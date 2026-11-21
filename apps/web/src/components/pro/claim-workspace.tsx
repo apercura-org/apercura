@@ -391,7 +391,7 @@ export function ClaimWorkspace({
 										>
 											{t("withdrawDialog.confirm")}
 										</Button>
-										<Button intent="quiet" onPress={close}>
+										<Button intent="quiet" className="px-0" onPress={close}>
 											{t("withdrawDialog.cancel")}
 										</Button>
 									</div>

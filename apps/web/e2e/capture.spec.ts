@@ -15,12 +15,15 @@ const VIEWPORTS = { desktop: { width: 1440, height: 900 }, mobile: { width: 390,
 
 test.skip(!process.env.CAPTURE_SCREENSHOTS, "design captures run with CAPTURE_SCREENSHOTS=1");
 
-async function capture(page: Page, name: string) {
+async function capture(page: Page, name: string, options: { fullPage?: boolean } = {}) {
 	mkdirSync(OUT, { recursive: true });
 	for (const [label, size] of Object.entries(VIEWPORTS)) {
 		await page.setViewportSize(size);
 		await page.waitForTimeout(300);
-		await page.screenshot({ path: join(OUT, `${name}-${label}.png`), fullPage: true });
+		await page.screenshot({
+			path: join(OUT, `${name}-${label}.png`),
+			fullPage: options.fullPage ?? true,
+		});
 	}
 	await page.setViewportSize(VIEWPORTS.desktop);
 }
@@ -85,6 +88,13 @@ test("capture the claim flow, the editor and the admin queue", async ({
 			buffer: Buffer.from("%PDF-1.4\n% synthetic attestation\n%%EOF\n"),
 		});
 	await expect(claimant.getByText("Carte CPS", { exact: true })).toBeVisible();
+	// The withdraw confirmation, open (a modal: the viewport, not the full page).
+	await claimant.getByRole("button", { name: "Retirer cette revendication" }).click();
+	const withdraw = claimant.getByRole("alertdialog", { name: "Retirer cette revendication ?" });
+	await expect(withdraw).toBeVisible();
+	await capture(claimant, "claim-withdraw-dialog", { fullPage: false });
+	await withdraw.getByRole("button", { name: "Garder la revendication" }).click();
+	await expect(withdraw).toHaveCount(0);
 	await claimant.getByRole("button", { name: "Afficher mon code" }).click();
 	await capture(claimant, "claim-documents");
 	await claimant.getByRole("button", { name: "Envoyer pour examen" }).click();
