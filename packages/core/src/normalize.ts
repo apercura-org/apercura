@@ -194,41 +194,73 @@ const STREET_LOWERCASE = new Set([
 ]);
 
 /**
- * Acronyms kept in capitals in place and establishment names ("GHU APHP",
- * "CDS", "EHPAD"), matched whatever their case in the source.
+ * Acronyms kept in capitals in place and establishment names, matched whatever
+ * their case in the source, with how they are printed ("APHP" -> "AP-HP").
  */
-const ACRONYMS = new Set([
-	"GHU",
-	"AP-HP",
-	"APHP",
-	"CHU",
-	"CHRU",
-	"CH",
-	"CHR",
-	"CHI",
-	"GH",
-	"CDS",
-	"CMS",
-	"MSP",
-	"SNCF",
-	"SAS",
-	"SELARL",
-	"SELAS",
-	"SARL",
-	"SCM",
-	"SCP",
-	"EHPAD",
-	"CMP",
-	"PMI",
-]);
+const ACRONYMS: ReadonlyMap<string, string> = new Map(
+	[
+		"GHU",
+		"AP-HP",
+		"CHU",
+		"CHRU",
+		"CH",
+		"CHR",
+		"CHI",
+		"GH",
+		"CDS",
+		"CMS",
+		"MSP",
+		"SNCF",
+		"SAS",
+		"SELARL",
+		"SELAS",
+		"SARL",
+		"SCM",
+		"SCP",
+		"EHPAD",
+		"CMP",
+		"PMI",
+		"USLD",
+		"SSR",
+		"CMPP",
+		"CPMI",
+		"IRM",
+		"GCS",
+		"CASVP",
+		"SESSAD",
+		"SSIAD",
+		"ESAT",
+	]
+		.map((acronym): [string, string] => [acronym, acronym])
+		.concat([["APHP", "AP-HP"]]),
+);
+
+/**
+ * AP-HP hospital group codes ("GHU AP-HP NUP Site Bichat"): short words that
+ * could be names elsewhere ("Dr Hu"), so they are capitalized only in a label
+ * that names a GHU or the AP-HP.
+ */
+const AP_HP_SITE_CODES = new Set(["NUP", "CUP", "SUN", "UPS", "HM", "HU", "PSSD"]);
+
+/** Two-letter name prefixes that are capitalized on purpose ("McDonald", "LeBlanc"). */
+const CAMEL_PREFIXES = new Set(["Mc", "De", "Di", "Du", "Le", "La", "Lo", "Da"]);
 
 const hasLetters = (value: string) => /\p{L}/u.test(value);
 const isUpper = (value: string) => hasLetters(value) && value === value.toLocaleUpperCase("fr");
 
 /**
+ * A registry typo that capitalizes the second letter ("SEbastien", "BEn") or
+ * the third ("StEphane"), as opposed to a deliberate camel case ("McDonald").
+ */
+const isMiscased = (value: string) =>
+	/^\p{Lu}{2}\p{Ll}+$/u.test(value) ||
+	(/^\p{Lu}\p{Ll}\p{Lu}\p{Ll}+$/u.test(value) && !CAMEL_PREFIXES.has(value.slice(0, 2)));
+
+/**
  * Formats a street, place or establishment label from the registry, word by
  * word: words printed in capitals are title-cased with short articles kept
- * lowercase, known acronyms stay in capitals, and words already in mixed or
+ * lowercase, known acronyms stay in capitals ("APHP" prints "AP-HP"), words
+ * with a stray capital ("SEbastien") are re-cased, and other words in mixed or
  * lower case are kept as written. A lone `l` or `d` before a word regains its
  * elided apostrophe ("DE L HOPITAL" -> "de l’Hopital"), as the registry drops
  * apostrophes. Idempotent, so it can also be applied when displaying.
@@ -239,14 +271,22 @@ export function formatStreetText(raw: string, options: { capitalizeFirst?: boole
 	const capitalizeFirst = options.capitalizeFirst ?? true;
 	const text = raw.trim().replace(/\s+/g, " ");
 	if (text === "") return "";
+	const upperWords = text.toLocaleUpperCase("fr").split(" ");
+	const apHp = upperWords.some((word) => word === "GHU" || word === "APHP" || word === "AP-HP");
+	const acronym = (word: string) => {
+		const upper = word.toLocaleUpperCase("fr");
+		return ACRONYMS.get(upper) ?? (apHp && AP_HP_SITE_CODES.has(upper) ? upper : undefined);
+	};
 	const words = text.split(" ").map((word, index) => {
-		if (ACRONYMS.has(word.toLocaleUpperCase("fr"))) return word.toLocaleUpperCase("fr");
+		const whole = acronym(word);
+		if (whole) return whole;
 		return word
 			.split(/(['’-])/)
 			.map((part, partIndex) => {
 				if (part === "'" || part === "’" || part === "-") return part;
-				if (ACRONYMS.has(part.toLocaleUpperCase("fr"))) return part.toLocaleUpperCase("fr");
-				if (!isUpper(part)) return part;
+				const known = acronym(part);
+				if (known) return known;
+				if (!isUpper(part) && !isMiscased(part)) return part;
 				const lower = part.toLocaleLowerCase("fr");
 				const isFirst = capitalizeFirst && index === 0 && partIndex === 0;
 				if (!isFirst && STREET_LOWERCASE.has(lower)) return lower;
