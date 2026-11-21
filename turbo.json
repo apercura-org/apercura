@@ -1,0 +1,41 @@
+{
+	"$schema": "https://turborepo.com/schema.json",
+	"ui": "stream",
+	"globalDependencies": [".env"],
+	"globalEnv": ["NODE_ENV", "SKIP_ENV_VALIDATION"],
+	"globalPassThroughEnv": [
+		"APP_URL",
+		"DATABASE_URL*",
+		"BETTER_AUTH_*",
+		"PSC_*",
+		"ENCRYPTION_*",
+		"BLIND_INDEX_KEY",
+		"SMTP_URL",
+		"MAIL_FROM",
+		"S3_*",
+		"JOBS_SECRET",
+		"REVALIDATE_SECRET",
+		"TRUSTED_PROXY_COUNT",
+		"ETL_PROFESSIONS",
+		"FEATURE_BOOKING",
+		"PORT"
+	],
+	"tasks": {
+		"build": {
+			"dependsOn": ["^build"],
+			"env": ["NEXT_PUBLIC_*"],
+			"outputs": [".next/**", "!.next/cache/**", "dist/**"]
+		},
+		"dev": {
+			"cache": false,
+			"persistent": true
+		},
+		"typecheck": {
+			"dependsOn": ["^typecheck"]
+		},
+		"test": {
+			"outputs": []
+		},
+		"check": {}
+	}
+}

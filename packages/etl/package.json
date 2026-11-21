@@ -1,0 +1,17 @@
+{
+	"name": "@apercura/etl",
+	"version": "0.0.0",
+	"private": true,
+	"license": "AGPL-3.0-only",
+	"type": "module",
+	"bin": {
+		"apercura-etl": "./src/cli.ts"
+	},
+	"exports": {
+		".": "./src/index.ts"
+	},
+	"scripts": {
+		"etl": "bun src/cli.ts",
+		"typecheck": "tsc --noEmit"
+	}
+}
