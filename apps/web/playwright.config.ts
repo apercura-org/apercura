@@ -7,9 +7,15 @@ import { defineConfig, devices } from "@playwright/test";
  *   repository root, which builds first.
  * - `development`: `next dev`, only for the component gallery (`/_ui`), which
  *   production builds answer with 404.
+ *
+ * The auth flow (`auth.spec.ts`) needs PostgreSQL with migrations applied
+ * (DATABASE_URL) and Mailpit (SMTP_URL, MAILPIT_URL for its API), e.g.
+ * `docker compose -f docker/compose.yml up -d && bun run db:migrate`.
+ * E2E_PORT moves both servers (production on it, development on the next one).
  */
-const PROD_PORT = 3100;
-const DEV_PORT = 3101;
+const PROD_PORT = Number(process.env.E2E_PORT ?? 3100);
+const DEV_PORT = PROD_PORT + 1;
+const PROD_URL = `http://localhost:${PROD_PORT}`;
 const isCI = Boolean(process.env.CI);
 
 export default defineConfig({
@@ -29,7 +35,7 @@ export default defineConfig({
 		{
 			name: "production",
 			testIgnore: /gallery\.spec\.ts/,
-			use: { baseURL: `http://localhost:${PROD_PORT}` },
+			use: { baseURL: PROD_URL },
 		},
 		{
 			name: "development",
@@ -37,11 +43,19 @@ export default defineConfig({
 			use: { baseURL: `http://localhost:${DEV_PORT}` },
 		},
 	],
+	globalSetup: "./e2e/global-setup.ts",
 	webServer: [
 		{
 			command: `bun run start --port ${PROD_PORT}`,
-			url: `http://localhost:${PROD_PORT}/`,
-			env: { SKIP_ENV_VALIDATION: "1" },
+			url: `${PROD_URL}/`,
+			env: {
+				SKIP_ENV_VALIDATION: "1",
+				// Auth checks the request origin against these.
+				APP_URL: PROD_URL,
+				BETTER_AUTH_URL: PROD_URL,
+				// No proxy in front of the test server.
+				TRUSTED_PROXY_COUNT: "0",
+			},
 			reuseExistingServer: !isCI,
 			timeout: 60_000,
 		},
