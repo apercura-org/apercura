@@ -610,6 +610,8 @@ async function approveInTx(
 	const claim = await loadClaim(tx, claimId);
 	if (!claim) throw new ClaimError("NOT_FOUND");
 	assertOpen(claim);
+	// Nobody reviews their own claim.
+	if (decidedBy !== null && decidedBy === claim.userId) throw new ClaimError("NOT_APPROVABLE");
 	// Serializes decisions on one page.
 	const [practitioner] = await tx
 		.select({

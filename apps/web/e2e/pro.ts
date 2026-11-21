@@ -33,6 +33,34 @@ export async function freshCode(account: ProAccount) {
 }
 
 /**
+ * Signs in with the password. The production server limits password sign-ins
+ * to 5 a minute and sees every test as one client: when parallel specs hit
+ * the limit, wait for the window to pass and try again.
+ */
+async function submitPassword(page: Page, email: string, password: string) {
+	for (let attempt = 0; ; attempt++) {
+		await page.goto("/pro/connexion");
+		await page.getByLabel("Adresse e-mail", { exact: true }).fill(email);
+		await page.getByLabel("Mot de passe", { exact: true }).fill(password);
+		await page.getByRole("button", { name: "Se connecter", exact: true }).click();
+		const limited = page.getByText("Trop de tentatives. Attendez une minute, puis réessayez.");
+		const left = page.waitForURL((url) => !url.pathname.endsWith("/pro/connexion"), {
+			timeout: 10_000,
+		});
+		const outcome = await Promise.race([
+			left.then(() => "left" as const),
+			limited.waitFor({ timeout: 10_000 }).then(() => "limited" as const),
+			page
+				.getByLabel(/Code à 6 chiffres/)
+				.waitFor({ timeout: 10_000 })
+				.then(() => "factor" as const),
+		]).catch(() => "unknown" as const);
+		if (outcome !== "limited" || attempt >= 3) return;
+		await page.waitForTimeout(20_000);
+	}
+}
+
+/**
  * A practitioner-space account with a confirmed email and an authenticator
  * app, signed in with its second factor. Sign-up goes through the API and
  * the email confirmation through the database (the sign-up flow itself is
@@ -61,10 +89,7 @@ export async function createProAccount(
 		await sql.end();
 	}
 
-	await page.goto("/pro/connexion");
-	await page.getByLabel("Adresse e-mail", { exact: true }).fill(email);
-	await page.getByLabel("Mot de passe", { exact: true }).fill(password);
-	await page.getByRole("button", { name: "Se connecter", exact: true }).click();
+	await submitPassword(page, email, password);
 	await expect(page).toHaveURL(/\/pro\/securite$/);
 	await page.getByLabel("Votre mot de passe", { exact: true }).fill(password);
 	await page.getByRole("button", { name: "Configurer l’application" }).click();
@@ -88,10 +113,7 @@ export async function createProAccount(
 
 /** Signs in again with password and TOTP (after a sign-out or in another context). */
 export async function signIn(page: Page, account: ProAccount) {
-	await page.goto("/pro/connexion");
-	await page.getByLabel("Adresse e-mail", { exact: true }).fill(account.email);
-	await page.getByLabel("Mot de passe", { exact: true }).fill(account.password);
-	await page.getByRole("button", { name: "Se connecter", exact: true }).click();
+	await submitPassword(page, account.email, account.password);
 	await page.getByLabel(/Code à 6 chiffres/).fill(await freshCode(account));
 	await page.getByRole("button", { name: "Confirmer" }).click();
 	await expect(page).toHaveURL(/\/pro\/tableau-de-bord$/);

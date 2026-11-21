@@ -1,7 +1,13 @@
-import { expect, test } from "@playwright/test";
+import { type Browser, type BrowserContext, expect, type Page, test } from "@playwright/test";
 import sharp from "sharp";
 import { latestEmailText } from "./mailpit";
-import { createProAccount, expectNoAxeViolations, resetPractitioner, testDb } from "./pro";
+import {
+	createProAccount,
+	expectNoAxeViolations,
+	type ProAccount,
+	resetPractitioner,
+	testDb,
+} from "./pro";
 
 /*
  * Claims, the page editor and the GDPR tools on the synthetic fixtures. Each
@@ -16,8 +22,46 @@ const REPORTED_PRACTITIONER = { rpps: "19999990070", slug: "emma-echantillon-199
 
 test.describe.configure({ mode: "serial" });
 
+/**
+ * One reviewer account for the whole file, kept signed in: password sign-ins
+ * are limited to 5 a minute and sign-ups to 5 an hour, and the test server
+ * sees every spec as one client. It starts as a plain account (first test)
+ * and is promoted to platform administrator when a test needs one.
+ */
+let reviewer: { context: BrowserContext; page: Page; account: ProAccount } | undefined;
+
+async function reviewerSession(
+	browser: Browser,
+	request: Parameters<typeof createProAccount>[1],
+	baseURL: string,
+	options: { admin: boolean },
+) {
+	if (!reviewer) {
+		const context = await browser.newContext();
+		const page = await context.newPage();
+		const account = await createProAccount(page, request, { name: "Exemple Relecteur", baseURL });
+		reviewer = { context, page, account };
+	}
+	const sql = testDb();
+	try {
+		await sql`
+			UPDATE directory."user" SET is_platform_admin = ${options.admin}
+			WHERE email = ${reviewer.account.email}
+		`;
+	} finally {
+		await sql.end();
+	}
+	return reviewer.page;
+}
+
+test.afterAll(async () => {
+	await reviewer?.context.close();
+	reviewer = undefined;
+});
+
 test("signed-out visitors and non-administrators cannot reach the practitioner and admin pages", async ({
 	page,
+	browser,
 	request,
 	baseURL,
 }) => {
@@ -30,12 +74,12 @@ test("signed-out visitors and non-administrators cannot reach the practitioner a
 		await page.goto(path);
 		await expect(page).toHaveURL(/\/pro\/connexion$/);
 	}
-	await createProAccount(page, request, { name: "Exemple Curieux", baseURL: baseURL as string });
+	const plain = await reviewerSession(browser, request, baseURL as string, { admin: false });
 	for (const path of ["/pro/admin/revendications", "/pro/admin/signalements"]) {
-		await page.goto(path);
-		await expect(page).toHaveURL(/\/pro\/tableau-de-bord$/);
+		await plain.goto(path);
+		await expect(plain).toHaveURL(/\/pro\/tableau-de-bord$/);
 	}
-	const document = await page.request.get(
+	const document = await plain.request.get(
 		"/api/admin/claim-documents/00000000-0000-4000-8000-000000000000",
 	);
 	expect(document.status()).toBe(403);
@@ -214,13 +258,7 @@ test("claim with a document and a registry phone callback; an administrator appr
 	}
 
 	// The administrator, in another browser context.
-	const adminContext = await browser.newContext();
-	const admin = await adminContext.newPage();
-	await createProAccount(admin, request, {
-		name: "Exemple Administrateur",
-		baseURL: baseURL as string,
-		platformAdmin: true,
-	});
+	const admin = await reviewerSession(browser, request, baseURL as string, { admin: true });
 	await admin.goto("/pro/admin/revendications");
 	await expect(admin.getByRole("heading", { level: 1, name: "Revendications" })).toBeVisible();
 	await expectNoAxeViolations(admin);
@@ -242,7 +280,6 @@ test("claim with a document and a registry phone callback; an administrator appr
 	await expect(admin.getByText("Le rappel téléphonique a réussi.")).toBeVisible();
 	await admin.getByRole("button", { name: "Approuver", exact: true }).click();
 	await expect(admin).toHaveURL(/\/pro\/admin\/revendications$/);
-	await adminContext.close();
 
 	const check = testDb();
 	try {
@@ -327,13 +364,7 @@ test("objecting to an unclaimed page hides it at once; an administrator then sup
 	);
 
 	// The light check: an administrator confirms, the page is suppressed for good.
-	const adminContext = await browser.newContext();
-	const admin = await adminContext.newPage();
-	await createProAccount(admin, request, {
-		name: "Exemple Moderateur",
-		baseURL: baseURL as string,
-		platformAdmin: true,
-	});
+	const admin = await reviewerSession(browser, request, baseURL as string, { admin: true });
 	await admin.goto("/pro/admin/signalements");
 	await expect(
 		admin.getByRole("heading", { level: 1, name: "Signalements et retraits" }),
@@ -344,7 +375,6 @@ test("objecting to an unclaimed page hides it at once; an administrator then sup
 	await expect(row.getByText("julie.modele@example.test")).toBeVisible();
 	await row.getByRole("button", { name: "Supprimer la page" }).click();
 	await expect(admin.getByRole("row", { name: /Modele/ })).toHaveCount(0);
-	await adminContext.close();
 
 	const gone = await request.get(`/praticien/${OPT_OUT_PRACTITIONER.slug}`);
 	expect(gone.status()).toBe(404);
