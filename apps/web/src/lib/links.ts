@@ -1,0 +1,16 @@
+/** External addresses printed on the public pages. */
+export const LINKS = {
+	repository: "https://github.com/maxgfr/apercura",
+	agplText: "https://www.gnu.org/licenses/agpl-3.0.html",
+	licenceOuverte: "https://www.etalab.gouv.fr/licence-ouverte-open-licence/",
+	odbl: "https://opendatacommons.org/licenses/odbl/",
+	annuaireSante:
+		"https://www.data.gouv.fr/datasets/annuaire-sante-extractions-des-donnees-en-libre-acces-des-professionnels-intervenant-dans-le-systeme-de-sante-rpps",
+	finess: "https://www.data.gouv.fr/datasets/finess-structures-1",
+	ameli: "https://www.data.gouv.fr/datasets/annuaire-sante-ameli",
+	geoApi: "https://geo.api.gouv.fr",
+	geocoder: "https://geoservices.ign.fr/documentation/services/services-geoplateforme/geocodage",
+	openStreetMap: "https://www.openstreetmap.org/copyright",
+	defenseurForm: "https://formulaire.defenseurdesdroits.fr/",
+	cnilComplaint: "https://www.cnil.fr/fr/adresser-une-plainte",
+} as const;
