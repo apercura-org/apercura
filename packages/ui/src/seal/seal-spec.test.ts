@@ -1,5 +1,13 @@
 import { describe, expect, it } from "vitest";
-import { bandPath, fnv1a, mulberry32, sealSpec, ticksPath } from "./seal-spec";
+import {
+	BRAND_SEAL_SEED,
+	bandPath,
+	brandSealSpec,
+	fnv1a,
+	mulberry32,
+	sealSpec,
+	ticksPath,
+} from "./seal-spec";
 
 // Synthetic, Luhn-valid numbers that identify no one.
 const SYNTHETIC = ["10000000009", "12345678903", "99999999990", "10101010105"];
@@ -37,6 +45,21 @@ describe("sealSpec", () => {
 				expect(band.weight).toBeGreaterThan(0.5);
 			}
 		}
+	});
+});
+
+describe("brandSealSpec", () => {
+	it("is deterministic and distinct from every sample practitioner seal", () => {
+		expect(brandSealSpec()).toEqual(brandSealSpec());
+		for (const rpps of SYNTHETIC) {
+			expect(JSON.stringify(brandSealSpec())).not.toBe(JSON.stringify(sealSpec(rpps)));
+		}
+	});
+
+	it("cannot be reached from an RPPS number", () => {
+		// Practitioner seeds are namespaced `apercura-seal:`; the brand seed is not.
+		expect(BRAND_SEAL_SEED.startsWith("apercura-seal:")).toBe(false);
+		expect(JSON.stringify(brandSealSpec())).not.toBe(JSON.stringify(sealSpec(BRAND_SEAL_SEED)));
 	});
 });
 

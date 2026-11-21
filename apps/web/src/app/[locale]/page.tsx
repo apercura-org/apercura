@@ -1,10 +1,10 @@
 import {
 	BookletSearch,
+	BrandSeal,
 	buttonStyles,
 	FieldList,
 	FieldRow,
 	ProvenanceNote,
-	Seal,
 	tableStyles,
 } from "@apercura/ui";
 import { hasLocale } from "next-intl";
@@ -12,7 +12,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { BookletPage } from "~/components/booklet-page";
 import { SiteFooter } from "~/components/site-footer";
 import { SiteHeader } from "~/components/site-header";
-import { SPECIMEN, SpecimenPage } from "~/components/specimen-page";
+import { SpecimenPage } from "~/components/specimen-page";
 import { serverEnv } from "~/env";
 import { getPathname, Link } from "~/i18n/navigation";
 import { routing } from "~/i18n/routing";
@@ -55,12 +55,8 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
 									{t("hook")}
 								</p>
 							</div>
-							{/* The specimen's seal, printed in paper white on the cover: the page below carries it. */}
-							<Seal
-								rpps={SPECIMEN.rpps}
-								size={208}
-								className="hidden shrink-0 text-cover-ink md:block"
-							/>
+							{/* Apercura's own seal (brand seed, never an RPPS), printed in paper white on the cover. */}
+							<BrandSeal size={208} className="hidden shrink-0 text-cover-ink md:block" />
 						</div>
 						<BookletSearch
 							action={getPathname({ href: "/recherche", locale })}

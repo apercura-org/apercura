@@ -74,7 +74,22 @@ const between = (random: () => number, min: number, max: number, step = 0.05) =>
 
 /** Derives the seal parameters from an RPPS number (any string is accepted). */
 export function sealSpec(rpps: string): SealSpec {
-	const random = mulberry32(fnv1a(`apercura-seal:${rpps.trim()}`));
+	return specFromSeed(`apercura-seal:${rpps.trim()}`);
+}
+
+/**
+ * Seed of Apercura's own seal. It lives outside the `apercura-seal:` namespace used
+ * for practitioners, so no RPPS number can ever produce the brand mark.
+ */
+export const BRAND_SEAL_SEED = "apercura-brand:booklet-cover";
+
+/** Apercura's own seal, for the cover band and brand marks. Never used on a practitioner page. */
+export function brandSealSpec(): SealSpec {
+	return specFromSeed(BRAND_SEAL_SEED);
+}
+
+function specFromSeed(seed: string): SealSpec {
+	const random = mulberry32(fnv1a(seed));
 
 	const bandCount = pick(random, [2, 3, 3, 4] as const);
 	const bands: SealBand[] = [];

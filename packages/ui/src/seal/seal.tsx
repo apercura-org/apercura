@@ -1,5 +1,5 @@
 import { cn } from "../recipes";
-import { bandPath, sealSpec, ticksPath } from "./seal-spec";
+import { bandPath, brandSealSpec, type SealSpec, sealSpec, ticksPath } from "./seal-spec";
 
 export interface SealProps {
 	/** RPPS number the seal is derived from. */
@@ -16,7 +16,43 @@ export interface SealProps {
  * Decorative (the page heading names the practitioner), so hidden from assistive technology.
  */
 export function Seal({ rpps, verified = false, size = 88, className }: SealProps) {
-	const spec = sealSpec(rpps);
+	return (
+		<SealMark
+			spec={sealSpec(rpps)}
+			verified={verified}
+			size={size}
+			className={className}
+			data-seal={rpps}
+		/>
+	);
+}
+
+export interface BrandSealProps {
+	size?: number;
+	className?: string;
+}
+
+/**
+ * Apercura's own seal, drawn by the same engraving generator from a fixed brand
+ * seed. Used on covers; practitioner pages always carry their RPPS seal instead.
+ */
+export function BrandSeal({ size = 88, className }: BrandSealProps) {
+	return <SealMark spec={brandSealSpec()} size={size} className={className} data-seal="brand" />;
+}
+
+function SealMark({
+	spec,
+	verified = false,
+	size,
+	className,
+	"data-seal": dataSeal,
+}: {
+	spec: SealSpec;
+	verified?: boolean;
+	size: number;
+	className?: string;
+	"data-seal": string;
+}) {
 	return (
 		<svg
 			viewBox="-50 -50 100 100"
@@ -27,7 +63,7 @@ export function Seal({ rpps, verified = false, size = 88, className }: SealProps
 			className={cn("shrink-0 text-ink", className)}
 			fill="none"
 			stroke="currentColor"
-			data-seal={rpps}
+			data-seal={dataSeal}
 		>
 			<circle
 				r={48.5 - spec.outerWeight / 2}

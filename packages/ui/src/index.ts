@@ -101,5 +101,5 @@ export {
 	tableStyles,
 } from "./recipes";
 export { cn } from "./recipes/tv";
-export { Seal, type SealProps } from "./seal/seal";
-export { type SealSpec, sealSpec } from "./seal/seal-spec";
+export { BrandSeal, type BrandSealProps, Seal, type SealProps } from "./seal/seal";
+export { BRAND_SEAL_SEED, brandSealSpec, type SealSpec, sealSpec } from "./seal/seal-spec";
