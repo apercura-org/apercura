@@ -1,7 +1,9 @@
 export * from "./booking";
+export * from "./directory";
 export {
 	addressKey,
 	formatPersonName,
+	formatPhoneFr,
 	formatStreetLine,
 	formatStreetText,
 	nameMatchKey,
@@ -12,8 +14,10 @@ export { slugify } from "./slugify";
 export {
 	communeSlug,
 	departmentSlug,
+	type EstablishmentSegment,
 	establishmentSlug,
 	type PractitionerSegment,
+	parseEstablishmentSegment,
 	parsePractitionerSegment,
 	practitionerSlug,
 	regionSlug,

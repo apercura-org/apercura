@@ -61,3 +61,21 @@ export function establishmentSlug(name: string, finess: string): string {
 	const base = slugify(name);
 	return base ? `${base}-${number}` : number;
 }
+
+export type EstablishmentSegment = {
+	/** FINESS number as stored (uppercase `2A`/`2B` for Corsica). */
+	finess: string;
+	/** Name part before the FINESS number, possibly empty. */
+	namePart: string;
+};
+
+/**
+ * Parses the last segment of an establishment URL: `{name}-{finess}`, where a
+ * FINESS number is two digits (or `2a`/`2b`) followed by seven digits. Returns
+ * null for anything else, so malformed URLs never reach the database.
+ */
+export function parseEstablishmentSegment(segment: string): EstablishmentSegment | null {
+	const match = /^(?:([a-z0-9-]*)-)?(\d{2}\d{7}|2[ab]\d{7})$/.exec(segment);
+	if (!match) return null;
+	return { finess: (match[2] ?? "").toUpperCase(), namePart: match[1] ?? "" };
+}

@@ -149,6 +149,23 @@ export function toE164Fr(raw: string | null | undefined): string | null {
 	return `+33${digits.slice(1)}`;
 }
 
+const FRENCH_CALLING_CODES = ["33", "262", "590", "594", "596"] as const;
+
+/**
+ * Prints a French E.164 number the way it is dialled in France, in pairs
+ * (`+33155347620` -> `01 55 34 76 20`, `+262262123456` -> `02 62 12 34 56`).
+ * Other numbers are returned unchanged.
+ */
+export function formatPhoneFr(e164: string): string {
+	for (const code of FRENCH_CALLING_CODES) {
+		const rest = e164.startsWith(`+${code}`) ? e164.slice(code.length + 1) : null;
+		if (rest && /^\d{9}$/.test(rest)) {
+			return `0${rest}`.replace(/(\d{2})(?=\d)/g, "$1 ");
+		}
+	}
+	return e164;
+}
+
 const REPETITION_INDEX: Readonly<Record<string, string>> = {
 	B: "bis",
 	T: "ter",

@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
 	addressKey,
 	formatPersonName,
+	formatPhoneFr,
 	formatStreetLine,
 	formatStreetText,
 	nameMatchKey,
@@ -90,5 +91,17 @@ describe("addresses", () => {
 			"24 BIS RUE DAUPHINE|75006|75106",
 		);
 		expect(addressKey("Rue de l'Église", null, null)).toBe("RUE DE L EGLISE||");
+	});
+});
+
+describe("formatPhoneFr", () => {
+	it.each([
+		["+33155347620", "01 55 34 76 20"],
+		["+33612345678", "06 12 34 56 78"],
+		["+262262123456", "02 62 12 34 56"],
+		["+590590123456", "05 90 12 34 56"],
+		["+4122123456", "+4122123456"],
+	])("%s -> %s", (e164, expected) => {
+		expect(formatPhoneFr(e164)).toBe(expected);
 	});
 });
