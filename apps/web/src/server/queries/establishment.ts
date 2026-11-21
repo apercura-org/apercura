@@ -1,6 +1,7 @@
 import "server-only";
 
 import { cacheLife, cacheTag } from "next/cache";
+import { label } from "~/lib/practitioner-view";
 import { cacheTags } from "../cache-tags";
 import { getSql } from "../db";
 import type { PlaceRef, PractitionerLink } from "./types";
@@ -96,6 +97,9 @@ export async function getEstablishment(slug: string, finess: string): Promise<Es
 			`
 		: [];
 	const { placeId: _placeId, ...rest } = site;
+	rest.name = label(rest.name) ?? rest.name;
+	rest.addressLine = label(rest.addressLine);
+	rest.addressComplement = label(rest.addressComplement);
 	return {
 		kind: "found",
 		page: {

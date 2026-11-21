@@ -486,6 +486,7 @@ async function SiteSection({
 async function Action({ plan, locale }: { plan: ReturnType<typeof actionPlan>; locale: Locale }) {
 	const t = await getTranslations({ locale, namespace: "PractitionerPage" });
 	const tP = await getTranslations({ locale, namespace: "Practitioner" });
+	const tSite = await getTranslations({ locale, namespace: "Site" });
 	const title = tP("action.title");
 	if (!plan) return null;
 	switch (plan.kind) {
@@ -507,7 +508,7 @@ async function Action({ plan, locale }: { plan: ReturnType<typeof actionPlan>; l
 					statement={tP("action.establishment.statement", {
 						establishment: plan.establishment.name,
 					})}
-					actionLabel={t("action.establishmentLink", { establishment: plan.establishment.name })}
+					actionLabel={t("action.establishmentLink")}
 					href={getPathname({
 						href: { pathname: "/etablissement/[slug]", params: { slug: plan.establishment.slug } },
 						locale,
@@ -529,7 +530,14 @@ async function Action({ plan, locale }: { plan: ReturnType<typeof actionPlan>; l
 					kind="notice"
 					title={title}
 					statement={t("action.noPhone")}
-					hint={t("action.noPhoneHint")}
+					hint={t.rich("action.noPhoneHint", {
+						link: (chunks) => (
+							<a href={ameliUrl} className={linkStyles({ tone: "muted" })}>
+								{chunks}
+								<span className="sr-only"> ({tSite("externalLink")})</span>
+							</a>
+						),
+					})}
 				/>
 			);
 	}

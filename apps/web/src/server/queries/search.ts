@@ -1,5 +1,6 @@
 import "server-only";
 
+import { label } from "~/lib/practitioner-view";
 import { getSql } from "../db";
 
 /**
@@ -182,7 +183,15 @@ export async function practitionerSlugByRpps(rpps: string): Promise<string | nul
 
 export type SearchResult = PractitionerSuggestion & {
 	practiceKind: string | null;
+	/** The place shown is inside the searched place (always, when one was given). */
+	inPlace: boolean;
 	siteName: string | null;
+	/** E.164 phone of the place shown, when the registry publishes one. */
+	phone: string | null;
+	/** `switchboard` when the number is shared by many practitioners. */
+	phoneKind: string | null;
+	/** Establishment page of the place shown (FINESS establishments only). */
+	establishmentSlug: string | null;
 	addressLine: string | null;
 	postcode: string | null;
 	lat: number | null;
@@ -224,20 +233,17 @@ export async function searchPractitioners(input: {
 			sd.payload->>'titleCode' AS "titleCode", sd.payload->>'civilityCode' AS "civilityCode",
 			sd.payload->>'firstName' AS "firstName", sd.payload->>'lastName' AS "lastName",
 			sd.listing_slug AS "listingSlug",
-			coalesce(local.place_name, sd.payload->'site'->>'placeName') AS "placeName",
-			coalesce(local.practice_kind, sd.payload->'site'->>'practiceKind') AS "practiceKind",
-			CASE WHEN local.found THEN local.name ELSE sd.payload->'site'->>'name' END AS "siteName",
-			CASE WHEN local.found THEN local.address_line ELSE sd.payload->'site'->>'addressLine' END
-				AS "addressLine",
-			CASE WHEN local.found THEN local.postcode ELSE sd.payload->'site'->>'postcode' END AS postcode,
-			ST_Y(coalesce(local.location, sd.location)::geometry) AS lat,
-			ST_X(coalesce(local.location, sd.location)::geometry) AS lon,
+			shown.place_name AS "placeName", shown.practice_kind AS "practiceKind",
+			coalesce(local.found, false) AS "inPlace",
+			shown.name AS "siteName", shown.address_line AS "addressLine", shown.postcode,
+			shown.phone, shown.phone_kind AS "phoneKind", shown.slug AS "establishmentSlug",
+			ST_Y(coalesce(shown.location, sd.location)::geometry) AS lat,
+			ST_X(coalesce(shown.location, sd.location)::geometry) AS lon,
 			${point ? sql`ST_Distance(sd.location, ${point})` : sql`NULL::float8`} AS distance
 		FROM directory.search_docs sd
-		-- With a place, print the practitioner's place of practice there, not the primary one.
+		-- With a place, the practitioner's place of practice there.
 		LEFT JOIN LATERAL (
-			SELECT true AS found, s.name, s.address_line, s.postcode, pl.name AS place_name,
-				a.practice_kind, s.location
+			SELECT true AS found, s.id AS site_id, a.practice_kind
 			FROM directory.activities a
 			JOIN directory.sites s ON s.id = a.site_id AND s.removed_at IS NULL
 			JOIN directory.places pl ON pl.id = s.place_id
@@ -249,6 +255,15 @@ export async function searchPractitioners(input: {
 			ORDER BY a.is_primary DESC, a.id
 			LIMIT 1
 		) local ON true
+		-- The place printed: that one, else the primary place of the read model.
+		LEFT JOIN LATERAL (
+			SELECT s.name, s.address_line, s.postcode, pl.name AS place_name, s.phone,
+				s.phone_kind, s.slug, s.location,
+				coalesce(local.practice_kind, sd.payload->'site'->>'practiceKind') AS practice_kind
+			FROM directory.sites s
+			LEFT JOIN directory.places pl ON pl.id = s.place_id
+			WHERE s.id = coalesce(local.site_id, (sd.payload->'site'->>'id')::integer)
+		) shown ON true
 		WHERE sd.indexable
 			${name ? sql`AND directory.text_norm(${name}) <% sd.name_norm` : sql``}
 			${listingSlug ? sql`AND sd.listing_slug = ${listingSlug}` : sql``}
@@ -260,6 +275,8 @@ export async function searchPractitioners(input: {
 	return {
 		results: rows.slice(0, SEARCH_PAGE_SIZE).map((row) => ({
 			...row,
+			siteName: label(row.siteName),
+			addressLine: label(row.addressLine),
 			lat: row.lat === null ? null : Number(row.lat),
 			lon: row.lon === null ? null : Number(row.lon),
 			distance: row.distance === null ? null : Number(row.distance),

@@ -170,10 +170,11 @@
 			"appointments": "Appointments"
 		},
 		"action": {
-			"call": "Call the practice",
+			"call": "Call {phone}",
 			"establishment": "Through the establishment",
 			"locum": "Locum: no direct appointments",
-			"page": "See the page"
+			"page": "See the page",
+			"noPhone": "No phone number published"
 		},
 		"distance": "{km} km away",
 		"pagination": "Results pages",
@@ -184,7 +185,8 @@
 			"hide": "Hide the map",
 			"region": "Map of the results",
 			"fallback": "The map is loading. The list above has every address."
-		}
+		},
+		"outsidePlace": "Practises outside {where}"
 	},
 	"Practitioner": {
 		"rpps": "RPPS",
@@ -471,9 +473,9 @@
 		"asideLabel": "Appointments and page",
 		"action": {
 			"callNotYetOpen": "Online booking is not open yet for this practitioner. To make an appointment, call the practice.",
-			"establishmentLink": "Contact {establishment}",
+			"establishmentLink": "Contact the establishment",
 			"noPhone": "No phone number is published for this place.",
-			"noPhoneHint": "Check the practitioner's details on ameli.fr, or contact the place directly."
+			"noPhoneHint": "Check the practitioner’s details on <link>ameli.fr</link>, or contact the place directly."
 		},
 		"fees": {
 			"heading": "Fees and health insurance",

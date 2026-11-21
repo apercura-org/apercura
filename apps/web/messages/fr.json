@@ -139,23 +139,23 @@
 	},
 	"SearchPage": {
 		"title": "Recherche",
-		"query": "Vous avez cherché « {who} »",
-		"queryWhere": "Vous avez cherché « {who} » à « {where} »",
-		"queryOnlyWhere": "Vous avez cherché à « {where} »",
+		"query": "Vous avez cherché « {who} »",
+		"queryWhere": "Vous avez cherché « {who} » à « {where} »",
+		"queryOnlyWhere": "Vous avez cherché à « {where} »",
 		"emptyTitle": "Aucun professionnel ne correspond",
-		"emptyBody": "Vérifiez l’orthographe, essayez une ville voisine, ou un terme plus large comme « médecin » au lieu d’une spécialité.",
-		"queryNear": "Vous avez cherché « {who} » autour de vous",
+		"emptyBody": "Vérifiez l’orthographe, essayez une ville voisine, ou un terme plus large comme « médecin » au lieu d’une spécialité.",
+		"queryNear": "Vous avez cherché « {who} » autour de vous",
 		"queryOnlyNear": "Professionnels autour de vous",
 		"startTitle": "Qui cherchez-vous ?",
-		"startBody": "Saisissez un nom, une spécialité ou une profession dans « Qui ? », et une ville ou un code postal dans « Où ? ». Vous pouvez aussi parcourir l’annuaire par lieu.",
+		"startBody": "Saisissez un nom, une spécialité ou une profession dans « Qui ? », et une ville ou un code postal dans « Où ? ». Vous pouvez aussi parcourir l’annuaire par lieu.",
 		"noMoreTitle": "Il n’y a plus de résultats",
 		"browseDirectory": "Parcourir l’annuaire",
 		"rppsTitle": "Aucune page publique pour le RPPS {rpps}",
 		"rppsBody": "Ce numéro n’est pas valide, ou ce professionnel n’a pas de page publique : les personnes sans lieu d’exercice fixe ne sont pas listées. Les professionnels peuvent tout de même retrouver et revendiquer leur fiche.",
 		"rppsPro": "Professionnels : retrouver votre fiche",
-		"ambiguousTitle": "Plusieurs lieux s’appellent « {where} »",
+		"ambiguousTitle": "Plusieurs lieux s’appellent « {where} »",
 		"ambiguousBody": "Choisissez celui que vous cherchez :",
-		"unknownPlaceTitle": "Nous ne connaissons pas le lieu « {where} »",
+		"unknownPlaceTitle": "Nous ne connaissons pas le lieu « {where} »",
 		"unknownPlaceSuggest": "Vouliez-vous dire l’un de ces lieux ?",
 		"unknownPlaceBody": "Vérifiez l’orthographe, ou saisissez un code postal.",
 		"departmentPlace": "Département",
@@ -170,10 +170,11 @@
 			"appointments": "Rendez-vous"
 		},
 		"action": {
-			"call": "Appeler le cabinet",
+			"call": "Appeler le {phone}",
 			"establishment": "Par l’établissement",
 			"locum": "Remplaçant : pas de rendez-vous direct",
-			"page": "Voir la page"
+			"page": "Voir la page",
+			"noPhone": "Pas de numéro publié"
 		},
 		"distance": "à {km} km",
 		"pagination": "Pages de résultats",
@@ -184,7 +185,8 @@
 			"hide": "Masquer la carte",
 			"region": "Carte des résultats",
 			"fallback": "La carte se charge. La liste ci-dessus donne toutes les adresses."
-		}
+		},
+		"outsidePlace": "Exerce hors de {where}"
 	},
 	"Practitioner": {
 		"rpps": "RPPS",
@@ -424,7 +426,7 @@
 		"feedback": {
 			"loadingLabel": "Chargement de la page",
 			"emptyTitle": "Aucun professionnel ne correspond",
-			"emptyBody": "Essayez une ville voisine ou une profession plus large, par exemple « médecin » plutôt qu’une spécialité.",
+			"emptyBody": "Essayez une ville voisine ou une profession plus large, par exemple « médecin » plutôt qu’une spécialité.",
 			"emptyAction": "Effacer les filtres"
 		},
 		"form": {
@@ -471,9 +473,9 @@
 		"asideLabel": "Rendez-vous et page",
 		"action": {
 			"callNotYetOpen": "La prise de rendez-vous en ligne n’est pas encore ouverte pour ce professionnel. Pour prendre rendez-vous, appelez le cabinet.",
-			"establishmentLink": "Contacter {establishment}",
+			"establishmentLink": "Contacter l’établissement",
 			"noPhone": "Aucun numéro de téléphone n’est publié pour ce lieu.",
-			"noPhoneHint": "Consultez la fiche du professionnel sur ameli.fr, ou contactez directement le lieu."
+			"noPhoneHint": "Consultez la fiche du professionnel sur <link>ameli.fr</link>, ou contactez directement le lieu."
 		},
 		"fees": {
 			"heading": "Honoraires et Assurance Maladie",

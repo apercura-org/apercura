@@ -1,6 +1,7 @@
 import "server-only";
 
 import { cacheLife, cacheTag } from "next/cache";
+import { label } from "~/lib/practitioner-view";
 import { cacheTags } from "../cache-tags";
 import { getSql, hasDatabaseUrl } from "../db";
 import type { PlaceRef } from "./types";
@@ -115,7 +116,15 @@ export async function getPlaceHub(place: PlaceRef, isCity: boolean): Promise<Pla
 		ORDER BY count(DISTINCT p.id) DESC, 2, 1
 		LIMIT 24
 	`;
-	return { total, listings, places, establishments };
+	return {
+		total,
+		listings,
+		places,
+		establishments: establishments.map((item) => ({
+			...item,
+			name: label(item.name) ?? item.name,
+		})),
+	};
 }
 
 /** Department slugs prerendered at build time. */

@@ -194,7 +194,44 @@ const STREET_LOWERCASE = new Set([
 ]);
 
 /**
- * Title-cases an uppercase street label, keeping short articles lowercase.
+ * Acronyms kept in capitals in place and establishment names ("GHU APHP",
+ * "CDS", "EHPAD"), matched whatever their case in the source.
+ */
+const ACRONYMS = new Set([
+	"GHU",
+	"AP-HP",
+	"APHP",
+	"CHU",
+	"CHRU",
+	"CH",
+	"CHR",
+	"CHI",
+	"GH",
+	"CDS",
+	"CMS",
+	"MSP",
+	"SNCF",
+	"SAS",
+	"SELARL",
+	"SELAS",
+	"SARL",
+	"SCM",
+	"SCP",
+	"EHPAD",
+	"CMP",
+	"PMI",
+]);
+
+const hasLetters = (value: string) => /\p{L}/u.test(value);
+const isUpper = (value: string) => hasLetters(value) && value === value.toLocaleUpperCase("fr");
+
+/**
+ * Formats a street, place or establishment label from the registry, word by
+ * word: words printed in capitals are title-cased with short articles kept
+ * lowercase, known acronyms stay in capitals, and words already in mixed or
+ * lower case are kept as written. A lone `l` or `d` before a word regains its
+ * elided apostrophe ("DE L HOPITAL" -> "de l’Hopital"), as the registry drops
+ * apostrophes. Idempotent, so it can also be applied when displaying.
  * `capitalizeFirst: false` keeps a leading article lowercase too, for a street
  * name that follows its type ("Boulevard de Sebastopol").
  */
@@ -202,22 +239,25 @@ export function formatStreetText(raw: string, options: { capitalizeFirst?: boole
 	const capitalizeFirst = options.capitalizeFirst ?? true;
 	const text = raw.trim().replace(/\s+/g, " ");
 	if (text === "") return "";
-	if (text !== text.toUpperCase()) return text;
-	return text
-		.toLocaleLowerCase("fr")
-		.split(" ")
-		.map((word, index) =>
-			word
-				.split(/(['’-])/)
-				.map((part, partIndex) => {
-					if (part === "'" || part === "’" || part === "-") return part;
-					const isFirst = capitalizeFirst && index === 0 && partIndex === 0;
-					if (!isFirst && STREET_LOWERCASE.has(part)) return part;
-					return capitalize(part);
-				})
-				.join(""),
-		)
-		.join(" ");
+	const words = text.split(" ").map((word, index) => {
+		if (ACRONYMS.has(word.toLocaleUpperCase("fr"))) return word.toLocaleUpperCase("fr");
+		return word
+			.split(/(['’-])/)
+			.map((part, partIndex) => {
+				if (part === "'" || part === "’" || part === "-") return part;
+				if (ACRONYMS.has(part.toLocaleUpperCase("fr"))) return part.toLocaleUpperCase("fr");
+				if (!isUpper(part)) return part;
+				const lower = part.toLocaleLowerCase("fr");
+				const isFirst = capitalizeFirst && index === 0 && partIndex === 0;
+				if (!isFirst && STREET_LOWERCASE.has(lower)) return lower;
+				return capitalize(lower);
+			})
+			.join("");
+	});
+	return words
+		.join(" ")
+		.replace(/(^|\s)([ld]) (?=\p{L})/gu, "$1$2’")
+		.replace(/^([LD]) (?=\p{L})/u, "$1’");
 }
 
 export type StreetParts = {

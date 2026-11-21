@@ -1,6 +1,7 @@
 "use client";
 
 import { type ReactNode, useEffect, useRef, useState } from "react";
+import { PinIcon } from "../icons";
 import { cn } from "../recipes";
 import { DEFAULT_MAP_STYLE_URL } from "./map-style";
 
@@ -111,7 +112,11 @@ export function MapView({
 			{/* MapLibre's own stylesheet makes this node `position: relative`, so size it with the parent. */}
 			<div ref={containerRef} className="h-full w-full" />
 			{status === "ready" ? null : (
-				<div className="absolute inset-0 flex flex-col justify-end gap-2 p-4">{fallback}</div>
+				// Until the map is ready (or if it never loads), the pin stands with the address.
+				<div className="absolute inset-0 flex flex-col items-center justify-center gap-2 p-4 text-center">
+					<PinIcon className="size-8 text-ink" />
+					{fallback}
+				</div>
 			)}
 		</section>
 	);

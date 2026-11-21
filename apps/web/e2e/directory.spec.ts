@@ -143,3 +143,23 @@ test("one Open Graph image per profession", async ({ request }) => {
 	expect(response.status()).toBe(200);
 	expect(response.headers()["content-type"]).toBe("image/png");
 });
+
+test("search results offer the next step and stay in the searched place", async ({ page }) => {
+	await page.goto("/recherche?quoi=Essai&ou=75015");
+	const results = page.getByRole("table", { name: "Résultats" });
+	await expect(results).toBeVisible();
+	const calls = results.getByRole("link", { name: /^Appeler le / });
+	expect(await calls.count()).toBeGreaterThan(0);
+	await expect(calls.first()).toHaveAttribute("href", /^tel:\+/);
+	await expect(results.getByText(/^Exerce hors de/)).toHaveCount(0);
+});
+
+test.describe("on a phone", () => {
+	test.use({ viewport: { width: 390, height: 844 } });
+
+	test("/donnees never scrolls sideways", async ({ page }) => {
+		await page.goto("/donnees");
+		const width = await page.evaluate(() => document.documentElement.scrollWidth);
+		expect(width).toBeLessThanOrEqual(390);
+	});
+});

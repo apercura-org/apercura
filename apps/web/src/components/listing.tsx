@@ -132,9 +132,18 @@ export async function PractitionerTable({
 }) {
 	const t = await getTranslations({ locale, namespace: "Listing" });
 	const tFees = await getTranslations({ locale, namespace: "PractitionerPage" });
+	const tP = await getTranslations({ locale, namespace: "Practitioner" });
 	const labels = await getTaxonomyLabels(locale);
+	const notProvided = tP("notProvided");
 	const carteVitale = (value: boolean | null) =>
-		value === true ? tFees("fees.accepted") : value === false ? tFees("fees.notAccepted") : "—";
+		value === true ? tFees("fees.accepted") : value === false ? tFees("fees.notAccepted") : null;
+	/** An empty cell: a printed dash, and the words for screen readers. */
+	const emptyCell = (
+		<span className="text-ink-muted">
+			<span aria-hidden="true">—</span>
+			<span className="sr-only">{notProvided}</span>
+		</span>
+	);
 	return (
 		<table className={table.table()}>
 			<caption className="sr-only">{caption}</caption>
@@ -173,16 +182,16 @@ export async function PractitionerTable({
 								{address ? <p className="text-meta text-ink-muted">{address}</p> : null}
 								<p className="text-meta text-ink-muted md:hidden">
 									{t("rowFacts", {
-										sector: sector ?? "—",
-										carteVitale: carteVitale(row.carteVitale),
+										sector: sector ?? notProvided,
+										carteVitale: carteVitale(row.carteVitale) ?? notProvided,
 									})}
 								</p>
 							</td>
 							<td className={table.cell({ className: "hidden text-meta md:table-cell" })}>
-								{sector ?? <span className="text-ink-muted">—</span>}
+								{sector ?? emptyCell}
 							</td>
 							<td className={table.cell({ className: "hidden text-meta md:table-cell" })}>
-								{carteVitale(row.carteVitale)}
+								{carteVitale(row.carteVitale) ?? emptyCell}
 							</td>
 						</tr>
 					);

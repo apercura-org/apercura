@@ -2,6 +2,7 @@ import "server-only";
 
 import { LISTING_PAGE_SIZE } from "@apercura/core";
 import { cacheLife, cacheTag } from "next/cache";
+import { label } from "~/lib/practitioner-view";
 import { cacheTags } from "../cache-tags";
 import { getSql } from "../db";
 import type { LandingPayload, PlaceRef, PractitionerLink } from "./types";
@@ -108,10 +109,16 @@ export async function getLandingPage(scope: LandingScope): Promise<LandingPage |
 				ORDER BY directory.text_norm(last_name), directory.text_norm(first_name), id
 				LIMIT ${LISTING_PAGE_SIZE} OFFSET ${offset}
 			`;
-	for (const row of rows) cacheTag(cacheTags.practitioner(row.id));
+	for (const row of rows) {
+		cacheTag(cacheTags.practitioner(row.id));
+		row.siteName = label(row.siteName);
+		row.addressLine = label(row.addressLine);
+	}
 
 	const nearby = await nearbyPlaces(listingSlug, place);
-	const establishments = place ? await establishmentsOf(listingSlug, place, isCity) : [];
+	const establishments = (place ? await establishmentsOf(listingSlug, place, isCity) : []).map(
+		(item) => ({ ...item, name: label(item.name) ?? item.name }),
+	);
 	return { landing, rows, nearby, establishments };
 }
 

@@ -1,4 +1,4 @@
-import { formatPhoneFr, publicActivities } from "@apercura/core";
+import { formatPhoneFr, formatStreetText, publicActivities } from "@apercura/core";
 import type { ActivityPayload, PractitionerPayload, SitePayload } from "~/server/queries/types";
 
 export type SiteView = {
@@ -17,13 +17,21 @@ export type SiteView = {
 	establishment: { name: string; slug: string } | null;
 };
 
+/**
+ * A registry label as printed: acronyms in capitals, elided apostrophes
+ * restored. Idempotent, so labels stored by earlier imports read the same.
+ */
+export function label(value: string | null | undefined): string | null {
+	return value ? formatStreetText(value) || null : null;
+}
+
 /** Address lines of a site, street first. */
 export function addressLines(
 	site: Pick<SitePayload, "addressLine" | "addressComplement" | "postcode" | "placeName">,
 ): string[] {
 	const town = [site.postcode, site.placeName].filter(Boolean).join(" ");
-	return [site.addressLine, site.addressComplement, town].filter((line): line is string =>
-		Boolean(line?.trim()),
+	return [label(site.addressLine), label(site.addressComplement), town].filter(
+		(line): line is string => Boolean(line?.trim()),
 	);
 }
 
@@ -37,7 +45,7 @@ function toView(activity: ActivityPayload & { site: SitePayload }): SiteView {
 		roleCode: activity.roleCode,
 		isPrimary: activity.isPrimary,
 		site,
-		name: site.name ?? site.establishmentName,
+		name: label(site.name ?? site.establishmentName),
 		addressLines: addressLines(site),
 		coordinates:
 			precise && site.latitude !== null && site.longitude !== null
@@ -52,7 +60,7 @@ function toView(activity: ActivityPayload & { site: SitePayload }): SiteView {
 			: null,
 		establishment:
 			site.establishmentSlug && (site.establishmentName ?? site.name)
-				? { name: site.establishmentName ?? site.name ?? "", slug: site.establishmentSlug }
+				? { name: label(site.establishmentName ?? site.name) ?? "", slug: site.establishmentSlug }
 				: null,
 	};
 }

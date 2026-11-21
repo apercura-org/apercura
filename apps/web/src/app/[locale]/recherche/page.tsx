@@ -1,4 +1,4 @@
-import { parseSearchQuery, type SearchQuery } from "@apercura/core";
+import { formatPhoneFr, parseSearchQuery, type SearchQuery } from "@apercura/core";
 import { buttonStyles, EmptyState, linkStyles, tableStyles } from "@apercura/ui";
 import type { Metadata } from "next";
 import { hasLocale } from "next-intl";
@@ -284,11 +284,29 @@ async function Results({
 	const kilometres = new Intl.NumberFormat(locale, { maximumFractionDigits: 1 });
 	const from = (page - 1) * SEARCH_PAGE_SIZE + 1;
 	const to = from + outcome.results.length - 1;
-	const action = (kind: string | null) => {
-		if (kind === "office" || kind === "health_center") return t("action.call");
-		if (kind === "hospital") return t("action.establishment");
-		if (kind === "locum") return t("action.locum");
-		return t("action.page");
+	/** What the patient can do next, from the place shown: call it, go through its establishment… */
+	const action = (result: SearchResult) => {
+		const kind = result.practiceKind;
+		if (kind === "locum") return <span>{t("action.locum")}</span>;
+		if (kind === "hospital" && result.establishmentSlug) {
+			return (
+				<Link
+					href={{ pathname: "/etablissement/[slug]", params: { slug: result.establishmentSlug } }}
+					className={linkStyles()}
+				>
+					{t("action.establishment")}
+				</Link>
+			);
+		}
+		if (kind === "office" || kind === "health_center" || kind === "hospital") {
+			if (!result.phone) return <span className="text-ink-muted">{t("action.noPhone")}</span>;
+			return (
+				<a href={`tel:${result.phone}`} className={`${linkStyles()} tabular whitespace-nowrap`}>
+					{t("action.call", { phone: formatPhoneFr(result.phone) })}
+				</a>
+			);
+		}
+		return <span>{t("action.page")}</span>;
 	};
 	const where = typedWhere(query);
 	const pageQuery = (target: number) => ({
@@ -360,15 +378,16 @@ async function Results({
 										{labels.personName(result)}
 									</Link>
 									{occupation ? <p className="text-meta text-ink">{occupation}</p> : null}
-									<p className="text-meta text-ink-muted md:hidden">
-										{action(result.practiceKind)}
-									</p>
+									<p className="text-meta text-ink md:hidden">{action(result)}</p>
 								</td>
 								<td className={table.cell({ className: "text-meta" })}>
 									{result.siteName ? (
 										<span className="block text-ink">{result.siteName}</span>
 									) : null}
 									{address ? <span className="block text-ink-muted">{address}</span> : null}
+									{where && !query.near && !result.inPlace ? (
+										<span className="block text-ink">{t("outsidePlace", { where })}</span>
+									) : null}
 									{result.distance !== null ? (
 										<span className="tabular block text-ink">
 											{t("distance", { km: kilometres.format(result.distance / 1000) })}
@@ -376,7 +395,7 @@ async function Results({
 									) : null}
 								</td>
 								<td className={table.cell({ className: "hidden text-meta md:table-cell" })}>
-									{action(result.practiceKind)}
+									{action(result)}
 								</td>
 							</tr>
 						);

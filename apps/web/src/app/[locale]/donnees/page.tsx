@@ -27,6 +27,11 @@ const HREF = "/donnees" as const;
 
 const table = tableStyles();
 
+/** A table cell printed as a stacked row on narrow screens. */
+const stacked = "max-md:block max-md:px-0 max-md:py-1";
+/** The column name above a stacked value (the header row is visually hidden there). */
+const cellLabel = "caps block text-ink md:hidden";
+
 type SourceRow = {
 	key: RegistryFile | "geo" | "geocoder" | "map";
 	href: string;
@@ -101,8 +106,11 @@ export default async function DataPage({ params }: PageProps<"/[locale]/donnees"
 					{registry ? null : <p className="text-body text-ink-muted">{t("status.notImported")}</p>}
 				</ProseSection>
 
-				<section aria-labelledby="sources-heading" className="flex flex-col gap-5">
-					<div className="flex max-w-[65ch] flex-col gap-2 border-t-[1.5px] border-ink pt-6">
+				<section
+					aria-labelledby="sources-heading"
+					className="flex min-w-0 flex-col gap-5 border-t-[1.5px] border-ink pt-6"
+				>
+					<div className="flex max-w-[65ch] flex-col gap-2">
 						<h2
 							id="sources-heading"
 							className="font-display text-title font-bold text-ink font-stretch-semi-expanded"
@@ -111,11 +119,11 @@ export default async function DataPage({ params }: PageProps<"/[locale]/donnees"
 						</h2>
 						<p className="text-body text-ink">{t("sources.body")}</p>
 					</div>
-					{/* The table scrolls on its own axis on narrow screens, so the page never does. */}
-					<div className="overflow-x-auto">
-						<table className={table.table({ className: "min-w-[40rem]" })}>
+					{/* Below 768 px each source stacks as label-over-value rows: the page never scrolls sideways. */}
+					<div>
+						<table className={table.table({ className: "max-md:block" })}>
 							<caption className="sr-only">{t("sources.caption")}</caption>
-							<thead className={table.head()}>
+							<thead className={table.head({ className: "max-md:sr-only" })}>
 								<tr>
 									<th scope="col" className={table.column()}>
 										{t("sources.columns.source")}
@@ -131,14 +139,17 @@ export default async function DataPage({ params }: PageProps<"/[locale]/donnees"
 									</th>
 								</tr>
 							</thead>
-							<tbody>
+							<tbody className="max-md:block">
 								{SOURCES.map((source) => {
 									const fileDate = isFileKey(source.key) ? registry?.files[source.key] : undefined;
 									return (
-										<tr key={source.key} className={table.row()}>
+										<tr
+											key={source.key}
+											className={table.row({ className: "max-md:block max-md:py-3" })}
+										>
 											<th
 												scope="row"
-												className={table.cell({ className: "text-left font-normal" })}
+												className={table.cell({ className: `text-left font-normal ${stacked}` })}
 											>
 												<ExternalLink href={source.href} externalLabel={external}>
 													{t(`sources.items.${source.key}.name`)}
@@ -147,8 +158,12 @@ export default async function DataPage({ params }: PageProps<"/[locale]/donnees"
 													{t(`sources.items.${source.key}.producer`)}
 												</span>
 											</th>
-											<td className={table.cell()}>{t(`sources.items.${source.key}.use`)}</td>
-											<td className={table.cell()}>
+											<td className={table.cell({ className: stacked })}>
+												<span className={cellLabel}>{t("sources.columns.use")}</span>
+												{t(`sources.items.${source.key}.use`)}
+											</td>
+											<td className={table.cell({ className: stacked })}>
+												<span className={cellLabel}>{t("sources.columns.licence")}</span>
 												<ExternalLink
 													href={source.licence === "odbl" ? LINKS.odbl : LINKS.licenceOuverte}
 													externalLabel={external}
@@ -156,7 +171,12 @@ export default async function DataPage({ params }: PageProps<"/[locale]/donnees"
 													{t(`sources.${source.licence}`)}
 												</ExternalLink>
 											</td>
-											<td className={table.cell({ className: "tabular whitespace-nowrap" })}>
+											<td
+												className={table.cell({
+													className: `tabular whitespace-nowrap ${stacked}`,
+												})}
+											>
+												<span className={cellLabel}>{t("sources.columns.date")}</span>
 												{fileDate ? (
 													<time dateTime={fileDate}>{date(fileDate)}</time>
 												) : (

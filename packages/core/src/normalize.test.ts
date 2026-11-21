@@ -75,6 +75,32 @@ describe("addresses", () => {
 		expect(formatStreetText("Rue déjà formatée")).toBe("Rue déjà formatée");
 	});
 
+	it.each([
+		["GHU APHP NUP SITE BICHAT", "GHU APHP Nup Site Bichat"],
+		["CDS MEDICAL ST JACQUES", "CDS Medical St Jacques"],
+		["PITIE SALPETRIERE", "Pitie Salpetriere"],
+		["47 BOULEVARD DE L HOPITAL", "47 Boulevard de l’Hopital"],
+		["CENTRE D IMAGERIE", "Centre d’Imagerie"],
+		["L HOPITAL", "L’Hopital"],
+		["EHPAD LES LILAS", "EHPAD les Lilas"],
+		["GHU AP-HP CENTRE", "GHU AP-HP Centre"],
+		["CABINET DU DR StEphane GHEZ", "Cabinet du Dr StEphane Ghez"],
+		["SELARL DU CH DE TULLE", "SELARL du CH de Tulle"],
+	])("formats %j word by word as %j", (raw, expected) => {
+		expect(formatStreetText(raw)).toBe(expected);
+	});
+
+	it("is idempotent on labels formatted by earlier imports", () => {
+		expect(formatStreetText("Ghu Aphp Sun Site Pitie Salpetriere")).toBe(
+			"GHU APHP Sun Site Pitie Salpetriere",
+		);
+		expect(formatStreetText("47 Boulevard de l Hopital")).toBe("47 Boulevard de l’Hopital");
+		for (const raw of ["GHU APHP NUP", "DE L HOPITAL", "Cds Medical St Jacques"]) {
+			const once = formatStreetText(raw);
+			expect(formatStreetText(once)).toBe(once);
+		}
+	});
+
 	it("builds the street line from registry columns", () => {
 		expect(
 			formatStreetLine({ number: "139", typeLabel: "Boulevard", street: "DE SEBASTOPOL" }),
