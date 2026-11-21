@@ -49,13 +49,17 @@ export async function capture(page: Page, name: string, anchor?: Locator) {
 			}
 		});
 	}
-	// Show each slot grid from its first column (clicks scroll it sideways).
+	// Show each slot grid from its first column (clicks scroll it sideways), then bring the
+	// stamped time into view when it lies further right.
 	await page.evaluate(() => {
 		for (const grid of document.querySelectorAll('[role="grid"]')) {
 			if (grid.parentElement) {
 				grid.parentElement.scrollLeft = 0;
 			}
 		}
+		document
+			.querySelector('[role="gridcell"][aria-selected="true"]')
+			?.scrollIntoView({ block: "nearest", inline: "nearest" });
 	});
 	// Let the stamp animation and focus rings settle.
 	await page.waitForTimeout(400);

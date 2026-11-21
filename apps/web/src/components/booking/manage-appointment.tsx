@@ -236,7 +236,10 @@ function Appointment({
 					<h2 id="appointment-status" className="caps text-ink">
 						{t("status.label")}
 					</h2>
-					<Badge tone="ink">{t(`status.${appointment.status}` as "status.confirmed")}</Badge>
+					{/* Stamp Law: a confirmed appointment is booked; every other state is ink. */}
+					<Badge tone={appointment.status === "confirmed" ? "stamp" : "ink"}>
+						{t(`status.${appointment.status}` as "status.confirmed")}
+					</Badge>
 				</div>
 				{appointment.status === "pending" && appointment.pendingUntil ? (
 					<p className="text-body text-ink">

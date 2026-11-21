@@ -1055,22 +1055,27 @@ describe.skipIf(!url)("booking (database)", { timeout: 30_000 }, () => {
 			expectedStatuses: ["confirmed"],
 			dedupeKey: `test-reminder:${booking.holdId}`,
 		};
-		expect(await enqueueOutbox(db, [entry])).toHaveLength(1);
+		// Every processOutbox call is scoped to this test's rows: rows left by other runs on the
+		// same database (end-to-end tests) must neither be sent here nor count in the results.
+		const ids = await enqueueOutbox(db, [entry]);
+		expect(ids).toHaveLength(1);
 		expect(await enqueueOutbox(db, [entry])).toHaveLength(0);
 
 		// Two workers at once: the email goes out once.
 		const sentBefore = mails.length;
 		await Promise.all([
-			processOutbox(db, { nowMs: clock.now }),
-			processOutbox(db, { nowMs: clock.now }),
+			processOutbox(db, { nowMs: clock.now, ids }),
+			processOutbox(db, { nowMs: clock.now, ids }),
 		]);
 		expect(mails.length - sentBefore).toBe(1);
 		const [sent] = await db.select().from(outbox).where(eq(outbox.dedupeKey, entry.dedupeKey));
 		expect(sent).toMatchObject({ status: "sent", attempts: 1, leaseToken: null });
 
 		// A row whose appointment moved on is skipped.
-		await enqueueOutbox(db, [{ ...entry, revision: 1, dedupeKey: `stale:${booking.holdId}` }]);
-		await processOutbox(db, { nowMs: clock.now });
+		const staleIds = await enqueueOutbox(db, [
+			{ ...entry, revision: 1, dedupeKey: `stale:${booking.holdId}` },
+		]);
+		await processOutbox(db, { nowMs: clock.now, ids: staleIds });
 		const [stale] = await db
 			.select()
 			.from(outbox)
@@ -1078,11 +1083,11 @@ describe.skipIf(!url)("booking (database)", { timeout: 30_000 }, () => {
 		expect(stale?.status).toBe("skipped");
 
 		// Failures: 1 min, 5 min, 15 min, 1 h, 4 h, then dead.
-		await enqueueOutbox(db, [{ ...entry, dedupeKey: `retry:${booking.holdId}` }]);
+		const retryIds = await enqueueOutbox(db, [{ ...entry, dedupeKey: `retry:${booking.holdId}` }]);
 		failMail = new Error("SMTP unavailable");
 		const delays = [1, 5, 15, 60, 240];
 		for (const delay of delays) {
-			await processOutbox(db, { nowMs: clock.now, random: () => 0.5 });
+			await processOutbox(db, { nowMs: clock.now, random: () => 0.5, ids: retryIds });
 			const [row] = await db
 				.select()
 				.from(outbox)
@@ -1090,12 +1095,13 @@ describe.skipIf(!url)("booking (database)", { timeout: 30_000 }, () => {
 			expect(row?.status).toBe("pending");
 			expect((row?.nextAttemptAt.getTime() ?? 0) - clock.now).toBe(delay * MINUTE);
 			// Not due yet: nothing happens.
-			expect((await processOutbox(db, { nowMs: clock.now + delay * MINUTE - 1_000 })).retried).toBe(
-				0,
-			);
+			expect(
+				(await processOutbox(db, { nowMs: clock.now + delay * MINUTE - 1_000, ids: retryIds }))
+					.retried,
+			).toBe(0);
 			clock.now += delay * MINUTE;
 		}
-		await processOutbox(db, { nowMs: clock.now });
+		await processOutbox(db, { nowMs: clock.now, ids: retryIds });
 		const [dead] = await db
 			.select()
 			.from(outbox)
@@ -1109,9 +1115,11 @@ describe.skipIf(!url)("booking (database)", { timeout: 30_000 }, () => {
 		expect(flagged?.unreachable).toBeInstanceOf(Date);
 
 		// A permanent refusal (5xx on RCPT) is dead at once.
-		await enqueueOutbox(db, [{ ...entry, dedupeKey: `permanent:${booking.holdId}` }]);
+		const permanentIds = await enqueueOutbox(db, [
+			{ ...entry, dedupeKey: `permanent:${booking.holdId}` },
+		]);
 		failMail = new PermanentMailError();
-		await processOutbox(db, { nowMs: clock.now });
+		await processOutbox(db, { nowMs: clock.now, ids: permanentIds });
 		const [permanent] = await db
 			.select()
 			.from(outbox)

@@ -23,9 +23,11 @@ import { BOOKING_PRACTITIONERS } from "./booking-seed";
  */
 
 const { direct, pending, race, manage } = BOOKING_PRACTITIONERS;
+// The phone first: it takes the earliest free time, which sits next to the "now" marker on its
+// narrow grid; the wide grid shows the next one without scrolling.
 const VIEWPORTS = [
-	{ name: "desktop", viewport: { width: 1440, height: 900 }, isMobile: false },
 	{ name: "mobile", viewport: { width: 390, height: 844 }, isMobile: true },
+	{ name: "desktop", viewport: { width: 1440, height: 900 }, isMobile: false },
 ] as const;
 
 /** Today at 08:20 in Paris (the agendas open 08:00 to 19:00). */

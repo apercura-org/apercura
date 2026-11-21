@@ -166,6 +166,10 @@ export function SlotPicker({
 				<div role="grid" aria-label={label} className="flex w-max min-w-full flex-col">
 					{days.map((day, row) => {
 						const fraction = now ? nowFraction(day, now) : null;
+						// The "now" label sits in a strip of its own under today's cells, on the side
+						// of the past slots once there is room for it, so it never covers a cell and
+						// stays inside the row near the start of the day.
+						const labelBefore = fraction !== null && Math.round(fraction * day.slots.length) >= 2;
 						return (
 							// biome-ignore lint/a11y/useSemanticElements lint/a11y/useFocusableInteractive: ARIA grid pattern (roving focus on cells); flex rows keep each day one unbroken row
 							<div
@@ -189,7 +193,7 @@ export function SlotPicker({
 										{emptyDayLabel}
 									</div>
 								) : (
-									<div className="relative flex">
+									<div className={cn("relative flex", fraction !== null && "pb-6")}>
 										{day.slots.map((slot, column) => {
 											const bookable = isBookable(slot, now);
 											// Past: was open, time has gone (plain muted). Taken: closed (struck through).
@@ -257,7 +261,12 @@ export function SlotPicker({
 												style={{ left: `${fraction * 100}%` }}
 											>
 												<span className="absolute -top-px left-1/2 size-0 -translate-x-1/2 border-x-[5px] border-t-[6px] border-x-transparent border-t-ink" />
-												<span className="caps absolute bottom-0.5 left-1.5 whitespace-nowrap bg-paper px-0.5 leading-none text-ink">
+												<span
+													className={cn(
+														"caps absolute bottom-1 whitespace-nowrap bg-paper px-0.5 leading-none text-ink",
+														labelBefore ? "right-1.5" : "left-1.5",
+													)}
+												>
 													{nowLabel}
 												</span>
 											</span>
