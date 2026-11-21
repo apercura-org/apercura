@@ -31,7 +31,7 @@ const tagsOf = (kind: SitemapKind) =>
 export async function getSitemapChunks(): Promise<SitemapChunk[]> {
 	"use cache";
 	cacheLife("hours");
-	cacheTag(...SITEMAP_KINDS.flatMap(tagsOf));
+	cacheTag(cacheTags.sitemap, ...SITEMAP_KINDS.flatMap(tagsOf));
 	const sql = getSql();
 	return sql<SitemapChunk[]>`
 		SELECT 'praticiens' AS kind, practitioner_id / ${SITEMAP_CHUNK} AS chunk,
@@ -65,7 +65,7 @@ export async function getSitemapChunks(): Promise<SitemapChunk[]> {
 export async function getSitemapEntries(kind: SitemapKind, chunk: number): Promise<SitemapEntry[]> {
 	"use cache";
 	cacheLife("hours");
-	cacheTag(...tagsOf(kind));
+	cacheTag(cacheTags.sitemap, ...tagsOf(kind));
 	const sql = getSql();
 	const from = chunk * SITEMAP_CHUNK;
 	const to = from + SITEMAP_CHUNK;

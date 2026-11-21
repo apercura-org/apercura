@@ -1,6 +1,7 @@
-import { Badge, EmptyState, FieldList, FieldRow, linkStyles, tableStyles } from "@apercura/ui";
+import { FieldList, FieldRow, tableStyles } from "@apercura/ui";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { BookletPage } from "~/components/booklet-page";
+import { RemovalForm, ReportForm } from "~/components/gdpr-forms";
 import {
 	ExternalLink,
 	InstitutionalCover,
@@ -9,7 +10,6 @@ import {
 } from "~/components/institutional";
 import { PublicPage } from "~/components/public-page";
 import { Trail } from "~/components/trail";
-import { Link } from "~/i18n/navigation";
 import type { Locale } from "~/i18n/routing";
 import { institutionalMetadata, localeOf } from "~/lib/institutional";
 import { LINKS } from "~/lib/links";
@@ -68,7 +68,6 @@ export default async function DataPage({ params }: PageProps<"/[locale]/donnees"
 	setRequestLocale(locale);
 	const t = await getTranslations({ locale, namespace: "DataPage" });
 	const tSite = await getTranslations({ locale, namespace: "Site" });
-	const tI = await getTranslations({ locale, namespace: "Institutional" });
 	const registry = await getRegistryStatus();
 	const external = tSite("externalLink");
 	const date = (value: string | undefined) => (value ? formatDate(value, locale) : null);
@@ -211,44 +210,22 @@ export default async function DataPage({ params }: PageProps<"/[locale]/donnees"
 						list: t.raw("correct.list") as string[],
 					}}
 				>
-					<EmptyState
-						headingLevel={3}
-						title={t("correct.formTitle")}
-						description={
-							<div className="flex flex-col gap-3">
-								<p>
-									<Badge>{tI("comingMark")}</Badge>
-								</p>
-								<p>{t("correct.formBody")}</p>
-							</div>
-						}
-						action={
-							<Link
-								href="/pro"
-								className={`${linkStyles()} inline-flex min-h-11 items-center text-body font-semibold`}
-							>
-								{t("correct.proLink")}
-							</Link>
-						}
-					/>
+					<div className="flex flex-col gap-4">
+						<h3 className="font-display text-lead font-bold text-ink">{t("correct.formTitle")}</h3>
+						<p className="max-w-[65ch] text-body text-ink">{t("correct.formBody")}</p>
+						<ReportForm />
+					</div>
 				</ProseSection>
 
 				<ProseSection
 					id="retrait"
 					content={{ heading: t("remove.heading"), body: t.raw("remove.body") as string[] }}
 				>
-					<EmptyState
-						headingLevel={3}
-						title={t("remove.formTitle")}
-						description={
-							<div className="flex flex-col gap-3">
-								<p>
-									<Badge>{tI("comingMark")}</Badge>
-								</p>
-								<p>{t("remove.formBody")}</p>
-							</div>
-						}
-					/>
+					<div className="flex flex-col gap-4">
+						<h3 className="font-display text-lead font-bold text-ink">{t("remove.formTitle")}</h3>
+						<p className="max-w-[65ch] text-body text-ink">{t("remove.formBody")}</p>
+						<RemovalForm />
+					</div>
 				</ProseSection>
 			</BookletPage>
 		</PublicPage>

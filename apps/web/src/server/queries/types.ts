@@ -28,6 +28,8 @@ export type SitePayload = {
 
 export type ActivityPayload = {
 	id: number;
+	/** `ans` (registry) or `owner` (added by the practitioner). Absent before migration 0009. */
+	source?: string;
 	practiceKind: string;
 	modeCode: string | null;
 	roleCode: string | null;
@@ -51,6 +53,7 @@ export type AmeliPayload = {
 	apcv: boolean | null;
 };
 
+/** Owner content, present once the page is published; hidden fields are already null. */
 export type ProfilePayload = {
 	photoKey: string | null;
 	headline: string | null;
@@ -58,7 +61,18 @@ export type ProfilePayload = {
 	languages: string[];
 	billingSector: string | null;
 	optam: string | null;
+	carteVitale: boolean | null;
+	fees: {
+		items: { label: string; amount: number; maxAmount?: number | null }[];
+		note?: string | null;
+	} | null;
 	paymentMethods: string[];
+	accessibility: {
+		stepFree: boolean | null;
+		lift: boolean | null;
+		parking: boolean | null;
+		notes: string | null;
+	} | null;
 	website: string | null;
 	showPhone: boolean;
 	expertises: string[];
@@ -79,6 +93,8 @@ export type PractitionerPayload = {
 	listingSlug: string | null;
 	primaryPlaceId: number | null;
 	claimStatus: string;
+	/** A removal request is being checked: the page shows nothing but that. */
+	withheld?: boolean;
 	qualifications: QualificationPayload[];
 	activities: ActivityPayload[];
 	ameli: AmeliPayload | null;

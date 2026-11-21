@@ -12,5 +12,7 @@ export default defineConfig({
 		// Playwright specs live in e2e/ and run with `test:e2e`.
 		include: ["src/**/*.test.ts"],
 		env: { SKIP_ENV_VALIDATION: "1" },
+		// next-intl imports `next/navigation` without an extension: let Vite resolve it.
+		server: { deps: { inline: ["next-intl"] } },
 	},
 });

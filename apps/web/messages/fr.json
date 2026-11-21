@@ -489,20 +489,31 @@
 			"notMatched": "Ce professionnel n’a pas pu être rapproché avec certitude de l’annuaire de l’Assurance Maladie : ces informations ne sont donc pas affichées.",
 			"regulatoryNotice": "Le secteur de conventionnement détermine les honoraires pratiqués et leur remboursement : vérifiez-les avant votre rendez-vous sur",
 			"ameliLink": "ameli.fr, l’annuaire de l’Assurance Maladie",
-			"source": "Annuaire santé, Assurance Maladie"
+			"source": "Annuaire santé, Assurance Maladie",
+			"sourceOwner": "Le praticien"
 		},
 		"claim": {
 			"heading": "C’est vous ?",
 			"body": "Cette page est construite à partir du registre public. Revendiquez-la gratuitement pour la vérifier et la compléter.",
-			"link": "Revendiquer cette page"
+			"link": "Revendiquer cette page",
+			"claimedHeading": "Page gérée par le praticien",
+			"claimedBody": "Le praticien a revendiqué cette page : son identité a été vérifiée, et il la complète lui-même."
 		},
 		"report": {
 			"heading": "Une erreur ?",
 			"body": "Si une adresse, un numéro ou un nom est faux, découvrez comment le faire corriger.",
-			"link": "Signaler une erreur"
+			"link": "Signaler une erreur",
+			"removalLink": "Vous êtes ce praticien et vous opposez à cette page ?"
 		},
 		"ring": {
 			"heading": "Autres praticiens : {listing} à {place}"
+		},
+		"photoAlt": "Photo de {name}",
+		"withheld": {
+			"metaTitle": "Page masquée · Apercura",
+			"title": "Cette page est masquée",
+			"body": "Une demande de retrait de cette page est en cours de vérification. Elle n’est pas affichée en attendant.",
+			"dataLink": "Comment les pages sont publiées et retirées"
 		}
 	},
 	"Institutional": {
@@ -681,13 +692,13 @@
 				"La plupart des informations viennent de registres tenus par d’autres : la correction durable se fait donc à la source. La page suit au prochain import hebdomadaire."
 			],
 			"list": [
-				"Nom, profession, spécialité, lieu d’exercice et téléphone : le professionnel met à jour son inscription auprès de son Ordre (ou de l’organisme qui l’a inscrit au RPPS).",
+				"Nom, profession, spécialité, lieu d’exercice et téléphone : le praticien met à jour son inscription auprès de son Ordre (ou de l’organisme qui l’a enregistré au RPPS).",
 				"Secteur de conventionnement, OPTAM et Carte Vitale : ils viennent de l’annuaire de l’Assurance Maladie (ameli.fr).",
 				"Nom et adresse d’un établissement : ils viennent du répertoire FINESS, tenu par les agences régionales de santé.",
-				"Les professionnels pourront aussi revendiquer leur page depuis l’espace professionnels, puis la compléter et corriger ce qui est affiché."
+				"Les praticiens peuvent aussi revendiquer leur page depuis l’espace praticien, puis la compléter et corriger ce qui est affiché."
 			],
-			"formTitle": "Le formulaire de signalement n’est pas encore ouvert",
-			"formBody": "Il ouvrira sur cette page avec les comptes professionnels. D’ici là, les corrections ci-dessus permettent de corriger une page.",
+			"formTitle": "Signaler une erreur",
+			"formBody": "Dites-nous ce qui ne va pas sur une page. Votre message est chiffré et lu par la seule équipe Apercura.",
 			"proLink": "Aller à l’espace professionnels"
 		},
 		"remove": {
@@ -696,8 +707,8 @@
 				"En vertu de l’article 21 du RGPD, un professionnel peut s’opposer à la publication de sa page. Apercura publie l’annuaire sur le fondement de l’intérêt légitime : informer le public à partir de données publiques.",
 				"Une page non revendiquée sera masquée dès réception de la demande, puis supprimée après une vérification légère de la demande. Une page revendiquée peut être retirée à tout moment par son titulaire. Une page retirée ne revient pas au prochain import."
 			],
-			"formTitle": "Le formulaire de demande de retrait n’est pas encore ouvert",
-			"formBody": "Il ouvrira sur cette page. L’adresse de contact pour les demandes reste à compléter."
+			"formTitle": "Demander le retrait d’une page",
+			"formBody": "Pour une page non revendiquée. La page est masquée tout de suite, puis supprimée après une vérification légère. Une page revendiquée se retire par son titulaire, depuis son espace."
 		}
 	},
 	"AccessibilityPage": {
@@ -1230,7 +1241,8 @@
 			"invalidPassword": "Ce mot de passe n’est pas correct.",
 			"mfaRequired": "Confirmez d’abord que c’est vous avec votre second facteur.",
 			"lastFactor": "Ajoutez un autre second facteur avant de retirer celui-ci : votre compte doit toujours en garder un.",
-			"passkeyFailed": "La clé d’accès n’a pas pu être utilisée. Réessayez, ou utilisez votre mot de passe et votre code."
+			"passkeyFailed": "La clé d’accès n’a pas pu être utilisée. Réessayez, ou utilisez votre mot de passe et votre code.",
+			"accountFrozen": "Ce compte est gelé à la suite d’une contestation sur une page. Contactez-nous pour le récupérer avec une nouvelle vérification d’identité."
 		},
 		"signIn": {
 			"title": "Se connecter",
@@ -1251,7 +1263,11 @@
 			"backupCode": "Code de secours",
 			"verify": "Confirmer",
 			"useBackupCode": "Utiliser plutôt un code de secours",
-			"useTotp": "Utiliser plutôt l’application d’authentification"
+			"useTotp": "Utiliser plutôt l’application d’authentification",
+			"pscHeading": "Avec Pro Santé Connect",
+			"pscHint": "Une fois reliée à votre compte depuis une revendication, votre application e-CPS ou votre carte CPS vous connecte sans autre code.",
+			"psc": "Se connecter avec Pro Santé Connect",
+			"pscFailed": "La connexion avec Pro Santé Connect n’a pas abouti. Reliez-la d’abord à votre compte depuis votre revendication, ou connectez-vous avec votre mot de passe."
 		},
 		"signUp": {
 			"title": "Créer un compte",
@@ -1337,6 +1353,26 @@
 				"revoke": "Déconnecter",
 				"everywhereHint": "Appareil perdu ou mot de passe partagé ? Déconnectez toutes les sessions, celle-ci comprise.",
 				"everywhere": "Me déconnecter partout"
+			},
+			"data": {
+				"heading": "Vos données",
+				"lead": "Une copie de tout ce que nous conservons sur votre compte, et sa suppression.",
+				"exportHeading": "Télécharger vos données",
+				"exportBody": "Un fichier JSON avec votre compte, vos méthodes de connexion (jamais leurs secrets), vos sessions, vos cabinets, vos revendications et le contenu de votre page.",
+				"export": "Télécharger mes données",
+				"deleteHeading": "Supprimer votre compte",
+				"deleteBody": "Votre compte, vos sessions, vos revendications et vos justificatifs sont supprimés. Votre page revient aux informations du registre : non revendiquée, sans votre contenu ni votre photo.",
+				"practiceChoice": "Que devient {name} ?",
+				"close": "Fermer le cabinet : ses membres perdent l’accès",
+				"transfer": "Le confier à {name} ({email})",
+				"practiceAlone": "{name} est fermé avec votre compte (vous en êtes le seul membre).",
+				"confirmEmail": "Saisissez votre adresse e-mail pour confirmer",
+				"confirmEmailHint": "La suppression est définitive.",
+				"mismatch": "Ce n’est pas l’adresse e-mail de votre compte.",
+				"hasTeam": "Choisissez ce que devient chaque cabinet qui a une équipe.",
+				"lastAdmin": "Vous êtes le dernier administrateur de la plateforme : désignez-en un autre d’abord.",
+				"failed": "Le compte n’a pas pu être supprimé. Réessayez dans un instant.",
+				"delete": "Supprimer mon compte"
 			}
 		},
 		"app": {
@@ -1346,19 +1382,28 @@
 			"nav": {
 				"label": "Espace praticien",
 				"home": "Votre espace",
-				"security": "Sécurité"
+				"security": "Sécurité",
+				"page": "Votre page",
+				"adminClaims": "Revendications",
+				"adminReports": "Signalements"
 			},
 			"practicesHeading": "Vos cabinets",
 			"columns": {
 				"practice": "Cabinet",
-				"role": "Votre rôle"
+				"role": "Votre rôle",
+				"page": "Page",
+				"status": "Statut",
+				"next": "Étape suivante"
 			},
 			"emptyTitle": "Aucun cabinet pour l’instant",
-			"emptyBody": "Votre cabinet apparaîtra ici une fois votre page revendiquée. La revendication n’est pas encore ouverte ; votre compte est prêt.",
+			"emptyBody": "Votre cabinet apparaîtra ici une fois votre page revendiquée et vérifiée.",
 			"emptyAction": "Trouver ma page",
 			"securityHeading": "Sécurité du compte",
 			"securityBody": "Votre compte est protégé par un second facteur. Gérez votre application d’authentification, vos clés d’accès et vos sessions.",
-			"securityLink": "Réglages de sécurité"
+			"securityLink": "Réglages de sécurité",
+			"claimsHeading": "Votre page et vos revendications",
+			"editPage": "Modifier la page",
+			"openClaim": "Ouvrir la revendication"
 		},
 		"roles": {
 			"owner": "Titulaire",
@@ -1380,6 +1425,619 @@
 				"expiry": "Le lien fonctionne pendant une heure.",
 				"ignore": "Vous n’avez pas créé ce compte ? Ignorez cet e-mail : il ne se passera rien."
 			}
+		}
+	},
+	"emails": {
+		"fallback": "Si le bouton ne fonctionne pas, copiez ce lien dans votre navigateur :",
+		"claimRegistryLink": {
+			"subject": "Confirmez la revendication d’une page praticien",
+			"title": "Est-ce le cabinet de {practitioner} ?",
+			"body": [
+				"Quelqu’un demande à gérer la page Apercura de {practitioner}. Cet e-mail est envoyé à l’adresse que le registre national publie pour ce cabinet.",
+				"Si la demande vient bien de {practitioner}, ouvrez le lien et confirmez-la. La page est alors vérifiée."
+			],
+			"action": "Confirmer la revendication",
+			"notes": [
+				"Le lien fonctionne pendant 24 heures.",
+				"Vous ne vous y attendiez pas ? Ignorez cet e-mail : rien ne change et la page reste telle quelle."
+			]
+		},
+		"claimReceived": {
+			"subject": "Votre revendication est en cours d’examen",
+			"title": "Votre revendication est en cours d’examen",
+			"body": [
+				"Bonjour {name},",
+				"Nous avons reçu votre revendication et ses justificatifs. Un membre de l’équipe Apercura appellera le cabinet au numéro publié dans le registre national et demandera le code affiché dans votre espace. Gardez-le sous la main.",
+				"Nous examinons les revendications sous 48 heures, jours ouvrés."
+			]
+		},
+		"claimVerified": {
+			"subject": "Votre page est vérifiée",
+			"title": "Votre page est vérifiée",
+			"body": [
+				"Bonjour {name},",
+				"Votre page porte désormais le tampon « vérifiée ». Vérifiez les informations importées, indiquez vos honoraires et vos moyens de paiement, puis publiez votre page."
+			],
+			"action": "Compléter ma page"
+		},
+		"claimRejected": {
+			"subject": "Votre revendication n’a pas été acceptée",
+			"title": "Votre revendication n’a pas été acceptée",
+			"body": [
+				"Bonjour {name},",
+				"Nous n’avons pas pu vérifier votre revendication. Motif indiqué : {reason}",
+				"Vous pouvez ouvrir une nouvelle revendication depuis votre espace, par exemple avec Pro Santé Connect."
+			]
+		},
+		"claimSuperseded": {
+			"subject": "Votre accès à une page a été retiré",
+			"title": "Votre accès à une page a été retiré",
+			"body": [
+				"Bonjour {name},",
+				"Un autre compte a prouvé qu’il appartient au praticien d’une page que votre compte gérait. Votre compte est gelé et son accès au cabinet a été retiré.",
+				"Si vous êtes ce praticien, contactez-nous : votre compte ne peut être récupéré qu’avec une nouvelle vérification d’identité."
+			]
+		},
+		"removalReceived": {
+			"subject": "Votre demande de retrait est bien reçue",
+			"title": "Votre demande de retrait est bien reçue",
+			"body": [
+				"La page est masquée dès maintenant : elle n’est plus affichée, indexée ni listée.",
+				"Nous vérifions la demande, puis supprimons la page. Une page supprimée ne revient pas au prochain import du registre."
+			]
+		},
+		"removalConfirmed": {
+			"subject": "La page a été supprimée",
+			"title": "La page a été supprimée",
+			"body": [
+				"La page dont vous avez demandé le retrait a été supprimée d’Apercura. Elle ne reviendra pas au prochain import du registre."
+			]
+		},
+		"removalRejected": {
+			"subject": "Votre demande de retrait n’a pas été acceptée",
+			"title": "Votre demande de retrait n’a pas été acceptée",
+			"body": [
+				"Nous n’avons pas pu confirmer votre demande de retrait : la page est de nouveau affichée. Motif : {reason}",
+				"Si vous êtes le praticien, vous pouvez aussi revendiquer la page et la retirer vous-même depuis votre espace."
+			]
+		}
+	},
+	"Profile": {
+		"presentationHeading": "Présentation",
+		"practicalHeading": "Informations pratiques",
+		"fields": {
+			"languages": "Langues parlées",
+			"accessibility": "Accès",
+			"website": "Site web",
+			"fees": "Honoraires",
+			"paymentMethods": "Moyens de paiement"
+		},
+		"accessibility": {
+			"stepFree": "Accès de plain-pied",
+			"lift": "Ascenseur",
+			"parking": "Stationnement à proximité"
+		},
+		"languages": {
+			"fr": "Français",
+			"en": "Anglais",
+			"es": "Espagnol",
+			"de": "Allemand",
+			"it": "Italien",
+			"pt": "Portugais",
+			"ar": "Arabe",
+			"zh": "Chinois",
+			"ru": "Russe",
+			"tr": "Turc",
+			"ro": "Roumain",
+			"pl": "Polonais",
+			"nl": "Néerlandais",
+			"vi": "Vietnamien",
+			"fa": "Persan",
+			"he": "Hébreu",
+			"uk": "Ukrainien",
+			"lsf": "Langue des signes française"
+		},
+		"paymentMethods": {
+			"card": "Carte bancaire",
+			"cash": "Espèces",
+			"cheque": "Chèque",
+			"transfer": "Virement"
+		},
+		"fees": {
+			"range": "de {min} à {max}",
+			"fromOwner": "Le praticien indique lui-même son secteur et ses honoraires."
+		}
+	},
+	"Claim": {
+		"metadata": {
+			"start": "Revendiquer une page · Apercura",
+			"claim": "Votre revendication · Apercura",
+			"emailLink": "Confirmer une revendication · Apercura"
+		},
+		"pending": "Veuillez patienter",
+		"errors": {
+			"generic": "Une erreur est survenue. Réessayez dans un instant.",
+			"TOO_MANY": "Trop de revendications aujourd’hui. Réessayez demain.",
+			"ALREADY_OWNER": "Cette page est déjà la vôtre.",
+			"FROZEN": "Ce compte est gelé et ne peut pas revendiquer de page.",
+			"NOT_FOUND": "Aucune page ne porte ce numéro RPPS.",
+			"INVALID_RPPS": "Ce numéro RPPS n’est pas valide : il compte 11 chiffres, le dernier étant une clé de contrôle.",
+			"NOT_OPEN": "Cette revendication est close : elle ne peut plus changer.",
+			"METHOD_UNAVAILABLE": "Cette méthode n’est pas disponible pour cette page.",
+			"TOO_MANY_ATTEMPTS": "Trop de tentatives avec cette méthode. Utilisez-en une autre.",
+			"NOT_SUBMITTABLE": "Ajoutez un justificatif avant d’envoyer la revendication.",
+			"BAD_DOCUMENT": "Ce fichier n’est pas utilisable : envoyez un PDF, JPEG, PNG ou WebP de 10 Mo au plus.",
+			"PSC_MISSING": "Pro Santé Connect n’a pas renvoyé d’identité. Réessayez."
+		},
+		"start": {
+			"title": "Revendiquez votre page",
+			"lead": "Une revendication vise un numéro RPPS, jamais un nom : deux homonymes ne peuvent pas prendre la page l’un de l’autre.",
+			"recordHeading": "La page que vous revendiquez",
+			"unknownProfession": "Professionnel de santé",
+			"viewPage": "Voir la page publique",
+			"contestTitle": "Cette page a déjà un titulaire vérifié",
+			"contestBody": "Si c’est la vôtre (par exemple si vous avez perdu l’accès à votre compte), vous pouvez quand même la revendiquer : un administrateur examine le cas, et Pro Santé Connect le prouve le plus vite. Récupérer un compte passe toujours par une nouvelle vérification d’identité.",
+			"confirm": "C’est moi : revendiquer la page",
+			"goToPage": "Aller à ma page",
+			"findHeading": "Trouvez votre page par son numéro RPPS",
+			"notFound": "Aucune page publique ne porte encore ce numéro RPPS.",
+			"rppsLabel": "Numéro RPPS",
+			"rppsHint": "11 chiffres, imprimés sur votre carte CPS et sur votre page.",
+			"find": "Trouver ma page",
+			"searchHint": "Vous pouvez aussi chercher votre page par votre nom :",
+			"searchLink": "chercher dans l’annuaire",
+			"howHeading": "Comment nous vérifions que c’est vous",
+			"factorNote": "Votre compte a déjà un second facteur : il est exigé avant toute revendication, et il protège ensuite votre page."
+		},
+		"methods": {
+			"psc": {
+				"title": "Pro Santé Connect",
+				"short": "Pro Santé Connect",
+				"summary": "Avec votre application e-CPS ou votre carte CPS. Vérifié tout de suite, et la prise de rendez-vous peut ouvrir aussitôt.",
+				"lead": "Connectez-vous avec votre application e-CPS ou votre carte CPS. Votre page est vérifiée dès que l’identité correspond à son numéro RPPS.",
+				"action": "Continuer avec Pro Santé Connect",
+				"hint": "Vous quittez Apercura pour la page de Pro Santé Connect, puis revenez ici.",
+				"done": "Pro Santé Connect a confirmé votre identité."
+			},
+			"registry_email": {
+				"title": "L’e-mail du cabinet",
+				"short": "E-mail du registre",
+				"summary": "Un lien envoyé à l’adresse que le registre publie pour votre cabinet ou votre centre de santé. Vérifié dès son ouverture ; la prise de rendez-vous ouvre 7 jours après.",
+				"lead": "Nous envoyons un lien à {email}, l’adresse publiée dans le registre pour votre cabinet. Ouvrez-le et confirmez.",
+				"action": "Envoyer le lien",
+				"resend": "Renvoyer le lien",
+				"sent": "Lien envoyé. Il fonctionne pendant 24 heures.",
+				"done": "La messagerie du cabinet a confirmé la revendication."
+			},
+			"document": {
+				"title": "Un justificatif et un appel",
+				"short": "Justificatif",
+				"summary": "Une photo de votre carte CPS ou votre attestation d’inscription à l’Ordre, puis un appel au numéro du cabinet tel qu’il figure dans le registre. Examiné sous 48 heures ; la prise de rendez-vous ouvre 7 jours après.",
+				"lead": "Envoyez une photo de votre carte CPS ou votre attestation d’inscription à l’Ordre. Elle est chiffrée avant d’être stockée, et supprimée 30 jours après la décision."
+			},
+			"phone_callback": {
+				"title": "Rappel au numéro du registre",
+				"short": "Rappel téléphonique",
+				"lead": "Pendant l’examen, un membre de notre équipe appelle le cabinet au {phone}, le numéro du registre (jamais un numéro que vous nous donnez). La personne qui répond lit le code affiché ici.",
+				"action": "Afficher mon code",
+				"newCode": "Afficher un nouveau code",
+				"hint": "Affichez-le quand vous êtes au cabinet, ou donnez-le à la personne qui répond au téléphone. En demander un nouveau annule le précédent.",
+				"codeLabel": "Code à lire",
+				"codeHint": "Gardez-le à l’écran ou notez-le : pour votre sécurité, nous ne l’affichons que maintenant.",
+				"done": "Le rappel téléphonique a confirmé la revendication."
+			}
+		},
+		"check": {
+			"passed": "Fait",
+			"failed": "Échoué",
+			"pending": "En cours",
+			"notStarted": "Pas commencé",
+			"claim": {
+				"open": "En cours",
+				"in_review": "En examen",
+				"verified": "Vérifiée",
+				"rejected": "Refusée",
+				"withdrawn": "Retirée",
+				"superseded": "Retirée après contestation"
+			}
+		},
+		"workspace": {
+			"title": "Revendication de {name}",
+			"lead": {
+				"open": "Prouvez que vous êtes ce praticien avec l’une des méthodes ci-dessous.",
+				"in_review": "Votre revendication est en cours d’examen.",
+				"verified": "Votre page est vérifiée.",
+				"rejected": "Cette revendication n’a pas été acceptée.",
+				"withdrawn": "Cette revendication a été retirée.",
+				"superseded": "Cette revendication a été retirée après une contestation."
+			}
+		},
+		"psc": {
+			"outcome": {
+				"verified": "Pro Santé Connect a confirmé votre identité : votre page est vérifiée.",
+				"passed": "Pro Santé Connect a confirmé votre identité. Un administrateur examine maintenant la revendication.",
+				"mismatch": "L’identité Pro Santé Connect ne correspond pas au numéro RPPS de cette page.",
+				"error": "Pro Santé Connect n’a pas répondu ou la connexion a été annulée. Réessayez.",
+				"linkedElsewhere": "Cette identité Pro Santé Connect est déjà reliée à un autre compte Apercura. Connectez-vous avec Pro Santé Connect pour utiliser ce compte."
+			}
+		},
+		"documents": {
+			"kind": {
+				"cps_card": "Carte CPS",
+				"ordre_attestation": "Attestation d’inscription à l’Ordre"
+			},
+			"kindLabel": "Type de justificatif",
+			"add": "Choisir un fichier",
+			"hint": "PDF, JPEG, PNG ou WebP, 10 Mo au plus. Jusqu’à 4 fichiers.",
+			"kilobytes": "Ko"
+		},
+		"review": {
+			"title": "Envoyer pour examen",
+			"lead": "Un administrateur vérifie votre justificatif et appelle le cabinet. Vous recevez la réponse par e-mail, sous 48 heures, jours ouvrés.",
+			"submit": "Envoyer pour examen",
+			"notYet": "Ajoutez d’abord un justificatif."
+		},
+		"withdraw": "Retirer cette revendication",
+		"status": {
+			"verified": "Votre page est vérifiée",
+			"bookingDelay": "La prise de rendez-vous en ligne pourra ouvrir à partir du {date} : sans Pro Santé Connect, elle ouvre 7 jours après la vérification.",
+			"continue": "Compléter votre page",
+			"in_review": "Votre revendication est en cours d’examen",
+			"contestReview": "Cette page avait déjà un titulaire vérifié : un administrateur tranche, et Pro Santé Connect le prouve le plus vite.",
+			"reviewBody": "Gardez votre code de rappel sous la main : nous appelons le cabinet au numéro du registre.",
+			"rejected": "Cette revendication n’a pas été acceptée",
+			"reason": "Motif : {reason}",
+			"withdrawn": "Cette revendication a été retirée",
+			"superseded": "Cette revendication a été retirée après une contestation",
+			"contestTitle": "Cette page a déjà un titulaire vérifié",
+			"contestBody": "Un administrateur tranchera. Pro Santé Connect prouve votre identité le plus vite ; les autres méthodes demandent un justificatif et un rappel."
+		},
+		"emailLink": {
+			"title": "Confirmez la revendication",
+			"lead": "Ce lien a été envoyé à l’adresse que le registre national publie pour un cabinet.",
+			"reading": "Lecture du lien…",
+			"invalidTitle": "Ce lien ne fonctionne plus",
+			"invalidBody": "Il a expiré (il fonctionne 24 heures) ou a déjà servi. Le praticien peut en envoyer un nouveau depuis sa revendication.",
+			"tooMany": "Trop de tentatives. Attendez une heure, puis réessayez.",
+			"doneTitle": "La revendication est confirmée",
+			"doneBody": "Le praticien peut maintenant se connecter pour compléter sa page.",
+			"goToSpace": "Aller à l’espace praticien",
+			"body": "Si le praticien de ce cabinet a demandé à gérer sa page Apercura, confirmez-le. Sinon, fermez cette page : rien ne change.",
+			"confirm": "Confirmer la revendication",
+			"pending": "Veuillez patienter"
+		}
+	},
+	"Onboarding": {
+		"metaTitle": "Préparer votre page · Apercura",
+		"title": "Préparez votre page",
+		"lead": "Trois étapes pour une page complète au nom de {name}.",
+		"stepsLabel": "Étapes",
+		"stepNumber": "Étape {n} sur {total} :",
+		"continue": "Continuer",
+		"pending": "Veuillez patienter",
+		"publishFailed": "La page n’a pas pu être publiée. Réessayez dans un instant.",
+		"fields": {
+			"name": "Nom",
+			"profession": "Profession"
+		},
+		"steps": {
+			"check": {
+				"label": "Vérifier les informations importées",
+				"title": "Vérifiez les informations importées",
+				"lead": "Votre page part du registre national (Annuaire Santé). Vérifiez votre nom, votre profession et vos lieux d’exercice.",
+				"sites": "Lieux d’exercice",
+				"unnamed": "Lieu sans nom",
+				"hidden": "Masqué",
+				"registryNote": "Une erreur ? La correction durable se fait auprès de votre Ordre, qui met le registre à jour ; la page suit au prochain import hebdomadaire. Vous pouvez masquer ou ajouter un lieu dans l’éditeur de page."
+			},
+			"booking": {
+				"label": "Horaires et prise de rendez-vous",
+				"title": "Horaires et prise de rendez-vous",
+				"lead": "La prise de rendez-vous en ligne ouvre dans une prochaine version. Avant qu’elle puisse ouvrir, votre page doit indiquer vos honoraires et les moyens de paiement acceptés.",
+				"fees": "Honoraires",
+				"payments": "Moyens de paiement",
+				"opensAt": "Prise de rendez-vous possible à partir du",
+				"done": "Indiqués",
+				"todo": "À compléter",
+				"deontology": "Article R.4127-53 du code de la santé publique : le médecin qui présente son activité en ligne indique ses honoraires et les moyens de paiement acceptés.",
+				"editFees": "Indiquer honoraires et moyens de paiement",
+				"settings": "Réglages de la prise de rendez-vous",
+				"settingsNote": "Les réglages arrivent avec la prise de rendez-vous en ligne : la page n’est peut-être pas encore disponible."
+			},
+			"publish": {
+				"label": "Publier",
+				"title": "Publiez votre page",
+				"lead": "Publier affiche votre présentation, vos langues, vos honoraires et vos informations pratiques sur votre page publique. Vous pouvez les modifier ou les masquer à tout moment.",
+				"already": "Votre page est publiée. Chaque modification enregistrée est en ligne aussitôt.",
+				"edit": "Modifier ma page",
+				"action": "Publier ma page"
+			}
+		}
+	},
+	"Editor": {
+		"metaTitle": "Votre page · Apercura",
+		"title": "Votre page",
+		"lead": "Complétez la page publique de {name}. Texte simple uniquement ; ce que vous masquez n’est jamais affiché.",
+		"empty": {
+			"title": "Pas encore de page à modifier",
+			"body": "Votre page apparaît ici une fois votre revendication vérifiée.",
+			"action": "Revendiquer ma page"
+		},
+		"pending": "Veuillez patienter",
+		"viewPublic": "Voir la page publique",
+		"jumpToPreview": "Aller à l’aperçu",
+		"formLabel": "Contenu de la page",
+		"removed": {
+			"title": "Votre page est retirée de l’annuaire",
+			"body": "Personne ne peut la voir. Vous pouvez la rétablir en bas de cette page."
+		},
+		"unpublished": {
+			"title": "Votre contenu n’est pas encore publié",
+			"link": "Terminer la préparation de votre page"
+		},
+		"photo": {
+			"title": "Photo",
+			"lead": "Facultative. Un portrait récent, comme une photo d’identité.",
+			"current": "Photo actuelle",
+			"none": "Pas de photo.",
+			"add": "Ajouter une photo",
+			"replace": "Remplacer la photo",
+			"remove": "Retirer la photo",
+			"hint": "JPEG, PNG ou WebP, 5 Mo au plus. Nous la recadrons en carré et retirons ses métadonnées (lieu, appareil)."
+		},
+		"visibility": {
+			"label": "Afficher « {field} » sur la page",
+			"shown": "Affiché"
+		},
+		"presentation": {
+			"title": "Présentation",
+			"lead": "Des informations factuelles uniquement : ni témoignages, ni comparaisons (R.4127-19-1).",
+			"headline": "Accroche",
+			"headlineHint": "Une ligne sous votre profession, {max} caractères au plus.",
+			"bio": "Présentation",
+			"bioHint": "Texte simple, {max} caractères au plus. Laissez une ligne vide entre deux paragraphes."
+		},
+		"languages": {
+			"title": "Langues parlées"
+		},
+		"fees": {
+			"title": "Honoraires et Assurance Maladie",
+			"lead": "Obligatoire avant d’ouvrir la prise de rendez-vous en ligne : vos honoraires et les moyens de paiement acceptés.",
+			"requiredBadge": "Requis pour les rendez-vous",
+			"ameliPrefill": "Pré-rempli d’après l’annuaire de l’Assurance Maladie. Votre déclaration le remplace sur votre page.",
+			"sector": "Secteur de conventionnement",
+			"notStated": "Non indiqué",
+			"optam": "Dépassements maîtrisés (OPTAM)",
+			"optamNone": "Non adhérent",
+			"carteVitale": "Carte Vitale",
+			"carteVitaleYes": "Acceptée",
+			"carteVitaleNo": "Non acceptée",
+			"itemsTitle": "Honoraires",
+			"noItem": "Aucun tarif pour l’instant.",
+			"itemLabel": "Tarif {n} : prestation",
+			"itemPlaceholder": "Consultation",
+			"amount": "Montant (€)",
+			"maxAmount": "Jusqu’à (€)",
+			"removeItem": "Retirer le tarif {n}",
+			"remove": "Retirer",
+			"addItem": "Ajouter un tarif",
+			"note": "Précision sur les honoraires",
+			"noteHint": "Par exemple ce dont dépendent les dépassements.",
+			"payments": "Moyens de paiement acceptés",
+			"requiredHint": "La prise de rendez-vous reste fermée tant qu’aucun tarif et aucun moyen de paiement ne sont indiqués."
+		},
+		"access": {
+			"title": "Accès",
+			"notes": "Précisions d’accès",
+			"notesHint": "Étage, entrée, transports en commun."
+		},
+		"contact": {
+			"title": "Site web et téléphone",
+			"website": "Site web",
+			"websiteHint": "Le site de votre cabinet, commençant par https://",
+			"showPhone": "Afficher le numéro du cabinet",
+			"showPhoneHint": "Masqué, la page ne propose plus d’appeler le cabinet."
+		},
+		"failure": {
+			"generic": "Une erreur est survenue. Réessayez dans un instant.",
+			"invalid": "Certains champs sont à corriger : voyez les messages sous ces champs.",
+			"lastSite": "Au moins un lieu doit rester affiché : une page sans lieu ne peut pas être publiée.",
+			"unknownPlace": "Nous ne connaissons pas ce code postal et cette commune. Vérifiez-les.",
+			"badPhone": "Ce numéro de téléphone n’est pas valide.",
+			"photoTooLarge": "Cette photo dépasse 5 Mo.",
+			"photoUnsupported": "Ce fichier n’est pas utilisable comme photo : envoyez un JPEG, PNG ou WebP."
+		},
+		"saved": "Enregistré. Votre page publique est à jour.",
+		"savedDraft": "Enregistré. Publiez votre page pour l’afficher.",
+		"save": "Enregistrer la page",
+		"lastSaved": "Dernier enregistrement : {date}",
+		"sites": {
+			"title": "Lieux d’exercice",
+			"lead": "Choisissez les lieux affichés sur votre page. Les lieux du registre peuvent être masqués, pas modifiés.",
+			"unnamed": "Lieu sans nom",
+			"added": "Ajouté par vous",
+			"shownNamed": "Afficher « {name} » sur la page",
+			"remove": "Retirer",
+			"registryNote": "Un lieu du registre est faux ? Votre Ordre le corrige dans le registre ; la page suit au prochain import.",
+			"addTitle": "Ajouter un lieu",
+			"name": "Nom du lieu",
+			"address": "Adresse",
+			"postcode": "Code postal",
+			"city": "Commune",
+			"phone": "Téléphone (facultatif)",
+			"phoneHint": "Le numéro du cabinet, affiché sur la page.",
+			"add": "Ajouter le lieu"
+		},
+		"remove": {
+			"title": "Retirer votre page",
+			"lead": "Votre page disparaît de l’annuaire, des recherches et des moteurs de recherche, et ne revient pas au prochain import. Vous pouvez la rétablir ici.",
+			"action": "Retirer ma page de l’annuaire",
+			"restore": "Rétablir ma page"
+		},
+		"preview": {
+			"title": "Aperçu",
+			"note": "Pas encore enregistré",
+			"noSite": "Aucun lieu affiché.",
+			"unnamedPlace": "Lieu d’exercice"
+		},
+		"issues": {
+			"tooLong": "Ce texte est trop long.",
+			"markup": "Texte simple uniquement : pas de HTML ni de liens entre crochets.",
+			"required": "Ce champ est obligatoire.",
+			"range": "Le montant maximal doit dépasser le montant.",
+			"website": "Cette adresse n’est pas un site web (https://…).",
+			"postcode": "Un code postal français compte 5 chiffres.",
+			"invalid": "Cette valeur n’est pas valide."
+		}
+	},
+	"Admin": {
+		"claims": {
+			"metaTitle": "Revendications · Administration · Apercura",
+			"title": "Revendications",
+			"lead": "Les revendications qui attendent une décision. Les contestations d’abord.",
+			"queueHeading": "{count, plural, =0 {Aucune revendication en attente} one {# revendication en attente} other {# revendications en attente}}",
+			"emptyTitle": "Rien à examiner",
+			"emptyBody": "Les revendications envoyées pour examen apparaissent ici.",
+			"columns": {
+				"practitioner": "Page",
+				"claimant": "Compte",
+				"proofs": "Preuves",
+				"submitted": "Envoyée"
+			},
+			"contest": "Contestation",
+			"proofLine": "{method} : {status}"
+		},
+		"claim": {
+			"metaTitle": "Revendication · Administration · Apercura",
+			"title": "Revendication de {name}",
+			"back": "Retour aux revendications",
+			"contestTitle": "Contestation : cette page a déjà un titulaire vérifié",
+			"contestPsc": "Le titulaire actuel a été vérifié avec Pro Santé Connect : seule une revendication vérifiée avec Pro Santé Connect peut reprendre la page.",
+			"contestBody": "Approuver donne la page à ce compte : le compte du titulaire actuel est gelé et perd l’accès au cabinet.",
+			"summary": "Résumé",
+			"fields": {
+				"status": "Statut",
+				"claimant": "E-mail du compte",
+				"accountCreated": "Compte créé le",
+				"opened": "Revendication ouverte le",
+				"submitted": "Envoyée pour examen le"
+			},
+			"proofs": "Preuves",
+			"documents": "Justificatifs",
+			"noDocument": "Aucun justificatif.",
+			"purged": "Supprimé",
+			"openDocument": "Ouvrir le justificatif",
+			"newTab": "s’ouvre dans un nouvel onglet",
+			"auditNote": "Ouvrir un justificatif le déchiffre ; c’est inscrit au journal d’audit, avec votre compte et l’heure.",
+			"phoneTitle": "Rappel téléphonique",
+			"phoneLead": "Appelez l’un de ces numéros du registre, jamais un numéro donné par le demandeur. Demandez à la personne qui répond le code affiché dans l’espace du demandeur.",
+			"phoneDone": "Le rappel téléphonique a réussi.",
+			"noCode": "Le demandeur n’a pas encore affiché de code.",
+			"decisionTitle": "Décision",
+			"decisionLead": "Approuver vérifie la page, crée le cabinet avec le demandeur comme titulaire et le prévient par e-mail. Refuser lui envoie le motif.",
+			"phoneCalled": "Numéro appelé",
+			"codeHeard": "Code lu par le cabinet",
+			"codeLocked": "Trop de codes erronés : le demandeur doit en afficher un nouveau.",
+			"codeWrong": "Ce code ne correspond pas.",
+			"confirmCode": "Vérifier le code",
+			"pending": "Veuillez patienter",
+			"decision": "Décision",
+			"approve": "Approuver la revendication",
+			"reject": "Refuser la revendication",
+			"notApprovable": "L’approbation demande Pro Santé Connect, l’e-mail du registre, ou un justificatif et un rappel réussi (Pro Santé Connect en cas de contestation face à un titulaire vérifié avec lui).",
+			"reasonRequired": "Motif (envoyé au demandeur)",
+			"reasonOptional": "Note (facultative)",
+			"reasonHint": "Dites simplement ce qui manque ou ne va pas.",
+			"decisionFailed": "La décision n’a pas pu être enregistrée. Rechargez la page et réessayez.",
+			"approveAction": "Approuver",
+			"rejectAction": "Refuser"
+		},
+		"reports": {
+			"metaTitle": "Signalements · Administration · Apercura",
+			"title": "Signalements et retraits",
+			"lead": "Les demandes de retrait (article 21 du RGPD) et les signalements d’erreur envoyés depuis les pages publiques.",
+			"contact": "Contact",
+			"message": "Message",
+			"failed": "L’action a échoué. Rechargez la page et réessayez.",
+			"auditNote": "Lire une demande la déchiffre ; c’est inscrit au journal d’audit.",
+			"tabsLabel": "Files d’attente",
+			"removalsTab": "Demandes de retrait ({count})",
+			"reportsTab": "Signalements d’erreur ({count})",
+			"removalsEmpty": "Aucune demande de retrait en attente",
+			"removalsCaption": "Demandes de retrait",
+			"columns": {
+				"page": "Page",
+				"received": "Reçu le",
+				"actions": "Actions",
+				"kind": "Type"
+			},
+			"read": "Lire",
+			"confirmRemoval": "Supprimer la page",
+			"rejectRemoval": "Réafficher la page",
+			"rejectReason": "La demande n’a pas pu être confirmée.",
+			"reportsEmpty": "Aucun signalement en attente",
+			"reportsCaption": "Signalements d’erreur",
+			"noPage": "Aucune page indiquée",
+			"kinds": {
+				"wrong_info": "Information erronée",
+				"retired": "Retraité",
+				"deceased": "Décédé",
+				"impersonation": "Usurpation"
+			},
+			"resolve": "Marquer comme traité",
+			"dismiss": "Écarter"
+		}
+	},
+	"Gdpr": {
+		"about": "À propos de la page de",
+		"rpps": "Numéro RPPS de la page",
+		"rppsHint": "11 chiffres, imprimés en haut de la page.",
+		"pending": "Veuillez patienter",
+		"errors": {
+			"tooMany": "Trop de demandes depuis cette connexion. Réessayez dans une heure.",
+			"notFound": "Aucune page ne porte ce numéro RPPS.",
+			"claimed": "Cette page est gérée par son praticien : lui seul peut la retirer, depuis son espace.",
+			"invalid": "Vérifiez le formulaire : un champ manque ou est trop long.",
+			"generic": "Une erreur est survenue. Réessayez dans un instant."
+		},
+		"report": {
+			"metaTitle": "Signaler une erreur · Apercura",
+			"title": "Signaler une erreur",
+			"lead": "Dites-nous ce qui ne va pas sur cette page. Votre message est chiffré et lu par la seule équipe Apercura.",
+			"doneTitle": "Merci, votre signalement est bien reçu",
+			"doneBody": "Nous le vérifions. Les informations du registre se corrigent à la source ; nous vous répondons si vous avez laissé une adresse.",
+			"kind": "Qu’est-ce qui ne va pas ?",
+			"kinds": {
+				"wrong_info": "Une information est fausse (adresse, téléphone, nom)",
+				"retired": "Le praticien est à la retraite",
+				"deceased": "Le praticien est décédé",
+				"impersonation": "Quelqu’un utilise cette page au nom du praticien"
+			},
+			"message": "Précisions",
+			"messageHint": "Ce qui est faux et, si vous le savez, ce qui est juste.",
+			"contact": "Votre e-mail (facultatif)",
+			"contactHint": "Seulement pour vous répondre.",
+			"privacy": "N’indiquez aucune information de santé.",
+			"submit": "Envoyer le signalement"
+		},
+		"removal": {
+			"metaTitle": "Demander le retrait d’une page · Apercura",
+			"title": "Demander le retrait de cette page",
+			"lead": "En vertu de l’article 21 du RGPD, vous pouvez vous opposer à la publication de votre page. Elle est masquée dès réception de la demande, puis supprimée après une vérification légère.",
+			"doneTitle": "La page est masquée",
+			"doneBody": "Elle n’est plus affichée, indexée ni listée. Nous vérifions la demande et vous le confirmons par e-mail, puis supprimons la page définitivement.",
+			"contact": "Votre e-mail",
+			"contactHint": "Pour confirmer la demande avec vous. Il est chiffré et ne sert à rien d’autre.",
+			"message": "Message (facultatif)",
+			"messageHint": "Tout ce qui nous aide à vérifier la demande.",
+			"confirm": "Je suis le praticien de cette page",
+			"privacy": "Une page supprimée ne revient pas au prochain import du registre.",
+			"submit": "Masquer et retirer la page",
+			"claimedTitle": "Cette page est gérée par son praticien",
+			"claimedBody": "Seul son titulaire peut la retirer, depuis l’éditeur de page de son espace.",
+			"claimedLink": "Se connecter à l’espace praticien",
+			"alreadyTitle": "Une demande de retrait est en cours de vérification",
+			"alreadyBody": "La page est déjà masquée."
 		}
 	}
 }

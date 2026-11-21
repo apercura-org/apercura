@@ -23,9 +23,10 @@ export const DISABLED_PATHS = [
 	// Email or SMS codes as a "second factor" are not a second factor.
 	"/two-factor/send-otp",
 	"/two-factor/verify-otp",
-	// No social or OAuth sign-in (Pro Santé Connect will get its own flow).
-	"/sign-in/social",
-	"/link-social",
+	// `/sign-in/social` and `/link-social` stay reachable for Pro Santé Connect
+	// only (see `pscRequestProblem`); every other provider and the direct
+	// ID-token sign-in are refused there.
+	"/unlink-account",
 	// Account recovery is a new identity verification, never an email reset.
 	"/request-password-reset",
 	"/reset-password",
@@ -38,7 +39,42 @@ export const DISABLED_PATHS = [
 
 /** Endpoints that always need a session with a second factor. */
 export function alwaysRequiresMfa(path: string): boolean {
-	return path.startsWith("/organization/");
+	// Linking Pro Santé Connect to an account changes how it signs in.
+	return path.startsWith("/organization/") || path === "/link-social";
+}
+
+/** Better Auth's provider id for Pro Santé Connect. */
+export const PSC_PROVIDER_ID = "psc";
+
+/** OAuth endpoints, open to Pro Santé Connect only. */
+export const OAUTH_PATHS = new Set(["/sign-in/social", "/link-social"]);
+
+/**
+ * Why an OAuth request must be refused, or null when it is a Pro Santé
+ * Connect redirect flow: another provider, a disabled provider, or a direct
+ * ID-token sign-in (which would skip the provider's own authentication).
+ */
+export function pscRequestProblem(
+	body: Record<string, unknown> | undefined,
+	pscEnabled: boolean,
+): "provider" | "id_token" | null {
+	if (!pscEnabled || body?.provider !== PSC_PROVIDER_ID) return "provider";
+	if (body.idToken !== undefined) return "id_token";
+	return null;
+}
+
+/**
+ * The second-factor method a new session proves, from the endpoint that
+ * created it: TOTP, backup code, passkey, or a Pro Santé Connect callback
+ * (e-CPS or CPS card are strong authentication on their own).
+ */
+export function mfaMethodOf(
+	path: string | undefined,
+	params?: Record<string, unknown>,
+): MfaMethod | null {
+	if (!path) return null;
+	if (path === "/callback/:id") return params?.id === PSC_PROVIDER_ID ? "psc" : null;
+	return MFA_SESSION_PATHS[path] ?? null;
 }
 
 /**

@@ -489,20 +489,31 @@
 			"notMatched": "This practitioner could not be matched with certainty in the Assurance Maladie directory, so these details are not shown.",
 			"regulatoryNotice": "The agreement sector sets how fees are charged and reimbursed: check fees and reimbursement before your appointment on",
 			"ameliLink": "ameli.fr, the Assurance Maladie directory",
-			"source": "Annuaire santé, Assurance Maladie"
+			"source": "Annuaire santé, Assurance Maladie",
+			"sourceOwner": "The practitioner"
 		},
 		"claim": {
 			"heading": "Is this you?",
 			"body": "This page is built from the public register. Claim it for free to check and complete it.",
-			"link": "Claim this page"
+			"link": "Claim this page",
+			"claimedHeading": "Page managed by the practitioner",
+			"claimedBody": "The practitioner has claimed this page: their identity was verified, and they complete it."
 		},
 		"report": {
 			"heading": "Something wrong?",
 			"body": "If an address, a phone number or a name is wrong, tell us how to correct it.",
-			"link": "Report an error"
+			"link": "Report an error",
+			"removalLink": "You are this practitioner and object to this page?"
 		},
 		"ring": {
 			"heading": "Other practitioners: {listing} in {place}"
+		},
+		"photoAlt": "Photo of {name}",
+		"withheld": {
+			"metaTitle": "Page hidden · Apercura",
+			"title": "This page is hidden",
+			"body": "A removal request is being checked for this page. It is not shown in the meantime.",
+			"dataLink": "How pages are published and removed"
 		}
 	},
 	"Institutional": {
@@ -684,10 +695,10 @@
 				"Name, profession, specialty, place of practice and phone: the practitioner updates their registration with their Ordre (or the body that registered them in the RPPS).",
 				"Agreement sector, OPTAM and Carte Vitale: they come from the Assurance Maladie directory (ameli.fr).",
 				"Name and address of an establishment: they come from the FINESS register, kept by the regional health agencies.",
-				"Practitioners will also be able to claim their page from the practitioners’ area, then complete it and correct what is shown."
+				"Practitioners can also claim their page from the practitioners’ area, then complete it and correct what is shown."
 			],
-			"formTitle": "The error report form is not open yet",
-			"formBody": "It will open on this page with practitioner accounts. Until then, the corrections above are the way to fix a page.",
+			"formTitle": "Report an error",
+			"formBody": "Tell us what is wrong on a page. Your message is encrypted and read by the Apercura team only.",
 			"proLink": "Go to the practitioners’ area"
 		},
 		"remove": {
@@ -696,8 +707,8 @@
 				"Under article 21 of the GDPR, a practitioner can object to the publication of their page. Apercura publishes the directory on the basis of a legitimate interest: informing the public from public data.",
 				"An unclaimed page will be hidden as soon as the request is received, then deleted after a light check of the request. A claimed page can be removed by its holder at any time. Once removed, a page does not come back with the next import."
 			],
-			"formTitle": "The removal request form is not open yet",
-			"formBody": "It will open on this page. The contact address for requests is still to be completed."
+			"formTitle": "Ask for the removal of a page",
+			"formBody": "For an unclaimed page. The page is hidden at once, then deleted after a light check. A claimed page is removed by its holder, from their space."
 		}
 	},
 	"AccessibilityPage": {
@@ -1230,7 +1241,8 @@
 			"invalidPassword": "This password is not correct.",
 			"mfaRequired": "Confirm it is you with your second factor first.",
 			"lastFactor": "Add another second factor before removing this one: your account must always keep one.",
-			"passkeyFailed": "The passkey could not be used. Try again, or use your password and code."
+			"passkeyFailed": "The passkey could not be used. Try again, or use your password and code.",
+			"accountFrozen": "This account is frozen after a contest on a page. Contact us to recover it with a new identity verification."
 		},
 		"signIn": {
 			"title": "Sign in",
@@ -1251,7 +1263,11 @@
 			"backupCode": "Backup code",
 			"verify": "Confirm",
 			"useBackupCode": "Use a backup code instead",
-			"useTotp": "Use the authenticator app instead"
+			"useTotp": "Use the authenticator app instead",
+			"pscHeading": "With Pro Santé Connect",
+			"pscHint": "Once linked to your account from a claim, your e-CPS app or CPS card signs you in without another code.",
+			"psc": "Sign in with Pro Santé Connect",
+			"pscFailed": "Pro Santé Connect sign-in did not work. Link it to your account from your claim first, or sign in with your password."
 		},
 		"signUp": {
 			"title": "Create an account",
@@ -1337,6 +1353,26 @@
 				"revoke": "Sign out",
 				"everywhereHint": "Lost a device or shared your password? Sign out of every session, this one included.",
 				"everywhere": "Sign out everywhere"
+			},
+			"data": {
+				"heading": "Your data",
+				"lead": "A copy of everything we hold about your account, and its deletion.",
+				"exportHeading": "Download your data",
+				"exportBody": "A JSON file with your account, sign-in methods (never their secrets), sessions, practices, claims and page content.",
+				"export": "Download my data",
+				"deleteHeading": "Delete your account",
+				"deleteBody": "Your account, sessions, claims and documents are deleted. Your page goes back to the facts of the register: unclaimed, without your content or photo.",
+				"practiceChoice": "What happens to {name}?",
+				"close": "Close the practice: its members lose access",
+				"transfer": "Hand it to {name} ({email})",
+				"practiceAlone": "{name} is closed with your account (you are its only member).",
+				"confirmEmail": "Type your email address to confirm",
+				"confirmEmailHint": "Deletion cannot be undone.",
+				"mismatch": "This is not the email address of your account.",
+				"hasTeam": "Choose what happens to each practice with a team.",
+				"lastAdmin": "You are the last platform administrator: name another one first.",
+				"failed": "The account could not be deleted. Try again in a moment.",
+				"delete": "Delete my account"
 			}
 		},
 		"app": {
@@ -1346,19 +1382,28 @@
 			"nav": {
 				"label": "Practitioner space",
 				"home": "Your space",
-				"security": "Security"
+				"security": "Security",
+				"page": "Your page",
+				"adminClaims": "Claims",
+				"adminReports": "Reports"
 			},
 			"practicesHeading": "Your practices",
 			"columns": {
 				"practice": "Practice",
-				"role": "Your role"
+				"role": "Your role",
+				"page": "Page",
+				"status": "Status",
+				"next": "Next step"
 			},
 			"emptyTitle": "No practice yet",
-			"emptyBody": "Your practice appears here once you have claimed your page. Claiming is not open yet; your account is ready for it.",
+			"emptyBody": "Your practice appears here once your page is claimed and verified.",
 			"emptyAction": "Find my page",
 			"securityHeading": "Account security",
 			"securityBody": "Your account is protected by a second factor. Manage your authenticator app, passkeys and sessions.",
-			"securityLink": "Security settings"
+			"securityLink": "Security settings",
+			"claimsHeading": "Your page and claims",
+			"editPage": "Edit the page",
+			"openClaim": "Open the claim"
 		},
 		"roles": {
 			"owner": "Owner",
@@ -1380,6 +1425,619 @@
 				"expiry": "The link works for one hour.",
 				"ignore": "You did not create this account? Ignore this email: nothing will happen."
 			}
+		}
+	},
+	"emails": {
+		"fallback": "If the button does not work, copy this link into your browser:",
+		"claimRegistryLink": {
+			"subject": "Confirm the claim of a practitioner page",
+			"title": "Is this the practice of {practitioner}?",
+			"body": [
+				"Someone has asked to manage the Apercura page of {practitioner}. This email was sent to the address the national register publishes for this practice.",
+				"If the request comes from {practitioner}, open the link and confirm it. The page is then verified."
+			],
+			"action": "Confirm the claim",
+			"notes": [
+				"The link works for 24 hours.",
+				"Not expected? Ignore this email: nothing changes and the page stays as it is."
+			]
+		},
+		"claimReceived": {
+			"subject": "Your claim is in review",
+			"title": "Your claim is in review",
+			"body": [
+				"Hello {name},",
+				"We have received your claim and its documents. A member of the Apercura team will call the practice at the number published in the national register and ask for the code shown in your space. Keep it at hand.",
+				"We review claims within 48 hours on working days."
+			]
+		},
+		"claimVerified": {
+			"subject": "Your page is verified",
+			"title": "Your page is verified",
+			"body": [
+				"Hello {name},",
+				"Your page now carries the verified stamp. Check the imported information, complete your fees and payment methods, then publish your page."
+			],
+			"action": "Complete my page"
+		},
+		"claimRejected": {
+			"subject": "Your claim was not accepted",
+			"title": "Your claim was not accepted",
+			"body": [
+				"Hello {name},",
+				"We could not verify your claim. Reason given by the reviewer: {reason}",
+				"You can open a new claim from your space, for instance with Pro Santé Connect."
+			]
+		},
+		"claimSuperseded": {
+			"subject": "Your access to a page was withdrawn",
+			"title": "Your access to a page was withdrawn",
+			"body": [
+				"Hello {name},",
+				"Another account proved that it belongs to the practitioner of a page your account managed. Your account is frozen and its access to the practice was removed.",
+				"If you are the practitioner, contact us: your account can only be recovered with a new identity verification."
+			]
+		},
+		"removalReceived": {
+			"subject": "Your removal request was received",
+			"title": "Your removal request was received",
+			"body": [
+				"The page is hidden from now on: it is no longer shown, indexed or listed.",
+				"We check the request, then delete the page. A deleted page does not come back with the next import of the register."
+			]
+		},
+		"removalConfirmed": {
+			"subject": "The page was deleted",
+			"title": "The page was deleted",
+			"body": [
+				"The page you asked us to remove has been deleted from Apercura. It will not come back with the next import of the register."
+			]
+		},
+		"removalRejected": {
+			"subject": "Your removal request was not accepted",
+			"title": "Your removal request was not accepted",
+			"body": [
+				"We could not confirm your removal request, so the page is shown again. Reason: {reason}",
+				"If you are the practitioner, you can also claim the page and remove it yourself from your space."
+			]
+		}
+	},
+	"Profile": {
+		"presentationHeading": "Presentation",
+		"practicalHeading": "Practical information",
+		"fields": {
+			"languages": "Languages spoken",
+			"accessibility": "Access",
+			"website": "Website",
+			"fees": "Fees",
+			"paymentMethods": "Payment methods"
+		},
+		"accessibility": {
+			"stepFree": "Step-free access",
+			"lift": "Lift",
+			"parking": "Parking nearby"
+		},
+		"languages": {
+			"fr": "French",
+			"en": "English",
+			"es": "Spanish",
+			"de": "German",
+			"it": "Italian",
+			"pt": "Portuguese",
+			"ar": "Arabic",
+			"zh": "Chinese",
+			"ru": "Russian",
+			"tr": "Turkish",
+			"ro": "Romanian",
+			"pl": "Polish",
+			"nl": "Dutch",
+			"vi": "Vietnamese",
+			"fa": "Persian",
+			"he": "Hebrew",
+			"uk": "Ukrainian",
+			"lsf": "French Sign Language"
+		},
+		"paymentMethods": {
+			"card": "Bank card",
+			"cash": "Cash",
+			"cheque": "Cheque",
+			"transfer": "Bank transfer"
+		},
+		"fees": {
+			"range": "{min} to {max}",
+			"fromOwner": "The practitioner states the agreement sector and fees."
+		}
+	},
+	"Claim": {
+		"metadata": {
+			"start": "Claim a page · Apercura",
+			"claim": "Your claim · Apercura",
+			"emailLink": "Confirm a claim · Apercura"
+		},
+		"pending": "Please wait",
+		"errors": {
+			"generic": "Something went wrong. Please try again in a moment.",
+			"TOO_MANY": "Too many claims for today. Try again tomorrow.",
+			"ALREADY_OWNER": "This page is already yours.",
+			"FROZEN": "This account is frozen and cannot claim a page.",
+			"NOT_FOUND": "No page has this RPPS number.",
+			"INVALID_RPPS": "This RPPS number is not valid: it has 11 digits, the last one being a check digit.",
+			"NOT_OPEN": "This claim is closed: it can no longer change.",
+			"METHOD_UNAVAILABLE": "This method is not available for this page.",
+			"TOO_MANY_ATTEMPTS": "Too many attempts with this method. Use another one.",
+			"NOT_SUBMITTABLE": "Add a document before sending the claim for review.",
+			"BAD_DOCUMENT": "This file cannot be used: send a PDF, JPEG, PNG or WebP of 10 MB at most.",
+			"PSC_MISSING": "Pro Santé Connect did not return an identity. Try again."
+		},
+		"start": {
+			"title": "Claim your page",
+			"lead": "A claim targets one RPPS number, never a name: homonyms cannot take each other's page.",
+			"recordHeading": "The page you are claiming",
+			"unknownProfession": "Health professional",
+			"viewPage": "See the public page",
+			"contestTitle": "This page already has a verified owner",
+			"contestBody": "If it is yours (for instance you lost access to your account), you can still claim it: an administrator reviews the case, and Pro Santé Connect proves it fastest. Recovering an account always goes through a new identity verification.",
+			"confirm": "This is me: start the claim",
+			"goToPage": "Go to my page",
+			"findHeading": "Find your page by its RPPS number",
+			"notFound": "No public page has this RPPS number yet.",
+			"rppsLabel": "RPPS number",
+			"rppsHint": "11 digits, printed on your CPS card and on your page.",
+			"find": "Find my page",
+			"searchHint": "You can also look your page up by name:",
+			"searchLink": "search the directory",
+			"howHeading": "How we check that it is you",
+			"factorNote": "Your account already has a second factor: it is required before any claim, and it protects your page from then on."
+		},
+		"methods": {
+			"psc": {
+				"title": "Pro Santé Connect",
+				"short": "Pro Santé Connect",
+				"summary": "With your e-CPS app or your CPS card. Verified at once, and online booking can open straight away.",
+				"lead": "Sign in with your e-CPS app or your CPS card. Your page is verified as soon as the identity matches its RPPS number.",
+				"action": "Continue with Pro Santé Connect",
+				"hint": "You leave Apercura for the Pro Santé Connect page, then come back here.",
+				"done": "Pro Santé Connect confirmed your identity."
+			},
+			"registry_email": {
+				"title": "The practice's email",
+				"short": "Registry email",
+				"summary": "A link sent to the email address the register publishes for your practice or health centre. Verified as soon as you open it; booking opens 7 days later.",
+				"lead": "We send a link to {email}, the address published in the register for your practice. Open it and confirm.",
+				"action": "Send the link",
+				"resend": "Send it again",
+				"sent": "Link sent. It works for 24 hours.",
+				"done": "The practice's mailbox confirmed the claim."
+			},
+			"document": {
+				"title": "A document and a phone call",
+				"short": "Document",
+				"summary": "A photo of your CPS card or your registration certificate from your Ordre, then a call to the practice's number as published in the register. Reviewed within 48 hours; booking opens 7 days later.",
+				"lead": "Send a photo of your CPS card or your registration certificate from your Ordre. It is encrypted before it is stored, and deleted 30 days after the decision."
+			},
+			"phone_callback": {
+				"title": "Phone callback",
+				"short": "Phone callback",
+				"lead": "During the review, a member of our team calls the practice at {phone}, the number in the register (never a number you give us). Whoever answers reads out the code shown here.",
+				"action": "Show my code",
+				"newCode": "Show a new code",
+				"hint": "Show it when you are at the practice, or give it to whoever answers its phone. Asking for a new one cancels the previous one.",
+				"codeLabel": "Code to read out",
+				"codeHint": "Keep it on screen or note it down: for your security we only show it now.",
+				"done": "The phone callback confirmed the claim."
+			}
+		},
+		"check": {
+			"passed": "Done",
+			"failed": "Failed",
+			"pending": "In progress",
+			"notStarted": "Not started",
+			"claim": {
+				"open": "In progress",
+				"in_review": "In review",
+				"verified": "Verified",
+				"rejected": "Rejected",
+				"withdrawn": "Withdrawn",
+				"superseded": "Withdrawn after a contest"
+			}
+		},
+		"workspace": {
+			"title": "Claim of {name}",
+			"lead": {
+				"open": "Prove that you are this practitioner with one of the methods below.",
+				"in_review": "Your claim is in review.",
+				"verified": "Your page is verified.",
+				"rejected": "This claim was not accepted.",
+				"withdrawn": "This claim was withdrawn.",
+				"superseded": "This claim was withdrawn after a contest."
+			}
+		},
+		"psc": {
+			"outcome": {
+				"verified": "Pro Santé Connect confirmed your identity: your page is verified.",
+				"passed": "Pro Santé Connect confirmed your identity. An administrator now reviews the claim.",
+				"mismatch": "The Pro Santé Connect identity does not match this page's RPPS number.",
+				"error": "Pro Santé Connect could not be reached or the sign-in was cancelled. Try again.",
+				"linkedElsewhere": "This Pro Santé Connect identity is already linked to another Apercura account. Sign in with Pro Santé Connect to use that account."
+			}
+		},
+		"documents": {
+			"kind": {
+				"cps_card": "CPS card",
+				"ordre_attestation": "Ordre registration certificate"
+			},
+			"kindLabel": "Kind of document",
+			"add": "Choose a file",
+			"hint": "PDF, JPEG, PNG or WebP, 10 MB at most. Up to 4 files.",
+			"kilobytes": "KB"
+		},
+		"review": {
+			"title": "Send for review",
+			"lead": "An administrator checks your document and calls the practice. You receive the answer by email, within 48 hours on working days.",
+			"submit": "Send for review",
+			"notYet": "Add a document first."
+		},
+		"withdraw": "Withdraw this claim",
+		"status": {
+			"verified": "Your page is verified",
+			"bookingDelay": "Online booking can open from {date}: without Pro Santé Connect, it opens 7 days after the verification.",
+			"continue": "Complete your page",
+			"in_review": "Your claim is in review",
+			"contestReview": "This page already had a verified owner: an administrator decides, and Pro Santé Connect proves it fastest.",
+			"reviewBody": "Keep your callback code at hand: we call the practice at the number in the register.",
+			"rejected": "This claim was not accepted",
+			"reason": "Reason: {reason}",
+			"withdrawn": "This claim was withdrawn",
+			"superseded": "This claim was withdrawn after a contest",
+			"contestTitle": "This page already has a verified owner",
+			"contestBody": "An administrator will decide. Pro Santé Connect proves your identity fastest; the other methods need a document and a callback."
+		},
+		"emailLink": {
+			"title": "Confirm the claim",
+			"lead": "This link was sent to the email address the national register publishes for a practice.",
+			"reading": "Reading the link…",
+			"invalidTitle": "This link no longer works",
+			"invalidBody": "It expired (it works for 24 hours) or was already used. The practitioner can send a new one from their claim.",
+			"tooMany": "Too many attempts. Wait an hour, then try again.",
+			"doneTitle": "The claim is confirmed",
+			"doneBody": "The practitioner can now sign in to complete the page.",
+			"goToSpace": "Go to the practitioner space",
+			"body": "If the practitioner of this practice asked to manage their Apercura page, confirm it. Otherwise close this page: nothing changes.",
+			"confirm": "Confirm the claim",
+			"pending": "Please wait"
+		}
+	},
+	"Onboarding": {
+		"metaTitle": "Set up your page · Apercura",
+		"title": "Set up your page",
+		"lead": "Three steps to a complete page for {name}.",
+		"stepsLabel": "Steps",
+		"stepNumber": "Step {n} of {total}:",
+		"continue": "Continue",
+		"pending": "Please wait",
+		"publishFailed": "The page could not be published. Try again in a moment.",
+		"fields": {
+			"name": "Name",
+			"profession": "Profession"
+		},
+		"steps": {
+			"check": {
+				"label": "Check the imported information",
+				"title": "Check the imported information",
+				"lead": "Your page starts from the national register (Annuaire Santé). Check your name, profession and places of practice.",
+				"sites": "Places of practice",
+				"unnamed": "Place without a name",
+				"hidden": "Hidden",
+				"registryNote": "Something wrong? The lasting fix is made with your Ordre, which updates the register; the page follows at the next weekly import. You can hide a place or add one in the page editor."
+			},
+			"booking": {
+				"label": "Opening hours and booking",
+				"title": "Opening hours and booking",
+				"lead": "Online booking opens in a later version. Before it can open, your page must state your fees and the payment methods you accept.",
+				"fees": "Fees",
+				"payments": "Payment methods",
+				"opensAt": "Booking can open from",
+				"done": "Stated",
+				"todo": "To complete",
+				"deontology": "Article R.4127-53 of the public health code: a doctor who presents their activity online states their fees and the payment methods accepted.",
+				"editFees": "Complete fees and payment methods",
+				"settings": "Booking settings",
+				"settingsNote": "Booking settings arrive with online booking: the page may not be available yet."
+			},
+			"publish": {
+				"label": "Publish",
+				"title": "Publish your page",
+				"lead": "Publishing shows your presentation, languages, fees and practical information on your public page. You can change or hide them at any time.",
+				"already": "Your page is published. Every change you save is online at once.",
+				"edit": "Edit my page",
+				"action": "Publish my page"
+			}
+		}
+	},
+	"Editor": {
+		"metaTitle": "Your page · Apercura",
+		"title": "Your page",
+		"lead": "Complete the public page of {name}. Plain text only; what you hide is never shown.",
+		"empty": {
+			"title": "No page to edit yet",
+			"body": "Your page appears here once your claim is verified.",
+			"action": "Claim my page"
+		},
+		"pending": "Please wait",
+		"viewPublic": "See the public page",
+		"jumpToPreview": "Go to the preview",
+		"formLabel": "Page content",
+		"removed": {
+			"title": "Your page is removed from the directory",
+			"body": "Nobody can see it. You can restore it at the bottom of this page."
+		},
+		"unpublished": {
+			"title": "Your content is not published yet",
+			"link": "Finish setting up your page"
+		},
+		"photo": {
+			"title": "Photo",
+			"lead": "Optional. A recent portrait, like an identity photo.",
+			"current": "Current photo",
+			"none": "No photo.",
+			"add": "Add a photo",
+			"replace": "Replace the photo",
+			"remove": "Remove the photo",
+			"hint": "JPEG, PNG or WebP, 5 MB at most. We crop it square and remove its metadata (location, device)."
+		},
+		"visibility": {
+			"label": "Show {field} on the page",
+			"shown": "Shown"
+		},
+		"presentation": {
+			"title": "Presentation",
+			"lead": "Factual information only: no testimonials, no comparisons (R.4127-19-1).",
+			"headline": "Headline",
+			"headlineHint": "One line under your profession, {max} characters at most.",
+			"bio": "Presentation",
+			"bioHint": "Plain text, {max} characters at most. Leave a blank line between paragraphs."
+		},
+		"languages": {
+			"title": "Languages spoken"
+		},
+		"fees": {
+			"title": "Fees and health insurance",
+			"lead": "Required before online booking can open: your fees and the payment methods you accept.",
+			"requiredBadge": "Required for booking",
+			"ameliPrefill": "Prefilled from the Assurance Maladie directory. Your statement replaces it on your page.",
+			"sector": "Agreement sector",
+			"notStated": "Not stated",
+			"optam": "Capped extra fees (OPTAM)",
+			"optamNone": "Not a member",
+			"carteVitale": "Carte Vitale",
+			"carteVitaleYes": "Accepted",
+			"carteVitaleNo": "Not accepted",
+			"itemsTitle": "Fees",
+			"noItem": "No fee yet.",
+			"itemLabel": "Fee {n}: what",
+			"itemPlaceholder": "Consultation",
+			"amount": "Amount (€)",
+			"maxAmount": "Up to (€)",
+			"removeItem": "Remove fee {n}",
+			"remove": "Remove",
+			"addItem": "Add a fee",
+			"note": "Note on fees",
+			"noteHint": "For instance what extra fees depend on.",
+			"payments": "Payment methods accepted",
+			"requiredHint": "Booking stays closed until at least one fee and one payment method are stated."
+		},
+		"access": {
+			"title": "Access",
+			"notes": "Access details",
+			"notesHint": "Floor, entrance, public transport."
+		},
+		"contact": {
+			"title": "Website and phone",
+			"website": "Website",
+			"websiteHint": "Your practice's site, starting with https://",
+			"showPhone": "Show the practice's phone number",
+			"showPhoneHint": "Hidden, the page no longer offers to call the practice."
+		},
+		"failure": {
+			"generic": "Something went wrong. Please try again in a moment.",
+			"invalid": "Some fields need a correction: see the messages under them.",
+			"lastSite": "At least one place must stay shown: a page without a place cannot be published.",
+			"unknownPlace": "We do not know this postcode and town. Check them.",
+			"badPhone": "This phone number is not valid.",
+			"photoTooLarge": "This photo is larger than 5 MB.",
+			"photoUnsupported": "This file cannot be used as a photo: send a JPEG, PNG or WebP."
+		},
+		"saved": "Saved. Your public page is up to date.",
+		"savedDraft": "Saved. Publish your page to show it.",
+		"save": "Save the page",
+		"lastSaved": "Last saved {date}",
+		"sites": {
+			"title": "Places of practice",
+			"lead": "Choose which places your page shows. Places from the register can be hidden, not edited.",
+			"unnamed": "Place without a name",
+			"added": "Added by you",
+			"shownNamed": "Show {name} on the page",
+			"remove": "Remove",
+			"registryNote": "A registry place is wrong? Your Ordre corrects it in the register; the page follows at the next import.",
+			"addTitle": "Add a place",
+			"name": "Name of the place",
+			"address": "Street address",
+			"postcode": "Postcode",
+			"city": "Town",
+			"phone": "Phone (optional)",
+			"phoneHint": "The practice's number, shown on the page.",
+			"add": "Add the place"
+		},
+		"remove": {
+			"title": "Remove your page",
+			"lead": "Your page disappears from the directory, searches and search engines, and does not come back with the next import. You can restore it here.",
+			"action": "Remove my page from the directory",
+			"restore": "Restore my page"
+		},
+		"preview": {
+			"title": "Preview",
+			"note": "Not saved yet",
+			"noSite": "No place shown.",
+			"unnamedPlace": "Place of practice"
+		},
+		"issues": {
+			"tooLong": "This text is too long.",
+			"markup": "Plain text only: no HTML, no links in brackets.",
+			"required": "This field is required.",
+			"range": "The upper amount must be greater than the amount.",
+			"website": "This address is not a website (https://…).",
+			"postcode": "A French postcode has 5 digits.",
+			"invalid": "This value is not valid."
+		}
+	},
+	"Admin": {
+		"claims": {
+			"metaTitle": "Claims · Administration · Apercura",
+			"title": "Claims",
+			"lead": "Claims waiting for a decision. Contests come first.",
+			"queueHeading": "{count, plural, =0 {No claim waiting} one {# claim waiting} other {# claims waiting}}",
+			"emptyTitle": "Nothing to review",
+			"emptyBody": "Claims sent for review appear here.",
+			"columns": {
+				"practitioner": "Page",
+				"claimant": "Account",
+				"proofs": "Proofs",
+				"submitted": "Sent"
+			},
+			"contest": "Contest",
+			"proofLine": "{method}: {status}"
+		},
+		"claim": {
+			"metaTitle": "Claim · Administration · Apercura",
+			"title": "Claim of {name}",
+			"back": "Back to the claims",
+			"contestTitle": "Contest: this page already has a verified owner",
+			"contestPsc": "The current owner was verified with Pro Santé Connect: only a claim verified with Pro Santé Connect can take the page over.",
+			"contestBody": "Approving gives the page to this account: the current owner's account is frozen and loses access to the practice.",
+			"summary": "Summary",
+			"fields": {
+				"status": "Status",
+				"claimant": "Account email",
+				"accountCreated": "Account created",
+				"opened": "Claim opened",
+				"submitted": "Sent for review"
+			},
+			"proofs": "Proofs",
+			"documents": "Documents",
+			"noDocument": "No document.",
+			"purged": "Deleted",
+			"openDocument": "Open the document",
+			"newTab": "opens in a new tab",
+			"auditNote": "Opening a document decrypts it and is recorded in the audit log, with your account and the time.",
+			"phoneTitle": "Phone callback",
+			"phoneLead": "Call one of these numbers from the register, never a number given by the claimant. Ask whoever answers for the code shown in the claimant's space.",
+			"phoneDone": "The phone callback succeeded.",
+			"noCode": "The claimant has not displayed a code yet.",
+			"decisionTitle": "Decision",
+			"decisionLead": "Approving verifies the page, creates the practice with the claimant as owner and emails them. Rejecting emails them the reason.",
+			"phoneCalled": "Number called",
+			"codeHeard": "Code read out by the practice",
+			"codeLocked": "Too many wrong codes: the claimant must show a new one.",
+			"codeWrong": "This code does not match.",
+			"confirmCode": "Check the code",
+			"pending": "Please wait",
+			"decision": "Decision",
+			"approve": "Approve the claim",
+			"reject": "Reject the claim",
+			"notApprovable": "Approval needs Pro Santé Connect, the registry email, or a document and a successful phone callback (Pro Santé Connect in a contest against an owner verified with it).",
+			"reasonRequired": "Reason (sent to the claimant)",
+			"reasonOptional": "Note (optional)",
+			"reasonHint": "Say what is missing or wrong, plainly.",
+			"decisionFailed": "The decision could not be recorded. Reload the page and try again.",
+			"approveAction": "Approve",
+			"rejectAction": "Reject"
+		},
+		"reports": {
+			"metaTitle": "Reports · Administration · Apercura",
+			"title": "Reports and removals",
+			"lead": "Removal requests (GDPR art. 21) and error reports sent from the public pages.",
+			"contact": "Contact",
+			"message": "Message",
+			"failed": "The action failed. Reload the page and try again.",
+			"auditNote": "Reading a request decrypts it and is recorded in the audit log.",
+			"tabsLabel": "Queues",
+			"removalsTab": "Removal requests ({count})",
+			"reportsTab": "Error reports ({count})",
+			"removalsEmpty": "No removal request waiting",
+			"removalsCaption": "Removal requests",
+			"columns": {
+				"page": "Page",
+				"received": "Received",
+				"actions": "Actions",
+				"kind": "Kind"
+			},
+			"read": "Read",
+			"confirmRemoval": "Delete the page",
+			"rejectRemoval": "Show the page again",
+			"rejectReason": "The request could not be confirmed.",
+			"reportsEmpty": "No error report waiting",
+			"reportsCaption": "Error reports",
+			"noPage": "No page given",
+			"kinds": {
+				"wrong_info": "Wrong information",
+				"retired": "Retired",
+				"deceased": "Deceased",
+				"impersonation": "Impersonation"
+			},
+			"resolve": "Mark as handled",
+			"dismiss": "Dismiss"
+		}
+	},
+	"Gdpr": {
+		"about": "About the page of",
+		"rpps": "RPPS number of the page",
+		"rppsHint": "11 digits, printed at the top of the page.",
+		"pending": "Please wait",
+		"errors": {
+			"tooMany": "Too many requests from this connection. Try again in an hour.",
+			"notFound": "No page has this RPPS number.",
+			"claimed": "This page is managed by its practitioner: only they can remove it, from their space.",
+			"invalid": "Check the form: a field is missing or too long.",
+			"generic": "Something went wrong. Please try again in a moment."
+		},
+		"report": {
+			"metaTitle": "Report an error · Apercura",
+			"title": "Report an error",
+			"lead": "Tell us what is wrong on this page. Your message is encrypted and read by the Apercura team only.",
+			"doneTitle": "Thank you, your report was received",
+			"doneBody": "We check it. Facts from the register are corrected at the source; we tell you if you left an address.",
+			"kind": "What is wrong?",
+			"kinds": {
+				"wrong_info": "Wrong information (address, phone, name)",
+				"retired": "The practitioner has retired",
+				"deceased": "The practitioner has died",
+				"impersonation": "Someone is using this page in the practitioner's name"
+			},
+			"message": "Details",
+			"messageHint": "What is wrong and, if you know, what is right.",
+			"contact": "Your email (optional)",
+			"contactHint": "Only to answer you.",
+			"privacy": "Do not include any health information.",
+			"submit": "Send the report"
+		},
+		"removal": {
+			"metaTitle": "Ask for the removal of a page · Apercura",
+			"title": "Ask for the removal of this page",
+			"lead": "Under article 21 of the GDPR you can object to the publication of your page. It is hidden as soon as we receive the request, then deleted after a light check.",
+			"doneTitle": "The page is hidden",
+			"doneBody": "It is no longer shown, indexed or listed. We check the request and confirm by email, then delete the page for good.",
+			"contact": "Your email",
+			"contactHint": "To confirm the request with you. It is encrypted and used for nothing else.",
+			"message": "Message (optional)",
+			"messageHint": "Anything that helps us check the request.",
+			"confirm": "I am the practitioner of this page",
+			"privacy": "A deleted page does not come back with the next import of the register.",
+			"submit": "Hide and remove the page",
+			"claimedTitle": "This page is managed by its practitioner",
+			"claimedBody": "Only its holder can remove it, from the page editor of their space.",
+			"claimedLink": "Sign in to the practitioner space",
+			"alreadyTitle": "A removal request is being checked",
+			"alreadyBody": "The page is already hidden."
 		}
 	}
 }

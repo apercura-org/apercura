@@ -12,6 +12,8 @@ export const cacheTags = {
 		`listing:${listingSlug}:${placeId ?? "fr"}`,
 	site: (id: number) => `site:${id}`,
 	place: (id: number) => `place:${id}`,
+	/** Every sitemap query: expired when the app changes what is indexable. */
+	sitemap: "sitemap",
 	coarse: {
 		practitioner: "practitioner:*",
 		listing: "listing:*",

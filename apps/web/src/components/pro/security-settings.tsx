@@ -3,10 +3,13 @@
 import {
 	Badge,
 	Button,
+	buttonStyles,
 	Form,
 	linkStyles,
 	Notice,
 	OtpField,
+	Radio,
+	RadioGroup,
 	TextField,
 	tableStyles,
 } from "@apercura/ui";
@@ -440,6 +443,123 @@ function SessionsSection() {
 	);
 }
 
+type PracticeChoice = { kind: "close" } | { kind: "transfer"; memberUserId: string };
+
+/** GDPR tools of the account: a JSON copy of its data, and deleting it. */
+function DataSection() {
+	const t = useTranslations("auth.security.data");
+	const tCommon = useTranslations("auth.common");
+	const router = useRouter();
+	const trpc = useTRPC();
+	const plan = useQuery(trpc.account.deletionPlan.queryOptions());
+	const [confirmEmail, setConfirmEmail] = useState("");
+	const [choices, setChoices] = useState<Record<string, PracticeChoice>>({});
+	const remove = useMutation(
+		trpc.account.delete.mutationOptions({
+			onSuccess: () => {
+				router.replace("/");
+				router.refresh();
+			},
+		}),
+	);
+	const onDelete = (event: FormEvent<HTMLFormElement>) => {
+		event.preventDefault();
+		remove.mutate({ confirmEmail, practices: choices });
+	};
+	const failure = remove.error?.message;
+	return (
+		<Section id="security-data" title={t("heading")} lead={t("lead")}>
+			<div className="flex flex-col gap-2">
+				<h3 className="font-display text-lead font-bold text-ink">{t("exportHeading")}</h3>
+				<p className="text-body text-ink">{t("exportBody")}</p>
+				<div>
+					<a href="/api/pro/account-export" download className={buttonStyles({ intent: "ink" })}>
+						{t("export")}
+					</a>
+				</div>
+			</div>
+			<Form
+				onSubmit={onDelete}
+				className="flex flex-col gap-5 border-t border-rule-soft pt-5"
+				aria-labelledby="security-delete"
+			>
+				<h3 id="security-delete" className="font-display text-lead font-bold text-ink">
+					{t("deleteHeading")}
+				</h3>
+				<p className="text-body text-ink">{t("deleteBody")}</p>
+				{(plan.data ?? []).map((practice) =>
+					practice.others > 0 ? (
+						<RadioGroup
+							key={practice.organizationId}
+							label={t("practiceChoice", { name: practice.name })}
+							value={
+								choices[practice.organizationId]?.kind === "transfer"
+									? `transfer:${(choices[practice.organizationId] as { memberUserId: string }).memberUserId}`
+									: choices[practice.organizationId]
+										? "close"
+										: null
+							}
+							onChange={(value) =>
+								setChoices((current) => ({
+									...current,
+									[practice.organizationId]: value.startsWith("transfer:")
+										? { kind: "transfer", memberUserId: value.slice("transfer:".length) }
+										: { kind: "close" },
+								}))
+							}
+							isRequired
+						>
+							<Radio value="close">{t("close")}</Radio>
+							{practice.members.map((person) => (
+								<Radio key={person.userId} value={`transfer:${person.userId}`}>
+									{t("transfer", { name: person.name, email: person.email })}
+								</Radio>
+							))}
+						</RadioGroup>
+					) : (
+						<p key={practice.organizationId} className="text-meta text-ink-muted">
+							{t("practiceAlone", { name: practice.name })}
+						</p>
+					),
+				)}
+				<TextField
+					label={t("confirmEmail")}
+					description={t("confirmEmailHint")}
+					type="email"
+					autoComplete="off"
+					value={confirmEmail}
+					onChange={setConfirmEmail}
+					isRequired
+				/>
+				{failure ? (
+					<Notice
+						tone="error"
+						title={
+							failure === "CONFIRMATION_MISMATCH"
+								? t("mismatch")
+								: failure === "HAS_TEAM"
+									? t("hasTeam")
+									: failure === "LAST_ADMIN"
+										? t("lastAdmin")
+										: t("failed")
+						}
+					/>
+				) : null}
+				<div>
+					<Button
+						type="submit"
+						intent="ink"
+						isPending={remove.isPending}
+						pendingLabel={tCommon("pending")}
+					>
+						{t("delete")}
+					</Button>
+				</div>
+			</Form>
+		</Section>
+	);
+}
+
 /** Second factors (TOTP, passkeys) and open sessions. */
 export function SecuritySettings({ totpEnabled, mfaVerified, enrolling }: SecuritySettingsProps) {
 	const t = useTranslations("auth");
@@ -456,6 +576,7 @@ export function SecuritySettings({ totpEnabled, mfaVerified, enrolling }: Securi
 			<TotpSection enabled={totpEnabled} enrolling={startedEnrolling} />
 			<PasskeySection enrolling={startedEnrolling} />
 			{mfaVerified ? <SessionsSection /> : null}
+			{mfaVerified ? <DataSection /> : null}
 		</div>
 	);
 }

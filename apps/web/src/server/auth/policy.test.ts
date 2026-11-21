@@ -10,6 +10,8 @@ import {
 	DISABLED_PATHS,
 	factorsLeftAfter,
 	MFA_SESSION_PATHS,
+	mfaMethodOf,
+	pscRequestProblem,
 	requiresStepUp,
 	TRUST_DEVICE_PATHS,
 } from "./policy";
@@ -30,13 +32,31 @@ describe("sign-in methods", () => {
 		for (const path of [
 			"/two-factor/send-otp",
 			"/two-factor/verify-otp",
-			"/sign-in/social",
+			"/unlink-account",
 			"/request-password-reset",
 			"/update-session",
 			"/list-sessions",
 		]) {
 			expect(DISABLED_PATHS).toContain(path);
 		}
+	});
+
+	it("opens OAuth to Pro Santé Connect redirects only", () => {
+		expect(pscRequestProblem({ provider: "psc" }, true)).toBeNull();
+		expect(pscRequestProblem({ provider: "psc" }, false)).toBe("provider");
+		expect(pscRequestProblem({ provider: "google" }, true)).toBe("provider");
+		expect(pscRequestProblem(undefined, true)).toBe("provider");
+		expect(pscRequestProblem({ provider: "psc", idToken: { token: "x" } }, true)).toBe("id_token");
+		// Linking it to an account needs a session that proved a second factor.
+		expect(alwaysRequiresMfa("/link-social")).toBe(true);
+	});
+
+	it("counts a Pro Santé Connect sign-in as strong authentication, and no other OAuth callback", () => {
+		expect(mfaMethodOf("/callback/:id", { id: "psc" })).toBe("psc");
+		expect(mfaMethodOf("/callback/:id", { id: "github" })).toBeNull();
+		expect(mfaMethodOf("/two-factor/verify-totp")).toBe("totp");
+		expect(mfaMethodOf("/sign-in/email")).toBeNull();
+		expect(mfaMethodOf(undefined)).toBeNull();
 	});
 
 	it("never lets a device be trusted to skip the second factor", () => {
