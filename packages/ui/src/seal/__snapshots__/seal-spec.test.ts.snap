@@ -1,0 +1,31 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`sealSpec > is stable across releases (snapshot of one synthetic RPPS) 1`] = `
+{
+  "bands": [
+    {
+      "amplitude": 2.2,
+      "braided": true,
+      "phase": 5.717,
+      "radius": 32.5,
+      "waves": 11,
+      "weight": 0.95,
+    },
+    {
+      "amplitude": 3.85,
+      "braided": true,
+      "phase": 4.059,
+      "radius": 22.25,
+      "waves": 10,
+      "weight": 0.65,
+    },
+  ],
+  "bossFilled": true,
+  "bossRadius": 4.75,
+  "doubleRing": false,
+  "outerWeight": 1.9,
+  "tickAccent": 6,
+  "tickWeight": 0.75,
+  "ticks": 60,
+}
+`;
