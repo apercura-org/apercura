@@ -23,6 +23,7 @@ import { findCalendar, findType, toCoreType } from "./availability";
 import { BOOKING_LIMITS } from "./config";
 import { ensureBookingConstraints } from "./constraints";
 import { BookingError, isExclusionViolation, isUniqueViolation } from "./errors";
+import { practitionerTransaction } from "./locks";
 import { refreshNextFreeLater } from "./next-free";
 import { enqueueOutbox, type OutboxEntry } from "./outbox";
 import { drainLater } from "./outbox-worker";
@@ -221,7 +222,7 @@ export async function createEntry(
 
 	try {
 		await ensureOrganizationKey(rt.db, staff.organizationId);
-		const ids = await rt.db.transaction(async (tx) => {
+		const ids = await practitionerTransaction(rt.db, calendar.practitionerId, async (tx) => {
 			await overrideHolds(
 				tx,
 				staff,
@@ -320,7 +321,7 @@ export async function blockTime(
 	const nowMs = rt.nowMs();
 	const id = randomUUID();
 	try {
-		await rt.db.transaction(async (tx) => {
+		await practitionerTransaction(rt.db, calendar.practitionerId, async (tx) => {
 			await overrideHolds(tx, staff, calendar.practitionerId, fromMs, untilMs, nowMs);
 			await tx.insert(appointments).values({
 				id,
@@ -374,7 +375,8 @@ export async function cancelEntry(
 	if (input.message?.trim()) {
 		await ensureOrganizationKey(rt.db, staff.organizationId);
 	}
-	const result = await rt.db.transaction(async (tx) => {
+	const practitionerId = await practitionerOf(rt, input.appointmentId, staff.organizationId);
+	const result = await practitionerTransaction(rt.db, practitionerId, async (tx) => {
 		const row = await lockAppointment(tx, input.appointmentId, staff.organizationId);
 		const message = input.message?.trim() ? input.message.trim() : null;
 		const sealed =
@@ -413,7 +415,8 @@ export async function decideRequest(
 	input: { appointmentId: string; decision: "approve" | "decline" },
 ) {
 	const nowMs = rt.nowMs();
-	const row = await rt.db.transaction(async (tx) => {
+	const practitionerId = await practitionerOf(rt, input.appointmentId, staff.organizationId);
+	const row = await practitionerTransaction(rt.db, practitionerId, async (tx) => {
 		const locked = await lockAppointment(tx, input.appointmentId, staff.organizationId);
 		const approve = input.decision === "approve";
 		const { row: updated } = await applyTransition(
@@ -447,11 +450,29 @@ export async function markNoShow(
 	input: { appointmentId: string },
 ) {
 	const nowMs = rt.nowMs();
-	await rt.db.transaction(async (tx) => {
+	const practitionerId = await practitionerOf(rt, input.appointmentId, staff.organizationId);
+	await practitionerTransaction(rt.db, practitionerId, async (tx) => {
 		const row = await lockAppointment(tx, input.appointmentId, staff.organizationId);
 		await applyTransition(tx, row, { type: "mark_no_show", nowMs }, { actor: actorOf(staff) });
 	});
 	return { status: "no_show" as const };
+}
+
+/** The practitioner of an organization's entry (it never changes), to lock their agenda. */
+async function practitionerOf(
+	rt: BookingRuntime,
+	appointmentId: string,
+	organizationId: string,
+): Promise<number> {
+	const [row] = await rt.db
+		.select({ practitionerId: appointments.practitionerId })
+		.from(appointments)
+		.where(and(eq(appointments.id, appointmentId), eq(appointments.organizationId, organizationId)))
+		.limit(1);
+	if (!row) {
+		throw new BookingError("NOT_FOUND");
+	}
+	return row.practitionerId;
 }
 
 async function pendingOutboxOf(rt: BookingRuntime, appointmentId: string): Promise<string[]> {

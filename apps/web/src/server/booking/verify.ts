@@ -17,6 +17,7 @@ import { BOOKING_LIMITS, bookingEnabled } from "./config";
 import { ensureBookingConstraints } from "./constraints";
 import { BookingError, isExclusionViolation } from "./errors";
 import { issueCode } from "./hold";
+import { practitionerTransaction } from "./locks";
 import { refreshNextFreeLater } from "./next-free";
 import { enqueueOutbox } from "./outbox";
 import { drainLater } from "./outbox-worker";
@@ -150,7 +151,7 @@ export async function verify(
 
 	let outcome: { row: AppointmentRow; outboxIds: string[] };
 	try {
-		outcome = await rt.db.transaction(async (tx) => {
+		outcome = await practitionerTransaction(rt.db, held.practitionerId, async (tx) => {
 			const row = await lockAppointment(tx, held.id);
 			if (row.status === "expired") {
 				await expireStaleOverlapping(tx, {
@@ -251,7 +252,7 @@ async function wrongCode(
 	const attempts = Math.max(0, ...rows.map((row) => row.attempts));
 	const attemptsLeft = Math.max(0, BOOKING_LIMITS.codeAttempts - attempts);
 	if (attemptsLeft === 0) {
-		await rt.db.transaction(async (tx) => {
+		await practitionerTransaction(rt.db, held.practitionerId, async (tx) => {
 			const row = await lockAppointment(tx, held.id);
 			await tx
 				.update(otpChallenges)
@@ -287,7 +288,7 @@ export async function resendCode(
 		throw new BookingError("TRANSITION_REFUSED", "INVALID_TRANSITION");
 	}
 	await ensureOrganizationKey(rt.db, held.organizationId);
-	const ids = await rt.db.transaction(async (tx) => {
+	const ids = await practitionerTransaction(rt.db, held.practitionerId, async (tx) => {
 		await lockAppointment(tx, held.id);
 		const sent = await tx
 			.select({ createdAt: otpChallenges.createdAt, consumedAt: otpChallenges.consumedAt })
@@ -329,7 +330,7 @@ export async function release(rt: BookingRuntime, ref: HoldRef): Promise<{ relea
 	await limit(rt, rt.clientKey("booking-verify"), BOOKING_LIMITS.verifiesPerIp);
 	const held = await findHold(rt, ref);
 	const nowMs = rt.nowMs();
-	const released = await rt.db.transaction(async (tx) => {
+	const released = await practitionerTransaction(rt.db, held.practitionerId, async (tx) => {
 		const row = await lockAppointment(tx, held.id);
 		if (row.status !== "held") {
 			return false;

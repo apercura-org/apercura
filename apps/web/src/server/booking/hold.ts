@@ -25,6 +25,7 @@ import {
 import { BOOKING_LIMITS, bookingEnabled } from "./config";
 import { ensureBookingConstraints } from "./constraints";
 import { BookingError, isExclusionViolation, isUniqueViolation } from "./errors";
+import { practitionerTransaction } from "./locks";
 import { refreshNextFreeLater } from "./next-free";
 import { enqueueOutbox } from "./outbox";
 import { drainLater } from "./outbox-worker";
@@ -162,7 +163,7 @@ export async function hold(rt: BookingRuntime, input: HoldInput): Promise<HoldRe
 	let outboxIds: string[];
 	try {
 		await ensureOrganizationKey(rt.db, calendar.organizationId);
-		outboxIds = await rt.db.transaction(async (tx) => {
+		outboxIds = await practitionerTransaction(rt.db, calendar.practitionerId, async (tx) => {
 			// One live hold per browser: an earlier hold of this browser is released.
 			const released = await tx
 				.update(appointments)

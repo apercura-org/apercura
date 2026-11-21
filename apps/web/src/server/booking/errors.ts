@@ -71,7 +71,7 @@ export function isUniqueViolation(error: unknown, constraint?: string): boolean 
 	return constraint === undefined || pgConstraint(error) === constraint;
 }
 
-function pgErrorCode(error: unknown): string | undefined {
+export function pgErrorCode(error: unknown): string | undefined {
 	for (let current = error, depth = 0; current && depth < 5; depth += 1) {
 		const code = (current as { code?: unknown }).code;
 		if (typeof code === "string" && /^[0-9A-Z]{5}$/.test(code)) {

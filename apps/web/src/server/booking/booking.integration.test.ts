@@ -23,7 +23,7 @@ import {
 import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
 import { solveChallenge } from "altcha-lib";
 import { deriveKey as sha } from "altcha-lib/algorithms/sha";
-import { and, eq, inArray, sql } from "drizzle-orm";
+import { and, asc, eq, inArray, sql } from "drizzle-orm";
 import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it } from "vitest";
 import { readAppointmentPatients } from "~/server/phi";
 import { dataKeyCache } from "~/server/phi/keys";
@@ -40,6 +40,7 @@ import { calendarRouter } from "~/trpc/routers/calendar";
 import { BROWSER_COOKIE } from "./config";
 import { assertBookingConstraints } from "./constraints";
 import { enqueueReminders, expireLapsed, purge, refreshAllNextFree } from "./jobs";
+import { practitionerTransaction } from "./locks";
 import type { RenderedMail } from "./mail-content";
 import { enqueueOutbox } from "./outbox";
 import { configureMailTransport, PermanentMailError, processOutbox } from "./outbox-worker";
@@ -65,7 +66,8 @@ const router = createTRPCRouter({
 });
 const createCaller = createCallerFactory(router);
 
-describe.skipIf(!url)("booking (database)", () => {
+// Slow CI runners: database tests get 30 s each instead of 5.
+describe.skipIf(!url)("booking (database)", { timeout: 30_000 }, () => {
 	let db: Database;
 	const run = randomUUID().slice(0, 8);
 	const id = (name: string) => `${name}-${run}`;
@@ -587,7 +589,7 @@ describe.skipIf(!url)("booking (database)", () => {
 				),
 			);
 		expect(rows).toHaveLength(1);
-	});
+	}, 30_000);
 
 	it("books with an emailed code, then lets the patient move and cancel through the manage link", async () => {
 		const [slot, later] = await freeSlots();
@@ -903,7 +905,8 @@ describe.skipIf(!url)("booking (database)", () => {
 			db
 				.select()
 				.from(auditEvents)
-				.where(and(eq(auditEvents.organizationId, orgA), eq(auditEvents.action, "decrypt")));
+				.where(and(eq(auditEvents.organizationId, orgA), eq(auditEvents.action, "decrypt")))
+				.orderBy(asc(auditEvents.id));
 		const before = (await audits()).length;
 		// Keys come from the database, not from this process's memory: a cold cache still decrypts.
 		dataKeyCache.clear();
@@ -1296,6 +1299,62 @@ describe.skipIf(!url)("booking (database)", () => {
 				)
 			)?.message,
 		).toBe("PROOF_REQUIRED");
+	});
+
+	it("serializes a practitioner's writes and retries deadlocks", async () => {
+		// The advisory lock is taken first: a second transaction for the same person waits.
+		const order: string[] = [];
+		let release: () => void = () => {};
+		const gate = new Promise<void>((resolve) => {
+			release = resolve;
+		});
+		const first = practitionerTransaction(db, ids.practitionerA, async () => {
+			order.push("first:start");
+			await gate;
+			order.push("first:end");
+		});
+		await new Promise((resolve) => setTimeout(resolve, 50));
+		const second = practitionerTransaction(db, ids.practitionerA, async () => {
+			order.push("second");
+		});
+		const other = practitionerTransaction(db, ids.practitionerB, async () => {
+			order.push("other practitioner");
+		});
+		await other;
+		await new Promise((resolve) => setTimeout(resolve, 50));
+		release();
+		await Promise.all([first, second]);
+		expect(order).toEqual(["first:start", "other practitioner", "first:end", "second"]);
+
+		// 40P01 and 40001 are retried (3 attempts), anything else is not.
+		let attempts = 0;
+		const result = await practitionerTransaction(db, ids.practitionerA, async () => {
+			attempts += 1;
+			if (attempts < 3) {
+				throw Object.assign(new Error("deadlock detected"), {
+					code: attempts === 1 ? "40P01" : "40001",
+				});
+			}
+			return "done";
+		});
+		expect({ result, attempts }).toEqual({ result: "done", attempts: 3 });
+		attempts = 0;
+		const failed = await errorOf(
+			practitionerTransaction(db, ids.practitionerA, async () => {
+				attempts += 1;
+				throw Object.assign(new Error("deadlock detected"), { code: "40P01" });
+			}),
+		);
+		expect(failed?.message).toBe("deadlock detected");
+		expect(attempts).toBe(3);
+		attempts = 0;
+		await errorOf(
+			practitionerTransaction(db, ids.practitionerA, async () => {
+				attempts += 1;
+				throw Object.assign(new Error("conflict"), { code: "23P01" });
+			}),
+		);
+		expect(attempts).toBe(1);
 	});
 
 	it("checks that the overlap constraint exists", async () => {

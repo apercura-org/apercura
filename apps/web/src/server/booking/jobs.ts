@@ -3,6 +3,7 @@ import { instantToLocalDate, localToInstant } from "@apercura/core/time";
 import type { Database } from "@apercura/db";
 import { sql } from "drizzle-orm";
 import { writeAudit } from "~/server/phi";
+import { practitionerTransaction } from "./locks";
 import { refreshNextFree } from "./next-free";
 import { enqueueOutbox } from "./outbox";
 import { type MailTransport, processOutbox } from "./outbox-worker";
@@ -61,21 +62,24 @@ export async function expireLapsed(db: Database, nowMs: number) {
 	const now = new Date(nowMs);
 	const touched = new Set<number>();
 	let expiredCount = 0;
-	for (;;) {
-		const batch = await db.transaction(async (tx) => {
+	// One practitioner at a time, under the same advisory lock as every booking write.
+	const due = await db.execute<{ practitioner_id: number }>(sql`
+		select distinct practitioner_id from care.appointments
+		where status in ('held', 'pending') and expires_at <= ${at(now)}
+	`);
+	for (const { practitioner_id: practitionerId } of due) {
+		expiredCount += await practitionerTransaction(db, practitionerId, async (tx) => {
 			const rows = await tx.execute<{
 				id: string;
 				organization_id: string;
-				practitioner_id: number;
 				from_status: "held" | "pending";
 				revision: number;
 			}>(sql`
 				with lapsed as (
 					select id, status from care.appointments
-					where status in ('held', 'pending') and expires_at <= ${at(now)}
-					order by expires_at
-					limit ${BATCH}
-					for update skip locked
+					where practitioner_id = ${practitionerId}
+						and status in ('held', 'pending') and expires_at <= ${at(now)}
+					for update
 				)
 				update care.appointments a
 				set status = 'expired',
@@ -84,24 +88,18 @@ export async function expireLapsed(db: Database, nowMs: number) {
 					updated_at = ${at(now)}
 				from lapsed
 				where a.id = lapsed.id
-				returning a.id, a.organization_id, a.practitioner_id, lapsed.status as from_status, a.revision
+				returning a.id, a.organization_id, lapsed.status as from_status, a.revision
 			`);
-			const expired: ExpiredEntry[] = [...rows].map((row) => {
-				touched.add(row.practitioner_id);
-				return {
-					id: row.id,
-					organizationId: row.organization_id,
-					fromStatus: row.from_status,
-					revision: row.revision,
-				};
-			});
+			const expired: ExpiredEntry[] = [...rows].map((row) => ({
+				id: row.id,
+				organizationId: row.organization_id,
+				fromStatus: row.from_status,
+				revision: row.revision,
+			}));
 			await recordExpiries(tx, expired, "system:sweep");
 			return expired.length;
 		});
-		expiredCount += batch;
-		if (batch < BATCH) {
-			break;
-		}
+		touched.add(practitionerId);
 	}
 
 	const completed = await db.transaction(async (tx) => {

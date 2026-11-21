@@ -19,6 +19,7 @@ import {
 import { BOOKING_LIMITS, bookingEnabled } from "./config";
 import { ensureBookingConstraints } from "./constraints";
 import { BookingError, isExclusionViolation } from "./errors";
+import { practitionerTransaction } from "./locks";
 import { refreshNextFreeLater } from "./next-free";
 import { enqueueOutbox } from "./outbox";
 import { drainLater } from "./outbox-worker";
@@ -153,7 +154,7 @@ export async function confirmManagedEmail(rt: BookingRuntime, token: string) {
 	if (row.emailVerifiedAt) {
 		return { confirmed: true };
 	}
-	await rt.db.transaction(async (tx) => {
+	await practitionerTransaction(rt.db, row.practitionerId, async (tx) => {
 		const locked = await lockAppointment(tx, row.id);
 		if (locked.emailVerifiedAt) {
 			return;
@@ -182,7 +183,7 @@ export async function cancelManaged(rt: BookingRuntime, token: string) {
 	const found = await byToken(rt, token);
 	const nowMs = rt.nowMs();
 	const { cutoffMin } = await cancellationCutoff(rt, found);
-	const ids = await rt.db.transaction(async (tx) => {
+	const ids = await practitionerTransaction(rt.db, found.practitionerId, async (tx) => {
 		const row = await lockAppointment(tx, found.id);
 		const notify = row.emailVerifiedAt !== null;
 		const { row: updated } = await applyTransition(
@@ -266,7 +267,7 @@ export async function rescheduleManaged(
 	const occupied = occupancy(toCoreType(type), startMs);
 	const endMs = appointmentEnd(toCoreType(type), startMs);
 	try {
-		const result = await rt.db.transaction(async (tx) => {
+		const result = await practitionerTransaction(rt.db, found.practitionerId, async (tx) => {
 			const row = await lockAppointment(tx, found.id);
 			const allowed = transition(lifecycleEntry(row), {
 				type: "cancel_by_patient",
