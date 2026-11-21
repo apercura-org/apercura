@@ -42,6 +42,7 @@ Generate local secrets for `.env` with `bun run keys:generate`.
 | `bun run check` / `check:write` | Lint and format with Biome (`:write` applies fixes) |
 | `bun run typecheck`             | Type-check every package                            |
 | `bun run test`                  | Run the unit tests (Vitest)                         |
+| `bun run test:e2e`              | Build, then run Playwright and axe checks           |
 | `bun run db:generate`           | Generate a SQL migration from the Drizzle schema    |
 | `bun run db:migrate`            | Apply pending migrations                            |
 | `bun run keys:generate`         | Print fresh random secrets for `.env`               |
@@ -55,7 +56,7 @@ packages/
   core/         Pure domain logic (RPPS validation, slugs), fully unit-tested
   db/           Drizzle ORM schema, client and SQL migrations (PostgreSQL + PostGIS)
   etl/          Open data import CLI (placeholder)
-  ui/           Shared UI components (placeholder until the design system lands)
+  ui/           Design system: tokens, React Aria components, domain components (see DESIGN.md)
 docker/
   compose.yml   Local PostgreSQL (PostGIS) and Mailpit
 ```
