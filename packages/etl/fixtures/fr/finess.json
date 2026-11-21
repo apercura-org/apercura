@@ -1,0 +1,131 @@
+{
+	"schemaVersion": "v1.0.0",
+	"generatedAt": "2026-11-21T03:00:00Z",
+	"gco": [],
+	"gcc": [],
+	"pmej": [
+		{
+			"informationsGeneralesPMEJ": {
+				"pmSmsseId": "1",
+				"numFinessPm": "759999000"
+			},
+			"ege": [
+				{
+					"informationsGeneralesEGE": {
+						"egeId": "759999001",
+						"dateFermeture": null,
+						"nomEgeCourt": "HOPITAL FICTIF DE TE",
+						"nomEgeLong": "HOPITAL FICTIF DE TEST            ",
+						"numFinessEge": "759999001"
+					},
+					"categorieentiteGeographiqueExercice": "355",
+					"adresse": [
+						{
+							"usageAdresse": "03",
+							"cogCommune": "75113",
+							"codePostal": "75013",
+							"coordonneesGeographique": {
+								"directionLatitude": "48.835000",
+								"directionLongitude": "2.360000",
+								"scoreBAN": "0.95"
+							}
+						}
+					],
+					"contact": [
+						{
+							"typeContact": {
+								"roleContact": "01"
+							},
+							"telecom": {
+								"telephone": "0199000100",
+								"telecopie": null,
+								"courriel": null
+							}
+						}
+					],
+					"etatObjet": "A"
+				},
+				{
+					"informationsGeneralesEGE": {
+						"egeId": "759999002",
+						"dateFermeture": "2020-01-01",
+						"nomEgeCourt": "CLINIQUE FERMEE FICT",
+						"nomEgeLong": "CLINIQUE FERMEE FICTIVE            ",
+						"numFinessEge": "759999002"
+					},
+					"categorieentiteGeographiqueExercice": "355",
+					"adresse": [
+						{
+							"usageAdresse": "03",
+							"cogCommune": "75113",
+							"codePostal": "75013",
+							"coordonneesGeographique": {
+								"directionLatitude": "48.836000",
+								"directionLongitude": "2.361000",
+								"scoreBAN": "0.95"
+							}
+						}
+					],
+					"contact": [
+						{
+							"typeContact": {
+								"roleContact": "01"
+							},
+							"telecom": {
+								"telephone": "0199000100",
+								"telecopie": null,
+								"courriel": null
+							}
+						}
+					],
+					"etatObjet": "I"
+				}
+			],
+			"etatObjet": "A"
+		},
+		{
+			"informationsGeneralesPMEJ": {
+				"pmSmsseId": "2",
+				"numFinessPm": "2A9999000"
+			},
+			"ege": [
+				{
+					"informationsGeneralesEGE": {
+						"egeId": "2A9999001",
+						"dateFermeture": null,
+						"nomEgeCourt": "CENTRE HOSPITALIER F",
+						"nomEgeLong": "CENTRE HOSPITALIER FICTIF            ",
+						"numFinessEge": "2A9999001"
+					},
+					"categorieentiteGeographiqueExercice": "355",
+					"adresse": [
+						{
+							"usageAdresse": "03",
+							"cogCommune": "2A004",
+							"codePostal": "20000",
+							"coordonneesGeographique": {
+								"directionLatitude": "41.930000",
+								"directionLongitude": "8.740000",
+								"scoreBAN": "0.95"
+							}
+						}
+					],
+					"contact": [
+						{
+							"typeContact": {
+								"roleContact": "01"
+							},
+							"telecom": {
+								"telephone": "0199000100",
+								"telecopie": null,
+								"courriel": null
+							}
+						}
+					],
+					"etatObjet": "A"
+				}
+			],
+			"etatObjet": "A"
+		}
+	]
+}

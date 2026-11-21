@@ -1,0 +1,5 @@
+Type d'identifiant PP|Identifiant PP|Identification nationale PP|Nom d'exercice|Prénom d'exercice|Code profession|Libellé profession|Code catégorie professionnelle|Libellé catégorie professionnelle|Code type savoir-faire|Libellé type savoir-faire|Code savoir-faire|Libellé savoir-faire
+8|19999990013|819999990013|EXEMPLE|CAMILLE|10|Médecin|C|Civil|C|Compétence|CM01|Médecine du sport (synthetic)
+8|19999990047|819999990047|DE LA MAQUETTE|BRUNO|10|Médecin|C|Civil|S|Spécialité ordinale|SM04|Cardiologie et maladies vasculaires
+8|19999990047|819999990047|DE LA MAQUETTE|BRUNO|10|Médecin|C|Civil|CAPA|Capacité|CAPA01|Angiologie (synthetic)
+8|19999990062|819999990062|TEMOIN|DAVID|40|Chirurgien-Dentiste|C|Civil|S|Spécialité ordinale|SCD01|Orthopédie dento-faciale

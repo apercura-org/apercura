@@ -1,0 +1,216 @@
+Type d'identifiant PP|Identifiant PP|Identification nationale PP|Nom d'exercice|Prénom d'exercice|Code type diplôme obtenu|Libellé type diplôme obtenu|Code diplôme obtenu|Libellé diplôme obtenu|Code type autorisation|Libellé type autorisation|Code discipline autorisation|Libellé discipline autorisation
+8|19999990013|819999990013|EXEMPLE|CAMILLE|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999990021|819999990021|FICTIF|JEAN-PIERRE|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999990039|819999990039|SPECIMEN|ALICE|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999990047|819999990047|DE LA MAQUETTE|BRUNO|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999990054|819999990054|D'ESSAI|CHLOE|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999990062|819999990062|TEMOIN|DAVID|DE|Diplôme d'Etat français |DE01|Diplôme d'État français de docteur en chirurgie dentaire||||
+8|19999990070|819999990070|ECHANTILLON|EMMA|DE|Diplôme d'Etat français |DE01|Diplôme d'État français de docteur en chirurgie dentaire||||
+8|19999990088|819999990088|PLACEBO|FANNY|DE|Diplôme d'Etat français |DE06|Diplôme d'Etat français de sage-femme ||||
+8|19999990096|819999990096|REMPLACANT|GASPARD|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999990104|819999990104|INSCRITE|HELENE|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999990112|819999990112|PROTOTYPE|IGOR|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999990120|819999990120|MODELE|JULIE|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999990138|819999990138|DOUBLON|KEVIN|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999990146|819999990146|DOUBLON|KEVIN|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999990153|819999990153|MAQUETTE|LAURA|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999991003|819999991003|ESSAIAA|ANNE|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999991011|819999991011|ESSAIAB|BENOIT|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999991029|819999991029|ESSAIAC|CLAIRE|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999991037|819999991037|ESSAIAD|DENIS|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999991045|819999991045|ESSAIAE|ELSA|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999991052|819999991052|ESSAIAF|FABIEN|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999991060|819999991060|ESSAIAG|GAELLE|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999991078|819999991078|ESSAIAH|HUGO|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999991086|819999991086|ESSAIAI|INES|DE|Diplôme d'Etat français |DE01|Diplôme d'État français de docteur en chirurgie dentaire||||
+8|19999991094|819999991094|ESSAIAJ|JULES|DE|Diplôme d'Etat français |DE06|Diplôme d'Etat français de sage-femme ||||
+8|19999991102|819999991102|ESSAIAK|ANNE|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999991110|819999991110|ESSAIAL|BENOIT|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999991128|819999991128|ESSAIAM|CLAIRE|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999991136|819999991136|ESSAIAN|DENIS|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999991144|819999991144|ESSAIAO|ELSA|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999991151|819999991151|ESSAIAP|FABIEN|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999991169|819999991169|ESSAIAQ|GAELLE|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999991177|819999991177|ESSAIAR|HUGO|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999991185|819999991185|ESSAIAS|INES|DE|Diplôme d'Etat français |DE01|Diplôme d'État français de docteur en chirurgie dentaire||||
+8|19999991193|819999991193|ESSAIAT|JULES|DE|Diplôme d'Etat français |DE06|Diplôme d'Etat français de sage-femme ||||
+8|19999991201|819999991201|ESSAIAU|ANNE|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999991219|819999991219|ESSAIAV|BENOIT|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999991227|819999991227|ESSAIAW|CLAIRE|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999991235|819999991235|ESSAIAX|DENIS|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999991243|819999991243|ESSAIAY|ELSA|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999991250|819999991250|ESSAIAZ|FABIEN|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999991268|819999991268|ESSAIBA|GAELLE|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999991276|819999991276|ESSAIBB|HUGO|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999991284|819999991284|ESSAIBC|INES|DE|Diplôme d'Etat français |DE01|Diplôme d'État français de docteur en chirurgie dentaire||||
+8|19999991292|819999991292|ESSAIBD|JULES|DE|Diplôme d'Etat français |DE06|Diplôme d'Etat français de sage-femme ||||
+8|19999991300|819999991300|ESSAIBE|ANNE|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999991318|819999991318|ESSAIBF|BENOIT|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999991326|819999991326|ESSAIBG|CLAIRE|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999991334|819999991334|ESSAIBH|DENIS|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999991342|819999991342|ESSAIBI|ELSA|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999991359|819999991359|ESSAIBJ|FABIEN|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999991367|819999991367|ESSAIBK|GAELLE|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999991375|819999991375|ESSAIBL|HUGO|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999991383|819999991383|ESSAIBM|INES|DE|Diplôme d'Etat français |DE01|Diplôme d'État français de docteur en chirurgie dentaire||||
+8|19999991391|819999991391|ESSAIBN|JULES|DE|Diplôme d'Etat français |DE06|Diplôme d'Etat français de sage-femme ||||
+8|19999991409|819999991409|ESSAIBO|ANNE|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999991417|819999991417|ESSAIBP|BENOIT|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999991425|819999991425|ESSAIBQ|CLAIRE|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999991433|819999991433|ESSAIBR|DENIS|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999991441|819999991441|ESSAIBS|ELSA|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999991458|819999991458|ESSAIBT|FABIEN|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999991466|819999991466|ESSAIBU|GAELLE|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999991474|819999991474|ESSAIBV|HUGO|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999991482|819999991482|ESSAIBW|INES|DE|Diplôme d'Etat français |DE01|Diplôme d'État français de docteur en chirurgie dentaire||||
+8|19999991490|819999991490|ESSAIBX|JULES|DE|Diplôme d'Etat français |DE06|Diplôme d'Etat français de sage-femme ||||
+8|19999991508|819999991508|ESSAIBY|ANNE|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999991516|819999991516|ESSAIBZ|BENOIT|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999991524|819999991524|ESSAICA|CLAIRE|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999991532|819999991532|ESSAICB|DENIS|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999991540|819999991540|ESSAICC|ELSA|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999991557|819999991557|ESSAICD|FABIEN|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999991565|819999991565|ESSAICE|GAELLE|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999991573|819999991573|ESSAICF|HUGO|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999991581|819999991581|ESSAICG|INES|DE|Diplôme d'Etat français |DE01|Diplôme d'État français de docteur en chirurgie dentaire||||
+8|19999991599|819999991599|ESSAICH|JULES|DE|Diplôme d'Etat français |DE06|Diplôme d'Etat français de sage-femme ||||
+8|19999991607|819999991607|ESSAICI|ANNE|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999991615|819999991615|ESSAICJ|BENOIT|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999991623|819999991623|ESSAICK|CLAIRE|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999991631|819999991631|ESSAICL|DENIS|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999991649|819999991649|ESSAICM|ELSA|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999991656|819999991656|ESSAICN|FABIEN|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999991664|819999991664|ESSAICO|GAELLE|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999991672|819999991672|ESSAICP|HUGO|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999991680|819999991680|ESSAICQ|INES|DE|Diplôme d'Etat français |DE01|Diplôme d'État français de docteur en chirurgie dentaire||||
+8|19999991698|819999991698|ESSAICR|JULES|DE|Diplôme d'Etat français |DE06|Diplôme d'Etat français de sage-femme ||||
+8|19999991706|819999991706|ESSAICS|ANNE|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999991714|819999991714|ESSAICT|BENOIT|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999991722|819999991722|ESSAICU|CLAIRE|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999991730|819999991730|ESSAICV|DENIS|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999991748|819999991748|ESSAICW|ELSA|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999991755|819999991755|ESSAICX|FABIEN|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999991763|819999991763|ESSAICY|GAELLE|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999991771|819999991771|ESSAICZ|HUGO|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999991789|819999991789|ESSAIDA|INES|DE|Diplôme d'Etat français |DE01|Diplôme d'État français de docteur en chirurgie dentaire||||
+8|19999991797|819999991797|ESSAIDB|JULES|DE|Diplôme d'Etat français |DE06|Diplôme d'Etat français de sage-femme ||||
+8|19999991805|819999991805|ESSAIDC|ANNE|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999991813|819999991813|ESSAIDD|BENOIT|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999991821|819999991821|ESSAIDE|CLAIRE|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999991839|819999991839|ESSAIDF|DENIS|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999991847|819999991847|ESSAIDG|ELSA|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999991854|819999991854|ESSAIDH|FABIEN|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999991862|819999991862|ESSAIDI|GAELLE|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999991870|819999991870|ESSAIDJ|HUGO|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999991888|819999991888|ESSAIDK|INES|DE|Diplôme d'Etat français |DE01|Diplôme d'État français de docteur en chirurgie dentaire||||
+8|19999991896|819999991896|ESSAIDL|JULES|DE|Diplôme d'Etat français |DE06|Diplôme d'Etat français de sage-femme ||||
+8|19999991904|819999991904|ESSAIDM|ANNE|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999991912|819999991912|ESSAIDN|BENOIT|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999991920|819999991920|ESSAIDO|CLAIRE|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999991938|819999991938|ESSAIDP|DENIS|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999991946|819999991946|ESSAIDQ|ELSA|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999991953|819999991953|ESSAIDR|FABIEN|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999991961|819999991961|ESSAIDS|GAELLE|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999991979|819999991979|ESSAIDT|HUGO|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999991987|819999991987|ESSAIDU|INES|DE|Diplôme d'Etat français |DE01|Diplôme d'État français de docteur en chirurgie dentaire||||
+8|19999991995|819999991995|ESSAIDV|JULES|DE|Diplôme d'Etat français |DE06|Diplôme d'Etat français de sage-femme ||||
+8|19999992001|819999992001|ESSAIDW|ANNE|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999992019|819999992019|ESSAIDX|BENOIT|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999992027|819999992027|ESSAIDY|CLAIRE|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999992035|819999992035|ESSAIDZ|DENIS|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999992043|819999992043|ESSAIEA|ELSA|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999992050|819999992050|ESSAIEB|FABIEN|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999992068|819999992068|ESSAIEC|GAELLE|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999992076|819999992076|ESSAIED|HUGO|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999992084|819999992084|ESSAIEE|INES|DE|Diplôme d'Etat français |DE01|Diplôme d'État français de docteur en chirurgie dentaire||||
+8|19999992092|819999992092|ESSAIEF|JULES|DE|Diplôme d'Etat français |DE06|Diplôme d'Etat français de sage-femme ||||
+8|19999992100|819999992100|ESSAIEG|ANNE|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999992118|819999992118|ESSAIEH|BENOIT|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999992126|819999992126|ESSAIEI|CLAIRE|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999992134|819999992134|ESSAIEJ|DENIS|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999992142|819999992142|ESSAIEK|ELSA|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999992159|819999992159|ESSAIEL|FABIEN|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999992167|819999992167|ESSAIEM|GAELLE|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999992175|819999992175|ESSAIEN|HUGO|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999992183|819999992183|ESSAIEO|INES|DE|Diplôme d'Etat français |DE01|Diplôme d'État français de docteur en chirurgie dentaire||||
+8|19999992191|819999992191|ESSAIEP|JULES|DE|Diplôme d'Etat français |DE06|Diplôme d'Etat français de sage-femme ||||
+8|19999992209|819999992209|ESSAIEQ|ANNE|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999992217|819999992217|ESSAIER|BENOIT|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999992225|819999992225|ESSAIES|CLAIRE|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999992233|819999992233|ESSAIET|DENIS|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999992241|819999992241|ESSAIEU|ELSA|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999992258|819999992258|ESSAIEV|FABIEN|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999992266|819999992266|ESSAIEW|GAELLE|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999992274|819999992274|ESSAIEX|HUGO|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999992282|819999992282|ESSAIEY|INES|DE|Diplôme d'Etat français |DE01|Diplôme d'État français de docteur en chirurgie dentaire||||
+8|19999992290|819999992290|ESSAIEZ|JULES|DE|Diplôme d'Etat français |DE06|Diplôme d'Etat français de sage-femme ||||
+8|19999992308|819999992308|ESSAIFA|ANNE|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999992316|819999992316|ESSAIFB|BENOIT|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999992324|819999992324|ESSAIFC|CLAIRE|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999992332|819999992332|ESSAIFD|DENIS|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999992340|819999992340|ESSAIFE|ELSA|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999992357|819999992357|ESSAIFF|FABIEN|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999992365|819999992365|ESSAIFG|GAELLE|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999992373|819999992373|ESSAIFH|HUGO|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999992381|819999992381|ESSAIFI|INES|DE|Diplôme d'Etat français |DE01|Diplôme d'État français de docteur en chirurgie dentaire||||
+8|19999992399|819999992399|ESSAIFJ|JULES|DE|Diplôme d'Etat français |DE06|Diplôme d'Etat français de sage-femme ||||
+8|19999992407|819999992407|ESSAIFK|ANNE|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999992415|819999992415|ESSAIFL|BENOIT|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999992423|819999992423|ESSAIFM|CLAIRE|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999992431|819999992431|ESSAIFN|DENIS|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999992449|819999992449|ESSAIFO|ELSA|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999992456|819999992456|ESSAIFP|FABIEN|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999992464|819999992464|ESSAIFQ|GAELLE|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999992472|819999992472|ESSAIFR|HUGO|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999992480|819999992480|ESSAIFS|INES|DE|Diplôme d'Etat français |DE01|Diplôme d'État français de docteur en chirurgie dentaire||||
+8|19999992498|819999992498|ESSAIFT|JULES|DE|Diplôme d'Etat français |DE06|Diplôme d'Etat français de sage-femme ||||
+8|19999992506|819999992506|ESSAIFU|ANNE|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999992514|819999992514|ESSAIFV|BENOIT|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999992522|819999992522|ESSAIFW|CLAIRE|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999992530|819999992530|ESSAIFX|DENIS|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999992548|819999992548|ESSAIFY|ELSA|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999992555|819999992555|ESSAIFZ|FABIEN|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999992563|819999992563|ESSAIGA|GAELLE|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999992571|819999992571|ESSAIGB|HUGO|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999992589|819999992589|ESSAIGC|INES|DE|Diplôme d'Etat français |DE01|Diplôme d'État français de docteur en chirurgie dentaire||||
+8|19999992597|819999992597|ESSAIGD|JULES|DE|Diplôme d'Etat français |DE06|Diplôme d'Etat français de sage-femme ||||
+8|19999992605|819999992605|ESSAIGE|ANNE|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999992613|819999992613|ESSAIGF|BENOIT|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999992621|819999992621|ESSAIGG|CLAIRE|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999992639|819999992639|ESSAIGH|DENIS|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999992647|819999992647|ESSAIGI|ELSA|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999992654|819999992654|ESSAIGJ|FABIEN|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999992662|819999992662|ESSAIGK|GAELLE|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999992670|819999992670|ESSAIGL|HUGO|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999992688|819999992688|ESSAIGM|INES|DE|Diplôme d'Etat français |DE01|Diplôme d'État français de docteur en chirurgie dentaire||||
+8|19999992696|819999992696|ESSAIGN|JULES|DE|Diplôme d'Etat français |DE06|Diplôme d'Etat français de sage-femme ||||
+8|19999992704|819999992704|ESSAIGO|ANNE|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999992712|819999992712|ESSAIGP|BENOIT|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999992720|819999992720|ESSAIGQ|CLAIRE|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999992738|819999992738|ESSAIGR|DENIS|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999992746|819999992746|ESSAIGS|ELSA|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999992753|819999992753|ESSAIGT|FABIEN|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999992761|819999992761|ESSAIGU|GAELLE|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999992779|819999992779|ESSAIGV|HUGO|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999992787|819999992787|ESSAIGW|INES|DE|Diplôme d'Etat français |DE01|Diplôme d'État français de docteur en chirurgie dentaire||||
+8|19999992795|819999992795|ESSAIGX|JULES|DE|Diplôme d'Etat français |DE06|Diplôme d'Etat français de sage-femme ||||
+8|19999992803|819999992803|ESSAIGY|ANNE|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999992811|819999992811|ESSAIGZ|BENOIT|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999992829|819999992829|ESSAIHA|CLAIRE|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999992837|819999992837|ESSAIHB|DENIS|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999992845|819999992845|ESSAIHC|ELSA|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999992852|819999992852|ESSAIHD|FABIEN|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999992860|819999992860|ESSAIHE|GAELLE|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999992878|819999992878|ESSAIHF|HUGO|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999992886|819999992886|ESSAIHG|INES|DE|Diplôme d'Etat français |DE01|Diplôme d'État français de docteur en chirurgie dentaire||||
+8|19999992894|819999992894|ESSAIHH|JULES|DE|Diplôme d'Etat français |DE06|Diplôme d'Etat français de sage-femme ||||
+8|19999992902|819999992902|ESSAIHI|ANNE|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999992910|819999992910|ESSAIHJ|BENOIT|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999992928|819999992928|ESSAIHK|CLAIRE|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999992936|819999992936|ESSAIHL|DENIS|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999992944|819999992944|ESSAIHM|ELSA|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999992951|819999992951|ESSAIHN|FABIEN|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999992969|819999992969|ESSAIHO|GAELLE|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999992977|819999992977|ESSAIHP|HUGO|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999992985|819999992985|ESSAIHQ|INES|DE|Diplôme d'Etat français |DE01|Diplôme d'État français de docteur en chirurgie dentaire||||
+8|19999992993|819999992993|ESSAIHR|JULES|DE|Diplôme d'Etat français |DE06|Diplôme d'Etat français de sage-femme ||||

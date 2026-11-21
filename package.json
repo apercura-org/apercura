@@ -17,7 +17,9 @@
 		"test": "turbo run test",
 		"db:generate": "bun run --cwd packages/db db:generate",
 		"db:migrate": "bun run --cwd packages/db db:migrate",
-		"keys:generate": "bun scripts/generate-keys.ts"
+		"keys:generate": "bun scripts/generate-keys.ts",
+		"etl:fr": "bun packages/etl/src/cli.ts etl:fr",
+		"etl:places": "bun packages/etl/src/cli.ts etl:places"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "2.6.8",

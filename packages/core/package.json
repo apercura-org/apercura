@@ -8,6 +8,8 @@
 		".": "./src/index.ts",
 		"./booking": "./src/booking/index.ts",
 		"./crypto": "./src/crypto/index.ts",
+		"./revalidation": "./src/revalidation.ts",
+		"./taxonomy": "./src/taxonomy/index.ts",
 		"./time": "./src/time/index.ts"
 	},
 	"scripts": {
