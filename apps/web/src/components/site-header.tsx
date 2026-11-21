@@ -5,7 +5,7 @@ import { type Locale, routing } from "~/i18n/routing";
 interface SiteHeaderProps {
 	locale: Locale;
 	/** Current path without locale prefix, so the language switch stays on the same page. */
-	pathname: "/" | "/pro" | "/recherche" | "/_ui";
+	pathname: string;
 	/** The home page prints the wordmark large in the band; other pages print it here. */
 	showWordmark?: boolean;
 }
@@ -17,7 +17,7 @@ const navLink =
 export async function SiteHeader({ locale, pathname, showWordmark = true }: SiteHeaderProps) {
 	const t = await getTranslations({ locale, namespace: "Site" });
 	const tLocale = await getTranslations({ locale, namespace: "LocaleSwitcher" });
-	const isPro = pathname === "/pro";
+	const isPro = pathname === "/pro" || pathname.startsWith("/pro/");
 
 	return (
 		<header className="border-b border-cover-rule">
