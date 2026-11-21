@@ -36,6 +36,20 @@
       "when": 1795288918688,
       "tag": "0004_database_roles",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1795295060201,
+      "tag": "0005_auth",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1795295067907,
+      "tag": "0006_auth_grants",
+      "breakpoints": true
     }
   ]
 }
