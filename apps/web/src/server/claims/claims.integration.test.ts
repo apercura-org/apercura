@@ -12,6 +12,7 @@ import {
 	claims,
 	member,
 	organization,
+	practitionerProfiles,
 	practitioners,
 	session,
 	user,
@@ -54,6 +55,7 @@ describe.skipIf(!url)("claims, ownership and objections (database)", async () =>
 	const { claimsRouter } = await import("~/trpc/routers/claims");
 	const { profileRouter } = await import("~/trpc/routers/profile");
 	const { adminRouter } = await import("~/trpc/routers/admin");
+	const { agendaRequirements } = await import("../booking/gate");
 
 	let db: Database;
 	const run = randomUUID().slice(0, 8);
@@ -528,5 +530,51 @@ describe.skipIf(!url)("claims, ownership and objections (database)", async () =>
 				}),
 			),
 		).toBe("CLAIMED");
+	});
+
+	it("gates the agenda in one place: verified owner, 7-day wait without Pro Santé Connect, fees and payment methods", async () => {
+		const fees = { items: [{ label: "Consultation", amount: 30, maxAmount: null }], note: null };
+		const viaEmail = await practitioner();
+		const emailClaim = await service.startClaim(db, users.alice, viaEmail.rpps);
+		await passCheck(emailClaim.id, "registry_email");
+		const emailApproval = await service.evaluateClaim(db, emailClaim.id);
+		const emailOrg = emailApproval?.organizationId ?? "";
+		await db
+			.update(practitionerProfiles)
+			.set({ fees, paymentMethods: ["card"] })
+			.where(eq(practitionerProfiles.practitionerId, viaEmail.id));
+		const waiting = await agendaRequirements(db, emailOrg, viaEmail.id);
+		expect(waiting).toMatchObject({
+			claimed: true,
+			fees: true,
+			paymentMethods: true,
+			ready: false,
+		});
+		expect(waiting.blockers).toEqual(["waitingPeriod"]);
+		const later = await agendaRequirements(
+			db,
+			emailOrg,
+			viaEmail.id,
+			new Date(Date.now() + 8 * 86_400_000),
+		);
+		expect(later.ready).toBe(true);
+		// Another organization never passes, whatever the page states.
+		expect((await agendaRequirements(db, ids("other-org"), viaEmail.id)).claimed).toBe(false);
+		// The editor reads the very same gate.
+		const editor = await caller(users.alice).profile.get({ organizationId: emailOrg });
+		expect(editor.booking).toEqual(waiting);
+
+		const viaPsc = await practitioner();
+		const pscClaim = await service.startClaim(db, users.carol, viaPsc.rpps);
+		await passCheck(pscClaim.id, "psc");
+		const pscApproval = await service.evaluateClaim(db, pscClaim.id);
+		const pscOrg = pscApproval?.organizationId ?? "";
+		const missing = await agendaRequirements(db, pscOrg, viaPsc.id);
+		expect(missing.blockers).toEqual(["fees", "paymentMethods"]);
+		await db
+			.update(practitionerProfiles)
+			.set({ fees, paymentMethods: ["cash"] })
+			.where(eq(practitionerProfiles.practitionerId, viaPsc.id));
+		expect((await agendaRequirements(db, pscOrg, viaPsc.id)).ready).toBe(true);
 	});
 });

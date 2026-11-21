@@ -1,6 +1,6 @@
 -- Custom migration: claims, owner page content and GDPR tools (M4).
 --
--- 1. Grants on the tables of 0008: the app reads and writes them, except the
+-- 1. Grants on the tables of 0011: the app reads and writes them, except the
 --    platform audit log, which is append-only; the import has no access; the
 --    read-only role reads everything but the secret hashes of claim checks.
 -- 2. practitioner_page_rows() publishes the owner's content once the page is

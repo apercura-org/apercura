@@ -15,11 +15,12 @@ import {
 } from "@apercura/ui";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useFormatter, useTranslations } from "next-intl";
-import { type FormEvent, type ReactNode, useState } from "react";
+import { type FormEvent, type ReactNode, useEffect, useState } from "react";
 import { Link, useRouter } from "~/i18n/navigation";
 import { authClient } from "~/lib/auth-client";
 import { type AuthErrorKey, authErrorKey } from "~/lib/auth-errors";
 import { PRO_ROUTES } from "~/lib/pro-routes";
+import { currentReturnTo, type ReturnTo } from "~/lib/return-to";
 import { useTRPC } from "~/trpc/client";
 import { QrCode } from "./qr-code";
 
@@ -90,8 +91,16 @@ function secretOf(totpURI: string) {
 	}
 }
 
+/** Where "Continue" goes once a factor is enrolled: the claim the visitor came for, else the space. */
+function useContinueTo(): ReturnTo | typeof PRO_ROUTES.home {
+	const [target, setTarget] = useState<ReturnTo | null>(null);
+	useEffect(() => setTarget(currentReturnTo()), []);
+	return target ?? PRO_ROUTES.home;
+}
+
 function TotpSection({ enabled, enrolling }: { enabled: boolean; enrolling: boolean }) {
 	const t = useTranslations("auth");
+	const continueTo = useContinueTo();
 	const router = useRouter();
 	const { error, pending, run } = useAction();
 	const [setup, setSetup] = useState<{ totpURI: string; backupCodes: string[] } | null>(null);
@@ -130,7 +139,7 @@ function TotpSection({ enabled, enrolling }: { enabled: boolean; enrolling: bool
 		body = (
 			<Notice tone="success" title={t("security.totp.enabledTitle")}>
 				{justEnabled && enrolling ? (
-					<Link href={PRO_ROUTES.home} className={linkStyles()}>
+					<Link href={continueTo} className={linkStyles()}>
 						{t("security.continue")}
 					</Link>
 				) : (
@@ -232,6 +241,7 @@ function TotpSection({ enabled, enrolling }: { enabled: boolean; enrolling: bool
 
 function PasskeySection({ enrolling }: { enrolling: boolean }) {
 	const t = useTranslations("auth");
+	const continueTo = useContinueTo();
 	const format = useFormatter();
 	const router = useRouter();
 	const { error, pending, run } = useAction();
@@ -265,7 +275,7 @@ function PasskeySection({ enrolling }: { enrolling: boolean }) {
 			{added ? (
 				<Notice tone="success" title={t("security.passkeys.addedTitle")}>
 					{enrolling ? (
-						<Link href={PRO_ROUTES.home} className={linkStyles()}>
+						<Link href={continueTo} className={linkStyles()}>
 							{t("security.continue")}
 						</Link>
 					) : null}

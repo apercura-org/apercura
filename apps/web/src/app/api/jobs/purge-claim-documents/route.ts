@@ -1,6 +1,6 @@
-import { safeEqual } from "@apercura/core/crypto";
 import { serverEnv } from "~/env";
 import { purgeClaimDocuments } from "~/server/claims/service";
+import { safeEqual } from "~/server/crypto/platform";
 import { getDb } from "~/server/db";
 import { getStorage, storageConfigured } from "~/server/storage";
 

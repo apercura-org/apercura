@@ -17,14 +17,6 @@ import {
 	registryPhones,
 	type VerificationMethodId,
 } from "@apercura/core";
-import {
-	generateManageToken,
-	generateOtp,
-	generateOtpSalt,
-	hashOtp,
-	hashToken,
-	verifyOtp,
-} from "@apercura/core/crypto";
 import type { Database } from "@apercura/db";
 import {
 	account,
@@ -40,7 +32,16 @@ import {
 } from "@apercura/db/schema";
 import { and, desc, eq, inArray, isNull, ne, sql } from "drizzle-orm";
 import { recordAudit } from "../audit";
-import { openBytes, sealBytes } from "../crypto/platform";
+import {
+	generateManageToken,
+	generateOtp,
+	generateOtpSalt,
+	hashOtp,
+	hashToken,
+	openBytes,
+	sealBytes,
+	verifyOtp,
+} from "../crypto/platform";
 import type { StorageDriver } from "../storage";
 
 export type Tx = Parameters<Parameters<Database["transaction"]>[0]>[0];

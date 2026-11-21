@@ -2,6 +2,7 @@ import "server-only";
 import { redirect } from "~/i18n/navigation";
 import type { Locale } from "~/i18n/routing";
 import { PRO_ROUTES, type ProRoute } from "~/lib/pro-routes";
+import { type ReturnTo, withReturnTo } from "~/lib/return-to";
 import { getProAccess, type ProAccess } from "./session";
 
 const HOME_FOR: Record<ProAccess["state"], ProRoute> = {
@@ -19,10 +20,13 @@ const HOME_FOR: Record<ProAccess["state"], ProRoute> = {
 export async function requireProAccess<State extends ProAccess["state"]>(
 	locale: Locale,
 	allowed: readonly State[],
+	/** Where to come back after signing in (allowlisted, see ~/lib/return-to). */
+	returnTo: ReturnTo | null = null,
 ): Promise<Extract<ProAccess, { state: State }>> {
 	const access = await getProAccess();
 	if ((allowed as readonly string[]).includes(access.state)) {
 		return access as Extract<ProAccess, { state: State }>;
 	}
-	return redirect({ href: HOME_FOR[access.state], locale });
+	const home = HOME_FOR[access.state];
+	return redirect({ href: home === PRO_ROUTES.home ? home : withReturnTo(home, returnTo), locale });
 }

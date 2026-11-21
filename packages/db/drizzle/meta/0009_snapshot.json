@@ -1,6 +1,6 @@
 {
-  "id": "b9209147-3a82-4a08-9be8-3b162e411e89",
-  "prevId": "2790eddb-a2d3-41c1-a487-2ffd96e993e0",
+  "id": "88bef46e-71ec-407c-aa2b-dc23270cb69b",
+  "prevId": "2b13a879-dbf6-4a53-a6bd-9e173cbbaf1c",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -906,12 +906,6 @@
           "notNull": true,
           "default": false
         },
-        "frozen_at": {
-          "name": "frozen_at",
-          "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": false
-        },
         "created_at": {
           "name": "created_at",
           "type": "timestamp with time zone",
@@ -1010,74 +1004,201 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "directory.claim_checks": {
-      "name": "claim_checks",
-      "schema": "directory",
+    "care.appointment_events": {
+      "name": "appointment_events",
+      "schema": "care",
       "columns": {
         "id": {
           "name": "id",
-          "type": "integer",
+          "type": "bigint",
           "primaryKey": true,
           "notNull": true,
           "identity": {
-            "name": "claim_checks_id_seq",
+            "name": "appointment_events_id_seq",
             "increment": "1",
             "minValue": "1",
-            "maxValue": "2147483647",
+            "maxValue": "9223372036854775807",
             "startWith": "1",
             "cache": "1",
             "cycle": false,
-            "schema": "directory",
+            "schema": "care",
             "type": "always"
           }
         },
-        "claim_id": {
-          "name": "claim_id",
+        "appointment_id": {
+          "name": "appointment_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "organization_id": {
+          "name": "organization_id",
           "type": "text",
           "primaryKey": false,
           "notNull": true
         },
-        "method": {
-          "name": "method",
+        "actor": {
+          "name": "actor",
           "type": "text",
           "primaryKey": false,
           "notNull": true
         },
-        "status": {
-          "name": "status",
+        "event": {
+          "name": "event",
           "type": "text",
           "primaryKey": false,
-          "notNull": true,
-          "default": "'pending'"
+          "notNull": true
         },
-        "secret_hash": {
-          "name": "secret_hash",
+        "from_status": {
+          "name": "from_status",
           "type": "text",
           "primaryKey": false,
           "notNull": false
         },
-        "attempts": {
-          "name": "attempts",
-          "type": "smallint",
+        "to_status": {
+          "name": "to_status",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "revision": {
+          "name": "revision",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "data": {
+          "name": "data",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "appointment_events_appointment_idx": {
+          "name": "appointment_events_appointment_idx",
+          "columns": [
+            {
+              "expression": "appointment_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "with": {},
+          "method": "btree",
+          "concurrently": false
+        }
+      },
+      "foreignKeys": {
+        "appointment_events_appointment_id_appointments_id_fk": {
+          "name": "appointment_events_appointment_id_appointments_id_fk",
+          "tableFrom": "appointment_events",
+          "columnsFrom": [
+            "appointment_id"
+          ],
+          "tableTo": "appointments",
+          "schemaTo": "care",
+          "columnsTo": [
+            "id"
+          ],
+          "onUpdate": "no action",
+          "onDelete": "cascade"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "care.appointment_types": {
+      "name": "appointment_types",
+      "schema": "care",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "organization_id": {
+          "name": "organization_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "calendar_id": {
+          "name": "calendar_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "duration_min": {
+          "name": "duration_min",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "before_min": {
+          "name": "before_min",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true,
           "default": 0
         },
-        "expires_at": {
-          "name": "expires_at",
-          "type": "timestamp with time zone",
+        "after_min": {
+          "name": "after_min",
+          "type": "integer",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true,
+          "default": 0
         },
-        "passed_at": {
-          "name": "passed_at",
-          "type": "timestamp with time zone",
+        "audience": {
+          "name": "audience",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true,
+          "default": "'all'"
         },
-        "detail": {
-          "name": "detail",
-          "type": "jsonb",
+        "position": {
+          "name": "position",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "active": {
+          "name": "active",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": true
+        },
+        "preset_key": {
+          "name": "preset_key",
+          "type": "text",
           "primaryKey": false,
           "notNull": false
         },
@@ -1097,37 +1218,37 @@
         }
       },
       "indexes": {
-        "claim_checks_method_uq": {
-          "name": "claim_checks_method_uq",
+        "appointment_types_calendar_idx": {
+          "name": "appointment_types_calendar_idx",
           "columns": [
             {
-              "expression": "claim_id",
+              "expression": "calendar_id",
               "isExpression": false,
               "asc": true,
               "nulls": "last"
             },
             {
-              "expression": "method",
+              "expression": "position",
               "isExpression": false,
               "asc": true,
               "nulls": "last"
             }
           ],
-          "isUnique": true,
+          "isUnique": false,
           "with": {},
           "method": "btree",
           "concurrently": false
         }
       },
       "foreignKeys": {
-        "claim_checks_claim_id_claims_id_fk": {
-          "name": "claim_checks_claim_id_claims_id_fk",
-          "tableFrom": "claim_checks",
+        "appointment_types_calendar_id_calendars_id_fk": {
+          "name": "appointment_types_calendar_id_calendars_id_fk",
+          "tableFrom": "appointment_types",
           "columnsFrom": [
-            "claim_id"
+            "calendar_id"
           ],
-          "tableTo": "claims",
-          "schemaTo": "directory",
+          "tableTo": "calendars",
+          "schemaTo": "care",
           "columnsTo": [
             "id"
           ],
@@ -1139,56 +1260,238 @@
       "uniqueConstraints": {},
       "policies": {},
       "checkConstraints": {
-        "claim_checks_method_check": {
-          "name": "claim_checks_method_check",
-          "value": "\"directory\".\"claim_checks\".\"method\" in ('psc', 'registry_email', 'document', 'phone_callback')"
+        "appointment_types_audience_check": {
+          "name": "appointment_types_audience_check",
+          "value": "\"care\".\"appointment_types\".\"audience\" in ('all', 'new', 'existing')"
         },
-        "claim_checks_status_check": {
-          "name": "claim_checks_status_check",
-          "value": "\"directory\".\"claim_checks\".\"status\" in ('pending', 'passed', 'failed')"
+        "appointment_types_duration_check": {
+          "name": "appointment_types_duration_check",
+          "value": "\"care\".\"appointment_types\".\"duration_min\" between 5 and 480"
+        },
+        "appointment_types_buffers_check": {
+          "name": "appointment_types_buffers_check",
+          "value": "\"care\".\"appointment_types\".\"before_min\" between 0 and 240 and \"care\".\"appointment_types\".\"after_min\" between 0 and 240"
         }
       },
       "isRLSEnabled": false
     },
-    "directory.claim_documents": {
-      "name": "claim_documents",
-      "schema": "directory",
+    "care.appointments": {
+      "name": "appointments",
+      "schema": "care",
       "columns": {
         "id": {
           "name": "id",
-          "type": "text",
+          "type": "uuid",
           "primaryKey": true,
-          "notNull": true
+          "notNull": true,
+          "default": "gen_random_uuid()"
         },
-        "claim_id": {
-          "name": "claim_id",
+        "organization_id": {
+          "name": "organization_id",
           "type": "text",
           "primaryKey": false,
           "notNull": true
+        },
+        "calendar_id": {
+          "name": "calendar_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "practitioner_id": {
+          "name": "practitioner_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "appointment_type_id": {
+          "name": "appointment_type_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
         },
         "kind": {
           "name": "kind",
           "type": "text",
           "primaryKey": false,
+          "notNull": true,
+          "default": "'appointment'"
+        },
+        "type_name": {
+          "name": "type_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "starts_at": {
+          "name": "starts_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
           "notNull": true
         },
-        "storage_key": {
-          "name": "storage_key",
+        "ends_at": {
+          "name": "ends_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "occupied_from": {
+          "name": "occupied_from",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "occupied_until": {
+          "name": "occupied_until",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "status": {
+          "name": "status",
           "type": "text",
           "primaryKey": false,
           "notNull": true
         },
-        "content_type": {
-          "name": "content_type",
+        "expiry_reason": {
+          "name": "expiry_reason",
           "type": "text",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
-        "byte_size": {
-          "name": "byte_size",
+        "expires_at": {
+          "name": "expires_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "booked_at": {
+          "name": "booked_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "revision": {
+          "name": "revision",
           "type": "integer",
           "primaryKey": false,
+          "notNull": true,
+          "default": 1
+        },
+        "idempotency_key": {
+          "name": "idempotency_key",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "source": {
+          "name": "source",
+          "type": "text",
+          "primaryKey": false,
           "notNull": true
+        },
+        "created_by_user_id": {
+          "name": "created_by_user_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "patient_first_name_enc": {
+          "name": "patient_first_name_enc",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "patient_last_name_enc": {
+          "name": "patient_last_name_enc",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "patient_email_enc": {
+          "name": "patient_email_enc",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "patient_phone_enc": {
+          "name": "patient_phone_enc",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "practice_message_enc": {
+          "name": "practice_message_enc",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "email_bidx": {
+          "name": "email_bidx",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "phone_bidx": {
+          "name": "phone_bidx",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "patient_locale": {
+          "name": "patient_locale",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'fr'"
+        },
+        "patient_is_new": {
+          "name": "patient_is_new",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "email_verified_at": {
+          "name": "email_verified_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "manage_token_hash": {
+          "name": "manage_token_hash",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "manage_token_nonce": {
+          "name": "manage_token_nonce",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "hold_token_hash": {
+          "name": "hold_token_hash",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "browser_key_hash": {
+          "name": "browser_key_hash",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "reminder_sent_at": {
+          "name": "reminder_sent_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "patient_unreachable_at": {
+          "name": "patient_unreachable_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
         },
         "purge_after": {
           "name": "purge_after",
@@ -1208,14 +1511,110 @@
           "primaryKey": false,
           "notNull": true,
           "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
         }
       },
       "indexes": {
-        "claim_documents_claim_idx": {
-          "name": "claim_documents_claim_idx",
+        "appointments_idempotency_key_uq": {
+          "name": "appointments_idempotency_key_uq",
           "columns": [
             {
-              "expression": "claim_id",
+              "expression": "idempotency_key",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "with": {},
+          "method": "btree",
+          "concurrently": false
+        },
+        "appointments_manage_token_hash_uq": {
+          "name": "appointments_manage_token_hash_uq",
+          "columns": [
+            {
+              "expression": "manage_token_hash",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "with": {},
+          "method": "btree",
+          "concurrently": false
+        },
+        "appointments_hold_token_hash_uq": {
+          "name": "appointments_hold_token_hash_uq",
+          "columns": [
+            {
+              "expression": "hold_token_hash",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "with": {},
+          "method": "btree",
+          "concurrently": false
+        },
+        "appointments_one_hold_per_browser_uq": {
+          "name": "appointments_one_hold_per_browser_uq",
+          "columns": [
+            {
+              "expression": "browser_key_hash",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "with": {},
+          "method": "btree",
+          "where": "\"care\".\"appointments\".\"status\" = 'held' and \"care\".\"appointments\".\"browser_key_hash\" is not null",
+          "concurrently": false
+        },
+        "appointments_practitioner_active_idx": {
+          "name": "appointments_practitioner_active_idx",
+          "columns": [
+            {
+              "expression": "practitioner_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "occupied_from",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "with": {},
+          "method": "btree",
+          "where": "\"care\".\"appointments\".\"status\" in ('held', 'pending', 'confirmed')",
+          "concurrently": false
+        },
+        "appointments_calendar_starts_idx": {
+          "name": "appointments_calendar_starts_idx",
+          "columns": [
+            {
+              "expression": "calendar_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "starts_at",
               "isExpression": false,
               "asc": true,
               "nulls": "last"
@@ -1226,8 +1625,66 @@
           "method": "btree",
           "concurrently": false
         },
-        "claim_documents_purge_idx": {
-          "name": "claim_documents_purge_idx",
+        "appointments_organization_starts_idx": {
+          "name": "appointments_organization_starts_idx",
+          "columns": [
+            {
+              "expression": "organization_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "starts_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "with": {},
+          "method": "btree",
+          "concurrently": false
+        },
+        "appointments_email_bidx_idx": {
+          "name": "appointments_email_bidx_idx",
+          "columns": [
+            {
+              "expression": "organization_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "email_bidx",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "with": {},
+          "method": "btree",
+          "concurrently": false
+        },
+        "appointments_expiring_idx": {
+          "name": "appointments_expiring_idx",
+          "columns": [
+            {
+              "expression": "expires_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "with": {},
+          "method": "btree",
+          "where": "\"care\".\"appointments\".\"status\" in ('held', 'pending')",
+          "concurrently": false
+        },
+        "appointments_purge_idx": {
+          "name": "appointments_purge_idx",
           "columns": [
             {
               "expression": "purge_after",
@@ -1239,245 +1696,74 @@
           "isUnique": false,
           "with": {},
           "method": "btree",
-          "where": "\"directory\".\"claim_documents\".\"purged_at\" is null and \"directory\".\"claim_documents\".\"purge_after\" is not null",
+          "where": "\"care\".\"appointments\".\"purged_at\" is null",
           "concurrently": false
         }
       },
       "foreignKeys": {
-        "claim_documents_claim_id_claims_id_fk": {
-          "name": "claim_documents_claim_id_claims_id_fk",
-          "tableFrom": "claim_documents",
+        "appointments_calendar_id_calendars_id_fk": {
+          "name": "appointments_calendar_id_calendars_id_fk",
+          "tableFrom": "appointments",
           "columnsFrom": [
-            "claim_id"
+            "calendar_id"
           ],
-          "tableTo": "claims",
-          "schemaTo": "directory",
+          "tableTo": "calendars",
+          "schemaTo": "care",
           "columnsTo": [
             "id"
           ],
           "onUpdate": "no action",
-          "onDelete": "cascade"
+          "onDelete": "restrict"
+        },
+        "appointments_appointment_type_id_appointment_types_id_fk": {
+          "name": "appointments_appointment_type_id_appointment_types_id_fk",
+          "tableFrom": "appointments",
+          "columnsFrom": [
+            "appointment_type_id"
+          ],
+          "tableTo": "appointment_types",
+          "schemaTo": "care",
+          "columnsTo": [
+            "id"
+          ],
+          "onUpdate": "no action",
+          "onDelete": "set null"
         }
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
       "policies": {},
       "checkConstraints": {
-        "claim_documents_kind_check": {
-          "name": "claim_documents_kind_check",
-          "value": "\"directory\".\"claim_documents\".\"kind\" in ('cps_card', 'ordre_attestation')"
+        "appointments_status_check": {
+          "name": "appointments_status_check",
+          "value": "\"care\".\"appointments\".\"status\" in ('held', 'pending', 'confirmed', 'declined', 'expired', 'cancelled_by_patient', 'cancelled_by_practice', 'no_show', 'completed')"
+        },
+        "appointments_kind_check": {
+          "name": "appointments_kind_check",
+          "value": "\"care\".\"appointments\".\"kind\" in ('appointment', 'block')"
+        },
+        "appointments_source_check": {
+          "name": "appointments_source_check",
+          "value": "\"care\".\"appointments\".\"source\" in ('online', 'practice')"
+        },
+        "appointments_times_check": {
+          "name": "appointments_times_check",
+          "value": "\"care\".\"appointments\".\"ends_at\" > \"care\".\"appointments\".\"starts_at\" and \"care\".\"appointments\".\"occupied_from\" <= \"care\".\"appointments\".\"starts_at\" and \"care\".\"appointments\".\"occupied_until\" >= \"care\".\"appointments\".\"ends_at\""
+        },
+        "appointments_expiry_check": {
+          "name": "appointments_expiry_check",
+          "value": "\"care\".\"appointments\".\"status\" not in ('held', 'pending') or \"care\".\"appointments\".\"expires_at\" is not null"
+        },
+        "appointments_locale_check": {
+          "name": "appointments_locale_check",
+          "value": "\"care\".\"appointments\".\"patient_locale\" in ('fr', 'en')"
         }
       },
       "isRLSEnabled": false
     },
-    "directory.claims": {
-      "name": "claims",
-      "schema": "directory",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "text",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "practitioner_id": {
-          "name": "practitioner_id",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "user_id": {
-          "name": "user_id",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "status": {
-          "name": "status",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "'open'"
-        },
-        "contest": {
-          "name": "contest",
-          "type": "boolean",
-          "primaryKey": false,
-          "notNull": true,
-          "default": false
-        },
-        "submitted_at": {
-          "name": "submitted_at",
-          "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "verified_at": {
-          "name": "verified_at",
-          "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "booking_opens_at": {
-          "name": "booking_opens_at",
-          "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "decided_at": {
-          "name": "decided_at",
-          "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "decided_by": {
-          "name": "decided_by",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "decision_reason": {
-          "name": "decision_reason",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        },
-        "updated_at": {
-          "name": "updated_at",
-          "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        }
-      },
-      "indexes": {
-        "claims_one_owner_uq": {
-          "name": "claims_one_owner_uq",
-          "columns": [
-            {
-              "expression": "practitioner_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": true,
-          "with": {},
-          "method": "btree",
-          "where": "\"directory\".\"claims\".\"status\" = 'verified'",
-          "concurrently": false
-        },
-        "claims_one_live_per_user_uq": {
-          "name": "claims_one_live_per_user_uq",
-          "columns": [
-            {
-              "expression": "practitioner_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            },
-            {
-              "expression": "user_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": true,
-          "with": {},
-          "method": "btree",
-          "where": "\"directory\".\"claims\".\"status\" in ('open', 'in_review')",
-          "concurrently": false
-        },
-        "claims_user_idx": {
-          "name": "claims_user_idx",
-          "columns": [
-            {
-              "expression": "user_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "with": {},
-          "method": "btree",
-          "concurrently": false
-        },
-        "claims_queue_idx": {
-          "name": "claims_queue_idx",
-          "columns": [
-            {
-              "expression": "status",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            },
-            {
-              "expression": "submitted_at",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "with": {},
-          "method": "btree",
-          "where": "\"directory\".\"claims\".\"status\" = 'in_review'",
-          "concurrently": false
-        }
-      },
-      "foreignKeys": {
-        "claims_practitioner_id_practitioners_id_fk": {
-          "name": "claims_practitioner_id_practitioners_id_fk",
-          "tableFrom": "claims",
-          "columnsFrom": [
-            "practitioner_id"
-          ],
-          "tableTo": "practitioners",
-          "schemaTo": "directory",
-          "columnsTo": [
-            "id"
-          ],
-          "onUpdate": "no action",
-          "onDelete": "cascade"
-        },
-        "claims_user_id_user_id_fk": {
-          "name": "claims_user_id_user_id_fk",
-          "tableFrom": "claims",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "tableTo": "user",
-          "schemaTo": "directory",
-          "columnsTo": [
-            "id"
-          ],
-          "onUpdate": "no action",
-          "onDelete": "cascade"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {
-        "claims_status_check": {
-          "name": "claims_status_check",
-          "value": "\"directory\".\"claims\".\"status\" in ('open', 'in_review', 'verified', 'rejected', 'withdrawn', 'superseded')"
-        }
-      },
-      "isRLSEnabled": false
-    },
-    "directory.platform_audit_events": {
-      "name": "platform_audit_events",
-      "schema": "directory",
+    "care.audit_events": {
+      "name": "audit_events",
+      "schema": "care",
       "columns": {
         "id": {
           "name": "id",
@@ -1485,16 +1771,22 @@
           "primaryKey": true,
           "notNull": true,
           "identity": {
-            "name": "platform_audit_events_id_seq",
+            "name": "audit_events_id_seq",
             "increment": "1",
             "minValue": "1",
             "maxValue": "9223372036854775807",
             "startWith": "1",
             "cache": "1",
             "cycle": false,
-            "schema": "directory",
+            "schema": "care",
             "type": "always"
           }
+        },
+        "organization_id": {
+          "name": "organization_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
         },
         "actor": {
           "name": "actor",
@@ -1502,23 +1794,48 @@
           "primaryKey": false,
           "notNull": true
         },
+        "user_id": {
+          "name": "user_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
         "action": {
           "name": "action",
           "type": "text",
           "primaryKey": false,
           "notNull": true
         },
-        "subject_type": {
-          "name": "subject_type",
+        "purpose": {
+          "name": "purpose",
           "type": "text",
           "primaryKey": false,
           "notNull": true
         },
-        "subject_id": {
-          "name": "subject_id",
+        "subject_table": {
+          "name": "subject_table",
           "type": "text",
           "primaryKey": false,
           "notNull": true
+        },
+        "subject_ids": {
+          "name": "subject_ids",
+          "type": "text[]",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "fields": {
+          "name": "fields",
+          "type": "text[]",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'{}'::text[]"
+        },
+        "request_id": {
+          "name": "request_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
         },
         "ip_hash": {
           "name": "ip_hash",
@@ -1535,17 +1852,17 @@
         }
       },
       "indexes": {
-        "platform_audit_events_subject_idx": {
-          "name": "platform_audit_events_subject_idx",
+        "audit_events_organization_idx": {
+          "name": "audit_events_organization_idx",
           "columns": [
             {
-              "expression": "subject_type",
+              "expression": "organization_id",
               "isExpression": false,
               "asc": true,
               "nulls": "last"
             },
             {
-              "expression": "subject_id",
+              "expression": "created_at",
               "isExpression": false,
               "asc": true,
               "nulls": "last"
@@ -1556,9 +1873,15 @@
           "method": "btree",
           "concurrently": false
         },
-        "platform_audit_events_created_idx": {
-          "name": "platform_audit_events_created_idx",
+        "audit_events_user_idx": {
+          "name": "audit_events_user_idx",
           "columns": [
+            {
+              "expression": "user_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
             {
               "expression": "created_at",
               "isExpression": false,
@@ -1579,19 +1902,759 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "directory.removal_requests": {
-      "name": "removal_requests",
-      "schema": "directory",
+    "care.availability_exceptions": {
+      "name": "availability_exceptions",
+      "schema": "care",
       "columns": {
         "id": {
           "name": "id",
-          "type": "text",
+          "type": "uuid",
           "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "organization_id": {
+          "name": "organization_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "calendar_id": {
+          "name": "calendar_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "kind": {
+          "name": "kind",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "span": {
+          "name": "span",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "from_date": {
+          "name": "from_date",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "until_date": {
+          "name": "until_date",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "from_local": {
+          "name": "from_local",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "until_local": {
+          "name": "until_local",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "type_ids": {
+          "name": "type_ids",
+          "type": "uuid[]",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'{}'::uuid[]"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "availability_exceptions_calendar_idx": {
+          "name": "availability_exceptions_calendar_idx",
+          "columns": [
+            {
+              "expression": "calendar_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "with": {},
+          "method": "btree",
+          "concurrently": false
+        }
+      },
+      "foreignKeys": {
+        "availability_exceptions_calendar_id_calendars_id_fk": {
+          "name": "availability_exceptions_calendar_id_calendars_id_fk",
+          "tableFrom": "availability_exceptions",
+          "columnsFrom": [
+            "calendar_id"
+          ],
+          "tableTo": "calendars",
+          "schemaTo": "care",
+          "columnsTo": [
+            "id"
+          ],
+          "onUpdate": "no action",
+          "onDelete": "cascade"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {
+        "availability_exceptions_kind_check": {
+          "name": "availability_exceptions_kind_check",
+          "value": "\"care\".\"availability_exceptions\".\"kind\" in ('closed', 'open')"
+        },
+        "availability_exceptions_span_check": {
+          "name": "availability_exceptions_span_check",
+          "value": "(\"care\".\"availability_exceptions\".\"span\" = 'days' and \"care\".\"availability_exceptions\".\"from_date\" is not null and \"care\".\"availability_exceptions\".\"until_date\" is not null and \"care\".\"availability_exceptions\".\"until_date\" >= \"care\".\"availability_exceptions\".\"from_date\")\n\t\t\tor (\"care\".\"availability_exceptions\".\"span\" = 'time' and \"care\".\"availability_exceptions\".\"from_local\" is not null and \"care\".\"availability_exceptions\".\"until_local\" is not null and \"care\".\"availability_exceptions\".\"until_local\" > \"care\".\"availability_exceptions\".\"from_local\")"
+        }
+      },
+      "isRLSEnabled": false
+    },
+    "care.availability_rules": {
+      "name": "availability_rules",
+      "schema": "care",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "organization_id": {
+          "name": "organization_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "calendar_id": {
+          "name": "calendar_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "weekday": {
+          "name": "weekday",
+          "type": "smallint",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "start_time": {
+          "name": "start_time",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "end_time": {
+          "name": "end_time",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "type_ids": {
+          "name": "type_ids",
+          "type": "uuid[]",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'{}'::uuid[]"
+        },
+        "valid_from": {
+          "name": "valid_from",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "valid_until": {
+          "name": "valid_until",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "availability_rules_calendar_idx": {
+          "name": "availability_rules_calendar_idx",
+          "columns": [
+            {
+              "expression": "calendar_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "with": {},
+          "method": "btree",
+          "concurrently": false
+        }
+      },
+      "foreignKeys": {
+        "availability_rules_calendar_id_calendars_id_fk": {
+          "name": "availability_rules_calendar_id_calendars_id_fk",
+          "tableFrom": "availability_rules",
+          "columnsFrom": [
+            "calendar_id"
+          ],
+          "tableTo": "calendars",
+          "schemaTo": "care",
+          "columnsTo": [
+            "id"
+          ],
+          "onUpdate": "no action",
+          "onDelete": "cascade"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {
+        "availability_rules_weekday_check": {
+          "name": "availability_rules_weekday_check",
+          "value": "\"care\".\"availability_rules\".\"weekday\" between 1 and 7"
+        },
+        "availability_rules_time_check": {
+          "name": "availability_rules_time_check",
+          "value": "\"care\".\"availability_rules\".\"start_time\" ~ '^([01][0-9]|2[0-3]):[0-5][0-9]$' and \"care\".\"availability_rules\".\"end_time\" ~ '^(([01][0-9]|2[0-3]):[0-5][0-9]|24:00)$' and \"care\".\"availability_rules\".\"end_time\" > \"care\".\"availability_rules\".\"start_time\""
+        }
+      },
+      "isRLSEnabled": false
+    },
+    "care.calendars": {
+      "name": "calendars",
+      "schema": "care",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "organization_id": {
+          "name": "organization_id",
+          "type": "text",
+          "primaryKey": false,
           "notNull": true
         },
         "practitioner_id": {
           "name": "practitioner_id",
           "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "site_id": {
+          "name": "site_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "time_zone": {
+          "name": "time_zone",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "status": {
+          "name": "status",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'draft'"
+        },
+        "opened_at": {
+          "name": "opened_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "min_notice_min": {
+          "name": "min_notice_min",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 120
+        },
+        "horizon_days": {
+          "name": "horizon_days",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 60
+        },
+        "step_min": {
+          "name": "step_min",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 15
+        },
+        "manual_validation": {
+          "name": "manual_validation",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "accepts_new_patients": {
+          "name": "accepts_new_patients",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": true
+        },
+        "cancellation_cutoff_min": {
+          "name": "cancellation_cutoff_min",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 1440
+        },
+        "require_phone": {
+          "name": "require_phone",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": true
+        },
+        "ask_first_visit": {
+          "name": "ask_first_visit",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": true
+        },
+        "retention_days": {
+          "name": "retention_days",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 90
+        },
+        "public_instructions": {
+          "name": "public_instructions",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ics_token_hash": {
+          "name": "ics_token_hash",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "calendars_practitioner_site_uq": {
+          "name": "calendars_practitioner_site_uq",
+          "columns": [
+            {
+              "expression": "practitioner_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "site_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "with": {},
+          "method": "btree",
+          "concurrently": false
+        },
+        "calendars_ics_token_hash_uq": {
+          "name": "calendars_ics_token_hash_uq",
+          "columns": [
+            {
+              "expression": "ics_token_hash",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "with": {},
+          "method": "btree",
+          "concurrently": false
+        },
+        "calendars_organization_idx": {
+          "name": "calendars_organization_idx",
+          "columns": [
+            {
+              "expression": "organization_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "with": {},
+          "method": "btree",
+          "concurrently": false
+        }
+      },
+      "foreignKeys": {
+        "calendars_organization_id_organization_id_fk": {
+          "name": "calendars_organization_id_organization_id_fk",
+          "tableFrom": "calendars",
+          "columnsFrom": [
+            "organization_id"
+          ],
+          "tableTo": "organization",
+          "schemaTo": "directory",
+          "columnsTo": [
+            "id"
+          ],
+          "onUpdate": "no action",
+          "onDelete": "restrict"
+        },
+        "calendars_practitioner_id_practitioners_id_fk": {
+          "name": "calendars_practitioner_id_practitioners_id_fk",
+          "tableFrom": "calendars",
+          "columnsFrom": [
+            "practitioner_id"
+          ],
+          "tableTo": "practitioners",
+          "schemaTo": "directory",
+          "columnsTo": [
+            "id"
+          ],
+          "onUpdate": "no action",
+          "onDelete": "restrict"
+        },
+        "calendars_site_id_sites_id_fk": {
+          "name": "calendars_site_id_sites_id_fk",
+          "tableFrom": "calendars",
+          "columnsFrom": [
+            "site_id"
+          ],
+          "tableTo": "sites",
+          "schemaTo": "directory",
+          "columnsTo": [
+            "id"
+          ],
+          "onUpdate": "no action",
+          "onDelete": "restrict"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {
+        "calendars_status_check": {
+          "name": "calendars_status_check",
+          "value": "\"care\".\"calendars\".\"status\" in ('draft', 'open', 'paused')"
+        },
+        "calendars_step_check": {
+          "name": "calendars_step_check",
+          "value": "\"care\".\"calendars\".\"step_min\" between 5 and 240"
+        },
+        "calendars_min_notice_check": {
+          "name": "calendars_min_notice_check",
+          "value": "\"care\".\"calendars\".\"min_notice_min\" between 0 and 43200"
+        },
+        "calendars_horizon_check": {
+          "name": "calendars_horizon_check",
+          "value": "\"care\".\"calendars\".\"horizon_days\" between 0 and 365"
+        },
+        "calendars_cutoff_check": {
+          "name": "calendars_cutoff_check",
+          "value": "\"care\".\"calendars\".\"cancellation_cutoff_min\" between 0 and 20160"
+        },
+        "calendars_retention_check": {
+          "name": "calendars_retention_check",
+          "value": "\"care\".\"calendars\".\"retention_days\" between 30 and 365"
+        }
+      },
+      "isRLSEnabled": false
+    },
+    "care.organization_keys": {
+      "name": "organization_keys",
+      "schema": "care",
+      "columns": {
+        "organization_id": {
+          "name": "organization_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "version": {
+          "name": "version",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "wrapped_dek": {
+          "name": "wrapped_dek",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "retired_at": {
+          "name": "retired_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "organization_keys_organization_id_organization_id_fk": {
+          "name": "organization_keys_organization_id_organization_id_fk",
+          "tableFrom": "organization_keys",
+          "columnsFrom": [
+            "organization_id"
+          ],
+          "tableTo": "organization",
+          "schemaTo": "directory",
+          "columnsTo": [
+            "id"
+          ],
+          "onUpdate": "no action",
+          "onDelete": "restrict"
+        }
+      },
+      "compositePrimaryKeys": {
+        "organization_keys_organization_id_version_pk": {
+          "name": "organization_keys_organization_id_version_pk",
+          "columns": [
+            "organization_id",
+            "version"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "care.otp_challenges": {
+      "name": "otp_challenges",
+      "schema": "care",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "organization_id": {
+          "name": "organization_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "purpose": {
+          "name": "purpose",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "appointment_id": {
+          "name": "appointment_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "target_bidx": {
+          "name": "target_bidx",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "code_hash": {
+          "name": "code_hash",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "salt": {
+          "name": "salt",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "code_enc": {
+          "name": "code_enc",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "attempts": {
+          "name": "attempts",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "expires_at": {
+          "name": "expires_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "consumed_at": {
+          "name": "consumed_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "otp_challenges_appointment_idx": {
+          "name": "otp_challenges_appointment_idx",
+          "columns": [
+            {
+              "expression": "appointment_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "created_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "with": {},
+          "method": "btree",
+          "concurrently": false
+        }
+      },
+      "foreignKeys": {
+        "otp_challenges_appointment_id_appointments_id_fk": {
+          "name": "otp_challenges_appointment_id_appointments_id_fk",
+          "tableFrom": "otp_challenges",
+          "columnsFrom": [
+            "appointment_id"
+          ],
+          "tableTo": "appointments",
+          "schemaTo": "care",
+          "columnsTo": [
+            "id"
+          ],
+          "onUpdate": "no action",
+          "onDelete": "cascade"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "care.outbox": {
+      "name": "outbox",
+      "schema": "care",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "organization_id": {
+          "name": "organization_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "kind": {
+          "name": "kind",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "recipient": {
+          "name": "recipient",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "appointment_id": {
+          "name": "appointment_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "otp_challenge_id": {
+          "name": "otp_challenge_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "appointment_revision": {
+          "name": "appointment_revision",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "expected_statuses": {
+          "name": "expected_statuses",
+          "type": "text[]",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'{}'::text[]"
+        },
+        "dedupe_key": {
+          "name": "dedupe_key",
+          "type": "text",
           "primaryKey": false,
           "notNull": true
         },
@@ -1602,167 +2665,41 @@
           "notNull": true,
           "default": "'pending'"
         },
-        "contact_enc": {
-          "name": "contact_enc",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "message_enc": {
-          "name": "message_enc",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "locale": {
-          "name": "locale",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "'fr'"
-        },
-        "decided_at": {
-          "name": "decided_at",
-          "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "decided_by": {
-          "name": "decided_by",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "decision_reason": {
-          "name": "decision_reason",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        }
-      },
-      "indexes": {
-        "removal_requests_queue_idx": {
-          "name": "removal_requests_queue_idx",
-          "columns": [
-            {
-              "expression": "status",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            },
-            {
-              "expression": "created_at",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "with": {},
-          "method": "btree",
-          "where": "\"directory\".\"removal_requests\".\"status\" = 'pending'",
-          "concurrently": false
-        },
-        "removal_requests_practitioner_idx": {
-          "name": "removal_requests_practitioner_idx",
-          "columns": [
-            {
-              "expression": "practitioner_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "with": {},
-          "method": "btree",
-          "concurrently": false
-        }
-      },
-      "foreignKeys": {
-        "removal_requests_practitioner_id_practitioners_id_fk": {
-          "name": "removal_requests_practitioner_id_practitioners_id_fk",
-          "tableFrom": "removal_requests",
-          "columnsFrom": [
-            "practitioner_id"
-          ],
-          "tableTo": "practitioners",
-          "schemaTo": "directory",
-          "columnsTo": [
-            "id"
-          ],
-          "onUpdate": "no action",
-          "onDelete": "cascade"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {
-        "removal_requests_status_check": {
-          "name": "removal_requests_status_check",
-          "value": "\"directory\".\"removal_requests\".\"status\" in ('pending', 'confirmed', 'rejected')"
-        }
-      },
-      "isRLSEnabled": false
-    },
-    "directory.reports": {
-      "name": "reports",
-      "schema": "directory",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "text",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "practitioner_id": {
-          "name": "practitioner_id",
+        "attempts": {
+          "name": "attempts",
           "type": "integer",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true,
+          "default": 0
         },
-        "kind": {
-          "name": "kind",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "content_enc": {
-          "name": "content_enc",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "status": {
-          "name": "status",
-          "type": "text",
+        "next_attempt_at": {
+          "name": "next_attempt_at",
+          "type": "timestamp with time zone",
           "primaryKey": false,
           "notNull": true,
-          "default": "'open'"
+          "default": "now()"
         },
-        "resolved_at": {
-          "name": "resolved_at",
+        "lease_token": {
+          "name": "lease_token",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "lease_until": {
+          "name": "lease_until",
           "type": "timestamp with time zone",
           "primaryKey": false,
           "notNull": false
         },
-        "resolved_by": {
-          "name": "resolved_by",
+        "last_error": {
+          "name": "last_error",
           "type": "text",
           "primaryKey": false,
           "notNull": false
         },
-        "resolution_note": {
-          "name": "resolution_note",
-          "type": "text",
+        "sent_at": {
+          "name": "sent_at",
+          "type": "timestamp with time zone",
           "primaryKey": false,
           "notNull": false
         },
@@ -1775,17 +2712,26 @@
         }
       },
       "indexes": {
-        "reports_queue_idx": {
-          "name": "reports_queue_idx",
+        "outbox_dedupe_key_uq": {
+          "name": "outbox_dedupe_key_uq",
           "columns": [
             {
-              "expression": "status",
+              "expression": "dedupe_key",
               "isExpression": false,
               "asc": true,
               "nulls": "last"
-            },
+            }
+          ],
+          "isUnique": true,
+          "with": {},
+          "method": "btree",
+          "concurrently": false
+        },
+        "outbox_due_idx": {
+          "name": "outbox_due_idx",
+          "columns": [
             {
-              "expression": "created_at",
+              "expression": "next_attempt_at",
               "isExpression": false,
               "asc": true,
               "nulls": "last"
@@ -1794,19 +2740,48 @@
           "isUnique": false,
           "with": {},
           "method": "btree",
-          "where": "\"directory\".\"reports\".\"status\" = 'open'",
+          "where": "\"care\".\"outbox\".\"status\" in ('pending', 'sending')",
+          "concurrently": false
+        },
+        "outbox_appointment_idx": {
+          "name": "outbox_appointment_idx",
+          "columns": [
+            {
+              "expression": "appointment_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "with": {},
+          "method": "btree",
           "concurrently": false
         }
       },
       "foreignKeys": {
-        "reports_practitioner_id_practitioners_id_fk": {
-          "name": "reports_practitioner_id_practitioners_id_fk",
-          "tableFrom": "reports",
+        "outbox_appointment_id_appointments_id_fk": {
+          "name": "outbox_appointment_id_appointments_id_fk",
+          "tableFrom": "outbox",
           "columnsFrom": [
-            "practitioner_id"
+            "appointment_id"
           ],
-          "tableTo": "practitioners",
-          "schemaTo": "directory",
+          "tableTo": "appointments",
+          "schemaTo": "care",
+          "columnsTo": [
+            "id"
+          ],
+          "onUpdate": "no action",
+          "onDelete": "cascade"
+        },
+        "outbox_otp_challenge_id_otp_challenges_id_fk": {
+          "name": "outbox_otp_challenge_id_otp_challenges_id_fk",
+          "tableFrom": "outbox",
+          "columnsFrom": [
+            "otp_challenge_id"
+          ],
+          "tableTo": "otp_challenges",
+          "schemaTo": "care",
           "columnsTo": [
             "id"
           ],
@@ -1818,13 +2793,13 @@
       "uniqueConstraints": {},
       "policies": {},
       "checkConstraints": {
-        "reports_kind_check": {
-          "name": "reports_kind_check",
-          "value": "\"directory\".\"reports\".\"kind\" in ('wrong_info', 'retired', 'deceased', 'impersonation')"
+        "outbox_status_check": {
+          "name": "outbox_status_check",
+          "value": "\"care\".\"outbox\".\"status\" in ('pending', 'sending', 'sent', 'skipped', 'dead')"
         },
-        "reports_status_check": {
-          "name": "reports_status_check",
-          "value": "\"directory\".\"reports\".\"status\" in ('open', 'resolved', 'dismissed')"
+        "outbox_recipient_check": {
+          "name": "outbox_recipient_check",
+          "value": "\"care\".\"outbox\".\"recipient\" in ('patient', 'practice')"
         }
       },
       "isRLSEnabled": false
@@ -2993,12 +3968,6 @@
           "primaryKey": false,
           "notNull": false
         },
-        "carte_vitale": {
-          "name": "carte_vitale",
-          "type": "boolean",
-          "primaryKey": false,
-          "notNull": false
-        },
         "payment_methods": {
           "name": "payment_methods",
           "type": "text[]",
@@ -3031,19 +4000,6 @@
           "primaryKey": false,
           "notNull": true,
           "default": "'{}'::text[]"
-        },
-        "hidden_fields": {
-          "name": "hidden_fields",
-          "type": "text[]",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "'{}'::text[]"
-        },
-        "published_at": {
-          "name": "published_at",
-          "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": false
         },
         "created_at": {
           "name": "created_at",
@@ -3488,12 +4444,6 @@
         },
         "next_free_at": {
           "name": "next_free_at",
-          "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "withheld_at": {
-          "name": "withheld_at",
           "type": "timestamp with time zone",
           "primaryKey": false,
           "notNull": false

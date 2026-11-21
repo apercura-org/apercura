@@ -28,11 +28,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 const sectionHeading = "font-display text-title font-bold text-ink font-stretch-semi-expanded";
 
 async function Start({ locale, rpps }: { locale: Locale; rpps: string | null }) {
-	await requireProAccess(locale, ["ready"]);
+	// Outside the `(app)` group on purpose: a visitor coming from "Claim this
+	// page" signs in (or up) and comes back here for the same RPPS.
+	const valid = rpps !== null && isValidRpps(rpps);
+	await requireProAccess(
+		locale,
+		["ready"],
+		valid ? { pathname: "/pro/revendiquer", query: { rpps } } : null,
+	);
 	const t = await getTranslations({ locale, namespace: "Claim" });
 	const tP = await getTranslations({ locale, namespace: "Practitioner" });
 	const labels = await getTaxonomyLabels(locale);
-	const valid = rpps !== null && isValidRpps(rpps);
 	const practitioner = valid ? await caller.claims.preview({ rpps }).catch(() => null) : null;
 	const methods = [
 		...(pscConfigured() ? (["psc"] as const) : []),

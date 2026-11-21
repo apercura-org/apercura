@@ -7,6 +7,7 @@ import { getPathname, Link } from "~/i18n/navigation";
 import { authClient } from "~/lib/auth-client";
 import { type AuthErrorKey, authErrorKey } from "~/lib/auth-errors";
 import { PRO_ROUTES } from "~/lib/pro-routes";
+import { currentReturnTo, withReturnTo } from "~/lib/return-to";
 
 export const MIN_PASSWORD_LENGTH = 12;
 
@@ -18,6 +19,8 @@ export function SignUpForm() {
 	const [error, setError] = useState<AuthErrorKey | null>(null);
 	const [pending, setPending] = useState(false);
 	const sentRef = useRef<HTMLHeadingElement>(null);
+	const [returnTo, setReturnTo] = useState<ReturnType<typeof currentReturnTo>>(null);
+	useEffect(() => setReturnTo(currentReturnTo()), []);
 
 	useEffect(() => {
 		if (sentTo) {
@@ -37,7 +40,11 @@ export function SignUpForm() {
 				email,
 				password: String(data.get("password") ?? ""),
 				locale,
-				callbackURL: getPathname({ href: PRO_ROUTES.verifyEmail, locale }),
+				// The confirmation link brings the visitor back to the claim they started.
+				callbackURL: getPathname({
+					href: withReturnTo(PRO_ROUTES.verifyEmail, currentReturnTo()),
+					locale,
+				}),
 			});
 			if (result.error) {
 				setError(authErrorKey(result.error));
@@ -101,7 +108,7 @@ export function SignUpForm() {
 			</Form>
 			<p className="text-body text-ink">
 				{t("signUp.haveAccount")}{" "}
-				<Link href={PRO_ROUTES.signIn} className={linkStyles()}>
+				<Link href={withReturnTo(PRO_ROUTES.signIn, returnTo)} className={linkStyles()}>
 					{t("signUp.signInLink")}
 				</Link>
 			</p>

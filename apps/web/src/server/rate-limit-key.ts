@@ -23,10 +23,36 @@ export function clientRateLimitKey(
 		RATE_LIMIT_KEY: process.env.RATE_LIMIT_KEY,
 		TRUSTED_PROXY_COUNT: process.env.TRUSTED_PROXY_COUNT,
 	},
+	options: { ipv6Prefix64?: boolean } = {},
 ): string {
-	const ip =
-		resolveClientIp(headers.get("x-forwarded-for"), trustedProxyCount(env.TRUSTED_PROXY_COUNT)) ??
-		"direct";
+	const resolved = resolveClientIp(
+		headers.get("x-forwarded-for"),
+		trustedProxyCount(env.TRUSTED_PROXY_COUNT),
+	);
+	const ip = resolved ? (options.ipv6Prefix64 ? ipBucket(resolved) : resolved) : "direct";
 	const digest = createHmac("sha256", hmacKey(env.RATE_LIMIT_KEY)).update(ip).digest("base64url");
 	return `${scope}:${digest}`;
+}
+
+/**
+ * The bucket of an address for per-client limits: an IPv4 address itself (IPv4-mapped IPv6
+ * included), or the /64 prefix of an IPv6 address, since one subscriber usually gets a whole /64.
+ */
+export function ipBucket(ip: string): string {
+	const mapped = /^::ffff:(\d+\.\d+\.\d+\.\d+)$/i.exec(ip);
+	if (mapped?.[1]) {
+		return mapped[1];
+	}
+	if (!ip.includes(":")) {
+		return ip;
+	}
+	const [head = "", tail] = ip.toLowerCase().split("::");
+	const left = head ? head.split(":") : [];
+	const right = tail === undefined ? [] : tail ? tail.split(":") : [];
+	const missing = Math.max(0, 8 - left.length - right.length);
+	const groups = [...left, ...Array<string>(missing).fill("0"), ...right];
+	return `${groups
+		.slice(0, 4)
+		.map((group) => group.replace(/^0+(?=.)/, ""))
+		.join(":")}::/64`;
 }

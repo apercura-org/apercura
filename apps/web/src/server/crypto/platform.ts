@@ -12,6 +12,10 @@ import {
 import { serverEnv } from "~/env";
 
 /*
+ * The only module besides ~/server/phi allowed to import the crypto package
+ * (see biome.json): it never touches patient data. It also hands the claims
+ * their token and one-time-code helpers, so nothing else imports the crypto.
+ *
  * The platform key: data that belongs to no practice (claim documents, the
  * free text of reports and removal requests) is encrypted with the master
  * keys of ENCRYPTION_KEYS directly, the active one for new data. The AAD binds
@@ -63,3 +67,13 @@ export function openBytes(blob: Uint8Array, table: string, column: string, rowId
 export function resetPlatformKeyring() {
 	keyring = undefined;
 }
+
+export {
+	generateManageToken,
+	generateOtp,
+	generateOtpSalt,
+	hashOtp,
+	hashToken,
+	safeEqual,
+	verifyOtp,
+} from "@apercura/core/crypto";

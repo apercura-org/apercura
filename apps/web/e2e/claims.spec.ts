@@ -6,6 +6,7 @@ import {
 	expectNoAxeViolations,
 	type ProAccount,
 	resetPractitioner,
+	signIn,
 	testDb,
 } from "./pro";
 
@@ -83,6 +84,37 @@ test("signed-out visitors and non-administrators cannot reach the practitioner a
 		"/api/admin/claim-documents/00000000-0000-4000-8000-000000000000",
 	);
 	expect(document.status()).toBe(403);
+});
+
+test("a visitor from “Claim this page” comes back to the claim of that RPPS after signing in", async ({
+	browser,
+	request,
+	baseURL,
+}) => {
+	await reviewerSession(browser, request, baseURL as string, { admin: false });
+	const account = reviewer?.account as ProAccount;
+	const context = await browser.newContext();
+	const page = await context.newPage();
+	await page.goto("/praticien/camille-exemple-19999990013");
+	await page.getByRole("link", { name: "Revendiquer cette page" }).click();
+	await expect(page).toHaveURL(
+		/\/pro\/connexion\?suite=%2Fpro%2Frevendiquer%3Frpps%3D19999990013$/,
+	);
+	// The sign-up link keeps the intent too.
+	await expect(page.getByRole("link", { name: "Créer un compte" })).toHaveAttribute(
+		"href",
+		"/pro/inscription?suite=%2Fpro%2Frevendiquer%3Frpps%3D19999990013",
+	);
+	await signIn(page, account, { from: page.url() });
+	await expect(page).toHaveURL(/\/pro\/revendiquer\?rpps=19999990013$/);
+	await expect(page.getByRole("button", { name: "C’est moi : revendiquer la page" })).toBeVisible();
+	// A foreign target is ignored: the space opens instead.
+	await page.goto("/pro/connexion?suite=https%3A%2F%2Fevil.example%2F");
+	await expect(page.getByRole("link", { name: "Créer un compte" })).toHaveAttribute(
+		"href",
+		"/pro/inscription",
+	);
+	await context.close();
 });
 
 test("claim with Pro Santé Connect, complete the page, and the public page follows", async ({

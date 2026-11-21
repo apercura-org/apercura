@@ -37,9 +37,9 @@ export async function freshCode(account: ProAccount) {
  * to 5 a minute and sees every test as one client: when parallel specs hit
  * the limit, wait for the window to pass and try again.
  */
-async function submitPassword(page: Page, email: string, password: string) {
+async function submitPassword(page: Page, email: string, password: string, from?: string) {
 	for (let attempt = 0; ; attempt++) {
-		await page.goto("/pro/connexion");
+		await page.goto(from ?? "/pro/connexion");
 		await page.getByLabel("Adresse e-mail", { exact: true }).fill(email);
 		await page.getByLabel("Mot de passe", { exact: true }).fill(password);
 		await page.getByRole("button", { name: "Se connecter", exact: true }).click();
@@ -112,11 +112,16 @@ export async function createProAccount(
 }
 
 /** Signs in again with password and TOTP (after a sign-out or in another context). */
-export async function signIn(page: Page, account: ProAccount) {
-	await submitPassword(page, account.email, account.password);
+export async function signIn(
+	page: Page,
+	account: ProAccount,
+	/** Stay on the sign-in page the visitor was sent to (with its `?suite=`). */
+	options: { from?: string } = {},
+) {
+	await submitPassword(page, account.email, account.password, options.from);
 	await page.getByLabel(/Code à 6 chiffres/).fill(await freshCode(account));
 	await page.getByRole("button", { name: "Confirmer" }).click();
-	await expect(page).toHaveURL(/\/pro\/tableau-de-bord$/);
+	if (!options.from) await expect(page).toHaveURL(/\/pro\/tableau-de-bord$/);
 }
 
 /**

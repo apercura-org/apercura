@@ -1,10 +1,9 @@
 import "server-only";
 import { randomUUID } from "node:crypto";
-import { bookingReadiness, type Fees, toE164Fr } from "@apercura/core";
+import { type Fees, toE164Fr } from "@apercura/core";
 import type { Database } from "@apercura/db";
 import {
 	activities,
-	claims,
 	practitionerProfiles,
 	practitioners,
 	sites,
@@ -12,6 +11,7 @@ import {
 } from "@apercura/db/schema";
 import { and, eq, sql } from "drizzle-orm";
 import type { OwnerSiteData, ProfileData } from "~/lib/profile-schema";
+import { agendaRequirements } from "../booking/gate";
 import { photoUrl, type StorageDriver } from "../storage";
 import { processPhoto } from "./photo";
 
@@ -91,11 +91,8 @@ export async function editorData(db: Database, practitionerId: number) {
 			AND a.practice_kind IN ('office', 'health_center', 'hospital')
 		ORDER BY a.is_primary DESC, a.id
 	`.then((rows) => [...rows]);
-	const [claim] = await db
-		.select({ verifiedAt: claims.verifiedAt, bookingOpensAt: claims.bookingOpensAt })
-		.from(claims)
-		.where(and(eq(claims.practitionerId, practitionerId), eq(claims.status, "verified")))
-		.limit(1);
+	// The same gate the calendar's "open agenda" procedure applies.
+	const booking = await agendaRequirements(db, null, practitionerId);
 	const [ownerRemoval] = await db
 		.select({ id: suppressions.id })
 		.from(suppressions)
@@ -139,13 +136,8 @@ export async function editorData(db: Database, practitionerId: number) {
 					carteVitale: practitioner.carteVitale,
 				}
 			: null,
-		booking: bookingReadiness({
-			verified: claim !== undefined,
-			bookingOpensAt: claim?.bookingOpensAt ?? null,
-			fees,
-			paymentMethods,
-		}),
-		bookingOpensAt: claim?.bookingOpensAt ?? null,
+		booking,
+		bookingOpensAt: booking.bookingOpensAt,
 	};
 }
 
@@ -308,13 +300,4 @@ export async function removePhoto(db: Database, storage: StorageDriver, practiti
 		.set({ photoKey: null, updatedAt: new Date() })
 		.where(eq(practitionerProfiles.practitionerId, practitionerId));
 	if (previous?.key) await storage.delete(previous.key).catch(() => undefined);
-}
-
-/**
- * Whether the booking module may open an agenda for this practitioner
- * (verified page, waiting period over, fees and payment methods stated).
- */
-export async function bookingReadinessFor(db: Database, practitionerId: number) {
-	const data = await editorData(db, practitionerId);
-	return data.booking;
 }

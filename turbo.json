@@ -10,6 +10,7 @@
 		"PSC_*",
 		"ENCRYPTION_*",
 		"BLIND_INDEX_KEY",
+		"ALTCHA_HMAC_KEY",
 		"SMTP_URL",
 		"MAIL_FROM",
 		"S3_*",

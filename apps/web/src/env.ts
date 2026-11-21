@@ -35,6 +35,13 @@ const serverSchema = z.object({
 	ENCRYPTION_KEYS: optionalString,
 	ENCRYPTION_ACTIVE_KEY: optionalString,
 	BLIND_INDEX_KEY: optionalString,
+	/**
+	 * Secret that signs the ALTCHA proof-of-work challenges of the booking form
+	 * (self-hosted, no third-party service). Any random string of 32 bytes or more
+	 * (`bun run keys:generate`). Optional: when unset each process draws a random
+	 * key at start, so a challenge fetched from one instance fails on another.
+	 */
+	ALTCHA_HMAC_KEY: optionalString,
 
 	SMTP_URL: optionalUrl,
 	MAIL_FROM: optionalString,

@@ -6,6 +6,7 @@ import { useState } from "react";
 import { getPathname } from "~/i18n/navigation";
 import { authClient } from "~/lib/auth-client";
 import { PRO_ROUTES } from "~/lib/pro-routes";
+import { currentReturnTo } from "~/lib/return-to";
 
 /**
  * Sign in with Pro Santé Connect (e-CPS or CPS card), once it is linked to the
@@ -23,7 +24,7 @@ export function PscSignIn({ failed }: { failed: boolean }) {
 		setError(false);
 		const result = await authClient.signIn.social({
 			provider: "psc" as never,
-			callbackURL: getPathname({ href: PRO_ROUTES.home, locale }),
+			callbackURL: getPathname({ href: currentReturnTo() ?? PRO_ROUTES.home, locale }),
 			errorCallbackURL: `${getPathname({ href: PRO_ROUTES.signIn, locale })}?psc=erreur`,
 		});
 		if (result.error) {

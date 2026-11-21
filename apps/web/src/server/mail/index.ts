@@ -37,3 +37,24 @@ export async function sendMail({ to, subject, react }: MailMessage) {
 		text,
 	});
 }
+
+export interface RawMailMessage {
+	to: string | string[];
+	subject: string;
+	html: string;
+	text: string;
+	/** An iCalendar invitation (REQUEST or CANCEL), sent as `text/calendar` and attached. */
+	icalEvent?: { method: "REQUEST" | "CANCEL"; filename: string; content: string };
+}
+
+/** Sends an already rendered message (booking outbox). Errors keep Nodemailer's SMTP details. */
+export async function sendRawMail(message: RawMailMessage) {
+	await getTransporter().sendMail({
+		from: serverEnv.MAIL_FROM ?? "Apercura <no-reply@localhost>",
+		to: message.to,
+		subject: message.subject,
+		html: message.html,
+		text: message.text,
+		...(message.icalEvent ? { icalEvent: message.icalEvent } : {}),
+	});
+}

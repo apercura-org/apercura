@@ -7,7 +7,7 @@ const handler = (request: Request) =>
 		endpoint: "/api/trpc",
 		req: request,
 		router: appRouter,
-		createContext: () => createTRPCContext({ headers: request.headers }),
+		createContext: ({ resHeaders }) => createTRPCContext({ headers: request.headers, resHeaders }),
 		onError:
 			process.env.NODE_ENV === "development"
 				? ({ path, error }) => console.error(`tRPC failed on ${path ?? "<no-path>"}:`, error)

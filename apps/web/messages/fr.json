@@ -1209,6 +1209,132 @@
 			"FON-AU": "Fonction non précisée"
 		}
 	},
+	"booking": {
+		"presets": {
+			"consultation": "Consultation",
+			"firstConsultation": "Première consultation",
+			"checkup": "Contrôle",
+			"emergency": "Urgence",
+			"scaling": "Détartrage",
+			"orthodonticCheckup": "Contrôle d’orthodontie",
+			"pregnancyFollowUp": "Suivi de grossesse",
+			"perinealRehabilitation": "Rééducation du périnée"
+		},
+		"email": {
+			"wordmark": "Apercura",
+			"runningHead": "Rendez-vous",
+			"practiceRunningHead": "Espace praticien",
+			"footer": "Apercura : l’annuaire ouvert des soignants en France. Gratuit et libre.",
+			"summary": "Rendez-vous — {practitioner}",
+			"summaryNoName": "Rendez-vous",
+			"labels": {
+				"with": "Avec",
+				"date": "Date",
+				"time": "Heure",
+				"address": "Adresse",
+				"until": "Réponse avant"
+			},
+			"manageAction": "Voir ou modifier mon rendez-vous",
+			"agendaAction": "Ouvrir l’agenda",
+			"fallback": "Si le bouton ne marche pas, copiez ce lien dans votre navigateur :",
+			"calendarNote": "Le fichier joint ajoute le rendez-vous à votre agenda.",
+			"greeting": "Bonjour {name},",
+			"code": {
+				"subject": "Votre code : {code}",
+				"preview": "Saisissez ce code pour confirmer votre rendez-vous.",
+				"title": "Votre code de confirmation",
+				"body": "Saisissez ce code sur la page de réservation pour confirmer votre rendez-vous.",
+				"expiry": "Le code est valable 30 minutes.",
+				"ignore": "Vous n’avez pas demandé de rendez-vous ? Ignorez cet e-mail : il ne se passera rien."
+			},
+			"confirmed": {
+				"subject": "Rendez-vous confirmé avec {practitioner}",
+				"preview": "Votre rendez-vous est confirmé.",
+				"title": "Votre rendez-vous est confirmé",
+				"body": "Voici votre rendez-vous."
+			},
+			"pending": {
+				"subject": "Demande de rendez-vous envoyée à {practitioner}",
+				"preview": "Le cabinet va répondre à votre demande.",
+				"title": "Votre demande est envoyée",
+				"body": "Le cabinet confirme lui-même ses rendez-vous. Vous recevrez sa réponse par e-mail."
+			},
+			"accepted": {
+				"subject": "Rendez-vous confirmé avec {practitioner}",
+				"preview": "Le cabinet a accepté votre demande.",
+				"title": "Votre rendez-vous est confirmé",
+				"body": "Le cabinet a accepté votre demande."
+			},
+			"declined": {
+				"subject": "Demande de rendez-vous non acceptée",
+				"preview": "Le cabinet n’a pas pu accepter votre demande.",
+				"title": "Votre demande n’a pas été acceptée",
+				"body": "Le cabinet n’a pas pu accepter votre demande. Vous pouvez choisir un autre horaire sur Apercura."
+			},
+			"expired": {
+				"subject": "Demande de rendez-vous restée sans réponse",
+				"preview": "Le cabinet n’a pas répondu à temps.",
+				"title": "Votre demande est restée sans réponse",
+				"body": "Le cabinet n’a pas répondu à temps : le créneau est de nouveau libre. Vous pouvez choisir un autre horaire sur Apercura."
+			},
+			"cancelledByPatient": {
+				"subject": "Rendez-vous annulé",
+				"preview": "Votre rendez-vous est annulé.",
+				"title": "Votre rendez-vous est annulé",
+				"body": "Votre rendez-vous est annulé, comme vous l’avez demandé."
+			},
+			"cancelledByPractice": {
+				"subject": "Rendez-vous annulé par le cabinet",
+				"preview": "Le cabinet a annulé votre rendez-vous.",
+				"title": "Votre rendez-vous est annulé",
+				"body": "Le cabinet a dû annuler votre rendez-vous.",
+				"message": "Message du cabinet : « {message} »"
+			},
+			"rescheduled": {
+				"subject": "Rendez-vous déplacé",
+				"preview": "Votre rendez-vous change d’horaire.",
+				"title": "Votre rendez-vous est déplacé",
+				"body": "Voici le nouvel horaire de votre rendez-vous."
+			},
+			"reminder": {
+				"subject": "Rappel : rendez-vous le {date}",
+				"preview": "Votre rendez-vous approche.",
+				"title": "Votre rendez-vous approche",
+				"body": "Un rappel de votre rendez-vous. Si vous ne pouvez pas venir, annulez-le pour libérer le créneau."
+			},
+			"practiceEntry": {
+				"subject": "Un rendez-vous a été enregistré pour cette adresse",
+				"preview": "Ouvrez le lien pour le voir.",
+				"title": "Un rendez-vous a été enregistré pour cette adresse",
+				"body": "Un cabinet a enregistré un rendez-vous pour cette adresse e-mail sur Apercura. Ouvrez le lien pour le voir et confirmer que cette adresse est bien la vôtre.",
+				"ignore": "Ce n’est pas vous ? Ignorez cet e-mail : aucun autre message ne suivra."
+			},
+			"practiceNew": {
+				"subject": "Nouveau rendez-vous le {date}",
+				"preview": "Un patient a réservé en ligne.",
+				"title": "Nouveau rendez-vous",
+				"body": "Un patient a pris rendez-vous en ligne."
+			},
+			"practiceRequest": {
+				"subject": "Demande de rendez-vous à traiter ({date})",
+				"preview": "Un patient attend votre réponse.",
+				"title": "Demande de rendez-vous à traiter",
+				"body": "Un patient demande un rendez-vous. Acceptez-le ou refusez-le dans l’agenda avant la date limite."
+			},
+			"practiceCancelled": {
+				"subject": "Rendez-vous annulé par le patient ({date})",
+				"preview": "Un patient a annulé un rendez-vous.",
+				"title": "Rendez-vous annulé",
+				"body": "Un patient a annulé un rendez-vous. Le créneau est de nouveau libre."
+			},
+			"practiceRescheduled": {
+				"subject": "Rendez-vous déplacé par le patient ({date})",
+				"preview": "Un patient a déplacé un rendez-vous.",
+				"title": "Rendez-vous déplacé",
+				"body": "Un patient a déplacé un rendez-vous à ce nouvel horaire."
+			}
+		}
+	},
 	"auth": {
 		"runningHead": "Espace praticien",
 		"metadata": {
@@ -1736,13 +1862,13 @@
 				"lead": "La prise de rendez-vous en ligne ouvre dans une prochaine version. Avant qu’elle puisse ouvrir, votre page doit indiquer vos honoraires et les moyens de paiement acceptés.",
 				"fees": "Honoraires",
 				"payments": "Moyens de paiement",
-				"opensAt": "Prise de rendez-vous possible à partir du",
 				"done": "Indiqués",
 				"todo": "À compléter",
 				"deontology": "Article R.4127-53 du code de la santé publique : le médecin qui présente son activité en ligne indique ses honoraires et les moyens de paiement acceptés.",
 				"editFees": "Indiquer honoraires et moyens de paiement",
-				"settings": "Réglages de la prise de rendez-vous",
-				"settingsNote": "Les réglages arrivent avec la prise de rendez-vous en ligne : la page n’est peut-être pas encore disponible."
+				"settingsNote": "Les réglages arrivent avec la prise de rendez-vous en ligne : la page n’est peut-être pas encore disponible.",
+				"opensAt": "Prise de rendez-vous possible à partir du",
+				"settings": "Réglages de la prise de rendez-vous"
 			},
 			"publish": {
 				"label": "Publier",

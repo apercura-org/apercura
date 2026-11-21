@@ -7,6 +7,7 @@ import { Link, useRouter } from "~/i18n/navigation";
 import { authClient } from "~/lib/auth-client";
 import { type AuthErrorKey, authErrorKey } from "~/lib/auth-errors";
 import { PRO_ROUTES } from "~/lib/pro-routes";
+import { currentReturnTo, withReturnTo } from "~/lib/return-to";
 
 type Step = "password" | "totp" | "backup";
 
@@ -23,6 +24,8 @@ export function SignInForm() {
 	const [code, setCode] = useState("");
 	const headingRef = useRef<HTMLHeadingElement>(null);
 	const shownStep = useRef<Step>("password");
+	const [returnTo, setReturnTo] = useState<ReturnType<typeof currentReturnTo>>(null);
+	useEffect(() => setReturnTo(currentReturnTo()), []);
 
 	useEffect(() => {
 		// Move focus to the new step's heading so screen readers hear where they are.
@@ -33,7 +36,8 @@ export function SignInForm() {
 	}, [step]);
 
 	const goIn = () => {
-		router.replace(PRO_ROUTES.home);
+		// Back to the claim the visitor came for, else their space.
+		router.replace(currentReturnTo() ?? PRO_ROUTES.home);
 		router.refresh();
 	};
 
@@ -148,7 +152,7 @@ export function SignInForm() {
 				</section>
 				<p className="text-body text-ink">
 					{t("signIn.noAccount")}{" "}
-					<Link href={PRO_ROUTES.signUp} className={linkStyles()}>
+					<Link href={withReturnTo(PRO_ROUTES.signUp, returnTo)} className={linkStyles()}>
 						{t("signIn.signUpLink")}
 					</Link>
 				</p>
