@@ -33,6 +33,12 @@ export interface Context {
 	getSession: () => Promise<SessionContext | null>;
 	/** Counts one hit against a key; false when over the limit. */
 	rateLimit: (key: string, rule: RateLimitRule) => Promise<boolean>;
+	/** Response headers (HTTP only), e.g. to set the booking cookie. */
+	resHeaders?: Headers;
+	/** Runs a task after the response is sent (Next.js `after`). Unset: tasks run unawaited. */
+	defer?: (task: () => Promise<void>) => void;
+	/** Clock of the booking services, injected by tests. Defaults to `Date.now`. */
+	now?: () => number;
 }
 
 const t = initTRPC.context<Context>().create({
