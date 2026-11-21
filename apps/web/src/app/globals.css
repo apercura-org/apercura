@@ -1,4 +1,6 @@
 @import "tailwindcss";
+@import "@apercura/ui/theme.css";
+@import "./fonts.css";
 
 /* Workspace packages that may contain Tailwind classes. */
 @source "../../../../packages/ui/src";

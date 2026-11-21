@@ -1,12 +1,48 @@
 {
 	"Metadata": {
 		"title": "Apercura",
-		"description": "The open directory and free booking tool for every health practitioner in France."
+		"description": "The open directory and free booking tool for every health practitioner in France.",
+		"proTitle": "Your page already exists · Apercura",
+		"proDescription": "Apercura publishes a factual page for every health practitioner registered in France. Find yours and claim it for free.",
+		"searchTitle": "Search · Apercura",
+		"galleryTitle": "Component gallery · Apercura"
+	},
+	"Site": {
+		"skipLink": "Skip to content",
+		"wordmark": "Apercura",
+		"homeLink": "Apercura, home",
+		"runningHead": "Open directory of health practitioners in France",
+		"navLabel": "Main",
+		"navPro": "For practitioners",
+		"navPatients": "For patients",
+		"folio": "Page {number}",
+		"externalLink": "opens another site",
+		"footer": {
+			"free": "Free for practitioners and patients.",
+			"license": "Source code under the AGPL-3.0 licence",
+			"noAds": "No ratings, no ads, no paid ranking."
+		}
+	},
+	"LocaleSwitcher": {
+		"label": "Language",
+		"locale": "{locale, select, fr {Français} en {English} other {Unknown}}"
+	},
+	"Search": {
+		"label": "Find a health practitioner",
+		"who": "Who?",
+		"whoHint": "Name, specialty or profession",
+		"where": "Where?",
+		"whereHint": "Town or postcode",
+		"submit": "Search"
 	},
 	"HomePage": {
 		"title": "Apercura",
-		"tagline": "The open directory and free booking tool for every health practitioner in France.",
-		"pillarsHeading": "Our commitments",
+		"hook": "Find any health practitioner in France: every one of them already has a page.",
+		"pillarsHeading": "What Apercura commits to",
+		"columns": {
+			"number": "No.",
+			"commitment": "Commitment"
+		},
 		"pillars": {
 			"free": {
 				"title": "Free",
@@ -14,7 +50,7 @@
 			},
 			"openSource": {
 				"title": "Open source",
-				"description": "The full source code is published under the AGPL-3.0 license."
+				"description": "The full source code is published under the AGPL-3.0 licence."
 			},
 			"hostedInFrance": {
 				"title": "Health data hosted in France",
@@ -25,10 +61,333 @@
 				"description": "Run the whole platform yourself with Docker, open data import included."
 			}
 		},
-		"status": "Work in progress."
+		"registry": {
+			"heading": "Built from the national register",
+			"intro": "Each page starts from the public register of health professionals. Nobody pays to be listed, and nobody is left out.",
+			"doctors": "Doctors",
+			"dentists": "Dentists",
+			"midwives": "Midwives",
+			"withAddress": "With a public practice address",
+			"count": "{count, number}",
+			"approxCount": "about {count, number}",
+			"sourceLabel": "Source",
+			"sourceName": "Annuaire Santé, Agence du numérique en santé",
+			"updatedLabel": "Figures of"
+		},
+		"pro": {
+			"heading": "Are you a health practitioner?",
+			"body": "Your page already exists. Claiming it is free.",
+			"cta": "Find my page"
+		}
 	},
-	"LocaleSwitcher": {
-		"label": "Language",
-		"locale": "{locale, select, fr {Français} en {English} other {Unknown}}"
+	"ProPage": {
+		"title": "Your page already exists.",
+		"lead": "Apercura publishes a factual page for every health practitioner registered in France, built from public data. Find yours, claim it for free and complete it.",
+		"search": {
+			"label": "Find your page",
+			"field": "Name or RPPS number",
+			"hint": "Last name, or the 11 digits",
+			"submit": "Find my page"
+		},
+		"stepsHeading": "Claiming your page, in three steps",
+		"columns": {
+			"step": "Step",
+			"what": "What you do"
+		},
+		"steps": {
+			"find": {
+				"title": "Find your page",
+				"description": "Search by name or RPPS number. The page is already filled with your public registry information."
+			},
+			"verify": {
+				"title": "Prove it is you",
+				"description": "Sign in with Pro Santé Connect using your e-CPS, or send a document that a person reviews."
+			},
+			"complete": {
+				"title": "Complete it and open booking",
+				"description": "Add your hours and practice details and, if you wish, free online booking. Patients book without creating an account."
+			}
+		},
+		"sampleHeading": "What a page looks like before it is claimed",
+		"sampleNote": "Fictitious example: this practitioner does not exist.",
+		"factsHeading": "Factual, and the same for everyone",
+		"facts": "Pages carry factual information only, as French medical ethics require. There are no ratings, no ads and no paid ranking: every practitioner is listed the same way."
+	},
+	"SearchPage": {
+		"title": "Search",
+		"query": "You searched for “{who}”",
+		"queryWhere": "You searched for “{who}” in “{where}”",
+		"queryOnlyWhere": "You searched in “{where}”",
+		"emptyTitle": "Search is not open yet",
+		"emptyBody": "The directory is being imported from the national register. Search results will appear on this page soon.",
+		"backHome": "Back to the home page"
+	},
+	"Practitioner": {
+		"rpps": "RPPS",
+		"status": {
+			"unclaimed": "Unclaimed page",
+			"claimed": "Claimed page",
+			"verified": "Verified page"
+		},
+		"statusNote": {
+			"unclaimed": "Built from the public register. The practitioner has not completed it yet.",
+			"verified": "Completed by the practitioner, whose identity has been verified."
+		},
+		"notProvided": "Not provided",
+		"fields": {
+			"profession": "Profession",
+			"specialty": "Specialty",
+			"address": "Practice address",
+			"phone": "Phone",
+			"hours": "Opening hours",
+			"languages": "Languages spoken",
+			"convention": "Fee agreement",
+			"booking": "Online booking",
+			"access": "Access"
+		},
+		"sitesHeading": "Places of practice",
+		"directions": "Directions",
+		"providers": {
+			"openStreetMap": "OpenStreetMap",
+			"appleMaps": "Apple Maps",
+			"googleMaps": "Google Maps"
+		},
+		"mapLabel": "Map: {place}",
+		"mapPin": "Location of {place}",
+		"source": {
+			"label": "Source",
+			"name": "Annuaire Santé, Agence du numérique en santé",
+			"updated": "Updated"
+		},
+		"action": {
+			"title": "Appointments",
+			"book": {
+				"statement": "Online booking is open. It is free and needs no account.",
+				"label": "Book an appointment"
+			},
+			"call": {
+				"statement": "This practitioner does not offer online booking. Call the practice to make an appointment.",
+				"label": "Call {phone}"
+			},
+			"establishment": {
+				"statement": "Appointments with this practitioner are made through {establishment}.",
+				"label": "Book with {establishment}"
+			},
+			"locum": {
+				"statement": "This practitioner works as a locum, standing in for other doctors. They cannot be booked directly.",
+				"hint": "To see them, book with the practice where they are currently working."
+			}
+		},
+		"slots": {
+			"heading": "Choose a time",
+			"label": "Available times",
+			"now": "now",
+			"unavailable": "unavailable",
+			"selected": "Selected: {slot}",
+			"emptyDay": "No times this day",
+			"slotLabel": "{day}, {time}"
+		},
+		"professions": {
+			"gp": "General practitioner",
+			"dentist": "Dentist",
+			"midwife": "Midwife",
+			"physio": "Physiotherapist"
+		}
+	},
+	"Gallery": {
+		"title": "Component gallery",
+		"intro": "Every component of the booklet system, in every state. Development only: this page returns 404 in production. All people, numbers and places on it are fictitious.",
+		"sections": {
+			"tokens": "Tokens",
+			"type": "Type roles",
+			"buttons": "Buttons and links",
+			"fields": "Text fields",
+			"pickers": "Pickers and dates",
+			"choices": "Choices",
+			"overlays": "Overlays",
+			"navigation": "Navigation",
+			"data": "Tables and marks",
+			"feedback": "Loading and empty states",
+			"form": "Form validation",
+			"domain": "Domain components",
+			"booklet": "Sample booklet page"
+		},
+		"palette": {
+			"paper": "Paper: page ground",
+			"paperShade": "Paper shade: hovered rows, skeletons",
+			"ink": "Ink: type, rules, labels",
+			"inkMuted": "Muted ink: hints, placeholders",
+			"inkDisabled": "Disabled ink",
+			"ruleSoft": "Soft rule: hairlines, leaders",
+			"fieldEdge": "Field edge: control borders",
+			"cover": "Cover: solid bands",
+			"coverMuted": "Cover muted: secondary type on bands",
+			"stamp": "Stamp: action, verified, booked",
+			"stampStrong": "Stamp pressed",
+			"stampTint": "Stamp wash",
+			"error": "Error ink",
+			"errorTint": "Error wash"
+		},
+		"typeRoles": {
+			"display": "Display: the wordmark",
+			"headline": "Headline: page titles",
+			"title": "Title: section headings",
+			"lead": "Lead: introductions",
+			"body": "Body: running text at 18 px, set in Atkinson Hyperlegible Next for low-vision readers.",
+			"meta": "Meta: hints and secondary facts",
+			"caps": "Caps: column headers and running heads"
+		},
+		"states": {
+			"default": "Default",
+			"disabled": "Disabled",
+			"pending": "Pending",
+			"invalid": "Invalid",
+			"filled": "Filled",
+			"empty": "Empty",
+			"loading": "Loading",
+			"onCover": "On a cover band"
+		},
+		"buttons": {
+			"stamp": "Book",
+			"ink": "Call the practice",
+			"quiet": "Show more",
+			"cover": "For practitioners",
+			"large": "Find my page",
+			"pendingLabel": "Sending",
+			"linkButton": "Open the register",
+			"inlineLink": "Read how pages are built",
+			"externalLink": "Annuaire Santé"
+		},
+		"fields": {
+			"name": "Last name",
+			"nameHint": "As written in the register",
+			"email": "Email address",
+			"emailHint": "We send the booking code to this address.",
+			"emailError": "Enter an email address such as name@example.fr.",
+			"phone": "Phone",
+			"locked": "RPPS number",
+			"search": "Search the directory",
+			"searchHint": "Name, specialty or town",
+			"clear": "Clear search"
+		},
+		"pickers": {
+			"city": "Town",
+			"profession": "Profession",
+			"choose": "Choose a profession",
+			"date": "Date of birth",
+			"calendar": "Appointment day",
+			"time": "Preferred time",
+			"otp": "Booking code",
+			"otpHint": "The 6 digits sent to your email address.",
+			"otpError": "This code is not valid. Check the last email we sent.",
+			"dateError": "Enter a date in the past."
+		},
+		"choices": {
+			"terms": "I agree to receive the booking code by email",
+			"reminder": "Send me a reminder the day before",
+			"remindersAll": "All reminders",
+			"visitLabel": "Type of visit",
+			"visitInPerson": "At the practice",
+			"visitHome": "Home visit",
+			"visitVideo": "Video consultation",
+			"bookingOpen": "Open online booking",
+			"mustAgree": "You must agree to continue."
+		},
+		"overlays": {
+			"openDialog": "Cancel the appointment",
+			"dialogTitle": "Cancel this appointment?",
+			"dialogBody": "The time will be offered to other patients. You will receive a confirmation by email.",
+			"keep": "Keep it",
+			"confirmCancel": "Cancel the appointment",
+			"openSheet": "Other places of practice",
+			"sheetTitle": "Other places of practice",
+			"sheetBody": "This practitioner also works at two other places. Each place has its own agenda.",
+			"openPopover": "What is the RPPS?",
+			"popoverBody": "The RPPS number identifies every health professional in the national register. It is public.",
+			"popoverLabel": "About the RPPS number",
+			"openMenu": "Page actions",
+			"menuShare": "Share this page",
+			"menuReport": "Report an error",
+			"menuClaim": "Claim this page",
+			"tooltipTrigger": "Fee agreement",
+			"tooltip": "Sector 1: fees set by the national health insurance.",
+			"toastInfo": "Show a notice",
+			"toastBooked": "Show a booking",
+			"toastError": "Show an error",
+			"toastInfoTitle": "Page updated",
+			"toastInfoBody": "The register was refreshed this morning.",
+			"toastBookedTitle": "Appointment booked",
+			"toastBookedBody": "Tuesday 24 November at 9:30. A confirmation is on its way.",
+			"toastErrorTitle": "The time is no longer free",
+			"toastErrorBody": "Someone booked it a moment ago. Choose another time.",
+			"toastRegion": "Notifications",
+			"close": "Close"
+		},
+		"navigation": {
+			"tabsLabel": "Page sections",
+			"tabInfo": "Information",
+			"tabSites": "Places",
+			"tabBooking": "Booking",
+			"tabInfoBody": "Profession, specialty and fee agreement, from the register.",
+			"tabSitesBody": "Each place of practice with its address and directions.",
+			"tabBookingBody": "Open times, when the practitioner offers online booking.",
+			"breadcrumbsLabel": "Breadcrumb",
+			"crumbHome": "Home",
+			"crumbCity": "Lyon",
+			"crumbProfession": "General practitioners",
+			"crumbPage": "Dr Exemple Martin"
+		},
+		"data": {
+			"tableLabel": "Practitioners near you",
+			"colName": "Name",
+			"colProfession": "Profession",
+			"colTown": "Town",
+			"colStatus": "Page",
+			"badgeInk": "Unclaimed page",
+			"badgeStamp": "Verified page",
+			"badgeError": "Removed on request",
+			"badgeCover": "Fictitious",
+			"staticCaption": "Opening hours (static ruled table)",
+			"colDay": "Day",
+			"colMorning": "Morning",
+			"colAfternoon": "Afternoon",
+			"monday": "Monday",
+			"tuesday": "Tuesday",
+			"closed": "Closed"
+		},
+		"feedback": {
+			"loadingLabel": "Loading the page",
+			"emptyTitle": "No practitioner matches",
+			"emptyBody": "Try a nearby town or a broader profession, such as “doctor” instead of a specialty.",
+			"emptyAction": "Clear the filters"
+		},
+		"form": {
+			"heading": "Confirm your appointment",
+			"firstName": "First name",
+			"lastName": "Last name",
+			"submit": "Confirm",
+			"required": "This field is required.",
+			"success": "Form is valid."
+		},
+		"domain": {
+			"seals": "Seals derived from fictitious RPPS numbers",
+			"sealVerified": "Verified: the outer ring is stamped",
+			"fieldRows": "Field rows",
+			"provenance": "Provenance note",
+			"actions": "Action block: the four honest states",
+			"slots": "Slot picker",
+			"site": "Place of practice",
+			"map": "Map",
+			"search": "Booklet search"
+		},
+		"booklet": {
+			"unclaimed": "Unclaimed page",
+			"claimed": "Claimed and verified page",
+			"variantsLabel": "Page variant"
+		},
+		"labels": {
+			"toast": "Toasts",
+			"badge": "Badges"
+		}
 	}
 }

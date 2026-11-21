@@ -58,7 +58,7 @@ const serverSchema = z.object({
 });
 
 const clientSchema = z.object({
-	NEXT_PUBLIC_MAP_STYLE_URL: z.url().default("https://tiles.openfreemap.org/styles/liberty"),
+	NEXT_PUBLIC_MAP_STYLE_URL: z.url().default("https://tiles.openfreemap.org/styles/positron"),
 });
 
 export type ServerEnv = z.infer<typeof serverSchema>;
