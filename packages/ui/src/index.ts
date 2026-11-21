@@ -1,7 +1,7 @@
 /**
  * @apercura/ui: the booklet design system.
  *
- * - Server-safe: tokens, recipes, icons, Badge, Skeleton, EmptyState, Seal and
+ * - Server-safe: tokens, recipes, icons, Badge, Notice, Skeleton, EmptyState, Seal and
  *   the static domain components (FieldRow, PractitionerHeader, ActionBlock,
  *   SiteCard, ProvenanceNote, BookletSearch).
  * - Client ("use client"): every React Aria primitive, SlotPicker and MapView.
@@ -33,6 +33,7 @@ export {
 export { Link, type LinkProps } from "./components/link";
 export { ListBox, ListBoxItem } from "./components/list-box";
 export { Menu, MenuItem, type MenuProps, MenuTrigger } from "./components/menu";
+export { Notice, type NoticeProps } from "./components/notice";
 export { OtpField, type OtpFieldProps } from "./components/otp-field";
 export { Popover, PopoverDialog } from "./components/popover";
 export { UIProvider, type UIProviderProps } from "./components/provider";

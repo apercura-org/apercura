@@ -1,12 +1,20 @@
+import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import { routing } from "~/i18n/routing";
 import { suggestListings } from "~/lib/listing-index";
 import { suggestPlaces, suggestPractitioners } from "~/server/queries/search";
-import { enforceRateLimit, type RateLimit } from "~/server/rate-limit";
+import { clientRateLimitKey, type RateLimitRule } from "~/server/rate-limit";
+import type { Context } from "../init";
 import { createTRPCRouter, publicProcedure } from "../init";
 
 /** Suggestions are typed letter by letter: generous, but bounded per client. */
-const SUGGEST_LIMIT: Omit<RateLimit, "scope"> = { limit: 120, windowSeconds: 60 };
+const SUGGEST_LIMIT: RateLimitRule = { max: 120, windowSeconds: 60 };
+
+async function limitSuggestions(ctx: Context) {
+	if (!(await ctx.rateLimit(clientRateLimitKey("search", ctx.headers), SUGGEST_LIMIT))) {
+		throw new TRPCError({ code: "TOO_MANY_REQUESTS" });
+	}
+}
 
 const query = z.string().trim().min(1).max(80);
 
@@ -19,7 +27,7 @@ export const searchRouter = createTRPCRouter({
 	who: publicProcedure
 		.input(z.object({ q: query, locale: z.enum(routing.locales) }))
 		.query(async ({ ctx, input }) => {
-			await enforceRateLimit(ctx.headers, { scope: "search", ...SUGGEST_LIMIT });
+			await limitSuggestions(ctx);
 			const listings = suggestListings(input.q, input.locale, 5).map((entry) => ({
 				slug: entry.slug,
 				label: entry.label,
@@ -30,7 +38,7 @@ export const searchRouter = createTRPCRouter({
 
 	/** "Où ?": communes, arrondissements and departments, with their department. */
 	where: publicProcedure.input(z.object({ q: query })).query(async ({ ctx, input }) => {
-		await enforceRateLimit(ctx.headers, { scope: "search", ...SUGGEST_LIMIT });
+		await limitSuggestions(ctx);
 		const places = input.q.length >= 2 ? await suggestPlaces(input.q, 8) : [];
 		return {
 			places: places.map((place) => ({

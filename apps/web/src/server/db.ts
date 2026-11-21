@@ -1,21 +1,27 @@
 import "server-only";
+import { createDb, type Database, type Sql } from "@apercura/db";
 
-import { createSql, type Sql } from "@apercura/db";
+const globalForDb = globalThis as typeof globalThis & { apercuraDb?: Database };
 
 /**
- * The app's database pool. Public pages read it only through the cached
- * functions in `server/queries`, so a page view that hits the cache never
- * touches the database.
+ * The app's connection pool, created on first use (so builds and pages that
+ * never query do not need DATABASE_URL) and kept across hot reloads. Auth and
+ * the account tables go through Drizzle; the directory's set-based queries use
+ * the same pool through `getSql()`. Public pages read it only through the
+ * cached functions in `server/queries`, so a cached page view never touches it.
  */
-let pool: Sql | undefined;
-
-export function getSql(): Sql {
-	pool ??= createSql({
-		max: Number(process.env.DATABASE_POOL_MAX ?? 5),
+export function getDb(): Database {
+	globalForDb.apercuraDb ??= createDb({
+		max: Number(process.env.DATABASE_POOL_MAX ?? 10),
 		idleTimeout: 30,
 		connectTimeout: 10,
 	});
-	return pool;
+	return globalForDb.apercuraDb;
+}
+
+/** The same pool as a postgres.js tagged template, for SQL written by hand. */
+export function getSql(): Sql {
+	return getDb().$client;
 }
 
 /**

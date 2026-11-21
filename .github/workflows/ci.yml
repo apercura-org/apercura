@@ -53,9 +53,20 @@ jobs:
           --health-interval 5s
           --health-timeout 5s
           --health-retries 10
+      # Receives the confirmation emails of the sign-up flow; the test reads them from its API.
+      mailpit:
+        image: axllent/mailpit:latest
+        ports:
+          - 1025:1025
+          - 8025:8025
     env:
       SKIP_ENV_VALIDATION: "1"
       DATABASE_URL: postgres://postgres:postgres@localhost:5432/apercura
+      SMTP_URL: smtp://localhost:1025
+      MAIL_FROM: "Apercura <no-reply@localhost>"
+      MAILPIT_URL: http://localhost:8025
+      # Test-only secret: the CI database is thrown away after the job.
+      BETTER_AUTH_SECRET: ci-only-secret-not-used-anywhere-else-0123456789
       APP_URL: http://localhost:3100
     steps:
       - uses: actions/checkout@v7
@@ -115,6 +126,13 @@ jobs:
         run: bun run db:migrate
       - name: Re-apply migrations (must be a no-op)
         run: bun run db:migrate
+      # Membership isolation, owner-only procedures, platform admin and rate limits
+      # against the migrated schema (skipped by `bun run test` without a database).
+      - name: Access-control integration tests
+        run: bun run --cwd apps/web test
+        env:
+          DATABASE_URL_TEST: postgres://postgres:postgres@localhost:5432/apercura
+          SKIP_ENV_VALIDATION: "1"
       - name: Check schemas and extensions
         run: |
           psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -tA -c "

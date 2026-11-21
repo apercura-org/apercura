@@ -15,6 +15,13 @@ export const routing = defineRouting({
 	pathnames: {
 		"/": "/",
 		"/pro": "/pro",
+		// Practitioner space: the same French paths in both locales (never indexed).
+		"/pro/connexion": "/pro/connexion",
+		"/pro/connexion/verification": "/pro/connexion/verification",
+		"/pro/inscription": "/pro/inscription",
+		"/pro/verification-email": "/pro/verification-email",
+		"/pro/securite": "/pro/securite",
+		"/pro/tableau-de-bord": "/pro/tableau-de-bord",
 		"/_ui": "/_ui",
 		"/recherche": { fr: "/recherche", en: "/search" },
 		"/praticien/[slug]": { fr: "/praticien/[slug]", en: "/practitioner/[slug]" },

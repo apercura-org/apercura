@@ -5,7 +5,10 @@
 --    invalidated) when practitioners join or leave it, even when the counts
 --    stay the same.
 -- 2. text_norm() and a trigram index on place names for the "Où ?" search.
--- 3. Grants on the new rate_limits table (the app role only).
+-- 3. Grants: the app runs text_norm() for search, and the import writes
+--    directory.places, whose trigram index evaluates it; the read-only role
+--    needs no function. Rate limits use the
+--    directory.rate_limits table of 0005_auth (grants in 0006_auth_grants).
 
 -- Normalized text for fuzzy matching: unaccented, lowercase, single spaces.
 CREATE OR REPLACE FUNCTION directory.text_norm(value text)
@@ -163,9 +166,7 @@ END
 $$;
 --> statement-breakpoint
 
--- The app counts requests; nobody else needs this table.
-GRANT SELECT, INSERT, UPDATE, DELETE ON directory.rate_limits TO apercura_app;
---> statement-breakpoint
-GRANT SELECT ON directory.rate_limits TO apercura_readonly;
+-- Functions are executable by PUBLIC by default: keep text_norm() to the roles that need it.
+REVOKE EXECUTE ON FUNCTION directory.text_norm(text) FROM PUBLIC;
 --> statement-breakpoint
 GRANT EXECUTE ON FUNCTION directory.text_norm(text) TO apercura_app, apercura_etl;

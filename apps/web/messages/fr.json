@@ -1195,5 +1195,189 @@
 			"FON-65": "Remplaçant du titulaire d'officine",
 			"FON-AU": "Fonction non précisée"
 		}
+	},
+	"auth": {
+		"runningHead": "Espace praticien",
+		"metadata": {
+			"signIn": "Se connecter · Apercura",
+			"signUp": "Créer un compte · Apercura",
+			"verifyEmail": "Confirmation de l’adresse e-mail · Apercura",
+			"challenge": "Confirmez que c’est vous · Apercura",
+			"security": "Sécurité · Apercura",
+			"home": "Votre espace · Apercura"
+		},
+		"common": {
+			"email": "Adresse e-mail",
+			"password": "Mot de passe",
+			"pending": "Veuillez patienter",
+			"loading": "Chargement",
+			"signOut": "Se déconnecter",
+			"signingOut": "Déconnexion en cours",
+			"totpCode": "Code à 6 chiffres de votre application d’authentification"
+		},
+		"errors": {
+			"generic": "Une erreur est survenue. Réessayez dans un instant.",
+			"tooManyRequests": "Trop de tentatives. Attendez une minute, puis réessayez.",
+			"invalidCredentials": "Cette adresse e-mail et ce mot de passe ne correspondent pas.",
+			"emailNotVerified": "Confirmez d’abord votre adresse e-mail : nous venons de vous envoyer un nouveau lien.",
+			"invalidCode": "Ce code n’est pas valide. Vérifiez-le et réessayez.",
+			"locked": "Trop de codes erronés. Attendez 15 minutes, puis reconnectez-vous.",
+			"passwordTooShort": "Le mot de passe est trop court : 12 caractères au minimum.",
+			"passwordTooLong": "Le mot de passe est trop long : 128 caractères au maximum.",
+			"userExists": "Un compte utilise déjà cette adresse e-mail. Connectez-vous plutôt.",
+			"invalidPassword": "Ce mot de passe n’est pas correct.",
+			"mfaRequired": "Confirmez d’abord que c’est vous avec votre second facteur.",
+			"lastFactor": "Ajoutez un autre second facteur avant de retirer celui-ci : votre compte doit toujours en garder un.",
+			"passkeyFailed": "La clé d’accès n’a pas pu être utilisée. Réessayez, ou utilisez votre mot de passe et votre code."
+		},
+		"signIn": {
+			"title": "Se connecter",
+			"lead": "Votre espace praticien : votre page, votre agenda, votre équipe.",
+			"asideFactor": "Tout compte qui accède aux rendez-vous a besoin d’un second facteur : un code d’application d’authentification ou une clé d’accès.",
+			"asidePasskey": "Une clé d’accès est gardée sur votre téléphone ou votre ordinateur et se déverrouille avec votre empreinte, votre visage ou votre code.",
+			"passwordHeading": "Avec votre mot de passe",
+			"submit": "Se connecter",
+			"passkeyHeading": "Avec une clé d’accès",
+			"passkeyHint": "Pas de mot de passe : votre appareil confirme que c’est vous.",
+			"passkey": "Se connecter avec une clé d’accès",
+			"noAccount": "Pas encore de compte ?",
+			"signUpLink": "Créer un compte",
+			"totpHeading": "Saisissez votre code",
+			"backupHeading": "Saisissez un code de secours",
+			"totpLead": "Ouvrez votre application d’authentification et saisissez le code à 6 chiffres affiché pour Apercura.",
+			"backupLead": "Chaque code de secours ne sert qu’une fois. Vous les avez reçus en configurant votre application d’authentification.",
+			"backupCode": "Code de secours",
+			"verify": "Confirmer",
+			"useBackupCode": "Utiliser plutôt un code de secours",
+			"useTotp": "Utiliser plutôt l’application d’authentification"
+		},
+		"signUp": {
+			"title": "Créer un compte",
+			"lead": "Gratuit pour les praticiens et leurs secrétaires.",
+			"asideSteps": "Trois étapes : créer le compte, confirmer votre adresse e-mail, puis configurer un second facteur.",
+			"asideFree": "Créer un compte ne modifie aucune page publique. La revendication de votre page vient ensuite.",
+			"name": "Prénom et nom",
+			"emailHint": "Nous envoyons un lien de confirmation à cette adresse.",
+			"passwordHint": "Au moins {min} caractères. Une longue phrase se retient facilement.",
+			"submit": "Créer le compte",
+			"haveAccount": "Déjà un compte ?",
+			"signInLink": "Se connecter",
+			"sentHeading": "Consultez votre messagerie",
+			"sentTitle": "Nous avons envoyé un lien de confirmation à {email}.",
+			"sentBody": "Ouvrez l’e-mail et suivez le lien dans l’heure. Connectez-vous ensuite pour configurer votre second facteur.",
+			"sentHint": "Rien après quelques minutes ? Regardez dans vos courriers indésirables, ou connectez-vous : nous enverrons un nouveau lien."
+		},
+		"verifyEmail": {
+			"title": "Confirmation de l’adresse e-mail",
+			"successTitle": "Votre adresse e-mail est confirmée.",
+			"successBody": "Connectez-vous avec votre mot de passe pour configurer votre second facteur.",
+			"errorTitle": "Ce lien ne fonctionne plus.",
+			"errorBody": "Il a peut-être expiré ou déjà servi. Connectez-vous : nous vous enverrons un nouveau lien.",
+			"signIn": "Se connecter"
+		},
+		"challenge": {
+			"title": "Confirmez que c’est vous",
+			"lead": "Votre compte a un second facteur : utilisez-le pour ouvrir votre espace.",
+			"aside": "Votre mot de passe seul ne suffit pas pour accéder aux rendez-vous.",
+			"passkeyHeading": "Avec une clé d’accès",
+			"passkeyLead": "Votre appareil demande votre empreinte, votre visage ou votre code.",
+			"passkey": "Utiliser ma clé d’accès",
+			"totpHeading": "Avec votre application d’authentification",
+			"otherHeading": "Ce n’est pas vous, ou vous n’avez plus votre facteur ?",
+			"otherLead": "Déconnectez-vous. Récupérer un compte demande de vérifier à nouveau votre identité."
+		},
+		"security": {
+			"title": "Sécurité",
+			"lead": "Comment vous vous connectez, et où vous êtes connecté.",
+			"enrolLead": "Une dernière étape avant votre espace : configurez un second facteur.",
+			"enrolTitle": "Choisissez un second facteur pour continuer",
+			"enrolBody": "Apercura en demande un à tout compte qui accède aux rendez-vous. Une application d’authentification ou une clé d’accès conviennent ; vous pourrez ajouter l’autre plus tard.",
+			"continue": "Continuer vers votre espace",
+			"actions": "Actions",
+			"totp": {
+				"heading": "Application d’authentification",
+				"lead": "Une application sur votre téléphone (par exemple FreeOTP, Aegis ou Google Authenticator) affiche un nouveau code à 6 chiffres toutes les 30 secondes.",
+				"enabledTitle": "L’application d’authentification est configurée.",
+				"enabledBody": "Un code vous sera demandé à chaque connexion par mot de passe.",
+				"scanHeading": "1. Scannez le QR code",
+				"scanLead": "Dans votre application d’authentification, ajoutez un compte et scannez ce code. Si vous ne pouvez pas le scanner, saisissez la clé de configuration.",
+				"qrLabel": "QR code pour ajouter Apercura à votre application d’authentification",
+				"manualKey": "Clé de configuration",
+				"codesHeading": "2. Gardez vos codes de secours",
+				"codesLead": "Si vous perdez votre téléphone, chacun de ces codes permet de vous connecter une fois. Imprimez-les ou rangez-les dans un gestionnaire de mots de passe : ils ne sont affichés que maintenant.",
+				"confirmHeading": "3. Saisissez le code affiché par l’application",
+				"confirm": "Activer",
+				"password": "Votre mot de passe",
+				"passwordHint": "Nous le redemandons avant de modifier votre façon de vous connecter.",
+				"start": "Configurer l’application"
+			},
+			"passkeys": {
+				"heading": "Clés d’accès",
+				"lead": "Une clé d’accès reste sur votre téléphone, votre ordinateur ou votre clé de sécurité et se déverrouille avec votre empreinte, votre visage ou votre code. Rien à saisir, rien à voler.",
+				"addedTitle": "La clé d’accès est ajoutée.",
+				"name": "Nom",
+				"added": "Ajoutée le",
+				"unnamed": "Clé d’accès",
+				"removeNamed": "Retirer {name}",
+				"remove": "Retirer",
+				"none": "Aucune clé d’accès pour l’instant.",
+				"nameLabel": "Nom de la nouvelle clé (facultatif)",
+				"nameHint": "Par exemple : ordinateur du cabinet.",
+				"add": "Ajouter une clé d’accès"
+			},
+			"sessions": {
+				"heading": "Où vous êtes connecté",
+				"lead": "Une session se termine après 12 heures sans utilisation. Déconnectez toute session que vous ne reconnaissez pas.",
+				"device": "Appareil",
+				"lastActive": "Dernière activité",
+				"unknownDevice": "Appareil inconnu",
+				"current": "Cette session",
+				"revoke": "Déconnecter",
+				"everywhereHint": "Appareil perdu ou mot de passe partagé ? Déconnectez toutes les sessions, celle-ci comprise.",
+				"everywhere": "Me déconnecter partout"
+			}
+		},
+		"app": {
+			"title": "Votre espace",
+			"lead": "Connecté avec {email}.",
+			"homeLink": "Apercura, accueil",
+			"nav": {
+				"label": "Espace praticien",
+				"home": "Votre espace",
+				"security": "Sécurité"
+			},
+			"practicesHeading": "Vos cabinets",
+			"columns": {
+				"practice": "Cabinet",
+				"role": "Votre rôle"
+			},
+			"emptyTitle": "Aucun cabinet pour l’instant",
+			"emptyBody": "Votre cabinet apparaîtra ici une fois votre page revendiquée. La revendication n’est pas encore ouverte ; votre compte est prêt.",
+			"emptyAction": "Trouver ma page",
+			"securityHeading": "Sécurité du compte",
+			"securityBody": "Votre compte est protégé par un second facteur. Gérez votre application d’authentification, vos clés d’accès et vos sessions.",
+			"securityLink": "Réglages de sécurité"
+		},
+		"roles": {
+			"owner": "Titulaire",
+			"practitioner": "Praticien",
+			"assistant": "Secrétaire"
+		},
+		"email": {
+			"wordmark": "Apercura",
+			"runningHead": "Espace praticien",
+			"footer": "Apercura : l’annuaire ouvert des soignants en France. Gratuit et open source.",
+			"verify": {
+				"subject": "Confirmez votre adresse e-mail",
+				"preview": "Confirmez votre adresse e-mail pour terminer la création de votre compte Apercura.",
+				"title": "Confirmez votre adresse e-mail",
+				"greeting": "Bonjour {name},",
+				"body": "Vous venez de créer un compte Apercura. Confirmez que cette adresse est bien la vôtre pour continuer.",
+				"action": "Confirmer mon adresse",
+				"fallback": "Si le bouton ne fonctionne pas, copiez ce lien dans votre navigateur :",
+				"expiry": "Le lien fonctionne pendant une heure.",
+				"ignore": "Vous n’avez pas créé ce compte ? Ignorez cet e-mail : il ne se passera rien."
+			}
+		}
 	}
 }

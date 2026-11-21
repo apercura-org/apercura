@@ -17,7 +17,7 @@ const navLink =
 export async function SiteHeader({ locale, href, showWordmark = true }: SiteHeaderProps) {
 	const t = await getTranslations({ locale, namespace: "Site" });
 	const tLocale = await getTranslations({ locale, namespace: "LocaleSwitcher" });
-	const isPro = href === "/pro";
+	const isPro = typeof href === "string" && (href === "/pro" || href.startsWith("/pro/"));
 
 	return (
 		<header className="border-b border-cover-rule">

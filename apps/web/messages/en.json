@@ -1195,5 +1195,189 @@
 			"FON-65": "Pharmacy locum",
 			"FON-AU": "Unspecified role"
 		}
+	},
+	"auth": {
+		"runningHead": "Practitioner space",
+		"metadata": {
+			"signIn": "Sign in · Apercura",
+			"signUp": "Create an account · Apercura",
+			"verifyEmail": "Email confirmation · Apercura",
+			"challenge": "Confirm it is you · Apercura",
+			"security": "Security · Apercura",
+			"home": "Your space · Apercura"
+		},
+		"common": {
+			"email": "Email address",
+			"password": "Password",
+			"pending": "Please wait",
+			"loading": "Loading",
+			"signOut": "Sign out",
+			"signingOut": "Signing out",
+			"totpCode": "6-digit code from your authenticator app"
+		},
+		"errors": {
+			"generic": "Something went wrong. Please try again in a moment.",
+			"tooManyRequests": "Too many attempts. Wait a minute, then try again.",
+			"invalidCredentials": "This email address and password do not match.",
+			"emailNotVerified": "Confirm your email address first: we have just sent you a new link.",
+			"invalidCode": "This code is not valid. Check the code and try again.",
+			"locked": "Too many wrong codes. Wait 15 minutes, then sign in again.",
+			"passwordTooShort": "The password is too short: use at least 12 characters.",
+			"passwordTooLong": "The password is too long: use at most 128 characters.",
+			"userExists": "An account already uses this email address. Sign in instead.",
+			"invalidPassword": "This password is not correct.",
+			"mfaRequired": "Confirm it is you with your second factor first.",
+			"lastFactor": "Add another second factor before removing this one: your account must always keep one.",
+			"passkeyFailed": "The passkey could not be used. Try again, or use your password and code."
+		},
+		"signIn": {
+			"title": "Sign in",
+			"lead": "Your practitioner space: your page, your agenda, your team.",
+			"asideFactor": "Every account that can reach appointments needs a second factor: a code from an authenticator app or a passkey.",
+			"asidePasskey": "A passkey is kept on your phone or computer and unlocked with your fingerprint, face or PIN.",
+			"passwordHeading": "With your password",
+			"submit": "Sign in",
+			"passkeyHeading": "With a passkey",
+			"passkeyHint": "No password needed: your device confirms it is you.",
+			"passkey": "Sign in with a passkey",
+			"noAccount": "No account yet?",
+			"signUpLink": "Create an account",
+			"totpHeading": "Enter your code",
+			"backupHeading": "Enter a backup code",
+			"totpLead": "Open your authenticator app and enter the 6-digit code shown for Apercura.",
+			"backupLead": "Each backup code works once. You received them when you set up your authenticator app.",
+			"backupCode": "Backup code",
+			"verify": "Confirm",
+			"useBackupCode": "Use a backup code instead",
+			"useTotp": "Use the authenticator app instead"
+		},
+		"signUp": {
+			"title": "Create an account",
+			"lead": "Free for practitioners and their assistants.",
+			"asideSteps": "Three steps: create the account, confirm your email address, then set up a second factor.",
+			"asideFree": "Creating an account does not change any public page. Claiming your page comes next.",
+			"name": "First and last name",
+			"emailHint": "We send a confirmation link to this address.",
+			"passwordHint": "At least {min} characters. A long sentence is easy to remember.",
+			"submit": "Create the account",
+			"haveAccount": "Already have an account?",
+			"signInLink": "Sign in",
+			"sentHeading": "Check your inbox",
+			"sentTitle": "We sent a confirmation link to {email}.",
+			"sentBody": "Open the email and follow the link within an hour. Then sign in to set up your second factor.",
+			"sentHint": "Nothing after a few minutes? Check your spam folder, or sign in: we will send a new link."
+		},
+		"verifyEmail": {
+			"title": "Email confirmation",
+			"successTitle": "Your email address is confirmed.",
+			"successBody": "Sign in with your password to set up your second factor.",
+			"errorTitle": "This link no longer works.",
+			"errorBody": "It may have expired or been used already. Sign in: we will send you a new link.",
+			"signIn": "Sign in"
+		},
+		"challenge": {
+			"title": "Confirm it is you",
+			"lead": "Your account has a second factor: use it to open your space.",
+			"aside": "Your password alone is not enough to reach appointments.",
+			"passkeyHeading": "With a passkey",
+			"passkeyLead": "Your device asks for your fingerprint, face or PIN.",
+			"passkey": "Use my passkey",
+			"totpHeading": "With your authenticator app",
+			"otherHeading": "Not you, or no access to your factor?",
+			"otherLead": "Sign out. Recovering an account means verifying your identity again."
+		},
+		"security": {
+			"title": "Security",
+			"lead": "How you sign in, and where you are signed in.",
+			"enrolLead": "One last step before your space: set up a second factor.",
+			"enrolTitle": "Choose a second factor to continue",
+			"enrolBody": "Apercura asks every account that can reach appointments for one. An authenticator app or a passkey both work; you can add the other later.",
+			"continue": "Continue to your space",
+			"actions": "Actions",
+			"totp": {
+				"heading": "Authenticator app",
+				"lead": "An app on your phone (for example FreeOTP, Aegis or Google Authenticator) shows a new 6-digit code every 30 seconds.",
+				"enabledTitle": "The authenticator app is set up.",
+				"enabledBody": "You will be asked for a code each time you sign in with your password.",
+				"scanHeading": "1. Scan the QR code",
+				"scanLead": "In your authenticator app, add an account and scan this code. If you cannot scan it, type the setup key.",
+				"qrLabel": "QR code to add Apercura to your authenticator app",
+				"manualKey": "Setup key",
+				"codesHeading": "2. Keep your backup codes",
+				"codesLead": "If you lose your phone, each of these codes lets you sign in once. Print them or store them in a password manager; they are shown only now.",
+				"confirmHeading": "3. Enter the code shown by the app",
+				"confirm": "Turn on",
+				"password": "Your password",
+				"passwordHint": "We ask for it again before changing how you sign in.",
+				"start": "Set up the app"
+			},
+			"passkeys": {
+				"heading": "Passkeys",
+				"lead": "A passkey stays on your phone, computer or security key and is unlocked with your fingerprint, face or PIN. Nothing to type, nothing to steal.",
+				"addedTitle": "The passkey is added.",
+				"name": "Name",
+				"added": "Added on",
+				"unnamed": "Passkey",
+				"removeNamed": "Remove {name}",
+				"remove": "Remove",
+				"none": "No passkey yet.",
+				"nameLabel": "Name of the new passkey (optional)",
+				"nameHint": "For example: practice computer.",
+				"add": "Add a passkey"
+			},
+			"sessions": {
+				"heading": "Where you are signed in",
+				"lead": "A session ends after 12 hours without use. Sign out any session you do not recognise.",
+				"device": "Device",
+				"lastActive": "Last active",
+				"unknownDevice": "Unknown device",
+				"current": "This session",
+				"revoke": "Sign out",
+				"everywhereHint": "Lost a device or shared your password? Sign out of every session, this one included.",
+				"everywhere": "Sign out everywhere"
+			}
+		},
+		"app": {
+			"title": "Your space",
+			"lead": "Signed in as {email}.",
+			"homeLink": "Apercura, home",
+			"nav": {
+				"label": "Practitioner space",
+				"home": "Your space",
+				"security": "Security"
+			},
+			"practicesHeading": "Your practices",
+			"columns": {
+				"practice": "Practice",
+				"role": "Your role"
+			},
+			"emptyTitle": "No practice yet",
+			"emptyBody": "Your practice appears here once you have claimed your page. Claiming is not open yet; your account is ready for it.",
+			"emptyAction": "Find my page",
+			"securityHeading": "Account security",
+			"securityBody": "Your account is protected by a second factor. Manage your authenticator app, passkeys and sessions.",
+			"securityLink": "Security settings"
+		},
+		"roles": {
+			"owner": "Owner",
+			"practitioner": "Practitioner",
+			"assistant": "Assistant"
+		},
+		"email": {
+			"wordmark": "Apercura",
+			"runningHead": "Practitioner space",
+			"footer": "Apercura: the open directory of health practitioners in France. Free and open source.",
+			"verify": {
+				"subject": "Confirm your email address",
+				"preview": "Confirm your email address to finish creating your Apercura account.",
+				"title": "Confirm your email address",
+				"greeting": "Hello {name},",
+				"body": "You have just created an Apercura account. Confirm that this address is yours to continue.",
+				"action": "Confirm my address",
+				"fallback": "If the button does not work, copy this link into your browser:",
+				"expiry": "The link works for one hour.",
+				"ignore": "You did not create this account? Ignore this email: nothing will happen."
+			}
+		}
 	}
 }

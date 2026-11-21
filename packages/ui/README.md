@@ -32,7 +32,7 @@ booklet's tokens exist (`bg-paper`, `text-ink`, `bg-stamp`, `text-body`, `rounde
 `PopoverDialog`, `Menu`, `Tabs`, `ToastRegion` + `toastQueue`, `Tooltip`, `Breadcrumbs`,
 `Table`, `Form`, `FieldError`, `OtpField`, and `UIProvider` (React Aria locale and router).
 
-**Server-safe**: `Badge`, `Skeleton`, `SkeletonText`, `EmptyState`, `Seal`, `FieldList`/`FieldRow`,
+**Server-safe**: `Badge`, `Notice`, `Skeleton`, `SkeletonText`, `EmptyState`, `Seal`, `FieldList`/`FieldRow`,
 `PractitionerHeader`, `ActionBlock`, `SiteCard`, `ProvenanceNote`, `BookletSearch`, the icons and
 every recipe (`buttonStyles`, `linkStyles`, `fieldStyles`, `tableStyles`, `badgeStyles`…), so
 server components can style plain `<a>` and `<table>` elements like the interactive ones.

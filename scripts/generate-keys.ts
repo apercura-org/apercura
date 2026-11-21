@@ -10,3 +10,4 @@ console.log(`ENCRYPTION_KEYS=1:${key()}`);
 console.log("ENCRYPTION_ACTIVE_KEY=1");
 console.log(`BLIND_INDEX_KEY=${key()}`);
 console.log(`BETTER_AUTH_SECRET=${key()}`);
+console.log(`RATE_LIMIT_KEY=${key()}`);

@@ -1,29 +1,34 @@
 import { describe, expect, it } from "vitest";
-import { clientIp, windowStart } from "./rate-limit-core";
+import { clientRateLimitKey } from "./rate-limit-key";
 
-describe("windowStart", () => {
-	it("floors to the start of the fixed window", () => {
-		const at = Date.UTC(2026, 10, 21, 10, 15, 42, 123);
-		expect(windowStart(at, 60).toISOString()).toBe("2026-11-21T10:15:00.000Z");
-		expect(windowStart(at, 3600).toISOString()).toBe("2026-11-21T10:00:00.000Z");
+const headers = (forwarded?: string) =>
+	new Headers(forwarded ? { "x-forwarded-for": forwarded } : {});
+const env = (count: number) => ({ RATE_LIMIT_KEY: "test-key", TRUSTED_PROXY_COUNT: count });
+
+describe("clientRateLimitKey", () => {
+	it("never stores the raw IP address", () => {
+		const key = clientRateLimitKey("search", headers("203.0.113.7"), env(1));
+		expect(key).toMatch(/^search:[\w-]{43}$/);
+		expect(key).not.toContain("203.0.113.7");
 	});
-});
-
-describe("clientIp", () => {
-	const headers = (forwarded?: string) =>
-		new Headers(forwarded ? { "x-forwarded-for": forwarded } : {});
 
 	it("ignores X-Forwarded-For without a trusted proxy", () => {
-		expect(clientIp(headers("203.0.113.7"), 0)).toBe("direct");
+		expect(clientRateLimitKey("search", headers("203.0.113.7"), env(0))).toBe(
+			clientRateLimitKey("search", headers("198.51.100.9"), env(0)),
+		);
 	});
 
-	it("reads the entry added by the outermost trusted proxy", () => {
-		expect(clientIp(headers("198.51.100.1, 203.0.113.7"), 1)).toBe("203.0.113.7");
-		expect(clientIp(headers("198.51.100.1, 203.0.113.7, 10.0.0.2"), 2)).toBe("203.0.113.7");
+	it("tells clients apart through the trusted proxies only", () => {
+		const a = clientRateLimitKey("search", headers("198.51.100.1, 203.0.113.7"), env(1));
+		const b = clientRateLimitKey("search", headers("198.51.100.2, 203.0.113.7"), env(1));
+		const c = clientRateLimitKey("search", headers("198.51.100.1, 203.0.113.8"), env(1));
+		expect(a).toBe(b);
+		expect(a).not.toBe(c);
 	});
 
-	it("falls back when the chain is shorter than the proxy count", () => {
-		expect(clientIp(headers("203.0.113.7"), 2)).toBe("direct");
-		expect(clientIp(headers(), 1)).toBe("direct");
+	it("scopes keys", () => {
+		expect(clientRateLimitKey("a", headers(), env(0))).not.toBe(
+			clientRateLimitKey("b", headers(), env(0)),
+		);
 	});
 });
