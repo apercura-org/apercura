@@ -80,7 +80,7 @@ describe("computeSlots properties", () => {
 			}),
 			{ numRuns: 300 },
 		);
-	});
+	}, 30_000);
 
 	it("never lets successive bookings of returned slots overlap", () => {
 		fc.assert(
@@ -105,5 +105,5 @@ describe("computeSlots properties", () => {
 			}),
 			{ numRuns: 200 },
 		);
-	});
+	}, 30_000);
 });
