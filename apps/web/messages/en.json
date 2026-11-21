@@ -1198,6 +1198,132 @@
 			"FON-AU": "Unspecified role"
 		}
 	},
+	"booking": {
+		"presets": {
+			"consultation": "Consultation",
+			"firstConsultation": "First consultation",
+			"checkup": "Check-up",
+			"emergency": "Emergency",
+			"scaling": "Scaling",
+			"orthodonticCheckup": "Orthodontic check-up",
+			"pregnancyFollowUp": "Pregnancy follow-up",
+			"perinealRehabilitation": "Perineal rehabilitation"
+		},
+		"email": {
+			"wordmark": "Apercura",
+			"runningHead": "Appointment",
+			"practiceRunningHead": "Practitioner space",
+			"footer": "Apercura: the open directory of health practitioners in France. Free and open source.",
+			"summary": "Appointment with {practitioner}",
+			"summaryNoName": "Appointment",
+			"labels": {
+				"with": "With",
+				"date": "Date",
+				"time": "Time",
+				"address": "Address",
+				"until": "Answer by"
+			},
+			"manageAction": "See or change my appointment",
+			"agendaAction": "Open the agenda",
+			"fallback": "If the button does not work, copy this link into your browser:",
+			"calendarNote": "The attached file adds the appointment to your calendar.",
+			"greeting": "Hello {name},",
+			"code": {
+				"subject": "Your code: {code}",
+				"preview": "Enter this code to confirm your appointment.",
+				"title": "Your confirmation code",
+				"body": "Enter this code on the booking page to confirm your appointment.",
+				"expiry": "The code works for 30 minutes.",
+				"ignore": "You did not ask for an appointment? Ignore this email: nothing will happen."
+			},
+			"confirmed": {
+				"subject": "Appointment confirmed with {practitioner}",
+				"preview": "Your appointment is confirmed.",
+				"title": "Your appointment is confirmed",
+				"body": "Here is your appointment."
+			},
+			"pending": {
+				"subject": "Appointment request sent to {practitioner}",
+				"preview": "The practice will answer your request.",
+				"title": "Your request has been sent",
+				"body": "The practice confirms its appointments itself. You will receive an email with its answer."
+			},
+			"accepted": {
+				"subject": "Appointment confirmed with {practitioner}",
+				"preview": "The practice accepted your request.",
+				"title": "Your appointment is confirmed",
+				"body": "The practice accepted your request."
+			},
+			"declined": {
+				"subject": "Appointment request not accepted",
+				"preview": "The practice could not accept your request.",
+				"title": "Your request was not accepted",
+				"body": "The practice could not accept your request. You can choose another time on Apercura."
+			},
+			"expired": {
+				"subject": "Appointment request not answered",
+				"preview": "The practice did not answer your request in time.",
+				"title": "Your request was not answered in time",
+				"body": "The practice did not answer your request in time, so the slot is free again. You can choose another time on Apercura."
+			},
+			"cancelledByPatient": {
+				"subject": "Appointment cancelled",
+				"preview": "Your appointment has been cancelled.",
+				"title": "Your appointment is cancelled",
+				"body": "Your appointment has been cancelled, as you asked."
+			},
+			"cancelledByPractice": {
+				"subject": "Appointment cancelled by the practice",
+				"preview": "The practice cancelled your appointment.",
+				"title": "Your appointment is cancelled",
+				"body": "The practice had to cancel your appointment.",
+				"message": "Message from the practice: “{message}”"
+			},
+			"rescheduled": {
+				"subject": "Appointment moved",
+				"preview": "Your appointment has a new time.",
+				"title": "Your appointment has been moved",
+				"body": "Here is the new time of your appointment."
+			},
+			"reminder": {
+				"subject": "Reminder: appointment on {date}",
+				"preview": "Your appointment is coming up.",
+				"title": "Your appointment is coming up",
+				"body": "A reminder of your appointment. If you cannot come, cancel it so the slot can go to someone else."
+			},
+			"practiceEntry": {
+				"subject": "An appointment was registered for this address",
+				"preview": "Open the link to see it.",
+				"title": "An appointment was registered for this address",
+				"body": "A practice registered an appointment for this email address on Apercura. Open the link to see it and to confirm that this address is yours.",
+				"ignore": "Not you? Ignore this email: no other message will follow."
+			},
+			"practiceNew": {
+				"subject": "New appointment on {date}",
+				"preview": "A patient booked online.",
+				"title": "New appointment",
+				"body": "A patient booked an appointment online."
+			},
+			"practiceRequest": {
+				"subject": "Appointment request to review ({date})",
+				"preview": "A patient is waiting for your answer.",
+				"title": "Appointment request to review",
+				"body": "A patient asked for an appointment. Accept or decline it in the agenda before the deadline."
+			},
+			"practiceCancelled": {
+				"subject": "Appointment cancelled by the patient ({date})",
+				"preview": "A patient cancelled an appointment.",
+				"title": "Appointment cancelled",
+				"body": "A patient cancelled an appointment. The slot is free again."
+			},
+			"practiceRescheduled": {
+				"subject": "Appointment moved by the patient ({date})",
+				"preview": "A patient moved an appointment.",
+				"title": "Appointment moved",
+				"body": "A patient moved an appointment to this new time."
+			}
+		}
+	},
 	"auth": {
 		"runningHead": "Practitioner space",
 		"metadata": {

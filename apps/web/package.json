@@ -10,7 +10,8 @@
 		"start": "next start",
 		"typecheck": "SKIP_ENV_VALIDATION=1 next typegen && tsc --noEmit",
 		"test": "vitest run",
-		"test:e2e": "playwright test"
+		"test:e2e": "playwright test",
+		"jobs:tick": "bun --preload ./src/jobs/preload.ts src/jobs/cli.ts"
 	},
 	"dependencies": {
 		"@apercura/core": "workspace:*",
@@ -28,6 +29,7 @@
 		"@trpc/client": "11.29.7",
 		"@trpc/server": "11.29.7",
 		"@trpc/tanstack-react-query": "11.29.7",
+		"altcha-lib": "2.10.0",
 		"better-auth": "1.7.27",
 		"client-only": "^0.0.1",
 		"drizzle-orm": "0.45.4",
