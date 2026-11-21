@@ -5,13 +5,21 @@
 	"license": "AGPL-3.0-only",
 	"type": "module",
 	"exports": {
-		".": "./src/index.ts"
+		".": "./src/index.ts",
+		"./booking": "./src/booking/index.ts",
+		"./crypto": "./src/crypto/index.ts",
+		"./time": "./src/time/index.ts"
 	},
 	"scripts": {
 		"typecheck": "tsc --noEmit",
 		"test": "vitest run"
 	},
+	"dependencies": {
+		"@internationalized/date": "3.12.4"
+	},
 	"devDependencies": {
+		"@types/node": "26.6.6",
+		"fast-check": "4.10.3",
 		"vitest": "5.1.1"
 	}
 }
