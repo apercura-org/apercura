@@ -503,6 +503,24 @@ export const searchDocs = directory.table(
 	],
 );
 
+/**
+ * Fixed-window request counters for public endpoints (search suggestions).
+ * Incremented atomically with `INSERT … ON CONFLICT DO UPDATE … RETURNING`.
+ * `key` never holds a raw IP address: the app stores a keyed hash.
+ */
+export const rateLimits = directory.table(
+	"rate_limits",
+	{
+		key: text().notNull(),
+		windowStart: timestamp({ withTimezone: true }).notNull(),
+		hits: integer().notNull().default(1),
+	},
+	(table) => [
+		primaryKey({ columns: [table.key, table.windowStart] }),
+		index("rate_limits_window_idx").on(table.windowStart),
+	],
+);
+
 /** Cache tags to invalidate, drained after the import commits. */
 export const invalidationOutbox = directory.table(
 	"invalidation_outbox",

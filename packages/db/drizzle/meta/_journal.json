@@ -36,6 +36,20 @@
       "when": 1795288918688,
       "tag": "0004_database_roles",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1795295116260,
+      "tag": "0005_public_site_rate_limits",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1795295116457,
+      "tag": "0006_public_site_functions",
+      "breakpoints": true
     }
   ]
 }
