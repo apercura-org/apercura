@@ -100,11 +100,28 @@ export function Dialog({
 	);
 }
 
-/** Side sheet (end edge), full height: filters, a practitioner's other sites, agenda details. */
-export function Sheet({ title, closeLabel, children, ...props }: Omit<DialogFrameProps, "role">) {
+export interface SheetProps extends Omit<DialogFrameProps, "role"> {
+	/**
+	 * `md` (28 rem) for short forms; `lg` (44 rem) for tasks that need room, such as booking with
+	 * the slot grid. Below the width the sheet covers the whole screen.
+	 */
+	size?: "md" | "lg";
+}
+
+/**
+ * Side sheet (end edge), full height: filters, a practitioner's other sites, agenda details, the
+ * booking panel. On a phone it is a full-screen page. Escape and the close button dismiss it;
+ * focus is trapped inside and returns to the trigger.
+ */
+export function Sheet({ title, closeLabel, children, size = "md", ...props }: SheetProps) {
 	return (
 		<ModalOverlay {...props} isDismissable className={cn(overlay, "justify-end")}>
-			<Modal className="h-dvh w-full max-w-md border-s-[1.5px] border-ink bg-paper data-entering:animate-sheet-in forced-colors:border-[CanvasText]">
+			<Modal
+				className={cn(
+					"h-dvh w-full border-ink bg-paper data-entering:animate-sheet-in sm:border-s-[1.5px] forced-colors:border-[CanvasText]",
+					size === "lg" ? "max-w-176" : "max-w-md",
+				)}
+			>
 				<RACDialog className="flex h-full flex-col outline-none">
 					{({ close }) => (
 						<>

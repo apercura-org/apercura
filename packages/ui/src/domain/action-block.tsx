@@ -15,8 +15,17 @@ export interface BookAction extends ActionBlockBase {
 	kind: "book";
 	/** What happens, e.g. "Online booking is open. Free, no account needed." */
 	statement: ReactNode;
+	/** The next free slot, printed under the statement, e.g. "Tuesday 24 November, 09:30". */
+	nextSlot?: { label: string; value: ReactNode } | null;
 	actionLabel: string;
 	href: string;
+	/**
+	 * Replaces the plain stamp link with an interactive control (the booking panel trigger), which
+	 * should render `href` as a link until it hydrates.
+	 */
+	action?: ReactNode;
+	/** Another way to book under the stamp, e.g. "Or call 01 00 00 00 00". */
+	secondary?: ReactNode;
 }
 
 /** No online booking: the honest next step is calling the practice. */
@@ -87,17 +96,28 @@ export function ActionBlock(props: ActionBlockProps) {
 					) : null}
 					<span>{props.statement}</span>
 				</p>
-				{props.kind === "book" ? (
-					<a
-						href={props.href}
-						className={buttonStyles({
-							intent: "stamp",
-							size: "lg",
-							className: "self-stretch sm:self-start",
-						})}
-					>
-						{props.actionLabel}
-					</a>
+				{props.kind === "book" && props.nextSlot ? (
+					<p className="flex flex-col border-y-[1.5px] border-ink py-2.5">
+						<span className="caps text-ink">{props.nextSlot.label}</span>
+						<span className="tabular text-lead font-semibold text-ink">{props.nextSlot.value}</span>
+					</p>
+				) : null}
+				{props.kind === "book"
+					? (props.action ?? (
+							<a
+								href={props.href}
+								className={buttonStyles({
+									intent: "stamp",
+									size: "lg",
+									className: "self-stretch sm:self-start",
+								})}
+							>
+								{props.actionLabel}
+							</a>
+						))
+					: null}
+				{props.kind === "book" && props.secondary ? (
+					<p className="text-meta text-ink">{props.secondary}</p>
 				) : null}
 				{props.kind === "call" ? (
 					<a

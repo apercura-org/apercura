@@ -16,6 +16,11 @@ import {
 export interface Slot extends GridSlot {
 	/** Printed time, e.g. "09:30". */
 	time: string;
+	/**
+	 * Printed under the time in caps, e.g. "UTC+2" for the hour that occurs twice when clocks go
+	 * back. Must also be part of `accessibleLabel`.
+	 */
+	detail?: string;
 	/** Full spoken label, e.g. "Tuesday 24 November, 9:30". */
 	accessibleLabel: string;
 }
@@ -225,7 +230,14 @@ export function SlotPicker({
 													)}
 												>
 													{isSelected ? <CheckIcon className="size-4" strokeWidth={2.5} /> : null}
-													{slot.time}
+													{slot.detail ? (
+														<span className="flex flex-col items-center leading-tight">
+															<span>{slot.time}</span>
+															<span className="caps font-normal">{slot.detail}</span>
+														</span>
+													) : (
+														slot.time
+													)}
 												</div>
 											);
 										})}
