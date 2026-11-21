@@ -1,0 +1,159 @@
+[
+	{
+		"nom": "Marseille",
+		"code": "13055",
+		"codesPostaux": [
+			"13001",
+			"13002",
+			"13003",
+			"13004",
+			"13005",
+			"13006",
+			"13007",
+			"13008",
+			"13009",
+			"13010",
+			"13011",
+			"13012",
+			"13013",
+			"13014",
+			"13015",
+			"13016"
+		],
+		"centre": {
+			"type": "Point",
+			"coordinates": [5.3806, 43.2803]
+		},
+		"codeDepartement": "13",
+		"codeRegion": "93",
+		"population": 886040
+	},
+	{
+		"nom": "Ajaccio",
+		"code": "2A004",
+		"codesPostaux": ["20000", "20090", "20167"],
+		"centre": {
+			"type": "Point",
+			"coordinates": [8.7058, 41.9228]
+		},
+		"codeDepartement": "2A",
+		"codeRegion": "94",
+		"population": 76320
+	},
+	{
+		"nom": "Porto-Vecchio",
+		"code": "2A247",
+		"codesPostaux": ["20137"],
+		"centre": {
+			"type": "Point",
+			"coordinates": [9.2732, 41.5849]
+		},
+		"codeDepartement": "2A",
+		"codeRegion": "94",
+		"population": 11198
+	},
+	{
+		"nom": "Bron",
+		"code": "69029",
+		"codesPostaux": ["69500"],
+		"centre": {
+			"type": "Point",
+			"coordinates": [4.9116, 45.7355]
+		},
+		"codeDepartement": "69",
+		"codeRegion": "84",
+		"population": 42982
+	},
+	{
+		"nom": "Lyon",
+		"code": "69123",
+		"codesPostaux": [
+			"69001",
+			"69002",
+			"69003",
+			"69004",
+			"69005",
+			"69006",
+			"69007",
+			"69008",
+			"69009"
+		],
+		"centre": {
+			"type": "Point",
+			"coordinates": [4.8351, 45.758]
+		},
+		"codeDepartement": "69",
+		"codeRegion": "84",
+		"population": 519127
+	},
+	{
+		"nom": "Villeurbanne",
+		"code": "69266",
+		"codesPostaux": ["69100"],
+		"centre": {
+			"type": "Point",
+			"coordinates": [4.8898, 45.7719]
+		},
+		"codeDepartement": "69",
+		"codeRegion": "84",
+		"population": 163684
+	},
+	{
+		"nom": "Paris",
+		"code": "75056",
+		"codesPostaux": [
+			"75001",
+			"75002",
+			"75003",
+			"75004",
+			"75005",
+			"75006",
+			"75007",
+			"75008",
+			"75009",
+			"75010",
+			"75011",
+			"75012",
+			"75013",
+			"75014",
+			"75015",
+			"75016",
+			"75017",
+			"75018",
+			"75019",
+			"75020",
+			"75116"
+		],
+		"centre": {
+			"type": "Point",
+			"coordinates": [2.347, 48.8589]
+		},
+		"codeDepartement": "75",
+		"codeRegion": "11",
+		"population": 2103778
+	},
+	{
+		"nom": "Saint-Denis",
+		"code": "97411",
+		"codesPostaux": ["97400", "97417", "97490"],
+		"centre": {
+			"type": "Point",
+			"coordinates": [55.4444, -20.9434]
+		},
+		"codeDepartement": "974",
+		"codeRegion": "04",
+		"population": 155634
+	},
+	{
+		"nom": "Saint-Paul",
+		"code": "97415",
+		"codesPostaux": ["97411", "97422", "97423", "97434", "97435", "97460"],
+		"centre": {
+			"type": "Point",
+			"coordinates": [55.3402, -21.0366]
+		},
+		"codeDepartement": "974",
+		"codeRegion": "04",
+		"population": 108088
+	}
+]
