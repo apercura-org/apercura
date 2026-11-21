@@ -1,5 +1,4 @@
 import {
-	BookletSearch,
 	BrandSeal,
 	buttonStyles,
 	FieldList,
@@ -10,11 +9,12 @@ import {
 import { hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { BookletPage } from "~/components/booklet-page";
+import { SearchForm } from "~/components/search-form";
 import { SiteFooter } from "~/components/site-footer";
 import { SiteHeader } from "~/components/site-header";
 import { SpecimenPage } from "~/components/specimen-page";
 import { serverEnv } from "~/env";
-import { getPathname, Link } from "~/i18n/navigation";
+import { Link } from "~/i18n/navigation";
 import { routing } from "~/i18n/routing";
 import { getPillars } from "~/lib/pillars";
 
@@ -35,13 +35,12 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
 	setRequestLocale(locale);
 
 	const t = await getTranslations({ locale, namespace: "HomePage" });
-	const tSearch = await getTranslations({ locale, namespace: "Search" });
 	const tSite = await getTranslations({ locale, namespace: "Site" });
 
 	return (
 		<>
 			<div className="surface-cover">
-				<SiteHeader locale={locale} pathname="/" showWordmark={false} />
+				<SiteHeader locale={locale} href="/" showWordmark={false} />
 			</div>
 			<main id="main" tabIndex={-1} className="flex-1 outline-none">
 				<div className="surface-cover flex min-h-[calc(60svh-3.5rem)] flex-col">
@@ -58,20 +57,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
 							{/* Apercura's own seal (brand seed, never an RPPS), printed in paper white on the cover. */}
 							<BrandSeal size={208} className="hidden shrink-0 text-cover-ink md:block" />
 						</div>
-						<BookletSearch
-							action={getPathname({ href: "/recherche", locale })}
-							label={tSearch("label")}
-							submitLabel={tSearch("submit")}
-							fields={[
-								{ name: "quoi", label: tSearch("who"), hint: tSearch("whoHint") },
-								{
-									name: "ou",
-									label: tSearch("where"),
-									hint: tSearch("whereHint"),
-									autoComplete: "address-level2",
-								},
-							]}
-						/>
+						<SearchForm idPrefix="home-search" />
 					</div>
 					<div aria-hidden="true" className="mx-auto w-full max-w-6xl px-5 sm:px-8">
 						<div className="border-t-2 border-cover-rule pb-1" />

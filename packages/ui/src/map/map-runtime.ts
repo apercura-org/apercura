@@ -18,7 +18,19 @@ export interface CreateMapOptions {
 	center: { lat: number; lon: number };
 	zoom: number;
 	markerLabel: string;
+	/** Several pins (search results): replaces the single pin and fits them all in view. */
+	markers?: { lat: number; lon: number; label: string }[];
 	signal: AbortSignal;
+}
+
+function addPin(map: maplibregl.Map, at: { lat: number; lon: number }, label: string) {
+	const pin = document.createElement("div");
+	pin.className = "apercura-map-pin";
+	pin.setAttribute("role", "img");
+	pin.setAttribute("aria-label", label);
+	// MapLibre positions the marker element with its own transform, so the shape is a child.
+	pin.append(document.createElement("span"));
+	new maplibregl.Marker({ element: pin, anchor: "bottom" }).setLngLat([at.lon, at.lat]).addTo(map);
 }
 
 export async function createMap({
@@ -27,6 +39,7 @@ export async function createMap({
 	center,
 	zoom,
 	markerLabel,
+	markers,
 	signal,
 }: CreateMapOptions) {
 	const response = await fetch(styleUrl, { signal });
@@ -47,15 +60,16 @@ export async function createMap({
 	});
 	map.addControl(new maplibregl.NavigationControl({ showCompass: false }), "top-right");
 
-	const pin = document.createElement("div");
-	pin.className = "apercura-map-pin";
-	pin.setAttribute("role", "img");
-	pin.setAttribute("aria-label", markerLabel);
-	// MapLibre positions the marker element with its own transform, so the shape is a child.
-	pin.append(document.createElement("span"));
-	new maplibregl.Marker({ element: pin, anchor: "bottom" })
-		.setLngLat([center.lon, center.lat])
-		.addTo(map);
+	if (markers && markers.length > 0) {
+		for (const marker of markers) addPin(map, marker, marker.label);
+		if (markers.length > 1) {
+			const bounds = new maplibregl.LngLatBounds();
+			for (const marker of markers) bounds.extend([marker.lon, marker.lat]);
+			map.fitBounds(bounds, { padding: 48, maxZoom: 16, duration: 0 });
+		}
+	} else {
+		addPin(map, center, markerLabel);
+	}
 
 	return map;
 }

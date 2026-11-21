@@ -71,12 +71,21 @@ export {
 	type CallAction,
 	type EstablishmentAction,
 	type LocumAction,
+	type NoticeAction,
 } from "./domain/action-block";
 export {
 	BookletSearch,
 	type BookletSearchField,
 	type BookletSearchProps,
 } from "./domain/booklet-search";
+export {
+	BookletComboField,
+	type BookletComboFieldProps,
+	type BookletComboOption,
+	type BookletComboSection,
+	BookletSearchFrame,
+	type BookletSearchFrameProps,
+} from "./domain/booklet-search-combo";
 export { type Coordinates, type DirectionsLinks, directionsLinks } from "./domain/directions";
 export { FieldList, type FieldListProps, FieldRow, type FieldRowProps } from "./domain/field-row";
 export {

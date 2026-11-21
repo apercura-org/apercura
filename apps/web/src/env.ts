@@ -41,6 +41,8 @@ const serverSchema = z.object({
 	JOBS_SECRET: optionalString,
 	REVALIDATE_SECRET: optionalString,
 	TRUSTED_PROXY_COUNT: z.coerce.number().int().min(0).default(0),
+	/** HMAC key for rate-limit keys derived from client IPs; random per process when unset. */
+	RATE_LIMIT_KEY: optionalString,
 
 	ETL_PROFESSIONS: z
 		.string()

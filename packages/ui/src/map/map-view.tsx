@@ -14,6 +14,11 @@ export interface MapViewProps {
 	/** Accessible name of the location pin. */
 	markerLabel: string;
 	/**
+	 * Several labelled pins (e.g. search results) instead of the single pin at
+	 * `center`; the map fits them all in view.
+	 */
+	markers?: { lat: number; lon: number; label: string }[];
+	/**
 	 * Shown until the map is ready, and kept if WebGL or the network fails:
 	 * the address and directions links, so the page never depends on the map.
 	 */
@@ -33,12 +38,15 @@ export function MapView({
 	styleUrl = DEFAULT_MAP_STYLE_URL,
 	label,
 	markerLabel,
+	markers,
 	fallback,
 	className,
 }: MapViewProps) {
 	const containerRef = useRef<HTMLDivElement>(null);
 	const [status, setStatus] = useState<Status>("idle");
 	const { lat, lon } = center;
+	// A stable dependency: a new array with the same pins must not rebuild the map.
+	const markersKey = markers ? JSON.stringify(markers) : "";
 
 	useEffect(() => {
 		const container = containerRef.current;
@@ -58,6 +66,7 @@ export function MapView({
 						center: { lat, lon },
 						zoom,
 						markerLabel,
+						...(markersKey ? { markers: JSON.parse(markersKey) as MapViewProps["markers"] } : {}),
 						signal: controller.signal,
 					}),
 				)
@@ -88,7 +97,7 @@ export function MapView({
 			controller.abort();
 			map?.remove();
 		};
-	}, [styleUrl, lat, lon, zoom, markerLabel]);
+	}, [styleUrl, lat, lon, zoom, markerLabel, markersKey]);
 
 	return (
 		<section
