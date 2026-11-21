@@ -29,6 +29,7 @@ bun-debug.log*
 
 # Local working artifacts
 .impeccable/
+.messages.lock
 
 # Playwright
 test-results/

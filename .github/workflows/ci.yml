@@ -37,8 +37,26 @@ jobs:
     name: End-to-end and accessibility (Playwright + axe)
     runs-on: ubuntu-latest
     timeout-minutes: 25
+    # The public pages read the directory: a throwaway PostGIS seeded with the
+    # SYNTHETIC fixtures (never real registry data, never production).
+    services:
+      postgres:
+        image: postgis/postgis:17-3.5
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: apercura
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d apercura"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
     env:
       SKIP_ENV_VALIDATION: "1"
+      DATABASE_URL: postgres://postgres:postgres@localhost:5432/apercura
+      APP_URL: http://localhost:3100
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v7
@@ -48,6 +66,10 @@ jobs:
         with:
           bun-version-file: package.json
       - run: bun install --frozen-lockfile
+      - name: Apply migrations
+        run: bun run db:migrate
+      - name: Import the synthetic fixtures
+        run: bun run etl:fr --source-dir packages/etl/fixtures/fr --offline
       - name: Install Chromium
         working-directory: apps/web
         run: bunx playwright install --with-deps chromium
