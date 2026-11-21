@@ -839,6 +839,8 @@ export async function recomputeDerived(tx: TransactionSql, ctx: MergeContext) {
 		WITH computed AS (
 			SELECT p.id, (
 				p.status = 'active'
+				-- Withheld by the app while a removal request is checked: stays hidden.
+				AND p.withheld_at IS NULL
 				AND p.profession_code = ANY (${ctx.professions}::text[])
 				AND NOT EXISTS (
 					SELECT 1 FROM directory.suppressions x

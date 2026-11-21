@@ -159,6 +159,12 @@ export const practitioners = directory.table(
 		indexable: boolean().notNull().default(false),
 		/** Next free slot, denormalized by the booking module for result cards. */
 		nextFreeAt: timestamp({ withTimezone: true }),
+		/**
+		 * Set while a removal request (GDPR art. 21) on an unclaimed page is being
+		 * checked: the page is hidden at once (not indexable, out of listings,
+		 * searches and sitemaps). The import keeps it hidden and cannot clear it.
+		 */
+		withheldAt: timestamp({ withTimezone: true }),
 		createdAt: createdAt(),
 		updatedAt: updatedAt(),
 	},
@@ -206,23 +212,37 @@ export const practitionerQualifications = directory.table(
 	],
 );
 
-/** Owner-owned page content. Never written by the import. */
+/**
+ * Owner-owned page content. Never written by the import. Every text is plain
+ * text (no HTML, no Markdown): pages print it as text.
+ */
 export const practitionerProfiles = directory.table("practitioner_profiles", {
 	practitionerId: integer()
 		.primaryKey()
 		.references(() => practitioners.id, { onDelete: "cascade" }),
+	/** Storage key of the re-encoded photo (`photos/{random}.webp`). */
 	photoKey: text(),
 	headline: text(),
 	bio: text(),
+	/** ISO 639-1 codes. */
 	languages: text().array().notNull().default(sql`'{}'::text[]`),
+	/** Owner's statement, prefilled from Ameli (`0`…`3`, as in practitioners). */
 	billingSector: text(),
+	/** `{ items: [{ label, amount, maxAmount? }], note? }`, amounts in euros. */
 	fees: jsonb(),
 	optam: text(),
+	carteVitale: boolean(),
+	/** `card`, `cash`, `cheque`, `transfer`. */
 	paymentMethods: text().array().notNull().default(sql`'{}'::text[]`),
+	/** `{ stepFree?, lift?, parking?, notes? }`. */
 	accessibility: jsonb(),
 	website: text(),
 	showPhone: boolean().notNull().default(true),
 	expertises: text().array().notNull().default(sql`'{}'::text[]`),
+	/** Owner fields hidden on the public page (`photo`, `headline`, `bio`, `languages`…). */
+	hiddenFields: text().array().notNull().default(sql`'{}'::text[]`),
+	/** Set by the last onboarding step: until then the public page shows registry facts only. */
+	publishedAt: timestamp({ withTimezone: true }),
 	createdAt: createdAt(),
 	updatedAt: updatedAt(),
 });
