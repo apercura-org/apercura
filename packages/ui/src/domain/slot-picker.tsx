@@ -42,6 +42,8 @@ export interface SlotPickerProps {
 	nowLabel: string;
 	/** Appended to the label of slots that cannot be booked, e.g. "unavailable". */
 	unavailableLabel: string;
+	/** Appended to the label of slots whose time has passed, e.g. "past". */
+	pastLabel: string;
 	/** Spoken when a slot is stamped, e.g. (slot) => `Selected: ${slot.accessibleLabel}`. */
 	announceSelection: (slot: Slot) => string;
 	/** Shown in a day row without slots. */
@@ -74,6 +76,7 @@ export function SlotPicker({
 	initialNow,
 	nowLabel,
 	unavailableLabel,
+	pastLabel,
 	announceSelection,
 	emptyDayLabel,
 }: SlotPickerProps) {
@@ -178,6 +181,8 @@ export function SlotPicker({
 									<div className="relative flex">
 										{day.slots.map((slot, column) => {
 											const bookable = isBookable(slot, now);
+											// Past: was open, time has gone (plain muted). Taken: closed (struck through).
+											const isPast = slot.available && !bookable;
 											const isSelected = slot.id === selected;
 											const isActive = active.row === row && active.column === column;
 											return (
@@ -198,7 +203,7 @@ export function SlotPicker({
 													aria-label={
 														bookable
 															? slot.accessibleLabel
-															: `${slot.accessibleLabel}, ${unavailableLabel}`
+															: `${slot.accessibleLabel}, ${isPast ? pastLabel : unavailableLabel}`
 													}
 													onClick={() => {
 														setFocus({ row, column });
@@ -212,7 +217,8 @@ export function SlotPicker({
 														bookable &&
 															!isSelected &&
 															"cursor-pointer text-ink hover:bg-paper-shade",
-														!bookable &&
+														isPast && "cursor-not-allowed font-normal text-ink-muted",
+														!slot.available &&
 															"cursor-not-allowed text-ink-disabled line-through decoration-1",
 														isSelected &&
 															"z-10 cursor-pointer bg-stamp text-paper shadow-[inset_0_0_0_2px_var(--color-stamp),inset_0_0_0_3.5px_var(--color-paper)] motion-safe:animate-stamp",
@@ -230,10 +236,7 @@ export function SlotPicker({
 												style={{ left: `${fraction * 100}%` }}
 											>
 												<span className="absolute -top-px left-1/2 size-0 -translate-x-1/2 border-x-[5px] border-t-[6px] border-x-transparent border-t-ink" />
-												<span
-													className="caps absolute bottom-0.5 left-1.5 bg-paper px-0.5 leading-none text-ink"
-													style={{ fontSize: "0.75rem" }}
-												>
+												<span className="caps absolute bottom-0.5 left-1.5 whitespace-nowrap bg-paper px-0.5 leading-none text-ink">
 													{nowLabel}
 												</span>
 											</span>

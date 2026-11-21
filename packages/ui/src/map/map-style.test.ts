@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { mapPaletteHex } from "../tokens";
-import { type MapStyle, themeMapStyle } from "./map-style";
+import { type MapStyle, SETTLEMENT_LABEL_MAX_ZOOM, themeMapStyle } from "./map-style";
 
 const style: MapStyle = {
 	version: 8,
@@ -12,6 +12,7 @@ const style: MapStyle = {
 		{ id: "highway_primary_casing", type: "line", "source-layer": "transportation" },
 		{ id: "highway_minor", type: "line", "source-layer": "transportation" },
 		{ id: "place_city", type: "symbol", "source-layer": "place" },
+		{ id: "place_suburb", type: "symbol", "source-layer": "place" },
 		{ id: "hillshade", type: "hillshade" },
 	],
 };
@@ -35,8 +36,14 @@ describe("themeMapStyle", () => {
 			"fill-opacity": 0.5,
 			"fill-color": mapPaletteHex.building,
 		});
-		expect(themed.layers.find((layer) => layer.id === "hillshade")).toBe(style.layers[6]);
+		expect(themed.layers.find((layer) => layer.id === "hillshade")).toBe(style.layers[7]);
 		expect(themed.name).toBe("fixture");
+	});
+
+	it("hides settlement names at practice zoom so the pin never covers them", () => {
+		const layer = (id: string) => themed.layers.find((item) => item.id === id);
+		expect(layer("place_city")?.maxzoom).toBe(SETTLEMENT_LABEL_MAX_ZOOM);
+		expect(layer("place_suburb")?.maxzoom).toBeUndefined();
 	});
 
 	it("does not mutate its input", () => {

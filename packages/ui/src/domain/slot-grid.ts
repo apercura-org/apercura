@@ -73,8 +73,9 @@ export function moveFocus(days: GridDay[], from: Position, key: GridKey): Positi
 
 /**
  * Where the "now" marker sits in a day's row, as a fraction of the row (0 to 1),
- * or `null` when `now` is not within that day's slots. Each slot owns an equal
- * share of the row, so the marker moves through a slot as its time passes.
+ * or `null` when `now` is not within that day's slots. The marker stands on the
+ * boundary right after the last slot that has started, so it never cuts a slot
+ * in two: everything before it is past, everything after it is still to come.
  */
 export function nowFraction(day: GridDay, now: Date): number | null {
 	const starts = day.slots.map((slot) => Date.parse(slot.start));
@@ -89,7 +90,8 @@ export function nowFraction(day: GridDay, now: Date): number | null {
 	if (time < first || time > end) {
 		return null;
 	}
-	return (time - first) / (end - first);
+	const started = starts.filter((start) => start <= time).length;
+	return started / starts.length;
 }
 
 /** A slot can be stamped only while it is open and still in the future. */

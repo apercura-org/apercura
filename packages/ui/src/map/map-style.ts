@@ -86,13 +86,33 @@ function paintFor(layer: StyleLayer, colors: Colors): Paint | null {
 	}
 }
 
+/**
+ * Settlement names (city, town, village) are hidden from this zoom on: at the
+ * street zoom of a practice map they would sit right under the location pin
+ * ("Ly●n"), and the page already prints the address.
+ */
+export const SETTLEMENT_LABEL_MAX_ZOOM = 13;
+
+const isSettlementLabel = (layer: StyleLayer) =>
+	layer.type === "symbol" &&
+	(layer["source-layer"] ?? "").toLowerCase() === "place" &&
+	/city|town|village|capital|hamlet/i.test(layer.id);
+
 /** Returns a copy of `style` with every recognised layer re-inked. Unknown layers are kept as they are. */
 export function themeMapStyle<T extends MapStyle>(style: T, colors: Colors = mapPaletteHex): T {
 	return {
 		...style,
 		layers: style.layers.map((layer) => {
 			const paint = paintFor(layer, colors);
-			return paint ? { ...layer, paint: { ...layer.paint, ...paint } } : layer;
+			const themed = paint ? { ...layer, paint: { ...layer.paint, ...paint } } : layer;
+			if (!isSettlementLabel(layer)) {
+				return themed;
+			}
+			const maxzoom =
+				typeof layer.maxzoom === "number"
+					? Math.min(layer.maxzoom, SETTLEMENT_LABEL_MAX_ZOOM)
+					: SETTLEMENT_LABEL_MAX_ZOOM;
+			return { ...themed, maxzoom };
 		}),
 	};
 }

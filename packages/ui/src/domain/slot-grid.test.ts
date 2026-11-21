@@ -39,9 +39,10 @@ describe("moveFocus", () => {
 describe("nowFraction", () => {
 	const morning = DAYS[0] as GridDay;
 
-	it("places now inside the row in proportion to elapsed slots", () => {
-		expect(nowFraction(morning, new Date("2026-11-24T09:00:00+01:00"))).toBe(0);
-		expect(nowFraction(morning, new Date("2026-11-24T10:00:00+01:00"))).toBe(0.5);
+	it("places now right after the last slot that has started", () => {
+		expect(nowFraction(morning, new Date("2026-11-24T09:00:00+01:00"))).toBe(0.25);
+		expect(nowFraction(morning, new Date("2026-11-24T09:10:00+01:00"))).toBe(0.25);
+		expect(nowFraction(morning, new Date("2026-11-24T10:00:00+01:00"))).toBe(0.75);
 		expect(nowFraction(morning, new Date("2026-11-24T11:00:00+01:00"))).toBe(1);
 	});
 

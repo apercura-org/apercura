@@ -63,7 +63,7 @@ export function BookletSearch({
 									placeholder={field.hint}
 									autoComplete={field.autoComplete ?? "off"}
 									enterKeyHint="search"
-									className="min-h-11 w-full bg-transparent py-1 text-lead text-ink outline-none placeholder:text-ink-muted [&::-webkit-search-cancel-button]:hidden"
+									className="min-h-11 w-full text-ellipsis bg-transparent py-1 text-body text-ink sm:text-lead outline-none placeholder:text-ink-muted [&::-webkit-search-cancel-button]:hidden"
 								/>
 							</div>
 						);
