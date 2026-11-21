@@ -7,7 +7,7 @@ open data (RPPS / Annuaire Santé), and gives every practitioner a free online b
 
 - **Free** for practitioners and patients.
 - **Open source** (AGPL-3.0).
-- **Health data hosted in France** by an HDS-certified host, encrypted at the application level.
+- **Health data encrypted** at the application level, and built to run on an HDS-certified host in France (the official instance will say which one once it is live).
 - **Run it all yourself**: self-hostable with Docker, open data import included.
 
 > **Status: work in progress.** Nothing here is production-ready yet. See the roadmap in the
@@ -42,6 +42,7 @@ Generate local secrets for `.env` with `bun run keys:generate`.
 | `bun run check` / `check:write` | Lint and format with Biome (`:write` applies fixes) |
 | `bun run typecheck`             | Type-check every package                            |
 | `bun run test`                  | Run the unit tests (Vitest)                         |
+| `bun run test:e2e`              | Build, then run Playwright and axe checks           |
 | `bun run db:generate`           | Generate a SQL migration from the Drizzle schema    |
 | `bun run db:migrate`            | Apply pending migrations                            |
 | `bun run keys:generate`         | Print fresh random secrets for `.env`               |
@@ -55,7 +56,7 @@ packages/
   core/         Pure domain logic (RPPS validation, slugs), fully unit-tested
   db/           Drizzle ORM schema, client and SQL migrations (PostgreSQL + PostGIS)
   etl/          Open data import CLI (placeholder)
-  ui/           Shared UI components (placeholder until the design system lands)
+  ui/           Design system: tokens, React Aria components, domain components (see DESIGN.md)
 docker/
   compose.yml   Local PostgreSQL (PostGIS) and Mailpit
 ```

@@ -1,0 +1,121 @@
+import type { ReactNode } from "react";
+import { BuildingIcon, InfoIcon, PhoneIcon } from "../icons";
+import { buttonStyles, cn } from "../recipes";
+
+interface ActionBlockBase {
+	/** Heading of the block, e.g. "Appointments". */
+	title: string;
+	/** Heading level so the block fits the page outline. */
+	headingLevel?: 2 | 3 | 4;
+	className?: string;
+}
+
+/** Online booking is open on Apercura. */
+export interface BookAction extends ActionBlockBase {
+	kind: "book";
+	/** What happens, e.g. "Online booking is open. Free, no account needed." */
+	statement: ReactNode;
+	actionLabel: string;
+	href: string;
+}
+
+/** No online booking: the honest next step is calling the practice. */
+export interface CallAction extends ActionBlockBase {
+	kind: "call";
+	statement: ReactNode;
+	/** Accessible, visible call label, e.g. "Call 01 23 45 67 89". */
+	actionLabel: string;
+	/** Phone number in E.164 form, used for the `tel:` link. */
+	phone: string;
+}
+
+/** Appointments go through the establishment (hospital, health centre). */
+export interface EstablishmentAction extends ActionBlockBase {
+	kind: "establishment";
+	statement: ReactNode;
+	actionLabel: string;
+	href: string;
+	/** Screen-reader suffix for the external link, e.g. "opens another site". */
+	externalLabel?: string;
+}
+
+/** Locum practitioner: no direct booking exists, say so and point to the alternative. */
+export interface LocumAction extends ActionBlockBase {
+	kind: "locum";
+	statement: ReactNode;
+	/** Optional extra guidance (e.g. "Contact the practice where they work"). */
+	hint?: ReactNode;
+}
+
+export type ActionBlockProps = BookAction | CallAction | EstablishmentAction | LocumAction;
+
+/**
+ * "What can I do next?" printed as a boxed section with a cover-band title.
+ * Every state says plainly what the patient can actually do; only online
+ * booking is stamped violet.
+ */
+export function ActionBlock(props: ActionBlockProps) {
+	const { title, headingLevel = 2, className } = props;
+	const Heading = `h${headingLevel}` as const;
+	return (
+		<section
+			data-kind={props.kind}
+			className={cn("border-2 border-ink bg-paper", className)}
+			aria-label={title}
+		>
+			<div className="surface-cover px-5 py-2.5">
+				<Heading className="font-display text-body font-bold uppercase tracking-[0.05em] font-stretch-semi-expanded">
+					{title}
+				</Heading>
+			</div>
+			<div className="flex flex-col gap-4 p-5">
+				<p className="flex items-start gap-3 text-body text-ink">
+					{props.kind === "locum" ? <InfoIcon className="mt-0.5 size-6 shrink-0" /> : null}
+					<span>{props.statement}</span>
+				</p>
+				{props.kind === "book" ? (
+					<a
+						href={props.href}
+						className={buttonStyles({
+							intent: "stamp",
+							size: "lg",
+							className: "self-stretch sm:self-start",
+						})}
+					>
+						{props.actionLabel}
+					</a>
+				) : null}
+				{props.kind === "call" ? (
+					<a
+						href={`tel:${props.phone}`}
+						className={buttonStyles({
+							intent: "ink",
+							size: "lg",
+							className: "self-stretch sm:self-start",
+						})}
+					>
+						<PhoneIcon className="size-5" />
+						<span className="tabular">{props.actionLabel}</span>
+					</a>
+				) : null}
+				{props.kind === "establishment" ? (
+					<a
+						href={props.href}
+						className={buttonStyles({
+							intent: "ink",
+							size: "lg",
+							className: "self-stretch sm:self-start",
+						})}
+					>
+						<BuildingIcon className="size-5" />
+						{props.actionLabel}
+						{props.externalLabel ? <span className="sr-only"> ({props.externalLabel})</span> : null}
+					</a>
+				) : null}
+				{props.kind === "locum" && props.hint ? (
+					<p className="text-meta text-ink-muted">{props.hint}</p>
+				) : null}
+			</div>
+		</section>
+	);
+}

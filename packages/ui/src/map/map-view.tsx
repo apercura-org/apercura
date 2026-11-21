@@ -1,0 +1,109 @@
+"use client";
+
+import { type ReactNode, useEffect, useRef, useState } from "react";
+import { cn } from "../recipes";
+import { DEFAULT_MAP_STYLE_URL } from "./map-style";
+
+export interface MapViewProps {
+	center: { lat: number; lon: number };
+	zoom?: number;
+	/** MapLibre style URL. Pass `NEXT_PUBLIC_MAP_STYLE_URL`; defaults to OpenFreeMap positron. */
+	styleUrl?: string;
+	/** Accessible name of the map region, e.g. "Map: Cabinet de l'Exemple". */
+	label: string;
+	/** Accessible name of the location pin. */
+	markerLabel: string;
+	/**
+	 * Shown until the map is ready, and kept if WebGL or the network fails:
+	 * the address and directions links, so the page never depends on the map.
+	 */
+	fallback: ReactNode;
+	className?: string;
+}
+
+type Status = "idle" | "loading" | "ready" | "failed";
+
+/**
+ * Lazy MapLibre GL map. Renders the fallback on the server and in the first
+ * client paint, then loads MapLibre only when the map scrolls near the viewport.
+ */
+export function MapView({
+	center,
+	zoom = 15,
+	styleUrl = DEFAULT_MAP_STYLE_URL,
+	label,
+	markerLabel,
+	fallback,
+	className,
+}: MapViewProps) {
+	const containerRef = useRef<HTMLDivElement>(null);
+	const [status, setStatus] = useState<Status>("idle");
+	const { lat, lon } = center;
+
+	useEffect(() => {
+		const container = containerRef.current;
+		if (!container) {
+			return;
+		}
+		const controller = new AbortController();
+		let map: { remove: () => void } | undefined;
+
+		const load = () => {
+			setStatus("loading");
+			import("./map-runtime")
+				.then(({ createMap }) =>
+					createMap({
+						container,
+						styleUrl,
+						center: { lat, lon },
+						zoom,
+						markerLabel,
+						signal: controller.signal,
+					}),
+				)
+				.then((created) => {
+					map = created;
+					created.once("load", () => setStatus("ready"));
+				})
+				.catch(() => {
+					if (!controller.signal.aborted) {
+						setStatus("failed");
+					}
+				});
+		};
+
+		const observer = new IntersectionObserver(
+			(entries) => {
+				if (entries.some((entry) => entry.isIntersecting)) {
+					observer.disconnect();
+					load();
+				}
+			},
+			{ rootMargin: "200px" },
+		);
+		observer.observe(container);
+
+		return () => {
+			observer.disconnect();
+			controller.abort();
+			map?.remove();
+		};
+	}, [styleUrl, lat, lon, zoom, markerLabel]);
+
+	return (
+		<section
+			aria-label={label}
+			data-status={status}
+			className={cn(
+				"apercura-map relative overflow-hidden border-[1.5px] border-ink bg-paper-shade",
+				className,
+			)}
+		>
+			{/* MapLibre's own stylesheet makes this node `position: relative`, so size it with the parent. */}
+			<div ref={containerRef} className="h-full w-full" />
+			{status === "ready" ? null : (
+				<div className="absolute inset-0 flex flex-col justify-end gap-2 p-4">{fallback}</div>
+			)}
+		</section>
+	);
+}

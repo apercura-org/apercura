@@ -1,7 +1,8 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { notFound } from "next/navigation";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { SkipLink } from "~/components/skip-link";
 import { routing } from "~/i18n/routing";
 import { TRPCReactProvider } from "~/trpc/client";
 import "../globals.css";
@@ -9,6 +10,11 @@ import "../globals.css";
 export function generateStaticParams() {
 	return routing.locales.map((locale) => ({ locale }));
 }
+
+export const viewport: Viewport = {
+	themeColor: "#003851",
+	colorScheme: "light",
+};
 
 export async function generateMetadata({ params }: LayoutProps<"/[locale]">): Promise<Metadata> {
 	const { locale } = await params;
@@ -28,10 +34,12 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
 		notFound();
 	}
 	setRequestLocale(locale);
+	const t = await getTranslations({ locale, namespace: "Site" });
 
 	return (
 		<html lang={locale}>
-			<body>
+			<body className="flex min-h-dvh flex-col">
+				<SkipLink label={t("skipLink")} />
 				<NextIntlClientProvider>
 					<TRPCReactProvider>{children}</TRPCReactProvider>
 				</NextIntlClientProvider>

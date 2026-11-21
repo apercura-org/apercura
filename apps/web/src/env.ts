@@ -51,6 +51,13 @@ const serverSchema = z.object({
 				.map((code) => code.trim())
 				.filter(Boolean),
 		),
+	/**
+	 * Name of the HDS-certified host that runs production (e.g. "Clever Cloud").
+	 * Set it only where health data really is hosted there: the public pages then
+	 * say so, naming the host. Unset (development, demos, forks, directory-only
+	 * deployments), they only promise application-level encryption.
+	 */
+	PUBLIC_HDS_HOST: optionalString,
 	FEATURE_BOOKING: z
 		.enum(["true", "false", "1", "0"])
 		.default("false")
@@ -58,7 +65,7 @@ const serverSchema = z.object({
 });
 
 const clientSchema = z.object({
-	NEXT_PUBLIC_MAP_STYLE_URL: z.url().default("https://tiles.openfreemap.org/styles/liberty"),
+	NEXT_PUBLIC_MAP_STYLE_URL: z.url().default("https://tiles.openfreemap.org/styles/positron"),
 });
 
 export type ServerEnv = z.infer<typeof serverSchema>;

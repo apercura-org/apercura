@@ -1,12 +1,53 @@
 {
 	"Metadata": {
 		"title": "Apercura",
-		"description": "L’annuaire ouvert et l’outil de prise de rendez-vous gratuit pour tous les professionnels de santé en France."
+		"description": "L’annuaire ouvert et l’outil de prise de rendez-vous gratuit pour tous les professionnels de santé en France.",
+		"proTitle": "Votre page existe déjà · Apercura",
+		"proDescription": "Apercura publie une page factuelle pour chaque professionnel de santé inscrit en France. Retrouvez la vôtre et réclamez-la gratuitement.",
+		"searchTitle": "Recherche · Apercura",
+		"galleryTitle": "Galerie des composants · Apercura"
+	},
+	"Site": {
+		"skipLink": "Aller au contenu",
+		"wordmark": "Apercura",
+		"homeLink": "Apercura, accueil",
+		"runningHead": "Annuaire ouvert des professionnels de santé en France",
+		"navLabel": "Principale",
+		"navPro": "Professionnels de santé",
+		"navPatients": "Patients",
+		"folio": "Page {number}",
+		"externalLink": "ouvre un autre site",
+		"footer": {
+			"free": "Gratuit pour les professionnels comme pour les patients.",
+			"license": "Code source sous licence AGPL-3.0",
+			"noAds": "Ni notes, ni publicité, ni classement payant."
+		},
+		"folioRpps": "RPPS {rpps}"
+	},
+	"LocaleSwitcher": {
+		"label": "Langue",
+		"locale": "{locale, select, fr {Français} en {English} other {Inconnue}}"
+	},
+	"Search": {
+		"label": "Trouver un professionnel de santé",
+		"who": "Qui ?",
+		"whoHint": "Nom, spécialité ou profession",
+		"where": "Où ?",
+		"whereHint": "Ville ou code postal",
+		"submit": "Chercher"
 	},
 	"HomePage": {
 		"title": "Apercura",
-		"tagline": "L’annuaire ouvert et l’outil de prise de rendez-vous gratuit pour tous les professionnels de santé en France.",
-		"pillarsHeading": "Nos engagements",
+		"hook": "Trouvez n’importe quel professionnel de santé en France : chacun a déjà sa page.",
+		"specimen": {
+			"heading": "Chaque professionnel a déjà sa page",
+			"intro": "Voici une page telle que le registre national la remplit, avant que le professionnel la réclame : les champs connus sont remplis, les autres disent qu’ils ne sont pas renseignés."
+		},
+		"pillarsHeading": "Ce à quoi Apercura s’engage",
+		"columns": {
+			"number": "N°",
+			"commitment": "Engagement"
+		},
 		"pillars": {
 			"free": {
 				"title": "Gratuit",
@@ -18,18 +59,349 @@
 			},
 			"hostedInFrance": {
 				"title": "Données de santé hébergées en France",
-				"description": "Les données de santé sont hébergées en France par un hébergeur certifié HDS et chiffrées au niveau applicatif."
+				"description": "Les données de santé sont hébergées en France chez un hébergeur certifié HDS ({host}) et chiffrées au niveau applicatif."
+			},
+			"encrypted": {
+				"title": "Données chiffrées",
+				"description": "Les données des patients sont chiffrées au niveau applicatif. Hébergez-les chez vous ou chez un hébergeur certifié HDS."
 			},
 			"selfHostable": {
 				"title": "Auto-hébergeable",
 				"description": "Déployez toute la plateforme vous-même avec Docker, import des données ouvertes inclus."
 			}
 		},
+		"registry": {
+			"heading": "Construit à partir du registre national",
+			"intro": "Chaque page part du registre public des professionnels de santé. Personne ne paie pour y figurer, personne n’en est exclu.",
+			"doctors": "Médecins",
+			"dentists": "Chirurgiens-dentistes",
+			"midwives": "Sages-femmes",
+			"withAddress": "Avec une adresse d’exercice publique",
+			"count": "{count, number}",
+			"approxCount": "environ {count, number}",
+			"sourceLabel": "Source",
+			"sourceName": "Annuaire Santé, Agence du numérique en santé",
+			"updatedLabel": "Chiffres du"
+		},
+		"pro": {
+			"heading": "Vous êtes professionnel de santé ?",
+			"body": "Votre page existe déjà. La réclamer est gratuit.",
+			"cta": "Retrouver ma page"
+		},
+		"tagline": "L’annuaire ouvert et l’outil de prise de rendez-vous gratuit pour tous les professionnels de santé en France.",
 		"status": "Projet en cours de construction."
 	},
-	"LocaleSwitcher": {
-		"label": "Langue",
-		"locale": "{locale, select, fr {Français} en {English} other {Inconnue}}"
+	"ProPage": {
+		"title": "Votre page existe déjà.",
+		"lead": "Apercura publie une page factuelle pour chaque professionnel de santé inscrit en France, à partir des données publiques. Retrouvez la vôtre, réclamez-la gratuitement et complétez-la.",
+		"search": {
+			"label": "Retrouver votre page",
+			"field": "Nom ou numéro RPPS",
+			"hint": "Nom ou 11 chiffres du RPPS",
+			"submit": "Retrouver ma page"
+		},
+		"stepsHeading": "Réclamer sa page, en trois étapes",
+		"columns": {
+			"step": "Étape",
+			"what": "Ce que vous faites"
+		},
+		"steps": {
+			"find": {
+				"title": "Retrouvez votre page",
+				"description": "Cherchez par nom ou par numéro RPPS. La page est déjà remplie avec vos informations publiques du registre."
+			},
+			"verify": {
+				"title": "Prouvez que c’est vous",
+				"description": "Connectez-vous avec Pro Santé Connect et votre e-CPS, ou envoyez un justificatif relu par une personne."
+			},
+			"complete": {
+				"title": "Complétez-la et ouvrez les rendez-vous",
+				"description": "Ajoutez vos horaires, les informations du cabinet et, si vous le souhaitez, la prise de rendez-vous en ligne gratuite. Les patients réservent sans créer de compte."
+			}
+		},
+		"sampleHeading": "À quoi ressemble une page avant réclamation",
+		"sampleNote": "Exemple fictif : ce professionnel n’existe pas.",
+		"factsHeading": "Factuel, et pareil pour tous",
+		"facts": "Les pages ne portent que des informations factuelles, comme l’exige la déontologie médicale. Ni notes, ni publicité, ni classement payant : chaque professionnel figure de la même façon."
+	},
+	"SearchPage": {
+		"title": "Recherche",
+		"query": "Vous avez cherché « {who} »",
+		"queryWhere": "Vous avez cherché « {who} » à « {where} »",
+		"queryOnlyWhere": "Vous avez cherché à « {where} »",
+		"emptyTitle": "La recherche n’est pas encore ouverte",
+		"emptyBody": "L’annuaire est en cours d’import depuis le registre national. Les résultats s’afficheront bientôt sur cette page.",
+		"backHome": "Revenir à l’accueil"
+	},
+	"Practitioner": {
+		"rpps": "RPPS",
+		"status": {
+			"unclaimed": "Page non réclamée",
+			"claimed": "Page réclamée",
+			"verified": "Page vérifiée"
+		},
+		"statusNote": {
+			"unclaimed": "Construite à partir du registre public. Le professionnel ne l’a pas encore complétée.",
+			"verified": "Complétée par le professionnel, dont l’identité a été vérifiée."
+		},
+		"notProvided": "Non renseigné",
+		"fields": {
+			"profession": "Profession",
+			"specialty": "Spécialité",
+			"address": "Adresse d’exercice",
+			"phone": "Téléphone",
+			"hours": "Horaires",
+			"languages": "Langues parlées",
+			"convention": "Conventionnement",
+			"booking": "Rendez-vous en ligne",
+			"access": "Accès"
+		},
+		"sitesHeading": "Lieux d’exercice",
+		"directions": "Itinéraire",
+		"providers": {
+			"openStreetMap": "OpenStreetMap",
+			"appleMaps": "Plans d’Apple",
+			"googleMaps": "Google Maps"
+		},
+		"mapLabel": "Carte : {place}",
+		"mapPin": "Emplacement de {place}",
+		"source": {
+			"label": "Source",
+			"name": "Annuaire Santé, Agence du numérique en santé",
+			"updated": "Mise à jour"
+		},
+		"action": {
+			"title": "Rendez-vous",
+			"book": {
+				"statement": "La prise de rendez-vous en ligne est ouverte. Elle est gratuite et sans compte.",
+				"label": "Prendre rendez-vous"
+			},
+			"call": {
+				"statement": "Ce professionnel ne propose pas de rendez-vous en ligne. Appelez le cabinet pour prendre rendez-vous.",
+				"label": "Appeler le {phone}"
+			},
+			"establishment": {
+				"statement": "Les rendez-vous avec ce professionnel se prennent auprès de {establishment}.",
+				"label": "Réserver auprès de {establishment}"
+			},
+			"locum": {
+				"statement": "Ce professionnel exerce comme remplaçant : il ne peut pas être réservé directement.",
+				"hint": "Pour le consulter, prenez rendez-vous auprès du cabinet où il remplace en ce moment."
+			}
+		},
+		"slots": {
+			"heading": "Choisir un horaire",
+			"label": "Horaires disponibles",
+			"now": "maintenant",
+			"unavailable": "indisponible",
+			"selected": "Sélectionné : {slot}",
+			"emptyDay": "Aucun horaire ce jour-là",
+			"slotLabel": "{day}, {time}",
+			"past": "passé"
+		},
+		"professions": {
+			"gp": "Médecin généraliste",
+			"dentist": "Chirurgien-dentiste",
+			"midwife": "Sage-femme",
+			"physio": "Masseur-kinésithérapeute"
+		},
+		"specimen": "Exemple fictif"
+	},
+	"Gallery": {
+		"title": "Galerie des composants",
+		"intro": "Chaque composant du système livret, dans chacun de ses états. Développement uniquement : cette page répond 404 en production. Toutes les personnes, tous les numéros et tous les lieux y sont fictifs.",
+		"sections": {
+			"tokens": "Jetons",
+			"type": "Rôles typographiques",
+			"buttons": "Boutons et liens",
+			"fields": "Champs de texte",
+			"pickers": "Sélecteurs et dates",
+			"choices": "Choix",
+			"overlays": "Superpositions",
+			"navigation": "Navigation",
+			"data": "Tableaux et marques",
+			"feedback": "Chargement et états vides",
+			"form": "Validation de formulaire",
+			"domain": "Composants métier",
+			"booklet": "Exemple de page livret"
+		},
+		"palette": {
+			"paper": "Papier : fond de page",
+			"paperShade": "Papier ombré : lignes survolées, squelettes",
+			"ink": "Encre : texte, filets, libellés",
+			"inkMuted": "Encre atténuée : aides, exemples de saisie",
+			"inkDisabled": "Encre désactivée",
+			"ruleSoft": "Filet fin : séparateurs, pointillés",
+			"fieldEdge": "Bord de champ : contours des contrôles",
+			"cover": "Couverture : bandeaux pleins",
+			"coverMuted": "Couverture atténuée : texte secondaire sur bandeau",
+			"stamp": "Tampon : action, vérifié, réservé",
+			"stampStrong": "Tampon pressé",
+			"stampTint": "Lavis de tampon",
+			"error": "Encre d’erreur",
+			"errorTint": "Lavis d’erreur"
+		},
+		"typeRoles": {
+			"display": "Affiche : le logotype",
+			"headline": "Titre de page",
+			"title": "Titre de section",
+			"lead": "Chapeau : les introductions",
+			"body": "Corps : texte courant à 18 px, en Atkinson Hyperlegible Next pour les lecteurs malvoyants.",
+			"meta": "Méta : aides et informations secondaires",
+			"caps": "Capitales : en-têtes de colonnes et titres courants"
+		},
+		"states": {
+			"default": "Par défaut",
+			"disabled": "Désactivé",
+			"pending": "En cours",
+			"invalid": "Invalide",
+			"filled": "Rempli",
+			"empty": "Vide",
+			"loading": "Chargement",
+			"onCover": "Sur un bandeau de couverture"
+		},
+		"buttons": {
+			"stamp": "Réserver",
+			"ink": "Appeler le cabinet",
+			"quiet": "Afficher plus",
+			"cover": "Professionnels de santé",
+			"large": "Retrouver ma page",
+			"pendingLabel": "Envoi en cours",
+			"linkButton": "Ouvrir le registre",
+			"inlineLink": "Lire comment les pages sont construites",
+			"externalLink": "Annuaire Santé"
+		},
+		"fields": {
+			"name": "Nom de famille",
+			"nameHint": "Tel qu’inscrit au registre",
+			"email": "Adresse e-mail",
+			"emailHint": "Nous envoyons le code de réservation à cette adresse.",
+			"emailError": "Saisissez une adresse e-mail comme nom@exemple.fr.",
+			"phone": "Téléphone",
+			"locked": "Numéro RPPS",
+			"search": "Chercher dans l’annuaire",
+			"searchHint": "Nom, spécialité ou ville",
+			"clear": "Effacer la recherche"
+		},
+		"pickers": {
+			"city": "Ville",
+			"profession": "Profession",
+			"choose": "Choisir une profession",
+			"date": "Date de naissance",
+			"calendar": "Jour du rendez-vous",
+			"time": "Heure souhaitée",
+			"otp": "Code de réservation",
+			"otpHint": "Les 6 chiffres envoyés à votre adresse e-mail.",
+			"otpError": "Ce code n’est pas valide. Vérifiez le dernier e-mail reçu.",
+			"dateError": "Saisissez une date passée."
+		},
+		"choices": {
+			"terms": "J’accepte de recevoir le code de réservation par e-mail",
+			"reminder": "M’envoyer un rappel la veille",
+			"remindersAll": "Tous les rappels",
+			"visitLabel": "Type de consultation",
+			"visitInPerson": "Au cabinet",
+			"visitHome": "À domicile",
+			"visitVideo": "En vidéo",
+			"bookingOpen": "Ouvrir la prise de rendez-vous en ligne",
+			"mustAgree": "Vous devez accepter pour continuer."
+		},
+		"overlays": {
+			"openDialog": "Annuler le rendez-vous",
+			"dialogTitle": "Annuler ce rendez-vous ?",
+			"dialogBody": "L’horaire sera proposé à d’autres patients. Vous recevrez une confirmation par e-mail.",
+			"keep": "Le garder",
+			"confirmCancel": "Annuler le rendez-vous",
+			"openSheet": "Autres lieux d’exercice",
+			"sheetTitle": "Autres lieux d’exercice",
+			"sheetBody": "Ce professionnel exerce aussi dans deux autres lieux. Chaque lieu a son propre agenda.",
+			"openPopover": "Qu’est-ce que le RPPS ?",
+			"popoverBody": "Le numéro RPPS identifie chaque professionnel de santé dans le registre national. Il est public.",
+			"popoverLabel": "À propos du numéro RPPS",
+			"openMenu": "Actions de la page",
+			"menuShare": "Partager cette page",
+			"menuReport": "Signaler une erreur",
+			"menuClaim": "Réclamer cette page",
+			"tooltipTrigger": "Conventionnement",
+			"tooltip": "Secteur 1 : tarifs fixés par l’Assurance maladie.",
+			"toastInfo": "Afficher un avis",
+			"toastBooked": "Afficher une réservation",
+			"toastError": "Afficher une erreur",
+			"toastInfoTitle": "Page mise à jour",
+			"toastInfoBody": "Le registre a été actualisé ce matin.",
+			"toastBookedTitle": "Rendez-vous réservé",
+			"toastBookedBody": "Mardi 24 novembre à 9 h 30. Une confirmation arrive par e-mail.",
+			"toastErrorTitle": "L’horaire n’est plus libre",
+			"toastErrorBody": "Quelqu’un vient de le réserver. Choisissez un autre horaire.",
+			"toastRegion": "Notifications",
+			"close": "Fermer"
+		},
+		"navigation": {
+			"tabsLabel": "Sections de la page",
+			"tabInfo": "Informations",
+			"tabSites": "Lieux",
+			"tabBooking": "Rendez-vous",
+			"tabInfoBody": "Profession, spécialité et conventionnement, d’après le registre.",
+			"tabSitesBody": "Chaque lieu d’exercice avec son adresse et l’itinéraire.",
+			"tabBookingBody": "Les horaires ouverts, quand le professionnel propose la réservation en ligne.",
+			"breadcrumbsLabel": "Fil d’Ariane",
+			"crumbHome": "Accueil",
+			"crumbCity": "Lyon",
+			"crumbProfession": "Médecins généralistes",
+			"crumbPage": "Dr Exemple Martin"
+		},
+		"data": {
+			"tableLabel": "Professionnels près de chez vous",
+			"colName": "Nom",
+			"colProfession": "Profession",
+			"colTown": "Ville",
+			"colStatus": "Page",
+			"badgeInk": "Page non réclamée",
+			"badgeStamp": "Page vérifiée",
+			"badgeError": "Retirée à la demande",
+			"badgeCover": "Fictif",
+			"staticCaption": "Horaires (tableau réglé statique)",
+			"colDay": "Jour",
+			"colMorning": "Matin",
+			"colAfternoon": "Après-midi",
+			"monday": "Lundi",
+			"tuesday": "Mardi",
+			"closed": "Fermé"
+		},
+		"feedback": {
+			"loadingLabel": "Chargement de la page",
+			"emptyTitle": "Aucun professionnel ne correspond",
+			"emptyBody": "Essayez une ville voisine ou une profession plus large, par exemple « médecin » plutôt qu’une spécialité.",
+			"emptyAction": "Effacer les filtres"
+		},
+		"form": {
+			"heading": "Confirmer votre rendez-vous",
+			"firstName": "Prénom",
+			"lastName": "Nom",
+			"submit": "Confirmer",
+			"required": "Ce champ est obligatoire.",
+			"success": "Le formulaire est valide."
+		},
+		"domain": {
+			"seals": "Sceaux dérivés de numéros RPPS fictifs",
+			"sealVerified": "Vérifié : l’anneau extérieur est tamponné",
+			"fieldRows": "Lignes de champ",
+			"provenance": "Note de provenance",
+			"actions": "Bloc d’action : les quatre états honnêtes",
+			"slots": "Sélecteur d’horaires",
+			"site": "Lieu d’exercice",
+			"map": "Carte",
+			"search": "Recherche livret"
+		},
+		"booklet": {
+			"unclaimed": "Page non réclamée",
+			"claimed": "Page réclamée et vérifiée",
+			"variantsLabel": "Variante de page"
+		},
+		"labels": {
+			"toast": "Notifications éphémères",
+			"badge": "Marques"
+		}
 	},
 	"taxonomy": {
 		"profession": {
