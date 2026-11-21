@@ -1,0 +1,76 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  verify:
+    name: Lint, typecheck, test, build
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version-file: package.json
+      - run: bun install --frozen-lockfile
+      - run: bun run check
+      - run: bun run typecheck
+      - run: bun run test
+      - run: bun run build
+        env:
+          SKIP_ENV_VALIDATION: "1"
+
+  migrations:
+    name: Database migrations
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    services:
+      postgres:
+        image: postgis/postgis:17-3.5
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: apercura
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d apercura"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      DATABASE_URL: postgres://postgres:postgres@localhost:5432/apercura
+    steps:
+      - uses: actions/checkout@v7
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version-file: package.json
+      - run: bun install --frozen-lockfile
+      - name: Apply migrations
+        run: bun run db:migrate
+      - name: Re-apply migrations (must be a no-op)
+        run: bun run db:migrate
+      - name: Check schemas and extensions
+        run: |
+          psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -tA -c "
+            DO \$\$
+            BEGIN
+              IF (SELECT count(*) FROM pg_extension
+                  WHERE extname IN ('postgis', 'pg_trgm', 'unaccent', 'btree_gist')) <> 4 THEN
+                RAISE EXCEPTION 'missing extensions';
+              END IF;
+              IF (SELECT count(*) FROM pg_namespace WHERE nspname IN ('directory', 'care')) <> 2 THEN
+                RAISE EXCEPTION 'missing schemas';
+              END IF;
+            END
+            \$\$;"
