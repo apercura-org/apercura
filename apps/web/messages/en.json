@@ -1,0 +1,34 @@
+{
+	"Metadata": {
+		"title": "Apercura",
+		"description": "The open directory and free booking tool for every health practitioner in France."
+	},
+	"HomePage": {
+		"title": "Apercura",
+		"tagline": "The open directory and free booking tool for every health practitioner in France.",
+		"pillarsHeading": "Our commitments",
+		"pillars": {
+			"free": {
+				"title": "Free",
+				"description": "Free for practitioners and patients, with no subscription and no commission."
+			},
+			"openSource": {
+				"title": "Open source",
+				"description": "The full source code is published under the AGPL-3.0 license."
+			},
+			"hostedInFrance": {
+				"title": "Health data hosted in France",
+				"description": "Health data is hosted in France by an HDS-certified host and encrypted at the application level."
+			},
+			"selfHostable": {
+				"title": "Self-hostable",
+				"description": "Run the whole platform yourself with Docker, open data import included."
+			}
+		},
+		"status": "Work in progress."
+	},
+	"LocaleSwitcher": {
+		"label": "Language",
+		"locale": "{locale, select, fr {Français} en {English} other {Unknown}}"
+	}
+}

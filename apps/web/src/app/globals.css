@@ -1,0 +1,4 @@
+@import "tailwindcss";
+
+/* Workspace packages that may contain Tailwind classes. */
+@source "../../../../packages/ui/src";
