@@ -11,10 +11,21 @@ import { defineConfig, devices } from "@playwright/test";
  * The auth flow (`auth.spec.ts`) needs PostgreSQL with migrations applied
  * (DATABASE_URL) and Mailpit (SMTP_URL, MAILPIT_URL for its API), e.g.
  * `docker compose -f docker/compose.yml up -d && bun run db:migrate`.
+ * The claim and page specs also need the synthetic fixtures imported, MinIO
+ * (S3_*), the encryption keys (ENCRYPTION_KEYS, ENCRYPTION_ACTIVE_KEY) and,
+ * in the test process, DATABASE_URL to prepare their practitioners. Pro Santé
+ * Connect is the local mock started below.
  * E2E_PORT moves both servers (production on it, development on the next one).
  */
 const PROD_PORT = Number(process.env.E2E_PORT ?? 3100);
 const DEV_PORT = PROD_PORT + 1;
+/** The mock Pro Santé Connect provider (e2e/mock-psc.ts), never the real one. */
+const PSC_PORT = PROD_PORT + 90;
+const PSC = {
+	PSC_ISSUER: `http://localhost:${PSC_PORT}`,
+	PSC_CLIENT_ID: "apercura-e2e",
+	PSC_CLIENT_SECRET: "e2e-only-secret-not-used-anywhere-else",
+};
 const PROD_URL = `http://localhost:${PROD_PORT}`;
 const isCI = Boolean(process.env.CI);
 
@@ -55,9 +66,17 @@ export default defineConfig({
 				BETTER_AUTH_URL: PROD_URL,
 				// No proxy in front of the test server.
 				TRUSTED_PROXY_COUNT: "0",
+				...PSC,
 			},
 			reuseExistingServer: !isCI,
 			timeout: 60_000,
+		},
+		{
+			command: "bun e2e/mock-psc.ts",
+			url: `${PSC.PSC_ISSUER}/.well-known/openid-configuration`,
+			env: { PSC_MOCK_PORT: String(PSC_PORT), ...PSC },
+			reuseExistingServer: !isCI,
+			timeout: 30_000,
 		},
 		{
 			command: `bun run dev --port ${DEV_PORT}`,

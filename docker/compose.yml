@@ -1,5 +1,6 @@
 # Local development services.
 #   docker compose -f docker/compose.yml up -d
+# Ports: POSTGRES_PORT, MINIO_PORT and MINIO_CONSOLE_PORT move the host side.
 name: apercura
 
 services:
@@ -33,5 +34,29 @@ services:
       MP_SMTP_AUTH_ACCEPT_ANY: "1"
       MP_SMTP_AUTH_ALLOW_INSECURE: "1"
 
+  # S3-compatible storage for practitioner photos and (encrypted) claim
+  # documents. MinIO's own images are no longer published; this is the
+  # community build of the same server (AGPL-3.0). The app creates the bucket
+  # on first use. Production uses the host's S3 (e.g. Cellar).
+  minio:
+    image: pgsty/minio:RELEASE.2026-08-04T00-00-00Z
+    restart: unless-stopped
+    command: ["server", "/data", "--console-address", ":9001"]
+    environment:
+      MINIO_ROOT_USER: apercura
+      MINIO_ROOT_PASSWORD: apercura-dev-only
+    ports:
+      - "${MINIO_PORT:-9000}:9000" # S3 API
+      - "${MINIO_CONSOLE_PORT:-9001}:9001" # Web console
+    volumes:
+      - minio-data:/data
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:9000/minio/health/live || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 5s
+
 volumes:
   postgres-data:
+  minio-data:
