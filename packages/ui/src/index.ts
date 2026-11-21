@@ -27,9 +27,12 @@ export {
 	Form,
 	Input,
 	Label,
+	TextAreaField,
+	type TextAreaFieldProps,
 	TextField,
 	type TextFieldProps,
 } from "./components/field";
+export { FileTrigger, type FileTriggerProps } from "./components/file-trigger";
 export { Link, type LinkProps } from "./components/link";
 export { ListBox, ListBoxItem } from "./components/list-box";
 export { Menu, MenuItem, type MenuProps, MenuTrigger } from "./components/menu";
