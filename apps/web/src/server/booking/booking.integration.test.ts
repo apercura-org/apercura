@@ -344,7 +344,7 @@ describe.skipIf(!url)("booking (database)", { timeout: 30_000 }, () => {
 			{ practitionerId: ids.practitionerA, fees: null, paymentMethods: [] },
 			{
 				practitionerId: ids.practitionerB,
-				fees: { consultation: 3000 },
+				fees: { items: [{ label: "Consultation", amount: 30 }] },
 				paymentMethods: ["card"],
 			},
 		]);
@@ -458,7 +458,10 @@ describe.skipIf(!url)("booking (database)", { timeout: 30_000 }, () => {
 		expect(refused?.message).toBe("AGENDA_NOT_READY");
 		await db
 			.update(practitionerProfiles)
-			.set({ fees: { consultation: 3000 }, paymentMethods: ["card", "cash"] })
+			.set({
+				fees: { items: [{ label: "Consultation", amount: 30 }] },
+				paymentMethods: ["card", "cash"],
+			})
 			.where(eq(practitionerProfiles.practitionerId, ids.practitionerA));
 		expect(
 			await ownerA.calendar.setStatus({

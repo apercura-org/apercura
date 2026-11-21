@@ -10,6 +10,7 @@ import {
 	type InputProps as RACInputProps,
 	Label as RACLabel,
 	type LabelProps as RACLabelProps,
+	TextArea as RACTextArea,
 	TextField as RACTextField,
 	type TextFieldProps as RACTextFieldProps,
 	Text,
@@ -97,6 +98,52 @@ export function TextField({
 			<Label>{label}</Label>
 			<div className={styles.box()}>
 				<Input placeholder={placeholder} className={inputClassName} />
+			</div>
+			{description ? <FieldDescription>{description}</FieldDescription> : null}
+			<FieldError>{errorMessage}</FieldError>
+		</RACTextField>
+	);
+}
+
+export interface TextAreaFieldProps extends Omit<RACTextFieldProps, "children"> {
+	label: ReactNode;
+	description?: ReactNode;
+	errorMessage?: string | ((validation: ValidationResult) => string);
+	placeholder?: string;
+	/** Visible lines before the box scrolls. */
+	rows?: number;
+}
+
+/**
+ * Multi-line text field, same anatomy as TextField: label above, ruled box,
+ * hint and error below. Plain text only; the box grows with `rows`.
+ */
+export function TextAreaField({
+	label,
+	description,
+	errorMessage,
+	placeholder,
+	rows = 6,
+	className,
+	...props
+}: TextAreaFieldProps) {
+	return (
+		<RACTextField
+			{...props}
+			className={styles.root({ className: typeof className === "string" ? className : undefined })}
+		>
+			<Label>{label}</Label>
+			<div
+				className={styles.box({
+					className:
+						"items-stretch has-[textarea:focus-visible]:outline-3 has-[textarea:focus-visible]:outline-offset-2 has-[textarea:focus-visible]:outline-(--focus-ring)",
+				})}
+			>
+				<RACTextArea
+					placeholder={placeholder}
+					rows={rows}
+					className={cn(styles.input(), "resize-y leading-relaxed")}
+				/>
 			</div>
 			{description ? <FieldDescription>{description}</FieldDescription> : null}
 			<FieldError>{errorMessage}</FieldError>

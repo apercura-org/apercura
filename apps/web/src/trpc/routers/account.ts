@@ -2,7 +2,10 @@ import { member, organization, session } from "@apercura/db/schema";
 import { TRPCError } from "@trpc/server";
 import { and, asc, desc, eq, gt, ne } from "drizzle-orm";
 import { z } from "zod";
+import { AccountError, deleteAccount, deletionPlan } from "~/server/account/service";
 import { hasSecondFactor, secondFactors } from "~/server/auth/membership";
+import { refreshPractitioners } from "~/server/refresh";
+import { getStorage } from "~/server/storage";
 import { authedProcedure, createTRPCRouter, mfaProcedure } from "../init";
 
 /** The signed-in person's own account: second factors, sessions, memberships. */
@@ -75,4 +78,46 @@ export const accountRouter = createTRPCRouter({
 			.where(eq(member.userId, ctx.user.id))
 			.orderBy(asc(organization.name)),
 	),
+
+	/** What deleting the account would do to the practices it owns. */
+	deletionPlan: mfaProcedure.query(({ ctx }) => deletionPlan(ctx.db(), ctx.user.id)),
+
+	/**
+	 * Deletes the account. The caller retypes their email address, and says for
+	 * each practice with a team whether it is closed or handed to a member.
+	 */
+	delete: mfaProcedure
+		.input(
+			z.object({
+				confirmEmail: z.string().trim().toLowerCase(),
+				practices: z
+					.record(
+						z.string().min(1).max(64),
+						z.discriminatedUnion("kind", [
+							z.object({ kind: z.literal("close") }),
+							z.object({ kind: z.literal("transfer"), memberUserId: z.string().min(1).max(64) }),
+						]),
+					)
+					.default({}),
+			}),
+		)
+		.mutation(async ({ ctx, input }) => {
+			if (input.confirmEmail !== ctx.user.email.toLowerCase()) {
+				throw new TRPCError({ code: "BAD_REQUEST", message: "CONFIRMATION_MISMATCH" });
+			}
+			try {
+				const result = await deleteAccount(ctx.db(), getStorage(), {
+					userId: ctx.user.id,
+					practices: input.practices,
+					headers: ctx.headers,
+				});
+				await refreshPractitioners(ctx.db().$client, result.practitionerIds);
+				return { ok: true as const };
+			} catch (error) {
+				if (error instanceof AccountError) {
+					throw new TRPCError({ code: "PRECONDITION_FAILED", message: error.code });
+				}
+				throw error;
+			}
+		}),
 });

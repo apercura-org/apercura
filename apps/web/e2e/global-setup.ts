@@ -3,10 +3,11 @@ import { E2E_BOOKING_ENV } from "./booking-env";
 import { refreshNextFree, seedBookingAgendas } from "./booking-seed";
 
 /**
- * Clears Better Auth's rate-limit counters, so repeated local runs within an
- * hour do not hit the sign-up limit (the test server sees every request as the
- * same client), and opens the agendas the booking tests use (synthetic
- * practitioners only). Needs DATABASE_URL; without it these flows cannot run anyway.
+ * Clears the rate-limit counters, so repeated local runs within an hour do
+ * not hit the sign-up, claim or public form limits (the test server sees
+ * every request as the same client), and opens the agendas the booking tests
+ * use (synthetic practitioners only). Needs DATABASE_URL; without it these
+ * flows cannot run anyway.
  */
 export default async function globalSetup() {
 	const url = process.env.DATABASE_URL;
@@ -16,6 +17,11 @@ export default async function globalSetup() {
 	const sql = postgres(url, { max: 1, onnotice: () => {} });
 	try {
 		await sql`delete from directory.auth_rate_limit`;
+		await sql`
+			delete from directory.rate_limits
+			where key like 'claim:%' or key like 'claim-link:%' or key like 'removal:%'
+				or key like 'report:%' or key like 'user:%'
+		`;
 		await seedBookingAgendas(sql);
 	} finally {
 		await sql.end();

@@ -4,6 +4,8 @@ import type { Database } from "@apercura/db";
 import { sql } from "drizzle-orm";
 import { cacheTags } from "~/server/cache-tags";
 import { writeAudit } from "~/server/phi";
+import { purgeClaimDocuments } from "../claims/service";
+import { getStorage, type StorageDriver, storageConfigured } from "../storage";
 import { practitionerTransaction } from "./locks";
 import { refreshNextFree } from "./next-free";
 import { enqueueOutbox } from "./outbox";
@@ -302,9 +304,26 @@ export async function drainOutbox(db: Database, nowMs: number, transport?: MailT
 export interface TickOptions {
 	nowMs?: () => number;
 	transport?: MailTransport;
+	/** Object storage for the claim-document purge; defaults to S3 when configured, else skipped. */
+	storage?: StorageDriver | null;
 }
 
-/** One `jobs:tick`: expirations, reminders, outbox, next free slots, purge. */
+/**
+ * Deletes claim documents 30 days after their decision (plan §11), under its
+ * own advisory lock. Skipped (null) when no object storage is configured.
+ */
+export async function purgeClaimDocumentsJob(
+	db: Database,
+	nowMs: number,
+	storage: StorageDriver | null = storageConfigured() ? getStorage() : null,
+) {
+	if (!storage) return null;
+	return withAdvisoryLock(db, "jobs:claim-documents", () =>
+		purgeClaimDocuments(db, storage, new Date(nowMs)),
+	);
+}
+
+/** One `jobs:tick`: expirations, reminders, outbox, next free slots, purges. */
 export async function runTick(db: Database, options: TickOptions = {}) {
 	const now = options.nowMs ?? Date.now;
 	const expirations = await withAdvisoryLock(db, "jobs:expire", () => expireLapsed(db, now()));
@@ -316,6 +335,7 @@ export async function runTick(db: Database, options: TickOptions = {}) {
 		refreshAllNextFree(db, now()),
 	);
 	const purged = await withAdvisoryLock(db, "jobs:purge", () => purge(db, now()));
+	const claimDocuments = await purgeClaimDocumentsJob(db, now(), options.storage);
 	return {
 		expirations: expirations && {
 			expired: expirations.expired,
@@ -325,5 +345,6 @@ export async function runTick(db: Database, options: TickOptions = {}) {
 		outbox,
 		nextFree,
 		purged,
+		claimDocuments,
 	};
 }

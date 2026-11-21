@@ -46,7 +46,7 @@ test("an office practitioner page: header, call action, JSON-LD and indexing", a
 	await expect(page.getByText(/pas encore ouverte/)).toBeVisible();
 	await expect(page.getByRole("link", { name: "Revendiquer cette page" })).toHaveAttribute(
 		"href",
-		"/pro",
+		"/pro/revendiquer?rpps=19999990013",
 	);
 	expect(await robotsOf(page)).toBe("index, follow");
 	const jsonLd = await page.locator('script[type="application/ld+json"]').allTextContents();

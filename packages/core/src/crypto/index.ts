@@ -1,4 +1,5 @@
 export { type BlindIndexKind, blindIndex, deriveBlindIndexKey } from "./blind-index";
+export { decryptBytes, encryptBytes } from "./blob";
 export { decodeKey } from "./encoding";
 export {
 	type DataKey,

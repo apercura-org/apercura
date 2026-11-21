@@ -43,6 +43,11 @@ export const user = directory.table("user", {
 	 * roles and never a way into patient data.
 	 */
 	isPlatformAdmin: boolean().notNull().default(false),
+	/**
+	 * Set when the account lost a contested claim to a verified owner: no new
+	 * session can open and its memberships are removed. Lifted by an admin only.
+	 */
+	frozenAt: timestamp({ withTimezone: true }),
 	createdAt: now(),
 	updatedAt: updated(),
 });
