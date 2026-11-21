@@ -86,13 +86,12 @@ export function BookingPanel({
 			previousStep.current = null;
 			return;
 		}
-		// The code step puts the focus straight into the code field (its label says what to type).
-		if (
-			previousStep.current !== null &&
-			previousStep.current !== state.step &&
-			state.step !== "code"
-		) {
-			heading.current?.focus();
+		if (previousStep.current !== null && previousStep.current !== state.step) {
+			// Each step starts from its top: the sheet scrolls back up, then its heading takes the
+			// focus without scrolling again (a long grid or form must not leave the patient midway).
+			const body = heading.current?.closest<HTMLElement>("[data-sheet-body]");
+			body?.scrollTo({ top: 0 });
+			heading.current?.focus({ preventScroll: true });
 		}
 		previousStep.current = state.step;
 	}, [state.step, isOpen]);

@@ -13,6 +13,17 @@ const TAGS = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"];
 const LIVE_ANNOUNCER_ECHO = '[role="log"][aria-relevant="additions"] > [role="img"]';
 
 export async function axeViolations(page: Page) {
+	// Audit the settled page, not a dialog half-way through its fade-in.
+	await page.evaluate(() =>
+		Promise.all(
+			document
+				.getAnimations()
+				.filter(
+					(animation) => animation.effect?.getTiming().iterations !== Number.POSITIVE_INFINITY,
+				)
+				.map((animation) => animation.finished.catch(() => undefined)),
+		),
+	);
 	const results = await new AxeBuilder({ page })
 		.withTags(TAGS)
 		.exclude(LIVE_ANNOUNCER_ECHO)

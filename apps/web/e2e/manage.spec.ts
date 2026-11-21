@@ -4,7 +4,6 @@ import postgres from "postgres";
 import { axeViolations } from "./axe";
 import {
 	bookThroughPanel,
-	capture,
 	firstFreeCell,
 	manageLink,
 	ownClientAddress,
@@ -49,7 +48,10 @@ test("without a token, or with a wrong one, the page says so honestly", async ({
 	await expect(page.getByRole("heading", { name: "Ce lien est incomplet" })).toBeVisible();
 	await page.goto(`/rdv#t=${"A".repeat(43)}`);
 	await expect(page.getByRole("heading", { name: "Ce lien ne fonctionne plus" })).toBeVisible();
-	await capture(page, "rdv-invalid-desktop");
+	await expect(page.getByRole("link", { name: "Chercher un praticien" })).toHaveAttribute(
+		"href",
+		"/recherche",
+	);
 	expect(await axeViolations(page)).toEqual([]);
 });
 
@@ -87,14 +89,18 @@ test("a patient moves then cancels an appointment from the email link", async ({
 	await expect(page.getByText("Confirmé", { exact: true })).toBeVisible();
 	await expect(page.getByText("Alexis Fictif")).toBeVisible();
 	await expect(page.getByRole("link", { name: "Dr Claire Essaiac" })).toBeVisible();
-	await capture(page, "rdv-1-view-desktop");
 	expect(await axeViolations(page)).toEqual([]);
 
 	await page.getByRole("button", { name: "Déplacer le rendez-vous" }).click();
 	await expect(page.getByRole("heading", { name: "Choisissez un nouvel horaire" })).toBeVisible();
+	// The current time is never offered again: shown, marked and spoken as such.
+	const current = page.locator('[role="gridcell"][aria-label$=", votre horaire actuel"]');
+	await expect(current).toHaveCount(1);
+	await expect(current).toHaveAttribute("aria-disabled", "true");
+	await expect(current).toContainText("actuel");
+	await expect(page.getByText(/Votre horaire actuel, .* est marqué « actuel »/)).toBeVisible();
 	const cell = firstFreeCell(page);
 	await cell.click();
-	await capture(page, "rdv-2-reschedule-desktop");
 	expect(await axeViolations(page)).toEqual([]);
 	await page.getByRole("button", { name: /^Déplacer au / }).click();
 	await expect(page.getByText(/Votre rendez-vous est déplacé/)).toBeVisible();
@@ -102,13 +108,11 @@ test("a patient moves then cancels an appointment from the email link", async ({
 	await page.getByRole("button", { name: "Annuler le rendez-vous" }).click();
 	const confirm = page.getByRole("alertdialog", { name: "Annuler ce rendez-vous ?" });
 	await expect(confirm).toBeVisible();
-	await capture(page, "rdv-3-cancel-confirm-desktop");
 	expect(await axeViolations(page)).toEqual([]);
 	await confirm.getByRole("button", { name: "Oui, annuler" }).click();
 	await expect(page.getByText(/Votre rendez-vous est annulé/)).toBeVisible();
 	await expect(page.getByText("Annulé par vous")).toBeVisible();
 	await expect(page.getByRole("button", { name: "Annuler le rendez-vous" })).toHaveCount(0);
-	await capture(page, "rdv-4-cancelled-desktop");
 	expect(await statusOf(link.token)).toBe("cancelled_by_patient");
 });
 
@@ -145,10 +149,8 @@ test.describe("on a phone", () => {
 		const link = await manageLink(page.request, who.email);
 		await page.goto(link.path);
 		await expect(page.getByText("Confirmé", { exact: true })).toBeVisible();
-		await capture(page, "rdv-1-view-mobile");
 		await page.getByRole("button", { name: "Déplacer le rendez-vous" }).click();
 		await expect(firstFreeCell(page)).toBeVisible();
-		await capture(page, "rdv-2-reschedule-mobile");
 		expect(await axeViolations(page)).toEqual([]);
 	});
 });

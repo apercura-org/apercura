@@ -470,7 +470,6 @@ export function CodeStep({
 				isRequired
 				isInvalid={fieldError !== null}
 				errorMessage={fieldError ?? undefined}
-				autoFocus
 			/>
 			<p className="tabular text-meta text-ink">{t("code.held", { time: heldUntil })}</p>
 			<div className="flex flex-col items-start gap-2">
@@ -538,7 +537,7 @@ export function TakenStep({
 								<Button
 									intent="ink"
 									size="lg"
-									className="w-full justify-start tabular sm:w-auto"
+									className="w-full justify-start py-2.5 leading-snug tabular sm:w-auto"
 									onPress={() => onPick(ms, t("picked", { slot: label(ms) }))}
 								>
 									{t("choose", { slot: label(ms) })}

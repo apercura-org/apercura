@@ -27,14 +27,38 @@ export async function ownClientAddress(page: Page) {
 	await page.setExtraHTTPHeaders({ "x-forwarded-for": octets.join(".") });
 }
 
-/** Saves a screenshot under E2E_SCREENSHOTS_DIR (design review), when set. */
-export async function capture(page: Page, name: string) {
+/**
+ * Saves a screenshot under E2E_SCREENSHOTS_DIR (design review), when set. The step is shown from
+ * its top: the booking sheet (or the page) scrolls back up, or `anchor` scrolls to the top.
+ */
+export async function capture(page: Page, name: string, anchor?: Locator) {
 	const dir = process.env.E2E_SCREENSHOTS_DIR;
 	if (!dir) {
 		return;
 	}
 	mkdirSync(dir, { recursive: true });
-	await page.waitForTimeout(350);
+	if (anchor) {
+		await anchor.evaluate((element) => element.scrollIntoView({ block: "start" }));
+	} else {
+		await page.evaluate(() => {
+			const body = document.querySelector("[data-sheet-body]");
+			if (body) {
+				body.scrollTo({ top: 0 });
+			} else {
+				window.scrollTo({ top: 0 });
+			}
+		});
+	}
+	// Show each slot grid from its first column (clicks scroll it sideways).
+	await page.evaluate(() => {
+		for (const grid of document.querySelectorAll('[role="grid"]')) {
+			if (grid.parentElement) {
+				grid.parentElement.scrollLeft = 0;
+			}
+		}
+	});
+	// Let the stamp animation and focus rings settle.
+	await page.waitForTimeout(400);
 	await page.screenshot({ path: join(dir, `${name}.png`), fullPage: false });
 }
 

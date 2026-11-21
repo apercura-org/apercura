@@ -1,6 +1,6 @@
 import { appointmentTypes, calendars, sites } from "@apercura/db/schema";
 import { and, asc, eq, inArray } from "drizzle-orm";
-import { availableSlots, findCalendar, findType } from "./availability";
+import { findCalendar, findType, slotGrid } from "./availability";
 import { BOOKING_LIMITS, bookingEnabled } from "./config";
 import { BookingError } from "./errors";
 import { type BookingRuntime, limit } from "./runtime";
@@ -100,7 +100,7 @@ export async function bookingSlots(
 	await limit(rt, rt.clientKey("booking-read"), BOOKING_LIMITS.slotsPerIp);
 	const calendar = await findCalendar(rt.db, input.calendarId, { openOnly: true });
 	const type = await findType(rt.db, calendar.id, input.typeId);
-	const slots = await availableSlots(
+	const { free, taken } = await slotGrid(
 		rt.db,
 		calendar,
 		type,
@@ -108,5 +108,10 @@ export async function bookingSlots(
 		rt.nowMs(),
 		input.patient ? { patient: input.patient } : {},
 	);
-	return { timeZone: calendar.timeZone, slots: slots.map((ms) => new Date(ms)) };
+	return {
+		timeZone: calendar.timeZone,
+		slots: free.map((ms) => new Date(ms)),
+		/** Grid starts that cannot be booked: start instants only, never who holds them. */
+		taken: taken.map((ms) => new Date(ms)),
+	};
 }

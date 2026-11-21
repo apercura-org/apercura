@@ -4,6 +4,7 @@ import { formatPhoneFr } from "@apercura/core";
 import {
 	Badge,
 	Button,
+	buttonStyles,
 	Dialog,
 	EmptyState,
 	FieldList,
@@ -78,9 +79,21 @@ export function ManageAppointment() {
 		case "loading":
 			return <SkeletonText lines={6} label={t("loading")} />;
 		case "missing":
-			return <EmptyState title={t("missingTitle")} description={t("missingBody")} />;
+			return (
+				<EmptyState
+					title={t("missingTitle")}
+					description={t("missingBody")}
+					action={<SearchLink label={t("searchAction")} />}
+				/>
+			);
 		case "invalid":
-			return <EmptyState title={t("invalidTitle")} description={t("invalidBody")} />;
+			return (
+				<EmptyState
+					title={t("invalidTitle")}
+					description={t("invalidBody")}
+					action={<SearchLink label={t("searchAction")} />}
+				/>
+			);
 		case "error":
 			return (
 				<Notice tone="error" title={t("errorBody")}>
@@ -98,6 +111,15 @@ export function ManageAppointment() {
 				/>
 			) : null;
 	}
+}
+
+/** The next step when the link leads nowhere: find the practitioner again. */
+function SearchLink({ label }: { label: string }) {
+	return (
+		<Link href="/recherche" className={buttonStyles({ intent: "ink", size: "lg" })}>
+			{label}
+		</Link>
+	);
 }
 
 function Appointment({
@@ -214,9 +236,7 @@ function Appointment({
 					<h2 id="appointment-status" className="caps text-ink">
 						{t("status.label")}
 					</h2>
-					<Badge tone={appointment.status === "confirmed" ? "stamp" : "ink"}>
-						{t(`status.${appointment.status}` as "status.confirmed")}
-					</Badge>
+					<Badge tone="ink">{t(`status.${appointment.status}` as "status.confirmed")}</Badge>
 				</div>
 				{appointment.status === "pending" && appointment.pendingUntil ? (
 					<p className="text-body text-ink">
@@ -328,7 +348,13 @@ function Appointment({
 									) : null}
 								</Notice>
 							) : null}
+							<p className="text-meta text-ink">{t("currentLegend", { slot: label(startMs) })}</p>
 							<SlotWindow
+								current={{
+									startMs,
+									short: t("currentShort"),
+									spoken: t("currentSpoken"),
+								}}
 								queryKey={["manage", appointment.appointmentId]}
 								timeZone={timeZone}
 								load={(fromDate, days) =>
@@ -387,7 +413,7 @@ function Appointment({
 					<p className="text-body font-semibold text-ink">
 						{parts.dateNoYear}, <span className="tabular">{slotTime(parts)}</span>
 					</p>
-					<div className="flex flex-wrap-reverse justify-between gap-3">
+					<div className="flex flex-col-reverse gap-3 sm:flex-row sm:justify-between [&>*]:w-full [&>*]:justify-center sm:[&>*]:w-auto">
 						<Button intent="ink" size="lg" autoFocus onPress={() => setConfirmingCancel(false)}>
 							{t("cancelKeep")}
 						</Button>

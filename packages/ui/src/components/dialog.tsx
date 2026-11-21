@@ -126,7 +126,7 @@ export function Sheet({ title, closeLabel, children, size = "md", ...props }: Sh
 					{({ close }) => (
 						<>
 							<Header title={title} closeLabel={closeLabel} close={close} showClose />
-							<div className="flex-1 overflow-auto p-5 text-body">
+							<div data-sheet-body="" className="flex-1 overflow-auto p-5 text-body">
 								{typeof children === "function" ? children({ close }) : children}
 							</div>
 						</>

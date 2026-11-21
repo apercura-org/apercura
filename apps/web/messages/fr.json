@@ -1538,7 +1538,11 @@
 				"INVALID_SLOT": "Cet horaire n’est plus proposé. Choisissez-en un autre.",
 				"BOOKING_DISABLED": "Les changements en ligne ne sont pas disponibles pour le moment. Appelez le cabinet.",
 				"generic": "Un problème est survenu de notre côté. Réessayez dans un instant, ou appelez le cabinet."
-			}
+			},
+			"currentShort": "actuel",
+			"currentSpoken": "votre horaire actuel",
+			"currentLegend": "Votre horaire actuel, {slot}, est marqué « actuel » dans la grille.",
+			"searchAction": "Chercher un praticien"
 		}
 	},
 	"auth": {

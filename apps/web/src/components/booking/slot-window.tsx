@@ -29,6 +29,11 @@ export interface SlotWindowProps {
 	onChange: (startMs: number) => void;
 	/** Shown when a window has no free time, e.g. "or call 01 00 00 00 00". */
 	emptyHint?: string;
+	/**
+	 * The appointment being moved: its cell cannot be stamped and says so, in print (`short`, under
+	 * the time) and in speech (`spoken`).
+	 */
+	current?: { startMs: number; short: string; spoken: string } | null;
 }
 
 /**
@@ -42,6 +47,7 @@ export function SlotWindow({
 	value,
 	onChange,
 	emptyHint,
+	current = null,
 }: SlotWindowProps) {
 	const t = useTranslations("booking.panel.slot");
 	const tSlots = useTranslations("Practitioner.slots");
@@ -61,32 +67,52 @@ export function SlotWindow({
 	const { days, repeatedDay } = useMemo(() => {
 		const byDay = new Map<string, SlotDay["slots"]>();
 		let repeated: string | null = null;
-		for (const start of query.data?.slots ?? []) {
+		const nowMs = Date.now();
+		const add = (start: Date, free: boolean) => {
 			const ms = new Date(start).getTime();
 			const parts = slotParts(ms, timeZone, locale);
 			if (parts.offset) {
 				repeated ??= parts.day;
 			}
 			const iso = new Date(ms).toISOString();
+			const isCurrent = current !== null && ms === current.startMs;
 			const list = byDay.get(parts.day) ?? [];
 			list.push({
 				id: iso,
 				start: iso,
-				available: true,
+				// A grid time already gone prints as past (muted); one still ahead but not free is
+				// struck through as unavailable.
+				available: isCurrent ? false : free || ms <= nowMs,
 				time: parts.time,
-				...(parts.offset ? { detail: parts.offset } : {}),
-				// The printed time is part of the spoken label, so both read the same (WCAG 2.5.3).
-				accessibleLabel: tSlots("slotLabel", { day: parts.dateNoYear, time: slotTime(parts) }),
+				...(isCurrent
+					? { detail: current.short, unavailableNote: current.spoken }
+					: parts.offset
+						? { detail: parts.offset }
+						: {}),
+				// The printed time (and its mark) is part of the spoken label (WCAG 2.5.3).
+				accessibleLabel: tSlots("slotLabel", {
+					day: parts.dateNoYear,
+					time: isCurrent ? `${slotTime(parts)} ${current.short}` : slotTime(parts),
+				}),
 			});
 			byDay.set(parts.day, list);
+		};
+		for (const start of query.data?.slots ?? []) {
+			add(start, true);
+		}
+		for (const start of query.data?.taken ?? []) {
+			add(start, false);
 		}
 		const rows: SlotDay[] = [];
 		for (let index = 0; index < WINDOW_DAYS; index += 1) {
 			const day = addLocalDays(from, index);
-			rows.push({ date: day, label: localDayLabel(day, locale), slots: byDay.get(day) ?? [] });
+			const slots = (byDay.get(day) ?? []).sort(
+				(a, b) => Date.parse(a.start) - Date.parse(b.start),
+			);
+			rows.push({ date: day, label: localDayLabel(day, locale), slots });
 		}
 		return { days: rows, repeatedDay: repeated };
-	}, [query.data, timeZone, locale, from, tSlots]);
+	}, [query.data, timeZone, locale, from, tSlots, current]);
 
 	const count = query.data?.slots.length ?? 0;
 	const range = t("range", {

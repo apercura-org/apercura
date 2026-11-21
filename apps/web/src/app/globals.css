@@ -7,7 +7,9 @@
 
 /*
  * The ALTCHA proof-of-work checkbox of the booking form, printed like a booklet field: ruled box,
- * square corners, ink tick, no shadow. The widget reads these custom properties.
+ * square corners, a white tick on ink once checked, no shadow, its label at the 18 px body size.
+ * The widget declares its defaults on :root, where derived variables (input colours, outline)
+ * are resolved, so each one is set again here on the widget itself.
  */
 .altcha-booklet altcha-widget {
 	--altcha-border-width: 1.5px;
@@ -23,9 +25,14 @@
 	--altcha-color-success-content: var(--color-paper);
 	--altcha-color-error: var(--color-error);
 	--altcha-color-error-content: var(--color-paper);
+	--altcha-input-background-color: var(--color-paper);
+	--altcha-input-color: var(--color-ink);
+	--altcha-input-border-radius: 2px;
+	--altcha-input-border-width: 1.5px;
 	--altcha-checkbox-border-color: var(--color-ink);
 	--altcha-checkbox-border-radius: 2px;
 	--altcha-checkbox-border-width: 2px;
+	--altcha-checkbox-outline-color: var(--focus-ring);
 	--altcha-checkbox-outline: 3px solid var(--focus-ring);
 	--altcha-checkbox-outline-offset: 2px;
 	--altcha-checkbox-size: 24px;
@@ -34,6 +41,6 @@
 	--altcha-padding: 0.75rem 1rem;
 	--altcha-shadow: none;
 	font-family: var(--font-body);
-	font-size: 1rem;
+	font-size: 1.125rem;
 	color: var(--color-ink);
 }

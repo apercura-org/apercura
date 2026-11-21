@@ -1538,7 +1538,11 @@
 				"INVALID_SLOT": "This time is no longer offered. Choose another one.",
 				"BOOKING_DISABLED": "Online changes are not available at the moment. Call the practice.",
 				"generic": "Something went wrong on our side. Try again in a moment, or call the practice."
-			}
+			},
+			"currentShort": "current",
+			"currentSpoken": "your current time",
+			"currentLegend": "Your current time, {slot}, is marked “current” in the grid.",
+			"searchAction": "Find a practitioner"
 		}
 	},
 	"auth": {

@@ -3,7 +3,6 @@ import { expect, test } from "@playwright/test";
 import { axeViolations } from "./axe";
 import {
 	bookThroughPanel,
-	capture,
 	fillDetails,
 	firstFreeCell,
 	openPanel,
@@ -51,7 +50,6 @@ test("a patient books in the panel and downloads the .ics", async ({ page }) => 
 	const who = patient("direct");
 	await openPanel(page, direct.slug);
 	const dialog = panel(page);
-	await capture(page, "panel-1-reason-desktop");
 	expect(await axeViolations(page)).toEqual([]);
 
 	await dialog.getByText("Consultation", { exact: true }).click();
@@ -59,14 +57,11 @@ test("a patient books in the panel and downloads the .ics", async ({ page }) => 
 	await expect(dialog.getByRole("heading", { name: "Choisissez un horaire" })).toBeFocused();
 	await expect(dialog.getByText(/Heures du cabinet/)).toBeVisible();
 	await expect(firstFreeCell(dialog)).toBeVisible();
-	await capture(page, "panel-2-slot-desktop");
 	expect(await axeViolations(page)).toEqual([]);
 
 	const slot = await pickFirstSlot(page);
-	await capture(page, "panel-2b-slot-stamped-desktop");
 	await dialog.getByRole("button", { name: "Continuer" }).click();
 	await fillDetails(page, who);
-	await capture(page, "panel-3-details-desktop");
 	expect(await axeViolations(page)).toEqual([]);
 
 	await dialog.getByRole("button", { name: "Recevoir mon code" }).click();
@@ -77,7 +72,6 @@ test("a patient books in the panel and downloads the .ics", async ({ page }) => 
 	await expect(
 		dialog.getByRole("button", { name: /Envoyer un nouveau code \(\d+ s\)/ }),
 	).toBeDisabled();
-	await capture(page, "panel-4-code-desktop");
 	expect(await axeViolations(page)).toEqual([]);
 
 	// A wrong code says how many attempts are left.
@@ -94,7 +88,6 @@ test("a patient books in the panel and downloads the .ics", async ({ page }) => 
 	).toBeVisible();
 	await expect(dialog.getByText(/lien pour annuler ou déplacer/)).toBeVisible();
 	await expect(dialog.getByText(slot.split(", ").at(-1) ?? "")).toBeVisible();
-	await capture(page, "panel-5-done-desktop");
 	expect(await axeViolations(page)).toEqual([]);
 
 	const download = page.waitForEvent("download");
@@ -142,8 +135,9 @@ test("a booking can be made with the keyboard only", async ({ page }) => {
 	const cell = firstFreeCell(dialog);
 	await expect(cell).toBeVisible();
 	await tabTo(page, dialog.locator('[role="gridcell"][tabindex="0"]'));
+	// The grid opens on the first free time; move away and back, then stamp it.
 	await page.keyboard.press("ArrowRight");
-	await page.keyboard.press("Home");
+	await page.keyboard.press("ArrowLeft");
 	await page.keyboard.press("Enter");
 	await expect(dialog.locator('[role="gridcell"][aria-selected="true"]')).toHaveCount(1);
 	await tabTo(page, dialog.getByRole("button", { name: "Continuer" }));
@@ -162,8 +156,10 @@ test("a booking can be made with the keyboard only", async ({ page }) => {
 	await tabTo(page, dialog.getByRole("button", { name: "Recevoir mon code" }));
 	await page.keyboard.press("Enter");
 
-	const field = dialog.getByLabel("Code à 6 chiffres");
-	await expect(field).toBeFocused({ timeout: 20_000 });
+	await expect(dialog.getByRole("heading", { name: "Saisissez votre code" })).toBeFocused({
+		timeout: 20_000,
+	});
+	await tabTo(page, dialog.getByLabel("Code à 6 chiffres"));
 	await page.keyboard.type(await readCode(page.request, who.email));
 	await page.keyboard.press("Enter");
 	await expect(
@@ -179,7 +175,6 @@ test("a practice that validates by hand gets an honest request", async ({ page }
 	await expect(dialog.getByText(/confirme lui-même ses rendez-vous/)).toBeVisible();
 	await expect(dialog.getByText("En attente du cabinet")).toBeVisible();
 	await expect(dialog.getByRole("button", { name: /Ajouter à mon agenda/ })).toHaveCount(0);
-	await capture(page, "panel-5b-pending-desktop");
 	expect(await axeViolations(page)).toEqual([]);
 	const mail = await waitForEmail(page.request, who.email, /Demande de rendez-vous envoyée/);
 	expect(mail.text).toMatch(/Réponse avant/i);
@@ -221,7 +216,6 @@ test("a time taken by someone else offers the three nearest ones", async ({ brow
 		).toBeVisible({ timeout: 20_000 });
 		const alternatives = dialog.getByRole("button", { name: /^Choisir / });
 		await expect(alternatives).toHaveCount(3);
-		await capture(loser, "panel-6-taken-desktop");
 		expect(await axeViolations(loser)).toEqual([]);
 
 		await alternatives.first().click();
@@ -253,26 +247,38 @@ test.describe("on a phone", () => {
 		const dialog = panel(page);
 		const box = await dialog.boundingBox();
 		expect(box?.width).toBeGreaterThanOrEqual(389);
-		await capture(page, "panel-1-reason-mobile");
 		await dialog.getByText("Consultation", { exact: true }).click();
 		await dialog.getByRole("button", { name: "Continuer" }).click();
 		await expect(firstFreeCell(dialog)).toBeVisible();
-		await capture(page, "panel-2-slot-mobile");
+		// Times booked by the earlier tests stay in their column, struck through.
+		await expect(
+			dialog
+				.locator('[role="gridcell"][aria-disabled="true"][aria-label$=", indisponible"]')
+				.first(),
+		).toBeAttached();
 		await pickFirstSlot(page);
 		await dialog.getByRole("button", { name: "Continuer" }).click();
+		// Each step starts from its top: heading in view and focused.
+		await expect(dialog.getByRole("heading", { name: "Vos coordonnées" })).toBeFocused();
+		await expect(dialog.getByRole("heading", { name: "Vos coordonnées" })).toBeInViewport();
 		await fillDetails(page, who);
-		await capture(page, "panel-3-details-mobile");
 		await dialog.getByRole("button", { name: "Recevoir mon code" }).click();
-		await expect(dialog.getByRole("heading", { name: "Saisissez votre code" })).toBeVisible({
-			timeout: 20_000,
-		});
-		await capture(page, "panel-4-code-mobile");
+		const heading = dialog.getByRole("heading", { name: "Saisissez votre code" });
+		await expect(heading).toBeFocused({ timeout: 20_000 });
+		await expect(heading).toBeInViewport();
+		await expect(dialog.getByText(/Nous avons envoyé un code à 6 chiffres/)).toBeInViewport();
+		// Stacked actions fit the screen: the stamp first, Back under it.
+		const confirm = await dialog
+			.getByRole("button", { name: "Confirmer le rendez-vous" })
+			.boundingBox();
+		const back = await dialog.getByRole("button", { name: "Retour" }).boundingBox();
+		expect((confirm?.x ?? 0) + (confirm?.width ?? 0)).toBeLessThanOrEqual(390);
+		expect(confirm?.y ?? 0).toBeLessThan(back?.y ?? 0);
 		await dialog.getByLabel("Code à 6 chiffres").fill(await readCode(page.request, who.email));
 		await dialog.getByRole("button", { name: "Confirmer le rendez-vous" }).click();
 		await expect(
 			dialog.getByRole("heading", { name: "Votre rendez-vous est confirmé" }),
 		).toBeVisible();
-		await capture(page, "panel-5-done-mobile");
 		expect(await axeViolations(page)).toEqual([]);
 	});
 });

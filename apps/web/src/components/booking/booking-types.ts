@@ -14,6 +14,8 @@ export type ManagedAppointment = Outputs["booking"]["manage"]["get"];
 export interface SlotPage {
 	timeZone: string;
 	slots: Date[];
+	/** Grid starts that cannot be booked (start instants only), struck through in the grid. */
+	taken?: Date[];
 }
 
 /** Business error codes the booking procedures answer with (the tRPC error message). */
