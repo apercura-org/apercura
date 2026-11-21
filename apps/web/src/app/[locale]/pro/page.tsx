@@ -1,29 +1,15 @@
-import {
-	BookletSearch,
-	FieldList,
-	FieldRow,
-	PractitionerHeader,
-	ProvenanceNote,
-	tableStyles,
-} from "@apercura/ui";
+import { BookletSearch, tableStyles } from "@apercura/ui";
 import type { Metadata } from "next";
 import { hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { BookletPage } from "~/components/booklet-page";
 import { SiteFooter } from "~/components/site-footer";
 import { SiteHeader } from "~/components/site-header";
+import { SpecimenPage } from "~/components/specimen-page";
 import { getPathname } from "~/i18n/navigation";
 import { routing } from "~/i18n/routing";
 
 const STEPS = ["find", "verify", "complete"] as const;
-
-/** Fictitious practitioner used to show an unclaimed page. The RPPS is Luhn-valid but synthetic. */
-const SAMPLE = {
-	name: "Dr Exemple Martin",
-	rpps: "10000000009",
-	address: "12 rue de l’Exemple, 69000 Lyon",
-	updatedAt: "2026-11-19",
-} as const;
 
 const table = tableStyles();
 
@@ -41,7 +27,6 @@ export default async function ProPage({ params }: PageProps<"/[locale]/pro">) {
 
 	const t = await getTranslations({ locale, namespace: "ProPage" });
 	const tSite = await getTranslations({ locale, namespace: "Site" });
-	const tPage = await getTranslations({ locale, namespace: "Practitioner" });
 
 	return (
 		<>
@@ -67,7 +52,7 @@ export default async function ProPage({ params }: PageProps<"/[locale]/pro">) {
 					</div>
 				</div>
 
-				<BookletPage locale={locale} runningHead={tSite("runningHead")} folio={2}>
+				<BookletPage runningHead={tSite("runningHead")}>
 					<section aria-labelledby="steps-heading" className="flex flex-col gap-5">
 						<h2
 							id="steps-heading"
@@ -120,36 +105,7 @@ export default async function ProPage({ params }: PageProps<"/[locale]/pro">) {
 							</h2>
 							<p className="text-meta text-ink-muted">{t("sampleNote")}</p>
 						</div>
-						<div className="border-[1.5px] border-dashed border-field-edge p-5 sm:p-8">
-							<PractitionerHeader
-								headingLevel={3}
-								name={SAMPLE.name}
-								profession={tPage("professions.gp")}
-								rpps={SAMPLE.rpps}
-								rppsLabel={tPage("rpps")}
-								status="unclaimed"
-								statusLabel={tPage("status.unclaimed")}
-								statusNote={tPage("statusNote.unclaimed")}
-							/>
-							<FieldList className="mt-6 border-t-0">
-								<FieldRow
-									label={tPage("fields.address")}
-									value={SAMPLE.address}
-									emptyLabel={tPage("notProvided")}
-								/>
-								<FieldRow label={tPage("fields.phone")} emptyLabel={tPage("notProvided")} />
-								<FieldRow label={tPage("fields.hours")} emptyLabel={tPage("notProvided")} />
-								<FieldRow label={tPage("fields.booking")} emptyLabel={tPage("notProvided")} />
-							</FieldList>
-							<ProvenanceNote
-								className="mt-4"
-								locale={locale}
-								sourceLabel={tPage("source.label")}
-								source={tPage("source.name")}
-								updatedLabel={tPage("source.updated")}
-								updatedAt={SAMPLE.updatedAt}
-							/>
-						</div>
+						<SpecimenPage locale={locale} />
 					</section>
 
 					<section aria-labelledby="facts-heading" className="flex max-w-[65ch] flex-col gap-3">

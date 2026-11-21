@@ -45,6 +45,7 @@ export function SlotDemo({ defaultValue = null }: { defaultValue?: string | null
 			initialNow={SAMPLE_NOW}
 			nowLabel={t("now")}
 			unavailableLabel={t("unavailable")}
+			pastLabel={t("past")}
 			emptyDayLabel={t("emptyDay")}
 			announceSelection={(slot) => t("selected", { slot: slot.accessibleLabel })}
 		/>

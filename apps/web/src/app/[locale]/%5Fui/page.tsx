@@ -92,7 +92,7 @@ export default async function GalleryPage({ params }: PageProps<"/[locale]/_ui">
 						<p className="max-w-[65ch] text-body text-cover-muted">{t("intro")}</p>
 					</div>
 				</div>
-				<BookletPage locale={locale} runningHead={t("title")} folio={0}>
+				<BookletPage runningHead={t("title")}>
 					<section aria-labelledby="g-tokens" className="flex flex-col gap-6">
 						<SectionHeading id="g-tokens">{t("sections.tokens")}</SectionHeading>
 						<ul className="grid gap-x-6 gap-y-3 sm:grid-cols-2 lg:grid-cols-3">

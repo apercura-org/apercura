@@ -1,19 +1,19 @@
-import { getTranslations } from "next-intl/server";
 import type { ReactNode } from "react";
-import type { Locale } from "~/i18n/routing";
 
 interface BookletPageProps {
-	locale: Locale;
 	/** Running head text printed at the top left of the page. */
 	runningHead: string;
-	folio: number;
+	/**
+	 * Folio printed at the top right, only where it means something: the home page is
+	 * page 1, search results print their results page, practitioner pages their RPPS.
+	 */
+	folio?: string;
 	children: ReactNode;
 	id?: string;
 }
 
-/** One page of the booklet: running head with folio, then the page's content on white paper. */
-export async function BookletPage({ locale, runningHead, folio, children, id }: BookletPageProps) {
-	const t = await getTranslations({ locale, namespace: "Site" });
+/** One page of the booklet: running head (and folio when meaningful), then the page's content on white paper. */
+export function BookletPage({ runningHead, folio, children, id }: BookletPageProps) {
 	return (
 		<div id={id} className="mx-auto w-full max-w-6xl px-5 sm:px-8">
 			<div
@@ -21,9 +21,7 @@ export async function BookletPage({ locale, runningHead, folio, children, id }: 
 				aria-hidden="true"
 			>
 				<span className="caps text-ink">{runningHead}</span>
-				<span className="caps tabular whitespace-nowrap text-ink">
-					{t("folio", { number: folio })}
-				</span>
+				{folio ? <span className="caps tabular whitespace-nowrap text-ink">{folio}</span> : null}
 			</div>
 			<div className="flex flex-col gap-14 py-10 sm:py-14">{children}</div>
 		</div>

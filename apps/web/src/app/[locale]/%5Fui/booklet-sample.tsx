@@ -49,7 +49,7 @@ export async function BookletSample({
 			>
 				<span className="caps text-ink">{tSite("runningHead")}</span>
 				<span className="caps tabular text-ink">
-					{tSite("folio", { number: verified ? 2 : 1 })}
+					{tSite("folioRpps", { rpps: practitioner.rpps })}
 				</span>
 			</div>
 			<div className="flex flex-col gap-8 p-5 sm:p-8">

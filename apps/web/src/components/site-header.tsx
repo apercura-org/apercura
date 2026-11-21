@@ -31,7 +31,8 @@ export async function SiteHeader({ locale, pathname, showWordmark = true }: Site
 						{t("wordmark")}
 					</Link>
 				) : (
-					<p className="caps py-3 text-cover-muted">{t("runningHead")}</p>
+					// The home page prints the wordmark in the band; the running head lives on the booklet page.
+					<span />
 				)}
 				<div className="flex flex-wrap items-center gap-x-5">
 					<nav aria-label={t("navLabel")}>

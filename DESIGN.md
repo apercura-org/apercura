@@ -131,7 +131,7 @@ Patients of every age, including older and low-vision readers, use it on a phone
 
 - Pure white paper, one petrol ink, one violet stamp, ink red only for errors.
 - Cover bands (solid petrol, white type) open and close every page: home hero, page titles, action block headers, dialog title strips, footer.
-- Ruled tables with small-caps column headers; field rows with dotted leaders; running heads and folio numbers on every booklet page.
+- Ruled tables with small-caps column headers; field rows with dotted leaders; a running head on every booklet page, and a folio only where it means something.
 - A deterministic seal per practitioner, derived from the RPPS number.
 - Square corners (2 px), no shadows: depth is rules and bands.
 
@@ -195,9 +195,9 @@ Every token pair the UI uses is verified by `packages/ui/src/tokens/tokens.test.
 
 ## Layout
 
-A booklet page is a single centred column, `max-width: 72rem`, with 20 px gutters (32 px from 640 px up). Each page opens with a running head (caps, left) and a folio (caps, right) over a 1.5 px ink rule, then sections separated by 56 px. Section content uses a 5/7 split on wide screens (heading and intro left, facts right) and stacks below 768 px.
+A booklet page is a single centred column, `max-width: 72rem`, with 20 px gutters (32 px from 640 px up). Each page opens with a running head (caps, left) over a 1.5 px ink rule, then sections separated by 56 px. The running head lives only there, never as a caps label on the cover above a title. Section content uses a 5/7 split on wide screens (heading and intro left, facts right) and stacks below 768 px.
 
-The home cover band holds about 60 % of the viewport (`min-height: calc(60svh - header)`), content bottom-aligned so the search sits just above the fold line, closed by a double printed rule. Form cells sit side by side from 768 px and stack below; field rows switch from label-leader-value to label-over-value under a 28 rem container width.
+The home cover band holds about 60 % of the viewport (`min-height: calc(60svh - header)`), content bottom-aligned so the search sits just above the fold line, closed by a double printed rule. From 768 px the specimen's seal is printed in paper white on the band's right. Page 1 opens with the proof: the unclaimed specimen page (seal, field rows, provenance, labelled "Exemple fictif"), then the commitments table. Form cells sit side by side from 768 px and stack below; field rows switch from label-leader-value to label-over-value under a 28 rem container width.
 
 Every target is at least 44 px; type and layout survive 400 % zoom (rows stack, the slot grid scrolls on its own axis).
 
@@ -247,10 +247,10 @@ Badges are printed marks in caps: ink outline (unclaimed, informational), stampe
 - **PractitionerHeader**: seal, name (headline), profession (lead), RPPS (caps label and tabular number), page status badge and a one-line explanation.
 - **FieldRow / FieldList**: label, dotted leader, value. An empty field prints an em dash and "Non renseigné" in Muted Ink; it never disappears.
 - **ActionBlock**: the "what can I do next" box with a cover-strip title, in four honest states: book (stamp), call the practice (ink, `tel:`), book via the establishment (ink, external), locum not bookable (statement and hint, no button).
-- **SlotPicker**: each day is one unbroken row of 80 × 56 px cells, like a step sequencer. A ruled "now" marker with a caret moves through today's row; past and closed slots are struck through and disabled. Selecting stamps the cell violet with a white inner frame, a tick and a short stamp animation; a live region announces the selection. Keyboard: arrows, Home/End, Page Up/Down, Enter/Space.
+- **SlotPicker**: each day is one unbroken row of 80 × 56 px cells, like a step sequencer. A ruled "now" marker with a caret moves through today's row; past slots (open, but their time has gone) are plain muted ink, taken slots are struck through; both are disabled. The marker stands on the boundary after the last slot that has started, never across a slot, with a 0.875 rem caps label. Selecting stamps the cell violet with a white inner frame, a tick and a short stamp animation; a live region announces the selection. Keyboard: arrows, Home/End, Page Up/Down, Enter/Space.
 - **SiteCard**: place name, postal address, optional facts, and directions as plain links to OpenStreetMap, Apple Maps and Google Maps (no API, no key).
 - **ProvenanceNote**: source and refresh date set as a printer's imprint.
-- **MapView**: MapLibre GL, loaded only when the map nears the viewport; shows the address until ready or if WebGL fails. Style from `NEXT_PUBLIC_MAP_STYLE_URL` (default OpenFreeMap positron), re-inked by `themeMapStyle` from `@apercura/ui/map-style`; attribution always visible.
+- **MapView**: MapLibre GL, loaded only when the map nears the viewport; shows the address until ready or if WebGL fails. Style from `NEXT_PUBLIC_MAP_STYLE_URL` (default OpenFreeMap positron), re-inked by `themeMapStyle` from `@apercura/ui/map-style`, which also hides city, town and village names from zoom 13 so the pin never covers them; attribution always visible.
 - **BookletSearch**: the search printed as form cells ("QUI ?", "OÙ ?") with a stamp at the end; a plain GET form that ships no JavaScript.
 
 ### Motion

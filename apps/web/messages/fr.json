@@ -21,7 +21,8 @@
 			"free": "Gratuit pour les professionnels comme pour les patients.",
 			"license": "Code source sous licence AGPL-3.0",
 			"noAds": "Ni notes, ni publicité, ni classement payant."
-		}
+		},
+		"folioRpps": "RPPS {rpps}"
 	},
 	"LocaleSwitcher": {
 		"label": "Langue",
@@ -38,6 +39,10 @@
 	"HomePage": {
 		"title": "Apercura",
 		"hook": "Trouvez n’importe quel professionnel de santé en France : chacun a déjà sa page.",
+		"specimen": {
+			"heading": "Chaque professionnel a déjà sa page",
+			"intro": "Voici une page telle que le registre national la remplit, avant que le professionnel la réclame : les champs connus sont remplis, les autres disent qu’ils ne sont pas renseignés."
+		},
 		"pillarsHeading": "Ce à quoi Apercura s’engage",
 		"columns": {
 			"number": "N°",
@@ -90,7 +95,7 @@
 		"search": {
 			"label": "Retrouver votre page",
 			"field": "Nom ou numéro RPPS",
-			"hint": "Nom de famille, ou les 11 chiffres",
+			"hint": "Nom ou 11 chiffres du RPPS",
 			"submit": "Retrouver ma page"
 		},
 		"stepsHeading": "Réclamer sa page, en trois étapes",
@@ -189,14 +194,16 @@
 			"unavailable": "indisponible",
 			"selected": "Sélectionné : {slot}",
 			"emptyDay": "Aucun horaire ce jour-là",
-			"slotLabel": "{day}, {time}"
+			"slotLabel": "{day}, {time}",
+			"past": "passé"
 		},
 		"professions": {
 			"gp": "Médecin généraliste",
 			"dentist": "Chirurgien-dentiste",
 			"midwife": "Sage-femme",
 			"physio": "Masseur-kinésithérapeute"
-		}
+		},
+		"specimen": "Exemple fictif"
 	},
 	"Gallery": {
 		"title": "Galerie des composants",

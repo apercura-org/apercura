@@ -104,7 +104,8 @@ export default async function SearchPage({
 						</Suspense>
 					</div>
 				</div>
-				<BookletPage locale={locale} runningHead={tSite("runningHead")} folio={1}>
+				{/* Results are paginated; this placeholder is the first results page. */}
+				<BookletPage runningHead={tSite("runningHead")} folio={tSite("folio", { number: 1 })}>
 					<div className="flex flex-col gap-5">
 						<Suspense fallback={null}>
 							<QuerySummary locale={locale} searchParams={searchParams} />

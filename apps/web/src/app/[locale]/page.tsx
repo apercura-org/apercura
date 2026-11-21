@@ -4,6 +4,7 @@ import {
 	FieldList,
 	FieldRow,
 	ProvenanceNote,
+	Seal,
 	tableStyles,
 } from "@apercura/ui";
 import { hasLocale } from "next-intl";
@@ -11,6 +12,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { BookletPage } from "~/components/booklet-page";
 import { SiteFooter } from "~/components/site-footer";
 import { SiteHeader } from "~/components/site-header";
+import { SPECIMEN, SpecimenPage } from "~/components/specimen-page";
 import { serverEnv } from "~/env";
 import { getPathname, Link } from "~/i18n/navigation";
 import { routing } from "~/i18n/routing";
@@ -44,13 +46,21 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
 			<main id="main" tabIndex={-1} className="flex-1 outline-none">
 				<div className="surface-cover flex min-h-[calc(60svh-3.5rem)] flex-col">
 					<div className="mx-auto flex w-full max-w-6xl flex-1 flex-col justify-end gap-7 px-5 pt-10 pb-10 sm:px-8 sm:pb-14">
-						<div className="flex flex-col gap-4">
-							<h1 className="font-display text-display font-black tracking-[-0.03em] font-stretch-expanded">
-								{t("title")}
-							</h1>
-							<p className="max-w-[40ch] text-lead text-cover-ink sm:text-[1.625rem] sm:leading-snug">
-								{t("hook")}
-							</p>
+						<div className="flex items-end justify-between gap-10">
+							<div className="flex flex-col gap-4">
+								<h1 className="font-display text-display font-black tracking-[-0.03em] font-stretch-expanded">
+									{t("title")}
+								</h1>
+								<p className="max-w-[40ch] text-lead text-cover-ink sm:text-[1.625rem] sm:leading-snug">
+									{t("hook")}
+								</p>
+							</div>
+							{/* The specimen's seal, printed in paper white on the cover: the page below carries it. */}
+							<Seal
+								rpps={SPECIMEN.rpps}
+								size={208}
+								className="hidden shrink-0 text-cover-ink md:block"
+							/>
 						</div>
 						<BookletSearch
 							action={getPathname({ href: "/recherche", locale })}
@@ -73,7 +83,20 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
 					</div>
 				</div>
 
-				<BookletPage locale={locale} runningHead={tSite("runningHead")} folio={1}>
+				<BookletPage runningHead={tSite("runningHead")} folio={tSite("folio", { number: 1 })}>
+					<section aria-labelledby="specimen-heading" className="flex flex-col gap-5">
+						<div className="flex max-w-[65ch] flex-col gap-2">
+							<h2
+								id="specimen-heading"
+								className="font-display text-title font-bold text-ink font-stretch-semi-expanded"
+							>
+								{t("specimen.heading")}
+							</h2>
+							<p className="text-body text-ink">{t("specimen.intro")}</p>
+						</div>
+						<SpecimenPage locale={locale} />
+					</section>
+
 					<section aria-labelledby="pillars-heading" className="flex flex-col gap-5">
 						<h2
 							id="pillars-heading"

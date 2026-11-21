@@ -21,7 +21,8 @@
 			"free": "Free for practitioners and patients.",
 			"license": "Source code under the AGPL-3.0 licence",
 			"noAds": "No ratings, no ads, no paid ranking."
-		}
+		},
+		"folioRpps": "RPPS {rpps}"
 	},
 	"LocaleSwitcher": {
 		"label": "Language",
@@ -38,6 +39,10 @@
 	"HomePage": {
 		"title": "Apercura",
 		"hook": "Find any health practitioner in France: every one of them already has a page.",
+		"specimen": {
+			"heading": "Every practitioner already has a page",
+			"intro": "This is a page as the national register fills it, before the practitioner claims it: known fields are filled, the others say plainly that they are not provided."
+		},
 		"pillarsHeading": "What Apercura commits to",
 		"columns": {
 			"number": "No.",
@@ -90,7 +95,7 @@
 		"search": {
 			"label": "Find your page",
 			"field": "Name or RPPS number",
-			"hint": "Last name, or the 11 digits",
+			"hint": "Name or 11-digit RPPS",
 			"submit": "Find my page"
 		},
 		"stepsHeading": "Claiming your page, in three steps",
@@ -189,14 +194,16 @@
 			"unavailable": "unavailable",
 			"selected": "Selected: {slot}",
 			"emptyDay": "No times this day",
-			"slotLabel": "{day}, {time}"
+			"slotLabel": "{day}, {time}",
+			"past": "past"
 		},
 		"professions": {
 			"gp": "General practitioner",
 			"dentist": "Dentist",
 			"midwife": "Midwife",
 			"physio": "Physiotherapist"
-		}
+		},
+		"specimen": "Sample, not a real practitioner"
 	},
 	"Gallery": {
 		"title": "Component gallery",
