@@ -3,6 +3,7 @@ import {
 	communeSlug,
 	departmentSlug,
 	establishmentSlug,
+	parseEstablishmentSegment,
 	parsePractitionerSegment,
 	practitionerSlug,
 	regionSlug,
@@ -68,5 +69,20 @@ describe("place slugs", () => {
 		);
 		expect(establishmentSlug("", "690781810")).toBe("690781810");
 		expect(establishmentSlug("CH de Bastia", "2B0000016")).toBe("ch-de-bastia-2b0000016");
+	});
+
+	it("parses establishment segments by their trailing FINESS number", () => {
+		expect(parseEstablishmentSegment("hopital-edouard-herriot-690781810")).toEqual({
+			finess: "690781810",
+			namePart: "hopital-edouard-herriot",
+		});
+		expect(parseEstablishmentSegment("ch-de-bastia-2b0000016")).toEqual({
+			finess: "2B0000016",
+			namePart: "ch-de-bastia",
+		});
+		expect(parseEstablishmentSegment("690781810")?.namePart).toBe("");
+		expect(parseEstablishmentSegment("hopital-69078181")).toBeNull();
+		expect(parseEstablishmentSegment("hopital-2c0000016")).toBeNull();
+		expect(parseEstablishmentSegment("Hopital-690781810")).toBeNull();
 	});
 });

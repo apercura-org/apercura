@@ -1,10 +1,10 @@
 import "server-only";
 import { redirect } from "~/i18n/navigation";
 import type { Locale } from "~/i18n/routing";
-import { PRO_ROUTES } from "~/lib/pro-routes";
+import { PRO_ROUTES, type ProRoute } from "~/lib/pro-routes";
 import { getProAccess, type ProAccess } from "./session";
 
-const HOME_FOR: Record<ProAccess["state"], string> = {
+const HOME_FOR: Record<ProAccess["state"], ProRoute> = {
 	"signed-out": PRO_ROUTES.signIn,
 	enrol: PRO_ROUTES.security,
 	challenge: PRO_ROUTES.challenge,

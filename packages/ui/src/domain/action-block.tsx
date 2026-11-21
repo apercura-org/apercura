@@ -47,7 +47,19 @@ export interface LocumAction extends ActionBlockBase {
 	hint?: ReactNode;
 }
 
-export type ActionBlockProps = BookAction | CallAction | EstablishmentAction | LocumAction;
+/** No action is possible here (no phone published…): say so and what to try instead. */
+export interface NoticeAction extends ActionBlockBase {
+	kind: "notice";
+	statement: ReactNode;
+	hint?: ReactNode;
+}
+
+export type ActionBlockProps =
+	| BookAction
+	| CallAction
+	| EstablishmentAction
+	| LocumAction
+	| NoticeAction;
 
 /**
  * "What can I do next?" printed as a boxed section with a cover-band title.
@@ -70,7 +82,9 @@ export function ActionBlock(props: ActionBlockProps) {
 			</div>
 			<div className="flex flex-col gap-4 p-5">
 				<p className="flex items-start gap-3 text-body text-ink">
-					{props.kind === "locum" ? <InfoIcon className="mt-0.5 size-6 shrink-0" /> : null}
+					{props.kind === "locum" || props.kind === "notice" ? (
+						<InfoIcon className="mt-0.5 size-6 shrink-0" />
+					) : null}
 					<span>{props.statement}</span>
 				</p>
 				{props.kind === "book" ? (
@@ -112,7 +126,7 @@ export function ActionBlock(props: ActionBlockProps) {
 						{props.externalLabel ? <span className="sr-only"> ({props.externalLabel})</span> : null}
 					</a>
 				) : null}
-				{props.kind === "locum" && props.hint ? (
+				{(props.kind === "locum" || props.kind === "notice") && props.hint ? (
 					<p className="text-meta text-ink-muted">{props.hint}</p>
 				) : null}
 			</div>

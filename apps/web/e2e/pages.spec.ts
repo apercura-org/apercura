@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 import { axeViolations } from "./axe";
 
-const PAGES = ["/", "/en", "/pro", "/en/pro", "/recherche?quoi=Exemple&ou=Lyon", "/en/recherche"];
+const PAGES = ["/", "/en", "/pro", "/en/pro", "/recherche?quoi=Exemple&ou=Lyon", "/en/search"];
 
 for (const path of PAGES) {
 	test(`${path} has no axe violations`, async ({ page }) => {
@@ -26,8 +26,9 @@ test.describe("without JavaScript", () => {
 test("the English home page searches under /en", async ({ page }) => {
 	await page.goto("/en");
 	await page.getByLabel("Who?").fill("Exemple");
-	await page.getByRole("button", { name: "Search" }).click();
-	await expect(page).toHaveURL(/\/en\/recherche\?quoi=Exemple&ou=$/);
+	// The open suggestion slip hides the rest of the page from assistive tech (React Aria).
+	await page.getByRole("button", { name: "Search", includeHidden: true }).click();
+	await expect(page).toHaveURL(/\/en\/search\?quoi=Exemple&ou=$/);
 });
 
 test("the skip link moves focus to the main content", async ({ page }) => {

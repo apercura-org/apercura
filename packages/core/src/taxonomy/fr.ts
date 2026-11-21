@@ -365,6 +365,8 @@ export const FR_TITLES = ["DR", "PR", "MC", "MG", "PC", "PG"] as const;
 
 /**
  * First URL segments reserved by the app: they can never be a listing slug.
+ * Includes the institutional pages, the English locale prefix and the
+ * technical paths (sitemaps, Open Graph images, the component gallery).
  */
 export const RESERVED_SEGMENTS = [
 	"praticien",
@@ -374,7 +376,31 @@ export const RESERVED_SEGMENTS = [
 	"pro",
 	"rdv",
 	"api",
+	"a-propos",
+	"open-source",
+	"donnees",
+	"accessibilite",
+	"confidentialite",
+	"mentions-legales",
+	"conditions",
+	"en",
+	"og",
+	"sitemaps",
+	"_ui",
 ] as const;
+
+/** True when `segment` is reserved by the app and must never resolve to a listing. */
+export function isReservedSegment(segment: string): boolean {
+	return (RESERVED_SEGMENTS as readonly string[]).includes(segment);
+}
+
+/**
+ * True when `slug` is a listing slug the app can serve as the first URL
+ * segment: known to the taxonomy and not reserved.
+ */
+export function isListingSlug(slug: string): boolean {
+	return !isReservedSegment(slug) && LISTING_SLUGS.has(slug);
+}
 
 export type ActivityCodes = {
 	sectorCode?: string | null;
@@ -463,6 +489,19 @@ export function allListingSlugs(): Set<string> {
 	for (const profession of Object.values(FR_PROFESSIONS)) slugs.add(profession.slug);
 	for (const specialty of Object.values(FR_SPECIALTIES)) slugs.add(specialty.slug);
 	return slugs;
+}
+
+const LISTING_SLUGS: ReadonlySet<string> = allListingSlugs();
+
+/** Profession code of a listing slug (`cardiologue` -> `10`), or undefined. */
+export function professionOfListingSlug(slug: string): string | undefined {
+	for (const [code, profession] of Object.entries(FR_PROFESSIONS)) {
+		if (profession.slug === slug) return code;
+	}
+	for (const specialty of Object.values(FR_SPECIALTIES)) {
+		if (specialty.slug === slug) return specialty.profession;
+	}
+	return undefined;
 }
 
 /**

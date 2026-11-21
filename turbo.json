@@ -18,12 +18,15 @@
 		"TRUSTED_PROXY_COUNT",
 		"ETL_*",
 		"FEATURE_BOOKING",
-		"PORT"
+		"PORT",
+		"RATE_LIMIT_KEY",
+		"CANONICAL_HOST_REDIRECT",
+		"DATABASE_POOL_MAX"
 	],
 	"tasks": {
 		"build": {
 			"dependsOn": ["^build"],
-			"env": ["NEXT_PUBLIC_*", "PUBLIC_HDS_HOST"],
+			"env": ["NEXT_PUBLIC_*", "PUBLIC_HDS_HOST", "DATABASE_URL", "APP_URL"],
 			"outputs": [".next/**", "!.next/cache/**", "dist/**"]
 		},
 		"dev": {

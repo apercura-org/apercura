@@ -41,6 +41,16 @@ const serverSchema = z.object({
 	JOBS_SECRET: optionalString,
 	REVALIDATE_SECRET: optionalString,
 	TRUSTED_PROXY_COUNT: z.coerce.number().int().min(0).default(0),
+	/**
+	 * Secret HMAC-SHA256 key that turns client IP addresses into rate-limit keys
+	 * (public search suggestions), so `directory.rate_limits` never stores a raw
+	 * IP. Any random string of at least 32 bytes, e.g. base64 of 32 random bytes:
+	 * `bun run keys:generate` prints one, or `openssl rand -base64 32`. Optional:
+	 * when unset each process draws a random key at start, which works but resets
+	 * the counters on restart and splits them across instances. Rotating it only
+	 * resets the counters.
+	 */
+	RATE_LIMIT_KEY: optionalString,
 
 	ETL_PROFESSIONS: z
 		.string()

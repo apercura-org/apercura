@@ -22,7 +22,20 @@
 			"license": "Code source sous licence AGPL-3.0",
 			"noAds": "Ni notes, ni publicité, ni classement payant."
 		},
-		"folioRpps": "RPPS {rpps}"
+		"folioRpps": "RPPS {rpps}",
+		"home": "Accueil",
+		"breadcrumbs": "Vous êtes ici",
+		"footerNav": {
+			"label": "À propos d’Apercura",
+			"directory": "Annuaire",
+			"about": "À propos",
+			"openSource": "Open source",
+			"data": "Données et sources",
+			"accessibility": "Accessibilité",
+			"privacy": "Confidentialité",
+			"legal": "Mentions légales",
+			"terms": "Conditions d’utilisation"
+		}
 	},
 	"LocaleSwitcher": {
 		"label": "Langue",
@@ -126,12 +139,54 @@
 	},
 	"SearchPage": {
 		"title": "Recherche",
-		"query": "Vous avez cherché « {who} »",
-		"queryWhere": "Vous avez cherché « {who} » à « {where} »",
-		"queryOnlyWhere": "Vous avez cherché à « {where} »",
-		"emptyTitle": "La recherche n’est pas encore ouverte",
-		"emptyBody": "L’annuaire est en cours d’import depuis le registre national. Les résultats s’afficheront bientôt sur cette page.",
-		"backHome": "Revenir à l’accueil"
+		"query": "Vous avez cherché « {who} »",
+		"queryWhere": "Vous avez cherché « {who} » à « {where} »",
+		"queryOnlyWhere": "Vous avez cherché à « {where} »",
+		"emptyTitle": "Aucun professionnel ne correspond",
+		"emptyBody": "Vérifiez l’orthographe, essayez une ville voisine, ou un terme plus large comme « médecin » au lieu d’une spécialité.",
+		"queryNear": "Vous avez cherché « {who} » autour de vous",
+		"queryOnlyNear": "Professionnels autour de vous",
+		"startTitle": "Qui cherchez-vous ?",
+		"startBody": "Saisissez un nom, une spécialité ou une profession dans « Qui ? », et une ville ou un code postal dans « Où ? ». Vous pouvez aussi parcourir l’annuaire par lieu.",
+		"noMoreTitle": "Il n’y a plus de résultats",
+		"browseDirectory": "Parcourir l’annuaire",
+		"rppsTitle": "Aucune page publique pour le RPPS {rpps}",
+		"rppsBody": "Ce numéro n’est pas valide, ou ce professionnel n’a pas de page publique : les personnes sans lieu d’exercice fixe ne sont pas listées. Les professionnels peuvent tout de même retrouver et revendiquer leur fiche.",
+		"rppsPro": "Professionnels : retrouver votre fiche",
+		"ambiguousTitle": "Plusieurs lieux s’appellent « {where} »",
+		"ambiguousBody": "Choisissez celui que vous cherchez :",
+		"unknownPlaceTitle": "Nous ne connaissons pas le lieu « {where} »",
+		"unknownPlaceSuggest": "Vouliez-vous dire l’un de ces lieux ?",
+		"unknownPlaceBody": "Vérifiez l’orthographe, ou saisissez un code postal.",
+		"departmentPlace": "Département",
+		"resultsHeading": "Résultats",
+		"range": "Résultats {from} à {to}",
+		"orderName": "Les résultats sont classés selon la proximité du nom, puis par ordre alphabétique. Personne ne paie pour apparaître plus haut.",
+		"orderNear": "Les résultats sont classés par distance depuis votre position. Personne ne paie pour apparaître plus haut.",
+		"bookingNotOpen": "La prise de rendez-vous en ligne n’est pas encore ouverte : appelez le cabinet, ou contactez l’établissement.",
+		"columns": {
+			"practitioner": "Professionnel",
+			"place": "Lieu d’exercice",
+			"appointments": "Rendez-vous"
+		},
+		"action": {
+			"call": "Appeler le {phone}",
+			"establishment": "Par l’établissement",
+			"locum": "Remplaçant : pas de rendez-vous direct",
+			"page": "Voir la page",
+			"noPhone": "Pas de numéro publié"
+		},
+		"distance": "à {km} km",
+		"pagination": "Pages de résultats",
+		"previous": "Résultats précédents",
+		"next": "Plus de résultats",
+		"map": {
+			"show": "Afficher sur une carte",
+			"hide": "Masquer la carte",
+			"region": "Carte des résultats",
+			"fallback": "La carte se charge. La liste ci-dessus donne toutes les adresses."
+		},
+		"outsidePlace": "Exerce hors de {where}"
 	},
 	"Practitioner": {
 		"rpps": "RPPS",
@@ -371,7 +426,7 @@
 		"feedback": {
 			"loadingLabel": "Chargement de la page",
 			"emptyTitle": "Aucun professionnel ne correspond",
-			"emptyBody": "Essayez une ville voisine ou une profession plus large, par exemple « médecin » plutôt qu’une spécialité.",
+			"emptyBody": "Essayez une ville voisine ou une profession plus large, par exemple « médecin » plutôt qu’une spécialité.",
 			"emptyAction": "Effacer les filtres"
 		},
 		"form": {
@@ -402,6 +457,539 @@
 			"toast": "Notifications éphémères",
 			"badge": "Marques"
 		}
+	},
+	"PractitionerPage": {
+		"metaTitle": "{name}, {occupation} · Apercura",
+		"metaTitlePlace": "{name}, {occupation} à {place} · Apercura",
+		"metaDescription": "{name}, {occupation} : lieux d’exercice, téléphone et secteur de conventionnement, d’après le registre national des professionnels de santé.",
+		"metaDescriptionPlace": "{name}, {occupation} à {place} : lieux d’exercice, téléphone et secteur de conventionnement, d’après le registre national des professionnels de santé.",
+		"unknownProfession": "Professionnel de santé",
+		"professionHeading": "Profession et qualifications",
+		"otherQualifications": "Autres qualifications",
+		"practiceType": "Type d’exercice",
+		"switchboard": "{phone} (standard de l’établissement)",
+		"establishment": "Établissement",
+		"unnamedPlace": "Lieu d’exercice",
+		"asideLabel": "Rendez-vous et page",
+		"action": {
+			"callNotYetOpen": "La prise de rendez-vous en ligne n’est pas encore ouverte pour ce professionnel. Pour prendre rendez-vous, appelez le cabinet.",
+			"establishmentLink": "Contacter l’établissement",
+			"noPhone": "Aucun numéro de téléphone n’est publié pour ce lieu.",
+			"noPhoneHint": "Consultez la fiche du professionnel sur <link>ameli.fr</link>, ou contactez directement le lieu."
+		},
+		"fees": {
+			"heading": "Honoraires et Assurance Maladie",
+			"sector": "Secteur de conventionnement",
+			"optam": "Dépassements maîtrisés (OPTAM)",
+			"optamNo": "Non adhérent",
+			"carteVitale": "Carte Vitale",
+			"accepted": "Acceptée",
+			"notAccepted": "Non acceptée",
+			"fromAmeli": "Ces informations viennent de l’annuaire de l’Assurance Maladie.",
+			"notMatched": "Ce professionnel n’a pas pu être rapproché avec certitude de l’annuaire de l’Assurance Maladie : ces informations ne sont donc pas affichées.",
+			"regulatoryNotice": "Le secteur de conventionnement détermine les honoraires pratiqués et leur remboursement : vérifiez-les avant votre rendez-vous sur",
+			"ameliLink": "ameli.fr, l’annuaire de l’Assurance Maladie",
+			"source": "Annuaire santé, Assurance Maladie"
+		},
+		"claim": {
+			"heading": "C’est vous ?",
+			"body": "Cette page est construite à partir du registre public. Revendiquez-la gratuitement pour la vérifier et la compléter.",
+			"link": "Revendiquer cette page"
+		},
+		"report": {
+			"heading": "Une erreur ?",
+			"body": "Si une adresse, un numéro ou un nom est faux, découvrez comment le faire corriger.",
+			"link": "Signaler une erreur"
+		},
+		"ring": {
+			"heading": "Autres praticiens : {listing} à {place}"
+		}
+	},
+	"Institutional": {
+		"toBeCompleted": "À compléter",
+		"draftMark": "Brouillon : à compléter avant le lancement",
+		"comingMark": "Bientôt disponible"
+	},
+	"AboutPage": {
+		"metaTitle": "À propos · Apercura",
+		"metaDescription": "Apercura publie une page gratuite et factuelle pour chaque professionnel de santé inscrit en France, à partir des données publiques ouvertes.",
+		"title": "À propos d’Apercura",
+		"lead": "Un annuaire ouvert de tous les professionnels de santé de France, et un outil de rendez-vous gratuit pour ceux qui le souhaitent.",
+		"sections": {
+			"what": {
+				"heading": "Ce que fait Apercura",
+				"body": [
+					"Apercura publie une page pour chaque médecin, chirurgien-dentiste et sage-femme inscrit en France, à partir du registre national des professionnels de santé et d’autres données publiques ouvertes.",
+					"Les patients trouvent n’importe quel professionnel, pas seulement ceux qui paient une plateforme. Les professionnels peuvent revendiquer leur page gratuitement, la vérifier et la compléter. La prise de rendez-vous en ligne, gratuite et sans compte patient, ouvrira plus tard."
+				]
+			},
+			"principles": {
+				"heading": "Principes",
+				"list": [
+					"Chaque professionnel est présenté de la même façon, qu’il utilise Apercura ou non.",
+					"Uniquement des informations factuelles : ni note, ni avis, ni publicité, ni classement payant.",
+					"Gratuit pour les professionnels et les patients, sans abonnement ni commission.",
+					"Chaque page indique d’où viennent ses informations et quand elles ont été mises à jour.",
+					"Le moins de données possible, collectées dans un but précis et supprimées à échéance."
+				]
+			},
+			"how": {
+				"heading": "D’où viennent les pages",
+				"body": [
+					"Les pages sont générées chaque semaine à partir de l’Annuaire Santé de l’Agence du numérique en santé, du répertoire FINESS des établissements et de l’annuaire de l’Assurance Maladie. La page des données liste chaque source, sa licence et sa date."
+				]
+			},
+			"who": {
+				"heading": "Qui fait Apercura",
+				"body": [
+					"Apercura est un projet d’intérêt général. Ce n’est pas un service de l’État et il n’est lié ni à l’Assurance Maladie, ni aux Ordres, ni à l’Agence du numérique en santé."
+				]
+			}
+		},
+		"fields": {
+			"publisher": "Éditeur",
+			"contact": "Contact"
+		},
+		"links": {
+			"data": "Données et sources",
+			"openSource": "Code source et licence"
+		}
+	},
+	"OpenSourcePage": {
+		"metaTitle": "Open source · Apercura",
+		"metaDescription": "Tout le code source d’Apercura est public, sous licence AGPL-3.0. Lisez-le, auditez-le, ou faites tourner toute la plateforme chez vous.",
+		"title": "Le code est public.",
+		"lead": "Chaque ligne d’Apercura est publiée sous licence AGPL-3.0 : vous pouvez la lire, l’auditer et faire tourner toute la plateforme vous-même.",
+		"sections": {
+			"licence": {
+				"heading": "Licence AGPL-3.0",
+				"body": [
+					"L’AGPL-3.0 est une licence de logiciel libre. Chacun peut utiliser, étudier, modifier et partager le code. Qui propose une version modifiée sous forme de service en ligne doit publier ses modifications sous la même licence."
+				]
+			},
+			"can": {
+				"heading": "Ce que vous pouvez faire",
+				"list": [
+					"Lire comment chaque page est construite et comment les données ouvertes sont importées.",
+					"Vérifier comment les données des patients seront chiffrées et combien de temps elles seront conservées.",
+					"Signaler un problème ou proposer une modification dans le dépôt public.",
+					"Faire tourner toute la plateforme sur votre propre infrastructure avec Docker, import des données ouvertes compris."
+				]
+			},
+			"selfHost": {
+				"heading": "L’héberger vous-même",
+				"body": [
+					"Un déploiement en annuaire seul ne contient aucune donnée de santé et peut tourner chez n’importe quel hébergeur. Les rendez-vous sont des données de santé : si vous gérez des rendez-vous pour d’autres personnes, les données doivent être hébergées en France par un hébergeur certifié pour les données de santé (HDS)."
+				]
+			}
+		},
+		"facts": {
+			"licence": "Licence",
+			"licenceValue": "GNU Affero General Public License v3.0",
+			"repository": "Dépôt",
+			"data": "Données de l’annuaire"
+		},
+		"dataValue": "Licence Ouverte 2.0, voir la page des données",
+		"cta": {
+			"heading": "Lire le code source",
+			"body": "Le dépôt contient le code, la documentation et le guide d’auto-hébergement.",
+			"link": "Ouvrir le dépôt"
+		}
+	},
+	"DataPage": {
+		"metaTitle": "Données et sources · Apercura",
+		"metaDescription": "D’où viennent les pages des professionnels : sources, licences, dates de mise à jour, comment corriger une erreur et comment s’opposer à une page.",
+		"title": "Données et sources",
+		"lead": "Chaque page est construite à partir de données publiques ouvertes. Voici d’où elles viennent, quand elles ont été mises à jour, et comment corriger ou retirer une page.",
+		"status": {
+			"heading": "Dernière mise à jour",
+			"body": "L’annuaire est importé depuis les sources chaque semaine. Une page ne change que si ses informations changent dans une source.",
+			"importedAt": "Dernier import",
+			"checkedAt": "Dernière vérification des sources",
+			"notImported": "L’annuaire n’a pas encore été importé sur ce site.",
+			"notImportedValue": "Pas encore importé"
+		},
+		"sources": {
+			"heading": "Sources",
+			"body": "Toutes les sources de l’annuaire sont publiées sous Licence Ouverte 2.0 (Etalab), qui autorise la réutilisation à condition de citer la source et sa date.",
+			"caption": "Sources de données de l’annuaire",
+			"columns": {
+				"source": "Source",
+				"use": "Utilisée pour",
+				"licence": "Licence",
+				"date": "Fichier du"
+			},
+			"noDate": "—",
+			"items": {
+				"personneActivite": {
+					"name": "Annuaire Santé : professionnels et activités",
+					"producer": "Agence du numérique en santé",
+					"use": "Noms, professions, lieux d’exercice, téléphones"
+				},
+				"savoirFaire": {
+					"name": "Annuaire Santé : spécialités et qualifications",
+					"producer": "Agence du numérique en santé",
+					"use": "Spécialités, compétences, capacités"
+				},
+				"diplomes": {
+					"name": "Annuaire Santé : diplômes et autorisations",
+					"producer": "Agence du numérique en santé",
+					"use": "Diplômes"
+				},
+				"finess": {
+					"name": "FINESS+ structures",
+					"producer": "Agence du numérique en santé",
+					"use": "Noms et emplacements des établissements"
+				},
+				"ameli": {
+					"name": "Annuaire santé Ameli",
+					"producer": "Caisse nationale de l’Assurance Maladie",
+					"use": "Secteur de conventionnement, OPTAM, Carte Vitale"
+				},
+				"geo": {
+					"name": "Communes et départements (geo.api.gouv.fr)",
+					"producer": "Insee et IGN, via l’API Géo",
+					"use": "Communes, codes postaux, départements"
+				},
+				"geocoder": {
+					"name": "Service de géocodage de la Géoplateforme",
+					"producer": "IGN",
+					"use": "Localisation des adresses, pendant l’import seulement"
+				},
+				"map": {
+					"name": "Données cartographiques",
+					"producer": "Contributeurs OpenStreetMap, tuiles OpenFreeMap",
+					"use": "Cartes des pages"
+				}
+			},
+			"licenceOuverte": "Licence Ouverte 2.0",
+			"odbl": "ODbL",
+			"attribution": "Contient des informations de l’Annuaire Santé (Agence du numérique en santé), du répertoire FINESS et de l’Annuaire santé Ameli (Caisse nationale de l’Assurance Maladie), réutilisées sous Licence Ouverte 2.0.",
+			"licenceLink": "Lire la Licence Ouverte 2.0",
+			"sourceLabel": "Source"
+		},
+		"rules": {
+			"heading": "Quels professionnels ont une page",
+			"body": [
+				"Un professionnel a une page publique quand le registre le mentionne avec au moins une activité ouverte aux patients (cabinet, centre de santé ou hôpital) à une adresse. Les personnes sans lieu d’exercice fixe gardent une fiche qu’elles peuvent revendiquer, mais pas de page publique.",
+				"Les pages ne montrent que des faits, dans un ordre neutre : ni note, ni avis, ni classement payant."
+			]
+		},
+		"correct": {
+			"heading": "Corriger une erreur",
+			"body": [
+				"La plupart des informations viennent de registres tenus par d’autres : la correction durable se fait donc à la source. La page suit au prochain import hebdomadaire."
+			],
+			"list": [
+				"Nom, profession, spécialité, lieu d’exercice et téléphone : le professionnel met à jour son inscription auprès de son Ordre (ou de l’organisme qui l’a inscrit au RPPS).",
+				"Secteur de conventionnement, OPTAM et Carte Vitale : ils viennent de l’annuaire de l’Assurance Maladie (ameli.fr).",
+				"Nom et adresse d’un établissement : ils viennent du répertoire FINESS, tenu par les agences régionales de santé.",
+				"Les professionnels pourront aussi revendiquer leur page depuis l’espace professionnels, puis la compléter et corriger ce qui est affiché."
+			],
+			"formTitle": "Le formulaire de signalement n’est pas encore ouvert",
+			"formBody": "Il ouvrira sur cette page avec les comptes professionnels. D’ici là, les corrections ci-dessus permettent de corriger une page.",
+			"proLink": "Aller à l’espace professionnels"
+		},
+		"remove": {
+			"heading": "S’opposer à une page",
+			"body": [
+				"En vertu de l’article 21 du RGPD, un professionnel peut s’opposer à la publication de sa page. Apercura publie l’annuaire sur le fondement de l’intérêt légitime : informer le public à partir de données publiques.",
+				"Une page non revendiquée sera masquée dès réception de la demande, puis supprimée après une vérification légère de la demande. Une page revendiquée peut être retirée à tout moment par son titulaire. Une page retirée ne revient pas au prochain import."
+			],
+			"formTitle": "Le formulaire de demande de retrait n’est pas encore ouvert",
+			"formBody": "Il ouvrira sur cette page. L’adresse de contact pour les demandes reste à compléter."
+		}
+	},
+	"AccessibilityPage": {
+		"metaTitle": "Accessibilité · Apercura",
+		"metaDescription": "Déclaration d’accessibilité d’Apercura (brouillon) : état de conformité au RGAA 4.1, méthodes de test, signaler un problème et voies de recours.",
+		"title": "Accessibilité",
+		"lead": "Apercura est conçu pour tout le monde, y compris les personnes âgées et malvoyantes. Cette déclaration provisoire dit où il en est.",
+		"sections": {
+			"commitment": {
+				"heading": "Engagement",
+				"body": [
+					"Apercura vise la conformité au Référentiel général d’amélioration de l’accessibilité (RGAA 4.1) et aux WCAG 2.2 niveau AA sur toutes ses pages.",
+					"Les pages patients utilisent un texte courant d’au moins 18 px, des cibles d’au moins 44 px, un focus visible, et rien n’y est porté par la couleur seule."
+				]
+			},
+			"status": {
+				"heading": "État de conformité",
+				"body": [
+					"Apercura n’a pas encore été audité au regard du RGAA 4.1. Tant qu’aucun audit n’est publié, le site est considéré comme non conforme. Un audit complet est prévu avant le lancement."
+				]
+			},
+			"tests": {
+				"heading": "Comment les pages sont testées",
+				"list": [
+					"Contrôles automatiques avec axe-core sur chaque type de page, à chaque version.",
+					"Contrôles de la recherche et de la navigation au clavier seul.",
+					"Des contrôles manuels avec les lecteurs d’écran VoiceOver et NVDA sont prévus avec l’audit."
+				]
+			},
+			"technologies": {
+				"heading": "Technologies utilisées",
+				"body": [
+					"HTML, CSS, WAI-ARIA et JavaScript. La recherche et les pages de l’annuaire fonctionnent aussi sans JavaScript."
+				]
+			},
+			"feedback": {
+				"heading": "Signaler un problème",
+				"body": [
+					"Si vous n’arrivez pas à accéder à un contenu ou à un service, dites-le-nous pour que nous vous proposions une alternative ou corrigions la page."
+				]
+			},
+			"recourse": {
+				"heading": "Voies de recours",
+				"body": [
+					"Si vous avez signalé un problème sans obtenir de réponse satisfaisante, vous pouvez saisir le Défenseur des droits."
+				],
+				"list": [
+					"Formulaire en ligne du Défenseur des droits",
+					"Téléphone : 09 69 39 00 00",
+					"Courrier (gratuit, sans timbre) : Défenseur des droits, Libre réponse 71120, 75342 Paris CEDEX 07"
+				]
+			}
+		},
+		"fields": {
+			"status": "Conformité",
+			"statusValue": "Pas encore audité",
+			"framework": "Référentiel",
+			"frameworkValue": "RGAA 4.1",
+			"date": "Date de la déclaration",
+			"contact": "Contact"
+		},
+		"defenseurLink": "Saisir le Défenseur des droits"
+	},
+	"PrivacyPage": {
+		"metaTitle": "Confidentialité · Apercura",
+		"metaDescription": "Comment Apercura traite les données personnelles : données de l’annuaire issues des registres publics, aucune donnée patient pour l’instant, aucun pisteur, et vos droits.",
+		"title": "Confidentialité",
+		"lead": "Apercura collecte le moins possible. Ce brouillon explique ce qui est traité, pourquoi, et comment exercer vos droits.",
+		"sections": {
+			"roles": {
+				"heading": "Qui est responsable",
+				"body": [
+					"Pour l’annuaire public, Apercura est responsable de traitement. Pour les rendez-vous en ligne, quand ils ouvriront, Apercura traitera les données pour le compte de chaque professionnel, dans le cadre d’un contrat de sous-traitance prévu par les conditions des professionnels."
+				]
+			},
+			"practitioners": {
+				"heading": "Données sur les professionnels",
+				"body": [
+					"Les pages de l’annuaire montrent des informations issues de registres publics : nom, profession, spécialités, lieux d’exercice, téléphones publiés et secteur de conventionnement. Chaque page cite ses sources et la date de sa dernière mise à jour.",
+					"La base légale est l’intérêt légitime : informer le public à partir de données publiques. Les professionnels ne sont pas informés un par un, ce qui demanderait un effort disproportionné (article 14.5.b du RGPD) : la page des données et une mention sur chaque page les informent.",
+					"Chaque professionnel peut s’opposer à la publication de sa page."
+				]
+			},
+			"patients": {
+				"heading": "Données sur les patients",
+				"body": [
+					"La prise de rendez-vous en ligne n’est pas encore ouverte : Apercura ne collecte aujourd’hui aucune donnée sur les patients. Quand elle ouvrira, elle ne demandera que ce dont le professionnel a besoin, le chiffrera au niveau de l’application et le supprimera à échéance (90 jours après le rendez-vous par défaut)."
+				]
+			},
+			"cookies": {
+				"heading": "Cookies et pisteurs",
+				"body": [
+					"Apercura n’utilise aucun cookie publicitaire ou de mesure d’audience, ni aucun pisteur. Seuls des cookies strictement nécessaires au service peuvent être déposés : aucun bandeau de consentement n’est donc nécessaire."
+				]
+			},
+			"rights": {
+				"heading": "Vos droits",
+				"body": [
+					"Vous pouvez demander l’accès aux données qui vous concernent, leur rectification ou leur effacement, et vous opposer à leur traitement. Si vous estimez que vos droits ne sont pas respectés, vous pouvez adresser une réclamation à la CNIL."
+				]
+			}
+		},
+		"fields": {
+			"controller": "Responsable de traitement",
+			"dpo": "Délégué à la protection des données",
+			"contact": "Contact pour les demandes",
+			"hosting": "Hébergement"
+		},
+		"hostedBy": "Hébergé en France par un hébergeur certifié HDS ({host})",
+		"objectLink": "Comment s’opposer à une page",
+		"cnilLink": "Adresser une réclamation à la CNIL"
+	},
+	"LegalPage": {
+		"metaTitle": "Mentions légales · Apercura",
+		"metaDescription": "Mentions légales d’Apercura : éditeur, directeur de la publication et hébergeur.",
+		"title": "Mentions légales",
+		"lead": "La structure juridique qui éditera Apercura n’est pas encore créée. Les champs ci-dessous restent vides jusque-là.",
+		"sections": {
+			"publisher": {
+				"heading": "Éditeur",
+				"body": [
+					"L’éditeur du site, comme l’exige la loi pour la confiance dans l’économie numérique (LCEN)."
+				]
+			},
+			"hosting": {
+				"heading": "Hébergeur",
+				"body": ["La société qui héberge le site."]
+			},
+			"ip": {
+				"heading": "Code et données",
+				"body": [
+					"Le code source d’Apercura est publié sous licence AGPL-3.0. Les données de l’annuaire sont réutilisées depuis des sources publiques sous Licence Ouverte 2.0 : la page des données les liste avec leurs dates."
+				]
+			}
+		},
+		"fields": {
+			"name": "Dénomination",
+			"legalForm": "Forme juridique",
+			"address": "Siège",
+			"registration": "Numéro d’immatriculation",
+			"director": "Directeur de la publication",
+			"contact": "Contact",
+			"hostName": "Hébergeur",
+			"hostAddress": "Adresse de l’hébergeur"
+		},
+		"dataLink": "Données et sources"
+	},
+	"TermsPage": {
+		"metaTitle": "Conditions d’utilisation · Apercura",
+		"metaDescription": "Conditions d’utilisation d’Apercura (brouillon) : un annuaire gratuit et factuel des professionnels de santé en France.",
+		"title": "Conditions d’utilisation",
+		"lead": "Ces conditions provisoires décrivent le service tel qu’il est aujourd’hui. Elles seront complétées et relues avant le lancement.",
+		"sections": {
+			"service": {
+				"heading": "Le service",
+				"body": [
+					"Apercura est un annuaire gratuit des professionnels de santé inscrits en France, construit à partir de données publiques ouvertes. Son utilisation ne demande aucun compte."
+				]
+			},
+			"content": {
+				"heading": "Ce que contiennent les pages",
+				"body": [
+					"Les pages montrent des informations factuelles issues de registres publics, dans un ordre neutre. Elles ne comportent ni note, ni avis, ni publicité, ni classement payant.",
+					"Les informations peuvent contenir des erreurs ou ne pas être à jour : vérifiez-les auprès du professionnel avant de vous déplacer. Chaque page indique comment signaler une erreur."
+				]
+			},
+			"health": {
+				"heading": "Pas un avis médical",
+				"body": [
+					"Apercura ne donne aucun avis médical et n’est pas un service d’urgence. En cas d’urgence, appelez le 15 (Samu) ou le 112."
+				]
+			},
+			"practitioners": {
+				"heading": "Pour les professionnels",
+				"body": [
+					"Revendiquer une page sera gratuit et demandera une preuve d’identité. Le professionnel qui revendique une page est responsable des informations qu’il y ajoute, qui doivent rester factuelles, comme l’exigent les codes de déontologie."
+				]
+			},
+			"ip": {
+				"heading": "Code et données",
+				"body": [
+					"Le code source est publié sous licence AGPL-3.0. Les données de l’annuaire sont réutilisées sous Licence Ouverte 2.0."
+				]
+			}
+		},
+		"fields": {
+			"effectiveDate": "Date d’entrée en vigueur",
+			"law": "Droit applicable et juridictions",
+			"contact": "Contact"
+		}
+	},
+	"Listing": {
+		"count": "{count, plural, one {# praticien} other {# praticiens}}",
+		"metaTitle": "{listing} à {place} : {count, plural, one {# praticien} other {# praticiens}} · Apercura",
+		"metaTitlePage": "{listing} à {place}, page {page} · Apercura",
+		"metaDescription": "{count, plural, one {# praticien inscrit} other {# praticiens inscrits}} comme {listing} à {place} au registre national, avec adresses, téléphones et secteurs de conventionnement.",
+		"title": "{listing} à {place}",
+		"lead": "Le registre national compte {count, plural, one {# praticien} other {# praticiens}} sous cette rubrique avec un lieu d’exercice à {place}.",
+		"practitionersHeading": "{count, plural, one {Le praticien} other {Les # praticiens}}",
+		"practitionersIntro": "Par ordre alphabétique. Personne ne paie pour figurer ici, et personne n’est classé.",
+		"rowFacts": "Secteur : {sector} · Carte Vitale : {carteVitale}",
+		"columns": {
+			"practitioner": "Praticien",
+			"sector": "Secteur",
+			"carteVitale": "Carte Vitale"
+		},
+		"pagination": {
+			"label": "Pages de la liste",
+			"previous": "Page précédente",
+			"next": "Page suivante",
+			"status": "Page {page} sur {pages}"
+		},
+		"facts": {
+			"heading": "En chiffres",
+			"intro": "Les secteurs de conventionnement et la Carte Vitale viennent de l’annuaire de l’Assurance Maladie, pour les praticiens qui ont pu y être rapprochés.",
+			"sectorUnknown": "Secteur non connu",
+			"carteVitaleYes": "Acceptent la Carte Vitale",
+			"carteVitaleNo": "N’acceptent pas la Carte Vitale",
+			"bookingNotOpen": "Pas encore ouvert",
+			"sources": "Annuaire Santé (ANS) et Annuaire santé (Assurance Maladie)"
+		},
+		"communesHeading": "{listing} : communes de {place}",
+		"nearbyHeading": "{listing} : communes voisines",
+		"establishmentsHeading": "Établissements à {place}",
+		"establishmentsIntro": "Hôpitaux, cliniques et centres de santé où exercent des praticiens inscrits comme {listing}.",
+		"allSpecialties": "Toutes les spécialités à {place}",
+		"hubMetaTitle": "{listing} en France : {count, plural, one {# praticien} other {# praticiens}} · Apercura",
+		"hubMetaDescription": "{count, plural, one {# praticien inscrit} other {# praticiens inscrits}} comme {listing} au registre national, par département.",
+		"hubTitle": "{listing} en France",
+		"hubLead": "Le registre national compte {count, plural, one {# praticien} other {# praticiens}} sous cette rubrique avec un lieu d’exercice en France.",
+		"departmentsHeading": "{listing} par département",
+		"departmentsIntro": "Choisissez un département pour voir ses praticiens et ses communes.",
+		"browseDirectory": "Parcourir l’annuaire par lieu"
+	},
+	"Directory": {
+		"metaTitle": "Annuaire des professionnels de santé par lieu · Apercura",
+		"metaDescription": "Chaque département de France avec ses professionnels de santé, d’après le registre national : médecins, chirurgiens-dentistes et sages-femmes.",
+		"title": "Annuaire par lieu",
+		"lead": "{count, plural, one {# praticien} other {# praticiens}} avec un lieu d’exercice, par département.",
+		"otherRegion": "Autres lieux",
+		"emptyTitle": "L’annuaire n’est pas encore importé",
+		"emptyBody": "Le registre national n’a pas encore été importé sur ce serveur. Revenez après le prochain import.",
+		"placeMetaTitle": "Professionnels de santé à {place} · Apercura",
+		"placeMetaDescription": "{count, plural, one {# praticien} other {# praticiens}} à {place}, par spécialité, d’après le registre national.",
+		"placeTitle": "Professionnels de santé à {place}",
+		"placeLead": "{count, plural, one {# praticien} other {# praticiens}} avec un lieu d’exercice à {place}.",
+		"specialtiesHeading": "Par spécialité",
+		"communesHeading": "Communes de {place}",
+		"arrondissementsHeading": "Par arrondissement",
+		"establishmentsHeading": "Établissements à {place}"
+	},
+	"Establishment": {
+		"metaTitle": "{name} · Apercura",
+		"metaTitlePlace": "{name}, {place} · Apercura",
+		"metaDescription": "{name} : adresse, standard et {count, plural, one {le praticien qui y exerce} other {les # praticiens qui y exercent}}, d’après le registre national.",
+		"directory": "Annuaire",
+		"folio": "FINESS {finess}",
+		"lead": "{kind}. Le registre national y compte {count, plural, one {# praticien} other {# praticiens}}.",
+		"addressHeading": "Adresse",
+		"finess": "Numéro FINESS",
+		"action": {
+			"call": "Les rendez-vous se prennent auprès de l’établissement. Appelez son standard et demandez le service qu’il vous faut.",
+			"noPhone": "Aucun numéro de téléphone n’est publié pour cet établissement.",
+			"noPhoneHint": "Cherchez ses coordonnées sur son propre site ou sur ameli.fr."
+		},
+		"practitionersHeading": "{count, plural, one {Le praticien qui y exerce} other {Les # praticiens qui y exercent}}",
+		"practitionersIntro": "Par spécialité, par ordre alphabétique.",
+		"otherProfessions": "Autres professions",
+		"source": "Annuaire Santé (ANS) et FINESS+"
+	},
+	"SearchForm": {
+		"specialties": "Spécialités",
+		"practitioners": "Professionnels",
+		"places": "Lieux",
+		"department": "Département",
+		"nearMe": "Autour de moi",
+		"locating": "Recherche de votre position…",
+		"geoDenied": "La localisation est désactivée pour ce site. Saisissez plutôt une ville ou un code postal.",
+		"geoUnavailable": "Votre position n’a pas pu être trouvée. Saisissez plutôt une ville ou un code postal.",
+		"searching": "Recherche…",
+		"noSuggestion": "Aucune suggestion. Appuyez sur Chercher pour voir tous les résultats."
+	},
+	"OgImage": {
+		"runningHead": "Annuaire ouvert des professionnels de santé",
+		"wordmark": "Apercura",
+		"titles": {
+			"medecin": "Chaque médecin de France a déjà sa page.",
+			"chirurgien-dentiste": "Chaque chirurgien-dentiste de France a déjà sa page.",
+			"sage-femme": "Chaque sage-femme de France a déjà sa page.",
+			"annuaire": "Les professionnels de santé, par spécialité et par lieu."
+		},
+		"footer": "Gratuit · Open source · Ni notes, ni publicité"
 	},
 	"taxonomy": {
 		"profession": {

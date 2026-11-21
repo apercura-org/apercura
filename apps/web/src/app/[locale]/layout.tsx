@@ -4,6 +4,7 @@ import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { SkipLink } from "~/components/skip-link";
 import { routing } from "~/i18n/routing";
+import { siteOrigin } from "~/lib/site-url";
 import { TRPCReactProvider } from "~/trpc/client";
 import "../globals.css";
 
@@ -23,6 +24,8 @@ export async function generateMetadata({ params }: LayoutProps<"/[locale]">): Pr
 	}
 	const t = await getTranslations({ locale, namespace: "Metadata" });
 	return {
+		// Canonical URLs, Open Graph images and JSON-LD are absolute on this origin.
+		metadataBase: new URL(siteOrigin()),
 		title: t("title"),
 		description: t("description"),
 	};

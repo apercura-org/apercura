@@ -2,6 +2,15 @@ import type { Database } from "@apercura/db";
 import { rateLimits } from "@apercura/db/schema";
 import { sql } from "drizzle-orm";
 
+export { clientRateLimitKey } from "./rate-limit-key";
+
+/*
+ * The app's one rate limiter, shared by auth (per signed-in user) and public
+ * search (per client), on `directory.rate_limits`. Better Auth keeps its own
+ * built-in counters in `directory.auth_rate_limit`, the storage its plugin
+ * requires.
+ */
+
 export interface RateLimitRule {
 	max: number;
 	windowSeconds: number;

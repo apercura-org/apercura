@@ -1,11 +1,11 @@
 import { getTranslations } from "next-intl/server";
-import { Link } from "~/i18n/navigation";
+import { type Href, Link } from "~/i18n/navigation";
 import { type Locale, routing } from "~/i18n/routing";
 
 interface SiteHeaderProps {
 	locale: Locale;
-	/** Current path without locale prefix, so the language switch stays on the same page. */
-	pathname: string;
+	/** The current page, so the language switch stays on it. */
+	href: Href;
 	/** The home page prints the wordmark large in the band; other pages print it here. */
 	showWordmark?: boolean;
 }
@@ -14,10 +14,10 @@ const navLink =
 	"inline-flex min-h-11 items-center rounded-field px-1 text-meta text-cover-ink underline decoration-1 underline-offset-[0.25em] hover:decoration-2";
 
 /** Running head printed at the top of every cover band: wordmark or title line, navigation, language. */
-export async function SiteHeader({ locale, pathname, showWordmark = true }: SiteHeaderProps) {
+export async function SiteHeader({ locale, href, showWordmark = true }: SiteHeaderProps) {
 	const t = await getTranslations({ locale, namespace: "Site" });
 	const tLocale = await getTranslations({ locale, namespace: "LocaleSwitcher" });
-	const isPro = pathname === "/pro" || pathname.startsWith("/pro/");
+	const isPro = typeof href === "string" && (href === "/pro" || href.startsWith("/pro/"));
 
 	return (
 		<header className="border-b border-cover-rule">
@@ -45,7 +45,7 @@ export async function SiteHeader({ locale, pathname, showWordmark = true }: Site
 							{routing.locales.map((other) => (
 								<li key={other}>
 									<Link
-										href={pathname}
+										href={href}
 										locale={other}
 										hrefLang={other}
 										lang={other}

@@ -50,6 +50,13 @@
       "when": 1795295067907,
       "tag": "0006_auth_grants",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1795297134518,
+      "tag": "0007_public_site_functions",
+      "breakpoints": true
     }
   ]
 }

@@ -81,7 +81,7 @@ export default async function GalleryPage({ params }: PageProps<"/[locale]/_ui">
 	return (
 		<>
 			<div className="surface-cover">
-				<SiteHeader locale={locale} pathname="/_ui" />
+				<SiteHeader locale={locale} href="/_ui" />
 			</div>
 			<main id="main" tabIndex={-1} className="flex-1 outline-none">
 				<div className="surface-cover">

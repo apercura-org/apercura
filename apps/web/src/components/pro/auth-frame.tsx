@@ -4,11 +4,12 @@ import { BookletPage } from "~/components/booklet-page";
 import { SiteFooter } from "~/components/site-footer";
 import { SiteHeader } from "~/components/site-header";
 import type { Locale } from "~/i18n/routing";
+import type { ProRoute } from "~/lib/pro-routes";
 
 interface AuthFrameProps {
 	locale: Locale;
-	/** Current path without locale prefix (for the language switch). */
-	pathname: string;
+	/** Current page (for the language switch). */
+	pathname: ProRoute;
 	title: string;
 	lead?: string;
 	children: ReactNode;
@@ -20,7 +21,7 @@ export async function AuthFrame({ locale, pathname, title, lead, children }: Aut
 	return (
 		<>
 			<div className="surface-cover">
-				<SiteHeader locale={locale} pathname={pathname} />
+				<SiteHeader locale={locale} href={pathname} />
 			</div>
 			<main id="main" tabIndex={-1} className="flex-1 outline-none">
 				<div className="surface-cover">
