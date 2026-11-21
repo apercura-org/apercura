@@ -1,0 +1,22 @@
+[
+	{
+		"nom": "Île-de-France",
+		"code": "11"
+	},
+	{
+		"nom": "Auvergne-Rhône-Alpes",
+		"code": "84"
+	},
+	{
+		"nom": "Provence-Alpes-Côte d'Azur",
+		"code": "93"
+	},
+	{
+		"nom": "Corse",
+		"code": "94"
+	},
+	{
+		"nom": "La Réunion",
+		"code": "04"
+	}
+]

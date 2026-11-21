@@ -1,0 +1,27 @@
+[
+	{
+		"nom": "Bouches-du-Rhône",
+		"code": "13",
+		"codeRegion": "93"
+	},
+	{
+		"nom": "Corse-du-Sud",
+		"code": "2A",
+		"codeRegion": "94"
+	},
+	{
+		"nom": "Rhône",
+		"code": "69",
+		"codeRegion": "84"
+	},
+	{
+		"nom": "Paris",
+		"code": "75",
+		"codeRegion": "11"
+	},
+	{
+		"nom": "La Réunion",
+		"code": "974",
+		"codeRegion": "04"
+	}
+]
