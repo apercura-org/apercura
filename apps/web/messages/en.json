@@ -22,7 +22,20 @@
 			"license": "Source code under the AGPL-3.0 licence",
 			"noAds": "No ratings, no ads, no paid ranking."
 		},
-		"folioRpps": "RPPS {rpps}"
+		"folioRpps": "RPPS {rpps}",
+		"home": "Home",
+		"breadcrumbs": "You are here",
+		"footerNav": {
+			"label": "About Apercura",
+			"directory": "Directory",
+			"about": "About",
+			"openSource": "Open source",
+			"data": "Data and sources",
+			"accessibility": "Accessibility",
+			"privacy": "Privacy",
+			"legal": "Legal notice",
+			"terms": "Terms of use"
+		}
 	},
 	"LocaleSwitcher": {
 		"label": "Language",
@@ -129,9 +142,49 @@
 		"query": "You searched for “{who}”",
 		"queryWhere": "You searched for “{who}” in “{where}”",
 		"queryOnlyWhere": "You searched in “{where}”",
-		"emptyTitle": "Search is not open yet",
-		"emptyBody": "The directory is being imported from the national register. Search results will appear on this page soon.",
-		"backHome": "Back to the home page"
+		"emptyTitle": "No practitioner matches",
+		"emptyBody": "Check the spelling, try a nearby town, or a broader term such as “doctor” instead of a specialty.",
+		"queryNear": "You searched for “{who}” near you",
+		"queryOnlyNear": "Practitioners near you",
+		"startTitle": "Who are you looking for?",
+		"startBody": "Type a name, a specialty or a profession in “Who?”, and a town or a postcode in “Where?”. You can also browse the directory by place.",
+		"noMoreTitle": "No more results",
+		"browseDirectory": "Browse the directory",
+		"rppsTitle": "No public page for RPPS {rpps}",
+		"rppsBody": "This number is not valid, or this practitioner has no public page: people without a fixed place of practice are not listed. Practitioners can still find and claim their record.",
+		"rppsPro": "Practitioners: find your record",
+		"ambiguousTitle": "Several places are called “{where}”",
+		"ambiguousBody": "Choose the one you mean:",
+		"unknownPlaceTitle": "We do not know the place “{where}”",
+		"unknownPlaceSuggest": "Did you mean one of these places?",
+		"unknownPlaceBody": "Check the spelling, or type a postcode.",
+		"departmentPlace": "Department",
+		"resultsHeading": "Results",
+		"range": "Results {from} to {to}",
+		"orderName": "Results are listed by how closely the name matches, then alphabetically. Nobody pays to appear higher.",
+		"orderNear": "Results are listed by distance from you. Nobody pays to appear higher.",
+		"bookingNotOpen": "Online booking is not open yet: call the practice, or contact the establishment.",
+		"columns": {
+			"practitioner": "Practitioner",
+			"place": "Place of practice",
+			"appointments": "Appointments"
+		},
+		"action": {
+			"call": "Call the practice",
+			"establishment": "Through the establishment",
+			"locum": "Locum: no direct appointments",
+			"page": "See the page"
+		},
+		"distance": "{km} km away",
+		"pagination": "Results pages",
+		"previous": "Previous results",
+		"next": "More results",
+		"map": {
+			"show": "Show on a map",
+			"hide": "Hide the map",
+			"region": "Map of the results",
+			"fallback": "The map is loading. The list above has every address."
+		}
 	},
 	"Practitioner": {
 		"rpps": "RPPS",
@@ -402,6 +455,539 @@
 			"toast": "Toasts",
 			"badge": "Badges"
 		}
+	},
+	"PractitionerPage": {
+		"metaTitle": "{name}, {occupation} · Apercura",
+		"metaTitlePlace": "{name}, {occupation} in {place} · Apercura",
+		"metaDescription": "{name}, {occupation}: places of practice, phone and agreement sector, from the national register of health professionals.",
+		"metaDescriptionPlace": "{name}, {occupation} in {place}: places of practice, phone and agreement sector, from the national register of health professionals.",
+		"unknownProfession": "Health professional",
+		"professionHeading": "Profession and qualifications",
+		"otherQualifications": "Other qualifications",
+		"practiceType": "Type of practice",
+		"switchboard": "{phone} (establishment switchboard)",
+		"establishment": "Establishment",
+		"unnamedPlace": "Place of practice",
+		"asideLabel": "Appointments and page",
+		"action": {
+			"callNotYetOpen": "Online booking is not open yet for this practitioner. To make an appointment, call the practice.",
+			"establishmentLink": "Contact {establishment}",
+			"noPhone": "No phone number is published for this place.",
+			"noPhoneHint": "Check the practitioner's details on ameli.fr, or contact the place directly."
+		},
+		"fees": {
+			"heading": "Fees and health insurance",
+			"sector": "Agreement sector",
+			"optam": "Capped extra fees (OPTAM)",
+			"optamNo": "Not a member",
+			"carteVitale": "Carte Vitale",
+			"accepted": "Accepted",
+			"notAccepted": "Not accepted",
+			"fromAmeli": "These details come from the Assurance Maladie directory.",
+			"notMatched": "This practitioner could not be matched with certainty in the Assurance Maladie directory, so these details are not shown.",
+			"regulatoryNotice": "The agreement sector sets how fees are charged and reimbursed: check fees and reimbursement before your appointment on",
+			"ameliLink": "ameli.fr, the Assurance Maladie directory",
+			"source": "Annuaire santé, Assurance Maladie"
+		},
+		"claim": {
+			"heading": "Is this you?",
+			"body": "This page is built from the public register. Claim it for free to check and complete it.",
+			"link": "Claim this page"
+		},
+		"report": {
+			"heading": "Something wrong?",
+			"body": "If an address, a phone number or a name is wrong, tell us how to correct it.",
+			"link": "Report an error"
+		},
+		"ring": {
+			"heading": "Other practitioners: {listing} in {place}"
+		}
+	},
+	"Institutional": {
+		"toBeCompleted": "To be completed",
+		"draftMark": "Draft: to be completed before launch",
+		"comingMark": "Coming soon"
+	},
+	"AboutPage": {
+		"metaTitle": "About · Apercura",
+		"metaDescription": "Apercura publishes a free, factual page for every health practitioner registered in France, built from public open data.",
+		"title": "About Apercura",
+		"lead": "An open directory of every health practitioner in France, and a free booking tool for those who want one.",
+		"sections": {
+			"what": {
+				"heading": "What Apercura does",
+				"body": [
+					"Apercura publishes a page for every doctor, dentist and midwife registered in France, built from the national register of health professionals and other public open data.",
+					"Patients find any practitioner, not only those who pay a platform. Practitioners can claim their page for free, check it and complete it. Free online booking, without a patient account, will open later."
+				]
+			},
+			"principles": {
+				"heading": "Principles",
+				"list": [
+					"Every practitioner is listed the same way, whether or not they use Apercura.",
+					"Factual information only: no ratings, no reviews, no ads and no paid ranking.",
+					"Free for practitioners and patients, with no subscription and no commission.",
+					"Each page shows where its facts come from and when they were last updated.",
+					"Minimal data, collected for a stated purpose and deleted on schedule."
+				]
+			},
+			"how": {
+				"heading": "Where the pages come from",
+				"body": [
+					"Pages are generated each week from the Annuaire Santé of the Agence du numérique en santé, the FINESS register of establishments and the Assurance Maladie directory. The data page lists every source, its licence and its date."
+				]
+			},
+			"who": {
+				"heading": "Who runs Apercura",
+				"body": [
+					"Apercura is a public-interest project. It is not a government service and is not affiliated with the Assurance Maladie, the Ordres or the Agence du numérique en santé."
+				]
+			}
+		},
+		"fields": {
+			"publisher": "Publisher",
+			"contact": "Contact"
+		},
+		"links": {
+			"data": "Data and sources",
+			"openSource": "Source code and licence"
+		}
+	},
+	"OpenSourcePage": {
+		"metaTitle": "Open source · Apercura",
+		"metaDescription": "The full source code of Apercura is public under the AGPL-3.0 licence. Read it, audit it, or run the whole platform yourself.",
+		"title": "The code is public.",
+		"lead": "Every line of Apercura is published under the AGPL-3.0 licence: you can read it, audit it and run the whole platform yourself.",
+		"sections": {
+			"licence": {
+				"heading": "AGPL-3.0 licence",
+				"body": [
+					"The AGPL-3.0 is a free software licence. Anyone may use, study, modify and share the code. Whoever offers a modified version as an online service must publish their changes under the same licence."
+				]
+			},
+			"can": {
+				"heading": "What you can do",
+				"list": [
+					"Read how each page is built and how the open data is imported.",
+					"Check how patient data will be encrypted and how long it is kept.",
+					"Report a problem or propose a change in the public repository.",
+					"Run the whole platform on your own infrastructure with Docker, open data import included."
+				]
+			},
+			"selfHost": {
+				"heading": "Running it yourself",
+				"body": [
+					"A directory-only deployment holds no health data and can run on any host. Bookings are health data: if you run booking for other people, the data must be hosted by a host certified for health data (HDS) in France."
+				]
+			}
+		},
+		"facts": {
+			"licence": "Licence",
+			"licenceValue": "GNU Affero General Public License v3.0",
+			"repository": "Repository",
+			"data": "Directory data"
+		},
+		"dataValue": "Licence Ouverte 2.0, see the data page",
+		"cta": {
+			"heading": "Read the source code",
+			"body": "The repository holds the code, the documentation and the self-hosting guide.",
+			"link": "Open the repository"
+		}
+	},
+	"DataPage": {
+		"metaTitle": "Data and sources · Apercura",
+		"metaDescription": "Where the practitioner pages come from: sources, licences, update dates, how to correct an error and how to object to a page.",
+		"title": "Data and sources",
+		"lead": "Every page is built from public open data. Here is where it comes from, when it was updated, and how to correct or remove a page.",
+		"status": {
+			"heading": "Last update",
+			"body": "The directory is imported from the sources every week. A page changes only when its facts change in a source.",
+			"importedAt": "Last import",
+			"checkedAt": "Sources last checked",
+			"notImported": "The directory has not been imported yet on this site.",
+			"notImportedValue": "Not imported yet"
+		},
+		"sources": {
+			"heading": "Sources",
+			"body": "All the directory sources are published under the Licence Ouverte 2.0 (Etalab), which allows reuse provided the source and its date are cited.",
+			"caption": "Data sources of the directory",
+			"columns": {
+				"source": "Source",
+				"use": "Used for",
+				"licence": "Licence",
+				"date": "File of"
+			},
+			"noDate": "—",
+			"items": {
+				"personneActivite": {
+					"name": "Annuaire Santé: professionals and activities",
+					"producer": "Agence du numérique en santé",
+					"use": "Names, professions, places of practice, phones"
+				},
+				"savoirFaire": {
+					"name": "Annuaire Santé: specialties and qualifications",
+					"producer": "Agence du numérique en santé",
+					"use": "Specialties, competences, capacities"
+				},
+				"diplomes": {
+					"name": "Annuaire Santé: diplomas and authorizations",
+					"producer": "Agence du numérique en santé",
+					"use": "Diplomas"
+				},
+				"finess": {
+					"name": "FINESS+ structures",
+					"producer": "Agence du numérique en santé",
+					"use": "Names and locations of establishments"
+				},
+				"ameli": {
+					"name": "Annuaire santé Ameli",
+					"producer": "Caisse nationale de l’Assurance Maladie",
+					"use": "Agreement sector, OPTAM, Carte Vitale"
+				},
+				"geo": {
+					"name": "Communes and departments (geo.api.gouv.fr)",
+					"producer": "INSEE and IGN, via the API Géo",
+					"use": "Towns, postcodes, departments"
+				},
+				"geocoder": {
+					"name": "Géoplateforme geocoding service",
+					"producer": "IGN",
+					"use": "Locating addresses, during the import only"
+				},
+				"map": {
+					"name": "Map data",
+					"producer": "OpenStreetMap contributors, tiles by OpenFreeMap",
+					"use": "Maps on the pages"
+				}
+			},
+			"licenceOuverte": "Licence Ouverte 2.0",
+			"odbl": "ODbL",
+			"attribution": "Contains information from the Annuaire Santé (Agence du numérique en santé), the FINESS register and the Annuaire santé Ameli (Caisse nationale de l’Assurance Maladie), reused under the Licence Ouverte 2.0.",
+			"licenceLink": "Read the Licence Ouverte 2.0",
+			"sourceLabel": "Source"
+		},
+		"rules": {
+			"heading": "Which practitioners have a page",
+			"body": [
+				"A practitioner has a public page when the register lists them with at least one activity open to patients (a practice, a health centre or a hospital) at an address. People without a fixed place of practice keep a record they can claim, but no public page.",
+				"Pages show facts only, in a neutral order: there are no ratings, no reviews and no paid ranking."
+			]
+		},
+		"correct": {
+			"heading": "Correcting an error",
+			"body": [
+				"Most facts come from registers kept by others, so the lasting fix is made at the source. The page follows at the next weekly import."
+			],
+			"list": [
+				"Name, profession, specialty, place of practice and phone: the practitioner updates their registration with their Ordre (or the body that registered them in the RPPS).",
+				"Agreement sector, OPTAM and Carte Vitale: they come from the Assurance Maladie directory (ameli.fr).",
+				"Name and address of an establishment: they come from the FINESS register, kept by the regional health agencies.",
+				"Practitioners will also be able to claim their page from the practitioners’ area, then complete it and correct what is shown."
+			],
+			"formTitle": "The error report form is not open yet",
+			"formBody": "It will open on this page with practitioner accounts. Until then, the corrections above are the way to fix a page.",
+			"proLink": "Go to the practitioners’ area"
+		},
+		"remove": {
+			"heading": "Objecting to a page",
+			"body": [
+				"Under article 21 of the GDPR, a practitioner can object to the publication of their page. Apercura publishes the directory on the basis of a legitimate interest: informing the public from public data.",
+				"An unclaimed page will be hidden as soon as the request is received, then deleted after a light check of the request. A claimed page can be removed by its holder at any time. Once removed, a page does not come back with the next import."
+			],
+			"formTitle": "The removal request form is not open yet",
+			"formBody": "It will open on this page. The contact address for requests is still to be completed."
+		}
+	},
+	"AccessibilityPage": {
+		"metaTitle": "Accessibility · Apercura",
+		"metaDescription": "Accessibility statement of Apercura (draft): compliance status with RGAA 4.1, test methods, how to report a problem and your recourse.",
+		"title": "Accessibility",
+		"lead": "Apercura is designed for everyone, including older and low-vision people. This draft statement says where it stands.",
+		"sections": {
+			"commitment": {
+				"heading": "Commitment",
+				"body": [
+					"Apercura aims to comply with the French accessibility framework RGAA 4.1 and with WCAG 2.2 level AA on every page.",
+					"Patient pages use body text of at least 18 px, targets of at least 44 px, visible focus, and nothing conveyed by colour alone."
+				]
+			},
+			"status": {
+				"heading": "Compliance status",
+				"body": [
+					"Apercura has not been audited against RGAA 4.1 yet. Until an audit is published, the site is considered not compliant. A full audit is planned before launch."
+				]
+			},
+			"tests": {
+				"heading": "How the pages are tested",
+				"list": [
+					"Automated checks with axe-core on every type of page, in each release.",
+					"Keyboard-only checks of search and navigation.",
+					"Manual checks with the VoiceOver and NVDA screen readers are planned with the audit."
+				]
+			},
+			"technologies": {
+				"heading": "Technologies used",
+				"body": [
+					"HTML, CSS, WAI-ARIA and JavaScript. Search and the directory pages also work without JavaScript."
+				]
+			},
+			"feedback": {
+				"heading": "Reporting a problem",
+				"body": [
+					"If you cannot access a content or a service, tell us so we can provide an alternative or fix the page."
+				]
+			},
+			"recourse": {
+				"heading": "Recourse",
+				"body": [
+					"If you reported a problem and did not get a satisfactory answer, you can contact the Défenseur des droits."
+				],
+				"list": [
+					"Online form of the Défenseur des droits",
+					"Phone: 09 69 39 00 00",
+					"Post (free, no stamp): Défenseur des droits, Libre réponse 71120, 75342 Paris CEDEX 07"
+				]
+			}
+		},
+		"fields": {
+			"status": "Compliance",
+			"statusValue": "Not audited yet",
+			"framework": "Framework",
+			"frameworkValue": "RGAA 4.1",
+			"date": "Statement date",
+			"contact": "Contact"
+		},
+		"defenseurLink": "Contact the Défenseur des droits"
+	},
+	"PrivacyPage": {
+		"metaTitle": "Privacy · Apercura",
+		"metaDescription": "How Apercura processes personal data: directory data from public registers, no patient data yet, no trackers, and your rights.",
+		"title": "Privacy",
+		"lead": "Apercura collects as little as it can. This draft explains what is processed, why, and how to exercise your rights.",
+		"sections": {
+			"roles": {
+				"heading": "Who is responsible",
+				"body": [
+					"For the public directory, Apercura is the data controller. For online bookings, once they open, Apercura will process data on behalf of each practitioner, under a processing agreement included in the practitioners’ terms."
+				]
+			},
+			"practitioners": {
+				"heading": "Data about practitioners",
+				"body": [
+					"Directory pages show facts from public registers: name, profession, specialties, places of practice, published phone numbers and agreement sector. Each page names its sources and the date of its last update.",
+					"The legal basis is a legitimate interest: informing the public from public data. Practitioners are not informed one by one, which would be a disproportionate effort (article 14.5.b of the GDPR); the data page and a notice on each page inform them instead.",
+					"Every practitioner can object to the publication of their page."
+				]
+			},
+			"patients": {
+				"heading": "Data about patients",
+				"body": [
+					"Online booking is not open yet: Apercura does not collect any patient data today. When booking opens, it will ask only for what the practitioner needs, encrypt it at the application level and delete it on schedule (90 days after the appointment by default)."
+				]
+			},
+			"cookies": {
+				"heading": "Cookies and trackers",
+				"body": [
+					"Apercura uses no advertising or audience cookies and no trackers. Only cookies strictly needed for the service may be set, so no consent banner is needed."
+				]
+			},
+			"rights": {
+				"heading": "Your rights",
+				"body": [
+					"You can ask to access, correct or erase data about you, and object to its processing. If you think your rights are not respected, you can file a complaint with the CNIL."
+				]
+			}
+		},
+		"fields": {
+			"controller": "Data controller",
+			"dpo": "Data protection officer",
+			"contact": "Contact for requests",
+			"hosting": "Hosting"
+		},
+		"hostedBy": "Hosted in France by an HDS-certified host ({host})",
+		"objectLink": "How to object to a page",
+		"cnilLink": "File a complaint with the CNIL"
+	},
+	"LegalPage": {
+		"metaTitle": "Legal notice · Apercura",
+		"metaDescription": "Legal notice of Apercura: publisher, publication director and hosting provider.",
+		"title": "Legal notice",
+		"lead": "The legal entity that will publish Apercura is not set up yet. The fields below are printed empty until it is.",
+		"sections": {
+			"publisher": {
+				"heading": "Publisher",
+				"body": [
+					"The publisher of the site, as required by the French law on confidence in the digital economy (LCEN)."
+				]
+			},
+			"hosting": {
+				"heading": "Hosting provider",
+				"body": ["The company that hosts the site."]
+			},
+			"ip": {
+				"heading": "Code and data",
+				"body": [
+					"The source code of Apercura is published under the AGPL-3.0 licence. Directory data is reused from public sources under the Licence Ouverte 2.0: the data page lists them with their dates."
+				]
+			}
+		},
+		"fields": {
+			"name": "Name",
+			"legalForm": "Legal form",
+			"address": "Registered address",
+			"registration": "Registration number",
+			"director": "Publication director",
+			"contact": "Contact",
+			"hostName": "Host",
+			"hostAddress": "Host address"
+		},
+		"dataLink": "Data and sources"
+	},
+	"TermsPage": {
+		"metaTitle": "Terms of use · Apercura",
+		"metaDescription": "Terms of use of Apercura (draft): a free, factual directory of health practitioners in France.",
+		"title": "Terms of use",
+		"lead": "These draft terms describe the service as it is today. They will be completed and reviewed before launch.",
+		"sections": {
+			"service": {
+				"heading": "The service",
+				"body": [
+					"Apercura is a free directory of health practitioners registered in France, built from public open data. Using it requires no account."
+				]
+			},
+			"content": {
+				"heading": "What the pages contain",
+				"body": [
+					"Pages show factual information from public registers, in a neutral order. They carry no ratings, no reviews, no ads and no paid ranking.",
+					"The information can contain errors or be out of date: check it with the practitioner before travelling. Each page says how to report an error."
+				]
+			},
+			"health": {
+				"heading": "Not medical advice",
+				"body": [
+					"Apercura gives no medical advice and is not an emergency service. In an emergency, call 15 (SAMU) or 112."
+				]
+			},
+			"practitioners": {
+				"heading": "For practitioners",
+				"body": [
+					"Claiming a page will be free and will require proof of identity. A practitioner who claims a page is responsible for the information they add to it, which must stay factual, as the codes of medical ethics require."
+				]
+			},
+			"ip": {
+				"heading": "Code and data",
+				"body": [
+					"The source code is published under the AGPL-3.0 licence. Directory data is reused under the Licence Ouverte 2.0."
+				]
+			}
+		},
+		"fields": {
+			"effectiveDate": "Effective date",
+			"law": "Applicable law and courts",
+			"contact": "Contact"
+		}
+	},
+	"Listing": {
+		"count": "{count, plural, one {# practitioner} other {# practitioners}}",
+		"metaTitle": "{listing} in {place}: {count, plural, one {# practitioner} other {# practitioners}} · Apercura",
+		"metaTitlePage": "{listing} in {place}, page {page} · Apercura",
+		"metaDescription": "{count, plural, one {# practitioner} other {# practitioners}} listed as {listing} in {place} in the national register, with their addresses, phones and agreement sectors.",
+		"title": "{listing} in {place}",
+		"lead": "The national register lists {count, plural, one {# practitioner} other {# practitioners}} under this heading with a place of practice in {place}.",
+		"practitionersHeading": "{count, plural, one {The practitioner} other {The # practitioners}}",
+		"practitionersIntro": "In alphabetical order. Nobody pays to appear here, and nobody is ranked.",
+		"rowFacts": "Sector: {sector} · Carte Vitale: {carteVitale}",
+		"columns": {
+			"practitioner": "Practitioner",
+			"sector": "Sector",
+			"carteVitale": "Carte Vitale"
+		},
+		"pagination": {
+			"label": "Pages of the list",
+			"previous": "Previous page",
+			"next": "Next page",
+			"status": "Page {page} of {pages}"
+		},
+		"facts": {
+			"heading": "In figures",
+			"intro": "Agreement sectors and Carte Vitale come from the Assurance Maladie directory, for the practitioners it could be matched with.",
+			"sectorUnknown": "Sector not known",
+			"carteVitaleYes": "Accept the Carte Vitale",
+			"carteVitaleNo": "Do not accept the Carte Vitale",
+			"bookingNotOpen": "Not open yet",
+			"sources": "Annuaire Santé (ANS) and Annuaire santé (Assurance Maladie)"
+		},
+		"communesHeading": "{listing}: communes of {place}",
+		"nearbyHeading": "{listing}: nearby communes",
+		"establishmentsHeading": "Establishments in {place}",
+		"establishmentsIntro": "Hospitals, clinics and health centres where practitioners listed as {listing} work.",
+		"allSpecialties": "Every specialty in {place}",
+		"hubMetaTitle": "{listing} in France: {count, plural, one {# practitioner} other {# practitioners}} · Apercura",
+		"hubMetaDescription": "{count, plural, one {# practitioner} other {# practitioners}} listed as {listing} in the national register, by department.",
+		"hubTitle": "{listing} in France",
+		"hubLead": "The national register lists {count, plural, one {# practitioner} other {# practitioners}} under this heading with a place of practice in France.",
+		"departmentsHeading": "{listing} by department",
+		"departmentsIntro": "Choose a department to see its practitioners and communes.",
+		"browseDirectory": "Browse the directory by place"
+	},
+	"Directory": {
+		"metaTitle": "Directory of health practitioners by place · Apercura",
+		"metaDescription": "Every department of France with its health practitioners, from the national register: doctors, dentists and midwives.",
+		"title": "Directory by place",
+		"lead": "{count, plural, one {# practitioner} other {# practitioners}} with a place of practice, by department.",
+		"otherRegion": "Other places",
+		"emptyTitle": "The directory is not imported yet",
+		"emptyBody": "The national register has not been imported on this server yet. Come back after the next import.",
+		"placeMetaTitle": "Health practitioners in {place} · Apercura",
+		"placeMetaDescription": "{count, plural, one {# practitioner} other {# practitioners}} in {place}, by specialty, from the national register.",
+		"placeTitle": "Health practitioners in {place}",
+		"placeLead": "{count, plural, one {# practitioner} other {# practitioners}} with a place of practice in {place}.",
+		"specialtiesHeading": "By specialty",
+		"communesHeading": "Communes of {place}",
+		"arrondissementsHeading": "By arrondissement",
+		"establishmentsHeading": "Establishments in {place}"
+	},
+	"Establishment": {
+		"metaTitle": "{name} · Apercura",
+		"metaTitlePlace": "{name}, {place} · Apercura",
+		"metaDescription": "{name}: address, switchboard and the {count, plural, one {# practitioner} other {# practitioners}} who work there, from the national register.",
+		"directory": "Directory",
+		"folio": "FINESS {finess}",
+		"lead": "{kind}. The national register lists {count, plural, one {# practitioner} other {# practitioners}} working here.",
+		"addressHeading": "Address",
+		"finess": "FINESS number",
+		"action": {
+			"call": "Appointments are made through the establishment. Call its switchboard and ask for the department you need.",
+			"noPhone": "No phone number is published for this establishment.",
+			"noPhoneHint": "Look up its details on its own website or on ameli.fr."
+		},
+		"practitionersHeading": "{count, plural, one {The practitioner} other {The # practitioners}} working here",
+		"practitionersIntro": "By specialty, in alphabetical order.",
+		"otherProfessions": "Other professions",
+		"source": "Annuaire Santé (ANS) and FINESS+"
+	},
+	"SearchForm": {
+		"specialties": "Specialties",
+		"practitioners": "Practitioners",
+		"places": "Places",
+		"department": "Department",
+		"nearMe": "Near me",
+		"locating": "Finding your location…",
+		"geoDenied": "Location is turned off for this site. Type a town or a postcode instead.",
+		"geoUnavailable": "Your location could not be found. Type a town or a postcode instead.",
+		"searching": "Searching…",
+		"noSuggestion": "No suggestion. Press Search to see every result."
+	},
+	"OgImage": {
+		"runningHead": "Open directory of health practitioners",
+		"wordmark": "Apercura",
+		"titles": {
+			"medecin": "Every doctor in France already has a page.",
+			"chirurgien-dentiste": "Every dentist in France already has a page.",
+			"sage-femme": "Every midwife in France already has a page.",
+			"annuaire": "Health practitioners, by specialty and by place."
+		},
+		"footer": "Free · Open source · No ratings, no ads"
 	},
 	"taxonomy": {
 		"profession": {

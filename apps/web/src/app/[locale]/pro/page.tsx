@@ -31,7 +31,7 @@ export default async function ProPage({ params }: PageProps<"/[locale]/pro">) {
 	return (
 		<>
 			<div className="surface-cover">
-				<SiteHeader locale={locale} pathname="/pro" />
+				<SiteHeader locale={locale} href="/pro" />
 			</div>
 			<main id="main" tabIndex={-1} className="flex-1 outline-none">
 				<div className="surface-cover">
