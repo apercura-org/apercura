@@ -18,6 +18,7 @@
 		"test:e2e": "SKIP_ENV_VALIDATION=1 turbo run build --filter=@apercura/web && bun run --cwd apps/web test:e2e",
 		"db:generate": "bun run --cwd packages/db db:generate",
 		"db:migrate": "bun run --cwd packages/db db:migrate",
+		"jobs:tick": "bun run --cwd apps/web jobs:tick",
 		"keys:generate": "bun scripts/generate-keys.ts",
 		"etl:fr": "bun packages/etl/src/cli.ts etl:fr",
 		"etl:places": "bun packages/etl/src/cli.ts etl:places"

@@ -37,7 +37,23 @@
 	"linter": {
 		"enabled": true,
 		"rules": {
-			"preset": "recommended"
+			"preset": "recommended",
+			"style": {
+				"noRestrictedImports": {
+					"level": "error",
+					"options": {
+						"paths": {
+							"@apercura/core/crypto": "Patient data is encrypted and decrypted only in apps/web/src/server/phi (which audits every decryption): import from ~/server/phi instead."
+						},
+						"patterns": [
+							{
+								"group": ["**/core/src/crypto", "**/core/src/crypto/**"],
+								"message": "Patient data is encrypted and decrypted only in apps/web/src/server/phi: import from ~/server/phi instead."
+							}
+						]
+					}
+				}
+			}
 		}
 	},
 	"assist": {
@@ -47,5 +63,17 @@
 				"organizeImports": "on"
 			}
 		}
-	}
+	},
+	"overrides": [
+		{
+			"includes": ["apps/web/src/server/phi/**", "packages/core/**"],
+			"linter": {
+				"rules": {
+					"style": {
+						"noRestrictedImports": "off"
+					}
+				}
+			}
+		}
+	]
 }

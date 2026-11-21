@@ -126,13 +126,22 @@ jobs:
         run: bun run db:migrate
       - name: Re-apply migrations (must be a no-op)
         run: bun run db:migrate
-      # Membership isolation, owner-only procedures, platform admin and rate limits
-      # against the migrated schema (skipped by `bun run test` without a database).
-      - name: Access-control integration tests
+      # Against the migrated schema (skipped by `bun run test` without a database):
+      # membership isolation, owner-only procedures, platform admin, rate limits, and
+      # booking (20 parallel holds on one slot, hold/verify/manage, audited
+      # decryption, no plaintext patient data, cross-organization refusals, outbox
+      # retries, reminders, purge). Synthetic data only.
+      - name: Access-control and booking integration tests
         run: bun run --cwd apps/web test
         env:
           DATABASE_URL_TEST: postgres://postgres:postgres@localhost:5432/apercura
           SKIP_ENV_VALIDATION: "1"
+      # The scheduled jobs start, find the overlap constraint and run on an empty agenda.
+      - name: Booking jobs smoke run
+        run: bun run jobs:tick
+        env:
+          SKIP_ENV_VALIDATION: "1"
+          APP_URL: http://localhost:3000
       - name: Check schemas and extensions
         run: |
           psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -tA -c "
@@ -144,6 +153,15 @@ jobs:
               END IF;
               IF (SELECT count(*) FROM pg_namespace WHERE nspname IN ('directory', 'care')) <> 2 THEN
                 RAISE EXCEPTION 'missing schemas';
+              END IF;
+              IF NOT EXISTS (SELECT 1 FROM pg_constraint
+                  WHERE conname = 'appointments_no_overlap' AND contype = 'x') THEN
+                RAISE EXCEPTION 'missing booking overlap constraint';
+              END IF;
+              IF has_table_privilege('apercura_app', 'care.audit_events', 'UPDATE')
+                  OR has_table_privilege('apercura_app', 'care.audit_events', 'DELETE')
+                  OR has_schema_privilege('apercura_etl', 'care', 'USAGE') THEN
+                RAISE EXCEPTION 'care grants are too wide';
               END IF;
             END
             \$\$;"
