@@ -1,4 +1,5 @@
 import { defineConfig, devices } from "@playwright/test";
+import { E2E_BOOKING_ENV } from "./e2e/booking-env";
 
 /**
  * End-to-end and accessibility checks.
@@ -8,9 +9,12 @@ import { defineConfig, devices } from "@playwright/test";
  * - `development`: `next dev`, only for the component gallery (`/_ui`), which
  *   production builds answer with 404.
  *
- * The auth flow (`auth.spec.ts`) needs PostgreSQL with migrations applied
- * (DATABASE_URL) and Mailpit (SMTP_URL, MAILPIT_URL for its API), e.g.
- * `docker compose -f docker/compose.yml up -d && bun run db:migrate`.
+ * The auth flow (`auth.spec.ts`) and booking (`booking.spec.ts`, `manage.spec.ts`) need
+ * PostgreSQL with migrations applied and the synthetic fixtures imported (DATABASE_URL) and
+ * Mailpit (SMTP_URL, MAILPIT_URL for its API), e.g.
+ * `docker compose -f docker/compose.yml up -d && bun run db:migrate` then
+ * `bun run etl:fr --source-dir packages/etl/fixtures/fr --offline`. The global setup opens
+ * agendas for four fictitious practitioners (`e2e/booking-seed.ts`).
  * E2E_PORT moves both servers (production on it, development on the next one).
  */
 const PROD_PORT = Number(process.env.E2E_PORT ?? 3100);
@@ -53,8 +57,9 @@ export default defineConfig({
 				// Auth checks the request origin against these.
 				APP_URL: PROD_URL,
 				BETTER_AUTH_URL: PROD_URL,
-				// No proxy in front of the test server.
-				TRUSTED_PROXY_COUNT: "0",
+				// Booking tests send X-Forwarded-For so each one has its own rate-limit bucket.
+				TRUSTED_PROXY_COUNT: "1",
+				...E2E_BOOKING_ENV,
 			},
 			reuseExistingServer: !isCI,
 			timeout: 60_000,

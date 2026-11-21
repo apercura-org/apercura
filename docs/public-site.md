@@ -15,6 +15,7 @@ functions in `apps/web/src/server/queries`.
 | `/annuaire`, `/annuaire/{dept}[/{commune}]` | `/en/directory/…`          | when one of its listings is                |
 | `/etablissement/{nom}-{finess}`             | `/en/establishment/…`      | with one indexable practitioner            |
 | `/recherche?quoi=&ou=&pres=`                | `/en/search`               | never (and disallowed in robots.txt)       |
+| `/rdv#t={token}` (manage an appointment)    | `/en/rdv#t=…`              | never (`noindex`, no referrer, no cache)   |
 | `/a-propos`, `/donnees`, …                  | `/en/about`, `/en/data`, … | yes                                        |
 
 English pages exist for the interface and are always `noindex` in v1.
@@ -45,6 +46,21 @@ Queries are tagged with the import's cache tags and their coarse form
 `/api/revalidate` refreshes them after each import. Practitioner pages use
 `cacheLife("max")`; listings, hubs and establishments `cacheLife("weeks")`
 (their neighbour counts are not tagged precisely).
+
+Online booking keeps practitioner pages static. The read model query also
+returns whether an agenda is open and the denormalized next free time
+(`directory.practitioners.next_free_at`); the booking services revalidate
+`practitioner:{id}` whenever either changes (a hold, a confirmation, a
+cancellation, an agenda opened or paused), and `bun run jobs:tick` does the
+same through `/api/revalidate` as time passes. The booking panel is a client
+island loaded on demand: it reads `?rdv=1` in the browser (the server never
+looks at it) and fetches the free times itself, so no session, cookie or search
+parameter ever reaches the cached HTML.
+
+`/rdv` is rendered per request and reads its token from the URL fragment in the
+browser; every `booking.manage.*` call is a POST with the token in its body, so
+a link scanner opening the email link changes nothing. It sends
+`Referrer-Policy: no-referrer` (header and meta) and `X-Robots-Tag: noindex`.
 
 `generateStaticParams` prerenders a few pages from the database at build time.
 **A build without a database works**: the params fall back to values that
