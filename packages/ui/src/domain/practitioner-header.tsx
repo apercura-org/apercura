@@ -21,6 +21,13 @@ export interface PractitionerHeaderProps {
 	statusNote?: ReactNode;
 	/** The page title is an `h1`; previews inside another page use a lower level. */
 	headingLevel?: 1 | 2 | 3;
+	/**
+	 * The owner's photo, printed like an identity photo pasted in the booklet
+	 * (square, ink frame). Without one, the seal stands alone.
+	 */
+	photo?: { src: string; alt: string } | null;
+	/** The owner's one-line headline, under the profession. Plain text. */
+	headline?: string | null;
 	className?: string;
 }
 
@@ -37,6 +44,8 @@ export function PractitionerHeader({
 	statusLabel,
 	statusNote,
 	headingLevel = 1,
+	photo,
+	headline,
 	className,
 }: PractitionerHeaderProps) {
 	const verified = status === "verified";
@@ -48,12 +57,31 @@ export function PractitionerHeader({
 				className,
 			)}
 		>
-			<Seal rpps={rpps} verified={verified} size={96} />
+			{photo ? (
+				<div className="relative shrink-0 self-start">
+					<img
+						src={photo.src}
+						alt={photo.alt}
+						width={128}
+						height={128}
+						className="block size-32 border-[1.5px] border-ink bg-paper-shade object-cover p-1"
+					/>
+					<Seal
+						rpps={rpps}
+						verified={verified}
+						size={48}
+						className="absolute -right-4 -bottom-4 rounded-full bg-paper"
+					/>
+				</div>
+			) : (
+				<Seal rpps={rpps} verified={verified} size={96} />
+			)}
 			<div className="flex min-w-0 flex-col gap-2">
 				<Heading className="font-display text-headline font-extrabold tracking-[-0.02em] text-ink font-stretch-semi-expanded">
 					{name}
 				</Heading>
 				<p className="text-lead text-ink">{profession}</p>
+				{headline ? <p className="max-w-[60ch] text-body text-ink">{headline}</p> : null}
 				<p className="text-meta text-ink-muted">
 					<span className="caps me-2 text-ink">{rppsLabel}</span>
 					<span className="tabular">{rpps}</span>

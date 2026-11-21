@@ -15,18 +15,21 @@ import { hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { BookletPage } from "~/components/booklet-page";
 import { JsonLd } from "~/components/json-ld";
+import { FeesSection, PracticalSection, PresentationSection } from "~/components/owner-sections";
 import { PublicPage } from "~/components/public-page";
 import { Trail, type TrailItem } from "~/components/trail";
 import { clientEnv } from "~/env";
 import { getPathname, Link, permanentRedirect } from "~/i18n/navigation";
 import { type Locale, routing } from "~/i18n/routing";
 import { genderOf, getTaxonomyLabels, inSentence } from "~/lib/labels";
+import { ownerContentOf } from "~/lib/owner-content";
 import { actionPlan, type SiteView, siteViews } from "~/lib/practitioner-view";
 import { robotsFor } from "~/lib/robots";
 import { absoluteUrl, pageAlternates, siteOrigin } from "~/lib/site-url";
 import { practitionerStructuredData } from "~/lib/structured-data";
 import { databaseAvailable } from "~/server/db";
 import { getPractitionerPage, samplePractitionerSlugs } from "~/server/queries/practitioner";
+import { photoUrl } from "~/server/storage";
 
 /** The first request of a page waits for the complete page, never a shell. */
 export const ensureStatic = "navigation";
@@ -88,6 +91,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 	const t = await getTranslations({ locale, namespace: "PractitionerPage" });
 	const labels = await getTaxonomyLabels(locale);
 	const { payload } = page;
+	if (payload.withheld) {
+		return { title: t("withheld.metaTitle"), robots: { index: false, follow: false } };
+	}
 	const gender = genderOf(payload.civilityCode);
 	const name = labels.personName(payload);
 	const occupation =
@@ -130,18 +136,24 @@ export default async function PractitionerPage({ params }: Props) {
 	const labels = await getTaxonomyLabels(locale);
 
 	const { payload } = page;
+	if (payload.withheld) return <WithheldPage locale={locale} slug={page.slug} />;
 	const gender = genderOf(payload.civilityCode);
 	const name = labels.personName(payload);
+	const content = ownerContentOf(payload, photoUrl);
 	const professionSlug = payload.listingSlug ?? "";
 	const professionLabel =
 		labels.profession(professionOfPayload(payload), gender) ?? t("unknownProfession");
 	const listingLabel = labels.listing(payload.listingSlug, gender) ?? professionLabel;
 	const specialty =
 		payload.listingSlug && labels.profession(professionSlug, gender) === null ? listingLabel : null;
-	const sites = siteViews(payload);
+	// The owner may hide the practice's phone from the page.
+	const sites = siteViews(payload).map((site) =>
+		content.showPhone ? site : { ...site, phone: null },
+	);
 	const plan = actionPlan(sites);
 	const empty = tP("notProvided");
-	const status = payload.claimStatus === "claimed" ? "verified" : "unclaimed";
+	const claimed = payload.claimStatus === "claimed";
+	const status = claimed ? "verified" : "unclaimed";
 	const href = { pathname: "/praticien/[slug]", params: { slug: page.slug } } as const;
 	const url = absoluteUrl(href, locale);
 	const otherQualifications = payload.qualifications
@@ -201,7 +213,7 @@ export default async function PractitionerPage({ params }: Props) {
 					honorificPrefix: labels.title(payload.titleCode),
 					occupation: listingLabel,
 					specialty,
-					languages: payload.profile?.languages ?? [],
+					languages: content.languages,
 					sites,
 					establishmentUrl,
 					image: `${siteOrigin()}/og/${ogImageOf(payload.professionCode)}.png`,
@@ -221,11 +233,16 @@ export default async function PractitionerPage({ params }: Props) {
 						status={status}
 						statusLabel={tP(`status.${status}`)}
 						statusNote={tP(`statusNote.${status}`)}
+						headline={content.headline}
+						photo={
+							content.photoUrl ? { src: content.photoUrl, alt: t("photoAlt", { name }) } : null
+						}
 					/>
 				</div>
 
 				<div className="grid gap-10 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:gap-12">
 					<div className="order-2 flex flex-col gap-14 lg:order-1">
+						<PresentationSection bio={content.bio} headingId="presentation-heading" />
 						<section aria-labelledby="profession-heading" className="flex flex-col gap-4">
 							<h2 id="profession-heading" className={sectionHeading}>
 								{t("professionHeading")}
@@ -246,7 +263,6 @@ export default async function PractitionerPage({ params }: Props) {
 									}
 									emptyLabel={empty}
 								/>
-								<FieldRow label={tP("fields.languages")} emptyLabel={empty} />
 								<FieldRow label={tP("fields.hours")} emptyLabel={empty} />
 							</FieldList>
 						</section>
@@ -269,59 +285,31 @@ export default async function PractitionerPage({ params }: Props) {
 							))}
 						</section>
 
-						<section aria-labelledby="fees-heading" className="flex flex-col gap-4">
-							<h2 id="fees-heading" className={sectionHeading}>
-								{t("fees.heading")}
-							</h2>
-							<FieldList>
-								<FieldRow
-									label={t("fees.sector")}
-									value={labels.billingSector(payload.ameli?.billingSector)}
-									emptyLabel={empty}
-								/>
-								<FieldRow
-									label={t("fees.optam")}
-									value={
-										payload.ameli
-											? (labels.optam(payload.ameli.optam) ??
-												(payload.ameli.billingSector ? t("fees.optamNo") : null))
-											: null
-									}
-									emptyLabel={empty}
-								/>
-								<FieldRow
-									label={t("fees.carteVitale")}
-									value={
-										payload.ameli?.carteVitale === true
-											? t("fees.accepted")
-											: payload.ameli?.carteVitale === false
-												? t("fees.notAccepted")
-												: null
-									}
-									emptyLabel={empty}
-								/>
-							</FieldList>
-							<p className="max-w-[65ch] text-body text-ink">
-								{payload.ameli ? t("fees.fromAmeli") : t("fees.notMatched")}{" "}
-								{/* Placeholder: replace with the verbatim wording required by the order of
-								    30 May 2018 (art. 5) once the legal review (M6) provides it. */}
-								{t("fees.regulatoryNotice")}{" "}
-								<a href={ameliUrl} className={linkStyles()}>
-									{t("fees.ameliLink")}
-									<span className="sr-only"> ({tSite("externalLink")})</span>
-								</a>
-								.
-							</p>
-							<ProvenanceNote
-								locale={locale}
-								sourceLabel={tP("source.label")}
-								source={t("fees.source")}
-								updatedLabel={tP("source.updated")}
-								updatedAt={page.updatedAt}
-							/>
-						</section>
-					</div>
+						<PracticalSection
+							content={content}
+							headingId="practical-heading"
+							emptyLabel={empty}
+							externalLabel={tSite("externalLink")}
+						/>
 
+						<FeesSection
+							content={content}
+							headingId="fees-heading"
+							emptyLabel={empty}
+							externalLabel={tSite("externalLink")}
+							provenance={
+								<ProvenanceNote
+									locale={locale}
+									sourceLabel={tP("source.label")}
+									source={
+										content.billing.source === "owner" ? t("fees.sourceOwner") : t("fees.source")
+									}
+									updatedLabel={tP("source.updated")}
+									updatedAt={page.updatedAt}
+								/>
+							}
+						/>
+					</div>
 					<aside aria-label={t("asideLabel")} className="order-1 flex flex-col gap-6 lg:order-2">
 						<Action plan={plan} locale={locale} />
 						<section
@@ -329,15 +317,19 @@ export default async function PractitionerPage({ params }: Props) {
 							className="flex flex-col gap-2 border-t-[1.5px] border-ink pt-4"
 						>
 							<h2 id="claim-heading" className="font-display text-lead font-bold text-ink">
-								{t("claim.heading")}
+								{claimed ? t("claim.claimedHeading") : t("claim.heading")}
 							</h2>
-							<p className="text-body text-ink">{t("claim.body")}</p>
-							<Link
-								href="/pro"
-								className={`${linkStyles()} inline-flex min-h-11 items-center text-body font-semibold`}
-							>
-								{t("claim.link")}
-							</Link>
+							<p className="text-body text-ink">
+								{claimed ? t("claim.claimedBody") : t("claim.body")}
+							</p>
+							{claimed ? null : (
+								<Link
+									href={{ pathname: "/pro/revendiquer", query: { rpps: payload.nationalId } }}
+									className={`${linkStyles()} inline-flex min-h-11 items-center text-body font-semibold`}
+								>
+									{t("claim.link")}
+								</Link>
+							)}
 						</section>
 						<section
 							aria-labelledby="report-heading"
@@ -347,12 +339,20 @@ export default async function PractitionerPage({ params }: Props) {
 								{t("report.heading")}
 							</h2>
 							<p className="text-body text-ink">{t("report.body")}</p>
-							<a
-								href={`${getPathname({ href: "/donnees", locale })}#corriger`}
+							<Link
+								href={{ pathname: "/praticien/[slug]/signaler", params: { slug: page.slug } }}
 								className={`${linkStyles()} inline-flex min-h-11 items-center text-body font-semibold`}
 							>
 								{t("report.link")}
-							</a>
+							</Link>
+							{claimed ? null : (
+								<Link
+									href={{ pathname: "/praticien/[slug]/retrait", params: { slug: page.slug } }}
+									className={`${linkStyles({ tone: "muted" })} inline-flex min-h-11 items-center text-meta`}
+								>
+									{t("report.removalLink")}
+								</Link>
+							)}
 						</section>
 					</aside>
 				</div>
@@ -541,4 +541,31 @@ async function Action({ plan, locale }: { plan: ReturnType<typeof actionPlan>; l
 				/>
 			);
 	}
+}
+
+/**
+ * A page withheld while a removal request is checked (GDPR art. 21): nothing
+ * about the person is shown, the page is not indexed and has left listings,
+ * searches and sitemaps.
+ */
+async function WithheldPage({ locale, slug }: { locale: Locale; slug: string }) {
+	const t = await getTranslations({ locale, namespace: "PractitionerPage" });
+	const tSite = await getTranslations({ locale, namespace: "Site" });
+	return (
+		<PublicPage locale={locale} href={{ pathname: "/praticien/[slug]", params: { slug } }}>
+			<BookletPage runningHead={tSite("runningHead")}>
+				<div className="flex max-w-[65ch] flex-col gap-4">
+					<h1 className="font-display text-headline font-extrabold tracking-[-0.02em] text-ink font-stretch-semi-expanded">
+						{t("withheld.title")}
+					</h1>
+					<p className="text-lead text-ink">{t("withheld.body")}</p>
+					<p className="text-body text-ink">
+						<Link href="/donnees" className={linkStyles()}>
+							{t("withheld.dataLink")}
+						</Link>
+					</p>
+				</div>
+			</BookletPage>
+		</PublicPage>
+	);
 }

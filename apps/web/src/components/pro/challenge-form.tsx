@@ -7,6 +7,7 @@ import { useRouter } from "~/i18n/navigation";
 import { authClient } from "~/lib/auth-client";
 import { type AuthErrorKey, authErrorKey } from "~/lib/auth-errors";
 import { PRO_ROUTES } from "~/lib/pro-routes";
+import { currentReturnTo } from "~/lib/return-to";
 import { SignOutButton } from "./sign-out-button";
 
 /**
@@ -29,7 +30,7 @@ export function ChallengeForm({ totp, passkeys }: { totp: boolean; passkeys: boo
 				setError(authErrorKey(result.error as { code?: string; status?: number }));
 				return;
 			}
-			router.replace(PRO_ROUTES.home);
+			router.replace(currentReturnTo() ?? PRO_ROUTES.home);
 			router.refresh();
 		} catch {
 			setError("generic");

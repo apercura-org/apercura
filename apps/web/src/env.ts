@@ -21,6 +21,13 @@ const serverSchema = z.object({
 
 	BETTER_AUTH_SECRET: optionalString,
 	BETTER_AUTH_URL: optionalUrl,
+	/**
+	 * Pro Santé Connect (OpenID Connect, client_secret_post, scope
+	 * `openid scope_all`). The three are needed together; unset, the claim and
+	 * sign-in pages do not offer it. PSC_ISSUER is the issuer URL whose
+	 * `/.well-known/openid-configuration` is read at start, e.g. the ANS
+	 * sandbox realm.
+	 */
 	PSC_CLIENT_ID: optionalString,
 	PSC_CLIENT_SECRET: optionalString,
 	PSC_ISSUER: optionalUrl,
@@ -43,7 +50,10 @@ const serverSchema = z.object({
 	S3_BUCKET: optionalString,
 	S3_ACCESS_KEY_ID: optionalString,
 	S3_SECRET_ACCESS_KEY: optionalString,
+	/** Base URL photos are served from (a CDN or a public bucket); unset, the app serves them. */
 	S3_PUBLIC_URL: optionalUrl,
+	/** Signing region of the S3 API (MinIO and most hosts accept the default). */
+	S3_REGION: z.string().min(1).default("us-east-1"),
 
 	JOBS_SECRET: optionalString,
 	REVALIDATE_SECRET: optionalString,
@@ -78,6 +88,15 @@ const serverSchema = z.object({
 	FEATURE_BOOKING: z
 		.enum(["true", "false", "1", "0"])
 		.default("false")
+		.transform((value) => value === "true" || value === "1"),
+	/**
+	 * Claims by documents and registry phone callback (needs S3 storage and the
+	 * encryption keys). On by default; `false` leaves Pro Santé Connect and the
+	 * registry email only.
+	 */
+	FEATURE_CLAIM_DOCUMENTS: z
+		.enum(["true", "false", "1", "0"])
+		.default("true")
 		.transform((value) => value === "true" || value === "1"),
 });
 

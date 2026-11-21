@@ -7,6 +7,7 @@ import { Link } from "~/i18n/navigation";
 import type { Locale } from "~/i18n/routing";
 import { NO_INDEX, resolveLocale } from "~/lib/locale";
 import { PRO_ROUTES } from "~/lib/pro-routes";
+import { parseReturnTo, RETURN_PARAM, withReturnTo } from "~/lib/return-to";
 
 type Props = PageProps<"/[locale]/pro/verification-email">;
 
@@ -25,7 +26,9 @@ async function Outcome({
 	searchParams: Props["searchParams"];
 }) {
 	const t = await getTranslations({ locale, namespace: "auth.verifyEmail" });
-	const { error } = await searchParams;
+	const query = await searchParams;
+	const { error } = query;
+	const returnTo = parseReturnTo(query[RETURN_PARAM]);
 	const failed = Boolean(error);
 	return (
 		<div className="flex max-w-2xl flex-col gap-5">
@@ -36,7 +39,10 @@ async function Outcome({
 				{failed ? t("errorBody") : t("successBody")}
 			</Notice>
 			<div>
-				<Link href={PRO_ROUTES.signIn} className={buttonStyles({ intent: "stamp" })}>
+				<Link
+					href={withReturnTo(PRO_ROUTES.signIn, returnTo)}
+					className={buttonStyles({ intent: "stamp" })}
+				>
 					{t("signIn")}
 				</Link>
 			</div>

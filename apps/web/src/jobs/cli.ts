@@ -1,15 +1,24 @@
 /**
  * Scheduled booking jobs, run by the host's scheduler (same image as the app):
  *
- *   bun run jobs:tick            expirations, reminders, outbox, next free slots, purge
- *   bun run jobs:tick outbox     one sub-job only (expire | reminders | outbox | next-free | purge)
+ *   bun run jobs:tick            expirations, reminders, outbox, next free slots, purges
+ *   bun run jobs:tick outbox     one sub-job only
+ *                                (expire | reminders | outbox | next-free | purge | claim-documents)
  *
  * Every sub-job takes its own Postgres advisory lock, so overlapping runs are harmless. Refuses
  * to run when the overlap constraint is missing (a schema created by `drizzle-kit push`).
  */
 import { loadRootEnv } from "../server/load-root-env";
 
-const SUB_JOBS = ["tick", "expire", "reminders", "outbox", "next-free", "purge"] as const;
+const SUB_JOBS = [
+	"tick",
+	"expire",
+	"reminders",
+	"outbox",
+	"next-free",
+	"purge",
+	"claim-documents",
+] as const;
 type SubJob = (typeof SUB_JOBS)[number];
 
 async function main() {
@@ -36,6 +45,7 @@ async function main() {
 			"next-free": () =>
 				jobs.withAdvisoryLock(db, "jobs:next-free", () => jobs.refreshAllNextFree(db, now())),
 			purge: () => jobs.withAdvisoryLock(db, "jobs:purge", () => jobs.purge(db, now())),
+			"claim-documents": () => jobs.purgeClaimDocumentsJob(db, now()),
 		};
 		const result = await run[command]();
 		console.log(JSON.stringify({ job: command, result: result ?? "locked" }));

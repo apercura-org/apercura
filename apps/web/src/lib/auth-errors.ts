@@ -12,7 +12,8 @@ export type AuthErrorKey =
 	| "invalidPassword"
 	| "mfaRequired"
 	| "lastFactor"
-	| "passkeyFailed";
+	| "passkeyFailed"
+	| "accountFrozen";
 
 const BY_CODE: Record<string, AuthErrorKey> = {
 	INVALID_EMAIL_OR_PASSWORD: "invalidCredentials",
@@ -33,6 +34,7 @@ const BY_CODE: Record<string, AuthErrorKey> = {
 	AUTHENTICATION_FAILED: "passkeyFailed",
 	PASSKEY_NOT_FOUND: "passkeyFailed",
 	FAILED_TO_VERIFY_REGISTRATION: "passkeyFailed",
+	ACCOUNT_FROZEN: "accountFrozen",
 };
 
 export function authErrorKey(

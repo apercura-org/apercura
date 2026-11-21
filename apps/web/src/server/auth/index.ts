@@ -1,13 +1,15 @@
 import "server-only";
-import { authSchema } from "@apercura/db/schema";
+import { authSchema, user as userTable } from "@apercura/db/schema";
 import { drizzleAdapter } from "@better-auth/drizzle-adapter";
 import { passkey } from "@better-auth/passkey";
 import { betterAuth } from "better-auth";
 import { APIError, createAuthMiddleware, getSessionFromCtx, isAPIError } from "better-auth/api";
 import { nextCookies } from "better-auth/next-js";
-import { organization, twoFactor } from "better-auth/plugins";
+import { genericOAuth, organization, twoFactor } from "better-auth/plugins";
+import { eq } from "drizzle-orm";
 import { serverEnv } from "~/env";
 import { getDb } from "~/server/db";
+import { pscConfigured } from "~/server/features";
 import { emailLocale, sendVerificationEmail } from "~/server/mail/auth-emails";
 import { ac, roles } from "./access";
 import { CLIENT_IP_HEADER } from "./client-ip";
@@ -17,9 +19,14 @@ import {
 	DISABLED_PATHS,
 	factorsLeftAfter,
 	MFA_SESSION_PATHS,
+	mfaMethodOf,
+	OAUTH_PATHS,
+	PSC_PROVIDER_ID,
+	pscRequestProblem,
 	requiresStepUp,
 	TRUST_DEVICE_PATHS,
 } from "./policy";
+import { pscProviderConfig } from "./psc";
 
 const HOUR = 60 * 60;
 
@@ -68,7 +75,19 @@ function createAuth() {
 				});
 			},
 		},
-		account: { accountLinking: { enabled: false } },
+		account: {
+			// Linking exists for Pro Santé Connect only, and only explicitly: a
+			// signed-in, second-factor session links it from the claim page. It is
+			// never linked implicitly by email at sign-in (its profile email is a
+			// placeholder anyway, see ./psc).
+			accountLinking: {
+				enabled: true,
+				disableImplicitLinking: true,
+				trustedProviders: [PSC_PROVIDER_ID],
+				allowDifferentEmails: true,
+				updateUserInfoOnLink: false,
+			},
+		},
 
 		user: {
 			additionalFields: {
@@ -132,9 +151,24 @@ function createAuth() {
 			session: {
 				create: {
 					// The only place mfaVerifiedAt is set on a new session: the endpoint
-					// that created it has just verified a second factor.
+					// that created it has just verified a second factor (or it is a Pro
+					// Santé Connect callback). A frozen account gets no session at all.
 					before: async (session, ctx) => {
-						const method = ctx?.path ? MFA_SESSION_PATHS[ctx.path] : undefined;
+						const [owner] = await getDb()
+							.select({ frozenAt: userTable.frozenAt })
+							.from(userTable)
+							.where(eq(userTable.id, session.userId))
+							.limit(1);
+						if (owner?.frozenAt) {
+							throw new APIError("FORBIDDEN", {
+								code: "ACCOUNT_FROZEN",
+								message: "This account is frozen.",
+							});
+						}
+						const method = mfaMethodOf(
+							ctx?.path,
+							(ctx as { params?: Record<string, unknown> } | undefined)?.params,
+						);
 						if (!method) {
 							return { data: session };
 						}
@@ -150,6 +184,9 @@ function createAuth() {
 				const body = ctx.body as Record<string, unknown> | undefined;
 				if (path === "/passkey/verify-registration" && body?.createSession) {
 					throw new APIError("BAD_REQUEST", { message: "createSession is not supported" });
+				}
+				if (OAUTH_PATHS.has(path) && pscRequestProblem(body, pscConfigured())) {
+					throw new APIError("NOT_FOUND", { message: "Not found" });
 				}
 				if (!alwaysRequiresMfa(path) && !requiresStepUp(path)) {
 					if (TRUST_DEVICE_PATHS.has(path) && body?.trustDevice) {
@@ -203,6 +240,8 @@ function createAuth() {
 		},
 
 		plugins: [
+			// Pro Santé Connect only when configured (an empty list registers no provider).
+			genericOAuth({ config: pscConfigured() ? [pscProviderConfig()] : [] }),
 			twoFactor({
 				issuer: "Apercura",
 				backupCodeOptions: { amount: 10, length: 10 },

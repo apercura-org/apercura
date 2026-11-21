@@ -201,8 +201,8 @@ describe.skipIf(!url)("etl:fr on synthetic fixtures", () => {
 			SELECT id FROM directory.practitioners WHERE national_id = ${fakeRpps(1)}
 		`;
 		await sql`
-			INSERT INTO directory.practitioner_profiles (practitioner_id, headline, languages)
-			VALUES (${person?.id ?? 0}, 'Owner headline', '{fr,en}')
+			INSERT INTO directory.practitioner_profiles (practitioner_id, headline, languages, published_at)
+			VALUES (${person?.id ?? 0}, 'Owner headline', '{fr,en}', now())
 		`;
 		await sql`UPDATE directory.practitioners SET claim_status = 'claimed' WHERE id = ${person?.id ?? 0}`;
 		const people = [...CASES.filter((p) => p.n !== 2), ...fillerPeople(200, 3)];
@@ -222,5 +222,28 @@ describe.skipIf(!url)("etl:fr on synthetic fixtures", () => {
 			claim_status: "claimed",
 			payload_headline: "Owner headline",
 		});
+	});
+
+	it("keeps a page withheld by a removal request hidden, and never clears the request", async () => {
+		const target = fakeRpps(4);
+		await sql`
+			UPDATE directory.practitioners SET withheld_at = now(), indexable = false
+			WHERE national_id = ${target}
+		`;
+		const people = [...CASES.filter((p) => p.n !== 2), ...fillerPeople(200, 3)];
+		const outcome = await run(fixtureDir(people), { force: true });
+		expect(outcome.status).toBe("succeeded");
+		const [row] = await sql<{ indexable: boolean; withheld: boolean; page_indexable: boolean }[]>`
+			SELECT p.indexable, p.withheld_at IS NOT NULL AS withheld, pg.indexable AS page_indexable
+			FROM directory.practitioners p
+			JOIN directory.practitioner_pages pg ON pg.practitioner_id = p.id
+			WHERE p.national_id = ${target}
+		`;
+		expect(row).toEqual({ indexable: false, withheld: true, page_indexable: false });
+		expect(
+			await count(
+				`directory.search_docs sd JOIN directory.practitioners p ON p.id = sd.practitioner_id WHERE p.national_id = '${target}' AND sd.indexable`,
+			),
+		).toBe(0);
 	});
 });

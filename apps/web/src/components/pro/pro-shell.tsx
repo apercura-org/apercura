@@ -5,6 +5,8 @@ import { SiteFooter } from "~/components/site-footer";
 import { Link } from "~/i18n/navigation";
 import type { Locale } from "~/i18n/routing";
 import { PRO_ROUTES } from "~/lib/pro-routes";
+import { getServerSession } from "~/server/auth/session";
+import { getProContext } from "~/server/pro-context";
 import { SignOutButton } from "./sign-out-button";
 
 const navLink =
@@ -31,9 +33,20 @@ export async function ProShell({
 	children,
 }: ProShellProps) {
 	const t = await getTranslations({ locale, namespace: "auth" });
-	const items = [
+	const session = showNav ? await getServerSession() : null;
+	const context = session?.session.mfaVerifiedAt ? await getProContext(session.user.id) : null;
+	const items: { href: (typeof PRO_ROUTES)[keyof typeof PRO_ROUTES]; label: string }[] = [
 		{ href: PRO_ROUTES.home, label: t("app.nav.home") },
+		...(context && context.pages.length > 0
+			? [{ href: PRO_ROUTES.pageEditor, label: t("app.nav.page") }]
+			: []),
 		{ href: PRO_ROUTES.security, label: t("app.nav.security") },
+		...(context?.isPlatformAdmin
+			? [
+					{ href: PRO_ROUTES.adminClaims, label: t("app.nav.adminClaims") },
+					{ href: PRO_ROUTES.adminReports, label: t("app.nav.adminReports") },
+				]
+			: []),
 	];
 	return (
 		<>
@@ -79,7 +92,13 @@ export async function ProShell({
 						{lead ? <p className="max-w-[58ch] text-lead text-cover-ink">{lead}</p> : null}
 					</div>
 				</div>
-				<BookletPage runningHead={t("runningHead")}>{children}</BookletPage>
+				<BookletPage
+					runningHead={
+						current.startsWith("/pro/admin") ? t("app.adminRunningHead") : t("runningHead")
+					}
+				>
+					{children}
+				</BookletPage>
 			</main>
 			<SiteFooter locale={locale} />
 		</>
