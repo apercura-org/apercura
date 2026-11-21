@@ -84,6 +84,7 @@ export async function getManaged(rt: BookingRuntime, token: string) {
 			addressLine: sites.addressLine,
 			postcode: sites.postcode,
 			communeLabel: sites.communeLabel,
+			phone: sites.phone,
 		})
 		.from(calendars)
 		.innerJoin(practitioners, eq(practitioners.id, calendars.practitionerId))
@@ -134,12 +135,16 @@ export async function getManaged(rt: BookingRuntime, token: string) {
 					addressLine: place.addressLine,
 					postcode: place.postcode,
 					communeLabel: place.communeLabel,
+					/** E.164 number of the place: past the cutoff, the patient calls. */
+					phone: place.phone,
 				}
 			: null,
 		patient: { firstName: patient?.firstName ?? null, lastName: patient?.lastName ?? null },
 		/** An address typed by the practice that the patient has not confirmed yet. */
 		needsConfirmation: row.source === "practice" && row.emailVerifiedAt === null,
 		canCancel,
+		/** Online cancellation and moves close this many minutes before the start. */
+		cancellationCutoffMin: cutoffMin,
 		canReschedule: canCancel && row.appointmentTypeId !== null && place?.calendarStatus === "open",
 	};
 }

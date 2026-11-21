@@ -3,6 +3,7 @@ import { instantToLocalDate } from "@apercura/core/time";
 import type { Database } from "@apercura/db";
 import { appointmentTypes, calendars } from "@apercura/db/schema";
 import { and, asc, eq, sql } from "drizzle-orm";
+import { cacheTags } from "~/server/cache-tags";
 import type { Executor } from "~/server/db-executor";
 import { slotQuery } from "./availability";
 import type { BookingRuntime } from "./runtime";
@@ -65,6 +66,22 @@ export async function refreshNextFree(
 	return rows[0]?.changed === true;
 }
 
+/**
+ * Recomputes the next free slot and, when it changed (or `force`, e.g. the agenda opened or
+ * paused), marks the practitioner's cached page stale so its action block tells the truth.
+ */
+export async function refreshNextFreeFor(
+	rt: BookingRuntime,
+	practitionerId: number,
+	options: { force?: boolean } = {},
+): Promise<boolean> {
+	const changed = await refreshNextFree(rt.db, practitionerId, rt.nowMs());
+	if (changed || options.force) {
+		rt.revalidate?.([cacheTags.practitioner(practitionerId)]);
+	}
+	return changed;
+}
+
 export function refreshNextFreeLater(rt: BookingRuntime, practitionerId: number) {
-	rt.defer(() => refreshNextFree(rt.db, practitionerId, rt.nowMs()));
+	rt.defer(() => refreshNextFreeFor(rt, practitionerId));
 }

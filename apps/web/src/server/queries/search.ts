@@ -1,6 +1,7 @@
 import "server-only";
 
 import { label } from "~/lib/practitioner-view";
+import { bookingEnabled } from "../booking/config";
 import { getSql } from "../db";
 
 /**
@@ -198,6 +199,9 @@ export type SearchResult = PractitionerSuggestion & {
 	lon: number | null;
 	/** Metres from the "near me" point, when searching near the visitor. */
 	distance: number | null;
+	/** Next free online slot (bookable practitioners only) and the time zone it is read in. */
+	nextFreeAt: Date | null;
+	bookingTimeZone: string | null;
 };
 
 export const SEARCH_PAGE_SIZE = 20;
@@ -228,6 +232,7 @@ export async function searchPractitioners(input: {
 			? sql`word_similarity(directory.text_norm(${name}), sd.name_norm) DESC, sd.name_norm, sd.practitioner_id`
 			: sql`sd.name_norm, sd.practitioner_id`;
 	const offset = (input.page - 1) * SEARCH_PAGE_SIZE;
+	const online = bookingEnabled();
 	const rows = await sql<SearchResult[]>`
 		SELECT sd.practitioner_id AS id, sd.payload->>'slug' AS slug,
 			sd.payload->>'titleCode' AS "titleCode", sd.payload->>'civilityCode' AS "civilityCode",
@@ -239,7 +244,8 @@ export async function searchPractitioners(input: {
 			shown.phone, shown.phone_kind AS "phoneKind", shown.slug AS "establishmentSlug",
 			ST_Y(coalesce(shown.location, sd.location)::geometry) AS lat,
 			ST_X(coalesce(shown.location, sd.location)::geometry) AS lon,
-			${point ? sql`ST_Distance(sd.location, ${point})` : sql`NULL::float8`} AS distance
+			${point ? sql`ST_Distance(sd.location, ${point})` : sql`NULL::float8`} AS distance,
+			booking.next_free_at AS "nextFreeAt", booking.time_zone AS "bookingTimeZone"
 		FROM directory.search_docs sd
 		-- With a place, the practitioner's place of practice there.
 		LEFT JOIN LATERAL (
@@ -264,6 +270,21 @@ export async function searchPractitioners(input: {
 			LEFT JOIN directory.places pl ON pl.id = s.place_id
 			WHERE s.id = coalesce(local.site_id, (sd.payload->'site'->>'id')::integer)
 		) shown ON true
+		-- Online booking: the denormalized next free time, when an agenda is open.
+		${
+			online
+				? sql`LEFT JOIN LATERAL (
+					SELECT p.next_free_at, c.time_zone
+					FROM directory.practitioners p
+					JOIN care.calendars c ON c.practitioner_id = p.id AND c.status = 'open'
+					WHERE p.id = sd.practitioner_id AND p.next_free_at IS NOT NULL
+					ORDER BY c.created_at
+					LIMIT 1
+				) booking ON true`
+				: sql`LEFT JOIN LATERAL (
+					SELECT NULL::timestamptz AS next_free_at, NULL::text AS time_zone
+				) booking ON true`
+		}
 		WHERE sd.indexable
 			${name ? sql`AND directory.text_norm(${name}) <% sd.name_norm` : sql``}
 			${listingSlug ? sql`AND sd.listing_slug = ${listingSlug}` : sql``}
@@ -280,6 +301,7 @@ export async function searchPractitioners(input: {
 			lat: row.lat === null ? null : Number(row.lat),
 			lon: row.lon === null ? null : Number(row.lon),
 			distance: row.distance === null ? null : Number(row.distance),
+			nextFreeAt: row.nextFreeAt ? new Date(row.nextFreeAt) : null,
 		})),
 		hasNext: rows.length > SEARCH_PAGE_SIZE,
 	};

@@ -14,6 +14,7 @@ export function bookingRuntime(ctx: Context): BookingRuntime {
 		clientKey: (scope) => clientRateLimitKey(scope, ctx.headers, undefined, { ipv6Prefix64: true }),
 		requestId,
 		ipHash: clientRateLimitKey("audit", ctx.headers),
+		...(ctx.revalidate ? { revalidate: ctx.revalidate } : {}),
 		defer: deferWith(
 			ctx.defer ??
 				((task) => {

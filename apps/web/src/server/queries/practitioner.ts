@@ -1,6 +1,7 @@
 import "server-only";
 
 import { cacheLife, cacheTag } from "next/cache";
+import { bookingEnabled } from "../booking/config";
 import { cacheTags } from "../cache-tags";
 import { getSql } from "../db";
 import type { PlaceRef, PractitionerLink, PractitionerPayload } from "./types";
@@ -19,6 +20,12 @@ export type PractitionerPage = {
 	listings: { france: boolean; department: boolean; commune: boolean };
 	/** The next six practitioners of the same listing in the commune (ring by md5(RPPS)). */
 	neighbours: PractitionerLink[];
+	/**
+	 * Online booking: open when the practitioner has an open agenda (and FEATURE_BOOKING is on).
+	 * `nextFreeAt` (ISO instant) is the denormalized next free slot, read in `timeZone`. The
+	 * booking module revalidates the page's tag whenever either changes.
+	 */
+	booking: { open: boolean; nextFreeAt: string | null; timeZone: string | null };
 };
 
 type PageRow = {
@@ -27,6 +34,8 @@ type PageRow = {
 	indexable: boolean;
 	updatedAt: string;
 	payload: PractitionerPayload;
+	nextFreeAt: Date | null;
+	bookingTimeZone: string | null;
 };
 
 /**
@@ -41,7 +50,11 @@ export async function getPractitionerPage(rpps: string): Promise<PractitionerPag
 
 	const [row] = await sql<PageRow[]>`
 		SELECT pg.practitioner_id AS "practitionerId", pg.slug, pg.indexable, pg.payload,
-			to_char(pg.content_updated_at AT TIME ZONE 'UTC', 'YYYY-MM-DD') AS "updatedAt"
+			to_char(pg.content_updated_at AT TIME ZONE 'UTC', 'YYYY-MM-DD') AS "updatedAt",
+			p.next_free_at AS "nextFreeAt",
+			(SELECT c.time_zone FROM care.calendars c
+				WHERE c.practitioner_id = p.id AND c.status = 'open'
+				ORDER BY c.created_at LIMIT 1) AS "bookingTimeZone"
 		FROM directory.practitioners p
 		JOIN directory.practitioner_pages pg ON pg.practitioner_id = p.id
 		WHERE p.country = 'FR' AND p.id_scheme = 'RPPS' AND p.national_id = ${rpps}
@@ -121,6 +134,11 @@ export async function getPractitionerPage(rpps: string): Promise<PractitionerPag
 		department,
 		listings,
 		neighbours,
+		booking: {
+			open: bookingEnabled() && row.bookingTimeZone !== null,
+			nextFreeAt: row.nextFreeAt ? new Date(row.nextFreeAt).toISOString() : null,
+			timeZone: row.bookingTimeZone,
+		},
 	};
 }
 
