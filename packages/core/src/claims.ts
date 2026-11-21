@@ -57,12 +57,22 @@ export interface VerificationMethod {
 /** Kinds of practice whose registry email belongs to the practitioner's own structure. */
 const REGISTRY_EMAIL_KINDS: readonly string[] = ["office", "health_center"];
 
+/** `local@domain.tld` without spaces — checked by splitting, in linear time. */
+function isPlainEmail(email: string): boolean {
+	if (/\s/.test(email)) return false;
+	const parts = email.split("@");
+	if (parts.length !== 2) return false;
+	const [local = "", domain = ""] = parts;
+	const dot = domain.lastIndexOf(".");
+	return local.length > 0 && dot > 0 && dot < domain.length - 1;
+}
+
 /** Registry emails a claim link may be sent to: practices and health centres, never hospitals. */
 export function registryEmails(subject: ClaimSubject): string[] {
 	const emails = subject.activities
 		.filter((activity) => REGISTRY_EMAIL_KINDS.includes(activity.practiceKind) && activity.email)
 		.map((activity) => (activity.email as string).trim().toLowerCase())
-		.filter((email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email));
+		.filter(isPlainEmail);
 	return [...new Set(emails)];
 }
 

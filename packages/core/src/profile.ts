@@ -87,10 +87,37 @@ export function normalizePlainText(value: string, options: { multiline?: boolean
  */
 export function hasMarkup(value: string): boolean {
 	return (
-		/<\s*\/?\s*[a-z!?][^>]*>/i.test(value) ||
-		/&(#\d+|#x[\da-f]+|[a-z]+);/i.test(value) ||
-		/!?\[[^\]]*\]\([^)]*\)/.test(value)
+		hasHtmlTag(value) ||
+		/&(?:#\d{1,8}|#x[\da-f]{1,8}|[a-z]{1,32});/i.test(value) ||
+		hasMarkdownLink(value)
 	);
+}
+
+/** `<tag`, `</tag`, `<!…` or `<?…` with optional spaces after `<` — a linear scan, no backtracking. */
+function hasHtmlTag(value: string): boolean {
+	for (let i = value.indexOf("<"); i !== -1; i = value.indexOf("<", i + 1)) {
+		let j = i + 1;
+		while (j < value.length && /\s/.test(value.charAt(j))) j++;
+		if (value.charAt(j) === "/") {
+			j++;
+			while (j < value.length && /\s/.test(value.charAt(j))) j++;
+		}
+		if (/[a-z!?]/i.test(value.charAt(j))) return true;
+	}
+	return false;
+}
+
+/** `[text](target)` or `![alt](src)` — a linear scan, no backtracking. */
+function hasMarkdownLink(value: string): boolean {
+	const firstOpen = value.indexOf("[");
+	const lastClose = value.lastIndexOf(")");
+	if (firstOpen === -1 || lastClose === -1) return false;
+	let i = value.indexOf("](", firstOpen);
+	while (i !== -1) {
+		if (lastClose > i + 1) return true;
+		i = value.indexOf("](", i + 1);
+	}
+	return false;
 }
 
 /** A website the page may link to: absolute http(s) URL with a host, no credentials. */
