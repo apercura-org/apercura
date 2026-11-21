@@ -11,10 +11,10 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { BookletPage } from "~/components/booklet-page";
 import { SiteFooter } from "~/components/site-footer";
 import { SiteHeader } from "~/components/site-header";
+import { serverEnv } from "~/env";
 import { getPathname, Link } from "~/i18n/navigation";
 import { routing } from "~/i18n/routing";
-
-const PILLARS = ["free", "openSource", "hostedInFrance", "selfHostable"] as const;
+import { getPillars } from "~/lib/pillars";
 
 /** National register figures supplied in PRODUCT.md (Annuaire Santé, 19 November 2026). */
 const REGISTRY = {
@@ -93,8 +93,8 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
 								</tr>
 							</thead>
 							<tbody>
-								{PILLARS.map((pillar, index) => (
-									<tr key={pillar} className={table.row()}>
+								{getPillars(serverEnv.PUBLIC_HDS_HOST).map((pillar, index) => (
+									<tr key={pillar.key} className={table.row()}>
 										<td
 											className={table.cell({
 												className: "py-5 font-display text-title font-extrabold tabular",
@@ -104,10 +104,12 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
 										</td>
 										<td className={table.cell({ className: "py-5" })}>
 											<p className="font-display text-lead font-bold text-ink">
-												{t(`pillars.${pillar}.title`)}
+												{t(`pillars.${pillar.key}.title`)}
 											</p>
 											<p className="mt-1 max-w-[65ch] text-body text-ink">
-												{t(`pillars.${pillar}.description`)}
+												{pillar.key === "hostedInFrance"
+													? t("pillars.hostedInFrance.description", { host: pillar.host })
+													: t(`pillars.${pillar.key}.description`)}
 											</p>
 										</td>
 									</tr>

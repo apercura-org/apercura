@@ -40,6 +40,19 @@ test("the skip link moves focus to the main content", async ({ page }) => {
 	await expect(page).toHaveURL(/#main$/);
 });
 
+test("without PUBLIC_HDS_HOST the home page claims encryption, not HDS hosting", async ({
+	page,
+}) => {
+	await page.goto("/");
+	await expect(page.getByText("Données chiffrées", { exact: true })).toBeVisible();
+	await expect(
+		page.getByText(/Hébergez-les chez vous ou chez un hébergeur certifié HDS\./),
+	).toBeVisible();
+	await expect(page.getByText(/hébergées en France/)).toHaveCount(0);
+	await page.goto("/en");
+	await expect(page.getByText("Encrypted data", { exact: true })).toBeVisible();
+});
+
 test("the component gallery is not served in production", async ({ request }) => {
 	expect((await request.get("/_ui")).status()).toBe(404);
 	expect((await request.get("/en/_ui")).status()).toBe(404);

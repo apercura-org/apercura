@@ -54,7 +54,11 @@
 			},
 			"hostedInFrance": {
 				"title": "Health data hosted in France",
-				"description": "Health data is hosted in France by an HDS-certified host and encrypted at the application level."
+				"description": "Health data is hosted in France by an HDS-certified host ({host}) and encrypted at the application level."
+			},
+			"encrypted": {
+				"title": "Encrypted data",
+				"description": "Patient data is encrypted at the application level. Host it yourself or with an HDS-certified host."
 			},
 			"selfHostable": {
 				"title": "Self-hostable",
