@@ -67,18 +67,18 @@ async function Onboarding({ locale, step }: { locale: Locale; step: Step }) {
 					{STEPS.map((item, position) => (
 						<li
 							key={item}
-							className="flex items-baseline gap-3 border-b border-rule-soft py-3 last:border-b-0 sm:border-b-0 sm:border-e sm:px-4 sm:first:ps-0 sm:last:border-e-0"
+							// The current step is printed solid ink, like a selected tab.
+							className={`flex items-baseline gap-3 border-b border-rule-soft px-3 py-3 last:border-b-0 sm:border-b-0 sm:border-e sm:last:border-e-0 ${
+								item === step ? "bg-ink text-paper" : "text-ink"
+							}`}
 						>
-							<span
-								className="font-display text-title font-extrabold text-ink tabular"
-								aria-hidden="true"
-							>
+							<span className="font-display text-title font-extrabold tabular" aria-hidden="true">
 								{position + 1}
 							</span>
 							<Link
 								href={{ pathname: "/pro/bienvenue", query: { etape: String(position + 1) } }}
 								aria-current={item === step ? "step" : undefined}
-								className={`${linkStyles()} text-body aria-[current=step]:font-bold aria-[current=step]:decoration-2`}
+								className={`${linkStyles()} text-body aria-[current=step]:font-bold aria-[current=step]:text-paper aria-[current=step]:[--focus-ring:var(--color-paper)]`}
 							>
 								<span className="sr-only">
 									{t("stepNumber", { n: position + 1, total: STEPS.length })}{" "}
@@ -159,22 +159,28 @@ async function Onboarding({ locale, step }: { locale: Locale; step: Step }) {
 							emptyLabel={t("steps.booking.todo")}
 						/>
 						<FieldRow
-							label={t("steps.booking.opensAt")}
+							label={t("steps.booking.waitingPeriod")}
 							value={
-								data.bookingOpensAt
-									? format.dateTime(new Date(data.bookingOpensAt), { dateStyle: "long" })
-									: null
+								data.bookingOpensAt && new Date(data.bookingOpensAt) > new Date()
+									? t("steps.booking.waitingEnds", {
+											date: format.dateTime(new Date(data.bookingOpensAt), { dateStyle: "long" }),
+										})
+									: t("steps.booking.noWaiting")
 							}
 							emptyLabel={empty}
 						/>
 					</FieldList>
 					<p className="max-w-[65ch] text-meta text-ink-muted">{t("steps.booking.deontology")}</p>
-					<div className="flex flex-wrap gap-4">
-						<Link href={PRO_ROUTES.pageEditor} className={buttonStyles({ intent: "ink" })}>
+					<div>
+						{/* Wraps, and takes the full width below 640 px: the label is long. */}
+						<Link
+							href={PRO_ROUTES.pageEditor}
+							className={buttonStyles({
+								intent: "ink",
+								className: "w-full whitespace-normal py-2 sm:w-auto",
+							})}
+						>
 							{t("steps.booking.editFees")}
-						</Link>
-						<Link href={PRO_ROUTES.bookingSettings} className={buttonStyles({ intent: "ink" })}>
-							{t("steps.booking.settings")}
 						</Link>
 					</div>
 					<p className="max-w-[65ch] text-meta text-ink-muted">{t("steps.booking.settingsNote")}</p>

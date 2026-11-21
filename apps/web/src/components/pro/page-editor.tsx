@@ -210,9 +210,13 @@ export function PageEditor({
 		showPhone,
 	};
 
+	// What the server last saved: the preview says "not saved yet" only while the draft differs.
+	const [savedDraft, setSavedDraft] = useState(() => JSON.stringify(draft));
+	const dirty = JSON.stringify(draft) !== savedDraft;
 	const save = useMutation(
 		trpc.profile.save.mutationOptions({
-			onSuccess: () => {
+			onSuccess: (_result, variables) => {
+				setSavedDraft(JSON.stringify(variables.profile));
 				setSaved(true);
 				setFailure(null);
 				router.refresh();
@@ -895,7 +899,11 @@ export function PageEditor({
 						>
 							{t("preview.title")}
 						</h2>
-						<span className="text-meta text-cover-muted">{t("preview.note")}</span>
+						{dirty ? (
+							<span className="text-meta text-cover-muted" role="status">
+								{t("preview.note")}
+							</span>
+						) : null}
 					</div>
 					<div className="border-[1.5px] border-ink p-4 sm:p-6">
 						<PagePreview

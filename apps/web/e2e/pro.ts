@@ -105,9 +105,22 @@ export async function createProAccount(
 			period: 30,
 		}),
 	};
-	await page.getByLabel(/Code à 6 chiffres/).fill(await freshCode(account));
-	await page.getByRole("button", { name: "Activer" }).click();
-	await expect(page.getByText("L’application d’authentification est configurée.")).toBeVisible();
+	// Two-factor endpoints are limited to 5 a minute for what the server sees as one client.
+	const enabled = page.getByText("L’application d’authentification est configurée.");
+	for (let attempt = 0; ; attempt++) {
+		await page.getByLabel(/Code à 6 chiffres/).fill(await freshCode(account));
+		await page.getByRole("button", { name: "Activer" }).click();
+		const outcome = await Promise.race([
+			enabled.waitFor({ timeout: 10_000 }).then(() => "enabled" as const),
+			page
+				.getByText("Trop de tentatives. Attendez une minute, puis réessayez.")
+				.waitFor({ timeout: 10_000 })
+				.then(() => "limited" as const),
+		]).catch(() => "unknown" as const);
+		if (outcome !== "limited" || attempt >= 3) break;
+		await page.waitForTimeout(20_000);
+	}
+	await expect(enabled).toBeVisible();
 	return account;
 }
 

@@ -1,6 +1,18 @@
 "use client";
 
-import { Badge, Button, FileTrigger, linkStyles, Notice, Radio, RadioGroup } from "@apercura/ui";
+import {
+	Badge,
+	Button,
+	buttonStyles,
+	CheckIcon,
+	Dialog,
+	DialogTrigger,
+	FileTrigger,
+	Notice,
+	Radio,
+	RadioGroup,
+	Seal,
+} from "@apercura/ui";
 import { useMutation } from "@tanstack/react-query";
 import type { inferRouterOutputs } from "@trpc/server";
 import { useFormatter, useTranslations } from "next-intl";
@@ -103,6 +115,8 @@ export function ClaimWorkspace({
 			onSuccess: (result) => {
 				setCode(result.code);
 				setError(null);
+				// The check is now pending: refresh its badge (the code stays in local state).
+				router.refresh();
 			},
 			onError,
 		}),
@@ -169,9 +183,10 @@ export function ClaimWorkspace({
 	return (
 		<div className="flex flex-col gap-12">
 			<ClaimStatus data={data} />
-			{pscOutcome ? (
+			{/* A verified outcome is the verified status below: say it once. */}
+			{pscOutcome && pscOutcome !== "verified" ? (
 				<Notice
-					tone={pscOutcome === "verified" || pscOutcome === "passed" ? "success" : "error"}
+					tone={pscOutcome === "passed" ? "success" : "error"}
 					title={t(`psc.outcome.${pscOutcome}`)}
 				/>
 			) : null}
@@ -303,7 +318,7 @@ export function ClaimWorkspace({
 							<p className="caps text-ink">{t("methods.phone_callback.codeLabel")}</p>
 							<p
 								data-testid="callback-code"
-								className="w-fit border-y-2 border-ink px-1 py-2 font-display text-headline font-black tracking-[0.18em] text-ink tabular"
+								className="w-fit border-y-2 border-ink px-1 py-2 font-body text-headline font-bold tracking-[0.3em] text-ink tabular"
 							>
 								{code}
 							</p>
@@ -349,14 +364,41 @@ export function ClaimWorkspace({
 
 			{live ? (
 				<div className="border-t border-rule-soft pt-4">
-					<Button
-						intent="quiet"
-						isPending={withdraw.isPending}
-						pendingLabel={t("pending")}
-						onPress={() => withdraw.mutate({ claimId: claim.id })}
-					>
-						{t("withdraw")}
-					</Button>
+					<DialogTrigger>
+						<Button
+							intent="quiet"
+							className="px-0"
+							isPending={withdraw.isPending}
+							pendingLabel={t("pending")}
+						>
+							{t("withdraw")}
+						</Button>
+						<Dialog
+							role="alertdialog"
+							title={t("withdrawDialog.title")}
+							closeLabel={t("withdrawDialog.cancel")}
+						>
+							{({ close }) => (
+								<div className="flex flex-col gap-5">
+									<p className="max-w-[60ch] text-body text-ink">{t("withdrawDialog.body")}</p>
+									<div className="flex flex-wrap gap-3">
+										<Button
+											intent="ink"
+											onPress={() => {
+												close();
+												withdraw.mutate({ claimId: claim.id });
+											}}
+										>
+											{t("withdrawDialog.confirm")}
+										</Button>
+										<Button intent="quiet" onPress={close}>
+											{t("withdrawDialog.cancel")}
+										</Button>
+									</div>
+								</div>
+							)}
+						</Dialog>
+					</DialogTrigger>
 				</div>
 			) : null}
 		</div>
@@ -368,21 +410,41 @@ function ClaimStatus({ data }: { data: ClaimData }) {
 	const format = useFormatter();
 	const { claim } = data;
 	if (claim.status === "verified") {
+		// The stamp law: verified is printed in violet, with the page's seal ringed in stamp ink.
 		return (
-			<Notice tone="success" title={t("status.verified")} role="status">
-				<span className="flex flex-col gap-2">
+			<section
+				aria-labelledby="claim-verified"
+				role="status"
+				className="flex flex-col gap-5 border-y-2 border-ink py-6 sm:flex-row sm:items-start sm:gap-6"
+			>
+				<Seal rpps={data.practitioner.nationalId} verified size={72} />
+				<div className="flex min-w-0 flex-col gap-3">
+					<div>
+						<Badge tone="stamp">
+							<CheckIcon className="size-4" strokeWidth={2.5} />
+							{t("status.verifiedBadge")}
+						</Badge>
+					</div>
+					<h2
+						id="claim-verified"
+						className="font-display text-title font-bold text-ink font-stretch-semi-expanded"
+					>
+						{t("status.verified")}
+					</h2>
 					{claim.bookingOpensAt && new Date(claim.bookingOpensAt) > new Date() ? (
-						<span>
+						<p className="max-w-[60ch] text-body text-ink">
 							{t("status.bookingDelay", {
 								date: format.dateTime(new Date(claim.bookingOpensAt), { dateStyle: "long" }),
 							})}
-						</span>
+						</p>
 					) : null}
-					<Link href={PRO_ROUTES.onboarding} className={linkStyles()}>
-						{t("status.continue")}
-					</Link>
-				</span>
-			</Notice>
+					<div>
+						<Link href={PRO_ROUTES.onboarding} className={buttonStyles({ intent: "stamp" })}>
+							{t("status.continue")}
+						</Link>
+					</div>
+				</div>
+			</section>
 		);
 	}
 	if (claim.status === "in_review") {

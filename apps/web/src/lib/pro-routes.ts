@@ -10,8 +10,6 @@ export const PRO_ROUTES = {
 	claimEmail: "/pro/revendication-email",
 	onboarding: "/pro/bienvenue",
 	pageEditor: "/pro/page",
-	/** Added with online booking (M5); may answer 404 until then. */
-	bookingSettings: "/pro/agenda/reglages",
 	adminClaims: "/pro/admin/revendications",
 	adminReports: "/pro/admin/signalements",
 } as const;

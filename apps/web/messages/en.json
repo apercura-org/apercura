@@ -1529,7 +1529,8 @@
 			"securityLink": "Security settings",
 			"claimsHeading": "Your page and claims",
 			"editPage": "Edit the page",
-			"openClaim": "Open the claim"
+			"openClaim": "Open the claim",
+			"adminRunningHead": "Administration"
 		},
 		"roles": {
 			"owner": "Owner",
@@ -1772,7 +1773,7 @@
 			"lead": {
 				"open": "Prove that you are this practitioner with one of the methods below.",
 				"in_review": "Your claim is in review.",
-				"verified": "Your page is verified.",
+				"verified": "Next step: complete your page.",
 				"rejected": "This claim was not accepted.",
 				"withdrawn": "This claim was withdrawn.",
 				"superseded": "This claim was withdrawn after a contest."
@@ -1806,7 +1807,7 @@
 		"withdraw": "Withdraw this claim",
 		"status": {
 			"verified": "Your page is verified",
-			"bookingDelay": "Online booking can open from {date}: without Pro Santé Connect, it opens 7 days after the verification.",
+			"bookingDelay": "Without Pro Santé Connect, the 7-day waiting period before online booking ends on {date}.",
 			"continue": "Complete your page",
 			"in_review": "Your claim is in review",
 			"contestReview": "This page already had a verified owner: an administrator decides, and Pro Santé Connect proves it fastest.",
@@ -1816,7 +1817,8 @@
 			"withdrawn": "This claim was withdrawn",
 			"superseded": "This claim was withdrawn after a contest",
 			"contestTitle": "This page already has a verified owner",
-			"contestBody": "An administrator will decide. Pro Santé Connect proves your identity fastest; the other methods need a document and a callback."
+			"contestBody": "An administrator will decide. Pro Santé Connect proves your identity fastest; the other methods need a document and a callback.",
+			"verifiedBadge": "Verified page"
 		},
 		"emailLink": {
 			"title": "Confirm the claim",
@@ -1831,6 +1833,12 @@
 			"body": "If the practitioner of this practice asked to manage their Apercura page, confirm it. Otherwise close this page: nothing changes.",
 			"confirm": "Confirm the claim",
 			"pending": "Please wait"
+		},
+		"withdrawDialog": {
+			"title": "Withdraw this claim?",
+			"body": "The claim closes for good: its proofs stop counting and its documents are deleted 30 days from now. You can open a new claim later, starting again from the verification.",
+			"confirm": "Withdraw the claim",
+			"cancel": "Keep the claim"
 		}
 	},
 	"Onboarding": {
@@ -1866,9 +1874,10 @@
 				"todo": "To complete",
 				"deontology": "Article R.4127-53 of the public health code: a doctor who presents their activity online states their fees and the payment methods accepted.",
 				"editFees": "Complete fees and payment methods",
-				"settingsNote": "Booking settings arrive with online booking: the page may not be available yet.",
-				"opensAt": "Booking can open from",
-				"settings": "Booking settings"
+				"settingsNote": "Calendars, opening hours and appointment types are set up with online booking, from this space.",
+				"waitingPeriod": "Waiting period after verification",
+				"waitingEnds": "The 7-day waiting period ends on {date}",
+				"noWaiting": "None"
 			},
 			"publish": {
 				"label": "Publish",

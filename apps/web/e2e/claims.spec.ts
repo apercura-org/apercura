@@ -143,9 +143,13 @@ test("claim with Pro Santé Connect, complete the page, and the public page foll
 	await page.getByLabel("Numéro RPPS").fill(PSC_PRACTITIONER.rpps);
 	await page.getByRole("button", { name: "Valider avec e-CPS" }).click();
 	await expect(page).toHaveURL(/\?psc=verified$/);
+	// Said once: the verified status, stamped violet, with the next step as the primary action.
 	await expect(
-		page.getByText("Pro Santé Connect a confirmé votre identité : votre page est vérifiée."),
+		page.getByRole("heading", { level: 2, name: "Votre page est vérifiée" }),
 	).toBeVisible();
+	await expect(page.getByText("Page vérifiée", { exact: true })).toBeVisible();
+	await expect(page.getByText("Pro Santé Connect a confirmé votre identité")).toHaveCount(0);
+	await expectNoAxeViolations(page);
 
 	// 3. Onboarding: check, booking placeholder, publish.
 	await page.getByRole("link", { name: "Compléter votre page" }).click();
@@ -157,9 +161,8 @@ test("claim with Pro Santé Connect, complete the page, and the public page foll
 	await expect(
 		page.getByRole("heading", { name: "Horaires et prise de rendez-vous" }),
 	).toBeVisible();
-	await expect(
-		page.getByRole("link", { name: "Réglages de la prise de rendez-vous" }),
-	).toHaveAttribute("href", "/pro/agenda/reglages");
+	// No link to booking settings until that page exists.
+	await expect(page.getByRole("link", { name: /Réglages/ })).toHaveCount(0);
 	await expectNoAxeViolations(page);
 	await page.getByRole("link", { name: "Continuer" }).click();
 	await page.getByRole("button", { name: "Publier ma page" }).click();
@@ -269,6 +272,13 @@ test("claim with a document and a registry phone callback; an administrator appr
 			),
 		});
 	await expect(page.getByText("Carte CPS", { exact: true })).toBeVisible();
+	// Withdrawing asks first, naming the consequence.
+	await page.getByRole("button", { name: "Retirer cette revendication" }).click();
+	const confirm = page.getByRole("alertdialog", { name: "Retirer cette revendication ?" });
+	await expect(confirm).toBeVisible();
+	await expect(confirm.getByText(/justificatifs sont supprimés dans 30 jours/)).toBeVisible();
+	await confirm.getByRole("button", { name: "Garder la revendication" }).click();
+	await expect(confirm).toHaveCount(0);
 	await page.getByRole("button", { name: "Afficher mon code" }).click();
 	const code = (await page.getByTestId("callback-code").textContent())?.trim() ?? "";
 	expect(code).toMatch(/^\d{6}$/);

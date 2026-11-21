@@ -27,8 +27,6 @@ export const routing = defineRouting({
 		"/pro/revendication-email": "/pro/revendication-email",
 		"/pro/bienvenue": "/pro/bienvenue",
 		"/pro/page": "/pro/page",
-		// Booking settings (M5): linked from onboarding before the page exists.
-		"/pro/agenda/reglages": "/pro/agenda/reglages",
 		"/pro/admin/revendications": "/pro/admin/revendications",
 		"/pro/admin/revendications/[id]": "/pro/admin/revendications/[id]",
 		"/pro/admin/signalements": "/pro/admin/signalements",

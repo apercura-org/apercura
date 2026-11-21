@@ -92,7 +92,13 @@ export async function ProShell({
 						{lead ? <p className="max-w-[58ch] text-lead text-cover-ink">{lead}</p> : null}
 					</div>
 				</div>
-				<BookletPage runningHead={t("runningHead")}>{children}</BookletPage>
+				<BookletPage
+					runningHead={
+						current.startsWith("/pro/admin") ? t("app.adminRunningHead") : t("runningHead")
+					}
+				>
+					{children}
+				</BookletPage>
 			</main>
 			<SiteFooter locale={locale} />
 		</>

@@ -1529,7 +1529,8 @@
 			"securityLink": "Réglages de sécurité",
 			"claimsHeading": "Votre page et vos revendications",
 			"editPage": "Modifier la page",
-			"openClaim": "Ouvrir la revendication"
+			"openClaim": "Ouvrir la revendication",
+			"adminRunningHead": "Administration"
 		},
 		"roles": {
 			"owner": "Titulaire",
@@ -1772,7 +1773,7 @@
 			"lead": {
 				"open": "Prouvez que vous êtes ce praticien avec l’une des méthodes ci-dessous.",
 				"in_review": "Votre revendication est en cours d’examen.",
-				"verified": "Votre page est vérifiée.",
+				"verified": "Prochaine étape : compléter votre page.",
 				"rejected": "Cette revendication n’a pas été acceptée.",
 				"withdrawn": "Cette revendication a été retirée.",
 				"superseded": "Cette revendication a été retirée après une contestation."
@@ -1806,7 +1807,7 @@
 		"withdraw": "Retirer cette revendication",
 		"status": {
 			"verified": "Votre page est vérifiée",
-			"bookingDelay": "La prise de rendez-vous en ligne pourra ouvrir à partir du {date} : sans Pro Santé Connect, elle ouvre 7 jours après la vérification.",
+			"bookingDelay": "Sans Pro Santé Connect, la période d’attente de 7 jours avant la prise de rendez-vous en ligne se termine le {date}.",
 			"continue": "Compléter votre page",
 			"in_review": "Votre revendication est en cours d’examen",
 			"contestReview": "Cette page avait déjà un titulaire vérifié : un administrateur tranche, et Pro Santé Connect le prouve le plus vite.",
@@ -1816,7 +1817,8 @@
 			"withdrawn": "Cette revendication a été retirée",
 			"superseded": "Cette revendication a été retirée après une contestation",
 			"contestTitle": "Cette page a déjà un titulaire vérifié",
-			"contestBody": "Un administrateur tranchera. Pro Santé Connect prouve votre identité le plus vite ; les autres méthodes demandent un justificatif et un rappel."
+			"contestBody": "Un administrateur tranchera. Pro Santé Connect prouve votre identité le plus vite ; les autres méthodes demandent un justificatif et un rappel.",
+			"verifiedBadge": "Page vérifiée"
 		},
 		"emailLink": {
 			"title": "Confirmez la revendication",
@@ -1831,6 +1833,12 @@
 			"body": "Si le praticien de ce cabinet a demandé à gérer sa page Apercura, confirmez-le. Sinon, fermez cette page : rien ne change.",
 			"confirm": "Confirmer la revendication",
 			"pending": "Veuillez patienter"
+		},
+		"withdrawDialog": {
+			"title": "Retirer cette revendication ?",
+			"body": "La revendication se ferme définitivement : ses preuves ne comptent plus et ses justificatifs sont supprimés dans 30 jours. Vous pourrez en ouvrir une nouvelle plus tard, en reprenant la vérification depuis le début.",
+			"confirm": "Retirer la revendication",
+			"cancel": "Garder la revendication"
 		}
 	},
 	"Onboarding": {
@@ -1866,9 +1874,10 @@
 				"todo": "À compléter",
 				"deontology": "Article R.4127-53 du code de la santé publique : le médecin qui présente son activité en ligne indique ses honoraires et les moyens de paiement acceptés.",
 				"editFees": "Indiquer honoraires et moyens de paiement",
-				"settingsNote": "Les réglages arrivent avec la prise de rendez-vous en ligne : la page n’est peut-être pas encore disponible.",
-				"opensAt": "Prise de rendez-vous possible à partir du",
-				"settings": "Réglages de la prise de rendez-vous"
+				"settingsNote": "Agendas, horaires et motifs se règlent avec la prise de rendez-vous en ligne, depuis cet espace.",
+				"waitingPeriod": "Période d’attente après la vérification",
+				"waitingEnds": "La période d’attente de 7 jours se termine le {date}",
+				"noWaiting": "Aucune"
 			},
 			"publish": {
 				"label": "Publier",
