@@ -1,0 +1,34 @@
+{
+	"Metadata": {
+		"title": "Apercura",
+		"description": "L’annuaire ouvert et l’outil de prise de rendez-vous gratuit pour tous les professionnels de santé en France."
+	},
+	"HomePage": {
+		"title": "Apercura",
+		"tagline": "L’annuaire ouvert et l’outil de prise de rendez-vous gratuit pour tous les professionnels de santé en France.",
+		"pillarsHeading": "Nos engagements",
+		"pillars": {
+			"free": {
+				"title": "Gratuit",
+				"description": "Gratuit pour les professionnels comme pour les patients, sans abonnement ni commission."
+			},
+			"openSource": {
+				"title": "Open source",
+				"description": "L’intégralité du code source est publiée sous licence AGPL-3.0."
+			},
+			"hostedInFrance": {
+				"title": "Données de santé hébergées en France",
+				"description": "Les données de santé sont hébergées en France par un hébergeur certifié HDS et chiffrées au niveau applicatif."
+			},
+			"selfHostable": {
+				"title": "Auto-hébergeable",
+				"description": "Déployez toute la plateforme vous-même avec Docker, import des données ouvertes inclus."
+			}
+		},
+		"status": "Projet en cours de construction."
+	},
+	"LocaleSwitcher": {
+		"label": "Langue",
+		"locale": "{locale, select, fr {Français} en {English} other {Inconnue}}"
+	}
+}

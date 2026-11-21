@@ -1,0 +1,26 @@
+const LIGATURES: Record<string, string> = {
+	œ: "oe",
+	Œ: "oe",
+	æ: "ae",
+	Æ: "ae",
+	ß: "ss",
+};
+
+/**
+ * Turns free text (names, cities, specialties) into a URL-safe slug:
+ * lowercase ASCII letters and digits separated by single dashes.
+ *
+ * - French diacritics are stripped (`é` -> `e`, `ç` -> `c`).
+ * - Ligatures are expanded (`œ` -> `oe`, `æ` -> `ae`).
+ * - Apostrophes, spaces and any other separator become `-`.
+ * - Repeated dashes are collapsed and leading/trailing dashes removed.
+ */
+export function slugify(text: string): string {
+	return text
+		.replace(/[œŒæÆß]/g, (char) => LIGATURES[char] ?? char)
+		.normalize("NFKD")
+		.replace(/\p{Mark}/gu, "")
+		.toLowerCase()
+		.replace(/[^a-z0-9]+/g, "-")
+		.replace(/^-+|-+$/g, "");
+}
