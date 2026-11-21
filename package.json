@@ -15,6 +15,7 @@
 		"check:write": "biome check --write .",
 		"typecheck": "turbo run typecheck",
 		"test": "turbo run test",
+		"test:e2e": "SKIP_ENV_VALIDATION=1 turbo run build --filter=@apercura/web && bun run --cwd apps/web test:e2e",
 		"db:generate": "bun run --cwd packages/db db:generate",
 		"db:migrate": "bun run --cwd packages/db db:migrate",
 		"keys:generate": "bun scripts/generate-keys.ts"
