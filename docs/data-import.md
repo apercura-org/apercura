@@ -210,15 +210,15 @@ minutes.
 
 Laptop, local PostGIS 17, files of 19–21/11/2026, role `apercura_etl`:
 
-| | First run | Rerun (`--force`, same files) |
-|---|---|---|
-| Duration | 255 s (114 s download) | 159 s (84 s download), 0 changes |
-| Peak RSS (OS) | 822 MB | 815 MB |
-| Practitioners merged | 34,784 (doctors 29,521, dentists 4,016, midwives 1,247) | — |
-| Indexable | 28,930 | — |
-| Sites | 20,528: 15,868 geocoded at the address, 658 at the street, 2,418 from FINESS+, 1,580 at the commune centroid, 4 not located | — |
-| Ameli matched | 11,117 | — |
-| Cache tags | 97,709 (sent as coarse tags) | 0 |
+|                      | First run                                                                                                                   | Rerun (`--force`, same files)    |
+| -------------------- | --------------------------------------------------------------------------------------------------------------------------- | -------------------------------- |
+| Duration             | 255 s (114 s download)                                                                                                      | 159 s (84 s download), 0 changes |
+| Peak RSS (OS)        | 822 MB                                                                                                                      | 815 MB                           |
+| Practitioners merged | 34,784 (doctors 29,521, dentists 4,016, midwives 1,247)                                                                     | —                                |
+| Indexable            | 28,930                                                                                                                      | —                                |
+| Sites                | 20,528: 15,868 geocoded at the address, 658 at the street, 2,418 from FINESS+, 1,580 at the commune centroid, 4 not located | —                                |
+| Ameli matched        | 11,117                                                                                                                      | —                                |
+| Cache tags           | 97,709 (sent as coarse tags)                                                                                                | 0                                |
 
 An unchanged run stops after the download (`skipped`, 101 s, 121 MB). The
 whole file is parsed and staged even with `--department`, so memory and
