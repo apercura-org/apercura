@@ -15,20 +15,40 @@ export interface Oklch {
 
 export type Rgb = readonly [number, number, number];
 
-const OKLCH_PATTERN =
-	/^oklch\(\s*([\d.]+)(%?)\s+([\d.]+)\s+([\d.]+)(?:deg)?\s*(?:\/\s*([\d.]+)(%?))?\s*\)$/;
+const NUMBER_PATTERN = /^\d+(?:\.\d+)?$|^\.\d+$/;
 
-/** Parses an `oklch(L C H)` or `oklch(L C H / A)` string. */
-export function parseOklch(value: string): Oklch {
-	const match = OKLCH_PATTERN.exec(value.trim());
-	if (!match) {
+function parseComponent(raw: string, allowPercent: boolean, value: string): number {
+	const isPercent = allowPercent && raw.endsWith("%");
+	const digits = isPercent ? raw.slice(0, -1) : raw;
+	if (!NUMBER_PATTERN.test(digits)) {
 		throw new Error(`Not an oklch() colour: ${value}`);
 	}
-	const [, l = "0", lPercent, c = "0", h = "0", alpha, alphaPercent] = match;
-	const lightness = Number(l) / (lPercent ? 100 : 1);
-	const result: Oklch = { l: lightness, c: Number(c), h: Number(h) };
-	if (alpha !== undefined) {
-		result.alpha = Number(alpha) / (alphaPercent ? 100 : 1);
+	return Number(digits) / (isPercent ? 100 : 1);
+}
+
+/**
+ * Parses an `oklch(L C H)` or `oklch(L C H / A)` string. Implemented without a
+ * backtracking regular expression so it runs in linear time on any input.
+ */
+export function parseOklch(value: string): Oklch {
+	const trimmed = value.trim();
+	if (!trimmed.startsWith("oklch(") || !trimmed.endsWith(")")) {
+		throw new Error(`Not an oklch() colour: ${value}`);
+	}
+	const [channels = "", alphaPart, ...rest] = trimmed.slice(6, -1).split("/");
+	const parts = channels.trim().split(/\s+/);
+	if (rest.length > 0 || parts.length !== 3) {
+		throw new Error(`Not an oklch() colour: ${value}`);
+	}
+	const [l = "", c = "", h = ""] = parts;
+	const hue = h.endsWith("deg") ? h.slice(0, -3) : h;
+	const result: Oklch = {
+		l: parseComponent(l, true, value),
+		c: parseComponent(c, false, value),
+		h: parseComponent(hue, false, value),
+	};
+	if (alphaPart !== undefined) {
+		result.alpha = parseComponent(alphaPart.trim(), true, value);
 	}
 	return result;
 }
