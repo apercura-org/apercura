@@ -38,7 +38,10 @@ module.exports = {
 			url: [HOME, PRACTITIONER, LISTING],
 			numberOfRuns: 3,
 			settings: {
-				chromeFlags: "--headless=new --no-sandbox",
+				chromeFlags: "--headless=new --no-sandbox --lang=fr-FR",
+				// A French visitor: an English browser would be sent to the (noindex) /en pages
+				// by the locale detection.
+				extraHeaders: JSON.stringify({ "Accept-Language": "fr-FR,fr;q=0.9" }),
 			},
 		},
 		assert: {
