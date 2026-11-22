@@ -10,9 +10,8 @@ import type { Metadata } from "next";
 import { hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { BookletPage } from "~/components/booklet-page";
-import { ClientIsland, SEARCH_FORM_MESSAGES } from "~/components/client-island";
+import { HomeSearch } from "~/components/home-search";
 import { PageGraph } from "~/components/page-graph";
-import { SearchForm } from "~/components/search-form";
 import { SiteFooter } from "~/components/site-footer";
 import { SiteHeader } from "~/components/site-header";
 import { SpecimenPage } from "~/components/specimen-page";
@@ -24,7 +23,6 @@ import { getPillars } from "~/lib/pillars";
 import { BRAND, CONTENT_LANGUAGES, pageMetadata } from "~/lib/seo";
 import { siteOrigin } from "~/lib/site-url";
 import { siteNodes } from "~/lib/structured-data";
-import { TRPCReactProvider } from "~/trpc/client";
 
 /** National register figures supplied in PRODUCT.md (Annuaire Santé, 19 November 2026). */
 const REGISTRY = {
@@ -94,11 +92,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
 							{/* Apercura's own seal (brand seed, never an RPPS), engraved in graphite line work. */}
 							<BrandSeal size={168} className="hidden shrink-0 text-ink md:block" />
 						</div>
-						<ClientIsland locale={locale} namespaces={SEARCH_FORM_MESSAGES}>
-							<TRPCReactProvider>
-								<SearchForm idPrefix="home-search" />
-							</TRPCReactProvider>
-						</ClientIsland>
+						<HomeSearch locale={locale} idPrefix="home-search" />
 					</div>
 				</div>
 

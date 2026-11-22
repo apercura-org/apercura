@@ -75,6 +75,25 @@ test("“Où ?” suggests places with their department", async ({ page }) => {
 	);
 });
 
+test("the home search gets its suggestions on first use, keeping the text and the focus", async ({
+	page,
+}) => {
+	await page.goto("/");
+	// The plain GET form until the visitor reaches it: no combo box code at load.
+	await expect(page.getByLabel("Qui ?")).toHaveAttribute("type", "search");
+	await expect(page.getByRole("combobox")).toHaveCount(0);
+	await page.getByLabel("Qui ?").focus();
+	await page.keyboard.type("Fic");
+	const who = page.getByRole("combobox", { name: "Qui ?" });
+	await expect(who).toBeFocused();
+	await expect(who).toHaveValue("Fic");
+	await page.keyboard.type("t");
+	const option = page.getByRole("option", { name: /Jean-Pierre Fictif/ });
+	await expect(option).toBeVisible();
+	await option.click();
+	await expect(page).toHaveURL(FICTIF_PAGE);
+});
+
 for (const path of [
 	"/recherche?quoi=Essai&ou=75015",
 	"/recherche",

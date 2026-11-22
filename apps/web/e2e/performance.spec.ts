@@ -19,8 +19,8 @@ const BUDGETS_KB: Record<string, number> = {
 	"/medecin-generaliste/75-paris": 60,
 	"/etablissement/centre-hospitalier-fictif-2a9999001": 60,
 	"/annuaire/75-paris": 60,
-	// The search form (combo boxes, suggestions over the API) is the home page's purpose.
-	"/": 160,
+	// The search form's combo boxes and API client load on first interaction.
+	"/": 60,
 };
 
 const manifest = JSON.parse(

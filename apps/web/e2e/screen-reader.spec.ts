@@ -90,8 +90,9 @@ test("home search, results and an unclaimed practitioner page read in order", as
 		"main",
 		"heading, Apercura, level 1",
 		"search, Trouver un professionnel de santé",
-		/^combobox, Qui \?, has popup listbox/,
-		/^combobox, Où \?, has popup listbox/,
+		// Plain search fields until first used: the suggestions load then (DeferredSearchForm).
+		/^searchbox, Qui \?/,
+		/^searchbox, Où \?/,
 		"button, Chercher",
 		"heading, Chaque professionnel a déjà sa page, level 2",
 		// The specimen card is labelled as fictitious before anything else is read.
@@ -110,7 +111,9 @@ test("home search, results and an unclaimed practitioner page read in order", as
 
 	// Search by name with the keyboard: the results say what was searched, how they are sorted
 	// and, honestly, that booking is not open for these practitioners yet.
+	await page.getByLabel("Qui ?").focus();
 	const who = page.getByRole("combobox", { name: "Qui ?" });
+	await expect(who).toBeFocused();
 	await who.fill("Fictif");
 	// Suggestions open as the user types; Tab leaves them for "Où ?", Enter submits the form.
 	await expect(page.getByRole("option", { name: /Jean-Pierre Fictif/ })).toBeVisible();
