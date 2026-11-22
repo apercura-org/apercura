@@ -13,6 +13,8 @@ import { parseQuotedRecord } from "./lib/text";
 export const GEOCODE_MIN_SCORE = 0.6;
 /** The endpoint accepts up to 200,000 lines or 50 MB; smaller chunks retry cheaply. */
 export const GEOCODE_CHUNK_SIZE = 50_000;
+/** A full batch takes minutes; past this the request is abandoned and retried. */
+const GEOCODE_TIMEOUT_MS = 10 * 60_000;
 
 export type GeocodeInput = {
 	key: string;
@@ -159,6 +161,8 @@ async function geocodeChunk(
 				method: "POST",
 				body: form,
 				headers: { "user-agent": USER_AGENT },
+				// A batch of addresses takes seconds; a hung geocoder must not hang the import.
+				signal: AbortSignal.timeout(GEOCODE_TIMEOUT_MS),
 			});
 			if (response.status === 429 || response.status >= 500) {
 				throw new Error(`geocoder answered ${response.status}`);
