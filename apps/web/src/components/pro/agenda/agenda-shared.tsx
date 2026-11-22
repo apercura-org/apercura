@@ -145,7 +145,7 @@ export function AddEntryDialog({
 }) {
 	const t = useTranslations("Agenda.add");
 	const tCommon = useTranslations("Agenda.common");
-	const locale = useLocale() === "en" ? "en" : "fr";
+	const locale = useLocale();
 	const trpc = useTRPC();
 	const refresh = useAgendaRefresh();
 	const activeTypes = calendar.types.filter((type) => type.active);

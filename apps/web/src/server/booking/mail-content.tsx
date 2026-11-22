@@ -3,6 +3,8 @@ import { render } from "@react-email/render";
 import { eq } from "drizzle-orm";
 import { createTranslator } from "next-intl";
 import { BookingEmail, type BookingEmailProps } from "~/emails/booking-email";
+import { messagesFor } from "~/i18n/catalogs";
+import { type Locale, toLocale } from "~/i18n/locales";
 import { buildIcs } from "~/lib/ics";
 import type { Executor } from "~/server/db-executor";
 import {
@@ -12,8 +14,6 @@ import {
 	readAppointmentPatients,
 	revealOtpCode,
 } from "~/server/phi";
-import en from "../../../messages/en.json";
-import fr from "../../../messages/fr.json";
 import {
 	agendaUrl,
 	appOrigin,
@@ -24,9 +24,6 @@ import {
 } from "./format";
 import type { OutboxKind } from "./outbox";
 import type { AppointmentRow } from "./transitions";
-
-const catalogs = { en, fr } as const;
-type Locale = keyof typeof catalogs;
 
 export interface RenderedMail {
 	to: string[];
@@ -43,8 +40,6 @@ export type OutboxRow = {
 	recipient: string;
 	otpChallengeId: string | null;
 };
-
-const asLocale = (value: unknown): Locale => (value === "en" ? "en" : "fr");
 
 /** Template keys (namespace `booking.email`) of each outbox kind. */
 const TEMPLATE: Record<OutboxKind, string> = {
@@ -135,7 +130,7 @@ async function loadPlace(
 	if (!row) {
 		throw new Error("Calendar of the appointment is missing");
 	}
-	const titles = catalogs[locale].taxonomy.title as Record<string, string>;
+	const titles = messagesFor(locale).taxonomy.title as Record<string, string>;
 	const title = row.titleCode ? titles[row.titleCode] : undefined;
 	const town = [row.postcode, row.communeLabel].filter(Boolean).join(" ");
 	return {
@@ -147,7 +142,7 @@ async function loadPlace(
 }
 
 function translator(locale: Locale) {
-	const t = createTranslator({ locale, messages: catalogs[locale], namespace: "booking.email" });
+	const t = createTranslator({ locale, messages: messagesFor(locale), namespace: "booking.email" });
 	// Template keys are chosen at run time from the outbox kind.
 	return (key: string, values?: Record<string, string>) => t(key as never, values as never);
 }
@@ -189,7 +184,7 @@ async function composePatientMail(
 	audit: AuditContext,
 	nowMs: number,
 ): Promise<RenderedMail[]> {
-	const locale = asLocale(appointment.patientLocale);
+	const locale = toLocale(appointment.patientLocale);
 	const t = translator(locale);
 	const fields: PatientField[] = ["email", "firstName", "lastName"];
 	if (kind === "booking_cancelled_by_practice") {
@@ -331,7 +326,7 @@ async function composePracticeMail(
 	const recipients = await practiceRecipients(db, appointment.organizationId);
 	const byLocale = new Map<Locale, string[]>();
 	for (const recipient of recipients) {
-		const locale = asLocale(recipient.locale);
+		const locale = toLocale(recipient.locale);
 		byLocale.set(locale, [...(byLocale.get(locale) ?? []), recipient.email]);
 	}
 	const mails: RenderedMail[] = [];

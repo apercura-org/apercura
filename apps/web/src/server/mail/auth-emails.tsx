@@ -1,16 +1,13 @@
 import "server-only";
 import { createTranslator } from "next-intl";
 import { VerifyEmail } from "~/emails/verify-email";
-import { type Locale, routing } from "~/i18n/routing";
-import en from "../../../messages/en.json";
-import fr from "../../../messages/fr.json";
+import { messagesFor } from "~/i18n/catalogs";
+import { type Locale, toLocale } from "~/i18n/locales";
 import { sendMail } from "./index";
-
-const catalogs = { en, fr } as const;
 
 /** Users store their locale; anything unknown falls back to the default (French). */
 export function emailLocale(value: unknown): Locale {
-	return routing.locales.includes(value as Locale) ? (value as Locale) : routing.defaultLocale;
+	return toLocale(value);
 }
 
 export async function sendVerificationEmail(options: {
@@ -20,7 +17,7 @@ export async function sendVerificationEmail(options: {
 	locale: unknown;
 }) {
 	const locale = emailLocale(options.locale);
-	const t = createTranslator({ locale, messages: catalogs[locale], namespace: "auth.email" });
+	const t = createTranslator({ locale, messages: messagesFor(locale), namespace: "auth.email" });
 	const strings = {
 		preview: t("verify.preview"),
 		wordmark: t("wordmark"),

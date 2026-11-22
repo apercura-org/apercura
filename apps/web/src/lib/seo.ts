@@ -1,8 +1,8 @@
 import { paletteHex } from "@apercura/ui/tokens";
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
+import { LOCALE_TAGS, type Locale, OG_LOCALES } from "~/i18n/locales";
 import type { Href } from "~/i18n/navigation";
-import type { Locale } from "~/i18n/routing";
 import { robotsFor } from "./robots";
 import { absoluteUrl, siteOrigin } from "./site-url";
 
@@ -19,9 +19,9 @@ export const PAPER_COLOR = paletteHex.paper;
 export const INK_COLOR = paletteHex.ink;
 
 /** Open Graph locales (`og:locale`). English is the British catalogue. */
-export const OG_LOCALES: Record<Locale, string> = { fr: "fr_FR", en: "en_GB" };
+export { OG_LOCALES };
 /** BCP 47 language tags of the page content (JSON-LD `inLanguage`). */
-export const CONTENT_LANGUAGES: Record<Locale, string> = { fr: "fr-FR", en: "en-GB" };
+export const CONTENT_LANGUAGES: Record<Locale, string> = LOCALE_TAGS;
 
 /** One static Open Graph image per profession, plus one for every other page. */
 export type OgImage = "medecin" | "chirurgien-dentiste" | "sage-femme" | "annuaire";

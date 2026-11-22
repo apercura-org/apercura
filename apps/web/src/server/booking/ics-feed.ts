@@ -2,10 +2,10 @@ import type { Database } from "@apercura/db";
 import { appointments, calendars, member, user } from "@apercura/db/schema";
 import { and, asc, eq, gte, inArray, lt } from "drizzle-orm";
 import { createTranslator } from "next-intl";
+import { messagesFor } from "~/i18n/catalogs";
+import { toLocale } from "~/i18n/locales";
 import { escapeText, foldLine, icsUtc } from "~/lib/ics";
 import { hashOpaqueToken, readAppointmentPatients } from "~/server/phi";
-import en from "../../../messages/en.json";
-import fr from "../../../messages/fr.json";
 import { BOOKING_LIMITS } from "./config";
 import { appOrigin } from "./format";
 
@@ -166,10 +166,10 @@ export async function readFeed(
 		.innerJoin(user, eq(user.id, member.userId))
 		.where(and(eq(member.organizationId, calendar.organizationId), eq(member.role, "owner")))
 		.limit(1);
-	const locale = owner?.locale === "en" ? "en" : "fr";
+	const locale = toLocale(owner?.locale);
 	const t = createTranslator({
 		locale,
-		messages: locale === "en" ? en : fr,
+		messages: messagesFor(locale),
 		namespace: "Agenda.feed",
 	});
 	const host = new URL(appOrigin()).host;

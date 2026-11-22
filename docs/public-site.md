@@ -18,7 +18,40 @@ functions in `apps/web/src/server/queries`.
 | `/rdv#t={token}` (manage an appointment)    | `/en/rdv#t=…`              | never (`noindex`, no referrer, no cache)   |
 | `/a-propos`, `/donnees`, …                  | `/en/about`, `/en/data`, … | yes                                        |
 
-English pages exist for the interface and are always `noindex` in v1.
+### Locales
+
+Five interface locales, all from `apps/web/src/i18n/locales.ts`: French (the
+default, no prefix), English (`/en`, the source catalog, British English),
+German (`/de`), Spanish (`/es`) and Italian (`/it`). Route segments are
+translated per locale in `routing.ts`; listing slugs stay French in every
+locale (they are data):
+
+| fr                  | en               | de                     | es               | it                |
+| ------------------- | ---------------- | ---------------------- | ---------------- | ----------------- |
+| `/praticien/…`      | `/practitioner`  | `/behandler`           | `/profesional`   | `/professionista` |
+| `…/signaler`        | `…/report`       | `…/meldung`            | `…/notificacion` | `…/segnalazione`  |
+| `…/retrait`         | `…/removal`      | `…/entfernung`         | `…/retirada`     | `…/rimozione`     |
+| `/etablissement/…`  | `/establishment` | `/einrichtung`         | `/centro`        | `/struttura`      |
+| `/annuaire`         | `/directory`     | `/verzeichnis`         | `/directorio`    | `/elenco`         |
+| `/recherche`        | `/search`        | `/suche`               | `/buscar`        | `/cerca`          |
+| `/a-propos`         | `/about`         | `/ueber-uns`           | `/acerca-de`     | `/chi-siamo`      |
+| `/donnees`          | `/data`          | `/daten`               | `/datos`         | `/dati`           |
+| `/accessibilite`    | `/accessibility` | `/barrierefreiheit`    | `/accesibilidad` | `/accessibilita`  |
+| `/confidentialite`  | `/privacy`       | `/datenschutz`         | `/privacidad`    | `/privacy`        |
+| `/mentions-legales` | `/legal-notice`  | `/impressum`           | `/aviso-legal`   | `/note-legali`    |
+| `/conditions`       | `/terms`         | `/nutzungsbedingungen` | `/condiciones`   | `/condizioni`     |
+
+Only French pages are indexed in v1 (`INDEXABLE_LOCALES`): pages in the other
+locales exist for the interface, are always `noindex`, stay out of the
+sitemaps and get no hreflang until their market opens
+([ADR 0002](adr/0002-multi-country.md)). Dates, times and numbers use each
+locale's own conventions (`LOCALE_TAGS`: `fr-FR`, `en-GB`, `de-DE`, `es-ES`,
+`it-IT`, a 24-hour clock in all of them); emails use the recipient's stored
+locale. The catalogs (`apps/web/messages/{fr,en,de,es,it}.json`) are checked
+by `src/i18n/catalogs.test.ts`: the same keys as `en.json`, the same ICU
+arguments and tags in every message, and every plural form each language
+selects.
+
 Reserved first segments (`RESERVED_SEGMENTS` in `@apercura/core/taxonomy`) are
 never treated as listing slugs.
 
@@ -39,7 +72,8 @@ decision, `instant = false`), with the pure rules of `@apercura/core`
 - canonical path, in the proxy: `/fr/…` and paths with capitals answer 308 to
   the unprefixed, lowercase path (`/pro` and percent-escapes are left as they
   are); next-intl's redirects of a prefixed path (`/en/annuaire` →
-  `/en/directory`) are 308, its locale detection of an unprefixed path 307.
+  `/en/directory`, `/de/annuaire` → `/de/verzeichnis`) are 308, its locale
+  detection of an unprefixed path 307.
 
 Next.js 16.4 repeats the (identical) `Location` header on the first, uncached
 render of a page-level redirect; clients follow either copy.
@@ -85,11 +119,12 @@ bake canonical URLs, Open Graph and JSON-LD on it.
   `/sitemaps/{praticiens|listes|lieux|etablissements}-{k}.xml`, where chunk `k`
   holds the ids `[k × 20,000, (k + 1) × 20,000)`. Only indexable canonical
   French URLs, `lastmod` = `content_updated_at`, no `changefreq`/`priority`.
-- `/robots.txt` disallows only `/recherche`, `/en/search`, `/api/`, `/_ui` and
+- `/robots.txt` disallows only the search page of every locale (`/recherche`,
+  `/en/search`, `/de/suche`…), `/api/`, `/_ui` and
   the signed-in practitioner area (`/pro/tableau-de-bord`, `/pro/agenda`…);
   `noindex` pages stay crawlable, among them the claim, sign-in and sign-up
   pages every practitioner page links to.
-- `X-Robots-Tag` (next.config.ts) repeats the robots meta for English pages,
+- `X-Robots-Tag` (next.config.ts) repeats the robots meta for every page outside French,
   search, the practitioner space and the report and removal forms.
 - The import blocks a run (`integrity.orphans`, approvable) when an indexable
   practitioner is listed on no listing page.
@@ -98,9 +133,9 @@ bake canonical URLs, Open Graph and JSON-LD on it.
 
 - `pageMetadata` (`src/lib/seo.ts`) gives every public page its title (60
   characters at most when possible, brand suffix), description (155), absolute
-  self canonical, robots (`robotsFor`: English never indexed in v1) and
+  self canonical, robots (`robotsFor`: only French indexed in v1) and
   complete Open Graph and Twitter cards (Next.js replaces a parent's
-  `openGraph` instead of merging it). No hreflang while English is `noindex`.
+  `openGraph` instead of merging it). No hreflang while the other locales are `noindex`.
 - One JSON-LD `@graph` per page (`src/lib/structured-data.ts`, typed with
   `schema-dts`), with `@id`s made of the canonical URL and a fragment:
   `IndividualPhysician` (doctors), `Dentist`, `Person` with `hasOccupation`

@@ -41,7 +41,7 @@ export function TeamManager({
 	const tRoles = useTranslations("auth.roles");
 	const tCommon = useTranslations("Agenda.common");
 	const format = useFormatter();
-	const locale = useLocale() === "en" ? "en" : "fr";
+	const locale = useLocale();
 	const trpc = useTRPC();
 	const queryClient = useQueryClient();
 	const team = useQuery(trpc.team.list.queryOptions({ organizationId }));

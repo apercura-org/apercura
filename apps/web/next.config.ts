@@ -4,6 +4,8 @@ import "./src/env";
 
 import type { NextConfig } from "next";
 import createNextIntlPlugin from "next-intl/plugin";
+import { PREFIXED_LOCALES } from "./src/i18n/locales";
+import { routing } from "./src/i18n/routing";
 
 const nextConfig: NextConfig = {
 	cacheComponents: true,
@@ -26,20 +28,27 @@ const nextConfig: NextConfig = {
 			{ key: "Cache-Control", value: "private, no-store" },
 		];
 		// The same directives as the pages' robots meta, for crawlers that read headers only:
-		// English pages are never indexed in v1, nor search results, the practitioner space and
-		// the per-practitioner forms. `/pro` itself (the practitioners' page) stays indexable.
+		// pages in a locale other than French are never indexed in v1, nor search results, the
+		// practitioner space and the per-practitioner forms. `/pro` itself (the practitioners'
+		// page) stays indexable.
 		const noindex = [{ key: "X-Robots-Tag", value: "noindex" }];
 		const noindexNofollow = [{ key: "X-Robots-Tag", value: "noindex, nofollow" }];
+		const prefixed = `:locale(${PREFIXED_LOCALES.join("|")})`;
+		const forms = ["/praticien/[slug]/signaler", "/praticien/[slug]/retrait"] as const;
 		return [
-			{ source: "/en", headers: noindex },
-			{ source: "/en/:path*", headers: noindex },
+			{ source: `/${prefixed}`, headers: noindex },
+			{ source: `/${prefixed}/:path*`, headers: noindex },
 			{ source: "/recherche", headers: noindex },
-			{ source: "/:locale(en)?/pro/:path+", headers: noindexNofollow },
-			{ source: "/praticien/:slug/:form(signaler|retrait)", headers: noindexNofollow },
-			{ source: "/en/practitioner/:slug/:form(report|removal)", headers: noindexNofollow },
+			{ source: `/${prefixed}?/pro/:path+`, headers: noindexNofollow },
+			...routing.locales.flatMap((locale) =>
+				forms.map((form) => ({
+					source: `${locale === routing.defaultLocale ? "" : `/${locale}`}${routing.pathnames[form][locale].replace("[slug]", ":slug")}`,
+					headers: noindexNofollow,
+				})),
+			),
 			// Last, so they win over the rules above.
 			{ source: "/rdv", headers: manage },
-			{ source: "/en/rdv", headers: manage },
+			{ source: `/${prefixed}/rdv`, headers: manage },
 		];
 	},
 };

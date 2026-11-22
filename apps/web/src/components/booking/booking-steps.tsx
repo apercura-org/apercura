@@ -211,7 +211,7 @@ export function DetailsStep({
 					phone: details.phone.trim() ? details.phone : null,
 					isNew: details.firstVisit === "" ? null : details.firstVisit === "yes",
 				},
-				locale: locale === "en" ? "en" : "fr",
+				locale,
 				idempotencyKey: crypto.randomUUID(),
 				altcha: proof,
 				...(typeof website === "string" && website ? { website } : {}),

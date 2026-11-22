@@ -52,6 +52,7 @@ import {
 import { parseDate, Time } from "@internationalized/date";
 import { useLocale, useTranslations } from "next-intl";
 import { type ReactNode, useMemo, useState } from "react";
+import { LOCALE_TAGS } from "~/i18n/locales";
 import { SAMPLE_CITIES, SAMPLE_PRACTITIONERS } from "./fixtures";
 
 type SortDescriptor = { column: string | number; direction: "ascending" | "descending" };
@@ -103,7 +104,7 @@ export function GalleryPrimitives() {
 	}, [sort, locale]);
 
 	return (
-		<UIProvider locale={locale === "fr" ? "fr-FR" : "en-GB"}>
+		<UIProvider locale={LOCALE_TAGS[locale]}>
 			<div className="flex flex-col gap-14">
 				<Section id="g-buttons" title={t("sections.buttons")}>
 					<Specimen label={t("states.default")}>

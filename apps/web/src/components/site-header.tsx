@@ -42,7 +42,7 @@ export async function SiteHeader({ locale, href, showWordmark = true }: SiteHead
 						</Link>
 					</nav>
 					<nav aria-label={tLocale("label")}>
-						<ul className="flex items-center gap-1">
+						<ul className="flex flex-wrap items-center gap-x-1">
 							{routing.locales.map((other) => (
 								<li key={other}>
 									<LocaleSwitchLink

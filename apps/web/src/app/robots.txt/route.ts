@@ -1,4 +1,7 @@
 import { connection } from "next/server";
+import { PREFIXED_LOCALES } from "~/i18n/locales";
+import { getPathname } from "~/i18n/navigation";
+import { routing } from "~/i18n/routing";
 import { siteOrigin } from "~/lib/site-url";
 
 /**
@@ -28,12 +31,14 @@ export async function GET() {
 	await connection();
 	const body = [
 		"User-agent: *",
-		"Disallow: /recherche",
-		"Disallow: /en/search",
+		...routing.locales.map((locale) => `Disallow: ${getPathname({ href: "/recherche", locale })}`),
 		"Disallow: /api/",
 		"Disallow: /_ui",
-		"Disallow: /en/_ui",
-		...PRO_APP.flatMap((path) => [`Disallow: ${path}`, `Disallow: /en${path}`]),
+		...PREFIXED_LOCALES.map((locale) => `Disallow: /${locale}/_ui`),
+		...PRO_APP.flatMap((path) => [
+			`Disallow: ${path}`,
+			...PREFIXED_LOCALES.map((locale) => `Disallow: /${locale}${path}`),
+		]),
 		"",
 		`Sitemap: ${siteOrigin()}/sitemap.xml`,
 		"",

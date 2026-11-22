@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { LOCALES } from "~/i18n/locales";
 import {
 	addException,
 	agendaOverview,
@@ -58,7 +59,7 @@ export const calendarRouter = createTRPCRouter({
 
 	/** The settings page: places with their time zone, calendars, presets and the agenda gate. */
 	overview: owner
-		.input(z.object({ locale: z.enum(["fr", "en"]) }))
+		.input(z.object({ locale: z.enum(LOCALES) }))
 		.query(({ ctx, input }) =>
 			asTrpc(() =>
 				agendaOverview(
@@ -96,7 +97,7 @@ export const calendarRouter = createTRPCRouter({
 		),
 
 	presets: owner
-		.input(z.object({ practitionerId: z.number().int().positive(), locale: z.enum(["fr", "en"]) }))
+		.input(z.object({ practitionerId: z.number().int().positive(), locale: z.enum(LOCALES) }))
 		.query(({ ctx, input }) =>
 			asTrpc(() => presetsFor(ctx.db(), ctx.organizationId, input.practitionerId, input.locale)),
 		),
@@ -107,7 +108,7 @@ export const calendarRouter = createTRPCRouter({
 				practitionerId: z.number().int().positive(),
 				siteId: z.number().int().positive(),
 				withPresets: z.boolean().default(true),
-				locale: z.enum(["fr", "en"]).default("fr"),
+				locale: z.enum(LOCALES).default("fr"),
 				settings: settings.optional(),
 			}),
 		)

@@ -161,7 +161,7 @@ export const removalRequests = directory.table(
 		contactEnc: text().notNull(),
 		/** Encrypted free text (optional). */
 		messageEnc: text(),
-		/** Locale of the emails sent to the requester (`fr` or `en`). */
+		/** Locale of the emails sent to the requester (an interface locale, `fr` by default). */
 		locale: text().notNull().default("fr"),
 		decidedAt: timestamp({ withTimezone: true }),
 		decidedBy: text(),

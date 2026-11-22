@@ -1,6 +1,7 @@
 import { hasMarkup, normalizePlainText } from "@apercura/core";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
+import { LOCALES } from "~/i18n/locales";
 import { REPORT_KINDS, requestRemoval, submitReport } from "~/server/gdpr/service";
 import { sendNotice } from "~/server/mail/notices";
 import { clientRateLimitKey } from "~/server/rate-limit";
@@ -33,7 +34,7 @@ export const gdprRouter = createTRPCRouter({
 				message: plain(1000).optional(),
 				/** The person confirms they are the practitioner of the page. */
 				isPractitioner: z.literal(true),
-				locale: z.enum(["fr", "en"]).default("fr"),
+				locale: z.enum(LOCALES).default("fr"),
 			}),
 		)
 		.mutation(async ({ ctx, input }) => {

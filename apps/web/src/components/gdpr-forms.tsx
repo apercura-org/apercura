@@ -152,7 +152,7 @@ export function RemovalForm({ rpps: fixedRpps }: { rpps?: string }) {
 			contact,
 			message: message.trim() || undefined,
 			isPractitioner: true,
-			locale: locale === "en" ? "en" : "fr",
+			locale,
 		});
 	};
 	const failure = errorKey(request.error);

@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { LOCALES } from "~/i18n/locales";
 import { BOOKING_LIMITS, BROWSER_COOKIE, bookingEnabled } from "~/server/booking/config";
 import { asTrpc, BookingError } from "~/server/booking/errors";
 import { hold } from "~/server/booking/hold";
@@ -119,7 +120,7 @@ export const bookingRouter = createTRPCRouter({
 					phone: z.string().trim().max(32).nullish(),
 					isNew: z.boolean().nullish(),
 				}),
-				locale: z.enum(["fr", "en"]),
+				locale: z.enum(LOCALES),
 				idempotencyKey: z.uuid(),
 				altcha: z.string().min(16).max(8192),
 				/** Honeypot: hidden from people, filled by naive bots. */

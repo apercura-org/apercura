@@ -267,7 +267,7 @@ export const appointments = care.table(
 		/** Blind indexes keyed per organization (see `deriveBlindIndexKey`). */
 		emailBidx: text(),
 		phoneBidx: text(),
-		/** Locale of the patient's emails (`fr` or `en`). */
+		/** Locale of the patient's emails (an interface locale: `fr`, `en`, `de`, `es` or `it`). */
 		patientLocale: text().notNull().default("fr"),
 		/** Answer to "first visit?", when asked. */
 		patientIsNew: boolean(),
@@ -322,7 +322,10 @@ export const appointments = care.table(
 			"appointments_expiry_check",
 			sql`${table.status} not in ('held', 'pending') or ${table.expiresAt} is not null`,
 		),
-		check("appointments_locale_check", sql`${table.patientLocale} in ('fr', 'en')`),
+		check(
+			"appointments_locale_check",
+			sql`${table.patientLocale} in ('fr', 'en', 'de', 'es', 'it')`,
+		),
 	],
 );
 

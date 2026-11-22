@@ -1,3 +1,5 @@
+import type { Locale } from "~/i18n/locales";
+import { localePath } from "~/i18n/paths";
 import { slotParts, slotTime } from "~/lib/slot-format";
 
 /** Origin of the public site, from APP_URL (emails, .ics UIDs). */
@@ -9,37 +11,34 @@ export function appOrigin(): string {
 	}
 }
 
-const localePrefix = (locale: "fr" | "en") => (locale === "en" ? "/en" : "");
-
 /**
  * The patient's manage page. The token travels in the URL fragment, which browsers never send
  * to the server (so it never reaches access logs); the page posts it to `booking.manage.*`.
  */
-export function manageUrl(locale: "fr" | "en", token: string): string {
-	return `${appOrigin()}${localePrefix(locale)}/rdv#t=${token}`;
+export function manageUrl(locale: Locale, token: string): string {
+	return `${appOrigin()}${localePath(locale, "/rdv")}#t=${token}`;
 }
 
 /** The practitioner's public page, where a patient can choose another time. */
-export function practitionerPageUrl(locale: "fr" | "en", slug: string): string {
-	const path = locale === "en" ? "/en/practitioner/" : "/praticien/";
-	return `${appOrigin()}${path}${encodeURIComponent(slug)}`;
+export function practitionerPageUrl(locale: Locale, slug: string): string {
+	return `${appOrigin()}${localePath(locale, "/praticien/[slug]", { slug })}`;
 }
 
 /** The practice's day in the agenda ("Today"). */
-export function agendaUrl(locale: "fr" | "en"): string {
-	return `${appOrigin()}${localePrefix(locale)}/pro/aujourdhui`;
+export function agendaUrl(locale: Locale): string {
+	return `${appOrigin()}${localePath(locale, "/pro/aujourdhui")}`;
 }
 
 /** The page where an invited person joins a practice. */
-export function invitationUrl(locale: "fr" | "en", invitationId: string): string {
-	return `${appOrigin()}${localePrefix(locale)}/pro/invitation/${invitationId}`;
+export function invitationUrl(locale: Locale, invitationId: string): string {
+	return `${appOrigin()}${localePath(locale, "/pro/invitation/[id]", { id: invitationId })}`;
 }
 
 /**
  * Date and time of an instant in the site's time zone. When clocks go back and the wall-clock
  * time occurs twice, the time carries its UTC offset.
  */
-export function formatSlot(ms: number, timeZone: string, locale: "fr" | "en") {
+export function formatSlot(ms: number, timeZone: string, locale: Locale) {
 	const parts = slotParts(ms, timeZone, locale);
 	return { date: parts.date, time: slotTime(parts), shortDate: parts.shortDate };
 }

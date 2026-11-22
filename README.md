@@ -44,7 +44,8 @@ bun run db:migrate
 bun run dev
 ```
 
-The app runs on <http://localhost:3000> (French) and <http://localhost:3000/en> (English).
+The app runs on <http://localhost:3000> (French), with the other interface languages under
+<http://localhost:3000/en>, `/de`, `/es` and `/it`.
 Mailpit catches outgoing email at <http://localhost:8025>.
 
 Generate local secrets for `.env` with `bun run keys:generate`.

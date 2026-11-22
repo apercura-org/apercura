@@ -1,6 +1,8 @@
 import { TRPCError } from "@trpc/server";
 import { createTranslator } from "next-intl";
 import { z } from "zod";
+import { messagesFor } from "~/i18n/catalogs";
+import { LOCALES } from "~/i18n/locales";
 import { BOOKING_LIMITS } from "~/server/booking/config";
 import { sendInvitationEmail } from "~/server/team/notify";
 import {
@@ -16,8 +18,6 @@ import {
 	TeamError,
 	updateMemberRole,
 } from "~/server/team/service";
-import en from "../../../messages/en.json";
-import fr from "../../../messages/fr.json";
 import { createTRPCRouter, memberProcedure, mfaProcedure } from "../init";
 
 const CODE_FOR: Record<TeamError["code"], TRPCError["code"]> = {
@@ -59,7 +59,7 @@ export const teamRouter = createTRPCRouter({
 			z.object({
 				email: z.email().max(254),
 				role,
-				locale: z.enum(["fr", "en"]).default("fr"),
+				locale: z.enum(LOCALES).default("fr"),
 			}),
 		)
 		.mutation(({ ctx, input }) =>
@@ -81,7 +81,7 @@ export const teamRouter = createTRPCRouter({
 				});
 				const t = createTranslator({
 					locale: input.locale,
-					messages: input.locale === "en" ? en : fr,
+					messages: messagesFor(input.locale),
 					namespace: "auth.roles",
 				});
 				const send = () =>

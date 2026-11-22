@@ -1,13 +1,10 @@
 import "server-only";
 import { createTranslator } from "next-intl";
 import { NoticeEmail } from "~/emails/notice-email";
-import type { Locale } from "~/i18n/routing";
-import en from "../../../messages/en.json";
-import fr from "../../../messages/fr.json";
+import { messagesFor } from "~/i18n/catalogs";
+import type { Locale } from "~/i18n/locales";
 import { emailLocale } from "./auth-emails";
 import { sendMail } from "./index";
-
-const catalogs = { en, fr } as const;
 
 /** Messages of `emails.{kind}` that every notice reads. */
 export type NoticeKind =
@@ -33,7 +30,7 @@ export async function sendNotice(options: {
 	actionUrl?: string;
 }) {
 	const locale: Locale = emailLocale(options.locale);
-	const messages = catalogs[locale];
+	const messages = messagesFor(locale);
 	const common = createTranslator({ locale, messages, namespace: "auth.email" });
 	const t = createTranslator({ locale, messages, namespace: "emails" });
 	const values = options.values ?? {};

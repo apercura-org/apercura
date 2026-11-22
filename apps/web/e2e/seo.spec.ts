@@ -20,7 +20,7 @@ type Expected = {
 	robots: "index, follow" | "noindex, follow";
 	/** schema.org types the page's graph must contain. */
 	types: string[];
-	lang?: "fr" | "en";
+	lang?: "fr" | "en" | "de" | "es" | "it";
 };
 
 const PAGES: Expected[] = [
@@ -80,7 +80,26 @@ const PAGES: Expected[] = [
 		lang: "en",
 	},
 	{ path: "/en/directory", robots: "noindex, follow", types: ["CollectionPage"], lang: "en" },
+	// German, Spanish and Italian: interface only, never indexed in v1.
+	...(
+		[
+			["de", "behandler", "verzeichnis"],
+			["es", "profesional", "directorio"],
+			["it", "professionista", "elenco"],
+		] as const
+	).flatMap(([lang, practitioner, directory]): Expected[] => [
+		{ path: `/${lang}`, robots: "noindex, follow", types: ["WebSite"], lang },
+		{
+			path: `/${lang}/${practitioner}/camille-exemple-19999990013`,
+			robots: "noindex, follow",
+			types: ["IndividualPhysician"],
+			lang,
+		},
+		{ path: `/${lang}/${directory}`, robots: "noindex, follow", types: ["CollectionPage"], lang },
+	]),
 ];
+
+const OG_LOCALES = { fr: "fr_FR", en: "en_GB", de: "de_DE", es: "es_ES", it: "it_IT" } as const;
 
 const FORBIDDEN_KEYS = ["aggregateRating", "review", "reviews", "ratingValue"];
 /** schema.org LocalBusiness subtypes the pages use (Hospital through EmergencyService). */
@@ -217,10 +236,12 @@ for (const expected of PAGES) {
 		expect(page.meta("robots")).toEqual([expected.robots]);
 		expect(page.links.filter((link) => link.hreflang)).toEqual([]);
 		expect(response.headers().link ?? "").not.toContain("hreflang");
-		if (expected.lang === "en") expect(response.headers()["x-robots-tag"]).toContain("noindex");
+		if ((expected.lang ?? "fr") !== "fr") {
+			expect(response.headers()["x-robots-tag"]).toContain("noindex");
+		}
 
 		// Open Graph and Twitter cards.
-		expect(page.meta("og:locale")).toEqual([expected.lang === "en" ? "en_GB" : "fr_FR"]);
+		expect(page.meta("og:locale")).toEqual([OG_LOCALES[expected.lang ?? "fr"]]);
 		expect(page.meta("og:site_name")).toEqual(["Apercura"]);
 		expect(page.meta("og:image")[0]).toMatch(new RegExp(`^${origin}/og/[a-z-]+\\.png$`));
 		expect(page.meta("twitter:card")).toEqual(["summary_large_image"]);
@@ -262,7 +283,8 @@ for (const expected of PAGES) {
 		}
 		for (const crumbs of nodes.filter((item) => item["@type"] === "BreadcrumbList")) {
 			const items = crumbs.itemListElement as { position: number; name: string; item: string }[];
-			expect(items[0]?.item).toBe(expected.lang === "en" ? `${origin}/en` : `${origin}/`);
+			const lang = expected.lang ?? "fr";
+			expect(items[0]?.item).toBe(lang === "fr" ? `${origin}/` : `${origin}/${lang}`);
 			items.forEach((item, index) => {
 				expect(item.position).toBe(index + 1);
 				expect(item.name).toBeTruthy();
@@ -447,7 +469,8 @@ test.describe("sitemaps", () => {
 
 		for (const url of urls) {
 			expect(url.startsWith(origin), url).toBe(true);
-			expect(url, url).not.toMatch(/\/en(\/|$)|\/recherche|\/pro\/|\/rdv/);
+			// French pages only: no other locale is indexed in v1.
+			expect(url, url).not.toMatch(/\/(en|de|es|it)(\/|$)|\/recherche|\/pro\/|\/rdv/);
 			const response = await request.get(url, { maxRedirects: 0 });
 			expect(response.status(), url).toBe(200);
 			expect(response.headers()["x-robots-tag"], url).toBeUndefined();
@@ -471,6 +494,10 @@ test.describe("sitemaps", () => {
 			"/pro/revendiquer?rpps=19999990013",
 			"/praticien/camille-exemple-19999990013/signaler",
 			"/en/practitioner/camille-exemple-19999990013",
+			"/de/behandler/camille-exemple-19999990013",
+			"/es/profesional/camille-exemple-19999990013",
+			"/it/professionista/camille-exemple-19999990013",
+			"/it/professionista/camille-exemple-19999990013/segnalazione",
 		]) {
 			expect(
 				disallowed.some((prefix) => path.startsWith(prefix)),

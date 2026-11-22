@@ -18,9 +18,9 @@ import {
 } from "@apercura/db/schema";
 import { and, asc, desc, eq, inArray, isNull, sql } from "drizzle-orm";
 import { createTranslator } from "next-intl";
+import { messagesFor } from "~/i18n/catalogs";
+import type { Locale } from "~/i18n/locales";
 import { hashOpaqueToken, newOpaqueToken } from "~/server/phi";
-import en from "../../../messages/en.json";
-import fr from "../../../messages/fr.json";
 import { findCalendar } from "./availability";
 import { BookingError, isUniqueViolation } from "./errors";
 import { agendaRequirements } from "./gate";
@@ -57,7 +57,7 @@ export async function presetsFor(
 	db: Database,
 	organizationId: string,
 	practitionerId: number,
-	locale: "fr" | "en",
+	locale: Locale,
 ) {
 	const [row] = await db
 		.select({ listingSlug: practitioners.listingSlug })
@@ -67,7 +67,7 @@ export async function presetsFor(
 	if (!row) {
 		throw new BookingError("NOT_FOUND");
 	}
-	const t = createTranslator({ locale, messages: locale === "en" ? en : fr });
+	const t = createTranslator({ locale, messages: messagesFor(locale) });
 	return presetsForSpecialty(row.listingSlug ?? "").map((preset) => ({
 		...preset,
 		name: t(preset.nameKey as never),
@@ -114,7 +114,7 @@ export async function createCalendar(
 		practitionerId: number;
 		siteId: number;
 		withPresets: boolean;
-		locale: "fr" | "en";
+		locale: Locale;
 		settings?: CalendarSettingsInput;
 	},
 ) {
@@ -473,7 +473,7 @@ export interface SetupSite {
 export async function agendaOverview(
 	db: Database,
 	organizationId: string,
-	locale: "fr" | "en",
+	locale: Locale,
 	now: Date,
 ) {
 	const [practitioner] = await db

@@ -24,6 +24,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import type { inferRouterOutputs } from "@trpc/server";
 import { useFormatter, useLocale, useTranslations } from "next-intl";
 import { type FormEvent, type ReactNode, useMemo, useRef, useState } from "react";
+import { capitalisesWeekdays } from "~/i18n/locales";
 import { Link } from "~/i18n/navigation";
 import { hhmm, minutesOf, noonOf, parseIsoDate } from "~/lib/agenda-time";
 import { PRO_ROUTES } from "~/lib/pro-routes";
@@ -78,7 +79,7 @@ export function AgendaSettings({ organizationId }: { organizationId: string }) {
 	const t = useTranslations("Agenda.settings");
 	const tCommon = useTranslations("Agenda.common");
 	const format = useFormatter();
-	const locale = useLocale() === "en" ? "en" : "fr";
+	const locale = useLocale();
 	const trpc = useTRPC();
 	const queryClient = useQueryClient();
 	const overview = useQuery(trpc.calendar.overview.queryOptions({ organizationId, locale }));
@@ -671,9 +672,9 @@ function RulesEditor({
 	const [result, setResult] = useState<{ tone: "success" | "error"; text: string } | null>(null);
 	const locale = useLocale();
 	const dayName = (weekday: number) => t(`days.${weekday}` as "days.1");
-	// Weekdays take a capital in English only, in the middle of a sentence.
+	// Weekdays keep their capital in the middle of a sentence in English and German only.
 	const dayInText = (weekday: number) =>
-		locale === "en" ? dayName(weekday) : dayName(weekday).toLocaleLowerCase(locale);
+		capitalisesWeekdays(locale) ? dayName(weekday) : dayName(weekday).toLocaleLowerCase(locale);
 
 	const invalidDay = (weekday: number) => {
 		const ranges = (days[weekday] ?? [])

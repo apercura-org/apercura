@@ -15,6 +15,7 @@ import {
 	sites,
 } from "@apercura/db/schema";
 import { and, asc, eq, gte, inArray, lt, ne, sql } from "drizzle-orm";
+import type { Locale } from "~/i18n/locales";
 import type { Transaction } from "~/server/db-executor";
 import {
 	ensureOrganizationKey,
@@ -195,7 +196,7 @@ export interface CreateEntryInput {
 	typeId: string;
 	startsAt: Date;
 	patient: { firstName: string; lastName: string; email?: string | null; phone?: string | null };
-	locale: "fr" | "en";
+	locale: Locale;
 	idempotencyKey?: string | null;
 }
 

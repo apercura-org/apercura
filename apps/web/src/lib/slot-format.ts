@@ -4,11 +4,13 @@
  * everywhere.
  */
 
-export type BookingLocale = "fr" | "en";
+import { LOCALE_TAGS, type Locale, toLocale } from "~/i18n/locales";
 
-/** BCP 47 tag of an interface locale (24-hour clock in both). */
+export type BookingLocale = Locale;
+
+/** BCP 47 tag of an interface locale (a 24-hour clock in every one of them). */
 export function localeTag(locale: string): string {
-	return locale === "en" ? "en-GB" : "fr-FR";
+	return LOCALE_TAGS[toLocale(locale)];
 }
 
 export interface SlotParts {
