@@ -1,12 +1,16 @@
 import { getTranslations } from "next-intl/server";
 import { BookletPage } from "~/components/booklet-page";
+import { JsonLd } from "~/components/json-ld";
 import { CountLinks, ListingSection, ListingTitle } from "~/components/listing";
 import { PublicPage } from "~/components/public-page";
-import { Trail, type TrailItem } from "~/components/trail";
-import type { Href } from "~/i18n/navigation";
+import { Trail, type TrailItem, trailEntries } from "~/components/trail";
+import { getPathname, type Href } from "~/i18n/navigation";
 import type { Locale } from "~/i18n/routing";
 import { getTaxonomyLabels } from "~/lib/labels";
 import { placeLabel } from "~/lib/places";
+import { CONTENT_LANGUAGES } from "~/lib/seo";
+import { absoluteUrl, siteOrigin } from "~/lib/site-url";
+import { breadcrumbNode, graph, ids, itemListNode, webPageNode } from "~/lib/structured-data";
 import type { PlaceHub as PlaceHubData } from "~/server/queries/hubs";
 import type { PlaceRef } from "~/server/queries/types";
 
@@ -42,15 +46,37 @@ export async function PlaceHub({
 			rest: isDepartment ? undefined : [place.slug],
 		},
 	});
+	const title = t("placeTitle", { place: name });
+	const url = absoluteUrl(href, locale);
+	const origin = siteOrigin();
 	return (
 		<PublicPage locale={locale} href={href}>
+			<JsonLd
+				data={graph([
+					webPageNode({
+						url,
+						origin,
+						name: title,
+						language: CONTENT_LANGUAGES[locale],
+						type: "CollectionPage",
+						hasBreadcrumb: true,
+						mainEntity: ids.list(url),
+					}),
+					breadcrumbNode(url, await trailEntries(locale, trail)),
+					itemListNode({
+						url,
+						name: t("specialtiesHeading"),
+						items: hub.listings.map((listing) => ({
+							name: labels.listing(listing.listingSlug) ?? listing.listingSlug,
+							url: `${origin}${getPathname({ href: landing(listing.listingSlug), locale })}`,
+						})),
+					}),
+				])}
+			/>
 			<BookletPage runningHead={tSite("runningHead")}>
 				<div className="flex flex-col gap-6">
 					<Trail locale={locale} items={trail} />
-					<ListingTitle
-						title={t("placeTitle", { place: name })}
-						lead={t("placeLead", { count: hub.total, place: name })}
-					/>
+					<ListingTitle title={title} lead={t("placeLead", { count: hub.total, place: name })} />
 				</div>
 				<ListingSection id="specialties-heading" title={t("specialtiesHeading")}>
 					<CountLinks

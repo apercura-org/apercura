@@ -6,8 +6,7 @@ import { PlaceHub } from "~/components/place-hub";
 import { type Href, permanentRedirect } from "~/i18n/navigation";
 import { type Locale, routing } from "~/i18n/routing";
 import { isDepartmentSlug, isPlaceSlug, placeLabel } from "~/lib/places";
-import { robotsFor } from "~/lib/robots";
-import { pageAlternates } from "~/lib/site-url";
+import { DESCRIPTION_MAX, fitText, pageMetadata, pickTitle, shortPlaceName } from "~/lib/seo";
 import { databaseAvailable } from "~/server/db";
 import { getPlaceHub } from "~/server/queries/hubs";
 import { sampleLandingParams } from "~/server/queries/landing";
@@ -66,15 +65,21 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 	const { locale, place, hub, href } = await resolve(params);
 	const t = await getTranslations({ locale, namespace: "Directory" });
 	const name = placeLabel(place);
-	return {
-		title: t("placeMetaTitle", { place: name }),
-		description: t("placeMetaDescription", { place: name, count: hub.total }),
-		robots: robotsFor(
-			locale,
-			hub.listings.some((listing) => listing.indexable),
+	const short = placeLabel({ ...place, name: shortPlaceName(place.name) });
+	return pageMetadata({
+		locale,
+		href,
+		title: pickTitle([
+			t("placeMetaTitle", { place: name }),
+			t("placeMetaTitle", { place: short }),
+			t("placeMetaTitleShort", { place: short }),
+		]),
+		description: fitText(
+			[t("placeMetaDescription", { place: name, count: hub.total })],
+			DESCRIPTION_MAX,
 		),
-		alternates: pageAlternates(href, locale),
-	};
+		indexable: hub.listings.some((listing) => listing.indexable),
+	});
 }
 
 export default async function CommuneHub({ params }: Props) {

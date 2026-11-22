@@ -5,7 +5,8 @@
 		"proTitle": "Votre page existe déjà · Apercura",
 		"proDescription": "Apercura publie une page factuelle pour chaque professionnel de santé inscrit en France. Retrouvez la vôtre et réclamez-la gratuitement.",
 		"searchTitle": "Recherche · Apercura",
-		"galleryTitle": "Galerie des composants · Apercura"
+		"galleryTitle": "Galerie des composants · Apercura",
+		"homeTitle": "Apercura · L’annuaire ouvert des professionnels de santé"
 	},
 	"Site": {
 		"skipLink": "Aller au contenu",
@@ -463,8 +464,8 @@
 	"PractitionerPage": {
 		"metaTitle": "{name}, {occupation} · Apercura",
 		"metaTitlePlace": "{name}, {occupation} à {place} · Apercura",
-		"metaDescription": "{name}, {occupation} : lieux d’exercice, téléphone et secteur de conventionnement, d’après le registre national des professionnels de santé.",
-		"metaDescriptionPlace": "{name}, {occupation} à {place} : lieux d’exercice, téléphone et secteur de conventionnement, d’après le registre national des professionnels de santé.",
+		"metaDescription": "{name}, {occupation} : adresse, coordonnées et secteur de conventionnement, d’après le registre national.",
+		"metaDescriptionPlace": "{name}, {occupation} à {place} : adresse, coordonnées et secteur de conventionnement, d’après le registre national.",
 		"unknownProfession": "Professionnel de santé",
 		"professionHeading": "Profession et qualifications",
 		"otherQualifications": "Autres qualifications",
@@ -521,7 +522,10 @@
 			"title": "Cette page est masquée",
 			"body": "Une demande de retrait de cette page est en cours de vérification. Elle n’est pas affichée en attendant.",
 			"dataLink": "Comment les pages sont publiées et retirées"
-		}
+		},
+		"metaTitleName": "{name} · Apercura",
+		"metaDescriptionBookable": "{name}, {occupation} : prise de rendez-vous en ligne, adresse, coordonnées et secteur de conventionnement.",
+		"metaDescriptionBookablePlace": "{name}, {occupation} à {place} : prise de rendez-vous en ligne, adresse, coordonnées et secteur de conventionnement."
 	},
 	"Institutional": {
 		"toBeCompleted": "À compléter",
@@ -911,7 +915,7 @@
 		"count": "{count, plural, one {# praticien} other {# praticiens}}",
 		"metaTitle": "{listing} à {place} : {count, plural, one {# praticien} other {# praticiens}} · Apercura",
 		"metaTitlePage": "{listing} à {place}, page {page} · Apercura",
-		"metaDescription": "{count, plural, one {# praticien inscrit} other {# praticiens inscrits}} comme {listing} à {place} au registre national, avec adresses, téléphones et secteurs de conventionnement.",
+		"metaDescription": "{count, plural, one {# praticien inscrit} other {# praticiens inscrits}} comme {occupation} à {place} au registre national : adresses, coordonnées, secteurs de conventionnement.",
 		"title": "{listing} à {place}",
 		"lead": "Le registre national compte {count, plural, one {# praticien} other {# praticiens}} sous cette rubrique avec un lieu d’exercice à {place}.",
 		"practitionersHeading": "{count, plural, one {Le praticien} other {Les # praticiens}}",
@@ -943,12 +947,15 @@
 		"establishmentsIntro": "Hôpitaux, cliniques et centres de santé où exercent des praticiens inscrits comme {listing}.",
 		"allSpecialties": "Toutes les spécialités à {place}",
 		"hubMetaTitle": "{listing} en France : {count, plural, one {# praticien} other {# praticiens}} · Apercura",
-		"hubMetaDescription": "{count, plural, one {# praticien inscrit} other {# praticiens inscrits}} comme {listing} au registre national, par département.",
+		"hubMetaDescription": "{count, plural, one {# praticien inscrit} other {# praticiens inscrits}} comme {occupation} au registre national, par département : adresses, coordonnées, secteurs de conventionnement.",
 		"hubTitle": "{listing} en France",
 		"hubLead": "Le registre national compte {count, plural, one {# praticien} other {# praticiens}} sous cette rubrique avec un lieu d’exercice en France.",
 		"departmentsHeading": "{listing} par département",
 		"departmentsIntro": "Choisissez un département pour voir ses praticiens et ses communes.",
-		"browseDirectory": "Parcourir l’annuaire par lieu"
+		"browseDirectory": "Parcourir l’annuaire par lieu",
+		"metaTitleShort": "{listing} à {place} · Apercura",
+		"metaDescriptionPage": "Page {page} sur {pages} : {count, plural, one {# praticien inscrit} other {# praticiens inscrits}} comme {occupation} à {place} au registre national.",
+		"hubMetaTitleShort": "{listing} en France · Apercura"
 	},
 	"Directory": {
 		"metaTitle": "Annuaire des professionnels de santé par lieu · Apercura",
@@ -965,7 +972,8 @@
 		"specialtiesHeading": "Par spécialité",
 		"communesHeading": "Communes de {place}",
 		"arrondissementsHeading": "Par arrondissement",
-		"establishmentsHeading": "Établissements à {place}"
+		"establishmentsHeading": "Établissements à {place}",
+		"placeMetaTitleShort": "Soignants à {place} · Apercura"
 	},
 	"Establishment": {
 		"metaTitle": "{name} · Apercura",

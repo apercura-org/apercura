@@ -16,15 +16,22 @@ import { BookletPage } from "~/components/booklet-page";
 import { JsonLd } from "~/components/json-ld";
 import { ListingSection, ListingTitle } from "~/components/listing";
 import { PublicPage } from "~/components/public-page";
-import { Trail, type TrailItem } from "~/components/trail";
+import { Trail, type TrailItem, trailEntries } from "~/components/trail";
 import { clientEnv } from "~/env";
 import { Link, permanentRedirect } from "~/i18n/navigation";
 import { type Locale, routing } from "~/i18n/routing";
 import { getTaxonomyLabels } from "~/lib/labels";
-import { placeLabel } from "~/lib/places";
 import { addressLines } from "~/lib/practitioner-view";
-import { robotsFor } from "~/lib/robots";
-import { absoluteUrl, pageAlternates } from "~/lib/site-url";
+import {
+	CONTENT_LANGUAGES,
+	DESCRIPTION_MAX,
+	fitText,
+	pageMetadata,
+	pickTitle,
+	shortPlaceName,
+} from "~/lib/seo";
+import { absoluteUrl, siteOrigin } from "~/lib/site-url";
+import { breadcrumbNode, establishmentNode, graph, ids, webPageNode } from "~/lib/structured-data";
 import { databaseAvailable } from "~/server/db";
 import { getEstablishment, sampleEstablishmentSlugs } from "~/server/queries/establishment";
 
@@ -69,22 +76,21 @@ async function resolve(params: Props["params"]) {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
 	const { locale, page, indexable, href } = await resolve(params);
 	const t = await getTranslations({ locale, namespace: "Establishment" });
-	const place = page.commune ? placeLabel(page.commune) : null;
-	return {
-		title: place
-			? t("metaTitlePlace", { name: page.name, place })
-			: t("metaTitle", { name: page.name }),
-		description: t("metaDescription", { name: page.name, count: page.practitioners.length }),
-		robots: robotsFor(locale, indexable),
-		alternates: pageAlternates(href, locale),
-		openGraph: { images: [{ url: "/og/annuaire.png", width: 1200, height: 630 }] },
-	};
+	const place = page.commune ? shortPlaceName(page.commune.name) : null;
+	return pageMetadata({
+		locale,
+		href,
+		title: pickTitle([
+			...(place ? [t("metaTitlePlace", { name: page.name, place })] : []),
+			t("metaTitle", { name: page.name }),
+		]),
+		description: fitText(
+			[t("metaDescription", { name: page.name, count: page.practitioners.length })],
+			DESCRIPTION_MAX,
+		),
+		indexable,
+	});
 }
-
-const SCHEMA_TYPES: Record<string, string> = {
-	hospital: "Hospital",
-	health_center: "MedicalClinic",
-};
 
 export default async function EstablishmentPage({ params }: Props) {
 	const { locale, page, href } = await resolve(params);
@@ -119,6 +125,7 @@ export default async function EstablishmentPage({ params }: Props) {
 		}
 	}
 	trail.push({ label: page.name, href });
+	const url = absoluteUrl(href, locale);
 
 	// Group the practitioners by listing, in a stable order.
 	const groups = new Map<string, typeof page.practitioners>();
@@ -133,30 +140,30 @@ export default async function EstablishmentPage({ params }: Props) {
 	return (
 		<PublicPage locale={locale} href={href}>
 			<JsonLd
-				data={{
-					"@context": "https://schema.org",
-					"@type": SCHEMA_TYPES[page.kind] ?? "MedicalOrganization",
-					"@id": `${absoluteUrl(href, locale)}#establishment`,
-					url: absoluteUrl(href, locale),
-					name: page.name,
-					identifier: { "@type": "PropertyValue", propertyID: "FINESS", value: page.finessEt },
-					address: {
-						"@type": "PostalAddress",
-						streetAddress:
-							[page.addressLine, page.addressComplement].filter(Boolean).join(", ") || undefined,
-						postalCode: page.postcode ?? undefined,
-						addressLocality: page.placeName ?? undefined,
-						addressCountry: "FR",
-					},
-					geo: coordinates
-						? {
-								"@type": "GeoCoordinates",
-								latitude: coordinates.lat.toFixed(6),
-								longitude: coordinates.lon.toFixed(6),
-							}
-						: undefined,
-					telephone: page.phone ?? undefined,
-				}}
+				data={graph([
+					webPageNode({
+						url,
+						origin: siteOrigin(),
+						name: page.name,
+						language: CONTENT_LANGUAGES[locale],
+						hasBreadcrumb: true,
+						mainEntity: ids.establishment(url),
+						dateModified: page.updatedAt,
+					}),
+					breadcrumbNode(url, await trailEntries(locale, trail)),
+					establishmentNode({
+						url,
+						kind: page.kind,
+						name: page.name,
+						finess: page.finessEt,
+						addressLine: page.addressLine,
+						addressComplement: page.addressComplement,
+						postcode: page.postcode,
+						placeName: page.placeName,
+						coordinates,
+						phone: page.phone,
+					}),
+				])}
 			/>
 			<BookletPage runningHead={tSite("runningHead")} folio={t("folio", { finess: page.finessEt })}>
 				<div className="flex flex-col gap-6">

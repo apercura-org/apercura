@@ -2,6 +2,7 @@ import { FieldList, FieldRow } from "@apercura/ui";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { BookletPage } from "~/components/booklet-page";
 import { ExternalLink, InstitutionalCover, ProseSection } from "~/components/institutional";
+import { PageGraph } from "~/components/page-graph";
 import { PublicPage } from "~/components/public-page";
 import { Trail } from "~/components/trail";
 import { institutionalMetadata, localeOf, proseSections } from "~/lib/institutional";
@@ -29,6 +30,12 @@ export default async function AccessibilityPage({ params }: PageProps<"/[locale]
 		<PublicPage locale={locale} href={HREF}>
 			<InstitutionalCover title={t("title")} lead={t("lead")} mark={tI("draftMark")} />
 			<BookletPage runningHead={tSite("runningHead")}>
+				<PageGraph
+					locale={locale}
+					href={HREF}
+					name={t("title")}
+					trail={[{ label: t("title"), href: HREF }]}
+				/>
 				<Trail locale={locale} items={[{ label: t("title"), href: HREF }]} />
 				<ProseSection id="engagement" content={section("commitment")} />
 				<ProseSection id="conformite" content={section("status")}>

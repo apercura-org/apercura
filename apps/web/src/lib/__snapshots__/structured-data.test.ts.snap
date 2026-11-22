@@ -1,0 +1,333 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`page entities > builds a listing page: CollectionPage, breadcrumb and a positioned ItemList 1`] = `
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@id": "https://apercura.example/medecin-generaliste/75-paris/2#webpage",
+      "@type": "CollectionPage",
+      "breadcrumb": {
+        "@id": "https://apercura.example/medecin-generaliste/75-paris/2#breadcrumb",
+      },
+      "inLanguage": "fr-FR",
+      "isPartOf": {
+        "@id": "https://apercura.example/#website",
+      },
+      "mainEntity": {
+        "@id": "https://apercura.example/medecin-generaliste/75-paris/2#list",
+      },
+      "name": "Médecin généraliste à Paris (75)",
+      "url": "https://apercura.example/medecin-generaliste/75-paris/2",
+    },
+    {
+      "@id": "https://apercura.example/medecin-generaliste/75-paris/2#breadcrumb",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "item": "https://apercura.example/",
+          "name": "Accueil",
+          "position": 1,
+        },
+        {
+          "@type": "ListItem",
+          "item": "https://apercura.example/medecin-generaliste",
+          "name": "Médecin généraliste",
+          "position": 2,
+        },
+        {
+          "@type": "ListItem",
+          "item": "https://apercura.example/medecin-generaliste/75-paris",
+          "name": "Paris",
+          "position": 3,
+        },
+        {
+          "@type": "ListItem",
+          "item": "https://apercura.example/medecin-generaliste/75-paris/2",
+          "name": "Page 2 sur 3",
+          "position": 4,
+        },
+      ],
+    },
+    {
+      "@id": "https://apercura.example/medecin-generaliste/75-paris/2#list",
+      "@type": "ItemList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "name": "Dr Camille Exemple",
+          "position": 21,
+          "url": "https://apercura.example/praticien/camille-exemple-19999990013",
+        },
+      ],
+      "itemListOrder": "https://schema.org/ItemListOrderAscending",
+      "name": "Médecin généraliste à Paris (75)",
+      "numberOfItems": 41,
+    },
+  ],
+}
+`;
+
+exports[`page entities > describes an establishment with its FINESS number 1`] = `
+{
+  "@id": "https://apercura.example/etablissement/centre-de-sante-fictif-759999001#establishment",
+  "@type": "MedicalClinic",
+  "address": {
+    "@type": "PostalAddress",
+    "addressCountry": "FR",
+    "addressLocality": "Paris 12e Arrondissement",
+    "postalCode": "75012",
+    "streetAddress": "3 Rue Fictive",
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": "48.840000",
+    "longitude": "2.390000",
+  },
+  "identifier": {
+    "@type": "PropertyValue",
+    "propertyID": "FINESS",
+    "value": "759999001",
+  },
+  "mainEntityOfPage": {
+    "@id": "https://apercura.example/etablissement/centre-de-sante-fictif-759999001#webpage",
+  },
+  "name": "Centre de santé fictif",
+  "telephone": "+33100000003",
+  "url": "https://apercura.example/etablissement/centre-de-sante-fictif-759999001",
+}
+`;
+
+exports[`page entities > links the home page, the website and its search action 1`] = `
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@id": "https://apercura.example/#website",
+      "@type": "WebSite",
+      "description": "Annuaire ouvert.",
+      "inLanguage": "fr-FR",
+      "name": "Apercura",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "query-input": "required name=search_term_string",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "https://apercura.example/recherche?quoi={search_term_string}",
+        },
+      },
+      "publisher": {
+        "@id": "https://apercura.example/#organization",
+      },
+      "url": "https://apercura.example/",
+    },
+    {
+      "@id": "https://apercura.example/#organization",
+      "@type": "Organization",
+      "logo": {
+        "@type": "ImageObject",
+        "height": "512",
+        "url": "https://apercura.example/icon/512",
+        "width": "512",
+      },
+      "name": "Apercura",
+      "sameAs": [
+        "https://github.com/maxgfr/apercura",
+      ],
+      "url": "https://apercura.example/",
+    },
+  ],
+}
+`;
+
+exports[`practitionerNodes > describes a dentist as Dentist with its places as locations 1`] = `
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@id": "https://apercura.example/praticien/camille-exemple-19999990013#practitioner",
+      "@type": "Dentist",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "FR",
+        "addressLocality": "Paris 11e Arrondissement",
+        "postalCode": "75011",
+        "streetAddress": "1 Rue de l'Exemple",
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": "48.859200",
+        "longitude": "2.380100",
+      },
+      "identifier": {
+        "@type": "PropertyValue",
+        "propertyID": "RPPS",
+        "value": "19999990013",
+      },
+      "location": {
+        "@id": "https://apercura.example/praticien/camille-exemple-19999990013#site-101",
+      },
+      "mainEntityOfPage": {
+        "@id": "https://apercura.example/praticien/camille-exemple-19999990013#webpage",
+      },
+      "medicalSpecialty": "https://schema.org/Dentistry",
+      "name": "Dr Camille Exemple",
+      "telephone": "+33100000001",
+      "url": "https://apercura.example/praticien/camille-exemple-19999990013",
+    },
+    {
+      "@id": "https://apercura.example/praticien/camille-exemple-19999990013#site-101",
+      "@type": "PhysiciansOffice",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "FR",
+        "addressLocality": "Paris 11e Arrondissement",
+        "postalCode": "75011",
+        "streetAddress": "1 Rue de l'Exemple",
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": "48.859200",
+        "longitude": "2.380100",
+      },
+      "name": "Cabinet de l'Exemple",
+      "telephone": "+33100000001",
+    },
+  ],
+}
+`;
+
+exports[`practitionerNodes > describes a doctor as IndividualPhysician practising at its places 1`] = `
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@id": "https://apercura.example/praticien/camille-exemple-19999990013#practitioner",
+      "@type": "IndividualPhysician",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "FR",
+        "addressLocality": "Paris 11e Arrondissement",
+        "postalCode": "75011",
+        "streetAddress": "1 Rue de l'Exemple",
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": "48.859200",
+        "longitude": "2.380100",
+      },
+      "identifier": {
+        "@type": "PropertyValue",
+        "propertyID": "RPPS",
+        "value": "19999990013",
+      },
+      "mainEntityOfPage": {
+        "@id": "https://apercura.example/praticien/camille-exemple-19999990013#webpage",
+      },
+      "medicalSpecialty": "https://schema.org/PrimaryCare",
+      "name": "Dr Camille Exemple",
+      "practicesAt": [
+        {
+          "@id": "https://apercura.example/praticien/camille-exemple-19999990013#site-101",
+        },
+        {
+          "@id": "https://apercura.example/etablissement/centre-hospitalier-fictif-2a9999001#establishment",
+        },
+      ],
+      "telephone": "+33100000001",
+      "url": "https://apercura.example/praticien/camille-exemple-19999990013",
+    },
+    {
+      "@id": "https://apercura.example/praticien/camille-exemple-19999990013#site-101",
+      "@type": "PhysiciansOffice",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "FR",
+        "addressLocality": "Paris 11e Arrondissement",
+        "postalCode": "75011",
+        "streetAddress": "1 Rue de l'Exemple",
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": "48.859200",
+        "longitude": "2.380100",
+      },
+      "name": "Cabinet de l'Exemple",
+      "telephone": "+33100000001",
+    },
+    {
+      "@id": "https://apercura.example/etablissement/centre-hospitalier-fictif-2a9999001#establishment",
+      "@type": "Hospital",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "FR",
+        "addressLocality": "Ajaccio",
+        "postalCode": "20000",
+        "streetAddress": "2 Avenue Fictive, Bâtiment B",
+      },
+      "name": "Centre hospitalier fictif",
+      "url": "https://apercura.example/etablissement/centre-hospitalier-fictif-2a9999001",
+    },
+  ],
+}
+`;
+
+exports[`practitionerNodes > describes a midwife as Person with an occupation and work locations 1`] = `
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@id": "https://apercura.example/praticien/camille-exemple-19999990013#practitioner",
+      "@type": "Person",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "FR",
+        "addressLocality": "Paris 11e Arrondissement",
+        "postalCode": "75011",
+        "streetAddress": "1 Rue de l'Exemple",
+      },
+      "familyName": "Fictive",
+      "givenName": "Alix",
+      "hasOccupation": {
+        "@type": "Occupation",
+        "name": "Sage-femme",
+        "occupationalCategory": "2222",
+      },
+      "identifier": {
+        "@type": "PropertyValue",
+        "propertyID": "RPPS",
+        "value": "19999990013",
+      },
+      "jobTitle": "Sage-femme",
+      "mainEntityOfPage": {
+        "@id": "https://apercura.example/praticien/camille-exemple-19999990013#webpage",
+      },
+      "name": "Alix Fictive",
+      "telephone": "+33100000001",
+      "url": "https://apercura.example/praticien/camille-exemple-19999990013",
+      "workLocation": {
+        "@id": "https://apercura.example/praticien/camille-exemple-19999990013#site-101",
+      },
+    },
+    {
+      "@id": "https://apercura.example/praticien/camille-exemple-19999990013#site-101",
+      "@type": "PhysiciansOffice",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "FR",
+        "addressLocality": "Paris 11e Arrondissement",
+        "postalCode": "75011",
+        "streetAddress": "1 Rue de l'Exemple",
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": "48.859200",
+        "longitude": "2.380100",
+      },
+      "name": "Cabinet de l'Exemple",
+      "telephone": "+33100000001",
+    },
+  ],
+}
+`;

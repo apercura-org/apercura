@@ -3,11 +3,13 @@ import type { Metadata } from "next";
 import { hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { BookletPage } from "~/components/booklet-page";
+import { PageGraph } from "~/components/page-graph";
 import { SiteFooter } from "~/components/site-footer";
 import { SiteHeader } from "~/components/site-header";
 import { SpecimenPage } from "~/components/specimen-page";
 import { getPathname } from "~/i18n/navigation";
 import { routing } from "~/i18n/routing";
+import { pageMetadata } from "~/lib/seo";
 
 const STEPS = ["find", "verify", "complete"] as const;
 
@@ -17,7 +19,13 @@ export async function generateMetadata({ params }: PageProps<"/[locale]/pro">): 
 	const { locale: requested } = await params;
 	const locale = hasLocale(routing.locales, requested) ? requested : routing.defaultLocale;
 	const t = await getTranslations({ locale, namespace: "Metadata" });
-	return { title: t("proTitle"), description: t("proDescription") };
+	return pageMetadata({
+		locale,
+		href: "/pro",
+		title: t("proTitle"),
+		description: t("proDescription"),
+		indexable: true,
+	});
 }
 
 export default async function ProPage({ params }: PageProps<"/[locale]/pro">) {
@@ -27,9 +35,16 @@ export default async function ProPage({ params }: PageProps<"/[locale]/pro">) {
 
 	const t = await getTranslations({ locale, namespace: "ProPage" });
 	const tSite = await getTranslations({ locale, namespace: "Site" });
+	const tMeta = await getTranslations({ locale, namespace: "Metadata" });
 
 	return (
 		<>
+			<PageGraph
+				locale={locale}
+				href="/pro"
+				name={tMeta("proTitle")}
+				description={tMeta("proDescription")}
+			/>
 			<div className="surface-cover">
 				<SiteHeader locale={locale} href="/pro" />
 			</div>

@@ -1,7 +1,7 @@
 import { FieldList, FieldRow, linkStyles, ProvenanceNote, tableStyles } from "@apercura/ui";
 import { getTranslations } from "next-intl/server";
 import type { ReactNode } from "react";
-import { getPathname, type Href, Link } from "~/i18n/navigation";
+import { type Href, Link } from "~/i18n/navigation";
 import type { Locale } from "~/i18n/routing";
 import { genderOf, getTaxonomyLabels } from "~/lib/labels";
 import type { ListedPractitioner } from "~/server/queries/landing";
@@ -268,20 +268,4 @@ export async function CountLinks({
 			))}
 		</ul>
 	);
-}
-
-/** ItemList structured data of the practitioners shown on a listing page. */
-export function itemListData(locale: Locale, origin: string, rows: ListedPractitioner[]) {
-	return {
-		"@context": "https://schema.org",
-		"@type": "ItemList",
-		itemListElement: rows.map((row, index) => ({
-			"@type": "ListItem",
-			position: index + 1,
-			url: `${origin}${getPathname({
-				href: { pathname: "/praticien/[slug]", params: { slug: row.slug } },
-				locale,
-			})}`,
-		})),
-	};
 }

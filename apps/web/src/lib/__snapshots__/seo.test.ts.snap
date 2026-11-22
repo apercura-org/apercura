@@ -1,0 +1,10 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`sitemap XML > writes a sitemaps.org index and url set, escaped, without changefreq or priority 1`] = `
+"<?xml version="1.0" encoding="UTF-8"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<sitemap><loc>https://apercura.example/sitemaps/pages-0.xml</loc></sitemap>
+<sitemap><loc>https://apercura.example/sitemaps/praticiens-0.xml</loc><lastmod>2026-11-19</lastmod></sitemap>
+</sitemapindex>
+"
+`;
