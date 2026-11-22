@@ -476,7 +476,7 @@ test("the owner invites an assistant, who joins with a second factor and runs th
 
 	// The owner sees the new member, with a second factor, and who read patient details.
 	await page.goto("/pro/equipe");
-	const row = page.getByRole("row", { name: new RegExp(assistantEmail.replace(/\./g, "\\.")) });
+	const row = page.getByRole("row", { name: new RegExp(assistantEmail.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")) });
 	await expect(row.getByText("Configuré")).toBeVisible();
 	await page.goto("/pro/agenda/journal");
 	await expect(page.getByRole("heading", { level: 1, name: "Journal des accès" })).toBeVisible();
