@@ -1,4 +1,6 @@
 import "server-only";
+import { session as sessionTable } from "@apercura/db/schema";
+import { eq } from "drizzle-orm";
 import { headers } from "next/headers";
 import { cache } from "react";
 import { serverEnv } from "~/env";
@@ -6,12 +8,21 @@ import { getDb } from "~/server/db";
 import { trustedProxyCount, withClientIpHeader } from "./client-ip";
 import { getAuth } from "./index";
 import { hasSecondFactor, secondFactors } from "./membership";
+import { sessionTooOld } from "./policy";
 
-/** Reads the session for a set of request headers (tRPC context, route handlers). */
+/**
+ * Reads the session for a set of request headers (tRPC context, route handlers,
+ * pages). A session past its absolute lifetime is deleted and reads as none.
+ */
 export async function getSessionFor(requestHeaders: Headers) {
-	return getAuth().api.getSession({
+	const current = await getAuth().api.getSession({
 		headers: withClientIpHeader(requestHeaders, trustedProxyCount(serverEnv.TRUSTED_PROXY_COUNT)),
 	});
+	if (current && sessionTooOld(current.session.createdAt)) {
+		await getDb().delete(sessionTable).where(eq(sessionTable.id, current.session.id));
+		return null;
+	}
+	return current;
 }
 
 /** The current request's session in Server Components, read once per request. */

@@ -143,3 +143,29 @@ export function factorsLeftAfter(
 	}
 	return null;
 }
+
+/**
+ * Limits per email address, on top of Better Auth's limits per client IP (which
+ * a botnet spreads thin, and which hospitals behind one address share): password
+ * guesses on one account, and sign-up or verification emails sent to one
+ * address (plan §10: 3 a day).
+ */
+export const EMAIL_RATE_LIMITS: Readonly<Record<string, { max: number; windowSeconds: number }>> = {
+	"/sign-in/email": { max: 10, windowSeconds: 15 * 60 },
+	"/sign-up/email": { max: 3, windowSeconds: 24 * 60 * 60 },
+	"/send-verification-email": { max: 3, windowSeconds: 24 * 60 * 60 },
+};
+
+/**
+ * Absolute lifetime of a session, however active: past it the person signs in
+ * again with their password and second factor. Sessions also end after 12 hours
+ * without use (Better Auth's `expiresIn`).
+ */
+export const SESSION_MAX_AGE_MS = 7 * 24 * 60 * 60 * 1000;
+
+/** Whether a session created at `createdAt` has outlived {@link SESSION_MAX_AGE_MS}. */
+export function sessionTooOld(createdAt: Date | string | null | undefined, nowMs = Date.now()) {
+	if (!createdAt) return false;
+	const created = new Date(createdAt).getTime();
+	return Number.isFinite(created) && nowMs - created > SESSION_MAX_AGE_MS;
+}
