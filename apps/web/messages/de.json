@@ -859,7 +859,7 @@
 			"security": {
 				"heading": "Sicherheit und technische Daten",
 				"body": [
-					"Die Sitzungen der Gesundheitsfachkräfte speichern eine gekürzte IP-Adresse (das Netz, nicht das Gerät) und den verwendeten Browser, um ihr Konto zu schützen. Um Missbrauch zu begrenzen, wandelt die Website IP-Adressen vor dem Zählen durch eine Funktion mit geheimem Schlüssel um; nur die Begrenzung der Anmeldeversuche bewahrt sie für die Dauer ihres Zeitfensters auf. Der Hosting-Anbieter bewahrt seine eigenen technischen Protokolle gemäß seinem Vertrag auf."
+					"Die Sitzungen der Gesundheitsfachkräfte speichern eine gekürzte IP-Adresse (das Netz, nicht das Gerät) und den verwendeten Browser, um ihr Konto zu schützen. Um Missbrauch zu begrenzen, wandelt die Website IP-Adressen vor dem Zählen durch eine Funktion mit geheimem Schlüssel um und speichert sie nie im Klartext; jeder Zähler wird gelöscht, sobald sein Zeitfenster (eine Minute bis ein Tag) abgelaufen ist. Der Hosting-Anbieter bewahrt seine eigenen technischen Protokolle gemäß seinem Vertrag auf."
 				]
 			},
 			"recipients": {

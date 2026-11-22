@@ -91,11 +91,12 @@ const serverFields = z.object({
 	TRUSTED_PROXY_COUNT: z.coerce.number().int().min(0).default(0),
 	/**
 	 * Secret HMAC-SHA256 key that turns client IP addresses into rate-limit keys
-	 * (public search suggestions), so `directory.rate_limits` never stores a raw
-	 * IP. Any random string of at least 32 bytes, e.g. base64 of 32 random bytes:
+	 * (public search suggestions, Better Auth's limits), so neither
+	 * `directory.rate_limits` nor `directory.auth_rate_limit` stores a raw IP. Any random string of at least 32 bytes, e.g. base64 of 32 random bytes:
 	 * `bun run keys:generate` prints one, or `openssl rand -base64 32`. Optional:
 	 * when unset each process draws a random key at start, which works but resets
-	 * the counters on restart and splits them across instances. Rotating it only
+	 * the counters on restart and splits them across instances (Better Auth's
+	 * counters then use a key derived from BETTER_AUTH_SECRET). Rotating it only
 	 * resets the counters.
 	 */
 	RATE_LIMIT_KEY: optionalString,

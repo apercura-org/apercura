@@ -4,6 +4,7 @@ import type { Database } from "@apercura/db";
 import { sql } from "drizzle-orm";
 import { cacheTags } from "~/server/cache-tags";
 import { writeAudit } from "~/server/phi";
+import { purgeExpiredRateLimits } from "~/server/rate-limit";
 import { purgeClaimDocuments } from "../claims/service";
 import { purgeAuditLogs, purgeClosedRequests } from "../retention";
 import { getStorage, type StorageDriver, storageConfigured } from "../storage";
@@ -340,14 +341,23 @@ export function requestsJob(db: Database, nowMs: number) {
 	return withAdvisoryLock(db, "jobs:requests", () => purgeClosedRequests(db, nowMs));
 }
 
+/**
+ * Rate-limit counters (`directory.rate_limits`, `directory.auth_rate_limit`) whose window has
+ * elapsed are deleted. Runs with the app role (DATABASE_URL), the narrowest role with DELETE on
+ * them (`apercura_jobs` holds no table privilege).
+ */
+export function rateLimitsJob(db: Database, nowMs: number) {
+	return withAdvisoryLock(db, "jobs:rate-limits", () => purgeExpiredRateLimits(db, nowMs));
+}
+
 /** Both access logs lose their rows past the retention, through `care.purge_audit_events()`. */
 export function auditLogJob(db: Database) {
 	return withAdvisoryLock(db, "jobs:audit-log", () => purgeAuditLogs(db));
 }
 
 /**
- * One `jobs:tick`: expirations, reminders, outbox, closed practices, next free slots, purges and
- * retention.
+ * One `jobs:tick`: expirations, reminders, outbox, closed practices, next free slots, purges,
+ * retention and expired rate-limit counters.
  */
 export async function runTick(db: Database, options: TickOptions = {}) {
 	const now = options.nowMs ?? Date.now;
@@ -364,6 +374,7 @@ export async function runTick(db: Database, options: TickOptions = {}) {
 	const purged = await withAdvisoryLock(db, "jobs:purge", () => purge(db, now()));
 	const claimDocuments = await purgeClaimDocumentsJob(db, now(), options.storage);
 	const requests = await requestsJob(db, now());
+	const rateLimits = await rateLimitsJob(db, now());
 	const auditLog = await auditLogJob(options.auditDb ?? db);
 	return {
 		expirations: expirations && {
@@ -380,6 +391,7 @@ export async function runTick(db: Database, options: TickOptions = {}) {
 		purged,
 		claimDocuments,
 		requests,
+		rateLimits,
 		auditLog,
 	};
 }

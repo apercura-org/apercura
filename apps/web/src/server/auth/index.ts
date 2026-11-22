@@ -30,6 +30,7 @@ import {
 	TRUST_DEVICE_PATHS,
 } from "./policy";
 import { pscProviderConfig } from "./psc";
+import { AUTH_RATE_LIMIT_RULES, authRateLimitStorage } from "./rate-limit-storage";
 
 const HOUR = 60 * 60;
 
@@ -116,16 +117,11 @@ function createAuth() {
 
 		rateLimit: {
 			enabled: isProduction,
-			storage: "database",
 			window: 60,
 			max: 100,
-			customRules: {
-				"/sign-up/email": { window: HOUR, max: 5 },
-				"/sign-in/email": { window: 60, max: 5 },
-				"/send-verification-email": { window: HOUR, max: 3 },
-				"/two-factor/*": { window: 60, max: 5 },
-				"/passkey/verify-authentication": { window: 60, max: 10 },
-			},
+			customRules: AUTH_RATE_LIMIT_RULES,
+			// Counters in directory.auth_rate_limit, keyed by a keyed hash of the address.
+			customStorage: authRateLimitStorage(getDb()),
 		},
 		advanced: {
 			cookiePrefix: "apercura",

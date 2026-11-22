@@ -120,6 +120,13 @@
       "when": 1795342404327,
       "tag": "0016_retention_and_closures",
       "breakpoints": true
+    },
+    {
+      "idx": 17,
+      "version": "7",
+      "when": 1795344386151,
+      "tag": "0017_rate_limit_windows",
+      "breakpoints": true
     }
   ]
 }
