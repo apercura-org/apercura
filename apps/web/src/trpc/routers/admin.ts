@@ -16,6 +16,7 @@ import {
 	reportQueue,
 	resolveReport,
 } from "~/server/gdpr/service";
+import { mailErrorSummary } from "~/server/mail/error-summary";
 import { sendNotice } from "~/server/mail/notices";
 import { refreshPractitioners } from "~/server/refresh";
 import { createTRPCRouter, platformAdminProcedure } from "../init";
@@ -156,10 +157,7 @@ export const adminRouter = createTRPCRouter({
 						values: { reason: input.reason ?? "" },
 					});
 				} catch (error) {
-					console.error(
-						"Removal decision email failed:",
-						error instanceof Error ? error.message : error,
-					);
+					console.error(`Removal decision email failed: ${mailErrorSummary(error)}`);
 				}
 				return { ok: true as const };
 			}),

@@ -1087,7 +1087,13 @@ describe.skipIf(!url)("booking (database)", { timeout: 30_000 }, () => {
 
 		// Failures: 1 min, 5 min, 15 min, 1 h, 4 h, then dead.
 		const retryIds = await enqueueOutbox(db, [{ ...entry, dedupeKey: `retry:${booking.holdId}` }]);
-		failMail = new Error("SMTP unavailable");
+		// SMTP replies quote the recipient: the stored error must not.
+		failMail = Object.assign(
+			new Error(
+				"Can't send mail - all recipients were rejected: 450 4.2.0 <greylisted.patient@example.test>: greylisted",
+			),
+			{ code: "EENVELOPE", responseCode: 450, command: "RCPT TO" },
+		);
 		const delays = [1, 5, 15, 60, 240];
 		for (const delay of delays) {
 			await processOutbox(db, { nowMs: clock.now, random: () => 0.5, ids: retryIds });
@@ -1110,7 +1116,8 @@ describe.skipIf(!url)("booking (database)", { timeout: 30_000 }, () => {
 			.from(outbox)
 			.where(eq(outbox.dedupeKey, `retry:${booking.holdId}`));
 		expect(dead).toMatchObject({ status: "dead", attempts: 6 });
-		expect(dead?.lastError).toContain("SMTP unavailable");
+		expect(dead?.lastError).toBe("Error EENVELOPE SMTP 450 on RCPT TO");
+		expect(dead?.lastError).not.toContain("@");
 		const [flagged] = await db
 			.select({ unreachable: appointments.patientUnreachableAt })
 			.from(appointments)

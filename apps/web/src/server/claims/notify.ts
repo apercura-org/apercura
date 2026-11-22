@@ -1,3 +1,4 @@
+import { mailErrorSummary } from "~/server/mail/error-summary";
 import "server-only";
 import type { Database } from "@apercura/db";
 import { user } from "@apercura/db/schema";
@@ -28,7 +29,7 @@ async function quietly(task: Promise<unknown>) {
 	try {
 		await task;
 	} catch (error) {
-		console.error("Notice email failed:", error instanceof Error ? error.message : error);
+		console.error(`Notice email failed: ${mailErrorSummary(error)}`);
 	}
 }
 
