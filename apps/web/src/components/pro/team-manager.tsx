@@ -16,6 +16,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useFormatter, useLocale, useTranslations } from "next-intl";
 import { type FormEvent, useState } from "react";
 import { useTRPC } from "~/trpc/client";
+import { ActionStatus } from "./agenda/agenda-shared";
 
 const table = tableStyles();
 const sectionHeading = "font-display text-title font-bold text-ink font-stretch-semi-expanded";
@@ -52,6 +53,7 @@ export function TeamManager({
 	const [role, setRole] = useState<Role>("assistant");
 	const [submitted, setSubmitted] = useState(false);
 	const [result, setResult] = useState<Result>(null);
+	const [inviteResult, setInviteResult] = useState<Result>(null);
 	const [roles, setRoles] = useState<Record<string, Role>>({});
 	const [removing, setRemoving] = useState<{ id: string; name: string } | null>(null);
 	const refresh = () => queryClient.invalidateQueries({ queryKey: trpc.team.pathKey() });
@@ -62,13 +64,13 @@ export function TeamManager({
 			{ organizationId, email: address, role: chosen, locale },
 			{
 				onSuccess: (created) => {
-					setResult({ tone: "success", text: t("invite.sent", { email: created.email }) });
+					setInviteResult({ tone: "success", text: t("invite.sent", { email: created.email }) });
 					setEmail("");
 					setSubmitted(false);
 					void refresh();
 				},
 				onError: (error) =>
-					setResult({
+					setInviteResult({
 						tone: "error",
 						text:
 							error.message === "ALREADY_MEMBER"
@@ -83,7 +85,7 @@ export function TeamManager({
 	const onInvite = (event: FormEvent) => {
 		event.preventDefault();
 		setSubmitted(true);
-		setResult(null);
+		setInviteResult(null);
 		if (emailInvalid) return;
 		send(email.trim(), role);
 	};
@@ -138,16 +140,12 @@ export function TeamManager({
 							))}
 						</Select>
 					</div>
-					{result ? (
-						<Notice tone={result.tone} className="max-w-3xl">
-							{result.text}
-						</Notice>
-					) : null}
 					<div>
 						<Button type="submit" isPending={invite.isPending} pendingLabel={t("invite.pending")}>
 							{t("invite.submit")}
 						</Button>
 					</div>
+					<ActionStatus result={inviteResult} className="max-w-3xl" />
 				</Form>
 			</section>
 
@@ -277,6 +275,8 @@ export function TeamManager({
 					</div>
 				)}
 			</section>
+
+			<ActionStatus result={result} className="min-h-0 -mt-8" />
 
 			<section aria-labelledby="team-invitations" className="flex flex-col gap-4">
 				<h2 id="team-invitations" className={sectionHeading}>

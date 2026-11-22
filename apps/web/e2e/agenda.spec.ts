@@ -159,7 +159,7 @@ test("the owner sets up a place from presets and weekly hours, then opens the ag
 
 	// 4. A closure today (a holiday): listed, removable.
 	await page.getByRole("button", { name: "Ajouter", exact: true }).click();
-	await expect(page.getByText(/^Fermé du /)).toBeVisible();
+	await expect(page.getByText(/^Fermé le /)).toBeVisible();
 
 	// 5. The private feed: a link shown once, initials by default.
 	await page.getByRole("button", { name: "Créer un lien de flux" }).click();
@@ -217,6 +217,10 @@ test("a patient's request shows on Today; the owner accepts it, finds it in the 
 	await expect(
 		page.getByText("Les données des patients de cette page sont déchiffrées pour vous"),
 	).toBeVisible();
+	// Adding from Today opens on the next free time.
+	await page.getByRole("button", { name: "Ajouter un rendez-vous" }).click();
+	await expect(page.getByRole("dialog", { name: "Ajouter à l’agenda" })).toBeVisible();
+	await page.keyboard.press("Escape");
 	await expectNoAxeViolations(page);
 	await shoot(page, "today");
 	await requests.getByRole("button", { name: "Accepter" }).click();
@@ -328,6 +332,23 @@ test("the week works with the keyboard only: move, change week, add an appointme
 		};
 		// The week that holds the new entries, then the add dialog on a free time.
 		await shoot(page, "week", toWeek);
+		// The current week at 10:20 in Paris (browser clock only), so today's column shows "now".
+		const day = new Intl.DateTimeFormat("en-CA", { timeZone: "Europe/Paris" }).format(new Date());
+		const probe = new Date(`${day}T10:20:00Z`);
+		const offset =
+			Number(
+				new Intl.DateTimeFormat("en-GB", {
+					timeZone: "Europe/Paris",
+					hour: "2-digit",
+					hourCycle: "h23",
+				}).format(probe),
+			) - 10;
+		await page.clock.install({ time: new Date(probe.getTime() - offset * 3_600_000) });
+		await page.clock.resume();
+		await page.reload();
+		await shoot(page, "week-today", async () => {});
+		await page.clock.setSystemTime(new Date());
+		await page.reload();
 		await page.getByRole("button", { name: "Semaine suivante" }).click();
 		const addOnFree = async () => {
 			await page

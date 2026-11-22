@@ -1735,7 +1735,8 @@
 				"adminReports": "Signalements",
 				"today": "Aujourd’hui",
 				"agenda": "Agenda",
-				"team": "Équipe"
+				"team": "Équipe",
+				"menu": "Menu"
 			},
 			"practicesHeading": "Vos cabinets",
 			"columns": {
@@ -2473,7 +2474,8 @@
 			"next": {
 				"heading": "Prochain patient",
 				"none": "Plus de rendez-vous aujourd’hui.",
-				"at": "À {time}"
+				"at": "À {time}",
+				"empty": "Aucun rendez-vous aujourd’hui."
 			},
 			"day": {
 				"heading": "Les rendez-vous du jour",
@@ -2500,7 +2502,8 @@
 				"noShow": "Absent",
 				"noShowDone": "Marqué absent.",
 				"block": "Bloquer une plage",
-				"week": "Voir la semaine"
+				"week": "Voir la semaine",
+				"add": "Ajouter un rendez-vous"
 			}
 		},
 		"week": {
@@ -2676,7 +2679,11 @@
 				"templateDays": "Journées, 9 h à 12 h 30 et 14 h à 18 h 30",
 				"save": "Enregistrer les horaires",
 				"saved": "Horaires enregistrés.",
-				"invalid": "Le {day}, chaque plage doit finir après son début sans chevaucher une autre."
+				"invalid": "Le {day}, chaque plage doit finir après son début sans chevaucher une autre.",
+				"columns": {
+					"day": "Jour",
+					"actions": "Actions"
+				}
 			},
 			"exceptions": {
 				"heading": "Fermetures et ouvertures exceptionnelles",
@@ -2701,7 +2708,9 @@
 				"closedTime": "Fermé le {date}, de {from} à {to}",
 				"openDays": "Ouvert du {from} au {until}",
 				"openTime": "Ouvert le {date}, de {from} à {to}",
-				"invalid": "La fin doit venir après le début."
+				"invalid": "La fin doit venir après le début.",
+				"closedDay": "Fermé le {date}",
+				"openDay": "Ouvert le {date}"
 			},
 			"booking": {
 				"heading": "Règles de réservation en ligne",
@@ -2739,7 +2748,8 @@
 				"revoked": "Le flux est désactivé : l’ancien lien ne fonctionne plus.",
 				"saved": "Réglage du flux enregistré."
 			},
-			"logLink": "Voir qui a consulté les données des patients"
+			"logLink": "Voir qui a consulté les données des patients",
+			"index": "Sur cette page"
 		},
 		"log": {
 			"metaTitle": "Journal des accès",

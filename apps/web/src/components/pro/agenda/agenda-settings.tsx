@@ -29,7 +29,7 @@ import { hhmm, minutesOf, noonOf, parseIsoDate } from "~/lib/agenda-time";
 import { PRO_ROUTES } from "~/lib/pro-routes";
 import { useTRPC } from "~/trpc/client";
 import type { AppRouter } from "~/trpc/routers/_app";
-import { errorCode, sectionHeading } from "./agenda-shared";
+import { ActionStatus, errorCode, sectionHeading } from "./agenda-shared";
 
 type Overview = inferRouterOutputs<AppRouter>["calendar"]["overview"];
 type Calendar = Overview["calendars"][number];
@@ -106,116 +106,149 @@ export function AgendaSettings({ organizationId }: { organizationId: string }) {
 	const calendar = data.calendars.find((item) => item.id === selected) ?? data.calendars[0] ?? null;
 	const siteOf = (siteId: number) => data.sites.find((site) => site.siteId === siteId);
 
-	return (
-		<div className="flex flex-col gap-12">
-			<Section id="settings-places" title={t("places.heading")} lead={t("places.lead")}>
-				{data.sites.length === 0 ? (
-					<EmptyState
-						title={t("places.heading")}
-						description={t("places.none")}
-						headingLevel={3}
-						action={
-							<Link href={PRO_ROUTES.pageEditor} className={buttonStyles({ intent: "ink" })}>
-								{t("places.addPlace")}
-							</Link>
-						}
-					/>
-				) : (
-					<ul className="flex flex-col border-t-[1.5px] border-ink">
-						{data.sites.map((site) => {
-							const existing = data.calendars.find((item) => item.siteId === site.siteId);
-							const isCurrent = existing !== undefined && existing.id === calendar?.id;
-							return (
-								<li
-									key={site.siteId}
-									className="flex flex-wrap items-center justify-between gap-4 border-b border-rule-soft py-3"
-								>
-									<span className="flex flex-col gap-0.5">
-										<span className="font-display text-body font-bold text-ink">
-											{site.name ?? site.addressLine ?? tCommon("placeLabel")}
-										</span>
-										<span className="text-meta text-ink">
-											{[site.addressLine, [site.postcode, site.placeName].filter(Boolean).join(" ")]
-												.filter(Boolean)
-												.join(", ")}
-										</span>
-										<span className="text-meta text-ink-muted">
-											{site.timeZone
-												? t("places.timeZone", { zone: site.timeZone })
-												: t("places.noZone")}
-										</span>
-									</span>
-									{existing ? (
-										<span className="flex flex-wrap items-center gap-3">
-											<Badge tone={existing.status === "open" ? "stamp" : undefined}>
-												{t(`gate.status.${existing.status as "draft" | "open" | "paused"}`)}
-											</Badge>
-											{data.calendars.length > 1 ? (
-												<Button
-													intent="quiet"
-													aria-pressed={isCurrent}
-													onPress={() => setSelected(existing.id)}
-												>
-													{t("places.choose")}
-												</Button>
-											) : null}
-										</span>
-									) : site.timeZone ? (
-										<span className="flex max-w-md flex-col items-start gap-2">
-											<Button
-												intent="ink"
-												isPending={create.isPending && create.variables?.siteId === site.siteId}
-												onPress={() => {
-													setProblem(null);
-													create.mutate(
-														{
-															organizationId,
-															practitionerId: data.practitionerId,
-															siteId: site.siteId,
-															withPresets: true,
-															locale,
-														},
-														{
-															onSuccess: (created) => {
-																setSelected(created.id);
-																void refresh();
-															},
-															onError: () => setProblem(tCommon("failed")),
-														},
-													);
-												}}
-											>
-												{t("places.create")}
-											</Button>
-											{data.presets.length > 0 ? (
-												<span className="text-meta text-ink-muted">
-													{t("places.presetsNote", {
-														names: data.presets
-															.map((preset) => `${preset.name} (${preset.durationMin} min)`)
-															.join(", "),
-													})}
-												</span>
-											) : null}
-										</span>
-									) : null}
-								</li>
-							);
-						})}
-					</ul>
-				)}
-				{problem ? <Notice tone="error">{problem}</Notice> : null}
-			</Section>
+	const index = [
+		["settings-places", t("places.heading")],
+		...(calendar
+			? [
+					["settings-gate", t("gate.heading")],
+					["settings-types", t("types.heading")],
+					["settings-rules", t("rules.heading")],
+					["settings-exceptions", t("exceptions.heading")],
+					["settings-booking", t("booking.heading")],
+					["settings-feed", t("feed.heading")],
+				]
+			: []),
+	] as const;
 
-			{calendar ? (
-				<CalendarSettings
-					key={calendar.id}
-					organizationId={organizationId}
-					calendar={calendar}
-					placeLabel={siteOf(calendar.siteId)?.name ?? tCommon("placeLabel")}
-					requirements={data.requirements}
-					onChanged={refresh}
-				/>
-			) : null}
+	return (
+		<div className="grid gap-8 lg:grid-cols-[14rem_minmax(0,1fr)] lg:gap-12">
+			<nav aria-labelledby="settings-index" className="lg:sticky lg:top-6 lg:self-start">
+				<h2 id="settings-index" className="caps pb-2 text-ink">
+					{t("index")}
+				</h2>
+				<ul className="flex flex-col border-t-[1.5px] border-ink">
+					{index.map(([id, label]) => (
+						<li key={id} className="border-b border-rule-soft">
+							<a href={`#${id}`} className={`${linkStyles()} flex min-h-11 items-center text-meta`}>
+								{label}
+							</a>
+						</li>
+					))}
+				</ul>
+			</nav>
+			<div className="flex min-w-0 flex-col gap-12">
+				<Section id="settings-places" title={t("places.heading")} lead={t("places.lead")}>
+					{data.sites.length === 0 ? (
+						<EmptyState
+							title={t("places.heading")}
+							description={t("places.none")}
+							headingLevel={3}
+							action={
+								<Link href={PRO_ROUTES.pageEditor} className={buttonStyles({ intent: "ink" })}>
+									{t("places.addPlace")}
+								</Link>
+							}
+						/>
+					) : (
+						<ul className="flex flex-col border-t-[1.5px] border-ink">
+							{data.sites.map((site) => {
+								const existing = data.calendars.find((item) => item.siteId === site.siteId);
+								const isCurrent = existing !== undefined && existing.id === calendar?.id;
+								return (
+									<li
+										key={site.siteId}
+										className="flex flex-wrap items-center justify-between gap-4 border-b border-rule-soft py-3"
+									>
+										<span className="flex flex-col gap-0.5">
+											<span className="font-display text-body font-bold text-ink">
+												{site.name ?? site.addressLine ?? tCommon("placeLabel")}
+											</span>
+											<span className="text-meta text-ink">
+												{[
+													site.addressLine,
+													[site.postcode, site.placeName].filter(Boolean).join(" "),
+												]
+													.filter(Boolean)
+													.join(", ")}
+											</span>
+											<span className="text-meta text-ink-muted">
+												{site.timeZone
+													? t("places.timeZone", { zone: site.timeZone })
+													: t("places.noZone")}
+											</span>
+										</span>
+										{existing ? (
+											<span className="flex flex-wrap items-center gap-3">
+												<Badge>
+													{t(`gate.status.${existing.status as "draft" | "open" | "paused"}`)}
+												</Badge>
+												{data.calendars.length > 1 ? (
+													<Button
+														intent="quiet"
+														aria-pressed={isCurrent}
+														onPress={() => setSelected(existing.id)}
+													>
+														{t("places.choose")}
+													</Button>
+												) : null}
+											</span>
+										) : site.timeZone ? (
+											<span className="flex max-w-md flex-col items-start gap-2">
+												<Button
+													intent="ink"
+													isPending={create.isPending && create.variables?.siteId === site.siteId}
+													onPress={() => {
+														setProblem(null);
+														create.mutate(
+															{
+																organizationId,
+																practitionerId: data.practitionerId,
+																siteId: site.siteId,
+																withPresets: true,
+																locale,
+															},
+															{
+																onSuccess: (created) => {
+																	setSelected(created.id);
+																	void refresh();
+																},
+																onError: () => setProblem(tCommon("failed")),
+															},
+														);
+													}}
+												>
+													{t("places.create")}
+												</Button>
+												{data.presets.length > 0 ? (
+													<span className="text-meta text-ink-muted">
+														{t("places.presetsNote", {
+															names: data.presets
+																.map((preset) => `${preset.name} (${preset.durationMin} min)`)
+																.join(", "),
+														})}
+													</span>
+												) : null}
+											</span>
+										) : null}
+									</li>
+								);
+							})}
+						</ul>
+					)}
+					{problem ? <Notice tone="error">{problem}</Notice> : null}
+				</Section>
+
+				{calendar ? (
+					<CalendarSettings
+						key={calendar.id}
+						organizationId={organizationId}
+						calendar={calendar}
+						placeLabel={siteOf(calendar.siteId)?.name ?? tCommon("placeLabel")}
+						requirements={data.requirements}
+						onChanged={refresh}
+					/>
+				) : null}
+			</div>
 		</div>
 	);
 }
@@ -342,7 +375,7 @@ function Gate({
 				</h2>
 				<p className="flex items-center gap-2 text-meta text-ink">
 					<span>{t("statusLabel")}</span>
-					<Badge tone={status === "open" ? "stamp" : undefined}>{t(`status.${status}`)}</Badge>
+					<Badge>{t(`status.${status}`)}</Badge>
 				</p>
 			</div>
 			{missing.length > 0 ? (
@@ -368,10 +401,9 @@ function Gate({
 			) : status !== "open" ? (
 				<p className="text-body text-ink">{t("ready")}</p>
 			) : null}
-			{result ? <Notice tone={result.tone}>{result.text}</Notice> : null}
 			<div className="flex flex-wrap gap-3">
 				{status === "open" ? (
-					<Button intent="ink" isPending={setStatus.isPending} onPress={() => change("paused")}>
+					<Button isPending={setStatus.isPending} onPress={() => change("paused")}>
 						{t("pause")}
 					</Button>
 				) : (
@@ -384,6 +416,7 @@ function Gate({
 					</Button>
 				)}
 			</div>
+			<ActionStatus result={result} />
 		</section>
 	);
 }
@@ -559,12 +592,12 @@ function TypeForm({
 					</Switch>
 				</div>
 			</div>
-			{result ? <Notice tone={result.tone}>{result.text}</Notice> : null}
 			<div>
 				<Button type="submit" intent="ink" isPending={save.isPending}>
 					{t("save")}
 				</Button>
 			</div>
+			<ActionStatus result={result} />
 		</Form>
 	);
 }
@@ -729,66 +762,40 @@ function RulesEditor({
 					{t("templateDays")}
 				</Button>
 			</div>
-			<ul className="flex flex-col border-t-[1.5px] border-ink">
-				{WEEKDAYS.map((weekday) => {
-					const ranges = days[weekday] ?? [];
-					const day = dayName(weekday);
-					const inText = dayInText(weekday);
-					const invalid = invalidDay(weekday);
-					return (
-						<li
-							key={weekday}
-							className="grid gap-3 border-b border-rule-soft py-4 md:grid-cols-[9rem_1fr]"
-						>
-							<h3 className="font-display text-body font-bold text-ink">{day}</h3>
-							<div className="flex flex-col gap-3">
-								{ranges.length === 0 ? (
-									<p className="text-meta text-ink-muted">{t("closed")}</p>
-								) : (
-									ranges.map((range, index) => (
-										<fieldset
-											key={range.key}
-											className="flex flex-wrap items-end gap-3"
-											aria-label={t("rangeLabel", { day, n: index + 1 })}
-										>
-											<TimeField
-												label={t("from")}
-												value={range.from}
-												onChange={(value) => setRange(weekday, range.key, { from: value })}
-												hourCycle={24}
-												isInvalid={invalid}
-											/>
-											<TimeField
-												label={t("to")}
-												value={range.to}
-												onChange={(value) => setRange(weekday, range.key, { to: value })}
-												hourCycle={24}
-												isInvalid={invalid}
-											/>
-											<Button
-												intent="quiet"
-												aria-label={t("removeRange", {
-													day: inText,
-													from: textOf(range.from) ?? "",
-													to: textOf(range.to) ?? "",
-												})}
-												onPress={() =>
-													setDays((current) => ({
-														...current,
-														[weekday]: (current[weekday] ?? []).filter(
-															(item) => item.key !== range.key,
-														),
-													}))
-												}
-											>
-												{t("remove")}
-											</Button>
-										</fieldset>
-									))
-								)}
-								<div className="flex flex-wrap gap-x-2">
+			<div className="overflow-x-auto">
+				<table className="w-full border-collapse border-y-2 border-ink text-left text-body">
+					<thead className="border-b-[1.5px] border-ink">
+						<tr>
+							<th scope="col" className="caps py-2.5 pe-3 text-left text-ink">
+								{t("columns.day")}
+							</th>
+							<th scope="col" className="caps w-40 px-3 py-2.5 text-left text-ink">
+								{t("from")}
+							</th>
+							<th scope="col" className="caps w-40 px-3 py-2.5 text-left text-ink">
+								{t("to")}
+							</th>
+							<th scope="col" className="w-28 py-2.5 ps-3">
+								<span className="sr-only">{t("columns.actions")}</span>
+							</th>
+						</tr>
+					</thead>
+					{WEEKDAYS.map((weekday) => {
+						const ranges = days[weekday] ?? [];
+						const day = dayName(weekday);
+						const inText = dayInText(weekday);
+						const invalid = invalidDay(weekday);
+						const dayHeader = (
+							<th
+								scope="rowgroup"
+								rowSpan={Math.max(ranges.length, 1)}
+								className="py-3 pe-3 align-top text-left font-normal"
+							>
+								<span className="flex flex-col items-start gap-1">
+									<span className="font-display text-body font-bold text-ink">{day}</span>
 									<Button
 										intent="quiet"
+										className="-ms-2"
 										aria-label={t("addFor", { day: inText })}
 										onPress={() =>
 											setDays((current) => {
@@ -817,24 +824,92 @@ function RulesEditor({
 									{(WORKDAYS as readonly number[]).includes(weekday) && ranges.length > 0 ? (
 										<Button
 											intent="quiet"
+											className="-ms-2 text-start"
 											aria-label={t("copyFor", { day: inText })}
 											onPress={() => copyToWorkdays(weekday)}
 										>
 											{t("copy")}
 										</Button>
 									) : null}
-								</div>
-							</div>
-						</li>
-					);
-				})}
-			</ul>
-			{result ? <Notice tone={result.tone}>{result.text}</Notice> : null}
+								</span>
+							</th>
+						);
+						return (
+							<tbody key={weekday} className="border-b border-rule-soft last:border-b-0">
+								{ranges.length === 0 ? (
+									<tr>
+										{dayHeader}
+										<td colSpan={2} className="px-3 py-3 align-top text-meta text-ink-muted">
+											{t("closed")}
+										</td>
+										<td />
+									</tr>
+								) : (
+									ranges.map((range, index) => (
+										<tr key={range.key}>
+											{index === 0 ? dayHeader : null}
+											<td className="px-3 py-2 align-top">
+												<TimeField
+													label={
+														<span className="sr-only">
+															{t("rangeLabel", { day, n: index + 1 })}, {t("from")}
+														</span>
+													}
+													value={range.from}
+													onChange={(value) => setRange(weekday, range.key, { from: value })}
+													hourCycle={24}
+													isInvalid={invalid}
+													className="w-36"
+												/>
+											</td>
+											<td className="px-3 py-2 align-top">
+												<TimeField
+													label={
+														<span className="sr-only">
+															{t("rangeLabel", { day, n: index + 1 })}, {t("to")}
+														</span>
+													}
+													value={range.to}
+													onChange={(value) => setRange(weekday, range.key, { to: value })}
+													hourCycle={24}
+													isInvalid={invalid}
+													className="w-36"
+												/>
+											</td>
+											<td className="py-2 ps-3 align-top">
+												<Button
+													intent="quiet"
+													aria-label={t("removeRange", {
+														day: inText,
+														from: textOf(range.from) ?? "",
+														to: textOf(range.to) ?? "",
+													})}
+													onPress={() =>
+														setDays((current) => ({
+															...current,
+															[weekday]: (current[weekday] ?? []).filter(
+																(item) => item.key !== range.key,
+															),
+														}))
+													}
+												>
+													{t("remove")}
+												</Button>
+											</td>
+										</tr>
+									))
+								)}
+							</tbody>
+						);
+					})}
+				</table>
+			</div>
 			<div>
 				<Button isPending={save.isPending} onPress={onSave} intent="ink">
 					{t("save")}
 				</Button>
 			</div>
+			<ActionStatus result={result} />
 		</div>
 	);
 }
@@ -877,6 +952,9 @@ function ExceptionsEditor({
 	const labelOf = (item: Calendar["exceptions"][number]) => {
 		const open = item.kind === "open";
 		if (item.span === "days") {
+			if (item.fromDate === item.untilDate) {
+				return t(open ? "openDay" : "closedDay", { date: day(item.fromDate) });
+			}
 			return t(open ? "openDays" : "closedDays", {
 				from: day(item.fromDate),
 				until: day(item.untilDate),
@@ -1021,12 +1099,12 @@ function ExceptionsEditor({
 						/>
 					</div>
 				)}
-				{result ? <Notice tone={result.tone}>{result.text}</Notice> : null}
 				<div>
 					<Button type="submit" intent="ink" isPending={add.isPending}>
 						{t("add")}
 					</Button>
 				</div>
+				<ActionStatus result={result} />
 			</Form>
 		</div>
 	);
@@ -1169,12 +1247,12 @@ function BookingRules({
 				onChange={setInstructions}
 				maxLength={1000}
 			/>
-			{result ? <Notice tone={result.tone}>{result.text}</Notice> : null}
 			<div>
 				<Button type="submit" intent="ink" isPending={update.isPending}>
 					{t("save")}
 				</Button>
 			</div>
+			<ActionStatus result={result} />
 		</Form>
 	);
 }
@@ -1218,7 +1296,6 @@ function FeedSettings({
 					onFocus={(event) => (event.target as HTMLInputElement).select()}
 				/>
 			) : null}
-			{result ? <Notice tone={result.tone}>{result.text}</Notice> : null}
 			<div className="flex flex-wrap gap-3">
 				<Button
 					intent="ink"
@@ -1262,6 +1339,7 @@ function FeedSettings({
 					</Button>
 				) : null}
 			</div>
+			<ActionStatus result={result} />
 			<div className="flex flex-col gap-1">
 				<Switch
 					isSelected={fullNames}

@@ -85,6 +85,28 @@ const TONES: Record<WeekGridTone, string> = {
 	absent: "border-[1.5px] border-ink bg-paper-shade text-ink line-through decoration-1",
 };
 
+/** Lines of 0.875 rem text (leading 1.25) that fit in `rows` rows, split between title and detail. */
+function linesFor(rows: number, hasDetail: boolean): { title: number; detail: number } {
+	// Row height 44 px, minus the slip's 3 px inset and 4 px padding; a line is 17.5 px.
+	const total = Math.max(1, Math.floor((rows * 44 - 7) / 17.5));
+	if (!hasDetail) return { title: Math.min(total, 3), detail: 0 };
+	if (total < 2) return { title: 1, detail: 0 };
+	const title = total >= 4 ? 2 : 1;
+	return { title, detail: total - title };
+}
+
+/** Multi-line clamp for entries that cover several rows; one line stays `truncate`. */
+function clampTo(lines: number): CSSProperties | undefined {
+	return lines > 1
+		? {
+				display: "-webkit-box",
+				WebkitBoxOrient: "vertical",
+				WebkitLineClamp: lines,
+				overflow: "hidden",
+			}
+		: undefined;
+}
+
 /** Height of one time row (the 44 px target). */
 const ROW_REM = 2.75;
 
@@ -152,6 +174,19 @@ export function WeekGrid({
 		cellRefs.current.get(`${active.column}:${active.row}`)?.focus();
 	}, [daysKey, active.column, active.row]);
 
+	// Opening a week that holds "now": scroll the timetable to it (once per week shown).
+	const scroller = useRef<HTMLDivElement>(null);
+	const scrolledFor = useRef<string | null>(null);
+	const nowRow =
+		now && now.minute >= startMin && now.minute < endMin
+			? rowOf(now.minute, startMin, stepMin)
+			: null;
+	useEffect(() => {
+		if (nowRow === null || !scroller.current || scrolledFor.current === daysKey) return;
+		scrolledFor.current = daysKey;
+		scroller.current.scrollTop = Math.max(0, (nowRow - 2) * 44);
+	}, [daysKey, nowRow]);
+
 	const move = (next: CellPosition) => {
 		setFocus(next);
 		const element = cellRefs.current.get(`${next.column}:${next.row}`);
@@ -195,7 +230,7 @@ export function WeekGrid({
 	};
 
 	return (
-		<div className="max-h-[70vh] overflow-auto border-y-2 border-ink">
+		<div ref={scroller} className="max-h-[70vh] overflow-auto border-y-2 border-ink">
 			{/* biome-ignore lint/a11y/useSemanticElements: ARIA grid pattern (roving focus on cells); a table cannot hold the entries printed across rows */}
 			<div role="grid" aria-label={label} className="min-w-full w-max sm:w-full">
 				{/* biome-ignore lint/a11y/useSemanticElements lint/a11y/useFocusableInteractive: ARIA grid pattern */}
@@ -260,6 +295,7 @@ export function WeekGrid({
 									starts && entry
 										? (Math.min(entry.endMin, endMin) - Math.max(entry.startMin, minute)) / stepMin
 										: 0;
+								const lines = linesFor(Math.max(span, 1), Boolean(entry?.detail));
 								const showNow =
 									now &&
 									now.day === column &&
@@ -310,11 +346,23 @@ export function WeekGrid({
 													height: `calc(${Math.max(span, 1) * ROW_REM}rem - 3px)`,
 												}}
 											>
-												<span className="truncate text-[0.875rem] leading-tight font-semibold tabular">
+												<span
+													className={cn(
+														"text-[0.875rem] leading-tight font-semibold tabular",
+														lines.title === 1 && "truncate",
+													)}
+													style={clampTo(lines.title)}
+												>
 													{entry.title}
 												</span>
-												{entry.detail ? (
-													<span className="truncate text-[0.875rem] leading-tight">
+												{entry.detail && lines.detail > 0 ? (
+													<span
+														className={cn(
+															"text-[0.875rem] leading-tight",
+															lines.detail === 1 && "truncate",
+														)}
+														style={clampTo(lines.detail)}
+													>
 														{/* Leading space: the two lines read as words, as in the label. */}{" "}
 														{entry.detail}
 													</span>

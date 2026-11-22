@@ -13,7 +13,13 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "~/i18n/navigation";
-import { dayBounds, instantToLocalDate, localMinutes } from "~/lib/agenda-time";
+import {
+	dayBounds,
+	instantToLocalDate,
+	isoWeekday,
+	localMinutes,
+	minutesOf,
+} from "~/lib/agenda-time";
 import { PRO_ROUTES } from "~/lib/pro-routes";
 import { useTRPC } from "~/trpc/client";
 import {
@@ -88,7 +94,7 @@ export function TodayView({
 	const decide = useMutation(trpc.agenda.decide.mutationOptions());
 	const noShow = useMutation(trpc.agenda.noShow.mutationOptions());
 	const [opened, setOpened] = useState<AgendaEntry | null>(null);
-	const [blocking, setBlocking] = useState(false);
+	const [adding, setAdding] = useState<"appointment" | "block" | null>(null);
 	const [notice, setNotice] = useState<{ tone: "success" | "error"; text: string } | null>(null);
 
 	const byId = useMemo(
@@ -155,6 +161,54 @@ export function TodayView({
 		);
 	}
 
+	/**
+	 * Where "add an appointment" opens: the first quarter hour from now that is inside today's
+	 * opening hours and free for the first type's duration; else the next opening day.
+	 */
+	const nextFree = () => {
+		const step = 15;
+		const duration = main.types.find((type) => type.active)?.durationMin ?? step;
+		const windowsOn = (date: typeof today) => {
+			const iso = date.toString();
+			return main.rules
+				.filter(
+					(rule) =>
+						rule.weekday === isoWeekday(date) &&
+						(!rule.validFrom || rule.validFrom <= iso) &&
+						(!rule.validUntil || rule.validUntil >= iso),
+				)
+				.map((rule) => [minutesOf(rule.startTime) ?? 0, minutesOf(rule.endTime) ?? 0] as const)
+				.sort((a, b) => a[0] - b[0]);
+		};
+		const busy = day
+			.filter(
+				(entry) =>
+					entry.kind === "block" || ["held", "pending", "confirmed"].includes(entry.status),
+			)
+			.map((entry) => [
+				localMinutes(entry.startsAt.getTime(), timeZone),
+				entry.endsAt.getTime() >= dayEnd ? 24 * 60 : localMinutes(entry.endsAt.getTime(), timeZone),
+			]);
+		const open = windowsOn(today);
+		for (
+			let minute = Math.ceil(localMinutes(nowMs, timeZone) / step) * step;
+			minute + duration <= 24 * 60;
+			minute += step
+		) {
+			const inside = open.some(([from, until]) => from <= minute && minute + duration <= until);
+			const free = !busy.some(
+				([from, until]) => (from ?? 0) < minute + duration && minute < (until ?? 0),
+			);
+			if (inside && free) return { date: today, minute };
+		}
+		for (let offset = 1; offset <= 14; offset += 1) {
+			const date = today.add({ days: offset });
+			const first = windowsOn(date)[0];
+			if (first) return { date, minute: first[0] };
+		}
+		return { date: today.add({ days: 1 }), minute: 9 * 60 };
+	};
+
 	const where = (entry: AgendaEntry) => {
 		const calendar = byId.get(entry.calendarId);
 		return calendars.length > 1 && calendar ? placeName(calendar, "") : null;
@@ -195,7 +249,9 @@ export function TodayView({
 						{next.unreachable ? <Notice tone="error">{tCommon("unreachable")}</Notice> : null}
 					</div>
 				) : (
-					<p className="text-body text-ink">{t("next.none")}</p>
+					<p className="text-body text-ink">
+						{appointments.length > 0 ? t("next.none") : t("next.empty")}
+					</p>
 				)}
 			</section>
 
@@ -205,7 +261,10 @@ export function TodayView({
 						{t("day.heading")}
 					</h2>
 					<div className="flex flex-wrap gap-3">
-						<Button intent="ink" onPress={() => setBlocking(true)}>
+						<Button intent="ink" onPress={() => setAdding("appointment")}>
+							{t("actions.add")}
+						</Button>
+						<Button intent="ink" onPress={() => setAdding("block")}>
 							{t("actions.block")}
 						</Button>
 						<Link href={PRO_ROUTES.agenda} className={buttonStyles({ intent: "ink" })}>
@@ -378,18 +437,22 @@ export function TodayView({
 					}}
 				/>
 			) : null}
-			{blocking ? (
+			{adding ? (
 				<AddEntryDialog
 					organizationId={organizationId}
 					calendar={main}
-					initial={{
-						date: today,
-						minute: Math.min(23 * 60, Math.ceil(localMinutes(nowMs, timeZone) / 30) * 30),
-					}}
-					defaultKind="block"
+					initial={
+						adding === "appointment"
+							? nextFree()
+							: {
+									date: today,
+									minute: Math.min(23 * 60, Math.ceil(localMinutes(nowMs, timeZone) / 30) * 30),
+								}
+					}
+					defaultKind={adding}
 					isOpen
 					onOpenChange={(open) => {
-						if (!open) setBlocking(false);
+						if (!open) setAdding(null);
 					}}
 				/>
 			) : null}

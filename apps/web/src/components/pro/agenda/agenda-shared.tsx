@@ -3,6 +3,7 @@
 import {
 	Badge,
 	Button,
+	cn,
 	DatePicker,
 	Dialog,
 	FieldList,
@@ -587,3 +588,25 @@ export function CalendarSelect({
 }
 
 export { minutesOf };
+
+/**
+ * The outcome of a form, printed after its submit button in a polite live region whose space
+ * is reserved, so the button never moves when the message appears.
+ */
+export function ActionStatus({
+	result,
+	className,
+}: {
+	result: { tone: "success" | "error"; text: string } | null;
+	className?: string;
+}) {
+	return (
+		<div aria-live="polite" aria-atomic="true" className={cn("min-h-[3.75rem]", className)}>
+			{result ? (
+				<Notice tone={result.tone} role="none">
+					{result.text}
+				</Notice>
+			) : null}
+		</div>
+	);
+}

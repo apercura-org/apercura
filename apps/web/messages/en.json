@@ -1735,7 +1735,8 @@
 				"adminReports": "Reports",
 				"today": "Today",
 				"agenda": "Agenda",
-				"team": "Team"
+				"team": "Team",
+				"menu": "Menu"
 			},
 			"practicesHeading": "Your practices",
 			"columns": {
@@ -2473,7 +2474,8 @@
 			"next": {
 				"heading": "Next patient",
 				"none": "No more appointments today.",
-				"at": "At {time}"
+				"at": "At {time}",
+				"empty": "No appointment today."
 			},
 			"day": {
 				"heading": "The day’s appointments",
@@ -2500,7 +2502,8 @@
 				"noShow": "Did not come",
 				"noShowDone": "Marked as not come.",
 				"block": "Block a time slot",
-				"week": "See the week"
+				"week": "See the week",
+				"add": "Add an appointment"
 			}
 		},
 		"week": {
@@ -2676,7 +2679,11 @@
 				"templateDays": "Days, 9:00 to 12:30 and 14:00 to 18:30",
 				"save": "Save opening hours",
 				"saved": "Opening hours saved.",
-				"invalid": "On {day}, each range must end after it starts and not overlap another."
+				"invalid": "On {day}, each range must end after it starts and not overlap another.",
+				"columns": {
+					"day": "Day",
+					"actions": "Actions"
+				}
 			},
 			"exceptions": {
 				"heading": "Closures and extra openings",
@@ -2701,7 +2708,9 @@
 				"closedTime": "Closed on {date}, {from} to {to}",
 				"openDays": "Open from {from} to {until}",
 				"openTime": "Open on {date}, {from} to {to}",
-				"invalid": "The end must come after the start."
+				"invalid": "The end must come after the start.",
+				"closedDay": "Closed on {date}",
+				"openDay": "Open on {date}"
 			},
 			"booking": {
 				"heading": "Online booking rules",
@@ -2739,7 +2748,8 @@
 				"revoked": "The feed is off: the old link no longer works.",
 				"saved": "Feed setting saved."
 			},
-			"logLink": "See who accessed patient details"
+			"logLink": "See who accessed patient details",
+			"index": "On this page"
 		},
 		"log": {
 			"metaTitle": "Access log",

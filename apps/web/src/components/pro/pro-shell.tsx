@@ -7,6 +7,7 @@ import type { Locale } from "~/i18n/routing";
 import { PRO_ROUTES } from "~/lib/pro-routes";
 import { getServerSession } from "~/server/auth/session";
 import { getProContext } from "~/server/pro-context";
+import { ProHeaderMenu } from "./pro-header-menu";
 import { SignOutButton } from "./sign-out-button";
 
 const navLink =
@@ -67,10 +68,10 @@ export async function ProShell({
 						>
 							{t("email.wordmark")}
 						</Link>
-						<div className="flex flex-wrap items-center gap-x-5 gap-y-2">
+						<ProHeaderMenu label={t("app.nav.menu")}>
 							{showNav ? (
 								<nav aria-label={t("app.nav.label")}>
-									<ul className="flex flex-wrap items-center gap-x-5">
+									<ul className="flex flex-col items-start gap-x-5 sm:flex-row sm:flex-wrap sm:items-center">
 										{items.map((item) => (
 											<li key={item.href}>
 												<Link
@@ -86,7 +87,7 @@ export async function ProShell({
 								</nav>
 							) : null}
 							<SignOutButton />
-						</div>
+						</ProHeaderMenu>
 					</div>
 				</header>
 			</div>
