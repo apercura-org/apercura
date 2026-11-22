@@ -21,7 +21,19 @@ const nextConfig: NextConfig = {
 			{ key: "X-Robots-Tag", value: "noindex, nofollow" },
 			{ key: "Cache-Control", value: "private, no-store" },
 		];
+		// The same directives as the pages' robots meta, for crawlers that read headers only:
+		// English pages are never indexed in v1, nor search results, the practitioner space and
+		// the per-practitioner forms. `/pro` itself (the practitioners' page) stays indexable.
+		const noindex = [{ key: "X-Robots-Tag", value: "noindex" }];
+		const noindexNofollow = [{ key: "X-Robots-Tag", value: "noindex, nofollow" }];
 		return [
+			{ source: "/en", headers: noindex },
+			{ source: "/en/:path*", headers: noindex },
+			{ source: "/recherche", headers: noindex },
+			{ source: "/:locale(en)?/pro/:path+", headers: noindexNofollow },
+			{ source: "/praticien/:slug/:form(signaler|retrait)", headers: noindexNofollow },
+			{ source: "/en/practitioner/:slug/:form(report|removal)", headers: noindexNofollow },
+			// Last, so they win over the rules above.
 			{ source: "/rdv", headers: manage },
 			{ source: "/en/rdv", headers: manage },
 		];
