@@ -10,6 +10,11 @@ export const PRO_ROUTES = {
 	claimEmail: "/pro/revendication-email",
 	onboarding: "/pro/bienvenue",
 	pageEditor: "/pro/page",
+	today: "/pro/aujourdhui",
+	agenda: "/pro/agenda",
+	agendaSettings: "/pro/agenda/reglages",
+	accessLog: "/pro/agenda/journal",
+	team: "/pro/equipe",
 	adminClaims: "/pro/admin/revendications",
 	adminReports: "/pro/admin/signalements",
 } as const;

@@ -37,9 +37,16 @@ export async function ProShell({
 	const context = session?.session.mfaVerifiedAt ? await getProContext(session.user.id) : null;
 	const items: { href: (typeof PRO_ROUTES)[keyof typeof PRO_ROUTES]; label: string }[] = [
 		{ href: PRO_ROUTES.home, label: t("app.nav.home") },
+		...(context?.practice
+			? [
+					{ href: PRO_ROUTES.today, label: t("app.nav.today") },
+					{ href: PRO_ROUTES.agenda, label: t("app.nav.agenda") },
+				]
+			: []),
 		...(context && context.pages.length > 0
 			? [{ href: PRO_ROUTES.pageEditor, label: t("app.nav.page") }]
 			: []),
+		...(context?.practice?.isOwner ? [{ href: PRO_ROUTES.team, label: t("app.nav.team") }] : []),
 		{ href: PRO_ROUTES.security, label: t("app.nav.security") },
 		...(context?.isPlatformAdmin
 			? [

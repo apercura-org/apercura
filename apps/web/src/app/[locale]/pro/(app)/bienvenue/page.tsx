@@ -183,7 +183,18 @@ async function Onboarding({ locale, step }: { locale: Locale; step: Step }) {
 							{t("steps.booking.editFees")}
 						</Link>
 					</div>
-					<p className="max-w-[65ch] text-meta text-ink-muted">{t("steps.booking.settingsNote")}</p>
+					<div className="flex flex-col gap-2 border-t border-rule-soft pt-4">
+						<p className="max-w-[65ch] text-meta text-ink-muted">
+							{t("steps.booking.settingsNote")}
+						</p>
+						{page.isOwner ? (
+							<p>
+								<Link href={PRO_ROUTES.agendaSettings} className={linkStyles()}>
+									{t("steps.booking.settingsLink")}
+								</Link>
+							</p>
+						) : null}
+					</div>
 				</section>
 			) : null}
 

@@ -30,6 +30,12 @@ export const BOOKING_LIMITS = {
 	alternatives: 3,
 	/** Longest agenda range staff may list at once. */
 	agendaMaxDays: 42,
+	/** `agenda.list` calls (each one decrypts and audits), per signed-in person. */
+	agendaListsPerUser: { max: 120, windowSeconds: 60 } satisfies RateLimitRule,
+	/** Reads of one private calendar feed (`/api/ics/{token}`), per token. */
+	feedReadsPerToken: { max: 60, windowSeconds: 3600 } satisfies RateLimitRule,
+	/** Invitations one practice may send in a day. */
+	invitationsPerOrganization: { max: 20, windowSeconds: 86_400 } satisfies RateLimitRule,
 } as const;
 
 /** Whether online booking is enabled (FEATURE_BOOKING). */

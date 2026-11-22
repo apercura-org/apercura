@@ -1,3 +1,4 @@
+import { APPOINTMENT_STATUSES } from "@apercura/db/schema";
 import { z } from "zod";
 import {
 	blockTime,
@@ -5,6 +6,7 @@ import {
 	createEntry,
 	decideRequest,
 	listAgenda,
+	listAgendaCalendars,
 	markNoShow,
 	type StaffContext,
 } from "~/server/booking/agenda";
@@ -31,9 +33,15 @@ export const agendaRouter = createTRPCRouter({
 				calendarId: z.uuid().optional(),
 				from: z.date(),
 				to: z.date(),
+				statuses: z.array(z.enum(APPOINTMENT_STATUSES)).max(9).optional(),
 			}),
 		)
 		.query(({ ctx, input }) => asTrpc(() => listAgenda(bookingRuntime(ctx), staff(ctx), input))),
+
+	/** Calendars, sites, types and opening hours: what drawing the agenda needs (no patient data). */
+	calendars: memberProcedure({ agenda: ["read"] }).query(({ ctx }) =>
+		asTrpc(() => listAgendaCalendars(bookingRuntime(ctx), staff(ctx))),
+	),
 
 	/** An appointment taken by phone: confirmed at once, outside the opening hours if need be. */
 	create: memberProcedure({ agenda: ["write"] })

@@ -4,18 +4,22 @@
  *
  * Only an allowlist of internal practitioner-space paths is accepted, parsed
  * into a typed route (never echoed back as a raw string), so the parameter
- * can never become an open redirect: today, the claim of one RPPS.
+ * can never become an open redirect: the claim of one RPPS, or one team
+ * invitation (an invited person creates their account first).
  */
 
 export const RETURN_PARAM = "suite";
 
 export type ReturnTo =
 	| { pathname: "/pro/revendiquer"; query: { rpps: string } }
-	| { pathname: "/pro/revendiquer/[id]"; params: { id: string } };
+	| { pathname: "/pro/revendiquer/[id]"; params: { id: string } }
+	| { pathname: "/pro/invitation/[id]"; params: { id: string } };
 
 const CLAIM_START = /^(?:\/en)?\/pro\/revendiquer$/;
 const CLAIM =
 	/^(?:\/en)?\/pro\/revendiquer\/([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})$/;
+const INVITATION =
+	/^(?:\/en)?\/pro\/invitation\/([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})$/;
 const RPPS = /^\d{11}$/;
 
 /** The allowlisted route a `?suite=` value designates, or null for anything else. */
@@ -40,14 +44,23 @@ export function parseReturnTo(raw: unknown): ReturnTo | null {
 	if (claim?.[1] && url.search === "") {
 		return { pathname: "/pro/revendiquer/[id]", params: { id: claim[1] } };
 	}
+	const invitation = INVITATION.exec(url.pathname);
+	if (invitation?.[1] && url.search === "") {
+		return { pathname: "/pro/invitation/[id]", params: { id: invitation[1] } };
+	}
 	return null;
 }
 
-/** The `?suite=` value of a route (locale-free: the claim paths are the same in every locale). */
+/** The `?suite=` value of a route (locale-free: these paths are the same in every locale). */
 export function serializeReturnTo(target: ReturnTo): string {
-	return target.pathname === "/pro/revendiquer"
-		? `/pro/revendiquer?rpps=${target.query.rpps}`
-		: `/pro/revendiquer/${target.params.id}`;
+	switch (target.pathname) {
+		case "/pro/revendiquer":
+			return `/pro/revendiquer?rpps=${target.query.rpps}`;
+		case "/pro/revendiquer/[id]":
+			return `/pro/revendiquer/${target.params.id}`;
+		case "/pro/invitation/[id]":
+			return `/pro/invitation/${target.params.id}`;
+	}
 }
 
 /** Adds `?suite=` to a route's query when there is somewhere to come back to. */

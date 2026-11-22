@@ -256,7 +256,10 @@ function createAuth() {
 				creatorRole: "owner",
 				// Organizations are created by the claim flow (server side), not by users.
 				allowUserToCreateOrganization: false,
-				invitationExpiresIn: 7 * 24 * HOUR,
+				// Invitations are created and accepted by tRPC `team.*` (the endpoints are
+				// disabled, see ./policy); this keeps Better Auth's own default in line.
+				invitationExpiresIn: 48 * HOUR,
+				requireEmailVerificationOnInvitation: true,
 			}),
 			// Must stay last: forwards Set-Cookie from server-side auth calls.
 			nextCookies(),

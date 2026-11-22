@@ -32,7 +32,7 @@ import {
 } from "@apercura/core/crypto";
 import type { Database } from "@apercura/db";
 import { appointments, auditEvents, organizationKeys, otpChallenges } from "@apercura/db/schema";
-import { and, desc, eq, inArray } from "drizzle-orm";
+import { and, desc, eq, inArray, sql } from "drizzle-orm";
 import type { Executor } from "~/server/db-executor";
 import { dataKeyCache, keyring, manageTokenMac, organizationIndexKey } from "./keys";
 
@@ -193,6 +193,7 @@ export async function readAppointmentPatients(
 			subjectIds: [...appointmentIds],
 			fields: fields.map((field) => PATIENT_COLUMNS[field]),
 		});
+		await flagDecryptionVolume(tx, audit);
 		const rows = await tx
 			.select({
 				id: appointments.id,
@@ -235,6 +236,45 @@ export interface AuditSubject {
 	subjectTable: string;
 	subjectIds: string[];
 	fields?: string[];
+}
+
+/**
+ * More distinct patient records than this, decrypted by one person within an hour, raise an
+ * alert (plan §10): a stolen session or an export by hand looks like that.
+ */
+export const DECRYPTION_ALERT_PER_HOUR = 500;
+
+/**
+ * After a person's decryption, records an `alert` audit row (once an hour at most) when they
+ * have read more than {@link DECRYPTION_ALERT_PER_HOUR} distinct appointments in the last hour.
+ * The owner sees it at the top of the access log; operators see the log line.
+ */
+async function flagDecryptionVolume(tx: Executor, audit: AuditContext) {
+	if (!audit.userId) {
+		return;
+	}
+	const [row] = await tx.execute<{ records: number; alerted: boolean }>(sql`
+		select
+			(select count(distinct subject.id)::int
+				from care.audit_events e, unnest(e.subject_ids) as subject(id)
+				where e.user_id = ${audit.userId} and e.organization_id = ${audit.organizationId}
+					and e.action = 'decrypt' and e.subject_table = 'appointments'
+					and e.created_at > now() - interval '1 hour') as records,
+			exists (select 1 from care.audit_events
+				where user_id = ${audit.userId} and organization_id = ${audit.organizationId}
+					and action = 'alert' and created_at > now() - interval '1 hour') as alerted
+	`);
+	if (!row || row.alerted || row.records <= DECRYPTION_ALERT_PER_HOUR) {
+		return;
+	}
+	await writeAudit(
+		tx,
+		{ ...audit, purpose: "decrypt_volume" },
+		{ action: "alert", subjectTable: "audit_events", subjectIds: [], fields: [] },
+	);
+	console.warn(
+		`[phi] decryption volume alert: user ${audit.userId} read ${row.records} patient records of organization ${audit.organizationId} within an hour`,
+	);
 }
 
 /** Appends one row to `care.audit_events` (append-only for the app role). */

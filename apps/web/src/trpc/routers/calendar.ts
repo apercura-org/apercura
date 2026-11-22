@@ -1,17 +1,21 @@
 import { z } from "zod";
 import {
 	addException,
+	agendaOverview,
 	createCalendar,
 	listCalendars,
 	presetsFor,
 	removeException,
 	replaceRules,
+	revokeFeedToken,
+	rotateFeedToken,
 	saveType,
 	setCalendarStatus,
 	updateCalendar,
 } from "~/server/booking/calendar-settings";
 import { asTrpc } from "~/server/booking/errors";
 import { agendaRequirements } from "~/server/booking/gate";
+import { feedUrl } from "~/server/booking/ics-feed";
 import { bookingRuntime } from "../booking-runtime";
 import { createTRPCRouter, memberProcedure } from "../init";
 
@@ -33,6 +37,7 @@ const settings = z.object({
 	askFirstVisit: z.boolean().optional(),
 	retentionDays: z.number().int().min(30).max(365).optional(),
 	publicInstructions: z.string().trim().max(1000).nullish(),
+	icsFullNames: z.boolean().optional(),
 });
 
 const typeFields = {
@@ -50,6 +55,38 @@ const typeIds = z.array(z.uuid()).max(50).optional();
 /** Calendar settings (plan §9): calendars per site, types, weekly rules, exceptions. */
 export const calendarRouter = createTRPCRouter({
 	list: owner.query(({ ctx }) => listCalendars(ctx.db(), ctx.organizationId)),
+
+	/** The settings page: places with their time zone, calendars, presets and the agenda gate. */
+	overview: owner
+		.input(z.object({ locale: z.enum(["fr", "en"]) }))
+		.query(({ ctx, input }) =>
+			asTrpc(() =>
+				agendaOverview(
+					ctx.db(),
+					ctx.organizationId,
+					input.locale,
+					new Date((ctx.now ?? Date.now)()),
+				),
+			),
+		),
+
+	/** Issues a new private feed link (the old one stops working). The URL is shown once. */
+	rotateFeed: owner.input(z.object({ calendarId: z.uuid() })).mutation(({ ctx, input }) =>
+		asTrpc(async () => {
+			const { token } = await rotateFeedToken(
+				bookingRuntime(ctx),
+				ctx.organizationId,
+				input.calendarId,
+			);
+			return { url: feedUrl(token) };
+		}),
+	),
+
+	revokeFeed: owner
+		.input(z.object({ calendarId: z.uuid() }))
+		.mutation(({ ctx, input }) =>
+			asTrpc(() => revokeFeedToken(bookingRuntime(ctx), ctx.organizationId, input.calendarId)),
+		),
 
 	/** What opening the agenda still needs: verified claim, fees, payment methods. */
 	requirements: owner

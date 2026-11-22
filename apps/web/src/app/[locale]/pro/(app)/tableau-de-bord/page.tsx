@@ -38,6 +38,7 @@ async function Home({ locale }: { locale: Locale }) {
 	const tClaim = await getTranslations({ locale, namespace: "Claim" });
 	const labels = await getTaxonomyLabels(locale);
 	const memberships = await caller.account.memberships();
+	const invitations = await caller.team.mine();
 	const claims = await caller.claims.mine();
 	const liveClaims = claims.filter(
 		(claim) => claim.status === "open" || claim.status === "in_review",
@@ -155,6 +156,47 @@ async function Home({ locale }: { locale: Locale }) {
 							))}
 						</tbody>
 					</table>
+				</section>
+			) : null}
+			{invitations.length > 0 ? (
+				<section aria-labelledby="home-invitations" className="flex max-w-[65ch] flex-col gap-3">
+					<h2
+						id="home-invitations"
+						className="font-display text-title font-bold text-ink font-stretch-semi-expanded"
+					>
+						{t("invitationsHeading")}
+					</h2>
+					<ul className="flex flex-col gap-2">
+						{invitations.map((invitation) => (
+							<li key={invitation.id} className="flex flex-col gap-1">
+								<span className="text-body text-ink">
+									{t("invitationBody", { practice: invitation.practiceName })}
+								</span>
+								<Link
+									href={{ pathname: "/pro/invitation/[id]", params: { id: invitation.id } }}
+									className={linkStyles()}
+								>
+									{t("invitationLink")}
+								</Link>
+							</li>
+						))}
+					</ul>
+				</section>
+			) : null}
+			{memberships.length > 0 ? (
+				<section aria-labelledby="home-agenda" className="flex max-w-[65ch] flex-col gap-3">
+					<h2
+						id="home-agenda"
+						className="font-display text-title font-bold text-ink font-stretch-semi-expanded"
+					>
+						{t("agendaHeading")}
+					</h2>
+					<p className="text-body text-ink">{t("agendaBody")}</p>
+					<p>
+						<Link href={PRO_ROUTES.today} className={linkStyles()}>
+							{t("agendaLink")}
+						</Link>
+					</p>
 				</section>
 			) : null}
 			<section aria-labelledby="home-security" className="flex max-w-[65ch] flex-col gap-3">
