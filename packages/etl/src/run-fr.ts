@@ -17,6 +17,7 @@ import { acceptGeocode, type GeocodeResult, geocodeBatch, geocodeInput } from ".
 import {
 	checkBreakers,
 	checkFiles,
+	checkOrphans,
 	checkQuarantine,
 	checkStaging,
 	type GuardCheck,
@@ -37,6 +38,7 @@ import {
 	mergePractitioners,
 	mergeQualifications,
 	mergeSites,
+	orphanedPages,
 	recomputeDerived,
 	refreshReadModels,
 	restoreSiteNameAccents,
@@ -395,10 +397,15 @@ async function runLocked(
 				...(finess.ids ?? []),
 				...derived.removedSites,
 			]);
-			const breakers = checkBreakers({
-				...models.pages,
-				unpublished: Math.max(0, models.pages.unpublished - suppressedPages),
-			});
+			const orphans = await orphanedPages(tx);
+			merge.orphans = orphans.count;
+			const breakers = [
+				...checkBreakers({
+					...models.pages,
+					unpublished: Math.max(0, models.pages.unpublished - suppressedPages),
+				}),
+				...checkOrphans(orphans),
+			];
 			const breakerVerdict = verdict(breakers, approved);
 			const [totals] = await tx<Record<string, number>[]>`
 				SELECT

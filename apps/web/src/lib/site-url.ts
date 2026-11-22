@@ -18,11 +18,3 @@ export function siteOrigin(): string {
 export function absoluteUrl(href: Href, locale: Locale): string {
 	return `${siteOrigin()}${getPathname({ href, locale })}`;
 }
-
-/**
- * Canonical URL of a page: itself. English pages are `noindex` in v1, so no
- * hreflang alternates are announced (see `alternateLinks` in the routing).
- */
-export function pageAlternates(href: Href, locale: Locale) {
-	return { canonical: getPathname({ href, locale }) };
-}

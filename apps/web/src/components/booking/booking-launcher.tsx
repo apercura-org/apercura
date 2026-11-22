@@ -1,12 +1,14 @@
 "use client";
 
-import { buttonStyles } from "@apercura/ui";
 import dynamic from "next/dynamic";
 import { type MouseEvent, useCallback, useEffect, useRef, useState } from "react";
 
-/** The panel (forms, slot grid, proof of work) loads only when a patient asks for it. */
-const loadPanel = () => import("./booking-panel");
-const BookingPanel = dynamic(() => loadPanel().then((module) => module.BookingPanel), {
+/**
+ * The panel (forms, slot grid, proof of work) and the API client it needs load
+ * only when a patient asks for it, so neither weighs on the page's first load.
+ */
+const loadPanel = () => import("./booking-panel-loader");
+const BookingPanel = dynamic(() => loadPanel().then((module) => module.BookingPanelWithApi), {
 	ssr: false,
 });
 
@@ -33,6 +35,11 @@ export interface BookingLauncherProps {
 	label: string;
 	/** "Or call 01 00 00 00 00." when the practice publishes a number. */
 	callHint?: string | undefined;
+	/**
+	 * The stamp's classes, computed on the server (`buttonStyles`), so the style
+	 * recipes never ship to the browser with this island.
+	 */
+	className: string;
 }
 
 /**
@@ -44,6 +51,7 @@ export function BookingLauncher({
 	practitionerName,
 	label,
 	callHint,
+	className,
 }: BookingLauncherProps) {
 	const [open, setOpen] = useState(false);
 	const [loaded, setLoaded] = useState(false);
@@ -110,11 +118,7 @@ export function BookingLauncher({
 				onPointerEnter={() => void loadPanel()}
 				onFocus={() => void loadPanel()}
 				aria-haspopup="dialog"
-				className={buttonStyles({
-					intent: "stamp",
-					size: "lg",
-					className: "self-stretch sm:self-start",
-				})}
+				className={className}
 			>
 				{label}
 			</a>

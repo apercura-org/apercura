@@ -1,6 +1,7 @@
 import { FieldList, FieldRow, tableStyles } from "@apercura/ui";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { BookletPage } from "~/components/booklet-page";
+import { ClientIsland, GDPR_MESSAGES } from "~/components/client-island";
 import { RemovalForm, ReportForm } from "~/components/gdpr-forms";
 import {
 	ExternalLink,
@@ -8,12 +9,14 @@ import {
 	type ProseContent,
 	ProseSection,
 } from "~/components/institutional";
+import { PageGraph } from "~/components/page-graph";
 import { PublicPage } from "~/components/public-page";
 import { Trail } from "~/components/trail";
 import type { Locale } from "~/i18n/routing";
 import { institutionalMetadata, localeOf } from "~/lib/institutional";
 import { LINKS } from "~/lib/links";
 import { getRegistryStatus, type RegistryFile } from "~/server/queries/registry";
+import { TRPCReactProvider } from "~/trpc/client";
 
 export const ensureStatic = "navigation";
 /**
@@ -76,6 +79,12 @@ export default async function DataPage({ params }: PageProps<"/[locale]/donnees"
 		<PublicPage locale={locale} href={HREF}>
 			<InstitutionalCover title={t("title")} lead={t("lead")} />
 			<BookletPage runningHead={tSite("runningHead")}>
+				<PageGraph
+					locale={locale}
+					href={HREF}
+					name={t("title")}
+					trail={[{ label: t("title"), href: HREF }]}
+				/>
 				<Trail locale={locale} items={[{ label: t("title"), href: HREF }]} />
 
 				<ProseSection
@@ -210,7 +219,11 @@ export default async function DataPage({ params }: PageProps<"/[locale]/donnees"
 					<div className="flex flex-col gap-4">
 						<h3 className="type-subtitle text-ink">{t("correct.formTitle")}</h3>
 						<p className="max-w-[65ch] text-body text-ink">{t("correct.formBody")}</p>
-						<ReportForm />
+						<ClientIsland locale={locale} namespaces={GDPR_MESSAGES}>
+							<TRPCReactProvider>
+								<ReportForm />
+							</TRPCReactProvider>
+						</ClientIsland>
 					</div>
 				</ProseSection>
 
@@ -221,7 +234,11 @@ export default async function DataPage({ params }: PageProps<"/[locale]/donnees"
 					<div className="flex flex-col gap-4">
 						<h3 className="type-subtitle text-ink">{t("remove.formTitle")}</h3>
 						<p className="max-w-[65ch] text-body text-ink">{t("remove.formBody")}</p>
-						<RemovalForm />
+						<ClientIsland locale={locale} namespaces={GDPR_MESSAGES}>
+							<TRPCReactProvider>
+								<RemovalForm />
+							</TRPCReactProvider>
+						</ClientIsland>
 					</div>
 				</ProseSection>
 			</BookletPage>

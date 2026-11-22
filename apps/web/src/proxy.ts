@@ -3,6 +3,7 @@ import { type NextRequest, NextResponse } from "next/server";
 import createMiddleware from "next-intl/middleware";
 import { getPathname } from "./i18n/navigation";
 import { type Locale, routing } from "./i18n/routing";
+import { canonicalPath } from "./lib/canonical-path";
 import { searchRedirect } from "./server/search-redirect";
 
 const intl = createMiddleware(routing);
@@ -62,12 +63,18 @@ async function searchShortcut(request: NextRequest): Promise<NextResponse | null
 	}
 }
 
+const LOCALE_PREFIX = new RegExp(`^/(?:${routing.locales.join("|")})(?:/|$)`);
+
 /**
  * 1. Canonical host: any other host (www., the hosting provider's default
  *    domain) answers 308 to the same path on APP_URL. Loopback hosts are left
  *    alone so health checks and local runs of a production build keep working.
- * 2. Search shortcuts: 307 to the page a query names.
- * 3. Locale routing (next-intl): French without a prefix, English under /en.
+ * 2. Canonical path: 308 to the unprefixed, lowercase form (`canonicalPath`).
+ * 3. Search shortcuts: 307 to the page a query names.
+ * 4. Locale routing (next-intl): French without a prefix, English under /en.
+ *    Its redirects of an explicitly prefixed path (`/en/annuaire` →
+ *    `/en/directory`) are permanent; the locale detection of an unprefixed
+ *    path stays temporary (307), as it depends on the visitor.
  */
 export default async function proxy(request: NextRequest) {
 	const canonical = canonicalOrigin();
@@ -76,14 +83,25 @@ export default async function proxy(request: NextRequest) {
 		const target = new URL(request.nextUrl.pathname + request.nextUrl.search, canonical);
 		return NextResponse.redirect(target, 308);
 	}
+	const path = canonicalPath(request.nextUrl.pathname);
+	if (path) {
+		const target = request.nextUrl.clone();
+		target.pathname = path;
+		return NextResponse.redirect(target, 308);
+	}
 	const shortcut = await searchShortcut(request);
 	if (shortcut) return shortcut;
-	return intl(request);
+	const response = intl(request);
+	if (response.status === 307 && LOCALE_PREFIX.test(request.nextUrl.pathname)) {
+		return new NextResponse(null, { status: 308, headers: response.headers });
+	}
+	return response;
 }
 
 export const config = {
 	// Skip API routes, Next.js internals and files with an extension (sitemaps,
 	// robots.txt, images), which the canonical host check does not need either:
 	// crawlers reach them from the canonical robots.txt.
-	matcher: "/((?!api|trpc|_next|_vercel|.*\\..*).*)",
+	// The site icons (`/icon/{size}`, `/apple-icon`) are metadata routes, outside the locales.
+	matcher: "/((?!api|trpc|_next|_vercel|icon/|apple-icon|.*\\..*).*)",
 };

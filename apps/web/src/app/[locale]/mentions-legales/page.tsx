@@ -2,6 +2,7 @@ import { FieldList, FieldRow, linkStyles } from "@apercura/ui";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { BookletPage } from "~/components/booklet-page";
 import { InstitutionalCover, ProseSection } from "~/components/institutional";
+import { PageGraph } from "~/components/page-graph";
 import { PublicPage } from "~/components/public-page";
 import { Trail } from "~/components/trail";
 import { serverEnv } from "~/env";
@@ -31,6 +32,12 @@ export default async function LegalPage({ params }: PageProps<"/[locale]/mention
 		<PublicPage locale={locale} href={HREF}>
 			<InstitutionalCover title={t("title")} lead={t("lead")} mark={tI("draftMark")} />
 			<BookletPage runningHead={tSite("runningHead")}>
+				<PageGraph
+					locale={locale}
+					href={HREF}
+					name={t("title")}
+					trail={[{ label: t("title"), href: HREF }]}
+				/>
 				<Trail locale={locale} items={[{ label: t("title"), href: HREF }]} />
 				<ProseSection id="editeur" content={section("publisher")}>
 					<FieldList>

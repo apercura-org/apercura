@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { BookletPage } from "~/components/booklet-page";
+import { ClientIsland, SEARCH_FORM_MESSAGES } from "~/components/client-island";
 import { PublicPage } from "~/components/public-page";
 import { ResultsMap } from "~/components/results-map";
 import { SearchForm } from "~/components/search-form";
@@ -22,6 +23,7 @@ import {
 	suggestPlaces,
 } from "~/server/queries/search";
 import { searchRedirect } from "~/server/search-redirect";
+import { TRPCReactProvider } from "~/trpc/client";
 
 /**
  * Search is dynamic and never indexed. The page awaits its query at the top
@@ -125,7 +127,11 @@ export default async function SearchPage({ params, searchParams }: Props) {
 			<div className="surface-shade border-b border-rule-soft">
 				<div className="mx-auto flex w-full max-w-6xl flex-col gap-6 px-5 pt-8 pb-10 sm:px-8">
 					<h1 className="type-headline">{t("title")}</h1>
-					<SearchForm defaultWho={query.who} defaultWhere={typedWhere(query)} />
+					<ClientIsland locale={locale} namespaces={SEARCH_FORM_MESSAGES}>
+						<TRPCReactProvider>
+							<SearchForm defaultWho={query.who} defaultWhere={typedWhere(query)} />
+						</TRPCReactProvider>
+					</ClientIsland>
 				</div>
 			</div>
 			<BookletPage runningHead={tSite("runningHead")} folio={tSite("folio", { number: page })}>

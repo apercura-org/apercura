@@ -1,4 +1,4 @@
-import { landingRoute, pageCount, parsePageSegment } from "@apercura/core";
+import { LISTING_PAGE_SIZE, landingRoute, pageCount, parsePageSegment } from "@apercura/core";
 import { isListingSlug } from "@apercura/core/taxonomy";
 import { linkStyles } from "@apercura/ui";
 import type { Metadata } from "next";
@@ -9,7 +9,6 @@ import { BookletPage } from "~/components/booklet-page";
 import { JsonLd } from "~/components/json-ld";
 import {
 	CountLinks,
-	itemListData,
 	ListingFacts,
 	ListingSection,
 	ListingTitle,
@@ -17,13 +16,21 @@ import {
 	PractitionerTable,
 } from "~/components/listing";
 import { PublicPage } from "~/components/public-page";
-import { Trail, type TrailItem } from "~/components/trail";
-import { type Href, Link, permanentRedirect } from "~/i18n/navigation";
+import { Trail, type TrailItem, trailEntries } from "~/components/trail";
+import { getPathname, type Href, Link, permanentRedirect } from "~/i18n/navigation";
 import { type Locale, routing } from "~/i18n/routing";
-import { getTaxonomyLabels } from "~/lib/labels";
+import { getTaxonomyLabels, inSentence } from "~/lib/labels";
 import { isDepartmentSlug, isPlaceSlug, placeLabel } from "~/lib/places";
-import { robotsFor } from "~/lib/robots";
-import { pageAlternates, siteOrigin } from "~/lib/site-url";
+import {
+	CONTENT_LANGUAGES,
+	DESCRIPTION_MAX,
+	fitText,
+	pageMetadata,
+	pickTitle,
+	shortPlaceName,
+} from "~/lib/seo";
+import { absoluteUrl, siteOrigin } from "~/lib/site-url";
+import { breadcrumbNode, graph, ids, itemListNode, webPageNode } from "~/lib/structured-data";
 import { databaseAvailable } from "~/server/db";
 import { getLandingPage, sampleLandingParams } from "~/server/queries/landing";
 import { resolvePlace } from "~/server/queries/places";
@@ -133,22 +140,32 @@ async function resolve(params: Props["params"]) {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
 	const resolved = await resolve(params);
-	const { locale, data, page } = resolved;
+	const { locale, data, page, pages } = resolved;
 	const t = await getTranslations({ locale, namespace: "Listing" });
 	const labels = await getTaxonomyLabels(locale);
 	const listing = labels.listing(resolved.listingSlug) ?? resolved.listingSlug;
 	const place = placeLabel(resolved.place);
+	const short = placeLabel({ ...resolved.place, name: shortPlaceName(resolved.place.name) });
 	const count = data.landing.practitionerCount;
-	return {
+	const values = { listing, place, count, page, pages, occupation: inSentence(listing) };
+	const shortValues = { ...values, place: short };
+	return pageMetadata({
+		locale,
+		href: resolved.href,
 		title:
 			page > 1
-				? t("metaTitlePage", { listing, place, count, page })
-				: t("metaTitle", { listing, place, count }),
-		description: t("metaDescription", { listing, place, count }),
-		robots: robotsFor(locale, resolved.indexable),
-		alternates: pageAlternates(resolved.href, locale),
-		openGraph: { images: [{ url: "/og/annuaire.png", width: 1200, height: 630 }] },
-	};
+				? pickTitle([t("metaTitlePage", values), t("metaTitlePage", shortValues)])
+				: pickTitle([
+						t("metaTitle", values),
+						t("metaTitle", shortValues),
+						t("metaTitleShort", shortValues),
+					]),
+		description: fitText(
+			[t(page > 1 ? "metaDescriptionPage" : "metaDescription", values)],
+			DESCRIPTION_MAX,
+		),
+		indexable: resolved.indexable,
+	});
 }
 
 export default async function LandingPage({ params }: Props) {
@@ -174,6 +191,10 @@ export default async function LandingPage({ params }: Props) {
 		trail.push({ label: t("pagination.status", { page, pages }), href: resolved.href });
 	}
 
+	const title = t("title", { listing, place: placeName });
+	const url = absoluteUrl(resolved.href, locale);
+	const origin = siteOrigin();
+
 	const hubHref: Href = isDepartment
 		? { pathname: "/annuaire/[dept]", params: { dept: department.slug } }
 		: {
@@ -183,7 +204,34 @@ export default async function LandingPage({ params }: Props) {
 
 	return (
 		<PublicPage locale={locale} href={resolved.href}>
-			<JsonLd data={itemListData(locale, siteOrigin(), data.rows)} />
+			<JsonLd
+				data={graph([
+					webPageNode({
+						url,
+						origin,
+						name: title,
+						language: CONTENT_LANGUAGES[locale],
+						type: "CollectionPage",
+						hasBreadcrumb: true,
+						mainEntity: ids.list(url),
+						dateModified: data.landing.updatedAt,
+					}),
+					breadcrumbNode(url, await trailEntries(locale, trail)),
+					itemListNode({
+						url,
+						name: title,
+						total: count,
+						offset: (page - 1) * LISTING_PAGE_SIZE,
+						items: data.rows.map((row) => ({
+							name: labels.personName(row),
+							url: `${origin}${getPathname({
+								href: { pathname: "/praticien/[slug]", params: { slug: row.slug } },
+								locale,
+							})}`,
+						})),
+					}),
+				])}
+			/>
 			<BookletPage
 				runningHead={tSite("runningHead")}
 				folio={pages > 1 ? tSite("folio", { number: page }) : undefined}

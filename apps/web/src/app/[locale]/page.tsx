@@ -6,17 +6,25 @@ import {
 	ProvenanceNote,
 	tableStyles,
 } from "@apercura/ui";
+import type { Metadata } from "next";
 import { hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { BookletPage } from "~/components/booklet-page";
+import { ClientIsland, SEARCH_FORM_MESSAGES } from "~/components/client-island";
+import { PageGraph } from "~/components/page-graph";
 import { SearchForm } from "~/components/search-form";
 import { SiteFooter } from "~/components/site-footer";
 import { SiteHeader } from "~/components/site-header";
 import { SpecimenPage } from "~/components/specimen-page";
 import { serverEnv } from "~/env";
-import { Link } from "~/i18n/navigation";
+import { getPathname, Link } from "~/i18n/navigation";
 import { routing } from "~/i18n/routing";
+import { LINKS } from "~/lib/links";
 import { getPillars } from "~/lib/pillars";
+import { BRAND, CONTENT_LANGUAGES, pageMetadata } from "~/lib/seo";
+import { siteOrigin } from "~/lib/site-url";
+import { siteNodes } from "~/lib/structured-data";
+import { TRPCReactProvider } from "~/trpc/client";
 
 /** National register figures supplied in PRODUCT.md (Annuaire Santé, 19 November 2026). */
 const REGISTRY = {
@@ -29,6 +37,19 @@ const REGISTRY = {
 
 const table = tableStyles();
 
+export async function generateMetadata({ params }: PageProps<"/[locale]">): Promise<Metadata> {
+	const { locale: requested } = await params;
+	const locale = hasLocale(routing.locales, requested) ? requested : routing.defaultLocale;
+	const t = await getTranslations({ locale, namespace: "Metadata" });
+	return pageMetadata({
+		locale,
+		href: "/",
+		title: t("homeTitle"),
+		description: t("description"),
+		indexable: true,
+	});
+}
+
 export default async function HomePage({ params }: PageProps<"/[locale]">) {
 	const { locale: requested } = await params;
 	const locale = hasLocale(routing.locales, requested) ? requested : routing.defaultLocale;
@@ -37,8 +58,28 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
 	const t = await getTranslations({ locale, namespace: "HomePage" });
 	const tSite = await getTranslations({ locale, namespace: "Site" });
 
+	const tMeta = await getTranslations({ locale, namespace: "Metadata" });
+	const origin = siteOrigin();
+	const searchPath = getPathname({ href: "/recherche", locale });
+
 	return (
 		<>
+			<PageGraph
+				locale={locale}
+				href="/"
+				name={tMeta("homeTitle")}
+				description={tMeta("description")}
+				extra={siteNodes({
+					origin,
+					name: BRAND,
+					description: tMeta("description"),
+					language: CONTENT_LANGUAGES[locale],
+					logo: `${origin}/icon/512`,
+					// The search page reads `quoi`; a query naming a page answers a redirect to it.
+					searchUrlTemplate: `${origin}${searchPath}?quoi={search_term_string}`,
+					sameAs: [LINKS.repository],
+				})}
+			/>
 			<SiteHeader locale={locale} href="/" showWordmark={false} />
 			<main id="main" tabIndex={-1} className="flex-1 outline-none">
 				<div className="surface-shade flex min-h-[calc(60svh-3.5rem)] flex-col border-b border-rule-soft">
@@ -53,7 +94,11 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
 							{/* Apercura's own seal (brand seed, never an RPPS), engraved in graphite line work. */}
 							<BrandSeal size={168} className="hidden shrink-0 text-ink md:block" />
 						</div>
-						<SearchForm idPrefix="home-search" />
+						<ClientIsland locale={locale} namespaces={SEARCH_FORM_MESSAGES}>
+							<TRPCReactProvider>
+								<SearchForm idPrefix="home-search" />
+							</TRPCReactProvider>
+						</ClientIsland>
 					</div>
 				</div>
 

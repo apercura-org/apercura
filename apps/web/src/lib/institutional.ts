@@ -4,8 +4,7 @@ import { getTranslations } from "next-intl/server";
 import type { ProseContent } from "~/components/institutional";
 import type { Href } from "~/i18n/navigation";
 import { type Locale, routing } from "~/i18n/routing";
-import { robotsFor } from "./robots";
-import { pageAlternates } from "./site-url";
+import { pageMetadata } from "./seo";
 
 export type InstitutionalNamespace =
 	| "AboutPage"
@@ -33,12 +32,13 @@ export async function institutionalMetadata(
 	const t = (await getTranslations({ locale, namespace: namespace as "AboutPage" })) as (
 		key: "metaTitle" | "metaDescription",
 	) => string;
-	return {
+	return pageMetadata({
+		locale,
+		href,
 		title: t("metaTitle"),
 		description: t("metaDescription"),
-		robots: robotsFor(locale, true),
-		alternates: pageAlternates(href, locale),
-	};
+		indexable: true,
+	});
 }
 
 /**

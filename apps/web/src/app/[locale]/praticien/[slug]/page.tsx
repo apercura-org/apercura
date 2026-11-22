@@ -1,6 +1,7 @@
 import { parsePractitionerSegment, practitionerRoute } from "@apercura/core";
 import {
 	ActionBlock,
+	buttonStyles,
 	FieldList,
 	FieldRow,
 	linkStyles,
@@ -15,20 +16,29 @@ import { hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { BookingLauncher } from "~/components/booking/booking-launcher";
 import { BookletPage } from "~/components/booklet-page";
+import { BOOKING_PANEL_MESSAGES, ClientIsland } from "~/components/client-island";
 import { JsonLd } from "~/components/json-ld";
 import { FeesSection, PracticalSection, PresentationSection } from "~/components/owner-sections";
 import { PublicPage } from "~/components/public-page";
-import { Trail, type TrailItem } from "~/components/trail";
+import { Trail, type TrailItem, trailEntries } from "~/components/trail";
 import { clientEnv } from "~/env";
 import { getPathname, Link, permanentRedirect } from "~/i18n/navigation";
 import { type Locale, routing } from "~/i18n/routing";
 import { genderOf, getTaxonomyLabels, inSentence } from "~/lib/labels";
 import { ownerContentOf } from "~/lib/owner-content";
-import { actionPlan, type SiteView, siteViews } from "~/lib/practitioner-view";
-import { robotsFor } from "~/lib/robots";
-import { absoluteUrl, pageAlternates, siteOrigin } from "~/lib/site-url";
+import { actionPlan, label, type SiteView, siteViews } from "~/lib/practitioner-view";
+import {
+	CONTENT_LANGUAGES,
+	DESCRIPTION_MAX,
+	fitText,
+	ogImageOf,
+	pageMetadata,
+	pickTitle,
+	shortPlaceName,
+} from "~/lib/seo";
+import { absoluteUrl, siteOrigin } from "~/lib/site-url";
 import { slotParts, slotTime } from "~/lib/slot-format";
-import { practitionerStructuredData } from "~/lib/structured-data";
+import { breadcrumbNode, graph, ids, practitionerNodes, webPageNode } from "~/lib/structured-data";
 import { databaseAvailable } from "~/server/db";
 import {
 	getPractitionerPage,
@@ -102,35 +112,36 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 	}
 	const gender = genderOf(payload.civilityCode);
 	const name = labels.personName(payload);
-	const occupation =
+	const occupation = inSentence(
 		labels.listing(payload.listingSlug, gender) ??
-		labels.profession(payload.listingSlug ?? "", gender) ??
-		"";
-	const place = page.commune?.name ?? null;
+			labels.profession(payload.listingSlug ?? "", gender) ??
+			"",
+	);
+	const place = page.commune ? shortPlaceName(page.commune.name) : null;
 	const href = { pathname: "/praticien/[slug]", params: { slug: page.slug } } as const;
-	const image = `${siteOrigin()}/og/${ogImageOf(payload.professionCode)}.png`;
-	return {
-		title: place
-			? t("metaTitlePlace", { name, occupation: inSentence(occupation), place })
-			: t("metaTitle", { name, occupation: inSentence(occupation) }),
-		description: place
-			? t("metaDescriptionPlace", { name, occupation: inSentence(occupation), place })
-			: t("metaDescription", { name, occupation: inSentence(occupation) }),
-		robots: robotsFor(locale, page.indexable),
-		alternates: pageAlternates(href, locale),
-		openGraph: {
-			type: "profile",
-			url: absoluteUrl(href, locale),
-			images: [{ url: image, width: 1200, height: 630 }],
-		},
-	};
-}
-
-/** One Open Graph image per profession, never one per page. */
-function ogImageOf(professionCode: string) {
-	if (professionCode === "40") return "chirurgien-dentiste";
-	if (professionCode === "50") return "sage-femme";
-	return "medecin";
+	// The description only mentions online booking when the agenda is open.
+	const bookable = page.booking.open;
+	const values = { name, occupation, place: place ?? "" };
+	const descriptionOf = (withPlace: boolean) =>
+		bookable
+			? t(withPlace ? "metaDescriptionBookablePlace" : "metaDescriptionBookable", values)
+			: t(withPlace ? "metaDescriptionPlace" : "metaDescription", values);
+	return pageMetadata({
+		locale,
+		href,
+		title: pickTitle([
+			...(place ? [t("metaTitlePlace", values)] : []),
+			t("metaTitle", values),
+			t("metaTitleName", values),
+		]),
+		description: fitText(
+			place ? [descriptionOf(true), descriptionOf(false)] : [descriptionOf(false)],
+			DESCRIPTION_MAX,
+		),
+		indexable: page.indexable,
+		image: ogImageOf(payload.professionCode),
+		type: "profile",
+	});
 }
 
 export default async function PractitionerPage({ params }: Props) {
@@ -209,21 +220,48 @@ export default async function PractitionerPage({ params }: Props) {
 	return (
 		<PublicPage locale={locale} href={href}>
 			<JsonLd
-				data={practitionerStructuredData({
-					url,
-					professionCode: payload.professionCode,
-					rpps: payload.nationalId,
-					name,
-					givenName: payload.firstName,
-					familyName: payload.lastName,
-					honorificPrefix: labels.title(payload.titleCode),
-					occupation: listingLabel,
-					specialty,
-					languages: content.languages,
-					sites,
-					establishmentUrl,
-					image: `${siteOrigin()}/og/${ogImageOf(payload.professionCode)}.png`,
-				})}
+				data={graph([
+					webPageNode({
+						url,
+						origin: siteOrigin(),
+						name,
+						language: CONTENT_LANGUAGES[locale],
+						hasBreadcrumb: true,
+						mainEntity: ids.practitioner(url),
+						dateModified: page.updatedAt,
+					}),
+					breadcrumbNode(url, await trailEntries(locale, trail)),
+					...practitionerNodes({
+						url,
+						professionCode: payload.professionCode,
+						rpps: payload.nationalId,
+						name,
+						givenName: payload.firstName,
+						familyName: payload.lastName,
+						honorificPrefix: labels.title(payload.titleCode),
+						occupation: listingLabel,
+						listingSlug: payload.listingSlug,
+						languages: content.languages,
+						photoUrl: content.photoUrl,
+						website: content.website,
+						places: sites.map((site) => ({
+							siteId: site.site.id,
+							practiceKind: site.practiceKind,
+							// As printed on the place's card: a LocalBusiness needs a name.
+							name: site.name ?? labels.practiceKind(site.practiceKind),
+							addressLine: label(site.site.addressLine),
+							addressComplement: label(site.site.addressComplement),
+							postcode: site.site.postcode,
+							placeName: site.site.placeName,
+							coordinates: site.coordinates,
+							phone: site.phone?.e164 ?? null,
+							establishmentUrl: site.establishment
+								? establishmentUrl(site.establishment.slug)
+								: null,
+						})),
+						bookingUrl: page.booking.open ? `${url}?rdv=1` : null,
+					}),
+				])}
 			/>
 			<BookletPage
 				runningHead={tSite("runningHead")}
@@ -533,12 +571,20 @@ async function Action({
 				actionLabel={t("action.bookLabel")}
 				href="?rdv=1"
 				action={
-					<BookingLauncher
-						practitionerId={practitionerId}
-						practitionerName={practitionerName}
-						label={t("action.bookLabel")}
-						callHint={callHint}
-					/>
+					// The panel's messages ride with the launcher; the panel itself loads on demand.
+					<ClientIsland locale={locale} namespaces={BOOKING_PANEL_MESSAGES}>
+						<BookingLauncher
+							practitionerId={practitionerId}
+							practitionerName={practitionerName}
+							label={t("action.bookLabel")}
+							callHint={callHint}
+							className={buttonStyles({
+								intent: "stamp",
+								size: "lg",
+								className: "self-stretch sm:self-start",
+							})}
+						/>
+					</ClientIsland>
 				}
 				secondary={
 					phone ? (

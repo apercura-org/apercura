@@ -107,6 +107,21 @@ jobs:
         working-directory: apps/web
         run: bunx playwright install --with-deps chromium
       - run: bun run test:e2e
+      # Core Web Vitals (mobile emulation), SEO and accessibility scores and JavaScript caps of
+      # the home, a practitioner and a listing page, on the build the e2e tests just used (same
+      # origin as APP_URL, so canonical URLs match).
+      - name: Lighthouse CI
+        working-directory: apps/web
+        run: bun run lhci
+        env:
+          LHCI_PORT: "3100"
+      - name: Upload Lighthouse reports
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: lighthouse
+          path: apps/web/.lighthouseci
+          retention-days: 7
       - name: Upload Playwright traces
         if: failure()
         uses: actions/upload-artifact@v7

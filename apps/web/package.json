@@ -11,7 +11,8 @@
 		"typecheck": "SKIP_ENV_VALIDATION=1 next typegen && tsc --noEmit",
 		"test": "vitest run",
 		"test:e2e": "playwright test",
-		"jobs:tick": "bun --preload ./src/jobs/preload.ts src/jobs/cli.ts"
+		"jobs:tick": "bun --preload ./src/jobs/preload.ts src/jobs/cli.ts",
+		"lhci": "lhci autorun --config=./lighthouserc.cjs"
 	},
 	"dependencies": {
 		"@apercura/core": "workspace:*",
@@ -48,6 +49,7 @@
 	},
 	"devDependencies": {
 		"@axe-core/playwright": "4.14.0",
+		"@lhci/cli": "0.16.1",
 		"@next/env": "16.4.6",
 		"@playwright/test": "1.65.1",
 		"@tailwindcss/postcss": "4.3.5",
@@ -58,6 +60,7 @@
 		"@types/react-dom": "^19.3.0",
 		"otpauth": "9.6.0",
 		"postgres": "4.1.1",
+		"schema-dts": "2.1.0",
 		"tailwindcss": "4.3.5",
 		"vitest": "5.1.1"
 	}

@@ -2,10 +2,27 @@ import { connection } from "next/server";
 import { siteOrigin } from "~/lib/site-url";
 
 /**
- * robots.txt. Only search results, the API, the component gallery and the
- * practitioner app area are disallowed: `noindex` pages must stay crawlable,
- * or crawlers never see their `noindex`. `/pro` itself (the claim entry page)
- * stays open. Rendered at request time so APP_URL is the runtime one.
+ * Private areas that nothing public links to: the signed-in practitioner
+ * space (behind sign-in, `noindex, nofollow` anyway). The entry pages of
+ * `/pro` (sign in, sign up, claim a page) stay crawlable: practitioner pages
+ * link to them, so crawlers must be able to read their `noindex`.
+ */
+const PRO_APP = [
+	"/pro/tableau-de-bord",
+	"/pro/aujourdhui",
+	"/pro/agenda",
+	"/pro/equipe",
+	"/pro/page",
+	"/pro/bienvenue",
+	"/pro/admin/",
+	"/pro/revendiquer/",
+];
+
+/**
+ * robots.txt. Only search results (also `noindex`; a crawl trap of endless
+ * query combinations), the API, the component gallery and the practitioner app
+ * area are disallowed: `noindex` pages must stay crawlable, or crawlers never
+ * see their `noindex`. Rendered at request time so APP_URL is the runtime one.
  */
 export async function GET() {
 	await connection();
@@ -16,8 +33,7 @@ export async function GET() {
 		"Disallow: /api/",
 		"Disallow: /_ui",
 		"Disallow: /en/_ui",
-		"Disallow: /pro/",
-		"Disallow: /en/pro/",
+		...PRO_APP.flatMap((path) => [`Disallow: ${path}`, `Disallow: /en${path}`]),
 		"",
 		`Sitemap: ${siteOrigin()}/sitemap.xml`,
 		"",

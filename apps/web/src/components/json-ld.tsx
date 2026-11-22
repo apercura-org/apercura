@@ -1,8 +1,10 @@
+import type { Graph } from "schema-dts";
+
 /**
- * Structured data as a JSON-LD script. `<` is escaped so the payload can never
- * close the script element, whatever the data contains.
+ * The page's structured data: one JSON-LD `@graph` per page. `<` is escaped
+ * so the payload can never close the script element, whatever the data holds.
  */
-export function JsonLd({ data }: { data: Record<string, unknown> | Record<string, unknown>[] }) {
+export function JsonLd({ data }: { data: Graph }) {
 	return (
 		<script
 			type="application/ld+json"

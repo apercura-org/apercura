@@ -1,6 +1,13 @@
 import { describe, expect, it } from "vitest";
 import { acceptGeocode, buildGeocodeCsv, geocodeInput, parseGeocodeCsv } from "../geocode";
-import { checkBreakers, checkFiles, checkQuarantine, checkStaging, verdict } from "../guards";
+import {
+	checkBreakers,
+	checkFiles,
+	checkOrphans,
+	checkQuarantine,
+	checkStaging,
+	verdict,
+} from "../guards";
 import { coarseTag } from "../outbox";
 import { AMELI_COLUMNS, ameliRow } from "../sources/fr/ameli";
 import { finessRow } from "../sources/fr/finess";
@@ -234,5 +241,15 @@ describe("outbox", () => {
 	it("derives coarse tags", () => {
 		expect(coarseTag("practitioner:12")).toBe("practitioner:*");
 		expect(coarseTag("listing:cardiologue:75")).toBe("listing:*");
+	});
+});
+
+describe("orphan guard", () => {
+	it("passes when every indexable page is listed, blocks (approvable) otherwise", () => {
+		expect(verdict(checkOrphans({ count: 0, examples: [] }), false).ok).toBe(true);
+		const orphan = checkOrphans({ count: 2, examples: ["a-19999990013", "b-19999990021"] });
+		expect(verdict(orphan, false).ok).toBe(false);
+		expect(verdict(orphan, true).ok).toBe(true);
+		expect(orphan[0]?.detail).toContain("a-19999990013");
 	});
 });

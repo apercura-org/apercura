@@ -50,7 +50,8 @@ test("an office practitioner page: header, call action, JSON-LD and indexing", a
 	);
 	expect(await robotsOf(page)).toBe("index, follow");
 	const jsonLd = await page.locator('script[type="application/ld+json"]').allTextContents();
-	const data = jsonLd.map((text) => JSON.parse(text));
+	// One @graph per page (seo.spec.ts checks the server HTML in detail).
+	const data = jsonLd.flatMap((text) => JSON.parse(text)["@graph"]);
 	const person = data.find((item) => item["@type"] === "IndividualPhysician");
 	expect(person.identifier).toEqual({
 		"@type": "PropertyValue",

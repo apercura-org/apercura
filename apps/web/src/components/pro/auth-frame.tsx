@@ -1,10 +1,12 @@
 import { getTranslations } from "next-intl/server";
 import type { ReactNode } from "react";
 import { BookletPage } from "~/components/booklet-page";
+import { ClientIsland } from "~/components/client-island";
 import { SiteFooter } from "~/components/site-footer";
 import { SiteHeader } from "~/components/site-header";
 import type { Locale } from "~/i18n/routing";
 import type { ProRoute } from "~/lib/pro-routes";
+import { TRPCReactProvider } from "~/trpc/client";
 
 interface AuthFrameProps {
 	locale: Locale;
@@ -18,20 +20,23 @@ interface AuthFrameProps {
 /** Sign-in, sign-up and confirmation pages: the title on the quiet shade, the form on a booklet page. */
 export async function AuthFrame({ locale, pathname, title, lead, children }: AuthFrameProps) {
 	const t = await getTranslations({ locale, namespace: "auth" });
+	// The practitioner space is never indexed and full of forms: it gets the whole catalogue and the API client.
 	return (
-		<>
-			<SiteHeader locale={locale} href={pathname} />
-			<main id="main" tabIndex={-1} className="flex-1 outline-none">
-				<div className="surface-shade border-b border-rule-soft">
-					<div className="mx-auto flex w-full max-w-6xl flex-col gap-3 px-5 pt-10 pb-10 sm:px-8 sm:pb-12">
-						<h1 className="max-w-[20ch] type-headline">{title}</h1>
-						{lead ? <p className="max-w-[58ch] text-lead text-ink">{lead}</p> : null}
+		<ClientIsland locale={locale} namespaces="all">
+			<TRPCReactProvider>
+				<SiteHeader locale={locale} href={pathname} />
+				<main id="main" tabIndex={-1} className="flex-1 outline-none">
+					<div className="surface-shade border-b border-rule-soft">
+						<div className="mx-auto flex w-full max-w-6xl flex-col gap-3 px-5 pt-10 pb-10 sm:px-8 sm:pb-12">
+							<h1 className="max-w-[20ch] type-headline">{title}</h1>
+							{lead ? <p className="max-w-[58ch] text-lead text-ink">{lead}</p> : null}
+						</div>
 					</div>
-				</div>
-				<BookletPage runningHead={t("runningHead")}>{children}</BookletPage>
-			</main>
-			<SiteFooter locale={locale} />
-		</>
+					<BookletPage runningHead={t("runningHead")}>{children}</BookletPage>
+				</main>
+				<SiteFooter locale={locale} />
+			</TRPCReactProvider>
+		</ClientIsland>
 	);
 }
 

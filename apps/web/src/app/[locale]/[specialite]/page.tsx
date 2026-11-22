@@ -6,15 +6,17 @@ import { notFound } from "next/navigation";
 import { hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { BookletPage } from "~/components/booklet-page";
+import { JsonLd } from "~/components/json-ld";
 import { CountLinks, ListingFacts, ListingSection, ListingTitle } from "~/components/listing";
 import { PublicPage } from "~/components/public-page";
-import { Trail } from "~/components/trail";
-import { Link } from "~/i18n/navigation";
+import { Trail, type TrailItem, trailEntries } from "~/components/trail";
+import { getPathname, type Href, Link } from "~/i18n/navigation";
 import { type Locale, routing } from "~/i18n/routing";
-import { getTaxonomyLabels } from "~/lib/labels";
+import { getTaxonomyLabels, inSentence } from "~/lib/labels";
 import { placeLabel } from "~/lib/places";
-import { robotsFor } from "~/lib/robots";
-import { pageAlternates } from "~/lib/site-url";
+import { CONTENT_LANGUAGES, DESCRIPTION_MAX, fitText, pageMetadata, pickTitle } from "~/lib/seo";
+import { absoluteUrl, siteOrigin } from "~/lib/site-url";
+import { breadcrumbNode, graph, ids, itemListNode, webPageNode } from "~/lib/structured-data";
 import { databaseAvailable } from "~/server/db";
 import { getLandingPage, sampleListingSlugs } from "~/server/queries/landing";
 
@@ -63,13 +65,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 	const labels = await getTaxonomyLabels(locale);
 	const listing = labels.listing(listingSlug) ?? listingSlug;
 	const count = data.landing.practitionerCount;
-	return {
-		title: t("hubMetaTitle", { listing, count }),
-		description: t("hubMetaDescription", { listing, count }),
-		robots: robotsFor(locale, indexable),
-		alternates: pageAlternates(href, locale),
-		openGraph: { images: [{ url: "/og/annuaire.png", width: 1200, height: 630 }] },
-	};
+	const values = { listing, count, occupation: inSentence(listing) };
+	return pageMetadata({
+		locale,
+		href,
+		title: pickTitle([t("hubMetaTitle", values), t("hubMetaTitleShort", values)]),
+		description: fitText([t("hubMetaDescription", values)], DESCRIPTION_MAX),
+		indexable,
+	});
 }
 
 export default async function SpecialtyHub({ params }: Props) {
@@ -80,16 +83,44 @@ export default async function SpecialtyHub({ params }: Props) {
 	const labels = await getTaxonomyLabels(locale);
 	const listing = labels.listing(listingSlug) ?? listingSlug;
 	const count = data.landing.practitionerCount;
+	const title = t("hubTitle", { listing });
+	const trail: TrailItem[] = [{ label: listing, href }];
+	const url = absoluteUrl(href, locale);
+	const origin = siteOrigin();
+	const departmentHref = (dept: string): Href => ({
+		pathname: "/[specialite]/[dept]/[[...rest]]",
+		params: { specialite: listingSlug, dept, rest: undefined },
+	});
 
 	return (
 		<PublicPage locale={locale} href={href}>
+			<JsonLd
+				data={graph([
+					webPageNode({
+						url,
+						origin,
+						name: title,
+						language: CONTENT_LANGUAGES[locale],
+						type: "CollectionPage",
+						hasBreadcrumb: true,
+						mainEntity: ids.list(url),
+						dateModified: data.landing.updatedAt,
+					}),
+					breadcrumbNode(url, await trailEntries(locale, trail)),
+					itemListNode({
+						url,
+						name: t("departmentsHeading", { listing }),
+						items: data.nearby.map((department) => ({
+							name: placeLabel(department),
+							url: `${origin}${getPathname({ href: departmentHref(department.slug), locale })}`,
+						})),
+					}),
+				])}
+			/>
 			<BookletPage runningHead={tSite("runningHead")}>
 				<div className="flex flex-col gap-6">
-					<Trail locale={locale} items={[{ label: listing, href }]} />
-					<ListingTitle
-						title={t("hubTitle", { listing })}
-						lead={t("hubLead", { count, listing })}
-					/>
+					<Trail locale={locale} items={trail} />
+					<ListingTitle title={title} lead={t("hubLead", { count, listing })} />
 				</div>
 
 				<ListingSection

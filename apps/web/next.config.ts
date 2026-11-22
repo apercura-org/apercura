@@ -13,6 +13,10 @@ const nextConfig: NextConfig = {
 	reactStrictMode: true,
 	poweredByHeader: false,
 	transpilePackages: ["@apercura/core", "@apercura/db", "@apercura/ui"],
+	async redirects() {
+		// Browsers ask for /favicon.ico whatever the page says: the 48 px site icon.
+		return [{ source: "/favicon.ico", destination: "/icon/48", permanent: true }];
+	},
 	async headers() {
 		// The appointment page reads its token from the URL fragment: no referrer may leave it,
 		// it is never indexed and never stored by a shared cache.
@@ -21,7 +25,19 @@ const nextConfig: NextConfig = {
 			{ key: "X-Robots-Tag", value: "noindex, nofollow" },
 			{ key: "Cache-Control", value: "private, no-store" },
 		];
+		// The same directives as the pages' robots meta, for crawlers that read headers only:
+		// English pages are never indexed in v1, nor search results, the practitioner space and
+		// the per-practitioner forms. `/pro` itself (the practitioners' page) stays indexable.
+		const noindex = [{ key: "X-Robots-Tag", value: "noindex" }];
+		const noindexNofollow = [{ key: "X-Robots-Tag", value: "noindex, nofollow" }];
 		return [
+			{ source: "/en", headers: noindex },
+			{ source: "/en/:path*", headers: noindex },
+			{ source: "/recherche", headers: noindex },
+			{ source: "/:locale(en)?/pro/:path+", headers: noindexNofollow },
+			{ source: "/praticien/:slug/:form(signaler|retrait)", headers: noindexNofollow },
+			{ source: "/en/practitioner/:slug/:form(report|removal)", headers: noindexNofollow },
+			// Last, so they win over the rules above.
 			{ source: "/rdv", headers: manage },
 			{ source: "/en/rdv", headers: manage },
 		];

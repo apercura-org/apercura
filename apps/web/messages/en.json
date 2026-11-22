@@ -5,7 +5,8 @@
 		"proTitle": "Your page already exists · Apercura",
 		"proDescription": "Apercura publishes a factual page for every health practitioner registered in France. Find yours and claim it for free.",
 		"searchTitle": "Search · Apercura",
-		"galleryTitle": "Component gallery · Apercura"
+		"galleryTitle": "Component gallery · Apercura",
+		"homeTitle": "Apercura · The open directory of health practitioners"
 	},
 	"Site": {
 		"skipLink": "Skip to content",
@@ -459,8 +460,8 @@
 	"PractitionerPage": {
 		"metaTitle": "{name}, {occupation} · Apercura",
 		"metaTitlePlace": "{name}, {occupation} in {place} · Apercura",
-		"metaDescription": "{name}, {occupation}: places of practice, phone and agreement sector, from the national register of health professionals.",
-		"metaDescriptionPlace": "{name}, {occupation} in {place}: places of practice, phone and agreement sector, from the national register of health professionals.",
+		"metaDescription": "{name}, {occupation}: address, contact details and agreement sector, from the national register.",
+		"metaDescriptionPlace": "{name}, {occupation} in {place}: address, contact details and agreement sector, from the national register.",
 		"unknownProfession": "Health professional",
 		"professionHeading": "Profession and qualifications",
 		"otherQualifications": "Other qualifications",
@@ -517,7 +518,10 @@
 			"title": "This page is hidden",
 			"body": "A removal request is being checked for this page. It is not shown in the meantime.",
 			"dataLink": "How pages are published and removed"
-		}
+		},
+		"metaTitleName": "{name} · Apercura",
+		"metaDescriptionBookable": "{name}, {occupation}: online booking, address, contact details and agreement sector.",
+		"metaDescriptionBookablePlace": "{name}, {occupation} in {place}: online booking, address, contact details and agreement sector."
 	},
 	"Institutional": {
 		"toBeCompleted": "To be completed",
@@ -907,7 +911,7 @@
 		"count": "{count, plural, one {# practitioner} other {# practitioners}}",
 		"metaTitle": "{listing} in {place}: {count, plural, one {# practitioner} other {# practitioners}} · Apercura",
 		"metaTitlePage": "{listing} in {place}, page {page} · Apercura",
-		"metaDescription": "{count, plural, one {# practitioner} other {# practitioners}} listed as {listing} in {place} in the national register, with their addresses, phones and agreement sectors.",
+		"metaDescription": "{count, plural, one {# practitioner} other {# practitioners}} listed as {occupation} in {place} in the national register: addresses, contact details, agreement sectors.",
 		"title": "{listing} in {place}",
 		"lead": "The national register lists {count, plural, one {# practitioner} other {# practitioners}} under this heading with a place of practice in {place}.",
 		"practitionersHeading": "{count, plural, one {The practitioner} other {The # practitioners}}",
@@ -939,12 +943,15 @@
 		"establishmentsIntro": "Hospitals, clinics and health centres where practitioners listed as {listing} work.",
 		"allSpecialties": "Every specialty in {place}",
 		"hubMetaTitle": "{listing} in France: {count, plural, one {# practitioner} other {# practitioners}} · Apercura",
-		"hubMetaDescription": "{count, plural, one {# practitioner} other {# practitioners}} listed as {listing} in the national register, by department.",
+		"hubMetaDescription": "{count, plural, one {# practitioner} other {# practitioners}} listed as {occupation} in the national register, by department: addresses, contact details, agreement sectors.",
 		"hubTitle": "{listing} in France",
 		"hubLead": "The national register lists {count, plural, one {# practitioner} other {# practitioners}} under this heading with a place of practice in France.",
 		"departmentsHeading": "{listing} by department",
 		"departmentsIntro": "Choose a department to see its practitioners and communes.",
-		"browseDirectory": "Browse the directory by place"
+		"browseDirectory": "Browse the directory by place",
+		"metaTitleShort": "{listing} in {place} · Apercura",
+		"metaDescriptionPage": "Page {page} of {pages}: {count, plural, one {# practitioner} other {# practitioners}} listed as {occupation} in {place} in the national register.",
+		"hubMetaTitleShort": "{listing} in France · Apercura"
 	},
 	"Directory": {
 		"metaTitle": "Directory of health practitioners by place · Apercura",
@@ -961,7 +968,8 @@
 		"specialtiesHeading": "By specialty",
 		"communesHeading": "Communes of {place}",
 		"arrondissementsHeading": "By arrondissement",
-		"establishmentsHeading": "Establishments in {place}"
+		"establishmentsHeading": "Establishments in {place}",
+		"placeMetaTitleShort": "Practitioners in {place} · Apercura"
 	},
 	"Establishment": {
 		"metaTitle": "{name} · Apercura",
