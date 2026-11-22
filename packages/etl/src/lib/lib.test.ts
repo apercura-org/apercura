@@ -1,5 +1,11 @@
 import { describe, expect, it } from "vitest";
-import { acceptGeocode, buildGeocodeCsv, geocodeInput, parseGeocodeCsv } from "../geocode";
+import {
+	acceptGeocode,
+	buildGeocodeCsv,
+	geocodeInput,
+	parseGeocodeCsv,
+	siteLabel,
+} from "../geocode";
 import {
 	checkBreakers,
 	checkFiles,
@@ -156,8 +162,72 @@ describe("geocoding", () => {
 			resultType: "housenumber",
 			resultCitycode: "75106",
 			precision: "address",
+			label: null,
+			housenumber: null,
+			name: null,
+			street: null,
+			postcode: null,
+			city: null,
 		});
 		expect(results[1]?.precision).toBeNull();
+	});
+
+	it("parses the BAN label and its parts when the answer has them", () => {
+		const csv = [
+			"key,adresse,postcode,citycode,latitude,longitude,result_score,result_type,result_citycode,result_label,result_housenumber,result_name,result_street,result_postcode,result_city",
+			"0,24 Rue Dauphine,75006,75106,48.85,2.33,0.97,housenumber,75106,24 Rue Dauphine 75006 Paris,24,24 Rue Dauphine,Rue Dauphine,75006,Paris",
+		].join("\n");
+		expect(parseGeocodeCsv(csv, inputs)[0]).toMatchObject({
+			label: "24 Rue Dauphine 75006 Paris",
+			housenumber: "24",
+			name: "24 Rue Dauphine",
+			street: "Rue Dauphine",
+			postcode: "75006",
+			city: "Paris",
+		});
+	});
+
+	describe("site labels", () => {
+		const result = {
+			score: 0.97,
+			resultCitycode: "75116",
+			resultType: "housenumber",
+			label: "34 Avenue du Général Sarrail 75016 Paris",
+			name: "34 Avenue du Général Sarrail",
+			street: "Avenue du Général Sarrail",
+		};
+		const site = { addressLine: "34 Avenue du General Sarrail", placeCode: "75116" };
+
+		it("displays the BAN street of a sure match in the site's commune", () => {
+			expect(siteLabel(result, site)).toEqual({
+				geoLabel: "34 Avenue du Général Sarrail 75016 Paris",
+				geoAddressLine: "34 Avenue du Général Sarrail",
+			});
+			// From 0.8 included.
+			expect(siteLabel({ ...result, score: 0.8 }, site).geoAddressLine).not.toBeNull();
+		});
+
+		it("keeps the registry text below 0.8, in another commune or without a place", () => {
+			const none = { geoLabel: null, geoAddressLine: null };
+			expect(siteLabel({ ...result, score: 0.79 }, site)).toEqual(none);
+			expect(siteLabel({ ...result, resultCitycode: "75056" }, site)).toEqual(none);
+			expect(siteLabel(result, { ...site, placeCode: null })).toEqual(none);
+			expect(siteLabel(result, { ...site, addressLine: null })).toEqual(none);
+		});
+
+		it("keeps the label but not the line when the BAN names another street", () => {
+			expect(siteLabel({ ...result, street: "Avenue du Général Leclerc" }, site)).toEqual({
+				geoLabel: result.label,
+				geoAddressLine: null,
+			});
+		});
+
+		it("uses the name of a locality, which has no street", () => {
+			const locality = { ...result, resultType: "locality", street: null, name: "Le Bourg" };
+			expect(siteLabel(locality, { addressLine: "Le Bourg", placeCode: "75116" })).toMatchObject({
+				geoAddressLine: "Le Bourg",
+			});
+		});
 	});
 
 	it("accepts a result only above 0.6 and in an expected commune", () => {

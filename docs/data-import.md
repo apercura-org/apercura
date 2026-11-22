@@ -72,6 +72,12 @@ The URLs can be overridden with `ETL_ANS_URLS`, `ETL_AMELI_URL`,
      applied, and never count against the circuit breakers;
    - FINESS+ enrichment of sites with a FINESS number (open establishments
      only): official name, category, coordinates (`geo_source = finess`);
+   - site names: accented letters the registry printed as capitals inside a
+     word ("HElEne") regain their accents from the staged names and communes;
+     then a word written without accents that is, accent-insensitively, a first
+     or last name of a practitioner of that same structure takes that name's
+     accents ("Cabinet du Dr Helene Aelion" for Hélène Aelion). A word two of
+     these names spell differently is left as it is;
    - geocoding of sites without coordinates: `geocode_cache` first, then the
      Géoplateforme CSV endpoint in chunks of 50,000 lines (results are cached
      on a separate connection, so they survive a rollback). A result is kept
@@ -79,6 +85,18 @@ The URLs can be overridden with `ETL_ANS_URLS`, `ETL_AMELI_URL`,
      arrondissements); otherwise the commune centroid is used with
      `geo_precision = city`. Dry runs and `--offline` runs use the cache and
      centroids only;
+   - street names: the cache also keeps the BAN label of each result and its
+     parts (`result_label`, `result_housenumber`, `result_name`,
+     `result_street`, `result_postcode`, `result_city`). For every registry
+     site whose match scores ≥ 0.8 in the site's own commune code, the label is
+     stored in `sites.geo_label` and, when the BAN street is the registry's
+     street (same words once accents, case, hyphens and common abbreviations
+     are ignored), `sites.geo_address_line` gets the registry's number with the
+     BAN's street name ("34 Avenue du Général Sarrail"). Pages print
+     `geo_address_line` when set, else `address_line`, which always stays the
+     registry text. Cache rows from before these columns
+     (`with_labels = false`) are geocoded again once by the next online run;
+     offline runs leave labels as they are;
    - primary activity and place, switchboard phones (a number shared by 10+
      practitioners), orphan sites, `indexable`;
    - Ameli strict matching (below);
@@ -217,6 +235,11 @@ Laptop, local PostGIS 17, files of 19–21/11/2026, role `apercura_etl`:
 | Ameli matched        | 11,117                                                                                                                      | —                                |
 | Cache tags           | 97,709 (sent as coarse tags)                                                                                                | 0                                |
 
+The first online run after migration `0015_geocoder_labels` geocodes every
+cached address again for its label and changes the street line of many pages,
+so it is usually blocked by the 10% breaker: review it and approve it with
+`--approve=<run_id>`.
+
 An unchanged run stops after the download (`skipped`, 101 s, 121 MB). The
 whole file is parsed and staged even with `--department`, so memory and
 parsing time are about the same for a full-France run; the merge grows with
@@ -240,6 +263,7 @@ public geo.api.gouv.fr data. Never commit real registry rows.
 The CI `etl` job applies the migrations to a PostGIS service, runs
 `etl:fr --dry-run` on the fixtures, then the integration test (import twice
 with zero changes the second time, truncated file, removal after two runs,
-circuit breaker and `--approve`, suppressions, owner data untouched). Dry runs
+circuit breaker and `--approve`, suppressions, owner data untouched, street
+labels from a local mock of the geocoder). Dry runs
 commit nothing but the places reference data, imported before the merge when
 the table is empty.

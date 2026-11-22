@@ -4,12 +4,14 @@ export * from "./directory";
 export {
 	type AccentDictionary,
 	addressKey,
+	banStreetLine,
 	buildAccentDictionary,
 	formatPersonName,
 	formatPhoneFr,
 	formatStreetLine,
 	formatStreetText,
 	nameMatchKey,
+	restoreOwnNameAccents,
 	toE164Fr,
 } from "./normalize";
 export * from "./profile";

@@ -28,6 +28,7 @@ import {
 	readAppointmentPatients,
 	sealAppointment,
 } from "~/server/phi";
+import { siteAddressLine } from "~/server/queries/site-address";
 import { findCalendar, findType, toCoreType } from "./availability";
 import { BOOKING_LIMITS } from "./config";
 import { ensureBookingConstraints } from "./constraints";
@@ -519,7 +520,7 @@ export async function listAgendaCalendars(rt: BookingRuntime, staff: StaffContex
 			stepMin: calendars.stepMin,
 			manualValidation: calendars.manualValidation,
 			siteName: sql<string | null>`coalesce(${sites.name}, ${sites.finessName})`,
-			addressLine: sites.addressLine,
+			addressLine: siteAddressLine,
 			postcode: sites.postcode,
 			placeName: places.name,
 		})

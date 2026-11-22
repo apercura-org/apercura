@@ -263,7 +263,8 @@ export async function searchPractitioners(input: {
 		) local ON true
 		-- The place printed: that one, else the primary place of the read model.
 		LEFT JOIN LATERAL (
-			SELECT s.name, s.address_line, s.postcode, pl.name AS place_name, s.phone,
+			SELECT s.name, coalesce(s.geo_address_line, s.address_line) AS address_line, s.postcode,
+				pl.name AS place_name, s.phone,
 				s.phone_kind, s.slug, s.location,
 				coalesce(local.practice_kind, sd.payload->'site'->>'practiceKind') AS practice_kind
 			FROM directory.sites s
