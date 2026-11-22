@@ -88,20 +88,20 @@ for everything that differs per market. Adapters are pure: no network, no
 database. France is the only implementation and only wraps the code the app
 already uses, so behaviour is unchanged.
 
-| Member               | France (v1)                                                         |
-| -------------------- | ------------------------------------------------------------------- |
-| `defaultLocale`      | `fr`                                                                |
-| `defaultTimeZone`    | `Europe/Paris`                                                      |
-| `timeZones`          | Paris and the 8 overseas zones                                      |
-| `timeZoneOf(region)` | `timeZoneForDepartment` (INSEE department code, throws if unknown)  |
-| `registries`         | Annuaire Santé (RPPS), FINESS+, Ameli, under the Licence Ouverte 2.0 |
-| `practitionerId`     | RPPS, 11 digits with a Luhn check digit (`isValidRpps`)             |
-| `taxonomy`           | `FR_PROFESSIONS`, `listingSlugFor`, `isListingSlug`                 |
-| `phone`              | `toE164Fr`, `formatPhoneFr` (`+33` and the overseas codes)          |
-| `address`            | 5-digit postcode, `street` then `postcode city`                     |
+| Member               | France (v1)                                                               |
+| -------------------- | ------------------------------------------------------------------------- |
+| `defaultLocale`      | `fr`                                                                      |
+| `defaultTimeZone`    | `Europe/Paris`                                                            |
+| `timeZones`          | Paris and the 8 overseas zones                                            |
+| `timeZoneOf(region)` | `timeZoneForDepartment` (INSEE department code, throws if unknown)        |
+| `registries`         | Annuaire Santé (RPPS), FINESS+, Ameli, under the Licence Ouverte 2.0      |
+| `practitionerId`     | RPPS, 11 digits with a Luhn check digit (`isValidRpps`)                   |
+| `taxonomy`           | `FR_PROFESSIONS`, `listingSlugFor`, `isListingSlug`                       |
+| `phone`              | `toE164Fr`, `formatPhoneFr` (`+33` and the overseas codes)                |
+| `address`            | 5-digit postcode, `street` then `postcode city`                           |
 | `legalPages`         | mentions légales (LCEN), privacy (GDPR art. 13–14), terms, RGAA statement |
-| `healthDataHosting`  | HDS (Code de la santé publique, art. L1111-8)                       |
-| `features`           | directory, booking and e-identity claim (Pro Santé Connect)         |
+| `healthDataHosting`  | HDS (Code de la santé publique, art. L1111-8)                             |
+| `features`           | directory, booking and e-identity claim (Pro Santé Connect)               |
 
 Per-country feature flags are the adapter's `features`: what a market can
 support once it is open. The global environment flags (`FEATURE_BOOKING`…)
@@ -208,7 +208,7 @@ reliable source is marked **UNVERIFIED**.
 - **Formats.** `Europe/Madrid` and `Atlantic/Canary`; phone `+34`, 9 digits, no
   trunk prefix; 5-digit postcode whose first two digits are the province
   (**UNVERIFIED** as sourced).
-- **Legal pages.** LSSI-CE art. 10 *aviso legal*: name, NIF, address, contact,
+- **Legal pages.** LSSI-CE art. 10 _aviso legal_: name, NIF, address, contact,
   registry details, and for regulated professions the college and number [33].
 - **Professional advertising.** CGCOM Code of Medical Ethics (2022), arts.
   89–91: strictly informative advertising, no celebrities or real patients;
@@ -222,7 +222,7 @@ reliable source is marked **UNVERIFIED**.
   lists as open data, often stale; the Ministry of Health publishes aggregates
   per ASL under IODL 2.0 [36].
 - **Identifiers.** Codice fiscale, 16 characters with a mod-26 check character
-  (DM 23/12/1976); *omocodia* replaces digits with letters, so validation must
+  (DM 23/12/1976); _omocodia_ replaces digits with letters, so validation must
   accept those substitutions [37]. FNOMCeO albo numbers and regional GP codes:
   **UNVERIFIED**.
 - **Health data.** GDPR and the Codice privacy (D.lgs. 196/2003 as amended by
