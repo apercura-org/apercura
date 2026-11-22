@@ -11,8 +11,8 @@ open data (RPPS / Annuaire Santé), and gives every practitioner a free online b
 - **Run it all yourself**: self-hostable with Docker, open data import included
   ([guide](./docs/self-hosting.md)).
 
-> **Status: work in progress.** Nothing here is production-ready yet. See the roadmap in the
-> [issues](https://github.com/maxgfr/apercura/issues).
+> **Status: work in progress.** Nothing here is production-ready yet. See the
+> [roadmap](./ROADMAP.md) and the [issues](https://github.com/maxgfr/apercura/issues).
 
 ## Run it yourself
 
