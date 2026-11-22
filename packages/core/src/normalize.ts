@@ -248,13 +248,81 @@ const CAMEL_PREFIXES = new Set(["Mc", "De", "Di", "Du", "Le", "La", "Lo", "Da"])
 const hasLetters = (value: string) => /\p{L}/u.test(value);
 const isUpper = (value: string) => hasLetters(value) && value === value.toLocaleUpperCase("fr");
 
+/** A word with a deliberate camel case after a name prefix ("LeBlanc", "DeAngelis"). */
+const isCamelCase = (value: string) =>
+	/^\p{Lu}\p{Ll}\p{Lu}\p{Ll}+$/u.test(value) && CAMEL_PREFIXES.has(value.slice(0, 2));
+
 /**
  * A registry typo that capitalizes the second letter ("SEbastien", "BEn") or
- * the third ("StEphane"), as opposed to a deliberate camel case ("McDonald").
+ * the third ("StEphane"), as opposed to a deliberate camel case ("McDonald"),
+ * or that prints accented letters as unaccented capitals inside a word
+ * ("HElEne" for Hélène, "BenoIt" for Benoît, "ChloE" for Chloé).
  */
 const isMiscased = (value: string) =>
 	/^\p{Lu}{2}\p{Ll}+$/u.test(value) ||
-	(/^\p{Lu}\p{Ll}\p{Lu}\p{Ll}+$/u.test(value) && !CAMEL_PREFIXES.has(value.slice(0, 2)));
+	(/^\p{Lu}\p{Ll}\p{Lu}\p{Ll}+$/u.test(value) && !isCamelCase(value)) ||
+	(/^\p{Lu}[\p{Ll}AEIOUY]+$/u.test(value) &&
+		/\p{Ll}/u.test(value) &&
+		/^.+[AEIOUY]/u.test(value) &&
+		!isCamelCase(value));
+
+/**
+ * How the registry prints an accented word: accented letters after the first
+ * become unaccented capitals ("Hélène" -> "HElEne", "Benoît" -> "BenoIt").
+ * Null when the word has no accented letter after the first.
+ */
+function registrySpelling(word: string): string | null {
+	const letters = Array.from(word);
+	let changed = false;
+	const spelled = letters.map((letter, index) => {
+		if (index === 0) return letter;
+		const base = letter.normalize("NFD").replace(/\p{Mark}/gu, "");
+		if (base === letter || base.length !== 1 || !/\p{Ll}/u.test(letter)) return letter;
+		changed = true;
+		return base.toUpperCase();
+	});
+	return changed ? spelled.join("") : null;
+}
+
+/**
+ * Accented words keyed by their registry spelling ("HElEne" -> "Hélène"),
+ * used by {@link formatStreetText} to restore the accents of names in place
+ * labels. Built with {@link buildAccentDictionary}.
+ */
+export type AccentDictionary = ReadonlyMap<string, string>;
+
+/**
+ * Builds an {@link AccentDictionary} from correctly accented names
+ * ("Hélène", "Marie-Gwenaëlle", "Saint-Rémy-lès-Chevreuse"), optionally with
+ * a weight (how many people bear the name). When two words share a registry
+ * spelling, the most frequent one wins, then the first in alphabetical order.
+ */
+export function buildAccentDictionary(
+	names: Iterable<string | readonly [name: string, weight: number]>,
+): AccentDictionary {
+	const counts = new Map<string, Map<string, number>>();
+	for (const entry of names) {
+		const [name, weight] = typeof entry === "string" ? [entry, 1] : entry;
+		for (const word of name.split(/[\s'’-]+/)) {
+			// Only words written in title case ("Hélène", not "HÉLÈNE" or "hélène").
+			if (!/^\p{Lu}\p{Ll}+$/u.test(word)) continue;
+			const key = registrySpelling(word);
+			// A key without lowercase ("Lé" -> "LE") would match words printed in capitals.
+			if (!key || !/\p{Ll}/u.test(key)) continue;
+			const forms = counts.get(key) ?? new Map<string, number>();
+			forms.set(word, (forms.get(word) ?? 0) + weight);
+			counts.set(key, forms);
+		}
+	}
+	const dictionary = new Map<string, string>();
+	for (const [key, forms] of counts) {
+		const [best] = [...forms].sort(
+			([wordA, countA], [wordB, countB]) => countB - countA || wordA.localeCompare(wordB, "fr"),
+		);
+		if (best) dictionary.set(key, best[0]);
+	}
+	return dictionary;
+}
 
 /**
  * Formats a street, place or establishment label from the registry, word by
@@ -266,8 +334,16 @@ const isMiscased = (value: string) =>
  * apostrophes. Idempotent, so it can also be applied when displaying.
  * `capitalizeFirst: false` keeps a leading article lowercase too, for a street
  * name that follows its type ("Boulevard de Sebastopol").
+ *
+ * The registry prints accented letters inside words as unaccented capitals
+ * ("Cabinet du Dr HElEne Aelion"). With `accents` (see
+ * {@link buildAccentDictionary}) such a word regains its accents ("Hélène");
+ * otherwise its stray capitals are lowercased ("Helene").
  */
-export function formatStreetText(raw: string, options: { capitalizeFirst?: boolean } = {}): string {
+export function formatStreetText(
+	raw: string,
+	options: { capitalizeFirst?: boolean; accents?: AccentDictionary } = {},
+): string {
 	const capitalizeFirst = options.capitalizeFirst ?? true;
 	const text = raw.trim().replace(/\s+/g, " ");
 	if (text === "") return "";
@@ -286,6 +362,8 @@ export function formatStreetText(raw: string, options: { capitalizeFirst?: boole
 				if (part === "'" || part === "’" || part === "-") return part;
 				const known = acronym(part);
 				if (known) return known;
+				const accented = options.accents?.get(part);
+				if (accented) return accented;
 				if (!isUpper(part) && !isMiscased(part)) return part;
 				const lower = part.toLocaleLowerCase("fr");
 				const isFirst = capitalizeFirst && index === 0 && partIndex === 0;

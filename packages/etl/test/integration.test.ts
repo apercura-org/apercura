@@ -93,6 +93,11 @@ describe.skipIf(!url)("etl:fr on synthetic fixtures", () => {
 			WHERE s.source_key IN ('R10999999000003', 'R10999999000004') ORDER BY s.source_key
 		`;
 		expect(places.map((row) => row.code)).toEqual(["75106", "75112"]);
+		// The registry's "ChloE" regains the accent of the practitioner's first name.
+		const [site] = await sql<{ name: string }[]>`
+			SELECT name FROM directory.sites WHERE source_key = 'R10999999000004'
+		`;
+		expect(site?.name).toBe("Cabinet du Dr Chloé d'Essai");
 	});
 
 	it("skips unchanged sources, and a forced rerun changes nothing", async () => {

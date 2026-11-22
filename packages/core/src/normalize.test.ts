@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
 	addressKey,
+	buildAccentDictionary,
 	formatPersonName,
 	formatPhoneFr,
 	formatStreetLine,
@@ -113,10 +114,100 @@ describe("addresses", () => {
 			"DE L HOPITAL",
 			"Cds Medical St Jacques",
 			"Cabinet du Dr SEbastien Dubois",
+			"Cabinet du Dr HElEne Aelion",
+			"CABINET DU DR GwenaElle LEROY",
 		]) {
 			const once = formatStreetText(raw);
 			expect(formatStreetText(once)).toBe(once);
 		}
+	});
+
+	it.each([
+		["Cabinet du Dr HElEne Aelion", "Cabinet du Dr Helene Aelion"],
+		["CABINET DU DR BenoIt MARTIN", "Cabinet du Dr Benoit Martin"],
+		["CABINET DU DR ChloE ADAM", "Cabinet du Dr Chloe Adam"],
+		["CABINET DU DR FrEdEric PETIT", "Cabinet du Dr Frederic Petit"],
+		["CABINET DU DR AnaIs ROUX", "Cabinet du Dr Anais Roux"],
+		["CABINET DU DR GwenaElle LEROY", "Cabinet du Dr Gwenaelle Leroy"],
+		["CABINET DU DR Marie-HElEne FAURE", "Cabinet du Dr Marie-Helene Faure"],
+		["CABINET DU DR LEa GIRARD", "Cabinet du Dr Lea Girard"],
+		["CABINET DU DR GUl KAYA", "Cabinet du Dr Gul Kaya"],
+		["Cabinet LeBlanc", "Cabinet LeBlanc"],
+		["Cabinet du Dr McDonald", "Cabinet du Dr McDonald"],
+		["Cabinet du Dr DeAngelis", "Cabinet du Dr DeAngelis"],
+		["CENTRE CMPP", "Centre CMPP"],
+	])("lowercases the stray capitals of accented letters in %j", (raw, expected) => {
+		expect(formatStreetText(raw)).toBe(expected);
+	});
+
+	describe("with an accent dictionary", () => {
+		const accents = buildAccentDictionary([
+			"Hélène",
+			"Benoît",
+			"Chloé",
+			"Frédéric",
+			"Anaïs",
+			"Marie-Gwenaëlle",
+			"Laëtitia",
+			"Gül",
+			"Léa",
+			["Raphaël", 3],
+			["Raphaél", 1],
+			"Saint-Rémy-lès-Chevreuse",
+			"Lé",
+			"HÉLOÏSE",
+			"Élodie",
+			"Deangelis",
+		]);
+
+		it("keys accented words by their registry spelling", () => {
+			expect(accents.get("HElEne")).toBe("Hélène");
+			expect(accents.get("GwenaElle")).toBe("Gwenaëlle");
+			expect(accents.get("REmy")).toBe("Rémy");
+			// The most frequent form wins.
+			expect(accents.get("RaphaEl")).toBe("Raphaël");
+			// No key that a word in capitals, or with only a leading accent, would match.
+			expect(accents.has("LE")).toBe(false);
+			expect(accents.has("HElOIse")).toBe(false);
+			expect(accents.has("Elodie")).toBe(false);
+			expect(accents.has("Deangelis")).toBe(false);
+			expect(accents.has("lEs")).toBe(false);
+		});
+
+		it.each([
+			["Cabinet du Dr HElEne Aelion", "Cabinet du Dr Hélène Aelion"],
+			["CABINET DU DR BenoIt MARTIN", "Cabinet du Dr Benoît Martin"],
+			["CABINET DU DR ChloE ADAM", "Cabinet du Dr Chloé Adam"],
+			["CABINET DU DR FrEdEric PETIT", "Cabinet du Dr Frédéric Petit"],
+			["CABINET DU DR AnaIs ROUX", "Cabinet du Dr Anaïs Roux"],
+			["CABINET DU DR GwenaElle LEROY", "Cabinet du Dr Gwenaëlle Leroy"],
+			["CABINET DU DR Marie-HElEne FAURE", "Cabinet du Dr Marie-Hélène Faure"],
+			["CABINET DU DR LaEtitia MOREL", "Cabinet du Dr Laëtitia Morel"],
+			["CABINET DU DR LEa GIRARD", "Cabinet du Dr Léa Girard"],
+			["CABINET DU DR GUl KAYA", "Cabinet du Dr Gül Kaya"],
+			["MAISON DE SANTE DE SAINT REmy", "Maison de Sante de Saint Rémy"],
+			// Not in the dictionary: the stray capitals are lowercased.
+			["CABINET DU DR JErOme BLANC", "Cabinet du Dr Jerome Blanc"],
+			// Words in capitals and deliberate camel case are untouched.
+			["CABINET LE HELENE", "Cabinet le Helene"],
+			["Cabinet du Dr DeAngelis", "Cabinet du Dr DeAngelis"],
+			["Cabinet LeBlanc", "Cabinet LeBlanc"],
+		])("restores %j as %j", (raw, expected) => {
+			expect(formatStreetText(raw, { accents })).toBe(expected);
+		});
+
+		it("stores a form that reads the same when displayed", () => {
+			for (const raw of [
+				"Cabinet du Dr HElEne Aelion",
+				"CABINET DU DR FrEdEric PETIT",
+				"CABINET DU DR JErOme BLANC",
+				"Cabinet du Dr DeAngelis",
+			]) {
+				const stored = formatStreetText(raw, { accents });
+				expect(formatStreetText(stored, { accents })).toBe(stored);
+				expect(formatStreetText(stored)).toBe(stored);
+			}
+		});
 	});
 
 	it("builds the street line from registry columns", () => {

@@ -213,7 +213,8 @@ const S: Record<string, Structure> = {
 	},
 	cabinetNoCommune: {
 		id: "R10999999000004",
-		name: "CABINET SANS CODE COMMUNE",
+		// The registry prints accented letters inside words as capitals (Chloé -> ChloE).
+		name: "CABINET DU DR ChloE D'ESSAI",
 		number: "5",
 		typeCode: "PL",
 		typeLabel: "Place",
@@ -377,7 +378,7 @@ export const CASES: Person[] = [
 		title: "DR",
 		civility: "MME",
 		last: "D'ESSAI",
-		first: "CHLOE",
+		first: "CHLOÉ",
 		profession: "10",
 		activities: [office(S.cabinetNoCommune as Structure, "SM15")],
 	},
