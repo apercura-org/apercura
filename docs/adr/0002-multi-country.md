@@ -252,6 +252,10 @@ reliable source is marked **UNVERIFIED**.
 - Health-data hosting must be re-contracted per market: an HDS contract covers
   France, not Germany's C5 requirement.
 
+## See also
+
+- [Medical systems by country](../reference/medical-systems-by-country.md): earlier, unverified research on France, Belgium, Germany and Switzerland.
+
 ## Sources
 
 1. KBV, Bundesarztregister: <https://www.kbv.de/html/bundesarztregister.php>; <https://www.verwaltungsdaten-informationsplattform.de/register/214>
