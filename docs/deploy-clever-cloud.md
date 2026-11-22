@@ -76,7 +76,11 @@ other roles nor install extensions; open tickets with Clever Cloud support:
 3. **Point-in-time recovery** (pgBackRest): not installed by default, ask for
    it. Clever Cloud already takes a daily backup kept 7 days.
 
-Test a restore into a separate add-on before opening booking.
+Test a restore before opening booking, then monthly: download a backup from the add-on's
+**Backups** tab (a `pg_dump` custom-format file) to a trusted machine with Docker and run
+`scripts/verify-backup.sh <file>` ([self-hosting](./self-hosting.md#verify-a-backup)); it
+restores into a throwaway container and checks schema, constraints, grants and counts. A
+restore into a separate add-on remains the rehearsal of the real procedure.
 
 ## 3. Environment of the web app
 
@@ -97,19 +101,23 @@ Then Apercura's variables ([configuration.md](./configuration.md)). Write them
 in a local file that never enters the repository, then
 `clever env import --app apercura-web < that-file`:
 
-| Variable                                                                                                                 | Value                                                                                             |
-| ------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------- |
-| `APP_URL`                                                                                                                | `https://apercura.health` (read at build time too)                                                |
-| `DATABASE_URL`                                                                                                           | `postgres://apercura_app:…@<POSTGRESQL_ADDON_HOST>:<POSTGRESQL_ADDON_PORT>/<POSTGRESQL_ADDON_DB>` |
-| `DATABASE_POOL_MAX`                                                                                                      | `10`, within the plan's connection limit                                                          |
-| `BETTER_AUTH_SECRET`, `ENCRYPTION_KEYS`, `ENCRYPTION_ACTIVE_KEY`, `BLIND_INDEX_KEY`, `ALTCHA_HMAC_KEY`, `RATE_LIMIT_KEY` | `bun run keys:generate`, on a trusted machine. Production keys exist only here.                   |
-| `REVALIDATE_SECRET`, `JOBS_SECRET`                                                                                       | `openssl rand -base64 32`                                                                         |
-| `SMTP_URL`, `MAIL_FROM`                                                                                                  | European SMTP provider; SPF, DKIM and DMARC on the sending domain                                 |
-| `S3_BUCKET`                                                                                                              | e.g. `apercura-prod`; the app creates it on first use                                             |
-| `TRUSTED_PROXY_COUNT`                                                                                                    | `1` (Clever Cloud's load balancer)                                                                |
-| `FEATURE_BOOKING`                                                                                                        | `false` until the HDS contract is signed                                                          |
-| `PSC_CLIENT_ID`, `PSC_CLIENT_SECRET`, `PSC_ISSUER`                                                                       | Pro Santé Connect, once registered                                                                |
-| `PUBLIC_HDS_HOST`                                                                                                        | **unset** for now (step 9)                                                                        |
+| Variable                                                                                                                 | Value                                                                                                                      |
+| ------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------- |
+| `APP_URL`                                                                                                                | `https://apercura.health` (read at build time too)                                                                         |
+| `DATABASE_URL`                                                                                                           | `postgres://apercura_app:…@<POSTGRESQL_ADDON_HOST>:<POSTGRESQL_ADDON_PORT>/<POSTGRESQL_ADDON_DB>`                          |
+| `DATABASE_POOL_MAX`                                                                                                      | `10`, within the plan's connection limit                                                                                   |
+| `BETTER_AUTH_SECRET`, `ENCRYPTION_KEYS`, `ENCRYPTION_ACTIVE_KEY`, `BLIND_INDEX_KEY`, `ALTCHA_HMAC_KEY`, `RATE_LIMIT_KEY` | `bun run keys:generate`, on a trusted machine. Production keys exist only here.                                            |
+| `REVALIDATE_SECRET`, `JOBS_SECRET`                                                                                       | `openssl rand -base64 32`                                                                                                  |
+| `SMTP_URL`, `MAIL_FROM`                                                                                                  | European SMTP provider; SPF, DKIM and DMARC on the sending domain                                                          |
+| `S3_BUCKET`                                                                                                              | e.g. `apercura-prod`; the app creates it on first use                                                                      |
+| `TRUSTED_PROXY_COUNT`                                                                                                    | `1` (Clever Cloud's load balancer)                                                                                         |
+| `FEATURE_BOOKING`                                                                                                        | `false` until the HDS contract is signed                                                                                   |
+| `PSC_CLIENT_ID`, `PSC_CLIENT_SECRET`, `PSC_ISSUER`                                                                       | Pro Santé Connect, once registered                                                                                         |
+| `PUBLIC_HDS_HOST`                                                                                                        | **unset** for now (step 9)                                                                                                 |
+| `LEGAL_*` (publisher, director, contact, host, SMTP provider, effective date; DPO with booking)                          | From the legal entity's documents and the contracts. `next build` fails without them ([configuration](./configuration.md)) |
+| `SECURITY_CONTACT`                                                                                                       | Optional, `mailto:` or `https://`; defaults to `mailto:` `LEGAL_CONTACT_EMAIL` in `security.txt`                           |
+| `GOOGLE_SITE_VERIFICATION`, `BING_SITE_VERIFICATION`                                                                     | Search Console and Bing Webmaster Tools tokens, once the domain is final (step 10)                                         |
+| `HSTS_PRELOAD`                                                                                                           | `true` only once the domain is final (step 10)                                                                             |
 
 `clevercloud/env.sh` fills the rest from the linked add-ons: `DATABASE_URL_MIGRATE`
 from `POSTGRESQL_ADDON_URI` (owner role, migrations only), and `S3_ENDPOINT`,
@@ -206,6 +214,25 @@ clever restart --app apercura-web --without-cache
 The value is baked into static pages, hence the rebuild without cache. The
 public pages then say that health data is hosted by Clever Cloud. Turn on
 `FEATURE_BOOKING=true` at the same time, or later.
+
+## 10. Search engines, HSTS preload, monitoring
+
+Once `apercura.health` serves production for good:
+
+1. **Search Console and Bing Webmaster Tools**: add the domain property, choose the HTML meta
+   tag method, set `GOOGLE_SITE_VERIFICATION` and `BING_SITE_VERIFICATION` to the tokens, then
+   `clever restart --app apercura-web --without-cache` (static pages bake them) and confirm
+   ownership in each tool. Submit `https://apercura.health/sitemap.xml`.
+2. **HSTS preload**: check that every subdomain serves HTTPS (`www.`, mail and DNS-only names
+   included), set `HSTS_PRELOAD=true`, rebuild, check the header
+   (`curl -sI https://apercura.health | grep -i strict`), then submit the domain at
+   <https://hstspreload.org>. Removal from the list takes months.
+3. **security.txt**: `https://apercura.health/.well-known/security.txt` names
+   `SECURITY_CONTACT` (or the legal contact) and the repository's security policy; its
+   `Expires` moves forward by itself.
+4. **Uptime**: set the repository variable `PRODUCTION_URL` (GitHub, Settings → Secrets and
+   variables → Actions → Variables); `.github/workflows/uptime.yml` then checks `/api/health`
+   and a practitioner page every 15 minutes and opens an `uptime` issue on failure.
 
 ## Cache
 

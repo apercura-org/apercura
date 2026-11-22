@@ -78,6 +78,14 @@ Fill in `docker/.env.selfhost`:
    `S3_SECRET_ACCESS_KEY`. They end up in connection URLs: letters and digits
    only, e.g. `openssl rand -hex 24` for each.
 4. `SMTP_URL` and `MAIL_FROM` for your email provider.
+5. The publisher and the host the legal pages must name (legal notice, privacy policy,
+   terms): `LEGAL_PUBLISHER_NAME`, `LEGAL_PUBLISHER_LEGAL_FORM`, `LEGAL_PUBLISHER_ADDRESS`,
+   `LEGAL_PUBLISHER_PHONE`, `LEGAL_PUBLISHER_REGISTRATION`, `LEGAL_PUBLICATION_DIRECTOR`,
+   `LEGAL_CONTACT_EMAIL`, `LEGAL_HOST_NAME`, `LEGAL_HOST_ADDRESS`, `LEGAL_HOST_PHONE`,
+   `LEGAL_SMTP_PROVIDER`, `LEGAL_EFFECTIVE_DATE` (and `LEGAL_DPO_CONTACT` with booking on).
+   The app refuses to start without them; add them to `docker/.env.selfhost` by hand. They are
+   your own organization's details: the texts around them are drafts to have reviewed for
+   your situation.
 
 Every variable is described in [configuration.md](./configuration.md). Then
 build and start:
@@ -193,6 +201,11 @@ location / {
 }
 ```
 
+HSTS (two years, subdomains included) is sent by any production build whose `APP_URL` is
+HTTPS. `HSTS_PRELOAD=true` at build time adds `preload`; only set it once the domain and
+every subdomain serve HTTPS for good, then submit the domain at <https://hstspreload.org>.
+Leaving the list takes months.
+
 In production, any other host name answers a 308 to `APP_URL`
 (`CANONICAL_HOST_REDIRECT=false` turns it off). Loopback hosts and `/api/*`
 are left alone, so `curl http://127.0.0.1:3000/api/health` keeps working.
@@ -233,6 +246,28 @@ apercura-compose up -d                     # migrations, app, scheduler
 
 The roles are not part of a `pg_dump`: the init script recreates them on an
 empty volume with the passwords of the environment file, before the restore.
+
+### Verify a backup
+
+A backup is only known to work once it has been restored. `scripts/verify-backup.sh`
+restores a dump into a throwaway PostGIS container (no published port, no network, removed
+on exit) and checks the result:
+
+```sh
+scripts/verify-backup.sh apercura-2026-11-22.dump
+```
+
+It creates the three roles without login (they are not in the dump, and the grants need
+them), restores with `pg_restore --exit-on-error`, then checks the extensions, the schemas,
+the number of applied migrations (the migrations of the checkout; override with
+`VERIFY_EXPECTED_MIGRATIONS` for a dump of another version), the booking overlap constraint,
+the grants of `apercura_app`, `apercura_etl` and `apercura_readonly`, and that the directory
+holds at least `VERIFY_MIN_PRACTITIONERS` practitioners (default 1), then prints row counts
+and the date of the last successful import. It exits 1 if anything fails. Patient fields stay
+encrypted: the keys are never needed.
+
+Run it after every change to the backup job and at least monthly, on a machine with Docker
+and enough disk for one restore, never on the production host.
 
 ## Upgrades
 
