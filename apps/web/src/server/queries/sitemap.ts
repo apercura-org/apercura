@@ -39,9 +39,11 @@ export async function getSitemapChunks(): Promise<SitemapChunk[]> {
 		FROM directory.practitioner_pages WHERE indexable
 		GROUP BY 2
 		UNION ALL
-		SELECT 'listes', id / ${SITEMAP_CHUNK},
-			to_char(max(content_updated_at) AT TIME ZONE 'UTC', 'YYYY-MM-DD')
-		FROM directory.landing_pages WHERE indexable
+		SELECT 'listes', lp.id / ${SITEMAP_CHUNK},
+			to_char(max(lp.content_updated_at) AT TIME ZONE 'UTC', 'YYYY-MM-DD')
+		FROM directory.landing_pages lp
+		LEFT JOIN directory.places p ON p.id = lp.place_id
+		WHERE lp.indexable AND (p.id IS NULL OR p.code <> '75056')
 		GROUP BY 2
 		UNION ALL
 		SELECT 'lieux', place_id / ${SITEMAP_CHUNK},
@@ -79,7 +81,8 @@ export async function getSitemapEntries(kind: SitemapKind, chunk: number): Promi
 				ORDER BY practitioner_id
 			`;
 		case "listes":
-			// The Paris city has no listing page: its department page stands for it.
+			// The Paris city has no listing page: its department page stands for it
+			// (`/{listing}/75-paris/paris` answers 308), so it is never listed.
 			return sql<SitemapEntry[]>`
 				SELECT '/' || lp.listing_slug || CASE
 						WHEN p.id IS NULL THEN ''
@@ -91,6 +94,7 @@ export async function getSitemapEntries(kind: SitemapKind, chunk: number): Promi
 				LEFT JOIN directory.places p ON p.id = lp.place_id
 				LEFT JOIN directory.places d ON d.kind = 'department' AND d.code = p.department_code
 				WHERE lp.indexable AND lp.id >= ${from} AND lp.id < ${to}
+					AND (p.id IS NULL OR p.code <> '75056')
 					AND (p.id IS NULL OR p.kind = 'department' OR d.id IS NOT NULL)
 				ORDER BY lp.id
 			`;

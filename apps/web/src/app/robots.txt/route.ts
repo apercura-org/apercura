@@ -9,6 +9,9 @@ import { siteOrigin } from "~/lib/site-url";
  */
 const PRO_APP = [
 	"/pro/tableau-de-bord",
+	"/pro/aujourdhui",
+	"/pro/agenda",
+	"/pro/equipe",
 	"/pro/page",
 	"/pro/bienvenue",
 	"/pro/admin/",

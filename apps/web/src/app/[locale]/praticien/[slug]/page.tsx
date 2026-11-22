@@ -247,7 +247,8 @@ export default async function PractitionerPage({ params }: Props) {
 						places: sites.map((site) => ({
 							siteId: site.site.id,
 							practiceKind: site.practiceKind,
-							name: site.name,
+							// As printed on the place's card: a LocalBusiness needs a name.
+							name: site.name ?? labels.practiceKind(site.practiceKind),
 							addressLine: label(site.site.addressLine),
 							addressComplement: label(site.site.addressComplement),
 							postcode: site.site.postcode,

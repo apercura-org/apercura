@@ -13,6 +13,10 @@ const nextConfig: NextConfig = {
 	reactStrictMode: true,
 	poweredByHeader: false,
 	transpilePackages: ["@apercura/core", "@apercura/db", "@apercura/ui"],
+	async redirects() {
+		// Browsers ask for /favicon.ico whatever the page says: the 48 px site icon.
+		return [{ source: "/favicon.ico", destination: "/icon/48", permanent: true }];
+	},
 	async headers() {
 		// The appointment page reads its token from the URL fragment: no referrer may leave it,
 		// it is never indexed and never stored by a shared cache.
