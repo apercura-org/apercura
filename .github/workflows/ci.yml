@@ -26,6 +26,12 @@ jobs:
         with:
           bun-version-file: package.json
       - run: bun install --frozen-lockfile
+      # Known vulnerabilities: none at all in what production runs, none high or critical in
+      # the development tools.
+      - name: Dependency audit
+        run: |
+          bun audit --prod
+          bun audit --audit-level=high
       - run: bun run check
       - run: bun run typecheck
       - run: bun run test

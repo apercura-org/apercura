@@ -78,6 +78,11 @@ export type FetchOptions = {
 	attempts?: number;
 };
 
+/** Time to receive the response headers of a download. */
+const HEADERS_TIMEOUT_MS = 60_000;
+/** Longest pause in a download's body before it is abandoned (and retried). */
+const STALL_TIMEOUT_MS = 120_000;
+
 /**
  * Downloads `url` to `path`, streaming. Asks for gzip transfer encoding; fetch
  * decompresses it transparently, so sizes and hashes are of the content.
@@ -99,20 +104,43 @@ export async function downloadFile(options: FetchOptions): Promise<SourceFile> {
 }
 
 async function downloadOnce(options: FetchOptions): Promise<SourceFile> {
-	const response = await fetch(options.url, {
-		headers: { "accept-encoding": "gzip", "user-agent": USER_AGENT },
-		redirect: "follow",
-	});
-	if (!response.ok || !response.body) {
-		throw new Error(`GET ${options.url} answered ${response.status}`);
-	}
-	await mkdir(dirname(options.path), { recursive: true });
-	const inspector = new Inspector(options.text);
-	await pipeline(
-		Readable.fromWeb(response.body as WebReadableStream<Uint8Array>),
-		inspector,
-		createWriteStream(options.path),
+	// Large files stream for minutes: one deadline for the headers, then one for a stalled body.
+	const controller = new AbortController();
+	let deadline = setTimeout(
+		() => controller.abort(new Error("download timed out")),
+		HEADERS_TIMEOUT_MS,
 	);
+	const watchdog = new Transform({
+		transform(chunk, _encoding, callback) {
+			clearTimeout(deadline);
+			deadline = setTimeout(
+				() => controller.abort(new Error("download stalled")),
+				STALL_TIMEOUT_MS,
+			);
+			callback(null, chunk);
+		},
+	});
+	const inspector = new Inspector(options.text);
+	let response: Response;
+	try {
+		response = await fetch(options.url, {
+			headers: { "accept-encoding": "gzip", "user-agent": USER_AGENT },
+			redirect: "follow",
+			signal: controller.signal,
+		});
+		if (!response.ok || !response.body) {
+			throw new Error(`GET ${options.url} answered ${response.status}`);
+		}
+		await mkdir(dirname(options.path), { recursive: true });
+		await pipeline(
+			Readable.fromWeb(response.body as WebReadableStream<Uint8Array>),
+			watchdog,
+			inspector,
+			createWriteStream(options.path),
+		);
+	} finally {
+		clearTimeout(deadline);
+	}
 	return {
 		key: options.key,
 		url: options.url,
@@ -152,6 +180,9 @@ export async function inspectLocalFile(
 	};
 }
 
+/** A metadata request (dataset description, places API page) never hangs the import. */
+const JSON_TIMEOUT_MS = 30_000;
+
 /** GET a JSON document with retries. */
 export async function fetchJson<T>(url: string, attempts = 3): Promise<T> {
 	let lastError: unknown;
@@ -159,6 +190,7 @@ export async function fetchJson<T>(url: string, attempts = 3): Promise<T> {
 		try {
 			const response = await fetch(url, {
 				headers: { accept: "application/json", "user-agent": USER_AGENT },
+				signal: AbortSignal.timeout(JSON_TIMEOUT_MS),
 			});
 			if (!response.ok) throw new Error(`GET ${url} answered ${response.status}`);
 			return (await response.json()) as T;

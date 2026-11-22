@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { AuthFrame } from "~/components/pro/auth-frame";
 import { ClaimEmailConfirm } from "~/components/pro/claim-email-confirm";
+import { PerRequest } from "~/components/pro/per-request";
 import { NO_INDEX, resolveLocale } from "~/lib/locale";
 import { PRO_ROUTES } from "~/lib/pro-routes";
 
@@ -21,6 +22,7 @@ export default async function ClaimEmailPage({ params }: Props) {
 	return (
 		<AuthFrame locale={locale} pathname={PRO_ROUTES.claimEmail} title={t("title")} lead={t("lead")}>
 			<ClaimEmailConfirm />
+			<PerRequest />
 		</AuthFrame>
 	);
 }

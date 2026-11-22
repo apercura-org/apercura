@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { readForm, requireMember, requireMfaSession } from "~/server/auth/route-guard";
 import { getDb } from "~/server/db";
+import { refuseCrossSite } from "~/server/http/same-origin";
 import { MAX_PHOTO_BYTES, PhotoError } from "~/server/profile/photo";
 import { ProfileError, practitionerOfOrganization, setPhoto } from "~/server/profile/service";
 import { refreshPractitioners } from "~/server/refresh";
@@ -12,6 +13,8 @@ import { getStorage } from "~/server/storage";
  * editor's procedures: second factor, then membership with `page:update`.
  */
 export async function POST(request: Request) {
+	const crossSite = refuseCrossSite(request);
+	if (crossSite) return crossSite;
 	const db = getDb();
 	const guard = await requireMfaSession(db, request.headers);
 	if (!guard.ok) return guard.response;

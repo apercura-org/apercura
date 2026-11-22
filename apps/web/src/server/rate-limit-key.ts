@@ -56,3 +56,19 @@ export function ipBucket(ip: string): string {
 		.map((group) => group.replace(/^0+(?=.)/, ""))
 		.join(":")}::/64`;
 }
+
+/**
+ * Rate-limit key of an email address for `scope` (sign-in attempts, sign-up and
+ * verification emails per address): a keyed hash of the trimmed, lowercased
+ * address, so the table never holds the address itself.
+ */
+export function emailRateLimitKey(
+	scope: string,
+	email: string,
+	env: { RATE_LIMIT_KEY?: string | undefined } = { RATE_LIMIT_KEY: process.env.RATE_LIMIT_KEY },
+): string {
+	const digest = createHmac("sha256", hmacKey(env.RATE_LIMIT_KEY))
+		.update(`email:${email.trim().toLowerCase()}`)
+		.digest("base64url");
+	return `${scope}:${digest}`;
+}

@@ -1,0 +1,256 @@
+# Security review
+
+Review of the whole application before booking opens to patients (issue #31):
+authentication and sessions, authorization of every procedure and route
+handler, patient data handling, web hardening, rate limiting and abuse, and
+infrastructure. Patient booking data is health data: it is encrypted at the
+application level and production must run on an HDS-certified host.
+
+- **Scope**: `apps/web` (Next.js app, tRPC, route handlers, proxy),
+  `packages/core/src/crypto`, `packages/db` (schema, migrations, grants),
+  `packages/etl`, `docker/`, `clevercloud/`, CI workflows.
+- **Method**: code reading against the plan's security sections, checks on a
+  production build (headers, CSP, Host handling, nonce coverage of partially
+  prerendered pages), dependency audit (`bun audit`), and new automated tests
+  for every fix. Synthetic data only.
+- **Not covered**: an external penetration test, the hosting provider's
+  controls, and the legal documents (DPIA, processing records, contracts).
+  See [Recommendations](#recommendations).
+
+## Threat model
+
+| Asset                                          | Where                                                                   | Main threats                                                                                       |
+| ---------------------------------------------- | ----------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| Patient identity and contact, appointments     | `care.appointments` (encrypted fields), outbox, emails, calendar feeds  | Reading by an outsider, a former team member or the host; leaks through logs, errors, emails, URLs |
+| Practitioner accounts and their second factors | `directory.user`, `session`, `two_factor`, `passkey`, `account`         | Credential stuffing, session theft, second-factor bypass, account takeover by an impostor          |
+| Claims and identity documents                  | `directory.claims`, `claim_documents` (encrypted in S3)                 | Impostor claiming a page, document leak, IDOR between claimants                                    |
+| Master, data and blind-index keys              | Environment (`ENCRYPTION_KEYS`, `BLIND_INDEX_KEY`), `organization_keys` | Key disclosure, inability to rotate after a disclosure                                             |
+| Directory integrity and public pages           | `directory.*`, cached pages                                             | Cache poisoning, XSS through imported or owner-provided text, defacement through the import        |
+| Availability of booking                        | Public tRPC procedures, auth endpoints                                  | Bots holding slots, email flooding, oversized bodies, brute force                                  |
+
+Actors: anonymous visitors and bots; patients (no account, email code and
+opaque manage token); practitioners and their assistants (password plus TOTP
+or passkey, or Pro Santé Connect); platform administrators (claims and
+reports, **no access to patient data**); the operator and the HDS host
+(database, backups, environment); third parties that receive data by design
+(SMTP provider, the calendar provider reading a feed, the map tile server).
+
+Trust boundaries: the browser and the app (CSP, same-origin writes, cookies);
+the app and PostgreSQL (one role per component: app, import, read-only); the
+`phi` module and the rest of the app (the only decryption path, audited); the
+HDS perimeter and outgoing email (minimal content).
+
+## What was verified and holds
+
+- **Second factor everywhere patient data is reachable.** The app trusts its
+  own `session.mfaVerifiedAt`, set only by TOTP, backup code, passkey with user
+  verification or Pro Santé Connect; the sign-in methods that would skip it
+  (magic link, email OTP, password reset, other OAuth providers, ID-token
+  sign-in, `trustDevice`) are disabled or refused. Every tRPC procedure, the
+  upload and download route handlers and the account export check it again,
+  never the proxy. The calendar feed is the one exception by design: a
+  256-bit bearer URL for calendar apps, initials only by default.
+- **Authorization.** Membership and the platform administrator flag are read
+  from the database on each call; the client's `activeOrganizationId` is
+  ignored; every agenda, calendar, team, profile and audit query is scoped by
+  the organization read from the database (integration tests cover
+  cross-organization refusals). Assistants cannot edit pages or settings;
+  only owners open the agenda, manage the team and read the access log.
+  Platform administrators carry no organization.
+- **Patient data.** Only `server/phi` decrypts patient fields, and it inserts
+  the audit row in the same transaction first. The Biome rule catches static,
+  dynamic and relative imports and re-exports of the crypto package. Outbox
+  rows hold ids only; patient emails carry no specialty and no reason; manage
+  tokens travel in the URL fragment and in POST bodies; blind indexes use an
+  HKDF key per organization; the purge erases identity, contact, blind
+  indexes and token hashes, audited.
+- **Abuse.** ALTCHA proofs are verified server side, signature before any
+  work, and burnt once used; holds, codes, resends, manage links, claims,
+  reports, removal requests and suggestions are rate limited; revalidation
+  requests are HMAC-signed with a ±5 minute window; the jobs endpoint compares
+  its bearer secret in constant time.
+- **Web.** `?suite=` is parsed against an allowlist of typed routes; Better
+  Auth checks `callbackURL` against `trustedOrigins`; raw SQL is limited to
+  constant fragments; the only `dangerouslySetInnerHTML` is JSON-LD; uploads
+  are sniffed by magic bytes, photos re-encoded by sharp without metadata
+  under random keys, claim documents encrypted before storage in a private
+  bucket and served on demand with `nosniff` and a sandboxed policy. A
+  production build answers 400 to a `Host` or `X-Forwarded-Host` it does not
+  serve, and the proxy redirects any other host to `APP_URL`; per-request
+  pages are `private, no-store`.
+- **Infrastructure.** The image is multi-stage, runs as `node`, holds no
+  secret (built with `SKIP_ENV_VALIDATION`, `.env*` excluded from the
+  context); the self-hosted stack publishes the app only, on 127.0.0.1; the
+  bucket is private and the app's S3 key is limited to it.
+
+## Findings
+
+Severity: **High** (exploitable, patient data at stake), **Medium**
+(exploitable with conditions, or a control missing), **Low** (defense in
+depth, hard to exploit), **Info** (hardening, no direct impact).
+
+| #   | Severity | Finding                                                                                                                                                                                                                                                      | Status   | Fix              |
+| --- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------- | ---------------- |
+| H-1 | High     | Private calendar feeds survived a change of owner: after a contested claim (page taken over from an impostor) or an owner handing the practice over and deleting their account, the previous owner's feed URL kept serving patients' names and appointments. | Fixed    | f71edef          |
+| M-1 | Medium   | No Content-Security-Policy, HSTS, `X-Content-Type-Options`, `Permissions-Policy` or framing protection on pages and API answers (only a few routes set headers of their own).                                                                                | Fixed    | ea699e4          |
+| M-2 | Medium   | Raw SMTP error messages were stored in `care.outbox.last_error`, readable by the read-only role. SMTP replies quote the recipient, so a patient's email address could sit there in clear.                                                                    | Fixed    | f25f243          |
+| M-3 | Medium   | Request bodies were buffered whole before any size check on unauthenticated endpoints (`/api/auth/*`, `/api/revalidate`, `/api/trpc`), and uploads sent without `Content-Length` were read without limit: memory exhaustion with one request.                | Fixed    | ee586fe, cc3d46a |
+| M-4 | Medium   | A master key could not be retired: nothing re-wrapped the practices' data keys or re-encrypted platform-key data, so after a key disclosure the old key had to stay listed forever.                                                                          | Fixed    | ca37c1f          |
+| L-1 | Low      | Only the booking mutations checked `Sec-Fetch-Site`; every other mutation and the uploads relied on `SameSite=Lax` cookies alone, which do not stop a sibling subdomain of a shared hosting domain.                                                          | Fixed    | ee586fe          |
+| L-2 | Low      | Unexpected errors (database errors) reached the client with their message in production, and were not logged at all.                                                                                                                                         | Fixed    | 5e5d801          |
+| L-3 | Low      | Sign-in attempts were limited per IP only (a botnet spreads thin, a hospital shares one address); sign-up and verification emails had no limit per address (plan: 3 a day).                                                                                  | Fixed    | 8335e65          |
+| L-4 | Low      | Sessions had a 12-hour idle expiry but no absolute lifetime: a session in daily use, and its second-factor proof, never ended.                                                                                                                               | Fixed    | 8335e65          |
+| L-5 | Low      | A signed revalidation request could be replayed within its 5-minute window (cache stampede).                                                                                                                                                                 | Fixed    | cc3d46a          |
+| L-6 | Low      | The import downloaded the FINESS file from a URL taken from the data.gouv.fr API answer without checking its host, and its outgoing requests had no timeout.                                                                                                 | Fixed    | 1b3f3da          |
+| L-7 | Low      | The app's configuration check accepted secrets of any length in production, and a missing `BETTER_AUTH_SECRET` was only caught by Better Auth at the first request.                                                                                          | Fixed    | f745189          |
+| L-8 | Low      | The development compose file published PostgreSQL, MinIO and Mailpit, with well-known passwords, on every interface.                                                                                                                                         | Fixed    | f745189          |
+| I-1 | Info     | JSON-LD escaped `<` only; `>`, `&`, U+2028 and U+2029 are now escaped too.                                                                                                                                                                                   | Fixed    | d2165d4          |
+| I-2 | Info     | No automated check that every procedure keeps its middleware, that the decryption boundary holds beyond Biome, or that the database roles stay narrow.                                                                                                       | Fixed    | 5e5d801, be6793c |
+| I-3 | Info     | `bun audit`: one moderate advisory (esbuild ≤ 0.24.2 development server) in development tools only (`drizzle-kit`, `vitest`); production dependencies are clean. CI now fails on any production advisory and on high or critical ones anywhere.              | Accepted | f745189          |
+| I-4 | Info     | `GET /api/pro/claims/{id}/psc` records the Pro Santé Connect result (a state change on GET). It only re-reads the caller's own linked identity for their own claim and is idempotent.                                                                        | Accepted | —                |
+| I-5 | Info     | Claim documents open inline under a `sandbox` policy; Chrome does not render PDFs in a sandboxed document. Serving PDFs as attachments would keep the policy and work everywhere.                                                                            | Open     | —                |
+| I-6 | Info     | Audit logs are append-only for the app role, so the planned one-year retention cannot be applied by the app: nothing deletes older rows yet.                                                                                                                 | Open     | —                |
+
+### Details of the fixes
+
+- **Headers and CSP** (`apps/web/src/lib/security-headers.ts`, `proxy.ts`,
+  `next.config.ts`). Every response: `X-Content-Type-Options: nosniff`,
+  `Referrer-Policy: strict-origin-when-cross-origin` (`no-referrer` on
+  `/rdv`), `X-Frame-Options: DENY`, a `Permissions-Policy` that turns off
+  every powerful feature but geolocation on our origin and passkeys,
+  `Cross-Origin-Opener-Policy: same-origin`, and HSTS (two years, subdomains)
+  in an HTTPS production build. API answers: `default-src 'none'` and
+  `Cross-Origin-Resource-Policy: same-origin`. Pages, from the proxy:
+  - the practitioner space and `/rdv` (rendered per request) get a fresh
+    nonce: `script-src 'self' 'nonce-…' 'sha256-…'`. Next.js puts the nonce on
+    its inline scripts; the prerendered shell keeps one React timing script,
+    allowed by its hash (pinned by a test against the React build Next.js
+    ships). `'strict-dynamic'` is left out because the shell's `<script src>`
+    tags are prerendered without a nonce;
+  - cached public pages get `script-src 'self' 'unsafe-inline'`: their
+    inline data scripts are prerendered and cannot carry a per-request nonce,
+    and no user-provided HTML is rendered there;
+  - both: no `eval` outside development, `object-src`, `base-uri`,
+    `frame-src` and `frame-ancestors` `'none'`, `form-action 'self'`,
+    `worker-src 'self' blob:` (MapLibre's worker file, ALTCHA's blob worker),
+    and the map style's origin in `connect-src` and `img-src`.
+
+  The sign-up and registry-email pages now answer per request
+  (`PerRequest`), so the whole practitioner space carries a nonce. An e2e
+  spec loads every page type and fails on any CSP violation.
+- **Cross-site writes and body caps** (`server/http/same-origin.ts`,
+  `server/http/body.ts`): POSTs to tRPC and the upload routes need
+  `Sec-Fetch-Site: same-origin` (or `none`), or an `Origin` of the app;
+  bodies are read up to a cap (64 KB auth and revalidation, 512 KB tRPC, the
+  file size plus 64 KB for uploads) and refused with 413 beyond.
+- **Errors** (`trpc/error-redaction.ts`): outside development, an
+  `INTERNAL_SERVER_ERROR` reaches the client as that code only, without stack;
+  the server logs the procedure path, the error class, its SQLSTATE or Node
+  code and the first frame of our code, never the message nor the input.
+  Business errors keep their codes.
+- **SMTP errors** (`server/mail/error-summary.ts`): the outbox stores and the
+  logs print `Error EENVELOPE SMTP 450 on RCPT TO`, never the reply text.
+- **Calendar feeds** (`server/booking/feeds.ts`): all feeds of a practice are
+  revoked when a contested claim takes it over and when its owner hands it to
+  a member before deleting their account. The new owner issues a new link.
+- **Auth** (`server/auth/policy.ts`): 10 sign-in attempts per address per
+  15 minutes, 3 sign-ups and 3 verification emails per address per day (keyed
+  hashes in `rate_limits`), on top of Better Auth's per-IP limits; a session
+  ends 7 days after its creation, however active.
+- **Key rotation** (`server/keys/rotation.ts`, `jobs:tick rotate-keys`):
+  re-wraps every data key, re-encrypts reports, removal requests and claim
+  documents with the active master key; idempotent. The procedure is in
+  [self-hosting](self-hosting.md#key-rotation).
+- **Revalidation**: a verified signature is burnt in `rate_limits` for
+  15 minutes; a replay is answered 200 without revalidating anything.
+- **Import**: the FINESS resource must be HTTPS on `data.gouv.fr` or a
+  subdomain; JSON requests time out after 30 s, geocoding after 10 min, a
+  download that stalls for 2 min is retried.
+- **Configuration**: production refuses to start without
+  `BETTER_AUTH_SECRET`, or with any secret shorter than 32 characters;
+  development services listen on 127.0.0.1 only.
+
+### Tests added
+
+- `trpc/procedure-access.test.ts`: lists every procedure of the app router
+  with its required access (public, signed in, second factor, member with
+  given permissions, platform administrator) and calls each one signed out,
+  without a second factor, as a non-member and as a non-administrator.
+- `server/phi/boundary.test.ts`: the Biome rule and its exemptions are still
+  configured; Node ciphers appear in the crypto package only; the package root
+  does not export decryption; platform-key data is opened by the claims and
+  GDPR services only.
+- `server/database-roles.integration.test.ts`: the import cannot read `care`,
+  accounts or claims, nor rewrite practitioner-owned columns; the read-only
+  role writes nothing and reads no column that looks like a secret (a scan,
+  so a new secret column fails until a migration hides it); both audit logs
+  are append-only for the app; nothing is granted to `PUBLIC`.
+- `server/phi/rotation.integration.test.ts`: data under the old key opens
+  after the rotation starts (data keys unwrap with the old master key),
+  `rotateKeys` moves everything, and everything opens once the old key is gone.
+- Unit tests for the policy builder, cross-site checks, body caps, error
+  redaction, SMTP summaries, JSON-LD escaping, per-address keys, session
+  lifetime and the FINESS URL check; integration tests for feed revocation,
+  revalidation replay and stored SMTP errors; `e2e/security.spec.ts` for
+  headers, nonces, CSP violations, cross-site refusals and body caps.
+
+## Residual risks
+
+- **Cached public pages run inline scripts.** Their policy needs
+  `'unsafe-inline'` for scripts; it is mitigated by plain-text rendering of
+  every owner and registry field, React's escaping and `nosniff`. Revisit
+  when Next.js can hash the inline data scripts of prerendered pages.
+- **`style-src 'unsafe-inline'`** on every page (React `style` attributes,
+  widget styles): CSS injection stays possible where markup injection is.
+- **Calendar feeds** are bearer URLs read by the calendar provider's servers
+  (Google, Apple), outside the HDS perimeter; they carry initials and the
+  reason by default and full names only if the owner turns them on. A second
+  factor cannot protect them; rotation and revocation are manual.
+- **Patient emails** leave the HDS perimeter through the SMTP provider and the
+  patient's mailbox; their content is minimal by design (practitioner, date,
+  time, address, manage link) and must be validated in the DPIA.
+- **Client IP behind proxies**: `TRUSTED_PROXY_COUNT` too low makes every
+  visitor share one rate-limit bucket (booking holds, sign-ins); too high lets
+  clients choose their address. It must match the deployment.
+- **Pro Santé Connect**: state, PKCE, nonce, issuer and ID-token signature
+  checks are Better Auth's `genericOAuth`; only the `SubjectNameID` matching
+  is ours. The ANS qualification and the pentest must exercise this flow.
+- **Platform administrators** read claim documents, reports and removal
+  requests (audited in `platform_audit_events`): a governance matter (few
+  people, second factor, review of the log).
+- **Keys** live in environment variables of the host; `BLIND_INDEX_KEY`
+  cannot be rotated without rebuilding the indexes. Backups keep purged data
+  until their own expiry.
+- **Audit log retention** (I-6): rows older than a year must be deleted by a
+  privileged scheduled task (or a `SECURITY DEFINER` function granted to the
+  app), not by the app role.
+
+## Recommendations
+
+Before opening booking to patients:
+
+1. **HDS**: run production (app, database, jobs, object storage, backups) on
+   the HDS-certified host under a signed hosting contract; keep `PUBLIC_HDS_HOST`
+   unset until then. Store the master keys in the host's secret manager, with
+   restricted access and a written rotation and incident procedure.
+2. **DPIA (AIPD)**, mandatory for health data at scale, covering at least:
+   the content of patient emails and `.ics` files, the calendar feed and its
+   default fields, retention (90 days by default, 30 to 365) and backups, the
+   platform administrators' access to claim documents, IP hashing in audit
+   rows, the SMTP and map tile providers, and the breach procedure (CNIL
+   notification within 72 hours). Appoint the DPO and keep the records of
+   processing up to date.
+3. **Penetration test** by an external team, in a staging environment with
+   synthetic data: authentication and second factor (including Pro Santé
+   Connect in the ANS sandbox), session handling, the booking flow and its
+   limits, manage links, IDOR on every id, the calendar feed, uploads and
+   claim documents, admin paths, CSP and headers, and the database roles.
+4. **HSTS preload** once the production domain is final; publish a
+   `/.well-known/security.txt` with a contact and a disclosure policy.
+5. **CodeQL** with the `security-extended` query suite, GitHub secret
+   scanning with push protection, and Dependabot (already on) for every
+   ecosystem in the repository.
+6. Close I-5 (claim PDFs as attachments) and I-6 (audit retention task).
+7. Set `RATE_LIMIT_KEY` and `ALTCHA_HMAC_KEY` explicitly in every deployment
+   (they are random per process otherwise) and check `TRUSTED_PROXY_COUNT`
+   against the actual proxy chain.

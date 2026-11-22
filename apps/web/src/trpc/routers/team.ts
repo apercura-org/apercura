@@ -4,6 +4,7 @@ import { z } from "zod";
 import { messagesFor } from "~/i18n/catalogs";
 import { LOCALES } from "~/i18n/locales";
 import { BOOKING_LIMITS } from "~/server/booking/config";
+import { mailErrorSummary } from "~/server/mail/error-summary";
 import { sendInvitationEmail } from "~/server/team/notify";
 import {
 	acceptInvitation,
@@ -93,7 +94,7 @@ export const teamRouter = createTRPCRouter({
 						inviterName: created.inviterName,
 						roleLabel: t(input.role),
 					}).catch((error: unknown) => {
-						console.error("Invitation email failed:", error);
+						console.error(`Invitation email failed: ${mailErrorSummary(error)}`);
 					});
 				if (ctx.defer) {
 					ctx.defer(send);

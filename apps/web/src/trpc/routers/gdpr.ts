@@ -3,6 +3,7 @@ import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import { LOCALES } from "~/i18n/locales";
 import { REPORT_KINDS, requestRemoval, submitReport } from "~/server/gdpr/service";
+import { mailErrorSummary } from "~/server/mail/error-summary";
 import { sendNotice } from "~/server/mail/notices";
 import { clientRateLimitKey } from "~/server/rate-limit";
 import { refreshPractitioners } from "~/server/refresh";
@@ -53,10 +54,7 @@ export const gdprRouter = createTRPCRouter({
 			try {
 				await sendNotice({ to: input.contact, locale: input.locale, kind: "removalReceived" });
 			} catch (error) {
-				console.error(
-					"Removal acknowledgment failed:",
-					error instanceof Error ? error.message : error,
-				);
+				console.error(`Removal acknowledgment failed: ${mailErrorSummary(error)}`);
 			}
 			return { ok: true as const };
 		}),

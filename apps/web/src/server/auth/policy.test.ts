@@ -8,11 +8,14 @@ import {
 import {
 	alwaysRequiresMfa,
 	DISABLED_PATHS,
+	EMAIL_RATE_LIMITS,
 	factorsLeftAfter,
 	MFA_SESSION_PATHS,
 	mfaMethodOf,
 	pscRequestProblem,
 	requiresStepUp,
+	SESSION_MAX_AGE_MS,
+	sessionTooOld,
 	TRUST_DEVICE_PATHS,
 } from "./policy";
 
@@ -135,5 +138,20 @@ describe("client IP", () => {
 		expect(trustedProxyCount("2")).toBe(2);
 		expect(trustedProxyCount("-1")).toBe(0);
 		expect(trustedProxyCount("abc")).toBe(0);
+	});
+});
+
+describe("session lifetime and per-address limits", () => {
+	it("ends a session a week after it was created, however active", () => {
+		const now = Date.parse("2026-11-22T10:00:00Z");
+		expect(sessionTooOld(new Date(now - SESSION_MAX_AGE_MS + 60_000), now)).toBe(false);
+		expect(sessionTooOld(new Date(now - SESSION_MAX_AGE_MS - 60_000), now)).toBe(true);
+		expect(sessionTooOld(null, now)).toBe(false);
+	});
+
+	it("limits password guesses and emails per address (plan §10: 3 sign-ups a day)", () => {
+		expect(EMAIL_RATE_LIMITS["/sign-in/email"]).toEqual({ max: 10, windowSeconds: 900 });
+		expect(EMAIL_RATE_LIMITS["/sign-up/email"]).toEqual({ max: 3, windowSeconds: 86_400 });
+		expect(EMAIL_RATE_LIMITS["/send-verification-email"]?.max).toBe(3);
 	});
 });

@@ -6,6 +6,7 @@ import type { NextConfig } from "next";
 import createNextIntlPlugin from "next-intl/plugin";
 import { PREFIXED_LOCALES } from "./src/i18n/locales";
 import { routing } from "./src/i18n/routing";
+import { API_CONTENT_SECURITY_POLICY, baseSecurityHeaders } from "./src/lib/security-headers";
 
 const nextConfig: NextConfig = {
 	cacheComponents: true,
@@ -20,6 +21,18 @@ const nextConfig: NextConfig = {
 		return [{ source: "/favicon.ico", destination: "/icon/48", permanent: true }];
 	},
 	async headers() {
+		// Every response: nosniff, referrer, framing, permissions, opener isolation and, in an
+		// HTTPS production build, HSTS. Pages get their Content-Security-Policy from the proxy.
+		const security = baseSecurityHeaders({
+			production: process.env.NODE_ENV === "production",
+			appUrl: process.env.APP_URL,
+		});
+		// API answers are data: nothing may run, load or frame them, nor read them cross-origin.
+		// The claim document route sets its own sandboxed policy.
+		const api = [
+			{ key: "Content-Security-Policy", value: API_CONTENT_SECURITY_POLICY },
+			{ key: "Cross-Origin-Resource-Policy", value: "same-origin" },
+		];
 		// The appointment page reads its token from the URL fragment: no referrer may leave it,
 		// it is never indexed and never stored by a shared cache.
 		const manage = [
@@ -36,6 +49,8 @@ const nextConfig: NextConfig = {
 		const prefixed = `:locale(${PREFIXED_LOCALES.join("|")})`;
 		const forms = ["/praticien/[slug]/signaler", "/praticien/[slug]/retrait"] as const;
 		return [
+			{ source: "/:path*", headers: security },
+			{ source: "/api/:path((?!admin/claim-documents/).*)", headers: api },
 			{ source: `/${prefixed}`, headers: noindex },
 			{ source: `/${prefixed}/:path*`, headers: noindex },
 			{ source: "/recherche", headers: noindex },

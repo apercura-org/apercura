@@ -1,6 +1,7 @@
 import "server-only";
 import type { Database } from "@apercura/db";
 import { USER_RATE_LIMIT } from "~/trpc/init";
+import { readBodyCapped, withBody } from "../http/body";
 import { consumeRateLimit } from "../rate-limit";
 import { type Permissions, roleCan } from "./access";
 import { findMembership, isPlatformAdmin } from "./membership";
@@ -49,12 +50,15 @@ export async function requirePlatformAdmin(db: Database, userId: string) {
 	return { ok: true, value: true } as const;
 }
 
-/** Reads a multipart body with a size cap, before buffering it all. */
+/**
+ * Reads a multipart body with a size cap (the file plus 64 KB of form
+ * overhead), never buffering more than that, even without Content-Length.
+ */
 export async function readForm(request: Request, maxBytes: number): Promise<FormData | null> {
-	const length = Number(request.headers.get("content-length") ?? "0");
-	if (length > maxBytes + 64 * 1024) return null;
+	const body = await readBodyCapped(request, maxBytes + 64 * 1024);
+	if (!body) return null;
 	try {
-		return await request.formData();
+		return await withBody(request, body).formData();
 	} catch {
 		return null;
 	}
