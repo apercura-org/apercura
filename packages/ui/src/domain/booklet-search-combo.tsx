@@ -174,6 +174,12 @@ export interface BookletSearchFrameProps {
 	footer?: ReactNode;
 	formId?: string;
 	className?: string;
+	/**
+	 * `false` prints the form (and footer) without the `<search>` landmark, for a
+	 * caller that wraps it in its own: e.g. a page that hydrates the cells later
+	 * than a footer action. `label` and `className` then belong to that wrapper.
+	 */
+	landmark?: boolean;
 }
 
 /**
@@ -188,35 +194,48 @@ export function BookletSearchFrame({
 	footer,
 	formId,
 	className,
+	landmark = true,
 }: BookletSearchFrameProps) {
+	const form = (
+		<form
+			id={formId}
+			action={action}
+			method="get"
+			className="flex flex-col gap-3 md:flex-row md:gap-0"
+		>
+			<div
+				className={cn(
+					"flex flex-1 flex-col border border-field-edge bg-paper md:flex-row",
+					// Rules between the cells only: React Aria puts a <template> before each cell.
+					"[&>div~div]:border-t [&>div~div]:border-field-edge md:[&>div~div]:border-t-0 md:[&>div~div]:border-s",
+				)}
+			>
+				{children}
+			</div>
+			<button
+				type="submit"
+				className={buttonStyles({
+					intent: "stamp",
+					size: "lg",
+					className: "min-h-16 text-body md:min-w-44",
+				})}
+			>
+				<SearchIcon className="size-5" />
+				{submitLabel}
+			</button>
+		</form>
+	);
+	if (!landmark) {
+		return (
+			<>
+				{form}
+				{footer}
+			</>
+		);
+	}
 	return (
 		<search aria-label={label} className={cn("flex flex-col gap-3", className)}>
-			<form
-				id={formId}
-				action={action}
-				method="get"
-				className="flex flex-col gap-3 md:flex-row md:gap-0"
-			>
-				<div
-					className={cn(
-						"flex flex-1 flex-col border border-field-edge bg-paper md:flex-row",
-						"[&>*+*]:border-t [&>*+*]:border-field-edge md:[&>*+*]:border-t-0 md:[&>*+*]:border-s",
-					)}
-				>
-					{children}
-				</div>
-				<button
-					type="submit"
-					className={buttonStyles({
-						intent: "stamp",
-						size: "lg",
-						className: "min-h-16 text-body md:min-w-44",
-					})}
-				>
-					<SearchIcon className="size-5" />
-					{submitLabel}
-				</button>
-			</form>
+			{form}
 			{footer}
 		</search>
 	);
