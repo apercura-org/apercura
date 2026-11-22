@@ -15,6 +15,7 @@ import {
 } from "@apercura/db/schema";
 import { and, eq, inArray, ne, sql } from "drizzle-orm";
 import { recordAudit } from "../audit";
+import { revokeOrganizationFeeds } from "../booking/feeds";
 import type { StorageDriver } from "../storage";
 
 /**
@@ -265,6 +266,8 @@ export async function deleteAccount(
 					)
 					.returning({ id: member.id });
 				if (promoted.length === 0) throw new AccountError("NO_SUCH_MEMBER");
+				// The leaving owner's feed links must not outlive their account.
+				await revokeOrganizationFeeds(tx, practice.organizationId);
 			} else {
 				await tx.delete(organization).where(eq(organization.id, practice.organizationId));
 			}

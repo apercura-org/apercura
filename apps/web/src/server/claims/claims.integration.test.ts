@@ -7,6 +7,7 @@
 import { randomBytes, randomUUID } from "node:crypto";
 import { createDb, type Database } from "@apercura/db";
 import {
+	calendars,
 	claimChecks,
 	claimDocuments,
 	claims,
@@ -376,6 +377,22 @@ describe.skipIf(!url)("claims, ownership and objections (database)", async () =>
 			userId: users.bob,
 			expiresAt: new Date(Date.now() + 3_600_000),
 		});
+		// The incumbent subscribed to the practice's private calendar feed.
+		const [bobOrg] = await db
+			.select({ id: practitioners.ownerOrgId })
+			.from(practitioners)
+			.where(eq(practitioners.id, target.id));
+		const [feedCalendar] = await db
+			.insert(calendars)
+			.values({
+				organizationId: bobOrg?.id ?? "",
+				practitionerId: target.id,
+				siteId: created.sites.at(-1) ?? 0,
+				timeZone: "Europe/Paris",
+				icsTokenHash: randomBytes(32).toString("hex"),
+				icsTokenCreatedAt: new Date(),
+			})
+			.returning({ id: calendars.id });
 
 		// Without Pro Santé Connect, a contest needs an administrator; with it, it is reviewable.
 		const challenger = await service.startClaim(db, users.carol, target.rpps);
@@ -406,6 +423,14 @@ describe.skipIf(!url)("claims, ownership and objections (database)", async () =>
 			.where(eq(member.organizationId, approval.organizationId));
 		expect(team).toEqual([{ userId: users.carol }]);
 		expect(await codeOf(service.startClaim(db, users.bob, target.rpps))).toBe("FROZEN");
+		// The practice changed hands: the incumbent's feed link no longer opens anything.
+		expect(approval.organizationId).toBe(bobOrg?.id);
+		const [feed] = await db
+			.select({ hash: calendars.icsTokenHash })
+			.from(calendars)
+			.where(eq(calendars.id, feedCalendar?.id ?? ""));
+		expect(feed?.hash).toBeNull();
+		await db.delete(calendars).where(eq(calendars.id, feedCalendar?.id ?? ""));
 	});
 
 	it("never lets a claim without Pro Santé Connect take a page verified with it", async () => {

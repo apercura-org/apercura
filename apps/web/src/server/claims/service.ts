@@ -32,6 +32,7 @@ import {
 } from "@apercura/db/schema";
 import { and, desc, eq, inArray, isNull, ne, sql } from "drizzle-orm";
 import { recordAudit } from "../audit";
+import { revokeOrganizationFeeds } from "../booking/feeds";
 import {
 	generateManageToken,
 	generateOtp,
@@ -659,8 +660,10 @@ async function approveInTx(
 
 	let organizationId = practitioner.owner_org_id;
 	if (organizationId) {
-		// Take over the practice: nobody from the previous owner's team keeps access.
+		// Take over the practice: nobody from the previous owner's team keeps access, not even
+		// through a calendar feed link they subscribed to.
 		await tx.delete(member).where(eq(member.organizationId, organizationId));
+		await revokeOrganizationFeeds(tx, organizationId);
 	} else {
 		organizationId = randomUUID();
 		await tx.insert(organization).values({
