@@ -3,7 +3,7 @@ Type d'identifiant PP|Identifiant PP|Identification nationale PP|Nom d'exercice|
 8|19999990021|819999990021|FICTIF|JEAN-PIERRE|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
 8|19999990039|819999990039|SPECIMEN|ALICE|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
 8|19999990047|819999990047|DE LA MAQUETTE|BRUNO|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
-8|19999990054|819999990054|D'ESSAI|CHLOE|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
+8|19999990054|819999990054|D'ESSAI|CHLOÉ|DE|Diplôme d'Etat français |DE05|Diplôme d'État français de docteur en médecine||||
 8|19999990062|819999990062|TEMOIN|DAVID|DE|Diplôme d'Etat français |DE01|Diplôme d'État français de docteur en chirurgie dentaire||||
 8|19999990070|819999990070|ECHANTILLON|EMMA|DE|Diplôme d'Etat français |DE01|Diplôme d'État français de docteur en chirurgie dentaire||||
 8|19999990088|819999990088|PLACEBO|FANNY|DE|Diplôme d'Etat français |DE06|Diplôme d'Etat français de sage-femme ||||

@@ -39,6 +39,7 @@ import {
 	mergeSites,
 	recomputeDerived,
 	refreshReadModels,
+	restoreSiteNameAccents,
 	type SiteLocation,
 	sitesToGeocode,
 	stageScope,
@@ -369,6 +370,7 @@ async function runLocked(
 			await syncTaxonomy(tx);
 			const merge: Record<string, unknown> = {};
 			merge.structures = await timer.run("resolve places", () => stageSites(tx));
+			merge.siteNameAccents = await restoreSiteNameAccents(tx);
 			merge.scope = await stageScope(tx, ctx);
 			const sites = await timer.run("merge sites", () => mergeSites(tx));
 			merge.sites = { inserted: sites.inserted, updated: sites.updated };

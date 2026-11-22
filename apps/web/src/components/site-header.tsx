@@ -1,10 +1,11 @@
 import { getTranslations } from "next-intl/server";
 import { type Href, Link } from "~/i18n/navigation";
 import { type Locale, routing } from "~/i18n/routing";
+import { LocaleSwitchLink } from "./locale-switch-link";
 
 interface SiteHeaderProps {
 	locale: Locale;
-	/** The current page, so the language switch stays on it. */
+	/** The current page, so the language switch stays on it (with its query and, on `/rdv`, its fragment). */
 	href: Href;
 	/** The home page prints the wordmark large in the band; other pages print it here. */
 	showWordmark?: boolean;
@@ -44,16 +45,18 @@ export async function SiteHeader({ locale, href, showWordmark = true }: SiteHead
 						<ul className="flex items-center gap-1">
 							{routing.locales.map((other) => (
 								<li key={other}>
-									<Link
+									<LocaleSwitchLink
 										href={href}
 										locale={other}
+										// The appointment page keeps its token, which lives in the fragment.
+										keepHash={href === "/rdv"}
 										hrefLang={other}
 										lang={other}
 										aria-current={other === locale ? "true" : undefined}
 										className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-field px-2 text-meta text-cover-ink no-underline hover:underline aria-[current]:font-bold aria-[current]:underline aria-[current]:decoration-2 aria-[current]:underline-offset-[0.25em]"
 									>
 										{tLocale("locale", { locale: other })}
-									</Link>
+									</LocaleSwitchLink>
 								</li>
 							))}
 						</ul>
