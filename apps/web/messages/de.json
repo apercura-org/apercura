@@ -1,0 +1,2913 @@
+{
+	"Metadata": {
+		"title": "Apercura",
+		"description": "Das offene Verzeichnis und das kostenlose Buchungstool für alle Gesundheitsfachkräfte in Frankreich.",
+		"proTitle": "Ihre Seite existiert bereits · Apercura",
+		"proDescription": "Apercura veröffentlicht eine sachliche Seite für jede in Frankreich registrierte Gesundheitsfachkraft. Finden Sie Ihre Seite und beanspruchen Sie sie kostenlos.",
+		"searchTitle": "Suche · Apercura",
+		"galleryTitle": "Komponentengalerie · Apercura",
+		"homeTitle": "Apercura · Das offene Verzeichnis der Gesundheitsfachkräfte"
+	},
+	"Site": {
+		"skipLink": "Zum Inhalt springen",
+		"wordmark": "Apercura",
+		"homeLink": "Apercura, Startseite",
+		"runningHead": "Offenes Verzeichnis der Gesundheitsfachkräfte in Frankreich",
+		"navLabel": "Hauptort",
+		"navPro": "Für Gesundheitsfachkräfte",
+		"navPatients": "Für Patienten",
+		"folio": "Seite {number}",
+		"externalLink": "öffnet eine andere Website",
+		"footer": {
+			"free": "Kostenlos für Gesundheitsfachkräfte und Patienten.",
+			"license": "Quellcode unter der Lizenz AGPL-3.0",
+			"noAds": "Keine Bewertungen, keine Werbung, kein bezahltes Ranking."
+		},
+		"folioRpps": "RPPS {rpps}",
+		"home": "Startseite",
+		"breadcrumbs": "Sie sind hier",
+		"footerNav": {
+			"label": "Über Apercura",
+			"directory": "Verzeichnis",
+			"about": "Info",
+			"openSource": "Open Source",
+			"data": "Daten und Quellen",
+			"accessibility": "Barrierefreiheit",
+			"privacy": "Datenschutz",
+			"legal": "Impressum",
+			"terms": "Nutzungsbedingungen"
+		}
+	},
+	"LocaleSwitcher": {
+		"label": "Sprache",
+		"locale": "{locale, select, fr {Français} en {English} de {Deutsch} es {Español} it {Italiano} other {Unbekannte Sprache}}"
+	},
+	"Search": {
+		"label": "Gesundheitsfachkraft finden",
+		"who": "Wer?",
+		"whoHint": "Name, Fachgebiet oder Beruf",
+		"where": "Wo?",
+		"whereHint": "Ort oder Postleitzahl",
+		"submit": "Suchen"
+	},
+	"HomePage": {
+		"title": "Apercura",
+		"hook": "Finden Sie jede Gesundheitsfachkraft in Frankreich: Alle haben bereits eine Seite.",
+		"specimen": {
+			"heading": "Jede Gesundheitsfachkraft hat bereits eine Seite",
+			"intro": "So sieht eine Seite aus, wie das nationale Register sie befüllt, bevor die Gesundheitsfachkraft sie beansprucht: Bekannte Felder sind ausgefüllt, bei den anderen steht klar, dass sie nicht angegeben sind."
+		},
+		"pillarsHeading": "Wozu sich Apercura verpflichtet",
+		"columns": {
+			"number": "Nr.",
+			"commitment": "Verpflichtung"
+		},
+		"pillars": {
+			"free": {
+				"title": "Kostenlos",
+				"description": "Kostenlos für Gesundheitsfachkräfte und Patienten, ohne Abonnement und ohne Provision."
+			},
+			"openSource": {
+				"title": "Open Source",
+				"description": "Der vollständige Quellcode ist unter der Lizenz AGPL-3.0 veröffentlicht."
+			},
+			"hostedInFrance": {
+				"title": "Gesundheitsdaten in Frankreich gehostet",
+				"description": "Gesundheitsdaten werden in Frankreich von einem HDS-zertifizierten Hosting-Anbieter ({host}) gehostet und auf Anwendungsebene verschlüsselt."
+			},
+			"encrypted": {
+				"title": "Verschlüsselte Daten",
+				"description": "Patientendaten werden auf Anwendungsebene verschlüsselt. Hosten Sie sie selbst oder bei einem HDS-zertifizierten Hosting-Anbieter."
+			},
+			"selfHostable": {
+				"title": "Selbst hostbar",
+				"description": "Betreiben Sie die gesamte Plattform selbst mit Docker, einschließlich Import der offenen Daten."
+			}
+		},
+		"registry": {
+			"heading": "Aus dem nationalen Register erstellt",
+			"intro": "Jede Seite basiert auf dem öffentlichen Register der Gesundheitsberufe. Niemand zahlt für einen Eintrag, und niemand wird ausgelassen.",
+			"doctors": "Ärzte",
+			"dentists": "Zahnärzte",
+			"midwives": "Hebammen",
+			"withAddress": "Mit öffentlicher Praxisadresse",
+			"count": "{count, number}",
+			"approxCount": "etwa {count, number}",
+			"sourceLabel": "Quelle",
+			"sourceName": "Annuaire Santé, Agence du numérique en santé",
+			"updatedLabel": "Zahlen von"
+		},
+		"pro": {
+			"heading": "Sind Sie eine Gesundheitsfachkraft?",
+			"body": "Ihre Seite existiert bereits. Die Beanspruchung ist kostenlos.",
+			"cta": "Meine Seite finden"
+		},
+		"tagline": "Das offene Verzeichnis und das kostenlose Buchungstool für alle Gesundheitsfachkräfte in Frankreich.",
+		"status": "In Arbeit."
+	},
+	"ProPage": {
+		"title": "Ihre Seite existiert bereits.",
+		"lead": "Apercura veröffentlicht eine sachliche Seite für jede in Frankreich registrierte Gesundheitsfachkraft, erstellt aus öffentlichen Daten. Finden Sie Ihre Seite, beanspruchen Sie sie kostenlos und vervollständigen Sie sie.",
+		"search": {
+			"label": "Ihre Seite finden",
+			"field": "Name oder RPPS-Nummer",
+			"hint": "Name oder 11-stellige RPPS-Nummer",
+			"submit": "Meine Seite finden"
+		},
+		"stepsHeading": "Ihre Seite beanspruchen, in drei Schritten",
+		"columns": {
+			"step": "Schritt",
+			"what": "Ihre Tätigkeit"
+		},
+		"steps": {
+			"find": {
+				"title": "Ihre Seite finden",
+				"description": "Suchen Sie nach Name oder RPPS-Nummer. Die Seite ist bereits mit Ihren öffentlichen Registerangaben ausgefüllt."
+			},
+			"verify": {
+				"title": "Bestätigen Sie Ihre Identität",
+				"description": "Melden Sie sich mit Pro Santé Connect über Ihre e-CPS an oder senden Sie ein Dokument, das von einer Person geprüft wird."
+			},
+			"complete": {
+				"title": "Vervollständigen und Terminbuchung öffnen",
+				"description": "Ergänzen Sie Ihre Sprechzeiten und Praxisangaben und, wenn Sie möchten, die kostenlose Online-Terminbuchung. Patienten buchen, ohne ein Konto anzulegen."
+			}
+		},
+		"sampleHeading": "So sieht eine Seite aus, bevor sie beansprucht wird",
+		"sampleNote": "Fiktives Beispiel: Diese Gesundheitsfachkraft existiert nicht.",
+		"factsHeading": "Sachlich und für alle gleich",
+		"facts": "Die Seiten enthalten ausschließlich sachliche Informationen, wie es die französische ärztliche Berufsordnung verlangt. Es gibt keine Bewertungen, keine Werbung und kein bezahltes Ranking: Alle Gesundheitsfachkräfte werden gleich dargestellt."
+	},
+	"SearchPage": {
+		"title": "Suchen",
+		"query": "Sie suchten nach „{who}“",
+		"queryWhere": "Sie suchten nach „{who}“ in „{where}“",
+		"queryOnlyWhere": "Sie suchten in „{where}“",
+		"emptyTitle": "Keine passende Gesundheitsfachkraft",
+		"emptyBody": "Prüfen Sie die Schreibweise, versuchen Sie einen Ort in der Nähe oder einen allgemeineren Begriff, etwa „Arzt“ statt eines Fachgebiets.",
+		"queryNear": "Sie suchten nach „{who}“ in Ihrer Nähe",
+		"queryOnlyNear": "Gesundheitsfachkräfte in Ihrer Nähe",
+		"startTitle": "Wen suchen Sie?",
+		"startBody": "Geben Sie unter „Wer?“ einen Namen, ein Fachgebiet oder einen Beruf ein und unter „Wo?“ einen Ort oder eine Postleitzahl. Sie können das Verzeichnis auch nach Ort durchsuchen.",
+		"noMoreTitle": "Keine weiteren Ergebnisse",
+		"browseDirectory": "Verzeichnis durchsuchen",
+		"rppsTitle": "Keine öffentliche Seite für RPPS {rpps}",
+		"rppsBody": "Diese Nummer ist ungültig, oder diese Gesundheitsfachkraft hat keine öffentliche Seite: Personen ohne festen Praxisort werden nicht aufgeführt. Gesundheitsfachkräfte können ihren Eintrag trotzdem finden und beanspruchen.",
+		"rppsPro": "Gesundheitsfachkräfte: Finden Sie Ihren Eintrag",
+		"ambiguousTitle": "Mehrere Orte heißen „{where}“",
+		"ambiguousBody": "Wählen Sie aus, was Sie meinen:",
+		"unknownPlaceTitle": "Den Ort „{where}“ kennen wir nicht",
+		"unknownPlaceSuggest": "Meinten Sie einen dieser Orte?",
+		"unknownPlaceBody": "Schreibweise prüfen oder eine Postleitzahl eingeben.",
+		"departmentPlace": "Département",
+		"resultsHeading": "Ergebnisse",
+		"range": "Ergebnisse {from} bis {to}",
+		"orderName": "Die Ergebnisse sind danach geordnet, wie genau der Name übereinstimmt, dann alphabetisch. Niemand zahlt, um weiter oben zu erscheinen.",
+		"orderNear": "Die Ergebnisse sind nach Entfernung von Ihnen geordnet. Niemand zahlt, um weiter oben zu erscheinen.",
+		"bookingNotOpen": "Die Online-Terminbuchung ist noch nicht geöffnet: Rufen Sie die Praxis an oder wenden Sie sich an die Einrichtung.",
+		"columns": {
+			"practitioner": "Gesundheitsfachkraft",
+			"place": "Praxisort",
+			"appointments": "Termine"
+		},
+		"action": {
+			"call": "{phone} anrufen",
+			"establishment": "Über die Einrichtung",
+			"locum": "Vertretung: keine direkten Termine",
+			"page": "Seite ansehen",
+			"noPhone": "Keine Telefonnummer veröffentlicht",
+			"nextFree": "Buchen: {slot}"
+		},
+		"distance": "{km} km entfernt",
+		"pagination": "Ergebnisseiten",
+		"previous": "Vorherige Ergebnisse",
+		"next": "Weitere Ergebnisse",
+		"map": {
+			"show": "Auf einer Karte zeigen",
+			"hide": "Karte ausblenden",
+			"region": "Karte der Ergebnisse",
+			"fallback": "Die Karte wird geladen. Die Liste oben enthält alle Adressen."
+		},
+		"outsidePlace": "Praktiziert außerhalb von {where}",
+		"bookingOpenSome": "Einige Gesundheitsfachkräfte nehmen Online-Buchungen an: Deren nächster freier Termin wird angezeigt. Bei den anderen rufen Sie die Praxis an oder wenden Sie sich an die Einrichtung."
+	},
+	"Practitioner": {
+		"rpps": "RPPS",
+		"status": {
+			"unclaimed": "Nicht beanspruchte Seite",
+			"claimed": "Beanspruchte Seite",
+			"verified": "Verifizierte Seite"
+		},
+		"statusNote": {
+			"unclaimed": "Aus dem öffentlichen Register erstellt. Die Gesundheitsfachkraft hat die Seite noch nicht vervollständigt.",
+			"verified": "Vervollständigt von der Gesundheitsfachkraft, deren Identität verifiziert wurde."
+		},
+		"notProvided": "Nicht angegeben",
+		"fields": {
+			"profession": "Beruf",
+			"specialty": "Fachgebiet",
+			"address": "Praxisadresse",
+			"phone": "Telefon",
+			"hours": "Öffnungszeiten",
+			"languages": "Gesprochene Sprachen",
+			"convention": "Kassenvertrag",
+			"booking": "Online-Terminbuchung",
+			"access": "Zugang"
+		},
+		"sitesHeading": "Praxisorte",
+		"directions": "Anfahrt",
+		"providers": {
+			"openStreetMap": "OpenStreetMap",
+			"appleMaps": "Apple Maps",
+			"googleMaps": "Google Maps"
+		},
+		"mapLabel": "Karte: {place}",
+		"mapPin": "Lage von {place}",
+		"source": {
+			"label": "Quelle",
+			"name": "Annuaire Santé, Agence du numérique en santé",
+			"updated": "Aktualisiert"
+		},
+		"action": {
+			"title": "Termine",
+			"book": {
+				"statement": "Die Online-Terminbuchung ist geöffnet. Sie ist kostenlos und erfordert kein Konto.",
+				"label": "Termin buchen"
+			},
+			"call": {
+				"statement": "Diese Gesundheitsfachkraft bietet keine Online-Terminbuchung an. Rufen Sie die Praxis an, um einen Termin zu vereinbaren.",
+				"label": "{phone} anrufen"
+			},
+			"establishment": {
+				"statement": "Termine bei dieser Gesundheitsfachkraft werden über {establishment} vereinbart.",
+				"label": "Termin bei {establishment} buchen"
+			},
+			"locum": {
+				"statement": "Diese Gesundheitsfachkraft arbeitet als Vertretung für andere Ärzte. Sie kann nicht direkt gebucht werden.",
+				"hint": "Um diese Gesundheitsfachkraft aufzusuchen, buchen Sie bei der Praxis, in der sie derzeit arbeitet."
+			}
+		},
+		"slots": {
+			"heading": "Uhrzeit wählen",
+			"label": "Verfügbare Uhrzeiten",
+			"now": "jetzt",
+			"unavailable": "nicht verfügbar",
+			"selected": "Ausgewählt: {slot}",
+			"emptyDay": "Keine Zeiten an diesem Tag",
+			"slotLabel": "{day}, {time}",
+			"past": "vergangen"
+		},
+		"professions": {
+			"gp": "Allgemeinmediziner",
+			"dentist": "Zahnarzt",
+			"midwife": "Hebamme",
+			"physio": "Physiotherapeut"
+		},
+		"specimen": "Beispiel, keine echte Gesundheitsfachkraft"
+	},
+	"Gallery": {
+		"title": "Komponentengalerie",
+		"intro": "Alle Komponenten des Broschüren-Systems in allen Zuständen. Nur für die Entwicklung: Diese Seite liefert in der Produktion 404. Alle Personen, Nummern und Orte darauf sind fiktiv.",
+		"sections": {
+			"tokens": "Tokens",
+			"type": "Typografische Rollen",
+			"buttons": "Schaltflächen und Links",
+			"fields": "Textfelder",
+			"pickers": "Auswahlfelder und Datumsangaben",
+			"choices": "Auswahl",
+			"overlays": "Überlagerungen",
+			"navigation": "Navigation",
+			"data": "Tabellen und Markierungen",
+			"feedback": "Lade- und Leerzustände",
+			"form": "Formularvalidierung",
+			"domain": "Domänenkomponenten",
+			"booklet": "Beispielseite der Broschüre"
+		},
+		"palette": {
+			"paper": "Papier: Seitenhintergrund",
+			"paperShade": "Papierton: Öffnungen, Fußzeile, Titelleisten, Zeilen beim Überfahren",
+			"ink": "Tinte: Graphit für Schrift, Linien, Beschriftungen",
+			"inkMuted": "Gedämpfte Tinte: Hinweise, Platzhalter",
+			"inkDisabled": "Deaktiviert-Tinte",
+			"ruleSoft": "Feine Linie: Haarlinien, Führungslinien",
+			"fieldEdge": "Feldrand: Rahmen der Bedienelemente",
+			"stamp": "Stempel: Aktion, verifiziert, gebucht",
+			"stampStrong": "Stempel gedrückt",
+			"stampTint": "Stempel-Hintergrund",
+			"error": "Fehler-Tinte",
+			"errorTint": "Fehler-Hintergrund"
+		},
+		"typeRoles": {
+			"display": "Anzeige: der Schriftzug",
+			"headline": "Überschrift: Seitentitel",
+			"title": "Titel: Abschnittsüberschriften",
+			"lead": "Vorspann: Einleitungen",
+			"body": "Fließtext: 18 px, gesetzt in Atkinson Hyperlegible Next für Menschen mit Sehbehinderung.",
+			"meta": "Meta: Hinweise und Nebenangaben",
+			"caps": "Versalien: Spaltenköpfe und Kolumnentitel"
+		},
+		"states": {
+			"default": "Standard",
+			"disabled": "Deaktiviert",
+			"pending": "Ausstehend",
+			"invalid": "Ungültig",
+			"filled": "Ausgefüllt",
+			"empty": "Leer",
+			"loading": "Wird geladen",
+			"onShade": "Mit dem ruhigen Farbton"
+		},
+		"buttons": {
+			"stamp": "Buchen",
+			"ink": "Praxis anrufen",
+			"quiet": "Mehr anzeigen",
+			"large": "Meine Seite finden",
+			"pendingLabel": "Wird gesendet",
+			"linkButton": "Register öffnen",
+			"inlineLink": "Lesen, wie Seiten erstellt werden",
+			"externalLink": "Annuaire Santé"
+		},
+		"fields": {
+			"name": "Nachname",
+			"nameHint": "Wie im Register eingetragen",
+			"email": "E-Mail-Adresse",
+			"emailHint": "Wir senden den Buchungscode an diese Adresse.",
+			"emailError": "Geben Sie eine E-Mail-Adresse wie name@example.fr ein.",
+			"phone": "Telefon",
+			"locked": "RPPS-Nummer",
+			"search": "Verzeichnis durchsuchen",
+			"searchHint": "Name, Fachgebiet oder Ort",
+			"clear": "Suche löschen"
+		},
+		"pickers": {
+			"city": "Ort",
+			"profession": "Beruf",
+			"choose": "Beruf wählen",
+			"date": "Geburtsdatum",
+			"calendar": "Tag des Termins",
+			"time": "Bevorzugte Uhrzeit",
+			"otp": "Buchungscode",
+			"otpHint": "Die 6 Ziffern, die an Ihre E-Mail-Adresse gesendet wurden.",
+			"otpError": "Dieser Code ist ungültig. Prüfen Sie die letzte E-Mail, die wir gesendet haben.",
+			"dateError": "Geben Sie ein Datum in der Vergangenheit ein."
+		},
+		"choices": {
+			"terms": "Ich bin einverstanden, den Buchungscode per E-Mail zu erhalten",
+			"reminder": "Mir am Vortag eine Erinnerung senden",
+			"remindersAll": "Alle Erinnerungen",
+			"visitLabel": "Art des Besuchs",
+			"visitInPerson": "In der Praxis",
+			"visitHome": "Hausbesuch",
+			"visitVideo": "Videosprechstunde",
+			"bookingOpen": "Online-Terminbuchung öffnen",
+			"mustAgree": "Sie müssen zustimmen, um fortzufahren."
+		},
+		"overlays": {
+			"openDialog": "Termin absagen",
+			"dialogTitle": "Diesen Termin absagen?",
+			"dialogBody": "Die Uhrzeit wird anderen Patienten angeboten. Sie erhalten eine Bestätigung per E-Mail.",
+			"keep": "Behalten",
+			"confirmCancel": "Termin absagen",
+			"openSheet": "Weitere Praxisorte",
+			"sheetTitle": "Weitere Praxisorte",
+			"sheetBody": "Diese Gesundheitsfachkraft arbeitet auch an zwei weiteren Orten. Jeder Ort hat einen eigenen Terminkalender.",
+			"openPopover": "Was ist das RPPS?",
+			"popoverBody": "Die RPPS-Nummer identifiziert jede Gesundheitsfachkraft im nationalen Register. Sie ist öffentlich.",
+			"popoverLabel": "Zur RPPS-Nummer",
+			"openMenu": "Seitenaktionen",
+			"menuShare": "Diese Seite teilen",
+			"menuReport": "Fehler melden",
+			"menuClaim": "Diese Seite beanspruchen",
+			"tooltipTrigger": "Kassenvertrag",
+			"tooltip": "Sektor 1: Honorare von der Assurance Maladie festgelegt.",
+			"toastInfo": "Hinweis anzeigen",
+			"toastBooked": "Terminbuchung anzeigen",
+			"toastError": "Fehler anzeigen",
+			"toastInfoTitle": "Seite aktualisiert",
+			"toastInfoBody": "Das Register wurde heute Morgen aktualisiert.",
+			"toastBookedTitle": "Termin gebucht",
+			"toastBookedBody": "Dienstag, 24. November, um 9:30 Uhr. Eine Bestätigung ist unterwegs.",
+			"toastErrorTitle": "Die Uhrzeit ist nicht mehr frei",
+			"toastErrorBody": "Jemand hat sie gerade gebucht. Wählen Sie eine andere Uhrzeit.",
+			"toastRegion": "Benachrichtigungen",
+			"close": "Schließen"
+		},
+		"navigation": {
+			"tabsLabel": "Seitenabschnitte",
+			"tabInfo": "Informationen",
+			"tabSites": "Orte",
+			"tabBooking": "Terminbuchung",
+			"tabInfoBody": "Beruf, Fachgebiet und Kassenvertrag, aus dem Register.",
+			"tabSitesBody": "Jeder Praxisort mit Adresse und Anfahrt.",
+			"tabBookingBody": "Freie Zeiten, wenn die Gesundheitsfachkraft Online-Terminbuchung anbietet.",
+			"breadcrumbsLabel": "Brotkrümelnavigation",
+			"crumbHome": "Startseite",
+			"crumbCity": "Lyon",
+			"crumbProfession": "Allgemeinmediziner",
+			"crumbPage": "Dr. Exemple Martin"
+		},
+		"data": {
+			"tableLabel": "Gesundheitsfachkräfte in Ihrer Nähe",
+			"colName": "Name",
+			"colProfession": "Beruf",
+			"colTown": "Ort",
+			"colStatus": "Seite",
+			"badgeInk": "Nicht beanspruchte Seite",
+			"badgeStamp": "Verifizierte Seite",
+			"badgeError": "Auf Antrag entfernt",
+			"staticCaption": "Öffnungszeiten (statische Tabelle mit Linien)",
+			"colDay": "Tag",
+			"colMorning": "Vormittag",
+			"colAfternoon": "Nachmittag",
+			"monday": "Montag",
+			"tuesday": "Dienstag",
+			"closed": "Geschlossen"
+		},
+		"feedback": {
+			"loadingLabel": "Seite wird geladen",
+			"emptyTitle": "Keine passende Gesundheitsfachkraft",
+			"emptyBody": "Versuchen Sie einen Ort in der Nähe oder einen allgemeineren Beruf, etwa „Arzt“ statt eines Fachgebiets.",
+			"emptyAction": "Filter zurücksetzen"
+		},
+		"form": {
+			"heading": "Bestätigen Sie Ihren Termin",
+			"firstName": "Vorname",
+			"lastName": "Nachname",
+			"submit": "Bestätigen",
+			"required": "Dieses Feld ist erforderlich.",
+			"success": "Formular ist gültig."
+		},
+		"domain": {
+			"seals": "Siegel, abgeleitet aus fiktiven RPPS-Nummern",
+			"sealVerified": "Verifiziert: Der äußere Ring ist gestempelt",
+			"fieldRows": "Feldzeilen",
+			"provenance": "Herkunftshinweis",
+			"actions": "Aktionsblock: die vier ehrlichen Zustände",
+			"slots": "Terminauswahl",
+			"site": "Praxisort",
+			"map": "Karte",
+			"search": "Suche in der Broschüre"
+		},
+		"booklet": {
+			"unclaimed": "Nicht beanspruchte Seite",
+			"claimed": "Beanspruchte und verifizierte Seite",
+			"variantsLabel": "Seitenvariante"
+		},
+		"labels": {
+			"toast": "Kurzmeldungen",
+			"badge": "Abzeichen"
+		}
+	},
+	"PractitionerPage": {
+		"metaTitle": "{name}, {occupation} · Apercura",
+		"metaTitlePlace": "{name}, {occupation} in {place} · Apercura",
+		"metaDescription": "{name}, {occupation}: Adresse, Kontaktdaten und Tarifsektor, aus dem nationalen Register.",
+		"metaDescriptionPlace": "{name}, {occupation} in {place}: Adresse, Kontaktdaten und Tarifsektor, aus dem nationalen Register.",
+		"unknownProfession": "Gesundheitsfachkraft",
+		"professionHeading": "Beruf und Qualifikationen",
+		"otherQualifications": "Weitere Qualifikationen",
+		"practiceType": "Art der Tätigkeit",
+		"switchboard": "{phone} (Zentrale der Einrichtung)",
+		"establishment": "Einrichtung",
+		"unnamedPlace": "Praxisort",
+		"asideLabel": "Termine und Seite",
+		"action": {
+			"callNotYetOpen": "Für diese Gesundheitsfachkraft ist die Online-Terminbuchung noch nicht geöffnet. Um einen Termin zu vereinbaren, rufen Sie die Praxis an.",
+			"establishmentLink": "Einrichtung kontaktieren",
+			"noPhone": "Für diesen Ort ist keine Telefonnummer veröffentlicht.",
+			"noPhoneHint": "Prüfen Sie die Angaben der Gesundheitsfachkraft auf <link>ameli.fr</link> oder wenden Sie sich direkt an den Praxisort.",
+			"bookStatement": "Die Online-Terminbuchung ist geöffnet. Sie ist kostenlos und erfordert kein Konto.",
+			"bookNoSlot": "Die Online-Terminbuchung ist geöffnet, aber in den kommenden Wochen ist keine Uhrzeit frei. Schauen Sie später noch einmal nach oder rufen Sie die Praxis an.",
+			"nextSlot": "Nächster freier Termin",
+			"bookLabel": "Termin buchen",
+			"orCall": "Oder rufen Sie {phone} an."
+		},
+		"fees": {
+			"heading": "Honorare und Krankenversicherung",
+			"sector": "Tarifsektor",
+			"optam": "Begrenzte Honorarzuschläge (OPTAM)",
+			"optamNo": "Kein Mitglied",
+			"carteVitale": "Carte Vitale",
+			"accepted": "Angenommen",
+			"notAccepted": "Nicht angenommen",
+			"fromAmeli": "Diese Angaben stammen aus dem Verzeichnis der Assurance Maladie.",
+			"notMatched": "Diese Gesundheitsfachkraft konnte im Verzeichnis der Assurance Maladie nicht mit Sicherheit zugeordnet werden, daher werden diese Angaben nicht angezeigt.",
+			"regulatoryNotice": "Der Tarifsektor bestimmt, wie Honorare berechnet und erstattet werden: Prüfen Sie Honorare und Erstattung vor Ihrem Termin auf",
+			"ameliLink": "ameli.fr, das Verzeichnis der Assurance Maladie",
+			"source": "Annuaire santé, Assurance Maladie",
+			"sourceOwner": "Die Gesundheitsfachkraft"
+		},
+		"claim": {
+			"heading": "Sind Sie das?",
+			"body": "Diese Seite basiert auf dem öffentlichen Register. Beanspruchen Sie sie kostenlos, um sie zu prüfen und zu vervollständigen.",
+			"link": "Diese Seite beanspruchen",
+			"claimedHeading": "Von der Gesundheitsfachkraft verwaltete Seite",
+			"claimedBody": "Die Gesundheitsfachkraft hat diese Seite beansprucht; ihre Identität wurde verifiziert, und sie vervollständigt die Seite selbst."
+		},
+		"report": {
+			"heading": "Etwas ist falsch?",
+			"body": "Wenn eine Adresse, eine Telefonnummer oder ein Name falsch ist, teilen Sie uns mit, wie es richtig lautet.",
+			"link": "Fehler melden",
+			"removalLink": "Sie sind diese Gesundheitsfachkraft und widersprechen dieser Seite?"
+		},
+		"ring": {
+			"heading": "Weitere Gesundheitsfachkräfte: {listing} in {place}"
+		},
+		"photoAlt": "Foto von {name}",
+		"withheld": {
+			"metaTitle": "Seite ausgeblendet · Apercura",
+			"title": "Diese Seite ist ausgeblendet",
+			"body": "Für diese Seite wird ein Antrag auf Entfernung geprüft. Bis dahin wird sie nicht angezeigt.",
+			"dataLink": "Wie Seiten veröffentlicht und entfernt werden"
+		},
+		"metaTitleName": "{name} · Apercura",
+		"metaDescriptionBookable": "{name}, {occupation}: Online-Terminbuchung, Adresse, Kontaktdaten und Tarifsektor.",
+		"metaDescriptionBookablePlace": "{name}, {occupation} in {place}: Online-Terminbuchung, Adresse, Kontaktdaten und Tarifsektor."
+	},
+	"Institutional": {
+		"toBeCompleted": "Zu vervollständigen",
+		"draftMark": "Entwurf: vor dem Start zu vervollständigen",
+		"comingMark": "Demnächst"
+	},
+	"AboutPage": {
+		"metaTitle": "Über uns · Apercura",
+		"metaDescription": "Apercura veröffentlicht eine kostenlose, sachliche Seite für jede in Frankreich registrierte Gesundheitsfachkraft, erstellt aus öffentlichen offenen Daten.",
+		"title": "Über Apercura",
+		"lead": "Ein offenes Verzeichnis aller Gesundheitsfachkräfte in Frankreich und ein kostenloses Buchungstool für alle, die eines möchten.",
+		"sections": {
+			"what": {
+				"heading": "Was Apercura macht",
+				"body": [
+					"Apercura veröffentlicht eine Seite für alle in Frankreich registrierten Ärzte, Zahnärzte und Hebammen, erstellt aus dem nationalen Register der Gesundheitsberufe und weiteren öffentlichen offenen Daten.",
+					"Patienten finden jede Gesundheitsfachkraft, nicht nur diejenigen, die eine Plattform bezahlen. Gesundheitsfachkräfte können ihre Seite kostenlos beanspruchen, prüfen und vervollständigen. Die kostenlose Online-Terminbuchung ohne Patientenkonto wird später geöffnet."
+				]
+			},
+			"principles": {
+				"heading": "Grundsätze",
+				"list": [
+					"Alle Gesundheitsfachkräfte werden gleich dargestellt, ob sie Apercura nutzen oder nicht.",
+					"Nur sachliche Informationen: keine Bewertungen, keine Rezensionen, keine Werbung und kein bezahltes Ranking.",
+					"Kostenlos für Gesundheitsfachkräfte und Patienten, ohne Abonnement und ohne Provision.",
+					"Jede Seite zeigt, woher ihre Angaben stammen und wann sie zuletzt aktualisiert wurden.",
+					"Minimale Daten, für einen angegebenen Zweck erhoben und planmäßig gelöscht."
+				]
+			},
+			"how": {
+				"heading": "Woher die Seiten stammen",
+				"body": [
+					"Die Seiten werden jede Woche aus dem Annuaire Santé der Agence du numérique en santé, dem FINESS-Register der Einrichtungen und dem Verzeichnis der Assurance Maladie erstellt. Die Datenseite führt jede Quelle mit ihrer Lizenz und ihrem Stand auf."
+				]
+			},
+			"who": {
+				"heading": "Wer Apercura betreibt",
+				"body": [
+					"Apercura ist ein Projekt im öffentlichen Interesse. Es ist kein staatlicher Dienst und steht in keiner Verbindung zur Assurance Maladie, zu den Ordres (Berufskammern) oder zur Agence du numérique en santé."
+				]
+			}
+		},
+		"fields": {
+			"publisher": "Herausgeber",
+			"contact": "Kontakt"
+		},
+		"links": {
+			"data": "Daten und Quellen",
+			"openSource": "Quellcode und Lizenz"
+		}
+	},
+	"OpenSourcePage": {
+		"metaTitle": "Open Source · Apercura",
+		"metaDescription": "Der vollständige Quellcode von Apercura ist unter der Lizenz AGPL-3.0 öffentlich. Lesen Sie ihn, prüfen Sie ihn oder betreiben Sie die gesamte Plattform selbst.",
+		"title": "Der Code ist öffentlich.",
+		"lead": "Jede Zeile von Apercura ist unter der Lizenz AGPL-3.0 veröffentlicht: Sie können den Code lesen, prüfen und die gesamte Plattform selbst betreiben.",
+		"sections": {
+			"licence": {
+				"heading": "Lizenz AGPL-3.0",
+				"body": [
+					"Die AGPL-3.0 ist eine Lizenz für freie Software. Jeder darf den Code nutzen, untersuchen, verändern und weitergeben. Wer eine veränderte Version als Online-Dienst anbietet, muss seine Änderungen unter derselben Lizenz veröffentlichen."
+				]
+			},
+			"can": {
+				"heading": "Was Sie tun können",
+				"list": [
+					"Lesen Sie, wie jede Seite erstellt wird und wie die offenen Daten importiert werden.",
+					"Prüfen Sie, wie Patientendaten verschlüsselt werden und wie lange sie gespeichert bleiben.",
+					"Melden Sie ein Problem oder schlagen Sie eine Änderung im öffentlichen Repository vor.",
+					"Betreiben Sie die gesamte Plattform mit Docker auf Ihrer eigenen Infrastruktur, einschließlich Import der offenen Daten."
+				]
+			},
+			"selfHost": {
+				"heading": "Selbst hosten",
+				"body": [
+					"Eine reine Verzeichnis-Installation enthält keine Gesundheitsdaten und kann bei jedem Hosting-Anbieter laufen. Terminbuchungen sind Gesundheitsdaten: Wenn Sie die Terminbuchung für andere betreiben, müssen die Daten in Frankreich bei einem für Gesundheitsdaten zertifizierten Hosting-Anbieter (HDS) gehostet werden."
+				]
+			}
+		},
+		"facts": {
+			"licence": "Lizenz",
+			"licenceValue": "GNU Affero General Public License v3.0",
+			"repository": "Repository",
+			"data": "Verzeichnisdaten"
+		},
+		"dataValue": "Licence Ouverte 2.0, siehe Datenseite",
+		"cta": {
+			"heading": "Quellcode ansehen",
+			"body": "Das Repository enthält den Code, die Dokumentation und die Anleitung zum Selbsthosten.",
+			"link": "Repository öffnen"
+		}
+	},
+	"DataPage": {
+		"metaTitle": "Daten und Quellen · Apercura",
+		"metaDescription": "Woher die Seiten der Gesundheitsfachkräfte stammen: Quellen, Lizenzen, Aktualisierungsdaten, wie man einen Fehler korrigiert und wie man einer Seite widerspricht.",
+		"title": "Daten und Quellen",
+		"lead": "Jede Seite basiert auf öffentlichen offenen Daten. Hier erfahren Sie, woher sie stammen, wann sie aktualisiert wurden und wie Sie eine Seite korrigieren oder entfernen lassen.",
+		"status": {
+			"heading": "Letzte Aktualisierung",
+			"body": "Das Verzeichnis wird jede Woche aus den Quellen importiert. Eine Seite ändert sich nur, wenn sich ihre Angaben in einer Quelle ändern.",
+			"importedAt": "Letzter Import",
+			"checkedAt": "Quellen zuletzt geprüft",
+			"notImported": "Das Verzeichnis wurde auf dieser Website noch nicht importiert.",
+			"notImportedValue": "Noch nicht importiert"
+		},
+		"sources": {
+			"heading": "Quellen",
+			"body": "Alle Quellen des Verzeichnisses sind unter der Licence Ouverte 2.0 (Etalab) veröffentlicht, die die Weiterverwendung unter Angabe der Quelle und ihres Datums erlaubt.",
+			"caption": "Datenquellen des Verzeichnisses",
+			"columns": {
+				"source": "Quelle",
+				"use": "Verwendet für",
+				"licence": "Lizenz",
+				"date": "Akte von"
+			},
+			"noDate": "—",
+			"items": {
+				"personneActivite": {
+					"name": "Annuaire Santé: Fachkräfte und Tätigkeiten",
+					"producer": "Agence du numérique en santé",
+					"use": "Namen, Berufe, Praxisorte, Telefonnummern"
+				},
+				"savoirFaire": {
+					"name": "Annuaire Santé: Fachgebiete und Qualifikationen",
+					"producer": "Agence du numérique en santé",
+					"use": "Fachgebiete, Kompetenzen, Befähigungen"
+				},
+				"diplomes": {
+					"name": "Annuaire Santé: Abschlüsse und Berechtigungen",
+					"producer": "Agence du numérique en santé",
+					"use": "Abschlüsse"
+				},
+				"finess": {
+					"name": "Einrichtungen in FINESS+",
+					"producer": "Agence du numérique en santé",
+					"use": "Namen und Standorte der Einrichtungen"
+				},
+				"ameli": {
+					"name": "Annuaire santé Ameli",
+					"producer": "Caisse nationale de l’Assurance Maladie",
+					"use": "Tarifsektor, OPTAM, Carte Vitale"
+				},
+				"geo": {
+					"name": "Gemeinden und Départements (geo.api.gouv.fr)",
+					"producer": "INSEE und IGN, über die API Géo",
+					"use": "Orte, Postleitzahlen, Départements"
+				},
+				"geocoder": {
+					"name": "Geokodierungsdienst der Géoplateforme",
+					"producer": "IGN",
+					"use": "Geokodierung der Adressen, nur während des Imports"
+				},
+				"map": {
+					"name": "Kartendaten",
+					"producer": "OpenStreetMap-Mitwirkende, Kacheln von OpenFreeMap",
+					"use": "Karten auf den Seiten"
+				}
+			},
+			"licenceOuverte": "Licence Ouverte 2.0",
+			"odbl": "ODbL",
+			"attribution": "Enthält Informationen aus dem Annuaire Santé (Agence du numérique en santé), dem FINESS-Register und dem Annuaire santé Ameli (Caisse nationale de l’Assurance Maladie), weiterverwendet unter der Licence Ouverte 2.0.",
+			"licenceLink": "Licence Ouverte 2.0 lesen",
+			"sourceLabel": "Quelle"
+		},
+		"rules": {
+			"heading": "Welche Gesundheitsfachkräfte eine Seite haben",
+			"body": [
+				"Eine Gesundheitsfachkraft hat eine öffentliche Seite, wenn das Register sie mit mindestens einer für Patienten zugänglichen Tätigkeit (einer Praxis, einem Gesundheitszentrum oder einem Krankenhaus) an einer Adresse führt. Personen ohne festen Praxisort behalten einen Eintrag, den sie beanspruchen können, aber keine öffentliche Seite.",
+				"Die Seiten zeigen nur Fakten in neutraler Reihenfolge: Es gibt keine Bewertungen, keine Rezensionen und kein bezahltes Ranking."
+			]
+		},
+		"correct": {
+			"heading": "Einen Fehler korrigieren",
+			"body": [
+				"Die meisten Angaben stammen aus Registern, die von anderen geführt werden; die dauerhafte Korrektur erfolgt daher an der Quelle. Die Seite übernimmt sie beim nächsten wöchentlichen Import."
+			],
+			"list": [
+				"Name, Beruf, Fachgebiet, Praxisort und Telefon: Die Gesundheitsfachkraft aktualisiert ihre Eintragung bei ihrer Berufskammer (Ordre) oder bei der Stelle, die sie im RPPS registriert hat.",
+				"Tarifsektor, OPTAM und Carte Vitale: Diese Angaben stammen aus dem Verzeichnis der Assurance Maladie (ameli.fr).",
+				"Name und Adresse einer Einrichtung: Sie stammen aus dem FINESS-Register, das von den regionalen Gesundheitsbehörden (ARS) geführt wird.",
+				"Gesundheitsfachkräfte können ihre Seite auch im Bereich für Gesundheitsfachkräfte beanspruchen, sie dann vervollständigen und die angezeigten Angaben korrigieren."
+			],
+			"formTitle": "Fehler melden",
+			"formBody": "Teilen Sie uns mit, was auf einer Seite falsch ist. Ihre Nachricht wird verschlüsselt und nur vom Apercura-Team gelesen.",
+			"proLink": "Zum Bereich für Gesundheitsfachkräfte"
+		},
+		"remove": {
+			"heading": "Widerspruch gegen eine Seite",
+			"body": [
+				"Nach Artikel 21 DSGVO kann eine Gesundheitsfachkraft der Veröffentlichung ihrer Seite widersprechen. Apercura veröffentlicht das Verzeichnis auf Grundlage eines berechtigten Interesses: der Information der Öffentlichkeit aus öffentlichen Daten.",
+				"Eine nicht beanspruchte Seite wird ausgeblendet, sobald der Antrag eingeht, und nach einer kurzen Prüfung des Antrags gelöscht. Eine beanspruchte Seite kann von ihrem Inhaber jederzeit entfernt werden. Einmal entfernt, erscheint eine Seite beim nächsten Import nicht wieder."
+			],
+			"formTitle": "Entfernung einer Seite beantragen",
+			"formBody": "Für eine nicht beanspruchte Seite. Die Seite wird sofort ausgeblendet und nach einer kurzen Prüfung gelöscht. Eine beanspruchte Seite entfernt ihr Inhaber selbst über seinen Bereich."
+		}
+	},
+	"AccessibilityPage": {
+		"metaTitle": "Barrierefreiheit · Apercura",
+		"metaDescription": "Erklärung zur Barrierefreiheit von Apercura (Entwurf): Stand der Konformität mit RGAA 4.1, Prüfmethoden, Meldung eines Problems und Ihre Rechtsbehelfe.",
+		"title": "Barrierefreiheit",
+		"lead": "Apercura ist für alle gedacht, auch für ältere und sehbehinderte Menschen. Diese Erklärung im Entwurf zeigt den aktuellen Stand.",
+		"sections": {
+			"commitment": {
+				"heading": "Verpflichtung",
+				"body": [
+					"Apercura strebt auf jeder Seite die Konformität mit dem französischen Barrierefreiheitsstandard RGAA 4.1 und mit WCAG 2.2 Stufe AA an.",
+					"Patientenseiten verwenden Fließtext von mindestens 18 px, Klickflächen von mindestens 44 px und einen sichtbaren Fokus; nichts wird allein durch Farbe vermittelt."
+				]
+			},
+			"status": {
+				"heading": "Stand der Konformität",
+				"body": [
+					"Apercura wurde noch nicht anhand von RGAA 4.1 geprüft. Bis ein Prüfbericht veröffentlicht ist, gilt die Website als nicht konform. Eine vollständige Prüfung ist vor dem Start geplant."
+				]
+			},
+			"tests": {
+				"heading": "Wie die Seiten getestet werden",
+				"list": [
+					"Automatisierte Prüfungen mit axe-core auf jedem Seitentyp, bei jeder Veröffentlichung.",
+					"Prüfungen von Suche und Navigation allein mit der Tastatur.",
+					"Manuelle Prüfungen mit den Screenreadern VoiceOver und NVDA sind im Rahmen des Audits geplant."
+				]
+			},
+			"technologies": {
+				"heading": "Verwendete Technologien",
+				"body": [
+					"HTML, CSS, WAI-ARIA und JavaScript. Die Suche und die Verzeichnisseiten funktionieren auch ohne JavaScript."
+				]
+			},
+			"feedback": {
+				"heading": "Ein Problem melden",
+				"body": [
+					"Wenn Sie auf einen Inhalt oder einen Dienst nicht zugreifen können, teilen Sie es uns mit, damit wir eine Alternative bereitstellen oder die Seite korrigieren können."
+				]
+			},
+			"recourse": {
+				"heading": "Rechtsbehelfe",
+				"body": [
+					"Wenn Sie ein Problem gemeldet und keine zufriedenstellende Antwort erhalten haben, können Sie sich an den Défenseur des droits (die französische Ombudsstelle) wenden."
+				],
+				"list": [
+					"Onlineformular des Défenseur des droits",
+					"Telefon: 09 69 39 00 00",
+					"Per Post (kostenlos, ohne Briefmarke): Défenseur des droits, Libre réponse 71120, 75342 Paris CEDEX 07"
+				]
+			}
+		},
+		"fields": {
+			"status": "Konformität",
+			"statusValue": "Noch nicht geprüft",
+			"framework": "Rahmen",
+			"frameworkValue": "RGAA 4.1",
+			"date": "Datum der Erklärung",
+			"contact": "Kontakt"
+		},
+		"defenseurLink": "Den Défenseur des droits kontaktieren"
+	},
+	"PrivacyPage": {
+		"metaTitle": "Datenschutz · Apercura",
+		"metaDescription": "Wie Apercura personenbezogene Daten verarbeitet: Verzeichnisdaten aus öffentlichen Registern, noch keine Patientendaten, keine Tracker, und Ihre Rechte.",
+		"title": "Datenschutz",
+		"lead": "Apercura erhebt so wenig Daten wie möglich. Dieser Entwurf erklärt, was verarbeitet wird, warum und wie Sie Ihre Rechte ausüben.",
+		"sections": {
+			"roles": {
+				"heading": "Wer verantwortlich ist",
+				"body": [
+					"Für das öffentliche Verzeichnis ist Apercura der Verantwortliche. Für Online-Terminbuchungen wird Apercura nach deren Start Daten im Auftrag jeder Gesundheitsfachkraft verarbeiten, auf Grundlage eines Auftragsverarbeitungsvertrags, der Teil der Nutzungsbedingungen für Gesundheitsfachkräfte ist."
+				]
+			},
+			"practitioners": {
+				"heading": "Daten zu Gesundheitsfachkräften",
+				"body": [
+					"Die Verzeichnisseiten zeigen Angaben aus öffentlichen Registern: Name, Beruf, Fachgebiete, Praxisorte, veröffentlichte Telefonnummern und Tarifsektor. Jede Seite nennt ihre Quellen und das Datum ihrer letzten Aktualisierung.",
+					"Rechtsgrundlage ist ein berechtigtes Interesse: die Information der Öffentlichkeit auf Grundlage öffentlicher Daten. Die Gesundheitsfachkräfte werden nicht einzeln informiert, da dies einen unverhältnismäßigen Aufwand bedeuten würde (Artikel 14 Absatz 5 Buchstabe b DSGVO); stattdessen informieren sie die Datenseite und ein Hinweis auf jeder Seite.",
+					"Jede Gesundheitsfachkraft kann der Veröffentlichung ihrer Seite widersprechen."
+				]
+			},
+			"patients": {
+				"heading": "Daten zu Patienten",
+				"body": [
+					"Die Online-Terminbuchung ist noch nicht geöffnet: Apercura erhebt derzeit keine Patientendaten. Sobald die Terminbuchung geöffnet ist, wird nur abgefragt, was die Gesundheitsfachkraft benötigt; diese Daten werden auf Anwendungsebene verschlüsselt und planmäßig gelöscht (standardmäßig 90 Tage nach dem Termin)."
+				]
+			},
+			"cookies": {
+				"heading": "Cookies und Tracker",
+				"body": [
+					"Apercura verwendet keine Werbe- oder Reichweiten-Cookies und keine Tracker. Es dürfen nur Cookies gesetzt werden, die für den Dienst unbedingt erforderlich sind; daher ist kein Einwilligungsbanner nötig."
+				]
+			},
+			"rights": {
+				"heading": "Ihre Rechte",
+				"body": [
+					"Sie können Auskunft über die Sie betreffenden Daten sowie deren Berichtigung oder Löschung verlangen und der Verarbeitung widersprechen. Wenn Sie der Meinung sind, dass Ihre Rechte nicht gewahrt werden, können Sie eine Beschwerde bei der CNIL einreichen."
+				]
+			}
+		},
+		"fields": {
+			"controller": "Verantwortlicher",
+			"dpo": "Datenschutzbeauftragter",
+			"contact": "Kontakt für Anfragen",
+			"hosting": "Hosting"
+		},
+		"hostedBy": "In Frankreich gehostet von einem HDS-zertifizierten Hosting-Anbieter ({host})",
+		"objectLink": "Wie Sie einer Seite widersprechen",
+		"cnilLink": "Beschwerde bei der CNIL einreichen"
+	},
+	"LegalPage": {
+		"metaTitle": "Impressum · Apercura",
+		"metaDescription": "Impressum von Apercura: Herausgeber, Verantwortlicher für den Inhalt und Hosting-Anbieter.",
+		"title": "Impressum",
+		"lead": "Die juristische Person, die Apercura herausgeben wird, ist noch nicht gegründet. Bis dahin bleiben die folgenden Felder leer.",
+		"sections": {
+			"publisher": {
+				"heading": "Herausgeber",
+				"body": [
+					"Der Herausgeber der Website, wie im französischen Gesetz über das Vertrauen in die digitale Wirtschaft (LCEN) vorgeschrieben."
+				]
+			},
+			"hosting": {
+				"heading": "Hosting-Anbieter",
+				"body": ["Das Unternehmen, das die Website hostet."]
+			},
+			"ip": {
+				"heading": "Code und Daten",
+				"body": [
+					"Der Quellcode von Apercura ist unter der Lizenz AGPL-3.0 veröffentlicht. Die Verzeichnisdaten werden aus öffentlichen Quellen unter der Licence Ouverte 2.0 weiterverwendet: Die Datenseite listet sie mit ihrem jeweiligen Stand auf."
+				]
+			}
+		},
+		"fields": {
+			"name": "Name",
+			"legalForm": "Rechtsform",
+			"address": "Eingetragene Adresse",
+			"registration": "Registrierungsnummer",
+			"director": "Verantwortlich für den Inhalt",
+			"contact": "Kontakt",
+			"hostName": "Hoster",
+			"hostAddress": "Adresse des Hosters"
+		},
+		"dataLink": "Daten und Quellen"
+	},
+	"TermsPage": {
+		"metaTitle": "Nutzungsbedingungen · Apercura",
+		"metaDescription": "Nutzungsbedingungen von Apercura (Entwurf): ein kostenloses, sachliches Verzeichnis der Gesundheitsfachkräfte in Frankreich.",
+		"title": "Nutzungsbedingungen",
+		"lead": "Dieser Entwurf der Bedingungen beschreibt den Dienst in seinem heutigen Stand. Er wird vor dem Start vervollständigt und überprüft.",
+		"sections": {
+			"service": {
+				"heading": "Der Dienst",
+				"body": [
+					"Apercura ist ein kostenloses Verzeichnis der in Frankreich registrierten Gesundheitsfachkräfte, erstellt aus öffentlichen offenen Daten. Für die Nutzung ist kein Konto erforderlich."
+				]
+			},
+			"content": {
+				"heading": "Was die Seiten enthalten",
+				"body": [
+					"Die Seiten zeigen sachliche Informationen aus öffentlichen Registern in neutraler Reihenfolge. Sie enthalten keine Bewertungen, keine Rezensionen, keine Werbung und kein bezahltes Ranking.",
+					"Die Informationen können Fehler enthalten oder veraltet sein: Klären Sie sie vor dem Weg dorthin mit der Gesundheitsfachkraft ab. Auf jeder Seite steht, wie Sie einen Fehler melden."
+				]
+			},
+			"health": {
+				"heading": "Keine medizinische Beratung",
+				"body": [
+					"Apercura bietet keine medizinische Beratung und ist kein Notdienst. Rufen Sie im Notfall die 15 (SAMU) oder die 112 an."
+				]
+			},
+			"practitioners": {
+				"heading": "Für Gesundheitsfachkräfte",
+				"body": [
+					"Die Beanspruchung einer Seite wird kostenlos sein und einen Identitätsnachweis erfordern. Eine Gesundheitsfachkraft, die eine Seite beansprucht, ist für die von ihr hinzugefügten Informationen verantwortlich; diese müssen sachlich bleiben, wie es die Berufsordnungen verlangen."
+				]
+			},
+			"ip": {
+				"heading": "Code und Daten",
+				"body": [
+					"Der Quellcode ist unter der Lizenz AGPL-3.0 veröffentlicht. Die Verzeichnisdaten werden unter der Licence Ouverte 2.0 weiterverwendet."
+				]
+			}
+		},
+		"fields": {
+			"effectiveDate": "Gültig ab",
+			"law": "Anwendbares Recht und Gerichtsstand",
+			"contact": "Kontakt"
+		}
+	},
+	"Listing": {
+		"count": "{count, plural, one {# Gesundheitsfachkraft} other {# Gesundheitsfachkräfte}}",
+		"metaTitle": "{count, plural, one {{listing} in {place}: # Gesundheitsfachkraft · Apercura} other {{listing} in {place}: # Gesundheitsfachkräfte · Apercura}}",
+		"metaTitlePage": "{listing} in {place}, Seite {page} · Apercura",
+		"metaDescription": "{count, plural, one {# als {occupation} in {place} im nationalen Register geführte Gesundheitsfachkraft: Adressen, Kontaktdaten, Tarifsektoren.} other {# als {occupation} in {place} im nationalen Register geführte Gesundheitsfachkräfte: Adressen, Kontaktdaten, Tarifsektoren.}}",
+		"title": "{listing} in {place}",
+		"lead": "{count, plural, one {Das nationale Register führt unter dieser Rubrik # Gesundheitsfachkraft mit einem Praxisort in {place}.} other {Das nationale Register führt unter dieser Rubrik # Gesundheitsfachkräfte mit einem Praxisort in {place}.}}",
+		"practitionersHeading": "{count, plural, one {Die Gesundheitsfachkraft} other {Die # Gesundheitsfachkräfte}}",
+		"practitionersIntro": "In alphabetischer Reihenfolge. Niemand zahlt, um hier zu erscheinen, und niemand wird gerankt.",
+		"rowFacts": "Sektor: {sector} · Carte Vitale: {carteVitale}",
+		"columns": {
+			"practitioner": "Gesundheitsfachkraft",
+			"sector": "Sektor",
+			"carteVitale": "Carte Vitale"
+		},
+		"pagination": {
+			"label": "Seiten der Liste",
+			"previous": "Vorherige Seite",
+			"next": "Nächste Seite",
+			"status": "Seite {page} von {pages}"
+		},
+		"facts": {
+			"heading": "In Zahlen",
+			"intro": "Tarifsektoren und Carte Vitale stammen aus dem Verzeichnis der Assurance Maladie, für die Gesundheitsfachkräfte, die dort zugeordnet werden konnten.",
+			"sectorUnknown": "Sektor unbekannt",
+			"carteVitaleYes": "Carte Vitale akzeptieren",
+			"carteVitaleNo": "Carte Vitale nicht akzeptieren",
+			"bookingNotOpen": "Noch nicht geöffnet",
+			"sources": "Annuaire Santé (ANS) und Annuaire santé (Assurance Maladie)"
+		},
+		"communesHeading": "{listing}: Gemeinden von {place}",
+		"nearbyHeading": "{listing}: Gemeinden in der Nähe",
+		"establishmentsHeading": "Einrichtungen in {place}",
+		"establishmentsIntro": "Krankenhäuser, Kliniken und Gesundheitszentren, in denen als {listing} geführte Gesundheitsfachkräfte arbeiten.",
+		"allSpecialties": "Alle Fachgebiete in {place}",
+		"hubMetaTitle": "{count, plural, one {{listing} in Frankreich: # Gesundheitsfachkraft · Apercura} other {{listing} in Frankreich: # Gesundheitsfachkräfte · Apercura}}",
+		"hubMetaDescription": "{count, plural, one {# als {occupation} im nationalen Register geführte Gesundheitsfachkraft, nach Département: Adressen, Kontaktdaten, Tarifsektoren.} other {# als {occupation} im nationalen Register geführte Gesundheitsfachkräfte, nach Département: Adressen, Kontaktdaten, Tarifsektoren.}}",
+		"hubTitle": "{listing} in Frankreich",
+		"hubLead": "{count, plural, one {Das nationale Register führt unter dieser Rubrik # Gesundheitsfachkraft mit einem Praxisort in Frankreich.} other {Das nationale Register führt unter dieser Rubrik # Gesundheitsfachkräfte mit einem Praxisort in Frankreich.}}",
+		"departmentsHeading": "{listing} nach Département",
+		"departmentsIntro": "Wählen Sie ein Département, um seine Gesundheitsfachkräfte und Gemeinden zu sehen.",
+		"browseDirectory": "Verzeichnis nach Ort durchsuchen",
+		"metaTitleShort": "{listing} in {place} · Apercura",
+		"metaDescriptionPage": "{count, plural, one {Seite {page} von {pages}: # als {occupation} in {place} im nationalen Register geführte Gesundheitsfachkraft.} other {Seite {page} von {pages}: # als {occupation} in {place} im nationalen Register geführte Gesundheitsfachkräfte.}}",
+		"hubMetaTitleShort": "{listing} in Frankreich · Apercura"
+	},
+	"Directory": {
+		"metaTitle": "Verzeichnis der Gesundheitsfachkräfte nach Ort · Apercura",
+		"metaDescription": "Alle Départements Frankreichs mit ihren Gesundheitsfachkräften, aus dem nationalen Register: Ärzte, Zahnärzte und Hebammen.",
+		"title": "Verzeichnis nach Ort",
+		"lead": "{count, plural, one {# Gesundheitsfachkraft mit Praxisort, nach Département.} other {# Gesundheitsfachkräfte mit Praxisort, nach Département.}}",
+		"otherRegion": "Weitere Orte",
+		"emptyTitle": "Das Verzeichnis ist noch nicht importiert",
+		"emptyBody": "Das nationale Register wurde auf diesem Server noch nicht importiert. Schauen Sie nach dem nächsten Import wieder vorbei.",
+		"placeMetaTitle": "Gesundheitsfachkräfte in {place} · Apercura",
+		"placeMetaDescription": "{count, plural, one {# Gesundheitsfachkraft in {place}, nach Fachgebiet, aus dem nationalen Register.} other {# Gesundheitsfachkräfte in {place}, nach Fachgebiet, aus dem nationalen Register.}}",
+		"placeTitle": "Gesundheitsfachkräfte in {place}",
+		"placeLead": "{count, plural, one {# Gesundheitsfachkraft mit Praxisort in {place}.} other {# Gesundheitsfachkräfte mit Praxisort in {place}.}}",
+		"specialtiesHeading": "Nach Fachgebiet",
+		"communesHeading": "Gemeinden von {place}",
+		"arrondissementsHeading": "Nach Arrondissement",
+		"establishmentsHeading": "Einrichtungen in {place}",
+		"placeMetaTitleShort": "Gesundheitsfachkräfte in {place} · Apercura"
+	},
+	"Establishment": {
+		"metaTitle": "{name} · Apercura",
+		"metaTitlePlace": "{name}, {place} · Apercura",
+		"metaDescription": "{count, plural, one {{name}: Adresse, Zentrale und die # Gesundheitsfachkraft, die dort arbeitet, aus dem nationalen Register.} other {{name}: Adresse, Zentrale und die # Gesundheitsfachkräfte, die dort arbeiten, aus dem nationalen Register.}}",
+		"directory": "Verzeichnis",
+		"folio": "FINESS {finess}",
+		"lead": "{count, plural, one {{kind}. Das nationale Register führt # Gesundheitsfachkraft, die hier arbeitet.} other {{kind}. Das nationale Register führt # Gesundheitsfachkräfte, die hier arbeiten.}}",
+		"addressHeading": "Adresse",
+		"finess": "FINESS-Nummer",
+		"action": {
+			"call": "Termine werden über die Einrichtung vereinbart. Rufen Sie die Zentrale an und fragen Sie nach der gewünschten Abteilung.",
+			"noPhone": "Für diese Einrichtung ist keine Telefonnummer veröffentlicht.",
+			"noPhoneHint": "Die Angaben finden Sie auf deren eigener Website oder auf ameli.fr."
+		},
+		"practitionersHeading": "{count, plural, one {Die hier tätige Gesundheitsfachkraft} other {Die # hier tätigen Gesundheitsfachkräfte}}",
+		"practitionersIntro": "Nach Fachgebiet, in alphabetischer Reihenfolge.",
+		"otherProfessions": "Weitere Berufe",
+		"source": "Annuaire Santé (ANS) und FINESS+"
+	},
+	"SearchForm": {
+		"specialties": "Fachgebiete",
+		"practitioners": "Gesundheitsfachkräfte",
+		"places": "Orte",
+		"department": "Département",
+		"nearMe": "In meiner Nähe",
+		"locating": "Standort wird ermittelt…",
+		"geoDenied": "Die Standortfreigabe ist für diese Website deaktiviert. Geben Sie stattdessen einen Ort oder eine Postleitzahl ein.",
+		"geoUnavailable": "Ihr Standort konnte nicht ermittelt werden. Geben Sie stattdessen einen Ort oder eine Postleitzahl ein.",
+		"searching": "Wird gesucht…",
+		"noSuggestion": "Kein Vorschlag. Klicken Sie auf „Suchen“, um alle Ergebnisse zu sehen."
+	},
+	"OgImage": {
+		"runningHead": "Offenes Verzeichnis der Gesundheitsfachkräfte",
+		"wordmark": "Apercura",
+		"titles": {
+			"medecin": "Jeder Arzt in Frankreich hat bereits eine Seite.",
+			"chirurgien-dentiste": "Jeder Zahnarzt in Frankreich hat bereits eine Seite.",
+			"sage-femme": "Jede Hebamme in Frankreich hat bereits eine Seite.",
+			"annuaire": "Gesundheitsfachkräfte, nach Fachgebiet und nach Ort."
+		},
+		"footer": "Kostenlos · Open Source · Keine Bewertungen, keine Werbung"
+	},
+	"taxonomy": {
+		"profession": {
+			"medecin": "{gender, select, female {Ärztin} other {Arzt}}",
+			"pharmacien": "{gender, select, female {Apothekerin} other {Apotheker}}",
+			"audioprothesiste": "{gender, select, female {Hörakustikerin} other {Hörakustiker}}",
+			"opticien-lunetier": "{gender, select, female {Augenoptikerin} other {Augenoptiker}}",
+			"assistant-dentaire": "Zahnmedizinische Fachkraft",
+			"physicien-medical": "{gender, select, female {Medizinphysikerin} other {Medizinphysiker}}",
+			"aide-soignant": "{gender, select, female {Pflegehelferin} other {Pflegehelfer}}",
+			"ambulancier": "{gender, select, female {Rettungssanitäterin} other {Rettungssanitäter}}",
+			"auxiliaire-de-puericulture": "{gender, select, female {Kinderpflegerin} other {Kinderpfleger}}",
+			"preparateur-en-pharmacie-hospitaliere": "{gender, select, female {Pharmazeutisch-technische Assistentin im Krankenhaus} other {Pharmazeutisch-technischer Assistent im Krankenhaus}}",
+			"preparateur-en-pharmacie": "{gender, select, female {Pharmazeutisch-technische Assistentin} other {Pharmazeutisch-technischer Assistent}}",
+			"chirurgien-dentiste": "{gender, select, female {Zahnärztin} other {Zahnarzt}}",
+			"sage-femme": "Hebamme",
+			"infirmier": "Pflegefachkraft",
+			"infirmier-psychiatrique": "Psychiatrische Pflegefachkraft",
+			"masseur-kinesitherapeute": "{gender, select, female {Physiotherapeutin} other {Physiotherapeut}}",
+			"pedicure-podologue": "{gender, select, female {Podologin} other {Podologe}}",
+			"orthoprothesiste": "{gender, select, female {Orthopädietechnikerin} other {Orthopädietechniker}}",
+			"podo-orthesiste": "{gender, select, female {Orthopädieschuhmacherin} other {Orthopädieschuhmacher}}",
+			"orthopediste-orthesiste": "{gender, select, female {Orthesentechnikerin} other {Orthesentechniker}}",
+			"oculariste": "{gender, select, female {Okularistin} other {Okularist}}",
+			"epithesiste": "{gender, select, female {Epithetikerin} other {Epithetiker}}",
+			"technicien-de-laboratoire-medical": "{gender, select, female {Medizinische Technologin für Laboratoriumsanalytik} other {Medizinischer Technologe für Laboratoriumsanalytik}}",
+			"orthophoniste": "{gender, select, female {Logopädin} other {Logopäde}}",
+			"orthoptiste": "{gender, select, female {Orthoptistin} other {Orthoptist}}",
+			"psychologue": "{gender, select, female {Psychologin} other {Psychologe}}",
+			"ergotherapeute": "{gender, select, female {Ergotherapeutin} other {Ergotherapeut}}",
+			"dieteticien": "{gender, select, female {Diätassistentin} other {Diätassistent}}",
+			"psychomotricien": "{gender, select, female {Psychomotorikerin} other {Psychomotoriker}}",
+			"manipulateur-erm": "{gender, select, female {Radiologieassistentin} other {Radiologieassistent}}",
+			"assistant-de-service-social": "{gender, select, female {Sozialarbeiterin} other {Sozialarbeiter}}",
+			"osteopathe": "{gender, select, female {Osteopathin} other {Osteopath}}",
+			"psychotherapeute": "{gender, select, female {Psychotherapeutin} other {Psychotherapeut}}",
+			"chiropracteur": "{gender, select, female {Chiropraktikerin} other {Chiropraktiker}}"
+		},
+		"listing": {
+			"aide-soignant": "{gender, select, female {Pflegehelferin} other {Pflegehelfer}}",
+			"allergologue": "{gender, select, female {Allergologin} other {Allergologe}}",
+			"ambulancier": "{gender, select, female {Rettungssanitäterin} other {Rettungssanitäter}}",
+			"anatomopathologiste": "{gender, select, female {Pathologin} other {Pathologe}}",
+			"anesthesiste-reanimateur": "{gender, select, female {Anästhesistin} other {Anästhesist}}",
+			"assistant-de-service-social": "{gender, select, female {Sozialarbeiterin} other {Sozialarbeiter}}",
+			"assistant-dentaire": "Zahnmedizinische Fachkraft",
+			"audioprothesiste": "{gender, select, female {Hörakustikerin} other {Hörakustiker}}",
+			"auxiliaire-de-puericulture": "{gender, select, female {Kinderpflegerin} other {Kinderpfleger}}",
+			"biologiste-medical": "{gender, select, female {Laboratoriumsmedizinerin} other {Laboratoriumsmediziner}}",
+			"cardiologue": "{gender, select, female {Kardiologin} other {Kardiologe}}",
+			"chiropracteur": "{gender, select, female {Chiropraktikerin} other {Chiropraktiker}}",
+			"chirurgien-dentiste": "{gender, select, female {Zahnärztin} other {Zahnarzt}}",
+			"chirurgien-general": "{gender, select, female {Allgemeinchirurgin} other {Allgemeinchirurg}}",
+			"chirurgien-maxillo-facial": "{gender, select, female {Mund-Kiefer-Gesichtschirurgin} other {Mund-Kiefer-Gesichtschirurg}}",
+			"chirurgien-oral": "{gender, select, female {Oralchirurgin} other {Oralchirurg}}",
+			"chirurgien-orthopediste": "{gender, select, female {Orthopädin und Unfallchirurgin} other {Orthopäde und Unfallchirurg}}",
+			"chirurgien-pediatrique": "{gender, select, female {Kinderchirurgin} other {Kinderchirurg}}",
+			"chirurgien-plasticien": "{gender, select, female {Plastische Chirurgin} other {Plastischer Chirurg}}",
+			"chirurgien-thoracique-et-cardiovasculaire": "{gender, select, female {Herz-Thorax-Chirurgin} other {Herz-Thorax-Chirurg}}",
+			"chirurgien-vasculaire": "{gender, select, female {Gefäßchirurgin} other {Gefäßchirurg}}",
+			"chirurgien-visceral": "{gender, select, female {Viszeralchirurgin} other {Viszeralchirurg}}",
+			"dermatologue": "{gender, select, female {Dermatologin} other {Dermatologe}}",
+			"dieteticien": "{gender, select, female {Diätassistentin} other {Diätassistent}}",
+			"endocrinologue": "{gender, select, female {Endokrinologin} other {Endokrinologe}}",
+			"epithesiste": "{gender, select, female {Epithetikerin} other {Epithetiker}}",
+			"ergotherapeute": "{gender, select, female {Ergotherapeutin} other {Ergotherapeut}}",
+			"gastro-enterologue": "{gender, select, female {Gastroenterologin} other {Gastroenterologe}}",
+			"geneticien": "{gender, select, female {Humangenetikerin} other {Humangenetiker}}",
+			"geriatre": "{gender, select, female {Geriaterin} other {Geriater}}",
+			"gynecologue": "{gender, select, female {Gynäkologin} other {Gynäkologe}}",
+			"gynecologue-obstetricien": "{gender, select, female {Gynäkologin und Geburtshelferin} other {Gynäkologe und Geburtshelfer}}",
+			"hematologue": "{gender, select, female {Hämatologin} other {Hämatologe}}",
+			"infectiologue": "{gender, select, female {Fachärztin für Infektiologie} other {Facharzt für Infektiologie}}",
+			"infirmier": "Pflegefachkraft",
+			"infirmier-anesthesiste": "Anästhesiepflegefachkraft",
+			"infirmier-de-bloc-operatoire": "OP-Pflegefachkraft",
+			"infirmier-en-pratique-avancee": "Pflegefachkraft mit erweiterter Praxis",
+			"infirmier-psychiatrique": "Psychiatrische Pflegefachkraft",
+			"infirmier-puericulteur": "{gender, select, female {Kinderkrankenpflegerin} other {Kinderkrankenpfleger}}",
+			"interniste": "{gender, select, female {Internistin} other {Internist}}",
+			"manipulateur-erm": "{gender, select, female {Radiologieassistentin} other {Radiologieassistent}}",
+			"masseur-kinesitherapeute": "{gender, select, female {Physiotherapeutin} other {Physiotherapeut}}",
+			"medecin": "{gender, select, female {Ärztin} other {Arzt}}",
+			"medecin-chercheur": "{gender, select, female {Ärztin in der Forschung} other {Arzt in der Forschung}}",
+			"medecin-de-sante-publique": "{gender, select, female {Ärztin für Öffentliches Gesundheitswesen} other {Arzt für Öffentliches Gesundheitswesen}}",
+			"medecin-du-travail": "{gender, select, female {Arbeitsmedizinerin} other {Arbeitsmediziner}}",
+			"medecin-generaliste": "{gender, select, female {Allgemeinmedizinerin} other {Allgemeinmediziner}}",
+			"medecin-legiste": "{gender, select, female {Rechtsmedizinerin} other {Rechtsmediziner}}",
+			"medecin-nucleaire": "{gender, select, female {Nuklearmedizinerin} other {Nuklearmediziner}}",
+			"medecin-reanimateur": "{gender, select, female {Intensivmedizinerin} other {Intensivmediziner}}",
+			"medecin-reeducateur": "{gender, select, female {Fachärztin für Physikalische und Rehabilitative Medizin} other {Facharzt für Physikalische und Rehabilitative Medizin}}",
+			"medecin-vasculaire": "{gender, select, female {Angiologin} other {Angiologe}}",
+			"nephrologue": "{gender, select, female {Nephrologin} other {Nephrologe}}",
+			"neurochirurgien": "{gender, select, female {Neurochirurgin} other {Neurochirurg}}",
+			"neurologue": "{gender, select, female {Neurologin} other {Neurologe}}",
+			"neuropsychiatre": "{gender, select, female {Neuropsychiaterin} other {Neuropsychiater}}",
+			"oculariste": "{gender, select, female {Okularistin} other {Okularist}}",
+			"oncologue": "{gender, select, female {Onkologin} other {Onkologe}}",
+			"ophtalmologue": "{gender, select, female {Augenärztin} other {Augenarzt}}",
+			"opticien-lunetier": "{gender, select, female {Augenoptikerin} other {Augenoptiker}}",
+			"orl": "{gender, select, female {HNO-Ärztin} other {HNO-Arzt}}",
+			"orthodontiste": "{gender, select, female {Kieferorthopädin} other {Kieferorthopäde}}",
+			"orthopediste-orthesiste": "{gender, select, female {Orthesentechnikerin} other {Orthesentechniker}}",
+			"orthophoniste": "{gender, select, female {Logopädin} other {Logopäde}}",
+			"orthoprothesiste": "{gender, select, female {Orthopädietechnikerin} other {Orthopädietechniker}}",
+			"orthoptiste": "{gender, select, female {Orthoptistin} other {Orthoptist}}",
+			"osteopathe": "{gender, select, female {Osteopathin} other {Osteopath}}",
+			"pediatre": "{gender, select, female {Kinderärztin} other {Kinderarzt}}",
+			"pedicure-podologue": "{gender, select, female {Podologin} other {Podologe}}",
+			"pedopsychiatre": "{gender, select, female {Kinder- und Jugendpsychiaterin} other {Kinder- und Jugendpsychiater}}",
+			"pharmacien": "{gender, select, female {Apothekerin} other {Apotheker}}",
+			"physicien-medical": "{gender, select, female {Medizinphysikerin} other {Medizinphysiker}}",
+			"pneumologue": "{gender, select, female {Pneumologin} other {Pneumologe}}",
+			"podo-orthesiste": "{gender, select, female {Orthopädieschuhmacherin} other {Orthopädieschuhmacher}}",
+			"preparateur-en-pharmacie": "{gender, select, female {Pharmazeutisch-technische Assistentin} other {Pharmazeutisch-technischer Assistent}}",
+			"preparateur-en-pharmacie-hospitaliere": "{gender, select, female {Pharmazeutisch-technische Assistentin im Krankenhaus} other {Pharmazeutisch-technischer Assistent im Krankenhaus}}",
+			"psychiatre": "{gender, select, female {Psychiaterin} other {Psychiater}}",
+			"psychologue": "{gender, select, female {Psychologin} other {Psychologe}}",
+			"psychomotricien": "{gender, select, female {Psychomotorikerin} other {Psychomotoriker}}",
+			"psychotherapeute": "{gender, select, female {Psychotherapeutin} other {Psychotherapeut}}",
+			"radiologue": "{gender, select, female {Radiologin} other {Radiologe}}",
+			"radiotherapeute": "{gender, select, female {Strahlentherapeutin} other {Strahlentherapeut}}",
+			"rhumatologue": "{gender, select, female {Rheumatologin} other {Rheumatologe}}",
+			"sage-femme": "Hebamme",
+			"specialiste-medecine-bucco-dentaire": "{gender, select, female {Fachärztin für Oralmedizin} other {Facharzt für Oralmedizin}}",
+			"stomatologue": "{gender, select, female {Stomatologin} other {Stomatologe}}",
+			"technicien-de-laboratoire-medical": "{gender, select, female {Medizinische Technologin für Laboratoriumsanalytik} other {Medizinischer Technologe für Laboratoriumsanalytik}}",
+			"urgentiste": "{gender, select, female {Notfallmedizinerin} other {Notfallmediziner}}",
+			"urologue": "{gender, select, female {Urologin} other {Urologe}}"
+		},
+		"practiceKind": {
+			"office": "Praxis",
+			"health_center": "Gesundheitszentrum",
+			"hospital": "Krankenhaus oder Klinik",
+			"locum": "Vertretung",
+			"non_clinical": "Nicht klinische Tätigkeit"
+		},
+		"mode": {
+			"L": "Selbstständig",
+			"S": "Angestellt",
+			"B": "Ehrenamtlich",
+			"I": "Indirekt"
+		},
+		"title": {
+			"DR": "Dr.",
+			"PR": "Prof.",
+			"MC": "Chefarzt",
+			"MG": "Generalarzt",
+			"PC": "Leitender Apotheker",
+			"PG": "Generalapotheker"
+		},
+		"billingSector": {
+			"0": "Nicht vertraglich an die Assurance Maladie gebunden",
+			"1": "Sektor 1 (Regelhonorare)",
+			"2": "Sektor 1 mit dauerhaften Honorarzuschlägen",
+			"3": "Sektor 2 (Honorarzuschläge)"
+		},
+		"optam": {
+			"optam": "Teilnahme an OPTAM (begrenzte Honorarzuschläge)",
+			"optam_aco": "Teilnahme an OPTAM-ACO (begrenzte Honorarzuschläge)"
+		},
+		"role": {
+			"FON-01": "Praxisinhaber",
+			"FON-02": "Gesellschafter einer Praxisgesellschaft",
+			"FON-03": "Apothekeninhaber",
+			"FON-04": "Apotheker (Vertretung)",
+			"FON-05": "Partner",
+			"FON-07": "Interimsleiter",
+			"FON-09": "Leiter der Einrichtung",
+			"FON-17": "Assoziierter Arzt",
+			"FON-18": "Assistenz",
+			"FON-19": "Beratungsarzt",
+			"FON-21": "Schularzt",
+			"FON-22": "Vertretung",
+			"FON-23": "Leitung",
+			"FON-24": "Arzt für Öffentliches Gesundheitswesen",
+			"FON-29": "Arbeitsmediziner",
+			"FON-32": "Leitstellenarzt (SAMU)",
+			"FON-33": "Mitarbeiter",
+			"FON-36": "Bevollmächtigte Person",
+			"FON-37": "Leiter einer Krankenhausapotheke",
+			"FON-39": "Mutter-Kind-Beratungsstelle (PMI)",
+			"FON-40": "Leitender Laborarzt",
+			"FON-41": "Laboratoriumsmediziner",
+			"FON-42": "Assoziierter Assistenzarzt",
+			"FON-43": "Leitende Pflegekraft",
+			"FON-45": "Pflegedirektor",
+			"FON-46": "Lehrkraft",
+			"FON-47": "Studentische Vertretung",
+			"FON-48": "Assistenzarzt",
+			"FON-49": "Verantwortlicher Apotheker",
+			"FON-50": "Angestellter Apotheker",
+			"FON-51": "Teilzeitvertretung",
+			"FON-52": "Sanitätsoffizieranwärter",
+			"FON-54": "Bereitschaftsdienst",
+			"FON-55": "Öffentlicher Krankenhausdienst",
+			"FON-56": "Kooperationsverbund im Gesundheitswesen",
+			"FON-57": "Arzt in Weiterbildung",
+			"FON-58": "Tätigkeit im Pool",
+			"FON-59": "Filialleiter",
+			"FON-60": "Vertretungsapotheker",
+			"FON-61": "Dienstleister",
+			"FON-62": "Ausgelagerte Sprechstunden",
+			"FON-63": "Koordinierender Arzt im Pflegeheim",
+			"FON-65": "Apotheker (Vertretung)",
+			"FON-AU": "Nicht angegebene Rolle"
+		}
+	},
+	"booking": {
+		"presets": {
+			"consultation": "Konsultation",
+			"firstConsultation": "Erstkonsultation",
+			"checkup": "Kontrolluntersuchung",
+			"emergency": "Notfall",
+			"scaling": "Zahnsteinentfernung",
+			"orthodonticCheckup": "Kieferorthopädische Kontrolle",
+			"pregnancyFollowUp": "Schwangerschaftsvorsorge",
+			"perinealRehabilitation": "Beckenbodenrehabilitation"
+		},
+		"email": {
+			"wordmark": "Apercura",
+			"runningHead": "Termin",
+			"practiceRunningHead": "Bereich für Gesundheitsfachkräfte",
+			"footer": "Apercura: das offene Verzeichnis der Gesundheitsfachkräfte in Frankreich. Kostenlos und Open Source.",
+			"summary": "Termin bei {practitioner}",
+			"summaryNoName": "Termin",
+			"labels": {
+				"with": "Bei",
+				"date": "Datum",
+				"time": "Uhrzeit",
+				"address": "Adresse",
+				"until": "Antwort bis"
+			},
+			"manageAction": "Meinen Termin ansehen oder ändern",
+			"agendaAction": "Terminkalender öffnen",
+			"fallback": "Wenn die Schaltfläche nicht funktioniert, kopieren Sie diesen Link in Ihren Browser:",
+			"calendarNote": "Die angehängte Datei fügt den Termin zu Ihrem Kalender hinzu.",
+			"greeting": "Guten Tag {name},",
+			"code": {
+				"subject": "Ihr Code: {code}",
+				"preview": "Geben Sie diesen Code ein, um Ihren Termin zu bestätigen.",
+				"title": "Ihr Bestätigungscode",
+				"body": "Geben Sie diesen Code auf der Buchungsseite ein, um Ihren Termin zu bestätigen.",
+				"expiry": "Der Code ist 30 Minuten gültig.",
+				"ignore": "Sie haben keinen Termin angefragt? Ignorieren Sie diese E-Mail: Es passiert nichts."
+			},
+			"confirmed": {
+				"subject": "Termin bei {practitioner} bestätigt",
+				"preview": "Ihr Termin ist bestätigt.",
+				"title": "Ihr Termin ist bestätigt",
+				"body": "Hier ist Ihr Termin."
+			},
+			"pending": {
+				"subject": "Terminanfrage an {practitioner} gesendet",
+				"preview": "Die Praxis wird Ihre Anfrage beantworten.",
+				"title": "Ihre Anfrage wurde gesendet",
+				"body": "Die Praxis bestätigt ihre Termine selbst. Sie erhalten eine E-Mail mit der Antwort."
+			},
+			"accepted": {
+				"subject": "Termin bei {practitioner} bestätigt",
+				"preview": "Die Praxis hat Ihre Anfrage angenommen.",
+				"title": "Ihr Termin ist bestätigt",
+				"body": "Die Praxis hat Ihre Anfrage angenommen."
+			},
+			"declined": {
+				"subject": "Terminanfrage nicht angenommen",
+				"preview": "Die Praxis konnte Ihre Anfrage nicht annehmen.",
+				"title": "Ihre Anfrage wurde nicht angenommen",
+				"body": "Die Praxis konnte Ihre Anfrage nicht annehmen. Sie können auf Apercura eine andere Uhrzeit wählen."
+			},
+			"expired": {
+				"subject": "Terminanfrage unbeantwortet",
+				"preview": "Die Praxis hat Ihre Anfrage nicht rechtzeitig beantwortet.",
+				"title": "Ihre Anfrage wurde nicht rechtzeitig beantwortet",
+				"body": "Die Praxis hat Ihre Anfrage nicht rechtzeitig beantwortet, daher ist der Termin wieder frei. Sie können auf Apercura eine andere Uhrzeit wählen."
+			},
+			"cancelledByPatient": {
+				"subject": "Termin abgesagt",
+				"preview": "Ihr Termin wurde abgesagt.",
+				"title": "Ihr Termin ist abgesagt",
+				"body": "Ihr Termin wurde wie gewünscht abgesagt."
+			},
+			"cancelledByPractice": {
+				"subject": "Termin von der Praxis abgesagt",
+				"preview": "Die Praxis hat Ihren Termin abgesagt.",
+				"title": "Ihr Termin ist abgesagt",
+				"body": "Die Praxis musste Ihren Termin absagen.",
+				"message": "Nachricht der Praxis: „{message}“"
+			},
+			"rescheduled": {
+				"subject": "Termin verschoben",
+				"preview": "Ihr Termin hat eine neue Uhrzeit.",
+				"title": "Ihr Termin wurde verschoben",
+				"body": "Hier ist die neue Uhrzeit Ihres Termins."
+			},
+			"reminder": {
+				"subject": "Erinnerung: Termin am {date}",
+				"preview": "Ihr Termin steht bevor.",
+				"title": "Ihr Termin steht bevor",
+				"body": "Eine Erinnerung an Ihren Termin. Wenn Sie nicht kommen können, sagen Sie ihn ab, damit jemand anderes den Termin erhalten kann."
+			},
+			"practiceEntry": {
+				"subject": "Für diese Adresse wurde ein Termin eingetragen",
+				"preview": "Öffnen Sie den Link zur Ansicht.",
+				"title": "Für diese Adresse wurde ein Termin eingetragen",
+				"body": "Eine Praxis hat auf Apercura einen Termin für diese E-Mail-Adresse eingetragen. Öffnen Sie den Link, um ihn anzusehen und zu bestätigen, dass diese Adresse Ihnen gehört.",
+				"ignore": "Nicht Sie? Ignorieren Sie diese E-Mail: Es folgt keine weitere Nachricht."
+			},
+			"practiceNew": {
+				"subject": "Neuer Termin am {date}",
+				"preview": "Ein Patient hat online gebucht.",
+				"title": "Neuer Termin",
+				"body": "Ein Patient hat online einen Termin gebucht."
+			},
+			"practiceRequest": {
+				"subject": "Zu prüfende Terminanfrage ({date})",
+				"preview": "Ein Patient wartet auf Ihre Antwort.",
+				"title": "Zu prüfende Terminanfrage",
+				"body": "Ein Patient hat einen Termin angefragt. Nehmen Sie ihn vor Ablauf der Frist im Terminkalender an oder lehnen Sie ihn ab."
+			},
+			"practiceCancelled": {
+				"subject": "Termin vom Patienten abgesagt ({date})",
+				"preview": "Ein Patient hat einen Termin abgesagt.",
+				"title": "Termin abgesagt",
+				"body": "Ein Patient hat einen Termin abgesagt. Das Zeitfenster ist wieder frei."
+			},
+			"practiceRescheduled": {
+				"subject": "Termin vom Patienten verschoben ({date})",
+				"preview": "Ein Patient hat einen Termin verschoben.",
+				"title": "Termin verschoben",
+				"body": "Ein Patient hat einen Termin auf diese neue Uhrzeit verschoben."
+			},
+			"bookAgainAction": "Andere Uhrzeit wählen"
+		},
+		"panel": {
+			"title": "Termin buchen",
+			"close": "Schließen",
+			"with": "Bei {practitioner}",
+			"step": "Schritt {current} von {total}: {name}",
+			"steps": {
+				"reason": "Grund",
+				"slot": "Uhrzeit",
+				"details": "Ihre Angaben",
+				"code": "Code",
+				"done": "Erledigt"
+			},
+			"back": "Zurück",
+			"continue": "Weiter",
+			"pending": "Bitte warten…",
+			"loading": "Terminkalender der Gesundheitsfachkraft wird geladen…",
+			"unavailableTitle": "Online-Terminbuchung ist nicht verfügbar",
+			"unavailableBody": "Der Online-Terminkalender dieser Gesundheitsfachkraft ist vorerst geschlossen. Rufen Sie die Praxis an, um einen Termin zu vereinbaren.",
+			"loadError": "Der Terminkalender konnte nicht geladen werden. Prüfen Sie Ihre Verbindung und versuchen Sie es dann erneut.",
+			"retry": "Erneut versuchen",
+			"summary": {
+				"with": "Bei",
+				"place": "Ort",
+				"reason": "Grund",
+				"date": "Datum",
+				"time": "Uhrzeit",
+				"patient": "Patient"
+			},
+			"reason": {
+				"heading": "Wofür ist der Termin?",
+				"place": "Ort",
+				"type": "Grund des Termins",
+				"duration": "{minutes} Min.",
+				"newOnly": "nur Erstbesuch",
+				"existingOnly": "bereits betreute Patienten",
+				"required": "Wählen Sie einen Grund.",
+				"instructions": "Hinweis der Praxis",
+				"noNewPatients": "Diese Praxis nimmt online keine neuen Patienten an: Ihre Anfrage wartet auf die Antwort der Praxis."
+			},
+			"slot": {
+				"heading": "Uhrzeit wählen",
+				"range": "Von {from} bis {to}",
+				"previous": "Vorherige 14 Tage",
+				"next": "Nächste 14 Tage",
+				"timeZone": "Uhrzeiten der Praxis ({zone}).",
+				"repeatedHour": "Am {day} wird die Uhr zurückgestellt: Die Stunde zwischen 02:00 und 03:00 Uhr gibt es zweimal, daher zeigen ihre Uhrzeiten den UTC-Versatz an.",
+				"emptyTitle": "Keine freie Uhrzeit von {from} bis {to}",
+				"emptyBody": "Sehen Sie sich die nächsten 14 Tage an oder rufen Sie die Praxis an.",
+				"required": "Wählen Sie eine Uhrzeit im Raster.",
+				"chosen": "Gewählt: {slot}",
+				"loading": "Freie Termine werden geladen…"
+			},
+			"details": {
+				"heading": "Ihre Angaben",
+				"lead": "Wir senden einen Code an Ihre E-Mail-Adresse, um den Termin zu bestätigen. Es wird kein Konto erstellt.",
+				"firstName": "Vorname",
+				"lastName": "Nachname",
+				"email": "E-Mail-Adresse",
+				"emailHint": "Der Code und der Link zur Verwaltung des Termins werden hierhin gesendet.",
+				"phone": "Mobil- oder Festnetznummer",
+				"phoneOptional": "Telefon (optional)",
+				"phoneHint": "Die Praxis ruft diese Nummer nur wegen dieses Termins an.",
+				"firstVisit": "Ist dies Ihr erster Besuch bei dieser Gesundheitsfachkraft?",
+				"firstVisitYes": "Ja, es ist mein erster Besuch",
+				"firstVisitNo": "Nein, ich war schon einmal dort",
+				"privacy": "Ihre Angaben werden verschlüsselt, nur für diesen Termin verwendet und danach automatisch gelöscht.",
+				"submit": "Meinen Code erhalten",
+				"requiredFirstName": "Geben Sie Ihren Vornamen ein.",
+				"requiredLastName": "Geben Sie Ihren Nachnamen ein.",
+				"invalidEmail": "Geben Sie eine E-Mail-Adresse wie name@example.fr ein.",
+				"invalidPhone": "Geben Sie eine Telefonnummer wie 06 12 34 56 78 ein.",
+				"requiredFirstVisit": "Beantworten Sie diese Frage.",
+				"website": "Dieses Feld leer lassen"
+			},
+			"altcha": {
+				"label": "Automatische Prüfung, dass Sie kein Roboter sind",
+				"verifying": "Wird geprüft…",
+				"verified": "Geprüft",
+				"error": "Prüfung fehlgeschlagen. Versuchen Sie es erneut.",
+				"expired": "Die Prüfung ist abgelaufen. Versuchen Sie es erneut.",
+				"verificationRequired": "Warten Sie, bis die Prüfung abgeschlossen ist.",
+				"waitAlert": "Wird geprüft, bitte warten.",
+				"loading": "Wird geladen…",
+				"reload": "Erneut versuchen",
+				"verify": "Prüfen",
+				"cancel": "Abbrechen",
+				"enterCode": "Code eingeben",
+				"enterCodeAria": "Geben Sie den Code ein, den Sie hören. Drücken Sie die Leertaste, um die Audiodatei abzuspielen.",
+				"enterCodeFromImage": "Geben Sie zum Fortfahren den im Bild angezeigten Code ein.",
+				"getAudioChallenge": "Code anhören",
+				"ariaLinkLabel": "ALTCHA"
+			},
+			"code": {
+				"heading": "Code eingeben",
+				"lead": "Wir haben einen 6-stelligen Code an {email} gesendet. Es kann eine Minute dauern, bis er ankommt; prüfen Sie auch Ihren Spam-Ordner.",
+				"field": "6-stelliger Code",
+				"hint": "Der Code ist 30 Minuten gültig.",
+				"held": "Diese Uhrzeit wird bis {time} für Sie freigehalten.",
+				"submit": "Termin bestätigen",
+				"resend": "Neuen Code senden",
+				"resendIn": "Neuen Code senden ({seconds} s)",
+				"resent": "Ein neuer Code an {email} ist unterwegs.",
+				"sendsLeft": "{count, plural, one {Sie können noch # weiteren Code anfordern.} other {Sie können noch # weitere Codes anfordern.}}",
+				"noSendsLeft": "Es können keine weiteren Codes gesendet werden.",
+				"invalid": "{count, plural, one {Dieser Code ist nicht korrekt. Noch # Versuch.} other {Dieser Code ist nicht korrekt. Noch # Versuche.}}",
+				"required": "Geben Sie die 6 Ziffern des Codes ein.",
+				"changeEmail": "Meine Angaben ändern"
+			},
+			"done": {
+				"confirmedTitle": "Ihr Termin ist bestätigt",
+				"confirmedBody": "Eine Bestätigungs-E-Mail an {email} ist unterwegs. Sie enthält den Link, um den Termin abzusagen oder zu verschieben.",
+				"pendingTitle": "Ihre Anfrage wurde gesendet",
+				"pendingBody": "Diese Praxis bestätigt ihre Termine selbst. Sie antwortet bis {deadline}; Sie erhalten die Antwort per E-Mail an {email}.",
+				"pendingNote": "Die Uhrzeit wird für Sie freigehalten, bis die Praxis antwortet.",
+				"calendar": "Zu meinem Kalender hinzufügen (.ics)",
+				"calendarHint": "Die Datei wird im Kalender Ihres Smartphones oder Computers geöffnet.",
+				"close": "Schließen",
+				"bookedMark": "Gebucht",
+				"pendingMark": "Wartet auf die Praxis"
+			},
+			"taken": {
+				"title": "Diese Uhrzeit wurde gerade vergeben",
+				"body": "Jemand hat sie gerade gebucht. Hier sind die nächstgelegenen freien Uhrzeiten:",
+				"none": "Keine andere freie Uhrzeit liegt in der Nähe. Wählen Sie eine andere Uhrzeit im Terminkalender.",
+				"choose": "{slot} wählen",
+				"seeAgenda": "Ganzen Terminkalender ansehen",
+				"picked": "Neue Uhrzeit: {slot}. Prüfen Sie Ihre Angaben und fordern Sie dann erneut den Code an."
+			},
+			"errors": {
+				"RATE_LIMITED": "Zu viele Versuche von dieser Verbindung. Warten Sie ein paar Minuten oder rufen Sie die Praxis an.",
+				"PROOF_REQUIRED": "Automatische Prüfung fehlgeschlagen. Versuchen Sie es erneut.",
+				"INVALID_INPUT": "Einige Angaben sind ungültig. Prüfen Sie die Felder oben.",
+				"INVALID_SLOT": "Diese Uhrzeit wird nicht mehr angeboten. Wählen Sie eine andere.",
+				"CODE_EXPIRED": "Dieser Code ist abgelaufen. Fordern Sie einen neuen Code an oder wählen Sie die Uhrzeit erneut.",
+				"TOO_MANY_ATTEMPTS": "Zu viele falsche Codes: Diese Uhrzeit wurde wieder freigegeben. Wählen Sie erneut eine Uhrzeit.",
+				"RESEND_TOO_SOON": "Warten Sie eine Minute, bevor Sie einen neuen Code anfordern.",
+				"RESEND_LIMIT": "Für diese Terminbuchung können keine weiteren Codes gesendet werden. Wählen Sie die Uhrzeit erneut.",
+				"TRANSITION_REFUSED": "Diese Terminbuchung kann nicht mehr abgeschlossen werden. Wählen Sie die Uhrzeit erneut.",
+				"BOOKING_DISABLED": "Die Online-Terminbuchung ist derzeit nicht verfügbar. Rufen Sie die Praxis an.",
+				"NOT_FOUND": "Diese Terminbuchung existiert nicht mehr. Wählen Sie die Uhrzeit erneut.",
+				"IDEMPOTENCY_CONFLICT": "Diese Anfrage wurde bereits gesendet. Wählen Sie die Uhrzeit erneut.",
+				"generic": "Bei uns ist etwas schiefgelaufen. Versuchen Sie es gleich noch einmal oder rufen Sie die Praxis an.",
+				"restart": "Erneut eine Uhrzeit wählen"
+			}
+		},
+		"manage": {
+			"metaTitle": "Ihr Termin",
+			"runningHead": "Termin",
+			"title": "Ihr Termin",
+			"loading": "Ihr Termin wird geladen…",
+			"missingTitle": "Dieser Link ist unvollständig",
+			"missingBody": "Öffnen Sie den Link aus Ihrer Bestätigungs-E-Mail erneut. Wenn Sie ihn kopiert haben, achten Sie darauf, dass Sie ihn vollständig kopiert haben.",
+			"invalidTitle": "Dieser Link funktioniert nicht mehr",
+			"invalidBody": "Der Termin wurde möglicherweise nach seinem Datum gelöscht, oder der Link wurde nicht vollständig kopiert. Bei Fragen wenden Sie sich an die Praxis.",
+			"errorBody": "Ihr Termin konnte nicht geladen werden. Prüfen Sie Ihre Verbindung und versuchen Sie es dann erneut.",
+			"retry": "Erneut versuchen",
+			"status": {
+				"label": "Status",
+				"held": "Noch nicht bestätigt",
+				"pending": "Wartet auf die Praxis",
+				"confirmed": "Bestätigt",
+				"declined": "Von der Praxis nicht angenommen",
+				"expired": "Nicht rechtzeitig bestätigt",
+				"cancelled_by_patient": "Von Ihnen abgesagt",
+				"cancelled_by_practice": "Von der Praxis abgesagt",
+				"no_show": "Verpasst",
+				"completed": "Vergangen"
+			},
+			"pendingUntil": "Die Praxis antwortet bis {deadline}.",
+			"rows": {
+				"with": "Bei",
+				"date": "Datum",
+				"time": "Uhrzeit",
+				"reason": "Grund",
+				"place": "Ort",
+				"patient": "Patient"
+			},
+			"practitionerPage": "Seite der Gesundheitsfachkraft ansehen",
+			"confirmEmail": {
+				"title": "Bestätigen Sie Ihre E-Mail-Adresse",
+				"body": "Die Praxis hat diese Adresse für Sie eingegeben. Bestätigen Sie, dass sie Ihnen gehört, um Erinnerungen und Änderungen per E-Mail zu erhalten.",
+				"action": "Diese Adresse gehört mir",
+				"done": "Danke: Ihre Adresse ist bestätigt."
+			},
+			"actions": "Was Sie tun können",
+			"reschedule": "Termin verschieben",
+			"rescheduleHeading": "Neue Uhrzeit wählen",
+			"rescheduleSubmit": "Auf {slot} verschieben",
+			"rescheduleCancel": "Aktuelle Uhrzeit beibehalten",
+			"rescheduled": "Ihr Termin wurde verschoben. Eine Bestätigungs-E-Mail ist unterwegs.",
+			"cancel": "Termin absagen",
+			"cancelConfirmTitle": "Diesen Termin absagen?",
+			"cancelConfirmBody": "Die Uhrzeit wird anderen Patienten angeboten. Dies kann nicht rückgängig gemacht werden.",
+			"cancelConfirm": "Ja, absagen",
+			"cancelKeep": "Nein, behalten",
+			"cancelled": "Ihr Termin ist abgesagt. Eine Bestätigungs-E-Mail ist unterwegs.",
+			"cutoffPassed": "{hours, plural, one {Online-Änderungen sind bis # Stunde vor dem Termin möglich. Um ihn jetzt abzusagen oder zu verschieben, rufen Sie die Praxis an.} other {Online-Änderungen sind bis # Stunden vor dem Termin möglich. Um ihn jetzt abzusagen oder zu verschieben, rufen Sie die Praxis an.}}",
+			"cutoffPassedMinutes": "Online-Änderungen sind bis {minutes} Minuten vor dem Termin möglich. Um ihn jetzt abzusagen oder zu verschieben, rufen Sie die Praxis an.",
+			"call": "{phone} anrufen",
+			"closedNote": "Dieser Termin kann online nicht mehr geändert werden.",
+			"bookAgain": "Weiteren Termin buchen",
+			"errors": {
+				"TRANSITION_REFUSED": "Dieser Termin kann online nicht mehr geändert werden. Rufen Sie die Praxis an.",
+				"RATE_LIMITED": "Zu viele Versuche von dieser Verbindung. Warten Sie eine Weile oder rufen Sie die Praxis an.",
+				"NOT_FOUND": "Dieser Termin wurde nicht gefunden.",
+				"INVALID_SLOT": "Diese Uhrzeit wird nicht mehr angeboten. Wählen Sie eine andere.",
+				"BOOKING_DISABLED": "Online-Änderungen sind derzeit nicht verfügbar. Rufen Sie die Praxis an.",
+				"generic": "Bei uns ist etwas schiefgelaufen. Versuchen Sie es gleich noch einmal oder rufen Sie die Praxis an."
+			},
+			"currentShort": "aktuell",
+			"currentSpoken": "Ihre aktuelle Uhrzeit",
+			"currentLegend": "Ihre aktuelle Uhrzeit, {slot}, ist im Raster als „aktuell“ markiert.",
+			"searchAction": "Gesundheitsfachkraft finden"
+		}
+	},
+	"auth": {
+		"runningHead": "Bereich für Gesundheitsfachkräfte",
+		"metadata": {
+			"signIn": "Anmelden · Apercura",
+			"signUp": "Konto erstellen · Apercura",
+			"verifyEmail": "E-Mail-Bestätigung · Apercura",
+			"challenge": "Bestätigen Sie, dass Sie es sind · Apercura",
+			"security": "Sicherheit · Apercura",
+			"home": "Ihr Bereich · Apercura"
+		},
+		"common": {
+			"email": "E-Mail-Adresse",
+			"password": "Passwort",
+			"pending": "Bitte warten",
+			"loading": "Wird geladen",
+			"signOut": "Abmelden",
+			"signingOut": "Abmeldung läuft",
+			"totpCode": "6-stelliger Code aus Ihrer Authenticator-App"
+		},
+		"errors": {
+			"generic": "Etwas ist schiefgelaufen. Bitte versuchen Sie es gleich noch einmal.",
+			"tooManyRequests": "Zu viele Versuche. Warten Sie eine Minute und versuchen Sie es dann erneut.",
+			"invalidCredentials": "E-Mail-Adresse und Passwort stimmen nicht überein.",
+			"emailNotVerified": "Bestätigen Sie zuerst Ihre E-Mail-Adresse: Wir haben Ihnen gerade einen neuen Link gesendet.",
+			"invalidCode": "Dieser Code ist ungültig. Prüfen Sie den Code und versuchen Sie es erneut.",
+			"locked": "Zu viele falsche Codes. Warten Sie 15 Minuten und melden Sie sich dann erneut an.",
+			"passwordTooShort": "Das Passwort ist zu kurz: Verwenden Sie mindestens 12 Zeichen.",
+			"passwordTooLong": "Das Passwort ist zu lang: Verwenden Sie höchstens 128 Zeichen.",
+			"userExists": "Diese E-Mail-Adresse wird bereits von einem Konto verwendet. Melden Sie sich stattdessen an.",
+			"invalidPassword": "Dieses Passwort ist nicht korrekt.",
+			"mfaRequired": "Bestätigen Sie zuerst mit Ihrem zweiten Faktor, dass Sie es sind.",
+			"lastFactor": "Fügen Sie einen weiteren zweiten Faktor hinzu, bevor Sie diesen entfernen: Ihr Konto muss immer einen behalten.",
+			"passkeyFailed": "Der Passkey konnte nicht verwendet werden. Versuchen Sie es erneut oder verwenden Sie Ihr Passwort und Ihren Code.",
+			"accountFrozen": "Dieses Konto wurde nach einem Einspruch gegen eine Seite gesperrt. Kontaktieren Sie uns, um es mit einer neuen Identitätsprüfung wiederherzustellen."
+		},
+		"signIn": {
+			"title": "Anmelden",
+			"lead": "Ihr Bereich für Gesundheitsfachkräfte: Ihre Seite, Ihr Terminkalender, Ihr Team.",
+			"asideFactor": "Jedes Konto, das auf Termine zugreifen kann, benötigt einen zweiten Faktor: einen Code aus einer Authenticator-App oder einen Passkey.",
+			"asidePasskey": "Ein Passkey wird auf Ihrem Smartphone oder Computer gespeichert und mit Ihrem Fingerabdruck, Ihrem Gesicht oder Ihrer PIN entsperrt.",
+			"passwordHeading": "Mit Ihrem Passwort",
+			"submit": "Anmelden",
+			"passkeyHeading": "Mit einem Passkey",
+			"passkeyHint": "Kein Passwort nötig: Ihr Gerät bestätigt, dass Sie es sind.",
+			"passkey": "Mit einem Passkey anmelden",
+			"noAccount": "Noch kein Konto?",
+			"signUpLink": "Konto erstellen",
+			"totpHeading": "Code eingeben",
+			"backupHeading": "Backup-Code eingeben",
+			"totpLead": "Öffnen Sie Ihre Authenticator-App und geben Sie den 6-stelligen Code ein, der für Apercura angezeigt wird.",
+			"backupLead": "Jeder Backup-Code funktioniert einmal. Sie haben sie beim Einrichten Ihrer Authenticator-App erhalten.",
+			"backupCode": "Backup-Code",
+			"verify": "Bestätigen",
+			"useBackupCode": "Stattdessen einen Backup-Code verwenden",
+			"useTotp": "Stattdessen die Authenticator-App verwenden",
+			"pscHeading": "Mit Pro Santé Connect",
+			"pscHint": "Sobald sie über eine Beanspruchung mit Ihrem Konto verknüpft ist, meldet Ihre e-CPS-App oder CPS-Karte Sie ohne weiteren Code an.",
+			"psc": "Mit Pro Santé Connect anmelden",
+			"pscFailed": "Die Anmeldung mit Pro Santé Connect hat nicht funktioniert. Verknüpfen Sie Pro Santé Connect zuerst über Ihre Beanspruchung mit Ihrem Konto, oder melden Sie sich mit Ihrem Passwort an."
+		},
+		"signUp": {
+			"title": "Konto erstellen",
+			"lead": "Kostenlos für Gesundheitsfachkräfte und ihre Assistenz.",
+			"asideSteps": "Drei Schritte: Konto erstellen, E-Mail-Adresse bestätigen und dann einen zweiten Faktor einrichten.",
+			"asideFree": "Das Erstellen eines Kontos ändert keine öffentliche Seite. Als Nächstes beanspruchen Sie Ihre Seite.",
+			"name": "Vor- und Nachname",
+			"emailHint": "Wir senden einen Bestätigungslink an diese Adresse.",
+			"passwordHint": "Mindestens {min} Zeichen. Ein langer Satz ist leicht zu merken.",
+			"submit": "Konto erstellen",
+			"haveAccount": "Sie haben bereits ein Konto?",
+			"signInLink": "Anmelden",
+			"sentHeading": "Prüfen Sie Ihr Postfach",
+			"sentTitle": "Wir haben einen Bestätigungslink an {email} gesendet.",
+			"sentBody": "Öffnen Sie die E-Mail und folgen Sie dem Link innerhalb einer Stunde. Melden Sie sich dann an, um Ihren zweiten Faktor einzurichten.",
+			"sentHint": "Nach ein paar Minuten nichts erhalten? Prüfen Sie Ihren Spam-Ordner oder melden Sie sich an: Wir senden einen neuen Link."
+		},
+		"verifyEmail": {
+			"title": "Bestätigung per E-Mail",
+			"successTitle": "Ihre E-Mail-Adresse ist bestätigt.",
+			"successBody": "Melden Sie sich mit Ihrem Passwort an, um Ihren zweiten Faktor einzurichten.",
+			"errorTitle": "Dieser Link funktioniert nicht mehr.",
+			"errorBody": "Er ist möglicherweise abgelaufen oder wurde bereits verwendet. Melden Sie sich an: Wir senden Ihnen einen neuen Link.",
+			"signIn": "Anmelden"
+		},
+		"challenge": {
+			"title": "Bestätigen Sie, dass Sie es sind",
+			"lead": "Ihr Konto hat einen zweiten Faktor: Verwenden Sie ihn, um Ihren Bereich zu öffnen.",
+			"aside": "Ihr Passwort allein genügt nicht, um auf Termine zuzugreifen.",
+			"passkeyHeading": "Mit einem Passkey",
+			"passkeyLead": "Ihr Gerät fragt nach Ihrem Fingerabdruck, Ihrem Gesicht oder Ihrer PIN.",
+			"passkey": "Meinen Passkey verwenden",
+			"totpHeading": "Mit Ihrer Authenticator-App",
+			"otherHeading": "Nicht Sie, oder kein Zugriff auf Ihren Faktor?",
+			"otherLead": "Abmelden. Die Wiederherstellung eines Kontos erfordert eine erneute Identitätsprüfung."
+		},
+		"security": {
+			"title": "Sicherheit",
+			"lead": "Wie Sie sich anmelden und wo Sie angemeldet sind.",
+			"enrolLead": "Ein letzter Schritt vor Ihrem Bereich: Richten Sie einen zweiten Faktor ein.",
+			"enrolTitle": "Wählen Sie einen zweiten Faktor, um fortzufahren",
+			"enrolBody": "Apercura verlangt einen zweiten Faktor für jedes Konto, das auf Termine zugreifen kann. Eine Authenticator-App und ein Passkey funktionieren beide; das andere können Sie später hinzufügen.",
+			"continue": "Weiter zu Ihrem Bereich",
+			"actions": "Aktionen",
+			"totp": {
+				"heading": "Authenticator-App",
+				"lead": "Eine App auf Ihrem Smartphone (zum Beispiel FreeOTP, Aegis oder Google Authenticator) zeigt alle 30 Sekunden einen neuen 6-stelligen Code an.",
+				"enabledTitle": "Die Authenticator-App ist eingerichtet.",
+				"enabledBody": "Bei jeder Anmeldung mit Ihrem Passwort werden Sie nach einem Code gefragt.",
+				"scanHeading": "1. QR-Code scannen",
+				"scanLead": "Fügen Sie in Ihrer Authenticator-App ein Konto hinzu und scannen Sie diesen Code. Wenn Sie ihn nicht scannen können, geben Sie den Einrichtungsschlüssel ein.",
+				"qrLabel": "QR-Code, um Apercura zu Ihrer Authenticator-App hinzuzufügen",
+				"manualKey": "Einrichtungsschlüssel",
+				"codesHeading": "2. Bewahren Sie Ihre Backup-Codes auf",
+				"codesLead": "Wenn Sie Ihr Smartphone verlieren, können Sie sich mit jedem dieser Codes einmal anmelden. Drucken Sie sie aus oder speichern Sie sie in einem Passwort-Manager; sie werden nur jetzt angezeigt.",
+				"confirmHeading": "3. Geben Sie den Code aus der App ein",
+				"confirm": "Aktivieren",
+				"password": "Ihr Passwort",
+				"passwordHint": "Wir fragen erneut danach, bevor Sie ändern, wie Sie sich anmelden.",
+				"start": "App einrichten"
+			},
+			"passkeys": {
+				"heading": "Passkeys",
+				"lead": "Ein Passkey bleibt auf Ihrem Smartphone, Computer oder Sicherheitsschlüssel und wird mit Ihrem Fingerabdruck, Ihrem Gesicht oder Ihrer PIN entsperrt. Nichts einzutippen, nichts zu stehlen.",
+				"addedTitle": "Der Passkey wurde hinzugefügt.",
+				"name": "Name",
+				"added": "Hinzugefügt am",
+				"unnamed": "Passkey",
+				"removeNamed": "{name} entfernen",
+				"remove": "Entfernen",
+				"none": "Noch kein Passkey.",
+				"nameLabel": "Name des neuen Passkeys (optional)",
+				"nameHint": "Zum Beispiel: Praxiscomputer.",
+				"add": "Passkey hinzufügen"
+			},
+			"sessions": {
+				"heading": "Wo Sie angemeldet sind",
+				"lead": "Eine Sitzung endet nach 12 Stunden ohne Nutzung. Melden Sie jede Sitzung ab, die Sie nicht erkennen.",
+				"device": "Gerät",
+				"lastActive": "Zuletzt aktiv",
+				"unknownDevice": "Unbekanntes Gerät",
+				"current": "Diese Sitzung",
+				"revoke": "Abmelden",
+				"everywhereHint": "Ein Gerät verloren oder Ihr Passwort weitergegeben? Melden Sie sich von allen Sitzungen ab, auch von dieser.",
+				"everywhere": "Überall abmelden"
+			},
+			"data": {
+				"heading": "Ihre Daten",
+				"lead": "Eine Kopie aller Daten, die wir zu Ihrem Konto speichern, und dessen Löschung.",
+				"exportHeading": "Ihre Daten herunterladen",
+				"exportBody": "Eine JSON-Datei mit Ihrem Konto, Ihren Anmeldemethoden (nie deren Geheimnisse), Sitzungen, Praxen, Beanspruchungen und Seiteninhalten.",
+				"export": "Meine Daten herunterladen",
+				"deleteHeading": "Ihr Konto löschen",
+				"deleteBody": "Ihr Konto, Ihre Sitzungen, Beanspruchungen und Dokumente werden gelöscht. Ihre Seite kehrt zu den Angaben des Registers zurück: nicht beansprucht, ohne Ihre Inhalte oder Ihr Foto.",
+				"practiceChoice": "Was geschieht mit {name}?",
+				"close": "Praxis schließen: Die Mitglieder verlieren den Zugriff",
+				"transfer": "An {name} ({email}) übergeben",
+				"practiceAlone": "{name} wird mit Ihrem Konto geschlossen (Sie sind das einzige Mitglied).",
+				"confirmEmail": "Geben Sie zur Bestätigung Ihre E-Mail-Adresse ein",
+				"confirmEmailHint": "Löschen lässt sich nicht rückgängig machen.",
+				"mismatch": "Dies ist nicht die E-Mail-Adresse Ihres Kontos.",
+				"hasTeam": "Wählen Sie, was mit jeder Praxis mit Team geschieht.",
+				"lastAdmin": "Sie sind der letzte Plattform-Administrator: Ernennen Sie zuerst einen weiteren.",
+				"failed": "Das Konto konnte nicht gelöscht werden. Versuchen Sie es gleich noch einmal.",
+				"delete": "Mein Konto löschen"
+			}
+		},
+		"app": {
+			"title": "Ihr Bereich",
+			"lead": "Angemeldet als {email}.",
+			"homeLink": "Apercura, Startseite",
+			"nav": {
+				"label": "Bereich für Gesundheitsfachkräfte",
+				"home": "Ihr Bereich",
+				"security": "Sicherheit",
+				"page": "Ihre Seite",
+				"adminClaims": "Beanspruchungen",
+				"adminReports": "Meldungen",
+				"today": "Heute",
+				"agenda": "Terminkalender",
+				"team": "Team",
+				"menu": "Menü"
+			},
+			"practicesHeading": "Ihre Praxen",
+			"columns": {
+				"practice": "Praxis",
+				"role": "Ihre Rolle",
+				"page": "Seite",
+				"status": "Status",
+				"next": "Nächster Schritt"
+			},
+			"emptyTitle": "Noch keine Praxis",
+			"emptyBody": "Ihre Praxis erscheint hier, sobald Ihre Seite beansprucht und verifiziert ist.",
+			"emptyAction": "Meine Seite finden",
+			"securityHeading": "Kontosicherheit",
+			"securityBody": "Ihr Konto ist durch einen zweiten Faktor geschützt. Verwalten Sie Ihre Authenticator-App, Passkeys und Sitzungen.",
+			"securityLink": "Sicherheitseinstellungen",
+			"claimsHeading": "Ihre Seite und Beanspruchungen",
+			"editPage": "Seite bearbeiten",
+			"openClaim": "Beanspruchung öffnen",
+			"adminRunningHead": "Verwaltung",
+			"agendaHeading": "Terminkalender",
+			"agendaBody": "Ihr Tag, Ihre Woche, die zu beantwortenden Anfragen und die Buchungseinstellungen.",
+			"agendaLink": "Heutigen Terminkalender öffnen",
+			"invitationsHeading": "Einladungen",
+			"invitationBody": "{practice} lädt Sie ein, dem Team beizutreten.",
+			"invitationLink": "Auf die Einladung antworten"
+		},
+		"roles": {
+			"owner": "Inhaber",
+			"practitioner": "Gesundheitsfachkraft",
+			"assistant": "Assistenz"
+		},
+		"email": {
+			"wordmark": "Apercura",
+			"runningHead": "Bereich für Gesundheitsfachkräfte",
+			"footer": "Apercura: das offene Verzeichnis der Gesundheitsfachkräfte in Frankreich. Kostenlos und Open Source.",
+			"verify": {
+				"subject": "Bestätigen Sie Ihre E-Mail-Adresse",
+				"preview": "Bestätigen Sie Ihre E-Mail-Adresse, um die Erstellung Ihres Apercura-Kontos abzuschließen.",
+				"title": "Bestätigen Sie Ihre E-Mail-Adresse",
+				"greeting": "Guten Tag {name},",
+				"body": "Sie haben gerade ein Apercura-Konto erstellt. Bestätigen Sie, dass diese Adresse Ihnen gehört, um fortzufahren.",
+				"action": "Meine Adresse bestätigen",
+				"fallback": "Wenn die Schaltfläche nicht funktioniert, kopieren Sie diesen Link in Ihren Browser:",
+				"expiry": "Der Link ist eine Stunde gültig.",
+				"ignore": "Sie haben dieses Konto nicht erstellt? Ignorieren Sie diese E-Mail: Es passiert nichts."
+			}
+		}
+	},
+	"emails": {
+		"fallback": "Wenn die Schaltfläche nicht funktioniert, kopieren Sie diesen Link in Ihren Browser:",
+		"claimRegistryLink": {
+			"subject": "Beanspruchung einer Gesundheitsfachkraft-Seite bestätigen",
+			"title": "Ist dies die Praxis von {practitioner}?",
+			"body": [
+				"Jemand hat beantragt, die Apercura-Seite von {practitioner} zu verwalten. Diese E-Mail wurde an die Adresse gesendet, die das nationale Register für diese Praxis veröffentlicht.",
+				"Wenn die Anfrage von {practitioner} stammt, öffnen Sie den Link und bestätigen Sie sie. Die Seite ist dann verifiziert."
+			],
+			"action": "Beanspruchung bestätigen",
+			"notes": [
+				"Der Link ist 24 Stunden gültig.",
+				"Nicht erwartet? Ignorieren Sie diese E-Mail: Es ändert sich nichts, und die Seite bleibt, wie sie ist."
+			]
+		},
+		"claimReceived": {
+			"subject": "Ihre Beanspruchung wird geprüft",
+			"title": "Ihre Beanspruchung wird geprüft",
+			"body": [
+				"Guten Tag {name},",
+				"Wir haben Ihre Beanspruchung und die zugehörigen Dokumente erhalten. Ein Mitglied des Apercura-Teams ruft die Praxis unter der im nationalen Register veröffentlichten Nummer an und fragt nach dem Code, der in Ihrem Bereich angezeigt wird. Halten Sie ihn bereit.",
+				"Wir prüfen Beanspruchungen innerhalb von 48 Stunden an Werktagen."
+			]
+		},
+		"claimVerified": {
+			"subject": "Ihre Seite ist verifiziert",
+			"title": "Ihre Seite ist verifiziert",
+			"body": [
+				"Guten Tag {name},",
+				"Ihre Seite trägt jetzt den Verifiziert-Stempel. Prüfen Sie die importierten Angaben, vervollständigen Sie Ihre Honorare und Zahlungsarten und veröffentlichen Sie dann Ihre Seite."
+			],
+			"action": "Meine Seite vervollständigen"
+		},
+		"claimRejected": {
+			"subject": "Ihre Beanspruchung wurde nicht angenommen",
+			"title": "Ihre Beanspruchung wurde nicht angenommen",
+			"body": [
+				"Guten Tag {name},",
+				"Wir konnten Ihre Beanspruchung nicht verifizieren. Vom Prüfer angegebener Grund: {reason}",
+				"Sie können in Ihrem Bereich eine neue Beanspruchung eröffnen, zum Beispiel mit Pro Santé Connect."
+			]
+		},
+		"claimSuperseded": {
+			"subject": "Ihr Zugriff auf eine Seite wurde entzogen",
+			"title": "Ihr Zugriff auf eine Seite wurde entzogen",
+			"body": [
+				"Guten Tag {name},",
+				"Ein anderes Konto hat nachgewiesen, dass es der Gesundheitsfachkraft einer Seite gehört, die Ihr Konto verwaltet hat. Ihr Konto ist gesperrt, und sein Zugriff auf die Praxis wurde entfernt.",
+				"Wenn Sie die Gesundheitsfachkraft sind, kontaktieren Sie uns: Ihr Konto kann nur mit einer neuen Identitätsprüfung wiederhergestellt werden."
+			]
+		},
+		"removalReceived": {
+			"subject": "Ihr Antrag auf Entfernung ist eingegangen",
+			"title": "Ihr Antrag auf Entfernung ist eingegangen",
+			"body": [
+				"Die Seite ist ab sofort ausgeblendet: Sie wird nicht mehr angezeigt, indexiert oder aufgeführt.",
+				"Wir prüfen den Antrag und löschen dann die Seite. Eine gelöschte Seite erscheint beim nächsten Import des Registers nicht wieder."
+			]
+		},
+		"removalConfirmed": {
+			"subject": "Die Seite wurde gelöscht",
+			"title": "Die Seite wurde gelöscht",
+			"body": [
+				"Die Seite, deren Entfernung Sie beantragt haben, wurde aus Apercura gelöscht. Sie erscheint auch beim nächsten Import des Registers nicht wieder."
+			]
+		},
+		"removalRejected": {
+			"subject": "Ihr Antrag auf Entfernung wurde nicht angenommen",
+			"title": "Ihr Antrag auf Entfernung wurde nicht angenommen",
+			"body": [
+				"Wir konnten Ihren Antrag auf Entfernung nicht bestätigen, daher wird die Seite wieder angezeigt. Grund: {reason}",
+				"Wenn Sie die Gesundheitsfachkraft sind, können Sie die Seite auch beanspruchen und sie selbst über Ihren Bereich entfernen."
+			]
+		},
+		"teamInvitation": {
+			"subject": "{inviter} lädt Sie ein, dem Team von {practice} beizutreten",
+			"title": "Dem Team von {practice} beitreten",
+			"body": [
+				"Guten Tag,",
+				"{inviter} lädt Sie ein, dem Team von {practice} auf Apercura als {role} beizutreten.",
+				"Um beizutreten, melden Sie sich mit dieser E-Mail-Adresse an oder erstellen Sie damit Ihr Konto und richten Sie dann einen zweiten Faktor ein (eine Authenticator-App oder einen Passkey): Er schützt die Patientendaten, die Sie sehen werden."
+			],
+			"action": "Dem Team beitreten",
+			"notes": [
+				"Diese Einladung ist 48 Stunden gültig.",
+				"Sie haben das nicht erwartet? Ignorieren Sie diese E-Mail: Ohne Sie geschieht nichts."
+			]
+		}
+	},
+	"Profile": {
+		"presentationHeading": "Vorstellung",
+		"practicalHeading": "Praktische Informationen",
+		"fields": {
+			"languages": "Gesprochene Sprachen",
+			"accessibility": "Zugang",
+			"website": "Website",
+			"fees": "Honorare",
+			"paymentMethods": "Zahlungsarten"
+		},
+		"accessibility": {
+			"stepFree": "Stufenloser Zugang",
+			"lift": "Aufzug",
+			"parking": "Parkplätze in der Nähe"
+		},
+		"languages": {
+			"fr": "Französisch",
+			"en": "Englisch",
+			"es": "Spanisch",
+			"de": "Deutsch",
+			"it": "Italienisch",
+			"pt": "Portugiesisch",
+			"ar": "Arabisch",
+			"zh": "Chinesisch",
+			"ru": "Russisch",
+			"tr": "Türkisch",
+			"ro": "Rumänisch",
+			"pl": "Polnisch",
+			"nl": "Niederländisch",
+			"vi": "Vietnamesisch",
+			"fa": "Persisch",
+			"he": "Hebräisch",
+			"uk": "Ukrainisch",
+			"lsf": "Französische Gebärdensprache"
+		},
+		"paymentMethods": {
+			"card": "Bankkarte",
+			"cash": "Bargeld",
+			"cheque": "Scheck",
+			"transfer": "Überweisung"
+		},
+		"fees": {
+			"range": "{min} bis {max}",
+			"fromOwner": "Die Gesundheitsfachkraft gibt den Tarifsektor und die Honorare an."
+		}
+	},
+	"Claim": {
+		"metadata": {
+			"start": "Seite beanspruchen · Apercura",
+			"claim": "Ihre Beanspruchung · Apercura",
+			"emailLink": "Beanspruchung bestätigen · Apercura"
+		},
+		"pending": "Bitte warten",
+		"errors": {
+			"generic": "Etwas ist schiefgelaufen. Bitte versuchen Sie es gleich noch einmal.",
+			"TOO_MANY": "Zu viele Beanspruchungen für heute. Versuchen Sie es morgen erneut.",
+			"ALREADY_OWNER": "Diese Seite gehört bereits Ihnen.",
+			"FROZEN": "Dieses Konto ist gesperrt und kann keine Seite beanspruchen.",
+			"NOT_FOUND": "Keine Seite hat diese RPPS-Nummer.",
+			"INVALID_RPPS": "Diese RPPS-Nummer ist ungültig: Sie hat 11 Ziffern, die letzte ist eine Prüfziffer.",
+			"NOT_OPEN": "Diese Beanspruchung ist abgeschlossen: Sie kann sich nicht mehr ändern.",
+			"METHOD_UNAVAILABLE": "Diese Methode ist für diese Seite nicht verfügbar.",
+			"TOO_MANY_ATTEMPTS": "Zu viele Versuche mit dieser Methode. Verwenden Sie eine andere.",
+			"NOT_SUBMITTABLE": "Fügen Sie ein Dokument hinzu, bevor Sie die Beanspruchung zur Prüfung senden.",
+			"BAD_DOCUMENT": "Diese Datei kann nicht verwendet werden: Senden Sie eine PDF-, JPEG-, PNG- oder WebP-Datei mit höchstens 10 MB.",
+			"PSC_MISSING": "Pro Santé Connect hat keine Identität übermittelt. Versuchen Sie es erneut."
+		},
+		"start": {
+			"title": "Ihre Seite beanspruchen",
+			"lead": "Eine Beanspruchung bezieht sich auf eine RPPS-Nummer, nie auf einen Namen: Namensvettern können sich nicht gegenseitig die Seite wegnehmen.",
+			"recordHeading": "Die Seite, die Sie beanspruchen",
+			"unknownProfession": "Gesundheitsfachkraft",
+			"viewPage": "Öffentliche Seite ansehen",
+			"contestTitle": "Diese Seite hat bereits einen verifizierten Inhaber",
+			"contestBody": "Wenn es Ihre Seite ist (zum Beispiel, weil Sie den Zugang zu Ihrem Konto verloren haben), können Sie sie trotzdem beanspruchen: Ein Administrator prüft den Fall, und mit Pro Santé Connect gelingt der Nachweis am schnellsten. Die Wiederherstellung eines Kontos erfordert immer eine neue Identitätsprüfung.",
+			"confirm": "Das bin ich: Beanspruchung starten",
+			"goToPage": "Zu meiner Seite",
+			"findHeading": "Finden Sie Ihre Seite über die RPPS-Nummer",
+			"notFound": "Noch keine öffentliche Seite hat diese RPPS-Nummer.",
+			"rppsLabel": "RPPS-Nummer",
+			"rppsHint": "11 Ziffern, aufgedruckt auf Ihrer CPS-Karte und auf Ihrer Seite.",
+			"find": "Meine Seite finden",
+			"searchHint": "Sie können Ihre Seite auch über den Namen suchen:",
+			"searchLink": "das Verzeichnis durchsuchen",
+			"howHeading": "Wie wir prüfen, dass Sie es sind",
+			"factorNote": "Ihr Konto hat bereits einen zweiten Faktor: Er ist vor jeder Beanspruchung erforderlich und schützt Ihre Seite von da an."
+		},
+		"methods": {
+			"psc": {
+				"title": "Pro Santé Connect",
+				"short": "Pro Santé Connect",
+				"summary": "Mit Ihrer e-CPS-App oder Ihrer CPS-Karte. Sofort verifiziert, und die Online-Terminbuchung kann direkt geöffnet werden.",
+				"lead": "Melden Sie sich mit Ihrer e-CPS-App oder Ihrer CPS-Karte an. Ihre Seite ist verifiziert, sobald die Identität mit ihrer RPPS-Nummer übereinstimmt.",
+				"action": "Weiter mit Pro Santé Connect",
+				"hint": "Sie verlassen Apercura für die Seite von Pro Santé Connect und kehren dann hierher zurück.",
+				"done": "Pro Santé Connect hat Ihre Identität bestätigt."
+			},
+			"registry_email": {
+				"title": "E-Mail-Adresse der Praxis",
+				"short": "E-Mail-Adresse im Register",
+				"summary": "Ein Link, der an die E-Mail-Adresse gesendet wird, die das Register für Ihre Praxis oder Ihr Gesundheitszentrum veröffentlicht. Verifiziert, sobald Sie ihn öffnen; die Terminbuchung wird 7 Tage später geöffnet.",
+				"lead": "Wir senden einen Link an {email}, die im Register für Ihre Praxis veröffentlichte Adresse. Öffnen Sie ihn und bestätigen Sie.",
+				"action": "Link senden",
+				"resend": "Erneut senden",
+				"sent": "Link gesendet. Er ist 24 Stunden gültig.",
+				"done": "Das Postfach der Praxis hat die Beanspruchung bestätigt."
+			},
+			"document": {
+				"title": "Ein Dokument und ein Anruf",
+				"short": "Dokument",
+				"summary": "Ein Foto Ihrer CPS-Karte oder der Eintragungsbescheinigung Ihrer Berufskammer (Ordre), dann ein Anruf unter der im Register veröffentlichten Nummer der Praxis. Prüfung innerhalb von 48 Stunden; die Terminbuchung wird 7 Tage später geöffnet.",
+				"lead": "Senden Sie ein Foto Ihrer CPS-Karte oder der Eintragungsbescheinigung Ihrer Berufskammer (Ordre). Es wird vor dem Speichern verschlüsselt und 30 Tage nach der Entscheidung gelöscht."
+			},
+			"phone_callback": {
+				"title": "Telefonischer Rückruf",
+				"short": "Telefonischer Rückruf",
+				"lead": "Während der Prüfung ruft ein Mitglied unseres Teams die Praxis unter {phone} an, der Nummer aus dem Register (niemals eine Nummer, die Sie uns geben). Die Person, die abnimmt, liest den hier angezeigten Code vor.",
+				"action": "Meinen Code anzeigen",
+				"newCode": "Neuen Code anzeigen",
+				"hint": "Zeigen Sie ihn vor, wenn Sie in der Praxis sind, oder nennen Sie ihn der Person, die das Telefon der Praxis annimmt. Wenn Sie einen neuen anfordern, wird der vorherige ungültig.",
+				"codeLabel": "Vorzulesender Code",
+				"codeHint": "Lassen Sie ihn auf dem Bildschirm oder notieren Sie ihn: Zu Ihrer Sicherheit zeigen wir ihn nur jetzt an.",
+				"done": "Der telefonische Rückruf hat die Beanspruchung bestätigt."
+			}
+		},
+		"check": {
+			"passed": "Erledigt",
+			"failed": "Fehlgeschlagen",
+			"pending": "In Bearbeitung",
+			"notStarted": "Nicht begonnen",
+			"claim": {
+				"open": "In Bearbeitung",
+				"in_review": "In Prüfung",
+				"verified": "Verifiziert",
+				"rejected": "Abgelehnt",
+				"withdrawn": "Zurückgezogen",
+				"superseded": "Nach einem Einspruch zurückgezogen"
+			}
+		},
+		"workspace": {
+			"title": "Beanspruchung von {name}",
+			"lead": {
+				"open": "Weisen Sie mit einer der folgenden Methoden nach, dass Sie diese Gesundheitsfachkraft sind.",
+				"in_review": "Ihre Beanspruchung wird geprüft.",
+				"verified": "Nächster Schritt: Vervollständigen Sie Ihre Seite.",
+				"rejected": "Diese Beanspruchung wurde nicht angenommen.",
+				"withdrawn": "Diese Beanspruchung wurde zurückgezogen.",
+				"superseded": "Diese Beanspruchung wurde nach einem Einspruch zurückgezogen."
+			}
+		},
+		"psc": {
+			"outcome": {
+				"verified": "Pro Santé Connect hat Ihre Identität bestätigt: Ihre Seite ist verifiziert.",
+				"passed": "Pro Santé Connect hat Ihre Identität bestätigt. Ein Administrator prüft nun die Beanspruchung.",
+				"mismatch": "Die Identität aus Pro Santé Connect stimmt nicht mit der RPPS-Nummer dieser Seite überein.",
+				"error": "Pro Santé Connect war nicht erreichbar, oder die Anmeldung wurde abgebrochen. Versuchen Sie es erneut.",
+				"linkedElsewhere": "Diese Identität aus Pro Santé Connect ist bereits mit einem anderen Apercura-Konto verknüpft. Melden Sie sich mit Pro Santé Connect an, um dieses Konto zu verwenden."
+			}
+		},
+		"documents": {
+			"kind": {
+				"cps_card": "CPS-Karte",
+				"ordre_attestation": "Eintragungsbescheinigung der Berufskammer (Ordre)"
+			},
+			"kindLabel": "Art des Dokuments",
+			"add": "Datei auswählen",
+			"hint": "PDF, JPEG, PNG oder WebP, höchstens 10 MB. Bis zu 4 Dateien.",
+			"kilobytes": "KB"
+		},
+		"review": {
+			"title": "Zur Prüfung senden",
+			"lead": "Ein Administrator prüft Ihr Dokument und ruft die Praxis an. Sie erhalten die Antwort per E-Mail, innerhalb von 48 Stunden an Werktagen.",
+			"submit": "Zur Prüfung senden",
+			"notYet": "Fügen Sie zuerst ein Dokument hinzu."
+		},
+		"withdraw": "Diese Beanspruchung zurückziehen",
+		"status": {
+			"verified": "Ihre Seite ist verifiziert",
+			"bookingDelay": "Ohne Pro Santé Connect endet die 7-tägige Wartezeit vor der Online-Terminbuchung am {date}.",
+			"continue": "Vervollständigen Sie Ihre Seite",
+			"in_review": "Ihre Beanspruchung wird geprüft",
+			"contestReview": "Diese Seite hatte bereits einen verifizierten Inhaber: Die Entscheidung trifft ein Administrator, und mit Pro Santé Connect gelingt der Nachweis am schnellsten.",
+			"reviewBody": "Halten Sie Ihren Rückrufcode bereit: Wir rufen die Praxis unter der Nummer aus dem Register an.",
+			"rejected": "Diese Beanspruchung wurde nicht angenommen",
+			"reason": "Grund: {reason}",
+			"withdrawn": "Diese Beanspruchung wurde zurückgezogen",
+			"superseded": "Diese Beanspruchung wurde nach einem Einspruch zurückgezogen",
+			"contestTitle": "Diese Seite hat bereits einen verifizierten Inhaber",
+			"contestBody": "Ein Administrator wird entscheiden. Mit Pro Santé Connect weisen Sie Ihre Identität am schnellsten nach; die anderen Methoden erfordern ein Dokument und einen Rückruf.",
+			"verifiedBadge": "Verifizierte Seite"
+		},
+		"emailLink": {
+			"title": "Beanspruchung bestätigen",
+			"lead": "Dieser Link wurde an die E-Mail-Adresse gesendet, die das nationale Register für eine Praxis veröffentlicht.",
+			"reading": "Link wird gelesen…",
+			"invalidTitle": "Dieser Link funktioniert nicht mehr",
+			"invalidBody": "Er ist abgelaufen (er ist 24 Stunden gültig) oder wurde bereits verwendet. Die Gesundheitsfachkraft kann über ihre Beanspruchung einen neuen senden.",
+			"tooMany": "Zu viele Versuche. Warten Sie eine Stunde und versuchen Sie es dann erneut.",
+			"doneTitle": "Die Beanspruchung ist bestätigt",
+			"doneBody": "Die Gesundheitsfachkraft kann sich jetzt anmelden, um die Seite zu vervollständigen.",
+			"goToSpace": "Zum Bereich für Gesundheitsfachkräfte",
+			"body": "Wenn die Gesundheitsfachkraft dieser Praxis beantragt hat, ihre Apercura-Seite zu verwalten, bestätigen Sie dies. Andernfalls schließen Sie diese Seite: Es ändert sich nichts.",
+			"confirm": "Beanspruchung bestätigen",
+			"pending": "Bitte warten"
+		},
+		"withdrawDialog": {
+			"title": "Diese Beanspruchung zurückziehen?",
+			"body": "Die Beanspruchung wird endgültig geschlossen: Die zugehörigen Nachweise zählen nicht mehr, und die Dokumente werden in 30 Tagen gelöscht. Sie können später eine neue Beanspruchung eröffnen und beginnen dann wieder mit der Verifizierung.",
+			"confirm": "Beanspruchung zurückziehen",
+			"cancel": "Beanspruchung beibehalten"
+		}
+	},
+	"Onboarding": {
+		"metaTitle": "Ihre Seite einrichten · Apercura",
+		"title": "Ihre Seite einrichten",
+		"lead": "Drei Schritte zu einer vollständigen Seite für {name}.",
+		"stepsLabel": "Schritte",
+		"stepNumber": "Schritt {n} von {total}:",
+		"continue": "Weiter",
+		"pending": "Bitte warten",
+		"publishFailed": "Die Seite konnte nicht veröffentlicht werden. Versuchen Sie es gleich noch einmal.",
+		"fields": {
+			"name": "Name",
+			"profession": "Beruf"
+		},
+		"steps": {
+			"check": {
+				"label": "Importierte Angaben prüfen",
+				"title": "Importierte Angaben prüfen",
+				"lead": "Ihre Seite basiert auf dem nationalen Register (Annuaire Santé). Prüfen Sie Ihren Namen, Ihren Beruf und Ihre Praxisorte.",
+				"sites": "Praxisorte",
+				"unnamed": "Ort ohne Namen",
+				"hidden": "Ausgeblendet",
+				"registryNote": "Etwas ist falsch? Die dauerhafte Korrektur erfolgt über Ihre Berufskammer (Ordre), die das Register aktualisiert; die Seite übernimmt dies beim nächsten wöchentlichen Import. Im Seiteneditor können Sie einen Ort ausblenden oder hinzufügen."
+			},
+			"booking": {
+				"label": "Öffnungszeiten und Terminbuchung",
+				"title": "Öffnungszeiten und Terminbuchung",
+				"lead": "Patienten buchen auf Ihrer Seite, sobald Ihr Terminkalender geöffnet ist. Damit er geöffnet werden kann, muss Ihre Seite Ihre Honorare und die akzeptierten Zahlungsarten angeben.",
+				"fees": "Honorare",
+				"payments": "Zahlungsarten",
+				"done": "Angegeben",
+				"todo": "Zu vervollständigen",
+				"deontology": "Artikel R.4127-53 des französischen Gesetzbuchs über die öffentliche Gesundheit (Code de la santé publique): Ein Arzt, der seine Tätigkeit online präsentiert, gibt seine Honorare und die akzeptierten Zahlungsarten an.",
+				"editFees": "Honorare und Zahlungsarten vervollständigen",
+				"settingsNote": "Orte, Öffnungszeiten und Terminarten werden in den Buchungseinstellungen festgelegt.",
+				"waitingPeriod": "Wartezeit nach der Verifizierung",
+				"waitingEnds": "Die 7-tägige Wartezeit endet am {date}",
+				"noWaiting": "Keine",
+				"settingsLink": "Öffnungszeiten und Terminbuchung einrichten"
+			},
+			"publish": {
+				"label": "Veröffentlichen",
+				"title": "Ihre Seite veröffentlichen",
+				"lead": "Mit der Veröffentlichung werden Ihre Vorstellung, Sprachen, Honorare und praktischen Informationen auf Ihrer öffentlichen Seite angezeigt. Sie können sie jederzeit ändern oder ausblenden.",
+				"already": "Ihre Seite ist veröffentlicht. Jede gespeicherte Änderung ist sofort online.",
+				"edit": "Meine Seite bearbeiten",
+				"action": "Meine Seite veröffentlichen"
+			}
+		}
+	},
+	"Editor": {
+		"metaTitle": "Ihre Seite · Apercura",
+		"title": "Ihre Seite",
+		"lead": "Vervollständigen Sie die öffentliche Seite von {name}. Nur reiner Text; was Sie ausblenden, wird nie angezeigt.",
+		"empty": {
+			"title": "Noch keine Seite zum Bearbeiten",
+			"body": "Ihre Seite erscheint hier, sobald Ihre Beanspruchung verifiziert ist.",
+			"action": "Meine Seite beanspruchen"
+		},
+		"pending": "Bitte warten",
+		"viewPublic": "Öffentliche Seite ansehen",
+		"jumpToPreview": "Zur Vorschau",
+		"formLabel": "Seiteninhalt",
+		"removed": {
+			"title": "Ihre Seite wurde aus dem Verzeichnis entfernt",
+			"body": "Niemand kann sie sehen. Sie können sie unten auf dieser Seite wiederherstellen."
+		},
+		"unpublished": {
+			"title": "Ihre Inhalte sind noch nicht veröffentlicht",
+			"link": "Schließen Sie die Einrichtung Ihrer Seite ab"
+		},
+		"photo": {
+			"title": "Foto",
+			"lead": "Optional. Ein aktuelles Porträt, wie ein Passfoto.",
+			"current": "Aktuelles Foto",
+			"none": "Kein Foto.",
+			"add": "Foto hinzufügen",
+			"replace": "Foto ersetzen",
+			"remove": "Foto entfernen",
+			"hint": "JPEG, PNG oder WebP, höchstens 5 MB. Wir schneiden es quadratisch zu und entfernen seine Metadaten (Standort, Gerät)."
+		},
+		"visibility": {
+			"label": "{field} auf der Seite anzeigen",
+			"shown": "Angezeigt"
+		},
+		"presentation": {
+			"title": "Vorstellung",
+			"lead": "Nur sachliche Informationen: keine Erfahrungsberichte, keine Vergleiche (R.4127-19-1).",
+			"headline": "Überschrift",
+			"headlineHint": "Eine Zeile unter Ihrem Beruf, höchstens {max} Zeichen.",
+			"bio": "Vorstellung",
+			"bioHint": "Nur reiner Text, höchstens {max} Zeichen. Lassen Sie zwischen Absätzen eine Leerzeile."
+		},
+		"languages": {
+			"title": "Gesprochene Sprachen"
+		},
+		"fees": {
+			"title": "Honorare und Krankenversicherung",
+			"lead": "Erforderlich, bevor die Online-Terminbuchung geöffnet werden kann: Ihre Honorare und die Zahlungsarten, die Sie akzeptieren.",
+			"requiredBadge": "Für die Terminbuchung erforderlich",
+			"ameliPrefill": "Vorausgefüllt aus dem Verzeichnis der Assurance Maladie. Ihre Angabe ersetzt sie auf Ihrer Seite.",
+			"sector": "Tarifsektor",
+			"notStated": "Nicht angegeben",
+			"optam": "Begrenzte Honorarzuschläge (OPTAM)",
+			"optamNone": "Kein Mitglied",
+			"carteVitale": "Carte Vitale",
+			"carteVitaleYes": "Angenommen",
+			"carteVitaleNo": "Nicht angenommen",
+			"itemsTitle": "Honorare",
+			"noItem": "Noch kein Honorar.",
+			"itemLabel": "Honorar {n}: Leistung",
+			"itemPlaceholder": "Konsultation",
+			"amount": "Betrag (€)",
+			"maxAmount": "Bis zu (€)",
+			"removeItem": "Honorar {n} entfernen",
+			"remove": "Entfernen",
+			"addItem": "Honorar hinzufügen",
+			"note": "Hinweis zu Honoraren",
+			"noteHint": "Zum Beispiel, wovon Honorarzuschläge abhängen.",
+			"payments": "Akzeptierte Zahlungsarten",
+			"requiredHint": "Die Terminbuchung bleibt geschlossen, bis mindestens ein Honorar und eine Zahlungsart angegeben sind."
+		},
+		"access": {
+			"title": "Zugang",
+			"notes": "Zugangshinweise",
+			"notesHint": "Etage, Eingang, öffentliche Verkehrsmittel."
+		},
+		"contact": {
+			"title": "Website und Telefon",
+			"website": "Website",
+			"websiteHint": "Website Ihrer Praxis, beginnend mit https://",
+			"showPhone": "Telefonnummer der Praxis anzeigen",
+			"showPhoneHint": "Ausgeblendet: Die Seite bietet nicht mehr an, die Praxis anzurufen."
+		},
+		"failure": {
+			"generic": "Etwas ist schiefgelaufen. Bitte versuchen Sie es gleich noch einmal.",
+			"invalid": "Einige Felder müssen korrigiert werden: Beachten Sie die Hinweise darunter.",
+			"lastSite": "Mindestens ein Ort muss angezeigt bleiben: Eine Seite ohne Ort kann nicht veröffentlicht werden.",
+			"unknownPlace": "Diese Postleitzahl und diesen Ort kennen wir nicht. Bitte prüfen Sie sie.",
+			"badPhone": "Diese Telefonnummer ist ungültig.",
+			"photoTooLarge": "Dieses Foto ist größer als 5 MB.",
+			"photoUnsupported": "Diese Datei kann nicht als Foto verwendet werden: Senden Sie ein JPEG, PNG oder WebP."
+		},
+		"saved": "Gespeichert. Ihre öffentliche Seite ist aktuell.",
+		"savedDraft": "Gespeichert. Zum Anzeigen Seite veröffentlichen.",
+		"save": "Seite speichern",
+		"lastSaved": "Zuletzt gespeichert: {date}",
+		"sites": {
+			"title": "Praxisorte",
+			"lead": "Wählen Sie, welche Orte Ihre Seite anzeigt. Orte aus dem Register können ausgeblendet, aber nicht bearbeitet werden.",
+			"unnamed": "Ort ohne Namen",
+			"added": "Von Ihnen hinzugefügt",
+			"shownNamed": "{name} auf der Seite anzeigen",
+			"remove": "Entfernen",
+			"registryNote": "Ein Ort aus dem Register ist falsch? Ihre Berufskammer (Ordre) korrigiert ihn im Register; die Seite übernimmt dies beim nächsten Import.",
+			"addTitle": "Ort hinzufügen",
+			"name": "Name des Ortes",
+			"address": "Straße und Hausnummer",
+			"postcode": "Postleitzahl",
+			"city": "Ort",
+			"phone": "Telefon (optional)",
+			"phoneHint": "Die Nummer der Praxis, die auf der Seite angezeigt wird.",
+			"add": "Ort hinzufügen"
+		},
+		"remove": {
+			"title": "Ihre Seite entfernen",
+			"lead": "Ihre Seite verschwindet aus dem Verzeichnis, aus Suchergebnissen und Suchmaschinen und erscheint beim nächsten Import nicht wieder. Sie können sie hier wiederherstellen.",
+			"action": "Meine Seite aus dem Verzeichnis entfernen",
+			"restore": "Meine Seite wiederherstellen"
+		},
+		"preview": {
+			"title": "Vorschau",
+			"note": "Noch nicht gespeichert",
+			"noSite": "Kein Ort angezeigt.",
+			"unnamedPlace": "Praxisort"
+		},
+		"issues": {
+			"tooLong": "Dieser Text ist zu lang.",
+			"markup": "Nur reiner Text: kein HTML, keine Links in Klammern.",
+			"required": "Dieses Feld ist erforderlich.",
+			"range": "Der Höchstbetrag muss größer als der Betrag sein.",
+			"website": "Diese Adresse ist keine Website (https://…).",
+			"postcode": "Eine französische Postleitzahl hat 5 Ziffern.",
+			"invalid": "Dieser Wert ist ungültig."
+		}
+	},
+	"Admin": {
+		"claims": {
+			"metaTitle": "Beanspruchungen · Verwaltung · Apercura",
+			"title": "Beanspruchungen",
+			"lead": "Beanspruchungen, die auf eine Entscheidung warten. Einsprüche stehen an erster Stelle.",
+			"queueHeading": "{count, plural, one {# Beanspruchung ausstehend} other {# Beanspruchungen ausstehend}}",
+			"queueEmpty": "Keine Beanspruchung ausstehend",
+			"emptyTitle": "Nichts zu prüfen",
+			"emptyBody": "Zur Prüfung gesendete Beanspruchungen erscheinen hier.",
+			"columns": {
+				"practitioner": "Seite",
+				"claimant": "Konto",
+				"proofs": "Nachweise",
+				"submitted": "Gesendet"
+			},
+			"contest": "Einspruch",
+			"proofLine": "{method}: {status}"
+		},
+		"claim": {
+			"metaTitle": "Beanspruchung · Verwaltung · Apercura",
+			"title": "Beanspruchung von {name}",
+			"back": "Zurück zu den Beanspruchungen",
+			"contestTitle": "Einspruch: Diese Seite hat bereits einen verifizierten Inhaber",
+			"contestPsc": "Der aktuelle Inhaber wurde mit Pro Santé Connect verifiziert: Nur eine mit Pro Santé Connect verifizierte Beanspruchung kann die Seite übernehmen.",
+			"contestBody": "Mit der Genehmigung geht die Seite an dieses Konto: Das Konto des aktuellen Inhabers wird gesperrt und verliert den Zugriff auf die Praxis.",
+			"summary": "Zusammenfassung",
+			"fields": {
+				"status": "Status",
+				"claimant": "E-Mail-Adresse des Kontos",
+				"accountCreated": "Konto erstellt",
+				"opened": "Beanspruchung eröffnet",
+				"submitted": "Zur Prüfung gesendet"
+			},
+			"proofs": "Nachweise",
+			"documents": "Dokumente",
+			"noDocument": "Kein Dokument.",
+			"purged": "Gelöscht",
+			"openDocument": "Dokument öffnen",
+			"newTab": "öffnet in einem neuen Tab",
+			"auditNote": "Das Öffnen eines Dokuments entschlüsselt es und wird mit Ihrem Konto und der Uhrzeit im Prüfprotokoll erfasst.",
+			"phoneTitle": "Telefonischer Rückruf",
+			"phoneLead": "Rufen Sie eine dieser Nummern aus dem Register an, niemals eine von der antragstellenden Person angegebene Nummer. Fragen Sie die Person, die abnimmt, nach dem Code, der im Bereich der antragstellenden Person angezeigt wird.",
+			"phoneDone": "Der telefonische Rückruf war erfolgreich.",
+			"noCode": "Die antragstellende Person hat noch keinen Code angezeigt.",
+			"decisionTitle": "Entscheidung",
+			"decisionLead": "Mit der Genehmigung wird die Seite verifiziert, die Praxis mit der antragstellenden Person als Inhaber angelegt und ihr eine E-Mail gesendet. Bei einer Ablehnung erhält sie den Grund per E-Mail.",
+			"phoneCalled": "Angerufene Nummer",
+			"codeHeard": "Von der Praxis vorgelesener Code",
+			"codeLocked": "Zu viele falsche Codes: Die antragstellende Person muss einen neuen vorzeigen.",
+			"codeWrong": "Dieser Code stimmt nicht überein.",
+			"confirmCode": "Code prüfen",
+			"pending": "Bitte warten",
+			"decision": "Entscheidung",
+			"approve": "Beanspruchung genehmigen",
+			"reject": "Beanspruchung ablehnen",
+			"notApprovable": "Für eine Genehmigung sind Pro Santé Connect, die E-Mail-Adresse aus dem Register oder ein Dokument und ein erfolgreicher telefonischer Rückruf erforderlich (Pro Santé Connect bei einem Einspruch gegen einen damit verifizierten Inhaber).",
+			"reasonRequired": "Grund (geht an die antragstellende Person)",
+			"reasonOptional": "Notiz (optional)",
+			"reasonHint": "Beschreiben Sie einfach, was fehlt oder falsch ist.",
+			"decisionFailed": "Die Entscheidung konnte nicht gespeichert werden. Laden Sie die Seite neu und versuchen Sie es erneut.",
+			"approveAction": "Genehmigen",
+			"rejectAction": "Ablehnen"
+		},
+		"reports": {
+			"metaTitle": "Meldungen · Verwaltung · Apercura",
+			"title": "Meldungen und Entfernungen",
+			"lead": "Anträge auf Entfernung (Art. 21 DSGVO) und Fehlerberichte, die über die öffentlichen Seiten gesendet wurden.",
+			"contact": "Kontakt",
+			"message": "Nachricht",
+			"failed": "Die Aktion ist fehlgeschlagen. Laden Sie die Seite neu und versuchen Sie es erneut.",
+			"auditNote": "Das Lesen einer Anfrage entschlüsselt sie und wird im Prüfprotokoll erfasst.",
+			"tabsLabel": "Warteschlangen",
+			"removalsTab": "Anträge auf Entfernung ({count})",
+			"reportsTab": "Fehlerberichte ({count})",
+			"removalsEmpty": "Kein Antrag auf Entfernung ausstehend",
+			"removalsCaption": "Anträge auf Entfernung",
+			"columns": {
+				"page": "Seite",
+				"received": "Eingegangen",
+				"actions": "Aktionen",
+				"kind": "Art"
+			},
+			"read": "Lesen",
+			"confirmRemoval": "Seite löschen",
+			"rejectRemoval": "Seite wieder anzeigen",
+			"rejectReason": "Der Antrag konnte nicht bestätigt werden.",
+			"reportsEmpty": "Kein Fehlerbericht ausstehend",
+			"reportsCaption": "Fehlerberichte",
+			"noPage": "Keine Seite angegeben",
+			"kinds": {
+				"wrong_info": "Falsche Angaben",
+				"retired": "Im Ruhestand",
+				"deceased": "Verstorben",
+				"impersonation": "Identitätsanmaßung"
+			},
+			"resolve": "Als erledigt markieren",
+			"dismiss": "Schließen"
+		}
+	},
+	"Gdpr": {
+		"about": "Zur Seite von",
+		"rpps": "RPPS-Nummer der Seite",
+		"rppsHint": "11 Ziffern, oben auf der Seite angegeben.",
+		"pending": "Bitte warten",
+		"errors": {
+			"tooMany": "Zu viele Anfragen von dieser Verbindung. Versuchen Sie es in einer Stunde erneut.",
+			"notFound": "Keine Seite hat diese RPPS-Nummer.",
+			"claimed": "Diese Seite wird von ihrer Gesundheitsfachkraft verwaltet: Nur diese kann sie über ihren Bereich entfernen.",
+			"invalid": "Prüfen Sie das Formular: Ein Feld fehlt oder ist zu lang.",
+			"generic": "Etwas ist schiefgelaufen. Bitte versuchen Sie es gleich noch einmal."
+		},
+		"report": {
+			"metaTitle": "Fehler melden · Apercura",
+			"title": "Fehler melden",
+			"lead": "Teilen Sie uns mit, was auf dieser Seite falsch ist. Ihre Nachricht wird verschlüsselt und nur vom Apercura-Team gelesen.",
+			"doneTitle": "Danke, Ihre Meldung ist eingegangen",
+			"doneBody": "Wir prüfen die Meldung. Angaben aus dem Register werden an der Quelle korrigiert; wenn Sie eine Adresse hinterlassen haben, informieren wir Sie.",
+			"kind": "Was ist falsch?",
+			"kinds": {
+				"wrong_info": "Falsche Angaben (Adresse, Telefon, Name)",
+				"retired": "Die Gesundheitsfachkraft ist im Ruhestand",
+				"deceased": "Die Gesundheitsfachkraft ist verstorben",
+				"impersonation": "Jemand verwendet diese Seite im Namen der Gesundheitsfachkraft"
+			},
+			"message": "Details",
+			"messageHint": "Was falsch ist und, falls bekannt, was richtig ist.",
+			"contact": "Ihre E-Mail-Adresse (optional)",
+			"contactHint": "Nur, um Ihnen zu antworten.",
+			"privacy": "Geben Sie keine Gesundheitsdaten an.",
+			"submit": "Meldung senden"
+		},
+		"removal": {
+			"metaTitle": "Entfernung einer Seite beantragen · Apercura",
+			"title": "Entfernung dieser Seite beantragen",
+			"lead": "Nach Artikel 21 DSGVO können Sie der Veröffentlichung Ihrer Seite widersprechen. Sie wird ausgeblendet, sobald wir den Antrag erhalten, und nach einer kurzen Prüfung gelöscht.",
+			"doneTitle": "Die Seite ist ausgeblendet",
+			"doneBody": "Sie wird nicht mehr angezeigt, indexiert oder aufgeführt. Wir prüfen den Antrag, bestätigen per E-Mail und löschen die Seite dann endgültig.",
+			"contact": "Ihre E-Mail-Adresse",
+			"contactHint": "Um den Antrag mit Ihnen abzuklären. Diese Angabe wird verschlüsselt und für nichts anderes verwendet.",
+			"message": "Nachricht (optional)",
+			"messageHint": "Alles, was uns bei der Prüfung des Antrags hilft.",
+			"confirm": "Ich bin die Gesundheitsfachkraft dieser Seite",
+			"privacy": "Eine gelöschte Seite erscheint beim nächsten Import des Registers nicht wieder.",
+			"submit": "Seite ausblenden und entfernen",
+			"claimedTitle": "Diese Seite wird von ihrer Gesundheitsfachkraft verwaltet",
+			"claimedBody": "Nur ihr Inhaber kann sie entfernen, über den Seiteneditor in seinem Bereich.",
+			"claimedLink": "Im Bereich für Gesundheitsfachkräfte anmelden",
+			"alreadyTitle": "Ein Antrag auf Entfernung wird geprüft",
+			"alreadyBody": "Die Seite ist bereits ausgeblendet."
+		}
+	},
+	"Agenda": {
+		"common": {
+			"accessLogged": "Die Patientendaten auf dieser Seite werden für Sie entschlüsselt, und jeder Zugriff wird protokolliert.",
+			"accessLogLink": "Zugriffsprotokoll",
+			"loadFailed": "Der Terminkalender konnte nicht geladen werden. Prüfen Sie Ihre Verbindung und versuchen Sie es erneut.",
+			"retry": "Erneut versuchen",
+			"close": "Schließen",
+			"keep": "Behalten",
+			"failed": "Das hat nicht funktioniert. Versuchen Sie es gleich noch einmal.",
+			"refused": "Diese Änderung ist nicht mehr möglich: Der Terminkalender hat sich inzwischen geändert.",
+			"patient": "Patient",
+			"newPatient": "Erstbesuch",
+			"unreachable": "E-Mails erreichen diesen Patienten nicht: Bitte rufen Sie an.",
+			"emailUnconfirmed": "E-Mail-Adresse wartet auf die Bestätigung durch den Patienten",
+			"noPhone": "Keine Telefonnummer",
+			"noEmail": "Keine E-Mail-Adresse",
+			"placeLabel": "Ort",
+			"placeOption": "{place}, {city}",
+			"status": {
+				"held": "Wird gebucht",
+				"pending": "Zu beantwortende Anfrage",
+				"confirmed": "Bestätigt",
+				"declined": "Abgelehnt",
+				"expired": "Abgelaufen",
+				"cancelled_by_patient": "Vom Patienten abgesagt",
+				"cancelled_by_practice": "Von der Praxis abgesagt",
+				"no_show": "Nicht erschienen",
+				"completed": "Erledigt"
+			},
+			"block": "Gesperrte Zeit",
+			"source": {
+				"online": "Online gebucht",
+				"practice": "Von der Praxis hinzugefügt"
+			},
+			"timeRange": "{start} bis {end}",
+			"noPractice": {
+				"title": "Noch kein Terminkalender",
+				"body": "Der Terminkalender wird geöffnet, sobald Ihre Seite beansprucht und verifiziert ist oder sobald eine Praxis Sie in ihr Team aufnimmt.",
+				"action": "Zurück zu Ihrem Bereich"
+			},
+			"noCalendar": {
+				"title": "Noch kein Ort eingerichtet",
+				"bodyOwner": "Richten Sie den Ort ein, an dem Sie Patienten empfangen: Öffnungszeiten und Terminarten.",
+				"bodyStaff": "Der Inhaber der Seite hat den Terminkalender noch nicht eingerichtet.",
+				"action": "Terminbuchung einrichten"
+			}
+		},
+		"today": {
+			"metaTitle": "Heute",
+			"title": "Heute",
+			"next": {
+				"heading": "Nächster Patient",
+				"none": "Heute keine weiteren Termine.",
+				"at": "Um {time}",
+				"empty": "Heute kein Termin."
+			},
+			"day": {
+				"heading": "Die Termine des Tages",
+				"empty": "Heute kein Termin.",
+				"columns": {
+					"time": "Uhrzeit",
+					"entry": "Termin",
+					"status": "Status",
+					"actions": "Aktionen"
+				}
+			},
+			"requests": {
+				"heading": "Zu beantwortende Anfragen",
+				"lead": "Patienten warten auf Ihre Antwort. Unbeantwortete Anfragen verfallen zum angezeigten Zeitpunkt.",
+				"empty": "Keine Anfrage ausstehend.",
+				"deadline": "Antwort bis {date}",
+				"approve": "Annehmen",
+				"decline": "Ablehnen",
+				"approved": "Anfrage angenommen. Der Patient erhält eine Bestätigung.",
+				"declined": "Anfrage abgelehnt. Der Patient wird per E-Mail informiert."
+			},
+			"actions": {
+				"cancel": "Absagen…",
+				"noShow": "Nicht erschienen",
+				"noShowDone": "Als nicht erschienen markiert.",
+				"block": "Zeitfenster sperren",
+				"week": "Woche ansehen",
+				"add": "Termin hinzufügen"
+			}
+		},
+		"week": {
+			"metaTitle": "Terminkalender",
+			"title": "Terminkalender",
+			"gridLabel": "Woche vom {date}",
+			"dayGridLabel": "{date}",
+			"previous": "Vorherige Woche",
+			"next": "Nächste Woche",
+			"previousDay": "Vorheriger Tag",
+			"nextDay": "Nächster Tag",
+			"current": "Heute",
+			"viewLabel": "Ansehen",
+			"viewWeek": "Woche",
+			"viewDay": "Tag",
+			"timeColumn": "Uhrzeit",
+			"free": "{day}, {time}, frei",
+			"freeClosed": "{day}, {time}, außerhalb der Öffnungszeiten",
+			"now": "Jetzt",
+			"entry": "{day}, {start} bis {end}, {status}",
+			"keyboardHint": "Mit den Pfeiltasten bewegen Sie sich durch die Woche, mit der Eingabetaste fügen Sie etwas hinzu oder öffnen es, mit Bild auf und Bild ab wechseln Sie die Woche.",
+			"settings": "Buchungseinstellungen",
+			"legend": {
+				"label": "Legende",
+				"booked": "Bestätigt",
+				"pending": "Anfrage",
+				"held": "Wird gebucht",
+				"block": "Gesperrt",
+				"closed": "Außerhalb der Öffnungszeiten"
+			},
+			"loading": "Terminkalender wird geladen"
+		},
+		"add": {
+			"title": "In den Terminkalender eintragen",
+			"when": "{date}, {time}",
+			"kindLabel": "Was zu ergänzen ist",
+			"kindAppointment": "Ein Termin",
+			"kindBlock": "Gesperrte Zeit",
+			"date": "Datum",
+			"start": "Beginn",
+			"end": "Ende",
+			"type": "Terminart",
+			"typeOption": "{name} · {minutes} Min.",
+			"firstName": "Vorname",
+			"lastName": "Nachname",
+			"email": "E-Mail-Adresse (optional)",
+			"emailHint": "Die erste E-Mail bittet den Patienten nur, diese Adresse zu bestätigen. Die Einzelheiten folgen nach der Bestätigung, sodass ein Tippfehler sie nie an eine fremde Person schickt.",
+			"phone": "Telefon (optional)",
+			"submit": "Termin hinzufügen",
+			"submitBlock": "Diese Uhrzeit sperren",
+			"pending": "Wird hinzugefügt…",
+			"taken": "Diese Uhrzeit ist bereits vergeben. Wählen Sie eine andere Uhrzeit.",
+			"invalid": "Prüfen Sie die markierten Felder.",
+			"invalidEmail": "Geben Sie eine E-Mail-Adresse wie name@example.fr ein oder lassen Sie das Feld leer.",
+			"invalidPhone": "Geben Sie eine Telefonnummer wie 06 12 34 56 78 ein oder lassen Sie das Feld leer.",
+			"required": "Pflichtfeld.",
+			"endBeforeStart": "Das Ende muss nach dem Beginn liegen.",
+			"created": "Termin hinzugefügt.",
+			"blocked": "Zeit gesperrt.",
+			"outsideHours": "Außerhalb der Öffnungszeiten: Sie können ihn trotzdem hinzufügen."
+		},
+		"entry": {
+			"when": "Wann",
+			"type": "Typ",
+			"patient": "Patient",
+			"email": "E-Mail",
+			"phone": "Telefon",
+			"status": "Status",
+			"source": "Herkunft",
+			"cancel": "Termin absagen",
+			"removeBlock": "Sperrzeit entfernen",
+			"noShow": "Nicht erschienen",
+			"approve": "Anfrage annehmen",
+			"decline": "Anfrage ablehnen",
+			"message": "Nachricht an den Patienten (optional)",
+			"messageHint": "Wird mit der Absage-E-Mail gesendet, sofern der Patient seine Adresse bestätigt hat.",
+			"cancelTitle": "Diesen Termin absagen?",
+			"cancelBody": "Die Uhrzeit wird wieder frei.",
+			"confirmCancel": "Termin absagen",
+			"cancelled": "Termin abgesagt.",
+			"blockRemoved": "Sperrzeit entfernt."
+		},
+		"block": {
+			"title": "Zeitfenster sperren",
+			"lead": "Eine Besprechung, eine Abwesenheit: Patienten können diese Uhrzeit nicht buchen.",
+			"submit": "Diese Uhrzeit sperren"
+		},
+		"settings": {
+			"metaTitle": "Buchungseinstellungen",
+			"title": "Buchungseinstellungen",
+			"lead": "Praxisorte, Öffnungszeiten, Terminarten und die Regeln der Online-Terminbuchung.",
+			"ownerOnly": {
+				"title": "Nur der Inhaber der Seite richtet die Terminbuchung ein",
+				"body": "Ihre Rolle erlaubt Ihnen, den Terminkalender zu führen. Öffnungszeiten und Buchungsregeln legt der Inhaber der Seite fest.",
+				"action": "Terminkalender öffnen"
+			},
+			"gate": {
+				"heading": "Online-Terminbuchung",
+				"ready": "Ihre Seite erfüllt die Voraussetzungen: Sie können die Online-Terminbuchung öffnen.",
+				"missing": "Bevor Patienten online buchen können:",
+				"notVerified": "Ihre Seite muss verifiziert sein.",
+				"fees": "Geben Sie Ihre Honorare auf Ihrer Seite an.",
+				"paymentMethods": "Geben Sie auf Ihrer Seite die Zahlungsarten an, die Sie akzeptieren.",
+				"waitingPeriod": "Ihre Seite wurde ohne Pro Santé Connect verifiziert: Die Terminbuchung kann am {date} geöffnet werden.",
+				"noType": "Bieten Sie mindestens eine Terminart online an.",
+				"noHours": "Fügen Sie Öffnungszeiten oder eine zusätzliche Öffnung hinzu.",
+				"editPage": "Honorare und Zahlungsarten vervollständigen",
+				"deontology": "Artikel R.4127-53 des französischen Gesetzbuchs über die öffentliche Gesundheit (Code de la santé publique): Ein Arzt, der seine Tätigkeit online präsentiert, gibt seine Honorare und die akzeptierten Zahlungsarten an.",
+				"open": "Online-Terminbuchung öffnen",
+				"pause": "Online-Terminbuchung pausieren",
+				"opened": "Die Online-Terminbuchung ist geöffnet. Patienten können auf Ihrer Seite buchen.",
+				"paused": "Die Online-Terminbuchung ist pausiert. Der Terminkalender funktioniert weiterhin für die Termine, die Sie hinzufügen.",
+				"statusLabel": "Status",
+				"status": {
+					"draft": "Noch nicht geöffnet",
+					"open": "Geöffnet",
+					"paused": "Pausiert"
+				}
+			},
+			"places": {
+				"heading": "Orte",
+				"lead": "Jeder Ort hat einen eigenen Terminkalender in der Zeitzone seines Départements.",
+				"timeZone": "Zeitzone: {zone}",
+				"noZone": "Unbekanntes Département: An diesem Ort sind noch keine Buchungen möglich.",
+				"create": "Diesen Ort einrichten",
+				"presetsNote": "Zu Beginn stehen die üblichen Terminarten Ihres Fachgebiets bereit: {names}.",
+				"presetItem": "{name} ({minutes} Min.)",
+				"none": "Kein Ort Ihrer Seite kann Termine annehmen. Fügen Sie im Seiteneditor Ihre Praxisadresse hinzu.",
+				"addPlace": "Im Editor einen Ort hinzufügen",
+				"choose": "Einzurichtender Ort"
+			},
+			"types": {
+				"heading": "Terminarten",
+				"lead": "Wählen Sie neutrale Bezeichnungen: Die Art eines Termins kann Gesundheitsinformationen preisgeben.",
+				"name": "Name",
+				"duration": "Dauer (Minuten)",
+				"before": "Pufferzeit davor (Minuten)",
+				"after": "Pufferzeit danach (Minuten)",
+				"audience": "Wer buchen kann",
+				"audienceAll": "Alle Patienten",
+				"audienceNew": "Nur neue Patienten",
+				"audienceExisting": "Bereits betreute Patienten",
+				"active": "Online angeboten",
+				"save": "Speichern",
+				"saved": "Terminart gespeichert.",
+				"add": "Terminart hinzufügen",
+				"newName": "Konsultation",
+				"summary": "{duration} Min.",
+				"inactive": "Nicht online angeboten"
+			},
+			"rules": {
+				"heading": "Wöchentliche Öffnungszeiten",
+				"lead": "Die Uhrzeiten, zu denen Patienten buchen können, Tag für Tag. Mehrere Zeiträume pro Tag sind möglich (zum Beispiel mit einer Mittagspause).",
+				"days": {
+					"1": "Montag",
+					"2": "Dienstag",
+					"3": "Mittwoch",
+					"4": "Donnerstag",
+					"5": "Freitag",
+					"6": "Samstag",
+					"7": "Sonntag"
+				},
+				"add": "Zeitraum hinzufügen",
+				"addFor": "Zeitraum am {day} hinzufügen",
+				"remove": "Entfernen",
+				"removeRange": "Zeitraum {from} bis {to} am {day} entfernen",
+				"from": "Von",
+				"to": "Bis",
+				"rangeLabel": "{day}, Zeitraum {n}",
+				"closed": "Geschlossen",
+				"copy": "Auf die anderen Wochentage übertragen",
+				"copyFor": "Ab {day} auf die anderen Wochentage übertragen",
+				"copied": "{day} auf die anderen Wochentage übertragen. Speichern Sie, um die Änderung zu übernehmen.",
+				"template": "Mit einer Vorlage beginnen",
+				"templateMornings": "Vormittags, 8:30 bis 12:30 Uhr",
+				"templateDays": "Tagsüber, 9:00 bis 12:30 und 14:00 bis 18:30 Uhr",
+				"save": "Öffnungszeiten speichern",
+				"saved": "Öffnungszeiten gespeichert.",
+				"invalid": "Am {day} muss jeder Zeitraum nach seinem Beginn enden und darf sich nicht mit einem anderen überschneiden.",
+				"columns": {
+					"day": "Tag",
+					"actions": "Aktionen"
+				}
+			},
+			"exceptions": {
+				"heading": "Schließungen und zusätzliche Öffnungszeiten",
+				"lead": "Urlaub, eine Abwesenheit oder ein zusätzlicher Vormittag: Diese Angaben haben Vorrang vor den wöchentlichen Zeiten.",
+				"kind": "Art",
+				"kindClosed": "Geschlossen (Urlaub, Abwesenheit)",
+				"kindOpen": "Zusätzliche Öffnung",
+				"span": "Dauer",
+				"spanDays": "Ganze Tage",
+				"spanTime": "Zeiten eines Tages",
+				"from": "Von",
+				"until": "Bis (einschließlich)",
+				"date": "Datum",
+				"start": "Von",
+				"end": "Bis",
+				"add": "Ergänzen",
+				"added": "Hinzugefügt.",
+				"empty": "Keine Schließung und keine zusätzliche Öffnung.",
+				"remove": "Entfernen",
+				"removeLabel": "Entfernen: {label}",
+				"closedDays": "Geschlossen von {from} bis {until}",
+				"closedTime": "Geschlossen am {date}, {from} bis {to}",
+				"openDays": "Geöffnet von {from} bis {until}",
+				"openTime": "Geöffnet am {date}, {from} bis {to}",
+				"invalid": "Das Ende muss nach dem Beginn liegen.",
+				"closedDay": "Geschlossen am {date}",
+				"openDay": "Geöffnet am {date}"
+			},
+			"booking": {
+				"heading": "Regeln für die Online-Terminbuchung",
+				"minNotice": "Mindestvorlauf (Stunden)",
+				"minNoticeHint": "Kurzfristiger können Patienten nicht buchen.",
+				"horizon": "Buchungshorizont (Tage)",
+				"horizonHint": "Wie weit im Voraus Patienten buchen können.",
+				"step": "Abstand zwischen zwei möglichen Anfangszeiten (Minuten)",
+				"manual": "Jede Anfrage manuell bestätigen",
+				"manualHint": "Anfragen warten bis zu 48 Stunden auf Ihre Antwort.",
+				"newPatients": "Neue Patienten annehmen",
+				"cutoff": "Online-Absage bis (Stunden vorher)",
+				"requirePhone": "Telefonnummer abfragen",
+				"askFirstVisit": "Fragen, ob es ein Erstbesuch ist",
+				"retention": "Patientendaten löschen nach (Tagen)",
+				"retentionHint": "Zwischen 30 und 365 Tagen nach dem Termin. Apercura ist keine Patientenakte.",
+				"instructions": "Hinweise bei der Buchung (optional)",
+				"instructionsHint": "Reiner Text: der Eingang, was mitzubringen ist.",
+				"save": "Buchungsregeln speichern",
+				"saved": "Buchungsregeln gespeichert.",
+				"invalid": "Prüfen Sie die markierten Werte."
+			},
+			"feed": {
+				"heading": "Privates Kalender-Abo",
+				"lead": "Verfolgen Sie diesen Terminkalender in Google Calendar, Apple Calendar oder Thunderbird. Jeder, der den Link hat, kann ihn lesen: Behalten Sie ihn für sich.",
+				"off": "Kein Abo-Link ist aktiv.",
+				"on": "Ein Abo-Link ist seit {date} aktiv.",
+				"create": "Abo-Link erstellen",
+				"rotate": "Link ersetzen",
+				"revoke": "Kalender-Abo deaktivieren",
+				"url": "Abo-Link",
+				"urlHint": "Wird nur einmal angezeigt: Kopieren Sie ihn jetzt in Ihre Kalender-App. Wenn Sie ihn ersetzen, funktioniert der alte Link nicht mehr.",
+				"fullNames": "Vollständige Namen der Patienten im Kalender-Abo anzeigen",
+				"fullNamesHint": "Standardmäßig deaktiviert: Das Kalender-Abo zeigt dann nur die Terminart und die Initialen, weil die Server Ihres Kalenderanbieters es lesen.",
+				"revoked": "Das Kalender-Abo ist deaktiviert: Der alte Link funktioniert nicht mehr.",
+				"saved": "Abo-Einstellung gespeichert."
+			},
+			"logLink": "Sehen, wer auf Patientendaten zugegriffen hat",
+			"index": "Auf dieser Seite"
+		},
+		"log": {
+			"metaTitle": "Zugriffsprotokoll",
+			"title": "Zugriffsprotokoll",
+			"lead": "Jedes Mal, wenn Patientendaten entschlüsselt wurden: wer, wann, warum und wie viele Akten. Niemand kann dies ändern oder löschen.",
+			"ownerOnly": {
+				"title": "Nur der Inhaber der Seite liest das Zugriffsprotokoll",
+				"body": "Das Zugriffsprotokoll der Praxis ist dem Inhaber der Seite vorbehalten."
+			},
+			"columns": {
+				"when": "Wann",
+				"who": "Wer",
+				"what": "Was",
+				"why": "Warum",
+				"records": "Einträge"
+			},
+			"actor": {
+				"patient": "Der Patient",
+				"system": "Apercura (automatische Aufgabe)",
+				"unknown": "Ehemaliges Mitglied"
+			},
+			"action": {
+				"decrypt": "Lesen",
+				"alert": "Warnung",
+				"unknown": "{action}"
+			},
+			"purpose": {
+				"agenda_list": "Terminkalender",
+				"notify": "E-Mail wird gesendet",
+				"manage": "Die eigene Seite des Patienten",
+				"ics_feed": "Kalender-Abo",
+				"decrypt_volume": "Mehr als 500 Akten innerhalb einer Stunde gelesen",
+				"unknown": "{purpose}"
+			},
+			"records": "{count, plural, one {# Datensatz} other {# Datensätze}}",
+			"empty": "Bisher wurde auf nichts zugegriffen.",
+			"more": "Ältere Einträge anzeigen",
+			"alert": "Am {date} hat {name} innerhalb einer Stunde mehr als 500 Patientenakten gelesen. Prüfen Sie, ob das zu erwarten war; falls nicht, entziehen Sie den Zugriff und ändern Sie Ihr Passwort."
+		},
+		"feed": {
+			"name": "Apercura-Terminkalender",
+			"block": "Gesperrt",
+			"pending": "[Anfrage]",
+			"appointment": "Termin"
+		}
+	},
+	"Team": {
+		"metaTitle": "Team",
+		"title": "Team",
+		"lead": "Laden Sie die Personen ein, die Ihren Terminkalender führen. Jede Person meldet sich mit ihrem eigenen Konto und einem zweiten Faktor an.",
+		"ownerOnly": {
+			"title": "Nur der Inhaber der Seite verwaltet das Team",
+			"body": "Bitten Sie den Inhaber der Seite, ein Mitglied einzuladen, zu ändern oder zu entfernen."
+		},
+		"roles": {
+			"heading": "Wer was tun kann",
+			"owner": "Alles: die Seite, das Team, die Buchungseinstellungen, das Zugriffsprotokoll.",
+			"practitioner": "Den Terminkalender und die öffentliche Seite. Nicht das Team, die Buchungseinstellungen oder das Zugriffsprotokoll.",
+			"assistant": "Nur den Terminkalender: Tag, Woche, Anfragen, Termine und Sperrzeiten. Nicht die Seite, das Team, die Buchungseinstellungen oder das Zugriffsprotokoll."
+		},
+		"invite": {
+			"heading": "Jemanden einladen",
+			"email": "E-Mail-Adresse",
+			"role": "Rolle",
+			"submit": "Einladung senden",
+			"pending": "Wird gesendet…",
+			"sent": "Einladung an {email} gesendet. Sie ist 48 Stunden gültig.",
+			"alreadyMember": "Diese Person ist bereits im Team.",
+			"rateLimited": "Zu viele Einladungen heute. Versuchen Sie es morgen erneut.",
+			"invalidEmail": "Geben Sie eine E-Mail-Adresse wie name@example.fr ein.",
+			"note": "Die eingeladene Person erstellt ein Konto mit dieser Adresse und richtet vor dem Beitritt einen zweiten Faktor ein."
+		},
+		"members": {
+			"heading": "Mitglieder",
+			"columns": {
+				"name": "Name",
+				"role": "Rolle",
+				"factor": "Zweiter Faktor",
+				"actions": "Aktionen"
+			},
+			"you": "Sie",
+			"factorYes": "Einrichten",
+			"factorNo": "Noch nicht",
+			"roleOf": "Rolle von {name}",
+			"saveRole": "Ändern",
+			"roleChanged": "Rolle geändert.",
+			"remove": "Entfernen",
+			"removeLabel": "{name} aus dem Team entfernen",
+			"removeTitle": "{name} entfernen?",
+			"removeBody": "Die Person verliert sofort den Zugriff auf den Terminkalender. Sie können sie später erneut einladen.",
+			"confirmRemove": "Aus dem Team entfernen",
+			"removed": "{name} hat keinen Zugriff mehr."
+		},
+		"invitations": {
+			"heading": "Ausstehende Einladungen",
+			"empty": "Keine ausstehende Einladung.",
+			"columns": {
+				"email": "E-Mail",
+				"role": "Rolle",
+				"expires": "Läuft ab",
+				"actions": "Aktionen"
+			},
+			"expired": "Abgelaufen",
+			"cancel": "Zurückziehen",
+			"cancelLabel": "Einladung an {email} zurückziehen",
+			"cancelled": "Einladung zurückgezogen.",
+			"resend": "Erneut senden",
+			"resendLabel": "Einladung erneut an {email} senden"
+		}
+	},
+	"Invitation": {
+		"metaTitle": "Einladung",
+		"title": "Einer Praxis beitreten",
+		"open": {
+			"lead": "{inviter} lädt Sie ein, dem Team von {practice} als {role} beizutreten.",
+			"practitioner": "Seite von {name}.",
+			"expires": "Diese Einladung ist bis {date} gültig.",
+			"accept": "Dem Team beitreten",
+			"decline": "Ablehnen",
+			"pending": "Beitritt läuft…"
+		},
+		"accepted": {
+			"title": "Sie sind im Team",
+			"body": "Sie sind dem Team von {practice} beigetreten.",
+			"action": "Terminkalender öffnen"
+		},
+		"declined": "Einladung abgelehnt. Es ändert sich nichts.",
+		"other_address": {
+			"title": "Diese Einladung gilt für eine andere Adresse",
+			"body": "Sie sind als {email} angemeldet. Melden Sie sich mit der Adresse an, an die die Einladung gesendet wurde."
+		},
+		"expired": {
+			"title": "Diese Einladung ist abgelaufen",
+			"body": "Einladungen sind 48 Stunden gültig. Bitten Sie {inviter}, Ihnen eine neue zu senden."
+		},
+		"closed": {
+			"title": "Diese Einladung ist nicht mehr gültig",
+			"body": "Sie wurde zurückgezogen oder bereits beantwortet. Bitten Sie die Praxis bei Bedarf um eine neue."
+		},
+		"not_found": {
+			"title": "Einladung nicht gefunden",
+			"body": "Prüfen Sie den Link in der E-Mail oder bitten Sie die Praxis um eine neue Einladung."
+		},
+		"errors": {
+			"EMAIL_NOT_VERIFIED": "Bestätigen Sie zuerst Ihre E-Mail-Adresse.",
+			"NO_SECOND_FACTOR": "Richten Sie vor dem Beitritt einen zweiten Faktor ein.",
+			"ALREADY_MEMBER": "Sie sind bereits Mitglied dieses Teams.",
+			"EXPIRED": "Diese Einladung ist abgelaufen.",
+			"failed": "Beitritt nicht möglich. Versuchen Sie es gleich erneut."
+		}
+	}
+}

@@ -1,0 +1,2913 @@
+{
+	"Metadata": {
+		"title": "Apercura",
+		"description": "L’elenco aperto e lo strumento di prenotazione gratuito per tutti i professionisti sanitari in Francia.",
+		"proTitle": "La sua pagina esiste già · Apercura",
+		"proDescription": "Apercura pubblica una pagina oggettiva per ogni professionista sanitario iscritto in Francia. Trovi la sua e la rivendichi gratuitamente.",
+		"searchTitle": "Ricerca · Apercura",
+		"galleryTitle": "Galleria dei componenti · Apercura",
+		"homeTitle": "Apercura · L’elenco aperto dei professionisti sanitari"
+	},
+	"Site": {
+		"skipLink": "Passare al contenuto",
+		"wordmark": "Apercura",
+		"homeLink": "Apercura, home page",
+		"runningHead": "Elenco aperto dei professionisti sanitari in Francia",
+		"navLabel": "Principale",
+		"navPro": "Per i professionisti",
+		"navPatients": "Per i pazienti",
+		"folio": "Pagina {number}",
+		"externalLink": "apre un altro sito",
+		"footer": {
+			"free": "Gratuito per professionisti e pazienti.",
+			"license": "Codice sorgente con licenza AGPL-3.0",
+			"noAds": "Niente valutazioni, pubblicità o classifiche a pagamento."
+		},
+		"folioRpps": "RPPS {rpps}",
+		"home": "Home",
+		"breadcrumbs": "Lei è qui",
+		"footerNav": {
+			"label": "Informazioni su Apercura",
+			"directory": "Elenco",
+			"about": "Informazioni",
+			"openSource": "Open source",
+			"data": "Dati e fonti",
+			"accessibility": "Accessibilità",
+			"privacy": "Privacy",
+			"legal": "Note legali",
+			"terms": "Condizioni d’uso"
+		}
+	},
+	"LocaleSwitcher": {
+		"label": "Lingua",
+		"locale": "{locale, select, fr {Français} en {English} de {Deutsch} es {Español} it {Italiano} other {Lingua sconosciuta}}"
+	},
+	"Search": {
+		"label": "Trovare un professionista sanitario",
+		"who": "Chi?",
+		"whoHint": "Nome, specializzazione o professione",
+		"where": "Dove?",
+		"whereHint": "Città o codice postale",
+		"submit": "Ricerca"
+	},
+	"HomePage": {
+		"title": "Apercura",
+		"hook": "Trovi qualsiasi professionista sanitario in Francia: ognuno di loro ha già una pagina.",
+		"specimen": {
+			"heading": "Ogni professionista ha già una pagina",
+			"intro": "Questa è una pagina così come la compila il registro nazionale, prima che il professionista la rivendichi: i campi noti sono compilati, gli altri indicano chiaramente che non sono forniti."
+		},
+		"pillarsHeading": "Gli impegni di Apercura",
+		"columns": {
+			"number": "N.",
+			"commitment": "Impegno"
+		},
+		"pillars": {
+			"free": {
+				"title": "Gratuito",
+				"description": "Gratuito per professionisti e pazienti, senza abbonamento e senza commissioni."
+			},
+			"openSource": {
+				"title": "Open source",
+				"description": "L’intero codice sorgente è pubblicato con licenza AGPL-3.0."
+			},
+			"hostedInFrance": {
+				"title": "Dati sanitari ospitati in Francia",
+				"description": "I dati sanitari sono ospitati in Francia da un fornitore di hosting certificato HDS ({host}) e cifrati a livello applicativo."
+			},
+			"encrypted": {
+				"title": "Dati cifrati",
+				"description": "I dati dei pazienti sono cifrati a livello applicativo. Può ospitarli in proprio o presso un fornitore di hosting certificato HDS."
+			},
+			"selfHostable": {
+				"title": "Installabile in proprio",
+				"description": "Esegua in proprio l’intera piattaforma con Docker, importazione degli open data inclusa."
+			}
+		},
+		"registry": {
+			"heading": "Creata a partire dal registro nazionale",
+			"intro": "Ogni pagina parte dal registro pubblico dei professionisti sanitari. Nessuno paga per esservi elencato e nessuno viene escluso.",
+			"doctors": "Medici",
+			"dentists": "Dentisti",
+			"midwives": "Ostetriche",
+			"withAddress": "Con un indirizzo pubblico dello studio",
+			"count": "{count, number}",
+			"approxCount": "circa {count, number}",
+			"sourceLabel": "Fonte",
+			"sourceName": "Annuaire Santé, Agence du numérique en santé",
+			"updatedLabel": "Cifre di"
+		},
+		"pro": {
+			"heading": "È un professionista sanitario?",
+			"body": "La sua pagina esiste già. Rivendicarla è gratuito.",
+			"cta": "Trovare la mia pagina"
+		},
+		"tagline": "L’elenco aperto e lo strumento di prenotazione gratuito per tutti i professionisti sanitari in Francia.",
+		"status": "Lavori in corso."
+	},
+	"ProPage": {
+		"title": "La sua pagina esiste già.",
+		"lead": "Apercura pubblica una pagina oggettiva per ogni professionista sanitario iscritto in Francia, creata a partire da dati pubblici. Trovi la sua, la rivendichi gratuitamente e la completi.",
+		"search": {
+			"label": "Trovare la sua pagina",
+			"field": "Nome o numero RPPS",
+			"hint": "Nome o RPPS a 11 cifre",
+			"submit": "Trovare la mia pagina"
+		},
+		"stepsHeading": "Rivendicare la sua pagina in tre passaggi",
+		"columns": {
+			"step": "Passaggio",
+			"what": "Che cosa fa"
+		},
+		"steps": {
+			"find": {
+				"title": "Trovare la sua pagina",
+				"description": "Cerchi per nome o numero RPPS. La pagina contiene già le sue informazioni pubbliche del registro."
+			},
+			"verify": {
+				"title": "Verifica dell’identità",
+				"description": "Acceda con Pro Santé Connect usando la sua e-CPS, oppure invii un documento che verrà esaminato da una persona."
+			},
+			"complete": {
+				"title": "Completarla e aprire la prenotazione",
+				"description": "Aggiunga i suoi orari e i dati dello studio e, se lo desidera, la prenotazione online gratuita. I pazienti prenotano senza creare un account."
+			}
+		},
+		"sampleHeading": "Come appare una pagina prima di essere rivendicata",
+		"sampleNote": "Esempio fittizio: questo professionista non esiste.",
+		"factsHeading": "Oggettiva e uguale per tutti",
+		"facts": "Le pagine riportano solo informazioni oggettive, come richiede la deontologia medica francese. Non ci sono valutazioni, né pubblicità, né posizionamenti a pagamento: ogni professionista è presentato allo stesso modo."
+	},
+	"SearchPage": {
+		"title": "Ricerca",
+		"query": "Ha cercato «{who}»",
+		"queryWhere": "Ha cercato «{who}» a «{where}»",
+		"queryOnlyWhere": "Ha cercato a «{where}»",
+		"emptyTitle": "Nessun professionista corrisponde",
+		"emptyBody": "Verifichi l’ortografia, provi con una città vicina o con un termine più ampio come «medico» invece di una specializzazione.",
+		"queryNear": "Ha cercato «{who}» vicino a lei",
+		"queryOnlyNear": "Professionisti vicino a lei",
+		"startTitle": "Chi sta cercando?",
+		"startBody": "Digiti un nome, una specializzazione o una professione in «Chi?» e una città o un codice postale in «Dove?». Può anche sfogliare l’elenco per luogo.",
+		"noMoreTitle": "Nessun altro risultato",
+		"browseDirectory": "Sfogliare l’elenco",
+		"rppsTitle": "Nessuna pagina pubblica per l’RPPS {rpps}",
+		"rppsBody": "Questo numero non è valido, oppure questo professionista non ha una pagina pubblica: le persone senza una sede di esercizio fissa non sono elencate. I professionisti possono comunque trovare e rivendicare la propria scheda.",
+		"rppsPro": "Professionisti: trovare la propria scheda",
+		"ambiguousTitle": "Diversi luoghi si chiamano «{where}»",
+		"ambiguousBody": "Scelga quello che intende:",
+		"unknownPlaceTitle": "Non conosciamo il luogo «{where}»",
+		"unknownPlaceSuggest": "Intendeva uno di questi luoghi?",
+		"unknownPlaceBody": "Verifichi l’ortografia o digiti un codice postale.",
+		"departmentPlace": "Dipartimento",
+		"resultsHeading": "Risultati",
+		"range": "Risultati da {from} a {to}",
+		"orderName": "I risultati sono ordinati in base alla corrispondenza del nome, poi in ordine alfabetico. Nessuno paga per comparire più in alto.",
+		"orderNear": "I risultati sono ordinati per distanza da lei. Nessuno paga per comparire più in alto.",
+		"bookingNotOpen": "La prenotazione online non è ancora disponibile: telefoni allo studio o contatti la struttura.",
+		"columns": {
+			"practitioner": "Professionista",
+			"place": "Sede di esercizio",
+			"appointments": "Appuntamenti"
+		},
+		"action": {
+			"call": "Chiamare il {phone}",
+			"establishment": "Tramite la struttura",
+			"locum": "Sostituto: nessun appuntamento diretto",
+			"page": "Vedere la pagina",
+			"noPhone": "Nessun numero di telefono pubblicato",
+			"nextFree": "Prenotare: {slot}"
+		},
+		"distance": "A {km} km",
+		"pagination": "Pagine dei risultati",
+		"previous": "Risultati precedenti",
+		"next": "Altri risultati",
+		"map": {
+			"show": "Mostrare su una mappa",
+			"hide": "Nascondere la mappa",
+			"region": "Mappa dei risultati",
+			"fallback": "La mappa è in caricamento. L’elenco qui sopra contiene tutti gli indirizzi."
+		},
+		"outsidePlace": "Esercita fuori da {where}",
+		"bookingOpenSome": "Alcuni professionisti accettano prenotazioni online: viene mostrato il loro prossimo orario libero. Per gli altri, telefoni allo studio o contatti la struttura."
+	},
+	"Practitioner": {
+		"rpps": "RPPS",
+		"status": {
+			"unclaimed": "Pagina non rivendicata",
+			"claimed": "Pagina rivendicata",
+			"verified": "Pagina verificata"
+		},
+		"statusNote": {
+			"unclaimed": "Creata a partire dal registro pubblico. Il professionista non l’ha ancora completata.",
+			"verified": "Completata dal professionista, la cui identità è stata verificata."
+		},
+		"notProvided": "Non fornito",
+		"fields": {
+			"profession": "Professione",
+			"specialty": "Specializzazione",
+			"address": "Indirizzo dello studio",
+			"phone": "Telefono",
+			"hours": "Orari di apertura",
+			"languages": "Lingue parlate",
+			"convention": "Convenzione tariffaria",
+			"booking": "Prenotazione online",
+			"access": "Accesso"
+		},
+		"sitesHeading": "Sedi di esercizio",
+		"directions": "Indicazioni stradali",
+		"providers": {
+			"openStreetMap": "OpenStreetMap",
+			"appleMaps": "Apple Maps",
+			"googleMaps": "Google Maps"
+		},
+		"mapLabel": "Mappa: {place}",
+		"mapPin": "Posizione di {place}",
+		"source": {
+			"label": "Fonte",
+			"name": "Annuaire Santé, Agence du numérique en santé",
+			"updated": "Aggiornato"
+		},
+		"action": {
+			"title": "Appuntamenti",
+			"book": {
+				"statement": "La prenotazione online è aperta. È gratuita e non richiede alcun account.",
+				"label": "Prenotare un appuntamento"
+			},
+			"call": {
+				"statement": "Questo professionista non offre la prenotazione online. Telefoni allo studio per fissare un appuntamento.",
+				"label": "Chiamare il {phone}"
+			},
+			"establishment": {
+				"statement": "Gli appuntamenti con questo professionista si prendono tramite {establishment}.",
+				"label": "Prenotare presso {establishment}"
+			},
+			"locum": {
+				"statement": "Questo professionista lavora come sostituto, al posto di altri medici. Non può essere prenotato direttamente.",
+				"hint": "Per farsi visitare, prenoti presso lo studio in cui lavora attualmente."
+			}
+		},
+		"slots": {
+			"heading": "Scegliere un orario",
+			"label": "Orari disponibili",
+			"now": "adesso",
+			"unavailable": "non disponibile",
+			"selected": "Selezionato: {slot}",
+			"emptyDay": "Nessun orario in questo giorno",
+			"slotLabel": "{day}, {time}",
+			"past": "passato"
+		},
+		"professions": {
+			"gp": "Medico di medicina generale",
+			"dentist": "Dentista",
+			"midwife": "Ostetrica",
+			"physio": "Fisioterapista"
+		},
+		"specimen": "Esempio, non un professionista reale"
+	},
+	"Gallery": {
+		"title": "Galleria dei componenti",
+		"intro": "Tutti i componenti del sistema del libretto, in tutti i loro stati. Solo per lo sviluppo: in produzione questa pagina restituisce 404. Tutte le persone, i numeri e i luoghi che vi compaiono sono fittizi.",
+		"sections": {
+			"tokens": "Token",
+			"type": "Ruoli tipografici",
+			"buttons": "Pulsanti e link",
+			"fields": "Campi di testo",
+			"pickers": "Selettori e date",
+			"choices": "Scelte",
+			"overlays": "Sovrapposizioni",
+			"navigation": "Navigazione",
+			"data": "Tabelle e segni",
+			"feedback": "Stati di caricamento e vuoti",
+			"form": "Convalida dei moduli",
+			"domain": "Componenti di dominio",
+			"booklet": "Pagina di esempio del libretto"
+		},
+		"palette": {
+			"paper": "Carta: sfondo della pagina",
+			"paperShade": "Tinta carta: aperture, piè di pagina, fasce del titolo, righe al passaggio del mouse",
+			"ink": "Inchiostro: testo grafite, filetti, etichette",
+			"inkMuted": "Inchiostro tenue: suggerimenti, segnaposto",
+			"inkDisabled": "Inchiostro disattivato",
+			"ruleSoft": "Linea sottile: filetti, linee guida",
+			"fieldEdge": "Bordo del campo: contorni dei controlli",
+			"stamp": "Timbro: azione, verificato, prenotato",
+			"stampStrong": "Timbro impresso",
+			"stampTint": "Sfondo timbro",
+			"error": "Inchiostro errore",
+			"errorTint": "Sfondo errore"
+		},
+		"typeRoles": {
+			"display": "Visualizzazione: il logotipo",
+			"headline": "Titolo principale: titoli di pagina",
+			"title": "Titolo: intestazioni di sezione",
+			"lead": "Occhiello: introduzioni",
+			"body": "Corpo: testo corrente a 18 px, composto in Atkinson Hyperlegible Next per i lettori ipovedenti.",
+			"meta": "Meta: suggerimenti e dati secondari",
+			"caps": "Maiuscoletto: intestazioni di colonna e testatine"
+		},
+		"states": {
+			"default": "Predefinito",
+			"disabled": "Disattivato",
+			"pending": "In attesa",
+			"invalid": "Non valido",
+			"filled": "Pieno",
+			"empty": "Vuoto",
+			"loading": "Caricamento",
+			"onShade": "Sulla tinta tenue"
+		},
+		"buttons": {
+			"stamp": "Prenotare",
+			"ink": "Telefonare allo studio",
+			"quiet": "Mostrare altro",
+			"large": "Trovare la mia pagina",
+			"pendingLabel": "Invio in corso",
+			"linkButton": "Aprire il registro",
+			"inlineLink": "Leggere come vengono create le pagine",
+			"externalLink": "Annuaire Santé"
+		},
+		"fields": {
+			"name": "Cognome",
+			"nameHint": "Come riportato nel registro",
+			"email": "Indirizzo e-mail",
+			"emailHint": "Inviamo il codice di prenotazione a questo indirizzo.",
+			"emailError": "Inserisca un indirizzo e-mail come nome@example.fr.",
+			"phone": "Telefono",
+			"locked": "Numero RPPS",
+			"search": "Cercare nell’elenco",
+			"searchHint": "Nome, specializzazione o città",
+			"clear": "Cancellare la ricerca"
+		},
+		"pickers": {
+			"city": "Città",
+			"profession": "Professione",
+			"choose": "Scegliere una professione",
+			"date": "Data di nascita",
+			"calendar": "Giorno dell’appuntamento",
+			"time": "Orario preferito",
+			"otp": "Codice di prenotazione",
+			"otpHint": "Le 6 cifre inviate al suo indirizzo e-mail.",
+			"otpError": "Questo codice non è valido. Controlli l’ultima e-mail che le abbiamo inviato.",
+			"dateError": "Inserisca una data passata."
+		},
+		"choices": {
+			"terms": "Accetto di ricevere il codice di prenotazione via e-mail",
+			"reminder": "Inviarmi un promemoria il giorno prima",
+			"remindersAll": "Tutti i promemoria",
+			"visitLabel": "Tipo di visita",
+			"visitInPerson": "Presso lo studio",
+			"visitHome": "Visita a domicilio",
+			"visitVideo": "Televisita",
+			"bookingOpen": "Aprire la prenotazione online",
+			"mustAgree": "Per continuare deve accettare."
+		},
+		"overlays": {
+			"openDialog": "Annullare l’appuntamento",
+			"dialogTitle": "Annullare questo appuntamento?",
+			"dialogBody": "L’orario sarà proposto ad altri pazienti. Riceverà una conferma via e-mail.",
+			"keep": "Mantenerla",
+			"confirmCancel": "Annullare l’appuntamento",
+			"openSheet": "Altre sedi di esercizio",
+			"sheetTitle": "Altre sedi di esercizio",
+			"sheetBody": "Questo professionista lavora anche in altre due sedi. Ogni sede ha la propria agenda.",
+			"openPopover": "Che cos’è l’RPPS?",
+			"popoverBody": "Il numero RPPS identifica ogni professionista sanitario nel registro nazionale. È pubblico.",
+			"popoverLabel": "Informazioni sul numero RPPS",
+			"openMenu": "Azioni sulla pagina",
+			"menuShare": "Condividere questa pagina",
+			"menuReport": "Segnalare un errore",
+			"menuClaim": "Rivendicare questa pagina",
+			"tooltipTrigger": "Convenzione tariffaria",
+			"tooltip": "Settore 1: onorari fissati dall’Assicurazione sanitaria francese.",
+			"toastInfo": "Mostrare un avviso",
+			"toastBooked": "Mostrare una prenotazione",
+			"toastError": "Mostrare un errore",
+			"toastInfoTitle": "Pagina aggiornata",
+			"toastInfoBody": "Il registro è stato aggiornato stamattina.",
+			"toastBookedTitle": "Appuntamento prenotato",
+			"toastBookedBody": "Martedì 24 novembre alle 9:30. Una conferma è in arrivo.",
+			"toastErrorTitle": "L’orario non è più libero",
+			"toastErrorBody": "Qualcuno lo ha prenotato un attimo fa. Scelga un altro orario.",
+			"toastRegion": "Notifiche",
+			"close": "Chiudere"
+		},
+		"navigation": {
+			"tabsLabel": "Sezioni della pagina",
+			"tabInfo": "Informazioni",
+			"tabSites": "Sedi",
+			"tabBooking": "Prenotazione",
+			"tabInfoBody": "Professione, specializzazione e convenzione tariffaria, dal registro.",
+			"tabSitesBody": "Ogni sede di esercizio con il suo indirizzo e le indicazioni stradali.",
+			"tabBookingBody": "Orari disponibili, quando il professionista offre la prenotazione online.",
+			"breadcrumbsLabel": "Percorso di navigazione",
+			"crumbHome": "Home",
+			"crumbCity": "Lyon",
+			"crumbProfession": "Medici di medicina generale",
+			"crumbPage": "Dott. Exemple Martin"
+		},
+		"data": {
+			"tableLabel": "Professionisti vicino a lei",
+			"colName": "Nome",
+			"colProfession": "Professione",
+			"colTown": "Città",
+			"colStatus": "Pagina",
+			"badgeInk": "Pagina non rivendicata",
+			"badgeStamp": "Pagina verificata",
+			"badgeError": "Rimossa su richiesta",
+			"staticCaption": "Orari di apertura (tabella statica a righe)",
+			"colDay": "Giorno",
+			"colMorning": "Mattina",
+			"colAfternoon": "Pomeriggio",
+			"monday": "Lunedì",
+			"tuesday": "Martedì",
+			"closed": "Chiuso"
+		},
+		"feedback": {
+			"loadingLabel": "Caricamento della pagina",
+			"emptyTitle": "Nessun professionista corrisponde",
+			"emptyBody": "Provi con una città vicina o una professione più ampia, per esempio «medico» invece di una specializzazione.",
+			"emptyAction": "Cancellare i filtri"
+		},
+		"form": {
+			"heading": "Confermi il suo appuntamento",
+			"firstName": "Nome",
+			"lastName": "Cognome",
+			"submit": "Confermare",
+			"required": "Questo campo è obbligatorio.",
+			"success": "Il modulo è valido."
+		},
+		"domain": {
+			"seals": "Sigilli derivati da numeri RPPS fittizi",
+			"sealVerified": "Verificato: l’anello esterno è timbrato",
+			"fieldRows": "Righe dei campi",
+			"provenance": "Nota sulla provenienza",
+			"actions": "Blocco azione: i quattro stati onesti",
+			"slots": "Selettore di orari",
+			"site": "Sede di esercizio",
+			"map": "Mappa",
+			"search": "Ricerca nel libretto"
+		},
+		"booklet": {
+			"unclaimed": "Pagina non rivendicata",
+			"claimed": "Pagina rivendicata e verificata",
+			"variantsLabel": "Variante di pagina"
+		},
+		"labels": {
+			"toast": "Toast",
+			"badge": "Badge"
+		}
+	},
+	"PractitionerPage": {
+		"metaTitle": "{name}, {occupation} · Apercura",
+		"metaTitlePlace": "{name}, {occupation} a {place} · Apercura",
+		"metaDescription": "{name}, {occupation}: indirizzo, recapiti e settore tariffario, dal registro nazionale.",
+		"metaDescriptionPlace": "{name}, {occupation} a {place}: indirizzo, recapiti e settore tariffario, dal registro nazionale.",
+		"unknownProfession": "Professionista sanitario",
+		"professionHeading": "Professione e qualifiche",
+		"otherQualifications": "Altre qualifiche",
+		"practiceType": "Tipo di esercizio",
+		"switchboard": "{phone} (centralino della struttura)",
+		"establishment": "Struttura",
+		"unnamedPlace": "Sede di esercizio",
+		"asideLabel": "Appuntamenti e pagina",
+		"action": {
+			"callNotYetOpen": "La prenotazione online non è ancora disponibile per questo professionista. Per fissare un appuntamento, telefoni allo studio.",
+			"establishmentLink": "Contattare la struttura",
+			"noPhone": "Per questa sede non è pubblicato alcun numero di telefono.",
+			"noPhoneHint": "Verifichi i dati del professionista su <link>ameli.fr</link>, oppure contatti direttamente la struttura.",
+			"bookStatement": "La prenotazione online è aperta. È gratuita e non richiede alcun account.",
+			"bookNoSlot": "La prenotazione online è aperta, ma nelle prossime settimane non ci sono orari liberi. Riprovi più tardi o telefoni allo studio.",
+			"nextSlot": "Prossimo orario libero",
+			"bookLabel": "Prenotare un appuntamento",
+			"orCall": "Oppure chiami il {phone}."
+		},
+		"fees": {
+			"heading": "Onorari e assicurazione sanitaria",
+			"sector": "Settore tariffario",
+			"optam": "Onorari aggiuntivi limitati (OPTAM)",
+			"optamNo": "Non membro",
+			"carteVitale": "Carte Vitale",
+			"accepted": "Accettato",
+			"notAccepted": "Non accettato",
+			"fromAmeli": "Questi dati provengono dall’elenco dell’Assurance Maladie.",
+			"notMatched": "Non è stato possibile associare con certezza questo professionista nell’elenco dell’Assurance Maladie, perciò questi dati non vengono mostrati.",
+			"regulatoryNotice": "Il settore tariffario determina come vengono applicati e rimborsati gli onorari: verifichi onorari e rimborso prima dell’appuntamento su",
+			"ameliLink": "ameli.fr, l’elenco dell’Assurance Maladie",
+			"source": "Annuaire santé, Assurance Maladie",
+			"sourceOwner": "Il professionista"
+		},
+		"claim": {
+			"heading": "È lei?",
+			"body": "Questa pagina è creata a partire dal registro pubblico. La rivendichi gratuitamente per verificarla e completarla.",
+			"link": "Rivendicare questa pagina",
+			"claimedHeading": "Pagina gestita dal professionista",
+			"claimedBody": "Il professionista ha rivendicato questa pagina: la sua identità è stata verificata ed è lui a completarla."
+		},
+		"report": {
+			"heading": "Qualcosa non va?",
+			"body": "Se un indirizzo, un numero di telefono o un nome è errato, ci dica come correggerlo.",
+			"link": "Segnalare un errore",
+			"removalLink": "È questo professionista e si oppone a questa pagina?"
+		},
+		"ring": {
+			"heading": "Altri professionisti: {listing} a {place}"
+		},
+		"photoAlt": "Foto di {name}",
+		"withheld": {
+			"metaTitle": "Pagina nascosta · Apercura",
+			"title": "Questa pagina è nascosta",
+			"body": "È in corso la verifica di una richiesta di rimozione per questa pagina. Nel frattempo non viene mostrata.",
+			"dataLink": "Come vengono pubblicate e rimosse le pagine"
+		},
+		"metaTitleName": "{name} · Apercura",
+		"metaDescriptionBookable": "{name}, {occupation}: prenotazione online, indirizzo, recapiti e settore tariffario.",
+		"metaDescriptionBookablePlace": "{name}, {occupation} a {place}: prenotazione online, indirizzo, recapiti e settore tariffario."
+	},
+	"Institutional": {
+		"toBeCompleted": "Da completare",
+		"draftMark": "Bozza: da completare prima del lancio",
+		"comingMark": "Prossimamente"
+	},
+	"AboutPage": {
+		"metaTitle": "Informazioni · Apercura",
+		"metaDescription": "Apercura pubblica una pagina gratuita e oggettiva per ogni professionista sanitario iscritto in Francia, creata a partire da open data pubblici.",
+		"title": "Informazioni su Apercura",
+		"lead": "Un elenco aperto di tutti i professionisti sanitari in Francia e uno strumento di prenotazione gratuito per chi lo desidera.",
+		"sections": {
+			"what": {
+				"heading": "Che cosa fa Apercura",
+				"body": [
+					"Apercura pubblica una pagina per ogni medico, dentista e ostetrica iscritti in Francia, creata a partire dal registro nazionale dei professionisti sanitari e da altri open data pubblici.",
+					"I pazienti trovano qualsiasi professionista, non solo quelli che pagano una piattaforma. I professionisti possono rivendicare gratuitamente la propria pagina, verificarla e completarla. La prenotazione online gratuita, senza account paziente, aprirà più avanti."
+				]
+			},
+			"principles": {
+				"heading": "Principi",
+				"list": [
+					"Ogni professionista è presentato allo stesso modo, che usi o meno Apercura.",
+					"Solo informazioni oggettive: nessuna valutazione, nessuna recensione, nessuna pubblicità e nessun posizionamento a pagamento.",
+					"Gratuito per professionisti e pazienti, senza abbonamento e senza commissioni.",
+					"Ogni pagina indica da dove provengono le sue informazioni e quando sono state aggiornate l’ultima volta.",
+					"Dati minimi, raccolti per una finalità dichiarata e cancellati secondo un calendario."
+				]
+			},
+			"how": {
+				"heading": "Da dove provengono le pagine",
+				"body": [
+					"Le pagine vengono generate ogni settimana a partire dall’Annuaire Santé dell’Agence du numérique en santé, dal registro FINESS delle strutture e dall’elenco dell’Assurance Maladie. La pagina sui dati elenca ogni fonte, la sua licenza e la sua data."
+				]
+			},
+			"who": {
+				"heading": "Chi gestisce Apercura",
+				"body": [
+					"Apercura è un progetto di interesse pubblico. Non è un servizio pubblico dello Stato e non è affiliato all’Assurance Maladie, agli Ordini professionali né all’Agence du numérique en santé."
+				]
+			}
+		},
+		"fields": {
+			"publisher": "Editore",
+			"contact": "Contatto"
+		},
+		"links": {
+			"data": "Dati e fonti",
+			"openSource": "Codice sorgente e licenza"
+		}
+	},
+	"OpenSourcePage": {
+		"metaTitle": "Open source · Apercura",
+		"metaDescription": "L’intero codice sorgente di Apercura è pubblico con licenza AGPL-3.0. Può leggerlo, verificarlo o eseguire in proprio l’intera piattaforma.",
+		"title": "Il codice è pubblico.",
+		"lead": "Ogni riga di Apercura è pubblicata con licenza AGPL-3.0: può leggerla, verificarla ed eseguire in proprio l’intera piattaforma.",
+		"sections": {
+			"licence": {
+				"heading": "Licenza AGPL-3.0",
+				"body": [
+					"L’AGPL-3.0 è una licenza di software libero. Chiunque può usare, studiare, modificare e condividere il codice. Chi offre una versione modificata come servizio online deve pubblicare le proprie modifiche con la stessa licenza."
+				]
+			},
+			"can": {
+				"heading": "Che cosa può fare",
+				"list": [
+					"Legga come viene creata ogni pagina e come vengono importati gli open data.",
+					"Verifichi come verranno cifrati i dati dei pazienti e per quanto tempo saranno conservati.",
+					"Segnali un problema o proponga una modifica nel repository pubblico.",
+					"Esegua l’intera piattaforma sulla propria infrastruttura con Docker, importazione degli open data inclusa."
+				]
+			},
+			"selfHost": {
+				"heading": "Eseguirlo in proprio",
+				"body": [
+					"Un’installazione con il solo elenco non contiene dati sanitari e può funzionare presso qualsiasi hosting. Le prenotazioni sono dati sanitari: se gestisce le prenotazioni per altre persone, i dati devono essere ospitati in Francia da un fornitore di hosting certificato per i dati sanitari (HDS)."
+				]
+			}
+		},
+		"facts": {
+			"licence": "Licenza",
+			"licenceValue": "GNU Affero General Public License v3.0",
+			"repository": "Repository",
+			"data": "Dati dell’elenco"
+		},
+		"dataValue": "Licence Ouverte 2.0, veda la pagina sui dati",
+		"cta": {
+			"heading": "Leggere il codice sorgente",
+			"body": "Il repository contiene il codice, la documentazione e la guida al self-hosting.",
+			"link": "Aprire il repository"
+		}
+	},
+	"DataPage": {
+		"metaTitle": "Dati e fonti · Apercura",
+		"metaDescription": "Da dove provengono le pagine dei professionisti: fonti, licenze, date di aggiornamento, come correggere un errore e come opporsi a una pagina.",
+		"title": "Dati e fonti",
+		"lead": "Ogni pagina è creata a partire da open data pubblici. Ecco da dove provengono, quando sono stati aggiornati e come correggere o rimuovere una pagina.",
+		"status": {
+			"heading": "Ultimo aggiornamento",
+			"body": "L’elenco viene importato dalle fonti ogni settimana. Una pagina cambia solo quando le sue informazioni cambiano in una fonte.",
+			"importedAt": "Ultima importazione",
+			"checkedAt": "Ultima verifica delle fonti",
+			"notImported": "L’elenco non è ancora stato importato su questo sito.",
+			"notImportedValue": "Non ancora importato"
+		},
+		"sources": {
+			"heading": "Fonti",
+			"body": "Tutte le fonti dell’elenco sono pubblicate con Licence Ouverte 2.0 (Etalab), che consente il riutilizzo a condizione di citare la fonte e la sua data.",
+			"caption": "Fonti dei dati dell’elenco",
+			"columns": {
+				"source": "Fonte",
+				"use": "Usato per",
+				"licence": "Licenza",
+				"date": "Scheda di"
+			},
+			"noDate": "—",
+			"items": {
+				"personneActivite": {
+					"name": "Annuaire Santé: professionisti e attività",
+					"producer": "Agence du numérique en santé",
+					"use": "Nomi, professioni, sedi di esercizio, telefoni"
+				},
+				"savoirFaire": {
+					"name": "Annuaire Santé: specializzazioni e qualifiche",
+					"producer": "Agence du numérique en santé",
+					"use": "Specializzazioni, competenze, capacità"
+				},
+				"diplomes": {
+					"name": "Annuaire Santé: titoli di studio e autorizzazioni",
+					"producer": "Agence du numérique en santé",
+					"use": "Titoli di studio"
+				},
+				"finess": {
+					"name": "Strutture FINESS+",
+					"producer": "Agence du numérique en santé",
+					"use": "Nomi e posizioni delle strutture"
+				},
+				"ameli": {
+					"name": "Annuaire santé Ameli",
+					"producer": "Caisse nationale de l’Assurance Maladie",
+					"use": "Settore tariffario, OPTAM, Carte Vitale"
+				},
+				"geo": {
+					"name": "Comuni e dipartimenti (geo.api.gouv.fr)",
+					"producer": "INSEE e IGN, tramite l’API Géo",
+					"use": "Città, codici postali, dipartimenti"
+				},
+				"geocoder": {
+					"name": "Servizio di geocodifica Géoplateforme",
+					"producer": "IGN",
+					"use": "Localizzazione degli indirizzi, solo durante l’importazione"
+				},
+				"map": {
+					"name": "Dati cartografici",
+					"producer": "Collaboratori di OpenStreetMap, tile di OpenFreeMap",
+					"use": "Mappe sulle pagine"
+				}
+			},
+			"licenceOuverte": "Licence Ouverte 2.0",
+			"odbl": "ODbL",
+			"attribution": "Contiene informazioni dell’Annuaire Santé (Agence du numérique en santé), del registro FINESS e dell’Annuaire santé Ameli (Caisse nationale de l’Assurance Maladie), riutilizzate con Licence Ouverte 2.0.",
+			"licenceLink": "Leggere la Licence Ouverte 2.0",
+			"sourceLabel": "Fonte"
+		},
+		"rules": {
+			"heading": "Quali professionisti hanno una pagina",
+			"body": [
+				"Un professionista ha una pagina pubblica quando il registro lo riporta con almeno un’attività aperta ai pazienti (uno studio, un centro sanitario o un ospedale) a un indirizzo. Le persone senza una sede di esercizio fissa conservano una scheda che possono rivendicare, ma nessuna pagina pubblica.",
+				"Le pagine mostrano solo informazioni oggettive, in un ordine neutro: non ci sono valutazioni, recensioni né posizionamenti a pagamento."
+			]
+		},
+		"correct": {
+			"heading": "Correggere un errore",
+			"body": [
+				"La maggior parte delle informazioni proviene da registri tenuti da altri, quindi la correzione duratura si fa alla fonte. La pagina si aggiorna alla successiva importazione settimanale."
+			],
+			"list": [
+				"Nome, professione, specializzazione, sede di esercizio e telefono: il professionista aggiorna la propria iscrizione presso il suo Ordine (o l’ente che lo ha registrato nell’RPPS).",
+				"Settore tariffario, OPTAM e Carte Vitale: provengono dall’elenco dell’Assurance Maladie (ameli.fr).",
+				"Nome e indirizzo di una struttura: provengono dal registro FINESS, tenuto dalle agenzie regionali di sanità.",
+				"I professionisti possono anche rivendicare la propria pagina dall’area professionisti, poi completarla e correggere ciò che viene mostrato."
+			],
+			"formTitle": "Segnalare un errore",
+			"formBody": "Ci dica che cosa è sbagliato in una pagina. Il suo messaggio è cifrato e viene letto solo dal team di Apercura.",
+			"proLink": "Andare all’area professionisti"
+		},
+		"remove": {
+			"heading": "Opporsi a una pagina",
+			"body": [
+				"In base all’articolo 21 del GDPR, un professionista può opporsi alla pubblicazione della propria pagina. Apercura pubblica l’elenco sulla base di un legittimo interesse: informare il pubblico a partire da dati pubblici.",
+				"Una pagina non rivendicata sarà nascosta non appena ricevuta la richiesta, poi eliminata dopo una breve verifica della richiesta. Una pagina rivendicata può essere rimossa dal suo titolare in qualsiasi momento. Una volta rimossa, una pagina non ricompare con la successiva importazione."
+			],
+			"formTitle": "Chiedere la rimozione di una pagina",
+			"formBody": "Per una pagina non rivendicata. La pagina viene nascosta subito, poi eliminata dopo una breve verifica. Una pagina rivendicata viene rimossa dal suo titolare, dal suo spazio."
+		}
+	},
+	"AccessibilityPage": {
+		"metaTitle": "Accessibilità · Apercura",
+		"metaDescription": "Dichiarazione di accessibilità di Apercura (bozza): stato di conformità al RGAA 4.1, metodi di verifica, come segnalare un problema e le sue possibilità di ricorso.",
+		"title": "Accessibilità",
+		"lead": "Apercura è pensato per tutti, comprese le persone anziane e ipovedenti. Questa dichiarazione in bozza indica a che punto è.",
+		"sections": {
+			"commitment": {
+				"heading": "Impegno",
+				"body": [
+					"Apercura mira a rispettare, su ogni pagina, il quadro francese di accessibilità RGAA 4.1 e le WCAG 2.2 di livello AA.",
+					"Le pagine per i pazienti usano un testo di almeno 18 px, aree cliccabili di almeno 44 px, un focus visibile e nessuna informazione trasmessa solo dal colore."
+				]
+			},
+			"status": {
+				"heading": "Stato di conformità",
+				"body": [
+					"Apercura non è ancora stato sottoposto a un audit RGAA 4.1. Finché non viene pubblicato un audit, il sito è considerato non conforme. Prima del lancio è previsto un audit completo."
+				]
+			},
+			"tests": {
+				"heading": "Come vengono testate le pagine",
+				"list": [
+					"Verifiche automatiche con axe-core su ogni tipo di pagina, a ogni rilascio.",
+					"Verifiche della ricerca e della navigazione solo da tastiera.",
+					"Verifiche manuali con i lettori di schermo VoiceOver e NVDA sono previste insieme all’audit."
+				]
+			},
+			"technologies": {
+				"heading": "Tecnologie utilizzate",
+				"body": [
+					"HTML, CSS, WAI-ARIA e JavaScript. La ricerca e le pagine dell’elenco funzionano anche senza JavaScript."
+				]
+			},
+			"feedback": {
+				"heading": "Segnalare un problema",
+				"body": [
+					"Se non riesce ad accedere a un contenuto o a un servizio, ce lo segnali: le forniremo un’alternativa o correggeremo la pagina."
+				]
+			},
+			"recourse": {
+				"heading": "Ricorsi",
+				"body": [
+					"Se ha segnalato un problema senza ricevere una risposta soddisfacente, può rivolgersi al Défenseur des droits."
+				],
+				"list": [
+					"Modulo online del Défenseur des droits",
+					"Telefono: 09 69 39 00 00",
+					"Per posta (gratuita, senza francobollo): Défenseur des droits, Libre réponse 71120, 75342 Paris CEDEX 07"
+				]
+			}
+		},
+		"fields": {
+			"status": "Conformità",
+			"statusValue": "Non ancora sottoposto ad audit",
+			"framework": "Riferimento",
+			"frameworkValue": "RGAA 4.1",
+			"date": "Data della dichiarazione",
+			"contact": "Contatto"
+		},
+		"defenseurLink": "Contattare il Défenseur des droits"
+	},
+	"PrivacyPage": {
+		"metaTitle": "Privacy · Apercura",
+		"metaDescription": "Come Apercura tratta i dati personali: dati dell’elenco provenienti dai registri pubblici, ancora nessun dato dei pazienti, nessun tracker, e i suoi diritti.",
+		"title": "Privacy",
+		"lead": "Apercura raccoglie il meno possibile. Questa bozza spiega che cosa viene trattato, perché e come esercitare i suoi diritti.",
+		"sections": {
+			"roles": {
+				"heading": "Chi è responsabile",
+				"body": [
+					"Per l’elenco pubblico, Apercura è il titolare del trattamento. Per le prenotazioni online, quando saranno aperte, Apercura tratterà i dati per conto di ciascun professionista, in base a un accordo sul trattamento incluso nelle condizioni per i professionisti."
+				]
+			},
+			"practitioners": {
+				"heading": "Dati sui professionisti",
+				"body": [
+					"Le pagine dell’elenco mostrano informazioni dei registri pubblici: nome, professione, specializzazioni, sedi di esercizio, numeri di telefono pubblicati e settore tariffario. Ogni pagina indica le proprie fonti e la data dell’ultimo aggiornamento.",
+					"La base giuridica è il legittimo interesse: informare il pubblico a partire da dati pubblici. I professionisti non vengono informati uno per uno, il che richiederebbe uno sforzo sproporzionato (articolo 14, paragrafo 5, lettera b del GDPR); la pagina sui dati e un avviso su ogni pagina li informano al suo posto.",
+					"Ogni professionista può opporsi alla pubblicazione della propria pagina."
+				]
+			},
+			"patients": {
+				"heading": "Dati sui pazienti",
+				"body": [
+					"La prenotazione online non è ancora disponibile: oggi Apercura non raccoglie alcun dato dei pazienti. Quando la prenotazione sarà aperta, chiederà solo ciò di cui il professionista ha bisogno, lo cifrerà a livello applicativo e lo cancellerà secondo un calendario (per impostazione predefinita 90 giorni dopo l’appuntamento)."
+				]
+			},
+			"cookies": {
+				"heading": "Cookie e tracker",
+				"body": [
+					"Apercura non usa cookie pubblicitari o di misurazione dell’audience né tracker. Possono essere impostati solo i cookie strettamente necessari al servizio, quindi non serve alcun banner di consenso."
+				]
+			},
+			"rights": {
+				"heading": "I suoi diritti",
+				"body": [
+					"Può chiedere di accedere ai dati che la riguardano, di rettificarli o cancellarli, e opporsi al loro trattamento. Se ritiene che i suoi diritti non siano rispettati, può presentare un reclamo alla CNIL."
+				]
+			}
+		},
+		"fields": {
+			"controller": "Titolare del trattamento",
+			"dpo": "Responsabile della protezione dei dati",
+			"contact": "Contatto per le richieste",
+			"hosting": "Hosting"
+		},
+		"hostedBy": "Ospitato in Francia da un fornitore di hosting certificato HDS ({host})",
+		"objectLink": "Come opporsi a una pagina",
+		"cnilLink": "Presentare un reclamo alla CNIL"
+	},
+	"LegalPage": {
+		"metaTitle": "Note legali · Apercura",
+		"metaDescription": "Note legali di Apercura: editore, direttore della pubblicazione e fornitore di hosting.",
+		"title": "Note legali",
+		"lead": "L’entità giuridica che pubblicherà Apercura non è ancora costituita. I campi qui sotto restano vuoti finché non lo sarà.",
+		"sections": {
+			"publisher": {
+				"heading": "Editore",
+				"body": [
+					"L’editore del sito, come richiesto dalla legge francese sulla fiducia nell’economia digitale (LCEN)."
+				]
+			},
+			"hosting": {
+				"heading": "Fornitore di hosting",
+				"body": ["L’azienda che ospita il sito."]
+			},
+			"ip": {
+				"heading": "Codice e dati",
+				"body": [
+					"Il codice sorgente di Apercura è pubblicato con licenza AGPL-3.0. I dati dell’elenco sono riutilizzati da fonti pubbliche con Licence Ouverte 2.0: la pagina sui dati le elenca con le relative date."
+				]
+			}
+		},
+		"fields": {
+			"name": "Nome",
+			"legalForm": "Forma giuridica",
+			"address": "Indirizzo registrato",
+			"registration": "Numero di iscrizione",
+			"director": "Direttore della pubblicazione",
+			"contact": "Contatto",
+			"hostName": "Hosting",
+			"hostAddress": "Indirizzo dell’host"
+		},
+		"dataLink": "Dati e fonti"
+	},
+	"TermsPage": {
+		"metaTitle": "Condizioni d’uso · Apercura",
+		"metaDescription": "Condizioni d’uso di Apercura (bozza): un elenco gratuito e oggettivo dei professionisti sanitari in Francia.",
+		"title": "Condizioni d’uso",
+		"lead": "Queste condizioni in bozza descrivono il servizio così com’è oggi. Saranno completate e riviste prima del lancio.",
+		"sections": {
+			"service": {
+				"heading": "Il servizio",
+				"body": [
+					"Apercura è un elenco gratuito dei professionisti sanitari iscritti in Francia, creato a partire da open data pubblici. Per usarlo non serve alcun account."
+				]
+			},
+			"content": {
+				"heading": "Che cosa contengono le pagine",
+				"body": [
+					"Le pagine mostrano informazioni oggettive provenienti dai registri pubblici, in un ordine neutro. Non contengono valutazioni, recensioni, pubblicità né posizionamenti a pagamento.",
+					"Le informazioni possono contenere errori o non essere aggiornate: le verifichi con il professionista prima di spostarsi. Ogni pagina indica come segnalare un errore."
+				]
+			},
+			"health": {
+				"heading": "Non è un consiglio medico",
+				"body": [
+					"Apercura non fornisce consigli medici e non è un servizio di emergenza. In caso di emergenza, chiami il 15 (SAMU) o il 112."
+				]
+			},
+			"practitioners": {
+				"heading": "Per i professionisti",
+				"body": [
+					"Rivendicare una pagina sarà gratuito e richiederà una prova d’identità. Il professionista che rivendica una pagina è responsabile delle informazioni che vi aggiunge, che devono restare oggettive, come richiedono i codici di deontologia medica."
+				]
+			},
+			"ip": {
+				"heading": "Codice e dati",
+				"body": [
+					"Il codice sorgente è pubblicato con licenza AGPL-3.0. I dati dell’elenco sono riutilizzati con Licence Ouverte 2.0."
+				]
+			}
+		},
+		"fields": {
+			"effectiveDate": "Data di entrata in vigore",
+			"law": "Legge applicabile e foro competente",
+			"contact": "Contatto"
+		}
+	},
+	"Listing": {
+		"count": "{count, plural, one {# professionista} many {# di professionisti} other {# professionisti}}",
+		"metaTitle": "{count, plural, one {{listing} a {place}: # professionista · Apercura} many {{listing} a {place}: # di professionisti · Apercura} other {{listing} a {place}: # professionisti · Apercura}}",
+		"metaTitlePage": "{listing} a {place}, pagina {page} · Apercura",
+		"metaDescription": "{count, plural, one {# professionista registrato come {occupation} a {place} nel registro nazionale: indirizzi, recapiti, settori tariffari.} many {# di professionisti registrati come {occupation} a {place} nel registro nazionale: indirizzi, recapiti, settori tariffari.} other {# professionisti registrati come {occupation} a {place} nel registro nazionale: indirizzi, recapiti, settori tariffari.}}",
+		"title": "{listing} a {place}",
+		"lead": "{count, plural, one {Il registro nazionale elenca # professionista sotto questa voce con una sede di esercizio a {place}.} many {Il registro nazionale elenca # di professionisti sotto questa voce con una sede di esercizio a {place}.} other {Il registro nazionale elenca # professionisti sotto questa voce con una sede di esercizio a {place}.}}",
+		"practitionersHeading": "{count, plural, one {Il professionista} many {I # di professionisti} other {I # professionisti}}",
+		"practitionersIntro": "In ordine alfabetico. Nessuno paga per comparire qui e nessuno viene classificato.",
+		"rowFacts": "Settore: {sector} · Carte Vitale: {carteVitale}",
+		"columns": {
+			"practitioner": "Professionista",
+			"sector": "Settore",
+			"carteVitale": "Carte Vitale"
+		},
+		"pagination": {
+			"label": "Pagine dell’elenco",
+			"previous": "Pagina precedente",
+			"next": "Pagina successiva",
+			"status": "Pagina {page} di {pages}"
+		},
+		"facts": {
+			"heading": "In cifre",
+			"intro": "I settori tariffari e la Carte Vitale provengono dall’elenco dell’Assurance Maladie, per i professionisti con cui è stato possibile un abbinamento.",
+			"sectorUnknown": "Settore non noto",
+			"carteVitaleYes": "Accettare la Carte Vitale",
+			"carteVitaleNo": "Non accettare la Carte Vitale",
+			"bookingNotOpen": "Non ancora aperto",
+			"sources": "Annuaire Santé (ANS) e Annuaire santé (Assurance Maladie)"
+		},
+		"communesHeading": "{listing}: comuni di {place}",
+		"nearbyHeading": "{listing}: comuni vicini",
+		"establishmentsHeading": "Strutture a {place}",
+		"establishmentsIntro": "Ospedali, cliniche e centri sanitari in cui lavorano i professionisti elencati come {listing}.",
+		"allSpecialties": "Tutte le specializzazioni a {place}",
+		"hubMetaTitle": "{count, plural, one {{listing} in Francia: # professionista · Apercura} many {{listing} in Francia: # di professionisti · Apercura} other {{listing} in Francia: # professionisti · Apercura}}",
+		"hubMetaDescription": "{count, plural, one {# professionista registrato come {occupation} nel registro nazionale, per dipartimento: indirizzi, recapiti, settori tariffari.} many {# di professionisti registrati come {occupation} nel registro nazionale, per dipartimento: indirizzi, recapiti, settori tariffari.} other {# professionisti registrati come {occupation} nel registro nazionale, per dipartimento: indirizzi, recapiti, settori tariffari.}}",
+		"hubTitle": "{listing} in Francia",
+		"hubLead": "{count, plural, one {Il registro nazionale elenca # professionista sotto questa voce con una sede di esercizio in Francia.} many {Il registro nazionale elenca # di professionisti sotto questa voce con una sede di esercizio in Francia.} other {Il registro nazionale elenca # professionisti sotto questa voce con una sede di esercizio in Francia.}}",
+		"departmentsHeading": "{listing} per dipartimento",
+		"departmentsIntro": "Scelga un dipartimento per vederne i professionisti e i comuni.",
+		"browseDirectory": "Sfogliare l’elenco per luogo",
+		"metaTitleShort": "{listing} a {place} · Apercura",
+		"metaDescriptionPage": "{count, plural, one {Pagina {page} di {pages}: # professionista registrato come {occupation} a {place} nel registro nazionale.} many {Pagina {page} di {pages}: # di professionisti registrati come {occupation} a {place} nel registro nazionale.} other {Pagina {page} di {pages}: # professionisti registrati come {occupation} a {place} nel registro nazionale.}}",
+		"hubMetaTitleShort": "{listing} in Francia · Apercura"
+	},
+	"Directory": {
+		"metaTitle": "Elenco dei professionisti sanitari per luogo · Apercura",
+		"metaDescription": "Tutti i dipartimenti della Francia con i loro professionisti sanitari, dal registro nazionale: medici, dentisti e ostetriche.",
+		"title": "Elenco per luogo",
+		"lead": "{count, plural, one {# professionista con una sede di esercizio, per dipartimento.} many {# di professionisti con una sede di esercizio, per dipartimento.} other {# professionisti con una sede di esercizio, per dipartimento.}}",
+		"otherRegion": "Altre sedi",
+		"emptyTitle": "L’elenco non è ancora stato importato",
+		"emptyBody": "Il registro nazionale non è ancora stato importato su questo server. Torni dopo la prossima importazione.",
+		"placeMetaTitle": "Professionisti sanitari a {place} · Apercura",
+		"placeMetaDescription": "{count, plural, one {# professionista a {place}, per specializzazione, dal registro nazionale.} many {# di professionisti a {place}, per specializzazione, dal registro nazionale.} other {# professionisti a {place}, per specializzazione, dal registro nazionale.}}",
+		"placeTitle": "Professionisti sanitari a {place}",
+		"placeLead": "{count, plural, one {# professionista con una sede di esercizio a {place}.} many {# di professionisti con una sede di esercizio a {place}.} other {# professionisti con una sede di esercizio a {place}.}}",
+		"specialtiesHeading": "Per specializzazione",
+		"communesHeading": "Comuni di {place}",
+		"arrondissementsHeading": "Per arrondissement",
+		"establishmentsHeading": "Strutture a {place}",
+		"placeMetaTitleShort": "Professionisti a {place} · Apercura"
+	},
+	"Establishment": {
+		"metaTitle": "{name} · Apercura",
+		"metaTitlePlace": "{name}, {place} · Apercura",
+		"metaDescription": "{count, plural, one {{name}: indirizzo, centralino e il professionista che vi lavora, dal registro nazionale.} many {{name}: indirizzo, centralino e i # di professionisti che vi lavorano, dal registro nazionale.} other {{name}: indirizzo, centralino e i # professionisti che vi lavorano, dal registro nazionale.}}",
+		"directory": "Elenco",
+		"folio": "FINESS {finess}",
+		"lead": "{count, plural, one {{kind}. Il registro nazionale elenca # professionista che lavora qui.} many {{kind}. Il registro nazionale elenca # di professionisti che lavorano qui.} other {{kind}. Il registro nazionale elenca # professionisti che lavorano qui.}}",
+		"addressHeading": "Indirizzo",
+		"finess": "Numero FINESS",
+		"action": {
+			"call": "Gli appuntamenti si prendono tramite la struttura. Chiami il centralino e chieda del reparto di cui ha bisogno.",
+			"noPhone": "Per questa struttura non è pubblicato alcun numero di telefono.",
+			"noPhoneHint": "Cerchi i suoi dati sul suo sito web o su ameli.fr."
+		},
+		"practitionersHeading": "{count, plural, one {Il professionista che lavora qui} many {I # di professionisti che lavorano qui} other {I # professionisti che lavorano qui}}",
+		"practitionersIntro": "Per specializzazione, in ordine alfabetico.",
+		"otherProfessions": "Altre professioni",
+		"source": "Annuaire Santé (ANS) e FINESS+"
+	},
+	"SearchForm": {
+		"specialties": "Specializzazioni",
+		"practitioners": "Professionisti",
+		"places": "Sedi",
+		"department": "Dipartimento",
+		"nearMe": "Vicino a me",
+		"locating": "Ricerca della sua posizione…",
+		"geoDenied": "La geolocalizzazione è disattivata per questo sito. Digiti invece una città o un codice postale.",
+		"geoUnavailable": "Non è stato possibile trovare la sua posizione. Digiti invece una città o un codice postale.",
+		"searching": "Ricerca in corso…",
+		"noSuggestion": "Nessun suggerimento. Prema «Ricerca» per vedere tutti i risultati."
+	},
+	"OgImage": {
+		"runningHead": "Elenco aperto dei professionisti sanitari",
+		"wordmark": "Apercura",
+		"titles": {
+			"medecin": "Ogni medico in Francia ha già una pagina.",
+			"chirurgien-dentiste": "Ogni dentista in Francia ha già una pagina.",
+			"sage-femme": "Ogni ostetrica in Francia ha già una pagina.",
+			"annuaire": "Professionisti sanitari, per specializzazione e per luogo."
+		},
+		"footer": "Gratuito · Open source · Niente valutazioni né pubblicità"
+	},
+	"taxonomy": {
+		"profession": {
+			"medecin": "{gender, select, female {Medica} other {Medico}}",
+			"pharmacien": "Farmacista",
+			"audioprothesiste": "Audioprotesista",
+			"opticien-lunetier": "{gender, select, female {Ottica} other {Ottico}}",
+			"assistant-dentaire": "Assistente alla poltrona",
+			"physicien-medical": "{gender, select, female {Fisica medica} other {Fisico medico}}",
+			"aide-soignant": "{gender, select, female {Operatrice socio-sanitaria} other {Operatore socio-sanitario}}",
+			"ambulancier": "{gender, select, female {Autista soccorritrice} other {Autista soccorritore}}",
+			"auxiliaire-de-puericulture": "{gender, select, female {Puericultrice} other {Puericultore}}",
+			"preparateur-en-pharmacie-hospitaliere": "{gender, select, female {Tecnica di farmacia ospedaliera} other {Tecnico di farmacia ospedaliera}}",
+			"preparateur-en-pharmacie": "{gender, select, female {Tecnica di farmacia} other {Tecnico di farmacia}}",
+			"chirurgien-dentiste": "Dentista",
+			"sage-femme": "Ostetrica",
+			"infirmier": "{gender, select, female {Infermiera} other {Infermiere}}",
+			"infirmier-psychiatrique": "{gender, select, female {Infermiera psichiatrica} other {Infermiere psichiatrico}}",
+			"masseur-kinesitherapeute": "Fisioterapista",
+			"pedicure-podologue": "{gender, select, female {Podologa} other {Podologo}}",
+			"orthoprothesiste": "Protesista",
+			"podo-orthesiste": "{gender, select, female {Podotecnica} other {Podotecnico}}",
+			"orthopediste-orthesiste": "{gender, select, female {Tecnica ortopedica} other {Tecnico ortopedico}}",
+			"oculariste": "Protesista oculare",
+			"epithesiste": "Epitesista",
+			"technicien-de-laboratoire-medical": "{gender, select, female {Tecnica di laboratorio biomedico} other {Tecnico di laboratorio biomedico}}",
+			"orthophoniste": "Logopedista",
+			"orthoptiste": "Ortottista",
+			"psychologue": "{gender, select, female {Psicologa} other {Psicologo}}",
+			"ergotherapeute": "Terapista occupazionale",
+			"dieteticien": "Dietista",
+			"psychomotricien": "Psicomotricista",
+			"manipulateur-erm": "{gender, select, female {Tecnica di radiologia} other {Tecnico di radiologia}}",
+			"assistant-de-service-social": "Assistente sociale",
+			"osteopathe": "Osteopata",
+			"psychotherapeute": "Psicoterapeuta",
+			"chiropracteur": "{gender, select, female {Chiropratica} other {Chiropratico}}"
+		},
+		"listing": {
+			"aide-soignant": "{gender, select, female {Operatrice socio-sanitaria} other {Operatore socio-sanitario}}",
+			"allergologue": "{gender, select, female {Allergologa} other {Allergologo}}",
+			"ambulancier": "{gender, select, female {Autista soccorritrice} other {Autista soccorritore}}",
+			"anatomopathologiste": "{gender, select, female {Anatomopatologa} other {Anatomopatologo}}",
+			"anesthesiste-reanimateur": "Anestesista",
+			"assistant-de-service-social": "Assistente sociale",
+			"assistant-dentaire": "Assistente alla poltrona",
+			"audioprothesiste": "Audioprotesista",
+			"auxiliaire-de-puericulture": "{gender, select, female {Puericultrice} other {Puericultore}}",
+			"biologiste-medical": "{gender, select, female {Medica biologa} other {Medico biologo}}",
+			"cardiologue": "{gender, select, female {Cardiologa} other {Cardiologo}}",
+			"chiropracteur": "{gender, select, female {Chiropratica} other {Chiropratico}}",
+			"chirurgien-dentiste": "Dentista",
+			"chirurgien-general": "{gender, select, female {Chirurga generale} other {Chirurgo generale}}",
+			"chirurgien-maxillo-facial": "{gender, select, female {Chirurga maxillo-facciale} other {Chirurgo maxillo-facciale}}",
+			"chirurgien-oral": "{gender, select, female {Chirurga orale} other {Chirurgo orale}}",
+			"chirurgien-orthopediste": "{gender, select, female {Chirurga ortopedica} other {Chirurgo ortopedico}}",
+			"chirurgien-pediatrique": "{gender, select, female {Chirurga pediatrica} other {Chirurgo pediatrico}}",
+			"chirurgien-plasticien": "{gender, select, female {Chirurga plastica} other {Chirurgo plastico}}",
+			"chirurgien-thoracique-et-cardiovasculaire": "{gender, select, female {Chirurga toracica e cardiovascolare} other {Chirurgo toracico e cardiovascolare}}",
+			"chirurgien-vasculaire": "{gender, select, female {Chirurga vascolare} other {Chirurgo vascolare}}",
+			"chirurgien-visceral": "{gender, select, female {Chirurga viscerale} other {Chirurgo viscerale}}",
+			"dermatologue": "{gender, select, female {Dermatologa} other {Dermatologo}}",
+			"dieteticien": "Dietista",
+			"endocrinologue": "{gender, select, female {Endocrinologa} other {Endocrinologo}}",
+			"epithesiste": "Epitesista",
+			"ergotherapeute": "Terapista occupazionale",
+			"gastro-enterologue": "{gender, select, female {Gastroenterologa} other {Gastroenterologo}}",
+			"geneticien": "Genetista",
+			"geriatre": "Geriatra",
+			"gynecologue": "{gender, select, female {Ginecologa} other {Ginecologo}}",
+			"gynecologue-obstetricien": "{gender, select, female {Ginecologa ostetrica} other {Ginecologo ostetrico}}",
+			"hematologue": "{gender, select, female {Ematologa} other {Ematologo}}",
+			"infectiologue": "{gender, select, female {Infettivologa} other {Infettivologo}}",
+			"infirmier": "{gender, select, female {Infermiera} other {Infermiere}}",
+			"infirmier-anesthesiste": "{gender, select, female {Infermiera anestesista} other {Infermiere anestesista}}",
+			"infirmier-de-bloc-operatoire": "{gender, select, female {Infermiera di sala operatoria} other {Infermiere di sala operatoria}}",
+			"infirmier-en-pratique-avancee": "{gender, select, female {Infermiera di pratica avanzata} other {Infermiere di pratica avanzata}}",
+			"infirmier-psychiatrique": "{gender, select, female {Infermiera psichiatrica} other {Infermiere psichiatrico}}",
+			"infirmier-puericulteur": "{gender, select, female {Infermiera pediatrica} other {Infermiere pediatrico}}",
+			"interniste": "Internista",
+			"manipulateur-erm": "{gender, select, female {Tecnica di radiologia} other {Tecnico di radiologia}}",
+			"masseur-kinesitherapeute": "Fisioterapista",
+			"medecin": "{gender, select, female {Medica} other {Medico}}",
+			"medecin-chercheur": "{gender, select, female {Medica ricercatrice} other {Medico ricercatore}}",
+			"medecin-de-sante-publique": "{gender, select, female {Medica di sanità pubblica} other {Medico di sanità pubblica}}",
+			"medecin-du-travail": "{gender, select, female {Medica del lavoro} other {Medico del lavoro}}",
+			"medecin-generaliste": "{gender, select, female {Medica di medicina generale} other {Medico di medicina generale}}",
+			"medecin-legiste": "{gender, select, female {Medica legale} other {Medico legale}}",
+			"medecin-nucleaire": "{gender, select, female {Medica nucleare} other {Medico nucleare}}",
+			"medecin-reanimateur": "{gender, select, female {Medica di terapia intensiva} other {Medico di terapia intensiva}}",
+			"medecin-reeducateur": "{gender, select, female {Medica fisiatra (medicina fisica e riabilitativa)} other {Medico fisiatra (medicina fisica e riabilitativa)}}",
+			"medecin-vasculaire": "{gender, select, female {Angiologa} other {Angiologo}}",
+			"nephrologue": "{gender, select, female {Nefrologa} other {Nefrologo}}",
+			"neurochirurgien": "{gender, select, female {Neurochirurga} other {Neurochirurgo}}",
+			"neurologue": "{gender, select, female {Neurologa} other {Neurologo}}",
+			"neuropsychiatre": "Neuropsichiatra",
+			"oculariste": "Protesista oculare",
+			"oncologue": "{gender, select, female {Oncologa} other {Oncologo}}",
+			"ophtalmologue": "{gender, select, female {Oftalmologa} other {Oftalmologo}}",
+			"opticien-lunetier": "{gender, select, female {Ottica} other {Ottico}}",
+			"orl": "Otorinolaringoiatra",
+			"orthodontiste": "Ortodontista",
+			"orthopediste-orthesiste": "{gender, select, female {Tecnica ortopedica} other {Tecnico ortopedico}}",
+			"orthophoniste": "Logopedista",
+			"orthoprothesiste": "Protesista",
+			"orthoptiste": "Ortottista",
+			"osteopathe": "Osteopata",
+			"pediatre": "Pediatra",
+			"pedicure-podologue": "{gender, select, female {Podologa} other {Podologo}}",
+			"pedopsychiatre": "Neuropsichiatra infantile",
+			"pharmacien": "Farmacista",
+			"physicien-medical": "{gender, select, female {Fisica medica} other {Fisico medico}}",
+			"pneumologue": "{gender, select, female {Pneumologa} other {Pneumologo}}",
+			"podo-orthesiste": "{gender, select, female {Podotecnica} other {Podotecnico}}",
+			"preparateur-en-pharmacie": "{gender, select, female {Tecnica di farmacia} other {Tecnico di farmacia}}",
+			"preparateur-en-pharmacie-hospitaliere": "{gender, select, female {Tecnica di farmacia ospedaliera} other {Tecnico di farmacia ospedaliera}}",
+			"psychiatre": "Psichiatra",
+			"psychologue": "{gender, select, female {Psicologa} other {Psicologo}}",
+			"psychomotricien": "Psicomotricista",
+			"psychotherapeute": "Psicoterapeuta",
+			"radiologue": "{gender, select, female {Radiologa} other {Radiologo}}",
+			"radiotherapeute": "{gender, select, female {Radioterapista oncologa} other {Radioterapista oncologo}}",
+			"rhumatologue": "{gender, select, female {Reumatologa} other {Reumatologo}}",
+			"sage-femme": "Ostetrica",
+			"specialiste-medecine-bucco-dentaire": "Specialista in medicina orale",
+			"stomatologue": "{gender, select, female {Stomatologa} other {Stomatologo}}",
+			"technicien-de-laboratoire-medical": "{gender, select, female {Tecnica di laboratorio biomedico} other {Tecnico di laboratorio biomedico}}",
+			"urgentiste": "{gender, select, female {Medica di pronto soccorso} other {Medico di pronto soccorso}}",
+			"urologue": "{gender, select, female {Urologa} other {Urologo}}"
+		},
+		"practiceKind": {
+			"office": "Studio",
+			"health_center": "Centro sanitario",
+			"hospital": "Ospedale o clinica",
+			"locum": "{gender, select, female {Sostituta} other {Sostituto}}",
+			"non_clinical": "Attività non clinica"
+		},
+		"mode": {
+			"L": "Libero professionista",
+			"S": "Dipendente",
+			"B": "Volontario",
+			"I": "Indiretto"
+		},
+		"title": {
+			"DR": "Dott.",
+			"PR": "Prof.",
+			"MC": "Medico capo",
+			"MG": "Generale medico",
+			"PC": "Farmacista capo",
+			"PG": "Generale farmacista"
+		},
+		"billingSector": {
+			"0": "Non convenzionato con l’Assicurazione sanitaria francese",
+			"1": "Settore 1 (onorari standard)",
+			"2": "Settore 1 con onorari aggiuntivi permanenti",
+			"3": "Settore 2 (onorari aggiuntivi)"
+		},
+		"optam": {
+			"optam": "Aderente all’OPTAM (onorari aggiuntivi limitati)",
+			"optam_aco": "Aderente all’OPTAM-ACO (onorari aggiuntivi limitati)"
+		},
+		"role": {
+			"FON-01": "Titolare dello studio",
+			"FON-02": "Socio di una società di professionisti",
+			"FON-03": "Farmacista titolare",
+			"FON-04": "Farmacista sostituto",
+			"FON-05": "Associato",
+			"FON-07": "Responsabile ad interim",
+			"FON-09": "Direttore della struttura",
+			"FON-17": "Professionista associato",
+			"FON-18": "Assistente",
+			"FON-19": "Medico consulente",
+			"FON-21": "Medico scolastico",
+			"FON-22": "Sostituto",
+			"FON-23": "Responsabile",
+			"FON-24": "Medico di sanità pubblica",
+			"FON-29": "Medico del lavoro",
+			"FON-32": "Medico regolatore",
+			"FON-33": "Dipendente",
+			"FON-36": "Delegato",
+			"FON-37": "Responsabile della farmacia ospedaliera",
+			"FON-39": "Consultorio materno-infantile",
+			"FON-40": "Biologo responsabile",
+			"FON-41": "Medico biologo",
+			"FON-42": "Assistente associato",
+			"FON-43": "Dirigente sanitario",
+			"FON-45": "Direttore delle cure",
+			"FON-46": "Docente",
+			"FON-47": "Studente sostituto",
+			"FON-48": "Specializzando",
+			"FON-49": "Farmacista responsabile",
+			"FON-50": "Farmacista collaboratore",
+			"FON-51": "Sostituto a tempo parziale",
+			"FON-52": "Studente militare",
+			"FON-54": "Continuità assistenziale",
+			"FON-55": "Servizio ospedaliero pubblico",
+			"FON-56": "Gruppo di cooperazione sanitaria",
+			"FON-57": "Medico in formazione",
+			"FON-58": "Attività in pool",
+			"FON-59": "Direttore di filiale",
+			"FON-60": "Farmacista sostituto",
+			"FON-61": "Fornitore di servizi",
+			"FON-62": "Consultazioni decentrate",
+			"FON-63": "Coordinatore di casa di cura",
+			"FON-65": "Farmacista sostituto",
+			"FON-AU": "Ruolo non specificato"
+		}
+	},
+	"booking": {
+		"presets": {
+			"consultation": "Visita",
+			"firstConsultation": "Prima visita",
+			"checkup": "Controllo",
+			"emergency": "Urgenza",
+			"scaling": "Detartrasi",
+			"orthodonticCheckup": "Controllo ortodontico",
+			"pregnancyFollowUp": "Controllo della gravidanza",
+			"perinealRehabilitation": "Riabilitazione del pavimento pelvico"
+		},
+		"email": {
+			"wordmark": "Apercura",
+			"runningHead": "Appuntamento",
+			"practiceRunningHead": "Area professionisti",
+			"footer": "Apercura: l’elenco aperto dei professionisti sanitari in Francia. Gratuito e open source.",
+			"summary": "Appuntamento con {practitioner}",
+			"summaryNoName": "Appuntamento",
+			"labels": {
+				"with": "Con",
+				"date": "Data",
+				"time": "Ora",
+				"address": "Indirizzo",
+				"until": "Rispondere entro"
+			},
+			"manageAction": "Vedere o modificare il mio appuntamento",
+			"agendaAction": "Aprire l’agenda",
+			"fallback": "Se il pulsante non funziona, copi questo link nel suo browser:",
+			"calendarNote": "Il file allegato aggiunge l’appuntamento al suo calendario.",
+			"greeting": "Gentile {name},",
+			"code": {
+				"subject": "Il suo codice: {code}",
+				"preview": "Inserisca questo codice per confermare il suo appuntamento.",
+				"title": "Il suo codice di conferma",
+				"body": "Inserisca questo codice nella pagina di prenotazione per confermare il suo appuntamento.",
+				"expiry": "Il codice è valido per 30 minuti.",
+				"ignore": "Non ha chiesto un appuntamento? Ignori questa e-mail: non succederà nulla."
+			},
+			"confirmed": {
+				"subject": "Appuntamento confermato con {practitioner}",
+				"preview": "Il suo appuntamento è confermato.",
+				"title": "Il suo appuntamento è confermato",
+				"body": "Ecco il suo appuntamento."
+			},
+			"pending": {
+				"subject": "Richiesta di appuntamento inviata a {practitioner}",
+				"preview": "Lo studio risponderà alla sua richiesta.",
+				"title": "La sua richiesta è stata inviata",
+				"body": "Lo studio conferma personalmente i suoi appuntamenti. Riceverà un’e-mail con la sua risposta."
+			},
+			"accepted": {
+				"subject": "Appuntamento confermato con {practitioner}",
+				"preview": "Lo studio ha accettato la sua richiesta.",
+				"title": "Il suo appuntamento è confermato",
+				"body": "Lo studio ha accettato la sua richiesta."
+			},
+			"declined": {
+				"subject": "Richiesta di appuntamento non accettata",
+				"preview": "Lo studio non ha potuto accettare la sua richiesta.",
+				"title": "La sua richiesta non è stata accettata",
+				"body": "Lo studio non ha potuto accettare la sua richiesta. Può scegliere un altro orario su Apercura."
+			},
+			"expired": {
+				"subject": "Richiesta di appuntamento senza risposta",
+				"preview": "Lo studio non ha risposto in tempo alla sua richiesta.",
+				"title": "La sua richiesta non ha ricevuto risposta in tempo",
+				"body": "Lo studio non ha risposto in tempo alla sua richiesta, quindi l’orario è di nuovo libero. Può scegliere un altro orario su Apercura."
+			},
+			"cancelledByPatient": {
+				"subject": "Appuntamento annullato",
+				"preview": "Il suo appuntamento è stato annullato.",
+				"title": "Il suo appuntamento è annullato",
+				"body": "Il suo appuntamento è stato annullato, come ha chiesto."
+			},
+			"cancelledByPractice": {
+				"subject": "Appuntamento annullato dallo studio",
+				"preview": "Lo studio ha annullato il suo appuntamento.",
+				"title": "Il suo appuntamento è annullato",
+				"body": "Lo studio ha dovuto annullare il suo appuntamento.",
+				"message": "Messaggio dello studio: «{message}»"
+			},
+			"rescheduled": {
+				"subject": "Appuntamento spostato",
+				"preview": "Il suo appuntamento ha un nuovo orario.",
+				"title": "Il suo appuntamento è stato spostato",
+				"body": "Ecco il nuovo orario del suo appuntamento."
+			},
+			"reminder": {
+				"subject": "Promemoria: appuntamento il {date}",
+				"preview": "Il suo appuntamento si avvicina.",
+				"title": "Il suo appuntamento si avvicina",
+				"body": "Un promemoria del suo appuntamento. Se non può venire, lo annulli, così l’orario potrà andare a qualcun altro."
+			},
+			"practiceEntry": {
+				"subject": "È stato registrato un appuntamento per questo indirizzo",
+				"preview": "Apra il link per vederlo.",
+				"title": "È stato registrato un appuntamento per questo indirizzo",
+				"body": "Uno studio ha registrato su Apercura un appuntamento per questo indirizzo e-mail. Apra il link per vederlo e per confermare che questo indirizzo è suo.",
+				"ignore": "Non è lei? Ignori questa e-mail: non seguirà nessun altro messaggio."
+			},
+			"practiceNew": {
+				"subject": "Nuovo appuntamento il {date}",
+				"preview": "Un paziente ha prenotato online.",
+				"title": "Nuovo appuntamento",
+				"body": "Un paziente ha prenotato un appuntamento online."
+			},
+			"practiceRequest": {
+				"subject": "Richiesta di appuntamento da esaminare ({date})",
+				"preview": "Un paziente attende la sua risposta.",
+				"title": "Richiesta di appuntamento da esaminare",
+				"body": "Un paziente ha chiesto un appuntamento. Lo accetti o lo rifiuti nell’agenda prima della scadenza."
+			},
+			"practiceCancelled": {
+				"subject": "Appuntamento annullato dal paziente ({date})",
+				"preview": "Un paziente ha annullato un appuntamento.",
+				"title": "Appuntamento annullato",
+				"body": "Un paziente ha annullato un appuntamento. L’orario è di nuovo libero."
+			},
+			"practiceRescheduled": {
+				"subject": "Appuntamento spostato dal paziente ({date})",
+				"preview": "Un paziente ha spostato un appuntamento.",
+				"title": "Appuntamento spostato",
+				"body": "Un paziente ha spostato un appuntamento a questo nuovo orario."
+			},
+			"bookAgainAction": "Scegliere un altro orario"
+		},
+		"panel": {
+			"title": "Prenotare un appuntamento",
+			"close": "Chiudere",
+			"with": "Con {practitioner}",
+			"step": "Passaggio {current} di {total}: {name}",
+			"steps": {
+				"reason": "Motivo",
+				"slot": "Ora",
+				"details": "I suoi dati",
+				"code": "Codice",
+				"done": "Fatto"
+			},
+			"back": "Indietro",
+			"continue": "Continuare",
+			"pending": "Attenda…",
+			"loading": "Caricamento dell’agenda del professionista…",
+			"unavailableTitle": "La prenotazione online non è disponibile",
+			"unavailableBody": "L’agenda online di questo professionista è chiusa per ora. Telefoni allo studio per fissare un appuntamento.",
+			"loadError": "Non è stato possibile caricare l’agenda. Verifichi la connessione, poi riprovi.",
+			"retry": "Riprovare",
+			"summary": {
+				"with": "Con",
+				"place": "Sede",
+				"reason": "Motivo",
+				"date": "Data",
+				"time": "Ora",
+				"patient": "Paziente"
+			},
+			"reason": {
+				"heading": "Qual è il motivo dell’appuntamento?",
+				"place": "Sede",
+				"type": "Motivo dell’appuntamento",
+				"duration": "{minutes} min",
+				"newOnly": "solo prima visita",
+				"existingOnly": "pazienti già seguiti",
+				"required": "Scelga un motivo.",
+				"instructions": "Nota dello studio",
+				"noNewPatients": "Questo studio non accetta nuovi pazienti online: la sua richiesta resterà in attesa della sua risposta."
+			},
+			"slot": {
+				"heading": "Scegliere un orario",
+				"range": "Da {from} a {to}",
+				"previous": "14 giorni precedenti",
+				"next": "Prossimi 14 giorni",
+				"timeZone": "Orari dello studio ({zone}).",
+				"repeatedHour": "Il {day} si torna all’ora solare: l’ora tra le 02:00 e le 03:00 si ripete due volte, quindi i suoi orari mostrano lo scostamento da UTC.",
+				"emptyTitle": "Nessun orario libero dal {from} al {to}",
+				"emptyBody": "Consulti i prossimi 14 giorni o telefoni allo studio.",
+				"required": "Scelga un orario nella griglia.",
+				"chosen": "Scelto: {slot}",
+				"loading": "Caricamento degli orari liberi…"
+			},
+			"details": {
+				"heading": "I suoi dati",
+				"lead": "Inviamo un codice al suo indirizzo e-mail per confermare l’appuntamento. Non viene creato alcun account.",
+				"firstName": "Nome",
+				"lastName": "Cognome",
+				"email": "Indirizzo e-mail",
+				"emailHint": "Il codice e il link per gestire l’appuntamento vengono inviati qui.",
+				"phone": "Telefono cellulare o fisso",
+				"phoneOptional": "Telefono (facoltativo)",
+				"phoneHint": "Lo studio chiama questo numero solo per questo appuntamento.",
+				"firstVisit": "È la sua prima visita da questo professionista?",
+				"firstVisitYes": "Sì, è la mia prima visita",
+				"firstVisitNo": "No, li ho già visti",
+				"privacy": "I suoi dati sono cifrati, usati solo per questo appuntamento e cancellati automaticamente dopo di esso.",
+				"submit": "Ottenere il codice",
+				"requiredFirstName": "Inserisca il suo nome.",
+				"requiredLastName": "Inserisca il suo cognome.",
+				"invalidEmail": "Inserisca un indirizzo e-mail come nome@example.fr.",
+				"invalidPhone": "Inserisca un numero di telefono come 06 12 34 56 78.",
+				"requiredFirstVisit": "Risponda a questa domanda.",
+				"website": "Lasci vuoto questo campo"
+			},
+			"altcha": {
+				"label": "Verifica automatica che lei non sia un robot",
+				"verifying": "Verifica in corso…",
+				"verified": "Verificato",
+				"error": "La verifica non è riuscita. Riprovi.",
+				"expired": "La verifica è scaduta. Riprovi.",
+				"verificationRequired": "Attenda il termine della verifica.",
+				"waitAlert": "Verifica in corso, attenda.",
+				"loading": "Caricamento…",
+				"reload": "Riprovare",
+				"verify": "Verificare",
+				"cancel": "Annullare",
+				"enterCode": "Inserire il codice",
+				"enterCodeAria": "Inserisca il codice che sente. Prema Spazio per riprodurre l’audio.",
+				"enterCodeFromImage": "Per continuare, inserisca il codice mostrato nell’immagine.",
+				"getAudioChallenge": "Ascoltare il codice",
+				"ariaLinkLabel": "ALTCHA"
+			},
+			"code": {
+				"heading": "Inserisca il codice",
+				"lead": "Abbiamo inviato un codice a 6 cifre a {email}. Potrebbe impiegare un minuto ad arrivare; controlli anche la cartella dello spam.",
+				"field": "Codice a 6 cifre",
+				"hint": "Il codice è valido per 30 minuti.",
+				"held": "Questo orario è riservato per lei fino alle {time}.",
+				"submit": "Confermare l’appuntamento",
+				"resend": "Inviare un nuovo codice",
+				"resendIn": "Inviare un nuovo codice ({seconds} s)",
+				"resent": "Un nuovo codice è in arrivo a {email}.",
+				"sendsLeft": "{count, plural, one {Può chiedere ancora # codice.} many {Può chiedere ancora # di codici.} other {Può chiedere ancora # codici.}}",
+				"noSendsLeft": "Non è possibile inviare altri codici.",
+				"invalid": "{count, plural, one {Questo codice non è corretto. Resta # tentativo.} many {Questo codice non è corretto. Restano # di tentativi.} other {Questo codice non è corretto. Restano # tentativi.}}",
+				"required": "Inserisca le 6 cifre del codice.",
+				"changeEmail": "Modificare i miei dati"
+			},
+			"done": {
+				"confirmedTitle": "Il suo appuntamento è confermato",
+				"confirmedBody": "Un’e-mail di conferma è in arrivo a {email}. Contiene il link per annullare o spostare l’appuntamento.",
+				"pendingTitle": "La sua richiesta è stata inviata",
+				"pendingBody": "Questo studio conferma personalmente i suoi appuntamenti. Risponde entro {deadline}; riceverà la sua risposta via e-mail a {email}.",
+				"pendingNote": "L’orario resta riservato per lei finché lo studio non risponde.",
+				"calendar": "Aggiungere al mio calendario (.ics)",
+				"calendarHint": "Il file si apre nel calendario del suo telefono o computer.",
+				"close": "Chiudere",
+				"bookedMark": "Prenotato",
+				"pendingMark": "In attesa dello studio"
+			},
+			"taken": {
+				"title": "Questo orario è appena stato preso",
+				"body": "Qualcuno lo ha prenotato un attimo fa. Ecco gli orari liberi più vicini:",
+				"none": "Nessun altro orario libero è vicino a questo. Scelga un altro orario nell’agenda.",
+				"choose": "Scegliere {slot}",
+				"seeAgenda": "Vedere tutta l’agenda",
+				"picked": "Nuovo orario: {slot}. Verifichi i suoi dati, poi richieda di nuovo il codice."
+			},
+			"errors": {
+				"RATE_LIMITED": "Troppi tentativi da questa connessione. Attenda qualche minuto o telefoni allo studio.",
+				"PROOF_REQUIRED": "La verifica automatica non è riuscita. Riprovi.",
+				"INVALID_INPUT": "Alcuni dati non sono validi. Verifichi i campi qui sopra.",
+				"INVALID_SLOT": "Questo orario non è più disponibile. Ne scelga un altro.",
+				"CODE_EXPIRED": "Questo codice è scaduto. Chieda un nuovo codice o scelga di nuovo l’orario.",
+				"TOO_MANY_ATTEMPTS": "Troppi codici errati: questo orario è stato liberato. Scelga di nuovo un orario.",
+				"RESEND_TOO_SOON": "Attenda un minuto prima di chiedere un nuovo codice.",
+				"RESEND_LIMIT": "Non è possibile inviare altri codici per questa prenotazione. Scelga di nuovo l’orario.",
+				"TRANSITION_REFUSED": "Questa prenotazione non può più essere completata. Scelga di nuovo l’orario.",
+				"BOOKING_DISABLED": "La prenotazione online non è disponibile al momento. Telefoni allo studio.",
+				"NOT_FOUND": "Questa prenotazione non esiste più. Scelga di nuovo l’orario.",
+				"IDEMPOTENCY_CONFLICT": "Questa richiesta è già stata inviata. Scelga di nuovo l’orario.",
+				"generic": "Si è verificato un problema da parte nostra. Riprovi tra un momento o telefoni allo studio.",
+				"restart": "Scegliere di nuovo un orario"
+			}
+		},
+		"manage": {
+			"metaTitle": "Il suo appuntamento",
+			"runningHead": "Appuntamento",
+			"title": "Il suo appuntamento",
+			"loading": "Caricamento del suo appuntamento…",
+			"missingTitle": "Questo link è incompleto",
+			"missingBody": "Riapra il link dell’e-mail di conferma. Se lo ha copiato, si assicuri di averlo copiato per intero.",
+			"invalidTitle": "Questo link non funziona più",
+			"invalidBody": "L’appuntamento potrebbe essere stato cancellato dopo la sua data, oppure il link non è stato copiato per intero. Per qualsiasi domanda, contatti lo studio.",
+			"errorBody": "Non è stato possibile caricare il suo appuntamento. Verifichi la connessione, poi riprovi.",
+			"retry": "Riprovare",
+			"status": {
+				"label": "Stato",
+				"held": "Non ancora confermato",
+				"pending": "In attesa dello studio",
+				"confirmed": "Confermato",
+				"declined": "Non accettato dallo studio",
+				"expired": "Non confermato in tempo",
+				"cancelled_by_patient": "Annullato da lei",
+				"cancelled_by_practice": "Annullato dallo studio",
+				"no_show": "Mancato",
+				"completed": "Passato"
+			},
+			"pendingUntil": "Lo studio risponde entro {deadline}.",
+			"rows": {
+				"with": "Con",
+				"date": "Data",
+				"time": "Ora",
+				"reason": "Motivo",
+				"place": "Sede",
+				"patient": "Paziente"
+			},
+			"practitionerPage": "Vedere la pagina del professionista",
+			"confirmEmail": {
+				"title": "Confermi il suo indirizzo e-mail",
+				"body": "Lo studio ha digitato questo indirizzo per lei. Confermi che è suo per ricevere via e-mail promemoria e modifiche.",
+				"action": "Questo indirizzo è mio",
+				"done": "Grazie: il suo indirizzo è confermato."
+			},
+			"actions": "Che cosa può fare",
+			"reschedule": "Spostare l’appuntamento",
+			"rescheduleHeading": "Scegliere un nuovo orario",
+			"rescheduleSubmit": "Spostare a {slot}",
+			"rescheduleCancel": "Mantenere l’orario attuale",
+			"rescheduled": "Il suo appuntamento è stato spostato. Un’e-mail di conferma è in arrivo.",
+			"cancel": "Annullare l’appuntamento",
+			"cancelConfirmTitle": "Annullare questo appuntamento?",
+			"cancelConfirmBody": "L’orario sarà proposto ad altri pazienti. L’operazione non può essere annullata.",
+			"cancelConfirm": "Sì, annullare",
+			"cancelKeep": "No, mantenerla",
+			"cancelled": "Il suo appuntamento è annullato. Un’e-mail di conferma è in arrivo.",
+			"cutoffPassed": "{hours, plural, one {Le modifiche online si chiudono # ora prima dell’appuntamento. Per annullarlo o spostarlo adesso, telefoni allo studio.} many {Le modifiche online si chiudono # di ore prima dell’appuntamento. Per annullarlo o spostarlo adesso, telefoni allo studio.} other {Le modifiche online si chiudono # ore prima dell’appuntamento. Per annullarlo o spostarlo adesso, telefoni allo studio.}}",
+			"cutoffPassedMinutes": "Le modifiche online si chiudono {minutes} minuti prima dell’appuntamento. Per annullarlo o spostarlo ora, telefoni allo studio.",
+			"call": "Chiamare il {phone}",
+			"closedNote": "Questo appuntamento non può più essere modificato online.",
+			"bookAgain": "Prenotare un altro appuntamento",
+			"errors": {
+				"TRANSITION_REFUSED": "Questo appuntamento non può più essere modificato online. Telefoni allo studio.",
+				"RATE_LIMITED": "Troppi tentativi da questa connessione. Attenda un po’ o telefoni allo studio.",
+				"NOT_FOUND": "Non è stato possibile trovare questo appuntamento.",
+				"INVALID_SLOT": "Questo orario non è più disponibile. Ne scelga un altro.",
+				"BOOKING_DISABLED": "Le modifiche online non sono disponibili al momento. Telefoni allo studio.",
+				"generic": "Si è verificato un problema da parte nostra. Riprovi tra un momento o telefoni allo studio."
+			},
+			"currentShort": "attuale",
+			"currentSpoken": "il suo orario attuale",
+			"currentLegend": "Il suo orario attuale, {slot}, è indicato come «attuale» nella griglia.",
+			"searchAction": "Trovare un professionista"
+		}
+	},
+	"auth": {
+		"runningHead": "Area professionisti",
+		"metadata": {
+			"signIn": "Accesso · Apercura",
+			"signUp": "Creare un account · Apercura",
+			"verifyEmail": "Conferma dell’e-mail · Apercura",
+			"challenge": "Confermare la propria identità · Apercura",
+			"security": "Sicurezza · Apercura",
+			"home": "Il suo spazio · Apercura"
+		},
+		"common": {
+			"email": "Indirizzo e-mail",
+			"password": "Password",
+			"pending": "Attenda",
+			"loading": "Caricamento",
+			"signOut": "Disconnettersi",
+			"signingOut": "Disconnessione",
+			"totpCode": "Codice a 6 cifre dell’app di autenticazione"
+		},
+		"errors": {
+			"generic": "Si è verificato un problema. Riprovi tra un momento.",
+			"tooManyRequests": "Troppi tentativi. Attenda un minuto, poi riprovi.",
+			"invalidCredentials": "Questo indirizzo e-mail e questa password non corrispondono.",
+			"emailNotVerified": "Confermi prima il suo indirizzo e-mail: le abbiamo appena inviato un nuovo link.",
+			"invalidCode": "Questo codice non è valido. Verifichi il codice e riprovi.",
+			"locked": "Troppi codici errati. Attenda 15 minuti, poi acceda di nuovo.",
+			"passwordTooShort": "La password è troppo corta: usi almeno 12 caratteri.",
+			"passwordTooLong": "La password è troppo lunga: usi al massimo 128 caratteri.",
+			"userExists": "Un account usa già questo indirizzo e-mail. Acceda invece con quello.",
+			"invalidPassword": "Questa password non è corretta.",
+			"mfaRequired": "Confermi prima la sua identità con il secondo fattore.",
+			"lastFactor": "Aggiunga un altro secondo fattore prima di rimuovere questo: il suo account deve sempre conservarne uno.",
+			"passkeyFailed": "Non è stato possibile usare la passkey. Riprovi, oppure usi la password e il codice.",
+			"accountFrozen": "Questo account è congelato in seguito a una contestazione su una pagina. Ci contatti per recuperarlo con una nuova verifica dell’identità."
+		},
+		"signIn": {
+			"title": "Accedere",
+			"lead": "Il suo spazio professionista: la sua pagina, la sua agenda, il suo team.",
+			"asideFactor": "Ogni account che può accedere agli appuntamenti richiede un secondo fattore: un codice da un’app di autenticazione o una passkey.",
+			"asidePasskey": "Una passkey è conservata sul suo telefono o computer e si sblocca con l’impronta digitale, il volto o il PIN.",
+			"passwordHeading": "Con la password",
+			"submit": "Accedere",
+			"passkeyHeading": "Con una passkey",
+			"passkeyHint": "Nessuna password necessaria: il suo dispositivo conferma che è lei.",
+			"passkey": "Accedere con una passkey",
+			"noAccount": "Non ha ancora un account?",
+			"signUpLink": "Creare un account",
+			"totpHeading": "Inserisca il codice",
+			"backupHeading": "Inserisca un codice di riserva",
+			"totpLead": "Apra l’app di autenticazione e inserisca il codice a 6 cifre mostrato per Apercura.",
+			"backupLead": "Ogni codice di riserva funziona una sola volta. Li ha ricevuti quando ha configurato l’app di autenticazione.",
+			"backupCode": "Codice di riserva",
+			"verify": "Confermare",
+			"useBackupCode": "Usare invece un codice di riserva",
+			"useTotp": "Usare invece l’app di autenticazione",
+			"pscHeading": "Con Pro Santé Connect",
+			"pscHint": "Una volta collegata al suo account da una rivendicazione, l’app e-CPS o la carta CPS le consente di accedere senza un altro codice.",
+			"psc": "Accedere con Pro Santé Connect",
+			"pscFailed": "L’accesso con Pro Santé Connect non è riuscito. Lo colleghi prima al suo account dalla sua rivendicazione, oppure acceda con la password."
+		},
+		"signUp": {
+			"title": "Creare un account",
+			"lead": "Gratuito per i professionisti e i loro assistenti.",
+			"asideSteps": "Tre passaggi: creare l’account, confermare l’indirizzo e-mail, poi configurare un secondo fattore.",
+			"asideFree": "La creazione di un account non modifica alcuna pagina pubblica. Il passo successivo è rivendicare la sua pagina.",
+			"name": "Nome e cognome",
+			"emailHint": "Inviamo un link di conferma a questo indirizzo.",
+			"passwordHint": "Almeno {min} caratteri. Una frase lunga è facile da ricordare.",
+			"submit": "Creare l’account",
+			"haveAccount": "Ha già un account?",
+			"signInLink": "Accedere",
+			"sentHeading": "Controlli la sua casella e-mail",
+			"sentTitle": "Abbiamo inviato un link di conferma a {email}.",
+			"sentBody": "Apra l’e-mail e segua il link entro un’ora. Poi acceda per configurare il suo secondo fattore.",
+			"sentHint": "Niente dopo qualche minuto? Controlli la cartella dello spam, oppure acceda: le invieremo un nuovo link."
+		},
+		"verifyEmail": {
+			"title": "Conferma dell’e-mail",
+			"successTitle": "Il suo indirizzo e-mail è confermato.",
+			"successBody": "Acceda con la password per configurare il secondo fattore.",
+			"errorTitle": "Questo link non funziona più.",
+			"errorBody": "Potrebbe essere scaduto o già stato usato. Acceda: le invieremo un nuovo link.",
+			"signIn": "Accedere"
+		},
+		"challenge": {
+			"title": "Confermare la propria identità",
+			"lead": "Il suo account ha un secondo fattore: lo usi per aprire il suo spazio.",
+			"aside": "La sola password non basta per accedere agli appuntamenti.",
+			"passkeyHeading": "Con una passkey",
+			"passkeyLead": "Il suo dispositivo le chiede l’impronta digitale, il volto o il PIN.",
+			"passkey": "Usare la mia passkey",
+			"totpHeading": "Con l’app di autenticazione",
+			"otherHeading": "Non è lei, o non ha accesso al suo fattore?",
+			"otherLead": "Si disconnetta. Recuperare un account significa verificare di nuovo la propria identità."
+		},
+		"security": {
+			"title": "Sicurezza",
+			"lead": "Come accede e dove ha effettuato l’accesso.",
+			"enrolLead": "Un ultimo passaggio prima del suo spazio: configuri un secondo fattore.",
+			"enrolTitle": "Scelga un secondo fattore per continuare",
+			"enrolBody": "Apercura ne richiede uno a ogni account che può accedere agli appuntamenti. Vanno bene sia un’app di autenticazione sia una passkey; potrà aggiungere l’altra in seguito.",
+			"continue": "Continuare verso il suo spazio",
+			"actions": "Azioni",
+			"totp": {
+				"heading": "App di autenticazione",
+				"lead": "Un’app sul suo telefono (per esempio FreeOTP, Aegis o Google Authenticator) mostra un nuovo codice a 6 cifre ogni 30 secondi.",
+				"enabledTitle": "L’app di autenticazione è configurata.",
+				"enabledBody": "Le verrà chiesto un codice ogni volta che accede con la password.",
+				"scanHeading": "1. Scansionare il codice QR",
+				"scanLead": "Nella sua app di autenticazione, aggiunga un account e scansioni questo codice. Se non riesce a scansionarlo, digiti la chiave di configurazione.",
+				"qrLabel": "Codice QR per aggiungere Apercura alla sua app di autenticazione",
+				"manualKey": "Chiave di configurazione",
+				"codesHeading": "2. Conservare i codici di riserva",
+				"codesLead": "Se perde il telefono, ciascuno di questi codici le permette di accedere una volta. Li stampi o li conservi in un gestore di password; vengono mostrati solo adesso.",
+				"confirmHeading": "3. Inserire il codice mostrato dall’app",
+				"confirm": "Attivare",
+				"password": "La sua password",
+				"passwordHint": "Lo chiediamo di nuovo prima di modificare il suo modo di accedere.",
+				"start": "Configurare l’app"
+			},
+			"passkeys": {
+				"heading": "Passkey",
+				"lead": "Una passkey resta sul suo telefono, computer o chiave di sicurezza e si sblocca con l’impronta digitale, il volto o il PIN. Niente da digitare, niente da rubare.",
+				"addedTitle": "La passkey è stata aggiunta.",
+				"name": "Nome",
+				"added": "Aggiunto il",
+				"unnamed": "Passkey",
+				"removeNamed": "Rimuovere {name}",
+				"remove": "Rimuovere",
+				"none": "Ancora nessuna passkey.",
+				"nameLabel": "Nome della nuova passkey (facoltativo)",
+				"nameHint": "Per esempio: computer dello studio.",
+				"add": "Aggiungere una passkey"
+			},
+			"sessions": {
+				"heading": "Dove ha effettuato l’accesso",
+				"lead": "Una sessione termina dopo 12 ore di inattività. Chiuda ogni sessione che non riconosce.",
+				"device": "Dispositivo",
+				"lastActive": "Ultima attività",
+				"unknownDevice": "Dispositivo sconosciuto",
+				"current": "Questa sessione",
+				"revoke": "Disconnettersi",
+				"everywhereHint": "Ha perso un dispositivo o condiviso la password? Si disconnetta da tutte le sessioni, compresa questa.",
+				"everywhere": "Disconnettersi ovunque"
+			},
+			"data": {
+				"heading": "I suoi dati",
+				"lead": "Una copia di tutto ciò che conserviamo sul suo account, e la sua eliminazione.",
+				"exportHeading": "Scaricare i suoi dati",
+				"exportBody": "Un file JSON con il suo account, i metodi di accesso (mai i relativi segreti), le sessioni, gli studi, le rivendicazioni e il contenuto della pagina.",
+				"export": "Scaricare i miei dati",
+				"deleteHeading": "Eliminare il suo account",
+				"deleteBody": "Il suo account, le sessioni, le rivendicazioni e i documenti vengono eliminati. La sua pagina torna ai dati del registro: non rivendicata, senza i suoi contenuti né la sua foto.",
+				"practiceChoice": "Che cosa succede a {name}?",
+				"close": "Chiudere lo studio: i suoi membri perdono l’accesso",
+				"transfer": "Affidarlo a {name} ({email})",
+				"practiceAlone": "{name} viene chiuso insieme al suo account (lei è l’unico membro).",
+				"confirmEmail": "Digiti il suo indirizzo e-mail per confermare",
+				"confirmEmailHint": "L’eliminazione non può essere annullata.",
+				"mismatch": "Questo non è l’indirizzo e-mail del suo account.",
+				"hasTeam": "Scelga che cosa succede a ogni studio con un team.",
+				"lastAdmin": "Lei è l’ultimo amministratore della piattaforma: ne nomini prima un altro.",
+				"failed": "Non è stato possibile eliminare l’account. Riprovi tra un momento.",
+				"delete": "Eliminare il mio account"
+			}
+		},
+		"app": {
+			"title": "Il suo spazio",
+			"lead": "Accesso effettuato come {email}.",
+			"homeLink": "Apercura, home page",
+			"nav": {
+				"label": "Area professionisti",
+				"home": "Il suo spazio",
+				"security": "Sicurezza",
+				"page": "La sua pagina",
+				"adminClaims": "Rivendicazioni",
+				"adminReports": "Segnalazioni",
+				"today": "Oggi",
+				"agenda": "Agenda",
+				"team": "Team",
+				"menu": "Menu"
+			},
+			"practicesHeading": "I suoi studi",
+			"columns": {
+				"practice": "Studio",
+				"role": "Il suo ruolo",
+				"page": "Pagina",
+				"status": "Stato",
+				"next": "Passaggio successivo"
+			},
+			"emptyTitle": "Ancora nessuno studio",
+			"emptyBody": "Il suo studio compare qui quando la sua pagina è stata rivendicata e verificata.",
+			"emptyAction": "Trovare la mia pagina",
+			"securityHeading": "Sicurezza dell’account",
+			"securityBody": "Il suo account è protetto da un secondo fattore. Gestisca l’app di autenticazione, le passkey e le sessioni.",
+			"securityLink": "Impostazioni di sicurezza",
+			"claimsHeading": "La sua pagina e le rivendicazioni",
+			"editPage": "Modificare la pagina",
+			"openClaim": "Aprire la rivendicazione",
+			"adminRunningHead": "Amministrazione",
+			"agendaHeading": "Agenda",
+			"agendaBody": "La sua giornata, la sua settimana, le richieste a cui rispondere e le impostazioni di prenotazione.",
+			"agendaLink": "Aprire l’agenda di oggi",
+			"invitationsHeading": "Inviti",
+			"invitationBody": "{practice} la invita a unirsi al suo team.",
+			"invitationLink": "Rispondere all’invito"
+		},
+		"roles": {
+			"owner": "Titolare",
+			"practitioner": "Professionista",
+			"assistant": "Assistente"
+		},
+		"email": {
+			"wordmark": "Apercura",
+			"runningHead": "Area professionisti",
+			"footer": "Apercura: l’elenco aperto dei professionisti sanitari in Francia. Gratuito e open source.",
+			"verify": {
+				"subject": "Confermi il suo indirizzo e-mail",
+				"preview": "Confermi il suo indirizzo e-mail per completare la creazione del suo account Apercura.",
+				"title": "Confermi il suo indirizzo e-mail",
+				"greeting": "Gentile {name},",
+				"body": "Ha appena creato un account Apercura. Confermi che questo indirizzo è suo per continuare.",
+				"action": "Confermare il mio indirizzo",
+				"fallback": "Se il pulsante non funziona, copi questo link nel suo browser:",
+				"expiry": "Il link è valido per un’ora.",
+				"ignore": "Non ha creato questo account? Ignori questa e-mail: non succederà nulla."
+			}
+		}
+	},
+	"emails": {
+		"fallback": "Se il pulsante non funziona, copi questo link nel suo browser:",
+		"claimRegistryLink": {
+			"subject": "Confermare la rivendicazione di una pagina di professionista",
+			"title": "È questo lo studio di {practitioner}?",
+			"body": [
+				"Qualcuno ha chiesto di gestire la pagina Apercura di {practitioner}. Questa e-mail è stata inviata all’indirizzo che il registro nazionale pubblica per questo studio.",
+				"Se la richiesta proviene da {practitioner}, apra il link e la confermi. La pagina risulterà quindi verificata."
+			],
+			"action": "Confermare la rivendicazione",
+			"notes": [
+				"Il link è valido per 24 ore.",
+				"Non se lo aspettava? Ignori questa e-mail: non cambia nulla e la pagina resta com’è."
+			]
+		},
+		"claimReceived": {
+			"subject": "La sua rivendicazione è in esame",
+			"title": "La sua rivendicazione è in esame",
+			"body": [
+				"Gentile {name},",
+				"Abbiamo ricevuto la sua rivendicazione e i relativi documenti. Un membro del team di Apercura chiamerà lo studio al numero pubblicato nel registro nazionale e chiederà il codice mostrato nel suo spazio. Lo tenga a portata di mano.",
+				"Esaminiamo le rivendicazioni entro 48 ore nei giorni lavorativi."
+			]
+		},
+		"claimVerified": {
+			"subject": "La sua pagina è verificata",
+			"title": "La sua pagina è verificata",
+			"body": [
+				"Gentile {name},",
+				"La sua pagina ora reca il timbro di verifica. Verifichi le informazioni importate, completi gli onorari e i metodi di pagamento, poi pubblichi la sua pagina."
+			],
+			"action": "Completare la mia pagina"
+		},
+		"claimRejected": {
+			"subject": "La sua rivendicazione non è stata accettata",
+			"title": "La sua rivendicazione non è stata accettata",
+			"body": [
+				"Gentile {name},",
+				"Non abbiamo potuto verificare la sua rivendicazione. Motivo indicato dal revisore: {reason}",
+				"Può aprire una nuova rivendicazione dal suo spazio, per esempio con Pro Santé Connect."
+			]
+		},
+		"claimSuperseded": {
+			"subject": "Il suo accesso a una pagina è stato revocato",
+			"title": "Il suo accesso a una pagina è stato revocato",
+			"body": [
+				"Gentile {name},",
+				"Un altro account ha dimostrato di appartenere al professionista di una pagina gestita dal suo account. Il suo account è congelato e il suo accesso allo studio è stato revocato.",
+				"Se è il professionista, ci contatti: il suo account può essere recuperato solo con una nuova verifica dell’identità."
+			]
+		},
+		"removalReceived": {
+			"subject": "Abbiamo ricevuto la sua richiesta di rimozione",
+			"title": "Abbiamo ricevuto la sua richiesta di rimozione",
+			"body": [
+				"La pagina è nascosta da ora: non è più mostrata, indicizzata né elencata.",
+				"Verifichiamo la richiesta, poi eliminiamo la pagina. Una pagina eliminata non ricompare con la successiva importazione del registro."
+			]
+		},
+		"removalConfirmed": {
+			"subject": "La pagina è stata eliminata",
+			"title": "La pagina è stata eliminata",
+			"body": [
+				"La pagina di cui ci ha chiesto la rimozione è stata eliminata da Apercura. Non ricomparirà con la prossima importazione del registro."
+			]
+		},
+		"removalRejected": {
+			"subject": "La sua richiesta di rimozione non è stata accettata",
+			"title": "La sua richiesta di rimozione non è stata accettata",
+			"body": [
+				"Non abbiamo potuto confermare la sua richiesta di rimozione, quindi la pagina è di nuovo visibile. Motivo: {reason}",
+				"Se è il professionista, può anche rivendicare la pagina e rimuoverla lei stesso dal suo spazio."
+			]
+		},
+		"teamInvitation": {
+			"subject": "{inviter} la invita a unirsi a {practice}",
+			"title": "Unirsi al team di {practice}",
+			"body": [
+				"Buongiorno,",
+				"{inviter} la invita a unirsi a {practice} su Apercura, come {role}.",
+				"Per aderire, acceda o crei il suo account con questo indirizzo e-mail, poi configuri un secondo fattore (un’app di autenticazione o una passkey): protegge i dati dei pazienti che vedrà."
+			],
+			"action": "Unirsi al team",
+			"notes": [
+				"Questo invito è valido per 48 ore.",
+				"Non se lo aspettava? Ignori questa e-mail: non succede nulla senza di lei."
+			]
+		}
+	},
+	"Profile": {
+		"presentationHeading": "Presentazione",
+		"practicalHeading": "Informazioni pratiche",
+		"fields": {
+			"languages": "Lingue parlate",
+			"accessibility": "Accesso",
+			"website": "Sito web",
+			"fees": "Onorari",
+			"paymentMethods": "Metodi di pagamento"
+		},
+		"accessibility": {
+			"stepFree": "Accesso senza gradini",
+			"lift": "Ascensore",
+			"parking": "Parcheggio nelle vicinanze"
+		},
+		"languages": {
+			"fr": "Francese",
+			"en": "Inglese",
+			"es": "Spagnolo",
+			"de": "Tedesco",
+			"it": "Italiano",
+			"pt": "Portoghese",
+			"ar": "Arabo",
+			"zh": "Cinese",
+			"ru": "Russo",
+			"tr": "Turco",
+			"ro": "Rumeno",
+			"pl": "Polacco",
+			"nl": "Olandese",
+			"vi": "Vietnamita",
+			"fa": "Persiano",
+			"he": "Ebraico",
+			"uk": "Ucraino",
+			"lsf": "Lingua dei segni francese"
+		},
+		"paymentMethods": {
+			"card": "Carta bancaria",
+			"cash": "Contanti",
+			"cheque": "Assegno",
+			"transfer": "Bonifico bancario"
+		},
+		"fees": {
+			"range": "Da {min} a {max}",
+			"fromOwner": "Il professionista indica il settore tariffario e gli onorari."
+		}
+	},
+	"Claim": {
+		"metadata": {
+			"start": "Rivendicare una pagina · Apercura",
+			"claim": "La sua rivendicazione · Apercura",
+			"emailLink": "Confermare una rivendicazione · Apercura"
+		},
+		"pending": "Attenda",
+		"errors": {
+			"generic": "Si è verificato un problema. Riprovi tra un momento.",
+			"TOO_MANY": "Troppe rivendicazioni per oggi. Riprovi domani.",
+			"ALREADY_OWNER": "Questa pagina è già sua.",
+			"FROZEN": "Questo account è congelato e non può rivendicare una pagina.",
+			"NOT_FOUND": "Nessuna pagina ha questo numero RPPS.",
+			"INVALID_RPPS": "Questo numero RPPS non è valido: ha 11 cifre, l’ultima delle quali è una cifra di controllo.",
+			"NOT_OPEN": "Questa rivendicazione è chiusa: non può più cambiare.",
+			"METHOD_UNAVAILABLE": "Questo metodo non è disponibile per questa pagina.",
+			"TOO_MANY_ATTEMPTS": "Troppi tentativi con questo metodo. Ne usi un altro.",
+			"NOT_SUBMITTABLE": "Aggiunga un documento prima di inviare la rivendicazione per l’esame.",
+			"BAD_DOCUMENT": "Questo file non può essere usato: invii un PDF, JPEG, PNG o WebP di massimo 10 MB.",
+			"PSC_MISSING": "Pro Santé Connect non ha restituito alcuna identità. Riprovi."
+		},
+		"start": {
+			"title": "Rivendicare la sua pagina",
+			"lead": "Una rivendicazione riguarda un numero RPPS, mai un nome: gli omonimi non possono appropriarsi della pagina altrui.",
+			"recordHeading": "La pagina che sta rivendicando",
+			"unknownProfession": "Professionista sanitario",
+			"viewPage": "Vedere la pagina pubblica",
+			"contestTitle": "Questa pagina ha già un titolare verificato",
+			"contestBody": "Se è sua (per esempio ha perso l’accesso al suo account), può comunque rivendicarla: un amministratore esamina il caso, e Pro Santé Connect è il modo più rapido per dimostrarlo. Il recupero di un account passa sempre da una nuova verifica dell’identità.",
+			"confirm": "Sono io: avviare la rivendicazione",
+			"goToPage": "Andare alla mia pagina",
+			"findHeading": "Trovare la sua pagina con il numero RPPS",
+			"notFound": "Nessuna pagina pubblica ha ancora questo numero RPPS.",
+			"rppsLabel": "Numero RPPS",
+			"rppsHint": "11 cifre, stampate sulla sua carta CPS e sulla sua pagina.",
+			"find": "Trovare la mia pagina",
+			"searchHint": "Può anche cercare la sua pagina per nome:",
+			"searchLink": "cercare nell’elenco",
+			"howHeading": "Come verifichiamo che sia lei",
+			"factorNote": "Il suo account ha già un secondo fattore: è obbligatorio prima di qualsiasi rivendicazione e da quel momento protegge la sua pagina."
+		},
+		"methods": {
+			"psc": {
+				"title": "Pro Santé Connect",
+				"short": "Pro Santé Connect",
+				"summary": "Con l’app e-CPS o la carta CPS. Verifica immediata, e la prenotazione online può aprirsi subito.",
+				"lead": "Acceda con l’app e-CPS o la carta CPS. La sua pagina viene verificata non appena l’identità corrisponde al suo numero RPPS.",
+				"action": "Continuare con Pro Santé Connect",
+				"hint": "Lascerà Apercura per la pagina di Pro Santé Connect, poi tornerà qui.",
+				"done": "Pro Santé Connect ha confermato la sua identità."
+			},
+			"registry_email": {
+				"title": "L’e-mail dello studio",
+				"short": "E-mail del registro",
+				"summary": "Un link inviato all’indirizzo e-mail che il registro pubblica per il suo studio o centro sanitario. Verifica immediata all’apertura; la prenotazione si apre 7 giorni dopo.",
+				"lead": "Inviamo un link a {email}, l’indirizzo pubblicato nel registro per il suo studio. Lo apra e confermi.",
+				"action": "Inviare il link",
+				"resend": "Inviarlo di nuovo",
+				"sent": "Link inviato. È valido per 24 ore.",
+				"done": "La casella e-mail dello studio ha confermato la rivendicazione."
+			},
+			"document": {
+				"title": "Un documento e una telefonata",
+				"short": "Documento",
+				"summary": "Una foto della sua carta CPS o del certificato di iscrizione rilasciato dal suo Ordine, poi una telefonata al numero dello studio pubblicato nel registro. Esame entro 48 ore; la prenotazione si apre 7 giorni dopo.",
+				"lead": "Invii una foto della sua carta CPS o del certificato di iscrizione rilasciato dal suo Ordine. Viene cifrata prima di essere archiviata ed eliminata 30 giorni dopo la decisione."
+			},
+			"phone_callback": {
+				"title": "Richiamata telefonica",
+				"short": "Richiamata telefonica",
+				"lead": "Durante l’esame, un membro del nostro team chiama lo studio al {phone}, il numero del registro (mai un numero fornito da lei). Chi risponde legge ad alta voce il codice mostrato qui.",
+				"action": "Mostrare il mio codice",
+				"newCode": "Mostrare un nuovo codice",
+				"hint": "Lo mostri quando è nello studio, oppure lo comunichi a chi risponde al telefono. Chiederne uno nuovo annulla il precedente.",
+				"codeLabel": "Codice da leggere ad alta voce",
+				"codeHint": "Lo tenga sullo schermo o lo annoti: per la sua sicurezza lo mostriamo solo adesso.",
+				"done": "La richiamata telefonica ha confermato la rivendicazione."
+			}
+		},
+		"check": {
+			"passed": "Fatto",
+			"failed": "Non riuscito",
+			"pending": "In corso",
+			"notStarted": "Non iniziato",
+			"claim": {
+				"open": "In corso",
+				"in_review": "In esame",
+				"verified": "Verificato",
+				"rejected": "Respinto",
+				"withdrawn": "Ritirato",
+				"superseded": "Ritirata dopo una contestazione"
+			}
+		},
+		"workspace": {
+			"title": "Rivendicazione di {name}",
+			"lead": {
+				"open": "Dimostri di essere questo professionista con uno dei metodi seguenti.",
+				"in_review": "La sua rivendicazione è in esame.",
+				"verified": "Passaggio successivo: completi la sua pagina.",
+				"rejected": "Questa rivendicazione non è stata accettata.",
+				"withdrawn": "Questa rivendicazione è stata ritirata.",
+				"superseded": "Questa rivendicazione è stata ritirata dopo una contestazione."
+			}
+		},
+		"psc": {
+			"outcome": {
+				"verified": "Pro Santé Connect ha confermato la sua identità: la sua pagina è verificata.",
+				"passed": "Pro Santé Connect ha confermato la sua identità. Ora un amministratore esamina la rivendicazione.",
+				"mismatch": "L’identità Pro Santé Connect non corrisponde al numero RPPS di questa pagina.",
+				"error": "Non è stato possibile raggiungere Pro Santé Connect oppure l’accesso è stato annullato. Riprovi.",
+				"linkedElsewhere": "Questa identità Pro Santé Connect è già collegata a un altro account Apercura. Acceda con Pro Santé Connect per usare quell’account."
+			}
+		},
+		"documents": {
+			"kind": {
+				"cps_card": "Carta CPS",
+				"ordre_attestation": "Certificato di iscrizione all’Ordine"
+			},
+			"kindLabel": "Tipo di documento",
+			"add": "Scegliere un file",
+			"hint": "PDF, JPEG, PNG o WebP, massimo 10 MB. Fino a 4 file.",
+			"kilobytes": "KB"
+		},
+		"review": {
+			"title": "Inviare per l’esame",
+			"lead": "Un amministratore verifica il suo documento e chiama lo studio. Riceverà la risposta via e-mail entro 48 ore nei giorni lavorativi.",
+			"submit": "Inviare per l’esame",
+			"notYet": "Aggiunga prima un documento."
+		},
+		"withdraw": "Ritirare questa rivendicazione",
+		"status": {
+			"verified": "La sua pagina è verificata",
+			"bookingDelay": "Senza Pro Santé Connect, il periodo di attesa di 7 giorni prima della prenotazione online termina il {date}.",
+			"continue": "Completare la sua pagina",
+			"in_review": "La sua rivendicazione è in esame",
+			"contestReview": "Questa pagina aveva già un titolare verificato: decide un amministratore, e Pro Santé Connect è il modo più rapido per dimostrarlo.",
+			"reviewBody": "Tenga a portata di mano il codice di richiamata: chiamiamo lo studio al numero del registro.",
+			"rejected": "Questa rivendicazione non è stata accettata",
+			"reason": "Motivo: {reason}",
+			"withdrawn": "Questa rivendicazione è stata ritirata",
+			"superseded": "Questa rivendicazione è stata ritirata dopo una contestazione",
+			"contestTitle": "Questa pagina ha già un titolare verificato",
+			"contestBody": "Deciderà un amministratore. Pro Santé Connect è il modo più rapido per dimostrare la sua identità; gli altri metodi richiedono un documento e una richiamata.",
+			"verifiedBadge": "Pagina verificata"
+		},
+		"emailLink": {
+			"title": "Confermare la rivendicazione",
+			"lead": "Questo link è stato inviato all’indirizzo e-mail che il registro nazionale pubblica per uno studio.",
+			"reading": "Lettura del link…",
+			"invalidTitle": "Questo link non funziona più",
+			"invalidBody": "È scaduto (è valido per 24 ore) o è già stato usato. Il professionista può inviarne uno nuovo dalla sua rivendicazione.",
+			"tooMany": "Troppi tentativi. Attenda un’ora, poi riprovi.",
+			"doneTitle": "La rivendicazione è confermata",
+			"doneBody": "Il professionista può ora accedere per completare la pagina.",
+			"goToSpace": "Andare all’area professionisti",
+			"body": "Se il professionista di questo studio ha chiesto di gestire la propria pagina Apercura, lo confermi. Altrimenti chiuda questa pagina: non cambia nulla.",
+			"confirm": "Confermare la rivendicazione",
+			"pending": "Attenda"
+		},
+		"withdrawDialog": {
+			"title": "Ritirare questa rivendicazione?",
+			"body": "La rivendicazione si chiude definitivamente: le sue prove non contano più e i suoi documenti saranno eliminati tra 30 giorni. Potrà aprire una nuova rivendicazione in seguito, ripartendo dalla verifica.",
+			"confirm": "Ritirare la rivendicazione",
+			"cancel": "Mantenere la rivendicazione"
+		}
+	},
+	"Onboarding": {
+		"metaTitle": "Configurare la sua pagina · Apercura",
+		"title": "Configurare la sua pagina",
+		"lead": "Tre passaggi per una pagina completa di {name}.",
+		"stepsLabel": "Passaggi",
+		"stepNumber": "Passaggio {n} di {total}:",
+		"continue": "Continuare",
+		"pending": "Attenda",
+		"publishFailed": "Non è stato possibile pubblicare la pagina. Riprovi tra un momento.",
+		"fields": {
+			"name": "Nome",
+			"profession": "Professione"
+		},
+		"steps": {
+			"check": {
+				"label": "Verificare le informazioni importate",
+				"title": "Verificare le informazioni importate",
+				"lead": "La sua pagina parte dal registro nazionale (Annuaire Santé). Verifichi il suo nome, la professione e le sedi di esercizio.",
+				"sites": "Sedi di esercizio",
+				"unnamed": "Sede senza nome",
+				"hidden": "Nascosto",
+				"registryNote": "Qualcosa non va? La correzione duratura si fa presso il suo Ordine, che aggiorna il registro; la pagina si aggiorna alla successiva importazione settimanale. Può nascondere una sede o aggiungerne una nell’editor della pagina."
+			},
+			"booking": {
+				"label": "Orari di apertura e prenotazione",
+				"title": "Orari di apertura e prenotazione",
+				"lead": "I pazienti prenotano sulla sua pagina quando la sua agenda è aperta. Prima che possa aprirsi, la sua pagina deve indicare gli onorari e i metodi di pagamento che accetta.",
+				"fees": "Onorari",
+				"payments": "Metodi di pagamento",
+				"done": "Dichiarato",
+				"todo": "Da completare",
+				"deontology": "Articolo R.4127-53 del codice della sanità pubblica francese: un medico che presenta la propria attività online indica i suoi onorari e i metodi di pagamento accettati.",
+				"editFees": "Completare onorari e metodi di pagamento",
+				"settingsNote": "Sedi, orari di apertura e tipi di appuntamento si definiscono nelle impostazioni di prenotazione.",
+				"waitingPeriod": "Periodo di attesa dopo la verifica",
+				"waitingEnds": "Il periodo di attesa di 7 giorni termina il {date}",
+				"noWaiting": "Nessuno",
+				"settingsLink": "Configurare orari di apertura e prenotazione"
+			},
+			"publish": {
+				"label": "Pubblicare",
+				"title": "Pubblicare la sua pagina",
+				"lead": "La pubblicazione mostra sulla sua pagina pubblica la presentazione, le lingue, gli onorari e le informazioni pratiche. Può modificarli o nasconderli in qualsiasi momento.",
+				"already": "La sua pagina è pubblicata. Ogni modifica che salva è subito online.",
+				"edit": "Modificare la mia pagina",
+				"action": "Pubblicare la mia pagina"
+			}
+		}
+	},
+	"Editor": {
+		"metaTitle": "La sua pagina · Apercura",
+		"title": "La sua pagina",
+		"lead": "Completi la pagina pubblica di {name}. Solo testo semplice; ciò che nasconde non viene mai mostrato.",
+		"empty": {
+			"title": "Ancora nessuna pagina da modificare",
+			"body": "La sua pagina compare qui quando la sua rivendicazione è stata verificata.",
+			"action": "Rivendicare la mia pagina"
+		},
+		"pending": "Attenda",
+		"viewPublic": "Vedere la pagina pubblica",
+		"jumpToPreview": "Andare all’anteprima",
+		"formLabel": "Contenuto della pagina",
+		"removed": {
+			"title": "La sua pagina è stata rimossa dall’elenco",
+			"body": "Nessuno può vederla. Può ripristinarla in fondo a questa pagina."
+		},
+		"unpublished": {
+			"title": "I suoi contenuti non sono ancora pubblicati",
+			"link": "Completare la configurazione della pagina"
+		},
+		"photo": {
+			"title": "Foto",
+			"lead": "Facoltativa. Un ritratto recente, come una foto d’identità.",
+			"current": "Foto attuale",
+			"none": "Nessuna foto.",
+			"add": "Aggiungere una foto",
+			"replace": "Sostituire la foto",
+			"remove": "Rimuovere la foto",
+			"hint": "JPEG, PNG o WebP, massimo 5 MB. La ritagliamo in formato quadrato e ne rimuoviamo i metadati (posizione, dispositivo)."
+		},
+		"visibility": {
+			"label": "Mostrare {field} sulla pagina",
+			"shown": "Mostrato"
+		},
+		"presentation": {
+			"title": "Presentazione",
+			"lead": "Solo informazioni oggettive: nessuna testimonianza, nessun confronto (R.4127-19-1).",
+			"headline": "Titolo",
+			"headlineHint": "Una riga sotto la sua professione, al massimo {max} caratteri.",
+			"bio": "Presentazione",
+			"bioHint": "Testo semplice, al massimo {max} caratteri. Lasci una riga vuota tra i paragrafi."
+		},
+		"languages": {
+			"title": "Lingue parlate"
+		},
+		"fees": {
+			"title": "Onorari e assicurazione sanitaria",
+			"lead": "Obbligatorio prima che la prenotazione online possa aprirsi: i suoi onorari e i metodi di pagamento che accetta.",
+			"requiredBadge": "Obbligatorio per la prenotazione",
+			"ameliPrefill": "Precompilato dall’elenco dell’Assurance Maladie. La sua dichiarazione lo sostituisce sulla sua pagina.",
+			"sector": "Settore tariffario",
+			"notStated": "Non indicato",
+			"optam": "Onorari aggiuntivi limitati (OPTAM)",
+			"optamNone": "Non membro",
+			"carteVitale": "Carte Vitale",
+			"carteVitaleYes": "Accettato",
+			"carteVitaleNo": "Non accettato",
+			"itemsTitle": "Onorari",
+			"noItem": "Nessun onorario.",
+			"itemLabel": "Onorario {n}: per cosa",
+			"itemPlaceholder": "Visita",
+			"amount": "Importo (€)",
+			"maxAmount": "Fino a (€)",
+			"removeItem": "Rimuovere l’onorario {n}",
+			"remove": "Rimuovere",
+			"addItem": "Aggiungere un onorario",
+			"note": "Nota sugli onorari",
+			"noteHint": "Per esempio da che cosa dipendono gli onorari aggiuntivi.",
+			"payments": "Metodi di pagamento accettati",
+			"requiredHint": "La prenotazione resta chiusa finché non sono indicati almeno un onorario e un metodo di pagamento."
+		},
+		"access": {
+			"title": "Accesso",
+			"notes": "Dati di accesso",
+			"notesHint": "Piano, ingresso, trasporti pubblici."
+		},
+		"contact": {
+			"title": "Sito web e telefono",
+			"website": "Sito web",
+			"websiteHint": "Il sito del suo studio, che inizia con https://",
+			"showPhone": "Mostrare il numero di telefono dello studio",
+			"showPhoneHint": "Se nascosto, la pagina non propone più di chiamare lo studio."
+		},
+		"failure": {
+			"generic": "Si è verificato un problema. Riprovi tra un momento.",
+			"invalid": "Alcuni campi devono essere corretti: veda i messaggi sotto di essi.",
+			"lastSite": "Almeno una sede deve restare visibile: una pagina senza sede non può essere pubblicata.",
+			"unknownPlace": "Non conosciamo questo codice postale e questa città. Li verifichi.",
+			"badPhone": "Questo numero di telefono non è valido.",
+			"photoTooLarge": "Questa foto supera i 5 MB.",
+			"photoUnsupported": "Questo file non può essere usato come foto: invii un JPEG, PNG o WebP."
+		},
+		"saved": "Salvato. La sua pagina pubblica è aggiornata.",
+		"savedDraft": "Salvato. Pubblichi la sua pagina per mostrarlo.",
+		"save": "Salvare la pagina",
+		"lastSaved": "Ultimo salvataggio {date}",
+		"sites": {
+			"title": "Sedi di esercizio",
+			"lead": "Scelga quali sedi mostra la sua pagina. Le sedi del registro possono essere nascoste, non modificate.",
+			"unnamed": "Sede senza nome",
+			"added": "Aggiunto da lei",
+			"shownNamed": "Mostrare {name} sulla pagina",
+			"remove": "Rimuovere",
+			"registryNote": "Una sede del registro è errata? Il suo Ordine la corregge nel registro; la pagina si aggiorna alla successiva importazione.",
+			"addTitle": "Aggiungere una sede",
+			"name": "Nome della sede",
+			"address": "Via e numero civico",
+			"postcode": "Codice postale",
+			"city": "Città",
+			"phone": "Telefono (facoltativo)",
+			"phoneHint": "Il numero dello studio, mostrato sulla pagina.",
+			"add": "Aggiungere la sede"
+		},
+		"remove": {
+			"title": "Rimuovere la sua pagina",
+			"lead": "La sua pagina scompare dall’elenco, dalle ricerche e dai motori di ricerca, e non ricompare con la successiva importazione. Può ripristinarla qui.",
+			"action": "Rimuovere la mia pagina dall’elenco",
+			"restore": "Ripristinare la mia pagina"
+		},
+		"preview": {
+			"title": "Anteprima",
+			"note": "Non ancora salvato",
+			"noSite": "Nessuna sede mostrata.",
+			"unnamedPlace": "Sede di esercizio"
+		},
+		"issues": {
+			"tooLong": "Questo testo è troppo lungo.",
+			"markup": "Solo testo semplice: niente HTML, niente link tra parentesi.",
+			"required": "Questo campo è obbligatorio.",
+			"range": "L’importo massimo deve essere superiore all’importo.",
+			"website": "Questo indirizzo non è un sito web (https://…).",
+			"postcode": "Un codice postale francese ha 5 cifre.",
+			"invalid": "Questo valore non è valido."
+		}
+	},
+	"Admin": {
+		"claims": {
+			"metaTitle": "Rivendicazioni · Amministrazione · Apercura",
+			"title": "Rivendicazioni",
+			"lead": "Rivendicazioni in attesa di decisione. Le contestazioni hanno la precedenza.",
+			"queueHeading": "{count, plural, one {# rivendicazione in attesa} many {# di rivendicazioni in attesa} other {# rivendicazioni in attesa}}",
+			"queueEmpty": "Nessuna rivendicazione in attesa",
+			"emptyTitle": "Niente da esaminare",
+			"emptyBody": "Le rivendicazioni inviate per l’esame compaiono qui.",
+			"columns": {
+				"practitioner": "Pagina",
+				"claimant": "Account",
+				"proofs": "Prove",
+				"submitted": "Inviato"
+			},
+			"contest": "Contestazione",
+			"proofLine": "{method}: {status}"
+		},
+		"claim": {
+			"metaTitle": "Rivendicazione · Amministrazione · Apercura",
+			"title": "Rivendicazione di {name}",
+			"back": "Tornare alle rivendicazioni",
+			"contestTitle": "Contestazione: questa pagina ha già un titolare verificato",
+			"contestPsc": "Il titolare attuale è stato verificato con Pro Santé Connect: solo una rivendicazione verificata con Pro Santé Connect può subentrare nella pagina.",
+			"contestBody": "L’approvazione assegna la pagina a questo account: l’account del titolare attuale viene congelato e perde l’accesso allo studio.",
+			"summary": "Riepilogo",
+			"fields": {
+				"status": "Stato",
+				"claimant": "E-mail dell’account",
+				"accountCreated": "Account creato",
+				"opened": "Rivendicazione aperta",
+				"submitted": "Inviato per l’esame"
+			},
+			"proofs": "Prove",
+			"documents": "Documenti",
+			"noDocument": "Nessun documento.",
+			"purged": "Eliminato",
+			"openDocument": "Aprire il documento",
+			"newTab": "si apre in una nuova scheda",
+			"auditNote": "L’apertura di un documento lo decifra e viene registrata nel registro di audit, con il suo account e l’ora.",
+			"phoneTitle": "Richiamata telefonica",
+			"phoneLead": "Chiami uno di questi numeri del registro, mai un numero fornito dal richiedente. Chieda a chi risponde il codice mostrato nello spazio del richiedente.",
+			"phoneDone": "La richiamata telefonica è riuscita.",
+			"noCode": "Il richiedente non ha ancora visualizzato un codice.",
+			"decisionTitle": "Decisione",
+			"decisionLead": "L’approvazione verifica la pagina, crea lo studio con il richiedente come titolare e gli invia un’e-mail. Il rifiuto gli invia per e-mail il motivo.",
+			"phoneCalled": "Numero chiamato",
+			"codeHeard": "Codice letto ad alta voce dallo studio",
+			"codeLocked": "Troppi codici errati: il richiedente deve mostrarne uno nuovo.",
+			"codeWrong": "Questo codice non corrisponde.",
+			"confirmCode": "Verificare il codice",
+			"pending": "Attenda",
+			"decision": "Decisione",
+			"approve": "Approvare la rivendicazione",
+			"reject": "Respingere la rivendicazione",
+			"notApprovable": "L’approvazione richiede Pro Santé Connect, l’e-mail del registro, oppure un documento e una richiamata telefonica riuscita (Pro Santé Connect in caso di contestazione contro un titolare verificato con esso).",
+			"reasonRequired": "Motivo (inviato al richiedente)",
+			"reasonOptional": "Nota (facoltativa)",
+			"reasonHint": "Indichi con parole semplici che cosa manca o è sbagliato.",
+			"decisionFailed": "Non è stato possibile registrare la decisione. Ricarichi la pagina e riprovi.",
+			"approveAction": "Approvare",
+			"rejectAction": "Respingere"
+		},
+		"reports": {
+			"metaTitle": "Segnalazioni · Amministrazione · Apercura",
+			"title": "Segnalazioni e rimozioni",
+			"lead": "Richieste di rimozione (art. 21 GDPR) e segnalazioni di errori inviate dalle pagine pubbliche.",
+			"contact": "Contatto",
+			"message": "Messaggio",
+			"failed": "L’azione non è riuscita. Ricarichi la pagina e riprovi.",
+			"auditNote": "La lettura di una richiesta la decifra e viene registrata nel registro di audit.",
+			"tabsLabel": "Code",
+			"removalsTab": "Richieste di rimozione ({count})",
+			"reportsTab": "Segnalazioni di errori ({count})",
+			"removalsEmpty": "Nessuna richiesta di rimozione in attesa",
+			"removalsCaption": "Richieste di rimozione",
+			"columns": {
+				"page": "Pagina",
+				"received": "Ricevuto",
+				"actions": "Azioni",
+				"kind": "Tipo"
+			},
+			"read": "Leggere",
+			"confirmRemoval": "Eliminare la pagina",
+			"rejectRemoval": "Mostrare di nuovo la pagina",
+			"rejectReason": "Non è stato possibile confermare la richiesta.",
+			"reportsEmpty": "Nessuna segnalazione di errore in attesa",
+			"reportsCaption": "Segnalazioni di errori",
+			"noPage": "Nessuna pagina indicata",
+			"kinds": {
+				"wrong_info": "Informazione errata",
+				"retired": "In pensione",
+				"deceased": "Deceduto",
+				"impersonation": "Furto d’identità"
+			},
+			"resolve": "Segnare come gestito",
+			"dismiss": "Chiudere"
+		}
+	},
+	"Gdpr": {
+		"about": "Informazioni sulla pagina di",
+		"rpps": "Numero RPPS della pagina",
+		"rppsHint": "11 cifre, stampate in alto nella pagina.",
+		"pending": "Attenda",
+		"errors": {
+			"tooMany": "Troppe richieste da questa connessione. Riprovi tra un’ora.",
+			"notFound": "Nessuna pagina ha questo numero RPPS.",
+			"claimed": "Questa pagina è gestita dal suo professionista: solo lui può rimuoverla, dal suo spazio.",
+			"invalid": "Verifichi il modulo: un campo manca o è troppo lungo.",
+			"generic": "Si è verificato un problema. Riprovi tra un momento."
+		},
+		"report": {
+			"metaTitle": "Segnalare un errore · Apercura",
+			"title": "Segnalare un errore",
+			"lead": "Ci dica che cosa è sbagliato in questa pagina. Il suo messaggio è cifrato e viene letto solo dal team di Apercura.",
+			"doneTitle": "Grazie, abbiamo ricevuto la sua segnalazione",
+			"doneBody": "La verifichiamo. Le informazioni del registro vengono corrette alla fonte; la avvisiamo se ha lasciato un indirizzo.",
+			"kind": "Che cosa è sbagliato?",
+			"kinds": {
+				"wrong_info": "Informazione errata (indirizzo, telefono, nome)",
+				"retired": "Il professionista è andato in pensione",
+				"deceased": "Il professionista è deceduto",
+				"impersonation": "Qualcuno usa questa pagina a nome del professionista"
+			},
+			"message": "Dettagli",
+			"messageHint": "Che cosa è sbagliato e, se lo sa, che cosa è corretto.",
+			"contact": "La sua e-mail (facoltativa)",
+			"contactHint": "Solo per risponderle.",
+			"privacy": "Non includa alcuna informazione sanitaria.",
+			"submit": "Inviare la segnalazione"
+		},
+		"removal": {
+			"metaTitle": "Chiedere la rimozione di una pagina · Apercura",
+			"title": "Chiedere la rimozione di questa pagina",
+			"lead": "In base all’articolo 21 del GDPR, può opporsi alla pubblicazione della sua pagina. Viene nascosta non appena riceviamo la richiesta, poi eliminata dopo una breve verifica.",
+			"doneTitle": "La pagina è nascosta",
+			"doneBody": "Non è più mostrata, indicizzata né elencata. Verifichiamo la richiesta e confermiamo via e-mail, poi eliminiamo la pagina definitivamente.",
+			"contact": "La sua e-mail",
+			"contactHint": "Per confermare la richiesta con lei. È cifrato e non viene usato per nient’altro.",
+			"message": "Messaggio (facoltativo)",
+			"messageHint": "Tutto ciò che ci aiuta a verificare la richiesta.",
+			"confirm": "Sono il professionista di questa pagina",
+			"privacy": "Una pagina eliminata non ricompare con la successiva importazione del registro.",
+			"submit": "Nascondere e rimuovere la pagina",
+			"claimedTitle": "Questa pagina è gestita dal suo professionista",
+			"claimedBody": "Solo il suo titolare può rimuoverla, dall’editor della pagina nel proprio spazio.",
+			"claimedLink": "Accedere all’area professionisti",
+			"alreadyTitle": "È in corso la verifica di una richiesta di rimozione",
+			"alreadyBody": "La pagina è già nascosta."
+		}
+	},
+	"Agenda": {
+		"common": {
+			"accessLogged": "I dati dei pazienti in questa pagina vengono decifrati per lei, e ogni accesso viene registrato.",
+			"accessLogLink": "Registro degli accessi",
+			"loadFailed": "Non è stato possibile caricare l’agenda. Verifichi la connessione e riprovi.",
+			"retry": "Riprovare",
+			"close": "Chiudere",
+			"keep": "Mantenere",
+			"failed": "Non ha funzionato. Riprovi tra un momento.",
+			"refused": "Questa modifica non è più possibile: nel frattempo l’agenda è cambiata.",
+			"patient": "Paziente",
+			"newPatient": "Prima visita",
+			"unreachable": "Le e-mail non raggiungono questo paziente: lo chiami.",
+			"emailUnconfirmed": "Indirizzo e-mail in attesa della conferma del paziente",
+			"noPhone": "Nessun numero di telefono",
+			"noEmail": "Nessun indirizzo e-mail",
+			"placeLabel": "Sede",
+			"placeOption": "{place}, {city}",
+			"status": {
+				"held": "In prenotazione",
+				"pending": "Richiesta a cui rispondere",
+				"confirmed": "Confermato",
+				"declined": "Rifiutato",
+				"expired": "Scaduto",
+				"cancelled_by_patient": "Annullato dal paziente",
+				"cancelled_by_practice": "Annullato dallo studio",
+				"no_show": "Non presentato",
+				"completed": "Fatto"
+			},
+			"block": "Fascia bloccata",
+			"source": {
+				"online": "Prenotato online",
+				"practice": "Aggiunto dallo studio"
+			},
+			"timeRange": "Da {start} a {end}",
+			"noPractice": {
+				"title": "Ancora nessuna agenda",
+				"body": "L’agenda si apre quando la sua pagina è stata rivendicata e verificata, oppure quando uno studio la aggiunge al suo team.",
+				"action": "Tornare al suo spazio"
+			},
+			"noCalendar": {
+				"title": "Ancora nessuna sede configurata",
+				"bodyOwner": "Configuri la sede in cui riceve i pazienti: orari di apertura e tipi di appuntamento.",
+				"bodyStaff": "Il titolare della pagina non ha ancora configurato l’agenda.",
+				"action": "Configurare la prenotazione"
+			}
+		},
+		"today": {
+			"metaTitle": "Oggi",
+			"title": "Oggi",
+			"next": {
+				"heading": "Prossimo paziente",
+				"none": "Nessun altro appuntamento oggi.",
+				"at": "Alle {time}",
+				"empty": "Nessun appuntamento oggi."
+			},
+			"day": {
+				"heading": "Gli appuntamenti del giorno",
+				"empty": "Nessun appuntamento oggi.",
+				"columns": {
+					"time": "Ora",
+					"entry": "Appuntamento",
+					"status": "Stato",
+					"actions": "Azioni"
+				}
+			},
+			"requests": {
+				"heading": "Richieste a cui rispondere",
+				"lead": "I pazienti attendono la sua risposta. Le richieste senza risposta scadono all’ora indicata.",
+				"empty": "Nessuna richiesta in attesa.",
+				"deadline": "Rispondere entro il {date}",
+				"approve": "Accettare",
+				"decline": "Rifiutare",
+				"approved": "Richiesta accettata. Il paziente riceve una conferma.",
+				"declined": "Richiesta rifiutata. Il paziente viene avvisato via e-mail."
+			},
+			"actions": {
+				"cancel": "Annullare…",
+				"noShow": "Non presentato",
+				"noShowDone": "Segnato come non presentato.",
+				"block": "Bloccare una fascia oraria",
+				"week": "Vedere la settimana",
+				"add": "Aggiungere un appuntamento"
+			}
+		},
+		"week": {
+			"metaTitle": "Agenda",
+			"title": "Agenda",
+			"gridLabel": "Settimana del {date}",
+			"dayGridLabel": "{date}",
+			"previous": "Settimana precedente",
+			"next": "Settimana successiva",
+			"previousDay": "Giorno precedente",
+			"nextDay": "Giorno successivo",
+			"current": "Oggi",
+			"viewLabel": "Vista",
+			"viewWeek": "Settimana",
+			"viewDay": "Giorno",
+			"timeColumn": "Ora",
+			"free": "{day}, {time}, libero",
+			"freeClosed": "{day}, {time}, fuori dagli orari di apertura",
+			"now": "Adesso",
+			"entry": "{day}, dalle {start} alle {end}, {status}",
+			"keyboardHint": "I tasti freccia si spostano nella settimana, Invio aggiunge o apre, Pagina su e Pagina giù cambiano settimana.",
+			"settings": "Impostazioni di prenotazione",
+			"legend": {
+				"label": "Legenda",
+				"booked": "Confermato",
+				"pending": "Richiesta",
+				"held": "In prenotazione",
+				"block": "Bloccato",
+				"closed": "Fuori dagli orari di apertura"
+			},
+			"loading": "Caricamento dell’agenda"
+		},
+		"add": {
+			"title": "Aggiungere all’agenda",
+			"when": "{date}, {time}",
+			"kindLabel": "Che cosa aggiungere",
+			"kindAppointment": "Un appuntamento",
+			"kindBlock": "Fascia bloccata",
+			"date": "Data",
+			"start": "Inizio",
+			"end": "Fine",
+			"type": "Tipo di appuntamento",
+			"typeOption": "{name} · {minutes} min",
+			"firstName": "Nome",
+			"lastName": "Cognome",
+			"email": "E-mail (facoltativa)",
+			"emailHint": "La prima e-mail chiede soltanto al paziente di confermare questo indirizzo. I dettagli seguono dopo la conferma, così un errore di battitura non li invia mai a un estraneo.",
+			"phone": "Telefono (facoltativo)",
+			"submit": "Aggiungere l’appuntamento",
+			"submitBlock": "Bloccare questo orario",
+			"pending": "Aggiunta in corso…",
+			"taken": "Questo orario è già occupato. Scelga un altro orario.",
+			"invalid": "Verifichi i campi evidenziati.",
+			"invalidEmail": "Inserisca un indirizzo e-mail come nome@example.fr, oppure lasci il campo vuoto.",
+			"invalidPhone": "Inserisca un numero di telefono come 06 12 34 56 78, oppure lasci il campo vuoto.",
+			"required": "Obbligatorio.",
+			"endBeforeStart": "La fine deve essere successiva all’inizio.",
+			"created": "Appuntamento aggiunto.",
+			"blocked": "Orario bloccato.",
+			"outsideHours": "Fuori dagli orari di apertura: può comunque aggiungerlo."
+		},
+		"entry": {
+			"when": "Quando",
+			"type": "Tipo",
+			"patient": "Paziente",
+			"email": "E-mail",
+			"phone": "Telefono",
+			"status": "Stato",
+			"source": "Origine",
+			"cancel": "Annullare l’appuntamento",
+			"removeBlock": "Rimuovere il blocco",
+			"noShow": "Non presentato",
+			"approve": "Accettare la richiesta",
+			"decline": "Rifiutare la richiesta",
+			"message": "Messaggio al paziente (facoltativo)",
+			"messageHint": "Inviato con l’e-mail di annullamento, se il paziente ha confermato il proprio indirizzo.",
+			"cancelTitle": "Annullare questo appuntamento?",
+			"cancelBody": "L’orario torna libero.",
+			"confirmCancel": "Annullare l’appuntamento",
+			"cancelled": "Appuntamento annullato.",
+			"blockRemoved": "Blocco rimosso."
+		},
+		"block": {
+			"title": "Bloccare una fascia oraria",
+			"lead": "Una riunione, un’assenza: i pazienti non possono prenotare questo orario.",
+			"submit": "Bloccare questo orario"
+		},
+		"settings": {
+			"metaTitle": "Impostazioni di prenotazione",
+			"title": "Impostazioni di prenotazione",
+			"lead": "Sedi, orari di apertura, tipi di appuntamento e regole della prenotazione online.",
+			"ownerOnly": {
+				"title": "Solo il titolare della pagina configura la prenotazione",
+				"body": "Il suo ruolo le consente di gestire l’agenda. Gli orari di apertura e le regole di prenotazione sono definiti dal titolare della pagina.",
+				"action": "Aprire l’agenda"
+			},
+			"gate": {
+				"heading": "Prenotazione online",
+				"ready": "La sua pagina soddisfa le condizioni: può aprire la prenotazione online.",
+				"missing": "Prima che i pazienti possano prenotare online:",
+				"notVerified": "La sua pagina deve essere verificata.",
+				"fees": "Indichi i suoi onorari sulla sua pagina.",
+				"paymentMethods": "Indichi sulla sua pagina i metodi di pagamento che accetta.",
+				"waitingPeriod": "La sua pagina è stata verificata senza Pro Santé Connect: la prenotazione potrà aprirsi il {date}.",
+				"noType": "Offra online almeno un tipo di appuntamento.",
+				"noHours": "Aggiunga orari di apertura o un’apertura straordinaria.",
+				"editPage": "Completare onorari e metodi di pagamento",
+				"deontology": "Articolo R.4127-53 del codice della sanità pubblica francese: un medico che presenta la propria attività online indica i suoi onorari e i metodi di pagamento accettati.",
+				"open": "Aprire la prenotazione online",
+				"pause": "Sospendere la prenotazione online",
+				"opened": "La prenotazione online è aperta. I pazienti possono prenotare sulla sua pagina.",
+				"paused": "La prenotazione online è sospesa. L’agenda continua a funzionare per gli appuntamenti che aggiunge.",
+				"statusLabel": "Stato",
+				"status": {
+					"draft": "Non ancora aperto",
+					"open": "Aperto",
+					"paused": "In pausa"
+				}
+			},
+			"places": {
+				"heading": "Sedi",
+				"lead": "Ogni sede ha la propria agenda, nel fuso orario del suo dipartimento.",
+				"timeZone": "Fuso orario: {zone}",
+				"noZone": "Dipartimento sconosciuto: questa sede non può ancora ricevere prenotazioni.",
+				"create": "Configurare questa sede",
+				"presetsNote": "Si parte dai tipi di appuntamento abituali della sua specializzazione: {names}.",
+				"presetItem": "{name} ({minutes} min)",
+				"none": "Nessuna sede della sua pagina può ricevere appuntamenti. Aggiunga l’indirizzo dello studio nell’editor della pagina.",
+				"addPlace": "Aggiungere una sede nell’editor",
+				"choose": "Sede da configurare"
+			},
+			"types": {
+				"heading": "Tipi di appuntamento",
+				"lead": "Preferisca nomi neutri: il tipo di un appuntamento può rivelare informazioni sanitarie.",
+				"name": "Nome",
+				"duration": "Durata (minuti)",
+				"before": "Margine prima (minuti)",
+				"after": "Margine dopo (minuti)",
+				"audience": "Chi può prenotarlo",
+				"audienceAll": "Tutti i pazienti",
+				"audienceNew": "Solo nuovi pazienti",
+				"audienceExisting": "Pazienti già seguiti",
+				"active": "Proposto online",
+				"save": "Salvare",
+				"saved": "Tipo di appuntamento salvato.",
+				"add": "Aggiungere un tipo di appuntamento",
+				"newName": "Visita",
+				"summary": "{duration} min",
+				"inactive": "Non proposto online"
+			},
+			"rules": {
+				"heading": "Orari di apertura settimanali",
+				"lead": "Gli orari che i pazienti possono prenotare, giorno per giorno. Sono possibili più fasce al giorno (per esempio con una pausa pranzo).",
+				"days": {
+					"1": "Lunedì",
+					"2": "Martedì",
+					"3": "Mercoledì",
+					"4": "Giovedì",
+					"5": "Venerdì",
+					"6": "Sabato",
+					"7": "Domenica"
+				},
+				"add": "Aggiungere una fascia oraria",
+				"addFor": "Aggiungere una fascia oraria il {day}",
+				"remove": "Rimuovere",
+				"removeRange": "Rimuovere la fascia {from}–{to} di {day}",
+				"from": "Da",
+				"to": "A",
+				"rangeLabel": "{day}, fascia {n}",
+				"closed": "Chiuso",
+				"copy": "Copiare negli altri giorni feriali",
+				"copyFor": "Copiare negli altri giorni feriali, da {day}",
+				"copied": "{day} copiato negli altri giorni feriali. Salvi per applicare.",
+				"template": "Partire da un modello",
+				"templateMornings": "Mattina, dalle 8:30 alle 12:30",
+				"templateDays": "Giorni feriali, 9:00–12:30 e 14:00–18:30",
+				"save": "Salvare gli orari di apertura",
+				"saved": "Orari di apertura salvati.",
+				"invalid": "Il {day}, ogni fascia deve terminare dopo il suo inizio e non sovrapporsi a un’altra.",
+				"columns": {
+					"day": "Giorno",
+					"actions": "Azioni"
+				}
+			},
+			"exceptions": {
+				"heading": "Chiusure e aperture straordinarie",
+				"lead": "Ferie, un’assenza o una mattina in più: prevalgono sugli orari settimanali.",
+				"kind": "Tipo",
+				"kindClosed": "Chiuso (ferie, assenza)",
+				"kindOpen": "Apertura straordinaria",
+				"span": "Durata",
+				"spanDays": "Giornate intere",
+				"spanTime": "Orari di un giorno",
+				"from": "Da",
+				"until": "Fino a (incluso)",
+				"date": "Data",
+				"start": "Da",
+				"end": "A",
+				"add": "Inserire",
+				"added": "Aggiunto.",
+				"empty": "Nessuna chiusura o apertura straordinaria.",
+				"remove": "Rimuovere",
+				"removeLabel": "Rimuovere: {label}",
+				"closedDays": "Chiuso dal {from} al {until}",
+				"closedTime": "Chiuso il {date}, dalle {from} alle {to}",
+				"openDays": "Aperto: {from}–{until}",
+				"openTime": "Aperto il {date}, dalle {from} alle {to}",
+				"invalid": "La fine deve essere successiva all’inizio.",
+				"closedDay": "Chiuso il {date}",
+				"openDay": "Aperto il {date}"
+			},
+			"booking": {
+				"heading": "Regole della prenotazione online",
+				"minNotice": "Preavviso minimo (ore)",
+				"minNoticeHint": "I pazienti non possono prenotare un orario più vicino di questo.",
+				"horizon": "Orizzonte di prenotazione (giorni)",
+				"horizonHint": "Con quanto anticipo i pazienti possono prenotare.",
+				"step": "Intervallo tra due orari di inizio possibili (minuti)",
+				"manual": "Approvare manualmente ogni richiesta",
+				"manualHint": "Le richieste attendono la sua risposta per un massimo di 48 ore.",
+				"newPatients": "Accettare nuovi pazienti",
+				"cutoff": "Annullamento online fino a (ore prima)",
+				"requirePhone": "Chiedere un numero di telefono",
+				"askFirstVisit": "Chiedere se si tratta di una prima visita",
+				"retention": "Cancellare i dati dei pazienti dopo (giorni)",
+				"retentionHint": "Tra 30 e 365 giorni dopo l’appuntamento. Apercura non è la cartella clinica.",
+				"instructions": "Istruzioni mostrate alla prenotazione (facoltative)",
+				"instructionsHint": "Testo semplice: l’ingresso, che cosa portare.",
+				"save": "Salvare le regole di prenotazione",
+				"saved": "Regole di prenotazione salvate.",
+				"invalid": "Verifichi i valori evidenziati."
+			},
+			"feed": {
+				"heading": "Feed del calendario privato",
+				"lead": "Segua questa agenda in Google Calendar, Apple Calendar o Thunderbird. Chiunque abbia il link può leggerla: non lo condivida.",
+				"off": "Nessun link di feed attivo.",
+				"on": "Un link del feed è attivo dal {date}.",
+				"create": "Creare un link per il feed",
+				"rotate": "Sostituire il link",
+				"revoke": "Disattivare il feed",
+				"url": "Link del feed",
+				"urlHint": "Mostrato una sola volta: lo copi subito nella sua app di calendario. Sostituirlo disattiva il vecchio link.",
+				"fullNames": "Mostrare il nome completo dei pazienti nel feed",
+				"fullNamesHint": "Disattivato per impostazione predefinita: il feed mostra allora solo il tipo di appuntamento e le iniziali, perché i server del suo fornitore di calendario lo leggono.",
+				"revoked": "Il feed è disattivato: il vecchio link non funziona più.",
+				"saved": "Impostazione del feed salvata."
+			},
+			"logLink": "Vedere chi ha consultato i dati dei pazienti",
+			"index": "In questa pagina"
+		},
+		"log": {
+			"metaTitle": "Registro degli accessi",
+			"title": "Registro degli accessi",
+			"lead": "Ogni volta che i dati dei pazienti sono stati decifrati: chi, quando, perché e quante schede. Nessuno può modificarlo o eliminarlo.",
+			"ownerOnly": {
+				"title": "Solo il titolare della pagina legge il registro degli accessi",
+				"body": "Il registro degli accessi dello studio è riservato al titolare della pagina."
+			},
+			"columns": {
+				"when": "Quando",
+				"who": "Chi",
+				"what": "Che cosa",
+				"why": "Perché",
+				"records": "Schede"
+			},
+			"actor": {
+				"patient": "Il paziente",
+				"system": "Apercura (attività automatica)",
+				"unknown": "Ex membro"
+			},
+			"action": {
+				"decrypt": "Leggere",
+				"alert": "Avviso",
+				"unknown": "{action}"
+			},
+			"purpose": {
+				"agenda_list": "Agenda",
+				"notify": "Invio di un’e-mail",
+				"manage": "La pagina del paziente",
+				"ics_feed": "Feed del calendario",
+				"decrypt_volume": "Più di 500 schede lette in un’ora",
+				"unknown": "{purpose}"
+			},
+			"records": "{count, plural, one {# scheda} many {# di schede} other {# schede}}",
+			"empty": "Ancora nessun accesso.",
+			"more": "Mostrare le voci precedenti",
+			"alert": "Il {date}, {name} ha letto più di 500 schede di pazienti in un’ora. Verifichi che fosse previsto; in caso contrario, revochi il suo accesso e cambi la sua password."
+		},
+		"feed": {
+			"name": "Agenda Apercura",
+			"block": "Bloccato",
+			"pending": "[Richiesta]",
+			"appointment": "Appuntamento"
+		}
+	},
+	"Team": {
+		"metaTitle": "Team",
+		"title": "Team",
+		"lead": "Inviti le persone che gestiscono la sua agenda. Ciascuna accede con il proprio account e un secondo fattore.",
+		"ownerOnly": {
+			"title": "Solo il titolare della pagina gestisce il team",
+			"body": "Chieda al titolare della pagina di invitare, modificare o rimuovere un membro."
+		},
+		"roles": {
+			"heading": "Chi può fare che cosa",
+			"owner": "Tutto: la pagina, il team, le impostazioni di prenotazione, il registro degli accessi.",
+			"practitioner": "L’agenda e la pagina pubblica. Non il team, le impostazioni di prenotazione né il registro degli accessi.",
+			"assistant": "Solo l’agenda: il giorno, la settimana, le richieste, gli appuntamenti e i blocchi. Non la pagina, il team, le impostazioni di prenotazione né il registro degli accessi."
+		},
+		"invite": {
+			"heading": "Invitare qualcuno",
+			"email": "Indirizzo e-mail",
+			"role": "Ruolo",
+			"submit": "Inviare l’invito",
+			"pending": "Invio…",
+			"sent": "Invito inviato a {email}. È valido per 48 ore.",
+			"alreadyMember": "Questa persona fa già parte del team.",
+			"rateLimited": "Troppi inviti oggi. Riprovi domani.",
+			"invalidEmail": "Inserisca un indirizzo e-mail come nome@example.fr.",
+			"note": "La persona invitata crea un account con questo indirizzo, poi configura un secondo fattore prima di aderire."
+		},
+		"members": {
+			"heading": "Membri",
+			"columns": {
+				"name": "Nome",
+				"role": "Ruolo",
+				"factor": "Secondo fattore",
+				"actions": "Azioni"
+			},
+			"you": "Lei",
+			"factorYes": "Configurare",
+			"factorNo": "Non ancora",
+			"roleOf": "Ruolo di {name}",
+			"saveRole": "Modificare",
+			"roleChanged": "Ruolo modificato.",
+			"remove": "Rimuovere",
+			"removeLabel": "Rimuovere {name} dal team",
+			"removeTitle": "Rimuovere {name}?",
+			"removeBody": "Perde subito l’accesso all’agenda. Potrà invitarlo di nuovo in seguito.",
+			"confirmRemove": "Rimuovere dal team",
+			"removed": "{name} non ha più accesso."
+		},
+		"invitations": {
+			"heading": "Inviti in attesa",
+			"empty": "Nessun invito in attesa.",
+			"columns": {
+				"email": "E-mail",
+				"role": "Ruolo",
+				"expires": "Scadenza",
+				"actions": "Azioni"
+			},
+			"expired": "Scaduto",
+			"cancel": "Ritirare",
+			"cancelLabel": "Ritirare l’invito di {email}",
+			"cancelled": "Invito ritirato.",
+			"resend": "Inviare di nuovo",
+			"resendLabel": "Inviare di nuovo l’invito a {email}"
+		}
+	},
+	"Invitation": {
+		"metaTitle": "Invito",
+		"title": "Unirsi a uno studio",
+		"open": {
+			"lead": "{inviter} la invita a unirsi a {practice} come {role}.",
+			"practitioner": "Pagina di {name}.",
+			"expires": "Questo invito è valido fino al {date}.",
+			"accept": "Unirsi al team",
+			"decline": "Rifiutare",
+			"pending": "Adesione in corso…"
+		},
+		"accepted": {
+			"title": "Fa parte del team",
+			"body": "Si è unito a {practice}.",
+			"action": "Aprire l’agenda"
+		},
+		"declined": "Invito rifiutato. Non cambia nulla.",
+		"other_address": {
+			"title": "Questo invito è destinato a un altro indirizzo",
+			"body": "Ha effettuato l’accesso come {email}. Acceda con l’indirizzo a cui è stato inviato l’invito."
+		},
+		"expired": {
+			"title": "Questo invito è scaduto",
+			"body": "Gli inviti sono validi 48 ore. Chieda a {inviter} di inviargliene uno nuovo."
+		},
+		"closed": {
+			"title": "Questo invito non è più valido",
+			"body": "È stato ritirato o ha già ricevuto risposta. Se necessario, ne chieda uno nuovo allo studio."
+		},
+		"not_found": {
+			"title": "Invito non trovato",
+			"body": "Verifichi il link nell’e-mail, oppure chieda allo studio un nuovo invito."
+		},
+		"errors": {
+			"EMAIL_NOT_VERIFIED": "Confermi prima il suo indirizzo e-mail.",
+			"NO_SECOND_FACTOR": "Configuri un secondo fattore prima di aderire.",
+			"ALREADY_MEMBER": "Fa già parte di questo team.",
+			"EXPIRED": "Questo invito è scaduto.",
+			"failed": "L’adesione non è riuscita. Riprovi tra un momento."
+		}
+	}
+}
