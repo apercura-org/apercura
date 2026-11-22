@@ -164,3 +164,25 @@ test("auth and tRPC refuse oversized bodies before reading them", async ({ reque
 	});
 	expect(trpc.status()).toBe(413);
 });
+
+test("security.txt says where to report a vulnerability, until when (RFC 9116)", async ({
+	request,
+	baseURL,
+}) => {
+	const response = await request.get("/.well-known/security.txt");
+	expect(response.status()).toBe(200);
+	expect(response.headers()["content-type"]).toMatch(/^text\/plain/);
+	const fields = Object.fromEntries(
+		(await response.text())
+			.trim()
+			.split("\n")
+			.map((line) => [line.slice(0, line.indexOf(":")), line.slice(line.indexOf(":") + 2)]),
+	);
+	// No contact configured on the e2e server: the repository's private advisories.
+	expect(fields.Contact).toBe("https://github.com/maxgfr/apercura/security/advisories/new");
+	expect(fields.Policy).toBe("https://github.com/maxgfr/apercura/security/policy");
+	expect(fields.Canonical).toBe(`${baseURL}/.well-known/security.txt`);
+	const expires = Date.parse(fields.Expires ?? "");
+	expect(expires).toBeGreaterThan(Date.now());
+	expect(expires - Date.now()).toBeLessThan(365 * 86_400_000);
+});

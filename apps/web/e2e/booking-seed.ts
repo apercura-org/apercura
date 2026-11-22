@@ -5,7 +5,9 @@ import type postgres from "postgres";
 /**
  * Open agendas for four fictitious practitioners of the synthetic fixtures (RPPS 1999999xxxx,
  * never real people), written straight into the `care` schema the way the agenda settings would.
- * Every run starts from a clean slate: earlier e2e appointments, codes and mails are deleted.
+ * Every run starts from a clean slate: earlier e2e appointments, codes and mails are deleted, and a
+ * page an earlier run claimed for one of these practices (the screen-reader spec signs its owner
+ * in) is unclaimed again.
  */
 export const BOOKING_PRACTITIONERS = {
 	/** Confirms at once, two reasons (the reason step shows). */
@@ -16,6 +18,8 @@ export const BOOKING_PRACTITIONERS = {
 	manage: { rpps: "19999991029", slug: "claire-essaiac-19999991029", name: "Claire Essaiac" },
 	/** Two browsers race for the same time. */
 	race: { rpps: "19999991037", slug: "denis-essaiad-19999991037", name: "Denis Essaiad" },
+	/** Screen-reader flows (`screen-reader.spec.ts`): booking, /rdv and the owner's agenda. */
+	screenReader: { rpps: "19999991045", slug: "elsa-essaiae-19999991045", name: "Elsa Essaiae" },
 } as const;
 
 type Key = keyof typeof BOOKING_PRACTITIONERS;
@@ -43,6 +47,13 @@ const SETTINGS: Record<
 		manualValidation: false,
 		types: [{ name: "Consultation", minutes: 15, audience: "all" }],
 	},
+	screenReader: {
+		manualValidation: false,
+		types: [
+			{ name: "Consultation", minutes: 15, audience: "all" },
+			{ name: "Première consultation", minutes: 30, audience: "new" },
+		],
+	},
 };
 
 const CARE_TABLES = [
@@ -64,6 +75,15 @@ export async function seedBookingAgendas(sql: postgres.Sql) {
 	const orgs = (Object.keys(BOOKING_PRACTITIONERS) as Key[]).map(orgOf);
 	for (const table of CARE_TABLES) {
 		await sql.unsafe(`delete from care.${table} where organization_id = any($1::text[])`, [orgs]);
+	}
+	const unclaimed = await sql<{ id: number }[]>`
+		update directory.practitioners set claim_status = 'unclaimed', owner_org_id = null
+		where owner_org_id = any(${orgs}::text[])
+		returning id
+	`;
+	if (unclaimed.length > 0) {
+		await sql`delete from directory.claims where practitioner_id = any(${unclaimed.map((row) => row.id)}::integer[])`;
+		await sql`select directory.refresh_practitioner(${unclaimed.map((row) => row.id)}::integer[])`;
 	}
 	await sql`delete from directory.organization where id = any(${orgs}::text[])`;
 	// Booking counters of earlier runs (holds, codes, manage calls, proof-of-work replays).

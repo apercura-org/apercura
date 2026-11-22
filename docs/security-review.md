@@ -233,7 +233,8 @@ Before opening booking to patients:
    the HDS-certified host under a signed hosting contract; keep `PUBLIC_HDS_HOST`
    unset until then. Store the master keys in the host's secret manager, with
    restricted access and a written rotation and incident procedure.
-2. **DPIA (AIPD)**, mandatory for health data at scale, covering at least:
+2. **DPIA (AIPD)**, mandatory for health data at scale (draft:
+   [legal/dpia-draft.md](legal/dpia-draft.md)), covering at least:
    the content of patient emails and `.ics` files, the calendar feed and its
    default fields, retention (90 days by default, 30 to 365) and backups, the
    platform administrators' access to claim documents, IP hashing in audit
@@ -247,6 +248,9 @@ Before opening booking to patients:
    claim documents, admin paths, CSP and headers, and the database roles.
 4. **HSTS preload** once the production domain is final; publish a
    `/.well-known/security.txt` with a contact and a disclosure policy.
+   _Done in the code (issue #34): `security.txt` is served with a contact, the policy and
+   an `Expires` 180 days ahead; `HSTS_PRELOAD=true` adds `preload` in production. The
+   preload submission itself is a founder step ([launch checklist](launch-checklist.md))._
 5. **CodeQL** with the `security-extended` query suite, GitHub secret
    scanning with push protection, and Dependabot (already on) for every
    ecosystem in the repository.

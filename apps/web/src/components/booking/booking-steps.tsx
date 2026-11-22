@@ -370,6 +370,22 @@ export function CodeStep({
 	const [code, setCode] = useState("");
 	const [pending, setPending] = useState(false);
 	const [fieldError, setFieldError] = useState<string | null>(null);
+	/**
+	 * Counts the errors shown on the code field. Each one moves the focus back to the field once
+	 * the error is rendered, so a screen reader reads the label, the error and the attempts left
+	 * (a server answer otherwise changes the page silently while the focus sits on the button).
+	 */
+	const [errorShown, setErrorShown] = useState(0);
+	const codeField = useRef<HTMLDivElement>(null);
+	useEffect(() => {
+		if (errorShown > 0) {
+			codeField.current?.querySelector("input")?.focus();
+		}
+	}, [errorShown]);
+	const showFieldError = (message: string) => {
+		setFieldError(message);
+		setErrorShown((count) => count + 1);
+	};
 	/** A dead end for this hold (expired, too many attempts…): only "choose again" remains. */
 	const [fatal, setFatal] = useState<string | null>(null);
 	const [info, setInfo] = useState<string | null>(null);
@@ -385,7 +401,7 @@ export function CodeStep({
 	const submit = async (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 		if (!/^\d{6}$/.test(code)) {
-			setFieldError(t("code.required"));
+			showFieldError(t("code.required"));
 			return;
 		}
 		setPending(true);
@@ -397,7 +413,7 @@ export function CodeStep({
 				if (outcome.attemptsLeft === 0) {
 					setFatal("TOO_MANY_ATTEMPTS");
 				} else {
-					setFieldError(t("code.invalid", { count: outcome.attemptsLeft }));
+					showFieldError(t("code.invalid", { count: outcome.attemptsLeft }));
 				}
 				return;
 			}
@@ -462,29 +478,31 @@ export function CodeStep({
 	return (
 		<Form onSubmit={(event) => void submit(event)}>
 			<p className="max-w-[60ch] text-body text-ink">{t("code.lead", { email })}</p>
-			<OtpField
-				name="code"
-				label={t("code.field")}
-				description={t("code.hint")}
-				value={code}
-				onChange={(value) => {
-					setCode(value);
-					setFieldError(null);
-				}}
-				isRequired
-				isInvalid={fieldError !== null}
-				errorMessage={fieldError ?? undefined}
-			/>
+			<div ref={codeField}>
+				<OtpField
+					name="code"
+					label={t("code.field")}
+					description={t("code.hint")}
+					value={code}
+					onChange={(value) => {
+						setCode(value);
+						setFieldError(null);
+					}}
+					isRequired
+					isInvalid={fieldError !== null}
+					errorMessage={fieldError ?? undefined}
+				/>
+			</div>
 			<p className="tabular text-meta text-ink">{t("code.held", { time: heldUntil })}</p>
 			<div className="flex flex-col items-start gap-2">
 				<Button intent="ink" isDisabled={waitSeconds > 0} onPress={() => void resend()}>
 					{waitSeconds > 0 ? t("code.resendIn", { seconds: waitSeconds }) : t("code.resend")}
 				</Button>
-				{info ? (
-					<p role="status" className="text-meta text-ink">
-						{info}
-					</p>
-				) : null}
+				{/* Mounted before it has anything to say: screen readers skip a live region that
+				    appears together with its text. */}
+				<p role="status" className="text-meta text-ink empty:hidden">
+					{info}
+				</p>
 			</div>
 			<BookingSummary
 				calendar={calendar}

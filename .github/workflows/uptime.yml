@@ -1,0 +1,107 @@
+name: Uptime
+
+# Every 15 minutes, from outside the host: the health check and one practitioner page of the
+# production site. A failure opens an issue labelled `uptime` (or comments on the one already
+# open); the next successful check closes it. Set the repository variable PRODUCTION_URL
+# (Settings > Secrets and variables > Actions > Variables), e.g. https://apercura.health; the job
+# skips while it is unset. UPTIME_PRACTITIONER_PATH (optional, e.g. /praticien/<slug>) pins the
+# page; otherwise the first page of the practitioner sitemap is checked.
+
+on:
+  schedule:
+    - cron: "*/15 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: uptime
+  cancel-in-progress: false
+
+jobs:
+  check:
+    name: Health check and a practitioner page
+    if: ${{ vars.PRODUCTION_URL != '' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      issues: write
+    env:
+      PRODUCTION_URL: ${{ vars.PRODUCTION_URL }}
+      UPTIME_PRACTITIONER_PATH: ${{ vars.UPTIME_PRACTITIONER_PATH }}
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - name: Check the site
+        id: probe
+        shell: bash
+        run: |
+          set -uo pipefail
+          base="${PRODUCTION_URL%/}"
+          failures=()
+
+          health=$(curl -sS --max-time 15 --retry 2 --retry-delay 5 --retry-all-errors \
+            -A "apercura-uptime" -o /tmp/health -w '%{http_code} %{time_total}' "$base/api/health" 2>/tmp/err) || true
+          if [ "${health%% *}" != "200" ] || ! grep -q '"status":"ok"' /tmp/health; then
+            failures+=("\`/api/health\` answered \`${health:-no response}\` $(head -c 200 /tmp/health 2>/dev/null) $(cat /tmp/err)")
+          fi
+
+          path="${UPTIME_PRACTITIONER_PATH:-}"
+          if [ -z "$path" ]; then
+            index=$(curl -sS --max-time 20 -A "apercura-uptime" "$base/sitemap.xml" || true)
+            chunk=$(grep -o '<loc>[^<]*/sitemaps/praticiens-[0-9]*\.xml</loc>' <<<"$index" | head -n 1 | sed 's/<[^>]*>//g')
+            if [ -n "$chunk" ]; then
+              page=$(curl -sS --max-time 20 -A "apercura-uptime" "$chunk" | grep -o '<loc>[^<]*</loc>' | head -n 1 | sed 's/<[^>]*>//g')
+              path="${page#"$base"}"
+            fi
+          fi
+          if [ -z "$path" ]; then
+            failures+=("no practitioner page found in \`/sitemap.xml\`")
+          else
+            page=$(curl -sS -L --max-time 20 --retry 2 --retry-delay 5 --retry-all-errors \
+              -A "apercura-uptime" -o /tmp/page -w '%{http_code} %{time_total}' "$base$path" 2>/tmp/err) || true
+            if [ "${page%% *}" != "200" ] || ! grep -q '<h1' /tmp/page; then
+              failures+=("\`$path\` answered \`${page:-no response}\` $(cat /tmp/err)")
+            fi
+          fi
+
+          {
+            echo "## Uptime of $base"
+            echo "- \`/api/health\`: \`${health:-no response}\`"
+            echo "- \`${path:-practitioner page}\`: \`${page:-not checked}\`"
+          } >> "$GITHUB_STEP_SUMMARY"
+          if [ ${#failures[@]} -gt 0 ]; then
+            printf -- '- %s\n' "${failures[@]}" > /tmp/failures.md
+            cat /tmp/failures.md >> "$GITHUB_STEP_SUMMARY"
+            echo "failed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "failed=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Open or update the uptime issue
+        if: steps.probe.outputs.failed == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          gh label create uptime --color B60205 --description "Production site check failed" 2>/dev/null || true
+          run_url="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+          body=$(printf 'The scheduled check of %s failed at %s UTC ([run](%s)):\n\n%s\n' \
+            "$PRODUCTION_URL" "$(date -u '+%Y-%m-%d %H:%M')" "$run_url" "$(cat /tmp/failures.md)")
+          open=$(gh issue list --label uptime --state open --limit 1 --json number --jq '.[0].number // empty')
+          if [ -n "$open" ]; then
+            gh issue comment "$open" --body "$body"
+          else
+            gh issue create --title "Production check failing: $PRODUCTION_URL" --label uptime --body "$body"
+          fi
+          exit 1
+
+      - name: Close the uptime issue once the site answers again
+        if: steps.probe.outputs.failed == 'false'
+        shell: bash
+        run: |
+          set -euo pipefail
+          open=$(gh issue list --label uptime --state open --json number --jq '.[].number' 2>/dev/null || true)
+          for number in $open; do
+            gh issue close "$number" --comment "Recovered: the check passed at $(date -u '+%Y-%m-%d %H:%M') UTC."
+          done

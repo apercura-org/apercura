@@ -22,10 +22,12 @@ const nextConfig: NextConfig = {
 	},
 	async headers() {
 		// Every response: nosniff, referrer, framing, permissions, opener isolation and, in an
-		// HTTPS production build, HSTS. Pages get their Content-Security-Policy from the proxy.
+		// HTTPS production build, HSTS (with `preload` when HSTS_PRELOAD is set at build time).
+		// Pages get their Content-Security-Policy from the proxy.
 		const security = baseSecurityHeaders({
 			production: process.env.NODE_ENV === "production",
 			appUrl: process.env.APP_URL,
+			preload: ["true", "1"].includes(process.env.HSTS_PRELOAD ?? ""),
 		});
 		// API answers are data: nothing may run, load or frame them, nor read them cross-origin.
 		// The claim document route sets its own sandboxed policy.

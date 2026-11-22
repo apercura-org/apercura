@@ -1,5 +1,6 @@
 "use client";
 
+import { formatPhoneFr } from "@apercura/core";
 import {
 	Badge,
 	Button,
@@ -237,7 +238,7 @@ export function TodayView({
 							{next.patient?.isNew ? <Badge>{tCommon("newPatient")}</Badge> : null}
 							{next.patient?.phone ? (
 								<a href={`tel:${next.patient.phone}`} className="tabular text-ink underline">
-									{next.patient.phone}
+									{formatPhoneFr(next.patient.phone)}
 								</a>
 							) : (
 								<span>{tCommon("noPhone")}</span>
@@ -277,7 +278,7 @@ export function TodayView({
 				) : day.length === 0 ? null : (
 					// An empty day is said once, under "Next patient".
 					<div className="overflow-x-auto">
-						<table className={table.table()}>
+						<table aria-labelledby="today-day" className={table.table()}>
 							<thead className={table.head()}>
 								<tr>
 									<th scope="col" className={table.column()}>

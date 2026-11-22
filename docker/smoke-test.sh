@@ -38,7 +38,11 @@ hex() { openssl rand -hex 24; }
 step() { printf '\n== %s\n' "$*"; }
 
 step "Build the image"
-docker build -f "$root/docker/Dockerfile" --build-arg "APP_URL=http://localhost:$port" -t "$image" "$root"
+# A fictitious publisher: production refuses to start without the facts of the legal pages,
+# which static pages bake at build time.
+publisher="Éditeur fictif du test de fumée"
+docker build -f "$root/docker/Dockerfile" --build-arg "APP_URL=http://localhost:$port" \
+	--build-arg "LEGAL_PUBLISHER_NAME=$publisher" -t "$image" "$root"
 
 step "Write a throwaway environment"
 {
@@ -52,6 +56,18 @@ step "Write a throwaway environment"
 	echo "MINIO_ROOT_PASSWORD=$(hex)"
 	echo "S3_SECRET_ACCESS_KEY=$(hex)"
 	echo "MAILPIT_UI_PORT=$((port + 1))"
+	echo "LEGAL_PUBLISHER_NAME=$publisher"
+	echo "LEGAL_PUBLISHER_LEGAL_FORM=Association fictive"
+	echo "LEGAL_PUBLISHER_ADDRESS=1 rue du Test, 75000 Paris"
+	echo "LEGAL_PUBLISHER_PHONE=01 00 00 00 00"
+	echo "LEGAL_PUBLISHER_REGISTRATION=RNA W000000000"
+	echo "LEGAL_PUBLICATION_DIRECTOR=Camille Test"
+	echo "LEGAL_CONTACT_EMAIL=contact@example.test"
+	echo "LEGAL_HOST_NAME=Hébergeur fictif"
+	echo "LEGAL_HOST_ADDRESS=2 rue du Test, 75000 Paris"
+	echo "LEGAL_HOST_PHONE=01 00 00 00 01"
+	echo "LEGAL_SMTP_PROVIDER=Mailpit"
+	echo "LEGAL_EFFECTIVE_DATE=2026-12-01"
 	docker run --rm "$image" keys
 } >"$env_file"
 
@@ -73,7 +89,9 @@ slug=$(compose exec -T postgres psql -U postgres -d apercura -tA \
 	-c "SELECT slug FROM directory.practitioner_pages WHERE indexable ORDER BY slug LIMIT 1")
 test -n "$slug"
 curl -fsS "$base/praticien/$slug" | grep -q "<h1"
-echo "home, /en, /praticien/$slug and /api/health: OK"
+curl -fsS "$base/mentions-legales" | grep -q "$publisher"
+curl -fsS "$base/.well-known/security.txt" | grep -q "^Contact: mailto:contact@example.test"
+echo "home, /en, /praticien/$slug, the legal notice, security.txt and /api/health: OK"
 
 step "Scheduled jobs run in the scheduler"
 compose exec -T scheduler apercura jobs:tick | grep '"job":"tick"'

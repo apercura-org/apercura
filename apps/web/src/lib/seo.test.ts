@@ -2,7 +2,14 @@ import { describe, expect, it } from "vitest";
 import { canonicalPath } from "./canonical-path";
 import { pickMessages } from "./client-messages";
 import { robotsFor } from "./robots";
-import { DESCRIPTION_MAX, fitText, pickTitle, shortPlaceName, TITLE_MAX } from "./seo";
+import {
+	DESCRIPTION_MAX,
+	fitText,
+	pickTitle,
+	shortPlaceName,
+	siteVerification,
+	TITLE_MAX,
+} from "./seo";
 import { sitemapIndexXml, urlSetXml } from "./sitemap-xml";
 
 describe("titles and descriptions", () => {
@@ -75,5 +82,23 @@ describe("sitemap XML", () => {
 		expect(set).toContain("<loc>https://apercura.example/praticien/a&amp;b-19999990013</loc>");
 		expect(set).not.toMatch(/changefreq|priority/);
 		expect(set.startsWith('<?xml version="1.0" encoding="UTF-8"?>')).toBe(true);
+	});
+});
+
+describe("search engine verification", () => {
+	it("prints nothing until a token is configured", () => {
+		expect(siteVerification({})).toBeUndefined();
+		expect(siteVerification({ GOOGLE_SITE_VERIFICATION: " ", BING_SITE_VERIFICATION: "" })).toBe(
+			undefined,
+		);
+	});
+
+	it("maps Google's token and Bing's msvalidate.01", () => {
+		expect(
+			siteVerification({ GOOGLE_SITE_VERIFICATION: "g-token", BING_SITE_VERIFICATION: "b-token" }),
+		).toEqual({ google: "g-token", other: { "msvalidate.01": "b-token" } });
+		expect(siteVerification({ BING_SITE_VERIFICATION: "b-token" })).toEqual({
+			other: { "msvalidate.01": "b-token" },
+		});
 	});
 });

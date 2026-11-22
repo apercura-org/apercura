@@ -116,15 +116,23 @@ export const PERMISSIONS_POLICY = [
 	"xr-spatial-tracking=()",
 ].join(", ");
 
-/** Two years, the value HSTS preload lists ask for. */
+/** Two years and every subdomain: what the HSTS preload list requires (https://hstspreload.org). */
 export const HSTS = "max-age=63072000; includeSubDomains";
+/** The same with `preload`: the domain may then be submitted to the browsers' preload list. */
+export const HSTS_PRELOAD = `${HSTS}; preload`;
 
 /**
  * Headers every response carries (pages, API, assets). HSTS only when the
  * public origin is HTTPS in a production build: a browser would otherwise
- * pin a development host to HTTPS.
+ * pin a development host to HTTPS. `preload` only when asked (HSTS_PRELOAD):
+ * it signals consent to the preload list, which is slow to leave, so forks and
+ * self-hosted instances do not send it by default.
  */
-export function baseSecurityHeaders(options: { production: boolean; appUrl: string | undefined }) {
+export function baseSecurityHeaders(options: {
+	production: boolean;
+	appUrl: string | undefined;
+	preload?: boolean;
+}) {
 	const headers = [
 		{ key: "X-Content-Type-Options", value: "nosniff" },
 		{ key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
@@ -135,7 +143,10 @@ export function baseSecurityHeaders(options: { production: boolean; appUrl: stri
 		{ key: "X-Permitted-Cross-Domain-Policies", value: "none" },
 	];
 	if (options.production && options.appUrl?.startsWith("https://")) {
-		headers.push({ key: "Strict-Transport-Security", value: HSTS });
+		headers.push({
+			key: "Strict-Transport-Security",
+			value: options.preload ? HSTS_PRELOAD : HSTS,
+		});
 	}
 	return headers;
 }

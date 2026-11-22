@@ -85,6 +85,56 @@ const serverFields = z.object({
 	 * deployments), they only promise application-level encryption.
 	 */
 	PUBLIC_HDS_HOST: optionalString,
+
+	/**
+	 * The publisher and host named by the legal notice, the privacy policy, the terms and the
+	 * accessibility statement (LCEN art. 6 III, GDPR art. 13). Unset, the pages print a visible
+	 * placeholder such as `{{PUBLISHER_NAME}}`; production refuses to start or build without the
+	 * required ones (LEGAL_REQUIRED_IN_PRODUCTION). Never invent them: they come from the legal
+	 * entity's documents and the hosting contract (docs/launch-checklist.md).
+	 */
+	LEGAL_PUBLISHER_NAME: optionalString,
+	LEGAL_PUBLISHER_LEGAL_FORM: optionalString,
+	LEGAL_PUBLISHER_ADDRESS: optionalString,
+	LEGAL_PUBLISHER_PHONE: optionalString,
+	/** Trade register (RCS + SIREN) for a company, RNA number (and SIREN) for an association. */
+	LEGAL_PUBLISHER_REGISTRATION: optionalString,
+	LEGAL_PUBLICATION_DIRECTOR: optionalString,
+	/** Address of every request: legal, privacy rights, accessibility feedback. */
+	LEGAL_CONTACT_EMAIL: z.email().optional(),
+	/** The data protection officer's contact (email or postal address). */
+	LEGAL_DPO_CONTACT: optionalString,
+	/** The host of the whole production (falls back to PUBLIC_HDS_HOST). */
+	LEGAL_HOST_NAME: optionalString,
+	LEGAL_HOST_ADDRESS: optionalString,
+	LEGAL_HOST_PHONE: optionalString,
+	/** The email provider, listed among the processors on the privacy page. */
+	LEGAL_SMTP_PROVIDER: optionalString,
+	/** Date the privacy policy and the terms take effect, `YYYY-MM-DD`. */
+	LEGAL_EFFECTIVE_DATE: z.iso.date().optional(),
+
+	/**
+	 * `/.well-known/security.txt` (RFC 9116): where to report a vulnerability (`mailto:` or
+	 * `https:` URI; defaults to `mailto:` LEGAL_CONTACT_EMAIL) and the disclosure policy (defaults
+	 * to the repository's security policy).
+	 */
+	SECURITY_CONTACT: z
+		.string()
+		.regex(/^(mailto:|https:\/\/)\S+$/, "must be a mailto: or https:// URI")
+		.optional(),
+	SECURITY_POLICY_URL: optionalUrl,
+	/**
+	 * Adds `preload` to the production HSTS header. Only once the production domain and all its
+	 * subdomains serve HTTPS for good: submitting a domain to the preload list is hard to undo.
+	 */
+	HSTS_PRELOAD: z
+		.enum(["true", "false", "1", "0"])
+		.default("false")
+		.transform((value) => value === "true" || value === "1"),
+	/** Search Console and Bing Webmaster Tools ownership tokens, printed as meta tags when set. */
+	GOOGLE_SITE_VERIFICATION: optionalString,
+	BING_SITE_VERIFICATION: optionalString,
+
 	FEATURE_BOOKING: z
 		.enum(["true", "false", "1", "0"])
 		.default("false")
@@ -110,9 +160,27 @@ const SECRETS = [
 ] as const;
 const MIN_SECRET_LENGTH = 32;
 
+/** What the legal notice and the privacy policy cannot do without (LCEN art. 6 III, GDPR art. 13). */
+export const LEGAL_REQUIRED_IN_PRODUCTION = [
+	"LEGAL_PUBLISHER_NAME",
+	"LEGAL_PUBLISHER_LEGAL_FORM",
+	"LEGAL_PUBLISHER_ADDRESS",
+	"LEGAL_PUBLISHER_PHONE",
+	"LEGAL_PUBLISHER_REGISTRATION",
+	"LEGAL_PUBLICATION_DIRECTOR",
+	"LEGAL_CONTACT_EMAIL",
+	"LEGAL_HOST_ADDRESS",
+	"LEGAL_HOST_PHONE",
+	"LEGAL_SMTP_PROVIDER",
+	"LEGAL_EFFECTIVE_DATE",
+] as const;
+
 /**
  * Production refuses to start without the session secret, or with any secret
- * shorter than 32 characters (`bun run keys:generate` prints 44).
+ * shorter than 32 characters (`bun run keys:generate` prints 44), and without
+ * the publisher and host the legal pages must name. `next build` loads this
+ * schema too (next.config.ts), so a production build fails the same way unless
+ * SKIP_ENV_VALIDATION is set (CI, image builds: the check then runs at start).
  */
 export const serverSchema = serverFields.superRefine((env, context) => {
 	if (env.NODE_ENV !== "production") return;
@@ -121,6 +189,30 @@ export const serverSchema = serverFields.superRefine((env, context) => {
 			code: "custom",
 			path: ["BETTER_AUTH_SECRET"],
 			message: "BETTER_AUTH_SECRET is required in production (bun run keys:generate)",
+		});
+	}
+	for (const name of LEGAL_REQUIRED_IN_PRODUCTION) {
+		if (!env[name]) {
+			context.addIssue({
+				code: "custom",
+				path: [name],
+				message: `${name} is required in production (legal pages, docs/launch-checklist.md)`,
+			});
+		}
+	}
+	if (!env.LEGAL_HOST_NAME && !env.PUBLIC_HDS_HOST) {
+		context.addIssue({
+			code: "custom",
+			path: ["LEGAL_HOST_NAME"],
+			message: "LEGAL_HOST_NAME (or PUBLIC_HDS_HOST) is required in production (legal notice)",
+		});
+	}
+	if (env.FEATURE_BOOKING && !env.LEGAL_DPO_CONTACT) {
+		context.addIssue({
+			code: "custom",
+			path: ["LEGAL_DPO_CONTACT"],
+			message:
+				"LEGAL_DPO_CONTACT is required in production when FEATURE_BOOKING is on (GDPR art. 37)",
 		});
 	}
 	for (const name of SECRETS) {

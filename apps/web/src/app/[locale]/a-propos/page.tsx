@@ -1,12 +1,14 @@
-import { FieldList, FieldRow, linkStyles } from "@apercura/ui";
+import { FieldList, linkStyles } from "@apercura/ui";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { BookletPage } from "~/components/booklet-page";
-import { InstitutionalCover, ProseSection } from "~/components/institutional";
+import { InstitutionalCover, LegalFactRow, ProseSection } from "~/components/institutional";
 import { PageGraph } from "~/components/page-graph";
 import { PublicPage } from "~/components/public-page";
 import { Trail } from "~/components/trail";
+import { serverEnv } from "~/env";
 import { Link } from "~/i18n/navigation";
 import { institutionalMetadata, localeOf, proseSections } from "~/lib/institutional";
+import { legalFacts } from "~/lib/legal";
 
 export const ensureStatic = "navigation";
 
@@ -23,6 +25,8 @@ export default async function AboutPage({ params }: PageProps<"/[locale]/a-propo
 	const tSite = await getTranslations({ locale, namespace: "Site" });
 	const tI = await getTranslations({ locale, namespace: "Institutional" });
 	const section = await proseSections(locale, "AboutPage");
+	const facts = legalFacts(serverEnv);
+	const tbc = tI("toBeCompleted");
 	const link = `${linkStyles()} inline-flex min-h-11 items-center text-body font-semibold`;
 
 	return (
@@ -46,8 +50,17 @@ export default async function AboutPage({ params }: PageProps<"/[locale]/a-propo
 				</ProseSection>
 				<ProseSection id="qui" content={section("who")}>
 					<FieldList>
-						<FieldRow label={t("fields.publisher")} emptyLabel={tI("toBeCompleted")} />
-						<FieldRow label={t("fields.contact")} emptyLabel={tI("toBeCompleted")} />
+						<LegalFactRow
+							label={t("fields.publisher")}
+							fact={facts.publisherName}
+							emptyLabel={tbc}
+						/>
+						<LegalFactRow
+							label={t("fields.contact")}
+							fact={facts.contactEmail}
+							email
+							emptyLabel={tbc}
+						/>
 					</FieldList>
 					<Link href="/open-source" className={link}>
 						{t("links.openSource")}

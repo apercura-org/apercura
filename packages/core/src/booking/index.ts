@@ -2,6 +2,7 @@ export { type Interval, subtractIntervals, unionIntervals } from "./intervals";
 export {
 	ACTIVE_STATUSES,
 	type AppointmentStatus,
+	bookingNoticeMin,
 	CANCELLATION_GRACE_MS,
 	COMPLETION_DELAY_MS,
 	createHold,

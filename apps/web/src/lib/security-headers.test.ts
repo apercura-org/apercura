@@ -130,6 +130,21 @@ describe("nonce routes", () => {
 describe("base security headers", () => {
 	const keys = (headers: { key: string }[]) => headers.map((header) => header.key);
 
+	it("adds preload to HSTS only when asked, and only where HSTS is sent", () => {
+		const hsts = (options: Parameters<typeof baseSecurityHeaders>[0]) =>
+			baseSecurityHeaders(options).find((header) => header.key === "Strict-Transport-Security")
+				?.value;
+		const https = "https://annuaire.example.org";
+		expect(hsts({ production: true, appUrl: https })).toBe("max-age=63072000; includeSubDomains");
+		expect(hsts({ production: true, appUrl: https, preload: true })).toBe(
+			"max-age=63072000; includeSubDomains; preload",
+		);
+		expect(hsts({ production: false, appUrl: https, preload: true })).toBeUndefined();
+		expect(
+			hsts({ production: true, appUrl: "http://localhost:3000", preload: true }),
+		).toBeUndefined();
+	});
+
 	it("sets HSTS only on an HTTPS production build", () => {
 		expect(
 			keys(baseSecurityHeaders({ production: true, appUrl: "https://annuaire.example.org" })),

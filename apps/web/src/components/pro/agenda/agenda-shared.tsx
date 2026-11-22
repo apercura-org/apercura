@@ -1,5 +1,6 @@
 "use client";
 
+import { formatPhoneFr } from "@apercura/core";
 import {
 	Badge,
 	Button,
@@ -414,7 +415,7 @@ export function EntryDialog({
 								value={
 									entry.patient?.phone ? (
 										<a href={`tel:${entry.patient.phone}`} className={linkStyles()}>
-											{entry.patient.phone}
+											{formatPhoneFr(entry.patient.phone)}
 										</a>
 									) : null
 								}

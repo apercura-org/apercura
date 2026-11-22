@@ -1,4 +1,4 @@
-import { Badge, linkStyles } from "@apercura/ui";
+import { Badge, FieldRow, linkStyles } from "@apercura/ui";
 import type { ReactNode } from "react";
 
 /** Text of one section of an institutional page, as stored in the messages. */
@@ -18,11 +18,14 @@ export function InstitutionalCover({
 	title,
 	lead,
 	mark,
+	note,
 }: {
 	title: string;
 	lead: string;
 	/** e.g. "Draft: to be completed before launch". */
 	mark?: string;
+	/** A short line under the lead, e.g. what the `{{…}}` placeholders mean. */
+	note?: string | null;
 }) {
 	return (
 		<div className="surface-shade border-b border-rule-soft">
@@ -34,6 +37,7 @@ export function InstitutionalCover({
 				) : null}
 				<h1 className="max-w-[22ch] type-headline">{title}</h1>
 				<p className="max-w-[60ch] text-lead text-ink">{lead}</p>
+				{note ? <p className="max-w-[65ch] text-meta text-ink">{note}</p> : null}
 			</div>
 		</div>
 	);
@@ -111,5 +115,53 @@ export function ExternalLink({
 			{children}
 			<span className="sr-only"> ({externalLabel})</span>
 		</a>
+	);
+}
+
+/**
+ * A fact of the legal pages (publisher, host, contacts) as configured, or its `{{…}}`
+ * placeholder while it is unknown, printed as such (see lib/legal.ts). Email addresses link.
+ */
+export function LegalFactValue({
+	fact,
+	email = false,
+}: {
+	fact: { value: string; missing: boolean };
+	email?: boolean;
+}) {
+	if (fact.missing) {
+		return (
+			<span data-legal-placeholder="" className="break-all text-ink-muted">
+				{fact.value}
+			</span>
+		);
+	}
+	return email ? (
+		<a href={`mailto:${fact.value}`} className={linkStyles()}>
+			{fact.value}
+		</a>
+	) : (
+		fact.value
+	);
+}
+
+/** A field row whose value is a legal fact (see LegalFactValue). */
+export function LegalFactRow({
+	label,
+	fact,
+	email,
+	emptyLabel,
+}: {
+	label: string;
+	fact: { value: string; missing: boolean };
+	email?: boolean;
+	emptyLabel: string;
+}) {
+	return (
+		<FieldRow
+			label={label}
+			value={<LegalFactValue fact={fact} email={email} />}
+			emptyLabel={emptyLabel}
+		/>
 	);
 }

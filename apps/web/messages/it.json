@@ -539,8 +539,10 @@
 	},
 	"Institutional": {
 		"toBeCompleted": "Da completare",
-		"draftMark": "Bozza: da completare prima del lancio",
-		"comingMark": "Prossimamente"
+		"legalDraftMark": "Bozza: da far rivedere a un giurista prima del lancio",
+		"auditMark": "Dichiarazione provvisoria: da completare dopo l’audit manuale",
+		"comingMark": "Presto disponibile",
+		"placeholderNote": "I valori scritti in maiuscolo tra doppie parentesi graffe non sono ancora noti: saranno inseriti quando esisteranno la struttura giuridica e i contratti."
 	},
 	"AboutPage": {
 		"metaTitle": "Informazioni · Apercura",
@@ -734,109 +736,181 @@
 	},
 	"AccessibilityPage": {
 		"metaTitle": "Accessibilità · Apercura",
-		"metaDescription": "Dichiarazione di accessibilità di Apercura (bozza): stato di conformità al RGAA 4.1, metodi di verifica, come segnalare un problema e le sue possibilità di ricorso.",
+		"metaDescription": "Dichiarazione di accessibilità di Apercura: parzialmente conforme al RGAA 4.1, audit in corso, cosa è stato verificato, come segnalare un problema e mezzi di ricorso.",
 		"title": "Accessibilità",
-		"lead": "Apercura è pensato per tutti, comprese le persone anziane e ipovedenti. Questa dichiarazione in bozza indica a che punto è.",
+		"lead": "Apercura è pensato per tutti, comprese le persone anziane e ipovedenti. Questa dichiarazione indica a che punto è: un’autovalutazione è stata effettuata, l’audit completo è in corso.",
 		"sections": {
 			"commitment": {
 				"heading": "Impegno",
 				"body": [
-					"Apercura mira a rispettare, su ogni pagina, il quadro francese di accessibilità RGAA 4.1 e le WCAG 2.2 di livello AA.",
-					"Le pagine per i pazienti usano un testo di almeno 18 px, aree cliccabili di almeno 44 px, un focus visibile e nessuna informazione trasmessa solo dal colore."
+					"L’editore di Apercura si impegna a rendere il sito accessibile. Mira alla conformità al quadro di riferimento francese per il miglioramento dell’accessibilità (RGAA 4.1) e alle WCAG 2.2 livello AA su tutte le sue pagine.",
+					"Le pagine per i pazienti usano un testo corrente di almeno 18 px, aree cliccabili di almeno 44 px, un focus visibile, e nulla vi è trasmesso dal solo colore."
 				]
 			},
 			"status": {
 				"heading": "Stato di conformità",
 				"body": [
-					"Apercura non è ancora stato sottoposto a un audit RGAA 4.1. Finché non viene pubblicato un audit, il sito è considerato non conforme. Prima del lancio è previsto un audit completo."
+					"Il sito è parzialmente conforme al RGAA 4.1. Questo stato si basa su un’autovalutazione e su test automatici, non ancora su un audit completo: il tasso di conformità sarà pubblicato alla fine dell’audit manuale, in corso.",
+					"Questa dichiarazione è provvisoria. Sarà completata dopo l’audit, con l’elenco dei contenuti non conformi."
 				]
 			},
 			"tests": {
-				"heading": "Come vengono testate le pagine",
+				"heading": "Cosa è stato verificato",
 				"list": [
-					"Verifiche automatiche con axe-core su ogni tipo di pagina, a ogni rilascio.",
-					"Verifiche della ricerca e della navigazione solo da tastiera.",
-					"Verifiche manuali con i lettori di schermo VoiceOver e NVDA sono previste insieme all’audit."
+					"Controlli automatici con axe-core (regole WCAG 2.0, 2.1 e 2.2, livelli A e AA) su ogni tipo di pagina e su ogni fase della prenotazione, a ogni versione.",
+					"Percorsi con la sola tastiera, con un focus visibile: ricerca, prenotazione, agenda dei professionisti.",
+					"Percorsi letti da uno screen reader virtuale: home page, risultati, pagina di un professionista, ogni fase della prenotazione, pagina di gestione dell’appuntamento, agenda del giorno e della settimana (titoli, regioni, campi letti con la loro etichetta, annunci).",
+					"Visualizzazione a 390 px di larghezza senza scorrimento orizzontale, verificata sulle pagine che ne avevano bisogno.",
+					"Punteggi di accessibilità Lighthouse della home page, di una pagina di professionista e di un elenco."
+				]
+			},
+			"pending": {
+				"heading": "Cosa resta da verificare",
+				"list": [
+					"Un passaggio manuale con gli screen reader VoiceOver (macOS e iOS) e NVDA (Windows).",
+					"L’audit dei 106 criteri del RGAA su un campione rappresentativo di pagine.",
+					"La mappa dei risultati: completa la tabella dei risultati, che contiene le stesse informazioni, ma non è ancora stata valutata."
 				]
 			},
 			"technologies": {
 				"heading": "Tecnologie utilizzate",
 				"body": [
-					"HTML, CSS, WAI-ARIA e JavaScript. La ricerca e le pagine dell’elenco funzionano anche senza JavaScript."
+					"HTML, CSS, WAI-ARIA e JavaScript. La ricerca e le pagine dell’elenco funzionano anche senza JavaScript. I test automatici usano Chromium; le combinazioni VoiceOver con Safari e NVDA con Firefox saranno testate durante l’audit."
 				]
 			},
 			"feedback": {
 				"heading": "Segnalare un problema",
 				"body": [
-					"Se non riesce ad accedere a un contenuto o a un servizio, ce lo segnali: le forniremo un’alternativa o correggeremo la pagina."
+					"Se non riesce ad accedere a un contenuto o a un servizio, ci scriva all’indirizzo indicato di seguito: le proporremo un’alternativa e correggeremo la pagina."
 				]
 			},
 			"recourse": {
-				"heading": "Ricorsi",
+				"heading": "Mezzi di ricorso",
 				"body": [
-					"Se ha segnalato un problema senza ricevere una risposta soddisfacente, può rivolgersi al Défenseur des droits."
+					"Se ha segnalato un difetto di accessibilità senza ottenere una risposta soddisfacente, può rivolgersi al Défenseur des droits (il difensore dei diritti francese)."
 				],
 				"list": [
 					"Modulo online del Défenseur des droits",
+					"Un delegato del Défenseur des droits nella sua regione",
 					"Telefono: 09 69 39 00 00",
-					"Per posta (gratuita, senza francobollo): Défenseur des droits, Libre réponse 71120, 75342 Paris CEDEX 07"
+					"Posta (gratuita, senza francobollo): Défenseur des droits, Libre réponse 71120, 75342 Paris CEDEX 07"
 				]
 			}
 		},
 		"fields": {
 			"status": "Conformità",
-			"statusValue": "Non ancora sottoposto ad audit",
-			"framework": "Riferimento",
+			"statusValue": "Parzialmente conforme (autovalutazione, audit in corso)",
+			"framework": "Quadro di riferimento",
 			"frameworkValue": "RGAA 4.1",
+			"rate": "Tasso di conformità",
+			"rateValue": "Pubblicato alla fine dell’audit",
 			"date": "Data della dichiarazione",
 			"contact": "Contatto"
 		},
-		"defenseurLink": "Contattare il Défenseur des droits"
+		"defenseurLink": "Rivolgersi al Défenseur des droits"
 	},
 	"PrivacyPage": {
 		"metaTitle": "Privacy · Apercura",
-		"metaDescription": "Come Apercura tratta i dati personali: dati dell’elenco provenienti dai registri pubblici, ancora nessun dato dei pazienti, nessun tracker, e i suoi diritti.",
+		"metaDescription": "Dati trattati da Apercura, finalità, basi giuridiche, tempi di conservazione, destinatari, cookie e i suoi diritti, tra cui l’opposizione.",
 		"title": "Privacy",
-		"lead": "Apercura raccoglie il meno possibile. Questa bozza spiega che cosa viene trattato, perché e come esercitare i suoi diritti.",
+		"lead": "Apercura raccoglie il minimo indispensabile. Questa informativa indica quali dati sono trattati, perché, per quanto tempo, da chi e come esercitare i propri diritti. Fa fede la versione francese.",
 		"sections": {
 			"roles": {
 				"heading": "Chi è responsabile",
 				"body": [
-					"Per l’elenco pubblico, Apercura è il titolare del trattamento. Per le prenotazioni online, quando saranno aperte, Apercura tratterà i dati per conto di ciascun professionista, in base a un accordo sul trattamento incluso nelle condizioni per i professionisti."
+					"Per l’elenco pubblico, gli account dei professionisti sanitari, le segnalazioni e le richieste di rimozione, il titolare del trattamento è l’editore del sito.",
+					"Per gli appuntamenti online, ogni professionista sanitario è titolare del trattamento dei dati dei propri pazienti. L’editore li tratta per conto del professionista, come responsabile del trattamento, nel quadro del contratto di trattamento dei dati previsto dalle condizioni per i professionisti (articolo 28 del GDPR)."
 				]
 			},
 			"practitioners": {
-				"heading": "Dati sui professionisti",
+				"heading": "Elenco: i dati sui professionisti sanitari",
 				"body": [
-					"Le pagine dell’elenco mostrano informazioni dei registri pubblici: nome, professione, specializzazioni, sedi di esercizio, numeri di telefono pubblicati e settore tariffario. Ogni pagina indica le proprie fonti e la data dell’ultimo aggiornamento.",
-					"La base giuridica è il legittimo interesse: informare il pubblico a partire da dati pubblici. I professionisti non vengono informati uno per uno, il che richiederebbe uno sforzo sproporzionato (articolo 14, paragrafo 5, lettera b del GDPR); la pagina sui dati e un avviso su ogni pagina li informano al suo posto.",
-					"Ogni professionista può opporsi alla pubblicazione della propria pagina."
+					"Dati: cognome, nome, titolo, numero RPPS, professione, specialità e competenze, luoghi e modalità di esercizio, numeri di telefono pubblicati, settore di convenzionamento con l’assicurazione sanitaria (conventionnement), adesione all’OPTAM e accettazione della Carte Vitale. Un professionista che rivendica la propria pagina può aggiungervi orari, onorari, lingue, una foto e una presentazione.",
+					"Fonti: l’Annuaire Santé dell’Agence du numérique en santé, il registro FINESS e l’elenco dell’Assurance Maladie, riutilizzati con Licence Ouverte 2.0 e aggiornati ogni settimana.",
+					"Finalità: permettere al pubblico di trovare un professionista sanitario, i suoi luoghi di esercizio e il modo di contattarlo. Base giuridica: il legittimo interesse a informare il pubblico a partire da dati pubblici (articolo 6.1.f del GDPR).",
+					"Durata: finché il professionista figura nei registri pubblici. Una pagina non rivendicata scompare dopo due aggiornamenti settimanali in cui il professionista non figura più nel registro; una pagina rimossa a seguito di opposizione non viene mai più ripubblicata.",
+					"Informazione: scrivere a ogni professionista richiederebbe uno sforzo sproporzionato (articolo 14.5.b del GDPR). I professionisti sono informati tramite la pagina dei dati, un avviso su ogni pagina e questa informativa."
+				]
+			},
+			"accounts": {
+				"heading": "Account dei professionisti e rivendicazioni",
+				"body": [
+					"Dati: indirizzo e-mail, nome, password (memorizzata in forma di hash), secondo fattore di autenticazione, identità Pro Santé Connect, documenti giustificativi inviati per rivendicare una pagina, membri del team e registro degli accessi ai dati dei pazienti.",
+					"Finalità: gestire l’account, verificare che una pagina sia rivendicata dal professionista giusto e proteggere l’accesso ai dati dei pazienti. Basi giuridiche: l’esecuzione delle condizioni d’uso (articolo 6.1.b) e il legittimo interesse a garantire la sicurezza del servizio (articolo 6.1.f).",
+					"Durate: l’account è conservato fino alla sua cancellazione; i documenti giustificativi, cifrati, sono cancellati 30 giorni dopo la decisione; il registro degli accessi sarà limitato a un anno."
 				]
 			},
 			"patients": {
-				"heading": "Dati sui pazienti",
+				"heading": "Appuntamenti: i dati sui pazienti",
 				"body": [
-					"La prenotazione online non è ancora disponibile: oggi Apercura non raccoglie alcun dato dei pazienti. Quando la prenotazione sarà aperta, chiederà solo ciò di cui il professionista ha bisogno, lo cifrerà a livello applicativo e lo cancellerà secondo un calendario (per impostazione predefinita 90 giorni dopo l’appuntamento)."
+					"Dati: nome, cognome, indirizzo e-mail, telefono, se si tratta o meno della prima visita, motivo scelto tra quelli del professionista, data e ora dell’appuntamento. Il professionista può chiedere meno dati; non viene creato alcun account paziente.",
+					"Finalità: prenotare l’appuntamento, inviare il codice di conferma, la conferma e il promemoria, e permettere di annullare o spostare l’appuntamento. Il professionista, titolare del trattamento, ne stabilisce la base giuridica; questi dati sono dati relativi alla salute (articolo 9 del GDPR).",
+					"Protezione: questi dati sono cifrati a livello applicativo, con una chiave propria per ogni studio, e ogni lettura viene registrata. Le e-mail non contengono né la specialità né il motivo.",
+					"Durate: una prenotazione non confermata viene cancellata dopo 24 ore; i dati di un appuntamento vengono cancellati per impostazione predefinita 90 giorni dopo la sua data (da 30 a 365 giorni secondo l’impostazione del professionista)."
+				]
+			},
+			"reports": {
+				"heading": "Segnalazioni e richieste di rimozione",
+				"body": [
+					"Dati: il messaggio, l’indirizzo e-mail di contatto se fornito e, per una richiesta di rimozione, la pagina interessata. Il testo libero è cifrato.",
+					"Finalità: correggere gli errori segnalati e dare seguito alle opposizioni. Basi giuridiche: il legittimo interesse a pubblicare informazioni esatte (articolo 6.1.f) e il diritto di opposizione (articolo 21). Durata: il tempo necessario per gestire la richiesta; la durata massima resta da stabilire durante la revisione giuridica."
+				]
+			},
+			"security": {
+				"heading": "Sicurezza e dati tecnici",
+				"body": [
+					"Le sessioni dei professionisti registrano l’indirizzo IP e il browser utilizzati, per proteggere il loro account. Per limitare gli abusi, il sito trasforma gli indirizzi IP con una funzione a chiave segreta prima di conteggiarli; solo il limite dei tentativi di accesso li conserva per la durata della sua finestra temporale. Il fornitore di hosting conserva i propri log tecnici secondo il suo contratto."
+				]
+			},
+			"recipients": {
+				"heading": "Destinatari e responsabili del trattamento",
+				"body": [
+					"I dati non sono né venduti né affittati e non sono usati per alcuna pubblicità. Li ricevono soltanto, ciascuno per quanto di sua competenza: il team dell’editore (senza accesso ai dati dei pazienti), il professionista e il suo team per i propri appuntamenti, e i responsabili del trattamento indicati di seguito.",
+					"Le mappe sono caricate da un server di tile cartografiche (OpenFreeMap per impostazione predefinita), che riceve l’indirizzo IP del visitatore come qualsiasi sito web, ma nessun dato dell’account o dell’appuntamento. L’accesso con Pro Santé Connect passa attraverso l’Agence du numérique en santé."
+				]
+			},
+			"transfers": {
+				"heading": "Trasferimenti al di fuori dell’Unione europea",
+				"body": [
+					"Nessuno: i dati sono ospitati e trattati nello Spazio economico europeo, e i dati sanitari in Francia. Qualsiasi cambio di responsabile del trattamento sarà annunciato qui prima di entrare in vigore."
 				]
 			},
 			"cookies": {
-				"heading": "Cookie e tracker",
+				"heading": "Cookie",
 				"body": [
-					"Apercura non usa cookie pubblicitari o di misurazione dell’audience né tracker. Possono essere impostati solo i cookie strettamente necessari al servizio, quindi non serve alcun banner di consenso."
+					"Vengono installati solo cookie strettamente necessari al servizio: la sessione dei professionisti connessi, la lingua scelta e un cookie che limita una prenotazione in corso a un solo browser (24 ore). Nessun cookie pubblicitario o di misurazione dell’audience, nessun tracker: non è quindi necessario alcun banner di consenso."
 				]
 			},
 			"rights": {
 				"heading": "I suoi diritti",
 				"body": [
-					"Può chiedere di accedere ai dati che la riguardano, di rettificarli o cancellarli, e opporsi al loro trattamento. Se ritiene che i suoi diritti non siano rispettati, può presentare un reclamo alla CNIL."
+					"Può chiedere l’accesso ai suoi dati, la loro rettifica, la loro cancellazione, la limitazione del loro trattamento e la loro portabilità, opporsi al loro trattamento e definire direttive sulla loro sorte dopo il suo decesso. I professionisti possono esportare i dati del proprio account dalla propria area riservata.",
+					"Scriva all’indirizzo indicato di seguito. Per un appuntamento, si rivolga preferibilmente al professionista, responsabile di questi dati; se scrive a noi, trasmettiamo la richiesta al professionista. Riceverà una risposta entro un mese.",
+					"Se ritiene che i suoi diritti non siano rispettati, può presentare un reclamo alla CNIL."
+				]
+			},
+			"objection": {
+				"heading": "Opporsi a una pagina dell’elenco",
+				"body": [
+					"Un professionista può opporsi alla pubblicazione della propria pagina senza doverne indicare il motivo. Se la pagina non è rivendicata, basta un modulo: viene nascosta subito, poi cancellata dopo una verifica leggera, e gli aggiornamenti non la ripubblicheranno più. Se è rivendicata, solo il suo titolare può rimuoverla, dalla propria area riservata."
+				]
+			},
+			"changes": {
+				"heading": "Aggiornamento di questa informativa",
+				"body": [
+					"Questa informativa è una bozza. Sarà rivista da un giurista e dal responsabile della protezione dei dati prima dell’apertura degli appuntamenti; ogni versione è datata."
 				]
 			}
 		},
 		"fields": {
 			"controller": "Titolare del trattamento",
+			"address": "Indirizzo",
 			"dpo": "Responsabile della protezione dei dati",
 			"contact": "Contatto per le richieste",
-			"hosting": "Hosting"
+			"hosting": "Hosting",
+			"hostingProvider": "Fornitore di hosting (responsabile del trattamento)",
+			"smtp": "Invio delle e-mail (responsabile del trattamento)",
+			"effectiveDate": "Data di entrata in vigore"
 		},
 		"hostedBy": "Ospitato in Francia da un fornitore di hosting certificato HDS ({host})",
 		"objectLink": "Come opporsi a una pagina",
@@ -844,68 +918,117 @@
 	},
 	"LegalPage": {
 		"metaTitle": "Note legali · Apercura",
-		"metaDescription": "Note legali di Apercura: editore, direttore della pubblicazione e fornitore di hosting.",
+		"metaDescription": "Note legali di Apercura: editore, direttore della pubblicazione e fornitore di hosting del sito.",
 		"title": "Note legali",
-		"lead": "L’entità giuridica che pubblicherà Apercura non è ancora costituita. I campi qui sotto restano vuoti finché non lo sarà.",
+		"lead": "Ciò che la legge impone di pubblicare sull’editore e sul fornitore di hosting del sito (legge francese sulla fiducia nell’economia digitale, articolo 6 III). Fa fede la versione francese.",
 		"sections": {
 			"publisher": {
 				"heading": "Editore",
 				"body": [
-					"L’editore del sito, come richiesto dalla legge francese sulla fiducia nell’economia digitale (LCEN)."
+					"Il sito è edito dalla struttura indicata di seguito. Questa pubblica l’elenco e fornisce la prenotazione degli appuntamenti ai professionisti sanitari che la attivano."
+				]
+			},
+			"director": {
+				"heading": "Direttore della pubblicazione",
+				"body": [
+					"La persona responsabile di ciò che l’editore pubblica. Le informazioni che un professionista sanitario aggiunge alla propria pagina sono sotto la sua responsabilità."
 				]
 			},
 			"hosting": {
 				"heading": "Fornitore di hosting",
-				"body": ["L’azienda che ospita il sito."]
+				"body": [
+					"Il sito, il suo database e i suoi file sono ospitati dalla società indicata di seguito.",
+					"I dati sanitari legati agli appuntamenti possono essere affidati solo a un fornitore di hosting certificato per l’hosting di dati sanitari (HDS), come richiede l’articolo L.1111-8 del codice della sanità pubblica francese."
+				]
 			},
 			"ip": {
 				"heading": "Codice e dati",
 				"body": [
-					"Il codice sorgente di Apercura è pubblicato con licenza AGPL-3.0. I dati dell’elenco sono riutilizzati da fonti pubbliche con Licence Ouverte 2.0: la pagina sui dati le elenca con le relative date."
+					"Il codice sorgente di Apercura è pubblicato con licenza AGPL-3.0. I dati dell’elenco sono riutilizzati da fonti pubbliche con Licence Ouverte 2.0: la pagina dei dati elenca queste fonti con le relative date."
+				]
+			},
+			"review": {
+				"heading": "Stato di questo testo",
+				"body": [
+					"Questo testo è una bozza, redatta prima della costituzione della struttura giuridica. Sarà rivisto da un giurista prima del lancio."
 				]
 			}
 		},
 		"fields": {
-			"name": "Nome",
+			"name": "Denominazione",
 			"legalForm": "Forma giuridica",
-			"address": "Indirizzo registrato",
+			"address": "Sede",
+			"phone": "Telefono",
+			"email": "Indirizzo e-mail",
 			"registration": "Numero di iscrizione",
 			"director": "Direttore della pubblicazione",
-			"contact": "Contatto",
-			"hostName": "Hosting",
-			"hostAddress": "Indirizzo dell’host"
+			"hostName": "Fornitore di hosting",
+			"hostAddress": "Indirizzo del fornitore di hosting",
+			"hostPhone": "Telefono del fornitore di hosting",
+			"healthData": "Dati sanitari"
 		},
+		"hdsHosted": "Ospitati in Francia da un fornitore di hosting certificato HDS ({host})",
 		"dataLink": "Dati e fonti"
 	},
 	"TermsPage": {
 		"metaTitle": "Condizioni d’uso · Apercura",
-		"metaDescription": "Condizioni d’uso di Apercura (bozza): un elenco gratuito e oggettivo dei professionisti sanitari in Francia.",
+		"metaDescription": "Condizioni d’uso di Apercura: un elenco gratuito e fattuale dei professionisti sanitari in Francia, con prenotazione gratuita degli appuntamenti.",
 		"title": "Condizioni d’uso",
-		"lead": "Queste condizioni in bozza descrivono il servizio così com’è oggi. Saranno completate e riviste prima del lancio.",
+		"lead": "Le regole d’uso di Apercura, per i pazienti come per i professionisti sanitari. Fa fede la versione francese.",
 		"sections": {
 			"service": {
 				"heading": "Il servizio",
 				"body": [
-					"Apercura è un elenco gratuito dei professionisti sanitari iscritti in Francia, creato a partire da open data pubblici. Per usarlo non serve alcun account."
+					"Apercura è un elenco gratuito dei professionisti sanitari iscritti in Francia, costruito a partire da dati pubblici aperti, con una prenotazione online gratuita degli appuntamenti per i professionisti che la attivano. È edito dalla struttura indicata nelle note legali.",
+					"Usare l’elenco o prenotare un appuntamento non richiede alcun account. L’uso del sito comporta l’accettazione di queste condizioni."
 				]
 			},
 			"content": {
 				"heading": "Che cosa contengono le pagine",
 				"body": [
-					"Le pagine mostrano informazioni oggettive provenienti dai registri pubblici, in un ordine neutro. Non contengono valutazioni, recensioni, pubblicità né posizionamenti a pagamento.",
-					"Le informazioni possono contenere errori o non essere aggiornate: le verifichi con il professionista prima di spostarsi. Ogni pagina indica come segnalare un errore."
+					"Le pagine mostrano informazioni fattuali tratte da registri pubblici, in un ordine neutro. Non contengono né voti, né recensioni, né pubblicità, né posizionamenti a pagamento.",
+					"Le informazioni possono contenere errori o non essere aggiornate: le verifichi presso il professionista prima di spostarsi. Ogni pagina indica come segnalare un errore."
+				]
+			},
+			"fees": {
+				"heading": "Onorari e convenzionamento (conventionnement)",
+				"body": [
+					"Le pagine indicano il settore di convenzionamento e l’adesione all’OPTAM così come li pubblica l’Assurance Maladie, e rimandano ad ameli.fr per verificarli. Le pagine prenotabili mostrano inoltre la dicitura regolamentare prevista dal decreto ministeriale francese del 30 maggio 2018 (articolo 5).",
+					"Il testo esatto di questa dicitura sarà ripreso parola per parola dopo la revisione giuridica: nel frattempo, compare qui sotto come campo da compilare."
+				]
+			},
+			"booking": {
+				"heading": "Prenotare un appuntamento",
+				"body": [
+					"Un appuntamento viene confermato tramite un codice inviato per e-mail. A seconda dell’impostazione del professionista, è confermato subito o dopo la sua convalida. Il link ricevuto per e-mail permette di annullarlo o spostarlo fino al termine fissato dal professionista.",
+					"Fornisca recapiti esatti e avvisi se non può presentarsi. Gli orari disponibili sono quelli pubblicati dal professionista: l’editore non garantisce né la loro disponibilità né lo svolgimento dell’appuntamento, che è di competenza del professionista."
 				]
 			},
 			"health": {
-				"heading": "Non è un consiglio medico",
+				"heading": "Non è un parere medico",
 				"body": [
-					"Apercura non fornisce consigli medici e non è un servizio di emergenza. In caso di emergenza, chiami il 15 (SAMU) o il 112."
+					"Apercura non fornisce alcun parere medico e non è un servizio di emergenza. In caso di emergenza, chiami il 15 (SAMU) o il 112."
 				]
 			},
 			"practitioners": {
-				"heading": "Per i professionisti",
+				"heading": "Per i professionisti sanitari",
 				"body": [
-					"Rivendicare una pagina sarà gratuito e richiederà una prova d’identità. Il professionista che rivendica una pagina è responsabile delle informazioni che vi aggiunge, che devono restare oggettive, come richiedono i codici di deontologia medica."
+					"Rivendicare una pagina e attivare la prenotazione degli appuntamenti è gratuito. Per rivendicare una pagina occorre una prova d’identità: Pro Santé Connect, l’indirizzo e-mail del registro o un documento verificato da una persona.",
+					"Il professionista è responsabile delle informazioni che aggiunge alla propria pagina. Queste devono restare fattuali, leali e aggiornate, come richiedono i codici deontologici; il professionista indica i propri onorari e i mezzi di pagamento prima di aprire la propria agenda.",
+					"Per gli appuntamenti, il professionista è titolare del trattamento dei dati dei propri pazienti e l’editore è il suo responsabile del trattamento. Le clausole sul trattamento dei dati previste dall’articolo 28 del GDPR sono allegate alle condizioni per i professionisti; sono in corso di redazione e saranno firmate prima dell’apertura degli appuntamenti.",
+					"Il professionista può esportare i dati del proprio account e chiederne la chiusura in qualsiasi momento."
+				]
+			},
+			"removal": {
+				"heading": "Rimozione di una pagina",
+				"body": [
+					"Un professionista può chiedere la rimozione della propria pagina in qualsiasi momento: la pagina dei dati spiega come. Una pagina rivendicata può essere rimossa solo dal suo titolare."
+				]
+			},
+			"liability": {
+				"heading": "Responsabilità",
+				"body": [
+					"L’editore fa del suo meglio perché il servizio sia disponibile ed esatto, senza poterlo garantire: il servizio può essere interrotto per manutenzione o in caso di incidente. Non è responsabile delle informazioni aggiunte dai professionisti né degli appuntamenti stessi. Questi limiti saranno precisati durante la revisione giuridica."
 				]
 			},
 			"ip": {
@@ -913,12 +1036,21 @@
 				"body": [
 					"Il codice sorgente è pubblicato con licenza AGPL-3.0. I dati dell’elenco sono riutilizzati con Licence Ouverte 2.0."
 				]
+			},
+			"law": {
+				"heading": "Legge applicabile e controversie",
+				"body": [
+					"Queste condizioni sono regolate dal diritto francese. In caso di controversia, scriva prima all’indirizzo di contatto per cercare una soluzione amichevole. Il ricorso a un mediatore dei consumatori e i tribunali competenti saranno precisati durante la revisione giuridica."
+				]
 			}
 		},
 		"fields": {
+			"publisher": "Editore",
 			"effectiveDate": "Data di entrata in vigore",
-			"law": "Legge applicabile e foro competente",
-			"contact": "Contatto"
+			"law": "Legge applicabile",
+			"lawValue": "Diritto francese",
+			"contact": "Contatto",
+			"conventionnementWording": "Dicitura regolamentare (decreto del 30 maggio 2018, articolo 5)"
 		}
 	},
 	"Listing": {

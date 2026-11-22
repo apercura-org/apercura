@@ -27,7 +27,18 @@
 	"tasks": {
 		"build": {
 			"dependsOn": ["^build"],
-			"env": ["NEXT_PUBLIC_*", "PUBLIC_HDS_HOST", "DATABASE_URL", "APP_URL"],
+			"env": [
+				"NEXT_PUBLIC_*",
+				"PUBLIC_HDS_HOST",
+				"DATABASE_URL",
+				"APP_URL",
+				"LEGAL_*",
+				"SECURITY_CONTACT",
+				"SECURITY_POLICY_URL",
+				"HSTS_PRELOAD",
+				"GOOGLE_SITE_VERIFICATION",
+				"BING_SITE_VERIFICATION"
+			],
 			"outputs": [".next/**", "!.next/cache/**", "dist/**"]
 		},
 		"dev": {

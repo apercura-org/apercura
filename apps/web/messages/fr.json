@@ -539,8 +539,10 @@
 	},
 	"Institutional": {
 		"toBeCompleted": "À compléter",
-		"draftMark": "Brouillon : à compléter avant le lancement",
-		"comingMark": "Bientôt disponible"
+		"legalDraftMark": "Brouillon : à faire relire par un juriste avant le lancement",
+		"auditMark": "Déclaration provisoire : à compléter après l’audit manuel",
+		"comingMark": "Bientôt disponible",
+		"placeholderNote": "Les valeurs écrites en majuscules entre doubles accolades ne sont pas encore connues : elles seront remplies quand la structure juridique et les contrats existeront."
 	},
 	"AboutPage": {
 		"metaTitle": "À propos · Apercura",
@@ -734,50 +736,62 @@
 	},
 	"AccessibilityPage": {
 		"metaTitle": "Accessibilité · Apercura",
-		"metaDescription": "Déclaration d’accessibilité d’Apercura (brouillon) : état de conformité au RGAA 4.1, méthodes de test, signaler un problème et voies de recours.",
+		"metaDescription": "Déclaration d’accessibilité d’Apercura : partiellement conforme au RGAA 4.1, audit en cours, ce qui a été vérifié, signaler un problème et voies de recours.",
 		"title": "Accessibilité",
-		"lead": "Apercura est conçu pour tout le monde, y compris les personnes âgées et malvoyantes. Cette déclaration provisoire dit où il en est.",
+		"lead": "Apercura est conçu pour tout le monde, y compris les personnes âgées et malvoyantes. Cette déclaration dit où il en est : une auto-évaluation est faite, l’audit complet est en cours.",
 		"sections": {
 			"commitment": {
 				"heading": "Engagement",
 				"body": [
-					"Apercura vise la conformité au Référentiel général d’amélioration de l’accessibilité (RGAA 4.1) et aux WCAG 2.2 niveau AA sur toutes ses pages.",
+					"L’éditeur d’Apercura s’engage à rendre le site accessible. Il vise la conformité au référentiel général d’amélioration de l’accessibilité (RGAA 4.1) et aux WCAG 2.2 niveau AA sur toutes ses pages.",
 					"Les pages patients utilisent un texte courant d’au moins 18 px, des cibles d’au moins 44 px, un focus visible, et rien n’y est porté par la couleur seule."
 				]
 			},
 			"status": {
 				"heading": "État de conformité",
 				"body": [
-					"Apercura n’a pas encore été audité au regard du RGAA 4.1. Tant qu’aucun audit n’est publié, le site est considéré comme non conforme. Un audit complet est prévu avant le lancement."
+					"Le site est partiellement conforme au RGAA 4.1. Ce statut repose sur une auto-évaluation et sur des tests automatisés, pas encore sur un audit complet : le taux de conformité sera publié à la fin de l’audit manuel, en cours.",
+					"Cette déclaration est provisoire. Elle sera complétée après l’audit, avec la liste des contenus non conformes."
 				]
 			},
 			"tests": {
-				"heading": "Comment les pages sont testées",
+				"heading": "Ce qui a été vérifié",
 				"list": [
-					"Contrôles automatiques avec axe-core sur chaque type de page, à chaque version.",
-					"Contrôles de la recherche et de la navigation au clavier seul.",
-					"Des contrôles manuels avec les lecteurs d’écran VoiceOver et NVDA sont prévus avec l’audit."
+					"Contrôles automatiques axe-core (règles WCAG 2.0, 2.1 et 2.2, niveaux A et AA) sur chaque type de page et chaque étape de la prise de rendez-vous, à chaque version.",
+					"Parcours au clavier seul, avec un focus visible : recherche, prise de rendez-vous, agenda des professionnels.",
+					"Parcours lus par un lecteur d’écran virtuel : accueil, résultats, page d’un professionnel, chaque étape de la prise de rendez-vous, page de gestion du rendez-vous, agenda du jour et de la semaine (titres, régions, champs lus avec leur intitulé, annonces).",
+					"Affichage à 390 px de large sans défilement horizontal, vérifié sur les pages qui en avaient besoin.",
+					"Scores d’accessibilité Lighthouse de l’accueil, d’une page de professionnel et d’une liste."
+				]
+			},
+			"pending": {
+				"heading": "Ce qui reste à vérifier",
+				"list": [
+					"Un passage manuel avec les lecteurs d’écran VoiceOver (macOS et iOS) et NVDA (Windows).",
+					"L’audit des 106 critères du RGAA sur un échantillon représentatif de pages.",
+					"La carte des résultats : elle complète le tableau des résultats, qui contient les mêmes informations, mais elle n’est pas encore évaluée."
 				]
 			},
 			"technologies": {
 				"heading": "Technologies utilisées",
 				"body": [
-					"HTML, CSS, WAI-ARIA et JavaScript. La recherche et les pages de l’annuaire fonctionnent aussi sans JavaScript."
+					"HTML, CSS, WAI-ARIA et JavaScript. La recherche et les pages de l’annuaire fonctionnent aussi sans JavaScript. Les tests automatisés utilisent Chromium ; les combinaisons VoiceOver avec Safari et NVDA avec Firefox seront testées pendant l’audit."
 				]
 			},
 			"feedback": {
 				"heading": "Signaler un problème",
 				"body": [
-					"Si vous n’arrivez pas à accéder à un contenu ou à un service, dites-le-nous pour que nous vous proposions une alternative ou corrigions la page."
+					"Si vous n’arrivez pas à accéder à un contenu ou à un service, écrivez-nous à l’adresse ci-dessous : nous vous proposerons une alternative et corrigerons la page."
 				]
 			},
 			"recourse": {
 				"heading": "Voies de recours",
 				"body": [
-					"Si vous avez signalé un problème sans obtenir de réponse satisfaisante, vous pouvez saisir le Défenseur des droits."
+					"Si vous avez signalé un défaut d’accessibilité sans obtenir de réponse satisfaisante, vous pouvez saisir le Défenseur des droits."
 				],
 				"list": [
 					"Formulaire en ligne du Défenseur des droits",
+					"Un délégué du Défenseur des droits dans votre région",
 					"Téléphone : 09 69 39 00 00",
 					"Courrier (gratuit, sans timbre) : Défenseur des droits, Libre réponse 71120, 75342 Paris CEDEX 07"
 				]
@@ -785,9 +799,11 @@
 		},
 		"fields": {
 			"status": "Conformité",
-			"statusValue": "Pas encore audité",
+			"statusValue": "Partiellement conforme (auto-évaluation, audit en cours)",
 			"framework": "Référentiel",
 			"frameworkValue": "RGAA 4.1",
+			"rate": "Taux de conformité",
+			"rateValue": "Publié à la fin de l’audit",
 			"date": "Date de la déclaration",
 			"contact": "Contact"
 		},
@@ -795,48 +811,106 @@
 	},
 	"PrivacyPage": {
 		"metaTitle": "Confidentialité · Apercura",
-		"metaDescription": "Comment Apercura traite les données personnelles : données de l’annuaire issues des registres publics, aucune donnée patient pour l’instant, aucun pisteur, et vos droits.",
+		"metaDescription": "Données traitées par Apercura, finalités, bases légales, durées de conservation, destinataires, cookies et vos droits, dont l’opposition.",
 		"title": "Confidentialité",
-		"lead": "Apercura collecte le moins possible. Ce brouillon explique ce qui est traité, pourquoi, et comment exercer vos droits.",
+		"lead": "Apercura collecte le moins possible. Cette politique dit quelles données sont traitées, pourquoi, combien de temps, par qui, et comment exercer vos droits.",
 		"sections": {
 			"roles": {
 				"heading": "Qui est responsable",
 				"body": [
-					"Pour l’annuaire public, Apercura est responsable de traitement. Pour les rendez-vous en ligne, quand ils ouvriront, Apercura traitera les données pour le compte de chaque professionnel, dans le cadre d’un contrat de sous-traitance prévu par les conditions des professionnels."
+					"Pour l’annuaire public, les comptes des professionnels, les signalements et les demandes de retrait, l’éditeur du site est responsable de traitement.",
+					"Pour les rendez-vous en ligne, chaque professionnel est responsable de traitement des données de ses patients. L’éditeur les traite pour son compte, comme sous-traitant, dans le cadre du contrat de sous-traitance prévu par les conditions des professionnels (article 28 du RGPD)."
 				]
 			},
 			"practitioners": {
-				"heading": "Données sur les professionnels",
+				"heading": "Annuaire : les données sur les professionnels",
 				"body": [
-					"Les pages de l’annuaire montrent des informations issues de registres publics : nom, profession, spécialités, lieux d’exercice, téléphones publiés et secteur de conventionnement. Chaque page cite ses sources et la date de sa dernière mise à jour.",
-					"La base légale est l’intérêt légitime : informer le public à partir de données publiques. Les professionnels ne sont pas informés un par un, ce qui demanderait un effort disproportionné (article 14.5.b du RGPD) : la page des données et une mention sur chaque page les informent.",
-					"Chaque professionnel peut s’opposer à la publication de sa page."
+					"Données : nom, prénom, civilité, numéro RPPS, profession, spécialités et savoir-faire, lieux et modes d’exercice, téléphones publiés, secteur de conventionnement, adhésion à l’OPTAM et acceptation de la carte Vitale. Un professionnel qui revendique sa page peut y ajouter ses horaires, ses honoraires, ses langues, une photo et une présentation.",
+					"Sources : l’Annuaire Santé de l’Agence du numérique en santé, le répertoire FINESS et l’annuaire de l’Assurance Maladie, réutilisés sous Licence Ouverte 2.0 et mis à jour chaque semaine.",
+					"Finalité : permettre au public de trouver un professionnel de santé, ses lieux d’exercice et la façon de le joindre. Base légale : l’intérêt légitime d’informer le public à partir de données publiques (article 6.1.f du RGPD).",
+					"Durée : tant que le professionnel figure dans les registres publics. Une page non revendiquée disparaît après deux mises à jour hebdomadaires où le professionnel ne figure plus dans le registre ; une page retirée sur opposition n’est plus jamais republiée.",
+					"Information : écrire à chaque professionnel demanderait un effort disproportionné (article 14.5.b du RGPD). Il est informé par la page des données, par une mention sur chaque page et par cette politique."
+				]
+			},
+			"accounts": {
+				"heading": "Comptes des professionnels et revendications",
+				"body": [
+					"Données : adresse e-mail, nom, mot de passe (enregistré haché), second facteur d’authentification, identité Pro Santé Connect, pièces justificatives envoyées pour revendiquer une page, membres de l’équipe, et journal des accès aux données des patients.",
+					"Finalités : gérer le compte, vérifier qu’une page est revendiquée par le bon professionnel et protéger l’accès aux données des patients. Bases légales : l’exécution des conditions d’utilisation (article 6.1.b) et l’intérêt légitime de sécuriser le service (article 6.1.f).",
+					"Durées : le compte est conservé jusqu’à sa suppression ; les pièces justificatives, chiffrées, sont effacées 30 jours après la décision ; le journal des accès sera limité à un an."
 				]
 			},
 			"patients": {
-				"heading": "Données sur les patients",
+				"heading": "Rendez-vous : les données sur les patients",
 				"body": [
-					"La prise de rendez-vous en ligne n’est pas encore ouverte : Apercura ne collecte aujourd’hui aucune donnée sur les patients. Quand elle ouvrira, elle ne demandera que ce dont le professionnel a besoin, le chiffrera au niveau de l’application et le supprimera à échéance (90 jours après le rendez-vous par défaut)."
+					"Données : prénom, nom, adresse e-mail, téléphone, première consultation ou non, motif choisi parmi ceux du professionnel, date et heure du rendez-vous. Le professionnel peut demander moins ; aucun compte patient n’est créé.",
+					"Finalités : réserver le rendez-vous, envoyer le code de confirmation, la confirmation et le rappel, et permettre d’annuler ou de déplacer le rendez-vous. Le professionnel, responsable de traitement, en fixe la base légale ; ces données sont des données de santé (article 9 du RGPD).",
+					"Protection : ces données sont chiffrées au niveau de l’application, avec une clé propre à chaque cabinet, et chaque lecture est enregistrée. Les e-mails ne contiennent ni spécialité ni motif.",
+					"Durées : une réservation non confirmée est effacée après 24 heures ; les données d’un rendez-vous sont effacées 90 jours après sa date par défaut (de 30 à 365 jours selon le réglage du professionnel)."
+				]
+			},
+			"reports": {
+				"heading": "Signalements et demandes de retrait",
+				"body": [
+					"Données : le message, l’adresse e-mail de contact quand elle est donnée, et pour une demande de retrait la page concernée. Le texte libre est chiffré.",
+					"Finalités : corriger les erreurs signalées et appliquer les oppositions. Bases légales : l’intérêt légitime de publier des informations exactes (article 6.1.f) et le droit d’opposition (article 21). Durée : le temps de traiter la demande ; la durée maximale reste à fixer lors de la relecture juridique."
+				]
+			},
+			"security": {
+				"heading": "Sécurité et données techniques",
+				"body": [
+					"Les sessions des professionnels enregistrent l’adresse IP et le navigateur utilisés, pour protéger leur compte. Pour limiter les abus, le site transforme les adresses IP par une fonction à clé secrète avant de les compter ; seule la limite des tentatives de connexion les garde le temps de sa fenêtre. L’hébergeur conserve ses propres journaux techniques selon son contrat."
+				]
+			},
+			"recipients": {
+				"heading": "Destinataires et sous-traitants",
+				"body": [
+					"Les données ne sont ni vendues ni louées, et ne servent à aucune publicité. Seuls les reçoivent, chacun pour ce qui le concerne : l’équipe de l’éditeur (sans accès aux données des patients), le professionnel et son équipe pour leurs rendez-vous, et les sous-traitants ci-dessous.",
+					"Les cartes sont chargées depuis un serveur de tuiles (OpenFreeMap par défaut), qui reçoit l’adresse IP du visiteur comme tout site web, mais aucune donnée de compte ni de rendez-vous. La connexion avec Pro Santé Connect passe par l’Agence du numérique en santé."
+				]
+			},
+			"transfers": {
+				"heading": "Transferts hors de l’Union européenne",
+				"body": [
+					"Aucun : les données sont hébergées et traitées dans l’Espace économique européen, et les données de santé en France. Tout changement de sous-traitant sera annoncé ici avant de prendre effet."
 				]
 			},
 			"cookies": {
-				"heading": "Cookies et pisteurs",
+				"heading": "Cookies",
 				"body": [
-					"Apercura n’utilise aucun cookie publicitaire ou de mesure d’audience, ni aucun pisteur. Seuls des cookies strictement nécessaires au service peuvent être déposés : aucun bandeau de consentement n’est donc nécessaire."
+					"Seuls des cookies strictement nécessaires au service sont déposés : la session des professionnels connectés, la langue choisie, et un cookie qui limite une réservation en cours à un navigateur (24 heures). Aucun cookie publicitaire ou de mesure d’audience, aucun pisteur : aucun bandeau de consentement n’est donc nécessaire."
 				]
 			},
 			"rights": {
 				"heading": "Vos droits",
 				"body": [
-					"Vous pouvez demander l’accès aux données qui vous concernent, leur rectification ou leur effacement, et vous opposer à leur traitement. Si vous estimez que vos droits ne sont pas respectés, vous pouvez adresser une réclamation à la CNIL."
+					"Vous pouvez demander l’accès à vos données, leur rectification, leur effacement, la limitation de leur traitement et leur portabilité, vous opposer à leur traitement et définir des directives sur leur sort après votre décès. Les professionnels peuvent exporter les données de leur compte depuis leur espace.",
+					"Écrivez à l’adresse ci-dessous. Pour un rendez-vous, adressez-vous de préférence au professionnel, responsable de ces données ; si vous nous écrivez, nous lui transmettons la demande. Une réponse vous est donnée dans un délai d’un mois.",
+					"Si vous estimez que vos droits ne sont pas respectés, vous pouvez adresser une réclamation à la CNIL."
+				]
+			},
+			"objection": {
+				"heading": "S’opposer à une page de l’annuaire",
+				"body": [
+					"Un professionnel peut s’opposer à la publication de sa page sans avoir à se justifier. Si la page n’est pas revendiquée, un formulaire suffit : elle est masquée tout de suite, puis supprimée après une vérification légère, et ne sera plus republiée par les mises à jour. Si elle est revendiquée, seul son titulaire peut la retirer, depuis son espace."
+				]
+			},
+			"changes": {
+				"heading": "Mise à jour de cette politique",
+				"body": [
+					"Cette politique est un brouillon. Elle sera relue par un juriste et par le délégué à la protection des données avant l’ouverture des rendez-vous ; chaque version est datée."
 				]
 			}
 		},
 		"fields": {
 			"controller": "Responsable de traitement",
+			"address": "Adresse",
 			"dpo": "Délégué à la protection des données",
 			"contact": "Contact pour les demandes",
-			"hosting": "Hébergement"
+			"hosting": "Hébergement",
+			"hostingProvider": "Hébergeur (sous-traitant)",
+			"smtp": "Envoi des e-mails (sous-traitant)",
+			"effectiveDate": "Date d’entrée en vigueur"
 		},
 		"hostedBy": "Hébergé en France par un hébergeur certifié HDS ({host})",
 		"objectLink": "Comment s’opposer à une page",
@@ -844,24 +918,39 @@
 	},
 	"LegalPage": {
 		"metaTitle": "Mentions légales · Apercura",
-		"metaDescription": "Mentions légales d’Apercura : éditeur, directeur de la publication et hébergeur.",
+		"metaDescription": "Mentions légales d’Apercura : éditeur, directeur de la publication et hébergeur du site.",
 		"title": "Mentions légales",
-		"lead": "La structure juridique qui éditera Apercura n’est pas encore créée. Les champs ci-dessous restent vides jusque-là.",
+		"lead": "Ce que la loi impose de publier sur l’éditeur et l’hébergeur du site (loi pour la confiance dans l’économie numérique, article 6 III).",
 		"sections": {
 			"publisher": {
 				"heading": "Éditeur",
 				"body": [
-					"L’éditeur du site, comme l’exige la loi pour la confiance dans l’économie numérique (LCEN)."
+					"Le site est édité par la structure ci-dessous. Elle publie l’annuaire et fournit la prise de rendez-vous aux professionnels qui l’ouvrent."
+				]
+			},
+			"director": {
+				"heading": "Directeur de la publication",
+				"body": [
+					"La personne responsable de ce que l’éditeur publie. Les informations qu’un professionnel ajoute à sa page relèvent de sa propre responsabilité."
 				]
 			},
 			"hosting": {
 				"heading": "Hébergeur",
-				"body": ["La société qui héberge le site."]
+				"body": [
+					"Le site, sa base de données et ses fichiers sont hébergés par la société ci-dessous.",
+					"Les données de santé liées aux rendez-vous ne peuvent être confiées qu’à un hébergeur certifié pour l’hébergement de données de santé (HDS), comme l’exige l’article L.1111-8 du code de la santé publique."
+				]
 			},
 			"ip": {
 				"heading": "Code et données",
 				"body": [
 					"Le code source d’Apercura est publié sous licence AGPL-3.0. Les données de l’annuaire sont réutilisées depuis des sources publiques sous Licence Ouverte 2.0 : la page des données les liste avec leurs dates."
+				]
+			},
+			"review": {
+				"heading": "Statut de ce texte",
+				"body": [
+					"Ce texte est un brouillon, rédigé avant la création de la structure juridique. Il sera relu par un juriste avant le lancement."
 				]
 			}
 		},
@@ -869,24 +958,29 @@
 			"name": "Dénomination",
 			"legalForm": "Forme juridique",
 			"address": "Siège",
+			"phone": "Téléphone",
+			"email": "Adresse e-mail",
 			"registration": "Numéro d’immatriculation",
 			"director": "Directeur de la publication",
-			"contact": "Contact",
 			"hostName": "Hébergeur",
-			"hostAddress": "Adresse de l’hébergeur"
+			"hostAddress": "Adresse de l’hébergeur",
+			"hostPhone": "Téléphone de l’hébergeur",
+			"healthData": "Données de santé"
 		},
+		"hdsHosted": "Hébergées en France par un hébergeur certifié HDS ({host})",
 		"dataLink": "Données et sources"
 	},
 	"TermsPage": {
 		"metaTitle": "Conditions d’utilisation · Apercura",
-		"metaDescription": "Conditions d’utilisation d’Apercura (brouillon) : un annuaire gratuit et factuel des professionnels de santé en France.",
+		"metaDescription": "Conditions d’utilisation d’Apercura : un annuaire gratuit et factuel des professionnels de santé en France, avec prise de rendez-vous gratuite.",
 		"title": "Conditions d’utilisation",
-		"lead": "Ces conditions provisoires décrivent le service tel qu’il est aujourd’hui. Elles seront complétées et relues avant le lancement.",
+		"lead": "Les règles d’utilisation d’Apercura, pour les patients comme pour les professionnels. La version française fait foi.",
 		"sections": {
 			"service": {
 				"heading": "Le service",
 				"body": [
-					"Apercura est un annuaire gratuit des professionnels de santé inscrits en France, construit à partir de données publiques ouvertes. Son utilisation ne demande aucun compte."
+					"Apercura est un annuaire gratuit des professionnels de santé inscrits en France, construit à partir de données publiques ouvertes, avec une prise de rendez-vous en ligne gratuite pour les professionnels qui l’ouvrent. Il est édité par la structure nommée dans les mentions légales.",
+					"Utiliser l’annuaire ou prendre un rendez-vous ne demande aucun compte. Utiliser le site vaut acceptation de ces conditions."
 				]
 			},
 			"content": {
@@ -894,6 +988,20 @@
 				"body": [
 					"Les pages montrent des informations factuelles issues de registres publics, dans un ordre neutre. Elles ne comportent ni note, ni avis, ni publicité, ni classement payant.",
 					"Les informations peuvent contenir des erreurs ou ne pas être à jour : vérifiez-les auprès du professionnel avant de vous déplacer. Chaque page indique comment signaler une erreur."
+				]
+			},
+			"fees": {
+				"heading": "Honoraires et conventionnement",
+				"body": [
+					"Les pages indiquent le secteur de conventionnement et l’adhésion à l’OPTAM tels que l’Assurance Maladie les publie, et renvoient vers ameli.fr pour les vérifier. Les pages réservables affichent en plus la mention réglementaire prévue par l’arrêté du 30 mai 2018 (article 5).",
+					"Le texte exact de cette mention sera repris mot pour mot après la relecture juridique : en attendant, il apparaît ci-dessous comme un champ à remplir."
+				]
+			},
+			"booking": {
+				"heading": "Prendre rendez-vous",
+				"body": [
+					"Un rendez-vous est confirmé par un code envoyé par e-mail. Selon le réglage du professionnel, il est confirmé tout de suite ou après sa validation. Le lien reçu par e-mail permet de l’annuler ou de le déplacer jusqu’au délai fixé par le professionnel.",
+					"Donnez des coordonnées exactes et prévenez si vous ne pouvez pas venir. Les créneaux sont ceux que le professionnel publie : l’éditeur ne garantit ni leur disponibilité ni la tenue du rendez-vous, qui relève du professionnel."
 				]
 			},
 			"health": {
@@ -905,7 +1013,22 @@
 			"practitioners": {
 				"heading": "Pour les professionnels",
 				"body": [
-					"Revendiquer une page sera gratuit et demandera une preuve d’identité. Le professionnel qui revendique une page est responsable des informations qu’il y ajoute, qui doivent rester factuelles, comme l’exigent les codes de déontologie."
+					"Revendiquer une page et ouvrir la prise de rendez-vous sont gratuits. Revendiquer une page demande une preuve d’identité : Pro Santé Connect, l’adresse e-mail du registre, ou un document vérifié par une personne.",
+					"Le professionnel est responsable des informations qu’il ajoute à sa page. Elles doivent rester factuelles, loyales et à jour, comme l’exigent les codes de déontologie ; il indique ses honoraires et ses moyens de paiement avant d’ouvrir son agenda.",
+					"Pour les rendez-vous, le professionnel est responsable de traitement des données de ses patients et l’éditeur son sous-traitant. Les clauses de sous-traitance de l’article 28 du RGPD sont annexées aux conditions des professionnels ; elles sont en cours de rédaction et seront signées avant l’ouverture des rendez-vous.",
+					"Le professionnel peut exporter les données de son compte et demander sa fermeture à tout moment."
+				]
+			},
+			"removal": {
+				"heading": "Retrait d’une page",
+				"body": [
+					"Un professionnel peut demander le retrait de sa page à tout moment : la page des données explique comment. Une page revendiquée ne peut être retirée que par son titulaire."
+				]
+			},
+			"liability": {
+				"heading": "Responsabilité",
+				"body": [
+					"L’éditeur fait de son mieux pour que le service soit disponible et exact, sans pouvoir le garantir : le service peut être interrompu pour maintenance ou en cas d’incident. Il n’est pas responsable des informations ajoutées par les professionnels ni des rendez-vous eux-mêmes. Ces limites seront précisées lors de la relecture juridique."
 				]
 			},
 			"ip": {
@@ -913,12 +1036,21 @@
 				"body": [
 					"Le code source est publié sous licence AGPL-3.0. Les données de l’annuaire sont réutilisées sous Licence Ouverte 2.0."
 				]
+			},
+			"law": {
+				"heading": "Droit applicable et litiges",
+				"body": [
+					"Ces conditions sont soumises au droit français. En cas de litige, écrivez d’abord à l’adresse de contact pour chercher une solution amiable. Le recours à un médiateur de la consommation et les juridictions compétentes seront précisés lors de la relecture juridique."
+				]
 			}
 		},
 		"fields": {
+			"publisher": "Éditeur",
 			"effectiveDate": "Date d’entrée en vigueur",
-			"law": "Droit applicable et juridictions",
-			"contact": "Contact"
+			"law": "Droit applicable",
+			"lawValue": "Droit français",
+			"contact": "Contact",
+			"conventionnementWording": "Mention réglementaire (arrêté du 30 mai 2018, article 5)"
 		}
 	},
 	"Listing": {

@@ -20,6 +20,16 @@ export const HOLD_DURATION_MS = 15 * MINUTE_MS;
 export const PENDING_MAX_MS = 48 * HOUR_MS;
 /** A request must be validated at least this long before the appointment starts. */
 export const PENDING_LEAD_MS = 2 * HOUR_MS;
+/**
+ * Notice, in minutes, a patient booking needs on a calendar. A practice that validates by hand
+ * must be able to answer before the request's deadline (start − PENDING_LEAD_MS) while the hold
+ * still runs: a time starting sooner than lead + hold could be chosen but never requested, so it
+ * is not offered at all.
+ */
+export function bookingNoticeMin(minNoticeMin: number, manualValidation: boolean): number {
+	if (!manualValidation) return minNoticeMin;
+	return Math.max(minNoticeMin, Math.ceil((PENDING_LEAD_MS + HOLD_DURATION_MS) / MINUTE_MS));
+}
 /** A patient may cancel a confirmed appointment this long after booking, whatever the cutoff. */
 export const CANCELLATION_GRACE_MS = 10 * MINUTE_MS;
 /** A confirmed appointment becomes `completed` this long after it ends. */

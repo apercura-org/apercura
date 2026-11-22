@@ -30,7 +30,9 @@ first administrator, backups, upgrades, key rotation, the reverse proxy, and wha
 data for others requires (an HDS-certified host). Production deployment:
 [Clever Cloud](./docs/deploy-clever-cloud.md) (default) or [Scalingo](./docs/deploy-scalingo.md).
 Directory only, without booking, it runs on any Node.js host (see
-[Directory-only mode](./docs/self-hosting.md#directory-only-mode)).
+[Directory-only mode](./docs/self-hosting.md#directory-only-mode)). What remains before the
+public launch (legal entity, HDS contract, DPIA, audits) is in the
+[launch checklist](./docs/launch-checklist.md).
 
 ## Development
 
