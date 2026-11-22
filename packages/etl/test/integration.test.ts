@@ -6,8 +6,11 @@
  * ETL_TEST_DATABASE_URL is set (CI sets it to a throwaway service container).
  */
 import { copyFileSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
+import { createServer } from "node:http";
+import type { AddressInfo } from "node:net";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
+import { nameMatchKey } from "@apercura/core";
 import postgres from "postgres";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import {
@@ -19,6 +22,7 @@ import {
 	writeFixtures,
 } from "../fixtures/generate";
 import { buildFrOptions } from "../src/config";
+import { parseQuotedRecord } from "../src/lib/text";
 import { runFr } from "../src/run-fr";
 
 const url = process.env.ETL_TEST_DATABASE_URL;
@@ -46,6 +50,142 @@ const run = (dir: string, flags: Record<string, string | true> = {}) =>
 		),
 		() => {},
 	);
+
+/** An import that calls the geocoder at `geocoderUrl` (the local mock below). */
+const runOnline = (dir: string, geocoderUrl: string, flags: Record<string, string | true> = {}) =>
+	runFr(
+		buildFrOptions(
+			new Map<string, string | true>([["source-dir", dir], ...Object.entries(flags)]),
+			{
+				DATABASE_URL_ETL: url,
+				ETL_GEOCODER_URL: geocoderUrl,
+			},
+		),
+		() => {},
+	);
+
+type BanAnswer = { score: number; street: string; citycode?: string };
+
+/**
+ * SYNTHETIC answers of the mock geocoder, by the street the import sends: the
+ * BAN writes street names with their accents.
+ */
+const BAN_ANSWERS: Record<string, BanAnswer> = {
+	"AVENUE DU SPECIMEN": { score: 0.93, street: "Avenue du Spécimen" },
+	"RUE DU GENERAL FICTIF": { score: 0.97, street: "Rue du Général Fictif" },
+	"BOULEVARD DE LA MAQUETTE": { score: 0.91, street: "Boulevard de la Maquette" },
+	// Another commune code, a low score, another street: the registry text stays.
+	"COURS DU TEMOIN": { score: 0.95, street: "Cours du Témoin", citycode: "69381" },
+	"QUAI DE L ECHANTILLON": { score: 0.7, street: "Quai de l'Échantillon" },
+	"PLACE DE L ESSAI": { score: 0.9, street: "Place de l'Épreuve" },
+};
+
+const GEOCODER_COLUMNS = [
+	"key",
+	"adresse",
+	"postcode",
+	"citycode",
+	"latitude",
+	"longitude",
+	"result_score",
+	"result_type",
+	"result_citycode",
+	"result_label",
+	"result_housenumber",
+	"result_name",
+	"result_street",
+	"result_postcode",
+	"result_city",
+];
+
+/** A stand-in for the Géoplateforme CSV endpoint, answering from `BAN_ANSWERS`. */
+async function startMockGeocoder() {
+	const batches: number[] = [];
+	const server = createServer(async (request, response) => {
+		const chunks: Buffer[] = [];
+		for await (const chunk of request) chunks.push(chunk as Buffer);
+		const form = await new Response(Buffer.concat(chunks), {
+			headers: { "content-type": request.headers["content-type"] ?? "" },
+		}).formData();
+		const file = form.get("data") as File;
+		const lines = (await file.text()).split("\n").filter(Boolean).slice(1);
+		batches.push(lines.length);
+		const csv = [GEOCODER_COLUMNS.join(",")];
+		for (const line of lines) {
+			const [key = "", address = "", postcode = "", citycode = ""] =
+				parseQuotedRecord(line, ",") ?? [];
+			const answer = Object.entries(BAN_ANSWERS).find(([street]) =>
+				nameMatchKey(address).includes(street),
+			)?.[1];
+			const number = /^\d+/.exec(address)?.[0] ?? "";
+			const name = answer ? [number, answer.street].filter(Boolean).join(" ") : "";
+			const row = answer
+				? [
+						key,
+						address,
+						postcode,
+						citycode,
+						"48.85",
+						"2.3",
+						String(answer.score),
+						number ? "housenumber" : "street",
+						answer.citycode ?? citycode,
+						`${name} ${postcode} Ville Fictive`,
+						number,
+						name,
+						answer.street,
+						postcode,
+						"Ville Fictive",
+					]
+				: [key, address, postcode, citycode, "", "", "0.3", "municipality", citycode];
+			csv.push(
+				row
+					.map((field) => (/[",]/.test(field) ? `"${field.replace(/"/g, '""')}"` : field))
+					.join(","),
+			);
+		}
+		response.writeHead(200, { "content-type": "text/csv; charset=utf-8" });
+		response.end(`${csv.join("\n")}\n`);
+	});
+	await new Promise<void>((resolve) => server.listen(0, "127.0.0.1", resolve));
+	const { port } = server.address() as AddressInfo;
+	return {
+		url: `http://127.0.0.1:${port}/geocodage/search/csv`,
+		batches,
+		close: () => new Promise<void>((resolve) => server.close(() => resolve())),
+	};
+}
+
+/** A fictitious practitioner whose registry structure name lost the accents of her first name. */
+const HELENE: Person = {
+	n: 98,
+	title: "DR",
+	civility: "MME",
+	last: "FICTIVE",
+	first: "HÉLÈNE",
+	profession: "10",
+	activities: [
+		{
+			structure: {
+				id: "R10999999000098",
+				name: "CABINET DU DR HELENE FICTIVE",
+				number: "7",
+				typeCode: "R",
+				typeLabel: "Rue",
+				street: "DU GENERAL FICTIF",
+				postcode: "75016",
+				commune: "75116",
+				communeLabel: "Paris 16e  Arrondissement",
+				phone: "0199000198",
+			},
+			mode: "L",
+			sector: "SA07",
+			role: "FON-01",
+			genre: "GENR01",
+			specialty: "SM53",
+		},
+	],
+};
 
 const changes = (outcome: Awaited<ReturnType<typeof run>>) =>
 	(outcome.stats.changes as { total: number } | undefined)?.total;
@@ -250,5 +390,82 @@ describe.skipIf(!url)("etl:fr on synthetic fixtures", () => {
 				`directory.search_docs sd JOIN directory.practitioners p ON p.id = sd.practitioner_id WHERE p.national_id = '${target}' AND sd.indexable`,
 			),
 		).toBe(0);
+	});
+	it("restores own-name accents and displays the geocoder's street names, idempotently", async () => {
+		const geocoder = await startMockGeocoder();
+		try {
+			const people = [...CASES.filter((p) => p.n !== 2), ...fillerPeople(200, 3), HELENE];
+			const dir = fixtureDir(people);
+			const first = await runOnline(dir, geocoder.url);
+			expect(first.status).toBe("succeeded");
+			// Every cached address was geocoded again, once, for its label.
+			expect(geocoder.batches.length).toBe(1);
+			expect(await count("directory.geocode_cache WHERE NOT with_labels")).toBe(0);
+			const labelled = await count("directory.sites WHERE geo_address_line IS NOT NULL");
+			expect(labelled).toBeGreaterThanOrEqual(3);
+
+			const sites = await sql<
+				{
+					source_key: string;
+					name: string;
+					address_line: string;
+					geo_label: string | null;
+					geo_address_line: string | null;
+				}[]
+			>`
+				SELECT source_key, name, address_line, geo_label, geo_address_line
+				FROM directory.sites
+				WHERE source_key IN ('R10999999000002', 'R10999999000098', 'R10999999000005',
+					'R10999999000006', 'R10999999000004')
+				ORDER BY source_key
+			`;
+			const bySite = Object.fromEntries(sites.map((site) => [site.source_key, site]));
+			// The registry wrote "HELENE"; the practitioner's own name has the accents.
+			expect(bySite.R10999999000098?.name).toBe("Cabinet du Dr Hélène Fictive");
+			expect(bySite.R10999999000098).toMatchObject({
+				address_line: "7 Rue du General Fictif",
+				geo_address_line: "7 Rue du Général Fictif",
+				geo_label: "7 Rue du Général Fictif 75016 Ville Fictive",
+			});
+			expect(bySite.R10999999000002).toMatchObject({
+				address_line: "3 bis Avenue du Specimen",
+				geo_address_line: "3 bis Avenue du Spécimen",
+			});
+			// Another commune code and a low score: nothing stored, the registry text is shown.
+			expect(bySite.R10999999000005).toMatchObject({ geo_label: null, geo_address_line: null });
+			expect(bySite.R10999999000006).toMatchObject({ geo_label: null, geo_address_line: null });
+			// A sure match on another street: the label is kept, the registry's line is shown.
+			expect(bySite.R10999999000004?.geo_label).not.toBeNull();
+			expect(bySite.R10999999000004?.geo_address_line).toBeNull();
+
+			// The read models print the BAN's street name.
+			const [page] = await sql<{ lines: string[] }[]>`
+				SELECT array_agg(a ->> 'addressLine' ORDER BY a ->> 'addressLine') AS lines
+				FROM directory.practitioner_pages pg
+				JOIN directory.practitioners p ON p.id = pg.practitioner_id,
+					jsonb_path_query(pg.payload, '$.activities[*].site') AS a
+				WHERE p.national_id = ${fakeRpps(98)}
+			`;
+			expect(page?.lines).toEqual(["7 Rue du Général Fictif"]);
+			const [doc] = await sql<{ line: string }[]>`
+				SELECT sd.payload -> 'site' ->> 'addressLine' AS line
+				FROM directory.search_docs sd
+				JOIN directory.practitioners p ON p.id = sd.practitioner_id
+				WHERE p.national_id = ${fakeRpps(98)}
+			`;
+			expect(doc?.line).toBe("7 Rue du Général Fictif");
+
+			// Rerun online and offline: nothing to geocode, nothing changes.
+			const again = await runOnline(dir, geocoder.url, { force: true });
+			expect(again.status).toBe("succeeded");
+			expect(geocoder.batches.length).toBe(1);
+			expect(changes(again)).toBe(0);
+			const offline = await run(dir, { force: true });
+			expect(offline.status).toBe("succeeded");
+			expect(changes(offline)).toBe(0);
+			expect(await count("directory.sites WHERE geo_address_line IS NOT NULL")).toBe(labelled);
+		} finally {
+			await geocoder.close();
+		}
 	});
 });

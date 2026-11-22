@@ -13,6 +13,7 @@ import { Link, redirect } from "~/i18n/navigation";
 import { type Locale, routing } from "~/i18n/routing";
 import { genderOf, getTaxonomyLabels } from "~/lib/labels";
 import { resolveListing } from "~/lib/listing-index";
+import { getMapStrings } from "~/lib/map-strings";
 import { slotParts, slotTime } from "~/lib/slot-format";
 import {
 	matchPlaces,
@@ -286,6 +287,7 @@ async function Results({
 }) {
 	const t = await getTranslations({ locale, namespace: "SearchPage" });
 	const labels = await getTaxonomyLabels(locale);
+	const mapStrings = await getMapStrings(locale);
 	const kilometres = new Intl.NumberFormat(locale, { maximumFractionDigits: 1 });
 	const from = (page - 1) * SEARCH_PAGE_SIZE + 1;
 	const to = from + outcome.results.length - 1;
@@ -365,6 +367,7 @@ async function Results({
 					region: t("map.region"),
 					fallback: t("map.fallback"),
 				}}
+				mapStrings={mapStrings}
 			/>
 			<table className={table.table()} aria-labelledby="results-heading">
 				<thead className={table.head()}>

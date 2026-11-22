@@ -1,12 +1,14 @@
 import { describe, expect, it } from "vitest";
 import {
 	addressKey,
+	banStreetLine,
 	buildAccentDictionary,
 	formatPersonName,
 	formatPhoneFr,
 	formatStreetLine,
 	formatStreetText,
 	nameMatchKey,
+	restoreOwnNameAccents,
 	toE164Fr,
 } from "./normalize";
 
@@ -226,6 +228,70 @@ describe("addresses", () => {
 			"24 BIS RUE DAUPHINE|75006|75106",
 		);
 		expect(addressKey("Rue de l'Église", null, null)).toBe("RUE DE L EGLISE||");
+	});
+});
+
+describe("restoreOwnNameAccents", () => {
+	it.each([
+		["Cabinet du Dr Helene Aelion", ["Hélène", "Aelion"], "Cabinet du Dr Hélène Aelion"],
+		[
+			"Cabinet du Dr Marie-Helene Faure",
+			["Marie-Hélène", "Faure"],
+			"Cabinet du Dr Marie-Hélène Faure",
+		],
+		["Cabinet Gaetan Lefevre", ["Gaëtan", "Lefèvre"], "Cabinet Gaëtan Lefèvre"],
+		["CABINET HELENE AELION", ["Hélène", "Aelion"], "CABINET HÉLÈNE AELION"],
+		["Cabinet d’Esperance Bezier", ["Espérance", "Bézier"], "Cabinet d’Espérance Bézier"],
+		// Already accented, or another spelling: untouched.
+		["Cabinet du Dr Hélène Aelion", ["Hélène", "Aelion"], "Cabinet du Dr Hélène Aelion"],
+		["Cabinet du Dr Helena Aelion", ["Hélène", "Aelion"], "Cabinet du Dr Helena Aelion"],
+		// Names without accents, short names and other words.
+		["Cabinet du Dr Helene Martin", ["Helene", "Martin"], "Cabinet du Dr Helene Martin"],
+		["Cabinet Le Gall", ["Lé", "Gall"], "Cabinet Le Gall"],
+		["Centre Medical", ["Hélène", "Aelion"], "Centre Medical"],
+	])("%j with the names %j is %j", (label, names, expected) => {
+		expect(restoreOwnNameAccents(label, names)).toBe(expected);
+	});
+
+	it("leaves a word that two names of the practice spell differently", () => {
+		expect(restoreOwnNameAccents("Cabinet Helene", ["Hélène", "Helene"])).toBe("Cabinet Helene");
+		expect(restoreOwnNameAccents("Cabinet Helene", ["Hélène", "Hélène"])).toBe("Cabinet Hélène");
+	});
+
+	it("is idempotent", () => {
+		const once = restoreOwnNameAccents("Cabinet du Dr Helene Aelion", ["Hélène"]);
+		expect(restoreOwnNameAccents(once, ["Hélène"])).toBe(once);
+		expect(formatStreetText(once)).toBe(once);
+	});
+});
+
+describe("banStreetLine", () => {
+	it.each([
+		["34 Avenue du General Sarrail", "Avenue du Général Sarrail", "34 Avenue du Général Sarrail"],
+		["24 bis Rue St Honore", "Rue Saint-Honoré", "24 bis Rue Saint-Honoré"],
+		["12 Bd St Germain", "Boulevard Saint-Germain", "12 Boulevard Saint-Germain"],
+		["3 B Rue de l’Eglise", "Rue de l'Église", "3 B Rue de l'Église"],
+		["Rue du General Leclerc", "Rue du Général Leclerc", "Rue du Général Leclerc"],
+		["12-14 Place de la Republique", "Place de la République", "12-14 Place de la République"],
+		["8 Rue du 8 Mai 1945", "Rue du 8 Mai 1945", "8 Rue du 8 Mai 1945"],
+	])("%j with the BAN street %j is %j", (line, street, expected) => {
+		expect(banStreetLine(line, street)).toBe(expected);
+	});
+
+	it.each([
+		["34 Avenue du General Sarrail", "Avenue du Général Leclerc"],
+		["34 Avenue du General Sarrail", "Rue du Général Sarrail"],
+		["34 Avenue du General Sarrail", null],
+		["34 Avenue du General Sarrail", ""],
+		["Batiment B 34 Avenue du General Sarrail", "Avenue du Général Sarrail"],
+		["", "Avenue du Général Sarrail"],
+	])("keeps the registry text for %j and %j", (line, street) => {
+		expect(banStreetLine(line, street)).toBeNull();
+	});
+
+	it("reads the same when formatted for display", () => {
+		const line = banStreetLine("34 Avenue du General Sarrail", "Avenue du Général Sarrail") ?? "";
+		expect(formatStreetText(line)).toBe(line);
 	});
 });
 

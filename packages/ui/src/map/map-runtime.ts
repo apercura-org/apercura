@@ -4,6 +4,7 @@
  */
 import * as maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
+import { type MapStrings, mapLibreLocale } from "./map-strings";
 import { type MapStyle, themeMapStyle } from "./map-style";
 
 /*
@@ -20,6 +21,8 @@ export interface CreateMapOptions {
 	markerLabel: string;
 	/** Several pins (search results): replaces the single pin and fits them all in view. */
 	markers?: { lat: number; lon: number; label: string }[];
+	/** Translated control titles, gestures hint and accessible names (MapLibre's are English). */
+	strings?: MapStrings;
 	signal: AbortSignal;
 }
 
@@ -40,6 +43,7 @@ export async function createMap({
 	zoom,
 	markerLabel,
 	markers,
+	strings,
 	signal,
 }: CreateMapOptions) {
 	const response = await fetch(styleUrl, { signal });
@@ -57,6 +61,7 @@ export async function createMap({
 		attributionControl: { compact: false },
 		cooperativeGestures: true,
 		maxZoom: 19,
+		locale: mapLibreLocale(strings),
 	});
 	map.addControl(new maplibregl.NavigationControl({ showCompass: false }), "top-right");
 

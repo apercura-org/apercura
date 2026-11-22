@@ -1,5 +1,6 @@
 import { appointmentTypes, calendars, sites } from "@apercura/db/schema";
 import { and, asc, eq, inArray } from "drizzle-orm";
+import { siteAddressLine } from "~/server/queries/site-address";
 import { findCalendar, findType, slotGrid } from "./availability";
 import { BOOKING_LIMITS, bookingEnabled } from "./config";
 import { BookingError } from "./errors";
@@ -35,7 +36,7 @@ export async function bookingOptions(
 			manualValidation: calendars.manualValidation,
 			publicInstructions: calendars.publicInstructions,
 			siteName: sites.name,
-			addressLine: sites.addressLine,
+			addressLine: siteAddressLine,
 			postcode: sites.postcode,
 			communeLabel: sites.communeLabel,
 		})

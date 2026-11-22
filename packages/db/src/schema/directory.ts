@@ -311,6 +311,17 @@ export const sites = directory.table(
 		geoPrecision: text(),
 		/** `finess`, `geocoder` or `centroid`. */
 		geoSource: text(),
+		/**
+		 * BAN label of the address ("34 Avenue du Général Sarrail 75016 Paris"),
+		 * when the geocoder matched it with a high score in the site's own commune.
+		 */
+		geoLabel: text(),
+		/**
+		 * The street line as displayed: the registry's number with the BAN's
+		 * (accented) street name, when they name the same street. Null otherwise;
+		 * `addressLine` stays the registry text, the source and the fallback.
+		 */
+		geoAddressLine: text(),
 		addressHash: text(),
 		phone: text(),
 		phone2: text(),
@@ -426,6 +437,18 @@ export const geocodeCache = directory.table("geocode_cache", {
 	resultCitycode: text(),
 	/** `address`, `street`, `city` or null when the address was not found. */
 	precision: text(),
+	/** BAN label of the result and its parts ("34 Avenue du Général Sarrail 75016 Paris"). */
+	resultLabel: text(),
+	resultHousenumber: text(),
+	resultName: text(),
+	resultStreet: text(),
+	resultPostcode: text(),
+	resultCity: text(),
+	/**
+	 * True when the row was written with the label columns above. Rows cached
+	 * before they existed are geocoded again once, by the next online import.
+	 */
+	withLabels: boolean().notNull().default(false),
 	provider: text().notNull(),
 	geocodedAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
 });

@@ -49,7 +49,7 @@ export async function getEstablishment(slug: string, finess: string): Promise<Es
 	};
 	const [site] = await sql<Row[]>`
 		SELECT s.id AS "siteId", s.slug, coalesce(s.finess_name, s.name, s.slug) AS name, s.kind,
-			s.finess_et AS "finessEt", s.address_line AS "addressLine",
+			s.finess_et AS "finessEt", coalesce(s.geo_address_line, s.address_line) AS "addressLine",
 			s.address_complement AS "addressComplement", s.postcode, pl.name AS "placeName",
 			s.place_id AS "placeId",
 			round(ST_Y(s.location::geometry)::numeric, 6)::float8 AS latitude,

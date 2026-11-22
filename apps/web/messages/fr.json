@@ -265,6 +265,20 @@
 		},
 		"specimen": "Exemple fictif"
 	},
+	"Map": {
+		"map": "Carte",
+		"marker": "Repère sur la carte",
+		"zoomIn": "Zoomer",
+		"zoomOut": "Dézoomer",
+		"resetBearing": "Faites glisser pour faire pivoter la carte, cliquez pour la réorienter vers le nord",
+		"toggleAttribution": "Afficher ou masquer les crédits de la carte",
+		"mapFeedback": "Signaler un problème sur la carte",
+		"logo": "Logo MapLibre",
+		"closePopup": "Fermer la fenêtre",
+		"scrollZoomWindows": "Utilisez Ctrl + molette pour zoomer sur la carte",
+		"scrollZoomMac": "Utilisez ⌘ + défilement pour zoomer sur la carte",
+		"twoFingers": "Utilisez deux doigts pour déplacer la carte"
+	},
 	"Gallery": {
 		"title": "Galerie des composants",
 		"intro": "Chaque composant du système livret, dans chacun de ses états. Développement uniquement : cette page répond 404 en production. Toutes les personnes, tous les numéros et tous les lieux y sont fictifs.",
@@ -510,7 +524,7 @@
 			"removalLink": "Vous êtes ce praticien et vous opposez à cette page ?"
 		},
 		"ring": {
-			"heading": "Autres praticiens : {listing} à {place}"
+			"heading": "Autres praticiens : {occupation} à {place}"
 		},
 		"photoAlt": "Photo de {name}",
 		"withheld": {
@@ -940,7 +954,7 @@
 		"communesHeading": "{listing} : communes de {place}",
 		"nearbyHeading": "{listing} : communes voisines",
 		"establishmentsHeading": "Établissements à {place}",
-		"establishmentsIntro": "Hôpitaux, cliniques et centres de santé où exercent des praticiens inscrits comme {listing}.",
+		"establishmentsIntro": "Hôpitaux, cliniques et centres de santé où exercent des praticiens inscrits comme {occupation}.",
 		"allSpecialties": "Toutes les spécialités à {place}",
 		"hubMetaTitle": "{count, plural, one {{listing} en France : # praticien · Apercura} many {{listing} en France : # praticiens · Apercura} other {{listing} en France : # praticiens · Apercura}}",
 		"hubMetaDescription": "{count, plural, one {# praticien inscrit comme {occupation} au registre national, par département : adresses, coordonnées, secteurs de conventionnement.} many {# praticiens inscrits comme {occupation} au registre national, par département : adresses, coordonnées, secteurs de conventionnement.} other {# praticiens inscrits comme {occupation} au registre national, par département : adresses, coordonnées, secteurs de conventionnement.}}",

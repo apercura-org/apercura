@@ -13,7 +13,14 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { FR_EXCLUDED_PROFESSIONS, FR_PROFESSIONS } from "@apercura/core/taxonomy";
 import { type AnsFileKey, type FrOptions, SOURCE_DIR_FILES } from "./config";
-import { acceptGeocode, type GeocodeResult, geocodeBatch, geocodeInput } from "./geocode";
+import {
+	acceptGeocode,
+	emptyGeocodeResult,
+	type GeocodeResult,
+	geocodeBatch,
+	geocodeInput,
+	siteLabel,
+} from "./geocode";
 import {
 	checkBreakers,
 	checkFiles,
@@ -28,6 +35,7 @@ import { acquireImportLock, connect, type Sql, type TransactionSql } from "./lib
 import { downloadFile, inspectLocalFile, type SourceFile } from "./lib/files";
 import { type LoadStats, loadPipeFile, Quarantine } from "./lib/load";
 import {
+	applySiteLabels,
 	applySiteLocations,
 	applySuppressions,
 	enqueueSiteTags,
@@ -41,7 +49,9 @@ import {
 	orphanedPages,
 	recomputeDerived,
 	refreshReadModels,
+	restoreOwnNameAccentsInSites,
 	restoreSiteNameAccents,
+	type SiteLabelUpdate,
 	type SiteLocation,
 	sitesToGeocode,
 	stageScope,
@@ -373,6 +383,9 @@ async function runLocked(
 			const merge: Record<string, unknown> = {};
 			merge.structures = await timer.run("resolve places", () => stageSites(tx));
 			merge.siteNameAccents = await restoreSiteNameAccents(tx);
+			merge.ownNameAccents = await timer.run("own name accents", () =>
+				restoreOwnNameAccentsInSites(tx),
+			);
 			merge.scope = await stageScope(tx, ctx);
 			const sites = await timer.run("merge sites", () => mergeSites(tx));
 			merge.sites = { inserted: sites.inserted, updated: sites.updated };
@@ -383,7 +396,8 @@ async function runLocked(
 			merge.suppressions = await applySuppressions(tx);
 			const finess = await timer.run("FINESS+ enrichment", () => enrichFromFiness(tx));
 			merge.finess = { ...finess, ids: undefined };
-			merge.geocoding = await timer.run("geocoding", () => geocodeSites(tx, sql, options, log));
+			const geocoding = await timer.run("geocoding", () => geocodeSites(tx, sql, options, log));
+			merge.geocoding = { ...geocoding, labelledIds: undefined };
 			const derived = await timer.run("derived fields", () => recomputeDerived(tx, ctx));
 			merge.removedSites = derived.removedSites.length;
 			merge.indexableChanged = derived.indexableChanged;
@@ -395,6 +409,7 @@ async function runLocked(
 			merge.siteTags = await enqueueSiteTags(tx, runId, [
 				...sites.ids,
 				...(finess.ids ?? []),
+				...geocoding.labelledIds,
 				...derived.removedSites,
 			]);
 			const orphans = await orphanedPages(tx);
@@ -595,7 +610,11 @@ async function stagingStats(sql: Sql): Promise<StagingStats> {
 
 /**
  * Locates sites without coordinates: cached geocoder result, new geocoder
- * call (not in dry runs or offline), or the commune centroid.
+ * call (not in dry runs or offline), or the commune centroid. Labels every
+ * registry site with the BAN's street name when the match is sure
+ * (`siteLabel`). Cached results from before the label columns are geocoded
+ * again once, online, for their label; offline they still locate but labels
+ * stay as they are.
  */
 async function geocodeSites(tx: TransactionSql, sql: Sql, options: FrOptions, log: Logger) {
 	const candidates = await sitesToGeocode(tx);
@@ -606,11 +625,13 @@ async function geocodeSites(tx: TransactionSql, sql: Sql, options: FrOptions, lo
 		}
 	}
 	const keys = [...new Set([...inputs.values()].map((input) => input.key))];
-	const cache = new Map<string, GeocodeResult>();
+	const cache = new Map<string, GeocodeResult & { withLabels: boolean }>();
 	for (let start = 0; start < keys.length; start += 10_000) {
-		const rows = await tx<GeocodeResult[]>`
+		const rows = await tx<(GeocodeResult & { withLabels: boolean })[]>`
 			SELECT address_key AS key, latitude, longitude, score, result_type AS "resultType",
-				result_citycode AS "resultCitycode", precision
+				result_citycode AS "resultCitycode", precision, result_label AS label,
+				result_housenumber AS housenumber, result_name AS name, result_street AS street,
+				result_postcode AS postcode, result_city AS city, with_labels AS "withLabels"
 			FROM directory.geocode_cache
 			WHERE address_key = ANY (${keys.slice(start, start + 10_000)}::text[])
 		`;
@@ -619,7 +640,7 @@ async function geocodeSites(tx: TransactionSql, sql: Sql, options: FrOptions, lo
 	const misses = [
 		...new Map(
 			[...inputs.values()]
-				.filter((input) => !cache.has(input.key))
+				.filter((input) => !cache.get(input.key)?.withLabels)
 				.map((input) => [input.key, input]),
 		).values(),
 	];
@@ -632,17 +653,7 @@ async function geocodeSites(tx: TransactionSql, sql: Sql, options: FrOptions, lo
 		requested = misses.length;
 		const found = new Set(results.map((result) => result.key));
 		for (const miss of misses) {
-			if (!found.has(miss.key)) {
-				results.push({
-					key: miss.key,
-					latitude: null,
-					longitude: null,
-					score: null,
-					resultType: null,
-					resultCitycode: null,
-					precision: null,
-				});
-			}
+			if (!found.has(miss.key)) results.push(emptyGeocodeResult(miss.key));
 		}
 		// Committed on its own connection: cached results survive a rollback.
 		for (let start = 0; start < results.length; start += 10_000) {
@@ -650,31 +661,59 @@ async function geocodeSites(tx: TransactionSql, sql: Sql, options: FrOptions, lo
 			await sql`
 				INSERT INTO directory.geocode_cache AS c (
 					address_key, latitude, longitude, score, result_type, result_citycode, precision,
-					provider, geocoded_at
+					result_label, result_housenumber, result_name, result_street, result_postcode,
+					result_city, with_labels, provider, geocoded_at
 				)
-				SELECT *, 'geoplateforme', now() FROM unnest(
+				SELECT *, true, 'geoplateforme', now() FROM unnest(
 					${chunk.map((r) => r.key)}::text[],
 					${chunk.map((r) => r.latitude)}::float8[],
 					${chunk.map((r) => r.longitude)}::float8[],
 					${chunk.map((r) => r.score)}::real[],
 					${chunk.map((r) => r.resultType)}::text[],
 					${chunk.map((r) => r.resultCitycode)}::text[],
-					${chunk.map((r) => r.precision)}::text[]
+					${chunk.map((r) => r.precision)}::text[],
+					${chunk.map((r) => r.label)}::text[],
+					${chunk.map((r) => r.housenumber)}::text[],
+					${chunk.map((r) => r.name)}::text[],
+					${chunk.map((r) => r.street)}::text[],
+					${chunk.map((r) => r.postcode)}::text[],
+					${chunk.map((r) => r.city)}::text[]
 				)
 				ON CONFLICT (address_key) DO UPDATE SET
 					latitude = excluded.latitude, longitude = excluded.longitude, score = excluded.score,
 					result_type = excluded.result_type, result_citycode = excluded.result_citycode,
-					precision = excluded.precision, geocoded_at = excluded.geocoded_at
+					precision = excluded.precision, result_label = excluded.result_label,
+					result_housenumber = excluded.result_housenumber, result_name = excluded.result_name,
+					result_street = excluded.result_street, result_postcode = excluded.result_postcode,
+					result_city = excluded.result_city, with_labels = excluded.with_labels,
+					geocoded_at = excluded.geocoded_at
 			`;
-			for (const result of chunk) cache.set(result.key, result);
+			// As a later run reads it back: the score is stored as a `real`.
+			for (const result of chunk) {
+				const score = result.score === null ? null : Math.fround(result.score);
+				cache.set(result.key, { ...result, score, withLabels: true });
+			}
 		}
 	}
 
 	const locations: SiteLocation[] = [];
+	const labels: SiteLabelUpdate[] = [];
 	let rejected = 0;
+	let shown = 0;
 	for (const site of candidates) {
 		const input = inputs.get(site.id);
 		const result = input ? cache.get(input.key) : undefined;
+		// No address to geocode: nothing to label. A result cached without labels: keep them.
+		if (!input || result?.withLabels) {
+			const label = result ? siteLabel(result, site) : { geoLabel: null, geoAddressLine: null };
+			if (label.geoLabel !== site.geoLabel || label.geoAddressLine !== site.geoAddressLine) {
+				labels.push({ id: site.id, ...label });
+			}
+			if (label.geoAddressLine) shown++;
+		} else if (site.geoAddressLine) {
+			shown++;
+		}
+		if (site.located) continue;
 		if (result && acceptGeocode(result, new Set(site.allowedCodes))) {
 			locations.push({
 				id: site.id,
@@ -699,13 +738,18 @@ async function geocodeSites(tx: TransactionSql, sql: Sql, options: FrOptions, lo
 		}
 	}
 	const applied = await applySiteLocations(tx, locations);
+	const labelled = await applySiteLabels(tx, labels);
 	return {
-		candidates: candidates.length,
+		candidates: candidates.filter((site) => !site.located).length,
+		labelCandidates: candidates.length,
 		cacheHits: keys.filter((key) => cache.has(key)).length - requested,
 		requested,
 		pending: options.skipGeocoding || options.dryRun ? misses.length : 0,
 		rejected,
 		...applied,
+		// Sites whose street line is the BAN's, and how many changed in this run.
+		labels: { shown, updated: labelled.length },
+		labelledIds: labelled,
 	};
 }
 
@@ -733,6 +777,7 @@ function summarizeChanges(merge: Record<string, unknown>) {
 		searchDocs: get("readModels.search.written") + get("readModels.search.deleted"),
 		ameli: get("ameli.updated") + get("ameli.cleared"),
 		geocoded: get("geocoding.geocoded") + get("geocoding.centroid"),
+		labels: get("geocoding.labels.updated"),
 	};
 	return { ...changes, total: Object.values(changes).reduce((sum, value) => sum + value, 0) };
 }

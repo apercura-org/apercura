@@ -1,4 +1,5 @@
 import { getTranslations } from "next-intl/server";
+import { capitalisesNouns } from "~/i18n/locales";
 import type { Locale } from "~/i18n/routing";
 import type { PractitionerLink } from "~/server/queries/types";
 
@@ -44,8 +45,16 @@ export async function getTaxonomyLabels(locale: Locale) {
 
 export type TaxonomyLabels = Awaited<ReturnType<typeof getTaxonomyLabels>>;
 
-/** Lowercases a label for use inside a sentence, keeping acronyms ("ORL"). */
-export function inSentence(label: string): string {
+/**
+ * A profession or specialty label as written inside a sentence of `locale`:
+ * German keeps the capital of its nouns ("Kardiologin"); French, Spanish,
+ * Italian and English lowercase the first letter ("cardiologue",
+ * "cardiologist"). Acronyms keep their capitals ("ORL", "ENT specialist").
+ */
+export function inSentence(label: string, locale: Locale): string {
+	if (capitalisesNouns(locale)) return label;
 	const [first = "", second = ""] = label;
-	return second && second === second.toLowerCase() ? first.toLowerCase() + label.slice(1) : label;
+	return second && second === second.toLocaleLowerCase(locale)
+		? first.toLocaleLowerCase(locale) + label.slice(first.length)
+		: label;
 }

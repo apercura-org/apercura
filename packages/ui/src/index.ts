@@ -108,6 +108,12 @@ export {
 	type WeekGridTone,
 } from "./domain/week-grid";
 export * from "./icons";
+export {
+	MAP_STRING_KEYS,
+	type MapStringKey,
+	type MapStrings,
+	mapLibreLocale,
+} from "./map/map-strings";
 export { DEFAULT_MAP_STYLE_URL, themeMapStyle } from "./map/map-style";
 export { MapView, type MapViewProps } from "./map/map-view";
 export {

@@ -21,6 +21,7 @@ import { createTranslator } from "next-intl";
 import { messagesFor } from "~/i18n/catalogs";
 import type { Locale } from "~/i18n/locales";
 import { hashOpaqueToken, newOpaqueToken } from "~/server/phi";
+import { siteAddressLine } from "~/server/queries/site-address";
 import { findCalendar } from "./availability";
 import { BookingError, isUniqueViolation } from "./errors";
 import { agendaRequirements } from "./gate";
@@ -490,7 +491,7 @@ export async function agendaOverview(
 		.select({
 			siteId: sites.id,
 			name: sql<string | null>`coalesce(${sites.name}, ${sites.finessName})`,
-			addressLine: sites.addressLine,
+			addressLine: siteAddressLine,
 			postcode: sites.postcode,
 			placeName: places.name,
 			departmentCode: places.departmentCode,

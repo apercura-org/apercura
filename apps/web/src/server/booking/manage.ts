@@ -8,6 +8,7 @@ import {
 import { appointments, calendars, practitioners, sites } from "@apercura/db/schema";
 import { and, eq, isNull } from "drizzle-orm";
 import { hashOpaqueToken, readAppointmentPatients } from "~/server/phi";
+import { siteAddressLine } from "~/server/queries/site-address";
 import {
 	findCalendar,
 	findType,
@@ -81,7 +82,7 @@ export async function getManaged(rt: BookingRuntime, token: string) {
 			lastName: practitioners.lastName,
 			slug: practitioners.slug,
 			siteName: sites.name,
-			addressLine: sites.addressLine,
+			addressLine: siteAddressLine,
 			postcode: sites.postcode,
 			communeLabel: sites.communeLabel,
 			phone: sites.phone,

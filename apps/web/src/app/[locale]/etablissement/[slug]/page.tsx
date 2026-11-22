@@ -21,6 +21,7 @@ import { clientEnv } from "~/env";
 import { Link, permanentRedirect } from "~/i18n/navigation";
 import { type Locale, routing } from "~/i18n/routing";
 import { getTaxonomyLabels } from "~/lib/labels";
+import { getMapStrings } from "~/lib/map-strings";
 import { addressLines } from "~/lib/practitioner-view";
 import {
 	CONTENT_LANGUAGES,
@@ -99,6 +100,7 @@ export default async function EstablishmentPage({ params }: Props) {
 	const tP = await getTranslations({ locale, namespace: "Practitioner" });
 	const tSite = await getTranslations({ locale, namespace: "Site" });
 	const labels = await getTaxonomyLabels(locale);
+	const mapStrings = await getMapStrings(locale);
 	const empty = tP("notProvided");
 	const lines = addressLines(page);
 	const precise = page.geoPrecision === "address" || page.geoPrecision === "street";
@@ -218,6 +220,7 @@ export default async function EstablishmentPage({ params }: Props) {
 								styleUrl={clientEnv.NEXT_PUBLIC_MAP_STYLE_URL}
 								label={tP("mapLabel", { place: page.name })}
 								markerLabel={tP("mapPin", { place: page.name })}
+								strings={mapStrings}
 								fallback={<p className="bg-paper/90 p-2 text-meta text-ink">{lines.join(", ")}</p>}
 							/>
 						) : null}

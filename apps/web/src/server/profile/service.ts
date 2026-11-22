@@ -82,7 +82,8 @@ export async function editorData(db: Database, practitionerId: number) {
 		.where(eq(practitionerProfiles.practitionerId, practitionerId));
 	const siteRows = await db.$client<EditorSite[]>`
 		SELECT a.id AS "activityId", a.source, a.practice_kind AS "practiceKind", a.hidden,
-			s.id AS "siteId", coalesce(s.name, s.finess_name) AS name, s.address_line AS "addressLine",
+			s.id AS "siteId", coalesce(s.name, s.finess_name) AS name,
+			coalesce(s.geo_address_line, s.address_line) AS "addressLine",
 			s.postcode, pl.name AS "placeName", s.phone
 		FROM directory.activities a
 		JOIN directory.sites s ON s.id = a.site_id AND s.removed_at IS NULL

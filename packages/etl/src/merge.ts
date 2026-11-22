@@ -5,7 +5,7 @@
  * Only import-owned columns are written. Every write is guarded by a row hash
  * (`IS DISTINCT FROM`), so a second run over the same files changes nothing.
  */
-import { buildAccentDictionary, formatStreetText } from "@apercura/core";
+import { buildAccentDictionary, formatStreetText, restoreOwnNameAccents } from "@apercura/core";
 import {
 	FR_AMELI_SPECIALTY_SLUGS,
 	FR_PROFESSIONS,
@@ -175,6 +175,53 @@ export async function restoreSiteNameAccents(tx: TransactionSql): Promise<{ rest
 	return { restored: updates.length };
 }
 
+/**
+ * Restores the accents of the practitioners' own names in the staged site
+ * names: the registry often writes the structure name without them ("Cabinet
+ * du Dr Helene Aelion") on the very rows that give the practitioner's names
+ * with them ("Hélène"). Only the names of the practitioners of that structure
+ * count (`restoreOwnNameAccents`), so the change stays local to its rows. Runs
+ * on `run_sites`, after {@link restoreSiteNameAccents}.
+ */
+export async function restoreOwnNameAccentsInSites(
+	tx: TransactionSql,
+): Promise<{ restored: number }> {
+	// Sites whose name holds, without its accents, an accented word of one of their practitioners' names.
+	const sites = await tx<{ structure_id: string; site_name: string; names: string[] }[]>`
+		WITH site_keys AS (
+			SELECT structure_id, site_name, ' ' || directory.match_key(site_name) || ' ' AS name_key
+			FROM run_sites
+			WHERE site_name IS NOT NULL
+		),
+		words AS (
+			SELECT DISTINCT a.structure_id, w.word
+			FROM directory.stg_ans_activities a
+			CROSS JOIN LATERAL regexp_split_to_table(
+				concat_ws(' ', a.first_name, a.last_name), '[[:space:]''’-]+'
+			) AS w (word)
+			WHERE a.structure_id IS NOT NULL
+		)
+		SELECT sk.structure_id, sk.site_name, array_agg(w.word) AS names
+		FROM site_keys sk
+		JOIN words w ON w.structure_id = sk.structure_id
+		GROUP BY sk.structure_id, sk.site_name, sk.name_key
+		HAVING bool_or(w.word ~ '[^ -~]' AND char_length(w.word) >= 3
+			AND position(' ' || directory.match_key(w.word) || ' ' IN sk.name_key) > 0)
+	`;
+	const updates = sites.flatMap((site) => {
+		const name = restoreOwnNameAccents(site.site_name, site.names);
+		return name !== site.site_name ? [{ structure_id: site.structure_id, site_name: name }] : [];
+	});
+	if (updates.length === 0) return { restored: 0 };
+	await tx`
+		UPDATE run_sites rs SET site_name = u.site_name
+		FROM jsonb_to_recordset(${JSON.stringify(updates)}::text::jsonb)
+			AS u (structure_id text, site_name text)
+		WHERE u.structure_id = rs.structure_id
+	`;
+	return { restored: updates.length };
+}
+
 /** Practitioners in scope: optional department filter, suppressions always excluded. */
 export async function stageScope(tx: TransactionSql, ctx: MergeContext) {
 	await tx`
@@ -248,6 +295,11 @@ export async function mergeSites(tx: TransactionSql) {
 				AND s.geo_source IS DISTINCT FROM 'finess' THEN NULL ELSE s.geo_precision END,
 			geo_source = CASE WHEN s.address_hash IS DISTINCT FROM excluded.address_hash
 				AND s.geo_source IS DISTINCT FROM 'finess' THEN NULL ELSE s.geo_source END,
+			-- A new address is labelled again by the geocoding step.
+			geo_label = CASE WHEN s.address_hash IS DISTINCT FROM excluded.address_hash
+				THEN NULL ELSE s.geo_label END,
+			geo_address_line = CASE WHEN s.address_hash IS DISTINCT FROM excluded.address_hash
+				THEN NULL ELSE s.geo_address_line END,
 			address_hash = excluded.address_hash,
 			phone = excluded.phone,
 			phone2 = excluded.phone2,
@@ -605,13 +657,24 @@ export type GeocodeCandidate = {
 	/** Codes a geocoder result may land in (the place, its arrondissements, or the postcode's communes). */
 	allowedCodes: string[];
 	hasCentroid: boolean;
+	/** Has coordinates already: only its label is refreshed. */
+	located: boolean;
+	geoLabel: string | null;
+	geoAddressLine: string | null;
 };
 
-/** Sites without coordinates (new or moved, and not located by FINESS). */
+/**
+ * Every registry site in the directory: those without coordinates (new or
+ * moved, and not located by FINESS) to locate, and all of them to label with
+ * the geocoder's street name (see `siteLabel`).
+ */
 export async function sitesToGeocode(tx: TransactionSql): Promise<GeocodeCandidate[]> {
 	return tx<GeocodeCandidate[]>`
 		SELECT s.id, s.address_line AS "addressLine", s.postcode, p.code AS "placeCode",
+			(s.location IS NOT NULL) AS located, s.geo_label AS "geoLabel",
+			s.geo_address_line AS "geoAddressLine",
 			CASE
+				WHEN s.location IS NOT NULL THEN '{}'
 				WHEN p.id IS NOT NULL THEN
 					ARRAY[p.code] || coalesce((SELECT array_agg(c.code) FROM directory.places c
 						WHERE c.parent_id = p.id AND c.kind = 'arrondissement'), '{}')
@@ -623,9 +686,35 @@ export async function sitesToGeocode(tx: TransactionSql): Promise<GeocodeCandida
 			(p.centroid IS NOT NULL) AS "hasCentroid"
 		FROM directory.sites s
 		LEFT JOIN directory.places p ON p.id = s.place_id
-		WHERE s.source = 'ans' AND s.removed_at IS NULL AND s.location IS NULL
+		WHERE s.source = 'ans' AND s.removed_at IS NULL
 		ORDER BY s.id
 	`;
+}
+
+export type SiteLabelUpdate = {
+	id: number;
+	geoLabel: string | null;
+	geoAddressLine: string | null;
+};
+
+/** Writes the geocoder labels of sites, set-based; returns the sites that changed. */
+export async function applySiteLabels(tx: TransactionSql, labels: SiteLabelUpdate[]) {
+	if (labels.length === 0) return [];
+	const rows = await tx<{ id: number }[]>`
+		UPDATE directory.sites s SET
+			geo_label = l.geo_label,
+			geo_address_line = l.geo_address_line,
+			updated_at = now()
+		FROM unnest(
+			${labels.map((l) => l.id)}::integer[],
+			${labels.map((l) => l.geoLabel)}::text[],
+			${labels.map((l) => l.geoAddressLine)}::text[]
+		) AS l (id, geo_label, geo_address_line)
+		WHERE s.id = l.id AND (s.geo_label IS DISTINCT FROM l.geo_label
+			OR s.geo_address_line IS DISTINCT FROM l.geo_address_line)
+		RETURNING s.id
+	`;
+	return rows.map((row) => row.id);
 }
 
 export type SiteLocation = {

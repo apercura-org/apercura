@@ -378,6 +378,135 @@ export function formatStreetText(
 		.replace(/^([LD]) (?=\p{L})/u, "$1’");
 }
 
+const withoutAccents = (value: string) => value.normalize("NFD").replace(/\p{Mark}/gu, "");
+
+/**
+ * Gives back the accents of a practitioner's own names in a place label of
+ * the same registry rows: the registry often writes the structure name without
+ * them ("Cabinet du Dr Helene Aelion") while the practitioner's first and last
+ * names have them ("Hélène"). A word of the label written without any accent
+ * that equals one of these names accent- and case-insensitively takes its
+ * accented letters, keeping its own case. Only names of three letters or more
+ * count, and a word two of the names would spell differently ("Helene" and
+ * "Hélène" in the same practice) is left as it is. Idempotent.
+ */
+export function restoreOwnNameAccents(label: string, names: Iterable<string>): string {
+	const forms = new Map<string, Set<string>>();
+	for (const name of names) {
+		for (const word of name.split(/[\s'’-]+/)) {
+			if (Array.from(word).length < 3 || !/^\p{L}+$/u.test(word)) continue;
+			const lower = word.normalize("NFC").toLocaleLowerCase("fr");
+			const key = withoutAccents(lower);
+			const set = forms.get(key) ?? new Set<string>();
+			set.add(lower);
+			forms.set(key, set);
+		}
+	}
+	if (forms.size === 0) return label;
+	return label
+		.split(/([\s'’-]+)/)
+		.map((part) => {
+			if (!/^\p{L}+$/u.test(part) || withoutAccents(part) !== part) return part;
+			const candidates = forms.get(part.toLocaleLowerCase("fr"));
+			if (candidates?.size !== 1) return part;
+			const [accented = ""] = candidates;
+			const letters = Array.from(accented);
+			const own = Array.from(part);
+			if (letters.length !== own.length || accented === part.toLocaleLowerCase("fr")) return part;
+			return own
+				.map((letter, index) => {
+					const target = letters[index] ?? letter;
+					return letter === letter.toLocaleUpperCase("fr")
+						? target.toLocaleUpperCase("fr")
+						: target;
+				})
+				.join("");
+		})
+		.join("");
+}
+
+/**
+ * Abbreviations of street names, expanded only to compare a registry street
+ * with the geocoder's ("Rue St Honore" names "Rue Saint-Honoré").
+ */
+const STREET_ABBREVIATIONS: Readonly<Record<string, string>> = {
+	ST: "SAINT",
+	STE: "SAINTE",
+	STS: "SAINTS",
+	GAL: "GENERAL",
+	GEN: "GENERAL",
+	MAL: "MARECHAL",
+	PDT: "PRESIDENT",
+	PRES: "PRESIDENT",
+	DR: "DOCTEUR",
+	PR: "PROFESSEUR",
+	PROF: "PROFESSEUR",
+	CDT: "COMMANDANT",
+	CPT: "CAPITAINE",
+	LT: "LIEUTENANT",
+	AV: "AVENUE",
+	AVE: "AVENUE",
+	BD: "BOULEVARD",
+	BLD: "BOULEVARD",
+	BVD: "BOULEVARD",
+	PL: "PLACE",
+	FBG: "FAUBOURG",
+	FG: "FAUBOURG",
+	CHE: "CHEMIN",
+	CHEM: "CHEMIN",
+	RTE: "ROUTE",
+	IMP: "IMPASSE",
+	ALL: "ALLEE",
+	CRS: "COURS",
+	QU: "QUAI",
+	SQ: "SQUARE",
+	PASS: "PASSAGE",
+	RES: "RESIDENCE",
+	GD: "GRAND",
+	GDE: "GRANDE",
+	MGR: "MONSEIGNEUR",
+	ND: "NOTRE DAME",
+	ZA: "ZONE ARTISANALE",
+	ZI: "ZONE INDUSTRIELLE",
+	ZAC: "ZONE D AMENAGEMENT CONCERTE",
+};
+
+/** Comparison key of a street name: uppercase ASCII words, abbreviations expanded. */
+function streetKey(value: string): string {
+	return nameMatchKey(value)
+		.split(" ")
+		.map((word) => STREET_ABBREVIATIONS[word] ?? word)
+		.join(" ");
+}
+
+/** A leading house number with its repetition index ("24", "24 bis", "3 B", "12-14"). */
+const isNumberToken = (token: string) =>
+	/^\d[\d/-]*[a-z]?$/i.test(token) || /^(bis|ter|quater|quinquies|[a-z])$/i.test(token);
+
+/**
+ * The registry street line with the street name as the national address base
+ * (BAN) writes it ("34 Avenue du General Sarrail" + "Avenue du Général
+ * Sarrail" -> "34 Avenue du Général Sarrail"): the registry's house number and
+ * repetition index are kept, only the street changes. Null when the BAN street
+ * does not name the same street (same words once accents, case, hyphens and
+ * common abbreviations are ignored), so a doubtful match never replaces the
+ * registry text.
+ */
+export function banStreetLine(addressLine: string, banStreet: string | null): string | null {
+	const street = banStreet?.trim().replace(/\s+/g, " ") ?? "";
+	if (street === "" || !/\p{L}/u.test(street)) return null;
+	const tokens = addressLine.trim().split(/\s+/);
+	const target = streetKey(street);
+	for (let start = 0; start < tokens.length; start++) {
+		const prefix = tokens.slice(0, start);
+		if (!prefix.every(isNumberToken)) break;
+		if (streetKey(tokens.slice(start).join(" ")) === target) {
+			return [...prefix, street].join(" ");
+		}
+	}
+	return null;
+}
+
 export type StreetParts = {
 	number?: string | null;
 	repetition?: string | null;

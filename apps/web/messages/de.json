@@ -265,6 +265,20 @@
 		},
 		"specimen": "Beispiel, keine echte Gesundheitsfachkraft"
 	},
+	"Map": {
+		"map": "Karte",
+		"marker": "Kartenmarkierung",
+		"zoomIn": "Vergrößern",
+		"zoomOut": "Verkleinern",
+		"resetBearing": "Ziehen Sie, um die Karte zu drehen; klicken Sie, um sie nach Norden auszurichten",
+		"toggleAttribution": "Quellenangaben der Karte ein- oder ausblenden",
+		"mapFeedback": "Problem mit der Karte melden",
+		"logo": "MapLibre-Logo",
+		"closePopup": "Pop-up schließen",
+		"scrollZoomWindows": "Verwenden Sie Strg + Scrollen, um die Karte zu zoomen",
+		"scrollZoomMac": "Verwenden Sie ⌘ + Scrollen, um die Karte zu zoomen",
+		"twoFingers": "Verwenden Sie zwei Finger, um die Karte zu bewegen"
+	},
 	"Gallery": {
 		"title": "Komponentengalerie",
 		"intro": "Alle Komponenten des Broschüren-Systems in allen Zuständen. Nur für die Entwicklung: Diese Seite liefert in der Produktion 404. Alle Personen, Nummern und Orte darauf sind fiktiv.",
@@ -510,7 +524,7 @@
 			"removalLink": "Sie sind diese Gesundheitsfachkraft und widersprechen dieser Seite?"
 		},
 		"ring": {
-			"heading": "Weitere Gesundheitsfachkräfte: {listing} in {place}"
+			"heading": "Weitere Gesundheitsfachkräfte: {occupation} in {place}"
 		},
 		"photoAlt": "Foto von {name}",
 		"withheld": {
@@ -940,7 +954,7 @@
 		"communesHeading": "{listing}: Gemeinden von {place}",
 		"nearbyHeading": "{listing}: Gemeinden in der Nähe",
 		"establishmentsHeading": "Einrichtungen in {place}",
-		"establishmentsIntro": "Krankenhäuser, Kliniken und Gesundheitszentren, in denen als {listing} geführte Gesundheitsfachkräfte arbeiten.",
+		"establishmentsIntro": "Krankenhäuser, Kliniken und Gesundheitszentren, in denen als {occupation} geführte Gesundheitsfachkräfte arbeiten.",
 		"allSpecialties": "Alle Fachgebiete in {place}",
 		"hubMetaTitle": "{count, plural, one {{listing} in Frankreich: # Gesundheitsfachkraft · Apercura} other {{listing} in Frankreich: # Gesundheitsfachkräfte · Apercura}}",
 		"hubMetaDescription": "{count, plural, one {# als {occupation} im nationalen Register geführte Gesundheitsfachkraft, nach Département: Adressen, Kontaktdaten, Tarifsektoren.} other {# als {occupation} im nationalen Register geführte Gesundheitsfachkräfte, nach Département: Adressen, Kontaktdaten, Tarifsektoren.}}",

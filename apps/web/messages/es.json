@@ -265,6 +265,20 @@
 		},
 		"specimen": "Ejemplo, no es un profesional sanitario real"
 	},
+	"Map": {
+		"map": "Mapa",
+		"marker": "Marcador del mapa",
+		"zoomIn": "Acercar",
+		"zoomOut": "Alejar",
+		"resetBearing": "Arrastre para girar el mapa; haga clic para orientarlo al norte",
+		"toggleAttribution": "Mostrar u ocultar los créditos del mapa",
+		"mapFeedback": "Informar de un problema en el mapa",
+		"logo": "Logotipo de MapLibre",
+		"closePopup": "Cerrar la ventana",
+		"scrollZoomWindows": "Use Ctrl + rueda del ratón para ampliar el mapa",
+		"scrollZoomMac": "Use ⌘ + desplazamiento para ampliar el mapa",
+		"twoFingers": "Use dos dedos para mover el mapa"
+	},
 	"Gallery": {
 		"title": "Galería de componentes",
 		"intro": "Todos los componentes del sistema del folleto, en todos sus estados. Solo para desarrollo: esta página devuelve 404 en producción. Todas las personas, números y lugares que aparecen en ella son ficticios.",
@@ -510,7 +524,7 @@
 			"removalLink": "¿Es usted este profesional sanitario y se opone a esta página?"
 		},
 		"ring": {
-			"heading": "Otros profesionales sanitarios: {listing} en {place}"
+			"heading": "Otros profesionales sanitarios: {occupation} en {place}"
 		},
 		"photoAlt": "Foto de {name}",
 		"withheld": {
@@ -940,7 +954,7 @@
 		"communesHeading": "{listing}: municipios de {place}",
 		"nearbyHeading": "{listing}: municipios cercanos",
 		"establishmentsHeading": "Centros en {place}",
-		"establishmentsIntro": "Hospitales, clínicas y centros de salud donde trabajan los profesionales sanitarios que figuran como {listing}.",
+		"establishmentsIntro": "Hospitales, clínicas y centros de salud donde trabajan los profesionales sanitarios que figuran como {occupation}.",
 		"allSpecialties": "Todas las especialidades en {place}",
 		"hubMetaTitle": "{count, plural, one {{listing} en Francia: # profesional sanitario · Apercura} many {{listing} en Francia: # de profesionales sanitarios · Apercura} other {{listing} en Francia: # profesionales sanitarios · Apercura}}",
 		"hubMetaDescription": "{count, plural, one {# profesional sanitario registrado como {occupation} en el registro nacional, por departamento: direcciones, datos de contacto, sectores de tarifas.} many {# de profesionales sanitarios registrados como {occupation} en el registro nacional, por departamento: direcciones, datos de contacto, sectores de tarifas.} other {# profesionales sanitarios registrados como {occupation} en el registro nacional, por departamento: direcciones, datos de contacto, sectores de tarifas.}}",

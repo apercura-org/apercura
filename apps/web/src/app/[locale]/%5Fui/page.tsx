@@ -20,6 +20,7 @@ import { ClientIsland } from "~/components/client-island";
 import { SiteHeader } from "~/components/site-header";
 import { clientEnv } from "~/env";
 import { routing } from "~/i18n/routing";
+import { getMapStrings } from "~/lib/map-strings";
 import { TRPCReactProvider } from "~/trpc/client";
 import { BookletSample } from "./booklet-sample";
 import { SAMPLE_PRACTITIONERS, SAMPLE_SITE, SAMPLE_UPDATED_AT } from "./fixtures";
@@ -71,6 +72,7 @@ export default async function GalleryPage({ params }: PageProps<"/[locale]/_ui">
 	const tPage = await getTranslations({ locale, namespace: "Practitioner" });
 	const tSite = await getTranslations({ locale, namespace: "Site" });
 	const tSearch = await getTranslations({ locale, namespace: "Search" });
+	const mapStrings = await getMapStrings(locale);
 	const empty = tPage("notProvided");
 	const providers = {
 		openStreetMap: tPage("providers.openStreetMap"),
@@ -250,6 +252,7 @@ export default async function GalleryPage({ params }: PageProps<"/[locale]/_ui">
 										styleUrl={clientEnv.NEXT_PUBLIC_MAP_STYLE_URL}
 										label={tPage("mapLabel", { place: SAMPLE_SITE.name })}
 										markerLabel={tPage("mapPin", { place: SAMPLE_SITE.name })}
+										strings={mapStrings}
 										fallback={
 											<p className="bg-paper/90 p-2 text-meta text-ink">
 												{SAMPLE_SITE.address.join(", ")}

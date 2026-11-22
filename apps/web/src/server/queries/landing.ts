@@ -86,7 +86,8 @@ export async function getLandingPage(scope: LandingScope): Promise<LandingPage |
 				WITH members AS (
 					SELECT DISTINCT ON (p.id) p.id, p.slug, p.title_code, p.civility_code, p.first_name,
 						p.last_name, p.listing_slug, p.billing_sector, p.optam, p.carte_vitale,
-						a.practice_kind, s.name AS site_name, s.address_line, s.postcode, pl.name AS place_name
+						a.practice_kind, s.name AS site_name,
+						coalesce(s.geo_address_line, s.address_line) AS address_line, s.postcode, pl.name AS place_name
 					FROM directory.practitioners p
 					JOIN directory.activities a ON a.practitioner_id = p.id AND a.removed_at IS NULL
 						AND NOT a.hidden AND a.practice_kind IN ('office', 'health_center', 'hospital')

@@ -14,6 +14,7 @@ import {
 	readAppointmentPatients,
 	revealOtpCode,
 } from "~/server/phi";
+import { siteAddressLine } from "~/server/queries/site-address";
 import {
 	agendaUrl,
 	appOrigin,
@@ -118,7 +119,7 @@ async function loadPlace(
 			lastName: practitioners.lastName,
 			slug: practitioners.slug,
 			siteName: sites.name,
-			addressLine: sites.addressLine,
+			addressLine: siteAddressLine,
 			postcode: sites.postcode,
 			communeLabel: sites.communeLabel,
 		})
