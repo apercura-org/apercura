@@ -276,9 +276,8 @@ export function TodayView({
 					<SkeletonText lines={4} label={t("day.heading")} />
 				) : dayQuery.isError ? (
 					<Notice tone="error">{tCommon("loadFailed")}</Notice>
-				) : day.length === 0 ? (
-					<p className="text-body text-ink">{t("day.empty")}</p>
-				) : (
+				) : day.length === 0 ? null : (
+					// An empty day is said once, under "Next patient".
 					<div className="overflow-x-auto">
 						<table className={table.table()}>
 							<thead className={table.head()}>

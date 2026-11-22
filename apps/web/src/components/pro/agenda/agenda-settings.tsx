@@ -36,6 +36,8 @@ type Calendar = Overview["calendars"][number];
 type AppointmentType = Calendar["types"][number];
 
 const WEEKDAYS = [1, 2, 3, 4, 5, 6, 7] as const;
+/** Long labels wrap on phones: give the stamp's lines room inside its inner frame. */
+const GATE_BUTTON = "h-auto py-3 text-start leading-snug whitespace-normal";
 const WORKDAYS = [1, 2, 3, 4, 5] as const;
 
 function Section({
@@ -122,7 +124,10 @@ export function AgendaSettings({ organizationId }: { organizationId: string }) {
 
 	return (
 		<div className="grid gap-8 lg:grid-cols-[14rem_minmax(0,1fr)] lg:gap-12">
-			<nav aria-labelledby="settings-index" className="lg:sticky lg:top-6 lg:self-start">
+			<nav
+				aria-labelledby="settings-index"
+				className="border-t-2 border-ink pt-6 lg:sticky lg:top-6 lg:self-start"
+			>
 				<h2 id="settings-index" className="caps pb-2 text-ink">
 					{t("index")}
 				</h2>
@@ -403,7 +408,11 @@ function Gate({
 			) : null}
 			<div className="flex flex-wrap gap-3">
 				{status === "open" ? (
-					<Button isPending={setStatus.isPending} onPress={() => change("paused")}>
+					<Button
+						isPending={setStatus.isPending}
+						onPress={() => change("paused")}
+						className={GATE_BUTTON}
+					>
 						{t("pause")}
 					</Button>
 				) : (
@@ -411,12 +420,14 @@ function Gate({
 						isDisabled={missing.length > 0}
 						isPending={setStatus.isPending}
 						onPress={() => change("open")}
+						className={GATE_BUTTON}
 					>
 						{t("open")}
 					</Button>
 				)}
 			</div>
-			<ActionStatus result={result} />
+			{/* Space only while a message shows: nothing below it can jump. */}
+			<ActionStatus result={result} className="min-h-0" />
 		</section>
 	);
 }
@@ -762,9 +773,9 @@ function RulesEditor({
 					{t("templateDays")}
 				</Button>
 			</div>
-			<div className="overflow-x-auto">
-				<table className="w-full border-collapse border-y-2 border-ink text-left text-body">
-					<thead className="border-b-[1.5px] border-ink">
+			<div>
+				<table className="block w-full border-collapse border-y-2 border-ink text-left text-body sm:table">
+					<thead className="hidden border-b-[1.5px] border-ink sm:table-header-group">
 						<tr>
 							<th scope="col" className="caps py-2.5 pe-3 text-left text-ink">
 								{t("columns.day")}
@@ -785,98 +796,110 @@ function RulesEditor({
 						const day = dayName(weekday);
 						const inText = dayInText(weekday);
 						const invalid = invalidDay(weekday);
+						// Below 640 px each day stacks: its name, its ranges, then these actions on a row.
+						const actions = (
+							<>
+								<Button
+									intent="quiet"
+									className="-ms-2 whitespace-nowrap"
+									aria-label={t("addFor", { day: inText })}
+									onPress={() =>
+										setDays((current) => {
+											const existing = current[weekday] ?? [];
+											const lastEnd = minutesOfTime(existing.at(-1)?.to ?? null);
+											const from = lastEnd !== null ? Math.min(lastEnd + 60, 22 * 60) : 9 * 60;
+											return {
+												...current,
+												[weekday]: [
+													...existing,
+													{
+														key: nextKey(),
+														from: parseTime(hhmm(from)),
+														to: parseTime(hhmm(Math.min(from + 180, 23 * 60 + 30))),
+														typeIds: [],
+														validFrom: null,
+														validUntil: null,
+													},
+												],
+											};
+										})
+									}
+								>
+									{t("add")}
+								</Button>
+								{(WORKDAYS as readonly number[]).includes(weekday) && ranges.length > 0 ? (
+									<Button
+										intent="quiet"
+										className="-ms-2 whitespace-nowrap text-start"
+										aria-label={t("copyFor", { day: inText })}
+										onPress={() => copyToWorkdays(weekday)}
+									>
+										{t("copy")}
+									</Button>
+								) : null}
+							</>
+						);
 						const dayHeader = (
 							<th
 								scope="rowgroup"
 								rowSpan={Math.max(ranges.length, 1)}
-								className="py-3 pe-3 align-top text-left font-normal"
+								className="block w-full pt-3 pe-3 text-left align-top font-normal sm:table-cell sm:w-auto sm:py-3"
 							>
 								<span className="flex flex-col items-start gap-1">
-									<span className="font-display text-body font-bold text-ink">{day}</span>
-									<Button
-										intent="quiet"
-										className="-ms-2"
-										aria-label={t("addFor", { day: inText })}
-										onPress={() =>
-											setDays((current) => {
-												const existing = current[weekday] ?? [];
-												const lastEnd = minutesOfTime(existing.at(-1)?.to ?? null);
-												const from = lastEnd !== null ? Math.min(lastEnd + 60, 22 * 60) : 9 * 60;
-												return {
-													...current,
-													[weekday]: [
-														...existing,
-														{
-															key: nextKey(),
-															from: parseTime(hhmm(from)),
-															to: parseTime(hhmm(Math.min(from + 180, 23 * 60 + 30))),
-															typeIds: [],
-															validFrom: null,
-															validUntil: null,
-														},
-													],
-												};
-											})
-										}
-									>
-										{t("add")}
-									</Button>
-									{(WORKDAYS as readonly number[]).includes(weekday) && ranges.length > 0 ? (
-										<Button
-											intent="quiet"
-											className="-ms-2 text-start"
-											aria-label={t("copyFor", { day: inText })}
-											onPress={() => copyToWorkdays(weekday)}
-										>
-											{t("copy")}
-										</Button>
-									) : null}
+									<span className="font-display text-body font-bold whitespace-nowrap text-ink">
+										{day}
+									</span>
+									<span className="hidden flex-col items-start gap-1 sm:flex">{actions}</span>
 								</span>
 							</th>
 						);
+						const timeLabel = (index: number, edge: string) => (
+							<span className="sm:sr-only">
+								<span className="sr-only">{t("rangeLabel", { day, n: index + 1 })}, </span>
+								{edge}
+							</span>
+						);
 						return (
-							<tbody key={weekday} className="border-b border-rule-soft last:border-b-0">
+							<tbody
+								key={weekday}
+								className="block border-b border-rule-soft pb-2 last:border-b-0 sm:table-row-group sm:pb-0"
+							>
 								{ranges.length === 0 ? (
-									<tr>
+									<tr className="flex flex-wrap items-end gap-x-3 sm:table-row">
 										{dayHeader}
-										<td colSpan={2} className="px-3 py-3 align-top text-meta text-ink-muted">
+										<td
+											colSpan={2}
+											className="block py-1 text-meta text-ink-muted sm:table-cell sm:px-3 sm:py-3 sm:align-top"
+										>
 											{t("closed")}
 										</td>
-										<td />
+										<td className="hidden sm:table-cell" />
 									</tr>
 								) : (
 									ranges.map((range, index) => (
-										<tr key={range.key}>
+										<tr key={range.key} className="flex flex-wrap items-end gap-x-3 sm:table-row">
 											{index === 0 ? dayHeader : null}
-											<td className="px-3 py-2 align-top">
+											<td className="block py-1 sm:table-cell sm:px-3 sm:py-2 sm:align-top">
 												<TimeField
-													label={
-														<span className="sr-only">
-															{t("rangeLabel", { day, n: index + 1 })}, {t("from")}
-														</span>
-													}
+													label={timeLabel(index, t("from"))}
 													value={range.from}
 													onChange={(value) => setRange(weekday, range.key, { from: value })}
 													hourCycle={24}
 													isInvalid={invalid}
-													className="w-36"
+													className="w-32 sm:w-36"
 												/>
 											</td>
-											<td className="px-3 py-2 align-top">
+											<td className="block py-1 sm:table-cell sm:px-3 sm:py-2 sm:align-top">
 												<TimeField
-													label={
-														<span className="sr-only">
-															{t("rangeLabel", { day, n: index + 1 })}, {t("to")}
-														</span>
-													}
+													label={timeLabel(index, t("to"))}
 													value={range.to}
 													onChange={(value) => setRange(weekday, range.key, { to: value })}
 													hourCycle={24}
 													isInvalid={invalid}
-													className="w-36"
+													className="w-32 sm:w-36"
 												/>
 											</td>
-											<td className="py-2 ps-3 align-top">
+											<td className="block py-1 sm:table-cell sm:py-2 sm:ps-3 sm:align-top">
 												<Button
 													intent="quiet"
 													aria-label={t("removeRange", {
@@ -899,6 +922,9 @@ function RulesEditor({
 										</tr>
 									))
 								)}
+								<tr className="flex flex-wrap gap-x-3 sm:hidden">
+									<td className="flex flex-wrap gap-x-3">{actions}</td>
+								</tr>
 							</tbody>
 						);
 					})}

@@ -89,6 +89,7 @@ async function shoot(page: Page, name: string, reopen?: () => Promise<void>) {
 			await page.waitForLoadState("networkidle");
 			await reopen?.();
 		}
+		if (!reopen) await page.evaluate(() => window.scrollTo(0, 0));
 		await page.waitForTimeout(400);
 		await page.screenshot({ path: join(dir, `${name}-${label}.png`), fullPage: !reopen });
 	}
@@ -177,6 +178,21 @@ test("the owner sets up a place from presets and weekly hours, then opens the ag
 		page.getByText("La prise de rendez-vous en ligne est ouverte. Les patients peuvent réserver"),
 	).toBeVisible();
 	await expectNoAxeViolations(page);
+	// The section index starts level with the first section.
+	await page.evaluate(() => window.scrollTo(0, 0));
+	const indexBox = await page.getByRole("navigation", { name: "Sur cette page" }).boundingBox();
+	const placesBox = await page.locator('section[aria-labelledby="settings-places"]').boundingBox();
+	expect(Math.abs((indexBox?.y ?? 0) - (placesBox?.y ?? 999))).toBeLessThan(4);
+	// Nothing scrolls sideways on a phone (WCAG 1.4.10), weekly hours included.
+	await page.setViewportSize({ width: 390, height: 844 });
+	await page.reload();
+	await expect(
+		page.getByRole("heading", { level: 2, name: "Horaires de la semaine" }),
+	).toBeVisible();
+	expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);
+	await expect(page.getByRole("button", { name: "Ajouter une plage le samedi" })).toBeVisible();
+	await page.setViewportSize({ width: 1280, height: 720 });
+	await page.reload();
 	await shoot(page, "settings");
 
 	// Revoking the feed stops the old link at once.
@@ -206,6 +222,23 @@ test("a patient's request shows on Today; the owner accepts it, finds it in the 
 	await bookThroughPanel(patientPage, { slug: PRACTITIONER.slug, who, reason: "Consultation" });
 	await waitForEmail(patientPage.request, who.email, /Demande de rendez-vous/);
 	await patientContext.close();
+
+	// The request is in the week too, as a request (dashed box), at its time.
+	await page.goto("/pro/agenda");
+	const request = page.getByRole("gridcell", {
+		name: new RegExp(`${who.firstName} ${who.lastName}.*Demande à traiter`),
+	});
+	for (let week = 0; week < 3 && (await request.count()) === 0; week += 1) {
+		await page.getByRole("button", { name: "Semaine suivante" }).click();
+		await page.waitForTimeout(500);
+	}
+	await expect(request.first()).toBeVisible();
+	await shoot(page, "week-request", async () => {
+		for (let day = 0; day < 9 && (await request.count()) === 0; day += 1) {
+			await page.getByRole("button", { name: "Jour suivant" }).click();
+			await page.waitForTimeout(300);
+		}
+	});
 
 	// Today: the request to answer, the discreet access note.
 	await page.goto("/pro/aujourdhui");

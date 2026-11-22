@@ -226,7 +226,7 @@ export function WeekGrid({
 	};
 
 	const template: CSSProperties = {
-		gridTemplateColumns: `4.5rem repeat(${days.length}, minmax(${days.length > 1 ? "7.5rem" : "0"}, 1fr))`,
+		gridTemplateColumns: `6.5rem repeat(${days.length}, minmax(${days.length > 1 ? "7.5rem" : "0"}, 1fr))`,
 	};
 
 	return (
@@ -278,9 +278,32 @@ export function WeekGrid({
 								role="rowheader"
 								className="sticky start-0 z-20 flex items-start justify-end bg-paper pe-2 pt-0.5 text-meta text-ink-muted tabular"
 							>
-								<span className={onHour ? "font-semibold text-ink" : "sr-only"}>
+								<span
+									className={
+										!onHour
+											? "sr-only"
+											: // The "now" label takes the hour's place when they would overlap.
+												nowRow === row && now && (now.minute - minute) / stepMin < 0.6
+												? "font-semibold text-transparent"
+												: "font-semibold text-ink"
+									}
+								>
 									{formatTime(minute)}
 								</span>
+								{nowRow === row && now ? (
+									// The "now" label has a strip of its own, the time column, at the height of the
+									// rule that crosses today's column: it never covers a cell.
+									<span
+										aria-hidden="true"
+										className="pointer-events-none absolute inset-x-0 z-10 flex items-center justify-end gap-1 pe-0"
+										style={{
+											top: `calc(${((now.minute - minute) / stepMin) * ROW_REM}rem - 0.5rem)`,
+										}}
+									>
+										<span className="caps bg-paper px-0.5 leading-none text-ink">{nowLabel}</span>
+										<span className="h-0.5 w-2 bg-ink" />
+									</span>
+								) : null}
 							</div>
 							{days.map((day, column) => {
 								const entry = covered.get(`${column}:${row}`);
@@ -374,11 +397,7 @@ export function WeekGrid({
 												aria-hidden="true"
 												className="pointer-events-none absolute inset-x-0 z-20 h-0.5 bg-ink"
 												style={{ top: `${((now.minute - minute) / stepMin) * ROW_REM}rem` }}
-											>
-												<span className="caps absolute -top-2 start-0.5 bg-paper px-0.5 leading-none text-ink">
-													{nowLabel}
-												</span>
-											</span>
+											/>
 										) : null}
 									</div>
 								);
