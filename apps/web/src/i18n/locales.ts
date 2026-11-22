@@ -59,3 +59,12 @@ export function isIndexableLocale(locale: Locale): boolean {
 export function capitalisesWeekdays(locale: Locale): boolean {
 	return locale === "en" || locale === "de";
 }
+
+/**
+ * Common nouns written with a capital inside a sentence: German only. French,
+ * Spanish, Italian and English lowercase a profession there ("Dr Marie Dubois,
+ * cardiologue à Paris", "Dr. Marie Dubois, Kardiologin in Paris").
+ */
+export function capitalisesNouns(locale: Locale): boolean {
+	return locale === "de";
+}

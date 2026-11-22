@@ -265,6 +265,20 @@
 		},
 		"specimen": "Esempio, non un professionista reale"
 	},
+	"Map": {
+		"map": "Mappa",
+		"marker": "Indicatore sulla mappa",
+		"zoomIn": "Ingrandire",
+		"zoomOut": "Ridurre",
+		"resetBearing": "Trascini per ruotare la mappa, faccia clic per riorientarla a nord",
+		"toggleAttribution": "Mostrare o nascondere i crediti della mappa",
+		"mapFeedback": "Segnalare un problema sulla mappa",
+		"logo": "Logo MapLibre",
+		"closePopup": "Chiudere la finestra",
+		"scrollZoomWindows": "Usi Ctrl + rotellina per ingrandire la mappa",
+		"scrollZoomMac": "Usi ⌘ + scorrimento per ingrandire la mappa",
+		"twoFingers": "Usi due dita per spostare la mappa"
+	},
 	"Gallery": {
 		"title": "Galleria dei componenti",
 		"intro": "Tutti i componenti del sistema del libretto, in tutti i loro stati. Solo per lo sviluppo: in produzione questa pagina restituisce 404. Tutte le persone, i numeri e i luoghi che vi compaiono sono fittizi.",
@@ -510,7 +524,7 @@
 			"removalLink": "È questo professionista e si oppone a questa pagina?"
 		},
 		"ring": {
-			"heading": "Altri professionisti: {listing} a {place}"
+			"heading": "Altri professionisti: {occupation} a {place}"
 		},
 		"photoAlt": "Foto di {name}",
 		"withheld": {
@@ -940,7 +954,7 @@
 		"communesHeading": "{listing}: comuni di {place}",
 		"nearbyHeading": "{listing}: comuni vicini",
 		"establishmentsHeading": "Strutture a {place}",
-		"establishmentsIntro": "Ospedali, cliniche e centri sanitari in cui lavorano i professionisti elencati come {listing}.",
+		"establishmentsIntro": "Ospedali, cliniche e centri sanitari in cui lavorano i professionisti elencati come {occupation}.",
 		"allSpecialties": "Tutte le specializzazioni a {place}",
 		"hubMetaTitle": "{count, plural, one {{listing} in Francia: # professionista · Apercura} many {{listing} in Francia: # di professionisti · Apercura} other {{listing} in Francia: # professionisti · Apercura}}",
 		"hubMetaDescription": "{count, plural, one {# professionista registrato come {occupation} nel registro nazionale, per dipartimento: indirizzi, recapiti, settori tariffari.} many {# di professionisti registrati come {occupation} nel registro nazionale, per dipartimento: indirizzi, recapiti, settori tariffari.} other {# professionisti registrati come {occupation} nel registro nazionale, per dipartimento: indirizzi, recapiti, settori tariffari.}}",

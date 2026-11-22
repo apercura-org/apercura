@@ -25,6 +25,7 @@ import { clientEnv } from "~/env";
 import { getPathname, Link, permanentRedirect } from "~/i18n/navigation";
 import { type Locale, routing } from "~/i18n/routing";
 import { genderOf, getTaxonomyLabels, inSentence } from "~/lib/labels";
+import { getMapStrings } from "~/lib/map-strings";
 import { ownerContentOf } from "~/lib/owner-content";
 import { actionPlan, label, type SiteView, siteViews } from "~/lib/practitioner-view";
 import {
@@ -116,6 +117,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 		labels.listing(payload.listingSlug, gender) ??
 			labels.profession(payload.listingSlug ?? "", gender) ??
 			"",
+		locale,
 	);
 	const place = page.commune ? shortPlaceName(page.commune.name) : null;
 	const href = { pathname: "/praticien/[slug]", params: { slug: page.slug } } as const;
@@ -410,7 +412,10 @@ export default async function PractitionerPage({ params }: Props) {
 				{page.neighbours.length > 0 && page.commune ? (
 					<section aria-labelledby="ring-heading" className="flex flex-col gap-4">
 						<h2 id="ring-heading" className={sectionHeading}>
-							{t("ring.heading", { listing: listingLabel, place: page.commune.name })}
+							{t("ring.heading", {
+								occupation: inSentence(listingLabel, locale),
+								place: page.commune.name,
+							})}
 						</h2>
 						<ul className="grid border-t border-ink sm:grid-cols-2 lg:grid-cols-3">
 							{page.neighbours.map((neighbour) => (
@@ -463,6 +468,7 @@ async function SiteSection({
 	const t = await getTranslations({ locale, namespace: "PractitionerPage" });
 	const tP = await getTranslations({ locale, namespace: "Practitioner" });
 	const tSite = await getTranslations({ locale, namespace: "Site" });
+	const mapStrings = showMap ? await getMapStrings(locale) : undefined;
 	const empty = tP("notProvided");
 	const name = site.name ?? labels.kind ?? t("unnamedPlace");
 	return (
@@ -524,6 +530,7 @@ async function SiteSection({
 					styleUrl={clientEnv.NEXT_PUBLIC_MAP_STYLE_URL}
 					label={tP("mapLabel", { place: name })}
 					markerLabel={tP("mapPin", { place: name })}
+					strings={mapStrings}
 					fallback={
 						<p className="bg-paper/90 p-2 text-meta text-ink">{site.addressLines.join(", ")}</p>
 					}

@@ -265,6 +265,20 @@
 		},
 		"specimen": "Sample, not a real practitioner"
 	},
+	"Map": {
+		"map": "Map",
+		"marker": "Map marker",
+		"zoomIn": "Zoom in",
+		"zoomOut": "Zoom out",
+		"resetBearing": "Drag to rotate the map, click to reset north",
+		"toggleAttribution": "Show or hide the map credits",
+		"mapFeedback": "Map feedback",
+		"logo": "MapLibre logo",
+		"closePopup": "Close popup",
+		"scrollZoomWindows": "Use Ctrl + scroll to zoom the map",
+		"scrollZoomMac": "Use ⌘ + scroll to zoom the map",
+		"twoFingers": "Use two fingers to move the map"
+	},
 	"Gallery": {
 		"title": "Component gallery",
 		"intro": "Every component of the booklet system, in every state. Development only: this page returns 404 in production. All people, numbers and places on it are fictitious.",
@@ -510,7 +524,7 @@
 			"removalLink": "You are this practitioner and object to this page?"
 		},
 		"ring": {
-			"heading": "Other practitioners: {listing} in {place}"
+			"heading": "Other practitioners: {occupation} in {place}"
 		},
 		"photoAlt": "Photo of {name}",
 		"withheld": {
@@ -940,7 +954,7 @@
 		"communesHeading": "{listing}: communes of {place}",
 		"nearbyHeading": "{listing}: nearby communes",
 		"establishmentsHeading": "Establishments in {place}",
-		"establishmentsIntro": "Hospitals, clinics and health centres where practitioners listed as {listing} work.",
+		"establishmentsIntro": "Hospitals, clinics and health centres where practitioners listed as {occupation} work.",
 		"allSpecialties": "Every specialty in {place}",
 		"hubMetaTitle": "{count, plural, one {{listing} in France: # practitioner · Apercura} other {{listing} in France: # practitioners · Apercura}}",
 		"hubMetaDescription": "{count, plural, one {# practitioner listed as {occupation} in the national register, by department: addresses, contact details, agreement sectors.} other {# practitioners listed as {occupation} in the national register, by department: addresses, contact details, agreement sectors.}}",

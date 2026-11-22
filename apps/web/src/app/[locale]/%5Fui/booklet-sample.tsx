@@ -10,6 +10,7 @@ import {
 import { getTranslations } from "next-intl/server";
 import { clientEnv } from "~/env";
 import type { Locale } from "~/i18n/routing";
+import { getMapStrings } from "~/lib/map-strings";
 import { SAMPLE_DETAILS, SAMPLE_PRACTITIONERS, SAMPLE_SITE, SAMPLE_UPDATED_AT } from "./fixtures";
 import { SlotDemo } from "./slot-demo";
 
@@ -26,6 +27,7 @@ export async function BookletSample({
 }) {
 	const t = await getTranslations({ locale, namespace: "Practitioner" });
 	const tSite = await getTranslations({ locale, namespace: "Site" });
+	const mapStrings = await getMapStrings(locale);
 	const practitioner = SAMPLE_PRACTITIONERS[0];
 	if (!practitioner) {
 		return null;
@@ -107,6 +109,7 @@ export async function BookletSample({
 								styleUrl={clientEnv.NEXT_PUBLIC_MAP_STYLE_URL}
 								label={t("mapLabel", { place: SAMPLE_SITE.name })}
 								markerLabel={t("mapPin", { place: SAMPLE_SITE.name })}
+								strings={mapStrings}
 								fallback={
 									<p className="bg-paper/90 p-2 text-meta text-ink">
 										{SAMPLE_SITE.address.join(", ")}

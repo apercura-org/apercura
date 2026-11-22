@@ -65,7 +65,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 	const labels = await getTaxonomyLabels(locale);
 	const listing = labels.listing(listingSlug) ?? listingSlug;
 	const count = data.landing.practitionerCount;
-	const values = { listing, count, occupation: inSentence(listing) };
+	const values = { listing, count, occupation: inSentence(listing, locale) };
 	return pageMetadata({
 		locale,
 		href,

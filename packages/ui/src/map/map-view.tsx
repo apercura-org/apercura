@@ -2,6 +2,7 @@
 
 import { type ReactNode, useEffect, useRef, useState } from "react";
 import { PinIcon } from "../icons";
+import type { MapStrings } from "./map-strings";
 import { DEFAULT_MAP_STYLE_URL } from "./map-style";
 
 export interface MapViewProps {
@@ -18,6 +19,11 @@ export interface MapViewProps {
 	 * `center`; the map fits them all in view.
 	 */
 	markers?: { lat: number; lon: number; label: string }[];
+	/**
+	 * The strings MapLibre shows (control titles, the "Ctrl + scroll" hint,
+	 * accessible names) in the page's language; MapLibre's own are English.
+	 */
+	strings?: MapStrings;
 	/**
 	 * Shown until the map is ready, and kept if WebGL or the network fails:
 	 * the address and directions links, so the page never depends on the map.
@@ -39,6 +45,7 @@ export function MapView({
 	label,
 	markerLabel,
 	markers,
+	strings,
 	fallback,
 	className,
 }: MapViewProps) {
@@ -47,6 +54,7 @@ export function MapView({
 	const { lat, lon } = center;
 	// A stable dependency: a new array with the same pins must not rebuild the map.
 	const markersKey = markers ? JSON.stringify(markers) : "";
+	const stringsKey = strings ? JSON.stringify(strings) : "";
 
 	useEffect(() => {
 		const container = containerRef.current;
@@ -67,6 +75,7 @@ export function MapView({
 						zoom,
 						markerLabel,
 						...(markersKey ? { markers: JSON.parse(markersKey) as MapViewProps["markers"] } : {}),
+						...(stringsKey ? { strings: JSON.parse(stringsKey) as MapStrings } : {}),
 						signal: controller.signal,
 					}),
 				)
@@ -97,7 +106,7 @@ export function MapView({
 			controller.abort();
 			map?.remove();
 		};
-	}, [styleUrl, lat, lon, zoom, markerLabel, markersKey]);
+	}, [styleUrl, lat, lon, zoom, markerLabel, markersKey, stringsKey]);
 
 	return (
 		<section

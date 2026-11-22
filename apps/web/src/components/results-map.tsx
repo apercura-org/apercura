@@ -1,19 +1,21 @@
 "use client";
 
-import { buttonStyles, MapView } from "@apercura/ui";
+import { buttonStyles, type MapStrings, MapView } from "@apercura/ui";
 import { useId, useState } from "react";
 
 export interface ResultsMapProps {
 	pins: { lat: number; lon: number; label: string }[];
 	styleUrl: string;
 	labels: { show: string; hide: string; region: string; fallback: string };
+	/** MapLibre's own strings in the page's language. */
+	mapStrings: MapStrings;
 }
 
 /**
  * "Show on the map" for a page of results. The map (and MapLibre) loads only
  * when the visitor asks for it; the list above stays the primary view.
  */
-export function ResultsMap({ pins, styleUrl, labels }: ResultsMapProps) {
+export function ResultsMap({ pins, styleUrl, labels, mapStrings }: ResultsMapProps) {
 	const [open, setOpen] = useState(false);
 	const id = useId();
 	const first = pins[0];
@@ -38,6 +40,7 @@ export function ResultsMap({ pins, styleUrl, labels }: ResultsMapProps) {
 						label={labels.region}
 						markerLabel={first.label}
 						markers={pins}
+						strings={mapStrings}
 						fallback={<p className="bg-paper/90 p-2 text-meta text-ink">{labels.fallback}</p>}
 					/>
 				) : null}
