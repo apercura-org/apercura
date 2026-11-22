@@ -114,13 +114,13 @@ const MIN_SECRET_LENGTH = 32;
  * Production refuses to start without the session secret, or with any secret
  * shorter than 32 characters (`bun run keys:generate` prints 44).
  */
-const serverSchema = serverFields.superRefine((env, context) => {
+export const serverSchema = serverFields.superRefine((env, context) => {
 	if (env.NODE_ENV !== "production") return;
 	if (!env.BETTER_AUTH_SECRET) {
 		context.addIssue({
 			code: "custom",
 			path: ["BETTER_AUTH_SECRET"],
-			message: "required in production (bun run keys:generate)",
+			message: "BETTER_AUTH_SECRET is required in production (bun run keys:generate)",
 		});
 	}
 	for (const name of SECRETS) {
@@ -129,13 +129,13 @@ const serverSchema = serverFields.superRefine((env, context) => {
 			context.addIssue({
 				code: "custom",
 				path: [name],
-				message: `must be at least ${MIN_SECRET_LENGTH} characters in production`,
+				message: `${name} must be at least ${MIN_SECRET_LENGTH} characters in production`,
 			});
 		}
 	}
 });
 
-const clientSchema = z.object({
+export const clientSchema = z.object({
 	NEXT_PUBLIC_MAP_STYLE_URL: z.url().default("https://tiles.openfreemap.org/styles/positron"),
 });
 
@@ -153,6 +153,18 @@ function withoutEmptyStrings(values: Record<string, string | undefined>) {
 	);
 }
 
+/**
+ * One line per invalid variable, each naming it: "JOBS_SECRET must be at least
+ * 32 characters in production", "APP_URL: Invalid URL". Messages written for a
+ * rule already name their variable; Zod's own ("Invalid URL") get it in front.
+ */
+export function describeEnvIssues(error: z.ZodError): string[] {
+	return error.issues.map((issue) => {
+		const name = issue.path.map(String).join(".") || "(environment)";
+		return issue.message.startsWith(`${name} `) ? issue.message : `${name}: ${issue.message}`;
+	});
+}
+
 function parseEnv<Schema extends z.ZodType>(
 	schema: Schema,
 	values: Record<string, string | undefined>,
@@ -165,7 +177,8 @@ function parseEnv<Schema extends z.ZodType>(
 	if (skipValidation) {
 		return values as z.infer<Schema>;
 	}
-	throw new Error(`Invalid ${scope} environment variables:\n${z.prettifyError(result.error)}`);
+	const lines = describeEnvIssues(result.error).map((line) => `  ✖ ${line}`);
+	throw new Error(`Invalid ${scope} environment variables:\n${lines.join("\n")}`);
 }
 
 export const clientEnv: ClientEnv = parseEnv(
