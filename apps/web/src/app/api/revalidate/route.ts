@@ -5,7 +5,7 @@
  * POST a JSON body `{ "tags": ["practitioner:12", …] }` (at most 100 tags),
  * signed with HMAC-SHA256 over `{timestamp}.{body}` using REVALIDATE_SECRET:
  *   x-apercura-timestamp: unix seconds (rejected beyond ±5 minutes)
- *   x-apercura-signature: hex digest
+ *   x-apercura-signature: hex digest (applied once: a replay changes nothing)
  * Tags are revalidated with the `max` profile: stale pages keep being served
  * while they are regenerated in the background.
  */
@@ -17,6 +17,9 @@ import {
 } from "@apercura/core/revalidation";
 import { revalidateTag } from "next/cache";
 import { serverEnv } from "~/env";
+import { getDb } from "~/server/db";
+import { readBodyCapped, tooLarge } from "~/server/http/body";
+import { acceptRevalidationOnce } from "~/server/revalidation-replay";
 
 const MAX_BODY_BYTES = 64 * 1024;
 
@@ -25,10 +28,9 @@ export async function POST(request: Request): Promise<Response> {
 	if (!secret) {
 		return Response.json({ error: "revalidation is not configured" }, { status: 503 });
 	}
-	const body = await request.text();
-	if (body.length > MAX_BODY_BYTES) {
-		return Response.json({ error: "body too large" }, { status: 413 });
-	}
+	const bytes = await readBodyCapped(request, MAX_BODY_BYTES);
+	if (!bytes) return tooLarge();
+	const body = new TextDecoder().decode(bytes);
 	const check = verifyRevalidation({
 		secret,
 		body,
@@ -37,6 +39,12 @@ export async function POST(request: Request): Promise<Response> {
 	});
 	if (!check.ok) {
 		return Response.json({ error: "invalid signature" }, { status: 401 });
+	}
+	// A signed request is applied once: a replay within the timestamp window (captured, or
+	// the same tags sent twice in one second) succeeds without revalidating anything again.
+	const signature = request.headers.get(REVALIDATE_SIGNATURE_HEADER) ?? "";
+	if (!(await acceptRevalidationOnce(getDb(), signature))) {
+		return Response.json({ revalidated: 0, replayed: true });
 	}
 	let payload: unknown;
 	try {
