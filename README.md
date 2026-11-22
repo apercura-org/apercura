@@ -8,14 +8,33 @@ open data (RPPS / Annuaire Santé), and gives every practitioner a free online b
 - **Free** for practitioners and patients.
 - **Open source** (AGPL-3.0).
 - **Health data encrypted** at the application level, and built to run on an HDS-certified host in France (the official instance will say which one once it is live).
-- **Run it all yourself**: self-hostable with Docker, open data import included.
+- **Run it all yourself**: self-hostable with Docker, open data import included
+  ([guide](./docs/self-hosting.md)).
 
 > **Status: work in progress.** Nothing here is production-ready yet. See the roadmap in the
 > [issues](https://github.com/maxgfr/apercura/issues).
 
-## Quick start
+## Run it yourself
 
-Requirements: [Bun](https://bun.sh) 1.4, Node.js 24, Docker with Compose.
+Everything (database, app, scheduled jobs, open data import, file storage) starts from one
+Compose file and one image:
+
+```sh
+cp docker/.env.selfhost.example docker/.env.selfhost    # fill it in (see the guide)
+docker compose -f docker/compose.selfhost.yml --env-file docker/.env.selfhost up -d --build
+docker compose -f docker/compose.selfhost.yml --env-file docker/.env.selfhost run --rm etl --department 75
+```
+
+Read [docs/self-hosting.md](./docs/self-hosting.md) first: prerequisites, the first import and the
+first administrator, backups, upgrades, key rotation, the reverse proxy, and what hosting health
+data for others requires (an HDS-certified host). Production deployment:
+[Clever Cloud](./docs/deploy-clever-cloud.md) (default) or [Scalingo](./docs/deploy-scalingo.md).
+Directory only, without booking, it runs on any Node.js host (see
+[Directory-only mode](./docs/self-hosting.md#directory-only-mode)).
+
+## Development
+
+Requirements: [Bun](https://bun.sh) 1.4, Node.js 26, Docker with Compose.
 
 ```sh
 bun install
@@ -58,7 +77,10 @@ packages/
   etl/          Open data import CLI (placeholder)
   ui/           Design system: tokens, React Aria components, domain components (see DESIGN.md)
 docker/
-  compose.yml   Local PostgreSQL (PostGIS) and Mailpit
+  compose.yml          Development services: PostgreSQL (PostGIS), Mailpit, MinIO
+  compose.selfhost.yml Self-hosting: the whole stack (docs/self-hosting.md)
+  Dockerfile           Production image: app, scheduler, import and migrations
+clevercloud/           Clever Cloud hooks and cron jobs (docs/deploy-clever-cloud.md)
 ```
 
 The database uses two Postgres schemas: `directory` for the public, open-data side and `care`
