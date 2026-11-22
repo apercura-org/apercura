@@ -83,6 +83,14 @@ const PAGES: Expected[] = [
 ];
 
 const FORBIDDEN_KEYS = ["aggregateRating", "review", "reviews", "ratingValue"];
+/** schema.org LocalBusiness subtypes the pages use (Hospital through EmergencyService). */
+const LOCAL_BUSINESSES = new Set([
+	"IndividualPhysician",
+	"Dentist",
+	"PhysiciansOffice",
+	"MedicalClinic",
+	"Hospital",
+]);
 
 /** The SEO-relevant parts of a server-rendered page. */
 function parse(html: string) {
@@ -232,6 +240,24 @@ for (const expected of PAGES) {
 		}
 		const keys = keysOf(data);
 		for (const forbidden of FORBIDDEN_KEYS) expect(keys).not.toContain(forbidden);
+
+		// Google's LocalBusiness requirements (name, address) on every local business of
+		// the graph, and BreadcrumbList items with a position, a name and an absolute URL.
+		for (const node of nodes.filter((item) => LOCAL_BUSINESSES.has(item["@type"] ?? ""))) {
+			expect(node.name, node["@id"]).toBeTruthy();
+			const address = node.address as Record<string, string> | undefined;
+			expect(address?.addressCountry, node["@id"]).toBe("FR");
+			expect(address?.addressLocality ?? address?.postalCode, node["@id"]).toBeTruthy();
+		}
+		for (const crumbs of nodes.filter((item) => item["@type"] === "BreadcrumbList")) {
+			const items = crumbs.itemListElement as { position: number; name: string; item: string }[];
+			expect(items[0]?.item).toBe(expected.lang === "en" ? `${origin}/en` : `${origin}/`);
+			items.forEach((item, index) => {
+				expect(item.position).toBe(index + 1);
+				expect(item.name).toBeTruthy();
+				expect(item.item.startsWith(origin)).toBe(true);
+			});
+		}
 	});
 }
 
@@ -299,6 +325,19 @@ test("the sitelinks search box target answers", async ({ request }) => {
 		maxRedirects: 0,
 	});
 	expect([200, 307]).toContain(response.status());
+});
+
+test("icons, manifest and the favicon answer outside the locale routing", async ({ request }) => {
+	for (const path of ["/icon/48", "/icon/192", "/icon/512", "/apple-icon"]) {
+		const response = await request.get(path);
+		expect(response.status(), path).toBe(200);
+		expect(response.headers()["content-type"]).toBe("image/png");
+	}
+	const manifest = await (await request.get("/manifest.webmanifest")).json();
+	expect(manifest.icons).toHaveLength(2);
+	const favicon = await request.get("/favicon.ico", { maxRedirects: 0 });
+	expect(favicon.status()).toBe(308);
+	expect(favicon.headers().location).toBe("/icon/48");
 });
 
 test.describe("status codes and redirects", () => {
