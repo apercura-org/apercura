@@ -1,0 +1,52 @@
+import { readFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
+import { gzipSync } from "node:zlib";
+import { expect, test } from "@playwright/test";
+
+/*
+ * First-load JavaScript budgets of the public pages, gzip, from the server
+ * HTML: the module scripts a page loads before it is interactive, minus the
+ * framework runtime every page shares (React, React DOM, the Next.js router:
+ * `rootMainFiles` of the build manifest, about 130 KB) and the legacy
+ * polyfills modern browsers skip (`noModule`). Lighthouse CI (`bun run lhci`)
+ * checks the Core Web Vitals; this checks what the pages themselves add.
+ */
+
+const BUDGETS_KB: Record<string, number> = {
+	// The map and the booking panel load on demand: neither counts here.
+	"/praticien/camille-exemple-19999990013": 60,
+	"/praticien/anne-essaiaa-19999991003": 60,
+	"/medecin-generaliste/75-paris": 60,
+	"/etablissement/centre-hospitalier-fictif-2a9999001": 60,
+	"/annuaire/75-paris": 60,
+	// The search form (combo boxes, suggestions over the API) is the home page's purpose.
+	"/": 160,
+};
+
+const manifest = JSON.parse(
+	readFileSync(fileURLToPath(new URL("../.next/build-manifest.json", import.meta.url)), "utf8"),
+) as { rootMainFiles: string[]; polyfillFiles: string[] };
+const shared = new Set([...manifest.rootMainFiles, ...manifest.polyfillFiles]);
+
+for (const [path, budget] of Object.entries(BUDGETS_KB)) {
+	test(`${path} adds at most ${budget} KB of JavaScript (gzip) to the framework`, async ({
+		request,
+	}) => {
+		const html = await (await request.get(path)).text();
+		const scripts = new Set(
+			[...html.matchAll(/<script\b[^>]*\bsrc="\/_next\/([^"]+)"[^>]*>/g)]
+				.filter((match) => !/\bnoModule\b/i.test(match[0]))
+				.map((match) => match[1] ?? ""),
+		);
+		let bytes = 0;
+		const sizes: string[] = [];
+		for (const file of scripts) {
+			if (shared.has(file)) continue;
+			const body = await (await request.get(`/_next/${file}`)).body();
+			const gzip = gzipSync(body).length;
+			bytes += gzip;
+			sizes.push(`${file} ${(gzip / 1024).toFixed(1)} KB`);
+		}
+		expect(bytes / 1024, sizes.join("\n")).toBeLessThanOrEqual(budget);
+	});
+}

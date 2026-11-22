@@ -32,6 +32,9 @@ bun-debug.log*
 .impeccable/
 .messages.lock
 
+# Lighthouse CI reports
+.lighthouseci/
+
 # Playwright
 test-results/
 playwright-report/
