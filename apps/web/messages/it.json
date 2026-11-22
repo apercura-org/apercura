@@ -837,7 +837,7 @@
 				"body": [
 					"Dati: indirizzo e-mail, nome, password (memorizzata in forma di hash), secondo fattore di autenticazione, identità Pro Santé Connect, documenti giustificativi inviati per rivendicare una pagina, membri del team e registro degli accessi ai dati dei pazienti.",
 					"Finalità: gestire l’account, verificare che una pagina sia rivendicata dal professionista giusto e proteggere l’accesso ai dati dei pazienti. Basi giuridiche: l’esecuzione delle condizioni d’uso (articolo 6.1.b) e il legittimo interesse a garantire la sicurezza del servizio (articolo 6.1.f).",
-					"Durate: l’account è conservato fino alla sua cancellazione; i documenti giustificativi, cifrati, sono cancellati 30 giorni dopo la decisione; il registro degli accessi sarà limitato a un anno."
+					"Durate: l’account è conservato fino alla sua cancellazione; i documenti giustificativi, cifrati, sono cancellati 30 giorni dopo la decisione; il registro degli accessi è cancellato dopo un anno."
 				]
 			},
 			"patients": {
@@ -853,13 +853,13 @@
 				"heading": "Segnalazioni e richieste di rimozione",
 				"body": [
 					"Dati: il messaggio, l’indirizzo e-mail di contatto se fornito e, per una richiesta di rimozione, la pagina interessata. Il testo libero è cifrato.",
-					"Finalità: correggere gli errori segnalati e dare seguito alle opposizioni. Basi giuridiche: il legittimo interesse a pubblicare informazioni esatte (articolo 6.1.f) e il diritto di opposizione (articolo 21). Durata: il tempo necessario per gestire la richiesta; la durata massima resta da stabilire durante la revisione giuridica."
+					"Finalità: correggere gli errori segnalati e dare seguito alle opposizioni. Basi giuridiche: il legittimo interesse a pubblicare informazioni esatte (articolo 6.1.f) e il diritto di opposizione (articolo 21). Durata: il tempo necessario per gestire la richiesta; poi una segnalazione è cancellata 6 mesi dopo la sua chiusura e una richiesta di rimozione un anno dopo la decisione; dopo un’opposizione è conservato solo il numero RPPS della pagina, perché non sia mai ripubblicata."
 				]
 			},
 			"security": {
 				"heading": "Sicurezza e dati tecnici",
 				"body": [
-					"Le sessioni dei professionisti registrano l’indirizzo IP e il browser utilizzati, per proteggere il loro account. Per limitare gli abusi, il sito trasforma gli indirizzi IP con una funzione a chiave segreta prima di conteggiarli; solo il limite dei tentativi di accesso li conserva per la durata della sua finestra temporale. Il fornitore di hosting conserva i propri log tecnici secondo il suo contratto."
+					"Le sessioni dei professionisti registrano un indirizzo IP troncato (la rete, non il dispositivo) e il browser utilizzato, per proteggere il loro account. Per limitare gli abusi, il sito trasforma gli indirizzi IP con una funzione a chiave segreta prima di conteggiarli; solo il limite dei tentativi di accesso li conserva per la durata della sua finestra temporale. Il fornitore di hosting conserva i propri log tecnici secondo il suo contratto."
 				]
 			},
 			"recipients": {
@@ -1860,6 +1860,7 @@
 				"export": "Scaricare i miei dati",
 				"deleteHeading": "Eliminare il suo account",
 				"deleteBody": "Il suo account, le sessioni, le rivendicazioni e i documenti vengono eliminati. La sua pagina torna ai dati del registro: non rivendicata, senza i suoi contenuti né la sua foto.",
+				"closeEffect": "Chiudere uno studio annulla i suoi prossimi appuntamenti (i pazienti sono avvisati via e-mail), revoca i suoi link di calendario e cancella i dati dei suoi pazienti entro un giorno. Il registro degli accessi è conservato per un anno.",
 				"practiceChoice": "Che cosa succede a {name}?",
 				"close": "Chiudere lo studio: i suoi membri perdono l’accesso",
 				"transfer": "Affidarlo a {name} ({email})",

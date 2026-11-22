@@ -176,17 +176,23 @@ Migration `0004_database_roles` creates three `NOLOGIN` roles idempotently:
 | `apercura_etl`      | `directory` only, table by table; nothing on `care` |
 | `apercura_readonly` | read-only on both schemas (support, audits)         |
 
+Migration `0016_retention_and_closures` adds a fourth, `apercura_jobs`, with no
+table privilege at all: it may only call `care.purge_audit_events()` (the
+audit log retention of `jobs:tick`, `DATABASE_URL_JOBS`). The read-only role
+does not read the address and browser of practitioner sessions.
+
 Passwords are never set in migrations. Set them once per environment, with a
 superuser or the database owner:
 
 ```sql
 ALTER ROLE apercura_etl WITH LOGIN PASSWORD '<generated secret>';
 ALTER ROLE apercura_app WITH LOGIN PASSWORD '<generated secret>';
+ALTER ROLE apercura_jobs WITH LOGIN PASSWORD '<generated secret>';
 ```
 
 then use `DATABASE_URL_ETL=postgres://apercura_etl:…@host/db` for the import.
 On a managed database where the migration user cannot `CREATE ROLE`, create
-the three roles beforehand (the migration then only applies the grants). New
+the four roles beforehand (the migration then only applies the grants). New
 directory tables are not visible to `apercura_etl` until a migration grants
 them explicitly (there are no default privileges for that role on purpose).
 The grants use the `MAINTAIN` privilege, so PostgreSQL 17 or later is required.

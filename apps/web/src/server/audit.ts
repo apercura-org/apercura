@@ -13,7 +13,9 @@ export type AuditAction =
 	| "removal_request.decrypt"
 	| "removal_request.decide"
 	| "account.export"
-	| "account.delete";
+	| "account.delete"
+	| "organization.close"
+	| "organization.purge";
 
 /**
  * Appends to the platform audit log (append-only for the app role). The IP is

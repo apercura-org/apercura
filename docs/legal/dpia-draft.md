@@ -148,8 +148,8 @@ or symptoms from the patient, documents, payment data. No patient account.
 
 - Account: name, email, email verified, locale, password hash, TOTP secret and backup codes,
   passkeys, Pro Santé Connect link (`SubjectNameID`, given and family name; the profile email is
-  replaced by a placeholder, `apps/web/src/server/auth/psc.ts`), sessions (IP address, user
-  agent, second-factor method and time), memberships and roles (owner, practitioner, assistant),
+  replaced by a placeholder, `apps/web/src/server/auth/psc.ts`), sessions (IP address
+  truncated to its IPv4 /24 or IPv6 /48 network, user agent, second-factor method and time), memberships and roles (owner, practitioner, assistant),
   invitations (email).
 - Claim: target RPPS, status, contest flag, decision, reason, deciding administrator; checks
   (`psc`, `registry_email`, `document`, `phone_callback`) with hashed secrets and non-secret
@@ -172,9 +172,10 @@ per-IP counters (`directory.auth_rate_limit`); keyed hashes of IPs in both audit
 logs without request inputs (`apps/web/src/trpc/error-redaction.ts`) and SMTP error summaries
 without reply text (`apps/web/src/server/mail/error-summary.ts`).
 
-Note: `directory.auth_rate_limit` keys are built by Better Auth as `{ip}|{path}` (raw IP), and
-`directory.session.ip_address` holds the raw IP of each session, as Better Auth stores it. Both
-are app-owned tables; see action A-12.
+Note: `directory.auth_rate_limit` keys are built by Better Auth as `{ip}|{path}` (raw IP); see
+action A-12. `directory.session.ip_address` holds only the network of the address (IPv4 /24,
+IPv6 /48, `apps/web/src/server/auth/client-ip.ts`, rows stored before truncated by migration
+0016), and the read-only role reads neither it nor the user agent.
 
 ### 1.5 Recipients
 
@@ -195,26 +196,27 @@ are app-owned tables; see action A-12.
 
 ### 1.6 Retention
 
-| Data                                                                                                      | Retention                                                                                                      | Source                                                                                                                                        |
-| --------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
-| Patient identity, contact, practice message, blind indexes, token hashes                                  | End of the appointment + the calendar's retention: **90 days by default, configurable 30 to 365**              | `care.ts` (`retentionDays`, check `between 30 and 365`); `booking/verify.ts`, `booking/agenda.ts` (`purgeAfter`); `booking/jobs.ts` (`purge`) |
-| Details of an online booking never verified by code                                                       | 24 hours after creation                                                                                        | `booking/jobs.ts` (`UNVERIFIED_RETENTION_MS`)                                                                                                 |
-| One-time codes                                                                                            | Valid 30 minutes; encrypted copy erased once sent; row deleted 24 hours after expiry                           | `booking/config.ts` (`codeValidityMs`), `care.ts`, `booking/jobs.ts`                                                                          |
-| Outbox rows (identifiers only)                                                                            | 30 days after processing                                                                                       | `booking/jobs.ts` (`OUTBOX_RETENTION_MS`)                                                                                                     |
-| Purged appointment rows (times, status, reason, first-visit answer, locale, no identity) and their events | No limit defined (kept for the agenda's history)                                                               | `booking/jobs.ts` comment; **to define**                                                                                                      |
-| Access log `care.audit_events`                                                                            | One year planned, **not implemented** (append-only for the app role)                                           | [security review](../security-review.md), finding I-6                                                                                         |
-| Platform audit log                                                                                        | One year planned, **not implemented**                                                                          | `claims.ts` comment; security review I-6                                                                                                      |
-| Claim identity documents                                                                                  | Deleted 30 days after the decision (or with the account)                                                       | `claims/service.ts` (`DOCUMENT_RETENTION_DAYS = 30`, `purgeClaimDocuments`); `account/service.ts`                                             |
-| Claims and checks                                                                                         | Until the account is deleted (cascade)                                                                         | `claims.ts`, `account/service.ts`                                                                                                             |
-| Accounts                                                                                                  | Until deleted by the user; no inactivity rule                                                                  | `account/service.ts`; **to define**                                                                                                           |
-| Sessions                                                                                                  | 12 hours idle, 7 days absolute; deletion of expired rows by Better Auth **to confirm**                         | `auth/index.ts`, `auth/policy.ts` (`SESSION_MAX_AGE_MS`)                                                                                      |
-| Rate-limit counters                                                                                       | Fixed windows; old rows are not deleted by the app (**to confirm**)                                            | `server/rate-limit.ts`                                                                                                                        |
-| Error reports, removal requests                                                                           | No deletion implemented                                                                                        | `gdpr/service.ts`; **to define**                                                                                                              |
-| Suppressions (RPPS of a page removed on objection)                                                        | As long as the directory is published (needed to honour the objection)                                         | `directory.ts` (`suppressions`)                                                                                                               |
-| Directory records                                                                                         | While present in the source; an unclaimed practitioner absent from two consecutive imports is marked `removed` | [data import](../data-import.md); retention of removed rows **to confirm**                                                                    |
-| Database backups (planned host)                                                                           | Daily backup kept 7 days; point-in-time recovery to be requested (retention **to confirm**)                    | [deploy-clever-cloud](../deploy-clever-cloud.md#2-database)                                                                                   |
-| Host logs                                                                                                 | **To confirm** with the host                                                                                   | —                                                                                                                                             |
-| Copies held by third parties (mailboxes, calendar apps)                                                   | Outside the publisher's control; the calendar feed covers the last 30 and next 120 days                        | `booking/ics-feed.ts`                                                                                                                         |
+| Data                                                                                                      | Retention                                                                                                                                              | Source                                                                                                                                        |
+| --------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| Patient identity, contact, practice message, blind indexes, token hashes                                  | End of the appointment + the calendar's retention: **90 days by default, configurable 30 to 365**                                                      | `care.ts` (`retentionDays`, check `between 30 and 365`); `booking/verify.ts`, `booking/agenda.ts` (`purgeAfter`); `booking/jobs.ts` (`purge`) |
+| Details of an online booking never verified by code                                                       | 24 hours after creation                                                                                                                                | `booking/jobs.ts` (`UNVERIFIED_RETENTION_MS`)                                                                                                 |
+| One-time codes                                                                                            | Valid 30 minutes; encrypted copy erased once sent; row deleted 24 hours after expiry                                                                   | `booking/config.ts` (`codeValidityMs`), `care.ts`, `booking/jobs.ts`                                                                          |
+| Outbox rows (identifiers only)                                                                            | 30 days after processing                                                                                                                               | `booking/jobs.ts` (`OUTBOX_RETENTION_MS`)                                                                                                     |
+| Purged appointment rows (times, status, reason, first-visit answer, locale, no identity) and their events | No limit defined (kept for the agenda's history)                                                                                                       | `booking/jobs.ts` comment; **to define**                                                                                                      |
+| Access log `care.audit_events`                                                                            | One year (`AUDIT_LOG_RETENTION_MONTHS`, 6 to 60), then deleted by `jobs:tick audit-log`                                                                | `care.purge_audit_events()` (migration 0016), `server/retention.ts`                                                                           |
+| Platform audit log                                                                                        | One year, same purge                                                                                                                                   | `care.purge_audit_events()`, `server/retention.ts`                                                                                            |
+| Claim identity documents                                                                                  | Deleted 30 days after the decision (or with the account)                                                                                               | `claims/service.ts` (`DOCUMENT_RETENTION_DAYS = 30`, `purgeClaimDocuments`); `account/service.ts`                                             |
+| Booking data of a closed practice (account deleted, practice closed)                                      | Upcoming appointments cancelled and patients emailed at once; every booking row, then the data keys, deleted once the emails are out, 24 hours at most | `booking/closure.ts`, `jobs:tick closures`                                                                                                    |
+| Claims and checks                                                                                         | Until the account is deleted (cascade)                                                                                                                 | `claims.ts`, `account/service.ts`                                                                                                             |
+| Accounts                                                                                                  | Until deleted by the user; no inactivity rule                                                                                                          | `account/service.ts`; **to define**                                                                                                           |
+| Sessions                                                                                                  | 12 hours idle, 7 days absolute; truncated IP; deletion of expired rows by Better Auth **to confirm**                                                   | `auth/index.ts`, `auth/policy.ts` (`SESSION_MAX_AGE_MS`), `auth/client-ip.ts`                                                                 |
+| Rate-limit counters                                                                                       | Fixed windows; old rows are not deleted by the app (**to confirm**)                                                                                    | `server/rate-limit.ts`                                                                                                                        |
+| Error reports, removal requests                                                                           | Reports: 6 months after resolution or dismissal; removal requests: one year after the decision (configurable); open ones until handled                 | `server/retention.ts` (`purgeClosedRequests`), `jobs:tick requests`                                                                           |
+| Suppressions (RPPS of a page removed on objection)                                                        | As long as the directory is published (needed to honour the objection)                                                                                 | `directory.ts` (`suppressions`)                                                                                                               |
+| Directory records                                                                                         | While present in the source; an unclaimed practitioner absent from two consecutive imports is marked `removed`                                         | [data import](../data-import.md); retention of removed rows **to confirm**                                                                    |
+| Database backups (planned host)                                                                           | Daily backup kept 7 days; point-in-time recovery to be requested (retention **to confirm**)                                                            | [deploy-clever-cloud](../deploy-clever-cloud.md#2-database)                                                                                   |
+| Host logs                                                                                                 | **To confirm** with the host                                                                                                                           | —                                                                                                                                             |
+| Copies held by third parties (mailboxes, calendar apps)                                                   | Outside the publisher's control; the calendar feed covers the last 30 and next 120 days                                                                | `booking/ics-feed.ts`                                                                                                                         |
 
 ### 1.7 Supporting assets
 
@@ -321,8 +323,9 @@ indexing by search engines widens exposure; published phone numbers may be perso
   (CPS card, Ordre certificate) and deleted 30 days after the decision.
 - **P5**: the contact email of a report is optional; the forms say "N'indiquez aucune
   information de santé".
-- **P6**: rate limits and audit rows hold keyed hashes of IPs and emails, not raw values
-  (except Better Auth's tables, see A-12).
+- **P6**: rate limits and audit rows hold keyed hashes of IPs and emails, not raw values;
+  sessions hold the network of the address only (except Better Auth's rate-limit table, see
+  A-12).
 
 ### 2.4 Accuracy
 
@@ -336,9 +339,10 @@ verifying.
 
 See [1.6](#16-retention). Strong points: automatic purge of patient data with an audited
 `purge` action; unverified details erased after 24 hours; claim documents deleted 30 days
-after the decision. Gaps: audit logs (I-6), reports, removal requests, rate-limit rows,
-de-identified appointment rows, inactive accounts and backups beyond the host's default
-(actions A-4 to A-6).
+after the decision; both audit logs deleted after a year; reports and removal requests deleted
+6 and 12 months after they are closed; booking data of a closed practice deleted within a day.
+Gaps: rate-limit rows, de-identified appointment rows, inactive accounts and backups beyond the
+host's default (actions A-4 and A-6).
 
 ### 2.6 Information of data subjects
 
@@ -453,12 +457,16 @@ CPS card image; harassment of practitioners.
 | Administrators: promoted in the database only, second factor, no organization, no access to patient data                                                                                                               | [configuration](../configuration.md#platform-administrators)                                                                               |
 | Web hardening: CSP with nonces, HSTS, `nosniff`, frame denial, same-origin checks on writes, body caps, error redaction, Host checks                                                                                   | `lib/security-headers.ts`, `server/http/same-origin.ts`, `server/http/body.ts`, `trpc/error-redaction.ts`                                  |
 | Rate limits on every public form and auth endpoint, keyed by HMAC of IP (`RATE_LIMIT_KEY`) or of the email                                                                                                             | `server/rate-limit-key.ts`, `booking/config.ts`, `server/auth/policy.ts`                                                                   |
+| Retention applied by the jobs: both access logs after one year through a `SECURITY DEFINER` function only `apercura_jobs` may call (the app stays append-only); reports and removal requests after closure             | `care.purge_audit_events()` (migration 0016), `server/retention.ts`, `server/retention.integration.test.ts`                                |
+| Session IPs truncated (IPv4 /24, IPv6 /48); the read-only role reads neither address nor user agent                                                                                                                    | `server/auth/client-ip.ts`, migration 0016, `server/database-roles.integration.test.ts`                                                    |
+| Outgoing mail over TLS only in production: `smtps://`, or `smtp://` with STARTTLS required, certificate verified; start-up refused otherwise                                                                           | `server/mail/smtp-options.ts`, `server/mail/smtp-check.ts`                                                                                 |
+| Closing a practice: upcoming appointments cancelled with patient email, feeds revoked, team removed at once; booking data, then keys, then the organization deleted; audit rows kept                                   | `server/booking/closure.ts`, `server/booking/closure.integration.test.ts`                                                                  |
 | Key rotation: re-wraps data keys and re-encrypts platform-key data                                                                                                                                                     | `server/keys/rotation.ts`, [self-hosting](../self-hosting.md#key-rotation)                                                                 |
 | Image runs as `node`, holds no secret; private bucket with a key limited to it                                                                                                                                         | `docker/`, security review                                                                                                                 |
 
 **Planned measures**: HDS hosting under contract, keys in the host's secret manager with
 restricted access (A-1); external penetration test (A-2); limiting raw IPs in Better Auth's
-tables (A-12); review of the platform audit log (A-7); art. 13 notice (A-8).
+rate-limit table (A-12); review of the platform audit log (A-7); art. 13 notice (A-8).
 
 | Processing           | Severity (proposal)                                             | Likelihood (proposal) | Rationale                                                                                                                                |
 | -------------------- | --------------------------------------------------------------- | --------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
@@ -467,7 +475,7 @@ tables (A-12); review of the platform audit log (A-7); art. 13 notice (A-8).
 | P3 accounts          | 2 Limited (on their own; account takeover leads to the P2 risk) | 2 Limited             | Password hashing, second factor, rate limits                                                                                             |
 | P1 directory         | 1 Negligible                                                    | —                     | Data is public by nature                                                                                                                 |
 | P5 reports, removals | 2 Limited                                                       | 2 Limited             | Contact emails and free text, encrypted, read by administrators only                                                                     |
-| P6 logs              | 1 Negligible to 2 Limited                                       | 2 Limited             | Keyed hashes; raw IPs remain in Better Auth's tables (A-12)                                                                              |
+| P6 logs              | 1 Negligible to 2 Limited                                       | 2 Limited             | Keyed hashes, truncated session IPs, one-year retention; raw IPs remain in Better Auth's rate-limit table (A-12)                         |
 
 ### 3.4 Unwanted modification of data
 
@@ -571,14 +579,16 @@ Audit rows store an HMAC-SHA256 of the client IP under `RATE_LIMIT_KEY`
 whoever holds the key can test every IPv4 address. If `RATE_LIMIT_KEY` is unset, each process
 draws a random key and the hashes are no longer comparable across restarts. Proposal: set the
 key explicitly (security review recommendation 7), restrict who holds it, and state in the
-records that the hash is personal data kept with the audit log (one year, once A-5 is done).
+records that the hash is personal data kept with the audit log (one year, `AUDIT_LOG_RETENTION_MONTHS`).
 
 #### 3.6.6 SMTP and map tile providers
 
-SMTP: {{SMTP_PROVIDER}}, European, under a DPA, with SPF, DKIM and DMARC. The transport
-(`apps/web/src/server/mail/index.ts`) uses `SMTP_URL` as given and does not force TLS: the
-production URL must use `smtps://` or a provider that requires STARTTLS (A-14). TLS from the
-provider to the patient's mailbox depends on that mailbox. Map tiles:
+SMTP: {{SMTP_PROVIDER}}, European, under a DPA, with SPF, DKIM and DMARC. In production the
+transport (`apps/web/src/server/mail/smtp-options.ts`) requires TLS: `smtps://` (implicit TLS)
+or `smtp://` with STARTTLS required, the certificate verified, TLS 1.2 at least; the app
+refuses to start with a URL that weakens it or a server without STARTTLS
+(`SMTP_ALLOW_INSECURE=true` only for a local catcher). TLS from the provider to the patient's
+mailbox depends on that mailbox. Map tiles:
 OpenFreeMap by default receives visitors' IPs and the area viewed when a map scrolls into
 view; no consent mechanism exists. Options: self-host the tiles (configurable through
 `NEXT_PUBLIC_MAP_STYLE_URL`), or document the provider in the privacy page. To decide (A-13).
@@ -604,25 +614,25 @@ See [DPO appointment](dpo-appointment.md) and [records of processing](records-of
 
 ### 4.1 Action plan
 
-| Id   | Action                                                                                                                                                      | Owner        | Due                  | Status |
-| ---- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | -------------------- | ------ |
-| A-1  | Sign the HDS hosting contract; run app, database, jobs, storage and backups in the HDS region; keys in the host's secret manager                            | {{OWNER}}    | Before booking opens | Open   |
-| A-2  | External penetration test on staging with synthetic data (security review recommendation 3)                                                                 | {{OWNER}}    | Before booking opens | Open   |
-| A-3  | Written breach procedure and register; processor notification target of 48 hours                                                                            | {{OWNER}}    | Before booking opens | Open   |
-| A-4  | Define retention for reports, removal requests, rate-limit rows, de-identified appointment rows, inactive accounts                                          | {{OWNER}}    | Before booking opens | Open   |
-| A-5  | Implement the one-year deletion of both audit logs by a privileged task (security review I-6)                                                               | {{OWNER}}    | Before booking opens | Open   |
-| A-6  | Request point-in-time recovery, confirm backup retention, test a restore                                                                                    | {{OWNER}}    | Before booking opens | Open   |
-| A-7  | Administrator governance: named list, review of `platform_audit_events`, offboarding                                                                        | {{OWNER}}    | Before booking opens | Open   |
-| A-8  | Art. 13 notice for patients on the booking form and in the confirmation email (template for practitioners)                                                  | {{OWNER}}    | Before booking opens | Open   |
-| A-9  | Guidance on generic appointment-type names                                                                                                                  | {{OWNER}}    | Before booking opens | Open   |
-| A-10 | Tools for practitioners to answer patient requests: per-patient export and early erasure; export of the agenda at the end of the contract                   | {{OWNER}}    | {{DUE_DATE}}         | Open   |
-| A-11 | DPO validation of email, `.ics` and feed content (3.6.1, 3.6.2)                                                                                             | {{DPO_NAME}} | Before booking opens | Open   |
-| A-12 | Limit raw IPs in `directory.session.ip_address` and `directory.auth_rate_limit` (Better Auth), or document and bound their retention                        | {{OWNER}}    | {{DUE_DATE}}         | Open   |
-| A-13 | Decide on the map tile provider (self-hosting or documented third party)                                                                                    | {{OWNER}}    | {{DUE_DATE}}         | Open   |
-| A-14 | Set `RATE_LIMIT_KEY` and `ALTCHA_HMAC_KEY` explicitly; check `TRUSTED_PROXY_COUNT` (security review recommendation 7); use an `SMTP_URL` with mandatory TLS | {{OWNER}}    | Before booking opens | Open   |
-| A-15 | Appoint the DPO, register with the CNIL, publish the contact                                                                                                | {{OWNER}}    | Before booking opens | Open   |
-| A-16 | Sign the processor agreement with each practitioner before opening their booking; DPA with the SMTP provider                                                | {{OWNER}}    | Before booking opens | Open   |
-| A-17 | Confirm the legal bases (2.2) and the role analysis (processor for P2) with the lawyer                                                                      | {{OWNER}}    | Before booking opens | Open   |
+| Id   | Action                                                                                                                                           | Owner        | Due                  | Status |
+| ---- | ------------------------------------------------------------------------------------------------------------------------------------------------ | ------------ | -------------------- | ------ |
+| A-1  | Sign the HDS hosting contract; run app, database, jobs, storage and backups in the HDS region; keys in the host's secret manager                 | {{OWNER}}    | Before booking opens | Open   |
+| A-2  | External penetration test on staging with synthetic data (security review recommendation 3)                                                      | {{OWNER}}    | Before booking opens | Open   |
+| A-3  | Written breach procedure and register; processor notification target of 48 hours                                                                 | {{OWNER}}    | Before booking opens | Open   |
+| A-4  | Define retention for rate-limit rows, de-identified appointment rows, inactive accounts (reports and removal requests: done, #63)                | {{OWNER}}    | Before booking opens | Open   |
+| A-5  | Implement the one-year deletion of both audit logs by a privileged task (security review I-6): `care.purge_audit_events()`, role `apercura_jobs` | {{OWNER}}    | Before booking opens | Done   |
+| A-6  | Request point-in-time recovery, confirm backup retention, test a restore                                                                         | {{OWNER}}    | Before booking opens | Open   |
+| A-7  | Administrator governance: named list, review of `platform_audit_events`, offboarding                                                             | {{OWNER}}    | Before booking opens | Open   |
+| A-8  | Art. 13 notice for patients on the booking form and in the confirmation email (template for practitioners)                                       | {{OWNER}}    | Before booking opens | Open   |
+| A-9  | Guidance on generic appointment-type names                                                                                                       | {{OWNER}}    | Before booking opens | Open   |
+| A-10 | Tools for practitioners to answer patient requests: per-patient export and early erasure; export of the agenda at the end of the contract        | {{OWNER}}    | {{DUE_DATE}}         | Open   |
+| A-11 | DPO validation of email, `.ics` and feed content (3.6.1, 3.6.2)                                                                                  | {{DPO_NAME}} | Before booking opens | Open   |
+| A-12 | Limit raw IPs in `directory.auth_rate_limit` (Better Auth), or document and bound their retention (sessions: truncated, #63)                     | {{OWNER}}    | {{DUE_DATE}}         | Open   |
+| A-13 | Decide on the map tile provider (self-hosting or documented third party)                                                                         | {{OWNER}}    | {{DUE_DATE}}         | Open   |
+| A-14 | Set `RATE_LIMIT_KEY`, `ALTCHA_HMAC_KEY` and `DATABASE_URL_JOBS` explicitly; check `TRUSTED_PROXY_COUNT`; SMTP TLS is enforced by the code (#63)  | {{OWNER}}    | Before booking opens | Open   |
+| A-15 | Appoint the DPO, register with the CNIL, publish the contact                                                                                     | {{OWNER}}    | Before booking opens | Open   |
+| A-16 | Sign the processor agreement with each practitioner before opening their booking; DPA with the SMTP provider                                     | {{OWNER}}    | Before booking opens | Open   |
+| A-17 | Confirm the legal bases (2.2) and the role analysis (processor for P2) with the lawyer                                                           | {{OWNER}}    | Before booking opens | Open   |
 
 ### 4.2 Residual risks (after planned measures, proposals)
 

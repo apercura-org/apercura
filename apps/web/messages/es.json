@@ -837,7 +837,7 @@
 				"body": [
 					"Datos: correo electrónico, nombre, contraseña (almacenada en forma de hash), segundo factor de autenticación, identidad Pro Santé Connect, documentos justificativos enviados para reclamar una página, miembros del equipo y registro de accesos a los datos de los pacientes.",
 					"Finalidades: gestionar la cuenta, verificar que una página la reclama el profesional correcto y proteger el acceso a los datos de los pacientes. Bases jurídicas: la ejecución de las condiciones de uso (artículo 6.1.b) y el interés legítimo de garantizar la seguridad del servicio (artículo 6.1.f).",
-					"Plazos: la cuenta se conserva hasta su supresión; los documentos justificativos, cifrados, se borran 30 días después de la decisión; el registro de accesos se limitará a un año."
+					"Plazos: la cuenta se conserva hasta su supresión; los documentos justificativos, cifrados, se borran 30 días después de la decisión; el registro de accesos se borra al cabo de un año."
 				]
 			},
 			"patients": {
@@ -853,13 +853,13 @@
 				"heading": "Avisos de error y solicitudes de retirada",
 				"body": [
 					"Datos: el mensaje, el correo electrónico de contacto cuando se facilita y, en una solicitud de retirada, la página afectada. El texto libre se cifra.",
-					"Finalidades: corregir los errores notificados y aplicar las oposiciones. Bases jurídicas: el interés legítimo de publicar información exacta (artículo 6.1.f) y el derecho de oposición (artículo 21). Plazo: el tiempo necesario para tramitar la solicitud; el plazo máximo queda por fijar durante la revisión jurídica."
+					"Finalidades: corregir los errores notificados y aplicar las oposiciones. Bases jurídicas: el interés legítimo de publicar información exacta (artículo 6.1.f) y el derecho de oposición (artículo 21). Plazo: el tiempo necesario para tramitar la solicitud; después, un aviso de error se suprime 6 meses después de su cierre y una solicitud de retirada un año después de su decisión; tras una oposición, solo se conserva el número RPPS de la página, para que nunca vuelva a publicarse."
 				]
 			},
 			"security": {
 				"heading": "Seguridad y datos técnicos",
 				"body": [
-					"Las sesiones de los profesionales registran la dirección IP y el navegador utilizados, para proteger su cuenta. Para limitar los abusos, el sitio transforma las direcciones IP mediante una función con clave secreta antes de contabilizarlas; solo el límite de intentos de inicio de sesión las conserva durante su ventana de tiempo. El proveedor de alojamiento conserva sus propios registros técnicos conforme a su contrato."
+					"Las sesiones de los profesionales registran una dirección IP truncada (la red, no el dispositivo) y el navegador utilizados, para proteger su cuenta. Para limitar los abusos, el sitio transforma las direcciones IP mediante una función con clave secreta antes de contabilizarlas; solo el límite de intentos de inicio de sesión las conserva durante su ventana de tiempo. El proveedor de alojamiento conserva sus propios registros técnicos conforme a su contrato."
 				]
 			},
 			"recipients": {
@@ -1860,6 +1860,7 @@
 				"export": "Descargar mis datos",
 				"deleteHeading": "Eliminar su cuenta",
 				"deleteBody": "Se eliminan su cuenta, sus sesiones, sus reclamaciones y sus documentos. Su página vuelve a los datos del registro: sin reclamar, sin su contenido ni su foto.",
+				"closeEffect": "Cerrar una consulta cancela sus próximas citas (se avisa a los pacientes por correo electrónico), revoca sus enlaces de calendario y borra los datos de sus pacientes en un día. El registro de accesos se conserva un año.",
 				"practiceChoice": "¿Qué ocurre con {name}?",
 				"close": "Cerrar la consulta: sus miembros pierden el acceso",
 				"transfer": "Transferir a {name} ({email})",

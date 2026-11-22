@@ -71,6 +71,8 @@ export default defineConfig({
 				// Booking tests send X-Forwarded-For so each one has its own rate-limit bucket;
 				// requests without it share one bucket, as with no proxy.
 				TRUSTED_PROXY_COUNT: "1",
+				// Mailpit catches the emails, without STARTTLS: allowed in tests only.
+				SMTP_ALLOW_INSECURE: "true",
 				...PSC,
 				...E2E_BOOKING_ENV,
 			},
@@ -87,7 +89,7 @@ export default defineConfig({
 		{
 			command: `bun run dev --port ${DEV_PORT}`,
 			url: `http://localhost:${DEV_PORT}/_ui`,
-			env: { SKIP_ENV_VALIDATION: "1" },
+			env: { SKIP_ENV_VALIDATION: "1", SMTP_ALLOW_INSECURE: "true" },
 			reuseExistingServer: !isCI,
 			timeout: 180_000,
 		},

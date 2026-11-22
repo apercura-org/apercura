@@ -109,6 +109,22 @@ export async function ensureOrganizationKey(db: Database, organizationId: string
 	}
 }
 
+/**
+ * Deletes every data key of the organization and forgets them in this process: a closed
+ * practice (`booking/closure.ts`), once nothing encrypted with them is left.
+ */
+export async function deleteOrganizationKeys(
+	db: Executor,
+	organizationId: string,
+): Promise<number> {
+	const deleted = await db
+		.delete(organizationKeys)
+		.where(eq(organizationKeys.organizationId, organizationId))
+		.returning({ version: organizationKeys.version });
+	dataKeyCache.delete(organizationId);
+	return deleted.length;
+}
+
 /** The organization's current data key; {@link ensureOrganizationKey} must have run first. */
 export async function activeDataKey(db: Executor, organizationId: string): Promise<DataKey> {
 	const [current] = await dataKeys(db, organizationId);

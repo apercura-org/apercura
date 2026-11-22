@@ -837,7 +837,7 @@
 				"body": [
 					"Daten: E-Mail-Adresse, Name, Passwort (gehasht gespeichert), zweiter Authentifizierungsfaktor, Identität über Pro Santé Connect, zur Beanspruchung einer Seite eingereichte Nachweise, Teammitglieder und das Protokoll der Zugriffe auf Patientendaten.",
 					"Zwecke: das Konto verwalten, prüfen, dass eine Seite von der richtigen Gesundheitsfachkraft beansprucht wird, und den Zugriff auf Patientendaten schützen. Rechtsgrundlagen: die Erfüllung der Nutzungsbedingungen (Artikel 6 Abs. 1 lit. b) und das berechtigte Interesse an der Absicherung des Dienstes (Artikel 6 Abs. 1 lit. f).",
-					"Speicherdauer: Das Konto wird bis zu seiner Löschung aufbewahrt; die Nachweise werden verschlüsselt gespeichert und 30 Tage nach der Entscheidung gelöscht; das Zugriffsprotokoll wird auf ein Jahr begrenzt."
+					"Speicherdauer: Das Konto wird bis zu seiner Löschung aufbewahrt; die Nachweise werden verschlüsselt gespeichert und 30 Tage nach der Entscheidung gelöscht; das Zugriffsprotokoll wird nach einem Jahr gelöscht."
 				]
 			},
 			"patients": {
@@ -853,13 +853,13 @@
 				"heading": "Fehlermeldungen und Anträge auf Entfernung",
 				"body": [
 					"Daten: die Nachricht, die Kontakt-E-Mail-Adresse, sofern angegeben, und bei einem Antrag auf Entfernung die betroffene Seite. Der Freitext wird verschlüsselt.",
-					"Zwecke: gemeldete Fehler korrigieren und Widersprüche umsetzen. Rechtsgrundlagen: das berechtigte Interesse, zutreffende Informationen zu veröffentlichen (Artikel 6 Abs. 1 lit. f), und das Widerspruchsrecht (Artikel 21). Speicherdauer: die zur Bearbeitung des Antrags nötige Zeit; die Höchstdauer wird bei der juristischen Prüfung noch festgelegt."
+					"Zwecke: gemeldete Fehler korrigieren und Widersprüche umsetzen. Rechtsgrundlagen: das berechtigte Interesse, zutreffende Informationen zu veröffentlichen (Artikel 6 Abs. 1 lit. f), und das Widerspruchsrecht (Artikel 21). Speicherdauer: die zur Bearbeitung des Antrags nötige Zeit; danach wird eine Fehlermeldung 6 Monate nach ihrem Abschluss und ein Antrag auf Entfernung ein Jahr nach der Entscheidung gelöscht; nach einem Widerspruch wird nur die RPPS-Nummer der Seite aufbewahrt, damit sie nie wieder veröffentlicht wird."
 				]
 			},
 			"security": {
 				"heading": "Sicherheit und technische Daten",
 				"body": [
-					"Die Sitzungen der Gesundheitsfachkräfte speichern die verwendete IP-Adresse und den verwendeten Browser, um ihr Konto zu schützen. Um Missbrauch zu begrenzen, wandelt die Website IP-Adressen vor dem Zählen durch eine Funktion mit geheimem Schlüssel um; nur die Begrenzung der Anmeldeversuche bewahrt sie für die Dauer ihres Zeitfensters auf. Der Hosting-Anbieter bewahrt seine eigenen technischen Protokolle gemäß seinem Vertrag auf."
+					"Die Sitzungen der Gesundheitsfachkräfte speichern eine gekürzte IP-Adresse (das Netz, nicht das Gerät) und den verwendeten Browser, um ihr Konto zu schützen. Um Missbrauch zu begrenzen, wandelt die Website IP-Adressen vor dem Zählen durch eine Funktion mit geheimem Schlüssel um; nur die Begrenzung der Anmeldeversuche bewahrt sie für die Dauer ihres Zeitfensters auf. Der Hosting-Anbieter bewahrt seine eigenen technischen Protokolle gemäß seinem Vertrag auf."
 				]
 			},
 			"recipients": {
@@ -1860,6 +1860,7 @@
 				"export": "Meine Daten herunterladen",
 				"deleteHeading": "Ihr Konto löschen",
 				"deleteBody": "Ihr Konto, Ihre Sitzungen, Beanspruchungen und Dokumente werden gelöscht. Ihre Seite kehrt zu den Angaben des Registers zurück: nicht beansprucht, ohne Ihre Inhalte oder Ihr Foto.",
+				"closeEffect": "Wird eine Praxis geschlossen, werden ihre anstehenden Termine abgesagt (die Patientinnen und Patienten werden per E-Mail benachrichtigt), ihre Kalenderlinks gesperrt und die Daten ihrer Patienten innerhalb eines Tages gelöscht. Das Zugriffsprotokoll wird ein Jahr lang aufbewahrt.",
 				"practiceChoice": "Was geschieht mit {name}?",
 				"close": "Praxis schließen: Die Mitglieder verlieren den Zugriff",
 				"transfer": "An {name} ({email}) übergeben",

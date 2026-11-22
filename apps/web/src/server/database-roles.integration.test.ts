@@ -7,12 +7,16 @@
  *   no claim, and cannot rewrite what practitioners own.
  * - apercura_readonly (support, audits) writes nothing and reads no secret.
  * - apercura_app cannot rewrite or erase the audit logs.
+ * - apercura_jobs (audit log retention) holds no table privilege: it may only
+ *   call care.purge_audit_events(), which nobody else may call.
+ * - practitioner sessions keep a truncated IP, unreadable by the read-only role.
  *
  * The secret-column check is a scan, not a list: a new column whose name looks
  * like a secret fails it until a migration keeps it from the read-only role.
  */
 import { createDb, type Database } from "@apercura/db";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
+import { truncateIp } from "./auth/client-ip";
 
 const url = process.env.DATABASE_URL_TEST;
 
@@ -174,6 +178,71 @@ describe.skipIf(!url)("database roles (database)", () => {
 				);
 			}
 		}
+	});
+
+	it("hides the session's address and browser from the read-only role", async () => {
+		for (const column of ["ip_address", "user_agent"]) {
+			expect(
+				await canColumn("apercura_readonly", "directory.session", column, "SELECT"),
+				column,
+			).toBe(false);
+		}
+		expect(await canColumn("apercura_readonly", "directory.session", "expires_at", "SELECT")).toBe(
+			true,
+		);
+	});
+
+	it("truncates IPs in SQL (migration 0016) exactly as the app does", async () => {
+		const samples = [
+			"203.0.113.77",
+			"::ffff:198.51.100.9",
+			"2001:db8:1:2::5",
+			"2001:0DB8:0001:0002:0003:0004:0005:0006",
+			"2001:db8::1",
+			"2001:0:0:1::1",
+			"0:db8:1::",
+			"::1",
+			"::ffff:c633:6409",
+			"2001:db8:1::203.0.113.7",
+			"fe80::1%eth0",
+			"300.1.1.1",
+			"junk",
+		];
+		const rows = await db.$client<{ ip: string; truncated: string | null }[]>`
+			SELECT ip, directory.truncate_ip(ip) AS truncated FROM unnest(${samples}::text[]) AS ip
+		`;
+		expect(rows.map((row) => [row.ip, row.truncated])).toEqual(
+			samples.map((ip) => [ip, truncateIp(ip)]),
+		);
+	});
+
+	it("lets only apercura_jobs purge the audit logs, and nothing else", async () => {
+		const callers = await db.$client<{ role: string; ok: boolean }[]>`
+			SELECT r AS role, has_function_privilege(r, 'care.purge_audit_events(integer)', 'EXECUTE') AS ok
+			FROM unnest(ARRAY['apercura_jobs', 'apercura_app', 'apercura_readonly', 'apercura_etl', 'public']) AS r
+		`;
+		expect(Object.fromEntries(callers.map((row) => [row.role, row.ok]))).toEqual({
+			apercura_jobs: true,
+			apercura_app: false,
+			apercura_readonly: false,
+			apercura_etl: false,
+			public: false,
+		});
+		const granted: string[] = [];
+		for (const { schema, table } of tables) {
+			for (const privilege of ["SELECT", "INSERT", "UPDATE", "DELETE", "TRUNCATE"]) {
+				if (await can("apercura_jobs", qualified(schema, table), privilege)) {
+					granted.push(`${schema}.${table} ${privilege}`);
+				}
+			}
+		}
+		expect(granted).toEqual([]);
+		const [definer] = await db.$client<{ secdef: boolean; config: string[] | null }[]>`
+			SELECT prosecdef AS secdef, proconfig AS config FROM pg_proc
+			WHERE oid = 'care.purge_audit_events(integer)'::regprocedure
+		`;
+		expect(definer?.secdef).toBe(true);
+		expect(definer?.config).toEqual(["search_path=pg_catalog, pg_temp"]);
 	});
 
 	it("leaves nothing to PUBLIC on the application schemas", async () => {
