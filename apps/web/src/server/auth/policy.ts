@@ -18,6 +18,22 @@ export const MFA_SESSION_PATHS: Readonly<Record<string, MfaMethod>> = {
 	"/passkey/verify-authentication": "passkey",
 };
 
+/** Better Auth's own invitation and member endpoints, replaced by tRPC `team.*`. */
+export const TEAM_PATHS = [
+	"/organization/invite-member",
+	"/organization/accept-invitation",
+	"/organization/reject-invitation",
+	"/organization/cancel-invitation",
+	"/organization/get-invitation",
+	"/organization/list-invitations",
+	"/organization/list-user-invitations",
+	"/organization/remove-member",
+	"/organization/update-member-role",
+	"/organization/leave",
+	"/organization/update",
+	"/organization/delete",
+] as const;
+
 /** Endpoints that answer 404 over HTTP. */
 export const DISABLED_PATHS = [
 	// Email or SMS codes as a "second factor" are not a second factor.
@@ -35,6 +51,9 @@ export const DISABLED_PATHS = [
 	"/delete-user",
 	// Session fields are written by the server only.
 	"/update-session",
+	// Team changes go through tRPC `team.*` only, which re-reads the membership, requires a
+	// second factor and keeps invitations to 48 hours: one path, one set of rules.
+	...TEAM_PATHS,
 ];
 
 /** Endpoints that always need a session with a second factor. */

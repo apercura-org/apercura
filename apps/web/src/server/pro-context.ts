@@ -2,6 +2,7 @@ import "server-only";
 import { member, practitioners, user } from "@apercura/db/schema";
 import { and, eq } from "drizzle-orm";
 import { cache } from "react";
+import { ORGANIZATION_ROLES } from "./auth/access";
 import { getDb } from "./db";
 
 /**
@@ -35,8 +36,22 @@ export const getProContext = cache(async (userId: string) => {
 		.from(user)
 		.where(eq(user.id, userId))
 		.limit(1);
+	const roles = (role: string) => role.split(",").map((name) => name.trim());
 	const editable = pages.filter((page) =>
-		page.role.split(",").some((role) => ["owner", "practitioner"].includes(role.trim())),
+		roles(page.role).some((role) => ["owner", "practitioner"].includes(role)),
 	);
-	return { pages: editable, isPlatformAdmin: row?.isPlatformAdmin === true };
+	// Every practice with an agenda the person may run (assistants included).
+	const practices = pages
+		.filter((page) => roles(page.role).some((role) => ORGANIZATION_ROLES.includes(role as never)))
+		.map((page) => ({
+			...page,
+			isOwner: roles(page.role).includes("owner"),
+		}));
+	return {
+		pages: editable,
+		practices,
+		/** The practice the agenda pages show (one per person in v1: the first one). */
+		practice: practices[0] ?? null,
+		isPlatformAdmin: row?.isPlatformAdmin === true,
+	};
 });

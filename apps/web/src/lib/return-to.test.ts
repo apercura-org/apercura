@@ -16,6 +16,16 @@ describe("return after sign-in", () => {
 		expect(serializeReturnTo(claim as NonNullable<typeof claim>)).toBe(`/pro/revendiquer/${id}`);
 	});
 
+	it("accepts one team invitation, so an invited person comes back after signing up", () => {
+		const id = "0b6f6f5e-4d1c-4c55-9a57-3a2f7d8e9c10";
+		const target = parseReturnTo(`/pro/invitation/${id}`);
+		expect(target).toEqual({ pathname: "/pro/invitation/[id]", params: { id } });
+		expect(serializeReturnTo(target as NonNullable<typeof target>)).toBe(`/pro/invitation/${id}`);
+		expect(parseReturnTo(`/en/pro/invitation/${id}`)?.pathname).toBe("/pro/invitation/[id]");
+		expect(parseReturnTo(`/pro/invitation/${id}?x=1`)).toBeNull();
+		expect(parseReturnTo("/pro/invitation/not-an-id")).toBeNull();
+	});
+
 	it("refuses anything else, including open redirects", () => {
 		for (const value of [
 			"https://evil.example/pro/revendiquer?rpps=19999990047",

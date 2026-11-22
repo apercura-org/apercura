@@ -1732,7 +1732,11 @@
 				"security": "Sécurité",
 				"page": "Votre page",
 				"adminClaims": "Revendications",
-				"adminReports": "Signalements"
+				"adminReports": "Signalements",
+				"today": "Aujourd’hui",
+				"agenda": "Agenda",
+				"team": "Équipe",
+				"menu": "Menu"
 			},
 			"practicesHeading": "Vos cabinets",
 			"columns": {
@@ -1751,7 +1755,13 @@
 			"claimsHeading": "Votre page et vos revendications",
 			"editPage": "Modifier la page",
 			"openClaim": "Ouvrir la revendication",
-			"adminRunningHead": "Administration"
+			"adminRunningHead": "Administration",
+			"agendaHeading": "Agenda",
+			"agendaBody": "Votre journée, votre semaine, les demandes à traiter et les réglages de prise de rendez-vous.",
+			"agendaLink": "Ouvrir l’agenda du jour",
+			"invitationsHeading": "Invitations",
+			"invitationBody": "{practice} vous invite à rejoindre son équipe.",
+			"invitationLink": "Répondre à l’invitation"
 		},
 		"roles": {
 			"owner": "Titulaire",
@@ -1847,6 +1857,20 @@
 			"body": [
 				"Nous n’avons pas pu confirmer votre demande de retrait : la page est de nouveau affichée. Motif : {reason}",
 				"Si vous êtes le praticien, vous pouvez aussi revendiquer la page et la retirer vous-même depuis votre espace."
+			]
+		},
+		"teamInvitation": {
+			"subject": "{inviter} vous invite à rejoindre {practice}",
+			"title": "Rejoindre l’équipe de {practice}",
+			"body": [
+				"Bonjour,",
+				"{inviter} vous invite à rejoindre {practice} sur Apercura, en tant que {role}.",
+				"Pour rejoindre l’équipe, connectez-vous ou créez votre compte avec cette adresse e-mail, puis configurez un second facteur (application d’authentification ou clé d’accès) : il protège les données des patients que vous verrez."
+			],
+			"action": "Rejoindre l’équipe",
+			"notes": [
+				"Cette invitation est valable 48 heures.",
+				"Vous ne l’attendiez pas ? Ignorez cet e-mail : rien ne se passe sans vous."
 			]
 		}
 	},
@@ -2088,17 +2112,18 @@
 			"booking": {
 				"label": "Horaires et prise de rendez-vous",
 				"title": "Horaires et prise de rendez-vous",
-				"lead": "La prise de rendez-vous en ligne ouvre dans une prochaine version. Avant qu’elle puisse ouvrir, votre page doit indiquer vos honoraires et les moyens de paiement acceptés.",
+				"lead": "Les patients réservent sur votre page dès que votre agenda est ouvert. Avant qu’il puisse ouvrir, votre page doit indiquer vos honoraires et les moyens de paiement acceptés.",
 				"fees": "Honoraires",
 				"payments": "Moyens de paiement",
 				"done": "Indiqués",
 				"todo": "À compléter",
 				"deontology": "Article R.4127-53 du code de la santé publique : le médecin qui présente son activité en ligne indique ses honoraires et les moyens de paiement acceptés.",
 				"editFees": "Indiquer honoraires et moyens de paiement",
-				"settingsNote": "Agendas, horaires et motifs se règlent avec la prise de rendez-vous en ligne, depuis cet espace.",
+				"settingsNote": "Lieux, horaires et motifs se règlent dans les réglages de prise de rendez-vous.",
 				"waitingPeriod": "Période d’attente après la vérification",
 				"waitingEnds": "La période d’attente de 7 jours se termine le {date}",
-				"noWaiting": "Aucune"
+				"noWaiting": "Aucune",
+				"settingsLink": "Régler horaires et prise de rendez-vous"
 			},
 			"publish": {
 				"label": "Publier",
@@ -2394,6 +2419,486 @@
 			"claimedLink": "Se connecter à l’espace praticien",
 			"alreadyTitle": "Une demande de retrait est en cours de vérification",
 			"alreadyBody": "La page est déjà masquée."
+		}
+	},
+	"Agenda": {
+		"common": {
+			"accessLogged": "Les données des patients de cette page sont déchiffrées pour vous, et chaque accès est enregistré.",
+			"accessLogLink": "Journal des accès",
+			"loadFailed": "L’agenda n’a pas pu être chargé. Vérifiez votre connexion, puis réessayez.",
+			"retry": "Réessayer",
+			"close": "Fermer",
+			"keep": "Garder",
+			"failed": "Cela n’a pas fonctionné. Réessayez dans un instant.",
+			"refused": "Ce changement n’est plus possible : l’agenda a changé entre-temps.",
+			"patient": "Patient",
+			"newPatient": "Première consultation",
+			"unreachable": "Les e-mails n’arrivent pas à ce patient : appelez-le.",
+			"emailUnconfirmed": "Adresse e-mail en attente de confirmation par le patient",
+			"noPhone": "Pas de téléphone",
+			"noEmail": "Pas d’adresse e-mail",
+			"placeLabel": "Lieu",
+			"placeOption": "{place}, {city}",
+			"status": {
+				"held": "Réservation en cours",
+				"pending": "Demande à traiter",
+				"confirmed": "Confirmé",
+				"declined": "Refusé",
+				"expired": "Expiré",
+				"cancelled_by_patient": "Annulé par le patient",
+				"cancelled_by_practice": "Annulé par le cabinet",
+				"no_show": "Absent",
+				"completed": "Passé"
+			},
+			"block": "Plage bloquée",
+			"source": {
+				"online": "Réservé en ligne",
+				"practice": "Ajouté par le cabinet"
+			},
+			"timeRange": "{start} à {end}",
+			"noPractice": {
+				"title": "Pas encore d’agenda",
+				"body": "L’agenda s’ouvre une fois votre page revendiquée et vérifiée, ou quand un cabinet vous ajoute à son équipe.",
+				"action": "Retour à votre espace"
+			},
+			"noCalendar": {
+				"title": "Aucun lieu réglé pour l’instant",
+				"bodyOwner": "Réglez le lieu où vous recevez : horaires et motifs de rendez-vous.",
+				"bodyStaff": "Le titulaire de la page n’a pas encore réglé l’agenda.",
+				"action": "Régler la prise de rendez-vous"
+			}
+		},
+		"today": {
+			"metaTitle": "Aujourd’hui",
+			"title": "Aujourd’hui",
+			"next": {
+				"heading": "Prochain patient",
+				"none": "Plus de rendez-vous aujourd’hui.",
+				"at": "À {time}",
+				"empty": "Aucun rendez-vous aujourd’hui."
+			},
+			"day": {
+				"heading": "Les rendez-vous du jour",
+				"empty": "Aucun rendez-vous aujourd’hui.",
+				"columns": {
+					"time": "Heure",
+					"entry": "Rendez-vous",
+					"status": "État",
+					"actions": "Actions"
+				}
+			},
+			"requests": {
+				"heading": "Demandes à traiter",
+				"lead": "Les patients attendent votre réponse. Sans réponse, une demande expire à l’heure indiquée.",
+				"empty": "Aucune demande en attente.",
+				"deadline": "Répondre avant le {date}",
+				"approve": "Accepter",
+				"decline": "Refuser",
+				"approved": "Demande acceptée. Le patient reçoit une confirmation.",
+				"declined": "Demande refusée. Le patient est prévenu par e-mail."
+			},
+			"actions": {
+				"cancel": "Annuler…",
+				"noShow": "Absent",
+				"noShowDone": "Marqué absent.",
+				"block": "Bloquer une plage",
+				"week": "Voir la semaine",
+				"add": "Ajouter un rendez-vous"
+			}
+		},
+		"week": {
+			"metaTitle": "Agenda",
+			"title": "Agenda",
+			"gridLabel": "Semaine du {date}",
+			"dayGridLabel": "{date}",
+			"previous": "Semaine précédente",
+			"next": "Semaine suivante",
+			"previousDay": "Jour précédent",
+			"nextDay": "Jour suivant",
+			"current": "Aujourd’hui",
+			"viewLabel": "Affichage",
+			"viewWeek": "Semaine",
+			"viewDay": "Jour",
+			"timeColumn": "Heure",
+			"free": "{day}, {time}, libre",
+			"freeClosed": "{day}, {time}, hors des horaires",
+			"now": "Maintenant",
+			"entry": "{day}, {start} à {end}, {status}",
+			"keyboardHint": "Les flèches parcourent la semaine, Entrée ajoute ou ouvre, Page précédente et Page suivante changent de semaine.",
+			"settings": "Réglages de prise de rendez-vous",
+			"legend": {
+				"label": "Légende",
+				"booked": "Confirmé",
+				"pending": "Demande",
+				"held": "Réservation en cours",
+				"block": "Bloqué"
+			},
+			"loading": "Chargement de l’agenda"
+		},
+		"add": {
+			"title": "Ajouter à l’agenda",
+			"when": "{date}, {time}",
+			"kindLabel": "Que voulez-vous ajouter ?",
+			"kindAppointment": "Un rendez-vous",
+			"kindBlock": "Une plage bloquée",
+			"date": "Date",
+			"start": "Début",
+			"end": "Fin",
+			"type": "Motif",
+			"firstName": "Prénom",
+			"lastName": "Nom",
+			"email": "E-mail (facultatif)",
+			"emailHint": "Le premier e-mail demande seulement au patient de confirmer cette adresse. Le détail suit une fois l’adresse confirmée : une faute de frappe n’envoie jamais rien à un inconnu.",
+			"phone": "Téléphone (facultatif)",
+			"submit": "Ajouter le rendez-vous",
+			"submitBlock": "Bloquer cette plage",
+			"pending": "Ajout…",
+			"taken": "Ce créneau est déjà pris. Choisissez un autre horaire.",
+			"invalid": "Vérifiez les champs signalés.",
+			"invalidEmail": "Indiquez une adresse comme nom@exemple.fr, ou laissez vide.",
+			"invalidPhone": "Indiquez un numéro comme 06 12 34 56 78, ou laissez vide.",
+			"required": "Obligatoire.",
+			"endBeforeStart": "La fin doit venir après le début.",
+			"created": "Rendez-vous ajouté.",
+			"blocked": "Plage bloquée.",
+			"outsideHours": "Hors des horaires d’ouverture : vous pouvez quand même l’ajouter."
+		},
+		"entry": {
+			"when": "Quand",
+			"type": "Motif",
+			"patient": "Patient",
+			"email": "E-mail",
+			"phone": "Téléphone",
+			"status": "État",
+			"source": "Origine",
+			"cancel": "Annuler le rendez-vous",
+			"removeBlock": "Retirer la plage bloquée",
+			"noShow": "Absent",
+			"approve": "Accepter la demande",
+			"decline": "Refuser la demande",
+			"message": "Message au patient (facultatif)",
+			"messageHint": "Envoyé avec l’e-mail d’annulation, si le patient a confirmé son adresse.",
+			"cancelTitle": "Annuler ce rendez-vous ?",
+			"cancelBody": "Le créneau redevient libre.",
+			"confirmCancel": "Annuler le rendez-vous",
+			"cancelled": "Rendez-vous annulé.",
+			"blockRemoved": "Plage bloquée retirée."
+		},
+		"block": {
+			"title": "Bloquer une plage",
+			"lead": "Une réunion, une absence : les patients ne peuvent pas réserver cette plage.",
+			"submit": "Bloquer cette plage"
+		},
+		"settings": {
+			"metaTitle": "Réglages de prise de rendez-vous",
+			"title": "Prise de rendez-vous",
+			"lead": "Lieux, horaires, motifs et règles de la prise de rendez-vous en ligne.",
+			"ownerOnly": {
+				"title": "Seul le titulaire règle la prise de rendez-vous",
+				"body": "Votre rôle vous permet de tenir l’agenda. Les horaires et les règles de réservation sont réglés par le titulaire de la page.",
+				"action": "Ouvrir l’agenda"
+			},
+			"gate": {
+				"heading": "Prise de rendez-vous en ligne",
+				"ready": "Votre page remplit les conditions : vous pouvez ouvrir la prise de rendez-vous en ligne.",
+				"missing": "Avant que les patients puissent réserver en ligne :",
+				"notVerified": "Votre page doit être vérifiée.",
+				"fees": "Indiquez vos honoraires sur votre page.",
+				"paymentMethods": "Indiquez les moyens de paiement acceptés sur votre page.",
+				"waitingPeriod": "Votre page a été vérifiée sans Pro Santé Connect : la prise de rendez-vous pourra ouvrir le {date}.",
+				"noType": "Proposez au moins un motif en ligne.",
+				"noHours": "Ajoutez des horaires d’ouverture ou une ouverture exceptionnelle.",
+				"editPage": "Indiquer honoraires et moyens de paiement",
+				"deontology": "Article R.4127-53 du code de la santé publique : le médecin qui présente son activité en ligne indique ses honoraires et les moyens de paiement acceptés.",
+				"open": "Ouvrir la prise de rendez-vous en ligne",
+				"pause": "Suspendre la prise de rendez-vous en ligne",
+				"opened": "La prise de rendez-vous en ligne est ouverte. Les patients peuvent réserver sur votre page.",
+				"paused": "La prise de rendez-vous en ligne est suspendue. L’agenda reste utilisable pour les rendez-vous que vous ajoutez.",
+				"statusLabel": "État",
+				"status": {
+					"draft": "Pas encore ouverte",
+					"open": "Ouverte",
+					"paused": "Suspendue"
+				}
+			},
+			"places": {
+				"heading": "Lieux",
+				"lead": "Chaque lieu a son propre agenda, dans le fuseau horaire de son département.",
+				"timeZone": "Fuseau horaire : {zone}",
+				"noZone": "Département inconnu : ce lieu ne peut pas encore prendre de rendez-vous.",
+				"create": "Régler ce lieu",
+				"presetsNote": "Il démarre avec les motifs habituels de votre spécialité : {names}.",
+				"none": "Aucun lieu de votre page ne peut prendre de rendez-vous. Ajoutez l’adresse de votre cabinet dans l’éditeur de page.",
+				"addPlace": "Ajouter un lieu dans l’éditeur",
+				"choose": "Lieu à régler"
+			},
+			"types": {
+				"heading": "Motifs de rendez-vous",
+				"lead": "Préférez des noms neutres : un motif peut révéler une information de santé.",
+				"name": "Nom",
+				"duration": "Durée (minutes)",
+				"before": "Temps libre avant (minutes)",
+				"after": "Temps libre après (minutes)",
+				"audience": "Qui peut le réserver",
+				"audienceAll": "Tous les patients",
+				"audienceNew": "Nouveaux patients seulement",
+				"audienceExisting": "Patients déjà suivis",
+				"active": "Proposé en ligne",
+				"save": "Enregistrer",
+				"saved": "Motif enregistré.",
+				"add": "Ajouter un motif",
+				"newName": "Consultation",
+				"summary": "{duration} min",
+				"inactive": "Non proposé en ligne"
+			},
+			"rules": {
+				"heading": "Horaires de la semaine",
+				"lead": "Les heures où les patients peuvent réserver, jour par jour. Plusieurs plages par jour sont possibles (une pause déjeuner, par exemple).",
+				"days": {
+					"1": "Lundi",
+					"2": "Mardi",
+					"3": "Mercredi",
+					"4": "Jeudi",
+					"5": "Vendredi",
+					"6": "Samedi",
+					"7": "Dimanche"
+				},
+				"add": "Ajouter une plage",
+				"addFor": "Ajouter une plage le {day}",
+				"remove": "Retirer",
+				"removeRange": "Retirer la plage de {from} à {to} le {day}",
+				"from": "De",
+				"to": "À",
+				"rangeLabel": "{day}, plage {n}",
+				"closed": "Fermé",
+				"copy": "Copier sur les autres jours de semaine",
+				"copyFor": "Copier sur les autres jours de semaine, depuis le {day}",
+				"copied": "{day} copié sur les autres jours de semaine. Enregistrez pour l’appliquer.",
+				"template": "Partir d’un modèle",
+				"templateMornings": "Matins, 8 h 30 à 12 h 30",
+				"templateDays": "Journées, 9 h à 12 h 30 et 14 h à 18 h 30",
+				"save": "Enregistrer les horaires",
+				"saved": "Horaires enregistrés.",
+				"invalid": "Le {day}, chaque plage doit finir après son début sans chevaucher une autre.",
+				"columns": {
+					"day": "Jour",
+					"actions": "Actions"
+				}
+			},
+			"exceptions": {
+				"heading": "Fermetures et ouvertures exceptionnelles",
+				"lead": "Congés, absence ou matinée en plus : elles l’emportent sur les horaires de la semaine.",
+				"kind": "Type",
+				"kindClosed": "Fermeture (congés, absence)",
+				"kindOpen": "Ouverture exceptionnelle",
+				"span": "Durée",
+				"spanDays": "Journées entières",
+				"spanTime": "Heures d’une journée",
+				"from": "Du",
+				"until": "Au (inclus)",
+				"date": "Date",
+				"start": "De",
+				"end": "À",
+				"add": "Ajouter",
+				"added": "Ajouté.",
+				"empty": "Aucune fermeture ni ouverture exceptionnelle.",
+				"remove": "Retirer",
+				"removeLabel": "Retirer : {label}",
+				"closedDays": "Fermé du {from} au {until}",
+				"closedTime": "Fermé le {date}, de {from} à {to}",
+				"openDays": "Ouvert du {from} au {until}",
+				"openTime": "Ouvert le {date}, de {from} à {to}",
+				"invalid": "La fin doit venir après le début.",
+				"closedDay": "Fermé le {date}",
+				"openDay": "Ouvert le {date}"
+			},
+			"booking": {
+				"heading": "Règles de réservation en ligne",
+				"minNotice": "Délai minimal (heures)",
+				"minNoticeHint": "Les patients ne peuvent pas réserver un créneau plus proche.",
+				"horizon": "Réservation jusqu’à (jours)",
+				"horizonHint": "Jusqu’où dans l’avenir les patients peuvent réserver.",
+				"step": "Écart entre deux débuts possibles (minutes)",
+				"manual": "Valider chaque demande à la main",
+				"manualHint": "Les demandes attendent votre réponse jusqu’à 48 heures.",
+				"newPatients": "Accepter de nouveaux patients",
+				"cutoff": "Annulation en ligne jusqu’à (heures avant)",
+				"requirePhone": "Demander un numéro de téléphone",
+				"askFirstVisit": "Demander s’il s’agit d’une première consultation",
+				"retention": "Effacer les données des patients après (jours)",
+				"retentionHint": "Entre 30 et 365 jours après le rendez-vous. Apercura n’est pas le dossier médical.",
+				"instructions": "Consignes affichées à la réservation (facultatif)",
+				"instructionsHint": "Texte simple : l’entrée, ce qu’il faut apporter.",
+				"save": "Enregistrer les règles",
+				"saved": "Règles de réservation enregistrées.",
+				"invalid": "Vérifiez les valeurs signalées."
+			},
+			"feed": {
+				"heading": "Flux d’agenda privé",
+				"lead": "Suivez cet agenda dans Google Agenda, Calendrier d’Apple ou Thunderbird. Toute personne qui a le lien peut le lire : gardez-le pour vous.",
+				"off": "Aucun lien de flux actif.",
+				"on": "Un lien de flux est actif depuis le {date}.",
+				"create": "Créer un lien de flux",
+				"rotate": "Remplacer le lien",
+				"revoke": "Désactiver le flux",
+				"url": "Lien du flux",
+				"urlHint": "Affiché une seule fois : copiez-le maintenant dans votre application d’agenda. Le remplacer coupe l’ancien lien.",
+				"fullNames": "Afficher le nom complet des patients dans le flux",
+				"fullNamesHint": "Désactivé par défaut : le flux montre alors le motif et les initiales seulement, car les serveurs de votre fournisseur d’agenda le lisent.",
+				"revoked": "Le flux est désactivé : l’ancien lien ne fonctionne plus.",
+				"saved": "Réglage du flux enregistré."
+			},
+			"logLink": "Voir qui a consulté les données des patients",
+			"index": "Sur cette page"
+		},
+		"log": {
+			"metaTitle": "Journal des accès",
+			"title": "Journal des accès",
+			"lead": "Chaque déchiffrement de données de patients : qui, quand, pourquoi et combien de dossiers. Personne ne peut le modifier ni l’effacer.",
+			"ownerOnly": {
+				"title": "Seul le titulaire consulte le journal des accès",
+				"body": "Le journal des accès du cabinet est réservé au titulaire de la page."
+			},
+			"columns": {
+				"when": "Quand",
+				"who": "Qui",
+				"what": "Quoi",
+				"why": "Pourquoi",
+				"records": "Dossiers"
+			},
+			"actor": {
+				"patient": "Le patient",
+				"system": "Apercura (tâche automatique)",
+				"unknown": "Ancien membre"
+			},
+			"action": {
+				"decrypt": "Lecture",
+				"alert": "Alerte",
+				"other": "{action}"
+			},
+			"purpose": {
+				"agenda_list": "Agenda",
+				"notify": "Envoi d’un e-mail",
+				"manage": "Page du patient",
+				"ics_feed": "Flux d’agenda",
+				"decrypt_volume": "Plus de 500 dossiers lus en une heure",
+				"other": "{purpose}"
+			},
+			"records": "{count, plural, one {# dossier} other {# dossiers}}",
+			"empty": "Aucun accès pour l’instant.",
+			"more": "Afficher les entrées plus anciennes",
+			"alert": "Le {date}, {name} a lu plus de 500 dossiers de patients en une heure. Vérifiez que c’était attendu ; sinon, retirez son accès et changez votre mot de passe."
+		},
+		"feed": {
+			"name": "Agenda Apercura",
+			"block": "Bloqué",
+			"pending": "[Demande]",
+			"appointment": "Rendez-vous"
+		}
+	},
+	"Team": {
+		"metaTitle": "Équipe",
+		"title": "Équipe",
+		"lead": "Invitez les personnes qui tiennent votre agenda. Chacune se connecte avec son propre compte et un second facteur.",
+		"ownerOnly": {
+			"title": "Seul le titulaire gère l’équipe",
+			"body": "Demandez au titulaire de la page d’inviter, de modifier ou de retirer un membre."
+		},
+		"roles": {
+			"heading": "Qui peut faire quoi",
+			"owner": "Tout : la page, l’équipe, les réglages de prise de rendez-vous, le journal des accès.",
+			"practitioner": "L’agenda et la page publique. Ni l’équipe, ni les réglages de prise de rendez-vous, ni le journal des accès.",
+			"assistant": "L’agenda seulement : la journée, la semaine, les demandes, les rendez-vous et les plages bloquées. Ni la page, ni l’équipe, ni les réglages, ni le journal des accès."
+		},
+		"invite": {
+			"heading": "Inviter une personne",
+			"email": "Adresse e-mail",
+			"role": "Rôle",
+			"submit": "Envoyer l’invitation",
+			"pending": "Envoi…",
+			"sent": "Invitation envoyée à {email}. Elle est valable 48 heures.",
+			"alreadyMember": "Cette personne fait déjà partie de l’équipe.",
+			"rateLimited": "Trop d’invitations aujourd’hui. Réessayez demain.",
+			"invalidEmail": "Indiquez une adresse comme nom@exemple.fr.",
+			"note": "La personne invitée crée un compte avec cette adresse, puis configure un second facteur avant de rejoindre l’équipe."
+		},
+		"members": {
+			"heading": "Membres",
+			"columns": {
+				"name": "Nom",
+				"role": "Rôle",
+				"factor": "Second facteur",
+				"actions": "Actions"
+			},
+			"you": "Vous",
+			"factorYes": "Configuré",
+			"factorNo": "Pas encore",
+			"roleOf": "Rôle de {name}",
+			"saveRole": "Modifier",
+			"roleChanged": "Rôle modifié.",
+			"remove": "Retirer",
+			"removeLabel": "Retirer {name} de l’équipe",
+			"removeTitle": "Retirer {name} ?",
+			"removeBody": "Cette personne perd l’accès à l’agenda immédiatement. Vous pourrez l’inviter de nouveau.",
+			"confirmRemove": "Retirer de l’équipe",
+			"removed": "{name} n’a plus accès."
+		},
+		"invitations": {
+			"heading": "Invitations en attente",
+			"empty": "Aucune invitation en attente.",
+			"columns": {
+				"email": "E-mail",
+				"role": "Rôle",
+				"expires": "Expire",
+				"actions": "Actions"
+			},
+			"expired": "Expirée",
+			"cancel": "Retirer",
+			"cancelLabel": "Retirer l’invitation de {email}",
+			"cancelled": "Invitation retirée.",
+			"resend": "Renvoyer",
+			"resendLabel": "Renvoyer l’invitation à {email}"
+		}
+	},
+	"Invitation": {
+		"metaTitle": "Invitation",
+		"title": "Rejoindre un cabinet",
+		"open": {
+			"lead": "{inviter} vous invite à rejoindre {practice} en tant que {role}.",
+			"practitioner": "Page de {name}.",
+			"expires": "Cette invitation est valable jusqu’au {date}.",
+			"accept": "Rejoindre l’équipe",
+			"decline": "Refuser",
+			"pending": "Ajout…"
+		},
+		"accepted": {
+			"title": "Vous faites partie de l’équipe",
+			"body": "Vous avez rejoint {practice}.",
+			"action": "Ouvrir l’agenda"
+		},
+		"declined": "Invitation refusée. Rien ne change.",
+		"other_address": {
+			"title": "Cette invitation est destinée à une autre adresse",
+			"body": "Vous êtes connecté avec {email}. Connectez-vous avec l’adresse à laquelle l’invitation a été envoyée."
+		},
+		"expired": {
+			"title": "Cette invitation a expiré",
+			"body": "Les invitations sont valables 48 heures. Demandez à {inviter} de vous en envoyer une nouvelle."
+		},
+		"closed": {
+			"title": "Cette invitation n’est plus valable",
+			"body": "Elle a été retirée ou a déjà reçu une réponse. Demandez-en une nouvelle au cabinet si besoin."
+		},
+		"not_found": {
+			"title": "Invitation introuvable",
+			"body": "Vérifiez le lien de l’e-mail, ou demandez une nouvelle invitation au cabinet."
+		},
+		"errors": {
+			"EMAIL_NOT_VERIFIED": "Confirmez d’abord votre adresse e-mail.",
+			"NO_SECOND_FACTOR": "Configurez un second facteur avant de rejoindre l’équipe.",
+			"ALREADY_MEMBER": "Vous faites déjà partie de cette équipe.",
+			"EXPIRED": "Cette invitation a expiré.",
+			"failed": "L’ajout n’a pas fonctionné. Réessayez dans un instant."
 		}
 	}
 }

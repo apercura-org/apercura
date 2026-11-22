@@ -161,8 +161,10 @@ test("claim with Pro Santé Connect, complete the page, and the public page foll
 	await expect(
 		page.getByRole("heading", { name: "Horaires et prise de rendez-vous" }),
 	).toBeVisible();
-	// No link to booking settings until that page exists.
-	await expect(page.getByRole("link", { name: /Réglages/ })).toHaveCount(0);
+	// The owner goes on to the booking settings from here.
+	await expect(
+		page.getByRole("link", { name: "Régler horaires et prise de rendez-vous" }),
+	).toBeVisible();
 	await expectNoAxeViolations(page);
 	await page.getByRole("link", { name: "Continuer" }).click();
 	await page.getByRole("button", { name: "Publier ma page" }).click();

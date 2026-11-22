@@ -1732,7 +1732,11 @@
 				"security": "Security",
 				"page": "Your page",
 				"adminClaims": "Claims",
-				"adminReports": "Reports"
+				"adminReports": "Reports",
+				"today": "Today",
+				"agenda": "Agenda",
+				"team": "Team",
+				"menu": "Menu"
 			},
 			"practicesHeading": "Your practices",
 			"columns": {
@@ -1751,7 +1755,13 @@
 			"claimsHeading": "Your page and claims",
 			"editPage": "Edit the page",
 			"openClaim": "Open the claim",
-			"adminRunningHead": "Administration"
+			"adminRunningHead": "Administration",
+			"agendaHeading": "Agenda",
+			"agendaBody": "Your day, your week, the requests to answer and the booking settings.",
+			"agendaLink": "Open today’s agenda",
+			"invitationsHeading": "Invitations",
+			"invitationBody": "{practice} invites you to join its team.",
+			"invitationLink": "Answer the invitation"
 		},
 		"roles": {
 			"owner": "Owner",
@@ -1847,6 +1857,20 @@
 			"body": [
 				"We could not confirm your removal request, so the page is shown again. Reason: {reason}",
 				"If you are the practitioner, you can also claim the page and remove it yourself from your space."
+			]
+		},
+		"teamInvitation": {
+			"subject": "{inviter} invites you to join {practice}",
+			"title": "Join the team of {practice}",
+			"body": [
+				"Hello,",
+				"{inviter} invites you to join {practice} on Apercura, as {role}.",
+				"To join, sign in or create your account with this email address, then set up a second factor (an authenticator app or a passkey): it protects the patients’ details you will see."
+			],
+			"action": "Join the team",
+			"notes": [
+				"This invitation works for 48 hours.",
+				"You did not expect it? Ignore this email: nothing happens without you."
 			]
 		}
 	},
@@ -2088,17 +2112,18 @@
 			"booking": {
 				"label": "Opening hours and booking",
 				"title": "Opening hours and booking",
-				"lead": "Online booking opens in a later version. Before it can open, your page must state your fees and the payment methods you accept.",
+				"lead": "Patients book on your page once your agenda is open. Before it can open, your page must state your fees and the payment methods you accept.",
 				"fees": "Fees",
 				"payments": "Payment methods",
 				"done": "Stated",
 				"todo": "To complete",
 				"deontology": "Article R.4127-53 of the public health code: a doctor who presents their activity online states their fees and the payment methods accepted.",
 				"editFees": "Complete fees and payment methods",
-				"settingsNote": "Calendars, opening hours and appointment types are set up with online booking, from this space.",
+				"settingsNote": "Places, opening hours and appointment types are set in the booking settings.",
 				"waitingPeriod": "Waiting period after verification",
 				"waitingEnds": "The 7-day waiting period ends on {date}",
-				"noWaiting": "None"
+				"noWaiting": "None",
+				"settingsLink": "Set up opening hours and booking"
 			},
 			"publish": {
 				"label": "Publish",
@@ -2394,6 +2419,486 @@
 			"claimedLink": "Sign in to the practitioner space",
 			"alreadyTitle": "A removal request is being checked",
 			"alreadyBody": "The page is already hidden."
+		}
+	},
+	"Agenda": {
+		"common": {
+			"accessLogged": "Patient details on this page are decrypted for you, and each access is logged.",
+			"accessLogLink": "Access log",
+			"loadFailed": "The agenda could not be loaded. Check your connection and try again.",
+			"retry": "Try again",
+			"close": "Close",
+			"keep": "Keep",
+			"failed": "That did not work. Try again in a moment.",
+			"refused": "This change is no longer possible: the agenda changed in the meantime.",
+			"patient": "Patient",
+			"newPatient": "First visit",
+			"unreachable": "Emails do not reach this patient: call them.",
+			"emailUnconfirmed": "Email address waiting for the patient’s confirmation",
+			"noPhone": "No phone number",
+			"noEmail": "No email address",
+			"placeLabel": "Place",
+			"placeOption": "{place}, {city}",
+			"status": {
+				"held": "Being booked",
+				"pending": "Request to answer",
+				"confirmed": "Confirmed",
+				"declined": "Declined",
+				"expired": "Expired",
+				"cancelled_by_patient": "Cancelled by the patient",
+				"cancelled_by_practice": "Cancelled by the practice",
+				"no_show": "Did not come",
+				"completed": "Done"
+			},
+			"block": "Blocked time",
+			"source": {
+				"online": "Booked online",
+				"practice": "Added by the practice"
+			},
+			"timeRange": "{start} to {end}",
+			"noPractice": {
+				"title": "No agenda yet",
+				"body": "The agenda opens once your page is claimed and verified, or once a practice adds you to its team.",
+				"action": "Back to your space"
+			},
+			"noCalendar": {
+				"title": "No place set up yet",
+				"bodyOwner": "Set up the place where you see patients: opening hours and appointment types.",
+				"bodyStaff": "The owner of the page has not set up the agenda yet.",
+				"action": "Set up booking"
+			}
+		},
+		"today": {
+			"metaTitle": "Today",
+			"title": "Today",
+			"next": {
+				"heading": "Next patient",
+				"none": "No more appointments today.",
+				"at": "At {time}",
+				"empty": "No appointment today."
+			},
+			"day": {
+				"heading": "The day’s appointments",
+				"empty": "No appointment today.",
+				"columns": {
+					"time": "Time",
+					"entry": "Appointment",
+					"status": "Status",
+					"actions": "Actions"
+				}
+			},
+			"requests": {
+				"heading": "Requests to answer",
+				"lead": "Patients wait for your answer. Unanswered requests lapse at the time shown.",
+				"empty": "No request waiting.",
+				"deadline": "Answer before {date}",
+				"approve": "Accept",
+				"decline": "Decline",
+				"approved": "Request accepted. The patient receives a confirmation.",
+				"declined": "Request declined. The patient is told by email."
+			},
+			"actions": {
+				"cancel": "Cancel…",
+				"noShow": "Did not come",
+				"noShowDone": "Marked as not come.",
+				"block": "Block a time slot",
+				"week": "See the week",
+				"add": "Add an appointment"
+			}
+		},
+		"week": {
+			"metaTitle": "Agenda",
+			"title": "Agenda",
+			"gridLabel": "Week of {date}",
+			"dayGridLabel": "{date}",
+			"previous": "Previous week",
+			"next": "Next week",
+			"previousDay": "Previous day",
+			"nextDay": "Next day",
+			"current": "Today",
+			"viewLabel": "View",
+			"viewWeek": "Week",
+			"viewDay": "Day",
+			"timeColumn": "Time",
+			"free": "{day}, {time}, free",
+			"freeClosed": "{day}, {time}, outside opening hours",
+			"now": "Now",
+			"entry": "{day}, {start} to {end}, {status}",
+			"keyboardHint": "Arrow keys move through the week, Enter adds or opens, Page Up and Page Down change the week.",
+			"settings": "Booking settings",
+			"legend": {
+				"label": "Legend",
+				"booked": "Confirmed",
+				"pending": "Request",
+				"held": "Being booked",
+				"block": "Blocked"
+			},
+			"loading": "Loading the agenda"
+		},
+		"add": {
+			"title": "Add to the agenda",
+			"when": "{date}, {time}",
+			"kindLabel": "What to add",
+			"kindAppointment": "An appointment",
+			"kindBlock": "Blocked time",
+			"date": "Date",
+			"start": "Start",
+			"end": "End",
+			"type": "Appointment type",
+			"firstName": "First name",
+			"lastName": "Last name",
+			"email": "Email (optional)",
+			"emailHint": "The first email only asks the patient to confirm this address. Details follow once confirmed, so a typo never sends them to a stranger.",
+			"phone": "Phone (optional)",
+			"submit": "Add the appointment",
+			"submitBlock": "Block this time",
+			"pending": "Adding…",
+			"taken": "This time is already taken. Choose another time.",
+			"invalid": "Check the highlighted fields.",
+			"invalidEmail": "Enter an email address such as name@example.fr, or leave it empty.",
+			"invalidPhone": "Enter a phone number such as 06 12 34 56 78, or leave it empty.",
+			"required": "Required.",
+			"endBeforeStart": "The end must come after the start.",
+			"created": "Appointment added.",
+			"blocked": "Time blocked.",
+			"outsideHours": "Outside the opening hours: you can still add it."
+		},
+		"entry": {
+			"when": "When",
+			"type": "Type",
+			"patient": "Patient",
+			"email": "Email",
+			"phone": "Phone",
+			"status": "Status",
+			"source": "Origin",
+			"cancel": "Cancel the appointment",
+			"removeBlock": "Remove the block",
+			"noShow": "Did not come",
+			"approve": "Accept the request",
+			"decline": "Decline the request",
+			"message": "Message to the patient (optional)",
+			"messageHint": "Sent with the cancellation email, if the patient confirmed their address.",
+			"cancelTitle": "Cancel this appointment?",
+			"cancelBody": "The time becomes free again.",
+			"confirmCancel": "Cancel the appointment",
+			"cancelled": "Appointment cancelled.",
+			"blockRemoved": "Block removed."
+		},
+		"block": {
+			"title": "Block a time slot",
+			"lead": "A meeting, an absence: patients cannot book this time.",
+			"submit": "Block this time"
+		},
+		"settings": {
+			"metaTitle": "Booking settings",
+			"title": "Booking settings",
+			"lead": "Places, opening hours, appointment types and the rules of online booking.",
+			"ownerOnly": {
+				"title": "Only the page owner sets up booking",
+				"body": "Your role lets you run the agenda. Opening hours and booking rules are set by the owner of the page.",
+				"action": "Open the agenda"
+			},
+			"gate": {
+				"heading": "Online booking",
+				"ready": "Your page meets the conditions: you can open online booking.",
+				"missing": "Before patients can book online:",
+				"notVerified": "Your page must be verified.",
+				"fees": "State your fees on your page.",
+				"paymentMethods": "State the payment methods you accept on your page.",
+				"waitingPeriod": "Your page was verified without Pro Santé Connect: booking can open on {date}.",
+				"noType": "Offer at least one appointment type online.",
+				"noHours": "Add opening hours or an extra opening.",
+				"editPage": "Complete fees and payment methods",
+				"deontology": "Article R.4127-53 of the public health code: a doctor who presents their activity online states their fees and the payment methods accepted.",
+				"open": "Open online booking",
+				"pause": "Pause online booking",
+				"opened": "Online booking is open. Patients can book on your page.",
+				"paused": "Online booking is paused. The agenda still works for the appointments you add.",
+				"statusLabel": "Status",
+				"status": {
+					"draft": "Not open yet",
+					"open": "Open",
+					"paused": "Paused"
+				}
+			},
+			"places": {
+				"heading": "Places",
+				"lead": "Each place has its own agenda, in the time zone of its department.",
+				"timeZone": "Time zone: {zone}",
+				"noZone": "Unknown department: this place cannot take bookings yet.",
+				"create": "Set up this place",
+				"presetsNote": "It starts with the usual appointment types of your specialty: {names}.",
+				"none": "No place of your page can take appointments. Add your practice address in the page editor.",
+				"addPlace": "Add a place in the editor",
+				"choose": "Place to set up"
+			},
+			"types": {
+				"heading": "Appointment types",
+				"lead": "Prefer neutral names: the type of an appointment can reveal health information.",
+				"name": "Name",
+				"duration": "Duration (minutes)",
+				"before": "Free time before (minutes)",
+				"after": "Free time after (minutes)",
+				"audience": "Who can book it",
+				"audienceAll": "Every patient",
+				"audienceNew": "New patients only",
+				"audienceExisting": "Patients already followed",
+				"active": "Offered online",
+				"save": "Save",
+				"saved": "Appointment type saved.",
+				"add": "Add an appointment type",
+				"newName": "Consultation",
+				"summary": "{duration} min",
+				"inactive": "Not offered online"
+			},
+			"rules": {
+				"heading": "Weekly opening hours",
+				"lead": "The times patients can book, day by day. Several ranges per day are fine (a lunch break, for example).",
+				"days": {
+					"1": "Monday",
+					"2": "Tuesday",
+					"3": "Wednesday",
+					"4": "Thursday",
+					"5": "Friday",
+					"6": "Saturday",
+					"7": "Sunday"
+				},
+				"add": "Add a time range",
+				"addFor": "Add a time range on {day}",
+				"remove": "Remove",
+				"removeRange": "Remove the range {from} to {to} on {day}",
+				"from": "From",
+				"to": "To",
+				"rangeLabel": "{day}, range {n}",
+				"closed": "Closed",
+				"copy": "Copy to the other weekdays",
+				"copyFor": "Copy to the other weekdays, from {day}",
+				"copied": "{day} copied to the other weekdays. Save to apply.",
+				"template": "Start from a template",
+				"templateMornings": "Mornings, 8:30 to 12:30",
+				"templateDays": "Days, 9:00 to 12:30 and 14:00 to 18:30",
+				"save": "Save opening hours",
+				"saved": "Opening hours saved.",
+				"invalid": "On {day}, each range must end after it starts and not overlap another.",
+				"columns": {
+					"day": "Day",
+					"actions": "Actions"
+				}
+			},
+			"exceptions": {
+				"heading": "Closures and extra openings",
+				"lead": "Holidays, an absence, or an extra morning: they win over the weekly hours.",
+				"kind": "Kind",
+				"kindClosed": "Closed (holidays, absence)",
+				"kindOpen": "Extra opening",
+				"span": "Duration",
+				"spanDays": "Whole days",
+				"spanTime": "Hours of one day",
+				"from": "From",
+				"until": "Until (included)",
+				"date": "Date",
+				"start": "From",
+				"end": "To",
+				"add": "Add",
+				"added": "Added.",
+				"empty": "No closure or extra opening.",
+				"remove": "Remove",
+				"removeLabel": "Remove: {label}",
+				"closedDays": "Closed from {from} to {until}",
+				"closedTime": "Closed on {date}, {from} to {to}",
+				"openDays": "Open from {from} to {until}",
+				"openTime": "Open on {date}, {from} to {to}",
+				"invalid": "The end must come after the start.",
+				"closedDay": "Closed on {date}",
+				"openDay": "Open on {date}"
+			},
+			"booking": {
+				"heading": "Online booking rules",
+				"minNotice": "Minimum notice (hours)",
+				"minNoticeHint": "Patients cannot book a time closer than this.",
+				"horizon": "Booking horizon (days)",
+				"horizonHint": "How far ahead patients can book.",
+				"step": "Time between two possible start times (minutes)",
+				"manual": "Approve each request by hand",
+				"manualHint": "Requests wait for your answer for up to 48 hours.",
+				"newPatients": "Accept new patients",
+				"cutoff": "Online cancellation until (hours before)",
+				"requirePhone": "Ask for a phone number",
+				"askFirstVisit": "Ask whether it is a first visit",
+				"retention": "Erase patient details after (days)",
+				"retentionHint": "Between 30 and 365 days after the appointment. Apercura is not the medical record.",
+				"instructions": "Instructions shown when booking (optional)",
+				"instructionsHint": "Plain text: the entrance, what to bring.",
+				"save": "Save booking rules",
+				"saved": "Booking rules saved.",
+				"invalid": "Check the highlighted values."
+			},
+			"feed": {
+				"heading": "Private calendar feed",
+				"lead": "Follow this agenda in Google Calendar, Apple Calendar or Thunderbird. Anyone who has the link can read it: keep it to yourself.",
+				"off": "No feed link is active.",
+				"on": "A feed link is active since {date}.",
+				"create": "Create a feed link",
+				"rotate": "Replace the link",
+				"revoke": "Turn the feed off",
+				"url": "Feed link",
+				"urlHint": "Shown only once: copy it into your calendar app now. Replacing it stops the old link.",
+				"fullNames": "Show patients’ full names in the feed",
+				"fullNamesHint": "Off by default: the feed then shows the appointment type and initials only, because your calendar provider’s servers read it.",
+				"revoked": "The feed is off: the old link no longer works.",
+				"saved": "Feed setting saved."
+			},
+			"logLink": "See who accessed patient details",
+			"index": "On this page"
+		},
+		"log": {
+			"metaTitle": "Access log",
+			"title": "Access log",
+			"lead": "Each time patient details were decrypted: who, when, why and how many records. Nobody can change or delete it.",
+			"ownerOnly": {
+				"title": "Only the page owner reads the access log",
+				"body": "The access log of the practice is reserved to the owner of the page."
+			},
+			"columns": {
+				"when": "When",
+				"who": "Who",
+				"what": "What",
+				"why": "Why",
+				"records": "Records"
+			},
+			"actor": {
+				"patient": "The patient",
+				"system": "Apercura (automatic task)",
+				"unknown": "Former member"
+			},
+			"action": {
+				"decrypt": "Read",
+				"alert": "Alert",
+				"other": "{action}"
+			},
+			"purpose": {
+				"agenda_list": "Agenda",
+				"notify": "Sending an email",
+				"manage": "The patient’s own page",
+				"ics_feed": "Calendar feed",
+				"decrypt_volume": "More than 500 records read within an hour",
+				"other": "{purpose}"
+			},
+			"records": "{count, plural, one {# record} other {# records}}",
+			"empty": "Nothing has been accessed yet.",
+			"more": "Show older entries",
+			"alert": "On {date}, {name} read more than 500 patient records within an hour. Check that it was expected; if not, remove their access and change your password."
+		},
+		"feed": {
+			"name": "Apercura agenda",
+			"block": "Blocked",
+			"pending": "[Request]",
+			"appointment": "Appointment"
+		}
+	},
+	"Team": {
+		"metaTitle": "Team",
+		"title": "Team",
+		"lead": "Invite the people who run your agenda. Each one signs in with their own account and a second factor.",
+		"ownerOnly": {
+			"title": "Only the page owner manages the team",
+			"body": "Ask the owner of the page to invite, change or remove a member."
+		},
+		"roles": {
+			"heading": "Who can do what",
+			"owner": "Everything: the page, the team, the booking settings, the access log.",
+			"practitioner": "The agenda and the public page. Not the team, the booking settings or the access log.",
+			"assistant": "The agenda only: the day, the week, requests, appointments and blocks. Not the page, the team, the booking settings or the access log."
+		},
+		"invite": {
+			"heading": "Invite someone",
+			"email": "Email address",
+			"role": "Role",
+			"submit": "Send the invitation",
+			"pending": "Sending…",
+			"sent": "Invitation sent to {email}. It works for 48 hours.",
+			"alreadyMember": "This person is already in the team.",
+			"rateLimited": "Too many invitations today. Try again tomorrow.",
+			"invalidEmail": "Enter an email address such as name@example.fr.",
+			"note": "The invited person creates an account with this address, then sets up a second factor before joining."
+		},
+		"members": {
+			"heading": "Members",
+			"columns": {
+				"name": "Name",
+				"role": "Role",
+				"factor": "Second factor",
+				"actions": "Actions"
+			},
+			"you": "You",
+			"factorYes": "Set up",
+			"factorNo": "Not yet",
+			"roleOf": "Role of {name}",
+			"saveRole": "Change",
+			"roleChanged": "Role changed.",
+			"remove": "Remove",
+			"removeLabel": "Remove {name} from the team",
+			"removeTitle": "Remove {name}?",
+			"removeBody": "They lose access to the agenda at once. You can invite them again later.",
+			"confirmRemove": "Remove from the team",
+			"removed": "{name} no longer has access."
+		},
+		"invitations": {
+			"heading": "Pending invitations",
+			"empty": "No pending invitation.",
+			"columns": {
+				"email": "Email",
+				"role": "Role",
+				"expires": "Expires",
+				"actions": "Actions"
+			},
+			"expired": "Expired",
+			"cancel": "Withdraw",
+			"cancelLabel": "Withdraw the invitation of {email}",
+			"cancelled": "Invitation withdrawn.",
+			"resend": "Send again",
+			"resendLabel": "Send the invitation to {email} again"
+		}
+	},
+	"Invitation": {
+		"metaTitle": "Invitation",
+		"title": "Join a practice",
+		"open": {
+			"lead": "{inviter} invites you to join {practice} as {role}.",
+			"practitioner": "Page of {name}.",
+			"expires": "This invitation works until {date}.",
+			"accept": "Join the team",
+			"decline": "Decline",
+			"pending": "Joining…"
+		},
+		"accepted": {
+			"title": "You are in the team",
+			"body": "You have joined {practice}.",
+			"action": "Open the agenda"
+		},
+		"declined": "Invitation declined. Nothing changes.",
+		"other_address": {
+			"title": "This invitation is for another address",
+			"body": "You are signed in as {email}. Sign in with the address the invitation was sent to."
+		},
+		"expired": {
+			"title": "This invitation has expired",
+			"body": "Invitations work for 48 hours. Ask {inviter} to send you a new one."
+		},
+		"closed": {
+			"title": "This invitation is no longer valid",
+			"body": "It was withdrawn or already answered. Ask the practice for a new one if needed."
+		},
+		"not_found": {
+			"title": "Invitation not found",
+			"body": "Check the link in the email, or ask the practice for a new invitation."
+		},
+		"errors": {
+			"EMAIL_NOT_VERIFIED": "Confirm your email address first.",
+			"NO_SECOND_FACTOR": "Set up a second factor before joining.",
+			"ALREADY_MEMBER": "You are already in this team.",
+			"EXPIRED": "This invitation has expired.",
+			"failed": "Joining did not work. Try again in a moment."
 		}
 	}
 }

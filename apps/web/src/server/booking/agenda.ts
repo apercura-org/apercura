@@ -1,12 +1,20 @@
 import { randomUUID } from "node:crypto";
 import {
+	type AppointmentStatus,
 	appointmentEnd,
 	createPracticeEntry,
 	effectiveStatus,
 	occupancy,
 } from "@apercura/core/booking";
-import { appointments } from "@apercura/db/schema";
-import { and, asc, eq, gte, lt, ne, sql } from "drizzle-orm";
+import {
+	appointments,
+	appointmentTypes,
+	availabilityRules,
+	calendars,
+	places,
+	sites,
+} from "@apercura/db/schema";
+import { and, asc, eq, gte, inArray, lt, ne, sql } from "drizzle-orm";
 import type { Transaction } from "~/server/db-executor";
 import {
 	ensureOrganizationKey,
@@ -27,7 +35,7 @@ import { practitionerTransaction } from "./locks";
 import { refreshNextFreeLater } from "./next-free";
 import { enqueueOutbox, type OutboxEntry } from "./outbox";
 import { drainLater } from "./outbox-worker";
-import type { BookingRuntime } from "./runtime";
+import { type BookingRuntime, limit } from "./runtime";
 import { at } from "./sql-time";
 import {
 	type AppointmentRow,
@@ -101,12 +109,20 @@ async function overrideHolds(
 export async function listAgenda(
 	rt: BookingRuntime,
 	staff: StaffContext,
-	input: { calendarId?: string | undefined; from: Date; to: Date },
+	input: {
+		calendarId?: string | undefined;
+		from: Date;
+		to: Date;
+		/** Only entries stored with these statuses (e.g. the requests waiting for an answer). */
+		statuses?: readonly AppointmentStatus[] | undefined;
+	},
 ) {
 	const span = input.to.getTime() - input.from.getTime();
 	if (span <= 0 || span > BOOKING_LIMITS.agendaMaxDays * DAY_MS) {
 		throw new BookingError("INVALID_INPUT");
 	}
+	// Per person, not per IP: a hospital ward shares one address.
+	await limit(rt, `agenda-list:${staff.userId}`, BOOKING_LIMITS.agendaListsPerUser);
 	if (input.calendarId) {
 		await findCalendar(rt.db, input.calendarId, { organizationId: staff.organizationId });
 	}
@@ -120,11 +136,15 @@ export async function listAgenda(
 				gte(appointments.startsAt, input.from),
 				lt(appointments.startsAt, input.to),
 				ne(appointments.status, "expired"),
+				input.statuses?.length ? inArray(appointments.status, [...input.statuses]) : undefined,
 			),
 		)
 		.orderBy(asc(appointments.startsAt));
 	const nowMs = rt.nowMs();
-	const withPatient = rows.filter((row) => row.kind === "appointment" && row.purgedAt === null);
+	// A live hold is someone still typing their details: nothing to read yet.
+	const withPatient = rows.filter(
+		(row) => row.kind === "appointment" && row.purgedAt === null && row.status !== "held",
+	);
 	const patients = await readAppointmentPatients(
 		rt.db,
 		{
@@ -480,4 +500,64 @@ async function pendingOutboxOf(rt: BookingRuntime, appointmentId: string): Promi
 		sql`select id from care.outbox where appointment_id = ${appointmentId} and status = 'pending'`,
 	);
 	return [...rows].map((row) => row.id);
+}
+
+/**
+ * `agenda.calendars`: what every member with agenda access needs to draw the agenda (assistants
+ * included): calendars with their site, time zone, appointment types and weekly opening windows.
+ * No patient data.
+ */
+export async function listAgendaCalendars(rt: BookingRuntime, staff: StaffContext) {
+	const rows = await rt.db
+		.select({
+			id: calendars.id,
+			practitionerId: calendars.practitionerId,
+			siteId: calendars.siteId,
+			timeZone: calendars.timeZone,
+			status: calendars.status,
+			stepMin: calendars.stepMin,
+			manualValidation: calendars.manualValidation,
+			siteName: sql<string | null>`coalesce(${sites.name}, ${sites.finessName})`,
+			addressLine: sites.addressLine,
+			postcode: sites.postcode,
+			placeName: places.name,
+		})
+		.from(calendars)
+		.innerJoin(sites, eq(sites.id, calendars.siteId))
+		.leftJoin(places, eq(places.id, sites.placeId))
+		.where(eq(calendars.organizationId, staff.organizationId))
+		.orderBy(asc(calendars.createdAt));
+	if (rows.length === 0) {
+		return [];
+	}
+	const ids = rows.map((row) => row.id);
+	const [types, rules] = await Promise.all([
+		rt.db
+			.select({
+				id: appointmentTypes.id,
+				calendarId: appointmentTypes.calendarId,
+				name: appointmentTypes.name,
+				durationMin: appointmentTypes.durationMin,
+				active: appointmentTypes.active,
+			})
+			.from(appointmentTypes)
+			.where(inArray(appointmentTypes.calendarId, ids))
+			.orderBy(asc(appointmentTypes.position), asc(appointmentTypes.createdAt)),
+		rt.db
+			.select({
+				calendarId: availabilityRules.calendarId,
+				weekday: availabilityRules.weekday,
+				startTime: availabilityRules.startTime,
+				endTime: availabilityRules.endTime,
+				validFrom: availabilityRules.validFrom,
+				validUntil: availabilityRules.validUntil,
+			})
+			.from(availabilityRules)
+			.where(inArray(availabilityRules.calendarId, ids)),
+	]);
+	return rows.map((row) => ({
+		...row,
+		types: types.filter((type) => type.calendarId === row.id),
+		rules: rules.filter((rule) => rule.calendarId === row.id),
+	}));
 }

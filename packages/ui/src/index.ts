@@ -4,7 +4,7 @@
  * - Server-safe: tokens, recipes, icons, Badge, Notice, Skeleton, EmptyState, Seal and
  *   the static domain components (FieldRow, PractitionerHeader, ActionBlock,
  *   SiteCard, ProvenanceNote, BookletSearch).
- * - Client ("use client"): every React Aria primitive, SlotPicker and MapView.
+ * - Client ("use client"): every React Aria primitive, SlotPicker, WeekGrid and MapView.
  */
 
 export { Badge, type BadgeProps } from "./components/badge";
@@ -100,6 +100,13 @@ export {
 export { ProvenanceNote, type ProvenanceNoteProps } from "./domain/provenance-note";
 export { SiteCard, type SiteCardProps } from "./domain/site-card";
 export { type Slot, type SlotDay, SlotPicker, type SlotPickerProps } from "./domain/slot-picker";
+export {
+	WeekGrid,
+	type WeekGridDay,
+	type WeekGridEntry,
+	type WeekGridProps,
+	type WeekGridTone,
+} from "./domain/week-grid";
 export * from "./icons";
 export { DEFAULT_MAP_STYLE_URL, themeMapStyle } from "./map/map-style";
 export { MapView, type MapViewProps } from "./map/map-view";

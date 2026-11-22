@@ -18,7 +18,8 @@ export type NoticeKind =
 	| "claimSuperseded"
 	| "removalReceived"
 	| "removalConfirmed"
-	| "removalRejected";
+	| "removalRejected"
+	| "teamInvitation";
 
 /**
  * Sends one of the platform's short notices in the recipient's locale.

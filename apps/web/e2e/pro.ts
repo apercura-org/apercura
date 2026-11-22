@@ -3,6 +3,20 @@ import * as OTPAuth from "otpauth";
 import postgres from "postgres";
 import { axeViolations } from "./axe";
 
+/** Tables of the `care` schema, children first. */
+const CARE_TABLES = [
+	"outbox",
+	"otp_challenges",
+	"appointment_events",
+	"appointments",
+	"availability_exceptions",
+	"availability_rules",
+	"appointment_types",
+	"calendars",
+	"organization_keys",
+	"audit_events",
+];
+
 /** Direct database access for test setup (synthetic fixtures only, never production). */
 export function testDb() {
 	const url = process.env.DATABASE_URL;
@@ -69,13 +83,20 @@ async function submitPassword(page: Page, email: string, password: string, from?
 export async function createProAccount(
 	page: Page,
 	request: APIRequestContext,
-	options: { name: string; baseURL: string; platformAdmin?: boolean },
+	options: { name: string; baseURL: string; platformAdmin?: boolean; email?: string },
 ): Promise<ProAccount> {
-	const email = `${options.name.toLowerCase().replace(/[^a-z]+/g, ".")}.${Date.now()}@example.test`;
+	const email =
+		options.email ??
+		`${options.name.toLowerCase().replace(/[^a-z]+/g, ".")}.${Date.now()}@example.test`;
 	const password = "une longue phrase de passe pour les tests";
 	const signUp = await request.post("/api/auth/sign-up/email", {
 		data: { email, password, name: options.name, locale: "fr" },
-		headers: { origin: new URL(options.baseURL).origin },
+		headers: {
+			origin: new URL(options.baseURL).origin,
+			// The server trusts one proxy hop in e2e: each account signs up from its own address,
+			// so the suite's sign-ups never share the 5-an-hour limit of one client.
+			"x-forwarded-for": `10.77.${Math.floor(Math.random() * 250)}.${Math.floor(Math.random() * 250)}`,
+		},
 	});
 	expect(signUp.ok(), await signUp.text()).toBe(true);
 	const sql = testDb();
@@ -165,8 +186,15 @@ export async function resetPractitioner(rpps: string) {
 				if (site.site_id) await tx`DELETE FROM directory.sites WHERE id = ${site.site_id}`;
 			}
 			await tx`UPDATE directory.activities SET hidden = false WHERE practitioner_id = ${row.id}`;
-			if (row.owner_org_id)
+			if (row.owner_org_id) {
+				// The practice's agenda goes with it (calendars hold the organization in place).
+				for (const table of CARE_TABLES) {
+					await tx.unsafe(`DELETE FROM care.${table} WHERE organization_id = $1`, [
+						row.owner_org_id,
+					]);
+				}
 				await tx`DELETE FROM directory.organization WHERE id = ${row.owner_org_id}`;
+			}
 			await tx`
 				UPDATE directory.practitioners
 				SET claim_status = 'unclaimed', owner_org_id = NULL, withheld_at = NULL, status = 'active'

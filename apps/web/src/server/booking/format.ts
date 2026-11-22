@@ -25,9 +25,14 @@ export function practitionerPageUrl(locale: "fr" | "en", slug: string): string {
 	return `${appOrigin()}${path}${encodeURIComponent(slug)}`;
 }
 
-/** The practice's agenda (dashboard until the agenda page exists). */
+/** The practice's day in the agenda ("Today"). */
 export function agendaUrl(locale: "fr" | "en"): string {
-	return `${appOrigin()}${localePrefix(locale)}/pro/tableau-de-bord`;
+	return `${appOrigin()}${localePrefix(locale)}/pro/aujourdhui`;
+}
+
+/** The page where an invited person joins a practice. */
+export function invitationUrl(locale: "fr" | "en", invitationId: string): string {
+	return `${appOrigin()}${localePrefix(locale)}/pro/invitation/${invitationId}`;
 }
 
 /**

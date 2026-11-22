@@ -41,6 +41,20 @@ describe("sign-in methods", () => {
 		}
 	});
 
+	it("leaves invitations and member changes to tRPC team.* alone", () => {
+		for (const path of [
+			"/organization/invite-member",
+			"/organization/accept-invitation",
+			"/organization/update-member-role",
+			"/organization/remove-member",
+		]) {
+			expect(DISABLED_PATHS).toContain(path);
+		}
+		// What the app still uses stays reachable (and needs a second factor).
+		expect(DISABLED_PATHS).not.toContain("/organization/list");
+		expect(alwaysRequiresMfa("/organization/list")).toBe(true);
+	});
+
 	it("opens OAuth to Pro Santé Connect redirects only", () => {
 		expect(pscRequestProblem({ provider: "psc" }, true)).toBeNull();
 		expect(pscRequestProblem({ provider: "psc" }, false)).toBe("provider");

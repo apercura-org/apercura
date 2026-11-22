@@ -16,8 +16,9 @@ import {
 	practitioners,
 	sites,
 } from "@apercura/db/schema";
-import { and, asc, eq, inArray, isNull } from "drizzle-orm";
+import { and, asc, desc, eq, inArray, isNull, sql } from "drizzle-orm";
 import { createTranslator } from "next-intl";
+import { hashOpaqueToken, newOpaqueToken } from "~/server/phi";
 import en from "../../../messages/en.json";
 import fr from "../../../messages/fr.json";
 import { findCalendar } from "./availability";
@@ -44,6 +45,7 @@ export interface CalendarSettingsInput {
 	askFirstVisit?: boolean | undefined;
 	retentionDays?: number | undefined;
 	publicInstructions?: string | null | undefined;
+	icsFullNames?: boolean | undefined;
 }
 
 function settingsPatch(input: CalendarSettingsInput) {
@@ -91,8 +93,10 @@ export async function listCalendars(db: Database, organizationId: string) {
 		db.select().from(availabilityRules).where(inArray(availabilityRules.calendarId, ids)),
 		db.select().from(availabilityExceptions).where(inArray(availabilityExceptions.calendarId, ids)),
 	]);
-	return rows.map(({ icsTokenHash: _hidden, ...calendar }) => ({
+	return rows.map(({ icsTokenHash, icsTokenCreatedAt, ...calendar }) => ({
 		...calendar,
+		/** The private feed: whether a token is live, never the token or its hash. */
+		feed: { active: icsTokenHash !== null, createdAt: icsTokenHash ? icsTokenCreatedAt : null },
 		types: types.filter((type) => type.calendarId === calendar.id),
 		rules: rules.filter((rule) => rule.calendarId === calendar.id),
 		exceptions: exceptions.filter((exception) => exception.calendarId === calendar.id),
@@ -208,7 +212,12 @@ export async function setCalendarStatus(
 ) {
 	const calendar = await findCalendar(rt.db, calendarId, { organizationId });
 	if (status === "open") {
-		const requirements = await agendaRequirements(rt.db, organizationId, calendar.practitionerId);
+		const requirements = await agendaRequirements(
+			rt.db,
+			organizationId,
+			calendar.practitionerId,
+			new Date(rt.nowMs()),
+		);
 		const [type] = await rt.db
 			.select({ id: appointmentTypes.id })
 			.from(appointmentTypes)
@@ -442,4 +451,116 @@ export async function removeException(
 	const calendar = await findCalendar(rt.db, row.calendarId, { organizationId });
 	await refreshNextFreeFor(rt, calendar.practitionerId);
 	return { removed: true };
+}
+
+/** A bookable place of the practitioner, with the time zone its calendar would use. */
+export interface SetupSite {
+	siteId: number;
+	name: string | null;
+	addressLine: string | null;
+	postcode: string | null;
+	placeName: string | null;
+	departmentCode: string | null;
+	/** IANA zone from the department; null when the department is unknown (cannot be booked). */
+	timeZone: string | null;
+}
+
+/**
+ * `calendar.overview`: everything the booking settings page shows for the organization's
+ * practitioner: their places (with the derived time zone), the calendars already set up, the
+ * presets of their specialty and what opening the agenda still needs.
+ */
+export async function agendaOverview(
+	db: Database,
+	organizationId: string,
+	locale: "fr" | "en",
+	now: Date,
+) {
+	const [practitioner] = await db
+		.select({ id: practitioners.id, listingSlug: practitioners.listingSlug })
+		.from(practitioners)
+		.where(
+			and(eq(practitioners.ownerOrgId, organizationId), eq(practitioners.claimStatus, "claimed")),
+		)
+		.limit(1);
+	if (!practitioner) {
+		throw new BookingError("NOT_FOUND");
+	}
+	const siteRows = await db
+		.select({
+			siteId: sites.id,
+			name: sql<string | null>`coalesce(${sites.name}, ${sites.finessName})`,
+			addressLine: sites.addressLine,
+			postcode: sites.postcode,
+			placeName: places.name,
+			departmentCode: places.departmentCode,
+		})
+		.from(activities)
+		.innerJoin(sites, and(eq(sites.id, activities.siteId), isNull(sites.removedAt)))
+		.leftJoin(places, eq(places.id, sites.placeId))
+		.where(
+			and(
+				eq(activities.practitionerId, practitioner.id),
+				isNull(activities.removedAt),
+				inArray(activities.practiceKind, ["office", "health_center", "hospital"]),
+			),
+		)
+		.orderBy(desc(activities.isPrimary), asc(activities.id));
+	const seen = new Set<number>();
+	const bookableSites: SetupSite[] = [];
+	for (const row of siteRows) {
+		if (seen.has(row.siteId)) continue;
+		seen.add(row.siteId);
+		let timeZone: string | null = null;
+		try {
+			timeZone = row.departmentCode ? timeZoneForDepartment(row.departmentCode) : null;
+		} catch {
+			timeZone = null;
+		}
+		bookableSites.push({ ...row, timeZone });
+	}
+	const [calendarList, presets, requirements] = await Promise.all([
+		listCalendars(db, organizationId),
+		presetsFor(db, organizationId, practitioner.id, locale),
+		agendaRequirements(db, organizationId, practitioner.id, now),
+	]);
+	return {
+		practitionerId: practitioner.id,
+		sites: bookableSites,
+		calendars: calendarList,
+		presets,
+		requirements,
+	};
+}
+
+/**
+ * Issues a new private feed token for a calendar (the previous link stops working at once).
+ * The token is returned once; only its SHA-256 is stored.
+ */
+export async function rotateFeedToken(
+	rt: BookingRuntime,
+	organizationId: string,
+	calendarId: string,
+) {
+	const calendar = await findCalendar(rt.db, calendarId, { organizationId });
+	const token = newOpaqueToken();
+	await rt.db
+		.update(calendars)
+		.set({ icsTokenHash: hashOpaqueToken(token), icsTokenCreatedAt: new Date(rt.nowMs()) })
+		.where(eq(calendars.id, calendar.id));
+	return { token };
+}
+
+/** Turns the private feed off: the current link answers 404 from now on. */
+export async function revokeFeedToken(
+	rt: BookingRuntime,
+	organizationId: string,
+	calendarId: string,
+) {
+	const calendar = await findCalendar(rt.db, calendarId, { organizationId });
+	await rt.db
+		.update(calendars)
+		.set({ icsTokenHash: null, icsTokenCreatedAt: null })
+		.where(eq(calendars.id, calendar.id));
+	return { revoked: true as const };
 }

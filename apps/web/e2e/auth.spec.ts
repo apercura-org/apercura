@@ -123,8 +123,14 @@ test("sign up, confirm the email, enrol TOTP, then sign in with password and cod
 	await expect(page).toHaveURL(/\/pro\/connexion$/);
 	await page.goto("/pro/tableau-de-bord");
 	await expect(page).toHaveURL(/\/pro\/connexion$/);
-	await page.getByLabel("Adresse e-mail", { exact: true }).fill(email);
-	await page.getByLabel("Mot de passe", { exact: true }).fill(password);
+	// Typed before the form hydrates, the values can be reset: type until they stay.
+	await expect(async () => {
+		await page.getByLabel("Adresse e-mail", { exact: true }).fill(email);
+		await page.getByLabel("Mot de passe", { exact: true }).fill(password);
+		await expect(page.getByLabel("Adresse e-mail", { exact: true })).toHaveValue(email, {
+			timeout: 500,
+		});
+	}).toPass({ timeout: 10_000 });
 	await page.getByRole("button", { name: "Se connecter", exact: true }).click();
 	await expect(page.getByRole("heading", { name: "Saisissez votre code" })).toBeFocused();
 	await expectNoAxeViolations(page);
