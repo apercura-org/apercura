@@ -92,6 +92,13 @@
       "when": 1795302693580,
       "tag": "0012_claims_functions",
       "breakpoints": true
+    },
+    {
+      "idx": 13,
+      "version": "7",
+      "when": 1795305083260,
+      "tag": "0013_agenda_feed",
+      "breakpoints": true
     }
   ]
 }

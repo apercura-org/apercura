@@ -95,8 +95,15 @@ export const calendars = care.table(
 		retentionDays: integer().notNull().default(90),
 		/** Plain text shown on the booking panel (never HTML). */
 		publicInstructions: text(),
-		/** SHA-256 of the private iCalendar feed token. */
+		/** SHA-256 of the private iCalendar feed token (`/api/ics/{token}`); null: no feed. */
 		icsTokenHash: text(),
+		/** When the current feed token was issued (rotating replaces it, revoking clears both). */
+		icsTokenCreatedAt: timestamp({ withTimezone: true }),
+		/**
+		 * The feed shows patients' full names. Off by default: the feed is read by the calendar
+		 * provider's servers (Google, Apple), so it carries the reason and initials only.
+		 */
+		icsFullNames: boolean().notNull().default(false),
 		createdAt: createdAt(),
 		updatedAt: updatedAt(),
 	},
