@@ -141,7 +141,12 @@ export function TeamManager({
 						</Select>
 					</div>
 					<div>
-						<Button type="submit" isPending={invite.isPending} pendingLabel={t("invite.pending")}>
+						<Button
+							intent="stamp"
+							type="submit"
+							isPending={invite.isPending}
+							pendingLabel={t("invite.pending")}
+						>
 							{t("invite.submit")}
 						</Button>
 					</div>
@@ -381,6 +386,7 @@ export function TeamManager({
 							<p className="text-body text-ink">{t("members.removeBody")}</p>
 							<div className="flex flex-wrap gap-3">
 								<Button
+									intent="ink"
 									isPending={remove.isPending}
 									onPress={() =>
 										remove.mutate(

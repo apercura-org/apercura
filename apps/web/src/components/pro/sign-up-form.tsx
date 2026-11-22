@@ -101,7 +101,12 @@ export function SignUpForm() {
 					isRequired
 				/>
 				<div>
-					<Button type="submit" isPending={pending} pendingLabel={t("common.pending")}>
+					<Button
+						intent="stamp"
+						type="submit"
+						isPending={pending}
+						pendingLabel={t("common.pending")}
+					>
 						{t("signUp.submit")}
 					</Button>
 				</div>

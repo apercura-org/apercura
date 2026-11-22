@@ -205,6 +205,7 @@ export function ClaimWorkspace({
 						<div className="flex flex-col gap-3">
 							<div>
 								<Button
+									intent="stamp"
 									size="lg"
 									isPending={pscPending}
 									pendingLabel={t("pending")}
@@ -348,6 +349,7 @@ export function ClaimWorkspace({
 				<Section id="claim-review" title={t("review.title")} lead={t("review.lead")}>
 					<div className="flex flex-wrap items-center gap-4">
 						<Button
+							intent="stamp"
 							isDisabled={!data.canSubmit}
 							isPending={submit.isPending}
 							pendingLabel={t("pending")}

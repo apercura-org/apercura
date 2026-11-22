@@ -21,8 +21,8 @@ fontFamily: "Archivo Variable, Archivo Fallback, sans-serif"
 fontSize: "clamp(2.5rem, 1.75rem + 3vw, 3.75rem)"
 fontWeight: 600
 lineHeight: 1.02
-letterSpacing: "-0.025em"
-fontVariation: "'wdth' 104"
+letterSpacing: "-0.02em"
+fontVariation: "'wdth' 115"
 headline:
 fontFamily: "Archivo Variable, Archivo Fallback, sans-serif"
 fontSize: "clamp(1.875rem, 1.5rem + 1.5vw, 2.5rem)"
@@ -174,13 +174,13 @@ Every token pair the UI uses is verified by `packages/ui/src/tokens/tokens.test.
 **Display Font:** Archivo Variable (weight 100–900, width 62–125 %), fallback metric-adjusted Arial.
 **Body Font:** Atkinson Hyperlegible Next Variable (weight 200–800), fallback metric-adjusted Arial.
 
-**Character:** Archivo is a grotesque with a width axis, set calm: semibold and close to its normal width for the wordmark and titles, semi-condensed for labels and column heads, like a form's printed captions. Hierarchy comes from small, regular size steps and from space, never from black weights or wide cuts. Atkinson Hyperlegible Next was drawn for low-vision readers and sets the body and every numeral (RPPS numbers, times, counts). Both are self-hosted from Fontsource, latin and latin-ext subsets only.
+**Character:** Archivo is a grotesque with a width axis, set calm: semibold and close to its normal width for the wordmark and titles, semi-condensed for labels and column heads, like a form's printed captions. Hierarchy comes from small, regular size steps and from space, never from black weights; only the home wordmark keeps a wide cut, as a signature. Atkinson Hyperlegible Next was drawn for low-vision readers and sets the body and every numeral (RPPS numbers, times, counts). Both are self-hosted from Fontsource, latin and latin-ext subsets only.
 
 ### Hierarchy
 
 Each display role is a utility in `theme.css` (`type-display`, `type-headline`, `type-title`, `type-subtitle`, `type-wordmark`), so the scale lives in one place.
 
-- **Display** (`type-display`: 600, wdth 104, clamp 2.5–3.75 rem, 1.02): the wordmark in the home opening only.
+- **Display** (`type-display`: 600, wdth 115, clamp 2.5–3.75 rem, 1.02): the wordmark in the home opening only. Its wide cut is the brand's signature; the weight stays semibold.
 - **Headline** (`type-headline`: 600, wdth 102, clamp 1.875–2.5 rem, 1.12): page titles (practitioner name, "Votre page existe déjà.").
 - **Title** (`type-title`: 600, wdth 100, 1.5 rem, 1.25): section headings on a booklet page.
 - **Subtitle** (`type-subtitle`: 600, 1.25 rem, 1.3): sub-sections, dialog titles, place names, list headings.
@@ -206,7 +206,7 @@ Every target is at least 44 px; type and layout survive 400 % zoom (rows stack, 
 
 ## Elevation & Depth
 
-Flat, as print is. There are no shadows. Depth comes from the quiet shade, 1 px graphite rules for table, section and field-list edges, Soft Rule hairlines between rows, and dashed borders for blank or preview forms. Heavier strokes are functional only: the 2 px error edge, the 2 px selected-tab underline, checkbox and radio outlines. Overlays are paper slips with a 1 px ink border; modal backdrops are ink at 40 %. Inset rules are used only for the stamp's inner frame.
+Flat, as print is. There are no shadows. Depth comes from the quiet shade, 1 px graphite rules for table, section and field-list edges, Soft Rule hairlines between rows, and dashed borders for blank or preview forms. Heavier strokes are functional only: the 2 px error edge (fields and the error badge), the 2 px selected-tab underline, the 2 px dashed edge of an agenda request, checkbox and radio outlines. Overlays are paper slips with a 1 px ink border; modal backdrops are ink at 40 %. Inset rules are used only for the stamp's inner frame.
 
 ## Shapes
 
@@ -218,10 +218,12 @@ All primitives are built on React Aria Components, styled with `tailwind-variant
 
 ### Buttons
 
+Buttons default to **Ink**: the stamp is always written out (`intent="stamp"`), and `apps/web/src/lib/stamp-law.test.ts` fails if a stamped button carries a step back, a cancellation, a pause or a removal.
+
 - **Stamp** (`intent="stamp"`): muted violet fill, white sentence-case Archivo semibold, a 1 px white inner frame 3 px in, like a rubber stamp. Hover and press darken to Stamp Pressed; press nudges 1 px down.
 - **Ink**: white with a 1 px graphite border (its labels can be long: "Appeler le 01 00 00 00 00"); hover Paper Shade. Also the secondary action on the quiet shade.
 - **Quiet**: underlined text action for dense rows.
-- States: disabled (paper shade, disabled ink, no stamp), pending (spinner plus announced label), focus (3 px violet ring on paper and shade alike).
+- States: disabled (paper fill, a 1 px disabled-ink edge and disabled ink, no stamp, so it reads as a button on paper and shade alike), pending (spinner plus announced label), focus (3 px violet ring on paper and shade alike).
 
 ### Fields
 
@@ -241,7 +243,7 @@ Tabs sit on a hairline baseline; unselected tabs are muted ink, the selected tab
 
 ### Feedback
 
-Badges are printed marks in light caps: a Field Edge outline (unclaimed, informational), stamped violet with a quiet double edge (1 px edge, 1 px inner line) on Stamp Wash (verified, booked), red (error). Skeletons are Paper Shade blocks with a soft pulse (off under reduced motion) and an announced status. EmptyState is a dashed blank form that says what is missing and offers the next step.
+Badges are printed marks in light caps: a Field Edge outline (unclaimed, informational), stamped violet with a quiet double edge (1 px edge, 1 px inner line) on Stamp Wash (verified, booked), a 2 px red edge on Error Wash (error). Skeletons are Paper Shade blocks with a soft pulse (off under reduced motion) and an announced status. EmptyState is a dashed blank form that says what is missing and offers the next step.
 
 ### Domain
 
@@ -250,7 +252,7 @@ Badges are printed marks in light caps: a Field Edge outline (unclaimed, informa
 - **FieldRow / FieldList**: label, dotted leader, value. An empty field prints an em dash and "Non renseigné" in Muted Ink; it never disappears.
 - **ActionBlock**: the "what can I do next" box, a 1 px graphite frame with its title on a quiet-shade strip, in five honest states: book (stamp), call the practice (ink, `tel:`), book via the establishment (ink, to its page or site), locum not bookable (statement and hint, no button), and a notice when no contact is published (statement and hint, no button). Until online booking opens, a practice's block says so and offers the call.
 - **SlotPicker**: each day is one unbroken row of 80 × 56 px cells, like a step sequencer. A ruled "now" marker with a caret moves through today's row; past slots (open, but their time has gone) are plain muted ink, taken slots are struck through; both are disabled. The marker stands on the boundary after the last slot that has started, never across a slot, with a 0.875 rem caps label printed in a strip of its own under today's cells (on the side of the past slots once two have gone), so it never covers a cell. Taken slots keep their column, so the times of every day line up. Selecting stamps the cell violet with a hairline white inner frame, a tick and a short, subtle stamp animation; a live region announces the selection. Keyboard: arrows, Home/End, Page Up/Down, Enter/Space.
-- **WeekGrid** (practice agenda): a timetable with one column per day (a single column on phones) and one ruled row per quarter or half hour, 44 px high; opening hours on paper, the rest on the quiet shade. Entries are printed over the cells they cover, at least one row high: confirmed appointments stamped violet (a booked slot), requests in a dashed ink box, blocks solid ink, holds (a patient is booking) dashed and muted, no-shows struck through. Today's header is printed solid ink and a ruled "now" marker crosses today's column; its caps label is printed in a strip of its own, the time column, at the rule's height (it takes the hour's place when they would overlap), so it never covers a cell, and a week that holds "now" opens scrolled to it. ARIA grid with roving focus: arrows move by time and day, Home/End jump to the first and last time, Page Up/Down change the week (focus stays on the same cell), Enter or Space opens the entry or adds one; each cell's label starts with its printed text.
+- **WeekGrid** (practice agenda): a timetable with one column per day (a single column on phones) and one ruled row per quarter or half hour, 44 px high; opening hours on paper, closed hours on the quiet shade under a 1 px Soft Rule hatch, with a Field Edge hairline where opening hours begin or end (no hue; the legend names it). Entries are printed over the cells they cover, at least one row high: confirmed appointments stamped violet (a booked slot), requests in a 2 px dashed ink box, blocks solid ink, holds (a patient is booking) in a 1 px dashed Field Edge box on the shade, no-shows struck through. Today's header is printed solid ink and a ruled "now" marker crosses today's column; its caps label is printed in a strip of its own, the time column, at the rule's height (it takes the hour's place when they would overlap), so it never covers a cell, and a week that holds "now" opens scrolled to it. ARIA grid with roving focus: arrows move by time and day, Home/End jump to the first and last time, Page Up/Down change the week (focus stays on the same cell), Enter or Space opens the entry or adds one; each cell's label starts with its printed text.
 - **SiteCard**: place name, postal address, optional facts, and directions as plain links to OpenStreetMap, Apple Maps and Google Maps (no API, no key).
 - **ProvenanceNote**: source and refresh date set as a printer's imprint.
 - **MapView**: MapLibre GL, loaded only when the map nears the viewport; shows the address until ready or if WebGL fails. Style from `NEXT_PUBLIC_MAP_STYLE_URL` (default OpenFreeMap positron), re-inked by `themeMapStyle` (`packages/ui/src/map/map-style.ts`) from the neutral `mapPalette`: white land, grey streets with slightly darker casings, muted blue-grey water, a barely green park tint, graphite labels on white halos, and a graphite pin. It also hides city, town and village names from zoom 13 so the pin never covers them; attribution always visible. The map is the only place a third hue may appear.
@@ -280,6 +282,6 @@ One authored moment, kept subtle: the stamp (220 ms, ease-out-quart, a 5 % scale
 - Don't put blue cards over stock photos, cream paper or serif editorial type.
 - Don't colour text violet or red, or use violet for mere selection.
 - Don't add shadows, glass, gradients, pill buttons or rounded cards; depth is rules, hairlines and the quiet shade.
-- Don't bring back saturated bands, black (900) weights, wide display cuts or uppercase buttons.
+- Don't bring back saturated bands, black (900) weights, wide cuts beyond the home wordmark, uppercase buttons, or a stamp that is not written out.
 - Don't add ratings, promotional badges or anything that ranks practitioners.
 - Don't invent figures: registry counts come with their source and date.

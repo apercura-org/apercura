@@ -107,13 +107,17 @@ export function GalleryPrimitives() {
 			<div className="flex flex-col gap-14">
 				<Section id="g-buttons" title={t("sections.buttons")}>
 					<Specimen label={t("states.default")}>
-						<Button>{t("buttons.stamp")}</Button>
+						<Button intent="stamp">{t("buttons.stamp")}</Button>
 						<Button intent="ink">{t("buttons.ink")}</Button>
 						<Button intent="quiet">{t("buttons.quiet")}</Button>
-						<Button size="lg">{t("buttons.large")}</Button>
+						<Button intent="stamp" size="lg">
+							{t("buttons.large")}
+						</Button>
 					</Specimen>
 					<Specimen label={t("states.disabled")}>
-						<Button isDisabled>{t("buttons.stamp")}</Button>
+						<Button intent="stamp" isDisabled>
+							{t("buttons.stamp")}
+						</Button>
 						<Button intent="ink" isDisabled>
 							{t("buttons.ink")}
 						</Button>
@@ -122,7 +126,7 @@ export function GalleryPrimitives() {
 						</Button>
 					</Specimen>
 					<Specimen label={t("states.pending")}>
-						<Button isPending pendingLabel={t("buttons.pendingLabel")}>
+						<Button intent="stamp" isPending pendingLabel={t("buttons.pendingLabel")}>
 							{t("buttons.stamp")}
 						</Button>
 						<Button intent="ink" isPending pendingLabel={t("buttons.pendingLabel")}>
@@ -132,7 +136,7 @@ export function GalleryPrimitives() {
 					<div className="surface-shade flex flex-col gap-2 p-5">
 						<p className="caps text-ink-muted">{t("states.onShade")}</p>
 						<div className="flex flex-wrap gap-3">
-							<Button>{t("buttons.stamp")}</Button>
+							<Button intent="stamp">{t("buttons.stamp")}</Button>
 							<Button intent="ink">{t("buttons.ink")}</Button>
 							<Link href="#g-buttons" tone="ink">
 								{t("buttons.inlineLink")}
@@ -276,7 +280,9 @@ export function GalleryPrimitives() {
 											<Button intent="ink" onPress={close} autoFocus>
 												{t("overlays.keep")}
 											</Button>
-											<Button onPress={close}>{t("overlays.confirmCancel")}</Button>
+											<Button intent="ink" onPress={close}>
+												{t("overlays.confirmCancel")}
+											</Button>
 										</div>
 									</div>
 								)}
@@ -482,7 +488,9 @@ export function GalleryPrimitives() {
 						/>
 						<Checkbox isRequired>{t("choices.terms")}</Checkbox>
 						<div className="flex items-center gap-4">
-							<Button type="submit">{t("form.submit")}</Button>
+							<Button intent="stamp" type="submit">
+								{t("form.submit")}
+							</Button>
 							<p role="status" className="text-meta text-ink">
 								{formValid ? t("form.success") : ""}
 							</p>

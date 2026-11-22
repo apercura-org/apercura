@@ -78,7 +78,7 @@ const TONES: Record<WeekGridTone, string> = {
 		"bg-stamp text-paper shadow-[inset_0_0_0_2px_var(--color-stamp),inset_0_0_0_3px_var(--color-paper)]",
 	done: "border border-ink bg-paper text-ink",
 	// Not yet a booking: a dashed form box in ink.
-	pending: "border-[1.5px] border-dashed border-ink bg-paper text-ink",
+	pending: "border-2 border-dashed border-ink bg-paper text-ink",
 	held: "border border-dashed border-field-edge bg-paper-shade text-ink",
 	// Printed solid in ink.
 	block: "bg-ink text-paper",
@@ -312,6 +312,8 @@ export function WeekGrid({
 									(rowOf(entry.startMin, startMin, stepMin) === row ||
 										(row === 0 && entry.startMin < startMin));
 								const open = isOpen(day.open, minute, minute + stepMin);
+								// Where opening hours begin or end, a field-edge hairline marks the boundary.
+								const boundary = row > 0 && open !== isOpen(day.open, minute - stepMin, minute);
 								const isActive = active.row === row && active.column === column;
 								const offset = starts && entry ? Math.max(0, entry.startMin - minute) / stepMin : 0;
 								const span =
@@ -350,9 +352,8 @@ export function WeekGrid({
 										onFocus={() => setFocus({ row, column })}
 										className={cn(
 											"relative h-11 cursor-pointer border-s border-rule-soft outline-none",
-											open
-												? "bg-paper hover:bg-paper-shade"
-												: "bg-paper-shade hover:bg-rule-soft/40",
+											open ? "bg-paper hover:bg-paper-shade" : "closed-hatch hover:bg-rule-soft/40",
+											boundary && "shadow-[inset_0_1px_0_var(--color-field-edge)]",
 											"focus-visible:z-20 focus-visible:outline-3 focus-visible:-outline-offset-3 focus-visible:outline-(--focus-ring)",
 										)}
 									>

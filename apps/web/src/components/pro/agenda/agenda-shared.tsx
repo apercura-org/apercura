@@ -334,7 +334,7 @@ export function AddEntryDialog({
 				) : null}
 				{problem ? <Notice tone="error">{problem}</Notice> : null}
 				<div className="flex flex-wrap gap-3">
-					<Button type="submit" isPending={pending} pendingLabel={t("pending")}>
+					<Button intent="stamp" type="submit" isPending={pending} pendingLabel={t("pending")}>
 						{kind === "block" ? t("submitBlock") : t("submit")}
 					</Button>
 				</div>
@@ -450,6 +450,7 @@ export function EntryDialog({
 				{entry.status === "pending" && !isBlock ? (
 					<div className="flex flex-wrap gap-3">
 						<Button
+							intent="stamp"
 							isPending={decide.isPending && decide.variables?.decision === "approve"}
 							onPress={() =>
 								decide.mutate(
@@ -513,6 +514,7 @@ export function EntryDialog({
 							/>
 							<div className="flex flex-wrap gap-3">
 								<Button
+									intent="ink"
 									isPending={cancel.isPending}
 									onPress={() =>
 										cancel.mutate(

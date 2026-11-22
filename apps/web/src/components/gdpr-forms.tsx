@@ -109,7 +109,12 @@ export function ReportForm({ rpps: fixedRpps }: { rpps?: string }) {
 			/>
 			<p className="text-meta text-ink-muted">{t("privacy")}</p>
 			<div>
-				<Button type="submit" isPending={report.isPending} pendingLabel={tCommon("pending")}>
+				<Button
+					intent="stamp"
+					type="submit"
+					isPending={report.isPending}
+					pendingLabel={tCommon("pending")}
+				>
 					{t("submit")}
 				</Button>
 			</div>
@@ -179,6 +184,7 @@ export function RemovalForm({ rpps: fixedRpps }: { rpps?: string }) {
 			<p className="text-meta text-ink-muted">{t("privacy")}</p>
 			<div>
 				<Button
+					intent="stamp"
 					type="submit"
 					isDisabled={!confirmed}
 					isPending={request.isPending}

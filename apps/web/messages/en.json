@@ -2527,7 +2527,8 @@
 				"booked": "Confirmed",
 				"pending": "Request",
 				"held": "Being booked",
-				"block": "Blocked"
+				"block": "Blocked",
+				"closed": "Outside opening hours"
 			},
 			"loading": "Loading the agenda"
 		},

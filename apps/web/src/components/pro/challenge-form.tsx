@@ -55,6 +55,7 @@ export function ChallengeForm({ totp, passkeys }: { totp: boolean; passkeys: boo
 					<p className="text-body text-ink">{t("challenge.passkeyLead")}</p>
 					<div>
 						<Button
+							intent="stamp"
 							isDisabled={pending}
 							onPress={() => void finish(async () => (await authClient.signIn.passkey()) ?? null)}
 						>
@@ -77,7 +78,12 @@ export function ChallengeForm({ totp, passkeys }: { totp: boolean; passkeys: boo
 							isRequired
 						/>
 						<div>
-							<Button type="submit" isPending={pending} pendingLabel={t("common.pending")}>
+							<Button
+								intent="stamp"
+								type="submit"
+								isPending={pending}
+								pendingLabel={t("common.pending")}
+							>
 								{t("signIn.verify")}
 							</Button>
 						</div>

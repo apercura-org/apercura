@@ -50,6 +50,7 @@ export function ClaimEmailConfirm() {
 			<p className="max-w-[60ch] text-body text-ink">{t("body")}</p>
 			<div>
 				<Button
+					intent="stamp"
 					size="lg"
 					isPending={confirm.isPending}
 					pendingLabel={t("pending")}

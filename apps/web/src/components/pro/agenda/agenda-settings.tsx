@@ -406,6 +406,7 @@ function Gate({
 			<div className="flex flex-wrap gap-3">
 				{status === "open" ? (
 					<Button
+						intent="ink"
 						isPending={setStatus.isPending}
 						onPress={() => change("paused")}
 						className={GATE_BUTTON}
@@ -414,6 +415,7 @@ function Gate({
 					</Button>
 				) : (
 					<Button
+						intent="stamp"
 						isDisabled={missing.length > 0}
 						isPending={setStatus.isPending}
 						onPress={() => change("open")}

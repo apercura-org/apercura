@@ -321,7 +321,7 @@ export function WeekView({
 					<li className="flex items-center gap-2">
 						<span
 							aria-hidden="true"
-							className="inline-block size-4 rounded-field border-[1.5px] border-dashed border-ink"
+							className="inline-block size-4 rounded-field border-2 border-dashed border-ink"
 						/>
 						{t("legend.pending")}
 					</li>
@@ -335,6 +335,13 @@ export function WeekView({
 					<li className="flex items-center gap-2">
 						<span aria-hidden="true" className="inline-block size-4 rounded-field bg-ink" />
 						{t("legend.block")}
+					</li>
+					<li className="flex items-center gap-2">
+						<span
+							aria-hidden="true"
+							className="closed-hatch inline-block size-4 rounded-field border border-rule-soft"
+						/>
+						{t("legend.closed")}
 					</li>
 				</ul>
 			</div>

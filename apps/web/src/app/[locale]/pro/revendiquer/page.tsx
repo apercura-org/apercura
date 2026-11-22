@@ -120,7 +120,9 @@ async function Start({ locale, rpps }: { locale: Locale; rpps: string | null }) 
 							</p>
 						</div>
 						<div>
-							<Button type="submit">{t("start.find")}</Button>
+							<Button intent="stamp" type="submit">
+								{t("start.find")}
+							</Button>
 						</div>
 					</form>
 					<p className="text-body text-ink">

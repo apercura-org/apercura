@@ -113,8 +113,8 @@
 	font-size: var(--text-display);
 	line-height: var(--text-display--line-height);
 	font-weight: 600;
-	font-stretch: 104%;
-	letter-spacing: -0.025em;
+	font-stretch: 115%;
+	letter-spacing: -0.02em;
 }
 
 @utility type-headline {
@@ -173,6 +173,16 @@
 	letter-spacing: 0.045em;
 	font-size: 0.875rem;
 	line-height: 1.3;
+}
+
+/* Closed hours in a timetable: the quiet shade under a 1 px hairline hatch, no hue. */
+@utility closed-hatch {
+	background-color: var(--color-paper-shade);
+	background-image: repeating-linear-gradient(
+		135deg,
+		var(--color-rule-soft) 0 1px,
+		transparent 1px 8px
+	);
 }
 
 @utility tabular {

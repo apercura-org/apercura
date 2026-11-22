@@ -2527,7 +2527,8 @@
 				"booked": "Confirmé",
 				"pending": "Demande",
 				"held": "Réservation en cours",
-				"block": "Bloqué"
+				"block": "Bloqué",
+				"closed": "Hors horaires d’ouverture"
 			},
 			"loading": "Chargement de l’agenda"
 		},

@@ -693,6 +693,7 @@ export function PageEditor({
 						) : null}
 						<div className="flex flex-wrap items-center gap-4">
 							<Button
+								intent="stamp"
 								type="submit"
 								size="lg"
 								isPending={save.isPending}

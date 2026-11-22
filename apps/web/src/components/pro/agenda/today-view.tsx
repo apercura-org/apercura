@@ -392,6 +392,7 @@ export function TodayView({
 								</span>
 								<span className="flex flex-wrap gap-3">
 									<Button
+										intent="stamp"
 										isPending={
 											decide.isPending &&
 											decide.variables?.appointmentId === entry.id &&

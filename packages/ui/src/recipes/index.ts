@@ -28,7 +28,8 @@ export const buttonStyles = tv({
 				"bg-stamp text-paper shadow-[inset_0_0_0_3px_var(--color-stamp),inset_0_0_0_4px_var(--color-paper)]",
 				"hover:bg-stamp-strong hover:shadow-[inset_0_0_0_3px_var(--color-stamp-strong),inset_0_0_0_4px_var(--color-paper)]",
 				"data-pressed:bg-stamp-strong",
-				"data-disabled:bg-paper-shade data-disabled:text-ink-disabled data-disabled:shadow-[inset_0_0_0_1px_var(--color-ink-disabled)]",
+				// Disabled: a paper slip with a disabled-ink edge, so it still reads as a button on paper and on the shade.
+				"data-disabled:bg-paper data-disabled:text-ink-disabled data-disabled:shadow-[inset_0_0_0_1px_var(--color-ink-disabled)]",
 			],
 			/** Printed outline: secondary action. Its labels can be long ("Call 01 00 00 00 00"). */
 			ink: [
@@ -48,7 +49,7 @@ export const buttonStyles = tv({
 		},
 	},
 	compoundVariants: [{ intent: "quiet", size: "md", className: "px-2" }],
-	defaultVariants: { intent: "stamp", size: "md" },
+	defaultVariants: { intent: "ink", size: "md" },
 });
 
 export const linkStyles = tv({
@@ -117,7 +118,7 @@ export const badgeStyles = tv({
 			stamp:
 				"border border-stamp bg-stamp-tint text-stamp shadow-[inset_0_0_0_2px_var(--color-stamp-tint),inset_0_0_0_3px_var(--color-stamp)]",
 			/** Error mark. */
-			error: "border border-error bg-error-tint text-error",
+			error: "border-2 border-error bg-error-tint text-error",
 		},
 	},
 	defaultVariants: { tone: "ink" },

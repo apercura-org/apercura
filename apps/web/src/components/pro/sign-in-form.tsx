@@ -129,7 +129,12 @@ export function SignInForm() {
 							isRequired
 						/>
 						<div>
-							<Button type="submit" isPending={pending} pendingLabel={t("common.pending")}>
+							<Button
+								intent="stamp"
+								type="submit"
+								isPending={pending}
+								pendingLabel={t("common.pending")}
+							>
 								{t("signIn.submit")}
 							</Button>
 						</div>
@@ -188,7 +193,12 @@ export function SignInForm() {
 					/>
 				)}
 				<div className="flex flex-wrap items-center gap-4">
-					<Button type="submit" isPending={pending} pendingLabel={t("common.pending")}>
+					<Button
+						intent="stamp"
+						type="submit"
+						isPending={pending}
+						pendingLabel={t("common.pending")}
+					>
 						{t("signIn.verify")}
 					</Button>
 					<Button
