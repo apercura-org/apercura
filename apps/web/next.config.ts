@@ -4,6 +4,7 @@ import "./src/env";
 
 import type { NextConfig } from "next";
 import createNextIntlPlugin from "next-intl/plugin";
+import { API_CONTENT_SECURITY_POLICY, baseSecurityHeaders } from "./src/lib/security-headers";
 
 const nextConfig: NextConfig = {
 	cacheComponents: true,
@@ -18,6 +19,18 @@ const nextConfig: NextConfig = {
 		return [{ source: "/favicon.ico", destination: "/icon/48", permanent: true }];
 	},
 	async headers() {
+		// Every response: nosniff, referrer, framing, permissions, opener isolation and, in an
+		// HTTPS production build, HSTS. Pages get their Content-Security-Policy from the proxy.
+		const security = baseSecurityHeaders({
+			production: process.env.NODE_ENV === "production",
+			appUrl: process.env.APP_URL,
+		});
+		// API answers are data: nothing may run, load or frame them, nor read them cross-origin.
+		// The claim document route sets its own sandboxed policy.
+		const api = [
+			{ key: "Content-Security-Policy", value: API_CONTENT_SECURITY_POLICY },
+			{ key: "Cross-Origin-Resource-Policy", value: "same-origin" },
+		];
 		// The appointment page reads its token from the URL fragment: no referrer may leave it,
 		// it is never indexed and never stored by a shared cache.
 		const manage = [
@@ -31,6 +44,8 @@ const nextConfig: NextConfig = {
 		const noindex = [{ key: "X-Robots-Tag", value: "noindex" }];
 		const noindexNofollow = [{ key: "X-Robots-Tag", value: "noindex, nofollow" }];
 		return [
+			{ source: "/:path*", headers: security },
+			{ source: "/api/:path((?!admin/claim-documents/).*)", headers: api },
 			{ source: "/en", headers: noindex },
 			{ source: "/en/:path*", headers: noindex },
 			{ source: "/recherche", headers: noindex },
