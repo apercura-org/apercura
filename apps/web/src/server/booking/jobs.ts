@@ -2,6 +2,7 @@ import { COMPLETION_DELAY_MS } from "@apercura/core/booking";
 import { instantToLocalDate, localToInstant } from "@apercura/core/time";
 import type { Database } from "@apercura/db";
 import { sql } from "drizzle-orm";
+import { cacheTags } from "~/server/cache-tags";
 import { writeAudit } from "~/server/phi";
 import { purgeClaimDocuments } from "../claims/service";
 import { getStorage, type StorageDriver, storageConfigured } from "../storage";
@@ -9,6 +10,7 @@ import { practitionerTransaction } from "./locks";
 import { refreshNextFree } from "./next-free";
 import { enqueueOutbox } from "./outbox";
 import { type MailTransport, processOutbox } from "./outbox-worker";
+import { sendRevalidation } from "./revalidate-remote";
 import { at } from "./sql-time";
 import { type ExpiredEntry, recordEvents, recordExpiries } from "./transitions";
 
@@ -253,7 +255,10 @@ export async function purge(db: Database, nowMs: number) {
 	return { appointments: purged, codes: codes.count ?? 0, outbox: mails.count ?? 0 };
 }
 
-/** Recomputes `next_free_at` of every practitioner with an open calendar (or the given ones). */
+/**
+ * Recomputes `next_free_at` of every practitioner with an open calendar (or the given ones), then
+ * asks the web app to refresh the pages whose next free slot changed (see `sendRevalidation`).
+ */
 export async function refreshAllNextFree(db: Database, nowMs: number, ids?: readonly number[]) {
 	const rows = ids
 		? ids.map((id) => ({ practitioner_id: id }))
@@ -266,13 +271,14 @@ export async function refreshAllNextFree(db: Database, nowMs: number, ids?: read
 						and id not in (select practitioner_id from care.calendars where status = 'open')
 				`)),
 			];
-	let changed = 0;
+	const changed: number[] = [];
 	for (const row of rows) {
 		if (await refreshNextFree(db, row.practitioner_id, nowMs)) {
-			changed += 1;
+			changed.push(row.practitioner_id);
 		}
 	}
-	return { practitioners: rows.length, changed };
+	const revalidated = await sendRevalidation(changed.map((id) => cacheTags.practitioner(id)));
+	return { practitioners: rows.length, changed: changed.length, revalidated };
 }
 
 /** Sends every due outbox row, batch after batch. */

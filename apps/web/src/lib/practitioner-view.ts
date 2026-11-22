@@ -91,9 +91,10 @@ export type ActionPlan =
 	| { kind: "no_phone"; site: SiteView };
 
 /**
- * What a patient can do next, from the first place shown. Online booking does
- * not exist yet (it opens with M5), so practices are called; hospital
- * practitioners are reached through their establishment.
+ * What a patient can do next without online booking, from the first place
+ * shown: practices are called, hospital practitioners are reached through
+ * their establishment. An open agenda (read model `booking`) takes precedence
+ * on the page and keeps the call as a second way.
  */
 export function actionPlan(sites: SiteView[]): ActionPlan | null {
 	const site = sites[0];

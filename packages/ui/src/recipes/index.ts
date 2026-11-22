@@ -13,7 +13,7 @@ export const focusRing =
 
 export const buttonStyles = tv({
 	base: [
-		"relative inline-flex shrink-0 cursor-pointer select-none items-center justify-center gap-2 rounded-field",
+		"relative inline-flex max-w-full shrink-0 cursor-pointer select-none items-center justify-center gap-2 rounded-field",
 		"font-display font-bold uppercase tracking-[0.05em] font-stretch-semi-expanded no-underline",
 		"transition-[background-color,color,transform,border-color] duration-150 ease-out",
 		"active:translate-y-px data-pressed:translate-y-px",

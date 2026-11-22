@@ -1,4 +1,5 @@
 import "server-only";
+import { revalidateTag } from "next/cache";
 import { after } from "next/server";
 import { getSessionFor } from "~/server/auth/session";
 import { getDb } from "~/server/db";
@@ -27,5 +28,15 @@ export async function createTRPCContext(options: CreateContextOptions): Promise<
 		rateLimit: (key, rule) => consumeRateLimit(getDb(), key, rule),
 		...(options.resHeaders ? { resHeaders: options.resHeaders } : {}),
 		defer: (task) => after(task),
+		revalidate: (tags) => {
+			for (const tag of tags) {
+				try {
+					// Stale-while-revalidate: the next visit regenerates the page in the background.
+					revalidateTag(tag, "max");
+				} catch (error) {
+					console.error(`Could not revalidate ${tag}:`, error);
+				}
+			}
+		},
 	};
 }

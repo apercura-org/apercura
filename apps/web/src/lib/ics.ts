@@ -1,11 +1,15 @@
 /**
- * Hand-written iCalendar (RFC 5545 / RFC 5546) for patient emails: one VEVENT per appointment
- * with a stable UID, `SEQUENCE` = the appointment's revision, times in UTC, `METHOD:REQUEST` for
- * a booking or a change and `METHOD:CANCEL` for a cancellation. No reason and no specialty in it.
+ * Hand-written iCalendar (RFC 5545 / RFC 5546) for patients: one VEVENT per appointment with a
+ * stable UID, `SEQUENCE` = the appointment's revision, times in UTC. Emails attach
+ * `METHOD:REQUEST` for a booking or a change and `METHOD:CANCEL` for a cancellation; the booking
+ * panel's "add to calendar" file is a plain `METHOD:PUBLISH` event with the same UID, so a later
+ * email updates it instead of adding a second one. No reason and no specialty in it.
+ *
+ * Pure: shared by the server (emails) and the browser (download).
  */
 
 export interface IcsEvent {
-	method: "REQUEST" | "CANCEL";
+	method: "REQUEST" | "CANCEL" | "PUBLISH";
 	/** Stable across revisions: `{appointmentId}@{host}`. */
 	uid: string;
 	sequence: number;
@@ -14,7 +18,8 @@ export interface IcsEvent {
 	stampedAt: Date;
 	summary: string;
 	location?: string | null;
-	organizer: { name: string; email: string };
+	/** Required by REQUEST and CANCEL (RFC 5546); left out of a published file. */
+	organizer?: { name: string; email: string } | null;
 	attendee?: { name: string; email: string } | null;
 }
 
@@ -77,7 +82,9 @@ export function buildIcs(event: IcsEvent): string {
 		`DTEND:${icsUtc(event.endsAt)}`,
 		`SUMMARY:${escapeText(event.summary)}`,
 		...(event.location ? [`LOCATION:${escapeText(event.location)}`] : []),
-		`ORGANIZER;CN=${paramValue(event.organizer.name)}:mailto:${event.organizer.email}`,
+		...(event.organizer
+			? [`ORGANIZER;CN=${paramValue(event.organizer.name)}:mailto:${event.organizer.email}`]
+			: []),
 		...(event.attendee
 			? [
 					`ATTENDEE;CN=${paramValue(event.attendee.name)};ROLE=REQ-PARTICIPANT;PARTSTAT=ACCEPTED;RSVP=FALSE:mailto:${event.attendee.email}`,

@@ -12,6 +12,7 @@ import { Link, redirect } from "~/i18n/navigation";
 import { type Locale, routing } from "~/i18n/routing";
 import { genderOf, getTaxonomyLabels } from "~/lib/labels";
 import { resolveListing } from "~/lib/listing-index";
+import { slotParts, slotTime } from "~/lib/slot-format";
 import {
 	matchPlaces,
 	type PlaceSuggestion,
@@ -286,6 +287,22 @@ async function Results({
 	const to = from + outcome.results.length - 1;
 	/** What the patient can do next, from the place shown: call it, go through its establishment… */
 	const action = (result: SearchResult) => {
+		if (result.nextFreeAt && result.bookingTimeZone) {
+			// Bookable online: the next free time, opening the booking panel on the practitioner's page.
+			const next = slotParts(new Date(result.nextFreeAt).getTime(), result.bookingTimeZone, locale);
+			return (
+				<Link
+					href={{
+						pathname: "/praticien/[slug]",
+						params: { slug: result.slug },
+						query: { rdv: "1" },
+					}}
+					className={`${linkStyles()} tabular font-semibold`}
+				>
+					{t("action.nextFree", { slot: `${next.dayLabel} ${slotTime(next)}` })}
+				</Link>
+			);
+		}
 		const kind = result.practiceKind;
 		if (kind === "locum") return <span>{t("action.locum")}</span>;
 		if (kind === "hospital" && result.establishmentSlug) {
@@ -330,7 +347,10 @@ async function Results({
 				<p className="tabular text-meta text-ink-muted">{t("range", { from, to })}</p>
 			</div>
 			<p className="max-w-[65ch] text-body text-ink">
-				{query.near ? t("orderNear") : t("orderName")} {t("bookingNotOpen")}
+				{query.near ? t("orderNear") : t("orderName")}{" "}
+				{outcome.results.some((result) => result.nextFreeAt)
+					? t("bookingOpenSome")
+					: t("bookingNotOpen")}
 			</p>
 			<ResultsMap
 				pins={pins}

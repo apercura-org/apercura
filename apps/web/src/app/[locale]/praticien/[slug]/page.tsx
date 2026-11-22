@@ -13,6 +13,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { BookingLauncher } from "~/components/booking/booking-launcher";
 import { BookletPage } from "~/components/booklet-page";
 import { JsonLd } from "~/components/json-ld";
 import { FeesSection, PracticalSection, PresentationSection } from "~/components/owner-sections";
@@ -26,9 +27,14 @@ import { ownerContentOf } from "~/lib/owner-content";
 import { actionPlan, type SiteView, siteViews } from "~/lib/practitioner-view";
 import { robotsFor } from "~/lib/robots";
 import { absoluteUrl, pageAlternates, siteOrigin } from "~/lib/site-url";
+import { slotParts, slotTime } from "~/lib/slot-format";
 import { practitionerStructuredData } from "~/lib/structured-data";
 import { databaseAvailable } from "~/server/db";
-import { getPractitionerPage, samplePractitionerSlugs } from "~/server/queries/practitioner";
+import {
+	getPractitionerPage,
+	type PractitionerPage as PractitionerPageData,
+	samplePractitionerSlugs,
+} from "~/server/queries/practitioner";
 import { photoUrl } from "~/server/storage";
 
 /** The first request of a page waits for the complete page, never a shell. */
@@ -311,7 +317,13 @@ export default async function PractitionerPage({ params }: Props) {
 						/>
 					</div>
 					<aside aria-label={t("asideLabel")} className="order-1 flex flex-col gap-6 lg:order-2">
-						<Action plan={plan} locale={locale} />
+						<Action
+							plan={plan}
+							locale={locale}
+							booking={page.booking}
+							practitionerId={page.practitionerId}
+							practitionerName={name}
+						/>
 						<section
 							aria-labelledby="claim-heading"
 							className="flex flex-col gap-2 border-t-[1.5px] border-ink pt-4"
@@ -483,11 +495,61 @@ async function SiteSection({
 	);
 }
 
-async function Action({ plan, locale }: { plan: ReturnType<typeof actionPlan>; locale: Locale }) {
+async function Action({
+	plan,
+	locale,
+	booking,
+	practitionerId,
+	practitionerName,
+}: {
+	plan: ReturnType<typeof actionPlan>;
+	locale: Locale;
+	booking: PractitionerPageData["booking"];
+	practitionerId: number;
+	practitionerName: string;
+}) {
 	const t = await getTranslations({ locale, namespace: "PractitionerPage" });
 	const tP = await getTranslations({ locale, namespace: "Practitioner" });
 	const tSite = await getTranslations({ locale, namespace: "Site" });
 	const title = tP("action.title");
+	if (booking.open) {
+		// Online booking is open: the stamp opens the panel in place; the phone stays as a second way.
+		const phone = plan?.kind === "call" ? plan.phone : null;
+		const callHint = phone ? t("action.orCall", { phone: phone.display }) : undefined;
+		const next =
+			booking.nextFreeAt && booking.timeZone
+				? slotParts(Date.parse(booking.nextFreeAt), booking.timeZone, locale)
+				: null;
+		return (
+			<ActionBlock
+				kind="book"
+				title={title}
+				statement={next ? t("action.bookStatement") : t("action.bookNoSlot")}
+				nextSlot={
+					next
+						? { label: t("action.nextSlot"), value: `${next.dateNoYear}, ${slotTime(next)}` }
+						: null
+				}
+				actionLabel={t("action.bookLabel")}
+				href="?rdv=1"
+				action={
+					<BookingLauncher
+						practitionerId={practitionerId}
+						practitionerName={practitionerName}
+						label={t("action.bookLabel")}
+						callHint={callHint}
+					/>
+				}
+				secondary={
+					phone ? (
+						<a href={`tel:${phone.e164}`} className={`${linkStyles()} tabular`}>
+							{callHint}
+						</a>
+					) : null
+				}
+			/>
+		);
+	}
 	if (!plan) return null;
 	switch (plan.kind) {
 		case "call":

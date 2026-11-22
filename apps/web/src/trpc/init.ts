@@ -39,6 +39,8 @@ export interface Context {
 	defer?: (task: () => Promise<void>) => void;
 	/** Clock of the booking services, injected by tests. Defaults to `Date.now`. */
 	now?: () => number;
+	/** Marks cached pages stale (Next.js `revalidateTag`). Unset in tests. */
+	revalidate?: (tags: string[]) => void;
 }
 
 const t = initTRPC.context<Context>().create({

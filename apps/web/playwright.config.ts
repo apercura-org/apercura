@@ -1,4 +1,5 @@
 import { defineConfig, devices } from "@playwright/test";
+import { E2E_BOOKING_ENV } from "./e2e/booking-env";
 
 /**
  * End-to-end and accessibility checks.
@@ -15,6 +16,9 @@ import { defineConfig, devices } from "@playwright/test";
  * (S3_*), the encryption keys (ENCRYPTION_KEYS, ENCRYPTION_ACTIVE_KEY) and,
  * in the test process, DATABASE_URL to prepare their practitioners. Pro Santé
  * Connect is the local mock started below.
+ * Booking (`booking.spec.ts`, `manage.spec.ts`) needs the synthetic fixtures too
+ * (`bun run etl:fr --source-dir packages/etl/fixtures/fr --offline`): the global
+ * setup opens agendas for four fictitious practitioners (`e2e/booking-seed.ts`).
  * E2E_PORT moves both servers (production on it, development on the next one).
  */
 const PROD_PORT = Number(process.env.E2E_PORT ?? 3100);
@@ -64,9 +68,11 @@ export default defineConfig({
 				// Auth checks the request origin against these.
 				APP_URL: PROD_URL,
 				BETTER_AUTH_URL: PROD_URL,
-				// No proxy in front of the test server.
-				TRUSTED_PROXY_COUNT: "0",
+				// Booking tests send X-Forwarded-For so each one has its own rate-limit bucket;
+				// requests without it share one bucket, as with no proxy.
+				TRUSTED_PROXY_COUNT: "1",
 				...PSC,
+				...E2E_BOOKING_ENV,
 			},
 			reuseExistingServer: !isCI,
 			timeout: 60_000,

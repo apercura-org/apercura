@@ -23,7 +23,7 @@ import fr from "../../../messages/fr.json";
 import { findCalendar } from "./availability";
 import { BookingError, isUniqueViolation } from "./errors";
 import { agendaRequirements } from "./gate";
-import { refreshNextFree } from "./next-free";
+import { refreshNextFreeFor } from "./next-free";
 import type { BookingRuntime } from "./runtime";
 
 /*
@@ -192,7 +192,7 @@ export async function updateCalendar(
 	if (Object.keys(patch).length > 0) {
 		await rt.db.update(calendars).set(patch).where(eq(calendars.id, calendar.id));
 	}
-	await refreshNextFree(rt.db, calendar.practitionerId, rt.nowMs());
+	await refreshNextFreeFor(rt, calendar.practitionerId);
 	return findCalendar(rt.db, calendarId, { organizationId });
 }
 
@@ -240,7 +240,8 @@ export async function setCalendarStatus(
 			...(status === "open" && !calendar.openedAt ? { openedAt: new Date(rt.nowMs()) } : {}),
 		})
 		.where(eq(calendars.id, calendar.id));
-	await refreshNextFree(rt.db, calendar.practitionerId, rt.nowMs());
+	// Opening or pausing changes what the practitioner's page offers even when the slot does not.
+	await refreshNextFreeFor(rt, calendar.practitionerId, { force: true });
 	return { status };
 }
 
@@ -287,7 +288,7 @@ export async function saveType(
 	if (!saved) {
 		throw new BookingError("NOT_FOUND");
 	}
-	await refreshNextFree(rt.db, calendar.practitionerId, rt.nowMs());
+	await refreshNextFreeFor(rt, calendar.practitionerId);
 	return saved;
 }
 
@@ -365,7 +366,7 @@ export async function replaceRules(
 			);
 		}
 	});
-	await refreshNextFree(rt.db, calendar.practitionerId, rt.nowMs());
+	await refreshNextFreeFor(rt, calendar.practitionerId);
 	return { count: rules.length };
 }
 
@@ -417,7 +418,7 @@ export async function addException(
 			typeIds: exception.typeIds ?? [],
 		})
 		.returning();
-	await refreshNextFree(rt.db, calendar.practitionerId, rt.nowMs());
+	await refreshNextFreeFor(rt, calendar.practitionerId);
 	return row;
 }
 
@@ -439,6 +440,6 @@ export async function removeException(
 		throw new BookingError("NOT_FOUND");
 	}
 	const calendar = await findCalendar(rt.db, row.calendarId, { organizationId });
-	await refreshNextFree(rt.db, calendar.practitionerId, rt.nowMs());
+	await refreshNextFreeFor(rt, calendar.practitionerId);
 	return { removed: true };
 }

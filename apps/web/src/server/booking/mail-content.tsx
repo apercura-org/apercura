@@ -3,6 +3,7 @@ import { render } from "@react-email/render";
 import { eq } from "drizzle-orm";
 import { createTranslator } from "next-intl";
 import { BookingEmail, type BookingEmailProps } from "~/emails/booking-email";
+import { buildIcs } from "~/lib/ics";
 import type { Executor } from "~/server/db-executor";
 import {
 	type AuditContext,
@@ -13,8 +14,14 @@ import {
 } from "~/server/phi";
 import en from "../../../messages/en.json";
 import fr from "../../../messages/fr.json";
-import { agendaUrl, appOrigin, formatSlot, manageUrl, senderAddress } from "./format";
-import { buildIcs } from "./ics";
+import {
+	agendaUrl,
+	appOrigin,
+	formatSlot,
+	manageUrl,
+	practitionerPageUrl,
+	senderAddress,
+} from "./format";
 import type { OutboxKind } from "./outbox";
 import type { AppointmentRow } from "./transitions";
 
@@ -79,6 +86,13 @@ const WITH_DETAILS = new Set<OutboxKind>([
 	"reminder",
 ]);
 
+/** Kinds that leave the patient without an appointment: they link to the practitioner's page. */
+const WITH_BOOK_AGAIN_LINK = new Set<OutboxKind>([
+	"booking_declined",
+	"request_expired",
+	"booking_cancelled_by_practice",
+]);
+
 /** Kinds that link to the manage page. */
 const WITH_MANAGE_LINK = new Set<OutboxKind>([
 	"booking_confirmed",
@@ -91,6 +105,7 @@ const WITH_MANAGE_LINK = new Set<OutboxKind>([
 
 interface Place {
 	practitionerName: string;
+	practitionerSlug: string;
 	address: string | null;
 	timeZone: string;
 }
@@ -106,6 +121,7 @@ async function loadPlace(
 			titleCode: practitioners.titleCode,
 			firstName: practitioners.firstName,
 			lastName: practitioners.lastName,
+			slug: practitioners.slug,
 			siteName: sites.name,
 			addressLine: sites.addressLine,
 			postcode: sites.postcode,
@@ -124,6 +140,7 @@ async function loadPlace(
 	const town = [row.postcode, row.communeLabel].filter(Boolean).join(" ");
 	return {
 		practitionerName: [title, row.firstName, row.lastName].filter(Boolean).join(" "),
+		practitionerSlug: row.slug,
 		address: [row.addressLine, town].filter(Boolean).join(", ") || row.siteName || null,
 		timeZone: row.timeZone,
 	};
@@ -206,7 +223,7 @@ async function composePatientMail(
 		paragraphs.push(t("cancelledByPractice.message", { message: patient.practiceMessage }));
 	}
 
-	const details = WITH_DETAILS.has(kind)
+	const details: { label: string; value: string }[] = WITH_DETAILS.has(kind)
 		? [
 				{ label: t("labels.with"), value: place.practitionerName },
 				{ label: t("labels.date"), value: slot.date },
@@ -214,6 +231,11 @@ async function composePatientMail(
 				...(place.address ? [{ label: t("labels.address"), value: place.address }] : []),
 			]
 		: [];
+	if (kind === "booking_pending" && appointment.expiresAt) {
+		// The patient knows until when the practice may answer.
+		const deadline = formatSlot(appointment.expiresAt.getTime(), place.timeZone, locale);
+		details.push({ label: t("labels.until"), value: `${deadline.date}, ${deadline.time}` });
+	}
 
 	const token =
 		WITH_MANAGE_LINK.has(kind) && appointment.manageTokenNonce
@@ -243,7 +265,13 @@ async function composePatientMail(
 		code,
 		action: token
 			? { href: manageUrl(locale, token), label: t("manageAction"), fallback: t("fallback") }
-			: null,
+			: WITH_BOOK_AGAIN_LINK.has(kind)
+				? {
+						href: practitionerPageUrl(locale, place.practitionerSlug),
+						label: t("bookAgainAction"),
+						fallback: t("fallback"),
+					}
+				: null,
 		notes,
 	});
 

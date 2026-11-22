@@ -9,11 +9,11 @@ import { appointments, calendars, practitioners, sites } from "@apercura/db/sche
 import { and, eq, isNull } from "drizzle-orm";
 import { hashOpaqueToken, readAppointmentPatients } from "~/server/phi";
 import {
-	availableSlots,
 	findCalendar,
 	findType,
 	isOnGrid,
 	nearestAlternatives,
+	slotGrid,
 	toCoreType,
 } from "./availability";
 import { BOOKING_LIMITS, bookingEnabled } from "./config";
@@ -84,6 +84,7 @@ export async function getManaged(rt: BookingRuntime, token: string) {
 			addressLine: sites.addressLine,
 			postcode: sites.postcode,
 			communeLabel: sites.communeLabel,
+			phone: sites.phone,
 		})
 		.from(calendars)
 		.innerJoin(practitioners, eq(practitioners.id, calendars.practitionerId))
@@ -134,12 +135,16 @@ export async function getManaged(rt: BookingRuntime, token: string) {
 					addressLine: place.addressLine,
 					postcode: place.postcode,
 					communeLabel: place.communeLabel,
+					/** E.164 number of the place: past the cutoff, the patient calls. */
+					phone: place.phone,
 				}
 			: null,
 		patient: { firstName: patient?.firstName ?? null, lastName: patient?.lastName ?? null },
 		/** An address typed by the practice that the patient has not confirmed yet. */
 		needsConfirmation: row.source === "practice" && row.emailVerifiedAt === null,
 		canCancel,
+		/** Online cancellation and moves close this many minutes before the start. */
+		cancellationCutoffMin: cutoffMin,
 		canReschedule: canCancel && row.appointmentTypeId !== null && place?.calendarStatus === "open",
 	};
 }
@@ -229,7 +234,7 @@ export async function managedSlots(
 	}
 	const calendar = await findCalendar(rt.db, row.calendarId, { openOnly: true });
 	const type = await findType(rt.db, calendar.id, row.appointmentTypeId);
-	const slots = await availableSlots(
+	const { free, taken } = await slotGrid(
 		rt.db,
 		calendar,
 		type,
@@ -237,7 +242,12 @@ export async function managedSlots(
 		rt.nowMs(),
 		{ excludeAppointmentId: row.id },
 	);
-	return { timeZone: calendar.timeZone, slots: slots.map((ms) => new Date(ms)) };
+	return {
+		timeZone: calendar.timeZone,
+		slots: free.map((ms) => new Date(ms)),
+		/** Grid starts that cannot be booked: start instants only, never who holds them. */
+		taken: taken.map((ms) => new Date(ms)),
+	};
 }
 
 export type RescheduleResult =

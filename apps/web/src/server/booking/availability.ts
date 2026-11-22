@@ -219,6 +219,46 @@ export async function availableSlots(
 }
 
 /**
+ * The free starts of a window and the grid starts that are not free (another booking, a block,
+ * too close to now, or already gone), so the picker strikes them in their own column. Only
+ * start instants leave the server: never who or what occupies a time.
+ */
+export async function slotGrid(
+	db: Executor,
+	calendar: CalendarRow,
+	type: AppointmentTypeRow,
+	range: { fromDate: string; days: number },
+	nowMs: number,
+	options: { patient?: "new" | "existing"; excludeAppointmentId?: string } = {},
+): Promise<{ free: number[]; taken: number[] }> {
+	if (!Number.isInteger(range.days) || range.days < 1 || range.days > MAX_SLOT_DAYS) {
+		throw new BookingError("INVALID_INPUT");
+	}
+	let from: ReturnType<typeof parseLocalDate>;
+	try {
+		from = parseLocalDate(range.fromDate);
+	} catch {
+		throw new BookingError("INVALID_INPUT");
+	}
+	const query = await slotQuery(db, calendar, type, range, nowMs, options);
+	const free = computeSlots({ ...query, fromDate: range.fromDate, days: range.days });
+	// The same grid from the start of the window, busy ranges and minimal notice ignored.
+	const windowStartMs = Math.min(nowMs, localToInstant(from, 0, calendar.timeZone));
+	const grid = computeSlots({
+		...query,
+		busy: [],
+		nowMs: windowStartMs,
+		settings: { ...query.settings, minNoticeMin: 0 },
+		fromDate: range.fromDate,
+		days: range.days,
+	});
+	const horizonEndMs = nowMs + calendar.horizonDays * DAY_MS;
+	const offered = new Set(free);
+	const taken = grid.filter((start) => !offered.has(start) && start < horizonEndMs);
+	return { free, taken };
+}
+
+/**
  * Whether `startMs` is on the calendar's grid for `type` (rules, exceptions, notice, horizon),
  * busy ranges ignored: the overlap constraint, not a prior read, decides whether it is free.
  */

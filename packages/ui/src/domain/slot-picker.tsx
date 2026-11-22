@@ -16,6 +16,17 @@ import {
 export interface Slot extends GridSlot {
 	/** Printed time, e.g. "09:30". */
 	time: string;
+	/**
+	 * Printed under the time in caps, e.g. "UTC+2" for the hour that occurs twice when clocks go
+	 * back. Must also be part of `accessibleLabel`.
+	 */
+	detail?: string;
+	/**
+	 * Why an unavailable slot cannot be stamped when it is not simply taken, e.g. "your current
+	 * time" when moving an appointment. Spoken instead of `unavailableLabel`; the slot is printed
+	 * on a shaded ground instead of struck through. Pair it with a visible `detail`.
+	 */
+	unavailableNote?: string;
 	/** Full spoken label, e.g. "Tuesday 24 November, 9:30". */
 	accessibleLabel: string;
 }
@@ -150,11 +161,15 @@ export function SlotPicker({
 
 	return (
 		<div className="flex flex-col gap-2">
-			<div className="overflow-x-auto border-y-2 border-ink">
+			<div className="scroll-ps-32 overflow-x-auto border-y-2 border-ink sm:scroll-ps-40">
 				{/* biome-ignore lint/a11y/useSemanticElements: ARIA grid pattern (roving focus on cells); flex rows keep each day one unbroken row */}
 				<div role="grid" aria-label={label} className="flex w-max min-w-full flex-col">
 					{days.map((day, row) => {
 						const fraction = now ? nowFraction(day, now) : null;
+						// The "now" label sits in a strip of its own under today's cells, on the side
+						// of the past slots once there is room for it, so it never covers a cell and
+						// stays inside the row near the start of the day.
+						const labelBefore = fraction !== null && Math.round(fraction * day.slots.length) >= 2;
 						return (
 							// biome-ignore lint/a11y/useSemanticElements lint/a11y/useFocusableInteractive: ARIA grid pattern (roving focus on cells); flex rows keep each day one unbroken row
 							<div
@@ -165,7 +180,7 @@ export function SlotPicker({
 								{/* biome-ignore lint/a11y/useSemanticElements lint/a11y/useFocusableInteractive: ARIA grid pattern (roving focus on cells); flex rows keep each day one unbroken row */}
 								<div
 									role="rowheader"
-									className="sticky start-0 z-10 flex w-32 shrink-0 items-center border-e-[1.5px] border-ink bg-paper py-2 pe-3 font-display text-meta font-semibold text-ink font-stretch-semi-condensed sm:w-40"
+									className="sticky start-0 z-40 flex w-32 shrink-0 items-center border-e-[1.5px] border-ink bg-paper py-2 pe-3 font-display text-meta font-semibold text-ink font-stretch-semi-condensed sm:w-40"
 								>
 									{day.label}
 								</div>
@@ -178,11 +193,12 @@ export function SlotPicker({
 										{emptyDayLabel}
 									</div>
 								) : (
-									<div className="relative flex">
+									<div className={cn("relative flex", fraction !== null && "pb-6")}>
 										{day.slots.map((slot, column) => {
 											const bookable = isBookable(slot, now);
 											// Past: was open, time has gone (plain muted). Taken: closed (struck through).
 											const isPast = slot.available && !bookable;
+											const isNoted = !slot.available && Boolean(slot.unavailableNote);
 											const isSelected = slot.id === selected;
 											const isActive = active.row === row && active.column === column;
 											return (
@@ -203,7 +219,7 @@ export function SlotPicker({
 													aria-label={
 														bookable
 															? slot.accessibleLabel
-															: `${slot.accessibleLabel}, ${isPast ? pastLabel : unavailableLabel}`
+															: `${slot.accessibleLabel}, ${isPast ? pastLabel : (slot.unavailableNote ?? unavailableLabel)}`
 													}
 													onClick={() => {
 														setFocus({ row, column });
@@ -219,13 +235,22 @@ export function SlotPicker({
 															"cursor-pointer text-ink hover:bg-paper-shade",
 														isPast && "cursor-not-allowed font-normal text-ink-muted",
 														!slot.available &&
+															!isNoted &&
 															"cursor-not-allowed text-ink-disabled line-through decoration-1",
+														isNoted && "cursor-not-allowed bg-paper-shade text-ink",
 														isSelected &&
 															"z-10 cursor-pointer bg-stamp text-paper shadow-[inset_0_0_0_2px_var(--color-stamp),inset_0_0_0_3.5px_var(--color-paper)] motion-safe:animate-stamp",
 													)}
 												>
 													{isSelected ? <CheckIcon className="size-4" strokeWidth={2.5} /> : null}
-													{slot.time}
+													{slot.detail ? (
+														<span className="flex flex-col items-center leading-tight">
+															<span>{slot.time}</span>{" "}
+															<span className="caps font-normal">{slot.detail}</span>
+														</span>
+													) : (
+														slot.time
+													)}
 												</div>
 											);
 										})}
@@ -236,7 +261,12 @@ export function SlotPicker({
 												style={{ left: `${fraction * 100}%` }}
 											>
 												<span className="absolute -top-px left-1/2 size-0 -translate-x-1/2 border-x-[5px] border-t-[6px] border-x-transparent border-t-ink" />
-												<span className="caps absolute bottom-0.5 left-1.5 whitespace-nowrap bg-paper px-0.5 leading-none text-ink">
+												<span
+													className={cn(
+														"caps absolute bottom-1 whitespace-nowrap bg-paper px-0.5 leading-none text-ink",
+														labelBefore ? "right-1.5" : "left-1.5",
+													)}
+												>
 													{nowLabel}
 												</span>
 											</span>

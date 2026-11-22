@@ -20,6 +20,11 @@ export interface BookingRuntime {
 	ipHash: string | null;
 	/** Runs a task after the response (Next.js `after`); errors are logged, never thrown. */
 	defer: (task: () => Promise<unknown>) => void;
+	/**
+	 * Marks cached public pages stale (Next.js `revalidateTag`), e.g. a practitioner page whose
+	 * next free slot or booking state changed. Unset outside the web app (tests, jobs).
+	 */
+	revalidate?: (tags: string[]) => void;
 }
 
 export async function limit(rt: BookingRuntime, key: string, rule: RateLimitRule) {

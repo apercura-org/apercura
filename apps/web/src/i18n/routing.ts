@@ -31,6 +31,8 @@ export const routing = defineRouting({
 		"/pro/admin/revendications/[id]": "/pro/admin/revendications/[id]",
 		"/pro/admin/signalements": "/pro/admin/signalements",
 		"/_ui": "/_ui",
+		// Manage an appointment from the email link (token in the fragment, never indexed).
+		"/rdv": "/rdv",
 		"/recherche": { fr: "/recherche", en: "/search" },
 		"/praticien/[slug]": { fr: "/praticien/[slug]", en: "/practitioner/[slug]" },
 		"/praticien/[slug]/signaler": {

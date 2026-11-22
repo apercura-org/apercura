@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vitest";
+import { buildIcs, escapeText, foldLine, icsUtc } from "~/lib/ics";
 import { ipBucket } from "~/server/rate-limit-key";
 import { isExclusionViolation, isUniqueViolation } from "./errors";
 import { formatSlot, manageUrl } from "./format";
-import { buildIcs, escapeText, foldLine, icsUtc } from "./ics";
 import { RETRY_DELAYS_MS, retryDelay } from "./outbox-worker";
 
 describe("iCalendar", () => {

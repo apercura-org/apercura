@@ -19,7 +19,7 @@ export { Calendar, type CalendarProps } from "./components/calendar";
 export { Checkbox, type CheckboxProps } from "./components/checkbox";
 export { ComboBox, type ComboBoxProps } from "./components/combo-box";
 export { DatePicker, type DatePickerProps } from "./components/date-picker";
-export { Dialog, DialogTrigger, Sheet, SheetTrigger } from "./components/dialog";
+export { Dialog, DialogTrigger, Sheet, type SheetProps, SheetTrigger } from "./components/dialog";
 export { EmptyState, type EmptyStateProps } from "./components/empty-state";
 export {
 	FieldDescription,

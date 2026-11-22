@@ -4,3 +4,43 @@
 
 /* Workspace packages that may contain Tailwind classes. */
 @source "../../../../packages/ui/src";
+
+/*
+ * The ALTCHA proof-of-work checkbox of the booking form, printed like a booklet field: ruled box,
+ * square corners, a white tick on ink once checked, no shadow, its label at the 18 px body size.
+ * The widget declares its defaults on :root, where derived variables (input colours, outline)
+ * are resolved, so each one is set again here on the widget itself.
+ */
+.altcha-booklet altcha-widget {
+	--altcha-border-width: 1.5px;
+	--altcha-border-radius: 2px;
+	--altcha-border-color: var(--color-field-edge);
+	--altcha-color-base: var(--color-paper);
+	--altcha-color-base-content: var(--color-ink);
+	--altcha-color-neutral: var(--color-paper-shade);
+	--altcha-color-neutral-content: var(--color-ink);
+	--altcha-color-primary: var(--color-ink);
+	--altcha-color-primary-content: var(--color-paper);
+	--altcha-color-success: var(--color-ink);
+	--altcha-color-success-content: var(--color-paper);
+	--altcha-color-error: var(--color-error);
+	--altcha-color-error-content: var(--color-paper);
+	--altcha-input-background-color: var(--color-paper);
+	--altcha-input-color: var(--color-ink);
+	--altcha-input-border-radius: 2px;
+	--altcha-input-border-width: 1.5px;
+	--altcha-checkbox-border-color: var(--color-ink);
+	--altcha-checkbox-border-radius: 2px;
+	--altcha-checkbox-border-width: 2px;
+	--altcha-checkbox-outline-color: var(--focus-ring);
+	--altcha-checkbox-outline: 3px solid var(--focus-ring);
+	--altcha-checkbox-outline-offset: 2px;
+	--altcha-checkbox-size: 24px;
+	--altcha-spinner-color: var(--color-ink);
+	--altcha-max-width: 100%;
+	--altcha-padding: 0.75rem 1rem;
+	--altcha-shadow: none;
+	font-family: var(--font-body);
+	font-size: 1.125rem;
+	color: var(--color-ink);
+}
