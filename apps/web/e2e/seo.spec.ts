@@ -92,10 +92,23 @@ const LOCAL_BUSINESSES = new Set([
 	"Hospital",
 ]);
 
+const ENTITIES: Record<string, string> = {
+	"&amp;": "&",
+	"&#x27;": "'",
+	"&#39;": "'",
+	"&quot;": '"',
+};
+
+/** HTML entities decoded in a single pass (never twice: `&amp;#39;` stays `&#39;`). */
+const decode = (text: string) =>
+	text.replace(/&(?:amp|#x27|#39|quot);/g, (entity) => ENTITIES[entity] ?? entity);
+
 /** The SEO-relevant parts of a server-rendered page. */
 function parse(html: string) {
-	const attr = (tag: string, name: string) =>
-		new RegExp(`\\b${name}="([^"]*)"`).exec(tag)?.[1]?.replace(/&amp;/g, "&") ?? null;
+	const attr = (tag: string, name: string) => {
+		const value = new RegExp(`\\b${name}="([^"]*)"`).exec(tag)?.[1];
+		return value === undefined ? null : decode(value);
+	};
 	const tags = (pattern: RegExp) => [...html.matchAll(pattern)].map((match) => match[0]);
 	const meta = (key: string) =>
 		tags(/<meta\b[^>]*>/g)
@@ -103,9 +116,7 @@ function parse(html: string) {
 			.map((tag) => attr(tag, "content"));
 	return {
 		lang: /<html[^>]*\blang="([^"]+)"/.exec(html)?.[1],
-		titles: [...html.matchAll(/<title>([^<]*)<\/title>/g)].map((match) =>
-			(match[1] ?? "").replace(/&amp;/g, "&").replace(/&#x27;|&#39;/g, "'"),
-		),
+		titles: [...html.matchAll(/<title>([^<]*)<\/title>/g)].map((match) => decode(match[1] ?? "")),
 		meta,
 		links: tags(/<link\b[^>]*>/g).map((tag) => ({
 			rel: attr(tag, "rel"),
