@@ -11,11 +11,11 @@
  * - Five runs per page. Total Blocking Time is asserted on their median: the
  *   simulation multiplies the CPU time observed on the runner by four, so TBT
  *   follows the runner's speed and a single slow or lucky run says little.
- *   200 ms is Lighthouse's own "good" mark for mobile TBT. A recent laptop
- *   with a 12x slowdown (`--settings.throttling.cpuSlowdownMultiplier=12`)
- *   reproduces CI figures: the three pages measure about 60 ms there, and
- *   the home page measured about 320 ms (CI: 296) while it hydrated its
- *   search form at load.
+ *   200 ms is Lighthouse's own "good" mark for mobile TBT. On a GitHub
+ *   runner (benchmarkIndex about 2,400) the medians are about 110 ms (home)
+ *   and 60 ms (practitioner, listing); the home page's best run was 296 ms
+ *   while it hydrated its search form at load. A laptop reproduces runner
+ *   figures with `--settings.throttling.cpuSlowdownMultiplier=12`.
  * - Largest Contentful Paint is bimodal under simulation: the text is painted
  *   either before or after the web fonts arrive (`font-display: swap`), about
  *   900 or 3000 ms, run to run, on unchanged code. It is asserted on the best
