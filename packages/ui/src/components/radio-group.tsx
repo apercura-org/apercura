@@ -18,7 +18,7 @@ const radio = tv({
 		ring: [
 			"flex size-6 shrink-0 items-center justify-center rounded-full border-2 border-ink bg-paper",
 			"group-data-invalid:border-error group-data-disabled:border-ink-disabled",
-			"group-data-focus-visible:outline-3 group-data-focus-visible:outline-offset-2 group-data-focus-visible:outline-(--focus-ring)",
+			"group-data-focus-visible:outline-3 group-data-focus-visible:outline-solid group-data-focus-visible:outline-offset-2 group-data-focus-visible:outline-(--focus-ring)",
 		],
 		dot: "block size-3 scale-0 rounded-full bg-ink transition-transform duration-150 ease-out group-data-selected:scale-100 forced-colors:bg-[CanvasText]",
 	},

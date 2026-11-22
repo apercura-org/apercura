@@ -239,10 +239,8 @@ export function BookingPanel({
 			size="lg"
 		>
 			<div className="flex flex-col gap-6">
-				<div className="flex flex-col gap-1 border-b-[1.5px] border-ink pb-3">
-					<p className="font-display text-lead font-bold text-ink">
-						{t("with", { practitioner: practitionerName })}
-					</p>
+				<div className="flex flex-col gap-1 border-b border-ink pb-3">
+					<p className="type-subtitle text-ink">{t("with", { practitioner: practitionerName })}</p>
 					{state.step !== "done" && stepIndex >= 0 && options.data && calendars.length > 0 ? (
 						<p className="caps text-ink">
 							{t("step", {
@@ -279,11 +277,7 @@ function StepHeading({
 		done: result?.status === "pending" ? t("done.pendingTitle") : t("done.confirmedTitle"),
 	};
 	return (
-		<h3
-			ref={ref}
-			tabIndex={-1}
-			className="font-display text-title font-bold text-ink outline-none font-stretch-semi-expanded"
-		>
+		<h3 ref={ref} tabIndex={-1} className="type-title text-ink outline-none">
 			{titles[step]}
 		</h3>
 	);

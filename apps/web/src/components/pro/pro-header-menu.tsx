@@ -19,7 +19,7 @@ export function ProHeaderMenu({ label, children }: { label: string; children: Re
 	return (
 		<>
 			<Button
-				intent="cover"
+				intent="ink"
 				className="sm:hidden"
 				aria-expanded={open}
 				aria-controls={id}

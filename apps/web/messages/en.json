@@ -285,14 +285,12 @@
 		},
 		"palette": {
 			"paper": "Paper: page ground",
-			"paperShade": "Paper shade: hovered rows, skeletons",
-			"ink": "Ink: type, rules, labels",
+			"paperShade": "Paper shade: openings, footer, title strips, hovered rows",
+			"ink": "Ink: graphite type, rules, labels",
 			"inkMuted": "Muted ink: hints, placeholders",
 			"inkDisabled": "Disabled ink",
 			"ruleSoft": "Soft rule: hairlines, leaders",
 			"fieldEdge": "Field edge: control borders",
-			"cover": "Cover: solid bands",
-			"coverMuted": "Cover muted: secondary type on bands",
 			"stamp": "Stamp: action, verified, booked",
 			"stampStrong": "Stamp pressed",
 			"stampTint": "Stamp wash",
@@ -316,13 +314,12 @@
 			"filled": "Filled",
 			"empty": "Empty",
 			"loading": "Loading",
-			"onCover": "On a cover band"
+			"onShade": "On the quiet shade"
 		},
 		"buttons": {
 			"stamp": "Book",
 			"ink": "Call the practice",
 			"quiet": "Show more",
-			"cover": "For practitioners",
 			"large": "Find my page",
 			"pendingLabel": "Sending",
 			"linkButton": "Open the register",
@@ -417,7 +414,6 @@
 			"badgeInk": "Unclaimed page",
 			"badgeStamp": "Verified page",
 			"badgeError": "Removed on request",
-			"badgeCover": "Fictitious",
 			"staticCaption": "Opening hours (static ruled table)",
 			"colDay": "Day",
 			"colMorning": "Morning",
@@ -2539,7 +2535,8 @@
 				"booked": "Confirmed",
 				"pending": "Request",
 				"held": "Being booked",
-				"block": "Blocked"
+				"block": "Blocked",
+				"closed": "Outside opening hours"
 			},
 			"loading": "Loading the agenda"
 		},

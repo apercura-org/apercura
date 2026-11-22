@@ -65,7 +65,7 @@ export function SignUpForm() {
 					id="sign-up-sent"
 					ref={sentRef}
 					tabIndex={-1}
-					className="font-display text-title font-bold text-ink font-stretch-semi-expanded outline-none"
+					className="type-title text-ink outline-none"
 				>
 					{t("signUp.sentHeading")}
 				</h2>
@@ -101,7 +101,12 @@ export function SignUpForm() {
 					isRequired
 				/>
 				<div>
-					<Button type="submit" isPending={pending} pendingLabel={t("common.pending")}>
+					<Button
+						intent="stamp"
+						type="submit"
+						isPending={pending}
+						pendingLabel={t("common.pending")}
+					>
 						{t("signUp.submit")}
 					</Button>
 				</div>

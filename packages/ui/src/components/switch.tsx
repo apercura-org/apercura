@@ -14,7 +14,7 @@ const switchStyles = tv({
 		track: [
 			"relative flex h-7 w-12 shrink-0 items-center rounded-full border-2 border-ink bg-paper px-0.5 transition-colors duration-150",
 			"group-data-selected:bg-ink group-data-disabled:border-ink-disabled",
-			"group-data-focus-visible:outline-3 group-data-focus-visible:outline-offset-2 group-data-focus-visible:outline-(--focus-ring)",
+			"group-data-focus-visible:outline-3 group-data-focus-visible:outline-solid group-data-focus-visible:outline-offset-2 group-data-focus-visible:outline-(--focus-ring)",
 		],
 		knob: [
 			"block size-5 rounded-full bg-ink transition-transform duration-150 ease-out",

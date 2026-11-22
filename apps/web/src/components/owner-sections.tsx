@@ -11,8 +11,7 @@ import type { Accessibility, OwnerContent } from "~/lib/owner-content";
  * purpose, so they render in both worlds with next-intl's hooks.
  */
 
-export const sectionHeading =
-	"font-display text-title font-bold text-ink font-stretch-semi-expanded";
+export const sectionHeading = "type-title text-ink";
 
 const AMELI_URL = "https://annuairesante.ameli.fr/";
 
@@ -26,7 +25,7 @@ export function PresentationSection({ bio, headingId }: { bio: string | null; he
 			<h2 id={headingId} className={sectionHeading}>
 				{t("presentationHeading")}
 			</h2>
-			<div className="flex max-w-[65ch] flex-col gap-3 border-t-[1.5px] border-ink pt-4">
+			<div className="flex max-w-[65ch] flex-col gap-3 border-t border-ink pt-4">
 				{paragraphs.map((paragraph, index) => (
 					// Paragraph order is the text's own order; index keys are stable here.
 					// biome-ignore lint/suspicious/noArrayIndexKey: static text split

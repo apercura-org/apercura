@@ -60,7 +60,7 @@ export function OtpField({
 							// biome-ignore lint/suspicious/noArrayIndexKey: positions are the identity of comb boxes
 							key={index}
 							className={cn(
-								"flex h-14 w-12 items-center justify-center rounded-field border-[1.5px] border-field-edge bg-paper font-body text-title font-bold text-ink tabular",
+								"flex h-14 w-12 items-center justify-center rounded-field border border-field-edge bg-paper font-body text-title font-semibold text-ink tabular",
 								"group-has-[input:focus-visible]/otp:border-ink",
 								index === Math.min(value.length, length - 1) &&
 									"group-has-[input:focus-visible]/otp:border-[3px] group-has-[input:focus-visible]/otp:border-(--focus-ring)",

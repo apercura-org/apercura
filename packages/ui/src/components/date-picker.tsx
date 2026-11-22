@@ -42,12 +42,12 @@ export function DatePicker<T extends DateValue>({
 			<Group
 				className={cn(
 					styles.box(),
-					"w-auto max-w-full data-focus-within:outline-3 data-focus-within:outline-offset-2 data-focus-within:outline-(--focus-ring)",
+					"w-auto max-w-full data-focus-within:outline-3 data-focus-within:outline-solid data-focus-within:outline-offset-2 data-focus-within:outline-(--focus-ring)",
 				)}
 			>
 				<DateSegments />
 				<RACButton
-					className={`flex size-11 shrink-0 cursor-pointer items-center justify-center border-s-[1.5px] border-field-edge text-ink hover:bg-paper-shade ${focusRing}`}
+					className={`flex size-11 shrink-0 cursor-pointer items-center justify-center border-s border-field-edge text-ink hover:bg-paper-shade ${focusRing}`}
 				>
 					<CalendarIcon className="size-5" />
 				</RACButton>

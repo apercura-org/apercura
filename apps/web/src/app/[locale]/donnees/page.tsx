@@ -116,13 +116,10 @@ export default async function DataPage({ params }: PageProps<"/[locale]/donnees"
 
 				<section
 					aria-labelledby="sources-heading"
-					className="flex min-w-0 flex-col gap-5 border-t-[1.5px] border-ink pt-6"
+					className="flex min-w-0 flex-col gap-5 border-t border-ink pt-6"
 				>
 					<div className="flex max-w-[65ch] flex-col gap-2">
-						<h2
-							id="sources-heading"
-							className="font-display text-title font-bold text-ink font-stretch-semi-expanded"
-						>
+						<h2 id="sources-heading" className="type-title text-ink">
 							{t("sources.heading")}
 						</h2>
 						<p className="text-body text-ink">{t("sources.body")}</p>
@@ -220,7 +217,7 @@ export default async function DataPage({ params }: PageProps<"/[locale]/donnees"
 					}}
 				>
 					<div className="flex flex-col gap-4">
-						<h3 className="font-display text-lead font-bold text-ink">{t("correct.formTitle")}</h3>
+						<h3 className="type-subtitle text-ink">{t("correct.formTitle")}</h3>
 						<p className="max-w-[65ch] text-body text-ink">{t("correct.formBody")}</p>
 						<ClientIsland locale={locale} namespaces={GDPR_MESSAGES}>
 							<TRPCReactProvider>
@@ -235,7 +232,7 @@ export default async function DataPage({ params }: PageProps<"/[locale]/donnees"
 					content={{ heading: t("remove.heading"), body: t.raw("remove.body") as string[] }}
 				>
 					<div className="flex flex-col gap-4">
-						<h3 className="font-display text-lead font-bold text-ink">{t("remove.formTitle")}</h3>
+						<h3 className="type-subtitle text-ink">{t("remove.formTitle")}</h3>
 						<p className="max-w-[65ch] text-body text-ink">{t("remove.formBody")}</p>
 						<ClientIsland locale={locale} namespaces={GDPR_MESSAGES}>
 							<TRPCReactProvider>

@@ -24,6 +24,7 @@ export function InvitationAnswer({ invitationId }: { invitationId: string }) {
 			{result ? <Notice tone={result.tone}>{result.text}</Notice> : null}
 			<div className="flex flex-wrap gap-3">
 				<Button
+					intent="stamp"
 					isPending={accept.isPending}
 					pendingLabel={t("open.pending")}
 					isDisabled={decline.isSuccess}

@@ -43,6 +43,7 @@ export function ClaimStartButton({ rpps }: { rpps: string }) {
 			) : null}
 			<div>
 				<Button
+					intent="stamp"
 					size="lg"
 					isPending={start.isPending || start.isSuccess}
 					pendingLabel={t("pending")}

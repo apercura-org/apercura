@@ -7,32 +7,32 @@ interface SiteHeaderProps {
 	locale: Locale;
 	/** The current page, so the language switch stays on it (with its query and, on `/rdv`, its fragment). */
 	href: Href;
-	/** The home page prints the wordmark large in the band; other pages print it here. */
+	/** The home page prints the wordmark large in its opening; other pages print it here. */
 	showWordmark?: boolean;
 }
 
 const navLink =
-	"inline-flex min-h-11 items-center rounded-field px-1 text-meta text-cover-ink underline decoration-1 underline-offset-[0.25em] hover:decoration-2";
+	"inline-flex min-h-11 items-center rounded-field px-1 text-meta text-ink underline decoration-1 underline-offset-[0.25em] hover:decoration-2";
 
-/** Running head printed at the top of every cover band: wordmark or title line, navigation, language. */
+/** Running head on white paper, closed by a hairline: wordmark, navigation, language. */
 export async function SiteHeader({ locale, href, showWordmark = true }: SiteHeaderProps) {
 	const t = await getTranslations({ locale, namespace: "Site" });
 	const tLocale = await getTranslations({ locale, namespace: "LocaleSwitcher" });
 	const isPro = typeof href === "string" && (href === "/pro" || href.startsWith("/pro/"));
 
 	return (
-		<header className="border-b border-cover-rule">
+		<header className="surface-paper border-b border-rule-soft">
 			<div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-x-6 gap-y-1 px-5 py-1.5 sm:px-8">
 				{showWordmark ? (
 					<Link
 						href="/"
 						aria-label={t("homeLink")}
-						className="inline-flex min-h-11 items-center font-display text-lead font-extrabold tracking-[-0.01em] text-cover-ink no-underline font-stretch-expanded"
+						className="type-wordmark inline-flex min-h-11 items-center text-ink no-underline"
 					>
 						{t("wordmark")}
 					</Link>
 				) : (
-					// The home page prints the wordmark in the band; the running head lives on the booklet page.
+					// The home page prints the wordmark in its opening; the running head lives on the booklet page.
 					<span />
 				)}
 				<div className="flex flex-wrap items-center gap-x-5">
@@ -53,7 +53,7 @@ export async function SiteHeader({ locale, href, showWordmark = true }: SiteHead
 										hrefLang={other}
 										lang={other}
 										aria-current={other === locale ? "true" : undefined}
-										className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-field px-2 text-meta text-cover-ink no-underline hover:underline aria-[current]:font-bold aria-[current]:underline aria-[current]:decoration-2 aria-[current]:underline-offset-[0.25em]"
+										className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-field px-2 text-meta text-ink no-underline hover:underline aria-[current]:font-semibold aria-[current]:underline aria-[current]:decoration-2 aria-[current]:underline-offset-[0.25em]"
 									>
 										{tLocale("locale", { locale: other })}
 									</LocaleSwitchLink>

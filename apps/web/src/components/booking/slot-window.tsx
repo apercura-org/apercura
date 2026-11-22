@@ -124,7 +124,7 @@ export function SlotWindow({
 	return (
 		<div className="flex flex-col gap-4">
 			<div className="flex flex-wrap items-center justify-between gap-3">
-				<p className="font-display text-body font-bold text-ink font-stretch-semi-condensed">
+				<p className="font-display text-body font-semibold text-ink font-stretch-semi-condensed">
 					{range}
 				</p>
 				<div className="flex flex-wrap gap-2">

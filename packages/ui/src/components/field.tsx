@@ -136,7 +136,7 @@ export function TextAreaField({
 			<div
 				className={styles.box({
 					className:
-						"items-stretch has-[textarea:focus-visible]:outline-3 has-[textarea:focus-visible]:outline-offset-2 has-[textarea:focus-visible]:outline-(--focus-ring)",
+						"items-stretch has-[textarea:focus-visible]:outline-3 has-[textarea:focus-visible]:outline-solid has-[textarea:focus-visible]:outline-offset-2 has-[textarea:focus-visible]:outline-(--focus-ring)",
 				})}
 			>
 				<RACTextArea

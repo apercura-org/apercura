@@ -40,7 +40,7 @@ export function BookletSearch({
 	return (
 		<search aria-label={label} className={className}>
 			<form action={action} method="get" className="flex flex-col gap-3 md:flex-row md:gap-0">
-				<div className="flex flex-1 flex-col border-2 border-paper bg-paper md:flex-row">
+				<div className="flex flex-1 flex-col border border-field-edge bg-paper md:flex-row">
 					{fields.map((field, index) => {
 						const id = `${idPrefix}-${field.name}`;
 						return (
@@ -48,8 +48,8 @@ export function BookletSearch({
 								key={field.name}
 								className={cn(
 									"group relative flex flex-1 flex-col px-4 pt-2.5 pb-1.5 text-ink",
-									"has-[input:focus-visible]:outline-3 has-[input:focus-visible]:outline-offset-[-6px] has-[input:focus-visible]:outline-stamp",
-									index > 0 && "border-t-[1.5px] border-ink md:border-t-0 md:border-s-[1.5px]",
+									"has-[input:focus-visible]:outline-3 has-[input:focus-visible]:outline-solid has-[input:focus-visible]:outline-offset-[-6px] has-[input:focus-visible]:outline-stamp",
+									index > 0 && "border-t border-field-edge md:border-t-0 md:border-s",
 								)}
 							>
 								<label htmlFor={id} className="caps text-ink">
@@ -74,8 +74,7 @@ export function BookletSearch({
 					className={buttonStyles({
 						intent: "stamp",
 						size: "lg",
-						className:
-							"min-h-16 text-body md:min-w-44 md:border-2 md:border-paper focus-visible:outline-cover-ink",
+						className: "min-h-16 text-body md:min-w-44",
 					})}
 				>
 					<SearchIcon className="size-5" />

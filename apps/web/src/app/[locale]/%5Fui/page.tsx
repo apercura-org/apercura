@@ -44,8 +44,6 @@ const PALETTE_ORDER = [
 	"inkDisabled",
 	"ruleSoft",
 	"fieldEdge",
-	"cover",
-	"coverMuted",
 	"stamp",
 	"stampStrong",
 	"stampTint",
@@ -55,7 +53,7 @@ const PALETTE_ORDER = [
 
 function SectionHeading({ id, children }: { id: string; children: React.ReactNode }) {
 	return (
-		<h2 id={id} className="font-display text-title font-bold text-ink font-stretch-semi-expanded">
+		<h2 id={id} className="type-title text-ink">
 			{children}
 		</h2>
 	);
@@ -84,16 +82,12 @@ export default async function GalleryPage({ params }: PageProps<"/[locale]/_ui">
 	return (
 		<ClientIsland locale={locale} namespaces="all">
 			<TRPCReactProvider>
-				<div className="surface-cover">
-					<SiteHeader locale={locale} href="/_ui" />
-				</div>
+				<SiteHeader locale={locale} href="/_ui" />
 				<main id="main" tabIndex={-1} className="flex-1 outline-none">
-					<div className="surface-cover">
+					<div className="surface-shade border-b border-rule-soft">
 						<div className="mx-auto flex max-w-6xl flex-col gap-3 px-5 pt-8 pb-10 sm:px-8">
-							<h1 className="font-display text-headline font-black tracking-[-0.02em] font-stretch-expanded">
-								{t("title")}
-							</h1>
-							<p className="max-w-[65ch] text-body text-cover-muted">{t("intro")}</p>
+							<h1 className="type-headline">{t("title")}</h1>
+							<p className="max-w-[65ch] text-body text-ink-muted">{t("intro")}</p>
 						</div>
 					</div>
 					<BookletPage runningHead={t("title")}>
@@ -122,15 +116,9 @@ export default async function GalleryPage({ params }: PageProps<"/[locale]/_ui">
 
 						<section aria-labelledby="g-type" className="flex flex-col gap-4">
 							<SectionHeading id="g-type">{t("sections.type")}</SectionHeading>
-							<p className="font-display text-display font-black tracking-[-0.03em] font-stretch-expanded">
-								Apercura
-							</p>
-							<p className="font-display text-headline font-black tracking-[-0.02em] font-stretch-expanded">
-								{t("typeRoles.headline")}
-							</p>
-							<p className="font-display text-title font-bold font-stretch-semi-expanded">
-								{t("typeRoles.title")}
-							</p>
+							<p className="type-display">Apercura</p>
+							<p className="type-headline">{t("typeRoles.headline")}</p>
+							<p className="type-title">{t("typeRoles.title")}</p>
 							<p className="text-lead">{t("typeRoles.lead")}</p>
 							<p className="max-w-[65ch] text-body">{t("typeRoles.body")}</p>
 							<p className="text-meta text-ink-muted">{t("typeRoles.meta")}</p>
@@ -145,12 +133,12 @@ export default async function GalleryPage({ params }: PageProps<"/[locale]/_ui">
 
 						<section
 							aria-labelledby="g-domain"
-							className="flex flex-col gap-10 border-t-2 border-ink pt-6"
+							className="flex flex-col gap-10 border-t border-ink pt-6"
 						>
 							<SectionHeading id="g-domain">{t("sections.domain")}</SectionHeading>
 
 							<div className="flex flex-col gap-3">
-								<h3 className="font-display text-lead font-bold">{t("domain.seals")}</h3>
+								<h3 className="type-subtitle">{t("domain.seals")}</h3>
 								<ul className="flex flex-wrap gap-6">
 									{SAMPLE_PRACTITIONERS.map((practitioner) => (
 										<li key={practitioner.id} className="flex flex-col items-center gap-2">
@@ -167,7 +155,7 @@ export default async function GalleryPage({ params }: PageProps<"/[locale]/_ui">
 
 							<div className="grid gap-8 md:grid-cols-2">
 								<div className="flex flex-col gap-3">
-									<h3 className="font-display text-lead font-bold">{t("domain.fieldRows")}</h3>
+									<h3 className="type-subtitle">{t("domain.fieldRows")}</h3>
 									<FieldList>
 										<FieldRow
 											label={tPage("fields.address")}
@@ -179,7 +167,7 @@ export default async function GalleryPage({ params }: PageProps<"/[locale]/_ui">
 									</FieldList>
 								</div>
 								<div className="flex flex-col gap-3">
-									<h3 className="font-display text-lead font-bold">{t("domain.provenance")}</h3>
+									<h3 className="type-subtitle">{t("domain.provenance")}</h3>
 									<ProvenanceNote
 										locale={locale}
 										sourceLabel={tPage("source.label")}
@@ -193,7 +181,7 @@ export default async function GalleryPage({ params }: PageProps<"/[locale]/_ui">
 							</div>
 
 							<div className="flex flex-col gap-3">
-								<h3 className="font-display text-lead font-bold">{t("domain.actions")}</h3>
+								<h3 className="type-subtitle">{t("domain.actions")}</h3>
 								<div className="grid gap-6 md:grid-cols-2">
 									<ActionBlock
 										headingLevel={4}
@@ -235,7 +223,7 @@ export default async function GalleryPage({ params }: PageProps<"/[locale]/_ui">
 							</div>
 
 							<div className="flex flex-col gap-3">
-								<h3 className="font-display text-lead font-bold">{t("domain.slots")}</h3>
+								<h3 className="type-subtitle">{t("domain.slots")}</h3>
 								<Suspense fallback={<SkeletonText lines={4} label={t("feedback.loadingLabel")} />}>
 									<SlotDemo defaultValue="2026-11-25T09:30" />
 								</Suspense>
@@ -243,7 +231,7 @@ export default async function GalleryPage({ params }: PageProps<"/[locale]/_ui">
 
 							<div className="grid gap-8 md:grid-cols-2">
 								<div className="flex flex-col gap-3">
-									<h3 className="font-display text-lead font-bold">{t("domain.site")}</h3>
+									<h3 className="type-subtitle">{t("domain.site")}</h3>
 									<SiteCard
 										headingLevel={4}
 										name={SAMPLE_SITE.name}
@@ -255,7 +243,7 @@ export default async function GalleryPage({ params }: PageProps<"/[locale]/_ui">
 									/>
 								</div>
 								<div className="flex flex-col gap-3">
-									<h3 className="font-display text-lead font-bold">{t("domain.map")}</h3>
+									<h3 className="type-subtitle">{t("domain.map")}</h3>
 									<MapView
 										className="h-72"
 										center={SAMPLE_SITE.coordinates}
@@ -272,8 +260,8 @@ export default async function GalleryPage({ params }: PageProps<"/[locale]/_ui">
 							</div>
 
 							<div className="flex flex-col gap-3">
-								<h3 className="font-display text-lead font-bold">{t("domain.search")}</h3>
-								<div className="surface-cover p-5 sm:p-8">
+								<h3 className="type-subtitle">{t("domain.search")}</h3>
+								<div className="surface-shade p-5 sm:p-8">
 									<BookletSearch
 										idPrefix="gallery-search"
 										action="#g-domain"
@@ -290,7 +278,7 @@ export default async function GalleryPage({ params }: PageProps<"/[locale]/_ui">
 
 						<section
 							aria-labelledby="g-booklet"
-							className="flex flex-col gap-8 border-t-2 border-ink pt-6"
+							className="flex flex-col gap-8 border-t border-ink pt-6"
 						>
 							<SectionHeading id="g-booklet">{t("sections.booklet")}</SectionHeading>
 							<BookletSample locale={locale} variant="unclaimed" />

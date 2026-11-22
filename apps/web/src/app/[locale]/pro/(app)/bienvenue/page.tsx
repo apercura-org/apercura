@@ -20,7 +20,7 @@ type Props = PageProps<"/[locale]/pro/bienvenue">;
 const STEPS = ["check", "booking", "publish"] as const;
 type Step = (typeof STEPS)[number];
 
-const sectionHeading = "font-display text-title font-bold text-ink font-stretch-semi-expanded";
+const sectionHeading = "type-title text-ink";
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
 	const locale = resolveLocale((await params).locale);
@@ -63,22 +63,22 @@ async function Onboarding({ locale, step }: { locale: Locale; step: Step }) {
 			lead={t("lead", { name: identity.name })}
 		>
 			<nav aria-label={t("stepsLabel")}>
-				<ol className="grid border-y-2 border-ink sm:grid-cols-3">
+				<ol className="grid border-y border-ink sm:grid-cols-3">
 					{STEPS.map((item, position) => (
 						<li
 							key={item}
-							// The current step is printed solid ink, like a selected tab.
+							// The current step sits on the quiet shade, underlined in ink like a selected tab.
 							className={`flex items-baseline gap-3 border-b border-rule-soft px-3 py-3 last:border-b-0 sm:border-b-0 sm:border-e sm:last:border-e-0 ${
-								item === step ? "bg-ink text-paper" : "text-ink"
+								item === step ? "bg-paper-shade text-ink" : "text-ink-muted"
 							}`}
 						>
-							<span className="font-display text-title font-extrabold tabular" aria-hidden="true">
+							<span className="font-body text-title font-medium tabular" aria-hidden="true">
 								{position + 1}
 							</span>
 							<Link
 								href={{ pathname: "/pro/bienvenue", query: { etape: String(position + 1) } }}
 								aria-current={item === step ? "step" : undefined}
-								className={`${linkStyles()} text-body aria-[current=step]:font-bold aria-[current=step]:text-paper aria-[current=step]:[--focus-ring:var(--color-paper)]`}
+								className={`${linkStyles()} text-body aria-[current=step]:font-semibold aria-[current=step]:decoration-2`}
 							>
 								<span className="sr-only">
 									{t("stepNumber", { n: position + 1, total: STEPS.length })}{" "}
@@ -109,14 +109,14 @@ async function Onboarding({ locale, step }: { locale: Locale; step: Step }) {
 							emptyLabel={empty}
 						/>
 					</FieldList>
-					<h3 className="font-display text-lead font-bold text-ink">{t("steps.check.sites")}</h3>
-					<ul className="flex flex-col border-t-[1.5px] border-ink">
+					<h3 className="type-subtitle text-ink">{t("steps.check.sites")}</h3>
+					<ul className="flex flex-col border-t border-ink">
 						{data.sites.map((site) => (
 							<li
 								key={site.activityId}
 								className="flex flex-col gap-0.5 border-b border-rule-soft py-3"
 							>
-								<span className="font-display text-body font-bold text-ink">
+								<span className="font-display text-body font-semibold text-ink">
 									{site.name ?? t("steps.check.unnamed")}
 									{site.hidden ? (
 										<span className="ms-2 align-middle">

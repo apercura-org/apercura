@@ -12,18 +12,15 @@ import type { LandingPayload } from "~/server/queries/types";
  * set as booklet sections: a title rule, ruled tables and field rows.
  */
 
-export const sectionHeading =
-	"font-display text-title font-bold text-ink font-stretch-semi-expanded";
+export const sectionHeading = "type-title text-ink";
 
 const table = tableStyles();
 
 /** The page title block: a headline and a factual lead. */
 export function ListingTitle({ title, lead }: { title: string; lead: ReactNode }) {
 	return (
-		<div className="flex max-w-[65ch] flex-col gap-3 border-b-2 border-ink pb-5">
-			<h1 className="font-display text-headline font-extrabold tracking-[-0.02em] text-ink font-stretch-semi-expanded">
-				{title}
-			</h1>
+		<div className="flex max-w-[65ch] flex-col gap-3 border-b border-ink pb-5">
+			<h1 className="type-headline text-ink">{title}</h1>
 			<p className="text-lead text-ink">{lead}</p>
 		</div>
 	);
@@ -171,7 +168,7 @@ export async function PractitionerTable({
 							<td className={table.cell()}>
 								<Link
 									href={{ pathname: "/praticien/[slug]", params: { slug: row.slug } }}
-									className={`${linkStyles()} font-display text-lead font-bold`}
+									className={`${linkStyles()} type-subtitle`}
 								>
 									{labels.personName(row)}
 								</Link>
@@ -219,7 +216,7 @@ export async function Pagination({
 	return (
 		<nav
 			aria-label={t("pagination.label")}
-			className="flex flex-wrap items-center justify-between gap-4 border-t-[1.5px] border-ink pt-3"
+			className="flex flex-wrap items-center justify-between gap-4 border-t border-ink pt-3"
 		>
 			{page > 1 ? (
 				<Link href={hrefOf(page - 1)} className={link} rel="prev">
@@ -252,7 +249,7 @@ export async function CountLinks({
 }) {
 	const t = await getTranslations({ locale, namespace: "Listing" });
 	return (
-		<ul className="grid border-t-[1.5px] border-ink sm:grid-cols-2 lg:grid-cols-3 sm:gap-x-8">
+		<ul className="grid border-t border-ink sm:grid-cols-2 lg:grid-cols-3 sm:gap-x-8">
 			{items.map((item) => (
 				<li
 					key={item.key}

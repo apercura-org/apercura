@@ -76,13 +76,13 @@ const TONES: Record<WeekGridTone, string> = {
 	// The Stamp Law: a booked slot is violet.
 	booked:
 		"bg-stamp text-paper shadow-[inset_0_0_0_2px_var(--color-stamp),inset_0_0_0_3px_var(--color-paper)]",
-	done: "border-[1.5px] border-ink bg-paper text-ink",
+	done: "border border-ink bg-paper text-ink",
 	// Not yet a booking: a dashed form box in ink.
 	pending: "border-2 border-dashed border-ink bg-paper text-ink",
-	held: "border-[1.5px] border-dashed border-field-edge bg-paper-shade text-ink",
-	// Printed solid, like a cover band.
+	held: "border border-dashed border-field-edge bg-paper-shade text-ink",
+	// Printed solid in ink.
 	block: "bg-ink text-paper",
-	absent: "border-[1.5px] border-ink bg-paper-shade text-ink line-through decoration-1",
+	absent: "border border-ink bg-paper-shade text-ink line-through decoration-1",
 };
 
 /** Lines of 0.875 rem text (leading 1.25) that fit in `rows` rows, split between title and detail. */
@@ -230,14 +230,14 @@ export function WeekGrid({
 	};
 
 	return (
-		<div ref={scroller} className="max-h-[70vh] overflow-auto border-y-2 border-ink">
+		<div ref={scroller} className="max-h-[70vh] overflow-auto border-y border-ink">
 			{/* biome-ignore lint/a11y/useSemanticElements: ARIA grid pattern (roving focus on cells); a table cannot hold the entries printed across rows */}
 			<div role="grid" aria-label={label} className="min-w-full w-max sm:w-full">
 				{/* biome-ignore lint/a11y/useSemanticElements lint/a11y/useFocusableInteractive: ARIA grid pattern */}
 				<div
 					role="row"
 					style={template}
-					className="sticky top-0 z-30 grid border-b-[1.5px] border-ink bg-paper"
+					className="sticky top-0 z-30 grid border-b border-ink bg-paper"
 				>
 					{/* biome-ignore lint/a11y/useSemanticElements lint/a11y/useFocusableInteractive: ARIA grid pattern */}
 					<div role="columnheader" className="sticky start-0 bg-paper">
@@ -312,6 +312,8 @@ export function WeekGrid({
 									(rowOf(entry.startMin, startMin, stepMin) === row ||
 										(row === 0 && entry.startMin < startMin));
 								const open = isOpen(day.open, minute, minute + stepMin);
+								// Where opening hours begin or end, a field-edge hairline marks the boundary.
+								const boundary = row > 0 && open !== isOpen(day.open, minute - stepMin, minute);
 								const isActive = active.row === row && active.column === column;
 								const offset = starts && entry ? Math.max(0, entry.startMin - minute) / stepMin : 0;
 								const span =
@@ -350,10 +352,9 @@ export function WeekGrid({
 										onFocus={() => setFocus({ row, column })}
 										className={cn(
 											"relative h-11 cursor-pointer border-s border-rule-soft outline-none",
-											open
-												? "bg-paper hover:bg-paper-shade"
-												: "bg-paper-shade hover:bg-rule-soft/40",
-											"focus-visible:z-20 focus-visible:outline-3 focus-visible:-outline-offset-3 focus-visible:outline-(--focus-ring)",
+											open ? "bg-paper hover:bg-paper-shade" : "closed-hatch hover:bg-rule-soft/40",
+											boundary && "shadow-[inset_0_1px_0_var(--color-field-edge)]",
+											"focus-visible:z-20 focus-visible:outline-3 focus-visible:outline-solid focus-visible:-outline-offset-3 focus-visible:outline-(--focus-ring)",
 										)}
 									>
 										{starts && entry ? (

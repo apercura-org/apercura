@@ -16,7 +16,7 @@ const checkbox = tv({
 			"flex size-6 shrink-0 items-center justify-center rounded-field border-2 border-ink bg-paper text-paper transition-colors duration-100",
 			"group-data-selected:bg-ink group-data-indeterminate:bg-ink",
 			"group-data-invalid:border-error group-data-disabled:border-ink-disabled",
-			"group-data-focus-visible:outline-3 group-data-focus-visible:outline-offset-2 group-data-focus-visible:outline-(--focus-ring)",
+			"group-data-focus-visible:outline-3 group-data-focus-visible:outline-solid group-data-focus-visible:outline-offset-2 group-data-focus-visible:outline-(--focus-ring)",
 			"forced-colors:group-data-selected:bg-[Highlight]",
 		],
 	},

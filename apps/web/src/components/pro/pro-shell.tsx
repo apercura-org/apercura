@@ -13,7 +13,7 @@ import { ProHeaderMenu } from "./pro-header-menu";
 import { SignOutButton } from "./sign-out-button";
 
 const navLink =
-	"inline-flex min-h-11 items-center rounded-field px-1 text-meta text-cover-ink underline decoration-1 underline-offset-[0.25em] hover:decoration-2 aria-[current=page]:font-bold aria-[current=page]:decoration-2";
+	"inline-flex min-h-11 items-center rounded-field px-1 text-meta text-ink underline decoration-1 underline-offset-[0.25em] hover:decoration-2 aria-[current=page]:font-semibold aria-[current=page]:decoration-2";
 
 interface ProShellProps {
 	locale: Locale;
@@ -62,13 +62,13 @@ export async function ProShell({
 	return (
 		<ClientIsland locale={locale} namespaces="all">
 			<TRPCReactProvider>
-				<div className="surface-cover">
-					<header className="border-b border-cover-rule">
+				<div>
+					<header className="surface-paper border-b border-rule-soft">
 						<div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-x-6 gap-y-2 px-5 py-1.5 sm:px-8">
 							<Link
 								href="/"
 								aria-label={t("app.homeLink")}
-								className="inline-flex min-h-11 items-center font-display text-lead font-extrabold tracking-[-0.01em] text-cover-ink no-underline font-stretch-expanded"
+								className="type-wordmark inline-flex min-h-11 items-center text-ink no-underline"
 							>
 								{t("email.wordmark")}
 							</Link>
@@ -96,12 +96,10 @@ export async function ProShell({
 					</header>
 				</div>
 				<main id="main" tabIndex={-1} className="flex-1 outline-none">
-					<div className="surface-cover">
+					<div className="surface-shade border-b border-rule-soft">
 						<div className="mx-auto flex w-full max-w-6xl flex-col gap-3 px-5 pt-10 pb-10 sm:px-8">
-							<h1 className="max-w-[20ch] font-display text-headline font-black tracking-[-0.02em] font-stretch-expanded">
-								{title}
-							</h1>
-							{lead ? <p className="max-w-[58ch] text-lead text-cover-ink">{lead}</p> : null}
+							<h1 className="max-w-[20ch] type-headline">{title}</h1>
+							{lead ? <p className="max-w-[58ch] text-lead text-ink">{lead}</p> : null}
 						</div>
 					</div>
 					<BookletPage

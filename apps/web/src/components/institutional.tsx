@@ -11,7 +11,7 @@ export type ProseContent = {
 };
 
 /**
- * The opening cover band of an institutional page: title, a short lead and,
+ * The opening of an institutional page, on the quiet shade: title, a short lead and,
  * for drafts, a printed mark saying what is still to be completed.
  */
 export function InstitutionalCover({
@@ -25,17 +25,15 @@ export function InstitutionalCover({
 	mark?: string;
 }) {
 	return (
-		<div className="surface-cover">
+		<div className="surface-shade border-b border-rule-soft">
 			<div className="mx-auto flex w-full max-w-6xl flex-col gap-4 px-5 pt-10 pb-10 sm:px-8 sm:pb-12">
 				{mark ? (
 					<p>
-						<Badge tone="cover">{mark}</Badge>
+						<Badge tone="ink">{mark}</Badge>
 					</p>
 				) : null}
-				<h1 className="max-w-[22ch] font-display text-headline font-black tracking-[-0.02em] text-balance font-stretch-expanded">
-					{title}
-				</h1>
-				<p className="max-w-[60ch] text-lead text-cover-ink">{lead}</p>
+				<h1 className="max-w-[22ch] type-headline">{title}</h1>
+				<p className="max-w-[60ch] text-lead text-ink">{lead}</p>
 			</div>
 		</div>
 	);
@@ -63,13 +61,10 @@ export function ProseSection({
 		<section
 			id={id}
 			aria-labelledby={headingId}
-			className="grid scroll-mt-6 gap-5 border-t-[1.5px] border-ink pt-6 md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] md:gap-12"
+			className="grid scroll-mt-6 gap-5 border-t border-ink pt-6 md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] md:gap-12"
 		>
 			<div className="flex flex-col gap-3">
-				<h2
-					id={headingId}
-					className="font-display text-title font-bold text-balance text-ink font-stretch-semi-expanded"
-				>
+				<h2 id={headingId} className="type-title text-ink">
 					{content.heading}
 				</h2>
 				{aside}

@@ -63,10 +63,7 @@ async function Queue({ locale }: { locale: Locale }) {
 			lead={t("claims.lead")}
 		>
 			<section aria-labelledby="admin-queue" className="flex flex-col gap-5">
-				<h2
-					id="admin-queue"
-					className="font-display text-title font-bold text-ink font-stretch-semi-expanded"
-				>
+				<h2 id="admin-queue" className="type-title text-ink">
 					{t("claims.queueHeading", { count: queue.length })}
 				</h2>
 				{queue.length === 0 ? (
@@ -78,10 +75,7 @@ async function Queue({ locale }: { locale: Locale }) {
 							{rows.map((row) => (
 								<li key={row.id} className="flex flex-col gap-2">
 									<p className="flex flex-wrap items-center gap-x-3 gap-y-1">
-										<Link
-											href={row.href}
-											className={`${linkStyles()} font-display text-lead font-bold`}
-										>
+										<Link href={row.href} className={`${linkStyles()} type-subtitle`}>
 											{row.name}
 										</Link>
 										{row.contest ? <Badge tone="error">{t("claims.contest")}</Badge> : null}

@@ -30,7 +30,7 @@ export async function SpecimenPage({
 	return (
 		<article
 			aria-label={`${SPECIMEN.name}, ${t("specimen")}`}
-			className="border-[1.5px] border-dashed border-field-edge bg-paper"
+			className="border border-dashed border-field-edge bg-paper"
 		>
 			<div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 border-b border-rule-soft px-5 py-2 sm:px-8">
 				<span className="caps text-ink">{t("specimen")}</span>

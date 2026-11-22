@@ -39,11 +39,11 @@ export function SiteCard({
 	const Heading = `h${headingLevel}` as const;
 	const links = coordinates ? directionsLinks(coordinates) : null;
 	return (
-		<section className={cn("flex flex-col gap-4 border-t-2 border-ink pt-4", className)}>
+		<section className={cn("flex flex-col gap-4 border-t border-ink pt-4", className)}>
 			<div className="flex items-start gap-3">
 				<PinIcon className="mt-1 size-6 shrink-0 text-ink" />
 				<div className="flex flex-col gap-1">
-					<Heading className="font-display text-lead font-bold text-ink">{name}</Heading>
+					<Heading className="type-subtitle text-ink">{name}</Heading>
 					<address className="text-body not-italic text-ink">
 						{address.map((line) => (
 							<span key={line} className="block">
@@ -64,7 +64,7 @@ export function SiteCard({
 									href={links[provider]}
 									rel="noopener noreferrer"
 									className={cn(
-										"inline-flex min-h-11 items-center gap-1.5 rounded-field border-[1.5px] border-ink px-3.5 text-meta font-semibold text-ink no-underline hover:bg-paper-shade",
+										"inline-flex min-h-11 items-center gap-1.5 rounded-field border border-ink px-3.5 text-meta font-semibold text-ink no-underline hover:bg-paper-shade",
 										focusRing,
 									)}
 								>

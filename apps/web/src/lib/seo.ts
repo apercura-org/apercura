@@ -1,3 +1,4 @@
+import { paletteHex } from "@apercura/ui/tokens";
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import type { Href } from "~/i18n/navigation";
@@ -12,9 +13,10 @@ export const DESCRIPTION_MAX = 155;
 /** The brand, printed after every title and as the Open Graph site name. */
 export const BRAND = "Apercura";
 
-/** Cover ink and paper: `theme-color`, the manifest and the site icons. */
-export const THEME_COLOR = "#003851";
-export const PAPER_COLOR = "#ffffff";
+/** White paper (`theme-color`, the manifest) and the graphite ink of the site icons. */
+export const THEME_COLOR = paletteHex.paper;
+export const PAPER_COLOR = paletteHex.paper;
+export const INK_COLOR = paletteHex.ink;
 
 /** Open Graph locales (`og:locale`). English is the British catalogue. */
 export const OG_LOCALES: Record<Locale, string> = { fr: "fr_FR", en: "en_GB" };

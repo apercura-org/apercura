@@ -250,8 +250,8 @@ export default async function EstablishmentPage({ params }: Props) {
 					<div className="flex flex-col gap-8">
 						{sortedGroups.map((group) => (
 							<div key={group.slug} className="flex flex-col gap-2">
-								<h3 className="font-display text-lead font-bold text-ink">{group.label}</h3>
-								<ul className="grid border-t-[1.5px] border-ink sm:grid-cols-2 sm:gap-x-8 lg:grid-cols-3">
+								<h3 className="type-subtitle text-ink">{group.label}</h3>
+								<ul className="grid border-t border-ink sm:grid-cols-2 sm:gap-x-8 lg:grid-cols-3">
 									{group.items.map((practitioner) => (
 										<li key={practitioner.id} className="border-b border-rule-soft">
 											<Link

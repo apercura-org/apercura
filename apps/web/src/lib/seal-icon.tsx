@@ -1,8 +1,8 @@
 import { BrandSeal } from "@apercura/ui";
 import { ImageResponse } from "next/og";
-import { PAPER_COLOR, THEME_COLOR } from "./seo";
+import { INK_COLOR, PAPER_COLOR } from "./seo";
 
-/** Apercura's brand seal in paper white on the cover ink, as a square PNG. */
+/** Apercura's brand seal in graphite ink on white paper, as a square PNG. */
 export function sealIcon(size: number) {
 	return new ImageResponse(
 		<div
@@ -12,8 +12,8 @@ export function sealIcon(size: number) {
 				display: "flex",
 				alignItems: "center",
 				justifyContent: "center",
-				background: THEME_COLOR,
-				color: PAPER_COLOR,
+				background: PAPER_COLOR,
+				color: INK_COLOR,
 			}}
 		>
 			<BrandSeal size={Math.round(size * 0.84)} />
