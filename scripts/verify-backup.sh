@@ -68,6 +68,7 @@ sql -c "DO \$\$ BEGIN
 	IF NOT EXISTS (SELECT 1 FROM pg_roles WHERE rolname = 'apercura_app') THEN CREATE ROLE apercura_app NOLOGIN; END IF;
 	IF NOT EXISTS (SELECT 1 FROM pg_roles WHERE rolname = 'apercura_etl') THEN CREATE ROLE apercura_etl NOLOGIN; END IF;
 	IF NOT EXISTS (SELECT 1 FROM pg_roles WHERE rolname = 'apercura_readonly') THEN CREATE ROLE apercura_readonly NOLOGIN; END IF;
+	IF NOT EXISTS (SELECT 1 FROM pg_roles WHERE rolname = 'apercura_jobs') THEN CREATE ROLE apercura_jobs NOLOGIN; END IF;
 END \$\$;" >/dev/null
 
 echo "Restoring $(basename "$dump") ($(du -h "$dump" | cut -f1))…"
@@ -103,6 +104,8 @@ check "app role writes appointments" \
 	"select has_table_privilege('apercura_app', 'care.appointments', 'INSERT')"
 check "app role cannot rewrite the audit log" \
 	"select not (has_table_privilege('apercura_app', 'care.audit_events', 'UPDATE') or has_table_privilege('apercura_app', 'care.audit_events', 'DELETE'))"
+check "only the jobs role may purge the audit logs" \
+	"select has_function_privilege('apercura_jobs', 'care.purge_audit_events(integer)', 'EXECUTE') and not has_function_privilege('apercura_app', 'care.purge_audit_events(integer)', 'EXECUTE')"
 check "import role cannot reach patient data" \
 	"select not has_schema_privilege('apercura_etl', 'care', 'USAGE')"
 check "import role writes the directory" \

@@ -69,6 +69,8 @@ jobs:
       SKIP_ENV_VALIDATION: "1"
       DATABASE_URL: postgres://postgres:postgres@localhost:5432/apercura
       SMTP_URL: smtp://localhost:1025
+      # Mailpit offers no STARTTLS; production requires TLS otherwise (docs/configuration.md).
+      SMTP_ALLOW_INSECURE: "true"
       MAIL_FROM: "Apercura <no-reply@localhost>"
       MAILPIT_URL: http://localhost:8025
       # Test-only secret: the CI database is thrown away after the job.
@@ -127,6 +129,8 @@ jobs:
         with:
           name: lighthouse
           path: apps/web/.lighthouseci
+          # A dot directory: upload-artifact skips hidden files unless told otherwise.
+          include-hidden-files: true
           retention-days: 7
       - name: Upload Playwright traces
         if: failure()

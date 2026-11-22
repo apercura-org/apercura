@@ -501,6 +501,9 @@ function DataSection() {
 					{t("deleteHeading")}
 				</h3>
 				<p className="text-body text-ink">{t("deleteBody")}</p>
+				{(plan.data ?? []).length > 0 ? (
+					<p className="text-body text-ink">{t("closeEffect")}</p>
+				) : null}
 				{(plan.data ?? []).map((practice) =>
 					practice.others > 0 ? (
 						<RadioGroup

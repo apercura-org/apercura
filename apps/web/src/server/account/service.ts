@@ -15,6 +15,7 @@ import {
 } from "@apercura/db/schema";
 import { and, eq, inArray, ne, sql } from "drizzle-orm";
 import { recordAudit } from "../audit";
+import { closeOrganization, finalizeClosures } from "../booking/closure";
 import { revokeOrganizationFeeds } from "../booking/feeds";
 import type { StorageDriver } from "../storage";
 
@@ -201,12 +202,18 @@ export async function deletionPlan(db: Database, userId: string) {
  * - a practice the account owns alone is closed;
  * - a practice with other members is closed or handed to one of them, as
  *   the caller chose (no choice: refused with HAS_TEAM);
+ * - closing a practice (`booking/closure.ts`) cancels its upcoming
+ *   appointments and tells their patients, revokes its calendar feeds and
+ *   removes its team at once; its booking data, data keys and the
+ *   organization are deleted once the cancellation emails are out (right
+ *   away when there are none, otherwise by the jobs, within a day at most);
  * - either way the practitioner's own page goes back to the registry facts:
  *   unclaimed, the owner's content and photo deleted (the page itself stays,
  *   built from open data, unless the owner removed it);
  * - claims and their documents are deleted with the account;
  * - the last platform administrator cannot delete their account.
- * The platform audit log keeps the pseudonymous account id.
+ * The platform audit log keeps the pseudonymous account id, and the access
+ * log of a closed practice stays until its own retention.
  */
 export async function deleteAccount(
 	db: Database,
@@ -215,8 +222,11 @@ export async function deleteAccount(
 		userId: string;
 		practices: Record<string, PracticeOutcome>;
 		headers?: Headers;
+		/** Injected by tests; defaults to the current time. */
+		nowMs?: number;
 	},
 ) {
+	const nowMs = input.nowMs ?? Date.now();
 	const plan = await deletionPlan(db, input.userId);
 	for (const practice of plan) {
 		if (practice.others > 0 && !input.practices[practice.organizationId]) {
@@ -225,6 +235,7 @@ export async function deleteAccount(
 	}
 	const objects: string[] = [];
 	const practitionerIds: number[] = [];
+	const closed = new Set<string>();
 	await db.transaction(async (tx) => {
 		const [self] = await tx
 			.select({ isPlatformAdmin: user.isPlatformAdmin })
@@ -237,21 +248,8 @@ export async function deleteAccount(
 			if ((admins?.n ?? 0) <= 1) throw new AccountError("LAST_ADMIN");
 		}
 		for (const practice of plan) {
-			if (practice.practitionerId) {
-				practitionerIds.push(practice.practitionerId);
-				const [profile] = await tx
-					.select({ photoKey: practitionerProfiles.photoKey })
-					.from(practitionerProfiles)
-					.where(eq(practitionerProfiles.practitionerId, practice.practitionerId));
-				if (profile?.photoKey) objects.push(profile.photoKey);
-				await tx
-					.delete(practitionerProfiles)
-					.where(eq(practitionerProfiles.practitionerId, practice.practitionerId));
-				await tx
-					.update(practitioners)
-					.set({ claimStatus: "unclaimed", ownerOrgId: null })
-					.where(eq(practitioners.id, practice.practitionerId));
-			}
+			// The practice first: closing it takes the practitioners' booking locks before any
+			// other row of theirs is touched.
 			const outcome = input.practices[practice.organizationId] ?? { kind: "close" };
 			if (outcome.kind === "transfer") {
 				const promoted = await tx
@@ -268,8 +266,35 @@ export async function deleteAccount(
 				if (promoted.length === 0) throw new AccountError("NO_SUCH_MEMBER");
 				// The leaving owner's feed links must not outlive their account.
 				await revokeOrganizationFeeds(tx, practice.organizationId);
-			} else {
-				await tx.delete(organization).where(eq(organization.id, practice.organizationId));
+			} else if (!closed.has(practice.organizationId)) {
+				closed.add(practice.organizationId);
+				await closeOrganization(tx, {
+					organizationId: practice.organizationId,
+					actor: `user:${input.userId}`,
+					nowMs,
+				});
+				await recordAudit(tx, {
+					actor: input.userId,
+					action: "organization.close",
+					subjectType: "organization",
+					subjectId: practice.organizationId,
+					headers: input.headers,
+				});
+			}
+			if (practice.practitionerId) {
+				practitionerIds.push(practice.practitionerId);
+				const [profile] = await tx
+					.select({ photoKey: practitionerProfiles.photoKey })
+					.from(practitionerProfiles)
+					.where(eq(practitionerProfiles.practitionerId, practice.practitionerId));
+				if (profile?.photoKey) objects.push(profile.photoKey);
+				await tx
+					.delete(practitionerProfiles)
+					.where(eq(practitionerProfiles.practitionerId, practice.practitionerId));
+				await tx
+					.update(practitioners)
+					.set({ claimStatus: "unclaimed", ownerOrgId: null })
+					.where(eq(practitioners.id, practice.practitionerId));
 			}
 		}
 		const documents = await tx.execute<{ storage_key: string }>(sql`
@@ -288,6 +313,12 @@ export async function deleteAccount(
 		// Sessions, sign-in methods, memberships, claims, checks and documents cascade.
 		await tx.delete(user).where(eq(user.id, input.userId));
 	});
+	// Practices with no email left to send go at once; the others with the jobs.
+	if (closed.size > 0) {
+		await finalizeClosures(db, nowMs, [...closed]).catch((error: unknown) => {
+			console.error("Practice closure left to the scheduled jobs:", error);
+		});
+	}
 	for (const key of objects) await storage.delete(key).catch(() => undefined);
 	return { practitionerIds };
 }

@@ -6,14 +6,15 @@ import {
 	type BookletComboSection,
 	BookletSearchFrame,
 	buttonStyles,
-	PinIcon,
 } from "@apercura/ui";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { useLocale, useTranslations } from "next-intl";
-import { useEffect, useId, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { getPathname, useRouter } from "~/i18n/navigation";
 import type { Locale } from "~/i18n/routing";
+import { searchFormId } from "~/lib/search-form-id";
 import { useTRPC } from "~/trpc/client";
+import { NearMeButton } from "./near-me-button";
 
 /** Waits until typing pauses before asking for suggestions. */
 function useDebounced(value: string, delay = 180) {
@@ -25,14 +26,18 @@ function useDebounced(value: string, delay = 180) {
 	return debounced;
 }
 
-type GeoStatus = "idle" | "locating" | "denied" | "unavailable";
-
 export interface SearchFormProps {
 	/** Current query, printed back into the fields. */
 	defaultWho?: string;
 	defaultWhere?: string;
 	/** Prefix for input ids, when several searches share a page. */
 	idPrefix?: string;
+	/**
+	 * `false` prints the form alone: the caller wraps it in the `<search>`
+	 * landmark and puts the "near me" action under it (the home page, which
+	 * hydrates this form later than that action).
+	 */
+	landmark?: boolean;
 }
 
 /**
@@ -44,6 +49,7 @@ export function SearchForm({
 	defaultWho = "",
 	defaultWhere = "",
 	idPrefix = "search",
+	landmark = true,
 }: SearchFormProps) {
 	const locale = useLocale() as Locale;
 	const t = useTranslations("Search");
@@ -51,8 +57,7 @@ export function SearchForm({
 	const tTaxonomy = useTranslations("taxonomy");
 	const trpc = useTRPC();
 	const router = useRouter();
-	const formId = useId();
-	const presRef = useRef<HTMLInputElement>(null);
+	const formId = searchFormId(idPrefix);
 
 	const [who, setWho] = useState(defaultWho);
 	const [where, setWhere] = useState(defaultWhere);
@@ -154,60 +159,29 @@ export function SearchForm({
 		}
 	};
 
-	// "Near me" exists only where the browser can locate the visitor.
-	const [geoSupported, setGeoSupported] = useState(false);
-	const [geo, setGeo] = useState<GeoStatus>("idle");
-	useEffect(() => setGeoSupported("geolocation" in navigator), []);
-
-	const locate = () => {
-		setGeo("locating");
-		navigator.geolocation.getCurrentPosition(
-			(position) => {
-				const form = document.getElementById(formId) as HTMLFormElement | null;
-				if (!form || !presRef.current) return;
-				// Named only now, so an ordinary search never carries an empty `pres`.
-				presRef.current.name = "pres";
-				presRef.current.value = `${position.coords.latitude.toFixed(5)},${position.coords.longitude.toFixed(5)}`;
-				// Near me replaces the place: the results are ordered by distance.
-				const whereInput = form.elements.namedItem("ou") as HTMLInputElement | null;
-				if (whereInput) whereInput.value = "";
-				form.requestSubmit();
-			},
-			(error) => setGeo(error.code === error.PERMISSION_DENIED ? "denied" : "unavailable"),
-			{ enableHighAccuracy: false, timeout: 10_000, maximumAge: 300_000 },
-		);
-	};
-
 	return (
 		<BookletSearchFrame
 			formId={formId}
 			action={getPathname({ href: "/recherche", locale })}
 			label={t("label")}
 			submitLabel={t("submit")}
+			landmark={landmark}
 			footer={
-				geoSupported ? (
-					<div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-						<button
-							type="button"
-							onClick={locate}
-							disabled={geo === "locating"}
-							className={buttonStyles({
-								intent: "ink",
-								size: "md",
-								className: "normal-case tracking-normal",
-							})}
-						>
-							<PinIcon className="size-5" />
-							{geo === "locating" ? tForm("locating") : tForm("nearMe")}
-						</button>
-						<p role="status" className="text-meta text-ink">
-							{geo === "denied"
-								? tForm("geoDenied")
-								: geo === "unavailable"
-									? tForm("geoUnavailable")
-									: ""}
-						</p>
-					</div>
+				landmark ? (
+					<NearMeButton
+						formId={formId}
+						className={buttonStyles({
+							intent: "ink",
+							size: "md",
+							className: "normal-case tracking-normal",
+						})}
+						labels={{
+							nearMe: tForm("nearMe"),
+							locating: tForm("locating"),
+							geoDenied: tForm("geoDenied"),
+							geoUnavailable: tForm("geoUnavailable"),
+						}}
+					/>
 				) : null
 			}
 		>
@@ -239,7 +213,8 @@ export function SearchForm({
 				}}
 				emptyStatus={whereStatus}
 			/>
-			<input ref={presRef} type="hidden" />
+			{/* Filled by the "near me" action. */}
+			<input type="hidden" data-near-me="" />
 		</BookletSearchFrame>
 	);
 }

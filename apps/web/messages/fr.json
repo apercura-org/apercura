@@ -837,7 +837,7 @@
 				"body": [
 					"Données : adresse e-mail, nom, mot de passe (enregistré haché), second facteur d’authentification, identité Pro Santé Connect, pièces justificatives envoyées pour revendiquer une page, membres de l’équipe, et journal des accès aux données des patients.",
 					"Finalités : gérer le compte, vérifier qu’une page est revendiquée par le bon professionnel et protéger l’accès aux données des patients. Bases légales : l’exécution des conditions d’utilisation (article 6.1.b) et l’intérêt légitime de sécuriser le service (article 6.1.f).",
-					"Durées : le compte est conservé jusqu’à sa suppression ; les pièces justificatives, chiffrées, sont effacées 30 jours après la décision ; le journal des accès sera limité à un an."
+					"Durées : le compte est conservé jusqu’à sa suppression ; les pièces justificatives, chiffrées, sont effacées 30 jours après la décision ; le journal des accès est effacé au bout d’un an."
 				]
 			},
 			"patients": {
@@ -853,13 +853,13 @@
 				"heading": "Signalements et demandes de retrait",
 				"body": [
 					"Données : le message, l’adresse e-mail de contact quand elle est donnée, et pour une demande de retrait la page concernée. Le texte libre est chiffré.",
-					"Finalités : corriger les erreurs signalées et appliquer les oppositions. Bases légales : l’intérêt légitime de publier des informations exactes (article 6.1.f) et le droit d’opposition (article 21). Durée : le temps de traiter la demande ; la durée maximale reste à fixer lors de la relecture juridique."
+					"Finalités : corriger les erreurs signalées et appliquer les oppositions. Bases légales : l’intérêt légitime de publier des informations exactes (article 6.1.f) et le droit d’opposition (article 21). Durée : le temps de traiter la demande, puis un signalement est supprimé 6 mois après sa clôture et une demande de retrait un an après sa décision ; après une opposition, seul le numéro RPPS de la page est conservé, pour qu’elle ne soit jamais republiée."
 				]
 			},
 			"security": {
 				"heading": "Sécurité et données techniques",
 				"body": [
-					"Les sessions des professionnels enregistrent l’adresse IP et le navigateur utilisés, pour protéger leur compte. Pour limiter les abus, le site transforme les adresses IP par une fonction à clé secrète avant de les compter ; seule la limite des tentatives de connexion les garde le temps de sa fenêtre. L’hébergeur conserve ses propres journaux techniques selon son contrat."
+					"Les sessions des professionnels enregistrent une adresse IP tronquée (le réseau, pas l’appareil) et le navigateur utilisés, pour protéger leur compte. Pour limiter les abus, le site transforme les adresses IP par une fonction à clé secrète avant de les compter ; seule la limite des tentatives de connexion les garde le temps de sa fenêtre. L’hébergeur conserve ses propres journaux techniques selon son contrat."
 				]
 			},
 			"recipients": {
@@ -1860,6 +1860,7 @@
 				"export": "Télécharger mes données",
 				"deleteHeading": "Supprimer votre compte",
 				"deleteBody": "Votre compte, vos sessions, vos revendications et vos justificatifs sont supprimés. Votre page revient aux informations du registre : non revendiquée, sans votre contenu ni votre photo.",
+				"closeEffect": "Fermer un cabinet annule ses rendez-vous à venir (les patients sont prévenus par e-mail), coupe ses liens d’agenda et efface les données de ses patients sous un jour. Le journal des accès est conservé un an.",
 				"practiceChoice": "Que devient {name} ?",
 				"close": "Fermer le cabinet : ses membres perdent l’accès",
 				"transfer": "Le confier à {name} ({email})",

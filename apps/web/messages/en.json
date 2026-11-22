@@ -837,7 +837,7 @@
 				"body": [
 					"Data: email address, name, password (stored hashed), second authentication factor, Pro Santé Connect identity, supporting documents sent to claim a page, team members, and the log of access to patient data.",
 					"Purposes: managing the account, checking that a page is claimed by the right practitioner and protecting access to patient data. Legal bases: performance of the terms of use (article 6.1.b) and the legitimate interest of securing the service (article 6.1.f).",
-					"Retention: the account is kept until it is deleted; supporting documents, encrypted, are erased 30 days after the decision; the access log will be limited to one year."
+					"Retention: the account is kept until it is deleted; supporting documents, encrypted, are erased 30 days after the decision; the access log is erased after one year."
 				]
 			},
 			"patients": {
@@ -853,13 +853,13 @@
 				"heading": "Error reports and removal requests",
 				"body": [
 					"Data: the message, the contact email address when one is given and, for a removal request, the page concerned. Free text is encrypted.",
-					"Purposes: correcting reported errors and applying objections. Legal bases: the legitimate interest of publishing accurate information (article 6.1.f) and the right to object (article 21). Retention: the time needed to handle the request; the maximum period is still to be set during the legal review."
+					"Purposes: correcting reported errors and applying objections. Legal bases: the legitimate interest of publishing accurate information (article 6.1.f) and the right to object (article 21). Retention: the time needed to handle the request, then a report is deleted 6 months after it is closed and a removal request one year after its decision; after an objection, only the RPPS number of the page is kept, so that it is never published again."
 				]
 			},
 			"security": {
 				"heading": "Security and technical data",
 				"body": [
-					"Practitioner sessions record the IP address and browser used, to protect their account. To limit abuse, the site transforms IP addresses with a keyed function before counting them; only the sign-in attempt limit keeps them for the length of its window. The host keeps its own technical logs under its contract."
+					"Practitioner sessions record a truncated IP address (the network, not the device) and the browser used, to protect their account. To limit abuse, the site transforms IP addresses with a keyed function before counting them; only the sign-in attempt limit keeps them for the length of its window. The host keeps its own technical logs under its contract."
 				]
 			},
 			"recipients": {
@@ -1860,6 +1860,7 @@
 				"export": "Download my data",
 				"deleteHeading": "Delete your account",
 				"deleteBody": "Your account, sessions, claims and documents are deleted. Your page goes back to the facts of the register: unclaimed, without your content or photo.",
+				"closeEffect": "Closing a practice cancels its upcoming appointments (patients are told by email), revokes its calendar links and erases its patients’ data within a day. The access log is kept for one year.",
 				"practiceChoice": "What happens to {name}?",
 				"close": "Close the practice: its members lose access",
 				"transfer": "Hand it to {name} ({email})",

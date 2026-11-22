@@ -464,5 +464,25 @@ export const auditEvents = care.table(
 	(table) => [
 		index("audit_events_organization_idx").on(table.organizationId, table.createdAt),
 		index("audit_events_user_idx").on(table.userId, table.createdAt),
+		// The retention purge (`care.purge_audit_events`) deletes by age.
+		index("audit_events_created_idx").on(table.createdAt),
 	],
 );
+
+/**
+ * A practice being closed (its owner deleted their account and chose to close it). Closing
+ * cancels the upcoming appointments, notifies their patients, revokes the feeds and removes the
+ * team at once; the scheduled jobs then erase every booking row and the data keys once the
+ * cancellation emails are out (or after a deadline), and delete the organization, which deletes
+ * this row. The audit rows of the practice stay until their own retention.
+ */
+export const organizationClosures = care.table("organization_closures", {
+	organizationId: text()
+		.primaryKey()
+		.references(() => organization.id, { onDelete: "cascade" }),
+	/** `user:<id>` of the person who closed it. */
+	requestedBy: text().notNull(),
+	requestedAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
+	/** Booking data is erased at the latest then, even if some emails are still being retried. */
+	purgeBy: timestamp({ withTimezone: true }).notNull(),
+});

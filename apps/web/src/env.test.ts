@@ -123,6 +123,38 @@ describe("environment validation messages", () => {
 		expect(issues).toHaveLength(6);
 	});
 
+	it("refuses an SMTP_URL that weakens TLS in production, unless SMTP_ALLOW_INSECURE", () => {
+		const insecure = { ...PRODUCTION, SMTP_URL: "smtp://mail.apercura.example:25?ignoreTLS=true" };
+		expect(issuesOf(serverSchema, insecure)).toEqual([
+			'SMTP_URL may not set "ignoreTLS" in production: TLS comes from the scheme (smtps:// implicit TLS, smtp:// STARTTLS required)',
+		]);
+		expect(issuesOf(serverSchema, { ...insecure, SMTP_ALLOW_INSECURE: "true" })).toEqual([]);
+		expect(
+			issuesOf(serverSchema, { ...PRODUCTION, SMTP_URL: "smtps://u:p@mail.apercura.example:465" }),
+		).toEqual([]);
+		expect(
+			issuesOf(serverSchema, { ...PRODUCTION, SMTP_URL: "smtp://u:p@mail.apercura.example:587" }),
+		).toEqual([]);
+		expect(
+			issuesOf(serverSchema, { ...VALID, SMTP_URL: "smtp://localhost:1025?ignoreTLS=true" }),
+		).toEqual([]);
+	});
+
+	it("keeps the retention periods within their bounds", () => {
+		const parsed = serverSchema.parse(VALID);
+		expect([
+			parsed.AUDIT_LOG_RETENTION_MONTHS,
+			parsed.REPORT_RETENTION_MONTHS,
+			parsed.REMOVAL_REQUEST_RETENTION_MONTHS,
+		]).toEqual([12, 6, 12]);
+		expect(
+			issuesOf(serverSchema, { ...VALID, AUDIT_LOG_RETENTION_MONTHS: "3" }).map(
+				(line) => line.split(":")[0],
+			),
+		).toEqual(["AUDIT_LOG_RETENTION_MONTHS"]);
+		expect(issuesOf(serverSchema, { ...VALID, REPORT_RETENTION_MONTHS: "24" })).toEqual([]);
+	});
+
 	it("names the client variables too", () => {
 		expect(issuesOf(clientSchema, { NEXT_PUBLIC_MAP_STYLE_URL: "tiles" })).toEqual([
 			"NEXT_PUBLIC_MAP_STYLE_URL: Invalid URL",
