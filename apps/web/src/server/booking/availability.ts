@@ -3,6 +3,7 @@ import {
 	type AvailabilityException,
 	type AvailabilityRule,
 	type BusyInterval,
+	bookingNoticeMin,
 	computeSlots,
 	isSlotOffered,
 	MAX_SLOT_DAYS,
@@ -188,7 +189,8 @@ export async function slotQuery(
 		type: toCoreType(type),
 		settings: {
 			stepMin: calendar.stepMin,
-			minNoticeMin: calendar.minNoticeMin,
+			// A practice that validates by hand needs time to answer: no time it could not.
+			minNoticeMin: bookingNoticeMin(calendar.minNoticeMin, calendar.manualValidation),
 			horizonDays: calendar.horizonDays,
 		},
 		nowMs,

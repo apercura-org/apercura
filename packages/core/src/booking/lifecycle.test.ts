@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
 	type AppointmentStatus,
+	bookingNoticeMin,
 	createHold,
 	createPracticeEntry,
 	effectiveStatus,
@@ -221,5 +222,27 @@ describe("effective status", () => {
 		expect(occupiesSlot(entry("held"), T0 + 15 * MIN)).toBe(false);
 		expect(occupiesSlot(entry("confirmed"), START + 10 * 24 * HOUR)).toBe(true);
 		expect(occupiesSlot(entry("cancelled_by_patient"), T0)).toBe(false);
+	});
+});
+
+describe("booking notice", () => {
+	it("keeps the calendar's notice when the practice does not validate by hand", () => {
+		expect(bookingNoticeMin(60, false)).toBe(60);
+		expect(bookingNoticeMin(0, false)).toBe(0);
+	});
+
+	it("offers no time a request could not be validated for (2 h lead + the 15 min hold)", () => {
+		expect(bookingNoticeMin(60, true)).toBe(135);
+		expect(bookingNoticeMin(1440, true)).toBe(1440);
+		// The earliest offered time still leaves a deadline after the hold ends.
+		const startsAt = T0 + bookingNoticeMin(60, true) * MIN;
+		const hold = createHold(T0);
+		expect(pendingDeadline(T0, startsAt)).toBeGreaterThanOrEqual(hold.expiresAtMs ?? 0);
+		const verified = transition(entry("held", { createdAtMs: T0, startsAtMs: startsAt }), {
+			type: "verify",
+			nowMs: (hold.expiresAtMs ?? T0) - MIN,
+			manualValidation: true,
+		});
+		expect(verified.ok).toBe(true);
 	});
 });
