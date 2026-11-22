@@ -4,8 +4,11 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Suspense } from "react";
 import { ManageAppointment } from "~/components/booking/manage-appointment";
 import { BookletPage } from "~/components/booklet-page";
+import { ClientIsland, MANAGE_MESSAGES } from "~/components/client-island";
 import { PublicPage } from "~/components/public-page";
+import type { Locale } from "~/i18n/routing";
 import { NO_INDEX, resolveLocale } from "~/lib/locale";
+import { TRPCReactProvider } from "~/trpc/client";
 
 /*
  * `/rdv#t={token}`: a patient manages an appointment from the email link. The token lives in the
@@ -22,9 +25,15 @@ export async function generateMetadata({ params }: PageProps<"/[locale]/rdv">): 
 }
 
 /** Rendered per request (personal page, never cached by a CDN). */
-async function Dynamic() {
+async function Dynamic({ locale }: { locale: Locale }) {
 	await connection();
-	return <ManageAppointment />;
+	return (
+		<ClientIsland locale={locale} namespaces={MANAGE_MESSAGES}>
+			<TRPCReactProvider>
+				<ManageAppointment />
+			</TRPCReactProvider>
+		</ClientIsland>
+	);
 }
 
 export default async function ManagePage({ params }: PageProps<"/[locale]/rdv">) {
@@ -39,7 +48,7 @@ export default async function ManagePage({ params }: PageProps<"/[locale]/rdv">)
 						{t("title")}
 					</h1>
 					<Suspense fallback={<p className="text-body text-ink">{t("loading")}</p>}>
-						<Dynamic />
+						<Dynamic locale={locale} />
 					</Suspense>
 				</div>
 			</BookletPage>

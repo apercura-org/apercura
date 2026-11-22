@@ -1,12 +1,14 @@
 import { getTranslations } from "next-intl/server";
 import type { ReactNode } from "react";
 import { BookletPage } from "~/components/booklet-page";
+import { ClientIsland } from "~/components/client-island";
 import { SiteFooter } from "~/components/site-footer";
 import { Link } from "~/i18n/navigation";
 import type { Locale } from "~/i18n/routing";
 import { PRO_ROUTES } from "~/lib/pro-routes";
 import { getServerSession } from "~/server/auth/session";
 import { getProContext } from "~/server/pro-context";
+import { TRPCReactProvider } from "~/trpc/client";
 import { ProHeaderMenu } from "./pro-header-menu";
 import { SignOutButton } from "./sign-out-button";
 
@@ -56,59 +58,62 @@ export async function ProShell({
 				]
 			: []),
 	];
+	// The practitioner space is never indexed and full of forms: it gets the whole catalogue and the API client.
 	return (
-		<>
-			<div className="surface-cover">
-				<header className="border-b border-cover-rule">
-					<div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-x-6 gap-y-2 px-5 py-1.5 sm:px-8">
-						<Link
-							href="/"
-							aria-label={t("app.homeLink")}
-							className="inline-flex min-h-11 items-center font-display text-lead font-extrabold tracking-[-0.01em] text-cover-ink no-underline font-stretch-expanded"
-						>
-							{t("email.wordmark")}
-						</Link>
-						<ProHeaderMenu label={t("app.nav.menu")}>
-							{showNav ? (
-								<nav aria-label={t("app.nav.label")}>
-									<ul className="flex flex-col items-start gap-x-5 sm:flex-row sm:flex-wrap sm:items-center">
-										{items.map((item) => (
-											<li key={item.href}>
-												<Link
-													href={item.href}
-													aria-current={item.href === current ? "page" : undefined}
-													className={navLink}
-												>
-													{item.label}
-												</Link>
-											</li>
-										))}
-									</ul>
-								</nav>
-							) : null}
-							<SignOutButton />
-						</ProHeaderMenu>
-					</div>
-				</header>
-			</div>
-			<main id="main" tabIndex={-1} className="flex-1 outline-none">
+		<ClientIsland locale={locale} namespaces="all">
+			<TRPCReactProvider>
 				<div className="surface-cover">
-					<div className="mx-auto flex w-full max-w-6xl flex-col gap-3 px-5 pt-10 pb-10 sm:px-8">
-						<h1 className="max-w-[20ch] font-display text-headline font-black tracking-[-0.02em] font-stretch-expanded">
-							{title}
-						</h1>
-						{lead ? <p className="max-w-[58ch] text-lead text-cover-ink">{lead}</p> : null}
-					</div>
+					<header className="border-b border-cover-rule">
+						<div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-x-6 gap-y-2 px-5 py-1.5 sm:px-8">
+							<Link
+								href="/"
+								aria-label={t("app.homeLink")}
+								className="inline-flex min-h-11 items-center font-display text-lead font-extrabold tracking-[-0.01em] text-cover-ink no-underline font-stretch-expanded"
+							>
+								{t("email.wordmark")}
+							</Link>
+							<ProHeaderMenu label={t("app.nav.menu")}>
+								{showNav ? (
+									<nav aria-label={t("app.nav.label")}>
+										<ul className="flex flex-col items-start gap-x-5 sm:flex-row sm:flex-wrap sm:items-center">
+											{items.map((item) => (
+												<li key={item.href}>
+													<Link
+														href={item.href}
+														aria-current={item.href === current ? "page" : undefined}
+														className={navLink}
+													>
+														{item.label}
+													</Link>
+												</li>
+											))}
+										</ul>
+									</nav>
+								) : null}
+								<SignOutButton />
+							</ProHeaderMenu>
+						</div>
+					</header>
 				</div>
-				<BookletPage
-					runningHead={
-						current.startsWith("/pro/admin") ? t("app.adminRunningHead") : t("runningHead")
-					}
-				>
-					{children}
-				</BookletPage>
-			</main>
-			<SiteFooter locale={locale} />
-		</>
+				<main id="main" tabIndex={-1} className="flex-1 outline-none">
+					<div className="surface-cover">
+						<div className="mx-auto flex w-full max-w-6xl flex-col gap-3 px-5 pt-10 pb-10 sm:px-8">
+							<h1 className="max-w-[20ch] font-display text-headline font-black tracking-[-0.02em] font-stretch-expanded">
+								{title}
+							</h1>
+							{lead ? <p className="max-w-[58ch] text-lead text-cover-ink">{lead}</p> : null}
+						</div>
+					</div>
+					<BookletPage
+						runningHead={
+							current.startsWith("/pro/admin") ? t("app.adminRunningHead") : t("runningHead")
+						}
+					>
+						{children}
+					</BookletPage>
+				</main>
+				<SiteFooter locale={locale} />
+			</TRPCReactProvider>
+		</ClientIsland>
 	);
 }

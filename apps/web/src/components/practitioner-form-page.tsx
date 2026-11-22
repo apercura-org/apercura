@@ -4,11 +4,13 @@ import { notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import type { ReactNode } from "react";
 import { BookletPage } from "~/components/booklet-page";
+import { ClientIsland, GDPR_MESSAGES } from "~/components/client-island";
 import { PublicPage } from "~/components/public-page";
 import { Link } from "~/i18n/navigation";
 import type { Locale } from "~/i18n/routing";
 import { getTaxonomyLabels } from "~/lib/labels";
 import { getPractitionerPage } from "~/server/queries/practitioner";
+import { TRPCReactProvider } from "~/trpc/client";
 
 /** The practitioner a form page is about (from the read model), or a 404. */
 export async function formPractitioner(slug: string) {
@@ -65,7 +67,9 @@ export async function PractitionerFormPage({
 						</p>
 					) : null}
 				</div>
-				{children}
+				<ClientIsland locale={locale} namespaces={GDPR_MESSAGES}>
+					<TRPCReactProvider>{children}</TRPCReactProvider>
+				</ClientIsland>
 			</BookletPage>
 		</PublicPage>
 	);

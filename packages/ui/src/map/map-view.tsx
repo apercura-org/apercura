@@ -2,7 +2,6 @@
 
 import { type ReactNode, useEffect, useRef, useState } from "react";
 import { PinIcon } from "../icons";
-import { cn } from "../recipes";
 import { DEFAULT_MAP_STYLE_URL } from "./map-style";
 
 export interface MapViewProps {
@@ -104,10 +103,14 @@ export function MapView({
 		<section
 			aria-label={label}
 			data-status={status}
-			className={cn(
+			// A plain join, not `cn`: the map is on every practitioner page, and class merging
+			// would ship tailwind-merge to the browser for a base no caller overrides.
+			className={[
 				"apercura-map relative overflow-hidden border-[1.5px] border-ink bg-paper-shade",
 				className,
-			)}
+			]
+				.filter(Boolean)
+				.join(" ")}
 		>
 			{/* MapLibre's own stylesheet makes this node `position: relative`, so size it with the parent. */}
 			<div ref={containerRef} className="h-full w-full" />
