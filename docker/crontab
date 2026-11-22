@@ -1,0 +1,10 @@
+# Scheduled tasks of the image, run by `apercura scheduler` (supercronic). Times are UTC.
+#
+# Expirations, reminders, the email outbox, next free slots and purges. Every sub-job holds a
+# Postgres advisory lock, so a run that lasts longer than five minutes is harmless.
+*/5 * * * * apercura jobs:tick
+
+# Open data import, every Monday at 03:00 UTC. ETL_SCHEDULE_ARGS narrows it, e.g.
+# `--department 75`; empty imports all of France. Exit codes: 1 failed, 2 blocked (see
+# docs/data-import.md).
+0 3 * * 1 apercura etl:fr $ETL_SCHEDULE_ARGS

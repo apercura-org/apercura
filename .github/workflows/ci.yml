@@ -229,3 +229,16 @@ jobs:
           psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -c "CREATE DATABASE apercura_test"
           DATABASE_URL="$ETL_TEST_DATABASE_URL" bun run db:migrate
           bun run --cwd packages/etl test
+
+  docker:
+    name: Docker image and self-hosting smoke test (synthetic fixtures)
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v7
+      # Builds docker/Dockerfile (no push), starts docker/compose.selfhost.yml from a clean
+      # state with throwaway secrets, imports the SYNTHETIC fixtures, checks the home page, a
+      # practitioner page, /api/health, jobs:tick and the import role's grants, then removes
+      # everything (volumes included).
+      - name: Build and smoke test
+        run: docker/smoke-test.sh
