@@ -168,12 +168,14 @@ confirmed, the RPPS is kept in `directory.suppressions` so the import never brin
 
 **P6 — Security**: rate-limit counters keyed by an HMAC-SHA256 of the client IP or of the email
 address (`directory.rate_limits`, `apps/web/src/server/rate-limit-key.ts`); Better Auth's own
-per-IP counters (`directory.auth_rate_limit`); keyed hashes of IPs in both audit logs; server
+per-IP counters, keyed the same way (`directory.auth_rate_limit`,
+`apps/web/src/server/auth/rate-limit-storage.ts`); keyed hashes of IPs in both audit logs; server
 logs without request inputs (`apps/web/src/trpc/error-redaction.ts`) and SMTP error summaries
 without reply text (`apps/web/src/server/mail/error-summary.ts`).
 
-Note: `directory.auth_rate_limit` keys are built by Better Auth as `{ip}|{path}` (raw IP); see
-action A-12. `directory.session.ip_address` holds only the network of the address (IPv4 /24,
+Note: Better Auth builds its rate-limit keys as `{ip}|{path}`; our storage replaces the address
+with its HMAC-SHA256 before writing (`auth:{hash}|{path}`), and migration 0017 deleted the rows
+stored before with raw addresses (action A-12, done in #66). `directory.session.ip_address` holds only the network of the address (IPv4 /24,
 IPv6 /48, `apps/web/src/server/auth/client-ip.ts`, rows stored before truncated by migration
 0016), and the read-only role reads neither it nor the user agent.
 
@@ -210,7 +212,7 @@ IPv6 /48, `apps/web/src/server/auth/client-ip.ts`, rows stored before truncated 
 | Claims and checks                                                                                         | Until the account is deleted (cascade)                                                                                                                 | `claims.ts`, `account/service.ts`                                                                                                             |
 | Accounts                                                                                                  | Until deleted by the user; no inactivity rule                                                                                                          | `account/service.ts`; **to define**                                                                                                           |
 | Sessions                                                                                                  | 12 hours idle, 7 days absolute; truncated IP; deletion of expired rows by Better Auth **to confirm**                                                   | `auth/index.ts`, `auth/policy.ts` (`SESSION_MAX_AGE_MS`), `auth/client-ip.ts`                                                                 |
-| Rate-limit counters                                                                                       | Fixed windows; old rows are not deleted by the app (**to confirm**)                                                                                    | `server/rate-limit.ts`                                                                                                                        |
+| Rate-limit counters                                                                                       | Windows of a minute to a day; each row deleted once its window has elapsed, by `jobs:tick rate-limits` (every 5 minutes)                               | `server/rate-limit.ts` (`purgeExpiredRateLimits`), `auth/rate-limit-storage.ts`                                                               |
 | Error reports, removal requests                                                                           | Reports: 6 months after resolution or dismissal; removal requests: one year after the decision (configurable); open ones until handled                 | `server/retention.ts` (`purgeClosedRequests`), `jobs:tick requests`                                                                           |
 | Suppressions (RPPS of a page removed on objection)                                                        | As long as the directory is published (needed to honour the objection)                                                                                 | `directory.ts` (`suppressions`)                                                                                                               |
 | Directory records                                                                                         | While present in the source; an unclaimed practitioner absent from two consecutive imports is marked `removed`                                         | [data import](../data-import.md); retention of removed rows **to confirm**                                                                    |
@@ -323,9 +325,8 @@ indexing by search engines widens exposure; published phone numbers may be perso
   (CPS card, Ordre certificate) and deleted 30 days after the decision.
 - **P5**: the contact email of a report is optional; the forms say "N'indiquez aucune
   information de santé".
-- **P6**: rate limits and audit rows hold keyed hashes of IPs and emails, not raw values;
-  sessions hold the network of the address only (except Better Auth's rate-limit table, see
-  A-12).
+- **P6**: rate limits (Better Auth's included) and audit rows hold keyed hashes of IPs and
+  emails, not raw values; sessions hold the network of the address only.
 
 ### 2.4 Accuracy
 
@@ -340,8 +341,9 @@ verifying.
 See [1.6](#16-retention). Strong points: automatic purge of patient data with an audited
 `purge` action; unverified details erased after 24 hours; claim documents deleted 30 days
 after the decision; both audit logs deleted after a year; reports and removal requests deleted
-6 and 12 months after they are closed; booking data of a closed practice deleted within a day.
-Gaps: rate-limit rows, de-identified appointment rows, inactive accounts and backups beyond the
+6 and 12 months after they are closed; booking data of a closed practice deleted within a day;
+rate-limit counters deleted once their window has elapsed.
+Gaps: de-identified appointment rows, inactive accounts and backups beyond the
 host's default (actions A-4 and A-6).
 
 ### 2.6 Information of data subjects
@@ -465,8 +467,8 @@ CPS card image; harassment of practitioners.
 | Image runs as `node`, holds no secret; private bucket with a key limited to it                                                                                                                                         | `docker/`, security review                                                                                                                 |
 
 **Planned measures**: HDS hosting under contract, keys in the host's secret manager with
-restricted access (A-1); external penetration test (A-2); limiting raw IPs in Better Auth's
-rate-limit table (A-12); review of the platform audit log (A-7); art. 13 notice (A-8).
+restricted access (A-1); external penetration test (A-2); review of the platform audit log
+(A-7); art. 13 notice (A-8).
 
 | Processing           | Severity (proposal)                                             | Likelihood (proposal) | Rationale                                                                                                                                |
 | -------------------- | --------------------------------------------------------------- | --------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
@@ -475,7 +477,7 @@ rate-limit table (A-12); review of the platform audit log (A-7); art. 13 notice 
 | P3 accounts          | 2 Limited (on their own; account takeover leads to the P2 risk) | 2 Limited             | Password hashing, second factor, rate limits                                                                                             |
 | P1 directory         | 1 Negligible                                                    | —                     | Data is public by nature                                                                                                                 |
 | P5 reports, removals | 2 Limited                                                       | 2 Limited             | Contact emails and free text, encrypted, read by administrators only                                                                     |
-| P6 logs              | 1 Negligible to 2 Limited                                       | 2 Limited             | Keyed hashes, truncated session IPs, one-year retention; raw IPs remain in Better Auth's rate-limit table (A-12)                         |
+| P6 logs              | 1 Negligible to 2 Limited                                       | 2 Limited             | Keyed hashes (Better Auth's rate limits included, A-12), truncated session IPs, one-year retention                                       |
 
 ### 3.4 Unwanted modification of data
 
@@ -619,7 +621,7 @@ See [DPO appointment](dpo-appointment.md) and [records of processing](records-of
 | A-1  | Sign the HDS hosting contract; run app, database, jobs, storage and backups in the HDS region; keys in the host's secret manager                 | {{OWNER}}    | Before booking opens | Open   |
 | A-2  | External penetration test on staging with synthetic data (security review recommendation 3)                                                      | {{OWNER}}    | Before booking opens | Open   |
 | A-3  | Written breach procedure and register; processor notification target of 48 hours                                                                 | {{OWNER}}    | Before booking opens | Open   |
-| A-4  | Define retention for rate-limit rows, de-identified appointment rows, inactive accounts (reports and removal requests: done, #63)                | {{OWNER}}    | Before booking opens | Open   |
+| A-4  | Define retention for de-identified appointment rows, inactive accounts (reports and removal requests: done, #63; rate-limit rows: done, #66)     | {{OWNER}}    | Before booking opens | Open   |
 | A-5  | Implement the one-year deletion of both audit logs by a privileged task (security review I-6): `care.purge_audit_events()`, role `apercura_jobs` | {{OWNER}}    | Before booking opens | Done   |
 | A-6  | Request point-in-time recovery, confirm backup retention, test a restore                                                                         | {{OWNER}}    | Before booking opens | Open   |
 | A-7  | Administrator governance: named list, review of `platform_audit_events`, offboarding                                                             | {{OWNER}}    | Before booking opens | Open   |
@@ -627,7 +629,7 @@ See [DPO appointment](dpo-appointment.md) and [records of processing](records-of
 | A-9  | Guidance on generic appointment-type names                                                                                                       | {{OWNER}}    | Before booking opens | Open   |
 | A-10 | Tools for practitioners to answer patient requests: per-patient export and early erasure; export of the agenda at the end of the contract        | {{OWNER}}    | {{DUE_DATE}}         | Open   |
 | A-11 | DPO validation of email, `.ics` and feed content (3.6.1, 3.6.2)                                                                                  | {{DPO_NAME}} | Before booking opens | Open   |
-| A-12 | Limit raw IPs in `directory.auth_rate_limit` (Better Auth), or document and bound their retention (sessions: truncated, #63)                     | {{OWNER}}    | {{DUE_DATE}}         | Open   |
+| A-12 | Limit raw IPs in `directory.auth_rate_limit` (Better Auth): keyed hashes, purge of elapsed windows (#66; sessions: truncated, #63)               | {{OWNER}}    | {{DUE_DATE}}         | Done   |
 | A-13 | Decide on the map tile provider (self-hosting or documented third party)                                                                         | {{OWNER}}    | {{DUE_DATE}}         | Open   |
 | A-14 | Set `RATE_LIMIT_KEY`, `ALTCHA_HMAC_KEY` and `DATABASE_URL_JOBS` explicitly; check `TRUSTED_PROXY_COUNT`; SMTP TLS is enforced by the code (#63)  | {{OWNER}}    | Before booking opens | Open   |
 | A-15 | Appoint the DPO, register with the CNIL, publish the contact                                                                                     | {{OWNER}}    | Before booking opens | Open   |

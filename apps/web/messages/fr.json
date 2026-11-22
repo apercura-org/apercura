@@ -859,7 +859,7 @@
 			"security": {
 				"heading": "Sécurité et données techniques",
 				"body": [
-					"Les sessions des professionnels enregistrent une adresse IP tronquée (le réseau, pas l’appareil) et le navigateur utilisés, pour protéger leur compte. Pour limiter les abus, le site transforme les adresses IP par une fonction à clé secrète avant de les compter ; seule la limite des tentatives de connexion les garde le temps de sa fenêtre. L’hébergeur conserve ses propres journaux techniques selon son contrat."
+					"Les sessions des professionnels enregistrent une adresse IP tronquée (le réseau, pas l’appareil) et le navigateur utilisés, pour protéger leur compte. Pour limiter les abus, le site transforme les adresses IP par une fonction à clé secrète avant de les compter, et ne les enregistre jamais telles quelles ; chaque compteur est supprimé une fois sa fenêtre (d’une minute à un jour) écoulée. L’hébergeur conserve ses propres journaux techniques selon son contrat."
 				]
 			},
 			"recipients": {

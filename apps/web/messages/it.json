@@ -859,7 +859,7 @@
 			"security": {
 				"heading": "Sicurezza e dati tecnici",
 				"body": [
-					"Le sessioni dei professionisti registrano un indirizzo IP troncato (la rete, non il dispositivo) e il browser utilizzato, per proteggere il loro account. Per limitare gli abusi, il sito trasforma gli indirizzi IP con una funzione a chiave segreta prima di conteggiarli; solo il limite dei tentativi di accesso li conserva per la durata della sua finestra temporale. Il fornitore di hosting conserva i propri log tecnici secondo il suo contratto."
+					"Le sessioni dei professionisti registrano un indirizzo IP troncato (la rete, non il dispositivo) e il browser utilizzato, per proteggere il loro account. Per limitare gli abusi, il sito trasforma gli indirizzi IP con una funzione a chiave segreta prima di conteggiarli e non li registra mai in chiaro; ogni contatore viene eliminato una volta trascorsa la sua finestra temporale (da un minuto a un giorno). Il fornitore di hosting conserva i propri log tecnici secondo il suo contratto."
 				]
 			},
 			"recipients": {

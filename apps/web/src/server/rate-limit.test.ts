@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { clientRateLimitKey, emailRateLimitKey } from "./rate-limit-key";
+import { authRateLimitKey, clientRateLimitKey, emailRateLimitKey } from "./rate-limit-key";
 
 const headers = (forwarded?: string) =>
 	new Headers(forwarded ? { "x-forwarded-for": forwarded } : {});
@@ -45,5 +45,32 @@ describe("emailRateLimitKey", () => {
 				RATE_LIMIT_KEY: "test-key",
 			}),
 		);
+	});
+});
+
+describe("authRateLimitKey", () => {
+	const keyed = { RATE_LIMIT_KEY: "test-key" };
+
+	it("hashes the address of a Better Auth key and keeps its path", () => {
+		const key = authRateLimitKey("203.0.113.7|/sign-in/email", keyed);
+		expect(key).toMatch(/^auth:[\w-]{43}\|\/sign-in\/email$/);
+		expect(key).not.toContain("203.0.113");
+		const v6 = authRateLimitKey("2001:0db8:0001:0002:0000:0000:0000:0000|/sign-in/email", keyed);
+		expect(v6).not.toMatch(/2001|0db8/);
+	});
+
+	it("keeps one bucket per address and path", () => {
+		const key = (ip: string, path = "/sign-in/email") => authRateLimitKey(`${ip}|${path}`, keyed);
+		expect(key("203.0.113.7")).toBe(key("203.0.113.7"));
+		expect(key("203.0.113.7")).not.toBe(key("203.0.113.8"));
+		expect(key("203.0.113.7")).not.toBe(key("203.0.113.7", "/sign-up/email"));
+	});
+
+	it("shares the counters across processes without RATE_LIMIT_KEY, through BETTER_AUTH_SECRET", () => {
+		const secret = { BETTER_AUTH_SECRET: "synthetic-secret-0123456789abcdef0123456789" };
+		const key = authRateLimitKey("203.0.113.7|/sign-in/email", secret);
+		expect(key).toBe(authRateLimitKey("203.0.113.7|/sign-in/email", { ...secret }));
+		expect(key).not.toBe(authRateLimitKey("203.0.113.7|/sign-in/email", keyed));
+		expect(key).not.toContain("203.0.113");
 	});
 });

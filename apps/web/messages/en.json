@@ -859,7 +859,7 @@
 			"security": {
 				"heading": "Security and technical data",
 				"body": [
-					"Practitioner sessions record a truncated IP address (the network, not the device) and the browser used, to protect their account. To limit abuse, the site transforms IP addresses with a keyed function before counting them; only the sign-in attempt limit keeps them for the length of its window. The host keeps its own technical logs under its contract."
+					"Practitioner sessions record a truncated IP address (the network, not the device) and the browser used, to protect their account. To limit abuse, the site transforms IP addresses with a keyed function before counting them, and never stores them as such; each counter is deleted once its window (a minute to a day) has elapsed. The host keeps its own technical logs under its contract."
 				]
 			},
 			"recipients": {

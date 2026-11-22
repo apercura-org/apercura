@@ -72,3 +72,36 @@ export function emailRateLimitKey(
 		.digest("base64url");
 	return `${scope}:${digest}`;
 }
+
+/** Key of the Better Auth counters when RATE_LIMIT_KEY is unset, derived from its secret. */
+function authHmacKey(env: {
+	RATE_LIMIT_KEY?: string | undefined;
+	BETTER_AUTH_SECRET?: string | undefined;
+}) {
+	if (env.RATE_LIMIT_KEY || !env.BETTER_AUTH_SECRET) return hmacKey(env.RATE_LIMIT_KEY);
+	return createHmac("sha256", env.BETTER_AUTH_SECRET).update("apercura:auth-rate-limit").digest();
+}
+
+/**
+ * What `directory.auth_rate_limit` stores for one of Better Auth's rate-limit keys, which it
+ * builds as `{ip}|{path}` (the address normalized, IPv6 by /64): `auth:{HMAC-SHA256 of the
+ * address}|{path}`, so the table never holds a raw IP. One address keeps one bucket per path,
+ * as before, so the limits are unchanged.
+ *
+ * The HMAC key is RATE_LIMIT_KEY or, when it is unset, a key derived from BETTER_AUTH_SECRET
+ * (required in production): either way every instance and restart shares the counters, as the
+ * raw keys did.
+ */
+export function authRateLimitKey(
+	key: string,
+	env: { RATE_LIMIT_KEY?: string | undefined; BETTER_AUTH_SECRET?: string | undefined } = {
+		RATE_LIMIT_KEY: process.env.RATE_LIMIT_KEY,
+		BETTER_AUTH_SECRET: process.env.BETTER_AUTH_SECRET,
+	},
+): string {
+	const separator = key.indexOf("|");
+	const client = separator === -1 ? key : key.slice(0, separator);
+	const path = separator === -1 ? "" : key.slice(separator);
+	const digest = createHmac("sha256", authHmacKey(env)).update(client).digest("base64url");
+	return `auth:${digest}${path}`;
+}

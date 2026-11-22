@@ -859,7 +859,7 @@
 			"security": {
 				"heading": "Seguridad y datos técnicos",
 				"body": [
-					"Las sesiones de los profesionales registran una dirección IP truncada (la red, no el dispositivo) y el navegador utilizados, para proteger su cuenta. Para limitar los abusos, el sitio transforma las direcciones IP mediante una función con clave secreta antes de contabilizarlas; solo el límite de intentos de inicio de sesión las conserva durante su ventana de tiempo. El proveedor de alojamiento conserva sus propios registros técnicos conforme a su contrato."
+					"Las sesiones de los profesionales registran una dirección IP truncada (la red, no el dispositivo) y el navegador utilizados, para proteger su cuenta. Para limitar los abusos, el sitio transforma las direcciones IP mediante una función con clave secreta antes de contabilizarlas y nunca las guarda tal cual; cada contador se elimina una vez transcurrida su ventana de tiempo (de un minuto a un día). El proveedor de alojamiento conserva sus propios registros técnicos conforme a su contrato."
 				]
 			},
 			"recipients": {

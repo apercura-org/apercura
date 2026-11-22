@@ -95,11 +95,12 @@ DPIA signed, DPO appointed, processing agreement in the practitioner terms, rest
 - [ ] **[founder]** Set `FEATURE_BOOKING=true` and `LEGAL_DPO_CONTACT` (production refuses
       booking without it).
 - [ ] **[code]** Close before booking opens (from [security-review](security-review.md) and
-      the DPIA draft): I-5 (claim PDFs as attachments); purge of rate-limit rows; raw IP
-      addresses in the sign-in limiter's keys; an export of the patients' data for a
+      the DPIA draft): I-5 (claim PDFs as attachments); an export of the patients' data for a
       practitioner who leaves. _Done (#63): purge of both audit logs after a year, of error
       reports and removal requests after closure, truncated session IPs hidden from the
-      read-only role, closing a practice that holds booking data, TLS required for SMTP._
+      read-only role, closing a practice that holds booking data, TLS required for SMTP.
+      Done (#66): keyed hashes instead of raw IP addresses in the sign-in limiter's keys,
+      purge of elapsed rate-limit rows._
 - [ ] **[founder]** Enable the `apercura_jobs` role (`ALTER ROLE apercura_jobs WITH LOGIN
       PASSWORD '…'`) and set `DATABASE_URL_JOBS` where `jobs:tick` runs: without it the audit
       logs are not purged. Use an `SMTP_URL` with `smtps://` or STARTTLS; never set

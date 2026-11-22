@@ -108,6 +108,7 @@ depth, hard to exploit), **Info** (hardening, no direct impact).
 | L-8  | Low      | The development compose file published PostgreSQL, MinIO and Mailpit, with well-known passwords, on every interface.                                                                                                                                         | Fixed    | f745189          |
 | L-9  | Low      | Practitioner sessions stored the client's raw IP address, readable (with the user agent) by the read-only role.                                                                                                                                              | Fixed    | #63              |
 | L-10 | Low      | Error reports and removal requests were never deleted, although the privacy policy limits them to the time needed.                                                                                                                                           | Fixed    | #63              |
+| L-11 | Low      | Better Auth's sign-in rate limiter stored the raw client IP in its keys (`{ip}\|{path}`), and neither rate-limit table was ever purged.                                                                                                                      | Fixed    | #66              |
 | I-1  | Info     | JSON-LD escaped `<` only; `>`, `&`, U+2028 and U+2029 are now escaped too.                                                                                                                                                                                   | Fixed    | d2165d4          |
 | I-2  | Info     | No automated check that every procedure keeps its middleware, that the decryption boundary holds beyond Biome, or that the database roles stay narrow.                                                                                                       | Fixed    | 5e5d801, be6793c |
 | I-3  | Info     | `bun audit`: one moderate advisory (esbuild ≤ 0.24.2 development server) in development tools only (`drizzle-kit`, `vitest`); production dependencies are clean. CI now fails on any production advisory and on high or critical ones anywhere.              | Accepted | f745189          |
@@ -198,6 +199,22 @@ depth, hard to exploit), **Info** (hardening, no direct impact).
     URL that sets TLS options is refused by the environment check, the jobs and the
     transport, and the app refuses to start against a server that cannot do STARTTLS.
     `SMTP_ALLOW_INSECURE=true` lifts this for a local catcher only.
+- **Rate-limit hygiene (issue #66)**:
+  - _Better Auth's counters_ (`server/auth/rate-limit-storage.ts`, migration 0017): Better Auth
+    keeps limiting sign-in, sign-up, verification emails, second factors and passkeys per
+    address and path, with the same rules, but through our own storage: one atomic
+    `INSERT … ON CONFLICT DO UPDATE` per hit on `directory.auth_rate_limit`, keyed
+    `auth:{HMAC-SHA256 of the address}|{path}` (`authRateLimitKey`). The HMAC key is
+    `RATE_LIMIT_KEY`, or one derived from `BETTER_AUTH_SECRET` when it is unset, so the
+    counters stay shared across instances and restarts as before. Migration 0017 deletes the
+    rows stored before with raw addresses (counters of an hour at most: a client mid-window
+    starts a new one). A test signs in against a real database and finds no address in the
+    table.
+  - _Purge_ (`purgeExpiredRateLimits` in `server/rate-limit.ts`, `jobs:tick rate-limits`):
+    both tables record each row's window; under its advisory lock the job deletes the rows
+    whose window has elapsed, which the limiters count as zero anyway, and nothing else. It
+    runs with the app role, which already holds `DELETE` on both tables (`apercura_jobs` holds
+    no table privilege and gets none).
 - **Configuration**: production refuses to start without
   `BETTER_AUTH_SECRET`, or with any secret shorter than 32 characters;
   development services listen on 127.0.0.1 only.

@@ -2,9 +2,10 @@
  * Scheduled jobs, run by the host's scheduler (same image as the app):
  *
  *   bun run jobs:tick            expirations, reminders, outbox, closed practices, next free
- *                                slots, purges and retention
+ *                                slots, purges, retention and expired rate-limit counters
  *   bun run jobs:tick outbox     one sub-job only (expire | reminders | outbox | closures |
- *                                next-free | purge | claim-documents | requests | audit-log)
+ *                                next-free | purge | claim-documents | requests | rate-limits |
+ *                                audit-log)
  *   bun run jobs:tick rotate-keys after a master key rotation, never scheduled: moves every
  *                                key and platform ciphertext to ENCRYPTION_ACTIVE_KEY
  *
@@ -25,6 +26,7 @@ const SUB_JOBS = [
 	"claim-documents",
 	"closures",
 	"requests",
+	"rate-limits",
 	"audit-log",
 	"rotate-keys",
 ] as const;
@@ -65,6 +67,7 @@ async function main() {
 			"claim-documents": () => jobs.purgeClaimDocumentsJob(db, now()),
 			closures: () => jobs.closuresJob(db, now()),
 			requests: () => jobs.requestsJob(db, now()),
+			"rate-limits": () => jobs.rateLimitsJob(db, now()),
 			"audit-log": () => jobs.auditLogJob(auditDb),
 			"rotate-keys": async () => {
 				const { rotateKeys } = await import("../server/keys/rotation");

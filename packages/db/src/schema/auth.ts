@@ -212,13 +212,19 @@ export const invitation = directory.table(
 	],
 );
 
-/** Better Auth's own rate limiter (`rateLimit.storage = "database"`), keyed by IP and path. */
+/**
+ * Counters of Better Auth's own rate limiter, written by our storage
+ * (`apps/web/src/server/auth/rate-limit-storage.ts`): keyed by a keyed hash of the client
+ * address and the path, never the address itself.
+ */
 export const authRateLimit = directory.table("auth_rate_limit", {
 	id: text().primaryKey(),
 	key: text().notNull().unique(),
 	count: integer().notNull(),
 	/** Milliseconds since the epoch, as Better Auth writes it. */
 	lastRequest: bigint({ mode: "number" }).notNull(),
+	/** Length of the row's window: `jobs:tick` deletes the row once it has elapsed. */
+	windowSeconds: integer().notNull(),
 });
 
 /**
@@ -232,6 +238,8 @@ export const rateLimits = directory.table(
 		key: text().primaryKey(),
 		windowStartedAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
 		count: integer().notNull().default(0),
+		/** Length of the row's window: `jobs:tick` deletes the row once it has elapsed. */
+		windowSeconds: integer().notNull(),
 	},
 	(table) => [index("rate_limits_window_idx").on(table.windowStartedAt)],
 );
