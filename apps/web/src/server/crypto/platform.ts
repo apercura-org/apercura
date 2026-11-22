@@ -1,5 +1,6 @@
 import "server-only";
 import {
+	blobKeyVersion,
 	type DataKey,
 	decryptBytes,
 	decryptField,
@@ -8,8 +9,8 @@ import {
 	fieldAad,
 	type Keyring,
 	parseKeyring,
+	tokenKeyVersion,
 } from "@apercura/core/crypto";
-import { serverEnv } from "~/env";
 
 /*
  * The only module besides ~/server/phi allowed to import the crypto package
@@ -23,16 +24,23 @@ import { serverEnv } from "~/env";
  * `organization_keys.dek` AAD used to wrap practice keys.
  */
 
-let keyring: Keyring | undefined;
+let cached: { source: string; keyring: Keyring } | undefined;
 
 /** True when ENCRYPTION_KEYS and ENCRYPTION_ACTIVE_KEY are set. */
 export function platformKeyConfigured(): boolean {
-	return Boolean(serverEnv.ENCRYPTION_KEYS && serverEnv.ENCRYPTION_ACTIVE_KEY);
+	return Boolean(process.env.ENCRYPTION_KEYS && process.env.ENCRYPTION_ACTIVE_KEY);
 }
 
+/** The master keys, re-read when the environment changes (as in ~/server/phi/keys). */
 function getKeyring(): Keyring {
-	keyring ??= parseKeyring(serverEnv.ENCRYPTION_KEYS, serverEnv.ENCRYPTION_ACTIVE_KEY);
-	return keyring;
+	const source = `${process.env.ENCRYPTION_KEYS ?? ""}|${process.env.ENCRYPTION_ACTIVE_KEY ?? ""}`;
+	if (cached?.source !== source) {
+		cached = {
+			source,
+			keyring: parseKeyring(process.env.ENCRYPTION_KEYS, process.env.ENCRYPTION_ACTIVE_KEY),
+		};
+	}
+	return cached.keyring;
 }
 
 function activeKey(): DataKey {
@@ -63,9 +71,24 @@ export function openBytes(blob: Uint8Array, table: string, column: string, rowId
 	return decryptBytes(blob, allKeys(), aadOf(table, column, rowId));
 }
 
+/**
+ * Key rotation: the same text under the active master key, or null when it
+ * already is (see ~/server/keys/rotation).
+ */
+export function resealText(token: string, table: string, column: string, rowId: string) {
+	if (tokenKeyVersion(token) === getKeyring().activeId) return null;
+	return sealText(openText(token, table, column, rowId), table, column, rowId);
+}
+
+/** Key rotation: the same bytes under the active master key, or null when they already are. */
+export function resealBytes(blob: Uint8Array, table: string, column: string, rowId: string) {
+	if (blobKeyVersion(blob) === getKeyring().activeId) return null;
+	return sealBytes(openBytes(blob, table, column, rowId), table, column, rowId);
+}
+
 /** For tests: forget the parsed keyring. */
 export function resetPlatformKeyring() {
-	keyring = undefined;
+	cached = undefined;
 }
 
 export {

@@ -38,6 +38,16 @@ export function encryptBytes(plaintext: Uint8Array, key: DataKey, aad: string): 
 	]);
 }
 
+/** Key version recorded in a blob's header, without decrypting it. */
+export function blobKeyVersion(blob: Uint8Array): string {
+	const data = Buffer.from(blob.buffer, blob.byteOffset, blob.byteLength);
+	const versionLength = data[MAGIC.length] ?? 0;
+	if (versionLength === 0 || !data.subarray(0, MAGIC.length).equals(MAGIC)) {
+		throw new DecryptionError("Malformed encrypted blob");
+	}
+	return data.subarray(MAGIC.length + 1, MAGIC.length + 1 + versionLength).toString("ascii");
+}
+
 /** @throws DecryptionError on a malformed blob, an unknown key version, tampering or a wrong AAD. */
 export function decryptBytes(
 	blob: Uint8Array,
