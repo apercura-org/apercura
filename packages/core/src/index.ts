@@ -2,7 +2,9 @@ export * from "./booking";
 export * from "./claims";
 export * from "./directory";
 export {
+	type AccentDictionary,
 	addressKey,
+	buildAccentDictionary,
 	formatPersonName,
 	formatPhoneFr,
 	formatStreetLine,

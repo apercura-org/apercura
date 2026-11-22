@@ -5,6 +5,7 @@
  * Only import-owned columns are written. Every write is guarded by a row hash
  * (`IS DISTINCT FROM`), so a second run over the same files changes nothing.
  */
+import { buildAccentDictionary, formatStreetText } from "@apercura/core";
 import {
 	FR_AMELI_SPECIALTY_SLUGS,
 	FR_PROFESSIONS,
@@ -129,6 +130,49 @@ export async function stageSites(
 		SELECT count(*)::integer AS structures, count(place_id)::integer AS resolved FROM run_sites
 	`;
 	return counts ?? { structures: 0, resolved: 0 };
+}
+
+/**
+ * Restores the accents of the staged site names. The registry prints accented
+ * letters inside the words of a place name as unaccented capitals ("Cabinet du
+ * Dr HElEne Aelion") while the practitioner's own names are correctly accented
+ * ("Hélène"), so the accented words of the staged first and last names and of
+ * the commune names give them back ("Cabinet du Dr Hélène Aelion"). Words not
+ * found keep the lowercased form of the parser ("Helene"). Runs on
+ * `run_sites`, after {@link stageSites}.
+ */
+export async function restoreSiteNameAccents(tx: TransactionSql): Promise<{ restored: number }> {
+	const names = await tx<{ name: string; weight: number }[]>`
+		SELECT name, count(*)::integer AS weight FROM (
+			SELECT DISTINCT rpps, first_name AS name FROM directory.stg_ans_activities
+			UNION ALL
+			SELECT DISTINCT rpps, last_name FROM directory.stg_ans_activities
+			UNION ALL
+			SELECT code, name FROM directory.places
+			WHERE kind IN ('commune', 'arrondissement') AND removed_at IS NULL
+		) n
+		WHERE name ~ '[^ -~]'
+		GROUP BY name
+	`;
+	const accents = buildAccentDictionary(names.map(({ name, weight }) => [name, weight] as const));
+	// Only names with a capital after a lowercase letter or two capitals before one.
+	const sites = await tx<{ structure_id: string; raw: string; site_name: string | null }[]>`
+		SELECT structure_id, coalesce(trade_name, legal_name) AS raw, site_name
+		FROM run_sites
+		WHERE coalesce(trade_name, legal_name) ~ '[a-z][A-Z]|[A-Z]{2}[a-z]'
+	`;
+	const updates = sites.flatMap((site) => {
+		const name = formatStreetText(site.raw, { accents }) || null;
+		return name !== site.site_name ? [{ structure_id: site.structure_id, site_name: name }] : [];
+	});
+	if (updates.length === 0) return { restored: 0 };
+	await tx`
+		UPDATE run_sites rs SET site_name = u.site_name
+		FROM jsonb_to_recordset(${JSON.stringify(updates)}::text::jsonb)
+			AS u (structure_id text, site_name text)
+		WHERE u.structure_id = rs.structure_id
+	`;
+	return { restored: updates.length };
 }
 
 /** Practitioners in scope: optional department filter, suppressions always excluded. */
