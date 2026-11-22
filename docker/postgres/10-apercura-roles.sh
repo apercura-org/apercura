@@ -1,0 +1,22 @@
+#!/bin/sh
+# First start of the self-hosted database only (docker-entrypoint-initdb.d): creates the three
+# login roles of Apercura with the passwords of the environment. Migration 0004 then finds them
+# and only applies the grants. To change a password later:
+#   ALTER ROLE apercura_app WITH PASSWORD '…';
+set -eu
+
+: "${APERCURA_APP_DB_PASSWORD:?APERCURA_APP_DB_PASSWORD is required}"
+: "${APERCURA_ETL_DB_PASSWORD:?APERCURA_ETL_DB_PASSWORD is required}"
+
+psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" \
+	-v app_password="$APERCURA_APP_DB_PASSWORD" \
+	-v etl_password="$APERCURA_ETL_DB_PASSWORD" \
+	-v readonly_password="${APERCURA_READONLY_DB_PASSWORD:-}" <<'SQL'
+SELECT format('CREATE ROLE apercura_app LOGIN PASSWORD %L', :'app_password') \gexec
+SELECT format('CREATE ROLE apercura_etl LOGIN PASSWORD %L', :'etl_password') \gexec
+-- Without a password the read-only role stays NOLOGIN (support and audits, enable it later).
+SELECT CASE WHEN :'readonly_password' = ''
+	THEN 'CREATE ROLE apercura_readonly NOLOGIN'
+	ELSE format('CREATE ROLE apercura_readonly LOGIN PASSWORD %L', :'readonly_password')
+END \gexec
+SQL
