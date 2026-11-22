@@ -2,6 +2,7 @@ import { randomUUID } from "node:crypto";
 import { appointmentEnd, createHold, occupancy } from "@apercura/core/booking";
 import { appointments, otpChallenges } from "@apercura/db/schema";
 import { and, count, eq, gt, inArray, sql } from "drizzle-orm";
+import type { Locale } from "~/i18n/locales";
 import type { Transaction } from "~/server/db-executor";
 import {
 	ensureOrganizationKey,
@@ -47,7 +48,7 @@ export interface HoldInput {
 	typeId: string;
 	startsAt: Date;
 	patient: PatientInput;
-	locale: "fr" | "en";
+	locale: Locale;
 	/** Client-chosen (UUID): a retried request returns the same hold. */
 	idempotencyKey: string;
 	/** Solved ALTCHA challenge (base64 JSON). */

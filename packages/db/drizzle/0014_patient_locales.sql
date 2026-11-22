@@ -1,0 +1,2 @@
+ALTER TABLE "care"."appointments" DROP CONSTRAINT "appointments_locale_check";--> statement-breakpoint
+ALTER TABLE "care"."appointments" ADD CONSTRAINT "appointments_locale_check" CHECK ("care"."appointments"."patient_locale" in ('fr', 'en', 'de', 'es', 'it'));

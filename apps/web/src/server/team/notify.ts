@@ -1,4 +1,5 @@
 import "server-only";
+import type { Locale } from "~/i18n/locales";
 import { invitationUrl } from "~/server/booking/format";
 import { sendNotice } from "~/server/mail/notices";
 
@@ -8,7 +9,7 @@ import { sendNotice } from "~/server/mail/notices";
  */
 export async function sendInvitationEmail(options: {
 	to: string;
-	locale: "fr" | "en";
+	locale: Locale;
 	invitationId: string;
 	practiceName: string;
 	inviterName: string;

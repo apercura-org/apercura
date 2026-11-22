@@ -365,7 +365,7 @@ export const FR_TITLES = ["DR", "PR", "MC", "MG", "PC", "PG"] as const;
 
 /**
  * First URL segments reserved by the app: they can never be a listing slug.
- * Includes the institutional pages, the English locale prefix and the
+ * Includes the institutional pages, the locale prefixes and the
  * technical paths (sitemaps, Open Graph images, the component gallery).
  */
 export const RESERVED_SEGMENTS = [
@@ -383,7 +383,11 @@ export const RESERVED_SEGMENTS = [
 	"confidentialite",
 	"mentions-legales",
 	"conditions",
+	// Locale prefixes.
 	"en",
+	"de",
+	"es",
+	"it",
 	"og",
 	"sitemaps",
 	"_ui",

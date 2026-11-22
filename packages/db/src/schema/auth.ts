@@ -36,7 +36,7 @@ export const user = directory.table("user", {
 	image: text(),
 	/** Set by the two-factor plugin once a TOTP secret has been confirmed. */
 	twoFactorEnabled: boolean().default(false),
-	/** Locale of emails sent to this user (`fr` or `en`). */
+	/** Locale of emails sent to this user (an interface locale, `fr` by default). */
 	locale: text().notNull().default("fr"),
 	/**
 	 * Platform administrator (claims review, reports). Separate from organization

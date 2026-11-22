@@ -40,7 +40,7 @@
 	},
 	"LocaleSwitcher": {
 		"label": "Langue",
-		"locale": "{locale, select, fr {Français} en {English} other {Inconnue}}"
+		"locale": "{locale, select, fr {Français} en {English} de {Deutsch} es {Español} it {Italiano} other {Langue inconnue}}"
 	},
 	"Search": {
 		"label": "Trouver un professionnel de santé",
@@ -908,13 +908,13 @@
 		}
 	},
 	"Listing": {
-		"count": "{count, plural, one {# praticien} other {# praticiens}}",
-		"metaTitle": "{listing} à {place} : {count, plural, one {# praticien} other {# praticiens}} · Apercura",
+		"count": "{count, plural, one {# praticien} many {# praticiens} other {# praticiens}}",
+		"metaTitle": "{count, plural, one {{listing} à {place} : # praticien · Apercura} many {{listing} à {place} : # praticiens · Apercura} other {{listing} à {place} : # praticiens · Apercura}}",
 		"metaTitlePage": "{listing} à {place}, page {page} · Apercura",
-		"metaDescription": "{count, plural, one {# praticien inscrit} other {# praticiens inscrits}} comme {occupation} à {place} au registre national : adresses, coordonnées, secteurs de conventionnement.",
+		"metaDescription": "{count, plural, one {# praticien inscrit comme {occupation} à {place} au registre national : adresses, coordonnées, secteurs de conventionnement.} many {# praticiens inscrits comme {occupation} à {place} au registre national : adresses, coordonnées, secteurs de conventionnement.} other {# praticiens inscrits comme {occupation} à {place} au registre national : adresses, coordonnées, secteurs de conventionnement.}}",
 		"title": "{listing} à {place}",
-		"lead": "Le registre national compte {count, plural, one {# praticien} other {# praticiens}} sous cette rubrique avec un lieu d’exercice à {place}.",
-		"practitionersHeading": "{count, plural, one {Le praticien} other {Les # praticiens}}",
+		"lead": "{count, plural, one {Le registre national compte # praticien sous cette rubrique avec un lieu d’exercice à {place}.} many {Le registre national compte # praticiens sous cette rubrique avec un lieu d’exercice à {place}.} other {Le registre national compte # praticiens sous cette rubrique avec un lieu d’exercice à {place}.}}",
+		"practitionersHeading": "{count, plural, one {Le praticien} many {Les # praticiens} other {Les # praticiens}}",
 		"practitionersIntro": "Par ordre alphabétique. Personne ne paie pour figurer ici, et personne n’est classé.",
 		"rowFacts": "Secteur : {sector} · Carte Vitale : {carteVitale}",
 		"columns": {
@@ -942,29 +942,29 @@
 		"establishmentsHeading": "Établissements à {place}",
 		"establishmentsIntro": "Hôpitaux, cliniques et centres de santé où exercent des praticiens inscrits comme {listing}.",
 		"allSpecialties": "Toutes les spécialités à {place}",
-		"hubMetaTitle": "{listing} en France : {count, plural, one {# praticien} other {# praticiens}} · Apercura",
-		"hubMetaDescription": "{count, plural, one {# praticien inscrit} other {# praticiens inscrits}} comme {occupation} au registre national, par département : adresses, coordonnées, secteurs de conventionnement.",
+		"hubMetaTitle": "{count, plural, one {{listing} en France : # praticien · Apercura} many {{listing} en France : # praticiens · Apercura} other {{listing} en France : # praticiens · Apercura}}",
+		"hubMetaDescription": "{count, plural, one {# praticien inscrit comme {occupation} au registre national, par département : adresses, coordonnées, secteurs de conventionnement.} many {# praticiens inscrits comme {occupation} au registre national, par département : adresses, coordonnées, secteurs de conventionnement.} other {# praticiens inscrits comme {occupation} au registre national, par département : adresses, coordonnées, secteurs de conventionnement.}}",
 		"hubTitle": "{listing} en France",
-		"hubLead": "Le registre national compte {count, plural, one {# praticien} other {# praticiens}} sous cette rubrique avec un lieu d’exercice en France.",
+		"hubLead": "{count, plural, one {Le registre national compte # praticien sous cette rubrique avec un lieu d’exercice en France.} many {Le registre national compte # praticiens sous cette rubrique avec un lieu d’exercice en France.} other {Le registre national compte # praticiens sous cette rubrique avec un lieu d’exercice en France.}}",
 		"departmentsHeading": "{listing} par département",
 		"departmentsIntro": "Choisissez un département pour voir ses praticiens et ses communes.",
 		"browseDirectory": "Parcourir l’annuaire par lieu",
 		"metaTitleShort": "{listing} à {place} · Apercura",
-		"metaDescriptionPage": "Page {page} sur {pages} : {count, plural, one {# praticien inscrit} other {# praticiens inscrits}} comme {occupation} à {place} au registre national.",
+		"metaDescriptionPage": "{count, plural, one {Page {page} sur {pages} : # praticien inscrit comme {occupation} à {place} au registre national.} many {Page {page} sur {pages} : # praticiens inscrits comme {occupation} à {place} au registre national.} other {Page {page} sur {pages} : # praticiens inscrits comme {occupation} à {place} au registre national.}}",
 		"hubMetaTitleShort": "{listing} en France · Apercura"
 	},
 	"Directory": {
 		"metaTitle": "Annuaire des professionnels de santé par lieu · Apercura",
 		"metaDescription": "Chaque département de France avec ses professionnels de santé, d’après le registre national : médecins, chirurgiens-dentistes et sages-femmes.",
 		"title": "Annuaire par lieu",
-		"lead": "{count, plural, one {# praticien} other {# praticiens}} avec un lieu d’exercice, par département.",
+		"lead": "{count, plural, one {# praticien avec un lieu d’exercice, par département.} many {# praticiens avec un lieu d’exercice, par département.} other {# praticiens avec un lieu d’exercice, par département.}}",
 		"otherRegion": "Autres lieux",
 		"emptyTitle": "L’annuaire n’est pas encore importé",
 		"emptyBody": "Le registre national n’a pas encore été importé sur ce serveur. Revenez après le prochain import.",
 		"placeMetaTitle": "Professionnels de santé à {place} · Apercura",
-		"placeMetaDescription": "{count, plural, one {# praticien} other {# praticiens}} à {place}, par spécialité, d’après le registre national.",
+		"placeMetaDescription": "{count, plural, one {# praticien à {place}, par spécialité, d’après le registre national.} many {# praticiens à {place}, par spécialité, d’après le registre national.} other {# praticiens à {place}, par spécialité, d’après le registre national.}}",
 		"placeTitle": "Professionnels de santé à {place}",
-		"placeLead": "{count, plural, one {# praticien} other {# praticiens}} avec un lieu d’exercice à {place}.",
+		"placeLead": "{count, plural, one {# praticien avec un lieu d’exercice à {place}.} many {# praticiens avec un lieu d’exercice à {place}.} other {# praticiens avec un lieu d’exercice à {place}.}}",
 		"specialtiesHeading": "Par spécialité",
 		"communesHeading": "Communes de {place}",
 		"arrondissementsHeading": "Par arrondissement",
@@ -974,10 +974,10 @@
 	"Establishment": {
 		"metaTitle": "{name} · Apercura",
 		"metaTitlePlace": "{name}, {place} · Apercura",
-		"metaDescription": "{name} : adresse, standard et {count, plural, one {le praticien qui y exerce} other {les # praticiens qui y exercent}}, d’après le registre national.",
+		"metaDescription": "{count, plural, one {{name} : adresse, standard et le praticien qui y exerce, d’après le registre national.} many {{name} : adresse, standard et les # praticiens qui y exercent, d’après le registre national.} other {{name} : adresse, standard et les # praticiens qui y exercent, d’après le registre national.}}",
 		"directory": "Annuaire",
 		"folio": "FINESS {finess}",
-		"lead": "{kind}. Le registre national y compte {count, plural, one {# praticien} other {# praticiens}}.",
+		"lead": "{count, plural, one {{kind}. Le registre national y compte # praticien.} many {{kind}. Le registre national y compte # praticiens.} other {{kind}. Le registre national y compte # praticiens.}}",
 		"addressHeading": "Adresse",
 		"finess": "Numéro FINESS",
 		"action": {
@@ -985,7 +985,7 @@
 			"noPhone": "Aucun numéro de téléphone n’est publié pour cet établissement.",
 			"noPhoneHint": "Cherchez ses coordonnées sur son propre site ou sur ameli.fr."
 		},
-		"practitionersHeading": "{count, plural, one {Le praticien qui y exerce} other {Les # praticiens qui y exercent}}",
+		"practitionersHeading": "{count, plural, one {Le praticien qui y exerce} many {Les # praticiens qui y exercent} other {Les # praticiens qui y exercent}}",
 		"practitionersIntro": "Par spécialité, par ordre alphabétique.",
 		"otherProfessions": "Autres professions",
 		"source": "Annuaire Santé (ANS) et FINESS+"
@@ -1448,8 +1448,9 @@
 				"resend": "Envoyer un nouveau code",
 				"resendIn": "Envoyer un nouveau code ({seconds} s)",
 				"resent": "Un nouveau code part vers {email}.",
-				"sendsLeft": "{count, plural, =0 {Aucun autre code ne peut être envoyé.} one {Vous pouvez demander encore # code.} other {Vous pouvez demander encore # codes.}}",
-				"invalid": "{count, plural, =0 {Ce code n’est pas le bon.} one {Ce code n’est pas le bon. Il vous reste # essai.} other {Ce code n’est pas le bon. Il vous reste # essais.}}",
+				"sendsLeft": "{count, plural, one {Vous pouvez demander encore # code.} many {Vous pouvez demander encore # codes.} other {Vous pouvez demander encore # codes.}}",
+				"noSendsLeft": "Aucun autre code ne peut être envoyé.",
+				"invalid": "{count, plural, one {Ce code n’est pas le bon. Il vous reste # essai.} many {Ce code n’est pas le bon. Il vous reste # essais.} other {Ce code n’est pas le bon. Il vous reste # essais.}}",
 				"required": "Saisissez les 6 chiffres du code.",
 				"changeEmail": "Modifier mes coordonnées"
 			},
@@ -1470,7 +1471,7 @@
 				"body": "Quelqu’un l’a réservé il y a un instant. Voici les horaires libres les plus proches :",
 				"none": "Aucun autre horaire libre n’est proche. Choisissez un autre horaire dans l’agenda.",
 				"choose": "Choisir {slot}",
-				"other": "Voir tout l’agenda",
+				"seeAgenda": "Voir tout l’agenda",
 				"picked": "Nouvel horaire : {slot}. Vérifiez vos coordonnées, puis redemandez le code."
 			},
 			"errors": {
@@ -1541,7 +1542,7 @@
 			"cancelConfirm": "Oui, annuler",
 			"cancelKeep": "Non, le garder",
 			"cancelled": "Votre rendez-vous est annulé. Un e-mail de confirmation part vers vous.",
-			"cutoffPassed": "{hours, plural, one {Les changements en ligne ferment # heure avant le rendez-vous.} other {Les changements en ligne ferment # heures avant le rendez-vous.}} Pour l’annuler ou le déplacer maintenant, appelez le cabinet.",
+			"cutoffPassed": "{hours, plural, one {Les changements en ligne ferment # heure avant le rendez-vous. Pour l’annuler ou le déplacer maintenant, appelez le cabinet.} many {Les changements en ligne ferment # heures avant le rendez-vous. Pour l’annuler ou le déplacer maintenant, appelez le cabinet.} other {Les changements en ligne ferment # heures avant le rendez-vous. Pour l’annuler ou le déplacer maintenant, appelez le cabinet.}}",
 			"cutoffPassedMinutes": "Les changements en ligne ferment {minutes} minutes avant le rendez-vous. Pour l’annuler ou le déplacer maintenant, appelez le cabinet.",
 			"call": "Appeler le {phone}",
 			"closedNote": "Ce rendez-vous ne peut plus être modifié en ligne.",
@@ -2280,7 +2281,8 @@
 			"metaTitle": "Revendications · Administration · Apercura",
 			"title": "Revendications",
 			"lead": "Les revendications qui attendent une décision. Les contestations d’abord.",
-			"queueHeading": "{count, plural, =0 {Aucune revendication en attente} one {# revendication en attente} other {# revendications en attente}}",
+			"queueHeading": "{count, plural, one {# revendication en attente} many {# revendications en attente} other {# revendications en attente}}",
+			"queueEmpty": "Aucune revendication en attente",
 			"emptyTitle": "Rien à examiner",
 			"emptyBody": "Les revendications envoyées pour examen apparaissent ici.",
 			"columns": {
@@ -2550,6 +2552,7 @@
 			"start": "Début",
 			"end": "Fin",
 			"type": "Motif",
+			"typeOption": "{name} · {minutes} min",
 			"firstName": "Prénom",
 			"lastName": "Nom",
 			"email": "E-mail (facultatif)",
@@ -2633,6 +2636,7 @@
 				"noZone": "Département inconnu : ce lieu ne peut pas encore prendre de rendez-vous.",
 				"create": "Régler ce lieu",
 				"presetsNote": "Il démarre avec les motifs habituels de votre spécialité : {names}.",
+				"presetItem": "{name} ({minutes} min)",
 				"none": "Aucun lieu de votre page ne peut prendre de rendez-vous. Ajoutez l’adresse de votre cabinet dans l’éditeur de page.",
 				"addPlace": "Ajouter un lieu dans l’éditeur",
 				"choose": "Lieu à régler"
@@ -2779,7 +2783,7 @@
 			"action": {
 				"decrypt": "Lecture",
 				"alert": "Alerte",
-				"other": "{action}"
+				"unknown": "{action}"
 			},
 			"purpose": {
 				"agenda_list": "Agenda",
@@ -2787,9 +2791,9 @@
 				"manage": "Page du patient",
 				"ics_feed": "Flux d’agenda",
 				"decrypt_volume": "Plus de 500 dossiers lus en une heure",
-				"other": "{purpose}"
+				"unknown": "{purpose}"
 			},
-			"records": "{count, plural, one {# dossier} other {# dossiers}}",
+			"records": "{count, plural, one {# dossier} many {# dossiers} other {# dossiers}}",
 			"empty": "Aucun accès pour l’instant.",
 			"more": "Afficher les entrées plus anciennes",
 			"alert": "Le {date}, {name} a lu plus de 500 dossiers de patients en une heure. Vérifiez que c’était attendu ; sinon, retirez son accès et changez votre mot de passe."

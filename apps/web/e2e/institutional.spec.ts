@@ -1,15 +1,21 @@
 import { expect, test } from "@playwright/test";
 import { axeViolations } from "./axe";
 
-/** The institutional pages, in French (no prefix) and English (`/en`, localized paths). */
+/** The institutional pages in every locale: French (no prefix), then English, German, Spanish, Italian. */
 const PAGES = [
-	["/a-propos", "/en/about"],
-	["/open-source", "/en/open-source"],
-	["/donnees", "/en/data"],
-	["/accessibilite", "/en/accessibility"],
-	["/confidentialite", "/en/privacy"],
-	["/mentions-legales", "/en/legal-notice"],
-	["/conditions", "/en/terms"],
+	["/a-propos", "/en/about", "/de/ueber-uns", "/es/acerca-de", "/it/chi-siamo"],
+	["/open-source", "/en/open-source", "/de/open-source", "/es/open-source", "/it/open-source"],
+	["/donnees", "/en/data", "/de/daten", "/es/datos", "/it/dati"],
+	[
+		"/accessibilite",
+		"/en/accessibility",
+		"/de/barrierefreiheit",
+		"/es/accesibilidad",
+		"/it/accessibilita",
+	],
+	["/confidentialite", "/en/privacy", "/de/datenschutz", "/es/privacidad", "/it/privacy"],
+	["/mentions-legales", "/en/legal-notice", "/de/impressum", "/es/aviso-legal", "/it/note-legali"],
+	["/conditions", "/en/terms", "/de/nutzungsbedingungen", "/es/condiciones", "/it/condizioni"],
 ] as const;
 
 for (const path of PAGES.flat()) {

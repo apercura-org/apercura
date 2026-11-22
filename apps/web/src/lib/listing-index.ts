@@ -5,9 +5,8 @@
  * scope) are offered, so a suggestion always leads to practitioners.
  */
 import { FR_PROFESSIONS, professionOfListingSlug } from "@apercura/core/taxonomy";
-import type { Locale } from "~/i18n/routing";
-import en from "../../messages/en.json";
-import fr from "../../messages/fr.json";
+import { messagesFor } from "~/i18n/catalogs";
+import { LOCALES, type Locale } from "~/i18n/locales";
 
 /** Unaccented lowercase words, the same normalization as `directory.text_norm()`. */
 export function normalizeText(value: string): string {
@@ -43,10 +42,8 @@ export type ListingEntry = {
 	keys: string[];
 };
 
-const catalogs = { en, fr } as const;
-
 function buildIndex(locale: Locale): ListingEntry[] {
-	const listing = catalogs[locale].taxonomy.listing as Record<string, string>;
+	const listing = messagesFor(locale).taxonomy.listing as Record<string, string>;
 	const entries: ListingEntry[] = [];
 	for (const [slug, message] of Object.entries(listing)) {
 		const profession = professionOfListingSlug(slug);
@@ -96,7 +93,7 @@ export function resolveListing(query: string): string | null {
 	const normalized = normalizeText(query);
 	if (!normalized) return null;
 	const candidates = new Set([normalized, normalized.replace(/s\b/g, "").trim()]);
-	for (const locale of ["fr", "en"] as const) {
+	for (const locale of LOCALES) {
 		for (const entry of indexFor(locale)) {
 			if (
 				entry.keys.some((key) => candidates.has(key) || candidates.has(key.replace(/s\b/g, "")))

@@ -1,5 +1,6 @@
 import { APPOINTMENT_STATUSES } from "@apercura/db/schema";
 import { z } from "zod";
+import { LOCALES } from "~/i18n/locales";
 import {
 	blockTime,
 	cancelEntry,
@@ -56,7 +57,7 @@ export const agendaRouter = createTRPCRouter({
 					email: z.string().trim().max(254).nullish(),
 					phone: z.string().trim().max(32).nullish(),
 				}),
-				locale: z.enum(["fr", "en"]).default("fr"),
+				locale: z.enum(LOCALES).default("fr"),
 				idempotencyKey: z.uuid().optional(),
 			}),
 		)

@@ -8,6 +8,7 @@
 		".": "./src/index.ts",
 		"./booking": "./src/booking/index.ts",
 		"./claims": "./src/claims.ts",
+		"./country": "./src/country/index.ts",
 		"./crypto": "./src/crypto/index.ts",
 		"./profile": "./src/profile.ts",
 		"./revalidation": "./src/revalidation.ts",

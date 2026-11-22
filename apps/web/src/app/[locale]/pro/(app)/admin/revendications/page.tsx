@@ -64,7 +64,9 @@ async function Queue({ locale }: { locale: Locale }) {
 		>
 			<section aria-labelledby="admin-queue" className="flex flex-col gap-5">
 				<h2 id="admin-queue" className="type-title text-ink">
-					{t("claims.queueHeading", { count: queue.length })}
+					{queue.length > 0
+						? t("claims.queueHeading", { count: queue.length })
+						: t("claims.queueEmpty")}
 				</h2>
 				{queue.length === 0 ? (
 					<EmptyState title={t("claims.emptyTitle")} description={t("claims.emptyBody")} />

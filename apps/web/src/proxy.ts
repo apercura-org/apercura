@@ -91,8 +91,10 @@ function requestHost(request: NextRequest): string | null {
 	return forwarded || request.headers.get("host");
 }
 
-/** Search pages by locale. */
-const SEARCH_PATHS: Record<string, Locale> = { "/recherche": "fr", "/en/search": "en" };
+/** Search pages by locale (`/recherche`, `/en/search`, `/de/suche`…). */
+const SEARCH_PATHS: Record<string, Locale> = Object.fromEntries(
+	routing.locales.map((locale) => [getPathname({ href: "/recherche", locale }), locale]),
+);
 
 /**
  * A search query that names a page (an RPPS number, a specialty in a place)
@@ -128,7 +130,8 @@ const LOCALE_PREFIX = new RegExp(`^/(?:${routing.locales.join("|")})(?:/|$)`);
  *    alone so health checks and local runs of a production build keep working.
  * 2. Canonical path: 308 to the unprefixed, lowercase form (`canonicalPath`).
  * 3. Search shortcuts: 307 to the page a query names.
- * 4. Locale routing (next-intl): French without a prefix, English under /en.
+ * 4. Locale routing (next-intl): French without a prefix, other locales under
+ *    theirs (/en, /de, /es, /it).
  *    Its redirects of an explicitly prefixed path (`/en/annuaire` →
  *    `/en/directory`) are permanent; the locale detection of an unprefixed
  *    path stays temporary (307), as it depends on the visitor.
