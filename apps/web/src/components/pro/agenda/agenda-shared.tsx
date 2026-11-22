@@ -280,7 +280,7 @@ export function AddEntryDialog({
 						>
 							{types.map((type) => (
 								<ListBoxItem key={type.id} id={type.id} textValue={type.name}>
-									{type.name} · {type.durationMin} min
+									{t("typeOption", { name: type.name, minutes: type.durationMin })}
 								</ListBoxItem>
 							))}
 						</Select>

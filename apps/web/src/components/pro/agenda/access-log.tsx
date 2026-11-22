@@ -93,12 +93,12 @@ export function AccessLog({ organizationId }: { organizationId: string }) {
 									<td className={table.cell()}>
 										{event.action === "decrypt" || event.action === "alert"
 											? t(`action.${event.action}`)
-											: t("action.other", { action: event.action })}
+											: t("action.unknown", { action: event.action })}
 									</td>
 									<td className={table.cell()}>
 										{KNOWN_PURPOSES.has(event.purpose)
 											? t(`purpose.${event.purpose as "agenda_list"}`)
-											: t("purpose.other", { purpose: event.purpose })}
+											: t("purpose.unknown", { purpose: event.purpose })}
 									</td>
 									<td className={`${table.cell()} text-end tabular`}>
 										{event.action === "alert" ? "" : t("records", { count: event.records })}

@@ -428,7 +428,11 @@ export function CodeStep({
 		try {
 			const result = await client.booking.resendCode.mutate(ref);
 			onResent(Date.now());
-			setInfo(`${t("code.resent", { email })} ${t("code.sendsLeft", { count: result.sendsLeft })}`);
+			const left =
+				result.sendsLeft > 0
+					? t("code.sendsLeft", { count: result.sendsLeft })
+					: t("code.noSendsLeft");
+			setInfo(`${t("code.resent", { email })} ${left}`);
 		} catch (caught) {
 			const code = bookingErrorCode(caught);
 			if (code === "RESEND_LIMIT" || code === "TRANSITION_REFUSED") {
@@ -549,7 +553,7 @@ export function TakenStep({
 			) : null}
 			<div>
 				<Button intent="quiet" onPress={onAgenda}>
-					{t("other")}
+					{t("seeAgenda")}
 				</Button>
 			</div>
 		</div>

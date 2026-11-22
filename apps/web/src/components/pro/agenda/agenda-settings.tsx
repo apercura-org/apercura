@@ -77,6 +77,7 @@ const int = (value: string) => {
 export function AgendaSettings({ organizationId }: { organizationId: string }) {
 	const t = useTranslations("Agenda.settings");
 	const tCommon = useTranslations("Agenda.common");
+	const format = useFormatter();
 	const locale = useLocale() === "en" ? "en" : "fr";
 	const trpc = useTRPC();
 	const queryClient = useQueryClient();
@@ -227,9 +228,15 @@ export function AgendaSettings({ organizationId }: { organizationId: string }) {
 												{data.presets.length > 0 ? (
 													<span className="text-meta text-ink-muted">
 														{t("places.presetsNote", {
-															names: data.presets
-																.map((preset) => `${preset.name} (${preset.durationMin} min)`)
-																.join(", "),
+															names: format.list(
+																data.presets.map((preset) =>
+																	t("places.presetItem", {
+																		name: preset.name,
+																		minutes: preset.durationMin,
+																	}),
+																),
+																{ type: "unit" },
+															),
 														})}
 													</span>
 												) : null}
