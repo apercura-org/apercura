@@ -53,10 +53,7 @@ async function Home({ locale }: { locale: Locale }) {
 			lead={t("lead", { email: access.session.user.email })}
 		>
 			<section aria-labelledby="home-practices" className="flex flex-col gap-5">
-				<h2
-					id="home-practices"
-					className="font-display text-title font-bold text-ink font-stretch-semi-expanded"
-				>
+				<h2 id="home-practices" className="type-title text-ink">
 					{t("practicesHeading")}
 				</h2>
 				{memberships.length > 0 ? (
@@ -101,10 +98,7 @@ async function Home({ locale }: { locale: Locale }) {
 			</section>
 			{ownedPage || liveClaims.length > 0 ? (
 				<section aria-labelledby="home-claims" className="flex flex-col gap-5">
-					<h2
-						id="home-claims"
-						className="font-display text-title font-bold text-ink font-stretch-semi-expanded"
-					>
+					<h2 id="home-claims" className="type-title text-ink">
 						{t("claimsHeading")}
 					</h2>
 					<table className={table.table()} aria-labelledby="home-claims">
@@ -160,10 +154,7 @@ async function Home({ locale }: { locale: Locale }) {
 			) : null}
 			{invitations.length > 0 ? (
 				<section aria-labelledby="home-invitations" className="flex max-w-[65ch] flex-col gap-3">
-					<h2
-						id="home-invitations"
-						className="font-display text-title font-bold text-ink font-stretch-semi-expanded"
-					>
+					<h2 id="home-invitations" className="type-title text-ink">
 						{t("invitationsHeading")}
 					</h2>
 					<ul className="flex flex-col gap-2">
@@ -185,10 +176,7 @@ async function Home({ locale }: { locale: Locale }) {
 			) : null}
 			{memberships.length > 0 ? (
 				<section aria-labelledby="home-agenda" className="flex max-w-[65ch] flex-col gap-3">
-					<h2
-						id="home-agenda"
-						className="font-display text-title font-bold text-ink font-stretch-semi-expanded"
-					>
+					<h2 id="home-agenda" className="type-title text-ink">
 						{t("agendaHeading")}
 					</h2>
 					<p className="text-body text-ink">{t("agendaBody")}</p>
@@ -200,10 +188,7 @@ async function Home({ locale }: { locale: Locale }) {
 				</section>
 			) : null}
 			<section aria-labelledby="home-security" className="flex max-w-[65ch] flex-col gap-3">
-				<h2
-					id="home-security"
-					className="font-display text-title font-bold text-ink font-stretch-semi-expanded"
-				>
+				<h2 id="home-security" className="type-title text-ink">
 					{t("securityHeading")}
 				</h2>
 				<p className="text-body text-ink">{t("securityBody")}</p>

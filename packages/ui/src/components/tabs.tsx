@@ -22,13 +22,13 @@ export function Tabs({ className, ...props }: TabsProps) {
 	);
 }
 
-/** Tab strip ruled on its baseline; the selected tab is printed solid, like a booklet tab. */
+/** Tab strip ruled on a hairline baseline; the selected tab is underlined in ink. */
 export function TabList<T extends object>({ className, ...props }: TabListProps<T>) {
 	return (
 		<RACTabList
 			{...props}
 			className={composeRenderProps(className, (cls) =>
-				cn("flex gap-1 overflow-x-auto border-b-2 border-ink", cls),
+				cn("flex gap-1 overflow-x-auto border-b border-rule-soft", cls),
 			)}
 		/>
 	);
@@ -40,10 +40,10 @@ export function Tab({ className, ...props }: TabProps) {
 			{...props}
 			className={composeRenderProps(className, (cls) =>
 				cn(
-					"flex min-h-11 cursor-pointer items-center whitespace-nowrap rounded-t-field border-[1.5px] border-b-0 border-transparent px-4",
-					"font-display text-meta font-semibold text-ink font-stretch-semi-condensed",
-					"hover:border-ink",
-					"data-selected:border-ink data-selected:bg-ink data-selected:text-paper",
+					"-mb-px flex min-h-11 cursor-pointer items-center whitespace-nowrap border-b-2 border-transparent px-4",
+					"font-display text-meta font-medium text-ink-muted font-stretch-semi-condensed",
+					"hover:border-field-edge hover:text-ink",
+					"data-selected:border-ink data-selected:font-semibold data-selected:text-ink",
 					"data-disabled:cursor-not-allowed data-disabled:text-ink-disabled",
 					focusRing,
 					cls,

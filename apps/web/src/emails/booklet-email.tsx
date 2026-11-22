@@ -1,9 +1,11 @@
 /**
- * Email layout in the booklet world: a petrol cover band with the wordmark,
- * white paper, ink type and a single violet stamp for the action.
+ * Email layout in the booklet world: a white running head closed by a hairline,
+ * white paper, graphite type and a single muted violet stamp for the action.
  * Email clients ignore stylesheets and custom fonts, so styles are inline and
  * the faces fall back to Arial.
  */
+
+import { paletteHex } from "@apercura/ui/tokens";
 import {
 	Body,
 	Button,
@@ -17,13 +19,13 @@ import {
 } from "@react-email/components";
 import type { ReactNode } from "react";
 
+/** The design tokens as hex (email clients cannot parse OKLCH). */
 export const emailColors = {
-	paper: "#ffffff",
-	ink: "#003851",
-	inkMuted: "#3c5d70",
-	rule: "#bcced9",
-	coverMuted: "#c2d8e5",
-	stamp: "#5f38a7",
+	paper: paletteHex.paper,
+	ink: paletteHex.ink,
+	inkMuted: paletteHex.inkMuted,
+	rule: paletteHex.ruleSoft,
+	stamp: paletteHex.stamp,
 } as const;
 
 const display = "'Archivo', Arial, Helvetica, sans-serif";
@@ -52,14 +54,16 @@ export function BookletEmail({
 			<Preview>{preview}</Preview>
 			<Body style={{ backgroundColor: emailColors.paper, margin: 0, padding: 0 }}>
 				<Container style={{ maxWidth: "560px", margin: "0 auto" }}>
-					<Section style={{ backgroundColor: emailColors.ink, padding: "20px 24px" }}>
+					<Section
+						style={{ borderBottom: `1px solid ${emailColors.rule}`, padding: "20px 24px 16px" }}
+					>
 						<Text
 							style={{
 								margin: 0,
-								color: emailColors.paper,
+								color: emailColors.ink,
 								fontFamily: display,
-								fontSize: "24px",
-								fontWeight: 900,
+								fontSize: "22px",
+								fontWeight: 600,
 								letterSpacing: "-0.01em",
 							}}
 						>
@@ -71,12 +75,12 @@ export function BookletEmail({
 							style={{
 								margin: 0,
 								paddingBottom: "6px",
-								borderBottom: `1.5px solid ${emailColors.ink}`,
+								borderBottom: `1px solid ${emailColors.ink}`,
 								color: emailColors.ink,
 								fontFamily: display,
 								fontSize: "13px",
-								fontWeight: 700,
-								letterSpacing: "0.07em",
+								fontWeight: 600,
+								letterSpacing: "0.045em",
 								textTransform: "uppercase",
 							}}
 						>
@@ -105,8 +109,8 @@ export function EmailTitle({ children }: { children: ReactNode }) {
 				margin: "16px 0 8px",
 				color: emailColors.ink,
 				fontFamily: display,
-				fontSize: "26px",
-				fontWeight: 900,
+				fontSize: "24px",
+				fontWeight: 600,
 				lineHeight: 1.15,
 			}}
 		>
@@ -131,7 +135,7 @@ export function EmailParagraph({ children, muted }: { children: ReactNode; muted
 	);
 }
 
-/** The stamp: violet fill, white inner frame, uppercase label. */
+/** The stamp: muted violet fill, a hairline white inner frame, sentence-case label. */
 export function EmailStamp({ href, children }: { href: string; children: ReactNode }) {
 	return (
 		<Button
@@ -142,15 +146,13 @@ export function EmailStamp({ href, children }: { href: string; children: ReactNo
 				padding: "14px 22px",
 				backgroundColor: emailColors.stamp,
 				border: `3px solid ${emailColors.stamp}`,
-				outline: `1.5px solid ${emailColors.paper}`,
-				outlineOffset: "-4.5px",
+				outline: `1px solid ${emailColors.paper}`,
+				outlineOffset: "-4px",
 				borderRadius: "2px",
 				color: emailColors.paper,
 				fontFamily: display,
 				fontSize: "15px",
-				fontWeight: 700,
-				letterSpacing: "0.05em",
-				textTransform: "uppercase",
+				fontWeight: 600,
 				textDecoration: "none",
 			}}
 		>

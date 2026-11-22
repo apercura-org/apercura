@@ -15,33 +15,31 @@ const FOOTER_LINKS = [
 	{ href: "/conditions", key: "terms" },
 ] as const satisfies readonly { href: Href; key: string }[];
 
-const coverLink =
-	"inline-flex min-h-11 items-center text-meta text-cover-ink underline decoration-1 underline-offset-[0.25em] hover:decoration-2";
+const footerLink =
+	"inline-flex min-h-11 items-center text-meta text-ink underline decoration-1 underline-offset-[0.25em] hover:decoration-2";
 
-/** Back cover: a closing band with the commitments that hold for every page, and the site's pages. */
+/** Back cover on the quiet shade: the commitments that hold for every page, and the site's pages. */
 export async function SiteFooter({ locale }: { locale: Locale }) {
 	const t = await getTranslations({ locale, namespace: "Site" });
 	return (
-		<footer className="surface-cover mt-auto">
+		<footer className="surface-shade mt-auto border-t border-rule-soft">
 			<div className="mx-auto flex max-w-6xl flex-col gap-6 px-5 py-8 sm:px-8">
 				<div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
 					<div className="flex flex-col gap-1">
-						<p className="font-display text-title font-extrabold font-stretch-expanded">
-							{t("wordmark")}
-						</p>
-						<p className="text-meta text-cover-muted">{t("footer.free")}</p>
-						<p className="text-meta text-cover-muted">{t("footer.noAds")}</p>
+						<p className="type-wordmark">{t("wordmark")}</p>
+						<p className="text-meta text-ink-muted">{t("footer.free")}</p>
+						<p className="text-meta text-ink-muted">{t("footer.noAds")}</p>
 					</div>
-					<a href={LINKS.repository} className={coverLink}>
+					<a href={LINKS.repository} className={footerLink}>
 						{t("footer.license")}
 						<span className="sr-only"> ({t("externalLink")})</span>
 					</a>
 				</div>
-				<nav aria-label={t("footerNav.label")} className="border-t border-cover-rule pt-3">
+				<nav aria-label={t("footerNav.label")} className="border-t border-rule-soft pt-3">
 					<ul className="grid grid-cols-1 gap-x-6 min-[420px]:grid-cols-2 md:flex md:flex-wrap">
 						{FOOTER_LINKS.map((item) => (
 							<li key={item.key}>
-								<Link href={item.href} className={coverLink}>
+								<Link href={item.href} className={footerLink}>
 									{t(`footerNav.${item.key}`)}
 								</Link>
 							</li>

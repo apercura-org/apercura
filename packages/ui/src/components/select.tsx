@@ -43,7 +43,7 @@ export function Select<T extends object>({
 				className={cn(
 					styles.box(),
 					"cursor-pointer justify-between gap-2 px-3.5 py-2.5 text-start text-body",
-					"data-focus-visible:outline-3 data-focus-visible:outline-offset-2 data-focus-visible:outline-(--focus-ring)",
+					"data-focus-visible:outline-3 data-focus-visible:outline-solid data-focus-visible:outline-offset-2 data-focus-visible:outline-(--focus-ring)",
 					"data-pressed:border-ink",
 				)}
 			>

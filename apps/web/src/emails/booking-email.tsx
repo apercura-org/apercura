@@ -45,12 +45,12 @@ export function BookingEmail(props: BookingEmailProps) {
 						margin: "8px 0 24px",
 						padding: "12px 16px",
 						display: "inline-block",
-						border: `1.5px solid ${emailColors.ink}`,
+						border: `1px solid ${emailColors.ink}`,
 						color: emailColors.ink,
 						fontFamily: display,
 						fontSize: "32px",
-						fontWeight: 900,
-						letterSpacing: "0.3em",
+						fontWeight: 600,
+						letterSpacing: "0.25em",
 					}}
 				>
 					{props.code}
@@ -60,7 +60,7 @@ export function BookingEmail(props: BookingEmailProps) {
 				<Section
 					style={{
 						margin: "8px 0 24px",
-						borderTop: `1.5px solid ${emailColors.ink}`,
+						borderTop: `1px solid ${emailColors.ink}`,
 					}}
 				>
 					{props.details.map((row) => (
@@ -83,8 +83,8 @@ export function BookingEmail(props: BookingEmailProps) {
 									color: emailColors.inkMuted,
 									fontFamily: display,
 									fontSize: "13px",
-									fontWeight: 700,
-									letterSpacing: "0.06em",
+									fontWeight: 600,
+									letterSpacing: "0.045em",
 									textTransform: "uppercase",
 								}}
 							>

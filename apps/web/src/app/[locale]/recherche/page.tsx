@@ -122,11 +122,9 @@ export default async function SearchPage({ params, searchParams }: Props) {
 
 	return (
 		<PublicPage locale={locale} href="/recherche">
-			<div className="surface-cover">
+			<div className="surface-shade border-b border-rule-soft">
 				<div className="mx-auto flex w-full max-w-6xl flex-col gap-6 px-5 pt-8 pb-10 sm:px-8">
-					<h1 className="font-display text-headline font-black tracking-[-0.02em] font-stretch-expanded">
-						{t("title")}
-					</h1>
+					<h1 className="type-headline">{t("title")}</h1>
 					<SearchForm defaultWho={query.who} defaultWhere={typedWhere(query)} />
 				</div>
 			</div>
@@ -174,7 +172,7 @@ async function PlaceList({
 }) {
 	const t = await getTranslations({ locale, namespace: "SearchPage" });
 	return (
-		<ul className="flex flex-col border-t-[1.5px] border-ink">
+		<ul className="flex flex-col border-t border-ink">
 			{candidates.map((candidate) => (
 				<li key={candidate.id} className="border-b border-rule-soft">
 					<Link
@@ -194,7 +192,7 @@ async function PlaceList({
 	);
 }
 
-const sectionHeading = "font-display text-title font-bold text-ink font-stretch-semi-expanded";
+const sectionHeading = "type-title text-ink";
 const table = tableStyles();
 
 async function OutcomeView({

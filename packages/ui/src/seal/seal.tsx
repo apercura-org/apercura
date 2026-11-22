@@ -34,7 +34,7 @@ export interface BrandSealProps {
 
 /**
  * Apercura's own seal, drawn by the same engraving generator from a fixed brand
- * seed. Used on covers; practitioner pages always carry their RPPS seal instead.
+ * seed. Used on the home opening; practitioner pages always carry their RPPS seal instead.
  */
 export function BrandSeal({ size = 88, className }: BrandSealProps) {
 	return <SealMark spec={brandSealSpec()} size={size} className={className} data-seal="brand" />;

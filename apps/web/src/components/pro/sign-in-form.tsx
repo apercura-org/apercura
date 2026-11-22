@@ -11,8 +11,7 @@ import { currentReturnTo, withReturnTo } from "~/lib/return-to";
 
 type Step = "password" | "totp" | "backup";
 
-const headingClass =
-	"font-display text-title font-bold text-ink font-stretch-semi-expanded outline-none";
+const headingClass = "type-title text-ink outline-none";
 
 /** Password first, then the second factor Better Auth asks for (TOTP or a backup code); or a passkey alone. */
 export function SignInForm() {
@@ -130,7 +129,12 @@ export function SignInForm() {
 							isRequired
 						/>
 						<div>
-							<Button type="submit" isPending={pending} pendingLabel={t("common.pending")}>
+							<Button
+								intent="stamp"
+								type="submit"
+								isPending={pending}
+								pendingLabel={t("common.pending")}
+							>
 								{t("signIn.submit")}
 							</Button>
 						</div>
@@ -140,7 +144,7 @@ export function SignInForm() {
 					aria-labelledby="sign-in-passkey"
 					className="flex flex-col gap-3 border-t border-rule-soft pt-6"
 				>
-					<h2 id="sign-in-passkey" className="font-display text-lead font-bold text-ink">
+					<h2 id="sign-in-passkey" className="type-subtitle text-ink">
 						{t("signIn.passkeyHeading")}
 					</h2>
 					<p className="text-meta text-ink-muted">{t("signIn.passkeyHint")}</p>
@@ -189,7 +193,12 @@ export function SignInForm() {
 					/>
 				)}
 				<div className="flex flex-wrap items-center gap-4">
-					<Button type="submit" isPending={pending} pendingLabel={t("common.pending")}>
+					<Button
+						intent="stamp"
+						type="submit"
+						isPending={pending}
+						pendingLabel={t("common.pending")}
+					>
 						{t("signIn.verify")}
 					</Button>
 					<Button

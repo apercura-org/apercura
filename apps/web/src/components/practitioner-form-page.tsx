@@ -47,10 +47,8 @@ export async function PractitionerFormPage({
 	return (
 		<PublicPage locale={locale} href={{ pathname, params: { slug: page.slug } }}>
 			<BookletPage runningHead={tSite("runningHead")}>
-				<div className="flex max-w-[65ch] flex-col gap-3 border-b-2 border-ink pb-5">
-					<h1 className="font-display text-headline font-extrabold tracking-[-0.02em] text-ink font-stretch-semi-expanded">
-						{title}
-					</h1>
+				<div className="flex max-w-[65ch] flex-col gap-3 border-b border-ink pb-5">
+					<h1 className="type-headline text-ink">{title}</h1>
 					<p className="text-lead text-ink">{lead}</p>
 					{name ? (
 						<p className="text-body text-ink">

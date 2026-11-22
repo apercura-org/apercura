@@ -309,9 +309,7 @@ export function WeekView({
 				</nav>
 			</div>
 			<div className="flex flex-wrap items-baseline justify-between gap-3">
-				<h2 className="font-display text-title font-bold text-ink font-stretch-semi-expanded">
-					{label}
-				</h2>
+				<h2 className="type-title text-ink">{label}</h2>
 				<ul
 					aria-label={t("legend.label")}
 					className="flex flex-wrap gap-x-4 gap-y-1 text-meta text-ink"
@@ -330,13 +328,20 @@ export function WeekView({
 					<li className="flex items-center gap-2">
 						<span
 							aria-hidden="true"
-							className="inline-block size-4 rounded-field border-[1.5px] border-dashed border-field-edge bg-paper-shade"
+							className="inline-block size-4 rounded-field border border-dashed border-field-edge bg-paper-shade"
 						/>
 						{t("legend.held")}
 					</li>
 					<li className="flex items-center gap-2">
 						<span aria-hidden="true" className="inline-block size-4 rounded-field bg-ink" />
 						{t("legend.block")}
+					</li>
+					<li className="flex items-center gap-2">
+						<span
+							aria-hidden="true"
+							className="closed-hatch inline-block size-4 rounded-field border border-rule-soft"
+						/>
+						{t("legend.closed")}
 					</li>
 				</ul>
 			</div>

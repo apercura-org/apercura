@@ -529,7 +529,7 @@ export function TakenStep({
 				{alternatives.length > 0 ? t("body") : t("none")}
 			</Notice>
 			{alternatives.length > 0 ? (
-				<ul className="flex flex-col border-t-[1.5px] border-ink">
+				<ul className="flex flex-col border-t border-ink">
 					{alternatives.map((start) => {
 						const ms = new Date(start).getTime();
 						return (

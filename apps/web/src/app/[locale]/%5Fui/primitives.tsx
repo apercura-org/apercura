@@ -58,8 +58,8 @@ type SortDescriptor = { column: string | number; direction: "ascending" | "desce
 
 function Section({ id, title, children }: { id: string; title: string; children: ReactNode }) {
 	return (
-		<section aria-labelledby={id} className="flex flex-col gap-6 border-t-2 border-ink pt-6">
-			<h2 id={id} className="font-display text-title font-bold text-ink font-stretch-semi-expanded">
+		<section aria-labelledby={id} className="flex flex-col gap-6 border-t border-ink pt-6">
+			<h2 id={id} className="type-title text-ink">
 				{title}
 			</h2>
 			{children}
@@ -107,13 +107,17 @@ export function GalleryPrimitives() {
 			<div className="flex flex-col gap-14">
 				<Section id="g-buttons" title={t("sections.buttons")}>
 					<Specimen label={t("states.default")}>
-						<Button>{t("buttons.stamp")}</Button>
+						<Button intent="stamp">{t("buttons.stamp")}</Button>
 						<Button intent="ink">{t("buttons.ink")}</Button>
 						<Button intent="quiet">{t("buttons.quiet")}</Button>
-						<Button size="lg">{t("buttons.large")}</Button>
+						<Button intent="stamp" size="lg">
+							{t("buttons.large")}
+						</Button>
 					</Specimen>
 					<Specimen label={t("states.disabled")}>
-						<Button isDisabled>{t("buttons.stamp")}</Button>
+						<Button intent="stamp" isDisabled>
+							{t("buttons.stamp")}
+						</Button>
 						<Button intent="ink" isDisabled>
 							{t("buttons.ink")}
 						</Button>
@@ -122,19 +126,19 @@ export function GalleryPrimitives() {
 						</Button>
 					</Specimen>
 					<Specimen label={t("states.pending")}>
-						<Button isPending pendingLabel={t("buttons.pendingLabel")}>
+						<Button intent="stamp" isPending pendingLabel={t("buttons.pendingLabel")}>
 							{t("buttons.stamp")}
 						</Button>
 						<Button intent="ink" isPending pendingLabel={t("buttons.pendingLabel")}>
 							{t("buttons.ink")}
 						</Button>
 					</Specimen>
-					<div className="surface-cover flex flex-col gap-2 p-5">
-						<p className="caps text-cover-muted">{t("states.onCover")}</p>
+					<div className="surface-shade flex flex-col gap-2 p-5">
+						<p className="caps text-ink-muted">{t("states.onShade")}</p>
 						<div className="flex flex-wrap gap-3">
-							<Button>{t("buttons.stamp")}</Button>
-							<Button intent="cover">{t("buttons.cover")}</Button>
-							<Link href="#g-buttons" tone="cover">
+							<Button intent="stamp">{t("buttons.stamp")}</Button>
+							<Button intent="ink">{t("buttons.ink")}</Button>
+							<Link href="#g-buttons" tone="ink">
 								{t("buttons.inlineLink")}
 							</Link>
 						</div>
@@ -276,7 +280,9 @@ export function GalleryPrimitives() {
 											<Button intent="ink" onPress={close} autoFocus>
 												{t("overlays.keep")}
 											</Button>
-											<Button onPress={close}>{t("overlays.confirmCancel")}</Button>
+											<Button intent="ink" onPress={close}>
+												{t("overlays.confirmCancel")}
+											</Button>
 										</div>
 									</div>
 								)}
@@ -374,9 +380,6 @@ export function GalleryPrimitives() {
 						<Badge>{t("data.badgeInk")}</Badge>
 						<Badge tone="stamp">{t("data.badgeStamp")}</Badge>
 						<Badge tone="error">{t("data.badgeError")}</Badge>
-						<span className="surface-cover inline-flex p-2">
-							<Badge tone="cover">{t("data.badgeCover")}</Badge>
-						</span>
 					</Specimen>
 					<Table
 						aria-label={t("data.tableLabel")}
@@ -468,7 +471,7 @@ export function GalleryPrimitives() {
 							setFormValid(true);
 						}}
 					>
-						<h3 id="g-form-heading" className="font-display text-lead font-bold">
+						<h3 id="g-form-heading" className="type-subtitle">
 							{t("form.heading")}
 						</h3>
 						<TextField
@@ -485,7 +488,9 @@ export function GalleryPrimitives() {
 						/>
 						<Checkbox isRequired>{t("choices.terms")}</Checkbox>
 						<div className="flex items-center gap-4">
-							<Button type="submit">{t("form.submit")}</Button>
+							<Button intent="stamp" type="submit">
+								{t("form.submit")}
+							</Button>
 							<p role="status" className="text-meta text-ink">
 								{formValid ? t("form.success") : ""}
 							</p>

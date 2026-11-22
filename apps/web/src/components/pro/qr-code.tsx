@@ -34,7 +34,7 @@ export function QrCode({
 			width={size}
 			height={size}
 			shapeRendering="crispEdges"
-			className="border-[1.5px] border-ink bg-paper text-ink"
+			className="border border-ink bg-paper text-ink"
 		>
 			<rect width={path.size} height={path.size} className="fill-paper" />
 			<path d={path.d} fill="currentColor" />

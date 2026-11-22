@@ -7,7 +7,7 @@ import { useRouter } from "~/i18n/navigation";
 import { authClient } from "~/lib/auth-client";
 import { PRO_ROUTES } from "~/lib/pro-routes";
 
-export function SignOutButton({ intent = "cover" }: { intent?: "cover" | "ink" }) {
+export function SignOutButton({ intent = "ink" }: { intent?: "ink" | "quiet" }) {
 	const t = useTranslations("auth.common");
 	const router = useRouter();
 	const [pending, setPending] = useState(false);

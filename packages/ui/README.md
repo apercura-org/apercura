@@ -6,12 +6,12 @@ rules (palette laws, type roles, components, do's and don'ts) are documented in
 
 ## Entry points
 
-| Import                   | What it holds                                                                                                                |
-| ------------------------ | ---------------------------------------------------------------------------------------------------------------------------- |
-| `@apercura/ui`           | Components, recipes, icons, `cn()`                                                                                           |
-| `@apercura/ui/theme.css` | Tailwind CSS v4 `@theme` tokens, base styles and utilities (`caps`, `leader`, `tabular`, `surface-paper`, `surface-cover`)   |
-| `@apercura/ui/tokens`    | The same tokens in TypeScript (`palette`, `paletteHex`, `mapPalette`, `fonts`, `typeScale`) and the OKLCH / contrast helpers |
-| `@apercura/ui/map-style` | `themeMapStyle()`: re-inks an OpenMapTiles MapLibre style with the palette                                                   |
+| Import                   | What it holds                                                                                                                        |
+| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------ |
+| `@apercura/ui`           | Components, recipes, icons, `cn()`                                                                                                   |
+| `@apercura/ui/theme.css` | Tailwind CSS v4 `@theme` tokens, base styles and utilities (`caps`, `leader`, `tabular`, `type-*`, `surface-paper`, `surface-shade`) |
+| `@apercura/ui/tokens`    | The same tokens in TypeScript (`palette`, `paletteHex`, `mapPalette`, `fonts`, `typeScale`) and the OKLCH / contrast helpers         |
+| `@apercura/ui/map-style` | `themeMapStyle()`: re-inks an OpenMapTiles MapLibre style with the palette                                                           |
 
 The app imports the theme after Tailwind and loads the two faces itself:
 

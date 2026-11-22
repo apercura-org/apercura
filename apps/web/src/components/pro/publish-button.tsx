@@ -25,6 +25,7 @@ export function PublishButton({ organizationId }: { organizationId: string }) {
 			{publish.isError ? <Notice tone="error" title={t("publishFailed")} /> : null}
 			<div>
 				<Button
+					intent="stamp"
 					size="lg"
 					isPending={publish.isPending || publish.isSuccess}
 					pendingLabel={t("pending")}

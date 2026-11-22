@@ -26,7 +26,7 @@ describe("token sources", () => {
 
 describe("colour maths", () => {
 	it("parses oklch() with optional alpha and percentages", () => {
-		expect(parseOklch("oklch(0.32 0.07 235)")).toEqual({ l: 0.32, c: 0.07, h: 235 });
+		expect(parseOklch("oklch(0.24 0.012 255)")).toEqual({ l: 0.24, c: 0.012, h: 255 });
 		expect(parseOklch("oklch(50% 0.1 20 / 40%)")).toEqual({ l: 0.5, c: 0.1, h: 20, alpha: 0.4 });
 		expect(() => parseOklch("#fff")).toThrow();
 	});
@@ -44,27 +44,57 @@ describe("colour maths", () => {
  */
 const PAIRS: Array<[string, keyof typeof palette, keyof typeof palette, number]> = [
 	["body text on paper", "ink", "paper", 4.5],
-	["body text on shaded rows", "ink", "paperShade", 4.5],
+	[
+		"body text on the quiet shade (openings, footer, title strips, hovered rows)",
+		"ink",
+		"paperShade",
+		4.5,
+	],
 	["secondary text and placeholders on paper", "inkMuted", "paper", 4.5],
-	["secondary text on shaded rows", "inkMuted", "paperShade", 4.5],
-	["field edges on paper", "fieldEdge", "paper", 3],
-	["cover type on cover bands", "coverInk", "cover", 4.5],
-	["secondary type on cover bands", "coverMuted", "cover", 4.5],
-	["focus ring (white) on cover bands", "coverInk", "cover", 3],
+	["secondary text on the quiet shade", "inkMuted", "paperShade", 4.5],
+	["field and control edges on paper", "fieldEdge", "paper", 3],
+	["field and control edges on the quiet shade", "fieldEdge", "paperShade", 3],
 	["stamp label on stamp", "paper", "stamp", 4.5],
 	["stamp label on pressed stamp", "paper", "stampStrong", 4.5],
-	["stamp ink text on paper (links, verified marks)", "stamp", "paper", 4.5],
+	["stamp ink text on paper (verified marks)", "stamp", "paper", 4.5],
+	["stamp ink text on the quiet shade", "stamp", "paperShade", 4.5],
 	["stamp text on stamp wash (verified badge)", "stamp", "stampTint", 4.5],
 	["ink text on stamp wash", "ink", "stampTint", 4.5],
 	["focus ring (violet) on paper", "stamp", "paper", 3],
-	["focus ring (violet) on shaded rows", "stamp", "paperShade", 3],
+	["focus ring (violet) on the quiet shade", "stamp", "paperShade", 3],
+	["focus ring (violet) on stamp wash", "stamp", "stampTint", 3],
 	["error text on paper", "error", "paper", 4.5],
 	["error text on error wash", "error", "errorTint", 4.5],
 	["ink text on error wash", "ink", "errorTint", 4.5],
 	["error edge on paper", "error", "paper", 3],
-	["white type on ink (selected tab, selected date, tooltip)", "paper", "ink", 4.5],
-	["disabled text stays perceivable", "inkDisabled", "paper", 3],
+	["white type on ink (selected date, tooltip, block, today)", "paper", "ink", 4.5],
+	["disabled text stays perceivable on paper", "inkDisabled", "paper", 3],
+	["disabled text stays perceivable on the quiet shade", "inkDisabled", "paperShade", 3],
 ];
+
+/** The quieter palette (issue 52): neutral ink, one muted accent, no saturated grounds. */
+describe("restraint", () => {
+	const chroma = (token: keyof typeof palette) => parseOklch(palette[token]).c;
+
+	it("keeps paper pure white and every neutral near-achromatic", () => {
+		expect(paletteHex.paper).toBe("#ffffff");
+		for (const token of [
+			"paperShade",
+			"ink",
+			"inkMuted",
+			"inkDisabled",
+			"ruleSoft",
+			"fieldEdge",
+		] as const) {
+			expect(chroma(token)).toBeLessThanOrEqual(0.015);
+		}
+	});
+
+	it("keeps the single accent and the error ink muted", () => {
+		expect(chroma("stamp")).toBeLessThanOrEqual(0.1);
+		expect(chroma("error")).toBeLessThanOrEqual(0.16);
+	});
+});
 
 describe("contrast", () => {
 	it.each(PAIRS)("%s: %s on %s ≥ %s:1", (_label, foreground, background, minimum) => {

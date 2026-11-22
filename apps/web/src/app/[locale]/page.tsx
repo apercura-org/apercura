@@ -39,39 +39,28 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
 
 	return (
 		<>
-			<div className="surface-cover">
-				<SiteHeader locale={locale} href="/" showWordmark={false} />
-			</div>
+			<SiteHeader locale={locale} href="/" showWordmark={false} />
 			<main id="main" tabIndex={-1} className="flex-1 outline-none">
-				<div className="surface-cover flex min-h-[calc(60svh-3.5rem)] flex-col">
+				<div className="surface-shade flex min-h-[calc(60svh-3.5rem)] flex-col border-b border-rule-soft">
 					<div className="mx-auto flex w-full max-w-6xl flex-1 flex-col justify-end gap-7 px-5 pt-10 pb-10 sm:px-8 sm:pb-14">
 						<div className="flex items-end justify-between gap-10">
 							<div className="flex flex-col gap-4">
-								<h1 className="font-display text-display font-black tracking-[-0.03em] font-stretch-expanded">
-									{t("title")}
-								</h1>
-								<p className="max-w-[40ch] text-lead text-cover-ink sm:text-[1.625rem] sm:leading-snug">
+								<h1 className="type-display">{t("title")}</h1>
+								<p className="max-w-[44ch] text-lead text-ink sm:text-[1.375rem] sm:leading-snug">
 									{t("hook")}
 								</p>
 							</div>
-							{/* Apercura's own seal (brand seed, never an RPPS), printed in paper white on the cover. */}
-							<BrandSeal size={208} className="hidden shrink-0 text-cover-ink md:block" />
+							{/* Apercura's own seal (brand seed, never an RPPS), engraved in graphite line work. */}
+							<BrandSeal size={168} className="hidden shrink-0 text-ink md:block" />
 						</div>
 						<SearchForm idPrefix="home-search" />
-					</div>
-					<div aria-hidden="true" className="mx-auto w-full max-w-6xl px-5 sm:px-8">
-						<div className="border-t-2 border-cover-rule pb-1" />
-						<div className="border-t border-cover-rule pb-3" />
 					</div>
 				</div>
 
 				<BookletPage runningHead={tSite("runningHead")} folio={tSite("folio", { number: 1 })}>
 					<section aria-labelledby="specimen-heading" className="flex flex-col gap-5">
 						<div className="flex max-w-[65ch] flex-col gap-2">
-							<h2
-								id="specimen-heading"
-								className="font-display text-title font-bold text-ink font-stretch-semi-expanded"
-							>
+							<h2 id="specimen-heading" className="type-title text-ink">
 								{t("specimen.heading")}
 							</h2>
 							<p className="text-body text-ink">{t("specimen.intro")}</p>
@@ -80,10 +69,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
 					</section>
 
 					<section aria-labelledby="pillars-heading" className="flex flex-col gap-5">
-						<h2
-							id="pillars-heading"
-							className="font-display text-title font-bold text-ink font-stretch-semi-expanded"
-						>
+						<h2 id="pillars-heading" className="type-title text-ink">
 							{t("pillarsHeading")}
 						</h2>
 						<table className={table.table()} aria-labelledby="pillars-heading">
@@ -102,15 +88,13 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
 									<tr key={pillar.key} className={table.row()}>
 										<td
 											className={table.cell({
-												className: "py-5 font-display text-title font-extrabold tabular",
+												className: "py-5 font-body text-title font-medium text-ink-muted tabular",
 											})}
 										>
 											{index + 1}
 										</td>
 										<td className={table.cell({ className: "py-5" })}>
-											<p className="font-display text-lead font-bold text-ink">
-												{t(`pillars.${pillar.key}.title`)}
-											</p>
+											<p className="type-subtitle text-ink">{t(`pillars.${pillar.key}.title`)}</p>
 											<p className="mt-1 max-w-[65ch] text-body text-ink">
 												{pillar.key === "hostedInFrance"
 													? t("pillars.hostedInFrance.description", { host: pillar.host })
@@ -128,10 +112,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
 						className="grid gap-6 md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] md:gap-12"
 					>
 						<div className="flex flex-col gap-3">
-							<h2
-								id="registry-heading"
-								className="font-display text-title font-bold text-ink font-stretch-semi-expanded"
-							>
+							<h2 id="registry-heading" className="type-title text-ink">
 								{t("registry.heading")}
 							</h2>
 							<p className="max-w-[60ch] text-body text-ink">{t("registry.intro")}</p>
@@ -187,18 +168,15 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
 
 					<section
 						aria-labelledby="pro-heading"
-						className="surface-cover flex flex-col gap-4 px-5 py-6 sm:flex-row sm:items-center sm:justify-between sm:px-8"
+						className="surface-shade flex flex-col gap-4 px-5 py-6 sm:flex-row sm:items-center sm:justify-between sm:px-8"
 					>
 						<div className="flex flex-col gap-1">
-							<h2
-								id="pro-heading"
-								className="font-display text-lead font-bold font-stretch-semi-expanded"
-							>
+							<h2 id="pro-heading" className="type-subtitle">
 								{t("pro.heading")}
 							</h2>
-							<p className="text-body text-cover-muted">{t("pro.body")}</p>
+							<p className="text-body text-ink-muted">{t("pro.body")}</p>
 						</div>
-						<Link href="/pro" className={buttonStyles({ intent: "cover", size: "lg" })}>
+						<Link href="/pro" className={buttonStyles({ intent: "ink", size: "lg" })}>
 							{t("pro.cta")}
 						</Link>
 					</section>

@@ -15,21 +15,17 @@ interface AuthFrameProps {
 	children: ReactNode;
 }
 
-/** Sign-in, sign-up and confirmation pages: the title on a cover band, the form on a booklet page. */
+/** Sign-in, sign-up and confirmation pages: the title on the quiet shade, the form on a booklet page. */
 export async function AuthFrame({ locale, pathname, title, lead, children }: AuthFrameProps) {
 	const t = await getTranslations({ locale, namespace: "auth" });
 	return (
 		<>
-			<div className="surface-cover">
-				<SiteHeader locale={locale} href={pathname} />
-			</div>
+			<SiteHeader locale={locale} href={pathname} />
 			<main id="main" tabIndex={-1} className="flex-1 outline-none">
-				<div className="surface-cover">
+				<div className="surface-shade border-b border-rule-soft">
 					<div className="mx-auto flex w-full max-w-6xl flex-col gap-3 px-5 pt-10 pb-10 sm:px-8 sm:pb-12">
-						<h1 className="max-w-[20ch] font-display text-headline font-black tracking-[-0.02em] font-stretch-expanded">
-							{title}
-						</h1>
-						{lead ? <p className="max-w-[58ch] text-lead text-cover-ink">{lead}</p> : null}
+						<h1 className="max-w-[20ch] type-headline">{title}</h1>
+						{lead ? <p className="max-w-[58ch] text-lead text-ink">{lead}</p> : null}
 					</div>
 				</div>
 				<BookletPage runningHead={t("runningHead")}>{children}</BookletPage>

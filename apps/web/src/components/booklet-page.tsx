@@ -17,7 +17,7 @@ export function BookletPage({ runningHead, folio, children, id }: BookletPagePro
 	return (
 		<div id={id} className="mx-auto w-full max-w-6xl px-5 sm:px-8">
 			<div
-				className="flex items-baseline justify-between gap-4 border-b-[1.5px] border-ink pt-6 pb-2"
+				className="flex items-baseline justify-between gap-4 border-b border-ink pt-6 pb-2"
 				aria-hidden="true"
 			>
 				<span className="caps text-ink">{runningHead}</span>
