@@ -5,6 +5,7 @@ import { z } from "zod";
 import { type Permissions, roleCan } from "~/server/auth/access";
 import { findMembership, isPlatformAdmin } from "~/server/auth/membership";
 import type { RateLimitRule } from "~/server/rate-limit";
+import { redactErrorShape } from "./error-redaction";
 
 /** The parts of a Better Auth session the procedures rely on. */
 export interface SessionContext {
@@ -43,15 +44,31 @@ export interface Context {
 	revalidate?: (tags: string[]) => void;
 }
 
-const t = initTRPC.context<Context>().create({
-	transformer: superjson,
-});
+/**
+ * What a procedure requires, set by the builders below (never by hand). A test
+ * enumerates every procedure of the app router and checks it against the
+ * expected access of its path (`procedure-access.test.ts`).
+ */
+export type ProcedureMeta =
+	| { access: "public" }
+	| { access: "authed" }
+	| { access: "mfa" }
+	| { access: "member"; permissions: Permissions }
+	| { access: "platformAdmin" };
+
+const t = initTRPC
+	.context<Context>()
+	.meta<ProcedureMeta>()
+	.create({
+		transformer: superjson,
+		errorFormatter: ({ shape, error }) => redactErrorShape(shape, error),
+	});
 
 export const createTRPCRouter = t.router;
 export const createCallerFactory = t.createCallerFactory;
 
 /** Procedure available without authentication. */
-export const publicProcedure = t.procedure;
+export const publicProcedure = t.procedure.meta({ access: "public" });
 
 /**
  * Per-user limit for signed-in staff: hospitals put many people behind one IP
@@ -60,7 +77,7 @@ export const publicProcedure = t.procedure;
 export const USER_RATE_LIMIT: RateLimitRule = { max: 300, windowSeconds: 60 };
 
 /** Signed in (any session, even without a second factor). */
-export const authedProcedure = t.procedure.use(async ({ ctx, next }) => {
+export const authedProcedure = t.procedure.meta({ access: "authed" }).use(async ({ ctx, next }) => {
 	const current = await ctx.getSession();
 	if (!current) {
 		throw new TRPCError({ code: "UNAUTHORIZED" });
@@ -76,7 +93,7 @@ export const authedProcedure = t.procedure.use(async ({ ctx, next }) => {
  * `mfaVerifiedAt`, never `user.twoFactorEnabled` (having a factor is not the
  * same as having used it).
  */
-export const mfaProcedure = authedProcedure.use(async ({ ctx, next }) => {
+export const mfaProcedure = authedProcedure.meta({ access: "mfa" }).use(async ({ ctx, next }) => {
 	const verifiedAt = ctx.session.mfaVerifiedAt;
 	if (!(verifiedAt instanceof Date) || Number.isNaN(verifiedAt.getTime())) {
 		throw new TRPCError({ code: "FORBIDDEN", message: "MFA_REQUIRED" });
@@ -92,6 +109,7 @@ export const mfaProcedure = authedProcedure.use(async ({ ctx, next }) => {
  */
 export function memberProcedure(permissions: Permissions) {
 	return mfaProcedure
+		.meta({ access: "member", permissions })
 		.input(z.object({ organizationId: z.string().min(1).max(64) }))
 		.use(async ({ ctx, input, next }) => {
 			const membership = await findMembership(ctx.db(), ctx.user.id, input.organizationId);
@@ -114,9 +132,11 @@ export function memberProcedure(permissions: Permissions) {
  * database on every call. Carries no organization: these procedures must never
  * read patient data.
  */
-export const platformAdminProcedure = mfaProcedure.use(async ({ ctx, next }) => {
-	if (!(await isPlatformAdmin(ctx.db(), ctx.user.id))) {
-		throw new TRPCError({ code: "FORBIDDEN" });
-	}
-	return next({ ctx: { platformAdmin: true as const } });
-});
+export const platformAdminProcedure = mfaProcedure
+	.meta({ access: "platformAdmin" })
+	.use(async ({ ctx, next }) => {
+		if (!(await isPlatformAdmin(ctx.db(), ctx.user.id))) {
+			throw new TRPCError({ code: "FORBIDDEN" });
+		}
+		return next({ ctx: { platformAdmin: true as const } });
+	});
