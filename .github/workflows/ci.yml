@@ -127,6 +127,8 @@ jobs:
         with:
           name: lighthouse
           path: apps/web/.lighthouseci
+          # A dot directory: upload-artifact skips hidden files unless told otherwise.
+          include-hidden-files: true
           retention-days: 7
       - name: Upload Playwright traces
         if: failure()
