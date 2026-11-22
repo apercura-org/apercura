@@ -48,7 +48,7 @@ export function BookletSearch({
 								key={field.name}
 								className={cn(
 									"group relative flex flex-1 flex-col px-4 pt-2.5 pb-1.5 text-ink",
-									"has-[input:focus-visible]:outline-3 has-[input:focus-visible]:outline-offset-[-6px] has-[input:focus-visible]:outline-stamp",
+									"has-[input:focus-visible]:outline-3 has-[input:focus-visible]:outline-solid has-[input:focus-visible]:outline-offset-[-6px] has-[input:focus-visible]:outline-stamp",
 									index > 0 && "border-t border-field-edge md:border-t-0 md:border-s",
 								)}
 							>

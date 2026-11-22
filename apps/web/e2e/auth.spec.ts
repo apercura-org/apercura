@@ -123,6 +123,8 @@ test("sign up, confirm the email, enrol TOTP, then sign in with password and cod
 	await expect(page).toHaveURL(/\/pro\/connexion$/);
 	await page.goto("/pro/tableau-de-bord");
 	await expect(page).toHaveURL(/\/pro\/connexion$/);
+	// Let the form hydrate first: values typed before it can be reset under load.
+	await page.waitForLoadState("networkidle");
 	// Typed before the form hydrates, the values can be reset: type until they stay.
 	await expect(async () => {
 		await page.getByLabel("Adresse e-mail", { exact: true }).fill(email);

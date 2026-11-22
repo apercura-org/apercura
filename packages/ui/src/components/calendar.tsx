@@ -68,7 +68,7 @@ export function Calendar<T extends DateValue>({
 								"data-unavailable:cursor-not-allowed data-unavailable:text-ink-disabled data-unavailable:line-through",
 								"data-disabled:cursor-not-allowed data-disabled:text-ink-disabled",
 								"data-invalid:data-selected:bg-error",
-								"data-focus-visible:outline-3 data-focus-visible:outline-offset-1 data-focus-visible:outline-(--focus-ring)",
+								"data-focus-visible:outline-3 data-focus-visible:outline-solid data-focus-visible:outline-offset-1 data-focus-visible:outline-(--focus-ring)",
 							)}
 						/>
 					)}

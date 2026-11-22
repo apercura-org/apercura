@@ -354,7 +354,7 @@ export function WeekGrid({
 											"relative h-11 cursor-pointer border-s border-rule-soft outline-none",
 											open ? "bg-paper hover:bg-paper-shade" : "closed-hatch hover:bg-rule-soft/40",
 											boundary && "shadow-[inset_0_1px_0_var(--color-field-edge)]",
-											"focus-visible:z-20 focus-visible:outline-3 focus-visible:-outline-offset-3 focus-visible:outline-(--focus-ring)",
+											"focus-visible:z-20 focus-visible:outline-3 focus-visible:outline-solid focus-visible:-outline-offset-3 focus-visible:outline-(--focus-ring)",
 										)}
 									>
 										{starts && entry ? (

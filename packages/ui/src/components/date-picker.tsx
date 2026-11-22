@@ -42,7 +42,7 @@ export function DatePicker<T extends DateValue>({
 			<Group
 				className={cn(
 					styles.box(),
-					"w-auto max-w-full data-focus-within:outline-3 data-focus-within:outline-offset-2 data-focus-within:outline-(--focus-ring)",
+					"w-auto max-w-full data-focus-within:outline-3 data-focus-within:outline-solid data-focus-within:outline-offset-2 data-focus-within:outline-(--focus-ring)",
 				)}
 			>
 				<DateSegments />

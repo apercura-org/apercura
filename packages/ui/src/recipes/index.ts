@@ -9,7 +9,7 @@ export { cn, tv } from "./tv";
 
 /** Focus ring for elements styled outside React Aria. Colour comes from the surface. */
 export const focusRing =
-	"outline-none focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-(--focus-ring) data-focus-visible:outline-3 data-focus-visible:outline-offset-2 data-focus-visible:outline-(--focus-ring)";
+	"outline-none focus-visible:outline-3 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-(--focus-ring) data-focus-visible:outline-3 data-focus-visible:outline-solid data-focus-visible:outline-offset-2 data-focus-visible:outline-(--focus-ring)";
 
 export const buttonStyles = tv({
 	base: [
@@ -75,7 +75,7 @@ export const fieldStyles = tv({
 		box: [
 			"flex min-h-12 w-full items-center overflow-hidden rounded-field border border-field-edge bg-paper text-ink",
 			"transition-colors duration-150 hover:border-ink",
-			"has-[input:focus-visible]:outline-3 has-[input:focus-visible]:outline-offset-2 has-[input:focus-visible]:outline-(--focus-ring)",
+			"has-[input:focus-visible]:outline-3 has-[input:focus-visible]:outline-solid has-[input:focus-visible]:outline-offset-2 has-[input:focus-visible]:outline-(--focus-ring)",
 			"data-focus-within:border-ink",
 			"group-data-invalid/field:border-2 group-data-invalid/field:border-error",
 			"group-data-disabled/field:border-ink-disabled group-data-disabled/field:bg-paper-shade group-data-disabled/field:text-ink-disabled",
@@ -103,7 +103,7 @@ export const listBoxItemStyles = tv({
 		"flex min-h-11 cursor-pointer items-center gap-3 border-b border-rule-soft px-3.5 py-2 text-body text-ink outline-none last:border-b-0",
 		"data-focused:bg-paper-shade data-hovered:bg-paper-shade",
 		"data-selected:font-semibold",
-		"data-focus-visible:outline-3 data-focus-visible:-outline-offset-3 data-focus-visible:outline-(--focus-ring)",
+		"data-focus-visible:outline-3 data-focus-visible:outline-solid data-focus-visible:-outline-offset-3 data-focus-visible:outline-(--focus-ring)",
 		"data-disabled:cursor-not-allowed data-disabled:text-ink-disabled",
 	],
 });
@@ -131,8 +131,8 @@ export const tableStyles = tv({
 		caption: "type-title pb-3 text-left",
 		head: "border-b border-ink",
 		column:
-			"caps px-3 py-2.5 text-left align-bottom text-ink first:pl-0 last:pr-0 outline-none data-focus-visible:outline-3 data-focus-visible:-outline-offset-3 data-focus-visible:outline-(--focus-ring)",
-		row: "border-b border-rule-soft last:border-b-0 outline-none data-focus-visible:outline-3 data-focus-visible:-outline-offset-3 data-focus-visible:outline-(--focus-ring) data-hovered:bg-paper-shade data-selected:bg-paper-shade",
+			"caps px-3 py-2.5 text-left align-bottom text-ink first:pl-0 last:pr-0 outline-none data-focus-visible:outline-3 data-focus-visible:outline-solid data-focus-visible:-outline-offset-3 data-focus-visible:outline-(--focus-ring)",
+		row: "border-b border-rule-soft last:border-b-0 outline-none data-focus-visible:outline-3 data-focus-visible:outline-solid data-focus-visible:-outline-offset-3 data-focus-visible:outline-(--focus-ring) data-hovered:bg-paper-shade data-selected:bg-paper-shade",
 		cell: "px-3 py-3 align-top first:pl-0 last:pr-0",
 	},
 });

@@ -102,7 +102,7 @@ async function Start({ locale, rpps }: { locale: Locale; rpps: string | null }) 
 					>
 						<div className="flex flex-col gap-1.5">
 							<Label htmlFor="claim-rpps">{t("start.rppsLabel")}</Label>
-							<div className="flex min-h-12 w-full max-w-sm items-center rounded-field border border-field-edge bg-paper hover:border-ink has-[input:focus-visible]:outline-3 has-[input:focus-visible]:outline-offset-2 has-[input:focus-visible]:outline-(--focus-ring)">
+							<div className="flex min-h-12 w-full max-w-sm items-center rounded-field border border-field-edge bg-paper hover:border-ink has-[input:focus-visible]:outline-3 has-[input:focus-visible]:outline-solid has-[input:focus-visible]:outline-offset-2 has-[input:focus-visible]:outline-(--focus-ring)">
 								<Input
 									id="claim-rpps"
 									name="rpps"

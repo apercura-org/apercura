@@ -229,7 +229,7 @@ export function SlotPicker({
 													onFocus={() => setFocus({ row, column })}
 													className={cn(
 														"relative flex h-14 w-20 shrink-0 items-center justify-center gap-1 border-e border-rule-soft text-meta font-semibold tabular outline-none last:border-e-0",
-														"focus-visible:z-20 focus-visible:outline-3 focus-visible:-outline-offset-3 focus-visible:outline-(--focus-ring)",
+														"focus-visible:z-20 focus-visible:outline-3 focus-visible:outline-solid focus-visible:-outline-offset-3 focus-visible:outline-(--focus-ring)",
 														bookable &&
 															!isSelected &&
 															"cursor-pointer text-ink hover:bg-paper-shade",

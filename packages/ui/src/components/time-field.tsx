@@ -37,7 +37,7 @@ export function TimeField<T extends TimeValue>({
 			<div
 				className={cn(
 					styles.box(),
-					"w-auto max-w-full has-[[data-focused]]:outline-3 has-[[data-focused]]:outline-offset-2 has-[[data-focused]]:outline-(--focus-ring)",
+					"w-auto max-w-full has-[[data-focused]]:outline-3 has-[[data-focused]]:outline-solid has-[[data-focused]]:outline-offset-2 has-[[data-focused]]:outline-(--focus-ring)",
 				)}
 			>
 				<ClockIcon className="ms-3.5 size-5 shrink-0 text-ink-muted" />

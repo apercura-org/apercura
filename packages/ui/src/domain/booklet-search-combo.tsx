@@ -60,7 +60,7 @@ export interface BookletComboFieldProps {
 
 const cell = cn(
 	"group relative flex flex-1 flex-col px-4 pt-2.5 pb-1.5 text-ink",
-	"has-[input:focus-visible]:outline-3 has-[input:focus-visible]:outline-offset-[-6px] has-[input:focus-visible]:outline-stamp",
+	"has-[input:focus-visible]:outline-3 has-[input:focus-visible]:outline-solid has-[input:focus-visible]:outline-offset-[-6px] has-[input:focus-visible]:outline-stamp",
 );
 const input =
 	"min-h-11 w-full text-ellipsis bg-transparent py-1 text-body text-ink sm:text-lead outline-none placeholder:text-ink-muted [&::-webkit-search-cancel-button]:hidden";
