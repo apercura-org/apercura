@@ -1,6 +1,10 @@
 /** External addresses printed on the public pages. */
 export const LINKS = {
 	repository: "https://github.com/maxgfr/apercura",
+	/** The repository's SECURITY.md, as GitHub serves it. */
+	securityPolicy: "https://github.com/maxgfr/apercura/security/policy",
+	/** Private vulnerability reports on the repository (GitHub Security Advisories). */
+	securityAdvisory: "https://github.com/maxgfr/apercura/security/advisories/new",
 	agplText: "https://www.gnu.org/licenses/agpl-3.0.html",
 	licenceOuverte: "https://www.etalab.gouv.fr/licence-ouverte-open-licence/",
 	odbl: "https://opendatacommons.org/licenses/odbl/",

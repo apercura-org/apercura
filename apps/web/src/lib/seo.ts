@@ -35,6 +35,24 @@ export function ogImageOf(professionCode: string): OgImage {
 export const ogImageUrl = (image: OgImage) => `${siteOrigin()}/og/${image}.png`;
 
 /**
+ * Ownership tokens of Google Search Console and Bing Webmaster Tools, as `<meta>` tags
+ * (`google-site-verification`, `msvalidate.01`) on every page; nothing when unset. Static pages
+ * bake them: set the variables at build time.
+ */
+export function siteVerification(env: {
+	GOOGLE_SITE_VERIFICATION?: string | undefined;
+	BING_SITE_VERIFICATION?: string | undefined;
+}): Metadata["verification"] {
+	const google = env.GOOGLE_SITE_VERIFICATION?.trim();
+	const bing = env.BING_SITE_VERIFICATION?.trim();
+	if (!google && !bing) return undefined;
+	return {
+		...(google ? { google } : {}),
+		...(bing ? { other: { "msvalidate.01": bing } } : {}),
+	};
+}
+
+/**
  * The first candidate that fits `max` characters; when none does, the last
  * one cut at a word boundary with an ellipsis. Candidates go from the most to
  * the least detailed.

@@ -44,11 +44,47 @@ test("/donnees explains how to correct and how to object to a page", async ({ pa
 	await expect(page.locator("#corriger h2")).toBeInViewport();
 });
 
-test("legal pages mark what is still to be completed", async ({ page }) => {
+test("legal pages print the unknown publisher and host as visible placeholders", async ({
+	page,
+}) => {
+	// The e2e server sets no LEGAL_* variable: every fact is still a placeholder, never invented.
 	await page.goto("/mentions-legales");
-	await expect(page.getByText("À compléter").first()).toBeVisible();
+	await expect(
+		page.getByText("Brouillon : à faire relire par un juriste avant le lancement"),
+	).toBeVisible();
+	for (const placeholder of [
+		"{{PUBLISHER_NAME}}",
+		"{{PUBLISHER_REGISTRATION}}",
+		"{{PUBLICATION_DIRECTOR}}",
+		"{{HOST_NAME}}",
+		"{{HOST_ADDRESS}}",
+	]) {
+		await expect(page.getByText(placeholder, { exact: true })).toBeVisible();
+	}
 	await page.goto("/en/legal-notice");
-	await expect(page.getByText("To be completed").first()).toBeVisible();
+	await expect(page.getByText("{{PUBLISHER_NAME}}", { exact: true })).toBeVisible();
+	await page.goto("/confidentialite");
+	for (const placeholder of ["{{DPO_CONTACT}}", "{{SMTP_PROVIDER}}", "{{CONTACT_EMAIL}}"]) {
+		await expect(page.getByText(placeholder, { exact: true })).toBeVisible();
+	}
+	// The regulatory conventionnement notice waits for the legal review.
+	await page.goto("/conditions");
+	await expect(page.getByText("{{CONVENTIONNEMENT_WORDING}}", { exact: true })).toBeVisible();
+});
+
+test("the accessibility statement is honest about its status and gives the recourse", async ({
+	page,
+}) => {
+	await page.goto("/accessibilite");
+	await expect(
+		page.getByText("Partiellement conforme (auto-évaluation, audit en cours)"),
+	).toBeVisible();
+	await expect(page.locator("time[datetime='2026-11-22']")).toHaveText("22 novembre 2026");
+	await expect(page.getByText("{{CONTACT_EMAIL}}", { exact: true })).toBeVisible();
+	await expect(page.getByRole("link", { name: /Saisir le Défenseur des droits/ })).toHaveAttribute(
+		"href",
+		"https://formulaire.defenseurdesdroits.fr/",
+	);
 });
 
 test("the footer links to every institutional page", async ({ page }) => {

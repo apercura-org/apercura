@@ -1,11 +1,27 @@
 import { describe, expect, it } from "vitest";
-import { clientSchema, describeEnvIssues, serverSchema } from "./env";
+import { clientSchema, describeEnvIssues, LEGAL_REQUIRED_IN_PRODUCTION, serverSchema } from "./env";
 
 const VALID = {
 	APP_URL: "https://apercura.example",
 	DATABASE_URL: "postgres://user:password@localhost:5432/apercura",
 };
 const LONG_SECRET = "x".repeat(32);
+/** Fictitious publisher and host: a production environment needs them all. */
+const LEGAL = {
+	LEGAL_PUBLISHER_NAME: "Association Exemple",
+	LEGAL_PUBLISHER_LEGAL_FORM: "Association loi 1901",
+	LEGAL_PUBLISHER_ADDRESS: "1 rue de l’Exemple, 75000 Paris",
+	LEGAL_PUBLISHER_PHONE: "01 00 00 00 00",
+	LEGAL_PUBLISHER_REGISTRATION: "RNA W000000000",
+	LEGAL_PUBLICATION_DIRECTOR: "Camille Exemple",
+	LEGAL_CONTACT_EMAIL: "contact@apercura.example",
+	LEGAL_HOST_NAME: "Hébergeur Exemple",
+	LEGAL_HOST_ADDRESS: "2 rue de l’Exemple, 75000 Paris",
+	LEGAL_HOST_PHONE: "01 00 00 00 01",
+	LEGAL_SMTP_PROVIDER: "Courrier Exemple",
+	LEGAL_EFFECTIVE_DATE: "2026-12-01",
+};
+const PRODUCTION = { ...VALID, ...LEGAL, NODE_ENV: "production", BETTER_AUTH_SECRET: LONG_SECRET };
 
 function issuesOf(schema: typeof serverSchema | typeof clientSchema, values: object): string[] {
 	const result = schema.safeParse(values);
@@ -15,20 +31,13 @@ function issuesOf(schema: typeof serverSchema | typeof clientSchema, values: obj
 
 describe("environment validation messages", () => {
 	it("accepts a complete production environment", () => {
-		expect(
-			issuesOf(serverSchema, { ...VALID, NODE_ENV: "production", BETTER_AUTH_SECRET: LONG_SECRET }),
-		).toEqual([]);
+		expect(issuesOf(serverSchema, PRODUCTION)).toEqual([]);
 	});
 
 	it("names the secret that is too short in production", () => {
-		expect(
-			issuesOf(serverSchema, {
-				...VALID,
-				NODE_ENV: "production",
-				BETTER_AUTH_SECRET: LONG_SECRET,
-				JOBS_SECRET: "short",
-			}),
-		).toEqual(["JOBS_SECRET must be at least 32 characters in production"]);
+		expect(issuesOf(serverSchema, { ...PRODUCTION, JOBS_SECRET: "short" })).toEqual([
+			"JOBS_SECRET must be at least 32 characters in production",
+		]);
 	});
 
 	it.each([
@@ -38,19 +47,58 @@ describe("environment validation messages", () => {
 		"REVALIDATE_SECRET",
 		"JOBS_SECRET",
 	])("names %s when it is too short", (name) => {
-		const issues = issuesOf(serverSchema, {
-			...VALID,
-			NODE_ENV: "production",
-			BETTER_AUTH_SECRET: LONG_SECRET,
-			[name]: "short",
-		});
+		const issues = issuesOf(serverSchema, { ...PRODUCTION, [name]: "short" });
 		expect(issues).toEqual([`${name} must be at least 32 characters in production`]);
 	});
 
 	it("names the session secret when production lacks it", () => {
-		expect(issuesOf(serverSchema, { ...VALID, NODE_ENV: "production" })).toEqual([
+		expect(issuesOf(serverSchema, { ...VALID, ...LEGAL, NODE_ENV: "production" })).toEqual([
 			"BETTER_AUTH_SECRET is required in production (bun run keys:generate)",
 		]);
+	});
+
+	it.each(LEGAL_REQUIRED_IN_PRODUCTION)("names %s when production lacks it", (name) => {
+		expect(issuesOf(serverSchema, { ...PRODUCTION, [name]: undefined })).toEqual([
+			`${name} is required in production (legal pages, docs/launch-checklist.md)`,
+		]);
+	});
+
+	it("leaves the legal variables optional outside production", () => {
+		expect(issuesOf(serverSchema, VALID)).toEqual([]);
+	});
+
+	it("takes the host's name from PUBLIC_HDS_HOST when LEGAL_HOST_NAME is unset", () => {
+		const { LEGAL_HOST_NAME: _, ...withoutHost } = PRODUCTION;
+		expect(issuesOf(serverSchema, withoutHost)).toEqual([
+			"LEGAL_HOST_NAME (or PUBLIC_HDS_HOST) is required in production (legal notice)",
+		]);
+		expect(
+			issuesOf(serverSchema, { ...withoutHost, PUBLIC_HDS_HOST: "Hébergeur Exemple" }),
+		).toEqual([]);
+	});
+
+	it("asks for the DPO's contact once booking is on in production", () => {
+		expect(issuesOf(serverSchema, { ...PRODUCTION, FEATURE_BOOKING: "true" })).toEqual([
+			"LEGAL_DPO_CONTACT is required in production when FEATURE_BOOKING is on (GDPR art. 37)",
+		]);
+		expect(
+			issuesOf(serverSchema, {
+				...PRODUCTION,
+				FEATURE_BOOKING: "true",
+				LEGAL_DPO_CONTACT: "dpo@apercura.example",
+			}),
+		).toEqual([]);
+	});
+
+	it("checks the formats of the contact, the date and the security contact", () => {
+		expect(
+			issuesOf(serverSchema, {
+				...VALID,
+				LEGAL_CONTACT_EMAIL: "not an email",
+				LEGAL_EFFECTIVE_DATE: "1 December 2026",
+				SECURITY_CONTACT: "security@apercura.example",
+			}).map((line) => line.split(":")[0]),
+		).toEqual(["LEGAL_CONTACT_EMAIL", "LEGAL_EFFECTIVE_DATE", "SECURITY_CONTACT"]);
 	});
 
 	it("names the variable of every type and format rule", () => {

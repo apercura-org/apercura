@@ -538,9 +538,11 @@
 		"metaDescriptionBookablePlace": "{name}, {occupation} in {place}: Online-Terminbuchung, Adresse, Kontaktdaten und Tarifsektor."
 	},
 	"Institutional": {
-		"toBeCompleted": "Zu vervollständigen",
-		"draftMark": "Entwurf: vor dem Start zu vervollständigen",
-		"comingMark": "Demnächst"
+		"toBeCompleted": "Noch zu ergänzen",
+		"legalDraftMark": "Entwurf: vor dem Start von einem Juristen zu prüfen",
+		"auditMark": "Vorläufige Erklärung: nach dem manuellen Audit zu ergänzen",
+		"comingMark": "Demnächst verfügbar",
+		"placeholderNote": "Werte in Großbuchstaben zwischen doppelten geschweiften Klammern sind noch nicht bekannt; sie werden eingetragen, sobald die juristische Person und die Verträge bestehen."
 	},
 	"AboutPage": {
 		"metaTitle": "Über uns · Apercura",
@@ -734,191 +736,321 @@
 	},
 	"AccessibilityPage": {
 		"metaTitle": "Barrierefreiheit · Apercura",
-		"metaDescription": "Erklärung zur Barrierefreiheit von Apercura (Entwurf): Stand der Konformität mit RGAA 4.1, Prüfmethoden, Meldung eines Problems und Ihre Rechtsbehelfe.",
+		"metaDescription": "Erklärung zur Barrierefreiheit von Apercura: teilweise konform mit RGAA 4.1, Audit läuft, was geprüft wurde, wie Sie ein Problem melden und welche Rechtsbehelfe bestehen.",
 		"title": "Barrierefreiheit",
-		"lead": "Apercura ist für alle gedacht, auch für ältere und sehbehinderte Menschen. Diese Erklärung im Entwurf zeigt den aktuellen Stand.",
+		"lead": "Apercura ist für alle gestaltet, auch für ältere und sehbehinderte Menschen. Diese Erklärung zeigt den aktuellen Stand: Eine Selbstbewertung ist erfolgt, das vollständige Audit läuft.",
 		"sections": {
 			"commitment": {
-				"heading": "Verpflichtung",
+				"heading": "Selbstverpflichtung",
 				"body": [
-					"Apercura strebt auf jeder Seite die Konformität mit dem französischen Barrierefreiheitsstandard RGAA 4.1 und mit WCAG 2.2 Stufe AA an.",
-					"Patientenseiten verwenden Fließtext von mindestens 18 px, Klickflächen von mindestens 44 px und einen sichtbaren Fokus; nichts wird allein durch Farbe vermittelt."
+					"Der Herausgeber von Apercura verpflichtet sich, die Website barrierefrei zu gestalten. Er strebt auf allen Seiten Konformität mit dem französischen Referenzrahmen zur Verbesserung der Barrierefreiheit (RGAA 4.1) und mit WCAG 2.2 Stufe AA an.",
+					"Die Seiten für Patienten verwenden Fließtext von mindestens 18 px, Zielflächen von mindestens 44 px und einen sichtbaren Fokus, und nichts wird dort allein durch Farbe vermittelt."
 				]
 			},
 			"status": {
-				"heading": "Stand der Konformität",
+				"heading": "Konformitätsstatus",
 				"body": [
-					"Apercura wurde noch nicht anhand von RGAA 4.1 geprüft. Bis ein Prüfbericht veröffentlicht ist, gilt die Website als nicht konform. Eine vollständige Prüfung ist vor dem Start geplant."
+					"Die Website ist teilweise konform mit RGAA 4.1. Dieser Status beruht auf einer Selbstbewertung und auf automatisierten Tests, noch nicht auf einem vollständigen Audit: Der Konformitätsgrad wird nach Abschluss des laufenden manuellen Audits veröffentlicht.",
+					"Diese Erklärung ist vorläufig. Sie wird nach dem Audit ergänzt, mit der Liste der nicht konformen Inhalte."
 				]
 			},
 			"tests": {
-				"heading": "Wie die Seiten getestet werden",
+				"heading": "Was geprüft wurde",
 				"list": [
-					"Automatisierte Prüfungen mit axe-core auf jedem Seitentyp, bei jeder Veröffentlichung.",
-					"Prüfungen von Suche und Navigation allein mit der Tastatur.",
-					"Manuelle Prüfungen mit den Screenreadern VoiceOver und NVDA sind im Rahmen des Audits geplant."
+					"Automatische Prüfungen mit axe-core (Regeln von WCAG 2.0, 2.1 und 2.2, Stufen A und AA) auf jedem Seitentyp und bei jedem Schritt der Terminbuchung, bei jeder Version.",
+					"Abläufe nur mit der Tastatur, mit sichtbarem Fokus: Suche, Terminbuchung, Terminkalender der Gesundheitsfachkräfte.",
+					"Abläufe, die von einem virtuellen Screenreader vorgelesen wurden: Startseite, Ergebnisse, Seite einer Gesundheitsfachkraft, jeder Schritt der Terminbuchung, Seite zur Verwaltung des Termins, Tages- und Wochenkalender (Überschriften, Bereiche, mit ihrer Beschriftung vorgelesene Felder, Ansagen).",
+					"Darstellung bei 390 px Breite ohne horizontales Scrollen, geprüft auf den Seiten, bei denen dies nötig war.",
+					"Lighthouse-Barrierefreiheitswerte der Startseite, einer Seite einer Gesundheitsfachkraft und einer Liste."
+				]
+			},
+			"pending": {
+				"heading": "Was noch zu prüfen ist",
+				"list": [
+					"Ein manueller Durchgang mit den Screenreadern VoiceOver (macOS und iOS) und NVDA (Windows).",
+					"Das Audit der 106 RGAA-Kriterien an einer repräsentativen Stichprobe von Seiten.",
+					"Die Ergebniskarte: Diese ergänzt die Ergebnistabelle, die dieselben Informationen enthält, ist aber noch nicht bewertet."
 				]
 			},
 			"technologies": {
 				"heading": "Verwendete Technologien",
 				"body": [
-					"HTML, CSS, WAI-ARIA und JavaScript. Die Suche und die Verzeichnisseiten funktionieren auch ohne JavaScript."
+					"HTML, CSS, WAI-ARIA und JavaScript. Die Suche und die Verzeichnisseiten funktionieren auch ohne JavaScript. Die automatisierten Tests verwenden Chromium; die Kombinationen VoiceOver mit Safari und NVDA mit Firefox werden während des Audits getestet."
 				]
 			},
 			"feedback": {
 				"heading": "Ein Problem melden",
 				"body": [
-					"Wenn Sie auf einen Inhalt oder einen Dienst nicht zugreifen können, teilen Sie es uns mit, damit wir eine Alternative bereitstellen oder die Seite korrigieren können."
+					"Wenn Sie auf einen Inhalt oder einen Dienst nicht zugreifen können, schreiben Sie uns an die unten genannte Adresse: Wir bieten Ihnen eine Alternative an und korrigieren die Seite."
 				]
 			},
 			"recourse": {
 				"heading": "Rechtsbehelfe",
 				"body": [
-					"Wenn Sie ein Problem gemeldet und keine zufriedenstellende Antwort erhalten haben, können Sie sich an den Défenseur des droits (die französische Ombudsstelle) wenden."
+					"Wenn Sie einen Mangel an Barrierefreiheit gemeldet und keine zufriedenstellende Antwort erhalten haben, können Sie sich an den Défenseur des droits (die französische Ombudsstelle für Bürgerrechte) wenden."
 				],
 				"list": [
-					"Onlineformular des Défenseur des droits",
+					"Online-Formular des Défenseur des droits",
+					"Ein Delegierter des Défenseur des droits in Ihrer Region",
 					"Telefon: 09 69 39 00 00",
-					"Per Post (kostenlos, ohne Briefmarke): Défenseur des droits, Libre réponse 71120, 75342 Paris CEDEX 07"
+					"Post (kostenlos, ohne Briefmarke): Défenseur des droits, Libre réponse 71120, 75342 Paris CEDEX 07"
 				]
 			}
 		},
 		"fields": {
 			"status": "Konformität",
-			"statusValue": "Noch nicht geprüft",
-			"framework": "Rahmen",
+			"statusValue": "Teilweise konform (Selbstbewertung, Audit läuft)",
+			"framework": "Referenzrahmen",
 			"frameworkValue": "RGAA 4.1",
+			"rate": "Konformitätsgrad",
+			"rateValue": "Wird nach Abschluss des Audits veröffentlicht",
 			"date": "Datum der Erklärung",
 			"contact": "Kontakt"
 		},
-		"defenseurLink": "Den Défenseur des droits kontaktieren"
+		"defenseurLink": "An den Défenseur des droits wenden"
 	},
 	"PrivacyPage": {
 		"metaTitle": "Datenschutz · Apercura",
-		"metaDescription": "Wie Apercura personenbezogene Daten verarbeitet: Verzeichnisdaten aus öffentlichen Registern, noch keine Patientendaten, keine Tracker, und Ihre Rechte.",
+		"metaDescription": "Von Apercura verarbeitete Daten, Zwecke, Rechtsgrundlagen, Speicherdauer, Empfänger, Cookies und Ihre Rechte, einschließlich des Widerspruchsrechts.",
 		"title": "Datenschutz",
-		"lead": "Apercura erhebt so wenig Daten wie möglich. Dieser Entwurf erklärt, was verarbeitet wird, warum und wie Sie Ihre Rechte ausüben.",
+		"lead": "Apercura erhebt so wenige Daten wie möglich. Diese Erklärung legt dar, welche Daten verarbeitet werden, warum, wie lange, von wem und wie Sie Ihre Rechte ausüben. Die französische Fassung ist verbindlich.",
 		"sections": {
 			"roles": {
 				"heading": "Wer verantwortlich ist",
 				"body": [
-					"Für das öffentliche Verzeichnis ist Apercura der Verantwortliche. Für Online-Terminbuchungen wird Apercura nach deren Start Daten im Auftrag jeder Gesundheitsfachkraft verarbeiten, auf Grundlage eines Auftragsverarbeitungsvertrags, der Teil der Nutzungsbedingungen für Gesundheitsfachkräfte ist."
+					"Für das öffentliche Verzeichnis, die Konten der Gesundheitsfachkräfte, Fehlermeldungen und Anträge auf Entfernung ist der Herausgeber der Website der Verantwortliche für die Verarbeitung.",
+					"Für Online-Termine ist jede Gesundheitsfachkraft Verantwortliche für die Verarbeitung der Daten ihrer Patienten. Der Herausgeber verarbeitet diese Daten in ihrem Auftrag als Auftragsverarbeiter, auf Grundlage des Auftragsverarbeitungsvertrags, der in den Bedingungen für Gesundheitsfachkräfte vorgesehen ist (Artikel 28 DSGVO)."
 				]
 			},
 			"practitioners": {
-				"heading": "Daten zu Gesundheitsfachkräften",
+				"heading": "Verzeichnis: Daten über Gesundheitsfachkräfte",
 				"body": [
-					"Die Verzeichnisseiten zeigen Angaben aus öffentlichen Registern: Name, Beruf, Fachgebiete, Praxisorte, veröffentlichte Telefonnummern und Tarifsektor. Jede Seite nennt ihre Quellen und das Datum ihrer letzten Aktualisierung.",
-					"Rechtsgrundlage ist ein berechtigtes Interesse: die Information der Öffentlichkeit auf Grundlage öffentlicher Daten. Die Gesundheitsfachkräfte werden nicht einzeln informiert, da dies einen unverhältnismäßigen Aufwand bedeuten würde (Artikel 14 Absatz 5 Buchstabe b DSGVO); stattdessen informieren sie die Datenseite und ein Hinweis auf jeder Seite.",
-					"Jede Gesundheitsfachkraft kann der Veröffentlichung ihrer Seite widersprechen."
+					"Daten: Name, Vorname, Anrede, RPPS-Nummer, Beruf, Fachgebiete und Fachkenntnisse, Orte und Formen der Berufsausübung, veröffentlichte Telefonnummern, Sektor der Vertragsbindung mit der Krankenversicherung (secteur de conventionnement), OPTAM-Teilnahme und Akzeptanz der Carte Vitale. Eine Gesundheitsfachkraft, die ihre Seite beansprucht, kann dort ihre Sprechzeiten, ihre Honorare, ihre Sprachen, ein Foto und eine Vorstellung ergänzen.",
+					"Quellen: das Annuaire Santé der Agence du numérique en santé, das FINESS-Verzeichnis und das Verzeichnis der Assurance Maladie, weiterverwendet unter der Licence Ouverte 2.0 und jede Woche aktualisiert.",
+					"Zweck: der Öffentlichkeit ermöglichen, eine Gesundheitsfachkraft, ihre Praxisorte und die Art, sie zu erreichen, zu finden. Rechtsgrundlage: das berechtigte Interesse, die Öffentlichkeit auf Grundlage öffentlicher Daten zu informieren (Artikel 6 Abs. 1 lit. f DSGVO).",
+					"Speicherdauer: solange die Gesundheitsfachkraft in den öffentlichen Registern geführt wird. Eine nicht beanspruchte Seite verschwindet nach zwei wöchentlichen Aktualisierungen, in denen die Gesundheitsfachkraft nicht mehr im Register steht; eine nach einem Widerspruch entfernte Seite wird nie wieder veröffentlicht.",
+					"Information: Jede Gesundheitsfachkraft anzuschreiben, wäre mit einem unverhältnismäßigen Aufwand verbunden (Artikel 14 Abs. 5 lit. b DSGVO). Die Gesundheitsfachkräfte werden über die Datenseite, einen Hinweis auf jeder Seite und diese Erklärung informiert."
+				]
+			},
+			"accounts": {
+				"heading": "Konten der Gesundheitsfachkräfte und Beanspruchung von Seiten",
+				"body": [
+					"Daten: E-Mail-Adresse, Name, Passwort (gehasht gespeichert), zweiter Authentifizierungsfaktor, Identität über Pro Santé Connect, zur Beanspruchung einer Seite eingereichte Nachweise, Teammitglieder und das Protokoll der Zugriffe auf Patientendaten.",
+					"Zwecke: das Konto verwalten, prüfen, dass eine Seite von der richtigen Gesundheitsfachkraft beansprucht wird, und den Zugriff auf Patientendaten schützen. Rechtsgrundlagen: die Erfüllung der Nutzungsbedingungen (Artikel 6 Abs. 1 lit. b) und das berechtigte Interesse an der Absicherung des Dienstes (Artikel 6 Abs. 1 lit. f).",
+					"Speicherdauer: Das Konto wird bis zu seiner Löschung aufbewahrt; die Nachweise werden verschlüsselt gespeichert und 30 Tage nach der Entscheidung gelöscht; das Zugriffsprotokoll wird auf ein Jahr begrenzt."
 				]
 			},
 			"patients": {
-				"heading": "Daten zu Patienten",
+				"heading": "Termine: Daten über Patienten",
 				"body": [
-					"Die Online-Terminbuchung ist noch nicht geöffnet: Apercura erhebt derzeit keine Patientendaten. Sobald die Terminbuchung geöffnet ist, wird nur abgefragt, was die Gesundheitsfachkraft benötigt; diese Daten werden auf Anwendungsebene verschlüsselt und planmäßig gelöscht (standardmäßig 90 Tage nach dem Termin)."
+					"Daten: Vorname, Name, E-Mail-Adresse, Telefon, ob es sich um eine Erstkonsultation handelt, aus den Vorgaben der Gesundheitsfachkraft gewählter Terminanlass, Datum und Uhrzeit des Termins. Die Gesundheitsfachkraft kann weniger abfragen; es wird kein Patientenkonto angelegt.",
+					"Zwecke: den Termin buchen, den Bestätigungscode, die Bestätigung und die Erinnerung senden und das Absagen oder Verschieben des Termins ermöglichen. Die Gesundheitsfachkraft legt als Verantwortliche die Rechtsgrundlage fest; diese Daten sind Gesundheitsdaten (Artikel 9 DSGVO).",
+					"Schutz: Diese Daten werden auf Anwendungsebene verschlüsselt, mit einem eigenen Schlüssel für jede Praxis, und jeder Lesezugriff wird protokolliert. Die E-Mails enthalten weder Fachgebiet noch Terminanlass.",
+					"Speicherdauer: Eine nicht bestätigte Buchung wird nach 24 Stunden gelöscht; die Daten eines Termins werden standardmäßig 90 Tage nach dessen Datum gelöscht (je nach Einstellung der Gesundheitsfachkraft 30 bis 365 Tage)."
+				]
+			},
+			"reports": {
+				"heading": "Fehlermeldungen und Anträge auf Entfernung",
+				"body": [
+					"Daten: die Nachricht, die Kontakt-E-Mail-Adresse, sofern angegeben, und bei einem Antrag auf Entfernung die betroffene Seite. Der Freitext wird verschlüsselt.",
+					"Zwecke: gemeldete Fehler korrigieren und Widersprüche umsetzen. Rechtsgrundlagen: das berechtigte Interesse, zutreffende Informationen zu veröffentlichen (Artikel 6 Abs. 1 lit. f), und das Widerspruchsrecht (Artikel 21). Speicherdauer: die zur Bearbeitung des Antrags nötige Zeit; die Höchstdauer wird bei der juristischen Prüfung noch festgelegt."
+				]
+			},
+			"security": {
+				"heading": "Sicherheit und technische Daten",
+				"body": [
+					"Die Sitzungen der Gesundheitsfachkräfte speichern die verwendete IP-Adresse und den verwendeten Browser, um ihr Konto zu schützen. Um Missbrauch zu begrenzen, wandelt die Website IP-Adressen vor dem Zählen durch eine Funktion mit geheimem Schlüssel um; nur die Begrenzung der Anmeldeversuche bewahrt sie für die Dauer ihres Zeitfensters auf. Der Hosting-Anbieter bewahrt seine eigenen technischen Protokolle gemäß seinem Vertrag auf."
+				]
+			},
+			"recipients": {
+				"heading": "Empfänger und Auftragsverarbeiter",
+				"body": [
+					"Die Daten werden weder verkauft noch vermietet und für keinerlei Werbung verwendet. Empfänger sind nur, jeweils für ihren Teil: das Team des Herausgebers (ohne Zugriff auf Patientendaten), die Gesundheitsfachkraft und ihr Team für ihre Termine sowie die unten genannten Auftragsverarbeiter.",
+					"Karten werden von einem Kachelserver geladen (standardmäßig OpenFreeMap), der wie jede Website die IP-Adresse der besuchenden Person erhält, aber keine Konto- oder Termindaten. Die Anmeldung über Pro Santé Connect läuft über die Agence du numérique en santé."
+				]
+			},
+			"transfers": {
+				"heading": "Übermittlungen außerhalb der Europäischen Union",
+				"body": [
+					"Keine: Die Daten werden im Europäischen Wirtschaftsraum gehostet und verarbeitet, die Gesundheitsdaten in Frankreich. Jeder Wechsel eines Auftragsverarbeiters wird hier angekündigt, bevor er wirksam wird."
 				]
 			},
 			"cookies": {
-				"heading": "Cookies und Tracker",
+				"heading": "Cookies",
 				"body": [
-					"Apercura verwendet keine Werbe- oder Reichweiten-Cookies und keine Tracker. Es dürfen nur Cookies gesetzt werden, die für den Dienst unbedingt erforderlich sind; daher ist kein Einwilligungsbanner nötig."
+					"Es werden nur Cookies gesetzt, die für den Dienst unbedingt erforderlich sind: die Sitzung angemeldeter Gesundheitsfachkräfte, die gewählte Sprache und ein Cookie, das eine laufende Buchung auf einen Browser beschränkt (24 Stunden). Keine Cookies für Werbung oder Reichweitenmessung, keine Tracker: Daher ist kein Einwilligungsbanner nötig."
 				]
 			},
 			"rights": {
 				"heading": "Ihre Rechte",
 				"body": [
-					"Sie können Auskunft über die Sie betreffenden Daten sowie deren Berichtigung oder Löschung verlangen und der Verarbeitung widersprechen. Wenn Sie der Meinung sind, dass Ihre Rechte nicht gewahrt werden, können Sie eine Beschwerde bei der CNIL einreichen."
+					"Sie können Auskunft über Ihre Daten, ihre Berichtigung, ihre Löschung, die Einschränkung ihrer Verarbeitung und ihre Übertragbarkeit verlangen, der Verarbeitung widersprechen und Verfügungen darüber treffen, was nach Ihrem Tod mit ihnen geschieht. Gesundheitsfachkräfte können die Daten ihres Kontos aus ihrem Bereich exportieren.",
+					"Schreiben Sie an die unten genannte Adresse. Wenden Sie sich bei einem Termin vorzugsweise an die Gesundheitsfachkraft, die für diese Daten verantwortlich ist; wenn Sie uns schreiben, leiten wir den Antrag an die Gesundheitsfachkraft weiter. Sie erhalten innerhalb eines Monats eine Antwort.",
+					"Wenn Sie der Ansicht sind, dass Ihre Rechte nicht gewahrt werden, können Sie bei der CNIL Beschwerde einreichen."
+				]
+			},
+			"objection": {
+				"heading": "Widerspruch gegen eine Verzeichnisseite",
+				"body": [
+					"Eine Gesundheitsfachkraft kann der Veröffentlichung ihrer Seite widersprechen, ohne dies begründen zu müssen. Ist die Seite nicht beansprucht, genügt ein Formular: Die Seite wird sofort ausgeblendet, nach einer kurzen Prüfung gelöscht und von den Aktualisierungen nicht wieder veröffentlicht. Ist sie beansprucht, kann nur ihre Inhaberin oder ihr Inhaber sie entfernen, über den eigenen Bereich."
+				]
+			},
+			"changes": {
+				"heading": "Aktualisierung dieser Erklärung",
+				"body": [
+					"Diese Erklärung ist ein Entwurf. Die Erklärung wird vor dem Start der Terminbuchung von einem Juristen und vom Datenschutzbeauftragten geprüft; jede Fassung ist datiert."
 				]
 			}
 		},
 		"fields": {
-			"controller": "Verantwortlicher",
+			"controller": "Verantwortlicher für die Verarbeitung",
+			"address": "Adresse",
 			"dpo": "Datenschutzbeauftragter",
-			"contact": "Kontakt für Anfragen",
-			"hosting": "Hosting"
+			"contact": "Kontakt für Anträge",
+			"hosting": "Hosting",
+			"hostingProvider": "Hosting-Anbieter (Auftragsverarbeiter)",
+			"smtp": "E-Mail-Versand (Auftragsverarbeiter)",
+			"effectiveDate": "Datum des Inkrafttretens"
 		},
-		"hostedBy": "In Frankreich gehostet von einem HDS-zertifizierten Hosting-Anbieter ({host})",
-		"objectLink": "Wie Sie einer Seite widersprechen",
+		"hostedBy": "In Frankreich bei einem HDS-zertifizierten Hosting-Anbieter gehostet ({host})",
+		"objectLink": "So widersprechen Sie einer Seite",
 		"cnilLink": "Beschwerde bei der CNIL einreichen"
 	},
 	"LegalPage": {
 		"metaTitle": "Impressum · Apercura",
-		"metaDescription": "Impressum von Apercura: Herausgeber, Verantwortlicher für den Inhalt und Hosting-Anbieter.",
+		"metaDescription": "Impressum von Apercura: Herausgeber, Verantwortlicher für die Veröffentlichung und Hosting-Anbieter der Website.",
 		"title": "Impressum",
-		"lead": "Die juristische Person, die Apercura herausgeben wird, ist noch nicht gegründet. Bis dahin bleiben die folgenden Felder leer.",
+		"lead": "Was das Gesetz über den Herausgeber und den Hosting-Anbieter der Website zu veröffentlichen vorschreibt (französisches Gesetz über das Vertrauen in die digitale Wirtschaft, Artikel 6 III). Die französische Fassung ist verbindlich.",
 		"sections": {
 			"publisher": {
 				"heading": "Herausgeber",
 				"body": [
-					"Der Herausgeber der Website, wie im französischen Gesetz über das Vertrauen in die digitale Wirtschaft (LCEN) vorgeschrieben."
+					"Die Website wird von der unten genannten Organisation herausgegeben. Sie veröffentlicht das Verzeichnis und stellt die Terminbuchung für die Gesundheitsfachkräfte bereit, die sie aktivieren."
+				]
+			},
+			"director": {
+				"heading": "Verantwortlicher für die Veröffentlichung",
+				"body": [
+					"Die Person, die für das verantwortlich ist, was der Herausgeber veröffentlicht. Informationen, die eine Gesundheitsfachkraft auf ihrer Seite ergänzt, liegen in ihrer eigenen Verantwortung."
 				]
 			},
 			"hosting": {
 				"heading": "Hosting-Anbieter",
-				"body": ["Das Unternehmen, das die Website hostet."]
+				"body": [
+					"Die Website, ihre Datenbank und ihre Dateien werden von dem unten genannten Unternehmen gehostet.",
+					"Gesundheitsdaten im Zusammenhang mit Terminen dürfen nur einem Hosting-Anbieter anvertraut werden, der für das Hosting von Gesundheitsdaten zertifiziert ist (HDS), wie es Artikel L.1111-8 des französischen Gesetzbuchs über die öffentliche Gesundheit verlangt."
+				]
 			},
 			"ip": {
 				"heading": "Code und Daten",
 				"body": [
-					"Der Quellcode von Apercura ist unter der Lizenz AGPL-3.0 veröffentlicht. Die Verzeichnisdaten werden aus öffentlichen Quellen unter der Licence Ouverte 2.0 weiterverwendet: Die Datenseite listet sie mit ihrem jeweiligen Stand auf."
+					"Der Quellcode von Apercura wird unter der Lizenz AGPL-3.0 veröffentlicht. Die Verzeichnisdaten werden aus öffentlichen Quellen unter der Licence Ouverte 2.0 weiterverwendet: Die Datenseite führt diese Quellen mit ihren Datumsangaben auf."
+				]
+			},
+			"review": {
+				"heading": "Status dieses Textes",
+				"body": [
+					"Dieser Text ist ein Entwurf, verfasst vor der Gründung der juristischen Person. Er wird vor dem Start von einem Juristen geprüft."
 				]
 			}
 		},
 		"fields": {
-			"name": "Name",
+			"name": "Bezeichnung",
 			"legalForm": "Rechtsform",
-			"address": "Eingetragene Adresse",
-			"registration": "Registrierungsnummer",
-			"director": "Verantwortlich für den Inhalt",
-			"contact": "Kontakt",
-			"hostName": "Hoster",
-			"hostAddress": "Adresse des Hosters"
+			"address": "Sitz",
+			"phone": "Telefon",
+			"email": "E-Mail-Adresse",
+			"registration": "Registernummer",
+			"director": "Verantwortlicher für die Veröffentlichung",
+			"hostName": "Hosting-Anbieter",
+			"hostAddress": "Adresse des Hosting-Anbieters",
+			"hostPhone": "Telefon des Hosting-Anbieters",
+			"healthData": "Gesundheitsdaten"
 		},
+		"hdsHosted": "In Frankreich bei einem HDS-zertifizierten Hosting-Anbieter gehostet ({host})",
 		"dataLink": "Daten und Quellen"
 	},
 	"TermsPage": {
 		"metaTitle": "Nutzungsbedingungen · Apercura",
-		"metaDescription": "Nutzungsbedingungen von Apercura (Entwurf): ein kostenloses, sachliches Verzeichnis der Gesundheitsfachkräfte in Frankreich.",
+		"metaDescription": "Nutzungsbedingungen von Apercura: ein kostenloses, sachliches Verzeichnis der Gesundheitsfachkräfte in Frankreich mit kostenloser Terminbuchung.",
 		"title": "Nutzungsbedingungen",
-		"lead": "Dieser Entwurf der Bedingungen beschreibt den Dienst in seinem heutigen Stand. Er wird vor dem Start vervollständigt und überprüft.",
+		"lead": "Die Regeln für die Nutzung von Apercura, für Patienten wie für Gesundheitsfachkräfte. Die französische Fassung ist verbindlich.",
 		"sections": {
 			"service": {
 				"heading": "Der Dienst",
 				"body": [
-					"Apercura ist ein kostenloses Verzeichnis der in Frankreich registrierten Gesundheitsfachkräfte, erstellt aus öffentlichen offenen Daten. Für die Nutzung ist kein Konto erforderlich."
+					"Apercura ist ein kostenloses Verzeichnis der in Frankreich registrierten Gesundheitsfachkräfte, aufgebaut aus offenen öffentlichen Daten, mit kostenloser Online-Terminbuchung für die Gesundheitsfachkräfte, die sie aktivieren. Herausgegeben wird es von der im Impressum genannten Organisation.",
+					"Für die Nutzung des Verzeichnisses oder die Buchung eines Termins ist kein Konto erforderlich. Die Nutzung der Website gilt als Annahme dieser Bedingungen."
 				]
 			},
 			"content": {
 				"heading": "Was die Seiten enthalten",
 				"body": [
-					"Die Seiten zeigen sachliche Informationen aus öffentlichen Registern in neutraler Reihenfolge. Sie enthalten keine Bewertungen, keine Rezensionen, keine Werbung und kein bezahltes Ranking.",
-					"Die Informationen können Fehler enthalten oder veraltet sein: Klären Sie sie vor dem Weg dorthin mit der Gesundheitsfachkraft ab. Auf jeder Seite steht, wie Sie einen Fehler melden."
+					"Die Seiten zeigen sachliche Informationen aus öffentlichen Registern in neutraler Reihenfolge. Sie enthalten weder Bewertungsnoten noch Erfahrungsberichte, Werbung oder bezahlte Platzierungen.",
+					"Die Informationen können Fehler enthalten oder veraltet sein: Überprüfen Sie sie bei der Gesundheitsfachkraft, bevor Sie sich auf den Weg machen. Jede Seite gibt an, wie ein Fehler gemeldet werden kann."
+				]
+			},
+			"fees": {
+				"heading": "Honorare und Vertragsbindung (conventionnement)",
+				"body": [
+					"Die Seiten geben den Sektor der Vertragsbindung mit der Krankenversicherung und die OPTAM-Teilnahme so an, wie die Assurance Maladie sie veröffentlicht, und verweisen zur Überprüfung auf ameli.fr. Buchbare Seiten zeigen zusätzlich den vorgeschriebenen Hinweis gemäß dem französischen Erlass vom 30. Mai 2018 (Artikel 5).",
+					"Der genaue Wortlaut dieses Hinweises wird nach der juristischen Prüfung wörtlich übernommen: Bis dahin erscheint er unten als auszufüllendes Feld."
+				]
+			},
+			"booking": {
+				"heading": "Einen Termin buchen",
+				"body": [
+					"Ein Termin wird mit einem per E-Mail gesendeten Code bestätigt. Je nach Einstellung der Gesundheitsfachkraft ist er sofort bestätigt oder erst nach ihrer Freigabe. Über den per E-Mail erhaltenen Link können Sie ihn bis zu der von der Gesundheitsfachkraft festgelegten Frist absagen oder verschieben.",
+					"Geben Sie zutreffende Kontaktdaten an und sagen Sie Bescheid, wenn Sie nicht kommen können. Die Zeitfenster sind diejenigen, die die Gesundheitsfachkraft veröffentlicht: Der Herausgeber garantiert weder ihre Verfügbarkeit noch das Stattfinden des Termins, das in der Verantwortung der Gesundheitsfachkraft liegt."
 				]
 			},
 			"health": {
 				"heading": "Keine medizinische Beratung",
 				"body": [
-					"Apercura bietet keine medizinische Beratung und ist kein Notdienst. Rufen Sie im Notfall die 15 (SAMU) oder die 112 an."
+					"Apercura gibt keinen medizinischen Rat und ist kein Notdienst. Rufen Sie im Notfall die 15 (SAMU) oder die 112 an."
 				]
 			},
 			"practitioners": {
 				"heading": "Für Gesundheitsfachkräfte",
 				"body": [
-					"Die Beanspruchung einer Seite wird kostenlos sein und einen Identitätsnachweis erfordern. Eine Gesundheitsfachkraft, die eine Seite beansprucht, ist für die von ihr hinzugefügten Informationen verantwortlich; diese müssen sachlich bleiben, wie es die Berufsordnungen verlangen."
+					"Eine Seite zu beanspruchen und die Terminbuchung zu aktivieren ist kostenlos. Für die Beanspruchung einer Seite ist ein Identitätsnachweis erforderlich: Pro Santé Connect, die im Register eingetragene E-Mail-Adresse oder ein von einer Person geprüftes Dokument.",
+					"Die Gesundheitsfachkraft ist für die Informationen verantwortlich, die sie auf ihrer Seite ergänzt. Diese Informationen müssen sachlich, redlich und aktuell bleiben, wie es die Berufsordnungen verlangen; die Gesundheitsfachkraft gibt ihre Honorare und Zahlungsmittel an, bevor sie ihren Terminkalender öffnet.",
+					"Bei Terminen ist die Gesundheitsfachkraft Verantwortliche für die Verarbeitung der Daten ihrer Patienten und der Herausgeber ihr Auftragsverarbeiter. Die Auftragsverarbeitungsklauseln nach Artikel 28 DSGVO sind den Bedingungen für Gesundheitsfachkräfte beigefügt; sie werden derzeit ausgearbeitet und vor dem Start der Terminbuchung unterzeichnet.",
+					"Die Gesundheitsfachkraft kann die Daten ihres Kontos jederzeit exportieren und die Schließung ihres Kontos beantragen."
+				]
+			},
+			"removal": {
+				"heading": "Entfernung einer Seite",
+				"body": [
+					"Eine Gesundheitsfachkraft kann jederzeit die Entfernung ihrer Seite beantragen: Die Datenseite erklärt, wie. Eine beanspruchte Seite kann nur von ihrer Inhaberin oder ihrem Inhaber entfernt werden."
+				]
+			},
+			"liability": {
+				"heading": "Haftung",
+				"body": [
+					"Der Herausgeber bemüht sich nach Kräften, dass der Dienst verfügbar und korrekt ist, kann dies aber nicht garantieren: Der Dienst kann für Wartungsarbeiten oder bei einem Störfall unterbrochen werden. Er ist nicht verantwortlich für die von Gesundheitsfachkräften ergänzten Informationen und nicht für die Termine selbst. Diese Grenzen werden bei der juristischen Prüfung näher bestimmt."
 				]
 			},
 			"ip": {
 				"heading": "Code und Daten",
 				"body": [
-					"Der Quellcode ist unter der Lizenz AGPL-3.0 veröffentlicht. Die Verzeichnisdaten werden unter der Licence Ouverte 2.0 weiterverwendet."
+					"Der Quellcode wird unter der Lizenz AGPL-3.0 veröffentlicht. Die Verzeichnisdaten werden unter der Licence Ouverte 2.0 weiterverwendet."
+				]
+			},
+			"law": {
+				"heading": "Anwendbares Recht und Streitigkeiten",
+				"body": [
+					"Diese Bedingungen unterliegen französischem Recht. Schreiben Sie im Streitfall zunächst an die Kontaktadresse, um eine gütliche Lösung zu suchen. Die Anrufung eines Verbraucherschlichters und die zuständigen Gerichte werden bei der juristischen Prüfung näher bestimmt."
 				]
 			}
 		},
 		"fields": {
-			"effectiveDate": "Gültig ab",
-			"law": "Anwendbares Recht und Gerichtsstand",
-			"contact": "Kontakt"
+			"publisher": "Herausgeber",
+			"effectiveDate": "Datum des Inkrafttretens",
+			"law": "Anwendbares Recht",
+			"lawValue": "Französisches Recht",
+			"contact": "Kontakt",
+			"conventionnementWording": "Vorgeschriebener Hinweis (Erlass vom 30. Mai 2018, Artikel 5)"
 		}
 	},
 	"Listing": {

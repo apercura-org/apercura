@@ -1,11 +1,18 @@
 import { FieldList, FieldRow } from "@apercura/ui";
-import { getTranslations, setRequestLocale } from "next-intl/server";
+import { getFormatter, getTranslations, setRequestLocale } from "next-intl/server";
 import { BookletPage } from "~/components/booklet-page";
-import { ExternalLink, InstitutionalCover, ProseSection } from "~/components/institutional";
+import {
+	ExternalLink,
+	InstitutionalCover,
+	LegalFactRow,
+	ProseSection,
+} from "~/components/institutional";
 import { PageGraph } from "~/components/page-graph";
 import { PublicPage } from "~/components/public-page";
 import { Trail } from "~/components/trail";
+import { serverEnv } from "~/env";
 import { institutionalMetadata, localeOf, proseSections } from "~/lib/institutional";
+import { ACCESSIBILITY_STATEMENT_DATE, legalFacts } from "~/lib/legal";
 import { LINKS } from "~/lib/links";
 
 export const ensureStatic = "navigation";
@@ -16,19 +23,33 @@ export function generateMetadata({ params }: PageProps<"/[locale]/accessibilite"
 	return institutionalMetadata(params, "AccessibilityPage", HREF);
 }
 
-/** Draft RGAA 4.1 accessibility statement: no audit has been run yet. */
+/**
+ * RGAA 4.1 accessibility statement, interim: partially conforming on the strength of a
+ * self-assessment and automated tests (docs/accessibility/rgaa-self-assessment.md), the manual
+ * audit in progress. To be completed with the audit's rate and non-conforming content.
+ */
 export default async function AccessibilityPage({ params }: PageProps<"/[locale]/accessibilite">) {
 	const locale = await localeOf(params);
 	setRequestLocale(locale);
 	const t = await getTranslations({ locale, namespace: "AccessibilityPage" });
 	const tSite = await getTranslations({ locale, namespace: "Site" });
 	const tI = await getTranslations({ locale, namespace: "Institutional" });
+	const format = await getFormatter({ locale });
 	const section = await proseSections(locale, "AccessibilityPage");
 	const tbc = tI("toBeCompleted");
+	const facts = legalFacts(serverEnv);
+	const statementDate = format.dateTime(new Date(`${ACCESSIBILITY_STATEMENT_DATE}T12:00:00Z`), {
+		dateStyle: "long",
+	});
 
 	return (
 		<PublicPage locale={locale} href={HREF}>
-			<InstitutionalCover title={t("title")} lead={t("lead")} mark={tI("draftMark")} />
+			<InstitutionalCover
+				title={t("title")}
+				lead={t("lead")}
+				mark={tI("auditMark")}
+				note={facts.contactEmail.missing ? tI("placeholderNote") : null}
+			/>
 			<BookletPage runningHead={tSite("runningHead")}>
 				<PageGraph
 					locale={locale}
@@ -46,14 +67,25 @@ export default async function AccessibilityPage({ params }: PageProps<"/[locale]
 							emptyLabel={tbc}
 						/>
 						<FieldRow label={t("fields.status")} value={t("fields.statusValue")} emptyLabel={tbc} />
-						<FieldRow label={t("fields.date")} emptyLabel={tbc} />
+						<FieldRow label={t("fields.rate")} value={t("fields.rateValue")} emptyLabel={tbc} />
+						<FieldRow
+							label={t("fields.date")}
+							value={<time dateTime={ACCESSIBILITY_STATEMENT_DATE}>{statementDate}</time>}
+							emptyLabel={tbc}
+						/>
 					</FieldList>
 				</ProseSection>
 				<ProseSection id="tests" content={section("tests")} />
+				<ProseSection id="a-verifier" content={section("pending")} />
 				<ProseSection id="technologies" content={section("technologies")} />
 				<ProseSection id="signaler" content={section("feedback")}>
 					<FieldList>
-						<FieldRow label={t("fields.contact")} emptyLabel={tbc} />
+						<LegalFactRow
+							label={t("fields.contact")}
+							fact={facts.contactEmail}
+							email
+							emptyLabel={tbc}
+						/>
 					</FieldList>
 				</ProseSection>
 				<ProseSection id="recours" content={section("recourse")}>

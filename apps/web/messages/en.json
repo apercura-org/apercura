@@ -539,8 +539,10 @@
 	},
 	"Institutional": {
 		"toBeCompleted": "To be completed",
-		"draftMark": "Draft: to be completed before launch",
-		"comingMark": "Coming soon"
+		"legalDraftMark": "Draft: to be reviewed by a lawyer before launch",
+		"auditMark": "Interim statement: to be completed after the manual audit",
+		"comingMark": "Coming soon",
+		"placeholderNote": "Values written in capitals between double braces are not known yet: they will be filled in once the legal entity and the contracts exist."
 	},
 	"AboutPage": {
 		"metaTitle": "About · Apercura",
@@ -734,166 +736,272 @@
 	},
 	"AccessibilityPage": {
 		"metaTitle": "Accessibility · Apercura",
-		"metaDescription": "Accessibility statement of Apercura (draft): compliance status with RGAA 4.1, test methods, how to report a problem and your recourse.",
+		"metaDescription": "Accessibility statement of Apercura: partially conforming to RGAA 4.1, audit in progress, what was checked, how to report a problem and your recourse.",
 		"title": "Accessibility",
-		"lead": "Apercura is designed for everyone, including older and low-vision people. This draft statement says where it stands.",
+		"lead": "Apercura is designed for everyone, including older and low-vision people. This statement says where it stands: a self-assessment is done, the full audit is in progress.",
 		"sections": {
 			"commitment": {
 				"heading": "Commitment",
 				"body": [
-					"Apercura aims to comply with the French accessibility framework RGAA 4.1 and with WCAG 2.2 level AA on every page.",
-					"Patient pages use body text of at least 18 px, targets of at least 44 px, visible focus, and nothing conveyed by colour alone."
+					"The publisher of Apercura is committed to making the site accessible. It aims to conform to the French accessibility framework (RGAA 4.1) and to WCAG 2.2 level AA on every page.",
+					"Patient pages use body text of at least 18 px, targets of at least 44 px, a visible focus, and nothing on them relies on colour alone."
 				]
 			},
 			"status": {
 				"heading": "Compliance status",
 				"body": [
-					"Apercura has not been audited against RGAA 4.1 yet. Until an audit is published, the site is considered not compliant. A full audit is planned before launch."
+					"The site partially conforms to RGAA 4.1. This status rests on a self-assessment and on automated tests, not yet on a full audit: the conformance rate will be published at the end of the manual audit, which is in progress.",
+					"This statement is interim. It will be completed after the audit, with the list of non-conforming content."
 				]
 			},
 			"tests": {
-				"heading": "How the pages are tested",
+				"heading": "What was checked",
 				"list": [
-					"Automated checks with axe-core on every type of page, in each release.",
-					"Keyboard-only checks of search and navigation.",
-					"Manual checks with the VoiceOver and NVDA screen readers are planned with the audit."
+					"Automated axe-core checks (WCAG 2.0, 2.1 and 2.2 rules, levels A and AA) on every page type and every booking step, at every release.",
+					"Keyboard-only journeys with a visible focus: search, booking, the practitioners’ agenda.",
+					"Journeys read by a virtual screen reader: home, results, a practitioner’s page, every booking step, the appointment page, the day and week agenda (headings, regions, fields read with their label, announcements).",
+					"Display at 390 px wide without horizontal scrolling, checked on the pages that needed it.",
+					"Lighthouse accessibility scores of the home page, a practitioner page and a listing."
+				]
+			},
+			"pending": {
+				"heading": "What remains to be checked",
+				"list": [
+					"A manual pass with the VoiceOver (macOS and iOS) and NVDA (Windows) screen readers.",
+					"The audit of the 106 RGAA criteria on a representative sample of pages.",
+					"The results map: it complements the results table, which holds the same information, but it is not evaluated yet."
 				]
 			},
 			"technologies": {
 				"heading": "Technologies used",
 				"body": [
-					"HTML, CSS, WAI-ARIA and JavaScript. Search and the directory pages also work without JavaScript."
+					"HTML, CSS, WAI-ARIA and JavaScript. Search and the directory pages also work without JavaScript. Automated tests use Chromium; VoiceOver with Safari and NVDA with Firefox will be tested during the audit."
 				]
 			},
 			"feedback": {
-				"heading": "Reporting a problem",
+				"heading": "Report a problem",
 				"body": [
-					"If you cannot access a content or a service, tell us so we can provide an alternative or fix the page."
+					"If you cannot access some content or a service, write to us at the address below: we will offer you an alternative and fix the page."
 				]
 			},
 			"recourse": {
 				"heading": "Recourse",
 				"body": [
-					"If you reported a problem and did not get a satisfactory answer, you can contact the Défenseur des droits."
+					"If you reported an accessibility issue without getting a satisfactory answer, you can refer the matter to the Défenseur des droits (the French rights ombudsman)."
 				],
 				"list": [
 					"Online form of the Défenseur des droits",
+					"A delegate of the Défenseur des droits in your region",
 					"Phone: 09 69 39 00 00",
-					"Post (free, no stamp): Défenseur des droits, Libre réponse 71120, 75342 Paris CEDEX 07"
+					"Post (free, no stamp needed): Défenseur des droits, Libre réponse 71120, 75342 Paris CEDEX 07"
 				]
 			}
 		},
 		"fields": {
 			"status": "Compliance",
-			"statusValue": "Not audited yet",
+			"statusValue": "Partially conforming (self-assessment, audit in progress)",
 			"framework": "Framework",
 			"frameworkValue": "RGAA 4.1",
-			"date": "Statement date",
+			"rate": "Conformance rate",
+			"rateValue": "Published at the end of the audit",
+			"date": "Date of the statement",
 			"contact": "Contact"
 		},
 		"defenseurLink": "Contact the Défenseur des droits"
 	},
 	"PrivacyPage": {
 		"metaTitle": "Privacy · Apercura",
-		"metaDescription": "How Apercura processes personal data: directory data from public registers, no patient data yet, no trackers, and your rights.",
+		"metaDescription": "Data processed by Apercura, purposes, legal bases, retention, recipients, cookies and your rights, including objection.",
 		"title": "Privacy",
-		"lead": "Apercura collects as little as it can. This draft explains what is processed, why, and how to exercise your rights.",
+		"lead": "Apercura collects as little as it can. This policy says what data is processed, why, for how long, by whom, and how to exercise your rights. The French version is binding.",
 		"sections": {
 			"roles": {
 				"heading": "Who is responsible",
 				"body": [
-					"For the public directory, Apercura is the data controller. For online bookings, once they open, Apercura will process data on behalf of each practitioner, under a processing agreement included in the practitioners’ terms."
+					"For the public directory, practitioner accounts, error reports and removal requests, the publisher of the site is the data controller.",
+					"For online appointments, each practitioner is the controller of their patients’ data. The publisher processes it on their behalf, as a processor, under the processing agreement included in the practitioner terms (GDPR article 28)."
 				]
 			},
 			"practitioners": {
-				"heading": "Data about practitioners",
+				"heading": "Directory: data about practitioners",
 				"body": [
-					"Directory pages show facts from public registers: name, profession, specialties, places of practice, published phone numbers and agreement sector. Each page names its sources and the date of its last update.",
-					"The legal basis is a legitimate interest: informing the public from public data. Practitioners are not informed one by one, which would be a disproportionate effort (article 14.5.b of the GDPR); the data page and a notice on each page inform them instead.",
-					"Every practitioner can object to the publication of their page."
+					"Data: last name, first name, title, RPPS number, profession, specialties and skills, places and modes of practice, published phone numbers, conventionnement sector, OPTAM membership and Carte Vitale acceptance. A practitioner who claims their page can add their hours, fees, languages, a photo and a presentation.",
+					"Sources: the Annuaire Santé of the Agence du numérique en santé, the FINESS register and the Assurance Maladie directory, reused under the Licence Ouverte 2.0 and refreshed every week.",
+					"Purpose: letting the public find a health practitioner, where they practise and how to reach them. Legal basis: the legitimate interest of informing the public from public data (GDPR article 6.1.f).",
+					"Retention: as long as the practitioner is listed in the public registers. An unclaimed page disappears after two weekly updates in which the practitioner is no longer in the register; a page removed after an objection is never published again.",
+					"Information: writing to every practitioner would take a disproportionate effort (GDPR article 14.5.b). They are informed by the data page, a notice on every page and this policy."
+				]
+			},
+			"accounts": {
+				"heading": "Practitioner accounts and claims",
+				"body": [
+					"Data: email address, name, password (stored hashed), second authentication factor, Pro Santé Connect identity, supporting documents sent to claim a page, team members, and the log of access to patient data.",
+					"Purposes: managing the account, checking that a page is claimed by the right practitioner and protecting access to patient data. Legal bases: performance of the terms of use (article 6.1.b) and the legitimate interest of securing the service (article 6.1.f).",
+					"Retention: the account is kept until it is deleted; supporting documents, encrypted, are erased 30 days after the decision; the access log will be limited to one year."
 				]
 			},
 			"patients": {
-				"heading": "Data about patients",
+				"heading": "Appointments: data about patients",
 				"body": [
-					"Online booking is not open yet: Apercura does not collect any patient data today. When booking opens, it will ask only for what the practitioner needs, encrypt it at the application level and delete it on schedule (90 days after the appointment by default)."
+					"Data: first name, last name, email address, phone, whether it is a first visit, the reason chosen among the practitioner’s, date and time of the appointment. The practitioner may ask for less; no patient account is created.",
+					"Purposes: booking the appointment, sending the confirmation code, the confirmation and the reminder, and letting the patient cancel or move it. The practitioner, as controller, sets the legal basis; this data is health data (GDPR article 9).",
+					"Protection: this data is encrypted at the application level, with a key of its own for each practice, and every reading is logged. Emails contain neither the specialty nor the reason.",
+					"Retention: an unconfirmed booking is erased after 24 hours; the data of an appointment is erased 90 days after its date by default (30 to 365 days, as the practitioner sets it)."
+				]
+			},
+			"reports": {
+				"heading": "Error reports and removal requests",
+				"body": [
+					"Data: the message, the contact email address when one is given and, for a removal request, the page concerned. Free text is encrypted.",
+					"Purposes: correcting reported errors and applying objections. Legal bases: the legitimate interest of publishing accurate information (article 6.1.f) and the right to object (article 21). Retention: the time needed to handle the request; the maximum period is still to be set during the legal review."
+				]
+			},
+			"security": {
+				"heading": "Security and technical data",
+				"body": [
+					"Practitioner sessions record the IP address and browser used, to protect their account. To limit abuse, the site transforms IP addresses with a keyed function before counting them; only the sign-in attempt limit keeps them for the length of its window. The host keeps its own technical logs under its contract."
+				]
+			},
+			"recipients": {
+				"heading": "Recipients and processors",
+				"body": [
+					"Data is neither sold nor rented, and is never used for advertising. Only these receive it, each for its own part: the publisher’s team (with no access to patient data), the practitioner and their team for their appointments, and the processors below.",
+					"Maps are loaded from a tile server (OpenFreeMap by default), which receives the visitor’s IP address like any website does, but no account or appointment data. Signing in with Pro Santé Connect goes through the Agence du numérique en santé."
+				]
+			},
+			"transfers": {
+				"heading": "Transfers outside the European Union",
+				"body": [
+					"None: data is hosted and processed in the European Economic Area, and health data in France. Any change of processor will be announced here before it takes effect."
 				]
 			},
 			"cookies": {
-				"heading": "Cookies and trackers",
+				"heading": "Cookies",
 				"body": [
-					"Apercura uses no advertising or audience cookies and no trackers. Only cookies strictly needed for the service may be set, so no consent banner is needed."
+					"Only cookies strictly necessary to the service are set: the session of signed-in practitioners, the chosen language, and a cookie that limits a booking in progress to one browser (24 hours). No advertising or audience measurement cookies, no trackers: no consent banner is needed."
 				]
 			},
 			"rights": {
 				"heading": "Your rights",
 				"body": [
-					"You can ask to access, correct or erase data about you, and object to its processing. If you think your rights are not respected, you can file a complaint with the CNIL."
+					"You can ask to access your data, to have it corrected or erased, to restrict its processing and to receive it in a portable format, object to its processing, and set directives on what happens to it after your death. Practitioners can export their account data from their space.",
+					"Write to the address below. For an appointment, preferably contact the practitioner, who is responsible for that data; if you write to us, we forward the request to them. You will get an answer within one month.",
+					"If you believe your rights are not respected, you can lodge a complaint with the CNIL."
+				]
+			},
+			"objection": {
+				"heading": "Objecting to a directory page",
+				"body": [
+					"A practitioner can object to the publication of their page without giving a reason. If the page is unclaimed, a form is enough: it is hidden at once, then deleted after a light check, and the updates never publish it again. If it is claimed, only its holder can remove it, from their space."
+				]
+			},
+			"changes": {
+				"heading": "Updates to this policy",
+				"body": [
+					"This policy is a draft. It will be reviewed by a lawyer and by the data protection officer before appointments open; every version is dated."
 				]
 			}
 		},
 		"fields": {
 			"controller": "Data controller",
+			"address": "Address",
 			"dpo": "Data protection officer",
 			"contact": "Contact for requests",
-			"hosting": "Hosting"
+			"hosting": "Hosting",
+			"hostingProvider": "Hosting provider (processor)",
+			"smtp": "Email delivery (processor)",
+			"effectiveDate": "Effective date"
 		},
 		"hostedBy": "Hosted in France by an HDS-certified host ({host})",
 		"objectLink": "How to object to a page",
-		"cnilLink": "File a complaint with the CNIL"
+		"cnilLink": "Lodge a complaint with the CNIL"
 	},
 	"LegalPage": {
 		"metaTitle": "Legal notice · Apercura",
-		"metaDescription": "Legal notice of Apercura: publisher, publication director and hosting provider.",
+		"metaDescription": "Legal notice of Apercura: publisher, publication director and hosting provider of the site.",
 		"title": "Legal notice",
-		"lead": "The legal entity that will publish Apercura is not set up yet. The fields below are printed empty until it is.",
+		"lead": "What the law requires to be published about the publisher and the host of the site (French law on confidence in the digital economy, article 6 III). The French version is binding.",
 		"sections": {
 			"publisher": {
 				"heading": "Publisher",
 				"body": [
-					"The publisher of the site, as required by the French law on confidence in the digital economy (LCEN)."
+					"The site is published by the entity below. It publishes the directory and provides booking to the practitioners who open it."
+				]
+			},
+			"director": {
+				"heading": "Publication director",
+				"body": [
+					"The person responsible for what the publisher publishes. Information a practitioner adds to their page is their own responsibility."
 				]
 			},
 			"hosting": {
 				"heading": "Hosting provider",
-				"body": ["The company that hosts the site."]
+				"body": [
+					"The site, its database and its files are hosted by the company below.",
+					"Health data linked to appointments may only be entrusted to a host certified for health data hosting (HDS), as article L.1111-8 of the French public health code requires."
+				]
 			},
 			"ip": {
 				"heading": "Code and data",
 				"body": [
 					"The source code of Apercura is published under the AGPL-3.0 licence. Directory data is reused from public sources under the Licence Ouverte 2.0: the data page lists them with their dates."
 				]
+			},
+			"review": {
+				"heading": "Status of this text",
+				"body": [
+					"This text is a draft, written before the legal entity was set up. It will be reviewed by a lawyer before launch."
+				]
 			}
 		},
 		"fields": {
 			"name": "Name",
 			"legalForm": "Legal form",
-			"address": "Registered address",
+			"address": "Registered office",
+			"phone": "Phone",
+			"email": "Email address",
 			"registration": "Registration number",
 			"director": "Publication director",
-			"contact": "Contact",
-			"hostName": "Host",
-			"hostAddress": "Host address"
+			"hostName": "Hosting provider",
+			"hostAddress": "Address of the hosting provider",
+			"hostPhone": "Phone of the hosting provider",
+			"healthData": "Health data"
 		},
+		"hdsHosted": "Hosted in France by an HDS-certified host ({host})",
 		"dataLink": "Data and sources"
 	},
 	"TermsPage": {
 		"metaTitle": "Terms of use · Apercura",
-		"metaDescription": "Terms of use of Apercura (draft): a free, factual directory of health practitioners in France.",
+		"metaDescription": "Terms of use of Apercura: a free, factual directory of health practitioners in France, with free online booking.",
 		"title": "Terms of use",
-		"lead": "These draft terms describe the service as it is today. They will be completed and reviewed before launch.",
+		"lead": "The rules for using Apercura, for patients and for practitioners alike. The French version is binding.",
 		"sections": {
 			"service": {
 				"heading": "The service",
 				"body": [
-					"Apercura is a free directory of health practitioners registered in France, built from public open data. Using it requires no account."
+					"Apercura is a free directory of health practitioners registered in France, built from public open data, with free online booking for the practitioners who open it. It is published by the entity named in the legal notice.",
+					"Using the directory or booking an appointment requires no account. Using the site means accepting these terms."
 				]
 			},
 			"content": {
 				"heading": "What the pages contain",
 				"body": [
-					"Pages show factual information from public registers, in a neutral order. They carry no ratings, no reviews, no ads and no paid ranking.",
-					"The information can contain errors or be out of date: check it with the practitioner before travelling. Each page says how to report an error."
+					"Pages show factual information from public registers, in a neutral order. They carry no ratings, reviews, advertising or paid ranking.",
+					"The information may contain errors or be out of date: check it with the practitioner before you go. Every page says how to report an error."
+				]
+			},
+			"fees": {
+				"heading": "Fees and conventionnement",
+				"body": [
+					"Pages state the conventionnement sector and OPTAM membership as the Assurance Maladie publishes them, and link to ameli.fr to check them. Bookable pages also show the regulatory notice required by the order of 30 May 2018 (article 5).",
+					"The exact wording of that notice will be copied verbatim after the legal review: until then, it appears below as a field to fill in."
+				]
+			},
+			"booking": {
+				"heading": "Booking an appointment",
+				"body": [
+					"An appointment is confirmed with a code sent by email. Depending on the practitioner’s setting, it is confirmed at once or after they accept it. The link received by email lets you cancel or move it up to the deadline the practitioner sets.",
+					"Give accurate contact details and let the practice know if you cannot come. The times offered are the ones the practitioner publishes: the publisher guarantees neither their availability nor that the appointment takes place, which is the practitioner’s responsibility."
 				]
 			},
 			"health": {
@@ -905,7 +1013,22 @@
 			"practitioners": {
 				"heading": "For practitioners",
 				"body": [
-					"Claiming a page will be free and will require proof of identity. A practitioner who claims a page is responsible for the information they add to it, which must stay factual, as the codes of medical ethics require."
+					"Claiming a page and opening booking are free. Claiming a page requires proof of identity: Pro Santé Connect, the email address in the register, or a document checked by a person.",
+					"The practitioner is responsible for the information they add to their page. It must stay factual, fair and up to date, as the codes of professional conduct require; they state their fees and payment methods before opening their agenda.",
+					"For appointments, the practitioner is the controller of their patients’ data and the publisher their processor. The processing clauses of GDPR article 28 are annexed to the practitioner terms; they are being drafted and will be signed before appointments open.",
+					"The practitioner can export their account data and ask for the account to be closed at any time."
+				]
+			},
+			"removal": {
+				"heading": "Removing a page",
+				"body": [
+					"A practitioner can ask for their page to be removed at any time: the data page explains how. A claimed page can only be removed by its holder."
+				]
+			},
+			"liability": {
+				"heading": "Liability",
+				"body": [
+					"The publisher does its best to keep the service available and accurate, but cannot guarantee it: the service may be interrupted for maintenance or after an incident. It is not responsible for the information practitioners add nor for the appointments themselves. These limits will be specified during the legal review."
 				]
 			},
 			"ip": {
@@ -913,12 +1036,21 @@
 				"body": [
 					"The source code is published under the AGPL-3.0 licence. Directory data is reused under the Licence Ouverte 2.0."
 				]
+			},
+			"law": {
+				"heading": "Governing law and disputes",
+				"body": [
+					"These terms are governed by French law. In case of a dispute, first write to the contact address to look for an amicable solution. Recourse to a consumer mediator and the competent courts will be specified during the legal review."
+				]
 			}
 		},
 		"fields": {
+			"publisher": "Publisher",
 			"effectiveDate": "Effective date",
-			"law": "Applicable law and courts",
-			"contact": "Contact"
+			"law": "Governing law",
+			"lawValue": "French law",
+			"contact": "Contact",
+			"conventionnementWording": "Regulatory notice (order of 30 May 2018, article 5)"
 		}
 	},
 	"Listing": {

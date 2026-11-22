@@ -1,13 +1,14 @@
 import { FieldList, FieldRow, linkStyles } from "@apercura/ui";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { BookletPage } from "~/components/booklet-page";
-import { InstitutionalCover, ProseSection } from "~/components/institutional";
+import { InstitutionalCover, LegalFactRow, ProseSection } from "~/components/institutional";
 import { PageGraph } from "~/components/page-graph";
 import { PublicPage } from "~/components/public-page";
 import { Trail } from "~/components/trail";
 import { serverEnv } from "~/env";
 import { Link } from "~/i18n/navigation";
 import { institutionalMetadata, localeOf, proseSections } from "~/lib/institutional";
+import { LEGAL_TEXTS_REVIEWED, legalFacts } from "~/lib/legal";
 
 export const ensureStatic = "navigation";
 
@@ -17,7 +18,11 @@ export function generateMetadata({ params }: PageProps<"/[locale]/mentions-legal
 	return institutionalMetadata(params, "LegalPage", HREF);
 }
 
-/** LCEN legal notice. The legal entity does not exist yet: its fields print empty. */
+/**
+ * LCEN legal notice (art. 6 III): publisher, publication director, host. The legal entity does
+ * not exist yet: its facts come from the `LEGAL_*` configuration and print as `{{…}}`
+ * placeholders until then (production refuses to start without them).
+ */
 export default async function LegalPage({ params }: PageProps<"/[locale]/mentions-legales">) {
 	const locale = await localeOf(params);
 	setRequestLocale(locale);
@@ -25,12 +30,20 @@ export default async function LegalPage({ params }: PageProps<"/[locale]/mention
 	const tSite = await getTranslations({ locale, namespace: "Site" });
 	const tI = await getTranslations({ locale, namespace: "Institutional" });
 	const section = await proseSections(locale, "LegalPage");
+	const facts = legalFacts(serverEnv);
 	const tbc = tI("toBeCompleted");
-	const host = serverEnv.PUBLIC_HDS_HOST?.trim() || null;
+	// Hosting by an HDS-certified host is only stated where it is true (see lib/pillars.ts).
+	const hdsHost = serverEnv.PUBLIC_HDS_HOST?.trim();
+	const anyMissing = Object.values(facts).some((fact) => fact.missing);
 
 	return (
 		<PublicPage locale={locale} href={HREF}>
-			<InstitutionalCover title={t("title")} lead={t("lead")} mark={tI("draftMark")} />
+			<InstitutionalCover
+				title={t("title")}
+				lead={t("lead")}
+				mark={LEGAL_TEXTS_REVIEWED ? undefined : tI("legalDraftMark")}
+				note={anyMissing ? tI("placeholderNote") : null}
+			/>
 			<BookletPage runningHead={tSite("runningHead")}>
 				<PageGraph
 					locale={locale}
@@ -41,18 +54,56 @@ export default async function LegalPage({ params }: PageProps<"/[locale]/mention
 				<Trail locale={locale} items={[{ label: t("title"), href: HREF }]} />
 				<ProseSection id="editeur" content={section("publisher")}>
 					<FieldList>
-						<FieldRow label={t("fields.name")} emptyLabel={tbc} />
-						<FieldRow label={t("fields.legalForm")} emptyLabel={tbc} />
-						<FieldRow label={t("fields.address")} emptyLabel={tbc} />
-						<FieldRow label={t("fields.registration")} emptyLabel={tbc} />
-						<FieldRow label={t("fields.director")} emptyLabel={tbc} />
-						<FieldRow label={t("fields.contact")} emptyLabel={tbc} />
+						<LegalFactRow label={t("fields.name")} fact={facts.publisherName} emptyLabel={tbc} />
+						<LegalFactRow
+							label={t("fields.legalForm")}
+							fact={facts.publisherLegalForm}
+							emptyLabel={tbc}
+						/>
+						<LegalFactRow
+							label={t("fields.address")}
+							fact={facts.publisherAddress}
+							emptyLabel={tbc}
+						/>
+						<LegalFactRow label={t("fields.phone")} fact={facts.publisherPhone} emptyLabel={tbc} />
+						<LegalFactRow
+							label={t("fields.email")}
+							fact={facts.contactEmail}
+							email
+							emptyLabel={tbc}
+						/>
+						<LegalFactRow
+							label={t("fields.registration")}
+							fact={facts.publisherRegistration}
+							emptyLabel={tbc}
+						/>
+					</FieldList>
+				</ProseSection>
+				<ProseSection id="direction" content={section("director")}>
+					<FieldList>
+						<LegalFactRow
+							label={t("fields.director")}
+							fact={facts.publicationDirector}
+							emptyLabel={tbc}
+						/>
 					</FieldList>
 				</ProseSection>
 				<ProseSection id="hebergeur" content={section("hosting")}>
 					<FieldList>
-						<FieldRow label={t("fields.hostName")} value={host} emptyLabel={tbc} />
-						<FieldRow label={t("fields.hostAddress")} emptyLabel={tbc} />
+						<LegalFactRow label={t("fields.hostName")} fact={facts.hostName} emptyLabel={tbc} />
+						<LegalFactRow
+							label={t("fields.hostAddress")}
+							fact={facts.hostAddress}
+							emptyLabel={tbc}
+						/>
+						<LegalFactRow label={t("fields.hostPhone")} fact={facts.hostPhone} emptyLabel={tbc} />
+						{hdsHost ? (
+							<FieldRow
+								label={t("fields.healthData")}
+								value={t("hdsHosted", { host: hdsHost })}
+								emptyLabel={tbc}
+							/>
+						) : null}
 					</FieldList>
 				</ProseSection>
 				<ProseSection id="code-et-donnees" content={section("ip")}>
@@ -63,6 +114,7 @@ export default async function LegalPage({ params }: PageProps<"/[locale]/mention
 						{t("dataLink")}
 					</Link>
 				</ProseSection>
+				{LEGAL_TEXTS_REVIEWED ? null : <ProseSection id="statut" content={section("review")} />}
 			</BookletPage>
 		</PublicPage>
 	);

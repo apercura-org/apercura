@@ -3,9 +3,10 @@ import { notFound } from "next/navigation";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
 import { SkipLink } from "~/components/skip-link";
+import { serverEnv } from "~/env";
 import { routing } from "~/i18n/routing";
 import { pickMessages } from "~/lib/client-messages";
-import { BRAND, OG_LOCALES, ogImageUrl, THEME_COLOR } from "~/lib/seo";
+import { BRAND, OG_LOCALES, ogImageUrl, siteVerification, THEME_COLOR } from "~/lib/seo";
 import { siteOrigin } from "~/lib/site-url";
 import "../globals.css";
 
@@ -39,6 +40,8 @@ export async function generateMetadata({ params }: LayoutProps<"/[locale]">): Pr
 			images: [{ url: ogImageUrl("annuaire"), width: 1200, height: 630 }],
 		},
 		twitter: { card: "summary_large_image" },
+		// Search Console and Bing Webmaster Tools, when their tokens are configured.
+		verification: siteVerification(serverEnv),
 	};
 }
 
