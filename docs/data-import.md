@@ -185,16 +185,11 @@ it. It uses the same build as the web app.
    `ETL_PROFESSIONS` (default `10,40,50`) and optionally `ETL_WORK_DIR`.
    Size it for the measured peak memory below plus headroom; the task needs
    about 1.2 GB of temporary disk for the downloads.
-2. Clever Tasks do not run `clevercloud/cron.json` themselves: schedule them
-   from a short job of another application. In the web app, add to
-   `clevercloud/cron.json` a line that restarts the task every Monday at 03:00
-   (cron times are UTC), for example with Clever Tools and a token restricted
-   to that task:
-
-   ```json
-   ["0 3 * * 1 /bin/bash -l -c 'cd $ROOT && clever restart --app $ETL_TASK_APP_ID'"]
-   ```
-
+2. Clever Tasks do not run `clevercloud/cron.json` themselves: the web app's
+   `clevercloud/cron.json` restarts the task every Monday at 03:00 UTC
+   through `clevercloud/cron/etl-weekly.sh` (Clever Tools, with a token
+   restricted to that task and `ETL_TASK_APP_ID`). Step by step in
+   [deploy-clever-cloud.md](./deploy-clever-cloud.md#6-import-task).
 3. Alert when a run fails or is blocked (non-zero exit code: `1` failed, `2`
    blocked) and when the last `succeeded` row of `etl_runs` is older than nine
    days.
@@ -202,9 +197,11 @@ it. It uses the same build as the web app.
 A blocked run is resolved by an operator: read `etl_runs.guards` and
 `stats.blockedExamples`, then run `bun run etl:fr --approve=<run_id>` once.
 
-Self-hosting: run the same commands on the host (`DATABASE_URL_ETL` pointing to
-your database), weekly from cron. A single department imports in a few
-minutes.
+Self-hosting: `docker/compose.selfhost.yml` runs the import on demand
+(`docker compose … run --rm etl --department 75`) and weekly from its
+`scheduler` service, with the `apercura_etl` role (see
+[self-hosting.md](./self-hosting.md#first-import)). A single department imports
+in a few minutes.
 
 ## Measured run (department 75, 21/11/2026)
 

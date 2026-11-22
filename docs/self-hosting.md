@@ -1,0 +1,301 @@
+# Self-hosting
+
+Run all of Apercura on your own machine: the public directory, the open data
+import, practitioner accounts and, if you turn it on, online booking. One
+Compose file starts everything from one image; the import of one department
+takes a few minutes.
+
+| Service      | Role                                                                                       |
+| ------------ | ------------------------------------------------------------------------------------------ |
+| `postgres`   | PostgreSQL 17 + PostGIS. Creates the three login roles on its first start                  |
+| `migrate`    | Applies pending migrations, then exits. Runs before the app at every `up`                  |
+| `app`        | The web app (Next.js standalone server), one replica, published on `127.0.0.1:${APP_PORT}` |
+| `scheduler`  | supercronic: `jobs:tick` every 5 minutes, the open data import every Monday at 03:00 UTC   |
+| `etl`        | The import, on demand (`docker compose … run --rm etl`)                                    |
+| `minio`      | S3-compatible storage for photos and encrypted claim documents (not published on the host) |
+| `minio-init` | Creates the private bucket and an access key limited to it, then exits                     |
+| `mailpit`    | Profile `dev` only: catches every email, web UI on `127.0.0.1:${MAILPIT_UI_PORT}`          |
+
+The files are in [`docker/`](../docker): `Dockerfile`, `compose.selfhost.yml`,
+`.env.selfhost.example`, the Postgres init script and the scheduler's
+`crontab`. `docker/compose.yml` is something else: the services of local
+development.
+
+## Health data and HDS
+
+If you install Apercura on hardware you run yourself, for your own patients,
+you host your own data. If you hand that server to someone else (a hosting
+provider, an IT contractor, a cloud machine), French law requires that
+provider to be certified for health data hosting (HDS, article L.1111-8 of the
+Code de la santé publique) as soon as online booking is on. An appointment with
+a practitioner is health data. Application-level encryption does not change
+that obligation.
+
+Apercura itself is not "HDS-certified": software cannot be. Leave
+`PUBLIC_HDS_HOST` empty unless the data really is hosted by a certified
+provider under an HDS contract; the public pages then name that provider.
+
+With `FEATURE_BOOKING=false` (the default) there is no health data at all: see
+[Directory-only mode](#directory-only-mode).
+
+## Prerequisites
+
+- A Linux server, amd64. The official PostGIS image is published for amd64
+  only: arm64 machines (Apple Silicon, Ampere) run it emulated, which works but
+  makes the import several times slower.
+- Docker Engine with Compose v2.24 or later.
+- 2 vCPU, 4 GB of RAM (the import peaks at about 0.8 GB, plus PostgreSQL), and
+  20 GB of disk. The import downloads about 1.2 GB of files into the
+  container's temporary folder at each run.
+- A domain name and a reverse proxy that terminates TLS (Caddy, nginx,
+  Traefik).
+- Outgoing HTTPS to `www.data.gouv.fr`, `static.data.gouv.fr`,
+  `geo.api.gouv.fr` and `data.geopf.fr` (the open data sources), and an SMTP
+  provider for email.
+- Optional: [Bun](https://bun.sh) 1.4 to generate the secrets with
+  `bun run keys:generate`. The image can print them too.
+
+## Start
+
+```sh
+git clone https://github.com/maxgfr/apercura.git
+cd apercura
+cp docker/.env.selfhost.example docker/.env.selfhost
+chmod 600 docker/.env.selfhost
+```
+
+Fill in `docker/.env.selfhost`:
+
+1. `APP_URL`: the public origin, e.g. `https://annuaire.example.org`.
+2. The secrets. `bun run keys:generate` prints `ENCRYPTION_KEYS`,
+   `ENCRYPTION_ACTIVE_KEY`, `BLIND_INDEX_KEY`, `BETTER_AUTH_SECRET`,
+   `RATE_LIMIT_KEY` and `ALTCHA_HMAC_KEY`; add `REVALIDATE_SECRET` and
+   `JOBS_SECRET` with `openssl rand -base64 32`. Without Bun, build the image
+   first (step below) and run `docker run --rm apercura:local keys`, which
+   prints all of them.
+3. The passwords of `POSTGRES_PASSWORD`, `APERCURA_APP_DB_PASSWORD`,
+   `APERCURA_ETL_DB_PASSWORD`, `MINIO_ROOT_PASSWORD` and
+   `S3_SECRET_ACCESS_KEY`. They end up in connection URLs: letters and digits
+   only, e.g. `openssl rand -hex 24` for each.
+4. `SMTP_URL` and `MAIL_FROM` for your email provider.
+
+Every variable is described in [configuration.md](./configuration.md). Then
+build and start:
+
+```sh
+docker compose -f docker/compose.selfhost.yml --env-file docker/.env.selfhost up -d --build
+```
+
+To save typing, the examples below use an alias:
+
+```sh
+alias apercura-compose='docker compose -f docker/compose.selfhost.yml --env-file docker/.env.selfhost'
+apercura-compose ps
+curl -s http://127.0.0.1:3000/api/health      # {"status":"ok"}
+```
+
+`/api/health` answers 200 when the app runs and reaches its database, 503
+otherwise, without any detail. The image's own Docker health check uses it.
+
+To try the stack without an SMTP provider, add `--profile dev` to `up`:
+Mailpit then receives every email (sign-up codes, booking confirmations) and
+shows them on `http://127.0.0.1:8025`. Never use it in production: nothing is
+delivered.
+
+## First import
+
+The directory is empty until the first import. Start with one department:
+
+```sh
+apercura-compose run --rm etl --department 75
+```
+
+It downloads the national files (Annuaire Santé, FINESS+, Ameli, all under
+the Licence Ouverte 2.0), imports the communes on the first run, then merges
+the practitioners with a structure in that department. Paris took about
+6 minutes (2.5 of them downloading) on a laptop. Then all of France, when you are ready:
+
+```sh
+apercura-compose run --rm etl
+```
+
+The import exits with `0` (succeeded or skipped because nothing changed), `1`
+(failed) or `2` (blocked by a circuit breaker; read `etl_runs.guards`, then
+rerun with `--approve=<run_id>`). Every flag is in
+[data-import.md](./data-import.md); `apercura-compose run --rm etl --help`
+lists them.
+
+The scheduler reruns the import every Monday at 03:00 UTC. Set
+`ETL_SCHEDULE_ARGS=--department 75` to keep it to one department, and follow
+it with `apercura-compose logs -f scheduler`.
+
+## Scheduled jobs
+
+The `scheduler` service runs [`docker/crontab`](../docker/crontab) with
+supercronic: `jobs:tick` every 5 minutes (expirations, reminders, the email
+outbox, next free slots, purges of patient data and claim documents) and the
+weekly import. Each sub-job holds a Postgres advisory lock, so a slow run never
+overlaps the next. To run them by hand:
+
+```sh
+apercura-compose exec scheduler apercura jobs:tick
+apercura-compose exec scheduler apercura jobs:tick outbox
+```
+
+The jobs refresh cached practitioner pages through `APP_URL/api/revalidate`:
+the scheduler must be able to reach the public URL. If your server cannot reach
+its own public name (no hairpin NAT), add an `extra_hosts` entry pointing the
+name to the host, e.g. `annuaire.example.org:host-gateway`, in an override file.
+The import sends its tags straight to `http://app:3000` instead.
+
+## First administrator
+
+Administrators review claims and reports. There is no sign-up for them:
+
+1. Create an account at `/pro/inscription`, confirm the email, and set up a
+   second factor at `/pro/securite`.
+2. Promote it:
+
+   ```sh
+   apercura-compose exec postgres psql -U postgres -d apercura \
+     -c "UPDATE directory.\"user\" SET is_platform_admin = true WHERE email = 'you@example.org';"
+   ```
+
+The admin pages are then under `/pro/admin`.
+
+## Reverse proxy
+
+The app only listens on `127.0.0.1:${APP_PORT}`. Put a reverse proxy in front
+of it for TLS and set `TRUSTED_PROXY_COUNT` to the number of proxies between
+the visitor and the app (1 for a single Caddy or nginx). The app then reads the
+client address from the last trusted `X-Forwarded-For` entry for its rate
+limits, and the host from `X-Forwarded-Host`. With `0`, forwarded headers are
+ignored and every visitor shares one rate-limit bucket; never set it higher
+than the real number of proxies, or clients can choose their own address.
+
+Caddy (certificates included):
+
+```caddy
+annuaire.example.org {
+	reverse_proxy 127.0.0.1:3000
+}
+```
+
+nginx:
+
+```nginx
+location / {
+    proxy_pass http://127.0.0.1:3000;
+    proxy_set_header Host $host;
+    proxy_set_header X-Forwarded-Host $host;
+    proxy_set_header X-Forwarded-Proto $scheme;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+}
+```
+
+In production, any other host name answers a 308 to `APP_URL`
+(`CANONICAL_HOST_REDIRECT=false` turns it off). Loopback hosts and `/api/*`
+are left alone, so `curl http://127.0.0.1:3000/api/health` keeps working.
+
+## Online booking
+
+Set `FEATURE_BOOKING=true` and recreate the app and the scheduler
+(`apercura-compose up -d`). The encryption keys must be set; the app refuses to
+start if the booking overlap constraint is missing. Read
+[Health data and HDS](#health-data-and-hds) first.
+
+## Backups and restore
+
+Three things to back up, together:
+
+1. **The database**, with `pg_dump` (custom format, compressed):
+
+   ```sh
+   apercura-compose exec -T postgres pg_dump -U postgres -Fc apercura > "apercura-$(date +%F).dump"
+   ```
+
+2. **The files** in MinIO (photos, claim documents), e.g. a copy of the
+   `minio-data` volume while MinIO is stopped, or `mc mirror` to another S3.
+3. **`docker/.env.selfhost`**, kept apart from the dumps. Patient data and
+   claim documents are encrypted with `ENCRYPTION_KEYS` and `BLIND_INDEX_KEY`:
+   a dump without them cannot be read, by you either.
+
+Run the dump daily from the host's cron, keep several days, copy them off the
+machine, and test a restore regularly. To restore into a fresh stack:
+
+```sh
+apercura-compose down                      # keep the volumes of the old stack apart first
+docker volume rm apercura-selfhost_postgres-data
+apercura-compose up -d postgres            # recreates the roles from docker/.env.selfhost
+apercura-compose exec -T postgres pg_restore -U postgres -d apercura --clean --if-exists < apercura-2026-11-22.dump
+apercura-compose up -d                     # migrations, app, scheduler
+```
+
+The roles are not part of a `pg_dump`: the init script recreates them on an
+empty volume with the passwords of the environment file, before the restore.
+
+## Upgrades
+
+```sh
+git pull
+apercura-compose up -d --build
+```
+
+The image is rebuilt, `migrate` applies the new migrations, then the app and
+the scheduler restart on the new version. Read the release notes first and take
+a backup: migrations only go forward, a rollback is a restore. Pages cached by
+the previous version are regenerated on their first request; the `next-cache`
+volume can be deleted at any time.
+
+To move to a new PostgreSQL major version, dump, change the image in
+`docker/compose.selfhost.yml`, restore into a new volume.
+
+## Key rotation
+
+| Secret                              | How                                                                                                                                                                             |
+| ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `ENCRYPTION_KEYS`                   | Add a new version (`1:old,2:new`), set `ENCRYPTION_ACTIVE_KEY=2`, `apercura-compose up -d`. New data uses version 2; keep version 1 listed while data encrypted with it exists. |
+| `BLIND_INDEX_KEY`                   | Do not rotate it: existing indexes (search of encrypted emails and phones) would stop matching.                                                                                 |
+| `BETTER_AUTH_SECRET`                | Replace it: every session ends, users sign in again.                                                                                                                            |
+| `RATE_LIMIT_KEY`, `ALTCHA_HMAC_KEY` | Replace at any time: rate-limit counters reset, pending booking challenges fail once.                                                                                           |
+| `REVALIDATE_SECRET`, `JOBS_SECRET`  | Replace at any time; the app, the scheduler and the import read the same file.                                                                                                  |
+| Database passwords                  | `ALTER ROLE apercura_app WITH PASSWORD '…';` in `psql`, update the file, `apercura-compose up -d`. The init script only runs on an empty volume.                                |
+| `S3_SECRET_ACCESS_KEY`              | Update the file and rerun `apercura-compose up -d`: `minio-init` sets the new secret.                                                                                           |
+
+`apercura-compose up -d` recreates every container whose environment changed.
+
+## Cache and scaling
+
+Pages are rendered on their first visit and cached on the app's disk
+(`next-cache` volume and the container's build folder). Run **one replica**:
+several replicas would each keep their own cache and miss each other's
+revalidations. Beyond one instance, a shared cache handler (Redis or Valkey)
+is needed; it is not provided yet. A single instance with 2 to 4 GB of RAM
+serves the whole of France.
+
+## Directory-only mode
+
+With `FEATURE_BOOKING=false` (the default) Apercura is a public directory with
+practitioner accounts and no health data. It can then run on any Node.js host,
+Vercel included, for a demo or a fork:
+
+- a PostgreSQL 17+ with PostGIS, `pg_trgm`, `unaccent` and `btree_gist`
+  (applied by the migrations);
+- the web app built from `apps/web` (`bun install`, then `bun run build`), with
+  `APP_URL`, `DATABASE_URL`, `BETTER_AUTH_SECRET`, `RATE_LIMIT_KEY`,
+  `REVALIDATE_SECRET` and SMTP;
+- the migrations and the import run from any machine that reaches the database
+  (`bun run db:migrate`, `bun run etl:fr`), weekly;
+- `FEATURE_CLAIM_DOCUMENTS=false` if you do not want to store claim documents
+  (then no S3 storage and no encryption keys are needed: practitioners claim
+  with Pro Santé Connect or the registry email).
+
+`jobs:tick` still refreshes the next free slots and purges claim documents;
+without booking and without claim documents it has nothing to do.
+
+## Smoke test
+
+`docker/smoke-test.sh` builds the image, starts the stack under its own project
+name on port 3090 with throwaway secrets, imports the **synthetic** fixtures,
+checks the home page, a practitioner page, `/api/health`, `jobs:tick` and the
+import role's grants, then removes everything. CI runs it on every pull request.

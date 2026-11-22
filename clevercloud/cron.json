@@ -1,0 +1,4 @@
+[
+	"*/5 * * * * $ROOT/clevercloud/cron/jobs-tick.sh",
+	"0 3 * * 1 $ROOT/clevercloud/cron/etl-weekly.sh"
+]

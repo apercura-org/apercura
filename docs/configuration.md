@@ -53,6 +53,29 @@ changed. Each sub-job holds a Postgres advisory lock, so overlapping
 runs are harmless; `bun run jobs:tick outbox` (or `expire`, `reminders`, `next-free`, `purge`)
 (or `claim-documents`) runs one of them. It refuses to run when the overlap constraint is missing.
 
+## Self-hosting (`docker/compose.selfhost.yml`)
+
+The Compose file builds the connection URLs and passes the variables above to
+each service; these only exist there (template: `docker/.env.selfhost.example`,
+guide: `docs/self-hosting.md`).
+
+| Variable                                               | Role                                                                                                          |
+| ------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------- |
+| `POSTGRES_PASSWORD`                                    | Superuser of the database container, used by the migrations only.                                             |
+| `APERCURA_APP_DB_PASSWORD`, `APERCURA_ETL_DB_PASSWORD` | Passwords of `apercura_app` and `apercura_etl`, set by `docker/postgres/10-apercura-roles.sh` on first start. |
+| `APERCURA_READONLY_DB_PASSWORD`                        | Optional; empty leaves `apercura_readonly` without login.                                                     |
+| `MINIO_ROOT_USER`, `MINIO_ROOT_PASSWORD`               | MinIO administrator; `minio-init` creates the bucket and the app's key (`S3_ACCESS_KEY_ID`) limited to it.    |
+| `APP_BIND`, `APP_PORT`                                 | Host address and port the app is published on (default `127.0.0.1:3000`).                                     |
+| `MAILPIT_UI_PORT`                                      | Host port of Mailpit's web UI (profile `dev`).                                                                |
+| `ETL_SCHEDULE_ARGS`                                    | Flags of the scheduler's weekly import, e.g. `--department 75`. Empty: all of France.                         |
+| `INTERNAL_APP_URL`                                     | Set by the Compose file (`http://app:3000`): where the import sends its cache tags instead of `APP_URL`.      |
+| `APERCURA_IMAGE`                                       | Tag of the image the stack builds and runs (default `apercura:local`).                                        |
+
+`GET /api/health` answers `200 {"status":"ok"}` when the app reaches its
+database and `503 {"status":"unavailable"}` otherwise, without details: the
+image's health check, Clever Cloud's `CC_HEALTH_CHECK_PATH` and reverse proxies
+use it.
+
 ## Platform administrators
 
 Administrators review claims (`/pro/admin/revendications`), error reports and
