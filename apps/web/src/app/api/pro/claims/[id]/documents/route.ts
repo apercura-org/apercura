@@ -3,6 +3,7 @@ import { readForm, requireMfaSession } from "~/server/auth/route-guard";
 import { addClaimDocument, ClaimError, MAX_DOCUMENT_BYTES } from "~/server/claims/service";
 import { getDb } from "~/server/db";
 import { claimDocumentsEnabled } from "~/server/features";
+import { refuseCrossSite } from "~/server/http/same-origin";
 import { getStorage } from "~/server/storage";
 
 const kind = z.enum(["cps_card", "ordre_attestation"]);
@@ -16,6 +17,8 @@ export async function POST(
 	request: Request,
 	context: RouteContext<"/api/pro/claims/[id]/documents">,
 ) {
+	const crossSite = refuseCrossSite(request);
+	if (crossSite) return crossSite;
 	if (!claimDocumentsEnabled()) return Response.json({ error: "DISABLED" }, { status: 404 });
 	const db = getDb();
 	const guard = await requireMfaSession(db, request.headers);

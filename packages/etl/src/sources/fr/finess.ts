@@ -22,11 +22,38 @@ type DataGouvResource = {
 	type: string;
 };
 
+/**
+ * Whether a resource URL read from the data.gouv.fr API may be downloaded:
+ * HTTPS on data.gouv.fr or one of its subdomains (`static.data.gouv.fr`). The
+ * URL comes from a third-party answer, so it is never trusted to point at an
+ * internal address or another host.
+ */
+export function isDataGouvUrl(value: string): boolean {
+	try {
+		const url = new URL(value);
+		return (
+			url.protocol === "https:" &&
+			url.username === "" &&
+			url.password === "" &&
+			(url.port === "" || url.port === "443") &&
+			(url.hostname === "data.gouv.fr" || url.hostname.endsWith(".data.gouv.fr"))
+		);
+	} catch {
+		return false;
+	}
+}
+
 /** Resolves the most recent daily JSON.gz resource of the FINESS+ dataset. */
 export async function resolveLatestFinessUrl(datasetApiUrl: string): Promise<string> {
 	const dataset = await fetchJson<{ resources: DataGouvResource[] }>(datasetApiUrl);
 	const candidates = dataset.resources
-		.filter((resource) => /json\.gz$/i.test(resource.url) && /journalier/i.test(resource.title))
+		.filter(
+			(resource) =>
+				typeof resource.url === "string" &&
+				isDataGouvUrl(resource.url) &&
+				/json\.gz$/i.test(resource.url) &&
+				/journalier/i.test(resource.title),
+		)
 		.sort((a, b) => b.last_modified.localeCompare(a.last_modified));
 	const latest = candidates[0];
 	if (!latest) throw new Error("No daily FINESS+ JSON.gz resource found on data.gouv.fr");

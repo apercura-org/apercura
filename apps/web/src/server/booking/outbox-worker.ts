@@ -2,6 +2,7 @@ import { randomUUID } from "node:crypto";
 import type { Database } from "@apercura/db";
 import { appointments, otpChallenges, outbox } from "@apercura/db/schema";
 import { and, eq, sql } from "drizzle-orm";
+import { mailErrorSummary } from "~/server/mail/error-summary";
 import { composeMail, type OutboxRow, type RenderedMail } from "./mail-content";
 import type { BookingRuntime } from "./runtime";
 import { at } from "./sql-time";
@@ -69,7 +70,10 @@ async function smtpTransport(): Promise<MailTransport> {
 					responseCode >= 500 &&
 					/RCPT/i.test(command ?? "")
 				) {
-					throw new PermanentMailError(`SMTP ${responseCode} on RCPT`);
+					throw Object.assign(new PermanentMailError(`SMTP ${responseCode} on RCPT`), {
+						responseCode,
+						command: "RCPT TO",
+					});
 				}
 				throw error;
 			}
@@ -189,7 +193,8 @@ export async function processOutbox(db: Database, options: ProcessOptions): Prom
 					.where(eq(otpChallenges.id, row.otpChallengeId));
 			}
 		} catch (error) {
-			const message = error instanceof Error ? `${error.name}: ${error.message}` : "Unknown error";
+			// Never the SMTP reply itself: it quotes the patient's address.
+			const message = mailErrorSummary(error);
 			const delay =
 				error instanceof PermanentMailError ? null : retryDelay(row.attempts, options.random);
 			if (delay === null) {

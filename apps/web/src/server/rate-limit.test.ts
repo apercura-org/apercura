@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { clientRateLimitKey } from "./rate-limit-key";
+import { clientRateLimitKey, emailRateLimitKey } from "./rate-limit-key";
 
 const headers = (forwarded?: string) =>
 	new Headers(forwarded ? { "x-forwarded-for": forwarded } : {});
@@ -29,6 +29,21 @@ describe("clientRateLimitKey", () => {
 	it("scopes keys", () => {
 		expect(clientRateLimitKey("a", headers(), env(0))).not.toBe(
 			clientRateLimitKey("b", headers(), env(0)),
+		);
+	});
+});
+
+describe("emailRateLimitKey", () => {
+	it("keys an address without storing it, whatever its case", () => {
+		const key = emailRateLimitKey("auth/sign-in/email", " Camille.Exemple@Example.test ", {
+			RATE_LIMIT_KEY: "test-key",
+		});
+		expect(key).toMatch(/^auth\/sign-in\/email:[\w-]{43}$/);
+		expect(key.toLowerCase()).not.toContain("camille");
+		expect(key).toBe(
+			emailRateLimitKey("auth/sign-in/email", "camille.exemple@example.test", {
+				RATE_LIMIT_KEY: "test-key",
+			}),
 		);
 	});
 });

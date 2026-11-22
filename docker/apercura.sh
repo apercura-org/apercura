@@ -9,7 +9,7 @@ Usage: apercura <command> [arguments]
   serve                  Start the web app (default; listens on $PORT, 3000)
   migrate                Apply pending database migrations (DATABASE_URL_MIGRATE)
   jobs:tick [job]        Run the scheduled jobs once (expire, reminders, outbox, next-free,
-                         purge, claim-documents)
+                         purge, claim-documents), or rotate-keys after a key rotation
   etl:fr [flags]         Import the French open data (e.g. --department 75, --dry-run)
   etl:places [flags]     Import the communes, departments and regions
   etl:outbox             Send the pending cache tags to the app

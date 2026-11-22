@@ -1,6 +1,7 @@
 # Local development services.
 #   docker compose -f docker/compose.yml up -d
-# Ports: POSTGRES_PORT, MINIO_PORT and MINIO_CONSOLE_PORT move the host side.
+# Ports: POSTGRES_PORT, MINIO_PORT and MINIO_CONSOLE_PORT move the host side. Every port is
+# published on 127.0.0.1 only: these services use well-known development passwords.
 name: apercura
 
 services:
@@ -14,7 +15,7 @@ services:
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: apercura
     ports:
-      - "${POSTGRES_PORT:-5432}:5432"
+      - "127.0.0.1:${POSTGRES_PORT:-5432}:5432"
     volumes:
       - postgres-data:/var/lib/postgresql/data
     healthcheck:
@@ -25,11 +26,11 @@ services:
       start_period: 10s
 
   mailpit:
-    image: axllent/mailpit:latest
+    image: axllent/mailpit:v1.34.0
     restart: unless-stopped
     ports:
-      - "1025:1025" # SMTP
-      - "8025:8025" # Web UI
+      - "127.0.0.1:1025:1025" # SMTP
+      - "127.0.0.1:8025:8025" # Web UI
     environment:
       MP_SMTP_AUTH_ACCEPT_ANY: "1"
       MP_SMTP_AUTH_ALLOW_INSECURE: "1"
@@ -46,8 +47,8 @@ services:
       MINIO_ROOT_USER: apercura
       MINIO_ROOT_PASSWORD: apercura-dev-only
     ports:
-      - "${MINIO_PORT:-9000}:9000" # S3 API
-      - "${MINIO_CONSOLE_PORT:-9001}:9001" # Web console
+      - "127.0.0.1:${MINIO_PORT:-9000}:9000" # S3 API
+      - "127.0.0.1:${MINIO_CONSOLE_PORT:-9001}:9001" # Web console
     volumes:
       - minio-data:/data
     healthcheck:

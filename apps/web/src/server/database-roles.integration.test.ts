@@ -1,0 +1,187 @@
+/**
+ * Least privilege of the database roles (migrations 0004, 0006, 0010, 0012,
+ * 0013) against a real, migrated database (DATABASE_URL_TEST). Skipped when
+ * the variable is unset; CI runs it in the `migrations` job.
+ *
+ * - apercura_etl (the open data import) reads no patient data, no account and
+ *   no claim, and cannot rewrite what practitioners own.
+ * - apercura_readonly (support, audits) writes nothing and reads no secret.
+ * - apercura_app cannot rewrite or erase the audit logs.
+ *
+ * The secret-column check is a scan, not a list: a new column whose name looks
+ * like a secret fails it until a migration keeps it from the read-only role.
+ */
+import { createDb, type Database } from "@apercura/db";
+import { afterAll, beforeAll, describe, expect, it } from "vitest";
+
+const url = process.env.DATABASE_URL_TEST;
+
+const SCHEMAS = ["directory", "care"] as const;
+
+/** Column names that hold secrets (tokens, hashes of tokens, keys, codes, passwords). */
+const SECRET_COLUMN =
+	/(^|_)(token|secret|password|salt|nonce|wrapped_dek|backup_codes|code_enc|code_hash|value)($|_)|_token_hash$|_key_hash$/;
+
+/** Names that look secret but are not. */
+const NOT_SECRET = new Set([
+	"directory.account.access_token_expires_at",
+	"directory.account.refresh_token_expires_at",
+	"care.calendars.ics_token_created_at",
+	// Import metadata (key/value pairs such as the last run's date).
+	"directory.meta.value",
+	// Fences two workers claiming the same email; it opens nothing.
+	"care.outbox.lease_token",
+]);
+
+/** Tables the import may never read. */
+const ETL_FORBIDDEN = [
+	'directory."user"',
+	"directory.session",
+	"directory.account",
+	"directory.verification",
+	"directory.two_factor",
+	"directory.passkey",
+	"directory.organization",
+	"directory.member",
+	"directory.invitation",
+	"directory.claims",
+	"directory.claim_checks",
+	"directory.claim_documents",
+	"directory.removal_requests",
+	"directory.reports",
+	"directory.platform_audit_events",
+	"directory.rate_limits",
+	"directory.auth_rate_limit",
+];
+
+describe.skipIf(!url)("database roles (database)", () => {
+	let db: Database;
+	let columns: { schema: string; table: string; column: string }[];
+	let tables: { schema: string; table: string }[];
+
+	beforeAll(async () => {
+		db = createDb({ url: url as string, max: 2 });
+		const sql = db.$client;
+		columns = await sql<{ schema: string; table: string; column: string }[]>`
+			SELECT c.table_schema AS schema, c.table_name AS table, c.column_name AS column
+			FROM information_schema.columns c
+			JOIN information_schema.tables t
+				ON t.table_schema = c.table_schema AND t.table_name = c.table_name
+			WHERE c.table_schema = ANY (${[...SCHEMAS]}::text[]) AND t.table_type = 'BASE TABLE'
+		`;
+		tables = [...new Map(columns.map((c) => [`${c.schema}.${c.table}`, c])).values()].map(
+			({ schema, table }) => ({ schema, table }),
+		);
+	});
+
+	afterAll(async () => {
+		await db?.close();
+	});
+
+	const qualified = (schema: string, table: string) =>
+		`${schema}.${table === "user" ? '"user"' : table}`;
+
+	async function can(role: string, target: string, privilege: string) {
+		const [row] = await db.$client<{ ok: boolean }[]>`
+			SELECT has_table_privilege(${role}, ${target}, ${privilege}) AS ok
+		`;
+		return row?.ok === true;
+	}
+
+	async function canColumn(role: string, target: string, column: string, privilege: string) {
+		const [row] = await db.$client<{ ok: boolean }[]>`
+			SELECT has_column_privilege(${role}, ${target}, ${column}, ${privilege}) AS ok
+		`;
+		return row?.ok === true;
+	}
+
+	it("keeps the import out of patient data, accounts and claims", async () => {
+		const [schema] = await db.$client<{ ok: boolean }[]>`
+			SELECT has_schema_privilege('apercura_etl', 'care', 'USAGE') AS ok
+		`;
+		expect(schema?.ok).toBe(false);
+		const readable: string[] = [];
+		for (const { schema: name, table } of tables.filter((t) => t.schema === "care")) {
+			if (await can("apercura_etl", qualified(name, table), "SELECT")) readable.push(table);
+		}
+		for (const target of ETL_FORBIDDEN) {
+			for (const privilege of ["SELECT", "INSERT", "UPDATE", "DELETE"]) {
+				if (await can("apercura_etl", target, privilege)) readable.push(`${target} ${privilege}`);
+			}
+		}
+		expect(readable).toEqual([]);
+	});
+
+	it("never lets the import rewrite what practitioners own", async () => {
+		for (const column of ["slug", "claim_status", "owner_org_id", "next_free_at"]) {
+			expect(
+				await canColumn("apercura_etl", "directory.practitioners", column, "UPDATE"),
+				column,
+			).toBe(false);
+		}
+		expect(await canColumn("apercura_etl", "directory.activities", "hidden", "UPDATE")).toBe(false);
+		for (const table of ["practitioner_profiles", "practitioner_slug_aliases", "suppressions"]) {
+			expect(await can("apercura_etl", `directory.${table}`, "UPDATE"), table).toBe(false);
+		}
+	});
+
+	it("gives the read-only role no write access at all", async () => {
+		const writable: string[] = [];
+		for (const { schema, table } of tables) {
+			for (const privilege of ["INSERT", "UPDATE", "DELETE", "TRUNCATE"]) {
+				if (await can("apercura_readonly", qualified(schema, table), privilege)) {
+					writable.push(`${schema}.${table} ${privilege}`);
+				}
+			}
+		}
+		expect(writable).toEqual([]);
+	});
+
+	it("keeps every secret column from the read-only role", async () => {
+		const secrets = columns.filter(
+			(c) => SECRET_COLUMN.test(c.column) && !NOT_SECRET.has(`${c.schema}.${c.table}.${c.column}`),
+		);
+		// The scan must see the known secrets, or it proves nothing.
+		const names = secrets.map((c) => `${c.schema}.${c.table}.${c.column}`);
+		expect(names).toEqual(
+			expect.arrayContaining([
+				"directory.session.token",
+				"directory.account.password",
+				"directory.two_factor.secret",
+				"directory.verification.value",
+				"directory.claim_checks.secret_hash",
+				"care.organization_keys.wrapped_dek",
+				"care.otp_challenges.code_enc",
+				"care.appointments.manage_token_hash",
+				"care.calendars.ics_token_hash",
+			]),
+		);
+		const readable: string[] = [];
+		for (const c of secrets) {
+			if (await canColumn("apercura_readonly", qualified(c.schema, c.table), c.column, "SELECT")) {
+				readable.push(`${c.schema}.${c.table}.${c.column}`);
+			}
+		}
+		expect(readable).toEqual([]);
+	});
+
+	it("keeps both audit logs append-only for the app", async () => {
+		for (const target of ["care.audit_events", "directory.platform_audit_events"]) {
+			expect(await can("apercura_app", target, "INSERT"), target).toBe(true);
+			for (const privilege of ["UPDATE", "DELETE", "TRUNCATE"]) {
+				expect(await can("apercura_app", target, `${privilege}`), `${target} ${privilege}`).toBe(
+					false,
+				);
+			}
+		}
+	});
+
+	it("leaves nothing to PUBLIC on the application schemas", async () => {
+		const open = await db.$client<{ schema: string }[]>`
+			SELECT nspname AS schema FROM pg_namespace
+			WHERE nspname = ANY (${[...SCHEMAS]}::text[])
+				AND (has_schema_privilege('public', oid, 'USAGE') OR has_schema_privilege('public', oid, 'CREATE'))
+		`;
+		expect(open).toEqual([]);
+	});
+});

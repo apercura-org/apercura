@@ -24,6 +24,7 @@ import {
 	generateOtpSalt,
 	hashOtp,
 	hashToken,
+	needsRewrap,
 	normalizeEmail,
 	normalizePhone,
 	unwrapDek,
@@ -115,6 +116,45 @@ export async function activeDataKey(db: Executor, organizationId: string): Promi
 		throw new Error("Organization data key is missing: call ensureOrganizationKey first");
 	}
 	return current;
+}
+
+/**
+ * Master key rotation (docs/self-hosting.md): re-wraps every organization data key still wrapped
+ * by an older master key with the active one. The data encrypted with the data keys does not
+ * change, so this is fast. Each row is updated only if nobody re-wrapped it meanwhile. Returns
+ * how many keys were re-wrapped and how many are still wrapped by another key (0 once done).
+ */
+export async function rewrapDataKeys(
+	db: Database,
+): Promise<{ rewrapped: number; remaining: number }> {
+	const ring = keyring();
+	const rows = await db
+		.select({
+			organizationId: organizationKeys.organizationId,
+			version: organizationKeys.version,
+			wrappedDek: organizationKeys.wrappedDek,
+		})
+		.from(organizationKeys);
+	let rewrapped = 0;
+	for (const row of rows) {
+		if (!needsRewrap(row.wrappedDek, ring)) continue;
+		const aad = dekAad(row.organizationId);
+		const updated = await db
+			.update(organizationKeys)
+			.set({ wrappedDek: wrapDek(unwrapDek(row.wrappedDek, ring, aad), ring, aad) })
+			.where(
+				and(
+					eq(organizationKeys.organizationId, row.organizationId),
+					eq(organizationKeys.version, row.version),
+					eq(organizationKeys.wrappedDek, row.wrappedDek),
+				),
+			)
+			.returning({ version: organizationKeys.version });
+		rewrapped += updated.length;
+	}
+	dataKeyCache.clear();
+	const left = await db.select({ wrappedDek: organizationKeys.wrappedDek }).from(organizationKeys);
+	return { rewrapped, remaining: left.filter((row) => needsRewrap(row.wrappedDek, ring)).length };
 }
 
 // ---------------------------------------------------------------------------

@@ -11,7 +11,7 @@ import { z } from "zod";
 const optionalString = z.string().min(1).optional();
 const optionalUrl = z.url().optional();
 
-const serverSchema = z.object({
+const serverFields = z.object({
 	NODE_ENV: z.enum(["development", "test", "production"]).default("development"),
 
 	APP_URL: z.url(),
@@ -98,6 +98,41 @@ const serverSchema = z.object({
 		.enum(["true", "false", "1", "0"])
 		.default("true")
 		.transform((value) => value === "true" || value === "1"),
+});
+
+/** Secrets that sign or derive keys: guessable values would make them pointless. */
+const SECRETS = [
+	"BETTER_AUTH_SECRET",
+	"ALTCHA_HMAC_KEY",
+	"RATE_LIMIT_KEY",
+	"REVALIDATE_SECRET",
+	"JOBS_SECRET",
+] as const;
+const MIN_SECRET_LENGTH = 32;
+
+/**
+ * Production refuses to start without the session secret, or with any secret
+ * shorter than 32 characters (`bun run keys:generate` prints 44).
+ */
+const serverSchema = serverFields.superRefine((env, context) => {
+	if (env.NODE_ENV !== "production") return;
+	if (!env.BETTER_AUTH_SECRET) {
+		context.addIssue({
+			code: "custom",
+			path: ["BETTER_AUTH_SECRET"],
+			message: "required in production (bun run keys:generate)",
+		});
+	}
+	for (const name of SECRETS) {
+		const value = env[name];
+		if (value !== undefined && value.length < MIN_SECRET_LENGTH) {
+			context.addIssue({
+				code: "custom",
+				path: [name],
+				message: `must be at least ${MIN_SECRET_LENGTH} characters in production`,
+			});
+		}
+	}
 });
 
 const clientSchema = z.object({

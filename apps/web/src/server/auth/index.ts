@@ -11,12 +11,14 @@ import { serverEnv } from "~/env";
 import { getDb } from "~/server/db";
 import { pscConfigured } from "~/server/features";
 import { emailLocale, sendVerificationEmail } from "~/server/mail/auth-emails";
+import { consumeRateLimit, emailRateLimitKey } from "~/server/rate-limit";
 import { ac, roles } from "./access";
 import { CLIENT_IP_HEADER } from "./client-ip";
 import { hasSecondFactor, secondFactors } from "./membership";
 import {
 	alwaysRequiresMfa,
 	DISABLED_PATHS,
+	EMAIL_RATE_LIMITS,
 	factorsLeftAfter,
 	MFA_SESSION_PATHS,
 	mfaMethodOf,
@@ -24,6 +26,7 @@ import {
 	PSC_PROVIDER_ID,
 	pscRequestProblem,
 	requiresStepUp,
+	sessionTooOld,
 	TRUST_DEVICE_PATHS,
 } from "./policy";
 import { pscProviderConfig } from "./psc";
@@ -188,6 +191,13 @@ function createAuth() {
 				if (OAUTH_PATHS.has(path) && pscRequestProblem(body, pscConfigured())) {
 					throw new APIError("NOT_FOUND", { message: "Not found" });
 				}
+				const emailLimit = EMAIL_RATE_LIMITS[path];
+				if (emailLimit && isProduction && typeof body?.email === "string") {
+					const key = emailRateLimitKey(`auth${path}`, body.email);
+					if (!(await consumeRateLimit(getDb(), key, emailLimit))) {
+						throw new APIError("TOO_MANY_REQUESTS", { message: "Too many requests." });
+					}
+				}
 				if (!alwaysRequiresMfa(path) && !requiresStepUp(path)) {
 					if (TRUST_DEVICE_PATHS.has(path) && body?.trustDevice) {
 						// A trusted device would let the next password sign-in skip the second factor.
@@ -199,6 +209,9 @@ function createAuth() {
 				if (!current) {
 					// No session: the endpoint itself refuses (or it is a trusted server call).
 					return;
+				}
+				if (sessionTooOld(current.session.createdAt)) {
+					throw new APIError("UNAUTHORIZED", { message: "Session expired." });
 				}
 				if (!current.session.mfaVerifiedAt && alwaysRequiresMfa(path)) {
 					throw mfaRequired();

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { AuthColumns, AuthFrame } from "~/components/pro/auth-frame";
+import { PerRequest } from "~/components/pro/per-request";
 import { SignUpForm } from "~/components/pro/sign-up-form";
 import { NO_INDEX, resolveLocale } from "~/lib/locale";
 import { PRO_ROUTES } from "~/lib/pro-routes";
@@ -28,6 +29,7 @@ export default async function SignUpPage({ params }: PageProps<"/[locale]/pro/in
 				}
 			>
 				<SignUpForm />
+				<PerRequest />
 			</AuthColumns>
 		</AuthFrame>
 	);

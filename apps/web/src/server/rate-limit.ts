@@ -2,7 +2,7 @@ import type { Database } from "@apercura/db";
 import { rateLimits } from "@apercura/db/schema";
 import { sql } from "drizzle-orm";
 
-export { clientRateLimitKey } from "./rate-limit-key";
+export { clientRateLimitKey, emailRateLimitKey } from "./rate-limit-key";
 
 /*
  * The app's one rate limiter, shared by auth (per signed-in user) and public
