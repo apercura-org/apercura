@@ -7,7 +7,7 @@ takes a few minutes.
 
 | Service      | Role                                                                                       |
 | ------------ | ------------------------------------------------------------------------------------------ |
-| `postgres`   | PostgreSQL 17 + PostGIS. Creates the three login roles on its first start                  |
+| `postgres`   | PostgreSQL 17 + PostGIS. Creates the database roles on its first start                     |
 | `migrate`    | Applies pending migrations, then exits. Runs before the app at every `up`                  |
 | `app`        | The web app (Next.js standalone server), one replica, published on `127.0.0.1:${APP_PORT}` |
 | `scheduler`  | supercronic: `jobs:tick` every 5 minutes, the open data import every Monday at 03:00 UTC   |
@@ -105,10 +105,18 @@ curl -s http://127.0.0.1:3000/api/health      # {"status":"ok"}
 `/api/health` answers 200 when the app runs and reaches its database, 503
 otherwise, without any detail. The image's own Docker health check uses it.
 
-To try the stack without an SMTP provider, add `--profile dev` to `up`:
-Mailpit then receives every email (sign-up codes, booking confirmations) and
-shows them on `http://127.0.0.1:8025`. Never use it in production: nothing is
-delivered.
+To try the stack without an SMTP provider, add `--profile dev` to `up` and set
+`SMTP_ALLOW_INSECURE=true` in `docker/.env.selfhost` (Mailpit offers no TLS, and the app
+otherwise refuses to start: production sends mail over TLS only). Mailpit then receives every
+email (sign-up codes, booking confirmations) and shows them on `http://127.0.0.1:8025`. Never
+use it in production: nothing is delivered. With a real provider, remove
+`SMTP_ALLOW_INSECURE` and use `smtps://` or an `smtp://` server with STARTTLS.
+
+The scheduler purges both access logs after a year (`AUDIT_LOG_RETENTION_MONTHS`) with the
+`apercura_jobs` role, which may only call that purge: set `APERCURA_JOBS_DB_PASSWORD` before
+the first start. On an existing volume, enable the role once with
+`ALTER ROLE apercura_jobs WITH LOGIN PASSWORD '…';` in `psql`, set the same password in the
+file and `apercura-compose up -d`. Without it the purge is skipped with a warning.
 
 ## First import
 
@@ -257,11 +265,11 @@ on exit) and checks the result:
 scripts/verify-backup.sh apercura-2026-11-22.dump
 ```
 
-It creates the three roles without login (they are not in the dump, and the grants need
+It creates the four roles without login (they are not in the dump, and the grants need
 them), restores with `pg_restore --exit-on-error`, then checks the extensions, the schemas,
 the number of applied migrations (the migrations of the checkout; override with
 `VERIFY_EXPECTED_MIGRATIONS` for a dump of another version), the booking overlap constraint,
-the grants of `apercura_app`, `apercura_etl` and `apercura_readonly`, and that the directory
+the grants of `apercura_app`, `apercura_etl`, `apercura_readonly` and `apercura_jobs`, and that the directory
 holds at least `VERIFY_MIN_PRACTITIONERS` practitioners (default 1), then prints row counts
 and the date of the last successful import. It exits 1 if anything fails. Patient fields stay
 encrypted: the keys are never needed.

@@ -89,27 +89,31 @@ Severity: **High** (exploitable, patient data at stake), **Medium**
 (exploitable with conditions, or a control missing), **Low** (defense in
 depth, hard to exploit), **Info** (hardening, no direct impact).
 
-| #   | Severity | Finding                                                                                                                                                                                                                                                      | Status   | Fix              |
-| --- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------- | ---------------- |
-| H-1 | High     | Private calendar feeds survived a change of owner: after a contested claim (page taken over from an impostor) or an owner handing the practice over and deleting their account, the previous owner's feed URL kept serving patients' names and appointments. | Fixed    | f71edef          |
-| M-1 | Medium   | No Content-Security-Policy, HSTS, `X-Content-Type-Options`, `Permissions-Policy` or framing protection on pages and API answers (only a few routes set headers of their own).                                                                                | Fixed    | ea699e4          |
-| M-2 | Medium   | Raw SMTP error messages were stored in `care.outbox.last_error`, readable by the read-only role. SMTP replies quote the recipient, so a patient's email address could sit there in clear.                                                                    | Fixed    | f25f243          |
-| M-3 | Medium   | Request bodies were buffered whole before any size check on unauthenticated endpoints (`/api/auth/*`, `/api/revalidate`, `/api/trpc`), and uploads sent without `Content-Length` were read without limit: memory exhaustion with one request.                | Fixed    | ee586fe, cc3d46a |
-| M-4 | Medium   | A master key could not be retired: nothing re-wrapped the practices' data keys or re-encrypted platform-key data, so after a key disclosure the old key had to stay listed forever.                                                                          | Fixed    | ca37c1f          |
-| L-1 | Low      | Only the booking mutations checked `Sec-Fetch-Site`; every other mutation and the uploads relied on `SameSite=Lax` cookies alone, which do not stop a sibling subdomain of a shared hosting domain.                                                          | Fixed    | ee586fe          |
-| L-2 | Low      | Unexpected errors (database errors) reached the client with their message in production, and were not logged at all.                                                                                                                                         | Fixed    | 5e5d801          |
-| L-3 | Low      | Sign-in attempts were limited per IP only (a botnet spreads thin, a hospital shares one address); sign-up and verification emails had no limit per address (plan: 3 a day).                                                                                  | Fixed    | 8335e65          |
-| L-4 | Low      | Sessions had a 12-hour idle expiry but no absolute lifetime: a session in daily use, and its second-factor proof, never ended.                                                                                                                               | Fixed    | 8335e65          |
-| L-5 | Low      | A signed revalidation request could be replayed within its 5-minute window (cache stampede).                                                                                                                                                                 | Fixed    | cc3d46a          |
-| L-6 | Low      | The import downloaded the FINESS file from a URL taken from the data.gouv.fr API answer without checking its host, and its outgoing requests had no timeout.                                                                                                 | Fixed    | 1b3f3da          |
-| L-7 | Low      | The app's configuration check accepted secrets of any length in production, and a missing `BETTER_AUTH_SECRET` was only caught by Better Auth at the first request.                                                                                          | Fixed    | f745189          |
-| L-8 | Low      | The development compose file published PostgreSQL, MinIO and Mailpit, with well-known passwords, on every interface.                                                                                                                                         | Fixed    | f745189          |
-| I-1 | Info     | JSON-LD escaped `<` only; `>`, `&`, U+2028 and U+2029 are now escaped too.                                                                                                                                                                                   | Fixed    | d2165d4          |
-| I-2 | Info     | No automated check that every procedure keeps its middleware, that the decryption boundary holds beyond Biome, or that the database roles stay narrow.                                                                                                       | Fixed    | 5e5d801, be6793c |
-| I-3 | Info     | `bun audit`: one moderate advisory (esbuild ≤ 0.24.2 development server) in development tools only (`drizzle-kit`, `vitest`); production dependencies are clean. CI now fails on any production advisory and on high or critical ones anywhere.              | Accepted | f745189          |
-| I-4 | Info     | `GET /api/pro/claims/{id}/psc` records the Pro Santé Connect result (a state change on GET). It only re-reads the caller's own linked identity for their own claim and is idempotent.                                                                        | Accepted | —                |
-| I-5 | Info     | Claim documents open inline under a `sandbox` policy; Chrome does not render PDFs in a sandboxed document. Serving PDFs as attachments would keep the policy and work everywhere.                                                                            | Open     | —                |
-| I-6 | Info     | Audit logs are append-only for the app role, so the planned one-year retention cannot be applied by the app: nothing deletes older rows yet.                                                                                                                 | Open     | —                |
+| #    | Severity | Finding                                                                                                                                                                                                                                                      | Status   | Fix              |
+| ---- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------- | ---------------- |
+| H-1  | High     | Private calendar feeds survived a change of owner: after a contested claim (page taken over from an impostor) or an owner handing the practice over and deleting their account, the previous owner's feed URL kept serving patients' names and appointments. | Fixed    | f71edef          |
+| M-1  | Medium   | No Content-Security-Policy, HSTS, `X-Content-Type-Options`, `Permissions-Policy` or framing protection on pages and API answers (only a few routes set headers of their own).                                                                                | Fixed    | ea699e4          |
+| M-2  | Medium   | Raw SMTP error messages were stored in `care.outbox.last_error`, readable by the read-only role. SMTP replies quote the recipient, so a patient's email address could sit there in clear.                                                                    | Fixed    | f25f243          |
+| M-3  | Medium   | Request bodies were buffered whole before any size check on unauthenticated endpoints (`/api/auth/*`, `/api/revalidate`, `/api/trpc`), and uploads sent without `Content-Length` were read without limit: memory exhaustion with one request.                | Fixed    | ee586fe, cc3d46a |
+| M-4  | Medium   | A master key could not be retired: nothing re-wrapped the practices' data keys or re-encrypted platform-key data, so after a key disclosure the old key had to stay listed forever.                                                                          | Fixed    | ca37c1f          |
+| M-5  | Medium   | Outgoing mail did not require TLS: an `smtp://` URL was used as given, so codes, appointments and sign-in links could travel in clear to a server without STARTTLS (or after a downgrade).                                                                   | Fixed    | #63              |
+| M-6  | Medium   | Deleting an account that closed a practice holding booking data failed on foreign keys (calendars and data keys restrict the organization), and nothing defined what happens to its patients, feeds and keys.                                                | Fixed    | #63              |
+| L-1  | Low      | Only the booking mutations checked `Sec-Fetch-Site`; every other mutation and the uploads relied on `SameSite=Lax` cookies alone, which do not stop a sibling subdomain of a shared hosting domain.                                                          | Fixed    | ee586fe          |
+| L-2  | Low      | Unexpected errors (database errors) reached the client with their message in production, and were not logged at all.                                                                                                                                         | Fixed    | 5e5d801          |
+| L-3  | Low      | Sign-in attempts were limited per IP only (a botnet spreads thin, a hospital shares one address); sign-up and verification emails had no limit per address (plan: 3 a day).                                                                                  | Fixed    | 8335e65          |
+| L-4  | Low      | Sessions had a 12-hour idle expiry but no absolute lifetime: a session in daily use, and its second-factor proof, never ended.                                                                                                                               | Fixed    | 8335e65          |
+| L-5  | Low      | A signed revalidation request could be replayed within its 5-minute window (cache stampede).                                                                                                                                                                 | Fixed    | cc3d46a          |
+| L-6  | Low      | The import downloaded the FINESS file from a URL taken from the data.gouv.fr API answer without checking its host, and its outgoing requests had no timeout.                                                                                                 | Fixed    | 1b3f3da          |
+| L-7  | Low      | The app's configuration check accepted secrets of any length in production, and a missing `BETTER_AUTH_SECRET` was only caught by Better Auth at the first request.                                                                                          | Fixed    | f745189          |
+| L-8  | Low      | The development compose file published PostgreSQL, MinIO and Mailpit, with well-known passwords, on every interface.                                                                                                                                         | Fixed    | f745189          |
+| L-9  | Low      | Practitioner sessions stored the client's raw IP address, readable (with the user agent) by the read-only role.                                                                                                                                              | Fixed    | #63              |
+| L-10 | Low      | Error reports and removal requests were never deleted, although the privacy policy limits them to the time needed.                                                                                                                                           | Fixed    | #63              |
+| I-1  | Info     | JSON-LD escaped `<` only; `>`, `&`, U+2028 and U+2029 are now escaped too.                                                                                                                                                                                   | Fixed    | d2165d4          |
+| I-2  | Info     | No automated check that every procedure keeps its middleware, that the decryption boundary holds beyond Biome, or that the database roles stay narrow.                                                                                                       | Fixed    | 5e5d801, be6793c |
+| I-3  | Info     | `bun audit`: one moderate advisory (esbuild ≤ 0.24.2 development server) in development tools only (`drizzle-kit`, `vitest`); production dependencies are clean. CI now fails on any production advisory and on high or critical ones anywhere.              | Accepted | f745189          |
+| I-4  | Info     | `GET /api/pro/claims/{id}/psc` records the Pro Santé Connect result (a state change on GET). It only re-reads the caller's own linked identity for their own claim and is idempotent.                                                                        | Accepted | —                |
+| I-5  | Info     | Claim documents open inline under a `sandbox` policy; Chrome does not render PDFs in a sandboxed document. Serving PDFs as attachments would keep the policy and work everywhere.                                                                            | Open     | —                |
+| I-6  | Info     | Audit logs are append-only for the app role, so the planned one-year retention could not be applied by the app: nothing deleted older rows.                                                                                                                  | Fixed    | #63              |
 
 ### Details of the fixes
 
@@ -166,6 +170,34 @@ depth, hard to exploit), **Info** (hardening, no direct impact).
 - **Import**: the FINESS resource must be HTTPS on `data.gouv.fr` or a
   subdomain; JSON requests time out after 30 s, geocoding after 10 min, a
   download that stalls for 2 min is retried.
+- **Retention and transport (issue #63)**:
+  - _Access logs_ (`care.purge_audit_events()`, migration 0016; `server/retention.ts`):
+    `jobs:tick audit-log` deletes rows of both audit logs older than
+    `AUDIT_LOG_RETENTION_MONTHS` (12 by default, 6 at least, enforced by the function too)
+    through a `SECURITY DEFINER` function owned by the migration role, with a fixed
+    `search_path` and a cutoff computed from the server clock. Only `apercura_jobs`
+    (`DATABASE_URL_JOBS`), a role with no table privilege, may call it; the app role stays
+    append-only and gets `permission denied`.
+  - _Session IPs_ (`server/auth/client-ip.ts`, `auth/index.ts`): Better Auth's session hooks
+    store the IPv4 /24 or IPv6 /48 network only; migration 0016 truncates the rows stored
+    before with the same rule (`directory.truncate_ip`, compared with the app's by a test) and
+    revokes the read-only role's grant on `ip_address` and `user_agent`. Rate limits read the
+    request's address through their own keyed hashes and are unchanged.
+  - _Reports and removal requests_ (`jobs:tick requests`): deleted 6 and 12 months after they
+    were closed (`REPORT_RETENTION_MONTHS`, `REMOVAL_REQUEST_RETENTION_MONTHS`); the
+    suppression of a confirmed objection stays.
+  - _Closing a practice_ (`booking/closure.ts`): in the account deletion's transaction, under
+    the practitioners' booking locks, the calendars stop taking bookings, their feeds are
+    revoked, live holds expire, upcoming appointments are cancelled by the practice with the
+    usual patient email (proved addresses only) and the team loses access. `jobs:tick
+    closures` then deletes every booking row, then the data keys, then the organization, once
+    the outbox holds no email of the practice (24 hours at most). Audit rows carry no foreign
+    key and stay until their own retention.
+  - _SMTP_ (`server/mail/smtp-options.ts`, `smtp-check.ts`): in production `smtps://` is
+    implicit TLS and `smtp://` gets `requireTLS`, certificates verified, TLS 1.2 at least; a
+    URL that sets TLS options is refused by the environment check, the jobs and the
+    transport, and the app refuses to start against a server that cannot do STARTTLS.
+    `SMTP_ALLOW_INSECURE=true` lifts this for a local catcher only.
 - **Configuration**: production refuses to start without
   `BETTER_AUTH_SECRET`, or with any secret shorter than 32 characters;
   development services listen on 127.0.0.1 only.
@@ -185,6 +217,13 @@ depth, hard to exploit), **Info** (hardening, no direct impact).
   role writes nothing and reads no column that looks like a secret (a scan,
   so a new secret column fails until a migration hides it); both audit logs
   are append-only for the app; nothing is granted to `PUBLIC`.
+- `server/retention.integration.test.ts`, `server/booking/closure.integration.test.ts`,
+  `server/mail/smtp-options.test.ts`, `server/auth/client-ip.test.ts` (#63): retention of
+  reports, removal requests and both audit logs, and who may purge them; a practice closed
+  end to end (cancellation emails, feed revocation, purge without foreign key errors, audit
+  rows kept, deadline); TLS rules and a STARTTLS-less server refused at start; session IP
+  truncation. `database-roles.integration.test.ts` also checks the jobs role, the session
+  columns hidden from the read-only role and the SQL truncation against the app's.
 - `server/phi/rotation.integration.test.ts`: data under the old key opens
   after the rotation starts (data keys unwrap with the old master key),
   `rotateKeys` moves everything, and everything opens once the old key is gone.
@@ -221,9 +260,9 @@ depth, hard to exploit), **Info** (hardening, no direct impact).
 - **Keys** live in environment variables of the host; `BLIND_INDEX_KEY`
   cannot be rotated without rebuilding the indexes. Backups keep purged data
   until their own expiry.
-- **Audit log retention** (I-6): rows older than a year must be deleted by a
-  privileged scheduled task (or a `SECURITY DEFINER` function granted to the
-  app), not by the app role.
+- **Audit log retention** (I-6, fixed): the purge needs `DATABASE_URL_JOBS` in
+  every deployment; without it the jobs skip it with a warning. Backups keep
+  purged rows until their own expiry.
 
 ## Recommendations
 
@@ -254,7 +293,8 @@ Before opening booking to patients:
 5. **CodeQL** with the `security-extended` query suite, GitHub secret
    scanning with push protection, and Dependabot (already on) for every
    ecosystem in the repository.
-6. Close I-5 (claim PDFs as attachments) and I-6 (audit retention task).
+6. Close I-5 (claim PDFs as attachments). I-6 (audit retention task) is fixed (#63): set
+   `DATABASE_URL_JOBS` in every deployment.
 7. Set `RATE_LIMIT_KEY` and `ALTCHA_HMAC_KEY` explicitly in every deployment
    (they are random per process otherwise) and check `TRUSTED_PROXY_COUNT`
    against the actual proxy chain.

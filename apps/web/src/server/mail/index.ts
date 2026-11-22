@@ -4,19 +4,27 @@ import nodemailer, { type Transporter } from "nodemailer";
 import type SMTPTransport from "nodemailer/lib/smtp-transport";
 import type { ReactElement } from "react";
 import { serverEnv } from "~/env";
+import { smtpTransportOptions } from "./smtp-options";
 
 const TIMEOUT_MS = 10_000;
 
 let transporter: Transporter | undefined;
 
-/** SMTP transport from SMTP_URL (Mailpit in development), with 10 s timeouts. */
+/**
+ * SMTP transport from SMTP_URL (Mailpit in development), with 10 s timeouts. In production TLS
+ * is required (see ./smtp-options): implicit with `smtps://`, STARTTLS with `smtp://`.
+ */
 function getTransporter(): Transporter {
 	transporter ??= nodemailer.createTransport({
-		url: serverEnv.SMTP_URL ?? "smtp://localhost:1025",
+		...smtpTransportOptions({
+			NODE_ENV: process.env.NODE_ENV,
+			SMTP_URL: serverEnv.SMTP_URL,
+			SMTP_ALLOW_INSECURE: serverEnv.SMTP_ALLOW_INSECURE,
+		}),
 		connectionTimeout: TIMEOUT_MS,
 		greetingTimeout: TIMEOUT_MS,
 		socketTimeout: TIMEOUT_MS,
-	} as SMTPTransport.Options);
+	} satisfies SMTPTransport.Options);
 	return transporter;
 }
 

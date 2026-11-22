@@ -5,7 +5,9 @@ import { sql } from "drizzle-orm";
 import { cacheTags } from "~/server/cache-tags";
 import { writeAudit } from "~/server/phi";
 import { purgeClaimDocuments } from "../claims/service";
+import { purgeAuditLogs, purgeClosedRequests } from "../retention";
 import { getStorage, type StorageDriver, storageConfigured } from "../storage";
+import { finalizeClosures } from "./closure";
 import { practitionerTransaction } from "./locks";
 import { refreshNextFree } from "./next-free";
 import { enqueueOutbox } from "./outbox";
@@ -306,6 +308,11 @@ export interface TickOptions {
 	transport?: MailTransport;
 	/** Object storage for the claim-document purge; defaults to S3 when configured, else skipped. */
 	storage?: StorageDriver | null;
+	/**
+	 * Connection of the audit log retention (`apercura_jobs`, DATABASE_URL_JOBS); defaults to
+	 * `db`, which may only run it when its role is allowed to (a superuser in development).
+	 */
+	auditDb?: Database;
 }
 
 /**
@@ -323,7 +330,25 @@ export async function purgeClaimDocumentsJob(
 	);
 }
 
-/** One `jobs:tick`: expirations, reminders, outbox, next free slots, purges. */
+/** Practices being closed whose emails are out (or past their deadline) lose their booking data. */
+export function closuresJob(db: Database, nowMs: number) {
+	return withAdvisoryLock(db, "jobs:closures", () => finalizeClosures(db, nowMs));
+}
+
+/** Error reports and removal requests past their retention after closure are deleted. */
+export function requestsJob(db: Database, nowMs: number) {
+	return withAdvisoryLock(db, "jobs:requests", () => purgeClosedRequests(db, nowMs));
+}
+
+/** Both access logs lose their rows past the retention, through `care.purge_audit_events()`. */
+export function auditLogJob(db: Database) {
+	return withAdvisoryLock(db, "jobs:audit-log", () => purgeAuditLogs(db));
+}
+
+/**
+ * One `jobs:tick`: expirations, reminders, outbox, closed practices, next free slots, purges and
+ * retention.
+ */
 export async function runTick(db: Database, options: TickOptions = {}) {
 	const now = options.nowMs ?? Date.now;
 	const expirations = await withAdvisoryLock(db, "jobs:expire", () => expireLapsed(db, now()));
@@ -331,11 +356,15 @@ export async function runTick(db: Database, options: TickOptions = {}) {
 	const outbox = await withAdvisoryLock(db, "jobs:outbox", () =>
 		drainOutbox(db, now(), options.transport),
 	);
+	// After the outbox, so a closed practice's cancellation emails usually leave first.
+	const closures = await closuresJob(db, now());
 	const nextFree = await withAdvisoryLock(db, "jobs:next-free", () =>
 		refreshAllNextFree(db, now()),
 	);
 	const purged = await withAdvisoryLock(db, "jobs:purge", () => purge(db, now()));
 	const claimDocuments = await purgeClaimDocumentsJob(db, now(), options.storage);
+	const requests = await requestsJob(db, now());
+	const auditLog = await auditLogJob(options.auditDb ?? db);
 	return {
 		expirations: expirations && {
 			expired: expirations.expired,
@@ -343,8 +372,14 @@ export async function runTick(db: Database, options: TickOptions = {}) {
 		},
 		reminders,
 		outbox,
+		closures: closures && {
+			organizations: closures.organizations,
+			appointments: closures.appointments,
+		},
 		nextFree,
 		purged,
 		claimDocuments,
+		requests,
+		auditLog,
 	};
 }

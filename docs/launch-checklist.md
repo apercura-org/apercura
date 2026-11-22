@@ -67,7 +67,7 @@ repository, to open as an issue.
 ## 4. Email and Pro Santé Connect
 
 - [ ] **[founder]** European SMTP provider; SPF, DKIM and DMARC on the sending domain; set
-      `SMTP_URL`, `MAIL_FROM` and `LEGAL_SMTP_PROVIDER`. Check delivery of a sign-up code to
+      `SMTP_URL` (TLS: `smtps://` or STARTTLS), `MAIL_FROM` and `LEGAL_SMTP_PROVIDER`. Check delivery of a sign-up code to
       the main mailbox providers.
 - [ ] **[founder]** Pro Santé Connect: iSC account, Datapass request
       ([datapass.api.gouv.fr](https://datapass.api.gouv.fr/)), sandbox (set `PSC_*` on
@@ -95,13 +95,15 @@ DPIA signed, DPO appointed, processing agreement in the practitioner terms, rest
 - [ ] **[founder]** Set `FEATURE_BOOKING=true` and `LEGAL_DPO_CONTACT` (production refuses
       booking without it).
 - [ ] **[code]** Close before booking opens (from [security-review](security-review.md) and
-      the DPIA draft): I-5 (claim PDFs as attachments); I-6 (one-year purge of the audit logs,
-      which the privacy page announces); purge of error reports, removal requests and
-      rate-limit rows; raw IP addresses in `directory.session` and in the sign-in limiter's
-      keys (the read-only role can read the session table); account deletion of a practice
-      that holds booking data (`care.calendars` and `care.organization_keys` restrict the
-      organization's deletion: to verify); TLS required for SMTP; an export of the patients'
-      data for a practitioner who leaves.
+      the DPIA draft): I-5 (claim PDFs as attachments); purge of rate-limit rows; raw IP
+      addresses in the sign-in limiter's keys; an export of the patients' data for a
+      practitioner who leaves. _Done (#63): purge of both audit logs after a year, of error
+      reports and removal requests after closure, truncated session IPs hidden from the
+      read-only role, closing a practice that holds booking data, TLS required for SMTP._
+- [ ] **[founder]** Enable the `apercura_jobs` role (`ALTER ROLE apercura_jobs WITH LOGIN
+      PASSWORD '…'`) and set `DATABASE_URL_JOBS` where `jobs:tick` runs: without it the audit
+      logs are not purged. Use an `SMTP_URL` with `smtps://` or STARTTLS; never set
+      `SMTP_ALLOW_INSECURE` in production.
 
 ## 7. Security
 

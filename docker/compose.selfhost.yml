@@ -53,6 +53,8 @@ x-app-env: &app-env
   ALTCHA_HMAC_KEY: ${ALTCHA_HMAC_KEY:?set ALTCHA_HMAC_KEY (bun run keys:generate)}
   RATE_LIMIT_KEY: ${RATE_LIMIT_KEY:?set RATE_LIMIT_KEY (bun run keys:generate)}
   SMTP_URL: ${SMTP_URL:-smtp://mailpit:1025}
+  # Production requires TLS (smtps://, or smtp:// with STARTTLS); `true` only for Mailpit.
+  SMTP_ALLOW_INSECURE: ${SMTP_ALLOW_INSECURE:-false}
   MAIL_FROM: ${MAIL_FROM:-Apercura <no-reply@localhost>}
   S3_ENDPOINT: ${S3_ENDPOINT:-http://minio:9000}
   S3_BUCKET: ${S3_BUCKET:-apercura}
@@ -67,6 +69,9 @@ x-app-env: &app-env
   PUBLIC_HDS_HOST: ${PUBLIC_HDS_HOST:-}
   FEATURE_BOOKING: ${FEATURE_BOOKING:-false}
   FEATURE_CLAIM_DOCUMENTS: ${FEATURE_CLAIM_DOCUMENTS:-true}
+  AUDIT_LOG_RETENTION_MONTHS: ${AUDIT_LOG_RETENTION_MONTHS:-12}
+  REPORT_RETENTION_MONTHS: ${REPORT_RETENTION_MONTHS:-6}
+  REMOVAL_REQUEST_RETENTION_MONTHS: ${REMOVAL_REQUEST_RETENTION_MONTHS:-12}
   # Publisher and host of the legal pages: required in production (docs/configuration.md).
   LEGAL_PUBLISHER_NAME: ${LEGAL_PUBLISHER_NAME:-}
   LEGAL_PUBLISHER_LEGAL_FORM: ${LEGAL_PUBLISHER_LEGAL_FORM:-}
@@ -106,6 +111,7 @@ services:
       APERCURA_APP_DB_PASSWORD: ${APERCURA_APP_DB_PASSWORD}
       APERCURA_ETL_DB_PASSWORD: ${APERCURA_ETL_DB_PASSWORD}
       APERCURA_READONLY_DB_PASSWORD: ${APERCURA_READONLY_DB_PASSWORD:-}
+      APERCURA_JOBS_DB_PASSWORD: ${APERCURA_JOBS_DB_PASSWORD:-}
     volumes:
       - postgres-data:/var/lib/postgresql/data
       - ./postgres/10-apercura-roles.sh:/docker-entrypoint-initdb.d/10-apercura-roles.sh:ro
@@ -156,6 +162,8 @@ services:
     environment:
       <<: [*app-env, *etl-env]
       ETL_SCHEDULE_ARGS: ${ETL_SCHEDULE_ARGS:-}
+      # The audit log retention's own role (docker/postgres/10-apercura-roles.sh); empty: skipped.
+      DATABASE_URL_JOBS: ${APERCURA_JOBS_DB_PASSWORD:+postgres://apercura_jobs:${APERCURA_JOBS_DB_PASSWORD}@postgres:5432/apercura}
     depends_on:
       migrate:
         condition: service_completed_successfully

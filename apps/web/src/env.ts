@@ -1,4 +1,11 @@
 import { z } from "zod";
+import { smtpUrlProblem } from "./server/mail/smtp-options";
+import {
+	AUDIT_LOG_RETENTION,
+	REMOVAL_REQUEST_RETENTION,
+	REPORT_RETENTION,
+	type RetentionSetting,
+} from "./server/retention-config";
 
 /**
  * Typed environment variables.
@@ -10,6 +17,8 @@ import { z } from "zod";
 
 const optionalString = z.string().min(1).optional();
 const optionalUrl = z.url().optional();
+const months = (setting: RetentionSetting) =>
+	z.coerce.number().int().min(setting.min).max(setting.max).default(setting.fallback);
 
 const serverFields = z.object({
 	NODE_ENV: z.enum(["development", "test", "production"]).default("development"),
@@ -18,6 +27,11 @@ const serverFields = z.object({
 	DATABASE_URL: z.url(),
 	DATABASE_URL_ETL: optionalUrl,
 	DATABASE_URL_MIGRATE: optionalUrl,
+	/**
+	 * Connection of the `apercura_jobs` role (migration 0016), used by `jobs:tick` for the audit
+	 * log retention only: that role may call `care.purge_audit_events()` and nothing else.
+	 */
+	DATABASE_URL_JOBS: optionalUrl,
 
 	BETTER_AUTH_SECRET: optionalString,
 	BETTER_AUTH_URL: optionalUrl,
@@ -45,6 +59,23 @@ const serverFields = z.object({
 
 	SMTP_URL: optionalUrl,
 	MAIL_FROM: optionalString,
+	/**
+	 * Lifts the production TLS requirement of SMTP_URL (server/mail/smtp-options.ts): for a local
+	 * catcher such as Mailpit only (development, a self-hosted trial), never a real provider.
+	 */
+	SMTP_ALLOW_INSECURE: z
+		.enum(["true", "false", "1", "0"])
+		.default("false")
+		.transform((value) => value === "true" || value === "1"),
+
+	/**
+	 * Retention, in months: the access logs (`care.audit_events`, `platform_audit_events`, 6 at
+	 * least), error reports after they are closed, removal requests after their decision. The
+	 * privacy policy states the defaults: update it if you change them.
+	 */
+	AUDIT_LOG_RETENTION_MONTHS: months(AUDIT_LOG_RETENTION),
+	REPORT_RETENTION_MONTHS: months(REPORT_RETENTION),
+	REMOVAL_REQUEST_RETENTION_MONTHS: months(REMOVAL_REQUEST_RETENTION),
 
 	S3_ENDPOINT: optionalUrl,
 	S3_BUCKET: optionalString,
@@ -214,6 +245,10 @@ export const serverSchema = serverFields.superRefine((env, context) => {
 			message:
 				"LEGAL_DPO_CONTACT is required in production when FEATURE_BOOKING is on (GDPR art. 37)",
 		});
+	}
+	const smtp = smtpUrlProblem(env);
+	if (smtp) {
+		context.addIssue({ code: "custom", path: ["SMTP_URL"], message: smtp });
 	}
 	for (const name of SECRETS) {
 		const value = env[name];

@@ -13,7 +13,7 @@ import { pscConfigured } from "~/server/features";
 import { emailLocale, sendVerificationEmail } from "~/server/mail/auth-emails";
 import { consumeRateLimit, emailRateLimitKey } from "~/server/rate-limit";
 import { ac, roles } from "./access";
-import { CLIENT_IP_HEADER } from "./client-ip";
+import { CLIENT_IP_HEADER, truncateIp } from "./client-ip";
 import { hasSecondFactor, secondFactors } from "./membership";
 import {
 	alwaysRequiresMfa,
@@ -156,7 +156,10 @@ function createAuth() {
 					// The only place mfaVerifiedAt is set on a new session: the endpoint
 					// that created it has just verified a second factor (or it is a Pro
 					// Santé Connect callback). A frozen account gets no session at all.
-					before: async (session, ctx) => {
+					// The client's address is kept truncated (IPv4 /24, IPv6 /48), never in
+					// full; the rate limits read the request, not the session.
+					before: async (created, ctx) => {
+						const session = { ...created, ipAddress: truncateIp(created.ipAddress) };
 						const [owner] = await getDb()
 							.select({ frozenAt: userTable.frozenAt })
 							.from(userTable)
@@ -177,6 +180,12 @@ function createAuth() {
 						}
 						return { data: { ...session, mfaVerifiedAt: new Date(), mfaMethod: method } };
 					},
+				},
+				update: {
+					before: async (data) =>
+						"ipAddress" in data
+							? { data: { ...data, ipAddress: truncateIp(data.ipAddress as string | null) } }
+							: { data },
 				},
 			},
 		},
