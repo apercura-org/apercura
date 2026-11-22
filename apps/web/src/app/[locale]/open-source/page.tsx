@@ -64,21 +64,18 @@ export default async function OpenSourcePage({ params }: PageProps<"/[locale]/op
 				<ProseSection id="auto-hebergement" content={section("selfHost")} />
 				<section
 					aria-labelledby="repository-heading"
-					className="surface-cover flex flex-col gap-4 px-5 py-6 sm:flex-row sm:items-center sm:justify-between sm:px-8"
+					className="surface-shade flex flex-col gap-4 px-5 py-6 sm:flex-row sm:items-center sm:justify-between sm:px-8"
 				>
 					<div className="flex flex-col gap-1">
-						<h2
-							id="repository-heading"
-							className="font-display text-lead font-bold font-stretch-semi-expanded"
-						>
+						<h2 id="repository-heading" className="type-subtitle">
 							{t("cta.heading")}
 						</h2>
-						<p className="text-body text-cover-muted">{t("cta.body")}</p>
+						<p className="text-body text-ink-muted">{t("cta.body")}</p>
 					</div>
 					<a
 						href={LINKS.repository}
 						rel="noopener noreferrer"
-						className={buttonStyles({ intent: "cover", size: "lg" })}
+						className={buttonStyles({ intent: "ink", size: "lg" })}
 					>
 						{t("cta.link")}
 						<span className="sr-only"> ({external})</span>

@@ -161,7 +161,7 @@ export function SlotPicker({
 
 	return (
 		<div className="flex flex-col gap-2">
-			<div className="scroll-ps-32 overflow-x-auto border-y-2 border-ink sm:scroll-ps-40">
+			<div className="scroll-ps-32 overflow-x-auto border-y border-ink sm:scroll-ps-40">
 				{/* biome-ignore lint/a11y/useSemanticElements: ARIA grid pattern (roving focus on cells); flex rows keep each day one unbroken row */}
 				<div role="grid" aria-label={label} className="flex w-max min-w-full flex-col">
 					{days.map((day, row) => {
@@ -180,7 +180,7 @@ export function SlotPicker({
 								{/* biome-ignore lint/a11y/useSemanticElements lint/a11y/useFocusableInteractive: ARIA grid pattern (roving focus on cells); flex rows keep each day one unbroken row */}
 								<div
 									role="rowheader"
-									className="sticky start-0 z-40 flex w-32 shrink-0 items-center border-e-[1.5px] border-ink bg-paper py-2 pe-3 font-display text-meta font-semibold text-ink font-stretch-semi-condensed sm:w-40"
+									className="sticky start-0 z-40 flex w-32 shrink-0 items-center border-e border-field-edge bg-paper py-2 pe-3 font-display text-meta font-medium text-ink font-stretch-semi-condensed sm:w-40"
 								>
 									{day.label}
 								</div>
@@ -239,7 +239,7 @@ export function SlotPicker({
 															"cursor-not-allowed text-ink-disabled line-through decoration-1",
 														isNoted && "cursor-not-allowed bg-paper-shade text-ink",
 														isSelected &&
-															"z-10 cursor-pointer bg-stamp text-paper shadow-[inset_0_0_0_2px_var(--color-stamp),inset_0_0_0_3.5px_var(--color-paper)] motion-safe:animate-stamp",
+															"z-10 cursor-pointer bg-stamp text-paper shadow-[inset_0_0_0_3px_var(--color-stamp),inset_0_0_0_4px_var(--color-paper)] motion-safe:animate-stamp",
 													)}
 												>
 													{isSelected ? <CheckIcon className="size-4" strokeWidth={2.5} /> : null}

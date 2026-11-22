@@ -40,7 +40,7 @@ export async function BookletSample({
 
 	return (
 		<article
-			className="border-[1.5px] border-ink bg-paper"
+			className="border border-ink bg-paper"
 			aria-label={`${practitioner.name}, ${t(`status.${variant}`)}`}
 		>
 			<div
@@ -139,7 +139,7 @@ export async function BookletSample({
 				</div>
 				{verified ? (
 					<section className="flex flex-col gap-3">
-						<h4 className="font-display text-lead font-bold text-ink">{t("slots.heading")}</h4>
+						<h4 className="type-subtitle text-ink">{t("slots.heading")}</h4>
 						<SlotDemo />
 					</section>
 				) : null}

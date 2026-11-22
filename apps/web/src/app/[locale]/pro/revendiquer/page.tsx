@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 	return { title: t("start"), robots: NO_INDEX };
 }
 
-const sectionHeading = "font-display text-title font-bold text-ink font-stretch-semi-expanded";
+const sectionHeading = "type-title text-ink";
 
 async function Start({ locale, rpps }: { locale: Locale; rpps: string | null }) {
 	// Outside the `(app)` group on purpose: a visitor coming from "Claim this
@@ -102,7 +102,7 @@ async function Start({ locale, rpps }: { locale: Locale; rpps: string | null }) 
 					>
 						<div className="flex flex-col gap-1.5">
 							<Label htmlFor="claim-rpps">{t("start.rppsLabel")}</Label>
-							<div className="flex min-h-12 w-full max-w-sm items-center rounded-field border-[1.5px] border-field-edge bg-paper hover:border-ink has-[input:focus-visible]:outline-3 has-[input:focus-visible]:outline-offset-2 has-[input:focus-visible]:outline-(--focus-ring)">
+							<div className="flex min-h-12 w-full max-w-sm items-center rounded-field border border-field-edge bg-paper hover:border-ink has-[input:focus-visible]:outline-3 has-[input:focus-visible]:outline-offset-2 has-[input:focus-visible]:outline-(--focus-ring)">
 								<Input
 									id="claim-rpps"
 									name="rpps"
@@ -136,12 +136,10 @@ async function Start({ locale, rpps }: { locale: Locale; rpps: string | null }) 
 				<h2 id="claim-how" className={sectionHeading}>
 					{t("start.howHeading")}
 				</h2>
-				<ul className="flex flex-col gap-3 border-t-[1.5px] border-ink pt-4">
+				<ul className="flex flex-col gap-3 border-t border-ink pt-4">
 					{methods.map((method) => (
 						<li key={method} className="flex flex-col gap-1 border-b border-rule-soft pb-3">
-							<p className="font-display text-lead font-bold text-ink">
-								{t(`methods.${method}.title`)}
-							</p>
+							<p className="type-subtitle text-ink">{t(`methods.${method}.title`)}</p>
 							<p className="text-body text-ink">{t(`methods.${method}.summary`)}</p>
 						</li>
 					))}

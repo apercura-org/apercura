@@ -5,8 +5,8 @@ import { SiteFooter } from "./site-footer";
 import { SiteHeader } from "./site-header";
 
 /**
- * The frame of every public page: the cover band with the running head and
- * navigation, the page's main content, and the closing band.
+ * The frame of every public page: the white running head with its navigation,
+ * the page's main content, and the closing footer on the quiet shade.
  */
 export function PublicPage({
 	locale,
@@ -20,9 +20,7 @@ export function PublicPage({
 }) {
 	return (
 		<>
-			<div className="surface-cover">
-				<SiteHeader locale={locale} href={href} />
-			</div>
+			<SiteHeader locale={locale} href={href} />
 			<main id="main" tabIndex={-1} className="flex-1 outline-none">
 				{children}
 			</main>

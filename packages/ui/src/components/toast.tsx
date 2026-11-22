@@ -23,7 +23,7 @@ export interface ToastContent {
 export const toastQueue = new RACToastQueue<ToastContent>({ maxVisibleToasts: 3 });
 
 const toast = tv({
-	base: "flex w-full items-start gap-3 border-2 bg-paper p-4 text-ink outline-none data-focus-visible:outline-3 data-focus-visible:outline-offset-2 data-focus-visible:outline-(--focus-ring) forced-colors:border-[CanvasText]",
+	base: "flex w-full items-start gap-3 border bg-paper p-4 text-ink outline-none data-focus-visible:outline-3 data-focus-visible:outline-offset-2 data-focus-visible:outline-(--focus-ring) forced-colors:border-[CanvasText]",
 	variants: {
 		tone: {
 			info: "border-ink",
@@ -62,7 +62,7 @@ export function ToastRegion({ closeLabel, label, queue = toastQueue }: ToastRegi
 					<RACToast toast={item} className={toast({ tone })}>
 						{toneIcon[tone]}
 						<RACToastContent className="flex min-w-0 flex-1 flex-col gap-0.5">
-							<Text slot="title" className="font-display text-body font-bold">
+							<Text slot="title" className="font-display text-body font-semibold">
 								{item.content.title}
 							</Text>
 							{item.content.description ? (

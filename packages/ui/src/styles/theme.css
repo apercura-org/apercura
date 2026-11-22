@@ -10,21 +10,17 @@
 @theme {
 	--color-*: initial;
 	--color-paper: oklch(1 0 0);
-	--color-paper-shade: oklch(0.975 0.008 235);
-	--color-ink: oklch(0.32 0.07 235);
-	--color-ink-muted: oklch(0.46 0.05 235);
-	--color-ink-disabled: oklch(0.62 0.03 235);
-	--color-rule-soft: oklch(0.84 0.025 235);
-	--color-field-edge: oklch(0.55 0.05 235);
-	--color-cover: oklch(0.32 0.07 235);
-	--color-cover-ink: oklch(1 0 0);
-	--color-cover-muted: oklch(0.87 0.03 235);
-	--color-cover-rule: oklch(0.62 0.05 235);
-	--color-stamp: oklch(0.45 0.17 295);
-	--color-stamp-strong: oklch(0.38 0.16 295);
-	--color-stamp-tint: oklch(0.96 0.03 295);
-	--color-error: oklch(0.5 0.19 27);
-	--color-error-tint: oklch(0.97 0.02 27);
+	--color-paper-shade: oklch(0.975 0.003 255);
+	--color-ink: oklch(0.24 0.012 255);
+	--color-ink-muted: oklch(0.46 0.012 255);
+	--color-ink-disabled: oklch(0.6 0.008 255);
+	--color-rule-soft: oklch(0.88 0.006 255);
+	--color-field-edge: oklch(0.56 0.01 255);
+	--color-stamp: oklch(0.42 0.09 290);
+	--color-stamp-strong: oklch(0.35 0.08 290);
+	--color-stamp-tint: oklch(0.965 0.014 290);
+	--color-error: oklch(0.5 0.15 25);
+	--color-error-tint: oklch(0.97 0.012 25);
 
 	--font-*: initial;
 	--font-display: "Archivo Variable", "Archivo Fallback", ui-sans-serif, system-ui, sans-serif;
@@ -34,19 +30,19 @@
 	--text-*: initial;
 	--text-folio: 0.875rem;
 	--text-folio--line-height: 1.3;
-	--text-folio--letter-spacing: 0.06em;
+	--text-folio--letter-spacing: 0.04em;
 	--text-meta: 1rem;
 	--text-meta--line-height: 1.5;
 	--text-body: 1.125rem;
 	--text-body--line-height: 1.6;
-	--text-lead: 1.375rem;
-	--text-lead--line-height: 1.45;
-	--text-title: 1.75rem;
-	--text-title--line-height: 1.2;
-	--text-headline: clamp(2.125rem, 1.5rem + 2.6vw, 3.25rem);
-	--text-headline--line-height: 1.05;
-	--text-display: clamp(3.5rem, 1.25rem + 9vw, 6rem);
-	--text-display--line-height: 0.92;
+	--text-lead: 1.25rem;
+	--text-lead--line-height: 1.5;
+	--text-title: 1.5rem;
+	--text-title--line-height: 1.25;
+	--text-headline: clamp(1.875rem, 1.5rem + 1.5vw, 2.5rem);
+	--text-headline--line-height: 1.12;
+	--text-display: clamp(2.5rem, 1.75rem + 3vw, 3.75rem);
+	--text-display--line-height: 1.02;
 
 	--radius-*: initial;
 	--radius-field: 0.125rem;
@@ -56,15 +52,15 @@
 	--inset-shadow-*: initial;
 	--drop-shadow-*: initial;
 
-	--animate-stamp: stamp 280ms cubic-bezier(0.16, 1, 0.3, 1);
+	--animate-stamp: stamp 220ms cubic-bezier(0.25, 1, 0.5, 1);
 	--animate-slip-in: slip-in 220ms cubic-bezier(0.16, 1, 0.3, 1);
 	--animate-sheet-in: sheet-in 260ms cubic-bezier(0.16, 1, 0.3, 1);
 	--animate-pulse-soft: pulse-soft 1.6s ease-in-out infinite;
 
 	@keyframes stamp {
 		from {
-			transform: scale(1.18) rotate(-4deg);
-			opacity: 0.4;
+			transform: scale(1.05) rotate(-1.5deg);
+			opacity: 0.6;
 		}
 		to {
 			transform: none;
@@ -94,17 +90,69 @@
 	}
 }
 
-/* Surfaces set the ink of focus rings and of the stamp frame for their descendants. */
+/* Surfaces set the ground and the ink of their descendants; the focus ring stays the stamp on both. */
 @utility surface-paper {
 	--focus-ring: var(--color-stamp);
 	background-color: var(--color-paper);
 	color: var(--color-ink);
 }
 
-@utility surface-cover {
-	--focus-ring: var(--color-cover-ink);
-	background-color: var(--color-cover);
-	color: var(--color-cover-ink);
+/* The quiet neutral surface: page openings, the footer, dialog title strips. */
+@utility surface-shade {
+	--focus-ring: var(--color-stamp);
+	background-color: var(--color-paper-shade);
+	color: var(--color-ink);
+}
+
+/*
+ * Display roles. Archivo set calm: semibold, close to its normal width, small
+ * steps between sizes. Size and weight carry hierarchy; colour never does.
+ */
+@utility type-display {
+	font-family: var(--font-display);
+	font-size: var(--text-display);
+	line-height: var(--text-display--line-height);
+	font-weight: 600;
+	font-stretch: 104%;
+	letter-spacing: -0.025em;
+}
+
+@utility type-headline {
+	font-family: var(--font-display);
+	font-size: var(--text-headline);
+	line-height: var(--text-headline--line-height);
+	font-weight: 600;
+	font-stretch: 102%;
+	letter-spacing: -0.018em;
+}
+
+@utility type-title {
+	font-family: var(--font-display);
+	font-size: var(--text-title);
+	line-height: var(--text-title--line-height);
+	font-weight: 600;
+	font-stretch: 100%;
+	letter-spacing: -0.01em;
+}
+
+/* A heading set at the lead size: dialog titles, sub-sections, list headings. */
+@utility type-subtitle {
+	font-family: var(--font-display);
+	font-size: var(--text-lead);
+	line-height: 1.3;
+	font-weight: 600;
+	font-stretch: 100%;
+	letter-spacing: -0.005em;
+}
+
+/* The wordmark in running heads. */
+@utility type-wordmark {
+	font-family: var(--font-display);
+	font-size: var(--text-lead);
+	line-height: 1.2;
+	font-weight: 650;
+	font-stretch: 106%;
+	letter-spacing: -0.01em;
 }
 
 /* Dotted leader between a field label and its value, as on a printed form. */
@@ -120,9 +168,9 @@
 @utility caps {
 	font-family: var(--font-display);
 	font-stretch: 87.5%;
-	font-weight: 650;
+	font-weight: 560;
 	text-transform: uppercase;
-	letter-spacing: 0.07em;
+	letter-spacing: 0.045em;
 	font-size: 0.875rem;
 	line-height: 1.3;
 }
@@ -237,7 +285,7 @@
 	}
 
 	.apercura-map .maplibregl-ctrl-group {
-		border: 1.5px solid var(--color-ink);
+		border: 1px solid var(--color-field-edge);
 		border-radius: var(--radius-field);
 		box-shadow: none;
 	}
@@ -260,7 +308,7 @@
 		margin-top: -10px;
 		border: 3px solid var(--color-paper);
 		border-radius: 50% 50% 50% 0;
-		outline: 1.5px solid var(--color-ink);
+		outline: 1px solid var(--color-ink);
 		background-color: var(--color-ink);
 		transform: rotate(-45deg);
 	}

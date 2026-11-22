@@ -22,7 +22,7 @@ export interface CalendarProps<T extends DateValue> extends Omit<RACCalendarProp
 }
 
 const navButton = cn(
-	"flex size-11 cursor-pointer items-center justify-center rounded-field border-[1.5px] border-ink text-ink hover:bg-paper-shade data-disabled:cursor-not-allowed data-disabled:border-ink-disabled data-disabled:text-ink-disabled",
+	"flex size-11 cursor-pointer items-center justify-center rounded-field border border-field-edge text-ink hover:bg-paper-shade data-disabled:cursor-not-allowed data-disabled:border-ink-disabled data-disabled:text-ink-disabled",
 	focusRing,
 );
 
@@ -47,13 +47,13 @@ export function Calendar<T extends DateValue>({
 				<RACButton slot="previous" className={navButton}>
 					<ChevronLeftIcon className="size-5" />
 				</RACButton>
-				<Heading className="font-display text-body font-bold capitalize font-stretch-semi-expanded" />
+				<Heading className="font-display text-body font-semibold capitalize" />
 				<RACButton slot="next" className={navButton}>
 					<ChevronRightIcon className="size-5" />
 				</RACButton>
 			</header>
-			<CalendarGrid className="border-collapse border-y-2 border-ink" weekdayStyle="short">
-				<CalendarGridHeader className="border-b-[1.5px] border-ink">
+			<CalendarGrid className="border-collapse border-y border-ink" weekdayStyle="short">
+				<CalendarGridHeader className="border-b border-rule-soft">
 					{(day) => <CalendarHeaderCell className="caps h-9 text-center">{day}</CalendarHeaderCell>}
 				</CalendarGridHeader>
 				<CalendarGridBody>

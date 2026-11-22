@@ -192,7 +192,7 @@ export function SearchForm({
 							onClick={locate}
 							disabled={geo === "locating"}
 							className={buttonStyles({
-								intent: "cover",
+								intent: "ink",
 								size: "md",
 								className: "normal-case tracking-normal",
 							})}
@@ -200,7 +200,7 @@ export function SearchForm({
 							<PinIcon className="size-5" />
 							{geo === "locating" ? tForm("locating") : tForm("nearMe")}
 						</button>
-						<p role="status" className="text-meta text-cover-ink">
+						<p role="status" className="text-meta text-ink">
 							{geo === "denied"
 								? tForm("geoDenied")
 								: geo === "unavailable"

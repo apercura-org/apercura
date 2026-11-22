@@ -25,7 +25,7 @@ import { useTRPC } from "~/trpc/client";
 import { QrCode } from "./qr-code";
 
 const table = tableStyles();
-const sectionHeading = "font-display text-title font-bold text-ink font-stretch-semi-expanded";
+const sectionHeading = "type-title text-ink";
 
 interface SecuritySettingsProps {
 	totpEnabled: boolean;
@@ -152,9 +152,7 @@ function TotpSection({ enabled, enrolling }: { enabled: boolean; enrolling: bool
 		body = (
 			<ol className="flex flex-col gap-8">
 				<li className="flex flex-col gap-3">
-					<h3 className="font-display text-lead font-bold text-ink">
-						{t("security.totp.scanHeading")}
-					</h3>
+					<h3 className="type-subtitle text-ink">{t("security.totp.scanHeading")}</h3>
 					<p className="text-body text-ink">{t("security.totp.scanLead")}</p>
 					<QrCode value={setup.totpURI} label={t("security.totp.qrLabel")} />
 					<dl className="flex flex-col gap-1">
@@ -172,13 +170,11 @@ function TotpSection({ enabled, enrolling }: { enabled: boolean; enrolling: bool
 					</dl>
 				</li>
 				<li className="flex flex-col gap-3">
-					<h3 className="font-display text-lead font-bold text-ink">
-						{t("security.totp.codesHeading")}
-					</h3>
+					<h3 className="type-subtitle text-ink">{t("security.totp.codesHeading")}</h3>
 					<p className="text-body text-ink">{t("security.totp.codesLead")}</p>
 					<ol
 						aria-label={t("security.totp.codesHeading")}
-						className="grid grid-cols-2 gap-x-6 gap-y-1 border-y-2 border-ink py-3 sm:grid-cols-3"
+						className="grid grid-cols-2 gap-x-6 gap-y-1 border-y border-ink py-3 sm:grid-cols-3"
 					>
 						{setup.backupCodes.map((backupCode) => (
 							<li key={backupCode} className="font-body text-body text-ink tabular">
@@ -188,9 +184,7 @@ function TotpSection({ enabled, enrolling }: { enabled: boolean; enrolling: bool
 					</ol>
 				</li>
 				<li className="flex flex-col gap-3">
-					<h3 className="font-display text-lead font-bold text-ink">
-						{t("security.totp.confirmHeading")}
-					</h3>
+					<h3 className="type-subtitle text-ink">{t("security.totp.confirmHeading")}</h3>
 					{errorNotice}
 					<Form onSubmit={onVerify}>
 						<OtpField
@@ -480,7 +474,7 @@ function DataSection() {
 	return (
 		<Section id="security-data" title={t("heading")} lead={t("lead")}>
 			<div className="flex flex-col gap-2">
-				<h3 className="font-display text-lead font-bold text-ink">{t("exportHeading")}</h3>
+				<h3 className="type-subtitle text-ink">{t("exportHeading")}</h3>
 				<p className="text-body text-ink">{t("exportBody")}</p>
 				<div>
 					<a href="/api/pro/account-export" download className={buttonStyles({ intent: "ink" })}>
@@ -493,7 +487,7 @@ function DataSection() {
 				className="flex flex-col gap-5 border-t border-rule-soft pt-5"
 				aria-labelledby="security-delete"
 			>
-				<h3 id="security-delete" className="font-display text-lead font-bold text-ink">
+				<h3 id="security-delete" className="type-subtitle text-ink">
 					{t("deleteHeading")}
 				</h3>
 				<p className="text-body text-ink">{t("deleteBody")}</p>

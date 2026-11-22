@@ -26,7 +26,7 @@ export function EmptyState({
 	return (
 		<div
 			className={cn(
-				"flex flex-col items-start gap-3 border-[1.5px] border-dashed border-field-edge bg-paper px-5 py-6 sm:px-7 sm:py-8",
+				"flex flex-col items-start gap-3 border border-dashed border-field-edge bg-paper px-5 py-6 sm:px-7 sm:py-8",
 				className,
 			)}
 		>
@@ -44,7 +44,7 @@ export function EmptyState({
 					strokeDasharray="2 3"
 				/>
 			</svg>
-			<Heading className="font-display text-lead font-bold text-ink">{title}</Heading>
+			<Heading className="type-subtitle text-ink">{title}</Heading>
 			{description ? (
 				<div className="max-w-[65ch] text-body text-ink-muted">{description}</div>
 			) : null}

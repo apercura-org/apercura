@@ -136,7 +136,7 @@ export function BookletComboField({
 					)}
 				>
 					{(section) => (
-						<ListBoxSection id={section.id} className="border-b border-ink last:border-b-0">
+						<ListBoxSection id={section.id} className="border-b border-rule-soft last:border-b-0">
 							<Header className="caps border-b border-rule-soft bg-paper-shade px-3.5 py-1.5 text-ink">
 								{section.title}
 							</Header>
@@ -199,8 +199,8 @@ export function BookletSearchFrame({
 			>
 				<div
 					className={cn(
-						"flex flex-1 flex-col border-2 border-paper bg-paper md:flex-row",
-						"[&>*+*]:border-t-[1.5px] [&>*+*]:border-ink md:[&>*+*]:border-t-0 md:[&>*+*]:border-s-[1.5px]",
+						"flex flex-1 flex-col border border-field-edge bg-paper md:flex-row",
+						"[&>*+*]:border-t [&>*+*]:border-field-edge md:[&>*+*]:border-t-0 md:[&>*+*]:border-s",
 					)}
 				>
 					{children}
@@ -210,8 +210,7 @@ export function BookletSearchFrame({
 					className={buttonStyles({
 						intent: "stamp",
 						size: "lg",
-						className:
-							"min-h-16 text-body md:min-w-44 md:border-2 md:border-paper focus-visible:outline-cover-ink",
+						className: "min-h-16 text-body md:min-w-44",
 					})}
 				>
 					<SearchIcon className="size-5" />

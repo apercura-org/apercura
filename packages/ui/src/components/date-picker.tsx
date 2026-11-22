@@ -47,7 +47,7 @@ export function DatePicker<T extends DateValue>({
 			>
 				<DateSegments />
 				<RACButton
-					className={`flex size-11 shrink-0 cursor-pointer items-center justify-center border-s-[1.5px] border-field-edge text-ink hover:bg-paper-shade ${focusRing}`}
+					className={`flex size-11 shrink-0 cursor-pointer items-center justify-center border-s border-field-edge text-ink hover:bg-paper-shade ${focusRing}`}
 				>
 					<CalendarIcon className="size-5" />
 				</RACButton>

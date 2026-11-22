@@ -65,7 +65,7 @@ export function SignUpForm() {
 					id="sign-up-sent"
 					ref={sentRef}
 					tabIndex={-1}
-					className="font-display text-title font-bold text-ink font-stretch-semi-expanded outline-none"
+					className="type-title text-ink outline-none"
 				>
 					{t("signUp.sentHeading")}
 				</h2>

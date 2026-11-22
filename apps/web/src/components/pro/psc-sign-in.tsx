@@ -37,7 +37,7 @@ export function PscSignIn({ failed }: { failed: boolean }) {
 			aria-labelledby="sign-in-psc"
 			className="flex flex-col gap-3 border-t border-rule-soft pt-6"
 		>
-			<h2 id="sign-in-psc" className="font-display text-lead font-bold text-ink">
+			<h2 id="sign-in-psc" className="type-subtitle text-ink">
 				{t("pscHeading")}
 			</h2>
 			<p className="text-meta text-ink-muted">{t("pscHint")}</p>

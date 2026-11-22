@@ -8,7 +8,7 @@ export interface FieldListProps {
 
 /** A list of printed form fields (`<dl>`). Rows stack label over value in narrow containers. */
 export function FieldList({ children, className }: FieldListProps) {
-	return <dl className={cn("@container border-t-[1.5px] border-ink", className)}>{children}</dl>;
+	return <dl className={cn("@container border-t border-ink", className)}>{children}</dl>;
 }
 
 export interface FieldRowProps {
@@ -40,7 +40,7 @@ export function FieldRow({ label, value, emptyLabel, className }: FieldRowProps)
 				className,
 			)}
 		>
-			<dt className="shrink-0 font-display text-meta font-semibold text-ink font-stretch-semi-condensed">
+			<dt className="shrink-0 font-display text-meta font-medium text-ink font-stretch-semi-condensed">
 				{label}
 			</dt>
 			<span aria-hidden="true" className="leader hidden @md:block" />

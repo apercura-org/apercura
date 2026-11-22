@@ -32,7 +32,7 @@ interface DialogFrameProps extends Omit<ModalOverlayProps, "children" | "classNa
 }
 
 const overlay =
-	"fixed inset-0 z-50 flex bg-ink/45 data-entering:animate-[fade-in_160ms_ease-out] data-exiting:animate-[fade-in_120ms_ease-in_reverse]";
+	"fixed inset-0 z-50 flex bg-ink/40 data-entering:animate-[fade-in_160ms_ease-out] data-exiting:animate-[fade-in_120ms_ease-in_reverse]";
 
 function Header({
 	title,
@@ -46,11 +46,8 @@ function Header({
 	showClose: boolean;
 }) {
 	return (
-		<header className="surface-cover flex min-h-14 items-center justify-between gap-4 ps-5 pe-1.5">
-			<Heading
-				slot="title"
-				className="py-3 font-display text-lead font-bold font-stretch-semi-expanded"
-			>
+		<header className="surface-shade flex min-h-14 items-center justify-between gap-4 border-b border-rule-soft ps-5 pe-1.5">
+			<Heading slot="title" className="type-subtitle py-3">
 				{title}
 			</Heading>
 			{showClose ? (
@@ -58,7 +55,7 @@ function Header({
 					onPress={close}
 					aria-label={closeLabel}
 					className={cn(
-						"flex size-11 shrink-0 cursor-pointer items-center justify-center text-cover-ink hover:bg-paper hover:text-ink",
+						"flex size-11 shrink-0 cursor-pointer items-center justify-center rounded-field text-ink hover:bg-rule-soft",
 						focusRing,
 					)}
 				>
@@ -69,7 +66,7 @@ function Header({
 	);
 }
 
-/** Modal dialog: a paper slip with a cover-band title strip. */
+/** Modal dialog: a paper slip with a title strip on the quiet shade. */
 export function Dialog({
 	title,
 	closeLabel,
@@ -84,7 +81,7 @@ export function Dialog({
 			isDismissable={!isAlert}
 			className={cn(overlay, "items-center justify-center p-4")}
 		>
-			<Modal className="w-full max-w-lg border-[1.5px] border-ink bg-paper data-entering:animate-slip-in forced-colors:border-[CanvasText]">
+			<Modal className="w-full max-w-lg border border-ink bg-paper data-entering:animate-slip-in forced-colors:border-[CanvasText]">
 				<RACDialog role={role} className="flex max-h-[calc(100dvh-2rem)] flex-col outline-none">
 					{({ close }) => (
 						<>
@@ -118,7 +115,7 @@ export function Sheet({ title, closeLabel, children, size = "md", ...props }: Sh
 		<ModalOverlay {...props} isDismissable className={cn(overlay, "justify-end")}>
 			<Modal
 				className={cn(
-					"h-dvh w-full border-ink bg-paper data-entering:animate-sheet-in sm:border-s-[1.5px] forced-colors:border-[CanvasText]",
+					"h-dvh w-full border-ink bg-paper data-entering:animate-sheet-in sm:border-s forced-colors:border-[CanvasText]",
 					size === "lg" ? "max-w-176" : "max-w-md",
 				)}
 			>

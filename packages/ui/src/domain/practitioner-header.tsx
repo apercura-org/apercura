@@ -53,7 +53,7 @@ export function PractitionerHeader({
 	return (
 		<header
 			className={cn(
-				"flex flex-col gap-4 border-b-2 border-ink pb-5 sm:flex-row sm:items-start sm:gap-6",
+				"flex flex-col gap-4 border-b border-ink pb-5 sm:flex-row sm:items-start sm:gap-6",
 				className,
 			)}
 		>
@@ -64,7 +64,7 @@ export function PractitionerHeader({
 						alt={photo.alt}
 						width={128}
 						height={128}
-						className="block size-32 border-[1.5px] border-ink bg-paper-shade object-cover p-1"
+						className="block size-32 border border-field-edge bg-paper-shade object-cover p-1"
 					/>
 					<Seal
 						rpps={rpps}
@@ -77,9 +77,7 @@ export function PractitionerHeader({
 				<Seal rpps={rpps} verified={verified} size={96} />
 			)}
 			<div className="flex min-w-0 flex-col gap-2">
-				<Heading className="font-display text-headline font-extrabold tracking-[-0.02em] text-ink font-stretch-semi-expanded">
-					{name}
-				</Heading>
+				<Heading className="type-headline text-ink">{name}</Heading>
 				<p className="text-lead text-ink">{profession}</p>
 				{headline ? <p className="max-w-[60ch] text-body text-ink">{headline}</p> : null}
 				<p className="text-meta text-ink-muted">

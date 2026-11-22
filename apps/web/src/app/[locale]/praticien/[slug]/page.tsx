@@ -326,9 +326,9 @@ export default async function PractitionerPage({ params }: Props) {
 						/>
 						<section
 							aria-labelledby="claim-heading"
-							className="flex flex-col gap-2 border-t-[1.5px] border-ink pt-4"
+							className="flex flex-col gap-2 border-t border-ink pt-4"
 						>
-							<h2 id="claim-heading" className="font-display text-lead font-bold text-ink">
+							<h2 id="claim-heading" className="type-subtitle text-ink">
 								{claimed ? t("claim.claimedHeading") : t("claim.heading")}
 							</h2>
 							<p className="text-body text-ink">
@@ -347,7 +347,7 @@ export default async function PractitionerPage({ params }: Props) {
 							aria-labelledby="report-heading"
 							className="flex flex-col gap-2 border-t border-rule-soft pt-4"
 						>
-							<h2 id="report-heading" className="font-display text-lead font-bold text-ink">
+							<h2 id="report-heading" className="type-subtitle text-ink">
 								{t("report.heading")}
 							</h2>
 							<p className="text-body text-ink">{t("report.body")}</p>
@@ -374,7 +374,7 @@ export default async function PractitionerPage({ params }: Props) {
 						<h2 id="ring-heading" className={sectionHeading}>
 							{t("ring.heading", { listing: listingLabel, place: page.commune.name })}
 						</h2>
-						<ul className="grid border-t-[1.5px] border-ink sm:grid-cols-2 lg:grid-cols-3">
+						<ul className="grid border-t border-ink sm:grid-cols-2 lg:grid-cols-3">
 							{page.neighbours.map((neighbour) => (
 								<li key={neighbour.id} className="border-b border-rule-soft">
 									<Link
@@ -401,7 +401,7 @@ export default async function PractitionerPage({ params }: Props) {
 	);
 }
 
-const sectionHeading = "font-display text-title font-bold text-ink font-stretch-semi-expanded";
+const sectionHeading = "type-title text-ink";
 
 /** Profession slug of the payload (`medecin`, `chirurgien-dentiste`, `sage-femme`…). */
 function professionOfPayload(payload: { professionCode: string }) {
@@ -617,9 +617,7 @@ async function WithheldPage({ locale, slug }: { locale: Locale; slug: string }) 
 		<PublicPage locale={locale} href={{ pathname: "/praticien/[slug]", params: { slug } }}>
 			<BookletPage runningHead={tSite("runningHead")}>
 				<div className="flex max-w-[65ch] flex-col gap-4">
-					<h1 className="font-display text-headline font-extrabold tracking-[-0.02em] text-ink font-stretch-semi-expanded">
-						{t("withheld.title")}
-					</h1>
+					<h1 className="type-headline text-ink">{t("withheld.title")}</h1>
 					<p className="text-lead text-ink">{t("withheld.body")}</p>
 					<p className="text-body text-ink">
 						<Link href="/donnees" className={linkStyles()}>

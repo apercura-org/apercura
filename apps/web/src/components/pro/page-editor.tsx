@@ -39,7 +39,7 @@ type EditorData = inferRouterOutputs<AppRouter>["profile"]["get"];
 
 type FeeRow = { key: number; label: string; amount: string; maxAmount: string };
 
-const sectionHeading = "font-display text-title font-bold text-ink font-stretch-semi-expanded";
+const sectionHeading = "type-title text-ink";
 
 function Group({
 	id,
@@ -55,7 +55,7 @@ function Group({
 	children: ReactNode;
 }) {
 	return (
-		<section aria-labelledby={id} className="flex flex-col gap-5 border-t-2 border-ink pt-6">
+		<section aria-labelledby={id} className="flex flex-col gap-5 border-t border-ink pt-6">
 			<div className="flex flex-wrap items-start justify-between gap-x-6 gap-y-2">
 				<div className="flex flex-col gap-1">
 					<h2 id={id} className={sectionHeading}>
@@ -398,7 +398,7 @@ export function PageEditor({
 								alt={t("photo.current")}
 								width={96}
 								height={96}
-								className="size-24 border-[1.5px] border-ink object-cover p-1"
+								className="size-24 border border-ink object-cover p-1"
 							/>
 						) : (
 							<p className="text-body text-ink-muted">{t("photo.none")}</p>
@@ -521,9 +521,7 @@ export function PageEditor({
 						</RadioGroup>
 
 						<fieldset className="flex flex-col gap-4">
-							<legend className="mb-2 font-display text-lead font-bold text-ink">
-								{t("fees.itemsTitle")}
-							</legend>
+							<legend className="mb-2 type-subtitle text-ink">{t("fees.itemsTitle")}</legend>
 							{fees.length === 0 ? (
 								<p className="text-meta text-ink-muted">{t("fees.noItem")}</p>
 							) : null}
@@ -613,9 +611,7 @@ export function PageEditor({
 							errorMessage={issue("fees.note")}
 						/>
 						<fieldset className="flex flex-col">
-							<legend className="mb-2 font-display text-lead font-bold text-ink">
-								{t("fees.payments")}
-							</legend>
+							<legend className="mb-2 type-subtitle text-ink">{t("fees.payments")}</legend>
 							{PAYMENT_METHODS.map((method) => (
 								<Checkbox
 									key={method}
@@ -685,7 +681,7 @@ export function PageEditor({
 						<p className="-mt-3 text-meta text-ink-muted">{t("contact.showPhoneHint")}</p>
 					</Group>
 
-					<div className="sticky bottom-0 z-10 flex flex-col gap-3 border-t-2 border-ink bg-paper py-4">
+					<div className="sticky bottom-0 z-10 flex flex-col gap-3 border-t border-ink bg-paper py-4">
 						{failure ? (
 							<Notice tone="error" title={t(`failure.${failure}` as never)} />
 						) : saved ? (
@@ -719,14 +715,14 @@ export function PageEditor({
 				</Form>
 
 				<Group id="editor-sites" title={t("sites.title")} lead={t("sites.lead")}>
-					<ul className="flex flex-col border-t-[1.5px] border-ink">
+					<ul className="flex flex-col border-t border-ink">
 						{sites.map((site) => (
 							<li
 								key={site.activityId}
 								className="flex flex-wrap items-center justify-between gap-x-6 gap-y-2 border-b border-rule-soft py-3"
 							>
 								<div className="flex min-w-0 flex-col">
-									<span className="font-display text-body font-bold text-ink">
+									<span className="font-display text-body font-semibold text-ink">
 										{site.name ?? t("sites.unnamed")}
 										{site.source === "owner" ? (
 											<span className="ms-2 align-middle">
@@ -782,7 +778,7 @@ export function PageEditor({
 						className="flex flex-col gap-4 border-t border-rule-soft pt-5"
 						aria-labelledby="editor-add-site"
 					>
-						<h3 id="editor-add-site" className="font-display text-lead font-bold text-ink">
+						<h3 id="editor-add-site" className="type-subtitle text-ink">
 							{t("sites.addTitle")}
 						</h3>
 						<TextField
@@ -892,20 +888,17 @@ export function PageEditor({
 
 			<aside id="apercu" aria-labelledby="editor-preview-heading" className="min-w-0 lg:col-span-5">
 				<div className="flex flex-col gap-4 lg:sticky lg:top-4 lg:max-h-[calc(100svh-2rem)] lg:overflow-y-auto">
-					<div className="surface-cover flex items-baseline justify-between gap-3 px-4 py-2">
-						<h2
-							id="editor-preview-heading"
-							className="font-display text-body font-bold uppercase tracking-[0.05em] font-stretch-semi-expanded"
-						>
+					<div className="surface-shade flex items-baseline justify-between gap-3 border border-rule-soft px-4 py-2">
+						<h2 id="editor-preview-heading" className="font-display text-body font-semibold">
 							{t("preview.title")}
 						</h2>
 						{dirty ? (
-							<span className="text-meta text-cover-muted" role="status">
+							<span className="text-meta text-ink-muted" role="status">
 								{t("preview.note")}
 							</span>
 						) : null}
 					</div>
-					<div className="border-[1.5px] border-ink p-4 sm:p-6">
+					<div className="border border-ink p-4 sm:p-6">
 						<PagePreview
 							identity={identity}
 							content={preview}

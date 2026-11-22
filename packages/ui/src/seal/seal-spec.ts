@@ -83,7 +83,7 @@ export function sealSpec(rpps: string): SealSpec {
  */
 export const BRAND_SEAL_SEED = "apercura-brand:booklet-cover";
 
-/** Apercura's own seal, for the cover band and brand marks. Never used on a practitioner page. */
+/** Apercura's own seal, for the home opening and brand marks. Never used on a practitioner page. */
 export function brandSealSpec(): SealSpec {
 	return specFromSeed(BRAND_SEAL_SEED);
 }

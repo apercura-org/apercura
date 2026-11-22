@@ -20,7 +20,7 @@ export const instant = false;
 
 type Props = PageProps<"/[locale]/pro/admin/revendications/[id]">;
 
-const sectionHeading = "font-display text-title font-bold text-ink font-stretch-semi-expanded";
+const sectionHeading = "type-title text-ink";
 const METHODS = ["psc", "registry_email", "document", "phone_callback"] as const;
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -146,7 +146,7 @@ async function Detail({ locale, id }: { locale: Locale; id: string }) {
 				{detail.documents.length === 0 ? (
 					<p className="text-body text-ink-muted">{t("claim.noDocument")}</p>
 				) : (
-					<ul className="flex flex-col border-t-[1.5px] border-ink">
+					<ul className="flex flex-col border-t border-ink">
 						{detail.documents.map((document) => (
 							<li
 								key={document.id}

@@ -19,7 +19,7 @@ import { useTRPC } from "~/trpc/client";
 import { ActionStatus } from "./agenda/agenda-shared";
 
 const table = tableStyles();
-const sectionHeading = "font-display text-title font-bold text-ink font-stretch-semi-expanded";
+const sectionHeading = "type-title text-ink";
 const ROLES = ["practitioner", "assistant"] as const;
 type Role = (typeof ROLES)[number];
 
@@ -96,7 +96,7 @@ export function TeamManager({
 				<h2 id="team-roles" className={sectionHeading}>
 					{t("roles.heading")}
 				</h2>
-				<dl className="grid max-w-3xl border-t-[1.5px] border-ink sm:grid-cols-[10rem_1fr]">
+				<dl className="grid max-w-3xl border-t border-ink sm:grid-cols-[10rem_1fr]">
 					{(["owner", "practitioner", "assistant"] as const).map((item) => (
 						<div key={item} className="contents">
 							<dt className="pt-3 font-display text-meta font-semibold text-ink font-stretch-semi-condensed sm:border-b sm:border-rule-soft sm:pb-3">

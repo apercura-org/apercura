@@ -49,7 +49,7 @@ export function ChallengeForm({ totp, passkeys }: { totp: boolean; passkeys: boo
 			{error ? <Notice tone="error" title={t(`errors.${error}`)} /> : null}
 			{passkeys ? (
 				<section aria-labelledby="challenge-passkey" className="flex flex-col gap-3">
-					<h2 id="challenge-passkey" className="font-display text-title font-bold text-ink">
+					<h2 id="challenge-passkey" className="type-title text-ink">
 						{t("challenge.passkeyHeading")}
 					</h2>
 					<p className="text-body text-ink">{t("challenge.passkeyLead")}</p>
@@ -65,7 +65,7 @@ export function ChallengeForm({ totp, passkeys }: { totp: boolean; passkeys: boo
 			) : null}
 			{totp ? (
 				<section aria-labelledby="challenge-totp" className="flex flex-col gap-3">
-					<h2 id="challenge-totp" className="font-display text-title font-bold text-ink">
+					<h2 id="challenge-totp" className="type-title text-ink">
 						{t("challenge.totpHeading")}
 					</h2>
 					<Form onSubmit={onTotp}>
@@ -88,7 +88,7 @@ export function ChallengeForm({ totp, passkeys }: { totp: boolean; passkeys: boo
 				aria-labelledby="challenge-out"
 				className="flex flex-col gap-3 border-t border-rule-soft pt-6"
 			>
-				<h2 id="challenge-out" className="font-display text-lead font-bold text-ink">
+				<h2 id="challenge-out" className="type-subtitle text-ink">
 					{t("challenge.otherHeading")}
 				</h2>
 				<p className="text-meta text-ink-muted">{t("challenge.otherLead")}</p>

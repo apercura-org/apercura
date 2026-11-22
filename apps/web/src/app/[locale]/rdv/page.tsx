@@ -35,9 +35,7 @@ export default async function ManagePage({ params }: PageProps<"/[locale]/rdv">)
 		<PublicPage locale={locale} href="/rdv">
 			<BookletPage runningHead={t("runningHead")}>
 				<div className="flex max-w-3xl flex-col gap-8">
-					<h1 className="font-display text-headline font-black text-ink font-stretch-expanded">
-						{t("title")}
-					</h1>
+					<h1 className="type-headline text-ink">{t("title")}</h1>
 					<Suspense fallback={<p className="text-body text-ink">{t("loading")}</p>}>
 						<Dynamic />
 					</Suspense>

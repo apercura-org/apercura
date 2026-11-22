@@ -52,7 +52,7 @@ function Section({
 	children: ReactNode;
 }) {
 	return (
-		<section aria-labelledby={id} className="flex flex-col gap-5 border-t-2 border-ink pt-6">
+		<section aria-labelledby={id} className="flex flex-col gap-5 border-t border-ink pt-6">
 			<div className="flex flex-col gap-1">
 				<h2 id={id} className={sectionHeading}>
 					{title}
@@ -126,12 +126,12 @@ export function AgendaSettings({ organizationId }: { organizationId: string }) {
 		<div className="grid gap-8 lg:grid-cols-[14rem_minmax(0,1fr)] lg:gap-12">
 			<nav
 				aria-labelledby="settings-index"
-				className="border-t-2 border-ink pt-6 lg:sticky lg:top-6 lg:self-start"
+				className="border-t border-ink pt-6 lg:sticky lg:top-6 lg:self-start"
 			>
 				<h2 id="settings-index" className="caps pb-2 text-ink">
 					{t("index")}
 				</h2>
-				<ul className="flex flex-col border-t-[1.5px] border-ink">
+				<ul className="flex flex-col border-t border-ink">
 					{index.map(([id, label]) => (
 						<li key={id} className="border-b border-rule-soft">
 							<a href={`#${id}`} className={`${linkStyles()} flex min-h-11 items-center text-meta`}>
@@ -155,7 +155,7 @@ export function AgendaSettings({ organizationId }: { organizationId: string }) {
 							}
 						/>
 					) : (
-						<ul className="flex flex-col border-t-[1.5px] border-ink">
+						<ul className="flex flex-col border-t border-ink">
 							{data.sites.map((site) => {
 								const existing = data.calendars.find((item) => item.siteId === site.siteId);
 								const isCurrent = existing !== undefined && existing.id === calendar?.id;
@@ -165,7 +165,7 @@ export function AgendaSettings({ organizationId }: { organizationId: string }) {
 										className="flex flex-wrap items-center justify-between gap-4 border-b border-rule-soft py-3"
 									>
 										<span className="flex flex-col gap-0.5">
-											<span className="font-display text-body font-bold text-ink">
+											<span className="font-display text-body font-semibold text-ink">
 												{site.name ?? site.addressLine ?? tCommon("placeLabel")}
 											</span>
 											<span className="text-meta text-ink">
@@ -274,7 +274,7 @@ function CalendarSettings({
 	const t = useTranslations("Agenda.settings");
 	return (
 		<div className="flex flex-col gap-12">
-			<p className="font-display text-lead font-bold text-ink">
+			<p className="type-subtitle text-ink">
 				{placeLabel} · <span className="font-normal tabular">{calendar.timeZone}</span>
 			</p>
 			<Gate
@@ -370,10 +370,7 @@ function Gate({
 	};
 
 	return (
-		<section
-			aria-labelledby="settings-gate"
-			className="flex flex-col gap-4 border-2 border-ink p-5"
-		>
+		<section aria-labelledby="settings-gate" className="flex flex-col gap-4 border border-ink p-5">
 			<div className="flex flex-wrap items-center justify-between gap-3">
 				<h2 id="settings-gate" className={sectionHeading}>
 					{t("heading")}
@@ -549,7 +546,7 @@ function TypeForm({
 			className="flex flex-col gap-4 border-t border-rule-soft pt-4"
 			validationBehavior="aria"
 		>
-			<h3 id={headingId} className="font-display text-lead font-bold text-ink">
+			<h3 id={headingId} className="type-subtitle text-ink">
 				{type ? type.name : t("add")}
 				<span className="ms-3 text-meta font-normal text-ink-muted tabular">
 					{t("summary", { duration: type?.durationMin ?? durationValue })}
@@ -774,8 +771,8 @@ function RulesEditor({
 				</Button>
 			</div>
 			<div>
-				<table className="block w-full border-collapse border-y-2 border-ink text-left text-body sm:table">
-					<thead className="hidden border-b-[1.5px] border-ink sm:table-header-group">
+				<table className="block w-full border-collapse border-y border-ink text-left text-body sm:table">
+					<thead className="hidden border-b border-ink sm:table-header-group">
 						<tr>
 							<th scope="col" className="caps py-2.5 pe-3 text-left text-ink">
 								{t("columns.day")}
@@ -846,7 +843,7 @@ function RulesEditor({
 								className="block w-full pt-3 pe-3 text-left align-top font-normal sm:table-cell sm:w-auto sm:py-3"
 							>
 								<span className="flex flex-col items-start gap-1">
-									<span className="font-display text-body font-bold whitespace-nowrap text-ink">
+									<span className="font-display text-body font-semibold whitespace-nowrap text-ink">
 										{day}
 									</span>
 									<span className="hidden flex-col items-start gap-1 sm:flex">{actions}</span>
@@ -1045,7 +1042,7 @@ function ExceptionsEditor({
 			{sorted.length === 0 ? (
 				<p className="text-body text-ink">{t("empty")}</p>
 			) : (
-				<ul className="flex flex-col border-t-[1.5px] border-ink">
+				<ul className="flex flex-col border-t border-ink">
 					{sorted.map((item) => {
 						const label = labelOf(item);
 						return (

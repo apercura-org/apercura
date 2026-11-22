@@ -58,8 +58,8 @@ type SortDescriptor = { column: string | number; direction: "ascending" | "desce
 
 function Section({ id, title, children }: { id: string; title: string; children: ReactNode }) {
 	return (
-		<section aria-labelledby={id} className="flex flex-col gap-6 border-t-2 border-ink pt-6">
-			<h2 id={id} className="font-display text-title font-bold text-ink font-stretch-semi-expanded">
+		<section aria-labelledby={id} className="flex flex-col gap-6 border-t border-ink pt-6">
+			<h2 id={id} className="type-title text-ink">
 				{title}
 			</h2>
 			{children}
@@ -129,12 +129,12 @@ export function GalleryPrimitives() {
 							{t("buttons.ink")}
 						</Button>
 					</Specimen>
-					<div className="surface-cover flex flex-col gap-2 p-5">
-						<p className="caps text-cover-muted">{t("states.onCover")}</p>
+					<div className="surface-shade flex flex-col gap-2 p-5">
+						<p className="caps text-ink-muted">{t("states.onShade")}</p>
 						<div className="flex flex-wrap gap-3">
 							<Button>{t("buttons.stamp")}</Button>
-							<Button intent="cover">{t("buttons.cover")}</Button>
-							<Link href="#g-buttons" tone="cover">
+							<Button intent="ink">{t("buttons.ink")}</Button>
+							<Link href="#g-buttons" tone="ink">
 								{t("buttons.inlineLink")}
 							</Link>
 						</div>
@@ -374,9 +374,6 @@ export function GalleryPrimitives() {
 						<Badge>{t("data.badgeInk")}</Badge>
 						<Badge tone="stamp">{t("data.badgeStamp")}</Badge>
 						<Badge tone="error">{t("data.badgeError")}</Badge>
-						<span className="surface-cover inline-flex p-2">
-							<Badge tone="cover">{t("data.badgeCover")}</Badge>
-						</span>
 					</Specimen>
 					<Table
 						aria-label={t("data.tableLabel")}
@@ -468,7 +465,7 @@ export function GalleryPrimitives() {
 							setFormValid(true);
 						}}
 					>
-						<h3 id="g-form-heading" className="font-display text-lead font-bold">
+						<h3 id="g-form-heading" className="type-subtitle">
 							{t("form.heading")}
 						</h3>
 						<TextField

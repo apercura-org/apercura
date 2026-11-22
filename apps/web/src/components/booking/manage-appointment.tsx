@@ -279,7 +279,7 @@ function Appointment({
 
 			{appointment.needsConfirmation && live ? (
 				<section aria-labelledby="confirm-email" className="flex flex-col gap-3">
-					<h2 id="confirm-email" className="font-display text-title font-bold text-ink">
+					<h2 id="confirm-email" className="type-title text-ink">
 						{t("confirmEmail.title")}
 					</h2>
 					<p className="max-w-[60ch] text-body text-ink">{t("confirmEmail.body")}</p>
@@ -299,7 +299,7 @@ function Appointment({
 
 			{live ? (
 				<section aria-labelledby="manage-actions" className="flex flex-col gap-4">
-					<h2 id="manage-actions" className="font-display text-title font-bold text-ink">
+					<h2 id="manage-actions" className="type-title text-ink">
 						{mode === "reschedule" ? t("rescheduleHeading") : t("actions")}
 					</h2>
 					{!appointment.canCancel ? (
@@ -366,7 +366,7 @@ function Appointment({
 								value={newSlot}
 								onChange={setNewSlot}
 							/>
-							<div className="flex flex-wrap-reverse items-center justify-between gap-3 border-t-[1.5px] border-ink pt-3">
+							<div className="flex flex-wrap-reverse items-center justify-between gap-3 border-t border-ink pt-3">
 								<Button
 									intent="ink"
 									size="lg"

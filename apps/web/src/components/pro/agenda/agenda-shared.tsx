@@ -41,8 +41,7 @@ type Outputs = inferRouterOutputs<AppRouter>;
 export type AgendaEntry = Outputs["agenda"]["list"][number];
 export type AgendaCalendar = Outputs["agenda"]["calendars"][number];
 
-export const sectionHeading =
-	"font-display text-title font-bold text-ink font-stretch-semi-expanded";
+export const sectionHeading = "type-title text-ink";
 
 /** The printed name of a calendar's place. */
 export function placeName(calendar: AgendaCalendar, fallback: string) {
@@ -502,8 +501,8 @@ export function EntryDialog({
 
 				{active && !isBlock ? (
 					confirming ? (
-						<div className="flex flex-col gap-4 border-t-[1.5px] border-ink pt-4">
-							<p className="font-display text-lead font-bold text-ink">{t("cancelTitle")}</p>
+						<div className="flex flex-col gap-4 border-t border-ink pt-4">
+							<p className="type-subtitle text-ink">{t("cancelTitle")}</p>
 							<p className="text-body text-ink">{t("cancelBody")}</p>
 							<TextAreaField
 								label={t("message")}
