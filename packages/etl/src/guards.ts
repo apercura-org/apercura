@@ -157,6 +157,26 @@ export function checkBreakers(pages: PageChanges): GuardCheck[] {
 	];
 }
 
+/**
+ * Before COMMIT: every indexable page must be listed on at least one listing
+ * page (its listing slug in the commune of one of its patient-facing places),
+ * so crawlers reach it from the place hubs. An orphan means the read models
+ * and the indexing rule disagree: blocked for review.
+ */
+export function checkOrphans(orphans: { count: number; examples: string[] }): GuardCheck[] {
+	return [
+		{
+			name: "integrity.orphans",
+			ok: orphans.count === 0,
+			approvable: true,
+			detail:
+				orphans.count === 0
+					? "every indexable page is listed on a listing page"
+					: `${orphans.count} indexable pages are listed on no listing page (${orphans.examples.join(", ")})`,
+		},
+	];
+}
+
 export type GuardVerdict = {
 	ok: boolean;
 	/** Failures that block the run (not approved or not approvable). */

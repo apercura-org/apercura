@@ -827,13 +827,17 @@ export async function recomputeDerived(tx: TransactionSql, ctx: MergeContext) {
 		WITH ranked AS (
 			SELECT a.id, row_number() OVER (
 				PARTITION BY a.practitioner_id
-				ORDER BY (a.site_id IS NULL),
+				-- A place attached to a commune first: the primary place gives the page its
+				-- commune (breadcrumb, ring of neighbours, title), and an office without one
+				-- must not hide a hospital that has one.
+				ORDER BY (a.site_id IS NULL), (s.place_id IS NULL OR s.removed_at IS NOT NULL),
 					CASE a.practice_kind WHEN 'office' THEN 0 WHEN 'health_center' THEN 1
 						WHEN 'hospital' THEN 2 WHEN 'locum' THEN 3 ELSE 4 END,
 					(a.mode_code = 'L') DESC NULLS LAST,
 					a.id
 			) AS rank
 			FROM directory.activities a
+			LEFT JOIN directory.sites s ON s.id = a.site_id
 			WHERE a.removed_at IS NULL AND NOT a.hidden
 		)
 		UPDATE directory.activities a SET is_primary = (r.rank = 1), updated_at = now()
@@ -939,6 +943,29 @@ export async function refreshReadModels(tx: TransactionSql, runId: number) {
 	`;
 	if (!pages || !landing || !search) throw new Error("Read model refresh returned nothing");
 	return { pages: pages.result, landing: landing.result, search: search.result };
+}
+
+/**
+ * Indexable practitioners listed on no listing page (see `checkOrphans`): no
+ * landing page for their listing slug in the commune of any of their
+ * patient-facing places. Call after refreshing the read models.
+ */
+export async function orphanedPages(
+	tx: TransactionSql,
+): Promise<{ count: number; examples: string[] }> {
+	const [row] = await tx<{ count: number; examples: string[] | null }[]>`
+		SELECT count(*)::integer AS count, (array_agg(p.slug ORDER BY p.id))[1:10] AS examples
+		FROM directory.practitioners p
+		WHERE p.indexable AND NOT EXISTS (
+			SELECT 1 FROM directory.activities a
+			JOIN directory.sites s ON s.id = a.site_id AND s.removed_at IS NULL
+			JOIN directory.landing_pages lp ON lp.listing_slug = p.listing_slug
+				AND lp.place_id = s.place_id
+			WHERE a.practitioner_id = p.id AND a.removed_at IS NULL AND NOT a.hidden
+				AND a.practice_kind IN ('office', 'health_center', 'hospital')
+		)
+	`;
+	return { count: row?.count ?? 0, examples: row?.examples ?? [] };
 }
 
 /**
