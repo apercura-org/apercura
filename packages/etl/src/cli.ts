@@ -1,5 +1,5 @@
 #!/usr/bin/env bun
-import { mkdtemp } from "node:fs/promises";
+import { mkdtemp, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import {
@@ -27,6 +27,16 @@ import { fetchGbPlaceSources, importGbPlaces, readGbPlaceSources } from "./sourc
 
 const isCommand = (value: string | undefined): value is Command =>
 	COMMANDS.includes(value as Command);
+
+/** Downloads the UK's place sources to a temporary directory, removed once they are read. */
+async function fetchGbPlacesOnce() {
+	const dir = await mkdtemp(join(tmpdir(), "apercura-etl-gb-places-"));
+	try {
+		return await fetchGbPlaceSources(gbPlacesUrls(process.env), dir);
+	} finally {
+		await rm(dir, { recursive: true, force: true });
+	}
+}
 
 const log = (message: string) => console.log(`[${new Date().toISOString()}] ${message}`);
 
@@ -99,10 +109,7 @@ async function main(): Promise<number> {
 							sql,
 							typeof sourceDir === "string"
 								? await readGbPlaceSources(sourceDir)
-								: await fetchGbPlaceSources(
-										gbPlacesUrls(process.env),
-										await mkdtemp(join(tmpdir(), "apercura-etl-gb-places-")),
-									),
+								: await fetchGbPlacesOnce(),
 							runId,
 						)
 					: country === "at"
