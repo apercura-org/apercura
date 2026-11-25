@@ -58,10 +58,10 @@ repository, to open as an issue.
       ([§2](deploy-clever-cloud.md#2-database)): the three roles `apercura_app`,
       `apercura_etl`, `apercura_readonly`; check the extensions (`postgis`, `pg_trgm`,
       `unaccent`, `btree_gist`); point-in-time recovery (pgBackRest).
-- [ ] **[founder]** Secrets on a trusted machine (`bun run keys:generate`, plus
-      `openssl rand -base64 32` for `REVALIDATE_SECRET` and `JOBS_SECRET`), stored only in the
-      host's environment; set `RATE_LIMIT_KEY` and `ALTCHA_HMAC_KEY` explicitly and
-      `TRUSTED_PROXY_COUNT=1` ([§3](deploy-clever-cloud.md#3-environment-of-the-web-app)).
+- [ ] **[founder]** Secrets on a trusted machine (`bun run keys:generate` prints all eight,
+      `REVALIDATE_SECRET` and `JOBS_SECRET` included), stored only in the host's environment;
+      set `RATE_LIMIT_KEY` and `ALTCHA_HMAC_KEY` explicitly and `TRUSTED_PROXY_COUNT=1`
+      ([§3](deploy-clever-cloud.md#3-environment-of-the-web-app)).
 - [ ] **[founder]** First deployment with `FEATURE_BOOKING=false`.
 
 ## 4. Email and Pro Santé Connect

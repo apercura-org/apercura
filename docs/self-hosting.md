@@ -69,10 +69,9 @@ Fill in `docker/.env.selfhost`:
 1. `APP_URL`: the public origin, e.g. `https://annuaire.example.org`.
 2. The secrets. `bun run keys:generate` prints `ENCRYPTION_KEYS`,
    `ENCRYPTION_ACTIVE_KEY`, `BLIND_INDEX_KEY`, `BETTER_AUTH_SECRET`,
-   `RATE_LIMIT_KEY` and `ALTCHA_HMAC_KEY`; add `REVALIDATE_SECRET` and
-   `JOBS_SECRET` with `openssl rand -base64 32`. Without Bun, build the image
-   first (step below) and run `docker run --rm apercura:local keys`, which
-   prints all of them.
+   `RATE_LIMIT_KEY`, `ALTCHA_HMAC_KEY`, `REVALIDATE_SECRET` and `JOBS_SECRET`.
+   Without Bun, build the image first (step below) and run
+   `docker run --rm apercura:local keys`, which prints the same eight.
 3. The passwords of `POSTGRES_PASSWORD`, `APERCURA_APP_DB_PASSWORD`,
    `APERCURA_ETL_DB_PASSWORD`, `MINIO_ROOT_PASSWORD` and
    `S3_SECRET_ACCESS_KEY`. They end up in connection URLs: letters and digits
