@@ -194,33 +194,31 @@ export async function signIn(
 }
 
 /**
- * Brings back a synthetic practitioner an earlier run removed for good (the objection spec):
- * only its suppression is left (#116), so it goes and the fixtures are imported again, as for a
- * withdrawn objection. The import tells this server which pages changed.
+ * Brings back a synthetic practitioner an earlier run removed (#116): an objection leaves only
+ * its suppression, an owner's removal a bare row without places. Once the suppression is gone
+ * the fixtures are imported again, as for a withdrawn objection or a restored page. The import
+ * tells this server which pages changed.
  */
-function withdrawObjection(rpps: string) {
+export function reimportFixtures(rpps: string) {
 	const root = fileURLToPath(new URL("../../..", import.meta.url));
+	const options = {
+		cwd: root,
+		env: {
+			...process.env,
+			APP_URL: `http://localhost:${process.env.E2E_PORT ?? 3100}`,
+			REVALIDATE_SECRET: E2E_BOOKING_ENV.REVALIDATE_SECRET,
+		},
+		stdio: "pipe" as const,
+	};
+	const cli = "packages/etl/src/cli.ts";
 	execFileSync(
 		"bun",
-		[
-			"packages/etl/src/cli.ts",
-			"etl:fr",
-			"--source-dir",
-			"packages/etl/fixtures/fr",
-			"--offline",
-			"--force",
-		],
-		{
-			cwd: root,
-			env: {
-				...process.env,
-				APP_URL: `http://localhost:${process.env.E2E_PORT ?? 3100}`,
-				REVALIDATE_SECRET: E2E_BOOKING_ENV.REVALIDATE_SECRET,
-			},
-			stdio: "pipe",
-		},
+		[cli, "etl:fr", "--source-dir", "packages/etl/fixtures/fr", "--offline", "--force"],
+		options,
 	);
-	console.log(`Synthetic practitioner ${rpps} imported again after its objection was withdrawn`);
+	// Offline, the import leaves its cache tags in the outbox: send them to this server.
+	execFileSync("bun", [cli, "etl:outbox"], options);
+	console.log(`Synthetic practitioner ${rpps} imported again after its removal was withdrawn`);
 }
 
 /**
@@ -232,15 +230,15 @@ function withdrawObjection(rpps: string) {
 export async function resetPractitioner(rpps: string) {
 	const sql = testDb();
 	try {
-		const find = () => sql<{ id: number; owner_org_id: string | null }[]>`
-			SELECT id, owner_org_id FROM directory.practitioners WHERE national_id = ${rpps}
+		const find = () => sql<{ id: number; owner_org_id: string | null; status: string }[]>`
+			SELECT id, owner_org_id, status FROM directory.practitioners WHERE national_id = ${rpps}
 		`;
 		const recover = async () => {
 			const [suppression] = await sql`
 				DELETE FROM directory.suppressions WHERE national_id = ${rpps} RETURNING 1
 			`;
 			if (!suppression) return undefined;
-			withdrawObjection(rpps);
+			reimportFixtures(rpps);
 			return (await find())[0];
 		};
 		const row = (await find())[0] ?? (await recover());
@@ -279,6 +277,8 @@ export async function resetPractitioner(rpps: string) {
 			`;
 			await tx`SELECT directory.refresh_practitioner(${[row.id]}::integer[])`;
 		});
+		// Removed by its owner in an earlier run: its places come back with an import.
+		if (row.status === "suppressed") reimportFixtures(rpps);
 		return row.id;
 	} finally {
 		await sql.end();

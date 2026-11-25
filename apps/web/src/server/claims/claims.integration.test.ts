@@ -570,6 +570,41 @@ describe.skipIf(!url)("claims, ownership and objections (database)", async () =>
 		).toBe("CLAIMED");
 	});
 
+	it("removes an owner's page only with the confirmation of the editor's dialog (#119)", async () => {
+		const target = await practitioner();
+		const claim = await service.startClaim(db, users.alice, target.rpps);
+		await passCheck(claim.id, "psc");
+		const approval = await service.evaluateClaim(db, claim.id);
+		const organizationId = approval?.organizationId ?? "";
+		const owner = caller(users.alice);
+		const suppressed = async () => {
+			const [row] = await db.$client<{ n: number }[]>`
+				SELECT count(*)::integer AS n FROM directory.suppressions WHERE national_id = ${target.rpps}
+			`;
+			return row?.n ?? 0;
+		};
+		// A stray request (no confirmation, or another page's number) removes nothing.
+		expect(await codeOf(owner.profile.setRemoved({ organizationId, removed: true }))).toBe(
+			"CONFIRMATION_REQUIRED",
+		);
+		expect(
+			await codeOf(
+				owner.profile.setRemoved({ organizationId, removed: true, confirmRpps: "19999999999" }),
+			),
+		).toBe("CONFIRMATION_REQUIRED");
+		expect(await suppressed()).toBe(0);
+		// The page's own RPPS number, as the dialog sends it once its box is ticked.
+		expect(
+			await owner.profile.setRemoved({ organizationId, removed: true, confirmRpps: target.rpps }),
+		).toEqual({ ok: true });
+		expect(await suppressed()).toBe(1);
+		// Restoring deletes nothing and needs no confirmation.
+		expect(await owner.profile.setRemoved({ organizationId, removed: false })).toEqual({
+			ok: true,
+		});
+		expect(await suppressed()).toBe(0);
+	});
+
 	it("gates the agenda in one place: verified owner, 7-day wait without Pro Santé Connect, fees and payment methods", async () => {
 		const fees = { items: [{ label: "Consultation", amount: 30, maxAmount: null }], note: null };
 		const viaEmail = await practitioner();

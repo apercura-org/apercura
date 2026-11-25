@@ -2531,7 +2531,22 @@
 			"title": "Retirer votre page",
 			"lead": "Votre page disparaît de l’annuaire, des recherches et des moteurs de recherche, et ne revient pas au prochain import. Ses lieux, sa présentation, sa photo, ses tarifs et ses statistiques sont supprimés aussitôt ; votre compte et votre agenda restent. Vous pouvez la rétablir ici : la page du registre revient à la mise à jour hebdomadaire suivante, et vous la complétez à nouveau.",
 			"action": "Retirer ma page de l’annuaire",
-			"restore": "Rétablir ma page"
+			"restore": "Rétablir ma page",
+			"dialog": {
+				"title": "Retirer votre page de l’annuaire ?",
+				"intro": "Votre page disparaît aussitôt de l’annuaire, des recherches et des moteurs de recherche. Ce contenu est supprimé définitivement :",
+				"items": {
+					"places": "vos lieux d’exercice",
+					"presentation": "votre présentation (accroche, biographie, langues, expertises)",
+					"photo": "votre photo",
+					"fees": "vos tarifs et moyens de paiement",
+					"statistics": "les statistiques de la page"
+				},
+				"restore": "Votre compte et votre agenda restent. Si vous rétablissez la page, elle revient depuis le registre au prochain import hebdomadaire, et vous la complétez à nouveau.",
+				"understood": "Je comprends que ce contenu est supprimé",
+				"confirm": "Retirer ma page",
+				"cancel": "Annuler"
+			}
 		},
 		"preview": {
 			"title": "Aperçu",

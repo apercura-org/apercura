@@ -14,6 +14,7 @@ import {
 	createProAccount,
 	expectNoAxeViolations,
 	type ProAccount,
+	reimportFixtures,
 	resetPractitioner,
 	testDb,
 } from "./pro";
@@ -21,7 +22,8 @@ import {
 /*
  * The owner experience (issue #92) on the synthetic fixtures: the "Is this you?" block, the
  * "I am this practitioner" contact form and its admin queue, the opt-out from both kinds of page,
- * page statistics, the share kit, the poster and the badge. Fictitious practitioners only.
+ * page statistics, the share kit, the poster and the badge, and the confirmed removal of a claimed
+ * page (#119). Fictitious practitioners only.
  */
 
 /** Unclaimed: the contact form and the opt-out of an unclaimed page. */
@@ -418,4 +420,60 @@ test("the share kit gives the link, the QR code files, the poster and a tracking
 	await expect(page.getByRole("button", { name: "Imprimer l’affiche" })).toBeHidden();
 	await expect(sheet).toBeVisible();
 	await page.emulateMedia({ media: "screen" });
+});
+
+test("the owner removes the page only after confirming what is deleted, and can restore it", async ({
+	request,
+}) => {
+	const page = owner?.page;
+	if (!page) throw new Error("The owner test must run first");
+	await page.goto("/fr/pro/page#editor-remove");
+	const trigger = page.getByRole("button", { name: "Retirer ma page de l’annuaire" });
+	await trigger.click();
+	const dialog = page.getByRole("alertdialog", { name: "Retirer votre page de l’annuaire ?" });
+	await expect(dialog).toBeVisible();
+	// Exactly what goes, and how a restored page comes back.
+	for (const item of ["vos lieux d’exercice", "votre photo", "vos tarifs et moyens de paiement"]) {
+		await expect(dialog.getByRole("listitem").filter({ hasText: item })).toBeVisible();
+	}
+	await expect(dialog.getByText(/au prochain import hebdomadaire/)).toBeVisible();
+	await expectNoAxeViolations(page);
+	await capture(page, "owner-remove-dialog", dialog);
+
+	// Escape cancels, and focus goes back to the button that opened it.
+	await page.keyboard.press("Escape");
+	await expect(dialog).toBeHidden();
+	await expect(trigger).toBeFocused();
+	expect((await request.get(`/fr/praticien/${OWNED.slug}`)).status()).toBe(200);
+
+	// The removal button does nothing until the box is ticked.
+	await trigger.click();
+	const confirm = dialog.getByRole("button", { name: "Retirer ma page", exact: true });
+	await expect(confirm).toBeDisabled();
+	await dialog.getByText("Je comprends que ce contenu est supprimé").click();
+	await expect(confirm).toBeEnabled();
+	await confirm.click();
+	await expect(page.getByText("Votre page est retirée de l’annuaire")).toBeVisible();
+	expect((await request.get(`/fr/praticien/${OWNED.slug}`)).status()).toBe(404);
+	const sql = testDb();
+	try {
+		const [row] = await sql<{ reason: string; status: string }[]>`
+			SELECT s.reason, p.status FROM directory.suppressions s
+			JOIN directory.practitioners p ON p.national_id = s.national_id
+			WHERE s.national_id = ${OWNED.rpps}
+		`;
+		expect(row).toEqual({ reason: "owner", status: "suppressed" });
+	} finally {
+		await sql.end();
+	}
+
+	// Restoring needs no confirmation: it deletes nothing, and the next import brings the
+	// registry page back.
+	await page.getByRole("button", { name: "Rétablir ma page" }).click();
+	await expect(page.getByText("Votre page est retirée de l’annuaire")).toBeHidden();
+	await expectNoAxeViolations(page);
+	reimportFixtures(OWNED.rpps);
+	await expect
+		.poll(async () => (await request.get(`/fr/praticien/${OWNED.slug}`)).status())
+		.toBe(200);
 });

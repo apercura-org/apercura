@@ -2531,7 +2531,22 @@
 			"title": "Rimuovere la sua pagina",
 			"lead": "La sua pagina scompare dall’elenco, dalle ricerche e dai motori di ricerca, e non ricompare con la successiva importazione. Le sue sedi di esercizio, la presentazione, la foto, gli onorari e le statistiche sono cancellati subito; il suo account e la sua agenda restano. Può ripristinarla qui: la pagina del registro ricompare con l’aggiornamento settimanale successivo, e lei la completa di nuovo.",
 			"action": "Rimuovere la mia pagina dall’elenco",
-			"restore": "Ripristinare la mia pagina"
+			"restore": "Ripristinare la mia pagina",
+			"dialog": {
+				"title": "Rimuovere la sua pagina dall’elenco?",
+				"intro": "La sua pagina scompare subito dall’elenco, dalle ricerche e dai motori di ricerca. Questo contenuto è cancellato definitivamente:",
+				"items": {
+					"places": "le sue sedi di esercizio",
+					"presentation": "la sua presentazione (titolo, biografia, lingue, competenze)",
+					"photo": "la sua foto",
+					"fees": "i suoi onorari e metodi di pagamento",
+					"statistics": "le statistiche della pagina"
+				},
+				"restore": "Il suo account e la sua agenda restano. Se ripristina la pagina, ricompare dal registro con la successiva importazione settimanale, e lei la completa di nuovo.",
+				"understood": "Ho capito che questo contenuto viene cancellato",
+				"confirm": "Rimuovere la mia pagina",
+				"cancel": "Annulla"
+			}
 		},
 		"preview": {
 			"title": "Anteprima",

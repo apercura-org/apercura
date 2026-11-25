@@ -111,27 +111,36 @@ export const profileRouter = createTRPCRouter({
 		}),
 	),
 
-	/** Removes the page from the directory (GDPR objection by its owner), or restores it. */
-	setRemoved: ownPage.input(z.object({ removed: z.boolean() })).mutation(({ ctx, input }) =>
-		profileCall(async () => {
-			const [row] = await ctx.db().$client<{ id: number }[]>`
-				SELECT id FROM directory.practitioners
-				WHERE owner_org_id = ${ctx.organizationId} AND claim_status = 'claimed'
-			`;
-			if (!row) throw new TRPCError({ code: "NOT_FOUND" });
-			const purge = await setOwnerRemoval(ctx.db(), {
-				practitionerId: row.id,
-				userId: ctx.user.id,
-				removed: input.removed,
-			});
-			if (purge) {
-				await afterPurge(ctx.db(), purge, {
-					storage: storageConfigured() ? getStorage() : null,
+	/**
+	 * Removes the page from the directory (GDPR objection by its owner), or restores it. Removing
+	 * deletes the page's content, so it needs the confirmation of the editor's dialog: the page's
+	 * RPPS number sent back (`confirmRpps`). A request without it changes nothing.
+	 */
+	setRemoved: ownPage
+		.input(z.object({ removed: z.boolean(), confirmRpps: z.string().max(32).optional() }))
+		.mutation(({ ctx, input }) =>
+			profileCall(async () => {
+				const [row] = await ctx.db().$client<{ id: number; nationalId: string }[]>`
+					SELECT id, national_id AS "nationalId" FROM directory.practitioners
+					WHERE owner_org_id = ${ctx.organizationId} AND claim_status = 'claimed'
+				`;
+				if (!row) throw new TRPCError({ code: "NOT_FOUND" });
+				if (input.removed && input.confirmRpps !== row.nationalId) {
+					throw new TRPCError({ code: "BAD_REQUEST", message: "CONFIRMATION_REQUIRED" });
+				}
+				const purge = await setOwnerRemoval(ctx.db(), {
+					practitionerId: row.id,
+					userId: ctx.user.id,
+					removed: input.removed,
 				});
-			} else {
-				await refreshPractitioners(ctx.db().$client, [row.id]);
-			}
-			return { ok: true as const };
-		}),
-	),
+				if (purge) {
+					await afterPurge(ctx.db(), purge, {
+						storage: storageConfigured() ? getStorage() : null,
+					});
+				} else {
+					await refreshPractitioners(ctx.db().$client, [row.id]);
+				}
+				return { ok: true as const };
+			}),
+		),
 });

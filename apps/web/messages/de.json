@@ -2531,7 +2531,22 @@
 			"title": "Ihre Seite entfernen",
 			"lead": "Ihre Seite verschwindet aus dem Verzeichnis, aus Suchergebnissen und Suchmaschinen und erscheint beim nächsten Import nicht wieder. Ihre Praxisorte, Vorstellung, Foto, Honorare und Statistiken werden sofort gelöscht; Ihr Konto und Ihr Terminkalender bleiben bestehen. Sie können sie hier wiederherstellen: Die Seite aus dem Register erscheint mit der nächsten wöchentlichen Aktualisierung wieder, und Sie vervollständigen sie erneut.",
 			"action": "Meine Seite aus dem Verzeichnis entfernen",
-			"restore": "Meine Seite wiederherstellen"
+			"restore": "Meine Seite wiederherstellen",
+			"dialog": {
+				"title": "Ihre Seite aus dem Verzeichnis entfernen?",
+				"intro": "Ihre Seite verschwindet sofort aus dem Verzeichnis, aus Suchergebnissen und Suchmaschinen. Dieser Inhalt wird endgültig gelöscht:",
+				"items": {
+					"places": "Ihre Praxisorte",
+					"presentation": "Ihre Vorstellung (Kurztext, Biografie, Sprachen, Schwerpunkte)",
+					"photo": "Ihr Foto",
+					"fees": "Ihre Honorare und Zahlungsarten",
+					"statistics": "die Statistiken der Seite"
+				},
+				"restore": "Ihr Konto und Ihr Terminkalender bleiben bestehen. Wenn Sie die Seite wiederherstellen, erscheint sie mit dem nächsten wöchentlichen Import aus dem Register wieder, und Sie vervollständigen sie erneut.",
+				"understood": "Ich habe verstanden, dass dieser Inhalt gelöscht wird",
+				"confirm": "Meine Seite entfernen",
+				"cancel": "Abbrechen"
+			}
 		},
 		"preview": {
 			"title": "Vorschau",
