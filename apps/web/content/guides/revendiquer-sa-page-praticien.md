@@ -121,7 +121,7 @@ Pour les rendez-vous, vous êtes responsable de traitement des données de vos p
 
 - le titulaire gère tout : la page, l’équipe, les réglages de rendez-vous et le journal des accès ;
 - un praticien gère l’agenda et la page publique ;
-- un assistant gère seulement l’agenda.
+- un secrétaire gère seulement l’agenda.
 
 **Les statistiques.** Vous voyez les consultations de votre page sur 30 jours, les rendez-vous pris en ligne et ce qui manque à votre page. Une consultation est comptée sans cookie ni identifiant. Les totaux par jour sont gardés 13 mois.
 

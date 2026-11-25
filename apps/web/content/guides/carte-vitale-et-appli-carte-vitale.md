@@ -32,6 +32,10 @@ sources:
     url: "https://france-identite.gouv.fr/actualite/france-identite-appli-carte-Vitale/"
     publisher: "France Identité"
     checkedAt: "2026-11-25"
+  - title: "Vacances à l’étranger : votre prise en charge"
+    url: "https://www.ameli.fr/assure/droits-demarches/europe-international/protection-sociale-etranger/vacances-etranger"
+    publisher: "Assurance Maladie (ameli.fr)"
+    checkedAt: "2026-11-25"
 ---
 
 La carte Vitale permet à l’Assurance Maladie de vous rembourser vite, sans papier à envoyer. L’appli carte Vitale en est la version sur smartphone. Elle ne remplace pas encore la carte partout : gardez votre carte sur vous.
@@ -45,7 +49,7 @@ Quelques points à connaître :
 - la carte Vitale et l’appli sont gratuites ;
 - ce ne sont pas des cartes de paiement : elles ne servent pas à payer le professionnel ;
 - elles sont valables en France métropolitaine et dans les départements et régions d’outre-mer (DROM) ;
-- pour des soins imprévus dans les autres pays d’Europe, en Suisse et au Royaume-Uni, présentez la carte européenne d’assurance maladie (CEAM), à commander dans votre compte ameli.
+- pour des soins imprévus dans un pays de l’Union européenne (UE) ou de l’Espace économique européen (EEE), en Suisse ou au Royaume-Uni, présentez la carte européenne d’assurance maladie (CEAM). Commandez-la au moins 15 jours avant votre départ, dans votre compte ameli.
 
 Mettez votre carte à jour à chaque changement de situation, et au moins une fois par an. L’appli, elle, se met à jour toute seule quand vous l’ouvrez.
 
@@ -57,7 +61,7 @@ L’appli carte Vitale est votre carte Vitale sur smartphone. Chez un profession
 
 - L’appli « ne contient pas d’information médicale ».
 - Elle fonctionne sur un seul smartphone.
-- Elle ne contient que votre propre carte.
+- Elle ne contient que votre carte Vitale personnelle, pas celle d’un membre de votre famille. Elle permet aussi la prise en charge de vos ayants droit, les personnes rattachées à votre compte.
 - Elle peut aussi servir d’identité numérique pour vous connecter avec FranceConnect.
 
 Les professionnels de santé s’équipent peu à peu pour lire l’appli. L’Assurance Maladie le dit clairement : « Il est donc conseillé de toujours garder sa carte Vitale physique sur soi. » L’annuaire santé de l’Assurance Maladie indique quels professionnels acceptent l’appli.

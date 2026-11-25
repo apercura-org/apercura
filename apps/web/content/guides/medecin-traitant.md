@@ -107,7 +107,7 @@ Vous êtes aussi remboursé normalement dans ces cas :
 - quand votre médecin traitant est parti à la retraite ou a changé de département il y a moins d’un an ;
 - quand une sage-femme vous oriente vers un médecin.
 
-En cas d’urgence, appelez le **15** (Samu) ou le **112** (numéro européen). Si vous êtes sourd, sourdaveugle, malentendant ou aphasique, le **114** est joignable par SMS, par application ou en visio. Pour savoir qui joindre le soir et le week-end, lisez le guide [Urgences, médecin de garde : qui appeler ?](/fr/guides/urgences-medecin-de-garde).
+En cas d’urgence, appelez le **15** (Samu) ou le **112** (numéro européen). Si vous êtes sourd, sourdaveugle, malentendant ou aphasique, le **114** est joignable par SMS, par application ou en visio. Pour savoir qui joindre le soir et le week-end, lisez le guide [Urgence, médecin de garde : quel numéro appeler ?](/fr/guides/urgences-medecin-de-garde).
 
 ## Que faire si aucun médecin ne vous accepte ?
 

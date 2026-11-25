@@ -45,6 +45,18 @@ sources:
     url: "https://www.data.gouv.fr/datasets/annuaire-sante-ameli"
     publisher: "Caisse nationale de l'Assurance Maladie (data.gouv.fr)"
     checkedAt: "2026-11-25"
+  - title: "Consultations en métropole : vos remboursements"
+    url: "https://www.ameli.fr/assure/remboursements/rembourse/consultations-telemedecine/metropole"
+    publisher: "Assurance Maladie (ameli.fr)"
+    checkedAt: "2026-11-25"
+  - title: "Facturation des professionnels et établissements de santé : qu'est ce qui peut vous être facturé ?"
+    url: "https://www.economie.gouv.fr/dgccrf/les-fiches-pratiques/facturation-des-professionnels-et-etablissements-de-sante-quest-ce-qui-peut-vous-etre-facture"
+    publisher: "DGCCRF (economie.gouv.fr)"
+    checkedAt: "2026-11-25"
+  - title: "Couverture maladie complémentaire (mutuelle)"
+    url: "https://www.service-public.gouv.fr/particuliers/vosdroits/F20314"
+    publisher: "Service-public.fr (DILA)"
+    checkedAt: "2026-11-25"
 ---
 
 Le secteur d’un médecin dit s’il applique les tarifs fixés avec l’Assurance Maladie. Il change ce que vous payez et ce qui vous est remboursé. Vous pouvez le vérifier avant votre rendez-vous.
@@ -66,11 +78,16 @@ Le **dépassement d’honoraires** est la part du prix qui dépasse le tarif de 
 
 Le médecin de secteur 1 « applique le tarif fixé par convention avec l’Assurance Maladie ». L’Assurance Maladie donne cet exemple : une consultation chez un médecin généraliste de secteur 1 coûte 30 €. Avec un médecin traitant déclaré, elle vous rembourse 19 €, une fois retirée la participation forfaitaire de 2 €.
 
-Un médecin de secteur 1 peut vous demander un supplément dans un seul cas : quand vous faites une demande particulière. C’est le cas, par exemple, d’une visite en dehors de ses heures d’ouverture. Ce supplément n’est pas remboursé.
+Un médecin de secteur 1 peut vous demander un dépassement dans deux cas :
+
+- quand vous consultez en dehors du parcours de soins coordonnés, par exemple sans passer par votre médecin traitant ;
+- quand vous faites une demande particulière, par exemple une visite en dehors de ses heures d’ouverture.
+
+Ce dépassement n’est pas remboursé par l’Assurance Maladie.
 
 ## Secteur 2 : des honoraires libres
 
-Le médecin de secteur 2 « pratique des honoraires libres ». Il peut donc demander plus que le tarif de la convention. Il doit le faire « avec tact et mesure ». L’Assurance Maladie ne rembourse pas ce dépassement. Votre complémentaire santé (votre mutuelle) peut en prendre une partie en charge, selon votre contrat.
+Le médecin de secteur 2 « pratique des honoraires libres ». Il peut donc demander plus que le tarif de la convention. Il doit le faire « avec tact et mesure ». L’Assurance Maladie ne rembourse pas ce dépassement. Votre complémentaire santé peut en prendre une partie en charge, selon votre contrat. Elle peut être proposée par une mutuelle, une compagnie d’assurance, une institution de prévoyance ou une banque.
 
 ### Avec l’OPTAM
 
@@ -80,7 +97,7 @@ Chez un médecin qui a adhéré à l’OPTAM, vous êtes remboursé sur la même
 
 ### Sans l’OPTAM
 
-Chez un médecin de secteur 2 qui n’a pas adhéré à l’OPTAM, l’Assurance Maladie vous rembourse sur une base plus basse qu’en secteur 1. Ce remboursement est le même, quel que soit le prix que vous payez.
+Chez un médecin de secteur 2 qui n’a pas adhéré à l’OPTAM, l’Assurance Maladie vous rembourse sur une base plus basse qu’en secteur 1. Pour une consultation chez un médecin généraliste, avec un médecin traitant déclaré, la base de remboursement est de 23 € et vous êtes remboursé 14,10 €, une fois retirée la participation forfaitaire de 2 € (tarifs au 1er janvier 2026). Ce remboursement est le même, quel que soit le prix que vous payez.
 
 Votre mutuelle rembourse aussi moins bien ces dépassements, si vous avez un **contrat responsable**. C’est un type de contrat de complémentaire santé encadré par la loi (article R871-2 du Code de la sécurité sociale). Pour un médecin sans OPTAM, la prise en charge du dépassement par ce contrat a deux limites :
 
@@ -105,7 +122,7 @@ Le médecin doit vous informer de ses tarifs. Il doit :
 
 S’il présente son activité au public, par exemple sur un site internet, il doit aussi y donner une information sur ses honoraires et sur les modes de paiement acceptés. Le Code de la santé publique précise que cette information doit être « claire, honnête, précise et non comparative » (article R4127-53).
 
-> **À retenir.** Un médecin ne peut pas vous facturer de frais administratifs ou de frais de dossier, de frais de prise de rendez-vous en ligne, ni l’envoi de vos résultats par la poste. Il ne peut pas non plus vous imposer un mode de paiement.
+> **À retenir.** Les honoraires couvrent tout le soin, de la prise de rendez-vous à la communication des résultats. Un professionnel de santé ne peut donc pas vous imposer de frais administratifs ou de frais de dossier, de frais de prise de rendez-vous en ligne, de frais d’annulation de rendez-vous ni de frais d’envoi de vos résultats par la poste.
 
 ### Si vous avez la Complémentaire santé solidaire
 

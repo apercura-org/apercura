@@ -53,7 +53,7 @@ Les informations viennent de trois sources publiques, publiées sous Licence Ouv
 - **Le répertoire FINESS**, qui recense les établissements de santé et les services sociaux et médico-sociaux. Apercura y prend le nom et l’emplacement des établissements.
 - **L’annuaire santé de l’Assurance Maladie** (Ameli). Apercura y prend le secteur de conventionnement, l’adhésion à l’OPTAM (option de pratique tarifaire maîtrisée) et l’acceptation de la carte Vitale. Cet annuaire ne contient plus les tarifs ni les horaires des cabinets.
 
-Selon l’ANS, l’état civil des professionnels, dont leur date et leur lieu de naissance, n’est pas en libre accès. Apercura ne l’affiche donc pas.
+Les données en accès libre de l’Annuaire Santé comprennent la civilité et les nom et prénom d’exercice, pas la date ni le lieu de naissance. Apercura n’affiche donc pas ces informations.
 
 Le fichier de l’Assurance Maladie ne contient pas de numéro RPPS. Apercura le rapproche des professionnels par leur nom, leur prénom, leur commune et leur spécialité. Quand ce rapprochement n’est pas certain, la page n’affiche pas ces informations. Elle le dit.
 
@@ -88,14 +88,14 @@ Quand la réservation est ouverte, elle se fait en quelques étapes :
 
 1. Choisissez le motif du rendez-vous et le lieu.
 2. Choisissez un horaire libre.
-3. Donnez vos coordonnées : prénom, nom et adresse e-mail. Selon le cabinet, on vous demande aussi votre téléphone et s’il s’agit d’une première consultation.
+3. Donnez vos coordonnées : prénom, nom, adresse e-mail et téléphone. Selon le cabinet, le téléphone est facultatif ou obligatoire. Pour une visite à domicile, indiquez aussi l’adresse de la visite. Certains cabinets demandent s’il s’agit d’une première consultation.
 4. Saisissez le code à 6 chiffres reçu par e-mail. Il est valable 30 minutes.
 
 Certains cabinets confirment eux-mêmes leurs rendez-vous. Vous recevez alors leur réponse par e-mail, avant une date indiquée. L’e-mail de confirmation contient un lien pour annuler ou déplacer le rendez-vous. Peu avant le rendez-vous, les changements en ligne ferment : appelez alors le cabinet.
 
 Vos coordonnées sont chiffrées et servent uniquement à ce rendez-vous. Les e-mails ne mentionnent ni la spécialité ni le motif. Une réservation non confirmée est effacée après 24 heures. Les données d’un rendez-vous sont effacées 90 jours après sa date par défaut. Le professionnel peut régler ce délai entre 30 et 365 jours. Le détail est sur la page [Confidentialité](/fr/confidentialite).
 
-La réservation en ligne ne convient pas à une urgence. Appelez le **15** (Samu) ou le **112**. Si vous êtes sourd, sourdaveugle, malentendant ou aphasique, le **114** est joignable par SMS, application ou visio. Notre guide [Urgences, médecin de garde : qui appeler ?](/fr/guides/urgences-medecin-de-garde) donne les autres numéros.
+La réservation en ligne ne convient pas à une urgence. Appelez le **15** (Samu) ou le **112**. Si vous êtes sourd, sourdaveugle, malentendant ou aphasique, le **114** est joignable par SMS, application ou visio. Notre guide [Urgence, médecin de garde : quel numéro appeler ?](/fr/guides/urgences-medecin-de-garde) donne les autres numéros.
 
 ## Comment choisir un professionnel avec les informations de la page ?
 

@@ -41,6 +41,10 @@ sources:
     url: "https://www.data.gouv.fr/datasets/annuaire-sante-ameli"
     publisher: "Caisse nationale de l’Assurance Maladie (data.gouv.fr)"
     checkedAt: "2026-11-25"
+  - title: "Le tiers payant"
+    url: "https://www.ameli.fr/assure/remboursements/etre-bien-rembourse/tiers-payant"
+    publisher: "Assurance Maladie (ameli.fr)"
+    checkedAt: "2026-11-25"
 ---
 
 Un infirmier libéral peut vous soigner chez vous. Ces soins se font en général sur prescription d’un médecin. L’Assurance Maladie rembourse ensuite 60 % du tarif, ou 100 % dans certains cas. Les frais de déplacement sont aussi pris en charge quand le médecin a prescrit les soins à domicile.
@@ -58,20 +62,20 @@ La loi du 27 juin 2025 prévoit aussi un accès direct à l’infirmier. Selon l
 Les mentions de l’ordonnance comptent. Elles décident de ce que l’infirmier peut facturer, et donc de ce qui vous est remboursé.
 
 - **Les soins à domicile.** Les frais de déplacement sont facturés « sur prescription du médecin ». Si l’ordonnance ne prévoit pas de soins à domicile et que vous demandez quand même à l’infirmier de venir chez vous, il peut vous facturer un dépassement d’honoraires « avec tact et mesure ». L’Assurance Maladie ne rembourse pas ce dépassement.
-- **Les soins de nuit.** L’infirmier ne peut ajouter la majoration de nuit que si l’ordonnance indique la « nécessité impérieuse » de soins la nuit.
-- **Les dimanches et jours fériés.** La majoration n’est possible que si l’ordonnance demande « une exécution rigoureusement quotidienne » des soins.
+- **Les soins de nuit.** Pour des actes infirmiers répétés, l’infirmier ne peut ajouter la majoration de nuit que si l’ordonnance indique la « nécessité impérieuse » d’une exécution de nuit.
+- **Les dimanches et jours fériés.** Pour des actes répétés, la majoration n’est possible que si l’ordonnance indique la nécessité d’une « exécution rigoureusement quotidienne ».
 
 > **À retenir.** Si vous avez besoin de soins chez vous, la nuit ou tous les jours, vérifiez avec votre médecin que l’ordonnance le dit clairement.
 
 ## Combien l’Assurance Maladie rembourse
 
-Les infirmiers font partie des auxiliaires médicaux. Leurs soins sont remboursés à **60 %** du tarif conventionnel. Le reste est à votre charge ou à celle de votre complémentaire santé (mutuelle).
+Les infirmiers font partie des auxiliaires médicaux. Leurs soins sont remboursés à **60 %** du tarif conventionnel. Le reste est à votre charge ou à celle de votre complémentaire santé.
 
 Une franchise médicale est aussi retenue sur le remboursement des actes des auxiliaires médicaux. La mutuelle ne peut pas la rembourser. Le [tableau des taux de remboursement de l’Assurance Maladie](https://www.ameli.fr/assure/remboursements/rembourse/tableau-recapitulatif-taux-remboursement) donne le détail.
 
 ### Les cas pris en charge à 100 %
 
-- **Une affection de longue durée (ALD) exonérante.** Si votre maladie est reconnue comme ALD exonérante, les soins liés à cette maladie sont pris en charge « à 100 % du montant remboursable par l’Assurance Maladie ». C’est 100 % du tarif de base, pas forcément du prix demandé. Le médecin utilise une ordonnance spéciale, dite « bizone » : une partie pour les soins liés à l’ALD, une autre pour le reste. Si l’infirmier pratique le tiers payant, vous n’avancez pas les frais.
+- **Une affection de longue durée (ALD) exonérante.** Si votre maladie est reconnue comme ALD exonérante, les soins liés à cette maladie sont pris en charge « à 100 % du montant remboursable par l’Assurance Maladie ». C’est 100 % du tarif de base, pas forcément du prix demandé. Le médecin utilise une ordonnance spéciale, dite « bizone » : une partie pour les soins liés à l’ALD, une autre pour le reste. Pour ces soins, le tiers payant est un droit : vous n’avancez pas la part remboursée par l’Assurance Maladie.
 - **La fin de la grossesse.** Du 1er jour du 6e mois de grossesse au 12e jour après l’accouchement, tous les soins remboursables sont pris en charge à 100 %, qu’ils soient liés ou non à la grossesse.
 
 ### Les forfaits pour les personnes dépendantes
@@ -89,7 +93,7 @@ Ces montants peuvent changer : la [page des tarifs des infirmiers de l’Assura
 Quand les soins à domicile sont prescrits, l’infirmier ajoute des frais de déplacement à ses soins. En métropole, à compter du 6 novembre 2026 :
 
 - l’indemnité forfaitaire de déplacement (IFD) est de 2,75 € ;
-- les indemnités kilométriques (IK) sont de 0,35 € par kilomètre en plaine et de 0,50 € en montagne.
+- les indemnités kilométriques (IK) sont de 0,35 € par kilomètre en plaine et de 0,50 € en montagne. Elles ne s’ajoutent que si votre domicile et le cabinet de l’infirmier ne sont pas dans la même agglomération, et s’ils sont à plus de 2 km l’un de l’autre en plaine (1 km en montagne).
 
 Deux règles limitent ces frais :
 
@@ -107,7 +111,7 @@ Il y a des exceptions. L’infirmier ne peut pas faire de vaccins vivants attén
 Vous pouvez chercher un infirmier près de chez vous de deux façons.
 
 - **L’annuaire santé de l’Assurance Maladie.** Il donne les coordonnées des professionnels de santé libéraux et des centres de santé. Il indique notamment leur secteur conventionnel, leur option tarifaire et s’ils acceptent la carte Vitale ou l’application carte Vitale. Il ne donne plus les tarifs des actes ni les horaires des cabinets. Il est accessible sur [le site de l’annuaire santé de l’Assurance Maladie](https://annuairesante.ameli.fr/).
-- **La liste des infirmiers sur Apercura.** La page [infirmiers libéraux](/fr/infirmier) présente les infirmiers à partir des données publiques de l’Annuaire Santé et de l’Assurance Maladie : nom, lieu d’exercice, téléphone. Vous pouvez aussi parcourir [l’annuaire par lieu](/fr/annuaire).
+- **La liste des infirmiers sur Apercura.** La page [infirmiers libéraux](/fr/infirmier) présente les infirmiers à partir de données publiques. Le nom, le lieu d’exercice et le téléphone viennent de l’Annuaire Santé. Le conventionnement et l’acceptation de la carte Vitale viennent de l’annuaire de l’Assurance Maladie. Vous pouvez aussi parcourir [l’annuaire par lieu](/fr/annuaire).
 
 Certains infirmiers ont ouvert la prise de rendez-vous en ligne sur leur page Apercura. Pour une visite à domicile, vous choisissez d’abord votre commune dans la liste des communes desservies. Si la vôtre n’y est pas, vous ne pouvez pas réserver cette visite en ligne : appelez le cabinet.
 
@@ -116,5 +120,5 @@ Certains infirmiers ont ouvert la prise de rendez-vous en ligne sur leur page Ap
 1. Demandez à votre médecin une ordonnance qui précise les soins, et si besoin « à domicile », la nuit ou tous les jours.
 2. Trouvez un infirmier proche de chez vous, pour limiter les frais de déplacement non remboursés.
 3. Présentez votre carte Vitale à l’infirmier. Le guide [carte Vitale et appli carte Vitale](/fr/guides/carte-vitale-et-appli-carte-vitale) explique comment l’utiliser.
-4. Si vous êtes en ALD, demandez si l’infirmier pratique le tiers payant.
+4. Si vous êtes en ALD, présentez votre carte Vitale à jour : pour les soins liés à l’ALD, le tiers payant est un droit.
 5. Pour toute question sur vos soins, parlez-en à votre médecin ou à votre infirmier.

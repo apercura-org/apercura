@@ -42,7 +42,7 @@ sources:
     checkedAt: "2026-11-25"
 ---
 
-Chez le dentiste, il faut distinguer deux types de soins. Les soins courants (consultation, carie, détartrage) sont remboursés à 60 % du tarif de la convention. Pour les prothèses, comme les couronnes, un devis est obligatoire. Le 100 % Santé permet d’en avoir sans reste à payer, si votre complémentaire santé est un contrat responsable.
+Chez le dentiste, il faut distinguer deux types de soins. Les soins courants (consultation, carie, détartrage) sont remboursés à 60 % du tarif de la convention. Pour les prothèses, comme les couronnes, un devis est obligatoire. Le 100 % Santé permet d’en avoir sans reste à payer, chez un dentiste conventionné et si votre complémentaire santé est un contrat responsable.
 
 ## Quels soins sont remboursés, et à quel taux ?
 
@@ -75,7 +75,7 @@ Dans tous les cas, le dépassement doit rester fixé « avec tact et mesure »
 
 Pour les prothèses (couronnes, bridges, dentiers), l’Assurance Maladie classe les soins en trois groupes, appelés « paniers » :
 
-- **le panier 100 % Santé** : le prix est plafonné et vous n’avez rien à payer, si votre complémentaire santé est un contrat responsable ;
+- **le panier 100 % Santé** : le prix est plafonné et vous n’avez rien à payer, à deux conditions : le dentiste est conventionné et votre complémentaire santé est un contrat responsable ;
 - **le panier aux tarifs maîtrisés** : le prix est plafonné, mais un reste à payer modéré est possible ;
 - **le panier aux tarifs libres** : le prix est libre, et le reste à payer peut être plus important, selon votre contrat.
 
