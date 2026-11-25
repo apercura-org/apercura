@@ -21,6 +21,10 @@ The files are in [`docker/`](../docker): `Dockerfile`, `compose.selfhost.yml`,
 `crontab`. `docker/compose.yml` is something else: the services of local
 development.
 
+To run this stack in production on one rented server, behind a Caddy on the
+host and deployed from GitHub Actions, follow [deploy-vps.md](./deploy-vps.md)
+(directory only: a generic VPS is not an HDS host).
+
 ## Health data and HDS
 
 If you install Apercura on hardware you run yourself, for your own patients,
@@ -160,7 +164,8 @@ apercura-compose exec scheduler apercura jobs:tick outbox
 The jobs refresh cached practitioner pages through `APP_URL/api/revalidate`:
 the scheduler must be able to reach the public URL. If your server cannot reach
 its own public name (no hairpin NAT), add an `extra_hosts` entry pointing the
-name to the host, e.g. `annuaire.example.org:host-gateway`, in an override file.
+name to the host, e.g. `annuaire.example.org:host-gateway`, in an override file
+(`docker/compose.vps.yml` does it from `APP_HOST`, see [deploy-vps.md](./deploy-vps.md)).
 The import sends its tags straight to `http://app:3000` instead.
 
 ## First administrator

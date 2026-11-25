@@ -50,6 +50,10 @@ repository, to open as an issue.
 
 ## 3. HDS hosting (Clever Cloud by default, Scalingo as alternative)
 
+Low-cost interim path, before the HDS contract and with `FEATURE_BOOKING=false` only: a single
+generic VPS with Docker Compose and automatic deploys from `main`
+([deploy-vps](deploy-vps.md)). A generic VPS is not HDS-certified: it never holds health data.
+
 - [ ] **[founder]** Quotes from both; written confirmation of the HDS scope of **every**
       service used (application, PostgreSQL, tasks, Cellar, backups); sign the HDS contract.
 - [ ] **[founder]** Create the Clever Cloud organisation and the applications in the HDS
