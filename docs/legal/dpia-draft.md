@@ -4,16 +4,16 @@
 >
 > Draft of 22 November 2026
 
-| Item                    | Value                                                                                               |
-| ----------------------- | --------------------------------------------------------------------------------------------------- |
-| Service                 | Apercura: public directory of health practitioners in France, with free online booking              |
-| Publisher               | {{PUBLISHER_NAME}}, {{PUBLISHER_LEGAL_FORM}}, {{PUBLISHER_ADDRESS}}, {{PUBLISHER_REGISTRATION}}     |
-| Contact                 | {{CONTACT_EMAIL}}, {{PUBLISHER_PHONE}}                                                              |
-| Data protection officer | {{DPO_NAME}}, {{DPO_CONTACT}}                                                                       |
-| Host                    | {{HOST_NAME}}, {{HOST_ADDRESS}}, {{HOST_PHONE}} (planned: Clever Cloud, HDS region `parhds`, Paris) |
-| Methodology             | CNIL PIA methodology (context, fundamental principles, risks, validation)                           |
-| Version                 | {{DPIA_VERSION}}, effective {{EFFECTIVE_DATE}}                                                      |
-| Technical basis         | Repository state of 22 November 2026; [security review](../security-review.md) (issue #31)          |
+| Item                    | Value                                                                                                            |
+| ----------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| Service                 | Apercura: public directory of health practitioners in France, with free online booking                           |
+| Publisher               | {{PUBLISHER_NAME}}, {{PUBLISHER_LEGAL_FORM}}, {{PUBLISHER_ADDRESS}}, {{PUBLISHER_REGISTRATION}}                  |
+| Contact                 | {{CONTACT_EMAIL}}, {{PUBLISHER_PHONE}}                                                                           |
+| Data protection officer | {{DPO_NAME}}, {{DPO_CONTACT}}                                                                                    |
+| Host                    | {{HOST_NAME}}, {{HOST_ADDRESS}}, {{HOST_PHONE}}: interim EEA host, not HDS-certified (planned: Clever Cloud HDS) |
+| Methodology             | CNIL PIA methodology (context, fundamental principles, risks, validation)                                        |
+| Version                 | {{DPIA_VERSION}}, effective {{EFFECTIVE_DATE}}                                                                   |
+| Technical basis         | Repository state of 22 November 2026; [security review](../security-review.md) (issue #31)                       |
 
 Related documents: [records of processing](records-of-processing.md),
 [processor agreement](processor-agreement-draft.md),
@@ -77,9 +77,11 @@ ranking, no audience-measurement cookies or trackers (privacy page,
 (AGPL-3.0).
 
 Booking is behind a feature flag (`FEATURE_BOOKING`, default `false`,
-[configuration](../configuration.md)): until the HDS hosting contract is signed, production
-runs in directory-only mode, without health data
-([deploy-clever-cloud](../deploy-clever-cloud.md#before-anything-the-hds-contract)).
+[configuration](../configuration.md)). By decision of the founder, booking is enabled in
+production on the interim host, which is **not HDS-certified**, until the migration to the
+HDS host (Clever Cloud HDS planned). This does not meet article L.1111-8 of the Code de la
+santé publique; the risk is assessed in [3.7](#37-health-data-on-a-host-that-is-not-hds-certified)
+and listed as a high residual risk in [4.2](#42-residual-risks-after-planned-measures-proposals).
 
 ### 1.2 Purposes
 
@@ -382,11 +384,12 @@ an email and tick "Je suis le praticien de cette page"; 5 requests per hour per 
 
 ### 2.8 Processors and sub-processors (art. 28)
 
-| Processor                                                | Role                                                                | Status                                                               |
-| -------------------------------------------------------- | ------------------------------------------------------------------- | -------------------------------------------------------------------- |
-| {{HOST_NAME}} (planned: Clever Cloud)                    | Hosting of app, database, storage, jobs, backups, in the HDS region | HDS contract **planned, not signed**; booking stays off until signed |
-| {{SMTP_PROVIDER}}                                        | Outgoing email                                                      | **To choose** (European provider); DPA to sign                       |
-| Alternative host (Scalingo, HDS region `osc-secnum-fr1`) | Fallback only                                                       | Not used ([deploy-scalingo](../deploy-scalingo.md))                  |
+| Processor                                                | Role                                                                | Status                                                                                   |
+| -------------------------------------------------------- | ------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| {{HOST_NAME}} (current interim host)                     | Hosting of app, database, storage, jobs, backups, in the EEA        | Interim host, **not HDS-certified**; booking enabled on it until the HDS migration (3.7) |
+| Planned HDS host (Clever Cloud)                          | Hosting of app, database, storage, jobs, backups, in the HDS region | HDS contract **planned, not signed**                                                     |
+| {{SMTP_PROVIDER}}                                        | Outgoing email                                                      | **To choose** (European provider); DPA to sign                                           |
+| Alternative host (Scalingo, HDS region `osc-secnum-fr1`) | Fallback only                                                       | Not used ([deploy-scalingo](../deploy-scalingo.md))                                      |
 
 The Agence du numérique en santé (Pro Santé Connect), the map tile server, the calendar
 providers and the mailbox providers are not processors of the publisher; their position
@@ -394,8 +397,9 @@ providers and the mailbox providers are not processors of the publisher; their p
 
 ### 2.9 Transfers outside the EEA
 
-None by design: production is planned entirely in France (HDS region), the SMTP provider must
-be European. Residual third parties, outside the publisher's perimeter:
+None by design: production runs on an interim host in the EEA, the planned HDS host (Clever
+Cloud, HDS region) is in the EEA too, and the SMTP provider must be European. Residual third
+parties, outside the publisher's perimeter:
 
 - the **SMTP provider** and the **patient's mailbox provider** (which may be outside the EEA,
   for example a US-based webmail chosen by the patient);
@@ -544,7 +548,7 @@ summary, the address, the start and end, the sender as organizer and the patient
 and email as attendee.
 
 Assessment: the practitioner's name and address can reveal the specialty indirectly, and the
-content leaves the HDS perimeter through the SMTP provider and the mailbox. This is judged
+content leaves the hosting perimeter through the SMTP provider and the mailbox. This is judged
 necessary for the patient to attend the appointment; the DPO must validate it (A-11). Options
 to consider: omit the patient's name from the `.ics` attendee field; let a practice choose a
 neutral sender display name.
@@ -553,7 +557,7 @@ neutral sender display name.
 
 The feed (`booking/ics-feed.ts`) covers the last 30 and next 120 days and shows, per entry,
 the reason and the patient's initials (full names only if the owner turns them on); it is
-read by the calendar provider's servers, outside the HDS perimeter and outside the second
+read by the calendar provider's servers, outside the hosting perimeter and outside the second
 factor. Token: 256-bit, only its hash stored, 60 reads per hour, rotation and revocation by
 the owner, revocation when a practice changes hands. Proposal: keep full names off by default,
 show a warning when they are turned on, and remind owners to rotate the link when a member
@@ -610,6 +614,30 @@ detection (host alerts, audit log anomalies), qualification, key rotation
 
 See [DPO appointment](dpo-appointment.md) and [records of processing](records-of-processing.md).
 
+### 3.7 Health data on a host that is not HDS-certified
+
+**Situation**: by decision of the founder, online booking (P2) is enabled in production on the
+interim host ({{HOST_NAME}}, in the EEA), which is **not HDS-certified**, for a short period
+until the migration to the HDS host (Clever Cloud HDS planned, contract **not signed**).
+Article L.1111-8 of the Code de la santé publique requires health data to be hosted by an
+HDS-certified host: this requirement is **not met** while booking runs on the interim host.
+
+**Potential impacts**: hosting without the guarantees of the HDS framework (certified
+security and operations, contractual commitments of the host on health data); legal
+non-compliance for the publisher, and possibly for the practitioners who open booking, as
+controllers (**to confirm** by the lawyer).
+
+**Existing measures**: application-level encryption of patient fields, with the master keys
+in the environment, not in the database (3.3); minimal patient data (2.3); automatic purge at
+the end of retention (2.5); no transfer outside the EEA (2.9).
+
+**Required action**: migrate to the HDS host before booking grows, and inform practitioners
+when it is done (A-1).
+
+| Processing                   | Severity (proposal) | Likelihood (proposal)                 | Rationale                                                                        |
+| ---------------------------- | ------------------- | ------------------------------------- | -------------------------------------------------------------------------------- |
+| P2 booking on a non-HDS host | 3 Significant       | 4 Maximum (certain while on the host) | The legal requirement is not met; encryption limits what a database copy reveals |
+
 ---
 
 ## 4. Action plan and residual risks
@@ -618,7 +646,7 @@ See [DPO appointment](dpo-appointment.md) and [records of processing](records-of
 
 | Id   | Action                                                                                                                                           | Owner        | Due                  | Status |
 | ---- | ------------------------------------------------------------------------------------------------------------------------------------------------ | ------------ | -------------------- | ------ |
-| A-1  | Sign the HDS hosting contract; run app, database, jobs, storage and backups in the HDS region; keys in the host's secret manager                 | {{OWNER}}    | Before booking opens | Open   |
+| A-1  | Sign the HDS hosting contract; migrate app, database, jobs, storage and backups to the HDS host; inform practitioners when done                  | Founder      | Before booking grows | Open   |
 | A-2  | External penetration test on staging with synthetic data (security review recommendation 3)                                                      | {{OWNER}}    | Before booking opens | Open   |
 | A-3  | Written breach procedure and register; processor notification target of 48 hours                                                                 | {{OWNER}}    | Before booking opens | Open   |
 | A-4  | Define retention for de-identified appointment rows, inactive accounts (reports and removal requests: done, #63; rate-limit rows: done, #66)     | {{OWNER}}    | Before booking opens | Open   |
@@ -638,22 +666,25 @@ See [DPO appointment](dpo-appointment.md) and [records of processing](records-of
 
 ### 4.2 Residual risks (after planned measures, proposals)
 
-| Risk                              | Severity | Likelihood | Accepted?         |
-| --------------------------------- | -------- | ---------- | ----------------- |
-| Illegitimate access, P2           | 3        | 2          | {{TO_BE_DECIDED}} |
-| Illegitimate access, P3 documents | 3        | 1          | {{TO_BE_DECIDED}} |
-| Unwanted modification, P2         | 3        | 2          | {{TO_BE_DECIDED}} |
-| Page takeover by an impostor      | 3        | 1          | {{TO_BE_DECIDED}} |
-| Abusive objection (R-M4)          | 2        | 2          | {{TO_BE_DECIDED}} |
-| Disappearance, P2                 | 2        | 1          | {{TO_BE_DECIDED}} |
+| Risk                                    | Severity | Likelihood | Accepted?                                          |
+| --------------------------------------- | -------- | ---------- | -------------------------------------------------- |
+| Illegitimate access, P2                 | 3        | 2          | {{TO_BE_DECIDED}}                                  |
+| Illegitimate access, P3 documents       | 3        | 1          | {{TO_BE_DECIDED}}                                  |
+| Unwanted modification, P2               | 3        | 2          | {{TO_BE_DECIDED}}                                  |
+| Page takeover by an impostor            | 3        | 1          | {{TO_BE_DECIDED}}                                  |
+| Abusive objection (R-M4)                | 2        | 2          | {{TO_BE_DECIDED}}                                  |
+| Disappearance, P2                       | 2        | 1          | {{TO_BE_DECIDED}}                                  |
+| Health data on a non-HDS host, P2 (3.7) | 3        | 4          | **High**; run by decision of the founder until A-1 |
 
-Residual risks that cannot be removed by design: emails and calendar feeds leave the HDS
+Residual risks that cannot be removed by design: emails and calendar feeds leave the hosting
 perimeter; backups keep purged data until their expiry; keys live in the host's environment;
 `BLIND_INDEX_KEY` cannot be rotated without rebuilding the indexes; a practice member with
 legitimate access can copy what is on screen.
 
 If a high residual risk remained, the CNIL would have to be consulted before the processing
-starts (art. 36).
+starts (art. 36). The non-HDS hosting risk (3.7) is high: whether it calls for that
+consultation, and how long booking may run on the interim host, is **to decide with the lawyer
+and the DPO**.
 
 ---
 

@@ -8,7 +8,7 @@ web
 
 ## Stack
 
-Decided by the founder: Next.js (App Router) + tRPC + PostgreSQL (Drizzle), Bun monorepo with an in-house component library (React Aria Components + Tailwind CSS v4). Production runs entirely on a French HDS-certified host; everything is self-hostable with Docker. Maps from OpenStreetMap data without API keys. Details in docs/architecture.md.
+Decided by the founder: Next.js (App Router) + tRPC + PostgreSQL (Drizzle), Bun monorepo with an in-house component library (React Aria Components + Tailwind CSS v4). The production target is an HDS-certified host; until then production runs on an interim host in the European Economic Area, with booking data encrypted at the application level. Everything is self-hostable with Docker. Maps from OpenStreetMap data without API keys. Details in docs/architecture.md.
 
 ## Users
 
@@ -22,7 +22,7 @@ Apercura publishes a free, factual public page for every registered health pract
 
 ## Positioning
 
-An open, public-interest alternative to commercial booking platforms: every practitioner is listed, not only paying customers; it is free for practitioners and patients; the code is open source (AGPL-3.0); health data is encrypted and hosted in France by an HDS-certified host; anyone can run the whole thing on their own infrastructure; there are no ratings, ads or paid ranking.
+An open, public-interest alternative to commercial booking platforms: every practitioner is listed, not only paying customers; it is free for practitioners and patients; the code is open source (AGPL-3.0); health data is encrypted at the application level, and the target is an HDS-certified host (until then production runs on an interim host in the European Economic Area); anyone can run the whole thing on their own infrastructure; there are no ratings, ads or paid ranking.
 
 ## Operating Context
 
@@ -34,7 +34,7 @@ An open, public-interest alternative to commercial booking platforms: every prac
 
 - v1: directory and landing pages, search, claim and verification, page editor, online booking without patient accounts (email code), agenda, team access, data export, page removal on request.
 - France first; Belgium, Switzerland and Germany later, through a multi-country data model.
-- GDPR applies. Booking data is health data: production is hosted by an HDS-certified host in France (decided).
+- GDPR applies. Booking data is health data: the target is an HDS-certified host (decided). Until then production runs on an interim host in the European Economic Area, which is not HDS-certified, with booking data encrypted at the application level.
 - French medical deontology: factual information only, no ratings, no promotional claims.
 - Legal entity and funding model: open decisions.
 
@@ -42,7 +42,7 @@ An open, public-interest alternative to commercial booking platforms: every prac
 
 - Name: Apercura.
 - Public claim: "free" for practitioners and patients. Never "free forever".
-- Communication pillars: free; open source; health data hosted in France by an HDS-certified host; run it all yourself (self-hosting). Say "hosted by an HDS-certified host", never "HDS-certified", and only once production actually runs there.
+- Communication pillars: free; open source; health data encrypted at the application level, hosted by an HDS-certified host once production runs on one; run it all yourself (self-hosting). Say "hosted by an HDS-certified host", never "HDS-certified", and only once production actually runs there.
 - Must never look like a government service (no DSFR components, no Marianne typeface, no tricolour) and must not imitate Doctolib.
 
 ## Evidence on Hand

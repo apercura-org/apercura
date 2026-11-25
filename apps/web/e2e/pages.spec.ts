@@ -54,6 +54,21 @@ test("without PUBLIC_HDS_HOST the home page claims encryption, not HDS hosting",
 	await expect(page.getByText("Encrypted data", { exact: true })).toBeVisible();
 });
 
+test("without PUBLIC_HDS_HOST the privacy policy keeps data in the EEA, not in France", async ({
+	page,
+}) => {
+	await page.goto("/confidentialite");
+	await expect(
+		page.locator("#transferts").getByText(/dans l’Espace économique européen et n’en sortent pas/),
+	).toBeVisible();
+	await expect(page.getByText(/données de santé en France|Hébergé en France/)).toHaveCount(0);
+	await page.goto("/en/privacy");
+	await expect(
+		page.locator("#transferts").getByText(/in the European Economic Area and is not transferred/),
+	).toBeVisible();
+	await expect(page.getByText(/health data in France|Hosted in France/)).toHaveCount(0);
+});
+
 test("the component gallery is not served in production", async ({ request }) => {
 	expect((await request.get("/_ui")).status()).toBe(404);
 	expect((await request.get("/en/_ui")).status()).toBe(404);

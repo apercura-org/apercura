@@ -13,7 +13,7 @@ import { Trail } from "~/components/trail";
 import { serverEnv } from "~/env";
 import { getPathname } from "~/i18n/navigation";
 import { institutionalMetadata, localeOf, proseSections } from "~/lib/institutional";
-import { LEGAL_TEXTS_REVIEWED, type LegalValue, legalFacts } from "~/lib/legal";
+import { LEGAL_TEXTS_REVIEWED, type LegalValue, legalFacts, transfersSection } from "~/lib/legal";
 import { LINKS } from "~/lib/links";
 
 export const ensureStatic = "navigation";
@@ -104,7 +104,7 @@ export default async function PrivacyPage({ params }: PageProps<"/[locale]/confi
 						<LegalFactRow label={t("fields.smtp")} fact={facts.smtpProvider} emptyLabel={tbc} />
 					</FieldList>
 				</ProseSection>
-				<ProseSection id="transferts" content={section("transfers")} />
+				<ProseSection id="transferts" content={section(transfersSection(hdsHost))} />
 				<ProseSection id="cookies" content={section("cookies")} />
 				<ProseSection id="droits" content={section("rights")}>
 					<FieldList>

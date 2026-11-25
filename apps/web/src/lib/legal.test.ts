@@ -1,5 +1,10 @@
 import { describe, expect, it } from "vitest";
-import { legalFacts, placeholderOf, securityContact, securityTxt } from "./legal";
+import de from "../../messages/de.json";
+import en from "../../messages/en.json";
+import es from "../../messages/es.json";
+import fr from "../../messages/fr.json";
+import it_ from "../../messages/it.json";
+import { legalFacts, placeholderOf, securityContact, securityTxt, transfersSection } from "./legal";
 import { LINKS } from "./links";
 
 describe("legal facts", () => {
@@ -29,6 +34,30 @@ describe("legal facts", () => {
 			legalFacts({ PUBLIC_HDS_HOST: "Hébergeur Exemple", LEGAL_HOST_NAME: "Autre Exemple" })
 				.hostName.value,
 		).toBe("Autre Exemple");
+	});
+});
+
+describe("privacy policy transfers section", () => {
+	const catalogs = { fr, en, de, es, it: it_ };
+	const printed = (catalog: typeof en, hdsHost: string | undefined) =>
+		catalog.PrivacyPage.sections[transfersSection(hdsHost)].body.join(" ");
+
+	it("says where health data is hosted only when an HDS host is configured", () => {
+		expect(transfersSection("Clever Cloud")).toBe("transfersHds");
+		expect(transfersSection(undefined)).toBe("transfers");
+		expect(transfersSection("   ")).toBe("transfers");
+		expect(printed(fr, "Clever Cloud")).toMatch(/données de santé en France/);
+		expect(printed(en, "Clever Cloud")).toMatch(/health data in France/);
+	});
+
+	it("names no country without PUBLIC_HDS_HOST, only the European Economic Area", () => {
+		for (const [locale, catalog] of Object.entries(catalogs)) {
+			const text = printed(catalog, undefined);
+			expect(text, locale).not.toMatch(/France|Frankreich|Francia|HDS/);
+			expect(text, locale).toMatch(
+				/Espace économique européen|European Economic Area|Europäischen Wirtschaftsraum|Espacio Económico Europeo|Spazio economico europeo/,
+			);
+		}
 	});
 });
 

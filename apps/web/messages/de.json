@@ -872,6 +872,12 @@
 			"transfers": {
 				"heading": "Übermittlungen außerhalb der Europäischen Union",
 				"body": [
+					"Keine: Alle Daten, einschließlich der Gesundheitsdaten, werden im Europäischen Wirtschaftsraum gehostet und verarbeitet und nicht außerhalb davon übermittelt. Jeder Wechsel eines Auftragsverarbeiters wird hier angekündigt, bevor er wirksam wird."
+				]
+			},
+			"transfersHds": {
+				"heading": "Übermittlungen außerhalb der Europäischen Union",
+				"body": [
 					"Keine: Die Daten werden im Europäischen Wirtschaftsraum gehostet und verarbeitet, die Gesundheitsdaten in Frankreich. Jeder Wechsel eines Auftragsverarbeiters wird hier angekündigt, bevor er wirksam wird."
 				]
 			},

@@ -872,6 +872,12 @@
 			"transfers": {
 				"heading": "Transferts hors de l’Union européenne",
 				"body": [
+					"Aucun : toutes les données, y compris les données de santé, sont hébergées et traitées dans l’Espace économique européen et n’en sortent pas. Tout changement de sous-traitant sera annoncé ici avant de prendre effet."
+				]
+			},
+			"transfersHds": {
+				"heading": "Transferts hors de l’Union européenne",
+				"body": [
 					"Aucun : les données sont hébergées et traitées dans l’Espace économique européen, et les données de santé en France. Tout changement de sous-traitant sera annoncé ici avant de prendre effet."
 				]
 			},

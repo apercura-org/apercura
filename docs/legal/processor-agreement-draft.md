@@ -27,7 +27,8 @@ accounts and of claims; those operations are outside this agreement (see the
 
 This agreement sets out the terms under which the Processor processes personal data on behalf
 of the Controller for online booking and agenda management, in accordance with article 28(3)
-GDPR and article L.1111-8 of the Code de la santé publique.
+GDPR. Its position with regard to article L.1111-8 of the Code de la santé publique (hosting
+of health data) is disclosed in [section 15](#15-hds-hosting).
 
 ## 2. Duration
 
@@ -41,7 +42,7 @@ deletion or return of the data under [section 13](#13-end-of-the-processing-dele
 | -------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Nature   | Collection, recording, storage, encryption, consultation by the Controller's team, transmission by email, provision through a calendar feed, erasure                                                                                                                                   |
 | Purposes | Publishing the Controller's free slots; letting patients book, confirm, reschedule and cancel; managing the agenda; sending codes, confirmations, reminders and notices; supplying the Controller's calendar app; recording access to patient data; securing the service against abuse |
-| Means    | The Apercura web application, its scheduled jobs and its database, operated by the Processor on an HDS-certified host                                                                                                                                                                  |
+| Means    | The Apercura web application, its scheduled jobs and its database, operated by the Processor on its host (see section 15)                                                                                                                                                              |
 
 ## 4. Types of personal data and categories of data subjects
 
@@ -89,7 +90,7 @@ and the [security review](../security-review.md):
 
 | Area           | Measures                                                                                                                                                                                                                                                                                                           |
 | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Hosting        | Production on an HDS-certified host in France (see [section 15](#15-hds-hosting)); separate staging with synthetic data only                                                                                                                                                                                       |
+| Hosting        | Production on an interim host in the EEA, not HDS-certified, until the move to an HDS-certified host (see [section 15](#15-hds-hosting)); separate staging with synthetic data only                                                                                                                                |
 | Encryption     | Patient fields encrypted in the application (AES-256-GCM) with a data key specific to the Controller's organization, wrapped by master keys; searchable fields through blind indexes keyed per organization; TLS between browsers and the application (HSTS); TLS required on the connection to the email provider |
 | Access control | Second factor for every team member; roles owner, practitioner and assistant; organization checked on every request; separate database roles for the application, the import and read-only support                                                                                                                 |
 | Traceability   | Every decryption of patient data recorded (who, when, why, which records), append-only for the application, viewable by the Controller's owner                                                                                                                                                                     |
@@ -105,10 +106,10 @@ reduced.
 1. **Prior general authorisation.** The Controller gives the Processor a general authorisation
    to engage the sub-processors listed below.
 
-   | Sub-processor     | Service                                                       | Location                  | Guarantees                                                                       |
-   | ----------------- | ------------------------------------------------------------- | ------------------------- | -------------------------------------------------------------------------------- |
-   | {{HOST_NAME}}     | Hosting of the application, database, files, jobs and backups | France ({{HOST_ADDRESS}}) | HDS certification of the host; HDS contract {{HDS_CONTRACT_REFERENCE}} (planned) |
-   | {{SMTP_PROVIDER}} | Sending of emails to patients and to the Controller's team    | {{SMTP_LOCATION}} (EEA)   | {{SMTP_DPA_REFERENCE}}                                                           |
+   | Sub-processor     | Service                                                       | Location                | Guarantees                                                                                                               |
+   | ----------------- | ------------------------------------------------------------- | ----------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+   | {{HOST_NAME}}     | Hosting of the application, database, files, jobs and backups | EEA ({{HOST_ADDRESS}})  | Interim host, **not HDS-certified**; move to an HDS-certified host under HDS contract {{HDS_CONTRACT_REFERENCE}} planned |
+   | {{SMTP_PROVIDER}} | Sending of emails to patients and to the Controller's team    | {{SMTP_LOCATION}} (EEA) | {{SMTP_DPA_REFERENCE}}                                                                                                   |
 
 2. **Changes.** The Processor informs the Controller of any intended addition or replacement
    of a sub-processor at least {{NOTICE_PERIOD}} in advance, by email and in the application.
@@ -155,8 +156,8 @@ safeguards (Chapter V GDPR). The limits in [section 8.4](#8-sub-processors) appl
    consequences, the measures taken or proposed, and the contact of the Processor's DPO
    ({{DPO_CONTACT}}). Information may be provided in phases.
 3. The Processor documents every breach and keeps the Controller informed until it is closed.
-4. A breach involving health data hosted under HDS is also reported as the HDS framework
-   requires (**to confirm** with the host and the lawyer).
+4. Once the health data are hosted under HDS (section 15), a breach involving them is also
+   reported as the HDS framework requires (**to confirm** with the host and the lawyer).
 
 ## 12. Assistance with security, DPIA and prior consultation
 
@@ -191,8 +192,9 @@ where required.
 
 1. The Processor makes available to the Controller all information necessary to demonstrate
    compliance with article 28: this agreement, the records of processing, the DPIA, the
-   security review, the host's HDS certificate and the list of sub-processors. The source code
-   of the application is public (AGPL-3.0).
+   security review, the host's HDS certificate once the data are on an HDS-certified host
+   (section 15), and the list of sub-processors. The source code of the application is public
+   (AGPL-3.0).
 2. The Controller may carry out, or have carried out by an independent auditor bound by
    confidentiality, an audit of the processing, with {{AUDIT_NOTICE}} prior notice, at most
    {{AUDIT_FREQUENCY}}, during working hours and without access to other controllers' data.
@@ -202,14 +204,16 @@ where required.
 
 ## 15. HDS hosting
 
-1. In accordance with article L.1111-8 of the Code de la santé publique, the health data
-   processed under this agreement are hosted by a host certified for health data hosting (HDS)
-   for the relevant activities, under a hosting contract that meets the requirements of that
-   article.
-2. Planned host: {{HOST_NAME}}, {{HOST_ADDRESS}}, {{HOST_PHONE}} (Clever Cloud, HDS region
-   `parhds`, Paris). The HDS contract is **planned and not signed** at the date of this
-   draft; online booking is not opened to patients before it is signed and production runs
-   entirely in the HDS perimeter (application, database, jobs, files, backups).
+1. **Disclosure.** Article L.1111-8 of the Code de la santé publique requires health data to
+   be hosted by a host certified for health data hosting (HDS), under a hosting contract that
+   meets the requirements of that article. At the date of this draft, the health data
+   processed under this agreement are hosted on an interim host in the EEA that is **not
+   HDS-certified**: this requirement is not met yet.
+2. Current host: {{HOST_NAME}}, {{HOST_ADDRESS}}, {{HOST_PHONE}}. The Processor commits to move
+   the application, database, jobs, files and backups to an HDS-certified host (planned:
+   Clever Cloud, in its HDS region; Scalingo as an alternative), under an HDS hosting contract
+   that is **planned and not signed** at the date of this draft, and to inform the Controller
+   when the move is complete.
 3. Once production runs there, Apercura is described as hosted by an HDS-certified host;
    Apercura itself is not certified. The public pages name the host only from that moment
    (`PUBLIC_HDS_HOST`).
