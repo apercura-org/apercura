@@ -1,22 +1,56 @@
 #!/bin/sh
-# Smoke test of docker/compose.selfhost.yml from a clean state, on the SYNTHETIC fixtures of
+# Smoke test of the Compose files from a clean state, on the SYNTHETIC fixtures of
 # packages/etl/fixtures/fr (never real registry data). Used by CI; runs locally too:
 #
-#   docker/smoke-test.sh            # builds the image, starts the stack, checks it, removes it
+#   docker/smoke-test.sh            # both variants below, one after the other
+#   docker/smoke-test.sh selfhost   # docker/compose.selfhost.yml: the whole stack
+#   docker/smoke-test.sh external   # docker/compose.app.yml alone, against a PostGIS and a
+#                                   # MinIO started apart, fresh and without any init script
+#                                   # (the Coolify layout)
 #
-# Throwaway secrets, its own project name and host port (SMOKE_PORT, default 3090). Everything,
+# Builds the image first unless SMOKE_BUILD=0 (and it exists). Throwaway secrets, its own
+# project names, containers and host port (SMOKE_PORT, default 3090). Everything it creates,
 # volumes included, is removed at the end unless SMOKE_KEEP=1.
 set -eu
 
+variant="${1:-all}"
 root=$(cd "$(dirname "$0")/.." && pwd)
 port="${SMOKE_PORT:-3090}"
-project="${SMOKE_PROJECT:-apercura-smoke}"
+base_project="${SMOKE_PROJECT:-apercura-smoke}"
 image="${SMOKE_IMAGE:-apercura:smoke}"
+# A fictitious publisher: production refuses to start without the facts of the legal pages,
+# which static pages bake at build time.
+publisher="Éditeur fictif du test de fumée"
+
+case "$variant" in
+all)
+	"$0" selfhost
+	SMOKE_BUILD=0 "$0" external
+	exit 0
+	;;
+selfhost)
+	project="$base_project"
+	compose_file="$root/docker/compose.selfhost.yml"
+	;;
+external)
+	project="$base_project-external"
+	compose_file="$root/docker/compose.app.yml"
+	;;
+*)
+	echo "Usage: $0 [all|selfhost|external]" >&2
+	exit 2
+	;;
+esac
+
 work=$(mktemp -d)
-env_file="$work/selfhost.env"
+env_file="$work/smoke.env"
+network="${project}_default"
+# The external variant's data services, outside the Compose project.
+db_container="$project-postgres"
+s3_container="$project-minio"
 
 compose() {
-	docker compose -p "$project" -f "$root/docker/compose.selfhost.yml" --env-file "$env_file" "$@"
+	docker compose -p "$project" -f "$compose_file" --env-file "$env_file" "$@"
 }
 
 cleanup() {
@@ -24,8 +58,15 @@ cleanup() {
 	if [ "$status" -ne 0 ]; then
 		compose ps -a || true
 		compose logs --no-color --tail 80 || true
+		if [ "$variant" = external ]; then
+			docker logs --tail 40 "$db_container" || true
+		fi
 	fi
 	if [ "${SMOKE_KEEP:-0}" != "1" ]; then
+		# The data containers first: they hold the project's network.
+		if [ "$variant" = external ]; then
+			docker rm -f -v "$db_container" "$s3_container" >/dev/null 2>&1 || true
+		fi
 		compose --profile dev --profile tools down -v --remove-orphans >/dev/null 2>&1 || true
 	fi
 	rm -rf "$work"
@@ -35,30 +76,31 @@ trap cleanup EXIT
 
 hex() { openssl rand -hex 24; }
 
-step() { printf '\n== %s\n' "$*"; }
+step() { printf '\n== [%s] %s\n' "$variant" "$*"; }
 
-step "Build the image"
-# A fictitious publisher: production refuses to start without the facts of the legal pages,
-# which static pages bake at build time.
-publisher="Éditeur fictif du test de fumée"
-docker build -f "$root/docker/Dockerfile" --build-arg "APP_URL=http://localhost:$port" \
-	--build-arg "LEGAL_PUBLISHER_NAME=$publisher" -t "$image" "$root"
+if [ "${SMOKE_BUILD:-1}" != "0" ] || ! docker image inspect "$image" >/dev/null 2>&1; then
+	step "Build the image"
+	docker build -f "$root/docker/Dockerfile" --build-arg "APP_URL=http://localhost:$port" \
+		--build-arg "LEGAL_PUBLISHER_NAME=$publisher" -t "$image" "$root"
+fi
 
 step "Write a throwaway environment"
+postgres_password=$(hex)
+minio_password=$(hex)
 {
 	echo "APP_URL=http://localhost:$port"
 	echo "APP_PORT=$port"
 	echo "APERCURA_IMAGE=$image"
 	echo "TRUSTED_PROXY_COUNT=0"
-	echo "POSTGRES_PASSWORD=$(hex)"
 	echo "APERCURA_APP_DB_PASSWORD=$(hex)"
 	echo "APERCURA_ETL_DB_PASSWORD=$(hex)"
-	echo "MINIO_ROOT_PASSWORD=$(hex)"
+	echo "APERCURA_JOBS_DB_PASSWORD=$(hex)"
+	echo "MINIO_ROOT_PASSWORD=$minio_password"
 	echo "S3_SECRET_ACCESS_KEY=$(hex)"
 	echo "MAILPIT_UI_PORT=$((port + 1))"
-	# Mailpit has no STARTTLS: the one case SMTP_ALLOW_INSECURE is meant for.
+	# Mailpit has no STARTTLS: the one case SMTP_ALLOW_INSECURE is meant for. The external
+	# variant runs no Mailpit; nothing sends mail there.
 	echo "SMTP_ALLOW_INSECURE=true"
-	echo "APERCURA_JOBS_DB_PASSWORD=$(hex)"
 	echo "LEGAL_PUBLISHER_NAME=$publisher"
 	echo "LEGAL_PUBLISHER_LEGAL_FORM=Association fictive"
 	echo "LEGAL_PUBLISHER_ADDRESS=1 rue du Test, 75000 Paris"
@@ -71,29 +113,96 @@ step "Write a throwaway environment"
 	echo "LEGAL_HOST_PHONE=01 00 00 00 01"
 	echo "LEGAL_SMTP_PROVIDER=Mailpit"
 	echo "LEGAL_EFFECTIVE_DATE=2026-12-01"
+	if [ "$variant" = selfhost ]; then
+		echo "POSTGRES_PASSWORD=$postgres_password"
+	else
+		# Everything the Coolify layout sets by hand: where the database and the S3 are, and
+		# the superuser URL itself (no POSTGRES_PASSWORD).
+		echo "APERCURA_DB_HOST=$db_container"
+		echo "DATABASE_URL_MIGRATE=postgres://postgres:$postgres_password@$db_container:5432/apercura"
+		echo "S3_ENDPOINT=http://$s3_container:9000"
+		echo "MINIO_ROOT_USER=smoke-admin"
+	fi
 	docker run --rm "$image" keys
 } >"$env_file"
 
-step "Start the stack (postgres, migrate, minio, app, scheduler, mailpit)"
-compose --profile dev up -d --wait --wait-timeout 300
+password_of() { sed -n "s/^$1=//p" "$env_file"; }
 
-step "Migrations are a no-op the second time, and set the roles' passwords again"
-# As under Coolify, where the init script is not mounted: the app role exists without login.
-# Over the container's own address, not loopback, so the password is checked (scram).
-app_password=$(sed -n 's/^APERCURA_APP_DB_PASSWORD=//p' "$env_file")
-app_login() {
-	# shellcheck disable=SC2016 # expanded by the container's shell
-	compose exec -T -e PGPASSWORD="$app_password" postgres \
-		sh -c 'psql -h "$(hostname -i)" -U apercura_app -d apercura -tA -c "SELECT 1"'
+# psql in the database container, as the superuser over its socket.
+db_psql() {
+	if [ "$variant" = selfhost ]; then
+		compose exec -T postgres psql -v ON_ERROR_STOP=1 -U postgres -d apercura "$@"
+	else
+		docker exec -i "$db_container" psql -v ON_ERROR_STOP=1 -U postgres -d apercura "$@"
+	fi
 }
-compose exec -T postgres psql -U postgres -d apercura -c "ALTER ROLE apercura_app NOLOGIN PASSWORD NULL" >/dev/null
-if app_login >/dev/null 2>&1; then
-	echo "apercura_app still logs in after NOLOGIN PASSWORD NULL" >&2
-	exit 1
+
+# Logs in as a role with its password, over the container's own address rather than loopback
+# so the password is checked (scram), and prints 1.
+role_login() {
+	role_password=$(password_of "$2")
+	# shellcheck disable=SC2016 # expanded by the container's shell
+	if [ "$variant" = selfhost ]; then
+		compose exec -T -e PGPASSWORD="$role_password" postgres \
+			sh -c 'psql -h "$(hostname -i)" -U "$0" -d apercura -tA -c "SELECT 1"' "$1"
+	else
+		docker exec -i -e PGPASSWORD="$role_password" "$db_container" \
+			sh -c 'psql -h "$(hostname -i)" -U "$0" -d apercura -tA -c "SELECT 1"' "$1"
+	fi
+}
+
+if [ "$variant" = selfhost ]; then
+	step "Start the stack (postgres, migrate, minio, app, scheduler, mailpit)"
+	compose --profile dev up -d --wait --wait-timeout 300
+
+	step "Migrations are a no-op the second time, and set the roles' passwords again"
+	# As under Coolify, where the init script is not mounted: the app role exists without login.
+	db_psql -c "ALTER ROLE apercura_app NOLOGIN PASSWORD NULL" >/dev/null
+	if role_login apercura_app APERCURA_APP_DB_PASSWORD >/dev/null 2>&1; then
+		echo "apercura_app still logs in after NOLOGIN PASSWORD NULL" >&2
+		exit 1
+	fi
+	compose run --rm --no-deps migrate | tee "$work/migrate.log" | grep "Migrations applied"
+	grep "Role passwords applied: apercura_app, apercura_etl, apercura_jobs" "$work/migrate.log"
+	role_login apercura_app APERCURA_APP_DB_PASSWORD | grep -qx 1
+else
+	step "Start a fresh PostGIS and MinIO outside the project, without any init script"
+	# The project's network first (`up --no-start` creates it and the containers), so the
+	# data services join it as Coolify's resources share a network with the application.
+	compose up --no-start
+	docker run -d --name "$db_container" --network "$network" --platform linux/amd64 \
+		-e POSTGRES_PASSWORD="$postgres_password" -e POSTGRES_DB=apercura \
+		postgis/postgis:17-3.7 >/dev/null
+	docker run -d --name "$s3_container" --network "$network" \
+		-e MINIO_ROOT_USER=smoke-admin -e MINIO_ROOT_PASSWORD="$minio_password" \
+		pgsty/minio:RELEASE.2026-08-04T00-00-00Z server /data >/dev/null
+
+	step "Start the application stack: migrate waits for the database, then creates the roles"
+	# No health check ties the two: PostGIS is still initialising when migrate starts.
+	compose up -d --wait --wait-timeout 300
+	compose logs --no-color migrate | tee "$work/migrate.log"
+	grep -q "Migrations applied" "$work/migrate.log"
+	grep -q "Role passwords applied: apercura_app, apercura_etl, apercura_jobs" "$work/migrate.log"
+	compose logs --no-color minio-init | grep -q "Bucket apercura ready"
+
+	step "The roles exist, created by the migrations, and log in with their passwords"
+	roles=$(db_psql -tA -c "SELECT string_agg(rolname || ':' || rolcanlogin, ',' ORDER BY rolname)
+		FROM pg_roles WHERE rolname LIKE 'apercura\_%'")
+	test "$roles" = "apercura_app:true,apercura_etl:true,apercura_jobs:true,apercura_readonly:false"
+	role_login apercura_app APERCURA_APP_DB_PASSWORD | grep -qx 1
+	role_login apercura_etl APERCURA_ETL_DB_PASSWORD | grep -qx 1
+	role_login apercura_jobs APERCURA_JOBS_DB_PASSWORD | grep -qx 1
+
+	step "The app's S3 key is limited to its bucket"
+	# shellcheck disable=SC2016 # expanded by the container's shell
+	compose run --rm --no-deps -T --entrypoint sh minio-init -c '
+		mc alias set app "$S3_ENDPOINT" "$S3_ACCESS_KEY_ID" "$S3_SECRET_ACCESS_KEY" >/dev/null
+		mc ls "app/$S3_BUCKET" >/dev/null
+		if mc mb app/another-bucket >/dev/null 2>&1; then
+			echo "the app key may create buckets" >&2
+			exit 1
+		fi'
 fi
-compose run --rm --no-deps migrate | tee "$work/migrate.log" | grep "Migrations applied"
-grep "Role passwords applied: apercura_app, apercura_etl" "$work/migrate.log"
-app_login | grep -qx 1
 
 step "Import the synthetic fixtures"
 compose run --rm -v "$root/packages/etl/fixtures/fr:/fixtures:ro" etl --source-dir /fixtures --offline
@@ -104,8 +213,7 @@ curl -fsS "$base/api/health" | grep -q '"ok"'
 curl -fsS -o /dev/null "$base/"
 curl -fsS -o /dev/null "$base/fr"
 curl -fsS -o /dev/null "$base/fr-en"
-slug=$(compose exec -T postgres psql -U postgres -d apercura -tA \
-	-c "SELECT slug FROM directory.practitioner_pages WHERE indexable ORDER BY slug LIMIT 1")
+slug=$(db_psql -tA -c "SELECT slug FROM directory.practitioner_pages WHERE indexable ORDER BY slug LIMIT 1")
 test -n "$slug"
 curl -fsS "$base/fr/praticien/$slug" | grep -q "<h1"
 curl -fsS "$base/fr/mentions-legales" | grep -q "$publisher"
@@ -116,9 +224,26 @@ step "Scheduled jobs run in the scheduler"
 compose exec -T scheduler apercura jobs:tick | grep '"job":"tick"'
 
 step "The import role cannot read patient data"
-if compose exec -T postgres psql -U apercura_etl -d apercura -tA -c "SELECT 1 FROM care.appointments LIMIT 1" 2>/dev/null; then
+etl_password=$(password_of APERCURA_ETL_DB_PASSWORD)
+if [ "$variant" = selfhost ]; then
+	denied() { compose exec -T -e PGPASSWORD="$etl_password" postgres "$@"; }
+else
+	denied() { docker exec -i -e PGPASSWORD="$etl_password" "$db_container" "$@"; }
+fi
+if denied psql -U apercura_etl -d apercura -tA -c "SELECT 1 FROM care.appointments LIMIT 1" 2>/dev/null; then
 	echo "apercura_etl can read care.appointments" >&2
 	exit 1
+fi
+
+if [ "$variant" = external ]; then
+	step "Removing the application's containers leaves the data services and their data alone"
+	# What a Coolify deploy does to the application: stop and remove all its containers.
+	compose --profile tools rm -f -s
+	test -z "$(compose ps -aq)"
+	test "$(docker inspect -f '{{.State.Running}}' "$db_container")" = true
+	test "$(db_psql -tA -c "SELECT count(*) > 0 FROM directory.practitioner_pages")" = t
+	compose up -d --wait --wait-timeout 300
+	curl -fsS "$base/fr/praticien/$slug" | grep -q "<h1"
 fi
 
 step "Smoke test passed"

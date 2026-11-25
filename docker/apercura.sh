@@ -7,7 +7,8 @@ usage() {
 Usage: apercura <command> [arguments]
 
   serve                  Start the web app (default; listens on $PORT, 3000)
-  migrate                Apply pending database migrations (DATABASE_URL_MIGRATE)
+  migrate                Wait for the database, apply pending migrations and the roles'
+                         passwords (DATABASE_URL_MIGRATE, or built from POSTGRES_PASSWORD)
   jobs:tick [job]        Run the scheduled jobs once (expire, reminders, outbox, next-free,
                          purge, claim-documents), or rotate-keys after a key rotation
   etl:fr [flags]         Import the French open data (e.g. --department 75, --dry-run)
@@ -21,16 +22,35 @@ Any other command runs as is (for example `sh`).
 EOF
 }
 
+# host:port/database of the URLs built below (docker/compose.app.yml passes the three).
+database_address() {
+	printf '%s:%s/%s' "${APERCURA_DB_HOST:-postgres}" "${APERCURA_DB_PORT:-5432}" "${APERCURA_DB_NAME:-apercura}"
+}
+
 # The audit log retention's own role: build its URL from APERCURA_JOBS_DB_PASSWORD (set by
-# docker/compose.selfhost.yml) unless DATABASE_URL_JOBS is given. Both empty: left unset, and
+# docker/compose.app.yml) unless DATABASE_URL_JOBS is given. Both empty: left unset, and
 # the jobs skip that purge with a warning. Never printed.
 jobs_database_url() {
 	if [ -z "${DATABASE_URL_JOBS:-}" ]; then
 		if [ -n "${APERCURA_JOBS_DB_PASSWORD:-}" ]; then
-			DATABASE_URL_JOBS="postgres://apercura_jobs:${APERCURA_JOBS_DB_PASSWORD}@${APERCURA_DB_HOST:-postgres}:5432/${APERCURA_DB_NAME:-apercura}"
+			DATABASE_URL_JOBS="postgres://apercura_jobs:${APERCURA_JOBS_DB_PASSWORD}@$(database_address)"
 			export DATABASE_URL_JOBS
 		else
 			unset DATABASE_URL_JOBS
+		fi
+	fi
+}
+
+# The migrations' superuser: DATABASE_URL_MIGRATE when given (an external database), otherwise
+# built from POSTGRES_PASSWORD for the `postgres` user (docker/compose.selfhost.yml). Both
+# empty: left unset, and the migration falls back to DATABASE_URL or stops. Never printed.
+migrate_database_url() {
+	if [ -z "${DATABASE_URL_MIGRATE:-}" ]; then
+		if [ -n "${POSTGRES_PASSWORD:-}" ]; then
+			DATABASE_URL_MIGRATE="postgres://postgres:${POSTGRES_PASSWORD}@$(database_address)"
+			export DATABASE_URL_MIGRATE
+		else
+			unset DATABASE_URL_MIGRATE
 		fi
 	fi
 }
@@ -43,6 +63,7 @@ serve)
 	exec node /app/apps/web/server.js "$@"
 	;;
 migrate | db:migrate)
+	migrate_database_url
 	exec bun /app/cli/migrate.js "$@"
 	;;
 jobs | jobs:tick)

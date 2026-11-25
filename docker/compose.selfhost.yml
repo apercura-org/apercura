@@ -4,100 +4,19 @@
 #   docker compose -f docker/compose.selfhost.yml --env-file docker/.env.selfhost up -d --build
 #   docker compose -f docker/compose.selfhost.yml --env-file docker/.env.selfhost run --rm etl --department 75
 #
-# Services: postgres (PostGIS), migrate (one-shot), app (one replica), scheduler (supercronic:
-# jobs every 5 minutes, weekly import), etl (on demand), minio + minio-init (S3 storage and its
-# bucket), mailpit (profile `dev`, catches every email). Only the app is published, on
-# 127.0.0.1:${APP_PORT}: put a reverse proxy with TLS in front of it.
+# The application stack (migrate, app, scheduler, etl, minio-init) is docker/compose.app.yml,
+# included below (Compose 2.24 or later); this file adds its data services with their defaults:
+# postgres (PostGIS) and minio (S3 storage), plus mailpit (profile `dev`, catches every email).
+# Only the app is published, on 127.0.0.1:${APP_PORT}: put a reverse proxy with TLS in front.
+#
+# Start-up order: Compose cannot make an included service depend on a service of this file, so
+# the application stack does not wait on health checks here. `migrate` retries until PostgreSQL
+# accepts connections (up to DATABASE_WAIT_SECONDS, 120 by default), `minio-init` until MinIO
+# answers, and the app and the scheduler only start once `migrate` has succeeded.
 name: apercura-selfhost
 
-# One image for the app, the scheduler, the import and the migrations. APP_URL is baked into
-# static pages at build time: rebuild (`up -d --build`) when it changes.
-x-image: &image
-  image: ${APERCURA_IMAGE:-apercura:local}
-  build:
-    context: ..
-    dockerfile: docker/Dockerfile
-    args:
-      APP_URL: ${APP_URL:?set APP_URL in docker/.env.selfhost}
-      PUBLIC_HDS_HOST: ${PUBLIC_HDS_HOST:-}
-      NEXT_PUBLIC_MAP_STYLE_URL: ${NEXT_PUBLIC_MAP_STYLE_URL:-}
-      LEGAL_PUBLISHER_NAME: ${LEGAL_PUBLISHER_NAME:-}
-      LEGAL_PUBLISHER_LEGAL_FORM: ${LEGAL_PUBLISHER_LEGAL_FORM:-}
-      LEGAL_PUBLISHER_ADDRESS: ${LEGAL_PUBLISHER_ADDRESS:-}
-      LEGAL_PUBLISHER_PHONE: ${LEGAL_PUBLISHER_PHONE:-}
-      LEGAL_PUBLISHER_REGISTRATION: ${LEGAL_PUBLISHER_REGISTRATION:-}
-      LEGAL_PUBLICATION_DIRECTOR: ${LEGAL_PUBLICATION_DIRECTOR:-}
-      LEGAL_CONTACT_EMAIL: ${LEGAL_CONTACT_EMAIL:-}
-      LEGAL_DPO_CONTACT: ${LEGAL_DPO_CONTACT:-}
-      LEGAL_HOST_NAME: ${LEGAL_HOST_NAME:-}
-      LEGAL_HOST_ADDRESS: ${LEGAL_HOST_ADDRESS:-}
-      LEGAL_HOST_PHONE: ${LEGAL_HOST_PHONE:-}
-      LEGAL_SMTP_PROVIDER: ${LEGAL_SMTP_PROVIDER:-}
-      LEGAL_EFFECTIVE_DATE: ${LEGAL_EFFECTIVE_DATE:-}
-      GOOGLE_SITE_VERIFICATION: ${GOOGLE_SITE_VERIFICATION:-}
-      BING_SITE_VERIFICATION: ${BING_SITE_VERIFICATION:-}
-      HSTS_PRELOAD: ${HSTS_PRELOAD:-}
-
-# The web app's variables, shared by the app and the scheduler (docs/configuration.md).
-x-app-env: &app-env
-  APP_URL: ${APP_URL}
-  DATABASE_URL: postgres://apercura_app:${APERCURA_APP_DB_PASSWORD:?set APERCURA_APP_DB_PASSWORD}@postgres:5432/apercura
-  DATABASE_POOL_MAX: ${DATABASE_POOL_MAX:-10}
-  BETTER_AUTH_SECRET: ${BETTER_AUTH_SECRET:?run `bun run keys:generate` and fill in docker/.env.selfhost}
-  PSC_CLIENT_ID: ${PSC_CLIENT_ID:-}
-  PSC_CLIENT_SECRET: ${PSC_CLIENT_SECRET:-}
-  PSC_ISSUER: ${PSC_ISSUER:-}
-  ENCRYPTION_KEYS: ${ENCRYPTION_KEYS:?set ENCRYPTION_KEYS (bun run keys:generate)}
-  ENCRYPTION_ACTIVE_KEY: ${ENCRYPTION_ACTIVE_KEY:?set ENCRYPTION_ACTIVE_KEY}
-  BLIND_INDEX_KEY: ${BLIND_INDEX_KEY:?set BLIND_INDEX_KEY (bun run keys:generate)}
-  ALTCHA_HMAC_KEY: ${ALTCHA_HMAC_KEY:?set ALTCHA_HMAC_KEY (bun run keys:generate)}
-  RATE_LIMIT_KEY: ${RATE_LIMIT_KEY:?set RATE_LIMIT_KEY (bun run keys:generate)}
-  SMTP_URL: ${SMTP_URL:-smtp://mailpit:1025}
-  # Production requires TLS (smtps://, or smtp:// with STARTTLS); `true` only for Mailpit.
-  SMTP_ALLOW_INSECURE: ${SMTP_ALLOW_INSECURE:-false}
-  MAIL_FROM: ${MAIL_FROM:-Apercura <no-reply@localhost>}
-  S3_ENDPOINT: ${S3_ENDPOINT:-http://minio:9000}
-  S3_BUCKET: ${S3_BUCKET:-apercura}
-  S3_ACCESS_KEY_ID: ${S3_ACCESS_KEY_ID:-apercura-app}
-  S3_SECRET_ACCESS_KEY: ${S3_SECRET_ACCESS_KEY:?set S3_SECRET_ACCESS_KEY}
-  S3_PUBLIC_URL: ${S3_PUBLIC_URL:-}
-  S3_REGION: ${S3_REGION:-us-east-1}
-  JOBS_SECRET: ${JOBS_SECRET:-}
-  REVALIDATE_SECRET: ${REVALIDATE_SECRET:?set REVALIDATE_SECRET (bun run keys:generate)}
-  TRUSTED_PROXY_COUNT: ${TRUSTED_PROXY_COUNT:-1}
-  CANONICAL_HOST_REDIRECT: ${CANONICAL_HOST_REDIRECT:-true}
-  # Former hosts whose every URL redirects to APP_URL (e.g. apercura.fr,www.apercura.fr).
-  LEGACY_HOSTS: ${LEGACY_HOSTS:-}
-  PUBLIC_HDS_HOST: ${PUBLIC_HDS_HOST:-}
-  FEATURE_BOOKING: ${FEATURE_BOOKING:-false}
-  FEATURE_CLAIM_DOCUMENTS: ${FEATURE_CLAIM_DOCUMENTS:-true}
-  AUDIT_LOG_RETENTION_MONTHS: ${AUDIT_LOG_RETENTION_MONTHS:-12}
-  REPORT_RETENTION_MONTHS: ${REPORT_RETENTION_MONTHS:-6}
-  REMOVAL_REQUEST_RETENTION_MONTHS: ${REMOVAL_REQUEST_RETENTION_MONTHS:-12}
-  # Publisher and host of the legal pages: required in production (docs/configuration.md).
-  LEGAL_PUBLISHER_NAME: ${LEGAL_PUBLISHER_NAME:-}
-  LEGAL_PUBLISHER_LEGAL_FORM: ${LEGAL_PUBLISHER_LEGAL_FORM:-}
-  LEGAL_PUBLISHER_ADDRESS: ${LEGAL_PUBLISHER_ADDRESS:-}
-  LEGAL_PUBLISHER_PHONE: ${LEGAL_PUBLISHER_PHONE:-}
-  LEGAL_PUBLISHER_REGISTRATION: ${LEGAL_PUBLISHER_REGISTRATION:-}
-  LEGAL_PUBLICATION_DIRECTOR: ${LEGAL_PUBLICATION_DIRECTOR:-}
-  LEGAL_CONTACT_EMAIL: ${LEGAL_CONTACT_EMAIL:-}
-  LEGAL_DPO_CONTACT: ${LEGAL_DPO_CONTACT:-}
-  LEGAL_HOST_NAME: ${LEGAL_HOST_NAME:-}
-  LEGAL_HOST_ADDRESS: ${LEGAL_HOST_ADDRESS:-}
-  LEGAL_HOST_PHONE: ${LEGAL_HOST_PHONE:-}
-  LEGAL_SMTP_PROVIDER: ${LEGAL_SMTP_PROVIDER:-}
-  LEGAL_EFFECTIVE_DATE: ${LEGAL_EFFECTIVE_DATE:-}
-  SECURITY_CONTACT: ${SECURITY_CONTACT:-}
-  SECURITY_POLICY_URL: ${SECURITY_POLICY_URL:-}
-  GOOGLE_SITE_VERIFICATION: ${GOOGLE_SITE_VERIFICATION:-}
-  BING_SITE_VERIFICATION: ${BING_SITE_VERIFICATION:-}
-
-# The import's own role: `directory` only, no access to patient data.
-x-etl-env: &etl-env
-  DATABASE_URL_ETL: postgres://apercura_etl:${APERCURA_ETL_DB_PASSWORD:?set APERCURA_ETL_DB_PASSWORD}@postgres:5432/apercura
-  INTERNAL_APP_URL: http://app:3000
-  ETL_PROFESSIONS: ${ETL_PROFESSIONS:-10,40,50,60}
+include:
+  - compose.app.yml
 
 services:
   postgres:
@@ -116,8 +35,8 @@ services:
       APERCURA_JOBS_DB_PASSWORD: ${APERCURA_JOBS_DB_PASSWORD:-}
     volumes:
       - postgres-data:/var/lib/postgresql/data
-      # First start only, and not mounted by orchestrators that skip single-file bind mounts
-      # (Coolify): `migrate` sets the passwords on every deploy either way.
+      # First start only, and a convenience: `migrate` creates the missing roles (migrations)
+      # and sets their passwords on every deploy either way.
       - ./postgres/10-apercura-roles.sh:/docker-entrypoint-initdb.d/10-apercura-roles.sh:ro
     healthcheck:
       # Over TCP: during the first start the init scripts run on a socket-only server, which
@@ -128,77 +47,9 @@ services:
       retries: 20
       start_period: 30s
 
-  # Applies pending migrations, then the roles' passwords below (LOGIN PASSWORD; an empty one
-  # leaves its role as is), then exits. Runs on every `up`: changing a password here and
-  # redeploying rotates it, even where the init script of the postgres service never ran.
-  migrate:
-    <<: *image
-    command: ["migrate"]
-    restart: "no"
-    healthcheck:
-      disable: true
-    environment:
-      DATABASE_URL_MIGRATE: postgres://postgres:${POSTGRES_PASSWORD}@postgres:5432/apercura
-      APERCURA_APP_DB_PASSWORD: ${APERCURA_APP_DB_PASSWORD:-}
-      APERCURA_ETL_DB_PASSWORD: ${APERCURA_ETL_DB_PASSWORD:-}
-      APERCURA_READONLY_DB_PASSWORD: ${APERCURA_READONLY_DB_PASSWORD:-}
-      APERCURA_JOBS_DB_PASSWORD: ${APERCURA_JOBS_DB_PASSWORD:-}
-    depends_on:
-      postgres:
-        condition: service_healthy
-
-  app:
-    <<: *image
-    command: ["serve"]
-    restart: unless-stopped
-    # One replica: pages are cached on this instance's disk (see docs/self-hosting.md).
-    environment: *app-env
-    ports:
-      - "${APP_BIND:-127.0.0.1}:${APP_PORT:-3000}:3000"
-    volumes:
-      - next-cache:/app/apps/web/.next/cache
-    depends_on:
-      migrate:
-        condition: service_completed_successfully
-      minio-init:
-        condition: service_completed_successfully
-
-  scheduler:
-    <<: *image
-    command: ["scheduler"]
-    restart: unless-stopped
-    healthcheck:
-      disable: true
-    environment:
-      <<: [*app-env, *etl-env]
-      ETL_SCHEDULE_ARGS: ${ETL_SCHEDULE_ARGS:-}
-      # The audit log retention's own role (docker/postgres/10-apercura-roles.sh): the entry
-      # point builds DATABASE_URL_JOBS from the password unless a URL is given; both empty:
-      # skipped.
-      APERCURA_JOBS_DB_PASSWORD: ${APERCURA_JOBS_DB_PASSWORD:-}
-      DATABASE_URL_JOBS: ${DATABASE_URL_JOBS:-}
-    depends_on:
-      migrate:
-        condition: service_completed_successfully
-
-  # On demand: docker compose … run --rm etl --department 75
-  etl:
-    <<: *image
-    entrypoint: ["apercura", "etl:fr"]
-    restart: "no"
-    profiles: [tools]
-    healthcheck:
-      disable: true
-    environment:
-      <<: *etl-env
-      APP_URL: ${APP_URL}
-      REVALIDATE_SECRET: ${REVALIDATE_SECRET}
-    depends_on:
-      migrate:
-        condition: service_completed_successfully
-
   # S3-compatible storage for photos and (encrypted) claim documents. Community build of the
-  # MinIO server (AGPL-3.0); MinIO's own images are no longer published.
+  # MinIO server (AGPL-3.0); MinIO's own images are no longer published. `minio-init`
+  # (docker/compose.app.yml) creates the bucket and the app's key with these credentials.
   minio:
     image: pgsty/minio:RELEASE.2026-08-04T00-00-00Z
     restart: unless-stopped
@@ -215,40 +66,6 @@ services:
       retries: 10
       start_period: 5s
 
-  # Creates the private bucket and the app's own access key, limited to that bucket.
-  minio-init:
-    image: pgsty/mc:RELEASE.2026-11-12T00-00-00Z
-    restart: "no"
-    environment:
-      MINIO_ROOT_USER: ${MINIO_ROOT_USER:-apercura-admin}
-      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
-      S3_BUCKET: ${S3_BUCKET:-apercura}
-      S3_ACCESS_KEY_ID: ${S3_ACCESS_KEY_ID:-apercura-app}
-      S3_SECRET_ACCESS_KEY: ${S3_SECRET_ACCESS_KEY}
-    entrypoint: ["/bin/sh", "-c"]
-    command:
-      - |
-        set -eu
-        mc alias set local http://minio:9000 "$$MINIO_ROOT_USER" "$$MINIO_ROOT_PASSWORD" >/dev/null
-        mc mb --ignore-existing "local/$$S3_BUCKET"
-        mc anonymous set none "local/$$S3_BUCKET"
-        cat > /tmp/apercura-app.json <<EOF
-        {
-          "Version": "2012-10-17",
-          "Statement": [
-            { "Effect": "Allow", "Action": ["s3:GetBucketLocation", "s3:ListBucket"], "Resource": ["arn:aws:s3:::$$S3_BUCKET"] },
-            { "Effect": "Allow", "Action": ["s3:GetObject", "s3:PutObject", "s3:DeleteObject"], "Resource": ["arn:aws:s3:::$$S3_BUCKET/*"] }
-          ]
-        }
-        EOF
-        mc admin policy create local apercura-app /tmp/apercura-app.json >/dev/null
-        mc admin user add local "$$S3_ACCESS_KEY_ID" "$$S3_SECRET_ACCESS_KEY" >/dev/null
-        mc admin policy attach local apercura-app --user "$$S3_ACCESS_KEY_ID" >/dev/null 2>&1 || true
-        echo "Bucket $$S3_BUCKET ready"
-    depends_on:
-      minio:
-        condition: service_healthy
-
   # Development and trials only: catches every email (UI on 127.0.0.1:${MAILPIT_UI_PORT}).
   mailpit:
     image: axllent/mailpit:v1.34.0
@@ -263,4 +80,3 @@ services:
 volumes:
   postgres-data:
   minio-data:
-  next-cache:
