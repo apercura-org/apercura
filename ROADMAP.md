@@ -9,13 +9,65 @@ Every module below plugs into an extension point that already exists, or adds on
 ships behind its own feature flag (`apps/web/src/server/features.ts`), off by default until it
 is ready.
 
-## Before launch
+## Launch status
 
-The launch blockers are not features. They are tracked in issues
-[#32](https://github.com/maxgfr/apercura/issues/32) (accessibility and performance audits),
-[#33](https://github.com/maxgfr/apercura/issues/33) (legal pages, DPIA, DPO, hosting contract)
-and [#34](https://github.com/maxgfr/apercura/issues/34) (production deployment, backups,
-monitoring), with the [launch checklist](./docs/launch-checklist.md).
+Production is live on [apercura.fr](https://apercura.fr), with TLS, backups, monitoring and
+alerts, deployed in [#34](https://github.com/maxgfr/apercura/issues/34). Online booking is on.
+
+To keep costs down at launch, it runs on an interim host in the European Economic Area that is
+**not HDS-certified**. Moving to an HDS-certified host is the first priority once the first users
+and results are in, and it must happen before booking grows: Clever Cloud HDS by default,
+Scalingo as the alternative ([`docs/deploy-clever-cloud.md`](./docs/deploy-clever-cloud.md),
+[`docs/deploy-scalingo.md`](./docs/deploy-scalingo.md)). Then set `PUBLIC_HDS_HOST`.
+
+The [launch checklist](./docs/launch-checklist.md) has the details of each step.
+
+## Founder-only actions
+
+What is left before and after launch is not code. Each item below needs the founder: a
+signature, an account, a contract, a paid service or a manual test. This list replaces issues
+#32, #33 and #34.
+
+### Hosting
+
+- Move production to the HDS-certified host and set `PUBLIC_HDS_HOST` (see above).
+
+### Legal ([#33](https://github.com/maxgfr/apercura/issues/33))
+
+- Create the legal entity (association or company) and fill in the publisher facts.
+- Have a lawyer review every legal text, then set `LEGAL_TEXTS_REVIEWED` in
+  `apps/web/src/lib/legal.ts`.
+- Finish the DPIA ([`docs/legal/dpia-draft.md`](./docs/legal/dpia-draft.md)), appoint the DPO
+  ([`docs/legal/dpo-appointment.md`](./docs/legal/dpo-appointment.md)) and keep the record of
+  processing.
+- Sign the article 28 processing agreement with practitioners
+  ([`docs/legal/processor-agreement-draft.md`](./docs/legal/processor-agreement-draft.md)).
+- Have the conventionnement wording reviewed (arrêté du 30 mai 2018, article 5,
+  `{{CONVENTIONNEMENT_WORDING}}`).
+- Sign the HDS hosting contract, with written confirmation of the HDS scope of each service.
+- Search and file the "Apercura" trademark (INPI, EUIPO).
+
+### Accessibility ([#32](https://github.com/maxgfr/apercura/issues/32))
+
+The automated part is done: no axe violation across the 224 end-to-end tests, a keyboard focus
+test, reflow at 390 px and a Lighthouse CI score of 100. What is left is manual:
+
+- A screen reader pass (VoiceOver on macOS and iOS, NVDA on Windows) over search, the
+  practitioner page, booking, `/rdv` and the pro agenda.
+- The RGAA 4.1 self-assessment
+  ([`docs/accessibility/rgaa-self-assessment.md`](./docs/accessibility/rgaa-self-assessment.md)),
+  then the published accessibility statement.
+
+### Operations ([#34](https://github.com/maxgfr/apercura/issues/34))
+
+- Register with Pro Santé Connect: iSC account, Datapass, sandbox, then production, with the
+  redirect URI `{APP_URL}/api/auth/callback/psc`.
+- Redirect the other domains (apercura.health, apercura.eu, apercura.org) to apercura.fr.
+- Submit the domain to the HSTS preload list once every subdomain is served over HTTPS for good.
+- Order an external penetration test.
+- Keep an off-site copy of the backups (an S3 bucket), if it is not set up yet.
+- Test a restore regularly with `scripts/verify-backup.sh`.
+- Follow up in Google Search Console and Bing Webmaster Tools.
 
 ## Next modules
 
