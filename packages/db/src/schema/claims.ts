@@ -231,3 +231,59 @@ export const platformAuditEvents = directory.table(
 		index("platform_audit_events_created_idx").on(table.createdAt),
 	],
 );
+
+/**
+ * "I am this practitioner, contact me": for those who cannot claim their page with Pro Santé
+ * Connect, the registry email or a document. Everything the requester typed (name, professional
+ * email, phone, message) is one encrypted JSON (platform key, AAD
+ * `practitioner_contact_requests.content_enc.<id>`); the row itself only says which page, when
+ * and where the administrators stand. Deleted `CONTACT_REQUEST_RETENTION_MONTHS` after its last
+ * change, whatever its status.
+ */
+export const practitionerContactRequests = directory.table(
+	"practitioner_contact_requests",
+	{
+		id: text().primaryKey(),
+		practitionerId: integer()
+			.notNull()
+			.references(() => practitioners.id, { onDelete: "cascade" }),
+		/** `new`, `contacted` or `closed`. */
+		status: text().notNull().default("new"),
+		/** Encrypted JSON `{ name, email, phone?, message }`. */
+		contentEnc: text().notNull(),
+		/** Locale of the confirmation email (an interface locale, `fr` by default). */
+		locale: text().notNull().default("fr"),
+		/** Administrator who last changed the status. */
+		handledBy: text(),
+		createdAt: createdAt(),
+		/** Last status change: the retention counts from it (set by hand, never by a re-encryption). */
+		updatedAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
+	},
+	(table) => [
+		index("practitioner_contact_requests_queue_idx").on(table.status, table.createdAt),
+		index("practitioner_contact_requests_practitioner_idx").on(table.practitionerId),
+		index("practitioner_contact_requests_updated_idx").on(table.updatedAt),
+		check(
+			"practitioner_contact_requests_status_check",
+			sql`${table.status} in ('new', 'contacted', 'closed')`,
+		),
+	],
+);
+
+/**
+ * When the administrators were last alerted, per queue: alerts are batched (at most one per
+ * `ADMIN_ALERT_INTERVAL_MINUTES` and queue), so a burst of submissions sends one email.
+ */
+export const adminAlerts = directory.table(
+	"admin_alerts",
+	{
+		kind: text().primaryKey(),
+		/** When the last alert of this queue was sent: the interval counts from it. */
+		lastSentAt: timestamp({ withTimezone: true }).notNull(),
+		/** The latest submission that alert covered: the next one counts what came after. */
+		lastItemAt: timestamp({ withTimezone: true }),
+	},
+	(table) => [
+		check("admin_alerts_kind_check", sql`${table.kind} in ('claims', 'contact_requests')`),
+	],
+);

@@ -544,16 +544,24 @@
 		},
 		"claim": {
 			"heading": "¿Es usted?",
-			"body": "Esta página se ha creado a partir del registro público. Reclámela gratuitamente para comprobarla y completarla.",
+			"body": "Esta página se ha creado a partir del registro público. Reclámela para comprobarla y completarla:",
 			"link": "Reclamar esta página",
 			"claimedHeading": "Página gestionada por el profesional sanitario",
-			"claimedBody": "El profesional sanitario ha reclamado esta página: se ha verificado su identidad y es quien la completa."
+			"claimedBody": "El profesional sanitario ha reclamado esta página: se ha verificado su identidad y es quien la completa.",
+			"benefits": [
+				"gratis, sin suscripción ni compromiso;",
+				"su foto, sus honorarios y los idiomas que habla;",
+				"la cita en línea, si lo desea;",
+				"las estadísticas de visitas de su página;",
+				"un kit para compartir: enlace, código QR y cartel."
+			],
+			"contactLink": "¿No tiene tarjeta CPS? Contáctenos",
+			"optOutLink": "¿Es el titular de esta página y no desea aparecer públicamente? Es aquí"
 		},
 		"report": {
 			"heading": "¿Algo es incorrecto?",
 			"body": "Si una dirección, un número de teléfono o un nombre es incorrecto, díganos cómo corregirlo.",
-			"link": "Notificar un error",
-			"removalLink": "¿Es usted este profesional sanitario y se opone a esta página?"
+			"link": "Notificar un error"
 		},
 		"ring": {
 			"heading": "Otros profesionales sanitarios: {occupation} en {place}"
@@ -885,7 +893,8 @@
 				"heading": "Avisos de error y solicitudes de retirada",
 				"body": [
 					"Datos: el mensaje, el correo electrónico de contacto cuando se facilita y, en una solicitud de retirada, la página afectada. El texto libre se cifra.",
-					"Finalidades: corregir los errores notificados y aplicar las oposiciones. Bases jurídicas: el interés legítimo de publicar información exacta (artículo 6.1.f) y el derecho de oposición (artículo 21). Plazo: el tiempo necesario para tramitar la solicitud; después, un aviso de error se suprime 6 meses después de su cierre y una solicitud de retirada un año después de su decisión; tras una oposición, solo se conserva el número RPPS de la página, para que nunca vuelva a publicarse."
+					"Finalidades: corregir los errores notificados y aplicar las oposiciones. Bases jurídicas: el interés legítimo de publicar información exacta (artículo 6.1.f) y el derecho de oposición (artículo 21). Plazo: el tiempo necesario para tramitar la solicitud; después, un aviso de error se suprime 6 meses después de su cierre y una solicitud de retirada un año después de su decisión; tras una oposición, solo se conserva el número RPPS de la página, para que nunca vuelva a publicarse.",
+					"Solicitudes «Soy este profesional»: el nombre, el correo electrónico profesional, el teléfono si se indica, el mensaje y la página afectada, cifrados. Finalidad: ayudar a un profesional que no puede reclamar su página en línea. Base jurídica: el interés legítimo de mantener el directorio al día con los profesionales afectados (artículo 6.1.f). Plazo: 12 meses después del último intercambio."
 				]
 			},
 			"security": {
@@ -916,7 +925,8 @@
 			"cookies": {
 				"heading": "Cookies",
 				"body": [
-					"Solo se instalan cookies estrictamente necesarias para el servicio: la sesión de los profesionales conectados, el idioma elegido y una cookie que limita una reserva en curso a un navegador (24 horas). Ninguna cookie publicitaria ni de medición de audiencia, ningún rastreador: por tanto, no se necesita ningún banner de consentimiento."
+					"Solo se instalan cookies estrictamente necesarias para el servicio: la sesión de los profesionales conectados, el idioma elegido y una cookie que limita una reserva en curso a un navegador (24 horas). Ninguna cookie publicitaria ni de medición de audiencia, ningún rastreador: por tanto, no se necesita ningún banner de consentimiento.",
+					"Estadísticas de las páginas reclamadas: cada visita suma uno al total del día de la página, sin cookie ni identificador; no se guarda ninguna dirección IP ni ningún navegador, y los navegadores que piden no ser rastreados (Global Privacy Control, Do Not Track) no se cuentan. Solo el titular de la página ve estos totales, que se conservan 13 meses."
 				]
 			},
 			"rights": {
@@ -1958,7 +1968,10 @@
 				"today": "Hoy",
 				"agenda": "Agenda",
 				"team": "Equipo",
-				"menu": "Menú"
+				"menu": "Menú",
+				"stats": "Estadísticas",
+				"share": "Compartir",
+				"adminContacts": "Solicitudes de contacto"
 			},
 			"practicesHeading": "Sus consultas",
 			"columns": {
@@ -1983,7 +1996,11 @@
 			"agendaLink": "Abrir la agenda de hoy",
 			"invitationsHeading": "Invitaciones",
 			"invitationBody": "{practice} le invita a unirse a su equipo.",
-			"invitationLink": "Responder a la invitación"
+			"invitationLink": "Responder a la invitación",
+			"pageHeading": "Su página",
+			"pageSummary": "{views, plural, =0 {Ninguna visita} one {# visita} many {# visitas} other {# visitas}} en los últimos 30 días; página completada al {score} %.",
+			"statsLink": "Ver las estadísticas y lo que falta",
+			"shareLink": "Compartir la página: enlace, código QR, cartel"
 		},
 		"roles": {
 			"owner": "Titular",
@@ -2062,8 +2079,8 @@
 			"subject": "Hemos recibido su solicitud de retirada",
 			"title": "Hemos recibido su solicitud de retirada",
 			"body": [
-				"La página queda oculta a partir de ahora: ya no se muestra, ni se indexa ni aparece en los listados.",
-				"Comprobamos la solicitud y después eliminamos la página. Una página eliminada no vuelve a aparecer con la siguiente importación del registro."
+				"La página queda oculta desde ahora: ya no se muestra, ni se indexa ni aparece en los listados.",
+				"Comprobamos la solicitud y le respondemos en un plazo máximo de un mes. Si se confirma, la página se elimina; una página eliminada no vuelve con la siguiente importación del registro."
 			]
 		},
 		"removalConfirmed": {
@@ -2094,6 +2111,33 @@
 				"Esta invitación es válida durante 48 horas.",
 				"¿No lo esperaba? Ignore este correo electrónico: no ocurre nada sin usted."
 			]
+		},
+		"contactReceived": {
+			"subject": "Hemos recibido su solicitud",
+			"title": "Hemos recibido su solicitud",
+			"body": [
+				"Hola:",
+				"Hemos recibido su solicitud sobre una página del directorio Apercura. Un miembro del equipo se pondrá en contacto con usted para verificar su identidad y ayudarle a reclamar la página.",
+				"Si no ha enviado usted esta solicitud, ignore este correo: no se ha modificado ninguna página ni ninguna cuenta."
+			]
+		},
+		"adminClaims": {
+			"subject": "{count, plural, one {# reclamación por examinar} many {# reclamaciones por examinar} other {# reclamaciones por examinar}}",
+			"title": "{count, plural, one {Una reclamación espera una decisión} many {# reclamaciones esperan una decisión} other {# reclamaciones esperan una decisión}}",
+			"body": [
+				"{count, plural, one {Se ha enviado una reclamación} many {Se han enviado # reclamaciones} other {Se han enviado # reclamaciones}} para examen desde la última alerta.",
+				"El detalle está en la cola del espacio del profesional, tras su segundo factor."
+			],
+			"action": "Abrir las reclamaciones"
+		},
+		"adminContactRequests": {
+			"subject": "{count, plural, one {# solicitud «Soy este profesional»} many {# solicitudes «Soy este profesional»} other {# solicitudes «Soy este profesional»}}",
+			"title": "{count, plural, one {Una solicitud de contacto espera respuesta} many {# solicitudes de contacto esperan respuesta} other {# solicitudes de contacto esperan respuesta}}",
+			"body": [
+				"{count, plural, one {Un profesional que no puede reclamar su página pide} many {# profesionales que no pueden reclamar su página piden} other {# profesionales que no pueden reclamar su página piden}} que se les contacte, desde la última alerta.",
+				"Sus datos, cifrados, se leen en la cola del espacio del profesional."
+			],
+			"action": "Abrir las solicitudes"
 		}
 	},
 	"Profile": {
@@ -2181,7 +2225,9 @@
 			"searchHint": "También puede buscar su página por nombre:",
 			"searchLink": "buscar en el directorio",
 			"howHeading": "Cómo comprobamos que es usted",
-			"factorNote": "Su cuenta ya tiene un segundo factor: es obligatorio antes de cualquier reclamación y, a partir de entonces, protege su página."
+			"factorNote": "Su cuenta ya tiene un segundo factor: es obligatorio antes de cualquier reclamación y, a partir de entonces, protege su página.",
+			"contactLink": "¿No tiene tarjeta CPS? Contáctenos",
+			"optOutLink": "¿Es el titular de esta página y no desea aparecer públicamente? Es aquí"
 		},
 		"methods": {
 			"psc": {
@@ -2353,7 +2399,10 @@
 				"lead": "Al publicar, su presentación, sus idiomas, sus honorarios y la información práctica se muestran en su página pública. Puede modificarlos u ocultarlos en cualquier momento.",
 				"already": "Su página está publicada. Cada cambio que guarde se publica en línea al instante.",
 				"edit": "Editar mi página",
-				"action": "Publicar mi página"
+				"action": "Publicar mi página",
+				"shareLead": "Dé a conocer su página: un enlace, un código QR y un cartel para la sala de espera están listos.",
+				"shareLink": "Abrir el kit para compartir",
+				"statsLink": "Ver las estadísticas de la página"
 			}
 		}
 	},
@@ -2591,6 +2640,43 @@
 			},
 			"resolve": "Marcar como tratado",
 			"dismiss": "Descartar"
+		},
+		"contacts": {
+			"metaTitle": "Solicitudes de contacto · Administración · Apercura",
+			"title": "Solicitudes «Soy este profesional»",
+			"lead": "Profesionales que no pueden reclamar su página en línea. Responda desde su correo y anote después en qué punto está la solicitud.",
+			"failed": "La acción ha fallado. Vuelva a cargar la página e inténtelo de nuevo.",
+			"auditNote": "Leer una solicitud la descifra; queda anotado en el registro de auditoría. Las solicitudes se eliminan 12 meses después de su último cambio.",
+			"tabsLabel": "Estado de las solicitudes",
+			"tabs": {
+				"new": "Nuevas ({count})",
+				"contacted": "Contactadas ({count})",
+				"closed": "Cerradas ({count})"
+			},
+			"empty": {
+				"new": "Ninguna solicitud nueva",
+				"contacted": "Ninguna solicitud en curso",
+				"closed": "Ninguna solicitud cerrada"
+			},
+			"caption": "Solicitudes de contacto",
+			"columns": {
+				"page": "Página",
+				"received": "Recibida el",
+				"actions": "Acciones"
+			},
+			"claimedNow": "Reclamada desde entonces",
+			"fields": {
+				"name": "Nombre",
+				"email": "Correo profesional",
+				"phone": "Teléfono",
+				"message": "Mensaje"
+			},
+			"read": "Leer",
+			"move": {
+				"new": "Volver a nueva",
+				"contacted": "Marcar como contactada",
+				"closed": "Cerrar"
+			}
 		}
 	},
 	"Gdpr": {
@@ -2630,7 +2716,7 @@
 			"title": "Solicitar la retirada de esta página",
 			"lead": "En virtud del artículo 21 del RGPD, puede oponerse a la publicación de su página. Se oculta en cuanto recibimos la solicitud y se elimina tras una comprobación sencilla.",
 			"doneTitle": "La página está oculta",
-			"doneBody": "Ya no se muestra, ni se indexa ni aparece en los listados. Comprobamos la solicitud y la confirmamos por correo electrónico; después eliminamos la página definitivamente.",
+			"doneBody": "Ya no se muestra, ni se indexa ni aparece en los listados. Comprobamos la solicitud y le respondemos por correo electrónico en un plazo máximo de un mes. Si se confirma, la página se elimina definitivamente y no vuelve con las actualizaciones del registro.",
 			"contact": "Su correo electrónico",
 			"contactHint": "Para confirmar la solicitud con usted. Se cifra y no se usa para nada más.",
 			"message": "Mensaje (opcional)",
@@ -2639,10 +2725,44 @@
 			"privacy": "Una página eliminada no vuelve a aparecer con la siguiente importación del registro.",
 			"submit": "Ocultar y retirar la página",
 			"claimedTitle": "Esta página la gestiona su profesional sanitario",
-			"claimedBody": "Solo su titular puede retirarla, desde el editor de página de su espacio.",
-			"claimedLink": "Iniciar sesión en el espacio del profesional",
+			"claimedBody": "Solo su titular puede retirarla, desde el editor de página de su espacio: la página desaparece entonces de inmediato y no vuelve con las actualizaciones del registro.",
+			"claimedLink": "Retirar mi página desde mi espacio",
 			"alreadyTitle": "Se está comprobando una solicitud de retirada",
 			"alreadyBody": "La página ya está oculta."
+		},
+		"contact": {
+			"metaTitle": "Soy este profesional · Apercura",
+			"title": "Soy este profesional",
+			"lead": "¿No puede reclamar su página con Pro Santé Connect, el correo del registro o un justificante? Déjenos sus datos: un miembro del equipo de Apercura se pondrá en contacto con usted para verificar su identidad y ayudarle.",
+			"patientsTitle": "Este formulario es solo para el profesional de esta página",
+			"patientsBody": "No sirve para pedir cita ni para contactar con la consulta: para ello, utilice los datos de contacto de la página.",
+			"claimFirst": "Con una tarjeta CPS o e-CPS, o acceso al correo publicado en el registro, la reclamación es más rápida:",
+			"claimFirstLink": "reclamar esta página",
+			"rpps": "Número RPPS de la página",
+			"rppsHint": "El de la página de la que viene. No se puede modificar.",
+			"name": "Su nombre y apellidos",
+			"email": "Su correo electrónico profesional",
+			"emailHint": "Para responderle. También le enviamos un acuse de recibo.",
+			"phone": "Su teléfono (opcional)",
+			"phoneHint": "Si prefiere que le llamemos.",
+			"message": "Su mensaje",
+			"messageHint": "Díganos por qué la reclamación en línea no le funciona.",
+			"privacy": "Sus datos y su mensaje se cifran, solo los lee el equipo de Apercura para responderle y se eliminan 12 meses después del último intercambio. No indique ningún dato de salud.",
+			"submit": "Enviar mi solicitud",
+			"doneTitle": "Hemos recibido su solicitud",
+			"doneBody": [
+				"Un miembro del equipo de Apercura se pondrá en contacto con usted por correo electrónico o por teléfono para verificar su identidad y le ayudará a reclamar la página.",
+				"Acabamos de enviar un acuse de recibo a la dirección indicada."
+			],
+			"claimedTitle": "Esta página ya la gestiona su profesional",
+			"claimedBody": "Su titular ha sido verificado. Si es su página y ya no tiene acceso, abra una reclamación: el equipo la examinará.",
+			"claimedLink": "Reclamar esta página",
+			"withheldTitle": "Esta página está oculta",
+			"withheldBody": "Se está comprobando una solicitud de retirada.",
+			"errors": {
+				"proof": "La verificación contra robots no ha terminado. Inténtelo de nuevo en un momento.",
+				"claimed": "Esta página ya la gestiona su profesional: abra una reclamación."
+			}
 		}
 	},
 	"Agenda": {
@@ -3156,6 +3276,116 @@
 			"ALREADY_MEMBER": "Ya forma parte de este equipo.",
 			"EXPIRED": "Esta invitación ha caducado.",
 			"failed": "La incorporación no ha funcionado. Inténtelo de nuevo en un momento."
+		}
+	},
+	"Stats": {
+		"metaTitle": "Estadísticas · Espacio del profesional · Apercura",
+		"title": "Estadísticas",
+		"lead": "Las visitas a la página de {name}, sus citas en línea y lo que aún le falta.",
+		"summaryHeading": "En resumen",
+		"summary": {
+			"views": "Visitas, últimos 30 días",
+			"bookings": "Citas en línea, últimas 12 semanas",
+			"completion": "Página completada"
+		},
+		"percent": "{score} %",
+		"dailyHeading": "Visitas por día",
+		"noViews": "No se ha contado ninguna visita en los últimos 30 días. Las visitas se cuentan desde que se reclama la página.",
+		"chartTitle": "Visitas por día, últimos 30 días",
+		"chartSummary": "{total, plural, one {# visita} many {# visitas} other {# visitas}} en 30 días; el máximo: {max} el {day}.",
+		"dailyTableToggle": "Ver las cifras día a día",
+		"dailyCaption": "Visitas por día",
+		"columns": {
+			"day": "Día",
+			"views": "Visitas",
+			"week": "Semana",
+			"bookings": "Citas en línea"
+		},
+		"weeklyHeading": "Por semana",
+		"weeklyCaption": "Visitas y citas en línea por semana",
+		"weekOf": "Semana del {date}",
+		"bookingsNote": "Citas que los pacientes reservaron en línea esa semana, se hayan celebrado, cambiado o cancelado después.",
+		"checklistHeading": "Lo que le falta a la página",
+		"checklistLead": "{done} de {total}: página completada al {score} %. Una página completa ayuda a los pacientes a saber si pueden acudir.",
+		"checklist": {
+			"published": "Página publicada",
+			"photo": "Foto",
+			"bio": "Presentación",
+			"languages": "Idiomas hablados",
+			"fees": "Honorarios",
+			"paymentMethods": "Medios de pago aceptados",
+			"accessibility": "Accesibilidad del lugar",
+			"hours": "Horarios de la agenda",
+			"booking": "Citas en línea abiertas"
+		},
+		"done": "Hecho",
+		"todo": "Pendiente",
+		"fix": {
+			"editor": "Completar",
+			"agenda": "Configurar la agenda",
+			"askOwner": "Lo configura el titular de la consulta"
+		},
+		"privacyHeading": "Cómo se cuenta",
+		"privacy": {
+			"counted": "Se cuenta una visita cuando la página se muestra en un navegador, sin cookie ni identificador: no se guarda ninguna dirección IP, ningún navegador ni ningún visitante, solo un total por día.",
+			"excluded": "Los robots y las vistas previas de enlaces no se cuentan, un mismo visitante se cuenta como máximo una vez cada media hora y los navegadores que piden no ser rastreados no se cuentan en absoluto: las cifras son un orden de magnitud.",
+			"kept": "Los totales diarios se conservan {months} meses y después se eliminan."
+		},
+		"shareLink": "Dar a conocer la página: el kit para compartir",
+		"countedSince": "Contadas desde el {date}, día en que se verificó su reclamación: las visitas anteriores no se le muestran."
+	},
+	"Share": {
+		"metaTitle": "Compartir mi página · Espacio del profesional · Apercura",
+		"title": "Compartir mi página",
+		"lead": "El enlace a la página de {name}, su código QR, un cartel para la sala de espera y una insignia para su sitio web.",
+		"removedTitle": "Su página está retirada",
+		"removedBody": "Ya no está publicada: el enlace y el código QR llevan a una página no encontrada mientras no la restablezca.",
+		"unpublishedTitle": "Su página aún no está publicada",
+		"unpublishedBody": "El enlace lleva a la página del registro, sin lo que usted ha añadido. Publíquela para que pacientes y enlaces compartidos muestren su versión.",
+		"unpublishedLink": "Publicar desde el editor",
+		"linkHeading": "El enlace de la página",
+		"linkLead": "Para su firma de correo, su sitio web o un mensaje a sus pacientes.",
+		"linkLabel": "Dirección de la página",
+		"copy": "Copiar",
+		"copied": "Copiado en el portapapeles.",
+		"copyFailed": "No se ha podido copiar: seleccione el texto y cópielo a mano.",
+		"qrHeading": "El código QR",
+		"qrLead": "Los pacientes lo escanean con la cámara del teléfono para abrir la página. Archivos listos para imprimir, en negro sobre blanco.",
+		"qrLabel": "Código QR hacia {url}",
+		"downloadSvg": "Descargar en SVG",
+		"downloadPng": "Descargar en PNG",
+		"qrHint": "Conserve el margen blanco alrededor del código ({margin} módulos) e imprímalo con al menos 2 cm de lado.",
+		"badgeHeading": "La insignia para su sitio web",
+		"badgeLead": "Un enlace «Encuéntreme en Apercura» para pegar en su sitio web. Una imagen y un enlace, nada más: ningún script, ninguna cookie, ningún seguimiento de los visitantes.",
+		"badgePreview": "Vista previa",
+		"badgeLabel": "Código HTML de la insignia",
+		"badgeHint": "Péguelo en la página de su sitio web donde deba aparecer la insignia.",
+		"posterHeading": "El cartel para la sala de espera",
+		"posterLead": "Una página para imprimir con su nombre y el código QR. Se abre en una vista previa; imprímala desde su navegador.",
+		"poster": {
+			"a4": "Cartel A4",
+			"a5": "Cartel A5",
+			"metaTitle": "Cartel para imprimir · Espacio del profesional · Apercura",
+			"title": "Cartel para imprimir",
+			"lead": "Compruebe la vista previa y después imprima. El cartel está en francés, el idioma de los pacientes que lo leerán.",
+			"formatsLabel": "Formato del cartel",
+			"print": "Imprimir el cartel",
+			"back": "Volver al kit para compartir",
+			"printHint": "En la ventana de impresión, elija el tamaño de papel del cartel y la escala al 100 %, sin encabezados ni pies de página.",
+			"sheetLabel": "Vista previa del cartel",
+			"sheet": {
+				"wordmark": "Apercura",
+				"headlineBooking": "Pida cita en línea",
+				"headlineFind": "Encuéntreme en Apercura",
+				"qrLabel": "Código QR hacia la página del profesional en Apercura",
+				"scan": "Escanee este código con la cámara de su teléfono.",
+				"footBooking": "Gratis, sin crear una cuenta.",
+				"footFind": "Dirección, teléfono e información práctica de la consulta."
+			}
+		},
+		"badge": {
+			"lead": "Encuéntreme en",
+			"brand": "Apercura"
 		}
 	}
 }

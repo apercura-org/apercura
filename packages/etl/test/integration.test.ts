@@ -516,4 +516,62 @@ describe.skipIf(!url)("etl:fr on synthetic fixtures", () => {
 			await geocoder.close();
 		}
 	});
+	it("honours the opt-outs of the practitioner space on every later import", async () => {
+		// The web app's two ways out (apps/web/src/server/gdpr/service.ts), written as it writes
+		// them: an objection to an unclaimed page (withheld at once, suppressed once an
+		// administrator confirms it) and the owner removing their claimed page.
+		const objecting = fakeRpps(7);
+		const owner = fakeRpps(6);
+		const people = [...CASES.filter((p) => p.n !== 2), ...fillerPeople(200, 3), HELENE];
+		const state = (rpps: string) => sql<
+			{ status: string; indexable: boolean; withheld: boolean; pages: number; docs: number }[]
+		>`
+			SELECT p.status, p.indexable, p.withheld_at IS NOT NULL AS withheld,
+				(SELECT count(*)::integer FROM directory.practitioner_pages pg
+					WHERE pg.practitioner_id = p.id AND pg.indexable) AS pages,
+				(SELECT count(*)::integer FROM directory.search_docs sd
+					WHERE sd.practitioner_id = p.id AND sd.indexable) AS docs
+			FROM directory.practitioners p WHERE p.national_id = ${rpps}
+		`;
+
+		// While the objection is checked: hidden by every import, never cleared by one.
+		await sql`
+			UPDATE directory.practitioners SET withheld_at = now(), indexable = false
+			WHERE national_id = ${objecting}
+		`;
+		expect((await run(fixtureDir(people), { force: true })).status).toBe("succeeded");
+		expect((await state(objecting))[0]).toMatchObject({
+			withheld: true,
+			indexable: false,
+			pages: 0,
+			docs: 0,
+		});
+
+		// Confirmed, and the owner's own removal: a suppression each, for good.
+		await sql`
+			INSERT INTO directory.suppressions (country, id_scheme, national_id, reason, created_by)
+			VALUES ('FR', 'RPPS', ${objecting}, 'objection', 'admin-test'),
+				('FR', 'RPPS', ${owner}, 'owner', 'owner-test')
+		`;
+		await sql`
+			UPDATE directory.practitioners SET status = 'suppressed', indexable = false, withheld_at = NULL
+			WHERE national_id = ${objecting}
+		`;
+		await sql`
+			UPDATE directory.practitioners
+			SET claim_status = 'claimed', status = 'suppressed', indexable = false
+			WHERE national_id = ${owner}
+		`;
+		for (let round = 0; round < 2; round++) {
+			expect((await run(fixtureDir(people), { force: true })).status).toBe("succeeded");
+			for (const rpps of [objecting, owner]) {
+				expect((await state(rpps))[0], `${rpps}, import ${round + 1}`).toMatchObject({
+					status: "suppressed",
+					indexable: false,
+					pages: 0,
+					docs: 0,
+				});
+			}
+		}
+	});
 });

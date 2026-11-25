@@ -544,16 +544,24 @@
 		},
 		"claim": {
 			"heading": "C’est vous ?",
-			"body": "Cette page est construite à partir du registre public. Revendiquez-la gratuitement pour la vérifier et la compléter.",
+			"body": "Cette page est construite à partir du registre public. En la revendiquant, vous la vérifiez et la complétez :",
 			"link": "Revendiquer cette page",
 			"claimedHeading": "Page gérée par le praticien",
-			"claimedBody": "Le praticien a revendiqué cette page : son identité a été vérifiée, et il la complète lui-même."
+			"claimedBody": "Le praticien a revendiqué cette page : son identité a été vérifiée, et il la complète lui-même.",
+			"benefits": [
+				"gratuit, sans abonnement ni engagement ;",
+				"votre photo, vos tarifs et les langues parlées ;",
+				"la prise de rendez-vous en ligne, si vous le souhaitez ;",
+				"les statistiques de consultation de votre page ;",
+				"un kit de partage : lien, QR code et affiche."
+			],
+			"contactLink": "Pas de carte CPS ? Contactez-nous",
+			"optOutLink": "Vous êtes le titulaire de cette page et ne souhaitez pas apparaître publiquement ? C’est ici"
 		},
 		"report": {
 			"heading": "Une erreur ?",
 			"body": "Si une adresse, un numéro ou un nom est faux, découvrez comment le faire corriger.",
-			"link": "Signaler une erreur",
-			"removalLink": "Vous êtes ce praticien et vous opposez à cette page ?"
+			"link": "Signaler une erreur"
 		},
 		"ring": {
 			"heading": "Autres praticiens : {occupation} à {place}"
@@ -885,7 +893,8 @@
 				"heading": "Signalements et demandes de retrait",
 				"body": [
 					"Données : le message, l’adresse e-mail de contact quand elle est donnée, et pour une demande de retrait la page concernée. Le texte libre est chiffré.",
-					"Finalités : corriger les erreurs signalées et appliquer les oppositions. Bases légales : l’intérêt légitime de publier des informations exactes (article 6.1.f) et le droit d’opposition (article 21). Durée : le temps de traiter la demande, puis un signalement est supprimé 6 mois après sa clôture et une demande de retrait un an après sa décision ; après une opposition, seul le numéro RPPS de la page est conservé, pour qu’elle ne soit jamais republiée."
+					"Finalités : corriger les erreurs signalées et appliquer les oppositions. Bases légales : l’intérêt légitime de publier des informations exactes (article 6.1.f) et le droit d’opposition (article 21). Durée : le temps de traiter la demande, puis un signalement est supprimé 6 mois après sa clôture et une demande de retrait un an après sa décision ; après une opposition, seul le numéro RPPS de la page est conservé, pour qu’elle ne soit jamais republiée.",
+					"Demandes « Je suis ce praticien » : le nom, l’adresse e-mail professionnelle, le téléphone s’il est donné, le message et la page concernée, chiffrés. Finalité : aider un professionnel qui ne peut pas revendiquer sa page en ligne. Base légale : l’intérêt légitime de tenir l’annuaire à jour avec les professionnels concernés (article 6.1.f). Durée : 12 mois après le dernier échange."
 				]
 			},
 			"security": {
@@ -916,7 +925,8 @@
 			"cookies": {
 				"heading": "Cookies",
 				"body": [
-					"Seuls des cookies strictement nécessaires au service sont déposés : la session des professionnels connectés, la langue choisie, et un cookie qui limite une réservation en cours à un navigateur (24 heures). Aucun cookie publicitaire ou de mesure d’audience, aucun pisteur : aucun bandeau de consentement n’est donc nécessaire."
+					"Seuls des cookies strictement nécessaires au service sont déposés : la session des professionnels connectés, la langue choisie, et un cookie qui limite une réservation en cours à un navigateur (24 heures). Aucun cookie publicitaire ou de mesure d’audience, aucun pisteur : aucun bandeau de consentement n’est donc nécessaire.",
+					"Statistiques des pages revendiquées : chaque consultation ajoute un au total du jour de la page, sans cookie ni identifiant ; aucune adresse IP ni aucun navigateur n’est enregistré, et les navigateurs qui demandent à ne pas être suivis (Global Privacy Control, Do Not Track) ne sont pas comptés. Seul le titulaire de la page voit ces totaux, conservés 13 mois."
 				]
 			},
 			"rights": {
@@ -1958,7 +1968,10 @@
 				"today": "Aujourd’hui",
 				"agenda": "Agenda",
 				"team": "Équipe",
-				"menu": "Menu"
+				"menu": "Menu",
+				"stats": "Statistiques",
+				"share": "Partager",
+				"adminContacts": "Demandes de contact"
 			},
 			"practicesHeading": "Vos cabinets",
 			"columns": {
@@ -1983,7 +1996,11 @@
 			"agendaLink": "Ouvrir l’agenda du jour",
 			"invitationsHeading": "Invitations",
 			"invitationBody": "{practice} vous invite à rejoindre son équipe.",
-			"invitationLink": "Répondre à l’invitation"
+			"invitationLink": "Répondre à l’invitation",
+			"pageHeading": "Votre page",
+			"pageSummary": "{views, plural, =0 {Aucune consultation} one {# consultation} many {# consultations} other {# consultations}} ces 30 derniers jours ; page complétée à {score} %.",
+			"statsLink": "Voir les statistiques et ce qui manque",
+			"shareLink": "Partager la page : lien, QR code, affiche"
 		},
 		"roles": {
 			"owner": "Titulaire",
@@ -2063,7 +2080,7 @@
 			"title": "Votre demande de retrait est bien reçue",
 			"body": [
 				"La page est masquée dès maintenant : elle n’est plus affichée, indexée ni listée.",
-				"Nous vérifions la demande, puis supprimons la page. Une page supprimée ne revient pas au prochain import du registre."
+				"Nous vérifions la demande et vous répondons dans un délai d’un mois au plus. Si elle est confirmée, la page est supprimée ; une page supprimée ne revient pas au prochain import du registre."
 			]
 		},
 		"removalConfirmed": {
@@ -2094,6 +2111,33 @@
 				"Cette invitation est valable 48 heures.",
 				"Vous ne l’attendiez pas ? Ignorez cet e-mail : rien ne se passe sans vous."
 			]
+		},
+		"contactReceived": {
+			"subject": "Votre demande est bien reçue",
+			"title": "Votre demande est bien reçue",
+			"body": [
+				"Bonjour,",
+				"Nous avons reçu votre demande au sujet d’une page de l’annuaire Apercura. Un membre de l’équipe vous recontacte pour vérifier votre identité et vous aider à revendiquer la page.",
+				"Si vous n’êtes pas à l’origine de cette demande, ignorez cet e-mail : aucune page ni aucun compte n’a été modifié."
+			]
+		},
+		"adminClaims": {
+			"subject": "{count, plural, one {# revendication à examiner} many {# revendications à examiner} other {# revendications à examiner}}",
+			"title": "{count, plural, one {Une revendication attend une décision} many {# revendications attendent une décision} other {# revendications attendent une décision}}",
+			"body": [
+				"{count, plural, one {Une revendication a été envoyée pour examen} many {# revendications ont été envoyées pour examen} other {# revendications ont été envoyées pour examen}} depuis la dernière alerte.",
+				"Le détail est dans la file d’attente de l’espace praticien, derrière votre second facteur."
+			],
+			"action": "Ouvrir les revendications"
+		},
+		"adminContactRequests": {
+			"subject": "{count, plural, one {# demande « Je suis ce praticien »} many {# demandes « Je suis ce praticien »} other {# demandes « Je suis ce praticien »}}",
+			"title": "{count, plural, one {Une demande de contact attend une réponse} many {# demandes de contact attendent une réponse} other {# demandes de contact attendent une réponse}}",
+			"body": [
+				"{count, plural, one {Un praticien qui ne peut pas revendiquer sa page demande} many {# praticiens qui ne peuvent pas revendiquer leur page demandent} other {# praticiens qui ne peuvent pas revendiquer leur page demandent}} à être recontactés, depuis la dernière alerte.",
+				"Leurs coordonnées, chiffrées, se lisent dans la file d’attente de l’espace praticien."
+			],
+			"action": "Ouvrir les demandes"
 		}
 	},
 	"Profile": {
@@ -2181,7 +2225,9 @@
 			"searchHint": "Vous pouvez aussi chercher votre page par votre nom :",
 			"searchLink": "chercher dans l’annuaire",
 			"howHeading": "Comment nous vérifions que c’est vous",
-			"factorNote": "Votre compte a déjà un second facteur : il est exigé avant toute revendication, et il protège ensuite votre page."
+			"factorNote": "Votre compte a déjà un second facteur : il est exigé avant toute revendication, et il protège ensuite votre page.",
+			"contactLink": "Pas de carte CPS ? Contactez-nous",
+			"optOutLink": "Vous êtes le titulaire de cette page et ne souhaitez pas apparaître publiquement ? C’est ici"
 		},
 		"methods": {
 			"psc": {
@@ -2353,7 +2399,10 @@
 				"lead": "Publier affiche votre présentation, vos langues, vos honoraires et vos informations pratiques sur votre page publique. Vous pouvez les modifier ou les masquer à tout moment.",
 				"already": "Votre page est publiée. Chaque modification enregistrée est en ligne aussitôt.",
 				"edit": "Modifier ma page",
-				"action": "Publier ma page"
+				"action": "Publier ma page",
+				"shareLead": "Faites connaître votre page : un lien, un QR code et une affiche pour la salle d’attente sont prêts.",
+				"shareLink": "Ouvrir le kit de partage",
+				"statsLink": "Voir les statistiques de la page"
 			}
 		}
 	},
@@ -2591,6 +2640,43 @@
 			},
 			"resolve": "Marquer comme traité",
 			"dismiss": "Écarter"
+		},
+		"contacts": {
+			"metaTitle": "Demandes de contact · Administration · Apercura",
+			"title": "Demandes « Je suis ce praticien »",
+			"lead": "Les praticiens qui ne peuvent pas revendiquer leur page en ligne. Répondez depuis votre messagerie, puis notez où en est la demande.",
+			"failed": "L’action a échoué. Rechargez la page et réessayez.",
+			"auditNote": "Lire une demande la déchiffre ; c’est inscrit au journal d’audit. Les demandes sont supprimées 12 mois après leur dernier changement.",
+			"tabsLabel": "Statut des demandes",
+			"tabs": {
+				"new": "Nouvelles ({count})",
+				"contacted": "Recontactées ({count})",
+				"closed": "Closes ({count})"
+			},
+			"empty": {
+				"new": "Aucune nouvelle demande",
+				"contacted": "Aucune demande en cours",
+				"closed": "Aucune demande close"
+			},
+			"caption": "Demandes de contact",
+			"columns": {
+				"page": "Page",
+				"received": "Reçue le",
+				"actions": "Actions"
+			},
+			"claimedNow": "Revendiquée depuis",
+			"fields": {
+				"name": "Nom",
+				"email": "E-mail professionnel",
+				"phone": "Téléphone",
+				"message": "Message"
+			},
+			"read": "Lire",
+			"move": {
+				"new": "Remettre en nouvelle",
+				"contacted": "Marquer comme recontactée",
+				"closed": "Clore"
+			}
 		}
 	},
 	"Gdpr": {
@@ -2630,7 +2716,7 @@
 			"title": "Demander le retrait de cette page",
 			"lead": "En vertu de l’article 21 du RGPD, vous pouvez vous opposer à la publication de votre page. Elle est masquée dès réception de la demande, puis supprimée après une vérification légère.",
 			"doneTitle": "La page est masquée",
-			"doneBody": "Elle n’est plus affichée, indexée ni listée. Nous vérifions la demande et vous le confirmons par e-mail, puis supprimons la page définitivement.",
+			"doneBody": "Elle n’est plus affichée, indexée ni listée. Nous vérifions la demande et vous répondons par e-mail dans un délai d’un mois au plus. Si elle est confirmée, la page est supprimée définitivement et ne revient pas avec les mises à jour du registre.",
 			"contact": "Votre e-mail",
 			"contactHint": "Pour confirmer la demande avec vous. Il est chiffré et ne sert à rien d’autre.",
 			"message": "Message (facultatif)",
@@ -2639,10 +2725,44 @@
 			"privacy": "Une page supprimée ne revient pas au prochain import du registre.",
 			"submit": "Masquer et retirer la page",
 			"claimedTitle": "Cette page est gérée par son praticien",
-			"claimedBody": "Seul son titulaire peut la retirer, depuis l’éditeur de page de son espace.",
-			"claimedLink": "Se connecter à l’espace praticien",
+			"claimedBody": "Seul son titulaire peut la retirer, depuis l’éditeur de page de son espace : la page disparaît alors aussitôt et ne revient pas avec les mises à jour du registre.",
+			"claimedLink": "Retirer ma page depuis mon espace praticien",
 			"alreadyTitle": "Une demande de retrait est en cours de vérification",
 			"alreadyBody": "La page est déjà masquée."
+		},
+		"contact": {
+			"metaTitle": "Je suis ce praticien · Apercura",
+			"title": "Je suis ce praticien",
+			"lead": "Vous ne pouvez pas revendiquer votre page avec Pro Santé Connect, l’e-mail du registre ou un justificatif ? Laissez-nous vos coordonnées : un membre de l’équipe Apercura vous recontacte pour vérifier votre identité et vous aider.",
+			"patientsTitle": "Ce formulaire est réservé au praticien de cette page",
+			"patientsBody": "Il ne sert pas à prendre rendez-vous ni à joindre le cabinet : pour cela, utilisez les coordonnées de la page.",
+			"claimFirst": "Avec une carte CPS ou e-CPS, ou l’accès à l’e-mail publié dans le registre, la revendication est plus rapide :",
+			"claimFirstLink": "revendiquer cette page",
+			"rpps": "Numéro RPPS de la page",
+			"rppsHint": "Celui de la page d’où vous venez. Il ne se modifie pas.",
+			"name": "Vos nom et prénom",
+			"email": "Votre e-mail professionnel",
+			"emailHint": "Pour vous répondre. Nous vous envoyons aussi un accusé de réception.",
+			"phone": "Votre téléphone (facultatif)",
+			"phoneHint": "Si vous préférez être rappelé.",
+			"message": "Votre message",
+			"messageHint": "Dites-nous pourquoi la revendication en ligne ne fonctionne pas pour vous.",
+			"privacy": "Vos coordonnées et votre message sont chiffrés, lus par la seule équipe Apercura pour vous répondre, et supprimés 12 mois après le dernier échange. N’indiquez aucune information de santé.",
+			"submit": "Envoyer ma demande",
+			"doneTitle": "Votre demande est bien reçue",
+			"doneBody": [
+				"Un membre de l’équipe Apercura vous recontacte par e-mail ou par téléphone pour vérifier votre identité, puis vous aide à revendiquer la page.",
+				"Un accusé de réception vient de partir à l’adresse indiquée."
+			],
+			"claimedTitle": "Cette page est déjà gérée par son praticien",
+			"claimedBody": "Son titulaire a été vérifié. Si c’est votre page et que vous n’y avez plus accès, ouvrez une revendication : elle est examinée par l’équipe.",
+			"claimedLink": "Revendiquer cette page",
+			"withheldTitle": "Cette page est masquée",
+			"withheldBody": "Une demande de retrait est en cours de vérification.",
+			"errors": {
+				"proof": "La vérification anti-robot n’a pas abouti. Réessayez dans un instant.",
+				"claimed": "Cette page est déjà gérée par son praticien : ouvrez une revendication."
+			}
 		}
 	},
 	"Agenda": {
@@ -3156,6 +3276,116 @@
 			"ALREADY_MEMBER": "Vous faites déjà partie de cette équipe.",
 			"EXPIRED": "Cette invitation a expiré.",
 			"failed": "L’ajout n’a pas fonctionné. Réessayez dans un instant."
+		}
+	},
+	"Stats": {
+		"metaTitle": "Statistiques · Espace praticien · Apercura",
+		"title": "Statistiques",
+		"lead": "Les consultations de la page de {name}, ses rendez-vous en ligne et ce qui lui manque encore.",
+		"summaryHeading": "En bref",
+		"summary": {
+			"views": "Consultations, 30 derniers jours",
+			"bookings": "Rendez-vous en ligne, 12 dernières semaines",
+			"completion": "Page complétée"
+		},
+		"percent": "{score} %",
+		"dailyHeading": "Consultations par jour",
+		"noViews": "Aucune consultation comptée ces 30 derniers jours. Les consultations sont comptées depuis la revendication de la page.",
+		"chartTitle": "Consultations par jour, 30 derniers jours",
+		"chartSummary": "{total, plural, one {# consultation} many {# consultations} other {# consultations}} en 30 jours ; le plus : {max} le {day}.",
+		"dailyTableToggle": "Voir les chiffres jour par jour",
+		"dailyCaption": "Consultations par jour",
+		"columns": {
+			"day": "Jour",
+			"views": "Consultations",
+			"week": "Semaine",
+			"bookings": "Rendez-vous en ligne"
+		},
+		"weeklyHeading": "Par semaine",
+		"weeklyCaption": "Consultations et rendez-vous en ligne par semaine",
+		"weekOf": "Semaine du {date}",
+		"bookingsNote": "Rendez-vous pris en ligne par des patients cette semaine-là, qu’ils aient eu lieu, été déplacés ou annulés depuis.",
+		"checklistHeading": "Ce qui manque à la page",
+		"checklistLead": "{done} sur {total} : page complétée à {score} %. Une page complète aide les patients à savoir s’ils peuvent venir.",
+		"checklist": {
+			"published": "Page publiée",
+			"photo": "Photo",
+			"bio": "Présentation",
+			"languages": "Langues parlées",
+			"fees": "Tarifs",
+			"paymentMethods": "Moyens de paiement acceptés",
+			"accessibility": "Accessibilité du lieu",
+			"hours": "Horaires de l’agenda",
+			"booking": "Rendez-vous en ligne ouverts"
+		},
+		"done": "Fait",
+		"todo": "À faire",
+		"fix": {
+			"editor": "Compléter",
+			"agenda": "Régler l’agenda",
+			"askOwner": "Réglé par le titulaire du cabinet"
+		},
+		"privacyHeading": "Comment c’est compté",
+		"privacy": {
+			"counted": "Une consultation est comptée quand la page s’affiche dans un navigateur, sans cookie ni identifiant : aucune adresse IP, aucun navigateur, aucun visiteur n’est enregistré, seulement un total par jour.",
+			"excluded": "Les robots et les aperçus de liens ne sont pas comptés, un même visiteur l’est une fois par demi-heure au plus, et les navigateurs qui demandent à ne pas être suivis ne le sont pas du tout : les chiffres sont un ordre de grandeur.",
+			"kept": "Les totaux par jour sont conservés {months} mois, puis supprimés."
+		},
+		"shareLink": "Faire connaître la page : le kit de partage",
+		"countedSince": "Comptées depuis le {date}, jour où votre revendication a été vérifiée : les consultations d’avant ne vous sont pas montrées."
+	},
+	"Share": {
+		"metaTitle": "Partager ma page · Espace praticien · Apercura",
+		"title": "Partager ma page",
+		"lead": "Le lien de la page de {name}, son QR code, une affiche pour la salle d’attente et un badge pour votre site.",
+		"removedTitle": "Votre page est retirée",
+		"removedBody": "Elle n’est plus publiée : le lien et le QR code mènent à une page introuvable tant que vous ne la rétablissez pas.",
+		"unpublishedTitle": "Votre page n’est pas encore publiée",
+		"unpublishedBody": "Le lien mène à la page du registre, sans ce que vous avez ajouté. Publiez-la pour que patients et partages voient votre version.",
+		"unpublishedLink": "Publier depuis l’éditeur",
+		"linkHeading": "Le lien de la page",
+		"linkLead": "À mettre dans votre signature d’e-mail, sur votre site ou dans un message à vos patients.",
+		"linkLabel": "Adresse de la page",
+		"copy": "Copier",
+		"copied": "Copié dans le presse-papiers.",
+		"copyFailed": "La copie a échoué : sélectionnez le texte et copiez-le à la main.",
+		"qrHeading": "Le QR code",
+		"qrLead": "Les patients le scannent avec l’appareil photo de leur téléphone pour ouvrir la page. Fichiers prêts à imprimer, en noir sur blanc.",
+		"qrLabel": "QR code vers {url}",
+		"downloadSvg": "Télécharger en SVG",
+		"downloadPng": "Télécharger en PNG",
+		"qrHint": "Gardez la marge blanche autour du code ({margin} modules) et imprimez-le à 2 cm de côté au moins.",
+		"badgeHeading": "Le badge pour votre site",
+		"badgeLead": "Un lien « Retrouvez-moi sur Apercura » à coller sur votre site. Une image et un lien, rien d’autre : aucun script, aucun cookie, aucun suivi des visiteurs.",
+		"badgePreview": "Aperçu",
+		"badgeLabel": "Code HTML du badge",
+		"badgeHint": "À coller dans la page de votre site où le badge doit apparaître.",
+		"posterHeading": "L’affiche pour la salle d’attente",
+		"posterLead": "Une page à imprimer avec votre nom et le QR code. Elle s’ouvre dans un aperçu ; imprimez-la depuis votre navigateur.",
+		"poster": {
+			"a4": "Affiche A4",
+			"a5": "Affiche A5",
+			"metaTitle": "Affiche à imprimer · Espace praticien · Apercura",
+			"title": "Affiche à imprimer",
+			"lead": "Vérifiez l’aperçu, puis imprimez. L’affiche est en français, la langue des patients qui la liront.",
+			"formatsLabel": "Format de l’affiche",
+			"print": "Imprimer l’affiche",
+			"back": "Retour au kit de partage",
+			"printHint": "Dans la fenêtre d’impression, choisissez le format de papier de l’affiche et l’échelle 100 %, sans en-têtes ni pieds de page.",
+			"sheetLabel": "Aperçu de l’affiche",
+			"sheet": {
+				"wordmark": "Apercura",
+				"headlineBooking": "Prenez rendez-vous en ligne",
+				"headlineFind": "Retrouvez-moi sur Apercura",
+				"qrLabel": "QR code vers la page du praticien sur Apercura",
+				"scan": "Scannez ce code avec l’appareil photo de votre téléphone.",
+				"footBooking": "Gratuit, sans créer de compte.",
+				"footFind": "Adresse, téléphone et informations pratiques du cabinet."
+			}
+		},
+		"badge": {
+			"lead": "Retrouvez-moi sur",
+			"brand": "Apercura"
 		}
 	}
 }

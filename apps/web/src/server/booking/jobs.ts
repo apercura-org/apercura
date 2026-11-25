@@ -5,8 +5,9 @@ import { sql } from "drizzle-orm";
 import { cacheTags } from "~/server/cache-tags";
 import { writeAudit } from "~/server/phi";
 import { purgeExpiredRateLimits } from "~/server/rate-limit";
+import { sendAdminAlerts } from "../admin-alerts";
 import { purgeClaimDocuments } from "../claims/service";
-import { purgeAuditLogs, purgeClosedRequests } from "../retention";
+import { purgeAuditLogs, purgeClosedRequests, purgePageViews } from "../retention";
 import { getStorage, type StorageDriver, storageConfigured } from "../storage";
 import { finalizeClosures } from "./closure";
 import { practitionerTransaction } from "./locks";
@@ -337,9 +338,22 @@ export function closuresJob(db: Database, nowMs: number) {
 	return withAdvisoryLock(db, "jobs:closures", () => finalizeClosures(db, nowMs));
 }
 
-/** Error reports and removal requests past their retention after closure are deleted. */
+/** Error reports, removal and contact requests past their retention are deleted. */
 export function requestsJob(db: Database, nowMs: number) {
 	return withAdvisoryLock(db, "jobs:requests", () => purgeClosedRequests(db, nowMs));
+}
+
+/** Daily page-view counters older than their retention (13 months) are deleted. */
+export function pageViewsJob(db: Database, nowMs: number) {
+	return withAdvisoryLock(db, "jobs:page-views", () => purgePageViews(db, nowMs));
+}
+
+/**
+ * The administrators' alerts of new claims and contact requests, batched (one email per queue
+ * and ADMIN_ALERT_INTERVAL_MINUTES at most): sends what arrived during the last interval.
+ */
+export function adminAlertsJob(db: Database, nowMs: number) {
+	return withAdvisoryLock(db, "jobs:admin-alerts", () => sendAdminAlerts(db, nowMs));
 }
 
 /**
@@ -375,6 +389,8 @@ export async function runTick(db: Database, options: TickOptions = {}) {
 	const purged = await withAdvisoryLock(db, "jobs:purge", () => purge(db, now()));
 	const claimDocuments = await purgeClaimDocumentsJob(db, now(), options.storage);
 	const requests = await requestsJob(db, now());
+	const pageViews = await pageViewsJob(db, now());
+	const adminAlerts = await adminAlertsJob(db, now());
 	const rateLimits = await rateLimitsJob(db, now());
 	const auditLog = await auditLogJob(options.auditDb ?? db);
 	return {
@@ -392,6 +408,8 @@ export async function runTick(db: Database, options: TickOptions = {}) {
 		purged,
 		claimDocuments,
 		requests,
+		pageViews,
+		adminAlerts,
 		rateLimits,
 		auditLog,
 	};

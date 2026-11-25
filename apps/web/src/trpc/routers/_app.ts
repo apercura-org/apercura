@@ -8,8 +8,10 @@ import { calendarRouter } from "./calendar";
 import { claimsRouter } from "./claims";
 import { gdprRouter } from "./gdpr";
 import { healthRouter } from "./health";
+import { practitionerContactRouter } from "./practitioner-contact";
 import { profileRouter } from "./profile";
 import { searchRouter } from "./search";
+import { statsRouter } from "./stats";
 import { teamRouter } from "./team";
 
 export const appRouter = createTRPCRouter({
@@ -24,6 +26,8 @@ export const appRouter = createTRPCRouter({
 	claims: claimsRouter,
 	profile: profileRouter,
 	gdpr: gdprRouter,
+	practitionerContact: practitionerContactRouter,
+	stats: statsRouter,
 	admin: adminRouter,
 });
 

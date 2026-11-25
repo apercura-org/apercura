@@ -12,6 +12,8 @@ export type AuditAction =
 	| "report.resolve"
 	| "removal_request.decrypt"
 	| "removal_request.decide"
+	| "contact_request.decrypt"
+	| "contact_request.status"
 	| "account.export"
 	| "account.delete"
 	| "organization.close"

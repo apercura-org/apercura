@@ -10,6 +10,9 @@ export const PRO_ROUTES = {
 	claimEmail: "/pro/revendication-email",
 	onboarding: "/pro/bienvenue",
 	pageEditor: "/pro/page",
+	stats: "/pro/statistiques",
+	share: "/pro/partager",
+	sharePoster: "/pro/partager/affiche",
 	today: "/pro/aujourdhui",
 	agenda: "/pro/agenda",
 	agendaSettings: "/pro/agenda/reglages",
@@ -17,6 +20,7 @@ export const PRO_ROUTES = {
 	team: "/pro/equipe",
 	adminClaims: "/pro/admin/revendications",
 	adminReports: "/pro/admin/signalements",
+	adminContacts: "/pro/admin/contacts",
 } as const;
 
 export type ProRoute = (typeof PRO_ROUTES)[keyof typeof PRO_ROUTES];

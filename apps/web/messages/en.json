@@ -544,16 +544,24 @@
 		},
 		"claim": {
 			"heading": "Is this you?",
-			"body": "This page is built from the public register. Claim it for free to check and complete it.",
+			"body": "This page is built from the public register. Claim it to check and complete it:",
 			"link": "Claim this page",
 			"claimedHeading": "Page managed by the practitioner",
-			"claimedBody": "The practitioner has claimed this page: their identity was verified, and they complete it."
+			"claimedBody": "The practitioner has claimed this page: their identity was verified, and they complete it.",
+			"benefits": [
+				"free, with no subscription or commitment;",
+				"your photo, your fees and the languages you speak;",
+				"online booking, if you want it;",
+				"statistics on who views your page;",
+				"a share kit: link, QR code and poster."
+			],
+			"contactLink": "No CPS card? Contact us",
+			"optOutLink": "This is your page and you would rather not appear publicly? Start here"
 		},
 		"report": {
 			"heading": "Something wrong?",
 			"body": "If an address, a phone number or a name is wrong, tell us how to correct it.",
-			"link": "Report an error",
-			"removalLink": "You are this practitioner and object to this page?"
+			"link": "Report an error"
 		},
 		"ring": {
 			"heading": "Other practitioners: {occupation} in {place}"
@@ -885,7 +893,8 @@
 				"heading": "Error reports and removal requests",
 				"body": [
 					"Data: the message, the contact email address when one is given and, for a removal request, the page concerned. Free text is encrypted.",
-					"Purposes: correcting reported errors and applying objections. Legal bases: the legitimate interest of publishing accurate information (article 6.1.f) and the right to object (article 21). Retention: the time needed to handle the request, then a report is deleted 6 months after it is closed and a removal request one year after its decision; after an objection, only the RPPS number of the page is kept, so that it is never published again."
+					"Purposes: correcting reported errors and applying objections. Legal bases: the legitimate interest of publishing accurate information (article 6.1.f) and the right to object (article 21). Retention: the time needed to handle the request, then a report is deleted 6 months after it is closed and a removal request one year after its decision; after an objection, only the RPPS number of the page is kept, so that it is never published again.",
+					"“I am this practitioner” requests: the name, the professional email address, the phone number when given, the message and the page concerned, encrypted. Purpose: helping a practitioner who cannot claim their page online. Legal basis: the legitimate interest of keeping the directory up to date with the practitioners concerned (article 6.1.f). Retention: 12 months after the last exchange."
 				]
 			},
 			"security": {
@@ -916,7 +925,8 @@
 			"cookies": {
 				"heading": "Cookies",
 				"body": [
-					"Only cookies strictly necessary to the service are set: the session of signed-in practitioners, the chosen language, and a cookie that limits a booking in progress to one browser (24 hours). No advertising or audience measurement cookies, no trackers: no consent banner is needed."
+					"Only cookies strictly necessary to the service are set: the session of signed-in practitioners, the chosen language, and a cookie that limits a booking in progress to one browser (24 hours). No advertising or audience measurement cookies, no trackers: no consent banner is needed.",
+					"Statistics of claimed pages: each view adds one to the page’s total for the day, with no cookie or identifier; no IP address and no browser is recorded, and browsers that ask not to be tracked (Global Privacy Control, Do Not Track) are not counted. Only the page’s holder sees these totals, kept 13 months."
 				]
 			},
 			"rights": {
@@ -1958,7 +1968,10 @@
 				"today": "Today",
 				"agenda": "Agenda",
 				"team": "Team",
-				"menu": "Menu"
+				"menu": "Menu",
+				"stats": "Statistics",
+				"share": "Share",
+				"adminContacts": "Contact requests"
 			},
 			"practicesHeading": "Your practices",
 			"columns": {
@@ -1983,7 +1996,11 @@
 			"agendaLink": "Open today’s agenda",
 			"invitationsHeading": "Invitations",
 			"invitationBody": "{practice} invites you to join its team.",
-			"invitationLink": "Answer the invitation"
+			"invitationLink": "Answer the invitation",
+			"pageHeading": "Your page",
+			"pageSummary": "{views, plural, =0 {No views} one {# view} other {# views}} in the last 30 days; page {score}% complete.",
+			"statsLink": "See the statistics and what is missing",
+			"shareLink": "Share the page: link, QR code, poster"
 		},
 		"roles": {
 			"owner": "Owner",
@@ -2063,7 +2080,7 @@
 			"title": "Your removal request was received",
 			"body": [
 				"The page is hidden from now on: it is no longer shown, indexed or listed.",
-				"We check the request, then delete the page. A deleted page does not come back with the next import of the register."
+				"We check the request and answer within one month at most. Once it is confirmed, the page is deleted; a deleted page does not come back with the next import of the register."
 			]
 		},
 		"removalConfirmed": {
@@ -2094,6 +2111,33 @@
 				"This invitation works for 48 hours.",
 				"You did not expect it? Ignore this email: nothing happens without you."
 			]
+		},
+		"contactReceived": {
+			"subject": "Your request was received",
+			"title": "Your request was received",
+			"body": [
+				"Hello,",
+				"We have received your request about a page of the Apercura directory. A member of the team gets back to you to check your identity and help you claim the page.",
+				"If you did not send this request, ignore this email: no page and no account was changed."
+			]
+		},
+		"adminClaims": {
+			"subject": "{count, plural, one {# claim to review} other {# claims to review}}",
+			"title": "{count, plural, one {A claim is waiting for a decision} other {# claims are waiting for a decision}}",
+			"body": [
+				"{count, plural, one {One claim was sent for review} other {# claims were sent for review}} since the last alert.",
+				"The details are in the queue of the practitioner space, behind your second factor."
+			],
+			"action": "Open the claims"
+		},
+		"adminContactRequests": {
+			"subject": "{count, plural, one {# “I am this practitioner” request} other {# “I am this practitioner” requests}}",
+			"title": "{count, plural, one {A contact request is waiting for an answer} other {# contact requests are waiting for an answer}}",
+			"body": [
+				"{count, plural, one {A practitioner who cannot claim their page asks} other {# practitioners who cannot claim their page ask}} to be contacted, since the last alert.",
+				"Their details, encrypted, can be read in the queue of the practitioner space."
+			],
+			"action": "Open the requests"
 		}
 	},
 	"Profile": {
@@ -2181,7 +2225,9 @@
 			"searchHint": "You can also look your page up by name:",
 			"searchLink": "search the directory",
 			"howHeading": "How we check that it is you",
-			"factorNote": "Your account already has a second factor: it is required before any claim, and it protects your page from then on."
+			"factorNote": "Your account already has a second factor: it is required before any claim, and it protects your page from then on.",
+			"contactLink": "No CPS card? Contact us",
+			"optOutLink": "This is your page and you would rather not appear publicly? Start here"
 		},
 		"methods": {
 			"psc": {
@@ -2353,7 +2399,10 @@
 				"lead": "Publishing shows your presentation, languages, fees and practical information on your public page. You can change or hide them at any time.",
 				"already": "Your page is published. Every change you save is online at once.",
 				"edit": "Edit my page",
-				"action": "Publish my page"
+				"action": "Publish my page",
+				"shareLead": "Let people know about your page: a link, a QR code and a waiting-room poster are ready.",
+				"shareLink": "Open the share kit",
+				"statsLink": "See the page statistics"
 			}
 		}
 	},
@@ -2591,6 +2640,43 @@
 			},
 			"resolve": "Mark as handled",
 			"dismiss": "Dismiss"
+		},
+		"contacts": {
+			"metaTitle": "Contact requests · Administration · Apercura",
+			"title": "“I am this practitioner” requests",
+			"lead": "Practitioners who cannot claim their page online. Answer from your mailbox, then record where the request stands.",
+			"failed": "The action failed. Reload the page and try again.",
+			"auditNote": "Reading a request decrypts it; this is written to the audit log. Requests are deleted 12 months after their last change.",
+			"tabsLabel": "Request status",
+			"tabs": {
+				"new": "New ({count})",
+				"contacted": "Contacted ({count})",
+				"closed": "Closed ({count})"
+			},
+			"empty": {
+				"new": "No new request",
+				"contacted": "No request in progress",
+				"closed": "No closed request"
+			},
+			"caption": "Contact requests",
+			"columns": {
+				"page": "Page",
+				"received": "Received",
+				"actions": "Actions"
+			},
+			"claimedNow": "Claimed since",
+			"fields": {
+				"name": "Name",
+				"email": "Professional email",
+				"phone": "Phone",
+				"message": "Message"
+			},
+			"read": "Read",
+			"move": {
+				"new": "Move back to new",
+				"contacted": "Mark as contacted",
+				"closed": "Close"
+			}
 		}
 	},
 	"Gdpr": {
@@ -2630,7 +2716,7 @@
 			"title": "Ask for the removal of this page",
 			"lead": "Under article 21 of the GDPR you can object to the publication of your page. It is hidden as soon as we receive the request, then deleted after a light check.",
 			"doneTitle": "The page is hidden",
-			"doneBody": "It is no longer shown, indexed or listed. We check the request and confirm by email, then delete the page for good.",
+			"doneBody": "It is no longer shown, indexed or listed. We check the request and answer by email within one month at most. Once it is confirmed, the page is deleted for good and does not come back with the register updates.",
 			"contact": "Your email",
 			"contactHint": "To confirm the request with you. It is encrypted and used for nothing else.",
 			"message": "Message (optional)",
@@ -2639,10 +2725,44 @@
 			"privacy": "A deleted page does not come back with the next import of the register.",
 			"submit": "Hide and remove the page",
 			"claimedTitle": "This page is managed by its practitioner",
-			"claimedBody": "Only its holder can remove it, from the page editor of their space.",
-			"claimedLink": "Sign in to the practitioner space",
+			"claimedBody": "Only its holder can remove it, from the page editor of their space: the page then disappears at once and does not come back with the register updates.",
+			"claimedLink": "Remove my page from my practitioner space",
 			"alreadyTitle": "A removal request is being checked",
 			"alreadyBody": "The page is already hidden."
+		},
+		"contact": {
+			"metaTitle": "I am this practitioner · Apercura",
+			"title": "I am this practitioner",
+			"lead": "You cannot claim your page with Pro Santé Connect, the register email or a document? Leave us your details: a member of the Apercura team gets back to you to check your identity and help you.",
+			"patientsTitle": "This form is for the practitioner of this page only",
+			"patientsBody": "It is not for booking an appointment or reaching the practice: use the contact details on the page for that.",
+			"claimFirst": "With a CPS or e-CPS card, or access to the email published in the register, claiming is quicker:",
+			"claimFirstLink": "claim this page",
+			"rpps": "RPPS number of the page",
+			"rppsHint": "The one of the page you came from. It cannot be changed.",
+			"name": "Your full name",
+			"email": "Your professional email",
+			"emailHint": "To answer you. We also send you an acknowledgment.",
+			"phone": "Your phone number (optional)",
+			"phoneHint": "If you would rather be called back.",
+			"message": "Your message",
+			"messageHint": "Tell us why claiming online does not work for you.",
+			"privacy": "Your details and your message are encrypted, read only by the Apercura team to answer you, and deleted 12 months after the last exchange. Do not include any health information.",
+			"submit": "Send my request",
+			"doneTitle": "Your request was received",
+			"doneBody": [
+				"A member of the Apercura team gets back to you by email or phone to check your identity, then helps you claim the page.",
+				"An acknowledgment has just been sent to the address you gave."
+			],
+			"claimedTitle": "This page is already managed by its practitioner",
+			"claimedBody": "Its holder was verified. If this is your page and you no longer have access to it, open a claim: the team reviews it.",
+			"claimedLink": "Claim this page",
+			"withheldTitle": "This page is hidden",
+			"withheldBody": "A removal request is being checked.",
+			"errors": {
+				"proof": "The anti-robot check did not complete. Try again in a moment.",
+				"claimed": "This page is already managed by its practitioner: open a claim."
+			}
 		}
 	},
 	"Agenda": {
@@ -3156,6 +3276,116 @@
 			"ALREADY_MEMBER": "You are already in this team.",
 			"EXPIRED": "This invitation has expired.",
 			"failed": "Joining did not work. Try again in a moment."
+		}
+	},
+	"Stats": {
+		"metaTitle": "Statistics · Practitioner space · Apercura",
+		"title": "Statistics",
+		"lead": "Views of the page of {name}, its online bookings and what it still lacks.",
+		"summaryHeading": "At a glance",
+		"summary": {
+			"views": "Views, last 30 days",
+			"bookings": "Online bookings, last 12 weeks",
+			"completion": "Page complete"
+		},
+		"percent": "{score}%",
+		"dailyHeading": "Views per day",
+		"noViews": "No views counted in the last 30 days. Views are counted from the moment the page is claimed.",
+		"chartTitle": "Views per day, last 30 days",
+		"chartSummary": "{total, plural, one {# view} other {# views}} in 30 days; the most: {max} on {day}.",
+		"dailyTableToggle": "See the figures day by day",
+		"dailyCaption": "Views per day",
+		"columns": {
+			"day": "Day",
+			"views": "Views",
+			"week": "Week",
+			"bookings": "Online bookings"
+		},
+		"weeklyHeading": "Per week",
+		"weeklyCaption": "Views and online bookings per week",
+		"weekOf": "Week of {date}",
+		"bookingsNote": "Appointments patients booked online that week, whether they took place, were moved or were cancelled since.",
+		"checklistHeading": "What the page lacks",
+		"checklistLead": "{done} of {total}: page {score}% complete. A complete page helps patients know whether they can come.",
+		"checklist": {
+			"published": "Page published",
+			"photo": "Photo",
+			"bio": "Introduction",
+			"languages": "Languages spoken",
+			"fees": "Fees",
+			"paymentMethods": "Accepted payment methods",
+			"accessibility": "Accessibility of the place",
+			"hours": "Agenda opening hours",
+			"booking": "Online booking open"
+		},
+		"done": "Done",
+		"todo": "To do",
+		"fix": {
+			"editor": "Complete",
+			"agenda": "Set up the agenda",
+			"askOwner": "Set by the practice owner"
+		},
+		"privacyHeading": "How it is counted",
+		"privacy": {
+			"counted": "A view is counted when the page shows in a browser, with no cookie or identifier: no IP address, no browser and no visitor is recorded, only a total per day.",
+			"excluded": "Robots and link previews are not counted, a visitor is counted once every half hour at most, and browsers that ask not to be tracked are not counted at all: the figures are an order of magnitude.",
+			"kept": "Daily totals are kept {months} months, then deleted."
+		},
+		"shareLink": "Make the page known: the share kit",
+		"countedSince": "Counted since {date}, the day your claim was verified: views from before are not shown to you."
+	},
+	"Share": {
+		"metaTitle": "Share my page · Practitioner space · Apercura",
+		"title": "Share my page",
+		"lead": "The link to the page of {name}, its QR code, a waiting-room poster and a badge for your website.",
+		"removedTitle": "Your page is removed",
+		"removedBody": "It is no longer published: the link and the QR code lead to a missing page until you restore it.",
+		"unpublishedTitle": "Your page is not published yet",
+		"unpublishedBody": "The link leads to the register page, without what you added. Publish it so that patients and shares see your version.",
+		"unpublishedLink": "Publish from the editor",
+		"linkHeading": "The page link",
+		"linkLead": "For your email signature, your website or a message to your patients.",
+		"linkLabel": "Page address",
+		"copy": "Copy",
+		"copied": "Copied to the clipboard.",
+		"copyFailed": "Copying failed: select the text and copy it by hand.",
+		"qrHeading": "The QR code",
+		"qrLead": "Patients scan it with their phone camera to open the page. Files ready to print, black on white.",
+		"qrLabel": "QR code to {url}",
+		"downloadSvg": "Download as SVG",
+		"downloadPng": "Download as PNG",
+		"qrHint": "Keep the white margin around the code ({margin} modules) and print it at least 2 cm wide.",
+		"badgeHeading": "The badge for your website",
+		"badgeLead": "A “Find me on Apercura” link to paste on your website. An image and a link, nothing else: no script, no cookie, no visitor tracking.",
+		"badgePreview": "Preview",
+		"badgeLabel": "HTML code of the badge",
+		"badgeHint": "Paste it into the page of your website where the badge should appear.",
+		"posterHeading": "The waiting-room poster",
+		"posterLead": "A page to print with your name and the QR code. It opens in a preview; print it from your browser.",
+		"poster": {
+			"a4": "A4 poster",
+			"a5": "A5 poster",
+			"metaTitle": "Poster to print · Practitioner space · Apercura",
+			"title": "Poster to print",
+			"lead": "Check the preview, then print. The poster is in French, the language of the patients who will read it.",
+			"formatsLabel": "Poster size",
+			"print": "Print the poster",
+			"back": "Back to the share kit",
+			"printHint": "In the print dialog, choose the poster’s paper size and 100% scale, without headers or footers.",
+			"sheetLabel": "Poster preview",
+			"sheet": {
+				"wordmark": "Apercura",
+				"headlineBooking": "Book an appointment online",
+				"headlineFind": "Find me on Apercura",
+				"qrLabel": "QR code to the practitioner’s page on Apercura",
+				"scan": "Scan this code with your phone camera.",
+				"footBooking": "Free, without creating an account.",
+				"footFind": "Address, phone number and practical information of the practice."
+			}
+		},
+		"badge": {
+			"lead": "Find me on",
+			"brand": "Apercura"
 		}
 	}
 }

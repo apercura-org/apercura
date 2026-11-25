@@ -544,16 +544,24 @@
 		},
 		"claim": {
 			"heading": "È lei?",
-			"body": "Questa pagina è creata a partire dal registro pubblico. La rivendichi gratuitamente per verificarla e completarla.",
+			"body": "Questa pagina è creata a partire dal registro pubblico. La rivendichi per verificarla e completarla:",
 			"link": "Rivendicare questa pagina",
 			"claimedHeading": "Pagina gestita dal professionista",
-			"claimedBody": "Il professionista ha rivendicato questa pagina: la sua identità è stata verificata ed è lui a completarla."
+			"claimedBody": "Il professionista ha rivendicato questa pagina: la sua identità è stata verificata ed è lui a completarla.",
+			"benefits": [
+				"gratis, senza abbonamento né impegno;",
+				"la sua foto, le sue tariffe e le lingue parlate;",
+				"la prenotazione online, se lo desidera;",
+				"le statistiche delle visite alla sua pagina;",
+				"un kit di condivisione: link, codice QR e locandina."
+			],
+			"contactLink": "Non ha la carta CPS? Ci contatti",
+			"optOutLink": "È il titolare di questa pagina e non desidera comparire pubblicamente? È qui"
 		},
 		"report": {
 			"heading": "Qualcosa non va?",
 			"body": "Se un indirizzo, un numero di telefono o un nome è errato, ci dica come correggerlo.",
-			"link": "Segnalare un errore",
-			"removalLink": "È questo professionista e si oppone a questa pagina?"
+			"link": "Segnalare un errore"
 		},
 		"ring": {
 			"heading": "Altri professionisti: {occupation} a {place}"
@@ -885,7 +893,8 @@
 				"heading": "Segnalazioni e richieste di rimozione",
 				"body": [
 					"Dati: il messaggio, l’indirizzo e-mail di contatto se fornito e, per una richiesta di rimozione, la pagina interessata. Il testo libero è cifrato.",
-					"Finalità: correggere gli errori segnalati e dare seguito alle opposizioni. Basi giuridiche: il legittimo interesse a pubblicare informazioni esatte (articolo 6.1.f) e il diritto di opposizione (articolo 21). Durata: il tempo necessario per gestire la richiesta; poi una segnalazione è cancellata 6 mesi dopo la sua chiusura e una richiesta di rimozione un anno dopo la decisione; dopo un’opposizione è conservato solo il numero RPPS della pagina, perché non sia mai ripubblicata."
+					"Finalità: correggere gli errori segnalati e dare seguito alle opposizioni. Basi giuridiche: il legittimo interesse a pubblicare informazioni esatte (articolo 6.1.f) e il diritto di opposizione (articolo 21). Durata: il tempo necessario per gestire la richiesta; poi una segnalazione è cancellata 6 mesi dopo la sua chiusura e una richiesta di rimozione un anno dopo la decisione; dopo un’opposizione è conservato solo il numero RPPS della pagina, perché non sia mai ripubblicata.",
+					"Richieste «Sono questo professionista»: il nome, l’indirizzo e-mail professionale, il telefono se indicato, il messaggio e la pagina interessata, cifrati. Finalità: aiutare un professionista che non può rivendicare la sua pagina online. Base giuridica: il legittimo interesse di mantenere l’elenco aggiornato con i professionisti interessati (articolo 6.1.f). Durata: 12 mesi dopo l’ultimo scambio."
 				]
 			},
 			"security": {
@@ -916,7 +925,8 @@
 			"cookies": {
 				"heading": "Cookie",
 				"body": [
-					"Vengono installati solo cookie strettamente necessari al servizio: la sessione dei professionisti connessi, la lingua scelta e un cookie che limita una prenotazione in corso a un solo browser (24 ore). Nessun cookie pubblicitario o di misurazione dell’audience, nessun tracker: non è quindi necessario alcun banner di consenso."
+					"Vengono installati solo cookie strettamente necessari al servizio: la sessione dei professionisti connessi, la lingua scelta e un cookie che limita una prenotazione in corso a un solo browser (24 ore). Nessun cookie pubblicitario o di misurazione dell’audience, nessun tracker: non è quindi necessario alcun banner di consenso.",
+					"Statistiche delle pagine rivendicate: ogni visita aggiunge uno al totale del giorno della pagina, senza cookie né identificativo; nessun indirizzo IP e nessun browser viene registrato, e i browser che chiedono di non essere tracciati (Global Privacy Control, Do Not Track) non sono contati. Solo il titolare della pagina vede questi totali, conservati 13 mesi."
 				]
 			},
 			"rights": {
@@ -1958,7 +1968,10 @@
 				"today": "Oggi",
 				"agenda": "Agenda",
 				"team": "Team",
-				"menu": "Menu"
+				"menu": "Menu",
+				"stats": "Statistiche",
+				"share": "Condividere",
+				"adminContacts": "Richieste di contatto"
 			},
 			"practicesHeading": "I suoi studi",
 			"columns": {
@@ -1983,7 +1996,11 @@
 			"agendaLink": "Aprire l’agenda di oggi",
 			"invitationsHeading": "Inviti",
 			"invitationBody": "{practice} la invita a unirsi al suo team.",
-			"invitationLink": "Rispondere all’invito"
+			"invitationLink": "Rispondere all’invito",
+			"pageHeading": "La sua pagina",
+			"pageSummary": "{views, plural, =0 {Nessuna visita} one {# visita} many {# visite} other {# visite}} negli ultimi 30 giorni; pagina completata al {score}%.",
+			"statsLink": "Vedere le statistiche e ciò che manca",
+			"shareLink": "Condividere la pagina: link, codice QR, locandina"
 		},
 		"roles": {
 			"owner": "Titolare",
@@ -2063,7 +2080,7 @@
 			"title": "Abbiamo ricevuto la sua richiesta di rimozione",
 			"body": [
 				"La pagina è nascosta da ora: non è più mostrata, indicizzata né elencata.",
-				"Verifichiamo la richiesta, poi eliminiamo la pagina. Una pagina eliminata non ricompare con la successiva importazione del registro."
+				"Verifichiamo la richiesta e le rispondiamo entro un mese al massimo. Se viene confermata, la pagina è eliminata; una pagina eliminata non ricompare con la successiva importazione del registro."
 			]
 		},
 		"removalConfirmed": {
@@ -2094,6 +2111,33 @@
 				"Questo invito è valido per 48 ore.",
 				"Non se lo aspettava? Ignori questa e-mail: non succede nulla senza di lei."
 			]
+		},
+		"contactReceived": {
+			"subject": "Abbiamo ricevuto la sua richiesta",
+			"title": "Abbiamo ricevuto la sua richiesta",
+			"body": [
+				"Buongiorno,",
+				"abbiamo ricevuto la sua richiesta relativa a una pagina dell’elenco Apercura. Un membro del team la ricontatta per verificare la sua identità e aiutarla a rivendicare la pagina.",
+				"Se non ha inviato lei questa richiesta, ignori questa e-mail: nessuna pagina e nessun account è stato modificato."
+			]
+		},
+		"adminClaims": {
+			"subject": "{count, plural, one {# rivendicazione da esaminare} many {# rivendicazioni da esaminare} other {# rivendicazioni da esaminare}}",
+			"title": "{count, plural, one {Una rivendicazione attende una decisione} many {# rivendicazioni attendono una decisione} other {# rivendicazioni attendono una decisione}}",
+			"body": [
+				"{count, plural, one {Una rivendicazione è stata inviata} many {# rivendicazioni sono state inviate} other {# rivendicazioni sono state inviate}} per l’esame dall’ultimo avviso.",
+				"Il dettaglio è nella coda dell’area professionisti, dietro il suo secondo fattore."
+			],
+			"action": "Aprire le rivendicazioni"
+		},
+		"adminContactRequests": {
+			"subject": "{count, plural, one {# richiesta «Sono questo professionista»} many {# richieste «Sono questo professionista»} other {# richieste «Sono questo professionista»}}",
+			"title": "{count, plural, one {Una richiesta di contatto attende una risposta} many {# richieste di contatto attendono una risposta} other {# richieste di contatto attendono una risposta}}",
+			"body": [
+				"{count, plural, one {Un professionista che non può rivendicare la sua pagina chiede} many {# professionisti che non possono rivendicare la loro pagina chiedono} other {# professionisti che non possono rivendicare la loro pagina chiedono}} di essere ricontattati, dall’ultimo avviso.",
+				"I loro recapiti, cifrati, si leggono nella coda dell’area professionisti."
+			],
+			"action": "Aprire le richieste"
 		}
 	},
 	"Profile": {
@@ -2181,7 +2225,9 @@
 			"searchHint": "Può anche cercare la sua pagina per nome:",
 			"searchLink": "cercare nell’elenco",
 			"howHeading": "Come verifichiamo che sia lei",
-			"factorNote": "Il suo account ha già un secondo fattore: è obbligatorio prima di qualsiasi rivendicazione e da quel momento protegge la sua pagina."
+			"factorNote": "Il suo account ha già un secondo fattore: è obbligatorio prima di qualsiasi rivendicazione e da quel momento protegge la sua pagina.",
+			"contactLink": "Non ha la carta CPS? Ci contatti",
+			"optOutLink": "È il titolare di questa pagina e non desidera comparire pubblicamente? È qui"
 		},
 		"methods": {
 			"psc": {
@@ -2353,7 +2399,10 @@
 				"lead": "La pubblicazione mostra sulla sua pagina pubblica la presentazione, le lingue, gli onorari e le informazioni pratiche. Può modificarli o nasconderli in qualsiasi momento.",
 				"already": "La sua pagina è pubblicata. Ogni modifica che salva è subito online.",
 				"edit": "Modificare la mia pagina",
-				"action": "Pubblicare la mia pagina"
+				"action": "Pubblicare la mia pagina",
+				"shareLead": "Faccia conoscere la sua pagina: un link, un codice QR e una locandina per la sala d’attesa sono pronti.",
+				"shareLink": "Aprire il kit di condivisione",
+				"statsLink": "Vedere le statistiche della pagina"
 			}
 		}
 	},
@@ -2591,6 +2640,43 @@
 			},
 			"resolve": "Segnare come gestito",
 			"dismiss": "Chiudere"
+		},
+		"contacts": {
+			"metaTitle": "Richieste di contatto · Amministrazione · Apercura",
+			"title": "Richieste «Sono questo professionista»",
+			"lead": "I professionisti che non possono rivendicare la loro pagina online. Risponda dalla sua casella di posta, poi annoti a che punto è la richiesta.",
+			"failed": "L’azione non è riuscita. Ricarichi la pagina e riprovi.",
+			"auditNote": "Leggere una richiesta la decifra; viene annotato nel registro di audit. Le richieste sono eliminate 12 mesi dopo l’ultima modifica.",
+			"tabsLabel": "Stato delle richieste",
+			"tabs": {
+				"new": "Nuove ({count})",
+				"contacted": "Ricontattate ({count})",
+				"closed": "Chiuse ({count})"
+			},
+			"empty": {
+				"new": "Nessuna nuova richiesta",
+				"contacted": "Nessuna richiesta in corso",
+				"closed": "Nessuna richiesta chiusa"
+			},
+			"caption": "Richieste di contatto",
+			"columns": {
+				"page": "Pagina",
+				"received": "Ricevuta il",
+				"actions": "Azioni"
+			},
+			"claimedNow": "Rivendicata nel frattempo",
+			"fields": {
+				"name": "Nome",
+				"email": "E-mail professionale",
+				"phone": "Telefono",
+				"message": "Messaggio"
+			},
+			"read": "Leggere",
+			"move": {
+				"new": "Rimettere tra le nuove",
+				"contacted": "Segnare come ricontattata",
+				"closed": "Chiudere"
+			}
 		}
 	},
 	"Gdpr": {
@@ -2630,7 +2716,7 @@
 			"title": "Chiedere la rimozione di questa pagina",
 			"lead": "In base all’articolo 21 del GDPR, può opporsi alla pubblicazione della sua pagina. Viene nascosta non appena riceviamo la richiesta, poi eliminata dopo una breve verifica.",
 			"doneTitle": "La pagina è nascosta",
-			"doneBody": "Non è più mostrata, indicizzata né elencata. Verifichiamo la richiesta e confermiamo via e-mail, poi eliminiamo la pagina definitivamente.",
+			"doneBody": "Non è più mostrata, indicizzata né elencata. Verifichiamo la richiesta e le rispondiamo via e-mail entro un mese al massimo. Se viene confermata, la pagina è eliminata definitivamente e non ricompare con gli aggiornamenti del registro.",
 			"contact": "La sua e-mail",
 			"contactHint": "Per confermare la richiesta con lei. È cifrato e non viene usato per nient’altro.",
 			"message": "Messaggio (facoltativo)",
@@ -2639,10 +2725,44 @@
 			"privacy": "Una pagina eliminata non ricompare con la successiva importazione del registro.",
 			"submit": "Nascondere e rimuovere la pagina",
 			"claimedTitle": "Questa pagina è gestita dal suo professionista",
-			"claimedBody": "Solo il suo titolare può rimuoverla, dall’editor della pagina nel proprio spazio.",
-			"claimedLink": "Accedere all’area professionisti",
+			"claimedBody": "Solo il suo titolare può rimuoverla, dall’editor della pagina nel proprio spazio: la pagina scompare allora subito e non ricompare con gli aggiornamenti del registro.",
+			"claimedLink": "Rimuovere la mia pagina dal mio spazio",
 			"alreadyTitle": "È in corso la verifica di una richiesta di rimozione",
 			"alreadyBody": "La pagina è già nascosta."
+		},
+		"contact": {
+			"metaTitle": "Sono questo professionista · Apercura",
+			"title": "Sono questo professionista",
+			"lead": "Non può rivendicare la sua pagina con Pro Santé Connect, l’e-mail del registro o un documento? Ci lasci i suoi recapiti: un membro del team Apercura la ricontatta per verificare la sua identità e aiutarla.",
+			"patientsTitle": "Questo modulo è riservato al professionista di questa pagina",
+			"patientsBody": "Non serve per prenotare né per contattare lo studio: per questo, usi i recapiti della pagina.",
+			"claimFirst": "Con una carta CPS o e-CPS, o l’accesso all’e-mail pubblicata nel registro, la rivendicazione è più rapida:",
+			"claimFirstLink": "rivendicare questa pagina",
+			"rpps": "Numero RPPS della pagina",
+			"rppsHint": "Quello della pagina da cui proviene. Non si può modificare.",
+			"name": "Nome e cognome",
+			"email": "La sua e-mail professionale",
+			"emailHint": "Per risponderle. Le inviamo anche una conferma di ricezione.",
+			"phone": "Il suo telefono (facoltativo)",
+			"phoneHint": "Se preferisce essere richiamato.",
+			"message": "Il suo messaggio",
+			"messageHint": "Ci dica perché la rivendicazione online non funziona per lei.",
+			"privacy": "I suoi recapiti e il suo messaggio sono cifrati, letti solo dal team Apercura per risponderle ed eliminati 12 mesi dopo l’ultimo scambio. Non indichi alcuna informazione sanitaria.",
+			"submit": "Inviare la richiesta",
+			"doneTitle": "Abbiamo ricevuto la sua richiesta",
+			"doneBody": [
+				"Un membro del team Apercura la ricontatta via e-mail o per telefono per verificare la sua identità, poi la aiuta a rivendicare la pagina.",
+				"Una conferma di ricezione è appena partita all’indirizzo indicato."
+			],
+			"claimedTitle": "Questa pagina è già gestita dal suo professionista",
+			"claimedBody": "Il suo titolare è stato verificato. Se è la sua pagina e non vi ha più accesso, apra una rivendicazione: il team la esamina.",
+			"claimedLink": "Rivendicare questa pagina",
+			"withheldTitle": "Questa pagina è nascosta",
+			"withheldBody": "È in corso la verifica di una richiesta di rimozione.",
+			"errors": {
+				"proof": "La verifica anti-robot non si è conclusa. Riprovi tra un momento.",
+				"claimed": "Questa pagina è già gestita dal suo professionista: apra una rivendicazione."
+			}
 		}
 	},
 	"Agenda": {
@@ -3156,6 +3276,116 @@
 			"ALREADY_MEMBER": "Fa già parte di questo team.",
 			"EXPIRED": "Questo invito è scaduto.",
 			"failed": "L’adesione non è riuscita. Riprovi tra un momento."
+		}
+	},
+	"Stats": {
+		"metaTitle": "Statistiche · Area professionisti · Apercura",
+		"title": "Statistiche",
+		"lead": "Le visite alla pagina di {name}, le sue prenotazioni online e ciò che le manca ancora.",
+		"summaryHeading": "In breve",
+		"summary": {
+			"views": "Visite, ultimi 30 giorni",
+			"bookings": "Prenotazioni online, ultime 12 settimane",
+			"completion": "Pagina completata"
+		},
+		"percent": "{score}%",
+		"dailyHeading": "Visite al giorno",
+		"noViews": "Nessuna visita contata negli ultimi 30 giorni. Le visite sono contate dalla rivendicazione della pagina.",
+		"chartTitle": "Visite al giorno, ultimi 30 giorni",
+		"chartSummary": "{total, plural, one {# visita} many {# visite} other {# visite}} in 30 giorni; il massimo: {max} il {day}.",
+		"dailyTableToggle": "Vedere le cifre giorno per giorno",
+		"dailyCaption": "Visite al giorno",
+		"columns": {
+			"day": "Giorno",
+			"views": "Visite",
+			"week": "Settimana",
+			"bookings": "Prenotazioni online"
+		},
+		"weeklyHeading": "Per settimana",
+		"weeklyCaption": "Visite e prenotazioni online per settimana",
+		"weekOf": "Settimana del {date}",
+		"bookingsNote": "Appuntamenti che i pazienti hanno prenotato online quella settimana, che si siano poi svolti, siano stati spostati o annullati.",
+		"checklistHeading": "Ciò che manca alla pagina",
+		"checklistLead": "{done} su {total}: pagina completata al {score}%. Una pagina completa aiuta i pazienti a sapere se possono venire.",
+		"checklist": {
+			"published": "Pagina pubblicata",
+			"photo": "Foto",
+			"bio": "Presentazione",
+			"languages": "Lingue parlate",
+			"fees": "Tariffe",
+			"paymentMethods": "Metodi di pagamento accettati",
+			"accessibility": "Accessibilità del luogo",
+			"hours": "Orari dell’agenda",
+			"booking": "Prenotazione online aperta"
+		},
+		"done": "Fatto",
+		"todo": "Da fare",
+		"fix": {
+			"editor": "Completare",
+			"agenda": "Configurare l’agenda",
+			"askOwner": "Lo configura il titolare dello studio"
+		},
+		"privacyHeading": "Come si conta",
+		"privacy": {
+			"counted": "Una visita è contata quando la pagina si apre in un browser, senza cookie né identificativo: nessun indirizzo IP, nessun browser e nessun visitatore viene registrato, solo un totale al giorno.",
+			"excluded": "I robot e le anteprime dei link non sono contati, uno stesso visitatore è contato al massimo una volta ogni mezz’ora e i browser che chiedono di non essere tracciati non sono contati affatto: le cifre sono un ordine di grandezza.",
+			"kept": "I totali giornalieri sono conservati {months} mesi, poi eliminati."
+		},
+		"shareLink": "Far conoscere la pagina: il kit di condivisione",
+		"countedSince": "Contate dal {date}, giorno in cui la sua rivendicazione è stata verificata: le visite precedenti non le vengono mostrate."
+	},
+	"Share": {
+		"metaTitle": "Condividere la mia pagina · Area professionisti · Apercura",
+		"title": "Condividere la mia pagina",
+		"lead": "Il link alla pagina di {name}, il suo codice QR, una locandina per la sala d’attesa e un badge per il suo sito.",
+		"removedTitle": "La sua pagina è rimossa",
+		"removedBody": "Non è più pubblicata: il link e il codice QR portano a una pagina non trovata finché non la ripristina.",
+		"unpublishedTitle": "La sua pagina non è ancora pubblicata",
+		"unpublishedBody": "Il link porta alla pagina del registro, senza ciò che lei ha aggiunto. La pubblichi perché pazienti e condivisioni mostrino la sua versione.",
+		"unpublishedLink": "Pubblicare dall’editor",
+		"linkHeading": "Il link della pagina",
+		"linkLead": "Per la sua firma e-mail, il suo sito o un messaggio ai suoi pazienti.",
+		"linkLabel": "Indirizzo della pagina",
+		"copy": "Copiare",
+		"copied": "Copiato negli appunti.",
+		"copyFailed": "Copia non riuscita: selezioni il testo e lo copi a mano.",
+		"qrHeading": "Il codice QR",
+		"qrLead": "I pazienti lo inquadrano con la fotocamera del telefono per aprire la pagina. File pronti da stampare, in nero su bianco.",
+		"qrLabel": "Codice QR verso {url}",
+		"downloadSvg": "Scaricare in SVG",
+		"downloadPng": "Scaricare in PNG",
+		"qrHint": "Mantenga il margine bianco attorno al codice ({margin} moduli) e lo stampi largo almeno 2 cm.",
+		"badgeHeading": "Il badge per il suo sito",
+		"badgeLead": "Un link «Mi trovi su Apercura» da incollare sul suo sito. Un’immagine e un link, nient’altro: nessuno script, nessun cookie, nessun tracciamento dei visitatori.",
+		"badgePreview": "Anteprima",
+		"badgeLabel": "Codice HTML del badge",
+		"badgeHint": "Lo incolli nella pagina del suo sito dove deve comparire il badge.",
+		"posterHeading": "La locandina per la sala d’attesa",
+		"posterLead": "Una pagina da stampare con il suo nome e il codice QR. Si apre in anteprima; la stampi dal suo browser.",
+		"poster": {
+			"a4": "Locandina A4",
+			"a5": "Locandina A5",
+			"metaTitle": "Locandina da stampare · Area professionisti · Apercura",
+			"title": "Locandina da stampare",
+			"lead": "Controlli l’anteprima, poi stampi. La locandina è in francese, la lingua dei pazienti che la leggeranno.",
+			"formatsLabel": "Formato della locandina",
+			"print": "Stampare la locandina",
+			"back": "Torna al kit di condivisione",
+			"printHint": "Nella finestra di stampa, scelga il formato carta della locandina e la scala al 100%, senza intestazioni né piè di pagina.",
+			"sheetLabel": "Anteprima della locandina",
+			"sheet": {
+				"wordmark": "Apercura",
+				"headlineBooking": "Prenoti online",
+				"headlineFind": "Mi trovi su Apercura",
+				"qrLabel": "Codice QR verso la pagina del professionista su Apercura",
+				"scan": "Inquadri questo codice con la fotocamera del telefono.",
+				"footBooking": "Gratis, senza creare un account.",
+				"footFind": "Indirizzo, telefono e informazioni pratiche dello studio."
+			}
+		},
+		"badge": {
+			"lead": "Mi trovi su",
+			"brand": "Apercura"
 		}
 	}
 }

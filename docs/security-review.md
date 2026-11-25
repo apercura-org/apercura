@@ -199,6 +199,54 @@ depth, hard to exploit), **Info** (hardening, no direct impact).
     URL that sets TLS options is refused by the environment check, the jobs and the
     transport, and the app refuses to start against a server that cannot do STARTTLS.
     `SMTP_ALLOW_INSECURE=true` lifts this for a local catcher only.
+- **Owner experience (issue #92)**:
+  - _"I am this practitioner" contact requests_ (`server/contact-requests/service.ts`,
+    `trpc/routers/practitioner-contact.ts`, `directory.practitioner_contact_requests`, migration
+    0022): public, same-origin writes only, 5 an hour per client (the GDPR forms' budget), a
+    self-hosted ALTCHA proof of work burnt after one use, a honeypot, plain text with markup
+    refused. The name, professional email, phone and message are one ciphertext under the
+    platform key (AAD `practitioner_contact_requests.content_enc.<id>`, re-encrypted by
+    `rotate-keys`); the row only says which page, when and its status. A claimed page refuses
+    the form (the claim's contest is the way); nothing here grants access to a page. Only
+    platform administrators list (without the personal fields), decrypt (audited
+    `contact_request.decrypt`) and move a request (audited `contact_request.status`). The
+    requester's acknowledgment is fixed text, never what was typed, and at most 3 a day per
+    address (`emailRateLimitKey`), so the form cannot relay messages or flood a third party.
+    `jobs:tick requests` deletes a request `CONTACT_REQUEST_RETENTION_MONTHS` (12) after its
+    last change, whatever its status. The import role has no access to the table.
+  - _Admin alerts_ (`server/admin-alerts.ts`, `directory.admin_alerts`): a count and a link to
+    the queue, never a name or an address, to `ADMIN_NOTIFY_EMAIL` (default
+    `LEGAL_CONTACT_EMAIL`); one email per queue every `ADMIN_ALERT_INTERVAL_MINUTES` at most,
+    the slot taken under a row lock, so a flood of submissions sends one email. Instants travel
+    as PostgreSQL text so the high-water mark never loses its microseconds.
+  - _Page statistics_ (`server/stats/page-views.ts`, `api/page-views/[id]`,
+    `directory.page_view_days`): claimed pages only, one counter per page and day, no other
+    column. The public page stays static and cached; an empty `fetch` (`credentials: "omit"`,
+    `referrerPolicy: "no-referrer"`) counts after the response, which is the same 204 whether
+    the view counted or not. Not counted: requests without `Sec-Fetch-Site: same-origin`
+    (other sites, scripts, old browsers), prefetches, crawler, preview, monitor and headless
+    user agents, Global Privacy Control and Do Not Track, and any visitor whose address is
+    unknown (no trusted proxy). Inflation is bounded in memory only: the client address (IPv4,
+    or the IPv6 /48) becomes an HMAC under a random key held by the process and replaced every
+    day (so buckets cannot be linked to an address or across days), one view per page and
+    bucket every 30 minutes, 30 an hour per bucket; once the map is full, new buckets stop
+    counting rather than evicting the windows already there. Kept `PAGE_VIEW_RETENTION_MONTHS`
+    (13). Only the page's owner and practitioner members read them (`stats.page`, page read
+    permission), and only the views counted since their own claim was verified (a page that
+    changes hands does not show the former owner's figures); online bookings per week are
+    counts of the practice's own appointments.
+  - _Withheld pages_: the "I am this practitioner" form answers `NOT_FOUND`, like an unknown
+    page, for a page withheld by an objection.
+  - _Share kit and badge_: the QR code files are drawn in the browser (no request); the poster
+    is the browser's print of a page of the practitioner space; the badge
+    (`/badges/apercura-{locale}.svg`) is a static, prerendered SVG with no script, link, font
+    or image of its own, served with `Cross-Origin-Resource-Policy: cross-origin`, a sandboxed
+    `default-src 'none'` policy and no cookie; the snippet is a plain link and image with
+    `referrerpolicy="no-referrer"`, its attributes escaped.
+  - _Opt-out_: the "Is this you?" block and the claim page link to the GDPR art. 21 objection
+    for every page; a claimed page sends its owner to the editor's removal. Both end in a
+    `directory.suppressions` row (`FR`, `RPPS`) that every import honours (ETL integration
+    test: hidden while checked, suppressed through two imports).
 - **Rate-limit hygiene (issue #66)**:
   - _Better Auth's counters_ (`server/auth/rate-limit-storage.ts`, migration 0017): Better Auth
     keeps limiting sign-in, sign-up, verification emails, second factors and passkeys per
@@ -300,9 +348,15 @@ depth, hard to exploit), **Info** (hardening, no direct impact).
 - **Pro Santé Connect**: state, PKCE, nonce, issuer and ID-token signature
   checks are Better Auth's `genericOAuth`; only the `SubjectNameID` matching
   is ours. The ANS qualification and the pentest must exercise this flow.
-- **Platform administrators** read claim documents, reports and removal
-  requests (audited in `platform_audit_events`): a governance matter (few
-  people, second factor, review of the log).
+- **Platform administrators** read claim documents, reports, removal requests
+  and "I am this practitioner" contact requests (audited in
+  `platform_audit_events`): a governance matter (few people, second factor,
+  review of the log).
+- **Page statistics are approximate by design**: a determined script that
+  spreads over many addresses and spoofs a browser can still add views
+  (bounded per address); the figures are shown as an order of
+  magnitude, never used to rank pages. A restart of the process forgets the
+  in-memory limits.
 - **Keys** live in environment variables of the host; `BLIND_INDEX_KEY`
   cannot be rotated without rebuilding the indexes. Backups keep purged data
   until their own expiry.

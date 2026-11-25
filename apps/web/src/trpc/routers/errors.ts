@@ -1,5 +1,6 @@
 import { TRPCError } from "@trpc/server";
 import { ClaimError } from "~/server/claims/service";
+import { ContactRequestError } from "~/server/contact-requests/service";
 import { GdprError } from "~/server/gdpr/service";
 
 const CODE_FOR: Record<ClaimError["code"], TRPCError["code"]> = {
@@ -27,7 +28,7 @@ export async function service<T>(run: () => Promise<T>): Promise<T> {
 		if (error instanceof ClaimError) {
 			throw new TRPCError({ code: CODE_FOR[error.code], message: error.code, cause: error });
 		}
-		if (error instanceof GdprError) {
+		if (error instanceof GdprError || error instanceof ContactRequestError) {
 			throw new TRPCError({
 				code: error.code === "NOT_FOUND" ? "NOT_FOUND" : "CONFLICT",
 				message: error.code,

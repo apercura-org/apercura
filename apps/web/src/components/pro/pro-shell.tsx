@@ -47,7 +47,11 @@ export async function ProShell({
 				]
 			: []),
 		...(context && context.pages.length > 0
-			? [{ href: PRO_ROUTES.pageEditor, label: t("app.nav.page") }]
+			? [
+					{ href: PRO_ROUTES.pageEditor, label: t("app.nav.page") },
+					{ href: PRO_ROUTES.stats, label: t("app.nav.stats") },
+					{ href: PRO_ROUTES.share, label: t("app.nav.share") },
+				]
 			: []),
 		...(context?.practice?.isOwner ? [{ href: PRO_ROUTES.team, label: t("app.nav.team") }] : []),
 		{ href: PRO_ROUTES.security, label: t("app.nav.security") },
@@ -55,6 +59,7 @@ export async function ProShell({
 			? [
 					{ href: PRO_ROUTES.adminClaims, label: t("app.nav.adminClaims") },
 					{ href: PRO_ROUTES.adminReports, label: t("app.nav.adminReports") },
+					{ href: PRO_ROUTES.adminContacts, label: t("app.nav.adminContacts") },
 				]
 			: []),
 	];

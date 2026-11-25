@@ -59,7 +59,11 @@ const nextConfig: NextConfig = {
 			.map((locale) => LOCALE_PREFIXES[locale].slice(1));
 		const notIndexed = `:prefix(${unindexed.join("|")})`;
 		const anyPrefix = `:prefix(${LOCALE_SEGMENTS.join("|")})`;
-		const forms = ["/praticien/[slug]/signaler", "/praticien/[slug]/retrait"] as const;
+		const forms = [
+			"/praticien/[slug]/signaler",
+			"/praticien/[slug]/retrait",
+			"/praticien/[slug]/c-est-moi",
+		] as const;
 		return [
 			{ source: "/:path*", headers: security },
 			{ source: "/api/:path((?!admin/claim-documents/).*)", headers: api },

@@ -2,10 +2,11 @@
  * Scheduled jobs, run by the host's scheduler (same image as the app):
  *
  *   bun run jobs:tick            expirations, reminders, outbox, closed practices, next free
- *                                slots, purges, retention and expired rate-limit counters
+ *                                slots, purges, retention, admin alerts and expired rate-limit
+ *                                counters
  *   bun run jobs:tick outbox     one sub-job only (expire | reminders | outbox | closures |
- *                                next-free | purge | claim-documents | requests | rate-limits |
- *                                audit-log)
+ *                                next-free | purge | claim-documents | requests | page-views |
+ *                                admin-alerts | rate-limits | audit-log)
  *   bun run jobs:tick rotate-keys after a master key rotation, never scheduled: moves every
  *                                key and platform ciphertext to ENCRYPTION_ACTIVE_KEY
  *   bun run jobs:tick warm       the next slice of the cache warm-up (its own schedule; see
@@ -28,6 +29,8 @@ const SUB_JOBS = [
 	"claim-documents",
 	"closures",
 	"requests",
+	"page-views",
+	"admin-alerts",
 	"rate-limits",
 	"audit-log",
 	"rotate-keys",
@@ -70,6 +73,8 @@ async function main() {
 			"claim-documents": () => jobs.purgeClaimDocumentsJob(db, now()),
 			closures: () => jobs.closuresJob(db, now()),
 			requests: () => jobs.requestsJob(db, now()),
+			"page-views": () => jobs.pageViewsJob(db, now()),
+			"admin-alerts": () => jobs.adminAlertsJob(db, now()),
 			"rate-limits": () => jobs.rateLimitsJob(db, now()),
 			"audit-log": () => jobs.auditLogJob(auditDb),
 			warm: async () => {

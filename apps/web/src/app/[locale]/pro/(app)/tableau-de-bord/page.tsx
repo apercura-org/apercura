@@ -12,6 +12,7 @@ import { NO_INDEX, resolveLocale } from "~/lib/locale";
 import { PRO_ROUTES } from "~/lib/pro-routes";
 import { ORGANIZATION_ROLES, type OrganizationRole } from "~/server/auth/access";
 import { requireProAccess } from "~/server/auth/guard";
+import { getProContext } from "~/server/pro-context";
 import { caller } from "~/trpc/server";
 
 // Personal, per-request pages: they read the session and may redirect, so they
@@ -44,6 +45,11 @@ async function Home({ locale }: { locale: Locale }) {
 		(claim) => claim.status === "open" || claim.status === "in_review",
 	);
 	const ownedPage = claims.find((claim) => claim.status === "verified" && claim.ownerOrgId);
+	// The page this person may edit (owner or practitioner of its practice): its statistics.
+	const editable = (await getProContext(access.session.user.id)).pages[0];
+	const stats = editable
+		? await caller.stats.page({ organizationId: editable.organizationId }).catch(() => null)
+		: null;
 
 	return (
 		<ProShell
@@ -150,6 +156,37 @@ async function Home({ locale }: { locale: Locale }) {
 							))}
 						</tbody>
 					</table>
+				</section>
+			) : null}
+			{stats ? (
+				<section aria-labelledby="home-page" className="flex max-w-[65ch] flex-col gap-3">
+					<h2 id="home-page" className="type-title text-ink">
+						{t("pageHeading")}
+					</h2>
+					<p className="text-body text-ink">
+						{t("pageSummary", {
+							views: stats.totals.viewsLast30Days,
+							score: stats.completion.score,
+						})}
+					</p>
+					<ul className="flex flex-wrap gap-x-6 gap-y-1">
+						<li>
+							<Link
+								href={PRO_ROUTES.stats}
+								className={`${linkStyles()} inline-flex min-h-11 items-center`}
+							>
+								{t("statsLink")}
+							</Link>
+						</li>
+						<li>
+							<Link
+								href={PRO_ROUTES.share}
+								className={`${linkStyles()} inline-flex min-h-11 items-center`}
+							>
+								{t("shareLink")}
+							</Link>
+						</li>
+					</ul>
 				</section>
 			) : null}
 			{invitations.length > 0 ? (

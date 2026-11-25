@@ -96,7 +96,7 @@ describe("patient data decryption boundary", () => {
 		expect(offenders).toEqual([]);
 	});
 
-	it("opens platform-key data (claim documents, reports) from the claims and GDPR services only", () => {
+	it("opens platform-key data (claim documents, reports, contact requests) from their services only", () => {
 		const offenders = files.filter((file) => {
 			if (isTest(file) || file.startsWith(PLATFORM)) return false;
 			const text = read(file);
@@ -105,9 +105,11 @@ describe("patient data decryption boundary", () => {
 			return (
 				importsPlatform &&
 				opens &&
-				!["apps/web/src/server/claims/service.ts", "apps/web/src/server/gdpr/service.ts"].includes(
-					file,
-				)
+				![
+					"apps/web/src/server/claims/service.ts",
+					"apps/web/src/server/gdpr/service.ts",
+					"apps/web/src/server/contact-requests/service.ts",
+				].includes(file)
 			);
 		});
 		expect(offenders).toEqual([]);

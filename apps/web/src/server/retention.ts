@@ -3,6 +3,8 @@ import { sql } from "drizzle-orm";
 import { at } from "./booking/sql-time";
 import {
 	AUDIT_LOG_RETENTION,
+	CONTACT_REQUEST_RETENTION,
+	PAGE_VIEW_RETENTION,
 	REMOVAL_REQUEST_RETENTION,
 	REPORT_RETENTION,
 	retentionMonths,
@@ -17,10 +19,12 @@ import {
 const BATCH = 500;
 
 /**
- * Deletes error reports `REPORT_RETENTION_MONTHS` after they were resolved or dismissed, and
- * removal requests `REMOVAL_REQUEST_RETENTION_MONTHS` after their decision, 500 of each at a
- * time. Requests still waiting are kept. A confirmed objection keeps its effect: the
- * suppression (the RPPS only) stays as long as the directory is published.
+ * Deletes error reports `REPORT_RETENTION_MONTHS` after they were resolved or dismissed,
+ * removal requests `REMOVAL_REQUEST_RETENTION_MONTHS` after their decision, and "I am this
+ * practitioner" contact requests `CONTACT_REQUEST_RETENTION_MONTHS` after their last change
+ * (whatever their status), 500 of each at a time. Reports and removal requests still waiting are
+ * kept. A confirmed objection keeps its effect: the suppression (the RPPS only) stays as long as
+ * the directory is published.
  */
 export async function purgeClosedRequests(
 	db: Database,
@@ -29,6 +33,7 @@ export async function purgeClosedRequests(
 ) {
 	const reportMonths = retentionMonths(REPORT_RETENTION, env);
 	const removalMonths = retentionMonths(REMOVAL_REQUEST_RETENTION, env);
+	const contactMonths = retentionMonths(CONTACT_REQUEST_RETENTION, env);
 	const reports = await db.execute(sql`
 		delete from directory.reports where id in (
 			select id from directory.reports
@@ -47,7 +52,49 @@ export async function purgeClosedRequests(
 			limit ${BATCH}
 		)
 	`);
-	return { reports: reports.count ?? 0, removalRequests: removals.count ?? 0 };
+	const contacts = await db.execute(sql`
+		delete from directory.practitioner_contact_requests where id in (
+			select id from directory.practitioner_contact_requests
+			where updated_at <= ${at(nowMs)} - make_interval(months => ${contactMonths}::integer)
+			order by updated_at
+			limit ${BATCH}
+		)
+	`);
+	return {
+		reports: reports.count ?? 0,
+		removalRequests: removals.count ?? 0,
+		contactRequests: contacts.count ?? 0,
+	};
+}
+
+const PAGE_VIEW_BATCH = 5_000;
+/** Bounds one run; the next tick goes on where this one stopped. */
+const PAGE_VIEW_MAX_BATCHES = 20;
+
+/**
+ * Deletes the daily view counters of the days older than `PAGE_VIEW_RETENTION_MONTHS` (13 by
+ * default), counted in calendar days of Europe/Paris like the counters themselves.
+ */
+export async function purgePageViews(
+	db: Pick<Database, "execute">,
+	nowMs: number,
+	env: Record<string, string | undefined> = process.env,
+) {
+	const months = retentionMonths(PAGE_VIEW_RETENTION, env);
+	let total = 0;
+	for (let batch = 0; batch < PAGE_VIEW_MAX_BATCHES; batch += 1) {
+		const deleted = await db.execute(sql`
+			delete from directory.page_view_days where (practitioner_id, day) in (
+				select practitioner_id, day from directory.page_view_days
+				where day < ((${at(nowMs)} at time zone 'Europe/Paris')::date
+					- make_interval(months => ${months}::integer))::date
+				limit ${PAGE_VIEW_BATCH}
+			)
+		`);
+		total += deleted.count ?? 0;
+		if ((deleted.count ?? 0) < PAGE_VIEW_BATCH) break;
+	}
+	return { months, pageViewDays: total };
 }
 
 /**

@@ -544,16 +544,24 @@
 		},
 		"claim": {
 			"heading": "Sind Sie das?",
-			"body": "Diese Seite basiert auf dem öffentlichen Register. Beanspruchen Sie sie kostenlos, um sie zu prüfen und zu vervollständigen.",
+			"body": "Diese Seite basiert auf dem öffentlichen Register. Beanspruchen Sie sie, um sie zu prüfen und zu vervollständigen:",
 			"link": "Diese Seite beanspruchen",
 			"claimedHeading": "Von der Gesundheitsfachkraft verwaltete Seite",
-			"claimedBody": "Die Gesundheitsfachkraft hat diese Seite beansprucht; ihre Identität wurde verifiziert, und sie vervollständigt die Seite selbst."
+			"claimedBody": "Die Gesundheitsfachkraft hat diese Seite beansprucht; ihre Identität wurde verifiziert, und sie vervollständigt die Seite selbst.",
+			"benefits": [
+				"kostenlos, ohne Abonnement und ohne Verpflichtung;",
+				"Ihr Foto, Ihre Honorare und die gesprochenen Sprachen;",
+				"Online-Terminbuchung, wenn Sie es wünschen;",
+				"Statistiken zu den Aufrufen Ihrer Seite;",
+				"ein Teilen-Paket: Link, QR-Code und Aushang."
+			],
+			"contactLink": "Keine CPS-Karte? Kontaktieren Sie uns",
+			"optOutLink": "Sie sind Inhaber dieser Seite und möchten nicht öffentlich erscheinen? Hier entlang"
 		},
 		"report": {
 			"heading": "Etwas ist falsch?",
 			"body": "Wenn eine Adresse, eine Telefonnummer oder ein Name falsch ist, teilen Sie uns mit, wie es richtig lautet.",
-			"link": "Fehler melden",
-			"removalLink": "Sie sind diese Gesundheitsfachkraft und widersprechen dieser Seite?"
+			"link": "Fehler melden"
 		},
 		"ring": {
 			"heading": "Weitere Gesundheitsfachkräfte: {occupation} in {place}"
@@ -885,7 +893,8 @@
 				"heading": "Fehlermeldungen und Anträge auf Entfernung",
 				"body": [
 					"Daten: die Nachricht, die Kontakt-E-Mail-Adresse, sofern angegeben, und bei einem Antrag auf Entfernung die betroffene Seite. Der Freitext wird verschlüsselt.",
-					"Zwecke: gemeldete Fehler korrigieren und Widersprüche umsetzen. Rechtsgrundlagen: das berechtigte Interesse, zutreffende Informationen zu veröffentlichen (Artikel 6 Abs. 1 lit. f), und das Widerspruchsrecht (Artikel 21). Speicherdauer: die zur Bearbeitung des Antrags nötige Zeit; danach wird eine Fehlermeldung 6 Monate nach ihrem Abschluss und ein Antrag auf Entfernung ein Jahr nach der Entscheidung gelöscht; nach einem Widerspruch wird nur die RPPS-Nummer der Seite aufbewahrt, damit sie nie wieder veröffentlicht wird."
+					"Zwecke: gemeldete Fehler korrigieren und Widersprüche umsetzen. Rechtsgrundlagen: das berechtigte Interesse, zutreffende Informationen zu veröffentlichen (Artikel 6 Abs. 1 lit. f), und das Widerspruchsrecht (Artikel 21). Speicherdauer: die zur Bearbeitung des Antrags nötige Zeit; danach wird eine Fehlermeldung 6 Monate nach ihrem Abschluss und ein Antrag auf Entfernung ein Jahr nach der Entscheidung gelöscht; nach einem Widerspruch wird nur die RPPS-Nummer der Seite aufbewahrt, damit sie nie wieder veröffentlicht wird.",
+					"Anfragen „Ich bin diese Gesundheitsfachkraft“: Name, berufliche E-Mail-Adresse, Telefonnummer, falls angegeben, Nachricht und betroffene Seite, verschlüsselt. Zweck: einer Gesundheitsfachkraft helfen, die ihre Seite nicht online beanspruchen kann. Rechtsgrundlage: das berechtigte Interesse, das Verzeichnis mit den betroffenen Fachkräften aktuell zu halten (Artikel 6.1.f). Dauer: 12 Monate nach dem letzten Austausch."
 				]
 			},
 			"security": {
@@ -916,7 +925,8 @@
 			"cookies": {
 				"heading": "Cookies",
 				"body": [
-					"Es werden nur Cookies gesetzt, die für den Dienst unbedingt erforderlich sind: die Sitzung angemeldeter Gesundheitsfachkräfte, die gewählte Sprache und ein Cookie, das eine laufende Buchung auf einen Browser beschränkt (24 Stunden). Keine Cookies für Werbung oder Reichweitenmessung, keine Tracker: Daher ist kein Einwilligungsbanner nötig."
+					"Es werden nur Cookies gesetzt, die für den Dienst unbedingt erforderlich sind: die Sitzung angemeldeter Gesundheitsfachkräfte, die gewählte Sprache und ein Cookie, das eine laufende Buchung auf einen Browser beschränkt (24 Stunden). Keine Cookies für Werbung oder Reichweitenmessung, keine Tracker: Daher ist kein Einwilligungsbanner nötig.",
+					"Statistiken beanspruchter Seiten: Jeder Aufruf erhöht die Tagessumme der Seite um eins, ohne Cookie und ohne Kennung; keine IP-Adresse und kein Browser wird gespeichert, und Browser, die nicht verfolgt werden möchten (Global Privacy Control, Do Not Track), werden nicht gezählt. Nur der Inhaber der Seite sieht diese Summen, die 13 Monate aufbewahrt werden."
 				]
 			},
 			"rights": {
@@ -1958,7 +1968,10 @@
 				"today": "Heute",
 				"agenda": "Terminkalender",
 				"team": "Team",
-				"menu": "Menü"
+				"menu": "Menü",
+				"stats": "Statistiken",
+				"share": "Teilen",
+				"adminContacts": "Kontaktanfragen"
 			},
 			"practicesHeading": "Ihre Praxen",
 			"columns": {
@@ -1983,7 +1996,11 @@
 			"agendaLink": "Heutigen Terminkalender öffnen",
 			"invitationsHeading": "Einladungen",
 			"invitationBody": "{practice} lädt Sie ein, dem Team beizutreten.",
-			"invitationLink": "Auf die Einladung antworten"
+			"invitationLink": "Auf die Einladung antworten",
+			"pageHeading": "Ihre Seite",
+			"pageSummary": "{views, plural, =0 {Keine Aufrufe} one {# Aufruf} other {# Aufrufe}} in den letzten 30 Tagen; Seite zu {score} % vollständig.",
+			"statsLink": "Statistiken und fehlende Angaben ansehen",
+			"shareLink": "Seite teilen: Link, QR-Code, Aushang"
 		},
 		"roles": {
 			"owner": "Inhaber",
@@ -2063,7 +2080,7 @@
 			"title": "Ihr Antrag auf Entfernung ist eingegangen",
 			"body": [
 				"Die Seite ist ab sofort ausgeblendet: Sie wird nicht mehr angezeigt, indexiert oder aufgeführt.",
-				"Wir prüfen den Antrag und löschen dann die Seite. Eine gelöschte Seite erscheint beim nächsten Import des Registers nicht wieder."
+				"Wir prüfen den Antrag und antworten innerhalb von höchstens einem Monat. Wird er bestätigt, wird die Seite gelöscht; eine gelöschte Seite kehrt mit dem nächsten Import des Registers nicht zurück."
 			]
 		},
 		"removalConfirmed": {
@@ -2094,6 +2111,33 @@
 				"Diese Einladung ist 48 Stunden gültig.",
 				"Sie haben das nicht erwartet? Ignorieren Sie diese E-Mail: Ohne Sie geschieht nichts."
 			]
+		},
+		"contactReceived": {
+			"subject": "Ihre Anfrage ist eingegangen",
+			"title": "Ihre Anfrage ist eingegangen",
+			"body": [
+				"Guten Tag,",
+				"wir haben Ihre Anfrage zu einer Seite des Apercura-Verzeichnisses erhalten. Ein Mitglied des Teams meldet sich, um Ihre Identität zu prüfen und Ihnen bei der Beanspruchung der Seite zu helfen.",
+				"Wenn Sie diese Anfrage nicht gesendet haben, ignorieren Sie diese E-Mail: Keine Seite und kein Konto wurde geändert."
+			]
+		},
+		"adminClaims": {
+			"subject": "{count, plural, one {# Beanspruchung zu prüfen} other {# Beanspruchungen zu prüfen}}",
+			"title": "{count, plural, one {Eine Beanspruchung wartet auf eine Entscheidung} other {# Beanspruchungen warten auf eine Entscheidung}}",
+			"body": [
+				"{count, plural, one {Eine Beanspruchung wurde} other {# Beanspruchungen wurden}} seit der letzten Benachrichtigung zur Prüfung eingereicht.",
+				"Die Einzelheiten stehen in der Warteschlange des Bereichs für Gesundheitsfachkräfte, hinter Ihrem zweiten Faktor."
+			],
+			"action": "Beanspruchungen öffnen"
+		},
+		"adminContactRequests": {
+			"subject": "{count, plural, one {# Anfrage „Ich bin diese Gesundheitsfachkraft“} other {# Anfragen „Ich bin diese Gesundheitsfachkraft“}}",
+			"title": "{count, plural, one {Eine Kontaktanfrage wartet auf eine Antwort} other {# Kontaktanfragen warten auf eine Antwort}}",
+			"body": [
+				"{count, plural, one {Eine Gesundheitsfachkraft, die ihre Seite nicht beanspruchen kann, bittet} other {# Gesundheitsfachkräfte, die ihre Seite nicht beanspruchen können, bitten}} seit der letzten Benachrichtigung um Rückmeldung.",
+				"Ihre verschlüsselten Kontaktdaten lassen sich in der Warteschlange des Bereichs für Gesundheitsfachkräfte lesen."
+			],
+			"action": "Anfragen öffnen"
 		}
 	},
 	"Profile": {
@@ -2181,7 +2225,9 @@
 			"searchHint": "Sie können Ihre Seite auch über den Namen suchen:",
 			"searchLink": "das Verzeichnis durchsuchen",
 			"howHeading": "Wie wir prüfen, dass Sie es sind",
-			"factorNote": "Ihr Konto hat bereits einen zweiten Faktor: Er ist vor jeder Beanspruchung erforderlich und schützt Ihre Seite von da an."
+			"factorNote": "Ihr Konto hat bereits einen zweiten Faktor: Er ist vor jeder Beanspruchung erforderlich und schützt Ihre Seite von da an.",
+			"contactLink": "Keine CPS-Karte? Kontaktieren Sie uns",
+			"optOutLink": "Sie sind Inhaber dieser Seite und möchten nicht öffentlich erscheinen? Hier entlang"
 		},
 		"methods": {
 			"psc": {
@@ -2353,7 +2399,10 @@
 				"lead": "Mit der Veröffentlichung werden Ihre Vorstellung, Sprachen, Honorare und praktischen Informationen auf Ihrer öffentlichen Seite angezeigt. Sie können sie jederzeit ändern oder ausblenden.",
 				"already": "Ihre Seite ist veröffentlicht. Jede gespeicherte Änderung ist sofort online.",
 				"edit": "Meine Seite bearbeiten",
-				"action": "Meine Seite veröffentlichen"
+				"action": "Meine Seite veröffentlichen",
+				"shareLead": "Machen Sie Ihre Seite bekannt: Ein Link, ein QR-Code und ein Aushang für das Wartezimmer stehen bereit.",
+				"shareLink": "Teilen-Paket öffnen",
+				"statsLink": "Statistiken der Seite ansehen"
 			}
 		}
 	},
@@ -2591,6 +2640,43 @@
 			},
 			"resolve": "Als erledigt markieren",
 			"dismiss": "Schließen"
+		},
+		"contacts": {
+			"metaTitle": "Kontaktanfragen · Verwaltung · Apercura",
+			"title": "Anfragen „Ich bin diese Gesundheitsfachkraft“",
+			"lead": "Gesundheitsfachkräfte, die ihre Seite nicht online beanspruchen können. Antworten Sie aus Ihrem Postfach und halten Sie dann den Stand der Anfrage fest.",
+			"failed": "Die Aktion ist fehlgeschlagen. Laden Sie die Seite neu und versuchen Sie es erneut.",
+			"auditNote": "Das Lesen einer Anfrage entschlüsselt sie; das wird im Audit-Protokoll vermerkt. Anfragen werden 12 Monate nach ihrer letzten Änderung gelöscht.",
+			"tabsLabel": "Status der Anfragen",
+			"tabs": {
+				"new": "Neu ({count})",
+				"contacted": "Kontaktiert ({count})",
+				"closed": "Abgeschlossen ({count})"
+			},
+			"empty": {
+				"new": "Keine neue Anfrage",
+				"contacted": "Keine laufende Anfrage",
+				"closed": "Keine abgeschlossene Anfrage"
+			},
+			"caption": "Kontaktanfragen",
+			"columns": {
+				"page": "Seite",
+				"received": "Eingegangen am",
+				"actions": "Aktionen"
+			},
+			"claimedNow": "Inzwischen beansprucht",
+			"fields": {
+				"name": "Name",
+				"email": "Berufliche E-Mail-Adresse",
+				"phone": "Telefon",
+				"message": "Nachricht"
+			},
+			"read": "Lesen",
+			"move": {
+				"new": "Wieder auf neu setzen",
+				"contacted": "Als kontaktiert markieren",
+				"closed": "Abschließen"
+			}
 		}
 	},
 	"Gdpr": {
@@ -2630,7 +2716,7 @@
 			"title": "Entfernung dieser Seite beantragen",
 			"lead": "Nach Artikel 21 DSGVO können Sie der Veröffentlichung Ihrer Seite widersprechen. Sie wird ausgeblendet, sobald wir den Antrag erhalten, und nach einer kurzen Prüfung gelöscht.",
 			"doneTitle": "Die Seite ist ausgeblendet",
-			"doneBody": "Sie wird nicht mehr angezeigt, indexiert oder aufgeführt. Wir prüfen den Antrag, bestätigen per E-Mail und löschen die Seite dann endgültig.",
+			"doneBody": "Sie wird nicht mehr angezeigt, indexiert oder aufgeführt. Wir prüfen den Antrag und antworten per E-Mail innerhalb von höchstens einem Monat. Wird er bestätigt, wird die Seite endgültig gelöscht und kehrt mit den Aktualisierungen des Registers nicht zurück.",
 			"contact": "Ihre E-Mail-Adresse",
 			"contactHint": "Um den Antrag mit Ihnen abzuklären. Diese Angabe wird verschlüsselt und für nichts anderes verwendet.",
 			"message": "Nachricht (optional)",
@@ -2639,10 +2725,44 @@
 			"privacy": "Eine gelöschte Seite erscheint beim nächsten Import des Registers nicht wieder.",
 			"submit": "Seite ausblenden und entfernen",
 			"claimedTitle": "Diese Seite wird von ihrer Gesundheitsfachkraft verwaltet",
-			"claimedBody": "Nur ihr Inhaber kann sie entfernen, über den Seiteneditor in seinem Bereich.",
-			"claimedLink": "Im Bereich für Gesundheitsfachkräfte anmelden",
+			"claimedBody": "Nur ihr Inhaber kann sie entfernen, im Seiten-Editor seines Bereichs: Die Seite verschwindet dann sofort und kehrt mit den Aktualisierungen des Registers nicht zurück.",
+			"claimedLink": "Meine Seite in meinem Bereich entfernen",
 			"alreadyTitle": "Ein Antrag auf Entfernung wird geprüft",
 			"alreadyBody": "Die Seite ist bereits ausgeblendet."
+		},
+		"contact": {
+			"metaTitle": "Ich bin diese Gesundheitsfachkraft · Apercura",
+			"title": "Ich bin diese Gesundheitsfachkraft",
+			"lead": "Sie können Ihre Seite weder mit Pro Santé Connect noch über die E-Mail-Adresse des Registers oder einen Nachweis beanspruchen? Hinterlassen Sie uns Ihre Kontaktdaten: Ein Mitglied des Apercura-Teams meldet sich, um Ihre Identität zu prüfen und Ihnen zu helfen.",
+			"patientsTitle": "Dieses Formular ist nur für die Gesundheitsfachkraft dieser Seite",
+			"patientsBody": "Es dient nicht der Terminbuchung oder der Kontaktaufnahme mit der Praxis: Nutzen Sie dafür die Kontaktdaten der Seite.",
+			"claimFirst": "Mit einer CPS- oder e-CPS-Karte oder Zugang zur im Register veröffentlichten E-Mail-Adresse geht die Beanspruchung schneller:",
+			"claimFirstLink": "diese Seite beanspruchen",
+			"rpps": "RPPS-Nummer der Seite",
+			"rppsHint": "Die der Seite, von der Sie kommen. Sie lässt sich nicht ändern.",
+			"name": "Ihr Vor- und Nachname",
+			"email": "Ihre berufliche E-Mail-Adresse",
+			"emailHint": "Um Ihnen zu antworten. Wir senden Ihnen auch eine Eingangsbestätigung.",
+			"phone": "Ihre Telefonnummer (optional)",
+			"phoneHint": "Falls Sie lieber zurückgerufen werden möchten.",
+			"message": "Ihre Nachricht",
+			"messageHint": "Sagen Sie uns, warum die Online-Beanspruchung für Sie nicht funktioniert.",
+			"privacy": "Ihre Kontaktdaten und Ihre Nachricht werden verschlüsselt, nur vom Apercura-Team gelesen, um Ihnen zu antworten, und 12 Monate nach dem letzten Austausch gelöscht. Geben Sie keine Gesundheitsdaten an.",
+			"submit": "Anfrage senden",
+			"doneTitle": "Ihre Anfrage ist eingegangen",
+			"doneBody": [
+				"Ein Mitglied des Apercura-Teams meldet sich per E-Mail oder Telefon, um Ihre Identität zu prüfen, und hilft Ihnen dann, die Seite zu beanspruchen.",
+				"Eine Eingangsbestätigung wurde soeben an die angegebene Adresse gesendet."
+			],
+			"claimedTitle": "Diese Seite wird bereits von ihrer Gesundheitsfachkraft verwaltet",
+			"claimedBody": "Ihr Inhaber wurde verifiziert. Wenn es Ihre Seite ist und Sie keinen Zugang mehr haben, eröffnen Sie eine Beanspruchung: Das Team prüft sie.",
+			"claimedLink": "Diese Seite beanspruchen",
+			"withheldTitle": "Diese Seite ist ausgeblendet",
+			"withheldBody": "Ein Antrag auf Entfernung wird geprüft.",
+			"errors": {
+				"proof": "Die Prüfung gegen Roboter wurde nicht abgeschlossen. Versuchen Sie es gleich noch einmal.",
+				"claimed": "Diese Seite wird bereits von ihrer Gesundheitsfachkraft verwaltet: Eröffnen Sie eine Beanspruchung."
+			}
 		}
 	},
 	"Agenda": {
@@ -3156,6 +3276,116 @@
 			"ALREADY_MEMBER": "Sie sind bereits Mitglied dieses Teams.",
 			"EXPIRED": "Diese Einladung ist abgelaufen.",
 			"failed": "Beitritt nicht möglich. Versuchen Sie es gleich erneut."
+		}
+	},
+	"Stats": {
+		"metaTitle": "Statistiken · Bereich für Gesundheitsfachkräfte · Apercura",
+		"title": "Statistiken",
+		"lead": "Die Aufrufe der Seite von {name}, ihre Online-Termine und was ihr noch fehlt.",
+		"summaryHeading": "Auf einen Blick",
+		"summary": {
+			"views": "Aufrufe, letzte 30 Tage",
+			"bookings": "Online-Termine, letzte 12 Wochen",
+			"completion": "Seite vollständig"
+		},
+		"percent": "{score} %",
+		"dailyHeading": "Aufrufe pro Tag",
+		"noViews": "In den letzten 30 Tagen wurden keine Aufrufe gezählt. Aufrufe werden ab der Beanspruchung der Seite gezählt.",
+		"chartTitle": "Aufrufe pro Tag, letzte 30 Tage",
+		"chartSummary": "{total, plural, one {# Aufruf} other {# Aufrufe}} in 30 Tagen; am meisten: {max} am {day}.",
+		"dailyTableToggle": "Zahlen Tag für Tag ansehen",
+		"dailyCaption": "Aufrufe pro Tag",
+		"columns": {
+			"day": "Tag",
+			"views": "Aufrufe",
+			"week": "Woche",
+			"bookings": "Online-Termine"
+		},
+		"weeklyHeading": "Pro Woche",
+		"weeklyCaption": "Aufrufe und Online-Termine pro Woche",
+		"weekOf": "Woche vom {date}",
+		"bookingsNote": "Termine, die Patientinnen und Patienten in dieser Woche online gebucht haben, ob sie seitdem stattgefunden haben, verschoben oder abgesagt wurden.",
+		"checklistHeading": "Was der Seite fehlt",
+		"checklistLead": "{done} von {total}: Seite zu {score} % vollständig. Eine vollständige Seite hilft Patientinnen und Patienten zu wissen, ob sie kommen können.",
+		"checklist": {
+			"published": "Seite veröffentlicht",
+			"photo": "Foto",
+			"bio": "Vorstellung",
+			"languages": "Gesprochene Sprachen",
+			"fees": "Honorare",
+			"paymentMethods": "Akzeptierte Zahlungsmittel",
+			"accessibility": "Barrierefreiheit des Ortes",
+			"hours": "Zeiten im Terminkalender",
+			"booking": "Online-Terminbuchung geöffnet"
+		},
+		"done": "Erledigt",
+		"todo": "Offen",
+		"fix": {
+			"editor": "Ergänzen",
+			"agenda": "Terminkalender einrichten",
+			"askOwner": "Wird von der Praxisinhaberin oder dem Praxisinhaber eingestellt"
+		},
+		"privacyHeading": "Wie gezählt wird",
+		"privacy": {
+			"counted": "Ein Aufruf wird gezählt, wenn die Seite in einem Browser angezeigt wird, ohne Cookie und ohne Kennung: Keine IP-Adresse, kein Browser und keine Besucherin, kein Besucher wird gespeichert, nur eine Summe pro Tag.",
+			"excluded": "Roboter und Link-Vorschauen werden nicht gezählt, dieselbe Person höchstens einmal pro halbe Stunde, und Browser, die nicht verfolgt werden möchten, gar nicht: Die Zahlen sind eine Größenordnung.",
+			"kept": "Die Tagessummen werden {months} Monate aufbewahrt und dann gelöscht."
+		},
+		"shareLink": "Die Seite bekannt machen: das Teilen-Paket",
+		"countedSince": "Gezählt seit dem {date}, dem Tag, an dem Ihre Beanspruchung verifiziert wurde: Frühere Aufrufe werden Ihnen nicht angezeigt."
+	},
+	"Share": {
+		"metaTitle": "Meine Seite teilen · Bereich für Gesundheitsfachkräfte · Apercura",
+		"title": "Meine Seite teilen",
+		"lead": "Der Link zur Seite von {name}, ihr QR-Code, ein Aushang für das Wartezimmer und ein Badge für Ihre Website.",
+		"removedTitle": "Ihre Seite ist entfernt",
+		"removedBody": "Sie ist nicht mehr veröffentlicht: Link und QR-Code führen zu einer nicht gefundenen Seite, bis Sie sie wiederherstellen.",
+		"unpublishedTitle": "Ihre Seite ist noch nicht veröffentlicht",
+		"unpublishedBody": "Der Link führt zur Seite des Registers, ohne Ihre Ergänzungen. Veröffentlichen Sie sie, damit Patientinnen, Patienten und geteilte Links Ihre Fassung zeigen.",
+		"unpublishedLink": "Im Editor veröffentlichen",
+		"linkHeading": "Der Link zur Seite",
+		"linkLead": "Für Ihre E-Mail-Signatur, Ihre Website oder eine Nachricht an Ihre Patientinnen und Patienten.",
+		"linkLabel": "Adresse der Seite",
+		"copy": "Kopieren",
+		"copied": "In die Zwischenablage kopiert.",
+		"copyFailed": "Kopieren fehlgeschlagen: Markieren Sie den Text und kopieren Sie ihn von Hand.",
+		"qrHeading": "Der QR-Code",
+		"qrLead": "Patientinnen und Patienten scannen ihn mit der Handykamera, um die Seite zu öffnen. Druckfertige Dateien, schwarz auf weiß.",
+		"qrLabel": "QR-Code zu {url}",
+		"downloadSvg": "Als SVG herunterladen",
+		"downloadPng": "Als PNG herunterladen",
+		"qrHint": "Lassen Sie den weißen Rand um den Code ({margin} Module) und drucken Sie ihn mindestens 2 cm breit.",
+		"badgeHeading": "Das Badge für Ihre Website",
+		"badgeLead": "Ein Link „Finden Sie mich auf Apercura“ zum Einfügen auf Ihrer Website. Ein Bild und ein Link, sonst nichts: kein Skript, kein Cookie, keine Verfolgung von Besuchern.",
+		"badgePreview": "Vorschau",
+		"badgeLabel": "HTML-Code des Badges",
+		"badgeHint": "Fügen Sie ihn in die Seite Ihrer Website ein, auf der das Badge erscheinen soll.",
+		"posterHeading": "Der Aushang für das Wartezimmer",
+		"posterLead": "Eine Seite zum Drucken mit Ihrem Namen und dem QR-Code. Sie öffnet sich in einer Vorschau; drucken Sie sie aus Ihrem Browser.",
+		"poster": {
+			"a4": "Aushang A4",
+			"a5": "Aushang A5",
+			"metaTitle": "Aushang zum Drucken · Bereich für Gesundheitsfachkräfte · Apercura",
+			"title": "Aushang zum Drucken",
+			"lead": "Prüfen Sie die Vorschau und drucken Sie dann. Der Aushang ist auf Französisch, der Sprache der Patientinnen und Patienten, die ihn lesen.",
+			"formatsLabel": "Format des Aushangs",
+			"print": "Aushang drucken",
+			"back": "Zurück zum Teilen-Paket",
+			"printHint": "Wählen Sie im Druckdialog das Papierformat des Aushangs und den Maßstab 100 %, ohne Kopf- und Fußzeilen.",
+			"sheetLabel": "Vorschau des Aushangs",
+			"sheet": {
+				"wordmark": "Apercura",
+				"headlineBooking": "Termine online buchen",
+				"headlineFind": "Finden Sie mich auf Apercura",
+				"qrLabel": "QR-Code zur Seite der Gesundheitsfachkraft auf Apercura",
+				"scan": "Scannen Sie diesen Code mit der Kamera Ihres Handys.",
+				"footBooking": "Kostenlos, ohne Konto.",
+				"footFind": "Adresse, Telefon und praktische Informationen der Praxis."
+			}
+		},
+		"badge": {
+			"lead": "Finden Sie mich auf",
+			"brand": "Apercura"
 		}
 	}
 }

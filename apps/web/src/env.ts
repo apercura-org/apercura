@@ -1,7 +1,10 @@
 import { z } from "zod";
 import { smtpUrlProblem } from "./server/mail/smtp-options";
 import {
+	ADMIN_ALERT_INTERVAL,
 	AUDIT_LOG_RETENTION,
+	CONTACT_REQUEST_RETENTION,
+	PAGE_VIEW_RETENTION,
 	REMOVAL_REQUEST_RETENTION,
 	REPORT_RETENTION,
 	type RetentionSetting,
@@ -76,6 +79,10 @@ const serverFields = z.object({
 	AUDIT_LOG_RETENTION_MONTHS: months(AUDIT_LOG_RETENTION),
 	REPORT_RETENTION_MONTHS: months(REPORT_RETENTION),
 	REMOVAL_REQUEST_RETENTION_MONTHS: months(REMOVAL_REQUEST_RETENTION),
+	/** "I am this practitioner" contact requests, after their last change (12 by default). */
+	CONTACT_REQUEST_RETENTION_MONTHS: months(CONTACT_REQUEST_RETENTION),
+	/** Daily view counters of claimed pages (13 by default). */
+	PAGE_VIEW_RETENTION_MONTHS: months(PAGE_VIEW_RETENTION),
 
 	S3_ENDPOINT: optionalUrl,
 	S3_BUCKET: optionalString,
@@ -141,6 +148,19 @@ const serverFields = z.object({
 	LEGAL_PUBLICATION_DIRECTOR: optionalString,
 	/** Address of every request: legal, privacy rights, accessibility feedback. */
 	LEGAL_CONTACT_EMAIL: z.email().optional(),
+	/**
+	 * Where the administrators' alerts go (a claim sent for review, an "I am this practitioner"
+	 * contact request). Falls back to LEGAL_CONTACT_EMAIL; with neither, no alert is sent (the
+	 * queues in the practitioner space still list everything).
+	 */
+	ADMIN_NOTIFY_EMAIL: z.email().optional(),
+	/** At most one alert per queue in this many minutes (15 by default, 1 to 1440). */
+	ADMIN_ALERT_INTERVAL_MINUTES: z.coerce
+		.number()
+		.int()
+		.min(ADMIN_ALERT_INTERVAL.min)
+		.max(ADMIN_ALERT_INTERVAL.max)
+		.default(ADMIN_ALERT_INTERVAL.fallback),
 	/** The data protection officer's contact (email or postal address). */
 	LEGAL_DPO_CONTACT: optionalString,
 	/** The host of the whole production (falls back to PUBLIC_HDS_HOST). */
