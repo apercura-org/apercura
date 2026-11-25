@@ -7,7 +7,7 @@ open data (RPPS / Annuaire Santé), and gives every practitioner a free online b
 
 - **Free** for practitioners and patients.
 - **Open source** (AGPL-3.0).
-- **Health data encrypted** at the application level, and built to run on an HDS-certified host in France (the official instance will say which one once it is live).
+- **Health data encrypted** at the application level, and built to run on an HDS-certified host. The official instance runs on an interim host in the European Economic Area for now, and will name its HDS-certified host only once it runs there.
 - **Run it all yourself**: self-hostable with Docker, open data import included
   ([guide](./docs/self-hosting.md)).
 

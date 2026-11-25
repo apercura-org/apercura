@@ -4,16 +4,16 @@
 >
 > Draft of 22 November 2026
 
-| Item                    | Value                                                                                               |
-| ----------------------- | --------------------------------------------------------------------------------------------------- |
-| Service                 | Apercura: public directory of health practitioners in France, with free online booking              |
-| Publisher               | {{PUBLISHER_NAME}}, {{PUBLISHER_LEGAL_FORM}}, {{PUBLISHER_ADDRESS}}, {{PUBLISHER_REGISTRATION}}     |
-| Contact                 | {{CONTACT_EMAIL}}, {{PUBLISHER_PHONE}}                                                              |
-| Data protection officer | {{DPO_NAME}}, {{DPO_CONTACT}}                                                                       |
-| Host                    | {{HOST_NAME}}, {{HOST_ADDRESS}}, {{HOST_PHONE}} (planned: Clever Cloud, HDS region `parhds`, Paris) |
-| Methodology             | CNIL PIA methodology (context, fundamental principles, risks, validation)                           |
-| Version                 | {{DPIA_VERSION}}, effective {{EFFECTIVE_DATE}}                                                      |
-| Technical basis         | Repository state of 22 November 2026; [security review](../security-review.md) (issue #31)          |
+| Item                    | Value                                                                                                            |
+| ----------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| Service                 | Apercura: public directory of health practitioners in France, with free online booking                           |
+| Publisher               | {{PUBLISHER_NAME}}, {{PUBLISHER_LEGAL_FORM}}, {{PUBLISHER_ADDRESS}}, {{PUBLISHER_REGISTRATION}}                  |
+| Contact                 | {{CONTACT_EMAIL}}, {{PUBLISHER_PHONE}}                                                                           |
+| Data protection officer | {{DPO_NAME}}, {{DPO_CONTACT}}                                                                                    |
+| Host                    | {{HOST_NAME}}, {{HOST_ADDRESS}}, {{HOST_PHONE}}: interim EEA host, not HDS-certified (planned: Clever Cloud HDS) |
+| Methodology             | CNIL PIA methodology (context, fundamental principles, risks, validation)                                        |
+| Version                 | {{DPIA_VERSION}}, effective {{EFFECTIVE_DATE}}                                                                   |
+| Technical basis         | Repository state of 22 November 2026; [security review](../security-review.md) (issue #31)                       |
 
 Related documents: [records of processing](records-of-processing.md),
 [processor agreement](processor-agreement-draft.md),
@@ -382,11 +382,12 @@ an email and tick "Je suis le praticien de cette page"; 5 requests per hour per 
 
 ### 2.8 Processors and sub-processors (art. 28)
 
-| Processor                                                | Role                                                                | Status                                                               |
-| -------------------------------------------------------- | ------------------------------------------------------------------- | -------------------------------------------------------------------- |
-| {{HOST_NAME}} (planned: Clever Cloud)                    | Hosting of app, database, storage, jobs, backups, in the HDS region | HDS contract **planned, not signed**; booking stays off until signed |
-| {{SMTP_PROVIDER}}                                        | Outgoing email                                                      | **To choose** (European provider); DPA to sign                       |
-| Alternative host (Scalingo, HDS region `osc-secnum-fr1`) | Fallback only                                                       | Not used ([deploy-scalingo](../deploy-scalingo.md))                  |
+| Processor                                                | Role                                                                | Status                                                                                 |
+| -------------------------------------------------------- | ------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
+| {{HOST_NAME}} (current interim host)                     | Hosting of app, database, storage, jobs, backups, in the EEA        | Interim host, **not HDS-certified**; booking stays off until an HDS contract is signed |
+| Planned HDS host (Clever Cloud)                          | Hosting of app, database, storage, jobs, backups, in the HDS region | HDS contract **planned, not signed**                                                   |
+| {{SMTP_PROVIDER}}                                        | Outgoing email                                                      | **To choose** (European provider); DPA to sign                                         |
+| Alternative host (Scalingo, HDS region `osc-secnum-fr1`) | Fallback only                                                       | Not used ([deploy-scalingo](../deploy-scalingo.md))                                    |
 
 The Agence du numérique en santé (Pro Santé Connect), the map tile server, the calendar
 providers and the mailbox providers are not processors of the publisher; their position
@@ -394,8 +395,9 @@ providers and the mailbox providers are not processors of the publisher; their p
 
 ### 2.9 Transfers outside the EEA
 
-None by design: production is planned entirely in France (HDS region), the SMTP provider must
-be European. Residual third parties, outside the publisher's perimeter:
+None by design: production runs on an interim host in the EEA, the planned HDS host (Clever
+Cloud, HDS region) is in the EEA too, and the SMTP provider must be European. Residual third
+parties, outside the publisher's perimeter:
 
 - the **SMTP provider** and the **patient's mailbox provider** (which may be outside the EEA,
   for example a US-based webmail chosen by the patient);
@@ -618,7 +620,7 @@ See [DPO appointment](dpo-appointment.md) and [records of processing](records-of
 
 | Id   | Action                                                                                                                                           | Owner        | Due                  | Status |
 | ---- | ------------------------------------------------------------------------------------------------------------------------------------------------ | ------------ | -------------------- | ------ |
-| A-1  | Sign the HDS hosting contract; run app, database, jobs, storage and backups in the HDS region; keys in the host's secret manager                 | {{OWNER}}    | Before booking opens | Open   |
+| A-1  | Sign the HDS hosting contract; move app, database, jobs, storage and backups to the HDS region; keys in the host's secret manager                | {{OWNER}}    | Before booking opens | Open   |
 | A-2  | External penetration test on staging with synthetic data (security review recommendation 3)                                                      | {{OWNER}}    | Before booking opens | Open   |
 | A-3  | Written breach procedure and register; processor notification target of 48 hours                                                                 | {{OWNER}}    | Before booking opens | Open   |
 | A-4  | Define retention for de-identified appointment rows, inactive accounts (reports and removal requests: done, #63; rate-limit rows: done, #66)     | {{OWNER}}    | Before booking opens | Open   |

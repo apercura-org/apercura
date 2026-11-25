@@ -89,7 +89,7 @@ and the [security review](../security-review.md):
 
 | Area           | Measures                                                                                                                                                                                                                                                                                                           |
 | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Hosting        | Production on an HDS-certified host in France (see [section 15](#15-hds-hosting)); separate staging with synthetic data only                                                                                                                                                                                       |
+| Hosting        | Production on an interim host in the EEA, not HDS-certified; booking opens to patients only on an HDS-certified host (see [section 15](#15-hds-hosting)); separate staging with synthetic data only                                                                                                                |
 | Encryption     | Patient fields encrypted in the application (AES-256-GCM) with a data key specific to the Controller's organization, wrapped by master keys; searchable fields through blind indexes keyed per organization; TLS between browsers and the application (HSTS); TLS required on the connection to the email provider |
 | Access control | Second factor for every team member; roles owner, practitioner and assistant; organization checked on every request; separate database roles for the application, the import and read-only support                                                                                                                 |
 | Traceability   | Every decryption of patient data recorded (who, when, why, which records), append-only for the application, viewable by the Controller's owner                                                                                                                                                                     |
@@ -105,10 +105,10 @@ reduced.
 1. **Prior general authorisation.** The Controller gives the Processor a general authorisation
    to engage the sub-processors listed below.
 
-   | Sub-processor     | Service                                                       | Location                  | Guarantees                                                                       |
-   | ----------------- | ------------------------------------------------------------- | ------------------------- | -------------------------------------------------------------------------------- |
-   | {{HOST_NAME}}     | Hosting of the application, database, files, jobs and backups | France ({{HOST_ADDRESS}}) | HDS certification of the host; HDS contract {{HDS_CONTRACT_REFERENCE}} (planned) |
-   | {{SMTP_PROVIDER}} | Sending of emails to patients and to the Controller's team    | {{SMTP_LOCATION}} (EEA)   | {{SMTP_DPA_REFERENCE}}                                                           |
+   | Sub-processor     | Service                                                       | Location                | Guarantees                                                                                                                   |
+   | ----------------- | ------------------------------------------------------------- | ----------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+   | {{HOST_NAME}}     | Hosting of the application, database, files, jobs and backups | EEA ({{HOST_ADDRESS}})  | Interim host, not HDS-certified; HDS-certified host and HDS contract {{HDS_CONTRACT_REFERENCE}} planned before booking opens |
+   | {{SMTP_PROVIDER}} | Sending of emails to patients and to the Controller's team    | {{SMTP_LOCATION}} (EEA) | {{SMTP_DPA_REFERENCE}}                                                                                                       |
 
 2. **Changes.** The Processor informs the Controller of any intended addition or replacement
    of a sub-processor at least {{NOTICE_PERIOD}} in advance, by email and in the application.
@@ -206,8 +206,9 @@ where required.
    processed under this agreement are hosted by a host certified for health data hosting (HDS)
    for the relevant activities, under a hosting contract that meets the requirements of that
    article.
-2. Planned host: {{HOST_NAME}}, {{HOST_ADDRESS}}, {{HOST_PHONE}} (Clever Cloud, HDS region
-   `parhds`, Paris). The HDS contract is **planned and not signed** at the date of this
+2. Current host: {{HOST_NAME}}, {{HOST_ADDRESS}}, {{HOST_PHONE}}, an interim host in the EEA
+   that is **not HDS-certified**. Planned HDS host: Clever Cloud, in its HDS region (Scalingo
+   as an alternative). The HDS contract is **planned and not signed** at the date of this
    draft; online booking is not opened to patients before it is signed and production runs
    entirely in the HDS perimeter (application, database, jobs, files, backups).
 3. Once production runs there, Apercura is described as hosted by an HDS-certified host;
