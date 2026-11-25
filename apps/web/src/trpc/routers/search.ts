@@ -1,5 +1,6 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
+import { marketOf } from "~/i18n/locales";
 import { routing } from "~/i18n/routing";
 import { suggestListings } from "~/lib/listing-index";
 import { suggestPlaces, suggestPractitioners } from "~/server/queries/search";
@@ -32,22 +33,26 @@ export const searchRouter = createTRPCRouter({
 				slug: entry.slug,
 				label: entry.label,
 			}));
-			const practitioners = input.q.length >= 2 ? await suggestPractitioners(input.q, 6) : [];
+			const practitioners =
+				input.q.length >= 2 ? await suggestPractitioners(input.q, 6, marketOf(input.locale)) : [];
 			return { listings, practitioners };
 		}),
 
 	/** "Où ?": communes, arrondissements and departments, with their department. */
-	where: publicProcedure.input(z.object({ q: query })).query(async ({ ctx, input }) => {
-		await limitSuggestions(ctx);
-		const places = input.q.length >= 2 ? await suggestPlaces(input.q, 8) : [];
-		return {
-			places: places.map((place) => ({
-				id: place.id,
-				kind: place.kind,
-				name: place.name,
-				departmentCode: place.departmentCode,
-				departmentName: place.departmentName,
-			})),
-		};
-	}),
+	where: publicProcedure
+		.input(z.object({ q: query, locale: z.enum(routing.locales).default("fr") }))
+		.query(async ({ ctx, input }) => {
+			await limitSuggestions(ctx);
+			const places =
+				input.q.length >= 2 ? await suggestPlaces(input.q, 8, marketOf(input.locale)) : [];
+			return {
+				places: places.map((place) => ({
+					id: place.id,
+					kind: place.kind,
+					name: place.name,
+					departmentCode: place.departmentCode,
+					departmentName: place.departmentName,
+				})),
+			};
+		}),
 });

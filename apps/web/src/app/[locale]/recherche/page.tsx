@@ -1,4 +1,4 @@
-import { formatPhoneFr, parseSearchQuery, type SearchQuery } from "@apercura/core";
+import { parseSearchQuery, type SearchQuery } from "@apercura/core";
 import { buttonStyles, EmptyState, linkStyles, tableStyles } from "@apercura/ui";
 import type { Metadata } from "next";
 import { hasLocale } from "next-intl";
@@ -9,11 +9,13 @@ import { PublicPage } from "~/components/public-page";
 import { ResultsMap } from "~/components/results-map";
 import { SearchForm } from "~/components/search-form";
 import { clientEnv } from "~/env";
+import { marketOf } from "~/i18n/locales";
 import { Link, redirect } from "~/i18n/navigation";
 import { type Locale, routing } from "~/i18n/routing";
 import { genderOf, getTaxonomyLabels } from "~/lib/labels";
 import { resolveListing } from "~/lib/listing-index";
 import { getMapStrings } from "~/lib/map-strings";
+import { formatPhone, localityOf } from "~/lib/practitioner-view";
 import { slotParts, slotTime } from "~/lib/slot-format";
 import {
 	matchPlaces,
@@ -66,13 +68,15 @@ type Outcome =
  * listing page, a specialty alone to its hub. Everything else is a list.
  */
 async function run(query: SearchQuery, page: number, locale: Locale): Promise<Outcome> {
-	const target = await searchRedirect(query, page);
+	const country = marketOf(locale);
+	const target = await searchRedirect(query, page, country);
 	if (target) redirect({ href: target, locale });
-	if (query.rpps) return { kind: "rpps_missing", rpps: query.rpps };
-	const listingSlug = query.who ? resolveListing(query.who) : null;
+	if (query.rpps && country === "FR") return { kind: "rpps_missing", rpps: query.rpps };
+	const listingSlug = query.who ? resolveListing(query.who, country) : null;
 	const wantsPlace = Boolean((query.where || query.postcode) && !query.near);
 	const places = wantsPlace
 		? await matchPlaces({
+				country,
 				where: query.where,
 				...(query.postcode ? { postcode: query.postcode } : {}),
 				...(query.departmentHint ? { departmentHint: query.departmentHint } : {}),
@@ -84,7 +88,7 @@ async function run(query: SearchQuery, page: number, locale: Locale): Promise<Ou
 	if (wantsPlace && places.length === 0) {
 		return {
 			kind: "unknown_place",
-			candidates: await suggestPlaces(query.where || query.postcode || "", 5),
+			candidates: await suggestPlaces(query.where || query.postcode || "", 5, country),
 		};
 	}
 	if (!query.who && !place && !query.near) return { kind: "start" };
@@ -92,6 +96,7 @@ async function run(query: SearchQuery, page: number, locale: Locale): Promise<Ou
 	return {
 		kind: "results",
 		...(await searchPractitioners({
+			country,
 			...(listingSlug ? { listingSlug } : query.who ? { name: query.who } : {}),
 			...(place ? { placeId: place.id } : {}),
 			...(query.near ? { near: query.near } : {}),
@@ -324,7 +329,7 @@ async function Results({
 			if (!result.phone) return <span className="text-ink-muted">{t("action.noPhone")}</span>;
 			return (
 				<a href={`tel:${result.phone}`} className={`${linkStyles()} tabular whitespace-nowrap`}>
-					{t("action.call", { phone: formatPhoneFr(result.phone) })}
+					{t("action.call", { phone: formatPhone(result.phone) })}
 				</a>
 			);
 		}
@@ -390,7 +395,9 @@ async function Results({
 							labels.profession(result.listingSlug ?? "", gender);
 						const address = [
 							result.addressLine,
-							[result.postcode, result.placeName].filter(Boolean).join(" "),
+							[result.postcode, localityOf(result.placeName, marketOf(locale))]
+								.filter(Boolean)
+								.join(" "),
 						]
 							.filter(Boolean)
 							.join(", ");

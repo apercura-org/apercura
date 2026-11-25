@@ -1,5 +1,4 @@
 import { landingRoute } from "@apercura/core";
-import { isListingSlug, listingHasBillingSectors } from "@apercura/core/taxonomy";
 import { linkStyles } from "@apercura/ui";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
@@ -11,10 +10,12 @@ import { JsonLd } from "~/components/json-ld";
 import { CountLinks, ListingFacts, ListingSection, ListingTitle } from "~/components/listing";
 import { PublicPage } from "~/components/public-page";
 import { Trail, type TrailItem, trailEntries } from "~/components/trail";
+import { marketOf } from "~/i18n/locales";
 import { getPathname, type Href, Link } from "~/i18n/navigation";
 import { type Locale, routing } from "~/i18n/routing";
 import { guidesForListing } from "~/lib/guides/catalog";
 import { getTaxonomyLabels, inSentence } from "~/lib/labels";
+import { isMarketListingSlug, listingFees } from "~/lib/market";
 import { placeLabel } from "~/lib/places";
 import { CONTENT_LANGUAGES, DESCRIPTION_MAX, fitText, pageMetadata, pickTitle } from "~/lib/seo";
 import { absoluteUrl, siteOrigin } from "~/lib/site-url";
@@ -43,8 +44,10 @@ async function resolve(params: Props["params"]) {
 	const { locale: requested, specialite } = await params;
 	const locale: Locale = hasLocale(routing.locales, requested) ? requested : routing.defaultLocale;
 	// Reserved first segments (praticien, annuaire, pro…) are never listings.
-	if (!isListingSlug(specialite)) notFound();
+	if (!isMarketListingSlug(locale, specialite)) notFound();
+	const country = marketOf(locale);
 	const data = await getLandingPage({
+		country,
 		listingSlug: specialite,
 		place: null,
 		isCity: false,
@@ -54,6 +57,7 @@ async function resolve(params: Props["params"]) {
 	if (decision.kind !== "page" || !data) notFound();
 	return {
 		locale,
+		country,
 		listingSlug: specialite,
 		data,
 		indexable: decision.indexable,
@@ -71,7 +75,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 		listing,
 		count,
 		occupation: inSentence(listing, locale),
-		fees: listingHasBillingSectors(listingSlug) ? "sector" : "other",
+		fees: listingFees(locale, listingSlug),
 	};
 	return pageMetadata({
 		locale,
@@ -83,7 +87,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function SpecialtyHub({ params }: Props) {
-	const { locale, listingSlug, data, href } = await resolve(params);
+	const { locale, country, listingSlug, data, href } = await resolve(params);
 	setRequestLocale(locale);
 	const t = await getTranslations({ locale, namespace: "Listing" });
 	const labels = await getTaxonomyLabels(locale);
@@ -117,7 +121,7 @@ export default async function SpecialtyHub({ params }: Props) {
 						url,
 						name: t("departmentsHeading", { listing }),
 						items: data.nearby.map((department) => ({
-							name: placeLabel(department),
+							name: placeLabel(department, country),
 							url: `${origin}${getPathname({ href: departmentHref(department.slug), locale })}`,
 						})),
 					}),
@@ -138,7 +142,7 @@ export default async function SpecialtyHub({ params }: Props) {
 						locale={locale}
 						items={data.nearby.map((department) => ({
 							key: department.id,
-							label: placeLabel(department),
+							label: placeLabel(department, country),
 							href: {
 								pathname: "/[specialite]/[dept]/[[...rest]]",
 								params: { specialite: listingSlug, dept: department.slug, rest: undefined },

@@ -24,6 +24,7 @@ import {
 } from "@apercura/db/schema";
 import { and, eq, gt, inArray, lt, ne, or, sql } from "drizzle-orm";
 import type { Executor } from "~/server/db-executor";
+import { inBookingMarket } from "./config";
 import { BookingError } from "./errors";
 import { at } from "./sql-time";
 
@@ -46,6 +47,8 @@ export async function findCalendar(
 				eq(calendars.id, calendarId),
 				scope.organizationId ? eq(calendars.organizationId, scope.organizationId) : undefined,
 				scope.openOnly ? eq(calendars.status, "open") : undefined,
+				// Public booking: only in a market that has it (never Austria).
+				scope.openOnly ? inBookingMarket() : undefined,
 			),
 		)
 		.limit(1);

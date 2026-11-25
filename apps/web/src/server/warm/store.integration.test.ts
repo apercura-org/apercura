@@ -55,7 +55,7 @@ describe.skipIf(!url)("cache warm-up cursor (database)", () => {
 		const chunks = await store.chunks();
 		for (const chunk of chunks) {
 			expect(chunk.urls).toBeGreaterThan(0);
-			const entries = await store.entries(chunk.kind, chunk.chunk);
+			const entries = await store.entries(chunk.market, chunk.kind, chunk.chunk);
 			expect(entries.length).toBeGreaterThan(0);
 			expect(entries.every((path) => path.startsWith("/"))).toBe(true);
 		}

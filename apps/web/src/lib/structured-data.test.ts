@@ -369,3 +369,58 @@ describe("page entities", () => {
 		});
 	});
 });
+
+describe("practitionerNodes for Austria", () => {
+	const place: PracticePlaceInput = {
+		siteId: 301,
+		practiceKind: "office",
+		name: "Ordination",
+		addressLine: "Fiktivgasse 1/2",
+		addressComplement: null,
+		postcode: "1090",
+		placeName: "Wien",
+		coordinates: { lat: 48.2246, lon: 16.3539 },
+		phone: "+4310000101",
+		establishmentUrl: null,
+	};
+	const austrian: PractitionerInput = {
+		...doctor,
+		url: `${ORIGIN}/at/arzt/anna-beispiel-w900001`,
+		professionCode: "ARZT",
+		rpps: "900001",
+		idScheme: "AT-WIEN",
+		country: "AT",
+		occupation: "Allgemeinmedizin",
+		listingSlug: "allgemeinmedizin",
+		places: [place],
+	};
+
+	it("publishes a doctor as an IndividualPhysician with an Austrian address and list key", () => {
+		const nodes = practitionerNodes(austrian);
+		const person = nodeOf(nodes, "IndividualPhysician");
+		expect(person.identifier).toEqual({
+			"@type": "PropertyValue",
+			propertyID: "AT-WIEN",
+			value: "900001",
+		});
+		expect(person.address).toMatchObject({ addressCountry: "AT", postalCode: "1090" });
+		expect(person.telephone).toBe("+4310000101");
+		expect(person.medicalSpecialty).toBe("https://schema.org/PrimaryCare");
+		expect(nodeOf(nodes, "PhysiciansOffice").address).toMatchObject({ addressCountry: "AT" });
+	});
+
+	it("publishes a dentist as a Dentist", () => {
+		const nodes = practitionerNodes({
+			...austrian,
+			professionCode: "ZAHNARZT",
+			listingSlug: "zahnaerzte",
+		});
+		expect(nodeOf(nodes, "Dentist").medicalSpecialty).toBe("https://schema.org/Dentistry");
+	});
+
+	it("keeps French pages on RPPS and France", () => {
+		const person = nodeOf(practitionerNodes(doctor), "IndividualPhysician");
+		expect((person.identifier as { propertyID: string }).propertyID).toBe("RPPS");
+		expect(person.address).toMatchObject({ addressCountry: "FR" });
+	});
+});

@@ -9,8 +9,13 @@
  */
 import { FRANCE_SEGMENT } from "~/i18n/locales";
 import { guidePaths } from "~/lib/guides/catalog";
-import { francePath, STATIC_PATHS } from "~/lib/sitemap-xml";
-import type { SitemapChunk, SitemapKind } from "~/server/queries/sitemap-sql";
+import { MARKET_STATIC_PATHS, marketPagePath } from "~/lib/sitemap-xml";
+import {
+	SITEMAP_MARKETS,
+	type SitemapChunk,
+	type SitemapKind,
+	type SitemapMarket,
+} from "~/server/queries/sitemap-sql";
 
 export const PAGES_UNIT = "pages";
 
@@ -29,7 +34,7 @@ export type WarmUnit = {
 	key: string;
 	rank: UnitRank;
 	/** The chunk it lists, or null for `pages`. */
-	chunk: { kind: SitemapKind; chunk: number } | null;
+	chunk: { market: SitemapMarket; kind: SitemapKind; chunk: number } | null;
 	/** URLs in the unit (the chunk's count from the sitemap index query). */
 	size: number;
 };
@@ -39,25 +44,43 @@ export type Cursor = { unit: string | null; position: number };
 const compareRank = (a: UnitRank, b: UnitRank) => a[0] - b[0] || a[1] - b[1];
 
 /** The sitemap file of a chunk, as the sitemap index lists it. */
-export const chunkFile = (kind: SitemapKind, chunk: number) =>
-	`/sitemaps/${FRANCE_SEGMENT}/${kind}-${chunk}.xml`;
+export const chunkFile = (kind: SitemapKind, chunk: number, market: SitemapMarket = "fr") =>
+	`/sitemaps/${market}/${kind}-${chunk}.xml`;
 
 /**
- * The `pages` unit: the international home, France's static pages and guides (as the
- * `pages-0.xml` sitemap lists them), then the sitemap index and every sitemap file (crawlers
- * fetch them too).
+ * The unit key of a chunk: `{kind}-{chunk}` for France (the keys of the walks before Austria
+ * opened, so a stored cursor still resumes), `{market}-{kind}-{chunk}` for another market.
+ */
+export const unitKey = (market: SitemapMarket, kind: SitemapKind, chunk: number) =>
+	market === "fr" ? `${kind}-${chunk}` : `${market}-${kind}-${chunk}`;
+
+/**
+ * The `pages` unit: the international home, every market's static pages and France's guides
+ * (as the `pages-0.xml` sitemaps list them), then the sitemap index and every sitemap file
+ * (crawlers fetch them too).
  */
 export function pagesPaths(chunks: readonly SitemapChunk[]): string[] {
 	return [
 		"/",
-		...STATIC_PATHS.map(francePath),
-		...guidePaths().map((guide) => francePath(guide.path)),
+		...SITEMAP_MARKETS.flatMap((market) =>
+			MARKET_STATIC_PATHS[market].map((path) => marketPagePath(market, path)),
+		),
+		...guidePaths().map((guide) => marketPagePath(FRANCE_SEGMENT, guide.path)),
 		"/sitemap.xml",
 		"/sitemaps/international.xml",
-		`/sitemaps/${FRANCE_SEGMENT}/pages-0.xml`,
-		...chunks.map((chunk) => chunkFile(chunk.kind, chunk.chunk)),
+		...SITEMAP_MARKETS.map((market) => `/sitemaps/${market}/pages-0.xml`),
+		...chunks.map((chunk) => chunkFile(chunk.kind, chunk.chunk, chunk.market)),
 	];
 }
+
+/**
+ * Sort key of a chunk: kinds in walk order, each kind's markets side by side (France, then
+ * Austria), so every market's listings come before any market's practitioners.
+ */
+const chunkRank = (market: SitemapMarket, kind: SitemapKind, chunk: number): UnitRank => [
+	1 + WARM_KIND_ORDER.indexOf(kind) * SITEMAP_MARKETS.length + SITEMAP_MARKETS.indexOf(market),
+	chunk,
+];
 
 /** The units of a walk, in order, from the sitemap index query. */
 export function warmUnits(chunks: readonly SitemapChunk[]): WarmUnit[] {
@@ -65,9 +88,9 @@ export function warmUnits(chunks: readonly SitemapChunk[]): WarmUnit[] {
 		.filter((chunk) => WARM_KIND_ORDER.includes(chunk.kind))
 		.map(
 			(chunk): WarmUnit => ({
-				key: `${chunk.kind}-${chunk.chunk}`,
-				rank: [1 + WARM_KIND_ORDER.indexOf(chunk.kind), chunk.chunk],
-				chunk: { kind: chunk.kind, chunk: chunk.chunk },
+				key: unitKey(chunk.market, chunk.kind, chunk.chunk),
+				rank: chunkRank(chunk.market, chunk.kind, chunk.chunk),
+				chunk: { market: chunk.market, kind: chunk.kind, chunk: chunk.chunk },
 				size: chunk.urls,
 			}),
 		)
@@ -81,10 +104,12 @@ export function warmUnits(chunks: readonly SitemapChunk[]): WarmUnit[] {
 /** The rank of a unit key, or null for a key this version does not know. */
 export function rankOf(key: string): UnitRank | null {
 	if (key === PAGES_UNIT) return [0, 0];
-	const match = /^([a-z]+)-(\d+)$/.exec(key);
-	const kind = match?.[1] as SitemapKind | undefined;
+	const match = /^(?:([a-z]{2})-)?([a-z]+)-(\d+)$/.exec(key);
+	const market = (match?.[1] ?? "fr") as SitemapMarket;
+	const kind = match?.[2] as SitemapKind | undefined;
 	if (!match || !kind || !WARM_KIND_ORDER.includes(kind)) return null;
-	return [1 + WARM_KIND_ORDER.indexOf(kind), Number(match[2])];
+	if (!SITEMAP_MARKETS.includes(market)) return null;
+	return chunkRank(market, kind, Number(match[3]));
 }
 
 /**

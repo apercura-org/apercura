@@ -2,6 +2,7 @@ import "server-only";
 
 import { LISTING_PAGE_SIZE } from "@apercura/core";
 import { cacheLife, cacheTag } from "next/cache";
+import { NOT_DEPARTMENT_CITY } from "~/lib/places";
 import { label } from "~/lib/practitioner-view";
 import { cacheTags } from "../cache-tags";
 import { getSql } from "../db";
@@ -45,10 +46,12 @@ export type LandingPage = {
 };
 
 export type LandingScope = {
+	/** Market of the page (`FR`, `AT`): listings never mix markets. */
+	country: string;
 	listingSlug: string;
-	/** Null for the France-wide specialty hub. */
+	/** Null for the market-wide specialty hub. */
 	place: PlaceRef | null;
-	/** Lyon and Marseille: the city groups its arrondissements. */
+	/** Lyon and Marseille (and, through its Bundesland, Wien): the city groups its arrondissements. */
 	isCity: boolean;
 	page: number;
 };
@@ -63,11 +66,11 @@ export async function getLandingPage(scope: LandingScope): Promise<LandingPage |
 	// Lists and counts of neighbours change with other pages: refreshed weekly at
 	// most, and at once when this listing's members change (its tag).
 	cacheLife("weeks");
-	const { listingSlug, place, isCity, page } = scope;
-	cacheTag(cacheTags.coarse.listing, cacheTags.listing(listingSlug, place?.id ?? null));
+	const { country, listingSlug, place, isCity, page } = scope;
+	cacheTag(cacheTags.coarse.listing, cacheTags.listing(listingSlug, place?.id ?? null, country));
 	const sql = getSql();
 
-	const key = `${listingSlug}:${place?.id ?? "fr"}`;
+	const key = `${listingSlug}:${place?.id ?? country.toLowerCase()}`;
 	const [landing] = await sql<LandingRow[]>`
 		SELECT id, key, practitioner_count AS "practitionerCount", indexable, payload,
 			to_char(content_updated_at AT TIME ZONE 'UTC', 'YYYY-MM-DD') AS "updatedAt"
@@ -93,11 +96,11 @@ export async function getLandingPage(scope: LandingScope): Promise<LandingPage |
 						AND NOT a.hidden AND a.practice_kind IN ('office', 'health_center', 'hospital')
 					JOIN directory.sites s ON s.id = a.site_id AND s.removed_at IS NULL
 					JOIN directory.places pl ON pl.id = s.place_id
-					WHERE p.indexable AND p.listing_slug = ${listingSlug}
+					WHERE p.indexable AND p.listing_slug = ${listingSlug} AND p.country = ${country}
 						AND (
 							s.place_id = ${placeId}
 							OR (${isCity} AND pl.parent_id = ${placeId})
-							OR pl.department_code = ${departmentCode}
+							OR (pl.department_code = ${departmentCode} AND pl.country = ${country})
 						)
 					ORDER BY p.id, a.is_primary DESC, a.id
 				)
@@ -116,18 +119,22 @@ export async function getLandingPage(scope: LandingScope): Promise<LandingPage |
 		row.addressLine = label(row.addressLine);
 	}
 
-	const nearby = await nearbyPlaces(listingSlug, place);
-	const establishments = (place ? await establishmentsOf(listingSlug, place, isCity) : []).map(
-		(item) => ({ ...item, name: label(item.name) ?? item.name }),
-	);
+	const nearby = await nearbyPlaces(country, listingSlug, place);
+	const establishments = (
+		place ? await establishmentsOf(country, listingSlug, place, isCity) : []
+	).map((item) => ({ ...item, name: label(item.name) ?? item.name }));
 	return { landing, rows, nearby, establishments };
 }
 
 /**
  * Places a listing page links to: every commune of the department (by count),
- * the nearest communes of a commune, or the departments of France.
+ * the nearest communes of a commune, or the departments of the market.
  */
-async function nearbyPlaces(listingSlug: string, place: PlaceRef | null): Promise<NearbyPlace[]> {
+async function nearbyPlaces(
+	country: string,
+	listingSlug: string,
+	place: PlaceRef | null,
+): Promise<NearbyPlace[]> {
 	const sql = getSql();
 	if (!place) {
 		return sql<NearbyPlace[]>`
@@ -135,6 +142,7 @@ async function nearbyPlaces(listingSlug: string, place: PlaceRef | null): Promis
 				lp.practitioner_count AS "practitionerCount", lp.indexable, p.slug AS "departmentSlug"
 			FROM directory.landing_pages lp
 			JOIN directory.places p ON p.id = lp.place_id AND p.kind = 'department'
+				AND p.country = ${country}
 			WHERE lp.listing_slug = ${listingSlug}
 			ORDER BY p.code
 		`;
@@ -146,9 +154,10 @@ async function nearbyPlaces(listingSlug: string, place: PlaceRef | null): Promis
 				${place.slug} AS "departmentSlug"
 			FROM directory.landing_pages lp
 			JOIN directory.places p ON p.id = lp.place_id AND p.kind IN ('commune', 'arrondissement')
-			-- The Paris city has no page of its own: its link would redirect back to this one.
+				AND p.country = ${country}
+			-- Paris and Wien have no city page of their own: the link would redirect back here.
 			WHERE lp.listing_slug = ${listingSlug} AND p.department_code = ${place.code}
-				AND p.code <> '75056'
+				AND NOT (p.country = 'FR' AND p.code = '75056') AND NOT (p.country = 'AT' AND p.code = '90001')
 			ORDER BY lp.practitioner_count DESC, p.name, p.id
 			LIMIT 40
 		`;
@@ -159,10 +168,12 @@ async function nearbyPlaces(listingSlug: string, place: PlaceRef | null): Promis
 		FROM directory.places origin
 		JOIN directory.landing_pages lp ON lp.listing_slug = ${listingSlug}
 		JOIN directory.places p ON p.id = lp.place_id AND p.kind IN ('commune', 'arrondissement')
-			AND p.id <> origin.id AND p.code <> '75056'
+			AND p.id <> origin.id AND p.country = origin.country
+			AND ${sql.unsafe(NOT_DEPARTMENT_CITY("p"))}
 			AND (origin.parent_id IS NULL OR p.id <> origin.parent_id)
 			AND (p.parent_id IS NULL OR p.parent_id <> origin.id)
-		JOIN directory.places d ON d.kind = 'department' AND d.code = p.department_code
+		JOIN directory.places d ON d.country = p.country AND d.kind = 'department'
+			AND d.code = p.department_code
 		WHERE origin.id = ${place.id} AND origin.centroid IS NOT NULL AND p.centroid IS NOT NULL
 		ORDER BY p.centroid <-> origin.centroid, p.id
 		LIMIT 8
@@ -171,6 +182,7 @@ async function nearbyPlaces(listingSlug: string, place: PlaceRef | null): Promis
 
 /** Establishments (hospitals, health centres) where the listing's practitioners work in the place. */
 async function establishmentsOf(
+	country: string,
 	listingSlug: string,
 	place: PlaceRef,
 	isCity: boolean,
@@ -185,35 +197,36 @@ async function establishmentsOf(
 			AND NOT a.hidden AND a.practice_kind IN ('hospital', 'health_center')
 		JOIN directory.sites s ON s.id = a.site_id AND s.removed_at IS NULL AND s.slug IS NOT NULL
 		JOIN directory.places pl ON pl.id = s.place_id
-		WHERE p.indexable AND p.listing_slug = ${listingSlug}
+		WHERE p.indexable AND p.listing_slug = ${listingSlug} AND p.country = ${country}
 			AND (s.place_id = ${place.id} OR (${isCity} AND pl.parent_id = ${place.id})
-				OR pl.department_code = ${departmentCode})
+				OR (pl.department_code = ${departmentCode} AND pl.country = ${country}))
 		GROUP BY s.slug, coalesce(s.finess_name, s.name)
 		ORDER BY count(DISTINCT p.id) DESC, 2, 1
 		LIMIT 12
 	`;
 }
 
-/** Listing x place pairs prerendered at build time (largest pages first). */
-export async function sampleLandingParams(limit: number) {
+/** Listing x place pairs of a market prerendered at build time (largest pages first). */
+export async function sampleLandingParams(limit: number, country = "FR") {
 	return getSql()<{ listingSlug: string; departmentSlug: string; placeSlug: string | null }[]>`
 		SELECT lp.listing_slug AS "listingSlug",
 			CASE WHEN p.kind = 'department' THEN p.slug ELSE d.slug END AS "departmentSlug",
 			CASE WHEN p.kind = 'department' THEN NULL ELSE p.slug END AS "placeSlug"
 		FROM directory.landing_pages lp
 		JOIN directory.places p ON p.id = lp.place_id
-		LEFT JOIN directory.places d ON d.kind = 'department' AND d.code = p.department_code
-		WHERE lp.indexable
+		LEFT JOIN directory.places d ON d.country = p.country AND d.kind = 'department'
+			AND d.code = p.department_code
+		WHERE lp.indexable AND lp.country = ${country}
 		ORDER BY lp.practitioner_count DESC, lp.id
 		LIMIT ${limit}
 	`;
 }
 
-/** Specialty hubs prerendered at build time. */
-export async function sampleListingSlugs(limit: number): Promise<string[]> {
+/** Specialty hubs of a market prerendered at build time. */
+export async function sampleListingSlugs(limit: number, country = "FR"): Promise<string[]> {
 	const rows = await getSql()<{ slug: string }[]>`
 		SELECT listing_slug AS slug FROM directory.landing_pages
-		WHERE place_id IS NULL AND indexable
+		WHERE place_id IS NULL AND indexable AND country = ${country}
 		ORDER BY practitioner_count DESC, listing_slug
 		LIMIT ${limit}
 	`;

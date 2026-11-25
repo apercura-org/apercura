@@ -1,4 +1,21 @@
+import { COUNTRY_ADAPTERS } from "@apercura/core/country";
+import { calendars, practitioners } from "@apercura/db/schema";
+import { inArray, type SQL, sql } from "drizzle-orm";
 import type { RateLimitRule } from "~/server/rate-limit";
+
+/**
+ * The markets whose practitioners can be booked online (the country adapters' `features.booking`):
+ * France. Austria lists its doctors without booking (docs/adr/0002-multi-country.md), so a
+ * calendar of an Austrian practitioner is never offered, even if one were opened.
+ */
+export const BOOKING_COUNTRIES: readonly string[] = Object.values(COUNTRY_ADAPTERS).flatMap(
+	(adapter) => (adapter?.features.booking ? [adapter.code] : []),
+);
+
+/** Condition on `care.calendars`: its practitioner belongs to a market with online booking. */
+export function inBookingMarket(): SQL {
+	return sql`${calendars.practitionerId} IN (SELECT ${practitioners.id} FROM ${practitioners} WHERE ${inArray(practitioners.country, [...BOOKING_COUNTRIES])})`;
+}
 
 /** Booking limits (plan §9). Kept together so tests and docs read the same numbers. */
 export const BOOKING_LIMITS = {

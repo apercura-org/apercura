@@ -112,11 +112,15 @@
 			"cta": "Meine Seite finden"
 		},
 		"tagline": "Das offene Verzeichnis und das kostenlose Buchungstool für alle Gesundheitsfachkräfte in Frankreich.",
-		"status": "In Arbeit."
+		"status": "In Arbeit.",
+		"market": {
+			"listingsHeading": "Nach Fachgebiet",
+			"placesHeading": "Nach Bundesland"
+		}
 	},
 	"International": {
 		"metaTitle": "Apercura · Offene Verzeichnisse der Gesundheitsfachkräfte",
-		"metaDescription": "Eine kostenlose, sachliche Seite für jede registrierte Gesundheitsfachkraft, aus öffentlichen Registern, Land für Land. Offen in Frankreich.",
+		"metaDescription": "Eine kostenlose, sachliche Seite für jede registrierte Gesundheitsfachkraft, aus öffentlichen Registern, Land für Land. Offen in Frankreich und Österreich.",
 		"runningHead": "Offene Verzeichnisse der Gesundheitsfachkräfte",
 		"title": "Jede Gesundheitsfachkraft, eine offene Seite",
 		"lead": "Apercura veröffentlicht eine kostenlose, sachliche Seite für jede registrierte Gesundheitsfachkraft, aus den öffentlichen Registern jedes Landes. Keine Bewertungen, keine Werbung, kein bezahltes Ranking, und der Quellcode ist offen.",
@@ -1104,6 +1108,370 @@
 			"conventionnementWording": "Vorgeschriebener Hinweis (Erlass vom 30. Mai 2018, Artikel 5)"
 		}
 	},
+	"ImpressumAt": {
+		"metaTitle": "Impressum · Apercura",
+		"metaDescription": "Impressum der österreichischen Seiten von Apercura: Diensteanbieter und Medieninhaber, Unternehmensgegenstand, grundlegende Richtung, Herausgeber und Hosting (§ 5 ECG, § 25 MedienG).",
+		"title": "Impressum",
+		"lead": "Informationen nach § 5 E-Commerce-Gesetz (ECG) und Offenlegung nach § 25 Mediengesetz (MedienG) für die österreichischen Seiten von Apercura (apercura.org/at).",
+		"sections": {
+			"provider": {
+				"heading": "Diensteanbieter und Medieninhaber",
+				"body": [
+					"Diensteanbieter (§ 5 ECG) und Medieninhaber (§ 25 MedienG) der österreichischen Seiten ist die unten genannte Stelle. Sie betreibt das Verzeichnis und ist für seinen Inhalt verantwortlich."
+				]
+			},
+			"purpose": {
+				"heading": "Unternehmensgegenstand",
+				"body": [
+					"Betrieb eines kostenlosen, werbefreien Verzeichnisses von Ärztinnen, Ärzten, Zahnärztinnen und Zahnärzten auf Grundlage offener Verwaltungsdaten, mit einem Bereich, in dem sie ihre eigene Seite ergänzen können. In Österreich werden über Apercura keine Termine gebucht."
+				]
+			},
+			"publisher": {
+				"heading": "Herausgeber und für den Inhalt verantwortlich",
+				"body": [
+					"Für die Veröffentlichungen des Medieninhabers ist die unten genannte Person verantwortlich. Für Angaben, die eine Ärztin oder ein Arzt selbst auf der eigenen Seite ergänzt, ist diese Person verantwortlich."
+				]
+			},
+			"line": {
+				"heading": "Grundlegende Richtung (§ 25 Abs. 4 MedienG)",
+				"body": [
+					"Apercura informiert sachlich und werbefrei darüber, welche Ärztinnen, Ärzte, Zahnärztinnen und Zahnärzte wo tätig sind und wie sie erreichbar sind. Die Seiten enthalten keine Bewertungen, keine Erfahrungsberichte, keine bezahlten Platzierungen und keine Werbung und führen alle in neutraler Reihenfolge an."
+				]
+			},
+			"hosting": {
+				"heading": "Hosting",
+				"body": [
+					"Die Website, ihre Datenbank und ihre Dateien werden vom unten genannten Unternehmen gehostet."
+				]
+			},
+			"liability": {
+				"heading": "Inhalt der Seiten",
+				"body": [
+					"Das Verzeichnis beruht auf den offenen Daten der Stadt Wien und der Länder Steiermark und Salzburg, die sie aus den Listen der Ärztekammern und der Zahnärztekammer übernehmen. Es kann unvollständig oder veraltet sein: Prüfen Sie die Angaben vor einem Besuch bei der Ordination. Jede Seite erklärt, wie Sie einen Fehler melden."
+				]
+			},
+			"ip": {
+				"heading": "Quellcode und Daten",
+				"body": [
+					"Der Quellcode von Apercura ist unter der Lizenz AGPL-3.0 veröffentlicht. Die Daten des Verzeichnisses werden unter der Lizenz Creative Commons Namensnennung 4.0 weiterverwendet: Die Seite „Daten und Quellen“ nennt jede Quelle mit der verlangten Namensnennung."
+				]
+			},
+			"review": {
+				"heading": "Stand dieses Textes",
+				"body": [
+					"Dieser Text ist ein Entwurf, verfasst vor der Gründung der Trägerorganisation. Er wird vor der Ankündigung der österreichischen Seiten von einer in Österreich zugelassenen Rechtsanwältin oder einem Rechtsanwalt geprüft."
+				]
+			}
+		},
+		"fields": {
+			"name": "Name",
+			"legalForm": "Rechtsform",
+			"address": "Sitz",
+			"phone": "Telefon",
+			"email": "E-Mail-Adresse",
+			"registration": "Register und Registernummer",
+			"vatId": "Umsatzsteuer-Identifikationsnummer (UID)",
+			"publisher": "Herausgeber",
+			"hostName": "Hosting-Anbieter",
+			"hostAddress": "Anschrift des Hosting-Anbieters",
+			"hostPhone": "Telefon des Hosting-Anbieters"
+		},
+		"dataLink": "Daten und Quellen"
+	},
+	"PrivacyAt": {
+		"metaTitle": "Datenschutzerklärung · Apercura",
+		"metaDescription": "Welche Daten die österreichischen Seiten von Apercura verarbeiten: Quellen, Zwecke, Rechtsgrundlagen, Speicherdauer, Empfänger und Ihre Rechte, einschließlich Widerspruch (Art. 13, 14 und 21 DSGVO).",
+		"title": "Datenschutzerklärung",
+		"lead": "Welche Daten die österreichischen Seiten von Apercura verarbeiten, woher sie stammen, wozu, wie lange und durch wen, und wie Sie Ihre Rechte ausüben (Art. 13 und 14 DSGVO).",
+		"sections": {
+			"controller": {
+				"heading": "Verantwortlicher",
+				"body": [
+					"Verantwortlicher für das Verzeichnis, die Konten der Ärztinnen und Ärzte, die Beanspruchungen und die über die Website gesendeten Anliegen ist der im Impressum genannte Medieninhaber."
+				]
+			},
+			"directory": {
+				"heading": "Verzeichnis: Daten über Ärztinnen, Ärzte, Zahnärztinnen und Zahnärzte",
+				"body": [
+					"Daten: Titel, Vor- und Nachname, Beruf und Fachrichtung, die Adresse jeder Ordination, ihre Lage und in Wien die Telefonnummer der Ordination, so wie die Quellen sie veröffentlichen. Wer die eigene Seite beansprucht, kann eine Vorstellung, Sprachen, ein Foto und Öffnungszeiten ergänzen.",
+					"Kennungen: Die Wiener und die steirische Liste geben jeder Ärztin und jedem Arzt eine Nummer; die Salzburger Listen geben keine, daher wird die Kennung einer Salzburger Seite aus den angeführten Namen abgeleitet.",
+					"Zweck: Patientinnen, Patienten und die Öffentlichkeit sollen eine Ärztin, einen Arzt, eine Zahnärztin oder einen Zahnarzt finden, sehen, wo sie tätig sind, und wie sie erreichbar sind. Rechtsgrundlage: berechtigtes Interesse (Art. 6 Abs. 1 lit. f DSGVO), wie unten abgewogen.",
+					"Speicherdauer: solange die Person in der Quelle aufscheint. Eine Seite verschwindet nach zwei wöchentlichen Aktualisierungen, in denen die Person nicht mehr in der Quelle steht; eine nach einem Widerspruch entfernte Seite wird nie wieder veröffentlicht.",
+					"Information: Die Daten werden nicht bei den Betroffenen erhoben (Art. 14 DSGVO). Jede Person einzeln anzuschreiben, wäre mit einem unverhältnismäßigen Aufwand verbunden (Art. 14 Abs. 5 lit. b DSGVO): Sie werden durch diese Erklärung, die Seite „Daten und Quellen“ und einen Hinweis auf jeder Seite informiert."
+				]
+			},
+			"sources": {
+				"heading": "Quellen",
+				"body": [
+					"Jede Seite beruht auf offenen Verwaltungsdaten unter der Lizenz Creative Commons Namensnennung 4.0, weiterverwendet mit der Namensnennung, die jeder Herausgeber verlangt:"
+				]
+			},
+			"balancing": {
+				"heading": "Interessenabwägung",
+				"body": [
+					"Interesse: Patientinnen, Patienten und die Öffentlichkeit müssen wissen, wer wo ordiniert; die Länder entsprechen diesem Bedarf bereits, indem sie diese Listen als offene Daten veröffentlichen.",
+					"Erforderlichkeit: Gezeigt werden nur die beruflichen Angaben der Listen, die eine Ordination ohnehin öffentlich macht; nichts aus dem Privatleben, keine Bewertungen, keine Erfahrungsberichte.",
+					"Schutzmaßnahmen: neutrale Reihenfolge, keine Werbung, ein Widerspruch, der eine Seite sofort ausblendet und ihre Rückkehr verhindert, Korrekturen an der Quelle und Seiten, die jeder Aktualisierung der Listen folgen.",
+					"Erwartungen: Ärztinnen und Ärzte mit einer Ordination in Österreich stehen in der öffentlichen Ärzteliste, die von Gesetzes wegen veröffentlicht wird (§ 27 Ärztegesetz 1998); ein Verzeichnis, das diese Angaben wiedergibt, ist zu erwarten. Nach Abwägung dieser Punkte überwiegt das Interesse der Öffentlichkeit, und jede betroffene Person kann ohne Angabe von Gründen widersprechen."
+				]
+			},
+			"accounts": {
+				"heading": "Konten und Beanspruchungen",
+				"body": [
+					"Daten: E-Mail-Adresse, Name, Passwort (nur als Hash gespeichert), zweiter Faktor der Anmeldung, die zur Beanspruchung einer Seite gesendeten Nachweise (der Ausweis der Kammer oder eine Bestätigung der Kammer) und die Mitglieder des Teams.",
+					"Zwecke: Verwaltung des Kontos und Prüfung, ob eine Seite von der richtigen Person beansprucht wird. Rechtsgrundlagen: Erfüllung der Nutzungsbedingungen (Art. 6 Abs. 1 lit. b DSGVO) und das berechtigte Interesse an der Sicherheit des Dienstes (Art. 6 Abs. 1 lit. f DSGVO).",
+					"Speicherdauer: das Konto bis zu seiner Löschung; die verschlüsselten Nachweise werden 30 Tage nach der Entscheidung gelöscht."
+				]
+			},
+			"requests": {
+				"heading": "Fehlermeldungen, Widersprüche und Kontaktanfragen",
+				"body": [
+					"Daten: die Nachricht, die angegebene E-Mail-Adresse und die betroffene Seite; bei einer Anfrage „Das bin ich“ auch Name und Telefonnummer. Freitexte werden verschlüsselt.",
+					"Zwecke: Fehler berichtigen, Widersprüche umsetzen und Personen helfen, die ihre Seite nicht online beanspruchen können. Rechtsgrundlagen: berechtigtes Interesse (Art. 6 Abs. 1 lit. f DSGVO) und das Widerspruchsrecht (Art. 21 DSGVO).",
+					"Speicherdauer: eine Fehlermeldung 6 Monate nach ihrem Abschluss, ein Widerspruch ein Jahr nach der Entscheidung, eine Kontaktanfrage 12 Monate nach dem letzten Austausch; nach einem Widerspruch bleibt nur die Kennung der Seite gespeichert, damit sie nie wieder veröffentlicht wird."
+				]
+			},
+			"technical": {
+				"heading": "Technische Daten und Cookies",
+				"body": [
+					"Es werden nur für den Dienst unbedingt erforderliche Cookies gesetzt: die Sitzung angemeldeter Ärztinnen und Ärzte und die gewählte Sprache. Keine Werbe- oder Reichweitenmessungs-Cookies, keine Tracker.",
+					"Zur Missbrauchsabwehr werden IP-Adressen vor dem Zählen mit einem geheimen Schlüssel umgewandelt und nie als solche gespeichert; Sitzungen speichern eine gekürzte IP-Adresse. Aufrufe beanspruchter Seiten werden ohne Cookie und ohne Kennung gezählt, und nur die Inhaberin oder der Inhaber der Seite sieht sie."
+				]
+			},
+			"recipients": {
+				"heading": "Empfänger und Auftragsverarbeiter",
+				"body": [
+					"Daten werden weder verkauft noch vermietet und nie für Werbung verwendet. Nur das Team des Medieninhabers und die unten genannten Auftragsverarbeiter erhalten sie, jeweils für ihren Teil. Karten werden von einem Kachelserver geladen, der wie jede Website die IP-Adresse der Besucherin oder des Besuchers erhält."
+				]
+			},
+			"transfers": {
+				"heading": "Übermittlung außerhalb der Europäischen Union",
+				"body": [
+					"Keine: Die Daten werden im Europäischen Wirtschaftsraum gehostet und verarbeitet. Ein Wechsel eines Auftragsverarbeiters wird hier vor seinem Wirksamwerden angekündigt."
+				]
+			},
+			"rights": {
+				"heading": "Ihre Rechte",
+				"body": [
+					"Sie haben das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung, Datenübertragbarkeit und Widerspruch. Schreiben Sie an die unten genannte Adresse; Sie erhalten innerhalb eines Monats eine Antwort.",
+					"Sie können Beschwerde bei der österreichischen Datenschutzbehörde einlegen: Barichgasse 40-42, 1030 Wien, Telefon +43 1 52 152-0, dsb@dsb.gv.at, oder bei der Aufsichtsbehörde Ihres Wohn- oder Arbeitsortes in der Europäischen Union."
+				]
+			},
+			"objection": {
+				"heading": "Widerspruch gegen eine Seite (Art. 21 DSGVO)",
+				"body": [
+					"Ärztinnen, Ärzte, Zahnärztinnen und Zahnärzte können der Veröffentlichung ihrer Seite jederzeit ohne Angabe von Gründen widersprechen. Ist die Seite nicht beansprucht, genügt ein Formular: Die Seite wird ausgeblendet, sobald der Antrag eingeht, nach einer kurzen Prüfung gelöscht, und die Aktualisierungen der Listen veröffentlichen sie nie wieder. Ist sie beansprucht, entfernt die Inhaberin oder der Inhaber sie im eigenen Bereich."
+				]
+			},
+			"changes": {
+				"heading": "Änderungen dieser Erklärung",
+				"body": [
+					"Diese Erklärung ist ein Entwurf. Sie wird von einer in Österreich zugelassenen Rechtsanwältin oder einem Rechtsanwalt und vom Datenschutzbeauftragten geprüft; jede Fassung ist datiert."
+				]
+			}
+		},
+		"fields": {
+			"controller": "Verantwortlicher",
+			"address": "Anschrift",
+			"email": "Kontakt für Anliegen",
+			"dpo": "Datenschutzbeauftragter",
+			"effectiveDate": "Gültig ab",
+			"hostingProvider": "Hosting (Auftragsverarbeiter)",
+			"smtp": "E-Mail-Versand (Auftragsverarbeiter)"
+		},
+		"sourcesCaption": "Quellen des österreichischen Verzeichnisses und die jeweils verlangte Namensnennung",
+		"objectLink": "So widersprechen Sie einer Seite",
+		"dsbLink": "Beschwerde bei der Datenschutzbehörde einlegen"
+	},
+	"TermsAt": {
+		"metaTitle": "Nutzungsbedingungen · Apercura",
+		"metaDescription": "Nutzungsbedingungen der österreichischen Seiten von Apercura: ein kostenloses, sachliches Verzeichnis von Ärztinnen, Ärzten, Zahnärztinnen und Zahnärzten, ohne Onlinebuchung.",
+		"title": "Nutzungsbedingungen",
+		"lead": "Die Regeln für die Nutzung der österreichischen Seiten von Apercura, für die Öffentlichkeit wie für Ärztinnen, Ärzte, Zahnärztinnen und Zahnärzte.",
+		"sections": {
+			"service": {
+				"heading": "Der Dienst",
+				"body": [
+					"Apercura verzeichnet kostenlos die Ärztinnen, Ärzte, Zahnärztinnen und Zahnärzte aus den offenen Verwaltungsdaten von Wien, der Steiermark und Salzburg. Es ist ausschließlich ein Verzeichnis: In Österreich werden über Apercura keine Termine gebucht. Betrieben wird es vom im Impressum genannten Medieninhaber.",
+					"Für die Nutzung des Verzeichnisses ist kein Konto nötig. Mit der Nutzung der Website akzeptieren Sie diese Bedingungen."
+				]
+			},
+			"content": {
+				"heading": "Was die Seiten enthalten",
+				"body": [
+					"Die Seiten zeigen sachliche Angaben aus öffentlichen Listen in neutraler Reihenfolge, ohne Bewertungen, Erfahrungsberichte, Werbung oder bezahlte Platzierungen.",
+					"Die Angaben können unvollständig oder veraltet sein: Prüfen Sie sie vor einem Besuch bei der Ordination. Jede Seite erklärt, wie Sie einen Fehler melden."
+				]
+			},
+			"health": {
+				"heading": "Keine medizinische Beratung",
+				"body": [
+					"Apercura gibt keine medizinische Auskunft und ist kein Notdienst. Im Notfall wählen Sie 144 (Rettung) oder 112; telefonische Gesundheitsberatung erhalten Sie unter 1450."
+				]
+			},
+			"practitioners": {
+				"heading": "Für Ärztinnen, Ärzte, Zahnärztinnen und Zahnärzte",
+				"body": [
+					"Die Beanspruchung einer Seite ist kostenlos. Sie erfordert einen Nachweis der Identität und der Eintragung bei der Kammer, den eine Person prüft, bevor die Seite übergeben wird.",
+					"Wer eine Seite innehat, ist für die ergänzten Angaben verantwortlich. Sie müssen sachlich und aktuell bleiben, wie es die berufsrechtlichen Regeln für Informationen über ärztliche Leistungen verlangen (§ 53 Ärztegesetz 1998)."
+				]
+			},
+			"removal": {
+				"heading": "Entfernung einer Seite",
+				"body": [
+					"Eine Ärztin, ein Arzt, eine Zahnärztin oder ein Zahnarzt kann jederzeit die Entfernung der eigenen Seite verlangen: Die Seite „Daten und Quellen“ erklärt, wie. Eine beanspruchte Seite kann nur ihre Inhaberin oder ihr Inhaber entfernen."
+				]
+			},
+			"liability": {
+				"heading": "Haftung",
+				"body": [
+					"Der Medieninhaber bemüht sich, den Dienst verfügbar und richtig zu halten, kann dies aber nicht garantieren. Für Angaben, die Ärztinnen und Ärzte selbst auf ihren Seiten ergänzen, ist er nicht verantwortlich. Diese Grenzen werden bei der rechtlichen Prüfung präzisiert."
+				]
+			},
+			"ip": {
+				"heading": "Quellcode und Daten",
+				"body": [
+					"Der Quellcode ist unter der Lizenz AGPL-3.0 veröffentlicht. Die Daten des Verzeichnisses werden unter der Lizenz Creative Commons Namensnennung 4.0 weiterverwendet."
+				]
+			},
+			"law": {
+				"heading": "Anwendbares Recht und Streitigkeiten",
+				"body": [
+					"Das anwendbare Recht und der Gerichtsstand werden bei der rechtlichen Prüfung festgelegt; zwingende Verbraucherschutzbestimmungen des Wohnsitzstaates bleiben immer anwendbar. Bei einer Streitigkeit schreiben Sie bitte zuerst an die Kontaktadresse, um eine einvernehmliche Lösung zu suchen."
+				]
+			}
+		},
+		"fields": {
+			"publisher": "Medieninhaber",
+			"effectiveDate": "Gültig ab",
+			"contact": "Kontakt"
+		}
+	},
+	"AccessibilityAt": {
+		"metaTitle": "Barrierefreiheit · Apercura",
+		"metaDescription": "Barrierefreiheit der österreichischen Seiten von Apercura: Ziel WCAG 2.2 AA, was geprüft wurde, was noch aussteht und wie Sie ein Problem melden.",
+		"title": "Barrierefreiheit",
+		"lead": "Apercura ist für alle gestaltet, auch für ältere und sehbehinderte Menschen. Diese Erklärung zeigt, wo die österreichischen Seiten stehen.",
+		"sections": {
+			"scope": {
+				"heading": "Geltungsbereich",
+				"body": [
+					"Das Web-Zugänglichkeits-Gesetz gilt für öffentliche Stellen; Apercura ist keine. Der Herausgeber verfolgt dennoch auf jeder Seite denselben Maßstab: WCAG 2.2 Konformitätsstufe AA, wie sie die Norm EN 301 549 übernimmt."
+				]
+			},
+			"status": {
+				"heading": "Stand der Website",
+				"body": [
+					"Die österreichischen Seiten teilen den Code und die Tests der französischen Seiten. Die Website erfüllt WCAG 2.2 AA teilweise: Diese Einschätzung beruht auf einer Selbstbewertung und automatisierten Tests, noch nicht auf einem vollständigen Audit, das in Arbeit ist."
+				]
+			},
+			"tests": {
+				"heading": "Was geprüft wurde",
+				"list": [
+					"Automatisierte Prüfungen mit axe-core (Regeln von WCAG 2.0, 2.1 und 2.2, Stufen A und AA) auf jedem Seitentyp, bei jeder Veröffentlichung.",
+					"Bedienung allein mit der Tastatur, mit sichtbarem Fokus.",
+					"Fließtext mit mindestens 18 px, Schaltflächen mit mindestens 44 px, nichts, das allein auf Farbe beruht, kein waagrechtes Scrollen bei 390 px Breite."
+				]
+			},
+			"pending": {
+				"heading": "Was noch geprüft wird",
+				"list": [
+					"Eine manuelle Prüfung mit den Screenreadern VoiceOver und NVDA.",
+					"Ein vollständiges Audit nach WCAG 2.2 AA an einer Stichprobe von Seiten, einschließlich der deutschen Texte."
+				]
+			},
+			"feedback": {
+				"heading": "Ein Problem melden",
+				"body": [
+					"Ist eine Seite oder Funktion schwer zu benutzen, schreiben Sie an die unten genannte Adresse: Nennen Sie die Seite und was Sie behindert hat. Wir antworten innerhalb eines Monats und stellen Ihnen die Information bei Bedarf in anderer Form bereit."
+				]
+			}
+		},
+		"fields": {
+			"contact": "Kontakt",
+			"date": "Datum dieser Erklärung"
+		}
+	},
+	"DataAt": {
+		"metaTitle": "Daten und Quellen · Apercura",
+		"metaDescription": "Woher die österreichischen Seiten von Apercura stammen: die offenen Daten von Wien, der Steiermark und Salzburg unter CC BY 4.0, Aktualisierungen und wie Sie eine Seite berichtigen oder entfernen.",
+		"title": "Daten und Quellen",
+		"lead": "Jede österreichische Seite beruht auf offenen Verwaltungsdaten. Hier steht, woher sie stammen, unter welcher Lizenz und Namensnennung, wann sie aktualisiert wurden und wie Sie eine Seite berichtigen oder entfernen.",
+		"status": {
+			"heading": "Letzte Aktualisierung",
+			"body": "Das Verzeichnis wird jede Woche aus den Quellen importiert. Eine Seite ändert sich nur, wenn sich ihre Angaben in einer Quelle ändern.",
+			"importedAt": "Letzter Import",
+			"checkedAt": "Quellen zuletzt geprüft",
+			"notImported": "Das österreichische Verzeichnis wurde auf dieser Website noch nicht importiert.",
+			"notImportedValue": "Noch nicht importiert"
+		},
+		"sources": {
+			"heading": "Quellen",
+			"body": "Die Quellen sind unter der Lizenz Creative Commons Namensnennung 4.0 (CC BY 4.0) veröffentlicht, die die Weiterverwendung erlaubt, sofern der Herausgeber genannt wird. Jede Namensnennung unten ist wörtlich so wiedergegeben, wie ihr Herausgeber sie verlangt.",
+			"caption": "Datenquellen des österreichischen Verzeichnisses",
+			"columns": {
+				"source": "Quelle",
+				"use": "Verwendet für",
+				"licence": "Lizenz und Namensnennung",
+				"frequency": "Aktualisiert"
+			},
+			"items": {
+				"at-wien": {
+					"use": "Ärztinnen und Ärzte in Wien: Namen, Fachrichtungen, Adressen und Lage der Ordinationen, Telefonnummern",
+					"frequency": "Täglich, durch die Stadt Wien"
+				},
+				"at-stmk": {
+					"use": "Ärztinnen und Ärzte in der Steiermark: Namen, Titel, Fachrichtungen, Adressen und Lage der Ordinationen",
+					"frequency": "Mehrmals im Jahr (ohne angekündigten Rhythmus)"
+				},
+				"at-sbg": {
+					"use": "Ärztinnen und Ärzte in Salzburg: Namen, Titel, Fachrichtungen, Adressen und Lage der Ordinationen",
+					"frequency": "Nach Bedarf, durch das Land Salzburg"
+				},
+				"at-sbg-zahn": {
+					"use": "Zahnärztinnen und Zahnärzte in Salzburg: Namen, Adressen und Lage der Ordinationen",
+					"frequency": "Nach Bedarf, durch das Land Salzburg"
+				},
+				"at-places": {
+					"use": "Gemeinden, Wiener Gemeindebezirke und ihre Schwerpunkte",
+					"frequency": "Jährlich (Gebietsstand 1. Jänner)"
+				},
+				"map": {
+					"name": "Kartendaten",
+					"publisher": "OpenStreetMap-Mitwirkende, Kacheln von OpenFreeMap",
+					"use": "Karten auf den Seiten",
+					"frequency": "Laufend"
+				}
+			},
+			"odbl": "ODbL"
+		},
+		"coverage": {
+			"heading": "Erfasste Bundesländer",
+			"body": [
+				"Seiten werden aus offenen Daten nur dort erstellt, wo ein Land seine Liste der Ärztinnen und Ärzte unter einer offenen Lizenz veröffentlicht: Wien, Steiermark und Salzburg (Salzburg auch für Zahnärztinnen und Zahnärzte).",
+				"In den anderen Bundesländern erlaubt noch keine Liste die Weiterverwendung: Wer dort ordiniert, kann die eigene Seite dennoch anlegen und beanspruchen, und niemand sonst wird angeführt."
+			],
+			"covered": "Aus offenen Daten",
+			"claimedOnly": "Nur beanspruchte Seiten"
+		},
+		"correct": {
+			"heading": "Einen Fehler berichtigen",
+			"body": [
+				"Die Seiten geben die Listen der Länder wieder, die sie von den Kammern übernehmen: Eine dauerhafte Berichtigung erfolgt an der Quelle, bei der Ärztekammer oder der Zahnärztekammer des Landes, und die Seite folgt beim nächsten wöchentlichen Import.",
+				"Für alles andere verwenden Sie das Formular: Wir prüfen jede Meldung."
+			],
+			"formTitle": "Einen Fehler melden",
+			"formBody": "Geben Sie die Kennung der Seite an (das Ende ihrer Adresse, zum Beispiel w7983) und was falsch ist."
+		},
+		"remove": {
+			"heading": "Eine Seite entfernen",
+			"body": [
+				"Ärztinnen, Ärzte, Zahnärztinnen und Zahnärzte können der Veröffentlichung ihrer Seite jederzeit ohne Angabe von Gründen widersprechen (Art. 21 DSGVO). Eine nicht beanspruchte Seite wird ausgeblendet, sobald der Antrag eingeht, und nach einer kurzen Prüfung gelöscht; mit den Aktualisierungen der Listen kehrt sie nie zurück. Eine beanspruchte Seite entfernt ihre Inhaberin oder ihr Inhaber im eigenen Bereich."
+			],
+			"formTitle": "Die Entfernung einer Seite beantragen",
+			"formBody": "Geben Sie die Kennung Ihrer Seite an (das Ende ihrer Adresse, zum Beispiel w7983) und eine E-Mail-Adresse für unsere Antwort."
+		}
+	},
 	"Listing": {
 		"count": "{count, plural, one {# Gesundheitsfachkraft} other {# Gesundheitsfachkräfte}}",
 		"metaTitle": "{count, plural, one {{listing} in {place}: # Gesundheitsfachkraft · Apercura} other {{listing} in {place}: # Gesundheitsfachkräfte · Apercura}}",
@@ -1258,21 +1626,31 @@
 			"assistant-de-service-social": "{gender, select, female {Sozialarbeiterin} other {Sozialarbeiter}}",
 			"osteopathe": "{gender, select, female {Osteopathin} other {Osteopath}}",
 			"psychotherapeute": "{gender, select, female {Psychotherapeutin} other {Psychotherapeut}}",
-			"chiropracteur": "{gender, select, female {Chiropraktikerin} other {Chiropraktiker}}"
+			"chiropracteur": "{gender, select, female {Chiropraktikerin} other {Chiropraktiker}}",
+			"aerzte": "{gender, select, female {Ärztin} male {Arzt} other {Ärztin/Arzt}}",
+			"zahnaerzte": "{gender, select, female {Zahnärztin} male {Zahnarzt} other {Zahnärztin/Zahnarzt}}"
 		},
 		"listing": {
+			"aerzte": "Ärztinnen und Ärzte ohne Fachangabe",
 			"aide-soignant": "{gender, select, female {Pflegehelferin} other {Pflegehelfer}}",
 			"allergologue": "{gender, select, female {Allergologin} other {Allergologe}}",
+			"allgemeinmedizin": "Allgemeinmedizin",
 			"ambulancier": "{gender, select, female {Rettungssanitäterin} other {Rettungssanitäter}}",
+			"anaesthesiologie": "Anästhesiologie und Intensivmedizin",
+			"anatomie": "Anatomie",
 			"anatomopathologiste": "{gender, select, female {Pathologin} other {Pathologe}}",
 			"anesthesiste-reanimateur": "{gender, select, female {Anästhesistin} other {Anästhesist}}",
+			"angiologie": "Angiologie",
+			"arbeitsmedizin": "Arbeitsmedizin",
 			"assistant-de-service-social": "{gender, select, female {Sozialarbeiterin} other {Sozialarbeiter}}",
 			"assistant-dentaire": "Zahnmedizinische Fachkraft",
 			"audioprothesiste": "{gender, select, female {Hörakustikerin} other {Hörakustiker}}",
+			"augenheilkunde": "Augenheilkunde",
 			"auxiliaire-de-puericulture": "{gender, select, female {Kinderpflegerin} other {Kinderpfleger}}",
 			"biologiste-medical": "{gender, select, female {Laboratoriumsmedizinerin} other {Laboratoriumsmediziner}}",
 			"cardiologue": "{gender, select, female {Kardiologin} other {Kardiologe}}",
 			"chiropracteur": "{gender, select, female {Chiropraktikerin} other {Chiropraktiker}}",
+			"chirurgie": "Chirurgie",
 			"chirurgien-dentiste": "{gender, select, female {Zahnärztin} other {Zahnarzt}}",
 			"chirurgien-general": "{gender, select, female {Allgemeinchirurgin} other {Allgemeinchirurg}}",
 			"chirurgien-maxillo-facial": "{gender, select, female {Mund-Kiefer-Gesichtschirurgin} other {Mund-Kiefer-Gesichtschirurg}}",
@@ -1283,25 +1661,42 @@
 			"chirurgien-thoracique-et-cardiovasculaire": "{gender, select, female {Herz-Thorax-Chirurgin} other {Herz-Thorax-Chirurg}}",
 			"chirurgien-vasculaire": "{gender, select, female {Gefäßchirurgin} other {Gefäßchirurg}}",
 			"chirurgien-visceral": "{gender, select, female {Viszeralchirurgin} other {Viszeralchirurg}}",
+			"dermatologie": "Haut- und Geschlechtskrankheiten",
 			"dermatologue": "{gender, select, female {Dermatologin} other {Dermatologe}}",
 			"dieteticien": "{gender, select, female {Diätassistentin} other {Diätassistent}}",
 			"endocrinologue": "{gender, select, female {Endokrinologin} other {Endokrinologe}}",
+			"endokrinologie": "Endokrinologie",
 			"epithesiste": "{gender, select, female {Epithetikerin} other {Epithetiker}}",
 			"ergotherapeute": "{gender, select, female {Ergotherapeutin} other {Ergotherapeut}}",
+			"frauenheilkunde": "Frauenheilkunde und Geburtshilfe",
 			"gastro-enterologue": "{gender, select, female {Gastroenterologin} other {Gastroenterologe}}",
+			"gastroenterologie": "Gastroenterologie",
+			"gefaesschirurgie": "Gefäßchirurgie",
 			"geneticien": "{gender, select, female {Humangenetikerin} other {Humangenetiker}}",
 			"geriatre": "{gender, select, female {Geriaterin} other {Geriater}}",
+			"gerichtsmedizin": "Gerichtsmedizin",
 			"gynecologue": "{gender, select, female {Gynäkologin} other {Gynäkologe}}",
 			"gynecologue-obstetricien": "{gender, select, female {Gynäkologin und Geburtshelferin} other {Gynäkologe und Geburtshelfer}}",
+			"haematologie-und-onkologie": "Hämatologie und Onkologie",
+			"hals-nasen-ohrenheilkunde": "Hals-, Nasen- und Ohrenheilkunde",
 			"hematologue": "{gender, select, female {Hämatologin} other {Hämatologe}}",
+			"herzchirurgie": "Herzchirurgie",
+			"immunologie": "Klinische Immunologie",
 			"infectiologue": "{gender, select, female {Fachärztin für Infektiologie} other {Facharzt für Infektiologie}}",
+			"infektiologie": "Infektiologie",
 			"infirmier": "Pflegefachkraft",
 			"infirmier-anesthesiste": "Anästhesiepflegefachkraft",
 			"infirmier-de-bloc-operatoire": "OP-Pflegefachkraft",
 			"infirmier-en-pratique-avancee": "Pflegefachkraft mit erweiterter Praxis",
 			"infirmier-psychiatrique": "Psychiatrische Pflegefachkraft",
 			"infirmier-puericulteur": "{gender, select, female {Kinderkrankenpflegerin} other {Kinderkrankenpfleger}}",
+			"innere-medizin": "Innere Medizin",
 			"interniste": "{gender, select, female {Internistin} other {Internist}}",
+			"kardiologie": "Kardiologie",
+			"kinder-und-jugendpsychiatrie": "Kinder- und Jugendpsychiatrie",
+			"kinderchirurgie": "Kinder- und Jugendchirurgie",
+			"kinderheilkunde": "Kinder- und Jugendheilkunde",
+			"labordiagnostik": "Medizinische und Chemische Labordiagnostik",
 			"manipulateur-erm": "{gender, select, female {Radiologieassistentin} other {Radiologieassistent}}",
 			"masseur-kinesitherapeute": "{gender, select, female {Physiotherapeutin} other {Physiotherapeut}}",
 			"medecin": "{gender, select, female {Ärztin} other {Arzt}}",
@@ -1314,43 +1709,67 @@
 			"medecin-reanimateur": "{gender, select, female {Intensivmedizinerin} other {Intensivmediziner}}",
 			"medecin-reeducateur": "{gender, select, female {Fachärztin für Physikalische und Rehabilitative Medizin} other {Facharzt für Physikalische und Rehabilitative Medizin}}",
 			"medecin-vasculaire": "{gender, select, female {Angiologin} other {Angiologe}}",
+			"medizinische-genetik": "Medizinische Genetik",
+			"mikrobiologie": "Mikrobiologie und Virologie",
+			"mund-kiefer-gesichtschirurgie": "Mund-, Kiefer- und Gesichtschirurgie",
+			"nephrologie": "Nephrologie",
 			"nephrologue": "{gender, select, female {Nephrologin} other {Nephrologe}}",
+			"neurochirurgie": "Neurochirurgie",
 			"neurochirurgien": "{gender, select, female {Neurochirurgin} other {Neurochirurg}}",
+			"neurologie": "Neurologie",
 			"neurologue": "{gender, select, female {Neurologin} other {Neurologe}}",
 			"neuropsychiatre": "{gender, select, female {Neuropsychiaterin} other {Neuropsychiater}}",
+			"nuklearmedizin": "Nuklearmedizin",
 			"oculariste": "{gender, select, female {Okularistin} other {Okularist}}",
 			"oncologue": "{gender, select, female {Onkologin} other {Onkologe}}",
 			"ophtalmologue": "{gender, select, female {Augenärztin} other {Augenarzt}}",
 			"opticien-lunetier": "{gender, select, female {Augenoptikerin} other {Augenoptiker}}",
 			"orl": "{gender, select, female {HNO-Ärztin} other {HNO-Arzt}}",
 			"orthodontiste": "{gender, select, female {Kieferorthopädin} other {Kieferorthopäde}}",
+			"orthopaedie": "Orthopädie und Traumatologie",
 			"orthopediste-orthesiste": "{gender, select, female {Orthesentechnikerin} other {Orthesentechniker}}",
 			"orthophoniste": "{gender, select, female {Logopädin} other {Logopäde}}",
 			"orthoprothesiste": "{gender, select, female {Orthopädietechnikerin} other {Orthopädietechniker}}",
 			"orthoptiste": "{gender, select, female {Orthoptistin} other {Orthoptist}}",
 			"osteopathe": "{gender, select, female {Osteopathin} other {Osteopath}}",
+			"pathologie": "Pathologie",
 			"pediatre": "{gender, select, female {Kinderärztin} other {Kinderarzt}}",
 			"pedicure-podologue": "{gender, select, female {Podologin} other {Podologe}}",
 			"pedopsychiatre": "{gender, select, female {Kinder- und Jugendpsychiaterin} other {Kinder- und Jugendpsychiater}}",
 			"pharmacien": "{gender, select, female {Apothekerin} other {Apotheker}}",
+			"pharmakologie": "Pharmakologie und Toxikologie",
 			"physicien-medical": "{gender, select, female {Medizinphysikerin} other {Medizinphysiker}}",
+			"physikalische-medizin": "Physikalische Medizin und Rehabilitation",
+			"physiologie": "Physiologie",
+			"plastische-chirurgie": "Plastische Chirurgie",
+			"pneumologie": "Pneumologie",
 			"pneumologue": "{gender, select, female {Pneumologin} other {Pneumologe}}",
 			"podo-orthesiste": "{gender, select, female {Orthopädieschuhmacherin} other {Orthopädieschuhmacher}}",
 			"preparateur-en-pharmacie": "{gender, select, female {Pharmazeutisch-technische Assistentin} other {Pharmazeutisch-technischer Assistent}}",
 			"preparateur-en-pharmacie-hospitaliere": "{gender, select, female {Pharmazeutisch-technische Assistentin im Krankenhaus} other {Pharmazeutisch-technischer Assistent im Krankenhaus}}",
 			"psychiatre": "{gender, select, female {Psychiaterin} other {Psychiater}}",
+			"psychiatrie": "Psychiatrie",
 			"psychologue": "{gender, select, female {Psychologin} other {Psychologe}}",
 			"psychomotricien": "{gender, select, female {Psychomotorikerin} other {Psychomotoriker}}",
 			"psychotherapeute": "{gender, select, female {Psychotherapeutin} other {Psychotherapeut}}",
+			"radiologie": "Radiologie",
 			"radiologue": "{gender, select, female {Radiologin} other {Radiologe}}",
 			"radiotherapeute": "{gender, select, female {Strahlentherapeutin} other {Strahlentherapeut}}",
+			"rheumatologie": "Rheumatologie",
 			"rhumatologue": "{gender, select, female {Rheumatologin} other {Rheumatologe}}",
 			"sage-femme": "Hebamme",
 			"specialiste-medecine-bucco-dentaire": "{gender, select, female {Fachärztin für Oralmedizin} other {Facharzt für Oralmedizin}}",
 			"stomatologue": "{gender, select, female {Stomatologin} other {Stomatologe}}",
+			"strahlentherapie": "Strahlentherapie",
 			"technicien-de-laboratoire-medical": "{gender, select, female {Medizinische Technologin für Laboratoriumsanalytik} other {Medizinischer Technologe für Laboratoriumsanalytik}}",
+			"thoraxchirurgie": "Thoraxchirurgie",
+			"transfusionsmedizin": "Transfusionsmedizin",
+			"tropenmedizin": "Tropenmedizin",
+			"unfallchirurgie": "Unfallchirurgie",
 			"urgentiste": "{gender, select, female {Notfallmedizinerin} other {Notfallmediziner}}",
-			"urologue": "{gender, select, female {Urologin} other {Urologe}}"
+			"urologie": "Urologie",
+			"urologue": "{gender, select, female {Urologin} other {Urologe}}",
+			"zahnaerzte": "Zahnmedizin"
 		},
 		"practiceKind": {
 			"office": "Praxis",
@@ -2233,7 +2652,8 @@
 			"howHeading": "Wie wir prüfen, dass Sie es sind",
 			"factorNote": "Ihr Konto hat bereits einen zweiten Faktor: Er ist vor jeder Beanspruchung erforderlich und schützt Ihre Seite von da an.",
 			"contactLink": "Keine CPS-Karte? Kontaktieren Sie uns",
-			"optOutLink": "Sie sind Inhaber dieser Seite und möchten nicht öffentlich erscheinen? Hier entlang"
+			"optOutLink": "Sie sind Inhaber dieser Seite und möchten nicht öffentlich erscheinen? Hier entlang",
+			"identifierLabel": "Kennung der Seite"
 		},
 		"methods": {
 			"psc": {
@@ -2358,6 +2778,13 @@
 			"body": "Die Beanspruchung wird endgültig geschlossen: Die zugehörigen Nachweise zählen nicht mehr, und die Dokumente werden in 30 Tagen gelöscht. Sie können später eine neue Beanspruchung eröffnen und beginnen dann wieder mit der Verifizierung.",
 			"confirm": "Beanspruchung zurückziehen",
 			"cancel": "Beanspruchung beibehalten"
+		},
+		"identifiers": {
+			"RPPS": "RPPS",
+			"AT-WIEN": "Wiener Liste",
+			"AT-STMK": "Steirische Liste",
+			"AT-SBG": "Salzburger Liste",
+			"AT-SBGZ": "Salzburger Zahnärzteliste"
 		}
 	},
 	"Onboarding": {
@@ -2580,7 +3007,8 @@
 				"submitted": "Gesendet"
 			},
 			"contest": "Einspruch",
-			"proofLine": "{method}: {status}"
+			"proofLine": "{method}: {status}",
+			"identifier": "Kennung"
 		},
 		"claim": {
 			"metaTitle": "Beanspruchung · Verwaltung · Apercura",

@@ -17,6 +17,8 @@ interface LanguagePickerProps {
 	currentLabel: string;
 	/** Each language named in itself ("Français", "English"…). */
 	names: Record<Locale, string>;
+	/** The languages offered: the market's own (default: every locale). */
+	locales?: readonly Locale[];
 	/** Keep the fragment (the appointment page's token lives there). */
 	keepHash?: boolean;
 	className?: string;
@@ -36,6 +38,7 @@ export function LanguagePicker({
 	label,
 	currentLabel,
 	names,
+	locales = routing.locales,
 	keepHash = false,
 	className,
 }: LanguagePickerProps) {
@@ -119,7 +122,7 @@ export function LanguagePicker({
 					ref={list}
 					className="absolute end-0 top-full z-50 mt-1.5 flex min-w-52 flex-col gap-0.5 rounded-field border border-rule-soft bg-paper p-1.5 shadow-overlay group-open:motion-safe:animate-slip-in"
 				>
-					{routing.locales.map((other) => (
+					{locales.map((other) => (
 						<li key={other}>
 							<LocaleSwitchLink
 								href={href}

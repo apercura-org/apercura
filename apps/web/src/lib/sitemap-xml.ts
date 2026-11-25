@@ -1,4 +1,6 @@
-import { LOCALE_PREFIXES } from "~/i18n/locales";
+import { LOCALE_PREFIXES, type Locale, MARKET_LOCALES, type MarketCountry } from "~/i18n/locales";
+import { routing } from "~/i18n/routing";
+import type { SitemapMarket } from "~/server/queries/sitemap-sql";
 
 /** XML of sitemaps and sitemap indexes (sitemaps.org 0.9), without changefreq or priority. */
 
@@ -56,6 +58,42 @@ export const xmlResponse = (body: string) =>
 export const francePath = (path: string) =>
 	path === "/" ? LOCALE_PREFIXES.fr : `${LOCALE_PREFIXES.fr}${path}`;
 
+/**
+ * First segments of the internal (French) paths and their form in each locale
+ * (`praticien` → `arzt` in Austria), from the routing table: the read models
+ * store internal paths, the sitemaps print public ones. Listing slugs, place
+ * slugs and dynamic segments are data and stay as they are.
+ */
+const FIRST_SEGMENTS: ReadonlyMap<string, Record<Locale, string>> = (() => {
+	const map = new Map<string, Record<Locale, string>>();
+	for (const [pathname, entry] of Object.entries(routing.pathnames)) {
+		const first = pathname.split("/")[1];
+		if (!first || first.startsWith("[") || typeof entry === "string") continue;
+		const forms = Object.fromEntries(
+			Object.entries(entry as Record<Locale, string>).map(([locale, path]) => [
+				locale,
+				path.split("/")[1] ?? first,
+			]),
+		) as Record<Locale, string>;
+		map.set(first, forms);
+	}
+	return map;
+})();
+
+/**
+ * An internal (French) path of a market's directory under the market's segment,
+ * with the market's route segments: `marketPagePath("at", "/praticien/x")` is
+ * `/at/arzt/x`, `marketPagePath("fr", "/annuaire")` is `/fr/annuaire`.
+ */
+export function marketPagePath(market: SitemapMarket, path: string): string {
+	const locale = MARKET_LOCALES[market.toUpperCase() as MarketCountry];
+	const prefix = LOCALE_PREFIXES[locale];
+	if (path === "/") return prefix;
+	const [, first = "", ...rest] = path.split("/");
+	const translated = FIRST_SEGMENTS.get(first)?.[locale] ?? first;
+	return `${prefix}/${[translated, ...rest].join("/")}`;
+}
+
 /** Indexable pages that do not come from the read models, as French paths. */
 export const STATIC_PATHS = [
 	"/",
@@ -69,3 +107,13 @@ export const STATIC_PATHS = [
 	"/mentions-legales",
 	"/conditions",
 ] as const;
+
+/**
+ * The static pages of each market's sitemap. Austria lists no practitioner space (its claims
+ * go through documents, the space's entry pages are France's) and no accessibility statement
+ * of its own (none is required of a private site there).
+ */
+export const MARKET_STATIC_PATHS: Record<SitemapMarket, readonly string[]> = {
+	fr: STATIC_PATHS,
+	at: STATIC_PATHS.filter((path) => path !== "/pro" && path !== "/accessibilite"),
+};

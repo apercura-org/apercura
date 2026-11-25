@@ -112,11 +112,15 @@
 			"cta": "Encontrar mi página"
 		},
 		"tagline": "El directorio abierto y la herramienta de reserva gratuita para todos los profesionales sanitarios de Francia.",
-		"status": "Trabajo en curso."
+		"status": "Trabajo en curso.",
+		"market": {
+			"listingsHeading": "Por especialidad",
+			"placesHeading": "Por estado federado"
+		}
 	},
 	"International": {
 		"metaTitle": "Apercura · Directorios abiertos de profesionales sanitarios",
-		"metaDescription": "Una página gratuita y factual para cada profesional sanitario registrado, a partir de registros públicos, país por país. Abierto en Francia.",
+		"metaDescription": "Una página gratuita y factual para cada profesional sanitario registrado, a partir de registros públicos, país por país. Abierto en Francia y Austria.",
 		"runningHead": "Directorios abiertos de profesionales sanitarios",
 		"title": "Cada profesional sanitario, una página abierta",
 		"lead": "Apercura publica una página gratuita y factual para cada profesional sanitario registrado, a partir de los registros públicos de cada país. Sin valoraciones, sin publicidad, sin posicionamiento de pago, y con código abierto.",
@@ -1104,6 +1108,368 @@
 			"conventionnementWording": "Aviso reglamentario (orden de 30 de mayo de 2018, artículo 5)"
 		}
 	},
+	"ImpressumAt": {
+		"metaTitle": "Legal notice (Austria) · Apercura",
+		"metaDescription": "Legal notice of the Austrian pages of Apercura: provider and media owner, purpose, fundamental line, publisher and host (ECG § 5, MedienG § 25).",
+		"title": "Legal notice",
+		"lead": "Information under § 5 of the Austrian E-Commerce Act (ECG) and disclosure under § 25 of the Media Act (MedienG) for the Austrian pages of Apercura (apercura.org/at).",
+		"sections": {
+			"provider": {
+				"heading": "Service provider and media owner",
+				"body": [
+					"The service provider (§ 5 ECG) and media owner (§ 25 MedienG) of the Austrian pages is the entity below. It runs the directory and answers for its content."
+				]
+			},
+			"purpose": {
+				"heading": "Purpose of the undertaking",
+				"body": [
+					"Running a free directory of doctors and dentists without advertising, built from open government data, with a space where they can complete their own page. No appointment is booked through Apercura in Austria."
+				]
+			},
+			"publisher": {
+				"heading": "Publisher and person responsible for the content",
+				"body": [
+					"The person below is responsible for what the media owner publishes. Information a doctor adds to their own page is their own responsibility."
+				]
+			},
+			"line": {
+				"heading": "Fundamental line (§ 25 (4) MedienG)",
+				"body": [
+					"Apercura informs factually and without advertising about which doctors and dentists practise where and how to reach them. Its pages carry no ratings, no reviews, no paid placement and no advertising, and list practitioners in a neutral order."
+				]
+			},
+			"hosting": {
+				"heading": "Hosting provider",
+				"body": ["The site, its database and its files are hosted by the company below."]
+			},
+			"liability": {
+				"heading": "Content of the pages",
+				"body": [
+					"The directory is built from the open data of the City of Vienna and of the Länder Styria and Salzburg, which take it from the lists of the medical and dental chambers. It can be incomplete or out of date: check the information with the practice before you go. Every page says how to report an error."
+				]
+			},
+			"ip": {
+				"heading": "Code and data",
+				"body": [
+					"The source code of Apercura is published under the AGPL-3.0 licence. The directory data is reused under the Creative Commons Attribution 4.0 licence: the data page lists every source with the attribution it requires."
+				]
+			},
+			"review": {
+				"heading": "Status of this text",
+				"body": [
+					"This text is a draft, written before the legal entity was set up. It will be reviewed by a lawyer admitted in Austria before the Austrian pages are announced."
+				]
+			}
+		},
+		"fields": {
+			"name": "Name",
+			"legalForm": "Legal form",
+			"address": "Registered office",
+			"phone": "Phone",
+			"email": "Email address",
+			"registration": "Register and registration number",
+			"vatId": "VAT identification number",
+			"publisher": "Publisher",
+			"hostName": "Hosting provider",
+			"hostAddress": "Address of the hosting provider",
+			"hostPhone": "Phone of the hosting provider"
+		},
+		"dataLink": "Data and sources"
+	},
+	"PrivacyAt": {
+		"metaTitle": "Privacy (Austria) · Apercura",
+		"metaDescription": "Data processed by the Austrian pages of Apercura: sources, purposes, legal bases, retention, recipients and your rights, including objection (GDPR articles 13, 14 and 21).",
+		"title": "Privacy",
+		"lead": "What data the Austrian pages of Apercura process, where it comes from, why, for how long and by whom, and how to exercise your rights (GDPR articles 13 and 14).",
+		"sections": {
+			"controller": {
+				"heading": "Who is responsible",
+				"body": [
+					"The media owner named in the legal notice is the controller of the directory, of practitioner accounts, of claims and of the requests sent through the site."
+				]
+			},
+			"directory": {
+				"heading": "Directory: data about doctors and dentists",
+				"body": [
+					"Data: title, first and last name, profession and specialty, the address of each practice, its location and, in Vienna, the practice phone number, as the sources publish them. A doctor who claims their page can add a presentation, languages, a photo and opening hours.",
+					"Identifiers: the Vienna and Styria lists give each doctor a number; the Salzburg lists give none, so the identifier of a Salzburg page is derived from the names it lists.",
+					"Purpose: letting the public find a doctor or dentist, where they practise and how to reach them. Legal basis: legitimate interest (GDPR article 6 (1) (f)), set out below.",
+					"Retention: as long as the practitioner appears in the source. A page disappears after two weekly updates in which the practitioner is no longer in the source; a page removed after an objection is never published again.",
+					"Information: the data does not come from the practitioners themselves (GDPR article 14). Writing to each of them would take a disproportionate effort (article 14 (5) (b)): they are informed by this policy, the data page and a notice on every page."
+				]
+			},
+			"sources": {
+				"heading": "Sources",
+				"body": [
+					"Every page is built from open government data published under the Creative Commons Attribution 4.0 licence, reused with the attribution each publisher requires:"
+				]
+			},
+			"balancing": {
+				"heading": "Balancing of interests",
+				"body": [
+					"Interest: patients and the public need to know which doctors practise where, a need the Länder already meet by publishing these lists as open data.",
+					"Necessity: only the professional data of the lists is shown, the data a practice makes public anyway; nothing about private life, no ratings, no reviews.",
+					"Safeguards: a neutral order, no advertising, an objection that hides a page at once and keeps it from coming back, corrections at the source, and pages that follow every update of the lists.",
+					"Expectations: doctors with a practice in Austria are listed in the public lists of their chamber, published by law (Ärztegesetz 1998, § 27); a directory repeating that information is to be expected. Weighing these points, the interest of the public prevails, and any doctor can object without giving a reason."
+				]
+			},
+			"accounts": {
+				"heading": "Practitioner accounts and claims",
+				"body": [
+					"Data: email address, name, password (stored hashed), second authentication factor, the documents sent to claim a page (the chamber ID card or a confirmation of the chamber) and team members.",
+					"Purposes: managing the account and checking that a page is claimed by the right practitioner. Legal bases: performance of the terms of use (article 6 (1) (b)) and the legitimate interest of securing the service (article 6 (1) (f)).",
+					"Retention: the account is kept until it is deleted; supporting documents, encrypted, are erased 30 days after the decision."
+				]
+			},
+			"requests": {
+				"heading": "Error reports, objections and contact requests",
+				"body": [
+					"Data: the message, the contact email address when one is given and the page concerned; for an “I am this practitioner” request also the name and phone number. Free text is encrypted.",
+					"Purposes: correcting errors, applying objections and helping a practitioner who cannot claim their page online. Legal bases: legitimate interest (article 6 (1) (f)) and the right to object (article 21).",
+					"Retention: a report is deleted 6 months after it is closed, an objection one year after its decision, a contact request 12 months after the last exchange; after an objection only the identifier of the page is kept, so that it is never published again."
+				]
+			},
+			"technical": {
+				"heading": "Technical data and cookies",
+				"body": [
+					"Only cookies strictly necessary to the service are set: the session of signed-in practitioners and the chosen language. No advertising or audience measurement cookies, no trackers.",
+					"To limit abuse, IP addresses are transformed with a keyed function before being counted and never stored as such; practitioner sessions record a truncated IP address. Views of claimed pages are counted without a cookie or identifier, and only the page’s holder sees them."
+				]
+			},
+			"recipients": {
+				"heading": "Recipients and processors",
+				"body": [
+					"Data is neither sold nor rented, and never used for advertising. Only the publisher’s team and the processors below receive it, each for its own part. Maps are loaded from a tile server, which receives the visitor’s IP address like any website."
+				]
+			},
+			"transfers": {
+				"heading": "Transfers outside the European Union",
+				"body": [
+					"None: the data is hosted and processed in the European Economic Area. Any change of processor will be announced here before it takes effect."
+				]
+			},
+			"rights": {
+				"heading": "Your rights",
+				"body": [
+					"You can ask to access your data, to have it corrected or erased, to restrict its processing, to receive it in a portable format and to object to its processing. Write to the address below; you will get an answer within one month.",
+					"You can lodge a complaint with the Austrian Data Protection Authority (Datenschutzbehörde), Barichgasse 40-42, 1030 Vienna, phone +43 1 52 152-0, dsb@dsb.gv.at, or with the authority of your place of residence or work in the European Union."
+				]
+			},
+			"objection": {
+				"heading": "Objecting to a page (GDPR article 21)",
+				"body": [
+					"A doctor or dentist can object to the publication of their page at any time, without giving a reason. If the page is unclaimed, a form is enough: the page is hidden as soon as the request arrives, deleted after a light check, and the updates of the lists never publish it again. If it is claimed, its holder removes it from their space."
+				]
+			},
+			"changes": {
+				"heading": "Updates to this policy",
+				"body": [
+					"This policy is a draft. It will be reviewed by a lawyer admitted in Austria and by the data protection officer; every version is dated."
+				]
+			}
+		},
+		"fields": {
+			"controller": "Controller",
+			"address": "Address",
+			"email": "Contact for requests",
+			"dpo": "Data protection officer",
+			"effectiveDate": "Effective date",
+			"hostingProvider": "Hosting provider (processor)",
+			"smtp": "Email delivery (processor)"
+		},
+		"sourcesCaption": "Sources of the Austrian directory and the attribution each requires",
+		"objectLink": "How to object to a page",
+		"dsbLink": "Lodge a complaint with the Datenschutzbehörde"
+	},
+	"TermsAt": {
+		"metaTitle": "Terms of use (Austria) · Apercura",
+		"metaDescription": "Terms of use of the Austrian pages of Apercura: a free, factual directory of doctors and dentists, without online booking.",
+		"title": "Terms of use",
+		"lead": "The rules for using the Austrian pages of Apercura, for the public and for doctors and dentists alike.",
+		"sections": {
+			"service": {
+				"heading": "The service",
+				"body": [
+					"Apercura lists, free of charge, the doctors and dentists of the open government data of Vienna, Styria and Salzburg. It is a directory only: no appointment is booked through Apercura in Austria. It is run by the media owner named in the legal notice.",
+					"Using the directory requires no account. Using the site means accepting these terms."
+				]
+			},
+			"content": {
+				"heading": "What the pages contain",
+				"body": [
+					"Pages show factual information from public lists, in a neutral order, without ratings, reviews, advertising or paid placement.",
+					"The information may be incomplete or out of date: check it with the practice before you go. Every page says how to report an error."
+				]
+			},
+			"health": {
+				"heading": "Not medical advice",
+				"body": [
+					"Apercura gives no medical advice and is not an emergency service. In an emergency, call 144 (ambulance) or 112; for health advice, call 1450."
+				]
+			},
+			"practitioners": {
+				"heading": "For doctors and dentists",
+				"body": [
+					"Claiming a page is free. It requires a document proving the identity and the registration with the chamber, checked by a person before the page is handed over.",
+					"The holder of a page is responsible for the information they add. It must stay factual and up to date, as the professional rules on information about medical services require (Ärztegesetz 1998, § 53)."
+				]
+			},
+			"removal": {
+				"heading": "Removing a page",
+				"body": [
+					"A doctor or dentist can ask for their page to be removed at any time: the data page explains how. A claimed page can only be removed by its holder."
+				]
+			},
+			"liability": {
+				"heading": "Liability",
+				"body": [
+					"The media owner does its best to keep the service available and accurate, but cannot guarantee it. It is not responsible for the information doctors add to their pages. These limits will be specified during the legal review."
+				]
+			},
+			"ip": {
+				"heading": "Code and data",
+				"body": [
+					"The source code is published under the AGPL-3.0 licence. Directory data is reused under the Creative Commons Attribution 4.0 licence."
+				]
+			},
+			"law": {
+				"heading": "Governing law and disputes",
+				"body": [
+					"The governing law and the competent courts will be specified during the legal review; mandatory consumer protection rules of the country of residence always apply. In case of a dispute, first write to the contact address to look for an amicable solution."
+				]
+			}
+		},
+		"fields": {
+			"publisher": "Media owner",
+			"effectiveDate": "Effective date",
+			"contact": "Contact"
+		}
+	},
+	"AccessibilityAt": {
+		"metaTitle": "Accessibility (Austria) · Apercura",
+		"metaDescription": "Accessibility of the Austrian pages of Apercura: the WCAG 2.2 AA target, what was checked, what remains, and how to report a problem.",
+		"title": "Accessibility",
+		"lead": "Apercura is designed for everyone, including older and low-vision people. This statement says where the Austrian pages stand.",
+		"sections": {
+			"scope": {
+				"heading": "Scope",
+				"body": [
+					"The Web Accessibility Act (Web-Zugänglichkeits-Gesetz) binds public bodies, which Apercura is not. Its publisher nevertheless aims at the same standard on every page: WCAG 2.2 level AA, as EN 301 549 takes it up."
+				]
+			},
+			"status": {
+				"heading": "Where the site stands",
+				"body": [
+					"The Austrian pages share the code of the French pages and their tests. The site partially meets WCAG 2.2 AA: this rests on a self-assessment and automated tests, not yet on a full audit, which is in progress."
+				]
+			},
+			"tests": {
+				"heading": "What was checked",
+				"list": [
+					"Automated axe-core checks (WCAG 2.0, 2.1 and 2.2 rules, levels A and AA) on every page type, at every release.",
+					"Keyboard-only journeys with a visible focus.",
+					"Body text of at least 18 px, targets of at least 44 px, nothing that relies on colour alone, no horizontal scrolling at 390 px."
+				]
+			},
+			"pending": {
+				"heading": "What remains to be checked",
+				"list": [
+					"A manual pass with the VoiceOver and NVDA screen readers.",
+					"A full audit against WCAG 2.2 AA on a sample of pages, including the German texts."
+				]
+			},
+			"feedback": {
+				"heading": "Report a problem",
+				"body": [
+					"If a page or a feature is hard to use, write to the address below: say which page and what blocked you. We answer within one month and, where needed, give you the information in another form."
+				]
+			}
+		},
+		"fields": {
+			"contact": "Contact",
+			"date": "Date of this statement"
+		}
+	},
+	"DataAt": {
+		"metaTitle": "Data and sources (Austria) · Apercura",
+		"metaDescription": "Where the Austrian pages of Apercura come from: the open data of Vienna, Styria and Salzburg under CC BY 4.0, update dates, and how to correct or remove a page.",
+		"title": "Data and sources",
+		"lead": "Every Austrian page is built from open government data. Here is where it comes from, under which licence and attribution, when it was updated, and how to correct or remove a page.",
+		"status": {
+			"heading": "Last update",
+			"body": "The directory is imported from the sources every week. A page changes only when its facts change in a source.",
+			"importedAt": "Last import",
+			"checkedAt": "Sources last checked",
+			"notImported": "The Austrian directory has not been imported yet on this site.",
+			"notImportedValue": "Not imported yet"
+		},
+		"sources": {
+			"heading": "Sources",
+			"body": "The sources are published under the Creative Commons Attribution 4.0 licence (CC BY 4.0), which allows reuse provided the publisher is named. Each attribution below is printed word for word as its publisher requires it.",
+			"caption": "Data sources of the Austrian directory",
+			"columns": {
+				"source": "Source",
+				"use": "Used for",
+				"licence": "Licence and attribution",
+				"frequency": "Updated"
+			},
+			"items": {
+				"at-wien": {
+					"use": "Doctors in Vienna: names, specialties, practice addresses and locations, phone numbers",
+					"frequency": "Daily, by the City of Vienna"
+				},
+				"at-stmk": {
+					"use": "Doctors in Styria: names, titles, specialties, practice addresses and locations",
+					"frequency": "Several times a year (no schedule announced)"
+				},
+				"at-sbg": {
+					"use": "Doctors in Salzburg: names, titles, specialties, practice addresses and locations",
+					"frequency": "As needed, by the Land Salzburg"
+				},
+				"at-sbg-zahn": {
+					"use": "Dentists in Salzburg: names, practice addresses and locations",
+					"frequency": "As needed, by the Land Salzburg"
+				},
+				"at-places": {
+					"use": "Municipalities, districts of Vienna and their centres",
+					"frequency": "Every year (situation on 1 January)"
+				},
+				"map": {
+					"name": "Map data",
+					"publisher": "OpenStreetMap contributors, tiles by OpenFreeMap",
+					"use": "Maps on the pages",
+					"frequency": "Continuously"
+				}
+			},
+			"odbl": "ODbL"
+		},
+		"coverage": {
+			"heading": "Länder covered",
+			"body": [
+				"Pages are generated from open data only where a Land publishes its list of doctors under an open licence: Vienna, Styria and Salzburg (Salzburg also for dentists).",
+				"In the other Länder, no list allows reuse yet: a doctor practising there can still create and claim their page, and nobody else is listed."
+			],
+			"covered": "Covered by open data",
+			"claimedOnly": "Claimed pages only"
+		},
+		"correct": {
+			"heading": "Correct an error",
+			"body": [
+				"The pages repeat the lists of the Länder, which take them from the chambers: a lasting correction is made at the source, with the medical chamber (Ärztekammer) or the dental chamber (Zahnärztekammer) of the Land, and the page follows at the next weekly import.",
+				"For anything else, use the form: we check every report."
+			],
+			"formTitle": "Report an error",
+			"formBody": "Give the identifier of the page (the end of its address, for example w7983) and what is wrong."
+		},
+		"remove": {
+			"heading": "Remove a page",
+			"body": [
+				"A doctor or dentist can object to the publication of their page at any time, without giving a reason (GDPR article 21). An unclaimed page is hidden as soon as the request arrives and deleted after a light check; it never comes back with the updates of the lists. A claimed page is removed by its holder, from their space."
+			],
+			"formTitle": "Ask for a page to be removed",
+			"formBody": "Give the identifier of your page (the end of its address, for example w7983) and an email address where we can answer you."
+		}
+	},
 	"Listing": {
 		"count": "{count, plural, one {# profesional sanitario} many {# de profesionales sanitarios} other {# profesionales sanitarios}}",
 		"metaTitle": "{count, plural, one {{listing} en {place}: # profesional sanitario · Apercura} many {{listing} en {place}: # de profesionales sanitarios · Apercura} other {{listing} en {place}: # profesionales sanitarios · Apercura}}",
@@ -1258,21 +1624,31 @@
 			"assistant-de-service-social": "{gender, select, female {Trabajadora social} other {Trabajador social}}",
 			"osteopathe": "Osteópata",
 			"psychotherapeute": "Psicoterapeuta",
-			"chiropracteur": "{gender, select, female {Quiropráctica} other {Quiropráctico}}"
+			"chiropracteur": "{gender, select, female {Quiropráctica} other {Quiropráctico}}",
+			"aerzte": "{gender, select, female {Médica} other {Médico}}",
+			"zahnaerzte": "{gender, select, female {Dentista} other {Dentista}}"
 		},
 		"listing": {
+			"aerzte": "Médicos sin especialidad indicada",
 			"aide-soignant": "Auxiliar de enfermería",
 			"allergologue": "{gender, select, female {Alergóloga} other {Alergólogo}}",
+			"allgemeinmedizin": "Medicina general",
 			"ambulancier": "{gender, select, female {Técnica de ambulancia} other {Técnico de ambulancia}}",
+			"anaesthesiologie": "Anestesiología",
+			"anatomie": "Anatomía",
 			"anatomopathologiste": "{gender, select, female {Anatomopatóloga} other {Anatomopatólogo}}",
 			"anesthesiste-reanimateur": "{gender, select, female {Anestesióloga} other {Anestesiólogo}}",
+			"angiologie": "Angiología",
+			"arbeitsmedizin": "Medicina del trabajo",
 			"assistant-de-service-social": "{gender, select, female {Trabajadora social} other {Trabajador social}}",
 			"assistant-dentaire": "Asistente dental",
 			"audioprothesiste": "Audioprotesista",
+			"augenheilkunde": "Oftalmología",
 			"auxiliaire-de-puericulture": "Auxiliar de puericultura",
 			"biologiste-medical": "Especialista en análisis clínicos",
 			"cardiologue": "{gender, select, female {Cardióloga} other {Cardiólogo}}",
 			"chiropracteur": "{gender, select, female {Quiropráctica} other {Quiropráctico}}",
+			"chirurgie": "Cirugía general",
 			"chirurgien-dentiste": "Dentista",
 			"chirurgien-general": "{gender, select, female {Cirujana general} other {Cirujano general}}",
 			"chirurgien-maxillo-facial": "{gender, select, female {Cirujana maxilofacial} other {Cirujano maxilofacial}}",
@@ -1283,25 +1659,42 @@
 			"chirurgien-thoracique-et-cardiovasculaire": "{gender, select, female {Cirujana cardiotorácica} other {Cirujano cardiotorácico}}",
 			"chirurgien-vasculaire": "{gender, select, female {Cirujana vascular} other {Cirujano vascular}}",
 			"chirurgien-visceral": "{gender, select, female {Cirujana digestiva} other {Cirujano digestivo}}",
+			"dermatologie": "Dermatología",
 			"dermatologue": "{gender, select, female {Dermatóloga} other {Dermatólogo}}",
 			"dieteticien": "Dietista-nutricionista",
 			"endocrinologue": "{gender, select, female {Endocrinóloga} other {Endocrinólogo}}",
+			"endokrinologie": "Endocrinología",
 			"epithesiste": "Epitesista",
 			"ergotherapeute": "Terapeuta ocupacional",
+			"frauenheilkunde": "Ginecología y obstetricia",
 			"gastro-enterologue": "{gender, select, female {Gastroenteróloga} other {Gastroenterólogo}}",
+			"gastroenterologie": "Gastroenterología",
+			"gefaesschirurgie": "Cirugía vascular",
 			"geneticien": "Genetista",
 			"geriatre": "Geriatra",
+			"gerichtsmedizin": "Medicina legal",
 			"gynecologue": "{gender, select, female {Ginecóloga} other {Ginecólogo}}",
 			"gynecologue-obstetricien": "{gender, select, female {Ginecóloga-obstetra} other {Ginecólogo-obstetra}}",
+			"haematologie-und-onkologie": "Hematología y oncología",
+			"hals-nasen-ohrenheilkunde": "Otorrinolaringología",
 			"hematologue": "{gender, select, female {Hematóloga} other {Hematólogo}}",
+			"herzchirurgie": "Cirugía cardíaca",
+			"immunologie": "Inmunología clínica",
 			"infectiologue": "Especialista en enfermedades infecciosas",
+			"infektiologie": "Enfermedades infecciosas",
 			"infirmier": "{gender, select, female {Enfermera} other {Enfermero}}",
 			"infirmier-anesthesiste": "{gender, select, female {Enfermera anestesista} other {Enfermero anestesista}}",
 			"infirmier-de-bloc-operatoire": "{gender, select, female {Enfermera de quirófano} other {Enfermero de quirófano}}",
 			"infirmier-en-pratique-avancee": "{gender, select, female {Enfermera de práctica avanzada} other {Enfermero de práctica avanzada}}",
 			"infirmier-psychiatrique": "{gender, select, female {Enfermera de salud mental} other {Enfermero de salud mental}}",
 			"infirmier-puericulteur": "{gender, select, female {Enfermera pediátrica} other {Enfermero pediátrico}}",
+			"innere-medizin": "Medicina interna",
 			"interniste": "Internista",
+			"kardiologie": "Cardiología",
+			"kinder-und-jugendpsychiatrie": "Psiquiatría infantil y juvenil",
+			"kinderchirurgie": "Cirugía pediátrica",
+			"kinderheilkunde": "Pediatría",
+			"labordiagnostik": "Análisis clínicos",
 			"manipulateur-erm": "{gender, select, female {Técnica de radiología} other {Técnico de radiología}}",
 			"masseur-kinesitherapeute": "Fisioterapeuta",
 			"medecin": "{gender, select, female {Médica} other {Médico}}",
@@ -1314,43 +1707,67 @@
 			"medecin-reanimateur": "{gender, select, female {Médica intensivista} other {Médico intensivista}}",
 			"medecin-reeducateur": "{gender, select, female {Médica especialista en medicina física y rehabilitación} other {Médico especialista en medicina física y rehabilitación}}",
 			"medecin-vasculaire": "{gender, select, female {Angióloga} other {Angiólogo}}",
+			"medizinische-genetik": "Genética médica",
+			"mikrobiologie": "Microbiología",
+			"mund-kiefer-gesichtschirurgie": "Cirugía maxilofacial",
+			"nephrologie": "Nefrología",
 			"nephrologue": "{gender, select, female {Nefróloga} other {Nefrólogo}}",
+			"neurochirurgie": "Neurocirugía",
 			"neurochirurgien": "{gender, select, female {Neurocirujana} other {Neurocirujano}}",
+			"neurologie": "Neurología",
 			"neurologue": "{gender, select, female {Neuróloga} other {Neurólogo}}",
 			"neuropsychiatre": "Neuropsiquiatra",
+			"nuklearmedizin": "Medicina nuclear",
 			"oculariste": "Ocularista",
 			"oncologue": "{gender, select, female {Oncóloga} other {Oncólogo}}",
 			"ophtalmologue": "{gender, select, female {Oftalmóloga} other {Oftalmólogo}}",
 			"opticien-lunetier": "{gender, select, female {Óptica} other {Óptico}}",
 			"orl": "{gender, select, female {Otorrinolaringóloga} other {Otorrinolaringólogo}}",
 			"orthodontiste": "Ortodoncista",
+			"orthopaedie": "Ortopedia y traumatología",
 			"orthopediste-orthesiste": "Ortesista",
 			"orthophoniste": "Logopeda",
 			"orthoprothesiste": "{gender, select, female {Ortoprotésica} other {Ortoprotésico}}",
 			"orthoptiste": "Ortoptista",
 			"osteopathe": "Osteópata",
+			"pathologie": "Anatomía patológica",
 			"pediatre": "Pediatra",
 			"pedicure-podologue": "{gender, select, female {Podóloga} other {Podólogo}}",
 			"pedopsychiatre": "Psiquiatra infantil",
 			"pharmacien": "{gender, select, female {Farmacéutica} other {Farmacéutico}}",
+			"pharmakologie": "Farmacología y toxicología",
 			"physicien-medical": "{gender, select, female {Radiofísica hospitalaria} other {Radiofísico hospitalario}}",
+			"physikalische-medizin": "Medicina física y rehabilitación",
+			"physiologie": "Fisiología",
+			"plastische-chirurgie": "Cirugía plástica",
+			"pneumologie": "Neumología",
 			"pneumologue": "{gender, select, female {Neumóloga} other {Neumólogo}}",
 			"podo-orthesiste": "Podortesista",
 			"preparateur-en-pharmacie": "{gender, select, female {Técnica de farmacia} other {Técnico de farmacia}}",
 			"preparateur-en-pharmacie-hospitaliere": "{gender, select, female {Técnica de farmacia hospitalaria} other {Técnico de farmacia hospitalaria}}",
 			"psychiatre": "Psiquiatra",
+			"psychiatrie": "Psiquiatría",
 			"psychologue": "{gender, select, female {Psicóloga} other {Psicólogo}}",
 			"psychomotricien": "Psicomotricista",
 			"psychotherapeute": "Psicoterapeuta",
+			"radiologie": "Radiología",
 			"radiologue": "{gender, select, female {Radióloga} other {Radiólogo}}",
 			"radiotherapeute": "{gender, select, female {Oncóloga radioterápica} other {Oncólogo radioterápico}}",
+			"rheumatologie": "Reumatología",
 			"rhumatologue": "{gender, select, female {Reumatóloga} other {Reumatólogo}}",
 			"sage-femme": "Matrona",
 			"specialiste-medecine-bucco-dentaire": "Especialista en medicina oral",
 			"stomatologue": "{gender, select, female {Estomatóloga} other {Estomatólogo}}",
+			"strahlentherapie": "Oncología radioterápica",
 			"technicien-de-laboratoire-medical": "{gender, select, female {Técnica de laboratorio clínico} other {Técnico de laboratorio clínico}}",
+			"thoraxchirurgie": "Cirugía torácica",
+			"transfusionsmedizin": "Medicina transfusional",
+			"tropenmedizin": "Medicina tropical",
+			"unfallchirurgie": "Cirugía traumatológica",
 			"urgentiste": "{gender, select, female {Médica de urgencias} other {Médico de urgencias}}",
-			"urologue": "{gender, select, female {Uróloga} other {Urólogo}}"
+			"urologie": "Urología",
+			"urologue": "{gender, select, female {Uróloga} other {Urólogo}}",
+			"zahnaerzte": "Odontología"
 		},
 		"practiceKind": {
 			"office": "Consulta",
@@ -2233,7 +2650,8 @@
 			"howHeading": "Cómo comprobamos que es usted",
 			"factorNote": "Su cuenta ya tiene un segundo factor: es obligatorio antes de cualquier reclamación y, a partir de entonces, protege su página.",
 			"contactLink": "¿No tiene tarjeta CPS? Contáctenos",
-			"optOutLink": "¿Es el titular de esta página y no desea aparecer públicamente? Es aquí"
+			"optOutLink": "¿Es el titular de esta página y no desea aparecer públicamente? Es aquí",
+			"identifierLabel": "Identificador de la página"
 		},
 		"methods": {
 			"psc": {
@@ -2358,6 +2776,13 @@
 			"body": "La reclamación se cierra definitivamente: sus pruebas dejan de contar y sus documentos se eliminarán dentro de 30 días. Más adelante puede abrir una nueva reclamación, empezando de nuevo por la verificación.",
 			"confirm": "Retirar la reclamación",
 			"cancel": "Mantener la reclamación"
+		},
+		"identifiers": {
+			"RPPS": "RPPS",
+			"AT-WIEN": "Lista de Viena",
+			"AT-STMK": "Lista de Estiria",
+			"AT-SBG": "Lista de Salzburgo",
+			"AT-SBGZ": "Lista de dentistas de Salzburgo"
 		}
 	},
 	"Onboarding": {
@@ -2580,7 +3005,8 @@
 				"submitted": "Enviado"
 			},
 			"contest": "Impugnación",
-			"proofLine": "{method}: {status}"
+			"proofLine": "{method}: {status}",
+			"identifier": "Identificador"
 		},
 		"claim": {
 			"metaTitle": "Reclamación · Administración · Apercura",

@@ -21,7 +21,7 @@ type Expected = {
 	robots: "index, follow" | "noindex, follow";
 	/** schema.org types the page's graph must contain. */
 	types: string[];
-	lang?: "fr" | "en" | "de" | "es" | "it";
+	lang?: "fr" | "en" | "de" | "es" | "it" | "de-AT";
 	/** The homes (`/fr` and the international `/`) print hreflang `fr-FR` and `x-default`. */
 	hreflang?: true;
 };
@@ -45,6 +45,26 @@ const PAGES: Expected[] = [
 		path: "/fr/medecin-generaliste",
 		robots: "index, follow",
 		types: ["CollectionPage", "ItemList"],
+	},
+	// Austria, indexed in German under its own segment.
+	{
+		path: "/at",
+		robots: "index, follow",
+		types: ["WebPage", "WebSite", "Organization"],
+		lang: "de-AT",
+		hreflang: true,
+	},
+	{
+		path: "/at/allgemeinmedizin/wien",
+		robots: "index, follow",
+		types: ["CollectionPage", "BreadcrumbList", "ItemList"],
+		lang: "de-AT",
+	},
+	{
+		path: "/at/arzt/anna-beispiel-w900001",
+		robots: "index, follow",
+		types: ["WebPage", "BreadcrumbList", "IndividualPhysician", "PhysiciansOffice"],
+		lang: "de-AT",
 	},
 	{
 		path: "/fr/medecin-generaliste/75-paris",
@@ -124,7 +144,14 @@ const PAGES: Expected[] = [
 	]),
 ];
 
-const OG_LOCALES = { fr: "fr_FR", en: "en_GB", de: "de_DE", es: "es_ES", it: "it_IT" } as const;
+const OG_LOCALES = {
+	fr: "fr_FR",
+	en: "en_GB",
+	de: "de_DE",
+	es: "es_ES",
+	it: "it_IT",
+	"de-AT": "de_AT",
+} as const;
 
 const FORBIDDEN_KEYS = ["aggregateRating", "review", "reviews", "ratingValue"];
 /** schema.org LocalBusiness subtypes the pages use (Hospital through EmergencyService). */
@@ -248,7 +275,9 @@ for (const expected of PAGES) {
 		expect(title.length).toBeLessThanOrEqual(60);
 		// The brand ends every title, unless a practitioner's commune would not fit with it.
 		if (!/ · Apercura$|^Apercura · /.test(title)) {
-			expect(expected.path).toMatch(/^\/fr(?:-[a-z]{2})?\/[a-z]+\/[a-z0-9-]+-\d{11}$/);
+			expect(expected.path).toMatch(
+				/^\/(?:fr(?:-[a-z]{2})?\/[a-z]+\/[a-z0-9-]+-\d{11}|at\/arzt\/[a-z0-9-]+-[a-z]{1,2}\d{1,9})$/,
+			);
 			expect(`${title} · Apercura`.length).toBeGreaterThan(60);
 		}
 		const [description] = page.meta("description");
@@ -272,10 +301,12 @@ for (const expected of PAGES) {
 				href: link.href?.replace(/\/$/, ""),
 			}));
 		if (expected.hreflang) {
-			expect(alternates).toHaveLength(2);
+			// The homes of the open markets and the international one.
+			expect(alternates).toHaveLength(3);
 			expect(alternates).toEqual(
 				expect.arrayContaining([
 					{ rel: "alternate", hreflang: "fr-FR", href: `${origin}/fr` },
+					{ rel: "alternate", hreflang: "de-AT", href: `${origin}/at` },
 					{ rel: "alternate", hreflang: "x-default", href: origin },
 				]),
 			);
@@ -330,13 +361,17 @@ for (const expected of PAGES) {
 		for (const node of nodes.filter((item) => LOCAL_BUSINESSES.has(item["@type"] ?? ""))) {
 			expect(node.name, node["@id"]).toBeTruthy();
 			const address = node.address as Record<string, string> | undefined;
-			expect(address?.addressCountry, node["@id"]).toBe("FR");
+			expect(address?.addressCountry, node["@id"]).toBe(
+				expected.path.startsWith("/at") ? "AT" : "FR",
+			);
 			expect(address?.addressLocality ?? address?.postalCode, node["@id"]).toBeTruthy();
 		}
 		for (const crumbs of nodes.filter((item) => item["@type"] === "BreadcrumbList")) {
 			const items = crumbs.itemListElement as { position: number; name: string; item: string }[];
 			const lang = expected.lang ?? "fr";
-			expect(items[0]?.item).toBe(lang === "fr" ? `${origin}/fr` : `${origin}/fr-${lang}`);
+			const home =
+				lang === "fr" ? `${origin}/fr` : lang === "de-AT" ? `${origin}/at` : `${origin}/fr-${lang}`;
+			expect(items[0]?.item).toBe(home);
 			items.forEach((item, index) => {
 				expect(item.position).toBe(index + 1);
 				expect(item.name).toBeTruthy();
@@ -617,13 +652,14 @@ test.describe("sitemaps", () => {
 		);
 		const chunks = [...indexXml.matchAll(LOC)].map((match) => match[1] ?? "");
 		expect(chunks.length).toBeGreaterThan(2);
-		// The international home, then France's files under its segment.
+		// The international home, then each open market's files under its segment.
 		expect(chunks.slice(0, 2)).toEqual([
 			`${origin}/sitemaps/international.xml`,
 			`${origin}/sitemaps/fr/pages-0.xml`,
 		]);
+		expect(chunks).toContain(`${origin}/sitemaps/at/pages-0.xml`);
 		for (const chunk of chunks.slice(1))
-			expect(chunk.startsWith(`${origin}/sitemaps/fr/`)).toBe(true);
+			expect(/\/sitemaps\/(fr|at)\//.test(chunk), chunk).toBe(true);
 		for (const lastmod of indexXml.matchAll(LASTMOD)) {
 			expect(lastmod[1]).toMatch(/^\d{4}-\d{2}-\d{2}$/);
 		}
@@ -647,11 +683,16 @@ test.describe("sitemaps", () => {
 		expect(new Set(urls).size).toBe(urls.length);
 		expect(urls).toContain(`${origin}/`);
 		expect(urls).toContain(`${origin}/fr`);
+		expect(urls).toContain(`${origin}/at`);
 
 		for (const url of urls) {
-			// The international home and France's French pages only: no other locale is indexed in v1.
+			// The international home and each market's own language: France in French, Austria in
+			// German. Interface translations (/fr-de…) are never listed.
 			expect(
-				url === `${origin}/` || url === `${origin}/fr` || url.startsWith(`${origin}/fr/`),
+				url === `${origin}/` ||
+					[`${origin}/fr`, `${origin}/at`].some(
+						(home) => url === home || url.startsWith(`${home}/`),
+					),
 				url,
 			).toBe(true);
 			expect(url, url).not.toMatch(/\/recherche|\/pro\/|\/rdv/);

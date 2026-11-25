@@ -1,5 +1,4 @@
 import { LISTING_PAGE_SIZE, landingRoute, pageCount, parsePageSegment } from "@apercura/core";
-import { isListingSlug, listingHasBillingSectors } from "@apercura/core/taxonomy";
 import { linkStyles } from "@apercura/ui";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
@@ -18,10 +17,12 @@ import {
 } from "~/components/listing";
 import { PublicPage } from "~/components/public-page";
 import { Trail, type TrailItem, trailEntries } from "~/components/trail";
+import { marketOf } from "~/i18n/locales";
 import { getPathname, type Href, Link, permanentRedirect } from "~/i18n/navigation";
 import { type Locale, routing } from "~/i18n/routing";
 import { guidesForListing } from "~/lib/guides/catalog";
 import { getTaxonomyLabels, inSentence } from "~/lib/labels";
+import { isMarketListingSlug, listingFees } from "~/lib/market";
 import { isDepartmentSlug, isPlaceSlug, placeLabel } from "~/lib/places";
 import {
 	CONTENT_LANGUAGES,
@@ -77,7 +78,14 @@ function landingHref(listingSlug: string, dept: string, placeSlug: string | null
 async function resolve(params: Props["params"]) {
 	const { locale: requested, specialite, dept, rest = [] } = await params;
 	const locale: Locale = hasLocale(routing.locales, requested) ? requested : routing.defaultLocale;
-	if (!isListingSlug(specialite) || !isDepartmentSlug(dept) || rest.length > 2) notFound();
+	const country = marketOf(locale);
+	if (
+		!isMarketListingSlug(locale, specialite) ||
+		!isDepartmentSlug(dept, country) ||
+		rest.length > 2
+	) {
+		notFound();
+	}
 
 	let placeSlug: string | null = null;
 	let page = 1;
@@ -101,7 +109,7 @@ async function resolve(params: Props["params"]) {
 		}
 	}
 
-	const resolution = await resolvePlace(dept, placeSlug);
+	const resolution = await resolvePlace(country, dept, placeSlug);
 	if (resolution.kind === "not_found") notFound();
 	if (resolution.kind === "moved") {
 		permanentRedirect({
@@ -115,6 +123,7 @@ async function resolve(params: Props["params"]) {
 
 	const place = resolution.place ?? resolution.department;
 	const data = await getLandingPage({
+		country,
 		listingSlug: specialite,
 		place,
 		isCity: resolution.isCity,
@@ -127,6 +136,7 @@ async function resolve(params: Props["params"]) {
 
 	return {
 		locale,
+		country,
 		listingSlug: specialite,
 		department: resolution.department,
 		place,
@@ -156,8 +166,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 	const t = await getTranslations({ locale, namespace: "Listing" });
 	const labels = await getTaxonomyLabels(locale);
 	const listing = labels.listing(resolved.listingSlug) ?? resolved.listingSlug;
-	const place = placeLabel(resolved.place);
-	const short = placeLabel({ ...resolved.place, name: shortPlaceName(resolved.place.name) });
+	const place = placeLabel(resolved.place, resolved.country);
+	const short = placeLabel(
+		{ ...resolved.place, name: shortPlaceName(resolved.place.name) },
+		resolved.country,
+	);
 	const count = data.landing.practitionerCount;
 	const values = {
 		listing,
@@ -166,7 +179,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 		page,
 		pages,
 		occupation: inSentence(listing, locale),
-		fees: listingHasBillingSectors(resolved.listingSlug) ? "sector" : "other",
+		fees: listingFees(locale, resolved.listingSlug),
 	};
 	const shortValues = { ...values, place: short };
 	return pageMetadata({
@@ -195,12 +208,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function LandingPage({ params }: Props) {
 	const resolved = await resolve(params);
-	const { locale, data, department, place, placeSlug, listingSlug, page, pages } = resolved;
+	const { locale, country, data, department, place, placeSlug, listingSlug, page, pages } =
+		resolved;
 	setRequestLocale(locale);
 	const t = await getTranslations({ locale, namespace: "Listing" });
 	const labels = await getTaxonomyLabels(locale);
 	const listing = labels.listing(listingSlug) ?? listingSlug;
-	const placeName = placeLabel(place);
+	const placeName = placeLabel(place, country);
 	const count = data.landing.practitionerCount;
 	const isDepartment = place.kind === "department";
 
@@ -304,7 +318,7 @@ export default async function LandingPage({ params }: Props) {
 							locale={locale}
 							items={data.nearby.map((item) => ({
 								key: item.id,
-								label: placeLabel(item),
+								label: placeLabel(item, country),
 								href: landingHref(listingSlug, item.departmentSlug, item.slug),
 								count: item.practitionerCount,
 							}))}

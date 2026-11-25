@@ -18,6 +18,7 @@ import { ListingSection, ListingTitle } from "~/components/listing";
 import { PublicPage } from "~/components/public-page";
 import { Trail, type TrailItem, trailEntries } from "~/components/trail";
 import { clientEnv } from "~/env";
+import { marketOf } from "~/i18n/locales";
 import { Link, permanentRedirect } from "~/i18n/navigation";
 import { type Locale, routing } from "~/i18n/routing";
 import { getTaxonomyLabels } from "~/lib/labels";
@@ -55,7 +56,8 @@ type Props = PageProps<"/[locale]/etablissement/[slug]">;
 async function resolve(params: Props["params"]) {
 	const { locale: requested, slug } = await params;
 	const locale: Locale = hasLocale(routing.locales, requested) ? requested : routing.defaultLocale;
-	const segment = parseEstablishmentSegment(slug);
+	// Establishment pages are FINESS establishments: France only (none under /at).
+	const segment = marketOf(locale) === "FR" ? parseEstablishmentSegment(slug) : null;
 	if (!segment) notFound();
 	const result = await getEstablishment(slug, segment.finess);
 	if (result.kind === "not_found") notFound();

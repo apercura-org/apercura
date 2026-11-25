@@ -4,6 +4,7 @@ import { JsonLd } from "~/components/json-ld";
 import { CountLinks, ListingSection, ListingTitle } from "~/components/listing";
 import { PublicPage } from "~/components/public-page";
 import { Trail, type TrailItem, trailEntries } from "~/components/trail";
+import { marketOf } from "~/i18n/locales";
 import { getPathname, type Href } from "~/i18n/navigation";
 import type { Locale } from "~/i18n/routing";
 import { getTaxonomyLabels } from "~/lib/labels";
@@ -35,7 +36,7 @@ export async function PlaceHub({
 }) {
 	const t = await getTranslations({ locale, namespace: "Directory" });
 	const labels = await getTaxonomyLabels(locale);
-	const name = placeLabel(place);
+	const name = placeLabel(place, marketOf(locale));
 	const isDepartment = place.kind === "department";
 	const landing = (listingSlug: string): Href => ({
 		pathname: "/[specialite]/[dept]/[[...rest]]",
@@ -99,7 +100,7 @@ export async function PlaceHub({
 							locale={locale}
 							items={hub.places.map((item) => ({
 								key: item.id,
-								label: placeLabel(item),
+								label: placeLabel(item, marketOf(locale)),
 								href: {
 									pathname: "/annuaire/[dept]/[commune]",
 									params: { dept: department.slug, commune: item.slug },

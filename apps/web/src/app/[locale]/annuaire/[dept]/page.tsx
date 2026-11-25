@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { PlaceHub } from "~/components/place-hub";
+import { marketOf } from "~/i18n/locales";
 import { permanentRedirect } from "~/i18n/navigation";
 import { type Locale, routing } from "~/i18n/routing";
 import { isDepartmentSlug, placeLabel } from "~/lib/places";
@@ -30,8 +31,9 @@ type Props = PageProps<"/[locale]/annuaire/[dept]">;
 async function resolve(params: Props["params"]) {
 	const { locale: requested, dept } = await params;
 	const locale: Locale = hasLocale(routing.locales, requested) ? requested : routing.defaultLocale;
-	if (!isDepartmentSlug(dept)) notFound();
-	const resolution = await resolvePlace(dept, null);
+	const country = marketOf(locale);
+	if (!isDepartmentSlug(dept, country)) notFound();
+	const resolution = await resolvePlace(country, dept, null);
 	if (resolution.kind === "not_found") notFound();
 	if (resolution.kind === "moved") {
 		permanentRedirect({
@@ -39,10 +41,11 @@ async function resolve(params: Props["params"]) {
 			locale,
 		});
 	}
-	const hub = await getPlaceHub(resolution.department, false);
+	const hub = await getPlaceHub(country, resolution.department, false);
 	if (hub.total === 0) notFound();
 	return {
 		locale,
+		country,
 		department: resolution.department,
 		hub,
 		href: { pathname: "/annuaire/[dept]", params: { dept } } as const,
@@ -50,10 +53,10 @@ async function resolve(params: Props["params"]) {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-	const { locale, department, hub, href } = await resolve(params);
+	const { locale, country, department, hub, href } = await resolve(params);
 	const t = await getTranslations({ locale, namespace: "Directory" });
-	const place = placeLabel(department);
-	const short = placeLabel({ ...department, name: shortPlaceName(department.name) });
+	const place = placeLabel(department, country);
+	const short = placeLabel({ ...department, name: shortPlaceName(department.name) }, country);
 	return pageMetadata({
 		locale,
 		href,

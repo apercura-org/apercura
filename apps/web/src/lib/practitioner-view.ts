@@ -1,4 +1,4 @@
-import { formatPhoneFr, formatStreetText, publicActivities } from "@apercura/core";
+import { formatPhoneAt, formatPhoneFr, formatStreetText, publicActivities } from "@apercura/core";
 import type { ActivityPayload, PractitionerPayload, SitePayload } from "~/server/queries/types";
 
 export type SiteView = {
@@ -25,17 +25,48 @@ export function label(value: string | null | undefined): string | null {
 	return value ? formatStreetText(value) || null : null;
 }
 
-/** Address lines of a site, street first. */
-export function addressLines(
-	site: Pick<SitePayload, "addressLine" | "addressComplement" | "postcode" | "placeName">,
-): string[] {
-	const town = [site.postcode, site.placeName].filter(Boolean).join(" ");
-	return [label(site.addressLine), label(site.addressComplement), town].filter(
-		(line): line is string => Boolean(line?.trim()),
-	);
+/** A phone number of any market as written there (`04 72 00 00 00`, `01 7673315`). */
+export function formatPhone(e164: string): string {
+	return e164.startsWith("+43") ? formatPhoneAt(e164) : formatPhoneFr(e164);
 }
 
-function toView(activity: ActivityPayload & { site: SitePayload }): SiteView {
+/**
+ * A source text as printed for a market. French registry labels are restored
+ * (`label`); Austrian lists publish their streets as written, so they are only trimmed
+ * (`63A` stays `63A`).
+ */
+export function marketLabel(value: string | null | undefined, country = "FR"): string | null {
+	if (country !== "AT") return label(value);
+	return value?.trim() || null;
+}
+
+/**
+ * The town line of an address: postcode and place. A Vienna district prints as the city,
+ * the way Austrian addresses are written (`1090 Wien`, the postcode names the district).
+ */
+function townLine(postcode: string | null, placeName: string | null, country: string): string {
+	return [postcode, localityOf(placeName, country)].filter(Boolean).join(" ");
+}
+
+/** The locality of an address as written in its market: a Vienna district is `Wien`. */
+export function localityOf(placeName: string | null, country = "FR"): string | null {
+	return country === "AT" && placeName?.startsWith("Wien-") ? "Wien" : placeName;
+}
+
+/** Address lines of a site, street first, in the market's form. */
+export function addressLines(
+	site: Pick<SitePayload, "addressLine" | "addressComplement" | "postcode" | "placeName">,
+	country = "FR",
+): string[] {
+	const town = townLine(site.postcode, site.placeName, country);
+	return [
+		marketLabel(site.addressLine, country),
+		marketLabel(site.addressComplement, country),
+		town,
+	].filter((line): line is string => Boolean(line?.trim()));
+}
+
+function toView(activity: ActivityPayload & { site: SitePayload }, country: string): SiteView {
 	const { site } = activity;
 	const precise = site.geoPrecision === "address" || site.geoPrecision === "street";
 	return {
@@ -45,8 +76,8 @@ function toView(activity: ActivityPayload & { site: SitePayload }): SiteView {
 		roleCode: activity.roleCode,
 		isPrimary: activity.isPrimary,
 		site,
-		name: label(site.name ?? site.establishmentName),
-		addressLines: addressLines(site),
+		name: marketLabel(site.name ?? site.establishmentName, country),
+		addressLines: addressLines(site, country),
 		coordinates:
 			precise && site.latitude !== null && site.longitude !== null
 				? { lat: Number(site.latitude), lon: Number(site.longitude) }
@@ -54,7 +85,7 @@ function toView(activity: ActivityPayload & { site: SitePayload }): SiteView {
 		phone: site.phone
 			? {
 					e164: site.phone,
-					display: formatPhoneFr(site.phone),
+					display: formatPhone(site.phone),
 					switchboard: site.phoneKind === "switchboard",
 				}
 			: null,
@@ -79,7 +110,7 @@ export function siteViews(payload: PractitionerPayload): SiteView[] {
 	for (const activity of publicActivities(withSite)) {
 		if (!activity.site || seen.has(activity.site.id)) continue;
 		seen.add(activity.site.id);
-		views.push(toView({ ...activity, site: activity.site }));
+		views.push(toView({ ...activity, site: activity.site }, payload.country));
 	}
 	return views;
 }

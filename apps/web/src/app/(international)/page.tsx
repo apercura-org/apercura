@@ -7,10 +7,18 @@ import { JsonLd } from "~/components/json-ld";
 import { type LanguageOffer, LanguageSuggestion } from "~/components/language-suggestion";
 import { ThemeSwitch } from "~/components/theme-switch";
 import { serverEnv } from "~/env";
-import { LOCALE_TAGS, LOCALES, OG_LOCALES } from "~/i18n/locales";
+import { LOCALE_TAGS, LOCALES, marketOf, OG_LOCALES } from "~/i18n/locales";
 import { getPathname, type Href } from "~/i18n/navigation";
 import { LINKS } from "~/lib/links";
-import { INTERNATIONAL_LOCALE, MARKETS } from "~/lib/markets";
+import { INTERNATIONAL_LOCALE, MARKETS, type Market } from "~/lib/markets";
+
+/** The other languages a market's pages are read in (France: en, de, es, it; Austria: none). */
+function languagesOf(market: Extract<Market, { status: "open" }>) {
+	return LOCALES.filter(
+		(locale) => locale !== market.locale && marketOf(locale) === market.country,
+	);
+}
+
 import { BRAND, documentMetadata, homeAlternates, siteVerification } from "~/lib/seo";
 import { apercuraSiteNodes } from "~/lib/site-entities";
 import { siteOrigin } from "~/lib/site-url";
@@ -65,14 +73,17 @@ export default async function InternationalHome() {
 
 	// The France pages in the visitor's language, offered to a browser that prefers it.
 	const offers: LanguageOffer[] = await Promise.all(
-		LOCALES.filter((locale) => locale !== INTERNATIONAL_LOCALE).map(async (locale) => {
-			const tOffer = await getTranslations({ locale, namespace: "International" });
-			return {
-				language: locale,
-				label: tOffer("suggestion"),
-				href: getPathname({ href: "/", locale }),
-			};
-		}),
+		// France's interface languages; Austria (`at`, German) is linked from its country line.
+		LOCALES.filter((locale) => locale !== INTERNATIONAL_LOCALE && marketOf(locale) === "FR").map(
+			async (locale) => {
+				const tOffer = await getTranslations({ locale, namespace: "International" });
+				return {
+					language: locale,
+					label: tOffer("suggestion"),
+					href: getPathname({ href: "/", locale }),
+				};
+			},
+		),
 	);
 	const open = MARKETS.filter((market) => market.status === "open");
 	const planned = MARKETS.filter((market) => market.status === "planned").sort((a, b) =>
@@ -138,22 +149,24 @@ export default async function InternationalHome() {
 										</a>
 										<Badge tone="ink">{t("countries.open")}</Badge>
 									</div>
-									<p className="text-meta text-ink-muted">
-										{t("countries.alsoIn")}{" "}
-										{LOCALES.filter((locale) => locale !== market.locale).map((locale, index) => (
-											<span key={locale}>
-												{index > 0 ? ", " : null}
-												<a
-													href={getPathname({ href: "/", locale })}
-													lang={locale}
-													hrefLang={locale}
-													className={footerLink}
-												>
-													{tLocale("locale", { locale })}
-												</a>
-											</span>
-										))}
-									</p>
+									{languagesOf(market).length > 0 ? (
+										<p className="text-meta text-ink-muted">
+											{t("countries.alsoIn")}{" "}
+											{languagesOf(market).map((locale, index) => (
+												<span key={locale}>
+													{index > 0 ? ", " : null}
+													<a
+														href={getPathname({ href: "/", locale })}
+														lang={locale}
+														hrefLang={locale}
+														className={footerLink}
+													>
+														{tLocale("locale", { locale })}
+													</a>
+												</span>
+											))}
+										</p>
+									) : null}
 								</li>
 							))}
 							{planned.map((market) => (

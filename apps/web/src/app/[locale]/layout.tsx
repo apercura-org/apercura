@@ -4,12 +4,18 @@ import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
 import { SkipLink } from "~/components/skip-link";
 import { serverEnv } from "~/env";
+import { CATALOG_LANGUAGES, LOCALE_TAGS, type Locale } from "~/i18n/locales";
 import { routing } from "~/i18n/routing";
 import { pickMessages } from "~/lib/client-messages";
 import { BRAND, OG_LOCALES, ogImageUrl, SITE_VIEWPORT, siteVerification } from "~/lib/seo";
 import { siteOrigin } from "~/lib/site-url";
 import { fontVariables } from "../fonts";
 import "../globals.css";
+
+/** The `lang` of a locale's pages: its code when it is a language, else its tag (`at` → `de-AT`). */
+function htmlLang(locale: Locale): string {
+	return CATALOG_LANGUAGES[locale] === locale ? locale : LOCALE_TAGS[locale];
+}
 
 export function generateStaticParams() {
 	return routing.locales.map((locale) => ({ locale }));
@@ -57,7 +63,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
 
 	return (
 		// /theme.js sets `data-theme` and `data-js` on <html> before React hydrates it.
-		<html lang={locale} className={fontVariables} suppressHydrationWarning>
+		<html lang={htmlLang(locale)} className={fontVariables} suppressHydrationWarning>
 			<head>
 				{/* Applies the stored colour theme before the first paint (~/lib/theme). */}
 				<script src="/theme.js" />

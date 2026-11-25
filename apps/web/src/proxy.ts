@@ -2,7 +2,7 @@ import { parseSearchQuery } from "@apercura/core";
 import { NextRequest, NextResponse } from "next/server";
 import createMiddleware from "next-intl/middleware";
 import { clientEnv } from "./env";
-import { LOCALE_SEGMENTS } from "./i18n/locales";
+import { LOCALE_SEGMENTS, marketOf } from "./i18n/locales";
 import { getPathname } from "./i18n/navigation";
 import { type Locale, routing } from "./i18n/routing";
 import { canonicalPath } from "./lib/canonical-path";
@@ -164,6 +164,7 @@ async function searchShortcut(request: NextRequest): Promise<NextResponse | null
 				pres: params.get("pres"),
 			}),
 			Number.isInteger(page) && page > 0 ? page : 1,
+			marketOf(locale),
 		);
 		if (!target) return null;
 		return NextResponse.redirect(new URL(getPathname({ href: target, locale }), request.url), 307);

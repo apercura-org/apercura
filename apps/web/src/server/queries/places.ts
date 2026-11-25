@@ -1,12 +1,13 @@
 import "server-only";
 
 import { cacheLife, cacheTag } from "next/cache";
+import { CITY_IS_DEPARTMENT, isDepartmentCity } from "~/lib/places";
 import { cacheTags } from "../cache-tags";
 import { getSql } from "../db";
 import type { PlaceRef } from "./types";
 
 /** Insee code of Paris: its city page is the department page. */
-export const PARIS_CODE = "75056";
+export const PARIS_CODE = CITY_IS_DEPARTMENT.FR;
 
 export type PlaceResolution =
 	| { kind: "found"; department: PlaceRef; place: PlaceRef | null; isCity: boolean }
@@ -17,11 +18,13 @@ export type PlaceResolution =
 const PLACE_COLUMNS = `id, kind, code, name, slug, department_code AS "departmentCode"`;
 
 /**
- * Resolves `/{dept}[/{commune}]` slugs to places. Slugs are stored once and
- * never recomputed: renamed places answer through their aliases, merged
- * communes through their successor, and the Paris city through its department.
+ * Resolves `/{dept}[/{commune}]` slugs to the places of one market (`FR`,
+ * `AT`). Slugs are stored once and never recomputed: renamed places answer
+ * through their aliases, merged communes through their successor, and the
+ * Paris and Wien cities through their department.
  */
 export async function resolvePlace(
+	country: string,
 	departmentSlug: string,
 	placeSlug: string | null,
 ): Promise<PlaceResolution> {
@@ -32,7 +35,8 @@ export async function resolvePlace(
 
 	let [department] = await sql<PlaceRef[]>`
 		SELECT ${sql.unsafe(PLACE_COLUMNS)} FROM directory.places
-		WHERE kind = 'department' AND slug = ${departmentSlug} AND removed_at IS NULL
+		WHERE country = ${country} AND kind = 'department' AND slug = ${departmentSlug}
+			AND removed_at IS NULL
 	`;
 	let moved = false;
 	if (!department) {
@@ -40,7 +44,7 @@ export async function resolvePlace(
 			SELECT p.id, p.kind, p.code, p.name, p.slug, p.department_code AS "departmentCode"
 			FROM directory.place_slug_aliases a
 			JOIN directory.places p ON p.id = a.place_id AND p.kind = 'department'
-			WHERE a.department_code IS NULL AND a.slug = ${departmentSlug}
+			WHERE a.country = ${country} AND a.department_code IS NULL AND a.slug = ${departmentSlug}
 		`;
 		if (!department) return { kind: "not_found" };
 		moved = true;
@@ -59,8 +63,8 @@ export async function resolvePlace(
 			s.slug AS "successorSlug", p.removed_at IS NOT NULL AS removed
 		FROM directory.places p
 		LEFT JOIN directory.places s ON s.id = p.successor_id
-		WHERE p.kind IN ('commune', 'arrondissement') AND p.department_code = ${department.code}
-			AND p.slug = ${placeSlug}
+		WHERE p.country = ${country} AND p.kind IN ('commune', 'arrondissement')
+			AND p.department_code = ${department.code} AND p.slug = ${placeSlug}
 	`;
 	if (!place) {
 		[place] = await sql<Row[]>`
@@ -68,13 +72,14 @@ export async function resolvePlace(
 				NULL AS "successorSlug", p.removed_at IS NOT NULL AS removed
 			FROM directory.place_slug_aliases a
 			JOIN directory.places p ON p.id = a.place_id AND p.kind IN ('commune', 'arrondissement')
-			WHERE a.department_code = ${department.code} AND a.slug = ${placeSlug}
+			WHERE a.country = ${country} AND a.department_code = ${department.code}
+				AND a.slug = ${placeSlug}
 		`;
 		if (!place) return { kind: "not_found" };
 		moved = true;
 	}
 	cacheTag(cacheTags.place(place.id));
-	if (place.code === PARIS_CODE) {
+	if (isDepartmentCity(country, place.code)) {
 		return { kind: "moved", departmentSlug: department.slug, placeSlug: null };
 	}
 	if (place.successorSlug) {

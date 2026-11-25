@@ -1,5 +1,7 @@
 import "server-only";
 
+import { countryAdapter } from "@apercura/core/country";
+import { isDepartmentCity } from "~/lib/places";
 import { label } from "~/lib/practitioner-view";
 import { bookingEnabled } from "../booking/config";
 import { getSql } from "../db";
@@ -8,6 +10,7 @@ import { getSql } from "../db";
  * Search queries. Search is dynamic and never cached as a page: these run on
  * each request (`/recherche`, tRPC suggestions). Rankings are deterministic
  * (similarity, then name, then id; or distance, then id) and never paid.
+ * Every query is scoped to one market (`country`): a search never mixes them.
  */
 
 /*
@@ -32,6 +35,7 @@ export type PractitionerSuggestion = {
 export async function suggestPractitioners(
 	query: string,
 	limit = 6,
+	country = "FR",
 ): Promise<PractitionerSuggestion[]> {
 	return getSql()<PractitionerSuggestion[]>`
 		WITH q AS (SELECT directory.text_norm(${query}) AS v)
@@ -40,7 +44,7 @@ export async function suggestPractitioners(
 			sd.payload->>'firstName' AS "firstName", sd.payload->>'lastName' AS "lastName",
 			sd.listing_slug AS "listingSlug", sd.payload->'site'->>'placeName' AS "placeName"
 		FROM directory.search_docs sd, q
-		WHERE sd.indexable AND q.v <% sd.name_norm
+		WHERE sd.indexable AND sd.country = ${country} AND q.v <% sd.name_norm
 		ORDER BY word_similarity(q.v, sd.name_norm) DESC, sd.name_norm, sd.practitioner_id
 		LIMIT ${limit}
 	`;
@@ -69,15 +73,21 @@ const placeColumns = (alias: string) => `
  * similarity, then by population, so the largest homonym comes first. A
  * leading number is also matched against postcodes.
  */
-export async function suggestPlaces(query: string, limit = 8): Promise<PlaceSuggestion[]> {
+export async function suggestPlaces(
+	query: string,
+	limit = 8,
+	country = "FR",
+): Promise<PlaceSuggestion[]> {
 	const sql = getSql();
 	return sql<PlaceSuggestion[]>`
 		WITH q AS (SELECT directory.text_norm(${query}) AS v)
 		SELECT ${sql.unsafe(placeColumns("p"))}
 		FROM directory.places p
 		CROSS JOIN q
-		LEFT JOIN directory.places d ON d.kind = 'department' AND d.code = p.department_code
-		WHERE p.kind IN ('commune', 'arrondissement', 'department') AND p.removed_at IS NULL
+		LEFT JOIN directory.places d ON d.country = p.country AND d.kind = 'department'
+			AND d.code = p.department_code
+		WHERE p.country = ${country} AND p.kind IN ('commune', 'arrondissement', 'department')
+			AND p.removed_at IS NULL
 			AND (
 				q.v <% directory.text_norm(p.name)
 				OR (q.v ~ '^[0-9]{2,5}$' AND EXISTS (
@@ -95,20 +105,23 @@ export async function suggestPlaces(query: string, limit = 8): Promise<PlaceSugg
  * narrowed by a department code). Several rows mean homonyms.
  */
 export async function matchPlaces(input: {
+	country?: string;
 	where: string;
 	postcode?: string;
 	departmentHint?: string;
 }): Promise<PlaceSuggestion[]> {
 	const sql = getSql();
 	const hint = input.departmentHint ?? null;
+	const country = input.country ?? "FR";
 	if (input.postcode) {
 		// The arrondissement of a Paris/Lyon/Marseille postcode, else its communes.
 		return sql<PlaceSuggestion[]>`
 			SELECT ${sql.unsafe(placeColumns("p"))}
 			FROM directory.places p
-			LEFT JOIN directory.places d ON d.kind = 'department' AND d.code = p.department_code
-			WHERE p.kind IN ('commune', 'arrondissement') AND p.removed_at IS NULL
-				AND p.postcodes @> ARRAY[${input.postcode}]::text[]
+			LEFT JOIN directory.places d ON d.country = p.country AND d.kind = 'department'
+			AND d.code = p.department_code
+			WHERE p.country = ${country} AND p.kind IN ('commune', 'arrondissement')
+				AND p.removed_at IS NULL AND p.postcodes @> ARRAY[${input.postcode}]::text[]
 				AND NOT (p.kind = 'commune' AND EXISTS (
 					SELECT 1 FROM directory.places a
 					WHERE a.parent_id = p.id AND a.kind = 'arrondissement'
@@ -120,15 +133,17 @@ export async function matchPlaces(input: {
 	const rows = await sql<PlaceSuggestion[]>`
 		SELECT ${sql.unsafe(placeColumns("p"))}
 		FROM directory.places p
-		LEFT JOIN directory.places d ON d.kind = 'department' AND d.code = p.department_code
-		WHERE p.kind IN ('commune', 'arrondissement', 'department') AND p.removed_at IS NULL
+		LEFT JOIN directory.places d ON d.country = p.country AND d.kind = 'department'
+			AND d.code = p.department_code
+		WHERE p.country = ${country} AND p.kind IN ('commune', 'arrondissement', 'department')
+			AND p.removed_at IS NULL
 			AND directory.text_norm(p.name) = directory.text_norm(${input.where})
 			AND (${hint}::text IS NULL OR p.department_code = ${hint}::text OR p.code = ${hint}::text)
 		ORDER BY p.population DESC NULLS LAST, p.id
 		LIMIT 10
 	`;
-	// "Paris" names both a commune and its department: keep the commune, whose
-	// pages are the department's anyway.
+	// "Paris" and "Wien" name both a commune and its department: keep the commune,
+	// whose pages are the department's anyway.
 	const communes = rows.filter((row) => row.kind !== "department");
 	return communes.length > 0 ? communes : rows;
 }
@@ -136,20 +151,22 @@ export async function matchPlaces(input: {
 export type LandingTarget = { listingSlug: string; deptSlug: string; communeSlug?: string };
 
 /**
- * The listing page of a listing slug in a place, when it exists. The Paris
- * commune's listings are its department pages.
+ * The listing page of a listing slug in a place of a market, when it exists. The
+ * Paris and Wien communes' listings are their department pages.
  */
 export async function landingTarget(
 	listingSlug: string,
 	place: PlaceSuggestion,
+	country = "FR",
 ): Promise<LandingTarget | null> {
 	if (!place.departmentSlug) return null;
 	const sql = getSql();
-	const isParis = place.kind === "commune" && place.code === "75056";
+	const isParis = place.kind === "commune" && isDepartmentCity(country, place.code);
 	let placeId = place.id;
 	if (isParis || place.kind === "department") {
 		const [department] = await sql<{ id: number }[]>`
-			SELECT id FROM directory.places WHERE kind = 'department' AND code = ${place.departmentCode}
+			SELECT id FROM directory.places
+			WHERE country = ${country} AND kind = 'department' AND code = ${place.departmentCode}
 		`;
 		if (!department) return null;
 		placeId = department.id;
@@ -163,10 +180,11 @@ export async function landingTarget(
 		: { listingSlug, deptSlug: place.departmentSlug, communeSlug: place.slug };
 }
 
-/** True when the France-wide hub of a listing slug exists. */
-export async function listingHubExists(listingSlug: string): Promise<boolean> {
+/** True when the market-wide hub of a listing slug exists. */
+export async function listingHubExists(listingSlug: string, country = "FR"): Promise<boolean> {
 	const [row] = await getSql()<{ key: string }[]>`
-		SELECT key FROM directory.landing_pages WHERE key = ${`${listingSlug}:fr`}
+		SELECT key FROM directory.landing_pages
+		WHERE key = ${`${listingSlug}:${country.toLowerCase()}`}
 	`;
 	return Boolean(row);
 }
@@ -213,6 +231,8 @@ export const SEARCH_PAGE_SIZE = 20;
  * else alphabetically. Returns one extra row to tell whether a next page exists.
  */
 export async function searchPractitioners(input: {
+	/** Market searched (`FR` by default). */
+	country?: string;
 	name?: string;
 	listingSlug?: string;
 	placeId?: number;
@@ -232,7 +252,8 @@ export async function searchPractitioners(input: {
 			? sql`word_similarity(directory.text_norm(${name}), sd.name_norm) DESC, sd.name_norm, sd.practitioner_id`
 			: sql`sd.name_norm, sd.practitioner_id`;
 	const offset = (input.page - 1) * SEARCH_PAGE_SIZE;
-	const online = bookingEnabled();
+	const country = input.country ?? "FR";
+	const online = bookingEnabled() && countryAdapter(country).features.booking;
 	const rows = await sql<SearchResult[]>`
 		SELECT sd.practitioner_id AS id, sd.payload->>'slug' AS slug,
 			sd.payload->>'titleCode' AS "titleCode", sd.payload->>'civilityCode' AS "civilityCode",
@@ -286,7 +307,7 @@ export async function searchPractitioners(input: {
 					SELECT NULL::timestamptz AS next_free_at, NULL::text AS time_zone
 				) booking ON true`
 		}
-		WHERE sd.indexable
+		WHERE sd.indexable AND sd.country = ${country}
 			${name ? sql`AND directory.text_norm(${name}) <% sd.name_norm` : sql``}
 			${listingSlug ? sql`AND sd.listing_slug = ${listingSlug}` : sql``}
 			${placeId ? sql`AND sd.place_ids @> ARRAY[${placeId}]::integer[] AND local.found` : sql``}

@@ -44,4 +44,14 @@ describe("listing index", () => {
 		expect(resolveListing("cardio")).toBeNull();
 		expect(resolveListing("Dupont")).toBeNull();
 	});
+
+	it("suggests and resolves each market's own listings only", () => {
+		expect(suggestListings("Kardio", "de-AT").map((entry) => entry.slug)).toEqual(["kardiologie"]);
+		expect(suggestListings("Zahn", "de-AT").map((entry) => entry.slug)).toContain("zahnaerzte");
+		expect(suggestListings("Kardio", "de").map((entry) => entry.slug)).not.toContain("kardiologie");
+		expect(resolveListing("Allgemeinmedizin", "AT")).toBe("allgemeinmedizin");
+		expect(resolveListing("Kardiologie", "AT")).toBe("kardiologie");
+		expect(resolveListing("Allgemeinmedizin", "FR")).not.toBe("allgemeinmedizin");
+		expect(resolveListing("cardiologue", "AT")).toBeNull();
+	});
 });

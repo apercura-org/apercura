@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { PlaceHub } from "~/components/place-hub";
+import { marketOf } from "~/i18n/locales";
 import { type Href, permanentRedirect } from "~/i18n/navigation";
 import { type Locale, routing } from "~/i18n/routing";
 import { isDepartmentSlug, isPlaceSlug, placeLabel } from "~/lib/places";
@@ -35,11 +36,12 @@ type Props = PageProps<"/[locale]/annuaire/[dept]/[commune]">;
 async function resolve(params: Props["params"]) {
 	const { locale: requested, dept, commune } = await params;
 	const locale: Locale = hasLocale(routing.locales, requested) ? requested : routing.defaultLocale;
-	if (!isDepartmentSlug(dept) || !isPlaceSlug(commune)) notFound();
-	const resolution = await resolvePlace(dept, commune);
+	const country = marketOf(locale);
+	if (!isDepartmentSlug(dept, country) || !isPlaceSlug(commune)) notFound();
+	const resolution = await resolvePlace(country, dept, commune);
 	if (resolution.kind === "not_found") notFound();
 	if (resolution.kind === "moved") {
-		// Old slugs and merged communes move; the Paris city is its department page.
+		// Old slugs and merged communes move; the Paris and Wien cities are their department page.
 		const target: Href = resolution.placeSlug
 			? {
 					pathname: "/annuaire/[dept]/[commune]",
@@ -50,10 +52,11 @@ async function resolve(params: Props["params"]) {
 	}
 	const place = resolution.place;
 	if (!place) notFound();
-	const hub = await getPlaceHub(place, resolution.isCity);
+	const hub = await getPlaceHub(country, place, resolution.isCity);
 	if (hub.total === 0) notFound();
 	return {
 		locale,
+		country,
 		department: resolution.department,
 		place,
 		hub,
@@ -62,10 +65,10 @@ async function resolve(params: Props["params"]) {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-	const { locale, place, hub, href } = await resolve(params);
+	const { locale, country, place, hub, href } = await resolve(params);
 	const t = await getTranslations({ locale, namespace: "Directory" });
-	const name = placeLabel(place);
-	const short = placeLabel({ ...place, name: shortPlaceName(place.name) });
+	const name = placeLabel(place, country);
+	const short = placeLabel({ ...place, name: shortPlaceName(place.name) }, country);
 	return pageMetadata({
 		locale,
 		href,
