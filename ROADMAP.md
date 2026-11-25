@@ -102,8 +102,8 @@ test, reflow at 390 px and a Lighthouse CI score of 100. What is left is manual:
     rest of the booking data.
 13. **Home visits, next steps.** Self-employed nurses already book home visits
     ([#75](https://github.com/maxgfr/apercura/issues/75)): a service area of communes, the
-    patient's address encrypted and shown to the practice only, a fixed travel time after each
-    visit. Still to come:
+    patient's address encrypted and shown to the practice only, a fixed travel time kept free
+    between a visit and the practice, and once between two visits. Still to come:
     - **Travel time from the distance** between consecutive visits (commune centres first, then
       the practice's own route), instead of one fixed buffer;
     - **Other professions that visit patients**: physiotherapists, midwives and general

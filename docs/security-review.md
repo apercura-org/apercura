@@ -234,6 +234,13 @@ depth, hard to exploit), **Info** (hardening, no direct impact).
     row's fields). Patient emails, the `.ics` files and `/rdv` print "À domicile — <commune>"
     and never the street; practice emails print "À domicile" only (no patient data there, as
     before); the private calendar feed carries no place at all.
+  - _Travel time_ (`travelConflict` in `packages/core/src/booking/occupancy.ts`,
+    `server/booking/travel.ts`): each appointment freezes its place and travel time. Its
+    occupied range holds the travel after a visit (the overlap constraint keeps ranges apart);
+    the travel before a visit, needed only next to an entry that does not travel, is checked by
+    every booking write inside the practitioner's serialized transaction and answered like an
+    overlap. Rescheduling keeps the frozen travel time and refuses a type that changed place
+    since the booking.
   - _Erasure_: the purge clears both columns with the rest of the patient's details (24 hours
     for an unverified booking, `purge_after` otherwise); a closed practice deletes the rows.
 - **Configuration**: production refuses to start without
