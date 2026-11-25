@@ -634,6 +634,9 @@ test.describe("status codes and redirects", () => {
 	});
 });
 
+/** Pages another spec unpublishes and publishes again during the run (owner.spec.ts). */
+const MUTATED_BY_OTHER_SPECS = ["/fr/praticien/benoit-essaial-19999991110"];
+
 test.describe("sitemaps", () => {
 	const LOC = /<loc>([^<]+)<\/loc>/g;
 	const LASTMOD = /<lastmod>([^<]+)<\/lastmod>/g;
@@ -686,6 +689,9 @@ test.describe("sitemaps", () => {
 		expect(urls).toContain(`${origin}/at`);
 
 		for (const url of urls) {
+			// owner.spec.ts removes and restores this claimed page while the specs run in
+			// parallel (#119): the sitemap, cached up to five minutes, may still list it meanwhile.
+			if (MUTATED_BY_OTHER_SPECS.some((path) => url === `${origin}${path}`)) continue;
 			// The international home and each market's own language: France in French, Austria in
 			// German. Interface translations (/fr-de…) are never listed.
 			expect(
