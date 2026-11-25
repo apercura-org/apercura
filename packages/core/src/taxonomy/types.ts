@@ -27,6 +27,12 @@ export type ProfessionEntry = {
 	slug: string;
 	/** Imported by default (v1 scope). Other professions are mapped but opt-in. */
 	enabled: boolean;
+	/**
+	 * Only self-employed activities (TRE_R23 mode `L`) are imported: nurses, whose
+	 * salaried activities (hospitals, care homes, health centers) patients do not
+	 * book. A person with no self-employed activity is not imported at all.
+	 */
+	liberalOnly?: boolean;
 };
 
 export type SpecialtyEntry = {

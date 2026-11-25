@@ -300,18 +300,19 @@ describe.skipIf(!url)("booking (database)", { timeout: 30_000 }, () => {
 				},
 			])
 			.returning({ id: sites.id });
+		// A: a GP in Paris. B: a self-employed nurse overseas, with the same practice-based agenda.
 		const [practA, practB] = await db
 			.insert(practitioners)
 			.values(
 				(["A", "B"] as const).map((letter) => ({
 					nationalId: id(`TEST${letter}`),
-					titleCode: "DR",
+					titleCode: letter === "A" ? "DR" : null,
 					firstName: "Camille",
 					lastName: `Exemple${letter}`,
 					firstNameSource: "CAMILLE",
 					lastNameSource: `EXEMPLE${letter}`,
-					professionCode: "10",
-					listingSlug: "medecin-generaliste",
+					professionCode: letter === "A" ? "10" : "60",
+					listingSlug: letter === "A" ? "medecin-generaliste" : "infirmier",
 					slug: id(`camille-exemple-${letter.toLowerCase()}`),
 					claimStatus: "claimed",
 					ownerOrgId: letter === "A" ? orgA : orgB,
@@ -483,7 +484,14 @@ describe.skipIf(!url)("booking (database)", { timeout: 30_000 }, () => {
 		});
 		calendarB = createdB.id;
 		expect(createdB.timeZone).toBe("Indian/Reunion");
-		typeB = (await ownerB.calendar.list({ organizationId: orgB }))[0]?.types[0]?.id ?? "";
+		// The nurse's agenda starts with the usual care given at the office.
+		const [nurseCalendar] = await ownerB.calendar.list({ organizationId: orgB });
+		expect(nurseCalendar?.types.map((type) => [type.name, type.durationMin])).toEqual([
+			["Prise de sang", 10],
+			["Injection", 10],
+			["Pansement", 15],
+		]);
+		typeB = nurseCalendar?.types[0]?.id ?? "";
 		await ownerB.calendar.replaceRules({
 			organizationId: orgB,
 			calendarId: calendarB,

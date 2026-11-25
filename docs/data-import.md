@@ -48,13 +48,14 @@ The URLs can be overridden with `ETL_ANS_URLS`, `ETL_AMELI_URL`,
    address line, practice kind from `@apercura/core/taxonomy`). Malformed lines
    go to `stg_quarantine` (count and samples in `etl_runs.stats.quarantine`);
    more than 0.1% fails the run. Unknown taxonomy codes are reported in
-   `stats.taxonomy`.
+   `stats.taxonomy`, with the lines skipped by the scope (see
+   [Professions](#professions)).
 4. **COPY** into the staging tables (`directory.stg_*`, ordinary tables
    truncated at each run), then `ANALYZE`.
 5. **Staging guards**: rows within ±3% and distinct RPPS per profession within
-   ±2% of the last success, at least 98% of rows with a structure resolving to
-   a commune, Luhn check of every staged RPPS (in SQL, as a second line of
-   defense).
+   ±2% of the last success with the same profession list, at least 98% of rows
+   with a structure resolving to a commune, Luhn check of every staged RPPS (in
+   SQL, as a second line of defense).
 6. **Merge**, set-based, in **one transaction** so that the circuit breakers
    can roll everything back:
    - places of structures: published commune code, then the arrondissement of
@@ -126,6 +127,42 @@ Every run, whatever its outcome, is recorded in `directory.etl_runs` (status
 `succeeded`, `failed`, `blocked`, `skipped` or `dry_run`, stats per step,
 durations, peak RSS).
 
+### Professions
+
+`ETL_PROFESSIONS` (or `--professions`) lists the TRE_G15 profession codes to
+import. The default, `FR_DEFAULT_PROFESSIONS` in `@apercura/core/taxonomy`, is
+`10,40,50,60`: physicians, dental surgeons, midwives and nurses. Every other
+registered profession is mapped (slug and labels) but opt-in; `99` is never
+imported.
+
+- **Nurses (`60`) are imported for their self-employed practice only**: a
+  `Personne_activite` line of a nurse is kept only when its practice mode is
+  `L` (libéral). Hospital, care home or health center employees are left out
+  (patients do not book them), so a nurse without any self-employed activity
+  is not imported at all, and one who also works at a hospital is listed at
+  their own practice only. This is `liberalOnly` on the profession entry,
+  checked by `activityInScope`. Physicians, dental surgeons and midwives keep
+  every activity, salaried ones included.
+- **`69` (infirmier psychiatrique) is not imported by default.** It is a
+  retired code: the psychiatric nursing diploma was merged into the single
+  nursing state diploma in 1992, so nurses are registered as `60`. An
+  operator can still add it (`ETL_PROFESSIONS=10,40,50,60,69`); it then lists
+  under its own slug, self-employed activities only.
+- `stats.taxonomy.outOfScopeLines` counts the skipped lines of mapped
+  professions outside the list (by code), and `stats.taxonomy.notLiberalLines`
+  the lines of nurses left out because they are not self-employed.
+
+**Changing the list.** The volume guards (file size, staging rows, RPPS per
+profession) only compare a run with the last success of the **same**
+profession list, so the first run with a new profession is not blocked by the
+volume it adds; the next runs compare with it. The circuit breakers count
+existing pages that would change or be unpublished, never new ones, so adding
+a profession (over 100,000 self-employed nurses for France) passes them.
+Removing one unpublishes its pages, which trips the 1% breaker unless it is a
+small share: approve it with `--approve=<run_id>` once reviewed. A directory
+that imported nurses before the self-employed-only rule loses their salaried
+activities on the next run, which can also trip the breakers.
+
 ### `--department`
 
 The whole file is still parsed and staged (absence detection and the volume
@@ -156,6 +193,12 @@ matches is unique to them and carries the same values. Ambiguous means nothing
 is stored. Fields: `billing_sector` (`0` not contracted, `1`, `2` sector 1 with
 permanent extra fees, `3` sector 2), `optam` (`optam`, `optam_aco`),
 `carte_vitale`, `apcv`, `ameli_matched_at`.
+
+Only physicians have sectors and OPTAM. For dental surgeons, midwives and
+nurses, Ameli writes `1` as "Secteur 1 ou conventionné": pages print it as
+"Conventionné" (`hasBillingSectors` in `@apercura/core/taxonomy`). Nurses
+have one Ameli specialty code, `24`, compatible with every nurse listing slug;
+rows of professions that are not imported are dropped before staging.
 
 ## Data ownership
 
@@ -206,7 +249,7 @@ it. It uses the same build as the web app.
    runtime) whose run command is `bun run etl:fr`, in the Paris zone, attached
    to the same PostgreSQL add-on. Give it only these environment variables:
    `DATABASE_URL_ETL` (role `apercura_etl`), `APP_URL`, `REVALIDATE_SECRET`,
-   `ETL_PROFESSIONS` (default `10,40,50`) and optionally `ETL_WORK_DIR`.
+   `ETL_PROFESSIONS` (default `10,40,50,60`) and optionally `ETL_WORK_DIR`.
    Size it for the measured peak memory below plus headroom; the task needs
    about 1.2 GB of temporary disk for the downloads.
 2. Clever Tasks do not run `clevercloud/cron.json` themselves: the web app's
@@ -246,6 +289,10 @@ cached address again for its label and changes the street line of many pages,
 so it is usually blocked by the 10% breaker: review it and approve it with
 `--approve=<run_id>`.
 
+These figures predate nurses in the default scope: expect a longer merge and
+geocoding step on the first run with them (new sites), and more practitioners
+per department.
+
 An unchanged run stops after the download (`skipped`, 101 s, 121 MB). The
 whole file is parsed and staged even with `--department`, so memory and
 parsing time are about the same for a full-France run; the merge grows with
@@ -267,9 +314,10 @@ range, made-up names, ARCEP fiction phone numbers), generated by
 public geo.api.gouv.fr data. Never commit real registry rows.
 
 The CI `etl` job applies the migrations to a PostGIS service, runs
-`etl:fr --dry-run` on the fixtures, then the integration test (import twice
-with zero changes the second time, truncated file, removal after two runs,
-circuit breaker and `--approve`, suppressions, owner data untouched, street
+`etl:fr --dry-run` on the fixtures, then the integration test (an import
+without nurses, then one with them that no guard blocks and that leaves their
+salaried activities out, import twice with zero changes the second time,
+truncated file, removal after two runs, circuit breaker and `--approve`, suppressions, owner data untouched, street
 labels from a local mock of the geocoder). Dry runs
 commit nothing but the places reference data, imported before the merge when
 the table is empty.

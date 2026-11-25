@@ -13,7 +13,7 @@ Commands:
 
 Flags (etl:fr):
   --department <code>     Only merge practitioners with an activity in this department (e.g. 75).
-  --professions <codes>   Profession codes (default ETL_PROFESSIONS, else 10,40,50). Never 99.
+  --professions <codes>   Profession codes (default ETL_PROFESSIONS, else 10,40,50,60). Never 99.
   --dry-run               Run everything, report, then roll back.
   --approve=<run_id>      Accept the unusual changes a blocked run reported (same files only).
   --force                 Import even when the source files did not change.

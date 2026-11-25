@@ -149,6 +149,28 @@ describe("practitionerNodes", () => {
 		expect(person.workLocation).toEqual({ "@id": `${URL_OFFICE}#site-101` });
 	});
 
+	it("describes a nurse as Person with the nursing occupation", () => {
+		const nodes = practitionerNodes({
+			...doctor,
+			professionCode: "60",
+			listingSlug: "infirmier",
+			name: "Pauline Soignante",
+			givenName: "Pauline",
+			familyName: "Soignante",
+			honorificPrefix: null,
+			occupation: "Infirmière",
+			places: [office],
+		});
+		const person = nodeOf(nodes, "Person");
+		expect(person.hasOccupation).toEqual({
+			"@type": "Occupation",
+			name: "Infirmière",
+			occupationalCategory: "2221",
+		});
+		expect(person).not.toHaveProperty("medicalSpecialty");
+		expect(person.workLocation).toEqual({ "@id": `${URL_OFFICE}#site-101` });
+	});
+
 	it("adds a ReserveAction only when online booking is open", () => {
 		const closed = nodeOf(practitionerNodes(doctor), "IndividualPhysician");
 		expect(closed).not.toHaveProperty("potentialAction");
@@ -224,6 +246,11 @@ describe("medicalSpecialtiesOf", () => {
 			"https://schema.org/Obstetric",
 		]);
 		expect(medicalSpecialtiesOf("medecin")).toEqual([]);
+		expect(medicalSpecialtiesOf("infirmier")).toEqual(["https://schema.org/Nursing"]);
+		expect(medicalSpecialtiesOf("infirmier-puericulteur")).toEqual([
+			"https://schema.org/Nursing",
+			"https://schema.org/Pediatric",
+		]);
 		expect(medicalSpecialtiesOf(null)).toEqual([]);
 	});
 });

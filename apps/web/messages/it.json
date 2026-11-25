@@ -474,8 +474,8 @@
 	"PractitionerPage": {
 		"metaTitle": "{name}, {occupation} · Apercura",
 		"metaTitlePlace": "{name}, {occupation} a {place} · Apercura",
-		"metaDescription": "{name}, {occupation}: indirizzo, recapiti e settore tariffario, dal registro nazionale.",
-		"metaDescriptionPlace": "{name}, {occupation} a {place}: indirizzo, recapiti e settore tariffario, dal registro nazionale.",
+		"metaDescription": "{name}, {occupation}: indirizzo, recapiti e {fees, select, sector {settore tariffario} other {convenzione tariffaria}}, dal registro nazionale.",
+		"metaDescriptionPlace": "{name}, {occupation} a {place}: indirizzo, recapiti e {fees, select, sector {settore tariffario} other {convenzione tariffaria}}, dal registro nazionale.",
 		"unknownProfession": "Professionista sanitario",
 		"professionHeading": "Professione e qualifiche",
 		"otherQualifications": "Altre qualifiche",
@@ -498,6 +498,7 @@
 		"fees": {
 			"heading": "Onorari e assicurazione sanitaria",
 			"sector": "Settore tariffario",
+			"agreement": "Convenzione tariffaria",
 			"optam": "Onorari aggiuntivi limitati (OPTAM)",
 			"optamNo": "Non membro",
 			"carteVitale": "Carte Vitale",
@@ -506,6 +507,7 @@
 			"fromAmeli": "Questi dati provengono dall’elenco dell’Assurance Maladie.",
 			"notMatched": "Non è stato possibile associare con certezza questo professionista nell’elenco dell’Assurance Maladie, perciò questi dati non vengono mostrati.",
 			"regulatoryNotice": "Il settore tariffario determina come vengono applicati e rimborsati gli onorari: verifichi onorari e rimborso prima dell’appuntamento su",
+			"regulatoryNoticeAgreement": "La convenzione tariffaria determina come vengono applicati e rimborsati gli onorari: verifichi onorari e rimborso prima dell’appuntamento su",
 			"ameliLink": "ameli.fr, l’elenco dell’Assurance Maladie",
 			"source": "Annuaire santé, Assurance Maladie",
 			"sourceOwner": "Il professionista"
@@ -534,8 +536,8 @@
 			"dataLink": "Come vengono pubblicate e rimosse le pagine"
 		},
 		"metaTitleName": "{name} · Apercura",
-		"metaDescriptionBookable": "{name}, {occupation}: prenotazione online, indirizzo, recapiti e settore tariffario.",
-		"metaDescriptionBookablePlace": "{name}, {occupation} a {place}: prenotazione online, indirizzo, recapiti e settore tariffario."
+		"metaDescriptionBookable": "{name}, {occupation}: prenotazione online, indirizzo, recapiti e {fees, select, sector {settore tariffario} other {convenzione tariffaria}}.",
+		"metaDescriptionBookablePlace": "{name}, {occupation} a {place}: prenotazione online, indirizzo, recapiti e {fees, select, sector {settore tariffario} other {convenzione tariffaria}}."
 	},
 	"Institutional": {
 		"toBeCompleted": "Da completare",
@@ -1063,15 +1065,17 @@
 		"count": "{count, plural, one {# professionista} many {# di professionisti} other {# professionisti}}",
 		"metaTitle": "{count, plural, one {{listing} a {place}: # professionista · Apercura} many {{listing} a {place}: # di professionisti · Apercura} other {{listing} a {place}: # professionisti · Apercura}}",
 		"metaTitlePage": "{listing} a {place}, pagina {page} · Apercura",
-		"metaDescription": "{count, plural, one {# professionista registrato come {occupation} a {place} nel registro nazionale: indirizzi, recapiti, settori tariffari.} many {# di professionisti registrati come {occupation} a {place} nel registro nazionale: indirizzi, recapiti, settori tariffari.} other {# professionisti registrati come {occupation} a {place} nel registro nazionale: indirizzi, recapiti, settori tariffari.}}",
+		"metaDescription": "{count, plural, one {# professionista registrato come {occupation} a {place} nel registro nazionale: indirizzi, recapiti, {fees, select, sector {settori tariffari} other {convenzioni tariffarie}}.} many {# di professionisti registrati come {occupation} a {place} nel registro nazionale: indirizzi, recapiti, {fees, select, sector {settori tariffari} other {convenzioni tariffarie}}.} other {# professionisti registrati come {occupation} a {place} nel registro nazionale: indirizzi, recapiti, {fees, select, sector {settori tariffari} other {convenzioni tariffarie}}.}}",
 		"title": "{listing} a {place}",
 		"lead": "{count, plural, one {Il registro nazionale elenca # professionista sotto questa voce con una sede di esercizio a {place}.} many {Il registro nazionale elenca # di professionisti sotto questa voce con una sede di esercizio a {place}.} other {Il registro nazionale elenca # professionisti sotto questa voce con una sede di esercizio a {place}.}}",
 		"practitionersHeading": "{count, plural, one {Il professionista} many {I # di professionisti} other {I # professionisti}}",
 		"practitionersIntro": "In ordine alfabetico. Nessuno paga per comparire qui e nessuno viene classificato.",
 		"rowFacts": "Settore: {sector} · Carte Vitale: {carteVitale}",
+		"rowFactsAgreement": "Convenzione: {sector} · Carte Vitale: {carteVitale}",
 		"columns": {
 			"practitioner": "Professionista",
 			"sector": "Settore",
+			"agreement": "Convenzione",
 			"carteVitale": "Carte Vitale"
 		},
 		"pagination": {
@@ -1083,7 +1087,9 @@
 		"facts": {
 			"heading": "In cifre",
 			"intro": "I settori tariffari e la Carte Vitale provengono dall’elenco dell’Assurance Maladie, per i professionisti con cui è stato possibile un abbinamento.",
+			"introAgreement": "Le convenzioni tariffarie e la Carte Vitale provengono dall’elenco dell’Assurance Maladie, per i professionisti con cui è stato possibile un abbinamento.",
 			"sectorUnknown": "Settore non noto",
+			"agreementUnknown": "Convenzione non nota",
 			"carteVitaleYes": "Accettare la Carte Vitale",
 			"carteVitaleNo": "Non accettare la Carte Vitale",
 			"bookingNotOpen": "Non ancora aperto",
@@ -1095,7 +1101,7 @@
 		"establishmentsIntro": "Ospedali, cliniche e centri sanitari in cui lavorano i professionisti elencati come {occupation}.",
 		"allSpecialties": "Tutte le specializzazioni a {place}",
 		"hubMetaTitle": "{count, plural, one {{listing} in Francia: # professionista · Apercura} many {{listing} in Francia: # di professionisti · Apercura} other {{listing} in Francia: # professionisti · Apercura}}",
-		"hubMetaDescription": "{count, plural, one {# professionista registrato come {occupation} nel registro nazionale, per dipartimento: indirizzi, recapiti, settori tariffari.} many {# di professionisti registrati come {occupation} nel registro nazionale, per dipartimento: indirizzi, recapiti, settori tariffari.} other {# professionisti registrati come {occupation} nel registro nazionale, per dipartimento: indirizzi, recapiti, settori tariffari.}}",
+		"hubMetaDescription": "{count, plural, one {# professionista registrato come {occupation} nel registro nazionale, per dipartimento: indirizzi, recapiti, {fees, select, sector {settori tariffari} other {convenzioni tariffarie}}.} many {# di professionisti registrati come {occupation} nel registro nazionale, per dipartimento: indirizzi, recapiti, {fees, select, sector {settori tariffari} other {convenzioni tariffarie}}.} other {# professionisti registrati come {occupation} nel registro nazionale, per dipartimento: indirizzi, recapiti, {fees, select, sector {settori tariffari} other {convenzioni tariffarie}}.}}",
 		"hubTitle": "{listing} in Francia",
 		"hubLead": "{count, plural, one {Il registro nazionale elenca # professionista sotto questa voce con una sede di esercizio in Francia.} many {Il registro nazionale elenca # di professionisti sotto questa voce con una sede di esercizio in Francia.} other {Il registro nazionale elenca # professionisti sotto questa voce con una sede di esercizio in Francia.}}",
 		"departmentsHeading": "{listing} per dipartimento",
@@ -1107,7 +1113,7 @@
 	},
 	"Directory": {
 		"metaTitle": "Elenco dei professionisti sanitari per luogo · Apercura",
-		"metaDescription": "Tutti i dipartimenti della Francia con i loro professionisti sanitari, dal registro nazionale: medici, dentisti e ostetriche.",
+		"metaDescription": "Tutti i dipartimenti della Francia con i loro professionisti sanitari, dal registro nazionale: medici, dentisti, ostetriche e infermieri.",
 		"title": "Elenco per luogo",
 		"lead": "{count, plural, one {# professionista con una sede di esercizio, per dipartimento.} many {# di professionisti con una sede di esercizio, per dipartimento.} other {# professionisti con una sede di esercizio, per dipartimento.}}",
 		"otherRegion": "Altre sedi",
@@ -1161,6 +1167,7 @@
 			"medecin": "Ogni medico in Francia ha già una pagina.",
 			"chirurgien-dentiste": "Ogni dentista in Francia ha già una pagina.",
 			"sage-femme": "Ogni ostetrica in Francia ha già una pagina.",
+			"infirmier": "Ogni infermiere libero professionista in Francia ha già una pagina.",
 			"annuaire": "Professionisti sanitari, per specializzazione e per luogo."
 		},
 		"footer": "Gratuito · Open source · Niente valutazioni né pubblicità"
@@ -1321,6 +1328,10 @@
 			"2": "Settore 1 con onorari aggiuntivi permanenti",
 			"3": "Settore 2 (onorari aggiuntivi)"
 		},
+		"billingAgreement": {
+			"0": "Non convenzionato con l’Assicurazione sanitaria francese",
+			"1": "Convenzionato con l’Assicurazione sanitaria francese"
+		},
 		"optam": {
 			"optam": "Aderente all’OPTAM (onorari aggiuntivi limitati)",
 			"optam_aco": "Aderente all’OPTAM-ACO (onorari aggiuntivi limitati)"
@@ -1381,7 +1392,10 @@
 			"scaling": "Detartrasi",
 			"orthodonticCheckup": "Controllo ortodontico",
 			"pregnancyFollowUp": "Controllo della gravidanza",
-			"perinealRehabilitation": "Riabilitazione del pavimento pelvico"
+			"perinealRehabilitation": "Riabilitazione del pavimento pelvico",
+			"bloodTest": "Prelievo di sangue",
+			"injection": "Iniezione",
+			"dressing": "Medicazione"
 		},
 		"email": {
 			"wordmark": "Apercura",
@@ -2275,7 +2289,7 @@
 				"payments": "Metodi di pagamento",
 				"done": "Dichiarato",
 				"todo": "Da completare",
-				"deontology": "Articolo R.4127-53 del codice della sanità pubblica francese: un medico che presenta la propria attività online indica i suoi onorari e i metodi di pagamento accettati.",
+				"deontology": "Un professionista sanitario che presenta la propria attività online indica i suoi onorari e i metodi di pagamento accettati (per i medici: articolo R.4127-53 del codice della sanità pubblica francese).",
 				"editFees": "Completare onorari e metodi di pagamento",
 				"settingsNote": "Sedi, orari di apertura e tipi di appuntamento si definiscono nelle impostazioni di prenotazione.",
 				"waitingPeriod": "Periodo di attesa dopo la verifica",
@@ -2345,6 +2359,7 @@
 			"requiredBadge": "Obbligatorio per la prenotazione",
 			"ameliPrefill": "Precompilato dall’elenco dell’Assurance Maladie. La sua dichiarazione lo sostituisce sulla sua pagina.",
 			"sector": "Settore tariffario",
+			"agreement": "Convenzione tariffaria",
 			"notStated": "Non indicato",
 			"optam": "Onorari aggiuntivi limitati (OPTAM)",
 			"optamNone": "Non membro",
@@ -2770,7 +2785,7 @@
 				"noType": "Offra online almeno un tipo di appuntamento.",
 				"noHours": "Aggiunga orari di apertura o un’apertura straordinaria.",
 				"editPage": "Completare onorari e metodi di pagamento",
-				"deontology": "Articolo R.4127-53 del codice della sanità pubblica francese: un medico che presenta la propria attività online indica i suoi onorari e i metodi di pagamento accettati.",
+				"deontology": "Un professionista sanitario che presenta la propria attività online indica i suoi onorari e i metodi di pagamento accettati (per i medici: articolo R.4127-53 del codice della sanità pubblica francese).",
 				"open": "Aprire la prenotazione online",
 				"pause": "Sospendere la prenotazione online",
 				"opened": "La prenotazione online è aperta. I pazienti possono prenotare sulla sua pagina.",

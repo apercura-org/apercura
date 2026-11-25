@@ -14,7 +14,7 @@ import {
 	practitionerSlug,
 	toE164Fr,
 } from "@apercura/core";
-import { FR_SECTOR_KINDS, practiceKindFor } from "@apercura/core/taxonomy";
+import { activityInScope, FR_SECTOR_KINDS, practiceKindFor } from "@apercura/core/taxonomy";
 import { z } from "zod";
 import type { CopyValue } from "../../lib/copy";
 import { nullIfEmpty } from "../../lib/text";
@@ -178,7 +178,9 @@ const quarantineReason = (error: z.ZodError): string => {
 
 /**
  * Maps one `Personne_activite` line to a staging row. Lines of professions out
- * of scope are skipped; malformed lines are quarantined.
+ * of scope, and salaried lines of the professions imported for their
+ * self-employed practice only (nurses), are skipped; malformed lines are
+ * quarantined.
  */
 export function parsePersonneActiviteLine(
 	fields: string[],
@@ -192,6 +194,7 @@ export function parsePersonneActiviteLine(
 	}
 	const professionCode = fields[index.professionCode] ?? "";
 	if (!professions.has(professionCode)) return { kind: "skip" };
+	if (!activityInScope(professionCode, field(fields, index.modeCode))) return { kind: "skip" };
 
 	const checked = coreSchema.safeParse({
 		idType: fields[index.idType],

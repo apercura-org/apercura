@@ -474,8 +474,8 @@
 	"PractitionerPage": {
 		"metaTitle": "{name}, {occupation} · Apercura",
 		"metaTitlePlace": "{name}, {occupation} in {place} · Apercura",
-		"metaDescription": "{name}, {occupation}: address, contact details and agreement sector, from the national register.",
-		"metaDescriptionPlace": "{name}, {occupation} in {place}: address, contact details and agreement sector, from the national register.",
+		"metaDescription": "{name}, {occupation}: address, contact details and {fees, select, sector {agreement sector} other {fee agreement}}, from the national register.",
+		"metaDescriptionPlace": "{name}, {occupation} in {place}: address, contact details and {fees, select, sector {agreement sector} other {fee agreement}}, from the national register.",
 		"unknownProfession": "Health professional",
 		"professionHeading": "Profession and qualifications",
 		"otherQualifications": "Other qualifications",
@@ -498,6 +498,7 @@
 		"fees": {
 			"heading": "Fees and health insurance",
 			"sector": "Agreement sector",
+			"agreement": "Fee agreement",
 			"optam": "Capped extra fees (OPTAM)",
 			"optamNo": "Not a member",
 			"carteVitale": "Carte Vitale",
@@ -506,6 +507,7 @@
 			"fromAmeli": "These details come from the Assurance Maladie directory.",
 			"notMatched": "This practitioner could not be matched with certainty in the Assurance Maladie directory, so these details are not shown.",
 			"regulatoryNotice": "The agreement sector sets how fees are charged and reimbursed: check fees and reimbursement before your appointment on",
+			"regulatoryNoticeAgreement": "The fee agreement sets how fees are charged and reimbursed: check fees and reimbursement before your appointment on",
 			"ameliLink": "ameli.fr, the Assurance Maladie directory",
 			"source": "Annuaire santé, Assurance Maladie",
 			"sourceOwner": "The practitioner"
@@ -534,8 +536,8 @@
 			"dataLink": "How pages are published and removed"
 		},
 		"metaTitleName": "{name} · Apercura",
-		"metaDescriptionBookable": "{name}, {occupation}: online booking, address, contact details and agreement sector.",
-		"metaDescriptionBookablePlace": "{name}, {occupation} in {place}: online booking, address, contact details and agreement sector."
+		"metaDescriptionBookable": "{name}, {occupation}: online booking, address, contact details and {fees, select, sector {agreement sector} other {fee agreement}}.",
+		"metaDescriptionBookablePlace": "{name}, {occupation} in {place}: online booking, address, contact details and {fees, select, sector {agreement sector} other {fee agreement}}."
 	},
 	"Institutional": {
 		"toBeCompleted": "To be completed",
@@ -1063,15 +1065,17 @@
 		"count": "{count, plural, one {# practitioner} other {# practitioners}}",
 		"metaTitle": "{count, plural, one {{listing} in {place}: # practitioner · Apercura} other {{listing} in {place}: # practitioners · Apercura}}",
 		"metaTitlePage": "{listing} in {place}, page {page} · Apercura",
-		"metaDescription": "{count, plural, one {# practitioner listed as {occupation} in {place} in the national register: addresses, contact details, agreement sectors.} other {# practitioners listed as {occupation} in {place} in the national register: addresses, contact details, agreement sectors.}}",
+		"metaDescription": "{count, plural, one {# practitioner listed as {occupation} in {place} in the national register: addresses, contact details, {fees, select, sector {agreement sectors} other {fee agreements}}.} other {# practitioners listed as {occupation} in {place} in the national register: addresses, contact details, {fees, select, sector {agreement sectors} other {fee agreements}}.}}",
 		"title": "{listing} in {place}",
 		"lead": "{count, plural, one {The national register lists # practitioner under this heading with a place of practice in {place}.} other {The national register lists # practitioners under this heading with a place of practice in {place}.}}",
 		"practitionersHeading": "{count, plural, one {The practitioner} other {The # practitioners}}",
 		"practitionersIntro": "In alphabetical order. Nobody pays to appear here, and nobody is ranked.",
 		"rowFacts": "Sector: {sector} · Carte Vitale: {carteVitale}",
+		"rowFactsAgreement": "Fee agreement: {sector} · Carte Vitale: {carteVitale}",
 		"columns": {
 			"practitioner": "Practitioner",
 			"sector": "Sector",
+			"agreement": "Fee agreement",
 			"carteVitale": "Carte Vitale"
 		},
 		"pagination": {
@@ -1083,7 +1087,9 @@
 		"facts": {
 			"heading": "In figures",
 			"intro": "Agreement sectors and Carte Vitale come from the Assurance Maladie directory, for the practitioners it could be matched with.",
+			"introAgreement": "Fee agreements and Carte Vitale come from the Assurance Maladie directory, for the practitioners it could be matched with.",
 			"sectorUnknown": "Sector not known",
+			"agreementUnknown": "Fee agreement not known",
 			"carteVitaleYes": "Accept the Carte Vitale",
 			"carteVitaleNo": "Do not accept the Carte Vitale",
 			"bookingNotOpen": "Not open yet",
@@ -1095,7 +1101,7 @@
 		"establishmentsIntro": "Hospitals, clinics and health centres where practitioners listed as {occupation} work.",
 		"allSpecialties": "Every specialty in {place}",
 		"hubMetaTitle": "{count, plural, one {{listing} in France: # practitioner · Apercura} other {{listing} in France: # practitioners · Apercura}}",
-		"hubMetaDescription": "{count, plural, one {# practitioner listed as {occupation} in the national register, by department: addresses, contact details, agreement sectors.} other {# practitioners listed as {occupation} in the national register, by department: addresses, contact details, agreement sectors.}}",
+		"hubMetaDescription": "{count, plural, one {# practitioner listed as {occupation} in the national register, by department: addresses, contact details, {fees, select, sector {agreement sectors} other {fee agreements}}.} other {# practitioners listed as {occupation} in the national register, by department: addresses, contact details, {fees, select, sector {agreement sectors} other {fee agreements}}.}}",
 		"hubTitle": "{listing} in France",
 		"hubLead": "{count, plural, one {The national register lists # practitioner under this heading with a place of practice in France.} other {The national register lists # practitioners under this heading with a place of practice in France.}}",
 		"departmentsHeading": "{listing} by department",
@@ -1107,7 +1113,7 @@
 	},
 	"Directory": {
 		"metaTitle": "Directory of health practitioners by place · Apercura",
-		"metaDescription": "Every department of France with its health practitioners, from the national register: doctors, dentists and midwives.",
+		"metaDescription": "Every department of France with its health practitioners, from the national register: doctors, dentists, midwives and nurses.",
 		"title": "Directory by place",
 		"lead": "{count, plural, one {# practitioner with a place of practice, by department.} other {# practitioners with a place of practice, by department.}}",
 		"otherRegion": "Other places",
@@ -1161,6 +1167,7 @@
 			"medecin": "Every doctor in France already has a page.",
 			"chirurgien-dentiste": "Every dentist in France already has a page.",
 			"sage-femme": "Every midwife in France already has a page.",
+			"infirmier": "Every self-employed nurse in France already has a page.",
 			"annuaire": "Health practitioners, by specialty and by place."
 		},
 		"footer": "Free · Open source · No ratings, no ads"
@@ -1321,6 +1328,10 @@
 			"2": "Sector 1 with permanent extra fees",
 			"3": "Sector 2 (extra fees)"
 		},
+		"billingAgreement": {
+			"0": "Not contracted with the national health insurance",
+			"1": "Contracted with the national health insurance"
+		},
 		"optam": {
 			"optam": "OPTAM member (capped extra fees)",
 			"optam_aco": "OPTAM-ACO member (capped extra fees)"
@@ -1381,7 +1392,10 @@
 			"scaling": "Scaling",
 			"orthodonticCheckup": "Orthodontic check-up",
 			"pregnancyFollowUp": "Pregnancy follow-up",
-			"perinealRehabilitation": "Perineal rehabilitation"
+			"perinealRehabilitation": "Perineal rehabilitation",
+			"bloodTest": "Blood test",
+			"injection": "Injection",
+			"dressing": "Wound dressing"
 		},
 		"email": {
 			"wordmark": "Apercura",
@@ -2275,7 +2289,7 @@
 				"payments": "Payment methods",
 				"done": "Stated",
 				"todo": "To complete",
-				"deontology": "Article R.4127-53 of the public health code: a doctor who presents their activity online states their fees and the payment methods accepted.",
+				"deontology": "A health professional who presents their activity online states their fees and the payment methods accepted (for doctors: article R.4127-53 of the public health code).",
 				"editFees": "Complete fees and payment methods",
 				"settingsNote": "Places, opening hours and appointment types are set in the booking settings.",
 				"waitingPeriod": "Waiting period after verification",
@@ -2345,6 +2359,7 @@
 			"requiredBadge": "Required for booking",
 			"ameliPrefill": "Prefilled from the Assurance Maladie directory. Your statement replaces it on your page.",
 			"sector": "Agreement sector",
+			"agreement": "Fee agreement",
 			"notStated": "Not stated",
 			"optam": "Capped extra fees (OPTAM)",
 			"optamNone": "Not a member",
@@ -2770,7 +2785,7 @@
 				"noType": "Offer at least one appointment type online.",
 				"noHours": "Add opening hours or an extra opening.",
 				"editPage": "Complete fees and payment methods",
-				"deontology": "Article R.4127-53 of the public health code: a doctor who presents their activity online states their fees and the payment methods accepted.",
+				"deontology": "A health professional who presents their activity online states their fees and the payment methods accepted (for doctors: article R.4127-53 of the public health code).",
 				"open": "Open online booking",
 				"pause": "Pause online booking",
 				"opened": "Online booking is open. Patients can book on your page.",

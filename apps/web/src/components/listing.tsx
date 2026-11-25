@@ -1,3 +1,4 @@
+import { listingHasBillingSectors } from "@apercura/core/taxonomy";
 import { FieldList, FieldRow, linkStyles, ProvenanceNote, tableStyles } from "@apercura/ui";
 import { getTranslations } from "next-intl/server";
 import type { ReactNode } from "react";
@@ -50,38 +51,50 @@ export function ListingSection({
 }
 
 /**
- * The computed facts of a listing: agreement sectors and Carte Vitale from the
- * Assurance Maladie directory, online booking, and where the figures come from.
+ * The computed facts of a listing: agreement sectors (or, for professions
+ * without sectors, contracted or not) and Carte Vitale from the Assurance
+ * Maladie directory, online booking, and where the figures come from.
  */
 export async function ListingFacts({
 	locale,
+	listingSlug,
 	payload,
 	updatedAt,
 }: {
 	locale: Locale;
+	listingSlug: string;
 	payload: LandingPayload;
 	updatedAt: string;
 }) {
 	const t = await getTranslations({ locale, namespace: "Listing" });
 	const tP = await getTranslations({ locale, namespace: "Practitioner" });
 	const labels = await getTaxonomyLabels(locale);
+	const bySector = listingHasBillingSectors(listingSlug);
 	const sectors = ["1", "2", "3", "0"]
 		.map((code) => ({ code, count: payload.billingSectors[code] ?? 0 }))
 		.filter((sector) => sector.count > 0);
 	const unknownSector = payload.billingSectors.unknown ?? 0;
 	const count = (value: number) => <span className="tabular">{t("count", { count: value })}</span>;
 	return (
-		<ListingSection id="facts-heading" title={t("facts.heading")} intro={t("facts.intro")}>
+		<ListingSection
+			id="facts-heading"
+			title={t("facts.heading")}
+			intro={bySector ? t("facts.intro") : t("facts.introAgreement")}
+		>
 			<FieldList>
 				{sectors.map((sector) => (
 					<FieldRow
 						key={sector.code}
-						label={labels.billingSector(sector.code) ?? sector.code}
+						label={labels.billingSector(sector.code, bySector) ?? sector.code}
 						value={count(sector.count)}
 						emptyLabel=""
 					/>
 				))}
-				<FieldRow label={t("facts.sectorUnknown")} value={count(unknownSector)} emptyLabel="" />
+				<FieldRow
+					label={bySector ? t("facts.sectorUnknown") : t("facts.agreementUnknown")}
+					value={count(unknownSector)}
+					emptyLabel=""
+				/>
 				{payload.carteVitale ? (
 					<>
 						<FieldRow
@@ -120,10 +133,12 @@ export async function ListingFacts({
 /** Practitioners of a listing as a ruled table, one row each. */
 export async function PractitionerTable({
 	locale,
+	listingSlug,
 	caption,
 	rows,
 }: {
 	locale: Locale;
+	listingSlug: string;
 	caption: string;
 	rows: ListedPractitioner[];
 }) {
@@ -131,6 +146,7 @@ export async function PractitionerTable({
 	const tFees = await getTranslations({ locale, namespace: "PractitionerPage" });
 	const tP = await getTranslations({ locale, namespace: "Practitioner" });
 	const labels = await getTaxonomyLabels(locale);
+	const bySector = listingHasBillingSectors(listingSlug);
 	const notProvided = tP("notProvided");
 	const carteVitale = (value: boolean | null) =>
 		value === true ? tFees("fees.accepted") : value === false ? tFees("fees.notAccepted") : null;
@@ -150,7 +166,7 @@ export async function PractitionerTable({
 						{t("columns.practitioner")}
 					</th>
 					<th scope="col" className={table.column({ className: "hidden md:table-cell" })}>
-						{t("columns.sector")}
+						{bySector ? t("columns.sector") : t("columns.agreement")}
 					</th>
 					<th scope="col" className={table.column({ className: "hidden md:table-cell" })}>
 						{t("columns.carteVitale")}
@@ -159,7 +175,7 @@ export async function PractitionerTable({
 			</thead>
 			<tbody>
 				{rows.map((row) => {
-					const sector = labels.billingSector(row.billingSector);
+					const sector = labels.billingSector(row.billingSector, bySector);
 					const address = [row.addressLine, [row.postcode, row.placeName].filter(Boolean).join(" ")]
 						.filter(Boolean)
 						.join(", ");
@@ -178,7 +194,7 @@ export async function PractitionerTable({
 								</p>
 								{address ? <p className="text-meta text-ink-muted">{address}</p> : null}
 								<p className="text-meta text-ink-muted md:hidden">
-									{t("rowFacts", {
+									{t(bySector ? "rowFacts" : "rowFactsAgreement", {
 										sector: sector ?? notProvided,
 										carteVitale: carteVitale(row.carteVitale) ?? notProvided,
 									})}

@@ -95,7 +95,7 @@ x-app-env: &app-env
 x-etl-env: &etl-env
   DATABASE_URL_ETL: postgres://apercura_etl:${APERCURA_ETL_DB_PASSWORD:?set APERCURA_ETL_DB_PASSWORD}@postgres:5432/apercura
   INTERNAL_APP_URL: http://app:3000
-  ETL_PROFESSIONS: ${ETL_PROFESSIONS:-10,40,50}
+  ETL_PROFESSIONS: ${ETL_PROFESSIONS:-10,40,50,60}
 
 services:
   postgres:

@@ -139,14 +139,15 @@ bake canonical URLs, Open Graph and JSON-LD on it.
 - One JSON-LD `@graph` per page (`src/lib/structured-data.ts`, typed with
   `schema-dts`), with `@id`s made of the canonical URL and a fragment:
   `IndividualPhysician` (doctors), `Dentist`, `Person` with `hasOccupation`
-  (midwives), their places (`PhysiciansOffice`, `MedicalClinic`, `Hospital`,
-  an establishment sharing its own page's `@id`), `BreadcrumbList`, `ItemList`
-  on listings and hubs, `WebSite` with `SearchAction` and `Organization` on the
-  home page. `medicalSpecialty` only takes the schema.org enumeration;
+  (midwives, ISCO-08 2222; nurses, 2221), their places (`PhysiciansOffice`,
+  `MedicalClinic`, `Hospital`, an establishment sharing its own page's `@id`),
+  `BreadcrumbList`, `ItemList` on listings and hubs, `WebSite` with
+  `SearchAction` and `Organization` on the home page. `medicalSpecialty` only takes the schema.org enumeration;
   `ReserveAction` only when booking is open; photo, website, languages and
   opening hours only from the owner; never a rating or a review.
-- Open Graph: one static image per profession, `/og/{medecin|chirurgien-dentiste|sage-femme|annuaire}.png`;
-  site icons `/icon/{48,192,512}`, `/apple-icon` and `/manifest.webmanifest`.
+- Open Graph: one static image per profession,
+  `/og/{medecin|chirurgien-dentiste|sage-femme|infirmier|annuaire}.png`; site
+  icons `/icon/{48,192,512}`, `/apple-icon` and `/manifest.webmanifest`.
 
 ## Client JavaScript
 

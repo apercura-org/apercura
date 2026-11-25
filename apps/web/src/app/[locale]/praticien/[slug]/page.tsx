@@ -1,4 +1,5 @@
 import { parsePractitionerSegment, practitionerRoute } from "@apercura/core";
+import { hasBillingSectors, professionFor } from "@apercura/core/taxonomy";
 import {
 	ActionBlock,
 	buttonStyles,
@@ -123,7 +124,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 	const href = { pathname: "/praticien/[slug]", params: { slug: page.slug } } as const;
 	// The description only mentions online booking when the agenda is open.
 	const bookable = page.booking.open;
-	const values = { name, occupation, place: place ?? "" };
+	const values = {
+		name,
+		occupation,
+		place: place ?? "",
+		fees: hasBillingSectors(payload.professionCode) ? "sector" : "other",
+	};
 	const descriptionOf = (withPlace: boolean) =>
 		bookable
 			? t(withPlace ? "metaDescriptionBookablePlace" : "metaDescriptionBookable", values)
@@ -161,7 +167,8 @@ export default async function PractitionerPage({ params }: Props) {
 	const content = ownerContentOf(payload, photoUrl);
 	const professionSlug = payload.listingSlug ?? "";
 	const professionLabel =
-		labels.profession(professionOfPayload(payload), gender) ?? t("unknownProfession");
+		labels.profession(professionFor(payload.professionCode)?.slug ?? "", gender) ??
+		t("unknownProfession");
 	const listingLabel = labels.listing(payload.listingSlug, gender) ?? professionLabel;
 	const specialty =
 		payload.listingSlug && labels.profession(professionSlug, gender) === null ? listingLabel : null;
@@ -343,6 +350,7 @@ export default async function PractitionerPage({ params }: Props) {
 							headingId="fees-heading"
 							emptyLabel={empty}
 							externalLabel={tSite("externalLink")}
+							sectors={hasBillingSectors(payload.professionCode)}
 							provenance={
 								<ProvenanceNote
 									locale={locale}
@@ -445,14 +453,6 @@ export default async function PractitionerPage({ params }: Props) {
 }
 
 const sectionHeading = "type-title text-ink";
-
-/** Profession slug of the payload (`medecin`, `chirurgien-dentiste`, `sage-femme`…). */
-function professionOfPayload(payload: { professionCode: string }) {
-	if (payload.professionCode === "40") return "chirurgien-dentiste";
-	if (payload.professionCode === "50") return "sage-femme";
-	if (payload.professionCode === "10") return "medecin";
-	return "";
-}
 
 async function SiteSection({
 	site,

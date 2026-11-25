@@ -1,5 +1,6 @@
 import "server-only";
 import { formatPersonName } from "@apercura/core";
+import { professionFor } from "@apercura/core/taxonomy";
 import type { Locale } from "~/i18n/routing";
 import { genderOf, getTaxonomyLabels } from "~/lib/labels";
 import { caller } from "~/trpc/server";
@@ -20,14 +21,7 @@ export async function ownedPage(userId: string, locale: Locale) {
 	const gender = genderOf(person.civilityCode);
 	const profession =
 		labels.listing(person.listingSlug, gender) ??
-		labels.profession(
-			person.professionCode === "40"
-				? "chirurgien-dentiste"
-				: person.professionCode === "50"
-					? "sage-femme"
-					: "medecin",
-			gender,
-		) ??
+		labels.profession(professionFor(person.professionCode)?.slug ?? "medecin", gender) ??
 		"";
 	return {
 		organizationId: page.organizationId,

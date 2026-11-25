@@ -47,6 +47,11 @@ export type HideableField = (typeof HIDEABLE_FIELDS)[number];
 
 /** Agreement sectors (Ameli codes): `0` not contracted, `1`, `2` sector 1 with extra fees, `3` sector 2. */
 export const BILLING_SECTORS = ["0", "1", "2", "3"] as const;
+/**
+ * The codes a profession without sectors (dentists, midwives, nurses) can
+ * state: `0` not contracted, `1` contracted (Ameli: "Secteur 1 ou conventionné").
+ */
+export const BILLING_AGREEMENTS = ["0", "1"] as const;
 export const OPTAM_VALUES = ["optam", "optam_aco"] as const;
 
 export const LIMITS = {

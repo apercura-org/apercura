@@ -1,5 +1,5 @@
 import { LISTING_PAGE_SIZE, landingRoute, pageCount, parsePageSegment } from "@apercura/core";
-import { isListingSlug } from "@apercura/core/taxonomy";
+import { isListingSlug, listingHasBillingSectors } from "@apercura/core/taxonomy";
 import { linkStyles } from "@apercura/ui";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
@@ -147,7 +147,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 	const place = placeLabel(resolved.place);
 	const short = placeLabel({ ...resolved.place, name: shortPlaceName(resolved.place.name) });
 	const count = data.landing.practitionerCount;
-	const values = { listing, place, count, page, pages, occupation: inSentence(listing, locale) };
+	const values = {
+		listing,
+		place,
+		count,
+		page,
+		pages,
+		occupation: inSentence(listing, locale),
+		fees: listingHasBillingSectors(resolved.listingSlug) ? "sector" : "other",
+	};
 	const shortValues = { ...values, place: short };
 	return pageMetadata({
 		locale,
@@ -251,6 +259,7 @@ export default async function LandingPage({ params }: Props) {
 				>
 					<PractitionerTable
 						locale={locale}
+						listingSlug={listingSlug}
 						caption={t("title", { listing, place: placeName })}
 						rows={data.rows}
 					/>
@@ -264,6 +273,7 @@ export default async function LandingPage({ params }: Props) {
 
 				<ListingFacts
 					locale={locale}
+					listingSlug={listingSlug}
 					payload={data.landing.payload}
 					updatedAt={data.landing.updatedAt}
 				/>

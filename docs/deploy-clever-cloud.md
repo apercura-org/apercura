@@ -161,7 +161,7 @@ clever env set --app apercura-etl CC_RUN_COMMAND "bun run etl:fr"
 clever env set --app apercura-etl DATABASE_URL_ETL "postgres://apercura_etl:…@…/…"
 clever env set --app apercura-etl APP_URL https://apercura.health
 clever env set --app apercura-etl REVALIDATE_SECRET "<same as the web app>"
-clever env set --app apercura-etl ETL_PROFESSIONS 10,40,50
+clever env set --app apercura-etl ETL_PROFESSIONS 10,40,50,60
 ```
 
 Give it nothing else: the import's role reaches `directory` only. Size it at

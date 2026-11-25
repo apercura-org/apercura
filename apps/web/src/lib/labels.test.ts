@@ -83,10 +83,53 @@ describe("titles and descriptions that embed a profession", () => {
 		const t = translate(locale, "Listing");
 		// A heading starts with the label: capitalized in every language.
 		expect(t("title", { listing: label, place })).toBe(title);
-		const values = { listing: label, occupation: inSentence(label, locale), place, count: 12 };
+		const values = {
+			listing: label,
+			occupation: inSentence(label, locale),
+			place,
+			count: 12,
+			fees: "sector",
+		};
 		expect(t("metaDescription", values)).toContain(fragment);
 		expect(t("establishmentsIntro", values)).toContain(
 			locale === "de" ? "als Kardiologe" : inSentence(label, locale),
 		);
 	});
+});
+
+describe("fees of professions without sectors", () => {
+	const name = "Pauline Soignante";
+	const place = "Paris 15e";
+
+	it.each([
+		["fr", "secteur de conventionnement", "conventionnement"],
+		["en", "agreement sector", "fee agreement"],
+		["de", "Tarifsektor", "Kassenvertrag"],
+		["es", "sector de tarifas", "convenio de honorarios"],
+		["it", "settore tariffario", "convenzione tariffaria"],
+	] as const)(
+		"a nurse's page description in %s names the agreement, not a sector",
+		(locale, sector, agreement) => {
+			const t = translate(locale, "PractitionerPage");
+			const occupation = inSentence(listing(locale, "infirmier"), locale);
+			const values = { name, occupation, place };
+			expect(t("metaDescriptionPlace", { ...values, fees: "sector" })).toContain(sector);
+			const nurse = t("metaDescriptionPlace", { ...values, fees: "other" });
+			expect(nurse).toContain(agreement);
+			expect(nurse).not.toContain(sector);
+			const listingT = translate(locale, "Listing");
+			const listingValues = { occupation, place, count: 3, fees: "other" };
+			expect(listingT("metaDescription", listingValues)).not.toContain(sector);
+			expect(listingT("hubMetaDescription", listingValues)).not.toContain(sector);
+		},
+	);
+
+	it.each(["fr", "en", "de", "es", "it"] as const)(
+		"labels a contracted nurse without a sector in %s",
+		(locale) => {
+			const t = createTranslator({ locale, messages: CATALOGS[locale], namespace: "taxonomy" });
+			expect(t("billingAgreement.1")).not.toBe(t("billingSector.1"));
+			expect(t("billingAgreement.1")).not.toMatch(/1/);
+		},
+	);
 });

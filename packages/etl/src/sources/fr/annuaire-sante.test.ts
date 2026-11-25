@@ -121,6 +121,50 @@ describe("Personne_activite lines", () => {
 		}
 	});
 
+	it("keeps the self-employed activities of nurses only", () => {
+		const nurse = {
+			...office,
+			"Code civilité d'exercice": "",
+			"Code profession": "60",
+			"Code savoir-faire": "SI08",
+			"Raison sociale site": "CABINET INFIRMIER FICTIF",
+		};
+		const scope = new Set(["10", "40", "50", "60"]);
+		const liberal = parsePersonneActiviteLine(line(nurse), header.length, index, scope, 7);
+		expect(liberal.kind).toBe("row");
+		if (liberal.kind === "row") {
+			expect(liberal.row.values[column("profession_code")]).toBe("60");
+			expect(liberal.row.values[column("practice_kind")]).toBe("office");
+		}
+		for (const mode of ["S", "B", ""]) {
+			expect(
+				parsePersonneActiviteLine(
+					line({
+						...nurse,
+						"Code mode exercice": mode,
+						"Code secteur d'activité": "SA01",
+						"Code rôle": "FON-33",
+					}),
+					header.length,
+					index,
+					scope,
+					8,
+				),
+				mode,
+			).toEqual({ kind: "skip" });
+		}
+		// Physicians keep every activity, salaried ones included.
+		expect(
+			parsePersonneActiviteLine(
+				line({ ...office, "Code mode exercice": "S", "Code secteur d'activité": "SA01" }),
+				header.length,
+				index,
+				scope,
+				9,
+			).kind,
+		).toBe("row");
+	});
+
 	it.each([
 		["field_count", line(office).slice(0, 40)],
 		["invalid_rpps", line({ ...office, "Identifiant PP": "10000000000" })],

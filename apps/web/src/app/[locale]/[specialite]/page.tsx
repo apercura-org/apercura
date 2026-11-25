@@ -1,5 +1,5 @@
 import { landingRoute } from "@apercura/core";
-import { isListingSlug } from "@apercura/core/taxonomy";
+import { isListingSlug, listingHasBillingSectors } from "@apercura/core/taxonomy";
 import { linkStyles } from "@apercura/ui";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
@@ -65,7 +65,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 	const labels = await getTaxonomyLabels(locale);
 	const listing = labels.listing(listingSlug) ?? listingSlug;
 	const count = data.landing.practitionerCount;
-	const values = { listing, count, occupation: inSentence(listing, locale) };
+	const values = {
+		listing,
+		count,
+		occupation: inSentence(listing, locale),
+		fees: listingHasBillingSectors(listingSlug) ? "sector" : "other",
+	};
 	return pageMetadata({
 		locale,
 		href,
@@ -144,6 +149,7 @@ export default async function SpecialtyHub({ params }: Props) {
 
 				<ListingFacts
 					locale={locale}
+					listingSlug={listingSlug}
 					payload={data.landing.payload}
 					updatedAt={data.landing.updatedAt}
 				/>

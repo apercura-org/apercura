@@ -24,11 +24,12 @@ export { OG_LOCALES };
 export const CONTENT_LANGUAGES: Record<Locale, string> = LOCALE_TAGS;
 
 /** One static Open Graph image per profession, plus one for every other page. */
-export type OgImage = "medecin" | "chirurgien-dentiste" | "sage-femme" | "annuaire";
+export type OgImage = "medecin" | "chirurgien-dentiste" | "sage-femme" | "infirmier" | "annuaire";
 
 export function ogImageOf(professionCode: string): OgImage {
 	if (professionCode === "40") return "chirurgien-dentiste";
 	if (professionCode === "50") return "sage-femme";
+	if (professionCode === "60" || professionCode === "69") return "infirmier";
 	return "medecin";
 }
 

@@ -210,12 +210,26 @@ describe.skipIf(!url)("etl:fr on synthetic fixtures", () => {
 		await sql.end();
 	});
 
-	it("imports the fixtures", async () => {
+	it("imports the fixtures, then adds nurses to the scope without tripping the guards", async () => {
+		// A directory imported before nurses were in the default scope.
+		const before = await run(base, { professions: "10,40,50" });
+		expect(before.status).toBe("succeeded");
+		expect(await count("directory.practitioners WHERE status = 'active'")).toBe(215);
+		expect(await count("directory.practitioners WHERE profession_code = '60'")).toBe(0);
+
 		const outcome = await run(base);
 		expect(outcome.status).toBe("succeeded");
-		expect(await count("directory.practitioners WHERE status = 'active'")).toBe(215);
-		expect(await count("directory.practitioners WHERE indexable")).toBe(212);
-		expect(await count("directory.practitioner_pages")).toBe(215);
+		// Nothing compared with the narrower scope, and adding pages is no change to review.
+		expect(outcome.guards.filter((check) => !check.ok)).toEqual([]);
+		expect(outcome.guards.map((check) => check.name)).not.toContain("staging.rows");
+		expect((outcome.stats.readModels as { pages: { inserted: number } }).pages.inserted).toBe(2);
+		expect(outcome.stats.taxonomy).toMatchObject({
+			outOfScopeLines: { "70": 1 },
+			notLiberalLines: { "60": 2 },
+		});
+		expect(await count("directory.practitioners WHERE status = 'active'")).toBe(217);
+		expect(await count("directory.practitioners WHERE indexable")).toBe(214);
+		expect(await count("directory.practitioner_pages")).toBe(217);
 		// The locum, the registration without activity and the occupational doctor.
 		expect(
 			await count(
@@ -223,7 +237,7 @@ describe.skipIf(!url)("etl:fr on synthetic fixtures", () => {
 			),
 		).toBe(3);
 		expect(await count("directory.landing_pages WHERE indexable")).toBeGreaterThan(0);
-		expect(await count("directory.practitioners WHERE ameli_matched_at IS NOT NULL")).toBe(4);
+		expect(await count("directory.practitioners WHERE ameli_matched_at IS NOT NULL")).toBe(5);
 		expect(await count("directory.sites WHERE geo_source = 'finess'")).toBe(2);
 		expect(await count("directory.sites WHERE slug IS NOT NULL")).toBe(2);
 		expect(await count("directory.invalidation_outbox")).toBeGreaterThan(0);
@@ -238,6 +252,40 @@ describe.skipIf(!url)("etl:fr on synthetic fixtures", () => {
 			SELECT name FROM directory.sites WHERE source_key = 'R10999999000004'
 		`;
 		expect(site?.name).toBe("Cabinet du Dr Chloé d'Essai");
+
+		// Nurses: self-employed activities only, their own listings, Ameli as "contracted".
+		const nurses = await sql<
+			{ national_id: string; listing_slug: string; indexable: boolean; kinds: string[] }[]
+		>`
+			SELECT p.national_id, p.listing_slug, p.indexable,
+				array_agg(a.practice_kind ORDER BY a.practice_kind) AS kinds
+			FROM directory.practitioners p
+			JOIN directory.activities a ON a.practitioner_id = p.id AND a.removed_at IS NULL
+			WHERE p.profession_code = '60'
+			GROUP BY p.id ORDER BY p.national_id
+		`;
+		expect(nurses).toEqual([
+			{ national_id: fakeRpps(18), listing_slug: "infirmier", indexable: true, kinds: ["office"] },
+			{
+				national_id: fakeRpps(20),
+				listing_slug: "infirmier-puericulteur",
+				indexable: true,
+				kinds: ["health_center"],
+			},
+		]);
+		const [nurse] = await sql<{ billing_sector: string | null; carte_vitale: boolean | null }[]>`
+			SELECT billing_sector, carte_vitale FROM directory.practitioners
+			WHERE national_id = ${fakeRpps(18)}
+		`;
+		expect(nurse).toEqual({ billing_sector: "1", carte_vitale: true });
+		expect(await count("directory.landing_pages WHERE listing_slug = 'infirmier'")).toBeGreaterThan(
+			0,
+		);
+		expect(
+			await count(
+				`directory.search_docs sd JOIN directory.practitioners p ON p.id = sd.practitioner_id WHERE p.national_id = '${fakeRpps(18)}' AND sd.indexable`,
+			),
+		).toBe(1);
 	});
 
 	it("skips unchanged sources, and a forced rerun changes nothing", async () => {
@@ -279,7 +327,7 @@ describe.skipIf(!url)("etl:fr on synthetic fixtures", () => {
 			outcome.guards.find((check) => check.name === "personneActivite.final_newline")?.ok,
 		).toBe(false);
 		expect(await count("directory.practitioner_pages")).toBe(pages);
-		expect(await count("directory.practitioners WHERE status = 'active'")).toBe(215);
+		expect(await count("directory.practitioners WHERE status = 'active'")).toBe(217);
 	});
 
 	it("removes a practitioner after two consecutive runs without them", async () => {
