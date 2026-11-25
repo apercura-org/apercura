@@ -24,8 +24,11 @@ import type {
 	SpecialtyEntry,
 } from "./types";
 
-/** Profession codes imported by default in v1: physicians, dental surgeons, midwives. */
-export const FR_DEFAULT_PROFESSIONS = ["10", "40", "50"] as const;
+/**
+ * Profession codes imported by default: physicians, dental surgeons, midwives
+ * and nurses (self-employed practice only, see `activityInScope`).
+ */
+export const FR_DEFAULT_PROFESSIONS = ["10", "40", "50", "60"] as const;
 
 /**
  * Code 99 ("autre") is never imported: those people are not health professionals.
@@ -48,8 +51,12 @@ export const FR_PROFESSIONS: Readonly<Record<string, ProfessionEntry>> = {
 	"40": { slug: "chirurgien-dentiste", enabled: true },
 	"41": { slug: "assistant-de-service-social", enabled: false },
 	"50": { slug: "sage-femme", enabled: true },
-	"60": { slug: "infirmier", enabled: false },
-	"69": { slug: "infirmier-psychiatrique", enabled: false },
+	"60": { slug: "infirmier", enabled: true, liberalOnly: true },
+	// Retired code: the psychiatric nursing diploma was merged into the single nursing state
+	// diploma in 1992, so new nurses are all registered as 60. Not imported by default (its
+	// own listing would only split the nurse listings); a run counts its lines in
+	// `stats.taxonomy.outOfScopeLines`.
+	"69": { slug: "infirmier-psychiatrique", enabled: false, liberalOnly: true },
 	"70": { slug: "masseur-kinesitherapeute", enabled: false },
 	"71": { slug: "osteopathe", enabled: false },
 	"72": { slug: "psychotherapeute", enabled: false },
@@ -467,6 +474,52 @@ export function professionFor(code: string): ProfessionEntry | undefined {
 	return FR_PROFESSIONS[code];
 }
 
+/** TRE_R23 practice mode of self-employed practice ("libéral, indépendant, artisan, commerçant"). */
+export const FR_LIBERAL_MODE = "L";
+
+/**
+ * True when an activity line of this profession is imported: always, except
+ * for the professions imported for their self-employed practice only (nurses),
+ * whose salaried and voluntary activities are left out.
+ */
+export function activityInScope(
+	professionCode: string,
+	modeCode: string | null | undefined,
+): boolean {
+	if (!FR_PROFESSIONS[professionCode]?.liberalOnly) return true;
+	return modeCode === FR_LIBERAL_MODE;
+}
+
+/**
+ * Professions whose agreement with the Assurance Maladie comes in sectors
+ * (sector 1, sector 1 with permanent extra fees, sector 2) with OPTAM:
+ * physicians only. Dental surgeons, midwives and nurses are contracted or not,
+ * which the Ameli file writes as "Secteur 1 ou conventionné" (code `1`).
+ */
+export const FR_SECTOR_PROFESSIONS = ["10"] as const;
+
+/** True when fees of this profession are stated as a sector; an unknown profession counts as one. */
+export function hasBillingSectors(professionCode: string | null | undefined): boolean {
+	return !professionCode || (FR_SECTOR_PROFESSIONS as readonly string[]).includes(professionCode);
+}
+
+/**
+ * True when a listing may hold practitioners billing by sector: one of the
+ * professions it lists has sectors (`chirurgien-oral` lists physicians and
+ * dental surgeons), or the slug is unknown.
+ */
+export function listingHasBillingSectors(listingSlug: string | null | undefined): boolean {
+	if (!listingSlug) return true;
+	const professions = new Set<string>();
+	for (const [code, profession] of Object.entries(FR_PROFESSIONS)) {
+		if (profession.slug === listingSlug) professions.add(code);
+	}
+	for (const specialty of Object.values(FR_SPECIALTIES)) {
+		if (specialty.slug === listingSlug) professions.add(specialty.profession);
+	}
+	return professions.size === 0 || [...professions].some((code) => hasBillingSectors(code));
+}
+
 /**
  * Listing slug for a practitioner: the specialty slug when the specialty
  * belongs to the practitioner's profession, else the profession slug
@@ -536,8 +589,10 @@ export function parseProfessionList(value: string | undefined): string[] {
  * with, used to check that an Ameli row and an RPPS practitioner have the same
  * kind of practice. The first slug is the natural one; the others cover known
  * overlaps (a specialist dentist billing as a dentist, a doctor without a
- * recorded specialty billing as a general practitioner…). Codes for other
- * professions (nurses, pharmacies, labs…) are absent on purpose.
+ * recorded specialty billing as a general practitioner…). The loader keeps
+ * only the rows of these codes, so codes of professions that are not imported
+ * (physiotherapists, pharmacies, labs…) are absent on purpose. Nurses (`24`)
+ * are listed under every nurse slug: Ameli has one code for all of them.
  */
 export const FR_AMELI_SPECIALTY_SLUGS: Readonly<Record<string, readonly string[]>> = {
 	"01": ["medecin-generaliste", "medecin"],
@@ -563,6 +618,14 @@ export const FR_AMELI_SPECIALTY_SLUGS: Readonly<Record<string, readonly string[]
 	"21": ["sage-femme"],
 	"22": ["medecin-generaliste", "medecin"],
 	"23": ["medecin-generaliste", "medecin"],
+	"24": [
+		"infirmier",
+		"infirmier-en-pratique-avancee",
+		"infirmier-puericulteur",
+		"infirmier-de-bloc-operatoire",
+		"infirmier-anesthesiste",
+		"infirmier-psychiatrique",
+	],
 	"31": ["medecin-reeducateur"],
 	"32": ["neurologue"],
 	"33": ["psychiatre"],

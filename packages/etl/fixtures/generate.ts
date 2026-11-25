@@ -127,6 +127,7 @@ const PROFESSIONS: Record<string, string> = {
 	"40": "Chirurgien-Dentiste",
 	"50": "Sage-Femme",
 	"60": "Infirmier",
+	"70": "Masseur-Kinésithérapeute",
 	"99": "Autre",
 };
 
@@ -137,6 +138,7 @@ const SPECIALTIES: Record<string, string> = {
 	SM15: "Dermatologie et vénéréologie",
 	SM25: "Médecine du travail",
 	SCD01: "Orthopédie dento-faciale",
+	SI08: "Puériculture",
 };
 
 type Structure = {
@@ -273,6 +275,18 @@ const S: Record<string, Structure> = {
 		commune: "97411",
 		communeLabel: "Saint-Denis",
 		phone: "0199000108",
+	},
+	cabinetInfirmier15: {
+		id: "R10999999000009",
+		name: "CABINET INFIRMIER DU PROTOTYPE",
+		number: "18",
+		typeCode: "R",
+		typeLabel: "Rue",
+		street: "DE LA SIMULATION",
+		postcode: "75015",
+		commune: "75115",
+		communeLabel: "Paris 15e  Arrondissement",
+		phone: "0199000109",
 	},
 	entreprise: {
 		id: "R10999999000008",
@@ -482,16 +496,63 @@ export const CASES: Person[] = [
 		profession: "10",
 		activities: [office(S.cabinet15b as Structure, "SM53")],
 	},
-	// Out of scope: a nurse and a non-health professional (code 99).
+	// Out of scope: a physiotherapist (not imported by default) and a non-health professional (99).
 	{
 		n: 16,
 		civility: "M",
 		last: "HORS-CHAMP",
 		first: "MARC",
-		profession: "60",
+		profession: "70",
 		activities: [office(S.cabinet15 as Structure)],
 	},
 	{ n: 17, civility: "MME", last: "AUTRE", first: "NINA", profession: "99", activities: [{}] },
+	// Nurses are imported for their self-employed activities only.
+	{
+		n: 18,
+		civility: "MME",
+		last: "SOIGNANTE",
+		first: "PAULINE",
+		profession: "60",
+		activities: [office(S.cabinetInfirmier15 as Structure)],
+	},
+	// A salaried hospital nurse: not imported at all.
+	{
+		n: 19,
+		civility: "M",
+		last: "SALARIE",
+		first: "QUENTIN",
+		profession: "60",
+		activities: [
+			{ structure: S.hopital13, mode: "S", sector: "SA01", role: "FON-33", genre: "GENR01" },
+		],
+	},
+	// A paediatric nurse in a health center who also works at the hospital: the salaried
+	// activity is left out, the self-employed one is listed.
+	{
+		n: 20,
+		civility: "MME",
+		last: "DE L'ESSAI",
+		first: "ROSE",
+		profession: "60",
+		activities: [
+			{
+				structure: S.cabinet15b,
+				mode: "L",
+				sector: "SA52",
+				role: "FON-01",
+				genre: "GENR01",
+				specialty: "SI08",
+			},
+			{
+				structure: S.hopital13,
+				mode: "S",
+				sector: "SA01",
+				role: "FON-33",
+				genre: "GENR01",
+				specialty: "SI08",
+			},
+		],
+	},
 ];
 
 const FIRST_NAMES = [
@@ -550,6 +611,14 @@ export const PEOPLE: Person[] = [...CASES, ...fillerPeople(200)];
 
 const line = (values: string[]) => values.join("|");
 
+/** Orders that register each profession, as the registry writes them. */
+const REGISTRATION_AUTHORITIES: Record<string, string> = {
+	"40": "ONCD/ONCD/ONCD",
+	"50": "CNOSF//",
+	"60": "ONI//",
+	"70": "CNOMK//",
+};
+
 function personneActiviteRows(people: Person[]): string[] {
 	const rows: string[] = [];
 	for (const person of people) {
@@ -597,11 +666,7 @@ function personneActiviteRows(people: Person[]): string[] {
 				"Téléphone (coord. structure)": s?.phone ?? "",
 				"Adresse e-mail (coord. structure)": s?.email ?? "",
 				"Autorité d'enregistrement":
-					person.profession === "40"
-						? "ONCD/ONCD/ONCD"
-						: person.profession === "50"
-							? "CNOSF//"
-							: "CNOM/CNOM/CNOM",
+					REGISTRATION_AUTHORITIES[person.profession] ?? "CNOM/CNOM/CNOM",
 				"Code secteur d'activité": activity.sector ?? "",
 				"Code rôle": activity.role ?? "",
 				"Code genre activité": activity.genre ?? "",
@@ -620,6 +685,7 @@ function savoirFaireRows(people: Person[]): string[] {
 			["CAPA", "Capacité", "CAPA01", "Angiologie (synthetic)"],
 		],
 		6: [["S", "Spécialité ordinale", "SCD01", "Orthopédie dento-faciale"]],
+		20: [["S", "Spécialité ordinale", "SI08", "Puériculture"]],
 	};
 	const rows: string[] = [];
 	for (const person of people) {
@@ -876,8 +942,10 @@ function ameliRows(): string[] {
 		// Two rows for one person that disagree: ambiguous, nothing is stored.
 		row("MAQUETTE", "LAURA", gp, "1", "75015", "PARIS", "1"),
 		row("MAQUETTE", "LAURA", gp, "1", "75015", "PARIS", "3", "3"),
-		// Nurse: out of scope.
-		row("HORS-CHAMP", "MARC", ["24", "Infirmier"], "2", "75015", "PARIS", "1"),
+		// Physiotherapist: not imported, so the row is not even staged.
+		row("HORS-CHAMP", "MARC", ["26", "Masseur-kinésithérapeute"], "2", "75015", "PARIS", "1"),
+		// Nurse: unique match, contracted (Pauline Soignante, Paris 15e).
+		row("SOIGNANTE", "PAULINE", ["24", "Infirmier"], "2", "75015", "PARIS", "1"),
 		// CEDEX postcode: commune not resolvable, no match.
 		row("MODELE", "JULIE", gp, "1", "97489", "SAINT DENIS CEDEX", "1"),
 	];

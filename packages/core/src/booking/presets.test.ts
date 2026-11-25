@@ -12,6 +12,11 @@ describe("presetsForSpecialty", () => {
 		expect(presetsForSpecialty("chirurgien-dentiste")).toHaveLength(3);
 		expect(presetsForSpecialty("orthodontiste")).toHaveLength(2);
 		expect(presetsForSpecialty("sage-femme").map((p) => p.durationMin)).toEqual([30, 30]);
+		expect(presetsForSpecialty("infirmier").map((p) => [p.nameKey, p.durationMin])).toEqual([
+			["booking.presets.bloodTest", 10],
+			["booking.presets.injection", 10],
+			["booking.presets.dressing", 15],
+		]);
 	});
 
 	it("falls back to a generic consultation", () => {
@@ -24,6 +29,7 @@ describe("presetsForSpecialty", () => {
 			"chirurgien-dentiste",
 			"orthodontiste",
 			"sage-femme",
+			"infirmier",
 			"x",
 		]) {
 			for (const preset of presetsForSpecialty(slug)) {

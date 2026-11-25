@@ -3,3 +3,4 @@ Type d'identifiant PP|Identifiant PP|Identification nationale PP|Nom d'exercice|
 8|19999990047|819999990047|DE LA MAQUETTE|BRUNO|10|Médecin|C|Civil|S|Spécialité ordinale|SM04|Cardiologie et maladies vasculaires
 8|19999990047|819999990047|DE LA MAQUETTE|BRUNO|10|Médecin|C|Civil|CAPA|Capacité|CAPA01|Angiologie (synthetic)
 8|19999990062|819999990062|TEMOIN|DAVID|40|Chirurgien-Dentiste|C|Civil|S|Spécialité ordinale|SCD01|Orthopédie dento-faciale
+8|19999990203|819999990203|DE L'ESSAI|ROSE|60|Infirmier|C|Civil|S|Spécialité ordinale|SI08|Puériculture

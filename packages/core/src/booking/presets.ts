@@ -35,6 +35,8 @@ const PRESETS_BY_SPECIALTY: ReadonlyMap<string, readonly AppointmentTypePreset[]
 		[preset("firstConsultation", 45, "new"), preset("orthodonticCheckup", 20, "existing")],
 	],
 	["sage-femme", [preset("pregnancyFollowUp", 30), preset("perinealRehabilitation", 30)]],
+	// Care at the nurse's office; home visits are not bookable online yet.
+	["infirmier", [preset("bloodTest", 10), preset("injection", 10), preset("dressing", 15)]],
 ]);
 
 /** Default appointment types offered when a practitioner opens a calendar, by specialty slug. */

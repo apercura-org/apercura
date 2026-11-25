@@ -73,7 +73,11 @@ describe("quoted records (Ameli)", () => {
 			"3",
 			"3",
 		]);
-		expect(ameliRow(row({ specialtyCode: "24" }), index, 3)).toBeNull();
+		// Physiotherapists (26) are not imported; nurses (24) are.
+		expect(ameliRow(row({ specialtyCode: "26" }), index, 3)).toBeNull();
+		expect(
+			ameliRow(row({ specialtyCode: "24", optionCode: "", billingSector: "1" }), index, 3),
+		).toEqual([3, "EXEMPLE", "CAMILLE", "24", "75015", "PARIS", "true", "false", "1", null]);
 		expect(ameliRow(row({ postcode: "DAX" }), index, 4)).toBe("invalid");
 		expect(
 			ameliRow(row({ billingSector: "Secteur 2", optionCode: "OPTAM" }), index, 5)?.slice(8),
@@ -295,6 +299,11 @@ describe("guards", () => {
 		]);
 		expect(verdict(checkStaging({ ...base, rowsWithCommune: 700 }, null), false).ok).toBe(false);
 		expect(verdict(checkStaging({ ...base, invalidRpps: 1 }, null), true).ok).toBe(false);
+		// A profession the last success did not stage has nothing to be compared with.
+		const withNurses = { ...base, rppsByProfession: { ...base.rppsByProfession, "60": 400 } };
+		expect(checkStaging(withNurses, base).map((check) => check.name)).not.toContain(
+			"staging.rpps.60",
+		);
 	});
 
 	it("trips the circuit breakers above 1% unpublished or 10% modified", () => {

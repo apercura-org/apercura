@@ -278,6 +278,9 @@ async function runLocked(
 		const rppsInScope = new Set<string>();
 		const unknownCodes = new Map<string, number>();
 		const unknownProfessions = new Map<string, number>();
+		// Skipped lines of known professions: out of the import scope, or not self-employed.
+		const outOfScope = new Map<string, number>();
+		const notLiberal = new Map<string, number>();
 		const professions = new Set(options.professions);
 		try {
 			load.personneActivite = await timer.run("load Personne_activite", () =>
@@ -293,12 +296,14 @@ async function runLocked(
 						const parsed = parsePersonneActiviteLine(fields, count, index, professions, lineNo);
 						if (parsed.kind === "skip") {
 							const code = fields[index.professionCode] ?? "";
-							if (
-								!FR_PROFESSIONS[code] &&
-								!(FR_EXCLUDED_PROFESSIONS as readonly string[]).includes(code)
-							) {
-								unknownProfessions.set(code, (unknownProfessions.get(code) ?? 0) + 1);
-							}
+							const tally = professions.has(code)
+								? notLiberal
+								: FR_PROFESSIONS[code]
+									? outOfScope
+									: (FR_EXCLUDED_PROFESSIONS as readonly string[]).includes(code)
+										? null
+										: unknownProfessions;
+							tally?.set(code, (tally.get(code) ?? 0) + 1);
 						}
 						return parsed;
 					},
@@ -355,9 +360,16 @@ async function runLocked(
 		stats.taxonomy = {
 			unknownCodes: Object.fromEntries(unknownCodes),
 			unknownProfessions: Object.fromEntries(unknownProfessions),
+			outOfScopeLines: Object.fromEntries(outOfScope),
+			notLiberalLines: Object.fromEntries(notLiberal),
 		};
 		if (unknownCodes.size > 0 || unknownProfessions.size > 0) {
-			log(`Taxonomy alert: unknown codes ${JSON.stringify(stats.taxonomy)}`);
+			log(
+				`Taxonomy alert: unknown codes ${JSON.stringify({
+					unknownCodes: Object.fromEntries(unknownCodes),
+					unknownProfessions: Object.fromEntries(unknownProfessions),
+				})}`,
+			);
 		}
 
 		// 5. Quarantine and staging guards.

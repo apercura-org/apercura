@@ -3,6 +3,7 @@ import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import { slugify } from "../slugify";
 import {
+	activityInScope,
 	allListingSlugs,
 	ameliSpecialtyCompatible,
 	FR_AMELI_SPECIALTY_SLUGS,
@@ -12,6 +13,8 @@ import {
 	FR_ROLE_CLASSES,
 	FR_SECTOR_KINDS,
 	FR_SPECIALTIES,
+	hasBillingSectors,
+	listingHasBillingSectors,
 	listingSlugFor,
 	parseProfessionList,
 	practiceKindFor,
@@ -20,11 +23,30 @@ import {
 import { PRACTICE_KINDS } from "./types";
 
 describe("professions", () => {
-	it("enables exactly physicians, dental surgeons and midwives by default", () => {
+	it("enables exactly physicians, dental surgeons, midwives and nurses by default", () => {
 		const enabled = Object.entries(FR_PROFESSIONS)
 			.filter(([, entry]) => entry.enabled)
 			.map(([code]) => code);
 		expect(enabled.sort()).toEqual([...FR_DEFAULT_PROFESSIONS]);
+		expect([...FR_DEFAULT_PROFESSIONS]).toEqual(["10", "40", "50", "60"]);
+	});
+
+	it("keeps the retired psychiatric nurse code out of the default scope", () => {
+		expect(FR_PROFESSIONS["69"]).toMatchObject({ enabled: false, liberalOnly: true });
+		expect(parseProfessionList(undefined)).not.toContain("69");
+		expect(parseProfessionList("60,69")).toEqual(["60", "69"]);
+	});
+
+	it("imports nurses for their self-employed activities only", () => {
+		expect(activityInScope("60", "L")).toBe(true);
+		for (const mode of ["S", "B", "I", null, undefined, ""]) {
+			expect(activityInScope("60", mode), String(mode)).toBe(false);
+			expect(activityInScope("69", mode), String(mode)).toBe(false);
+		}
+		for (const code of ["10", "40", "50"]) {
+			expect(activityInScope(code, "S")).toBe(true);
+			expect(activityInScope(code, null)).toBe(true);
+		}
 	});
 
 	it("never maps code 99", () => {
@@ -33,7 +55,7 @@ describe("professions", () => {
 	});
 
 	it("parses, deduplicates and sorts profession lists", () => {
-		expect(parseProfessionList(undefined)).toEqual(["10", "40", "50"]);
+		expect(parseProfessionList(undefined)).toEqual(["10", "40", "50", "60"]);
 		expect(parseProfessionList(" 50, 10,10 ")).toEqual(["10", "50"]);
 		expect(parseProfessionList("60")).toEqual(["60"]);
 		expect(() => parseProfessionList("12")).toThrow(/Unknown profession/);
@@ -61,6 +83,14 @@ describe("specialty slugs", () => {
 		["50", null, "sage-femme"],
 		["50", "SM20", "sage-femme"],
 		["60", "SI07", "infirmier-anesthesiste"],
+		["60", null, "infirmier"],
+		["60", "SI01", "infirmier-en-pratique-avancee"],
+		["60", "SI05", "infirmier-en-pratique-avancee"],
+		["60", "SI06", "infirmier-de-bloc-operatoire"],
+		["60", "SI08", "infirmier-puericulteur"],
+		["60", "SM53", "infirmier"],
+		["10", "SI08", "medecin"],
+		["69", null, "infirmier-psychiatrique"],
 	])("profession %s with specialty %s lists as %s", (profession, specialty, slug) => {
 		expect(listingSlugFor(profession, specialty)).toBe(slug);
 	});
@@ -110,6 +140,27 @@ describe("specialty slugs", () => {
 		expect(ameliSpecialtyCompatible("01", "cardiologue")).toBe(false);
 		expect(ameliSpecialtyCompatible("19", "chirurgien-dentiste")).toBe(true);
 		expect(ameliSpecialtyCompatible("24", "medecin")).toBe(false);
+		// Nurses: one Ameli code for every nurse listing, and nothing else.
+		for (const entry of Object.values(FR_SPECIALTIES).filter((s) => s.profession === "60")) {
+			expect(ameliSpecialtyCompatible("24", entry.slug), entry.slug).toBe(true);
+		}
+		expect(ameliSpecialtyCompatible("24", "infirmier")).toBe(true);
+		expect(ameliSpecialtyCompatible("24", "sage-femme")).toBe(false);
+		expect(ameliSpecialtyCompatible("01", "infirmier")).toBe(false);
+	});
+
+	it("states fees as sectors for physicians only", () => {
+		expect(hasBillingSectors("10")).toBe(true);
+		for (const code of ["40", "50", "60", "69"]) expect(hasBillingSectors(code), code).toBe(false);
+		expect(hasBillingSectors(null)).toBe(true);
+		expect(listingHasBillingSectors("medecin-generaliste")).toBe(true);
+		expect(listingHasBillingSectors("infirmier")).toBe(false);
+		expect(listingHasBillingSectors("infirmier-puericulteur")).toBe(false);
+		expect(listingHasBillingSectors("sage-femme")).toBe(false);
+		expect(listingHasBillingSectors("orthodontiste")).toBe(false);
+		// Oral surgery lists physicians and dental surgeons.
+		expect(listingHasBillingSectors("chirurgien-oral")).toBe(true);
+		expect(listingHasBillingSectors("unknown-slug")).toBe(true);
 	});
 });
 
@@ -180,36 +231,39 @@ describe("i18n labels", () => {
 			),
 		) as { taxonomy: Record<string, Record<string, string>> };
 
-	it.each(["en", "fr"])("has a %s label for every listing slug, profession and role", (locale) => {
-		const { taxonomy } = catalog(locale);
-		for (const slug of allListingSlugs()) expect(taxonomy.listing?.[slug], slug).toBeTruthy();
-		for (const { slug } of Object.values(FR_PROFESSIONS)) {
-			expect(taxonomy.profession?.[slug], slug).toBeTruthy();
-		}
-		for (const [code, activity] of Object.entries(FR_ROLE_CLASSES)) {
-			if (
-				activity &&
-				![
-					"FON-10",
-					"FON-11",
-					"FON-12",
-					"FON-13",
-					"FON-14",
-					"FON-15",
-					"FON-16",
-					"FON-27",
-					"FON-28",
-					"FON-30",
-					"FON-35",
-					"FON-38",
-					"FON-44",
-					"FON-53",
-				].includes(code)
-			) {
-				expect(taxonomy.role?.[code], code).toBeTruthy();
+	it.each(["en", "fr", "de", "es", "it"])(
+		"has a %s label for every listing slug, profession and role",
+		(locale) => {
+			const { taxonomy } = catalog(locale);
+			for (const slug of allListingSlugs()) expect(taxonomy.listing?.[slug], slug).toBeTruthy();
+			for (const { slug } of Object.values(FR_PROFESSIONS)) {
+				expect(taxonomy.profession?.[slug], slug).toBeTruthy();
 			}
-		}
-	});
+			for (const [code, activity] of Object.entries(FR_ROLE_CLASSES)) {
+				if (
+					activity &&
+					![
+						"FON-10",
+						"FON-11",
+						"FON-12",
+						"FON-13",
+						"FON-14",
+						"FON-15",
+						"FON-16",
+						"FON-27",
+						"FON-28",
+						"FON-30",
+						"FON-35",
+						"FON-38",
+						"FON-44",
+						"FON-53",
+					].includes(code)
+				) {
+					expect(taxonomy.role?.[code], code).toBeTruthy();
+				}
+			}
+		},
+	);
 
 	it("genders French labels with an ICU select that always has an `other` branch", () => {
 		const { taxonomy } = catalog("fr");
