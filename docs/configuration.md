@@ -81,6 +81,27 @@ Each sub-job holds a Postgres advisory lock, so overlapping runs are harmless;
 `bun run jobs:tick outbox` (or any name above) runs one of them. It refuses to run when the
 overlap constraint is missing, and in production with an `SMTP_URL` that breaks the TLS rules.
 
+### Cache warm-up (`bun run jobs:tick warm`)
+
+Not part of the default tick: scheduled on its own line (`docker/crontab`,
+`clevercloud/cron.json`), it requests the next slice of the site's sitemap URLs from the app so
+they are rendered and cached before visitors and crawlers ask
+([public-site.md](./public-site.md#cache-warm-up)). `jobs:tick warm --restart` starts the walk
+over. It reads `APP_URL` (sent as the `Host`), `INTERNAL_APP_URL` (where the requests go; default
+`APP_URL`) and:
+
+| Variable                 | Default | Role                                                                                              |
+| ------------------------ | ------- | ------------------------------------------------------------------------------------------------- |
+| `WARM_CACHE`             | `true`  | `false` (or `0`) turns the warm-up off: each run logs `{"skipped":"disabled"}`.                   |
+| `WARM_CACHE_CONCURRENCY` | `4`     | Requests at a time (1 to 16).                                                                     |
+| `WARM_CACHE_MAX_URLS`    | `5000`  | URLs per run, at most.                                                                            |
+| `WARM_CACHE_MAX_SECONDS` | `240`   | Seconds per run, at most (keep it under the five minutes between two runs).                       |
+| `WARM_CACHE_MAX_P95_MS`  | `3000`  | The run stops when the p95 latency of its last 100 requests exceeds this (the app is struggling). |
+
+A run also stops when `/api/health` fails or takes over 2 seconds (checked before it starts and
+every 15 seconds), on a 429 or 503 answer, and when errors pass a tenth of its requests. A
+malformed value stops the job with an error naming the variable.
+
 ## Self-hosting (`docker/compose.selfhost.yml`, `docker/compose.app.yml`)
 
 The Compose files build the connection URLs (the image's entry point builds
@@ -102,7 +123,8 @@ application stack; `compose.selfhost.yml` includes it and adds PostgreSQL and Mi
 | `APP_BIND`, `APP_PORT`                                     | Host address and port the app is published on (default `127.0.0.1:3000`).                                                                                                                                                                                                                                       |
 | `MAILPIT_UI_PORT`                                          | Host port of Mailpit's web UI (profile `dev`, with `SMTP_ALLOW_INSECURE=true`).                                                                                                                                                                                                                                 |
 | `ETL_SCHEDULE_ARGS`                                        | Flags of the scheduler's weekly import, e.g. `--department 75`. Empty: all of France.                                                                                                                                                                                                                           |
-| `INTERNAL_APP_URL`                                         | Default `http://app:3000`: where the import sends its cache tags instead of `APP_URL`, inside the stack's network. Set it to `APP_URL` where `app` may resolve to another stack (Coolify's predefined network).                                                                                                 |
+| `INTERNAL_APP_URL`                                         | Default `http://app:3000`: where the import sends its cache tags and the cache warm-up its requests, instead of `APP_URL`, inside the stack's network. Set it to `APP_URL` where `app` may resolve to another stack (Coolify's predefined network).                                                             |
+| `WARM_CACHE`, `WARM_CACHE_*`                               | The scheduler's cache warm-up (see [Cache warm-up](#cache-warm-up-bun-run-jobstick-warm)); defaults `true`, 4 requests at a time, 5000 URLs and 240 seconds per run, p95 3000 ms.                                                                                                                               |
 | `APERCURA_IMAGE`                                           | Tag of the image the stack builds and runs (default `apercura:local`).                                                                                                                                                                                                                                          |
 
 `GET /api/health` answers `200 {"status":"ok"}` when the app reaches its

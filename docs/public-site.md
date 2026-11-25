@@ -165,6 +165,67 @@ requests after deployment. Sitemaps and robots.txt are rendered at request time.
 `APP_URL` must be set **at build time** as well as at runtime: static pages
 bake canonical URLs, Open Graph and JSON-LD on it.
 
+### Cache warm-up
+
+Every other page is rendered on its first request, and an import expires the
+pages it changed (stale-while-revalidate: the next visitor gets the old page
+and triggers the render). So that this first visitor is not a crawler on a cold
+page, `jobs:tick warm` (scheduled every five minutes by the image's crontab,
+`apps/web/src/server/warm/`) requests the site's pages from the app itself,
+as a visitor would:
+
+- **What**: every URL of the sitemaps, from the same queries
+  (`src/server/queries/sitemap-sql.ts`): first the homes, the static pages and
+  the sitemap files themselves, then the listings, the place hubs, the
+  establishments and the practitioners, chunk by chunk.
+- **Where**: `INTERNAL_APP_URL` (`http://app:3000` in the image's stack), with
+  `APP_URL`'s host as `Host` and `X-Forwarded-Host`, so the canonical host
+  redirect lets it through.
+- **How much**: `WARM_CACHE_CONCURRENCY` requests at a time (4), at most
+  `WARM_CACHE_MAX_URLS` (5000) and `WARM_CACHE_MAX_SECONDS` (240) per run. It
+  checks `/api/health` before starting and every 15 seconds, and stops when the
+  health check fails or takes over 2 seconds, when the p95 of its last 100
+  requests exceeds `WARM_CACHE_MAX_P95_MS` (3000), on a 429 or 503, or when
+  errors pass a tenth of its requests: live traffic always comes first.
+- **Resumable**: its cursor (`directory.cache_warmup`, one row: the unit
+  reached and the offset in it) is saved as it goes, so the next run continues
+  there. A finished walk waits.
+- **When it starts over**: on a new build (the `.next/BUILD_ID` of the image the
+  scheduler shares with the app), on a new successful import (the last
+  `succeeded` row of `directory.etl_runs`), and when the import asks for it after
+  draining its invalidation outbox (it sets `restart_requested_at`, the only
+  column of the row its role may write). `jobs:tick warm --restart` forces it.
+- **Logs**: one JSON line per run, e.g.
+  `{"job":"warm","result":{"warmed":5000,"errors":0,"remaining":182000,"stopped":"count",…}}`
+  (`"locked"` when a run is still going). `WARM_CACHE=false` turns it off.
+
+At the default budget a run warms up to 5,000 pages in four minutes, 288 runs
+a day: a walk of the whole of France (hundreds of thousands of URLs) takes about
+a day when a cold page renders in a few hundred milliseconds, longer when the
+guards slow it down. The listings and hubs, which crawlers and visitors reach
+first, are warm within the first runs.
+
+### Cache-Control
+
+The proxy (`src/proxy.ts`, `src/lib/public-cache.ts`) gives every public page,
+and the practitioners' Open Graph images, an explicit
+`Cache-Control: public, max-age=0, s-maxage=300, stale-while-revalidate=3600`:
+a CDN or caching proxy may serve a page five minutes, then stale for an hour
+while it fetches the new one, which the app answers from its own cache. Without
+it Next.js would derive the header from the cache lifetimes
+(`s-maxage=2592000` on a practitioner page, a year on a static page and on a
+404): a shared cache would keep a page for a month after a removal request.
+Next.js keeps a Cache-Control the response already has, and still answers
+errors with `private, no-cache, no-store`.
+
+Never on the practitioner space (`/fr/pro` and below, its presentation page
+included), `/rdv` (both rendered per request with a nonce), search results, the
+report and removal forms, the API, and anything but GET and HEAD: those keep
+Next.js's own `private, no-cache, no-store` (or `next.config.ts`'s). RSC
+payloads of client navigations carry the same public header (the proxy cannot
+tell them apart from the documents); they are the same public content, and
+Next.js separates them with `Vary: rsc, …` and a `?_rsc=` parameter.
+
 ## Sitemaps and robots
 
 - `/sitemap.xml`: hand-written index (Next.js has none) listing
@@ -210,6 +271,23 @@ bake canonical URLs, Open Graph and JSON-LD on it.
 - Open Graph: one static image per profession,
   `/og/{medecin|chirurgien-dentiste|sage-femme|infirmier|annuaire}.png`; site
   icons `/icon/{48,192,512}`, `/apple-icon` and `/manifest.webmanifest`.
+- Practitioner pages have their own card, `/og/praticien/{slug}.png`
+  (`src/app/og/praticien/[file]`, `src/server/og/practitioner-image.tsx`),
+  listed first with the profession's image as the fallback: 1200 × 630, the
+  name, the profession or specialty, the commune, the RPPS number and the
+  Apercura print, graphite ink on white paper (the site's own contrast pairs),
+  in French like the other images. The photo only when the owner published one
+  on the page. Fonts are read from `@fontsource/archivo` on disk, never fetched.
+  The PNG is cached (`"use cache"`) with the page's tags (`practitioner:{id}`,
+  `practitioner:*` and those of its commune and listing), so an import or an
+  owner's edit renders it again; an unknown, malformed or withheld page answers
+  404.
+- Opening hours: the JSON-LD builder accepts owner-entered hours
+  (`openingHoursSpecification`), but nothing enters them yet. The booking
+  agenda's weekly windows (`care.availability_rules`) are when patients may
+  book online, for some appointment types, between two dates: not when the
+  practice is open, so they are never published as opening hours. Owner-entered
+  hours are in the [roadmap](../ROADMAP.md#practitioner-tools).
 
 ## Client JavaScript
 
