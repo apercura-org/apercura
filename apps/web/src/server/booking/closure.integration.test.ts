@@ -41,7 +41,6 @@ describe.skipIf(!url)("closing a practice (database)", { timeout: 30_000 }, asyn
 	const { createCalendar, listCalendars, rotateFeedToken } = await import("./calendar-settings");
 	const { createEntry } = await import("./agenda");
 	const { finalizeClosures, CLOSURE_PURGE_DEADLINE_MS } = await import("./closure");
-	const { closuresJob } = await import("./jobs");
 	const { configureMailTransport, processOutbox } = await import("./outbox-worker");
 	const { readFeed } = await import("./ics-feed");
 	const { memoryDriver } = await import("../storage");
@@ -316,12 +315,16 @@ describe.skipIf(!url)("closing a practice (database)", { timeout: 30_000 }, asyn
 		// The email still has to go: the practice and its data stay meanwhile.
 		expect((await finalizeClosures(db, closeAt, [p.orgId])).organizations).toBe(0);
 
-		// The jobs send it (outbox), then erase everything (closures).
+		// The jobs send it (outbox), then erase everything (closures): what `closuresJob` runs,
+		// limited to this practice (other test files close theirs on the same database).
 		expect(await sendEmailsOf(p.orgId, closeAt)).toMatchObject({ sent: 1 });
 		expect(
 			mails.map((mail) => [[mail.to].flat(), mail.subject.startsWith("Rendez-vous annulé")]),
 		).toEqual([[[`proved-${run}@example.test`], true]]);
-		expect(await closuresJob(db, closeAt)).toMatchObject({ organizations: 1, appointments: 3 });
+		expect(await finalizeClosures(db, closeAt, [p.orgId])).toMatchObject({
+			organizations: 1,
+			appointments: 3,
+		});
 		expect(await leftovers(p.orgId)).toEqual({
 			calendars: 0,
 			types: 0,

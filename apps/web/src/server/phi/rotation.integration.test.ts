@@ -6,15 +6,12 @@
  * old key can leave ENCRYPTION_KEYS. Synthetic data only.
  */
 import { randomBytes, randomUUID } from "node:crypto";
-import { fileURLToPath } from "node:url";
 import { decryptField, fieldAad, tokenKeyVersion } from "@apercura/core/crypto";
 import { createDb, type Database } from "@apercura/db";
 import { organization, organizationKeys, reports } from "@apercura/db/schema";
 import { eq } from "drizzle-orm";
-import { drizzle } from "drizzle-orm/postgres-js";
-import { migrate } from "drizzle-orm/postgres-js/migrator";
-import postgres from "postgres";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
+import { isolatedDatabase } from "~/test/isolated-database";
 
 const url = process.env.DATABASE_URL_TEST;
 
@@ -45,23 +42,10 @@ describe.skipIf(!url)("master key rotation (database)", async () => {
 	// A database of its own: a rotation re-wraps every organization key, and the other
 	// integration files, running alongside, leave keys wrapped by master keys only their
 	// own process knows.
-	const isolated = `apercura_rotation_${run}`;
-	const admin = () => postgres(url as string, { max: 1, onnotice: () => {} });
+	const isolated = isolatedDatabase("rotation");
 
 	beforeAll(async () => {
-		const server = admin();
-		await server.unsafe(`CREATE DATABASE "${isolated}"`);
-		await server.end();
-		const isolatedUrl = new URL(url as string);
-		isolatedUrl.pathname = `/${isolated}`;
-		const client = postgres(isolatedUrl.toString(), { max: 1, onnotice: () => {} });
-		await migrate(drizzle({ client }), {
-			migrationsFolder: fileURLToPath(
-				new URL("../../../../../packages/db/drizzle", import.meta.url),
-			),
-		});
-		await client.end();
-		db = createDb({ url: isolatedUrl.toString(), max: 2 });
+		db = createDb({ url: await isolated.create(), max: 2 });
 		await db.insert(organization).values({
 			id: organizationId,
 			name: "Cabinet fictif de rotation",
@@ -76,9 +60,7 @@ describe.skipIf(!url)("master key rotation (database)", async () => {
 			await db.delete(organization).where(eq(organization.id, organizationId));
 			await db.close();
 		}
-		const server = admin();
-		await server.unsafe(`DROP DATABASE IF EXISTS "${isolated}" WITH (FORCE)`);
-		await server.end();
+		await isolated.drop();
 	});
 
 	async function openPatientField(token: string, field: "firstName" | "address" = "firstName") {
