@@ -277,10 +277,7 @@ export default async function PractitionerPage({ params }: Props) {
 					}),
 				])}
 			/>
-			<BookletPage
-				runningHead={tSite("runningHead")}
-				folio={tSite("folioRpps", { rpps: payload.nationalId })}
-			>
+			<BookletPage>
 				<div className="flex flex-col gap-6">
 					<Trail locale={locale} items={trail} />
 					<PractitionerHeader
@@ -298,8 +295,22 @@ export default async function PractitionerPage({ params }: Props) {
 					/>
 				</div>
 
-				<div className="grid gap-10 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:gap-12">
-					<div className="order-2 flex flex-col gap-14 lg:order-1">
+				{/*
+				 * Patients first, in reading order and on every screen: what they can do (book or call),
+				 * then the facts, then what concerns the practitioner (claim, removal) and corrections.
+				 * From 1024 px the action and the page's own matters share the right column.
+				 */}
+				<div className="grid gap-10 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:grid-rows-[auto_1fr] lg:gap-x-12 lg:gap-y-6">
+					<div className="lg:col-start-2 lg:row-start-1">
+						<Action
+							plan={plan}
+							locale={locale}
+							booking={page.booking}
+							practitionerId={page.practitionerId}
+							practitionerName={name}
+						/>
+					</div>
+					<div className="flex flex-col gap-14 lg:col-start-1 lg:row-span-2 lg:row-start-1">
 						<PresentationSection bio={content.bio} headingId="presentation-heading" />
 						<section aria-labelledby="profession-heading" className="flex flex-col gap-4">
 							<h2 id="profession-heading" className={sectionHeading}>
@@ -369,14 +380,10 @@ export default async function PractitionerPage({ params }: Props) {
 							}
 						/>
 					</div>
-					<aside aria-label={t("asideLabel")} className="order-1 flex flex-col gap-6 lg:order-2">
-						<Action
-							plan={plan}
-							locale={locale}
-							booking={page.booking}
-							practitionerId={page.practitionerId}
-							practitionerName={name}
-						/>
+					<aside
+						aria-label={t("asideLabel")}
+						className="flex flex-col gap-6 self-start lg:col-start-2 lg:row-start-2"
+					>
 						<OwnerBlock
 							locale={locale}
 							claimed={claimed}
@@ -410,7 +417,7 @@ export default async function PractitionerPage({ params }: Props) {
 								place: page.commune.name,
 							})}
 						</h2>
-						<ul className="grid border-t border-ink sm:grid-cols-2 lg:grid-cols-3">
+						<ul className="grid border-t border-rule-soft sm:grid-cols-2 lg:grid-cols-3">
 							{page.neighbours.map((neighbour) => (
 								<li key={neighbour.id} className="border-b border-rule-soft">
 									<Link

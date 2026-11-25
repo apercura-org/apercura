@@ -146,7 +146,7 @@ async function Detail({ locale, id }: { locale: Locale; id: string }) {
 				{detail.documents.length === 0 ? (
 					<p className="text-body text-ink-muted">{t("claim.noDocument")}</p>
 				) : (
-					<ul className="flex flex-col border-t border-ink">
+					<ul className="flex flex-col border-t border-rule-soft">
 						{detail.documents.map((document) => (
 							<li
 								key={document.id}

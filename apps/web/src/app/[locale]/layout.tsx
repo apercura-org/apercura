@@ -6,18 +6,16 @@ import { SkipLink } from "~/components/skip-link";
 import { serverEnv } from "~/env";
 import { routing } from "~/i18n/routing";
 import { pickMessages } from "~/lib/client-messages";
-import { BRAND, OG_LOCALES, ogImageUrl, siteVerification, THEME_COLOR } from "~/lib/seo";
+import { BRAND, OG_LOCALES, ogImageUrl, SITE_VIEWPORT, siteVerification } from "~/lib/seo";
 import { siteOrigin } from "~/lib/site-url";
+import { fontVariables } from "../fonts";
 import "../globals.css";
 
 export function generateStaticParams() {
 	return routing.locales.map((locale) => ({ locale }));
 }
 
-export const viewport: Viewport = {
-	themeColor: THEME_COLOR,
-	colorScheme: "light",
-};
+export const viewport: Viewport = SITE_VIEWPORT;
 
 export async function generateMetadata({ params }: LayoutProps<"/[locale]">): Promise<Metadata> {
 	const { locale } = await params;
@@ -58,7 +56,12 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
 	const messages = pickMessages(await getMessages({ locale }), ["Site", "LocaleSwitcher"]);
 
 	return (
-		<html lang={locale}>
+		// /theme.js sets `data-theme` and `data-js` on <html> before React hydrates it.
+		<html lang={locale} className={fontVariables} suppressHydrationWarning>
+			<head>
+				{/* Applies the stored colour theme before the first paint (~/lib/theme). */}
+				<script src="/theme.js" />
+			</head>
 			<body className="flex min-h-dvh flex-col">
 				<SkipLink label={t("skipLink")} />
 				<NextIntlClientProvider messages={messages}>{children}</NextIntlClientProvider>

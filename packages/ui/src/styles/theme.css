@@ -2,35 +2,80 @@
  * Apercura design tokens for Tailwind CSS v4.
  *
  * Import after `tailwindcss`. Tailwind's default palette, type scale, radii and
- * shadows are removed on purpose: only the booklet's own tokens exist, so the
- * palette laws (violet = action/verified/booked, red = errors) cannot drift.
+ * shadows are removed on purpose: only Apercura's own tokens exist, so the
+ * palette laws (the accent = action/verified/booked, red = errors) cannot drift.
+ *
+ * Two themes share one set of names. The raw values live once, as `--light-*`
+ * and `--dark-*`; the `--color-*` tokens every utility reads point at the light
+ * ones, and are pointed at the dark ones when the visitor chose dark
+ * (`<html data-theme="dark">`, set before first paint by /theme.js) or chose
+ * nothing and the system is dark. Without JavaScript the system decides.
  * Keep the values in sync with `src/tokens/index.ts` (checked by a unit test).
  */
 
+:root {
+	--light-paper: oklch(1 0 0);
+	--light-paper-shade: oklch(0.977 0.003 260);
+	--light-ink: oklch(0.23 0.014 260);
+	--light-ink-muted: oklch(0.47 0.014 260);
+	--light-ink-disabled: oklch(0.6 0.01 260);
+	--light-rule-soft: oklch(0.91 0.005 260);
+	--light-field-edge: oklch(0.6 0.012 260);
+	--light-stamp: oklch(0.47 0.13 285);
+	--light-stamp-strong: oklch(0.4 0.12 285);
+	--light-stamp-tint: oklch(0.965 0.016 285);
+	--light-error: oklch(0.52 0.16 25);
+	--light-error-tint: oklch(0.97 0.013 25);
+	--light-overlay-shadow: oklch(0.23 0.03 260 / 0.16);
+
+	--dark-paper: oklch(0.2 0.01 260);
+	--dark-paper-shade: oklch(0.235 0.011 260);
+	--dark-ink: oklch(0.95 0.005 260);
+	--dark-ink-muted: oklch(0.77 0.012 260);
+	--dark-ink-disabled: oklch(0.59 0.01 260);
+	--dark-rule-soft: oklch(0.32 0.012 260);
+	--dark-field-edge: oklch(0.6 0.012 260);
+	--dark-stamp: oklch(0.78 0.1 285);
+	--dark-stamp-strong: oklch(0.85 0.075 285);
+	--dark-stamp-tint: oklch(0.28 0.04 285);
+	--dark-error: oklch(0.74 0.14 25);
+	--dark-error-tint: oklch(0.27 0.045 25);
+	--dark-overlay-shadow: oklch(0 0 0 / 0.5);
+}
+
 @theme {
 	--color-*: initial;
-	--color-paper: oklch(1 0 0);
-	--color-paper-shade: oklch(0.975 0.003 255);
-	--color-ink: oklch(0.24 0.012 255);
-	--color-ink-muted: oklch(0.46 0.012 255);
-	--color-ink-disabled: oklch(0.6 0.008 255);
-	--color-rule-soft: oklch(0.88 0.006 255);
-	--color-field-edge: oklch(0.56 0.01 255);
-	--color-stamp: oklch(0.42 0.09 290);
-	--color-stamp-strong: oklch(0.35 0.08 290);
-	--color-stamp-tint: oklch(0.965 0.014 290);
-	--color-error: oklch(0.5 0.15 25);
-	--color-error-tint: oklch(0.97 0.012 25);
+	--color-paper: var(--light-paper);
+	--color-paper-shade: var(--light-paper-shade);
+	--color-ink: var(--light-ink);
+	--color-ink-muted: var(--light-ink-muted);
+	--color-ink-disabled: var(--light-ink-disabled);
+	--color-rule-soft: var(--light-rule-soft);
+	--color-field-edge: var(--light-field-edge);
+	--color-stamp: var(--light-stamp);
+	--color-stamp-strong: var(--light-stamp-strong);
+	--color-stamp-tint: var(--light-stamp-tint);
+	--color-error: var(--light-error);
+	--color-error-tint: var(--light-error-tint);
 
+	/*
+	 * One family, Allo. The app loads it and names its faces in `--font-allo` and
+	 * `--font-allo-ext` (apps/web/src/app/fonts.ts). Body copy turns on the tailed l and the
+	 * serifed I (cv03, cv04), so Il1 never read alike; headings and labels keep the plain forms.
+	 */
 	--font-*: initial;
-	--font-display: "Archivo Variable", "Archivo Fallback", ui-sans-serif, system-ui, sans-serif;
+	--font-display:
+		var(--font-allo, "Allo"), var(--font-allo-ext, "Allo"), "Allo Fallback", ui-sans-serif,
+		system-ui, sans-serif;
+	--font-display--font-feature-settings: normal;
 	--font-body:
-		"Atkinson Hyperlegible Next Variable", "Atkinson Fallback", ui-sans-serif, system-ui, sans-serif;
+		var(--font-allo, "Allo"), var(--font-allo-ext, "Allo"), "Allo Fallback", ui-sans-serif,
+		system-ui, sans-serif;
+	--font-body--font-feature-settings: "cv03", "cv04";
 
 	--text-*: initial;
 	--text-folio: 0.875rem;
-	--text-folio--line-height: 1.3;
-	--text-folio--letter-spacing: 0.04em;
+	--text-folio--line-height: 1.35;
 	--text-meta: 1rem;
 	--text-meta--line-height: 1.5;
 	--text-body: 1.125rem;
@@ -39,28 +84,34 @@
 	--text-lead--line-height: 1.5;
 	--text-title: 1.5rem;
 	--text-title--line-height: 1.25;
-	--text-headline: clamp(1.875rem, 1.5rem + 1.5vw, 2.5rem);
-	--text-headline--line-height: 1.12;
-	--text-display: clamp(2.5rem, 1.75rem + 3vw, 3.75rem);
-	--text-display--line-height: 1.02;
+	--text-headline: clamp(1.875rem, 1.55rem + 1.3vw, 2.375rem);
+	--text-headline--line-height: 1.15;
+	--text-display: clamp(2.5rem, 1.9rem + 2.6vw, 3.5rem);
+	--text-display--line-height: 1.05;
 
 	--radius-*: initial;
-	--radius-field: 0.125rem;
+	/* Controls: fields, buttons, badges, popovers. */
+	--radius-field: 0.375rem;
+	/* Containers: the action block, dialogs, the specimen, notices. */
+	--radius-panel: 0.625rem;
 	--radius-full: 9999px;
 
+	/* One elevation, for what floats over the page (popovers, menus, dialogs). Nothing else casts a shadow. */
 	--shadow-*: initial;
+	--shadow-overlay: 0 12px 32px -12px var(--overlay-shadow), 0 2px 6px -2px var(--overlay-shadow);
 	--inset-shadow-*: initial;
 	--drop-shadow-*: initial;
 
-	--animate-stamp: stamp 220ms cubic-bezier(0.25, 1, 0.5, 1);
-	--animate-slip-in: slip-in 220ms cubic-bezier(0.16, 1, 0.3, 1);
-	--animate-sheet-in: sheet-in 260ms cubic-bezier(0.16, 1, 0.3, 1);
+	--animate-stamp: stamp 200ms cubic-bezier(0.25, 1, 0.5, 1);
+	--animate-slip-in: slip-in 180ms cubic-bezier(0.16, 1, 0.3, 1);
+	--animate-sheet-in: sheet-in 240ms cubic-bezier(0.16, 1, 0.3, 1);
 	--animate-pulse-soft: pulse-soft 1.6s ease-in-out infinite;
 
+	/* A booked slot settles in: a short, quiet scale from 96 %. */
 	@keyframes stamp {
 		from {
-			transform: scale(1.05) rotate(-1.5deg);
-			opacity: 0.6;
+			transform: scale(0.96);
+			opacity: 0.7;
 		}
 		to {
 			transform: none;
@@ -90,14 +141,88 @@
 	}
 }
 
-/* Surfaces set the ground and the ink of their descendants; the focus ring stays the stamp on both. */
+/*
+ * The dark theme: chosen, or followed from the system when nothing is chosen. The two blocks
+ * hold the same declarations (a media query and an attribute cannot share one selector).
+ */
+@layer base {
+	:root {
+		--overlay-shadow: var(--light-overlay-shadow);
+		color-scheme: light dark;
+	}
+
+	:root[data-theme="light"] {
+		color-scheme: light;
+	}
+
+	@media (prefers-color-scheme: dark) {
+		:root:not([data-theme="light"]) {
+			--color-paper: var(--dark-paper);
+			--color-paper-shade: var(--dark-paper-shade);
+			--color-ink: var(--dark-ink);
+			--color-ink-muted: var(--dark-ink-muted);
+			--color-ink-disabled: var(--dark-ink-disabled);
+			--color-rule-soft: var(--dark-rule-soft);
+			--color-field-edge: var(--dark-field-edge);
+			--color-stamp: var(--dark-stamp);
+			--color-stamp-strong: var(--dark-stamp-strong);
+			--color-stamp-tint: var(--dark-stamp-tint);
+			--color-error: var(--dark-error);
+			--color-error-tint: var(--dark-error-tint);
+			--overlay-shadow: var(--dark-overlay-shadow);
+			color-scheme: dark;
+		}
+	}
+
+	:root[data-theme="dark"] {
+		--color-paper: var(--dark-paper);
+		--color-paper-shade: var(--dark-paper-shade);
+		--color-ink: var(--dark-ink);
+		--color-ink-muted: var(--dark-ink-muted);
+		--color-ink-disabled: var(--dark-ink-disabled);
+		--color-rule-soft: var(--dark-rule-soft);
+		--color-field-edge: var(--dark-field-edge);
+		--color-stamp: var(--dark-stamp);
+		--color-stamp-strong: var(--dark-stamp-strong);
+		--color-stamp-tint: var(--dark-stamp-tint);
+		--color-error: var(--dark-error);
+		--color-error-tint: var(--dark-error-tint);
+		--overlay-shadow: var(--dark-overlay-shadow);
+		color-scheme: dark;
+	}
+}
+
+/*
+ * Always light, whatever the theme: what is printed or scanned (the QR code and its quiet
+ * zone, the share kit's poster preview).
+ */
+@utility scheme-light {
+	--color-paper: var(--light-paper);
+	--color-paper-shade: var(--light-paper-shade);
+	--color-ink: var(--light-ink);
+	--color-ink-muted: var(--light-ink-muted);
+	--color-ink-disabled: var(--light-ink-disabled);
+	--color-rule-soft: var(--light-rule-soft);
+	--color-field-edge: var(--light-field-edge);
+	--color-stamp: var(--light-stamp);
+	--color-stamp-strong: var(--light-stamp-strong);
+	--color-stamp-tint: var(--light-stamp-tint);
+	--color-error: var(--light-error);
+	--color-error-tint: var(--light-error-tint);
+	--focus-ring: var(--light-stamp);
+	color-scheme: light;
+	background-color: var(--color-paper);
+	color: var(--color-ink);
+}
+
+/* Surfaces set the ground and the ink of their descendants; the focus ring stays the accent on both. */
 @utility surface-paper {
 	--focus-ring: var(--color-stamp);
 	background-color: var(--color-paper);
 	color: var(--color-ink);
 }
 
-/* The quiet neutral surface: page openings, the footer, dialog title strips. */
+/* The quiet neutral surface: page openings, the footer, title strips. */
 @utility surface-shade {
 	--focus-ring: var(--color-stamp);
 	background-color: var(--color-paper-shade);
@@ -105,74 +230,67 @@
 }
 
 /*
- * Display roles. Archivo set calm: semibold, close to its normal width, small
- * steps between sizes. Size and weight carry hierarchy; colour never does.
+ * Display roles. Allo semibold, tracked in slightly as it grows; size and weight carry the
+ * hierarchy, colour never does.
  */
 @utility type-display {
 	font-family: var(--font-display);
+	font-feature-settings: normal;
 	font-size: var(--text-display);
 	line-height: var(--text-display--line-height);
 	font-weight: 600;
-	font-stretch: 115%;
-	letter-spacing: -0.02em;
+	letter-spacing: -0.028em;
 }
 
 @utility type-headline {
 	font-family: var(--font-display);
+	font-feature-settings: normal;
 	font-size: var(--text-headline);
 	line-height: var(--text-headline--line-height);
 	font-weight: 600;
-	font-stretch: 102%;
-	letter-spacing: -0.018em;
+	letter-spacing: -0.022em;
 }
 
 @utility type-title {
 	font-family: var(--font-display);
+	font-feature-settings: normal;
 	font-size: var(--text-title);
 	line-height: var(--text-title--line-height);
 	font-weight: 600;
-	font-stretch: 100%;
-	letter-spacing: -0.01em;
+	letter-spacing: -0.014em;
 }
 
 /* A heading set at the lead size: dialog titles, sub-sections, list headings. */
 @utility type-subtitle {
 	font-family: var(--font-display);
+	font-feature-settings: normal;
 	font-size: var(--text-lead);
 	line-height: 1.3;
 	font-weight: 600;
-	font-stretch: 100%;
-	letter-spacing: -0.005em;
+	letter-spacing: -0.008em;
 }
 
-/* The wordmark in running heads. */
+/* The wordmark in the header and the footer. */
 @utility type-wordmark {
 	font-family: var(--font-display);
+	font-feature-settings: normal;
 	font-size: var(--text-lead);
 	line-height: 1.2;
 	font-weight: 650;
-	font-stretch: 106%;
-	letter-spacing: -0.01em;
+	letter-spacing: -0.02em;
 }
 
-/* Dotted leader between a field label and its value, as on a printed form. */
-@utility leader {
-	flex: 1 1 2rem;
-	min-width: 1.5rem;
-	align-self: last baseline;
-	border-bottom: 2px dotted var(--color-rule-soft);
-	transform: translateY(-0.3em);
-}
-
-/* Small-caps column headers and running heads (Archivo has no smcp, so caps are set small). */
-@utility caps {
+/*
+ * Small labels: column headers, field captions, badges, the "now" markers. Sentence case,
+ * semibold, never shouting in capitals.
+ */
+@utility type-caption {
 	font-family: var(--font-display);
-	font-stretch: 87.5%;
-	font-weight: 560;
-	text-transform: uppercase;
-	letter-spacing: 0.045em;
+	font-feature-settings: normal;
+	font-weight: 600;
+	letter-spacing: 0.002em;
 	font-size: 0.875rem;
-	line-height: 1.3;
+	line-height: 1.35;
 }
 
 /* Closed hours in a timetable: the quiet shade under a 1 px hairline hatch, no hue. */
@@ -185,6 +303,7 @@
 	);
 }
 
+/* Times, fees, counts and numbers that line up: Allo's tabular figures. */
 @utility tabular {
 	font-variant-numeric: tabular-nums lining-nums;
 }
@@ -192,7 +311,6 @@
 @layer base {
 	:root {
 		--focus-ring: var(--color-stamp);
-		color-scheme: light;
 		accent-color: var(--color-ink);
 		-webkit-text-size-adjust: 100%;
 		text-size-adjust: 100%;
@@ -207,11 +325,13 @@
 		background-color: var(--color-paper);
 		color: var(--color-ink);
 		font-family: var(--font-body);
+		font-feature-settings: var(--font-body--font-feature-settings);
 		font-size: var(--text-body);
 		line-height: var(--text-body--line-height);
 		font-variant-numeric: lining-nums;
 		text-rendering: optimizeLegibility;
 		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
 	}
 
 	h1,
@@ -219,6 +339,7 @@
 	h3,
 	h4 {
 		font-family: var(--font-display);
+		font-feature-settings: normal;
 		text-wrap: balance;
 	}
 
@@ -229,13 +350,13 @@
 	}
 
 	::selection {
-		background-color: var(--color-ink);
-		color: var(--color-paper);
+		background-color: var(--color-stamp-tint);
+		color: var(--color-ink);
 	}
 
 	input,
 	textarea {
-		caret-color: var(--color-ink);
+		caret-color: var(--color-stamp);
 	}
 
 	::placeholder {
@@ -255,6 +376,17 @@
 
 	table {
 		font-variant-numeric: tabular-nums lining-nums;
+	}
+
+	/* Photos sit a touch quieter on the dark ground, so they do not glare. */
+	@media (prefers-color-scheme: dark) {
+		:root:not([data-theme="light"]) img:not([data-keep-light]) {
+			filter: brightness(0.92);
+		}
+	}
+
+	:root[data-theme="dark"] img:not([data-keep-light]) {
+		filter: brightness(0.92);
 	}
 
 	@media (forced-colors: active) {
@@ -279,10 +411,10 @@
 	}
 }
 
-/* MapLibre surfaces drawn by the library itself, re-inked to the booklet. */
+/* MapLibre surfaces drawn by the library itself, set in the site's tokens (both themes). */
 @layer components {
 	.apercura-map .maplibregl-ctrl-attrib {
-		background-color: oklch(1 0 0 / 0.92);
+		background-color: color-mix(in oklch, var(--color-paper) 92%, transparent);
 		color: var(--color-ink);
 		font-family: var(--font-body);
 		font-size: 0.875rem;
@@ -294,15 +426,27 @@
 		text-decoration: underline;
 	}
 
+	/* MapLibre draws the attribution toggle and zoom icons dark: invert them on the dark ground. */
+	.apercura-map .maplibregl-ctrl-attrib-button,
+	.apercura-map .maplibregl-ctrl-group button .maplibregl-ctrl-icon {
+		filter: var(--map-icon-filter, none);
+	}
+
 	.apercura-map .maplibregl-ctrl-group {
+		overflow: hidden;
 		border: 1px solid var(--color-field-edge);
 		border-radius: var(--radius-field);
+		background-color: var(--color-paper);
 		box-shadow: none;
 	}
 
 	.apercura-map .maplibregl-ctrl-group button {
 		width: 44px;
 		height: 44px;
+	}
+
+	.apercura-map .maplibregl-ctrl-group button + button {
+		border-top-color: var(--color-rule-soft);
 	}
 
 	.apercura-map-pin {
@@ -319,7 +463,17 @@
 		border: 3px solid var(--color-paper);
 		border-radius: 50% 50% 50% 0;
 		outline: 1px solid var(--color-ink);
-		background-color: var(--color-ink);
+		background-color: var(--color-stamp);
 		transform: rotate(-45deg);
 	}
+}
+
+@media (prefers-color-scheme: dark) {
+	:root:not([data-theme="light"]) .apercura-map {
+		--map-icon-filter: invert(1);
+	}
+}
+
+:root[data-theme="dark"] .apercura-map {
+	--map-icon-filter: invert(1);
 }

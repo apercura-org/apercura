@@ -250,10 +250,10 @@ export function BookingPanel({
 			size="lg"
 		>
 			<div className="flex flex-col gap-6">
-				<div className="flex flex-col gap-1 border-b border-ink pb-3">
+				<div className="flex flex-col gap-1 border-b border-rule-soft pb-3">
 					<p className="type-subtitle text-ink">{t("with", { practitioner: practitionerName })}</p>
 					{state.step !== "done" && stepIndex >= 0 && options.data && calendars.length > 0 ? (
-						<p className="caps text-ink">
+						<p className="type-caption text-ink">
 							{t("step", {
 								current: stepIndex + 1,
 								total: steps.length,

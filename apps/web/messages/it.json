@@ -37,11 +37,18 @@
 			"legal": "Note legali",
 			"terms": "Condizioni d’uso",
 			"international": "Apercura in altri paesi"
+		},
+		"theme": {
+			"label": "Tema",
+			"light": "Chiaro",
+			"dark": "Scuro",
+			"system": "Sistema"
 		}
 	},
 	"LocaleSwitcher": {
 		"label": "Lingua",
-		"locale": "{locale, select, fr {Français} en {English} de {Deutsch} es {Español} it {Italiano} other {Lingua sconosciuta}}"
+		"locale": "{locale, select, fr {Français} en {English} de {Deutsch} es {Español} it {Italiano} other {Lingua sconosciuta}}",
+		"current": "Lingua: {language}"
 	},
 	"Search": {
 		"label": "Trovare un professionista sanitario",
@@ -52,8 +59,8 @@
 		"submit": "Ricerca"
 	},
 	"HomePage": {
-		"title": "Apercura",
-		"hook": "Trovi qualsiasi professionista sanitario in Francia: ognuno di loro ha già una pagina.",
+		"title": "Trovi un professionista sanitario in Francia",
+		"hook": "Ogni medico, dentista, ostetrica e infermiere libero professionista ha già la sua pagina.",
 		"specimen": {
 			"heading": "Ogni professionista ha già una pagina",
 			"intro": "Questa è una pagina così come la compila il registro nazionale, prima che il professionista la rivendichi: i campi noti sono compilati, gli altri indicano chiaramente che non sono forniti."
@@ -91,9 +98,9 @@
 			"doctors": "Medici",
 			"dentists": "Dentisti",
 			"midwives": "Ostetriche",
+			"nurses": "Infermieri liberi professionisti",
 			"withAddress": "Con un indirizzo pubblico dello studio",
 			"count": "{count, number}",
-			"approxCount": "circa {count, number}",
 			"sourceLabel": "Fonte",
 			"sourceName": "Annuaire Santé, Agence du numérique en santé",
 			"updatedLabel": "Cifre di"
@@ -335,9 +342,9 @@
 			"inkDisabled": "Inchiostro disattivato",
 			"ruleSoft": "Linea sottile: filetti, linee guida",
 			"fieldEdge": "Bordo del campo: contorni dei controlli",
-			"stamp": "Timbro: azione, verificato, prenotato",
-			"stampStrong": "Timbro impresso",
-			"stampTint": "Sfondo timbro",
+			"stamp": "Accento: azione, verificata, prenotata",
+			"stampStrong": "Accento premuto",
+			"stampTint": "Velatura d’accento",
 			"error": "Inchiostro errore",
 			"errorTint": "Sfondo errore"
 		},
@@ -346,9 +353,9 @@
 			"headline": "Titolo principale: titoli di pagina",
 			"title": "Titolo: intestazioni di sezione",
 			"lead": "Occhiello: introduzioni",
-			"body": "Corpo: testo corrente a 18 px, composto in Atkinson Hyperlegible Next per i lettori ipovedenti.",
+			"body": "Corpo: testo corrente a 18 px, composto in Allo con la l con coda e la I con grazie, perché Il1 non si confondano mai.",
 			"meta": "Meta: suggerimenti e dati secondari",
-			"caps": "Maiuscoletto: intestazioni di colonna e testatine"
+			"caps": "Didascalia: intestazioni di colonna, etichette dei campi e badge"
 		},
 		"states": {
 			"default": "Predefinito",
@@ -513,7 +520,7 @@
 		"switchboard": "{phone} (centralino della struttura)",
 		"establishment": "Struttura",
 		"unnamedPlace": "Sede di esercizio",
-		"asideLabel": "Appuntamenti e pagina",
+		"asideLabel": "Informazioni su questa pagina",
 		"action": {
 			"callNotYetOpen": "La prenotazione online non è ancora disponibile per questo professionista. Per fissare un appuntamento, telefoni allo studio.",
 			"establishmentLink": "Contattare la struttura",

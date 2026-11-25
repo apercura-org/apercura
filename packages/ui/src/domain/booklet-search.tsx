@@ -32,8 +32,8 @@ export interface BookletSearchProps {
 }
 
 /**
- * The search printed as a row of form cells with a stamp at the end. A plain
- * GET form: it works without JavaScript and ships none.
+ * The search as one framed row of cells with the accent button at the end. A plain GET form:
+ * it works without JavaScript and ships none.
  */
 export function BookletSearch({
 	action,
@@ -50,21 +50,21 @@ export function BookletSearch({
 			id={formId}
 			action={action}
 			method="get"
-			className="flex flex-col gap-3 md:flex-row md:gap-0"
+			className="flex flex-col gap-1.5 rounded-panel border border-field-edge bg-paper p-1.5 md:flex-row"
 		>
-			<div className="flex flex-1 flex-col border border-field-edge bg-paper md:flex-row">
+			<div className="flex flex-1 flex-col md:flex-row">
 				{fields.map((field, index) => {
 					const id = `${idPrefix}-${field.name}`;
 					return (
 						<div
 							key={field.name}
 							className={cn(
-								"group relative flex flex-1 flex-col px-4 pt-2.5 pb-1.5 text-ink",
-								"has-[input:focus-visible]:outline-3 has-[input:focus-visible]:outline-solid has-[input:focus-visible]:outline-offset-[-6px] has-[input:focus-visible]:outline-stamp",
-								index > 0 && "border-t border-field-edge md:border-t-0 md:border-s",
+								"group relative flex flex-1 flex-col rounded-field px-3.5 pt-2 pb-1 text-ink",
+								"has-[input:focus-visible]:outline-3 has-[input:focus-visible]:outline-solid has-[input:focus-visible]:outline-offset-0 has-[input:focus-visible]:outline-stamp",
+								index > 0 && "border-t border-rule-soft md:border-t-0 md:border-s",
 							)}
 						>
-							<label htmlFor={id} className="caps text-ink">
+							<label htmlFor={id} className="type-caption text-ink-muted">
 								{field.label}
 							</label>
 							<input
@@ -86,7 +86,7 @@ export function BookletSearch({
 				className={buttonStyles({
 					intent: "stamp",
 					size: "lg",
-					className: "min-h-16 text-body md:min-w-44",
+					className: "min-h-14 text-body md:min-w-40",
 				})}
 			>
 				<SearchIcon className="size-5" />

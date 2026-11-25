@@ -36,7 +36,6 @@ export default async function TermsPage({ params }: PageProps<"/[locale]/conditi
 	const locale = await localeOf(params);
 	setRequestLocale(locale);
 	const t = await getTranslations({ locale, namespace: "TermsPage" });
-	const tSite = await getTranslations({ locale, namespace: "Site" });
 	const tI = await getTranslations({ locale, namespace: "Institutional" });
 	const format = await getFormatter({ locale });
 	const section = await proseSections(locale, "TermsPage");
@@ -60,7 +59,7 @@ export default async function TermsPage({ params }: PageProps<"/[locale]/conditi
 				mark={LEGAL_TEXTS_REVIEWED ? undefined : tI("legalDraftMark")}
 				note={anyMissing ? tI("placeholderNote") : null}
 			/>
-			<BookletPage runningHead={tSite("runningHead")}>
+			<BookletPage>
 				<PageGraph
 					locale={locale}
 					href={HREF}

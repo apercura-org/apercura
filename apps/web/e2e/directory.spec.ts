@@ -1,5 +1,6 @@
 import { expect, test } from "@playwright/test";
 import { axeViolations } from "./axe";
+import { testDb } from "./pro";
 
 /*
  * Public directory pages against the SYNTHETIC database seeded from
@@ -204,4 +205,45 @@ test.describe("on a phone", () => {
 		const width = await page.evaluate(() => document.documentElement.scrollWidth);
 		expect(width).toBeLessThanOrEqual(390);
 	});
+});
+
+test("the home page's register figures come from the directory, nurses included", async ({
+	page,
+}) => {
+	const sql = testDb();
+	let importedAt: string;
+	try {
+		const [run] = await sql<{ importedAt: string }[]>`
+			SELECT to_char(finished_at AT TIME ZONE 'UTC', 'YYYY-MM-DD') AS "importedAt"
+			FROM directory.etl_runs
+			WHERE source = 'fr' AND status = 'succeeded' AND finished_at IS NOT NULL
+			ORDER BY id DESC LIMIT 1
+		`;
+		if (!run) throw new Error("The synthetic fixtures are not imported");
+		importedAt = run.importedAt;
+	} finally {
+		await sql.end();
+	}
+	await page.goto("/fr");
+	const figures = page.getByRole("region", { name: "Construit à partir du registre national" });
+	const value = async (label: string) => {
+		const text = await figures
+			.locator("dt", { hasText: new RegExp(`^${label}$`) })
+			.locator("xpath=following-sibling::dd")
+			.textContent();
+		return Number((text ?? "").replace(/\D/g, ""));
+	};
+	const counts = {
+		doctors: await value("Médecins"),
+		dentists: await value("Chirurgiens-dentistes"),
+		midwives: await value("Sages-femmes"),
+		nurses: await value("Infirmiers libéraux"),
+	};
+	// Every profession of the fixtures has practitioners with a public page.
+	for (const count of Object.values(counts)) expect(count).toBeGreaterThan(0);
+	const withAddress = await value("Avec une adresse d’exercice publique");
+	expect(withAddress).toBeGreaterThan(0);
+	expect(withAddress).toBeLessThanOrEqual(Object.values(counts).reduce((a, b) => a + b, 0));
+	// Dated with the last import, not a frozen snapshot.
+	await expect(figures.locator(`time[datetime="${importedAt}"]`)).toBeVisible();
 });

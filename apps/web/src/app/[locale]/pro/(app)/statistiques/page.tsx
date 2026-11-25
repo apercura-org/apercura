@@ -89,7 +89,7 @@ async function Stats({ locale }: { locale: Locale }) {
 				<h2 id="stats-summary" className={sectionHeading}>
 					{t("summaryHeading")}
 				</h2>
-				<dl className="grid max-w-3xl border-y border-ink sm:grid-cols-3">
+				<dl className="grid max-w-3xl border-y border-rule-soft sm:grid-cols-3">
 					{summary.map((item) => (
 						<div
 							key={item.label}
@@ -212,7 +212,7 @@ async function Stats({ locale }: { locale: Locale }) {
 						score: stats.completion.score,
 					})}
 				</p>
-				<ul className="flex flex-col border-y border-ink">
+				<ul className="flex flex-col border-y border-rule-soft">
 					{stats.completion.items.map((item) => {
 						const target = CHECKLIST_TARGET[item.key];
 						return (

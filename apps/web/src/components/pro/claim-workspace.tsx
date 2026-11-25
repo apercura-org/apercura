@@ -43,7 +43,10 @@ function Section({
 	children?: ReactNode;
 }) {
 	return (
-		<section aria-labelledby={id} className="grid gap-6 border-t border-ink pt-6 md:grid-cols-12">
+		<section
+			aria-labelledby={id}
+			className="grid gap-6 border-t border-rule-soft pt-6 md:grid-cols-12"
+		>
 			<div className="flex flex-col gap-3 md:col-span-5">
 				<h2 id={id} className={sectionHeading}>
 					{title}
@@ -259,7 +262,7 @@ export function ClaimWorkspace({
 					lead={t("methods.document.lead")}
 				>
 					{data.documents.length > 0 ? (
-						<ul className="flex flex-col border-t border-ink">
+						<ul className="flex flex-col border-t border-rule-soft">
 							{data.documents.map((document) => (
 								<li
 									key={document.id}
@@ -316,10 +319,10 @@ export function ClaimWorkspace({
 						<p className="text-body text-ink">{t("methods.phone_callback.done")}</p>
 					) : code ? (
 						<div className="flex flex-col gap-3">
-							<p className="caps text-ink">{t("methods.phone_callback.codeLabel")}</p>
+							<p className="type-caption text-ink">{t("methods.phone_callback.codeLabel")}</p>
 							<p
 								data-testid="callback-code"
-								className="w-fit border-y border-ink px-1 py-2 font-body text-headline font-semibold tracking-[0.25em] text-ink tabular"
+								className="w-fit border-y border-rule-soft px-1 py-2 font-body text-headline font-semibold tracking-[0.25em] text-ink tabular"
 							>
 								{code}
 							</p>
@@ -417,7 +420,7 @@ function ClaimStatus({ data }: { data: ClaimData }) {
 			<section
 				aria-labelledby="claim-verified"
 				role="status"
-				className="flex flex-col gap-5 border-y border-ink py-6 sm:flex-row sm:items-start sm:gap-6"
+				className="flex flex-col gap-5 border-y border-rule-soft py-6 sm:flex-row sm:items-start sm:gap-6"
 			>
 				<Seal rpps={data.practitioner.nationalId} verified size={72} />
 				<div className="flex min-w-0 flex-col gap-3">

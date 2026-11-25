@@ -156,7 +156,7 @@ function TotpSection({ enabled, enrolling }: { enabled: boolean; enrolling: bool
 					<p className="text-body text-ink">{t("security.totp.scanLead")}</p>
 					<QrCode value={setup.totpURI} label={t("security.totp.qrLabel")} />
 					<dl className="flex flex-col gap-1">
-						<dt className="font-display text-meta font-semibold text-ink font-stretch-semi-condensed">
+						<dt className="font-display text-meta font-semibold text-ink">
 							{t("security.totp.manualKey")}
 						</dt>
 						<dd>
@@ -174,7 +174,7 @@ function TotpSection({ enabled, enrolling }: { enabled: boolean; enrolling: bool
 					<p className="text-body text-ink">{t("security.totp.codesLead")}</p>
 					<ol
 						aria-label={t("security.totp.codesHeading")}
-						className="grid grid-cols-2 gap-x-6 gap-y-1 border-y border-ink py-3 sm:grid-cols-3"
+						className="grid grid-cols-2 gap-x-6 gap-y-1 border-y border-rule-soft py-3 sm:grid-cols-3"
 					>
 						{setup.backupCodes.map((backupCode) => (
 							<li key={backupCode} className="font-body text-body text-ink tabular">

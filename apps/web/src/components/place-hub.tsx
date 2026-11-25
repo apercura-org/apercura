@@ -34,7 +34,6 @@ export async function PlaceHub({
 	hub: PlaceHubData;
 }) {
 	const t = await getTranslations({ locale, namespace: "Directory" });
-	const tSite = await getTranslations({ locale, namespace: "Site" });
 	const labels = await getTaxonomyLabels(locale);
 	const name = placeLabel(place);
 	const isDepartment = place.kind === "department";
@@ -73,7 +72,7 @@ export async function PlaceHub({
 					}),
 				])}
 			/>
-			<BookletPage runningHead={tSite("runningHead")}>
+			<BookletPage>
 				<div className="flex flex-col gap-6">
 					<Trail locale={locale} items={trail} />
 					<ListingTitle title={title} lead={t("placeLead", { count: hub.total, place: name })} />

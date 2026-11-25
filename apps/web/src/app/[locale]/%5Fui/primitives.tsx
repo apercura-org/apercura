@@ -59,7 +59,7 @@ type SortDescriptor = { column: string | number; direction: "ascending" | "desce
 
 function Section({ id, title, children }: { id: string; title: string; children: ReactNode }) {
 	return (
-		<section aria-labelledby={id} className="flex flex-col gap-6 border-t border-ink pt-6">
+		<section aria-labelledby={id} className="flex flex-col gap-6 border-t border-rule-soft pt-6">
 			<h2 id={id} className="type-title text-ink">
 				{title}
 			</h2>
@@ -79,7 +79,7 @@ function Specimen({
 }) {
 	return (
 		<div className={className}>
-			<p className="caps mb-2 text-ink-muted">{label}</p>
+			<p className="type-caption mb-2 text-ink-muted">{label}</p>
 			<div className="flex flex-wrap items-start gap-3">{children}</div>
 		</div>
 	);
@@ -135,7 +135,7 @@ export function GalleryPrimitives() {
 						</Button>
 					</Specimen>
 					<div className="surface-shade flex flex-col gap-2 p-5">
-						<p className="caps text-ink-muted">{t("states.onShade")}</p>
+						<p className="type-caption text-ink-muted">{t("states.onShade")}</p>
 						<div className="flex flex-wrap gap-3">
 							<Button intent="stamp">{t("buttons.stamp")}</Button>
 							<Button intent="ink">{t("buttons.ink")}</Button>

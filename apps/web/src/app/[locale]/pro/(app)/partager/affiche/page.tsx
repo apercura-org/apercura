@@ -86,10 +86,10 @@ async function Poster({ locale, format }: { locale: Locale; format: Format }) {
 				<article
 					lang="fr"
 					aria-label={t("sheetLabel")}
-					className={`poster-sheet poster-${format} @container mx-auto flex aspect-[210/297] w-full max-w-[32rem] flex-col items-center justify-between border border-ink bg-paper text-center text-ink`}
+					className={`poster-sheet poster-${format} @container mx-auto flex aspect-[210/297] w-full max-w-[32rem] flex-col items-center justify-between scheme-light border border-ink bg-paper text-center text-ink`}
 				>
-					<div className="flex w-full flex-col items-center gap-[2cqw] border-b border-ink px-[8cqw] pt-[6cqw] pb-[5cqw]">
-						<p className="font-display text-[4.2cqw] font-semibold tracking-[0.045em] uppercase">
+					<div className="flex w-full flex-col items-center gap-[2cqw] border-b border-rule-soft px-[8cqw] pt-[6cqw] pb-[5cqw]">
+						<p className="font-display text-[4.6cqw] font-semibold tracking-[-0.015em]">
 							{tPrint("wordmark")}
 						</p>
 						<h2 className="font-display text-[7.5cqw] leading-[1.05] font-semibold">
@@ -110,7 +110,7 @@ async function Poster({ locale, format }: { locale: Locale; format: Format }) {
 						size="40cqw"
 						className="shrink-0 border-0"
 					/>
-					<div className="flex w-full flex-col items-center gap-[1.5cqw] border-t border-ink px-[8cqw] pt-[4cqw] pb-[5cqw]">
+					<div className="flex w-full flex-col items-center gap-[1.5cqw] border-t border-rule-soft px-[8cqw] pt-[4cqw] pb-[5cqw]">
 						<p className="text-[3.8cqw] leading-snug">{tPrint("scan")}</p>
 						<p className="text-[3.2cqw] break-all tabular">{shown}</p>
 						<p className="text-[3.4cqw] leading-snug text-ink-muted">

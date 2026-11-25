@@ -3,7 +3,7 @@
 import { useMemo } from "react";
 import { qrPath } from "~/lib/qr";
 
-/** A QR code drawn as ink squares on paper (no external image, no innerHTML). */
+/** A QR code drawn as ink squares on a light quiet zone, in both themes (no external image, no innerHTML). */
 export function QrCode({
 	value,
 	label,
@@ -28,7 +28,8 @@ export function QrCode({
 			height={typeof size === "number" ? size : undefined}
 			style={typeof size === "string" ? { width: size, height: size } : undefined}
 			shapeRendering="crispEdges"
-			className={`${className} bg-paper text-ink`}
+			// Always dark modules on a light quiet zone, whatever the theme: scanners expect it.
+			className={`${className} scheme-light bg-paper text-ink`}
 		>
 			<rect width={path.size} height={path.size} className="fill-paper" />
 			<path d={path.d} fill="currentColor" />

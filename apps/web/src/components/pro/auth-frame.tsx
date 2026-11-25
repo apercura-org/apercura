@@ -1,4 +1,3 @@
-import { getTranslations } from "next-intl/server";
 import type { ReactNode } from "react";
 import { BookletPage } from "~/components/booklet-page";
 import { ClientIsland } from "~/components/client-island";
@@ -19,7 +18,6 @@ interface AuthFrameProps {
 
 /** Sign-in, sign-up and confirmation pages: the title on the quiet shade, the form on a booklet page. */
 export async function AuthFrame({ locale, pathname, title, lead, children }: AuthFrameProps) {
-	const t = await getTranslations({ locale, namespace: "auth" });
 	// The practitioner space is never indexed and full of forms: it gets the whole catalogue and the API client.
 	return (
 		<ClientIsland locale={locale} namespaces="all">
@@ -32,7 +30,7 @@ export async function AuthFrame({ locale, pathname, title, lead, children }: Aut
 							{lead ? <p className="max-w-[58ch] text-lead text-ink">{lead}</p> : null}
 						</div>
 					</div>
-					<BookletPage runningHead={t("runningHead")}>{children}</BookletPage>
+					<BookletPage>{children}</BookletPage>
 				</main>
 				<SiteFooter locale={locale} />
 			</TRPCReactProvider>

@@ -40,7 +40,7 @@ export function ProvenanceNote({
 			)}
 		>
 			<span>
-				<span className="caps me-1.5 text-ink">{sourceLabel}</span>
+				<span className="type-caption me-1.5 text-ink">{sourceLabel}</span>
 				{sourceHref ? (
 					<a
 						href={sourceHref}
@@ -54,7 +54,7 @@ export function ProvenanceNote({
 				)}
 			</span>
 			<span>
-				<span className="caps me-1.5 text-ink">{updatedLabel}</span>
+				<span className="type-caption me-1.5 text-ink">{updatedLabel}</span>
 				<time dateTime={updatedAt}>{date}</time>
 			</span>
 		</p>

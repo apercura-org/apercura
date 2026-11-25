@@ -34,7 +34,6 @@ export default async function ProPage({ params }: PageProps<"/[locale]/pro">) {
 	setRequestLocale(locale);
 
 	const t = await getTranslations({ locale, namespace: "ProPage" });
-	const tSite = await getTranslations({ locale, namespace: "Site" });
 
 	const tMeta = await getTranslations({ locale, namespace: "Metadata" });
 
@@ -64,7 +63,7 @@ export default async function ProPage({ params }: PageProps<"/[locale]/pro">) {
 					</div>
 				</div>
 
-				<BookletPage runningHead={tSite("runningHead")}>
+				<BookletPage>
 					<section aria-labelledby="steps-heading" className="flex flex-col gap-5">
 						<h2 id="steps-heading" className="type-title text-ink">
 							{t("stepsHeading")}

@@ -37,11 +37,18 @@
 			"legal": "Legal notice",
 			"terms": "Terms of use",
 			"international": "Apercura in other countries"
+		},
+		"theme": {
+			"label": "Theme",
+			"light": "Light",
+			"dark": "Dark",
+			"system": "System"
 		}
 	},
 	"LocaleSwitcher": {
 		"label": "Language",
-		"locale": "{locale, select, fr {Français} en {English} de {Deutsch} es {Español} it {Italiano} other {Unknown language}}"
+		"locale": "{locale, select, fr {Français} en {English} de {Deutsch} es {Español} it {Italiano} other {Unknown language}}",
+		"current": "Language: {language}"
 	},
 	"Search": {
 		"label": "Find a health practitioner",
@@ -52,8 +59,8 @@
 		"submit": "Search"
 	},
 	"HomePage": {
-		"title": "Apercura",
-		"hook": "Find any health practitioner in France: every one of them already has a page.",
+		"title": "Find a health practitioner in France",
+		"hook": "Every doctor, dentist, midwife and self-employed nurse already has a page.",
 		"specimen": {
 			"heading": "Every practitioner already has a page",
 			"intro": "This is a page as the national register fills it, before the practitioner claims it: known fields are filled, the others say plainly that they are not provided."
@@ -91,9 +98,9 @@
 			"doctors": "Doctors",
 			"dentists": "Dentists",
 			"midwives": "Midwives",
+			"nurses": "Self-employed nurses",
 			"withAddress": "With a public practice address",
 			"count": "{count, number}",
-			"approxCount": "about {count, number}",
 			"sourceLabel": "Source",
 			"sourceName": "Annuaire Santé, Agence du numérique en santé",
 			"updatedLabel": "Figures of"
@@ -335,9 +342,9 @@
 			"inkDisabled": "Disabled ink",
 			"ruleSoft": "Soft rule: hairlines, leaders",
 			"fieldEdge": "Field edge: control borders",
-			"stamp": "Stamp: action, verified, booked",
-			"stampStrong": "Stamp pressed",
-			"stampTint": "Stamp wash",
+			"stamp": "Accent: action, verified, booked",
+			"stampStrong": "Accent pressed",
+			"stampTint": "Accent wash",
 			"error": "Error ink",
 			"errorTint": "Error wash"
 		},
@@ -346,9 +353,9 @@
 			"headline": "Headline: page titles",
 			"title": "Title: section headings",
 			"lead": "Lead: introductions",
-			"body": "Body: running text at 18 px, set in Atkinson Hyperlegible Next for low-vision readers.",
+			"body": "Body: running text at 18 px, set in Allo with the tailed l and serifed I, so Il1 never read alike.",
 			"meta": "Meta: hints and secondary facts",
-			"caps": "Caps: column headers and running heads"
+			"caps": "Caption: column headers, field captions and badges"
 		},
 		"states": {
 			"default": "Default",
@@ -513,7 +520,7 @@
 		"switchboard": "{phone} (establishment switchboard)",
 		"establishment": "Establishment",
 		"unnamedPlace": "Place of practice",
-		"asideLabel": "Appointments and page",
+		"asideLabel": "About this page",
 		"action": {
 			"callNotYetOpen": "Online booking is not open yet for this practitioner. To make an appointment, call the practice.",
 			"establishmentLink": "Contact the establishment",

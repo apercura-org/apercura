@@ -22,7 +22,7 @@ export function Tabs({ className, ...props }: TabsProps) {
 	);
 }
 
-/** Tab strip ruled on a hairline baseline; the selected tab is underlined in ink. */
+/** Tab strip on a hairline baseline; the selected tab is underlined in ink. */
 export function TabList<T extends object>({ className, ...props }: TabListProps<T>) {
 	return (
 		<RACTabList
@@ -41,7 +41,7 @@ export function Tab({ className, ...props }: TabProps) {
 			className={composeRenderProps(className, (cls) =>
 				cn(
 					"-mb-px flex min-h-11 cursor-pointer items-center whitespace-nowrap border-b-2 border-transparent px-4",
-					"font-display text-meta font-medium text-ink-muted font-stretch-semi-condensed",
+					"font-display text-meta font-medium text-ink-muted transition-colors duration-150",
 					"hover:border-field-edge hover:text-ink",
 					"data-selected:border-ink data-selected:font-semibold data-selected:text-ink",
 					"data-disabled:cursor-not-allowed data-disabled:text-ink-disabled",

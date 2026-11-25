@@ -27,7 +27,6 @@ export default async function LegalPage({ params }: PageProps<"/[locale]/mention
 	const locale = await localeOf(params);
 	setRequestLocale(locale);
 	const t = await getTranslations({ locale, namespace: "LegalPage" });
-	const tSite = await getTranslations({ locale, namespace: "Site" });
 	const tI = await getTranslations({ locale, namespace: "Institutional" });
 	const section = await proseSections(locale, "LegalPage");
 	const facts = legalFacts(serverEnv);
@@ -44,7 +43,7 @@ export default async function LegalPage({ params }: PageProps<"/[locale]/mention
 				mark={LEGAL_TEXTS_REVIEWED ? undefined : tI("legalDraftMark")}
 				note={anyMissing ? tI("placeholderNote") : null}
 			/>
-			<BookletPage runningHead={tSite("runningHead")}>
+			<BookletPage>
 				<PageGraph
 					locale={locale}
 					href={HREF}

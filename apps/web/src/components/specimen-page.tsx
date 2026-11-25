@@ -1,4 +1,4 @@
-import { FieldList, FieldRow, PractitionerHeader, ProvenanceNote } from "@apercura/ui";
+import { Badge, FieldList, FieldRow, PractitionerHeader, ProvenanceNote } from "@apercura/ui";
 import { getTranslations } from "next-intl/server";
 import type { Locale } from "~/i18n/routing";
 
@@ -14,8 +14,8 @@ export const SPECIMEN = {
 } as const;
 
 /**
- * The specimen booklet page: an unclaimed page exactly as the register fills it,
- * with its seal, honest empty fields and provenance, labelled as fictitious.
+ * The specimen page: an unclaimed page exactly as the register fills it, with its seal,
+ * honest empty fields and provenance, labelled as fictitious.
  */
 export async function SpecimenPage({
 	locale,
@@ -30,11 +30,11 @@ export async function SpecimenPage({
 	return (
 		<article
 			aria-label={`${SPECIMEN.name}, ${t("specimen")}`}
-			className="border border-dashed border-field-edge bg-paper"
+			className="overflow-hidden rounded-panel border border-rule-soft bg-paper"
 		>
-			<div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 border-b border-rule-soft px-5 py-2 sm:px-8">
-				<span className="caps text-ink">{t("specimen")}</span>
-				<span className="caps tabular text-ink" aria-hidden="true">
+			<div className="surface-shade flex flex-wrap items-center justify-between gap-x-4 gap-y-1 border-b border-rule-soft px-5 py-2.5 sm:px-8">
+				<Badge tone="ink">{t("specimen")}</Badge>
+				<span className="tabular text-meta text-ink-muted" aria-hidden="true">
 					{tSite("folioRpps", { rpps: SPECIMEN.rpps })}
 				</span>
 			</div>

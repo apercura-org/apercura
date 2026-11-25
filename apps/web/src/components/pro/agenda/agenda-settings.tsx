@@ -55,7 +55,7 @@ function Section({
 	children: ReactNode;
 }) {
 	return (
-		<section aria-labelledby={id} className="flex flex-col gap-5 border-t border-ink pt-6">
+		<section aria-labelledby={id} className="flex flex-col gap-5 border-t border-rule-soft pt-6">
 			<div className="flex flex-col gap-1">
 				<h2 id={id} className={sectionHeading}>
 					{title}
@@ -130,12 +130,12 @@ export function AgendaSettings({ organizationId }: { organizationId: string }) {
 		<div className="grid gap-8 lg:grid-cols-[14rem_minmax(0,1fr)] lg:gap-12">
 			<nav
 				aria-labelledby="settings-index"
-				className="border-t border-ink pt-6 lg:sticky lg:top-6 lg:self-start"
+				className="border-t border-rule-soft pt-6 lg:sticky lg:top-6 lg:self-start"
 			>
-				<h2 id="settings-index" className="caps pb-2 text-ink">
+				<h2 id="settings-index" className="type-caption pb-2 text-ink">
 					{t("index")}
 				</h2>
-				<ul className="flex flex-col border-t border-ink">
+				<ul className="flex flex-col border-t border-rule-soft">
 					{index.map(([id, label]) => (
 						<li key={id} className="border-b border-rule-soft">
 							<a href={`#${id}`} className={`${linkStyles()} flex min-h-11 items-center text-meta`}>
@@ -159,7 +159,7 @@ export function AgendaSettings({ organizationId }: { organizationId: string }) {
 							}
 						/>
 					) : (
-						<ul className="flex flex-col border-t border-ink">
+						<ul className="flex flex-col border-t border-rule-soft">
 							{data.sites.map((site) => {
 								const existing = data.calendars.find((item) => item.siteId === site.siteId);
 								const isCurrent = existing !== undefined && existing.id === calendar?.id;
@@ -380,7 +380,10 @@ function Gate({
 	};
 
 	return (
-		<section aria-labelledby="settings-gate" className="flex flex-col gap-4 border border-ink p-5">
+		<section
+			aria-labelledby="settings-gate"
+			className="flex flex-col gap-4 rounded-panel border border-rule-soft p-5"
+		>
 			<div className="flex flex-wrap items-center justify-between gap-3">
 				<h2 id="settings-gate" className={sectionHeading}>
 					{t("heading")}
@@ -969,9 +972,7 @@ function RulesEditor({
 	return (
 		<div className="flex flex-col gap-5">
 			<div className="flex flex-wrap items-center gap-3">
-				<span className="font-display text-meta font-semibold text-ink font-stretch-semi-condensed">
-					{t("template")}
-				</span>
+				<span className="font-display text-meta font-semibold text-ink">{t("template")}</span>
 				<Button intent="ink" onPress={() => template([["08:30", "12:30"]])}>
 					{t("templateMornings")}
 				</Button>
@@ -988,16 +989,16 @@ function RulesEditor({
 				</Button>
 			</div>
 			<div>
-				<table className="block w-full border-collapse border-y border-ink text-left text-body sm:table">
-					<thead className="hidden border-b border-ink sm:table-header-group">
+				<table className="block w-full border-collapse border-y border-rule-soft text-left text-body sm:table">
+					<thead className="hidden border-b border-rule-soft sm:table-header-group">
 						<tr>
-							<th scope="col" className="caps py-2.5 pe-3 text-left text-ink">
+							<th scope="col" className="type-caption py-2.5 pe-3 text-left text-ink">
 								{t("columns.day")}
 							</th>
-							<th scope="col" className="caps w-40 px-3 py-2.5 text-left text-ink">
+							<th scope="col" className="type-caption w-40 px-3 py-2.5 text-left text-ink">
 								{t("from")}
 							</th>
-							<th scope="col" className="caps w-40 px-3 py-2.5 text-left text-ink">
+							<th scope="col" className="type-caption w-40 px-3 py-2.5 text-left text-ink">
 								{t("to")}
 							</th>
 							<th scope="col" className="w-28 py-2.5 ps-3">
@@ -1259,7 +1260,7 @@ function ExceptionsEditor({
 			{sorted.length === 0 ? (
 				<p className="text-body text-ink">{t("empty")}</p>
 			) : (
-				<ul className="flex flex-col border-t border-ink">
+				<ul className="flex flex-col border-t border-rule-soft">
 					{sorted.map((item) => {
 						const label = labelOf(item);
 						return (

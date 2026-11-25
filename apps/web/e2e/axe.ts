@@ -12,8 +12,8 @@ const TAGS = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"];
  */
 const LIVE_ANNOUNCER_ECHO = '[role="log"][aria-relevant="additions"] > [role="img"]';
 
-export async function axeViolations(page: Page) {
-	// Audit the settled page, not a dialog half-way through its fade-in.
+/** Waits for every finite animation and transition: audit the settled page, not a fade. */
+async function settle(page: Page) {
 	await page.evaluate(() =>
 		Promise.all(
 			document
@@ -24,6 +24,9 @@ export async function axeViolations(page: Page) {
 				.map((animation) => animation.finished.catch(() => undefined)),
 		),
 	);
+}
+
+async function analyze(page: Page, scheme: "light" | "dark") {
 	const results = await new AxeBuilder({ page })
 		.withTags(TAGS)
 		.exclude(LIVE_ANNOUNCER_ECHO)
@@ -32,6 +35,26 @@ export async function axeViolations(page: Page) {
 		id: violation.id,
 		impact: violation.impact,
 		help: violation.help,
+		scheme,
 		targets: violation.nodes.map((node) => node.target.join(" ")),
 	}));
+}
+
+/**
+ * The page's WCAG A/AA violations in both colour themes: light, then dark (the system's
+ * preference, which the page follows when the visitor chose no theme), then the browser's
+ * own scheme again.
+ */
+export async function axeViolations(page: Page) {
+	const violations = [];
+	for (const scheme of ["light", "dark"] as const) {
+		await page.emulateMedia({ colorScheme: scheme });
+		// One frame for the new custom properties to apply, then let colour transitions end.
+		await page.evaluate(() => new Promise((resolve) => requestAnimationFrame(resolve)));
+		await settle(page);
+		violations.push(...(await analyze(page, scheme)));
+	}
+	await page.emulateMedia({ colorScheme: null });
+	await settle(page);
+	return violations;
 }

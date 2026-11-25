@@ -121,7 +121,6 @@ export default async function SearchPage({ params, searchParams }: Props) {
 	const outcome = await run(query, page, locale);
 
 	const t = await getTranslations({ locale, namespace: "SearchPage" });
-	const tSite = await getTranslations({ locale, namespace: "Site" });
 
 	return (
 		<PublicPage locale={locale} href="/recherche">
@@ -135,7 +134,7 @@ export default async function SearchPage({ params, searchParams }: Props) {
 					</ClientIsland>
 				</div>
 			</div>
-			<BookletPage runningHead={tSite("runningHead")} folio={tSite("folio", { number: page })}>
+			<BookletPage>
 				<div className="flex flex-col gap-6">
 					<QuerySummary locale={locale} query={query} />
 					<OutcomeView locale={locale} outcome={outcome} query={query} page={page} />
@@ -179,7 +178,7 @@ async function PlaceList({
 }) {
 	const t = await getTranslations({ locale, namespace: "SearchPage" });
 	return (
-		<ul className="flex flex-col border-t border-ink">
+		<ul className="flex flex-col border-t border-rule-soft">
 			{candidates.map((candidate) => (
 				<li key={candidate.id} className="border-b border-rule-soft">
 					<Link

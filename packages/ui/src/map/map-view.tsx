@@ -115,7 +115,7 @@ export function MapView({
 			// A plain join, not `cn`: the map is on every practitioner page, and class merging
 			// would ship tailwind-merge to the browser for a base no caller overrides.
 			className={[
-				"apercura-map relative overflow-hidden border-[1.5px] border-ink bg-paper-shade",
+				"apercura-map relative overflow-hidden rounded-panel border border-rule-soft bg-paper-shade",
 				className,
 			]
 				.filter(Boolean)

@@ -6,9 +6,9 @@ export interface FieldListProps {
 	className?: string;
 }
 
-/** A list of printed form fields (`<dl>`). Rows stack label over value in narrow containers. */
+/** A list of facts (`<dl>`). Rows stack label over value in narrow containers. */
 export function FieldList({ children, className }: FieldListProps) {
-	return <dl className={cn("@container border-t border-ink", className)}>{children}</dl>;
+	return <dl className={cn("@container border-t border-rule-soft", className)}>{children}</dl>;
 }
 
 export interface FieldRowProps {
@@ -27,8 +27,8 @@ const isEmpty = (value: ReactNode) =>
 	(typeof value === "string" && value.trim() === "");
 
 /**
- * One printed field: label, dotted leader, value. An empty field is honest:
- * it says "not provided" in muted ink instead of disappearing.
+ * One fact: label, then value, in two columns from 28 rem. An empty field is honest: it says
+ * "not provided" in muted ink instead of disappearing.
  */
 export function FieldRow({ label, value, emptyLabel, className }: FieldRowProps) {
 	const empty = isEmpty(value);
@@ -36,15 +36,12 @@ export function FieldRow({ label, value, emptyLabel, className }: FieldRowProps)
 		<div
 			data-empty={empty || undefined}
 			className={cn(
-				"flex flex-col gap-0.5 border-b border-rule-soft py-2.5 @md:flex-row @md:items-baseline @md:gap-3",
+				"grid gap-0.5 border-b border-rule-soft py-3 @md:grid-cols-[minmax(9rem,2fr)_3fr] @md:items-baseline @md:gap-6",
 				className,
 			)}
 		>
-			<dt className="shrink-0 font-display text-meta font-medium text-ink font-stretch-semi-condensed">
-				{label}
-			</dt>
-			<span aria-hidden="true" className="leader hidden @md:block" />
-			<dd className={cn("min-w-0 text-body @md:text-end", empty ? "text-ink-muted" : "text-ink")}>
+			<dt className="font-display text-meta font-medium text-ink-muted">{label}</dt>
+			<dd className={cn("min-w-0 text-body", empty ? "text-ink-muted" : "text-ink")}>
 				{empty ? (
 					<>
 						<span aria-hidden="true" className="me-1.5">

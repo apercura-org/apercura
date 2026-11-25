@@ -37,11 +37,18 @@
 			"legal": "Aviso legal",
 			"terms": "Condiciones de uso",
 			"international": "Apercura en otros países"
+		},
+		"theme": {
+			"label": "Tema",
+			"light": "Claro",
+			"dark": "Oscuro",
+			"system": "Sistema"
 		}
 	},
 	"LocaleSwitcher": {
 		"label": "Idioma",
-		"locale": "{locale, select, fr {Français} en {English} de {Deutsch} es {Español} it {Italiano} other {Idioma desconocido}}"
+		"locale": "{locale, select, fr {Français} en {English} de {Deutsch} es {Español} it {Italiano} other {Idioma desconocido}}",
+		"current": "Idioma: {language}"
 	},
 	"Search": {
 		"label": "Encontrar un profesional sanitario",
@@ -52,8 +59,8 @@
 		"submit": "Buscar"
 	},
 	"HomePage": {
-		"title": "Apercura",
-		"hook": "Encuentre a cualquier profesional sanitario de Francia: todos ya tienen una página.",
+		"title": "Encuentre un profesional sanitario en Francia",
+		"hook": "Cada médico, dentista, matrona y enfermero autónomo ya tiene su página.",
 		"specimen": {
 			"heading": "Todos los profesionales sanitarios ya tienen una página",
 			"intro": "Esta es una página tal como la rellena el registro nacional, antes de que el profesional sanitario la reclame: los campos conocidos están completos y los demás indican claramente que no se han facilitado."
@@ -91,9 +98,9 @@
 			"doctors": "Médicos",
 			"dentists": "Dentistas",
 			"midwives": "Matronas",
+			"nurses": "Enfermeros autónomos",
 			"withAddress": "Con una dirección pública de consulta",
 			"count": "{count, number}",
-			"approxCount": "unos {count, number}",
 			"sourceLabel": "Fuente",
 			"sourceName": "Annuaire Santé, Agence du numérique en santé",
 			"updatedLabel": "Cifras de"
@@ -335,9 +342,9 @@
 			"inkDisabled": "Tinta desactivada",
 			"ruleSoft": "Regla suave: líneas finas, líneas guía",
 			"fieldEdge": "Borde de campo: bordes de los controles",
-			"stamp": "Sello: acción, verificado, reservado",
-			"stampStrong": "Sello estampado",
-			"stampTint": "Fondo de sello",
+			"stamp": "Acento: acción, verificada, reservada",
+			"stampStrong": "Acento pulsado",
+			"stampTint": "Lavado de acento",
 			"error": "Tinta de error",
 			"errorTint": "Fondo de error"
 		},
@@ -346,9 +353,9 @@
 			"headline": "Titular: títulos de página",
 			"title": "Título: encabezados de sección",
 			"lead": "Entradilla: introducciones",
-			"body": "Cuerpo: texto corrido a 18 px, compuesto en Atkinson Hyperlegible Next para lectores con baja visión.",
+			"body": "Cuerpo: texto corrido a 18 px, compuesto en Allo con la l con cola y la I con remates, para que Il1 nunca se confundan.",
 			"meta": "Meta: indicaciones y datos secundarios",
-			"caps": "Mayúsculas: encabezados de columna y titulillos"
+			"caps": "Leyenda: encabezados de columna, etiquetas de campo e insignias"
 		},
 		"states": {
 			"default": "Predeterminado",
@@ -513,7 +520,7 @@
 		"switchboard": "{phone} (centralita del centro)",
 		"establishment": "Centro",
 		"unnamedPlace": "Lugar de ejercicio",
-		"asideLabel": "Citas y página",
+		"asideLabel": "Sobre esta página",
 		"action": {
 			"callNotYetOpen": "La reserva en línea todavía no está abierta para este profesional sanitario. Para pedir cita, llame a la consulta.",
 			"establishmentLink": "Contactar con el centro",

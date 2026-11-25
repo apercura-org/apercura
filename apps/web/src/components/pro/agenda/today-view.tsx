@@ -233,7 +233,7 @@ export function TodayView({
 				{dayQuery.isPending ? (
 					<SkeletonText lines={2} label={t("next.heading")} />
 				) : next ? (
-					<div className="flex flex-col gap-1 border-y border-ink py-4">
+					<div className="flex flex-col gap-1 border-y border-rule-soft py-4">
 						<p className="type-headline tabular text-ink">{format.time(next.startsAt)}</p>
 						<p className="text-lead text-ink">
 							{patientName(next)}
@@ -380,7 +380,7 @@ export function TodayView({
 				) : requests.length === 0 ? (
 					<p className="text-body text-ink">{t("requests.empty")}</p>
 				) : (
-					<ul className="flex flex-col border-t border-ink">
+					<ul className="flex flex-col border-t border-rule-soft">
 						{requests.map((entry) => (
 							<li
 								key={entry.id}

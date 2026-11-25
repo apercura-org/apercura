@@ -22,7 +22,6 @@ export default async function AboutPage({ params }: PageProps<"/[locale]/a-propo
 	const locale = await localeOf(params);
 	setRequestLocale(locale);
 	const t = await getTranslations({ locale, namespace: "AboutPage" });
-	const tSite = await getTranslations({ locale, namespace: "Site" });
 	const tI = await getTranslations({ locale, namespace: "Institutional" });
 	const section = await proseSections(locale, "AboutPage");
 	const facts = legalFacts(serverEnv);
@@ -32,7 +31,7 @@ export default async function AboutPage({ params }: PageProps<"/[locale]/a-propo
 	return (
 		<PublicPage locale={locale} href={HREF}>
 			<InstitutionalCover title={t("title")} lead={t("lead")} />
-			<BookletPage runningHead={tSite("runningHead")}>
+			<BookletPage>
 				<PageGraph
 					locale={locale}
 					href={HREF}

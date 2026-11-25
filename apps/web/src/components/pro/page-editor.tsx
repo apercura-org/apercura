@@ -57,7 +57,7 @@ function Group({
 	children: ReactNode;
 }) {
 	return (
-		<section aria-labelledby={id} className="flex flex-col gap-5 border-t border-ink pt-6">
+		<section aria-labelledby={id} className="flex flex-col gap-5 border-t border-rule-soft pt-6">
 			<div className="flex flex-wrap items-start justify-between gap-x-6 gap-y-2">
 				<div className="flex flex-col gap-1">
 					<h2 id={id} className={sectionHeading}>
@@ -402,7 +402,7 @@ export function PageEditor({
 								alt={t("photo.current")}
 								width={96}
 								height={96}
-								className="size-24 border border-ink object-cover p-1"
+								className="size-24 rounded-panel border border-rule-soft object-cover"
 							/>
 						) : (
 							<p className="text-body text-ink-muted">{t("photo.none")}</p>
@@ -693,7 +693,7 @@ export function PageEditor({
 						<p className="-mt-3 text-meta text-ink-muted">{t("contact.showPhoneHint")}</p>
 					</Group>
 
-					<div className="sticky bottom-0 z-10 flex flex-col gap-3 border-t border-ink bg-paper py-4">
+					<div className="sticky bottom-0 z-10 flex flex-col gap-3 border-t border-rule-soft bg-paper py-4">
 						{failure ? (
 							<Notice tone="error" title={t(`failure.${failure}` as never)} />
 						) : saved ? (
@@ -728,7 +728,7 @@ export function PageEditor({
 				</Form>
 
 				<Group id="editor-sites" title={t("sites.title")} lead={t("sites.lead")}>
-					<ul className="flex flex-col border-t border-ink">
+					<ul className="flex flex-col border-t border-rule-soft">
 						{sites.map((site) => (
 							<li
 								key={site.activityId}
@@ -900,9 +900,9 @@ export function PageEditor({
 			</div>
 
 			<aside id="apercu" aria-labelledby="editor-preview-heading" className="min-w-0 lg:col-span-5">
-				<div className="flex flex-col gap-4 lg:sticky lg:top-4 lg:max-h-[calc(100svh-2rem)] lg:overflow-y-auto">
-					<div className="surface-shade flex items-baseline justify-between gap-3 border border-rule-soft px-4 py-2">
-						<h2 id="editor-preview-heading" className="font-display text-body font-semibold">
+				<div className="flex flex-col overflow-hidden rounded-panel border border-rule-soft lg:sticky lg:top-4 lg:max-h-[calc(100svh-2rem)]">
+					<div className="surface-shade flex items-baseline justify-between gap-3 border-b border-rule-soft px-4 py-2.5">
+						<h2 id="editor-preview-heading" className="type-subtitle">
 							{t("preview.title")}
 						</h2>
 						{dirty ? (
@@ -911,7 +911,13 @@ export function PageEditor({
 							</span>
 						) : null}
 					</div>
-					<div className="border border-ink p-4 sm:p-6">
+					{/* Scrolls on its own on wide screens; focusable so the keyboard can scroll it. */}
+					<section
+						// biome-ignore lint/a11y/noNoninteractiveTabindex: a scrollable region must be reachable from the keyboard.
+						tabIndex={0}
+						aria-labelledby="editor-preview-heading"
+						className="p-4 outline-none focus-visible:outline-3 focus-visible:outline-solid focus-visible:-outline-offset-3 focus-visible:outline-(--focus-ring) sm:p-6 lg:overflow-y-auto"
+					>
 						<PagePreview
 							identity={identity}
 							content={preview}
@@ -919,7 +925,7 @@ export function PageEditor({
 							sites={sites}
 							sectors={sectors}
 						/>
-					</div>
+					</section>
 				</div>
 			</aside>
 		</div>

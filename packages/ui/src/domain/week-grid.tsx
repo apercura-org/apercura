@@ -73,16 +73,16 @@ export interface WeekGridProps {
 const KEYS = new Set<string>(["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "Home", "End"]);
 
 const TONES: Record<WeekGridTone, string> = {
-	// The Stamp Law: a booked slot is violet.
-	booked:
-		"bg-stamp text-paper shadow-[inset_0_0_0_2px_var(--color-stamp),inset_0_0_0_3px_var(--color-paper)]",
-	done: "border border-ink bg-paper text-ink",
-	// Not yet a booking: a dashed form box in ink.
-	pending: "border-2 border-dashed border-ink bg-paper text-ink",
-	held: "border border-dashed border-field-edge bg-paper-shade text-ink",
-	// Printed solid in ink.
-	block: "bg-ink text-paper",
-	absent: "border border-ink bg-paper-shade text-ink line-through decoration-1",
+	// The accent law: a booked slot takes the accent.
+	booked: "rounded-field bg-stamp text-paper",
+	done: "rounded-field border border-field-edge bg-paper text-ink",
+	// Not yet a booking: a dashed box in ink.
+	pending: "rounded-field border-2 border-dashed border-ink bg-paper text-ink",
+	held: "rounded-field border border-dashed border-field-edge bg-paper-shade text-ink",
+	// Solid ink.
+	block: "rounded-field bg-ink text-paper",
+	absent:
+		"rounded-field border border-field-edge bg-paper-shade text-ink line-through decoration-1",
 };
 
 /** Lines of 0.875 rem text (leading 1.25) that fit in `rows` rows, split between title and detail. */
@@ -230,14 +230,17 @@ export function WeekGrid({
 	};
 
 	return (
-		<div ref={scroller} className="max-h-[70vh] overflow-auto border-y border-ink">
+		<div
+			ref={scroller}
+			className="max-h-[70vh] overflow-auto rounded-panel border border-rule-soft"
+		>
 			{/* biome-ignore lint/a11y/useSemanticElements: ARIA grid pattern (roving focus on cells); a table cannot hold the entries printed across rows */}
 			<div role="grid" aria-label={label} className="min-w-full w-max sm:w-full">
 				{/* biome-ignore lint/a11y/useSemanticElements lint/a11y/useFocusableInteractive: ARIA grid pattern */}
 				<div
 					role="row"
 					style={template}
-					className="sticky top-0 z-30 grid border-b border-ink bg-paper"
+					className="sticky top-0 z-30 grid border-b border-field-edge bg-paper"
 				>
 					{/* biome-ignore lint/a11y/useSemanticElements lint/a11y/useFocusableInteractive: ARIA grid pattern */}
 					<div role="columnheader" className="sticky start-0 bg-paper">
@@ -251,7 +254,7 @@ export function WeekGrid({
 							role="columnheader"
 							aria-label={day.accessibleLabel}
 							className={cn(
-								"caps flex min-h-11 items-center justify-center border-s border-rule-soft px-2 text-ink",
+								"type-caption flex min-h-11 items-center justify-center border-s border-rule-soft px-2 text-ink",
 								day.isToday && "bg-ink text-paper",
 							)}
 						>
@@ -300,7 +303,9 @@ export function WeekGrid({
 											top: `calc(${((now.minute - minute) / stepMin) * ROW_REM}rem - 0.5rem)`,
 										}}
 									>
-										<span className="caps bg-paper px-0.5 leading-none text-ink">{nowLabel}</span>
+										<span className="type-caption bg-paper px-0.5 leading-none text-ink">
+											{nowLabel}
+										</span>
 										<span className="h-0.5 w-2 bg-ink" />
 									</span>
 								) : null}

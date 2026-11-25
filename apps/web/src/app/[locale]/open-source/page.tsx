@@ -28,7 +28,7 @@ export default async function OpenSourcePage({ params }: PageProps<"/[locale]/op
 	return (
 		<PublicPage locale={locale} href={HREF}>
 			<InstitutionalCover title={t("title")} lead={t("lead")} />
-			<BookletPage runningHead={tSite("runningHead")}>
+			<BookletPage>
 				<PageGraph
 					locale={locale}
 					href={HREF}

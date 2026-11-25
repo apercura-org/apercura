@@ -6,8 +6,12 @@ import { expect, type Page, test } from "@playwright/test";
  * and fragment of a page across a language switch.
  */
 
-const languages = (page: Page, label: "Langue" | "Language") =>
-	page.getByRole("navigation", { name: label });
+/** The language picker, opened: a disclosure whose button names the current language. */
+async function languages(page: Page, label: "Langue" | "Language") {
+	const nav = page.getByRole("navigation", { name: label });
+	await nav.locator("summary").click();
+	return nav;
+}
 
 test("after a client-side navigation, the skip link focuses the visible main region", async ({
 	page,
@@ -56,12 +60,12 @@ for (const path of ["/pro/connexion", "/pro/inscription"]) {
 		const suite = encodeURIComponent("/pro/revendiquer?rpps=19999990013");
 		// `psc` (a sign-in error flag) is not part of the page's state: it is dropped.
 		await page.goto(`/fr${path}?suite=${suite}&psc=erreur`);
-		const english = languages(page, "Langue").getByRole("link", { name: "English" });
+		const english = (await languages(page, "Langue")).getByRole("link", { name: "English" });
 		await expect(english).toHaveAttribute("href", `/fr-en${path}?suite=${suite}`);
 		await english.click();
 		await expect(page).toHaveURL(new RegExp(`/fr-en${path}\\?suite=${suite}$`));
 
-		const french = languages(page, "Language").getByRole("link", { name: "Français" });
+		const french = (await languages(page, "Language")).getByRole("link", { name: "Français" });
 		await expect(french).toHaveAttribute("href", `/fr${path}?suite=${suite}`);
 		await french.click();
 		await expect(page).toHaveURL(new RegExp(`/fr${path}\\?suite=${suite}$`));
@@ -72,7 +76,7 @@ test("the language switch on /rdv keeps the token of the fragment", async ({ pag
 	const token = "A".repeat(43);
 	await page.goto(`/fr/rdv#t=${token}`);
 	await expect(page.getByRole("heading", { name: "Ce lien ne fonctionne plus" })).toBeVisible();
-	const english = languages(page, "Langue").getByRole("link", { name: "English" });
+	const english = (await languages(page, "Langue")).getByRole("link", { name: "English" });
 	await expect(english).toHaveAttribute("href", `/fr-en/rdv#t=${token}`);
 	await english.click();
 	await expect(page).toHaveURL(new RegExp(`/fr-en/rdv#t=${token}$`));
@@ -82,8 +86,6 @@ test("the language switch on /rdv keeps the token of the fragment", async ({ pag
 
 test("the language switch drops the fragment of other pages", async ({ page }) => {
 	await page.goto("/fr/donnees#corriger");
-	await expect(languages(page, "Langue").getByRole("link", { name: "English" })).toHaveAttribute(
-		"href",
-		"/fr-en/data",
-	);
+	const nav = await languages(page, "Langue");
+	await expect(nav.getByRole("link", { name: "English" })).toHaveAttribute("href", "/fr-en/data");
 });

@@ -3,81 +3,130 @@ import { oklchToHex } from "./color";
 /**
  * Apercura design tokens.
  *
- * The palette follows the printed-form grammar of a health booklet, set in a
- * quiet, near-neutral print: white paper, a pale neutral shade for secondary
- * areas, one cool graphite ink, and a single muted violet stamp. `theme.css`
- * declares the same values as CSS custom properties; a unit test keeps both in sync.
+ * A sober health-service palette: white (or, in the dark theme, a dark graphite) ground, a
+ * pale neutral shade for secondary areas, one cool graphite ink, and a single indigo-violet
+ * accent. `theme.css` declares the same values as CSS custom properties (`--light-*`,
+ * `--dark-*`); a unit test keeps both in sync.
  *
  * Palette laws:
- * - text is always `ink` or `inkMuted` (never violet, never red body copy);
- * - `stamp*` is reserved for actions, verified pages and booked slots;
+ * - text is always `ink` or `inkMuted` (never the accent, never red body copy);
+ * - `stamp*` (the accent) is reserved for actions, verified pages, booked slots and focus;
  * - `error*` is reserved for errors;
  * - nothing else is coloured (the map excepted).
  */
 export const palette = {
-	/** Page ground: pure white paper. */
+	/** Page ground: pure white. */
 	paper: "oklch(1 0 0)",
-	/** Quiet neutral surface: openings, the footer, dialog title strips, hovered rows, skeletons. */
-	paperShade: "oklch(0.975 0.003 255)",
-	/** The print ink, a cool graphite: type, strong rules, field labels. */
-	ink: "oklch(0.24 0.012 255)",
+	/** Quiet neutral surface: openings, the footer, title strips, hovered rows, skeletons. */
+	paperShade: "oklch(0.977 0.003 260)",
+	/** The ink, a cool graphite: type, strong rules, field labels. */
+	ink: "oklch(0.23 0.014 260)",
 	/** Secondary text, hints and placeholders (still ≥ 4.5:1 on paper and shade). */
-	inkMuted: "oklch(0.46 0.012 255)",
+	inkMuted: "oklch(0.47 0.014 260)",
 	/** Disabled controls (exempt from contrast, kept ≥ 3:1). */
-	inkDisabled: "oklch(0.6 0.008 255)",
-	/** Hairline rules and dotted leaders (decorative only). */
-	ruleSoft: "oklch(0.88 0.006 255)",
+	inkDisabled: "oklch(0.6 0.01 260)",
+	/** Hairline borders between rows and around panels (decorative only). */
+	ruleSoft: "oklch(0.91 0.005 260)",
 	/** Input and control edges (≥ 3:1 on paper and shade). */
-	fieldEdge: "oklch(0.56 0.01 255)",
-	/** The stamp ink: action, verified, booked. */
-	stamp: "oklch(0.42 0.09 290)",
-	/** Pressed or hovered stamp. */
-	stampStrong: "oklch(0.35 0.08 290)",
-	/** Stamp wash behind verified and booked marks. */
-	stampTint: "oklch(0.965 0.014 290)",
+	fieldEdge: "oklch(0.6 0.012 260)",
+	/** The one accent, an indigo violet: action, verified, booked, the focus ring. (Token name kept from v1.) */
+	stamp: "oklch(0.47 0.13 285)",
+	/** Hovered or pressed accent. */
+	stampStrong: "oklch(0.4 0.12 285)",
+	/** Accent wash behind verified and booked marks. */
+	stampTint: "oklch(0.965 0.016 285)",
 	/** Error ink. */
-	error: "oklch(0.5 0.15 25)",
+	error: "oklch(0.52 0.16 25)",
 	/** Error wash behind invalid fields. */
-	errorTint: "oklch(0.97 0.012 25)",
+	errorTint: "oklch(0.97 0.013 25)",
 } as const;
 
+/**
+ * The dark theme: the same roles on a dark graphite ground. The accent turns light, so the
+ * label on an accent button (`paper`) is dark. Same contrast floors as the light theme.
+ */
+export const paletteDark = {
+	paper: "oklch(0.2 0.01 260)",
+	paperShade: "oklch(0.235 0.011 260)",
+	ink: "oklch(0.95 0.005 260)",
+	inkMuted: "oklch(0.77 0.012 260)",
+	inkDisabled: "oklch(0.59 0.01 260)",
+	ruleSoft: "oklch(0.32 0.012 260)",
+	fieldEdge: "oklch(0.6 0.012 260)",
+	stamp: "oklch(0.78 0.1 285)",
+	stampStrong: "oklch(0.85 0.075 285)",
+	stampTint: "oklch(0.28 0.04 285)",
+	error: "oklch(0.74 0.14 25)",
+	errorTint: "oklch(0.27 0.045 25)",
+} as const satisfies Record<keyof typeof palette, string>;
+
 export type PaletteToken = keyof typeof palette;
+
+/** The two themes by name. */
+export const themes = { light: palette, dark: paletteDark } as const;
+export type ThemeName = keyof typeof themes;
 
 /** The same palette as `#rrggbb`, for consumers that cannot parse OKLCH (map styles, OG images). */
 export const paletteHex = Object.fromEntries(
 	Object.entries(palette).map(([name, value]) => [name, oklchToHex(value)]),
 ) as Record<PaletteToken, string>;
 
+/** The dark theme as `#rrggbb` (the dark browser theme colour, the dark map). */
+export const paletteDarkHex = Object.fromEntries(
+	Object.entries(paletteDark).map(([name, value]) => [name, oklchToHex(value)]),
+) as Record<PaletteToken, string>;
+
 /**
- * Map tints, derived from the neutral print so a map reads as part of the
- * booklet: white land, grey streets, muted water and parks, graphite labels.
+ * Map tints, derived from the neutral palette so a map reads as part of the page: white
+ * land, grey streets, muted water and parks, graphite labels.
  */
 export const mapPalette = {
 	land: palette.paper,
-	landShade: "oklch(0.97 0.003 255)",
+	landShade: "oklch(0.97 0.003 260)",
 	park: "oklch(0.95 0.012 165)",
 	water: "oklch(0.9 0.02 240)",
-	building: "oklch(0.93 0.004 255)",
-	road: "oklch(0.9 0.004 255)",
-	roadCasing: "oklch(0.86 0.005 255)",
-	roadMajorCasing: "oklch(0.76 0.006 255)",
-	rail: "oklch(0.76 0.006 255)",
+	building: "oklch(0.93 0.004 260)",
+	road: "oklch(0.9 0.004 260)",
+	roadCasing: "oklch(0.86 0.005 260)",
+	roadMajorCasing: "oklch(0.76 0.006 260)",
+	rail: "oklch(0.76 0.006 260)",
 	boundary: palette.fieldEdge,
 	label: palette.ink,
 	labelMuted: palette.inkMuted,
 	labelHalo: palette.paper,
 } as const;
 
+/** The same map on the dark ground: graphite land, slightly lighter streets, light labels. */
+export const mapPaletteDark = {
+	land: paletteDark.paper,
+	landShade: "oklch(0.225 0.01 260)",
+	park: "oklch(0.26 0.025 165)",
+	water: "oklch(0.3 0.035 240)",
+	building: "oklch(0.25 0.008 260)",
+	road: "oklch(0.31 0.008 260)",
+	roadCasing: "oklch(0.27 0.008 260)",
+	roadMajorCasing: "oklch(0.4 0.01 260)",
+	rail: "oklch(0.4 0.01 260)",
+	boundary: paletteDark.fieldEdge,
+	label: paletteDark.ink,
+	labelMuted: paletteDark.inkMuted,
+	labelHalo: paletteDark.paper,
+} as const satisfies Record<keyof typeof mapPalette, string>;
+
 export const mapPaletteHex = Object.fromEntries(
 	Object.entries(mapPalette).map(([name, value]) => [name, oklchToHex(value)]),
 ) as Record<keyof typeof mapPalette, string>;
 
+export const mapPaletteDarkHex = Object.fromEntries(
+	Object.entries(mapPaletteDark).map(([name, value]) => [name, oklchToHex(value)]),
+) as Record<keyof typeof mapPalette, string>;
+
 /** Font families. The app loads the faces; these names must match its `@font-face` rules. */
 export const fonts = {
-	/** Archivo (variable, wdth 62–125 %, wght 100–900): headers, labels, wordmark. */
-	display: "Archivo Variable",
-	/** Atkinson Hyperlegible Next (variable, wght 200–800): body copy and numerals. */
-	body: "Atkinson Hyperlegible Next Variable",
+	/** Allo (variable, wght 400–700, SIL OFL 1.1): headings, labels, the wordmark. */
+	display: "Allo",
+	/** Allo again, with the tailed l and serifed I (cv03, cv04): body copy and numerals. */
+	body: "Allo",
 } as const;
 
 /** Type roles, in rem. Patient-facing body copy never goes below `body` (18 px). */

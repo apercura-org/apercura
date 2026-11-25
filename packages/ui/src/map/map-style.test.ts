@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { mapPaletteHex } from "../tokens";
+import { mapPaletteDarkHex, mapPaletteHex } from "../tokens";
 import { type MapStyle, SETTLEMENT_LABEL_MAX_ZOOM, themeMapStyle } from "./map-style";
 
 const style: MapStyle = {
@@ -21,7 +21,7 @@ describe("themeMapStyle", () => {
 	const themed = themeMapStyle(style);
 	const paint = (id: string) => themed.layers.find((layer) => layer.id === id)?.paint;
 
-	it("re-inks known layers with the booklet palette", () => {
+	it("re-inks known layers with the site palette", () => {
 		expect(paint("background")).toEqual({ "background-color": mapPaletteHex.land });
 		expect(paint("water")).toEqual({ "fill-color": mapPaletteHex.water });
 		expect(paint("highway_primary_casing")).toEqual({
@@ -51,8 +51,16 @@ describe("themeMapStyle", () => {
 	});
 
 	it("uses hex colours MapLibre can parse", () => {
-		for (const value of Object.values(mapPaletteHex)) {
+		for (const value of [...Object.values(mapPaletteHex), ...Object.values(mapPaletteDarkHex)]) {
 			expect(value).toMatch(/^#[0-9a-f]{6}$/);
 		}
+	});
+
+	it("re-inks the same layers with the dark palette for the dark theme", () => {
+		const dark = themeMapStyle(style, mapPaletteDarkHex);
+		const darkPaint = (id: string) => dark.layers.find((layer) => layer.id === id)?.paint;
+		expect(darkPaint("background")).toEqual({ "background-color": mapPaletteDarkHex.land });
+		expect(darkPaint("place_city")).toMatchObject({ "text-color": mapPaletteDarkHex.label });
+		expect(mapPaletteDarkHex.land).not.toBe(mapPaletteHex.land);
 	});
 });

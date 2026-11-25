@@ -3,13 +3,13 @@ import { AlertIcon, CheckIcon, InfoIcon } from "../icons";
 import { tv } from "../recipes/tv";
 
 const notice = tv({
-	base: "flex items-start gap-3 border bg-paper px-4 py-3.5 text-body text-ink",
+	base: "flex items-start gap-3 rounded-panel border bg-paper px-4 py-3.5 text-body text-ink",
 	variants: {
 		tone: {
 			/** Plain information: a quiet edge on the neutral shade. */
-			info: "border-field-edge bg-paper-shade",
-			/** Something worked (a factor enrolled, an email sent): ink edge and a tick. */
-			success: "border-ink",
+			info: "border-rule-soft bg-paper-shade",
+			/** Something worked (a factor enrolled, an email sent): a quiet edge and a tick. */
+			success: "border-field-edge",
 			/** Errors only: red edge and the boxed exclamation, the words stay ink. */
 			error: "border-error bg-error-tint",
 		},
@@ -37,7 +37,7 @@ export interface NoticeProps {
 }
 
 /**
- * A printed slip that tells the reader what just happened and what to do next.
+ * A notice that tells the reader what just happened and what to do next.
  * Meaning is carried by the icon and the words, never by colour alone.
  */
 export function Notice({ tone = "info", title, children, role, className }: NoticeProps) {

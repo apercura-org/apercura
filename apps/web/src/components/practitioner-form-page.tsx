@@ -43,7 +43,6 @@ export async function PractitionerFormPage({
 	extraNamespaces?: readonly string[];
 	children: ReactNode;
 }) {
-	const tSite = await getTranslations({ locale, namespace: "Site" });
 	const t = await getTranslations({ locale, namespace: "Gdpr" });
 	const labels = await getTaxonomyLabels(locale);
 	const name = page.payload.withheld
@@ -54,8 +53,8 @@ export async function PractitionerFormPage({
 			});
 	return (
 		<PublicPage locale={locale} href={{ pathname, params: { slug: page.slug } }}>
-			<BookletPage runningHead={tSite("runningHead")}>
-				<div className="flex max-w-[65ch] flex-col gap-3 border-b border-ink pb-5">
+			<BookletPage>
+				<div className="flex max-w-[65ch] flex-col gap-3 border-b border-rule-soft pb-5">
 					<h1 className="type-headline text-ink">{title}</h1>
 					<p className="text-lead text-ink">{lead}</p>
 					{name ? (

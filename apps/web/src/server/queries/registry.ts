@@ -1,6 +1,13 @@
 import "server-only";
 
 import { cacheLife, cacheTag } from "next/cache";
+import {
+	countedProfessions,
+	type FigureRow,
+	type RegistryFigures,
+	shapeRegistryFigures,
+} from "~/lib/registry-figures";
+import { cacheTags } from "../cache-tags";
 import { getSql, hasDatabaseUrl } from "../db";
 
 /** Files of an import run, keyed as in `directory.etl_runs.files`. */
@@ -73,4 +80,44 @@ export async function getRegistryStatus(): Promise<RegistryStatus | null> {
 		if (date) files[key] = date;
 	}
 	return { importedAt: row.importedAt, checkedAt: row.checkedAt, files };
+}
+
+/**
+ * The home page's register figures, live from the directory: per enabled profession, the
+ * practitioners with an indexable page; how many of them have a street address for a practice
+ * they show; and the date of the last successful import. Null on an empty directory or
+ * without a database (the home page then leaves the block out).
+ *
+ * Cached for days and tagged like the sitemaps: the import sends `sitemap` with any change and
+ * the app expires it at once, so the next visitor after an import reads the new figures. The
+ * coarse practitioner tag covers a national import.
+ */
+export async function getRegistryFigures(): Promise<RegistryFigures | null> {
+	"use cache";
+	cacheTag("registry", cacheTags.sitemap, cacheTags.coarse.practitioner);
+	if (!hasDatabaseUrl()) {
+		cacheLife("minutes");
+		return null;
+	}
+	cacheLife("days");
+	const sql = getSql();
+	const [rows, status] = await Promise.all([
+		sql<FigureRow[]>`
+			SELECT
+				p.profession_code AS "professionCode",
+				count(*)::int AS practitioners,
+				count(*) FILTER (WHERE EXISTS (
+					SELECT 1 FROM directory.activities a
+					JOIN directory.sites s ON s.id = a.site_id AND s.removed_at IS NULL
+					WHERE a.practitioner_id = p.id AND a.removed_at IS NULL AND NOT a.hidden
+						AND a.practice_kind IN ('office', 'health_center', 'hospital')
+						AND nullif(btrim(s.address_line), '') IS NOT NULL
+				))::int AS "withAddress"
+			FROM directory.practitioners p
+			WHERE p.indexable AND p.profession_code = ANY(${countedProfessions()}::text[])
+			GROUP BY p.profession_code
+		`,
+		getRegistryStatus(),
+	]);
+	return shapeRegistryFigures(rows, status?.importedAt ?? null);
 }

@@ -32,7 +32,7 @@ interface DialogFrameProps extends Omit<ModalOverlayProps, "children" | "classNa
 }
 
 const overlay =
-	"fixed inset-0 z-50 flex bg-ink/40 data-entering:animate-[fade-in_160ms_ease-out] data-exiting:animate-[fade-in_120ms_ease-in_reverse]";
+	"fixed inset-0 z-50 flex bg-[oklch(0.2_0.02_260/0.45)] data-entering:animate-[fade-in_160ms_ease-out] data-exiting:animate-[fade-in_120ms_ease-in_reverse]";
 
 function Header({
 	title,
@@ -66,7 +66,7 @@ function Header({
 	);
 }
 
-/** Modal dialog: a paper slip with a title strip on the quiet shade. */
+/** Modal dialog: a panel with its title strip on the quiet shade. */
 export function Dialog({
 	title,
 	closeLabel,
@@ -81,7 +81,7 @@ export function Dialog({
 			isDismissable={!isAlert}
 			className={cn(overlay, "items-center justify-center p-4")}
 		>
-			<Modal className="w-full max-w-lg border border-ink bg-paper data-entering:animate-slip-in forced-colors:border-[CanvasText]">
+			<Modal className="w-full max-w-lg overflow-hidden rounded-panel border border-rule-soft bg-paper shadow-overlay data-entering:animate-slip-in forced-colors:border-[CanvasText]">
 				<RACDialog role={role} className="flex max-h-[calc(100dvh-2rem)] flex-col outline-none">
 					{({ close }) => (
 						<>
@@ -115,7 +115,7 @@ export function Sheet({ title, closeLabel, children, size = "md", ...props }: Sh
 		<ModalOverlay {...props} isDismissable className={cn(overlay, "justify-end")}>
 			<Modal
 				className={cn(
-					"h-dvh w-full border-ink bg-paper data-entering:animate-sheet-in sm:border-s forced-colors:border-[CanvasText]",
+					"h-dvh w-full border-rule-soft bg-paper shadow-overlay data-entering:animate-sheet-in sm:border-s forced-colors:border-[CanvasText]",
 					size === "lg" ? "max-w-176" : "max-w-md",
 				)}
 			>

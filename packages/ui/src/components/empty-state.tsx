@@ -12,8 +12,8 @@ export interface EmptyStateProps {
 }
 
 /**
- * Empty state as a blank printed form: an unfilled ruled box that says plainly
- * what is missing and what to do next.
+ * Empty state: a quiet panel on the shade that says plainly what is missing and what to do
+ * next.
  */
 export function EmptyState({
 	title,
@@ -26,24 +26,10 @@ export function EmptyState({
 	return (
 		<div
 			className={cn(
-				"flex flex-col items-start gap-3 border border-dashed border-field-edge bg-paper px-5 py-6 sm:px-7 sm:py-8",
+				"flex flex-col items-start gap-3 rounded-panel border border-rule-soft bg-paper-shade px-5 py-6 sm:px-7 sm:py-8",
 				className,
 			)}
 		>
-			<svg
-				viewBox="0 0 48 32"
-				className="h-8 w-12 text-ink-muted"
-				aria-hidden="true"
-				focusable="false"
-			>
-				<path d="M1 1h46v30H1z" fill="none" stroke="currentColor" strokeWidth="1.5" />
-				<path
-					d="M7 10h20M7 17h34M7 24h26"
-					stroke="currentColor"
-					strokeWidth="1.5"
-					strokeDasharray="2 3"
-				/>
-			</svg>
 			<Heading className="type-subtitle text-ink">{title}</Heading>
 			{description ? (
 				<div className="max-w-[65ch] text-body text-ink-muted">{description}</div>
