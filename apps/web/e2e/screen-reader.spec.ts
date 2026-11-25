@@ -10,7 +10,7 @@ import {
 	readCode,
 } from "./booking-helpers";
 import { BOOKING_PRACTITIONERS } from "./booking-seed";
-import { createProAccount, testDb } from "./pro";
+import { createProAccount, pageAgendaUntil, testDb } from "./pro";
 import { expectPhrasesInOrder, ScreenReader } from "./screen-reader";
 
 /*
@@ -473,10 +473,7 @@ test.describe("booking, the appointment page and the practice's agenda", () => {
 		// The appointment's cell reads its date, time, patient and state when focused (it may be
 		// next week); arrows move one day or one time step and read the new cell.
 		const entry = page.getByRole("gridcell", { name: /Alexis Fictif.*Confirmé/ });
-		for (let attempt = 0; attempt < 3 && (await entry.count()) === 0; attempt += 1) {
-			await page.getByRole("button", { name: "Semaine suivante" }).click();
-			await page.waitForTimeout(500);
-		}
+		await pageAgendaUntil(page, entry, { next: "Semaine suivante", max: 3 });
 		await reader.clear();
 		await entry.first().focus();
 		await page.keyboard.press("ArrowDown");
