@@ -1,11 +1,12 @@
 import type { Sql } from "postgres";
 import { describe, expect, it, vi } from "vitest";
 import {
-	alterRoleLoginPassword,
-	applyRolePasswords,
+	alterRoleLogin,
 	quoteIdentifier,
 	quoteLiteral,
-	rolePasswordsFromEnv,
+	roleEnvValue,
+	rolesToSet,
+	syncRoleLogins,
 } from "./roles";
 
 describe("quoteLiteral", () => {
@@ -33,27 +34,25 @@ describe("quoteIdentifier", () => {
 	});
 });
 
-describe("alterRoleLoginPassword", () => {
+describe("alterRoleLogin", () => {
 	it("builds a statement with a quote and a backslash in the password", () => {
-		expect(alterRoleLoginPassword("apercura_app", "a'b\\c")).toBe(
+		expect(alterRoleLogin("apercura_app", "a'b\\c")).toBe(
 			"ALTER ROLE \"apercura_app\" WITH LOGIN PASSWORD E'a''b\\\\c'",
 		);
 	});
 });
 
-describe("rolePasswordsFromEnv", () => {
+describe("rolesToSet", () => {
 	it("keeps the roles whose variable is set and not empty", () => {
-		expect(
-			rolePasswordsFromEnv({
-				APERCURA_APP_DB_PASSWORD: "app",
-				APERCURA_ETL_DB_PASSWORD: "etl",
-				APERCURA_READONLY_DB_PASSWORD: "",
-			}),
-		).toEqual([
-			{ role: "apercura_app", variable: "APERCURA_APP_DB_PASSWORD", password: "app" },
-			{ role: "apercura_etl", variable: "APERCURA_ETL_DB_PASSWORD", password: "etl" },
-		]);
-		expect(rolePasswordsFromEnv({})).toEqual([]);
+		const env = {
+			APERCURA_APP_DB_PASSWORD: "app",
+			APERCURA_ETL_DB_PASSWORD: "etl",
+			APERCURA_READONLY_DB_PASSWORD: "",
+		};
+		expect(rolesToSet(env)).toEqual(["apercura_app", "apercura_etl"]);
+		expect(roleEnvValue("apercura_app", env)).toBe("app");
+		expect(roleEnvValue("apercura_readonly", env)).toBeUndefined();
+		expect(rolesToSet({})).toEqual([]);
 	});
 });
 
@@ -82,10 +81,10 @@ function fakeSql(
 
 const quiet = () => ({ warn: vi.fn() });
 
-describe("applyRolePasswords", () => {
+describe("syncRoleLogins", () => {
 	it("does nothing, not even a query, without any password variable", async () => {
 		const { sql, statements, queries } = fakeSql([]);
-		expect(await applyRolePasswords(sql, { APERCURA_JOBS_DB_PASSWORD: "" }, quiet())).toEqual([]);
+		expect(await syncRoleLogins(sql, { APERCURA_JOBS_DB_PASSWORD: "" }, quiet())).toEqual([]);
 		expect(queries).toEqual([]);
 		expect(statements).toEqual([]);
 	});
@@ -95,7 +94,7 @@ describe("applyRolePasswords", () => {
 			{ rolname: "apercura_app", can_alter: true },
 			{ rolname: "apercura_jobs", can_alter: true },
 		]);
-		const outcomes = await applyRolePasswords(
+		const outcomes = await syncRoleLogins(
 			sql,
 			{ APERCURA_APP_DB_PASSWORD: "p'w", APERCURA_JOBS_DB_PASSWORD: "jobs" },
 			quiet(),
@@ -114,7 +113,7 @@ describe("applyRolePasswords", () => {
 	it("warns without failing when a role is missing or may not be altered", async () => {
 		const log = quiet();
 		const { sql, statements } = fakeSql([{ rolname: "apercura_etl", can_alter: false }]);
-		const outcomes = await applyRolePasswords(
+		const outcomes = await syncRoleLogins(
 			sql,
 			{ APERCURA_APP_DB_PASSWORD: "app-secret", APERCURA_ETL_DB_PASSWORD: "etl-secret" },
 			log,
@@ -133,7 +132,7 @@ describe("applyRolePasswords", () => {
 		const { sql } = fakeSql([{ rolname: "apercura_app", can_alter: true }], async () => {
 			throw Object.assign(new Error("permission denied to alter role"), { code: "42501" });
 		});
-		expect(await applyRolePasswords(sql, { APERCURA_APP_DB_PASSWORD: "x" }, log)).toEqual([
+		expect(await syncRoleLogins(sql, { APERCURA_APP_DB_PASSWORD: "x" }, log)).toEqual([
 			{ role: "apercura_app", status: "not-permitted" },
 		]);
 		expect(log.warn).toHaveBeenCalledOnce();
@@ -155,12 +154,12 @@ describe("applyRolePasswords", () => {
 				return [];
 			},
 		);
-		const run = applyRolePasswords(
+		const run = syncRoleLogins(
 			sql,
 			{ APERCURA_APP_DB_PASSWORD: "hunter2", APERCURA_ETL_DB_PASSWORD: "etl" },
 			quiet(),
 		);
-		await expect(run).rejects.toThrow("Could not set the password of apercura_app (42601");
+		await expect(run).rejects.toThrow("Could not set the login of apercura_app (42601");
 		await expect(run).rejects.not.toThrow(/hunter2/);
 		expect(statements).toHaveLength(2);
 	});

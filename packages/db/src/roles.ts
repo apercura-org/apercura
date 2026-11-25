@@ -27,17 +27,33 @@
  */
 import type { Sql } from "postgres";
 
-export const ROLE_PASSWORD_VARIABLES = [
-	{ role: "apercura_app", variable: "APERCURA_APP_DB_PASSWORD" },
-	{ role: "apercura_etl", variable: "APERCURA_ETL_DB_PASSWORD" },
-	{ role: "apercura_readonly", variable: "APERCURA_READONLY_DB_PASSWORD" },
-	{ role: "apercura_jobs", variable: "APERCURA_JOBS_DB_PASSWORD" },
+/** Apercura's database roles. Logs and outcomes are built from these names only. */
+export const DATABASE_ROLES = [
+	"apercura_app",
+	"apercura_etl",
+	"apercura_readonly",
+	"apercura_jobs",
 ] as const;
 
-export type RolePassword = { role: string; variable: string; password: string };
+export type DatabaseRole = (typeof DATABASE_ROLES)[number];
 
-export type RolePasswordOutcome = {
-	role: string;
+/** The environment variable each role's login is read from (never logged). */
+const ROLE_ENV: Record<DatabaseRole, string> = {
+	apercura_app: "APERCURA_APP_DB_PASSWORD",
+	apercura_etl: "APERCURA_ETL_DB_PASSWORD",
+	apercura_readonly: "APERCURA_READONLY_DB_PASSWORD",
+	apercura_jobs: "APERCURA_JOBS_DB_PASSWORD",
+};
+
+type Env = Record<string, string | undefined>;
+
+/** The value of the role's variable, or undefined when it is unset or empty. */
+export function roleEnvValue(role: DatabaseRole, env: Env): string | undefined {
+	return env[ROLE_ENV[role]] || undefined;
+}
+
+export type RoleLoginOutcome = {
+	role: DatabaseRole;
 	status: "applied" | "missing" | "not-permitted";
 };
 
@@ -60,16 +76,13 @@ export function quoteLiteral(value: string): string {
 	return value.includes("\\") ? `E'${body}'` : `'${body}'`;
 }
 
-export function alterRoleLoginPassword(role: string, password: string): string {
-	return `ALTER ROLE ${quoteIdentifier(role)} WITH LOGIN PASSWORD ${quoteLiteral(password)}`;
+export function alterRoleLogin(role: string, value: string): string {
+	return `ALTER ROLE ${quoteIdentifier(role)} WITH LOGIN PASSWORD ${quoteLiteral(value)}`;
 }
 
-/** The roles whose password variable is set and not empty, in a fixed order. */
-export function rolePasswordsFromEnv(env: Record<string, string | undefined>): RolePassword[] {
-	return ROLE_PASSWORD_VARIABLES.flatMap(({ role, variable }) => {
-		const password = env[variable];
-		return password ? [{ role, variable, password }] : [];
-	});
+/** The roles whose variable is set and not empty, in a fixed order. */
+export function rolesToSet(env: Env): DatabaseRole[] {
+	return DATABASE_ROLES.filter((role) => roleEnvValue(role, env) !== undefined);
 }
 
 /** PostgreSQL's insufficient_privilege. */
@@ -93,16 +106,16 @@ function describe(error: unknown): string {
 }
 
 /**
- * Applies the passwords of the environment (see the module comment). Returns one outcome per
+ * Applies the logins of the environment (see the module comment). Returns one outcome per
  * role whose variable is set; throws when an allowed ALTER ROLE fails.
  */
-export async function applyRolePasswords(
+export async function syncRoleLogins(
 	sql: Sql,
-	env: Record<string, string | undefined>,
+	env: Env,
 	log: Logger = console,
-): Promise<RolePasswordOutcome[]> {
-	const planned = rolePasswordsFromEnv(env);
-	if (planned.length === 0) return [];
+): Promise<RoleLoginOutcome[]> {
+	const roles = rolesToSet(env);
+	if (roles.length === 0) return [];
 
 	// Superuser, or (PostgreSQL 16+) CREATEROLE with ADMIN OPTION on a non-superuser role.
 	const rows = await sql<{ rolname: string; can_alter: boolean }[]>`
@@ -115,38 +128,43 @@ export async function applyRolePasswords(
 		FROM pg_roles r
 		CROSS JOIN pg_roles me
 		WHERE me.rolname = current_user
-			AND r.rolname IN ${sql(planned.map(({ role }) => role))}
+			AND r.rolname IN ${sql([...roles])}
 	`;
 	const canAlter = new Map(rows.map((row) => [row.rolname, row.can_alter]));
 
-	const outcomes: RolePasswordOutcome[] = [];
-	const failures: string[] = [];
-	for (const { role, variable, password } of planned) {
+	const outcomes: RoleLoginOutcome[] = [];
+	const failures: DatabaseRole[] = [];
+	const reasons: string[] = [];
+	for (const role of roles) {
 		const allowed = canAlter.get(role);
 		if (allowed === undefined) {
-			log.warn(`Role ${role} does not exist: ${variable} is ignored`);
+			log.warn(`Role ${role} does not exist: its variable is ignored`);
 			outcomes.push({ role, status: "missing" });
 			continue;
 		}
 		if (!allowed) {
-			log.warn(`The migration user may not alter role ${role}: ${variable} is ignored`);
+			log.warn(`The migration user may not alter role ${role}: its variable is ignored`);
 			outcomes.push({ role, status: "not-permitted" });
 			continue;
 		}
 		try {
-			await sql.unsafe(alterRoleLoginPassword(role, password), [], { prepare: false });
+			await sql.unsafe(alterRoleLogin(role, roleEnvValue(role, env) ?? ""), [], {
+				prepare: false,
+			});
 			outcomes.push({ role, status: "applied" });
 		} catch (error) {
 			if (errorCode(error) === INSUFFICIENT_PRIVILEGE) {
-				log.warn(`The migration user may not alter role ${role}: ${variable} is ignored`);
+				log.warn(`The migration user may not alter role ${role}: its variable is ignored`);
 				outcomes.push({ role, status: "not-permitted" });
 			} else {
-				failures.push(`${role} (${describe(error)})`);
+				failures.push(role);
+				reasons.push(describe(error));
 			}
 		}
 	}
 	if (failures.length > 0) {
-		throw new Error(`Could not set the password of ${failures.join(", ")}`);
+		const details = failures.map((role, index) => `${role} (${reasons[index]})`);
+		throw new Error(`Could not set the login of ${details.join(", ")}`);
 	}
 	return outcomes;
 }

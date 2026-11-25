@@ -7,7 +7,7 @@ import { fileURLToPath } from "node:url";
 import { drizzle } from "drizzle-orm/postgres-js";
 import { migrate } from "drizzle-orm/postgres-js/migrator";
 import postgres from "postgres";
-import { applyRolePasswords } from "./roles";
+import { syncRoleLogins } from "./roles";
 
 const url = process.env.DATABASE_URL_MIGRATE ?? process.env.DATABASE_URL;
 if (!url) {
@@ -22,7 +22,7 @@ try {
 	await migrate(drizzle({ client }), { migrationsFolder });
 	console.log("Migrations applied");
 	try {
-		const outcomes = await applyRolePasswords(client, process.env);
+		const outcomes = await syncRoleLogins(client, process.env);
 		const applied = outcomes.filter(({ status }) => status === "applied").map(({ role }) => role);
 		if (applied.length > 0) console.log(`Role passwords applied: ${applied.join(", ")}`);
 	} catch (error) {
