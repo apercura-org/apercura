@@ -103,7 +103,7 @@ const serverFields = z.object({
 
 	ETL_PROFESSIONS: z
 		.string()
-		.default("10,40,50")
+		.default("10,40,50,60")
 		.transform((value) =>
 			value
 				.split(",")

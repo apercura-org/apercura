@@ -38,11 +38,14 @@ export function PagePreview({
 	content,
 	hiddenFields,
 	sites,
+	sectors = true,
 }: {
 	identity: PreviewIdentity;
 	content: OwnerContent;
 	hiddenFields: readonly string[];
 	sites: PreviewSite[];
+	/** The profession's fees come in sectors (physicians). */
+	sectors?: boolean;
 }) {
 	const t = useTranslations("Editor.preview");
 	const tP = useTranslations("Practitioner");
@@ -130,6 +133,7 @@ export function PagePreview({
 				headingId="preview-fees"
 				emptyLabel={empty}
 				externalLabel={tSite("externalLink")}
+				sectors={sectors}
 			/>
 		</div>
 	);

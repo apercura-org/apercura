@@ -32,8 +32,15 @@ export async function getTaxonomyLabels(locale: Locale) {
 		practiceKind: (kind: string) => lookup(`practiceKind.${kind}`),
 		mode: (code: string | null | undefined) => (code ? lookup(`mode.${code}`) : null),
 		role: (code: string | null | undefined) => (code ? lookup(`role.${code}`) : null),
-		billingSector: (code: string | null | undefined) =>
-			code ? lookup(`billingSector.${code}`) : null,
+		/**
+		 * Agreement with the Assurance Maladie: a sector for physicians ("Sector 1"),
+		 * contracted or not for the other professions (`sectors: false`), which
+		 * have no sector. Codes that only exist as sectors keep the sector label.
+		 */
+		billingSector: (code: string | null | undefined, sectors = true) =>
+			code
+				? ((sectors ? null : lookup(`billingAgreement.${code}`)) ?? lookup(`billingSector.${code}`))
+				: null,
 		optam: (code: string | null | undefined) => (code ? lookup(`optam.${code}`) : null),
 		/** "Dr Marie Dubois": exercise title (when any), first name, last name. */
 		personName: (person: Pick<PractitionerLink, "titleCode" | "firstName" | "lastName">) => {

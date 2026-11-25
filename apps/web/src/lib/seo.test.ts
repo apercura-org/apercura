@@ -5,12 +5,22 @@ import { robotsFor } from "./robots";
 import {
 	DESCRIPTION_MAX,
 	fitText,
+	ogImageOf,
 	pickTitle,
 	shortPlaceName,
 	siteVerification,
 	TITLE_MAX,
 } from "./seo";
 import { sitemapIndexXml, urlSetXml } from "./sitemap-xml";
+
+describe("Open Graph images", () => {
+	it("picks one image per profession", () => {
+		expect(ogImageOf("10")).toBe("medecin");
+		expect(ogImageOf("40")).toBe("chirurgien-dentiste");
+		expect(ogImageOf("50")).toBe("sage-femme");
+		expect(ogImageOf("60")).toBe("infirmier");
+	});
+});
 
 describe("titles and descriptions", () => {
 	it("picks the most detailed title that fits, never cutting one", () => {

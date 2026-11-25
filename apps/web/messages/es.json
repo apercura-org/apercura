@@ -474,8 +474,8 @@
 	"PractitionerPage": {
 		"metaTitle": "{name}, {occupation} · Apercura",
 		"metaTitlePlace": "{name}, {occupation} en {place} · Apercura",
-		"metaDescription": "{name}, {occupation}: dirección, datos de contacto y sector de tarifas, procedentes del registro nacional.",
-		"metaDescriptionPlace": "{name}, {occupation} en {place}: dirección, datos de contacto y sector de tarifas, procedentes del registro nacional.",
+		"metaDescription": "{name}, {occupation}: dirección, datos de contacto y {fees, select, sector {sector de tarifas} other {convenio de honorarios}}, procedentes del registro nacional.",
+		"metaDescriptionPlace": "{name}, {occupation} en {place}: dirección, datos de contacto y {fees, select, sector {sector de tarifas} other {convenio de honorarios}}, procedentes del registro nacional.",
 		"unknownProfession": "Profesional sanitario",
 		"professionHeading": "Profesión y cualificaciones",
 		"otherQualifications": "Otras cualificaciones",
@@ -498,6 +498,7 @@
 		"fees": {
 			"heading": "Honorarios y cobertura sanitaria",
 			"sector": "Sector de tarifas",
+			"agreement": "Convenio de honorarios",
 			"optam": "Honorarios adicionales limitados (OPTAM)",
 			"optamNo": "No es miembro",
 			"carteVitale": "Carte Vitale",
@@ -506,6 +507,7 @@
 			"fromAmeli": "Estos datos proceden del directorio del Seguro de Enfermedad francés (Assurance Maladie).",
 			"notMatched": "Este profesional sanitario no se ha podido identificar con certeza en el directorio del Seguro de Enfermedad francés, por lo que estos datos no se muestran.",
 			"regulatoryNotice": "El sector de tarifas determina cómo se cobran y reembolsan los honorarios: compruebe los honorarios y el reembolso antes de su cita en",
+			"regulatoryNoticeAgreement": "El convenio de honorarios determina cómo se cobran y reembolsan los honorarios: compruebe los honorarios y el reembolso antes de su cita en",
 			"ameliLink": "ameli.fr, el directorio del Seguro de Enfermedad francés",
 			"source": "Annuaire santé, Assurance Maladie",
 			"sourceOwner": "El profesional sanitario"
@@ -534,8 +536,8 @@
 			"dataLink": "Cómo se publican y retiran las páginas"
 		},
 		"metaTitleName": "{name} · Apercura",
-		"metaDescriptionBookable": "{name}, {occupation}: reserva en línea, dirección, datos de contacto y sector de tarifas.",
-		"metaDescriptionBookablePlace": "{name}, {occupation} en {place}: reserva en línea, dirección, datos de contacto y sector de tarifas."
+		"metaDescriptionBookable": "{name}, {occupation}: reserva en línea, dirección, datos de contacto y {fees, select, sector {sector de tarifas} other {convenio de honorarios}}.",
+		"metaDescriptionBookablePlace": "{name}, {occupation} en {place}: reserva en línea, dirección, datos de contacto y {fees, select, sector {sector de tarifas} other {convenio de honorarios}}."
 	},
 	"Institutional": {
 		"toBeCompleted": "Por completar",
@@ -1057,15 +1059,17 @@
 		"count": "{count, plural, one {# profesional sanitario} many {# de profesionales sanitarios} other {# profesionales sanitarios}}",
 		"metaTitle": "{count, plural, one {{listing} en {place}: # profesional sanitario · Apercura} many {{listing} en {place}: # de profesionales sanitarios · Apercura} other {{listing} en {place}: # profesionales sanitarios · Apercura}}",
 		"metaTitlePage": "{listing} en {place}, página {page} · Apercura",
-		"metaDescription": "{count, plural, one {# profesional sanitario registrado como {occupation} en {place} en el registro nacional: direcciones, datos de contacto, sectores de tarifas.} many {# de profesionales sanitarios registrados como {occupation} en {place} en el registro nacional: direcciones, datos de contacto, sectores de tarifas.} other {# profesionales sanitarios registrados como {occupation} en {place} en el registro nacional: direcciones, datos de contacto, sectores de tarifas.}}",
+		"metaDescription": "{count, plural, one {# profesional sanitario registrado como {occupation} en {place} en el registro nacional: direcciones, datos de contacto, {fees, select, sector {sectores de tarifas} other {convenios de honorarios}}.} many {# de profesionales sanitarios registrados como {occupation} en {place} en el registro nacional: direcciones, datos de contacto, {fees, select, sector {sectores de tarifas} other {convenios de honorarios}}.} other {# profesionales sanitarios registrados como {occupation} en {place} en el registro nacional: direcciones, datos de contacto, {fees, select, sector {sectores de tarifas} other {convenios de honorarios}}.}}",
 		"title": "{listing} en {place}",
 		"lead": "{count, plural, one {El registro nacional incluye # profesional sanitario en este apartado con un lugar de ejercicio en {place}.} many {El registro nacional incluye # de profesionales sanitarios en este apartado con un lugar de ejercicio en {place}.} other {El registro nacional incluye # profesionales sanitarios en este apartado con un lugar de ejercicio en {place}.}}",
 		"practitionersHeading": "{count, plural, one {El profesional sanitario} many {Los # de profesionales sanitarios} other {Los # profesionales sanitarios}}",
 		"practitionersIntro": "Por orden alfabético. Nadie paga por aparecer aquí y no hay ninguna clasificación.",
 		"rowFacts": "Sector: {sector} · Carte Vitale: {carteVitale}",
+		"rowFactsAgreement": "Convenio: {sector} · Carte Vitale: {carteVitale}",
 		"columns": {
 			"practitioner": "Profesional sanitario",
 			"sector": "Sector",
+			"agreement": "Convenio",
 			"carteVitale": "Carte Vitale"
 		},
 		"pagination": {
@@ -1077,7 +1081,9 @@
 		"facts": {
 			"heading": "En cifras",
 			"intro": "Los sectores de tarifas y la Carte Vitale proceden del directorio del Seguro de Enfermedad francés, para los profesionales sanitarios con los que se ha podido establecer la correspondencia.",
+			"introAgreement": "Los convenios de honorarios y la Carte Vitale proceden del directorio del Seguro de Enfermedad francés, para los profesionales sanitarios con los que se ha podido establecer la correspondencia.",
 			"sectorUnknown": "Sector desconocido",
+			"agreementUnknown": "Convenio desconocido",
 			"carteVitaleYes": "Aceptar la Carte Vitale",
 			"carteVitaleNo": "No aceptar la Carte Vitale",
 			"bookingNotOpen": "Aún no abierto",
@@ -1089,7 +1095,7 @@
 		"establishmentsIntro": "Hospitales, clínicas y centros de salud donde trabajan los profesionales sanitarios que figuran como {occupation}.",
 		"allSpecialties": "Todas las especialidades en {place}",
 		"hubMetaTitle": "{count, plural, one {{listing} en Francia: # profesional sanitario · Apercura} many {{listing} en Francia: # de profesionales sanitarios · Apercura} other {{listing} en Francia: # profesionales sanitarios · Apercura}}",
-		"hubMetaDescription": "{count, plural, one {# profesional sanitario registrado como {occupation} en el registro nacional, por departamento: direcciones, datos de contacto, sectores de tarifas.} many {# de profesionales sanitarios registrados como {occupation} en el registro nacional, por departamento: direcciones, datos de contacto, sectores de tarifas.} other {# profesionales sanitarios registrados como {occupation} en el registro nacional, por departamento: direcciones, datos de contacto, sectores de tarifas.}}",
+		"hubMetaDescription": "{count, plural, one {# profesional sanitario registrado como {occupation} en el registro nacional, por departamento: direcciones, datos de contacto, {fees, select, sector {sectores de tarifas} other {convenios de honorarios}}.} many {# de profesionales sanitarios registrados como {occupation} en el registro nacional, por departamento: direcciones, datos de contacto, {fees, select, sector {sectores de tarifas} other {convenios de honorarios}}.} other {# profesionales sanitarios registrados como {occupation} en el registro nacional, por departamento: direcciones, datos de contacto, {fees, select, sector {sectores de tarifas} other {convenios de honorarios}}.}}",
 		"hubTitle": "{listing} en Francia",
 		"hubLead": "{count, plural, one {El registro nacional incluye # profesional sanitario en este apartado con un lugar de ejercicio en Francia.} many {El registro nacional incluye # de profesionales sanitarios en este apartado con un lugar de ejercicio en Francia.} other {El registro nacional incluye # profesionales sanitarios en este apartado con un lugar de ejercicio en Francia.}}",
 		"departmentsHeading": "{listing} por departamento",
@@ -1101,7 +1107,7 @@
 	},
 	"Directory": {
 		"metaTitle": "Directorio de profesionales sanitarios por lugar · Apercura",
-		"metaDescription": "Todos los departamentos de Francia con sus profesionales sanitarios, a partir del registro nacional: médicos, dentistas y matronas.",
+		"metaDescription": "Todos los departamentos de Francia con sus profesionales sanitarios, a partir del registro nacional: médicos, dentistas, matronas y enfermeros.",
 		"title": "Directorio por lugar",
 		"lead": "{count, plural, one {# profesional sanitario con lugar de ejercicio, por departamento.} many {# de profesionales sanitarios con lugar de ejercicio, por departamento.} other {# profesionales sanitarios con lugar de ejercicio, por departamento.}}",
 		"otherRegion": "Otros lugares",
@@ -1155,6 +1161,7 @@
 			"medecin": "Todos los médicos de Francia ya tienen una página.",
 			"chirurgien-dentiste": "Todos los dentistas de Francia ya tienen una página.",
 			"sage-femme": "Todas las matronas de Francia ya tienen una página.",
+			"infirmier": "Todos los enfermeros autónomos de Francia ya tienen una página.",
 			"annuaire": "Profesionales sanitarios, por especialidad y por lugar."
 		},
 		"footer": "Gratuito · Código abierto · Sin valoraciones ni publicidad"
@@ -1315,6 +1322,10 @@
 			"2": "Sector 1 con honorarios adicionales permanentes",
 			"3": "Sector 2 (honorarios adicionales)"
 		},
+		"billingAgreement": {
+			"0": "No concertado con el Seguro de Enfermedad francés (Assurance Maladie)",
+			"1": "Concertado con el Seguro de Enfermedad francés (Assurance Maladie)"
+		},
 		"optam": {
 			"optam": "Adherido a OPTAM (honorarios adicionales limitados)",
 			"optam_aco": "Adherido a OPTAM-ACO (honorarios adicionales limitados)"
@@ -1375,7 +1386,10 @@
 			"scaling": "Limpieza dental",
 			"orthodonticCheckup": "Revisión de ortodoncia",
 			"pregnancyFollowUp": "Seguimiento del embarazo",
-			"perinealRehabilitation": "Rehabilitación del suelo pélvico"
+			"perinealRehabilitation": "Rehabilitación del suelo pélvico",
+			"bloodTest": "Extracción de sangre",
+			"injection": "Inyección",
+			"dressing": "Cura de heridas"
 		},
 		"email": {
 			"wordmark": "Apercura",
@@ -2269,7 +2283,7 @@
 				"payments": "Formas de pago",
 				"done": "Declarado",
 				"todo": "Por completar",
-				"deontology": "Artículo R.4127-53 del código de salud pública: el médico que presenta su actividad en línea indica sus honorarios y las formas de pago aceptadas.",
+				"deontology": "El profesional sanitario que presenta su actividad en línea indica sus honorarios y las formas de pago aceptadas (para los médicos: artículo R.4127-53 del código de salud pública).",
 				"editFees": "Completar honorarios y formas de pago",
 				"settingsNote": "Los lugares, el horario de apertura y los tipos de cita se configuran en los ajustes de reserva.",
 				"waitingPeriod": "Periodo de espera tras la verificación",
@@ -2339,6 +2353,7 @@
 			"requiredBadge": "Obligatorio para la reserva",
 			"ameliPrefill": "Rellenado previamente a partir del directorio del Seguro de Enfermedad francés. Su declaración lo sustituye en su página.",
 			"sector": "Sector de tarifas",
+			"agreement": "Convenio de honorarios",
 			"notStated": "No indicado",
 			"optam": "Honorarios adicionales limitados (OPTAM)",
 			"optamNone": "No es miembro",
@@ -2764,7 +2779,7 @@
 				"noType": "Ofrezca al menos un tipo de cita en línea.",
 				"noHours": "Añada un horario de apertura o una apertura extraordinaria.",
 				"editPage": "Completar honorarios y formas de pago",
-				"deontology": "Artículo R.4127-53 del código de salud pública: el médico que presenta su actividad en línea indica sus honorarios y las formas de pago aceptadas.",
+				"deontology": "El profesional sanitario que presenta su actividad en línea indica sus honorarios y las formas de pago aceptadas (para los médicos: artículo R.4127-53 del código de salud pública).",
 				"open": "Abrir la reserva en línea",
 				"pause": "Poner en pausa la reserva en línea",
 				"opened": "La reserva en línea está abierta. Los pacientes pueden reservar en su página.",

@@ -474,8 +474,8 @@
 	"PractitionerPage": {
 		"metaTitle": "{name}, {occupation} · Apercura",
 		"metaTitlePlace": "{name}, {occupation} in {place} · Apercura",
-		"metaDescription": "{name}, {occupation}: Adresse, Kontaktdaten und Tarifsektor, aus dem nationalen Register.",
-		"metaDescriptionPlace": "{name}, {occupation} in {place}: Adresse, Kontaktdaten und Tarifsektor, aus dem nationalen Register.",
+		"metaDescription": "{name}, {occupation}: Adresse, Kontaktdaten und {fees, select, sector {Tarifsektor} other {Kassenvertrag}}, aus dem nationalen Register.",
+		"metaDescriptionPlace": "{name}, {occupation} in {place}: Adresse, Kontaktdaten und {fees, select, sector {Tarifsektor} other {Kassenvertrag}}, aus dem nationalen Register.",
 		"unknownProfession": "Gesundheitsfachkraft",
 		"professionHeading": "Beruf und Qualifikationen",
 		"otherQualifications": "Weitere Qualifikationen",
@@ -498,6 +498,7 @@
 		"fees": {
 			"heading": "Honorare und Krankenversicherung",
 			"sector": "Tarifsektor",
+			"agreement": "Kassenvertrag",
 			"optam": "Begrenzte Honorarzuschläge (OPTAM)",
 			"optamNo": "Kein Mitglied",
 			"carteVitale": "Carte Vitale",
@@ -506,6 +507,7 @@
 			"fromAmeli": "Diese Angaben stammen aus dem Verzeichnis der Assurance Maladie.",
 			"notMatched": "Diese Gesundheitsfachkraft konnte im Verzeichnis der Assurance Maladie nicht mit Sicherheit zugeordnet werden, daher werden diese Angaben nicht angezeigt.",
 			"regulatoryNotice": "Der Tarifsektor bestimmt, wie Honorare berechnet und erstattet werden: Prüfen Sie Honorare und Erstattung vor Ihrem Termin auf",
+			"regulatoryNoticeAgreement": "Der Kassenvertrag bestimmt, wie Honorare berechnet und erstattet werden: Prüfen Sie Honorare und Erstattung vor Ihrem Termin auf",
 			"ameliLink": "ameli.fr, das Verzeichnis der Assurance Maladie",
 			"source": "Annuaire santé, Assurance Maladie",
 			"sourceOwner": "Die Gesundheitsfachkraft"
@@ -534,8 +536,8 @@
 			"dataLink": "Wie Seiten veröffentlicht und entfernt werden"
 		},
 		"metaTitleName": "{name} · Apercura",
-		"metaDescriptionBookable": "{name}, {occupation}: Online-Terminbuchung, Adresse, Kontaktdaten und Tarifsektor.",
-		"metaDescriptionBookablePlace": "{name}, {occupation} in {place}: Online-Terminbuchung, Adresse, Kontaktdaten und Tarifsektor."
+		"metaDescriptionBookable": "{name}, {occupation}: Online-Terminbuchung, Adresse, Kontaktdaten und {fees, select, sector {Tarifsektor} other {Kassenvertrag}}.",
+		"metaDescriptionBookablePlace": "{name}, {occupation} in {place}: Online-Terminbuchung, Adresse, Kontaktdaten und {fees, select, sector {Tarifsektor} other {Kassenvertrag}}."
 	},
 	"Institutional": {
 		"toBeCompleted": "Noch zu ergänzen",
@@ -1057,15 +1059,17 @@
 		"count": "{count, plural, one {# Gesundheitsfachkraft} other {# Gesundheitsfachkräfte}}",
 		"metaTitle": "{count, plural, one {{listing} in {place}: # Gesundheitsfachkraft · Apercura} other {{listing} in {place}: # Gesundheitsfachkräfte · Apercura}}",
 		"metaTitlePage": "{listing} in {place}, Seite {page} · Apercura",
-		"metaDescription": "{count, plural, one {# als {occupation} in {place} im nationalen Register geführte Gesundheitsfachkraft: Adressen, Kontaktdaten, Tarifsektoren.} other {# als {occupation} in {place} im nationalen Register geführte Gesundheitsfachkräfte: Adressen, Kontaktdaten, Tarifsektoren.}}",
+		"metaDescription": "{count, plural, one {# als {occupation} in {place} im nationalen Register geführte Gesundheitsfachkraft: Adressen, Kontaktdaten, {fees, select, sector {Tarifsektoren} other {Kassenverträge}}.} other {# als {occupation} in {place} im nationalen Register geführte Gesundheitsfachkräfte: Adressen, Kontaktdaten, {fees, select, sector {Tarifsektoren} other {Kassenverträge}}.}}",
 		"title": "{listing} in {place}",
 		"lead": "{count, plural, one {Das nationale Register führt unter dieser Rubrik # Gesundheitsfachkraft mit einem Praxisort in {place}.} other {Das nationale Register führt unter dieser Rubrik # Gesundheitsfachkräfte mit einem Praxisort in {place}.}}",
 		"practitionersHeading": "{count, plural, one {Die Gesundheitsfachkraft} other {Die # Gesundheitsfachkräfte}}",
 		"practitionersIntro": "In alphabetischer Reihenfolge. Niemand zahlt, um hier zu erscheinen, und niemand wird gerankt.",
 		"rowFacts": "Sektor: {sector} · Carte Vitale: {carteVitale}",
+		"rowFactsAgreement": "Kassenvertrag: {sector} · Carte Vitale: {carteVitale}",
 		"columns": {
 			"practitioner": "Gesundheitsfachkraft",
 			"sector": "Sektor",
+			"agreement": "Kassenvertrag",
 			"carteVitale": "Carte Vitale"
 		},
 		"pagination": {
@@ -1077,7 +1081,9 @@
 		"facts": {
 			"heading": "In Zahlen",
 			"intro": "Tarifsektoren und Carte Vitale stammen aus dem Verzeichnis der Assurance Maladie, für die Gesundheitsfachkräfte, die dort zugeordnet werden konnten.",
+			"introAgreement": "Kassenverträge und Carte Vitale stammen aus dem Verzeichnis der Assurance Maladie, für die Gesundheitsfachkräfte, die dort zugeordnet werden konnten.",
 			"sectorUnknown": "Sektor unbekannt",
+			"agreementUnknown": "Kassenvertrag unbekannt",
 			"carteVitaleYes": "Carte Vitale akzeptieren",
 			"carteVitaleNo": "Carte Vitale nicht akzeptieren",
 			"bookingNotOpen": "Noch nicht geöffnet",
@@ -1089,7 +1095,7 @@
 		"establishmentsIntro": "Krankenhäuser, Kliniken und Gesundheitszentren, in denen als {occupation} geführte Gesundheitsfachkräfte arbeiten.",
 		"allSpecialties": "Alle Fachgebiete in {place}",
 		"hubMetaTitle": "{count, plural, one {{listing} in Frankreich: # Gesundheitsfachkraft · Apercura} other {{listing} in Frankreich: # Gesundheitsfachkräfte · Apercura}}",
-		"hubMetaDescription": "{count, plural, one {# als {occupation} im nationalen Register geführte Gesundheitsfachkraft, nach Département: Adressen, Kontaktdaten, Tarifsektoren.} other {# als {occupation} im nationalen Register geführte Gesundheitsfachkräfte, nach Département: Adressen, Kontaktdaten, Tarifsektoren.}}",
+		"hubMetaDescription": "{count, plural, one {# als {occupation} im nationalen Register geführte Gesundheitsfachkraft, nach Département: Adressen, Kontaktdaten, {fees, select, sector {Tarifsektoren} other {Kassenverträge}}.} other {# als {occupation} im nationalen Register geführte Gesundheitsfachkräfte, nach Département: Adressen, Kontaktdaten, {fees, select, sector {Tarifsektoren} other {Kassenverträge}}.}}",
 		"hubTitle": "{listing} in Frankreich",
 		"hubLead": "{count, plural, one {Das nationale Register führt unter dieser Rubrik # Gesundheitsfachkraft mit einem Praxisort in Frankreich.} other {Das nationale Register führt unter dieser Rubrik # Gesundheitsfachkräfte mit einem Praxisort in Frankreich.}}",
 		"departmentsHeading": "{listing} nach Département",
@@ -1101,7 +1107,7 @@
 	},
 	"Directory": {
 		"metaTitle": "Verzeichnis der Gesundheitsfachkräfte nach Ort · Apercura",
-		"metaDescription": "Alle Départements Frankreichs mit ihren Gesundheitsfachkräften, aus dem nationalen Register: Ärzte, Zahnärzte und Hebammen.",
+		"metaDescription": "Alle Départements Frankreichs mit ihren Gesundheitsfachkräften, aus dem nationalen Register: Ärzte, Zahnärzte, Hebammen und Pflegefachkräfte.",
 		"title": "Verzeichnis nach Ort",
 		"lead": "{count, plural, one {# Gesundheitsfachkraft mit Praxisort, nach Département.} other {# Gesundheitsfachkräfte mit Praxisort, nach Département.}}",
 		"otherRegion": "Weitere Orte",
@@ -1155,6 +1161,7 @@
 			"medecin": "Jeder Arzt in Frankreich hat bereits eine Seite.",
 			"chirurgien-dentiste": "Jeder Zahnarzt in Frankreich hat bereits eine Seite.",
 			"sage-femme": "Jede Hebamme in Frankreich hat bereits eine Seite.",
+			"infirmier": "Jede freiberufliche Pflegefachkraft in Frankreich hat bereits eine Seite.",
 			"annuaire": "Gesundheitsfachkräfte, nach Fachgebiet und nach Ort."
 		},
 		"footer": "Kostenlos · Open Source · Keine Bewertungen, keine Werbung"
@@ -1315,6 +1322,10 @@
 			"2": "Sektor 1 mit dauerhaften Honorarzuschlägen",
 			"3": "Sektor 2 (Honorarzuschläge)"
 		},
+		"billingAgreement": {
+			"0": "Nicht vertraglich an die Assurance Maladie gebunden",
+			"1": "Vertraglich an die Assurance Maladie gebunden"
+		},
 		"optam": {
 			"optam": "Teilnahme an OPTAM (begrenzte Honorarzuschläge)",
 			"optam_aco": "Teilnahme an OPTAM-ACO (begrenzte Honorarzuschläge)"
@@ -1375,7 +1386,10 @@
 			"scaling": "Zahnsteinentfernung",
 			"orthodonticCheckup": "Kieferorthopädische Kontrolle",
 			"pregnancyFollowUp": "Schwangerschaftsvorsorge",
-			"perinealRehabilitation": "Beckenbodenrehabilitation"
+			"perinealRehabilitation": "Beckenbodenrehabilitation",
+			"bloodTest": "Blutabnahme",
+			"injection": "Injektion",
+			"dressing": "Verbandswechsel"
 		},
 		"email": {
 			"wordmark": "Apercura",
@@ -2269,7 +2283,7 @@
 				"payments": "Zahlungsarten",
 				"done": "Angegeben",
 				"todo": "Zu vervollständigen",
-				"deontology": "Artikel R.4127-53 des französischen Gesetzbuchs über die öffentliche Gesundheit (Code de la santé publique): Ein Arzt, der seine Tätigkeit online präsentiert, gibt seine Honorare und die akzeptierten Zahlungsarten an.",
+				"deontology": "Eine Gesundheitsfachkraft, die ihre Tätigkeit online präsentiert, gibt ihre Honorare und die akzeptierten Zahlungsarten an (für Ärzte: Artikel R.4127-53 des französischen Gesetzbuchs über die öffentliche Gesundheit, Code de la santé publique).",
 				"editFees": "Honorare und Zahlungsarten vervollständigen",
 				"settingsNote": "Orte, Öffnungszeiten und Terminarten werden in den Buchungseinstellungen festgelegt.",
 				"waitingPeriod": "Wartezeit nach der Verifizierung",
@@ -2339,6 +2353,7 @@
 			"requiredBadge": "Für die Terminbuchung erforderlich",
 			"ameliPrefill": "Vorausgefüllt aus dem Verzeichnis der Assurance Maladie. Ihre Angabe ersetzt sie auf Ihrer Seite.",
 			"sector": "Tarifsektor",
+			"agreement": "Kassenvertrag",
 			"notStated": "Nicht angegeben",
 			"optam": "Begrenzte Honorarzuschläge (OPTAM)",
 			"optamNone": "Kein Mitglied",
@@ -2764,7 +2779,7 @@
 				"noType": "Bieten Sie mindestens eine Terminart online an.",
 				"noHours": "Fügen Sie Öffnungszeiten oder eine zusätzliche Öffnung hinzu.",
 				"editPage": "Honorare und Zahlungsarten vervollständigen",
-				"deontology": "Artikel R.4127-53 des französischen Gesetzbuchs über die öffentliche Gesundheit (Code de la santé publique): Ein Arzt, der seine Tätigkeit online präsentiert, gibt seine Honorare und die akzeptierten Zahlungsarten an.",
+				"deontology": "Eine Gesundheitsfachkraft, die ihre Tätigkeit online präsentiert, gibt ihre Honorare und die akzeptierten Zahlungsarten an (für Ärzte: Artikel R.4127-53 des französischen Gesetzbuchs über die öffentliche Gesundheit, Code de la santé publique).",
 				"open": "Online-Terminbuchung öffnen",
 				"pause": "Online-Terminbuchung pausieren",
 				"opened": "Die Online-Terminbuchung ist geöffnet. Patienten können auf Ihrer Seite buchen.",

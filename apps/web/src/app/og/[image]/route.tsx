@@ -7,9 +7,10 @@ import { getTranslations } from "next-intl/server";
 /**
  * One static Open Graph image per profession (and one for listings), never one
  * per page: `/og/medecin.png`, `/og/chirurgien-dentiste.png`,
- * `/og/sage-femme.png`, `/og/annuaire.png`. Prerendered at build time.
+ * `/og/sage-femme.png`, `/og/infirmier.png`, `/og/annuaire.png`. Prerendered
+ * at build time.
  */
-const IMAGES = ["medecin", "chirurgien-dentiste", "sage-femme", "annuaire"] as const;
+const IMAGES = ["medecin", "chirurgien-dentiste", "sage-femme", "infirmier", "annuaire"] as const;
 type ImageName = (typeof IMAGES)[number];
 
 export function generateStaticParams() {

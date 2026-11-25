@@ -144,6 +144,8 @@ export function useFeeAmount() {
  * Agreement sector, OPTAM, Carte Vitale, fees and payment methods, then the
  * regulatory pointer to ameli.fr. R.4127-53 II: a practitioner who presents
  * their activity online states their fees and the payment methods accepted.
+ * Professions without sectors (`hasBillingSectors`: dentists, midwives,
+ * nurses) print whether they are contracted, and no OPTAM.
  */
 export function FeesSection({
 	content,
@@ -151,6 +153,7 @@ export function FeesSection({
 	emptyLabel,
 	externalLabel,
 	provenance,
+	sectors = true,
 }: {
 	content: Pick<OwnerContent, "billing" | "fees" | "paymentMethods">;
 	headingId: string;
@@ -158,16 +161,18 @@ export function FeesSection({
 	externalLabel: string;
 	/** The provenance imprint (source and date), when the page knows it. */
 	provenance?: ReactNode;
+	/** The profession's fees come in sectors (physicians). */
+	sectors?: boolean;
 }) {
 	const t = useTranslations("PractitionerPage");
 	const tProfile = useTranslations("Profile");
 	const tTaxonomy = useTranslations("taxonomy");
 	const amount = useFeeAmount();
 	const { billing } = content;
+	const label = (key: string) => (tTaxonomy.has(key as never) ? tTaxonomy(key as never) : null);
 	const sector = billing.sector
-		? tTaxonomy.has(`billingSector.${billing.sector}` as never)
-			? tTaxonomy(`billingSector.${billing.sector}` as never)
-			: null
+		? ((sectors ? null : label(`billingAgreement.${billing.sector}`)) ??
+			label(`billingSector.${billing.sector}`))
 		: null;
 	const optam = billing.optam
 		? tTaxonomy.has(`optam.${billing.optam}` as never)
@@ -183,8 +188,14 @@ export function FeesSection({
 				{t("fees.heading")}
 			</h2>
 			<FieldList>
-				<FieldRow label={t("fees.sector")} value={sector} emptyLabel={emptyLabel} />
-				<FieldRow label={t("fees.optam")} value={optam} emptyLabel={emptyLabel} />
+				<FieldRow
+					label={sectors ? t("fees.sector") : t("fees.agreement")}
+					value={sector}
+					emptyLabel={emptyLabel}
+				/>
+				{sectors ? (
+					<FieldRow label={t("fees.optam")} value={optam} emptyLabel={emptyLabel} />
+				) : null}
 				<FieldRow
 					label={t("fees.carteVitale")}
 					value={
@@ -229,7 +240,7 @@ export function FeesSection({
 						: t("fees.notMatched")}{" "}
 				{/* Placeholder: replace with the verbatim wording required by the order of
 				    30 May 2018 (art. 5) once the legal review (M6) provides it. */}
-				{t("fees.regulatoryNotice")}{" "}
+				{sectors ? t("fees.regulatoryNotice") : t("fees.regulatoryNoticeAgreement")}{" "}
 				<a href={AMELI_URL} className={linkStyles()}>
 					{t("fees.ameliLink")}
 					<span className="sr-only"> ({externalLabel})</span>

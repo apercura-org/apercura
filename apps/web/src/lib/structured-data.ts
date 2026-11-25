@@ -112,6 +112,13 @@ function e164(phone: string | null | undefined): string | undefined {
 	return phone && /^\+[1-9]\d{6,14}$/.test(phone) ? phone : undefined;
 }
 
+/** ISCO-08 unit groups of the professions published as a `Person` with an `Occupation`. */
+const ISCO_CATEGORIES: Readonly<Record<string, string>> = {
+	"50": "2222",
+	"60": "2221",
+	"69": "2221",
+};
+
 /** Listing slugs whose meaning matches a schema.org `MedicalSpecialty` exactly. */
 const MEDICAL_SPECIALTIES: Record<string, readonly MedicalSpecialty[]> = {
 	anatomopathologiste: ["https://schema.org/Pathology"],
@@ -139,6 +146,12 @@ const MEDICAL_SPECIALTIES: Record<string, readonly MedicalSpecialty[]> = {
 	gynecologue: ["https://schema.org/Gynecologic"],
 	"gynecologue-obstetricien": ["https://schema.org/Gynecologic", "https://schema.org/Obstetric"],
 	hematologue: ["https://schema.org/Hematologic"],
+	infirmier: ["https://schema.org/Nursing"],
+	"infirmier-anesthesiste": ["https://schema.org/Nursing", "https://schema.org/Anesthesia"],
+	"infirmier-de-bloc-operatoire": ["https://schema.org/Nursing", "https://schema.org/Surgical"],
+	"infirmier-en-pratique-avancee": ["https://schema.org/Nursing"],
+	"infirmier-psychiatrique": ["https://schema.org/Nursing", "https://schema.org/Psychiatric"],
+	"infirmier-puericulteur": ["https://schema.org/Nursing", "https://schema.org/Pediatric"],
 	infectiologue: ["https://schema.org/Infectious"],
 	"medecin-de-sante-publique": ["https://schema.org/PublicHealth"],
 	"medecin-generaliste": ["https://schema.org/PrimaryCare"],
@@ -451,8 +464,8 @@ export function practitionerNodes(input: PractitionerInput): Thing[] {
 			hasOccupation: {
 				"@type": "Occupation",
 				name: input.occupation,
-				// ISCO-08 2222: midwifery professionals.
-				occupationalCategory: input.professionCode === "50" ? "2222" : undefined,
+				// ISCO-08 2222: midwifery professionals; 2221: nursing professionals.
+				occupationalCategory: ISCO_CATEGORIES[input.professionCode],
 			},
 			address: localBusiness.address,
 			telephone: localBusiness.telephone,

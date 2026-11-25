@@ -1,6 +1,7 @@
 "use client";
 
 import {
+	BILLING_AGREEMENTS,
 	BILLING_SECTORS,
 	type HideableField,
 	LIMITS,
@@ -8,6 +9,7 @@ import {
 	PAYMENT_METHODS,
 	PROFILE_LANGUAGES,
 } from "@apercura/core";
+import { hasBillingSectors } from "@apercura/core/taxonomy";
 import {
 	Badge,
 	Button,
@@ -107,6 +109,8 @@ export function PageEditor({
 	};
 
 	const initial = data.profile;
+	// Physicians state a sector and OPTAM; the other professions only whether they are contracted.
+	const sectors = hasBillingSectors(data.practitioner.professionCode);
 	const [headline, setHeadline] = useState(initial.headline ?? "");
 	const [bio, setBio] = useState(initial.bio ?? "");
 	const [languages, setLanguages] = useState<string[]>(initial.languages);
@@ -495,25 +499,33 @@ export function PageEditor({
 							<p className="text-meta text-ink-muted">{t("fees.ameliPrefill")}</p>
 						) : null}
 						<Select
-							label={t("fees.sector")}
+							label={sectors ? t("fees.sector") : t("fees.agreement")}
 							selectedKey={billingSector ?? "none"}
 							onSelectionChange={(key) => setBillingSector(key === "none" ? null : String(key))}
 						>
 							<ListBoxItem id="none">{t("fees.notStated")}</ListBoxItem>
-							{BILLING_SECTORS.map((code) => (
-								<ListBoxItem key={code} id={code}>
-									{tTaxonomy(`billingSector.${code}`)}
-								</ListBoxItem>
-							))}
+							{sectors
+								? BILLING_SECTORS.map((code) => (
+										<ListBoxItem key={code} id={code}>
+											{tTaxonomy(`billingSector.${code}`)}
+										</ListBoxItem>
+									))
+								: BILLING_AGREEMENTS.map((code) => (
+										<ListBoxItem key={code} id={code}>
+											{tTaxonomy(`billingAgreement.${code}`)}
+										</ListBoxItem>
+									))}
 						</Select>
-						<RadioGroup label={t("fees.optam")} value={optam} onChange={setOptam}>
-							<Radio value="none">{t("fees.optamNone")}</Radio>
-							{OPTAM_VALUES.map((code) => (
-								<Radio key={code} value={code}>
-									{tTaxonomy(`optam.${code}`)}
-								</Radio>
-							))}
-						</RadioGroup>
+						{sectors ? (
+							<RadioGroup label={t("fees.optam")} value={optam} onChange={setOptam}>
+								<Radio value="none">{t("fees.optamNone")}</Radio>
+								{OPTAM_VALUES.map((code) => (
+									<Radio key={code} value={code}>
+										{tTaxonomy(`optam.${code}`)}
+									</Radio>
+								))}
+							</RadioGroup>
+						) : null}
 						<RadioGroup label={t("fees.carteVitale")} value={carteVitale} onChange={setCarteVitale}>
 							<Radio value="yes">{t("fees.carteVitaleYes")}</Radio>
 							<Radio value="no">{t("fees.carteVitaleNo")}</Radio>
@@ -905,6 +917,7 @@ export function PageEditor({
 							content={preview}
 							hiddenFields={hiddenFields}
 							sites={sites}
+							sectors={sectors}
 						/>
 					</div>
 				</div>

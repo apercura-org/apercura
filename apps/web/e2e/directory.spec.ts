@@ -11,6 +11,9 @@ const HOSPITAL = "/praticien/fanny-placebo-19999990088";
 const ESTABLISHMENT = "/etablissement/centre-hospitalier-fictif-2a9999001";
 const LANDING = "/medecin-generaliste/75-paris";
 const SMALL_LANDING = "/cardiologue/75-paris";
+/** A self-employed nurse (fixture 18), contracted according to Ameli. */
+const NURSE = "/praticien/pauline-soignante-19999990187";
+const NURSE_LANDING = "/infirmier/75-paris/paris-15e-arrondissement";
 
 const PAGES = [
 	OFFICE,
@@ -24,6 +27,8 @@ const PAGES = [
 	"/annuaire",
 	"/annuaire/75-paris",
 	"/annuaire/69-rhone/lyon",
+	NURSE,
+	NURSE_LANDING,
 ];
 
 for (const path of PAGES) {
@@ -63,6 +68,33 @@ test("an office practitioner page: header, call action, JSON-LD and indexing", a
 		"href",
 		/\/praticien\/camille-exemple-19999990013$/,
 	);
+});
+
+test("a nurse's page states the agreement without a sector or OPTAM", async ({ page }) => {
+	await page.goto(OFFICE);
+	await expect(page.getByText("Secteur de conventionnement", { exact: true })).toBeVisible();
+	await expect(page.getByText("Conventionné secteur 1", { exact: true })).toBeVisible();
+
+	await page.goto(NURSE);
+	await expect(page.getByRole("heading", { level: 1 })).toHaveText(/Pauline Soignante/);
+	const fees = page.getByRole("region", { name: "Honoraires et Assurance Maladie" });
+	await expect(fees.getByText("Conventionnement", { exact: true })).toBeVisible();
+	await expect(fees.getByText("Conventionné", { exact: true })).toBeVisible();
+	await expect(fees.getByText(/secteur/i)).toHaveCount(0);
+	await expect(fees.getByText(/OPTAM/)).toHaveCount(0);
+	const jsonLd = await page.locator('script[type="application/ld+json"]').allTextContents();
+	const data = jsonLd.flatMap((text) => JSON.parse(text)["@graph"]);
+	const person = data.find((item) => item["@type"] === "Person");
+	expect(person.hasOccupation.occupationalCategory).toBe("2221");
+	await expect(page.locator('meta[property="og:image"]')).toHaveAttribute(
+		"content",
+		/\/og\/infirmier\.png$/,
+	);
+
+	await page.goto(NURSE_LANDING);
+	await expect(page.getByRole("link", { name: "Pauline Soignante" })).toBeVisible();
+	await expect(page.getByRole("columnheader", { name: "Conventionnement" })).toBeAttached();
+	await expect(page.locator("main").getByText(/secteur/i)).toHaveCount(0);
 });
 
 test("a hospital practitioner is reached through the establishment page", async ({ page }) => {
@@ -140,9 +172,11 @@ test("robots.txt disallows search and the API, never directory pages", async ({ 
 });
 
 test("one Open Graph image per profession", async ({ request }) => {
-	const response = await request.get("/og/medecin.png");
-	expect(response.status()).toBe(200);
-	expect(response.headers()["content-type"]).toBe("image/png");
+	for (const image of ["medecin", "infirmier"]) {
+		const response = await request.get(`/og/${image}.png`);
+		expect(response.status()).toBe(200);
+		expect(response.headers()["content-type"]).toBe("image/png");
+	}
 });
 
 test("search results offer the next step and stay in the searched place", async ({ page }) => {

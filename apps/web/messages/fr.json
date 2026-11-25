@@ -474,8 +474,8 @@
 	"PractitionerPage": {
 		"metaTitle": "{name}, {occupation} · Apercura",
 		"metaTitlePlace": "{name}, {occupation} à {place} · Apercura",
-		"metaDescription": "{name}, {occupation} : adresse, coordonnées et secteur de conventionnement, d’après le registre national.",
-		"metaDescriptionPlace": "{name}, {occupation} à {place} : adresse, coordonnées et secteur de conventionnement, d’après le registre national.",
+		"metaDescription": "{name}, {occupation} : adresse, coordonnées et {fees, select, sector {secteur de conventionnement} other {conventionnement}}, d’après le registre national.",
+		"metaDescriptionPlace": "{name}, {occupation} à {place} : adresse, coordonnées et {fees, select, sector {secteur de conventionnement} other {conventionnement}}, d’après le registre national.",
 		"unknownProfession": "Professionnel de santé",
 		"professionHeading": "Profession et qualifications",
 		"otherQualifications": "Autres qualifications",
@@ -498,6 +498,7 @@
 		"fees": {
 			"heading": "Honoraires et Assurance Maladie",
 			"sector": "Secteur de conventionnement",
+			"agreement": "Conventionnement",
 			"optam": "Dépassements maîtrisés (OPTAM)",
 			"optamNo": "Non adhérent",
 			"carteVitale": "Carte Vitale",
@@ -506,6 +507,7 @@
 			"fromAmeli": "Ces informations viennent de l’annuaire de l’Assurance Maladie.",
 			"notMatched": "Ce professionnel n’a pas pu être rapproché avec certitude de l’annuaire de l’Assurance Maladie : ces informations ne sont donc pas affichées.",
 			"regulatoryNotice": "Le secteur de conventionnement détermine les honoraires pratiqués et leur remboursement : vérifiez-les avant votre rendez-vous sur",
+			"regulatoryNoticeAgreement": "Le conventionnement détermine les honoraires pratiqués et leur remboursement : vérifiez-les avant votre rendez-vous sur",
 			"ameliLink": "ameli.fr, l’annuaire de l’Assurance Maladie",
 			"source": "Annuaire santé, Assurance Maladie",
 			"sourceOwner": "Le praticien"
@@ -534,8 +536,8 @@
 			"dataLink": "Comment les pages sont publiées et retirées"
 		},
 		"metaTitleName": "{name} · Apercura",
-		"metaDescriptionBookable": "{name}, {occupation} : prise de rendez-vous en ligne, adresse, coordonnées et secteur de conventionnement.",
-		"metaDescriptionBookablePlace": "{name}, {occupation} à {place} : prise de rendez-vous en ligne, adresse, coordonnées et secteur de conventionnement."
+		"metaDescriptionBookable": "{name}, {occupation} : prise de rendez-vous en ligne, adresse, coordonnées et {fees, select, sector {secteur de conventionnement} other {conventionnement}}.",
+		"metaDescriptionBookablePlace": "{name}, {occupation} à {place} : prise de rendez-vous en ligne, adresse, coordonnées et {fees, select, sector {secteur de conventionnement} other {conventionnement}}."
 	},
 	"Institutional": {
 		"toBeCompleted": "À compléter",
@@ -1057,15 +1059,17 @@
 		"count": "{count, plural, one {# praticien} many {# praticiens} other {# praticiens}}",
 		"metaTitle": "{count, plural, one {{listing} à {place} : # praticien · Apercura} many {{listing} à {place} : # praticiens · Apercura} other {{listing} à {place} : # praticiens · Apercura}}",
 		"metaTitlePage": "{listing} à {place}, page {page} · Apercura",
-		"metaDescription": "{count, plural, one {# praticien inscrit comme {occupation} à {place} au registre national : adresses, coordonnées, secteurs de conventionnement.} many {# praticiens inscrits comme {occupation} à {place} au registre national : adresses, coordonnées, secteurs de conventionnement.} other {# praticiens inscrits comme {occupation} à {place} au registre national : adresses, coordonnées, secteurs de conventionnement.}}",
+		"metaDescription": "{count, plural, one {# praticien inscrit comme {occupation} à {place} au registre national : adresses, coordonnées, {fees, select, sector {secteurs de conventionnement} other {conventionnement}}.} many {# praticiens inscrits comme {occupation} à {place} au registre national : adresses, coordonnées, {fees, select, sector {secteurs de conventionnement} other {conventionnement}}.} other {# praticiens inscrits comme {occupation} à {place} au registre national : adresses, coordonnées, {fees, select, sector {secteurs de conventionnement} other {conventionnement}}.}}",
 		"title": "{listing} à {place}",
 		"lead": "{count, plural, one {Le registre national compte # praticien sous cette rubrique avec un lieu d’exercice à {place}.} many {Le registre national compte # praticiens sous cette rubrique avec un lieu d’exercice à {place}.} other {Le registre national compte # praticiens sous cette rubrique avec un lieu d’exercice à {place}.}}",
 		"practitionersHeading": "{count, plural, one {Le praticien} many {Les # praticiens} other {Les # praticiens}}",
 		"practitionersIntro": "Par ordre alphabétique. Personne ne paie pour figurer ici, et personne n’est classé.",
 		"rowFacts": "Secteur : {sector} · Carte Vitale : {carteVitale}",
+		"rowFactsAgreement": "Conventionnement : {sector} · Carte Vitale : {carteVitale}",
 		"columns": {
 			"practitioner": "Praticien",
 			"sector": "Secteur",
+			"agreement": "Conventionnement",
 			"carteVitale": "Carte Vitale"
 		},
 		"pagination": {
@@ -1077,7 +1081,9 @@
 		"facts": {
 			"heading": "En chiffres",
 			"intro": "Les secteurs de conventionnement et la Carte Vitale viennent de l’annuaire de l’Assurance Maladie, pour les praticiens qui ont pu y être rapprochés.",
+			"introAgreement": "Le conventionnement et la Carte Vitale viennent de l’annuaire de l’Assurance Maladie, pour les praticiens qui ont pu y être rapprochés.",
 			"sectorUnknown": "Secteur non connu",
+			"agreementUnknown": "Conventionnement non connu",
 			"carteVitaleYes": "Acceptent la Carte Vitale",
 			"carteVitaleNo": "N’acceptent pas la Carte Vitale",
 			"bookingNotOpen": "Pas encore ouvert",
@@ -1089,7 +1095,7 @@
 		"establishmentsIntro": "Hôpitaux, cliniques et centres de santé où exercent des praticiens inscrits comme {occupation}.",
 		"allSpecialties": "Toutes les spécialités à {place}",
 		"hubMetaTitle": "{count, plural, one {{listing} en France : # praticien · Apercura} many {{listing} en France : # praticiens · Apercura} other {{listing} en France : # praticiens · Apercura}}",
-		"hubMetaDescription": "{count, plural, one {# praticien inscrit comme {occupation} au registre national, par département : adresses, coordonnées, secteurs de conventionnement.} many {# praticiens inscrits comme {occupation} au registre national, par département : adresses, coordonnées, secteurs de conventionnement.} other {# praticiens inscrits comme {occupation} au registre national, par département : adresses, coordonnées, secteurs de conventionnement.}}",
+		"hubMetaDescription": "{count, plural, one {# praticien inscrit comme {occupation} au registre national, par département : adresses, coordonnées, {fees, select, sector {secteurs de conventionnement} other {conventionnement}}.} many {# praticiens inscrits comme {occupation} au registre national, par département : adresses, coordonnées, {fees, select, sector {secteurs de conventionnement} other {conventionnement}}.} other {# praticiens inscrits comme {occupation} au registre national, par département : adresses, coordonnées, {fees, select, sector {secteurs de conventionnement} other {conventionnement}}.}}",
 		"hubTitle": "{listing} en France",
 		"hubLead": "{count, plural, one {Le registre national compte # praticien sous cette rubrique avec un lieu d’exercice en France.} many {Le registre national compte # praticiens sous cette rubrique avec un lieu d’exercice en France.} other {Le registre national compte # praticiens sous cette rubrique avec un lieu d’exercice en France.}}",
 		"departmentsHeading": "{listing} par département",
@@ -1101,7 +1107,7 @@
 	},
 	"Directory": {
 		"metaTitle": "Annuaire des professionnels de santé par lieu · Apercura",
-		"metaDescription": "Chaque département de France avec ses professionnels de santé, d’après le registre national : médecins, chirurgiens-dentistes et sages-femmes.",
+		"metaDescription": "Chaque département de France avec ses professionnels de santé, d’après le registre national : médecins, chirurgiens-dentistes, sages-femmes et infirmiers.",
 		"title": "Annuaire par lieu",
 		"lead": "{count, plural, one {# praticien avec un lieu d’exercice, par département.} many {# praticiens avec un lieu d’exercice, par département.} other {# praticiens avec un lieu d’exercice, par département.}}",
 		"otherRegion": "Autres lieux",
@@ -1155,6 +1161,7 @@
 			"medecin": "Chaque médecin de France a déjà sa page.",
 			"chirurgien-dentiste": "Chaque chirurgien-dentiste de France a déjà sa page.",
 			"sage-femme": "Chaque sage-femme de France a déjà sa page.",
+			"infirmier": "Chaque infirmier libéral a déjà sa page.",
 			"annuaire": "Les professionnels de santé, par spécialité et par lieu."
 		},
 		"footer": "Gratuit · Open source · Ni notes, ni publicité"
@@ -1315,6 +1322,10 @@
 			"2": "Conventionné secteur 1 avec dépassement permanent",
 			"3": "Conventionné secteur 2"
 		},
+		"billingAgreement": {
+			"0": "Non conventionné",
+			"1": "Conventionné"
+		},
 		"optam": {
 			"optam": "Adhérent OPTAM",
 			"optam_aco": "Adhérent OPTAM-ACO"
@@ -1375,7 +1386,10 @@
 			"scaling": "Détartrage",
 			"orthodonticCheckup": "Contrôle d’orthodontie",
 			"pregnancyFollowUp": "Suivi de grossesse",
-			"perinealRehabilitation": "Rééducation du périnée"
+			"perinealRehabilitation": "Rééducation du périnée",
+			"bloodTest": "Prise de sang",
+			"injection": "Injection",
+			"dressing": "Pansement"
 		},
 		"email": {
 			"wordmark": "Apercura",
@@ -2269,7 +2283,7 @@
 				"payments": "Moyens de paiement",
 				"done": "Indiqués",
 				"todo": "À compléter",
-				"deontology": "Article R.4127-53 du code de la santé publique : le médecin qui présente son activité en ligne indique ses honoraires et les moyens de paiement acceptés.",
+				"deontology": "Un professionnel de santé qui présente son activité en ligne indique ses honoraires et les moyens de paiement acceptés (pour les médecins : article R.4127-53 du code de la santé publique).",
 				"editFees": "Indiquer honoraires et moyens de paiement",
 				"settingsNote": "Lieux, horaires et motifs se règlent dans les réglages de prise de rendez-vous.",
 				"waitingPeriod": "Période d’attente après la vérification",
@@ -2339,6 +2353,7 @@
 			"requiredBadge": "Requis pour les rendez-vous",
 			"ameliPrefill": "Pré-rempli d’après l’annuaire de l’Assurance Maladie. Votre déclaration le remplace sur votre page.",
 			"sector": "Secteur de conventionnement",
+			"agreement": "Conventionnement",
 			"notStated": "Non indiqué",
 			"optam": "Dépassements maîtrisés (OPTAM)",
 			"optamNone": "Non adhérent",
@@ -2764,7 +2779,7 @@
 				"noType": "Proposez au moins un motif en ligne.",
 				"noHours": "Ajoutez des horaires d’ouverture ou une ouverture exceptionnelle.",
 				"editPage": "Indiquer honoraires et moyens de paiement",
-				"deontology": "Article R.4127-53 du code de la santé publique : le médecin qui présente son activité en ligne indique ses honoraires et les moyens de paiement acceptés.",
+				"deontology": "Un professionnel de santé qui présente son activité en ligne indique ses honoraires et les moyens de paiement acceptés (pour les médecins : article R.4127-53 du code de la santé publique).",
 				"open": "Ouvrir la prise de rendez-vous en ligne",
 				"pause": "Suspendre la prise de rendez-vous en ligne",
 				"opened": "La prise de rendez-vous en ligne est ouverte. Les patients peuvent réserver sur votre page.",

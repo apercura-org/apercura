@@ -22,7 +22,14 @@ describe("listing index", () => {
 		expect(suggestListings("general pract", "en").map((entry) => entry.slug)).toContain(
 			"medecin-generaliste",
 		);
-		expect(suggestListings("infirmier", "fr")).toEqual([]);
+		const nurses = suggestListings("infirmi", "fr").map((entry) => entry.slug);
+		expect(nurses[0]).toBe("infirmier");
+		expect(nurses).toContain("infirmier-puericulteur");
+		// The retired psychiatric nurse code is not imported: never suggested.
+		expect(nurses).not.toContain("infirmier-psychiatrique");
+		expect(suggestListings("nurse", "en").map((entry) => entry.slug)).toContain("infirmier");
+		// Physiotherapists are mapped but not imported.
+		expect(suggestListings("kine", "fr")).toEqual([]);
 		expect(suggestListings("", "fr")).toEqual([]);
 	});
 
@@ -32,6 +39,8 @@ describe("listing index", () => {
 		expect(resolveListing("General practitioner")).toBe("medecin-generaliste");
 		expect(resolveListing("Chirurgienne-dentiste")).toBe("chirurgien-dentiste");
 		expect(resolveListing("sages-femmes")).toBe("sage-femme");
+		expect(resolveListing("Infirmières")).toBe("infirmier");
+		expect(resolveListing("infirmière puéricultrice")).toBe("infirmier-puericulteur");
 		expect(resolveListing("cardio")).toBeNull();
 		expect(resolveListing("Dupont")).toBeNull();
 	});
