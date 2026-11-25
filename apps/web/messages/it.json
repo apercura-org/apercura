@@ -520,7 +520,7 @@
 		"switchboard": "{phone} (centralino della struttura)",
 		"establishment": "Struttura",
 		"unnamedPlace": "Sede di esercizio",
-		"asideLabel": "Appuntamenti e pagina",
+		"asideLabel": "Informazioni su questa pagina",
 		"action": {
 			"callNotYetOpen": "La prenotazione online non è ancora disponibile per questo professionista. Per fissare un appuntamento, telefoni allo studio.",
 			"establishmentLink": "Contattare la struttura",

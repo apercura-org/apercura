@@ -159,22 +159,23 @@ test("home search, results and an unclaimed practitioner page read in order", as
 		"Médecin généraliste",
 		"Page non réclamée",
 		"Construite à partir du registre public. Le professionnel ne l’a pas encore complétée.",
+		// Patients first: what they can do, then the facts, then what concerns the practitioner.
+		"region, Rendez-vous",
+		"La prise de rendez-vous en ligne n’est pas encore ouverte pour ce professionnel. Pour prendre rendez-vous, appelez le cabinet.",
+		"link, Appeler le 01 99 00 01 01",
 		"region, Profession et qualifications",
 		"region, Lieux d’exercice",
 		"heading, Cabinet Medical de l'Exemple, level 3",
 		"region, Informations pratiques",
 		"region, Honoraires et Assurance Maladie",
-		"complementary, Rendez-vous et page",
-		"region, Rendez-vous",
-		"La prise de rendez-vous en ligne n’est pas encore ouverte pour ce professionnel. Pour prendre rendez-vous, appelez le cabinet.",
-		"link, Appeler le 01 99 00 01 01",
+		"complementary, À propos de cette page",
 		"region, C’est vous ?",
 		"link, Revendiquer cette page",
 		"link, Pas de carte CPS ? Contactez-nous",
 		"link, Vous êtes le titulaire de cette page et ne souhaitez pas apparaître publiquement ? C’est ici",
 		"region, Une erreur ?",
 		"link, Signaler une erreur",
-		"end of complementary, Rendez-vous et page",
+		"end of complementary, À propos de cette page",
 		"end of main",
 	]);
 	expectHeadingOutline(practitioner);
@@ -187,7 +188,7 @@ test("home search, results and an unclaimed practitioner page read in order", as
 	expectFieldRow(practitioner, "Carte Vitale", "Acceptée");
 	// Every page ends with its source and the date of the data, read as a date.
 	expectPhrasesInOrder(practitioner, [
-		"end of complementary, Rendez-vous et page",
+		"end of complementary, À propos de cette page",
 		"Source",
 		"Annuaire Santé, Agence du numérique en santé",
 		"Mise à jour",

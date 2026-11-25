@@ -520,7 +520,7 @@
 		"switchboard": "{phone} (standard de l’établissement)",
 		"establishment": "Établissement",
 		"unnamedPlace": "Lieu d’exercice",
-		"asideLabel": "Rendez-vous et page",
+		"asideLabel": "À propos de cette page",
 		"action": {
 			"callNotYetOpen": "La prise de rendez-vous en ligne n’est pas encore ouverte pour ce professionnel. Pour prendre rendez-vous, appelez le cabinet.",
 			"establishmentLink": "Contacter l’établissement",

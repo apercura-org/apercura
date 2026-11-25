@@ -520,7 +520,7 @@
 		"switchboard": "{phone} (establishment switchboard)",
 		"establishment": "Establishment",
 		"unnamedPlace": "Place of practice",
-		"asideLabel": "Appointments and page",
+		"asideLabel": "About this page",
 		"action": {
 			"callNotYetOpen": "Online booking is not open yet for this practitioner. To make an appointment, call the practice.",
 			"establishmentLink": "Contact the establishment",

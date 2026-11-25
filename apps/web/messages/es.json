@@ -520,7 +520,7 @@
 		"switchboard": "{phone} (centralita del centro)",
 		"establishment": "Centro",
 		"unnamedPlace": "Lugar de ejercicio",
-		"asideLabel": "Citas y página",
+		"asideLabel": "Sobre esta página",
 		"action": {
 			"callNotYetOpen": "La reserva en línea todavía no está abierta para este profesional sanitario. Para pedir cita, llame a la consulta.",
 			"establishmentLink": "Contactar con el centro",

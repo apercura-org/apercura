@@ -520,7 +520,7 @@
 		"switchboard": "{phone} (Zentrale der Einrichtung)",
 		"establishment": "Einrichtung",
 		"unnamedPlace": "Praxisort",
-		"asideLabel": "Termine und Seite",
+		"asideLabel": "Über diese Seite",
 		"action": {
 			"callNotYetOpen": "Für diese Gesundheitsfachkraft ist die Online-Terminbuchung noch nicht geöffnet. Um einen Termin zu vereinbaren, rufen Sie die Praxis an.",
 			"establishmentLink": "Einrichtung kontaktieren",
