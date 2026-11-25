@@ -2,12 +2,14 @@ import { FieldList, FieldRow, linkStyles } from "@apercura/ui";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { BookletPage } from "~/components/booklet-page";
 import { InstitutionalCover, LegalFactRow, ProseSection } from "~/components/institutional";
+import { ImpressumAt } from "~/components/legal-at";
 import { PageGraph } from "~/components/page-graph";
 import { PublicPage } from "~/components/public-page";
 import { Trail } from "~/components/trail";
 import { serverEnv } from "~/env";
+import { marketOf } from "~/i18n/locales";
 import { Link } from "~/i18n/navigation";
-import { institutionalMetadata, localeOf, proseSections } from "~/lib/institutional";
+import { localeOf, marketInstitutionalMetadata, proseSections } from "~/lib/institutional";
 import { LEGAL_TEXTS_REVIEWED, legalFacts } from "~/lib/legal";
 
 export const ensureStatic = "navigation";
@@ -15,7 +17,7 @@ export const ensureStatic = "navigation";
 const HREF = "/mentions-legales" as const;
 
 export function generateMetadata({ params }: PageProps<"/[locale]/mentions-legales">) {
-	return institutionalMetadata(params, "LegalPage", HREF);
+	return marketInstitutionalMetadata(params, { FR: "LegalPage", AT: "ImpressumAt" }, HREF);
 }
 
 /**
@@ -26,6 +28,8 @@ export function generateMetadata({ params }: PageProps<"/[locale]/mentions-legal
 export default async function LegalPage({ params }: PageProps<"/[locale]/mentions-legales">) {
 	const locale = await localeOf(params);
 	setRequestLocale(locale);
+	// Austria's page has texts of its own, written for Austrian law.
+	if (marketOf(locale) === "AT") return <ImpressumAt locale={locale} />;
 	const t = await getTranslations({ locale, namespace: "LegalPage" });
 	const tI = await getTranslations({ locale, namespace: "Institutional" });
 	const section = await proseSections(locale, "LegalPage");

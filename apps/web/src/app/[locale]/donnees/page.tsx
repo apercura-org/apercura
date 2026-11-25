@@ -9,11 +9,13 @@ import {
 	type ProseContent,
 	ProseSection,
 } from "~/components/institutional";
+import { DataAt } from "~/components/legal-at";
 import { PageGraph } from "~/components/page-graph";
 import { PublicPage } from "~/components/public-page";
 import { Trail } from "~/components/trail";
+import { marketOf } from "~/i18n/locales";
 import type { Locale } from "~/i18n/routing";
-import { institutionalMetadata, localeOf } from "~/lib/institutional";
+import { localeOf, marketInstitutionalMetadata } from "~/lib/institutional";
 import { LINKS } from "~/lib/links";
 import { getRegistryStatus, type RegistryFile } from "~/server/queries/registry";
 import { TRPCReactProvider } from "~/trpc/client";
@@ -63,12 +65,14 @@ function formatDate(date: string, locale: Locale) {
 }
 
 export function generateMetadata({ params }: PageProps<"/[locale]/donnees">) {
-	return institutionalMetadata(params, "DataPage", HREF);
+	return marketInstitutionalMetadata(params, { FR: "DataPage", AT: "DataAt" }, HREF);
 }
 
 export default async function DataPage({ params }: PageProps<"/[locale]/donnees">) {
 	const locale = await localeOf(params);
 	setRequestLocale(locale);
+	// Austria's page has texts of its own, written for Austrian law.
+	if (marketOf(locale) === "AT") return <DataAt locale={locale} />;
 	const t = await getTranslations({ locale, namespace: "DataPage" });
 	const tSite = await getTranslations({ locale, namespace: "Site" });
 	const registry = await getRegistryStatus();

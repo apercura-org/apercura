@@ -4,7 +4,8 @@
  *
  * Only an allowlist of internal practitioner-space paths is accepted, parsed
  * into a typed route (never echoed back as a raw string), so the parameter
- * can never become an open redirect: the claim of one RPPS, or one team
+ * can never become an open redirect: the claim of one page (an RPPS in France, a list key such
+ * as `w7983` in Austria, see ~/lib/practitioner-ref), or one team
  * invitation (an invited person creates their account first).
  */
 
@@ -20,7 +21,8 @@ const CLAIM =
 	/^(?:\/en)?\/pro\/revendiquer\/([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})$/;
 const INVITATION =
 	/^(?:\/en)?\/pro\/invitation\/([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})$/;
-const RPPS = /^\d{11}$/;
+/** A practitioner reference: an RPPS (France) or a regional list key (Austria, `w7983`). */
+const RPPS = /^(?:\d{11}|[a-z]{1,2}[1-9]\d{0,8})$/;
 
 /** The allowlisted route a `?suite=` value designates, or null for anything else. */
 export function parseReturnTo(raw: unknown): ReturnTo | null {

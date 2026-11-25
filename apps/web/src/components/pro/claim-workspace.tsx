@@ -1,5 +1,6 @@
 "use client";
 
+import { countryAdapter } from "@apercura/core/country";
 import {
 	Badge,
 	Button,
@@ -433,7 +434,10 @@ function ClaimStatus({ data }: { data: ClaimData }) {
 					<h2 id="claim-verified" className="type-title text-ink">
 						{t("status.verified")}
 					</h2>
-					{claim.bookingOpensAt && new Date(claim.bookingOpensAt) > new Date() ? (
+					{/* Only where the practitioner's market has booking (none in Austria). */}
+					{countryAdapter(data.practitioner.country).features.booking &&
+					claim.bookingOpensAt &&
+					new Date(claim.bookingOpensAt) > new Date() ? (
 						<p className="max-w-[60ch] text-body text-ink">
 							{t("status.bookingDelay", {
 								date: format.dateTime(new Date(claim.bookingOpensAt), { dateStyle: "long" }),

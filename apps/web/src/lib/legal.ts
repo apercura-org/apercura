@@ -51,6 +51,14 @@ export const ACCESSIBILITY_STATEMENT_DATE = "2026-11-22";
 
 export const placeholderOf = (fact: LegalFact) => `{{${FACTS[fact][1]}}}`;
 
+/**
+ * The publisher's VAT identification number, or null. Printed only where it exists (the
+ * Austrian legal notice, ECG § 5 (1) 6: "sofern vorhanden"), never as a placeholder.
+ */
+export function publisherVatId(env: Partial<Pick<ServerEnv, "LEGAL_PUBLISHER_VAT_ID">>) {
+	return env.LEGAL_PUBLISHER_VAT_ID?.trim() || null;
+}
+
 export type LegalValue = { value: string; missing: boolean };
 
 /** Every legal fact, configured or as its placeholder. The host falls back to PUBLIC_HDS_HOST. */

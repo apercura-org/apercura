@@ -9,6 +9,7 @@ import { Link } from "~/i18n/navigation";
 import type { Locale } from "~/i18n/routing";
 import { getTaxonomyLabels } from "~/lib/labels";
 import { NO_INDEX, resolveLocale } from "~/lib/locale";
+import { practitionerRefOf } from "~/lib/practitioner-ref";
 import { PRO_ROUTES } from "~/lib/pro-routes";
 import { requirePlatformAdminPage } from "~/server/auth/admin-guard";
 import { caller } from "~/trpc/server";
@@ -42,7 +43,11 @@ async function Queue({ locale }: { locale: Locale }) {
 			...claim,
 			lastName: formatPersonName(claim.lastName, { familyName: true }),
 		}),
-		rpps: claim.nationalId,
+		// An RPPS in France; the list and its key elsewhere (`Vienna list w7983`).
+		rpps:
+			claim.idScheme === "RPPS"
+				? claim.nationalId
+				: `${tClaim(`identifiers.${claim.idScheme as "AT-WIEN"}`)} ${practitionerRefOf(claim)}`,
 		email: claim.email,
 		contest: claim.contest,
 		proofs: METHODS.filter((method) => claim.methods?.[method]).map((method) =>
@@ -84,7 +89,7 @@ async function Queue({ locale }: { locale: Locale }) {
 									</p>
 									<FieldList>
 										<FieldRow
-											label={tP("rpps")}
+											label={t("claims.identifier")}
 											value={<span className="tabular">{row.rpps}</span>}
 											emptyLabel={empty}
 										/>

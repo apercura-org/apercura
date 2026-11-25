@@ -45,3 +45,16 @@ describe("return after sign-in", () => {
 		}
 	});
 });
+
+describe("returning to an Austrian claim", () => {
+	it("accepts a list key, never anything that looks like a path", () => {
+		expect(parseReturnTo("/pro/revendiquer?rpps=w7983")).toEqual({
+			pathname: "/pro/revendiquer",
+			query: { rpps: "w7983" },
+		});
+		expect(parseReturnTo("/pro/revendiquer?rpps=st45")?.pathname).toBe("/pro/revendiquer");
+		expect(parseReturnTo("/pro/revendiquer?rpps=w0")).toBeNull();
+		expect(parseReturnTo("/pro/revendiquer?rpps=w7983/..")).toBeNull();
+		expect(parseReturnTo("/pro/revendiquer?rpps=abc7983")).toBeNull();
+	});
+});

@@ -7,11 +7,13 @@ import {
 	LegalFactRow,
 	ProseSection,
 } from "~/components/institutional";
+import { AccessibilityAt } from "~/components/legal-at";
 import { PageGraph } from "~/components/page-graph";
 import { PublicPage } from "~/components/public-page";
 import { Trail } from "~/components/trail";
 import { serverEnv } from "~/env";
-import { institutionalMetadata, localeOf, proseSections } from "~/lib/institutional";
+import { marketOf } from "~/i18n/locales";
+import { localeOf, marketInstitutionalMetadata, proseSections } from "~/lib/institutional";
 import { ACCESSIBILITY_STATEMENT_DATE, legalFacts } from "~/lib/legal";
 import { LINKS } from "~/lib/links";
 
@@ -20,7 +22,11 @@ export const ensureStatic = "navigation";
 const HREF = "/accessibilite" as const;
 
 export function generateMetadata({ params }: PageProps<"/[locale]/accessibilite">) {
-	return institutionalMetadata(params, "AccessibilityPage", HREF);
+	return marketInstitutionalMetadata(
+		params,
+		{ FR: "AccessibilityPage", AT: "AccessibilityAt" },
+		HREF,
+	);
 }
 
 /**
@@ -31,6 +37,8 @@ export function generateMetadata({ params }: PageProps<"/[locale]/accessibilite"
 export default async function AccessibilityPage({ params }: PageProps<"/[locale]/accessibilite">) {
 	const locale = await localeOf(params);
 	setRequestLocale(locale);
+	// Austria's page has texts of its own, written for Austrian law.
+	if (marketOf(locale) === "AT") return <AccessibilityAt locale={locale} />;
 	const t = await getTranslations({ locale, namespace: "AccessibilityPage" });
 	const tSite = await getTranslations({ locale, namespace: "Site" });
 	const tI = await getTranslations({ locale, namespace: "Institutional" });
