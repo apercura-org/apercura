@@ -220,11 +220,12 @@ slug=$(db_psql -tA -c "SELECT slug FROM directory.practitioner_pages WHERE index
 test -n "$slug"
 curl -fsS "$base/fr/praticien/$slug" | grep -q "<h1"
 curl -fsS "$base/fr/mentions-legales" | grep -q "$publisher"
+curl -fsS "$base/fr/guides/medecin-traitant" | grep -q "<h1"
 curl -fsS "$base/.well-known/security.txt" | grep -q "^Contact: mailto:contact@example.test"
 # The colour theme's script, loaded by every page's <head> (a missing file would leave the theme control dead).
 curl -fsS "$base/theme.js" | grep -q "apercura-theme"
 curl -fsS "$base/fr" | grep -q '<script src="/theme.js"></script>'
-echo "home, /fr, /fr-en, /fr/praticien/$slug, the legal notice, security.txt, /theme.js and /api/health: OK"
+echo "home, /fr, /fr-en, /fr/praticien/$slug, the legal notice, a guide, security.txt, /theme.js and /api/health: OK"
 
 step "Open Graph images render in the app container (their fonts ship with the build)"
 # 200 and a PNG: a font missing from the standalone output answers 500.
@@ -239,7 +240,8 @@ og_image() {
 }
 og_image /og/medecin.png
 og_image "/og/praticien/$slug.png"
-echo "/og/medecin.png and /og/praticien/$slug.png: OK"
+og_image /og/guides/medecin-traitant.png
+echo "/og/medecin.png, /og/praticien/$slug.png and /og/guides/medecin-traitant.png: OK"
 
 step "Scheduled jobs run in the scheduler"
 compose exec -T scheduler apercura jobs:tick | grep '"job":"tick"'

@@ -29,6 +29,7 @@
 		"footerNav": {
 			"label": "Informazioni su Apercura",
 			"directory": "Elenco",
+			"guides": "Guide",
 			"about": "Informazioni",
 			"openSource": "Open source",
 			"data": "Dati e fonti",
@@ -3388,5 +3389,44 @@
 			"lead": "Mi trovi su",
 			"brand": "Apercura"
 		}
+	},
+	"Guides": {
+		"metaTitle": "Guide pratiche sull’assistenza sanitaria in Francia · Apercura",
+		"metaDescription": "Guide chiare e con fonti: medico di base, settori e supplementi, carte Vitale, dentista, infermiere a domicilio, gravidanza, urgenze.",
+		"title": "Guide",
+		"lead": "Spiegazioni brevi e verificate per trovare il professionista sanitario giusto e capire cosa viene rimborsato. Ogni guida cita le sue fonti ufficiali e la data della loro ultima verifica.",
+		"frenchOnly": "Queste guide sono scritte in francese.",
+		"categories": {
+			"patients": {
+				"label": "Pazienti",
+				"heading": "Per i pazienti",
+				"intro": "Scegliere un professionista, capire tariffe e rimborsi, sapere chi chiamare."
+			},
+			"professionnels": {
+				"label": "Professionisti",
+				"heading": "Per i professionisti sanitari",
+				"intro": "La vostra pagina su Apercura: rivendicarla, correggerla o farla rimuovere."
+			}
+		},
+		"toc": "Sommario",
+		"sourcesHeading": "Fonti",
+		"sourcesIntro": "Le informazioni di questa guida provengono da queste pagine ufficiali. La data indica il giorno in cui abbiamo verificato ciascuna di esse.",
+		"sourceChecked": "consultata il {date}",
+		"updated": "Aggiornata il {date}",
+		"byline": "Redatta dalla redazione di Apercura",
+		"editorialTeam": "Redazione di Apercura",
+		"readingTime": "{minutes} min di lettura",
+		"disclaimer": "Questa guida fornisce informazioni generali. Non sostituisce il parere di un professionista sanitario né le informazioni della vostra cassa di assicurazione malattia.",
+		"emergencyTitle": "In caso di urgenza",
+		"emergencyBody": "Urgenza vitale: chiamate il 15 (SAMU) o il 112. Persone sorde, con problemi di udito o afasiche: 114, via SMS, app, videochiamata o chat. La sera, la notte, nel fine settimana e nei giorni festivi, quando il vostro medico non è raggiungibile: 116 117 o 15, a seconda della regione.",
+		"relatedHeading": "Guide utili",
+		"otherGuides": "Altre guide",
+		"allGuides": "Tutte le guide",
+		"findPractitioners": "Trovare un professionista",
+		"imprintSource": "Redazione",
+		"imprintUpdated": "Aggiornata",
+		"imprintReviewed": "Verificata",
+		"ogRunningHead": "Guide · Elenco aperto dei professionisti sanitari",
+		"ogFooter": "Fonti ufficiali · Aggiornata il {date}"
 	}
 }

@@ -6,12 +6,14 @@ import { notFound } from "next/navigation";
 import { hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { BookletPage } from "~/components/booklet-page";
+import { RelatedGuides } from "~/components/guides";
 import { JsonLd } from "~/components/json-ld";
 import { CountLinks, ListingFacts, ListingSection, ListingTitle } from "~/components/listing";
 import { PublicPage } from "~/components/public-page";
 import { Trail, type TrailItem, trailEntries } from "~/components/trail";
 import { getPathname, type Href, Link } from "~/i18n/navigation";
 import { type Locale, routing } from "~/i18n/routing";
+import { guidesForListing } from "~/lib/guides/catalog";
 import { getTaxonomyLabels, inSentence } from "~/lib/labels";
 import { placeLabel } from "~/lib/places";
 import { CONTENT_LANGUAGES, DESCRIPTION_MAX, fitText, pageMetadata, pickTitle } from "~/lib/seo";
@@ -158,6 +160,8 @@ export default async function SpecialtyHub({ params }: Props) {
 						{t("browseDirectory")}
 					</Link>
 				</p>
+
+				<RelatedGuides locale={locale} guides={guidesForListing(listingSlug)} />
 			</BookletPage>
 		</PublicPage>
 	);

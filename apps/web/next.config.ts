@@ -19,6 +19,10 @@ const nextConfig: NextConfig = {
 	outputFileTracingIncludes: {
 		"/og/**": OG_FONT_FILES.map((file) => `./${file}`),
 	},
+	// The guides (content/guides/*.md) are imported as their text and parsed at build time.
+	turbopack: {
+		rules: { "*.md": { type: "text" } },
+	},
 	reactStrictMode: true,
 	poweredByHeader: false,
 	transpilePackages: ["@apercura/core", "@apercura/db", "@apercura/ui"],

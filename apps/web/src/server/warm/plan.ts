@@ -3,11 +3,12 @@
  * resumes, its settings and the requests it sends. `./run` executes it (`jobs:tick warm`).
  *
  * The walk is the sitemaps' (`~/server/queries/sitemap-sql`, the same queries), split in
- * units: `pages` first (the home pages, the static pages and the sitemap files themselves),
+ * units: `pages` first (the home pages, the static pages, the guides and the sitemap files),
  * then each sitemap chunk, listings and place hubs before establishments and practitioners
  * (fewer pages, more visits each). A cursor is a unit key and an offset in its URL list.
  */
 import { FRANCE_SEGMENT } from "~/i18n/locales";
+import { guidePaths } from "~/lib/guides/catalog";
 import { francePath, STATIC_PATHS } from "~/lib/sitemap-xml";
 import type { SitemapChunk, SitemapKind } from "~/server/queries/sitemap-sql";
 
@@ -42,13 +43,15 @@ export const chunkFile = (kind: SitemapKind, chunk: number) =>
 	`/sitemaps/${FRANCE_SEGMENT}/${kind}-${chunk}.xml`;
 
 /**
- * The `pages` unit: the international home, France's static pages, then the sitemap index and
- * every sitemap file (crawlers fetch them too).
+ * The `pages` unit: the international home, France's static pages and guides (as the
+ * `pages-0.xml` sitemap lists them), then the sitemap index and every sitemap file (crawlers
+ * fetch them too).
  */
 export function pagesPaths(chunks: readonly SitemapChunk[]): string[] {
 	return [
 		"/",
 		...STATIC_PATHS.map(francePath),
+		...guidePaths().map((guide) => francePath(guide.path)),
 		"/sitemap.xml",
 		"/sitemaps/international.xml",
 		`/sitemaps/${FRANCE_SEGMENT}/pages-0.xml`,
