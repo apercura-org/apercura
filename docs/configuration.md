@@ -142,7 +142,7 @@ and every document or message they decrypt is written to
 
 | Variable                     | Role                                                                                                                        |
 | ---------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
-| `VERIFY_IMAGE`               | PostGIS image `scripts/verify-backup.sh` restores into (default `postgis/postgis:17-3.5`).                                  |
+| `VERIFY_IMAGE`               | PostGIS image `scripts/verify-backup.sh` restores into (default `postgis/postgis:17-3.7`).                                  |
 | `VERIFY_PLATFORM`            | Platform of that image (default `linux/amd64`, the only one PostGIS publishes).                                             |
 | `VERIFY_MIN_PRACTITIONERS`   | Fewest practitioners a restored dump must hold (default 1; 0 for a dump taken before the first import).                     |
 | `VERIFY_EXPECTED_MIGRATIONS` | Migrations the restored dump must record (default: those of the checkout).                                                  |
