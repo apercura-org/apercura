@@ -59,8 +59,8 @@
 		"submit": "Suchen"
 	},
 	"HomePage": {
-		"title": "Apercura",
-		"hook": "Finden Sie jede Gesundheitsfachkraft in Frankreich: Alle haben bereits eine Seite.",
+		"title": "Finden Sie eine Gesundheitsfachkraft in Frankreich",
+		"hook": "Alle Ärzte, Zahnärzte, Hebammen und freiberuflichen Pflegekräfte haben bereits eine eigene Seite.",
 		"specimen": {
 			"heading": "Jede Gesundheitsfachkraft hat bereits eine Seite",
 			"intro": "So sieht eine Seite aus, wie das nationale Register sie befüllt, bevor die Gesundheitsfachkraft sie beansprucht: Bekannte Felder sind ausgefüllt, bei den anderen steht klar, dass sie nicht angegeben sind."

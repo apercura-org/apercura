@@ -92,7 +92,7 @@ test("home search, results and an unclaimed practitioner page read in order", as
 		"banner",
 		"navigation, Principale",
 		"main",
-		"heading, Apercura, level 1",
+		"heading, Trouvez un professionnel de santé en France, level 1",
 		"search, Trouver un professionnel de santé",
 		// Plain search fields until first used: the suggestions load then (DeferredSearchForm).
 		/^searchbox, Qui \?/,

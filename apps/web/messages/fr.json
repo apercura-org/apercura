@@ -59,8 +59,8 @@
 		"submit": "Chercher"
 	},
 	"HomePage": {
-		"title": "Apercura",
-		"hook": "Trouvez n’importe quel professionnel de santé en France : chacun a déjà sa page.",
+		"title": "Trouvez un professionnel de santé en France",
+		"hook": "Chaque médecin, dentiste, sage-femme et infirmier libéral a déjà sa page.",
 		"specimen": {
 			"heading": "Chaque professionnel a déjà sa page",
 			"intro": "Voici une page telle que le registre national la remplit, avant que le professionnel la réclame : les champs connus sont remplis, les autres disent qu’ils ne sont pas renseignés."

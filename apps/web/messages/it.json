@@ -59,8 +59,8 @@
 		"submit": "Ricerca"
 	},
 	"HomePage": {
-		"title": "Apercura",
-		"hook": "Trovi qualsiasi professionista sanitario in Francia: ognuno di loro ha già una pagina.",
+		"title": "Trovi un professionista sanitario in Francia",
+		"hook": "Ogni medico, dentista, ostetrica e infermiere libero professionista ha già la sua pagina.",
 		"specimen": {
 			"heading": "Ogni professionista ha già una pagina",
 			"intro": "Questa è una pagina così come la compila il registro nazionale, prima che il professionista la rivendichi: i campi noti sono compilati, gli altri indicano chiaramente che non sono forniti."

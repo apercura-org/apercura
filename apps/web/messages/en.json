@@ -59,8 +59,8 @@
 		"submit": "Search"
 	},
 	"HomePage": {
-		"title": "Apercura",
-		"hook": "Find any health practitioner in France: every one of them already has a page.",
+		"title": "Find a health practitioner in France",
+		"hook": "Every doctor, dentist, midwife and self-employed nurse already has a page.",
 		"specimen": {
 			"heading": "Every practitioner already has a page",
 			"intro": "This is a page as the national register fills it, before the practitioner claims it: known fields are filled, the others say plainly that they are not provided."

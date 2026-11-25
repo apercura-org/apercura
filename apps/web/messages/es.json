@@ -59,8 +59,8 @@
 		"submit": "Buscar"
 	},
 	"HomePage": {
-		"title": "Apercura",
-		"hook": "Encuentre a cualquier profesional sanitario de Francia: todos ya tienen una página.",
+		"title": "Encuentre un profesional sanitario en Francia",
+		"hook": "Cada médico, dentista, matrona y enfermero autónomo ya tiene su página.",
 		"specimen": {
 			"heading": "Todos los profesionales sanitarios ya tienen una página",
 			"intro": "Esta es una página tal como la rellena el registro nacional, antes de que el profesional sanitario la reclame: los campos conocidos están completos y los demás indican claramente que no se han facilitado."
