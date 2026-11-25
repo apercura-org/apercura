@@ -282,7 +282,10 @@ for (const expected of PAGES) {
 		// Open Graph and Twitter cards.
 		expect(page.meta("og:locale")).toEqual([OG_LOCALES[expected.lang ?? "fr"]]);
 		expect(page.meta("og:site_name")).toEqual(["Apercura"]);
-		expect(page.meta("og:image")[0]).toMatch(new RegExp(`^${origin}/og/[a-z-]+\\.png$`));
+		// A practitioner page shows its own card (`/og/praticien/{slug}.png`), others a generic image.
+		expect(page.meta("og:image")[0]).toMatch(
+			new RegExp(`^${origin}/og/(?:praticien/[a-z0-9-]+|[a-z-]+)\\.png$`),
+		);
 		expect(page.meta("twitter:card")).toEqual(["summary_large_image"]);
 
 		// One JSON-LD graph (client navigation may keep another route in a hidden

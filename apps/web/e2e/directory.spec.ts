@@ -86,10 +86,13 @@ test("a nurse's page states the agreement without a sector or OPTAM", async ({ p
 	const data = jsonLd.flatMap((text) => JSON.parse(text)["@graph"]);
 	const person = data.find((item) => item["@type"] === "Person");
 	expect(person.hasOccupation.occupationalCategory).toBe("2221");
-	await expect(page.locator('meta[property="og:image"]')).toHaveAttribute(
+	// The practitioner's own card first, the profession's image as the fallback.
+	const images = page.locator('meta[property="og:image"]');
+	await expect(images.first()).toHaveAttribute(
 		"content",
-		/\/og\/infirmier\.png$/,
+		/\/og\/praticien\/pauline-soignante-\d+\.png$/,
 	);
+	await expect(images.nth(1)).toHaveAttribute("content", /\/og\/infirmier\.png$/);
 
 	await page.goto(NURSE_LANDING);
 	await expect(page.getByRole("link", { name: "Pauline Soignante" })).toBeVisible();

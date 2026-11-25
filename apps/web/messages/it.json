@@ -1200,7 +1200,12 @@
 			"infirmier": "Ogni infermiere libero professionista in Francia ha già una pagina.",
 			"annuaire": "Professionisti sanitari, per specializzazione e per luogo."
 		},
-		"footer": "Gratuito · Open source · Niente valutazioni né pubblicità"
+		"footer": "Gratuito · Open source · Niente valutazioni né pubblicità",
+		"practitioner": {
+			"folio": "RPPS {rpps}",
+			"alt": "{name}, {occupation}, {place}",
+			"altNoPlace": "{name}, {occupation}"
+		}
 	},
 	"taxonomy": {
 		"profession": {

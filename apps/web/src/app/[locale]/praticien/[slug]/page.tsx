@@ -42,6 +42,7 @@ import { absoluteUrl, siteOrigin } from "~/lib/site-url";
 import { slotParts, slotTime } from "~/lib/slot-format";
 import { breadcrumbNode, graph, ids, practitionerNodes, webPageNode } from "~/lib/structured-data";
 import { databaseAvailable } from "~/server/db";
+import { practitionerOgImageOf } from "~/server/og/practitioner-image";
 import {
 	getPractitionerPage,
 	type PractitionerPage as PractitionerPageData,
@@ -148,6 +149,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 		),
 		indexable: page.indexable,
 		image: ogImageOf(payload.professionCode),
+		// The practitioner's own card first; the profession's image as the fallback.
+		ownImage: (await practitionerOgImageOf(payload.nationalId, page.slug)) ?? undefined,
 		type: "profile",
 	});
 }

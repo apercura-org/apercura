@@ -1,14 +1,13 @@
-import { readFile } from "node:fs/promises";
-import { join } from "node:path";
 import { paletteHex } from "@apercura/ui/tokens";
 import { ImageResponse } from "next/og";
 import { getTranslations } from "next-intl/server";
+import { ogFonts } from "~/server/og/fonts";
 
 /**
- * One static Open Graph image per profession (and one for listings), never one
- * per page: `/og/medecin.png`, `/og/chirurgien-dentiste.png`,
- * `/og/sage-femme.png`, `/og/infirmier.png`, `/og/annuaire.png`. Prerendered
- * at build time.
+ * One static Open Graph image per profession (and one for listings):
+ * `/og/medecin.png`, `/og/chirurgien-dentiste.png`, `/og/sage-femme.png`,
+ * `/og/infirmier.png`, `/og/annuaire.png`. Prerendered at build time. Practitioner
+ * pages have their own (`/og/praticien/{slug}.png`), with these as the fallback.
  */
 const IMAGES = ["medecin", "chirurgien-dentiste", "sage-femme", "infirmier", "annuaire"] as const;
 type ImageName = (typeof IMAGES)[number];
@@ -26,23 +25,13 @@ const {
 	ruleSoft: RULE,
 } = paletteHex;
 
-/** Static Archivo cuts (the variable fonts are WOFF2 only, which the image renderer cannot read). */
-async function font(weight: 500 | 600) {
-	return readFile(
-		join(
-			process.cwd(),
-			`node_modules/@fontsource/archivo/files/archivo-latin-${weight}-normal.woff`,
-		),
-	);
-}
-
 export async function GET(_request: Request, { params }: RouteContext<"/og/[image]">) {
 	const { image } = await params;
 	const name = image.replace(/\.png$/, "") as ImageName;
 	if (!IMAGES.includes(name)) return new Response("Not found", { status: 404 });
 	// Shared on French search results and social networks: printed in French.
 	const t = await getTranslations({ locale: "fr", namespace: "OgImage" });
-	const [medium, semibold] = await Promise.all([font(500), font(600)]);
+	const fonts = await ogFonts();
 	return new ImageResponse(
 		<div
 			style={{
@@ -112,10 +101,7 @@ export async function GET(_request: Request, { params }: RouteContext<"/og/[imag
 		{
 			width: 1200,
 			height: 630,
-			fonts: [
-				{ name: "Archivo", data: medium, weight: 500, style: "normal" },
-				{ name: "Archivo", data: semibold, weight: 600, style: "normal" },
-			],
+			fonts,
 		},
 	);
 }

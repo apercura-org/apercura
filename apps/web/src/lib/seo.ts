@@ -42,6 +42,13 @@ export function ogImageOf(professionCode: string): OgImage {
 
 export const ogImageUrl = (image: OgImage) => `${siteOrigin()}/og/${image}.png`;
 
+/** The Open Graph image of one practitioner page (`app/og/praticien/[file]`). */
+export const practitionerOgImageUrl = (slug: string) =>
+	`${siteOrigin()}/og/praticien/${encodeURIComponent(slug)}.png`;
+
+/** A page's own Open Graph image, shown before its generic one (`image`). */
+export type OwnOgImage = { url: string; alt: string };
+
 /**
  * Ownership tokens of Google Search Console and Bing Webmaster Tools, as `<meta>` tags
  * (`google-site-verification`, `msvalidate.01`) on every page; nothing when unset. Static pages
@@ -91,6 +98,8 @@ export type PageMetadataInput = {
 	/** Indexing rule of the page; English pages are never indexed in v1 (`robotsFor`). */
 	indexable: boolean;
 	image?: OgImage;
+	/** The page's own image (a practitioner's card), with `image` as the fallback. */
+	ownImage?: OwnOgImage;
 	type?: "website" | "profile";
 	/** hreflang alternates (absolute URLs by language tag), printed only on an indexed page. */
 	languages?: Record<string, string>;
@@ -129,6 +138,7 @@ export async function pageMetadata(input: PageMetadataInput): Promise<Metadata> 
 		description: input.description,
 		robots: robotsFor(input.locale, input.indexable),
 		image: input.image,
+		ownImage: input.ownImage,
 		type: input.type,
 		languages: indexed ? input.languages : undefined,
 	});
@@ -145,6 +155,7 @@ export async function documentMetadata(input: {
 	description: string;
 	robots: Metadata["robots"];
 	image?: OgImage;
+	ownImage?: OwnOgImage;
 	type?: "website" | "profile";
 	languages?: Record<string, string>;
 }): Promise<Metadata> {
@@ -158,6 +169,10 @@ export async function documentMetadata(input: {
 		alt: tImage(`titles.${name}`),
 		type: "image/png",
 	};
+	// Crawlers take the first image they can read: the page's own, else the generic one.
+	const images = input.ownImage
+		? [{ ...image, url: input.ownImage.url, alt: input.ownImage.alt }, image]
+		: [image];
 	return {
 		title: input.title,
 		description: input.description,
@@ -173,13 +188,13 @@ export async function documentMetadata(input: {
 			description: input.description,
 			siteName: BRAND,
 			locale: input.ogLocale,
-			images: [image],
+			images,
 		},
 		twitter: {
 			card: "summary_large_image",
 			title: input.title,
 			description: input.description,
-			images: [image.url],
+			images: [images[0]?.url ?? image.url],
 		},
 	};
 }

@@ -1200,7 +1200,12 @@
 			"infirmier": "Chaque infirmier libéral a déjà sa page.",
 			"annuaire": "Les professionnels de santé, par spécialité et par lieu."
 		},
-		"footer": "Gratuit · Open source · Ni notes, ni publicité"
+		"footer": "Gratuit · Open source · Ni notes, ni publicité",
+		"practitioner": {
+			"folio": "RPPS {rpps}",
+			"alt": "{name}, {occupation}, {place}",
+			"altNoPlace": "{name}, {occupation}"
+		}
 	},
 	"taxonomy": {
 		"profession": {
