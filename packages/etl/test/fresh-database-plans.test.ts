@@ -18,7 +18,7 @@ import { ORPHANED_PAGES_QUERY, orphanedPages, recomputeDerived } from "../src/me
 
 const url = process.env.ETL_TEST_DATABASE_URL;
 
-const ctx = { runId: 0, professions: ["10"], department: null };
+const ctx = { runId: 0, country: "FR", professions: ["10"], department: null };
 
 /** The directory tables these queries read. */
 const TABLES = ["practitioners", "activities", "sites", "landing_pages", "suppressions"];
@@ -234,7 +234,9 @@ describe.skipIf(!url)("post-merge queries on a fresh database", () => {
 				) pairs
 				WHERE place_id % 10 <> 0
 			`;
-			const plan = await tx.unsafe<{ "QUERY PLAN": string }[]>(`EXPLAIN ${ORPHANED_PAGES_QUERY}`);
+			const plan = await tx.unsafe<{ "QUERY PLAN": string }[]>(`EXPLAIN ${ORPHANED_PAGES_QUERY}`, [
+				"FR",
+			]);
 			expect(plan.map((line) => line["QUERY PLAN"]).join("\n")).not.toMatch(/SubPlan/);
 			started = performance.now();
 			const orphans = await orphanedPages(tx);

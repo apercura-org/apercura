@@ -7,6 +7,9 @@
  */
 import { buildAccentDictionary, formatStreetText, restoreOwnNameAccents } from "@apercura/core";
 import {
+	AT_PROFESSIONS,
+	AT_SPECIALTIES,
+	atListingSlugFor,
 	FR_AMELI_SPECIALTY_SLUGS,
 	FR_PROFESSIONS,
 	FR_SPECIALTIES,
@@ -16,6 +19,8 @@ import type { TransactionSql } from "./lib/db";
 
 export type MergeContext = {
 	runId: number;
+	/** The market the run imports (`FR`, `AT`): it never writes another market's rows. */
+	country: string;
 	professions: string[];
 	department: string | null;
 };
@@ -73,16 +78,26 @@ export async function analyzeTables(tx: TransactionSql, tables: readonly string[
 	await tx.unsafe(`ANALYZE ${tables.join(", ")}`);
 }
 
-/** Rewrites the taxonomy mirror tables from `@apercura/core/taxonomy`. */
+/**
+ * Rewrites the taxonomy mirror tables from `@apercura/core/taxonomy`, for every
+ * market (profession codes never collide: `10`… in France, `ARZT` in Austria),
+ * so an import of one market keeps the other's rows.
+ */
 export async function syncTaxonomy(tx: TransactionSql): Promise<void> {
 	const listing: { profession_code: string; specialty_code: string; listing_slug: string }[] = [];
-	for (const code of Object.keys(FR_PROFESSIONS)) {
-		const none = listingSlugFor(code, null);
-		if (none) listing.push({ profession_code: code, specialty_code: "", listing_slug: none });
-		for (const specialty of Object.keys(FR_SPECIALTIES)) {
-			const slug = listingSlugFor(code, specialty);
-			if (slug)
-				listing.push({ profession_code: code, specialty_code: specialty, listing_slug: slug });
+	const markets = [
+		{ professions: FR_PROFESSIONS, specialties: FR_SPECIALTIES, slugFor: listingSlugFor },
+		{ professions: AT_PROFESSIONS, specialties: AT_SPECIALTIES, slugFor: atListingSlugFor },
+	];
+	for (const { professions, specialties, slugFor } of markets) {
+		for (const code of Object.keys(professions)) {
+			const none = slugFor(code, null);
+			if (none) listing.push({ profession_code: code, specialty_code: "", listing_slug: none });
+			for (const specialty of Object.keys(specialties)) {
+				const slug = slugFor(code, specialty);
+				if (slug)
+					listing.push({ profession_code: code, specialty_code: specialty, listing_slug: slug });
+			}
 		}
 	}
 	const ameli = Object.entries(FR_AMELI_SPECIALTY_SLUGS).flatMap(([code, slugs]) =>
@@ -132,7 +147,7 @@ export async function stageSites(
 	await tx`
 		UPDATE run_sites rs SET place_id = p.id
 		FROM directory.places p
-		WHERE p.kind IN ('commune', 'arrondissement') AND p.code = rs.commune_code
+		WHERE p.country = 'FR' AND p.kind IN ('commune', 'arrondissement') AND p.code = rs.commune_code
 			AND p.removed_at IS NULL
 	`;
 	// 2. A whole PLM city (75056, 69123, 13055): its arrondissement by postcode.
@@ -165,8 +180,8 @@ export async function stageSites(
 						THEN min(p.id) FILTER (WHERE directory.match_key(p.name) = directory.match_key(rs.commune_label))
 				END AS place_id
 			FROM run_sites rs
-			JOIN directory.places p ON p.kind IN ('commune', 'arrondissement') AND p.removed_at IS NULL
-				AND p.postcodes @> ARRAY[rs.postcode]
+			JOIN directory.places p ON p.country = 'FR' AND p.kind IN ('commune', 'arrondissement')
+				AND p.removed_at IS NULL AND p.postcodes @> ARRAY[rs.postcode]
 			WHERE rs.place_id IS NULL AND rs.postcode IS NOT NULL
 			GROUP BY rs.structure_id
 		) x
@@ -195,7 +210,7 @@ export async function restoreSiteNameAccents(tx: TransactionSql): Promise<{ rest
 			SELECT DISTINCT rpps, last_name FROM directory.stg_ans_activities
 			UNION ALL
 			SELECT code, name FROM directory.places
-			WHERE kind IN ('commune', 'arrondissement') AND removed_at IS NULL
+			WHERE country = 'FR' AND kind IN ('commune', 'arrondissement') AND removed_at IS NULL
 		) n
 		WHERE name ~ '[^ -~]'
 		GROUP BY name
@@ -591,11 +606,13 @@ export async function markMissing(tx: TransactionSql, ctx: MergeContext) {
 	const removed = await tx`
 		UPDATE directory.practitioners SET status = 'removed', removed_at = now(), indexable = false,
 			updated_at = now()
-		WHERE status = 'active' AND missing_runs >= 2 AND claim_status = 'unclaimed'
+		WHERE country = ${ctx.country} AND status = 'active' AND missing_runs >= 2
+			AND claim_status = 'unclaimed'
 	`;
 	const [review] = await tx<{ count: number }[]>`
 		SELECT count(*)::integer AS count FROM directory.practitioners
-		WHERE status = 'active' AND missing_runs >= 2 AND claim_status <> 'unclaimed'
+		WHERE country = ${ctx.country} AND status = 'active' AND missing_runs >= 2
+			AND claim_status <> 'unclaimed'
 	`;
 	return {
 		missing: missing.count,
@@ -749,7 +766,8 @@ export async function sitesToGeocode(tx: TransactionSql): Promise<GeocodeCandida
 						WHERE c.parent_id = p.id AND c.kind = 'arrondissement'), '{}')
 				WHEN s.postcode IS NOT NULL THEN
 					coalesce((SELECT array_agg(c.code) FROM directory.places c
-						WHERE c.kind IN ('commune', 'arrondissement') AND c.postcodes @> ARRAY[s.postcode]), '{}')
+						WHERE c.country = 'FR' AND c.kind IN ('commune', 'arrondissement')
+							AND c.postcodes @> ARRAY[s.postcode]), '{}')
 				ELSE '{}'
 			END AS "allowedCodes",
 			(p.centroid IS NOT NULL) AS "hasCentroid"
@@ -814,7 +832,8 @@ export async function applySiteLocations(tx: TransactionSql, locations: SiteLoca
 				(np.id IS NOT NULL AND s.place_id IS NULL) AS refined
 			FROM input i
 			JOIN directory.sites s ON s.id = i.id
-			LEFT JOIN directory.places np ON np.kind IN ('commune', 'arrondissement') AND np.code = i.place_code
+			LEFT JOIN directory.places np ON np.country = 'FR' AND np.kind IN ('commune', 'arrondissement')
+				AND np.code = i.place_code
 				AND np.removed_at IS NULL
 		)
 		UPDATE directory.sites s SET
@@ -912,8 +931,8 @@ export async function matchAmeli(tx: TransactionSql) {
 						THEN min(p.id) FILTER (WHERE directory.match_key(p.name) = ra.city_key)
 				END AS place_id
 			FROM run_ameli ra
-			JOIN directory.places p ON p.kind IN ('commune', 'arrondissement') AND p.removed_at IS NULL
-				AND p.postcodes @> ARRAY[ra.postcode]
+			JOIN directory.places p ON p.country = 'FR' AND p.kind IN ('commune', 'arrondissement')
+				AND p.removed_at IS NULL AND p.postcodes @> ARRAY[ra.postcode]
 			GROUP BY ra.line_no
 		) x
 		WHERE x.line_no = ra.line_no AND x.place_id IS NOT NULL
@@ -942,7 +961,7 @@ export async function matchAmeli(tx: TransactionSql) {
 		FROM directory.practitioners p
 		JOIN directory.activities a ON a.practitioner_id = p.id AND a.removed_at IS NULL
 		JOIN directory.sites s ON s.id = a.site_id AND s.removed_at IS NULL AND s.place_id IS NOT NULL
-		WHERE p.status = 'active' AND p.listing_slug IS NOT NULL
+		WHERE p.country = 'FR' AND p.status = 'active' AND p.listing_slug IS NOT NULL
 	`;
 	await tx`CREATE INDEX ON ameli_people (last_key, first_key, place_id)`;
 	await tx`ANALYZE ameli_people`;
@@ -978,7 +997,7 @@ export async function matchAmeli(tx: TransactionSql) {
 		UPDATE directory.practitioners p SET
 			billing_sector = NULL, optam = NULL, carte_vitale = NULL, apcv = NULL,
 			ameli_matched_at = NULL, updated_at = now()
-		WHERE p.ameli_matched_at IS NOT NULL
+		WHERE p.country = 'FR' AND p.ameli_matched_at IS NOT NULL
 			AND NOT EXISTS (SELECT 1 FROM ameli_matches m WHERE m.practitioner_id = p.id)
 	`;
 	const [counts] = await tx<{ resolved: number; groups: number; matched: number }[]>`
@@ -997,8 +1016,17 @@ export async function matchAmeli(tx: TransactionSql) {
 	};
 }
 
-/** Primary activity, primary place, switchboard phones, orphan sites and `indexable`. */
-export async function recomputeDerived(tx: TransactionSql, ctx: MergeContext) {
+/**
+ * Primary activity, primary place, switchboard phones, orphan sites and
+ * `indexable`. Sites are removed and `indexable` recomputed for the run's
+ * market only (`ctx.country` and its site sources): another market's scope and
+ * professions never apply.
+ */
+export async function recomputeDerived(
+	tx: TransactionSql,
+	ctx: MergeContext,
+	siteSources: readonly string[] = ["ans"],
+) {
 	await tx`
 		WITH ranked AS (
 			SELECT a.id, row_number() OVER (
@@ -1045,7 +1073,7 @@ export async function recomputeDerived(tx: TransactionSql, ctx: MergeContext) {
 	`;
 	const removedSites = await tx<{ id: number }[]>`
 		UPDATE directory.sites s SET removed_at = now(), updated_at = now()
-		WHERE s.source = 'ans' AND s.removed_at IS NULL
+		WHERE s.source = ANY (${siteSources}::text[]) AND s.removed_at IS NULL
 			AND NOT EXISTS (SELECT 1 FROM directory.activities a WHERE a.site_id = s.id AND a.removed_at IS NULL)
 		RETURNING s.id
 	`;
@@ -1088,6 +1116,7 @@ export async function recomputeDerived(tx: TransactionSql, ctx: MergeContext) {
 			LEFT JOIN directory.suppressions x
 				ON x.country = p.country AND x.id_scheme = p.id_scheme AND x.national_id = p.national_id
 			LEFT JOIN placed pl ON pl.practitioner_id = p.id
+			WHERE p.country = ${ctx.country}
 		)
 		UPDATE directory.practitioners p SET indexable = c.indexable, updated_at = now()
 		FROM computed c
@@ -1117,9 +1146,15 @@ export type PageRefresh = {
 	tags: number;
 };
 
-export async function refreshReadModels(tx: TransactionSql, runId: number) {
+/**
+ * Refreshes the read models. Practitioner pages are refreshed and counted for
+ * the run's market only, so its circuit breakers compare its own pages; landing
+ * pages and search documents are rebuilt for every market (the functions keep
+ * each market's rows apart).
+ */
+export async function refreshReadModels(tx: TransactionSql, runId: number, country: string) {
 	const [pages] = await tx<{ result: PageRefresh }[]>`
-		SELECT directory.refresh_practitioner_pages(${runId}) AS result
+		SELECT directory.refresh_practitioner_pages(${runId}, NULL, ${country}) AS result
 	`;
 	const [landing] = await tx<{ result: Record<string, number> }[]>`
 		SELECT directory.refresh_landing_pages(${runId}) AS result
@@ -1151,28 +1186,31 @@ export const ORPHANED_PAGES_QUERY = `
 		JOIN directory.sites s ON s.id = a.site_id AND s.removed_at IS NULL
 		JOIN directory.landing_pages lp ON lp.listing_slug = p.listing_slug
 			AND lp.place_id = s.place_id
-		WHERE p.indexable
+		WHERE p.indexable AND p.country = $1
 	)
 	SELECT count(*)::integer AS count, (array_agg(p.slug ORDER BY p.id))[1:10] AS examples
 	FROM directory.practitioners p
 	LEFT JOIN listed l ON l.id = p.id
-	WHERE p.indexable AND l.id IS NULL
+	WHERE p.indexable AND p.country = $1 AND l.id IS NULL
 `;
 
 export async function orphanedPages(
 	tx: TransactionSql,
+	country = "FR",
 ): Promise<{ count: number; examples: string[] }> {
-	const [row] =
-		await tx.unsafe<{ count: number; examples: string[] | null }[]>(ORPHANED_PAGES_QUERY);
+	const [row] = await tx.unsafe<{ count: number; examples: string[] | null }[]>(
+		ORPHANED_PAGES_QUERY,
+		[country],
+	);
 	return { count: row?.count ?? 0, examples: row?.examples ?? [] };
 }
 
 /** A few pages this run would unpublish, for the blocked-run summary (call before refreshing). */
-export async function unpublishedExamples(tx: TransactionSql): Promise<string[]> {
+export async function unpublishedExamples(tx: TransactionSql, country = "FR"): Promise<string[]> {
 	const rows = await tx<{ slug: string }[]>`
 		SELECT p.slug FROM directory.practitioner_pages pg
 		JOIN directory.practitioners p ON p.id = pg.practitioner_id
-		WHERE pg.indexable AND (NOT p.indexable OR p.status <> 'active')
+		WHERE pg.indexable AND p.country = ${country} AND (NOT p.indexable OR p.status <> 'active')
 		ORDER BY pg.practitioner_id
 		LIMIT 10
 	`;

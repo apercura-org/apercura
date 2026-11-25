@@ -102,7 +102,7 @@ const STAGING_TABLES = [
 	"directory.stg_quarantine",
 ];
 
-function startMemorySampler() {
+export function startMemorySampler() {
 	let peak = process.memoryUsage().rss;
 	const timer = setInterval(() => {
 		peak = Math.max(peak, process.memoryUsage().rss);
@@ -114,7 +114,7 @@ function startMemorySampler() {
 	};
 }
 
-class StepTimer {
+export class StepTimer {
 	readonly durations: Record<string, number> = {};
 	constructor(private readonly log: Logger) {}
 	async run<T>(name: string, step: () => Promise<T>): Promise<T> {
@@ -255,7 +255,7 @@ async function runLocked(
 
 		// 3. Places (once, or with `etl:places`).
 		const [{ places } = { places: 0 }] = await sql<{ places: number }[]>`
-			SELECT count(*)::integer AS places FROM directory.places
+			SELECT count(*)::integer AS places FROM directory.places WHERE country = 'FR'
 		`;
 		if (places === 0) {
 			stats.places = await timer.run("import places", async () =>
@@ -270,7 +270,8 @@ async function runLocked(
 		}
 		if (options.department) {
 			const [found] = await sql`
-				SELECT 1 FROM directory.places WHERE kind = 'department' AND code = ${options.department}
+				SELECT 1 FROM directory.places
+				WHERE country = 'FR' AND kind = 'department' AND code = ${options.department}
 			`;
 			if (!found) throw new Error(`Unknown department: ${options.department}`);
 		}
@@ -415,7 +416,12 @@ async function runLocked(
 		}
 
 		// 6. Merge, in one transaction.
-		const ctx = { runId, professions: options.professions, department: options.department };
+		const ctx = {
+			runId,
+			country: "FR",
+			professions: options.professions,
+			department: options.department,
+		};
 		const merged = await sql.begin(async (tx) => {
 			await syncTaxonomy(tx);
 			const merge: Record<string, unknown> = {};
@@ -444,7 +450,7 @@ async function runLocked(
 			merge.ameli = await timer.run("Ameli matching", () => matchAmeli(tx));
 			await timer.run("analyze derived fields", () => analyzeTables(tx, DERIVED_TABLES));
 			const examples = await unpublishedExamples(tx);
-			const models = await timer.run("read models", () => refreshReadModels(tx, runId));
+			const models = await timer.run("read models", () => refreshReadModels(tx, runId, "FR"));
 			merge.readModels = models;
 			merge.siteTags = await enqueueSiteTags(tx, runId, [
 				...sites.ids,
@@ -463,13 +469,13 @@ async function runLocked(
 			const breakerVerdict = verdict(breakers, approved);
 			const [totals] = await tx<Record<string, number>[]>`
 				SELECT
-					(SELECT count(*) FROM directory.practitioners WHERE status = 'active')::integer AS practitioners,
-					(SELECT count(*) FROM directory.practitioners WHERE indexable)::integer AS indexable,
-					(SELECT count(*) FROM directory.sites WHERE removed_at IS NULL)::integer AS sites,
-					(SELECT count(*) FROM directory.sites WHERE removed_at IS NULL AND location IS NOT NULL)::integer AS located,
-					(SELECT count(*) FROM directory.sites WHERE removed_at IS NULL AND geo_source = 'geocoder')::integer AS geocoded,
-					(SELECT count(*) FROM directory.sites WHERE removed_at IS NULL AND geo_source = 'finess')::integer AS finess_located,
-					(SELECT count(*) FROM directory.sites WHERE removed_at IS NULL AND geo_source = 'centroid')::integer AS centroid,
+					(SELECT count(*) FROM directory.practitioners WHERE country = 'FR' AND status = 'active')::integer AS practitioners,
+					(SELECT count(*) FROM directory.practitioners WHERE country = 'FR' AND indexable)::integer AS indexable,
+					(SELECT count(*) FROM directory.sites WHERE source = 'ans' AND removed_at IS NULL)::integer AS sites,
+					(SELECT count(*) FROM directory.sites WHERE source = 'ans' AND removed_at IS NULL AND location IS NOT NULL)::integer AS located,
+					(SELECT count(*) FROM directory.sites WHERE source = 'ans' AND removed_at IS NULL AND geo_source = 'geocoder')::integer AS geocoded,
+					(SELECT count(*) FROM directory.sites WHERE source = 'ans' AND removed_at IS NULL AND geo_source = 'finess')::integer AS finess_located,
+					(SELECT count(*) FROM directory.sites WHERE source = 'ans' AND removed_at IS NULL AND geo_source = 'centroid')::integer AS centroid,
 					(SELECT count(*) FROM directory.practitioners WHERE ameli_matched_at IS NOT NULL)::integer AS ameli_matched,
 					(SELECT count(*) FROM directory.invalidation_outbox)::integer AS outbox
 			`;
@@ -637,9 +643,11 @@ async function stagingStats(sql: Sql): Promise<StagingStats> {
 			count(*) FILTER (WHERE a.structure_id IS NOT NULL)::integer AS with_structure,
 			count(*) FILTER (WHERE a.structure_id IS NOT NULL AND (
 				EXISTS (SELECT 1 FROM directory.places p
-					WHERE p.kind IN ('commune', 'arrondissement') AND p.code = a.commune_code)
+					WHERE p.country = 'FR' AND p.kind IN ('commune', 'arrondissement')
+						AND p.code = a.commune_code)
 				OR EXISTS (SELECT 1 FROM directory.places p
-					WHERE p.kind IN ('commune', 'arrondissement') AND p.postcodes @> ARRAY[a.postcode])
+					WHERE p.country = 'FR' AND p.kind IN ('commune', 'arrondissement')
+						AND p.postcodes @> ARRAY[a.postcode])
 			))::integer AS with_commune,
 			count(*) FILTER (WHERE NOT directory.luhn_valid(a.rpps))::integer AS invalid
 		FROM directory.stg_ans_activities a
