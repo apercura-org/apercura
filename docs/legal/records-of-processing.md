@@ -25,9 +25,10 @@ Common facts used below:
 
 - **Host**: {{HOST_NAME}}, {{HOST_ADDRESS}}, {{HOST_PHONE}}. Current host: an interim host in
   the European Economic Area, **not HDS-certified**. Planned HDS host: Clever Cloud, in its HDS
-  region; Scalingo as an alternative. The HDS contract is **not signed yet**; booking
-  stays off (`FEATURE_BOOKING=false`) until it is
-  ([deploy-clever-cloud](../deploy-clever-cloud.md#before-anything-the-hds-contract)).
+  region; Scalingo as an alternative. The HDS contract is **not signed yet**. By decision of
+  the founder, booking (`FEATURE_BOOKING`) is enabled on the interim host until the HDS
+  migration: this does not meet article L.1111-8 of the Code de la santé publique (high
+  residual risk, [DPIA, 3.7](dpia-draft.md#37-health-data-on-a-host-that-is-not-hds-certified)).
 - **Email**: {{SMTP_PROVIDER}}, a European SMTP provider (to choose).
 - **Transfers outside the EEA**: none by design. Third parties outside the publisher's
   perimeter: recipients' mailbox providers, calendar providers reading a feed URL, the map tile
@@ -160,7 +161,7 @@ Common facts used below:
 
 | Measure                                                                                                                                        | Reference                                                                                    |
 | ---------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
-| Hosting by an HDS-certified host under an HDS contract (planned; interim EEA host until then, not HDS-certified); booking off until then       | [deploy-clever-cloud](../deploy-clever-cloud.md), `FEATURE_BOOKING`                          |
+| HDS-certified host under an HDS contract (planned); booking runs on the interim EEA host meanwhile, not HDS-certified (DPIA 3.7)               | [deploy-clever-cloud](../deploy-clever-cloud.md), `FEATURE_BOOKING`                          |
 | Application-level encryption of patient fields: AES-256-GCM, one data key per organization wrapped by master keys, AAD `table.column.rowId`    | `packages/core/src/crypto/envelope.ts`, `care.organization_keys`                             |
 | Only `server/phi` decrypts, and writes an audit row (actor, purpose, ids, fields, request id, IP hash) in the same transaction first           | `apps/web/src/server/phi/index.ts`, `apps/web/src/server/phi/boundary.test.ts`, `biome.json` |
 | Blind indexes (HMAC-SHA256, 128 bits) keyed per organization with HKDF                                                                         | `packages/core/src/crypto/blind-index.ts`                                                    |
