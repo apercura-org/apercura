@@ -1,4 +1,4 @@
-import { type APIRequestContext, expect, type Page } from "@playwright/test";
+import { type APIRequestContext, expect, type Locator, type Page } from "@playwright/test";
 import * as OTPAuth from "otpauth";
 import postgres from "postgres";
 import { axeViolations } from "./axe";
@@ -30,6 +30,38 @@ export async function expectNoAxeViolations(page: Page) {
 	await page.waitForTimeout(250);
 	await expect(page.locator('[aria-live] [role="img"]')).toHaveCount(0, { timeout: 10_000 });
 	expect(await axeViolations(page)).toEqual([]);
+}
+
+/**
+ * The agenda once the shown week (or day) is in: the grid has its cells and the entries of that
+ * range are no longer loading (the grid's wrapper is `aria-busy` while they are fetched).
+ */
+export async function expectAgendaLoaded(page: Page) {
+	await expect(page.getByRole("gridcell").first()).toBeVisible();
+	await expect(page.locator('[aria-busy="true"]:has([role="grid"])')).toHaveCount(0, {
+		timeout: 10_000,
+	});
+}
+
+/**
+ * Pages the agenda forward with `next` ("Semaine suivante", "Jour suivant") until `entry` shows,
+ * at most `max` times. Each range is checked only once its entries are loaded: `count()` does not
+ * wait, and an entry in the opening range must not be skipped while it is still loading.
+ */
+export async function pageAgendaUntil(
+	page: Page,
+	entry: Locator,
+	{ next, max }: { next: string; max: number },
+) {
+	const grid = page.getByRole("grid");
+	await expectAgendaLoaded(page);
+	for (let step = 0; step < max && (await entry.count()) === 0; step += 1) {
+		const shown = (await grid.getAttribute("aria-label")) ?? "";
+		await page.getByRole("button", { name: next }).click();
+		await expect(grid).not.toHaveAccessibleName(shown);
+		await expectAgendaLoaded(page);
+	}
+	await expect(entry.first()).toBeVisible();
 }
 
 export type ProAccount = { email: string; password: string; totp: OTPAuth.TOTP; used: Set<string> };

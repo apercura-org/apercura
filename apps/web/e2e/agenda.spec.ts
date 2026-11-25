@@ -8,6 +8,7 @@ import {
 	createProAccount,
 	expectNoAxeViolations,
 	type ProAccount,
+	pageAgendaUntil,
 	resetPractitioner,
 	testDb,
 } from "./pro";
@@ -223,22 +224,16 @@ test("a patient's request shows on Today; the owner accepts it, finds it in the 
 	await waitForEmail(patientPage.request, who.email, /Demande de rendez-vous/);
 	await patientContext.close();
 
-	// The request is in the week too, as a request (dashed box), at its time.
+	// The request is in the week too, as a request (dashed box), at its time (this week on a
+	// weekday, as today is closed; next week on a weekend).
 	await page.goto("/pro/agenda");
 	const request = page.getByRole("gridcell", {
 		name: new RegExp(`${who.firstName} ${who.lastName}.*Demande à traiter`),
 	});
-	for (let week = 0; week < 3 && (await request.count()) === 0; week += 1) {
-		await page.getByRole("button", { name: "Semaine suivante" }).click();
-		await page.waitForTimeout(500);
-	}
-	await expect(request.first()).toBeVisible();
-	await shoot(page, "week-request", async () => {
-		for (let day = 0; day < 9 && (await request.count()) === 0; day += 1) {
-			await page.getByRole("button", { name: "Jour suivant" }).click();
-			await page.waitForTimeout(300);
-		}
-	});
+	await pageAgendaUntil(page, request, { next: "Semaine suivante", max: 3 });
+	await shoot(page, "week-request", () =>
+		pageAgendaUntil(page, request, { next: "Jour suivant", max: 9 }),
+	);
 
 	// Today: the request to answer, the discreet access note.
 	await page.goto("/pro/aujourdhui");
@@ -269,10 +264,7 @@ test("a patient's request shows on Today; the owner accepts it, finds it in the 
 	const entry = page.getByRole("gridcell", {
 		name: new RegExp(`${who.firstName} ${who.lastName}.*Confirmé`),
 	});
-	for (let week = 0; week < 3 && (await entry.count()) === 0; week += 1) {
-		await page.getByRole("button", { name: "Semaine suivante" }).click();
-		await page.waitForTimeout(500);
-	}
+	await pageAgendaUntil(page, entry, { next: "Semaine suivante", max: 3 });
 	await entry.first().click();
 	const dialog = page.getByRole("dialog");
 	await expect(
@@ -356,13 +348,11 @@ test("the week works with the keyboard only: move, change week, add an appointme
 	await expect(page.getByRole("gridcell", { name: /Plage bloquée/ }).first()).toBeVisible();
 	if (process.env.E2E_SCREENSHOTS_DIR) {
 		// On a phone the day view opens on today: walk to the day of the new entries.
-		const toWeek = async () => {
-			const entry = page.getByRole("gridcell", { name: /Alexis Telephone/ });
-			for (let day = 0; day < 9 && (await entry.count()) === 0; day += 1) {
-				await page.getByRole("button", { name: "Jour suivant" }).click();
-				await page.waitForTimeout(300);
-			}
-		};
+		const toWeek = () =>
+			pageAgendaUntil(page, page.getByRole("gridcell", { name: /Alexis Telephone/ }), {
+				next: "Jour suivant",
+				max: 9,
+			});
 		// The week that holds the new entries, then the add dialog on a free time.
 		await shoot(page, "week", toWeek);
 		// The current week at 10:20 in Paris (browser clock only), so today's column shows "now".
