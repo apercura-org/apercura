@@ -113,6 +113,9 @@ minio_password=$(hex)
 	echo "LEGAL_HOST_PHONE=01 00 00 00 01"
 	echo "LEGAL_SMTP_PROVIDER=Mailpit"
 	echo "LEGAL_EFFECTIVE_DATE=2026-12-01"
+	# The scheduler's own cron never warms the cache here: the warm-up step below runs it
+	# explicitly, with WARM_CACHE=true, and would otherwise race it for the job's lock.
+	echo "WARM_CACHE=false"
 	if [ "$variant" = selfhost ]; then
 		echo "POSTGRES_PASSWORD=$postgres_password"
 	else
@@ -239,7 +242,20 @@ step "Scheduled jobs run in the scheduler"
 compose exec -T scheduler apercura jobs:tick | grep '"job":"tick"'
 
 step "The cache warm-up walks the sitemaps through the app, as its public host"
-compose exec -T scheduler apercura jobs:tick warm --restart | tee "$work/warm.log" | grep '"job":"warm"'
+# Turned on for this run only (the scheduler's cron runs it disabled). A disabled run still
+# holds the job's advisory lock for an instant, so a "locked" result is tried again, up to 30 s.
+tries=0
+while :; do
+	compose exec -T -e WARM_CACHE=true scheduler apercura jobs:tick warm --restart | tee "$work/warm.log"
+	grep -q '"result":"locked"' "$work/warm.log" || break
+	tries=$((tries + 1))
+	if [ "$tries" -ge 15 ]; then
+		echo "the warm-up job's lock is still held after 30 s" >&2
+		exit 1
+	fi
+	sleep 2
+done
+grep -q '"job":"warm"' "$work/warm.log"
 grep -Eq '"warmed":[1-9]' "$work/warm.log"
 grep -q '"errors":0' "$work/warm.log"
 grep -q '"redirected":0' "$work/warm.log"
