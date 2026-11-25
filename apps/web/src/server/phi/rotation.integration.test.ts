@@ -81,22 +81,26 @@ describe.skipIf(!url)("master key rotation (database)", async () => {
 		await server.end();
 	});
 
-	async function openPatientName(token: string) {
+	async function openPatientField(token: string, field: "firstName" | "address" = "firstName") {
 		const key = await phi.activeDataKey(db, organizationId);
 		return decryptField(
 			token,
 			[key],
-			fieldAad("appointments", phi.PATIENT_COLUMNS.firstName, appointmentId),
+			fieldAad("appointments", phi.PATIENT_COLUMNS[field], appointmentId),
 		);
 	}
+	const openPatientName = (token: string) => openPatientField(token);
 
 	it("moves every key and platform ciphertext to the new master key, then works without the old one", async () => {
 		// Before: patient data, a report and a claim document under the old key.
 		await phi.ensureOrganizationKey(db, organizationId);
 		const sealed = await phi.sealAppointment(db, organizationId, appointmentId, {
 			firstName: "Camille",
+			// A home visit's address is a patient field like the others (issue #75).
+			address: "12 rue Fictive",
 		});
 		const patientToken = sealed.patientFirstNameEnc as string;
+		const addressToken = sealed.patientAddressEnc as string;
 		await db.insert(reports).values({
 			id: reportId,
 			kind: "wrong_info",
@@ -150,6 +154,7 @@ describe.skipIf(!url)("master key rotation (database)", async () => {
 		// The old key is gone: patient data and the report still open.
 		useKeys(newKey, "new");
 		expect(await openPatientName(patientToken)).toBe("Camille");
+		expect(await openPatientField(addressToken, "address")).toBe("12 rue Fictive");
 		expect(
 			JSON.parse(platform.openText(report?.contentEnc ?? "", "reports", "content_enc", reportId)),
 		).toEqual({ message: "Adresse fictive erronée" });

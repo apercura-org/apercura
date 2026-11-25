@@ -20,6 +20,7 @@ import {
 import { BOOKING_LIMITS, bookingEnabled } from "./config";
 import { ensureBookingConstraints } from "./constraints";
 import { BookingError, isExclusionViolation } from "./errors";
+import { communeNames } from "./home-visit";
 import { practitionerTransaction } from "./locks";
 import { refreshNextFreeLater } from "./next-free";
 import { enqueueOutbox } from "./outbox";
@@ -103,9 +104,13 @@ export async function getManaged(rt: BookingRuntime, token: string) {
 				ipHash: rt.ipHash,
 			},
 			[row.id],
-			["firstName", "lastName"],
+			// A home visit shows its commune ("À domicile — Lyon"), never the street.
+			row.location === "home" ? ["firstName", "lastName", "commune"] : ["firstName", "lastName"],
 		)
 	).get(row.id);
+	const commune = patient?.commune
+		? ((await communeNames(rt.db, [patient.commune])).get(patient.commune) ?? null)
+		: null;
 	const { cutoffMin } = await cancellationCutoff(rt, row);
 	const canCancel = transition(lifecycleEntry(row), {
 		type: "cancel_by_patient",
@@ -119,6 +124,9 @@ export async function getManaged(rt: BookingRuntime, token: string) {
 		endsAt: row.endsAt,
 		timeZone: place?.timeZone ?? "Europe/Paris",
 		typeName: row.typeName,
+		/** `home`: the care happens at the patient's address, in `homeCommune`. */
+		location: row.location === "home" ? ("home" as const) : ("site" as const),
+		homeCommune: commune,
 		calendarId: row.calendarId,
 		typeId: row.appointmentTypeId,
 		pendingUntil: row.status === "pending" ? row.expiresAt : null,

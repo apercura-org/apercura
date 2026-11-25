@@ -6,13 +6,16 @@ import {
 	FieldList,
 	FieldRow,
 	Form,
+	ListBoxItem,
 	Notice,
 	OtpField,
 	Radio,
 	RadioGroup,
+	Select,
+	TextAreaField,
 	TextField,
 } from "@apercura/ui";
-import { useLocale, useTranslations } from "next-intl";
+import { useFormatter, useLocale, useTranslations } from "next-intl";
 import { type FormEvent, useEffect, useRef, useState } from "react";
 import { buildIcs } from "~/lib/ics";
 import { slotParts, slotTime } from "~/lib/slot-format";
@@ -23,11 +26,29 @@ import {
 	type BookingCalendar,
 	type BookingType,
 	bookingErrorCode,
+	communeLabel,
 	siteAddress,
 } from "./booking-types";
 import { StepActions } from "./step-actions";
 
 const RESEND_COOLDOWN_MS = 60_000;
+
+/** A home visit's commune among the type's service area. */
+type HomeCommune = BookingType["serviceArea"][number];
+
+/**
+ * Where the appointment takes place: the practice's address, or "À domicile — Lyon" for a home
+ * visit (the patient's street stays out, as in the emails).
+ */
+function usePlaceLabel() {
+	const tEmail = useTranslations("booking.email");
+	return (calendar: BookingCalendar, type: BookingType, commune: HomeCommune | null) =>
+		type.location === "home"
+			? commune
+				? tEmail("atHomeIn", { commune: commune.name })
+				: tEmail("atHome")
+			: [calendar.siteName, siteAddress(calendar)].filter(Boolean).join(", ");
+}
 
 /** Practitioner, place, reason and time of the booking, printed as booklet field rows. */
 export function BookingSummary({
@@ -35,17 +56,20 @@ export function BookingSummary({
 	type,
 	practitionerName,
 	slotMs,
+	commune = null,
 }: {
 	calendar: BookingCalendar;
 	type: BookingType;
 	practitionerName: string;
 	slotMs: number;
+	commune?: HomeCommune | null;
 }) {
 	const t = useTranslations("booking.panel.summary");
 	const tP = useTranslations("Practitioner");
 	const locale = useLocale();
+	const placeLabel = usePlaceLabel();
 	const parts = slotParts(slotMs, calendar.timeZone, locale);
-	const place = [calendar.siteName, siteAddress(calendar)].filter(Boolean).join(", ");
+	const place = placeLabel(calendar, type, commune);
 	return (
 		<FieldList>
 			<FieldRow label={t("with")} value={practitionerName} emptyLabel={tP("notProvided")} />
@@ -65,25 +89,41 @@ export function ReasonStep({
 	calendars,
 	calendarId,
 	typeId,
+	communeCode,
 	onSubmit,
 }: {
 	calendars: BookingCalendar[];
 	calendarId: string | null;
 	typeId: string | null;
-	onSubmit: (calendarId: string, typeId: string) => void;
+	communeCode: string | null;
+	onSubmit: (calendarId: string, typeId: string, communeCode: string | null) => void;
 }) {
 	const t = useTranslations("booking.panel");
+	const format = useFormatter();
 	const [place, setPlace] = useState(calendarId ?? calendars[0]?.id ?? "");
 	const [reason, setReason] = useState(typeId ?? "");
+	const [commune, setCommune] = useState<string | null>(communeCode);
+	const [communeMissing, setCommuneMissing] = useState(false);
 	const calendar = calendars.find((item) => item.id === place) ?? calendars[0];
+	const chosen = calendar?.types.find((type) => type.id === reason);
 	const audience = (value: string) =>
 		value === "new" ? t("reason.newOnly") : value === "existing" ? t("reason.existingOnly") : null;
 
 	const submit = (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
-		if (calendar?.types.some((type) => type.id === reason)) {
-			onSubmit(calendar.id, reason);
+		if (!calendar || !chosen) {
+			return;
 		}
+		if (chosen.location === "home") {
+			// Only a commune of the area can be chosen: the server checks it again before the hold.
+			if (!chosen.serviceArea.some((item) => item.code === commune)) {
+				setCommuneMissing(true);
+				return;
+			}
+			onSubmit(calendar.id, chosen.id, commune);
+			return;
+		}
+		onSubmit(calendar.id, chosen.id, null);
 	};
 
 	return (
@@ -115,7 +155,10 @@ export function ReasonStep({
 					key={calendar.id}
 					label={t("reason.type")}
 					value={reason || null}
-					onChange={setReason}
+					onChange={(value) => {
+						setReason(value);
+						setCommuneMissing(false);
+					}}
 					isRequired
 					errorMessage={t("reason.required")}
 				>
@@ -124,14 +167,54 @@ export function ReasonStep({
 							<span className="flex flex-col">
 								<span className="font-semibold">{type.name}</span>
 								<span className="tabular text-meta text-ink-muted">
-									{[t("reason.duration", { minutes: type.durationMin }), audience(type.audience)]
+									{[
+										t("reason.duration", { minutes: type.durationMin }),
+										type.location === "home" ? t("reason.atHome") : null,
+										audience(type.audience),
+									]
 										.filter(Boolean)
 										.join(" · ")}
 								</span>
+								{type.location === "home" ? (
+									<span className="text-meta text-ink-muted">
+										{t("reason.area", {
+											communes: format.list(
+												type.serviceArea.map((item) => item.name),
+												{ type: "conjunction" },
+											),
+										})}
+									</span>
+								) : null}
 							</span>
 						</Radio>
 					))}
 				</RadioGroup>
+			) : null}
+			{chosen?.location === "home" ? (
+				<Select
+					key={chosen.id}
+					name="address-level2"
+					autoComplete="address-level2"
+					label={t("reason.commune")}
+					description={t("reason.communeHint")}
+					placeholder={t("reason.communePlaceholder")}
+					selectedKey={commune}
+					onSelectionChange={(key) => {
+						setCommune(key === null ? null : String(key));
+						setCommuneMissing(false);
+					}}
+					isRequired
+					// Checked on submit by the step itself (a native check cannot focus the list).
+					validationBehavior="aria"
+					isInvalid={communeMissing}
+					errorMessage={t("reason.communeRequired")}
+				>
+					{chosen.serviceArea.map((item) => (
+						<ListBoxItem key={item.code} id={item.code} textValue={item.name}>
+							{communeLabel(item)}
+						</ListBoxItem>
+					))}
+				</Select>
 			) : null}
 			{calendar?.publicInstructions ? (
 				<Notice tone="info" role="none" title={t("reason.instructions")}>
@@ -163,6 +246,7 @@ export function DetailsStep({
 	type,
 	practitionerName,
 	slotMs,
+	commune,
 	details,
 	notice,
 	onBack,
@@ -174,6 +258,7 @@ export function DetailsStep({
 	type: BookingType;
 	practitionerName: string;
 	slotMs: number;
+	commune: HomeCommune | null;
 	details: PatientDetails;
 	notice: string | null;
 	onBack: () => void;
@@ -210,6 +295,10 @@ export function DetailsStep({
 					email: details.email,
 					phone: details.phone.trim() ? details.phone : null,
 					isNew: details.firstVisit === "" ? null : details.firstVisit === "yes",
+					homeAddress:
+						type.location === "home" && commune
+							? { street: details.address, communeCode: commune.code }
+							: null,
 				},
 				locale,
 				idempotencyKey: crypto.randomUUID(),
@@ -243,6 +332,7 @@ export function DetailsStep({
 				type={type}
 				practitionerName={practitionerName}
 				slotMs={slotMs}
+				commune={commune}
 			/>
 			<p className="max-w-[60ch] text-body text-ink">{t("details.lead")}</p>
 			<div className="grid gap-6 sm:grid-cols-2">
@@ -299,6 +389,20 @@ export function DetailsStep({
 							: t("details.invalidPhone")
 				}
 			/>
+			{type.location === "home" ? (
+				<TextAreaField
+					name="street-address"
+					label={t("details.address")}
+					description={t("details.addressHint")}
+					autoComplete="street-address"
+					rows={2}
+					value={details.address}
+					onChange={(address) => set({ address })}
+					isRequired
+					maxLength={300}
+					validate={(value) => (value.trim() ? null : t("details.requiredAddress"))}
+				/>
+			) : null}
 			{calendar.askFirstVisit ? (
 				<RadioGroup
 					label={t("details.firstVisit")}
@@ -344,6 +448,7 @@ export function CodeStep({
 	type,
 	practitionerName,
 	slotMs,
+	commune,
 	email,
 	hold,
 	onResent,
@@ -356,6 +461,7 @@ export function CodeStep({
 	type: BookingType;
 	practitionerName: string;
 	slotMs: number;
+	commune: HomeCommune | null;
 	email: string;
 	hold: HeldSlot;
 	onResent: (sentAt: number) => void;
@@ -509,6 +615,7 @@ export function CodeStep({
 				type={type}
 				practitionerName={practitionerName}
 				slotMs={slotMs}
+				commune={commune}
 			/>
 			<StepActions
 				onBack={onBack}
@@ -582,6 +689,7 @@ export function DoneStep({
 	calendar,
 	type,
 	practitionerName,
+	commune,
 	email,
 	result,
 	onClose,
@@ -589,6 +697,7 @@ export function DoneStep({
 	calendar: BookingCalendar;
 	type: BookingType;
 	practitionerName: string;
+	commune: HomeCommune | null;
 	email: string;
 	result: BookingResult;
 	onClose: () => void;
@@ -596,6 +705,7 @@ export function DoneStep({
 	const t = useTranslations("booking.panel.done");
 	const tEmail = useTranslations("booking.email");
 	const locale = useLocale();
+	const placeLabel = usePlaceLabel();
 	const startMs = result.startsAt.getTime();
 	const pending = result.status === "pending";
 
@@ -609,7 +719,7 @@ export function DoneStep({
 			stampedAt: new Date(),
 			// Same minimal title as the emails: the practitioner, never the reason.
 			summary: tEmail("summary", { practitioner: practitionerName }),
-			location: [calendar.siteName, siteAddress(calendar)].filter(Boolean).join(", "),
+			location: placeLabel(calendar, type, commune),
 		});
 		const url = URL.createObjectURL(new Blob([ics], { type: "text/calendar;charset=utf-8" }));
 		const link = document.createElement("a");
@@ -644,6 +754,7 @@ export function DoneStep({
 				type={type}
 				practitionerName={practitionerName}
 				slotMs={startMs}
+				commune={commune}
 			/>
 			{pending ? null : (
 				<div className="flex flex-col items-start gap-2">

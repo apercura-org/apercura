@@ -4,6 +4,7 @@ import { siteAddressLine } from "~/server/queries/site-address";
 import { findCalendar, findType, slotGrid } from "./availability";
 import { BOOKING_LIMITS, bookingEnabled } from "./config";
 import { BookingError } from "./errors";
+import { areaCommunes } from "./home-visit";
 import { type BookingRuntime, limit } from "./runtime";
 
 /*
@@ -62,6 +63,8 @@ export async function bookingOptions(
 			name: appointmentTypes.name,
 			durationMin: appointmentTypes.durationMin,
 			audience: appointmentTypes.audience,
+			location: appointmentTypes.location,
+			serviceAreaCodes: appointmentTypes.serviceAreaCodes,
 		})
 		.from(appointmentTypes)
 		.where(
@@ -74,12 +77,36 @@ export async function bookingOptions(
 			),
 		)
 		.orderBy(asc(appointmentTypes.position));
+	// Home visits: the communes the practitioner visits, which the patient chooses from. A home
+	// visit without any commune cannot be booked, so it is not offered.
+	const communes = new Map(
+		(
+			await areaCommunes(rt.db, [
+				...new Set(
+					types.flatMap((type) => (type.location === "home" ? type.serviceAreaCodes : [])),
+				),
+			])
+		).map((commune) => [commune.code, commune]),
+	);
 	return {
 		calendars: rows.map((row) => ({
 			...row,
 			types: types
 				.filter((type) => type.calendarId === row.id)
-				.map(({ calendarId: _calendar, ...type }) => type),
+				.map(({ calendarId: _calendar, serviceAreaCodes, ...type }) => ({
+					...type,
+					location: type.location === "home" ? ("home" as const) : ("site" as const),
+					serviceArea:
+						type.location === "home"
+							? serviceAreaCodes.flatMap((code) => {
+									const commune = communes.get(code);
+									return commune
+										? [{ code: commune.code, name: commune.name, postcodes: commune.postcodes }]
+										: [];
+								})
+							: [],
+				}))
+				.filter((type) => type.location === "site" || type.serviceArea.length > 0),
 		})),
 	};
 }

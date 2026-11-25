@@ -1395,7 +1395,8 @@
 			"perinealRehabilitation": "Rééducation du périnée",
 			"bloodTest": "Prise de sang",
 			"injection": "Injection",
-			"dressing": "Pansement"
+			"dressing": "Pansement",
+			"homeCare": "Soins à domicile"
 		},
 		"email": {
 			"wordmark": "Apercura",
@@ -1409,7 +1410,8 @@
 				"date": "Date",
 				"time": "Heure",
 				"address": "Adresse",
-				"until": "Réponse avant"
+				"until": "Réponse avant",
+				"place": "Lieu"
 			},
 			"manageAction": "Voir ou modifier mon rendez-vous",
 			"agendaAction": "Ouvrir l’agenda",
@@ -1510,7 +1512,9 @@
 				"title": "Rendez-vous déplacé",
 				"body": "Un patient a déplacé un rendez-vous à ce nouvel horaire."
 			},
-			"bookAgainAction": "Choisir un autre horaire"
+			"bookAgainAction": "Choisir un autre horaire",
+			"atHome": "À domicile",
+			"atHomeIn": "À domicile — {commune}"
 		},
 		"panel": {
 			"title": "Prendre rendez-vous",
@@ -1549,7 +1553,13 @@
 				"existingOnly": "patients déjà suivis",
 				"required": "Choisissez un motif.",
 				"instructions": "Message du cabinet",
-				"noNewPatients": "Ce cabinet ne prend pas de nouveaux patients en ligne : votre demande attendra sa réponse."
+				"noNewPatients": "Ce cabinet ne prend pas de nouveaux patients en ligne : votre demande attendra sa réponse.",
+				"atHome": "à domicile",
+				"area": "Communes desservies : {communes}",
+				"commune": "Votre commune",
+				"communeHint": "Les visites à domicile se font uniquement dans ces communes. La vôtre n’est pas dans la liste ? Appelez le cabinet.",
+				"communePlaceholder": "Choisir",
+				"communeRequired": "Choisissez votre commune."
 			},
 			"slot": {
 				"heading": "Choisissez un horaire",
@@ -1584,7 +1594,10 @@
 				"invalidEmail": "Saisissez une adresse e-mail comme nom@exemple.fr.",
 				"invalidPhone": "Saisissez un numéro comme 06 12 34 56 78.",
 				"requiredFirstVisit": "Répondez à cette question.",
-				"website": "Laissez ce champ vide"
+				"website": "Laissez ce champ vide",
+				"address": "Adresse de la visite",
+				"addressHint": "Numéro et rue, puis bâtiment, étage ou code d’accès si besoin. Seul le cabinet la voit : elle n’apparaît dans aucun e-mail.",
+				"requiredAddress": "Saisissez l’adresse de la visite."
 			},
 			"altcha": {
 				"label": "Vérification automatique que vous n’êtes pas un robot",
@@ -1654,7 +1667,8 @@
 				"NOT_FOUND": "Cette réservation n’existe plus. Choisissez de nouveau l’horaire.",
 				"IDEMPOTENCY_CONFLICT": "Cette demande a déjà été envoyée. Choisissez de nouveau l’horaire.",
 				"generic": "Un problème est survenu de notre côté. Réessayez dans un instant, ou appelez le cabinet.",
-				"restart": "Choisir de nouveau un horaire"
+				"restart": "Choisir de nouveau un horaire",
+				"OUTSIDE_AREA": "Les visites à domicile ne couvrent pas cette commune. Choisissez-en une autre, ou appelez le cabinet."
 			}
 		},
 		"manage": {
@@ -2640,7 +2654,9 @@
 				"bodyOwner": "Réglez le lieu où vous recevez : horaires et motifs de rendez-vous.",
 				"bodyStaff": "Le titulaire de la page n’a pas encore réglé l’agenda.",
 				"action": "Régler la prise de rendez-vous"
-			}
+			},
+			"atHome": "À domicile",
+			"atHomeIn": "À domicile — {commune}"
 		},
 		"today": {
 			"metaTitle": "Aujourd’hui",
@@ -2737,7 +2753,11 @@
 			"endBeforeStart": "La fin doit venir après le début.",
 			"created": "Rendez-vous ajouté.",
 			"blocked": "Plage bloquée.",
-			"outsideHours": "Hors des horaires d’ouverture : vous pouvez quand même l’ajouter."
+			"outsideHours": "Hors des horaires d’ouverture : vous pouvez quand même l’ajouter.",
+			"address": "Adresse de la visite (facultatif)",
+			"addressHint": "Seul le cabinet la voit : les e-mails au patient ne la contiennent jamais.",
+			"commune": "Commune",
+			"invalidAddress": "Saisissez l’adresse et sa commune, ou aucune des deux."
 		},
 		"entry": {
 			"when": "Quand",
@@ -2758,7 +2778,10 @@
 			"cancelBody": "Le créneau redevient libre.",
 			"confirmCancel": "Annuler le rendez-vous",
 			"cancelled": "Rendez-vous annulé.",
-			"blockRemoved": "Plage bloquée retirée."
+			"blockRemoved": "Plage bloquée retirée.",
+			"place": "Lieu",
+			"address": "Adresse de la visite",
+			"noAddress": "Non renseignée"
 		},
 		"block": {
 			"title": "Bloquer une plage",
@@ -2826,7 +2849,24 @@
 				"add": "Ajouter un motif",
 				"newName": "Consultation",
 				"summary": "{duration} min",
-				"inactive": "Non proposé en ligne"
+				"inactive": "Non proposé en ligne",
+				"location": "Lieu des soins",
+				"locationSite": "Au cabinet",
+				"locationHome": "Au domicile du patient",
+				"travel": "Trajet après chaque visite (minutes)",
+				"travelHint": "Temps gardé libre après chaque visite pour rejoindre le patient suivant ou le cabinet. Ajoutez du temps libre avant si vous devez aussi vous rendre à la première.",
+				"area": "Communes desservies",
+				"areaLead": "Les patients choisissent leur commune dans cette liste avant de choisir un horaire.",
+				"areaEmpty": "Aucune commune pour l’instant : les patients ne peuvent pas réserver cette visite.",
+				"areaSearch": "Ajouter une commune",
+				"areaSearchHint": "Nom, code postal ou code INSEE.",
+				"areaRemove": "Retirer {name}",
+				"areaRadius": "Rayon (km)",
+				"areaAround": "Ajouter les communes autour du cabinet",
+				"areaAdded": "{count, plural, =0 {Aucune nouvelle commune.} one {# commune ajoutée.} many {# communes ajoutées.} other {# communes ajoutées.}}",
+				"areaNotLocated": "Le cabinet n’a pas de position sur la carte : ajoutez les communes une par une.",
+				"areaRequired": "Choisissez au moins une commune pour proposer cette visite en ligne.",
+				"summaryHome": "{duration} min · à domicile"
 			},
 			"rules": {
 				"heading": "Horaires de la semaine",

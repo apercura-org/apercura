@@ -23,6 +23,7 @@ import {
 	practitionerPageUrl,
 	senderAddress,
 } from "./format";
+import { communeNames } from "./home-visit";
 import type { OutboxKind } from "./outbox";
 import type { AppointmentRow } from "./transitions";
 
@@ -191,6 +192,11 @@ async function composePatientMail(
 	if (kind === "booking_cancelled_by_practice") {
 		fields.push("practiceMessage");
 	}
+	const atHome = appointment.location === "home";
+	if (atHome && WITH_DETAILS.has(kind)) {
+		// Only the commune: the patient's street address never goes into an email.
+		fields.push("commune");
+	}
 	const patient = (await readAppointmentPatients(db, audit, [appointment.id], fields)).get(
 		appointment.id,
 	);
@@ -201,6 +207,15 @@ async function composePatientMail(
 	const slot = formatSlot(appointment.startsAt.getTime(), place.timeZone, locale);
 	const key = TEMPLATE[kind];
 	const values = { practitioner: place.practitionerName, date: slot.shortDate };
+	const commune = patient.commune
+		? ((await communeNames(db, [patient.commune])).get(patient.commune) ?? null)
+		: null;
+	// "À domicile — Lyon" for a home visit, the practice's address otherwise.
+	const where = atHome
+		? { label: t("labels.place"), value: commune ? t("atHomeIn", { commune }) : t("atHome") }
+		: place.address
+			? { label: t("labels.address"), value: place.address }
+			: null;
 
 	let code: string | null = null;
 	if (kind === "booking_code") {
@@ -224,7 +239,7 @@ async function composePatientMail(
 				{ label: t("labels.with"), value: place.practitionerName },
 				{ label: t("labels.date"), value: slot.date },
 				{ label: t("labels.time"), value: slot.time },
-				...(place.address ? [{ label: t("labels.address"), value: place.address }] : []),
+				...(where ? [where] : []),
 			]
 		: [];
 	if (kind === "booking_pending" && appointment.expiresAt) {
@@ -283,7 +298,7 @@ async function composePatientMail(
 					endsAt: appointment.endsAt,
 					stampedAt: new Date(nowMs),
 					summary: t("summary", { practitioner: place.practitionerName }),
-					location: place.address,
+					location: where?.value ?? null,
 					organizer: sender,
 					attendee: {
 						name: [patient.firstName, patient.lastName].filter(Boolean).join(" "),
@@ -336,10 +351,16 @@ async function composePracticeMail(
 		const place = await loadPlace(db, appointment, locale);
 		const slot = formatSlot(appointment.startsAt.getTime(), place.timeZone, locale);
 		const key = TEMPLATE[kind];
+		// A home visit says so, without the patient's commune or street: practice emails carry no
+		// patient data (the agenda shows it).
 		const details = [
 			{ label: t("labels.date"), value: slot.date },
 			{ label: t("labels.time"), value: slot.time },
-			...(place.address ? [{ label: t("labels.address"), value: place.address }] : []),
+			...(appointment.location === "home"
+				? [{ label: t("labels.place"), value: t("atHome") }]
+				: place.address
+					? [{ label: t("labels.address"), value: place.address }]
+					: []),
 		];
 		if (kind === "practice_request" && appointment.expiresAt) {
 			const deadline = formatSlot(appointment.expiresAt.getTime(), place.timeZone, locale);

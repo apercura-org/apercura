@@ -1395,7 +1395,8 @@
 			"perinealRehabilitation": "Perineal rehabilitation",
 			"bloodTest": "Blood test",
 			"injection": "Injection",
-			"dressing": "Wound dressing"
+			"dressing": "Wound dressing",
+			"homeCare": "Home care"
 		},
 		"email": {
 			"wordmark": "Apercura",
@@ -1409,7 +1410,8 @@
 				"date": "Date",
 				"time": "Time",
 				"address": "Address",
-				"until": "Answer by"
+				"until": "Answer by",
+				"place": "Place"
 			},
 			"manageAction": "See or change my appointment",
 			"agendaAction": "Open the agenda",
@@ -1510,7 +1512,9 @@
 				"title": "Appointment moved",
 				"body": "A patient moved an appointment to this new time."
 			},
-			"bookAgainAction": "Choose another time"
+			"bookAgainAction": "Choose another time",
+			"atHome": "At home",
+			"atHomeIn": "At home — {commune}"
 		},
 		"panel": {
 			"title": "Book an appointment",
@@ -1549,7 +1553,13 @@
 				"existingOnly": "patients already followed",
 				"required": "Choose a reason.",
 				"instructions": "Note from the practice",
-				"noNewPatients": "This practice does not take new patients online: your request will wait for its answer."
+				"noNewPatients": "This practice does not take new patients online: your request will wait for its answer.",
+				"atHome": "at your home",
+				"area": "Visits in: {communes}",
+				"commune": "Your commune",
+				"communeHint": "Home visits cover these communes only. Yours is not in the list? Call the practice.",
+				"communePlaceholder": "Choose",
+				"communeRequired": "Choose your commune."
 			},
 			"slot": {
 				"heading": "Choose a time",
@@ -1584,7 +1594,10 @@
 				"invalidEmail": "Enter an email address such as name@example.fr.",
 				"invalidPhone": "Enter a phone number such as 06 12 34 56 78.",
 				"requiredFirstVisit": "Answer this question.",
-				"website": "Leave this field empty"
+				"website": "Leave this field empty",
+				"address": "Address of the visit",
+				"addressHint": "Number and street, then building, floor or door code if needed. Only the practice sees it: emails never carry it.",
+				"requiredAddress": "Enter the address of the visit."
 			},
 			"altcha": {
 				"label": "Automatic check that you are not a robot",
@@ -1654,7 +1667,8 @@
 				"NOT_FOUND": "This booking no longer exists. Choose the time again.",
 				"IDEMPOTENCY_CONFLICT": "This request was already sent. Choose the time again.",
 				"generic": "Something went wrong on our side. Try again in a moment, or call the practice.",
-				"restart": "Choose a time again"
+				"restart": "Choose a time again",
+				"OUTSIDE_AREA": "Home visits do not cover this commune. Choose another one, or call the practice."
 			}
 		},
 		"manage": {
@@ -2640,7 +2654,9 @@
 				"bodyOwner": "Set up the place where you see patients: opening hours and appointment types.",
 				"bodyStaff": "The owner of the page has not set up the agenda yet.",
 				"action": "Set up booking"
-			}
+			},
+			"atHome": "At home",
+			"atHomeIn": "At home — {commune}"
 		},
 		"today": {
 			"metaTitle": "Today",
@@ -2737,7 +2753,11 @@
 			"endBeforeStart": "The end must come after the start.",
 			"created": "Appointment added.",
 			"blocked": "Time blocked.",
-			"outsideHours": "Outside the opening hours: you can still add it."
+			"outsideHours": "Outside the opening hours: you can still add it.",
+			"address": "Address of the visit (optional)",
+			"addressHint": "Only the practice sees it: emails to the patient never carry it.",
+			"commune": "Commune",
+			"invalidAddress": "Enter both the address and its commune, or neither."
 		},
 		"entry": {
 			"when": "When",
@@ -2758,7 +2778,10 @@
 			"cancelBody": "The time becomes free again.",
 			"confirmCancel": "Cancel the appointment",
 			"cancelled": "Appointment cancelled.",
-			"blockRemoved": "Block removed."
+			"blockRemoved": "Block removed.",
+			"place": "Place",
+			"address": "Address of the visit",
+			"noAddress": "Not given"
 		},
 		"block": {
 			"title": "Block a time slot",
@@ -2826,7 +2849,24 @@
 				"add": "Add an appointment type",
 				"newName": "Consultation",
 				"summary": "{duration} min",
-				"inactive": "Not offered online"
+				"inactive": "Not offered online",
+				"location": "Where the care happens",
+				"locationSite": "At the practice",
+				"locationHome": "At the patient’s home",
+				"travel": "Travel time after each visit (minutes)",
+				"travelHint": "Kept free after each home visit, to reach the next patient or the practice. Add free time before if you also need to reach the first one.",
+				"area": "Communes visited",
+				"areaLead": "Patients choose their commune from this list before they choose a time.",
+				"areaEmpty": "No commune yet: patients cannot book this home visit.",
+				"areaSearch": "Add a commune",
+				"areaSearchHint": "Name, postcode or INSEE code.",
+				"areaRemove": "Remove {name}",
+				"areaRadius": "Radius (km)",
+				"areaAround": "Add the communes around the practice",
+				"areaAdded": "{count, plural, =0 {No new commune.} one {# commune added.} other {# communes added.}}",
+				"areaNotLocated": "The practice has no position on the map: add the communes one by one.",
+				"areaRequired": "Choose at least one commune to offer this home visit online.",
+				"summaryHome": "{duration} min · at home"
 			},
 			"rules": {
 				"heading": "Weekly opening hours",

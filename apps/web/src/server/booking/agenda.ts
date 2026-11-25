@@ -33,6 +33,7 @@ import { findCalendar, findType, toCoreType } from "./availability";
 import { BOOKING_LIMITS } from "./config";
 import { ensureBookingConstraints } from "./constraints";
 import { BookingError, isExclusionViolation, isUniqueViolation } from "./errors";
+import { areaCommunes, checkHomeAddress, communeNames, type HomeAddressInput } from "./home-visit";
 import { practitionerTransaction } from "./locks";
 import { refreshNextFreeLater } from "./next-free";
 import { enqueueOutbox, type OutboxEntry } from "./outbox";
@@ -158,7 +159,14 @@ export async function listAgenda(
 			ipHash: rt.ipHash,
 		},
 		withPatient.map((row) => row.id),
-		["firstName", "lastName", "email", "phone"],
+		// The address of a home visit is read only when the range holds one.
+		withPatient.some((row) => row.location === "home")
+			? ["firstName", "lastName", "email", "phone", "address", "commune"]
+			: ["firstName", "lastName", "email", "phone"],
+	);
+	const communes = await communeNames(
+		rt.db,
+		[...patients.values()].map((patient) => patient.commune),
 	);
 	return rows
 		.map((row) => ({ row, status: effectiveStatus(lifecycleEntry(row), nowMs) }))
@@ -172,6 +180,8 @@ export async function listAgenda(
 				status,
 				source: row.source,
 				typeName: row.typeName,
+				/** `home`: a home visit, at the patient's address (shown to the practice only). */
+				location: row.location === "home" ? ("home" as const) : ("site" as const),
 				startsAt: row.startsAt,
 				endsAt: row.endsAt,
 				expiresAt: row.expiresAt,
@@ -184,6 +194,14 @@ export async function listAgenda(
 							phone: patient.phone,
 							isNew: row.patientIsNew,
 							emailConfirmed: row.emailVerifiedAt !== null,
+							home:
+								row.location === "home" && (patient.address || patient.commune)
+									? {
+											street: patient.address,
+											communeCode: patient.commune,
+											communeName: patient.commune ? (communes.get(patient.commune) ?? null) : null,
+										}
+									: null,
 						}
 					: null,
 				/** Emails could not be delivered: call the patient. */
@@ -196,7 +214,13 @@ export interface CreateEntryInput {
 	calendarId: string;
 	typeId: string;
 	startsAt: Date;
-	patient: { firstName: string; lastName: string; email?: string | null; phone?: string | null };
+	patient: {
+		firstName: string;
+		lastName: string;
+		email?: string | null;
+		phone?: string | null;
+		homeAddress?: HomeAddressInput | null;
+	};
 	locale: Locale;
 	idempotencyKey?: string | null;
 }
@@ -233,6 +257,8 @@ export async function createEntry(
 	) {
 		throw new BookingError("INVALID_INPUT");
 	}
+	// A practice may leave the address out (it knows it); one it types must be in the area.
+	const home = checkHomeAddress(type, input.patient.homeAddress, { required: false });
 	const nowMs = rt.nowMs();
 	const startMs = input.startsAt.getTime();
 	const occupied = occupancy(toCoreType(type), startMs);
@@ -258,6 +284,7 @@ export async function createEntry(
 				lastName,
 				email,
 				phone,
+				...(home ? { address: home.street, commune: home.communeCode } : {}),
 			});
 			await tx.insert(appointments).values({
 				id,
@@ -267,6 +294,7 @@ export async function createEntry(
 				appointmentTypeId: type.id,
 				kind: "appointment",
 				typeName: type.name,
+				location: type.location === "home" ? "home" : "site",
 				startsAt: new Date(startMs),
 				endsAt: new Date(endMs),
 				occupiedFrom: new Date(occupied.fromMs),
@@ -541,6 +569,8 @@ export async function listAgendaCalendars(rt: BookingRuntime, staff: StaffContex
 				name: appointmentTypes.name,
 				durationMin: appointmentTypes.durationMin,
 				active: appointmentTypes.active,
+				location: appointmentTypes.location,
+				serviceAreaCodes: appointmentTypes.serviceAreaCodes,
 			})
 			.from(appointmentTypes)
 			.where(inArray(appointmentTypes.calendarId, ids))
@@ -557,9 +587,21 @@ export async function listAgendaCalendars(rt: BookingRuntime, staff: StaffContex
 			.from(availabilityRules)
 			.where(inArray(availabilityRules.calendarId, ids)),
 	]);
+	const communes = new Map(
+		(await areaCommunes(rt.db, [...new Set(types.flatMap((type) => type.serviceAreaCodes))])).map(
+			(commune) => [commune.code, commune.name],
+		),
+	);
 	return rows.map((row) => ({
 		...row,
-		types: types.filter((type) => type.calendarId === row.id),
+		types: types
+			.filter((type) => type.calendarId === row.id)
+			.map(({ serviceAreaCodes, ...type }) => ({
+				...type,
+				location: type.location === "home" ? ("home" as const) : ("site" as const),
+				/** Home visits: the communes of the area, to note a patient's address. */
+				serviceArea: serviceAreaCodes.map((code) => ({ code, name: communes.get(code) ?? code })),
+			})),
 		rules: rules.filter((rule) => rule.calendarId === row.id),
 	}));
 }

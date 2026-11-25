@@ -1395,7 +1395,8 @@
 			"perinealRehabilitation": "Riabilitazione del pavimento pelvico",
 			"bloodTest": "Prelievo di sangue",
 			"injection": "Iniezione",
-			"dressing": "Medicazione"
+			"dressing": "Medicazione",
+			"homeCare": "Cure a domicilio"
 		},
 		"email": {
 			"wordmark": "Apercura",
@@ -1409,7 +1410,8 @@
 				"date": "Data",
 				"time": "Ora",
 				"address": "Indirizzo",
-				"until": "Rispondere entro"
+				"until": "Rispondere entro",
+				"place": "Luogo"
 			},
 			"manageAction": "Vedere o modificare il mio appuntamento",
 			"agendaAction": "Aprire l’agenda",
@@ -1510,7 +1512,9 @@
 				"title": "Appuntamento spostato",
 				"body": "Un paziente ha spostato un appuntamento a questo nuovo orario."
 			},
-			"bookAgainAction": "Scegliere un altro orario"
+			"bookAgainAction": "Scegliere un altro orario",
+			"atHome": "A domicilio",
+			"atHomeIn": "A domicilio — {commune}"
 		},
 		"panel": {
 			"title": "Prenotare un appuntamento",
@@ -1549,7 +1553,13 @@
 				"existingOnly": "pazienti già seguiti",
 				"required": "Scelga un motivo.",
 				"instructions": "Nota dello studio",
-				"noNewPatients": "Questo studio non accetta nuovi pazienti online: la sua richiesta resterà in attesa della sua risposta."
+				"noNewPatients": "Questo studio non accetta nuovi pazienti online: la sua richiesta resterà in attesa della sua risposta.",
+				"atHome": "a domicilio",
+				"area": "Comuni serviti: {communes}",
+				"commune": "Il suo comune",
+				"communeHint": "Le visite a domicilio coprono solo questi comuni. Il suo non è nell’elenco? Chiami lo studio.",
+				"communePlaceholder": "Scegliere",
+				"communeRequired": "Scelga il suo comune."
 			},
 			"slot": {
 				"heading": "Scegliere un orario",
@@ -1584,7 +1594,10 @@
 				"invalidEmail": "Inserisca un indirizzo e-mail come nome@example.fr.",
 				"invalidPhone": "Inserisca un numero di telefono come 06 12 34 56 78.",
 				"requiredFirstVisit": "Risponda a questa domanda.",
-				"website": "Lasci vuoto questo campo"
+				"website": "Lasci vuoto questo campo",
+				"address": "Indirizzo della visita",
+				"addressHint": "Numero civico e via, poi edificio, piano o codice d’accesso se serve. Solo lo studio lo vede: nessuna e-mail lo contiene.",
+				"requiredAddress": "Inserisca l’indirizzo della visita."
 			},
 			"altcha": {
 				"label": "Verifica automatica che lei non sia un robot",
@@ -1654,7 +1667,8 @@
 				"NOT_FOUND": "Questa prenotazione non esiste più. Scelga di nuovo l’orario.",
 				"IDEMPOTENCY_CONFLICT": "Questa richiesta è già stata inviata. Scelga di nuovo l’orario.",
 				"generic": "Si è verificato un problema da parte nostra. Riprovi tra un momento o telefoni allo studio.",
-				"restart": "Scegliere di nuovo un orario"
+				"restart": "Scegliere di nuovo un orario",
+				"OUTSIDE_AREA": "Le visite a domicilio non coprono questo comune. Ne scelga un altro, o chiami lo studio."
 			}
 		},
 		"manage": {
@@ -2640,7 +2654,9 @@
 				"bodyOwner": "Configuri la sede in cui riceve i pazienti: orari di apertura e tipi di appuntamento.",
 				"bodyStaff": "Il titolare della pagina non ha ancora configurato l’agenda.",
 				"action": "Configurare la prenotazione"
-			}
+			},
+			"atHome": "A domicilio",
+			"atHomeIn": "A domicilio — {commune}"
 		},
 		"today": {
 			"metaTitle": "Oggi",
@@ -2737,7 +2753,11 @@
 			"endBeforeStart": "La fine deve essere successiva all’inizio.",
 			"created": "Appuntamento aggiunto.",
 			"blocked": "Orario bloccato.",
-			"outsideHours": "Fuori dagli orari di apertura: può comunque aggiungerlo."
+			"outsideHours": "Fuori dagli orari di apertura: può comunque aggiungerlo.",
+			"address": "Indirizzo della visita (facoltativo)",
+			"addressHint": "Solo lo studio lo vede: le e-mail al paziente non lo contengono mai.",
+			"commune": "Comune",
+			"invalidAddress": "Indichi l’indirizzo e il suo comune, o nessuno dei due."
 		},
 		"entry": {
 			"when": "Quando",
@@ -2758,7 +2778,10 @@
 			"cancelBody": "L’orario torna libero.",
 			"confirmCancel": "Annullare l’appuntamento",
 			"cancelled": "Appuntamento annullato.",
-			"blockRemoved": "Blocco rimosso."
+			"blockRemoved": "Blocco rimosso.",
+			"place": "Luogo",
+			"address": "Indirizzo della visita",
+			"noAddress": "Non indicato"
 		},
 		"block": {
 			"title": "Bloccare una fascia oraria",
@@ -2826,7 +2849,24 @@
 				"add": "Aggiungere un tipo di appuntamento",
 				"newName": "Visita",
 				"summary": "{duration} min",
-				"inactive": "Non proposto online"
+				"inactive": "Non proposto online",
+				"location": "Luogo delle cure",
+				"locationSite": "In studio",
+				"locationHome": "Al domicilio del paziente",
+				"travel": "Spostamento dopo ogni visita (minuti)",
+				"travelHint": "Tempo lasciato libero dopo ogni visita per raggiungere il paziente successivo o lo studio. Aggiunga un margine prima se deve anche raggiungere la prima.",
+				"area": "Comuni serviti",
+				"areaLead": "I pazienti scelgono il loro comune da questo elenco prima di scegliere un orario.",
+				"areaEmpty": "Ancora nessun comune: i pazienti non possono prenotare questa visita.",
+				"areaSearch": "Aggiungere un comune",
+				"areaSearchHint": "Nome, codice postale o codice INSEE.",
+				"areaRemove": "Togliere {name}",
+				"areaRadius": "Raggio (km)",
+				"areaAround": "Aggiungere i comuni intorno allo studio",
+				"areaAdded": "{count, plural, =0 {Nessun nuovo comune.} one {# comune aggiunto.} many {# comuni aggiunti.} other {# comuni aggiunti.}}",
+				"areaNotLocated": "Lo studio non ha una posizione sulla mappa: aggiunga i comuni uno per uno.",
+				"areaRequired": "Scelga almeno un comune per offrire questa visita online.",
+				"summaryHome": "{duration} min · a domicilio"
 			},
 			"rules": {
 				"heading": "Orari di apertura settimanali",

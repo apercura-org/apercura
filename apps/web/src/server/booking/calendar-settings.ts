@@ -1,4 +1,4 @@
-import { presetsForSpecialty } from "@apercura/core/booking";
+import { isInseeCode, normalizeServiceArea, presetsForSpecialty } from "@apercura/core/booking";
 import {
 	parseLocalDate,
 	parseLocalDateTime,
@@ -25,6 +25,7 @@ import { siteAddressLine } from "~/server/queries/site-address";
 import { findCalendar } from "./availability";
 import { BookingError, isUniqueViolation } from "./errors";
 import { agendaRequirements } from "./gate";
+import { areaCommunes, assertKnownCommunes, communesAround } from "./home-visit";
 import { refreshNextFreeFor } from "./next-free";
 import type { BookingRuntime } from "./runtime";
 
@@ -94,11 +95,25 @@ export async function listCalendars(db: Database, organizationId: string) {
 		db.select().from(availabilityRules).where(inArray(availabilityRules.calendarId, ids)),
 		db.select().from(availabilityExceptions).where(inArray(availabilityExceptions.calendarId, ids)),
 	]);
+	const communes = new Map(
+		(await areaCommunes(db, [...new Set(types.flatMap((type) => type.serviceAreaCodes))])).map(
+			(commune) => [commune.code, commune],
+		),
+	);
 	return rows.map(({ icsTokenHash, icsTokenCreatedAt, ...calendar }) => ({
 		...calendar,
 		/** The private feed: whether a token is live, never the token or its hash. */
 		feed: { active: icsTokenHash !== null, createdAt: icsTokenHash ? icsTokenCreatedAt : null },
-		types: types.filter((type) => type.calendarId === calendar.id),
+		types: types
+			.filter((type) => type.calendarId === calendar.id)
+			.map((type) => ({
+				...type,
+				/** The service area of a home visit, with the names to print. */
+				serviceArea: type.serviceAreaCodes.flatMap((code) => {
+					const commune = communes.get(code);
+					return commune ? [commune] : [];
+				}),
+			})),
 		rules: rules.filter((rule) => rule.calendarId === calendar.id),
 		exceptions: exceptions.filter((exception) => exception.calendarId === calendar.id),
 	}));
@@ -120,7 +135,12 @@ export async function createCalendar(
 	},
 ) {
 	const [site] = await db
-		.select({ siteId: sites.id, departmentCode: places.departmentCode })
+		.select({
+			siteId: sites.id,
+			departmentCode: places.departmentCode,
+			placeKind: places.kind,
+			placeCode: places.code,
+		})
 		.from(activities)
 		.innerJoin(practitioners, eq(practitioners.id, activities.practitionerId))
 		.innerJoin(sites, eq(sites.id, activities.siteId))
@@ -161,6 +181,14 @@ export async function createCalendar(
 			if (!calendar) {
 				throw new BookingError("NOT_FOUND");
 			}
+			// A home visit starts with the site's own commune and stays off until the practitioner
+			// has checked its communes.
+			const siteCommune =
+				site.placeCode &&
+				isInseeCode(site.placeCode) &&
+				(site.placeKind === "commune" || site.placeKind === "arrondissement")
+					? [site.placeCode]
+					: [];
 			if (presets.length > 0) {
 				await tx.insert(appointmentTypes).values(
 					presets.map((preset, position) => ({
@@ -171,6 +199,10 @@ export async function createCalendar(
 						beforeMin: preset.beforeMin,
 						afterMin: preset.afterMin,
 						audience: preset.audience,
+						location: preset.location,
+						travelMin: preset.location === "home" ? preset.travelMin : 0,
+						serviceAreaCodes: preset.location === "home" ? siteCommune : [],
+						active: preset.location !== "home",
 						position,
 						presetKey: preset.nameKey,
 					})),
@@ -263,6 +295,41 @@ export interface TypeInput {
 	audience: "all" | "new" | "existing";
 	position?: number | undefined;
 	active?: boolean | undefined;
+	/** `home`: a home visit, with its travel time and the communes it serves. */
+	location?: "site" | "home" | undefined;
+	travelMin?: number | undefined;
+	serviceAreaCodes?: string[] | undefined;
+}
+
+/**
+ * Home-visit fields of a type: the communes (known INSEE codes, at most 200) and the travel time.
+ * A type at the site keeps neither. An active home visit needs at least one commune.
+ */
+async function homeVisitValues(
+	rt: BookingRuntime,
+	input: TypeInput,
+	current: { location: string; travelMin: number; serviceAreaCodes: string[] } | null,
+	active: boolean,
+) {
+	const location = input.location ?? current?.location ?? "site";
+	if (location !== "home") {
+		return { location: "site", travelMin: 0, serviceAreaCodes: [] as string[] };
+	}
+	let codes: string[];
+	try {
+		codes = normalizeServiceArea(input.serviceAreaCodes ?? current?.serviceAreaCodes ?? []);
+	} catch {
+		throw new BookingError("INVALID_INPUT", "INVALID_AREA");
+	}
+	if (active && codes.length === 0) {
+		throw new BookingError("AREA_REQUIRED");
+	}
+	await assertKnownCommunes(rt.db, codes);
+	return {
+		location,
+		travelMin: input.travelMin ?? current?.travelMin ?? 0,
+		serviceAreaCodes: codes,
+	};
 }
 
 export async function saveType(
@@ -271,6 +338,24 @@ export async function saveType(
 	input: TypeInput & { calendarId: string; typeId?: string | undefined },
 ) {
 	const calendar = await findCalendar(rt.db, input.calendarId, { organizationId });
+	const [current] = input.typeId
+		? await rt.db
+				.select({
+					active: appointmentTypes.active,
+					location: appointmentTypes.location,
+					travelMin: appointmentTypes.travelMin,
+					serviceAreaCodes: appointmentTypes.serviceAreaCodes,
+				})
+				.from(appointmentTypes)
+				.where(
+					and(eq(appointmentTypes.id, input.typeId), eq(appointmentTypes.calendarId, calendar.id)),
+				)
+				.limit(1)
+		: [];
+	if (input.typeId && !current) {
+		throw new BookingError("NOT_FOUND");
+	}
+	const active = input.active ?? current?.active ?? true;
 	const values = {
 		name: input.name.trim(),
 		durationMin: input.durationMin,
@@ -279,6 +364,7 @@ export async function saveType(
 		audience: input.audience,
 		...(input.position === undefined ? {} : { position: input.position }),
 		...(input.active === undefined ? {} : { active: input.active }),
+		...(await homeVisitValues(rt, input, current ?? null, active)),
 	};
 	let saved: typeof appointmentTypes.$inferSelect | undefined;
 	if (input.typeId) {
@@ -452,6 +538,23 @@ export async function removeException(
 	const calendar = await findCalendar(rt.db, row.calendarId, { organizationId });
 	await refreshNextFreeFor(rt, calendar.practitionerId);
 	return { removed: true };
+}
+
+/** Most communes a radius may suggest at once. */
+const AROUND_LIMIT = 60;
+
+/**
+ * `calendar.communesAround`: communes within `radiusKm` of the calendar's site, nearest first,
+ * to fill a home visit's service area (the practitioner then keeps the ones they visit).
+ */
+export async function suggestAreaAround(
+	db: Database,
+	organizationId: string,
+	calendarId: string,
+	radiusKm: number,
+) {
+	const calendar = await findCalendar(db, calendarId, { organizationId });
+	return communesAround(db, calendar.siteId, radiusKm, AROUND_LIMIT);
 }
 
 /** A bookable place of the practitioner, with the time zone its calendar would use. */

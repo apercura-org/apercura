@@ -34,6 +34,7 @@ import {
 	sectionHeading,
 	useAgendaFormat,
 	useAgendaRefresh,
+	useHomeVisitLabel,
 	usePatientName,
 } from "./agenda-shared";
 
@@ -92,6 +93,7 @@ export function TodayView({
 	});
 	const format = useAgendaFormat(timeZone);
 	const patientName = usePatientName();
+	const homeVisit = useHomeVisitLabel();
 	const decide = useMutation(trpc.agenda.decide.mutationOptions());
 	const noShow = useMutation(trpc.agenda.noShow.mutationOptions());
 	const [opened, setOpened] = useState<AgendaEntry | null>(null);
@@ -211,6 +213,10 @@ export function TodayView({
 	};
 
 	const where = (entry: AgendaEntry) => {
+		const home = homeVisit(entry);
+		if (home) {
+			return home;
+		}
 		const calendar = byId.get(entry.calendarId);
 		return calendars.length > 1 && calendar ? placeName(calendar, "") : null;
 	};

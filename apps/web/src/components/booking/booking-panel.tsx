@@ -7,7 +7,7 @@ import { type ReactNode, useEffect, useRef, useState } from "react";
 import { useTRPC, useTRPCClient } from "~/trpc/client";
 import { type BookingResult, type BookingState, EMPTY_DETAILS, type Step } from "./booking-state";
 import { CodeStep, DetailsStep, DoneStep, ReasonStep, TakenStep } from "./booking-steps";
-import type { BookingCalendar, BookingType } from "./booking-types";
+import { type BookingCalendar, type BookingType, homeCommune } from "./booking-types";
 import { SlotWindow } from "./slot-window";
 import { StepActions } from "./step-actions";
 
@@ -15,6 +15,7 @@ const initialState: BookingState = {
 	step: "reason",
 	calendarId: null,
 	typeId: null,
+	communeCode: null,
 	slotMs: null,
 	details: EMPTY_DETAILS,
 	hold: null,
@@ -62,8 +63,14 @@ export function BookingPanel({
 	const calendar: BookingCalendar | undefined =
 		calendars.find((item) => item.id === state.calendarId) ?? undefined;
 	const type: BookingType | undefined = calendar?.types.find((item) => item.id === state.typeId);
+	// A home visit always asks for the patient's commune first, so its reason step stays.
 	const onlyChoice =
-		calendars.length === 1 && calendars[0]?.types.length === 1 ? calendars[0] : undefined;
+		calendars.length === 1 &&
+		calendars[0]?.types.length === 1 &&
+		calendars[0].types[0]?.location === "site"
+			? calendars[0]
+			: undefined;
+	const commune = type ? homeCommune(type, state.communeCode) : null;
 
 	// One calendar with one reason: nothing to choose, start at the time.
 	useEffect(() => {
@@ -153,8 +160,9 @@ export function BookingPanel({
 				calendars={calendars}
 				calendarId={state.calendarId}
 				typeId={state.typeId}
-				onSubmit={(calendarId, typeId) =>
-					update({ calendarId, typeId, slotMs: null, step: "slot", notice: null })
+				communeCode={state.communeCode}
+				onSubmit={(calendarId, typeId, communeCode) =>
+					update({ calendarId, typeId, communeCode, slotMs: null, step: "slot", notice: null })
 				}
 			/>
 		);
@@ -177,6 +185,7 @@ export function BookingPanel({
 				type={type}
 				practitionerName={practitionerName}
 				slotMs={state.slotMs}
+				commune={commune}
 				details={state.details}
 				notice={state.notice}
 				onBack={() => update({ step: "slot", notice: null })}
@@ -192,6 +201,7 @@ export function BookingPanel({
 				type={type}
 				practitionerName={practitionerName}
 				slotMs={state.slotMs}
+				commune={commune}
 				email={state.details.email}
 				hold={state.hold}
 				onResent={(sentAt) => setState((s) => (s.hold ? { ...s, hold: { ...s.hold, sentAt } } : s))}
@@ -221,6 +231,7 @@ export function BookingPanel({
 				calendar={calendar}
 				type={type}
 				practitionerName={practitionerName}
+				commune={commune}
 				email={state.details.email}
 				result={state.result}
 				onClose={() => close(false)}

@@ -85,6 +85,8 @@ export function toCoreType(row: AppointmentTypeRow): AppointmentType {
 		durationMin: row.durationMin,
 		beforeMin: row.beforeMin,
 		afterMin: row.afterMin,
+		// Only home visits travel (the database refuses a travel time elsewhere).
+		travelMin: row.location === "home" ? row.travelMin : 0,
 		audience: row.audience as AppointmentType["audience"],
 	};
 }

@@ -75,6 +75,11 @@ describe.skipIf(!url)("booking (database)", { timeout: 30_000 }, () => {
 	const orgA = id("org-a");
 	const orgB = id("org-b");
 	const ids = { practitionerA: 0, practitionerB: 0, siteA: 0, siteB: 0, placeA: 0, placeB: 0 };
+	// Home visits: three synthetic communes with INSEE-shaped codes (99xxx: no French commune).
+	const homeCodes = [0, 1, 2].map(
+		(offset) => `99${String((parseInt(run.slice(0, 4), 16) * 3 + offset) % 1000).padStart(3, "0")}`,
+	);
+	const homePlaceIds: number[] = [];
 	let calendarA = "";
 	let calendarB = "";
 	let typeA = "";
@@ -321,6 +326,20 @@ describe.skipIf(!url)("booking (database)", { timeout: 30_000 }, () => {
 			.returning({ id: practitioners.id });
 		ids.placeA = placeA?.id ?? 0;
 		ids.placeB = placeB?.id ?? 0;
+		const homePlaces = await db
+			.insert(places)
+			.values(
+				homeCodes.map((code, index) => ({
+					kind: "commune",
+					code,
+					name: `Commune Synthétique ${"ABC"[index]}`,
+					slug: id(`commune-synthetique-${index}`),
+					departmentCode: "974",
+					postcodes: [`974${String(index).padStart(2, "0")}`],
+				})),
+			)
+			.returning({ id: places.id });
+		homePlaceIds.push(...homePlaces.map((row) => row.id));
 		ids.siteA = siteA?.id ?? 0;
 		ids.siteB = siteB?.id ?? 0;
 		ids.practitionerA = practA?.id ?? 0;
@@ -415,7 +434,7 @@ describe.skipIf(!url)("booking (database)", { timeout: 30_000 }, () => {
 			.delete(practitioners)
 			.where(inArray(practitioners.id, [ids.practitionerA, ids.practitionerB]));
 		await db.delete(sites).where(inArray(sites.id, [ids.siteA, ids.siteB]));
-		await db.delete(places).where(inArray(places.id, [ids.placeA, ids.placeB]));
+		await db.delete(places).where(inArray(places.id, [ids.placeA, ids.placeB, ...homePlaceIds]));
 		await db.delete(organization).where(inArray(organization.id, orgs));
 		await db.delete(user).where(inArray(user.id, Object.values(users)));
 		await db.execute(sql`delete from directory.rate_limits where key like ${`%${run}%`}`);
@@ -484,12 +503,16 @@ describe.skipIf(!url)("booking (database)", { timeout: 30_000 }, () => {
 		});
 		calendarB = createdB.id;
 		expect(createdB.timeZone).toBe("Indian/Reunion");
-		// The nurse's agenda starts with the usual care given at the office.
+		// The nurse's agenda starts with the usual care given at the office, and a home visit that
+		// stays off until its communes are chosen.
 		const [nurseCalendar] = await ownerB.calendar.list({ organizationId: orgB });
-		expect(nurseCalendar?.types.map((type) => [type.name, type.durationMin])).toEqual([
-			["Prise de sang", 10],
-			["Injection", 10],
-			["Pansement", 15],
+		expect(
+			nurseCalendar?.types.map((type) => [type.name, type.durationMin, type.location, type.active]),
+		).toEqual([
+			["Prise de sang", 10, "site", true],
+			["Injection", 10, "site", true],
+			["Pansement", 15, "site", true],
+			["Soins à domicile", 20, "home", false],
 		]);
 		typeB = nurseCalendar?.types[0]?.id ?? "";
 		await ownerB.calendar.replaceRules({
@@ -1386,6 +1409,192 @@ describe.skipIf(!url)("booking (database)", { timeout: 30_000 }, () => {
 			}),
 		);
 		expect(attempts).toBe(1);
+	});
+
+	it("books a home visit inside the service area, keeps the address encrypted and purges it", async () => {
+		const ownerB = staffCaller(users.ownerB);
+		const [nurseCalendar] = await ownerB.calendar.list({ organizationId: orgB });
+		const homeType = nurseCalendar?.types.find((type) => type.location === "home");
+		expect(homeType).toMatchObject({ travelMin: 15, active: false, serviceAreaCodes: [] });
+		if (!homeType) return;
+		const [inside, alsoInside, outside] = homeCodes as [string, string, string];
+		const save = (fields: { active: boolean; serviceAreaCodes: string[] }) =>
+			ownerB.calendar.saveType({
+				organizationId: orgB,
+				calendarId: calendarB,
+				typeId: homeType.id,
+				name: homeType.name,
+				durationMin: 20,
+				beforeMin: 0,
+				afterMin: 0,
+				audience: "all",
+				location: "home",
+				travelMin: 15,
+				...fields,
+			});
+
+		// No commune: it cannot be offered. An unknown commune is refused.
+		expect((await errorOf(save({ active: true, serviceAreaCodes: [] })))?.message).toBe(
+			"AREA_REQUIRED",
+		);
+		expect(
+			(await errorOf(save({ active: true, serviceAreaCodes: ["99999", inside] })))?.message,
+		).toBe("UNKNOWN_COMMUNE");
+		const saved = await save({ active: true, serviceAreaCodes: [alsoInside, inside, inside] });
+		expect(saved.serviceAreaCodes).toEqual([inside, alsoInside].sort());
+		expect(
+			(await ownerB.calendar.searchCommunes({ organizationId: orgB, q: inside })).map(
+				(commune) => commune.code,
+			),
+		).toEqual([inside]);
+
+		// The public options show the type at home, with the names of its communes.
+		const options = await patientCaller().booking.options({ practitionerId: ids.practitionerB });
+		const offered = options.calendars[0]?.types.find((type) => type.id === homeType.id);
+		expect(offered?.location).toBe("home");
+		expect(offered?.serviceArea.map((commune) => commune.name).sort()).toEqual([
+			"Commune Synthétique A",
+			"Commune Synthétique B",
+		]);
+		expect(JSON.stringify(options)).not.toContain("travelMin");
+
+		// Réunion, two Mondays ahead: 08:00 to 09:00 local (04:00 to 05:00 UTC).
+		const monday = new Date(base + 14 * DAY).toISOString().slice(0, 10);
+		const times = async (typeId: string) =>
+			(
+				await patientCaller().booking.slots({
+					calendarId: calendarB,
+					typeId,
+					fromDate: monday,
+					days: 1,
+				})
+			).slots.map((slot) => slot.toISOString().slice(11, 16));
+		expect(await times(homeType.id)).toEqual(["04:00", "04:15", "04:30"]);
+
+		const who = patient("home");
+		const street = `12 rue Domicile${run}\nBâtiment B, code 1234`;
+		const holdHome = async (homeAddress: { street: string; communeCode: string } | null) => {
+			const caller = patientCaller();
+			const result = await caller.booking.hold({
+				calendarId: calendarB,
+				typeId: homeType.id,
+				startsAt: new Date(`${monday}T04:00:00.000Z`),
+				patient: { ...who, homeAddress },
+				locale: "fr",
+				idempotencyKey: randomUUID(),
+				altcha: await proof(),
+			});
+			await settle();
+			return { caller, result };
+		};
+		// Checked before any slot is held: a commune outside the area, or no address at all.
+		expect((await errorOf(holdHome({ street, communeCode: outside })))?.message).toBe(
+			"OUTSIDE_AREA",
+		);
+		expect((await errorOf(holdHome(null)))?.message).toBe("INVALID_INPUT");
+		expect(
+			await db
+				.select({ id: appointments.id })
+				.from(appointments)
+				.where(eq(appointments.practitionerId, ids.practitionerB)),
+		).toHaveLength(0);
+
+		const { caller, result } = await holdHome({ street, communeCode: inside });
+		if (result.status !== "held") throw new Error("hold");
+		const verified = await caller.booking.verify({
+			holdId: result.holdId,
+			holdToken: result.holdToken,
+			code: lastCode(who.email),
+		});
+		await settle();
+		if (verified.status !== "confirmed") throw new Error(`verify: ${verified.status}`);
+
+		// The travel time after the visit (08:20 to 08:35 local) keeps the office care away too.
+		expect(await times(homeType.id)).toEqual([]);
+		expect(await times(typeB)).toEqual(["04:45"]);
+
+		// Stored encrypted under the organization's key, like every patient field.
+		const [row] = await db.select().from(appointments).where(eq(appointments.id, result.holdId));
+		expect(row?.location).toBe("home");
+		expect(row?.occupiedUntil.toISOString()).toBe(`${monday}T04:35:00.000Z`);
+		expect(row?.endsAt.toISOString()).toBe(`${monday}T04:20:00.000Z`);
+		expect(row?.patientAddressEnc).toMatch(/^enc:v1:/);
+		expect(row?.patientCommuneEnc).toMatch(/^enc:v1:/);
+		const opened = await readAppointmentPatients(
+			db,
+			{ organizationId: orgB, actor: "system:test", purpose: "test" },
+			[result.holdId],
+			["address", "commune"],
+		);
+		expect(opened.get(result.holdId)).toMatchObject({
+			address: `12 rue Domicile${run}\nBâtiment B, code 1234`,
+			commune: inside,
+		});
+		const columns = await db.execute<{ table_name: string; column_name: string }>(sql`
+			select table_name, column_name from information_schema.columns
+			where table_schema = 'care' and data_type in ('text', 'jsonb', 'ARRAY', 'character varying')
+		`);
+		for (const column of columns) {
+			const [found] = await db.execute<{ n: number }>(sql`
+				select count(*)::int as n from ${sql.raw(`care.${column.table_name}`)}
+				where ${sql.raw(`"${column.column_name}"`)}::text ilike ${`%Domicile${run}%`}
+			`);
+			expect(found?.n, `${column.table_name}.${column.column_name} holds the address`).toBe(0);
+		}
+
+		// The practice sees the address in its agenda, audited.
+		const agenda = await ownerB.agenda.list({
+			organizationId: orgB,
+			from: new Date(base + 13 * DAY),
+			to: new Date(base + 15 * DAY),
+		});
+		const entry = agenda.find((item) => item.id === result.holdId);
+		expect(entry?.location).toBe("home");
+		expect(entry?.patient?.home).toEqual({
+			street,
+			communeCode: inside,
+			communeName: "Commune Synthétique A",
+		});
+		const [audit] = await db
+			.select()
+			.from(auditEvents)
+			.where(and(eq(auditEvents.organizationId, orgB), eq(auditEvents.purpose, "agenda_list")))
+			.orderBy(sql`${auditEvents.id} desc`)
+			.limit(1);
+		expect(audit?.fields).toEqual(
+			expect.arrayContaining(["patient_address_enc", "patient_commune_enc"]),
+		);
+
+		// Emails and the manage page say "À domicile — <commune>", never the street.
+		const confirmation = mails.find(
+			(mail) => mail.to.includes(who.email) && mail.subject.startsWith("Rendez-vous confirmé"),
+		);
+		expect(confirmation?.text).toContain("À domicile — Commune Synthétique A");
+		expect(confirmation?.ics?.content).toContain("LOCATION:À domicile — Commune Synthétique A");
+		const notice = mails.find(
+			(mail) => mail.to.includes(`${users.ownerB}@example.test`) && /^Nouveau/.test(mail.subject),
+		);
+		expect(notice?.text).toContain("À domicile");
+		expect(notice?.text).not.toContain("Commune Synthétique");
+		for (const mail of mails) {
+			expect(`${mail.html}${mail.text}${mail.ics?.content ?? ""}`).not.toContain(`Domicile${run}`);
+			expect(mail.html).not.toContain("2 rue Exemple");
+		}
+		const managed = await patientCaller().booking.manage.get({ token: verified.manageToken });
+		expect(managed).toMatchObject({ location: "home", homeCommune: "Commune Synthétique A" });
+		expect(JSON.stringify(managed)).not.toContain(`Domicile${run}`);
+
+		// Erased with the rest of the patient's details at purge_after.
+		clock.now = (row?.purgeAfter?.getTime() ?? 0) + MINUTE;
+		await purge(db, clock.now);
+		const [erased] = await db.select().from(appointments).where(eq(appointments.id, result.holdId));
+		expect(erased).toMatchObject({
+			location: "home",
+			patientAddressEnc: null,
+			patientCommuneEnc: null,
+			patientFirstNameEnc: null,
+		});
+		expect(erased?.purgedAt).toBeInstanceOf(Date);
 	});
 
 	it("checks that the overlap constraint exists", async () => {

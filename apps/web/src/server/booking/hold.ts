@@ -26,6 +26,7 @@ import {
 import { BOOKING_LIMITS, bookingEnabled } from "./config";
 import { ensureBookingConstraints } from "./constraints";
 import { BookingError, isExclusionViolation, isUniqueViolation } from "./errors";
+import { checkHomeAddress, type HomeAddressInput } from "./home-visit";
 import { practitionerTransaction } from "./locks";
 import { refreshNextFreeLater } from "./next-free";
 import { enqueueOutbox } from "./outbox";
@@ -41,6 +42,8 @@ export interface PatientInput {
 	phone?: string | null;
 	/** Answer to "first visit with this practitioner?", when asked. */
 	isNew?: boolean | null;
+	/** Home visits: where the care happens (street, and a commune of the service area). */
+	homeAddress?: HomeAddressInput | null;
 }
 
 export interface HoldInput {
@@ -140,6 +143,8 @@ export async function hold(rt: BookingRuntime, input: HoldInput): Promise<HoldRe
 	const calendar = await findCalendar(rt.db, input.calendarId, { openOnly: true });
 	const type = await findType(rt.db, calendar.id, input.typeId);
 	const patient = validatePatient(input.patient, calendar.requirePhone);
+	// The service area is checked before any slot is held.
+	const home = checkHomeAddress(type, input.patient.homeAddress);
 	const startMs = input.startsAt.getTime();
 	if (!(await isOnGrid(rt.db, calendar, type, startMs, nowMs))) {
 		throw new BookingError("INVALID_SLOT");
@@ -238,6 +243,7 @@ export async function hold(rt: BookingRuntime, input: HoldInput): Promise<HoldRe
 				lastName: patient.lastName,
 				email: patient.email,
 				phone: patient.phone,
+				...(home ? { address: home.street, commune: home.communeCode } : {}),
 			});
 			await tx.insert(appointments).values({
 				id: appointmentId,
@@ -247,6 +253,7 @@ export async function hold(rt: BookingRuntime, input: HoldInput): Promise<HoldRe
 				appointmentTypeId: type.id,
 				kind: "appointment",
 				typeName: type.name,
+				location: home ? "home" : "site",
 				startsAt: new Date(startMs),
 				endsAt: new Date(endMs),
 				occupiedFrom: new Date(occupied.fromMs),

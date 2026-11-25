@@ -16,7 +16,15 @@ export type BookingErrorCode =
 	| "RESEND_LIMIT"
 	| "TRANSITION_REFUSED"
 	| "IDEMPOTENCY_CONFLICT"
-	| "AGENDA_NOT_READY";
+	| "AGENDA_NOT_READY"
+	/** A home visit asked for a commune outside the type's service area. */
+	| "OUTSIDE_AREA"
+	/** An active home visit without any commune. */
+	| "AREA_REQUIRED"
+	/** A service area code the directory does not hold. */
+	| "UNKNOWN_COMMUNE"
+	/** Communes around a site that has no position on the map. */
+	| "SITE_NOT_LOCATED";
 
 const TRPC_CODES: Record<BookingErrorCode, TRPCError["code"]> = {
 	BOOKING_DISABLED: "NOT_FOUND",
@@ -34,6 +42,10 @@ const TRPC_CODES: Record<BookingErrorCode, TRPCError["code"]> = {
 	TRANSITION_REFUSED: "CONFLICT",
 	IDEMPOTENCY_CONFLICT: "CONFLICT",
 	AGENDA_NOT_READY: "PRECONDITION_FAILED",
+	OUTSIDE_AREA: "BAD_REQUEST",
+	AREA_REQUIRED: "BAD_REQUEST",
+	UNKNOWN_COMMUNE: "BAD_REQUEST",
+	SITE_NOT_LOCATED: "PRECONDITION_FAILED",
 };
 
 export class BookingError extends Error {

@@ -1,3 +1,4 @@
+import { MAX_HOME_ADDRESS_LENGTH } from "@apercura/core/booking";
 import { z } from "zod";
 import { LOCALES } from "~/i18n/locales";
 import { BOOKING_LIMITS, BROWSER_COOKIE, bookingEnabled } from "~/server/booking/config";
@@ -23,6 +24,14 @@ const days = z.number().int().min(1).max(14);
 const holdRef = { holdId: z.uuid(), holdToken: z.string().regex(/^[A-Za-z0-9_-]{43}$/) };
 const manageToken = z.string().regex(/^[A-Za-z0-9_-]{43}$/);
 const name = z.string().trim().min(1).max(100);
+/** Home visits: the patient's street address and the INSEE code of their commune. */
+export const homeAddress = z.object({
+	street: z.string().trim().min(1).max(MAX_HOME_ADDRESS_LENGTH),
+	communeCode: z
+		.string()
+		.trim()
+		.regex(/^(\d{5}|2[ABab]\d{3})$/),
+});
 
 /** Public mutations: same-origin only. Queries never write booking data. */
 const publicMutation = publicProcedure.use(({ ctx, next }) => {
@@ -119,6 +128,7 @@ export const bookingRouter = createTRPCRouter({
 					email: z.string().trim().min(3).max(254),
 					phone: z.string().trim().max(32).nullish(),
 					isNew: z.boolean().nullish(),
+					homeAddress: homeAddress.nullish(),
 				}),
 				locale: z.enum(LOCALES),
 				idempotencyKey: z.uuid(),
