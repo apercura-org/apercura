@@ -162,8 +162,11 @@ services:
     environment:
       <<: [*app-env, *etl-env]
       ETL_SCHEDULE_ARGS: ${ETL_SCHEDULE_ARGS:-}
-      # The audit log retention's own role (docker/postgres/10-apercura-roles.sh); empty: skipped.
-      DATABASE_URL_JOBS: ${APERCURA_JOBS_DB_PASSWORD:+postgres://apercura_jobs:${APERCURA_JOBS_DB_PASSWORD}@postgres:5432/apercura}
+      # The audit log retention's own role (docker/postgres/10-apercura-roles.sh): the entry
+      # point builds DATABASE_URL_JOBS from the password unless a URL is given; both empty:
+      # skipped.
+      APERCURA_JOBS_DB_PASSWORD: ${APERCURA_JOBS_DB_PASSWORD:-}
+      DATABASE_URL_JOBS: ${DATABASE_URL_JOBS:-}
     depends_on:
       migrate:
         condition: service_completed_successfully

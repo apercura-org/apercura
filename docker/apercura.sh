@@ -21,6 +21,20 @@ Any other command runs as is (for example `sh`).
 EOF
 }
 
+# The audit log retention's own role: build its URL from APERCURA_JOBS_DB_PASSWORD (set by
+# docker/compose.selfhost.yml) unless DATABASE_URL_JOBS is given. Both empty: left unset, and
+# the jobs skip that purge with a warning. Never printed.
+jobs_database_url() {
+	if [ -z "${DATABASE_URL_JOBS:-}" ]; then
+		if [ -n "${APERCURA_JOBS_DB_PASSWORD:-}" ]; then
+			DATABASE_URL_JOBS="postgres://apercura_jobs:${APERCURA_JOBS_DB_PASSWORD}@${APERCURA_DB_HOST:-postgres}:5432/${APERCURA_DB_NAME:-apercura}"
+			export DATABASE_URL_JOBS
+		else
+			unset DATABASE_URL_JOBS
+		fi
+	fi
+}
+
 command="${1:-serve}"
 [ "$#" -gt 0 ] && shift
 
@@ -32,6 +46,7 @@ migrate | db:migrate)
 	exec bun /app/cli/migrate.js "$@"
 	;;
 jobs | jobs:tick)
+	jobs_database_url
 	exec bun /app/cli/jobs.js "$@"
 	;;
 etl:fr | etl:places | etl:outbox)
@@ -43,6 +58,8 @@ etl:fr | etl:places | etl:outbox)
 	exec bun /app/cli/etl.js "$command" "$@"
 	;;
 scheduler)
+	# Exported before exec: supercronic and its jobs inherit it.
+	jobs_database_url
 	exec supercronic -passthrough-logs /app/crontab
 	;;
 keys)

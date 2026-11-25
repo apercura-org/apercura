@@ -242,6 +242,22 @@ workflow** deploys by hand: the head of `main`, or an older sha of `main`.
 Deploying an older sha is only safe when no migration came in between. Without
 `DEPLOY_HOST` (forks) the job does nothing.
 
+## Under Coolify
+
+The same stack also runs under [Coolify](https://coolify.io) as a "Docker
+Compose" application pointed at `docker/compose.selfhost.yml`:
+
+- the variables of the environment file are set in Coolify, not in a file on
+  the server (`APERCURA_JOBS_DB_PASSWORD` before the first start, as above);
+- the domain goes on the `app` service, port `3000`;
+- Coolify's Traefik is the only proxy: no Caddy on the host, and
+  `TRUSTED_PROXY_COUNT=1`;
+- Coolify builds and restarts the stack itself, in place of
+  `docker/deploy-vps.sh` and the deploy from GitHub Actions (leave
+  `DEPLOY_HOST` unset); the override file `docker/compose.vps.yml` is not
+  used. Backups and alerts are still needed
+  (the sections below, adapted to the containers Coolify names).
+
 ## Backups
 
 Three things, daily, as in [Backups and restore](./self-hosting.md#backups-and-restore):

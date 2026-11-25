@@ -82,8 +82,9 @@ overlap constraint is missing, and in production with an `SMTP_URL` that breaks 
 
 ## Self-hosting (`docker/compose.selfhost.yml`)
 
-The Compose file builds the connection URLs and passes the variables above to
-each service; these only exist there (template: `docker/.env.selfhost.example`,
+The Compose file builds the connection URLs (the image's entry point builds
+`DATABASE_URL_JOBS`, unless it is set) and passes the variables above to each
+service; these only exist there (template: `docker/.env.selfhost.example`,
 guide: `docs/self-hosting.md`).
 
 | Variable                                               | Role                                                                                                          |
@@ -91,7 +92,7 @@ guide: `docs/self-hosting.md`).
 | `POSTGRES_PASSWORD`                                    | Superuser of the database container, used by the migrations only.                                             |
 | `APERCURA_APP_DB_PASSWORD`, `APERCURA_ETL_DB_PASSWORD` | Passwords of `apercura_app` and `apercura_etl`, set by `docker/postgres/10-apercura-roles.sh` on first start. |
 | `APERCURA_READONLY_DB_PASSWORD`                        | Optional; empty leaves `apercura_readonly` without login.                                                     |
-| `APERCURA_JOBS_DB_PASSWORD`                            | Optional; set, `apercura_jobs` can log in and the scheduler gets `DATABASE_URL_JOBS` (audit log retention).   |
+| `APERCURA_JOBS_DB_PASSWORD`                            | Optional; set, `apercura_jobs` can log in and the image builds the scheduler's `DATABASE_URL_JOBS` from it.   |
 | `MINIO_ROOT_USER`, `MINIO_ROOT_PASSWORD`               | MinIO administrator; `minio-init` creates the bucket and the app's key (`S3_ACCESS_KEY_ID`) limited to it.    |
 | `APP_BIND`, `APP_PORT`                                 | Host address and port the app is published on (default `127.0.0.1:3000`).                                     |
 | `MAILPIT_UI_PORT`                                      | Host port of Mailpit's web UI (profile `dev`, with `SMTP_ALLOW_INSECURE=true`).                               |
