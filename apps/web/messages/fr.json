@@ -3331,7 +3331,8 @@
 			"excluded": "Les robots et les aperçus de liens ne sont pas comptés, un même visiteur l’est une fois par demi-heure au plus, et les navigateurs qui demandent à ne pas être suivis ne le sont pas du tout : les chiffres sont un ordre de grandeur.",
 			"kept": "Les totaux par jour sont conservés {months} mois, puis supprimés."
 		},
-		"shareLink": "Faire connaître la page : le kit de partage"
+		"shareLink": "Faire connaître la page : le kit de partage",
+		"countedSince": "Comptées depuis le {date}, jour où votre revendication a été vérifiée : les consultations d’avant ne vous sont pas montrées."
 	},
 	"Share": {
 		"metaTitle": "Partager ma page · Espace praticien · Apercura",

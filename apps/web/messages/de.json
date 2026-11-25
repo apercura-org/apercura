@@ -3331,7 +3331,8 @@
 			"excluded": "Roboter und Link-Vorschauen werden nicht gezählt, dieselbe Person höchstens einmal pro halbe Stunde, und Browser, die nicht verfolgt werden möchten, gar nicht: Die Zahlen sind eine Größenordnung.",
 			"kept": "Die Tagessummen werden {months} Monate aufbewahrt und dann gelöscht."
 		},
-		"shareLink": "Die Seite bekannt machen: das Teilen-Paket"
+		"shareLink": "Die Seite bekannt machen: das Teilen-Paket",
+		"countedSince": "Gezählt seit dem {date}, dem Tag, an dem Ihre Beanspruchung verifiziert wurde: Frühere Aufrufe werden Ihnen nicht angezeigt."
 	},
 	"Share": {
 		"metaTitle": "Meine Seite teilen · Bereich für Gesundheitsfachkräfte · Apercura",

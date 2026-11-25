@@ -205,6 +205,23 @@ describe.skipIf(!url)("owner experience (database)", async () => {
 				visitor.practitionerContact.submit({ ...input, rpps: owned.rpps, altcha: await proof() }),
 			),
 		).toBe("CLAIMED");
+		// A page withheld by an objection answers like an unknown one, and stores nothing.
+		const withheld = await practitioner();
+		await db.$client`UPDATE directory.practitioners SET withheld_at = now() WHERE id = ${withheld.id}`;
+		expect(
+			await codeOf(
+				visitor.practitionerContact.submit({
+					...input,
+					rpps: withheld.rpps,
+					altcha: await proof(),
+				}),
+			),
+		).toBe("NOT_FOUND");
+		const none = await db
+			.select({ id: practitionerContactRequests.id })
+			.from(practitionerContactRequests)
+			.where(eq(practitionerContactRequests.practitionerId, withheld.id));
+		expect(none).toEqual([]);
 		expect(
 			await codeOf(
 				visitor.practitionerContact.submit({
@@ -318,7 +335,8 @@ describe.skipIf(!url)("owner experience (database)", async () => {
 		// …and the tick after the interval sends one email for what came meanwhile.
 		const later = await alerts.sendAdminAlerts(db, t0 + 16 * 60_000, { env, send });
 		expect(later.contact_requests).toEqual({ status: "sent", count: 2 });
-		expect(sent).toHaveLength(2);
+		// (The claims queue may have news from the claims suite running alongside: ignore it.)
+		expect(sent.filter((message) => message.kind === "contact_requests")).toHaveLength(2);
 		// Nothing new: nothing sent, however long it waits.
 		expect(
 			(await alerts.sendAdminAlert(db, "contact_requests", { nowMs: t0 + 90 * 60_000, env, send }))
@@ -348,6 +366,8 @@ describe.skipIf(!url)("owner experience (database)", async () => {
 		const page = await practitioner();
 		const sent: AdminAlertMessage[] = [];
 		const env = { ADMIN_NOTIFY_EMAIL: "admins@apercura.example" };
+		// The batching test above may have used the claims slot (`sendAdminAlerts`): start afresh.
+		await db.delete(adminAlerts).where(eq(adminAlerts.kind, "claims"));
 		await db.insert(claims).values({
 			id: randomUUID(),
 			practitionerId: page.id,
@@ -402,6 +422,16 @@ describe.skipIf(!url)("owner experience (database)", async () => {
 			{ practitionerId: owned.id, day: daysAgo(3), views: 2 },
 			{ practitionerId: owned.id, day: daysAgo(40), views: 9 },
 		]);
+		// The current owner was verified 60 days ago: every view above is theirs.
+		const claimId = randomUUID();
+		await db.insert(claims).values({
+			id: claimId,
+			practitionerId: owned.id,
+			userId: users.owner,
+			status: "verified",
+			submittedAt: new Date(now - 61 * DAY),
+			verifiedAt: new Date(now - 60 * DAY),
+		});
 		const [site] = await db.$client<{ id: number }[]>`
 			INSERT INTO directory.sites (source, source_key, kind, name, address_line, postcode, location, geo_precision)
 			VALUES ('ans', ${`stats-${run}`}, 'office', 'Cabinet Exemple', '1 rue de l’Exemple', '99999',
@@ -438,7 +468,7 @@ describe.skipIf(!url)("owner experience (database)", async () => {
 			.insert(appointments)
 			.values([slot(0, "online", true), slot(1, "online", true), slot(2, "practice", true)]);
 
-		const daily = await stats.dailyViews(db, owned.id, now);
+		const daily = await stats.dailyViews(db, owned.id, now, daysAgo(60));
 		expect(daily).toHaveLength(stats.STATS_DAYS);
 		expect(daily.at(-1)).toEqual({ day: today, views: 4 });
 		expect(daily.reduce((sum, day) => sum + day.views, 0)).toBe(6);
@@ -453,6 +483,25 @@ describe.skipIf(!url)("owner experience (database)", async () => {
 		expect(booking?.done).toBe(true);
 		expect(result.completion.items.find((item) => item.key === "hours")?.done).toBe(false);
 		expect(JSON.stringify(result)).not.toMatch(/patient|email/i);
+
+		expect(result.countedSince).toBe(daysAgo(60));
+
+		// The page changed hands two days ago: the new owner never sees the former owner's views.
+		await db
+			.update(claims)
+			.set({ verifiedAt: new Date(now - 2 * DAY) })
+			.where(eq(claims.id, claimId));
+		const handedOver = await caller(users.owner).stats.page({ organizationId: orgId });
+		expect(handedOver.countedSince).toBe(daysAgo(2));
+		expect(handedOver.totals.viewsLast30Days).toBe(4);
+		expect(handedOver.weekly.reduce((sum, week) => sum + week.views, 0)).toBe(4);
+		expect(handedOver.daily.find((day) => day.day === daysAgo(3))?.views).toBe(0);
+		// Without a verified claim, no view is shown at all.
+		await db.update(claims).set({ status: "superseded" }).where(eq(claims.id, claimId));
+		const unverified = await caller(users.owner).stats.page({ organizationId: orgId });
+		expect(unverified.countedSince).toBeNull();
+		expect(unverified.totals.viewsLast30Days).toBe(0);
+		await db.delete(claims).where(eq(claims.id, claimId));
 
 		// Assistants run the agenda, not the page: no statistics.
 		expect(await codeOf(caller(users.assistant).stats.page({ organizationId: orgId }))).toBe(

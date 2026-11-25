@@ -6,6 +6,7 @@ import {
 	optedOut,
 	shouldCountView,
 	ViewLimiter,
+	viewBucket,
 } from "./page-views";
 
 const BROWSER =
@@ -57,9 +58,12 @@ describe("page views: who counts", () => {
 		expect(fromOurPage(headers({ "sec-fetch-site": "same-origin" }))).toBe(true);
 		expect(fromOurPage(headers({ "sec-fetch-site": "cross-site" }))).toBe(false);
 		expect(fromOurPage(headers({ "sec-fetch-site": "same-site" }))).toBe(false);
-		expect(fromOurPage(headers({ "sec-purpose": "prefetch" }))).toBe(false);
-		// Old browsers send no Sec-Fetch-Site: the limits still apply.
-		expect(fromOurPage(headers({}))).toBe(true);
+		expect(
+			fromOurPage(headers({ "sec-fetch-site": "same-origin", "sec-purpose": "prefetch" })),
+		).toBe(false);
+		// Without Sec-Fetch-Site the request is a script or an old browser: not counted.
+		expect(fromOurPage(headers({}))).toBe(false);
+		expect(fromOurPage(headers({ "sec-fetch-site": "none" }))).toBe(false);
 	});
 });
 
@@ -75,10 +79,16 @@ describe("page views: limits kept in memory", () => {
 		expect(limiter.allow("203.0.113.7", 1, now + 31 * 60_000)).toBe(true);
 	});
 
-	it("treats an IPv6 /64 as one visitor", () => {
+	it("treats an IPv6 /48 as one visitor, an IPv4 address as one", () => {
+		expect(viewBucket("2001:db8:1:2::10")).toBe("2001:db8:1::/48");
+		expect(viewBucket("2001:0db8:0001:ffff:1:2:3:4")).toBe("2001:db8:1::/48");
+		expect(viewBucket("::ffff:203.0.113.9")).toBe("203.0.113.9");
+		expect(viewBucket("203.0.113.9")).toBe("203.0.113.9");
 		const limiter = new ViewLimiter();
 		expect(limiter.allow("2001:db8:1:2::10", 1, now)).toBe(true);
-		expect(limiter.allow("2001:db8:1:2::99", 1, now)).toBe(false);
+		// Another /64 of the same /48: the same visitor.
+		expect(limiter.allow("2001:db8:1:99::1", 1, now)).toBe(false);
+		expect(limiter.allow("2001:db8:2::1", 1, now)).toBe(true);
 	});
 
 	it("caps one visitor at 30 counted views an hour across pages", () => {
@@ -90,10 +100,13 @@ describe("page views: limits kept in memory", () => {
 		expect(counted).toBe(DEFAULT_VIEW_LIMITS.perClientPerHour);
 	});
 
-	it("caps a page when visitors cannot be told apart (no trusted proxy)", () => {
-		const limiter = new ViewLimiter({ ...DEFAULT_VIEW_LIMITS, perPageWithoutClientPerHour: 3 });
-		const results = Array.from({ length: 5 }, (_, index) => limiter.allow(null, 9, now + index));
-		expect(results).toEqual([true, true, true, false, false]);
+	it("never counts when visitors cannot be told apart (no trusted proxy)", () => {
+		const limiter = new ViewLimiter();
+		expect(limiter.allow(null, 9, now)).toBe(false);
+		expect(limiter.size).toBe(0);
+		expect(shouldCountView(visit("203.0.113.30"), 9, now, { limiter, trustedProxies: "0" })).toBe(
+			false,
+		);
 	});
 
 	it("forgets everything at the change of day (a new random key)", () => {
@@ -102,12 +115,21 @@ describe("page views: limits kept in memory", () => {
 		expect(limiter.allow("203.0.113.7", 1, now + 24 * 3_600_000)).toBe(true);
 	});
 
-	it("stays bounded under a flood of distinct addresses", () => {
+	it("stays bounded under a flood, without resetting the limits of those already counted", () => {
 		const limiter = new ViewLimiter({ ...DEFAULT_VIEW_LIMITS, maxEntries: 100 });
+		// A visitor counted once, then a flood of distinct addresses fills the map.
+		expect(limiter.allow("198.51.100.77", 1, now)).toBe(true);
+		let counted = 0;
 		for (let index = 0; index < 1_000; index++) {
-			limiter.allow(`10.0.${Math.floor(index / 250)}.${index % 250}`, 1, now);
+			if (limiter.allow(`10.0.${Math.floor(index / 250)}.${index % 250}`, 1, now)) counted++;
 		}
 		expect(limiter.size).toBeLessThanOrEqual(100);
+		// Full: newcomers stop counting instead of pushing anyone out…
+		expect(counted).toBeLessThan(100);
+		// …so the first visitor's window is still there and a reload does not count again.
+		expect(limiter.allow("198.51.100.77", 1, now + 60_000)).toBe(false);
+		// Once the windows elapse, the map makes room again.
+		expect(limiter.allow("192.0.2.1", 1, now + 2 * 3_600_000)).toBe(true);
 	});
 
 	it("puts every rule together", () => {
@@ -115,6 +137,10 @@ describe("page views: limits kept in memory", () => {
 		const options = { limiter, trustedProxies: "1" };
 		expect(shouldCountView(visit("203.0.113.20"), 5, now, options)).toBe(true);
 		expect(shouldCountView(visit("203.0.113.20"), 5, now, options)).toBe(false);
+		// Without Sec-Fetch-Site (a script): not counted.
+		const bare = visit("203.0.113.24");
+		bare.delete("sec-fetch-site");
+		expect(shouldCountView(bare, 5, now, options)).toBe(false);
 		expect(shouldCountView(visit("203.0.113.21", { dnt: "1" }), 5, now, options)).toBe(false);
 		expect(
 			shouldCountView(visit("203.0.113.22", { "sec-fetch-site": "cross-site" }), 5, now, options),

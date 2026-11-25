@@ -226,6 +226,12 @@ test("a claimed page counts its views without cookies and keeps the opt-out", as
 			UPDATE directory.practitioners SET claim_status = 'claimed', owner_org_id = ${org}
 			WHERE id = ${ownedId}
 		`;
+		// Verified yesterday: the owner's statistics start that day.
+		await sql`
+			INSERT INTO directory.claims (id, practitioner_id, user_id, status, submitted_at, verified_at)
+			VALUES (${randomUUID()}, ${ownedId}, ${user?.id ?? ""}, 'verified',
+				now() - interval '1 day', now() - interval '1 day')
+		`;
 		await sql`SELECT directory.refresh_practitioner(${[ownedId]}::integer[])`;
 	} finally {
 		await sql.end();
@@ -317,6 +323,9 @@ test("the owner sees the statistics, the checklist and the dashboard summary", a
 		"/fr/pro/page",
 	);
 	await expect(page.getByText(/sans cookie ni identifiant/)).toBeVisible();
+	await expect(
+		page.getByText(/^Comptées depuis le .+, jour où votre revendication a été vérifiée/),
+	).toBeVisible();
 	await expectNoAxeViolations(page);
 	await capture(page, "owner-stats");
 	await capture(page, "owner-stats-checklist", checklist);

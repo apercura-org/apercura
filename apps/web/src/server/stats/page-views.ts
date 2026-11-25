@@ -2,7 +2,6 @@ import { createHmac, randomBytes } from "node:crypto";
 import type { Database } from "@apercura/db";
 import { sql } from "drizzle-orm";
 import { resolveClientIp, trustedProxyCount } from "../auth/client-ip";
-import { ipBucket } from "../rate-limit-key";
 
 /*
  * Page views of claimed practitioner pages, for their owners: one counter per page and day, and
@@ -12,10 +11,12 @@ import { ipBucket } from "../rate-limit-key";
  *
  * Abuse is kept out in memory only: a visitor's address is turned into a keyed hash whose key is
  * random, held by this process alone and replaced every day, so even the in-memory buckets cannot
- * be linked to an address or across days. Within a bucket, one view per page every 30 minutes
- * counts, and 30 views an hour across pages; crawlers, link previews and monitoring tools are left
- * out by their user agent, and browsers that ask not to be tracked (Global Privacy Control, Do Not
- * Track) are not counted.
+ * be linked to an address or across days. A bucket is an IPv4 address or an IPv6 /48 (what one
+ * subscriber or one cheap server can rotate through). Within a bucket, one view per page every
+ * 30 minutes counts, and 30 views an hour across pages. Nothing counts when the visitor's address
+ * is unknown (no trusted proxy), when the request does not say it comes from our own page, from
+ * crawlers, link previews and monitoring tools, or from browsers that ask not to be tracked
+ * (Global Privacy Control, Do Not Track). The figures under-count rather than over-count.
  */
 
 /** Crawlers, link previews, monitoring, headless browsers and HTTP libraries. */
@@ -33,13 +34,13 @@ export function optedOut(headers: Headers): boolean {
 }
 
 /**
- * Only our own pages may count: browsers send `Sec-Fetch-Site` with every request, and a beacon
- * from another site (an attempt to inflate a page's figures) says `cross-site`. A prefetch is not
- * a view either.
+ * Only our own pages may count: browsers send `Sec-Fetch-Site` with every request, and our beacon
+ * says `same-origin`. A beacon from another site says `cross-site`, and a request without the
+ * header is not from a current browser on our page (a script, an old browser): neither counts. A
+ * prefetch is not a view either.
  */
 export function fromOurPage(headers: Headers): boolean {
-	const site = headers.get("sec-fetch-site");
-	if (site !== null && site !== "same-origin") return false;
+	if (headers.get("sec-fetch-site") !== "same-origin") return false;
 	const purpose = headers.get("sec-purpose") ?? headers.get("purpose");
 	return !purpose?.includes("prefetch");
 }
@@ -49,18 +50,35 @@ export interface ViewLimits {
 	samePageSeconds: number;
 	/** Views per bucket and hour, across pages. */
 	perClientPerHour: number;
-	/** Views of one page per hour when visitors cannot be told apart (no trusted proxy). */
-	perPageWithoutClientPerHour: number;
-	/** Bound of the in-memory map. */
+	/** Bound of the in-memory map: once full, new buckets do not count until windows expire. */
 	maxEntries: number;
 }
 
 export const DEFAULT_VIEW_LIMITS: ViewLimits = {
 	samePageSeconds: 30 * 60,
 	perClientPerHour: 30,
-	perPageWithoutClientPerHour: 120,
 	maxEntries: 50_000,
 };
+
+/**
+ * The bucket of an address: an IPv4 address itself (IPv4-mapped IPv6 included), or the /48
+ * prefix of an IPv6 address, the usual allocation of one site: a single subscriber or server
+ * cannot multiply its budget by walking its own addresses.
+ */
+export function viewBucket(ip: string): string {
+	const mapped = /^::ffff:(\d+\.\d+\.\d+\.\d+)$/i.exec(ip);
+	if (mapped?.[1]) return mapped[1];
+	if (!ip.includes(":")) return ip;
+	const [head = "", tail] = ip.toLowerCase().split("::");
+	const left = head ? head.split(":") : [];
+	const right = tail === undefined ? [] : tail ? tail.split(":") : [];
+	const missing = Math.max(0, 8 - left.length - right.length);
+	const groups = [...left, ...Array<string>(missing).fill("0"), ...right];
+	return `${groups
+		.slice(0, 3)
+		.map((group) => group.replace(/^0+(?=.)/, ""))
+		.join(":")}::/48`;
+}
 
 interface Window {
 	count: number;
@@ -86,46 +104,38 @@ export class ViewLimiter {
 			this.keyDay = day;
 			this.windows.clear();
 		}
-		return createHmac("sha256", this.key).update(ipBucket(ip)).digest("base64url");
+		return createHmac("sha256", this.key).update(viewBucket(ip)).digest("base64url");
 	}
 
+	/**
+	 * Counts one hit against `key`. A bucket the map does not hold yet only gets a window while
+	 * there is room: a flood of new addresses fills the map and then stops counting, it never
+	 * pushes out (and so resets) the windows of the buckets already there.
+	 */
 	private hit(key: string, max: number, seconds: number, nowMs: number): boolean {
 		const current = this.windows.get(key);
-		if (!current || current.until <= nowMs) {
-			this.windows.set(key, { count: 1, until: nowMs + seconds * 1_000 });
-			return true;
+		if (current && current.until > nowMs) {
+			current.count += 1;
+			return current.count <= max;
 		}
-		current.count += 1;
-		return current.count <= max;
+		if (!current && this.windows.size >= this.limits.maxEntries) return false;
+		this.windows.set(key, { count: 1, until: nowMs + seconds * 1_000 });
+		return true;
 	}
 
+	/** Drops the elapsed windows once the map is full. */
 	private sweep(nowMs: number) {
 		if (this.windows.size < this.limits.maxEntries) return;
 		for (const [key, window] of this.windows) {
 			if (window.until <= nowMs) this.windows.delete(key);
 		}
-		// Still full (a flood of distinct addresses): forget the oldest half.
-		if (this.windows.size >= this.limits.maxEntries) {
-			let drop = Math.ceil(this.windows.size / 2);
-			for (const key of this.windows.keys()) {
-				if (drop-- <= 0) break;
-				this.windows.delete(key);
-			}
-		}
 	}
 
-	/** Whether this view counts. `ip` null: visitors cannot be told apart. */
+	/** Whether this view counts. `ip` null (visitors cannot be told apart): never. */
 	allow(ip: string | null, practitionerId: number, nowMs: number): boolean {
-		this.sweep(nowMs);
-		if (ip === null) {
-			return this.hit(
-				`page:${practitionerId}`,
-				this.limits.perPageWithoutClientPerHour,
-				3_600,
-				nowMs,
-			);
-		}
+		if (ip === null) return false;
 		const bucket = this.bucketOf(ip, nowMs);
+		this.sweep(nowMs);
 		if (!this.hit(`client:${bucket}`, this.limits.perClientPerHour, 3_600, nowMs)) return false;
 		return this.hit(`seen:${bucket}:${practitionerId}`, 1, this.limits.samePageSeconds, nowMs);
 	}

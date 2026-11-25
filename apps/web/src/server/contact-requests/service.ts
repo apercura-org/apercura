@@ -36,8 +36,9 @@ const TABLE = "practitioner_contact_requests";
 const COLUMN = "content_enc";
 
 /**
- * Stores a request about the active page of `rpps`, encrypted. A claimed page already has a
- * verified owner: it answers `CLAIMED`, and the form says to use the claim's contest instead.
+ * Stores a request about the active page of `rpps`, encrypted. An unknown, inactive or withheld
+ * page answers `NOT_FOUND`; a claimed page already has a verified owner: it answers `CLAIMED`, and
+ * the form says to use the claim's contest instead.
  */
 export async function submitContactRequest(
 	db: Database,
@@ -49,6 +50,7 @@ export async function submitContactRequest(
 			id: practitioners.id,
 			status: practitioners.status,
 			claimStatus: practitioners.claimStatus,
+			withheldAt: practitioners.withheldAt,
 		})
 		.from(practitioners)
 		.where(
@@ -59,7 +61,11 @@ export async function submitContactRequest(
 			),
 		)
 		.limit(1);
-	if (practitioner?.status !== "active") throw new ContactRequestError("NOT_FOUND");
+	// A page withheld by an objection (GDPR art. 21) answers as if it did not exist: the
+	// objection is not disclosed, and nothing new is collected about the page meanwhile.
+	if (practitioner?.status !== "active" || practitioner.withheldAt !== null) {
+		throw new ContactRequestError("NOT_FOUND");
+	}
 	if (practitioner.claimStatus === "claimed") throw new ContactRequestError("CLAIMED");
 	const id = randomUUID();
 	const content: ContactRequestContent = {

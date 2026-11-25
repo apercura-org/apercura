@@ -106,6 +106,11 @@ async function Stats({ locale }: { locale: Locale }) {
 				<h2 id="stats-daily" className={sectionHeading}>
 					{t("dailyHeading")}
 				</h2>
+				{stats.countedSince ? (
+					<p className="max-w-[65ch] text-meta text-ink-muted">
+						{t("countedSince", { date: long(stats.countedSince) })}
+					</p>
+				) : null}
 				{stats.totals.viewsLast30Days === 0 ? (
 					<p className="max-w-[65ch] text-body text-ink">{t("noViews")}</p>
 				) : (

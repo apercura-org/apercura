@@ -3331,7 +3331,8 @@
 			"excluded": "I robot e le anteprime dei link non sono contati, uno stesso visitatore è contato al massimo una volta ogni mezz’ora e i browser che chiedono di non essere tracciati non sono contati affatto: le cifre sono un ordine di grandezza.",
 			"kept": "I totali giornalieri sono conservati {months} mesi, poi eliminati."
 		},
-		"shareLink": "Far conoscere la pagina: il kit di condivisione"
+		"shareLink": "Far conoscere la pagina: il kit di condivisione",
+		"countedSince": "Contate dal {date}, giorno in cui la sua rivendicazione è stata verificata: le visite precedenti non le vengono mostrate."
 	},
 	"Share": {
 		"metaTitle": "Condividere la mia pagina · Area professionisti · Apercura",

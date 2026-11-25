@@ -3331,7 +3331,8 @@
 			"excluded": "Robots and link previews are not counted, a visitor is counted once every half hour at most, and browsers that ask not to be tracked are not counted at all: the figures are an order of magnitude.",
 			"kept": "Daily totals are kept {months} months, then deleted."
 		},
-		"shareLink": "Make the page known: the share kit"
+		"shareLink": "Make the page known: the share kit",
+		"countedSince": "Counted since {date}, the day your claim was verified: views from before are not shown to you."
 	},
 	"Share": {
 		"metaTitle": "Share my page · Practitioner space · Apercura",
