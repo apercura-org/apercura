@@ -1,6 +1,27 @@
 import { defineRouting } from "next-intl/routing";
 import { DEFAULT_LOCALE, LOCALE_PREFIXES, LOCALES } from "./locales";
 
+type Pathnames = Record<
+	string,
+	string | Record<Exclude<(typeof LOCALES)[number], "de-AT">, string>
+>;
+
+/**
+ * Austria's paths (`de-AT`): the German ones, with a doctor's page under `/arzt` (every
+ * practitioner of its sources is a doctor or a dentist). Derived, not listed, so the table
+ * every client island ships stays the size of France's.
+ */
+function withAustria<T extends Pathnames>(pathnames: T) {
+	return Object.fromEntries(
+		Object.entries(pathnames).map(([key, value]) => [
+			key,
+			typeof value === "string"
+				? value
+				: { ...value, "de-AT": value.de.replace("/behandler/", "/arzt/") },
+		]),
+	) as { [K in keyof T]: T[K] extends string ? T[K] : T[K] & { "de-AT": string } };
+}
+
 export const routing = defineRouting({
 	locales: LOCALES,
 	defaultLocale: DEFAULT_LOCALE,
@@ -16,10 +37,9 @@ export const routing = defineRouting({
 	/**
 	 * Internal (French) pathnames and their forms in the other locales. Listing
 	 * pages keep their market's slugs in every locale: they are data, not interface
-	 * text. Austria (`at`) has the German forms, with `/arzt/…` for a doctor's page
-	 * (every practitioner of its sources is a doctor or a dentist).
+	 * text. Austria's are derived from the German ones (`withAustria`).
 	 */
-	pathnames: {
+	pathnames: withAustria({
 		"/": "/",
 		"/pro": "/pro",
 		// Practitioner space: the same French paths in every locale (never indexed).
@@ -56,13 +76,11 @@ export const routing = defineRouting({
 			de: "/suche",
 			es: "/buscar",
 			it: "/cerca",
-			"de-AT": "/suche",
 		},
 		"/praticien/[slug]": {
 			fr: "/praticien/[slug]",
 			en: "/practitioner/[slug]",
 			de: "/behandler/[slug]",
-			"de-AT": "/arzt/[slug]",
 			es: "/profesional/[slug]",
 			it: "/professionista/[slug]",
 		},
@@ -70,7 +88,6 @@ export const routing = defineRouting({
 			fr: "/praticien/[slug]/signaler",
 			en: "/practitioner/[slug]/report",
 			de: "/behandler/[slug]/meldung",
-			"de-AT": "/arzt/[slug]/meldung",
 			es: "/profesional/[slug]/notificacion",
 			it: "/professionista/[slug]/segnalazione",
 		},
@@ -78,7 +95,6 @@ export const routing = defineRouting({
 			fr: "/praticien/[slug]/retrait",
 			en: "/practitioner/[slug]/removal",
 			de: "/behandler/[slug]/entfernung",
-			"de-AT": "/arzt/[slug]/entfernung",
 			es: "/profesional/[slug]/retirada",
 			it: "/professionista/[slug]/rimozione",
 		},
@@ -87,7 +103,6 @@ export const routing = defineRouting({
 			fr: "/praticien/[slug]/c-est-moi",
 			en: "/practitioner/[slug]/this-is-me",
 			de: "/behandler/[slug]/das-bin-ich",
-			"de-AT": "/arzt/[slug]/das-bin-ich",
 			es: "/profesional/[slug]/soy-yo",
 			it: "/professionista/[slug]/sono-io",
 		},
@@ -95,7 +110,6 @@ export const routing = defineRouting({
 			fr: "/etablissement/[slug]",
 			en: "/establishment/[slug]",
 			de: "/einrichtung/[slug]",
-			"de-AT": "/einrichtung/[slug]",
 			es: "/centro/[slug]",
 			it: "/struttura/[slug]",
 		},
@@ -103,7 +117,6 @@ export const routing = defineRouting({
 			fr: "/annuaire",
 			en: "/directory",
 			de: "/verzeichnis",
-			"de-AT": "/verzeichnis",
 			es: "/directorio",
 			it: "/elenco",
 		},
@@ -111,7 +124,6 @@ export const routing = defineRouting({
 			fr: "/annuaire/[dept]",
 			en: "/directory/[dept]",
 			de: "/verzeichnis/[dept]",
-			"de-AT": "/verzeichnis/[dept]",
 			es: "/directorio/[dept]",
 			it: "/elenco/[dept]",
 		},
@@ -119,7 +131,6 @@ export const routing = defineRouting({
 			fr: "/annuaire/[dept]/[commune]",
 			en: "/directory/[dept]/[commune]",
 			de: "/verzeichnis/[dept]/[commune]",
-			"de-AT": "/verzeichnis/[dept]/[commune]",
 			es: "/directorio/[dept]/[commune]",
 			it: "/elenco/[dept]/[commune]",
 		},
@@ -129,7 +140,6 @@ export const routing = defineRouting({
 			fr: "/a-propos",
 			en: "/about",
 			de: "/ueber-uns",
-			"de-AT": "/ueber-uns",
 			es: "/acerca-de",
 			it: "/chi-siamo",
 		},
@@ -143,13 +153,11 @@ export const routing = defineRouting({
 			de: "/daten",
 			es: "/datos",
 			it: "/dati",
-			"de-AT": "/daten",
 		},
 		"/accessibilite": {
 			fr: "/accessibilite",
 			en: "/accessibility",
 			de: "/barrierefreiheit",
-			"de-AT": "/barrierefreiheit",
 			es: "/accesibilidad",
 			it: "/accessibilita",
 		},
@@ -157,7 +165,6 @@ export const routing = defineRouting({
 			fr: "/confidentialite",
 			en: "/privacy",
 			de: "/datenschutz",
-			"de-AT": "/datenschutz",
 			es: "/privacidad",
 			it: "/privacy",
 		},
@@ -165,7 +172,6 @@ export const routing = defineRouting({
 			fr: "/mentions-legales",
 			en: "/legal-notice",
 			de: "/impressum",
-			"de-AT": "/impressum",
 			es: "/aviso-legal",
 			it: "/note-legali",
 		},
@@ -173,11 +179,10 @@ export const routing = defineRouting({
 			fr: "/conditions",
 			en: "/terms",
 			de: "/nutzungsbedingungen",
-			"de-AT": "/nutzungsbedingungen",
 			es: "/condiciones",
 			it: "/condizioni",
 		},
-	},
+	}),
 });
 
 export type { Locale } from "./locales";

@@ -3,7 +3,7 @@
 import { CheckIcon, ChevronDownIcon, cn, GlobeIcon } from "@apercura/ui";
 import { type KeyboardEvent, useEffect, useRef } from "react";
 import type { Href } from "~/i18n/navigation";
-import { type Locale, routing } from "~/i18n/routing";
+import type { Locale } from "~/i18n/routing";
 import { LocaleSwitchLink } from "./locale-switch-link";
 
 interface LanguagePickerProps {
@@ -15,10 +15,8 @@ interface LanguagePickerProps {
 	label: string;
 	/** The toggle's accessible name, naming the current language, e.g. "Langue : Français". */
 	currentLabel: string;
-	/** Each language named in itself ("Français", "English"…). */
+	/** Each language offered, named in itself ("Français", "English"…). */
 	names: Record<Locale, string>;
-	/** The languages offered: the market's own (default: every locale). */
-	locales?: readonly Locale[];
 	/** Keep the fragment (the appointment page's token lives there). */
 	keepHash?: boolean;
 	className?: string;
@@ -38,7 +36,6 @@ export function LanguagePicker({
 	label,
 	currentLabel,
 	names,
-	locales = routing.locales,
 	keepHash = false,
 	className,
 }: LanguagePickerProps) {
@@ -122,7 +119,7 @@ export function LanguagePicker({
 					ref={list}
 					className="absolute end-0 top-full z-50 mt-1.5 flex min-w-52 flex-col gap-0.5 rounded-field border border-rule-soft bg-paper p-1.5 shadow-overlay group-open:motion-safe:animate-slip-in"
 				>
-					{locales.map((other) => (
+					{(Object.keys(names) as Locale[]).map((other) => (
 						<li key={other}>
 							<LocaleSwitchLink
 								href={href}

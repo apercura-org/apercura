@@ -19,8 +19,9 @@ export async function SiteHeader({ locale, href }: SiteHeaderProps) {
 	const tLocale = await getTranslations({ locale, namespace: "LocaleSwitcher" });
 	const languages = routing.locales.filter((other) => marketOf(other) === marketOf(locale));
 	const isPro = typeof href === "string" && (href === "/pro" || href.startsWith("/pro/"));
+	// The picker offers the languages it is given names for: this market's only.
 	const names = Object.fromEntries(
-		routing.locales.map((other) => [other, tLocale("locale", { locale: other })]),
+		languages.map((other) => [other, tLocale("locale", { locale: other })]),
 	) as Record<Locale, string>;
 
 	return (
@@ -43,7 +44,6 @@ export async function SiteHeader({ locale, href }: SiteHeaderProps) {
 					{languages.length > 1 ? (
 						<LanguagePicker
 							locale={locale}
-							locales={languages}
 							href={href}
 							label={tLocale("label")}
 							currentLabel={tLocale("current", { language: names[locale] })}

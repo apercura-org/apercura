@@ -10,7 +10,6 @@ import {
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { useLocale, useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
-import { marketOf } from "~/i18n/locales";
 import { getPathname, useRouter } from "~/i18n/navigation";
 import type { Locale } from "~/i18n/routing";
 import { searchFormId } from "~/lib/search-form-id";
@@ -53,7 +52,6 @@ export function SearchForm({
 	landmark = true,
 }: SearchFormProps) {
 	const locale = useLocale() as Locale;
-	const austria = marketOf(locale) === "AT";
 	const t = useTranslations("Search");
 	const tForm = useTranslations("SearchForm");
 	const tTaxonomy = useTranslations("taxonomy");
@@ -131,20 +129,13 @@ export function SearchForm({
 						options: whereResults.data.places.map((place) => ({
 							id: `place:${place.id}`,
 							label: place.name,
-							// Austrian places are known by name: no Statistik Austria code in the text.
-							textValue:
-								place.departmentCode && !austria
-									? `${place.name} (${place.departmentCode})`
-									: place.name,
+							textValue: place.departmentCode
+								? `${place.name} (${place.departmentCode})`
+								: place.name,
 							detail:
 								place.kind === "department"
 									? tForm("department")
-									: (austria
-											? [place.departmentName]
-											: [place.departmentCode, place.departmentName]
-										)
-											.filter(Boolean)
-											.join(" · "),
+									: [place.departmentCode, place.departmentName].filter(Boolean).join(" · "),
 						})),
 					},
 				];
