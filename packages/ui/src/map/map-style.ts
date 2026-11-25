@@ -2,7 +2,7 @@ import { mapPaletteHex } from "../tokens";
 
 /**
  * Re-inks an OpenMapTiles-schema MapLibre style (OpenFreeMap positron or
- * liberty, or any self-hosted equivalent) with the booklet palette. Pure:
+ * liberty, or any self-hosted equivalent) with the site palette (light or dark). Pure:
  * returns a new style object and never touches the network.
  */
 

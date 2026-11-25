@@ -37,11 +37,18 @@
 			"legal": "Impressum",
 			"terms": "Nutzungsbedingungen",
 			"international": "Apercura in anderen Ländern"
+		},
+		"theme": {
+			"label": "Farbschema",
+			"light": "Hell",
+			"dark": "Dunkel",
+			"system": "System"
 		}
 	},
 	"LocaleSwitcher": {
 		"label": "Sprache",
-		"locale": "{locale, select, fr {Français} en {English} de {Deutsch} es {Español} it {Italiano} other {Unbekannte Sprache}}"
+		"locale": "{locale, select, fr {Français} en {English} de {Deutsch} es {Español} it {Italiano} other {Unbekannte Sprache}}",
+		"current": "Sprache: {language}"
 	},
 	"Search": {
 		"label": "Gesundheitsfachkraft finden",
@@ -335,9 +342,9 @@
 			"inkDisabled": "Deaktiviert-Tinte",
 			"ruleSoft": "Feine Linie: Haarlinien, Führungslinien",
 			"fieldEdge": "Feldrand: Rahmen der Bedienelemente",
-			"stamp": "Stempel: Aktion, verifiziert, gebucht",
-			"stampStrong": "Stempel gedrückt",
-			"stampTint": "Stempel-Hintergrund",
+			"stamp": "Akzent: Aktion, verifiziert, gebucht",
+			"stampStrong": "Akzent gedrückt",
+			"stampTint": "Akzent-Tönung",
 			"error": "Fehler-Tinte",
 			"errorTint": "Fehler-Hintergrund"
 		},
@@ -346,9 +353,9 @@
 			"headline": "Überschrift: Seitentitel",
 			"title": "Titel: Abschnittsüberschriften",
 			"lead": "Vorspann: Einleitungen",
-			"body": "Fließtext: 18 px, gesetzt in Atkinson Hyperlegible Next für Menschen mit Sehbehinderung.",
+			"body": "Fließtext: 18 px, gesetzt in Allo mit geschwänztem l und I mit Serifen, damit Il1 nie verwechselt werden.",
 			"meta": "Meta: Hinweise und Nebenangaben",
-			"caps": "Versalien: Spaltenköpfe und Kolumnentitel"
+			"caps": "Beschriftung: Spaltenköpfe, Feldbeschriftungen und Plaketten"
 		},
 		"states": {
 			"default": "Standard",

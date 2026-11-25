@@ -37,11 +37,18 @@
 			"legal": "Mentions légales",
 			"terms": "Conditions d’utilisation",
 			"international": "Apercura dans d’autres pays"
+		},
+		"theme": {
+			"label": "Thème",
+			"light": "Clair",
+			"dark": "Sombre",
+			"system": "Système"
 		}
 	},
 	"LocaleSwitcher": {
 		"label": "Langue",
-		"locale": "{locale, select, fr {Français} en {English} de {Deutsch} es {Español} it {Italiano} other {Langue inconnue}}"
+		"locale": "{locale, select, fr {Français} en {English} de {Deutsch} es {Español} it {Italiano} other {Langue inconnue}}",
+		"current": "Langue : {language}"
 	},
 	"Search": {
 		"label": "Trouver un professionnel de santé",
@@ -335,9 +342,9 @@
 			"inkDisabled": "Encre désactivée",
 			"ruleSoft": "Filet fin : séparateurs, pointillés",
 			"fieldEdge": "Bord de champ : contours des contrôles",
-			"stamp": "Tampon : action, vérifié, réservé",
-			"stampStrong": "Tampon pressé",
-			"stampTint": "Lavis de tampon",
+			"stamp": "Accent : action, page vérifiée, rendez-vous réservé",
+			"stampStrong": "Accent appuyé",
+			"stampTint": "Lavis d’accent",
 			"error": "Encre d’erreur",
 			"errorTint": "Lavis d’erreur"
 		},
@@ -346,9 +353,9 @@
 			"headline": "Titre de page",
 			"title": "Titre de section",
 			"lead": "Chapeau : les introductions",
-			"body": "Corps : texte courant à 18 px, en Atkinson Hyperlegible Next pour les lecteurs malvoyants.",
+			"body": "Corps : texte courant à 18 px, en Allo, avec le l à queue et le I à empattements pour que Il1 ne se confondent jamais.",
 			"meta": "Méta : aides et informations secondaires",
-			"caps": "Capitales : en-têtes de colonnes et titres courants"
+			"caps": "Légende : en-têtes de colonnes, libellés de champs et badges"
 		},
 		"states": {
 			"default": "Par défaut",

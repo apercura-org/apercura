@@ -37,11 +37,18 @@
 			"legal": "Legal notice",
 			"terms": "Terms of use",
 			"international": "Apercura in other countries"
+		},
+		"theme": {
+			"label": "Theme",
+			"light": "Light",
+			"dark": "Dark",
+			"system": "System"
 		}
 	},
 	"LocaleSwitcher": {
 		"label": "Language",
-		"locale": "{locale, select, fr {Français} en {English} de {Deutsch} es {Español} it {Italiano} other {Unknown language}}"
+		"locale": "{locale, select, fr {Français} en {English} de {Deutsch} es {Español} it {Italiano} other {Unknown language}}",
+		"current": "Language: {language}"
 	},
 	"Search": {
 		"label": "Find a health practitioner",
@@ -335,9 +342,9 @@
 			"inkDisabled": "Disabled ink",
 			"ruleSoft": "Soft rule: hairlines, leaders",
 			"fieldEdge": "Field edge: control borders",
-			"stamp": "Stamp: action, verified, booked",
-			"stampStrong": "Stamp pressed",
-			"stampTint": "Stamp wash",
+			"stamp": "Accent: action, verified, booked",
+			"stampStrong": "Accent pressed",
+			"stampTint": "Accent wash",
 			"error": "Error ink",
 			"errorTint": "Error wash"
 		},
@@ -346,9 +353,9 @@
 			"headline": "Headline: page titles",
 			"title": "Title: section headings",
 			"lead": "Lead: introductions",
-			"body": "Body: running text at 18 px, set in Atkinson Hyperlegible Next for low-vision readers.",
+			"body": "Body: running text at 18 px, set in Allo with the tailed l and serifed I, so Il1 never read alike.",
 			"meta": "Meta: hints and secondary facts",
-			"caps": "Caps: column headers and running heads"
+			"caps": "Caption: column headers, field captions and badges"
 		},
 		"states": {
 			"default": "Default",

@@ -5,6 +5,7 @@ import { BookletPage } from "~/components/booklet-page";
 import { InstitutionalCover } from "~/components/institutional";
 import { JsonLd } from "~/components/json-ld";
 import { type LanguageOffer, LanguageSuggestion } from "~/components/language-suggestion";
+import { ThemeSwitch } from "~/components/theme-switch";
 import { serverEnv } from "~/env";
 import { LOCALE_TAGS, LOCALES, OG_LOCALES } from "~/i18n/locales";
 import { getPathname, type Href } from "~/i18n/navigation";
@@ -96,11 +97,11 @@ export default async function InternationalHome() {
 				])}
 			/>
 			<header className="surface-paper border-b border-rule-soft">
-				<div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-x-6 gap-y-1 px-5 py-1.5 sm:px-8">
+				<div className="mx-auto flex min-h-16 max-w-6xl flex-wrap items-center justify-between gap-x-6 gap-y-1 px-5 py-2 sm:px-8">
 					<a
 						href="/"
 						aria-current="page"
-						className="type-wordmark inline-flex min-h-11 items-center text-ink no-underline"
+						className="type-wordmark -ms-1 inline-flex min-h-11 items-center rounded-field px-1 text-ink no-underline"
 					>
 						{tSite("wordmark")}
 					</a>
@@ -113,7 +114,7 @@ export default async function InternationalHome() {
 			</header>
 			<main id="main" tabIndex={-1} className="flex-1 outline-none">
 				<InstitutionalCover title={t("title")} lead={t("lead")} />
-				<BookletPage runningHead={t("runningHead")}>
+				<BookletPage>
 					<section aria-labelledby="countries-heading" className="flex flex-col gap-5">
 						<div className="flex max-w-[65ch] flex-col gap-2">
 							<h2 id="countries-heading" className="type-title text-ink">
@@ -201,16 +202,27 @@ export default async function InternationalHome() {
 				</BookletPage>
 			</main>
 			<footer className="surface-shade mt-auto border-t border-rule-soft">
-				<div className="mx-auto flex max-w-6xl flex-col gap-4 px-5 py-8 sm:flex-row sm:items-end sm:justify-between sm:px-8">
-					<div className="flex flex-col gap-1">
-						<p className="type-wordmark">{tSite("wordmark")}</p>
-						<p className="text-meta text-ink-muted">{tSite("footer.free")}</p>
-						<p className="text-meta text-ink-muted">{tSite("footer.noAds")}</p>
+				<div className="mx-auto flex max-w-6xl flex-col gap-6 px-5 py-10 sm:px-8">
+					<div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+						<div className="flex flex-col gap-1">
+							<p className="type-wordmark">{tSite("wordmark")}</p>
+							<p className="text-meta text-ink-muted">{tSite("footer.free")}</p>
+							<p className="text-meta text-ink-muted">{tSite("footer.noAds")}</p>
+						</div>
+						<a href={LINKS.repository} className={footerLink}>
+							{tSite("footer.license")}
+							<span className="sr-only"> ({tSite("externalLink")})</span>
+						</a>
 					</div>
-					<a href={LINKS.repository} className={footerLink}>
-						{tSite("footer.license")}
-						<span className="sr-only"> ({tSite("externalLink")})</span>
-					</a>
+					<ThemeSwitch
+						label={tSite("theme.label")}
+						names={{
+							light: tSite("theme.light"),
+							dark: tSite("theme.dark"),
+							system: tSite("theme.system"),
+						}}
+						className="border-t border-rule-soft pt-4"
+					/>
 				</div>
 			</footer>
 		</>

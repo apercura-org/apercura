@@ -1,5 +1,5 @@
-import { paletteHex } from "@apercura/ui/tokens";
-import type { Metadata } from "next";
+import { paletteDarkHex, paletteHex } from "@apercura/ui/tokens";
+import type { Metadata, Viewport } from "next";
 import { getTranslations } from "next-intl/server";
 import {
 	HREFLANGS,
@@ -22,6 +22,20 @@ export const BRAND = "Apercura";
 
 /** White paper (`theme-color`, the manifest) and the graphite ink of the site icons. */
 export const THEME_COLOR = paletteHex.paper;
+/** The dark theme's ground, the browser chrome's colour when the system is dark. */
+export const THEME_COLOR_DARK = paletteDarkHex.paper;
+
+/**
+ * The viewport of every page: both colour schemes (~/lib/theme), the browser chrome matching
+ * the ground of the system's.
+ */
+export const SITE_VIEWPORT: Viewport = {
+	themeColor: [
+		{ media: "(prefers-color-scheme: light)", color: THEME_COLOR },
+		{ media: "(prefers-color-scheme: dark)", color: THEME_COLOR_DARK },
+	],
+	colorScheme: "light dark",
+};
 export const PAPER_COLOR = paletteHex.paper;
 export const INK_COLOR = paletteHex.ink;
 
