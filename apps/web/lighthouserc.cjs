@@ -42,7 +42,7 @@ const vitals = {
  * All JavaScript transferred during the run, gzip, prefetches of linked pages
  * included (Lighthouse cannot tell them apart): a regression cap. React 19,
  * React DOM and the Next.js runtime alone weigh about 130 KB; what each page
- * adds on first load has its own budget in e2e/performance.spec.ts (60 KB on
+ * adds on first load has its own budget in e2e/performance.spec.ts (61 KB on
  * the practitioner page, whose map and booking panel load on demand).
  */
 const script = (kilobytes) => ["error", { maxNumericValue: kilobytes * 1024 }];

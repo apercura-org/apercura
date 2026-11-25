@@ -13,9 +13,10 @@ import { expect, test } from "@playwright/test";
  */
 
 const BUDGETS_KB: Record<string, number> = {
-	// The map and the booking panel load on demand: neither counts here.
-	"/fr/praticien/camille-exemple-19999990013": 60,
-	"/fr/praticien/anne-essaiaa-19999991003": 60,
+	// The map and the booking panel load on demand: neither counts here. About 60.3 KB since
+	// next-intl 4.16 (query strings in hrefs, +0.2 KB) and the transitive updates (+0.1 KB).
+	"/fr/praticien/camille-exemple-19999990013": 61,
+	"/fr/praticien/anne-essaiaa-19999991003": 61,
 	"/fr/medecin-generaliste/75-paris": 60,
 	"/fr/etablissement/centre-hospitalier-fictif-2a9999001": 60,
 	"/fr/annuaire/75-paris": 60,
