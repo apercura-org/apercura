@@ -14,6 +14,7 @@ export {
 	restoreOwnNameAccents,
 	toE164Fr,
 } from "./normalize";
+export * from "./pagination";
 export * from "./profile";
 export { isValidRpps } from "./rpps";
 export { slugify } from "./slugify";
