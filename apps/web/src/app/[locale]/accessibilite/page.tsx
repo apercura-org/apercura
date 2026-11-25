@@ -8,6 +8,7 @@ import {
 	ProseSection,
 } from "~/components/institutional";
 import { AccessibilityAt } from "~/components/legal-at";
+import { AccessibilityGb } from "~/components/legal-gb";
 import { PageGraph } from "~/components/page-graph";
 import { PublicPage } from "~/components/public-page";
 import { Trail } from "~/components/trail";
@@ -24,7 +25,7 @@ const HREF = "/accessibilite" as const;
 export function generateMetadata({ params }: PageProps<"/[locale]/accessibilite">) {
 	return marketInstitutionalMetadata(
 		params,
-		{ FR: "AccessibilityPage", AT: "AccessibilityAt" },
+		{ FR: "AccessibilityPage", AT: "AccessibilityAt", GB: "AccessibilityGb" },
 		HREF,
 	);
 }
@@ -37,8 +38,9 @@ export function generateMetadata({ params }: PageProps<"/[locale]/accessibilite"
 export default async function AccessibilityPage({ params }: PageProps<"/[locale]/accessibilite">) {
 	const locale = await localeOf(params);
 	setRequestLocale(locale);
-	// Austria's page has texts of its own, written for Austrian law.
+	// Austria's and the UK's pages have texts of their own, written for their law.
 	if (marketOf(locale) === "AT") return <AccessibilityAt locale={locale} />;
+	if (marketOf(locale) === "GB") return <AccessibilityGb locale={locale} />;
 	const t = await getTranslations({ locale, namespace: "AccessibilityPage" });
 	const tSite = await getTranslations({ locale, namespace: "Site" });
 	const tI = await getTranslations({ locale, namespace: "Institutional" });

@@ -8,6 +8,7 @@ import {
 	ProseSection,
 } from "~/components/institutional";
 import { TermsAt } from "~/components/legal-at";
+import { TermsGb } from "~/components/legal-gb";
 import { PageGraph } from "~/components/page-graph";
 import { PublicPage } from "~/components/public-page";
 import { Trail } from "~/components/trail";
@@ -26,7 +27,11 @@ export const ensureStatic = "navigation";
 const HREF = "/conditions" as const;
 
 export function generateMetadata({ params }: PageProps<"/[locale]/conditions">) {
-	return marketInstitutionalMetadata(params, { FR: "TermsPage", AT: "TermsAt" }, HREF);
+	return marketInstitutionalMetadata(
+		params,
+		{ FR: "TermsPage", AT: "TermsAt", GB: "TermsGb" },
+		HREF,
+	);
 }
 
 /**
@@ -37,8 +42,9 @@ export function generateMetadata({ params }: PageProps<"/[locale]/conditions">) 
 export default async function TermsPage({ params }: PageProps<"/[locale]/conditions">) {
 	const locale = await localeOf(params);
 	setRequestLocale(locale);
-	// Austria's page has texts of its own, written for Austrian law.
+	// Austria's and the UK's pages have texts of their own, written for their law.
 	if (marketOf(locale) === "AT") return <TermsAt locale={locale} />;
+	if (marketOf(locale) === "GB") return <TermsGb locale={locale} />;
 	const t = await getTranslations({ locale, namespace: "TermsPage" });
 	const tI = await getTranslations({ locale, namespace: "Institutional" });
 	const format = await getFormatter({ locale });
