@@ -860,12 +860,17 @@ describe.skipIf(!url)("booking (database)", { timeout: 30_000 }, () => {
 		if (stale.result.status !== "held") throw new Error("hold");
 		clock.now = base + 20 * MINUTE;
 
+		// Every row of this run's practices, in full: other test files write to the same database
+		// at the same time, so whole tables would change under this test without any GET writing.
 		const fingerprint = async () => {
 			const [row] = await db.execute<{ appointments: string; outbox: string; events: string }>(sql`
 				select
-					(select md5(coalesce(string_agg(a::text, ',' order by id), '')) from care.appointments a) as appointments,
-					(select md5(coalesce(string_agg(o::text, ',' order by id), '')) from care.outbox o) as outbox,
-					(select count(*)::text from care.appointment_events) as events
+					(select md5(coalesce(string_agg(a::text, ',' order by id), '')) from care.appointments a
+						where a.organization_id in (${orgA}, ${orgB})) as appointments,
+					(select md5(coalesce(string_agg(o::text, ',' order by id), '')) from care.outbox o
+						where o.organization_id in (${orgA}, ${orgB})) as outbox,
+					(select md5(coalesce(string_agg(e::text, ',' order by id), '')) from care.appointment_events e
+						where e.organization_id in (${orgA}, ${orgB})) as events
 			`);
 			return row;
 		};
