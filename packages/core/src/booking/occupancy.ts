@@ -31,8 +31,9 @@ export function assertOccupancyType(type: OccupancyType): void {
 
 /**
  * The single source of truth for occupied ranges:
- * `[start − before, start + duration + after + travel)`. A home visit's travel time comes after
- * the visit, so two visits in a row count it once.
+ * `[start − before, start + duration + after + travel)`. The travel time of a home visit is
+ * stored after the visit; the travel before it is checked with {@link travelConflict}, so two
+ * visits in a row count it once while a visit right after the practice still gets it.
  *
  * The slot engine and the database write path (`occupied_from` / `occupied_until`) must both use
  * it, otherwise they would disagree on buffers.
@@ -52,4 +53,34 @@ export function occupancy(type: OccupancyType, startMs: number): Occupancy {
 export function appointmentEnd(type: OccupancyType, startMs: number): number {
 	assertOccupancyType(type);
 	return startMs + type.durationMin * MINUTE_MS;
+}
+
+/** A range with, for a home visit, its travel time (0 at the site). */
+export interface TravelRange extends Occupancy {
+	travelMin: number;
+}
+
+const overlap = (aFrom: number, aUntil: number, bFrom: number, bUntil: number) =>
+	aFrom < bUntil && bFrom < aUntil;
+
+/**
+ * Whether two entries of one practitioner cannot both stand, travel included. Their occupied
+ * ranges must not overlap (the database's overlap constraint); and when only one of them travels
+ * (a home visit next to the practice, a block or a visit without travel time), the travel before
+ * it, `[from − travel, from)`, must not overlap the other one either. Two home visits in a row
+ * count one travel time: the one stored after the first.
+ *
+ * The slot engine and the booking writes (`server/booking/travel.ts`) must both use this rule.
+ */
+export function travelConflict(a: TravelRange, b: TravelRange): boolean {
+	if (overlap(a.fromMs, a.untilMs, b.fromMs, b.untilMs)) {
+		return true;
+	}
+	if (a.travelMin > 0 && b.travelMin === 0) {
+		return overlap(a.fromMs - a.travelMin * MINUTE_MS, a.fromMs, b.fromMs, b.untilMs);
+	}
+	if (b.travelMin > 0 && a.travelMin === 0) {
+		return overlap(b.fromMs - b.travelMin * MINUTE_MS, b.fromMs, a.fromMs, a.untilMs);
+	}
+	return false;
 }

@@ -55,8 +55,9 @@ export interface AppointmentType {
 	/** Buffer occupied after the appointment, in minutes (≥ 0). */
 	afterMin: number;
 	/**
-	 * Home visits only: fixed travel time occupied after the visit, on top of `afterMin` (the way
-	 * to the next patient or back to the practice), in minutes (≥ 0). Absent means 0.
+	 * Home visits only: fixed travel time, in minutes (≥ 0, absent means 0). It is occupied after
+	 * the visit (on top of `afterMin`), and before it whenever the entry before does not travel
+	 * itself (see {@link BusyInterval.travelMin}).
 	 */
 	travelMin?: number;
 	audience: Audience;
@@ -81,4 +82,9 @@ export interface CalendarSettings {
 export interface BusyInterval {
 	startMs: number;
 	endMs: number;
+	/**
+	 * A home visit's travel time, in minutes. The range already holds the travel after it; the
+	 * travel before it, `[startMs − travel, startMs)`, also blocks entries that do not travel.
+	 */
+	travelMin?: number;
 }

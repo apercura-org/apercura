@@ -38,6 +38,8 @@ export {
 	type Occupancy,
 	type OccupancyType,
 	occupancy,
+	type TravelRange,
+	travelConflict,
 } from "./occupancy";
 export { type AppointmentTypePreset, GENERIC_PRESETS, presetsForSpecialty } from "./presets";
 export {

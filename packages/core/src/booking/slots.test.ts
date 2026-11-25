@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { timeZoneForDepartment } from "../time/departments";
 import { MINUTE_MS } from "../time/local";
+import { occupancy, travelConflict } from "./occupancy";
 import { isSlotOffered, MAX_SLOT_DAYS } from "./slots";
 import {
 	clock,
@@ -13,6 +14,7 @@ import {
 	slots,
 	utc,
 } from "./test-helpers";
+import type { BusyInterval } from "./types";
 
 const isStrictlyAscending = (values: readonly number[]) =>
 	values.every((value, index) => index === 0 || value > (values[index - 1] as number));
@@ -228,37 +230,90 @@ describe("computeSlots: buffers and busy intervals", () => {
 
 describe("computeSlots: home visits with a fixed travel time", () => {
 	const at = (time: string) => utc(`2026-01-05T${time}:00+01:00`);
-	// "Soins à domicile": 20 minutes of care, 15 minutes of travel after each visit.
+	// "Soins à domicile": 20 minutes of care, 15 minutes of travel.
 	const homeCare = makeType({ durationMin: 20, travelMin: 15 });
+	const bloodTest = makeType({ id: "t2", durationMin: 10 });
 	const rules = [makeRule(1, "09:00", "11:00")];
 	const settings = makeSettings({ stepMin: 5 });
-	/** The range an existing visit at `time` occupies (care + travel), as the database stores it. */
-	const visitAt = (time: string) => ({ startMs: at(time), endMs: at(time) + 35 * MINUTE_MS });
+	/** A visit booked at `time`, as the database stores it: care + travel after, and its travel. */
+	const visitAt = (time: string) => ({
+		startMs: at(time),
+		endMs: at(time) + 35 * MINUTE_MS,
+		travelMin: 15,
+	});
+	/** Something at the practice (or a block): no travel. */
+	const officeAt = (from: string, until: string): BusyInterval => ({
+		startMs: at(from),
+		endMs: at(until),
+	});
 
-	it("keeps the travel time free after each visit, so two visits in a row count it once", () => {
-		const free = clock(slots({ rules, type: homeCare, settings, busy: [visitAt("09:00")] }));
-		// The next visit starts once the care (09:20) and the travel (09:35) are over.
-		expect(free[0]).toBe("09:35");
-		expect(free).not.toContain("09:30");
-		// A visit must end, travel included, before the next one starts.
+	it("counts the travel time once between two visits in a row", () => {
+		const after = clock(slots({ rules, type: homeCare, settings, busy: [visitAt("09:00")] }));
+		// The visit ends at 09:20, its travel at 09:35: the next visit may start then.
+		expect(after[0]).toBe("09:35");
 		const before = clock(slots({ rules, type: homeCare, settings, busy: [visitAt("10:00")] }));
+		// A visit at 09:25 ends, travel included, at 10:00, when the next one starts.
 		expect(before).toContain("09:25");
 		expect(before).not.toContain("09:30");
 	});
 
+	it("keeps the travel time free before a visit that follows the practice or a block", () => {
+		const free = clock(
+			slots({ rules, type: homeCare, settings, busy: [officeAt("09:00", "09:10")] }),
+		);
+		expect(free).not.toContain("09:10");
+		expect(free).not.toContain("09:20");
+		expect(free[0]).toBe("09:25");
+	});
+
+	it("keeps the travel time free after a visit for care at the practice", () => {
+		const free = clock(slots({ rules, type: bloodTest, settings, busy: [visitAt("09:00")] }));
+		expect(free[0]).toBe("09:35");
+	});
+
+	it("keeps care at the practice out of the travel before a visit", () => {
+		const free = clock(slots({ rules, type: bloodTest, settings, busy: [visitAt("10:00")] }));
+		// The blood test must end by 09:45, when the nurse leaves for the 10:00 visit.
+		expect(free).toContain("09:35");
+		expect(free).not.toContain("09:40");
+		expect(free).toContain("10:35");
+	});
+
 	it("lets the travel time spill outside the window, like the other buffers", () => {
 		const free = clock(slots({ rules, type: homeCare, settings }));
+		expect(free[0]).toBe("09:00");
 		expect(free.at(-1)).toBe("10:40");
 	});
 
 	it("adds the travel time to the free time after the visit", () => {
 		const type = makeType({ durationMin: 20, afterMin: 5, travelMin: 15 });
-		const free = clock(
-			slots({ rules, type, settings, busy: [{ startMs: at("09:40"), endMs: at("10:00") }] }),
-		);
+		const free = clock(slots({ rules, type, settings, busy: [officeAt("09:40", "10:00")] }));
 		expect(free).toContain("09:00");
 		expect(free).not.toContain("09:05");
-		expect(free).toContain("10:00");
+		// After the practice, the travel comes first.
+		expect(free).not.toContain("10:00");
+		expect(free).toContain("10:15");
+	});
+
+	it("offers exactly the starts that have no travel conflict with the agenda", () => {
+		const busy = [visitAt("09:30"), officeAt("10:15", "10:25"), visitAt("10:50")];
+		const ranges = busy.map((item) => ({
+			fromMs: item.startMs,
+			untilMs: item.endMs,
+			travelMin: item.travelMin ?? 0,
+		}));
+		for (const type of [homeCare, bloodTest]) {
+			const free = new Set(slots({ rules, type, settings, busy }));
+			for (
+				let start = at("09:00");
+				start + type.durationMin * MINUTE_MS <= at("11:00");
+				start += 5 * MINUTE_MS
+			) {
+				const candidate = { ...occupancy(type, start), travelMin: type.travelMin ?? 0 };
+				const conflict = ranges.some((range) => travelConflict(candidate, range));
+				expect(free.has(start), `${type.id} at ${local(start)}`).toBe(!conflict);
+			}
+		}
 	});
 
 	it("rejects a negative or fractional travel time", () => {
