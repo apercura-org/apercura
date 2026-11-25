@@ -1,0 +1,100 @@
+name: Deploy
+
+# Deploys main to a single VPS once CI has passed on a push to main (docs/deploy-vps.md). The
+# runner only opens an SSH connection with a dedicated key whose forced command on the server
+# is docker/deploy-vps.sh: it sends the commit sha, the server fetches, checks out, builds and
+# restarts. No code, image or environment file leaves the runner.
+#
+# Secrets (environment `production` or repository): DEPLOY_HOST, DEPLOY_SSH_KEY (private key),
+# DEPLOY_KNOWN_HOSTS (the server's host keys, `ssh-keyscan -p <port> <host>` checked out of
+# band). Variables: DEPLOY_USER (default deploy), DEPLOY_PORT (default 22). Without DEPLOY_HOST
+# (forks) every step is skipped and the job succeeds.
+
+on:
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      sha:
+        description: Full commit sha on main to deploy (default the head of main)
+        required: false
+        default: ""
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Deploy main to the VPS
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      (github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.event == 'push')
+    runs-on: ubuntu-latest
+    # The image is built on the server: about 20 minutes, plus the start and the health check.
+    timeout-minutes: 35
+    environment: production
+    env:
+      DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+      DEPLOY_USER: ${{ vars.DEPLOY_USER || 'deploy' }}
+      DEPLOY_PORT: ${{ vars.DEPLOY_PORT || '22' }}
+    steps:
+      - name: Skip without a deploy target
+        if: env.DEPLOY_HOST == ''
+        run: echo "DEPLOY_HOST is not set; nothing to deploy." >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Resolve the commit
+        id: sha
+        if: env.DEPLOY_HOST != ''
+        env:
+          RUN_SHA: ${{ github.event.workflow_run.head_sha }}
+          INPUT_SHA: ${{ inputs.sha }}
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          if [ "$GITHUB_EVENT_NAME" = "workflow_run" ]; then
+            sha="$RUN_SHA"
+          elif [ -n "$INPUT_SHA" ]; then
+            sha="$INPUT_SHA"
+          else
+            sha=$(gh api "repos/$GH_REPO/commits/main" --jq .sha)
+          fi
+          if ! [[ "$sha" =~ ^[0-9a-f]{40}$ ]]; then
+            echo "::error::not a full commit sha: ${sha:0:80}"
+            exit 1
+          fi
+          echo "sha=$sha" >> "$GITHUB_OUTPUT"
+
+      - name: Deploy over SSH
+        if: env.DEPLOY_HOST != ''
+        timeout-minutes: 30
+        env:
+          DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+          DEPLOY_KNOWN_HOSTS: ${{ secrets.DEPLOY_KNOWN_HOSTS }}
+          SHA: ${{ steps.sha.outputs.sha }}
+        run: |
+          set -euo pipefail
+          dir="$RUNNER_TEMP/deploy-ssh"
+          install -d -m 700 "$dir"
+          install -m 600 /dev/null "$dir/key"
+          install -m 600 /dev/null "$dir/known_hosts"
+          printf '%s\n' "$DEPLOY_SSH_KEY" > "$dir/key"
+          printf '%s\n' "$DEPLOY_KNOWN_HOSTS" > "$dir/known_hosts"
+          # The server's forced command reads the sha from SSH_ORIGINAL_COMMAND.
+          ssh -i "$dir/key" -p "$DEPLOY_PORT" \
+            -o BatchMode=yes -o IdentitiesOnly=yes \
+            -o StrictHostKeyChecking=yes -o UserKnownHostsFile="$dir/known_hosts" \
+            -o ConnectTimeout=20 -o ServerAliveInterval=30 -o ServerAliveCountMax=10 \
+            "${DEPLOY_USER}@${DEPLOY_HOST}" "$SHA"
+          echo "Deployed \`$SHA\`." >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Remove the key
+        if: always() && env.DEPLOY_HOST != ''
+        run: rm -rf "$RUNNER_TEMP/deploy-ssh"
