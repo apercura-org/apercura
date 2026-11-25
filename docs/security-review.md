@@ -223,15 +223,20 @@ depth, hard to exploit), **Info** (hardening, no direct impact).
     `directory.page_view_days`): claimed pages only, one counter per page and day, no other
     column. The public page stays static and cached; an empty `fetch` (`credentials: "omit"`,
     `referrerPolicy: "no-referrer"`) counts after the response, which is the same 204 whether
-    the view counted or not. Not counted: `Sec-Fetch-Site` other than `same-origin`,
-    prefetches, crawler, preview, monitor and headless user agents, Global Privacy Control and
-    Do Not Track. Inflation is bounded in memory only: the client address becomes an HMAC under
-    a random key held by the process and replaced every day (so buckets cannot be linked to an
-    address or across days), one view per page and bucket every 30 minutes, 30 an hour per
-    bucket, 120 an hour per page when clients cannot be told apart; the map is bounded. Kept
-    `PAGE_VIEW_RETENTION_MONTHS` (13). Only the page's owner and practitioner members read them
-    (`stats.page`, page read permission); online bookings per week are counts of the
-    practice's own appointments.
+    the view counted or not. Not counted: requests without `Sec-Fetch-Site: same-origin`
+    (other sites, scripts, old browsers), prefetches, crawler, preview, monitor and headless
+    user agents, Global Privacy Control and Do Not Track, and any visitor whose address is
+    unknown (no trusted proxy). Inflation is bounded in memory only: the client address (IPv4,
+    or the IPv6 /48) becomes an HMAC under a random key held by the process and replaced every
+    day (so buckets cannot be linked to an address or across days), one view per page and
+    bucket every 30 minutes, 30 an hour per bucket; once the map is full, new buckets stop
+    counting rather than evicting the windows already there. Kept `PAGE_VIEW_RETENTION_MONTHS`
+    (13). Only the page's owner and practitioner members read them (`stats.page`, page read
+    permission), and only the views counted since their own claim was verified (a page that
+    changes hands does not show the former owner's figures); online bookings per week are
+    counts of the practice's own appointments.
+  - _Withheld pages_: the "I am this practitioner" form answers `NOT_FOUND`, like an unknown
+    page, for a page withheld by an objection.
   - _Share kit and badge_: the QR code files are drawn in the browser (no request); the poster
     is the browser's print of a page of the practitioner space; the badge
     (`/badges/apercura-{locale}.svg`) is a static, prerendered SVG with no script, link, font
@@ -349,7 +354,7 @@ depth, hard to exploit), **Info** (hardening, no direct impact).
   review of the log).
 - **Page statistics are approximate by design**: a determined script that
   spreads over many addresses and spoofs a browser can still add views
-  (bounded per address and per page); the figures are shown as an order of
+  (bounded per address); the figures are shown as an order of
   magnitude, never used to rank pages. A restart of the process forgets the
   in-memory limits.
 - **Keys** live in environment variables of the host; `BLIND_INDEX_KEY`
