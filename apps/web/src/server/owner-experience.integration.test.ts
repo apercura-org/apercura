@@ -542,24 +542,25 @@ describe.skipIf(!url)("owner experience (database)", async () => {
 			confirm: true,
 			reason: null,
 		});
-		// The suppression keyed exactly as the import's scope and applySuppressions read it
-		// (packages/etl/src/merge.ts; the ETL integration test imports twice over it).
+		// The suppression keyed exactly as the import reads it before staging (SuppressedLines in
+		// packages/etl/src/suppressions.ts; the ETL integration test imports twice over it), and
+		// nothing else left of the page.
 		const [suppression] = await db.$client<
-			{ country: string; id_scheme: string; reason: string; status: string }[]
+			{ country: string; id_scheme: string; reason: string; practitioners: number }[]
 		>`
-			SELECT s.country, s.id_scheme, s.reason, p.status
+			SELECT s.country, s.id_scheme, s.reason,
+				(SELECT count(*)::integer FROM directory.practitioners p
+					WHERE p.country = s.country AND p.id_scheme = s.id_scheme
+						AND p.national_id = s.national_id) AS practitioners
 			FROM directory.suppressions s
-			JOIN directory.practitioners p
-				ON p.country = s.country AND p.id_scheme = s.id_scheme AND p.national_id = s.national_id
 			WHERE s.national_id = ${page.rpps}
 		`;
 		expect(suppression).toEqual({
 			country: "FR",
 			id_scheme: "RPPS",
 			reason: "objection",
-			status: "suppressed",
+			practitioners: 0,
 		});
-		await db.$client`DELETE FROM directory.removal_requests WHERE practitioner_id = ${page.id}`;
 		await db.$client`DELETE FROM directory.suppressions WHERE national_id = ${page.rpps}`;
 	});
 

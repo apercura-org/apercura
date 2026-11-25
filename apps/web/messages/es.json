@@ -770,7 +770,7 @@
 			"heading": "Oponerse a una página",
 			"body": [
 				"En virtud del artículo 21 del RGPD, un profesional sanitario puede oponerse a la publicación de su página. Apercura publica el directorio sobre la base de un interés legítimo: informar al público a partir de datos públicos.",
-				"Una página no reclamada se ocultará en cuanto se reciba la solicitud y se eliminará tras una comprobación sencilla de esta. Su titular puede retirar una página reclamada en cualquier momento. Una vez retirada, una página no vuelve a aparecer con la siguiente importación."
+				"Una página no reclamada se ocultará en cuanto se reciba la solicitud y se eliminará tras una comprobación sencilla de esta. Su titular puede retirar una página reclamada en cualquier momento. Una página retirada se suprime con sus datos: solo se conserva el número RPPS, para que la página no vuelva a aparecer con las importaciones siguientes."
 			],
 			"formTitle": "Solicitar la retirada de una página",
 			"formBody": "Para una página no reclamada. La página se oculta de inmediato y se elimina tras una comprobación sencilla. Una página reclamada la retira su titular, desde su espacio."
@@ -870,7 +870,7 @@
 					"Datos: apellidos, nombre, tratamiento, número RPPS, profesión, especialidades y competencias, lugares y modalidades de ejercicio, teléfonos publicados, sector de concierto con el seguro de enfermedad (conventionnement), adhesión a la OPTAM y aceptación de la Carte Vitale. Un profesional de salud que reclama su página puede añadir su horario, sus honorarios, sus idiomas, una foto y una presentación.",
 					"Fuentes: el Annuaire Santé de la Agence du numérique en santé, el registro FINESS y el directorio de la Assurance Maladie, reutilizados bajo la Licence Ouverte 2.0 y actualizados cada semana.",
 					"Finalidad: permitir al público encontrar a un profesional de salud, sus lugares de ejercicio y la forma de contactarlo. Base jurídica: el interés legítimo de informar al público a partir de datos públicos (artículo 6.1.f del RGPD).",
-					"Plazo: mientras el profesional figure en los registros públicos. Una página no reclamada desaparece tras dos actualizaciones semanales en las que el profesional ya no figura en el registro; una página retirada por oposición no se vuelve a publicar nunca.",
+					"Plazo: mientras el profesional figure en los registros públicos. Una página no reclamada desaparece tras dos actualizaciones semanales en las que el profesional ya no figura en el registro; una página retirada por oposición se suprime de inmediato y no se vuelve a publicar nunca: solo se conserva su número RPPS.",
 					"Información: escribir a cada profesional supondría un esfuerzo desproporcionado (artículo 14.5.b del RGPD). Se informa a los profesionales mediante la página de datos, un aviso en cada página y esta política."
 				]
 			},
@@ -895,7 +895,7 @@
 				"heading": "Avisos de error y solicitudes de retirada",
 				"body": [
 					"Datos: el mensaje, el correo electrónico de contacto cuando se facilita y, en una solicitud de retirada, la página afectada. El texto libre se cifra.",
-					"Finalidades: corregir los errores notificados y aplicar las oposiciones. Bases jurídicas: el interés legítimo de publicar información exacta (artículo 6.1.f) y el derecho de oposición (artículo 21). Plazo: el tiempo necesario para tramitar la solicitud; después, un aviso de error se suprime 6 meses después de su cierre y una solicitud de retirada un año después de su decisión; tras una oposición, solo se conserva el número RPPS de la página, para que nunca vuelva a publicarse.",
+					"Finalidades: corregir los errores notificados y aplicar las oposiciones. Bases jurídicas: el interés legítimo de publicar información exacta (artículo 6.1.f) y el derecho de oposición (artículo 21). Plazo: el tiempo necesario para tramitar la solicitud; después, un aviso de error se suprime 6 meses después de su cierre y una solicitud de retirada rechazada un año después de su decisión. En cuanto se confirma una oposición, o un titular retira su página, la página y todos los datos del profesional se suprimen de inmediato, incluidos la solicitud de retirada y los avisos de error; solo se conserva un registro de la retirada (el número RPPS, el país, el motivo, quién lo anotó y cuándo), para que las importaciones siguientes omitan al profesional y la página no vuelva a publicarse nunca. Si se retira la oposición, ese registro se suprime y la página vuelve con la siguiente actualización semanal. Un titular que retira su página conserva, solo en su cuenta y hasta que la suprima, el nombre y el número RPPS que se muestran en su espacio y los lugares que usa su agenda.",
 					"Solicitudes «Soy este profesional»: el nombre, el correo electrónico profesional, el teléfono si se indica, el mensaje y la página afectada, cifrados. Finalidad: ayudar a un profesional que no puede reclamar su página en línea. Base jurídica: el interés legítimo de mantener el directorio al día con los profesionales afectados (artículo 6.1.f). Plazo: 12 meses después del último intercambio."
 				]
 			},
@@ -2426,7 +2426,7 @@
 		"formLabel": "Contenido de la página",
 		"removed": {
 			"title": "Su página se ha retirado del directorio",
-			"body": "Nadie puede verlo. Puede restaurarlo al final de esta página."
+			"body": "Nadie puede verla y su contenido se ha suprimido. Puede restaurarla al final de esta página: vuelve con la siguiente actualización semanal del registro."
 		},
 		"unpublished": {
 			"title": "Su contenido aún no está publicado",
@@ -2528,7 +2528,7 @@
 		},
 		"remove": {
 			"title": "Retirar su página",
-			"lead": "Su página desaparece del directorio, de las búsquedas y de los motores de búsqueda, y no vuelve a aparecer con la siguiente importación. Puede restaurarla aquí.",
+			"lead": "Su página desaparece del directorio, de las búsquedas y de los motores de búsqueda, y no vuelve a aparecer con la siguiente importación. Sus lugares de ejercicio, su presentación, su foto, sus honorarios y sus estadísticas se suprimen de inmediato; su cuenta y su agenda se mantienen. Puede restaurarla aquí: la página del registro vuelve con la siguiente actualización semanal y usted la completa de nuevo.",
 			"action": "Retirar mi página del directorio",
 			"restore": "Restaurar mi página"
 		},
@@ -3344,7 +3344,7 @@
 		"title": "Compartir mi página",
 		"lead": "El enlace a la página de {name}, su código QR, un cartel para la sala de espera y una insignia para su sitio web.",
 		"removedTitle": "Su página está retirada",
-		"removedBody": "Ya no está publicada: el enlace y el código QR llevan a una página no encontrada mientras no la restablezca.",
+		"removedBody": "Ya no está publicada: el enlace y el código QR llevan a una página no encontrada. Si la restablece, vuelve con la siguiente actualización semanal.",
 		"unpublishedTitle": "Su página aún no está publicada",
 		"unpublishedBody": "El enlace lleva a la página del registro, sin lo que usted ha añadido. Publíquela para que pacientes y enlaces compartidos muestren su versión.",
 		"unpublishedLink": "Publicar desde el editor",

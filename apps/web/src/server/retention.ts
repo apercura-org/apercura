@@ -23,8 +23,9 @@ const BATCH = 500;
  * removal requests `REMOVAL_REQUEST_RETENTION_MONTHS` after their decision, and "I am this
  * practitioner" contact requests `CONTACT_REQUEST_RETENTION_MONTHS` after their last change
  * (whatever their status), 500 of each at a time. Reports and removal requests still waiting are
- * kept. A confirmed objection keeps its effect: the suppression (the RPPS only) stays as long as
- * the directory is published.
+ * kept. A confirmed objection already deleted its request with the page (`gdpr/minimise.ts`):
+ * only the suppression (country, RPPS, reason, who and when) stays, as long as the directory is
+ * published.
  */
 export async function purgeClosedRequests(
 	db: Database,

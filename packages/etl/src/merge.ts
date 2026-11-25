@@ -604,15 +604,31 @@ export async function markMissing(tx: TransactionSql, ctx: MergeContext) {
 	};
 }
 
-/** Suppressions (GDPR objections) always win, on every run. */
-export async function applySuppressions(tx: TransactionSql) {
-	const suppressed = await tx`
-		UPDATE directory.practitioners p SET status = 'suppressed', indexable = false, updated_at = now()
-		WHERE p.status <> 'suppressed' AND EXISTS (
-			SELECT 1 FROM directory.suppressions s
-			WHERE s.country = p.country AND s.id_scheme = p.id_scheme AND s.national_id = p.national_id
-		)
+export type SuppressionPurge = {
+	deleted: number;
+	kept: number;
+	sites: number;
+	objects: number;
+	tags: string[];
+};
+
+/**
+ * Suppressions (GDPR objections) always win, on every run. Their lines never reach staging
+ * (`SuppressedLines`); what is still stored about a suppressed practitioner (a suppression added
+ * by hand, or confirmed while this run was loading, or a row no longer held by an agenda or an
+ * owner) is deleted by the same function as the app's (migration 0023), and its cache tags are
+ * queued. A row whose suppression was withdrawn is active again: the merge refills it.
+ */
+export async function applySuppressions(tx: TransactionSql, runId: number) {
+	const [row] = await tx<{ purge: SuppressionPurge }[]>`
+		SELECT directory.purge_suppressed_practitioners(NULL) AS purge
 	`;
+	const purge = row?.purge ?? { deleted: 0, kept: 0, sites: 0, objects: 0, tags: [] };
+	const [queued] = purge.tags.length
+		? await tx<{ tags: number }[]>`
+				SELECT directory.enqueue_tags(${runId}, ${purge.tags}::text[]) AS tags
+			`
+		: [];
 	const lifted = await tx`
 		UPDATE directory.practitioners p SET status = 'active', updated_at = now()
 		WHERE p.status = 'suppressed' AND NOT EXISTS (
@@ -620,7 +636,14 @@ export async function applySuppressions(tx: TransactionSql) {
 			WHERE s.country = p.country AND s.id_scheme = p.id_scheme AND s.national_id = p.national_id
 		)
 	`;
-	return { suppressed: suppressed.count, lifted: lifted.count };
+	return {
+		deleted: purge.deleted,
+		kept: purge.kept,
+		sites: purge.sites,
+		objects: purge.objects,
+		tags: queued?.tags ?? 0,
+		lifted: lifted.count,
+	};
 }
 
 /** FINESS+ enrichment: official name, category and WGS84 coordinates of open establishments. */
@@ -1142,19 +1165,6 @@ export async function orphanedPages(
 	const [row] =
 		await tx.unsafe<{ count: number; examples: string[] | null }[]>(ORPHANED_PAGES_QUERY);
 	return { count: row?.count ?? 0, examples: row?.examples ?? [] };
-}
-
-/**
- * Indexable pages whose practitioner is now suppressed: they are always
- * unpublished and never count against the circuit breakers.
- */
-export async function suppressedIndexablePages(tx: TransactionSql): Promise<number> {
-	const [row] = await tx<{ count: number }[]>`
-		SELECT count(*)::integer AS count FROM directory.practitioner_pages pg
-		JOIN directory.practitioners p ON p.id = pg.practitioner_id
-		WHERE pg.indexable AND p.status = 'suppressed'
-	`;
-	return row?.count ?? 0;
 }
 
 /** A few pages this run would unpublish, for the blocked-run summary (call before refreshing). */

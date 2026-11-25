@@ -1,6 +1,7 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import { ownerSiteSchema, profileInputSchema } from "~/lib/profile-schema";
+import { afterPurge } from "~/server/gdpr/minimise";
 import { setOwnerRemoval } from "~/server/gdpr/service";
 import {
 	addOwnerSite,
@@ -14,7 +15,7 @@ import {
 	setSiteHidden,
 } from "~/server/profile/service";
 import { refreshPractitioners } from "~/server/refresh";
-import { getStorage } from "~/server/storage";
+import { getStorage, storageConfigured } from "~/server/storage";
 import { createTRPCRouter, memberProcedure } from "../init";
 import { service } from "./errors";
 
@@ -118,12 +119,18 @@ export const profileRouter = createTRPCRouter({
 				WHERE owner_org_id = ${ctx.organizationId} AND claim_status = 'claimed'
 			`;
 			if (!row) throw new TRPCError({ code: "NOT_FOUND" });
-			await setOwnerRemoval(ctx.db(), {
+			const purge = await setOwnerRemoval(ctx.db(), {
 				practitionerId: row.id,
 				userId: ctx.user.id,
 				removed: input.removed,
 			});
-			await refreshPractitioners(ctx.db().$client, [row.id]);
+			if (purge) {
+				await afterPurge(ctx.db(), purge, {
+					storage: storageConfigured() ? getStorage() : null,
+				});
+			} else {
+				await refreshPractitioners(ctx.db().$client, [row.id]);
+			}
 			return { ok: true as const };
 		}),
 	),

@@ -25,6 +25,7 @@ import { buildFrOptions } from "../src/config";
 import { parseQuotedRecord } from "../src/lib/text";
 import { COARSE_TAG_THRESHOLD, drainOutbox } from "../src/outbox";
 import { runFr } from "../src/run-fr";
+import type { SuppressedLinesSummary } from "../src/suppressions";
 
 const url = process.env.ETL_TEST_DATABASE_URL;
 const FIXTURES = join(import.meta.dirname, "..", "fixtures", "fr");
@@ -371,23 +372,40 @@ describe.skipIf(!url)("etl:fr on synthetic fixtures", () => {
 		expect(await count("directory.sites WHERE phone LIKE '+3319903%'")).toBe(200);
 	});
 
-	it("always honours suppressions, without tripping the breakers", async () => {
+	it("drops a suppressed practitioner's lines before staging and deletes what was stored", async () => {
 		const target = fakeRpps(3);
+		const [before] = await sql<{ id: number }[]>`
+			SELECT id FROM directory.practitioners WHERE national_id = ${target}
+		`;
+		const id = before?.id ?? 0;
+		expect(await count(`directory.activities WHERE practitioner_id = ${id}`)).toBeGreaterThan(0);
+		// Added by hand, as an operator may: the next import deletes the rest.
 		await sql`
 			INSERT INTO directory.suppressions (national_id, reason) VALUES (${target}, 'objection (test)')
 		`;
 		const people = [...CASES.filter((person) => person.n !== 2), ...fillerPeople(200, 3)];
-		const outcome = await run(fixtureDir(people), { force: true });
-		expect(outcome.status).toBe("succeeded");
-		const [row] = await sql<{ status: string; indexable: boolean }[]>`
-			SELECT status, indexable FROM directory.practitioners WHERE national_id = ${target}
-		`;
-		expect(row).toEqual({ status: "suppressed", indexable: false });
-		expect(
-			await count(
-				`directory.practitioner_pages pg JOIN directory.practitioners p ON p.id = pg.practitioner_id WHERE p.national_id = '${target}'`,
-			),
-		).toBe(0);
+		for (const round of [1, 2]) {
+			const outcome = await run(fixtureDir(people), { force: true });
+			expect(outcome.status, `import ${round}`).toBe("succeeded");
+			// Every line of the person is dropped while parsing, counted per country.
+			const lines = (outcome.stats.suppressedLines as SuppressedLinesSummary).FR;
+			expect(lines).toMatchObject({ idScheme: "RPPS", ids: 1 });
+			expect(lines?.byFile.personneActivite).toBeGreaterThan(0);
+			expect(await count(`directory.stg_ans_activities WHERE rpps = '${target}'`)).toBe(0);
+			expect(await count(`directory.stg_ans_qualifications WHERE rpps = '${target}'`)).toBe(0);
+			// What the earlier imports stored is deleted by the first one, and never comes back.
+			expect(outcome.stats.suppressions).toMatchObject({ deleted: round === 1 ? 1 : 0 });
+			expect(await count(`directory.practitioners WHERE national_id = '${target}'`)).toBe(0);
+			for (const table of [
+				"activities",
+				"practitioner_qualifications",
+				"practitioner_pages",
+				"search_docs",
+			]) {
+				expect(await count(`directory.${table} WHERE practitioner_id = ${id}`), table).toBe(0);
+			}
+			expect(await count(`directory.suppressions WHERE national_id = '${target}'`)).toBe(1);
+		}
 	});
 
 	it("never overwrites practitioner-owned data", async () => {
@@ -517,21 +535,34 @@ describe.skipIf(!url)("etl:fr on synthetic fixtures", () => {
 			await geocoder.close();
 		}
 	});
-	it("honours the opt-outs of the practitioner space on every later import", async () => {
+	it("keeps only the suppressions of removed pages through later imports, until withdrawn", async () => {
 		// The web app's two ways out (apps/web/src/server/gdpr/service.ts), written as it writes
-		// them: an objection to an unclaimed page (withheld at once, suppressed once an
-		// administrator confirms it) and the owner removing their claimed page.
+		// them: an objection to an unclaimed page (withheld at once; once an administrator confirms
+		// it, a suppression and the purge) and the owner removing their claimed page.
 		const objecting = fakeRpps(7);
 		const owner = fakeRpps(6);
 		const people = [...CASES.filter((p) => p.n !== 2), ...fillerPeople(200, 3), HELENE];
 		const state = (rpps: string) => sql<
-			{ status: string; indexable: boolean; withheld: boolean; pages: number; docs: number }[]
+			{
+				id: number;
+				status: string;
+				indexable: boolean;
+				withheld: boolean;
+				claim: string;
+				refreshed: boolean;
+				pages: number;
+				docs: number;
+				activities: number;
+			}[]
 		>`
-			SELECT p.status, p.indexable, p.withheld_at IS NOT NULL AS withheld,
+			SELECT p.id, p.status, p.indexable, p.withheld_at IS NOT NULL AS withheld,
+				p.claim_status AS claim, p.source_hash IS NOT NULL AS refreshed,
 				(SELECT count(*)::integer FROM directory.practitioner_pages pg
 					WHERE pg.practitioner_id = p.id AND pg.indexable) AS pages,
 				(SELECT count(*)::integer FROM directory.search_docs sd
-					WHERE sd.practitioner_id = p.id AND sd.indexable) AS docs
+					WHERE sd.practitioner_id = p.id AND sd.indexable) AS docs,
+				(SELECT count(*)::integer FROM directory.activities a
+					WHERE a.practitioner_id = p.id) AS activities
 			FROM directory.practitioners p WHERE p.national_id = ${rpps}
 		`;
 
@@ -548,32 +579,72 @@ describe.skipIf(!url)("etl:fr on synthetic fixtures", () => {
 			docs: 0,
 		});
 
-		// Confirmed, and the owner's own removal: a suppression each, for good.
+		// Confirmed, and the owner's own removal: a suppression each, then the purge.
+		await sql`
+			INSERT INTO directory.organization (id, name, slug)
+			VALUES ('org-etl-owner', 'Cabinet Témoin', 'cabinet-etl-owner')
+			ON CONFLICT (id) DO NOTHING
+		`;
+		await sql`
+			UPDATE directory.practitioners SET claim_status = 'claimed', owner_org_id = 'org-etl-owner'
+			WHERE national_id = ${owner}
+		`;
 		await sql`
 			INSERT INTO directory.suppressions (country, id_scheme, national_id, reason, created_by)
 			VALUES ('FR', 'RPPS', ${objecting}, 'objection', 'admin-test'),
 				('FR', 'RPPS', ${owner}, 'owner', 'owner-test')
 		`;
-		await sql`
-			UPDATE directory.practitioners SET status = 'suppressed', indexable = false, withheld_at = NULL
-			WHERE national_id = ${objecting}
+		const ids = [(await state(objecting))[0]?.id ?? 0, (await state(owner))[0]?.id ?? 0];
+		const [purge] = await sql<{ result: { deleted: number; kept: number; tags: string[] } }[]>`
+			SELECT directory.purge_suppressed_practitioners(${ids}::integer[]) AS result
 		`;
+		// The unclaimed page goes; the claimed one stays a bare row its owner can restore.
+		expect(purge?.result).toMatchObject({ deleted: 1, kept: 1 });
+		expect(purge?.result.tags).toEqual(
+			expect.arrayContaining([`practitioner:${ids[0]}`, `practitioner:${ids[1]}`]),
+		);
+		expect(purge?.result.tags.some((tag) => tag.startsWith("listing:"))).toBe(true);
+
+		for (let round = 1; round <= 2; round++) {
+			const outcome = await run(fixtureDir(people), { force: true });
+			expect(outcome.status, `import ${round}`).toBe("succeeded");
+			// Both (and the suppression of the test above) are dropped before staging.
+			expect((outcome.stats.suppressedLines as SuppressedLinesSummary).FR?.ids).toBe(3);
+			expect(outcome.stats.suppressions).toMatchObject({ deleted: 0, lifted: 0 });
+			expect(await count(`directory.practitioners WHERE national_id = '${objecting}'`)).toBe(0);
+			expect((await state(owner))[0], `import ${round}`).toMatchObject({
+				status: "suppressed",
+				indexable: false,
+				claim: "claimed",
+				refreshed: false,
+				pages: 0,
+				docs: 0,
+				activities: 0,
+			});
+		}
+
+		// Withdrawn: the suppressions go, and the next import brings both pages back.
+		await sql`DELETE FROM directory.suppressions WHERE national_id IN (${objecting}, ${owner})`;
+		const back = await run(fixtureDir(people), { force: true });
+		expect(back.status).toBe("succeeded");
+		expect(back.stats.suppressions).toMatchObject({ lifted: 1 });
+		for (const rpps of [objecting, owner]) {
+			expect((await state(rpps))[0], rpps).toMatchObject({
+				status: "active",
+				indexable: true,
+				withheld: false,
+				refreshed: true,
+				pages: 1,
+				docs: 1,
+				activities: 1,
+			});
+		}
+		expect((await state(owner))[0]?.claim).toBe("claimed");
 		await sql`
-			UPDATE directory.practitioners
-			SET claim_status = 'claimed', status = 'suppressed', indexable = false
+			UPDATE directory.practitioners SET claim_status = 'unclaimed', owner_org_id = NULL
 			WHERE national_id = ${owner}
 		`;
-		for (let round = 0; round < 2; round++) {
-			expect((await run(fixtureDir(people), { force: true })).status).toBe("succeeded");
-			for (const rpps of [objecting, owner]) {
-				expect((await state(rpps))[0], `${rpps}, import ${round + 1}`).toMatchObject({
-					status: "suppressed",
-					indexable: false,
-					pages: 0,
-					docs: 0,
-				});
-			}
-		}
+		await sql`DELETE FROM directory.organization WHERE id = 'org-etl-owner'`;
 	});
 });
 
