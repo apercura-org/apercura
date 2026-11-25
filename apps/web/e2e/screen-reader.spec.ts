@@ -227,6 +227,8 @@ test.describe("booking, the appointment page and the practice's agenda", () => {
 		await expect(async () => {
 			expect(await reader.log()).toContain("dialog, Prendre rendez-vous");
 		}).toPass({ timeout: 10_000 });
+		// The reasons arrive with the agenda: read the step once it is there, not its loading line.
+		await expect(dialog.getByRole("radiogroup", { name: "Motif du rendez-vous" })).toBeVisible();
 		expectPhrasesInOrder(await reader.readUntil(/^button, Continuer$/), [
 			"dialog, Prendre rendez-vous",
 			"heading, Prendre rendez-vous, level 2",

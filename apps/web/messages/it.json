@@ -1597,7 +1597,8 @@
 				"website": "Lasci vuoto questo campo",
 				"address": "Indirizzo della visita",
 				"addressHint": "Numero civico e via, poi edificio, piano o codice d’accesso se serve. Solo lo studio lo vede: nessuna e-mail lo contiene.",
-				"requiredAddress": "Inserisca l’indirizzo della visita."
+				"requiredAddress": "Inserisca l’indirizzo della visita.",
+				"addressTooLong": "Scriva l’indirizzo su 4 righe e in 300 caratteri al massimo."
 			},
 			"altcha": {
 				"label": "Verifica automatica che lei non sia un robot",
@@ -2853,8 +2854,8 @@
 				"location": "Luogo delle cure",
 				"locationSite": "In studio",
 				"locationHome": "Al domicilio del paziente",
-				"travel": "Spostamento dopo ogni visita (minuti)",
-				"travelHint": "Tempo lasciato libero dopo ogni visita per raggiungere il paziente successivo o lo studio. Aggiunga un margine prima se deve anche raggiungere la prima.",
+				"travel": "Tempo di spostamento (minuti)",
+				"travelHint": "Tempo lasciato libero dopo ogni visita per raggiungere il paziente successivo o lo studio, e prima di una visita che segue una cura in studio o una fascia bloccata. Due visite di seguito condividono un solo spostamento.",
 				"area": "Comuni serviti",
 				"areaLead": "I pazienti scelgono il loro comune da questo elenco prima di scegliere un orario.",
 				"areaEmpty": "Ancora nessun comune: i pazienti non possono prenotare questa visita.",
@@ -2866,7 +2867,11 @@
 				"areaAdded": "{count, plural, =0 {Nessun nuovo comune.} one {# comune aggiunto.} many {# comuni aggiunti.} other {# comuni aggiunti.}}",
 				"areaNotLocated": "Lo studio non ha una posizione sulla mappa: aggiunga i comuni uno per uno.",
 				"areaRequired": "Scelga almeno un comune per offrire questa visita online.",
-				"summaryHome": "{duration} min · a domicilio"
+				"summaryHome": "{duration} min · a domicilio",
+				"invalidName": "Inserisca un nome.",
+				"invalidDuration": "Inserisca un numero intero di minuti, da 5 a 480.",
+				"invalidMinutes": "Inserisca un numero intero di minuti, da 0 a 240.",
+				"invalidRadius": "Inserisca un numero intero di chilometri, da 1 a 50."
 			},
 			"rules": {
 				"heading": "Orari di apertura settimanali",

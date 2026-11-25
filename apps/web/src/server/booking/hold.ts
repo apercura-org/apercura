@@ -34,6 +34,7 @@ import { drainLater } from "./outbox-worker";
 import { verifyProof } from "./proof";
 import { type BookingRuntime, limit } from "./runtime";
 import { expireStaleOverlapping, recordEvents } from "./transitions";
+import { assertTravelFree } from "./travel";
 
 export interface PatientInput {
 	firstName: string;
@@ -159,8 +160,10 @@ export async function hold(rt: BookingRuntime, input: HoldInput): Promise<HoldRe
 		BOOKING_LIMITS.holdsPerEmail,
 	);
 
-	const occupied = occupancy(toCoreType(type), startMs);
-	const endMs = appointmentEnd(toCoreType(type), startMs);
+	const coreType = toCoreType(type);
+	const occupied = occupancy(coreType, startMs);
+	const endMs = appointmentEnd(coreType, startMs);
+	const travelMin = coreType.travelMin ?? 0;
 	const state = createHold(nowMs);
 	const holdToken = newOpaqueToken();
 	const appointmentId = randomUUID();
@@ -237,6 +240,13 @@ export async function hold(rt: BookingRuntime, input: HoldInput): Promise<HoldRe
 				nowMs,
 				actor: "patient",
 			});
+			await assertTravelFree(tx, {
+				practitionerId: calendar.practitionerId,
+				fromMs: occupied.fromMs,
+				untilMs: occupied.untilMs,
+				travelMin,
+				nowMs,
+			});
 
 			const sealed = await sealAppointment(tx, calendar.organizationId, appointmentId, {
 				firstName: patient.firstName,
@@ -254,6 +264,7 @@ export async function hold(rt: BookingRuntime, input: HoldInput): Promise<HoldRe
 				kind: "appointment",
 				typeName: type.name,
 				location: home ? "home" : "site",
+				travelMin,
 				startsAt: new Date(startMs),
 				endsAt: new Date(endMs),
 				occupiedFrom: new Date(occupied.fromMs),

@@ -47,6 +47,8 @@ test("a patient books a home visit in a commune the nurse visits", async ({ page
 	await reason.check({ force: true });
 	await dialog.getByRole("button", { name: "Continuer" }).click();
 	await expect(dialog.getByText("Choisissez votre commune.")).toBeVisible();
+	// The focus moves to the list, which reads its error.
+	await expect(dialog.getByRole("button", { name: /Votre commune/ })).toBeFocused();
 	expect(await axeViolations(page)).toEqual([]);
 
 	// The hidden select carries the autofill hint of the commune.
@@ -67,6 +69,12 @@ test("a patient books a home visit in a commune the nurse visits", async ({ page
 	await dialog.getByRole("button", { name: "Recevoir mon code" }).click();
 	await expect(dialog.getByText("Saisissez l’adresse de la visite.")).toBeVisible();
 	expect(await axeViolations(page)).toEqual([]);
+	// Four lines at most, said before anything is sent.
+	await address.fill("12 rue de la Simulation\nBâtiment B\n3e étage\nPorte gauche\nCode 1234");
+	await dialog.getByRole("button", { name: "Recevoir mon code" }).click();
+	await expect(
+		dialog.getByText("Écrivez l’adresse sur 4 lignes et en 300 caractères au plus."),
+	).toBeVisible();
 	await address.fill(STREET);
 	await dialog.getByRole("button", { name: "Recevoir mon code" }).click();
 	await expect(dialog.getByRole("heading", { name: "Saisissez votre code" })).toBeVisible({
@@ -137,7 +145,7 @@ test("the practice reads the address in its agenda and edits the communes it vis
 	// The settings: the home visit's travel time and communes.
 	await page.goto("/pro/agenda/reglages");
 	const form = page.getByRole("form", { name: /^Soins à domicile/ });
-	await expect(form.getByLabel("Trajet après chaque visite (minutes)")).toHaveValue("15");
+	await expect(form.getByLabel("Temps de trajet (minutes)")).toHaveValue("15");
 	const area = form.getByRole("group", { name: "Communes desservies" });
 	await expect(area.getByText("Paris 14e Arrondissement")).toBeVisible();
 	await expect(area.getByText("Paris 15e Arrondissement")).toBeVisible();

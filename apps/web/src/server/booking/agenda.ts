@@ -48,6 +48,7 @@ import {
 	lockAppointment,
 	recordEvents,
 } from "./transitions";
+import { assertTravelFree } from "./travel";
 
 const DAY_MS = 86_400_000;
 
@@ -148,26 +149,39 @@ export async function listAgenda(
 	const withPatient = rows.filter(
 		(row) => row.kind === "appointment" && row.purgedAt === null && row.status !== "held",
 	);
+	const audit = {
+		organizationId: staff.organizationId,
+		actor: actorOf(staff),
+		userId: staff.userId,
+		purpose: "agenda_list",
+		requestId: rt.requestId,
+		ipHash: rt.ipHash,
+	};
 	const patients = await readAppointmentPatients(
 		rt.db,
-		{
-			organizationId: staff.organizationId,
-			actor: actorOf(staff),
-			userId: staff.userId,
-			purpose: "agenda_list",
-			requestId: rt.requestId,
-			ipHash: rt.ipHash,
-		},
+		audit,
 		withPatient.map((row) => row.id),
-		// The address of a home visit is read only when the range holds one.
-		withPatient.some((row) => row.location === "home")
-			? ["firstName", "lastName", "email", "phone", "address", "commune"]
-			: ["firstName", "lastName", "email", "phone"],
+		["firstName", "lastName", "email", "phone"],
+	);
+	// The address of a home visit is read (and logged) for home visits only.
+	const addresses = await readAppointmentPatients(
+		rt.db,
+		audit,
+		withPatient.filter((row) => row.location === "home").map((row) => row.id),
+		["address", "commune"],
 	);
 	const communes = await communeNames(
 		rt.db,
-		[...patients.values()].map((patient) => patient.commune),
+		[...addresses.values()].map((address) => address.commune),
 	);
+	const homeOf = (address: { address: string | null; commune: string | null } | undefined) =>
+		address && (address.address || address.commune)
+			? {
+					street: address.address,
+					communeCode: address.commune,
+					communeName: address.commune ? (communes.get(address.commune) ?? null) : null,
+				}
+			: null;
 	return rows
 		.map((row) => ({ row, status: effectiveStatus(lifecycleEntry(row), nowMs) }))
 		.filter(({ status }) => status !== "expired")
@@ -194,14 +208,7 @@ export async function listAgenda(
 							phone: patient.phone,
 							isNew: row.patientIsNew,
 							emailConfirmed: row.emailVerifiedAt !== null,
-							home:
-								row.location === "home" && (patient.address || patient.commune)
-									? {
-											street: patient.address,
-											communeCode: patient.commune,
-											communeName: patient.commune ? (communes.get(patient.commune) ?? null) : null,
-										}
-									: null,
+							home: homeOf(addresses.get(row.id)),
 						}
 					: null,
 				/** Emails could not be delivered: call the patient. */
@@ -261,8 +268,10 @@ export async function createEntry(
 	const home = checkHomeAddress(type, input.patient.homeAddress, { required: false });
 	const nowMs = rt.nowMs();
 	const startMs = input.startsAt.getTime();
-	const occupied = occupancy(toCoreType(type), startMs);
-	const endMs = appointmentEnd(toCoreType(type), startMs);
+	const coreType = toCoreType(type);
+	const occupied = occupancy(coreType, startMs);
+	const endMs = appointmentEnd(coreType, startMs);
+	const travelMin = coreType.travelMin ?? 0;
 	const state = createPracticeEntry(nowMs);
 	const id = randomUUID();
 	const nonce = newManageNonce();
@@ -279,6 +288,13 @@ export async function createEntry(
 				occupied.untilMs,
 				nowMs,
 			);
+			await assertTravelFree(tx, {
+				practitionerId: calendar.practitionerId,
+				fromMs: occupied.fromMs,
+				untilMs: occupied.untilMs,
+				travelMin,
+				nowMs,
+			});
 			const sealed = await sealAppointment(tx, staff.organizationId, id, {
 				firstName,
 				lastName,
@@ -295,6 +311,7 @@ export async function createEntry(
 				kind: "appointment",
 				typeName: type.name,
 				location: type.location === "home" ? "home" : "site",
+				travelMin,
 				startsAt: new Date(startMs),
 				endsAt: new Date(endMs),
 				occupiedFrom: new Date(occupied.fromMs),
@@ -373,6 +390,14 @@ export async function blockTime(
 	try {
 		await practitionerTransaction(rt.db, calendar.practitionerId, async (tx) => {
 			await overrideHolds(tx, staff, calendar.practitionerId, fromMs, untilMs, nowMs);
+			// A block is an absence: it must leave the travel before a home visit free.
+			await assertTravelFree(tx, {
+				practitionerId: calendar.practitionerId,
+				fromMs,
+				untilMs,
+				travelMin: 0,
+				nowMs,
+			});
 			await tx.insert(appointments).values({
 				id,
 				organizationId: staff.organizationId,

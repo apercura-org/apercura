@@ -104,6 +104,14 @@ export function ReasonStep({
 	const [reason, setReason] = useState(typeId ?? "");
 	const [commune, setCommune] = useState<string | null>(communeCode);
 	const [communeMissing, setCommuneMissing] = useState(false);
+	/** Counts the refused submits: each one moves the focus to the commune list, with its error. */
+	const [communeAsked, setCommuneAsked] = useState(0);
+	const communeField = useRef<HTMLDivElement>(null);
+	useEffect(() => {
+		if (communeAsked > 0) {
+			communeField.current?.querySelector("button")?.focus();
+		}
+	}, [communeAsked]);
 	const calendar = calendars.find((item) => item.id === place) ?? calendars[0];
 	const chosen = calendar?.types.find((type) => type.id === reason);
 	const audience = (value: string) =>
@@ -118,6 +126,7 @@ export function ReasonStep({
 			// Only a commune of the area can be chosen: the server checks it again before the hold.
 			if (!chosen.serviceArea.some((item) => item.code === commune)) {
 				setCommuneMissing(true);
+				setCommuneAsked((count) => count + 1);
 				return;
 			}
 			onSubmit(calendar.id, chosen.id, commune);
@@ -191,30 +200,32 @@ export function ReasonStep({
 				</RadioGroup>
 			) : null}
 			{chosen?.location === "home" ? (
-				<Select
-					key={chosen.id}
-					name="address-level2"
-					autoComplete="address-level2"
-					label={t("reason.commune")}
-					description={t("reason.communeHint")}
-					placeholder={t("reason.communePlaceholder")}
-					selectedKey={commune}
-					onSelectionChange={(key) => {
-						setCommune(key === null ? null : String(key));
-						setCommuneMissing(false);
-					}}
-					isRequired
-					// Checked on submit by the step itself (a native check cannot focus the list).
-					validationBehavior="aria"
-					isInvalid={communeMissing}
-					errorMessage={t("reason.communeRequired")}
-				>
-					{chosen.serviceArea.map((item) => (
-						<ListBoxItem key={item.code} id={item.code} textValue={item.name}>
-							{communeLabel(item)}
-						</ListBoxItem>
-					))}
-				</Select>
+				<div ref={communeField}>
+					<Select
+						key={chosen.id}
+						name="address-level2"
+						autoComplete="address-level2"
+						label={t("reason.commune")}
+						description={t("reason.communeHint")}
+						placeholder={t("reason.communePlaceholder")}
+						selectedKey={commune}
+						onSelectionChange={(key) => {
+							setCommune(key === null ? null : String(key));
+							setCommuneMissing(false);
+						}}
+						isRequired
+						// Checked on submit by the step itself (a native check cannot focus the list).
+						validationBehavior="aria"
+						isInvalid={communeMissing}
+						errorMessage={t("reason.communeRequired")}
+					>
+						{chosen.serviceArea.map((item) => (
+							<ListBoxItem key={item.code} id={item.code} textValue={item.name}>
+								{communeLabel(item)}
+							</ListBoxItem>
+						))}
+					</Select>
+				</div>
 			) : null}
 			{calendar?.publicInstructions ? (
 				<Notice tone="info" role="none" title={t("reason.instructions")}>
@@ -239,6 +250,10 @@ export function ReasonStep({
 }
 
 const PHONE = /^\+?[0-9][0-9 .\-()]{5,20}$/;
+/** Lines of a street address the server keeps (`normalizeHomeAddress`): 4 at most. */
+const MAX_ADDRESS_LINES = 4;
+const addressLines = (value: string) =>
+	value.split(/\r\n|\r|\n/).filter((line) => line.trim() !== "").length;
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export function DetailsStep({
@@ -400,7 +415,13 @@ export function DetailsStep({
 					onChange={(address) => set({ address })}
 					isRequired
 					maxLength={300}
-					validate={(value) => (value.trim() ? null : t("details.requiredAddress"))}
+					validate={(value) =>
+						!value.trim()
+							? t("details.requiredAddress")
+							: addressLines(value) > MAX_ADDRESS_LINES || value.trim().length > 300
+								? t("details.addressTooLong")
+								: null
+					}
 				/>
 			) : null}
 			{calendar.askFirstVisit ? (

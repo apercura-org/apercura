@@ -1583,9 +1583,121 @@ describe.skipIf(!url)("booking (database)", { timeout: 30_000 }, () => {
 		const managed = await patientCaller().booking.manage.get({ token: verified.manageToken });
 		expect(managed).toMatchObject({ location: "home", homeCommune: "Commune Synthétique A" });
 		expect(JSON.stringify(managed)).not.toContain(`Domicile${run}`);
+		expect(row?.travelMin).toBe(15);
+
+		// The travel before a visit: right after care at the practice, the visit must wait for it;
+		// and care at the practice cannot take the travel before a visit. The overlap constraint
+		// alone would accept both.
+		const later = new Date(base + 21 * DAY).toISOString().slice(0, 10);
+		const atLocal = (time: string) => new Date(`${later}T${time}:00.000Z`);
+		const office = await ownerB.agenda.create({
+			organizationId: orgB,
+			calendarId: calendarB,
+			typeId: typeB,
+			startsAt: atLocal("04:00"),
+			patient: { firstName: "Dominique", lastName: `Cabinet${run}` },
+			locale: "fr",
+		});
+		expect(office.status).toBe("created");
+		expect(
+			(
+				await patientCaller().booking.slots({
+					calendarId: calendarB,
+					typeId: homeType.id,
+					fromDate: later,
+					days: 1,
+				})
+			).slots.map((slot) => slot.toISOString().slice(11, 16)),
+		).toEqual(["04:30"]);
+		const tooSoon = await patientCaller().booking.hold({
+			calendarId: calendarB,
+			typeId: homeType.id,
+			startsAt: atLocal("04:15"),
+			patient: { ...patient("travel"), homeAddress: { street, communeCode: inside } },
+			locale: "fr",
+			idempotencyKey: randomUUID(),
+			altcha: await proof(),
+		});
+		await settle();
+		expect(tooSoon.status).toBe("slot_taken");
+		const visit = await patientCaller().booking.hold({
+			calendarId: calendarB,
+			typeId: homeType.id,
+			startsAt: atLocal("04:30"),
+			patient: { ...patient("travel"), homeAddress: { street, communeCode: inside } },
+			locale: "fr",
+			idempotencyKey: randomUUID(),
+			altcha: await proof(),
+		});
+		await settle();
+		expect(visit.status).toBe("held");
+		// 08:20 to 08:30 local is the travel to that visit: no care at the practice then.
+		expect(
+			await ownerB.agenda.create({
+				organizationId: orgB,
+				calendarId: calendarB,
+				typeId: typeB,
+				startsAt: atLocal("04:20"),
+				patient: { firstName: "Dominique", lastName: `Cabinet${run}` },
+				locale: "fr",
+			}),
+		).toEqual({ status: "slot_taken" });
+		expect(
+			await ownerB.agenda.block({
+				organizationId: orgB,
+				calendarId: calendarB,
+				startsAt: atLocal("04:15"),
+				endsAt: atLocal("04:25"),
+			}),
+		).toEqual({ status: "slot_taken" });
+
+		// A move keeps the place and travel time frozen at booking time, and is refused once the
+		// type no longer takes place at home.
+		const editHome = (fields: { location: "site" | "home"; travelMin: number }) =>
+			ownerB.calendar.saveType({
+				organizationId: orgB,
+				calendarId: calendarB,
+				typeId: homeType.id,
+				name: homeType.name,
+				durationMin: 20,
+				beforeMin: 0,
+				afterMin: 0,
+				audience: "all",
+				active: true,
+				serviceAreaCodes: fields.location === "home" ? [inside, alsoInside] : [],
+				...fields,
+			});
+		await editHome({ location: "site", travelMin: 0 });
+		expect(
+			(await patientCaller().booking.manage.get({ token: verified.manageToken })).canReschedule,
+		).toBe(false);
+		expect(
+			(
+				await errorOf(
+					patientCaller().booking.manage.reschedule({
+						token: verified.manageToken,
+						startsAt: atLocal("04:00"),
+					}),
+				)
+			)?.message,
+		).toBe("TRANSITION_REFUSED");
+		await editHome({ location: "home", travelMin: 30 });
+		const movedTo = new Date(
+			`${new Date(base + 28 * DAY).toISOString().slice(0, 10)}T04:00:00.000Z`,
+		);
+		expect(
+			await patientCaller().booking.manage.reschedule({
+				token: verified.manageToken,
+				startsAt: movedTo,
+			}),
+		).toMatchObject({ status: "rescheduled" });
+		await settle();
+		const [moved] = await db.select().from(appointments).where(eq(appointments.id, result.holdId));
+		expect(moved).toMatchObject({ location: "home", travelMin: 15 });
+		expect(moved?.occupiedUntil.getTime()).toBe(movedTo.getTime() + 35 * MINUTE);
 
 		// Erased with the rest of the patient's details at purge_after.
-		clock.now = (row?.purgeAfter?.getTime() ?? 0) + MINUTE;
+		clock.now = (moved?.purgeAfter?.getTime() ?? 0) + MINUTE;
 		await purge(db, clock.now);
 		const [erased] = await db.select().from(appointments).where(eq(appointments.id, result.holdId));
 		expect(erased).toMatchObject({
@@ -1599,6 +1711,16 @@ describe.skipIf(!url)("booking (database)", { timeout: 30_000 }, () => {
 
 	it("checks that the overlap constraint exists", async () => {
 		await expect(assertBookingConstraints(db.$client)).resolves.toBeUndefined();
+		// 0018 adds the home-visit checks NOT VALID (no scan under its lock); 0019 validates them.
+		const checks = await db.execute<{ conname: string; convalidated: boolean }>(sql`
+			select conname, convalidated from pg_constraint
+			where conname in ('appointments_location_check', 'appointments_travel_check')
+			order by conname
+		`);
+		expect([...checks]).toEqual([
+			{ conname: "appointments_location_check", convalidated: true },
+			{ conname: "appointments_travel_check", convalidated: true },
+		]);
 		const reserved = await db.$client.reserve();
 		try {
 			await reserved`begin`;

@@ -1597,7 +1597,8 @@
 				"website": "Leave this field empty",
 				"address": "Address of the visit",
 				"addressHint": "Number and street, then building, floor or door code if needed. Only the practice sees it: emails never carry it.",
-				"requiredAddress": "Enter the address of the visit."
+				"requiredAddress": "Enter the address of the visit.",
+				"addressTooLong": "Write the address on 4 lines and in 300 characters at most."
 			},
 			"altcha": {
 				"label": "Automatic check that you are not a robot",
@@ -2853,8 +2854,8 @@
 				"location": "Where the care happens",
 				"locationSite": "At the practice",
 				"locationHome": "At the patient’s home",
-				"travel": "Travel time after each visit (minutes)",
-				"travelHint": "Kept free after each home visit, to reach the next patient or the practice. Add free time before if you also need to reach the first one.",
+				"travel": "Travel time (minutes)",
+				"travelHint": "Kept free after each home visit, to reach the next patient or the practice, and before a visit that follows care at the practice or a block. Two visits in a row share one travel time.",
 				"area": "Communes visited",
 				"areaLead": "Patients choose their commune from this list before they choose a time.",
 				"areaEmpty": "No commune yet: patients cannot book this home visit.",
@@ -2866,7 +2867,11 @@
 				"areaAdded": "{count, plural, =0 {No new commune.} one {# commune added.} other {# communes added.}}",
 				"areaNotLocated": "The practice has no position on the map: add the communes one by one.",
 				"areaRequired": "Choose at least one commune to offer this home visit online.",
-				"summaryHome": "{duration} min · at home"
+				"summaryHome": "{duration} min · at home",
+				"invalidName": "Enter a name.",
+				"invalidDuration": "Enter a whole number of minutes, from 5 to 480.",
+				"invalidMinutes": "Enter a whole number of minutes, from 0 to 240.",
+				"invalidRadius": "Enter a whole number of kilometres, from 1 to 50."
 			},
 			"rules": {
 				"heading": "Weekly opening hours",

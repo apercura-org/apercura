@@ -1597,7 +1597,8 @@
 				"website": "Deje este campo vacío",
 				"address": "Dirección de la visita",
 				"addressHint": "Número y calle, y si hace falta edificio, piso o código de acceso. Solo la consulta la ve: ningún correo la incluye.",
-				"requiredAddress": "Escriba la dirección de la visita."
+				"requiredAddress": "Escriba la dirección de la visita.",
+				"addressTooLong": "Escriba la dirección en 4 líneas y 300 caracteres como máximo."
 			},
 			"altcha": {
 				"label": "Comprobación automática de que no es un robot",
@@ -2853,8 +2854,8 @@
 				"location": "Lugar de la atención",
 				"locationSite": "En la consulta",
 				"locationHome": "En el domicilio del paciente",
-				"travel": "Desplazamiento tras cada visita (minutos)",
-				"travelHint": "Tiempo libre tras cada visita para llegar al siguiente paciente o a la consulta. Añada tiempo libre antes si también debe desplazarse a la primera.",
+				"travel": "Tiempo de desplazamiento (minutos)",
+				"travelHint": "Tiempo libre tras cada visita para llegar al siguiente paciente o a la consulta, y antes de una visita que sigue a una atención en la consulta o a un bloqueo. Dos visitas seguidas comparten un solo desplazamiento.",
 				"area": "Municipios atendidos",
 				"areaLead": "Los pacientes eligen su municipio en esta lista antes de elegir una hora.",
 				"areaEmpty": "Aún no hay municipios: los pacientes no pueden reservar esta visita.",
@@ -2866,7 +2867,11 @@
 				"areaAdded": "{count, plural, =0 {Ningún municipio nuevo.} one {# municipio añadido.} many {# municipios añadidos.} other {# municipios añadidos.}}",
 				"areaNotLocated": "La consulta no tiene posición en el mapa: añada los municipios uno a uno.",
 				"areaRequired": "Elija al menos un municipio para ofrecer esta visita en línea.",
-				"summaryHome": "{duration} min · a domicilio"
+				"summaryHome": "{duration} min · a domicilio",
+				"invalidName": "Escriba un nombre.",
+				"invalidDuration": "Escriba un número entero de minutos, de 5 a 480.",
+				"invalidMinutes": "Escriba un número entero de minutos, de 0 a 240.",
+				"invalidRadius": "Escriba un número entero de kilómetros, de 1 a 50."
 			},
 			"rules": {
 				"heading": "Horario semanal de apertura",

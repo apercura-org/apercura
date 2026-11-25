@@ -1597,7 +1597,8 @@
 				"website": "Laissez ce champ vide",
 				"address": "Adresse de la visite",
 				"addressHint": "Numéro et rue, puis bâtiment, étage ou code d’accès si besoin. Seul le cabinet la voit : elle n’apparaît dans aucun e-mail.",
-				"requiredAddress": "Saisissez l’adresse de la visite."
+				"requiredAddress": "Saisissez l’adresse de la visite.",
+				"addressTooLong": "Écrivez l’adresse sur 4 lignes et en 300 caractères au plus."
 			},
 			"altcha": {
 				"label": "Vérification automatique que vous n’êtes pas un robot",
@@ -2853,8 +2854,8 @@
 				"location": "Lieu des soins",
 				"locationSite": "Au cabinet",
 				"locationHome": "Au domicile du patient",
-				"travel": "Trajet après chaque visite (minutes)",
-				"travelHint": "Temps gardé libre après chaque visite pour rejoindre le patient suivant ou le cabinet. Ajoutez du temps libre avant si vous devez aussi vous rendre à la première.",
+				"travel": "Temps de trajet (minutes)",
+				"travelHint": "Temps gardé libre après chaque visite, pour rejoindre le patient suivant ou le cabinet, et avant une visite qui suit un soin au cabinet ou une plage bloquée. Deux visites à la suite partagent un seul trajet.",
 				"area": "Communes desservies",
 				"areaLead": "Les patients choisissent leur commune dans cette liste avant de choisir un horaire.",
 				"areaEmpty": "Aucune commune pour l’instant : les patients ne peuvent pas réserver cette visite.",
@@ -2866,7 +2867,11 @@
 				"areaAdded": "{count, plural, =0 {Aucune nouvelle commune.} one {# commune ajoutée.} many {# communes ajoutées.} other {# communes ajoutées.}}",
 				"areaNotLocated": "Le cabinet n’a pas de position sur la carte : ajoutez les communes une par une.",
 				"areaRequired": "Choisissez au moins une commune pour proposer cette visite en ligne.",
-				"summaryHome": "{duration} min · à domicile"
+				"summaryHome": "{duration} min · à domicile",
+				"invalidName": "Saisissez un nom.",
+				"invalidDuration": "Saisissez un nombre entier de minutes, de 5 à 480.",
+				"invalidMinutes": "Saisissez un nombre entier de minutes, de 0 à 240.",
+				"invalidRadius": "Saisissez un nombre entier de kilomètres, de 1 à 50."
 			},
 			"rules": {
 				"heading": "Horaires de la semaine",

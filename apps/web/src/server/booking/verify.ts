@@ -28,6 +28,7 @@ import {
 	expireStaleOverlapping,
 	lockAppointment,
 } from "./transitions";
+import { assertTravelFree } from "./travel";
 
 const DAY_MS = 86_400_000;
 
@@ -160,6 +161,15 @@ export async function verify(
 					untilMs: row.occupiedUntil.getTime(),
 					nowMs,
 					actor: "patient",
+					excludeId: row.id,
+				});
+				// A revived hold takes its slot again: the travel before a visit too.
+				await assertTravelFree(tx, {
+					practitionerId: row.practitionerId,
+					fromMs: row.occupiedFrom.getTime(),
+					untilMs: row.occupiedUntil.getTime(),
+					travelMin: row.travelMin,
+					nowMs,
 					excludeId: row.id,
 				});
 			}

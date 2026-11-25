@@ -135,7 +135,11 @@ export async function busyIntervals(
 ): Promise<BusyInterval[]> {
 	const now = new Date(nowMs);
 	const rows = await db
-		.select({ from: appointments.occupiedFrom, until: appointments.occupiedUntil })
+		.select({
+			from: appointments.occupiedFrom,
+			until: appointments.occupiedUntil,
+			travelMin: appointments.travelMin,
+		})
 		.from(appointments)
 		.where(
 			and(
@@ -147,7 +151,12 @@ export async function busyIntervals(
 				excludeAppointmentId ? ne(appointments.id, excludeAppointmentId) : undefined,
 			),
 		);
-	return rows.map((row) => ({ startMs: row.from.getTime(), endMs: row.until.getTime() }));
+	// A home visit's travel before it blocks entries that do not travel (see `travelConflict`).
+	return rows.map((row) => ({
+		startMs: row.from.getTime(),
+		endMs: row.until.getTime(),
+		...(row.travelMin > 0 ? { travelMin: row.travelMin } : {}),
+	}));
 }
 
 const DAY_MS = 86_400_000;

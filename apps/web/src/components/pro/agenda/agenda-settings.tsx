@@ -596,6 +596,7 @@ function TypeForm({
 					maxLength={80}
 					isRequired
 					isInvalid={invalid.name}
+					errorMessage={t("invalidName")}
 					className="sm:col-span-2"
 				/>
 				<TextField
@@ -605,6 +606,7 @@ function TypeForm({
 					inputMode="numeric"
 					isRequired
 					isInvalid={invalid.duration}
+					errorMessage={t("invalidDuration")}
 				/>
 				<Select
 					label={t("audience")}
@@ -621,6 +623,7 @@ function TypeForm({
 					onChange={setBefore}
 					inputMode="numeric"
 					isInvalid={invalid.before}
+					errorMessage={t("invalidMinutes")}
 				/>
 				<TextField
 					label={t("after")}
@@ -628,6 +631,7 @@ function TypeForm({
 					onChange={setAfter}
 					inputMode="numeric"
 					isInvalid={invalid.after}
+					errorMessage={t("invalidMinutes")}
 				/>
 				<Select
 					label={t("location")}
@@ -646,6 +650,7 @@ function TypeForm({
 						onChange={setTravel}
 						inputMode="numeric"
 						isInvalid={invalid.travel}
+						errorMessage={t("invalidMinutes")}
 						className="sm:col-span-2"
 					/>
 				) : null}
@@ -809,6 +814,7 @@ function ServiceAreaEditor({
 						onChange={setRadius}
 						inputMode="numeric"
 						isInvalid={radiusInvalid}
+						errorMessage={t("invalidRadius")}
 						className="w-28"
 					/>
 					<Button intent="ink" isPending={around} onPress={() => void addAround()}>

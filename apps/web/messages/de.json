@@ -1597,7 +1597,8 @@
 				"website": "Dieses Feld leer lassen",
 				"address": "Adresse des Hausbesuchs",
 				"addressHint": "Hausnummer und Straße, bei Bedarf Gebäude, Stockwerk oder Türcode. Nur die Praxis sieht sie: Keine E-Mail enthält sie.",
-				"requiredAddress": "Geben Sie die Adresse des Hausbesuchs ein."
+				"requiredAddress": "Geben Sie die Adresse des Hausbesuchs ein.",
+				"addressTooLong": "Schreiben Sie die Adresse auf höchstens 4 Zeilen und in höchstens 300 Zeichen."
 			},
 			"altcha": {
 				"label": "Automatische Prüfung, dass Sie kein Roboter sind",
@@ -2853,8 +2854,8 @@
 				"location": "Ort der Behandlung",
 				"locationSite": "In der Praxis",
 				"locationHome": "Beim Patienten zu Hause",
-				"travel": "Fahrzeit nach jedem Besuch (Minuten)",
-				"travelHint": "Nach jedem Hausbesuch freigehalten, um zum nächsten Patienten oder zur Praxis zu fahren. Fügen Sie eine Pufferzeit davor hinzu, wenn Sie auch zum ersten Besuch fahren müssen.",
+				"travel": "Fahrzeit (Minuten)",
+				"travelHint": "Nach jedem Hausbesuch freigehalten, um zum nächsten Patienten oder zur Praxis zu fahren, und vor einem Besuch nach einer Behandlung in der Praxis oder einer blockierten Zeit. Zwei Besuche hintereinander teilen sich eine Fahrzeit.",
 				"area": "Besuchte Orte",
 				"areaLead": "Patienten wählen ihren Ort aus dieser Liste, bevor sie eine Uhrzeit wählen.",
 				"areaEmpty": "Noch kein Ort: Patienten können diesen Hausbesuch nicht buchen.",
@@ -2866,7 +2867,11 @@
 				"areaAdded": "{count, plural, =0 {Kein neuer Ort.} one {# Ort hinzugefügt.} other {# Orte hinzugefügt.}}",
 				"areaNotLocated": "Die Praxis hat keine Position auf der Karte: Fügen Sie die Orte einzeln hinzu.",
 				"areaRequired": "Wählen Sie mindestens einen Ort, um diesen Hausbesuch online anzubieten.",
-				"summaryHome": "{duration} Min. · Hausbesuch"
+				"summaryHome": "{duration} Min. · Hausbesuch",
+				"invalidName": "Geben Sie einen Namen ein.",
+				"invalidDuration": "Geben Sie eine ganze Zahl von Minuten ein, von 5 bis 480.",
+				"invalidMinutes": "Geben Sie eine ganze Zahl von Minuten ein, von 0 bis 240.",
+				"invalidRadius": "Geben Sie eine ganze Zahl von Kilometern ein, von 1 bis 50."
 			},
 			"rules": {
 				"heading": "Wöchentliche Öffnungszeiten",

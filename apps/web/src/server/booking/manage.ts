@@ -5,11 +5,18 @@ import {
 	PENDING_LEAD_MS,
 	transition,
 } from "@apercura/core/booking";
-import { appointments, calendars, practitioners, sites } from "@apercura/db/schema";
+import {
+	appointments,
+	appointmentTypes,
+	calendars,
+	practitioners,
+	sites,
+} from "@apercura/db/schema";
 import { and, eq, isNull } from "drizzle-orm";
 import { hashOpaqueToken, readAppointmentPatients } from "~/server/phi";
 import { siteAddressLine } from "~/server/queries/site-address";
 import {
+	type AppointmentTypeRow,
 	findCalendar,
 	findType,
 	isOnGrid,
@@ -34,8 +41,22 @@ import {
 	lockAppointment,
 	recordEvents,
 } from "./transitions";
+import { assertTravelFree } from "./travel";
 
 const DAY_MS = 86_400_000;
+
+/**
+ * The type an appointment moves with: today's durations, but the place and travel time frozen
+ * when it was booked. A type that changed place since (a home visit turned into care at the
+ * practice, or the reverse) cannot move the appointment: the address it holds, or lacks, would
+ * no longer match. Refused with `TRANSITION_REFUSED`.
+ */
+function rescheduleType(row: AppointmentRow, type: AppointmentTypeRow): AppointmentTypeRow {
+	if (type.location !== row.location) {
+		throw new BookingError("TRANSITION_REFUSED", "LOCATION_CHANGED");
+	}
+	return { ...type, travelMin: row.travelMin };
+}
 
 /*
  * The patient's manage page (`/rdv#t=…`). Every procedure takes the token in a
@@ -112,6 +133,13 @@ export async function getManaged(rt: BookingRuntime, token: string) {
 		? ((await communeNames(rt.db, [patient.commune])).get(patient.commune) ?? null)
 		: null;
 	const { cutoffMin } = await cancellationCutoff(rt, row);
+	const [currentType] = row.appointmentTypeId
+		? await rt.db
+				.select({ location: appointmentTypes.location })
+				.from(appointmentTypes)
+				.where(eq(appointmentTypes.id, row.appointmentTypeId))
+				.limit(1)
+		: [];
 	const canCancel = transition(lifecycleEntry(row), {
 		type: "cancel_by_patient",
 		nowMs,
@@ -154,7 +182,11 @@ export async function getManaged(rt: BookingRuntime, token: string) {
 		canCancel,
 		/** Online cancellation and moves close this many minutes before the start. */
 		cancellationCutoffMin: cutoffMin,
-		canReschedule: canCancel && row.appointmentTypeId !== null && place?.calendarStatus === "open",
+		canReschedule:
+			canCancel &&
+			row.appointmentTypeId !== null &&
+			place?.calendarStatus === "open" &&
+			currentType?.location === row.location,
 	};
 }
 
@@ -242,7 +274,7 @@ export async function managedSlots(
 		throw new BookingError("NOT_FOUND");
 	}
 	const calendar = await findCalendar(rt.db, row.calendarId, { openOnly: true });
-	const type = await findType(rt.db, calendar.id, row.appointmentTypeId);
+	const type = rescheduleType(row, await findType(rt.db, calendar.id, row.appointmentTypeId));
 	const { free, taken } = await slotGrid(
 		rt.db,
 		calendar,
@@ -278,7 +310,7 @@ export async function rescheduleManaged(
 		throw new BookingError("NOT_FOUND");
 	}
 	const calendar = await findCalendar(rt.db, found.calendarId, { openOnly: true });
-	const type = await findType(rt.db, calendar.id, found.appointmentTypeId);
+	const type = rescheduleType(found, await findType(rt.db, calendar.id, found.appointmentTypeId));
 	const startMs = input.startsAt.getTime();
 	if (!(await isOnGrid(rt.db, calendar, type, startMs, nowMs))) {
 		throw new BookingError("INVALID_SLOT");
@@ -310,6 +342,14 @@ export async function rescheduleManaged(
 				untilMs: occupied.untilMs,
 				nowMs,
 				actor: "patient",
+				excludeId: row.id,
+			});
+			await assertTravelFree(tx, {
+				practitionerId: row.practitionerId,
+				fromMs: occupied.fromMs,
+				untilMs: occupied.untilMs,
+				travelMin: row.travelMin,
+				nowMs,
 				excludeId: row.id,
 			});
 			const [updated] = await tx
