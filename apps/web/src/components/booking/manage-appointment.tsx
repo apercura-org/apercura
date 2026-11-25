@@ -132,6 +132,7 @@ function Appointment({
 	onChanged: (appointment: ManagedAppointment) => void;
 }) {
 	const t = useTranslations("booking.manage");
+	const tEmail = useTranslations("booking.email");
 	const tTaxonomy = useTranslations("taxonomy");
 	const tP = useTranslations("Practitioner");
 	const locale = useLocale();
@@ -152,7 +153,15 @@ function Appointment({
 	const practitionerName = practitioner
 		? [title, practitioner.firstName, practitioner.lastName].filter(Boolean).join(" ")
 		: null;
-	const address = site ? [site.name, siteAddress(site)].filter(Boolean).join(", ") : null;
+	// A home visit prints its commune, never the street ("À domicile — Lyon").
+	const address =
+		appointment.location === "home"
+			? appointment.homeCommune
+				? tEmail("atHomeIn", { commune: appointment.homeCommune })
+				: tEmail("atHome")
+			: site
+				? [site.name, siteAddress(site)].filter(Boolean).join(", ")
+				: null;
 	const phone = site?.phone ? formatPhoneFr(site.phone) : null;
 	const patient = [appointment.patient.firstName, appointment.patient.lastName]
 		.filter(Boolean)

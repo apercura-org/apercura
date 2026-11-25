@@ -72,6 +72,8 @@ const EXPECTED: Record<string, ProcedureMeta> = {
 	"calendar.replaceRules": AGENDA_OWNER,
 	"calendar.addException": AGENDA_OWNER,
 	"calendar.removeException": AGENDA_OWNER,
+	"calendar.searchCommunes": AGENDA_OWNER,
+	"calendar.communesAround": AGENDA_OWNER,
 
 	"team.list": member({ member: ["update"] }),
 	"team.invite": member({ invitation: ["create"] }),

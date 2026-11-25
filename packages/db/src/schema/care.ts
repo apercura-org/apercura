@@ -120,6 +120,9 @@ export const calendars = care.table(
 	],
 );
 
+/** Where the care happens: `site` (the calendar's place) or `home` (the patient's address). */
+export const VISIT_LOCATIONS = ["site", "home"] as const;
+
 /** A reason for an appointment ("motif"): the practitioner's own text, duration and buffers. */
 export const appointmentTypes = care.table(
 	"appointment_types",
@@ -139,11 +142,26 @@ export const appointmentTypes = care.table(
 		active: boolean().notNull().default(true),
 		/** i18n key of the preset it was created from, if any. */
 		presetKey: text(),
+		/** `site` or `home` (home visit: the patient's address, inside the service area). */
+		location: text().notNull().default("site"),
+		/** Home visits: fixed travel time occupied after each visit, on top of `after_min`. */
+		travelMin: integer().notNull().default(0),
+		/** Home visits: INSEE codes of the communes (or arrondissements) the practitioner visits. */
+		serviceAreaCodes: text().array().notNull().default(sql`'{}'::text[]`),
 		createdAt: createdAt(),
 		updatedAt: updatedAt(),
 	},
 	(table) => [
 		index("appointment_types_calendar_idx").on(table.calendarId, table.position),
+		check("appointment_types_location_check", sql`${table.location} in ('site', 'home')`),
+		check(
+			"appointment_types_travel_check",
+			sql`${table.travelMin} between 0 and 240 and (${table.location} = 'home' or ${table.travelMin} = 0)`,
+		),
+		check(
+			"appointment_types_service_area_check",
+			sql`cardinality(${table.serviceAreaCodes}) <= 200 and (${table.location} = 'home' or cardinality(${table.serviceAreaCodes}) = 0)`,
+		),
 		check("appointment_types_audience_check", sql`${table.audience} in ('all', 'new', 'existing')`),
 		check("appointment_types_duration_check", sql`${table.durationMin} between 5 and 480`),
 		check(
@@ -239,6 +257,14 @@ export const appointments = care.table(
 		kind: text().notNull().default("appointment"),
 		/** Name of the type at booking time (plaintext: the practice needs it, emails never carry it). */
 		typeName: text(),
+		/** Where the care happens, frozen at booking time: `site` or `home` (home visit). */
+		location: text().notNull().default("site"),
+		/**
+		 * Travel time of a home visit, frozen at booking time (0 at the site). The occupied range
+		 * holds the travel after the visit; the travel before it is checked by the booking writes
+		 * (`server/booking/travel.ts`).
+		 */
+		travelMin: integer().notNull().default(0),
 		startsAt: timestamp({ withTimezone: true }).notNull(),
 		endsAt: timestamp({ withTimezone: true }).notNull(),
 		occupiedFrom: timestamp({ withTimezone: true }).notNull(),
@@ -264,6 +290,10 @@ export const appointments = care.table(
 		patientPhoneEnc: text(),
 		/** Message of the practice attached to a cancellation. */
 		practiceMessageEnc: text(),
+		/** Home visits: the patient's street address (number, street, floor, door code). */
+		patientAddressEnc: text(),
+		/** Home visits: INSEE code of the patient's commune, one of the type's service area. */
+		patientCommuneEnc: text(),
 		/** Blind indexes keyed per organization (see `deriveBlindIndexKey`). */
 		emailBidx: text(),
 		phoneBidx: text(),
@@ -314,6 +344,11 @@ export const appointments = care.table(
 		check("appointments_status_check", sql`${table.status} in (${statusList})`),
 		check("appointments_kind_check", sql`${table.kind} in ('appointment', 'block')`),
 		check("appointments_source_check", sql`${table.source} in ('online', 'practice')`),
+		check("appointments_location_check", sql`${table.location} in ('site', 'home')`),
+		check(
+			"appointments_travel_check",
+			sql`${table.travelMin} between 0 and 240 and (${table.location} = 'home' or ${table.travelMin} = 0)`,
+		),
 		check(
 			"appointments_times_check",
 			sql`${table.endsAt} > ${table.startsAt} and ${table.occupiedFrom} <= ${table.startsAt} and ${table.occupiedUntil} >= ${table.endsAt}`,

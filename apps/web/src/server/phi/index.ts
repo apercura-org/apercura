@@ -184,6 +184,9 @@ export const PATIENT_COLUMNS = {
 	email: "patient_email_enc",
 	phone: "patient_phone_enc",
 	practiceMessage: "practice_message_enc",
+	/** Home visits: street address, and the INSEE code of the commune. */
+	address: "patient_address_enc",
+	commune: "patient_commune_enc",
 } as const;
 
 export type PatientField = keyof typeof PATIENT_COLUMNS;
@@ -196,6 +199,8 @@ export interface SealedPatient {
 	patientEmailEnc?: string | null;
 	patientPhoneEnc?: string | null;
 	practiceMessageEnc?: string | null;
+	patientAddressEnc?: string | null;
+	patientCommuneEnc?: string | null;
 }
 
 const SEALED_KEYS: Record<PatientField, keyof SealedPatient> = {
@@ -204,6 +209,8 @@ const SEALED_KEYS: Record<PatientField, keyof SealedPatient> = {
 	email: "patientEmailEnc",
 	phone: "patientPhoneEnc",
 	practiceMessage: "practiceMessageEnc",
+	address: "patientAddressEnc",
+	commune: "patientCommuneEnc",
 };
 
 /** Encrypts the given patient fields of appointment `appointmentId` (AAD `appointments.<column>.<id>`). */
@@ -258,6 +265,8 @@ export async function readAppointmentPatients(
 				patientEmailEnc: appointments.patientEmailEnc,
 				patientPhoneEnc: appointments.patientPhoneEnc,
 				practiceMessageEnc: appointments.practiceMessageEnc,
+				patientAddressEnc: appointments.patientAddressEnc,
+				patientCommuneEnc: appointments.patientCommuneEnc,
 			})
 			.from(appointments)
 			.where(

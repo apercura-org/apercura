@@ -4,6 +4,7 @@ import {
 	Badge,
 	Button,
 	buttonStyles,
+	ComboBox,
 	DatePicker,
 	EmptyState,
 	Form,
@@ -23,7 +24,7 @@ import { type CalendarDate, parseTime, type Time, today as todayIn } from "@inte
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import type { inferRouterOutputs } from "@trpc/server";
 import { useFormatter, useLocale, useTranslations } from "next-intl";
-import { type FormEvent, type ReactNode, useMemo, useRef, useState } from "react";
+import { type FormEvent, type ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import { capitalisesWeekdays } from "~/i18n/locales";
 import { Link } from "~/i18n/navigation";
 import { hhmm, minutesOf, noonOf, parseIsoDate } from "~/lib/agenda-time";
@@ -35,6 +36,7 @@ import { ActionStatus, errorCode, sectionHeading } from "./agenda-shared";
 type Overview = inferRouterOutputs<AppRouter>["calendar"]["overview"];
 type Calendar = Overview["calendars"][number];
 type AppointmentType = Calendar["types"][number];
+type AreaCommune = AppointmentType["serviceArea"][number];
 
 const WEEKDAYS = [1, 2, 3, 4, 5, 6, 7] as const;
 /** Long labels wrap on phones: give the stamp's lines room inside its inner frame. */
@@ -511,21 +513,35 @@ function TypeForm({
 		(type?.audience as "all" | "new" | "existing" | undefined) ?? "all",
 	);
 	const [active, setActive] = useState(type?.active ?? true);
+	const [location, setLocation] = useState<"site" | "home">(
+		type?.location === "home" ? "home" : "site",
+	);
+	// A type turned into a home visit starts with the nurses' usual 15 minutes of travel.
+	const [travel, setTravel] = useState(String(type?.location === "home" ? type.travelMin : 15));
+	const [area, setArea] = useState<AreaCommune[]>(type?.serviceArea ?? []);
 	const [result, setResult] = useState<{ tone: "success" | "error"; text: string } | null>(null);
 	const durationValue = int(duration);
 	const beforeValue = int(before);
 	const afterValue = int(after);
+	const travelValue = int(travel);
+	const atHome = location === "home";
 	const invalid = {
 		name: name.trim() === "",
 		duration: !(durationValue >= 5 && durationValue <= 480),
 		before: !(beforeValue >= 0 && beforeValue <= 240),
 		after: !(afterValue >= 0 && afterValue <= 240),
+		travel: atHome && !(travelValue >= 0 && travelValue <= 240),
+		area: atHome && active && area.length === 0,
 	};
 	const headingId = `type-${type?.id ?? "new"}`;
 
 	const onSubmit = (event: FormEvent) => {
 		event.preventDefault();
 		setResult(null);
+		if (invalid.area) {
+			setResult({ tone: "error", text: t("areaRequired") });
+			return;
+		}
 		if (Object.values(invalid).some(Boolean)) return;
 		save.mutate(
 			{
@@ -538,13 +554,20 @@ function TypeForm({
 				afterMin: afterValue,
 				audience,
 				active,
+				location,
+				travelMin: atHome ? travelValue : 0,
+				serviceAreaCodes: atHome ? area.map((commune) => commune.code) : [],
 			},
 			{
 				onSuccess: () => {
 					setResult({ tone: "success", text: t("saved") });
 					void onSaved();
 				},
-				onError: () => setResult({ tone: "error", text: tCommon("failed") }),
+				onError: (error) =>
+					setResult({
+						tone: "error",
+						text: errorCode(error) === "AREA_REQUIRED" ? t("areaRequired") : tCommon("failed"),
+					}),
 			},
 		);
 	};
@@ -559,7 +582,9 @@ function TypeForm({
 			<h3 id={headingId} className="type-subtitle text-ink">
 				{type ? type.name : t("add")}
 				<span className="ms-3 text-meta font-normal text-ink-muted tabular">
-					{t("summary", { duration: type?.durationMin ?? durationValue })}
+					{type?.location === "home"
+						? t("summaryHome", { duration: type.durationMin })
+						: t("summary", { duration: type?.durationMin ?? durationValue })}
 					{type && !type.active ? ` · ${t("inactive")}` : ""}
 				</span>
 			</h3>
@@ -571,6 +596,7 @@ function TypeForm({
 					maxLength={80}
 					isRequired
 					isInvalid={invalid.name}
+					errorMessage={t("invalidName")}
 					className="sm:col-span-2"
 				/>
 				<TextField
@@ -580,6 +606,7 @@ function TypeForm({
 					inputMode="numeric"
 					isRequired
 					isInvalid={invalid.duration}
+					errorMessage={t("invalidDuration")}
 				/>
 				<Select
 					label={t("audience")}
@@ -596,6 +623,7 @@ function TypeForm({
 					onChange={setBefore}
 					inputMode="numeric"
 					isInvalid={invalid.before}
+					errorMessage={t("invalidMinutes")}
 				/>
 				<TextField
 					label={t("after")}
@@ -603,13 +631,44 @@ function TypeForm({
 					onChange={setAfter}
 					inputMode="numeric"
 					isInvalid={invalid.after}
+					errorMessage={t("invalidMinutes")}
 				/>
+				<Select
+					label={t("location")}
+					selectedKey={location}
+					onSelectionChange={(key) => key !== null && setLocation(key as typeof location)}
+					className="sm:col-span-2"
+				>
+					<ListBoxItem id="site">{t("locationSite")}</ListBoxItem>
+					<ListBoxItem id="home">{t("locationHome")}</ListBoxItem>
+				</Select>
+				{atHome ? (
+					<TextField
+						label={t("travel")}
+						description={t("travelHint")}
+						value={travel}
+						onChange={setTravel}
+						inputMode="numeric"
+						isInvalid={invalid.travel}
+						errorMessage={t("invalidMinutes")}
+						className="sm:col-span-2"
+					/>
+				) : null}
 				<div className="flex items-end sm:col-span-2">
 					<Switch isSelected={active} onChange={setActive}>
 						{t("active")}
 					</Switch>
 				</div>
 			</div>
+			{atHome ? (
+				<ServiceAreaEditor
+					organizationId={organizationId}
+					calendarId={calendarId}
+					headingId={`${headingId}-area`}
+					area={area}
+					onChange={setArea}
+				/>
+			) : null}
 			<div>
 				<Button type="submit" intent="ink" isPending={save.isPending}>
 					{t("save")}
@@ -617,6 +676,154 @@ function TypeForm({
 			</div>
 			<ActionStatus result={result} />
 		</Form>
+	);
+}
+
+/**
+ * The communes a home visit serves: added one by one (name, postcode or INSEE code) or all at
+ * once within a radius of the practice, then trimmed. Saved with the type.
+ */
+function ServiceAreaEditor({
+	organizationId,
+	calendarId,
+	headingId,
+	area,
+	onChange,
+}: {
+	organizationId: string;
+	calendarId: string;
+	headingId: string;
+	area: AreaCommune[];
+	onChange: (area: AreaCommune[]) => void;
+}) {
+	const t = useTranslations("Agenda.settings.types");
+	const tCommon = useTranslations("Agenda.common");
+	const trpc = useTRPC();
+	const queryClient = useQueryClient();
+	const [input, setInput] = useState("");
+	const [query, setQuery] = useState("");
+	const [radius, setRadius] = useState("10");
+	const [status, setStatus] = useState<{ tone: "success" | "error"; text: string } | null>(null);
+	const [around, setAround] = useState(false);
+	useEffect(() => {
+		const timer = window.setTimeout(() => setQuery(input.trim()), 250);
+		return () => window.clearTimeout(timer);
+	}, [input]);
+	const suggestions = useQuery({
+		...trpc.calendar.searchCommunes.queryOptions({ organizationId, q: query }),
+		enabled: query.length >= 2,
+		staleTime: 60_000,
+	});
+	const known = new Set(area.map((commune) => commune.code));
+	const items = (suggestions.data ?? []).filter((commune) => !known.has(commune.code));
+	const radiusValue = int(radius);
+	const radiusInvalid = !(radiusValue >= 1 && radiusValue <= 50);
+
+	const add = (communes: AreaCommune[]) => {
+		const fresh = communes.filter((commune) => !known.has(commune.code));
+		onChange([...area, ...fresh]);
+		return fresh.length;
+	};
+
+	const addAround = async () => {
+		setStatus(null);
+		if (radiusInvalid) return;
+		setAround(true);
+		try {
+			const found = await queryClient.fetchQuery(
+				trpc.calendar.communesAround.queryOptions({
+					organizationId,
+					calendarId,
+					radiusKm: radiusValue,
+				}),
+			);
+			setStatus({ tone: "success", text: t("areaAdded", { count: add(found) }) });
+		} catch (error) {
+			setStatus({
+				tone: "error",
+				text: errorCode(error) === "SITE_NOT_LOCATED" ? t("areaNotLocated") : tCommon("failed"),
+			});
+		} finally {
+			setAround(false);
+		}
+	};
+
+	return (
+		<fieldset aria-labelledby={headingId} className="flex flex-col gap-4">
+			<div className="flex flex-col gap-1">
+				<h4 id={headingId} className="font-display text-body font-semibold text-ink">
+					{t("area")}
+				</h4>
+				<p className="max-w-[65ch] text-meta text-ink-muted">{t("areaLead")}</p>
+			</div>
+			{area.length > 0 ? (
+				<ul className="flex flex-wrap gap-2">
+					{area.map((commune) => (
+						<li
+							key={commune.code}
+							className="flex items-center gap-1 border border-rule-soft ps-3 text-meta text-ink"
+						>
+							<span>
+								{commune.name}
+								{commune.postcodes.length === 1 ? (
+									<span className="tabular text-ink-muted"> {commune.postcodes[0]}</span>
+								) : null}
+							</span>
+							<Button
+								intent="quiet"
+								aria-label={t("areaRemove", { name: commune.name })}
+								onPress={() => onChange(area.filter((item) => item.code !== commune.code))}
+							>
+								×
+							</Button>
+						</li>
+					))}
+				</ul>
+			) : (
+				<p className="text-meta text-ink">{t("areaEmpty")}</p>
+			)}
+			<div className="grid gap-4 sm:grid-cols-2">
+				<ComboBox
+					label={t("areaSearch")}
+					description={t("areaSearchHint")}
+					inputValue={input}
+					onInputChange={setInput}
+					items={items}
+					menuTrigger="input"
+					allowsEmptyCollection
+					onSelectionChange={(key) => {
+						const commune = items.find((item) => item.code === key);
+						if (commune) {
+							add([commune]);
+							setInput("");
+						}
+					}}
+				>
+					{(commune) => (
+						<ListBoxItem id={commune.code} textValue={commune.name}>
+							{[commune.name, commune.postcodes.length === 1 ? commune.postcodes[0] : null]
+								.filter(Boolean)
+								.join(" ")}
+						</ListBoxItem>
+					)}
+				</ComboBox>
+				<div className="flex flex-wrap items-end gap-3">
+					<TextField
+						label={t("areaRadius")}
+						value={radius}
+						onChange={setRadius}
+						inputMode="numeric"
+						isInvalid={radiusInvalid}
+						errorMessage={t("invalidRadius")}
+						className="w-28"
+					/>
+					<Button intent="ink" isPending={around} onPress={() => void addAround()}>
+						{t("areaAround")}
+					</Button>
+				</div>
+			</div>
+			<ActionStatus result={status} className="min-h-0" />
+		</fieldset>
 	);
 }
 

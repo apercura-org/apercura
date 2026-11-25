@@ -32,6 +32,7 @@ const KNOWN = new Set([
 	"RESEND_LIMIT",
 	"TRANSITION_REFUSED",
 	"IDEMPOTENCY_CONFLICT",
+	"OUTSIDE_AREA",
 ]);
 
 /** The booking error code of a failed call, or `generic` (network, validation, server fault). */
@@ -48,6 +49,18 @@ export function bookingErrorCode(error: unknown): string {
 		return "INVALID_INPUT";
 	}
 	return "generic";
+}
+
+/** The commune of a home visit among the type's service area, or null. */
+export function homeCommune(type: BookingType, communeCode: string | null) {
+	return type.serviceArea.find((commune) => commune.code === communeCode) ?? null;
+}
+
+/** "Lyon 3e Arrondissement (69003)": a commune with its postcode when it has a single one. */
+export function communeLabel(commune: { name: string; postcodes: string[] }): string {
+	return commune.postcodes.length === 1
+		? `${commune.name} (${commune.postcodes[0]})`
+		: commune.name;
 }
 
 /** Postal address of a site on one line: "1 rue de l’Exemple, 75011 Paris". */

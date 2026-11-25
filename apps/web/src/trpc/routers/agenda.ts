@@ -14,6 +14,7 @@ import {
 import { asTrpc } from "~/server/booking/errors";
 import { bookingRuntime } from "../booking-runtime";
 import { createTRPCRouter, memberProcedure } from "../init";
+import { homeAddress } from "./booking";
 
 const name = z.string().trim().min(1).max(100);
 
@@ -56,6 +57,8 @@ export const agendaRouter = createTRPCRouter({
 					lastName: name,
 					email: z.string().trim().max(254).nullish(),
 					phone: z.string().trim().max(32).nullish(),
+					/** Home visits: optional for the practice, which may know the address already. */
+					homeAddress: homeAddress.nullish(),
 				}),
 				locale: z.enum(LOCALES).default("fr"),
 				idempotencyKey: z.uuid().optional(),

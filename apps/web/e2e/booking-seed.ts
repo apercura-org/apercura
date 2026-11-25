@@ -3,7 +3,7 @@ import { fileURLToPath } from "node:url";
 import type postgres from "postgres";
 
 /**
- * Open agendas for four fictitious practitioners of the synthetic fixtures (RPPS 1999999xxxx,
+ * Open agendas for six fictitious practitioners of the synthetic fixtures (RPPS 1999999xxxx,
  * never real people), written straight into the `care` schema the way the agenda settings would.
  * Every run starts from a clean slate: earlier e2e appointments, codes and mails are deleted, and a
  * page an earlier run claimed for one of these practices (the screen-reader spec signs its owner
@@ -20,14 +20,24 @@ export const BOOKING_PRACTITIONERS = {
 	race: { rpps: "19999991037", slug: "denis-essaiad-19999991037", name: "Denis Essaiad" },
 	/** Screen-reader flows (`screen-reader.spec.ts`): booking, /rdv and the owner's agenda. */
 	screenReader: { rpps: "19999991045", slug: "elsa-essaiae-19999991045", name: "Elsa Essaiae" },
+	/** A self-employed nurse who visits patients at home (`home-visit.spec.ts`). */
+	homeVisit: { rpps: "19999990203", slug: "rose-de-l-essai-19999990203", name: "Rose De L'Essai" },
 } as const;
+
+/** Communes the home-visit nurse visits: Paris 14e and 15e (INSEE codes of the fixtures). */
+export const HOME_VISIT_AREA = ["75114", "75115"] as const;
+
+interface SeedType {
+	name: string;
+	minutes: number;
+	audience: string;
+	/** A home visit: fixed travel time after each visit, and the communes visited. */
+	home?: { travelMin: number; area: readonly string[] };
+}
 
 type Key = keyof typeof BOOKING_PRACTITIONERS;
 
-const SETTINGS: Record<
-	Key,
-	{ manualValidation: boolean; types: { name: string; minutes: number; audience: string }[] }
-> = {
+const SETTINGS: Record<Key, { manualValidation: boolean; types: SeedType[] }> = {
 	direct: {
 		manualValidation: false,
 		types: [
@@ -52,6 +62,17 @@ const SETTINGS: Record<
 		types: [
 			{ name: "Consultation", minutes: 15, audience: "all" },
 			{ name: "Première consultation", minutes: 30, audience: "new" },
+		],
+	},
+	homeVisit: {
+		manualValidation: false,
+		types: [
+			{
+				name: "Soins à domicile",
+				minutes: 20,
+				audience: "all",
+				home: { travelMin: 15, area: HOME_VISIT_AREA },
+			},
 		],
 	},
 };
@@ -125,9 +146,14 @@ export async function seedBookingAgendas(sql: postgres.Sql) {
 		}
 		for (const [position, type] of SETTINGS[key].types.entries()) {
 			await sql`
-				insert into care.appointment_types
-					(organization_id, calendar_id, name, duration_min, audience, position)
-				values (${org}, ${calendar.id}, ${type.name}, ${type.minutes}, ${type.audience}, ${position})
+				insert into care.appointment_types (
+					organization_id, calendar_id, name, duration_min, audience, position,
+					location, travel_min, service_area_codes
+				) values (
+					${org}, ${calendar.id}, ${type.name}, ${type.minutes}, ${type.audience}, ${position},
+					${type.home ? "home" : "site"}, ${type.home?.travelMin ?? 0},
+					${[...(type.home?.area ?? [])]}::text[]
+				)
 			`;
 		}
 		for (let weekday = 1; weekday <= 7; weekday += 1) {

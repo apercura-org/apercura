@@ -198,7 +198,8 @@ export async function enqueueReminders(db: Database, nowMs: number) {
 
 const PATIENT_FIELDS_NULL = sql`
 	patient_first_name_enc = null, patient_last_name_enc = null, patient_email_enc = null,
-	patient_phone_enc = null, practice_message_enc = null, email_bidx = null, phone_bidx = null,
+	patient_phone_enc = null, practice_message_enc = null, patient_address_enc = null,
+	patient_commune_enc = null, email_bidx = null, phone_bidx = null,
 	manage_token_hash = null, manage_token_nonce = null, hold_token_hash = null,
 	browser_key_hash = null`;
 

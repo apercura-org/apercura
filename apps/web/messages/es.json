@@ -1395,7 +1395,8 @@
 			"perinealRehabilitation": "Rehabilitación del suelo pélvico",
 			"bloodTest": "Extracción de sangre",
 			"injection": "Inyección",
-			"dressing": "Cura de heridas"
+			"dressing": "Cura de heridas",
+			"homeCare": "Cuidados a domicilio"
 		},
 		"email": {
 			"wordmark": "Apercura",
@@ -1409,7 +1410,8 @@
 				"date": "Fecha",
 				"time": "Hora",
 				"address": "Dirección",
-				"until": "Responder antes del"
+				"until": "Responder antes del",
+				"place": "Lugar"
 			},
 			"manageAction": "Ver o modificar mi cita",
 			"agendaAction": "Abrir la agenda",
@@ -1510,7 +1512,9 @@
 				"title": "Cita cambiada de hora",
 				"body": "Un paciente ha cambiado una cita a esta nueva hora."
 			},
-			"bookAgainAction": "Elegir otra hora"
+			"bookAgainAction": "Elegir otra hora",
+			"atHome": "A domicilio",
+			"atHomeIn": "A domicilio — {commune}"
 		},
 		"panel": {
 			"title": "Reservar una cita",
@@ -1549,7 +1553,13 @@
 				"existingOnly": "pacientes ya en seguimiento",
 				"required": "Elija un motivo.",
 				"instructions": "Nota de la consulta",
-				"noNewPatients": "Esta consulta no acepta nuevos pacientes en línea: su solicitud quedará a la espera de su respuesta."
+				"noNewPatients": "Esta consulta no acepta nuevos pacientes en línea: su solicitud quedará a la espera de su respuesta.",
+				"atHome": "a domicilio",
+				"area": "Municipios atendidos: {communes}",
+				"commune": "Su municipio",
+				"communeHint": "Las visitas a domicilio solo cubren estos municipios. ¿El suyo no está en la lista? Llame a la consulta.",
+				"communePlaceholder": "Elegir",
+				"communeRequired": "Elija su municipio."
 			},
 			"slot": {
 				"heading": "Elegir una hora",
@@ -1584,7 +1594,11 @@
 				"invalidEmail": "Introduzca una dirección de correo electrónico como nombre@example.fr.",
 				"invalidPhone": "Introduzca un número de teléfono como 06 12 34 56 78.",
 				"requiredFirstVisit": "Responda a esta pregunta.",
-				"website": "Deje este campo vacío"
+				"website": "Deje este campo vacío",
+				"address": "Dirección de la visita",
+				"addressHint": "Número y calle, y si hace falta edificio, piso o código de acceso. Solo la consulta la ve: ningún correo la incluye.",
+				"requiredAddress": "Escriba la dirección de la visita.",
+				"addressTooLong": "Escriba la dirección en 4 líneas y 300 caracteres como máximo."
 			},
 			"altcha": {
 				"label": "Comprobación automática de que no es un robot",
@@ -1654,7 +1668,8 @@
 				"NOT_FOUND": "Esta reserva ya no existe. Elija de nuevo la hora.",
 				"IDEMPOTENCY_CONFLICT": "Esta solicitud ya se ha enviado. Elija de nuevo la hora.",
 				"generic": "Se ha producido un error por nuestra parte. Inténtelo de nuevo en un momento o llame a la consulta.",
-				"restart": "Elegir de nuevo una hora"
+				"restart": "Elegir de nuevo una hora",
+				"OUTSIDE_AREA": "Las visitas a domicilio no cubren este municipio. Elija otro, o llame a la consulta."
 			}
 		},
 		"manage": {
@@ -2640,7 +2655,9 @@
 				"bodyOwner": "Configure el lugar donde atiende a los pacientes: horario de apertura y tipos de cita.",
 				"bodyStaff": "El titular de la página todavía no ha configurado la agenda.",
 				"action": "Configurar la reserva"
-			}
+			},
+			"atHome": "A domicilio",
+			"atHomeIn": "A domicilio — {commune}"
 		},
 		"today": {
 			"metaTitle": "Hoy",
@@ -2737,7 +2754,11 @@
 			"endBeforeStart": "El final debe ser posterior al inicio.",
 			"created": "Cita añadida.",
 			"blocked": "Franja bloqueada.",
-			"outsideHours": "Fuera del horario de apertura: puede añadirla igualmente."
+			"outsideHours": "Fuera del horario de apertura: puede añadirla igualmente.",
+			"address": "Dirección de la visita (opcional)",
+			"addressHint": "Solo la consulta la ve: los correos al paciente nunca la incluyen.",
+			"commune": "Municipio",
+			"invalidAddress": "Indique la dirección y su municipio, o ninguno de los dos."
 		},
 		"entry": {
 			"when": "Cuándo",
@@ -2758,7 +2779,10 @@
 			"cancelBody": "La hora vuelve a quedar libre.",
 			"confirmCancel": "Cancelar la cita",
 			"cancelled": "Cita cancelada.",
-			"blockRemoved": "Bloqueo eliminado."
+			"blockRemoved": "Bloqueo eliminado.",
+			"place": "Lugar",
+			"address": "Dirección de la visita",
+			"noAddress": "No indicada"
 		},
 		"block": {
 			"title": "Bloquear una franja horaria",
@@ -2826,7 +2850,28 @@
 				"add": "Añadir un tipo de cita",
 				"newName": "Consulta",
 				"summary": "{duration} min",
-				"inactive": "No ofrecido en línea"
+				"inactive": "No ofrecido en línea",
+				"location": "Lugar de la atención",
+				"locationSite": "En la consulta",
+				"locationHome": "En el domicilio del paciente",
+				"travel": "Tiempo de desplazamiento (minutos)",
+				"travelHint": "Tiempo libre tras cada visita para llegar al siguiente paciente o a la consulta, y antes de una visita que sigue a una atención en la consulta o a un bloqueo. Dos visitas seguidas comparten un solo desplazamiento.",
+				"area": "Municipios atendidos",
+				"areaLead": "Los pacientes eligen su municipio en esta lista antes de elegir una hora.",
+				"areaEmpty": "Aún no hay municipios: los pacientes no pueden reservar esta visita.",
+				"areaSearch": "Añadir un municipio",
+				"areaSearchHint": "Nombre, código postal o código INSEE.",
+				"areaRemove": "Quitar {name}",
+				"areaRadius": "Radio (km)",
+				"areaAround": "Añadir los municipios alrededor de la consulta",
+				"areaAdded": "{count, plural, =0 {Ningún municipio nuevo.} one {# municipio añadido.} many {# municipios añadidos.} other {# municipios añadidos.}}",
+				"areaNotLocated": "La consulta no tiene posición en el mapa: añada los municipios uno a uno.",
+				"areaRequired": "Elija al menos un municipio para ofrecer esta visita en línea.",
+				"summaryHome": "{duration} min · a domicilio",
+				"invalidName": "Escriba un nombre.",
+				"invalidDuration": "Escriba un número entero de minutos, de 5 a 480.",
+				"invalidMinutes": "Escriba un número entero de minutos, de 0 a 240.",
+				"invalidRadius": "Escriba un número entero de kilómetros, de 1 a 50."
 			},
 			"rules": {
 				"heading": "Horario semanal de apertura",
