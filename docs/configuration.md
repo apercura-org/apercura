@@ -119,7 +119,7 @@ and every document or message they decrypt is written to
 | Variable                                                                                         | Role                                                                           |
 | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ |
 | `DATABASE_URL_ETL`                                                                               | Connection of the `apercura_etl` role (falls back to `DATABASE_URL`).          |
-| `ETL_PROFESSIONS`                                                                                | Profession codes to import (default `10,40,50`).                               |
+| `ETL_PROFESSIONS`                                                                                | Profession codes to import (default `10,40,50,60`).                            |
 | `ETL_WORK_DIR`                                                                                   | Temporary directory for downloads (about 1.2 GB).                              |
 | `ETL_SOURCE_DIR`                                                                                 | Read the source files from a directory instead of downloading them (fixtures). |
 | `ETL_ANS_URLS`, `ETL_AMELI_URL`, `ETL_FINESS_DATASET_URL`, `ETL_GEO_API_URL`, `ETL_GEOCODER_URL` | Override the source URLs (see `docs/data-import.md`).                          |

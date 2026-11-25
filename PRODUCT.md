@@ -13,7 +13,7 @@ Decided by the founder: Next.js (App Router) + tRPC + PostgreSQL (Drizzle), Bun 
 ## Users
 
 - Patients in France of every age, including older and low-vision people, looking for a health practitioner near them, mostly arriving from a search engine on a phone, sometimes unwell or worried. Their job: find the right practitioner and book or call within a minute.
-- Practitioners (doctors, dentists and midwives first; every registered health profession next), busy and wary of platforms that charge or lock them in. Their job: make sure their public information is right and let patients book without extra work.
+- Practitioners (doctors, dentists, midwives and self-employed nurses first; every registered health profession next), busy and wary of platforms that charge or lock them in. Their job: make sure their public information is right and let patients book without extra work.
 - Practice assistants who run the agenda on a practitioner's behalf.
 
 ## Product Purpose
