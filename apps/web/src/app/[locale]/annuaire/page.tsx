@@ -7,6 +7,7 @@ import { JsonLd } from "~/components/json-ld";
 import { CountLinks, ListingSection, ListingTitle } from "~/components/listing";
 import { PublicPage } from "~/components/public-page";
 import { Trail, type TrailItem, trailEntries } from "~/components/trail";
+import { marketOf } from "~/i18n/locales";
 import { getPathname } from "~/i18n/navigation";
 import { type Locale, routing } from "~/i18n/routing";
 import { placeLabel } from "~/lib/places";
@@ -26,7 +27,7 @@ export async function generateMetadata({
 }: PageProps<"/[locale]/annuaire">): Promise<Metadata> {
 	const locale = localeOf((await params).locale);
 	const t = await getTranslations({ locale, namespace: "Directory" });
-	const index = await getDirectoryIndex();
+	const index = await getDirectoryIndex(marketOf(locale));
 	return pageMetadata({
 		locale,
 		href: "/annuaire",
@@ -41,7 +42,7 @@ export default async function DirectoryPage({ params }: PageProps<"/[locale]/ann
 	const locale = localeOf((await params).locale);
 	setRequestLocale(locale);
 	const t = await getTranslations({ locale, namespace: "Directory" });
-	const index = await getDirectoryIndex();
+	const index = await getDirectoryIndex(marketOf(locale));
 	const total = index.regions.reduce(
 		(sum, region) =>
 			sum +
@@ -72,7 +73,7 @@ export default async function DirectoryPage({ params }: PageProps<"/[locale]/ann
 						name: t("title"),
 						items: index.regions.flatMap((region) =>
 							region.departments.map((department) => ({
-								name: placeLabel(department),
+								name: placeLabel(department, marketOf(locale)),
 								url: `${origin}${getPathname({
 									href: { pathname: "/annuaire/[dept]", params: { dept: department.slug } },
 									locale,
@@ -100,7 +101,7 @@ export default async function DirectoryPage({ params }: PageProps<"/[locale]/ann
 								locale={locale}
 								items={region.departments.map((department) => ({
 									key: department.id,
-									label: placeLabel(department),
+									label: placeLabel(department, marketOf(locale)),
 									href: { pathname: "/annuaire/[dept]", params: { dept: department.slug } },
 									count: department.practitionerCount,
 								}))}

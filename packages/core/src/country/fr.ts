@@ -18,6 +18,7 @@ const LICENCE_OUVERTE = "Licence Ouverte 2.0 (Etalab)";
  */
 export const france: CountryAdapter = {
 	code: "FR",
+	segment: "fr",
 	defaultLocale: "fr",
 	defaultTimeZone: "Europe/Paris",
 	timeZones: [
@@ -58,12 +59,14 @@ export const france: CountryAdapter = {
 			provides: ["billing"],
 		},
 	],
-	practitionerId: {
-		id: "RPPS",
-		name: "RPPS",
-		issuer: "Agence du Numérique en Santé",
-		isValid: isValidRpps,
-	},
+	practitionerIds: [
+		{
+			id: "RPPS",
+			name: "RPPS",
+			issuer: "Agence du Numérique en Santé",
+			isValid: isValidRpps,
+		},
+	],
 	taxonomy: {
 		professions: FR_PROFESSIONS,
 		defaultProfessions: FR_DEFAULT_PROFESSIONS,

@@ -1,11 +1,11 @@
 import "server-only";
 import { randomUUID } from "node:crypto";
-import { isValidRpps } from "@apercura/core";
 import type { Database } from "@apercura/db";
 import { practitioners, removalRequests, reports, suppressions } from "@apercura/db/schema";
 import { and, eq, sql } from "drizzle-orm";
 import { recordAudit } from "../audit";
 import { openText, sealText } from "../crypto/platform";
+import { practitionerWhere } from "../practitioner-ref";
 import { type Purge, purgeSuppressed } from "./minimise";
 
 export class GdprError extends Error {
@@ -18,8 +18,10 @@ export class GdprError extends Error {
 export const REPORT_KINDS = ["wrong_info", "retired", "deceased", "impersonation"] as const;
 export type ReportKind = (typeof REPORT_KINDS)[number];
 
-async function practitionerByRpps(db: Database, rpps: string) {
-	if (!isValidRpps(rpps)) return null;
+/** The practitioner a reference designates (`19999990013` in France, `w7983` in Austria). */
+async function practitionerByRef(db: Database, ref: string) {
+	const where = practitionerWhere(ref);
+	if (!where) return null;
 	const [row] = await db
 		.select({
 			id: practitioners.id,
@@ -28,13 +30,7 @@ async function practitionerByRpps(db: Database, rpps: string) {
 			withheldAt: practitioners.withheldAt,
 		})
 		.from(practitioners)
-		.where(
-			and(
-				eq(practitioners.country, "FR"),
-				eq(practitioners.idScheme, "RPPS"),
-				eq(practitioners.nationalId, rpps),
-			),
-		)
+		.where(where)
 		.limit(1);
 	return row ?? null;
 }
@@ -49,9 +45,9 @@ async function practitionerByRpps(db: Database, rpps: string) {
  */
 export async function requestRemoval(
 	db: Database,
-	input: { rpps: string; contact: string; message: string | null; locale: string },
+	input: { ref: string; contact: string; message: string | null; locale: string },
 ) {
-	const practitioner = await practitionerByRpps(db, input.rpps);
+	const practitioner = await practitionerByRef(db, input.ref);
 	if (practitioner?.status !== "active") throw new GdprError("NOT_FOUND");
 	if (practitioner.claimStatus === "claimed") throw new GdprError("CLAIMED");
 	const id = randomUUID();
@@ -263,14 +259,17 @@ export async function setOwnerRemoval(
 // Error reports
 // ---------------------------------------------------------------------------
 
-/** Stores a "Report an error" message, encrypted. The RPPS is optional (from /donnees). */
+/**
+ * Stores a "Report an error" message, encrypted. The practitioner reference is optional (from
+ * the data page).
+ */
 export async function submitReport(
 	db: Database,
-	input: { rpps: string | null; kind: ReportKind; message: string; contact: string | null },
+	input: { ref: string | null; kind: ReportKind; message: string; contact: string | null },
 ) {
 	let practitionerId: number | null = null;
-	if (input.rpps) {
-		const practitioner = await practitionerByRpps(db, input.rpps);
+	if (input.ref) {
+		const practitioner = await practitionerByRef(db, input.ref);
 		if (!practitioner) throw new GdprError("NOT_FOUND");
 		practitionerId = practitioner.id;
 	}

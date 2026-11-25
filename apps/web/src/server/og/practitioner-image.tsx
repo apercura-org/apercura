@@ -1,11 +1,13 @@
 import "server-only";
 
-import { professionFor } from "@apercura/core/taxonomy";
 import { paletteHex } from "@apercura/ui/tokens";
 import { cacheLife, cacheTag } from "next/cache";
 import { ImageResponse } from "next/og";
 import { getTranslations } from "next-intl/server";
+import { MARKET_LOCALES } from "~/i18n/locales";
 import { genderOf, getTaxonomyLabels } from "~/lib/labels";
+import { professionSlugOf } from "~/lib/market";
+import { displayId, type PractitionerKey } from "~/lib/practitioner-key";
 import { type OwnOgImage, practitionerOgImageUrl, shortPlaceName } from "~/lib/seo";
 import { cacheTags } from "~/server/cache-tags";
 import { getPractitionerPage } from "~/server/queries/practitioner";
@@ -35,6 +37,9 @@ const {
 	ruleSoft: RULE,
 } = paletteHex;
 
+/** The identity of a page in its market (what an image URL names). */
+export type OgKey = Pick<PractitionerKey, "country" | "idScheme" | "nationalId">;
+
 /** What the image prints, and its text alternative. */
 export type PractitionerCard = {
 	name: string;
@@ -48,21 +53,21 @@ export type PractitionerCard = {
  * The card of a practitioner page, or null when there is no page to share: unknown, removed,
  * or withheld while a removal request is checked.
  */
-export async function practitionerCard(rpps: string): Promise<PractitionerCard | null> {
-	const page = await getPractitionerPage(rpps);
+export async function practitionerCard(key: OgKey): Promise<PractitionerCard | null> {
+	const page = await getPractitionerPage(key);
 	if (!page || page.payload.withheld) return null;
 	const { payload } = page;
-	const labels = await getTaxonomyLabels("fr");
-	const t = await getTranslations({ locale: "fr", namespace: "PractitionerPage" });
+	const locale = MARKET_LOCALES[key.country];
+	const labels = await getTaxonomyLabels(locale);
+	const t = await getTranslations({ locale, namespace: "PractitionerPage" });
 	const gender = genderOf(payload.civilityCode);
 	const profession =
-		labels.profession(professionFor(payload.professionCode)?.slug ?? "", gender) ??
-		t("unknownProfession");
+		labels.profession(professionSlugOf(payload.professionCode), gender) ?? t("unknownProfession");
 	return {
 		name: labels.personName(payload),
 		occupation: labels.listing(payload.listingSlug, gender) ?? profession,
 		place: page.commune ? shortPlaceName(page.commune.name) : null,
-		rpps: payload.nationalId,
+		rpps: displayId(payload),
 		photoKey: payload.profile?.photoKey ?? null,
 	};
 }
@@ -71,13 +76,10 @@ export async function practitionerCard(rpps: string): Promise<PractitionerCard |
  * The page's own image for its metadata: the card's URL and its text alternative (in French,
  * as printed), or null when there is no card (the page then shows its profession's image).
  */
-export async function practitionerOgImageOf(
-	rpps: string,
-	slug: string,
-): Promise<OwnOgImage | null> {
-	const card = await practitionerCard(rpps);
+export async function practitionerOgImageOf(key: OgKey, slug: string): Promise<OwnOgImage | null> {
+	const card = await practitionerCard(key);
 	if (!card) return null;
-	const t = await getTranslations({ locale: "fr", namespace: "OgImage" });
+	const t = await getTranslations({ locale: MARKET_LOCALES[key.country], namespace: "OgImage" });
 	const values = { name: card.name, occupation: card.occupation, place: card.place ?? "" };
 	return {
 		url: practitionerOgImageUrl(slug),
@@ -113,21 +115,21 @@ export function nameSize(name: string, withPhoto: boolean): number {
  * own (`practitioner:{id}`, or the coarse `practitioner:*`) and those of the page's commune
  * and listing, carried over from `getPractitionerPage`.
  */
-export async function practitionerOgImage(rpps: string): Promise<Uint8Array | null> {
+export async function practitionerOgImage(key: OgKey): Promise<Uint8Array | null> {
 	"use cache";
 	cacheTag(cacheTags.coarse.practitioner);
-	const card = await practitionerCard(rpps);
+	const card = await practitionerCard(key);
 	if (!card) {
 		// Same as the page's own miss: a page can appear with the next import.
 		cacheLife("days");
 		return null;
 	}
 	cacheLife("max");
-	const page = await getPractitionerPage(rpps);
+	const page = await getPractitionerPage(key);
 	if (page) cacheTag(cacheTags.practitioner(page.practitionerId));
 
 	const [t, fonts, photo] = await Promise.all([
-		getTranslations({ locale: "fr", namespace: "OgImage" }),
+		getTranslations({ locale: MARKET_LOCALES[key.country], namespace: "OgImage" }),
 		ogFonts(["latin", "latin-ext"]),
 		photoDataUrl(card.photoKey),
 	]);

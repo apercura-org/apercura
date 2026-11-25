@@ -6,6 +6,7 @@ import { PractitionerContactForm } from "~/components/practitioner-contact-form"
 import { formPractitioner, PractitionerFormPage } from "~/components/practitioner-form-page";
 import { Link } from "~/i18n/navigation";
 import { type Locale, routing } from "~/i18n/routing";
+import { practitionerRefOf } from "~/lib/practitioner-ref";
 
 /** Never a valid RPPS (bad Luhn check): answers 404 without touching the database. */
 export function generateStaticParams() {
@@ -38,9 +39,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function PractitionerContactPage({ params }: Props) {
 	const { locale, slug } = await localeOf(params);
 	setRequestLocale(locale);
-	const page = await formPractitioner(slug);
+	const page = await formPractitioner(slug, locale);
 	const t = await getTranslations({ locale, namespace: "Gdpr.contact" });
-	const rpps = page.payload.nationalId;
+	const ref = practitionerRefOf(page.payload);
 	return (
 		<PractitionerFormPage
 			locale={locale}
@@ -54,7 +55,10 @@ export default async function PractitionerContactPage({ params }: Props) {
 				<Notice tone="info" title={t("claimedTitle")}>
 					<span className="flex flex-col gap-2">
 						<span>{t("claimedBody")}</span>
-						<Link href={{ pathname: "/pro/revendiquer", query: { rpps } }} className={linkStyles()}>
+						<Link
+							href={{ pathname: "/pro/revendiquer", query: { rpps: ref } }}
+							className={linkStyles()}
+						>
 							{t("claimedLink")}
 						</Link>
 					</span>
@@ -70,11 +74,14 @@ export default async function PractitionerContactPage({ params }: Props) {
 					</Notice>
 					<p className="max-w-[65ch] text-body text-ink">
 						{t("claimFirst")}{" "}
-						<Link href={{ pathname: "/pro/revendiquer", query: { rpps } }} className={linkStyles()}>
+						<Link
+							href={{ pathname: "/pro/revendiquer", query: { rpps: ref } }}
+							className={linkStyles()}
+						>
 							{t("claimFirstLink")}
 						</Link>
 					</p>
-					<PractitionerContactForm rpps={rpps} />
+					<PractitionerContactForm reference={ref} />
 				</div>
 			)}
 		</PractitionerFormPage>

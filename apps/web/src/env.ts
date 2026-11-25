@@ -146,6 +146,11 @@ const serverFields = z.object({
 	/** Trade register (RCS + SIREN) for a company, RNA number (and SIREN) for an association. */
 	LEGAL_PUBLISHER_REGISTRATION: optionalString,
 	LEGAL_PUBLICATION_DIRECTOR: optionalString,
+	/**
+	 * VAT identification number of the publisher, printed by the Austrian legal notice when it
+	 * exists (ECG § 5 (1) 6: "sofern vorhanden"). Optional: an entity without one leaves it unset.
+	 */
+	LEGAL_PUBLISHER_VAT_ID: optionalString,
 	/** Address of every request: legal, privacy rights, accessibility feedback. */
 	LEGAL_CONTACT_EMAIL: z.email().optional(),
 	/**

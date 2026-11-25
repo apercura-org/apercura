@@ -1,6 +1,27 @@
 import { defineRouting } from "next-intl/routing";
 import { DEFAULT_LOCALE, LOCALE_PREFIXES, LOCALES } from "./locales";
 
+type Pathnames = Record<
+	string,
+	string | Record<Exclude<(typeof LOCALES)[number], "de-AT">, string>
+>;
+
+/**
+ * Austria's paths (`de-AT`): the German ones, with a doctor's page under `/arzt` (every
+ * practitioner of its sources is a doctor or a dentist). Derived, not listed, so the table
+ * every client island ships stays the size of France's.
+ */
+function withAustria<T extends Pathnames>(pathnames: T) {
+	return Object.fromEntries(
+		Object.entries(pathnames).map(([key, value]) => [
+			key,
+			typeof value === "string"
+				? value
+				: { ...value, "de-AT": value.de.replace("/behandler/", "/arzt/") },
+		]),
+	) as { [K in keyof T]: T[K] extends string ? T[K] : T[K] & { "de-AT": string } };
+}
+
 export const routing = defineRouting({
 	locales: LOCALES,
 	defaultLocale: DEFAULT_LOCALE,
@@ -15,10 +36,10 @@ export const routing = defineRouting({
 	alternateLinks: false,
 	/**
 	 * Internal (French) pathnames and their forms in the other locales. Listing
-	 * pages keep their French slugs in every locale: they are data, not interface
-	 * text. Pages in other locales exist for the interface but stay `noindex` in v1.
+	 * pages keep their market's slugs in every locale: they are data, not interface
+	 * text. Austria's are derived from the German ones (`withAustria`).
 	 */
-	pathnames: {
+	pathnames: withAustria({
 		"/": "/",
 		"/pro": "/pro",
 		// Practitioner space: the same French paths in every locale (never indexed).
@@ -49,7 +70,13 @@ export const routing = defineRouting({
 		"/_ui": "/_ui",
 		// Manage an appointment from the email link (token in the fragment, never indexed).
 		"/rdv": "/rdv",
-		"/recherche": { fr: "/recherche", en: "/search", de: "/suche", es: "/buscar", it: "/cerca" },
+		"/recherche": {
+			fr: "/recherche",
+			en: "/search",
+			de: "/suche",
+			es: "/buscar",
+			it: "/cerca",
+		},
 		"/praticien/[slug]": {
 			fr: "/praticien/[slug]",
 			en: "/practitioner/[slug]",
@@ -120,7 +147,13 @@ export const routing = defineRouting({
 		// Guides: articles written in French, at the same path in every locale (indexed in French only).
 		"/guides": "/guides",
 		"/guides/[slug]": "/guides/[slug]",
-		"/donnees": { fr: "/donnees", en: "/data", de: "/daten", es: "/datos", it: "/dati" },
+		"/donnees": {
+			fr: "/donnees",
+			en: "/data",
+			de: "/daten",
+			es: "/datos",
+			it: "/dati",
+		},
 		"/accessibilite": {
 			fr: "/accessibilite",
 			en: "/accessibility",
@@ -149,7 +182,7 @@ export const routing = defineRouting({
 			es: "/condiciones",
 			it: "/condizioni",
 		},
-	},
+	}),
 });
 
 export type { Locale } from "./locales";

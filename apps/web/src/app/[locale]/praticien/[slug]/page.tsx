@@ -1,5 +1,4 @@
-import { parsePractitionerSegment, practitionerRoute } from "@apercura/core";
-import { hasBillingSectors, professionFor } from "@apercura/core/taxonomy";
+import { practitionerRoute } from "@apercura/core";
 import {
 	ActionBlock,
 	buttonStyles,
@@ -25,13 +24,28 @@ import { FeesSection, PracticalSection, PresentationSection } from "~/components
 import { PublicPage } from "~/components/public-page";
 import { Trail, type TrailItem, trailEntries } from "~/components/trail";
 import { clientEnv } from "~/env";
+import { marketOf } from "~/i18n/locales";
 import { getPathname, Link, permanentRedirect } from "~/i18n/navigation";
 import { type Locale, routing } from "~/i18n/routing";
 import { relatedGuides } from "~/lib/guides/catalog";
 import { genderOf, getTaxonomyLabels, inSentence } from "~/lib/labels";
 import { getMapStrings } from "~/lib/map-strings";
+import {
+	austrianSourcesOf,
+	professionFees,
+	professionSlugOf,
+	showsBillingFacts,
+} from "~/lib/market";
 import { ownerContentOf } from "~/lib/owner-content";
-import { actionPlan, label, type SiteView, siteViews } from "~/lib/practitioner-view";
+import { isDepartmentCity } from "~/lib/places";
+import { displayId, identityOf, parsePractitionerKey } from "~/lib/practitioner-key";
+import {
+	actionPlan,
+	localityOf,
+	marketLabel,
+	type SiteView,
+	siteViews,
+} from "~/lib/practitioner-view";
 import {
 	CONTENT_LANGUAGES,
 	DESCRIPTION_MAX,
@@ -85,9 +99,9 @@ const ameliUrl = "https://annuairesante.ameli.fr/";
 async function resolve(params: Props["params"]) {
 	const { locale: requested, slug } = await params;
 	const locale: Locale = hasLocale(routing.locales, requested) ? requested : routing.defaultLocale;
-	const segment = parsePractitionerSegment(slug);
+	const segment = parsePractitionerKey(locale, slug);
 	if (!segment) notFound();
-	const page = await getPractitionerPage(segment.rpps);
+	const page = await getPractitionerPage(identityOf(segment));
 	const decision = practitionerRoute(
 		slug,
 		page && {
@@ -133,7 +147,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 		name,
 		occupation,
 		place: place ?? "",
-		fees: hasBillingSectors(payload.professionCode) ? "sector" : "other",
+		fees: professionFees(locale, payload.professionCode) ? "sector" : "other",
 	};
 	const descriptionOf = (withPlace: boolean) =>
 		bookable
@@ -155,7 +169,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 		indexable: page.indexable,
 		image: ogImageOf(payload.professionCode),
 		// The practitioner's own card first; the profession's image as the fallback.
-		ownImage: (await practitionerOgImageOf(payload.nationalId, page.slug)) ?? undefined,
+		ownImage:
+			(await practitionerOgImageOf(
+				{
+					country: payload.country === "AT" ? "AT" : "FR",
+					idScheme: payload.idScheme,
+					nationalId: payload.nationalId,
+				},
+				page.slug,
+			)) ?? undefined,
 		type: "profile",
 	});
 }
@@ -174,8 +196,7 @@ export default async function PractitionerPage({ params }: Props) {
 	const content = ownerContentOf(payload, photoUrl);
 	const professionSlug = payload.listingSlug ?? "";
 	const professionLabel =
-		labels.profession(professionFor(payload.professionCode)?.slug ?? "", gender) ??
-		t("unknownProfession");
+		labels.profession(professionSlugOf(payload.professionCode), gender) ?? t("unknownProfession");
 	const listingLabel = labels.listing(payload.listingSlug, gender) ?? professionLabel;
 	const specialty =
 		payload.listingSlug && labels.profession(professionSlug, gender) === null ? listingLabel : null;
@@ -189,12 +210,22 @@ export default async function PractitionerPage({ params }: Props) {
 	const status = claimed ? "verified" : "unclaimed";
 	const href = { pathname: "/praticien/[slug]", params: { slug: page.slug } } as const;
 	const url = absoluteUrl(href, locale);
+	const austrian = payload.country === "AT";
+	// France: the registry's other skills. Austria: the other specialties of the lists ("Fach").
 	const otherQualifications = payload.qualifications
-		.filter((item) => item.source === "savoir_faire" && item.typeCode !== "S" && item.label)
+		.filter((item) =>
+			austrian
+				? item.source === "fach" && item.code !== payload.primarySpecialtyCode && item.label
+				: item.source === "savoir_faire" && item.typeCode !== "S" && item.label,
+		)
 		.map((item) => item.label as string);
+	const identifier = displayId(payload);
+	const sources = austrian
+		? austrianSourcesOf(payload.activities.map((activity) => activity.source))
+		: [];
 
 	const trail: TrailItem[] = [];
-	if (payload.listingSlug && page.listings.france) {
+	if (payload.listingSlug && page.listings.country) {
 		trail.push({
 			label: listingLabel,
 			href: { pathname: "/[specialite]", params: { specialite: payload.listingSlug } },
@@ -214,7 +245,7 @@ export default async function PractitionerPage({ params }: Props) {
 		page.department &&
 		page.commune &&
 		page.listings.commune &&
-		page.commune.code !== "75056"
+		!isDepartmentCity(payload.country, page.commune.code)
 	) {
 		trail.push({
 			label: page.commune.name,
@@ -251,6 +282,8 @@ export default async function PractitionerPage({ params }: Props) {
 						url,
 						professionCode: payload.professionCode,
 						rpps: payload.nationalId,
+						idScheme: payload.idScheme,
+						country: payload.country,
 						name,
 						givenName: payload.firstName,
 						familyName: payload.lastName,
@@ -265,10 +298,11 @@ export default async function PractitionerPage({ params }: Props) {
 							practiceKind: site.practiceKind,
 							// As printed on the place's card: a LocalBusiness needs a name.
 							name: site.name ?? labels.practiceKind(site.practiceKind),
-							addressLine: label(site.site.addressLine),
-							addressComplement: label(site.site.addressComplement),
+							addressLine: marketLabel(site.site.addressLine, payload.country),
+							addressComplement: marketLabel(site.site.addressComplement, payload.country),
 							postcode: site.site.postcode,
-							placeName: site.site.placeName,
+							placeName: localityOf(site.site.placeName, payload.country),
+							country: payload.country,
 							coordinates: site.coordinates,
 							phone: site.phone?.e164 ?? null,
 							establishmentUrl: site.establishment
@@ -285,7 +319,7 @@ export default async function PractitionerPage({ params }: Props) {
 					<PractitionerHeader
 						name={name}
 						profession={listingLabel}
-						rpps={payload.nationalId}
+						rpps={identifier}
 						rppsLabel={tP("rpps")}
 						status={status}
 						statusLabel={tP(`status.${status}`)}
@@ -329,7 +363,7 @@ export default async function PractitionerPage({ params }: Props) {
 									label={t("otherQualifications")}
 									value={
 										otherQualifications.length > 0 ? (
-											<span lang="fr">{otherQualifications.join(", ")}</span>
+											<span lang={austrian ? "de" : "fr"}>{otherQualifications.join(", ")}</span>
 										) : null
 									}
 									emptyLabel={empty}
@@ -363,24 +397,27 @@ export default async function PractitionerPage({ params }: Props) {
 							externalLabel={tSite("externalLink")}
 						/>
 
-						<FeesSection
-							content={content}
-							headingId="fees-heading"
-							emptyLabel={empty}
-							externalLabel={tSite("externalLink")}
-							sectors={hasBillingSectors(payload.professionCode)}
-							provenance={
-								<ProvenanceNote
-									locale={locale}
-									sourceLabel={tP("source.label")}
-									source={
-										content.billing.source === "owner" ? t("fees.sourceOwner") : t("fees.source")
-									}
-									updatedLabel={tP("source.updated")}
-									updatedAt={page.updatedAt}
-								/>
-							}
-						/>
+						{/* Austria's sources publish no fees, sectors or Carte Vitale facts. */}
+						{showsBillingFacts(locale) ? (
+							<FeesSection
+								content={content}
+								headingId="fees-heading"
+								emptyLabel={empty}
+								externalLabel={tSite("externalLink")}
+								sectors={professionFees(locale, payload.professionCode)}
+								provenance={
+									<ProvenanceNote
+										locale={locale}
+										sourceLabel={tP("source.label")}
+										source={
+											content.billing.source === "owner" ? t("fees.sourceOwner") : t("fees.source")
+										}
+										updatedLabel={tP("source.updated")}
+										updatedAt={page.updatedAt}
+									/>
+								}
+							/>
+						) : null}
 					</div>
 					<aside
 						aria-label={t("asideLabel")}
@@ -389,7 +426,7 @@ export default async function PractitionerPage({ params }: Props) {
 						<OwnerBlock
 							locale={locale}
 							claimed={claimed}
-							rpps={payload.nationalId}
+							rpps={identifier}
 							slug={page.slug}
 							practitionerId={page.practitionerId}
 						/>
@@ -436,13 +473,18 @@ export default async function PractitionerPage({ params }: Props) {
 
 				<RelatedGuides
 					locale={locale}
-					guides={relatedGuides([payload.listingSlug, professionFor(payload.professionCode)?.slug])}
+					guides={relatedGuides([payload.listingSlug, professionSlugOf(payload.professionCode)])}
 				/>
 
 				<ProvenanceNote
 					locale={locale}
 					sourceLabel={tP("source.label")}
-					source={tP("source.name")}
+					source={
+						sources.length > 0
+							? // CC BY 4.0: each list named with its attribution, word for word.
+								sources.map((source) => `${source.name} (${source.attribution})`).join("; ")
+							: tP("source.name")
+					}
 					updatedLabel={tP("source.updated")}
 					updatedAt={page.updatedAt}
 				/>
@@ -639,6 +681,10 @@ async function Action({
 				/>
 			);
 		case "no_phone":
+			// The Ameli directory is French: an Austrian page has no such pointer.
+			if (marketOf(locale) === "AT") {
+				return <ActionBlock kind="notice" title={title} statement={t("action.noPhone")} />;
+			}
 			return (
 				<ActionBlock
 					kind="notice"

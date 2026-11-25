@@ -17,4 +17,8 @@ export const LINKS = {
 	openStreetMap: "https://www.openstreetmap.org/copyright",
 	defenseurForm: "https://formulaire.defenseurdesdroits.fr/",
 	cnilComplaint: "https://www.cnil.fr/fr/adresser-une-plainte",
+	/** The complaint form of the Austrian Datenschutzbehörde (checked 2026-11-25). */
+	dsbComplaint: "https://dsb.gv.at/eingabe-an-die-dsb/beschwerde",
+	/** Creative Commons Attribution 4.0, the licence of the Austrian sources. */
+	ccBy4: "https://creativecommons.org/licenses/by/4.0/deed.de",
 } as const;

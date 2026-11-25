@@ -1,4 +1,5 @@
 import { getTranslations } from "next-intl/server";
+import { marketOf } from "~/i18n/locales";
 import { type Href, Link } from "~/i18n/navigation";
 import { type Locale, routing } from "~/i18n/routing";
 import { LanguagePicker } from "./language-picker";
@@ -16,9 +17,11 @@ const navLink =
 export async function SiteHeader({ locale, href }: SiteHeaderProps) {
 	const t = await getTranslations({ locale, namespace: "Site" });
 	const tLocale = await getTranslations({ locale, namespace: "LocaleSwitcher" });
+	const languages = routing.locales.filter((other) => marketOf(other) === marketOf(locale));
 	const isPro = typeof href === "string" && (href === "/pro" || href.startsWith("/pro/"));
+	// The picker offers the languages it is given names for: this market's only.
 	const names = Object.fromEntries(
-		routing.locales.map((other) => [other, tLocale("locale", { locale: other })]),
+		languages.map((other) => [other, tLocale("locale", { locale: other })]),
 	) as Record<Locale, string>;
 
 	return (
@@ -37,15 +40,18 @@ export async function SiteHeader({ locale, href }: SiteHeaderProps) {
 							{isPro ? t("navPatients") : t("navPro")}
 						</Link>
 					</nav>
-					<LanguagePicker
-						locale={locale}
-						href={href}
-						label={tLocale("label")}
-						currentLabel={tLocale("current", { language: names[locale] })}
-						names={names}
-						// The appointment page keeps its token, which lives in the fragment.
-						keepHash={href === "/rdv"}
-					/>
+					{/* The languages of this market's pages only: an Austrian page has no French twin. */}
+					{languages.length > 1 ? (
+						<LanguagePicker
+							locale={locale}
+							href={href}
+							label={tLocale("label")}
+							currentLabel={tLocale("current", { language: names[locale] })}
+							names={names}
+							// The appointment page keeps its token, which lives in the fragment.
+							keepHash={href === "/rdv"}
+						/>
+					) : null}
 				</div>
 			</div>
 		</header>

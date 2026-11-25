@@ -7,6 +7,7 @@ import type { Sql } from "@apercura/db";
 import {
 	type SitemapChunk,
 	type SitemapKind,
+	type SitemapMarket,
 	selectSitemapChunks,
 	selectSitemapEntries,
 } from "~/server/queries/sitemap-sql";
@@ -40,7 +41,7 @@ export type WarmStore = {
 	}): Promise<void>;
 	lastImportRun(): Promise<number | null>;
 	chunks(): Promise<SitemapChunk[]>;
-	entries(kind: SitemapKind, chunk: number): Promise<string[]>;
+	entries(market: SitemapMarket, kind: SitemapKind, chunk: number): Promise<string[]>;
 };
 
 const COLUMNS = (sql: Sql) => sql`
@@ -97,8 +98,8 @@ export function sqlWarmStore(sql: Sql): WarmStore {
 			return row?.id ?? null;
 		},
 		chunks: () => selectSitemapChunks(sql),
-		async entries(kind, chunk) {
-			const rows = await selectSitemapEntries(sql, kind, chunk);
+		async entries(market, kind, chunk) {
+			const rows = await selectSitemapEntries(sql, market, kind, chunk);
 			return rows.map((row) => row.path);
 		},
 	};

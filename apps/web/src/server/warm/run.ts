@@ -13,7 +13,7 @@
  * build, a new successful import, or the import's restart request (after it expired cache
  * tags) starts the walk over; a finished walk waits for one of them.
  */
-import { francePath } from "~/lib/sitemap-xml";
+import { marketPagePath } from "~/lib/sitemap-xml";
 import {
 	type Cursor,
 	generationOf,
@@ -199,7 +199,9 @@ export async function runWarm(deps: WarmDeps): Promise<WarmReport> {
 		const unit = units[point.index];
 		if (!unit) break;
 		const paths = unit.chunk
-			? (await store.entries(unit.chunk.kind, unit.chunk.chunk)).map(francePath)
+			? (await store.entries(unit.chunk.market, unit.chunk.kind, unit.chunk.chunk)).map((path) =>
+					marketPagePath(unit.chunk?.market ?? "fr", path),
+				)
 			: pagesPaths(chunks);
 		currentSize = paths.length;
 		cursor = { unit: unit.key, position: Math.min(point.position, paths.length) };

@@ -1,8 +1,10 @@
-# Open data import (France)
+# Open data import
 
-`packages/etl` builds the public directory from French open data. It is a Bun
-CLI that runs as a scheduled task next to the app, with its own database role
-that cannot reach patient data.
+`packages/etl` builds the public directory from open data: France (this page,
+first) and Austria ([below](#austria)). It is a Bun CLI that runs as a
+scheduled task next to the app, with its own database role that cannot reach
+patient data. Each market's import writes the shared `directory` schema with
+its own `country` and never reads or writes another market's rows.
 
 ```sh
 bun run etl:places                        # once, then yearly
@@ -369,3 +371,184 @@ and only the suppression left through two imports, the page back once it is with
 labels from a local mock of the geocoder). Dry runs
 commit nothing but the places reference data, imported before the merge when
 the table is empty.
+
+## Austria
+
+`etl:at` builds Austria's directory (`/at`) from the open data of three Länder
+(issue #107, [ADR 0002](./adr/0002-multi-country.md#austria-at)). Everything
+above about roles, ownership, the outbox and `--approve` applies; this section
+says what differs.
+
+```sh
+bun run etl:places --country at           # once (etl:at does it on its first run), then yearly
+bun run etl:at                            # weekly (Vienna, Styria, Salzburg)
+bun run etl:at --sources wien,stmk        # some lists only
+bun run etl:at --dry-run                  # everything, then roll back
+bun run etl:at --approve=<run_id>         # accept what a blocked run reported
+```
+
+### Sources
+
+Verified on 25 November 2026 on data.gv.at, each publisher's catalogue and its
+terms of use. All are under **CC BY 4.0**; the attribution each publisher asks
+for is printed word for word on the data sources page (`/at/daten`) and kept in
+`austria.registries` (`packages/core/src/country/at.ts`).
+
+| List (`--sources`)             | Distribution                                                                                                                                                                                      | Format, update                                                                                                      | Attribution                                                       |
+| ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------- |
+| Vienna (`wien`)                | `https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:ARZTOGD&srsName=EPSG:4326&outputFormat=json`                                                     | GeoJSON, WGS 84, daily ("die Daten stammen von der Ärztekammer für Wien", geocoded to the address)                  | `Datenquelle: Stadt Wien – data.wien.gv.at`                       |
+| Styria (`stmk`)                | `https://service.stmk.gv.at/ogd/OGD_Data_ABT17/geoinformation/Niedergelassene_Aerzte.zip`                                                                                                         | point shapefile in a ZIP, ETRS89 degrees; modified 31 October 2026, file of 21 November 2026                        | `Datenquelle: CC-BY-4.0: Land Steiermark - data.steiermark.gv.at` |
+| Salzburg (`sbg`)               | `https://www.salzburg.gv.at/ogd/8bd69af0-d42a-4777-beb6-1e8e87145a23/Aerzte.json`                                                                                                                 | ArcGIS JSON, EPSG:31258; "nach Bedarf", modified 12 June 2026 (list of the Ärztekammer für Salzburg)                | `Datenquelle: Land Salzburg – data.salzburg.gv.at`                |
+| Salzburg dentists (`sbg-zahn`) | `https://www.salzburg.gv.at/ogd/90dd469f-9c41-49c4-aa86-cdf02ebaa1e0/Zahnaerzte.json`                                                                                                             | ArcGIS JSON, EPSG:31258; "nach Bedarf", modified 12 June 2026 (list of the Zahnärztekammer)                         | `Datenquelle: Land Salzburg – data.salzburg.gv.at`                |
+| Places                         | `https://www.statistik.gv.at/gs-open/GEODATA/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=GEODATA:STATISTIK_AUSTRIA_GEM_MP_20260101&outputFormat=application/json&srsName=EPSG:4326` | GeoJSON, the population-weighted centre of each Gemeinde ("Gemeinden – Schwerpunkte"), boundaries of 1 January 2026 | `Datenquelle: Statistik Austria - data.statistik.gv.at`           |
+
+The URLs can be overridden with `ETL_AT_WIEN_URL`, `ETL_AT_STMK_URL`,
+`ETL_AT_SBG_URL`, `ETL_AT_SBG_ZAHN_URL` and `ETL_AT_PLACES_URL` (next year's
+boundaries: `…GEM_MP_20270101…`). Every other candidate (the other six Länder,
+the chambers, the social insurance) and why it is not imported:
+[`docs/data-requests/at.md`](./data-requests/at.md).
+
+### Identifiers and deduplication
+
+No Austrian list publishes a national number, so each list is its own
+identifier scheme (`directory.practitioners.id_scheme`), with a letter in the
+page URL (`/at/arzt/{vorname-nachname}-{letter}{number}`):
+
+| Scheme    | URL  | Key                                                                                                                                                     |
+| --------- | ---- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `AT-WIEN` | `w`  | The doctor number in the chamber's practice links (`https://praxisplan.at/{doctor}/{name}/ordination/{practice}`): one number, one name across the file |
+| `AT-STMK` | `st` | `ARZTNR`, the doctor number of the Styrian list                                                                                                         |
+| `AT-SBG`  | `sb` | Derived: FNV-1a of the normalized family name, first name and gender, folded to 9 digits (`atNameKey`)                                                  |
+| `AT-SBGZ` | `sz` | Derived the same way from the dentist's name (the list has no gender)                                                                                   |
+
+Within a list, every row of one key (several practices, several specialties)
+is one practitioner with one site per practice and one activity per practice.
+A Salzburg name change gives a new key, so a new page (the old one is removed
+after two runs, as an absence); two different names that would derive one key
+are counted in `stats.taxonomy.keyCollisions` and the second one is left out.
+Two Salzburg doctors with the same names and gender would be merged into one
+page: none in the list of June 2026 (1,276 distinct people for 1,523 rows).
+
+Across lists there is no merge: a doctor who practises in Vienna and in Styria
+has two pages, one per list. The lists share no identifier, and names alone
+are not enough to say two rows are one person.
+
+### Places and precision
+
+The lists ship address-level coordinates, so **nothing is geocoded** and no
+geocoder is called: Vienna's points are geocoded by the city from the chamber's
+addresses, Styria's carry the address register code (`ADRCODE`), Salzburg's
+the address code (`ADRCD`) and EPSG:31258 points that PostGIS transforms to
+WGS 84. A site is stored with `geo_source = 'source'` and `geo_precision =
+'address'`; a site without a point would take its Gemeinde's centre
+(`centroid`, `city`): none in the files of November 2026.
+
+Places (`directory.places`, `country = 'AT'`): the nine Bundesländer are
+departments (`/at/allgemeinmedizin/steiermark`), each Gemeinde a commune of its
+Bundesland (`/at/allgemeinmedizin/steiermark/graz`), the Gemeinde Wien (90001)
+a commune whose 23 districts are arrondissements
+(`/at/allgemeinmedizin/wien/alsergrund`); like Paris, Vienna's city page is its
+Bundesland's. A practice is placed:
+
+1. in Vienna, by the district its address starts with (`09., …` → 1090,
+   Wien-Alsergrund);
+2. elsewhere, in the only Gemeinde of its Bundesland named like its town
+   (`Graz`);
+3. else in the Gemeinde whose centre is nearest to the practice (a postal
+   town that is not a Gemeinde, `Feldkirchen` → Feldkirchen bei Graz).
+
+Checked on the Styrian list of November 2026: 3,623 practices by name, 460 by
+the nearest centre, of which 8 land in a neighbouring Gemeinde of the one the
+postcode would give (border cases). Less than 2% of practices without a place
+blocks the run (`at.places`, approvable).
+
+### Guards
+
+Per list, before the merge (`AT_LIMITS` in `src/guards.ts`):
+
+- the file is between 1 KB and 100 MB, parses (JSON, ZIP, shapefile) and
+  matches its schema (`zod`); otherwise the list is **left out** of the run;
+- at most 1% of its records quarantined, and at least a floor of rows (Vienna
+  1,000, Styria 500, Salzburg 300, dentists 50): otherwise left out (never
+  approvable: a broken file, not an unusual one);
+- at most 5% more or fewer people and 15% more or fewer bytes than the last
+  successful run that loaded the list: otherwise the run is **blocked**
+  (approvable with `--approve`).
+
+A list left out keeps all its rows: its people are neither updated nor counted
+missing, and the command exits with code **3** (`stats.sourceErrors` says
+why); the other lists are imported. After the merge, the circuit breakers and
+the orphan check of France apply to Austria's own pages only
+(`refresh_practitioner_pages(run, NULL, 'AT')`).
+
+Records skipped on purpose (`stats.sources.{list}.skipped`): Styrian rows
+without a street or postcode (18 in November 2026).
+
+### Specialties
+
+`FACH` labels are read by `atSpecialtyCodeOf` (`packages/core/src/taxonomy/at.ts`):
+the Styrian `AM - `/`FA - ` prefixes are dropped, `u.` reads `und`, known
+typos are corrected, and each label becomes a specialty code
+(`innere-medizin-und-kardiologie`) mapped to a German listing slug
+(`kardiologie`). A doctor with a specialty and general practice is listed as
+the specialist. "Approbierte Ärztin/Approbierter Arzt" and "unbekannt" are
+listed under `aerzte`, dentists under `zahnaerzte`. An unknown label is listed
+under `aerzte` and reported (`stats.taxonomy.unknownSpecialties`, and a
+"Taxonomy alert" line): add it to the taxonomy.
+
+### Schedule and monitoring
+
+The scheduler runs `etl:at $ETL_AT_SCHEDULE_ARGS` every Monday at 05:30 UTC,
+after France's import (`docker/crontab`; one advisory lock for both). Alert on
+exit codes 1 (failed), 2 (blocked) and 3 (a list left out), and on the import
+age, per market and per list:
+
+```sql
+-- Days since each market's last successful import (alert above 9).
+SELECT source AS market, max(finished_at) AS last_success,
+	extract(day FROM now() - max(finished_at))::integer AS age_days
+FROM directory.etl_runs
+WHERE status IN ('succeeded', 'skipped') AND source IN ('fr', 'at')
+GROUP BY source;
+
+-- Days since each Austrian list was last loaded (alert above 9).
+SELECT list, max(r.finished_at) AS last_loaded,
+	extract(day FROM now() - max(r.finished_at))::integer AS age_days
+FROM directory.etl_runs r
+CROSS JOIN LATERAL jsonb_object_keys(r.stats -> 'sources') AS list
+WHERE r.source = 'at' AND r.status = 'succeeded'
+	AND NOT coalesce(r.stats -> 'sourceErrors' ? list, false)
+GROUP BY list;
+```
+
+A `skipped` run (lists unchanged) counts as fresh for the market; a list whose
+publisher stops updating it shows in the second query only once its file
+changes again, so also watch `etl_runs.files.{list}.lastModified`.
+
+### Measured run (files of 21–25 November 2026)
+
+Laptop, local PostGIS 17 under emulation, first run on an empty database:
+
+|               |                                                                             |
+| ------------- | --------------------------------------------------------------------------- |
+| Duration      | 13 s (places 0.4 s, read models 5 s), rerun with `--force`: 0 changes       |
+| Practitioners | 10,377: Vienna 6,100, Styria 2,656, Salzburg 1,276 doctors and 345 dentists |
+| Practices     | 12,384, all located at the address and placed                               |
+| Listing pages | 2,175, of which 896 indexable (46 country-wide)                             |
+| Quarantined   | 0                                                                           |
+
+### Local development
+
+```sh
+bun run etl:at --source-dir packages/etl/fixtures/at --offline   # synthetic data
+bun run --cwd packages/etl fixtures:at                           # regenerate the fixtures
+```
+
+`packages/etl/fixtures/at` holds **synthetic** files in the exact formats of
+the four lists and of the Gemeinde layer (a few real Gemeinde codes and names
+with approximate centres), generated by `packages/etl/fixtures/generate-at.ts`:
+made-up names, streets that do not exist, phone numbers whose subscriber part
+starts with 0 (never assigned in Austria), doctor numbers far above the real
+lists'. Never commit real rows. `test/at-integration.test.ts` imports them
+next to the French fixtures: France untouched, idempotence, places, read
+models, a list left out, absences, objections, the breaker and `--approve`.

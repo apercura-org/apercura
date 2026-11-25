@@ -129,14 +129,20 @@ Every market needs, on top of its own items:
 - a hosting contract that meets the market's health-data rules, and the DPIA updated;
 - a legitimate-interest assessment and an easy opt-out when pages are generated from a registry.
 
-### 1. Austria (`/at`): directory from open data
+### 1. Austria (`/at`): open, directory from open data
 
-- Import "Ärzte Standorte Wien" (City of Vienna, data from the Vienna medical chamber) and
-  "Niedergelassene Ärzte Steiermark", both CC BY 4.0, with the attribution on every page.
-- Confirm the licence of "Ärzte Land Salzburg"; look for the six other states.
-- Check the medical chamber's guideline on advertising against ÄrzteG §53 and the DSB's stance on
-  directories.
-- Austrian legal notice (Impressum); interface in German (`de`, Austrian terms where they differ).
+Done in [#107](https://github.com/maxgfr/apercura/issues/107): `/at` in German, built weekly by
+`etl:at` from the CC BY 4.0 lists of Vienna, Styria and Salzburg (10,377 doctors and dentists),
+with the attributions on the data sources page, the Impressum and Datenschutzerklärung, claims by
+documents, no booking ([data import](./docs/data-import.md#austria), [ADR 0002](./docs/adr/0002-multi-country.md#austria-at)).
+Left:
+
+- Send the re-use requests of [`docs/data-requests/at.md`](./docs/data-requests/at.md) to the
+  chambers of the six other Länder, the national chamber and the ÖGK (founder).
+- Check the medical chamber's guideline on advertising against ÄrzteG §53, the DSB's stance on
+  directories, and have an Austrian lawyer review the Impressum and Datenschutzerklärung.
+- Booking in Austria once the Gesundheitstelematikgesetz question is answered.
+- Enrich the practices with the primary care units of Vienna and Upper Austria (CC BY 4.0).
 
 ### 2. Switzerland (`/ch-fr`, `/ch-de`, `/ch-it`): claimed pages, French first
 

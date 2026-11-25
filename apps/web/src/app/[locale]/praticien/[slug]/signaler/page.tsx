@@ -6,6 +6,7 @@ import { ReportForm } from "~/components/gdpr-forms";
 import { formPractitioner, PractitionerFormPage } from "~/components/practitioner-form-page";
 
 import { type Locale, routing } from "~/i18n/routing";
+import { practitionerRefOf } from "~/lib/practitioner-ref";
 
 /** Never a valid RPPS (bad Luhn check): answers 404 without touching the database. */
 export function generateStaticParams() {
@@ -33,7 +34,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function ReportPage({ params }: Props) {
 	const { locale, slug } = await localeOf(params);
 	setRequestLocale(locale);
-	const page = await formPractitioner(slug);
+	const page = await formPractitioner(slug, locale);
 	const t = await getTranslations({ locale, namespace: "Gdpr.report" });
 	return (
 		<PractitionerFormPage
@@ -43,7 +44,7 @@ export default async function ReportPage({ params }: Props) {
 			title={t("title")}
 			lead={t("lead")}
 		>
-			<ReportForm rpps={page.payload.nationalId} />
+			<ReportForm reference={practitionerRefOf(page.payload)} />
 		</PractitionerFormPage>
 	);
 }

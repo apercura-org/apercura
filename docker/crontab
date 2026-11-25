@@ -14,3 +14,9 @@
 # `--department 75`; empty imports all of France. Exit codes: 1 failed, 2 blocked (see
 # docs/data-import.md).
 0 3 * * 1 apercura etl:fr $ETL_SCHEDULE_ARGS
+
+# Austria's open data (Vienna, Styria, Salzburg), every Monday at 05:30 UTC, after France's
+# import (both take the same advisory lock: one import at a time). ETL_AT_SCHEDULE_ARGS
+# narrows it, e.g. `--sources wien`. Exit codes: 1 failed, 2 blocked, 3 imported without a
+# list that could not be fetched or read (see docs/data-import.md, "Austria").
+30 5 * * 1 apercura etl:at $ETL_AT_SCHEDULE_ARGS

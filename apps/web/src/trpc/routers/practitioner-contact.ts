@@ -7,6 +7,7 @@ import { createProofChallenge, verifyProof } from "~/server/booking/proof";
 import { submitContactRequest } from "~/server/contact-requests/service";
 import { mailErrorSummary } from "~/server/mail/error-summary";
 import { sendNotice } from "~/server/mail/notices";
+import { practitionerRefInput } from "~/server/practitioner-ref";
 import { clientRateLimitKey, emailRateLimitKey } from "~/server/rate-limit";
 import { assertSameOrigin } from "../booking-runtime";
 import { createTRPCRouter, publicProcedure } from "../init";
@@ -59,7 +60,8 @@ export const practitionerContactRouter = createTRPCRouter({
 	submit: publicProcedure
 		.input(
 			z.object({
-				rpps: z.string().regex(/^\d{11}$/),
+				/** The page: an RPPS in France, the list letters and number in Austria (`w7983`). */
+				ref: practitionerRefInput,
 				name: plain(120, 2),
 				email: z.string().trim().toLowerCase().pipe(z.email().max(254)),
 				phone: phone.nullable(),
@@ -80,7 +82,7 @@ export const practitionerContactRouter = createTRPCRouter({
 			}
 			await service(() =>
 				submitContactRequest(ctx.db(), {
-					rpps: input.rpps,
+					ref: input.ref,
 					name: input.name,
 					email: input.email,
 					phone: input.phone,

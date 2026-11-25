@@ -1,3 +1,4 @@
+import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { BookletPage } from "~/components/booklet-page";
 import { GuideList } from "~/components/guides";
@@ -5,6 +6,7 @@ import { InstitutionalCover } from "~/components/institutional";
 import { PageGraph } from "~/components/page-graph";
 import { PublicPage } from "~/components/public-page";
 import { Trail } from "~/components/trail";
+import { marketOf } from "~/i18n/locales";
 import { getPathname } from "~/i18n/navigation";
 import { GUIDES, guidesIn } from "~/lib/guides/catalog";
 import { GUIDE_CATEGORIES } from "~/lib/guides/guide";
@@ -19,6 +21,8 @@ const HREF = "/guides" as const;
 
 export async function generateMetadata({ params }: PageProps<"/[locale]/guides">) {
 	const locale = await localeOf(params);
+	// French articles about France's health system: France's pages only.
+	if (marketOf(locale) !== "FR") notFound();
 	const t = await getTranslations({ locale, namespace: "Guides" });
 	return pageMetadata({
 		locale,
@@ -32,6 +36,7 @@ export async function generateMetadata({ params }: PageProps<"/[locale]/guides">
 /** The guides, by audience: patients first, then health practitioners. */
 export default async function GuidesIndex({ params }: PageProps<"/[locale]/guides">) {
 	const locale = await localeOf(params);
+	if (marketOf(locale) !== "FR") notFound();
 	setRequestLocale(locale);
 	const t = await getTranslations({ locale, namespace: "Guides" });
 	const origin = siteOrigin();

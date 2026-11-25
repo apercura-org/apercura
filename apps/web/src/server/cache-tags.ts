@@ -9,9 +9,12 @@ import { SITEMAP_CACHE_TAG } from "@apercura/core/revalidation";
  */
 export const cacheTags = {
 	practitioner: (id: number) => `practitioner:${id}`,
-	/** Same key as `directory.landing_pages.key`: `{listing slug}:{place id | fr}`. */
-	listing: (listingSlug: string, placeId: number | null) =>
-		`listing:${listingSlug}:${placeId ?? "fr"}`,
+	/**
+	 * Same key as `directory.landing_pages.key`: `{listing slug}:{place id | country}`,
+	 * the country lowercase for a market-wide listing (`cardiologue:fr`, `kardiologie:at`).
+	 */
+	listing: (listingSlug: string, placeId: number | null, country = "FR") =>
+		`listing:${listingSlug}:${placeId ?? country.toLowerCase()}`,
 	site: (id: number) => `site:${id}`,
 	place: (id: number) => `place:${id}`,
 	/**

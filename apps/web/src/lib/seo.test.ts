@@ -92,10 +92,11 @@ describe("hreflang of the homes", () => {
 		vi.unstubAllEnvs();
 	});
 
-	it("links France's home in French and the international home as x-default, on APP_URL", () => {
+	it("links the homes of the open markets and the international home as x-default, on APP_URL", () => {
 		vi.stubEnv("APP_URL", "https://apercura.org");
 		expect(homeAlternates()).toEqual({
 			"fr-FR": "https://apercura.org/fr",
+			"de-AT": "https://apercura.org/at",
 			"x-default": "https://apercura.org/",
 		});
 	});

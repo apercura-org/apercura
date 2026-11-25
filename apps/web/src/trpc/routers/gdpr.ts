@@ -5,6 +5,7 @@ import { LOCALES } from "~/i18n/locales";
 import { REPORT_KINDS, requestRemoval, submitReport } from "~/server/gdpr/service";
 import { mailErrorSummary } from "~/server/mail/error-summary";
 import { sendNotice } from "~/server/mail/notices";
+import { practitionerRefInput } from "~/server/practitioner-ref";
 import { clientRateLimitKey } from "~/server/rate-limit";
 import { refreshPractitioners } from "~/server/refresh";
 import { createTRPCRouter, publicProcedure } from "../init";
@@ -23,14 +24,13 @@ const plain = (max: number) =>
 
 const email = z.string().trim().toLowerCase().pipe(z.email().max(254));
 
-const rpps = z.string().regex(/^\d{11}$/);
-
 /** Public GDPR tools: objecting to a page (art. 21) and reporting an error. */
 export const gdprRouter = createTRPCRouter({
 	requestRemoval: publicProcedure
 		.input(
 			z.object({
-				rpps,
+				/** The page: an RPPS in France, the list letters and number in Austria (`w7983`). */
+				ref: practitionerRefInput,
 				contact: email,
 				message: plain(1000).optional(),
 				/** The person confirms they are the practitioner of the page. */
@@ -44,7 +44,7 @@ export const gdprRouter = createTRPCRouter({
 			}
 			const request = await service(() =>
 				requestRemoval(ctx.db(), {
-					rpps: input.rpps,
+					ref: input.ref,
 					contact: input.contact,
 					message: input.message || null,
 					locale: input.locale,
@@ -62,7 +62,7 @@ export const gdprRouter = createTRPCRouter({
 	report: publicProcedure
 		.input(
 			z.object({
-				rpps: rpps.nullable(),
+				ref: practitionerRefInput.nullable(),
 				kind: z.enum(REPORT_KINDS),
 				message: plain(2000).refine((value) => value.length >= 5, { message: "TOO_SHORT" }),
 				contact: email.nullable(),

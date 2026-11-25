@@ -92,7 +92,8 @@ export async function getEstablishment(slug: string, finess: string): Promise<Es
 				UNION ALL
 				SELECT d.id, d.kind, d.code, d.name, d.slug, d.department_code
 				FROM directory.places c
-				JOIN directory.places d ON d.kind = 'department' AND d.code = c.department_code
+				JOIN directory.places d ON d.country = c.country AND d.kind = 'department'
+					AND d.code = c.department_code
 				WHERE c.id = ${site.placeId}
 			`
 		: [];

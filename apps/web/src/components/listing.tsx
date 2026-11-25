@@ -3,9 +3,12 @@ import { listingHasBillingSectors } from "@apercura/core/taxonomy";
 import { FieldList, FieldRow, linkStyles, ProvenanceNote, tableStyles } from "@apercura/ui";
 import { getTranslations } from "next-intl/server";
 import type { ReactNode } from "react";
+import { marketOf } from "~/i18n/locales";
 import { type Href, Link } from "~/i18n/navigation";
 import type { Locale } from "~/i18n/routing";
 import { genderOf, getTaxonomyLabels } from "~/lib/labels";
+import { showsBillingFacts } from "~/lib/market";
+import { localityOf } from "~/lib/practitioner-view";
 import type { ListedPractitioner } from "~/server/queries/landing";
 import type { LandingPayload } from "~/server/queries/types";
 
@@ -76,6 +79,30 @@ export async function ListingFacts({
 		.filter((sector) => sector.count > 0);
 	const unknownSector = payload.billingSectors.unknown ?? 0;
 	const count = (value: number) => <span className="tabular">{t("count", { count: value })}</span>;
+	const provenance = (
+		<ProvenanceNote
+			locale={locale}
+			sourceLabel={tP("source.label")}
+			source={t("facts.sources")}
+			updatedLabel={tP("source.updated")}
+			updatedAt={updatedAt}
+		/>
+	);
+	// Austria: the sources publish no fees or insurance facts, and the market has no booking.
+	if (!showsBillingFacts(locale)) {
+		return (
+			<ListingSection id="facts-heading" title={t("facts.heading")}>
+				<FieldList>
+					<FieldRow
+						label={t("columns.practitioner")}
+						value={count(payload.practitionerCount)}
+						emptyLabel=""
+					/>
+				</FieldList>
+				{provenance}
+			</ListingSection>
+		);
+	}
 	return (
 		<ListingSection
 			id="facts-heading"
@@ -120,13 +147,7 @@ export async function ListingFacts({
 					emptyLabel=""
 				/>
 			</FieldList>
-			<ProvenanceNote
-				locale={locale}
-				sourceLabel={tP("source.label")}
-				source={t("facts.sources")}
-				updatedLabel={tP("source.updated")}
-				updatedAt={updatedAt}
-			/>
+			{provenance}
 		</ListingSection>
 	);
 }
@@ -148,6 +169,7 @@ export async function PractitionerTable({
 	const tP = await getTranslations({ locale, namespace: "Practitioner" });
 	const labels = await getTaxonomyLabels(locale);
 	const bySector = listingHasBillingSectors(listingSlug);
+	const billing = showsBillingFacts(locale);
 	const notProvided = tP("notProvided");
 	const carteVitale = (value: boolean | null) =>
 		value === true ? tFees("fees.accepted") : value === false ? tFees("fees.notAccepted") : null;
@@ -166,18 +188,25 @@ export async function PractitionerTable({
 					<th scope="col" className={table.column()}>
 						{t("columns.practitioner")}
 					</th>
-					<th scope="col" className={table.column({ className: "hidden md:table-cell" })}>
-						{bySector ? t("columns.sector") : t("columns.agreement")}
-					</th>
-					<th scope="col" className={table.column({ className: "hidden md:table-cell" })}>
-						{t("columns.carteVitale")}
-					</th>
+					{billing ? (
+						<>
+							<th scope="col" className={table.column({ className: "hidden md:table-cell" })}>
+								{bySector ? t("columns.sector") : t("columns.agreement")}
+							</th>
+							<th scope="col" className={table.column({ className: "hidden md:table-cell" })}>
+								{t("columns.carteVitale")}
+							</th>
+						</>
+					) : null}
 				</tr>
 			</thead>
 			<tbody>
 				{rows.map((row) => {
 					const sector = labels.billingSector(row.billingSector, bySector);
-					const address = [row.addressLine, [row.postcode, row.placeName].filter(Boolean).join(" ")]
+					const address = [
+						row.addressLine,
+						[row.postcode, localityOf(row.placeName, marketOf(locale))].filter(Boolean).join(" "),
+					]
 						.filter(Boolean)
 						.join(", ");
 					return (
@@ -194,19 +223,25 @@ export async function PractitionerTable({
 									{row.practiceKind ? ` · ${labels.practiceKind(row.practiceKind) ?? ""}` : ""}
 								</p>
 								{address ? <p className="text-meta text-ink-muted">{address}</p> : null}
-								<p className="text-meta text-ink-muted md:hidden">
-									{t(bySector ? "rowFacts" : "rowFactsAgreement", {
-										sector: sector ?? notProvided,
-										carteVitale: carteVitale(row.carteVitale) ?? notProvided,
-									})}
-								</p>
+								{billing ? (
+									<p className="text-meta text-ink-muted md:hidden">
+										{t(bySector ? "rowFacts" : "rowFactsAgreement", {
+											sector: sector ?? notProvided,
+											carteVitale: carteVitale(row.carteVitale) ?? notProvided,
+										})}
+									</p>
+								) : null}
 							</td>
-							<td className={table.cell({ className: "hidden text-meta md:table-cell" })}>
-								{sector ?? emptyCell}
-							</td>
-							<td className={table.cell({ className: "hidden text-meta md:table-cell" })}>
-								{carteVitale(row.carteVitale) ?? emptyCell}
-							</td>
+							{billing ? (
+								<>
+									<td className={table.cell({ className: "hidden text-meta md:table-cell" })}>
+										{sector ?? emptyCell}
+									</td>
+									<td className={table.cell({ className: "hidden text-meta md:table-cell" })}>
+										{carteVitale(row.carteVitale) ?? emptyCell}
+									</td>
+								</>
+							) : null}
 						</tr>
 					);
 				})}

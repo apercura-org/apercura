@@ -1,0 +1,89 @@
+{
+	"type": "FeatureCollection",
+	"features": [
+		{
+			"type": "Feature",
+			"id": "STATISTIK_AUSTRIA_GEM_MP_20260101.90101",
+			"geometry": { "type": "Point", "coordinates": [16.368, 48.2099] },
+			"geometry_name": "geom",
+			"properties": { "g_id": "90101", "g_name": "Wien-Innere Stadt" }
+		},
+		{
+			"type": "Feature",
+			"id": "STATISTIK_AUSTRIA_GEM_MP_20260101.90201",
+			"geometry": { "type": "Point", "coordinates": [16.3972, 48.2192] },
+			"geometry_name": "geom",
+			"properties": { "g_id": "90201", "g_name": "Wien-Leopoldstadt" }
+		},
+		{
+			"type": "Feature",
+			"id": "STATISTIK_AUSTRIA_GEM_MP_20260101.90901",
+			"geometry": { "type": "Point", "coordinates": [16.3539, 48.2246] },
+			"geometry_name": "geom",
+			"properties": { "g_id": "90901", "g_name": "Wien-Alsergrund" }
+		},
+		{
+			"type": "Feature",
+			"id": "STATISTIK_AUSTRIA_GEM_MP_20260101.91901",
+			"geometry": { "type": "Point", "coordinates": [16.3347, 48.2541] },
+			"geometry_name": "geom",
+			"properties": { "g_id": "91901", "g_name": "Wien-Döbling" }
+		},
+		{
+			"type": "Feature",
+			"id": "STATISTIK_AUSTRIA_GEM_MP_20260101.92201",
+			"geometry": { "type": "Point", "coordinates": [16.4669, 48.2289] },
+			"geometry_name": "geom",
+			"properties": { "g_id": "92201", "g_name": "Wien-Donaustadt" }
+		},
+		{
+			"type": "Feature",
+			"id": "STATISTIK_AUSTRIA_GEM_MP_20260101.60101",
+			"geometry": { "type": "Point", "coordinates": [15.4395, 47.0707] },
+			"geometry_name": "geom",
+			"properties": { "g_id": "60101", "g_name": "Graz" }
+		},
+		{
+			"type": "Feature",
+			"id": "STATISTIK_AUSTRIA_GEM_MP_20260101.60608",
+			"geometry": { "type": "Point", "coordinates": [15.4466, 46.9969] },
+			"geometry_name": "geom",
+			"properties": { "g_id": "60608", "g_name": "Feldkirchen bei Graz" }
+		},
+		{
+			"type": "Feature",
+			"id": "STATISTIK_AUSTRIA_GEM_MP_20260101.60624",
+			"geometry": { "type": "Point", "coordinates": [15.4806, 46.9649] },
+			"geometry_name": "geom",
+			"properties": { "g_id": "60624", "g_name": "Kalsdorf bei Graz" }
+		},
+		{
+			"type": "Feature",
+			"id": "STATISTIK_AUSTRIA_GEM_MP_20260101.61108",
+			"geometry": { "type": "Point", "coordinates": [15.0912, 47.3818] },
+			"geometry_name": "geom",
+			"properties": { "g_id": "61108", "g_name": "Leoben" }
+		},
+		{
+			"type": "Feature",
+			"id": "STATISTIK_AUSTRIA_GEM_MP_20260101.50101",
+			"geometry": { "type": "Point", "coordinates": [13.0457, 47.8027] },
+			"geometry_name": "geom",
+			"properties": { "g_id": "50101", "g_name": "Salzburg" }
+		},
+		{
+			"type": "Feature",
+			"id": "STATISTIK_AUSTRIA_GEM_MP_20260101.50203",
+			"geometry": { "type": "Point", "coordinates": [13.0956, 47.6833] },
+			"geometry_name": "geom",
+			"properties": { "g_id": "50203", "g_name": "Hallein" }
+		},
+		{
+			"type": "Feature",
+			"id": "STATISTIK_AUSTRIA_GEM_MP_20260101.30101",
+			"geometry": { "type": "Point", "coordinates": [15.6143, 48.4092] },
+			"geometry_name": "geom",
+			"properties": { "g_id": "30101", "g_name": "Krems an der Donau" }
+		}
+	]
+}

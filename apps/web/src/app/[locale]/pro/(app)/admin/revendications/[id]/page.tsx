@@ -8,10 +8,12 @@ import { z } from "zod";
 import { ClaimDecision, PhoneCallback } from "~/components/pro/admin-claim-actions";
 import { ProShell } from "~/components/pro/pro-shell";
 import { ProShellFallback } from "~/components/pro/pro-shell-fallback";
+import { MARKET_LOCALES, marketOf } from "~/i18n/locales";
 import { Link } from "~/i18n/navigation";
 import type { Locale } from "~/i18n/routing";
 import { getTaxonomyLabels } from "~/lib/labels";
 import { NO_INDEX, resolveLocale } from "~/lib/locale";
+import { practitionerRefOf } from "~/lib/practitioner-ref";
 import { PRO_ROUTES } from "~/lib/pro-routes";
 import { requirePlatformAdminPage } from "~/server/auth/admin-guard";
 import { caller } from "~/trpc/server";
@@ -73,13 +75,23 @@ async function Detail({ locale, id }: { locale: Locale; id: string }) {
 						emptyLabel={empty}
 					/>
 					<FieldRow
-						label={tP("rpps")}
+						label={
+							practitioner.idScheme === "RPPS"
+								? tP("rpps")
+								: tClaim(`identifiers.${practitioner.idScheme as "AT-WIEN"}`)
+						}
 						value={
 							<Link
 								href={{ pathname: "/praticien/[slug]", params: { slug: practitioner.slug } }}
+								// The page lives in its market's language (`/at/arzt/…` for Austria).
+								locale={
+									marketOf(locale) === practitioner.country
+										? locale
+										: MARKET_LOCALES[practitioner.country as keyof typeof MARKET_LOCALES]
+								}
 								className={`${linkStyles()} tabular`}
 							>
-								{practitioner.nationalId}
+								{practitionerRefOf(practitioner)}
 							</Link>
 						}
 						emptyLabel={empty}

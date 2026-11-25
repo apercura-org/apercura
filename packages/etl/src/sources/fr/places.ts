@@ -13,6 +13,7 @@ import { communeSlug, departmentSlug, regionSlug } from "@apercura/core";
 import { SOURCE_DIR_FILES } from "../../config";
 import type { Sql } from "../../lib/db";
 import { fetchJson } from "../../lib/files";
+import { type ExistingPlace, type PlaceRow, type PlacesStats, writePlaces } from "../../lib/places";
 
 type GeoPoint = { type: "Point"; coordinates: [number, number] };
 
@@ -85,29 +86,7 @@ export async function readPlaceSources(dir: string): Promise<PlaceSources> {
 	};
 }
 
-export type PlaceRow = {
-	kind: "region" | "department" | "commune" | "arrondissement";
-	code: string;
-	name: string;
-	slug: string;
-	department_code: string | null;
-	region_code: string | null;
-	parent_kind: string | null;
-	parent_code: string | null;
-	longitude: number | null;
-	latitude: number | null;
-	population: number | null;
-	postcodes: string[];
-	previous_slug: string | null;
-};
-
-export type ExistingPlace = {
-	kind: string;
-	code: string;
-	name: string;
-	slug: string;
-	departmentCode: string | null;
-};
+export type { ExistingPlace, PlaceRow, PlacesStats } from "../../lib/places";
 
 /**
  * Builds the place rows to upsert. Existing slugs are kept; a renamed place
@@ -249,139 +228,15 @@ function placeRow(
 	};
 }
 
-export type PlacesStats = {
-	regions: number;
-	departments: number;
-	communes: number;
-	arrondissements: number;
-	inserted: number;
-	updated: number;
-	removed: number;
-	aliases: number;
-};
-
-/** Upserts places set-based (one statement over a JSON array) and links parents. */
+/** Upserts the French places (see `writePlaces`). */
 export async function importPlaces(
 	sql: Sql,
 	sources: PlaceSources,
 	runId: number,
 ): Promise<PlacesStats> {
-	return sql.begin(async (tx) => {
-		const existing = await tx<ExistingPlace[]>`
-			SELECT kind, code, name, slug, department_code AS "departmentCode" FROM directory.places
-		`;
-		const rows = buildPlaceRows(sources, [...existing]);
-		const json = JSON.stringify(rows);
-
-		await tx`
-			CREATE TEMP TABLE import_places ON COMMIT DROP AS
-			SELECT r.*, md5(concat_ws('|', r.name, r.slug, r.department_code, r.region_code, r.parent_kind,
-				r.parent_code, r.longitude, r.latitude, r.population, array_to_string(r.postcodes, ','))) AS source_hash
-			FROM jsonb_to_recordset(${json}::text::jsonb) AS r (
-				kind text, code text, name text, slug text, department_code text, region_code text,
-				parent_kind text, parent_code text, longitude double precision, latitude double precision,
-				population integer, postcodes text[], previous_slug text
-			)
-		`;
-
-		const aliases = await tx`
-			INSERT INTO directory.place_slug_aliases (place_id, department_code, slug)
-			SELECT p.id, CASE WHEN p.kind IN ('commune', 'arrondissement') THEN p.department_code END,
-				r.previous_slug
-			FROM import_places r
-			JOIN directory.places p ON p.kind = r.kind AND p.code = r.code
-			WHERE r.previous_slug IS NOT NULL
-			ON CONFLICT DO NOTHING
-		`;
-
-		const upserted = await tx<{ id: number; inserted: boolean }[]>`
-			INSERT INTO directory.places AS p (
-				kind, code, name, slug, department_code, region_code, centroid, population, postcodes,
-				source_hash, removed_at, updated_at
-			)
-			SELECT r.kind, r.code, r.name, r.slug, r.department_code, r.region_code,
-				CASE WHEN r.longitude IS NULL THEN NULL
-					ELSE ST_SetSRID(ST_MakePoint(r.longitude, r.latitude), 4326)::geography END,
-				r.population, coalesce(r.postcodes, '{}'), r.source_hash, NULL, now()
-			FROM import_places r
-			ON CONFLICT (kind, code) DO UPDATE SET
-				name = excluded.name,
-				slug = excluded.slug,
-				department_code = excluded.department_code,
-				region_code = excluded.region_code,
-				centroid = excluded.centroid,
-				population = excluded.population,
-				postcodes = excluded.postcodes,
-				source_hash = excluded.source_hash,
-				removed_at = NULL,
-				updated_at = now()
-			WHERE p.source_hash IS DISTINCT FROM excluded.source_hash OR p.removed_at IS NOT NULL
-			RETURNING p.id, (xmax = 0) AS inserted
-		`;
-
-		await tx`
-			UPDATE directory.places p SET parent_id = parent.id
-			FROM import_places r
-			JOIN directory.places parent ON parent.kind = r.parent_kind AND parent.code = r.parent_code
-			WHERE p.kind = r.kind AND p.code = r.code AND p.parent_id IS DISTINCT FROM parent.id
-		`;
-
-		// Departments and regions: centroid of their communes, summed population.
-		await tx`
-			WITH agg AS (
-				SELECT d.id,
-					ST_Centroid(ST_Collect(c.centroid::geometry))::geography AS centroid,
-					sum(c.population)::integer AS population
-				FROM directory.places d
-				JOIN directory.places c ON c.kind = 'commune' AND c.department_code = d.code
-					AND c.removed_at IS NULL
-				WHERE d.kind = 'department'
-				GROUP BY d.id
-			)
-			UPDATE directory.places d SET centroid = agg.centroid, population = agg.population
-			FROM agg
-			WHERE d.id = agg.id AND (d.population IS DISTINCT FROM agg.population OR d.centroid IS NULL)
-		`;
-		await tx`
-			WITH agg AS (
-				SELECT r.id,
-					ST_Centroid(ST_Collect(c.centroid::geometry))::geography AS centroid,
-					sum(c.population)::integer AS population
-				FROM directory.places r
-				JOIN directory.places c ON c.kind = 'commune' AND c.region_code = r.code
-					AND c.removed_at IS NULL
-				WHERE r.kind = 'region'
-				GROUP BY r.id
-			)
-			UPDATE directory.places r SET centroid = agg.centroid, population = agg.population
-			FROM agg
-			WHERE r.id = agg.id AND (r.population IS DISTINCT FROM agg.population OR r.centroid IS NULL)
-		`;
-
-		const removed = await tx<{ id: number }[]>`
-			UPDATE directory.places p SET removed_at = now(), updated_at = now()
-			WHERE p.removed_at IS NULL
-				AND NOT EXISTS (SELECT 1 FROM import_places r WHERE r.kind = p.kind AND r.code = p.code)
-			RETURNING p.id
-		`;
-
-		const changedIds = [...upserted.map((row) => row.id), ...removed.map((row) => row.id)];
-		if (changedIds.length > 0) {
-			await tx`
-				SELECT directory.enqueue_tags(${runId}, array_agg('place:' || id))
-				FROM unnest(${changedIds}::integer[]) AS id
-			`;
-		}
-
-		return {
-			regions: sources.regions.length,
-			departments: rows.filter((row) => row.kind === "department").length,
-			communes: sources.communes.length,
-			arrondissements: sources.arrondissements.length,
-			inserted: upserted.filter((row) => row.inserted).length,
-			updated: upserted.filter((row) => !row.inserted).length,
-			removed: removed.length,
-			aliases: aliases.count,
-		};
+	return writePlaces(sql, "FR", (existing) => buildPlaceRows(sources, existing), runId, {
+		regions: sources.regions.length,
+		communes: sources.communes.length,
+		arrondissements: sources.arrondissements.length,
 	});
 }

@@ -10,7 +10,7 @@ import { useTRPC } from "~/trpc/client";
 const ERRORS = ["ALREADY_OWNER", "FROZEN", "NOT_FOUND", "INVALID_RPPS"] as const;
 
 /** "This is me": opens the claim (or reopens the caller's live one) and goes to it. */
-export function ClaimStartButton({ rpps }: { rpps: string }) {
+export function ClaimStartButton({ reference }: { reference: string }) {
 	const t = useTranslations("Claim");
 	const router = useRouter();
 	const trpc = useTRPC();
@@ -47,7 +47,7 @@ export function ClaimStartButton({ rpps }: { rpps: string }) {
 					size="lg"
 					isPending={start.isPending || start.isSuccess}
 					pendingLabel={t("pending")}
-					onPress={() => start.mutate({ rpps })}
+					onPress={() => start.mutate({ ref: reference })}
 				>
 					{t("start.confirm")}
 				</Button>

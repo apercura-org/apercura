@@ -1,3 +1,4 @@
+import at from "../../messages/at.json";
 import de from "../../messages/de.json";
 import en from "../../messages/en.json";
 import es from "../../messages/es.json";
@@ -23,7 +24,7 @@ export function mergeMessages(base: Tree, override: Tree): Tree {
 	return result;
 }
 
-const CATALOGS: Record<Locale, unknown> = { fr, en, de, es, it };
+const CATALOGS: Record<Exclude<Locale, "de-AT">, unknown> = { fr, en, de, es, it };
 
 const merged = new Map<Locale, Messages>();
 
@@ -35,8 +36,15 @@ export function messagesFor(locale: Locale): Messages {
 	if (locale === "en") return en;
 	let found = merged.get(locale);
 	if (!found) {
-		found = mergeMessages(en, CATALOGS[locale] as Tree) as Messages;
+		found =
+			locale === "de-AT"
+				? // Austria: the German catalog, with the Austrian overrides on top.
+					(mergeMessages(messagesFor("de") as Tree, at as Tree) as Messages)
+				: (mergeMessages(en, CATALOGS[locale] as Tree) as Messages);
 		merged.set(locale, found);
 	}
 	return found;
 }
+
+/** The Austrian overrides of the German catalog (`messages/at.json`), for tests. */
+export const AUSTRIAN_OVERRIDES: unknown = at;

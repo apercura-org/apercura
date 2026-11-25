@@ -1,4 +1,4 @@
-import type { Locale } from "~/i18n/locales";
+import { type Locale, MARKET_LOCALES } from "~/i18n/locales";
 
 /**
  * The countries the international home lists (docs/adr/0002-multi-country.md). An open market
@@ -18,6 +18,7 @@ export type Market =
 
 export const MARKETS: readonly Market[] = [
 	{ country: "FR", status: "open", locale: "fr" },
+	{ country: "AT", status: "open", locale: MARKET_LOCALES.AT },
 	{ country: "BE", status: "planned" },
 	{ country: "DE", status: "planned" },
 	{ country: "ES", status: "planned" },

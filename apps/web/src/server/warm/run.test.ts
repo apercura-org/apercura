@@ -1,12 +1,12 @@
 import { describe, expect, it } from "vitest";
-import type { SitemapChunk, SitemapKind } from "~/server/queries/sitemap-sql";
+import type { SitemapChunk, SitemapKind, SitemapMarket } from "~/server/queries/sitemap-sql";
 import { pagesPaths } from "./plan";
 import { runWarm, type WarmDeps } from "./run";
 import type { CursorRow, WarmStore } from "./store";
 
 const CHUNKS: SitemapChunk[] = [
-	{ kind: "listes", chunk: 0, lastmod: "2026-11-25", urls: 3 },
-	{ kind: "praticiens", chunk: 0, lastmod: "2026-11-25", urls: 5 },
+	{ market: "fr", kind: "listes", chunk: 0, lastmod: "2026-11-25", urls: 3 },
+	{ market: "fr", kind: "praticiens", chunk: 0, lastmod: "2026-11-25", urls: 5 },
 ];
 const ENTRIES: Record<string, string[]> = {
 	"listes-0": ["/medecin-generaliste", "/sage-femme", "/infirmier"],
@@ -58,7 +58,8 @@ function memoryStore(importRun = 1) {
 		},
 		lastImportRun: async () => state.importRun,
 		chunks: async () => CHUNKS,
-		entries: async (kind: SitemapKind, chunk: number) => ENTRIES[`${kind}-${chunk}`] ?? [],
+		entries: async (_market: SitemapMarket, kind: SitemapKind, chunk: number) =>
+			ENTRIES[`${kind}-${chunk}`] ?? [],
 	};
 	return { store, state };
 }

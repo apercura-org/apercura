@@ -8,6 +8,7 @@ import {
 	type SitemapChunk,
 	type SitemapEntry,
 	type SitemapKind,
+	type SitemapMarket,
 	selectSitemapChunks,
 	selectSitemapEntries,
 } from "./sitemap-sql";
@@ -30,9 +31,11 @@ const SITEMAP_CACHE_LIFE = { stale: 300, revalidate: 300, expire: 3600 };
 export {
 	SITEMAP_CHUNK,
 	SITEMAP_KINDS,
+	SITEMAP_MARKETS,
 	type SitemapChunk,
 	type SitemapEntry,
 	type SitemapKind,
+	type SitemapMarket,
 } from "./sitemap-sql";
 
 const tagsOf = (kind: SitemapKind) =>
@@ -50,10 +53,14 @@ export async function getSitemapChunks(): Promise<SitemapChunk[]> {
 	return selectSitemapChunks(getSql());
 }
 
-/** The URLs of one chunk, ordered by id. */
-export async function getSitemapEntries(kind: SitemapKind, chunk: number): Promise<SitemapEntry[]> {
+/** The URLs of one chunk of a market, ordered by id. */
+export async function getSitemapEntries(
+	market: SitemapMarket,
+	kind: SitemapKind,
+	chunk: number,
+): Promise<SitemapEntry[]> {
 	"use cache";
 	cacheLife(SITEMAP_CACHE_LIFE);
 	cacheTag(cacheTags.sitemap, ...tagsOf(kind));
-	return selectSitemapEntries(getSql(), kind, chunk);
+	return selectSitemapEntries(getSql(), market, kind, chunk);
 }

@@ -7,12 +7,14 @@ import {
 	LegalFactRow,
 	ProseSection,
 } from "~/components/institutional";
+import { PrivacyAt } from "~/components/legal-at";
 import { PageGraph } from "~/components/page-graph";
 import { PublicPage } from "~/components/public-page";
 import { Trail } from "~/components/trail";
 import { serverEnv } from "~/env";
+import { marketOf } from "~/i18n/locales";
 import { getPathname } from "~/i18n/navigation";
-import { institutionalMetadata, localeOf, proseSections } from "~/lib/institutional";
+import { localeOf, marketInstitutionalMetadata, proseSections } from "~/lib/institutional";
 import { LEGAL_TEXTS_REVIEWED, type LegalValue, legalFacts, transfersSection } from "~/lib/legal";
 import { LINKS } from "~/lib/links";
 
@@ -21,7 +23,7 @@ export const ensureStatic = "navigation";
 const HREF = "/confidentialite" as const;
 
 export function generateMetadata({ params }: PageProps<"/[locale]/confidentialite">) {
-	return institutionalMetadata(params, "PrivacyPage", HREF);
+	return marketInstitutionalMetadata(params, { FR: "PrivacyPage", AT: "PrivacyAt" }, HREF);
 }
 
 /**
@@ -32,6 +34,8 @@ export function generateMetadata({ params }: PageProps<"/[locale]/confidentialit
 export default async function PrivacyPage({ params }: PageProps<"/[locale]/confidentialite">) {
 	const locale = await localeOf(params);
 	setRequestLocale(locale);
+	// Austria's page has texts of its own, written for Austrian law.
+	if (marketOf(locale) === "AT") return <PrivacyAt locale={locale} />;
 	const t = await getTranslations({ locale, namespace: "PrivacyPage" });
 	const tSite = await getTranslations({ locale, namespace: "Site" });
 	const tI = await getTranslations({ locale, namespace: "Institutional" });

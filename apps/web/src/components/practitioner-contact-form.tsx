@@ -22,7 +22,7 @@ function errorKey(error: { message?: string; data?: { code?: string } | null } |
  * the RPPS is the page's, printed read-only. An ALTCHA proof of work (self-hosted) is solved
  * while the person types. Stored encrypted; the team answers by email.
  */
-export function PractitionerContactForm({ rpps }: { rpps: string }) {
+export function PractitionerContactForm({ reference }: { reference: string }) {
 	const t = useTranslations("Gdpr.contact");
 	const tCommon = useTranslations("Gdpr");
 	const locale = useLocale();
@@ -61,7 +61,7 @@ export function PractitionerContactForm({ rpps }: { rpps: string }) {
 			return;
 		}
 		submit.mutate({
-			rpps,
+			ref: reference,
 			name,
 			email,
 			phone: phone.trim() || null,
@@ -87,7 +87,7 @@ export function PractitionerContactForm({ rpps }: { rpps: string }) {
 			<TextField
 				label={t("rpps")}
 				description={t("rppsHint")}
-				value={rpps}
+				value={reference}
 				isReadOnly
 				inputClassName="tabular"
 			/>

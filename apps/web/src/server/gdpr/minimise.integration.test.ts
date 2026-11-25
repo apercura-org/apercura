@@ -213,13 +213,13 @@ describe.skipIf(!url)("minimisation of removed practitioners (database)", async 
 		expect(await count(`directory.landing_pages WHERE key = '${key}'`)).toBe(1);
 
 		const request = await gdpr.requestRemoval(db, {
-			rpps: page.rpps,
+			ref: page.rpps,
 			contact: "objection@example.test",
 			message: "Je ne souhaite pas apparaître.",
 			locale: "fr",
 		});
 		const second = await gdpr.requestRemoval(db, {
-			rpps: page.rpps,
+			ref: page.rpps,
 			contact: "again@example.test",
 			message: null,
 			locale: "fr",

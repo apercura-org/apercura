@@ -1,14 +1,14 @@
 /**
  * Everything that differs from one country market to the next, behind one
- * interface. France is the only implementation in v1; docs/adr/0002-multi-country.md
- * lists what is known about Germany, the United Kingdom, Spain and Italy.
+ * interface. France and Austria are implemented; docs/adr/0002-multi-country.md
+ * lists what is known about every other European market.
  *
  * Adapters are pure data and pure functions: no network, no database. Imports
  * (`packages/etl/sources/{country}`) and the web app read them.
  */
 
 /** ISO 3166-1 alpha-2 codes of the markets the data model is prepared for. */
-export const COUNTRY_CODES = ["FR", "DE", "GB", "ES", "IT"] as const;
+export const COUNTRY_CODES = ["FR", "AT", "DE", "GB", "ES", "IT"] as const;
 
 export type CountryCode = (typeof COUNTRY_CODES)[number];
 
@@ -32,8 +32,21 @@ export interface RegistrySource {
 	readonly url: string;
 	/** Licence of the published data. */
 	readonly licence: string;
+	/** The licence text, when it has a canonical URL. */
+	readonly licenceUrl?: string;
+	/**
+	 * The attribution the licence requires, word for word as the publisher asks
+	 * for it (CC BY 4.0 sources). Printed on the data sources page.
+	 */
+	readonly attribution?: string;
 	/** What the source provides to the directory. */
-	readonly provides: readonly ("practitioners" | "activities" | "establishments" | "billing")[];
+	readonly provides: readonly (
+		| "practitioners"
+		| "activities"
+		| "establishments"
+		| "billing"
+		| "places"
+	)[];
 }
 
 export interface PhoneFormat {
@@ -101,20 +114,26 @@ export interface CountryFeatures {
 
 export interface CountryAdapter {
 	readonly code: CountryCode;
-	/** Interface locale of the market's domain (its default language). */
+	/** First path segment of the market's pages on apercura.org (`fr`, `at`). */
+	readonly segment: string;
+	/** Language of the market's pages (ISO 639-1). */
 	readonly defaultLocale: string;
 	/** Default IANA time zone. */
 	readonly defaultTimeZone: string;
 	/** Every IANA time zone a practice of the market can be in. */
 	readonly timeZones: readonly string[];
 	/**
-	 * Time zone of a region code of the registry (a French department code).
-	 * Throws on an unknown code rather than guessing.
+	 * Time zone of a region code of the registry (a French department code, an
+	 * Austrian Bundesland number). Throws on an unknown code rather than guessing.
 	 */
 	timeZoneOf(regionCode: string): string;
 	readonly registries: readonly RegistrySource[];
-	/** Identifier of a practitioner in the national registry. */
-	readonly practitionerId: IdentifierScheme;
+	/**
+	 * Identifiers of practitioners in the market's sources: one national number
+	 * (RPPS in France), or one key per regional list where no national number is
+	 * published (Austria).
+	 */
+	readonly practitionerIds: readonly IdentifierScheme[];
 	readonly taxonomy: TaxonomyAdapter;
 	readonly phone: PhoneFormat;
 	readonly address: AddressFormat;

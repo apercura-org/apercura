@@ -13,6 +13,7 @@ import {
 import { useMutation } from "@tanstack/react-query";
 import { useLocale, useTranslations } from "next-intl";
 import { type FormEvent, useState } from "react";
+import { marketOf, toLocale } from "~/i18n/locales";
 import { useTRPC } from "~/trpc/client";
 
 const KINDS = ["wrong_info", "retired", "deceased", "impersonation"] as const;
@@ -26,18 +27,24 @@ function errorKey(error: { message?: string; data?: { code?: string } | null } |
 	return "generic";
 }
 
-/** RPPS field for the forms of /donnees, where no page is selected yet. */
+/**
+ * The page's identifier, for the forms of the data page, where no page is selected yet: an RPPS
+ * in France (11 digits), the key at the end of the page address in Austria (`w7983`, or the
+ * address itself).
+ */
 function RppsField({ value, onChange }: { value: string; onChange: (value: string) => void }) {
 	const t = useTranslations("Gdpr");
+	const locale = useLocale();
+	const french = marketOf(toLocale(locale)) === "FR";
 	return (
 		<TextField
 			label={t("rpps")}
 			description={t("rppsHint")}
 			value={value}
 			onChange={onChange}
-			inputMode="numeric"
-			pattern="\d{11}"
-			maxLength={11}
+			inputMode={french ? "numeric" : "text"}
+			pattern={french ? "\\d{11}" : undefined}
+			maxLength={french ? 11 : 300}
 			isRequired
 			autoComplete="off"
 			inputClassName="tabular"
@@ -46,7 +53,7 @@ function RppsField({ value, onChange }: { value: string; onChange: (value: strin
 }
 
 /** "Report an error": wrong information, retired, deceased, impersonation. Stored encrypted. */
-export function ReportForm({ rpps: fixedRpps }: { rpps?: string }) {
+export function ReportForm({ reference: fixedRpps }: { reference?: string }) {
 	const t = useTranslations("Gdpr.report");
 	const tCommon = useTranslations("Gdpr");
 	const trpc = useTRPC();
@@ -66,7 +73,7 @@ export function ReportForm({ rpps: fixedRpps }: { rpps?: string }) {
 	const onSubmit = (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 		report.mutate({
-			rpps: rpps.trim() || null,
+			ref: rpps.trim() || null,
 			kind,
 			message,
 			contact: contact.trim() || null,
@@ -126,7 +133,7 @@ export function ReportForm({ rpps: fixedRpps }: { rpps?: string }) {
  * GDPR art. 21 objection. An unclaimed page is hidden as soon as the request
  * is received, then deleted once an administrator has checked it.
  */
-export function RemovalForm({ rpps: fixedRpps }: { rpps?: string }) {
+export function RemovalForm({ reference: fixedRpps }: { reference?: string }) {
 	const t = useTranslations("Gdpr.removal");
 	const tCommon = useTranslations("Gdpr");
 	const locale = useLocale();
@@ -148,7 +155,7 @@ export function RemovalForm({ rpps: fixedRpps }: { rpps?: string }) {
 		event.preventDefault();
 		if (!confirmed) return;
 		request.mutate({
-			rpps: rpps.trim(),
+			ref: rpps.trim(),
 			contact,
 			message: message.trim() || undefined,
 			isPractitioner: true,

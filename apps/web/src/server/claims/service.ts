@@ -9,8 +9,8 @@ import {
 	type ClaimSubject,
 	canApprove,
 	canSubmitForReview,
+	claimPolicyOf,
 	formatPhoneFr,
-	isValidRpps,
 	type MethodOptions,
 	pscMatchesRpps,
 	registryEmails,
@@ -31,6 +31,7 @@ import {
 	user,
 } from "@apercura/db/schema";
 import { and, desc, eq, inArray, isNull, ne, sql } from "drizzle-orm";
+import { parsePractitionerRef } from "~/lib/practitioner-ref";
 import { recordAudit } from "../audit";
 import { revokeOrganizationFeeds } from "../booking/feeds";
 import {
@@ -43,6 +44,7 @@ import {
 	sealBytes,
 	verifyOtp,
 } from "../crypto/platform";
+import { practitionerWhere } from "../practitioner-ref";
 import type { StorageDriver } from "../storage";
 
 export type Tx = Parameters<Parameters<Database["transaction"]>[0]>[0];
@@ -99,6 +101,9 @@ export function sniffDocumentType(bytes: Uint8Array): (typeof DOCUMENT_TYPES)[nu
 
 export type PractitionerSummary = {
 	id: number;
+	/** Market of the practitioner: its claim policy (`claimPolicyOf`) applies. */
+	country: string;
+	idScheme: string;
 	nationalId: string;
 	slug: string;
 	titleCode: string | null;
@@ -117,6 +122,8 @@ export type PractitionerSummary = {
 
 const practitionerColumns = {
 	id: practitioners.id,
+	country: practitioners.country,
+	idScheme: practitioners.idScheme,
 	nationalId: practitioners.nationalId,
 	slug: practitioners.slug,
 	titleCode: practitioners.titleCode,
@@ -133,19 +140,14 @@ const practitionerColumns = {
 	carteVitale: practitioners.carteVitale,
 };
 
-export async function findPractitionerByRpps(db: Db, rpps: string) {
-	if (!isValidRpps(rpps)) return null;
-	const [row] = await db
-		.select(practitionerColumns)
-		.from(practitioners)
-		.where(
-			and(
-				eq(practitioners.country, "FR"),
-				eq(practitioners.idScheme, "RPPS"),
-				eq(practitioners.nationalId, rpps),
-			),
-		)
-		.limit(1);
+/**
+ * The practitioner a reference designates: an RPPS in France, the list letters and number in
+ * Austria (`w7983`), see `lib/practitioner-ref`.
+ */
+export async function findPractitionerByRef(db: Db, ref: string) {
+	const where = practitionerWhere(ref);
+	if (!where) return null;
+	const [row] = await db.select(practitionerColumns).from(practitioners).where(where).limit(1);
 	return row ?? null;
 }
 
@@ -155,8 +157,14 @@ export type SubjectSite = ClaimSubject["activities"][number] & {
 	place: string | null;
 };
 
-/** Registry contacts of a practitioner's current activities (for the methods). */
-export async function claimSubject(db: Db, practitioner: { id: number; nationalId: string }) {
+/**
+ * Registry contacts of a practitioner's current activities (for the methods): every imported
+ * activity, never one the owner added.
+ */
+export async function claimSubject(
+	db: Db,
+	practitioner: { id: number; country: string; nationalId: string },
+) {
 	const rows = [
 		...(await db.execute<SubjectSite>(sql`
 			SELECT a.practice_kind AS "practiceKind", s.email, s.phone, s.phone_kind AS "phoneKind",
@@ -165,11 +173,16 @@ export async function claimSubject(db: Db, practitioner: { id: number; nationalI
 			FROM directory.activities a
 			JOIN directory.sites s ON s.id = a.site_id AND s.removed_at IS NULL
 			LEFT JOIN directory.places pl ON pl.id = s.place_id
-			WHERE a.practitioner_id = ${practitioner.id} AND a.removed_at IS NULL AND a.source = 'ans'
+			WHERE a.practitioner_id = ${practitioner.id} AND a.removed_at IS NULL
+				AND a.source <> 'owner'
 			ORDER BY a.is_primary DESC, a.id
 		`)),
 	];
-	const subject: ClaimSubject = { rpps: practitioner.nationalId, activities: rows };
+	const subject: ClaimSubject = {
+		country: practitioner.country,
+		rpps: practitioner.nationalId,
+		activities: rows,
+	};
 	return { subject, sites: rows };
 }
 
@@ -313,15 +326,16 @@ async function assertNotFrozen(db: Db, userId: string) {
 }
 
 /**
- * Opens (or returns) the caller's claim on an RPPS. A page that already has a
+ * Opens (or returns) the caller's claim on a practitioner reference (an RPPS in France, `w7983`
+ * in Austria). A page that already has a
  * verified owner opens a contest, which an administrator decides; this is
  * also how a practitioner who lost access to their account recovers it.
  */
-export async function startClaim(db: Database, userId: string, rpps: string) {
-	if (!isValidRpps(rpps)) throw new ClaimError("INVALID_RPPS");
+export async function startClaim(db: Database, userId: string, ref: string) {
+	if (!parsePractitionerRef(ref)) throw new ClaimError("INVALID_RPPS");
 	await assertNotFrozen(db, userId);
 	return db.transaction(async (tx) => {
-		const practitioner = await findPractitionerByRpps(tx, rpps);
+		const practitioner = await findPractitionerByRef(tx, ref);
 		if (practitioner?.status !== "active") throw new ClaimError("NOT_FOUND");
 		const incumbent = await verifiedClaimOf(tx, practitioner.id);
 		if (incumbent?.userId === userId) throw new ClaimError("ALREADY_OWNER");
@@ -363,6 +377,13 @@ async function upsertCheck(
 		});
 }
 
+/** Refuses a method the practitioner's market does not offer (Pro Santé Connect in Austria…). */
+function assertOffered(practitioner: { country: string }, method: VerificationMethodId) {
+	if (!claimPolicyOf(practitioner.country).methods.includes(method)) {
+		throw new ClaimError("METHOD_UNAVAILABLE");
+	}
+}
+
 function assertOpen(claim: { status: string }) {
 	if (claim.status !== "open" && claim.status !== "in_review") throw new ClaimError("NOT_OPEN");
 }
@@ -389,6 +410,7 @@ export async function prepareRegistryEmail(
 	const claim = await ownClaim(db, claimId, userId);
 	assertOpen(claim);
 	const { practitioner, subject } = await subjectOf(db, claim.practitionerId);
+	assertOffered(practitioner, "registry_email");
 	const to = registryEmails(subject);
 	if (to.length === 0) throw new ClaimError("METHOD_UNAVAILABLE");
 	const [existing] = await db
@@ -450,9 +472,10 @@ export async function recordPscResult(db: Database, claimId: string, userId: str
 	const claim = await ownClaim(db, claimId, userId);
 	assertOpen(claim);
 	const [practitioner] = await db
-		.select({ nationalId: practitioners.nationalId })
+		.select({ country: practitioners.country, nationalId: practitioners.nationalId })
 		.from(practitioners)
 		.where(eq(practitioners.id, claim.practitionerId));
+	if (practitioner) assertOffered(practitioner, "psc");
 	const [linked] = await db
 		.select({ accountId: account.accountId })
 		.from(account)
@@ -481,6 +504,11 @@ export async function addClaimDocument(
 ) {
 	const claim = await ownClaim(db, input.claimId, input.userId);
 	if (claim.status !== "open") throw new ClaimError("NOT_OPEN");
+	const [owner] = await db
+		.select({ country: practitioners.country })
+		.from(practitioners)
+		.where(eq(practitioners.id, claim.practitionerId));
+	if (owner) assertOffered(owner, "document");
 	if (input.bytes.byteLength === 0 || input.bytes.byteLength > MAX_DOCUMENT_BYTES) {
 		throw new ClaimError("BAD_DOCUMENT");
 	}
@@ -514,7 +542,8 @@ export async function addClaimDocument(
 export async function issuePhoneCode(db: Database, claimId: string, userId: string) {
 	const claim = await ownClaim(db, claimId, userId);
 	assertOpen(claim);
-	const { subject } = await subjectOf(db, claim.practitionerId);
+	const { practitioner, subject } = await subjectOf(db, claim.practitionerId);
+	assertOffered(practitioner, "phone_callback");
 	if (registryPhones(subject).length === 0) throw new ClaimError("METHOD_UNAVAILABLE");
 	const [existing] = await db
 		.select({ status: claimChecks.status })
@@ -618,6 +647,7 @@ async function approveInTx(
 	const [practitioner] = await tx
 		.select({
 			id: practitioners.id,
+			country: practitioners.country,
 			owner_org_id: practitioners.ownerOrgId,
 			first_name: practitioners.firstName,
 			last_name: practitioners.lastName,
@@ -634,10 +664,16 @@ async function approveInTx(
 	const incumbent = await verifiedClaimOf(tx, practitioner.id);
 	if (decidedBy === null) {
 		// Automatic decision: never a contest.
-		if (incumbent || assessClaim(summary, false).kind !== "verified") {
+		if (incumbent || assessClaim(summary, false, practitioner.country).kind !== "verified") {
 			throw new ClaimError("NOT_APPROVABLE");
 		}
-	} else if (!canApprove(summary, incumbent ? { incumbentViaPsc: incumbent.viaPsc } : null)) {
+	} else if (
+		!canApprove(
+			summary,
+			incumbent ? { incumbentViaPsc: incumbent.viaPsc } : null,
+			practitioner.country,
+		)
+	) {
 		throw new ClaimError("NOT_APPROVABLE");
 	}
 	const now = new Date();
@@ -746,7 +782,11 @@ export async function evaluateClaim(db: Database, claimId: string): Promise<Appr
 		if (!claim || (claim.status !== "open" && claim.status !== "in_review")) return null;
 		const incumbent = await verifiedClaimOf(tx, claim.practitionerId);
 		const summary = summarize(await checksOf(tx, claimId));
-		const assessment = assessClaim(summary, incumbent !== null);
+		const [practitioner] = await tx
+			.select({ country: practitioners.country })
+			.from(practitioners)
+			.where(eq(practitioners.id, claim.practitionerId));
+		const assessment = assessClaim(summary, incumbent !== null, practitioner?.country);
 		if (assessment.kind === "verified") return approveInTx(tx, claimId, null, null);
 		if (assessment.kind === "reviewable" && incumbent && claim.status === "open") {
 			await tx
@@ -827,7 +867,8 @@ export async function verifyPhoneCallback(
 		const claim = await loadClaim(tx, input.claimId);
 		if (!claim) throw new ClaimError("NOT_FOUND");
 		assertOpen(claim);
-		const { subject } = await subjectOf(tx, claim.practitionerId);
+		const { practitioner, subject } = await subjectOf(tx, claim.practitionerId);
+		assertOffered(practitioner, "phone_callback");
 		if (!registryPhones(subject).includes(input.phone)) throw new ClaimError("METHOD_UNAVAILABLE");
 		const [check] = await tx
 			.select({
@@ -881,6 +922,8 @@ export async function adminClaimQueue(db: Database) {
 			submittedAt: Date | null;
 			createdAt: Date;
 			practitionerId: number;
+			country: string;
+			idScheme: string;
 			nationalId: string;
 			titleCode: string | null;
 			firstName: string;
@@ -890,7 +933,8 @@ export async function adminClaimQueue(db: Database) {
 		}[]
 	>`
 		SELECT c.id, c.status, c.contest, c.submitted_at AS "submittedAt", c.created_at AS "createdAt",
-			p.id AS "practitionerId", p.national_id AS "nationalId", p.title_code AS "titleCode",
+			p.id AS "practitionerId", p.country, p.id_scheme AS "idScheme",
+			p.national_id AS "nationalId", p.title_code AS "titleCode",
 			p.first_name AS "firstName", p.last_name AS "lastName", u.email,
 			(SELECT jsonb_object_agg(k.method, k.status) FROM directory.claim_checks k
 				WHERE k.claim_id = c.id) AS methods
@@ -946,6 +990,7 @@ export async function adminClaimDetail(db: Database, claimId: string, options: M
 			canApprove(
 				{ ...summary, document: summary.document === "pending" ? "passed" : summary.document },
 				incumbent ? { incumbentViaPsc: incumbent.viaPsc } : null,
+				practitioner.country,
 			),
 	};
 }

@@ -44,13 +44,21 @@ export const meta = directory.table("meta", {
 // Places (import-owned)
 // ---------------------------------------------------------------------------
 
-/** Regions, departments, communes and municipal arrondissements (Paris, Lyon, Marseille). */
+/**
+ * Places of every market, each in the four kinds the listings use. France:
+ * regions, departments, communes and the municipal arrondissements of Paris,
+ * Lyon and Marseille (INSEE codes). Austria: Bundesländer as departments,
+ * Gemeinden as communes and the 23 districts of Vienna as arrondissements of
+ * the Gemeinde Wien (Statistik Austria codes); no regions.
+ */
 export const places = directory.table(
 	"places",
 	{
 		id: integer().primaryKey().generatedAlwaysAsIdentity(),
+		/** ISO 3166-1 alpha-2 code of the market. Codes and slugs are unique within it. */
+		country: text().notNull().default("FR"),
 		kind: text().notNull(),
-		/** INSEE code of the commune or arrondissement, department or region code. */
+		/** Official code within the country: INSEE (France), Statistik Austria (Austria). */
 		code: text().notNull(),
 		name: text().notNull(),
 		/** Stored once, never recomputed (a rename keeps the old slug as an alias). */
@@ -70,12 +78,12 @@ export const places = directory.table(
 		updatedAt: updatedAt(),
 	},
 	(table) => [
-		uniqueIndex("places_kind_code_uq").on(table.kind, table.code),
+		uniqueIndex("places_kind_code_uq").on(table.country, table.kind, table.code),
 		uniqueIndex("places_top_slug_uq")
-			.on(table.slug)
+			.on(table.country, table.slug)
 			.where(sql`${table.kind} in ('region', 'department')`),
 		uniqueIndex("places_local_slug_uq")
-			.on(table.departmentCode, table.slug)
+			.on(table.country, table.departmentCode, table.slug)
 			.where(sql`${table.kind} in ('commune', 'arrondissement')`),
 		index("places_parent_idx").on(table.parentId),
 		index("places_postcodes_idx").using("gin", table.postcodes),
@@ -95,13 +103,17 @@ export const placeSlugAliases = directory.table(
 		placeId: integer()
 			.notNull()
 			.references(() => places.id, { onDelete: "cascade" }),
+		/** Market of the place. */
+		country: text().notNull().default("FR"),
 		/** Department scope of the slug; null for regions and departments. */
 		departmentCode: text(),
 		slug: text().notNull(),
 		createdAt: createdAt(),
 	},
 	(table) => [
-		unique("place_slug_aliases_uq").on(table.departmentCode, table.slug).nullsNotDistinct(),
+		unique("place_slug_aliases_uq")
+			.on(table.country, table.departmentCode, table.slug)
+			.nullsNotDistinct(),
 	],
 );
 
@@ -487,6 +499,8 @@ export const practitionerPages = directory.table(
 		practitionerId: integer()
 			.primaryKey()
 			.references(() => practitioners.id, { onDelete: "cascade" }),
+		/** Market of the practitioner (`practitioners.country`). */
+		country: text().notNull().default("FR"),
 		slug: text().notNull(),
 		listingSlug: text(),
 		departmentCode: text(),
@@ -499,16 +513,21 @@ export const practitionerPages = directory.table(
 		index("practitioner_pages_sitemap_idx")
 			.on(table.departmentCode, table.practitionerId)
 			.where(sql`${table.indexable}`),
+		index("practitioner_pages_country_idx")
+			.on(table.country, table.practitionerId)
+			.where(sql`${table.indexable}`),
 	],
 );
 
-/** Listing pages: specialty x (France | department | commune | arrondissement). */
+/** Listing pages: specialty x (country | department | commune | arrondissement). */
 export const landingPages = directory.table(
 	"landing_pages",
 	{
 		id: integer().primaryKey().generatedAlwaysAsIdentity(),
-		/** `{listing slug}:{place id | fr}`. */
+		/** `{listing slug}:{place id | lowercase country}` (`kardiologie:at`, `cardiologue:fr`). */
 		key: text().notNull(),
+		/** Market of the listing. */
+		country: text().notNull().default("FR"),
 		listingSlug: text().notNull(),
 		placeId: integer().references(() => places.id, { onDelete: "cascade" }),
 		practitionerCount: integer().notNull(),
@@ -520,6 +539,7 @@ export const landingPages = directory.table(
 	(table) => [
 		uniqueIndex("landing_pages_key_uq").on(table.key),
 		index("landing_pages_sitemap_idx").on(table.id).where(sql`${table.indexable}`),
+		index("landing_pages_country_idx").on(table.country, table.id).where(sql`${table.indexable}`),
 	],
 );
 
@@ -530,6 +550,8 @@ export const searchDocs = directory.table(
 		practitionerId: integer()
 			.primaryKey()
 			.references(() => practitioners.id, { onDelete: "cascade" }),
+		/** Market of the practitioner: a search never mixes two markets. */
+		country: text().notNull().default("FR"),
 		nameNorm: text().notNull(),
 		listingSlug: text(),
 		placeIds: integer().array().notNull().default(sql`'{}'::integer[]`),

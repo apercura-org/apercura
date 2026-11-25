@@ -1,6 +1,7 @@
 import "server-only";
 
 import { cacheLife, cacheTag } from "next/cache";
+import { NOT_DEPARTMENT_CITY } from "~/lib/places";
 import { label } from "~/lib/practitioner-view";
 import { cacheTags } from "../cache-tags";
 import { getSql, hasDatabaseUrl } from "../db";
@@ -18,8 +19,11 @@ export type RegionGroup = { code: string; name: string; departments: PlaceCount[
 
 export type DirectoryIndex = { available: boolean; regions: RegionGroup[] };
 
-/** Departments with at least one practitioner, grouped by region. */
-export async function getDirectoryIndex(): Promise<DirectoryIndex> {
+/**
+ * Departments of a market with at least one practitioner, grouped by region.
+ * Austria has no regions: its Bundesländer come in one group without a name.
+ */
+export async function getDirectoryIndex(country = "FR"): Promise<DirectoryIndex> {
 	"use cache";
 	cacheTag(cacheTags.coarse.listing, cacheTags.coarse.place);
 	if (!hasDatabaseUrl()) {
@@ -33,7 +37,9 @@ export async function getDirectoryIndex(): Promise<DirectoryIndex> {
 			coalesce(r.code, '') AS "regionCode", coalesce(r.name, '') AS "regionName"
 		FROM directory.landing_pages lp
 		JOIN directory.places d ON d.id = lp.place_id AND d.kind = 'department'
-		LEFT JOIN directory.places r ON r.kind = 'region' AND r.code = d.region_code
+			AND d.country = ${country}
+		LEFT JOIN directory.places r ON r.country = d.country AND r.kind = 'region'
+			AND r.code = d.region_code
 		GROUP BY d.id, r.code, r.name
 		ORDER BY r.name, d.code
 	`;
@@ -59,8 +65,12 @@ export type PlaceHub = {
 	establishments: EstablishmentCount[];
 };
 
-/** What a place hub lists: specialties present, sub-places and establishments. */
-export async function getPlaceHub(place: PlaceRef, isCity: boolean): Promise<PlaceHub> {
+/** What a place hub of a market lists: specialties present, sub-places and establishments. */
+export async function getPlaceHub(
+	country: string,
+	place: PlaceRef,
+	isCity: boolean,
+): Promise<PlaceHub> {
 	"use cache";
 	cacheLife("weeks");
 	cacheTag(cacheTags.coarse.listing, cacheTags.place(place.id));
@@ -82,9 +92,10 @@ export async function getPlaceHub(place: PlaceRef, isCity: boolean): Promise<Pla
 					FROM directory.landing_pages lp
 					JOIN directory.places p ON p.id = lp.place_id
 					LEFT JOIN directory.places parent ON parent.id = p.parent_id
-					WHERE p.department_code = ${place.code}
-						AND (p.kind = 'commune' OR (p.kind = 'arrondissement' AND parent.code = '75056'))
-						AND p.code <> '75056'
+					WHERE p.country = ${country} AND p.department_code = ${place.code}
+						AND (p.kind = 'commune' OR (p.kind = 'arrondissement'
+							AND NOT (${sql.unsafe(NOT_DEPARTMENT_CITY("parent"))})))
+						AND ${sql.unsafe(NOT_DEPARTMENT_CITY("p"))}
 					GROUP BY p.id
 					ORDER BY sum(lp.practitioner_count) DESC, p.name, p.id
 				`
@@ -111,7 +122,7 @@ export async function getPlaceHub(place: PlaceRef, isCity: boolean): Promise<Pla
 		JOIN directory.practitioners p ON p.id = a.practitioner_id AND p.indexable
 		WHERE s.slug IS NOT NULL AND s.removed_at IS NULL
 			AND (s.place_id = ${place.id} OR (${isCity} AND pl.parent_id = ${place.id})
-				OR pl.department_code = ${departmentCode})
+				OR (pl.department_code = ${departmentCode} AND pl.country = ${country}))
 		GROUP BY s.slug, coalesce(s.finess_name, s.name)
 		ORDER BY count(DISTINCT p.id) DESC, 2, 1
 		LIMIT 24
@@ -127,14 +138,59 @@ export async function getPlaceHub(place: PlaceRef, isCity: boolean): Promise<Pla
 	};
 }
 
-/** Department slugs prerendered at build time. */
-export async function sampleDepartmentSlugs(limit: number): Promise<string[]> {
+/** Department slugs of a market prerendered at build time. */
+export async function sampleDepartmentSlugs(limit: number, country = "FR"): Promise<string[]> {
 	const rows = await getSql()<{ slug: string }[]>`
 		SELECT d.slug FROM directory.landing_pages lp
 		JOIN directory.places d ON d.id = lp.place_id AND d.kind = 'department'
+			AND d.country = ${country}
 		GROUP BY d.slug
 		ORDER BY sum(lp.practitioner_count) DESC, d.slug
 		LIMIT ${limit}
 	`;
 	return rows.map((row) => row.slug);
+}
+
+export type MarketOverview = {
+	available: boolean;
+	/** Practitioners with an indexable page, by profession code. */
+	professions: { professionCode: string; practitionerCount: number }[];
+	/** The market's largest specialty listings (market-wide pages). */
+	listings: ListingCount[];
+	/** Date (YYYY-MM-DD, UTC) of the latest page change, the figures' date. */
+	updatedAt: string | null;
+};
+
+/**
+ * What a market's home shows of its directory: how many practitioners have a page, by
+ * profession, and its largest listings. Read from the read models of the market only.
+ */
+export async function getMarketOverview(country: string, limit = 12): Promise<MarketOverview> {
+	"use cache";
+	cacheTag(cacheTags.coarse.listing, cacheTags.coarse.practitioner);
+	if (!hasDatabaseUrl()) {
+		cacheLife("minutes");
+		return { available: false, professions: [], listings: [], updatedAt: null };
+	}
+	cacheLife("days");
+	const sql = getSql();
+	const professions = await sql<{ professionCode: string; practitionerCount: number }[]>`
+		SELECT payload->>'professionCode' AS "professionCode", count(*)::integer AS "practitionerCount"
+		FROM directory.practitioner_pages
+		WHERE indexable AND country = ${country}
+		GROUP BY 1
+		ORDER BY 2 DESC, 1
+	`;
+	const listings = await sql<ListingCount[]>`
+		SELECT listing_slug AS "listingSlug", practitioner_count AS "practitionerCount", indexable
+		FROM directory.landing_pages
+		WHERE place_id IS NULL AND country = ${country} AND indexable
+		ORDER BY practitioner_count DESC, listing_slug
+		LIMIT ${limit}
+	`;
+	const [latest] = await sql<{ updatedAt: string | null }[]>`
+		SELECT to_char(max(content_updated_at) AT TIME ZONE 'UTC', 'YYYY-MM-DD') AS "updatedAt"
+		FROM directory.practitioner_pages WHERE indexable AND country = ${country}
+	`;
+	return { available: true, professions, listings, updatedAt: latest?.updatedAt ?? null };
 }

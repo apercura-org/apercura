@@ -85,10 +85,11 @@ export const ownerSiteSchema = z.object({
 	addressLine: plainText(LIMITS.addressLine).refine((value) => value.length > 0, {
 		message: "required",
 	}),
+	// Five digits in France, four in Austria: the service checks the practitioner's market.
 	postcode: z
 		.string()
 		.trim()
-		.regex(/^\d{5}$/, { message: "postcode" }),
+		.regex(/^\d{4,5}$/, { message: "postcode" }),
 	city: plainText(80).refine((value) => value.length > 0, { message: "required" }),
 	phone: z
 		.string()

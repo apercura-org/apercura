@@ -14,7 +14,7 @@ import {
 	claimsOfUser,
 	confirmRegistryEmail,
 	evaluateClaim,
-	findPractitionerByRpps,
+	findPractitionerByRef,
 	issuePhoneCode,
 	prepareRegistryEmail,
 	recordPscResult,
@@ -23,6 +23,7 @@ import {
 	withdrawClaim,
 } from "~/server/claims/service";
 import { claimDocumentsEnabled, pscConfigured } from "~/server/features";
+import { practitionerRefInput } from "~/server/practitioner-ref";
 import { clientRateLimitKey } from "~/server/rate-limit";
 import { type Context, createTRPCRouter, mfaProcedure, publicProcedure } from "../init";
 import { service } from "./errors";
@@ -34,7 +35,8 @@ export const CLAIM_LIMIT = { max: 3, windowSeconds: 24 * 60 * 60 };
 const LINK_LIMIT = { max: 10, windowSeconds: 60 * 60 };
 
 const claimId = z.object({ claimId: z.uuid() });
-const rpps = z.object({ rpps: z.string().regex(/^\d{11}$/) });
+/** A practitioner reference: an RPPS in France, the list letters and number in Austria (`w7983`). */
+const ref = z.object({ ref: practitionerRefInput });
 
 /**
  * The administrators' alert of a claim that reached their queue (batched: see
@@ -58,20 +60,20 @@ const methodOptions = () => ({
 export const claimsRouter = createTRPCRouter({
 	mine: mfaProcedure.query(({ ctx }) => claimsOfUser(ctx.db(), ctx.user.id)),
 
-	/** The record an RPPS designates, before the claim starts. */
-	preview: mfaProcedure.input(rpps).query(async ({ ctx, input }) => {
-		const practitioner = await findPractitionerByRpps(ctx.db(), input.rpps);
+	/** The record a reference designates, before the claim starts. */
+	preview: mfaProcedure.input(ref).query(async ({ ctx, input }) => {
+		const practitioner = await findPractitionerByRef(ctx.db(), input.ref);
 		if (practitioner?.status !== "active") {
 			throw new TRPCError({ code: "NOT_FOUND" });
 		}
 		return practitioner;
 	}),
 
-	start: mfaProcedure.input(rpps).mutation(async ({ ctx, input }) => {
+	start: mfaProcedure.input(ref).mutation(async ({ ctx, input }) => {
 		if (!(await ctx.rateLimit(`claim:${ctx.user.id}`, CLAIM_LIMIT))) {
 			throw new TRPCError({ code: "TOO_MANY_REQUESTS" });
 		}
-		return service(() => startClaim(ctx.db(), ctx.user.id, input.rpps));
+		return service(() => startClaim(ctx.db(), ctx.user.id, input.ref));
 	}),
 
 	get: mfaProcedure

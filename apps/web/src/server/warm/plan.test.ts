@@ -18,7 +18,13 @@ import {
 	warmUnits,
 } from "./plan";
 
-const chunk = (kind: SitemapChunk["kind"], index: number, urls: number): SitemapChunk => ({
+const chunk = (
+	kind: SitemapChunk["kind"],
+	index: number,
+	urls: number,
+	market: SitemapChunk["market"] = "fr",
+): SitemapChunk => ({
+	market,
 	kind,
 	chunk: index,
 	lastmod: "2026-11-25",
@@ -64,9 +70,39 @@ describe("warm-up units", () => {
 	it("ranks unit keys, and knows none it does not walk", () => {
 		expect(rankOf("pages")).toEqual([0, 0]);
 		expect(rankOf("listes-3")).toEqual([1, 3]);
-		expect(rankOf("praticiens-12")).toEqual([4, 12]);
+		expect(rankOf("at-listes-3")).toEqual([2, 3]);
+		expect(rankOf("praticiens-12")).toEqual([7, 12]);
+		expect(rankOf("at-praticiens-12")).toEqual([8, 12]);
 		expect(rankOf("cabinets-1")).toBeNull();
 		expect(rankOf("praticiens")).toBeNull();
+		expect(rankOf("de-listes-1")).toBeNull();
+	});
+
+	it("walks Austria's chunks beside France's, kind by kind", () => {
+		const chunks = [
+			...CHUNKS,
+			chunk("listes", 0, 120, "at"),
+			chunk("lieux", 0, 40, "at"),
+			chunk("praticiens", 0, 9000, "at"),
+		];
+		expect(warmUnits(chunks).map((unit) => unit.key)).toEqual([
+			"pages",
+			"listes-0",
+			"at-listes-0",
+			"lieux-0",
+			"at-lieux-0",
+			"etablissements-0",
+			"praticiens-0",
+			"praticiens-2",
+			"at-praticiens-0",
+		]);
+		const paths = pagesPaths(chunks);
+		expect(paths).toContain("/at");
+		expect(paths).toContain("/at/verzeichnis");
+		expect(paths).toContain("/at/impressum");
+		expect(paths).not.toContain("/at/pro");
+		expect(paths).toContain("/sitemaps/at/pages-0.xml");
+		expect(paths).toContain("/sitemaps/at/praticiens-0.xml");
 	});
 });
 

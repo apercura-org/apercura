@@ -94,6 +94,8 @@ export type AddressInput = {
 	addressComplement: string | null;
 	postcode: string | null;
 	placeName: string | null;
+	/** ISO 3166-1 alpha-2 country of the address (the page's market); France when absent. */
+	country?: string;
 };
 
 export function postalAddress(address: AddressInput): PostalAddress {
@@ -103,7 +105,7 @@ export function postalAddress(address: AddressInput): PostalAddress {
 			[address.addressLine, address.addressComplement].filter(Boolean).join(", ") || undefined,
 		postalCode: address.postcode ?? undefined,
 		addressLocality: address.placeName ?? undefined,
-		addressCountry: "FR",
+		addressCountry: address.country ?? "FR",
 	};
 }
 
@@ -187,6 +189,44 @@ const MEDICAL_SPECIALTIES: Record<string, readonly MedicalSpecialty[]> = {
 	stomatologue: ["https://schema.org/Dentistry"],
 	urgentiste: ["https://schema.org/Emergency"],
 	urologue: ["https://schema.org/Urologic"],
+	// Austria (German listing slugs).
+	allgemeinmedizin: ["https://schema.org/PrimaryCare"],
+	anaesthesiologie: ["https://schema.org/Anesthesia"],
+	augenheilkunde: ["https://schema.org/Ophthalmology"],
+	chirurgie: ["https://schema.org/Surgical"],
+	dermatologie: ["https://schema.org/Dermatology"],
+	endokrinologie: ["https://schema.org/Endocrine"],
+	frauenheilkunde: ["https://schema.org/Gynecologic", "https://schema.org/Obstetric"],
+	gastroenterologie: ["https://schema.org/Gastroenterologic"],
+	gefaesschirurgie: ["https://schema.org/Surgical", "https://schema.org/Cardiovascular"],
+	"haematologie-und-onkologie": ["https://schema.org/Hematologic", "https://schema.org/Oncologic"],
+	"hals-nasen-ohrenheilkunde": ["https://schema.org/Otolaryngologic"],
+	herzchirurgie: ["https://schema.org/Surgical", "https://schema.org/Cardiovascular"],
+	infektiologie: ["https://schema.org/Infectious"],
+	kardiologie: ["https://schema.org/Cardiovascular"],
+	kinderchirurgie: ["https://schema.org/Surgical", "https://schema.org/Pediatric"],
+	kinderheilkunde: ["https://schema.org/Pediatric"],
+	"kinder-und-jugendpsychiatrie": [
+		"https://schema.org/Pediatric",
+		"https://schema.org/Psychiatric",
+	],
+	labordiagnostik: ["https://schema.org/LaboratoryScience"],
+	"medizinische-genetik": ["https://schema.org/Genetic"],
+	"mund-kiefer-gesichtschirurgie": ["https://schema.org/Surgical"],
+	nephrologie: ["https://schema.org/Renal"],
+	neurochirurgie: ["https://schema.org/Surgical", "https://schema.org/Neurologic"],
+	neurologie: ["https://schema.org/Neurologic"],
+	orthopaedie: ["https://schema.org/Musculoskeletal"],
+	pathologie: ["https://schema.org/Pathology"],
+	"plastische-chirurgie": ["https://schema.org/PlasticSurgery"],
+	pneumologie: ["https://schema.org/Pulmonary"],
+	psychiatrie: ["https://schema.org/Psychiatric"],
+	radiologie: ["https://schema.org/Radiography"],
+	rheumatologie: ["https://schema.org/Rheumatologic"],
+	thoraxchirurgie: ["https://schema.org/Surgical"],
+	unfallchirurgie: ["https://schema.org/Surgical", "https://schema.org/Musculoskeletal"],
+	urologie: ["https://schema.org/Urologic"],
+	zahnaerzte: ["https://schema.org/Dentistry"],
 };
 
 /**
@@ -342,7 +382,12 @@ export type OpeningHoursInput = {
 export type PractitionerInput = {
 	url: string;
 	professionCode: string;
+	/** The practitioner's identifier in its market's sources (an RPPS in France). */
 	rpps: string;
+	/** Identifier scheme of `rpps` (`RPPS`, `AT-WIEN`…); RPPS when absent. */
+	idScheme?: string;
+	/** Market of the practitioner (ISO 3166-1 alpha-2); France when absent. */
+	country?: string;
 	/** "Dr Marie Dubois". */
 	name: string;
 	givenName: string;
@@ -372,8 +417,12 @@ const PLACE_TYPES = {
  * doctor only (it is "a doctor's office"): a dentist's, midwife's or nurse's office is a
  * `MedicalBusiness`, the generic medical local business.
  */
+/** Profession codes of doctors: France's `10`, Austria's `ARZT`. */
+const DOCTOR_PROFESSIONS = new Set(["10", "ARZT"]);
+
 function placeTypeOf(practiceKind: string, professionCode: string) {
-	if (practiceKind === "office" && professionCode !== "10") return "MedicalBusiness";
+	if (practiceKind === "office" && !DOCTOR_PROFESSIONS.has(professionCode))
+		return "MedicalBusiness";
 	return PLACE_TYPES[practiceKind as keyof typeof PLACE_TYPES] ?? "MedicalClinic";
 }
 
@@ -433,11 +482,16 @@ function reserveAction(bookingUrl: string): ReserveAction {
  */
 export function practitionerNodes(input: PractitionerInput): Thing[] {
 	const primary = input.places[0];
-	const places = input.places.map((place) => placeNode(input.url, input.professionCode, place));
+	const places = input.places.map((place) =>
+		placeNode(input.url, input.professionCode, {
+			...place,
+			country: place.country ?? input.country,
+		}),
+	);
 	const placeRefs = places.map((place) => ref((place as { "@id": string })["@id"]));
 	const identifier: PropertyValue = {
 		"@type": "PropertyValue",
-		propertyID: "RPPS",
+		propertyID: input.idScheme ?? "RPPS",
 		value: input.rpps,
 	};
 	const common = {
@@ -452,14 +506,17 @@ export function practitionerNodes(input: PractitionerInput): Thing[] {
 		potentialAction: input.bookingUrl ? reserveAction(input.bookingUrl) : undefined,
 	};
 	const localBusiness = {
-		address: primary ? postalAddress(primary) : undefined,
+		address: primary
+			? postalAddress({ ...primary, country: primary.country ?? input.country })
+			: undefined,
 		geo: primary?.coordinates ? geoCoordinates(primary.coordinates) : undefined,
 		telephone: e164(primary?.phone),
 	};
 	const specialty = one(medicalSpecialtiesOf(input.listingSlug));
 
 	let person: Thing;
-	if (input.professionCode === "10") {
+	// Physicians: French profession 10, Austrian ARZT. Dentists: 40, ZAHNARZT.
+	if (input.professionCode === "10" || input.professionCode === "ARZT") {
 		person = {
 			"@type": "IndividualPhysician",
 			...common,
@@ -467,7 +524,7 @@ export function practitionerNodes(input: PractitionerInput): Thing[] {
 			medicalSpecialty: specialty,
 			practicesAt: one(placeRefs),
 		} as IndividualPhysician;
-	} else if (input.professionCode === "40") {
+	} else if (input.professionCode === "40" || input.professionCode === "ZAHNARZT") {
 		person = {
 			"@type": "Dentist",
 			...common,

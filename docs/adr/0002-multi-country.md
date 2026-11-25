@@ -1,8 +1,8 @@
 # ADR 0002: Multi-country foundation and European market study
 
-- Status: accepted (foundation only; no market other than France is open)
-- Date: 2026-11-22; section 2 amended 2026-11-25
-- Issue: #45; section 2: #81; market study: #82 (2026-11-25)
+- Status: accepted; France and Austria are open
+- Date: 2026-11-22; section 2 amended 2026-11-25; Austria opened 2026-11-25
+- Issue: #45; section 2: #81; market study: #82 (2026-11-25); Austria: #107
 
 ## Context
 
@@ -37,9 +37,10 @@ English, the language of the UK market); English, German, Spanish and Italian
 interfaces of France's pages live under `/fr-en`, `/fr-de`, `/fr-es` and
 `/fr-it` with translated route segments (section 2, `docs/public-site.md`).
 
-Until a market opens, every non-French page is `noindex`, absent from the
-sitemaps and announced by no hreflang (`INDEXABLE_LOCALES = ["fr"]`). A locale
-becomes indexable only with its market, because a German page of a French
+Until a market opens, its pages are `noindex`, absent from the sitemaps and
+announced by no hreflang (`INDEXABLE_LOCALES = ["fr", "at"]` since Austria
+opened: France in French, Austria in German). A locale becomes indexable only
+with its market, because a German page of a French
 directory is not what a German searching for a doctor near Munich expects.
 
 ### 2. One domain, one path segment per market
@@ -58,6 +59,7 @@ first domain, only redirects.
 | `/`                                                        | International home, in English: what Apercura is, the countries | yes (`x-default`) |
 | `/fr/…`                                                    | France, in French                                               | yes               |
 | `/fr-en/…`, `/fr-de/…`, `/fr-es/…`, `/fr-it/…`             | France's pages, interface in another language                   | never             |
+| `/at/…`                                                    | Austria, in German (open since #107)                            | yes               |
 | `/gb/…`, `/de/…`, `/es/…`, `/it/…`                         | Later: a market in its language                                 | once open         |
 | `/ch-fr/…`, `/ch-de/…`, `/ch-it/…`, `/be-fr/…`, `/be-nl/…` | Later: a market in each of its official languages               | once open         |
 
@@ -88,16 +90,17 @@ Why one segment, market first:
 
 When a second market opens, its languages become locales of their own (a
 German interface of France's pages and German pages of Germany are not the
-same thing): the internal locale ids then move to the segments themselves
-(`fr`, `fr-de`, `de`, `ch-fr`…), each with its catalog language and its BCP 47
-tag. Today's ids map one to one (`en` is `/fr-en`).
+same thing), each with its catalog language and its URL prefix. Locale ids
+stay BCP 47 tags (`de-AT` for `/at`, later `fr-CH` for `/ch-fr`), because
+next-intl formats with the id; the segment is only the prefix. Today's French
+ids map one to one (`en` is `/fr-en`).
 
 #### Indexing
 
 - **Canonical**: always self, absolute on `APP_URL` (`https://apercura.org`),
   whatever host the request came from.
 - **Indexed**: the international home and each open market's own languages
-  (`/fr` today). Interface translations (`/fr-en`…) are `noindex`, absent from
+  (`/fr` and `/at` today). Interface translations (`/fr-en`…) are `noindex`, absent from
   the sitemaps and never targeted by hreflang (`INDEXABLE_LOCALES`).
 - **hreflang**: only between indexed pages that are the same thing in another
   language or market. The homes form one cluster, printed by both: `x-default`
@@ -153,23 +156,24 @@ DKIM, DMARC, `contact@apercura.org`) and the Search Console property change
 
 `packages/core/src/country` (`@apercura/core/country`) defines one interface
 for everything that differs per market. Adapters are pure: no network, no
-database. France is the only implementation and only wraps the code the app
-already uses, so behaviour is unchanged.
+database. France wraps the code the app already used; Austria (#107) is the
+first market written against the interface.
 
-| Member               | France (v1)                                                               |
-| -------------------- | ------------------------------------------------------------------------- |
-| `defaultLocale`      | `fr`                                                                      |
-| `defaultTimeZone`    | `Europe/Paris`                                                            |
-| `timeZones`          | Paris and the 8 overseas zones                                            |
-| `timeZoneOf(region)` | `timeZoneForDepartment` (INSEE department code, throws if unknown)        |
-| `registries`         | Annuaire Santé (RPPS), FINESS+, Ameli, under the Licence Ouverte 2.0      |
-| `practitionerId`     | RPPS, 11 digits with a Luhn check digit (`isValidRpps`)                   |
-| `taxonomy`           | `FR_PROFESSIONS`, `listingSlugFor`, `isListingSlug`                       |
-| `phone`              | `toE164Fr`, `formatPhoneFr` (`+33` and the overseas codes)                |
-| `address`            | 5-digit postcode, `street` then `postcode city`                           |
-| `legalPages`         | mentions légales (LCEN), privacy (GDPR art. 13–14), terms, RGAA statement |
-| `healthDataHosting`  | HDS (Code de la santé publique, art. L1111-8)                             |
-| `features`           | directory, booking and e-identity claim (Pro Santé Connect)               |
+| Member               | France                                                                    | Austria                                                                                                                         |
+| -------------------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| `segment`            | `fr`                                                                      | `at`                                                                                                                            |
+| `defaultLocale`      | `fr`                                                                      | `de` (web locale `de-AT` under `/at`: the German catalog with Austrian overrides)                                               |
+| `defaultTimeZone`    | `Europe/Paris`                                                            | `Europe/Vienna`                                                                                                                 |
+| `timeZones`          | Paris and the 8 overseas zones                                            | Vienna only                                                                                                                     |
+| `timeZoneOf(region)` | `timeZoneForDepartment` (INSEE department code, throws if unknown)        | Bundesland number `1`–`9` (throws if unknown)                                                                                   |
+| `registries`         | Annuaire Santé (RPPS), FINESS+, Ameli, under the Licence Ouverte 2.0      | Vienna, Styria, Salzburg doctors and Salzburg dentists lists, Statistik Austria Gemeinden, CC BY 4.0, each with its attribution |
+| `practitionerIds`    | RPPS, 11 digits with a Luhn check digit (`isValidRpps`)                   | One scheme per list (`AT-WIEN`, `AT-STMK`, `AT-SBG`, `AT-SBGZ`): no national number is published                                |
+| `taxonomy`           | `FR_PROFESSIONS`, `listingSlugFor`, `isListingSlug`                       | `AT_PROFESSIONS` (doctors, dentists), `atListingSlugFor`, `isAtListingSlug`, German slugs                                       |
+| `phone`              | `toE164Fr`, `formatPhoneFr` (`+33` and the overseas codes)                | `toE164At`, `formatPhoneAt` (`+43`, national form `01 7673315`)                                                                 |
+| `address`            | 5-digit postcode, `street` then `postcode city`                           | 4-digit postcode, `street` then `postcode city`                                                                                 |
+| `legalPages`         | mentions légales (LCEN), privacy (GDPR art. 13–14), terms, RGAA statement | Impressum (ECG § 5, MedienG § 25), Datenschutzerklärung (DSGVO art. 13, 14, 21), Nutzungsbedingungen                            |
+| `healthDataHosting`  | HDS (Code de la santé publique, art. L1111-8)                             | No certification: DSGVO and DSG; Gesundheitstelematikgesetz 2012 for electronic health data exchange                            |
+| `features`           | directory, booking and e-identity claim (Pro Santé Connect)               | directory only: no booking, claims with documents and an administrator's review                                                 |
 
 Per-country feature flags are the adapter's `features`: what a market can
 support once it is open. The global environment flags (`FEATURE_BOOKING`…)
@@ -197,6 +201,40 @@ specialties mapped to the market's own terms, with catalog labels under
    legal pages, list it as open on the international home, join its home to
    the homes' hreflang, then make its languages indexable under its segments
    only.
+
+#### What the Austrian pilot proved (#107)
+
+- **The data model held, with one addition.** `country` on practitioners and
+  suppressions was not enough: places, place slug aliases and the three read
+  models needed it too (migration `0023_at_market`), because a Statistik
+  Austria Gemeinde code can equal an INSEE code and a country-wide listing has
+  no place to tell its market. Every query that joins places on a code joins
+  on (country, code); each import scopes its absences, indexing, orphan check,
+  breakers and totals to its own country, so France's run never touches
+  Austria's rows and the reverse.
+- **A market's places fit the four kinds.** Bundesländer are departments,
+  Gemeinden communes, Vienna's districts arrondissements of the Gemeinde Wien,
+  whose city page is its Bundesland's, like Paris. No new kind, no new route.
+- **A second market is a locale of its own, named by its BCP 47 tag.**
+  `de-AT` is a next-intl locale whose prefix is `/at`, whose catalog is the
+  German one with Austrian overrides and whose pages query Austria only
+  (`LOCALE_MARKETS`). The id must be a real tag, not the segment: next-intl
+  formats dates, numbers and plurals with it, and Intl does not know `at` (nor
+  would it know `ch-fr`). France's locale ids did not have to move.
+- **Open data may have no national number.** One identifier scheme per list,
+  and a key derived from the names where a list has none (Salzburg), with the
+  URL naming the list (`/at/arzt/anna-muster-w7983`). No merge across lists.
+- **Coordinates beat geocoding.** The lists ship address-level points, so the
+  Austrian import calls no geocoder; Gemeinde centres (CC BY 4.0) place the
+  practices, by name first, then by distance.
+- **Guard per list.** Regional lists fail one at a time: a list that cannot be
+  read is left out and keeps its rows, the others are imported (exit code 3).
+- **Look beyond the study.** The study found two lists; the search for the
+  pilot found a third (Salzburg, CC BY 4.0 on the Land's own catalogue though
+  missing from data.gv.at's metadata) and a fourth (Salzburg dentists). The
+  candidates that could not be used, and whom to ask, are in
+  [`docs/data-requests/at.md`](../data-requests/at.md): write such a file for
+  every market.
 
 ## What is known per market
 
@@ -451,34 +489,54 @@ France, the open market, is described in section 3 and `PRODUCT.md`.
 
 ### Austria (AT)
 
+Open since 2026-11-25 (#107) at `/at`: a directory from open data for Vienna, Styria and
+Salzburg, claimed pages elsewhere.
+
 - **Registry.** The Ärzteliste of the Austrian Medical Chamber (ÄrzteG §27) has a public part that
   must be online: doctor number, name, degrees, address, practice locations, titles, insurance
   contracts (VERIFIED [AT1][AT2]). The Gesundheitsberuferegister (GÖG and Arbeiterkammer) covers
   nursing and allied professions (VERIFIED [AT3]); the midwives' register and the dentists'
   search are lookup-only (VERIFIED [AT4][AT5]). National registers: `searchable website only`.
-- **Access and licence.** Regional `open data` on data.gv.at (VERIFIED [AT6]):
-  - **Ärzte Standorte Wien** (City of Vienna), CSV/JSON/WFS under **CC BY 4.0**: name, address,
-    specialty, phone, website, about 7,600 rows, "die Daten stammen von der Ärztekammer für Wien",
-    updated daily;
-  - **Niedergelassene Ärzte Steiermark** (Land Steiermark), **CC BY 4.0**: chamber number, name,
-    address, specialty, about 4,100 rows, modified 31 October 2026;
-  - **Ärzte Land Salzburg** and Zahnärzte Land Salzburg: about 1,500 doctors, licence missing from
-    the current metadata (CC BY 3.0 AT per secondary sources, UNVERIFIED).
+- **Access and licence.** Regional `open data`, each VERIFIED on 2026-11-25 on data.gv.at, the
+  publisher's catalogue and its terms of use ([AT6], [AT10]–[AT15]); formats, URLs and keys in
+  `docs/data-import.md`, "Austria":
+  - **Ärzte Standorte Wien** (City of Vienna): WFS layer `ogdwien:ARZTOGD` as GeoJSON, CSV or
+    shapefile, **CC BY 4.0**, updated daily, "die Daten stammen von der Ärztekammer für Wien, sind
+    adressscharf geocodiert"; 7,642 rows, 6,100 doctors (one practice-plan number each), a phone
+    on 57% of rows. Attribution: "Datenquelle: Stadt Wien – data.wien.gv.at" [AT10];
+  - **Niedergelassene Ärzte Steiermark** (Land Steiermark): shapefile ZIP and KMZ, **CC BY 4.0**,
+    modified 31 October 2026; 4,101 rows, 2,668 doctor numbers, no phone. Attribution:
+    "Datenquelle: CC-BY-4.0: Land Steiermark - data.steiermark.gv.at" [AT11];
+  - **Ärzte Land Salzburg** (list of the Ärztekammer für Salzburg): JSON, shapefile, KMZ, WFS,
+    **CC BY 4.0** on the Land's own catalogue (the data.gv.at record lacks the licence field; the
+    Land's terms put all its open data under CC BY 4.0), modified 12 June 2026; 1,523 rows, 1,276
+    people, gender given, no number, no phone. Attribution: "Datenquelle: Land Salzburg –
+    data.salzburg.gv.at" [AT12][AT13];
+  - **Zahnärzte Land Salzburg** (list of the Zahnärztekammer): same terms; 366 rows, 345 dentists
+    [AT14];
+  - Statistik Austria's **Gemeinden – Schwerpunkte**, **CC BY 4.0**, places the practices
+    (attribution "Datenquelle: Statistik Austria - data.statistik.gv.at") [AT15].
 
-  An open licence settles copyright and database rights, not the GDPR: listing named doctors still
-  rests on legitimate interest with an art. 14 notice, as in France.
+  Everything else found (the other six Länder publish no list; Linz publishes counts only;
+  Engerwitzdorf's list dates from 2022; Burgenland's driving-licence examiners; the labour
+  inspectorate's authorised doctors, whose file is gone) and whom to ask, under the IWG 2022
+  [AT16], is in [`docs/data-requests/at.md`](../data-requests/at.md). An open licence settles
+  copyright and database rights, not the GDPR: listing named doctors rests on legitimate interest
+  with an art. 14 notice, as in France (the Datenschutzerklärung at `/at/datenschutz`).
 - **Health data.** GDPR and DSG; no hosting certification or localisation rule found. The
   Gesundheitstelematikgesetz 2012 binds health service providers exchanging data electronically
   and allows cloud storage only with state-of-the-art encryption (VERIFIED text [AT7]); whether it
-  reaches a booking site is UNVERIFIED.
+  reaches a booking site is UNVERIFIED, so booking stays off in Austria (`features.booking`).
 - **Booking and advertising.** ÄrzteG §53 bans unobjective, untrue or reputation-harming
   information and referral fees, and binds "sonstigen physischen und juristischen Personen" too,
-  so it reaches platforms (VERIFIED [AT8]). The chamber's guideline on advertising was not checked.
+  so it reaches platforms (VERIFIED [AT8]). The chamber's guideline on advertising was not checked
+  (UNVERIFIED): the Austrian pages carry no ratings, rankings or paid placement.
 - **Market.** German. 53,353 doctors (Austrian Medical Chamber, 31 December 2025, VERIFIED
   [AT9]); over 220,000 in the health-professions register (UNVERIFIED). DocFinder (search, booking
   and ratings), Doctena; doctolib.at and jameda.at did not resolve (UNVERIFIED).
-- **Verdict.** Directory from open data for Vienna and Styria (about 11,700 doctors), Salzburg once
-  its licence is confirmed; claimed pages for the six other states.
+- **Verdict.** Directory from open data for Vienna, Styria and Salzburg (10,377 doctors and
+  dentists from the files of November 2026, about a fifth of Austria's doctors); claimed pages for
+  the six other states; booking later.
 
 ### Belgium (BE)
 
@@ -953,43 +1011,43 @@ other languages, and only `-{language}` segments where a market has no main lang
 Luxembourg (`/lu-fr`, `/lu-de`) are proposals: each has two or three official languages, and the
 English or French interface comes first. Finland's Swedish pages go under `/fi-sv`.
 
-| #   | Market         | Path                         | Fast path                                    | Why                                                                                                                                                                    |
-| --- | -------------- | ---------------------------- | -------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 1   | Austria        | `/at`                        | Directory (Vienna, Styria), claimed pages    | CC BY 4.0 lists from the Vienna chamber and Styria (about 11,700 doctors); German interface exists; no hosting certification; DocFinder rates doctors, Doctolib absent |
-| 2   | Switzerland    | `/ch-fr`, `/ch-de`, `/ch-it` | Claimed pages, French-speaking cantons first | High-value market, French interface exists; registers restricted, ask the FOPH for MedReg access; Swiss representative; OneDoc leads                                   |
-| 3   | Czechia        | `/cz`                        | Directory (providers and places of care)     | NRPZS under CC BY 4.0 with an API; DPA allowed basic profiles in 2013; needs a Czech interface; Znamylekar (Docplanner)                                                |
-| 4   | United Kingdom | `/gb`                        | Practice pages from ODS, claimed clinicians  | ODS under the OGL; no DSPT or CQC for a pure booking site; English exists; individual clinicians need a GMC licence                                                    |
-| 5   | Poland         | `/pl`                        | Directory (registered practices), opt-out    | RPWDL under CC BY 4.0, daily; large market; listing without consent litigated (III OSK 1052/21); Docplanner's home; needs Polish                                       |
-| 6   | Belgium        | `/be-fr`, `/be-nl`, `/be-de` | Claimed pages, opt-in only                   | DPA decision 149/2023 forbids listing practitioners who did not opt in; French exists, Dutch and German needed; Doctoranytime                                          |
-| 7   | Luxembourg     | `/lu-fr`, `/lu-de`           | Claimed pages                                | French exists; the Collège médical charter bans paid priority, which fits; small; Doctena                                                                              |
-| 8   | Spain          | `/es`                        | Claimed pages                                | Spanish exists; college registers are public by law, so claims are easy to verify; no reusable register; Doctoralia, Top Doctors                                       |
-| 9   | Italy          | `/it`                        | Claimed pages                                | Italian exists; Albo Unico forbids commercial reuse; booking needs explicit consent (Garante); MioDottore, Doctolib                                                    |
-| 10  | Ireland        | `/ie-en`                     | Claimed pages                                | English exists; a PSI re-use request could open the Medical Council register                                                                                           |
-| 11  | Malta          | `/mt-en`                     | Directory, once confirmed                    | Doctor and dentist registers under CC BY 4.0 in the national catalogue; English; tiny; many addresses withheld                                                         |
-| 12  | Germany        | `/de`                        | Claimed pages, booking not yet               | Largest market, German exists; no reusable register; booking for contracted doctors needs a C5 Type 2 host and GeDIG is pending                                        |
-| 13  | Estonia        | `/ee`                        | Directory, once confirmed                    | Individuals with workplaces in open data, but CC BY-NC-SA 3.0; pages must show the activity licence number; tiny                                                       |
-| 14  | Slovenia       | `/si`                        | Partial directory (personal doctors)         | ZZZS list under CC BY 4.0, HTML only; small                                                                                                                            |
-| 15  | Latvia         | `/lv`                        | Partial directory (GPs)                      | NVD GP lists under CC0; small                                                                                                                                          |
-| 16  | Netherlands    | `/nl`                        | Claimed pages                                | BIG register is CC0 but one lookup at a time and without addresses; courts accepted ZorgkaartNederland; needs Dutch                                                    |
-| 17  | Portugal       | `/pt`                        | Claimed pages                                | Registers public by law (Lei 2/2013) but no licence; Doctoralia                                                                                                        |
-| 18  | Croatia        | `/hr`                        | Claimed pages, directory if HZZO confirms    | HZZO lists have names and addresses, licence "not specified"                                                                                                           |
-| 19  | Cyprus         | `/cy`                        | Claimed pages, directory if licensed         | Full register online without a licence; the ethics code requires uniform listings                                                                                      |
-| 20  | Romania        | `/ro`                        | Claimed pages                                | CNAS lists are CC BY 4.0 but carry no address or specialty                                                                                                             |
-| 21  | Denmark        | `/dk`                        | Claimed pages                                | Lookup-only register; SOR could seed establishments                                                                                                                    |
-| 22  | Norway         | `/no`                        | Claimed pages                                | HPR API gated and onward sharing barred                                                                                                                                |
-| 23  | Sweden         | `/se`                        | Claimed pages                                | HOSP has no public search; concentrated digital-care market                                                                                                            |
-| 24  | Lithuania      | `/lt`                        | Claimed pages                                | Named search has no licence; institutions are open data                                                                                                                |
-| 25  | Slovakia       | `/sk`                        | Claimed pages                                | No licensed register                                                                                                                                                   |
-| 26  | Hungary        | `/hu`                        | Claimed pages                                | Lookup-only register                                                                                                                                                   |
-| 27  | Bulgaria       | `/bg`                        | Claimed pages                                | Lookup-only registers                                                                                                                                                  |
-| 28  | Iceland        | `/is`                        | Claimed pages                                | Lookup-only register; very small                                                                                                                                       |
-| 29  | Liechtenstein  | `/li`                        | Claimed pages, with Switzerland              | About 130 doctors                                                                                                                                                      |
-| 30  | Finland        | `/fi`, `/fi-sv`              | Not yet                                      | Booking means system registration and Kanta appointment records (Act 784/2021)                                                                                         |
-| 31  | Greece         | `/gr`                        | Not yet                                      | Law 3418/2005 art. 17 bans indirect advertising; needs a Greek legal opinion first                                                                                     |
+| #   | Market         | Path                         | Fast path                                    | Why                                                                                                                                                             |
+| --- | -------------- | ---------------------------- | -------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1   | Austria        | `/at`                        | Open: directory (Vienna, Styria, Salzburg)   | Opened 2026-11-25 (#107): CC BY 4.0 lists of Vienna, Styria and Salzburg (10,377 doctors and dentists); German interface; no hosting certification; booking off |
+| 2   | Switzerland    | `/ch-fr`, `/ch-de`, `/ch-it` | Claimed pages, French-speaking cantons first | High-value market, French interface exists; registers restricted, ask the FOPH for MedReg access; Swiss representative; OneDoc leads                            |
+| 3   | Czechia        | `/cz`                        | Directory (providers and places of care)     | NRPZS under CC BY 4.0 with an API; DPA allowed basic profiles in 2013; needs a Czech interface; Znamylekar (Docplanner)                                         |
+| 4   | United Kingdom | `/gb`                        | Practice pages from ODS, claimed clinicians  | ODS under the OGL; no DSPT or CQC for a pure booking site; English exists; individual clinicians need a GMC licence                                             |
+| 5   | Poland         | `/pl`                        | Directory (registered practices), opt-out    | RPWDL under CC BY 4.0, daily; large market; listing without consent litigated (III OSK 1052/21); Docplanner's home; needs Polish                                |
+| 6   | Belgium        | `/be-fr`, `/be-nl`, `/be-de` | Claimed pages, opt-in only                   | DPA decision 149/2023 forbids listing practitioners who did not opt in; French exists, Dutch and German needed; Doctoranytime                                   |
+| 7   | Luxembourg     | `/lu-fr`, `/lu-de`           | Claimed pages                                | French exists; the Collège médical charter bans paid priority, which fits; small; Doctena                                                                       |
+| 8   | Spain          | `/es`                        | Claimed pages                                | Spanish exists; college registers are public by law, so claims are easy to verify; no reusable register; Doctoralia, Top Doctors                                |
+| 9   | Italy          | `/it`                        | Claimed pages                                | Italian exists; Albo Unico forbids commercial reuse; booking needs explicit consent (Garante); MioDottore, Doctolib                                             |
+| 10  | Ireland        | `/ie-en`                     | Claimed pages                                | English exists; a PSI re-use request could open the Medical Council register                                                                                    |
+| 11  | Malta          | `/mt-en`                     | Directory, once confirmed                    | Doctor and dentist registers under CC BY 4.0 in the national catalogue; English; tiny; many addresses withheld                                                  |
+| 12  | Germany        | `/de`                        | Claimed pages, booking not yet               | Largest market, German exists; no reusable register; booking for contracted doctors needs a C5 Type 2 host and GeDIG is pending                                 |
+| 13  | Estonia        | `/ee`                        | Directory, once confirmed                    | Individuals with workplaces in open data, but CC BY-NC-SA 3.0; pages must show the activity licence number; tiny                                                |
+| 14  | Slovenia       | `/si`                        | Partial directory (personal doctors)         | ZZZS list under CC BY 4.0, HTML only; small                                                                                                                     |
+| 15  | Latvia         | `/lv`                        | Partial directory (GPs)                      | NVD GP lists under CC0; small                                                                                                                                   |
+| 16  | Netherlands    | `/nl`                        | Claimed pages                                | BIG register is CC0 but one lookup at a time and without addresses; courts accepted ZorgkaartNederland; needs Dutch                                             |
+| 17  | Portugal       | `/pt`                        | Claimed pages                                | Registers public by law (Lei 2/2013) but no licence; Doctoralia                                                                                                 |
+| 18  | Croatia        | `/hr`                        | Claimed pages, directory if HZZO confirms    | HZZO lists have names and addresses, licence "not specified"                                                                                                    |
+| 19  | Cyprus         | `/cy`                        | Claimed pages, directory if licensed         | Full register online without a licence; the ethics code requires uniform listings                                                                               |
+| 20  | Romania        | `/ro`                        | Claimed pages                                | CNAS lists are CC BY 4.0 but carry no address or specialty                                                                                                      |
+| 21  | Denmark        | `/dk`                        | Claimed pages                                | Lookup-only register; SOR could seed establishments                                                                                                             |
+| 22  | Norway         | `/no`                        | Claimed pages                                | HPR API gated and onward sharing barred                                                                                                                         |
+| 23  | Sweden         | `/se`                        | Claimed pages                                | HOSP has no public search; concentrated digital-care market                                                                                                     |
+| 24  | Lithuania      | `/lt`                        | Claimed pages                                | Named search has no licence; institutions are open data                                                                                                         |
+| 25  | Slovakia       | `/sk`                        | Claimed pages                                | No licensed register                                                                                                                                            |
+| 26  | Hungary        | `/hu`                        | Claimed pages                                | Lookup-only register                                                                                                                                            |
+| 27  | Bulgaria       | `/bg`                        | Claimed pages                                | Lookup-only registers                                                                                                                                           |
+| 28  | Iceland        | `/is`                        | Claimed pages                                | Lookup-only register; very small                                                                                                                                |
+| 29  | Liechtenstein  | `/li`                        | Claimed pages, with Switzerland              | About 130 doctors                                                                                                                                               |
+| 30  | Finland        | `/fi`, `/fi-sv`              | Not yet                                      | Booking means system registration and Kanta appointment records (Act 784/2021)                                                                                  |
+| 31  | Greece         | `/gr`                        | Not yet                                      | Law 3418/2005 art. 17 bans indirect advertising; needs a Greek legal opinion first                                                                              |
 
 The realistic fast path:
 
-- **Directory from open data:** Austria (Vienna and Styria), Czechia, Poland, then the small markets
+- **Directory from open data:** Austria (open: Vienna, Styria, Salzburg), Czechia, Poland, then the small markets
   whose licence must be confirmed in writing (Malta, Estonia) or that cover one segment (Slovenia,
   Latvia). Each needs a legitimate-interest assessment and an art. 14 notice: an open licence
   settles reuse rights, not the GDPR.
@@ -1006,7 +1064,9 @@ Germany's §393 SGB V.
 
 ## Consequences
 
-- The interface reads in five languages today; only French pages are indexed.
+- The interface reads in five languages; France's pages are indexed in French
+  (`/fr`) and Austria's in German (`/at`), every interface translation stays
+  `noindex`.
 - New markets plug in through an adapter, an ETL source and a path segment on
   apercura.org, without changing the French code paths.
 - Only a handful of markets publish practitioners under a reuse licence
@@ -1135,6 +1195,13 @@ Market study (#82), labelled by country, all checked on 2026-11-25:
 - AT7. Gesundheitstelematikgesetz 2012: <https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=20008120>
 - AT8. ÄrzteG 1998 §53: <https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10011138&Paragraf=53>
 - AT9. Austrian Medical Chamber, facts and figures: <https://www.aerztekammer.at/daten-fakten>
+- AT10. Ärzte Standorte Wien: <https://www.data.gv.at/katalog/dataset/fdcaabe5-0efd-4701-8fd9-49935c0d9cff>; Stadt Wien, terms of use: <https://data.wien.gv.at/nutzungsbedingungen>
+- AT11. Niedergelassene Ärzte Steiermark: <https://www.data.gv.at/katalog/dataset/b0a8ca10-3968-11e2-81c1-0800200c9a66>; Land Steiermark, terms of use: <https://data.steiermark.at/cms/ziel/95633648/DE/>
+- AT12. Ärzte Land Salzburg: <https://www.data.gv.at/katalog/dataset/8bd69af0-d42a-4777-beb6-1e8e87145a23>; the Land's catalogue entry: <https://service.salzburg.gv.at/ogd/client/showDetail/8bd69af0-d42a-4777-beb6-1e8e87145a23>
+- AT13. Land Salzburg, Open Government Data, terms ("Rechtliches und Netiquette"): <https://www.salzburg.gv.at/themen/statistik/ogd/rechtliches-und-netiquette>
+- AT14. Zahnärzte Land Salzburg: <https://service.salzburg.gv.at/ogd/client/showDetail/90dd469f-9c41-49c4-aa86-cdf02ebaa1e0>
+- AT15. Statistik Austria, Gemeinden – Schwerpunkte (OGDEXT_GEM_MP_1): <https://data.statistik.gv.at/web/meta.jsp?dataset=OGDEXT_GEM_MP_1>
+- AT16. Informationsweiterverwendungsgesetz 2022: <https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=20011973&Paragraf=1>
 - LI1. Liechtensteinische Ärztekammer, find a doctor: <https://www.aerztekammer.li/arzt-finden>
 - LI2. Liechtensteinische Ärztekammer, imprint: <https://www.aerztekammer.li/impressum>
 - BE1. SPF Santé publique, databases of health professions: <https://www.health.belgium.be/nl/professionals/gezondheidsprofessionals/menselijke-gezondheid/gezondheidszorgberoepen/databanken-statistieken-gezondheidszorgberoepen>

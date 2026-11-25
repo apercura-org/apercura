@@ -1,4 +1,4 @@
-import { isValidRpps } from "@apercura/core";
+import { claimPolicyOf } from "@apercura/core";
 import { Button, Input, Label, linkStyles, Notice, PractitionerHeader } from "@apercura/ui";
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
@@ -6,10 +6,12 @@ import { Suspense } from "react";
 import { ClaimStartButton } from "~/components/pro/claim-start";
 import { ProShell } from "~/components/pro/pro-shell";
 import { ProShellFallback } from "~/components/pro/pro-shell-fallback";
+import { MARKET_LOCALES, marketOf } from "~/i18n/locales";
 import { getPathname, Link } from "~/i18n/navigation";
 import type { Locale } from "~/i18n/routing";
 import { genderOf, getTaxonomyLabels } from "~/lib/labels";
 import { NO_INDEX, resolveLocale } from "~/lib/locale";
+import { parsePractitionerRef, practitionerRefOf } from "~/lib/practitioner-ref";
 import { PRO_ROUTES } from "~/lib/pro-routes";
 import { requireProAccess } from "~/server/auth/guard";
 import { claimDocumentsEnabled, pscConfigured } from "~/server/features";
@@ -30,28 +32,40 @@ const sectionHeading = "type-title text-ink";
 
 async function Start({ locale, rpps }: { locale: Locale; rpps: string | null }) {
 	// Outside the `(app)` group on purpose: a visitor coming from "Claim this
-	// page" signs in (or up) and comes back here for the same RPPS.
-	const valid = rpps !== null && isValidRpps(rpps);
+	// page" signs in (or up) and comes back here for the same page. `rpps` is the
+	// practitioner reference: an RPPS in France, `w7983` in Austria (lib/practitioner-ref).
+	const parsed = parsePractitionerRef(rpps);
+	const valid = parsed !== null;
+	const ref = parsed ? practitionerRefOf(parsed) : null;
 	const access = await requireProAccess(
 		locale,
 		["ready"],
-		valid ? { pathname: "/pro/revendiquer", query: { rpps } } : null,
+		ref ? { pathname: "/pro/revendiquer", query: { rpps: ref } } : null,
 	);
 	const t = await getTranslations({ locale, namespace: "Claim" });
 	const tP = await getTranslations({ locale, namespace: "Practitioner" });
 	const labels = await getTaxonomyLabels(locale);
-	const practitioner = valid ? await caller.claims.preview({ rpps }).catch(() => null) : null;
+	const practitioner = ref ? await caller.claims.preview({ ref }).catch(() => null) : null;
+	// The practitioner's page lives in their market's own language (`/at/arzt/…` for Austria).
+	const pageLocale = practitioner
+		? marketOf(locale) === practitioner.country
+			? locale
+			: MARKET_LOCALES[practitioner.country as keyof typeof MARKET_LOCALES]
+		: locale;
+	// The methods of the practitioner's market, else of the page's.
+	const policy = claimPolicyOf(practitioner?.country ?? marketOf(locale));
 	// The owner of this page removes it from their editor; anyone else objects through the form.
 	const ownsPage = practitioner
 		? (await getProContext(access.session.user.id)).pages.some(
 				(page) => page.practitionerId === practitioner.id,
 			)
 		: false;
-	const methods = [
-		...(pscConfigured() ? (["psc"] as const) : []),
-		"registry_email" as const,
-		...(claimDocumentsEnabled() ? (["document"] as const) : []),
-	];
+	const methods = (["psc", "registry_email", "document"] as const).filter(
+		(method) =>
+			policy.methods.includes(method) &&
+			(method !== "psc" || pscConfigured()) &&
+			(method !== "document" || claimDocumentsEnabled()),
+	);
 
 	return (
 		<ProShell
@@ -72,8 +86,8 @@ async function Start({ locale, rpps }: { locale: Locale; rpps: string | null }) 
 							labels.listing(practitioner.listingSlug, genderOf(practitioner.civilityCode)) ??
 							t("start.unknownProfession")
 						}
-						rpps={practitioner.nationalId}
-						rppsLabel={tP("rpps")}
+						rpps={practitionerRefOf(practitioner)}
+						rppsLabel={practitioner.country === "FR" ? tP("rpps") : t("start.identifierLabel")}
 						status={practitioner.claimStatus === "claimed" ? "verified" : "unclaimed"}
 						statusLabel={tP(
 							`status.${practitioner.claimStatus === "claimed" ? "verified" : "unclaimed"}`,
@@ -82,6 +96,7 @@ async function Start({ locale, rpps }: { locale: Locale; rpps: string | null }) 
 					<p className="max-w-[65ch] text-body text-ink">
 						<Link
 							href={{ pathname: "/praticien/[slug]", params: { slug: practitioner.slug } }}
+							locale={pageLocale}
 							className={linkStyles()}
 						>
 							{t("start.viewPage")}
@@ -92,7 +107,7 @@ async function Start({ locale, rpps }: { locale: Locale; rpps: string | null }) 
 							{t("start.contestBody")}
 						</Notice>
 					) : null}
-					<ClaimStartButton rpps={practitioner.nationalId} />
+					<ClaimStartButton reference={practitionerRefOf(practitioner)} />
 					<div className="flex max-w-[65ch] flex-col gap-1 border-t border-rule-soft pt-4">
 						{practitioner.claimStatus === "claimed" ? null : (
 							<Link
@@ -100,6 +115,7 @@ async function Start({ locale, rpps }: { locale: Locale; rpps: string | null }) 
 									pathname: "/praticien/[slug]/c-est-moi",
 									params: { slug: practitioner.slug },
 								}}
+								locale={pageLocale}
 								className={`${linkStyles()} inline-flex min-h-11 items-center text-body`}
 							>
 								{t("start.contactLink")}
@@ -114,6 +130,7 @@ async function Start({ locale, rpps }: { locale: Locale; rpps: string | null }) 
 											params: { slug: practitioner.slug },
 										}
 							}
+							locale={ownsPage ? locale : pageLocale}
 							className={`${linkStyles({ tone: "muted" })} inline-flex min-h-11 items-center text-meta`}
 						>
 							{t("start.optOutLink")}
@@ -139,9 +156,10 @@ async function Start({ locale, rpps }: { locale: Locale; rpps: string | null }) 
 								<Input
 									id="claim-rpps"
 									name="rpps"
-									inputMode="numeric"
+									inputMode={marketOf(locale) === "FR" ? "numeric" : "text"}
 									autoComplete="off"
-									pattern="\d{11}"
+									pattern={marketOf(locale) === "FR" ? "\\d{11}" : undefined}
+									maxLength={300}
 									required
 									defaultValue={rpps ?? ""}
 									aria-describedby="claim-rpps-hint"
@@ -202,7 +220,8 @@ async function StartWithParams({
 	locale: Locale;
 	searchParams: Props["searchParams"];
 }) {
+	// The page reference: an RPPS in France, a list key (`w7983`) in Austria.
 	const value = (await searchParams).rpps;
-	const rpps = typeof value === "string" ? value.replace(/\s+/g, "") : null;
+	const rpps = typeof value === "string" ? value.trim() : null;
 	return <Start locale={locale} rpps={rpps || null} />;
 }

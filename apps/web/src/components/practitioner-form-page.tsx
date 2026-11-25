@@ -1,4 +1,4 @@
-import { formatPersonName, parsePractitionerSegment } from "@apercura/core";
+import { formatPersonName } from "@apercura/core";
 import { linkStyles } from "@apercura/ui";
 import { notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
@@ -9,14 +9,15 @@ import { PublicPage } from "~/components/public-page";
 import { Link } from "~/i18n/navigation";
 import type { Locale } from "~/i18n/routing";
 import { getTaxonomyLabels } from "~/lib/labels";
+import { identityOf, parsePractitionerKey } from "~/lib/practitioner-key";
 import { getPractitionerPage } from "~/server/queries/practitioner";
 import { TRPCReactProvider } from "~/trpc/client";
 
-/** The practitioner a form page is about (from the read model), or a 404. */
-export async function formPractitioner(slug: string) {
-	const segment = parsePractitionerSegment(slug);
+/** The practitioner a form page is about (from the read model, in the locale's market), or a 404. */
+export async function formPractitioner(slug: string, locale: Locale) {
+	const segment = parsePractitionerKey(locale, slug);
 	if (!segment) notFound();
-	const page = await getPractitionerPage(segment.rpps);
+	const page = await getPractitionerPage(identityOf(segment));
 	if (!page || page.slug !== slug) notFound();
 	return page;
 }

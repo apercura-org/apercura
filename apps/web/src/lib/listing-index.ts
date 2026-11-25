@@ -4,9 +4,22 @@
  * label to its listing slug. Only the professions imported by default (v1
  * scope) are offered, so a suggestion always leads to practitioners.
  */
-import { FR_PROFESSIONS, professionOfListingSlug } from "@apercura/core/taxonomy";
+import {
+	allAtListingSlugs,
+	FR_PROFESSIONS,
+	professionOfListingSlug,
+} from "@apercura/core/taxonomy";
 import { messagesFor } from "~/i18n/catalogs";
-import { LOCALES, type Locale } from "~/i18n/locales";
+import { LOCALES, type Locale, type MarketCountry, marketOf } from "~/i18n/locales";
+
+const AT_LISTINGS: ReadonlySet<string> = allAtListingSlugs();
+
+/** True when a listing slug belongs to the market of `locale` (France's or Austria's taxonomy). */
+function inMarket(slug: string, locale: Locale): boolean {
+	if (marketOf(locale) === "AT") return AT_LISTINGS.has(slug);
+	const profession = professionOfListingSlug(slug);
+	return Boolean(profession && FR_PROFESSIONS[profession]?.enabled);
+}
 
 /** Unaccented lowercase words, the same normalization as `directory.text_norm()`. */
 export function normalizeText(value: string): string {
@@ -46,8 +59,7 @@ function buildIndex(locale: Locale): ListingEntry[] {
 	const listing = messagesFor(locale).taxonomy.listing as Record<string, string>;
 	const entries: ListingEntry[] = [];
 	for (const [slug, message] of Object.entries(listing)) {
-		const profession = professionOfListingSlug(slug);
-		if (!profession || !FR_PROFESSIONS[profession]?.enabled) continue;
+		if (!inMarket(slug, locale)) continue;
 		const forms = labelForms(message);
 		entries.push({
 			slug,
@@ -86,14 +98,14 @@ export function suggestListings(query: string, locale: Locale, limit = 5): Listi
 }
 
 /**
- * The listing slug a query names exactly (a label in either language, in
- * either gender, singular or plural, or the slug), or null.
+ * The listing slug of a market a query names exactly (a label in any language
+ * of the market, in either gender, singular or plural, or the slug), or null.
  */
-export function resolveListing(query: string): string | null {
+export function resolveListing(query: string, country: MarketCountry = "FR"): string | null {
 	const normalized = normalizeText(query);
 	if (!normalized) return null;
 	const candidates = new Set([normalized, normalized.replace(/s\b/g, "").trim()]);
-	for (const locale of LOCALES) {
+	for (const locale of LOCALES.filter((locale) => marketOf(locale) === country)) {
 		for (const entry of indexFor(locale)) {
 			if (
 				entry.keys.some((key) => candidates.has(key) || candidates.has(key.replace(/s\b/g, "")))

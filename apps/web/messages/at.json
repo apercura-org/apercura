@@ -1,0 +1,232 @@
+{
+	"Metadata": {
+		"description": "Das offene Verzeichnis der Ärztinnen und Ärzte in Österreich, aus den offenen Ärztelisten der Länder.",
+		"proDescription": "Apercura veröffentlicht eine sachliche Seite für jede Ärztin und jeden Arzt der offenen Ärztelisten der Länder. Finden Sie Ihre Seite und beanspruchen Sie sie kostenlos.",
+		"homeTitle": "Apercura · Das offene Ärzteverzeichnis für Österreich"
+	},
+	"Site": {
+		"runningHead": "Offenes Ärzteverzeichnis für Österreich",
+		"navPro": "Für Ärztinnen und Ärzte",
+		"footer": {
+			"free": "Kostenlos für Ärztinnen, Ärzte und Patienten."
+		},
+		"folioRpps": "Kennung {rpps}"
+	},
+	"Search": {
+		"label": "Ärztin oder Arzt finden",
+		"whereHint": "Ort oder Wiener Bezirk"
+	},
+	"SearchForm": {
+		"practitioners": "Ärztinnen und Ärzte",
+		"department": "Bundesland",
+		"geoDenied": "Die Standortfreigabe ist für diese Website deaktiviert. Geben Sie stattdessen einen Ort ein.",
+		"geoUnavailable": "Ihr Standort konnte nicht ermittelt werden. Geben Sie stattdessen einen Ort ein."
+	},
+	"SearchPage": {
+		"emptyTitle": "Keine passende Ärztin, kein passender Arzt",
+		"queryOnlyNear": "Ärztinnen und Ärzte in Ihrer Nähe",
+		"startBody": "Geben Sie unter „Wer?“ einen Namen oder ein Fachgebiet ein und unter „Wo?“ einen Ort oder einen Wiener Bezirk. Sie können das Verzeichnis auch nach Bundesland durchsuchen.",
+		"unknownPlaceBody": "Prüfen Sie die Schreibweise oder geben Sie einen anderen Ort ein.",
+		"departmentPlace": "Bundesland",
+		"bookingNotOpen": "In Österreich bietet Apercura keine Online-Terminbuchung an: Rufen Sie die Ordination an.",
+		"columns": {
+			"practitioner": "Ärztin/Arzt",
+			"place": "Ordination",
+			"appointments": "Kontakt"
+		}
+	},
+	"HomePage": {
+		"hook": "Finden Sie Ärztinnen und Ärzte in Wien, der Steiermark und Salzburg: Alle haben bereits eine Seite.",
+		"pillars": {
+			"free": {
+				"description": "Kostenlos für Ärztinnen, Ärzte und Patienten, ohne Abonnement und ohne Provision."
+			}
+		},
+		"registry": {
+			"heading": "Aus den offenen Ärztelisten der Länder erstellt",
+			"intro": "Jede Seite basiert auf den Ärztelisten, die die Stadt Wien, das Land Steiermark und das Land Salzburg als offene Daten veröffentlichen (CC BY 4.0). Niemand zahlt für einen Eintrag, und niemand wird ausgelassen.",
+			"doctors": "Ärztinnen und Ärzte",
+			"dentists": "Zahnärztinnen und Zahnärzte"
+		},
+		"pro": {
+			"heading": "Sind Sie Ärztin oder Arzt?"
+		},
+		"tagline": "Das offene Verzeichnis der Ärztinnen und Ärzte in Österreich."
+	},
+	"Practitioner": {
+		"rpps": "Kennung",
+		"statusNote": {
+			"unclaimed": "Aus den offenen Ärztelisten der Länder erstellt. Die Ärztin oder der Arzt hat die Seite noch nicht vervollständigt.",
+			"verified": "Von der Ärztin oder dem Arzt vervollständigt; die Identität wurde geprüft."
+		},
+		"source": {
+			"name": "Offene Ärztelisten der Länder Wien, Steiermark und Salzburg (CC BY 4.0)"
+		},
+		"action": {
+			"call": {
+				"statement": "Über Apercura ist in Österreich keine Online-Terminbuchung möglich. Rufen Sie die Ordination an, um einen Termin zu vereinbaren."
+			}
+		},
+		"sitesHeading": "Ordinationen"
+	},
+	"PractitionerPage": {
+		"metaDescription": "{name}, {occupation}: Ordination und Kontaktdaten aus den offenen Ärztelisten der Länder.{fees, select, sector {} other {}}",
+		"metaDescriptionPlace": "{name}, {occupation} in {place}: Ordination und Kontaktdaten aus den offenen Ärztelisten der Länder.{fees, select, sector {} other {}}",
+		"unknownProfession": "Ärztin/Arzt",
+		"asideLabel": "Kontakt und Seite",
+		"action": {
+			"callNotYetOpen": "In Österreich bietet Apercura keine Online-Terminbuchung an. Um einen Termin zu vereinbaren, rufen Sie die Ordination an."
+		},
+		"claim": {
+			"body": "Diese Seite basiert auf den offenen Ärztelisten der Länder. Beanspruchen Sie sie, um sie zu prüfen und zu vervollständigen:",
+			"claimedHeading": "Von der Ärztin oder dem Arzt verwaltete Seite",
+			"claimedBody": "Die Ärztin oder der Arzt hat diese Seite beansprucht; die Identität wurde geprüft, und die Seite wird selbst vervollständigt.",
+			"contactLink": "Fragen zur Beanspruchung? Kontaktieren Sie uns",
+			"benefits": [
+				"kostenlos, ohne Abonnement und ohne Verpflichtung;",
+				"Ihr Foto, Ihre Honorare und die gesprochenen Sprachen;",
+				"Ihre Ordinationszeiten und ein Text über Ihre Ordination;",
+				"Statistiken zu den Aufrufen Ihrer Seite;",
+				"ein Teilen-Paket: Link, QR-Code und Aushang."
+			]
+		},
+		"ring": {
+			"heading": "Weitere Ärztinnen und Ärzte: {occupation} in {place}"
+		}
+	},
+	"Listing": {
+		"count": "{count, plural, one {# Ärztin oder Arzt} other {# Ärztinnen und Ärzte}}",
+		"metaTitle": "{count, plural, one {{listing} in {place}: # Ärztin oder Arzt · Apercura} other {{listing} in {place}: # Ärztinnen und Ärzte · Apercura}}",
+		"metaDescription": "{count, plural, one {# Eintrag unter „{occupation}“ in {place}, aus den offenen Ärztelisten der Länder: Adresse und Kontaktdaten{fees, select, sector {} other {}}.} other {# Einträge unter „{occupation}“ in {place}, aus den offenen Ärztelisten der Länder: Adressen und Kontaktdaten{fees, select, sector {} other {}}.}}",
+		"lead": "{count, plural, one {Die offenen Ärztelisten der Länder führen unter dieser Rubrik # Ärztin oder Arzt mit einer Ordination in {place}.} other {Die offenen Ärztelisten der Länder führen unter dieser Rubrik # Ärztinnen und Ärzte mit einer Ordination in {place}.}}",
+		"practitionersHeading": "{count, plural, one {Die Ärztin oder der Arzt} other {Die # Ärztinnen und Ärzte}}",
+		"columns": {
+			"practitioner": "Ärztin/Arzt"
+		},
+		"facts": {
+			"sources": "Offene Ärztelisten von Stadt Wien, Land Steiermark und Land Salzburg (CC BY 4.0)"
+		},
+		"communesHeading": "{listing}: Orte in {place}",
+		"nearbyHeading": "{listing}: Orte in der Nähe",
+		"hubMetaTitle": "{count, plural, one {{listing} in Österreich: # Ärztin oder Arzt · Apercura} other {{listing} in Österreich: # Ärztinnen und Ärzte · Apercura}}",
+		"hubMetaDescription": "{count, plural, one {# Eintrag unter „{occupation}“ in den offenen Ärztelisten der Länder, nach Bundesland: Adresse und Kontaktdaten{fees, select, sector {} other {}}.} other {# Einträge unter „{occupation}“ in den offenen Ärztelisten der Länder, nach Bundesland: Adressen und Kontaktdaten{fees, select, sector {} other {}}.}}",
+		"hubTitle": "{listing} in Österreich",
+		"hubLead": "{count, plural, one {Die offenen Ärztelisten der Länder führen unter dieser Rubrik # Ärztin oder Arzt mit einer Ordination in Österreich.} other {Die offenen Ärztelisten der Länder führen unter dieser Rubrik # Ärztinnen und Ärzte mit einer Ordination in Österreich.}}",
+		"departmentsHeading": "{listing} nach Bundesland",
+		"departmentsIntro": "Wählen Sie ein Bundesland, um seine Ärztinnen, Ärzte und Orte zu sehen.",
+		"metaDescriptionPage": "{count, plural, one {Seite {page} von {pages}: # Eintrag unter „{occupation}“ in {place}.} other {Seite {page} von {pages}: # Einträge unter „{occupation}“ in {place}.}}",
+		"hubMetaTitleShort": "{listing} in Österreich · Apercura"
+	},
+	"Directory": {
+		"metaTitle": "Ärzteverzeichnis nach Ort · Apercura",
+		"metaDescription": "Die Bundesländer Österreichs mit ihren Ärztinnen und Ärzten, aus den offenen Ärztelisten der Länder.",
+		"lead": "{count, plural, one {# Ärztin oder Arzt mit Ordination, nach Bundesland.} other {# Ärztinnen und Ärzte mit Ordination, nach Bundesland.}}",
+		"otherRegion": "Bundesländer",
+		"emptyBody": "Die Ärztelisten der Länder wurden auf diesem Server noch nicht importiert. Schauen Sie nach dem nächsten Import wieder vorbei.",
+		"placeMetaTitle": "Ärztinnen und Ärzte in {place} · Apercura",
+		"placeMetaDescription": "{count, plural, one {# Ärztin oder Arzt in {place}, nach Fachgebiet, aus den offenen Ärztelisten der Länder.} other {# Ärztinnen und Ärzte in {place}, nach Fachgebiet, aus den offenen Ärztelisten der Länder.}}",
+		"placeTitle": "Ärztinnen und Ärzte in {place}",
+		"placeLead": "{count, plural, one {# Ärztin oder Arzt mit Ordination in {place}.} other {# Ärztinnen und Ärzte mit Ordination in {place}.}}",
+		"communesHeading": "Orte in {place}",
+		"arrondissementsHeading": "Nach Bezirk",
+		"placeMetaTitleShort": "Ärzte in {place} · Apercura"
+	},
+	"OgImage": {
+		"runningHead": "Offenes Ärzteverzeichnis für Österreich",
+		"practitioner": {
+			"folio": "Kennung {rpps}"
+		}
+	},
+	"taxonomy": {
+		"practiceKind": {
+			"office": "Ordination"
+		}
+	},
+	"Claim": {
+		"errors": {
+			"NOT_FOUND": "Keine Seite hat diese Kennung.",
+			"INVALID_RPPS": "Diese Kennung ist ungültig: Sie steht am Ende der Adresse Ihrer Seite, zum Beispiel w7983."
+		},
+		"start": {
+			"lead": "Eine Beanspruchung bezieht sich auf eine Seite, nie auf einen Namen: Personen gleichen Namens können einander die Seite nicht wegnehmen.",
+			"contestBody": "Wenn es Ihre Seite ist (zum Beispiel, weil Sie den Zugang zu Ihrem Konto verloren haben), können Sie sie trotzdem beanspruchen: Ein Administrator prüft Ihren Nachweis und entscheidet. Die Wiederherstellung eines Kontos erfordert immer eine neue Identitätsprüfung.",
+			"findHeading": "Finden Sie Ihre Seite über ihre Kennung",
+			"notFound": "Noch keine öffentliche Seite hat diese Kennung.",
+			"rppsLabel": "Kennung oder Adresse Ihrer Seite",
+			"rppsHint": "Die Kennung steht am Ende der Adresse Ihrer Seite, zum Beispiel w7983 in apercura.org/at/arzt/anna-muster-w7983. Sie können auch die ganze Adresse einfügen.",
+			"contactLink": "Kein Nachweis zur Hand? Kontaktieren Sie uns"
+		},
+		"methods": {
+			"document": {
+				"summary": "Ein Foto Ihres Ausweises der Ärztekammer oder Zahnärztekammer oder einer Bestätigung Ihrer Eintragung in die Ärzteliste. Ein Mitglied unseres Teams prüft ihn, in der Regel innerhalb von 48 Stunden.",
+				"lead": "Senden Sie ein Foto Ihres Ausweises der Ärztekammer oder Zahnärztekammer oder einer Bestätigung Ihrer Eintragung in die Ärzteliste. Es wird vor dem Speichern verschlüsselt und 30 Tage nach der Entscheidung gelöscht."
+			}
+		},
+		"documents": {
+			"kind": {
+				"cps_card": "Ausweis der Ärztekammer oder Zahnärztekammer",
+				"ordre_attestation": "Bestätigung der Eintragung in die Ärzteliste oder Zahnärzteliste"
+			}
+		},
+		"status": {
+			"contestReview": "Diese Seite hatte bereits einen verifizierten Inhaber: Ein Administrator entscheidet anhand Ihres Nachweises.",
+			"reviewBody": "Ein Mitglied unseres Teams prüft Ihren Nachweis und meldet sich per E-Mail.",
+			"contestBody": "Ein Administrator wird anhand Ihres Nachweises entscheiden."
+		}
+	},
+	"Gdpr": {
+		"rpps": "Kennung der Seite",
+		"rppsHint": "Das Ende der Adresse der Seite, zum Beispiel w7983 in apercura.org/at/arzt/anna-muster-w7983, oder die ganze Adresse.",
+		"errors": {
+			"notFound": "Keine Seite hat diese Kennung."
+		},
+		"report": {
+			"doneBody": "Wir prüfen die Meldung. Angaben aus den Listen der Länder werden an der Quelle berichtigt, bei der Ärztekammer oder Zahnärztekammer; wenn Sie eine Adresse hinterlassen haben, informieren wir Sie."
+		},
+		"removal": {
+			"doneBody": "Sie wird nicht mehr angezeigt, indexiert oder angeführt. Wir prüfen den Antrag und antworten per E-Mail innerhalb von höchstens einem Monat. Wird er bestätigt, wird die Seite endgültig gelöscht und kehrt mit den Aktualisierungen der Listen nicht zurück.",
+			"privacy": "Eine gelöschte Seite erscheint beim nächsten Import der Listen nicht wieder.",
+			"claimedBody": "Nur ihre Inhaberin oder ihr Inhaber kann sie entfernen, im Seiten-Editor des eigenen Bereichs: Die Seite verschwindet dann sofort und kehrt mit den Aktualisierungen der Listen nicht zurück."
+		},
+		"contact": {
+			"lead": "Sie können Ihre Seite nicht mit einem Nachweis beanspruchen? Hinterlassen Sie uns Ihre Kontaktdaten: Ein Mitglied des Apercura-Teams meldet sich, um Ihre Identität zu prüfen und Ihnen zu helfen.",
+			"claimFirst": "Mit einem Foto Ihres Kammerausweises geht die Beanspruchung schneller:",
+			"rpps": "Kennung der Seite"
+		}
+	},
+	"emails": {
+		"claimReceived": {
+			"body": [
+				"Guten Tag {name},",
+				"Wir haben Ihre Beanspruchung und die zugehörigen Dokumente erhalten. Ein Mitglied des Apercura-Teams prüft sie und meldet sich per E-Mail.",
+				"Wir prüfen Beanspruchungen innerhalb von 48 Stunden an Werktagen."
+			]
+		},
+		"claimRejected": {
+			"body": [
+				"Guten Tag {name},",
+				"Wir konnten Ihre Beanspruchung nicht verifizieren. Vom Prüfer angegebener Grund: {reason}",
+				"Sie können in Ihrem Bereich eine neue Beanspruchung eröffnen, mit einem gut lesbaren Foto Ihres Kammerausweises oder einer Bestätigung der Kammer."
+			]
+		},
+		"removalReceived": {
+			"body": [
+				"Die Seite ist ab sofort ausgeblendet: Sie wird nicht mehr angezeigt, indexiert oder aufgeführt.",
+				"Wir prüfen den Antrag und antworten innerhalb von höchstens einem Monat. Wird er bestätigt, wird die Seite gelöscht; eine gelöschte Seite kehrt mit dem nächsten Import der Listen nicht zurück."
+			]
+		},
+		"removalConfirmed": {
+			"body": [
+				"Die Seite, deren Entfernung Sie beantragt haben, wurde aus Apercura gelöscht. Sie erscheint auch beim nächsten Import der Listen nicht wieder."
+			]
+		}
+	},
+	"Onboarding": {
+		"steps": {
+			"check": {
+				"lead": "Ihre Seite beruht auf der offenen Liste Ihres Bundeslandes, die die Kammer liefert. Prüfen Sie Ihren Namen, Ihre Fachrichtung und Ihre Ordinationen.",
+				"registryNote": "Etwas ist falsch? Die dauerhafte Berichtigung erfolgt über Ihre Ärztekammer oder Zahnärztekammer, die die Liste aktualisiert; die Seite übernimmt dies beim nächsten wöchentlichen Import. Im Seiten-Editor können Sie einen Ort ausblenden oder hinzufügen."
+			}
+		}
+	}
+}

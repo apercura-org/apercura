@@ -1,4 +1,5 @@
 import { getTranslations } from "next-intl/server";
+import { marketOf } from "~/i18n/locales";
 import { type Href, Link } from "~/i18n/navigation";
 import type { Locale } from "~/i18n/routing";
 import { LINKS } from "~/lib/links";
@@ -39,7 +40,10 @@ export async function SiteFooter({ locale }: { locale: Locale }) {
 				</div>
 				<nav aria-label={t("footerNav.label")} className="border-t border-rule-soft pt-4">
 					<ul className="grid grid-cols-1 gap-x-6 min-[420px]:grid-cols-2 md:flex md:flex-wrap">
-						{FOOTER_LINKS.map((item) => (
+						{FOOTER_LINKS.filter(
+							// The guides are French articles: France's pages only.
+							(item) => item.href !== "/guides" || marketOf(locale) === "FR",
+						).map((item) => (
 							<li key={item.key}>
 								<Link href={item.href} className={footerLink}>
 									{t(`footerNav.${item.key}`)}

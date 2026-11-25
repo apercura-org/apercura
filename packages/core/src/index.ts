@@ -15,15 +15,22 @@ export {
 	toE164Fr,
 } from "./normalize";
 export * from "./pagination";
+export { formatPhoneAt, toE164At } from "./phone-at";
 export * from "./profile";
 export { isValidRpps } from "./rpps";
-export { slugify } from "./slugify";
+export { slugify, slugifyDe } from "./slugify";
 export {
+	AT_ID_SCHEMES,
+	type AtIdScheme,
+	type AtPractitionerSegment,
+	atPractitionerSlug,
 	communeSlug,
 	departmentSlug,
 	type EstablishmentSegment,
 	establishmentSlug,
+	isValidAtSourceId,
 	type PractitionerSegment,
+	parseAtPractitionerSegment,
 	parseEstablishmentSegment,
 	parsePractitionerSegment,
 	practitionerSlug,

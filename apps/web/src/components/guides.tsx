@@ -1,5 +1,6 @@
 import { linkStyles } from "@apercura/ui";
 import { getTranslations } from "next-intl/server";
+import { marketOf } from "~/i18n/locales";
 import { getPathname } from "~/i18n/navigation";
 import type { Locale } from "~/i18n/routing";
 import { formatGuideDate } from "~/lib/guides/format";
@@ -138,7 +139,7 @@ export async function RelatedGuides({
 	locale: Locale;
 	guides: readonly Guide[];
 }) {
-	if (guides.length === 0) return null;
+	if (guides.length === 0 || marketOf(locale) !== "FR") return null;
 	const t = await getTranslations({ locale, namespace: "Guides" });
 	return (
 		<section aria-labelledby="related-guides-heading" className="flex flex-col gap-2">

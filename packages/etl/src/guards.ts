@@ -197,3 +197,90 @@ export function verdict(checks: GuardCheck[], approved: boolean): GuardVerdict {
 		approvable: blocking.every((check) => check.approvable),
 	};
 }
+
+// ---------------------------------------------------------------------------
+// Austria (`etl:at`): the same verdicts, per list
+// ---------------------------------------------------------------------------
+
+/**
+ * Limits of the Austrian lists. They are small (a few thousand rows) and
+ * change daily (Vienna), so a size or row change is allowed a little more
+ * room than the national French files; a floor of rows per list catches an
+ * empty or truncated distribution that would otherwise look like a mass
+ * removal.
+ */
+export const AT_LIMITS = {
+	fileSizeDelta: 0.15,
+	quarantineRatio: 0.01,
+	rowsDelta: 0.05,
+	minPlacedRatio: 0.98,
+	minRows: { wien: 1_000, stmk: 500, sbg: 300, "sbg-zahn": 50 } as Record<string, number>,
+} as const;
+
+export type AtSourceStats = {
+	lines: number;
+	rows: number;
+	people: number;
+	quarantined: number;
+};
+
+/**
+ * Per-list checks before the merge: the file still reads (quarantine within
+ * 1%), holds at least its floor of rows (never approvable: a broken
+ * distribution), and did not change by more than 5% in rows or 15% in bytes
+ * since the last successful run (approvable).
+ */
+export function checkAtSource(
+	source: string,
+	current: AtSourceStats & { bytes: number },
+	previous: (AtSourceStats & { bytes?: number }) | null,
+): GuardCheck[] {
+	const ratio = current.lines === 0 ? 1 : current.quarantined / current.lines;
+	const floor = AT_LIMITS.minRows[source] ?? 1;
+	const checks: GuardCheck[] = [
+		{
+			name: `${source}.quarantine`,
+			ok: current.lines > 0 && ratio <= AT_LIMITS.quarantineRatio,
+			approvable: false,
+			detail: `${current.quarantined} of ${current.lines} records quarantined (${percent(ratio)})`,
+		},
+		{
+			name: `${source}.rows`,
+			ok: current.rows >= floor,
+			approvable: false,
+			detail: `${current.rows} rows (at least ${floor} expected)`,
+		},
+	];
+	if (previous) {
+		const rows = delta(current.people, previous.people);
+		checks.push({
+			name: `${source}.people`,
+			ok: rows <= AT_LIMITS.rowsDelta,
+			approvable: true,
+			detail: `${current.people} people vs ${previous.people} last time (${percent(rows)})`,
+		});
+		if (previous.bytes !== undefined) {
+			const size = delta(current.bytes, previous.bytes);
+			checks.push({
+				name: `${source}.size`,
+				ok: size <= AT_LIMITS.fileSizeDelta,
+				approvable: true,
+				detail: `${current.bytes} bytes vs ${previous.bytes} last time (${percent(size)})`,
+			});
+		}
+	}
+	return checks;
+}
+
+/** After staging: nearly every practice must resolve to a Gemeinde, or listings would lose it. */
+export function checkAtPlaces(staged: { sites: number; placed: number }): GuardCheck[] {
+	const ratio = staged.sites === 0 ? 1 : staged.placed / staged.sites;
+	return [
+		{
+			name: "at.places",
+			ok: ratio >= AT_LIMITS.minPlacedRatio,
+			approvable: true,
+			detail: `${staged.placed} of ${staged.sites} practices resolve to a Gemeinde (${percent(ratio)})`,
+		},
+	];
+}

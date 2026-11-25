@@ -1,11 +1,11 @@
 import "server-only";
 import { randomUUID } from "node:crypto";
-import { isValidRpps } from "@apercura/core";
 import type { Database } from "@apercura/db";
 import { practitionerContactRequests, practitioners } from "@apercura/db/schema";
-import { and, eq } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 import { recordAudit } from "../audit";
 import { openText, sealText } from "../crypto/platform";
+import { practitionerWhere } from "../practitioner-ref";
 
 /*
  * "I am this practitioner, contact me": the path for practitioners who cannot claim their page
@@ -36,15 +36,16 @@ const TABLE = "practitioner_contact_requests";
 const COLUMN = "content_enc";
 
 /**
- * Stores a request about the active page of `rpps`, encrypted. An unknown, inactive or withheld
+ * Stores a request about the active page of `ref` (an RPPS in France, `w7983` in Austria), encrypted. An unknown, inactive or withheld
  * page answers `NOT_FOUND`; a claimed page already has a verified owner: it answers `CLAIMED`, and
  * the form says to use the claim's contest instead.
  */
 export async function submitContactRequest(
 	db: Database,
-	input: ContactRequestContent & { rpps: string; locale: string },
+	input: ContactRequestContent & { ref: string; locale: string },
 ) {
-	if (!isValidRpps(input.rpps)) throw new ContactRequestError("NOT_FOUND");
+	const where = practitionerWhere(input.ref);
+	if (!where) throw new ContactRequestError("NOT_FOUND");
 	const [practitioner] = await db
 		.select({
 			id: practitioners.id,
@@ -53,13 +54,7 @@ export async function submitContactRequest(
 			withheldAt: practitioners.withheldAt,
 		})
 		.from(practitioners)
-		.where(
-			and(
-				eq(practitioners.country, "FR"),
-				eq(practitioners.idScheme, "RPPS"),
-				eq(practitioners.nationalId, input.rpps),
-			),
-		)
+		.where(where)
 		.limit(1);
 	// A page withheld by an objection (GDPR art. 21) answers as if it did not exist: the
 	// objection is not disclosed, and nothing new is collected about the page meanwhile.

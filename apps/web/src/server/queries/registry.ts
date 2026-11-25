@@ -49,6 +49,25 @@ function isoDate(httpDate: string | null | undefined): string | null {
  * build without a database (then cached for minutes only).
  */
 export async function getRegistryStatus(): Promise<RegistryStatus | null> {
+	const status = await getImportStatus("fr");
+	if (!status) return null;
+	const files: RegistryStatus["files"] = {};
+	for (const key of REGISTRY_FILES) {
+		const date = status.files[key];
+		if (date) files[key] = date;
+	}
+	return { ...status, files };
+}
+
+/** An import's status: dates of the last import and check, and of every file it read. */
+export type ImportStatus = Omit<RegistryStatus, "files"> & { files: Record<string, string> };
+
+/**
+ * The status of one market's import (`directory.etl_runs.source`: `fr`, `at`): when it last
+ * imported, when it last checked the sources, and the publication date of every file of its last
+ * import (`Last-Modified`), whatever their keys. Null before the first import.
+ */
+export async function getImportStatus(source: "fr" | "at"): Promise<ImportStatus | null> {
 	"use cache";
 	cacheTag("registry");
 	if (!hasDatabaseUrl()) {
@@ -64,19 +83,19 @@ export async function getRegistryStatus(): Promise<RegistryStatus | null> {
 			ok.files
 		FROM (
 			SELECT finished_at, files FROM directory.etl_runs
-			WHERE source = 'fr' AND status = 'succeeded' AND finished_at IS NOT NULL
+			WHERE source = ${source} AND status = 'succeeded' AND finished_at IS NOT NULL
 			ORDER BY id DESC LIMIT 1
 		) ok
 		LEFT JOIN LATERAL (
 			SELECT finished_at FROM directory.etl_runs
-			WHERE source = 'fr' AND status IN ('succeeded', 'skipped') AND finished_at IS NOT NULL
+			WHERE source = ${source} AND status IN ('succeeded', 'skipped') AND finished_at IS NOT NULL
 			ORDER BY id DESC LIMIT 1
 		) checked ON true
 	`;
 	if (!row) return null;
-	const files: RegistryStatus["files"] = {};
-	for (const key of REGISTRY_FILES) {
-		const date = isoDate(row.files?.[key]?.lastModified);
+	const files: Record<string, string> = {};
+	for (const [key, file] of Object.entries(row.files ?? {})) {
+		const date = isoDate(file?.lastModified);
 		if (date) files[key] = date;
 	}
 	return { importedAt: row.importedAt, checkedAt: row.checkedAt, files };

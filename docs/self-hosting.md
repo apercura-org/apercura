@@ -167,6 +167,18 @@ The scheduler reruns the import every Monday at 03:00 UTC. Set
 `ETL_SCHEDULE_ARGS=--department 75` to keep it to one department, and follow
 it with `apercura-compose logs -f scheduler`.
 
+Austria (`/at`) has its own import, from the Vienna, Styria and Salzburg open
+data (CC BY 4.0, about 10,400 doctors and dentists, a few seconds):
+
+```sh
+apercura-compose run --rm --entrypoint "apercura etl:at" etl
+```
+
+It imports the Austrian Gemeinden on its first run. The scheduler reruns it
+every Monday at 05:30 UTC (`ETL_AT_SCHEDULE_ARGS=--sources wien` keeps it to
+some lists). Exit code `3` means it imported, but left out a list it could not
+fetch or read ([data-import.md](./data-import.md#austria)).
+
 ## Scheduled jobs
 
 The `scheduler` service runs [`docker/crontab`](../docker/crontab) with

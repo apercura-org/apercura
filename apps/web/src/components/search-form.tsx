@@ -74,7 +74,7 @@ export function SearchForm({
 		retry: false,
 	});
 	const whereResults = useQuery({
-		...trpc.search.where.queryOptions({ q: whereQuery }),
+		...trpc.search.where.queryOptions({ q: whereQuery, locale }),
 		enabled: touched.where && whereQuery.length >= 2 && whereQuery.length <= 80,
 		placeholderData: keepPreviousData,
 		staleTime: 60_000,

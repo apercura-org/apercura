@@ -2,7 +2,7 @@ import { appointmentTypes, calendars, sites } from "@apercura/db/schema";
 import { and, asc, eq, inArray } from "drizzle-orm";
 import { siteAddressLine } from "~/server/queries/site-address";
 import { findCalendar, findType, slotGrid } from "./availability";
-import { BOOKING_LIMITS, bookingEnabled } from "./config";
+import { BOOKING_LIMITS, bookingEnabled, inBookingMarket } from "./config";
 import { BookingError } from "./errors";
 import { areaCommunes } from "./home-visit";
 import { type BookingRuntime, limit } from "./runtime";
@@ -46,6 +46,7 @@ export async function bookingOptions(
 		.where(
 			and(
 				eq(calendars.status, "open"),
+				inBookingMarket(),
 				input.calendarId ? eq(calendars.id, input.calendarId) : undefined,
 				input.practitionerId !== undefined
 					? eq(calendars.practitionerId, input.practitionerId)

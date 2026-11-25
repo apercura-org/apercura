@@ -9,7 +9,7 @@ import { GuideList, GuideSources, GuideToc } from "~/components/guides";
 import { JsonLd } from "~/components/json-ld";
 import { PublicPage } from "~/components/public-page";
 import { Trail, type TrailItem, trailEntries } from "~/components/trail";
-import { LOCALE_TAGS } from "~/i18n/locales";
+import { LOCALE_TAGS, marketOf } from "~/i18n/locales";
 import { getPathname, Link } from "~/i18n/navigation";
 import { type Locale, routing } from "~/i18n/routing";
 import { articleJsonLd } from "~/lib/article-json-ld";
@@ -38,7 +38,8 @@ async function resolve(params: Props["params"]) {
 	const { locale: requested, slug } = await params;
 	const locale: Locale = hasLocale(routing.locales, requested) ? requested : routing.defaultLocale;
 	const guide = guideBySlug(slug);
-	if (!guide) notFound();
+	// French articles about France's health system: France's pages only.
+	if (!guide || marketOf(locale) !== "FR") notFound();
 	return {
 		locale,
 		guide,

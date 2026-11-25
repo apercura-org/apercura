@@ -1,6 +1,7 @@
 import "server-only";
 import { randomUUID } from "node:crypto";
-import { type Fees, toE164Fr } from "@apercura/core";
+import type { Fees } from "@apercura/core";
+import { countryAdapter } from "@apercura/core/country";
 import type { Database } from "@apercura/db";
 import {
 	activities,
@@ -210,29 +211,52 @@ export async function setSiteHidden(
 
 /**
  * Adds a place the registry does not list (a second practice, a new
- * address). Located at the commune's centre: the page shows its address
- * without a map until it is geocoded.
+ * address), in the practitioner's market. Located at the commune's centre:
+ * the page shows its address without a map until it is geocoded. France finds
+ * the commune by postcode; Austria, whose places carry no postcodes, by the
+ * Vienna district of a 1xx0 postcode, else by the Gemeinde's name.
  */
 export async function addOwnerSite(db: Database, practitionerId: number, input: OwnerSiteData) {
-	const phone = input.phone ? toE164Fr(input.phone) : null;
-	if (input.phone && !phone) throw new ProfileError("BAD_PHONE");
 	return db.transaction(async (tx) => {
-		const [place] = await tx.execute<{ id: number }>(sql`
-			SELECT p.id FROM directory.places p
-			WHERE p.kind IN ('commune', 'arrondissement') AND p.removed_at IS NULL
-				AND ${input.postcode} = ANY (p.postcodes)
-			ORDER BY (directory.text_norm(p.name) = directory.text_norm(${input.city})) DESC,
-				similarity(directory.text_norm(p.name), directory.text_norm(${input.city})) DESC,
-				p.kind = 'arrondissement' DESC
-			LIMIT 1
+		const [owner] = await tx.execute<{ country: string }>(sql`
+			SELECT country FROM directory.practitioners WHERE id = ${practitionerId}
 		`);
+		const country = owner?.country ?? "FR";
+		const adapter = countryAdapter(country);
+		const phone = input.phone ? adapter.phone.toE164(input.phone) : null;
+		if (input.phone && !phone) throw new ProfileError("BAD_PHONE");
+		if (!adapter.address.postcode.test(input.postcode)) throw new ProfileError("UNKNOWN_PLACE");
+		const district = country === "AT" ? /^1(\d{2})0$/.exec(input.postcode)?.[1] : undefined;
+		const [place] =
+			country === "AT"
+				? await tx.execute<{ id: number }>(sql`
+					SELECT p.id FROM directory.places p
+					WHERE p.country = 'AT' AND p.removed_at IS NULL AND (
+						(p.kind = 'arrondissement' AND p.code = ${district ? `9${district}01` : ""})
+						OR (p.kind = 'commune' AND p.code <> '90001'
+							AND similarity(directory.text_norm(p.name), directory.text_norm(${input.city})) > 0.5)
+					)
+					ORDER BY p.kind = 'arrondissement' DESC,
+						(directory.text_norm(p.name) = directory.text_norm(${input.city})) DESC,
+						similarity(directory.text_norm(p.name), directory.text_norm(${input.city})) DESC
+					LIMIT 1
+				`)
+				: await tx.execute<{ id: number }>(sql`
+					SELECT p.id FROM directory.places p
+					WHERE p.country = 'FR' AND p.kind IN ('commune', 'arrondissement') AND p.removed_at IS NULL
+						AND ${input.postcode} = ANY (p.postcodes)
+					ORDER BY (directory.text_norm(p.name) = directory.text_norm(${input.city})) DESC,
+						similarity(directory.text_norm(p.name), directory.text_norm(${input.city})) DESC,
+						p.kind = 'arrondissement' DESC
+					LIMIT 1
+				`);
 		if (!place) throw new ProfileError("UNKNOWN_PLACE");
 		const key = randomUUID();
 		const [site] = await tx.execute<{ id: number }>(sql`
 			INSERT INTO directory.sites (source, source_key, kind, name, address_line, postcode,
 				commune_label, country_code, place_id, location, geo_precision, geo_source, phone, phone_kind)
 			SELECT 'owner', ${key}, 'office', ${input.name}, ${input.addressLine}, ${input.postcode},
-				${input.city}, 'FR', p.id, p.centroid, CASE WHEN p.centroid IS NULL THEN NULL ELSE 'city' END,
+				${input.city}, ${country}, p.id, p.centroid, CASE WHEN p.centroid IS NULL THEN NULL ELSE 'city' END,
 				CASE WHEN p.centroid IS NULL THEN NULL ELSE 'centroid' END, ${phone},
 				CASE WHEN ${phone}::text IS NULL THEN NULL ELSE 'direct' END
 			FROM directory.places p WHERE p.id = ${place.id}
@@ -244,7 +268,7 @@ export async function addOwnerSite(db: Database, practitionerId: number, input: 
 			siteId: site.id,
 			source: "owner",
 			sourceKey: key,
-			modeCode: "L",
+			modeCode: country === "FR" ? "L" : null,
 			practiceKind: "office",
 		});
 		return { siteId: site.id };

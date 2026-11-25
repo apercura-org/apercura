@@ -183,7 +183,7 @@ describe.skipIf(!url)("owner experience (database)", async () => {
 		const page = await practitioner();
 		const owned = await practitioner({ claimed: true });
 		const input = {
-			rpps: page.rpps,
+			ref: page.rpps,
 			name: "Exemple Martin",
 			email: "Exemple.Martin@Exemple.test",
 			phone: "01 99 00 00 00",
@@ -202,7 +202,7 @@ describe.skipIf(!url)("owner experience (database)", async () => {
 		);
 		expect(
 			await codeOf(
-				visitor.practitionerContact.submit({ ...input, rpps: owned.rpps, altcha: await proof() }),
+				visitor.practitionerContact.submit({ ...input, ref: owned.rpps, altcha: await proof() }),
 			),
 		).toBe("CLAIMED");
 		// A page withheld by an objection answers like an unknown one, and stores nothing.
@@ -212,7 +212,7 @@ describe.skipIf(!url)("owner experience (database)", async () => {
 			await codeOf(
 				visitor.practitionerContact.submit({
 					...input,
-					rpps: withheld.rpps,
+					ref: withheld.rpps,
 					altcha: await proof(),
 				}),
 			),
@@ -254,7 +254,7 @@ describe.skipIf(!url)("owner experience (database)", async () => {
 	it("lets administrators alone list, decrypt (audited) and move a request", async () => {
 		const page = await practitioner();
 		const { id } = await contacts.submitContactRequest(db, {
-			rpps: page.rpps,
+			ref: page.rpps,
 			name: "Exemple Dupont",
 			email: "dupont@exemple.test",
 			phone: null,
@@ -305,7 +305,7 @@ describe.skipIf(!url)("owner experience (database)", async () => {
 		const t0 = Date.now() + 1_000;
 		const submit = () =>
 			contacts.submitContactRequest(db, {
-				rpps: page.rpps,
+				ref: page.rpps,
 				name: "Exemple Durand",
 				email: "durand@exemple.test",
 				phone: null,
@@ -518,14 +518,14 @@ describe.skipIf(!url)("owner experience (database)", async () => {
 		// A claimed page is removed by its owner, from the editor: the public form refuses it.
 		await expect(
 			gdpr.requestRemoval(db, {
-				rpps: owned.rpps,
+				ref: owned.rpps,
 				contact: "owner@exemple.test",
 				message: null,
 				locale: "fr",
 			}),
 		).rejects.toMatchObject({ code: "CLAIMED" });
 		const request = await gdpr.requestRemoval(db, {
-			rpps: page.rpps,
+			ref: page.rpps,
 			contact: "objection@exemple.test",
 			message: null,
 			locale: "fr",

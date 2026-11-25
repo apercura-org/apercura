@@ -6,18 +6,21 @@ import { timeZoneForDepartment } from "../time/departments";
 import { COUNTRY_ADAPTERS, COUNTRY_CODES, countryAdapter, france } from "./index";
 
 describe("country adapters", () => {
-	it("serves France and refuses markets that are not open", () => {
+	it("serves France and Austria and refuses markets that are not open", () => {
 		expect(countryAdapter("FR")).toBe(france);
 		expect(() => countryAdapter("DE")).toThrow(RangeError);
 		expect(() => countryAdapter("XX")).toThrow(RangeError);
-		expect(Object.keys(COUNTRY_ADAPTERS)).toEqual(["FR"]);
-		expect(COUNTRY_CODES).toEqual(["FR", "DE", "GB", "ES", "IT"]);
+		expect(Object.keys(COUNTRY_ADAPTERS)).toEqual(["FR", "AT"]);
+		expect(COUNTRY_CODES).toEqual(["FR", "AT", "DE", "GB", "ES", "IT"]);
 	});
 
 	it("wraps the existing French rules without changing them", () => {
-		expect(france.practitionerId.isValid).toBe(isValidRpps);
-		expect(france.practitionerId.isValid("19999990013")).toBe(true);
-		expect(france.practitionerId.isValid("19999990014")).toBe(false);
+		const [rpps] = france.practitionerIds;
+		expect(france.practitionerIds).toHaveLength(1);
+		expect(rpps?.id).toBe("RPPS");
+		expect(rpps?.isValid).toBe(isValidRpps);
+		expect(rpps?.isValid("19999990013")).toBe(true);
+		expect(rpps?.isValid("19999990014")).toBe(false);
 		expect(france.timeZoneOf).toBe(timeZoneForDepartment);
 		expect(france.timeZoneOf("974")).toBe("Indian/Reunion");
 		expect(() => france.timeZoneOf("99")).toThrow(RangeError);

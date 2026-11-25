@@ -39,8 +39,18 @@ const pathnames = Object.keys(routing.pathnames) as AppPathname[];
 
 const move = (path: string, legacyRoot = true) => marketPath(path, { legacyRoot })?.path ?? null;
 
+/** The locales of the former scheme: Austria's pages never had another address. */
+const FORMER_LOCALES = LOCALES.filter((locale) => locale !== "de-AT");
+
 describe("marketPath: every page of the former scheme has a new address", () => {
-	for (const locale of LOCALES) {
+	it("leaves Austria's pages where they are", () => {
+		for (const pathname of pathnames) {
+			const path = currentPath("de-AT", pathname);
+			expect(marketPath(path, { legacyRoot: true }), path).toBeNull();
+		}
+	});
+
+	for (const locale of FORMER_LOCALES) {
 		it(`moves every ${locale} page (${pathnames.length} route families)`, () => {
 			for (const pathname of pathnames) {
 				const before = formerPath(locale, pathname);
