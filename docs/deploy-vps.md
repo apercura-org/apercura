@@ -2,16 +2,19 @@
 
 The cheapest way to put Apercura online: one generic Linux server, the
 [self-hosting](./self-hosting.md) Compose stack, a Caddy on the host for TLS,
-and a deploy from GitHub Actions after every green CI run on `main`. The image
-is built on the server, so the environment file (secrets, the legal facts of
-the publisher and the host) never leaves it and never goes through GitHub.
+and a deploy after every green CI run on `main`. Production runs it under
+[Coolify](#under-coolify), which GitHub Actions asks to deploy through its API;
+without Coolify, the same deploy goes [over SSH](#deploy-over-ssh-without-coolify).
+Either way the image is built on the server, so the environment file (secrets,
+the legal facts of the publisher and the host) never leaves it and never goes
+through GitHub.
 
-| File                           | Role                                                                                  |
-| ------------------------------ | ------------------------------------------------------------------------------------- |
-| `docker/compose.selfhost.yml`  | The whole stack (see [self-hosting](./self-hosting.md))                               |
-| `docker/compose.vps.yml`       | Override: the public host name resolved to the host for the scheduler, log rotation   |
-| `docker/deploy-vps.sh`         | Server side: checks a commit of `main`, checks it out, builds, restarts, health check |
-| `.github/workflows/deploy.yml` | After CI passes on a push to `main`: one SSH call with the commit sha                 |
+| File                           | Role                                                                                |
+| ------------------------------ | ----------------------------------------------------------------------------------- |
+| `docker/compose.selfhost.yml`  | The whole stack (see [self-hosting](./self-hosting.md))                             |
+| `docker/compose.vps.yml`       | Override: the public host name resolved to the host for the scheduler, log rotation |
+| `docker/deploy-vps.sh`         | Without Coolify: checks a commit of `main`, checks it out, builds, restarts, health |
+| `.github/workflows/deploy.yml` | After CI passes on a push to `main`: a Coolify deployment, followed to the end      |
 
 ## Who it is for
 
@@ -175,17 +178,100 @@ curl -s http://127.0.0.1:3000/api/health      # {"status":"ok"}
 
 Then the [first import](./self-hosting.md#first-import) and the
 [first administrator](./self-hosting.md#first-administrator), as in the
-self-hosting guide. Later deploys go through `docker/deploy-vps.sh`.
+self-hosting guide. Later deploys go through Coolify or, without it,
+`docker/deploy-vps.sh`.
 
-## Deploy key
+## Under Coolify
+
+Production runs the same stack under [Coolify](https://coolify.io) (v4) as a
+"Docker Compose" application pointed at `docker/compose.selfhost.yml`, branch
+`main`:
+
+- the variables of the environment file are set in Coolify, not in a file on
+  the server;
+- Coolify does not mount single files from the repository: in place of
+  `docker/postgres/10-apercura-roles.sh` it creates an empty directory, so the
+  database's first-start script does not run. Nothing to do: `migrate` sets
+  the roles' logins and passwords from `APERCURA_*_DB_PASSWORD` after the
+  migrations, on every deploy. Changing one of them in Coolify and redeploying
+  rotates it;
+- the domain goes on the `app` service, port `3000`;
+- Coolify's Traefik is the only proxy: no Caddy on the host, and
+  `TRUSTED_PROXY_COUNT=1`;
+- Coolify builds and restarts the stack itself; the override file
+  `docker/compose.vps.yml` and `docker/deploy-vps.sh` are not used. Backups and
+  alerts are still needed (the sections below, adapted to the containers
+  Coolify names).
+
+### Deploys gated on CI
+
+**Turn off Coolify's own automatic deploy** on push (the application's
+"Auto Deploy" setting, or no GitHub webhook): otherwise Coolify deploys every
+push to `main` before CI has run. `.github/workflows/deploy.yml` then deploys
+instead, after every successful `CI` run on a push to `main` (a merged pull
+request), one deploy at a time (concurrency group `deploy-production`, never
+cancelled midway):
+
+1. it checks that the head of `main` is the commit CI tested. If `main` has
+   moved on, it does nothing: the newer commit's own CI run deploys it, once
+   green;
+2. it asks Coolify to deploy the application (`POST /api/v1/deploy`) and
+   follows the deployment (`GET /api/v1/deployments/<uuid>`) until it is
+   `finished`, for up to 30 minutes. Any other end (`failed`, cancelled) or the
+   timeout fails the job;
+3. Coolify cannot be given a commit, only the head of the branch: if the
+   commit it built differs from the tested one (a push in between), the job
+   summary shows a warning;
+4. it checks `PRODUCTION_URL/api/health` for a 200.
+
+**Actions > Deploy > Run workflow** deploys by hand: the head of `main`, only
+if CI passed on it. There is no deploy of an older commit and no automatic
+rollback: migrations only go forward; going back is a revert on `main` (or a
+[restore](./self-hosting.md#backups-and-restore)).
+
+The Coolify API is off by default. In Coolify:
+
+1. **Settings > Advanced**: enable the API. It is served under the public
+   Coolify URL (`https://coolify.example.org/api/v1`, through Coolify's
+   Traefik, with its UI), which is how GitHub's runners reach it; an IP
+   allowlist there would have to allow GitHub's ranges;
+2. **Keys & Tokens > API tokens**: create a token for GitHub only, with the
+   `deploy` ability (queue a deployment) and `read` (follow it). Nothing else:
+   not `write`, `read:sensitive` or root;
+3. copy the application's UUID (in its URL, or its configuration page).
+
+## GitHub settings
+
+In **Settings > Environments**, create `production` (optionally limited to the
+`main` branch, with required reviewers if every deploy should be approved),
+then:
+
+| Kind                | Name                       | Value                                                              |
+| ------------------- | -------------------------- | ------------------------------------------------------------------ |
+| Environment secret  | `COOLIFY_TOKEN`            | The API token above                                                |
+| Variable            | `COOLIFY_URL`              | `https://coolify.example.org`                                      |
+| Variable            | `COOLIFY_APP_UUID`         | The application's UUID                                             |
+| Repository variable | `PRODUCTION_URL`           | `https://example.org`: the deploy's health check, and `uptime.yml` |
+| Repository variable | `UPTIME_PRACTITIONER_PATH` | Optional, e.g. `/praticien/<slug>`                                 |
+
+Without `COOLIFY_TOKEN` or `COOLIFY_APP_UUID` (forks) the deploy job does
+nothing. The token never appears in the logs: it is sent through a header
+file, and GitHub masks secrets.
+
+## Deploy over SSH (without Coolify)
+
+On a plain Compose VPS (Caddy on the host, `docker/compose.vps.yml`), the
+deploy goes over SSH instead: `.github/workflows/deploy.yml` targets Coolify,
+so replace its deploy step with the one below.
 
 `docker/deploy-vps.sh <sha>` fetches `origin/main`, refuses anything that is
 not a full 40-character sha of a commit on `main` (and a checkout with local
 changes), checks it out detached, builds the image, runs `up -d` (migrations
 first), waits up to 180 s for the app container to be healthy, checks
 `/api/health` on the host port, prunes dangling images and prints the deployed
-sha. There is **no automatic rollback**: migrations only go forward, a failed
-deploy leaves the stack as it is, and going back is a
+sha. Unlike Coolify it deploys the exact commit CI tested. There is **no
+automatic rollback**: migrations only go forward, a failed deploy leaves the
+stack as it is, and going back is a
 [restore](./self-hosting.md#backups-and-restore). Paths and the timeout can be
 overridden (see the script's header).
 
@@ -219,50 +305,44 @@ run on the server's console:
 ssh-keyscan -p 22 example.org > known_hosts
 ```
 
-## GitHub settings
+In the `production` environment, set the secrets `DEPLOY_HOST` (the server's
+host name or address), `DEPLOY_SSH_KEY` (the private key `apercura-deploy`)
+and `DEPLOY_KNOWN_HOSTS` (the `known_hosts` lines above), and optionally the
+variables `DEPLOY_USER` (default `deploy`) and `DEPLOY_PORT` (default `22`).
+The deploy step, with the job's `env` and skip condition changed to
+`DEPLOY_HOST` (the sha is the one CI tested, from the "Resolve the tested
+commit" step):
 
-In **Settings > Environments**, create `production` (optionally limited to the
-`main` branch, with required reviewers if every deploy should be approved),
-then:
+```yaml
+- name: Deploy over SSH
+  if: env.DEPLOY_HOST != ''
+  timeout-minutes: 30
+  env:
+    DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+    DEPLOY_USER: ${{ vars.DEPLOY_USER || 'deploy' }}
+    DEPLOY_PORT: ${{ vars.DEPLOY_PORT || '22' }}
+    DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+    DEPLOY_KNOWN_HOSTS: ${{ secrets.DEPLOY_KNOWN_HOSTS }}
+    SHA: ${{ steps.sha.outputs.sha }}
+  run: |
+    set -euo pipefail
+    dir="$RUNNER_TEMP/deploy-ssh"
+    install -d -m 700 "$dir"
+    install -m 600 /dev/null "$dir/key"
+    install -m 600 /dev/null "$dir/known_hosts"
+    trap 'rm -rf "$dir"' EXIT
+    printf '%s\n' "$DEPLOY_SSH_KEY" > "$dir/key"
+    printf '%s\n' "$DEPLOY_KNOWN_HOSTS" > "$dir/known_hosts"
+    # The server's forced command reads the sha from SSH_ORIGINAL_COMMAND.
+    ssh -i "$dir/key" -p "$DEPLOY_PORT" \
+      -o BatchMode=yes -o IdentitiesOnly=yes \
+      -o StrictHostKeyChecking=yes -o UserKnownHostsFile="$dir/known_hosts" \
+      -o ConnectTimeout=20 -o ServerAliveInterval=30 -o ServerAliveCountMax=10 \
+      "${DEPLOY_USER}@${DEPLOY_HOST}" "$SHA"
+```
 
-| Kind                | Name                       | Value                                                          |
-| ------------------- | -------------------------- | -------------------------------------------------------------- |
-| Environment secret  | `DEPLOY_HOST`              | The server's host name or address                              |
-| Environment secret  | `DEPLOY_SSH_KEY`           | The private key `apercura-deploy`                              |
-| Environment secret  | `DEPLOY_KNOWN_HOSTS`       | The `known_hosts` lines above                                  |
-| Variable            | `DEPLOY_USER`              | Optional, default `deploy`                                     |
-| Variable            | `DEPLOY_PORT`              | Optional, default `22`                                         |
-| Repository variable | `PRODUCTION_URL`           | `https://example.org`: turns on `.github/workflows/uptime.yml` |
-| Repository variable | `UPTIME_PRACTITIONER_PATH` | Optional, e.g. `/praticien/<slug>`                             |
-
-`.github/workflows/deploy.yml` then runs after every successful `CI` run on a
-push to `main` (a merged pull request), one deploy at a time (concurrency
-group `deploy-production`, never cancelled midway). **Actions > Deploy > Run
-workflow** deploys by hand: the head of `main`, or an older sha of `main`.
-Deploying an older sha is only safe when no migration came in between. Without
-`DEPLOY_HOST` (forks) the job does nothing.
-
-## Under Coolify
-
-The same stack also runs under [Coolify](https://coolify.io) as a "Docker
-Compose" application pointed at `docker/compose.selfhost.yml`:
-
-- the variables of the environment file are set in Coolify, not in a file on
-  the server;
-- Coolify does not mount single files from the repository: in place of
-  `docker/postgres/10-apercura-roles.sh` it creates an empty directory, so the
-  database's first-start script does not run. Nothing to do: `migrate` sets
-  the roles' logins and passwords from `APERCURA_*_DB_PASSWORD` after the
-  migrations, on every deploy. Changing one of them in Coolify and redeploying
-  rotates it;
-- the domain goes on the `app` service, port `3000`;
-- Coolify's Traefik is the only proxy: no Caddy on the host, and
-  `TRUSTED_PROXY_COUNT=1`;
-- Coolify builds and restarts the stack itself, in place of
-  `docker/deploy-vps.sh` and the deploy from GitHub Actions (leave
-  `DEPLOY_HOST` unset); the override file `docker/compose.vps.yml` is not
-  used. Backups and alerts are still needed
-  (the sections below, adapted to the containers Coolify names).
+The SSH deploy can target an older commit of `main` (pass its sha in place of
+the resolved one); that is only safe when no migration came in between.
 
 ## Backups
 
