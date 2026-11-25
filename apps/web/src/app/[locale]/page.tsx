@@ -16,13 +16,11 @@ import { SiteFooter } from "~/components/site-footer";
 import { SiteHeader } from "~/components/site-header";
 import { SpecimenPage } from "~/components/specimen-page";
 import { serverEnv } from "~/env";
-import { getPathname, Link } from "~/i18n/navigation";
+import { Link } from "~/i18n/navigation";
 import { routing } from "~/i18n/routing";
-import { LINKS } from "~/lib/links";
 import { getPillars } from "~/lib/pillars";
-import { BRAND, CONTENT_LANGUAGES, homeAlternates, pageMetadata } from "~/lib/seo";
-import { siteOrigin } from "~/lib/site-url";
-import { siteNodes } from "~/lib/structured-data";
+import { homeAlternates, pageMetadata } from "~/lib/seo";
+import { apercuraSiteNodes } from "~/lib/site-entities";
 
 /** National register figures supplied in PRODUCT.md (Annuaire Santé, 19 November 2026). */
 const REGISTRY = {
@@ -58,8 +56,6 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
 	const tSite = await getTranslations({ locale, namespace: "Site" });
 
 	const tMeta = await getTranslations({ locale, namespace: "Metadata" });
-	const origin = siteOrigin();
-	const searchPath = getPathname({ href: "/recherche", locale });
 
 	return (
 		<>
@@ -68,16 +64,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
 				href="/"
 				name={tMeta("homeTitle")}
 				description={tMeta("description")}
-				extra={siteNodes({
-					origin,
-					name: BRAND,
-					description: tMeta("description"),
-					language: CONTENT_LANGUAGES[locale],
-					logo: `${origin}/icon/512`,
-					// The search page reads `quoi`; a query naming a page answers a redirect to it.
-					searchUrlTemplate: `${origin}${searchPath}?quoi={search_term_string}`,
-					sameAs: [LINKS.repository],
-				})}
+				extra={apercuraSiteNodes()}
 			/>
 			<SiteHeader locale={locale} href="/" showWordmark={false} />
 			<main id="main" tabIndex={-1} className="flex-1 outline-none">

@@ -567,12 +567,6 @@
 			"heading": "Altri professionisti: {occupation} a {place}"
 		},
 		"photoAlt": "Foto di {name}",
-		"withheld": {
-			"metaTitle": "Pagina nascosta · Apercura",
-			"title": "Questa pagina è nascosta",
-			"body": "È in corso la verifica di una richiesta di rimozione per questa pagina. Nel frattempo non viene mostrata.",
-			"dataLink": "Come vengono pubblicate e rimosse le pagine"
-		},
 		"metaTitleName": "{name} · Apercura",
 		"metaDescriptionBookable": "{name}, {occupation}: prenotazione online, indirizzo, recapiti e {fees, select, sector {settore tariffario} other {convenzione tariffaria}}.",
 		"metaDescriptionBookablePlace": "{name}, {occupation} a {place}: prenotazione online, indirizzo, recapiti e {fees, select, sector {settore tariffario} other {convenzione tariffaria}}."

@@ -567,12 +567,6 @@
 			"heading": "Autres praticiens : {occupation} à {place}"
 		},
 		"photoAlt": "Photo de {name}",
-		"withheld": {
-			"metaTitle": "Page masquée · Apercura",
-			"title": "Cette page est masquée",
-			"body": "Une demande de retrait de cette page est en cours de vérification. Elle n’est pas affichée en attendant.",
-			"dataLink": "Comment les pages sont publiées et retirées"
-		},
 		"metaTitleName": "{name} · Apercura",
 		"metaDescriptionBookable": "{name}, {occupation} : prise de rendez-vous en ligne, adresse, coordonnées et {fees, select, sector {secteur de conventionnement} other {conventionnement}}.",
 		"metaDescriptionBookablePlace": "{name}, {occupation} à {place} : prise de rendez-vous en ligne, adresse, coordonnées et {fees, select, sector {secteur de conventionnement} other {conventionnement}}."

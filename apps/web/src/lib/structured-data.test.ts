@@ -124,6 +124,9 @@ describe("practitionerNodes", () => {
 		expect(dentist.medicalSpecialty).toBe("https://schema.org/Dentistry");
 		expect(dentist.location).toEqual({ "@id": `${URL_OFFICE}#site-101` });
 		expect(dentist).not.toHaveProperty("givenName");
+		// A dentist's office is not "a doctor's office".
+		expect(nodeOf(nodes, "PhysiciansOffice")).toBeUndefined();
+		expect(nodeOf(nodes, "MedicalBusiness")["@id"]).toBe(`${URL_OFFICE}#site-101`);
 	});
 
 	it("describes a midwife as Person with an occupation and work locations", () => {
@@ -143,7 +146,11 @@ describe("practitionerNodes", () => {
 		expect(person.hasOccupation).toEqual({
 			"@type": "Occupation",
 			name: "Sage-femme",
-			occupationalCategory: "2222",
+			occupationalCategory: {
+				"@type": "CategoryCode",
+				codeValue: "2222",
+				inCodeSet: { "@type": "CategoryCodeSet", name: "ISCO-08" },
+			},
 		});
 		expect(person).not.toHaveProperty("medicalSpecialty");
 		expect(person.workLocation).toEqual({ "@id": `${URL_OFFICE}#site-101` });
@@ -165,10 +172,16 @@ describe("practitionerNodes", () => {
 		expect(person.hasOccupation).toEqual({
 			"@type": "Occupation",
 			name: "Infirmière",
-			occupationalCategory: "2221",
+			occupationalCategory: {
+				"@type": "CategoryCode",
+				codeValue: "2221",
+				inCodeSet: { "@type": "CategoryCodeSet", name: "ISCO-08" },
+			},
 		});
 		expect(person).not.toHaveProperty("medicalSpecialty");
 		expect(person.workLocation).toEqual({ "@id": `${URL_OFFICE}#site-101` });
+		expect(nodeOf(nodes, "MedicalBusiness")["@id"]).toBe(`${URL_OFFICE}#site-101`);
+		expect(nodeOf(nodes, "PhysiciansOffice")).toBeUndefined();
 	});
 
 	it("adds a ReserveAction only when online booking is open", () => {
@@ -256,23 +269,41 @@ describe("medicalSpecialtiesOf", () => {
 });
 
 describe("page entities", () => {
-	it("links the home page, the website and its search action", () => {
+	it("describes the website and its publisher, with a logo and no search action", () => {
 		const nodes = siteNodes({
 			origin: ORIGIN,
 			name: "Apercura",
-			description: "Annuaire ouvert.",
-			language: "fr-FR",
 			logo: `${ORIGIN}/icon/512`,
-			searchUrlTemplate: `${ORIGIN}/recherche?quoi={search_term_string}`,
 			sameAs: ["https://github.com/maxgfr/apercura"],
 		});
 		expect(graph(nodes)).toMatchSnapshot();
 		const website = nodeOf(nodes, "WebSite");
-		expect(website["@id"]).toBe(ids.website(ORIGIN));
-		expect(website.potentialAction).toMatchObject({
-			"@type": "SearchAction",
-			"query-input": "required name=search_term_string",
+		expect(website).toEqual({
+			"@type": "WebSite",
+			"@id": ids.website(ORIGIN),
+			url: `${ORIGIN}/`,
+			name: "Apercura",
+			publisher: { "@id": ids.organization(ORIGIN) },
 		});
+		// Google retired the sitelinks search box; the search pages are disallowed in robots.txt.
+		expect(keysOf(nodes)).not.toContain("potentialAction");
+		const organization = nodeOf(nodes, "Organization");
+		expect(organization["@id"]).toBe(ids.organization(ORIGIN));
+		expect(organization.logo).toMatchObject({
+			"@type": "ImageObject",
+			url: `${ORIGIN}/icon/512`,
+			width: "512",
+			height: "512",
+		});
+		expect(organization.sameAs).toEqual(["https://github.com/maxgfr/apercura"]);
+	});
+
+	it("prints nothing language-dependent in the site entities (one @id, one entity)", () => {
+		const input = { origin: ORIGIN, name: "Apercura", logo: `${ORIGIN}/icon/512`, sameAs: [] };
+		const nodes = siteNodes(input);
+		expect(keysOf(nodes)).not.toContain("inLanguage");
+		expect(keysOf(nodes)).not.toContain("description");
+		expect(nodeOf(nodes, "Organization")).not.toHaveProperty("sameAs");
 	});
 
 	it("builds a listing page: CollectionPage, breadcrumb and a positioned ItemList", () => {

@@ -85,7 +85,10 @@ test("a nurse's page states the agreement without a sector or OPTAM", async ({ p
 	const jsonLd = await page.locator('script[type="application/ld+json"]').allTextContents();
 	const data = jsonLd.flatMap((text) => JSON.parse(text)["@graph"]);
 	const person = data.find((item) => item["@type"] === "Person");
-	expect(person.hasOccupation.occupationalCategory).toBe("2221");
+	expect(person.hasOccupation.occupationalCategory).toMatchObject({
+		"@type": "CategoryCode",
+		codeValue: "2221",
+	});
 	// The practitioner's own card first, the profession's image as the fallback.
 	const images = page.locator('meta[property="og:image"]');
 	await expect(images.first()).toHaveAttribute(

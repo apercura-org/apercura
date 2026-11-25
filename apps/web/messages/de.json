@@ -567,12 +567,6 @@
 			"heading": "Weitere Gesundheitsfachkräfte: {occupation} in {place}"
 		},
 		"photoAlt": "Foto von {name}",
-		"withheld": {
-			"metaTitle": "Seite ausgeblendet · Apercura",
-			"title": "Diese Seite ist ausgeblendet",
-			"body": "Für diese Seite wird ein Antrag auf Entfernung geprüft. Bis dahin wird sie nicht angezeigt.",
-			"dataLink": "Wie Seiten veröffentlicht und entfernt werden"
-		},
 		"metaTitleName": "{name} · Apercura",
 		"metaDescriptionBookable": "{name}, {occupation}: Online-Terminbuchung, Adresse, Kontaktdaten und {fees, select, sector {Tarifsektor} other {Kassenvertrag}}.",
 		"metaDescriptionBookablePlace": "{name}, {occupation} in {place}: Online-Terminbuchung, Adresse, Kontaktdaten und {fees, select, sector {Tarifsektor} other {Kassenvertrag}}."

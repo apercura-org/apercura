@@ -28,7 +28,13 @@ type Expected = {
 
 const PAGES: Expected[] = [
 	// The international home: in English, indexed, outside the locales.
-	{ path: "/", robots: "index, follow", types: ["WebPage"], lang: "en", hreflang: true },
+	{
+		path: "/",
+		robots: "index, follow",
+		types: ["WebPage", "WebSite", "Organization"],
+		lang: "en",
+		hreflang: true,
+	},
 	{
 		path: "/fr",
 		robots: "index, follow",
@@ -239,8 +245,12 @@ for (const expected of PAGES) {
 		expect(page.lang).toBe(expected.lang ?? "fr");
 		expect(page.titles).toHaveLength(1);
 		const title = page.titles[0] ?? "";
-		expect(title).toMatch(/ · Apercura$|^Apercura · /);
 		expect(title.length).toBeLessThanOrEqual(60);
+		// The brand ends every title, unless a practitioner's commune would not fit with it.
+		if (!/ · Apercura$|^Apercura · /.test(title)) {
+			expect(expected.path).toMatch(/^\/fr(?:-[a-z]{2})?\/[a-z]+\/[a-z0-9-]+-\d{11}$/);
+			expect(`${title} · Apercura`.length).toBeGreaterThan(60);
+		}
 		const [description] = page.meta("description");
 		expect(description?.length).toBeGreaterThan(40);
 		expect(description?.length).toBeLessThanOrEqual(155);
@@ -392,16 +402,87 @@ test("an owner-completed page links the owner's website and languages", async ({
 		.toEqual({ sameAs: "https://cabinet-fictif.example", knowsLanguage: ["fr", "en"] });
 });
 
-test("the sitelinks search box target answers", async ({ request }) => {
-	const html = await (await request.get("/fr")).text();
-	const nodes = JSON.parse(parse(html).jsonLd[0] ?? "")["@graph"] as Node[];
-	const website = nodes.find((node) => node["@type"] === "WebSite") as Node;
-	const template = (website.potentialAction as { target: { urlTemplate: string } }).target
-		.urlTemplate;
-	const response = await request.get(template.replace("{search_term_string}", "Exemple"), {
-		maxRedirects: 0,
+test("both homes print the same WebSite and Organization, with a logo that answers", async ({
+	request,
+	baseURL,
+}) => {
+	const origin = new URL(baseURL ?? "").origin;
+	const siteEntities = async (path: string) => {
+		const html = await (await request.get(path)).text();
+		const nodes = JSON.parse(parse(html).jsonLd[0] ?? "")["@graph"] as Node[];
+		return nodes.filter((node) => node["@type"] === "WebSite" || node["@type"] === "Organization");
+	};
+	const international = await siteEntities("/");
+	// One @id names one entity: nothing in it depends on the page's language.
+	for (const path of ["/fr", "/fr-en", "/fr-de"]) {
+		expect(await siteEntities(path), path).toEqual(international);
+	}
+	const website = international.find((node) => node["@type"] === "WebSite") as Node;
+	expect(website).toMatchObject({
+		"@id": `${origin}/#website`,
+		url: `${origin}/`,
+		name: "Apercura",
+		publisher: { "@id": `${origin}/#organization` },
 	});
-	expect([200, 307]).toContain(response.status());
+	// Google retired the sitelinks search box; the search pages are disallowed in robots.txt.
+	expect(website).not.toHaveProperty("potentialAction");
+	const organization = international.find((node) => node["@type"] === "Organization") as Node;
+	const logo = organization.logo as { url: string; width: string; height: string };
+	expect(logo).toMatchObject({ width: "512", height: "512" });
+	const image = await request.get(logo.url);
+	expect(image.status()).toBe(200);
+	expect(image.headers()["content-type"]).toBe("image/png");
+});
+
+test("a department listing never links the Paris city, whose URL redirects back to it", async ({
+	request,
+}) => {
+	// The Paris city (Insee 75056) is the department page: a listing of practitioners whose
+	// address names only "Paris" must not appear among the department's communes. Synthetic
+	// rows on a listing no other spec reads; a count bump shows the page was rendered again.
+	const sql = testDb();
+	const department = "/fr/dermatologue/75-paris";
+	const [city] = await sql<{ id: number }[]>`
+		SELECT id FROM directory.places WHERE code = '75056' AND kind = 'commune'
+	`;
+	const [paris] = await sql<{ id: number }[]>`
+		SELECT id FROM directory.places WHERE code = '75' AND kind = 'department'
+	`;
+	const [arrondissement] = await sql<{ id: number; count: number }[]>`
+		SELECT lp.id, lp.practitioner_count AS count FROM directory.landing_pages lp
+		JOIN directory.places p ON p.id = lp.place_id AND p.kind = 'arrondissement'
+		WHERE lp.listing_slug = 'dermatologue' AND p.department_code = '75'
+		ORDER BY lp.id LIMIT 1
+	`;
+	if (!city || !paris || !arrondissement) throw new Error("Import the synthetic fixtures first");
+	const cityKey = `dermatologue:${city.id}`;
+	try {
+		await sql`
+			INSERT INTO directory.landing_pages
+				(key, listing_slug, place_id, practitioner_count, payload, indexable, content_hash)
+			VALUES (${cityKey}, 'dermatologue', ${city.id}, 3, '{}', true, 'e2e')
+		`;
+		await sql`
+			UPDATE directory.landing_pages SET practitioner_count = 7 WHERE id = ${arrondissement.id}
+		`;
+		await revalidate(request, [`listing:dermatologue:${paris.id}`]);
+		await expect
+			.poll(async () => (await (await request.get(department)).text()).includes("7 praticiens"), {
+				timeout: 15_000,
+			})
+			.toBe(true);
+		const html = await (await request.get(department)).text();
+		expect(html).toContain('href="/fr/dermatologue/75-paris/paris-');
+		expect(html).not.toContain('href="/fr/dermatologue/75-paris/paris"');
+	} finally {
+		await sql`DELETE FROM directory.landing_pages WHERE key = ${cityKey}`;
+		await sql`
+			UPDATE directory.landing_pages SET practitioner_count = ${arrondissement.count}
+			WHERE id = ${arrondissement.id}
+		`;
+		await revalidate(request, [`listing:dermatologue:${paris.id}`]);
+		await sql.end();
+	}
 });
 
 test("icons, manifest and the favicon answer outside the locale routing", async ({ request }) => {

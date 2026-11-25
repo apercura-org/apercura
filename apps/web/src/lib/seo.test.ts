@@ -11,6 +11,7 @@ import {
 	shortPlaceName,
 	siteVerification,
 	TITLE_MAX,
+	withoutBrand,
 } from "./seo";
 import { francePath, sitemapIndexXml, urlSetXml } from "./sitemap-xml";
 
@@ -30,6 +31,22 @@ describe("titles and descriptions", () => {
 			"Dr Camille Exemple, médecin · Apercura",
 		);
 		expect(pickTitle([long, `${long}!`])).toBe(long);
+	});
+
+	it("drops the brand before a detail", () => {
+		expect(withoutBrand("Dr Camille Exemple, médecin à Paris 11e · Apercura")).toBe(
+			"Dr Camille Exemple, médecin à Paris 11e",
+		);
+		expect(withoutBrand("Apercura · L’annuaire ouvert")).toBe("L’annuaire ouvert");
+		expect(withoutBrand("Votre rendez-vous")).toBe("Votre rendez-vous");
+		// A practitioner's title keeps the commune (namesakes) when only the brand is too much.
+		const name = "Dr Camille Exemplaire";
+		const withPlace = `${name}, médecin généraliste à Paris 18e · Apercura`;
+		const withoutPlace = `${name}, médecin généraliste · Apercura`;
+		expect(withPlace.length).toBeGreaterThan(TITLE_MAX);
+		expect(pickTitle([withPlace, withoutBrand(withPlace), withoutPlace])).toBe(
+			`${name}, médecin généraliste à Paris 18e`,
+		);
 	});
 
 	it("cuts a description at a word boundary when nothing fits", () => {

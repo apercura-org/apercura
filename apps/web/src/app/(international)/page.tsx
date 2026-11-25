@@ -11,6 +11,7 @@ import { getPathname, type Href } from "~/i18n/navigation";
 import { LINKS } from "~/lib/links";
 import { INTERNATIONAL_LOCALE, MARKETS } from "~/lib/markets";
 import { BRAND, documentMetadata, homeAlternates, siteVerification } from "~/lib/seo";
+import { apercuraSiteNodes } from "~/lib/site-entities";
 import { siteOrigin } from "~/lib/site-url";
 import { graph, webPageNode } from "~/lib/structured-data";
 
@@ -90,6 +91,8 @@ export default async function InternationalHome() {
 						description: t("metaDescription"),
 						language: LOCALE_TAGS[INTERNATIONAL_LOCALE],
 					}),
+					// The site's home page: where Google reads the site name and the logo.
+					...apercuraSiteNodes(),
 				])}
 			/>
 			<header className="surface-paper border-b border-rule-soft">

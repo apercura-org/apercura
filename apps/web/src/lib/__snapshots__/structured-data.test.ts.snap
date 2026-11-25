@@ -99,24 +99,14 @@ exports[`page entities > describes an establishment with its FINESS number 1`] =
 }
 `;
 
-exports[`page entities > links the home page, the website and its search action 1`] = `
+exports[`page entities > describes the website and its publisher, with a logo and no search action 1`] = `
 {
   "@context": "https://schema.org",
   "@graph": [
     {
       "@id": "https://apercura.example/#website",
       "@type": "WebSite",
-      "description": "Annuaire ouvert.",
-      "inLanguage": "fr-FR",
       "name": "Apercura",
-      "potentialAction": {
-        "@type": "SearchAction",
-        "query-input": "required name=search_term_string",
-        "target": {
-          "@type": "EntryPoint",
-          "urlTemplate": "https://apercura.example/recherche?quoi={search_term_string}",
-        },
-      },
       "publisher": {
         "@id": "https://apercura.example/#organization",
       },
@@ -126,7 +116,9 @@ exports[`page entities > links the home page, the website and its search action 
       "@id": "https://apercura.example/#organization",
       "@type": "Organization",
       "logo": {
+        "@id": "https://apercura.example/#logo",
         "@type": "ImageObject",
+        "contentUrl": "https://apercura.example/icon/512",
         "height": "512",
         "url": "https://apercura.example/icon/512",
         "width": "512",
@@ -178,7 +170,7 @@ exports[`practitionerNodes > describes a dentist as Dentist with its places as l
     },
     {
       "@id": "https://apercura.example/praticien/camille-exemple-19999990013#site-101",
-      "@type": "PhysiciansOffice",
+      "@type": "MedicalBusiness",
       "address": {
         "@type": "PostalAddress",
         "addressCountry": "FR",
@@ -292,7 +284,14 @@ exports[`practitionerNodes > describes a midwife as Person with an occupation an
       "hasOccupation": {
         "@type": "Occupation",
         "name": "Sage-femme",
-        "occupationalCategory": "2222",
+        "occupationalCategory": {
+          "@type": "CategoryCode",
+          "codeValue": "2222",
+          "inCodeSet": {
+            "@type": "CategoryCodeSet",
+            "name": "ISCO-08",
+          },
+        },
       },
       "identifier": {
         "@type": "PropertyValue",
@@ -312,7 +311,7 @@ exports[`practitionerNodes > describes a midwife as Person with an occupation an
     },
     {
       "@id": "https://apercura.example/praticien/camille-exemple-19999990013#site-101",
-      "@type": "PhysiciansOffice",
+      "@type": "MedicalBusiness",
       "address": {
         "@type": "PostalAddress",
         "addressCountry": "FR",

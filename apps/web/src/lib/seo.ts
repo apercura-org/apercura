@@ -200,6 +200,19 @@ export async function documentMetadata(input: {
 }
 
 /**
+ * A title without the brand (" · Apercura" after it, "Apercura · " before it). A candidate to
+ * try before a less detailed one: the brand is the first thing a long title gives up, since
+ * search engines print the site name beside the result anyway.
+ */
+export function withoutBrand(title: string): string {
+	const suffix = ` · ${BRAND}`;
+	const prefix = `${BRAND} · `;
+	if (title.endsWith(suffix)) return title.slice(0, -suffix.length);
+	if (title.startsWith(prefix)) return title.slice(prefix.length);
+	return title;
+}
+
+/**
  * A title from the most to the least detailed candidate: the first that fits
  * TITLE_MAX, else the shortest. Titles are never cut mid-word.
  */
