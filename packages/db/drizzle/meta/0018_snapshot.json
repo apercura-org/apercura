@@ -1,5 +1,5 @@
 {
-  "id": "02cad83a-b019-411a-adfe-6bb670166bf2",
+  "id": "f16e7b59-fd70-4336-8a60-647af5abb5c3",
   "prevId": "4851fcc5-6134-4368-98e1-cee2697106c9",
   "version": "7",
   "dialect": "postgresql",
@@ -1381,6 +1381,13 @@
           "notNull": true,
           "default": "'site'"
         },
+        "travel_min": {
+          "name": "travel_min",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
         "starts_at": {
           "name": "starts_at",
           "type": "timestamp with time zone",
@@ -1819,6 +1826,10 @@
         "appointments_location_check": {
           "name": "appointments_location_check",
           "value": "\"care\".\"appointments\".\"location\" in ('site', 'home')"
+        },
+        "appointments_travel_check": {
+          "name": "appointments_travel_check",
+          "value": "\"care\".\"appointments\".\"travel_min\" between 0 and 240 and (\"care\".\"appointments\".\"location\" = 'home' or \"care\".\"appointments\".\"travel_min\" = 0)"
         },
         "appointments_times_check": {
           "name": "appointments_times_check",

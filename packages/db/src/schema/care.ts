@@ -259,6 +259,12 @@ export const appointments = care.table(
 		typeName: text(),
 		/** Where the care happens, frozen at booking time: `site` or `home` (home visit). */
 		location: text().notNull().default("site"),
+		/**
+		 * Travel time of a home visit, frozen at booking time (0 at the site). The occupied range
+		 * holds the travel after the visit; the travel before it is checked by the booking writes
+		 * (`server/booking/travel.ts`).
+		 */
+		travelMin: integer().notNull().default(0),
 		startsAt: timestamp({ withTimezone: true }).notNull(),
 		endsAt: timestamp({ withTimezone: true }).notNull(),
 		occupiedFrom: timestamp({ withTimezone: true }).notNull(),
@@ -339,6 +345,10 @@ export const appointments = care.table(
 		check("appointments_kind_check", sql`${table.kind} in ('appointment', 'block')`),
 		check("appointments_source_check", sql`${table.source} in ('online', 'practice')`),
 		check("appointments_location_check", sql`${table.location} in ('site', 'home')`),
+		check(
+			"appointments_travel_check",
+			sql`${table.travelMin} between 0 and 240 and (${table.location} = 'home' or ${table.travelMin} = 0)`,
+		),
 		check(
 			"appointments_times_check",
 			sql`${table.endsAt} > ${table.startsAt} and ${table.occupiedFrom} <= ${table.startsAt} and ${table.occupiedUntil} >= ${table.endsAt}`,
