@@ -1,0 +1,43 @@
+PracticeCode,GPPracticeName,PracticeListSize,AddressLine1,AddressLine2,AddressLine3,AddressLine4,Postcode,TelephoneNumber,PracticeType,HB,HSCP,DataZone,GPCluster
+89001,Example Medical Centre,1000,Example Medical Centre,1 Sample Street,Glasgow,,G1 1ZZ,0141 496 0001,GMS,S08000031,S37000034,S01000001,Example Cluster
+89002,"Drs Demo, Test & Mock",1000,Placeholder Health Centre,2 Sample Street,Edinburgh,,EH1 1ZZ,0131 496 0002,GMS,S08000024,S37000012,S01000002,Example Cluster
+89100,Filler Example Practice 000,1000,10 Filler Street,Edinburgh,,,EH2 9ZZ,,GMS,S08000024,S37000012,S01000002,Example Cluster
+89101,Filler Example Practice 001,1000,11 Filler Street,Edinburgh,,,EH2 9ZZ,,GMS,S08000024,S37000012,S01000002,Example Cluster
+89102,Filler Example Practice 002,1000,12 Filler Street,Edinburgh,,,EH2 9ZZ,,GMS,S08000024,S37000012,S01000002,Example Cluster
+89103,Filler Example Practice 003,1000,13 Filler Street,Edinburgh,,,EH2 9ZZ,,GMS,S08000024,S37000012,S01000002,Example Cluster
+89104,Filler Example Practice 004,1000,14 Filler Street,Edinburgh,,,EH2 9ZZ,,GMS,S08000024,S37000012,S01000002,Example Cluster
+89105,Filler Example Practice 005,1000,15 Filler Street,Edinburgh,,,EH2 9ZZ,,GMS,S08000024,S37000012,S01000002,Example Cluster
+89106,Filler Example Practice 006,1000,16 Filler Street,Edinburgh,,,EH2 9ZZ,,GMS,S08000024,S37000012,S01000002,Example Cluster
+89107,Filler Example Practice 007,1000,17 Filler Street,Edinburgh,,,EH2 9ZZ,,GMS,S08000024,S37000012,S01000002,Example Cluster
+89108,Filler Example Practice 008,1000,18 Filler Street,Edinburgh,,,EH2 9ZZ,,GMS,S08000024,S37000012,S01000002,Example Cluster
+89109,Filler Example Practice 009,1000,19 Filler Street,Edinburgh,,,EH2 9ZZ,,GMS,S08000024,S37000012,S01000002,Example Cluster
+89110,Filler Example Practice 010,1000,20 Filler Street,Edinburgh,,,EH2 9ZZ,,GMS,S08000024,S37000012,S01000002,Example Cluster
+89111,Filler Example Practice 011,1000,21 Filler Street,Edinburgh,,,EH2 9ZZ,,GMS,S08000024,S37000012,S01000002,Example Cluster
+89112,Filler Example Practice 012,1000,22 Filler Street,Edinburgh,,,EH2 9ZZ,,GMS,S08000024,S37000012,S01000002,Example Cluster
+89113,Filler Example Practice 013,1000,23 Filler Street,Edinburgh,,,EH2 9ZZ,,GMS,S08000024,S37000012,S01000002,Example Cluster
+89114,Filler Example Practice 014,1000,24 Filler Street,Edinburgh,,,EH2 9ZZ,,GMS,S08000024,S37000012,S01000002,Example Cluster
+89115,Filler Example Practice 015,1000,25 Filler Street,Edinburgh,,,EH2 9ZZ,,GMS,S08000024,S37000012,S01000002,Example Cluster
+89116,Filler Example Practice 016,1000,26 Filler Street,Edinburgh,,,EH2 9ZZ,,GMS,S08000024,S37000012,S01000002,Example Cluster
+89117,Filler Example Practice 017,1000,27 Filler Street,Edinburgh,,,EH2 9ZZ,,GMS,S08000024,S37000012,S01000002,Example Cluster
+89118,Filler Example Practice 018,1000,28 Filler Street,Edinburgh,,,EH2 9ZZ,,GMS,S08000024,S37000012,S01000002,Example Cluster
+89119,Filler Example Practice 019,1000,29 Filler Street,Edinburgh,,,EH2 9ZZ,,GMS,S08000024,S37000012,S01000002,Example Cluster
+89120,Filler Example Practice 020,1000,30 Filler Street,Edinburgh,,,EH2 9ZZ,,GMS,S08000024,S37000012,S01000002,Example Cluster
+89121,Filler Example Practice 021,1000,31 Filler Street,Edinburgh,,,EH2 9ZZ,,GMS,S08000024,S37000012,S01000002,Example Cluster
+89122,Filler Example Practice 022,1000,32 Filler Street,Edinburgh,,,EH2 9ZZ,,GMS,S08000024,S37000012,S01000002,Example Cluster
+89123,Filler Example Practice 023,1000,33 Filler Street,Edinburgh,,,EH2 9ZZ,,GMS,S08000024,S37000012,S01000002,Example Cluster
+89124,Filler Example Practice 024,1000,34 Filler Street,Edinburgh,,,EH2 9ZZ,,GMS,S08000024,S37000012,S01000002,Example Cluster
+89125,Filler Example Practice 025,1000,35 Filler Street,Edinburgh,,,EH2 9ZZ,,GMS,S08000024,S37000012,S01000002,Example Cluster
+89126,Filler Example Practice 026,1000,36 Filler Street,Edinburgh,,,EH2 9ZZ,,GMS,S08000024,S37000012,S01000002,Example Cluster
+89127,Filler Example Practice 027,1000,37 Filler Street,Edinburgh,,,EH2 9ZZ,,GMS,S08000024,S37000012,S01000002,Example Cluster
+89128,Filler Example Practice 028,1000,38 Filler Street,Edinburgh,,,EH2 9ZZ,,GMS,S08000024,S37000012,S01000002,Example Cluster
+89129,Filler Example Practice 029,1000,39 Filler Street,Edinburgh,,,EH2 9ZZ,,GMS,S08000024,S37000012,S01000002,Example Cluster
+89130,Filler Example Practice 030,1000,40 Filler Street,Edinburgh,,,EH2 9ZZ,,GMS,S08000024,S37000012,S01000002,Example Cluster
+89131,Filler Example Practice 031,1000,41 Filler Street,Edinburgh,,,EH2 9ZZ,,GMS,S08000024,S37000012,S01000002,Example Cluster
+89132,Filler Example Practice 032,1000,42 Filler Street,Edinburgh,,,EH2 9ZZ,,GMS,S08000024,S37000012,S01000002,Example Cluster
+89133,Filler Example Practice 033,1000,43 Filler Street,Edinburgh,,,EH2 9ZZ,,GMS,S08000024,S37000012,S01000002,Example Cluster
+89134,Filler Example Practice 034,1000,44 Filler Street,Edinburgh,,,EH2 9ZZ,,GMS,S08000024,S37000012,S01000002,Example Cluster
+89135,Filler Example Practice 035,1000,45 Filler Street,Edinburgh,,,EH2 9ZZ,,GMS,S08000024,S37000012,S01000002,Example Cluster
+89136,Filler Example Practice 036,1000,46 Filler Street,Edinburgh,,,EH2 9ZZ,,GMS,S08000024,S37000012,S01000002,Example Cluster
+89137,Filler Example Practice 037,1000,47 Filler Street,Edinburgh,,,EH2 9ZZ,,GMS,S08000024,S37000012,S01000002,Example Cluster
+89138,Filler Example Practice 038,1000,48 Filler Street,Edinburgh,,,EH2 9ZZ,,GMS,S08000024,S37000012,S01000002,Example Cluster
+89139,Filler Example Practice 039,1000,49 Filler Street,Edinburgh,,,EH2 9ZZ,,GMS,S08000024,S37000012,S01000002,Example Cluster

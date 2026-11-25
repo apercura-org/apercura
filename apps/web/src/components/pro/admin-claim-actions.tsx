@@ -1,11 +1,11 @@
 "use client";
 
-import { formatPhoneFr } from "@apercura/core";
 import { Button, Form, Notice, OtpField, Radio, RadioGroup, TextAreaField } from "@apercura/ui";
 import { useMutation } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { type FormEvent, useState } from "react";
 import { useRouter } from "~/i18n/navigation";
+import { formatPhone } from "~/lib/practitioner-view";
 import { PRO_ROUTES } from "~/lib/pro-routes";
 import { useTRPC } from "~/trpc/client";
 
@@ -34,7 +34,7 @@ export function PhoneCallback({
 			<RadioGroup label={t("phoneCalled")} value={phone} onChange={setPhone}>
 				{phones.map((item) => (
 					<Radio key={item.phone} value={item.phone}>
-						<span className="tabular">{formatPhoneFr(item.phone)}</span>
+						<span className="tabular">{formatPhone(item.phone)}</span>
 						{item.site ? <span className="text-meta text-ink-muted"> · {item.site}</span> : null}
 					</Radio>
 				))}

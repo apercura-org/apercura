@@ -20,3 +20,10 @@
 # narrows it, e.g. `--sources wien`. Exit codes: 1 failed, 2 blocked, 3 imported without a
 # list that could not be fetched or read (see docs/data-import.md, "Austria").
 30 5 * * 1 apercura etl:at $ETL_AT_SCHEDULE_ARGS
+
+# The United Kingdom's NHS open data (ODS for England and Wales, Public Health Scotland, the
+# Business Services Organisation), every Monday at 06:30 UTC, after Austria's import (the same
+# advisory lock: one import at a time). ETL_GB_SCHEDULE_ARGS narrows it, e.g.
+# `--sources ods-gp,ods-branches`. Exit codes: 1 failed, 2 blocked, 3 imported without a list
+# that could not be fetched or read (see docs/data-import.md, "United Kingdom").
+30 6 * * 1 apercura etl:gb $ETL_GB_SCHEDULE_ARGS

@@ -4,6 +4,7 @@ import {
 	isMarketListingSlug,
 	listingFees,
 	marketBooks,
+	openDataSourcesOf,
 	professionFees,
 	professionSlugOf,
 	showsBillingFacts,
@@ -98,5 +99,66 @@ describe("Austrian addresses and phones", () => {
 	it("formats each market's numbers its own way", () => {
 		expect(formatPhone("+4317673315")).toBe("01 7673315");
 		expect(formatPhone("+33155347620")).toBe("01 55 34 76 20");
+	});
+});
+
+describe("the UK's pages", () => {
+	it("serve the UK's listings, without booking or French insurance facts", () => {
+		expect(isMarketListingSlug("en-GB", "gp-practices")).toBe(true);
+		expect(isMarketListingSlug("en-GB", "cardiologue")).toBe(false);
+		expect(isMarketListingSlug("fr", "gp-practices")).toBe(false);
+		expect(showsBillingFacts("en-GB")).toBe(false);
+		expect(marketBooks("en-GB")).toBe(false);
+		expect(professionSlugOf("GB_PHARMACY")).toBe("pharmacies");
+	});
+
+	it("check UK place slugs, a region's included, and label places without codes", () => {
+		expect(isDepartmentSlug("stockton-on-tees", "GB")).toBe(true);
+		expect(isDepartmentSlug("north-east", "GB")).toBe(true);
+		expect(isDepartmentSlug("2", "GB")).toBe(false);
+		expect(isDepartmentSlug("Camden", "GB")).toBe(false);
+		expect(
+			placeLabel(
+				{ kind: "department", code: "E09000007", name: "Camden", departmentCode: "E09000007" },
+				"GB",
+			),
+		).toBe("Camden");
+		expect(isDepartmentCity("GB", "E09000007")).toBe(false);
+	});
+
+	it("write UK addresses town and postcode on lines of their own, and UK numbers", () => {
+		const site = {
+			addressLine: "Health Centre, Sample Street",
+			addressComplement: null,
+			postcode: "TS18 1ZA",
+			placeName: "Stockton-on-Tees",
+		};
+		expect(addressLines(site, "GB")).toEqual([
+			"Health Centre, Sample Street",
+			"Stockton-on-Tees",
+			"TS18 1ZA",
+		]);
+		expect(formatPhone("+441632960001")).toBe("01632 960001");
+		expect(formatPhone("+442079460005")).toBe("020 7946 0005");
+	});
+
+	it("credit each list with its OGL attribution, and Code-Point Open where a postcode located it", () => {
+		const located = { postcode: "TS18 1ZA", geoPrecision: "street" };
+		const sources = openDataSourcesOf("GB", [
+			{ source: "gb-ods-gp", site: located },
+			{ source: "gb-ods-branch", site: located },
+		]);
+		expect(sources.map((source) => source.name)).toEqual([
+			"GP practices (epraccur) and branch surgeries (ebranchs)",
+			"Code-Point Open",
+		]);
+		expect(sources[0]?.attribution).toContain("Open Government Licence v3.0");
+		const northernIrish = openDataSourcesOf("GB", [
+			{ source: "gb-bso-gp", site: { postcode: "BT9 9ZZ", geoPrecision: "city" } },
+		]);
+		expect(northernIrish.map((source) => source.name)).toEqual([
+			"GP Practice List Sizes (GP Practice Reference File)",
+		]);
+		expect(openDataSourcesOf("FR", [{ source: "ans", site: located }])).toEqual([]);
 	});
 });

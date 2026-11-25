@@ -15,7 +15,7 @@ import { type Locale, routing } from "~/i18n/routing";
 import { genderOf, getTaxonomyLabels } from "~/lib/labels";
 import { resolveListing } from "~/lib/listing-index";
 import { getMapStrings } from "~/lib/map-strings";
-import { formatPhone, localityOf } from "~/lib/practitioner-view";
+import { cardTownLine, formatPhone } from "~/lib/practitioner-view";
 import { slotParts, slotTime } from "~/lib/slot-format";
 import {
 	matchPlaces,
@@ -391,13 +391,11 @@ async function Results({
 					{outcome.results.map((result) => {
 						const gender = genderOf(result.civilityCode);
 						const occupation =
-							labels.listing(result.listingSlug, gender) ??
+							labels.occupation(result.listingSlug, gender) ??
 							labels.profession(result.listingSlug ?? "", gender);
 						const address = [
 							result.addressLine,
-							[result.postcode, localityOf(result.placeName, marketOf(locale))]
-								.filter(Boolean)
-								.join(" "),
+							cardTownLine(result.postcode, result.placeName, marketOf(locale)),
 						]
 							.filter(Boolean)
 							.join(", ");

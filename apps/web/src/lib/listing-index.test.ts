@@ -54,4 +54,16 @@ describe("listing index", () => {
 		expect(resolveListing("Allgemeinmedizin", "FR")).not.toBe("allgemeinmedizin");
 		expect(resolveListing("cardiologue", "AT")).toBeNull();
 	});
+
+	it("suggests and resolves the UK's practice listings in the UK only", () => {
+		expect(suggestListings("GP", "en-GB").map((entry) => entry.slug)).toEqual(["gp-practices"]);
+		expect(suggestListings("Pharm", "en-GB").map((entry) => entry.slug)).toEqual(["pharmacies"]);
+		expect(suggestListings("Cardio", "en-GB")).toEqual([]);
+		expect(suggestListings("GP practice", "en").map((entry) => entry.slug)).not.toContain(
+			"gp-practices",
+		);
+		expect(resolveListing("dental practices", "GB")).toBe("dental-practices");
+		expect(resolveListing("Pharmacies", "GB")).toBe("pharmacies");
+		expect(resolveListing("GP practices", "FR")).toBeNull();
+	});
 });

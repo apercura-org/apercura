@@ -1,10 +1,21 @@
 #!/usr/bin/env bun
-import { buildAtOptions, buildFrOptions, parseArgs, resolveDatabaseUrl } from "./config";
+import { mkdtemp, rm } from "node:fs/promises";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
+import {
+	buildAtOptions,
+	buildFrOptions,
+	buildGbOptions,
+	gbPlacesUrls,
+	parseArgs,
+	resolveDatabaseUrl,
+} from "./config";
 import { COMMANDS, type Command, USAGE } from "./index";
 import { connect } from "./lib/db";
 import { drainOutbox } from "./outbox";
 import { runAt } from "./run-at";
 import { runFr } from "./run-fr";
+import { runGb } from "./run-gb";
 import {
 	DEFAULT_AT_PLACES_URL,
 	fetchGemeinden,
@@ -12,9 +23,20 @@ import {
 	readGemeinden,
 } from "./sources/at/places";
 import { fetchPlaceSources, importPlaces, readPlaceSources } from "./sources/fr/places";
+import { fetchGbPlaceSources, importGbPlaces, readGbPlaceSources } from "./sources/gb/places";
 
 const isCommand = (value: string | undefined): value is Command =>
 	COMMANDS.includes(value as Command);
+
+/** Downloads the UK's place sources to a temporary directory, removed once they are read. */
+async function fetchGbPlacesOnce() {
+	const dir = await mkdtemp(join(tmpdir(), "apercura-etl-gb-places-"));
+	try {
+		return await fetchGbPlaceSources(gbPlacesUrls(process.env), dir);
+	} finally {
+		await rm(dir, { recursive: true, force: true });
+	}
+}
 
 const log = (message: string) => console.log(`[${new Date().toISOString()}] ${message}`);
 
@@ -45,8 +67,11 @@ async function main(): Promise<number> {
 		return 0;
 	}
 
-	if (command === "etl:at") {
-		const outcome = await runAt(buildAtOptions(flags, process.env), log);
+	if (command === "etl:at" || command === "etl:gb") {
+		const outcome =
+			command === "etl:at"
+				? await runAt(buildAtOptions(flags, process.env), log)
+				: await runGb(buildGbOptions(flags, process.env), log);
 		log(`Run ${outcome.runId} ${outcome.status}`);
 		console.log(
 			JSON.stringify(
@@ -71,7 +96,7 @@ async function main(): Promise<number> {
 	try {
 		if (command === "etl:places") {
 			const country = String(flags.get("country") ?? "fr").toLowerCase();
-			if (country !== "fr" && country !== "at") throw new Error(`Unknown --country ${country}`);
+			if (!["fr", "at", "gb"].includes(country)) throw new Error(`Unknown --country ${country}`);
 			const sourceDir = flags.get("source-dir");
 			const [run] = await sql<{ id: number }[]>`
 				INSERT INTO directory.etl_runs (source, status, scope)
@@ -79,21 +104,31 @@ async function main(): Promise<number> {
 			`;
 			const runId = run?.id ?? 0;
 			const stats =
-				country === "at"
-					? await importAtPlaces(
+				country === "gb"
+					? await importGbPlaces(
 							sql,
 							typeof sourceDir === "string"
-								? await readGemeinden(sourceDir)
-								: await fetchGemeinden(process.env.ETL_AT_PLACES_URL || DEFAULT_AT_PLACES_URL),
+								? await readGbPlaceSources(sourceDir)
+								: await fetchGbPlacesOnce(),
 							runId,
 						)
-					: await importPlaces(
-							sql,
-							typeof sourceDir === "string"
-								? await readPlaceSources(sourceDir)
-								: await fetchPlaceSources(process.env.ETL_GEO_API_URL || "https://geo.api.gouv.fr"),
-							runId,
-						);
+					: country === "at"
+						? await importAtPlaces(
+								sql,
+								typeof sourceDir === "string"
+									? await readGemeinden(sourceDir)
+									: await fetchGemeinden(process.env.ETL_AT_PLACES_URL || DEFAULT_AT_PLACES_URL),
+								runId,
+							)
+						: await importPlaces(
+								sql,
+								typeof sourceDir === "string"
+									? await readPlaceSources(sourceDir)
+									: await fetchPlaceSources(
+											process.env.ETL_GEO_API_URL || "https://geo.api.gouv.fr",
+										),
+								runId,
+							);
 			await sql`
 				UPDATE directory.etl_runs
 				SET status = 'succeeded', stats = ${JSON.stringify(stats)}::text::jsonb, finished_at = now()

@@ -20,7 +20,7 @@ export async function ownedPage(userId: string, locale: Locale) {
 	const person = data.practitioner;
 	const gender = genderOf(person.civilityCode);
 	const profession =
-		labels.listing(person.listingSlug, gender) ??
+		labels.occupation(person.listingSlug, gender) ??
 		labels.profession(professionFor(person.professionCode)?.slug ?? "medecin", gender) ??
 		"";
 	return {

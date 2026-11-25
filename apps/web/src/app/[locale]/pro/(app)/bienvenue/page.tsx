@@ -1,4 +1,3 @@
-import { formatPhoneFr } from "@apercura/core";
 import { Badge, buttonStyles, EmptyState, FieldList, FieldRow, linkStyles } from "@apercura/ui";
 import type { Metadata } from "next";
 import { getFormatter, getTranslations, setRequestLocale } from "next-intl/server";
@@ -9,6 +8,7 @@ import { PublishButton } from "~/components/pro/publish-button";
 import { Link } from "~/i18n/navigation";
 import type { Locale } from "~/i18n/routing";
 import { NO_INDEX, resolveLocale } from "~/lib/locale";
+import { formatPhone } from "~/lib/practitioner-view";
 import { PRO_ROUTES } from "~/lib/pro-routes";
 import { requireProAccess } from "~/server/auth/guard";
 import { ownedPage } from "~/server/owned-page";
@@ -130,7 +130,7 @@ async function Onboarding({ locale, step }: { locale: Locale; step: Step }) {
 										.join(", ")}
 								</span>
 								<span className="text-meta text-ink-muted tabular">
-									{site.phone ? formatPhoneFr(site.phone) : empty}
+									{site.phone ? formatPhone(site.phone) : empty}
 								</span>
 							</li>
 						))}

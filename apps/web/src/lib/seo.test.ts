@@ -97,6 +97,7 @@ describe("hreflang of the homes", () => {
 		expect(homeAlternates()).toEqual({
 			"fr-FR": "https://apercura.org/fr",
 			"de-AT": "https://apercura.org/at",
+			"en-GB": "https://apercura.org/gb",
 			"x-default": "https://apercura.org/",
 		});
 	});

@@ -50,8 +50,8 @@ export const searchRouter = createTRPCRouter({
 					id: place.id,
 					kind: place.kind,
 					name: place.name,
-					// Austrian places are known by name: no Statistik Austria code to print.
-					departmentCode: marketOf(input.locale) === "AT" ? null : place.departmentCode,
+					// Austrian and UK places are known by name: no Statistik Austria or ONS code to print.
+					departmentCode: marketOf(input.locale) === "FR" ? place.departmentCode : null,
 					departmentName: place.departmentName,
 				})),
 			};

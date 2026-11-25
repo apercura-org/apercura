@@ -424,3 +424,77 @@ describe("practitionerNodes for Austria", () => {
 		expect(person.address).toMatchObject({ addressCountry: "FR" });
 	});
 });
+
+describe("practitionerNodes for the United Kingdom", () => {
+	const site = (
+		siteId: number,
+		overrides: Partial<PracticePlaceInput> = {},
+	): PracticePlaceInput => ({
+		siteId,
+		practiceKind: "office",
+		name: null,
+		addressLine: "Health Centre, Sample Street",
+		addressComplement: null,
+		postcode: "TS18 1ZA",
+		placeName: "Stockton-on-Tees",
+		coordinates: { lat: 54.5661, lon: -1.3172 },
+		phone: "+441632960001",
+		establishmentUrl: null,
+		...overrides,
+	});
+	const practice: PractitionerInput = {
+		...doctor,
+		url: `${ORIGIN}/gb/practice/the-example-surgery-a99001`,
+		professionCode: "GB_GP",
+		rpps: "A99001",
+		idScheme: "GB-ODS-GP",
+		country: "GB",
+		name: "The Example Surgery",
+		givenName: "",
+		familyName: "The Example Surgery",
+		honorificPrefix: null,
+		occupation: "GP practice",
+		listingSlug: "gp-practices",
+		places: [site(1), site(2, { name: "Billingham Branch", postcode: "TS23 1ZZ" })],
+	};
+
+	it("publishes a GP practice as a MedicalClinic, its branches as locations, no person", () => {
+		const nodes = practitionerNodes(practice);
+		const clinic = nodeOf(nodes, "MedicalClinic");
+		expect(clinic["@id"]).toBe(`${practice.url}#practitioner`);
+		expect(clinic.name).toBe("The Example Surgery");
+		expect(clinic.identifier).toEqual({
+			"@type": "PropertyValue",
+			propertyID: "GB-ODS-GP",
+			value: "A99001",
+		});
+		expect(clinic.address).toMatchObject({
+			addressCountry: "GB",
+			postalCode: "TS18 1ZA",
+			addressLocality: "Stockton-on-Tees",
+		});
+		expect(clinic.telephone).toBe("+441632960001");
+		expect(clinic.medicalSpecialty).toBe("https://schema.org/PrimaryCare");
+		expect(clinic.location).toEqual({ "@id": `${practice.url}#site-2` });
+		expect(nodes).toHaveLength(2);
+		expect(JSON.stringify(nodes)).not.toMatch(/Person|IndividualPhysician|givenName|familyName/);
+	});
+
+	it("publishes a dental practice as a Dentist and a pharmacy as a Pharmacy", () => {
+		const dental = practitionerNodes({
+			...practice,
+			professionCode: "GB_DENTAL",
+			listingSlug: "dental-practices",
+			places: [site(1)],
+		});
+		expect(nodeOf(dental, "Dentist").medicalSpecialty).toBe("https://schema.org/Dentistry");
+		expect(dental).toHaveLength(1);
+		const pharmacy = practitionerNodes({
+			...practice,
+			professionCode: "GB_PHARMACY",
+			listingSlug: "pharmacies",
+			places: [site(1)],
+		});
+		expect(nodeOf(pharmacy, "Pharmacy").address).toMatchObject({ addressCountry: "GB" });
+	});
+});

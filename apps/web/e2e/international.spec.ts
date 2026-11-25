@@ -10,7 +10,7 @@ import { axeViolations } from "./axe";
  */
 
 test.describe("the international home", () => {
-	test("is in English, lists France as open and the other countries as plain text", async ({
+	test("is in English, lists the open markets and the other countries as plain text", async ({
 		page,
 	}) => {
 		const response = await page.goto("/");
@@ -22,6 +22,9 @@ test.describe("the international home", () => {
 		const france = countries.getByRole("link", { name: "Apercura France" });
 		await expect(france).toHaveAttribute("href", "/fr");
 		await expect(france).toHaveAttribute("hreflang", "fr-FR");
+		const uk = countries.getByRole("link", { name: "Apercura United Kingdom" });
+		await expect(uk).toHaveAttribute("href", "/gb");
+		await expect(uk).toHaveAttribute("hreflang", "en-GB");
 		for (const [name, href] of [
 			["English", "/fr-en"],
 			["Deutsch", "/fr-de"],
@@ -34,18 +37,11 @@ test.describe("the international home", () => {
 			);
 		}
 		// Planned countries are text: no page exists for them, so none can be thin.
-		for (const country of [
-			"Belgium",
-			"Germany",
-			"Italy",
-			"Spain",
-			"Switzerland",
-			"United Kingdom",
-		]) {
+		for (const country of ["Belgium", "Germany", "Italy", "Spain", "Switzerland"]) {
 			await expect(countries.getByText(country, { exact: true })).toBeVisible();
 			await expect(countries.getByRole("link", { name: country })).toHaveCount(0);
 		}
-		await expect(countries.getByText("Coming soon")).toHaveCount(6);
+		await expect(countries.getByText("Coming soon")).toHaveCount(5);
 
 		// The pages about Apercura, in English.
 		const more = page.getByRole("region", { name: "Learn more" });

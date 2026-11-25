@@ -1,4 +1,4 @@
-import { EmptyState } from "@apercura/ui";
+import { EmptyState, linkStyles } from "@apercura/ui";
 import type { Metadata } from "next";
 import { hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
@@ -8,7 +8,7 @@ import { CountLinks, ListingSection, ListingTitle } from "~/components/listing";
 import { PublicPage } from "~/components/public-page";
 import { Trail, type TrailItem, trailEntries } from "~/components/trail";
 import { marketOf } from "~/i18n/locales";
-import { getPathname } from "~/i18n/navigation";
+import { getPathname, Link } from "~/i18n/navigation";
 import { type Locale, routing } from "~/i18n/routing";
 import { placeLabel } from "~/lib/places";
 import { CONTENT_LANGUAGES, pageMetadata } from "~/lib/seo";
@@ -106,6 +106,16 @@ export default async function DirectoryPage({ params }: PageProps<"/[locale]/ann
 									count: department.practitionerCount,
 								}))}
 							/>
+							{region.slug ? (
+								<p className="text-body text-ink">
+									<Link
+										href={{ pathname: "/annuaire/[dept]", params: { dept: region.slug } }}
+										className={linkStyles()}
+									>
+										{t("regionLink", { place: region.name })}
+									</Link>
+								</p>
+							) : null}
 						</ListingSection>
 					))
 				)}

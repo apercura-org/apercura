@@ -1,7 +1,8 @@
 # Open data import
 
 `packages/etl` builds the public directory from open data: France (this page,
-first) and Austria ([below](#austria)). It is a Bun CLI that runs as a
+first), Austria ([below](#austria)) and the United Kingdom
+([below](#united-kingdom)). It is a Bun CLI that runs as a
 scheduled task next to the app, with its own database role that cannot reach
 patient data. Each market's import writes the shared `directory` schema with
 its own `country` and never reads or writes another market's rows.
@@ -512,7 +513,7 @@ age, per market and per list:
 SELECT source AS market, max(finished_at) AS last_success,
 	extract(day FROM now() - max(finished_at))::integer AS age_days
 FROM directory.etl_runs
-WHERE status IN ('succeeded', 'skipped') AND source IN ('fr', 'at')
+WHERE status IN ('succeeded', 'skipped') AND source IN ('fr', 'at', 'gb')
 GROUP BY source;
 
 -- Days since each Austrian list was last loaded (alert above 9).
@@ -556,3 +557,229 @@ starts with 0 (never assigned in Austria), doctor numbers far above the real
 lists'. Never commit real rows. `test/at-integration.test.ts` imports them
 next to the French fixtures: France untouched, idempotence, places, read
 models, a list left out, absences, objections, the breaker and `--approve`.
+
+## United Kingdom
+
+`etl:gb` builds the UK's directory (`/gb`) from the NHS organisation data of
+the four nations (issue #125, [ADR 0002](./adr/0002-multi-country.md#united-kingdom-gb)).
+Everything above about roles, ownership, the outbox and `--approve` applies, and
+the per-list behaviour is Austria's; this section says what differs.
+
+```sh
+bun run etl:places --country gb           # once (etl:gb does it on its first run), then yearly
+bun run etl:gb                            # weekly (England, Wales, Scotland, Northern Ireland)
+bun run etl:gb --sources ods-gp,ods-branches   # some lists only
+bun run etl:gb --dry-run                  # everything, then roll back
+bun run etl:gb --approve=<run_id>         # accept what a blocked run reported
+```
+
+The UK pages list **practices, not people**: GP practices, dental practices and
+pharmacies. The Open Government Licence (OGL v3.0) under which every source is
+published "does not cover personal data", and the registers of individual
+clinicians (GMC, GDC, NMC) are not open data
+([`docs/data-requests/gb.md`](./data-requests/gb.md)).
+
+### Sources
+
+Verified on 25 November 2026 on each publisher's portal (ODS Data Search and
+Export, opendata.nhs.scot, OpenDataNI, the OS Downloads API, the ONS Open
+Geography portal). All are under the **Open Government Licence v3.0**; the
+attribution statement of each is printed word for word on the data sources page
+(`/gb/data`) and kept in `unitedKingdom.registries`
+(`packages/core/src/country/gb.ts`).
+
+| List (`--sources`)                       | Distribution                                                                                                                                                                       | Format, update                                                                                                                                                                |
+| ---------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| England and Wales GP (`ods-gp`)          | `https://www.odsdatasearchandexport.nhs.uk/api/getReport?report=epraccur`                                                                                                          | headerless CSV, 27 columns; "refreshed at 2am each night"; GP practices are the active rows with role `RO76` in column 26                                                     |
+| Branch surgeries (`ods-branches`)        | `…getReport?report=ebranchs`                                                                                                                                                       | same layout; the parent practice's code in column 15; open branches only (no close date)                                                                                      |
+| England and Wales dental (`ods-dent`)    | `…getReport?report=egdpprac`                                                                                                                                                       | same layout; NHS Dental Services sends ODS monthly extracts                                                                                                                   |
+| England and Wales pharmacy (`ods-pharm`) | `…getReport?report=edispensary`                                                                                                                                                    | same layout; primary role `RO182` (pharmacy), `RO94` (appliance contractor) left out                                                                                          |
+| Scotland GP (`phs-gp`)                   | latest CSV of `https://www.opendata.nhs.scot/api/3/action/package_show?id=gp-practice-contact-details-and-list-sizes`                                                              | CSV with a header, quarterly ("GP Practices and List sizes October 2026")                                                                                                     |
+| Scotland dental (`phs-dent`)             | latest CSV of `…package_show?id=dental-practices-and-patient-registrations` named "Dental Practices …"                                                                             | CSV with a header, quarterly ("Dental Practices March 2026"); `CA` is the council area (ONS `S12` code)                                                                       |
+| Scotland pharmacy (`phs-pharm`)          | latest CSV of `…package_show?id=dispenser-location-contact-details`                                                                                                                | CSV with a header, monthly ("Dispenser Details - August 2026"); `NA` for an empty line                                                                                        |
+| Northern Ireland GP (`bso-gp`)           | latest CSV of `https://admin.opendatani.gov.uk/api/3/action/package_show?id=gp-practice-list-sizes` named "… Reference File …"                                                     | CSV with a header, quarterly ("GP Practice Reference File - July 2026"); `PracticeName` is the partners' names, never used                                                    |
+| Northern Ireland dental (`bso-dent`)     | latest CSV of `…package_show?id=general-dental-services-statistics` named "… Surgery List …"                                                                                       | CSV with a header, quarterly ("Dental Surgery List September 2026"), Windows-1252 in places; the "Dentist Contractor List" of the same dataset names dentists and is not read |
+| Postcodes                                | `https://api.os.uk/downloads/v1/products/CodePointOpen/downloads?area=GB&format=CSV&redirect`                                                                                      | Code-Point Open ZIP (14 MB), one headerless CSV per postcode area, British National Grid, quarterly                                                                           |
+| Towns                                    | `https://api.os.uk/downloads/v1/products/OpenNames/downloads?area=GB&format=CSV&redirect`                                                                                          | OS Open Names ZIP (100 MB), places import only: the cities, towns and villages (`populatedPlace`), quarterly                                                                  |
+| Local authorities                        | ONS feature services `WD26_LAD26_CTYUA26_RGN26_CTRY26_UK_LU` (lookup) and `LAD_DEC_2026_UK_BFC` (boundaries, GeoJSON)                                                              | places import only; yearly vintages (`LAD26CD`, next year `LAD27CD`: the reader takes any vintage)                                                                            |
+| Northern Ireland towns                   | `https://admin.opendatani.gov.uk/dataset/d27903f1-15e6-4c07-8564-ddc655e9c549/resource/411c6ea5-c079-43aa-bd62-438423d070cc/download/osni_open_data_-_gazetteer_-_place_names.csv` | OSNI gazetteer, 336 towns and villages, Irish Grid, published 2015; places import only                                                                                        |
+
+A CKAN dataset publishes a new file per period, and its portal uploads several
+periods the same day: the import takes the CSV resource whose **name** gives the
+latest month (`periodOfName`), then the most recently created. The URLs can be
+overridden with `ETL_GB_{SOURCE}_URL` (`ETL_GB_ODS_GP_URL`, `ETL_GB_PHS_DENT_URL`…),
+`ETL_GB_POSTCODES_URL`, `ETL_GB_LAD_LOOKUP_URL`, `ETL_GB_LAD_BOUNDARIES_URL`,
+`ETL_GB_TOWNS_URL` and `ETL_GB_NI_TOWNS_URL` (next year's ONS vintage:
+`…WD27_LAD27…`, `…LAD_DEC_2027…`).
+
+Not imported, and why: Public Health Scotland's "General Practitioner Contact
+Details" (individual GPs with their GMC number) and the BSO's "Dentist
+Contractor List" name people; the NHS Service Search API needs onboarding and a
+connection agreement; Northern Irish postcode coordinates are licensed by Land &
+Property Services. All in [`docs/data-requests/gb.md`](./data-requests/gb.md).
+
+### Identifiers
+
+Each list is its own identifier scheme (a list that fails keeps its rows), and
+the page URL ends with its key (`/gb/practice/{name}-{key}`):
+
+| Scheme         | URL key   | Key                                                                                          |
+| -------------- | --------- | -------------------------------------------------------------------------------------------- |
+| `GB-ODS-GP`    | `a81001`  | ODS code of the GP practice, a letter and 5 digits (never `V`)                               |
+| `GB-ODS-DENT`  | `v00003`  | ODS code of the dental practice, `V` and 5 or 6 digits                                       |
+| `GB-ODS-PHARM` | `fm474`   | ODS code of the pharmacy, `F` and 4 characters                                               |
+| `GB-PHS-GP`    | `sg10002` | Public Health Scotland's practice code                                                       |
+| `GB-PHS-DENT`  | `sd2`     | Public Health Scotland's dental practice code                                                |
+| `GB-PHS-PHARM` | `sp1030`  | Public Health Scotland's dispenser code                                                      |
+| `GB-BSO-GP`    | `ng1`     | the BSO's practice number                                                                    |
+| `GB-BSO-DENT`  | `nd…`     | derived: 10 hex digits of the SHA-256 of the normalized address and postcode (`niDentalKey`) |
+
+A branch surgery is a site of its GP practice (one activity per site), not a
+practice of its own; a branch whose parent is not an imported practice is left
+out (`stats.batch.orphanBranches`). A Northern Irish dental surgery that moves
+gets a new key, so a new page; the old one is removed after two runs.
+
+### Minimisation and what is left out
+
+- **Practices named after a person** (`DR A EXAMPLE & PARTNERS`, `MR B SAMPLE`,
+  `Drs Demo, Test & Mock`: a personal title, a partners formula, initials and a
+  surname alone, or a list of names without any organisation word,
+  `namesAPerson` in `sources/gb/names.ts`) are shown under the first address
+  line that names premises (`Falls Road Surgery`), else their street, else their
+  town. The published name is **never stored**, not even as the "source" name;
+  `stats.sources.{list}.minimised` counts them. Nearly every Northern Irish GP
+  practice is published under its partners' names: its own name is its first
+  address line.
+- Quarantined lines keep their **code only** (never a name).
+- Left out (`stats.sources.{list}.skipped`): inactive and closed practices,
+  prescribing cost centres that are not GP practices, appliance contractors,
+  services inside prisons and immigration removal centres (`HMP`, `HMYOI`…), and
+  the practices of the Isle of Man, Guernsey and Jersey (`IM`, `GY`, `JE`
+  postcodes: the ODS lists include them, the UK does not).
+- GDPR objections: the lines of a suppressed key are dropped while parsing, and
+  the purge of #116/#118 runs in the merge, as in France and Austria.
+
+Names and addresses are printed in British English case (`titleCaseGb`:
+`Stockton-on-Tees`, `St John's`, `McCann`, `NHS`), the legacy abbreviations
+spelled out (`MEDICAL CTR` → `Medical Centre`); phone numbers are stored in
+E.164 and printed the UK way (`formatPhoneGb`: `020 7946 0000`, `01642 672351`).
+
+### Places and precision
+
+Places (`directory.places`, `country = 'GB'`), imported once:
+
+- **regions**: England's nine regions and the three other nations
+  (`GB_REGIONS`, ONS codes); the UK's listings exist per region too (migration
+  `0026_gb_market`): `/gb/gp-practices/north-east`, `/gb/gp-practices/wales`;
+- **departments**: the 361 local authority districts (`E06000004`), their region
+  from the ONS lookup and their centre from the ONS boundaries;
+- **communes**: the cities, towns and villages of OS Open Names, and the OSNI
+  gazetteer's towns, each in the authority whose boundary holds it (else the
+  nearest within 3 km: a harbour on a simplified coastline); of two homonyms in
+  one authority, the larger is kept. No arrondissements.
+
+A site is located by its postcode (Code-Point Open, British National Grid
+transformed by PostGIS): `geo_source = 'postcode'`, `geo_precision = 'street'`
+(a postcode is the mean of about 15 addresses: never shown as if at the door).
+It is placed (`stageGb` in `src/merge-gb.ts`):
+
+1. in a local authority: the list's own (Scottish council areas), else the
+   postcode's, else the Northern Irish district the dental list names, else the
+   district the dental list's surgeries of the same postcode district all name
+   (`BT20` → Ards and North Down);
+2. in the town of that authority named like the address's post town, else like
+   one of its locality lines; without an authority (Northern Ireland, a postcode
+   too new for Code-Point Open), the only town of the nation with that name;
+3. else in the authority's town nearest to the postcode, within 3 km;
+4. else in the authority itself (London's boroughs list their practices there).
+
+Northern Irish postcodes cannot be located with open data: a practice there
+takes its town's centre (`geo_source = 'centroid'`, `geo_precision = 'city'`, no
+map pin). The town is not printed twice: an address line ending with the town
+the site is listed in loses it.
+
+### Guards
+
+Per list, before the merge (`GB_LIMITS` in `src/guards.ts`), as Austria's:
+
+- the file is between 1 KB and 100 MB and parses (27 columns for ODS, the
+  expected header columns elsewhere); otherwise the list is **left out**;
+- at most 1% of its lines quarantined, and at least a floor of rows, about 5%
+  of the November 2026 files (ODS GP 300, branches 100, ODS dental and
+  pharmacies 500, Scotland 40, 50 and 60, Northern Ireland 15 and 15): otherwise
+  left out (never approvable). The floor catches an empty or broken file on a
+  first run; afterwards the 5% change below blocks a truncated one;
+- at most 5% more or fewer practices and 15% more or fewer bytes than the last
+  successful run that loaded the list: otherwise **blocked** (approvable).
+
+After staging: less than 98% of the sites placed in a local authority
+(`gb.places`) or less than 97% of the sites of Great Britain located by postcode
+(`gb.postcodes`) blocks the run (approvable). After the merge, the circuit
+breakers and the orphan check apply to the UK's own pages only. A list left out
+keeps its rows, and the command exits with code **3**.
+
+### Schedule and monitoring
+
+The scheduler runs `etl:gb $ETL_GB_SCHEDULE_ARGS` every Monday at 06:30 UTC,
+after Austria's import (`docker/crontab`; one advisory lock for every import).
+Alert on exit codes 1, 2 and 3 and on the import age, per market (the market
+query of [Austria's monitoring](#schedule-and-monitoring) covers `gb`) and per list:
+
+```sql
+-- Days since each UK list was last loaded (alert above 9), and its practices then.
+SELECT list, max(r.finished_at) AS last_loaded,
+	extract(day FROM now() - max(r.finished_at))::integer AS age_days,
+	(array_agg((r.stats -> 'sources' -> list ->> 'people')::integer ORDER BY r.id DESC))[1] AS practices
+FROM directory.etl_runs r
+CROSS JOIN LATERAL jsonb_object_keys(r.stats -> 'sources') AS list
+WHERE r.source = 'gb' AND r.status = 'succeeded'
+	AND NOT coalesce(r.stats -> 'sourceErrors' ? list, false)
+GROUP BY list;
+
+-- The UK's last runs: status, lists left out, placement and totals.
+SELECT id, status, finished_at, stats -> 'sourceErrors' AS left_out,
+	stats -> 'staged' AS staged, stats -> 'totals' AS totals
+FROM directory.etl_runs WHERE source = 'gb' ORDER BY id DESC LIMIT 5;
+```
+
+The Scottish and Northern Irish lists are quarterly: their file changes four
+times a year, so watch `etl_runs.files.{list}.resource` (the resource name, with
+its period) as well.
+
+### Measured run (files of 25 November 2026)
+
+Laptop, local PostGIS 17 under emulation, dry run on a fresh database with the real
+files (the run quoted in the pull request):
+
+|             |                                                                                                                                                                                       |
+| ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Duration    | 167 s in all: places 144 s (OS Open Names, once), postcodes 13–37 s, merge and read models about 20 s; a weekly run takes about 35 s                                                  |
+| Memory      | peak RSS 1.1 GB on the first run (the places), about 300 MB on a weekly run                                                                                                           |
+| Practices   | 31,240: ODS GP 6,558, ODS dental 9,712, ODS pharmacies 11,109, PHS GP 879, PHS dental 986, PHS pharmacies 1,345, BSO GP 304, BSO dental 347                                           |
+| Left out    | 93 secure settings (prisons, removal centres), 42 practices of the Crown Dependencies, 116 appliance contractors, 60 branch surgeries of a practice that is not an active GP practice |
+| Minimised   | 891 practices named after a person, shown under their premises or street (ODS 161 GP, 214 dental, 77 pharmacies; PHS 78, 16, 47; BSO GP 298)                                          |
+| Sites       | 33,733 (2,493 branch surgeries), 33,027 located by postcode, 685 at their town's centre (Northern Ireland), 33,712 placed (99.9%), 28,680 in a town                                   |
+| Indexable   | 31,219 practices (7,727 GP practices, 11,039 dental practices, 12,453 pharmacies); 3,380 indexable listing pages of 7,152                                                             |
+| Places      | 12 regions, 361 local authorities, 16,854 towns                                                                                                                                       |
+| Quarantined | 1 line (a Scottish dispenser without a valid postcode)                                                                                                                                |
+
+### Local development
+
+```sh
+bun run etl:gb --source-dir packages/etl/fixtures/gb --offline   # synthetic data
+bun run --cwd packages/etl fixtures:gb                           # regenerate the fixtures
+```
+
+`packages/etl/fixtures/gb` holds **synthetic** files in the exact formats of the
+nine lists, of Code-Point Open (one CSV of the archive), OS Open Names (one CSV),
+the OSNI gazetteer and the ONS lookup and boundaries (real authority codes and
+town names with approximate points and square boundaries), generated by
+`packages/etl/fixtures/generate-gb.ts`: made-up practices and "persons", streets
+that do not exist, postcodes ending in `Z` letters, codes in ranges the real
+lists do not use, phone numbers in Ofcom's drama ranges, and fillers above the
+row floors. Never commit real rows. `test/gb-integration.test.ts` imports them
+next to the French and Austrian fixtures: the other markets untouched both ways,
+no person's name stored, placement (postcode, town, nearest town, local
+authority, Northern Ireland by town), region listings, idempotence, a dry run, a
+list left out (and branch surgeries kept when only their report fails),
+absences, objections, the breaker and `--approve`.

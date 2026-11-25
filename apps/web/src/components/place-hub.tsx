@@ -38,12 +38,14 @@ export async function PlaceHub({
 	const labels = await getTaxonomyLabels(locale);
 	const name = placeLabel(place, marketOf(locale));
 	const isDepartment = place.kind === "department";
+	// A UK region's hub lists its local authorities, each a hub of its own.
+	const isRegion = place.kind === "region";
 	const landing = (listingSlug: string): Href => ({
 		pathname: "/[specialite]/[dept]/[[...rest]]",
 		params: {
 			specialite: listingSlug,
 			dept: department.slug,
-			rest: isDepartment ? undefined : [place.slug],
+			rest: isDepartment || isRegion ? undefined : [place.slug],
 		},
 	});
 	const title = t("placeTitle", { place: name });
@@ -93,7 +95,11 @@ export async function PlaceHub({
 					<ListingSection
 						id="places-heading"
 						title={
-							isDepartment ? t("communesHeading", { place: name }) : t("arrondissementsHeading")
+							isRegion
+								? t("authoritiesHeading", { place: name })
+								: isDepartment
+									? t("communesHeading", { place: name })
+									: t("arrondissementsHeading")
 						}
 					>
 						<CountLinks
@@ -101,10 +107,13 @@ export async function PlaceHub({
 							items={hub.places.map((item) => ({
 								key: item.id,
 								label: placeLabel(item, marketOf(locale)),
-								href: {
-									pathname: "/annuaire/[dept]/[commune]",
-									params: { dept: department.slug, commune: item.slug },
-								},
+								href:
+									item.kind === "department"
+										? { pathname: "/annuaire/[dept]", params: { dept: item.slug } }
+										: {
+												pathname: "/annuaire/[dept]/[commune]",
+												params: { dept: department.slug, commune: item.slug },
+											},
 								count: item.practitionerCount,
 							}))}
 						/>

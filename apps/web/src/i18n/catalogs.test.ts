@@ -12,11 +12,15 @@ import de from "../../messages/de.json";
 import en from "../../messages/en.json";
 import es from "../../messages/es.json";
 import fr from "../../messages/fr.json";
+import gb from "../../messages/gb.json";
 import it_ from "../../messages/it.json";
 import { mergeMessages, messagesFor } from "./catalogs";
 import { CATALOG_LANGUAGES, LOCALES, type Locale } from "./locales";
 
-/** Austria's catalog is the German one with the Austrian overrides on top. */
+/**
+ * Austria's catalog is the German one with the Austrian overrides on top; the UK's the English
+ * one with the UK's overrides.
+ */
 const CATALOGS: Record<Locale, unknown> = {
 	fr,
 	en,
@@ -24,6 +28,7 @@ const CATALOGS: Record<Locale, unknown> = {
 	es,
 	it: it_,
 	"de-AT": mergeMessages(de, at as Record<string, unknown>),
+	"en-GB": mergeMessages(en, gb as Record<string, unknown>),
 };
 
 /** Every message of a catalog by its dotted key (array items are indexed). */
@@ -121,5 +126,12 @@ describe("the Austrian overrides", () => {
 	it("only override keys of the German catalog", () => {
 		const german = flatten(de);
 		expect([...flatten(at).keys()].filter((key) => !german.has(key))).toEqual([]);
+	});
+});
+
+describe("the UK overrides", () => {
+	it("only override keys of the English catalog", () => {
+		const english = flatten(en);
+		expect([...flatten(gb).keys()].filter((key) => !english.has(key))).toEqual([]);
 	});
 });

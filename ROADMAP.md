@@ -159,13 +159,26 @@ Left:
 - Import NRPZS (ÚZIS, CC BY 4.0, monthly CSV and API): one page per place of care.
 - Czech interface (`cs`); check the Czech Medical Chamber's ethics code on third-party listings.
 
-### 4. United Kingdom (`/gb`): practice pages and claimed clinicians
+### 4. United Kingdom (`/gb`): open, practice pages from NHS open data
 
-- Import ODS practices under the Open Government Licence, without the personal-data fields it
-  excludes.
-- Ask the GMC for the price of its republication licence; GDC and NMC lookups to verify claims.
-- Confirm with the CQC (and the devolved regulators) that a pure booking site is out of scope;
-  company details on the site (SI 2015/17).
+Done in [#125](https://github.com/maxgfr/apercura/issues/125): `/gb` in British English, built
+weekly by `etl:gb` from the NHS organisation data under the Open Government Licence (ODS for
+England and Wales, Public Health Scotland, the Business Services Organisation in Northern
+Ireland): about 31,000 GP practices, dental practices and pharmacies, located by postcode
+(Code-Point Open), listed by region and nation, local authority and town, with the attributions
+on the data sources page, a UK GDPR privacy notice, claims by documents, no booking
+([data import](./docs/data-import.md#united-kingdom), [ADR 0002](./docs/adr/0002-multi-country.md#united-kingdom-gb)).
+Practices only: no clinician is listed. Left:
+
+- Send the requests of [`docs/data-requests/gb.md`](./docs/data-requests/gb.md) (founder): the
+  GMC's republication licence for named doctors, Land & Property Services for Northern Irish
+  postcodes, the BSO for the district and coordinates of each GP practice, NHS England for
+  websites and opening hours (Organisation Data Terminology API onboarding).
+- Have a lawyer qualified in the UK review the legal notice, privacy notice and terms; check
+  whether a UK representative or ICO registration (data protection fee) is needed for the
+  publisher.
+- Confirm with the CQC (and the devolved regulators) that a pure booking site is out of scope
+  before booking opens in the UK.
 
 ### 5. Poland (`/pl`): directory of registered practices
 

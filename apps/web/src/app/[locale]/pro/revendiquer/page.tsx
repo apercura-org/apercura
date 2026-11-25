@@ -11,6 +11,7 @@ import { getPathname, Link } from "~/i18n/navigation";
 import type { Locale } from "~/i18n/routing";
 import { genderOf, getTaxonomyLabels } from "~/lib/labels";
 import { NO_INDEX, resolveLocale } from "~/lib/locale";
+import { displayId } from "~/lib/practitioner-key";
 import { parsePractitionerRef, practitionerRefOf } from "~/lib/practitioner-ref";
 import { PRO_ROUTES } from "~/lib/pro-routes";
 import { requireProAccess } from "~/server/auth/guard";
@@ -33,8 +34,9 @@ const sectionHeading = "type-title text-ink";
 async function Start({ locale, rpps }: { locale: Locale; rpps: string | null }) {
 	// Outside the `(app)` group on purpose: a visitor coming from "Claim this
 	// page" signs in (or up) and comes back here for the same page. `rpps` is the
-	// practitioner reference: an RPPS in France, `w7983` in Austria (lib/practitioner-ref).
-	const parsed = parsePractitionerRef(rpps);
+	// practitioner reference: an RPPS in France, `w7983` in Austria, `gb:a81001` or an ODS code
+	// typed on a UK page (lib/practitioner-ref).
+	const parsed = parsePractitionerRef(rpps, marketOf(locale));
 	const valid = parsed !== null;
 	const ref = parsed ? practitionerRefOf(parsed) : null;
 	const access = await requireProAccess(
@@ -83,10 +85,10 @@ async function Start({ locale, rpps }: { locale: Locale; rpps: string | null }) 
 						headingLevel={3}
 						name={labels.personName(practitioner)}
 						profession={
-							labels.listing(practitioner.listingSlug, genderOf(practitioner.civilityCode)) ??
+							labels.occupation(practitioner.listingSlug, genderOf(practitioner.civilityCode)) ??
 							t("start.unknownProfession")
 						}
-						rpps={practitionerRefOf(practitioner)}
+						rpps={displayId(practitioner)}
 						rppsLabel={practitioner.country === "FR" ? tP("rpps") : t("start.identifierLabel")}
 						status={practitioner.claimStatus === "claimed" ? "verified" : "unclaimed"}
 						statusLabel={tP(
@@ -220,7 +222,8 @@ async function StartWithParams({
 	locale: Locale;
 	searchParams: Props["searchParams"];
 }) {
-	// The page reference: an RPPS in France, a list key (`w7983`) in Austria.
+	// The page reference: an RPPS in France, a list key (`w7983`) in Austria, an ODS code or
+	// `gb:` key in the UK.
 	const value = (await searchParams).rpps;
 	const rpps = typeof value === "string" ? value.trim() : null;
 	return <Start locale={locale} rpps={rpps || null} />;

@@ -19,7 +19,7 @@ export const SITEMAP_KINDS = ["praticiens", "listes", "lieux", "etablissements"]
 export type SitemapKind = (typeof SITEMAP_KINDS)[number];
 
 /** The markets with sitemaps, by their path segment. */
-export const SITEMAP_MARKETS = ["fr", "at"] as const;
+export const SITEMAP_MARKETS = ["fr", "at", "gb"] as const;
 export type SitemapMarket = (typeof SITEMAP_MARKETS)[number];
 
 /** A non-empty chunk of a market: its latest change and how many URLs it lists. */
@@ -102,7 +102,7 @@ export function selectSitemapEntries(
 			return sql<SitemapEntry[]>`
 				SELECT '/' || lp.listing_slug || CASE
 						WHEN p.id IS NULL THEN ''
-						WHEN p.kind = 'department' THEN '/' || p.slug
+						WHEN p.kind IN ('department', 'region') THEN '/' || p.slug
 						ELSE '/' || d.slug || '/' || p.slug
 					END AS path,
 					to_char(lp.content_updated_at AT TIME ZONE 'UTC', 'YYYY-MM-DD') AS lastmod
@@ -112,13 +112,13 @@ export function selectSitemapEntries(
 					AND d.code = p.department_code
 				WHERE lp.indexable AND lp.country = ${country} AND lp.id >= ${from} AND lp.id < ${to}
 					AND (p.id IS NULL OR (${sql.unsafe(NOT_CITY("p"))}))
-					AND (p.id IS NULL OR p.kind = 'department' OR d.id IS NOT NULL)
+					AND (p.id IS NULL OR p.kind IN ('department', 'region') OR d.id IS NOT NULL)
 				ORDER BY lp.id
 			`;
 		case "lieux":
 			// A place hub is indexable when at least one of its listing pages is.
 			return sql<SitemapEntry[]>`
-				SELECT CASE WHEN p.kind = 'department' THEN '/annuaire/' || p.slug
+				SELECT CASE WHEN p.kind IN ('department', 'region') THEN '/annuaire/' || p.slug
 						ELSE '/annuaire/' || d.slug || '/' || p.slug END AS path,
 					to_char(max(lp.content_updated_at) AT TIME ZONE 'UTC', 'YYYY-MM-DD') AS lastmod
 				FROM directory.landing_pages lp
@@ -127,7 +127,7 @@ export function selectSitemapEntries(
 					AND d.code = p.department_code
 				WHERE lp.indexable AND lp.country = ${country}
 					AND lp.place_id >= ${from} AND lp.place_id < ${to}
-					AND (p.kind = 'department' OR d.id IS NOT NULL)
+					AND (p.kind IN ('department', 'region') OR d.id IS NOT NULL)
 				GROUP BY p.id, p.kind, p.slug, d.slug
 				ORDER BY p.id
 			`;

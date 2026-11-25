@@ -1,6 +1,5 @@
 "use client";
 
-import { formatPhoneFr } from "@apercura/core";
 import { FieldList, FieldRow, PractitionerHeader, SiteCard } from "@apercura/ui";
 import { useTranslations } from "next-intl";
 import {
@@ -10,7 +9,7 @@ import {
 	sectionHeading,
 } from "~/components/owner-sections";
 import type { OwnerContent } from "~/lib/owner-content";
-import { addressLines } from "~/lib/practitioner-view";
+import { addressLines, formatPhone } from "~/lib/practitioner-view";
 
 export type PreviewSite = {
 	activityId: number;
@@ -112,7 +111,7 @@ export function PagePreview({
 									label={tP("fields.phone")}
 									value={
 										content.showPhone && site.phone ? (
-											<span className="tabular">{formatPhoneFr(site.phone)}</span>
+											<span className="tabular">{formatPhone(site.phone)}</span>
 										) : null
 									}
 									emptyLabel={empty}

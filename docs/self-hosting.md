@@ -179,6 +179,20 @@ every Monday at 05:30 UTC (`ETL_AT_SCHEDULE_ARGS=--sources wien` keeps it to
 some lists). Exit code `3` means it imported, but left out a list it could not
 fetch or read ([data-import.md](./data-import.md#austria)).
 
+The United Kingdom (`/gb`) has its own import, from the NHS organisation data of
+England and Wales (ODS), Scotland (Public Health Scotland) and Northern Ireland
+(BSO), under the Open Government Licence (about 31,000 GP practices, dental
+practices and pharmacies):
+
+```sh
+apercura-compose run --rm --entrypoint "apercura etl:gb" etl
+```
+
+Its first run imports the UK's places (OS Open Names, about 100 MB, a few
+minutes). The scheduler reruns it every Monday at 06:30 UTC
+(`ETL_GB_SCHEDULE_ARGS=--sources ods-gp` keeps it to some lists); exit code `3`
+as for Austria ([data-import.md](./data-import.md#united-kingdom)).
+
 ## Scheduled jobs
 
 The `scheduler` service runs [`docker/crontab`](../docker/crontab) with

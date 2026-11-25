@@ -4,6 +4,14 @@
 import { parseProfessionList } from "@apercura/core/taxonomy";
 import { DEFAULT_AT_PLACES_URL } from "./sources/at/places";
 import { AT_SOURCE_IDS, type AtSourceId } from "./sources/at/types";
+import {
+	DEFAULT_GB_LAD_BOUNDARIES_URL,
+	DEFAULT_GB_LAD_LOOKUP_URL,
+	DEFAULT_GB_NI_TOWNS_URL,
+	DEFAULT_GB_TOWNS_URL,
+} from "./sources/gb/places";
+import { DEFAULT_GB_POSTCODES_URL } from "./sources/gb/postcodes";
+import { GB_SOURCE_IDS, type GbSourceId } from "./sources/gb/types";
 
 /** Stable data.gouv.fr URLs (they redirect to the latest daily file). */
 export const DEFAULT_ANS_URLS = {
@@ -241,6 +249,128 @@ export function buildAtOptions(flags: ParsedArgs["flags"], env: NodeJS.ProcessEn
 		offline,
 		urls,
 		placesUrl: env.ETL_AT_PLACES_URL || DEFAULT_AT_PLACES_URL,
+		workDir: flagString(flags, "work-dir") ?? env.ETL_WORK_DIR ?? null,
+		appUrl: offline ? null : env.APP_URL || null,
+		revalidateSecret: env.REVALIDATE_SECRET || null,
+	};
+}
+
+// ---------------------------------------------------------------------------
+// United Kingdom (`etl:gb`)
+// ---------------------------------------------------------------------------
+
+const ODS_REPORT = "https://www.odsdatasearchandexport.nhs.uk/api/getReport?report=";
+const PHS_DATASET = "https://www.opendata.nhs.scot/api/3/action/package_show?id=";
+const OPENDATANI_DATASET = "https://admin.opendatani.gov.uk/api/3/action/package_show?id=";
+
+/**
+ * Where each UK list is published, each overridable with `ETL_GB_{SOURCE}_URL`
+ * (`ETL_GB_ODS_GP_URL`, `ETL_GB_PHS_DENT_URL`…). The ODS reports are files; the Scottish and
+ * Northern Irish lists are CKAN datasets (`package_show`) whose latest CSV is downloaded, with
+ * the resource name each must match.
+ */
+export const DEFAULT_GB_URLS: Record<GbSourceId, string> = {
+	"ods-gp": `${ODS_REPORT}epraccur`,
+	"ods-branches": `${ODS_REPORT}ebranchs`,
+	"ods-dent": `${ODS_REPORT}egdpprac`,
+	"ods-pharm": `${ODS_REPORT}edispensary`,
+	"phs-gp": `${PHS_DATASET}gp-practice-contact-details-and-list-sizes`,
+	"phs-dent": `${PHS_DATASET}dental-practices-and-patient-registrations`,
+	"phs-pharm": `${PHS_DATASET}dispenser-location-contact-details`,
+	"bso-gp": `${OPENDATANI_DATASET}gp-practice-list-sizes`,
+	"bso-dent": `${OPENDATANI_DATASET}general-dental-services-statistics`,
+};
+
+/** The resource of a CKAN dataset each list reads (the dental dataset also lists the dentists). */
+export const GB_RESOURCE_PATTERNS: Partial<Record<GbSourceId, RegExp>> = {
+	"phs-gp": /practice/i,
+	"phs-dent": /dental practices/i,
+	"phs-pharm": /dispenser/i,
+	"bso-gp": /reference file/i,
+	"bso-dent": /surgery list/i,
+};
+
+/** File names expected in `--source-dir` for `etl:gb` (fixtures, offline runs). */
+export const GB_SOURCE_FILES: Record<GbSourceId, string> = {
+	"ods-gp": "epraccur.csv",
+	"ods-branches": "ebranchs.csv",
+	"ods-dent": "egdpprac.csv",
+	"ods-pharm": "edispensary.csv",
+	"phs-gp": "phs-gp.csv",
+	"phs-dent": "phs-dental.csv",
+	"phs-pharm": "phs-dispensers.csv",
+	"bso-gp": "bso-gp.csv",
+	"bso-dent": "bso-dental.csv",
+};
+
+/** Code-Point Open in `--source-dir`: the release ZIP, or one CSV of it for fixtures. */
+export const GB_POSTCODES_FILES = ["codepo_gb.zip", "codepoint.csv"] as const;
+
+export type GbOptions = {
+	databaseUrl: string;
+	/** The lists to import (default: all). */
+	sources: GbSourceId[];
+	dryRun: boolean;
+	approveRunId: number | null;
+	force: boolean;
+	sourceDir: string | null;
+	offline: boolean;
+	urls: Record<GbSourceId, string>;
+	postcodesUrl: string;
+	placesUrls: { ladLookup: string; ladBoundaries: string; towns: string; niTowns: string };
+	workDir: string | null;
+	appUrl: string | null;
+	revalidateSecret: string | null;
+};
+
+/** Parses a comma-separated list of UK sources (`ods-gp,phs-gp`); throws on unknown ones. */
+export function parseGbSources(value: string | undefined | null): GbSourceId[] {
+	if (!value) return [...GB_SOURCE_IDS];
+	const sources = value
+		.split(",")
+		.map((source) => source.trim())
+		.filter(Boolean);
+	for (const source of sources) {
+		if (!(GB_SOURCE_IDS as readonly string[]).includes(source)) {
+			throw new Error(`Unknown UK source: ${source} (known: ${GB_SOURCE_IDS.join(", ")})`);
+		}
+	}
+	if (sources.length === 0) throw new Error("At least one UK source is required");
+	return [...new Set(sources)] as GbSourceId[];
+}
+
+const gbEnvKey = (source: GbSourceId) => `ETL_GB_${source.toUpperCase().replace("-", "_")}_URL`;
+
+/** The UK places' sources, each overridable (`ETL_GB_LAD_LOOKUP_URL`…). */
+export function gbPlacesUrls(env: NodeJS.ProcessEnv): GbOptions["placesUrls"] {
+	return {
+		ladLookup: env.ETL_GB_LAD_LOOKUP_URL || DEFAULT_GB_LAD_LOOKUP_URL,
+		ladBoundaries: env.ETL_GB_LAD_BOUNDARIES_URL || DEFAULT_GB_LAD_BOUNDARIES_URL,
+		towns: env.ETL_GB_TOWNS_URL || DEFAULT_GB_TOWNS_URL,
+		niTowns: env.ETL_GB_NI_TOWNS_URL || DEFAULT_GB_NI_TOWNS_URL,
+	};
+}
+
+export function buildGbOptions(flags: ParsedArgs["flags"], env: NodeJS.ProcessEnv): GbOptions {
+	const approve = flagString(flags, "approve");
+	if (approve !== null && !/^\d+$/.test(approve)) {
+		throw new Error(`--approve needs a run id, got ${approve}`);
+	}
+	const offline = flags.has("offline");
+	const urls = Object.fromEntries(
+		GB_SOURCE_IDS.map((source) => [source, env[gbEnvKey(source)] || DEFAULT_GB_URLS[source]]),
+	) as Record<GbSourceId, string>;
+	return {
+		databaseUrl: resolveDatabaseUrl(env),
+		sources: parseGbSources(flagString(flags, "sources") ?? env.ETL_GB_SOURCES),
+		dryRun: flags.has("dry-run"),
+		approveRunId: approve === null ? null : Number(approve),
+		force: flags.has("force"),
+		sourceDir: flagString(flags, "source-dir") ?? env.ETL_GB_SOURCE_DIR ?? null,
+		offline,
+		urls,
+		postcodesUrl: env.ETL_GB_POSTCODES_URL || DEFAULT_GB_POSTCODES_URL,
+		placesUrls: gbPlacesUrls(env),
 		workDir: flagString(flags, "work-dir") ?? env.ETL_WORK_DIR ?? null,
 		appUrl: offline ? null : env.APP_URL || null,
 		revalidateSecret: env.REVALIDATE_SECRET || null,

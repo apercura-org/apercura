@@ -13,7 +13,7 @@ import { Link } from "~/i18n/navigation";
 import type { Locale } from "~/i18n/routing";
 import { getTaxonomyLabels } from "~/lib/labels";
 import { NO_INDEX, resolveLocale } from "~/lib/locale";
-import { practitionerRefOf } from "~/lib/practitioner-ref";
+import { displayId } from "~/lib/practitioner-key";
 import { PRO_ROUTES } from "~/lib/pro-routes";
 import { requirePlatformAdminPage } from "~/server/auth/admin-guard";
 import { caller } from "~/trpc/server";
@@ -91,7 +91,7 @@ async function Detail({ locale, id }: { locale: Locale; id: string }) {
 								}
 								className={`${linkStyles()} tabular`}
 							>
-								{practitionerRefOf(practitioner)}
+								{displayId(practitioner)}
 							</Link>
 						}
 						emptyLabel={empty}

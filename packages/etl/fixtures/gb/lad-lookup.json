@@ -1,0 +1,68 @@
+{
+	"features": [
+		{
+			"attributes": {
+				"LAD26CD": "E06000004",
+				"LAD26NM": "Stockton-on-Tees",
+				"RGN26CD": "E12000001",
+				"CTRY26CD": "E92000001"
+			}
+		},
+		{
+			"attributes": {
+				"LAD26CD": "E09000007",
+				"LAD26NM": "Camden",
+				"RGN26CD": "E12000007",
+				"CTRY26CD": "E92000001"
+			}
+		},
+		{
+			"attributes": {
+				"LAD26CD": "E08000025",
+				"LAD26NM": "Birmingham",
+				"RGN26CD": "E12000005",
+				"CTRY26CD": "E92000001"
+			}
+		},
+		{
+			"attributes": {
+				"LAD26CD": "W06000015",
+				"LAD26NM": "Cardiff",
+				"RGN26CD": null,
+				"CTRY26CD": "W92000004"
+			}
+		},
+		{
+			"attributes": {
+				"LAD26CD": "S12000049",
+				"LAD26NM": "Glasgow City",
+				"RGN26CD": null,
+				"CTRY26CD": "S92000003"
+			}
+		},
+		{
+			"attributes": {
+				"LAD26CD": "S12000036",
+				"LAD26NM": "City of Edinburgh",
+				"RGN26CD": null,
+				"CTRY26CD": "S92000003"
+			}
+		},
+		{
+			"attributes": {
+				"LAD26CD": "N09000003",
+				"LAD26NM": "Belfast",
+				"RGN26CD": null,
+				"CTRY26CD": "N92000002"
+			}
+		},
+		{
+			"attributes": {
+				"LAD26CD": "N09000010",
+				"LAD26NM": "Newry, Mourne and Down",
+				"RGN26CD": null,
+				"CTRY26CD": "N92000002"
+			}
+		}
+	]
+}

@@ -1,7 +1,7 @@
 import "server-only";
 
 import { cacheLife, cacheTag } from "next/cache";
-import { NOT_DEPARTMENT_CITY } from "~/lib/places";
+import { NOT_DEPARTMENT_CITY, REGION_LISTING_MARKETS } from "~/lib/places";
 import { label } from "~/lib/practitioner-view";
 import { cacheTags } from "../cache-tags";
 import { getSql, hasDatabaseUrl } from "../db";
@@ -15,13 +15,20 @@ import type { PlaceRef } from "./types";
 
 export type ListingCount = { listingSlug: string; practitionerCount: number; indexable: boolean };
 export type PlaceCount = PlaceRef & { practitionerCount: number };
-export type RegionGroup = { code: string; name: string; departments: PlaceCount[] };
+export type RegionGroup = {
+	code: string;
+	name: string;
+	/** Slug of the region, where it has pages of its own (the UK), else empty. */
+	slug: string;
+	departments: PlaceCount[];
+};
 
 export type DirectoryIndex = { available: boolean; regions: RegionGroup[] };
 
 /**
  * Departments of a market with at least one practitioner, grouped by region.
- * Austria has no regions: its Bundesländer come in one group without a name.
+ * Austria has no regions: its Bundesländer come in one group without a name. The UK's
+ * local authorities are grouped by England's regions and the other nations.
  */
 export async function getDirectoryIndex(country = "FR"): Promise<DirectoryIndex> {
 	"use cache";
@@ -31,23 +38,32 @@ export async function getDirectoryIndex(country = "FR"): Promise<DirectoryIndex>
 		return { available: false, regions: [] };
 	}
 	cacheLife("weeks");
-	const rows = await getSql()<(PlaceCount & { regionCode: string; regionName: string })[]>`
+	const rows = await getSql()<
+		(PlaceCount & { regionCode: string; regionName: string; regionSlug: string })[]
+	>`
 		SELECT d.id, d.kind, d.code, d.name, d.slug, d.department_code AS "departmentCode",
 			sum(lp.practitioner_count)::integer AS "practitionerCount",
-			coalesce(r.code, '') AS "regionCode", coalesce(r.name, '') AS "regionName"
+			coalesce(r.code, '') AS "regionCode", coalesce(r.name, '') AS "regionName",
+			coalesce(r.slug, '') AS "regionSlug"
 		FROM directory.landing_pages lp
 		JOIN directory.places d ON d.id = lp.place_id AND d.kind = 'department'
 			AND d.country = ${country}
 		LEFT JOIN directory.places r ON r.country = d.country AND r.kind = 'region'
 			AND r.code = d.region_code
-		GROUP BY d.id, r.code, r.name
-		ORDER BY r.name, d.code
+		GROUP BY d.id, r.code, r.name, r.slug
+		-- UK authorities by name (their ONS codes group them by type, not by place).
+		ORDER BY r.name, CASE WHEN d.country = 'GB' THEN d.name ELSE d.code END
 	`;
 	const regions: RegionGroup[] = [];
-	for (const { regionCode, regionName, ...department } of rows) {
+	for (const { regionCode, regionName, regionSlug, ...department } of rows) {
 		let region = regions.at(-1);
 		if (!region || region.code !== regionCode) {
-			region = { code: regionCode, name: regionName, departments: [] };
+			region = {
+				code: regionCode,
+				name: regionName,
+				slug: REGION_LISTING_MARKETS.has(country) ? regionSlug : "",
+				departments: [],
+			};
 			regions.push(region);
 		}
 		region.departments.push(department);
@@ -85,8 +101,19 @@ export async function getPlaceHub(
 	const total = listings.reduce((sum, listing) => sum + listing.practitionerCount, 0);
 
 	const places =
-		place.kind === "department"
-			? await sql<PlaceCount[]>`
+		place.kind === "region"
+			? // A UK region: its local authorities.
+				await sql<PlaceCount[]>`
+					SELECT p.id, p.kind, p.code, p.name, p.slug, p.department_code AS "departmentCode",
+						sum(lp.practitioner_count)::integer AS "practitionerCount"
+					FROM directory.landing_pages lp
+					JOIN directory.places p ON p.id = lp.place_id AND p.kind = 'department'
+					WHERE p.country = ${country} AND p.region_code = ${place.code}
+					GROUP BY p.id
+					ORDER BY sum(lp.practitioner_count) DESC, p.name, p.id
+				`
+			: place.kind === "department"
+				? await sql<PlaceCount[]>`
 					SELECT p.id, p.kind, p.code, p.name, p.slug, p.department_code AS "departmentCode",
 						sum(lp.practitioner_count)::integer AS "practitionerCount"
 					FROM directory.landing_pages lp
@@ -99,8 +126,8 @@ export async function getPlaceHub(
 					GROUP BY p.id
 					ORDER BY sum(lp.practitioner_count) DESC, p.name, p.id
 				`
-			: isCity
-				? await sql<PlaceCount[]>`
+				: isCity
+					? await sql<PlaceCount[]>`
 						SELECT p.id, p.kind, p.code, p.name, p.slug, p.department_code AS "departmentCode",
 							sum(lp.practitioner_count)::integer AS "practitionerCount"
 						FROM directory.landing_pages lp
@@ -109,7 +136,7 @@ export async function getPlaceHub(
 						GROUP BY p.id
 						ORDER BY p.code
 					`
-				: [];
+					: [];
 
 	const departmentCode = place.kind === "department" ? place.code : null;
 	const establishments = await sql<EstablishmentCount[]>`

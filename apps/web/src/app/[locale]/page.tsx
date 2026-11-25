@@ -1,5 +1,11 @@
-import { austria } from "@apercura/core/country";
-import { AT_DENTIST, AT_DOCTOR } from "@apercura/core/taxonomy";
+import { austria, unitedKingdom } from "@apercura/core/country";
+import {
+	AT_DENTIST,
+	AT_DOCTOR,
+	GB_DENTAL_PRACTICE,
+	GB_GP_PRACTICE,
+	GB_PHARMACY,
+} from "@apercura/core/taxonomy";
 import { buttonStyles, FieldList, FieldRow, ProvenanceNote } from "@apercura/ui";
 import type { Metadata } from "next";
 import { hasLocale } from "next-intl";
@@ -44,8 +50,9 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
 	const t = await getTranslations({ locale, namespace: "HomePage" });
 
 	const tMeta = await getTranslations({ locale, namespace: "Metadata" });
-	// Austria: a directory from the Länder's open lists, without booking or the French registry.
-	const austrian = marketOf(locale) === "AT";
+	// Austria and the UK: a directory from open lists, without booking or the French registry.
+	const market = marketOf(locale);
+	const austrian = market !== "FR";
 	const pillars: Pillar[] = austrian
 		? [{ key: "free" }, { key: "openSource" }, { key: "selfHostable" }]
 		: getPillars(serverEnv.PUBLIC_HDS_HOST);
@@ -77,7 +84,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
 
 				<BookletPage>
 					{austrian ? (
-						<AustriaDirectory locale={locale} />
+						<MarketDirectory locale={locale} />
 					) : (
 						<section aria-labelledby="specimen-heading" className="flex flex-col gap-5">
 							<div className="flex max-w-[65ch] flex-col gap-2">
@@ -111,7 +118,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
 						</ol>
 					</section>
 
-					{austrian ? <AustriaRegistry locale={locale} /> : null}
+					{austrian ? <OpenDataRegistry locale={locale} /> : null}
 					{figures ? (
 						<section
 							aria-labelledby="registry-heading"
@@ -179,12 +186,32 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
 	);
 }
 
-/** Austria's home: its largest specialty listings and its Bundesländer, from the read models. */
-async function AustriaDirectory({ locale }: { locale: Locale }) {
+/**
+ * The home of a market opened from open lists: its largest listings and its places, from the
+ * read models. Austria lists its Bundesländer; the UK its regions and nations, each a hub.
+ */
+async function MarketDirectory({ locale }: { locale: Locale }) {
 	const t = await getTranslations({ locale, namespace: "HomePage" });
 	const labels = await getTaxonomyLabels(locale);
-	const [overview, index] = await Promise.all([getMarketOverview("AT"), getDirectoryIndex("AT")]);
-	const states = index.regions.flatMap((region) => region.departments);
+	const country = marketOf(locale);
+	const [overview, index] = await Promise.all([
+		getMarketOverview(country),
+		getDirectoryIndex(country),
+	]);
+	const states =
+		country === "GB"
+			? index.regions
+					.filter((region) => region.slug)
+					.map((region) => ({
+						id: region.code,
+						name: region.name,
+						slug: region.slug,
+						practitionerCount: region.departments.reduce(
+							(sum, department) => sum + department.practitionerCount,
+							0,
+						),
+					}))
+			: index.regions.flatMap((region) => region.departments);
 	if (overview.listings.length === 0 && states.length === 0) return null;
 	return (
 		<>
@@ -224,16 +251,36 @@ async function AustriaDirectory({ locale }: { locale: Locale }) {
 	);
 }
 
-/** Austria's sources and figures: practitioners with a page, by profession, and the lists. */
-async function AustriaRegistry({ locale }: { locale: Locale }) {
+/**
+ * The sources and figures of a market opened from open lists: pages by profession (Austria's
+ * doctors and dentists, the UK's GP practices, dental practices and pharmacies) and the lists.
+ */
+async function OpenDataRegistry({ locale }: { locale: Locale }) {
 	const t = await getTranslations({ locale, namespace: "HomePage" });
-	const overview = await getMarketOverview("AT");
+	const labels = await getTaxonomyLabels(locale);
+	const country = marketOf(locale);
+	const overview = await getMarketOverview(country);
 	const countOf = (code: string) =>
 		overview.professions.find((row) => row.professionCode === code)?.practitionerCount ?? 0;
-	const sources = austria.registries
-		.filter((registry) => registry.provides.includes("practitioners"))
-		.map((registry) => registry.name)
-		.join(", ");
+	const adapter = country === "GB" ? unitedKingdom : austria;
+	const sources = [
+		...new Set(
+			adapter.registries
+				.filter((registry) => registry.provides.includes("practitioners"))
+				// The UK's eight lists come from three publishers: named by publisher.
+				.map((registry) => (country === "GB" ? registry.publisher : registry.name)),
+		),
+	].join(country === "GB" ? "; " : ", ");
+	const rows =
+		country === "GB"
+			? [GB_GP_PRACTICE, GB_DENTAL_PRACTICE, GB_PHARMACY].map((code) => ({
+					code,
+					label: labels.listing(unitedKingdom.taxonomy.listingSlugFor(code, null)) ?? code,
+				}))
+			: [
+					{ code: AT_DOCTOR, label: t("registry.doctors") },
+					{ code: AT_DENTIST, label: t("registry.dentists") },
+				];
 	return (
 		<section
 			aria-labelledby="registry-heading"
@@ -247,10 +294,7 @@ async function AustriaRegistry({ locale }: { locale: Locale }) {
 			</div>
 			<div className="flex flex-col gap-3">
 				<FieldList>
-					{[
-						{ code: AT_DOCTOR, label: t("registry.doctors") },
-						{ code: AT_DENTIST, label: t("registry.dentists") },
-					].map((row) => (
+					{rows.map((row) => (
 						<FieldRow
 							key={row.code}
 							label={row.label}
