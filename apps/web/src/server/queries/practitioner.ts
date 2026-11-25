@@ -62,6 +62,14 @@ export async function getPractitionerPage(rpps: string): Promise<PractitionerPag
 	if (!row) {
 		// A page can appear with the next import; the import tags it by id, which
 		// an unknown number does not have yet, so a miss is only kept for a day.
+		// A known practitioner without a page (withheld, or removed by its owner, who
+		// may restore it) is tagged by id: the import that brings the page back
+		// expires the miss at once.
+		const [known] = await sql<{ id: number }[]>`
+			SELECT id FROM directory.practitioners
+			WHERE country = 'FR' AND id_scheme = 'RPPS' AND national_id = ${rpps}
+		`;
+		if (known) cacheTag(cacheTags.practitioner(known.id));
 		cacheLife("days");
 		return null;
 	}

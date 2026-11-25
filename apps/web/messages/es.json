@@ -2530,7 +2530,22 @@
 			"title": "Retirar su página",
 			"lead": "Su página desaparece del directorio, de las búsquedas y de los motores de búsqueda, y no vuelve a aparecer con la siguiente importación. Sus lugares de ejercicio, su presentación, su foto, sus honorarios y sus estadísticas se suprimen de inmediato; su cuenta y su agenda se mantienen. Puede restaurarla aquí: la página del registro vuelve con la siguiente actualización semanal y usted la completa de nuevo.",
 			"action": "Retirar mi página del directorio",
-			"restore": "Restaurar mi página"
+			"restore": "Restaurar mi página",
+			"dialog": {
+				"title": "¿Retirar su página del directorio?",
+				"intro": "Su página desaparece de inmediato del directorio, de las búsquedas y de los motores de búsqueda. Este contenido se suprime definitivamente:",
+				"items": {
+					"places": "sus lugares de ejercicio",
+					"presentation": "su presentación (titular, biografía, idiomas, especialidades)",
+					"photo": "su foto",
+					"fees": "sus honorarios y medios de pago",
+					"statistics": "las estadísticas de la página"
+				},
+				"restore": "Su cuenta y su agenda se mantienen. Si restaura la página, vuelve desde el registro con la siguiente importación semanal y usted la completa de nuevo.",
+				"understood": "Entiendo que este contenido se suprime",
+				"confirm": "Retirar mi página",
+				"cancel": "Cancelar"
+			}
 		},
 		"preview": {
 			"title": "Vista previa",

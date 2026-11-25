@@ -2530,7 +2530,22 @@
 			"title": "Remove your page",
 			"lead": "Your page disappears from the directory, searches and search engines, and does not come back with the next import. Its places, presentation, photo, fees and statistics are deleted at once; your account and agenda stay. You can restore it here: the registry page comes back with the next weekly update, and you complete it again.",
 			"action": "Remove my page from the directory",
-			"restore": "Restore my page"
+			"restore": "Restore my page",
+			"dialog": {
+				"title": "Remove your page from the directory?",
+				"intro": "Your page disappears at once from the directory, searches and search engines. This content is deleted for good:",
+				"items": {
+					"places": "your places of practice",
+					"presentation": "your presentation (headline, biography, languages, expertises)",
+					"photo": "your photo",
+					"fees": "your fees and payment methods",
+					"statistics": "the page's statistics"
+				},
+				"restore": "Your account and agenda stay. If you restore the page, it comes back from the register with the next weekly import, and you fill it in again.",
+				"understood": "I understand that this content is deleted",
+				"confirm": "Remove my page",
+				"cancel": "Cancel"
+			}
 		},
 		"preview": {
 			"title": "Preview",

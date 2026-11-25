@@ -287,6 +287,13 @@ depth, hard to exploit), **Info** (hardening, no direct impact).
     withheld page (#104), and leaves every sitemap (e2e `claims.spec.ts`).
   - _Existing rows_: migration 0023 purges the rows suppressed before it, once (a handful,
     found through the unique national id index; `lock_timeout` 5 s, forward-only).
+  - _Owner's confirmation_ (issue #119): the editor removes a page only from an alert dialog
+    (labelled, focus trapped and restored, Escape cancels) that lists what is deleted and how a
+    restored page comes back, with a box to tick first; `profile.setRemoved` refuses a removal
+    (`CONFIRMATION_REQUIRED`) unless the request sends back the page's own RPPS number, so a
+    stray or forged request without it changes nothing (integration and e2e tests). A cached
+    miss of a known practitioner is tagged by id, so the import that brings a restored page
+    back expires it at once.
   - _Withdrawal_: deleting the suppression (the owner's "restore", or an administrator in SQL
     for an objection, `docs/data-import.md`) lets the next import recreate the page.
 - **Rate-limit hygiene (issue #66)**:

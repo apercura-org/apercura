@@ -14,6 +14,8 @@ import {
 	Badge,
 	Button,
 	Checkbox,
+	Dialog,
+	DialogTrigger,
 	FileTrigger,
 	Form,
 	ListBoxItem,
@@ -886,14 +888,43 @@ export function PageEditor({
 				{canRemovePage ? (
 					<Group id="editor-remove" title={t("remove.title")} lead={t("remove.lead")}>
 						<div>
-							<Button
-								intent="ink"
-								isPending={setRemoved.isPending}
-								pendingLabel={t("pending")}
-								onPress={() => setRemoved.mutate({ organizationId, removed: !data.removedByOwner })}
-							>
-								{data.removedByOwner ? t("remove.restore") : t("remove.action")}
-							</Button>
+							{data.removedByOwner ? (
+								<Button
+									intent="ink"
+									isPending={setRemoved.isPending}
+									pendingLabel={t("pending")}
+									onPress={() => setRemoved.mutate({ organizationId, removed: false })}
+								>
+									{t("remove.restore")}
+								</Button>
+							) : (
+								// Removing deletes the page's content: an explicit confirmation first, and the
+								// server refuses the removal without the page's RPPS number sent back.
+								<DialogTrigger>
+									<Button intent="ink" isPending={setRemoved.isPending} pendingLabel={t("pending")}>
+										{t("remove.action")}
+									</Button>
+									<Dialog
+										role="alertdialog"
+										title={t("remove.dialog.title")}
+										closeLabel={t("remove.dialog.cancel")}
+									>
+										{({ close }) => (
+											<RemovePageConfirmation
+												onCancel={close}
+												onConfirm={() => {
+													close();
+													setRemoved.mutate({
+														organizationId,
+														removed: true,
+														confirmRpps: data.practitioner.nationalId,
+													});
+												}}
+											/>
+										)}
+									</Dialog>
+								</DialogTrigger>
+							)}
 						</div>
 					</Group>
 				) : null}
@@ -928,6 +959,47 @@ export function PageEditor({
 					</section>
 				</div>
 			</aside>
+		</div>
+	);
+}
+
+/**
+ * The confirmation of an owner's removal: what is deleted at once, how a restored page comes
+ * back, and a checkbox to tick before the removal button works (no removal by a stray click).
+ */
+function RemovePageConfirmation({
+	onConfirm,
+	onCancel,
+}: {
+	onConfirm: () => void;
+	onCancel: () => void;
+}) {
+	const t = useTranslations("Editor.remove.dialog");
+	const [understood, setUnderstood] = useState(false);
+	return (
+		<div className="flex flex-col gap-5">
+			<div className="flex max-w-[60ch] flex-col gap-3 text-body text-ink">
+				<p>{t("intro")}</p>
+				<ul className="list-disc ps-6">
+					<li>{t("items.places")}</li>
+					<li>{t("items.presentation")}</li>
+					<li>{t("items.photo")}</li>
+					<li>{t("items.fees")}</li>
+					<li>{t("items.statistics")}</li>
+				</ul>
+				<p>{t("restore")}</p>
+			</div>
+			<Checkbox isSelected={understood} onChange={setUnderstood}>
+				{t("understood")}
+			</Checkbox>
+			<div className="flex flex-wrap gap-3">
+				<Button intent="ink" isDisabled={!understood} onPress={onConfirm}>
+					{t("confirm")}
+				</Button>
+				<Button intent="quiet" className="px-0" onPress={onCancel}>
+					{t("cancel")}
+				</Button>
+			</div>
 		</div>
 	);
 }

@@ -183,7 +183,8 @@ describe.skipIf(!url)("minimisation of removed practitioners (database)", async 
 		await storage.put(photo, new Uint8Array([1]), "image/webp");
 		await storage.put(document, new Uint8Array([2]), "application/octet-stream");
 		// What the app may hold about an unclaimed page: an abandoned profile, a claim in progress
-		// with its proof, page views, an "I am this practitioner" request, an error report.
+		// with its proof, page views, an "I am this practitioner" request (closed, so the admin
+		// alerts suite running alongside never counts it), an error report.
 		await sql`
 			INSERT INTO directory.practitioner_profiles (practitioner_id, headline, photo_key)
 			VALUES (${page.id}, 'Présentation', ${photo})
@@ -199,8 +200,8 @@ describe.skipIf(!url)("minimisation of removed practitioners (database)", async 
 		`;
 		await sql`INSERT INTO directory.page_view_days (practitioner_id, day, views) VALUES (${page.id}, current_date, 3)`;
 		await sql`
-			INSERT INTO directory.practitioner_contact_requests (id, practitioner_id, content_enc)
-			VALUES (${ids("contact")}, ${page.id}, 'enc:v1:synthetic')
+			INSERT INTO directory.practitioner_contact_requests (id, practitioner_id, status, content_enc)
+			VALUES (${ids("contact")}, ${page.id}, 'closed', 'enc:v1:synthetic')
 		`;
 		await sql`
 			INSERT INTO directory.reports (id, practitioner_id, kind, content_enc)
