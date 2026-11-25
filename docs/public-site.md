@@ -110,8 +110,10 @@ decision, `instant = false`), with the pure rules of `@apercura/core`
 (`practitionerRoute`, `landingRoute`, `parsePageSegment`):
 
 - practitioner: Luhn check of the trailing RPPS before any database access
-  (404), then 404 without a page or without a public place, 308 when the name
-  part is not the canonical slug;
+  (404), then 404 without a page, without a public place or while the page is
+  withheld by a removal request (GDPR art. 21: it answers like an unknown page,
+  as its Open Graph image and the contact form do), 308 when the name part is
+  not the canonical slug;
 - listing: 404 for an unknown listing or place, an empty listing or a page
   past the end; 308 for old place slugs, merged communes, the Paris city
   (its department page) and page `1`;
@@ -297,7 +299,9 @@ Next.js separates them with `Vary: rsc, …` and a `?_rsc=` parameter.
 ## Metadata and structured data
 
 - `pageMetadata` (`src/lib/seo.ts`) gives every public page its title (60
-  characters at most when possible, brand suffix), description (155), absolute
+  characters at most when possible, brand suffix; a practitioner's title drops
+  the brand before the commune, `withoutBrand`, so namesakes of one specialty
+  keep distinct titles), description (155), absolute
   self canonical, robots (`robotsFor`: only French indexed in v1) and
   complete Open Graph and Twitter cards (Next.js replaces a parent's
   `openGraph` instead of merging it). hreflang only between indexed pages: the
@@ -307,11 +311,16 @@ Next.js separates them with `Vary: rsc, …` and a `?_rsc=` parameter.
 - One JSON-LD `@graph` per page (`src/lib/structured-data.ts`, typed with
   `schema-dts`), with `@id`s made of the canonical URL and a fragment:
   `IndividualPhysician` (doctors), `Dentist`, `Person` with `hasOccupation`
-  (midwives, ISCO-08 2222; nurses, 2221), their places (`PhysiciansOffice`,
-  `MedicalClinic`, `Hospital`, an establishment sharing its own page's `@id`),
-  `BreadcrumbList`, `ItemList` on listings and hubs, `WebSite` with
-  `SearchAction` and `Organization` on the France home (`@id`s on the site root,
-  `{origin}/#website`), a `WebPage` on the international home. `medicalSpecialty` only takes the schema.org enumeration;
+  (midwives, ISCO-08 2222; nurses, 2221, as a `CategoryCode`), their places
+  (`PhysiciansOffice` for a doctor's office, `MedicalBusiness` for another
+  profession's, `MedicalClinic`, `Hospital`, an establishment sharing its own
+  page's `@id`), `BreadcrumbList`, `ItemList` on listings and hubs, and on the
+  homes (`/`, `/fr` and the other locales' homes) the same `WebSite` and
+  `Organization` (`src/lib/site-entities.ts`: `@id`s on the site root,
+  `{origin}/#website` and `#organization`, logo `/icon/512`, `sameAs` the
+  source repository; nothing in them depends on the page's language, and no
+  `SearchAction`). Every other page's `WebPage` is `isPartOf` that `WebSite`.
+  `medicalSpecialty` only takes the schema.org enumeration;
   `ReserveAction` only when booking is open; photo, website, languages and
   opening hours only from the owner; never a rating or a review.
 - Open Graph: one static image per profession,
@@ -366,6 +375,87 @@ does not run on them: it would buffer upload bodies), so calendar feeds
 subscribed on apercura.fr keep answering there. Loopback hosts are left alone
 (health checks). Set `CANONICAL_HOST_REDIRECT=false` to disable it all, and
 `TRUSTED_PROXY_COUNT` behind a proxy so `X-Forwarded-Host` is read.
+
+## SEO checklist
+
+Audit of production (https://apercura.org) on 25 November 2026, after the first
+national import (#104): about 180 read-only requests with a browser user agent,
+under two per second. Rerun it before a market opens or after a change to the
+routes, the metadata or the structured data.
+
+### How
+
+- **Pages**: the server HTML (what crawlers get) of `/`, `/fr`, `/fr-en`, a
+  practitioner of each profession (doctor, dentist, midwife, nurse, a
+  specialist), listings at department (`/fr/medecin-generaliste/75-paris`, 4,375
+  practitioners) and commune level, page 2 and the last page of a big listing,
+  a one-practitioner listing, place hubs (department, commune, `/fr/annuaire`), a
+  specialty hub, an establishment, the legal pages and `/fr/pro`: status,
+  title, description, canonical, robots meta and `X-Robots-Tag`, hreflang, Open
+  Graph and Twitter tags, icons, the h1 and where each tag sits (in `<head>`).
+- **Structured data**: every JSON-LD block, parsed and checked against the
+  schema.org vocabulary (`schemaorg-all-https.jsonld`: types, properties in the
+  domain of their type, enumeration members in the range of their property,
+  `@id` references), then with `@adobe/structured-data-validator` (schema.org and
+  Google's rich result rules) on the same HTML. Both run locally, nothing is
+  sent to a third party. Google's rules per type: `BreadcrumbList` (eligible),
+  `Organization` (logo of at least 112 px, crawlable), `WebSite` (site name, on
+  the home page), `LocalBusiness` subtypes (name and address), and no review or
+  rating markup anywhere.
+- **Crawlability**: `/robots.txt`, the sitemap index and one chunk of every kind
+  (XML well-formed, at most 50,000 URLs and 50 MB, `lastmod` as `YYYY-MM-DD`,
+  `&` escaped, lowercase URLs), the 33 practitioner chunks for the name
+  statistics below; status of unknown, malformed and redirected URLs; the
+  former domain over HTTP and HTTPS, with and without `www.`.
+- **Performance**: Lighthouse 13 (mobile emulation, simulated throttling) on the
+  Paris generalists listing and two practitioner pages.
+- **Metadata at scale**: the title templates reasoned over the real names of
+  the 393,846 indexed practitioners (from the sitemaps) and the commune names
+  of the place hubs.
+
+### Results
+
+| Check                                                                       | Result                                                                                                                                                                                                                         |
+| --------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| JSON-LD is valid schema.org on every page type                              | Pass: no unknown type or property, no out-of-domain property, no validator error or warning; `practicesAt` and `occupationalCategory` are still `pending` terms                                                                |
+| No review, rating or comparison markup                                      | Pass                                                                                                                                                                                                                           |
+| `WebSite` and `Organization` on the site's home page                        | **Fixed**: only on `/fr`; `/` (the home page Google reads the site name from) had a `WebPage` pointing at an undefined `/#website`                                                                                             |
+| Same `@id`, same entity                                                     | **Fixed**: `/#website` had a different `description` and `inLanguage` on each locale's home                                                                                                                                    |
+| `SearchAction`                                                              | **Removed**: Google retired the sitelinks search box in November 2024, and its target (`/fr/recherche`) is disallowed in robots.txt                                                                                            |
+| Place types                                                                 | **Fixed**: a nurse's, midwife's or dentist's office was a `PhysiciansOffice` ("a doctor's office"); now a `MedicalBusiness`                                                                                                    |
+| Title, description, canonical, robots, OG/Twitter, icons, manifest          | Pass on every page type: one of each, in `<head>`, self canonical, absolute URLs, `og:image` 1200 × 630 PNG                                                                                                                    |
+| Unique titles at scale                                                      | **Fixed**: 7 % of indexed practitioners share their name with another; the commune told them apart in only 28 % of generalists' and dentists' titles (60 characters with the brand). Dropping the brand first keeps it in 78 % |
+| hreflang / `x-default`                                                      | Pass: `/` and `/fr` print the same reciprocal pair; nothing elsewhere while other locales are `noindex`                                                                                                                        |
+| Other locales                                                               | Pass: `noindex, follow` in the meta and `X-Robots-Tag`, self canonical, out of the sitemaps                                                                                                                                    |
+| Sitemaps                                                                    | Pass: index of 47 files, chunks of at most 20,000 URLs (largest 12,000, 1.3 MB), valid XML, `lastmod` from the content hash                                                                                                    |
+| robots.txt                                                                  | Pass: only search, the API, `_ui` and the signed-in practitioner space; no `noindex` page linked publicly is hidden                                                                                                            |
+| Unknown slugs (bad RPPS, unknown RPPS, listing, place, establishment, page) | Pass: real 404 with `noindex`; page `1`, a trailing slash, capitals, an old name answer 308                                                                                                                                    |
+| Withheld page (removal request being checked)                               | **Fixed**: answered 200 with `noindex, nofollow` and a notice; now a 404 like an unknown page                                                                                                                                  |
+| Internal links that redirect                                                | **Fixed**: every Paris listing linked the Paris city (`/{listing}/75-paris/paris`), which answers 308 to the listing itself                                                                                                    |
+| Thin listings                                                               | Pass: below 3 practitioners `noindex, follow` and out of the sitemaps (hysteresis down to 2)                                                                                                                                   |
+| Pagination                                                                  | Page 2+ `noindex, follow`, self canonical, `rel="next"`; see the recommendations                                                                                                                                               |
+| Former domain                                                               | Pass over HTTPS: one 301 to the new URL, path and query mapped. Over HTTP, two hops (see below)                                                                                                                                |
+| Core Web Vitals (Lighthouse, mobile)                                        | Pass: performance, accessibility, best practices and SEO 100 on all three pages; LCP 1.2–1.3 s, CLS 0, TBT 10–60 ms, about 370 KB transferred                                                                                  |
+
+### Recommendations (not done)
+
+- **Pagination depth** (medium): a listing links only to the next and the
+  previous page, so the last of the 219 pages of the Paris generalists is 218
+  clicks away, and Google stops following the links of pages that stay
+  `noindex` for long. Practitioners are reachable through their arrondissement
+  or commune listing and the sitemaps, but a pager with the first, last and
+  nearby page numbers would bound the depth to a few clicks. Indexing pages 2+
+  (each its own canonical, as Google recommends) is worth weighing with it.
+- **HTTP on the former domain** (low): `http://apercura.fr/…` answers a 301 to
+  `https://apercura.fr/…` from the hosting proxy before the app's 301 to
+  apercura.org. Routing plain HTTP of the former hosts to the app too would make
+  it one hop.
+- **Exact namesakes** (low): two practitioners of the same name, specialty and
+  commune still share a title and description; adding the street to the
+  description would tell them apart.
+- **Pending schema.org terms** (info): `practicesAt` and `occupationalCategory`
+  are still in schema.org's pending area; no validator flags them, but follow
+  their status.
 
 ## Local checks
 
