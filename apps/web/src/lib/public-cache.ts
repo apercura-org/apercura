@@ -14,8 +14,11 @@
  * for a month after a removal request. Next.js keeps a Cache-Control the response already
  * has, and still answers errors with `private, no-store`.
  *
- * Never on what is personal or per request: the practitioner space (`/pro` and below, its
- * presentation page included), the appointment page (`/rdv`, both have a per-request nonce),
+ * The practitioners' presentation page (`/fr/pro`, `/fr-en/pro`…) is a public page like the
+ * others: static, without a nonce, it gets the same header (Next.js would give it a year).
+ *
+ * Never on what is personal or per request: the practitioner space (everything below `/pro`)
+ * and the appointment page (`/rdv`, both have a per-request nonce),
  * search results, the report and removal forms, API routes (outside the proxy's pages), and
  * anything but GET and HEAD.
  *
@@ -46,24 +49,26 @@ export function privatePagePattern(paths: readonly string[]): RegExp {
 }
 
 /**
- * Pages never stored by a shared cache, in every locale: the practitioner space and its
- * presentation page, the appointment page, search results, the per-practitioner forms and the
+ * Pages never stored by a shared cache, in every locale: the practitioner space (below `/pro`,
+ * not the presentation page itself), the appointment page, search results, the per-practitioner forms and the
  * component gallery.
  */
 export const PRIVATE_PAGES = privatePagePattern(
 	routing.locales.flatMap((locale) =>
 		(
 			[
-				"/pro",
-				"/rdv",
-				"/recherche",
-				"/praticien/[slug]/signaler",
-				"/praticien/[slug]/retrait",
-				"/_ui",
+				// Any page below `/pro`, never `/pro` itself.
+				["/pro", "/[page]"],
+				["/rdv", ""],
+				["/recherche", ""],
+				["/praticien/[slug]/signaler", ""],
+				["/praticien/[slug]/retrait", ""],
+				["/_ui", ""],
 			] as const
-		).map((page) => {
+		).map(([page, below]) => {
 			const localized = routing.pathnames[page];
-			return `${LOCALE_PREFIXES[locale]}${typeof localized === "string" ? localized : localized[locale]}`;
+			const path = typeof localized === "string" ? localized : localized[locale];
+			return `${LOCALE_PREFIXES[locale]}${path}${below}`;
 		}),
 	),
 );

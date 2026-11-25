@@ -1,5 +1,5 @@
 /**
- * The warm-up's database side: its cursor (`directory.cache_warmup`, one row, migration 0020),
+ * The warm-up's database side: its cursor (`directory.cache_warmup`, one row, migration 0021),
  * the last successful import and the sitemap queries. Runs with the app role (DATABASE_URL),
  * under the `jobs:warm` advisory lock, so a single run writes the row at a time.
  */

@@ -24,6 +24,10 @@ describe("public page Cache-Control", () => {
 			"/fr/annuaire/75-paris",
 			"/fr/etablissement/hopital-fictif-de-test-759999001",
 			"/fr/a-propos",
+			// The practitioners' presentation page, in every locale; not what is below it.
+			"/fr/pro",
+			"/fr-en/pro",
+			"/fr-de/pro",
 			"/fr-en/practitioner/camille-exemple-19999990013",
 			"/fr-de/verzeichnis",
 			// A listing whose slug starts like a private page is still a listing.
@@ -37,7 +41,6 @@ describe("public page Cache-Control", () => {
 
 	it("never applies to the practitioner space, appointments, search or the forms", () => {
 		for (const path of [
-			"/fr/pro",
 			"/fr/pro/connexion",
 			"/fr/pro/agenda/reglages",
 			"/fr-en/pro/tableau-de-bord",

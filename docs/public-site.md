@@ -218,8 +218,10 @@ it Next.js would derive the header from the cache lifetimes
 Next.js keeps a Cache-Control the response already has, and still answers
 errors with `private, no-cache, no-store`.
 
-Never on the practitioner space (`/fr/pro` and below, its presentation page
-included), `/rdv` (both rendered per request with a nonce), search results, the
+The practitioners' presentation page (`/fr/pro`, `/fr-en/pro`…) gets it too: it
+is static, without a nonce (Next.js would give it a year). Never on the
+practitioner space below it (`/fr/pro/connexion`, `/fr/pro/agenda`…), `/rdv`
+(both rendered per request with a nonce), search results, the
 report and removal forms, the API, and anything but GET and HEAD: those keep
 Next.js's own `private, no-cache, no-store` (or `next.config.ts`'s). RSC
 payloads of client navigations carry the same public header (the proxy cannot

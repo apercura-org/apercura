@@ -18,6 +18,9 @@ test.describe("Cache-Control", () => {
 		"/fr/annuaire",
 		"/fr/annuaire/75-paris",
 		"/fr/a-propos",
+		// The practitioners' presentation page; never what is below it.
+		"/fr/pro",
+		"/fr-en/pro",
 		`/fr-en/practitioner/${PRACTITIONER}`,
 	]) {
 		test(`${path} may be kept briefly by a shared cache`, async ({ request }) => {
