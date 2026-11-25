@@ -6,6 +6,7 @@ import {
 	type ClaimSubject,
 	canApprove,
 	canSubmitForReview,
+	claimPolicyOf,
 	pscIdentifierOf,
 	pscMatchesRpps,
 	registryEmails,
@@ -137,5 +138,51 @@ describe("claim assessment", () => {
 		const at = new Date("2026-11-21T10:00:00Z");
 		expect(bookingOpensAt(at, true)).toEqual(at);
 		expect(bookingOpensAt(at, false)).toEqual(new Date("2026-11-28T10:00:00Z"));
+	});
+});
+
+describe("claim policy by market", () => {
+	const all = { pscEnabled: true, documentsEnabled: true };
+	const austrian = (activities: ClaimSubject["activities"]): ClaimSubject => ({
+		country: "AT",
+		rpps: "7983",
+		activities,
+	});
+
+	it("keeps France's rules when no market is given", () => {
+		expect(claimPolicyOf(undefined)).toEqual(claimPolicyOf("FR"));
+		expect(claimPolicyOf("FR").methods).toEqual([
+			"psc",
+			"registry_email",
+			"document",
+			"phone_callback",
+		]);
+	});
+
+	it("offers only a document in Austria, whatever the registry or the configuration", () => {
+		expect(availableMethods(austrian([office]), all).map((m) => m.id)).toEqual(["document"]);
+		expect(
+			availableMethods(austrian([office]), { pscEnabled: true, documentsEnabled: false }),
+		).toEqual([]);
+		// An unknown market falls back to the document review, never to Pro Santé Connect.
+		expect(claimPolicyOf("DE").methods).toEqual(["document"]);
+	});
+
+	it("lets an administrator approve an Austrian claim on the document alone", () => {
+		expect(assessClaim({ document: "passed" }, false, "AT")).toEqual({ kind: "reviewable" });
+		expect(assessClaim({}, false, "AT")).toEqual({ kind: "incomplete", missing: ["document"] });
+		expect(canApprove({ document: "passed" }, null, "AT")).toBe(true);
+		// France still needs the phone callback too.
+		expect(canApprove({ document: "passed" }, null, "FR")).toBe(false);
+	});
+
+	it("never verifies an Austrian claim on its own, even with a strong check recorded", () => {
+		expect(assessClaim({ psc: "passed" }, false, "AT")).toEqual({
+			kind: "incomplete",
+			missing: ["document"],
+		});
+		expect(assessClaim({ registry_email: "passed", document: "passed" }, false, "AT")).toEqual({
+			kind: "reviewable",
+		});
 	});
 });

@@ -11,6 +11,11 @@
  *   callback to the registry phone), and booking opens 7 days later.
  * - A page that already has a verified owner is a contest: an administrator
  *   decides, and Pro Santé Connect wins against any other method.
+ *
+ * The rules above are France's. Each market has its own claim policy
+ * (`claimPolicyOf`): Austria publishes no registry email and has no
+ * e-identity open to Apercura, so a claim there is a document reviewed by an
+ * administrator, and nothing else.
  */
 import type { PracticeKind } from "./taxonomy/types";
 
@@ -20,6 +25,9 @@ export type CheckStatus = "pending" | "passed" | "failed";
 
 /** What a method needs to know about the claimed record. */
 export interface ClaimSubject {
+	/** Market of the practitioner (ISO 3166-1 alpha-2); France when absent. */
+	country?: string;
+	/** National identifier of the practitioner (an RPPS in France). */
 	rpps: string;
 	activities: readonly {
 		practiceKind: PracticeKind | string;
@@ -120,13 +128,51 @@ export const VERIFICATION_METHODS: Readonly<Record<VerificationMethodId, Verific
 	},
 };
 
+/** How a market's practitioners claim their page. */
+export interface ClaimPolicy {
+	/** Methods the market offers, in the order the claim page lists them. */
+	readonly methods: readonly VerificationMethodId[];
+	/**
+	 * Proofs an administrator needs to approve a claim without a method that
+	 * verifies on its own.
+	 */
+	readonly reviewRequires: readonly ("document" | "phone_callback")[];
+}
+
+/** France: Pro Santé Connect, the registry email, or a document and a callback to the registry phone. */
+const FRANCE_POLICY: ClaimPolicy = {
+	methods: ["psc", "registry_email", "document", "phone_callback"],
+	reviewRequires: ["document", "phone_callback"],
+};
+
+/**
+ * A market without an e-identity open to Apercura nor registry contacts to
+ * check against (Austria, and any market not listed): a document reviewed by
+ * an administrator, who decides alone.
+ */
+const DOCUMENT_REVIEW_POLICY: ClaimPolicy = {
+	methods: ["document"],
+	reviewRequires: ["document"],
+};
+
+export const CLAIM_POLICIES: Readonly<Record<string, ClaimPolicy>> = {
+	FR: FRANCE_POLICY,
+	AT: DOCUMENT_REVIEW_POLICY,
+};
+
+/** The claim policy of a market: France when none is given, document review for an unknown one. */
+export function claimPolicyOf(country: string | null | undefined): ClaimPolicy {
+	if (!country) return FRANCE_POLICY;
+	return CLAIM_POLICIES[country] ?? DOCUMENT_REVIEW_POLICY;
+}
+
 /** Methods offered for a record, in the order the claim page lists them. */
 export function availableMethods(
 	subject: ClaimSubject,
 	options: MethodOptions,
 ): VerificationMethod[] {
-	return (["psc", "registry_email", "document", "phone_callback"] as const)
-		.map((id) => VERIFICATION_METHODS[id])
+	return claimPolicyOf(subject.country)
+		.methods.map((id) => VERIFICATION_METHODS[id])
 		.filter((method) => method.isAvailable(subject, options));
 }
 
@@ -169,15 +215,22 @@ export type ClaimAssessment =
  * verify on their own, except in a contest, which an administrator always
  * decides. Without them a document and the phone callback are both needed.
  */
-export function assessClaim(checks: CheckSummary, contest: boolean): ClaimAssessment {
-	const strong = passed(checks, "psc")
-		? "psc"
-		: passed(checks, "registry_email")
-			? "registry_email"
-			: null;
+export function assessClaim(
+	checks: CheckSummary,
+	contest: boolean,
+	country?: string | null,
+): ClaimAssessment {
+	const policy = claimPolicyOf(country);
+	const offers = (id: VerificationMethodId) => policy.methods.includes(id);
+	const strong =
+		offers("psc") && passed(checks, "psc")
+			? "psc"
+			: offers("registry_email") && passed(checks, "registry_email")
+				? "registry_email"
+				: null;
 	if (strong && !contest) return { kind: "verified", via: strong };
 	if (strong) return { kind: "reviewable" };
-	const missing = (["document", "phone_callback"] as const).filter((id) => !passed(checks, id));
+	const missing = policy.reviewRequires.filter((id) => !passed(checks, id));
 	return missing.length === 0 ? { kind: "reviewable" } : { kind: "incomplete", missing };
 }
 
@@ -198,8 +251,9 @@ export function canSubmitForReview(checks: CheckSummary, contest: boolean): bool
 export function canApprove(
 	checks: CheckSummary,
 	contest: { incumbentViaPsc: boolean } | null,
+	country?: string | null,
 ): boolean {
-	const assessment = assessClaim(checks, contest !== null);
+	const assessment = assessClaim(checks, contest !== null, country);
 	if (assessment.kind === "incomplete") return false;
 	if (contest?.incumbentViaPsc && !passed(checks, "psc")) return false;
 	return true;

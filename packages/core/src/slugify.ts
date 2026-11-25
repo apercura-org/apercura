@@ -24,3 +24,24 @@ export function slugify(text: string): string {
 		.replace(/[^a-z0-9]+/g, "-")
 		.replace(/^-+|-+$/g, "");
 }
+
+/** German umlauts and ß, spelled out as German writes them without the letters. */
+const GERMAN_LETTERS: Record<string, string> = {
+	ä: "ae",
+	Ä: "ae",
+	ö: "oe",
+	Ö: "oe",
+	ü: "ue",
+	Ü: "ue",
+	ß: "ss",
+	ẞ: "ss",
+};
+
+/**
+ * {@link slugify} for German text: umlauts are spelled out (`ä` -> `ae`,
+ * `Döbling` -> `doebling`, `Kärnten` -> `kaernten`) instead of losing their
+ * dots, the way German URLs and street signs write them without the letters.
+ */
+export function slugifyDe(text: string): string {
+	return slugify(text.replace(/[äÄöÖüÜßẞ]/g, (char) => GERMAN_LETTERS[char] ?? char));
+}
