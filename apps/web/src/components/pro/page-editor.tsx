@@ -887,6 +887,14 @@ export function PageEditor({
 
 				{canRemovePage ? (
 					<Group id="editor-remove" title={t("remove.title")} lead={t("remove.lead")}>
+						{setRemoved.isError ? (
+							<Notice
+								tone="error"
+								title={
+									setRemoved.error.message === "BUSY" ? t("remove.busy") : t("failure.generic")
+								}
+							/>
+						) : null}
 						<div>
 							{data.removedByOwner ? (
 								<Button

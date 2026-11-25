@@ -17,7 +17,8 @@ export type AuditAction =
 	| "account.export"
 	| "account.delete"
 	| "organization.close"
-	| "organization.purge";
+	| "organization.purge"
+	| "practitioner.purge";
 
 /**
  * Appends to the platform audit log (append-only for the app role). The IP is
@@ -31,6 +32,8 @@ export async function recordAudit(
 		subjectType: string;
 		subjectId: string;
 		headers?: Headers;
+		/** Non-personal facts only (counts): never a name, a national id or typed text. */
+		details?: Record<string, number>;
 	},
 ) {
 	await db.insert(platformAuditEvents).values({
@@ -38,6 +41,7 @@ export async function recordAudit(
 		action: entry.action,
 		subjectType: entry.subjectType,
 		subjectId: entry.subjectId,
+		details: entry.details ?? null,
 		ipHash: entry.headers
 			? clientRateLimitKey("audit", entry.headers).slice("audit:".length)
 			: null,

@@ -79,6 +79,9 @@ chains:
 - `purge`: patient data at the end of its retention, unverified bookings after 24 hours;
 - `claim-documents`: claim documents 30 days after their decision, and the photo and documents of
   a removed practitioner (`directory.storage_deletions`) (needs the S3 variables);
+- `landing-counts`: the listing counts the app could not rebuild after a removal because an
+  import held its lock (`directory.landing_refresh_requests`), once no import runs; then, when
+  `REVALIDATE_SECRET` is set, it asks the app to refresh those listings and the sitemaps;
 - `requests`: error reports and removal requests at the end of their retention after closure,
   "I am this practitioner" contact requests `CONTACT_REQUEST_RETENTION_MONTHS` after their last
   change;

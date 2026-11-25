@@ -254,16 +254,21 @@ depth, hard to exploit), **Info** (hardening, no direct impact).
   - _What stays_: the `directory.suppressions` row only (country, id scheme, national id,
     reason `objection` or `owner`, who recorded it, when). On a confirmed objection
     (`decideRemoval`) or an owner's removal (`setOwnerRemoval`), the same transaction calls
-    `directory.purge_suppressed_practitioners(ids)` (migration 0023), which deletes the places
-    of practice (activities, then the sites nobody else links to and no agenda uses), the
+    `directory.purge_suppressed_practitioners(ids)` (migrations 0023 to 0025), which deletes the
+    places of practice (activities, then the sites nobody else links to and no agenda uses), the
     qualifications, Ameli fields, owner content, former slugs, page, search entry, page views,
     error reports, removal and contact requests, the person's lines in the last import's
-    staging and quarantine tables, then the row itself with the claims on it. The decision
-    email's address is decrypted before the request goes.
+    staging and quarantine tables (a quarantined line matches on a whole `|`-separated field
+    equal to the RPPS or national PP id, never on a longer number containing it), then the row
+    itself with the claims on it. The decision email's address is decrypted before the request
+    goes.
   - _Bare rows_: a row still held by something with its own retention is kept, never
     published, without registry enrichments, page or places: the claim of its owner (who may
     restore it from their space; their account shows its name and RPPS) or an agenda
-    (`care.calendars` restricts the delete; the places that agenda uses stay linked). The first
+    (`care.calendars` restricts the delete; the places that agenda uses stay linked). It keeps
+    only its owner's verified claim: every other claim on it (in progress, contesting,
+    rejected, withdrawn) goes with its checks and documents, whose objects are queued for
+    deletion (integration test). The first
     purge after nothing holds it any more deletes it: the account deletion runs one, and every
     import runs one over all suppressions (at the latest a week later). No foreign key is
     broken: appointments keep the booking retention, organizations and accounts their own.
@@ -272,8 +277,24 @@ depth, hard to exploit), **Info** (hardening, no direct impact).
     integration test). It lets the import delete what it may not delete itself, and only ever
     for national ids of `directory.suppressions`, which that role may read but not write. It
     returns the cache tags (page, listings, establishments) computed before the links go; the
-    app expires them with the sitemaps, then rebuilds the listing counts
-    (`refresh_landing_pages`) unless an import holds its advisory lock (it rebuilds them itself).
+    app expires them with the sitemaps and rebuilds the listing counts
+    (`refresh_landing_pages`); while an import holds its advisory lock, the rebuild is queued
+    in `directory.landing_refresh_requests` (cache tags only) and `jobs:tick landing-counts`
+    runs it once the lock is free, then expires those listings and the sitemaps.
+  - _Concurrency with the import_: the import updates sites then practitioners, a purge locks
+    the practitioner then deletes its sites, so a removal confirmed during an import could wait
+    for the whole run or deadlock with it (and Postgres could abort the import). A removal
+    (`removalTransaction` in `gdpr/service.ts`) therefore reads `pg_locks` and refuses to start
+    while the import's lock is held, without taking it (an import starting at that moment never
+    fails), and sets `lock_timeout` to 5 s for any other lock. Both end in `BUSY` with nothing
+    changed, and the administrator or owner sees "try again after the import" (integration
+    tests: an import lock held, a practitioner row held). The purge after an account deletion
+    follows the same rules and never fails the request, the account being already gone: the
+    next import finishes it.
+  - _Audit_: each purge by the app writes `practitioner.purge` to the platform audit log: the
+    actor, the removal request or account it follows, and the counts (rows deleted and kept,
+    sites, storage objects, claims) in `details`. Never a practitioner id, a name or a national
+    id: the event outlives the data. The import's purges are counted in `etl_runs.stats`.
   - _Storage_: the photo and unpurged claim documents of a deleted row are queued in
     `directory.storage_deletions` (keys only, no grant to the import); the app deletes them
     right after the commit, and `jobs:tick claim-documents` retries what is left.
@@ -286,7 +307,9 @@ depth, hard to exploit), **Info** (hardening, no direct impact).
   - _Public answer_: a removed page answers 404 with `noindex`, the same as an unknown or a
     withheld page (#104), and leaves every sitemap (e2e `claims.spec.ts`).
   - _Existing rows_: migration 0023 purges the rows suppressed before it, once (a handful,
-    found through the unique national id index; `lock_timeout` 5 s, forward-only).
+    found through the unique national id index; `lock_timeout` 5 s, forward-only). Migration
+    0025 replaces the function in place (same signature, `SECURITY DEFINER`, search path and
+    grants, integration test), forward-only with the same `lock_timeout`.
   - _Owner's confirmation_ (issue #119): the editor removes a page only from an alert dialog
     (labelled, focus trapped and restored, Escape cancels) that lists what is deleted and how a
     restored page comes back, with a box to tick first; `profile.setRemoved` refuses a removal

@@ -57,6 +57,7 @@ const ETL_FORBIDDEN = [
 	"directory.admin_alerts",
 	"directory.page_view_days",
 	"directory.storage_deletions",
+	"directory.landing_refresh_requests",
 	"directory.platform_audit_events",
 	"directory.rate_limits",
 	"directory.auth_rate_limit",

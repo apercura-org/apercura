@@ -132,6 +132,7 @@ export const profileRouter = createTRPCRouter({
 					practitionerId: row.id,
 					userId: ctx.user.id,
 					removed: input.removed,
+					headers: ctx.headers,
 				});
 				if (purge) {
 					await afterPurge(ctx.db(), purge, {
