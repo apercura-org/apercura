@@ -223,6 +223,17 @@ echo "home, /fr, /fr-en, /fr/praticien/$slug, the legal notice, security.txt and
 step "Scheduled jobs run in the scheduler"
 compose exec -T scheduler apercura jobs:tick | grep '"job":"tick"'
 
+step "The cache warm-up walks the sitemaps through the app, as its public host"
+compose exec -T scheduler apercura jobs:tick warm --restart | tee "$work/warm.log" | grep '"job":"warm"'
+grep -Eq '"warmed":[1-9]' "$work/warm.log"
+grep -q '"errors":0' "$work/warm.log"
+grep -q '"redirected":0' "$work/warm.log"
+# The scheduler reads the build id from the image it shares with the app.
+if grep -q 'build:unknown' "$work/warm.log"; then
+	echo "the warm-up found no build id in the image" >&2
+	exit 1
+fi
+
 step "The import role cannot read patient data"
 etl_password=$(password_of APERCURA_ETL_DB_PASSWORD)
 if [ "$variant" = selfhost ]; then

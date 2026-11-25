@@ -1200,7 +1200,12 @@
 			"infirmier": "Todos los enfermeros autónomos de Francia ya tienen una página.",
 			"annuaire": "Profesionales sanitarios, por especialidad y por lugar."
 		},
-		"footer": "Gratuito · Código abierto · Sin valoraciones ni publicidad"
+		"footer": "Gratuito · Código abierto · Sin valoraciones ni publicidad",
+		"practitioner": {
+			"folio": "RPPS {rpps}",
+			"alt": "{name}, {occupation}, {place}",
+			"altNoPlace": "{name}, {occupation}"
+		}
 	},
 	"taxonomy": {
 		"profession": {

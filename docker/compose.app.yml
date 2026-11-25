@@ -1,7 +1,8 @@
 # Apercura's application stack, without its data services. See docs/self-hosting.md.
 #
-# Services: migrate (one-shot), app (one replica), scheduler (supercronic: jobs every 5 minutes,
-# weekly import), etl (profile `tools`, on demand), minio-init (one-shot bucket bootstrap).
+# Services: migrate (one-shot), app (one replica), scheduler (supercronic: jobs and the cache
+# warm-up every 5 minutes, weekly import), etl (profile `tools`, on demand), minio-init
+# (one-shot bucket bootstrap).
 #
 # PostgreSQL (17 + PostGIS) and the S3 storage run elsewhere and outlive every deploy of this
 # file: docker/compose.selfhost.yml includes it next to its own postgres and minio services,
@@ -165,6 +166,13 @@ services:
     environment:
       <<: [*app-env, *etl-env, *db-address]
       ETL_SCHEDULE_ARGS: ${ETL_SCHEDULE_ARGS:-}
+      # Cache warm-up (`jobs:tick warm`, docs/self-hosting.md): requests INTERNAL_APP_URL as
+      # APP_URL's host, a budget at a time; `false` turns it off.
+      WARM_CACHE: ${WARM_CACHE:-true}
+      WARM_CACHE_CONCURRENCY: ${WARM_CACHE_CONCURRENCY:-4}
+      WARM_CACHE_MAX_URLS: ${WARM_CACHE_MAX_URLS:-5000}
+      WARM_CACHE_MAX_SECONDS: ${WARM_CACHE_MAX_SECONDS:-240}
+      WARM_CACHE_MAX_P95_MS: ${WARM_CACHE_MAX_P95_MS:-3000}
       # The audit log retention's own role (packages/db/drizzle/0016): the entry point builds
       # DATABASE_URL_JOBS from the password unless a URL is given; both empty: skipped.
       APERCURA_JOBS_DB_PASSWORD: ${APERCURA_JOBS_DB_PASSWORD:-}

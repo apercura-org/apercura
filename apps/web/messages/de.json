@@ -1200,7 +1200,12 @@
 			"infirmier": "Jede freiberufliche Pflegefachkraft in Frankreich hat bereits eine Seite.",
 			"annuaire": "Gesundheitsfachkräfte, nach Fachgebiet und nach Ort."
 		},
-		"footer": "Kostenlos · Open Source · Keine Bewertungen, keine Werbung"
+		"footer": "Kostenlos · Open Source · Keine Bewertungen, keine Werbung",
+		"practitioner": {
+			"folio": "RPPS {rpps}",
+			"alt": "{name}, {occupation}, {place}",
+			"altNoPlace": "{name}, {occupation}"
+		}
 	},
 	"taxonomy": {
 		"profession": {

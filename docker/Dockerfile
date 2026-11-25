@@ -9,7 +9,8 @@
 #   docker run … apercura migrate            apply pending migrations (DATABASE_URL_MIGRATE)
 #   docker run … apercura jobs:tick [job]    one run of the scheduled jobs
 #   docker run … apercura etl:fr [flags]     open data import (e.g. --department 75)
-#   docker run … apercura scheduler          supercronic: jobs every 5 minutes, weekly import
+#   docker run … apercura scheduler          supercronic: jobs and cache warm-up every 5 minutes,
+#                                            weekly import
 #
 # APP_URL, PUBLIC_HDS_HOST, NEXT_PUBLIC_MAP_STYLE_URL, the LEGAL_* facts of the legal pages,
 # the search engine verification tokens and HSTS_PRELOAD are read at build time: static pages

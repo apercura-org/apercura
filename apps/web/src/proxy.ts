@@ -7,6 +7,7 @@ import { getPathname } from "./i18n/navigation";
 import { type Locale, routing } from "./i18n/routing";
 import { canonicalPath } from "./lib/canonical-path";
 import { isPagePath, marketPath, parseHosts } from "./lib/market-path";
+import { publicPageCacheControl } from "./lib/public-cache";
 import {
 	contentSecurityPolicy,
 	newNonce,
@@ -172,6 +173,17 @@ async function searchShortcut(request: NextRequest): Promise<NextResponse | null
 	}
 }
 
+/** The public pages' Cache-Control on a page about to render (not on redirects). */
+function cacheable<T extends Response>(request: NextRequest, response: T): T {
+	if (response.status >= 300) return response;
+	const value = publicPageCacheControl({
+		method: request.method,
+		pathname: request.nextUrl.pathname,
+	});
+	if (value) response.headers.set("Cache-Control", value);
+	return response;
+}
+
 const LOCALE_PREFIX = new RegExp(`^/(?:${LOCALE_SEGMENTS.join("|")})(?:/|$)`, "i");
 
 /**
@@ -191,7 +203,8 @@ const LOCALE_PREFIX = new RegExp(`^/(?:${LOCALE_SEGMENTS.join("|")})(?:/|$)`, "i
  *    Its redirects of a localized path in the wrong form (`/fr-en/annuaire` →
  *    `/fr-en/directory`) are permanent.
  *
- * Every page answer carries the page's Content-Security-Policy (`pagePolicy`).
+ * Every page answer carries the page's Content-Security-Policy (`pagePolicy`), and the public
+ * pages about to render their CDN-friendly Cache-Control (`cacheable`, ~/lib/public-cache).
  */
 export default async function proxy(request: NextRequest) {
 	const canonical = canonicalOrigin();
@@ -207,7 +220,7 @@ export default async function proxy(request: NextRequest) {
 	}
 	const policy = pagePolicy(request);
 	if (request.nextUrl.pathname === "/") {
-		return secured(NextResponse.next(), policy);
+		return cacheable(request, secured(NextResponse.next(), policy));
 	}
 	const moved = marketRedirect(request);
 	if (moved) return secured(moved, policy);
@@ -223,7 +236,7 @@ export default async function proxy(request: NextRequest) {
 	if (response.status === 307 && LOCALE_PREFIX.test(request.nextUrl.pathname)) {
 		return secured(new NextResponse(null, { status: 308, headers: response.headers }), policy);
 	}
-	return secured(response, policy);
+	return cacheable(request, secured(response, policy));
 }
 
 export const config = {

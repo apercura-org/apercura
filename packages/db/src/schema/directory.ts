@@ -559,3 +559,27 @@ export const invalidationOutbox = directory.table(
 	},
 	(table) => [uniqueIndex("invalidation_outbox_tag_uq").on(table.tag)],
 );
+
+/**
+ * The cache warm-up's cursor (`jobs:tick warm`): one row, the walk of every sitemap URL it
+ * has reached. `generation` is the build and the last successful import it walks for; a new
+ * one, or `restart_requested_at` (set by the import after it drains the outbox), starts the
+ * walk over.
+ */
+export const cacheWarmup = directory.table(
+	"cache_warmup",
+	{
+		id: smallint().primaryKey().default(1),
+		generation: text().notNull().default(""),
+		/** Unit of the walk reached (`pages`, `listes-0`, `praticiens-3`…) and the offset in it. */
+		unit: text(),
+		position: integer().notNull().default(0),
+		warmed: bigint({ mode: "number" }).notNull().default(0),
+		errors: bigint({ mode: "number" }).notNull().default(0),
+		startedAt: timestamp({ withTimezone: true }),
+		completedAt: timestamp({ withTimezone: true }),
+		restartRequestedAt: timestamp({ withTimezone: true }),
+		updatedAt: updatedAt(),
+	},
+	(table) => [check("cache_warmup_single_row_check", sql`${table.id} = 1`)],
+);

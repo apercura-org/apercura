@@ -1200,7 +1200,12 @@
 			"infirmier": "Every self-employed nurse in France already has a page.",
 			"annuaire": "Health practitioners, by specialty and by place."
 		},
-		"footer": "Free · Open source · No ratings, no ads"
+		"footer": "Free · Open source · No ratings, no ads",
+		"practitioner": {
+			"folio": "RPPS {rpps}",
+			"alt": "{name}, {occupation}, {place}",
+			"altNoPlace": "{name}, {occupation}"
+		}
 	},
 	"taxonomy": {
 		"profession": {

@@ -212,6 +212,14 @@ Smaller additions to the pro area, most of them inherited from Medic Remplacemen
   cookie), bookings per week, and a checklist of what is missing from the page with a completion
   score.
 - **Share kit**: the page link and a printable QR code for the waiting room or the door plate.
+- **Opening hours**, entered by the practitioner for each place and shown on the page, then
+  published in the JSON-LD (`openingHoursSpecification`, which `src/lib/structured-data.ts`
+  already accepts). Not taken from the booking agenda: its weekly windows
+  (`care.availability_rules`) are when patients may book online, sometimes for a few
+  appointment types or between two dates, not when the practice is open (phone hours,
+  appointments booked elsewhere, walk-ins). Published as opening hours, they would tell search
+  engines a practice is closed when it is only not bookable online
+  ([#91](https://github.com/maxgfr/apercura/issues/91)).
 - **In-app notifications**: a bell in the pro area for new bookings, pending requests and claim
   decisions, in addition to the e-mails. Booking e-mails already go through an outbox, so this is
   a second reader of the same events.

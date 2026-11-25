@@ -4,6 +4,12 @@
 # Postgres advisory lock, so a run that lasts longer than five minutes is harmless.
 */5 * * * * apercura jobs:tick
 
+# Cache warm-up: the next slice of the walk of every sitemap URL against the app
+# (INTERNAL_APP_URL), at most WARM_CACHE_MAX_SECONDS (240) per run, two minutes after jobs:tick.
+# Starts over after a deploy (new build) or an import; idle once the walk is over. Off with
+# WARM_CACHE=false. Its advisory lock keeps one run at a time.
+2-59/5 * * * * apercura jobs:tick warm
+
 # Open data import, every Monday at 03:00 UTC. ETL_SCHEDULE_ARGS narrows it, e.g.
 # `--department 75`; empty imports all of France. Exit codes: 1 failed, 2 blocked (see
 # docs/data-import.md).

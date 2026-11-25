@@ -9,8 +9,9 @@ configuration lives in [`clevercloud/`](../clevercloud):
 | `clevercloud/env.sh`             | Maps the add-on variables (`POSTGRESQL_ADDON_URI`, `CELLAR_ADDON_*`) to the names Apercura reads |
 | `clevercloud/build.sh`           | `CC_POST_BUILD_HOOK`: migrations, `next build`, static assets next to the standalone server      |
 | `clevercloud/start.sh`           | `CC_RUN_COMMAND`: the standalone server on `0.0.0.0:$PORT` (8080)                                |
-| `clevercloud/cron.json`          | `jobs:tick` every 5 minutes, the weekly import (Monday 03:00 UTC)                                |
+| `clevercloud/cron.json`          | `jobs:tick` every 5 minutes, the cache warm-up, the weekly import (Monday 03:00 UTC)             |
 | `clevercloud/cron/jobs-tick.sh`  | First instance only, `flock` against overlaps                                                    |
+| `clevercloud/cron/warm.sh`       | `jobs:tick warm` against the first instance's own server (`127.0.0.1:$PORT`), `flock` too        |
 | `clevercloud/cron/etl-weekly.sh` | Restarts the import task (Clever Tasks do not read `cron.json`)                                  |
 
 Why not the Docker image: Clever Cloud's Docker runtime does not run

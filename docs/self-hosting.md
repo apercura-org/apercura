@@ -10,7 +10,7 @@ takes a few minutes.
 | `postgres`   | PostgreSQL 17 + PostGIS. Creates the database roles on its first start                     |
 | `migrate`    | Migrations, then the roles' passwords, then exits. Runs before the app at every `up`       |
 | `app`        | The web app (Next.js standalone server), one replica, published on `127.0.0.1:${APP_PORT}` |
-| `scheduler`  | supercronic: `jobs:tick` every 5 minutes, the open data import every Monday at 03:00 UTC   |
+| `scheduler`  | supercronic: `jobs:tick` and the cache warm-up every 5 minutes, the weekly import          |
 | `etl`        | The import, on demand (`docker compose … run --rm etl`)                                    |
 | `minio`      | S3-compatible storage for photos and encrypted claim documents (not published on the host) |
 | `minio-init` | Creates the private bucket and an access key limited to it, then exits                     |
@@ -172,7 +172,7 @@ it with `apercura-compose logs -f scheduler`.
 The `scheduler` service runs [`docker/crontab`](../docker/crontab) with
 supercronic: `jobs:tick` every 5 minutes (expirations, reminders, the email
 outbox, next free slots, purges of patient data and claim documents, retention,
-expired rate-limit counters) and the weekly import. Each sub-job holds a Postgres advisory lock, so a slow run never
+expired rate-limit counters), the cache warm-up (below) and the weekly import. Each sub-job holds a Postgres advisory lock, so a slow run never
 overlaps the next. To run them by hand:
 
 ```sh
@@ -186,6 +186,35 @@ its own public name (no hairpin NAT), add an `extra_hosts` entry pointing the
 name to the host, e.g. `annuaire.example.org:host-gateway`, in an override file
 (`docker/compose.vps.yml` does it from `APP_HOST`, see [deploy-vps.md](./deploy-vps.md)).
 The import sends its tags straight to `http://app:3000` instead.
+
+### Cache warm-up
+
+Pages are cached on the app's disk (`next-cache` volume) on their first visit.
+A deploy that replaces the build, or an import that changes pages, leaves them
+to be rendered again; so the first visitor is not a crawler waiting on a cold
+page, the scheduler also runs `jobs:tick warm` every 5 minutes, two minutes
+after `jobs:tick`. Each run requests the next slice of the sitemap URLs from
+`INTERNAL_APP_URL` (`http://app:3000`) as `APP_URL`'s host: up to 4 at a time,
+5,000 URLs or 4 minutes, whichever comes first, and it stops early when the
+app's health check or latency degrades. It continues where the last run
+stopped, starts over after a deploy or an import, and is idle once the whole
+site is warm. Each run logs one line:
+
+```sh
+apercura-compose logs scheduler | grep '"job":"warm"'
+# {"job":"warm","result":{"generation":"build:…|import:12","warmed":5000,"errors":0,
+#  "remaining":181234,"stopped":"count",…}}
+apercura-compose exec scheduler apercura jobs:tick warm --restart   # walk again now
+```
+
+`WARM_CACHE=false` turns it off; `WARM_CACHE_CONCURRENCY`,
+`WARM_CACHE_MAX_URLS`, `WARM_CACHE_MAX_SECONDS` and `WARM_CACHE_MAX_P95_MS` tune
+it ([configuration.md](./configuration.md#cache-warm-up-bun-run-jobstick-warm)).
+On a small server, lower the concurrency to 2 rather than turning it off.
+
+Public pages answer `Cache-Control: public, max-age=0, s-maxage=300,
+stale-while-revalidate=3600`: a CDN in front of the app may keep them five
+minutes ([public-site.md](./public-site.md#cache-control)).
 
 ## First administrator
 
