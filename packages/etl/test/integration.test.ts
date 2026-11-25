@@ -23,6 +23,7 @@ import {
 } from "../fixtures/generate";
 import { buildFrOptions } from "../src/config";
 import { parseQuotedRecord } from "../src/lib/text";
+import { COARSE_TAG_THRESHOLD, drainOutbox } from "../src/outbox";
 import { runFr } from "../src/run-fr";
 
 const url = process.env.ETL_TEST_DATABASE_URL;
@@ -573,5 +574,99 @@ describe.skipIf(!url)("etl:fr on synthetic fixtures", () => {
 				});
 			}
 		}
+	});
+});
+
+/** A stand-in for the app's `/api/revalidate`: records the tags of every request. */
+async function startRevalidateMock() {
+	const requests: string[][] = [];
+	const server = createServer((request, response) => {
+		let body = "";
+		request.on("data", (chunk) => {
+			body += chunk;
+		});
+		request.on("end", () => {
+			requests.push((JSON.parse(body) as { tags: string[] }).tags);
+			response.writeHead(200, { "content-type": "application/json" });
+			response.end(JSON.stringify({ revalidated: requests.at(-1)?.length ?? 0 }));
+		});
+	});
+	await new Promise<void>((resolve) => server.listen(0, "127.0.0.1", resolve));
+	const { port } = server.address() as AddressInfo;
+	return {
+		url: `http://127.0.0.1:${port}`,
+		requests,
+		close: () => new Promise<void>((resolve) => server.close(() => resolve())),
+	};
+}
+
+describe.skipIf(!url)("outbox drain against the database", () => {
+	const sql = postgres(url ?? "", { max: 1, onnotice: () => {} });
+	const secret = "etl-test-only-revalidate-secret-0123456789";
+
+	afterAll(async () => {
+		await sql`TRUNCATE directory.invalidation_outbox`;
+		await sql.end();
+	});
+
+	const enqueue = (tags: string[]) => sql`
+		INSERT INTO directory.invalidation_outbox (tag) SELECT unnest(${tags}::text[])
+		ON CONFLICT (tag) DO NOTHING
+	`;
+
+	it("sends the sitemaps' tag with any change, precise or coarse (#97)", async () => {
+		const app = await startRevalidateMock();
+		try {
+			await sql`TRUNCATE directory.invalidation_outbox`;
+			const empty = await drainOutbox(sql, { appUrl: app.url, secret });
+			expect(empty).toMatchObject({ pending: 0, status: "done" });
+			expect(app.requests).toEqual([]);
+
+			// Precise tags never match the sitemap queries' tags: `sitemap` goes with them.
+			await enqueue(["practitioner:12", "listing:medecin-generaliste:fr"]);
+			const precise = await drainOutbox(sql, { appUrl: app.url, secret });
+			expect(precise).toMatchObject({ coarse: false, status: "done", sent: 3 });
+			expect(app.requests.flat().sort()).toEqual([
+				"listing:medecin-generaliste:fr",
+				"practitioner:12",
+				"sitemap",
+			]);
+
+			// A national import: the coarse tags of every kind, and `sitemap` as it is.
+			app.requests.length = 0;
+			await enqueue([
+				...Array.from({ length: COARSE_TAG_THRESHOLD + 1 }, (_, i) => `practitioner:${i + 1}`),
+				"listing:medecin-generaliste:75",
+				"place:75",
+				"site:3",
+			]);
+			const coarse = await drainOutbox(sql, { appUrl: app.url, secret });
+			expect(coarse).toMatchObject({ coarse: true, status: "done" });
+			expect(app.requests).toHaveLength(1);
+			expect(app.requests[0]?.sort()).toEqual([
+				"listing:*",
+				"place:*",
+				"practitioner:*",
+				"site:*",
+				"sitemap",
+			]);
+			const [left] = await sql<{ n: number }[]>`
+				SELECT count(*)::integer AS n FROM directory.invalidation_outbox
+			`;
+			expect(left?.n).toBe(0);
+		} finally {
+			await app.close();
+		}
+	});
+
+	it("keeps the sitemaps' tag for the next drain when the app is unreachable", async () => {
+		await sql`TRUNCATE directory.invalidation_outbox`;
+		await enqueue(["practitioner:12"]);
+		const result = await drainOutbox(sql, { appUrl: null, secret: null });
+		expect(result).toMatchObject({ status: "skipped", pending: 2 });
+		const rows = await sql<{ tag: string }[]>`
+			SELECT tag FROM directory.invalidation_outbox ORDER BY tag
+		`;
+		expect(rows.map((row) => row.tag)).toEqual(["practitioner:12", "sitemap"]);
 	});
 });

@@ -141,6 +141,47 @@ Queries are tagged with the import's cache tags and their coarse form
 `cacheLife("max")`; listings, hubs and establishments `cacheLife("weeks")`
 (their neighbour counts are not tagged precisely).
 
+### Revalidation after an import
+
+The import sends its tags to `/api/revalidate` once it has committed
+([data-import.md](./data-import.md), step 8): the precise ones, or above
+20,000 of them the coarse `practitioner:*`, `listing:*`, `site:*` and `place:*`,
+which every page query carries too. With any change it also sends `sitemap`,
+the tag of every sitemap query: a precise tag (`practitioner:12`) never matches
+them, and an import always changes what they list.
+
+- **Pages** are revalidated with the `max` profile (stale-while-revalidate): the
+  next request for a page still gets the copy from before the import, once, and
+  triggers its render; the one after gets the new page. A national import marks
+  400,000 pages at once, and none of their visitors waits for a render: the cache
+  warm-up, which the import restarts, walks them and takes that one stale answer
+  for most of them.
+- **Sitemaps** are expired at once (`expire: 0`): the very next request for
+  `/sitemap.xml` or a sitemap file reads the new data. Their queries are also cached
+  five minutes at most (`revalidate` and `stale` of 300 seconds; a production
+  server's in-memory cache drops an entry past its `revalidate`), so a sitemap
+  never lags behind the data longer than that, even when a revalidation does not
+  reach it. They are answered with `Cache-Control: public, max-age=0, s-maxage=300`.
+
+`e2e/revalidation.spec.ts` checks both on a production build: it fills the
+caches, changes the data, runs the import's own drain (`etl:outbox`) with
+coarse, then precise tags, and reads the new sitemaps on the next request and
+the new pages right after.
+
+**Known limit (Next.js 16.4)**: Next.js timestamps the `"use cache"` entries with
+the server process's monotonic clock (`performance.timeOrigin +
+performance.now()`) but marks revalidated tags with the wall clock
+(`Date.now()`, written last by its file-system cache over the in-memory
+handler's own mark). The two drift apart in a long-running process; when the
+monotonic clock is ahead (the system clock was stepped back after the server
+started), every revalidation, `max` or `expire: 0`, misses the entries younger
+than the gap, and they keep being served until their own lifetime ends: five
+minutes for the sitemaps, weeks for the pages. A server in that state shows what
+#97 reported in production: the sitemap index from before the first national
+import, served for over half an hour across many requests, until a new
+deployment restarted the server (sitemaps were then cached for an hour). Restarting the
+app (`docker compose restart app`) clears it.
+
 Online booking keeps practitioner pages static. The read model query also
 returns whether an agenda is open and the denormalized next free time
 (`directory.practitioners.next_free_at`); the booking services revalidate
@@ -239,6 +280,9 @@ Next.js separates them with `Vary: rsc, …` and a `?_rsc=` parameter.
   URLs (`/` and France's French pages), `lastmod` = `content_updated_at`, no
   `changefreq`/`priority`. A market that opens adds its own
   `/sitemaps/{segment}/…`.
+  Fresh on the first request after an import (`sitemap` tag expired at once),
+  five minutes old at most otherwise (see
+  [Revalidation after an import](#revalidation-after-an-import)).
 - `/robots.txt` disallows only the search page of every locale
   (`/fr/recherche`, `/fr-en/search`, `/fr-de/suche`…), `/api/`, `/{prefix}/_ui`
   and the signed-in practitioner area (`/fr/pro/tableau-de-bord`,

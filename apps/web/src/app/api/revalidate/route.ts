@@ -7,7 +7,8 @@
  *   x-apercura-timestamp: unix seconds (rejected beyond ±5 minutes)
  *   x-apercura-signature: hex digest (applied once: a replay changes nothing)
  * Tags are revalidated with the `max` profile: stale pages keep being served
- * while they are regenerated in the background.
+ * while they are regenerated in the background. The sitemaps' tag (`sitemap`)
+ * is expired at once instead (`revalidationProfile`).
  */
 import {
 	parseRevalidationTags,
@@ -17,6 +18,7 @@ import {
 } from "@apercura/core/revalidation";
 import { revalidateTag } from "next/cache";
 import { serverEnv } from "~/env";
+import { revalidationProfile } from "~/server/cache-tags";
 import { getDb } from "~/server/db";
 import { readBodyCapped, tooLarge } from "~/server/http/body";
 import { acceptRevalidationOnce } from "~/server/revalidation-replay";
@@ -59,6 +61,6 @@ export async function POST(request: Request): Promise<Response> {
 			{ status: 400 },
 		);
 	}
-	for (const tag of tags) revalidateTag(tag, "max");
+	for (const tag of tags) revalidateTag(tag, revalidationProfile(tag));
 	return Response.json({ revalidated: tags.length });
 }
