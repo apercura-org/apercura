@@ -98,9 +98,9 @@
 			"doctors": "Medici",
 			"dentists": "Dentisti",
 			"midwives": "Ostetriche",
+			"nurses": "Infermieri liberi professionisti",
 			"withAddress": "Con un indirizzo pubblico dello studio",
 			"count": "{count, number}",
-			"approxCount": "circa {count, number}",
 			"sourceLabel": "Fonte",
 			"sourceName": "Annuaire Santé, Agence du numérique en santé",
 			"updatedLabel": "Cifre di"

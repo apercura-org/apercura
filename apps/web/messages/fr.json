@@ -98,9 +98,9 @@
 			"doctors": "Médecins",
 			"dentists": "Chirurgiens-dentistes",
 			"midwives": "Sages-femmes",
+			"nurses": "Infirmiers libéraux",
 			"withAddress": "Avec une adresse d’exercice publique",
 			"count": "{count, number}",
-			"approxCount": "environ {count, number}",
 			"sourceLabel": "Source",
 			"sourceName": "Annuaire Santé, Agence du numérique en santé",
 			"updatedLabel": "Chiffres du"

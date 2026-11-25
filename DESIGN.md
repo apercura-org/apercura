@@ -223,7 +223,8 @@ Hierarchy comes from size steps, weight and space; colour never carries it. No c
 - The header: 64 px, white, a hairline below; wordmark left, "Professionnels de santé" and the language picker right. The practitioner space adds its navigation as quiet tabs (current page: shade, semibold, underlined).
 - Page openings (home, search, institutional pages, the practitioner space) sit on the quiet shade closed by a hairline; practitioner, listing and establishment pages open on the ground under their breadcrumb.
 - Sections are 64 px apart (`BookletPage`), more space above a heading than below. Content splits 5/7 from 768 px (heading and intro left, facts right) and stacks below.
-- The home opening: the display heading, a muted lead, then the search, left-aligned; below it the specimen page, the four commitments in a ruled row of four columns (two on tablets, stacked on phones), the register figures, and the practitioners' call.
+- The home opening: the promise as the display heading (« Trouvez un professionnel de santé en France »), the complementary line in muted lead, then the search, left-aligned; the brand lives in the header. Below: the specimen page, the four commitments in a ruled row of four columns (two on tablets, stacked on phones), the register figures (live per enabled profession, dated with the last import, left out before the first import), and the practitioners' call.
+- A practitioner page reads patients first on every screen: the appointment block, then the facts (presentation, profession, places, practical information, fees), then what concerns the practitioner (claim, removal) and corrections. From 1024 px the appointment block and the page's own matters share the right column.
 - Every target is at least 44 px; the layout survives 400 % zoom.
 
 ## Elevation and shape

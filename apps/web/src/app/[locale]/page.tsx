@@ -14,15 +14,7 @@ import { routing } from "~/i18n/routing";
 import { getPillars } from "~/lib/pillars";
 import { homeAlternates, pageMetadata } from "~/lib/seo";
 import { apercuraSiteNodes } from "~/lib/site-entities";
-
-/** National register figures supplied in PRODUCT.md (Annuaire Santé, 19 November 2026). */
-const REGISTRY = {
-	date: "2026-11-19",
-	doctors: 401_691,
-	dentists: 65_056,
-	midwives: 32_436,
-	withAddress: 311_000,
-} as const;
+import { getRegistryFigures } from "~/server/queries/registry";
 
 export async function generateMetadata({ params }: PageProps<"/[locale]">): Promise<Metadata> {
 	const { locale: requested } = await params;
@@ -46,6 +38,8 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
 	const t = await getTranslations({ locale, namespace: "HomePage" });
 
 	const tMeta = await getTranslations({ locale, namespace: "Metadata" });
+	// Live from the directory; left out before the first import.
+	const figures = await getRegistryFigures();
 
 	return (
 		<>
@@ -102,64 +96,51 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
 						</ol>
 					</section>
 
-					<section
-						aria-labelledby="registry-heading"
-						className="grid gap-6 md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] md:gap-12"
-					>
-						<div className="flex flex-col gap-3">
-							<h2 id="registry-heading" className="type-title text-ink">
-								{t("registry.heading")}
-							</h2>
-							<p className="max-w-[60ch] text-body text-ink">{t("registry.intro")}</p>
-						</div>
-						<div className="flex flex-col gap-3">
-							<FieldList>
-								<FieldRow
-									label={t("registry.doctors")}
-									emptyLabel=""
-									value={
-										<span className="tabular">
-											{t("registry.count", { count: REGISTRY.doctors })}
-										</span>
-									}
+					{figures ? (
+						<section
+							aria-labelledby="registry-heading"
+							className="grid gap-6 md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] md:gap-12"
+						>
+							<div className="flex flex-col gap-3">
+								<h2 id="registry-heading" className="type-title text-ink">
+									{t("registry.heading")}
+								</h2>
+								<p className="max-w-[60ch] text-body text-ink">{t("registry.intro")}</p>
+							</div>
+							<div className="flex flex-col gap-3">
+								<FieldList>
+									{figures.professions.map((profession) => (
+										<FieldRow
+											key={profession.key}
+											label={t(`registry.${profession.key}`)}
+											emptyLabel=""
+											value={
+												<span className="tabular">
+													{t("registry.count", { count: profession.count })}
+												</span>
+											}
+										/>
+									))}
+									<FieldRow
+										label={t("registry.withAddress")}
+										emptyLabel=""
+										value={
+											<span className="tabular">
+												{t("registry.count", { count: figures.withAddress })}
+											</span>
+										}
+									/>
+								</FieldList>
+								<ProvenanceNote
+									locale={locale}
+									sourceLabel={t("registry.sourceLabel")}
+									source={t("registry.sourceName")}
+									updatedLabel={t("registry.updatedLabel")}
+									updatedAt={figures.importedAt}
 								/>
-								<FieldRow
-									label={t("registry.dentists")}
-									emptyLabel=""
-									value={
-										<span className="tabular">
-											{t("registry.count", { count: REGISTRY.dentists })}
-										</span>
-									}
-								/>
-								<FieldRow
-									label={t("registry.midwives")}
-									emptyLabel=""
-									value={
-										<span className="tabular">
-											{t("registry.count", { count: REGISTRY.midwives })}
-										</span>
-									}
-								/>
-								<FieldRow
-									label={t("registry.withAddress")}
-									emptyLabel=""
-									value={
-										<span className="tabular">
-											{t("registry.approxCount", { count: REGISTRY.withAddress })}
-										</span>
-									}
-								/>
-							</FieldList>
-							<ProvenanceNote
-								locale={locale}
-								sourceLabel={t("registry.sourceLabel")}
-								source={t("registry.sourceName")}
-								updatedLabel={t("registry.updatedLabel")}
-								updatedAt={REGISTRY.date}
-							/>
-						</div>
-					</section>
+							</div>
+						</section>
+					) : null}
 
 					<section
 						aria-labelledby="pro-heading"

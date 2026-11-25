@@ -98,9 +98,9 @@
 			"doctors": "Doctors",
 			"dentists": "Dentists",
 			"midwives": "Midwives",
+			"nurses": "Self-employed nurses",
 			"withAddress": "With a public practice address",
 			"count": "{count, number}",
-			"approxCount": "about {count, number}",
 			"sourceLabel": "Source",
 			"sourceName": "Annuaire Santé, Agence du numérique en santé",
 			"updatedLabel": "Figures of"
