@@ -1,6 +1,6 @@
 /**
  * Brings the login and password of Apercura's database roles in line with the environment,
- * right after the migrations. docker/compose.selfhost.yml passes the APERCURA_*_DB_PASSWORD
+ * right after the migrations. docker/compose.app.yml passes the APERCURA_*_DB_PASSWORD
  * variables to its `migrate` service, which connects as the PostgreSQL superuser on every
  * deploy: rotating a password is changing the variable and redeploying, whatever the
  * orchestrator (Coolify, for one, does not mount docker/postgres/10-apercura-roles.sh, so that

@@ -9,12 +9,13 @@ Either way the image is built on the server, so the environment file (secrets,
 the legal facts of the publisher and the host) never leaves it and never goes
 through GitHub.
 
-| File                           | Role                                                                                |
-| ------------------------------ | ----------------------------------------------------------------------------------- |
-| `docker/compose.selfhost.yml`  | The whole stack (see [self-hosting](./self-hosting.md))                             |
-| `docker/compose.vps.yml`       | Override: the public host name resolved to the host for the scheduler, log rotation |
-| `docker/deploy-vps.sh`         | Without Coolify: checks a commit of `main`, checks it out, builds, restarts, health |
-| `.github/workflows/deploy.yml` | After CI passes on a push to `main`: a Coolify deployment, followed to the end      |
+| File                           | Role                                                                                    |
+| ------------------------------ | --------------------------------------------------------------------------------------- |
+| `docker/compose.selfhost.yml`  | The whole stack (see [self-hosting](./self-hosting.md)): the application stack + data   |
+| `docker/compose.app.yml`       | The application stack alone, against an external database and S3 (what Coolify deploys) |
+| `docker/compose.vps.yml`       | Override: the public host name resolved to the host for the scheduler, log rotation     |
+| `docker/deploy-vps.sh`         | Without Coolify: checks a commit of `main`, checks it out, builds, restarts, health     |
+| `.github/workflows/deploy.yml` | After CI passes on a push to `main`: a Coolify deployment, followed to the end          |
 
 ## Who it is for
 
@@ -186,25 +187,148 @@ self-hosting guide. Later deploys go through Coolify or, without it,
 
 ## Under Coolify
 
-Production runs the same stack under [Coolify](https://coolify.io) (v4) as a
-"Docker Compose" application pointed at `docker/compose.selfhost.yml`, branch
-`main`:
+Production runs under [Coolify](https://coolify.io) (v4), split in three
+resources of the same project and environment, so that a deploy never touches
+the data. Coolify stops and removes **every** container of a Docker Compose
+application at each deploy before starting the new ones; with the database and
+the storage inside the application, every deploy restarted PostgreSQL and MinIO
+(about 30 s without a database, and any running import killed). Its
+"Consistent Container Names" setting does not change that: the containers keep
+their names, but they are still stopped and removed. So:
 
-- the variables of the environment file are set in Coolify, not in a file on
-  the server;
-- Coolify does not mount single files from the repository: in place of
-  `docker/postgres/10-apercura-roles.sh` it creates an empty directory, so the
-  database's first-start script does not run. Nothing to do: `migrate` sets
-  the roles' logins and passwords from `APERCURA_*_DB_PASSWORD` after the
-  migrations, on every deploy. Changing one of them in Coolify and redeploying
-  rotates it;
-- the domain goes on the `app` service, port `3000`;
-- Coolify's Traefik is the only proxy: no Caddy on the host, and
-  `TRUSTED_PROXY_COUNT=1`;
-- Coolify builds and restarts the stack itself; the override file
-  `docker/compose.vps.yml` and `docker/deploy-vps.sh` are not used. Backups and
-  alerts are still needed (the sections below, adapted to the containers
-  Coolify names).
+| Resource                                             | What                                               | Restarted by an app deploy |
+| ---------------------------------------------------- | -------------------------------------------------- | -------------------------- |
+| PostgreSQL database                                  | PostgreSQL 17 + PostGIS, image `postgis/postgis`   | no                         |
+| MinIO service (or any S3-compatible storage)         | Photos and encrypted claim documents               | no                         |
+| Docker Compose application, `docker/compose.app.yml` | `migrate`, `minio-init`, `app`, `scheduler`, `etl` | yes                        |
+
+A deploy still restarts the app and the scheduler (a few seconds, and an import
+running in the scheduler at that moment stops; the next weekly run, or
+`docker exec <scheduler container> apercura etl:fr`, redoes it).
+
+### 1. The database
+
+**New resource > Databases > PostgreSQL**, on the same server and destination
+as the application:
+
+- **Image**: `postgis/postgis:17-3.7` (a custom image in place of the default
+  `postgres`: the migrations need PostGIS; amd64 only);
+- **Initial database**: `apercura`; **user**: `postgres`; **password**: letters
+  and digits only (`openssl rand -hex 24`), since it ends up in a URL;
+- not publicly available; backups: Coolify's scheduled backups of the resource,
+  or the [Backups](#backups) script below pointed at its container.
+
+Nothing else: no init script and no role to create. On the first deploy,
+`migrate` waits for the database, the migrations create the four roles of
+Apercura without login (migrations 0004 and 0016, only when they are missing),
+then `migrate` gives each role whose `APERCURA_*_DB_PASSWORD` is set its login
+and password (`ALTER ROLE … WITH LOGIN PASSWORD`). It does so again on every
+deploy: changing one of these variables and redeploying rotates it. Note the
+resource's internal host name (its "Postgres URL (internal)",
+`postgres://postgres:…@<host>:5432/apercura`).
+
+### 2. The storage
+
+**New resource > Services > MinIO** (or any S3-compatible storage outside
+Coolify). Note its internal host name (the MinIO container's name), its API
+port (`9000`) and its administrator's user and password. Keep the API private:
+the app serves the files itself.
+
+`minio-init`, in the application, creates the private bucket and the app's own
+access key, limited to that bucket, when it is given the MinIO administrator
+(`MINIO_ROOT_USER`, `MINIO_ROOT_PASSWORD`). The administrator then only reaches
+that one-shot container, never the app. To keep it out of the application
+entirely (and with any other S3), leave `MINIO_ROOT_PASSWORD` empty and create,
+in the MinIO console or at the provider, the bucket and a key allowed only
+`s3:GetBucketLocation` and `s3:ListBucket` on it and `s3:GetObject`,
+`s3:PutObject` and `s3:DeleteObject` on its objects; `minio-init` then does
+nothing.
+
+### 3. The application
+
+**New resource > Docker Compose** (public repository, or GitHub App), branch
+`main`, **base directory** `/docker`, **Docker Compose location**
+`/compose.app.yml`:
+
+- turn on **Connect To Predefined Network**, so the application resolves the
+  database's and MinIO's internal host names. Coolify warns that short service
+  names may then also match containers of other stacks on its network: if
+  another application of the server has an `app` service, set
+  `INTERNAL_APP_URL` to `APP_URL` (the import then sends its cache tags through
+  the public URL instead of `http://app:3000`);
+- the domain goes on the `app` service, port `3000`; Coolify's Traefik is the
+  only proxy: no Caddy on the host, and `TRUSTED_PROXY_COUNT=1`;
+- the variables, set in Coolify (not in a file on the server), are those of the
+  [environment file](#environment-file), plus where the data lives:
+
+| Variable                                                | Value                                                                                                   |
+| ------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| `APERCURA_DB_HOST`                                      | The database resource's internal host name (`APERCURA_DB_PORT`, `APERCURA_DB_NAME`: `5432`, `apercura`) |
+| `DATABASE_URL_MIGRATE`                                  | `postgres://postgres:<password>@<host>:5432/apercura`: the database's superuser, for `migrate` only     |
+| `APERCURA_APP_DB_PASSWORD`, `…_ETL_…`, `…_JOBS_…`       | The roles' passwords (`openssl rand -hex 24` each); `…_READONLY_…` optional                             |
+| `S3_ENDPOINT`                                           | `http://<minio host>:9000`                                                                              |
+| `S3_BUCKET`, `S3_ACCESS_KEY_ID`, `S3_SECRET_ACCESS_KEY` | The app's bucket and its own key (not the administrator's)                                              |
+| `MINIO_ROOT_USER`, `MINIO_ROOT_PASSWORD`                | The MinIO administrator, for `minio-init`; empty if the bucket and key are made by hand                 |
+
+`POSTGRES_PASSWORD` is not used here: `DATABASE_URL_MIGRATE` replaces it.
+Coolify builds the image on the server and runs the file as is: it only uses
+`${VAR}`, `${VAR:-default}` and `${VAR:?message}`, no single-file bind mount
+and no empty `command`, which Coolify would not read the same way. The override
+file `docker/compose.vps.yml` and `docker/deploy-vps.sh` are not used; backups
+and alerts are still needed (the sections below, adapted to the containers
+Coolify names).
+
+### Moving from the single-application layout
+
+Until this split, production ran `docker/compose.selfhost.yml` as one Coolify
+application, data included. Moving once, in a quiet hour (the site is
+down for a few minutes):
+
+1. Create the database and the MinIO resources above and start them.
+2. Stop the old application's `app` and `scheduler` containers (writes stop),
+   then dump its database from the server's shell:
+
+   ```sh
+   docker exec <old postgres container> pg_dump -U postgres -Fc apercura > /root/apercura-move.dump
+   ```
+
+3. Restore into the new database. The dump holds no roles, and the grants need
+   them; restoring into a database made from `template0` keeps the extensions of
+   the dump only:
+
+   ```sh
+   new=<new database container>
+   docker exec "$new" dropdb -U postgres --force apercura
+   docker exec "$new" createdb -U postgres -T template0 apercura
+   for role in apercura_app apercura_etl apercura_readonly apercura_jobs; do
+     docker exec "$new" psql -U postgres -d apercura -c "CREATE ROLE $role NOLOGIN"
+   done
+   docker exec -i "$new" pg_restore -U postgres -d apercura --exit-on-error --no-owner < /root/apercura-move.dump
+   ```
+
+4. Copy the bucket with `mc mirror`, from a throwaway `mc` container joined to
+   both networks (`docker inspect` on each MinIO container shows its network):
+
+   ```sh
+   docker run -d --name apercura-move --network <old app network> --entrypoint sleep pgsty/mc:RELEASE.2026-11-12T00-00-00Z 3600
+   docker network connect <new MinIO network> apercura-move
+   docker exec -it apercura-move sh -c '
+     mc alias set old http://minio:9000 <old root user> <old root password> &&
+     mc alias set new http://<new minio host>:9000 <new root user> <new root password> &&
+     mc mb --ignore-existing new/apercura && mc mirror old/apercura new/apercura'
+   docker rm -f apercura-move
+   ```
+
+5. In the application: Docker Compose location `/compose.app.yml`, Connect To
+   Predefined Network on, the variables of the table above (with the same
+   `APERCURA_*_DB_PASSWORD` and S3 key as before), then deploy (Actions >
+   Deploy > Run workflow). `migrate` logs `Migrations applied` and
+   `Role passwords applied: …`.
+6. Check `/api/health`, a practitioner page, a practitioner photo and
+   `docker exec <scheduler container> apercura jobs:tick`.
+7. The old `postgres` and `minio` containers are no longer part of the
+   application: remove them if Coolify left them running, but keep their
+   volumes until a backup of the new database has been [verified](./self-hosting.md#verify-a-backup).
 
 ### Deploys gated on CI
 
@@ -460,7 +584,7 @@ find "$out/db" -name '*.dump' -mtime +7 -delete
 # Photos and claim documents: a mirror of the bucket, through the stack's own mc image (single
 # quotes: the variables are the container's).
 compose run --rm --no-deps -v "$out/minio:/mirror" --entrypoint sh minio-init -c \
-  'mc alias set local http://minio:9000 "$MINIO_ROOT_USER" "$MINIO_ROOT_PASSWORD" >/dev/null && mc mirror --overwrite --remove "local/$S3_BUCKET" /mirror'
+  'mc alias set local "$S3_ENDPOINT" "$MINIO_ROOT_USER" "$MINIO_ROOT_PASSWORD" >/dev/null && mc mirror --overwrite --remove "local/$S3_BUCKET" /mirror'
 
 restic backup --quiet --tag apercura "$out/db" "$out/minio"
 restic forget --quiet --prune --keep-daily 7 --keep-weekly 4 --keep-monthly 6

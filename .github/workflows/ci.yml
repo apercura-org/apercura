@@ -258,12 +258,19 @@ jobs:
   docker:
     name: Docker image and self-hosting smoke test (synthetic fixtures)
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 40
     steps:
       - uses: actions/checkout@v7
       # Builds docker/Dockerfile (no push), starts docker/compose.selfhost.yml from a clean
       # state with throwaway secrets, imports the SYNTHETIC fixtures, checks the home page, a
       # practitioner page, /api/health, jobs:tick and the import role's grants, then removes
       # everything (volumes included).
-      - name: Build and smoke test
-        run: docker/smoke-test.sh
+      - name: Build and smoke test (self-hosted stack)
+        run: docker/smoke-test.sh selfhost
+      # The same image, docker/compose.app.yml alone against a PostGIS and a MinIO started
+      # apart, fresh and without the init script (the Coolify layout): migrate waits for the
+      # database, the migrations create the roles and migrate gives them their logins.
+      - name: Smoke test (application stack, external database and S3)
+        run: docker/smoke-test.sh external
+        env:
+          SMOKE_BUILD: "0"

@@ -85,6 +85,7 @@ packages/
 docker/
   compose.yml          Development services: PostgreSQL (PostGIS), Mailpit, MinIO
   compose.selfhost.yml Self-hosting: the whole stack (docs/self-hosting.md)
+  compose.app.yml      The application stack alone, against an external database and S3
   compose.vps.yml      Override for a single VPS behind a host Caddy (docs/deploy-vps.md)
   deploy-vps.sh        Server side of the GitHub deploy (docs/deploy-vps.md)
   Dockerfile           Production image: app, scheduler, import and migrations

@@ -17,9 +17,13 @@ takes a few minutes.
 | `mailpit`    | Profile `dev` only: catches every email, web UI on `127.0.0.1:${MAILPIT_UI_PORT}`          |
 
 The files are in [`docker/`](../docker): `Dockerfile`, `compose.selfhost.yml`,
-`.env.selfhost.example`, the Postgres init script and the scheduler's
-`crontab`. `docker/compose.yml` is something else: the services of local
-development.
+`compose.app.yml`, `.env.selfhost.example`, the Postgres init script and the
+scheduler's `crontab`. `compose.selfhost.yml` includes `compose.app.yml` (the
+application stack: `migrate`, `app`, `scheduler`, `etl`, `minio-init`) and adds
+the data services (`postgres`, `minio`, `mailpit`); to run the application
+against a database and an S3 storage of your own, see
+[External database and S3](#external-database-and-s3). `docker/compose.yml` is
+something else: the services of local development.
 
 To run this stack in production on one rented server, behind a Caddy on the
 host and deployed from GitHub Actions, follow [deploy-vps.md](./deploy-vps.md)
@@ -47,7 +51,8 @@ With `FEATURE_BOOKING=false` (the default) there is no health data at all: see
 - A Linux server, amd64. The official PostGIS image is published for amd64
   only: arm64 machines (Apple Silicon, Ampere) run it emulated, which works but
   makes the import several times slower.
-- Docker Engine with Compose v2.24 or later.
+- Docker Engine with Compose v2.24 or later (`compose.selfhost.yml` uses
+  `include`).
 - 2 vCPU, 4 GB of RAM (the import peaks at about 0.8 GB, plus PostgreSQL), and
   20 GB of disk. The import downloads about 1.2 GB of files into the
   container's temporary folder at each run.
@@ -108,6 +113,12 @@ curl -s http://127.0.0.1:3000/api/health      # {"status":"ok"}
 `/api/health` answers 200 when the app runs and reaches its database, 503
 otherwise, without any detail. The image's own Docker health check uses it.
 
+Start-up order: `migrate` and `minio-init` start with the database and MinIO and
+wait for them (`migrate` retries for up to `DATABASE_WAIT_SECONDS`, 120 by
+default, and logs `Waiting for the database …`), then the app and the scheduler
+start. Compose cannot make the included application stack depend on the health
+checks of this file's services; the retries replace them.
+
 To try the stack without an SMTP provider, add `--profile dev` to `up` and set
 `SMTP_ALLOW_INSECURE=true` in `docker/.env.selfhost` (Mailpit offers no TLS, and the app
 otherwise refuses to start: production sends mail over TLS only). Mailpit then receives every
@@ -122,7 +133,9 @@ and password. Without it the purge is skipped with a warning.
 
 The database roles' passwords are applied twice: by `docker/postgres/10-apercura-roles.sh` when
 the volume is first created, and by `migrate` after the migrations on every `up`
-(`ALTER ROLE … WITH LOGIN PASSWORD …` for each `APERCURA_*_DB_PASSWORD` set). An empty
+(`ALTER ROLE … WITH LOGIN PASSWORD …` for each `APERCURA_*_DB_PASSWORD` set). The init script
+is a convenience: on a database without it, the migrations create the missing roles without
+login and `migrate` then gives them theirs. An empty
 variable leaves its role as it is: `migrate` never turns a role's login off, so a role you
 enabled by hand keeps working; disable one with `ALTER ROLE … NOLOGIN` in `psql`. Passwords
 are never logged.
@@ -316,9 +329,41 @@ To move to a new PostgreSQL major version, dump, change the image in
 | `RATE_LIMIT_KEY`, `ALTCHA_HMAC_KEY` | Replace at any time: rate-limit counters reset, pending booking challenges fail once.                                                                                                                                                                                                                                                                                                                                   |
 | `REVALIDATE_SECRET`, `JOBS_SECRET`  | Replace at any time; the app, the scheduler and the import read the same file.                                                                                                                                                                                                                                                                                                                                          |
 | Database passwords                  | Change `APERCURA_APP_DB_PASSWORD` (or `_ETL_`, `_READONLY_`, `_JOBS_`) in the file and `apercura-compose up -d`: `migrate` sets the new password, then the services using it restart with it. `POSTGRES_PASSWORD` is only read on first start: `ALTER ROLE postgres WITH PASSWORD '…';` in `psql`, then the file and `up -d`.                                                                                           |
-| `S3_SECRET_ACCESS_KEY`              | Update the file and rerun `apercura-compose up -d`: `minio-init` sets the new secret.                                                                                                                                                                                                                                                                                                                                   |
+| `S3_SECRET_ACCESS_KEY`              | Update the file and rerun `apercura-compose up -d`: `minio-init` sets the new secret (with `MINIO_ROOT_PASSWORD`; otherwise rotate it at the S3 provider first).                                                                                                                                                                                                                                                        |
 
 `apercura-compose up -d` recreates every container whose environment changed.
+
+## External database and S3
+
+`docker/compose.app.yml` is the application stack alone: no `postgres`, no
+`minio`, and no dependency on them, so restarting or redeploying it never
+touches the data. Point it at a PostgreSQL 17 with PostGIS (the
+`postgis/postgis:17-3.7` image, or a managed database offering PostGIS,
+`pg_trgm`, `unaccent` and `btree_gist`) and at any S3-compatible storage:
+
+```sh
+docker compose -f docker/compose.app.yml --env-file docker/.env.selfhost up -d --build
+```
+
+with, in the same environment file, in addition to the variables of [Start](#start):
+
+| Variable                                                   | Value                                                                                                                                                                                         |
+| ---------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `APERCURA_DB_HOST`, `APERCURA_DB_PORT`, `APERCURA_DB_NAME` | Where the database is (default `postgres`, `5432`, `apercura`). The app, the import and the scheduler connect there with their roles.                                                         |
+| `DATABASE_URL_MIGRATE`                                     | A superuser URL for `migrate` (extensions, roles), e.g. `postgres://postgres:…@db.internal:5432/apercura`. Without it, `migrate` builds one from `POSTGRES_PASSWORD` for the user `postgres`. |
+| `S3_ENDPOINT`                                              | The S3 API, path-style (default `http://minio:9000`).                                                                                                                                         |
+| `MINIO_ROOT_USER`, `MINIO_ROOT_PASSWORD`                   | A MinIO administrator: `minio-init` then creates the bucket and the app's key limited to it. Empty: `minio-init` does nothing; create the bucket and a key limited to it at the provider.     |
+
+The containers must reach the database and the storage by these names: put them
+on a shared Docker network, or use addresses reachable from the containers. On
+a **new, empty database** there is nothing to prepare beyond the database itself:
+the migrations create the four roles without login when they are missing
+(migrations 0004 and 0016) and `migrate` gives each role whose
+`APERCURA_*_DB_PASSWORD` is set its login and password. With a migration user
+that is not a superuser, create the roles beforehand (see
+[data-import.md](./data-import.md)); `migrate` then warns and leaves their
+passwords to you. Coolify's version of this layout is in
+[deploy-vps.md](./deploy-vps.md#under-coolify).
 
 ## Cache and scaling
 
@@ -354,4 +399,11 @@ without booking and without claim documents it has nothing to do.
 `docker/smoke-test.sh` builds the image, starts the stack under its own project
 name on port 3090 with throwaway secrets, imports the **synthetic** fixtures,
 checks the home page, a practitioner page, `/api/health`, `jobs:tick` and the
-import role's grants, then removes everything. CI runs it on every pull request.
+import role's grants, then removes everything. It runs twice: `selfhost`, the
+whole of `docker/compose.selfhost.yml`, and `external`, `docker/compose.app.yml`
+alone against a PostGIS and a MinIO started apart, fresh and without the init
+script (`migrate` starts while PostGIS is still initialising and waits for it),
+where it also checks that the migrations created the roles and that each logs in with its password, that the
+app's S3 key cannot create buckets, and that removing the application's
+containers leaves the data alone. CI runs both on every pull request
+(`docker/smoke-test.sh selfhost`, `docker/smoke-test.sh external`).
