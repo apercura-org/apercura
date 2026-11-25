@@ -96,7 +96,7 @@ test("the data page lists the UK sources with their licence and the nations cove
 		"OS Open Names",
 	]) {
 		await expect(
-			sources.getByRole("link", { name: new RegExp(name.replace(/[()]/g, "\\$&")) }),
+			sources.getByRole("link", { name: new RegExp(name.replace(/[\\^$.*+?()[\]{}|]/g, "\\$&")) }),
 		).toBeVisible();
 	}
 	for (const attribution of ATTRIBUTIONS) {
