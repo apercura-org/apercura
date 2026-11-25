@@ -38,3 +38,28 @@ test("slot picker: past and closed slots cannot be stamped", async ({ page }) =>
 	await closed.click({ force: true });
 	await expect(closed).toHaveAttribute("aria-selected", "false");
 });
+
+test("listing pager: the jumps of a long listing reach any page in three clicks", async ({
+	page,
+}) => {
+	await page.goto("/fr/_ui");
+	const pager = page.getByRole("navigation", { name: "Pages de la liste" });
+	await expect(pager.locator('[aria-current="page"]')).toHaveText("Page 187");
+	const jumps = pager.getByRole("list", { name: "Aller à la page" });
+	const names = await jumps.getByRole("link").allTextContents();
+	expect(names).toEqual([
+		"Page 1",
+		...[100, 110, 120, 130, 140, 150, 160, 170, 190, 200].map((n) => `Page ${n}`),
+		"Page 219",
+	]);
+	await expect(jumps.getByRole("link", { name: "Page 1", exact: true })).toHaveAttribute(
+		"href",
+		"/fr/medecin-generaliste/75-paris",
+	);
+	await expect(jumps.getByRole("link", { name: "Page 219" })).toHaveAttribute(
+		"href",
+		"/fr/medecin-generaliste/75-paris/219",
+	);
+	// The block of ten around the current page, before the jumps.
+	await expect(pager.getByRole("link", { name: /^Page 18\d$/ })).toHaveCount(9);
+});

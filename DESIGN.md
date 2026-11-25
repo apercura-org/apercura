@@ -246,6 +246,7 @@ All primitives are React Aria Components styled with `tailwind-variants` recipes
 - **Action block.** The "what can I do next" panel: title strip on the quiet shade, the statement, the next slot on a shade tile, one action. Five honest states (book, call, establishment, locum, notice); only booking takes the accent.
 - **Badges.** Small pills in caption type: neutral (`field-edge` edge on the shade), verified (accent on the accent wash, with a tick), error.
 - **Tables.** Caption-type headers in muted ink over a `field-edge` rule, hairlines between rows.
+- **Pager** (`Pagination`, listings). A `<nav>` under a hairline: previous and next as semibold links either side of "Page 187 sur 219", then the pages of the current block of ten, then "Aller à la page" with the first, the last and the round pages of the larger blocks (`pager` in `@apercura/core`: any page within three clicks below 1,000 pages). Numbers in meta type and tabular figures, underlined, in 44 px cells that take the shade on hover; the current page is text, on the shade, semibold, ringed in ink, `aria-current="page"`. Screen readers hear "Page 12". Plain links: it works without JavaScript.
 - **Notices.** Panels: information on the shade, success with a tick, errors on the error wash with a red edge.
 - **Empty states.** A quiet panel on the shade: what is missing, in plain words, and the next step as a button.
 - **Dialogs and sheets.** A panel with its title on a shade strip, a 44 px close control, the overlay shadow.

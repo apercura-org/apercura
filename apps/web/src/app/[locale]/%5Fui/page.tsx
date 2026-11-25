@@ -17,6 +17,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Suspense } from "react";
 import { BookletPage } from "~/components/booklet-page";
 import { ClientIsland } from "~/components/client-island";
+import { Pagination } from "~/components/listing";
 import { SiteHeader } from "~/components/site-header";
 import { clientEnv } from "~/env";
 import { routing } from "~/i18n/routing";
@@ -260,6 +261,23 @@ export default async function GalleryPage({ params }: PageProps<"/[locale]/_ui">
 										}
 									/>
 								</div>
+							</div>
+
+							<div className="flex flex-col gap-3">
+								<h3 className="type-subtitle">{t("domain.pager")}</h3>
+								<Pagination
+									locale={locale}
+									page={187}
+									pages={219}
+									hrefOf={(page) => ({
+										pathname: "/[specialite]/[dept]/[[...rest]]",
+										params: {
+											specialite: "medecin-generaliste",
+											dept: "75-paris",
+											rest: page > 1 ? [String(page)] : undefined,
+										},
+									})}
+								/>
 							</div>
 
 							<div className="flex flex-col gap-3">

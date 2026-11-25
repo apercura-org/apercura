@@ -496,7 +496,8 @@
 			"slots": "Terminauswahl",
 			"site": "Praxisort",
 			"map": "Karte",
-			"search": "Suche in der Broschüre"
+			"search": "Suche in der Broschüre",
+			"pager": "Seitennavigation einer Liste (Seite 187 von 219)"
 		},
 		"booklet": {
 			"unclaimed": "Nicht beanspruchte Seite",
@@ -1123,7 +1124,9 @@
 			"label": "Seiten der Liste",
 			"previous": "Vorherige Seite",
 			"next": "Nächste Seite",
-			"status": "Seite {page} von {pages}"
+			"status": "Seite {page} von {pages}",
+			"page": "<hidden>Seite </hidden>{page}",
+			"jumps": "Zur Seite"
 		},
 		"facts": {
 			"heading": "In Zahlen",
@@ -1150,6 +1153,7 @@
 		"browseDirectory": "Verzeichnis nach Ort durchsuchen",
 		"metaTitleShort": "{listing} in {place} · Apercura",
 		"metaDescriptionPage": "{count, plural, one {Seite {page} von {pages}: # als {occupation} in {place} im nationalen Register geführte Gesundheitsfachkraft.} other {Seite {page} von {pages}: # als {occupation} in {place} im nationalen Register geführte Gesundheitsfachkräfte.}}",
+		"metaDescriptionPageRange": "{count, plural, one {Seite {page} von {pages}, {first} bis {last}: # als {occupation} in {place} im nationalen Register geführte Gesundheitsfachkraft.} other {Seite {page} von {pages}, {first} bis {last}: # als {occupation} in {place} im nationalen Register geführte Gesundheitsfachkräfte.}}",
 		"hubMetaTitleShort": "{listing} in Frankreich · Apercura"
 	},
 	"Directory": {

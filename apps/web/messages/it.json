@@ -496,7 +496,8 @@
 			"slots": "Selettore di orari",
 			"site": "Sede di esercizio",
 			"map": "Mappa",
-			"search": "Ricerca nel libretto"
+			"search": "Ricerca nel libretto",
+			"pager": "Paginazione di un elenco (pagina 187 di 219)"
 		},
 		"booklet": {
 			"unclaimed": "Pagina non rivendicata",
@@ -1123,7 +1124,9 @@
 			"label": "Pagine dell’elenco",
 			"previous": "Pagina precedente",
 			"next": "Pagina successiva",
-			"status": "Pagina {page} di {pages}"
+			"status": "Pagina {page} di {pages}",
+			"page": "<hidden>Pagina </hidden>{page}",
+			"jumps": "Vai alla pagina"
 		},
 		"facts": {
 			"heading": "In cifre",
@@ -1150,6 +1153,7 @@
 		"browseDirectory": "Sfogliare l’elenco per luogo",
 		"metaTitleShort": "{listing} a {place} · Apercura",
 		"metaDescriptionPage": "{count, plural, one {Pagina {page} di {pages}: # professionista registrato come {occupation} a {place} nel registro nazionale.} many {Pagina {page} di {pages}: # di professionisti registrati come {occupation} a {place} nel registro nazionale.} other {Pagina {page} di {pages}: # professionisti registrati come {occupation} a {place} nel registro nazionale.}}",
+		"metaDescriptionPageRange": "{count, plural, one {Pagina {page} di {pages}, da {first} a {last}: # professionista registrato come {occupation} a {place} nel registro nazionale.} many {Pagina {page} di {pages}, da {first} a {last}: # di professionisti registrati come {occupation} a {place} nel registro nazionale.} other {Pagina {page} di {pages}, da {first} a {last}: # professionisti registrati come {occupation} a {place} nel registro nazionale.}}",
 		"hubMetaTitleShort": "{listing} in Francia · Apercura"
 	},
 	"Directory": {

@@ -496,7 +496,8 @@
 			"slots": "Sélecteur d’horaires",
 			"site": "Lieu d’exercice",
 			"map": "Carte",
-			"search": "Recherche livret"
+			"search": "Recherche livret",
+			"pager": "Pagination d’une liste (page 187 sur 219)"
 		},
 		"booklet": {
 			"unclaimed": "Page non réclamée",
@@ -1123,7 +1124,9 @@
 			"label": "Pages de la liste",
 			"previous": "Page précédente",
 			"next": "Page suivante",
-			"status": "Page {page} sur {pages}"
+			"status": "Page {page} sur {pages}",
+			"page": "<hidden>Page </hidden>{page}",
+			"jumps": "Aller à la page"
 		},
 		"facts": {
 			"heading": "En chiffres",
@@ -1150,6 +1153,7 @@
 		"browseDirectory": "Parcourir l’annuaire par lieu",
 		"metaTitleShort": "{listing} à {place} · Apercura",
 		"metaDescriptionPage": "{count, plural, one {Page {page} sur {pages} : # praticien inscrit comme {occupation} à {place} au registre national.} many {Page {page} sur {pages} : # praticiens inscrits comme {occupation} à {place} au registre national.} other {Page {page} sur {pages} : # praticiens inscrits comme {occupation} à {place} au registre national.}}",
+		"metaDescriptionPageRange": "{count, plural, one {Page {page} sur {pages}, de {first} à {last} : # praticien inscrit comme {occupation} à {place} au registre national.} many {Page {page} sur {pages}, de {first} à {last} : # praticiens inscrits comme {occupation} à {place} au registre national.} other {Page {page} sur {pages}, de {first} à {last} : # praticiens inscrits comme {occupation} à {place} au registre national.}}",
 		"hubMetaTitleShort": "{listing} en France · Apercura"
 	},
 	"Directory": {
