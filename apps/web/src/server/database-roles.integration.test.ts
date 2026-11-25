@@ -127,6 +127,13 @@ describe.skipIf(!url)("database roles (database)", () => {
 		for (const table of ["practitioner_profiles", "practitioner_slug_aliases", "suppressions"]) {
 			expect(await can("apercura_etl", `directory.${table}`, "UPDATE"), table).toBe(false);
 		}
+		// The warm-up's cursor: the import may only ask for a new walk.
+		const warmup = "directory.cache_warmup";
+		expect(await canColumn("apercura_etl", warmup, "restart_requested_at", "UPDATE")).toBe(true);
+		for (const column of ["generation", "unit", "position", "completed_at"]) {
+			expect(await canColumn("apercura_etl", warmup, column, "UPDATE"), column).toBe(false);
+		}
+		expect(await can("apercura_app", warmup, "UPDATE")).toBe(true);
 	});
 
 	it("gives the read-only role no write access at all", async () => {

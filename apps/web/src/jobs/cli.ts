@@ -8,6 +8,8 @@
  *                                audit-log)
  *   bun run jobs:tick rotate-keys after a master key rotation, never scheduled: moves every
  *                                key and platform ciphertext to ENCRYPTION_ACTIVE_KEY
+ *   bun run jobs:tick warm       the next slice of the cache warm-up (its own schedule; see
+ *                                src/server/warm/run.ts); `warm --restart` starts it over
  *
  * Every sub-job takes its own Postgres advisory lock, so overlapping runs are harmless. Refuses
  * to run when the overlap constraint is missing (a schema created by `drizzle-kit push`), and in
@@ -29,6 +31,7 @@ const SUB_JOBS = [
 	"rate-limits",
 	"audit-log",
 	"rotate-keys",
+	"warm",
 ] as const;
 type SubJob = (typeof SUB_JOBS)[number];
 
@@ -69,6 +72,20 @@ async function main() {
 			requests: () => jobs.requestsJob(db, now()),
 			"rate-limits": () => jobs.rateLimitsJob(db, now()),
 			"audit-log": () => jobs.auditLogJob(auditDb),
+			warm: async () => {
+				const { runWarm } = await import("../server/warm/run");
+				const { readBuildId, sqlWarmStore } = await import("../server/warm/store");
+				const buildId = await readBuildId();
+				return jobs.withAdvisoryLock(db, "jobs:warm", () =>
+					runWarm({
+						store: sqlWarmStore(db.$client),
+						fetch: (input, init) => fetch(input, init),
+						env: process.env,
+						buildId,
+						restart: process.argv.slice(3).includes("--restart"),
+					}),
+				);
+			},
 			"rotate-keys": async () => {
 				const { rotateKeys } = await import("../server/keys/rotation");
 				const { getStorage, storageConfigured } = await import("../server/storage");

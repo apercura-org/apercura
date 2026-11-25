@@ -10,11 +10,13 @@ Usage: apercura <command> [arguments]
   migrate                Wait for the database, apply pending migrations and the roles'
                          passwords (DATABASE_URL_MIGRATE, or built from POSTGRES_PASSWORD)
   jobs:tick [job]        Run the scheduled jobs once (expire, reminders, outbox, next-free,
-                         purge, claim-documents), or rotate-keys after a key rotation
+                         purge, claim-documents), rotate-keys after a key rotation, or
+                         warm [--restart] for the next slice of the cache warm-up
   etl:fr [flags]         Import the French open data (e.g. --department 75, --dry-run)
   etl:places [flags]     Import the communes, departments and regions
   etl:outbox             Send the pending cache tags to the app
-  scheduler              Run jobs:tick every 5 minutes and the weekly import (supercronic)
+  scheduler              Run jobs:tick and the cache warm-up every 5 minutes and the weekly
+                         import (supercronic)
   keys                   Print fresh random secrets for the environment file
   help                   Show this help
 

@@ -61,6 +61,19 @@ export async function sendTags(
 	throw lastError instanceof Error ? lastError : new Error(String(lastError));
 }
 
+/**
+ * Asks the cache warm-up to start its walk over: the import may only set this column of its
+ * row. Never fails the import: a database without the table (an older schema) just warms up
+ * on its own schedule.
+ */
+export async function requestWarmRestart(sql: Sql, log?: (message: string) => void): Promise<void> {
+	try {
+		await sql`UPDATE directory.cache_warmup SET restart_requested_at = now() WHERE id = 1`;
+	} catch (error) {
+		log?.(`Cache warm-up restart not requested: ${String(error)}`);
+	}
+}
+
 export async function drainOutbox(
 	sql: Sql,
 	options: { appUrl: string | null; secret: string | null; log?: (message: string) => void },
@@ -91,6 +104,7 @@ export async function drainOutbox(
 			return { pending, sent: 0, coarse: true, status: "unreachable", error: String(error) };
 		}
 		await sql`DELETE FROM directory.invalidation_outbox`;
+		await requestWarmRestart(sql, options.log);
 		return { pending, sent: pending, coarse: true, status: "done" };
 	}
 
@@ -113,6 +127,7 @@ export async function drainOutbox(
 				batch.map((row) => row.tag),
 			);
 		} catch (error) {
+			if (sent > 0) await requestWarmRestart(sql, options.log);
 			await sql`
 				UPDATE directory.invalidation_outbox
 				SET attempts = attempts + 1, last_error = ${String(error).slice(0, 500)}
@@ -129,5 +144,6 @@ export async function drainOutbox(
 		await sql`DELETE FROM directory.invalidation_outbox WHERE id = ANY (${ids}::bigint[])`;
 		sent += batch.length;
 	}
+	await requestWarmRestart(sql, options.log);
 	return { pending, sent, coarse: false, status: "done" };
 }
