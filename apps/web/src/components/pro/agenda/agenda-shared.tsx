@@ -573,7 +573,7 @@ export function EntryDialog({
 
 				{active && !isBlock ? (
 					confirming ? (
-						<div className="flex flex-col gap-4 border-t border-ink pt-4">
+						<div className="flex flex-col gap-4 border-t border-rule-soft pt-4">
 							<p className="type-subtitle text-ink">{t("cancelTitle")}</p>
 							<p className="text-body text-ink">{t("cancelBody")}</p>
 							<TextAreaField

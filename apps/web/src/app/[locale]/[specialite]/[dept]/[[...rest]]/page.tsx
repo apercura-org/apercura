@@ -181,7 +181,6 @@ export default async function LandingPage({ params }: Props) {
 	const { locale, data, department, place, placeSlug, listingSlug, page, pages } = resolved;
 	setRequestLocale(locale);
 	const t = await getTranslations({ locale, namespace: "Listing" });
-	const tSite = await getTranslations({ locale, namespace: "Site" });
 	const labels = await getTaxonomyLabels(locale);
 	const listing = labels.listing(listingSlug) ?? listingSlug;
 	const placeName = placeLabel(place);
@@ -240,10 +239,7 @@ export default async function LandingPage({ params }: Props) {
 					}),
 				])}
 			/>
-			<BookletPage
-				runningHead={tSite("runningHead")}
-				folio={pages > 1 ? tSite("folio", { number: page }) : undefined}
-			>
+			<BookletPage>
 				<div className="flex flex-col gap-6">
 					<Trail locale={locale} items={trail} />
 					<ListingTitle

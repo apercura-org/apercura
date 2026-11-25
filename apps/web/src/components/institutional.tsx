@@ -65,7 +65,7 @@ export function ProseSection({
 		<section
 			id={id}
 			aria-labelledby={headingId}
-			className="grid scroll-mt-6 gap-5 border-t border-ink pt-6 md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] md:gap-12"
+			className="grid scroll-mt-6 gap-5 border-t border-rule-soft pt-6 md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] md:gap-12"
 		>
 			<div className="flex flex-col gap-3">
 				<h2 id={headingId} className="type-title text-ink">

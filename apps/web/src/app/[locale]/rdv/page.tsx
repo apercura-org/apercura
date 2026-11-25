@@ -42,7 +42,7 @@ export default async function ManagePage({ params }: PageProps<"/[locale]/rdv">)
 	const t = await getTranslations({ locale, namespace: "booking.manage" });
 	return (
 		<PublicPage locale={locale} href="/rdv">
-			<BookletPage runningHead={t("runningHead")}>
+			<BookletPage>
 				<div className="flex max-w-3xl flex-col gap-8">
 					<h1 className="type-headline text-ink">{t("title")}</h1>
 					<Suspense fallback={<p className="text-body text-ink">{t("loading")}</p>}>

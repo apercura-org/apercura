@@ -92,7 +92,7 @@ export default async function GalleryPage({ params }: PageProps<"/[locale]/_ui">
 							<p className="max-w-[65ch] text-body text-ink-muted">{t("intro")}</p>
 						</div>
 					</div>
-					<BookletPage runningHead={t("title")}>
+					<BookletPage>
 						<section aria-labelledby="g-tokens" className="flex flex-col gap-6">
 							<SectionHeading id="g-tokens">{t("sections.tokens")}</SectionHeading>
 							<ul className="grid gap-x-6 gap-y-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -124,7 +124,7 @@ export default async function GalleryPage({ params }: PageProps<"/[locale]/_ui">
 							<p className="text-lead">{t("typeRoles.lead")}</p>
 							<p className="max-w-[65ch] text-body">{t("typeRoles.body")}</p>
 							<p className="text-meta text-ink-muted">{t("typeRoles.meta")}</p>
-							<p className="caps">{t("typeRoles.caps")}</p>
+							<p className="type-caption">{t("typeRoles.caps")}</p>
 							<p className="text-meta text-ink-muted">{t("typeRoles.display")}</p>
 						</section>
 
@@ -135,7 +135,7 @@ export default async function GalleryPage({ params }: PageProps<"/[locale]/_ui">
 
 						<section
 							aria-labelledby="g-domain"
-							className="flex flex-col gap-10 border-t border-ink pt-6"
+							className="flex flex-col gap-10 border-t border-rule-soft pt-6"
 						>
 							<SectionHeading id="g-domain">{t("sections.domain")}</SectionHeading>
 
@@ -281,7 +281,7 @@ export default async function GalleryPage({ params }: PageProps<"/[locale]/_ui">
 
 						<section
 							aria-labelledby="g-booklet"
-							className="flex flex-col gap-8 border-t border-ink pt-6"
+							className="flex flex-col gap-8 border-t border-rule-soft pt-6"
 						>
 							<SectionHeading id="g-booklet">{t("sections.booklet")}</SectionHeading>
 							<BookletSample locale={locale} variant="unclaimed" />

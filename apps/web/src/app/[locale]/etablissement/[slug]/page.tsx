@@ -167,7 +167,7 @@ export default async function EstablishmentPage({ params }: Props) {
 					}),
 				])}
 			/>
-			<BookletPage runningHead={tSite("runningHead")} folio={t("folio", { finess: page.finessEt })}>
+			<BookletPage>
 				<div className="flex flex-col gap-6">
 					<Trail locale={locale} items={trail} />
 					<ListingTitle
@@ -254,7 +254,7 @@ export default async function EstablishmentPage({ params }: Props) {
 						{sortedGroups.map((group) => (
 							<div key={group.slug} className="flex flex-col gap-2">
 								<h3 className="type-subtitle text-ink">{group.label}</h3>
-								<ul className="grid border-t border-ink sm:grid-cols-2 sm:gap-x-8 lg:grid-cols-3">
+								<ul className="grid border-t border-rule-soft sm:grid-cols-2 sm:gap-x-8 lg:grid-cols-3">
 									{group.items.map((practitioner) => (
 										<li key={practitioner.id} className="border-b border-rule-soft">
 											<Link

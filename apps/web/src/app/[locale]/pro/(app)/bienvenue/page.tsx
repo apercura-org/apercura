@@ -63,7 +63,7 @@ async function Onboarding({ locale, step }: { locale: Locale; step: Step }) {
 			lead={t("lead", { name: identity.name })}
 		>
 			<nav aria-label={t("stepsLabel")}>
-				<ol className="grid border-y border-ink sm:grid-cols-3">
+				<ol className="grid border-y border-rule-soft sm:grid-cols-3">
 					{STEPS.map((item, position) => (
 						<li
 							key={item}
@@ -110,7 +110,7 @@ async function Onboarding({ locale, step }: { locale: Locale; step: Step }) {
 						/>
 					</FieldList>
 					<h3 className="type-subtitle text-ink">{t("steps.check.sites")}</h3>
-					<ul className="flex flex-col border-t border-ink">
+					<ul className="flex flex-col border-t border-rule-soft">
 						{data.sites.map((site) => (
 							<li
 								key={site.activityId}

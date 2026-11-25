@@ -41,7 +41,6 @@ export default async function DirectoryPage({ params }: PageProps<"/[locale]/ann
 	const locale = localeOf((await params).locale);
 	setRequestLocale(locale);
 	const t = await getTranslations({ locale, namespace: "Directory" });
-	const tSite = await getTranslations({ locale, namespace: "Site" });
 	const index = await getDirectoryIndex();
 	const total = index.regions.reduce(
 		(sum, region) =>
@@ -83,7 +82,7 @@ export default async function DirectoryPage({ params }: PageProps<"/[locale]/ann
 					}),
 				])}
 			/>
-			<BookletPage runningHead={tSite("runningHead")}>
+			<BookletPage>
 				<div className="flex flex-col gap-6">
 					<Trail locale={locale} items={trail} />
 					<ListingTitle title={t("title")} lead={t("lead", { count: total })} />

@@ -20,7 +20,7 @@ const table = tableStyles();
 /** The page title block: a headline and a factual lead. */
 export function ListingTitle({ title, lead }: { title: string; lead: ReactNode }) {
 	return (
-		<div className="flex max-w-[65ch] flex-col gap-3 border-b border-ink pb-5">
+		<div className="flex max-w-[65ch] flex-col gap-3 border-b border-rule-soft pb-5">
 			<h1 className="type-headline text-ink">{title}</h1>
 			<p className="text-lead text-ink">{lead}</p>
 		</div>
@@ -232,7 +232,7 @@ export async function Pagination({
 	return (
 		<nav
 			aria-label={t("pagination.label")}
-			className="flex flex-wrap items-center justify-between gap-4 border-t border-ink pt-3"
+			className="flex flex-wrap items-center justify-between gap-4 border-t border-rule-soft pt-3"
 		>
 			{page > 1 ? (
 				<Link href={hrefOf(page - 1)} className={link} rel="prev">
@@ -241,7 +241,7 @@ export async function Pagination({
 			) : (
 				<span />
 			)}
-			<p className="caps tabular text-ink" aria-current="page">
+			<p className="type-caption tabular text-ink" aria-current="page">
 				{t("pagination.status", { page, pages })}
 			</p>
 			{page < pages ? (
@@ -265,7 +265,7 @@ export async function CountLinks({
 }) {
 	const t = await getTranslations({ locale, namespace: "Listing" });
 	return (
-		<ul className="grid border-t border-ink sm:grid-cols-2 lg:grid-cols-3 sm:gap-x-8">
+		<ul className="grid border-t border-rule-soft sm:grid-cols-2 lg:grid-cols-3 sm:gap-x-8">
 			{items.map((item) => (
 				<li
 					key={item.key}

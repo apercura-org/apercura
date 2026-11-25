@@ -39,7 +39,7 @@ export async function OwnerBlock({
 		return (
 			<section
 				aria-labelledby="claim-heading"
-				className="flex flex-col gap-2 border-t border-ink pt-4"
+				className="flex flex-col gap-2 border-t border-rule-soft pt-4"
 			>
 				<h2 id="claim-heading" className="type-subtitle text-ink">
 					{t("claimedHeading")}
@@ -54,7 +54,7 @@ export async function OwnerBlock({
 	return (
 		<section
 			aria-labelledby="claim-heading"
-			className="flex flex-col gap-3 border-t border-ink pt-4"
+			className="flex flex-col gap-3 border-t border-rule-soft pt-4"
 		>
 			<h2 id="claim-heading" className="type-subtitle text-ink">
 				{t("heading")}

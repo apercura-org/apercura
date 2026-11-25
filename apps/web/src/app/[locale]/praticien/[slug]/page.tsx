@@ -277,10 +277,7 @@ export default async function PractitionerPage({ params }: Props) {
 					}),
 				])}
 			/>
-			<BookletPage
-				runningHead={tSite("runningHead")}
-				folio={tSite("folioRpps", { rpps: payload.nationalId })}
-			>
+			<BookletPage>
 				<div className="flex flex-col gap-6">
 					<Trail locale={locale} items={trail} />
 					<PractitionerHeader
@@ -410,7 +407,7 @@ export default async function PractitionerPage({ params }: Props) {
 								place: page.commune.name,
 							})}
 						</h2>
-						<ul className="grid border-t border-ink sm:grid-cols-2 lg:grid-cols-3">
+						<ul className="grid border-t border-rule-soft sm:grid-cols-2 lg:grid-cols-3">
 							{page.neighbours.map((neighbour) => (
 								<li key={neighbour.id} className="border-b border-rule-soft">
 									<Link

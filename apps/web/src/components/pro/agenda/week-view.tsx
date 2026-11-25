@@ -5,6 +5,7 @@ import {
 	buttonStyles,
 	ChevronLeftIcon,
 	ChevronRightIcon,
+	cn,
 	EmptyState,
 	Notice,
 	SkeletonText,
@@ -268,17 +269,20 @@ export function WeekView({
 				<div className="flex flex-wrap items-end gap-4">
 					<CalendarSelect calendars={calendars} value={calendar.id} onChange={setCalendarId} />
 					<fieldset className="flex flex-col gap-1">
-						<legend className="font-display text-meta font-semibold text-ink font-stretch-semi-condensed">
+						<legend className="font-display text-meta font-semibold text-ink">
 							{t("viewLabel")}
 						</legend>
-						<div className="flex">
+						<div className="inline-flex gap-0.5 self-start rounded-field border border-field-edge bg-paper p-0.5">
 							{(["week", "day"] as const).map((option) => (
 								<Button
 									key={option}
-									intent={view === option ? "ink" : "quiet"}
+									intent="quiet"
 									aria-pressed={view === option}
 									onPress={() => setView(option)}
-									className={view === option ? "bg-ink text-paper hover:bg-ink" : undefined}
+									className={cn(
+										"min-h-10 rounded-[0.25rem] px-3 font-medium no-underline hover:bg-paper-shade",
+										view === option && "bg-paper-shade font-semibold ring-1 ring-ink",
+									)}
 								>
 									{option === "week" ? t("viewWeek") : t("viewDay")}
 								</Button>
@@ -328,7 +332,7 @@ export function WeekView({
 					<li className="flex items-center gap-2">
 						<span
 							aria-hidden="true"
-							className="inline-block size-4 rounded-field border border-dashed border-field-edge bg-paper-shade"
+							className="inline-block size-4 rounded-field border-2 border-dashed border-field-edge bg-paper-shade"
 						/>
 						{t("legend.held")}
 					</li>
@@ -339,7 +343,7 @@ export function WeekView({
 					<li className="flex items-center gap-2">
 						<span
 							aria-hidden="true"
-							className="closed-hatch inline-block size-4 rounded-field border border-rule-soft"
+							className="closed-hatch inline-block size-4 rounded-field border border-field-edge"
 						/>
 						{t("legend.closed")}
 					</li>

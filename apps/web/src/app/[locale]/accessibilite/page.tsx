@@ -50,7 +50,7 @@ export default async function AccessibilityPage({ params }: PageProps<"/[locale]
 				mark={tI("auditMark")}
 				note={facts.contactEmail.missing ? tI("placeholderNote") : null}
 			/>
-			<BookletPage runningHead={tSite("runningHead")}>
+			<BookletPage>
 				<PageGraph
 					locale={locale}
 					href={HREF}

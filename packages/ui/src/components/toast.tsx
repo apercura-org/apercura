@@ -23,10 +23,10 @@ export interface ToastContent {
 export const toastQueue = new RACToastQueue<ToastContent>({ maxVisibleToasts: 3 });
 
 const toast = tv({
-	base: "flex w-full items-start gap-3 border bg-paper p-4 text-ink outline-none data-focus-visible:outline-3 data-focus-visible:outline-solid data-focus-visible:outline-offset-2 data-focus-visible:outline-(--focus-ring) forced-colors:border-[CanvasText]",
+	base: "flex w-full items-start gap-3 rounded-panel border bg-paper p-4 text-ink shadow-overlay outline-none data-focus-visible:outline-3 data-focus-visible:outline-solid data-focus-visible:outline-offset-2 data-focus-visible:outline-(--focus-ring) forced-colors:border-[CanvasText]",
 	variants: {
 		tone: {
-			info: "border-ink",
+			info: "border-field-edge",
 			booked: "border-stamp",
 			error: "border-error",
 		},

@@ -42,15 +42,15 @@ export async function BookletSample({
 
 	return (
 		<article
-			className="border border-ink bg-paper"
+			className="rounded-panel border border-rule-soft bg-paper"
 			aria-label={`${practitioner.name}, ${t(`status.${variant}`)}`}
 		>
 			<div
 				className="flex items-baseline justify-between gap-4 border-b border-rule-soft px-5 py-2 sm:px-8"
 				aria-hidden="true"
 			>
-				<span className="caps text-ink">{tSite("runningHead")}</span>
-				<span className="caps tabular text-ink">
+				<span className="type-caption text-ink">{tSite("runningHead")}</span>
+				<span className="type-caption tabular text-ink">
 					{tSite("folioRpps", { rpps: practitioner.rpps })}
 				</span>
 			</div>

@@ -18,7 +18,7 @@ export function StepActions({
 }) {
 	const t = useTranslations("booking.panel");
 	return (
-		<div className="sticky -bottom-5 z-40 -mx-5 flex flex-col-reverse gap-3 border-t border-ink bg-paper px-5 py-3 sm:flex-row sm:items-center sm:justify-between [&>*]:w-full [&>*]:shrink [&>*]:whitespace-normal [&>*]:px-4 [&>*]:py-2.5 [&>*]:text-center [&>*]:text-balance [&>*]:leading-snug sm:[&>*]:w-auto sm:[&>*]:px-7">
+		<div className="sticky -bottom-5 z-40 -mx-5 flex flex-col-reverse gap-3 border-t border-rule-soft bg-paper px-5 py-3 sm:flex-row sm:items-center sm:justify-between [&>*]:w-full [&>*]:shrink [&>*]:whitespace-normal [&>*]:px-4 [&>*]:py-2.5 [&>*]:text-center [&>*]:text-balance [&>*]:leading-snug sm:[&>*]:w-auto sm:[&>*]:px-7">
 			{onBack ? (
 				<Button intent="ink" size="lg" onPress={onBack}>
 					{t("back")}

@@ -52,9 +52,11 @@ export function Calendar<T extends DateValue>({
 					<ChevronRightIcon className="size-5" />
 				</RACButton>
 			</header>
-			<CalendarGrid className="border-collapse border-y border-ink" weekdayStyle="short">
+			<CalendarGrid className="border-collapse border-y border-rule-soft" weekdayStyle="short">
 				<CalendarGridHeader className="border-b border-rule-soft">
-					{(day) => <CalendarHeaderCell className="caps h-9 text-center">{day}</CalendarHeaderCell>}
+					{(day) => (
+						<CalendarHeaderCell className="type-caption h-9 text-center">{day}</CalendarHeaderCell>
+					)}
 				</CalendarGridHeader>
 				<CalendarGridBody>
 					{(date) => (

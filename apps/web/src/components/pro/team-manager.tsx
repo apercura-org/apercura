@@ -96,10 +96,10 @@ export function TeamManager({
 				<h2 id="team-roles" className={sectionHeading}>
 					{t("roles.heading")}
 				</h2>
-				<dl className="grid max-w-3xl border-t border-ink sm:grid-cols-[10rem_1fr]">
+				<dl className="grid max-w-3xl border-t border-rule-soft sm:grid-cols-[10rem_1fr]">
 					{(["owner", "practitioner", "assistant"] as const).map((item) => (
 						<div key={item} className="contents">
-							<dt className="pt-3 font-display text-meta font-semibold text-ink font-stretch-semi-condensed sm:border-b sm:border-rule-soft sm:pb-3">
+							<dt className="pt-3 font-display text-meta font-semibold text-ink sm:border-b sm:border-rule-soft sm:pb-3">
 								{tRoles(item)}
 							</dt>
 							<dd className="border-b border-rule-soft pb-3 text-body text-ink sm:pt-3">

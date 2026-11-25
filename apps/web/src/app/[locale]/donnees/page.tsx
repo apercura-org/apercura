@@ -33,7 +33,7 @@ const table = tableStyles();
 /** A table cell printed as a stacked row on narrow screens. */
 const stacked = "max-md:block max-md:px-0 max-md:py-1";
 /** The column name above a stacked value (the header row is visually hidden there). */
-const cellLabel = "caps block text-ink md:hidden";
+const cellLabel = "type-caption block text-ink md:hidden";
 
 type SourceRow = {
 	key: RegistryFile | "geo" | "geocoder" | "map";
@@ -78,7 +78,7 @@ export default async function DataPage({ params }: PageProps<"/[locale]/donnees"
 	return (
 		<PublicPage locale={locale} href={HREF}>
 			<InstitutionalCover title={t("title")} lead={t("lead")} />
-			<BookletPage runningHead={tSite("runningHead")}>
+			<BookletPage>
 				<PageGraph
 					locale={locale}
 					href={HREF}
@@ -116,7 +116,7 @@ export default async function DataPage({ params }: PageProps<"/[locale]/donnees"
 
 				<section
 					aria-labelledby="sources-heading"
-					className="flex min-w-0 flex-col gap-5 border-t border-ink pt-6"
+					className="flex min-w-0 flex-col gap-5 border-t border-rule-soft pt-6"
 				>
 					<div className="flex max-w-[65ch] flex-col gap-2">
 						<h2 id="sources-heading" className="type-title text-ink">
@@ -195,7 +195,7 @@ export default async function DataPage({ params }: PageProps<"/[locale]/donnees"
 						</table>
 					</div>
 					<p className="max-w-[65ch] border-t border-rule-soft pt-3 text-meta text-ink-muted">
-						<span className="caps me-1.5 text-ink">{t("sources.sourceLabel")}</span>
+						<span className="type-caption me-1.5 text-ink">{t("sources.sourceLabel")}</span>
 						{t("sources.attribution")}{" "}
 						<ExternalLink href={LINKS.licenceOuverte} externalLabel={external}>
 							{t("sources.licenceLink")}

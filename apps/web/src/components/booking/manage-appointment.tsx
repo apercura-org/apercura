@@ -242,7 +242,7 @@ function Appointment({
 
 			<section aria-labelledby="appointment-status" className="flex flex-col gap-4">
 				<div className="flex flex-wrap items-center gap-3">
-					<h2 id="appointment-status" className="caps text-ink">
+					<h2 id="appointment-status" className="type-caption text-ink">
 						{t("status.label")}
 					</h2>
 					{/* Stamp Law: a confirmed appointment is booked; every other state is ink. */}
@@ -375,7 +375,7 @@ function Appointment({
 								value={newSlot}
 								onChange={setNewSlot}
 							/>
-							<div className="flex flex-wrap-reverse items-center justify-between gap-3 border-t border-ink pt-3">
+							<div className="flex flex-wrap-reverse items-center justify-between gap-3 border-t border-rule-soft pt-3">
 								<Button
 									intent="ink"
 									size="lg"

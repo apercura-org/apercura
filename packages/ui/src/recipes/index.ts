@@ -14,7 +14,7 @@ export const focusRing =
 export const buttonStyles = tv({
 	base: [
 		"relative inline-flex max-w-full shrink-0 cursor-pointer select-none items-center justify-center gap-2 rounded-field",
-		"font-display font-semibold tracking-[0.005em] font-stretch-normal no-underline",
+		"font-display font-semibold tracking-[-0.003em] no-underline",
 		"transition-[background-color,color,transform,border-color] duration-150 ease-out",
 		"active:translate-y-px data-pressed:translate-y-px",
 		"disabled:cursor-not-allowed data-disabled:cursor-not-allowed data-disabled:translate-y-0",
@@ -23,17 +23,16 @@ export const buttonStyles = tv({
 	],
 	variants: {
 		intent: {
-			/** The stamp: primary action. Muted violet fill, a hairline white inner frame. */
+			/** The accent: the primary action. A solid fill, its label in the ground's colour. */
 			stamp: [
-				"bg-stamp text-paper shadow-[inset_0_0_0_3px_var(--color-stamp),inset_0_0_0_4px_var(--color-paper)]",
-				"hover:bg-stamp-strong hover:shadow-[inset_0_0_0_3px_var(--color-stamp-strong),inset_0_0_0_4px_var(--color-paper)]",
-				"data-pressed:bg-stamp-strong",
-				// Disabled: a paper slip with a disabled-ink edge, so it still reads as a button on paper and on the shade.
-				"data-disabled:bg-paper data-disabled:text-ink-disabled data-disabled:shadow-[inset_0_0_0_1px_var(--color-ink-disabled)]",
+				"border border-stamp bg-stamp text-paper",
+				"hover:border-stamp-strong hover:bg-stamp-strong data-pressed:border-stamp-strong data-pressed:bg-stamp-strong",
+				// Disabled: the ground with a disabled-ink edge, so it still reads as a button on paper and on the shade.
+				"data-disabled:border-ink-disabled data-disabled:bg-paper data-disabled:text-ink-disabled",
 			],
-			/** Printed outline: secondary action. Its labels can be long ("Call 01 00 00 00 00"). */
+			/** Outline: the secondary action. Its labels can be long ("Call 01 00 00 00 00"). */
 			ink: [
-				"border border-ink bg-paper text-ink text-start hover:bg-paper-shade data-pressed:bg-paper-shade",
+				"border border-field-edge bg-paper text-ink text-start hover:border-ink hover:bg-paper-shade data-pressed:bg-paper-shade",
 				"data-disabled:border-ink-disabled data-disabled:text-ink-disabled data-disabled:bg-paper",
 			],
 			/** Text-only action inside dense rows. */
@@ -43,8 +42,8 @@ export const buttonStyles = tv({
 			],
 		},
 		size: {
-			md: "min-h-11 px-5 text-meta",
-			lg: "min-h-14 px-7 text-body",
+			md: "min-h-11 px-4.5 text-meta",
+			lg: "min-h-13 px-6 text-body",
 			icon: "size-11 p-0 text-meta",
 		},
 	},
@@ -54,7 +53,7 @@ export const buttonStyles = tv({
 
 export const linkStyles = tv({
 	base: [
-		"cursor-pointer rounded-[1px] underline decoration-1 underline-offset-[0.2em] transition-[text-decoration-thickness] duration-100",
+		"cursor-pointer rounded-[2px] underline decoration-1 underline-offset-[0.2em] transition-[text-decoration-thickness] duration-100",
 		"hover:decoration-2 data-hovered:decoration-2",
 		focusRing,
 	],
@@ -71,7 +70,7 @@ export const linkStyles = tv({
 export const fieldStyles = tv({
 	slots: {
 		root: "group/field flex flex-col gap-1.5",
-		label: "font-display text-meta font-medium text-ink font-stretch-semi-condensed",
+		label: "font-display text-meta font-semibold text-ink",
 		box: [
 			"flex min-h-12 w-full items-center overflow-hidden rounded-field border border-field-edge bg-paper text-ink",
 			"transition-colors duration-150 hover:border-ink",
@@ -89,10 +88,10 @@ export const fieldStyles = tv({
 	},
 });
 
-/** Popover paper slip: border-only elevation, as print has no shadows. */
+/** Popover: a hairline-bordered panel with the one overlay shadow. */
 export const popoverStyles = tv({
 	base: [
-		"min-w-(--trigger-width) overflow-auto rounded-field border border-ink bg-paper text-ink outline-none",
+		"min-w-(--trigger-width) overflow-auto rounded-field border border-rule-soft bg-paper text-ink shadow-overlay outline-none",
 		"data-entering:animate-slip-in",
 		"forced-colors:border-[CanvasText]",
 	],
@@ -109,29 +108,28 @@ export const listBoxItemStyles = tv({
 });
 
 export const badgeStyles = tv({
-	base: "inline-flex min-h-7 items-center gap-1.5 rounded-field px-2.5 py-0.5 font-display text-folio font-semibold uppercase tracking-[0.045em] font-stretch-normal",
+	base: "type-caption inline-flex min-h-7 items-center gap-1.5 rounded-full border px-3 py-0.5",
 	variants: {
 		tone: {
-			/** Neutral printed mark: unclaimed, not provided, informational. */
-			ink: "border border-field-edge bg-paper text-ink",
-			/** Stamped mark, double-edged: verified page, booked slot. */
-			stamp:
-				"border border-stamp bg-stamp-tint text-stamp shadow-[inset_0_0_0_2px_var(--color-stamp-tint),inset_0_0_0_3px_var(--color-stamp)]",
+			/** Neutral mark: unclaimed, not provided, informational. */
+			ink: "border-field-edge bg-paper-shade text-ink",
+			/** Accent mark: verified page, booked slot. */
+			stamp: "border-stamp bg-stamp-tint text-stamp",
 			/** Error mark. */
-			error: "border-2 border-error bg-error-tint text-error",
+			error: "border-error bg-error-tint text-error",
 		},
 	},
 	defaultVariants: { tone: "ink" },
 });
 
-/** Ruled table: strong top and bottom rules, hairlines between rows, caps headers. */
+/** Ruled table: a header row over a hairline, hairlines between rows, quiet sentence-case headers. */
 export const tableStyles = tv({
 	slots: {
-		table: "w-full border-collapse border-y border-ink text-left text-body",
+		table: "w-full border-collapse border-b border-rule-soft text-left text-body",
 		caption: "type-title pb-3 text-left",
-		head: "border-b border-ink",
+		head: "border-b border-field-edge",
 		column:
-			"caps px-3 py-2.5 text-left align-bottom text-ink first:pl-0 last:pr-0 outline-none data-focus-visible:outline-3 data-focus-visible:outline-solid data-focus-visible:-outline-offset-3 data-focus-visible:outline-(--focus-ring)",
+			"type-caption px-3 py-2.5 text-left align-bottom text-ink-muted first:pl-0 last:pr-0 outline-none data-focus-visible:outline-3 data-focus-visible:outline-solid data-focus-visible:-outline-offset-3 data-focus-visible:outline-(--focus-ring)",
 		row: "border-b border-rule-soft last:border-b-0 outline-none data-focus-visible:outline-3 data-focus-visible:outline-solid data-focus-visible:-outline-offset-3 data-focus-visible:outline-(--focus-ring) data-hovered:bg-paper-shade data-selected:bg-paper-shade",
 		cell: "px-3 py-3 align-top first:pl-0 last:pr-0",
 	},

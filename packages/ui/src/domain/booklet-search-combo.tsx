@@ -59,8 +59,8 @@ export interface BookletComboFieldProps {
 }
 
 const cell = cn(
-	"group relative flex flex-1 flex-col px-4 pt-2.5 pb-1.5 text-ink",
-	"has-[input:focus-visible]:outline-3 has-[input:focus-visible]:outline-solid has-[input:focus-visible]:outline-offset-[-6px] has-[input:focus-visible]:outline-stamp",
+	"group relative flex flex-1 flex-col rounded-field px-3.5 pt-2 pb-1 text-ink",
+	"has-[input:focus-visible]:outline-3 has-[input:focus-visible]:outline-solid has-[input:focus-visible]:outline-offset-0 has-[input:focus-visible]:outline-stamp",
 );
 const input =
 	"min-h-11 w-full text-ellipsis bg-transparent py-1 text-body text-ink sm:text-lead outline-none placeholder:text-ink-muted [&::-webkit-search-cancel-button]:hidden";
@@ -114,7 +114,7 @@ export function BookletComboField({
 			allowsEmptyCollection={emptyStatus !== undefined}
 			className={cell}
 		>
-			<Label className="caps text-ink">{label}</Label>
+			<Label className="type-caption text-ink-muted">{label}</Label>
 			<Input
 				type="search"
 				placeholder={hint}
@@ -137,7 +137,7 @@ export function BookletComboField({
 				>
 					{(section) => (
 						<ListBoxSection id={section.id} className="border-b border-rule-soft last:border-b-0">
-							<Header className="caps border-b border-rule-soft bg-paper-shade px-3.5 py-1.5 text-ink">
+							<Header className="type-caption border-b border-rule-soft bg-paper-shade px-3.5 py-1.5 text-ink-muted">
 								{section.title}
 							</Header>
 							<Collection items={section.options}>
@@ -183,8 +183,8 @@ export interface BookletSearchFrameProps {
 }
 
 /**
- * The booklet search as a row of form cells with a stamp at the end, holding
- * interactive cells. Same printed look and GET contract as `BookletSearch`.
+ * The search as one framed row of cells with the accent button at the end, holding
+ * interactive cells. Same look and GET contract as `BookletSearch`.
  */
 export function BookletSearchFrame({
 	action,
@@ -201,13 +201,13 @@ export function BookletSearchFrame({
 			id={formId}
 			action={action}
 			method="get"
-			className="flex flex-col gap-3 md:flex-row md:gap-0"
+			className="flex flex-col gap-1.5 rounded-panel border border-field-edge bg-paper p-1.5 md:flex-row"
 		>
 			<div
 				className={cn(
-					"flex flex-1 flex-col border border-field-edge bg-paper md:flex-row",
+					"flex flex-1 flex-col md:flex-row",
 					// Rules between the cells only: React Aria puts a <template> before each cell.
-					"[&>div~div]:border-t [&>div~div]:border-field-edge md:[&>div~div]:border-t-0 md:[&>div~div]:border-s",
+					"[&>div~div]:border-t [&>div~div]:border-rule-soft md:[&>div~div]:border-t-0 md:[&>div~div]:border-s",
 				)}
 			>
 				{children}
@@ -217,7 +217,7 @@ export function BookletSearchFrame({
 				className={buttonStyles({
 					intent: "stamp",
 					size: "lg",
-					className: "min-h-16 text-body md:min-w-44",
+					className: "min-h-14 text-body md:min-w-40",
 				})}
 			>
 				<SearchIcon className="size-5" />

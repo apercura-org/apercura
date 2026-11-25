@@ -60,7 +60,7 @@ export default async function PrivacyPage({ params }: PageProps<"/[locale]/confi
 				mark={LEGAL_TEXTS_REVIEWED ? undefined : tI("legalDraftMark")}
 				note={anyMissing ? tI("placeholderNote") : null}
 			/>
-			<BookletPage runningHead={tSite("runningHead")}>
+			<BookletPage>
 				<PageGraph
 					locale={locale}
 					href={HREF}

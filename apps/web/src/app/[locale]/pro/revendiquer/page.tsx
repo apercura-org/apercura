@@ -171,7 +171,7 @@ async function Start({ locale, rpps }: { locale: Locale; rpps: string | null }) 
 				<h2 id="claim-how" className={sectionHeading}>
 					{t("start.howHeading")}
 				</h2>
-				<ul className="flex flex-col gap-3 border-t border-ink pt-4">
+				<ul className="flex flex-col gap-3 border-t border-rule-soft pt-4">
 					{methods.map((method) => (
 						<li key={method} className="flex flex-col gap-1 border-b border-rule-soft pb-3">
 							<p className="type-subtitle text-ink">{t(`methods.${method}.title`)}</p>

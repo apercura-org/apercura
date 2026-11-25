@@ -103,7 +103,7 @@ test("home search, results and an unclaimed practitioner page read in order", as
 		"article, Dr Exemple Martin, Exemple fictif",
 		"Page non réclamée",
 		"heading, Ce à quoi Apercura s’engage, level 2",
-		"table, Ce à quoi Apercura s’engage",
+		"heading, Gratuit, level 3",
 		"heading, Construit à partir du registre national, level 2",
 		"heading, Vous êtes professionnel de santé ?, level 2",
 		"end of main",

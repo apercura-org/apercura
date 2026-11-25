@@ -84,7 +84,6 @@ export default async function SpecialtyHub({ params }: Props) {
 	const { locale, listingSlug, data, href } = await resolve(params);
 	setRequestLocale(locale);
 	const t = await getTranslations({ locale, namespace: "Listing" });
-	const tSite = await getTranslations({ locale, namespace: "Site" });
 	const labels = await getTaxonomyLabels(locale);
 	const listing = labels.listing(listingSlug) ?? listingSlug;
 	const count = data.landing.practitionerCount;
@@ -122,7 +121,7 @@ export default async function SpecialtyHub({ params }: Props) {
 					}),
 				])}
 			/>
-			<BookletPage runningHead={tSite("runningHead")}>
+			<BookletPage>
 				<div className="flex flex-col gap-6">
 					<Trail locale={locale} items={trail} />
 					<ListingTitle title={title} lead={t("hubLead", { count, listing })} />

@@ -13,7 +13,7 @@ import { ProHeaderMenu } from "./pro-header-menu";
 import { SignOutButton } from "./sign-out-button";
 
 const navLink =
-	"inline-flex min-h-11 items-center rounded-field px-1 text-meta text-ink underline decoration-1 underline-offset-[0.25em] hover:decoration-2 aria-[current=page]:font-semibold aria-[current=page]:decoration-2";
+	"inline-flex min-h-11 items-center rounded-field px-2.5 text-meta font-medium text-ink no-underline hover:bg-paper-shade aria-[current=page]:bg-paper-shade aria-[current=page]:font-semibold aria-[current=page]:underline aria-[current=page]:decoration-2 aria-[current=page]:underline-offset-[0.35em]";
 
 interface ProShellProps {
 	locale: Locale;
@@ -26,7 +26,7 @@ interface ProShellProps {
 	children: ReactNode;
 }
 
-/** The signed-in practitioner space: running head with navigation and sign out, then the page. */
+/** The signed-in practitioner space: the header with navigation and sign out, then the page. */
 export async function ProShell({
 	locale,
 	current,
@@ -69,18 +69,18 @@ export async function ProShell({
 			<TRPCReactProvider>
 				<div>
 					<header className="surface-paper border-b border-rule-soft">
-						<div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-x-6 gap-y-2 px-5 py-1.5 sm:px-8">
+						<div className="mx-auto flex min-h-16 max-w-6xl flex-wrap items-center justify-between gap-x-6 gap-y-2 px-5 py-2 sm:px-8">
 							<Link
 								href="/"
 								aria-label={t("app.homeLink")}
-								className="type-wordmark inline-flex min-h-11 items-center text-ink no-underline"
+								className="type-wordmark -ms-1 inline-flex min-h-11 items-center rounded-field px-1 text-ink no-underline"
 							>
 								{t("email.wordmark")}
 							</Link>
 							<ProHeaderMenu label={t("app.nav.menu")}>
 								{showNav ? (
 									<nav aria-label={t("app.nav.label")}>
-										<ul className="flex flex-col items-start gap-x-5 sm:flex-row sm:flex-wrap sm:items-center">
+										<ul className="flex flex-col items-start gap-x-1 sm:flex-row sm:flex-wrap sm:items-center">
 											{items.map((item) => (
 												<li key={item.href}>
 													<Link
@@ -102,18 +102,16 @@ export async function ProShell({
 				</div>
 				<main id="main" tabIndex={-1} className="flex-1 outline-none">
 					<div className="surface-shade border-b border-rule-soft">
-						<div className="mx-auto flex w-full max-w-6xl flex-col gap-3 px-5 pt-10 pb-10 sm:px-8">
+						<div className="mx-auto flex w-full max-w-6xl flex-col gap-3 px-5 pt-10 pb-10 sm:px-8 sm:pt-12">
 							<h1 className="max-w-[20ch] type-headline">{title}</h1>
-							{lead ? <p className="max-w-[58ch] text-lead text-ink">{lead}</p> : null}
+							{lead ? (
+								<p className="max-w-[58ch] text-lead text-ink-muted [overflow-wrap:anywhere]">
+									{lead}
+								</p>
+							) : null}
 						</div>
 					</div>
-					<BookletPage
-						runningHead={
-							current.startsWith("/pro/admin") ? t("app.adminRunningHead") : t("runningHead")
-						}
-					>
-						{children}
-					</BookletPage>
+					<BookletPage>{children}</BookletPage>
 				</main>
 				<SiteFooter locale={locale} />
 			</TRPCReactProvider>

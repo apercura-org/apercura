@@ -1,11 +1,4 @@
-import {
-	BrandSeal,
-	buttonStyles,
-	FieldList,
-	FieldRow,
-	ProvenanceNote,
-	tableStyles,
-} from "@apercura/ui";
+import { buttonStyles, FieldList, FieldRow, ProvenanceNote } from "@apercura/ui";
 import type { Metadata } from "next";
 import { hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
@@ -31,8 +24,6 @@ const REGISTRY = {
 	withAddress: 311_000,
 } as const;
 
-const table = tableStyles();
-
 export async function generateMetadata({ params }: PageProps<"/[locale]">): Promise<Metadata> {
 	const { locale: requested } = await params;
 	const locale = hasLocale(routing.locales, requested) ? requested : routing.defaultLocale;
@@ -53,7 +44,6 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
 	setRequestLocale(locale);
 
 	const t = await getTranslations({ locale, namespace: "HomePage" });
-	const tSite = await getTranslations({ locale, namespace: "Site" });
 
 	const tMeta = await getTranslations({ locale, namespace: "Metadata" });
 
@@ -66,25 +56,21 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
 				description={tMeta("description")}
 				extra={apercuraSiteNodes()}
 			/>
-			<SiteHeader locale={locale} href="/" showWordmark={false} />
+			<SiteHeader locale={locale} href="/" />
 			<main id="main" tabIndex={-1} className="flex-1 outline-none">
-				<div className="surface-shade flex min-h-[calc(60svh-3.5rem)] flex-col border-b border-rule-soft">
-					<div className="mx-auto flex w-full max-w-6xl flex-1 flex-col justify-end gap-7 px-5 pt-10 pb-10 sm:px-8 sm:pb-14">
-						<div className="flex items-end justify-between gap-10">
-							<div className="flex flex-col gap-4">
-								<h1 className="type-display">{t("title")}</h1>
-								<p className="max-w-[44ch] text-lead text-ink sm:text-[1.375rem] sm:leading-snug">
-									{t("hook")}
-								</p>
-							</div>
-							{/* Apercura's own seal (brand seed, never an RPPS), engraved in graphite line work. */}
-							<BrandSeal size={168} className="hidden shrink-0 text-ink md:block" />
+				<div className="surface-shade border-b border-rule-soft">
+					<div className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-5 pt-12 pb-12 sm:px-8 sm:pt-20 sm:pb-16">
+						<div className="flex max-w-3xl flex-col gap-4">
+							<h1 className="type-display">{t("title")}</h1>
+							<p className="max-w-[46ch] text-lead text-ink-muted sm:text-[1.375rem] sm:leading-snug">
+								{t("hook")}
+							</p>
 						</div>
 						<HomeSearch locale={locale} idPrefix="home-search" />
 					</div>
 				</div>
 
-				<BookletPage runningHead={tSite("runningHead")} folio={tSite("folio", { number: 1 })}>
+				<BookletPage>
 					<section aria-labelledby="specimen-heading" className="flex flex-col gap-5">
 						<div className="flex max-w-[65ch] flex-col gap-2">
 							<h2 id="specimen-heading" className="type-title text-ink">
@@ -99,39 +85,21 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
 						<h2 id="pillars-heading" className="type-title text-ink">
 							{t("pillarsHeading")}
 						</h2>
-						<table className={table.table()} aria-labelledby="pillars-heading">
-							<thead className={table.head()}>
-								<tr>
-									<th scope="col" className={table.column({ className: "w-16 sm:w-24" })}>
-										{t("columns.number")}
-									</th>
-									<th scope="col" className={table.column()}>
-										{t("columns.commitment")}
-									</th>
-								</tr>
-							</thead>
-							<tbody>
-								{getPillars(serverEnv.PUBLIC_HDS_HOST).map((pillar, index) => (
-									<tr key={pillar.key} className={table.row()}>
-										<td
-											className={table.cell({
-												className: "py-5 font-body text-title font-medium text-ink-muted tabular",
-											})}
-										>
-											{index + 1}
-										</td>
-										<td className={table.cell({ className: "py-5" })}>
-											<p className="type-subtitle text-ink">{t(`pillars.${pillar.key}.title`)}</p>
-											<p className="mt-1 max-w-[65ch] text-body text-ink">
-												{pillar.key === "hostedInFrance"
-													? t("pillars.hostedInFrance.description", { host: pillar.host })
-													: t(`pillars.${pillar.key}.description`)}
-											</p>
-										</td>
-									</tr>
-								))}
-							</tbody>
-						</table>
+						<ol className="grid gap-x-8 gap-y-6 sm:grid-cols-2 lg:grid-cols-4">
+							{getPillars(serverEnv.PUBLIC_HDS_HOST).map((pillar) => (
+								<li
+									key={pillar.key}
+									className="flex flex-col gap-2 border-t border-field-edge pt-4"
+								>
+									<h3 className="type-subtitle text-ink">{t(`pillars.${pillar.key}.title`)}</h3>
+									<p className="text-body text-ink-muted">
+										{pillar.key === "hostedInFrance"
+											? t("pillars.hostedInFrance.description", { host: pillar.host })
+											: t(`pillars.${pillar.key}.description`)}
+									</p>
+								</li>
+							))}
+						</ol>
 					</section>
 
 					<section
@@ -195,7 +163,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
 
 					<section
 						aria-labelledby="pro-heading"
-						className="surface-shade flex flex-col gap-4 px-5 py-6 sm:flex-row sm:items-center sm:justify-between sm:px-8"
+						className="surface-shade flex flex-col gap-4 rounded-panel border border-rule-soft px-5 py-6 sm:flex-row sm:items-center sm:justify-between sm:px-8"
 					>
 						<div className="flex flex-col gap-1">
 							<h2 id="pro-heading" className="type-subtitle">

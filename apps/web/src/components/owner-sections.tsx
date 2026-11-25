@@ -25,7 +25,7 @@ export function PresentationSection({ bio, headingId }: { bio: string | null; he
 			<h2 id={headingId} className={sectionHeading}>
 				{t("presentationHeading")}
 			</h2>
-			<div className="flex max-w-[65ch] flex-col gap-3 border-t border-ink pt-4">
+			<div className="flex max-w-[65ch] flex-col gap-3 border-t border-rule-soft pt-4">
 				{paragraphs.map((paragraph, index) => (
 					// Paragraph order is the text's own order; index keys are stable here.
 					// biome-ignore lint/suspicious/noArrayIndexKey: static text split
