@@ -1,66 +1,51 @@
 import { getTranslations } from "next-intl/server";
 import { type Href, Link } from "~/i18n/navigation";
 import { type Locale, routing } from "~/i18n/routing";
-import { LocaleSwitchLink } from "./locale-switch-link";
+import { LanguagePicker } from "./language-picker";
 
 interface SiteHeaderProps {
 	locale: Locale;
 	/** The current page, so the language switch stays on it (with its query and, on `/rdv`, its fragment). */
 	href: Href;
-	/** The home page prints the wordmark large in its opening; other pages print it here. */
-	showWordmark?: boolean;
 }
 
 const navLink =
-	"inline-flex min-h-11 items-center rounded-field px-1 text-meta text-ink underline decoration-1 underline-offset-[0.25em] hover:decoration-2";
+	"inline-flex min-h-11 items-center rounded-field px-2.5 text-meta font-medium text-ink no-underline hover:bg-paper-shade";
 
-/** Running head on white paper, closed by a hairline: wordmark, navigation, language. */
-export async function SiteHeader({ locale, href, showWordmark = true }: SiteHeaderProps) {
+/** The header on white, closed by a hairline: wordmark, navigation, language. */
+export async function SiteHeader({ locale, href }: SiteHeaderProps) {
 	const t = await getTranslations({ locale, namespace: "Site" });
 	const tLocale = await getTranslations({ locale, namespace: "LocaleSwitcher" });
 	const isPro = typeof href === "string" && (href === "/pro" || href.startsWith("/pro/"));
+	const names = Object.fromEntries(
+		routing.locales.map((other) => [other, tLocale("locale", { locale: other })]),
+	) as Record<Locale, string>;
 
 	return (
 		<header className="surface-paper border-b border-rule-soft">
-			<div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-x-6 gap-y-1 px-5 py-1.5 sm:px-8">
-				{showWordmark ? (
-					<Link
-						href="/"
-						aria-label={t("homeLink")}
-						className="type-wordmark inline-flex min-h-11 items-center text-ink no-underline"
-					>
-						{t("wordmark")}
-					</Link>
-				) : (
-					// The home page prints the wordmark in its opening; the running head lives on the booklet page.
-					<span />
-				)}
-				<div className="flex flex-wrap items-center gap-x-5">
+			<div className="mx-auto flex min-h-16 max-w-6xl flex-wrap items-center justify-between gap-x-4 gap-y-1 px-5 py-2 sm:px-8">
+				<Link
+					href="/"
+					aria-label={t("homeLink")}
+					className="type-wordmark -ms-1 inline-flex min-h-11 items-center rounded-field px-1 text-ink no-underline"
+				>
+					{t("wordmark")}
+				</Link>
+				<div className="flex flex-wrap items-center gap-x-2">
 					<nav aria-label={t("navLabel")}>
 						<Link href={isPro ? "/" : "/pro"} className={navLink}>
 							{isPro ? t("navPatients") : t("navPro")}
 						</Link>
 					</nav>
-					<nav aria-label={tLocale("label")}>
-						<ul className="flex flex-wrap items-center gap-x-1">
-							{routing.locales.map((other) => (
-								<li key={other}>
-									<LocaleSwitchLink
-										href={href}
-										locale={other}
-										// The appointment page keeps its token, which lives in the fragment.
-										keepHash={href === "/rdv"}
-										hrefLang={other}
-										lang={other}
-										aria-current={other === locale ? "true" : undefined}
-										className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-field px-2 text-meta text-ink no-underline hover:underline aria-[current]:font-semibold aria-[current]:underline aria-[current]:decoration-2 aria-[current]:underline-offset-[0.25em]"
-									>
-										{tLocale("locale", { locale: other })}
-									</LocaleSwitchLink>
-								</li>
-							))}
-						</ul>
-					</nav>
+					<LanguagePicker
+						locale={locale}
+						href={href}
+						label={tLocale("label")}
+						currentLabel={tLocale("current", { language: names[locale] })}
+						names={names}
+						// The appointment page keeps its token, which lives in the fragment.
+						keepHash={href === "/rdv"}
+					/>
 				</div>
 			</div>
 		</header>

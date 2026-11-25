@@ -83,6 +83,8 @@ for (const { locale, name, messages, practitioner } of LOCALES) {
 		test(`the language switch lists the five languages and leaves ${name}`, async ({ page }) => {
 			await page.goto(practitioner);
 			const nav = page.getByRole("navigation", { name: messages.LocaleSwitcher.label });
+			// A disclosure naming the current language opens the list.
+			await nav.locator("summary").click();
 			await expect(nav.getByRole("link")).toHaveText(SWITCHER);
 			await expect(nav.getByRole("link", { name })).toHaveAttribute("aria-current", "true");
 			await expect(nav.getByRole("link", { name })).toHaveAttribute("lang", locale);
@@ -98,6 +100,7 @@ test("the language switch reaches every locale from French and keeps the search"
 }) => {
 	await page.goto("/fr/recherche?quoi=Exemple&ou=Lyon");
 	const nav = page.getByRole("navigation", { name: "Langue" });
+	await nav.locator("summary").click();
 	await expect(nav.getByRole("link")).toHaveText(SWITCHER);
 	const targets = {
 		Deutsch: "/fr-de/suche",
@@ -119,6 +122,7 @@ test("the language switch on /rdv keeps the token in every locale", async ({ pag
 	const token = "A".repeat(43);
 	await page.goto(`/fr/rdv#t=${token}`);
 	const nav = page.getByRole("navigation", { name: "Langue" });
+	await nav.locator("summary").click();
 	for (const { locale, name } of LOCALES) {
 		await expect(nav.getByRole("link", { name })).toHaveAttribute(
 			"href",
