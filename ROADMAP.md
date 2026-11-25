@@ -100,6 +100,14 @@ test, reflow at 390 px and a Lighthouse CI score of 100. What is left is manual:
     [`docs/reference/medical-systems-by-country.md`](./docs/reference/medical-systems-by-country.md).
 12. **Teleconsultation**, with a video provider that meets the same hosting requirements as the
     rest of the booking data.
+13. **Home visits, next steps.** Self-employed nurses already book home visits
+    ([#75](https://github.com/maxgfr/apercura/issues/75)): a service area of communes, the
+    patient's address encrypted and shown to the practice only, a fixed travel time after each
+    visit. Still to come:
+    - **Travel time from the distance** between consecutive visits (commune centres first, then
+      the practice's own route), instead of one fixed buffer;
+    - **Other professions that visit patients**: physiotherapists, midwives and general
+      practitioners, with their own presets.
 
 ## Practitioner tools
 
