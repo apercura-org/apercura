@@ -7,12 +7,18 @@ import createNextIntlPlugin from "next-intl/plugin";
 import { INDEXABLE_LOCALES, LOCALE_PREFIXES, LOCALE_SEGMENTS } from "./src/i18n/locales";
 import { routing } from "./src/i18n/routing";
 import { API_CONTENT_SECURITY_POLICY, baseSecurityHeaders } from "./src/lib/security-headers";
+import { OG_FONT_FILES } from "./src/server/og/font-files";
 
 const nextConfig: NextConfig = {
 	cacheComponents: true,
 	partialPrefetching: true,
 	output: "standalone",
 	outputFileTracingRoot: monorepoRoot,
+	// The Open Graph images read their fonts with fs at request time, which tracing cannot
+	// follow: ship those exact files with the routes that draw them.
+	outputFileTracingIncludes: {
+		"/og/**": OG_FONT_FILES.map((file) => `./${file}`),
+	},
 	reactStrictMode: true,
 	poweredByHeader: false,
 	transpilePackages: ["@apercura/core", "@apercura/db", "@apercura/ui"],
