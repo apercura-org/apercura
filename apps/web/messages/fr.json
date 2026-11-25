@@ -769,7 +769,7 @@
 			"heading": "S’opposer à une page",
 			"body": [
 				"En vertu de l’article 21 du RGPD, un professionnel peut s’opposer à la publication de sa page. Apercura publie l’annuaire sur le fondement de l’intérêt légitime : informer le public à partir de données publiques.",
-				"Une page non revendiquée sera masquée dès réception de la demande, puis supprimée après une vérification légère de la demande. Une page revendiquée peut être retirée à tout moment par son titulaire. Une page retirée ne revient pas au prochain import."
+				"Une page non revendiquée sera masquée dès réception de la demande, puis supprimée après une vérification légère de la demande. Une page revendiquée peut être retirée à tout moment par son titulaire. Une page retirée est supprimée avec ses données : seul le numéro RPPS est conservé, pour qu’elle ne revienne pas avec les imports suivants."
 			],
 			"formTitle": "Demander le retrait d’une page",
 			"formBody": "Pour une page non revendiquée. La page est masquée tout de suite, puis supprimée après une vérification légère. Une page revendiquée se retire par son titulaire, depuis son espace."
@@ -869,7 +869,7 @@
 					"Données : nom, prénom, civilité, numéro RPPS, profession, spécialités et savoir-faire, lieux et modes d’exercice, téléphones publiés, secteur de conventionnement, adhésion à l’OPTAM et acceptation de la carte Vitale. Un professionnel qui revendique sa page peut y ajouter ses horaires, ses honoraires, ses langues, une photo et une présentation.",
 					"Sources : l’Annuaire Santé de l’Agence du numérique en santé, le répertoire FINESS et l’annuaire de l’Assurance Maladie, réutilisés sous Licence Ouverte 2.0 et mis à jour chaque semaine.",
 					"Finalité : permettre au public de trouver un professionnel de santé, ses lieux d’exercice et la façon de le joindre. Base légale : l’intérêt légitime d’informer le public à partir de données publiques (article 6.1.f du RGPD).",
-					"Durée : tant que le professionnel figure dans les registres publics. Une page non revendiquée disparaît après deux mises à jour hebdomadaires où le professionnel ne figure plus dans le registre ; une page retirée sur opposition n’est plus jamais republiée.",
+					"Durée : tant que le professionnel figure dans les registres publics. Une page non revendiquée disparaît après deux mises à jour hebdomadaires où le professionnel ne figure plus dans le registre ; une page retirée sur opposition est supprimée aussitôt et n’est plus jamais republiée : seul son numéro RPPS est conservé.",
 					"Information : écrire à chaque professionnel demanderait un effort disproportionné (article 14.5.b du RGPD). Il est informé par la page des données, par une mention sur chaque page et par cette politique."
 				]
 			},
@@ -894,7 +894,7 @@
 				"heading": "Signalements et demandes de retrait",
 				"body": [
 					"Données : le message, l’adresse e-mail de contact quand elle est donnée, et pour une demande de retrait la page concernée. Le texte libre est chiffré.",
-					"Finalités : corriger les erreurs signalées et appliquer les oppositions. Bases légales : l’intérêt légitime de publier des informations exactes (article 6.1.f) et le droit d’opposition (article 21). Durée : le temps de traiter la demande, puis un signalement est supprimé 6 mois après sa clôture et une demande de retrait un an après sa décision ; après une opposition, seul le numéro RPPS de la page est conservé, pour qu’elle ne soit jamais republiée.",
+					"Finalités : corriger les erreurs signalées et appliquer les oppositions. Bases légales : l’intérêt légitime de publier des informations exactes (article 6.1.f) et le droit d’opposition (article 21). Durée : le temps de traiter la demande, puis un signalement est supprimé 6 mois après sa clôture et une demande de retrait refusée un an après sa décision. Dès qu’une opposition est confirmée, ou qu’un titulaire retire sa page, la page et toutes les données du professionnel sont supprimées, demande de retrait et signalements compris ; seule reste une trace du retrait (le numéro RPPS, le pays, le motif, qui l’a enregistré et quand), pour que les imports suivants ignorent le professionnel et que la page ne soit jamais republiée. Si l’opposition est retirée, cette trace est supprimée et la page revient à la mise à jour hebdomadaire suivante. Un titulaire qui retire sa page garde, dans son seul compte et jusqu’à sa suppression, le nom et le numéro RPPS affichés dans son espace et les lieux qu’utilise son agenda.",
 					"Demandes « Je suis ce praticien » : le nom, l’adresse e-mail professionnelle, le téléphone s’il est donné, le message et la page concernée, chiffrés. Finalité : aider un professionnel qui ne peut pas revendiquer sa page en ligne. Base légale : l’intérêt légitime de tenir l’annuaire à jour avec les professionnels concernés (article 6.1.f). Durée : 12 mois après le dernier échange."
 				]
 			},
@@ -2422,7 +2422,7 @@
 		"formLabel": "Contenu de la page",
 		"removed": {
 			"title": "Votre page est retirée de l’annuaire",
-			"body": "Personne ne peut la voir. Vous pouvez la rétablir en bas de cette page."
+			"body": "Personne ne peut la voir, et son contenu est supprimé. Vous pouvez la rétablir en bas de cette page : elle revient à la mise à jour hebdomadaire suivante du registre."
 		},
 		"unpublished": {
 			"title": "Votre contenu n’est pas encore publié",
@@ -2524,7 +2524,7 @@
 		},
 		"remove": {
 			"title": "Retirer votre page",
-			"lead": "Votre page disparaît de l’annuaire, des recherches et des moteurs de recherche, et ne revient pas au prochain import. Vous pouvez la rétablir ici.",
+			"lead": "Votre page disparaît de l’annuaire, des recherches et des moteurs de recherche, et ne revient pas au prochain import. Ses lieux, sa présentation, sa photo, ses tarifs et ses statistiques sont supprimés aussitôt ; votre compte et votre agenda restent. Vous pouvez la rétablir ici : la page du registre revient à la mise à jour hebdomadaire suivante, et vous la complétez à nouveau.",
 			"action": "Retirer ma page de l’annuaire",
 			"restore": "Rétablir ma page"
 		},
@@ -3340,7 +3340,7 @@
 		"title": "Partager ma page",
 		"lead": "Le lien de la page de {name}, son QR code, une affiche pour la salle d’attente et un badge pour votre site.",
 		"removedTitle": "Votre page est retirée",
-		"removedBody": "Elle n’est plus publiée : le lien et le QR code mènent à une page introuvable tant que vous ne la rétablissez pas.",
+		"removedBody": "Elle n’est plus publiée : le lien et le QR code mènent à une page introuvable. Si vous la rétablissez, elle revient à la mise à jour hebdomadaire suivante.",
 		"unpublishedTitle": "Votre page n’est pas encore publiée",
 		"unpublishedBody": "Le lien mène à la page du registre, sans ce que vous avez ajouté. Publiez-la pour que patients et partages voient votre version.",
 		"unpublishedLink": "Publier depuis l’éditeur",

@@ -56,6 +56,7 @@ const ETL_FORBIDDEN = [
 	"directory.practitioner_contact_requests",
 	"directory.admin_alerts",
 	"directory.page_view_days",
+	"directory.storage_deletions",
 	"directory.platform_audit_events",
 	"directory.rate_limits",
 	"directory.auth_rate_limit",
@@ -137,6 +138,30 @@ describe.skipIf(!url)("database roles (database)", () => {
 			expect(await canColumn("apercura_etl", warmup, column, "UPDATE"), column).toBe(false);
 		}
 		expect(await can("apercura_app", warmup, "UPDATE")).toBe(true);
+	});
+
+	it("lets the import and the app purge suppressed practitioners, never the read-only role", async () => {
+		// A SECURITY DEFINER function (migration 0023): the import deletes through it what it may
+		// not delete itself, only for national ids of directory.suppressions, which it may not write.
+		const fn = "directory.purge_suppressed_practitioners(integer[])";
+		const rows = await db.$client<{ role: string; ok: boolean }[]>`
+			SELECT role, has_function_privilege(role, ${fn}, 'EXECUTE') AS ok
+			FROM unnest(ARRAY['apercura_etl', 'apercura_app', 'apercura_readonly', 'apercura_jobs']) AS role
+		`;
+		expect(Object.fromEntries(rows.map((row) => [row.role, row.ok]))).toEqual({
+			apercura_etl: true,
+			apercura_app: true,
+			apercura_readonly: false,
+			apercura_jobs: false,
+		});
+		const [definer] = await db.$client<{ definer: boolean; config: string[] | null }[]>`
+			SELECT prosecdef AS definer, proconfig AS config FROM pg_proc
+			WHERE oid = ${fn}::regprocedure
+		`;
+		expect(definer?.definer).toBe(true);
+		// A fixed search path: a caller's objects can never stand in for the directory's.
+		expect(definer?.config).toContain("search_path=pg_catalog, pg_temp");
+		expect(await can("apercura_etl", "directory.suppressions", "INSERT")).toBe(false);
 	});
 
 	it("gives the read-only role no write access at all", async () => {

@@ -4,6 +4,7 @@ import { and, asc, desc, eq, gt, ne } from "drizzle-orm";
 import { z } from "zod";
 import { AccountError, deleteAccount, deletionPlan } from "~/server/account/service";
 import { hasSecondFactor, secondFactors } from "~/server/auth/membership";
+import { afterPurge, purgeSuppressed } from "~/server/gdpr/minimise";
 import { refreshPractitioners } from "~/server/refresh";
 import { getStorage } from "~/server/storage";
 import { authedProcedure, createTRPCRouter, mfaProcedure } from "../init";
@@ -112,6 +113,11 @@ export const accountRouter = createTRPCRouter({
 					headers: ctx.headers,
 				});
 				await refreshPractitioners(ctx.db().$client, result.practitionerIds);
+				// A page its owner had removed is no longer held by their claim: only the
+				// suppression stays (or, while the practice's agenda is being closed, a bare row
+				// until the next import).
+				const purge = await purgeSuppressed(ctx.db(), result.practitionerIds);
+				if (purge.deleted > 0) await afterPurge(ctx.db(), purge, { storage: getStorage() });
 				return { ok: true as const };
 			} catch (error) {
 				if (error instanceof AccountError) {

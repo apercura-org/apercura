@@ -209,6 +209,17 @@ export const reports = directory.table(
 );
 
 /**
+ * Objects left in the object storage (profile photo, claim documents) by a practitioner whose
+ * data was deleted on removal (`directory.purge_suppressed_practitioners`, migration 0023): the
+ * database cannot reach the storage, so it queues their keys here and `jobs:tick
+ * claim-documents` deletes each object, then its row. Keys only, nothing about the person.
+ */
+export const storageDeletions = directory.table("storage_deletions", {
+	key: text().primaryKey(),
+	createdAt: createdAt(),
+});
+
+/**
  * Who did what on the platform side (decrypting a claim document or a report,
  * deciding a claim). Append-only: the app role may insert and read, never
  * update or delete. Kept one year.

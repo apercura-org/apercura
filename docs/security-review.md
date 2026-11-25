@@ -109,6 +109,7 @@ depth, hard to exploit), **Info** (hardening, no direct impact).
 | L-9  | Low      | Practitioner sessions stored the client's raw IP address, readable (with the user agent) by the read-only role.                                                                                                                                              | Fixed    | #63              |
 | L-10 | Low      | Error reports and removal requests were never deleted, although the privacy policy limits them to the time needed.                                                                                                                                           | Fixed    | #63              |
 | L-11 | Low      | Better Auth's sign-in rate limiter stored the raw client IP in its keys (`{ip}\|{path}`), and neither rate-limit table was ever purged.                                                                                                                      | Fixed    | #66              |
+| L-12 | Low      | A confirmed removal kept the whole practitioner row, refreshed by every import, with its places, qualifications, page and owner content, although the privacy policy said only the RPPS number stays.                                                        | Fixed    | #116             |
 | I-1  | Info     | JSON-LD escaped `<` only; `>`, `&`, U+2028 and U+2029 are now escaped too.                                                                                                                                                                                   | Fixed    | d2165d4          |
 | I-2  | Info     | No automated check that every procedure keeps its middleware, that the decryption boundary holds beyond Biome, or that the database roles stay narrow.                                                                                                       | Fixed    | 5e5d801, be6793c |
 | I-3  | Info     | `bun audit`: one moderate advisory (esbuild ≤ 0.24.2 development server) in development tools only (`drizzle-kit`, `vitest`); production dependencies are clean. CI now fails on any production advisory and on high or critical ones anywhere.              | Accepted | f745189          |
@@ -185,8 +186,9 @@ depth, hard to exploit), **Info** (hardening, no direct impact).
     revokes the read-only role's grant on `ip_address` and `user_agent`. Rate limits read the
     request's address through their own keyed hashes and are unchanged.
   - _Reports and removal requests_ (`jobs:tick requests`): deleted 6 and 12 months after they
-    were closed (`REPORT_RETENTION_MONTHS`, `REMOVAL_REQUEST_RETENTION_MONTHS`); the
-    suppression of a confirmed objection stays.
+    were closed (`REPORT_RETENTION_MONTHS`, `REMOVAL_REQUEST_RETENTION_MONTHS`); a confirmed
+    objection deletes its request, the reports and the page at once and keeps only the
+    suppression (issue #116, below).
   - _Closing a practice_ (`booking/closure.ts`): in the account deletion's transaction, under
     the practitioners' booking locks, the calendars stop taking bookings, their feeds are
     revoked, live holds expire, upcoming appointments are cancelled by the practice with the
@@ -246,7 +248,47 @@ depth, hard to exploit), **Info** (hardening, no direct impact).
   - _Opt-out_: the "Is this you?" block and the claim page link to the GDPR art. 21 objection
     for every page; a claimed page sends its owner to the editor's removal. Both end in a
     `directory.suppressions` row (`FR`, `RPPS`) that every import honours (ETL integration
-    test: hidden while checked, suppressed through two imports).
+    test: hidden while checked, only the suppression left through two imports, the page back
+    once it is withdrawn).
+- **Minimisation of removed practitioners (issue #116, GDPR art. 5(1)(c))**:
+  - _What stays_: the `directory.suppressions` row only (country, id scheme, national id,
+    reason `objection` or `owner`, who recorded it, when). On a confirmed objection
+    (`decideRemoval`) or an owner's removal (`setOwnerRemoval`), the same transaction calls
+    `directory.purge_suppressed_practitioners(ids)` (migration 0023), which deletes the places
+    of practice (activities, then the sites nobody else links to and no agenda uses), the
+    qualifications, Ameli fields, owner content, former slugs, page, search entry, page views,
+    error reports, removal and contact requests, the person's lines in the last import's
+    staging and quarantine tables, then the row itself with the claims on it. The decision
+    email's address is decrypted before the request goes.
+  - _Bare rows_: a row still held by something with its own retention is kept, never
+    published, without registry enrichments, page or places: the claim of its owner (who may
+    restore it from their space; their account shows its name and RPPS) or an agenda
+    (`care.calendars` restricts the delete; the places that agenda uses stay linked). The first
+    purge after nothing holds it any more deletes it: the account deletion runs one, and every
+    import runs one over all suppressions (at the latest a week later). No foreign key is
+    broken: appointments keep the booking retention, organizations and accounts their own.
+  - _The function_: `SECURITY DEFINER` with `search_path = pg_catalog, pg_temp`, executable by
+    `apercura_app` and `apercura_etl` only (not the read-only or jobs roles, nor `PUBLIC`;
+    integration test). It lets the import delete what it may not delete itself, and only ever
+    for national ids of `directory.suppressions`, which that role may read but not write. It
+    returns the cache tags (page, listings, establishments) computed before the links go; the
+    app expires them with the sitemaps, then rebuilds the listing counts
+    (`refresh_landing_pages`) unless an import holds its advisory lock (it rebuilds them itself).
+  - _Storage_: the photo and unpurged claim documents of a deleted row are queued in
+    `directory.storage_deletions` (keys only, no grant to the import); the app deletes them
+    right after the commit, and `jobs:tick claim-documents` retries what is left.
+  - _The import_: reads the suppressed ids of its country and scheme before the files and
+    drops their lines while parsing, before staging or quarantine (`etl_runs.stats
+    .suppressedLines` counts them per country and file; the staging volume guards add them back
+    so a suppression never looks like a shrinking file). It runs the purge as a safety net
+    (a suppression added by hand, or confirmed while it loaded) and makes a row whose
+    suppression was withdrawn active again.
+  - _Public answer_: a removed page answers 404 with `noindex`, the same as an unknown or a
+    withheld page (#104), and leaves every sitemap (e2e `claims.spec.ts`).
+  - _Existing rows_: migration 0023 purges the rows suppressed before it, once (a handful,
+    found through the unique national id index; `lock_timeout` 5 s, forward-only).
+  - _Withdrawal_: deleting the suppression (the owner's "restore", or an administrator in SQL
+    for an objection, `docs/data-import.md`) lets the next import recreate the page.
 - **Rate-limit hygiene (issue #66)**:
   - _Better Auth's counters_ (`server/auth/rate-limit-storage.ts`, migration 0017): Better Auth
     keeps limiting sign-in, sign-up, verification emails, second factors and passkeys per

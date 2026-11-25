@@ -1,3 +1,4 @@
+import { IMPORT_LOCK_KEY } from "@apercura/core";
 import postgres from "postgres";
 
 export type Sql = postgres.Sql;
@@ -12,8 +13,8 @@ export function connect(url: string): Sql {
 	});
 }
 
-/** Advisory lock key shared by every import run ("apercura-etl"). */
-export const ETL_LOCK_KEY = 4_281_337_001;
+/** Advisory lock key shared by every import run ("apercura-etl"), and tried by the app. */
+export const ETL_LOCK_KEY = IMPORT_LOCK_KEY;
 
 /**
  * Takes the import's session advisory lock on a reserved connection, so two

@@ -769,7 +769,7 @@
 			"heading": "Opporsi a una pagina",
 			"body": [
 				"In base all’articolo 21 del GDPR, un professionista può opporsi alla pubblicazione della propria pagina. Apercura pubblica l’elenco sulla base di un legittimo interesse: informare il pubblico a partire da dati pubblici.",
-				"Una pagina non rivendicata sarà nascosta non appena ricevuta la richiesta, poi eliminata dopo una breve verifica della richiesta. Una pagina rivendicata può essere rimossa dal suo titolare in qualsiasi momento. Una volta rimossa, una pagina non ricompare con la successiva importazione."
+				"Una pagina non rivendicata sarà nascosta non appena ricevuta la richiesta, poi eliminata dopo una breve verifica della richiesta. Una pagina rivendicata può essere rimossa dal suo titolare in qualsiasi momento. Una pagina rimossa è cancellata con i suoi dati: è conservato solo il numero RPPS, perché la pagina non ricompaia con le importazioni successive."
 			],
 			"formTitle": "Chiedere la rimozione di una pagina",
 			"formBody": "Per una pagina non rivendicata. La pagina viene nascosta subito, poi eliminata dopo una breve verifica. Una pagina rivendicata viene rimossa dal suo titolare, dal suo spazio."
@@ -869,7 +869,7 @@
 					"Dati: cognome, nome, titolo, numero RPPS, professione, specialità e competenze, luoghi e modalità di esercizio, numeri di telefono pubblicati, settore di convenzionamento con l’assicurazione sanitaria (conventionnement), adesione all’OPTAM e accettazione della Carte Vitale. Un professionista che rivendica la propria pagina può aggiungervi orari, onorari, lingue, una foto e una presentazione.",
 					"Fonti: l’Annuaire Santé dell’Agence du numérique en santé, il registro FINESS e l’elenco dell’Assurance Maladie, riutilizzati con Licence Ouverte 2.0 e aggiornati ogni settimana.",
 					"Finalità: permettere al pubblico di trovare un professionista sanitario, i suoi luoghi di esercizio e il modo di contattarlo. Base giuridica: il legittimo interesse a informare il pubblico a partire da dati pubblici (articolo 6.1.f del GDPR).",
-					"Durata: finché il professionista figura nei registri pubblici. Una pagina non rivendicata scompare dopo due aggiornamenti settimanali in cui il professionista non figura più nel registro; una pagina rimossa a seguito di opposizione non viene mai più ripubblicata.",
+					"Durata: finché il professionista figura nei registri pubblici. Una pagina non rivendicata scompare dopo due aggiornamenti settimanali in cui il professionista non figura più nel registro; una pagina rimossa a seguito di opposizione è cancellata subito e non viene mai più ripubblicata: è conservato solo il suo numero RPPS.",
 					"Informazione: scrivere a ogni professionista richiederebbe uno sforzo sproporzionato (articolo 14.5.b del GDPR). I professionisti sono informati tramite la pagina dei dati, un avviso su ogni pagina e questa informativa."
 				]
 			},
@@ -894,7 +894,7 @@
 				"heading": "Segnalazioni e richieste di rimozione",
 				"body": [
 					"Dati: il messaggio, l’indirizzo e-mail di contatto se fornito e, per una richiesta di rimozione, la pagina interessata. Il testo libero è cifrato.",
-					"Finalità: correggere gli errori segnalati e dare seguito alle opposizioni. Basi giuridiche: il legittimo interesse a pubblicare informazioni esatte (articolo 6.1.f) e il diritto di opposizione (articolo 21). Durata: il tempo necessario per gestire la richiesta; poi una segnalazione è cancellata 6 mesi dopo la sua chiusura e una richiesta di rimozione un anno dopo la decisione; dopo un’opposizione è conservato solo il numero RPPS della pagina, perché non sia mai ripubblicata.",
+					"Finalità: correggere gli errori segnalati e dare seguito alle opposizioni. Basi giuridiche: il legittimo interesse a pubblicare informazioni esatte (articolo 6.1.f) e il diritto di opposizione (articolo 21). Durata: il tempo necessario per gestire la richiesta; poi una segnalazione è cancellata 6 mesi dopo la sua chiusura e una richiesta di rimozione respinta un anno dopo la decisione. Non appena un’opposizione è confermata, o un titolare rimuove la sua pagina, la pagina e tutti i dati del professionista sono cancellati subito, compresi la richiesta di rimozione e le segnalazioni; resta solo una traccia della rimozione (il numero RPPS, il paese, il motivo, chi l’ha registrata e quando), perché le importazioni successive ignorino il professionista e la pagina non sia mai ripubblicata. Se l’opposizione è ritirata, questa traccia è cancellata e la pagina ricompare con l’aggiornamento settimanale successivo. Un titolare che rimuove la sua pagina conserva, solo nel suo account e fino alla sua cancellazione, il nome e il numero RPPS mostrati nella sua area e le sedi usate dalla sua agenda.",
 					"Richieste «Sono questo professionista»: il nome, l’indirizzo e-mail professionale, il telefono se indicato, il messaggio e la pagina interessata, cifrati. Finalità: aiutare un professionista che non può rivendicare la sua pagina online. Base giuridica: il legittimo interesse di mantenere l’elenco aggiornato con i professionisti interessati (articolo 6.1.f). Durata: 12 mesi dopo l’ultimo scambio."
 				]
 			},
@@ -2422,7 +2422,7 @@
 		"formLabel": "Contenuto della pagina",
 		"removed": {
 			"title": "La sua pagina è stata rimossa dall’elenco",
-			"body": "Nessuno può vederla. Può ripristinarla in fondo a questa pagina."
+			"body": "Nessuno può vederla, e il suo contenuto è cancellato. Può ripristinarla in fondo a questa pagina: ricompare con l’aggiornamento settimanale successivo del registro."
 		},
 		"unpublished": {
 			"title": "I suoi contenuti non sono ancora pubblicati",
@@ -2524,7 +2524,7 @@
 		},
 		"remove": {
 			"title": "Rimuovere la sua pagina",
-			"lead": "La sua pagina scompare dall’elenco, dalle ricerche e dai motori di ricerca, e non ricompare con la successiva importazione. Può ripristinarla qui.",
+			"lead": "La sua pagina scompare dall’elenco, dalle ricerche e dai motori di ricerca, e non ricompare con la successiva importazione. Le sue sedi di esercizio, la presentazione, la foto, gli onorari e le statistiche sono cancellati subito; il suo account e la sua agenda restano. Può ripristinarla qui: la pagina del registro ricompare con l’aggiornamento settimanale successivo, e lei la completa di nuovo.",
 			"action": "Rimuovere la mia pagina dall’elenco",
 			"restore": "Ripristinare la mia pagina"
 		},
@@ -3340,7 +3340,7 @@
 		"title": "Condividere la mia pagina",
 		"lead": "Il link alla pagina di {name}, il suo codice QR, una locandina per la sala d’attesa e un badge per il suo sito.",
 		"removedTitle": "La sua pagina è rimossa",
-		"removedBody": "Non è più pubblicata: il link e il codice QR portano a una pagina non trovata finché non la ripristina.",
+		"removedBody": "Non è più pubblicata: il link e il codice QR portano a una pagina non trovata. Se la ripristina, ricompare con l’aggiornamento settimanale successivo.",
 		"unpublishedTitle": "La sua pagina non è ancora pubblicata",
 		"unpublishedBody": "Il link porta alla pagina del registro, senza ciò che lei ha aggiunto. La pubblichi perché pazienti e condivisioni mostrino la sua versione.",
 		"unpublishedLink": "Pubblicare dall’editor",

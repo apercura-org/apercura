@@ -349,7 +349,7 @@ test("claim with a document and a registry phone callback; an administrator appr
 	await expect(page.getByText("Page vérifiée", { exact: true })).toBeVisible();
 });
 
-test("objecting to an unclaimed page hides it at once; an administrator then suppresses it", async ({
+test("objecting to an unclaimed page hides it at once; once an administrator confirms, only its suppression stays", async ({
 	page,
 	browser,
 	request,
@@ -423,14 +423,30 @@ test("objecting to an unclaimed page hides it at once; an administrator then sup
 	await row.getByRole("button", { name: "Supprimer la page" }).click();
 	await expect(admin.getByRole("row", { name: /Modele/ })).toHaveCount(0);
 
-	const gone = await request.get(`/fr/praticien/${OPT_OUT_PRACTITIONER.slug}`);
-	expect(gone.status()).toBe(404);
+	// Removed for good: the same 404 as an unknown page (like a withheld one), noindex, nothing
+	// about the person, and out of every sitemap.
+	const gone = await page.goto(`/fr/praticien/${OPT_OUT_PRACTITIONER.slug}`);
+	expect(gone?.status()).toBe(404);
+	await expect(page.getByText("Modele")).toHaveCount(0);
+	await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", /noindex/);
+	const sitemap = await (await request.get("/sitemap.xml")).text();
+	for (const chunk of sitemap.match(/\/sitemaps\/fr\/praticiens-\d+\.xml/g) ?? []) {
+		expect(await (await request.get(chunk)).text()).not.toContain(OPT_OUT_PRACTITIONER.slug);
+	}
+	// Only the suppression is kept (#116): no practitioner row, so nothing hanging off one (page,
+	// search entry, removal request) either.
 	const suppressed = testDb();
 	try {
-		const [suppression] = await suppressed<{ reason: string }[]>`
-			SELECT reason FROM directory.suppressions WHERE national_id = ${OPT_OUT_PRACTITIONER.rpps}
+		const [left] = await suppressed<{ reason: string; practitioners: number; pages: number }[]>`
+			SELECT s.reason,
+				(SELECT count(*)::integer FROM directory.practitioners p
+					WHERE p.national_id = s.national_id) AS practitioners,
+				(SELECT count(*)::integer FROM directory.practitioner_pages pg
+					WHERE pg.slug = ${OPT_OUT_PRACTITIONER.slug}) AS pages
+			FROM directory.suppressions s
+			WHERE s.country = 'FR' AND s.id_scheme = 'RPPS' AND s.national_id = ${OPT_OUT_PRACTITIONER.rpps}
 		`;
-		expect(suppression?.reason).toBe("objection");
+		expect(left).toEqual({ reason: "objection", practitioners: 0, pages: 0 });
 	} finally {
 		await suppressed.end();
 	}

@@ -503,7 +503,7 @@ describe.skipIf(!url)("claims, ownership and objections (database)", async () =>
 		expect(after[0]?.profile.showPhone).toBe(false);
 	});
 
-	it("withholds an unclaimed page at once on objection, suppresses it after the check, and refuses claimed pages", async () => {
+	it("withholds an unclaimed page at once on objection, keeps only the suppression after the check, and refuses claimed pages", async () => {
 		const target = await practitioner();
 		const request = await gdpr.requestRemoval(db, {
 			rpps: target.rpps,
@@ -526,20 +526,33 @@ describe.skipIf(!url)("claims, ownership and objections (database)", async () =>
 		expect(hidden).toMatchObject({ indexable: false, withheld: true, page: false, search: false });
 		expect(hidden?.contact).not.toContain("objection");
 
-		await gdpr.decideRemoval(db, {
+		const decided = await gdpr.decideRemoval(db, {
 			id: request.id,
 			adminId: users.admin,
 			confirm: true,
 			reason: null,
 		});
-		await refreshPractitioners(db.$client, [target.id], noRevalidate);
-		const [gone] = await db.$client<{ status: string; pages: number; suppressions: number }[]>`
-			SELECT p.status,
-				(SELECT count(*)::integer FROM directory.practitioner_pages WHERE practitioner_id = p.id) AS pages,
-				(SELECT count(*)::integer FROM directory.suppressions s WHERE s.national_id = p.national_id) AS suppressions
-			FROM directory.practitioners p WHERE p.id = ${target.id}
+		// The decision email still has its address, read before the request was deleted.
+		expect(decided.contact).toBe("objection@example.test");
+		expect(decided.purge).toMatchObject({ deleted: 1, kept: 0 });
+		const [gone] = await db.$client<
+			{
+				practitioners: number;
+				pages: number;
+				docs: number;
+				requests: number;
+				suppressions: number;
+			}[]
+		>`
+			SELECT
+				(SELECT count(*)::integer FROM directory.practitioners WHERE id = ${target.id}) AS practitioners,
+				(SELECT count(*)::integer FROM directory.practitioner_pages WHERE practitioner_id = ${target.id}) AS pages,
+				(SELECT count(*)::integer FROM directory.search_docs WHERE practitioner_id = ${target.id}) AS docs,
+				(SELECT count(*)::integer FROM directory.removal_requests WHERE id = ${request.id}) AS requests,
+				(SELECT count(*)::integer FROM directory.suppressions WHERE national_id = ${target.rpps}) AS suppressions
 		`;
-		expect(gone).toEqual({ status: "suppressed", pages: 0, suppressions: 1 });
+		expect(gone).toEqual({ practitioners: 0, pages: 0, docs: 0, requests: 0, suppressions: 1 });
+		await db.$client`DELETE FROM directory.suppressions WHERE national_id = ${target.rpps}`;
 
 		const claimed = await practitioner();
 		const claim = await service.startClaim(db, users.carol, claimed.rpps);

@@ -977,7 +977,11 @@ export async function readClaimDocument(
 	};
 }
 
-/** Deletes claim documents whose retention ended (30 days after the decision). */
+/**
+ * Deletes claim documents whose retention ended (30 days after the decision), then the objects
+ * a removed practitioner left in the storage (`directory.storage_deletions`). Returns how many
+ * objects were deleted.
+ */
 export async function purgeClaimDocuments(db: Database, storage: StorageDriver, now = new Date()) {
 	const due = await db.$client<{ id: string; storage_key: string }[]>`
 		SELECT id, storage_key FROM directory.claim_documents
@@ -992,5 +996,28 @@ export async function purgeClaimDocuments(db: Database, storage: StorageDriver, 
 			.set({ purgedAt: now })
 			.where(eq(claimDocuments.id, document.id));
 	}
-	return due.length;
+	return due.length + (await drainStorageDeletions(db, storage));
+}
+
+/**
+ * Deletes the objects queued by `directory.purge_suppressed_practitioners` (the photo and claim
+ * documents of a removed practitioner, migration 0023), 500 at a time: each object, then its
+ * row. A missing object counts as deleted; a storage error leaves the row for the next run.
+ */
+export async function drainStorageDeletions(db: Database, storage: StorageDriver) {
+	const queued = await db.$client<{ key: string }[]>`
+		SELECT key FROM directory.storage_deletions ORDER BY created_at, key LIMIT 500
+	`;
+	let deleted = 0;
+	for (const { key } of queued) {
+		try {
+			await storage.delete(key);
+		} catch (error) {
+			console.error(`Storage deletion left for the next run: ${String(error)}`);
+			continue;
+		}
+		await db.$client`DELETE FROM directory.storage_deletions WHERE key = ${key}`;
+		deleted++;
+	}
+	return deleted;
 }

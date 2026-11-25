@@ -769,7 +769,7 @@
 			"heading": "Objecting to a page",
 			"body": [
 				"Under article 21 of the GDPR, a practitioner can object to the publication of their page. Apercura publishes the directory on the basis of a legitimate interest: informing the public from public data.",
-				"An unclaimed page will be hidden as soon as the request is received, then deleted after a light check of the request. A claimed page can be removed by its holder at any time. Once removed, a page does not come back with the next import."
+				"An unclaimed page will be hidden as soon as the request is received, then deleted after a light check of the request. A claimed page can be removed by its holder at any time. A removed page is deleted with its data: only the RPPS number is kept, so that the page does not come back with the next imports."
 			],
 			"formTitle": "Ask for the removal of a page",
 			"formBody": "For an unclaimed page. The page is hidden at once, then deleted after a light check. A claimed page is removed by its holder, from their space."
@@ -869,7 +869,7 @@
 					"Data: last name, first name, title, RPPS number, profession, specialties and skills, places and modes of practice, published phone numbers, conventionnement sector, OPTAM membership and Carte Vitale acceptance. A practitioner who claims their page can add their hours, fees, languages, a photo and a presentation.",
 					"Sources: the Annuaire Santé of the Agence du numérique en santé, the FINESS register and the Assurance Maladie directory, reused under the Licence Ouverte 2.0 and refreshed every week.",
 					"Purpose: letting the public find a health practitioner, where they practise and how to reach them. Legal basis: the legitimate interest of informing the public from public data (GDPR article 6.1.f).",
-					"Retention: as long as the practitioner is listed in the public registers. An unclaimed page disappears after two weekly updates in which the practitioner is no longer in the register; a page removed after an objection is never published again.",
+					"Retention: as long as the practitioner is listed in the public registers. An unclaimed page disappears after two weekly updates in which the practitioner is no longer in the register; a page removed after an objection is deleted at once and never published again: only its RPPS number is kept.",
 					"Information: writing to every practitioner would take a disproportionate effort (GDPR article 14.5.b). They are informed by the data page, a notice on every page and this policy."
 				]
 			},
@@ -894,7 +894,7 @@
 				"heading": "Error reports and removal requests",
 				"body": [
 					"Data: the message, the contact email address when one is given and, for a removal request, the page concerned. Free text is encrypted.",
-					"Purposes: correcting reported errors and applying objections. Legal bases: the legitimate interest of publishing accurate information (article 6.1.f) and the right to object (article 21). Retention: the time needed to handle the request, then a report is deleted 6 months after it is closed and a removal request one year after its decision; after an objection, only the RPPS number of the page is kept, so that it is never published again.",
+					"Purposes: correcting reported errors and applying objections. Legal bases: the legitimate interest of publishing accurate information (article 6.1.f) and the right to object (article 21). Retention: the time needed to handle the request, then a report is deleted 6 months after it is closed and a rejected removal request one year after its decision. Once an objection is confirmed, or a holder removes their page, the page and everything about the practitioner are deleted at once, the removal request and the reports included; all that is kept is a record of the removal (the RPPS number, the country, the reason, who recorded it and when), so that the next imports skip the practitioner and the page is never published again. If the objection is withdrawn, that record is deleted and the page comes back with the next weekly update. A holder who removes their page keeps, in their account only and until it is deleted, the name and RPPS number shown in their space and the places their agenda uses.",
 					"“I am this practitioner” requests: the name, the professional email address, the phone number when given, the message and the page concerned, encrypted. Purpose: helping a practitioner who cannot claim their page online. Legal basis: the legitimate interest of keeping the directory up to date with the practitioners concerned (article 6.1.f). Retention: 12 months after the last exchange."
 				]
 			},
@@ -2422,7 +2422,7 @@
 		"formLabel": "Page content",
 		"removed": {
 			"title": "Your page is removed from the directory",
-			"body": "Nobody can see it. You can restore it at the bottom of this page."
+			"body": "Nobody can see it, and its content is deleted. You can restore it at the bottom of this page: it comes back with the next weekly update of the register."
 		},
 		"unpublished": {
 			"title": "Your content is not published yet",
@@ -2524,7 +2524,7 @@
 		},
 		"remove": {
 			"title": "Remove your page",
-			"lead": "Your page disappears from the directory, searches and search engines, and does not come back with the next import. You can restore it here.",
+			"lead": "Your page disappears from the directory, searches and search engines, and does not come back with the next import. Its places, presentation, photo, fees and statistics are deleted at once; your account and agenda stay. You can restore it here: the registry page comes back with the next weekly update, and you complete it again.",
 			"action": "Remove my page from the directory",
 			"restore": "Restore my page"
 		},
@@ -3340,7 +3340,7 @@
 		"title": "Share my page",
 		"lead": "The link to the page of {name}, its QR code, a waiting-room poster and a badge for your website.",
 		"removedTitle": "Your page is removed",
-		"removedBody": "It is no longer published: the link and the QR code lead to a missing page until you restore it.",
+		"removedBody": "It is no longer published: the link and the QR code lead to a missing page. If you restore it, it comes back with the next weekly update.",
 		"unpublishedTitle": "Your page is not published yet",
 		"unpublishedBody": "The link leads to the register page, without what you added. Publish it so that patients and shares see your version.",
 		"unpublishedLink": "Publish from the editor",

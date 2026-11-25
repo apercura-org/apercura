@@ -15,6 +15,7 @@ import {
 	setContactRequestStatus,
 } from "~/server/contact-requests/service";
 import { claimDocumentsEnabled, pscConfigured } from "~/server/features";
+import { afterPurge } from "~/server/gdpr/minimise";
 import {
 	decideRemoval,
 	readRemovalRequest,
@@ -26,6 +27,7 @@ import {
 import { mailErrorSummary } from "~/server/mail/error-summary";
 import { sendNotice } from "~/server/mail/notices";
 import { refreshPractitioners } from "~/server/refresh";
+import { getStorage, storageConfigured } from "~/server/storage";
 import { createTRPCRouter, platformAdminProcedure } from "../init";
 import { service } from "./errors";
 
@@ -189,7 +191,14 @@ export const adminRouter = createTRPCRouter({
 						headers: ctx.headers,
 					}),
 				);
-				await refreshPractitioners(ctx.db().$client, [result.practitionerId]);
+				if (result.purge) {
+					// Confirmed: the page and its data are gone; expire what showed them.
+					await afterPurge(ctx.db(), result.purge, {
+						storage: storageConfigured() ? getStorage() : null,
+					});
+				} else {
+					await refreshPractitioners(ctx.db().$client, [result.practitionerId]);
+				}
 				try {
 					await sendNotice({
 						to: result.contact,

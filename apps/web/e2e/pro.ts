@@ -1,7 +1,10 @@
+import { execFileSync } from "node:child_process";
+import { fileURLToPath } from "node:url";
 import { type APIRequestContext, expect, type Locator, type Page } from "@playwright/test";
 import * as OTPAuth from "otpauth";
 import postgres from "postgres";
 import { axeViolations } from "./axe";
+import { E2E_BOOKING_ENV } from "./booking-env";
 
 /** Tables of the `care` schema, children first. */
 const CARE_TABLES = [
@@ -191,6 +194,36 @@ export async function signIn(
 }
 
 /**
+ * Brings back a synthetic practitioner an earlier run removed for good (the objection spec):
+ * only its suppression is left (#116), so it goes and the fixtures are imported again, as for a
+ * withdrawn objection. The import tells this server which pages changed.
+ */
+function withdrawObjection(rpps: string) {
+	const root = fileURLToPath(new URL("../../..", import.meta.url));
+	execFileSync(
+		"bun",
+		[
+			"packages/etl/src/cli.ts",
+			"etl:fr",
+			"--source-dir",
+			"packages/etl/fixtures/fr",
+			"--offline",
+			"--force",
+		],
+		{
+			cwd: root,
+			env: {
+				...process.env,
+				APP_URL: `http://localhost:${process.env.E2E_PORT ?? 3100}`,
+				REVALIDATE_SECRET: E2E_BOOKING_ENV.REVALIDATE_SECRET,
+			},
+			stdio: "pipe",
+		},
+	);
+	console.log(`Synthetic practitioner ${rpps} imported again after its objection was withdrawn`);
+}
+
+/**
  * Puts a synthetic practitioner back as the import left it: no claim, no
  * owner, no profile, no removal or contact request, no suppression, no view
  * counted, every place shown.
@@ -199,9 +232,18 @@ export async function signIn(
 export async function resetPractitioner(rpps: string) {
 	const sql = testDb();
 	try {
-		const [row] = await sql<{ id: number; owner_org_id: string | null }[]>`
+		const find = () => sql<{ id: number; owner_org_id: string | null }[]>`
 			SELECT id, owner_org_id FROM directory.practitioners WHERE national_id = ${rpps}
 		`;
+		const recover = async () => {
+			const [suppression] = await sql`
+				DELETE FROM directory.suppressions WHERE national_id = ${rpps} RETURNING 1
+			`;
+			if (!suppression) return undefined;
+			withdrawObjection(rpps);
+			return (await find())[0];
+		};
+		const row = (await find())[0] ?? (await recover());
 		if (!row) throw new Error(`No synthetic practitioner ${rpps}: import the fixtures first`);
 		await sql.begin(async (tx) => {
 			await tx`DELETE FROM directory.claims WHERE practitioner_id = ${row.id}`;

@@ -6,6 +6,7 @@ import { practitioners, removalRequests, reports, suppressions } from "@apercura
 import { and, eq, sql } from "drizzle-orm";
 import { recordAudit } from "../audit";
 import { openText, sealText } from "../crypto/platform";
+import { type Purge, purgeSuppressed } from "./minimise";
 
 export class GdprError extends Error {
 	constructor(readonly code: "NOT_FOUND" | "CLAIMED" | "NOT_PENDING") {
@@ -41,7 +42,8 @@ async function practitionerByRpps(db: Database, rpps: string) {
 /**
  * GDPR art. 21 objection to an unclaimed page: the page is withheld at once
  * (not indexable, out of listings, searches and sitemaps, its content no
- * longer shown) and suppressed once an administrator has checked the request.
+ * longer shown) and suppressed once an administrator has checked the request:
+ * then only the suppression stays (`purgeSuppressed`).
  * A claimed page can only be removed by its owner, from the practitioner space.
  * Returns the practitioner id to refresh.
  */
@@ -121,8 +123,13 @@ export async function readRemovalRequest(
 }
 
 /**
- * Confirms (suppression: the page answers 404 and never comes back with an
- * import) or rejects (the page is shown again) a removal request.
+ * Confirms or rejects a removal request.
+ * - Confirmed: a suppression (country, id scheme, national id, reason, who, when), then
+ *   everything else about the practitioner is deleted in the same transaction, this request
+ *   included (`purgeSuppressed`): the page answers 404, and the imports drop the person's lines
+ *   before staging. `purge` carries the cache tags to expire (`afterPurge`).
+ * - Rejected: the page is shown again; the request is kept until its retention.
+ * The requester's address is decrypted first, for the decision email.
  */
 export async function decideRemoval(
 	db: Database,
@@ -152,6 +159,7 @@ export async function decideRemoval(
 			.from(practitioners)
 			.where(eq(practitioners.id, request.practitionerId));
 		if (!practitioner) throw new GdprError("NOT_FOUND");
+		const contact = openText(request.contactEnc, "removal_requests", "contact_enc", request.id);
 		await tx
 			.update(removalRequests)
 			.set({
@@ -161,6 +169,7 @@ export async function decideRemoval(
 				decisionReason: input.reason,
 			})
 			.where(eq(removalRequests.id, request.id));
+		let purge: Purge | null = null;
 		if (input.confirm) {
 			await tx
 				.insert(suppressions)
@@ -172,21 +181,9 @@ export async function decideRemoval(
 					createdBy: input.adminId,
 				})
 				.onConflictDoNothing();
-			// Same effect as the import's applySuppressions, without waiting for it.
-			await tx
-				.update(practitioners)
-				.set({ status: "suppressed", indexable: false, withheldAt: null })
-				.where(eq(practitioners.id, practitioner.id));
-			// Other pending requests on the same page are settled by this one.
-			await tx
-				.update(removalRequests)
-				.set({ status: "confirmed", decidedAt: new Date(), decidedBy: input.adminId })
-				.where(
-					and(
-						eq(removalRequests.practitionerId, practitioner.id),
-						eq(removalRequests.status, "pending"),
-					),
-				);
+			// Only the suppression stays: the page, its data and every request on it (this one
+			// and any other still pending) are deleted now, not at the next import.
+			purge = await purgeSuppressed(tx, [practitioner.id]);
 		} else {
 			await tx.execute(sql`
 				UPDATE directory.practitioners p SET withheld_at = NULL
@@ -203,23 +200,23 @@ export async function decideRemoval(
 			subjectId: request.id,
 			headers: input.headers,
 		});
-		return {
-			practitionerId: practitioner.id,
-			contact: openText(request.contactEnc, "removal_requests", "contact_enc", request.id),
-			locale: request.locale,
-		};
+		return { practitionerId: practitioner.id, contact, locale: request.locale, purge };
 	});
 }
 
 /**
- * The owner of a claimed page removes it (or restores it). A suppression,
- * like an objection, so the import never brings it back.
+ * The owner of a claimed page removes it (or restores it). A suppression, like an objection,
+ * and the same purge (`purgeSuppressed`): the places, qualifications, owner content and photo,
+ * page, search entry and statistics are deleted at once. Only a bare row stays, for the owner's
+ * space and agenda (their claim holds it), never published. Restoring deletes the suppression:
+ * the next import brings the registry page back, which the owner completes again.
+ * Returns the purge (cache tags to expire) on removal, null on restoring.
  */
 export async function setOwnerRemoval(
 	db: Database,
 	input: { practitionerId: number; userId: string; removed: boolean },
 ) {
-	return db.transaction(async (tx) => {
+	return db.transaction(async (tx): Promise<Purge | null> => {
 		const [practitioner] = await tx
 			.select({
 				id: practitioners.id,
@@ -247,21 +244,18 @@ export async function setOwnerRemoval(
 					createdBy: input.userId,
 				})
 				.onConflictDoNothing();
-			await tx
-				.update(practitioners)
-				.set({ status: "suppressed", indexable: false })
-				.where(eq(practitioners.id, practitioner.id));
-		} else {
-			// Only the owner's own removal can be undone here, never an objection.
-			await tx.delete(suppressions).where(and(key, eq(suppressions.reason, "owner")));
-			await tx.execute(sql`
-				UPDATE directory.practitioners p SET status = 'active'
-				WHERE p.id = ${practitioner.id} AND p.status = 'suppressed' AND NOT EXISTS (
-					SELECT 1 FROM directory.suppressions s
-					WHERE s.country = p.country AND s.id_scheme = p.id_scheme AND s.national_id = p.national_id
-				)
-			`);
+			return purgeSuppressed(tx, [practitioner.id]);
 		}
+		// Only the owner's own removal can be undone here, never an objection.
+		await tx.delete(suppressions).where(and(key, eq(suppressions.reason, "owner")));
+		await tx.execute(sql`
+			UPDATE directory.practitioners p SET status = 'active'
+			WHERE p.id = ${practitioner.id} AND p.status = 'suppressed' AND NOT EXISTS (
+				SELECT 1 FROM directory.suppressions s
+				WHERE s.country = p.country AND s.id_scheme = p.id_scheme AND s.national_id = p.national_id
+			)
+		`);
+		return null;
 	});
 }
 

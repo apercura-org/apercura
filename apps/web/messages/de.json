@@ -769,7 +769,7 @@
 			"heading": "Widerspruch gegen eine Seite",
 			"body": [
 				"Nach Artikel 21 DSGVO kann eine Gesundheitsfachkraft der Veröffentlichung ihrer Seite widersprechen. Apercura veröffentlicht das Verzeichnis auf Grundlage eines berechtigten Interesses: der Information der Öffentlichkeit aus öffentlichen Daten.",
-				"Eine nicht beanspruchte Seite wird ausgeblendet, sobald der Antrag eingeht, und nach einer kurzen Prüfung des Antrags gelöscht. Eine beanspruchte Seite kann von ihrem Inhaber jederzeit entfernt werden. Einmal entfernt, erscheint eine Seite beim nächsten Import nicht wieder."
+				"Eine nicht beanspruchte Seite wird ausgeblendet, sobald der Antrag eingeht, und nach einer kurzen Prüfung des Antrags gelöscht. Eine beanspruchte Seite kann von ihrem Inhaber jederzeit entfernt werden. Eine entfernte Seite wird mit ihren Daten gelöscht: Aufbewahrt wird nur die RPPS-Nummer, damit die Seite mit den folgenden Importen nicht wieder erscheint."
 			],
 			"formTitle": "Entfernung einer Seite beantragen",
 			"formBody": "Für eine nicht beanspruchte Seite. Die Seite wird sofort ausgeblendet und nach einer kurzen Prüfung gelöscht. Eine beanspruchte Seite entfernt ihr Inhaber selbst über seinen Bereich."
@@ -869,7 +869,7 @@
 					"Daten: Name, Vorname, Anrede, RPPS-Nummer, Beruf, Fachgebiete und Fachkenntnisse, Orte und Formen der Berufsausübung, veröffentlichte Telefonnummern, Sektor der Vertragsbindung mit der Krankenversicherung (secteur de conventionnement), OPTAM-Teilnahme und Akzeptanz der Carte Vitale. Eine Gesundheitsfachkraft, die ihre Seite beansprucht, kann dort ihre Sprechzeiten, ihre Honorare, ihre Sprachen, ein Foto und eine Vorstellung ergänzen.",
 					"Quellen: das Annuaire Santé der Agence du numérique en santé, das FINESS-Verzeichnis und das Verzeichnis der Assurance Maladie, weiterverwendet unter der Licence Ouverte 2.0 und jede Woche aktualisiert.",
 					"Zweck: der Öffentlichkeit ermöglichen, eine Gesundheitsfachkraft, ihre Praxisorte und die Art, sie zu erreichen, zu finden. Rechtsgrundlage: das berechtigte Interesse, die Öffentlichkeit auf Grundlage öffentlicher Daten zu informieren (Artikel 6 Abs. 1 lit. f DSGVO).",
-					"Speicherdauer: solange die Gesundheitsfachkraft in den öffentlichen Registern geführt wird. Eine nicht beanspruchte Seite verschwindet nach zwei wöchentlichen Aktualisierungen, in denen die Gesundheitsfachkraft nicht mehr im Register steht; eine nach einem Widerspruch entfernte Seite wird nie wieder veröffentlicht.",
+					"Speicherdauer: solange die Gesundheitsfachkraft in den öffentlichen Registern geführt wird. Eine nicht beanspruchte Seite verschwindet nach zwei wöchentlichen Aktualisierungen, in denen die Gesundheitsfachkraft nicht mehr im Register steht; eine nach einem Widerspruch entfernte Seite wird sofort gelöscht und nie wieder veröffentlicht: Aufbewahrt wird nur ihre RPPS-Nummer.",
 					"Information: Jede Gesundheitsfachkraft anzuschreiben, wäre mit einem unverhältnismäßigen Aufwand verbunden (Artikel 14 Abs. 5 lit. b DSGVO). Die Gesundheitsfachkräfte werden über die Datenseite, einen Hinweis auf jeder Seite und diese Erklärung informiert."
 				]
 			},
@@ -894,7 +894,7 @@
 				"heading": "Fehlermeldungen und Anträge auf Entfernung",
 				"body": [
 					"Daten: die Nachricht, die Kontakt-E-Mail-Adresse, sofern angegeben, und bei einem Antrag auf Entfernung die betroffene Seite. Der Freitext wird verschlüsselt.",
-					"Zwecke: gemeldete Fehler korrigieren und Widersprüche umsetzen. Rechtsgrundlagen: das berechtigte Interesse, zutreffende Informationen zu veröffentlichen (Artikel 6 Abs. 1 lit. f), und das Widerspruchsrecht (Artikel 21). Speicherdauer: die zur Bearbeitung des Antrags nötige Zeit; danach wird eine Fehlermeldung 6 Monate nach ihrem Abschluss und ein Antrag auf Entfernung ein Jahr nach der Entscheidung gelöscht; nach einem Widerspruch wird nur die RPPS-Nummer der Seite aufbewahrt, damit sie nie wieder veröffentlicht wird.",
+					"Zwecke: gemeldete Fehler korrigieren und Widersprüche umsetzen. Rechtsgrundlagen: das berechtigte Interesse, zutreffende Informationen zu veröffentlichen (Artikel 6 Abs. 1 lit. f), und das Widerspruchsrecht (Artikel 21). Speicherdauer: die zur Bearbeitung des Antrags nötige Zeit; danach wird eine Fehlermeldung 6 Monate nach ihrem Abschluss und ein abgelehnter Antrag auf Entfernung ein Jahr nach der Entscheidung gelöscht. Sobald ein Widerspruch bestätigt ist oder ein Inhaber seine Seite entfernt, werden die Seite und alle Daten der Gesundheitsfachkraft sofort gelöscht, einschließlich des Antrags auf Entfernung und der Fehlermeldungen; aufbewahrt wird nur ein Vermerk über die Entfernung (die RPPS-Nummer, das Land, der Grund, wer ihn erfasst hat und wann), damit die folgenden Importe die Gesundheitsfachkraft überspringen und die Seite nie wieder veröffentlicht wird. Wird der Widerspruch zurückgenommen, wird dieser Vermerk gelöscht und die Seite erscheint mit der nächsten wöchentlichen Aktualisierung wieder. Ein Inhaber, der seine Seite entfernt, behält allein in seinem Konto und bis zu dessen Löschung den in seinem Bereich angezeigten Namen und die RPPS-Nummer sowie die Orte, die sein Terminkalender nutzt.",
 					"Anfragen „Ich bin diese Gesundheitsfachkraft“: Name, berufliche E-Mail-Adresse, Telefonnummer, falls angegeben, Nachricht und betroffene Seite, verschlüsselt. Zweck: einer Gesundheitsfachkraft helfen, die ihre Seite nicht online beanspruchen kann. Rechtsgrundlage: das berechtigte Interesse, das Verzeichnis mit den betroffenen Fachkräften aktuell zu halten (Artikel 6.1.f). Dauer: 12 Monate nach dem letzten Austausch."
 				]
 			},
@@ -2422,7 +2422,7 @@
 		"formLabel": "Seiteninhalt",
 		"removed": {
 			"title": "Ihre Seite wurde aus dem Verzeichnis entfernt",
-			"body": "Niemand kann sie sehen. Sie können sie unten auf dieser Seite wiederherstellen."
+			"body": "Niemand kann sie sehen, und ihr Inhalt ist gelöscht. Sie können sie unten auf dieser Seite wiederherstellen: Sie erscheint mit der nächsten wöchentlichen Aktualisierung des Registers wieder."
 		},
 		"unpublished": {
 			"title": "Ihre Inhalte sind noch nicht veröffentlicht",
@@ -2524,7 +2524,7 @@
 		},
 		"remove": {
 			"title": "Ihre Seite entfernen",
-			"lead": "Ihre Seite verschwindet aus dem Verzeichnis, aus Suchergebnissen und Suchmaschinen und erscheint beim nächsten Import nicht wieder. Sie können sie hier wiederherstellen.",
+			"lead": "Ihre Seite verschwindet aus dem Verzeichnis, aus Suchergebnissen und Suchmaschinen und erscheint beim nächsten Import nicht wieder. Ihre Praxisorte, Vorstellung, Foto, Honorare und Statistiken werden sofort gelöscht; Ihr Konto und Ihr Terminkalender bleiben bestehen. Sie können sie hier wiederherstellen: Die Seite aus dem Register erscheint mit der nächsten wöchentlichen Aktualisierung wieder, und Sie vervollständigen sie erneut.",
 			"action": "Meine Seite aus dem Verzeichnis entfernen",
 			"restore": "Meine Seite wiederherstellen"
 		},
@@ -3340,7 +3340,7 @@
 		"title": "Meine Seite teilen",
 		"lead": "Der Link zur Seite von {name}, ihr QR-Code, ein Aushang für das Wartezimmer und ein Badge für Ihre Website.",
 		"removedTitle": "Ihre Seite ist entfernt",
-		"removedBody": "Sie ist nicht mehr veröffentlicht: Link und QR-Code führen zu einer nicht gefundenen Seite, bis Sie sie wiederherstellen.",
+		"removedBody": "Sie ist nicht mehr veröffentlicht: Link und QR-Code führen zu einer nicht gefundenen Seite. Wenn Sie sie wiederherstellen, erscheint sie mit der nächsten wöchentlichen Aktualisierung wieder.",
 		"unpublishedTitle": "Ihre Seite ist noch nicht veröffentlicht",
 		"unpublishedBody": "Der Link führt zur Seite des Registers, ohne Ihre Ergänzungen. Veröffentlichen Sie sie, damit Patientinnen, Patienten und geteilte Links Ihre Fassung zeigen.",
 		"unpublishedLink": "Im Editor veröffentlichen",

@@ -68,6 +68,12 @@ export function practitionerRoute(
 	return { kind: "page", indexable: record.indexable };
 }
 
+/**
+ * Postgres advisory lock key of the import (`packages/etl`): held by every run, so two imports
+ * never overlap, and tried by the app before it rebuilds the listing counts itself.
+ */
+export const IMPORT_LOCK_KEY = 4_281_337_001;
+
 /** Practitioners a landing page needs before it is indexed. */
 export const LANDING_INDEX_THRESHOLD = 3;
 /** An indexed landing page is only deindexed below this count (no flapping). */

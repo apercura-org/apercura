@@ -29,8 +29,9 @@ export const REPORT_RETENTION: RetentionSetting = {
 };
 
 /**
- * Removal requests, counted from their decision: one year (proof that the objection was
- * handled). The suppression that keeps the page from coming back is not affected.
+ * Rejected removal requests, counted from their decision: one year (proof that the request was
+ * handled). A confirmed one is deleted with the page (`purgeSuppressed`): the suppression that
+ * keeps the page from coming back is then the record of the objection.
  */
 export const REMOVAL_REQUEST_RETENTION: RetentionSetting = {
 	variable: "REMOVAL_REQUEST_RETENTION_MONTHS",

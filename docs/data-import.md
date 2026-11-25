@@ -49,11 +49,15 @@ The URLs can be overridden with `ETL_ANS_URLS`, `ETL_AMELI_URL`,
    go to `stg_quarantine` (count and samples in `etl_runs.stats.quarantine`);
    more than 0.1% fails the run. Unknown taxonomy codes are reported in
    `stats.taxonomy`, with the lines skipped by the scope (see
-   [Professions](#professions)).
+   [Professions](#professions)). The lines of a suppressed RPPS (GDPR
+   objection, see [Removed practitioners](#removed-practitioners)) are dropped
+   here, before staging or quarantine, and counted in
+   `stats.suppressedLines` (per country and file).
 4. **COPY** into the staging tables (`directory.stg_*`, ordinary tables
    truncated at each run), then `ANALYZE`.
 5. **Staging guards**: rows within ±3% and distinct RPPS per profession within
-   ±2% of the last success with the same profession list, at least 98% of rows
+   ±2% of the last success with the same profession list (the dropped lines of
+   suppressed RPPS count, so a suppression never looks like a shrinking file), at least 98% of rows
    with a structure resolving to a commune, Luhn check of every staged RPPS (in
    SQL, as a second line of defense).
 6. **Merge**, set-based, in **one transaction** so that the circuit breakers
@@ -69,8 +73,11 @@ The URLs can be overridden with `ETL_ANS_URLS`, `ETL_AMELI_URL`,
    - absences: a practitioner missing from the file gets `missing_runs + 1`;
      after **two consecutive** runs an unclaimed one is `removed` (claimed ones
      are counted in `stats.absences.claimedNeedingReview` for an admin);
-   - suppressions (GDPR objections) are excluded from the merge and always
-     applied, and never count against the circuit breakers;
+   - suppressions (GDPR objections): their lines never reach staging; a safety
+     net deletes what is still stored about a suppressed RPPS (a suppression
+     added by hand, or confirmed while the run loaded) and never counts against
+     the circuit breakers; a row whose suppression was withdrawn is active
+     again;
    - FINESS+ enrichment of sites with a FINESS number (open establishments
      only): official name, category, coordinates (`geo_source = finess`);
    - site names: accented letters the registry printed as capitals inside a
@@ -209,6 +216,37 @@ nurses, Ameli writes `1` as "Secteur 1 ou conventionné": pages print it as
 have one Ameli specialty code, `24`, compatible with every nurse listing slug;
 rows of professions that are not imported are dropped before staging.
 
+## Removed practitioners
+
+Once a removal is confirmed (a GDPR art. 21 objection checked by an
+administrator, or the owner of a claimed page removing it), only the
+`directory.suppressions` row stays: country, id scheme, national id, reason
+(`objection` or `owner`), who recorded it and when (#116).
+`directory.purge_suppressed_practitioners` (migration 0023) deletes the rest
+in the app's transaction: places of practice (and the sites nobody else links
+to), qualifications, Ameli fields, owner content and photo, former slugs, the
+page and search entry, page statistics, error reports, removal and contact
+requests, claims on the page, and the person's lines in the last run's staging
+and quarantine tables. The row itself is deleted unless the owner's claim (who
+may restore the page from their space) or a practice's agenda
+(`care.calendars`) still holds it: that bare row is never published and the
+next purge after nothing holds it deletes it. Every run calls the function over
+all suppressions, and the import never stores their lines again.
+
+To **withdraw an objection** (the practitioner asks for the page back), an
+administrator deletes the suppression, then the next run recreates the page
+from the registry (a new row, without the former owner content):
+
+```sql
+DELETE FROM directory.suppressions
+WHERE country = 'FR' AND id_scheme = 'RPPS' AND national_id = '<RPPS>';
+```
+
+An owner restores their own removal from the page editor; the registry page
+comes back with the next run. To honour an objection received outside the
+site, insert the suppression (`reason = 'objection'`, `created_by` = who
+decided): the next run deletes the page and its data.
+
 ## Data ownership
 
 The import owns the registry columns and never touches practitioner data:
@@ -326,7 +364,8 @@ The CI `etl` job applies the migrations to a PostGIS service, runs
 `etl:fr --dry-run` on the fixtures, then the integration test (an import
 without nurses, then one with them that no guard blocks and that leaves their
 salaried activities out, import twice with zero changes the second time,
-truncated file, removal after two runs, circuit breaker and `--approve`, suppressions, owner data untouched, street
+truncated file, removal after two runs, circuit breaker and `--approve`, suppressed lines dropped before staging
+and only the suppression left through two imports, the page back once it is withdrawn, owner data untouched, street
 labels from a local mock of the geocoder). Dry runs
 commit nothing but the places reference data, imported before the merge when
 the table is empty.

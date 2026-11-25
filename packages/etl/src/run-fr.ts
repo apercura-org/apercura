@@ -1,8 +1,8 @@
 /**
  * `etl:fr`: weekly import of the French open data.
  *
- * download -> file guards -> stream-parse -> COPY into staging -> staging
- * guards -> one merge transaction (sites, practitioners, activities,
+ * download -> file guards -> stream-parse (lines of suppressed national ids
+ * dropped) -> COPY into staging -> staging guards -> one merge transaction (sites, practitioners, activities,
  * qualifications, absences, suppressions, FINESS, geocoding, Ameli, derived
  * fields, read models) -> circuit breakers -> COMMIT -> drain the cache
  * invalidation outbox.
@@ -60,7 +60,6 @@ import {
 	sitesToGeocode,
 	stageScope,
 	stageSites,
-	suppressedIndexablePages,
 	syncTaxonomy,
 	unpublishedExamples,
 } from "./merge";
@@ -80,6 +79,7 @@ import {
 } from "./sources/fr/annuaire-sante";
 import { loadFiness, resolveLatestFinessUrl } from "./sources/fr/finess";
 import { fetchPlaceSources, importPlaces, readPlaceSources } from "./sources/fr/places";
+import { SuppressedLines } from "./suppressions";
 
 export type RunStatus = "succeeded" | "failed" | "blocked" | "skipped" | "dry_run";
 
@@ -277,6 +277,8 @@ async function runLocked(
 
 		// 4. Stream-parse into staging with COPY.
 		await sql.unsafe(`TRUNCATE ${STAGING_TABLES.join(", ")}`);
+		// GDPR objections: their lines are dropped before staging, never stored again.
+		const suppressed = await SuppressedLines.load(sql, { country: "FR", idScheme: "RPPS" });
 		const quarantine = await Quarantine.open(sql);
 		const load: Record<string, LoadStats> = {};
 		const rppsInScope = new Set<string>();
@@ -298,6 +300,19 @@ async function runLocked(
 					quarantine,
 					parse: (fields, count, index, lineNo) => {
 						const parsed = parsePersonneActiviteLine(fields, count, index, professions, lineNo);
+						// A line that would be staged or quarantined is dropped when suppressed.
+						if (
+							parsed.kind !== "skip" &&
+							suppressed.skip(
+								"personneActivite",
+								fields,
+								index.rpps,
+								count,
+								parsed.kind === "row" ? fields[index.professionCode] : undefined,
+							)
+						) {
+							return { kind: "skip" };
+						}
 						if (parsed.kind === "skip") {
 							const code = fields[index.professionCode] ?? "";
 							const tally = professions.has(code)
@@ -328,7 +343,10 @@ async function runLocked(
 					table: "directory.stg_ans_qualifications",
 					tableColumns: STG_QUALIFICATION_COLUMNS,
 					quarantine,
-					parse: (fields, count, index) => parseSavoirFaireLine(fields, count, index, rppsInScope),
+					parse: (fields, count, index) =>
+						suppressed.skip("savoirFaire", fields, index.rpps, count)
+							? { kind: "skip" }
+							: parseSavoirFaireLine(fields, count, index, rppsInScope),
 					rowsOf: (row) => row.values,
 				}),
 			);
@@ -341,7 +359,10 @@ async function runLocked(
 					table: "directory.stg_ans_qualifications",
 					tableColumns: STG_QUALIFICATION_COLUMNS,
 					quarantine,
-					parse: (fields, count, index) => parseDiplomeLine(fields, count, index, rppsInScope),
+					parse: (fields, count, index) =>
+						suppressed.skip("diplomes", fields, index.rpps, count)
+							? { kind: "skip" }
+							: parseDiplomeLine(fields, count, index, rppsInScope),
 					rowsOf: (row) => row.values,
 				}),
 			);
@@ -360,6 +381,7 @@ async function runLocked(
 		}
 		await sql.unsafe(`ANALYZE ${STAGING_TABLES.join(", ")}`);
 		stats.load = load;
+		stats.suppressedLines = suppressed.summary();
 		stats.quarantine = quarantine.summary();
 		stats.taxonomy = {
 			unknownCodes: Object.fromEntries(unknownCodes),
@@ -378,7 +400,7 @@ async function runLocked(
 
 		// 5. Quarantine and staging guards.
 		guards.push(...checkQuarantine(load));
-		const staging = await stagingStats(sql);
+		const staging = withDroppedRows(await stagingStats(sql), suppressed.droppedRows());
 		stats.staging = staging;
 		guards.push(...checkStaging(staging, previousAny?.stats?.staging ?? null));
 		const stagingVerdict = verdict(guards, approved);
@@ -409,7 +431,7 @@ async function runLocked(
 			merge.activities = await timer.run("merge activities", () => mergeActivities(tx));
 			merge.qualifications = await timer.run("merge qualifications", () => mergeQualifications(tx));
 			merge.absences = await markMissing(tx, ctx);
-			merge.suppressions = await applySuppressions(tx);
+			merge.suppressions = await applySuppressions(tx, runId);
 			const finess = await timer.run("FINESS+ enrichment", () => enrichFromFiness(tx));
 			merge.finess = { ...finess, ids: undefined };
 			const geocoding = await timer.run("geocoding", () => geocodeSites(tx, sql, options, log));
@@ -422,7 +444,6 @@ async function runLocked(
 			merge.ameli = await timer.run("Ameli matching", () => matchAmeli(tx));
 			await timer.run("analyze derived fields", () => analyzeTables(tx, DERIVED_TABLES));
 			const examples = await unpublishedExamples(tx);
-			const suppressedPages = await suppressedIndexablePages(tx);
 			const models = await timer.run("read models", () => refreshReadModels(tx, runId));
 			merge.readModels = models;
 			merge.siteTags = await enqueueSiteTags(tx, runId, [
@@ -435,10 +456,8 @@ async function runLocked(
 			const orphans = await timer.run("orphan check", () => orphanedPages(tx));
 			merge.orphans = orphans.count;
 			const breakers = [
-				...checkBreakers({
-					...models.pages,
-					unpublished: Math.max(0, models.pages.unpublished - suppressedPages),
-				}),
+				// Suppressed pages were deleted before the refresh: they never count as unpublished.
+				...checkBreakers(models.pages),
 				...checkOrphans(orphans),
 			];
 			const breakerVerdict = verdict(breakers, approved);
@@ -595,6 +614,18 @@ async function checkApproval(
 	if (!same)
 		throw new Error(`--approve: the source files changed since run ${runId}; review again`);
 	return true;
+}
+
+/** Staging volumes as the source holds them: the suppressed rows dropped while parsing count. */
+function withDroppedRows(
+	staging: StagingStats,
+	dropped: { rows: number; idsByGroup: Record<string, number> },
+): StagingStats {
+	const rppsByProfession = { ...staging.rppsByProfession };
+	for (const [profession, ids] of Object.entries(dropped.idsByGroup)) {
+		rppsByProfession[profession] = (rppsByProfession[profession] ?? 0) + ids;
+	}
+	return { ...staging, rows: staging.rows + dropped.rows, rppsByProfession };
 }
 
 async function stagingStats(sql: Sql): Promise<StagingStats> {
