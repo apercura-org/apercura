@@ -28,6 +28,7 @@ import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it } from
 import { readAppointmentPatients } from "~/server/phi";
 import { dataKeyCache } from "~/server/phi/keys";
 import { consumeRateLimit } from "~/server/rate-limit";
+import { isolatedDatabase } from "~/test/isolated-database";
 import {
 	type Context,
 	createCallerFactory,
@@ -69,6 +70,10 @@ const createCaller = createCallerFactory(router);
 // Slow CI runners: database tests get 30 s each instead of 5.
 describe.skipIf(!url)("booking (database)", { timeout: 30_000 }, () => {
 	let db: Database;
+	// A database of its own: the jobs below (`expireLapsed`, `enqueueReminders`, `purge`,
+	// `refreshAllNextFree`) work on every practice, at a clock a week ahead: on the shared database
+	// they expired, reminded and erased the bookings of the files running alongside.
+	const isolated = isolatedDatabase("booking");
 	const run = randomUUID().slice(0, 8);
 	const id = (name: string) => `${name}-${run}`;
 	const users = { ownerA: id("owner-a"), assistantA: id("assistant-a"), ownerB: id("owner-b") };
@@ -228,7 +233,7 @@ describe.skipIf(!url)("booking (database)", { timeout: 30_000 }, () => {
 	}
 
 	beforeAll(async () => {
-		db = createDb({ url, max: 30 });
+		db = createDb({ url: await isolated.create(), max: 30 });
 		configureMailTransport(async (mail) => {
 			if (failMail) {
 				throw failMail;
@@ -401,7 +406,7 @@ describe.skipIf(!url)("booking (database)", { timeout: 30_000 }, () => {
 	afterAll(async () => {
 		configureMailTransport(undefined);
 		if (!db) {
-			return;
+			return isolated.drop();
 		}
 		await settle();
 		const orgs = [orgA, orgB];
@@ -439,6 +444,7 @@ describe.skipIf(!url)("booking (database)", { timeout: 30_000 }, () => {
 		await db.delete(user).where(inArray(user.id, Object.values(users)));
 		await db.execute(sql`delete from directory.rate_limits where key like ${`%${run}%`}`);
 		await db.close();
+		await isolated.drop();
 	});
 
 	it("creates calendars in the site's time zone and opens them only when the page is ready", async () => {

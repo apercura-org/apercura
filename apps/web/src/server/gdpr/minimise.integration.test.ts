@@ -10,6 +10,7 @@ import { createDb, type Database } from "@apercura/db";
 import { organization, user } from "@apercura/db/schema";
 import { inArray } from "drizzle-orm";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
+import { isolatedDatabase } from "~/test/isolated-database";
 
 const url = process.env.DATABASE_URL_TEST;
 
@@ -43,6 +44,9 @@ describe.skipIf(!url)("minimisation of removed practitioners (database)", async 
 	const { memoryDriver } = await import("../storage");
 
 	let db: Database;
+	// A database of its own: `refreshLandingCounts` rebuilds every listing count and `afterPurge`
+	// drains every queued storage deletion, those of the files running alongside included.
+	const isolated = isolatedDatabase("minimise");
 	const run = randomUUID().slice(0, 8);
 	const ids = (name: string) => `${name}-${run}`;
 	const users = { admin: ids("admin"), owner: ids("owner"), claimant: ids("claimant") };
@@ -145,7 +149,7 @@ describe.skipIf(!url)("minimisation of removed practitioners (database)", async 
 	};
 
 	beforeAll(async () => {
-		db = createDb({ url, max: 2 });
+		db = createDb({ url: await isolated.create(), max: 2 });
 		await db.insert(user).values(
 			Object.values(users).map((id) => ({
 				id,
@@ -160,7 +164,7 @@ describe.skipIf(!url)("minimisation of removed practitioners (database)", async 
 	});
 
 	afterAll(async () => {
-		if (!db) return;
+		if (!db) return isolated.drop();
 		const sql = db.$client;
 		await sql`DELETE FROM care.calendars WHERE organization_id = ${orgId}`;
 		await sql`DELETE FROM directory.suppressions WHERE national_id = ANY (${[...rppsOf.values()]}::text[])`;
@@ -172,6 +176,7 @@ describe.skipIf(!url)("minimisation of removed practitioners (database)", async 
 		await db.delete(organization).where(inArray(organization.id, [orgId]));
 		await db.delete(user).where(inArray(user.id, Object.values(users)));
 		await db.close();
+		await isolated.drop();
 	});
 
 	it("keeps only the suppression once an objection is confirmed", async () => {

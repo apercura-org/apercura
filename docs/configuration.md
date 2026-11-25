@@ -169,16 +169,16 @@ and every document or message they decrypt is written to
 
 ## Tests and tooling
 
-| Variable                | Role                                                                                                                 |
-| ----------------------- | -------------------------------------------------------------------------------------------------------------------- |
-| `SKIP_ENV_VALIDATION`   | `1` skips the start-up validation of the web app's variables.                                                        |
-| `DATABASE_URL_TEST`     | Migrated database of the web integration tests: access control, claims, objections and booking (skipped when unset). |
-| `ETL_TEST_DATABASE_URL` | Throwaway database of the import integration test (destructive; skipped when unset).                                 |
-| `E2E_PORT`              | Port of the Playwright production server (default 3100; development on the next one).                                |
-| `MAILPIT_URL`           | Mailpit API read by the sign-up, claim and booking end-to-end tests (codes and manage links).                        |
-| `E2E_SCREENSHOTS_DIR`   | When set, `e2e/screens.spec.ts` saves desktop and phone screenshots of every booking and `/rdv` state there.         |
-| `PSC_MOCK_PORT`         | Port of the mock Pro Santé Connect provider (`apps/web/e2e/mock-psc.ts`).                                            |
-| `CI`                    | Set by CI: retries, no server reuse, GitHub reporter.                                                                |
+| Variable                | Role                                                                                                                                                                                                                                                                      |
+| ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `SKIP_ENV_VALIDATION`   | `1` skips the start-up validation of the web app's variables.                                                                                                                                                                                                             |
+| `DATABASE_URL_TEST`     | Migrated database of the web integration tests: access control, claims, objections and booking (skipped when unset). Files that run global jobs create and drop a database of their own next to it (`apps/web/src/test/isolated-database.ts`): its role needs `CREATEDB`. |
+| `ETL_TEST_DATABASE_URL` | Throwaway database of the import integration test (destructive; skipped when unset). Never the one of `DATABASE_URL_TEST`: the two suites run at the same time.                                                                                                           |
+| `E2E_PORT`              | Port of the Playwright production server (default 3100; development on the next one).                                                                                                                                                                                     |
+| `MAILPIT_URL`           | Mailpit API read by the sign-up, claim and booking end-to-end tests (codes and manage links).                                                                                                                                                                             |
+| `E2E_SCREENSHOTS_DIR`   | When set, `e2e/screens.spec.ts` saves desktop and phone screenshots of every booking and `/rdv` state there.                                                                                                                                                              |
+| `PSC_MOCK_PORT`         | Port of the mock Pro Santé Connect provider (`apps/web/e2e/mock-psc.ts`).                                                                                                                                                                                                 |
+| `CI`                    | Set by CI: retries, no server reuse, GitHub reporter.                                                                                                                                                                                                                     |
 
 ## Backups and monitoring
 

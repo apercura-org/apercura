@@ -9,6 +9,7 @@ import { createDb, type Database } from "@apercura/db";
 import { auditEvents, platformAuditEvents, removalRequests, reports } from "@apercura/db/schema";
 import { eq, inArray, sql } from "drizzle-orm";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
+import { isolatedDatabase } from "~/test/isolated-database";
 import { pgErrorCode } from "./booking/errors";
 import { purgeAuditLogs, purgeClosedRequests } from "./retention";
 
@@ -19,6 +20,9 @@ const MONTH = 31 * DAY;
 
 describe.skipIf(!url)("retention (database)", () => {
 	let db: Database;
+	// A database of its own: the purges delete the old reports, requests and access logs of every
+	// file running alongside.
+	const isolated = isolatedDatabase("retention");
 	const run = randomUUID().slice(0, 8);
 	const id = (name: string) => `${name}-${run}`;
 	let practitionerId = 0;
@@ -26,7 +30,7 @@ describe.skipIf(!url)("retention (database)", () => {
 	const ago = (ms: number) => new Date(now - ms);
 
 	beforeAll(async () => {
-		db = createDb({ url: url as string, max: 2 });
+		db = createDb({ url: await isolated.create(), max: 2 });
 		const [person] = await db.$client<{ id: number }[]>`
 			INSERT INTO directory.practitioners (national_id, first_name, last_name, first_name_source,
 				last_name_source, profession_code, slug)
@@ -37,11 +41,12 @@ describe.skipIf(!url)("retention (database)", () => {
 	});
 
 	afterAll(async () => {
-		if (!db) return;
+		if (!db) return isolated.drop();
 		await db.delete(reports).where(eq(reports.practitionerId, practitionerId));
 		await db.delete(removalRequests).where(eq(removalRequests.practitionerId, practitionerId));
 		await db.execute(sql`delete from directory.practitioners where id = ${practitionerId}`);
 		await db.close();
+		await isolated.drop();
 	});
 
 	it("deletes reports and removal requests once their retention after closure ends", async () => {
@@ -83,8 +88,7 @@ describe.skipIf(!url)("retention (database)", () => {
 			]);
 
 		const first = await purgeClosedRequests(db, now, {});
-		expect(first.reports).toBeGreaterThanOrEqual(2);
-		expect(first.removalRequests).toBeGreaterThanOrEqual(2);
+		expect(first).toEqual({ reports: 2, removalRequests: 2, contactRequests: 0 });
 		const kept = async () =>
 			[
 				...(await db
@@ -198,9 +202,7 @@ describe.skipIf(!url)("retention (database)", () => {
 			auditEvents: number;
 			platformAuditEvents: number;
 		};
-		expect(purged.months).toBe(12);
-		expect(purged.auditEvents).toBeGreaterThanOrEqual(1);
-		expect(purged.platformAuditEvents).toBeGreaterThanOrEqual(1);
+		expect(purged).toEqual({ months: 12, auditEvents: 1, platformAuditEvents: 1 });
 		expect(await left()).toEqual({ care: ["recent"], platform: [id("recent")] });
 
 		await db.delete(auditEvents).where(eq(auditEvents.organizationId, organizationId));

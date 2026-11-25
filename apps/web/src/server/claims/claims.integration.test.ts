@@ -21,6 +21,7 @@ import {
 import { TRPCError } from "@trpc/server";
 import { and, eq, inArray } from "drizzle-orm";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
+import { isolatedDatabase } from "~/test/isolated-database";
 
 const url = process.env.DATABASE_URL_TEST;
 
@@ -59,6 +60,9 @@ describe.skipIf(!url)("claims, ownership and objections (database)", async () =>
 	const { agendaRequirements } = await import("../booking/gate");
 
 	let db: Database;
+	// A database of its own: `purgeClaimDocuments` purges every due document and drains every
+	// queued storage deletion, those of the files running alongside included.
+	const isolated = isolatedDatabase("claims");
 	const run = randomUUID().slice(0, 8);
 	const ids = (name: string) => `${name}-${run}`;
 	const users = {
@@ -160,7 +164,7 @@ describe.skipIf(!url)("claims, ownership and objections (database)", async () =>
 	}
 
 	beforeAll(async () => {
-		db = createDb({ url, max: 2 });
+		db = createDb({ url: await isolated.create(), max: 2 });
 		await db.insert(user).values(
 			Object.values(users).map((id) => ({
 				id,
@@ -174,7 +178,7 @@ describe.skipIf(!url)("claims, ownership and objections (database)", async () =>
 	});
 
 	afterAll(async () => {
-		if (!db) return;
+		if (!db) return isolated.drop();
 		const sql = db.$client;
 		const orgs = await sql<{ owner_org_id: string }[]>`
 			SELECT owner_org_id FROM directory.practitioners
@@ -196,6 +200,7 @@ describe.skipIf(!url)("claims, ownership and objections (database)", async () =>
 		await sql`DELETE FROM directory.places WHERE id = ANY (${created.places}::integer[])`;
 		await db.delete(user).where(inArray(user.id, Object.values(users)));
 		await db.close();
+		await isolated.drop();
 	});
 
 	it("needs a session that proved a second factor before any claim", async () => {
