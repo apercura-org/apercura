@@ -62,9 +62,13 @@ export function LocaleSwitchLink({
 	}, [sync]);
 
 	const base = typeof href === "string" ? { pathname: href } : href;
+	// next-intl accepts the query of an href as an object or as a query string.
+	const baseQuery = "query" in base ? base.query : undefined;
+	const inherited =
+		typeof baseQuery === "string" ? Object.fromEntries(new URLSearchParams(baseQuery)) : baseQuery;
 	const target = {
 		...base,
-		...(state.query ? { query: { ...("query" in base ? base.query : {}), ...state.query } } : {}),
+		...(state.query ? { query: { ...inherited, ...state.query } } : {}),
 		...(state.hash ? { hash: state.hash } : {}),
 	} as ComponentProps<typeof Link>["href"];
 

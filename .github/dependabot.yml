@@ -1,3 +1,10 @@
+# Weekly, grouped updates: at most one pull request per ecosystem for minor and patch
+# releases, majors one by one (they usually need code changes and a read of the migration
+# guide). A few days of cooldown let a broken release be pulled before it reaches us.
+#
+# Not covered by Dependabot, to update by hand: the ARG-pinned base images of
+# docker/Dockerfile (NODE_VERSION, BUN_VERSION) and its supercronic checksums, the service
+# images of .github/workflows/ci.yml and the images started by docker/smoke-test.sh.
 version: 2
 updates:
   # Bun workspaces (bun.lock) are handled by the "bun" ecosystem.
@@ -5,7 +12,11 @@ updates:
     directory: /
     schedule:
       interval: weekly
-    open-pull-requests-limit: 10
+    cooldown:
+      default-days: 3
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: chore(deps)
     groups:
       minor-and-patch:
         update-types: [minor, patch]
@@ -14,6 +25,23 @@ updates:
     directory: /
     schedule:
       interval: weekly
+    commit-message:
+      prefix: ci
     groups:
       actions:
         patterns: ["*"]
+
+  # Images of the compose files (PostGIS, MinIO and its client, Mailpit).
+  - package-ecosystem: docker-compose
+    directory: /docker
+    schedule:
+      interval: weekly
+    commit-message:
+      prefix: chore(docker)
+    groups:
+      images:
+        patterns: ["*"]
+    ignore:
+      # A new PostgreSQL major needs a dump and restore (docs/self-hosting.md): by hand.
+      - dependency-name: postgis/postgis
+        update-types: [version-update:semver-major]
