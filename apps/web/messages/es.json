@@ -775,7 +775,7 @@
 			"heading": "Oponerse a una página",
 			"body": [
 				"En virtud del artículo 21 del RGPD, un profesional sanitario puede oponerse a la publicación de su página. Apercura publica el directorio sobre la base de un interés legítimo: informar al público a partir de datos públicos.",
-				"Una página no reclamada se ocultará en cuanto se reciba la solicitud y se eliminará tras una comprobación sencilla de esta. Su titular puede retirar una página reclamada en cualquier momento. Una página retirada se suprime con sus datos: solo se conserva el número RPPS, para que la página no vuelva a aparecer con las importaciones siguientes."
+				"Una página no reclamada se ocultará en cuanto se reciba la solicitud y se eliminará tras una comprobación sencilla de esta. Su titular puede retirar una página reclamada en cualquier momento. Una página retirada se suprime con sus datos; solo se conserva un registro de la retirada (el número RPPS, el país, el motivo, quién lo anotó y cuándo), para que la página no vuelva a aparecer con las importaciones siguientes. Un titular que retira su página conserva además, solo en su cuenta y sin publicarse, el nombre, el título, la profesión y el número RPPS que se muestran en su espacio, su reclamación y los lugares que usa su agenda."
 			],
 			"formTitle": "Solicitar la retirada de una página",
 			"formBody": "Para una página no reclamada. La página se oculta de inmediato y se elimina tras una comprobación sencilla. Una página reclamada la retira su titular, desde su espacio."
@@ -875,7 +875,7 @@
 					"Datos: apellidos, nombre, tratamiento, número RPPS, profesión, especialidades y competencias, lugares y modalidades de ejercicio, teléfonos publicados, sector de concierto con el seguro de enfermedad (conventionnement), adhesión a la OPTAM y aceptación de la Carte Vitale. Un profesional de salud que reclama su página puede añadir su horario, sus honorarios, sus idiomas, una foto y una presentación.",
 					"Fuentes: el Annuaire Santé de la Agence du numérique en santé, el registro FINESS y el directorio de la Assurance Maladie, reutilizados bajo la Licence Ouverte 2.0 y actualizados cada semana.",
 					"Finalidad: permitir al público encontrar a un profesional de salud, sus lugares de ejercicio y la forma de contactarlo. Base jurídica: el interés legítimo de informar al público a partir de datos públicos (artículo 6.1.f del RGPD).",
-					"Plazo: mientras el profesional figure en los registros públicos. Una página no reclamada desaparece tras dos actualizaciones semanales en las que el profesional ya no figura en el registro; una página retirada por oposición se suprime de inmediato y no se vuelve a publicar nunca: solo se conserva su número RPPS.",
+					"Plazo: mientras el profesional figure en los registros públicos. Una página no reclamada desaparece tras dos actualizaciones semanales en las que el profesional ya no figura en el registro; una página retirada por oposición se suprime de inmediato y no se vuelve a publicar nunca: solo se conserva un registro de la retirada (el número RPPS, el país, el motivo, quién lo anotó y cuándo).",
 					"Información: escribir a cada profesional supondría un esfuerzo desproporcionado (artículo 14.5.b del RGPD). Se informa a los profesionales mediante la página de datos, un aviso en cada página y esta política."
 				]
 			},
@@ -900,7 +900,7 @@
 				"heading": "Avisos de error y solicitudes de retirada",
 				"body": [
 					"Datos: el mensaje, el correo electrónico de contacto cuando se facilita y, en una solicitud de retirada, la página afectada. El texto libre se cifra.",
-					"Finalidades: corregir los errores notificados y aplicar las oposiciones. Bases jurídicas: el interés legítimo de publicar información exacta (artículo 6.1.f) y el derecho de oposición (artículo 21). Plazo: el tiempo necesario para tramitar la solicitud; después, un aviso de error se suprime 6 meses después de su cierre y una solicitud de retirada rechazada un año después de su decisión. En cuanto se confirma una oposición, o un titular retira su página, la página y todos los datos del profesional se suprimen de inmediato, incluidos la solicitud de retirada y los avisos de error; solo se conserva un registro de la retirada (el número RPPS, el país, el motivo, quién lo anotó y cuándo), para que las importaciones siguientes omitan al profesional y la página no vuelva a publicarse nunca. Si se retira la oposición, ese registro se suprime y la página vuelve con la siguiente actualización semanal. Un titular que retira su página conserva, solo en su cuenta y hasta que la suprima, el nombre y el número RPPS que se muestran en su espacio y los lugares que usa su agenda.",
+					"Finalidades: corregir los errores notificados y aplicar las oposiciones. Bases jurídicas: el interés legítimo de publicar información exacta (artículo 6.1.f) y el derecho de oposición (artículo 21). Plazo: el tiempo necesario para tramitar la solicitud; después, un aviso de error se suprime 6 meses después de su cierre y una solicitud de retirada rechazada un año después de su decisión. En cuanto se confirma una oposición, o un titular retira su página, la página y los datos del profesional se suprimen de inmediato, incluidos las solicitudes de retirada, los avisos de error y las reclamaciones de otras personas; solo se conserva un registro de la retirada (el número RPPS, el país, el motivo, quién lo anotó y cuándo), para que las importaciones siguientes omitan al profesional y la página no vuelva a publicarse nunca. Si se retira la oposición, ese registro se suprime y la página vuelve con la siguiente actualización semanal. Dos cosas pueden retener aún lo que queda de la página, que nunca se publica: la cuenta del titular que la retiró, que conserva el nombre, el título, la profesión, el número RPPS y la dirección de la página que se muestran en su espacio, su reclamación (cuyos justificantes se suprimen 30 días después de su decisión, como los de cualquier reclamación) y los lugares que usa su agenda, hasta que se suprime la cuenta; y la agenda de una consulta, que conserva la misma identidad hasta el cierre de la consulta. Después, ese resto se suprime, a más tardar con la siguiente actualización semanal.",
 					"Solicitudes «Soy este profesional»: el nombre, el correo electrónico profesional, el teléfono si se indica, el mensaje y la página afectada, cifrados. Finalidad: ayudar a un profesional que no puede reclamar su página en línea. Base jurídica: el interés legítimo de mantener el directorio al día con los profesionales afectados (artículo 6.1.f). Plazo: 12 meses después del último intercambio."
 				]
 			},
@@ -1226,7 +1226,7 @@
 				"body": [
 					"Data: the message, the contact email address when one is given and the page concerned; for an “I am this practitioner” request also the name and phone number. Free text is encrypted.",
 					"Purposes: correcting errors, applying objections and helping a practitioner who cannot claim their page online. Legal bases: legitimate interest (article 6 (1) (f)) and the right to object (article 21).",
-					"Retention: a report is deleted 6 months after it is closed, an objection one year after its decision, a contact request 12 months after the last exchange; after an objection only the identifier of the page is kept, so that it is never published again."
+					"Retention: a report is deleted 6 months after it is closed, a rejected objection one year after its decision, a contact request 12 months after the last exchange. Once an objection is confirmed, or the holder of a claimed page removes it, the page and the data about the person are deleted at once, the objection included; all that is kept is a record of the removal (the identifier of the page, the country, the reason, who recorded it and when), so that it is never published again. A holder who removes their page keeps, in their account only and never published, the name, title, profession and identifier shown in their space, their claim and the places their agenda uses, until the account is deleted."
 				]
 			},
 			"technical": {
@@ -2971,7 +2971,8 @@
 				"understood": "Entiendo que este contenido se suprime",
 				"confirm": "Retirar mi página",
 				"cancel": "Cancelar"
-			}
+			},
+			"busy": "El directorio se está actualizando con la importación semanal: su página no se ha modificado. Inténtelo de nuevo dentro de unos minutos."
 		},
 		"preview": {
 			"title": "Vista previa",
@@ -3060,6 +3061,7 @@
 			"contact": "Contacto",
 			"message": "Mensaje",
 			"failed": "La acción ha fallado. Vuelva a cargar la página e inténtelo de nuevo.",
+			"busy": "El directorio se está actualizando con la importación semanal: no se ha modificado nada. Inténtelo de nuevo dentro de unos minutos, cuando haya terminado.",
 			"auditNote": "Al leer una solicitud, esta se descifra y la lectura queda anotada en el registro de auditoría.",
 			"tabsLabel": "Colas",
 			"removalsTab": "Solicitudes de retirada ({count})",

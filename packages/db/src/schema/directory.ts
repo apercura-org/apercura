@@ -543,6 +543,18 @@ export const landingPages = directory.table(
 	],
 );
 
+/**
+ * Rebuilds of the listing counts (`directory.refresh_landing_pages`) the app could not run at
+ * once because an import held its lock (a removal confirmed during an import): one row per
+ * cache tag to expire after the rebuild (the listings concerned and the sitemaps). `jobs:tick
+ * landing-counts` rebuilds the counts once the lock is free, then deletes the rows and sends
+ * the tags. Tags only, nothing about the person.
+ */
+export const landingRefreshRequests = directory.table("landing_refresh_requests", {
+	tag: text().primaryKey(),
+	requestedAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
+});
+
 /** Search documents. `name_norm` is precomputed: `unaccent` cannot be indexed. */
 export const searchDocs = directory.table(
 	"search_docs",

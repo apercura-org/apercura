@@ -224,15 +224,19 @@ Once a removal is confirmed (a GDPR art. 21 objection checked by an
 administrator, or the owner of a claimed page removing it), only the
 `directory.suppressions` row stays: country, id scheme, national id, reason
 (`objection` or `owner`), who recorded it and when (#116).
-`directory.purge_suppressed_practitioners` (migration 0023) deletes the rest
+`directory.purge_suppressed_practitioners` (migrations 0023 to 0025) deletes the rest
 in the app's transaction: places of practice (and the sites nobody else links
 to), qualifications, Ameli fields, owner content and photo, former slugs, the
 page and search entry, page statistics, error reports, removal and contact
 requests, claims on the page, and the person's lines in the last run's staging
-and quarantine tables. The row itself is deleted unless the owner's claim (who
+and quarantine tables (a quarantined line when one of its fields is their RPPS
+or national PP id). The row itself is deleted unless the owner's claim (who
 may restore the page from their space) or a practice's agenda
-(`care.calendars`) still holds it: that bare row is never published and the
-next purge after nothing holds it deletes it. Every run calls the function over
+(`care.calendars`) still holds it: that bare row keeps only its owner's
+verified claim, is never published, and the next purge after nothing holds it
+deletes it. The app refuses a removal while a run holds the import's lock (the
+administrator or owner retries after the run), and leaves the listing counts
+it could not rebuild to `jobs:tick landing-counts`. Every run calls the function over
 all suppressions, and the import never stores their lines again.
 
 To **withdraw an objection** (the practitioner asks for the page back), an

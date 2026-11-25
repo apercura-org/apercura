@@ -6,10 +6,11 @@
  * skipped when the variable is unset.
  */
 import { randomBytes, randomUUID } from "node:crypto";
+import { IMPORT_LOCK_KEY } from "@apercura/core";
 import { createDb, type Database } from "@apercura/db";
 import { organization, user } from "@apercura/db/schema";
 import { inArray } from "drizzle-orm";
-import { afterAll, beforeAll, describe, expect, it } from "vitest";
+import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 
 const url = process.env.DATABASE_URL_TEST;
 
@@ -145,7 +146,7 @@ describe.skipIf(!url)("minimisation of removed practitioners (database)", async 
 	};
 
 	beforeAll(async () => {
-		db = createDb({ url, max: 2 });
+		db = createDb({ url, max: 4 });
 		await db.insert(user).values(
 			Object.values(users).map((id) => ({
 				id,
@@ -169,6 +170,9 @@ describe.skipIf(!url)("minimisation of removed practitioners (database)", async 
 		await sql`DELETE FROM directory.sites WHERE id = ANY (${created.sites}::integer[])`;
 		await sql`DELETE FROM directory.places WHERE id = ANY (${created.places}::integer[])`;
 		await sql`DELETE FROM directory.landing_pages WHERE listing_slug = ${listing}`;
+		await sql`DELETE FROM directory.landing_refresh_requests`;
+		await sql`DELETE FROM directory.stg_quarantine WHERE reason = ${ids("quarantine")}`;
+		await sql`DELETE FROM directory.storage_deletions WHERE key LIKE ${`%-${run}%`}`;
 		await db.delete(organization).where(inArray(organization.id, [orgId]));
 		await db.delete(user).where(inArray(user.id, Object.values(users)));
 		await db.close();
@@ -232,7 +236,21 @@ describe.skipIf(!url)("minimisation of removed practitioners (database)", async 
 		});
 		expect(decided.contact).toBe("objection@example.test");
 		const purge = decided.purge;
-		expect(purge).toMatchObject({ deleted: 1, kept: 0, sites: 1, objects: 2 });
+		expect(purge).toMatchObject({ deleted: 1, kept: 0, sites: 1, objects: 2, claims: 0 });
+		// Recorded with the counts only: nothing that names the practitioner.
+		const events = await sql<
+			{ actor: string; subject_type: string; details: Record<string, number> }[]
+		>`
+			SELECT actor, subject_type, details FROM directory.platform_audit_events
+			WHERE action = 'practitioner.purge' AND subject_id = ${request.id}
+		`;
+		expect(events).toEqual([
+			{
+				actor: users.admin,
+				subject_type: "removal_request",
+				details: { deleted: 1, kept: 0, sites: 1, objects: 2, claims: 0 },
+			},
+		]);
 		expect(purge?.tags).toEqual(
 			expect.arrayContaining([
 				`practitioner:${page.id}`,
@@ -270,7 +288,7 @@ describe.skipIf(!url)("minimisation of removed practitioners (database)", async 
 		const expired: string[] = [];
 		await minimise.afterPurge(
 			db,
-			purge ?? { deleted: 0, kept: 0, sites: 0, objects: 0, tags: [] },
+			purge ?? { deleted: 0, kept: 0, sites: 0, objects: 0, claims: 0, tags: [] },
 			{
 				storage,
 				revalidate: (tag) => {
@@ -397,5 +415,290 @@ describe.skipIf(!url)("minimisation of removed practitioners (database)", async 
 			practitioner_pages: 1,
 			search_docs: 1,
 		});
+	});
+
+	/** Holds the import's advisory lock on a connection of its own, as a running import does. */
+	async function holdImportLock() {
+		const reserved = await db.$client.reserve();
+		await reserved`SELECT pg_advisory_lock(${IMPORT_LOCK_KEY})`;
+		return async () => {
+			await reserved`SELECT pg_advisory_unlock(${IMPORT_LOCK_KEY})`;
+			reserved.release();
+		};
+	}
+
+	/** A claimed page of the test organization, with its agenda on the registry place. */
+	async function claimedWithAgenda() {
+		const page = await practitioner();
+		const sql = db.$client;
+		await sql`
+			UPDATE directory.practitioners SET claim_status = 'claimed', owner_org_id = ${orgId}
+			WHERE id = ${page.id}
+		`;
+		await sql`
+			INSERT INTO care.calendars (organization_id, practitioner_id, site_id, time_zone)
+			VALUES (${orgId}, ${page.id}, ${page.siteId}, 'Europe/Paris')
+		`;
+		return page;
+	}
+
+	it("refuses a removal while an import runs, and changes nothing", async () => {
+		const page = await practitioner();
+		const request = await gdpr.requestRemoval(db, {
+			ref: page.rpps,
+			contact: "objection@example.test",
+			message: null,
+			locale: "fr",
+		});
+		const release = await holdImportLock();
+		try {
+			await expect(
+				gdpr.decideRemoval(db, {
+					id: request.id,
+					adminId: users.admin,
+					confirm: true,
+					reason: null,
+				}),
+			).rejects.toMatchObject({ name: "GdprError", code: "BUSY" });
+		} finally {
+			await release();
+		}
+		// Nothing happened: the request waits, no suppression, the page is only withheld.
+		expect(
+			await count(`directory.removal_requests WHERE id = '${request.id}' AND status = 'pending'`),
+		).toBe(1);
+		expect(await count(`directory.suppressions WHERE national_id = '${page.rpps}'`)).toBe(0);
+		expect(await count(`directory.practitioners WHERE id = ${page.id} AND status = 'active'`)).toBe(
+			1,
+		);
+		// After the import, the same decision goes through.
+		const decided = await gdpr.decideRemoval(db, {
+			id: request.id,
+			adminId: users.admin,
+			confirm: true,
+			reason: null,
+		});
+		expect(decided.purge).toMatchObject({ deleted: 1 });
+		expect(await count(`directory.practitioners WHERE id = ${page.id}`)).toBe(0);
+	});
+
+	it("gives up on a page another transaction holds after the lock timeout", async () => {
+		const page = await claimedWithAgenda();
+		expect(gdpr.REMOVAL_LOCK_TIMEOUT).toBe("5s");
+		// Another writer (an import's merge, a booking) holds the practitioner row.
+		const holder = await db.$client.reserve();
+		await holder`BEGIN`;
+		await holder`SELECT id FROM directory.practitioners WHERE id = ${page.id} FOR UPDATE`;
+		const started = Date.now();
+		try {
+			await expect(
+				gdpr.setOwnerRemoval(db, { practitionerId: page.id, userId: users.owner, removed: true }),
+			).rejects.toMatchObject({ name: "GdprError", code: "BUSY" });
+		} finally {
+			await holder`ROLLBACK`;
+			holder.release();
+		}
+		const waited = Date.now() - started;
+		expect(waited).toBeGreaterThanOrEqual(4_500);
+		expect(waited).toBeLessThan(10_000);
+		expect(await count(`directory.suppressions WHERE national_id = '${page.rpps}'`)).toBe(0);
+		// The timeout was the transaction's own: the connection is back to the default.
+		const [setting] = await db.$client<{ lock_timeout: string }[]>`SHOW lock_timeout`;
+		expect(setting?.lock_timeout).toBe("0");
+	}, 20_000);
+
+	it("deletes the other claims of a kept row, with their documents", async () => {
+		const page = await claimedWithAgenda();
+		const sql = db.$client;
+		const claim = async (userId: string, status: string, document: string) => {
+			const id = ids(`claim-${status}`);
+			await sql`
+				INSERT INTO directory.claims (id, practitioner_id, user_id, status, contest)
+				VALUES (${id}, ${page.id}, ${userId}, ${status}, ${status !== "verified"})
+			`;
+			await sql`
+				INSERT INTO directory.claim_documents (id, claim_id, kind, storage_key, content_type, byte_size)
+				VALUES (${ids(`document-${status}`)}, ${id}, 'cps_card', ${document}, 'application/pdf', 1)
+			`;
+			return id;
+		};
+		const own = await claim(users.owner, "verified", `claims/own-${run}`);
+		// A contest in progress, and an older rejected claim: identity documents of other people.
+		await claim(users.claimant, "in_review", `claims/contest-${run}`);
+		await claim(users.admin, "rejected", `claims/rejected-${run}`);
+
+		const purge = await gdpr.setOwnerRemoval(db, {
+			practitionerId: page.id,
+			userId: users.owner,
+			removed: true,
+		});
+		expect(purge).toMatchObject({ deleted: 0, kept: 1, claims: 2, objects: 2 });
+		const left = await sql<{ id: string }[]>`
+			SELECT id FROM directory.claims WHERE practitioner_id = ${page.id}
+		`;
+		expect(left.map((row) => row.id)).toEqual([own]);
+		const queued = await sql<{ key: string }[]>`
+			SELECT key FROM directory.storage_deletions
+			WHERE key IN (${`claims/own-${run}`}, ${`claims/contest-${run}`}, ${`claims/rejected-${run}`})
+			ORDER BY key
+		`;
+		// The owner's own proof follows the usual 30 days after its decision.
+		expect(queued.map((row) => row.key)).toEqual([
+			`claims/contest-${run}`,
+			`claims/rejected-${run}`,
+		]);
+		const [event] = await sql<{ subject_type: string; subject_id: string; details: object }[]>`
+			SELECT subject_type, subject_id, details FROM directory.platform_audit_events
+			WHERE action = 'practitioner.purge' AND actor = ${users.owner}
+			ORDER BY id DESC LIMIT 1
+		`;
+		expect(event).toEqual({
+			subject_type: "user",
+			subject_id: users.owner,
+			details: { deleted: 0, kept: 1, sites: 0, objects: 2, claims: 2 },
+		});
+		await sql`DELETE FROM directory.claims WHERE id = ${own}`;
+	});
+
+	it("matches a quarantined line on a whole id field, never on digits containing the id", async () => {
+		const page = await practitioner();
+		const sql = db.$client;
+		const reason = ids("quarantine");
+		const lines = {
+			rpps: `8|${page.rpps}|8${page.rpps}|MARTIN|EXEMPLE`,
+			nationalId: `8|0|8${page.rpps}|MARTIN`,
+			// The RPPS inside a longer number (another person's id, a phone number): not theirs.
+			inside: `8|1${page.rpps}|81${page.rpps}|DURAND`,
+			prefix: `8|${page.rpps}9|8${page.rpps}9|DURAND`,
+		};
+		for (const [index, [file, sample]] of [
+			["personneActivite", lines.rpps],
+			["diplomes", lines.nationalId],
+			["personneActivite", lines.inside],
+			["savoirFaire", lines.prefix],
+		].entries()) {
+			await sql`
+				INSERT INTO directory.stg_quarantine (file, line_no, reason, sample)
+				VALUES (${file as string}, ${index + 1}, ${reason}, ${sample as string})
+			`;
+		}
+		await sql`
+			INSERT INTO directory.suppressions (country, id_scheme, national_id, reason, created_by)
+			VALUES ('FR', 'RPPS', ${page.rpps}, 'objection', ${users.admin})
+		`;
+		expect(await minimise.purgeSuppressed(db, [page.id])).toMatchObject({ deleted: 1 });
+		const left = await sql<{ sample: string }[]>`
+			SELECT sample FROM directory.stg_quarantine WHERE reason = ${reason} ORDER BY line_no
+		`;
+		expect(left.map((row) => row.sample)).toEqual([lines.inside, lines.prefix]);
+	});
+
+	it("queues the listing counts for jobs:tick while an import holds its lock", async () => {
+		const page = await practitioner();
+		const sql = db.$client;
+		await sql`DELETE FROM directory.landing_refresh_requests`;
+		expect(await minimise.refreshLandingCounts(db, [])).toBe(true);
+		const key = `${listing}:${page.placeId}`;
+		expect(await count(`directory.landing_pages WHERE key = '${key}'`)).toBe(1);
+		await sql`
+			INSERT INTO directory.suppressions (country, id_scheme, national_id, reason, created_by)
+			VALUES ('FR', 'RPPS', ${page.rpps}, 'objection', ${users.admin})
+		`;
+		const purge = await minimise.purgeSuppressed(db, [page.id]);
+		const listings = purge.tags.filter((tag) => tag.startsWith("listing:"));
+		expect(listings).toContain(`listing:${key}`);
+
+		const sent: string[][] = [];
+		const send = async (tags: readonly string[]) => {
+			sent.push([...tags]);
+			return tags.length;
+		};
+		const release = await holdImportLock();
+		try {
+			const expired: string[] = [];
+			await minimise.afterPurge(db, purge, {
+				storage: null,
+				revalidate: (tag) => expired.push(tag),
+			});
+			// Not rebuilt (the import holds the lock), queued with what to expire afterwards.
+			expect(await count(`directory.landing_pages WHERE key = '${key}'`)).toBe(1);
+			const queued = await sql<{ tag: string }[]>`
+				SELECT tag FROM directory.landing_refresh_requests ORDER BY tag
+			`;
+			expect(queued.map((row) => row.tag)).toEqual([...listings, "sitemap"].sort());
+			expect(expired).toEqual(expect.arrayContaining([...purge.tags, "sitemap"]));
+			// jobs:tick leaves it while the import runs.
+			expect(await minimise.runQueuedLandingRefresh(db, send)).toMatchObject({
+				rebuilt: false,
+			});
+			expect(await count("directory.landing_refresh_requests")).toBe(listings.length + 1);
+		} finally {
+			await release();
+		}
+		// Then rebuilds the counts, empties the queue and sends the tags.
+		expect(await minimise.runQueuedLandingRefresh(db, send)).toMatchObject({
+			queued: listings.length + 1,
+			rebuilt: true,
+		});
+		expect(await count(`directory.landing_pages WHERE key = '${key}'`)).toBe(0);
+		expect(await count("directory.landing_refresh_requests")).toBe(0);
+		expect(sent).toHaveLength(1);
+		expect(sent[0]).toEqual(expect.arrayContaining([...listings, "sitemap"]));
+		// Nothing queued: nothing to do, the import's lock is not even tried.
+		expect(await minimise.runQueuedLandingRefresh(db, send)).toEqual({
+			queued: 0,
+			rebuilt: false,
+			revalidated: 0,
+		});
+	});
+
+	it("finishes a removed page after the account goes, and never fails the deletion", async () => {
+		const page = await claimedWithAgenda();
+		const sql = db.$client;
+		await gdpr.setOwnerRemoval(db, { practitionerId: page.id, userId: users.owner, removed: true });
+		// A claim opened since (a page kept bare is never published, but a claim can predate it).
+		const claimId = ids("late-claim");
+		const document = `claims/late-${run}`;
+		await sql`
+			INSERT INTO directory.claims (id, practitioner_id, user_id, status)
+			VALUES (${claimId}, ${page.id}, ${users.claimant}, 'in_review')
+		`;
+		await sql`
+			INSERT INTO directory.claim_documents (id, claim_id, kind, storage_key, content_type, byte_size)
+			VALUES (${ids("late-document")}, ${claimId}, 'cps_card', ${document}, 'application/pdf', 1)
+		`;
+		const storage = memoryDriver();
+		await storage.put(document, new Uint8Array([3]), "application/octet-stream");
+		// The account is deleted while the practice's agenda is being closed: the claim no longer
+		// holds the row, the agenda still does.
+		await sql`
+			UPDATE directory.practitioners SET claim_status = 'unclaimed', owner_org_id = NULL
+			WHERE id = ${page.id}
+		`;
+		const input = {
+			userId: users.owner,
+			practitionerIds: [page.id],
+			storage,
+			revalidate: () => {},
+		};
+
+		// During an import: logged, left to the import, never thrown at the deleted account.
+		const logged = vi.spyOn(console, "error").mockImplementation(() => {});
+		const release = await holdImportLock();
+		try {
+			await expect(gdpr.afterAccountDeletion(db, input)).resolves.toBeNull();
+			expect(logged).toHaveBeenCalledWith(expect.stringContaining("left to the next import"));
+		} finally {
+			await release();
+			logged.mockRestore();
+		}
+		expect(await count(`directory.claims WHERE id = '${claimId}'`)).toBe(1);
+
+		// Afterwards: a kept row (deleted 0, kept 1) still gets the follow-up, objects included.
+		const purge = await gdpr.afterAccountDeletion(db, input);
+		expect(purge).toMatchObject({ deleted: 0, kept: 1, claims: 1, objects: 1 });
+		expect(await count(`directory.claims WHERE id = '${claimId}'`)).toBe(0);
+		expect(storage.objects.has(document)).toBe(false);
+		expect(await count(`directory.storage_deletions WHERE key = '${document}'`)).toBe(0);
 	});
 });

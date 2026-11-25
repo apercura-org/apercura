@@ -775,7 +775,7 @@
 			"heading": "Opporsi a una pagina",
 			"body": [
 				"In base all’articolo 21 del GDPR, un professionista può opporsi alla pubblicazione della propria pagina. Apercura pubblica l’elenco sulla base di un legittimo interesse: informare il pubblico a partire da dati pubblici.",
-				"Una pagina non rivendicata sarà nascosta non appena ricevuta la richiesta, poi eliminata dopo una breve verifica della richiesta. Una pagina rivendicata può essere rimossa dal suo titolare in qualsiasi momento. Una pagina rimossa è cancellata con i suoi dati: è conservato solo il numero RPPS, perché la pagina non ricompaia con le importazioni successive."
+				"Una pagina non rivendicata sarà nascosta non appena ricevuta la richiesta, poi eliminata dopo una breve verifica della richiesta. Una pagina rivendicata può essere rimossa dal suo titolare in qualsiasi momento. Una pagina rimossa è cancellata con i suoi dati; resta solo una traccia della rimozione (il numero RPPS, il paese, il motivo, chi l’ha registrata e quando), perché la pagina non ricompaia con le importazioni successive. Un titolare che rimuove la sua pagina conserva inoltre, solo nel suo account e senza pubblicazione, il nome, il titolo, la professione e il numero RPPS mostrati nella sua area, la sua rivendicazione e le sedi usate dalla sua agenda."
 			],
 			"formTitle": "Chiedere la rimozione di una pagina",
 			"formBody": "Per una pagina non rivendicata. La pagina viene nascosta subito, poi eliminata dopo una breve verifica. Una pagina rivendicata viene rimossa dal suo titolare, dal suo spazio."
@@ -875,7 +875,7 @@
 					"Dati: cognome, nome, titolo, numero RPPS, professione, specialità e competenze, luoghi e modalità di esercizio, numeri di telefono pubblicati, settore di convenzionamento con l’assicurazione sanitaria (conventionnement), adesione all’OPTAM e accettazione della Carte Vitale. Un professionista che rivendica la propria pagina può aggiungervi orari, onorari, lingue, una foto e una presentazione.",
 					"Fonti: l’Annuaire Santé dell’Agence du numérique en santé, il registro FINESS e l’elenco dell’Assurance Maladie, riutilizzati con Licence Ouverte 2.0 e aggiornati ogni settimana.",
 					"Finalità: permettere al pubblico di trovare un professionista sanitario, i suoi luoghi di esercizio e il modo di contattarlo. Base giuridica: il legittimo interesse a informare il pubblico a partire da dati pubblici (articolo 6.1.f del GDPR).",
-					"Durata: finché il professionista figura nei registri pubblici. Una pagina non rivendicata scompare dopo due aggiornamenti settimanali in cui il professionista non figura più nel registro; una pagina rimossa a seguito di opposizione è cancellata subito e non viene mai più ripubblicata: è conservato solo il suo numero RPPS.",
+					"Durata: finché il professionista figura nei registri pubblici. Una pagina non rivendicata scompare dopo due aggiornamenti settimanali in cui il professionista non figura più nel registro; una pagina rimossa a seguito di opposizione è cancellata subito e non viene mai più ripubblicata: resta solo una traccia della rimozione (il numero RPPS, il paese, il motivo, chi l’ha registrata e quando).",
 					"Informazione: scrivere a ogni professionista richiederebbe uno sforzo sproporzionato (articolo 14.5.b del GDPR). I professionisti sono informati tramite la pagina dei dati, un avviso su ogni pagina e questa informativa."
 				]
 			},
@@ -900,7 +900,7 @@
 				"heading": "Segnalazioni e richieste di rimozione",
 				"body": [
 					"Dati: il messaggio, l’indirizzo e-mail di contatto se fornito e, per una richiesta di rimozione, la pagina interessata. Il testo libero è cifrato.",
-					"Finalità: correggere gli errori segnalati e dare seguito alle opposizioni. Basi giuridiche: il legittimo interesse a pubblicare informazioni esatte (articolo 6.1.f) e il diritto di opposizione (articolo 21). Durata: il tempo necessario per gestire la richiesta; poi una segnalazione è cancellata 6 mesi dopo la sua chiusura e una richiesta di rimozione respinta un anno dopo la decisione. Non appena un’opposizione è confermata, o un titolare rimuove la sua pagina, la pagina e tutti i dati del professionista sono cancellati subito, compresi la richiesta di rimozione e le segnalazioni; resta solo una traccia della rimozione (il numero RPPS, il paese, il motivo, chi l’ha registrata e quando), perché le importazioni successive ignorino il professionista e la pagina non sia mai ripubblicata. Se l’opposizione è ritirata, questa traccia è cancellata e la pagina ricompare con l’aggiornamento settimanale successivo. Un titolare che rimuove la sua pagina conserva, solo nel suo account e fino alla sua cancellazione, il nome e il numero RPPS mostrati nella sua area e le sedi usate dalla sua agenda.",
+					"Finalità: correggere gli errori segnalati e dare seguito alle opposizioni. Basi giuridiche: il legittimo interesse a pubblicare informazioni esatte (articolo 6.1.f) e il diritto di opposizione (articolo 21). Durata: il tempo necessario per gestire la richiesta; poi una segnalazione è cancellata 6 mesi dopo la sua chiusura e una richiesta di rimozione respinta un anno dopo la decisione. Non appena un’opposizione è confermata, o un titolare rimuove la sua pagina, la pagina e i dati del professionista sono cancellati subito, comprese le richieste di rimozione, le segnalazioni e le rivendicazioni di altre persone; resta solo una traccia della rimozione (il numero RPPS, il paese, il motivo, chi l’ha registrata e quando), perché le importazioni successive ignorino il professionista e la pagina non sia mai ripubblicata. Se l’opposizione è ritirata, questa traccia è cancellata e la pagina ricompare con l’aggiornamento settimanale successivo. Due cose possono ancora trattenere ciò che resta della pagina, mai pubblicato: l’account del titolare che l’ha rimossa, che conserva il nome, il titolo, la professione, il numero RPPS e l’indirizzo della pagina mostrati nella sua area, la sua rivendicazione (i cui documenti sono cancellati 30 giorni dopo la decisione, come per ogni rivendicazione) e le sedi usate dalla sua agenda, fino alla cancellazione dell’account; e l’agenda di uno studio, che conserva la stessa identità fino alla chiusura dello studio. Questo resto è poi cancellato, al più tardi con l’aggiornamento settimanale successivo.",
 					"Richieste «Sono questo professionista»: il nome, l’indirizzo e-mail professionale, il telefono se indicato, il messaggio e la pagina interessata, cifrati. Finalità: aiutare un professionista che non può rivendicare la sua pagina online. Base giuridica: il legittimo interesse di mantenere l’elenco aggiornato con i professionisti interessati (articolo 6.1.f). Durata: 12 mesi dopo l’ultimo scambio."
 				]
 			},
@@ -1226,7 +1226,7 @@
 				"body": [
 					"Data: the message, the contact email address when one is given and the page concerned; for an “I am this practitioner” request also the name and phone number. Free text is encrypted.",
 					"Purposes: correcting errors, applying objections and helping a practitioner who cannot claim their page online. Legal bases: legitimate interest (article 6 (1) (f)) and the right to object (article 21).",
-					"Retention: a report is deleted 6 months after it is closed, an objection one year after its decision, a contact request 12 months after the last exchange; after an objection only the identifier of the page is kept, so that it is never published again."
+					"Retention: a report is deleted 6 months after it is closed, a rejected objection one year after its decision, a contact request 12 months after the last exchange. Once an objection is confirmed, or the holder of a claimed page removes it, the page and the data about the person are deleted at once, the objection included; all that is kept is a record of the removal (the identifier of the page, the country, the reason, who recorded it and when), so that it is never published again. A holder who removes their page keeps, in their account only and never published, the name, title, profession and identifier shown in their space, their claim and the places their agenda uses, until the account is deleted."
 				]
 			},
 			"technical": {
@@ -2971,7 +2971,8 @@
 				"understood": "Ho capito che questo contenuto viene cancellato",
 				"confirm": "Rimuovere la mia pagina",
 				"cancel": "Annulla"
-			}
+			},
+			"busy": "L’elenco è in corso di aggiornamento con l’importazione settimanale: la sua pagina non è stata modificata. Riprovi tra qualche minuto."
 		},
 		"preview": {
 			"title": "Anteprima",
@@ -3060,6 +3061,7 @@
 			"contact": "Contatto",
 			"message": "Messaggio",
 			"failed": "L’azione non è riuscita. Ricarichi la pagina e riprovi.",
+			"busy": "L’elenco è in corso di aggiornamento con l’importazione settimanale: non è stato modificato nulla. Riprovi tra qualche minuto, a importazione conclusa.",
 			"auditNote": "La lettura di una richiesta la decifra e viene registrata nel registro di audit.",
 			"tabsLabel": "Code",
 			"removalsTab": "Richieste di rimozione ({count})",

@@ -7,6 +7,7 @@ import { writeAudit } from "~/server/phi";
 import { purgeExpiredRateLimits } from "~/server/rate-limit";
 import { sendAdminAlerts } from "../admin-alerts";
 import { purgeClaimDocuments } from "../claims/service";
+import { runQueuedLandingRefresh } from "../gdpr/minimise";
 import { purgeAuditLogs, purgeClosedRequests, purgePageViews } from "../retention";
 import { getStorage, type StorageDriver, storageConfigured } from "../storage";
 import { finalizeClosures } from "./closure";
@@ -338,6 +339,18 @@ export function closuresJob(db: Database, nowMs: number) {
 	return withAdvisoryLock(db, "jobs:closures", () => finalizeClosures(db, nowMs));
 }
 
+/**
+ * The listing-count rebuilds the app left because an import held its lock (a removal confirmed
+ * during an import, `refreshLandingCounts`): run once the lock is free, then their listings and
+ * the sitemaps are expired in the app (`sendRevalidation`).
+ */
+export function landingCountsJob(
+	db: Database,
+	revalidate: (tags: readonly string[]) => Promise<number> = sendRevalidation,
+) {
+	return withAdvisoryLock(db, "jobs:landing-counts", () => runQueuedLandingRefresh(db, revalidate));
+}
+
 /** Error reports, removal and contact requests past their retention are deleted. */
 export function requestsJob(db: Database, nowMs: number) {
 	return withAdvisoryLock(db, "jobs:requests", () => purgeClosedRequests(db, nowMs));
@@ -372,7 +385,7 @@ export function auditLogJob(db: Database) {
 
 /**
  * One `jobs:tick`: expirations, reminders, outbox, closed practices, next free slots, purges,
- * retention and expired rate-limit counters.
+ * queued listing counts, retention and expired rate-limit counters.
  */
 export async function runTick(db: Database, options: TickOptions = {}) {
 	const now = options.nowMs ?? Date.now;
@@ -388,6 +401,7 @@ export async function runTick(db: Database, options: TickOptions = {}) {
 	);
 	const purged = await withAdvisoryLock(db, "jobs:purge", () => purge(db, now()));
 	const claimDocuments = await purgeClaimDocumentsJob(db, now(), options.storage);
+	const landingCounts = await landingCountsJob(db);
 	const requests = await requestsJob(db, now());
 	const pageViews = await pageViewsJob(db, now());
 	const adminAlerts = await adminAlertsJob(db, now());
@@ -407,6 +421,7 @@ export async function runTick(db: Database, options: TickOptions = {}) {
 		nextFree,
 		purged,
 		claimDocuments,
+		landingCounts,
 		requests,
 		pageViews,
 		adminAlerts,

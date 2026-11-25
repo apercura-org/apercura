@@ -775,7 +775,7 @@
 			"heading": "Objecting to a page",
 			"body": [
 				"Under article 21 of the GDPR, a practitioner can object to the publication of their page. Apercura publishes the directory on the basis of a legitimate interest: informing the public from public data.",
-				"An unclaimed page will be hidden as soon as the request is received, then deleted after a light check of the request. A claimed page can be removed by its holder at any time. A removed page is deleted with its data: only the RPPS number is kept, so that the page does not come back with the next imports."
+				"An unclaimed page will be hidden as soon as the request is received, then deleted after a light check of the request. A claimed page can be removed by its holder at any time. A removed page is deleted with its data; all that is kept is a record of the removal (the RPPS number, the country, the reason, who recorded it and when), so that the page does not come back with the next imports. A holder who removes their page also keeps, in their account only and never published, the name, title, profession and RPPS number shown in their space, their claim and the places their agenda uses."
 			],
 			"formTitle": "Ask for the removal of a page",
 			"formBody": "For an unclaimed page. The page is hidden at once, then deleted after a light check. A claimed page is removed by its holder, from their space."
@@ -875,7 +875,7 @@
 					"Data: last name, first name, title, RPPS number, profession, specialties and skills, places and modes of practice, published phone numbers, conventionnement sector, OPTAM membership and Carte Vitale acceptance. A practitioner who claims their page can add their hours, fees, languages, a photo and a presentation.",
 					"Sources: the Annuaire Santé of the Agence du numérique en santé, the FINESS register and the Assurance Maladie directory, reused under the Licence Ouverte 2.0 and refreshed every week.",
 					"Purpose: letting the public find a health practitioner, where they practise and how to reach them. Legal basis: the legitimate interest of informing the public from public data (GDPR article 6.1.f).",
-					"Retention: as long as the practitioner is listed in the public registers. An unclaimed page disappears after two weekly updates in which the practitioner is no longer in the register; a page removed after an objection is deleted at once and never published again: only its RPPS number is kept.",
+					"Retention: as long as the practitioner is listed in the public registers. An unclaimed page disappears after two weekly updates in which the practitioner is no longer in the register; a page removed after an objection is deleted at once and never published again: all that is kept is a record of the removal (the RPPS number, the country, the reason, who recorded it and when).",
 					"Information: writing to every practitioner would take a disproportionate effort (GDPR article 14.5.b). They are informed by the data page, a notice on every page and this policy."
 				]
 			},
@@ -900,7 +900,7 @@
 				"heading": "Error reports and removal requests",
 				"body": [
 					"Data: the message, the contact email address when one is given and, for a removal request, the page concerned. Free text is encrypted.",
-					"Purposes: correcting reported errors and applying objections. Legal bases: the legitimate interest of publishing accurate information (article 6.1.f) and the right to object (article 21). Retention: the time needed to handle the request, then a report is deleted 6 months after it is closed and a rejected removal request one year after its decision. Once an objection is confirmed, or a holder removes their page, the page and everything about the practitioner are deleted at once, the removal request and the reports included; all that is kept is a record of the removal (the RPPS number, the country, the reason, who recorded it and when), so that the next imports skip the practitioner and the page is never published again. If the objection is withdrawn, that record is deleted and the page comes back with the next weekly update. A holder who removes their page keeps, in their account only and until it is deleted, the name and RPPS number shown in their space and the places their agenda uses.",
+					"Purposes: correcting reported errors and applying objections. Legal bases: the legitimate interest of publishing accurate information (article 6.1.f) and the right to object (article 21). Retention: the time needed to handle the request, then a report is deleted 6 months after it is closed and a rejected removal request one year after its decision. Once an objection is confirmed, or a holder removes their page, the page and the data about the practitioner are deleted at once, the removal requests, the reports and the claims of other people included; all that is kept is a record of the removal (the RPPS number, the country, the reason, who recorded it and when), so that the next imports skip the practitioner and the page is never published again. If the objection is withdrawn, that record is deleted and the page comes back with the next weekly update. Two things can still hold what is left of the page, never published: the account of a holder who removed it, which keeps the name, title, profession, RPPS number and page address shown in their space, their claim (its documents are deleted 30 days after its decision, like any claim's) and the places their agenda uses, until the account is deleted; and the agenda of a practice, which keeps the same identity until the practice is closed. That remainder is then deleted, at the latest with the next weekly update.",
 					"“I am this practitioner” requests: the name, the professional email address, the phone number when given, the message and the page concerned, encrypted. Purpose: helping a practitioner who cannot claim their page online. Legal basis: the legitimate interest of keeping the directory up to date with the practitioners concerned (article 6.1.f). Retention: 12 months after the last exchange."
 				]
 			},
@@ -1226,7 +1226,7 @@
 				"body": [
 					"Data: the message, the contact email address when one is given and the page concerned; for an “I am this practitioner” request also the name and phone number. Free text is encrypted.",
 					"Purposes: correcting errors, applying objections and helping a practitioner who cannot claim their page online. Legal bases: legitimate interest (article 6 (1) (f)) and the right to object (article 21).",
-					"Retention: a report is deleted 6 months after it is closed, an objection one year after its decision, a contact request 12 months after the last exchange; after an objection only the identifier of the page is kept, so that it is never published again."
+					"Retention: a report is deleted 6 months after it is closed, a rejected objection one year after its decision, a contact request 12 months after the last exchange. Once an objection is confirmed, or the holder of a claimed page removes it, the page and the data about the person are deleted at once, the objection included; all that is kept is a record of the removal (the identifier of the page, the country, the reason, who recorded it and when), so that it is never published again. A holder who removes their page keeps, in their account only and never published, the name, title, profession and identifier shown in their space, their claim and the places their agenda uses, until the account is deleted."
 				]
 			},
 			"technical": {
@@ -2971,7 +2971,8 @@
 				"understood": "I understand that this content is deleted",
 				"confirm": "Remove my page",
 				"cancel": "Cancel"
-			}
+			},
+			"busy": "The directory is being updated by the weekly import: your page was not changed. Try again in a few minutes."
 		},
 		"preview": {
 			"title": "Preview",
@@ -3060,6 +3061,7 @@
 			"contact": "Contact",
 			"message": "Message",
 			"failed": "The action failed. Reload the page and try again.",
+			"busy": "The directory is being updated by the weekly import: nothing was changed. Try again in a few minutes, once it is over.",
 			"auditNote": "Reading a request decrypts it and is recorded in the audit log.",
 			"tabsLabel": "Queues",
 			"removalsTab": "Removal requests ({count})",

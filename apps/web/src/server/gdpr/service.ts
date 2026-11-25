@@ -3,15 +3,59 @@ import { randomUUID } from "node:crypto";
 import type { Database } from "@apercura/db";
 import { practitioners, removalRequests, reports, suppressions } from "@apercura/db/schema";
 import { and, eq, sql } from "drizzle-orm";
+import { describeError } from "~/trpc/error-redaction";
 import { recordAudit } from "../audit";
+import { pgErrorCode } from "../booking/errors";
 import { openText, sealText } from "../crypto/platform";
+import type { Transaction } from "../db-executor";
 import { practitionerWhere } from "../practitioner-ref";
-import { type Purge, purgeSuppressed } from "./minimise";
+import { type Revalidate, refreshPractitioners } from "../refresh";
+import type { StorageDriver } from "../storage";
+import { afterPurge, importRunning, type Purge, purgeSuppressed, recordPurge } from "./minimise";
 
+/**
+ * `BUSY`: a removal could not run now, because an import is updating the directory or another
+ * write held the page longer than `REMOVAL_LOCK_TIMEOUT`; nothing was changed, try again later.
+ */
 export class GdprError extends Error {
-	constructor(readonly code: "NOT_FOUND" | "CLAIMED" | "NOT_PENDING") {
+	constructor(readonly code: "NOT_FOUND" | "CLAIMED" | "NOT_PENDING" | "BUSY") {
 		super(code);
 		this.name = "GdprError";
+	}
+}
+
+/** The longest a removal waits for a lock (a page or a site an import or a booking holds). */
+export const REMOVAL_LOCK_TIMEOUT = "5s";
+
+/** SQLSTATEs of a lock a removal gave up on: lock_not_available (the timeout), deadlock. */
+const LOCK_CONFLICTS = new Set(["55P03", "40P01"]);
+
+/**
+ * The transaction of a removal decision. It never waits on an import: the import updates sites
+ * then practitioners, while a purge locks the practitioner then deletes its sites, so the two
+ * could block each other for the whole import or deadlock, and the import could be the
+ * transaction Postgres aborts. A purge therefore refuses to start while an import holds its
+ * lock (`importRunning`), and every statement waits at most `REMOVAL_LOCK_TIMEOUT` for any other
+ * lock. Both end in `GdprError("BUSY")` with nothing changed: the person retries after the
+ * import, a few minutes later, and the decision stays one transaction (the suppression and the
+ * purge together, never a suppression whose page is still published).
+ */
+export async function removalTransaction<T>(
+	db: Database,
+	options: { purges: boolean },
+	run: (tx: Transaction) => Promise<T>,
+): Promise<T> {
+	try {
+		return await db.transaction(async (tx) => {
+			// `SET LOCAL`: this transaction only, back to the default at its end.
+			await tx.execute(sql`select set_config('lock_timeout', ${REMOVAL_LOCK_TIMEOUT}, true)`);
+			if (options.purges && (await importRunning(tx))) throw new GdprError("BUSY");
+			return run(tx);
+		});
+	} catch (error) {
+		const code = pgErrorCode(error);
+		if (code !== undefined && LOCK_CONFLICTS.has(code)) throw new GdprError("BUSY");
+		throw error;
 	}
 }
 
@@ -125,7 +169,9 @@ export async function readRemovalRequest(
  *   included (`purgeSuppressed`): the page answers 404, and the imports drop the person's lines
  *   before staging. `purge` carries the cache tags to expire (`afterPurge`).
  * - Rejected: the page is shown again; the request is kept until its retention.
- * The requester's address is decrypted first, for the decision email.
+ * The requester's address is decrypted first, for the decision email. While an import runs, or
+ * when a lock is held too long, nothing changes and `GdprError("BUSY")` is thrown
+ * (`removalTransaction`). A purge is recorded (`practitioner.purge`, counts only).
  */
 export async function decideRemoval(
 	db: Database,
@@ -137,7 +183,7 @@ export async function decideRemoval(
 		headers?: Headers;
 	},
 ) {
-	return db.transaction(async (tx) => {
+	return removalTransaction(db, { purges: input.confirm }, async (tx) => {
 		const [request] = await tx
 			.select()
 			.from(removalRequests)
@@ -180,6 +226,12 @@ export async function decideRemoval(
 			// Only the suppression stays: the page, its data and every request on it (this one
 			// and any other still pending) are deleted now, not at the next import.
 			purge = await purgeSuppressed(tx, [practitioner.id]);
+			await recordPurge(tx, purge, {
+				actor: input.adminId,
+				subjectType: "removal_request",
+				subjectId: request.id,
+				headers: input.headers,
+			});
 		} else {
 			await tx.execute(sql`
 				UPDATE directory.practitioners p SET withheld_at = NULL
@@ -206,13 +258,14 @@ export async function decideRemoval(
  * page, search entry and statistics are deleted at once. Only a bare row stays, for the owner's
  * space and agenda (their claim holds it), never published. Restoring deletes the suppression:
  * the next import brings the registry page back, which the owner completes again.
- * Returns the purge (cache tags to expire) on removal, null on restoring.
+ * Returns the purge (cache tags to expire) on removal, null on restoring. Same lock rules as
+ * `decideRemoval` (`GdprError("BUSY")`); the purge is recorded (`practitioner.purge`).
  */
 export async function setOwnerRemoval(
 	db: Database,
-	input: { practitionerId: number; userId: string; removed: boolean },
+	input: { practitionerId: number; userId: string; removed: boolean; headers?: Headers },
 ) {
-	return db.transaction(async (tx): Promise<Purge | null> => {
+	return removalTransaction(db, { purges: input.removed }, async (tx): Promise<Purge | null> => {
 		const [practitioner] = await tx
 			.select({
 				id: practitioners.id,
@@ -240,7 +293,14 @@ export async function setOwnerRemoval(
 					createdBy: input.userId,
 				})
 				.onConflictDoNothing();
-			return purgeSuppressed(tx, [practitioner.id]);
+			const purge = await purgeSuppressed(tx, [practitioner.id]);
+			await recordPurge(tx, purge, {
+				actor: input.userId,
+				subjectType: "user",
+				subjectId: input.userId,
+				headers: input.headers,
+			});
+			return purge;
 		}
 		// Only the owner's own removal can be undone here, never an objection.
 		await tx.delete(suppressions).where(and(key, eq(suppressions.reason, "owner")));
@@ -253,6 +313,51 @@ export async function setOwnerRemoval(
 		`);
 		return null;
 	});
+}
+
+/**
+ * After an account is deleted (committed): the pages it owned are refreshed, and a page its
+ * owner had removed, no longer held by their claim, loses what was left of it (only the
+ * suppression stays, or a bare row while the practice's agenda is being closed). The purge
+ * follows the removal's lock rules (`removalTransaction`) and is recorded. Never throws: the
+ * account is already gone, so a failure (an import running, a lock held) is logged and left to
+ * the next import, which purges every suppressed practitioner, and to `jobs:tick` (objects).
+ * Returns the purge, or null when it was left.
+ */
+export async function afterAccountDeletion(
+	db: Database,
+	input: {
+		userId: string;
+		practitionerIds: readonly number[];
+		storage: StorageDriver | null;
+		revalidate?: Revalidate;
+	},
+): Promise<Purge | null> {
+	if (input.practitionerIds.length === 0) return null;
+	try {
+		await refreshPractitioners(db.$client, input.practitionerIds, input.revalidate);
+		const purge = await removalTransaction(db, { purges: true }, async (tx) => {
+			const done = await purgeSuppressed(tx, input.practitionerIds);
+			await recordPurge(tx, done, {
+				actor: input.userId,
+				subjectType: "user",
+				subjectId: input.userId,
+			});
+			return done;
+		});
+		if (purge.deleted + purge.kept > 0) {
+			await afterPurge(db, purge, {
+				storage: input.storage,
+				...(input.revalidate ? { revalidate: input.revalidate } : {}),
+			});
+		}
+		return purge;
+	} catch (error) {
+		console.error(
+			`Account deleted; its pages are left to the next import: ${describeError(error)}`,
+		);
+		return null;
+	}
 }
 
 // ---------------------------------------------------------------------------

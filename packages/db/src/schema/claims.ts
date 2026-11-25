@@ -235,6 +235,11 @@ export const platformAuditEvents = directory.table(
 		subjectId: text().notNull(),
 		/** HMAC of the client IP (same key as the rate limits), never the IP itself. */
 		ipHash: text(),
+		/**
+		 * Non-personal facts of the event, such as the counts of a `practitioner.purge`. Never a
+		 * name, a national id or anything typed by a user.
+		 */
+		details: jsonb(),
 		createdAt: createdAt(),
 	},
 	(table) => [

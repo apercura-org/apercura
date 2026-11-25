@@ -2,11 +2,11 @@
  * Scheduled jobs, run by the host's scheduler (same image as the app):
  *
  *   bun run jobs:tick            expirations, reminders, outbox, closed practices, next free
- *                                slots, purges, retention, admin alerts and expired rate-limit
- *                                counters
+ *                                slots, purges, queued listing counts, retention, admin alerts
+ *                                and expired rate-limit counters
  *   bun run jobs:tick outbox     one sub-job only (expire | reminders | outbox | closures |
- *                                next-free | purge | claim-documents | requests | page-views |
- *                                admin-alerts | rate-limits | audit-log)
+ *                                next-free | purge | claim-documents | landing-counts |
+ *                                requests | page-views | admin-alerts | rate-limits | audit-log)
  *   bun run jobs:tick rotate-keys after a master key rotation, never scheduled: moves every
  *                                key and platform ciphertext to ENCRYPTION_ACTIVE_KEY
  *   bun run jobs:tick warm       the next slice of the cache warm-up (its own schedule; see
@@ -27,6 +27,7 @@ const SUB_JOBS = [
 	"next-free",
 	"purge",
 	"claim-documents",
+	"landing-counts",
 	"closures",
 	"requests",
 	"page-views",
@@ -71,6 +72,7 @@ async function main() {
 				jobs.withAdvisoryLock(db, "jobs:next-free", () => jobs.refreshAllNextFree(db, now())),
 			purge: () => jobs.withAdvisoryLock(db, "jobs:purge", () => jobs.purge(db, now())),
 			"claim-documents": () => jobs.purgeClaimDocumentsJob(db, now()),
+			"landing-counts": () => jobs.landingCountsJob(db),
 			closures: () => jobs.closuresJob(db, now()),
 			requests: () => jobs.requestsJob(db, now()),
 			"page-views": () => jobs.pageViewsJob(db, now()),

@@ -79,7 +79,9 @@ export function AdminReports() {
 
 	return (
 		<div className="flex flex-col gap-6">
-			{failed ? <Notice tone="error" title={t("failed")} /> : null}
+			{failed ? (
+				<Notice tone="error" title={decide.error?.message === "BUSY" ? t("busy") : t("failed")} />
+			) : null}
 			<p className="text-meta text-ink-muted">{t("auditNote")}</p>
 			<Tabs>
 				<TabList aria-label={t("tabsLabel")}>
