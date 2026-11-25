@@ -175,7 +175,6 @@ services:
   etl:
     <<: *image
     entrypoint: ["apercura", "etl:fr"]
-    command: []
     restart: "no"
     profiles: [tools]
     healthcheck:
