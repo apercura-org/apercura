@@ -113,6 +113,8 @@ jobs:
         run: bun run etl:fr --source-dir packages/etl/fixtures/fr --offline
       - name: Import the synthetic Austrian fixtures
         run: bun run etl:at --source-dir packages/etl/fixtures/at --offline
+      - name: Import the synthetic UK fixtures
+        run: bun run etl:gb --source-dir packages/etl/fixtures/gb --offline
       - name: Install Chromium
         working-directory: apps/web
         run: bunx playwright install --with-deps chromium
@@ -253,6 +255,8 @@ jobs:
         run: bun run etl:fr --source-dir packages/etl/fixtures/fr --offline --dry-run
       - name: Dry-run the Austrian import on the fixtures
         run: bun run etl:at --source-dir packages/etl/fixtures/at --offline --dry-run
+      - name: Dry-run the UK import on the fixtures
+        run: bun run etl:gb --source-dir packages/etl/fixtures/gb --offline --dry-run
       - name: Integration test (import twice, guards, removals, suppressions)
         run: |
           psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -c "CREATE DATABASE apercura_test"

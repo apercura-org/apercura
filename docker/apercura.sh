@@ -14,8 +14,10 @@ Usage: apercura <command> [arguments]
                          warm [--restart] for the next slice of the cache warm-up
   etl:fr [flags]         Import the French open data (e.g. --department 75, --dry-run)
   etl:at [flags]         Import the Austrian open data (Vienna, Styria, Salzburg lists)
+  etl:gb [flags]         Import the UK's NHS open data (GP practices, dental practices, pharmacies)
   etl:places [flags]     Import the communes, departments and regions (--country at: the
-                         Austrian Bundesländer and Gemeinden)
+                         Austrian Bundesländer and Gemeinden; --country gb: the UK regions,
+                         local authorities and towns)
   etl:outbox             Send the pending cache tags to the app
   scheduler              Run jobs:tick and the cache warm-up every 5 minutes and the weekly
                          imports (supercronic)
@@ -74,7 +76,7 @@ jobs | jobs:tick)
 	jobs_database_url
 	exec bun /app/cli/jobs.js "$@"
 	;;
-etl:fr | etl:at | etl:places | etl:outbox)
+etl:fr | etl:at | etl:gb | etl:places | etl:outbox)
 	# The import only uses APP_URL to send cache tags to the app: inside a private network it
 	# can reach it directly (INTERNAL_APP_URL, e.g. http://app:3000) instead of the public URL.
 	if [ -n "${INTERNAL_APP_URL:-}" ]; then
