@@ -226,6 +226,47 @@ describe("computeSlots: buffers and busy intervals", () => {
 	});
 });
 
+describe("computeSlots: home visits with a fixed travel time", () => {
+	const at = (time: string) => utc(`2026-01-05T${time}:00+01:00`);
+	// "Soins à domicile": 20 minutes of care, 15 minutes of travel after each visit.
+	const homeCare = makeType({ durationMin: 20, travelMin: 15 });
+	const rules = [makeRule(1, "09:00", "11:00")];
+	const settings = makeSettings({ stepMin: 5 });
+	/** The range an existing visit at `time` occupies (care + travel), as the database stores it. */
+	const visitAt = (time: string) => ({ startMs: at(time), endMs: at(time) + 35 * MINUTE_MS });
+
+	it("keeps the travel time free after each visit, so two visits in a row count it once", () => {
+		const free = clock(slots({ rules, type: homeCare, settings, busy: [visitAt("09:00")] }));
+		// The next visit starts once the care (09:20) and the travel (09:35) are over.
+		expect(free[0]).toBe("09:35");
+		expect(free).not.toContain("09:30");
+		// A visit must end, travel included, before the next one starts.
+		const before = clock(slots({ rules, type: homeCare, settings, busy: [visitAt("10:00")] }));
+		expect(before).toContain("09:25");
+		expect(before).not.toContain("09:30");
+	});
+
+	it("lets the travel time spill outside the window, like the other buffers", () => {
+		const free = clock(slots({ rules, type: homeCare, settings }));
+		expect(free.at(-1)).toBe("10:40");
+	});
+
+	it("adds the travel time to the free time after the visit", () => {
+		const type = makeType({ durationMin: 20, afterMin: 5, travelMin: 15 });
+		const free = clock(
+			slots({ rules, type, settings, busy: [{ startMs: at("09:40"), endMs: at("10:00") }] }),
+		);
+		expect(free).toContain("09:00");
+		expect(free).not.toContain("09:05");
+		expect(free).toContain("10:00");
+	});
+
+	it("rejects a negative or fractional travel time", () => {
+		expect(() => slots({ rules, type: makeType({ travelMin: -5 }) })).toThrow(RangeError);
+		expect(() => slots({ rules, type: makeType({ travelMin: 2.5 }) })).toThrow(RangeError);
+	});
+});
+
 describe("computeSlots: notice, horizon and range", () => {
 	const daily = ([1, 2, 3, 4, 5, 6, 7] as const).map((d) => makeRule(d, "09:00", "12:00"));
 

@@ -54,8 +54,16 @@ export interface AppointmentType {
 	beforeMin: number;
 	/** Buffer occupied after the appointment, in minutes (≥ 0). */
 	afterMin: number;
+	/**
+	 * Home visits only: fixed travel time occupied after the visit, on top of `afterMin` (the way
+	 * to the next patient or back to the practice), in minutes (≥ 0). Absent means 0.
+	 */
+	travelMin?: number;
 	audience: Audience;
 }
+
+/** Where the care of an appointment type happens: at the practitioner's site or at home. */
+export type VisitLocation = "site" | "home";
 
 export interface CalendarSettings {
 	/** Distance between two candidate starts, in real minutes (> 0). */

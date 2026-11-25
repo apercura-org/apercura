@@ -7,7 +7,10 @@ export interface Occupancy {
 	untilMs: number;
 }
 
-export type OccupancyType = Pick<AppointmentType, "durationMin" | "beforeMin" | "afterMin">;
+export type OccupancyType = Pick<
+	AppointmentType,
+	"durationMin" | "beforeMin" | "afterMin" | "travelMin"
+>;
 
 /** Throws a RangeError unless the durations of `type` are integers, with a positive duration. */
 export function assertOccupancyType(type: OccupancyType): void {
@@ -20,10 +23,16 @@ export function assertOccupancyType(type: OccupancyType): void {
 	if (!Number.isInteger(type.afterMin) || type.afterMin < 0) {
 		throw new RangeError("afterMin must be a non-negative integer");
 	}
+	const travelMin = type.travelMin ?? 0;
+	if (!Number.isInteger(travelMin) || travelMin < 0) {
+		throw new RangeError("travelMin must be a non-negative integer");
+	}
 }
 
 /**
- * The single source of truth for occupied ranges: `[start − before, start + duration + after)`.
+ * The single source of truth for occupied ranges:
+ * `[start − before, start + duration + after + travel)`. A home visit's travel time comes after
+ * the visit, so two visits in a row count it once.
  *
  * The slot engine and the database write path (`occupied_from` / `occupied_until`) must both use
  * it, otherwise they would disagree on buffers.
@@ -35,7 +44,7 @@ export function occupancy(type: OccupancyType, startMs: number): Occupancy {
 	}
 	return {
 		fromMs: startMs - type.beforeMin * MINUTE_MS,
-		untilMs: startMs + (type.durationMin + type.afterMin) * MINUTE_MS,
+		untilMs: startMs + (type.durationMin + type.afterMin + (type.travelMin ?? 0)) * MINUTE_MS,
 	};
 }
 

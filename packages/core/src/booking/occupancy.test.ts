@@ -14,6 +14,18 @@ describe("occupancy", () => {
 		);
 	});
 
+	it("occupies a home visit's travel time after the visit, never before", () => {
+		const homeCare = { durationMin: 20, beforeMin: 0, afterMin: 5, travelMin: 15 };
+		expect(occupancy(homeCare, start)).toEqual({
+			fromMs: start,
+			untilMs: start + 40 * 60_000,
+		});
+		expect(appointmentEnd(homeCare, start)).toBe(start + 20 * 60_000);
+		expect(occupancy({ durationMin: 20, beforeMin: 0, afterMin: 0 }, start).untilMs).toBe(
+			start + 20 * 60_000,
+		);
+	});
+
 	it("rejects invalid durations", () => {
 		expect(() => occupancy({ durationMin: 0, beforeMin: 0, afterMin: 0 }, start)).toThrow(
 			RangeError,
@@ -24,6 +36,9 @@ describe("occupancy", () => {
 		expect(() => occupancy({ durationMin: 15, beforeMin: 0, afterMin: 0.5 }, start)).toThrow(
 			RangeError,
 		);
+		expect(() =>
+			occupancy({ durationMin: 15, beforeMin: 0, afterMin: 0, travelMin: -1 }, start),
+		).toThrow(RangeError);
 		expect(() => occupancy({ durationMin: 15, beforeMin: 0, afterMin: 0 }, Number.NaN)).toThrow(
 			RangeError,
 		);

@@ -1,3 +1,12 @@
+export {
+	isInServiceArea,
+	isInseeCode,
+	MAX_HOME_ADDRESS_LENGTH,
+	MAX_SERVICE_AREA,
+	MAX_TRAVEL_MIN,
+	normalizeHomeAddress,
+	normalizeServiceArea,
+} from "./home-visit";
 export { type Interval, subtractIntervals, unionIntervals } from "./intervals";
 export {
 	ACTIVE_STATUSES,
@@ -47,4 +56,5 @@ export type {
 	CalendarSettings,
 	DaysException,
 	TimeException,
+	VisitLocation,
 } from "./types";
