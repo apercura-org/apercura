@@ -26,6 +26,7 @@ describe("UK names", () => {
 		expect(titleCaseGb("423B UPPER ROAD, 2ND FLOOR")).toBe("423B Upper Road, 2nd Floor");
 		expect(titleCaseGb("MODALITY PARTNERSHIP (HULL)")).toBe("Modality Partnership (Hull)");
 		expect(titleCaseGb("DG SMILE")).toBe("DG Smile");
+		expect(titleCaseGb("12 THE GREEN, THE ARCHES")).toBe("12 The Green, The Arches");
 		expect(titleCaseGb("TIME FOR TEETH HMP EXAMPLE")).toBe("Time for Teeth HMP Example");
 		expect(titleCaseGb("Muirhead Medical Centre")).toBe("Muirhead Medical Centre");
 		expect(titleCaseGb("Whyteman'S Brae")).toBe("Whyteman's Brae");

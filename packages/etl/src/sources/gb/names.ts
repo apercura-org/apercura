@@ -117,8 +117,12 @@ export function titleCaseGb(value: string | null | undefined): string {
 	// apostrophe (`Whyteman'S Brae`).
 	if (/[a-z]/.test(text) && /[A-Z]/.test(text)) return text.replace(/(\p{Ll})'S\b/gu, "$1's");
 	let index = 0;
+	let previous = "";
 	return text.replace(/[\p{L}\p{N}']+/gu, (word, offset: number) => {
-		const first = index++ === 0 || /[(/]\s*$/.test(text.slice(0, offset));
+		// A name starts the text, a bracket, a line part, or follows a house number (`5 The Green`).
+		const first =
+			index++ === 0 || /[(/,]\s*$/.test(text.slice(0, offset)) || /^\d+[A-Z]?$/i.test(previous);
+		previous = word;
 		return word
 			.split("-")
 			.map((part, partIndex) => (part ? caseWord(part, first && partIndex === 0) : part))
