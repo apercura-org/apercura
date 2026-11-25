@@ -185,7 +185,9 @@ function offeredToPatient(query: SlotQuery): boolean {
  * changes neither duplicate nor drop slots. A start `s` is kept when:
  * - `s ≥ now + minNotice` and its local day is within the horizon;
  * - the appointment itself (without buffers) ends inside its window — buffers may spill out;
- * - `occupancy(type, s)` overlaps no busy interval (half-open, so back-to-back is fine).
+ * - `occupancy(type, s)` overlaps no busy interval (half-open, so back-to-back is fine), and a
+ *   home visit's travel before it overlaps no entry that does not travel, nor the other way
+ *   round (the rule of {@link travelConflict}).
  *
  * Pure: no clock read, no I/O.
  *
@@ -220,14 +222,28 @@ export function computeSlots(input: ComputeSlotsInput): number[] {
 	// One extra day on each side keeps the grid anchored on the true start of windows that cross
 	// midnight, so the result for a day does not depend on the range it was asked with.
 	const windows = buildWindows(input, fromDay.subtract({ days: 1 }), input.days + 2);
-	const busy = unionIntervals(
-		input.busy.map((interval) => ({ start: interval.startMs, end: interval.endMs })),
+	// Entries that do not travel; home visits with a travel time; and the same with the travel
+	// before them, which blocks the candidates that do not travel.
+	const still = unionIntervals(
+		input.busy
+			.filter((interval) => !((interval.travelMin ?? 0) > 0))
+			.map((interval) => ({ start: interval.startMs, end: interval.endMs })),
 	);
+	const travelling = input.busy.filter((interval) => (interval.travelMin ?? 0) > 0);
+	const visits = unionIntervals(
+		travelling.map((interval) => ({ start: interval.startMs, end: interval.endMs })),
+	);
+	const visitsWithTravelBefore = unionIntervals(
+		travelling.map((interval) => ({
+			start: interval.startMs - (interval.travelMin ?? 0) * MINUTE_MS,
+			end: interval.endMs,
+		})),
+	);
+	const travelMs = (type.travelMin ?? 0) * MINUTE_MS;
 	const stepMs = settings.stepMin * MINUTE_MS;
 	const durationMs = type.durationMin * MINUTE_MS;
 
 	const slots: number[] = [];
-	let busyIndex = 0;
 	for (const window of windows) {
 		if (window.end - durationMs < lower) {
 			continue;
@@ -242,16 +258,34 @@ export function computeSlots(input: ComputeSlotsInput): number[] {
 			start += stepMs
 		) {
 			const occupied = occupancy(type, start);
-			while (busyIndex < busy.length && (busy[busyIndex] as Interval).end <= occupied.fromMs) {
-				busyIndex += 1;
-			}
-			const next = busy[busyIndex];
-			if (next === undefined || next.start >= occupied.untilMs) {
+			const blocked =
+				travelMs > 0
+					? overlapsAny(visits, occupied.fromMs, occupied.untilMs) ||
+						overlapsAny(still, occupied.fromMs - travelMs, occupied.untilMs)
+					: overlapsAny(still, occupied.fromMs, occupied.untilMs) ||
+						overlapsAny(visitsWithTravelBefore, occupied.fromMs, occupied.untilMs);
+			if (!blocked) {
 				slots.push(start);
 			}
 		}
 	}
 	return slots;
+}
+
+/** Whether `[from, until)` overlaps one of `sorted` (sorted, disjoint): a binary search. */
+function overlapsAny(sorted: readonly Interval[], from: number, until: number): boolean {
+	let low = 0;
+	let high = sorted.length;
+	while (low < high) {
+		const middle = (low + high) >> 1;
+		if ((sorted[middle] as Interval).end <= from) {
+			low = middle + 1;
+		} else {
+			high = middle;
+		}
+	}
+	const next = sorted[low];
+	return next !== undefined && next.start < until;
 }
 
 /**

@@ -1425,7 +1425,8 @@
 			"perinealRehabilitation": "Beckenbodenrehabilitation",
 			"bloodTest": "Blutabnahme",
 			"injection": "Injektion",
-			"dressing": "Verbandswechsel"
+			"dressing": "Verbandswechsel",
+			"homeCare": "Pflege zu Hause"
 		},
 		"email": {
 			"wordmark": "Apercura",
@@ -1439,7 +1440,8 @@
 				"date": "Datum",
 				"time": "Uhrzeit",
 				"address": "Adresse",
-				"until": "Antwort bis"
+				"until": "Antwort bis",
+				"place": "Ort"
 			},
 			"manageAction": "Meinen Termin ansehen oder ändern",
 			"agendaAction": "Terminkalender öffnen",
@@ -1540,7 +1542,9 @@
 				"title": "Termin verschoben",
 				"body": "Ein Patient hat einen Termin auf diese neue Uhrzeit verschoben."
 			},
-			"bookAgainAction": "Andere Uhrzeit wählen"
+			"bookAgainAction": "Andere Uhrzeit wählen",
+			"atHome": "Hausbesuch",
+			"atHomeIn": "Hausbesuch — {commune}"
 		},
 		"panel": {
 			"title": "Termin buchen",
@@ -1579,7 +1583,13 @@
 				"existingOnly": "bereits betreute Patienten",
 				"required": "Wählen Sie einen Grund.",
 				"instructions": "Hinweis der Praxis",
-				"noNewPatients": "Diese Praxis nimmt online keine neuen Patienten an: Ihre Anfrage wartet auf die Antwort der Praxis."
+				"noNewPatients": "Diese Praxis nimmt online keine neuen Patienten an: Ihre Anfrage wartet auf die Antwort der Praxis.",
+				"atHome": "Hausbesuch",
+				"area": "Besuchte Orte: {communes}",
+				"commune": "Ihr Wohnort",
+				"communeHint": "Hausbesuche gibt es nur in diesen Orten. Ihr Ort fehlt? Rufen Sie die Praxis an.",
+				"communePlaceholder": "Auswählen",
+				"communeRequired": "Wählen Sie Ihren Wohnort."
 			},
 			"slot": {
 				"heading": "Uhrzeit wählen",
@@ -1614,7 +1624,11 @@
 				"invalidEmail": "Geben Sie eine E-Mail-Adresse wie name@example.fr ein.",
 				"invalidPhone": "Geben Sie eine Telefonnummer wie 06 12 34 56 78 ein.",
 				"requiredFirstVisit": "Beantworten Sie diese Frage.",
-				"website": "Dieses Feld leer lassen"
+				"website": "Dieses Feld leer lassen",
+				"address": "Adresse des Hausbesuchs",
+				"addressHint": "Hausnummer und Straße, bei Bedarf Gebäude, Stockwerk oder Türcode. Nur die Praxis sieht sie: Keine E-Mail enthält sie.",
+				"requiredAddress": "Geben Sie die Adresse des Hausbesuchs ein.",
+				"addressTooLong": "Schreiben Sie die Adresse auf höchstens 4 Zeilen und in höchstens 300 Zeichen."
 			},
 			"altcha": {
 				"label": "Automatische Prüfung, dass Sie kein Roboter sind",
@@ -1684,7 +1698,8 @@
 				"NOT_FOUND": "Diese Terminbuchung existiert nicht mehr. Wählen Sie die Uhrzeit erneut.",
 				"IDEMPOTENCY_CONFLICT": "Diese Anfrage wurde bereits gesendet. Wählen Sie die Uhrzeit erneut.",
 				"generic": "Bei uns ist etwas schiefgelaufen. Versuchen Sie es gleich noch einmal oder rufen Sie die Praxis an.",
-				"restart": "Erneut eine Uhrzeit wählen"
+				"restart": "Erneut eine Uhrzeit wählen",
+				"OUTSIDE_AREA": "Hausbesuche gibt es in diesem Ort nicht. Wählen Sie einen anderen oder rufen Sie die Praxis an."
 			}
 		},
 		"manage": {
@@ -2670,7 +2685,9 @@
 				"bodyOwner": "Richten Sie den Ort ein, an dem Sie Patienten empfangen: Öffnungszeiten und Terminarten.",
 				"bodyStaff": "Der Inhaber der Seite hat den Terminkalender noch nicht eingerichtet.",
 				"action": "Terminbuchung einrichten"
-			}
+			},
+			"atHome": "Hausbesuch",
+			"atHomeIn": "Hausbesuch — {commune}"
 		},
 		"today": {
 			"metaTitle": "Heute",
@@ -2767,7 +2784,11 @@
 			"endBeforeStart": "Das Ende muss nach dem Beginn liegen.",
 			"created": "Termin hinzugefügt.",
 			"blocked": "Zeit gesperrt.",
-			"outsideHours": "Außerhalb der Öffnungszeiten: Sie können ihn trotzdem hinzufügen."
+			"outsideHours": "Außerhalb der Öffnungszeiten: Sie können ihn trotzdem hinzufügen.",
+			"address": "Adresse des Hausbesuchs (optional)",
+			"addressHint": "Nur die Praxis sieht sie: E-Mails an den Patienten enthalten sie nie.",
+			"commune": "Ort",
+			"invalidAddress": "Geben Sie Adresse und Ort an, oder keines von beiden."
 		},
 		"entry": {
 			"when": "Wann",
@@ -2788,7 +2809,10 @@
 			"cancelBody": "Die Uhrzeit wird wieder frei.",
 			"confirmCancel": "Termin absagen",
 			"cancelled": "Termin abgesagt.",
-			"blockRemoved": "Sperrzeit entfernt."
+			"blockRemoved": "Sperrzeit entfernt.",
+			"place": "Ort",
+			"address": "Adresse des Hausbesuchs",
+			"noAddress": "Nicht angegeben"
 		},
 		"block": {
 			"title": "Zeitfenster sperren",
@@ -2856,7 +2880,28 @@
 				"add": "Terminart hinzufügen",
 				"newName": "Konsultation",
 				"summary": "{duration} Min.",
-				"inactive": "Nicht online angeboten"
+				"inactive": "Nicht online angeboten",
+				"location": "Ort der Behandlung",
+				"locationSite": "In der Praxis",
+				"locationHome": "Beim Patienten zu Hause",
+				"travel": "Fahrzeit (Minuten)",
+				"travelHint": "Nach jedem Hausbesuch freigehalten, um zum nächsten Patienten oder zur Praxis zu fahren, und vor einem Besuch nach einer Behandlung in der Praxis oder einer blockierten Zeit. Zwei Besuche hintereinander teilen sich eine Fahrzeit.",
+				"area": "Besuchte Orte",
+				"areaLead": "Patienten wählen ihren Ort aus dieser Liste, bevor sie eine Uhrzeit wählen.",
+				"areaEmpty": "Noch kein Ort: Patienten können diesen Hausbesuch nicht buchen.",
+				"areaSearch": "Ort hinzufügen",
+				"areaSearchHint": "Name, Postleitzahl oder INSEE-Code.",
+				"areaRemove": "{name} entfernen",
+				"areaRadius": "Umkreis (km)",
+				"areaAround": "Orte rund um die Praxis hinzufügen",
+				"areaAdded": "{count, plural, =0 {Kein neuer Ort.} one {# Ort hinzugefügt.} other {# Orte hinzugefügt.}}",
+				"areaNotLocated": "Die Praxis hat keine Position auf der Karte: Fügen Sie die Orte einzeln hinzu.",
+				"areaRequired": "Wählen Sie mindestens einen Ort, um diesen Hausbesuch online anzubieten.",
+				"summaryHome": "{duration} Min. · Hausbesuch",
+				"invalidName": "Geben Sie einen Namen ein.",
+				"invalidDuration": "Geben Sie eine ganze Zahl von Minuten ein, von 5 bis 480.",
+				"invalidMinutes": "Geben Sie eine ganze Zahl von Minuten ein, von 0 bis 240.",
+				"invalidRadius": "Geben Sie eine ganze Zahl von Kilometern ein, von 1 bis 50."
 			},
 			"rules": {
 				"heading": "Wöchentliche Öffnungszeiten",

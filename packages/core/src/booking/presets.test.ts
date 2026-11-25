@@ -16,7 +16,28 @@ describe("presetsForSpecialty", () => {
 			["booking.presets.bloodTest", 10],
 			["booking.presets.injection", 10],
 			["booking.presets.dressing", 15],
+			["booking.presets.homeCare", 20],
 		]);
+	});
+
+	it("offers nurses a home visit with a fixed travel time", () => {
+		const home = presetsForSpecialty("infirmier").filter((p) => p.location === "home");
+		expect(home).toEqual([
+			{
+				nameKey: "booking.presets.homeCare",
+				durationMin: 20,
+				beforeMin: 0,
+				afterMin: 0,
+				audience: "all",
+				location: "home",
+				travelMin: 15,
+			},
+		]);
+		for (const slug of ["medecin-generaliste", "chirurgien-dentiste", "sage-femme", "x"]) {
+			for (const preset of presetsForSpecialty(slug)) {
+				expect([preset.location, preset.travelMin]).toEqual(["site", 0]);
+			}
+		}
 	});
 
 	it("falls back to a generic consultation", () => {

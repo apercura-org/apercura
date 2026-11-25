@@ -1,3 +1,4 @@
+import { MAX_SERVICE_AREA, MAX_TRAVEL_MIN } from "@apercura/core/booking";
 import { z } from "zod";
 import { LOCALES } from "~/i18n/locales";
 import {
@@ -12,10 +13,12 @@ import {
 	rotateFeedToken,
 	saveType,
 	setCalendarStatus,
+	suggestAreaAround,
 	updateCalendar,
 } from "~/server/booking/calendar-settings";
 import { asTrpc } from "~/server/booking/errors";
 import { agendaRequirements } from "~/server/booking/gate";
+import { searchCommunes } from "~/server/booking/home-visit";
 import { feedUrl } from "~/server/booking/ics-feed";
 import { bookingRuntime } from "../booking-runtime";
 import { createTRPCRouter, memberProcedure } from "../init";
@@ -49,6 +52,21 @@ const typeFields = {
 	audience: z.enum(["all", "new", "existing"]).default("all"),
 	position: z.number().int().min(0).max(1000).optional(),
 	active: z.boolean().optional(),
+	/** `home`: a home visit (the patient's address, inside the service area). */
+	// Left out, an update keeps the type's place, travel time and communes.
+	location: z.enum(["site", "home"]).optional(),
+	/** Home visits: fixed travel time after each visit, in minutes. */
+	travelMin: z.number().int().min(0).max(MAX_TRAVEL_MIN).optional(),
+	/** Home visits: INSEE codes of the communes visited. */
+	serviceAreaCodes: z
+		.array(
+			z
+				.string()
+				.trim()
+				.regex(/^(\d{5}|2[ABab]\d{3})$/),
+		)
+		.max(MAX_SERVICE_AREA)
+		.optional(),
 };
 
 const typeIds = z.array(z.uuid()).max(50).optional();
@@ -203,5 +221,19 @@ export const calendarRouter = createTRPCRouter({
 		.input(z.object({ exceptionId: z.uuid() }))
 		.mutation(({ ctx, input }) =>
 			asTrpc(() => removeException(bookingRuntime(ctx), ctx.organizationId, input.exceptionId)),
+		),
+
+	/** Home visits: communes and arrondissements by name, postcode or INSEE code. */
+	searchCommunes: owner
+		.input(z.object({ q: z.string().trim().min(2).max(80) }))
+		.query(({ ctx, input }) => asTrpc(() => searchCommunes(ctx.db(), input.q))),
+
+	/** Home visits: communes within a radius of the calendar's site, to fill a service area. */
+	communesAround: owner
+		.input(z.object({ calendarId: z.uuid(), radiusKm: z.number().int().min(1).max(50) }))
+		.query(({ ctx, input }) =>
+			asTrpc(() =>
+				suggestAreaAround(ctx.db(), ctx.organizationId, input.calendarId, input.radiusKm),
+			),
 		),
 });

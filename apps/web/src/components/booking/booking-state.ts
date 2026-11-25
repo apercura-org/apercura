@@ -7,6 +7,8 @@ export interface PatientDetails {
 	phone: string;
 	/** "yes" (first visit), "no", or "" when not answered or not asked. */
 	firstVisit: "" | "yes" | "no";
+	/** Home visits: street address (number, street, floor, door code). */
+	address: string;
 }
 
 export interface HeldSlot {
@@ -30,6 +32,8 @@ export interface BookingState {
 	step: Step;
 	calendarId: string | null;
 	typeId: string | null;
+	/** Home visits: INSEE code of the patient's commune, chosen with the reason. */
+	communeCode: string | null;
 	slotMs: number | null;
 	details: PatientDetails;
 	hold: HeldSlot | null;
@@ -45,4 +49,5 @@ export const EMPTY_DETAILS: PatientDetails = {
 	email: "",
 	phone: "",
 	firstVisit: "",
+	address: "",
 };

@@ -215,6 +215,34 @@ depth, hard to exploit), **Info** (hardening, no direct impact).
     whose window has elapsed, which the limiters count as zero anyway, and nothing else. It
     runs with the app role, which already holds `DELETE` on both tables (`apercura_jobs` holds
     no table privilege and gets none).
+- **Home visits (issue #75)**: a new patient field, the address of a home visit.
+  - _Storage_ (`care.appointments.patient_address_enc`, `patient_commune_enc`, migration 0018):
+    the street address (number, street, floor, door code) and the INSEE code of the commune
+    are sealed by `server/phi` like the name and contact (organization data key, AAD
+    `appointments.<column>.<id>`), so key rotation needs nothing new: `rotate-keys` re-wraps
+    the data keys and the address never changes. Nothing else holds them in clear: no blind
+    index, no event data, no audit field value, no log line, no outbox row; an integration
+    test scans every text column of `care` for the address. The read-only role sees the
+    ciphertext columns only, as for the other `*_enc` fields.
+  - _Area check_ (`server/booking/home-visit.ts`): the service area is a list of communes
+    (INSEE codes of `directory.places`), not a radius, so the patient chooses their commune
+    from it and the address is never geocoded (no third party sees it). `booking.hold`
+    refuses a commune outside the area (`OUTSIDE_AREA`) or a missing address before it holds
+    a slot or encrypts anything.
+  - _Who reads it_: the practice only, in the agenda (`agenda.list` decrypts it when the range
+    holds a home visit, audited with `patient_address_enc` and `patient_commune_enc` in the
+    row's fields). Patient emails, the `.ics` files and `/rdv` print "À domicile — <commune>"
+    and never the street; practice emails print "À domicile" only (no patient data there, as
+    before); the private calendar feed carries no place at all.
+  - _Travel time_ (`travelConflict` in `packages/core/src/booking/occupancy.ts`,
+    `server/booking/travel.ts`): each appointment freezes its place and travel time. Its
+    occupied range holds the travel after a visit (the overlap constraint keeps ranges apart);
+    the travel before a visit, needed only next to an entry that does not travel, is checked by
+    every booking write inside the practitioner's serialized transaction and answered like an
+    overlap. Rescheduling keeps the frozen travel time and refuses a type that changed place
+    since the booking.
+  - _Erasure_: the purge clears both columns with the rest of the patient's details (24 hours
+    for an unverified booking, `purge_after` otherwise); a closed practice deletes the rows.
 - **Configuration**: production refuses to start without
   `BETTER_AUTH_SECRET`, or with any secret shorter than 32 characters;
   development services listen on 127.0.0.1 only.
@@ -264,7 +292,8 @@ depth, hard to exploit), **Info** (hardening, no direct impact).
   factor cannot protect them; rotation and revocation are manual.
 - **Patient emails** leave the HDS perimeter through the SMTP provider and the
   patient's mailbox; their content is minimal by design (practitioner, date,
-  time, address, manage link) and must be validated in the DPIA.
+  time, the practice's address or "À domicile — <commune>" for a home visit,
+  manage link) and must be validated in the DPIA.
 - **Client IP behind proxies**: `TRUSTED_PROXY_COUNT` too low makes every
   visitor share one rate-limit bucket (booking holds, sign-ins); too high lets
   clients choose their address. It must match the deployment.

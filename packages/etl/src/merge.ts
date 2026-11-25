@@ -767,6 +767,37 @@ export async function applySiteLocations(tx: TransactionSql, locations: SiteLoca
 	};
 }
 
+/**
+ * Ameli matches from `ameli_candidates` (practitioner_id, group_id) and
+ * `ameli_groups`. Unique both ways: each group matches one practitioner, and
+ * every group a practitioner matches is unique to them and carries the same
+ * values. Hash aggregates and joins only (no correlated subquery), so it stays
+ * linear at national scale.
+ */
+export const AMELI_MATCHES_QUERY = `
+	WITH shared_groups AS (
+		SELECT group_id FROM ameli_candidates
+		GROUP BY group_id
+		HAVING count(DISTINCT practitioner_id) > 1
+	)
+	SELECT c.practitioner_id,
+		min(g.billing_sector) AS billing_sector, min(g.optam) AS optam,
+		bool_or(g.carte_vitale) AS carte_vitale, bool_or(g.apcv) AS apcv
+	FROM ameli_candidates c
+	JOIN ameli_groups g ON g.group_id = c.group_id
+	LEFT JOIN shared_groups sg ON sg.group_id = c.group_id
+	GROUP BY c.practitioner_id
+	HAVING bool_and(sg.group_id IS NULL)
+		AND count(DISTINCT (coalesce(g.billing_sector, ''), coalesce(g.optam, ''), g.carte_vitale, g.apcv)) = 1
+`;
+
+/** Builds the `ameli_matches` temp table (see `AMELI_MATCHES_QUERY`). */
+export async function buildAmeliMatches(tx: TransactionSql) {
+	await tx.unsafe(`CREATE TEMP TABLE ameli_matches ON COMMIT DROP AS ${AMELI_MATCHES_QUERY}`);
+	await tx`ALTER TABLE ameli_matches ADD PRIMARY KEY (practitioner_id)`;
+	await tx`ANALYZE ameli_matches`;
+}
+
 /** Strict Ameli matching: unique 1:1 on names + commune + compatible specialty. */
 export async function matchAmeli(tx: TransactionSql) {
 	const [{ staged } = { staged: 0 }] = await tx<{ staged: number }[]>`
@@ -830,6 +861,8 @@ export async function matchAmeli(tx: TransactionSql) {
 		GROUP BY last_key, first_key, place_id, specialty_code
 		HAVING count(DISTINCT (coalesce(billing_sector, ''), coalesce(optam, ''), carte_vitale, apcv)) = 1
 	`;
+	await tx`ALTER TABLE ameli_groups ADD PRIMARY KEY (group_id)`;
+	await tx`CREATE INDEX ON ameli_groups (last_key, first_key, place_id)`;
 	await tx`ANALYZE ameli_groups`;
 	await tx`
 		CREATE TEMP TABLE ameli_people ON COMMIT DROP AS
@@ -842,6 +875,7 @@ export async function matchAmeli(tx: TransactionSql) {
 		JOIN directory.sites s ON s.id = a.site_id AND s.removed_at IS NULL AND s.place_id IS NOT NULL
 		WHERE p.status = 'active' AND p.listing_slug IS NOT NULL
 	`;
+	await tx`CREATE INDEX ON ameli_people (last_key, first_key, place_id)`;
 	await tx`ANALYZE ameli_people`;
 	await tx`
 		CREATE TEMP TABLE ameli_candidates ON COMMIT DROP AS
@@ -853,23 +887,7 @@ export async function matchAmeli(tx: TransactionSql) {
 			ON t.ameli_code = g.specialty_code AND t.listing_slug = ap.listing_slug
 	`;
 	await tx`ANALYZE ameli_candidates`;
-	// Unique both ways: each group matches one practitioner, and every group a
-	// practitioner matches is unique to them and carries the same values.
-	await tx`
-		CREATE TEMP TABLE ameli_matches ON COMMIT DROP AS
-		SELECT c.practitioner_id,
-			min(g.billing_sector) AS billing_sector, min(g.optam) AS optam,
-			bool_or(g.carte_vitale) AS carte_vitale, bool_or(g.apcv) AS apcv
-		FROM ameli_candidates c
-		JOIN ameli_groups g ON g.group_id = c.group_id
-		WHERE NOT EXISTS (
-			SELECT 1 FROM ameli_candidates other
-			WHERE other.group_id = c.group_id AND other.practitioner_id <> c.practitioner_id
-		)
-		GROUP BY c.practitioner_id
-		HAVING count(DISTINCT (coalesce(g.billing_sector, ''), coalesce(g.optam, ''), g.carte_vitale, g.apcv)) = 1
-			AND count(*) = (SELECT count(*) FROM ameli_candidates all_c WHERE all_c.practitioner_id = c.practitioner_id)
-	`;
+	await buildAmeliMatches(tx);
 	const updated = await tx`
 		UPDATE directory.practitioners p SET
 			billing_sector = m.billing_sector,

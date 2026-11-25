@@ -203,9 +203,21 @@ describe.skipIf(!url)("auth rate limits (database)", () => {
 		expect(await consumeRateLimit(db, key, { max: 3, windowSeconds: 3600 })).toBe(true);
 		const [row] = await db.select().from(rateLimits).where(eq(rateLimits.key, key));
 		expect(row?.windowSeconds).toBe(3600);
-		await purgeExpiredRateLimits(db, Date.now() + 3_599_000);
+		// Age this counter rather than purge with a clock an hour ahead: the purge is global, and
+		// a clock ahead would also delete the live counters of the test files running in
+		// parallel on the same database, resetting them mid-test.
+		const age = (seconds: number) =>
+			db
+				.update(rateLimits)
+				.set({
+					windowStartedAt: sql`${rateLimits.windowStartedAt} - make_interval(secs => ${seconds})`,
+				})
+				.where(eq(rateLimits.key, key));
+		await age(3540);
+		await purgeExpiredRateLimits(db, Date.now());
 		expect(await db.select().from(rateLimits).where(eq(rateLimits.key, key))).toHaveLength(1);
-		await purgeExpiredRateLimits(db, Date.now() + 3_601_000);
+		await age(120);
+		await purgeExpiredRateLimits(db, Date.now());
 		expect(await db.select().from(rateLimits).where(eq(rateLimits.key, key))).toHaveLength(0);
 	});
 });

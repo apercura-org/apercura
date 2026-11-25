@@ -49,6 +49,18 @@ export function placeName(calendar: AgendaCalendar, fallback: string) {
 	return calendar.siteName ?? calendar.addressLine ?? fallback;
 }
 
+/** "À domicile — Lyon" for a home visit (null at the site): the practice's own view. */
+export function useHomeVisitLabel() {
+	const t = useTranslations("Agenda.common");
+	return (entry: AgendaEntry) => {
+		if (entry.location !== "home") {
+			return null;
+		}
+		const commune = entry.patient?.home?.communeName;
+		return commune ? t("atHomeIn", { commune }) : t("atHome");
+	};
+}
+
 /** "Alexis Martin", or the generic word when the details are gone (purged, still booking). */
 export function usePatientName() {
 	const t = useTranslations("Agenda.common");
@@ -160,9 +172,15 @@ export function AddEntryDialog({
 	const [lastName, setLastName] = useState("");
 	const [email, setEmail] = useState("");
 	const [phone, setPhone] = useState("");
+	const [street, setStreet] = useState("");
+	const [commune, setCommune] = useState<string | null>(null);
 	const [problem, setProblem] = useState<string | null>(null);
 	const [submitted, setSubmitted] = useState(false);
 	const create = useMutation(trpc.agenda.create.mutationOptions());
+	const chosenType = types.find((type) => type.id === typeId);
+	const atHome = kind === "appointment" && chosenType?.location === "home";
+	// The address of a home visit is optional here, but a street needs its commune and back.
+	const addressInvalid = atHome && (street.trim() === "") !== (commune === null);
 	const block = useMutation(trpc.agenda.block.mutationOptions());
 	const pending = create.isPending || block.isPending;
 
@@ -211,6 +229,10 @@ export function AddEntryDialog({
 			setProblem(t("invalid"));
 			return;
 		}
+		if (addressInvalid) {
+			setProblem(t("invalidAddress"));
+			return;
+		}
 		create.mutate(
 			{
 				organizationId,
@@ -222,6 +244,10 @@ export function AddEntryDialog({
 					lastName: lastName.trim(),
 					email: email.trim() || null,
 					phone: phone.trim() || null,
+					homeAddress:
+						atHome && street.trim() && commune
+							? { street: street.trim(), communeCode: commune }
+							: null,
 				},
 				locale,
 				idempotencyKey: crypto.randomUUID(),
@@ -331,6 +357,35 @@ export function AddEntryDialog({
 							isInvalid={submitted && phoneInvalid}
 							errorMessage={t("invalidPhone")}
 						/>
+						{atHome && chosenType ? (
+							<>
+								<TextAreaField
+									label={t("address")}
+									description={t("addressHint")}
+									value={street}
+									onChange={setStreet}
+									rows={2}
+									maxLength={300}
+									autoComplete="off"
+									isInvalid={submitted && addressInvalid && street.trim() === ""}
+									errorMessage={t("invalidAddress")}
+									className="sm:col-span-2"
+								/>
+								<Select
+									label={t("commune")}
+									selectedKey={commune}
+									onSelectionChange={(key) => setCommune(key === null ? null : String(key))}
+									isInvalid={submitted && addressInvalid && commune === null}
+									errorMessage={t("invalidAddress")}
+								>
+									{chosenType.serviceArea.map((item) => (
+										<ListBoxItem key={item.code} id={item.code} textValue={item.name}>
+											{item.name}
+										</ListBoxItem>
+									))}
+								</Select>
+							</>
+						) : null}
 					</div>
 				) : null}
 				{problem ? <Notice tone="error">{problem}</Notice> : null}
@@ -368,6 +423,7 @@ export function EntryDialog({
 	const trpc = useTRPC();
 	const refresh = useAgendaRefresh();
 	const patientName = usePatientName();
+	const homeVisit = useHomeVisitLabel();
 	const when = useAgendaFormat(timeZone);
 	const [message, setMessage] = useState("");
 	const [confirming, setConfirming] = useState(false);
@@ -410,6 +466,20 @@ export function EntryDialog({
 						<>
 							<FieldRow label={t("type")} value={entry.typeName} emptyLabel="—" />
 							<FieldRow label={t("patient")} value={patientName(entry)} emptyLabel="—" />
+							{entry.location === "home" ? (
+								<>
+									<FieldRow label={t("place")} value={homeVisit(entry)} emptyLabel="—" />
+									<FieldRow
+										label={t("address")}
+										value={
+											entry.patient?.home?.street ? (
+												<span className="whitespace-pre-line">{entry.patient.home.street}</span>
+											) : null
+										}
+										emptyLabel={t("noAddress")}
+									/>
+								</>
+							) : null}
 							<FieldRow
 								label={t("phone")}
 								value={
