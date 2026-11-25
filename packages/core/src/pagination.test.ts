@@ -1,24 +1,33 @@
 import { describe, expect, it } from "vitest";
 import { pager, pagerDepthBound, pagerTargets } from "./pagination";
 
-/** Clicks from `from` to every page of a `pages`-page listing, following the pager's links. */
-function depths(from: number, pages: number): number[] {
-	const depth = new Array<number>(pages + 1).fill(-1);
+/** The pager's links of every page of a `pages`-page listing (index 0 unused). */
+function linksOf(pages: number): number[][] {
+	const links: number[][] = [[]];
+	for (let page = 1; page <= pages; page++) links.push(pagerTargets(page, pages));
+	return links;
+}
+
+/** Clicks from `from` to every page, following the pager's links. */
+function depths(from: number, pages: number, links = linksOf(pages)): number[] {
+	const depth = new Int32Array(pages + 1).fill(-1);
 	depth[from] = 0;
-	const queue = [from];
-	for (let head = 0; head < queue.length; head++) {
+	const queue = new Int32Array(pages);
+	queue[0] = from;
+	for (let head = 0, tail = 1; head < tail; head++) {
 		const page = queue[head] as number;
-		for (const target of pagerTargets(page, pages)) {
+		for (const target of links[page] as number[]) {
 			if (depth[target] === -1) {
 				depth[target] = (depth[page] as number) + 1;
-				queue.push(target);
+				queue[tail++] = target;
 			}
 		}
 	}
-	return depth.slice(1);
+	return [...depth.slice(1)];
 }
 
-const maxDepth = (from: number, pages: number) => Math.max(...depths(from, pages));
+const maxDepth = (from: number, pages: number, links?: number[][]) =>
+	Math.max(...depths(from, pages, links));
 /** Numbered links of one pager: the block of ten, 9 per larger block, first and last. */
 const linkCap = (pages: number) => 10 + 9 * (pagerDepthBound(pages) - 1) + 2;
 
@@ -77,12 +86,16 @@ describe("click depth", () => {
 				throw new Error(`${pages} pages: ${depth} clicks from page 1`);
 			}
 		}
-	});
+	}, 20_000); // 720,000 pagers: about a second, more on a shared runner
 
 	it("bounds the depth between any two pages too", () => {
 		for (const pages of [9, 10, 57, 100, 219, 1000]) {
+			const links = linksOf(pages);
 			for (let from = 1; from <= pages; from++) {
-				expect(maxDepth(from, pages)).toBeLessThanOrEqual(pagerDepthBound(pages));
+				const depth = maxDepth(from, pages, links);
+				if (depth > pagerDepthBound(pages)) {
+					throw new Error(`${pages} pages: ${depth} clicks from page ${from}`);
+				}
 			}
 		}
 	});
