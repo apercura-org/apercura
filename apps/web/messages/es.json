@@ -872,6 +872,12 @@
 			"transfers": {
 				"heading": "Transferencias fuera de la Unión Europea",
 				"body": [
+					"Ninguna: todos los datos, incluidos los datos de salud, se alojan y tratan en el Espacio Económico Europeo y no se transfieren fuera de él. Cualquier cambio de encargado del tratamiento se anunciará aquí antes de que surta efecto."
+				]
+			},
+			"transfersHds": {
+				"heading": "Transferencias fuera de la Unión Europea",
+				"body": [
 					"Ninguna: los datos se alojan y tratan en el Espacio Económico Europeo, y los datos de salud en Francia. Cualquier cambio de encargado del tratamiento se anunciará aquí antes de que surta efecto."
 				]
 			},

@@ -872,6 +872,12 @@
 			"transfers": {
 				"heading": "Trasferimenti al di fuori dell’Unione europea",
 				"body": [
+					"Nessuno: tutti i dati, compresi i dati sanitari, sono ospitati e trattati nello Spazio economico europeo e non vengono trasferiti al di fuori di esso. Qualsiasi cambio di responsabile del trattamento sarà annunciato qui prima di entrare in vigore."
+				]
+			},
+			"transfersHds": {
+				"heading": "Trasferimenti al di fuori dell’Unione europea",
+				"body": [
 					"Nessuno: i dati sono ospitati e trattati nello Spazio economico europeo, e i dati sanitari in Francia. Qualsiasi cambio di responsabile del trattamento sarà annunciato qui prima di entrare in vigore."
 				]
 			},

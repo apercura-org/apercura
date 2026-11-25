@@ -872,6 +872,12 @@
 			"transfers": {
 				"heading": "Transfers outside the European Union",
 				"body": [
+					"None: all data, health data included, is hosted and processed in the European Economic Area and is not transferred outside it. Any change of processor will be announced here before it takes effect."
+				]
+			},
+			"transfersHds": {
+				"heading": "Transfers outside the European Union",
+				"body": [
 					"None: data is hosted and processed in the European Economic Area, and health data in France. Any change of processor will be announced here before it takes effect."
 				]
 			},

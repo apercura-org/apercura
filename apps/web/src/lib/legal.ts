@@ -74,6 +74,15 @@ export function legalFacts(
 }
 
 /**
+ * The section of the privacy policy on transfers outside the EU. Only a deployment with an
+ * HDS-certified host (`PUBLIC_HDS_HOST` set) says where health data is hosted; otherwise the
+ * section only states that data stays in the European Economic Area (see lib/pillars.ts).
+ */
+export function transfersSection(hdsHost: string | null | undefined): "transfers" | "transfersHds" {
+	return hdsHost?.trim() ? "transfersHds" : "transfers";
+}
+
+/**
  * The `Contact` and `Policy` of security.txt (RFC 9116): SECURITY_CONTACT, else a `mailto:` of
  * the legal contact, else the repository's private vulnerability reports (SECURITY.md); the
  * policy defaults to the repository's security policy.
