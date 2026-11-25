@@ -35,11 +35,14 @@ import { acquireImportLock, connect, type Sql, type TransactionSql } from "./lib
 import { downloadFile, inspectLocalFile, type SourceFile } from "./lib/files";
 import { type LoadStats, loadPipeFile, Quarantine } from "./lib/load";
 import {
+	analyzeTables,
 	applySiteLabels,
 	applySiteLocations,
 	applySuppressions,
+	DERIVED_TABLES,
 	enqueueSiteTags,
 	enrichFromFiness,
+	MERGED_TABLES,
 	markMissing,
 	matchAmeli,
 	mergeActivities,
@@ -47,6 +50,7 @@ import {
 	mergeQualifications,
 	mergeSites,
 	orphanedPages,
+	READ_MODEL_TABLES,
 	recomputeDerived,
 	refreshReadModels,
 	restoreOwnNameAccentsInSites,
@@ -410,10 +414,13 @@ async function runLocked(
 			merge.finess = { ...finess, ids: undefined };
 			const geocoding = await timer.run("geocoding", () => geocodeSites(tx, sql, options, log));
 			merge.geocoding = { ...geocoding, labelledIds: undefined };
+			// Statistics for what this transaction wrote, which autovacuum cannot see (#90).
+			await timer.run("analyze merged tables", () => analyzeTables(tx, MERGED_TABLES));
 			const derived = await timer.run("derived fields", () => recomputeDerived(tx, ctx));
 			merge.removedSites = derived.removedSites.length;
 			merge.indexableChanged = derived.indexableChanged;
 			merge.ameli = await timer.run("Ameli matching", () => matchAmeli(tx));
+			await timer.run("analyze derived fields", () => analyzeTables(tx, DERIVED_TABLES));
 			const examples = await unpublishedExamples(tx);
 			const suppressedPages = await suppressedIndexablePages(tx);
 			const models = await timer.run("read models", () => refreshReadModels(tx, runId));
@@ -424,7 +431,8 @@ async function runLocked(
 				...geocoding.labelledIds,
 				...derived.removedSites,
 			]);
-			const orphans = await orphanedPages(tx);
+			await timer.run("analyze read models", () => analyzeTables(tx, READ_MODEL_TABLES));
+			const orphans = await timer.run("orphan check", () => orphanedPages(tx));
 			merge.orphans = orphans.count;
 			const breakers = [
 				...checkBreakers({

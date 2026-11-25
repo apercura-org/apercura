@@ -98,6 +98,12 @@ The URLs can be overridden with `ETL_ANS_URLS`, `ETL_AMELI_URL`,
      registry text. Cache rows from before these columns
      (`with_labels = false`) are geocoded again once by the next online run;
      offline runs leave labels as they are;
+   - planner statistics: autovacuum cannot see rows of a transaction still
+     open, so on a fresh database the directory tables would have none. The
+     run `ANALYZE`s the tables it wrote (which samples its own rows) after
+     geocoding, again after the derived fields and Ameli matching, and the
+     read models before the circuit breakers. The queries after the merge are
+     joins and anti-joins, without a subquery per practitioner;
    - primary activity and place, switchboard phones (a number shared by 10+
      practitioners), orphan sites, `indexable`;
    - Ameli strict matching (below);

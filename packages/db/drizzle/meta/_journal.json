@@ -141,6 +141,13 @@
       "when": 1795611706440,
       "tag": "0019_validate_appointment_checks",
       "breakpoints": true
+    },
+    {
+      "idx": 20,
+      "version": "7",
+      "when": 1795617158542,
+      "tag": "0020_landing_pages_hash_join",
+      "breakpoints": true
     }
   ]
 }

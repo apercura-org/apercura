@@ -27,6 +27,52 @@ const split = (rows: Returned) => ({
 	updated: rows.filter((row) => !row.inserted).length,
 });
 
+/**
+ * Directory tables the merge writes: analyzed once the merge and geocoding are
+ * done, before the derived fields.
+ */
+export const MERGED_TABLES = [
+	"directory.practitioners",
+	"directory.activities",
+	"directory.sites",
+	"directory.practitioner_qualifications",
+	"directory.places",
+	"directory.taxonomy_listing_slugs",
+	"directory.taxonomy_ameli_specialties",
+] as const;
+
+/**
+ * Tables whose filtered columns the derived fields and Ameli matching rewrite
+ * (`indexable`, `is_primary`, `primary_place_id`, `removed_at`): analyzed again
+ * before the read models, which select on them.
+ */
+export const DERIVED_TABLES = [
+	"directory.practitioners",
+	"directory.activities",
+	"directory.sites",
+] as const;
+
+/** Read models and outbox: analyzed before the guards and totals that read them. */
+export const READ_MODEL_TABLES = [
+	"directory.practitioner_pages",
+	"directory.landing_pages",
+	"directory.search_docs",
+	"directory.invalidation_outbox",
+] as const;
+
+/**
+ * Refreshes the planner statistics of tables the run has just written. The
+ * whole merge is one transaction, so autovacuum never sees its rows: on a fresh
+ * database the tables have no statistics at all, every `IS NULL` filter is
+ * estimated at 0.5% and the planner picks nested loops that never finish at
+ * national scale (#90). ANALYZE inside the transaction samples the
+ * transaction's own rows; its statistics become visible to other sessions at
+ * COMMIT and are rolled back with the run.
+ */
+export async function analyzeTables(tx: TransactionSql, tables: readonly string[]) {
+	await tx.unsafe(`ANALYZE ${tables.join(", ")}`);
+}
+
 /** Rewrites the taxonomy mirror tables from `@apercura/core/taxonomy`. */
 export async function syncTaxonomy(tx: TransactionSql): Promise<void> {
 	const listing: { profession_code: string; specialty_code: string; listing_slug: string }[] = [];
@@ -955,15 +1001,20 @@ export async function recomputeDerived(tx: TransactionSql, ctx: MergeContext) {
 		UPDATE directory.activities SET is_primary = false, updated_at = now()
 		WHERE is_primary AND (removed_at IS NOT NULL OR hidden)
 	`;
+	// Joins only, no per-practitioner subquery (#90). At most one primary
+	// activity per practitioner remains after the two statements above.
 	await tx`
-		WITH primary_place AS (
-			SELECT p.id, (
-				SELECT s.place_id FROM directory.activities a
-				JOIN directory.sites s ON s.id = a.site_id AND s.removed_at IS NULL
-				WHERE a.practitioner_id = p.id AND a.is_primary
-				LIMIT 1
-			) AS place_id
+		WITH primary_site AS (
+			SELECT DISTINCT ON (a.practitioner_id) a.practitioner_id, s.place_id
+			FROM directory.activities a
+			JOIN directory.sites s ON s.id = a.site_id AND s.removed_at IS NULL
+			WHERE a.is_primary
+			ORDER BY a.practitioner_id, a.id
+		),
+		primary_place AS (
+			SELECT p.id, ps.place_id
 			FROM directory.practitioners p
+			LEFT JOIN primary_site ps ON ps.practitioner_id = p.id
 		)
 		UPDATE directory.practitioners p SET primary_place_id = pp.place_id, updated_at = now()
 		FROM primary_place pp
@@ -990,25 +1041,30 @@ export async function recomputeDerived(tx: TransactionSql, ctx: MergeContext) {
 		WHERE s.phone = c.phone
 			AND s.phone_kind IS DISTINCT FROM (CASE WHEN c.practitioners >= 10 THEN 'switchboard' ELSE 'direct' END)
 	`;
+	// Joins only: subqueries in a select list stay per-row subplans (#90).
 	const indexable = await tx`
-		WITH computed AS (
+		WITH placed AS (
+			SELECT DISTINCT a.practitioner_id
+			FROM directory.activities a
+			JOIN directory.sites s ON s.id = a.site_id AND s.removed_at IS NULL AND s.place_id IS NOT NULL
+			WHERE a.removed_at IS NULL AND NOT a.hidden
+				AND a.practice_kind IN ('office', 'health_center', 'hospital')
+		),
+		computed AS (
 			SELECT p.id, (
 				p.status = 'active'
 				-- Withheld by the app while a removal request is checked: stays hidden.
 				AND p.withheld_at IS NULL
 				AND p.profession_code = ANY (${ctx.professions}::text[])
-				AND NOT EXISTS (
-					SELECT 1 FROM directory.suppressions x
-					WHERE x.country = p.country AND x.id_scheme = p.id_scheme AND x.national_id = p.national_id
-				)
-				AND EXISTS (
-					SELECT 1 FROM directory.activities a
-					JOIN directory.sites s ON s.id = a.site_id AND s.removed_at IS NULL AND s.place_id IS NOT NULL
-					WHERE a.practitioner_id = p.id AND a.removed_at IS NULL AND NOT a.hidden
-						AND a.practice_kind IN ('office', 'health_center', 'hospital')
-				)
+				-- Not suppressed (at most one row: suppressions are unique per national id).
+				AND x.national_id IS NULL
+				-- At least one patient-facing place in a commune.
+				AND pl.practitioner_id IS NOT NULL
 			) AS indexable
 			FROM directory.practitioners p
+			LEFT JOIN directory.suppressions x
+				ON x.country = p.country AND x.id_scheme = p.id_scheme AND x.national_id = p.national_id
+			LEFT JOIN placed pl ON pl.practitioner_id = p.id
 		)
 		UPDATE directory.practitioners p SET indexable = c.indexable, updated_at = now()
 		FROM computed c
@@ -1056,22 +1112,35 @@ export async function refreshReadModels(tx: TransactionSql, runId: number) {
  * Indexable practitioners listed on no listing page (see `checkOrphans`): no
  * landing page for their listing slug in the commune of any of their
  * patient-facing places. Call after refreshing the read models.
+ *
+ * Set-based: the practitioners that are listed somewhere come from one join,
+ * then an anti-join keeps the others. A correlated `NOT EXISTS` whose join
+ * condition reads `p.listing_slug` cannot be pulled up into an anti-join and
+ * ran as a subplan per practitioner, with a scan of `landing_pages` inside
+ * (#90).
  */
+export const ORPHANED_PAGES_QUERY = `
+	WITH listed AS (
+		SELECT DISTINCT p.id
+		FROM directory.practitioners p
+		JOIN directory.activities a ON a.practitioner_id = p.id AND a.removed_at IS NULL
+			AND NOT a.hidden AND a.practice_kind IN ('office', 'health_center', 'hospital')
+		JOIN directory.sites s ON s.id = a.site_id AND s.removed_at IS NULL
+		JOIN directory.landing_pages lp ON lp.listing_slug = p.listing_slug
+			AND lp.place_id = s.place_id
+		WHERE p.indexable
+	)
+	SELECT count(*)::integer AS count, (array_agg(p.slug ORDER BY p.id))[1:10] AS examples
+	FROM directory.practitioners p
+	LEFT JOIN listed l ON l.id = p.id
+	WHERE p.indexable AND l.id IS NULL
+`;
+
 export async function orphanedPages(
 	tx: TransactionSql,
 ): Promise<{ count: number; examples: string[] }> {
-	const [row] = await tx<{ count: number; examples: string[] | null }[]>`
-		SELECT count(*)::integer AS count, (array_agg(p.slug ORDER BY p.id))[1:10] AS examples
-		FROM directory.practitioners p
-		WHERE p.indexable AND NOT EXISTS (
-			SELECT 1 FROM directory.activities a
-			JOIN directory.sites s ON s.id = a.site_id AND s.removed_at IS NULL
-			JOIN directory.landing_pages lp ON lp.listing_slug = p.listing_slug
-				AND lp.place_id = s.place_id
-			WHERE a.practitioner_id = p.id AND a.removed_at IS NULL AND NOT a.hidden
-				AND a.practice_kind IN ('office', 'health_center', 'hospital')
-		)
-	`;
+	const [row] =
+		await tx.unsafe<{ count: number; examples: string[] | null }[]>(ORPHANED_PAGES_QUERY);
 	return { count: row?.count ?? 0, examples: row?.examples ?? [] };
 }
 
