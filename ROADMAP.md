@@ -95,11 +95,10 @@ test, reflow at 390 px and a Lighthouse CI score of 100. What is left is manual:
    encryption** of free-text notes, sealed to the practice's public key.
 10. **Give the enriched directory back** as open data (Licence Ouverte), geocoded and
     deduplicated.
-11. **More countries**, one `CountryAdapter` each: Germany, the United Kingdom, Spain and Italy
-    first ([ADR 0002](./docs/adr/0002-multi-country.md)), then Belgium, Switzerland and
-    Luxembourg. Medic Remplacement already covered Belgium (INAMI numbers), Switzerland (GLN)
-    and Germany (Approbation), with Dutch (`nl`) and Swiss German (`de-CH`) interfaces, and its
-    notes live on in
+11. **More countries**, one `CountryAdapter` each, in the order of the
+    [International launch](#international-launch) section below
+    ([ADR 0002](./docs/adr/0002-multi-country.md)). Medic Remplacement already covered Belgium
+    (INAMI numbers), Switzerland (GLN) and Germany (Approbation), and its notes live on in
     [`docs/reference/medical-systems-by-country.md`](./docs/reference/medical-systems-by-country.md).
 12. **Teleconsultation**, with a video provider that meets the same hosting requirements as the
     rest of the booking data.
@@ -111,6 +110,99 @@ test, reflow at 390 px and a Lighthouse CI score of 100. What is left is manual:
       the practice's own route), instead of one fixed buffer;
     - **Other professions that visit patients**: physiotherapists, midwives and general
       practitioners, with their own presets.
+
+## International launch
+
+Every market lives on apercura.org under its own path
+([#81](https://github.com/maxgfr/apercura/issues/81), paths as in ADR 0002 section 2). The order below comes from the market study
+in [ADR 0002](./docs/adr/0002-multi-country.md#launch-order) (#82, 2026-11-25), which records the
+sources and what is still UNVERIFIED. No market opens before its checklist is done.
+
+Every market needs, on top of its own items:
+
+- the points marked UNVERIFIED for that market checked with a primary source or a local lawyer,
+  and the answer recorded in the ADR;
+- a `CountryAdapter` (identifier, taxonomy, phone, address, time zones), an ETL source when there
+  is open data, and the market's path and languages;
+- its legal pages (legal notice, privacy notice with the art. 14 notice when pages come from a
+  registry, terms) and a lawyer's review;
+- a hosting contract that meets the market's health-data rules, and the DPIA updated;
+- a legitimate-interest assessment and an easy opt-out when pages are generated from a registry.
+
+### 1. Austria (`/at`): directory from open data
+
+- Import "Ärzte Standorte Wien" (City of Vienna, data from the Vienna medical chamber) and
+  "Niedergelassene Ärzte Steiermark", both CC BY 4.0, with the attribution on every page.
+- Confirm the licence of "Ärzte Land Salzburg"; look for the six other states.
+- Check the medical chamber's guideline on advertising against ÄrzteG §53 and the DSB's stance on
+  directories.
+- Austrian legal notice (Impressum); interface in German (`de`, Austrian terms where they differ).
+
+### 2. Switzerland (`/ch-fr`, `/ch-de`, `/ch-it`): claimed pages, French first
+
+- Open `/ch-fr` first, then `/ch-de` and `/ch-it`.
+- Write to the FOPH (MedReg standard interface, Registerverordnung MedBG art. 11) to ask whether a
+  free public-interest directory may use and republish the register.
+- Appoint a Swiss representative (nFADP art. 14) and write the DPIA (art. 22).
+- Verify claims through MedReg and GesReg lookups and the GLN; contract with practitioners for
+  professional secrecy (StGB art. 321).
+- Check FMH annex 2 point 3.7 and the cantonal rules on advertising.
+
+### 3. Czechia (`/cz`): directory of providers
+
+- Import NRPZS (ÚZIS, CC BY 4.0, monthly CSV and API): one page per place of care.
+- Czech interface (`cs`); check the Czech Medical Chamber's ethics code on third-party listings.
+
+### 4. United Kingdom (`/gb`): practice pages and claimed clinicians
+
+- Import ODS practices under the Open Government Licence, without the personal-data fields it
+  excludes.
+- Ask the GMC for the price of its republication licence; GDC and NMC lookups to verify claims.
+- Confirm with the CQC (and the devolved regulators) that a pure booking site is out of scope;
+  company details on the site (SI 2015/17).
+
+### 5. Poland (`/pl`): directory of registered practices
+
+- Import RPWDL (dane.gov.pl, CC BY 4.0, with the dates of production and download shown).
+- A legal opinion on listing without consent after NSA III OSK 1052/21, and a one-click opt-out.
+- Polish interface (`pl`); Act on medical activity art. 14 (no advertising features).
+
+### 6. Belgium (`/be-fr`, `/be-nl`, `/be-de`) and Luxembourg (`/lu-fr`, `/lu-de`): claimed pages
+
+- Belgium: no page for a practitioner who has not opted in (DPA decision 149/2023); never ask
+  patients for their national register number. Dutch interface (`nl`) for Flanders.
+- Luxembourg: check the Collège médical charter (no priority placement) and the rule on
+  directories for other health professions.
+
+### 7. Spain (`/es`), Italy (`/it`) and Ireland (`/ie-en`): claimed pages
+
+- Spain: verify claims against the college registers (Ley 2/1974 art. 10); check the
+  regional registers.
+- Italy: an explicit consent step before booking (Garante, 2024 compendium); the DPIA; check
+  regional GP open data (Milan, Campania) for later.
+- Ireland: file a re-use request to the Medical Council under the Open Data and PSI
+  Regulations 2021.
+
+### 8. Small open-data markets
+
+- Malta (doctors and dentists, CC BY 4.0): written confirmation from the Medical Council.
+- Estonia (MEDRE, CC BY-NC-SA 3.0): confirmation that the NonCommercial and ShareAlike terms fit;
+  show the activity licence number on every provider page.
+- Slovenia (ZZZS personal doctors, CC BY 4.0) and Latvia (NVD GPs, CC0): partial directories.
+
+### 9. Germany (`/de`): claimed pages, booking later
+
+- Booking only with a host holding a BSI C5 Type 2 attestation, after a legal opinion on §393
+  SGB V (processor or controller, establishment in Germany) and once the GeDIG rules for private
+  booking platforms are known.
+
+### Later
+
+The Netherlands, Portugal, Croatia, Cyprus, Romania, Denmark, Norway, Sweden, Lithuania, Slovakia,
+Hungary, Bulgaria, Iceland and Liechtenstein open with claimed pages when there is demand.
+Croatia (HZZO) and Cyprus (Medical Council) become directories if their publisher confirms an open
+licence. Finland waits for a ruling on whether a booking site is a registered system connected to
+Kanta, and Greece for a legal opinion on Law 3418/2005 art. 17.
 
 ## Practitioner tools
 
