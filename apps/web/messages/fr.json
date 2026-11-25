@@ -29,6 +29,7 @@
 		"footerNav": {
 			"label": "À propos d’Apercura",
 			"directory": "Annuaire",
+			"guides": "Guides",
 			"about": "À propos",
 			"openSource": "Open source",
 			"data": "Données et sources",
@@ -3392,5 +3393,44 @@
 			"lead": "Retrouvez-moi sur",
 			"brand": "Apercura"
 		}
+	},
+	"Guides": {
+		"metaTitle": "Guides pratiques sur les soins en France · Apercura",
+		"metaDescription": "Des guides clairs et sourcés : médecin traitant, secteurs et dépassements, carte Vitale, dentiste, infirmier à domicile, grossesse, urgences.",
+		"title": "Guides",
+		"lead": "Des explications courtes et vérifiées pour trouver le bon professionnel de santé et comprendre ce qui est remboursé. Chaque guide cite ses sources officielles et la date de leur dernière vérification.",
+		"frenchOnly": "Ces guides sont rédigés en français.",
+		"categories": {
+			"patients": {
+				"label": "Patients",
+				"heading": "Pour les patients",
+				"intro": "Choisir un praticien, comprendre les tarifs et les remboursements, savoir qui appeler."
+			},
+			"professionnels": {
+				"label": "Professionnels",
+				"heading": "Pour les professionnels de santé",
+				"intro": "Votre page sur Apercura : la revendiquer, la corriger ou la faire retirer."
+			}
+		},
+		"toc": "Sommaire",
+		"sourcesHeading": "Sources",
+		"sourcesIntro": "Les informations de ce guide viennent de ces pages officielles. La date indique le jour où nous avons vérifié chacune d’elles.",
+		"sourceChecked": "consultée le {date}",
+		"updated": "Mis à jour le {date}",
+		"byline": "Rédigé par l’équipe éditoriale d’Apercura",
+		"editorialTeam": "Équipe éditoriale d’Apercura",
+		"readingTime": "{minutes} min de lecture",
+		"disclaimer": "Ce guide donne des informations générales. Il ne remplace ni l’avis d’un professionnel de santé, ni les informations de votre caisse d’assurance maladie.",
+		"emergencyTitle": "En cas d’urgence",
+		"emergencyBody": "Urgence vitale : appelez le 15 (Samu) ou le 112. Personnes sourdes, malentendantes ou aphasiques : 114, par SMS, application, visio ou tchat. Le soir, la nuit, le week-end et les jours fériés, quand votre médecin n’est pas joignable : 116 117 ou 15, selon votre région.",
+		"relatedHeading": "Guides utiles",
+		"otherGuides": "Autres guides",
+		"allGuides": "Tous les guides",
+		"findPractitioners": "Trouver un praticien",
+		"imprintSource": "Rédaction",
+		"imprintUpdated": "Mis à jour",
+		"imprintReviewed": "Vérifié",
+		"ogRunningHead": "Guides · Annuaire ouvert des professionnels de santé",
+		"ogFooter": "Sources officielles · Mis à jour le {date}"
 	}
 }

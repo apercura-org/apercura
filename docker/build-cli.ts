@@ -29,6 +29,8 @@ for (const [name, entry] of Object.entries(entries)) {
 		minify: false,
 		sourcemap: "none",
 		define: { "process.env.NODE_ENV": '"production"' },
+		// The guides (Markdown) are bundled as their text, as in the app: the warm-up lists them.
+		loader: { ".md": "text" },
 		plugins: [
 			{
 				name: "server-only",

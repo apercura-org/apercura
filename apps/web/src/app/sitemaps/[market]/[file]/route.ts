@@ -1,5 +1,6 @@
 import { connection } from "next/server";
 import { FRANCE_SEGMENT } from "~/i18n/locales";
+import { guidePaths } from "~/lib/guides/catalog";
 import { siteOrigin } from "~/lib/site-url";
 import { francePath, STATIC_PATHS, urlSetXml, xmlResponse } from "~/lib/sitemap-xml";
 import { hasDatabaseUrl } from "~/server/db";
@@ -23,8 +24,15 @@ export async function GET(
 	const chunk = Number(match?.[2]);
 	const origin = siteOrigin();
 	if (kind === "pages" && chunk === 0) {
+		// The static pages, then the guides with the date of their last change.
 		return xmlResponse(
-			urlSetXml(STATIC_PATHS.map((path) => ({ loc: `${origin}${francePath(path)}` }))),
+			urlSetXml([
+				...STATIC_PATHS.map((path) => ({ loc: `${origin}${francePath(path)}` })),
+				...guidePaths().map((guide) => ({
+					loc: `${origin}${francePath(guide.path)}`,
+					lastmod: guide.lastmod,
+				})),
+			]),
 		);
 	}
 	if (!kind || !(SITEMAP_KINDS as readonly string[]).includes(kind) || !hasDatabaseUrl()) {

@@ -29,6 +29,7 @@
 		"footerNav": {
 			"label": "About Apercura",
 			"directory": "Directory",
+			"guides": "Guides",
 			"about": "About",
 			"openSource": "Open source",
 			"data": "Data and sources",
@@ -3392,5 +3393,44 @@
 			"lead": "Find me on",
 			"brand": "Apercura"
 		}
+	},
+	"Guides": {
+		"metaTitle": "Practical guides to health care in France · Apercura",
+		"metaDescription": "Clear, sourced guides: choosing a regular doctor, fees and sectors, the carte Vitale, dentists, home nursing, pregnancy follow-up, emergencies.",
+		"title": "Guides",
+		"lead": "Short, checked explanations to find the right health practitioner and understand what is reimbursed. Every guide cites its official sources and the date they were last checked.",
+		"frenchOnly": "These guides are written in French.",
+		"categories": {
+			"patients": {
+				"label": "Patients",
+				"heading": "For patients",
+				"intro": "Choosing a practitioner, understanding fees and reimbursements, knowing whom to call."
+			},
+			"professionnels": {
+				"label": "Practitioners",
+				"heading": "For health practitioners",
+				"intro": "Your page on Apercura: claim it, correct it or have it removed."
+			}
+		},
+		"toc": "Contents",
+		"sourcesHeading": "Sources",
+		"sourcesIntro": "The information in this guide comes from these official pages. The date is the day we checked each of them.",
+		"sourceChecked": "checked on {date}",
+		"updated": "Updated on {date}",
+		"byline": "Written by the Apercura editorial team",
+		"editorialTeam": "Apercura editorial team",
+		"readingTime": "{minutes} min read",
+		"disclaimer": "This guide gives general information. It does not replace the advice of a health professional, nor the information from your health insurance fund.",
+		"emergencyTitle": "In an emergency",
+		"emergencyBody": "Life-threatening emergency: call 15 (SAMU) or 112. Deaf, hard-of-hearing or aphasic people: 114, by text message, app, video or chat. In the evening, at night, at weekends and on public holidays, when your doctor cannot be reached: 116 117 or 15, depending on your region.",
+		"relatedHeading": "Useful guides",
+		"otherGuides": "Other guides",
+		"allGuides": "All guides",
+		"findPractitioners": "Find a practitioner",
+		"imprintSource": "Written by",
+		"imprintUpdated": "Updated",
+		"imprintReviewed": "Checked",
+		"ogRunningHead": "Guides · Open directory of health practitioners",
+		"ogFooter": "Official sources · Updated on {date}"
 	}
 }

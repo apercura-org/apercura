@@ -46,10 +46,12 @@ describe("warm-up units", () => {
 		]);
 	});
 
-	it("puts the home pages, the static pages and every sitemap file in the pages unit", () => {
+	it("puts the home pages, the static pages, the guides and every sitemap file in the pages unit", () => {
 		const paths = pagesPaths(CHUNKS);
 		expect(paths.slice(0, 3)).toEqual(["/", "/fr", "/fr/pro"]);
 		expect(paths).toContain("/fr/annuaire");
+		expect(paths).toContain("/fr/guides");
+		expect(paths).toContain("/fr/guides/medecin-traitant");
 		expect(paths).toContain("/sitemap.xml");
 		expect(paths).toContain("/sitemaps/international.xml");
 		expect(paths).toContain("/sitemaps/fr/pages-0.xml");

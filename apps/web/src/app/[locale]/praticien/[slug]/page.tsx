@@ -18,6 +18,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { BookingLauncher } from "~/components/booking/booking-launcher";
 import { BookletPage } from "~/components/booklet-page";
 import { BOOKING_PANEL_MESSAGES, ClientIsland } from "~/components/client-island";
+import { RelatedGuides } from "~/components/guides";
 import { JsonLd } from "~/components/json-ld";
 import { OwnerBlock } from "~/components/owner-block";
 import { FeesSection, PracticalSection, PresentationSection } from "~/components/owner-sections";
@@ -26,6 +27,7 @@ import { Trail, type TrailItem, trailEntries } from "~/components/trail";
 import { clientEnv } from "~/env";
 import { getPathname, Link, permanentRedirect } from "~/i18n/navigation";
 import { type Locale, routing } from "~/i18n/routing";
+import { relatedGuides } from "~/lib/guides/catalog";
 import { genderOf, getTaxonomyLabels, inSentence } from "~/lib/labels";
 import { getMapStrings } from "~/lib/map-strings";
 import { ownerContentOf } from "~/lib/owner-content";
@@ -431,6 +433,11 @@ export default async function PractitionerPage({ params }: Props) {
 						</ul>
 					</section>
 				) : null}
+
+				<RelatedGuides
+					locale={locale}
+					guides={relatedGuides([payload.listingSlug, professionFor(payload.professionCode)?.slug])}
+				/>
 
 				<ProvenanceNote
 					locale={locale}

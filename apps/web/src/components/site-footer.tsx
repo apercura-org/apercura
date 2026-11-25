@@ -7,6 +7,7 @@ import { ThemeSwitch } from "./theme-switch";
 /** Pages listed on the back cover, in reading order. */
 const FOOTER_LINKS = [
 	{ href: "/annuaire", key: "directory" },
+	{ href: "/guides", key: "guides" },
 	{ href: "/a-propos", key: "about" },
 	{ href: "/open-source", key: "openSource" },
 	{ href: "/donnees", key: "data" },

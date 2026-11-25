@@ -117,6 +117,9 @@ export const routing = defineRouting({
 			it: "/chi-siamo",
 		},
 		"/open-source": "/open-source",
+		// Guides: articles written in French, at the same path in every locale (indexed in French only).
+		"/guides": "/guides",
+		"/guides/[slug]": "/guides/[slug]",
 		"/donnees": { fr: "/donnees", en: "/data", de: "/daten", es: "/datos", it: "/dati" },
 		"/accessibilite": {
 			fr: "/accessibilite",

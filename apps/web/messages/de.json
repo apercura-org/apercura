@@ -29,6 +29,7 @@
 		"footerNav": {
 			"label": "Über Apercura",
 			"directory": "Verzeichnis",
+			"guides": "Ratgeber",
 			"about": "Info",
 			"openSource": "Open Source",
 			"data": "Daten und Quellen",
@@ -3392,5 +3393,44 @@
 			"lead": "Finden Sie mich auf",
 			"brand": "Apercura"
 		}
+	},
+	"Guides": {
+		"metaTitle": "Ratgeber zur Gesundheitsversorgung in Frankreich · Apercura",
+		"metaDescription": "Klare Ratgeber mit Quellen: Hausarzt, Sektoren und Zuzahlungen, Carte Vitale, Zahnarzt, häusliche Pflege, Schwangerschaft, Notfälle.",
+		"title": "Ratgeber",
+		"lead": "Kurze, geprüfte Erklärungen, um die richtige Fachperson zu finden und zu verstehen, was erstattet wird. Jeder Ratgeber nennt seine amtlichen Quellen und das Datum ihrer letzten Prüfung.",
+		"frenchOnly": "Diese Ratgeber sind auf Französisch verfasst.",
+		"categories": {
+			"patients": {
+				"label": "Patienten",
+				"heading": "Für Patientinnen und Patienten",
+				"intro": "Eine Fachperson wählen, Honorare und Erstattungen verstehen, wissen, wen man anruft."
+			},
+			"professionnels": {
+				"label": "Fachpersonen",
+				"heading": "Für Gesundheitsfachpersonen",
+				"intro": "Ihre Seite auf Apercura: übernehmen, korrigieren oder entfernen lassen."
+			}
+		},
+		"toc": "Inhalt",
+		"sourcesHeading": "Quellen",
+		"sourcesIntro": "Die Angaben dieses Ratgebers stammen von diesen amtlichen Seiten. Das Datum ist der Tag, an dem wir jede von ihnen geprüft haben.",
+		"sourceChecked": "geprüft am {date}",
+		"updated": "Aktualisiert am {date}",
+		"byline": "Verfasst von der Redaktion von Apercura",
+		"editorialTeam": "Redaktion von Apercura",
+		"readingTime": "{minutes} Min. Lesezeit",
+		"disclaimer": "Dieser Ratgeber gibt allgemeine Informationen. Er ersetzt weder den Rat einer Gesundheitsfachperson noch die Auskünfte Ihrer Krankenkasse.",
+		"emergencyTitle": "Im Notfall",
+		"emergencyBody": "Lebensbedrohlicher Notfall: 15 (SAMU) oder 112 anrufen. Gehörlose, schwerhörige oder aphasische Menschen: 114, per SMS, App, Video oder Chat. Abends, nachts, am Wochenende und an Feiertagen, wenn Ihre Ärztin oder Ihr Arzt nicht erreichbar ist: 116 117 oder 15, je nach Region.",
+		"relatedHeading": "Nützliche Ratgeber",
+		"otherGuides": "Weitere Ratgeber",
+		"allGuides": "Alle Ratgeber",
+		"findPractitioners": "Eine Fachperson finden",
+		"imprintSource": "Redaktion",
+		"imprintUpdated": "Aktualisiert",
+		"imprintReviewed": "Geprüft",
+		"ogRunningHead": "Ratgeber · Offenes Verzeichnis der Gesundheitsfachpersonen",
+		"ogFooter": "Amtliche Quellen · Aktualisiert am {date}"
 	}
 }

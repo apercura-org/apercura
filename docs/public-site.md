@@ -25,6 +25,22 @@ market: its pages live under `/fr`, their interface translations under
 | `/fr/recherche?quoi=&ou=&pres=`                | `/fr-en/search`               | never (and disallowed in robots.txt)       |
 | `/fr/rdv#t={token}` (manage an appointment)    | `/fr-en/rdv#t=…`              | never (`noindex`, no referrer, no cache)   |
 | `/fr/a-propos`, `/fr/donnees`, …               | `/fr-en/about`, `/fr-en/data` | yes                                        |
+| `/fr/guides`, `/fr/guides/{slug}`              | `/fr-en/guides/…`             | yes (fr); the articles are French only     |
+
+### Guides
+
+The guides are articles in French stored in the repository as Markdown with a YAML
+frontmatter (`apps/web/content/guides/{slug}.md`: title, description, category, dates of
+publication, update and review, related listing slugs, official sources with the date each
+was checked), registered in `src/lib/guides/catalog.ts` and validated by
+`src/lib/guides/guide.ts` (official source hosts only, a restricted Markdown subset, no raw
+HTML). The files are imported as text (Turbopack `text` rule, a Vite plugin in the unit
+tests, Bun's loader for the jobs), so nothing is read from disk at request time. Pages are
+prerendered; each guide has its own Open Graph image (`/og/guides/{slug}.png`), an `Article`
+(author: the editorial team, an `Organization`) and a `BreadcrumbList`. The guides are in
+`pages-0.xml` with their `lastmod` and in the warm-up's `pages` unit; listing and practitioner
+pages link to the guides whose `listings` match ("Guides utiles"). Editorial rules and the
+plan: [docs/guides/editorial-plan.md](guides/editorial-plan.md).
 
 ### The international home
 
@@ -275,7 +291,8 @@ Next.js separates them with `Vary: rsc, …` and a `?_rsc=` parameter.
 
 - `/sitemap.xml`: hand-written index (Next.js has none) listing
   `/sitemaps/international.xml` (the international home), then each open
-  market's files under its segment: France's `/sitemaps/fr/pages-0.xml` and
+  market's files under its segment: France's `/sitemaps/fr/pages-0.xml` (static
+  pages, then the guides with their `lastmod`) and
   every non-empty chunk
   `/sitemaps/fr/{praticiens|listes|lieux|etablissements}-{k}.xml`, where chunk
   `k` holds the ids `[k × 20,000, (k + 1) × 20,000)`. Only indexable canonical
