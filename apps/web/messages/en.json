@@ -496,7 +496,8 @@
 			"slots": "Slot picker",
 			"site": "Place of practice",
 			"map": "Map",
-			"search": "Booklet search"
+			"search": "Booklet search",
+			"pager": "Listing pager (page 187 of 219)"
 		},
 		"booklet": {
 			"unclaimed": "Unclaimed page",
@@ -1123,7 +1124,9 @@
 			"label": "Pages of the list",
 			"previous": "Previous page",
 			"next": "Next page",
-			"status": "Page {page} of {pages}"
+			"status": "Page {page} of {pages}",
+			"page": "<hidden>Page </hidden>{page}",
+			"jumps": "Go to page"
 		},
 		"facts": {
 			"heading": "In figures",
@@ -1150,6 +1153,7 @@
 		"browseDirectory": "Browse the directory by place",
 		"metaTitleShort": "{listing} in {place} · Apercura",
 		"metaDescriptionPage": "{count, plural, one {Page {page} of {pages}: # practitioner listed as {occupation} in {place} in the national register.} other {Page {page} of {pages}: # practitioners listed as {occupation} in {place} in the national register.}}",
+		"metaDescriptionPageRange": "{count, plural, one {Page {page} of {pages}, {first} to {last}: # practitioner listed as {occupation} in {place} in the national register.} other {Page {page} of {pages}, {first} to {last}: # practitioners listed as {occupation} in {place} in the national register.}}",
 		"hubMetaTitleShort": "{listing} in France · Apercura"
 	},
 	"Directory": {

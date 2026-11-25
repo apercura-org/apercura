@@ -496,7 +496,8 @@
 			"slots": "Selector de horas",
 			"site": "Lugar de ejercicio",
 			"map": "Mapa",
-			"search": "Búsqueda en el folleto"
+			"search": "Búsqueda en el folleto",
+			"pager": "Paginación de una lista (página 187 de 219)"
 		},
 		"booklet": {
 			"unclaimed": "Página sin reclamar",
@@ -1123,7 +1124,9 @@
 			"label": "Páginas de la lista",
 			"previous": "Página anterior",
 			"next": "Página siguiente",
-			"status": "Página {page} de {pages}"
+			"status": "Página {page} de {pages}",
+			"page": "<hidden>Página </hidden>{page}",
+			"jumps": "Ir a la página"
 		},
 		"facts": {
 			"heading": "En cifras",
@@ -1150,6 +1153,7 @@
 		"browseDirectory": "Explorar el directorio por lugar",
 		"metaTitleShort": "{listing} en {place} · Apercura",
 		"metaDescriptionPage": "{count, plural, one {Página {page} de {pages}: # profesional sanitario registrado como {occupation} en {place} en el registro nacional.} many {Página {page} de {pages}: # de profesionales sanitarios registrados como {occupation} en {place} en el registro nacional.} other {Página {page} de {pages}: # profesionales sanitarios registrados como {occupation} en {place} en el registro nacional.}}",
+		"metaDescriptionPageRange": "{count, plural, one {Página {page} de {pages}, de {first} a {last}: # profesional sanitario registrado como {occupation} en {place} en el registro nacional.} many {Página {page} de {pages}, de {first} a {last}: # de profesionales sanitarios registrados como {occupation} en {place} en el registro nacional.} other {Página {page} de {pages}, de {first} a {last}: # profesionales sanitarios registrados como {occupation} en {place} en el registro nacional.}}",
 		"hubMetaTitleShort": "{listing} en Francia · Apercura"
 	},
 	"Directory": {

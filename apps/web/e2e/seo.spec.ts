@@ -53,7 +53,7 @@ const PAGES: Expected[] = [
 	},
 	{
 		path: "/fr/medecin-generaliste/75-paris/2",
-		robots: "noindex, follow",
+		robots: "index, follow",
 		types: ["CollectionPage", "BreadcrumbList", "ItemList"],
 	},
 	{

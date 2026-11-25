@@ -1,3 +1,4 @@
+import { pager } from "@apercura/core";
 import { listingHasBillingSectors } from "@apercura/core/taxonomy";
 import { FieldList, FieldRow, linkStyles, ProvenanceNote, tableStyles } from "@apercura/ui";
 import { getTranslations } from "next-intl/server";
@@ -214,7 +215,12 @@ export async function PractitionerTable({
 	);
 }
 
-/** Previous / next links between the pages of a listing. */
+/**
+ * The pager of a listing (`pager` in @apercura/core): previous and next, every
+ * page of the current block of ten, then the first, the last and the round
+ * pages of the larger blocks, so any page is a few clicks from any other (3
+ * below 1,000 pages). Plain links: it works without JavaScript.
+ */
 export async function Pagination({
 	locale,
 	page,
@@ -228,29 +234,73 @@ export async function Pagination({
 }) {
 	if (pages <= 1) return null;
 	const t = await getTranslations({ locale, namespace: "Listing" });
-	const link = `${linkStyles()} inline-flex min-h-11 items-center text-body font-semibold`;
+	const { previous, next, nearby, jumps } = pager(page, pages);
+	const step = `${linkStyles()} inline-flex min-h-11 items-center text-body font-semibold`;
+	const cell =
+		"inline-flex min-h-11 min-w-11 items-center justify-center rounded-field px-2 text-meta tabular";
+	/** "Page 12", with "Page " for screen readers only. */
+	const label = (target: number) =>
+		t.rich("pagination.page", {
+			page: target,
+			hidden: (chunks) => <span className="sr-only">{chunks}</span>,
+		});
+	const pageCell = (target: number) => (
+		<li key={target}>
+			{target === page ? (
+				<span
+					aria-current="page"
+					className={`${cell} bg-paper-shade font-semibold text-ink ring-1 ring-ink`}
+				>
+					{label(target)}
+				</span>
+			) : (
+				// Not prefetched: two dozen far pages would be fetched on every view.
+				<Link
+					href={hrefOf(target)}
+					prefetch={false}
+					className={linkStyles({ className: `${cell} hover:bg-paper-shade` })}
+				>
+					{label(target)}
+				</Link>
+			)}
+		</li>
+	);
 	return (
 		<nav
 			aria-label={t("pagination.label")}
-			className="flex flex-wrap items-center justify-between gap-4 border-t border-rule-soft pt-3"
+			className="flex flex-col gap-3 border-t border-rule-soft pt-3"
 		>
-			{page > 1 ? (
-				<Link href={hrefOf(page - 1)} className={link} rel="prev">
-					{t("pagination.previous")}
-				</Link>
-			) : (
-				<span />
-			)}
-			<p className="type-caption tabular text-ink" aria-current="page">
-				{t("pagination.status", { page, pages })}
-			</p>
-			{page < pages ? (
-				<Link href={hrefOf(page + 1)} className={link} rel="next">
-					{t("pagination.next")}
-				</Link>
-			) : (
-				<span />
-			)}
+			<div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1">
+				{previous ? (
+					<Link href={hrefOf(previous)} className={step} rel="prev">
+						{t("pagination.previous")}
+					</Link>
+				) : (
+					<span />
+				)}
+				{/* On a phone the status takes its own line, previous and next stay either side. */}
+				<p className="type-caption tabular text-ink max-sm:order-first max-sm:basis-full">
+					{t("pagination.status", { page, pages })}
+				</p>
+				{next ? (
+					<Link href={hrefOf(next)} className={step} rel="next">
+						{t("pagination.next")}
+					</Link>
+				) : (
+					<span />
+				)}
+			</div>
+			<ol className="flex flex-wrap gap-1">{nearby.map(pageCell)}</ol>
+			{jumps.length > 0 ? (
+				<div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+					<span id="pagination-jumps" className="text-meta text-ink-muted">
+						{t("pagination.jumps")}
+					</span>
+					<ol aria-labelledby="pagination-jumps" className="flex flex-wrap gap-1">
+						{jumps.map(pageCell)}
+					</ol>
+				</div>
+			) : null}
 		</nav>
 	);
 }
