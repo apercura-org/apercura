@@ -704,9 +704,11 @@ Per list, before the merge (`GB_LIMITS` in `src/guards.ts`), as Austria's:
 
 - the file is between 1 KB and 100 MB and parses (27 columns for ODS, the
   expected header columns elsewhere); otherwise the list is **left out**;
-- at most 1% of its lines quarantined, and at least a floor of rows (ODS GP
-  1,000, branches 300, ODS dental and pharmacies 1,500, Scotland 100, 100 and
-  150, Northern Ireland 40 and 40): otherwise left out (never approvable);
+- at most 1% of its lines quarantined, and at least a floor of rows, about 5%
+  of the November 2026 files (ODS GP 300, branches 100, ODS dental and
+  pharmacies 500, Scotland 40, 50 and 60, Northern Ireland 15 and 15): otherwise
+  left out (never approvable). The floor catches an empty or broken file on a
+  first run; afterwards the 5% change below blocks a truncated one;
 - at most 5% more or fewer practices and 15% more or fewer bytes than the last
   successful run that loaded the list: otherwise **blocked** (approvable).
 

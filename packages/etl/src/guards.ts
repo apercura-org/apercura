@@ -291,9 +291,9 @@ export function checkAtPlaces(staged: { sites: number; placed: number }): GuardC
 
 /**
  * Limits of the UK lists. ODS refreshes its reports every night, so a size or row change is
- * allowed the Austrian lists' room. A floor of rows per list (about a sixth of the November
- * 2026 files) catches an empty or truncated report on a first run; afterwards the change
- * since the last successful run (5%) blocks anything smaller.
+ * allowed the Austrian lists' room. A floor of rows per list (about 5% of the November 2026
+ * files) catches an empty or broken report on a first run; afterwards the change since the
+ * last successful run (5%, approvable) blocks a truncated one.
  */
 export const GB_LIMITS = {
 	fileSizeDelta: 0.15,
@@ -304,15 +304,15 @@ export const GB_LIMITS = {
 	/** Sites of Great Britain located by their postcode (Northern Ireland is placed by town). */
 	minLocatedRatio: 0.97,
 	minRows: {
-		"ods-gp": 1_000,
-		"ods-branches": 300,
-		"ods-dent": 1_500,
-		"ods-pharm": 1_500,
-		"phs-gp": 100,
-		"phs-dent": 100,
-		"phs-pharm": 150,
-		"bso-gp": 40,
-		"bso-dent": 40,
+		"ods-gp": 300,
+		"ods-branches": 100,
+		"ods-dent": 500,
+		"ods-pharm": 500,
+		"phs-gp": 40,
+		"phs-dent": 50,
+		"phs-pharm": 60,
+		"bso-gp": 15,
+		"bso-dent": 15,
 	} as Record<string, number>,
 } as const;
 

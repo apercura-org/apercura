@@ -140,14 +140,14 @@ describe.skipIf(!url)("etl:gb on synthetic fixtures, next to France and Austria"
 		expect(outcome.sourceErrors).toEqual({});
 		const totals = outcome.stats.totals as Record<string, unknown>;
 		expect(totals.bySource).toEqual({
-			"GB-ODS-GP": 1007,
-			"GB-ODS-DENT": 1502,
-			"GB-ODS-PHARM": 1501,
-			"GB-PHS-GP": 102,
-			"GB-PHS-DENT": 101,
-			"GB-PHS-PHARM": 151,
-			"GB-BSO-GP": 42,
-			"GB-BSO-DENT": 42,
+			"GB-ODS-GP": 307,
+			"GB-ODS-DENT": 502,
+			"GB-ODS-PHARM": 501,
+			"GB-PHS-GP": 42,
+			"GB-PHS-DENT": 51,
+			"GB-PHS-PHARM": 61,
+			"GB-BSO-GP": 17,
+			"GB-BSO-DENT": 17,
 		});
 		expect(await snapshot("FR")).toEqual(france);
 		expect(await snapshot("AT")).toEqual(austria);
@@ -259,7 +259,7 @@ describe.skipIf(!url)("etl:gb on synthetic fixtures, next to France and Austria"
 		`;
 		const region = await listing(`gp-practices:${northEast?.id}`);
 		expect(region?.country).toBe("GB");
-		expect(region?.n).toBeGreaterThan(1000);
+		expect(region?.n).toBeGreaterThan(300);
 		expect(await count("directory.landing_pages WHERE country = 'GB' AND key LIKE '%:fr'")).toBe(0);
 		expect(await count("directory.search_docs WHERE country = 'GB'")).toBe(
 			await count("directory.practitioners WHERE country = 'GB' AND status = 'active'"),
@@ -299,7 +299,7 @@ describe.skipIf(!url)("etl:gb on synthetic fixtures, next to France and Austria"
 		).toBe(0);
 		expect(
 			await count("directory.practitioners WHERE id_scheme = 'GB-PHS-GP' AND status = 'active'"),
-		).toBe(102);
+		).toBe(42);
 	});
 
 	it("keeps the branch surgeries when only their report fails", async () => {
@@ -356,8 +356,6 @@ describe.skipIf(!url)("etl:gb on synthetic fixtures, next to France and Austria"
 		expect(await count("directory.sites WHERE address_line LIKE '% Filler Street West'")).toBe(0);
 		const approved = await runUk(dir, { approve: String(blocked.runId) });
 		expect(approved.status).toBe("succeeded");
-		expect(await count("directory.sites WHERE address_line LIKE '% Filler Street West'")).toBe(
-			1000,
-		);
+		expect(await count("directory.sites WHERE address_line LIKE '% Filler Street West'")).toBe(300);
 	});
 });

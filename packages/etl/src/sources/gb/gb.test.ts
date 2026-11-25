@@ -153,7 +153,7 @@ describe("the ODS reports", () => {
 describe("Public Health Scotland's lists", () => {
 	it("read the GP practices, without the repeated name line", () => {
 		const result = parsePhs("phs-gp", fixture("phs-gp.csv"));
-		expect(result.rows).toHaveLength(102);
+		expect(result.rows).toHaveLength(42);
 		expect(result.rows[0]).toMatchObject({
 			idScheme: "GB-PHS-GP",
 			nationalId: "89001",
@@ -229,7 +229,7 @@ describe("Public Health Scotland's lists", () => {
 describe("the Business Services Organisation's lists", () => {
 	it("show a GP practice under its own name, never its partners'", () => {
 		const result = parseBsoGp(fixture("bso-gp.csv"));
-		expect(result.rows).toHaveLength(42);
+		expect(result.rows).toHaveLength(17);
 		expect(result.rows[0]).toMatchObject({
 			idScheme: "GB-BSO-GP",
 			nationalId: "901",

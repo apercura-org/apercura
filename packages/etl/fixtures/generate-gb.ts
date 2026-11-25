@@ -336,15 +336,15 @@ export const GB_PHARMACY_CASES: OdsCase[] = [
 
 /** Fillers above the row floors of the import's guards (`GB_LIMITS.minRows`). */
 export const GB_FILLERS = {
-	gp: 1_000,
-	branches: 300,
-	dental: 1_500,
-	pharmacies: 1_500,
-	scotlandGp: 100,
-	scotlandDental: 100,
-	scotlandPharmacies: 150,
-	niGp: 40,
-	niDental: 40,
+	gp: 300,
+	branches: 100,
+	dental: 500,
+	pharmacies: 500,
+	scotlandGp: 40,
+	scotlandDental: 50,
+	scotlandPharmacies: 60,
+	niGp: 15,
+	niDental: 15,
 } as const;
 
 const pad = (value: number, width: number) => String(value).padStart(width, "0");
