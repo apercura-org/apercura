@@ -220,6 +220,21 @@ curl -fsS "$base/fr/mentions-legales" | grep -q "$publisher"
 curl -fsS "$base/.well-known/security.txt" | grep -q "^Contact: mailto:contact@example.test"
 echo "home, /fr, /fr-en, /fr/praticien/$slug, the legal notice, security.txt and /api/health: OK"
 
+step "Open Graph images render in the app container (their fonts ship with the build)"
+# 200 and a PNG: a font missing from the standalone output answers 500.
+og_image() {
+	content_type=$(curl -fsS -o "$work/og.png" -w '%{content_type}' "$base$1")
+	if [ "$content_type" != "image/png" ]; then
+		echo "$1 answered $content_type, not image/png" >&2
+		exit 1
+	fi
+	# The PNG signature's "PNG", bytes 2 to 4.
+	test "$(head -c 4 "$work/og.png" | tail -c 3)" = PNG
+}
+og_image /og/medecin.png
+og_image "/og/praticien/$slug.png"
+echo "/og/medecin.png and /og/praticien/$slug.png: OK"
+
 step "Scheduled jobs run in the scheduler"
 compose exec -T scheduler apercura jobs:tick | grep '"job":"tick"'
 
