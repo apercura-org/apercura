@@ -13,10 +13,12 @@ Usage: apercura <command> [arguments]
                          purge, claim-documents), rotate-keys after a key rotation, or
                          warm [--restart] for the next slice of the cache warm-up
   etl:fr [flags]         Import the French open data (e.g. --department 75, --dry-run)
-  etl:places [flags]     Import the communes, departments and regions
+  etl:at [flags]         Import the Austrian open data (Vienna, Styria, Salzburg lists)
+  etl:places [flags]     Import the communes, departments and regions (--country at: the
+                         Austrian Bundesländer and Gemeinden)
   etl:outbox             Send the pending cache tags to the app
   scheduler              Run jobs:tick and the cache warm-up every 5 minutes and the weekly
-                         import (supercronic)
+                         imports (supercronic)
   keys                   Print fresh random secrets for the environment file
   help                   Show this help
 
@@ -72,7 +74,7 @@ jobs | jobs:tick)
 	jobs_database_url
 	exec bun /app/cli/jobs.js "$@"
 	;;
-etl:fr | etl:places | etl:outbox)
+etl:fr | etl:at | etl:places | etl:outbox)
 	# The import only uses APP_URL to send cache tags to the app: inside a private network it
 	# can reach it directly (INTERNAL_APP_URL, e.g. http://app:3000) instead of the public URL.
 	if [ -n "${INTERNAL_APP_URL:-}" ]; then
