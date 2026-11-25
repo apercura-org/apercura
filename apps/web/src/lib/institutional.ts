@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { hasLocale } from "next-intl";
 import { getTranslations } from "next-intl/server";
 import type { ProseContent } from "~/components/institutional";
-import { marketOf } from "~/i18n/locales";
+import { type MarketCountry, marketOf } from "~/i18n/locales";
 import type { Href } from "~/i18n/navigation";
 import { type Locale, routing } from "~/i18n/routing";
 import { pageMetadata } from "./seo";
@@ -19,15 +19,21 @@ export type InstitutionalNamespace =
 	| "PrivacyAt"
 	| "TermsAt"
 	| "AccessibilityAt"
-	| "DataAt";
+	| "DataAt"
+	| "LegalNoticeGb"
+	| "PrivacyGb"
+	| "TermsGb"
+	| "AccessibilityGb"
+	| "DataGb";
 
 /**
- * The namespace of a page in the locale's market: Austria's pages (`/at/impressum`…) have
- * texts of their own, written for Austrian law, under the same routes as France's.
+ * The namespace of a page in the locale's market: Austria's pages (`/at/impressum`…) and the
+ * UK's (`/gb/privacy`…) have texts of their own, written for their law, under the same routes as
+ * France's.
  */
 export function marketNamespace(
 	locale: Locale,
-	namespaces: { FR: InstitutionalNamespace; AT: InstitutionalNamespace },
+	namespaces: Record<MarketCountry, InstitutionalNamespace>,
 ): InstitutionalNamespace {
 	return namespaces[marketOf(locale)];
 }
@@ -35,7 +41,7 @@ export function marketNamespace(
 /** Metadata of an institutional page whose texts depend on the market (see `marketNamespace`). */
 export async function marketInstitutionalMetadata(
 	params: Promise<{ locale: string }>,
-	namespaces: { FR: InstitutionalNamespace; AT: InstitutionalNamespace },
+	namespaces: Record<MarketCountry, InstitutionalNamespace>,
 	href: Href,
 ): Promise<Metadata> {
 	return institutionalMetadata(params, marketNamespace(await localeOf(params), namespaces), href);

@@ -7,7 +7,7 @@ import { getTranslations } from "next-intl/server";
 import { MARKET_LOCALES } from "~/i18n/locales";
 import { genderOf, getTaxonomyLabels } from "~/lib/labels";
 import { professionSlugOf } from "~/lib/market";
-import { displayId, type PractitionerKey } from "~/lib/practitioner-key";
+import { displayId, marketSegmentOf, type PractitionerKey } from "~/lib/practitioner-key";
 import { type OwnOgImage, practitionerOgImageUrl, shortPlaceName } from "~/lib/seo";
 import { cacheTags } from "~/server/cache-tags";
 import { getPractitionerPage } from "~/server/queries/practitioner";
@@ -65,8 +65,12 @@ export async function practitionerCard(key: OgKey): Promise<PractitionerCard | n
 		labels.profession(professionSlugOf(payload.professionCode), gender) ?? t("unknownProfession");
 	return {
 		name: labels.personName(payload),
-		occupation: labels.listing(payload.listingSlug, gender) ?? profession,
-		place: page.commune ? shortPlaceName(page.commune.name) : null,
+		occupation: labels.occupation(payload.listingSlug, gender) ?? profession,
+		place: (() => {
+			// A London practice is listed in its borough, without a town.
+			const locality = page.commune ?? (payload.country === "GB" ? page.department : null);
+			return locality ? shortPlaceName(locality.name) : null;
+		})(),
 		rpps: displayId(payload),
 		photoKey: payload.profile?.photoKey ?? null,
 	};
@@ -82,7 +86,7 @@ export async function practitionerOgImageOf(key: OgKey, slug: string): Promise<O
 	const t = await getTranslations({ locale: MARKET_LOCALES[key.country], namespace: "OgImage" });
 	const values = { name: card.name, occupation: card.occupation, place: card.place ?? "" };
 	return {
-		url: practitionerOgImageUrl(slug),
+		url: practitionerOgImageUrl(marketSegmentOf(key.country, slug)),
 		alt: card.place ? t("practitioner.alt", values) : t("practitioner.altNoPlace", values),
 	};
 }

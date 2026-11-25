@@ -217,12 +217,16 @@ export default async function LandingPage({ params }: Props) {
 	const placeName = placeLabel(place, country);
 	const count = data.landing.practitionerCount;
 	const isDepartment = place.kind === "department";
+	// A UK region (England's regions, the other nations) sits in the department's slot: its
+	// places are local authorities, and it has no hub of a commune.
+	const isRegion = place.kind === "region";
+	const isTop = isDepartment || isRegion;
 
 	const trail: TrailItem[] = [
 		{ label: listing, href: { pathname: "/[specialite]", params: { specialite: listingSlug } } },
 		{ label: department.name, href: landingHref(listingSlug, department.slug, null) },
 	];
-	if (!isDepartment && placeSlug) {
+	if (!isTop && placeSlug) {
 		trail.push({ label: place.name, href: landingHref(listingSlug, department.slug, placeSlug) });
 	}
 	if (page > 1) {
@@ -233,7 +237,7 @@ export default async function LandingPage({ params }: Props) {
 	const url = absoluteUrl(resolved.href, locale);
 	const origin = siteOrigin();
 
-	const hubHref: Href = isDepartment
+	const hubHref: Href = isTop
 		? { pathname: "/annuaire/[dept]", params: { dept: department.slug } }
 		: {
 				pathname: "/annuaire/[dept]/[commune]",
@@ -309,9 +313,11 @@ export default async function LandingPage({ params }: Props) {
 					<ListingSection
 						id="nearby-heading"
 						title={
-							isDepartment
-								? t("communesHeading", { listing, place: placeName })
-								: t("nearbyHeading", { listing })
+							isRegion
+								? t("authoritiesHeading", { listing, place: placeName })
+								: isDepartment
+									? t("communesHeading", { listing, place: placeName })
+									: t("nearbyHeading", { listing })
 						}
 					>
 						<CountLinks
@@ -319,7 +325,11 @@ export default async function LandingPage({ params }: Props) {
 							items={data.nearby.map((item) => ({
 								key: item.id,
 								label: placeLabel(item, country),
-								href: landingHref(listingSlug, item.departmentSlug, item.slug),
+								href: landingHref(
+									listingSlug,
+									item.departmentSlug,
+									item.kind === "department" ? null : item.slug,
+								),
 								count: item.practitionerCount,
 							}))}
 						/>

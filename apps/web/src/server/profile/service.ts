@@ -1,6 +1,6 @@
 import "server-only";
 import { randomUUID } from "node:crypto";
-import type { Fees } from "@apercura/core";
+import { type Fees, normalizeGbPostcode } from "@apercura/core";
 import { countryAdapter } from "@apercura/core/country";
 import type { Database } from "@apercura/db";
 import {
@@ -214,7 +214,7 @@ export async function setSiteHidden(
  * address), in the practitioner's market. Located at the commune's centre:
  * the page shows its address without a map until it is geocoded. France finds
  * the commune by postcode; Austria, whose places carry no postcodes, by the
- * Vienna district of a 1xx0 postcode, else by the Gemeinde's name.
+ * Vienna district of a 1xx0 postcode, else by the Gemeinde's name; the UK by the town's name.
  */
 export async function addOwnerSite(db: Database, practitionerId: number, input: OwnerSiteData) {
 	return db.transaction(async (tx) => {
@@ -225,11 +225,25 @@ export async function addOwnerSite(db: Database, practitionerId: number, input: 
 		const adapter = countryAdapter(country);
 		const phone = input.phone ? adapter.phone.toE164(input.phone) : null;
 		if (input.phone && !phone) throw new ProfileError("BAD_PHONE");
-		if (!adapter.address.postcode.test(input.postcode)) throw new ProfileError("UNKNOWN_PLACE");
-		const district = country === "AT" ? /^1(\d{2})0$/.exec(input.postcode)?.[1] : undefined;
+		// UK postcodes are stored in their standard form (`TS18 1HU`).
+		const postcode =
+			country === "GB" ? (normalizeGbPostcode(input.postcode) ?? input.postcode) : input.postcode;
+		if (!adapter.address.postcode.test(postcode)) throw new ProfileError("UNKNOWN_PLACE");
+		const district = country === "AT" ? /^1(\d{2})0$/.exec(postcode)?.[1] : undefined;
 		const [place] =
-			country === "AT"
-				? await tx.execute<{ id: number }>(sql`
+			country === "GB"
+				? // The UK's towns carry no postcodes either: the town by its name.
+					await tx.execute<{ id: number }>(sql`
+					SELECT p.id FROM directory.places p
+					WHERE p.country = 'GB' AND p.kind = 'commune' AND p.removed_at IS NULL
+						AND similarity(directory.text_norm(p.name), directory.text_norm(${input.city})) > 0.5
+					ORDER BY (directory.text_norm(p.name) = directory.text_norm(${input.city})) DESC,
+						similarity(directory.text_norm(p.name), directory.text_norm(${input.city})) DESC,
+						p.id
+					LIMIT 1
+				`)
+				: country === "AT"
+					? await tx.execute<{ id: number }>(sql`
 					SELECT p.id FROM directory.places p
 					WHERE p.country = 'AT' AND p.removed_at IS NULL AND (
 						(p.kind = 'arrondissement' AND p.code = ${district ? `9${district}01` : ""})
@@ -241,10 +255,10 @@ export async function addOwnerSite(db: Database, practitionerId: number, input: 
 						similarity(directory.text_norm(p.name), directory.text_norm(${input.city})) DESC
 					LIMIT 1
 				`)
-				: await tx.execute<{ id: number }>(sql`
+					: await tx.execute<{ id: number }>(sql`
 					SELECT p.id FROM directory.places p
 					WHERE p.country = 'FR' AND p.kind IN ('commune', 'arrondissement') AND p.removed_at IS NULL
-						AND ${input.postcode} = ANY (p.postcodes)
+						AND ${postcode} = ANY (p.postcodes)
 					ORDER BY (directory.text_norm(p.name) = directory.text_norm(${input.city})) DESC,
 						similarity(directory.text_norm(p.name), directory.text_norm(${input.city})) DESC,
 						p.kind = 'arrondissement' DESC
@@ -255,7 +269,7 @@ export async function addOwnerSite(db: Database, practitionerId: number, input: 
 		const [site] = await tx.execute<{ id: number }>(sql`
 			INSERT INTO directory.sites (source, source_key, kind, name, address_line, postcode,
 				commune_label, country_code, place_id, location, geo_precision, geo_source, phone, phone_kind)
-			SELECT 'owner', ${key}, 'office', ${input.name}, ${input.addressLine}, ${input.postcode},
+			SELECT 'owner', ${key}, 'office', ${input.name}, ${input.addressLine}, ${postcode},
 				${input.city}, ${country}, p.id, p.centroid, CASE WHEN p.centroid IS NULL THEN NULL ELSE 'city' END,
 				CASE WHEN p.centroid IS NULL THEN NULL ELSE 'centroid' END, ${phone},
 				CASE WHEN ${phone}::text IS NULL THEN NULL ELSE 'direct' END

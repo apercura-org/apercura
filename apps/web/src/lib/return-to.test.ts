@@ -58,3 +58,18 @@ describe("returning to an Austrian claim", () => {
 		expect(parseReturnTo("/pro/revendiquer?rpps=abc7983")).toBeNull();
 	});
 });
+
+describe("returning to a UK claim", () => {
+	it("accepts a `gb:` practice key, never anything that looks like a path", () => {
+		expect(parseReturnTo("/pro/revendiquer?rpps=gb:a99001")).toEqual({
+			pathname: "/pro/revendiquer",
+			query: { rpps: "gb:a99001" },
+		});
+		expect(parseReturnTo("/pro/revendiquer?rpps=gb%3Asg89001")).toEqual({
+			pathname: "/pro/revendiquer",
+			query: { rpps: "gb:sg89001" },
+		});
+		expect(parseReturnTo("/pro/revendiquer?rpps=gb:a99001/..")).toBeNull();
+		expect(parseReturnTo("/pro/revendiquer?rpps=gb:")).toBeNull();
+	});
+});

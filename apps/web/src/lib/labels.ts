@@ -1,3 +1,4 @@
+import { isGbListingSlug } from "@apercura/core/taxonomy";
 import { getTranslations } from "next-intl/server";
 import { capitalisesNouns } from "~/i18n/locales";
 import type { Locale } from "~/i18n/routing";
@@ -26,6 +27,16 @@ export async function getTaxonomyLabels(locale: Locale) {
 	return {
 		listing: (slug: string | null | undefined, gender: Gender = "other") =>
 			slug ? lookup(`listing.${slug}`, { gender }) : null,
+		/**
+		 * What one practitioner is, from their listing: the listing's label ("Cardiologist"), but a
+		 * UK practice's kind in the singular ("GP practice"), its listing being plural ("GP
+		 * practices").
+		 */
+		occupation: (slug: string | null | undefined, gender: Gender = "other") =>
+			slug
+				? ((isGbListingSlug(slug) ? lookup(`profession.${slug}`) : null) ??
+					lookup(`listing.${slug}`, { gender }))
+				: null,
 		profession: (slug: string, gender: Gender = "other") =>
 			lookup(`profession.${slug}`, { gender }),
 		title: (code: string | null | undefined) => (code ? lookup(`title.${code}`) : null),

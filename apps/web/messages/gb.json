@@ -1,0 +1,256 @@
+{
+	"Metadata": {
+		"description": "The open directory of every NHS GP practice, dental practice and pharmacy in the United Kingdom, from NHS open data.",
+		"proDescription": "Apercura publishes a factual page for every NHS GP practice, dental practice and pharmacy in the UK. Find your practice's page and claim it for free.",
+		"homeTitle": "Apercura · GP practices, dentists and pharmacies in the UK"
+	},
+	"Site": {
+		"runningHead": "Open directory of NHS practices in the United Kingdom",
+		"navPro": "For practices",
+		"footer": {
+			"free": "Free for practices and patients."
+		},
+		"folioRpps": "Code {rpps}"
+	},
+	"Search": {
+		"label": "Find a GP practice, dentist or pharmacy",
+		"whoHint": "Practice name, or GP practice, dentist, pharmacy",
+		"whereHint": "Town or local authority"
+	},
+	"SearchForm": {
+		"practitioners": "Practices",
+		"department": "Local authority",
+		"geoDenied": "Location is turned off for this site. Type a town instead.",
+		"geoUnavailable": "Your location could not be found. Type a town instead."
+	},
+	"SearchPage": {
+		"emptyTitle": "No practice matches",
+		"emptyBody": "Check the spelling, try a nearby town, or a broader term such as “GP practice”.",
+		"queryOnlyNear": "Practices near you",
+		"startTitle": "What are you looking for?",
+		"startBody": "Type a practice name, or GP practice, dentist or pharmacy, in “Who?”, and a town or a local authority in “Where?”. You can also browse the directory by region and local authority.",
+		"unknownPlaceBody": "Check the spelling, or type a nearby town.",
+		"departmentPlace": "Local authority",
+		"bookingNotOpen": "Apercura does not offer online booking in the UK: call the practice.",
+		"columns": {
+			"practitioner": "Practice",
+			"place": "Address",
+			"appointments": "Contact"
+		},
+		"outsidePlace": "Outside {where}"
+	},
+	"HomePage": {
+		"title": "Find a GP practice, dentist or pharmacy in the UK",
+		"hook": "Every NHS GP practice, dental practice and pharmacy in England, Scotland, Wales and Northern Ireland already has a page.",
+		"pillars": {
+			"free": {
+				"description": "Free for practices and patients, with no subscription and no commission."
+			}
+		},
+		"registry": {
+			"heading": "Built from NHS open data",
+			"intro": "Each page starts from the lists the NHS publishes as open data in each nation, under the Open Government Licence: NHS England's Organisation Data Service for England and Wales, Public Health Scotland, and the Business Services Organisation in Northern Ireland. Practices are listed, never individual clinicians. Nobody pays to be listed, and nobody is left out."
+		},
+		"pro": {
+			"heading": "Do you run a GP practice, dental practice or pharmacy?",
+			"body": "Your practice's page already exists. Claiming it is free."
+		},
+		"tagline": "The open directory of NHS GP practices, dental practices and pharmacies in the UK.",
+		"market": {
+			"listingsHeading": "By type of practice",
+			"placesHeading": "By region and nation"
+		}
+	},
+	"Practitioner": {
+		"rpps": "Code",
+		"statusNote": {
+			"unclaimed": "Built from NHS open data. The practice has not completed this page yet.",
+			"verified": "Completed by the practice, whose claim has been verified."
+		},
+		"fields": {
+			"profession": "Type of practice"
+		},
+		"source": {
+			"name": "NHS organisation data, Open Government Licence v3.0"
+		},
+		"action": {
+			"call": {
+				"statement": "Apercura does not offer online booking in the UK. Call the practice to make an appointment."
+			}
+		},
+		"sitesHeading": "Addresses"
+	},
+	"PractitionerPage": {
+		"metaTitle": "{name}, {occupation} · Apercura",
+		"metaTitlePlace": "{name}, {occupation} in {place} · Apercura",
+		"metaDescription": "{name}, {occupation}: {fees, select, sector {address, phone and fees} other {address, phone and NHS details}}, from NHS open data.",
+		"metaDescriptionPlace": "{name}, {occupation} in {place}: {fees, select, sector {address, phone and fees} other {address, phone and NHS details}}, from NHS open data.",
+		"unknownProfession": "NHS practice",
+		"professionHeading": "Practice",
+		"unnamedPlace": "Branch surgery",
+		"asideLabel": "About this page",
+		"action": {
+			"callNotYetOpen": "Apercura does not offer online booking in the UK. To make an appointment, call the practice.",
+			"noPhone": "No phone number is published for this practice."
+		},
+		"claim": {
+			"heading": "Is this your practice?",
+			"body": "This page is built from NHS open data. Claim it to check and complete it:",
+			"claimedHeading": "Page managed by the practice",
+			"claimedBody": "The practice has claimed this page: its claim was verified, and it completes the page.",
+			"contactLink": "No document to hand? Contact us",
+			"benefits": [
+				"free, with no subscription or commitment;",
+				"your photo, your opening hours and the languages spoken;",
+				"your website and accessibility details;",
+				"statistics on who views your page;",
+				"a share kit: link, QR code and poster."
+			]
+		},
+		"report": {
+			"body": "If an address, a phone number or a name is wrong, tell us how to correct it."
+		},
+		"ring": {
+			"heading": "Other practices: {occupation} in {place}"
+		}
+	},
+	"Listing": {
+		"count": "{count, plural, one {# practice} other {# practices}}",
+		"metaTitle": "{count, plural, one {{listing} in {place}: # practice · Apercura} other {{listing} in {place}: # practices · Apercura}}",
+		"metaDescription": "{count, plural, one {# NHS practice listed as {occupation} in {place}: {fees, select, sector {addresses, phone numbers and fees} other {addresses and phone numbers}}, from NHS open data.} other {# NHS practices listed as {occupation} in {place}: {fees, select, sector {addresses, phone numbers and fees} other {addresses and phone numbers}}, from NHS open data.}}",
+		"lead": "{count, plural, one {The NHS open data lists # practice under this heading in {place}.} other {The NHS open data lists # practices under this heading in {place}.}}",
+		"practitionersHeading": "{count, plural, one {The practice} other {The # practices}}",
+		"columns": {
+			"practitioner": "Practice"
+		},
+		"facts": {
+			"sources": "NHS England (ODS), Public Health Scotland, Business Services Organisation"
+		},
+		"communesHeading": "{listing}: towns of {place}",
+		"nearbyHeading": "{listing}: nearby towns",
+		"authoritiesHeading": "{listing}: local authorities of {place}",
+		"hubMetaTitle": "{count, plural, one {{listing} in the UK: # practice · Apercura} other {{listing} in the UK: # practices · Apercura}}",
+		"hubMetaDescription": "{count, plural, one {# NHS practice listed as {occupation} in the UK, by region and nation: {fees, select, sector {addresses, phone numbers and fees} other {addresses and phone numbers}}, from NHS open data.} other {# NHS practices listed as {occupation} in the UK, by region and nation: {fees, select, sector {addresses, phone numbers and fees} other {addresses and phone numbers}}, from NHS open data.}}",
+		"hubTitle": "{listing} in the UK",
+		"hubLead": "{count, plural, one {The NHS open data lists # practice under this heading in the United Kingdom.} other {The NHS open data lists # practices under this heading in the United Kingdom.}}",
+		"departmentsHeading": "{listing} by region and nation",
+		"departmentsIntro": "Choose England's region or a nation to see its local authorities and practices.",
+		"metaDescriptionPage": "{count, plural, one {Page {page} of {pages}: # NHS practice listed as {occupation} in {place}.} other {Page {page} of {pages}: # NHS practices listed as {occupation} in {place}.}}",
+		"metaDescriptionPageRange": "{count, plural, one {Page {page} of {pages}, {first} to {last}: # NHS practice listed as {occupation} in {place}.} other {Page {page} of {pages}, {first} to {last}: # NHS practices listed as {occupation} in {place}.}}",
+		"hubMetaTitleShort": "{listing} in the UK · Apercura",
+		"allSpecialties": "Every type of practice in {place}"
+	},
+	"Directory": {
+		"metaTitle": "Directory of NHS practices by place · Apercura",
+		"metaDescription": "Every region, nation and local authority of the UK with its NHS GP practices, dental practices and pharmacies, from NHS open data.",
+		"lead": "{count, plural, one {# practice, by region, nation and local authority.} other {# practices, by region, nation and local authority.}}",
+		"otherRegion": "Other places",
+		"emptyBody": "The NHS lists have not been imported on this server yet. Come back after the next import.",
+		"placeMetaTitle": "GP practices, dentists and pharmacies in {place} · Apercura",
+		"placeMetaDescription": "{count, plural, one {# NHS practice in {place}, by type, from NHS open data.} other {# NHS practices in {place}, by type, from NHS open data.}}",
+		"placeTitle": "NHS practices in {place}",
+		"placeLead": "{count, plural, one {# practice in {place}.} other {# practices in {place}.}}",
+		"specialtiesHeading": "By type of practice",
+		"communesHeading": "Towns of {place}",
+		"authoritiesHeading": "Local authorities of {place}",
+		"placeMetaTitleShort": "Practices in {place} · Apercura"
+	},
+	"OgImage": {
+		"runningHead": "Open directory of NHS practices",
+		"practitioner": {
+			"folio": "Code {rpps}"
+		}
+	},
+	"taxonomy": {
+		"practiceKind": {
+			"office": "Practice premises"
+		}
+	},
+	"Claim": {
+		"errors": {
+			"NOT_FOUND": "No page has this code.",
+			"INVALID_RPPS": "This code is not valid: it is the practice's ODS code (for example A81001), or the end of the address of its page, or the whole address."
+		},
+		"start": {
+			"lead": "A claim targets one practice page, never a name.",
+			"contestBody": "If it is your practice's (for instance you lost access to your account), you can still claim it: an administrator reviews your document and decides. Recovering an account always goes through a new verification.",
+			"findHeading": "Find your practice's page",
+			"notFound": "No public page has this code yet.",
+			"rppsLabel": "ODS code or address of the page",
+			"rppsHint": "Your practice's ODS code (for example A81001), or the address of its page, for example apercura.org/gb/practice/the-example-surgery-a81001.",
+			"contactLink": "No document to hand? Contact us"
+		},
+		"methods": {
+			"document": {
+				"summary": "A document that shows you act for the practice: an NHS contract or a letter from the commissioner (ICB, health board or BSO) naming the practice, or a professional registration (GMC, GDC, GPhC) with a letter on the practice's letterhead. A member of our team reviews it, usually within 48 hours.",
+				"lead": "Send a document that shows you act for the practice: an NHS contract or a letter from its commissioner naming the practice, or your professional registration with a letter on the practice's letterhead. It is encrypted before it is stored, and deleted 30 days after the decision."
+			}
+		},
+		"documents": {
+			"kind": {
+				"cps_card": "Professional registration (GMC, GDC or GPhC) with a letter on the practice's letterhead",
+				"ordre_attestation": "NHS contract or letter from the commissioner naming the practice"
+			}
+		},
+		"status": {
+			"contestReview": "This page already had a verified owner: an administrator decides on your document.",
+			"reviewBody": "A member of our team reviews your document and writes to you by email.",
+			"contestBody": "An administrator will decide on your document."
+		}
+	},
+	"Gdpr": {
+		"rpps": "Code of the page",
+		"rppsHint": "The practice's ODS code (for example A81001), the end of the address of the page, or the whole address.",
+		"errors": {
+			"notFound": "No page has this code."
+		},
+		"report": {
+			"doneBody": "We check it. Facts from the NHS lists are corrected at the source, by the practice's commissioner or the NHS organisation that publishes the list; we tell you if you left an address."
+		},
+		"removal": {
+			"doneBody": "It is no longer shown, indexed or listed. We check the request and answer by email within one month at most. Once it is confirmed, the page is deleted for good and does not come back with the NHS lists' updates.",
+			"privacy": "A deleted page does not come back with the next import of the NHS lists.",
+			"claimedBody": "Only its holder can remove it, from the page editor of their space: the page then disappears at once and does not come back with the NHS lists' updates."
+		},
+		"contact": {
+			"lead": "You cannot claim your practice's page with a document? Leave us your details: a member of the Apercura team gets back to you to check that you act for the practice and help you.",
+			"claimFirst": "With a document that shows you act for the practice, claiming is quicker:",
+			"rpps": "Code of the page"
+		}
+	},
+	"emails": {
+		"claimReceived": {
+			"body": [
+				"Hello {name},",
+				"We have received your claim and its documents. A member of the Apercura team reviews them and writes to you by email.",
+				"We review claims within 48 hours on working days."
+			]
+		},
+		"claimRejected": {
+			"body": [
+				"Hello {name},",
+				"We could not verify your claim. Reason given by the reviewer: {reason}",
+				"You can open a new claim from your space, with a legible document that shows you act for the practice."
+			]
+		},
+		"removalReceived": {
+			"body": [
+				"The page is hidden from now on: it is no longer shown, indexed or listed.",
+				"We check the request and answer within one month at most. Once it is confirmed, the page is deleted; a deleted page does not come back with the next import of the NHS lists."
+			]
+		},
+		"removalConfirmed": {
+			"body": [
+				"The page you asked us to remove has been deleted from Apercura. It will not come back with the next import of the NHS lists."
+			]
+		}
+	},
+	"Onboarding": {
+		"steps": {
+			"check": {
+				"lead": "Your page starts from the NHS open data of your nation. Check the practice's name, type and addresses.",
+				"registryNote": "Something wrong? The lasting fix is made with your commissioner or the NHS organisation that publishes the list; the page follows at the next weekly import. You can hide an address or add one in the page editor."
+			}
+		}
+	}
+}

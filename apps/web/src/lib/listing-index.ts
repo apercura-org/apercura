@@ -6,6 +6,7 @@
  */
 import {
 	allAtListingSlugs,
+	allGbListingSlugs,
 	FR_PROFESSIONS,
 	professionOfListingSlug,
 } from "@apercura/core/taxonomy";
@@ -13,10 +14,12 @@ import { messagesFor } from "~/i18n/catalogs";
 import { LOCALES, type Locale, type MarketCountry, marketOf } from "~/i18n/locales";
 
 const AT_LISTINGS: ReadonlySet<string> = allAtListingSlugs();
+const GB_LISTINGS: ReadonlySet<string> = allGbListingSlugs();
 
-/** True when a listing slug belongs to the market of `locale` (France's or Austria's taxonomy). */
+/** True when a listing slug belongs to the market of `locale` (France's, Austria's or the UK's taxonomy). */
 function inMarket(slug: string, locale: Locale): boolean {
 	if (marketOf(locale) === "AT") return AT_LISTINGS.has(slug);
+	if (marketOf(locale) === "GB") return GB_LISTINGS.has(slug);
 	const profession = professionOfListingSlug(slug);
 	return Boolean(profession && FR_PROFESSIONS[profession]?.enabled);
 }

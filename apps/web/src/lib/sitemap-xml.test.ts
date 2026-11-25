@@ -31,4 +31,18 @@ describe("market page paths of the sitemaps", () => {
 		expect(MARKET_STATIC_PATHS.at).toContain("/donnees");
 		expect(MARKET_STATIC_PATHS.fr).toContain("/pro");
 	});
+
+	it("gives the UK its English route segments under /gb", () => {
+		expect(marketPagePath("gb", "/")).toBe("/gb");
+		expect(marketPagePath("gb", "/praticien/the-example-surgery-a99001")).toBe(
+			"/gb/practice/the-example-surgery-a99001",
+		);
+		expect(marketPagePath("gb", "/annuaire/stockton-on-tees/yarm")).toBe(
+			"/gb/directory/stockton-on-tees/yarm",
+		);
+		expect(marketPagePath("gb", "/gp-practices/north-east")).toBe("/gb/gp-practices/north-east");
+		expect(marketPagePath("gb", "/confidentialite")).toBe("/gb/privacy");
+		expect(MARKET_STATIC_PATHS.gb).not.toContain("/pro");
+		expect(MARKET_STATIC_PATHS.gb).toContain("/accessibilite");
+	});
 });

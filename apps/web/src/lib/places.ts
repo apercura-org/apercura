@@ -26,6 +26,12 @@ export const NOT_DEPARTMENT_CITY = (alias: string) =>
 		.map(([country, code]) => `NOT (${alias}.country = '${country}' AND ${alias}.code = '${code}')`)
 		.join(" AND ");
 
+/**
+ * Markets whose regions have listing and hub pages of their own (migration 0026): the United
+ * Kingdom. France's regions group its departments on the directory page only.
+ */
+export const REGION_LISTING_MARKETS: ReadonlySet<string> = new Set(["GB"]);
+
 /** Slugs of the Austrian Bundesländer (`wien`, `steiermark`, `niederoesterreich`…). */
 export const AT_STATE_SLUGS: ReadonlySet<string> = new Set(
 	Object.values(AT_STATES).map((name) => slugifyDe(name)),
@@ -34,10 +40,13 @@ export const AT_STATE_SLUGS: ReadonlySet<string> = new Set(
 /**
  * A department slug of the market, checked before any database access. France:
  * `{code}-{name}` (2 or 3 digits, or 2a/2b for Corsica). Austria: the slug of one of
- * the nine Bundesländer.
+ * the nine Bundesländer. The United Kingdom: the slug of a local authority or of a
+ * region (England's regions and the other nations list in the same slot), never only
+ * digits.
  */
 export function isDepartmentSlug(slug: string, country = "FR"): boolean {
 	if (country === "AT") return AT_STATE_SLUGS.has(slug);
+	if (country === "GB") return isPlaceSlug(slug);
 	return /^(?:\d{2,3}|2[ab])-[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug);
 }
 
@@ -49,14 +58,15 @@ export function isPlaceSlug(slug: string): boolean {
 /**
  * Name of a place with its department code, so homonyms read apart
  * ("Saint-Denis (974)", "Rhône (69)"). Arrondissements already say their city.
- * Austrian places carry no code: nobody knows a Bundesland or Gemeinde by its
- * Statistik Austria number, and Vienna's districts say their city ("Wien-Alsergrund").
+ * Austrian and UK places carry no code: nobody knows a Bundesland or Gemeinde by its
+ * Statistik Austria number, nor a local authority by its ONS code, and Vienna's
+ * districts say their city ("Wien-Alsergrund").
  */
 export function placeLabel(
 	place: Pick<PlaceRef, "kind" | "code" | "name" | "departmentCode">,
 	country = "FR",
 ): string {
-	if (country === "AT") return place.name;
+	if (country === "AT" || country === "GB") return place.name;
 	if (place.kind === "department") return `${place.name} (${place.code})`;
 	if (place.kind === "arrondissement" || !place.departmentCode) return place.name;
 	return `${place.name} (${place.departmentCode})`;

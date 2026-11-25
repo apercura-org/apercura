@@ -14,6 +14,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useLocale, useTranslations } from "next-intl";
 import { type FormEvent, useState } from "react";
 import { marketOf, toLocale } from "~/i18n/locales";
+import { marketRef } from "~/lib/practitioner-ref";
 import { useTRPC } from "~/trpc/client";
 
 const KINDS = ["wrong_info", "retired", "deceased", "impersonation"] as const;
@@ -62,6 +63,7 @@ export function ReportForm({ reference: fixedRpps }: { reference?: string }) {
 	const [message, setMessage] = useState("");
 	const [contact, setContact] = useState("");
 	const report = useMutation(trpc.gdpr.report.mutationOptions());
+	const market = marketOf(toLocale(useLocale()));
 
 	if (report.isSuccess) {
 		return (
@@ -73,7 +75,7 @@ export function ReportForm({ reference: fixedRpps }: { reference?: string }) {
 	const onSubmit = (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 		report.mutate({
-			ref: rpps.trim() || null,
+			ref: rpps.trim() ? marketRef(rpps, market) : null,
 			kind,
 			message,
 			contact: contact.trim() || null,
@@ -155,7 +157,7 @@ export function RemovalForm({ reference: fixedRpps }: { reference?: string }) {
 		event.preventDefault();
 		if (!confirmed) return;
 		request.mutate({
-			ref: rpps.trim(),
+			ref: marketRef(rpps, marketOf(toLocale(locale))),
 			contact,
 			message: message.trim() || undefined,
 			isPractitioner: true,

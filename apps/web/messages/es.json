@@ -120,7 +120,7 @@
 	},
 	"International": {
 		"metaTitle": "Apercura · Directorios abiertos de profesionales sanitarios",
-		"metaDescription": "Una página gratuita y factual para cada profesional sanitario registrado, a partir de registros públicos, país por país. Abierto en Francia y Austria.",
+		"metaDescription": "Una página gratuita y factual para cada profesional sanitario registrado, a partir de registros públicos. Abierto en Francia, Austria y el Reino Unido.",
 		"runningHead": "Directorios abiertos de profesionales sanitarios",
 		"title": "Cada profesional sanitario, una página abierta",
 		"lead": "Apercura publica una página gratuita y factual para cada profesional sanitario registrado, a partir de los registros públicos de cada país. Sin valoraciones, sin publicidad, sin posicionamiento de pago, y con código abierto.",
@@ -1521,7 +1521,8 @@
 		"metaTitleShort": "{listing} en {place} · Apercura",
 		"metaDescriptionPage": "{count, plural, one {Página {page} de {pages}: # profesional sanitario registrado como {occupation} en {place} en el registro nacional.} many {Página {page} de {pages}: # de profesionales sanitarios registrados como {occupation} en {place} en el registro nacional.} other {Página {page} de {pages}: # profesionales sanitarios registrados como {occupation} en {place} en el registro nacional.}}",
 		"metaDescriptionPageRange": "{count, plural, one {Página {page} de {pages}, de {first} a {last}: # profesional sanitario registrado como {occupation} en {place} en el registro nacional.} many {Página {page} de {pages}, de {first} a {last}: # de profesionales sanitarios registrados como {occupation} en {place} en el registro nacional.} other {Página {page} de {pages}, de {first} a {last}: # profesionales sanitarios registrados como {occupation} en {place} en el registro nacional.}}",
-		"hubMetaTitleShort": "{listing} en Francia · Apercura"
+		"hubMetaTitleShort": "{listing} en Francia · Apercura",
+		"authoritiesHeading": "{listing}: autoridades locales de {place}"
 	},
 	"Directory": {
 		"metaTitle": "Directorio de profesionales sanitarios por lugar · Apercura",
@@ -1539,7 +1540,9 @@
 		"communesHeading": "Municipios de {place}",
 		"arrondissementsHeading": "Por distrito (arrondissement)",
 		"establishmentsHeading": "Centros en {place}",
-		"placeMetaTitleShort": "Profesionales sanitarios en {place} · Apercura"
+		"placeMetaTitleShort": "Profesionales sanitarios en {place} · Apercura",
+		"authoritiesHeading": "Autoridades locales de {place}",
+		"regionLink": "Todo {place}"
 	},
 	"Establishment": {
 		"metaTitle": "{name} · Apercura",
@@ -1626,7 +1629,10 @@
 			"psychotherapeute": "Psicoterapeuta",
 			"chiropracteur": "{gender, select, female {Quiropráctica} other {Quiropráctico}}",
 			"aerzte": "{gender, select, female {Médica} other {Médico}}",
-			"zahnaerzte": "{gender, select, female {Dentista} other {Dentista}}"
+			"zahnaerzte": "{gender, select, female {Dentista} other {Dentista}}",
+			"gp-practices": "Consulta de medicina general",
+			"dental-practices": "Clínica dental",
+			"pharmacies": "Farmacia"
 		},
 		"listing": {
 			"aerzte": "Médicos sin especialidad indicada",
@@ -1767,7 +1773,10 @@
 			"urgentiste": "{gender, select, female {Médica de urgencias} other {Médico de urgencias}}",
 			"urologie": "Urología",
 			"urologue": "{gender, select, female {Uróloga} other {Urólogo}}",
-			"zahnaerzte": "Odontología"
+			"zahnaerzte": "Odontología",
+			"gp-practices": "Consultas de medicina general",
+			"dental-practices": "Clínicas dentales",
+			"pharmacies": "Farmacias"
 		},
 		"practiceKind": {
 			"office": "Consulta",
@@ -2782,7 +2791,15 @@
 			"AT-WIEN": "Lista de Viena",
 			"AT-STMK": "Lista de Estiria",
 			"AT-SBG": "Lista de Salzburgo",
-			"AT-SBGZ": "Lista de dentistas de Salzburgo"
+			"AT-SBGZ": "Lista de dentistas de Salzburgo",
+			"GB-ODS-GP": "Código ODS",
+			"GB-ODS-DENT": "Código ODS",
+			"GB-ODS-PHARM": "Código ODS",
+			"GB-PHS-GP": "Código de Public Health Scotland",
+			"GB-PHS-DENT": "Código de Public Health Scotland",
+			"GB-PHS-PHARM": "Código de Public Health Scotland",
+			"GB-BSO-GP": "Número de consulta del BSO",
+			"GB-BSO-DENT": "Clínica dental del BSO"
 		}
 	},
 	"Onboarding": {
@@ -3875,5 +3892,423 @@
 		"imprintReviewed": "Verificada",
 		"ogRunningHead": "Guías · Directorio abierto de profesionales de la salud",
 		"ogFooter": "Fuentes oficiales · Actualizada el {date}"
+	},
+	"LegalNoticeGb": {
+		"metaTitle": "Legal notice (United Kingdom) · Apercura",
+		"metaDescription": "Legal notice of the UK pages of Apercura: the service provider, its contact details and registration, the person responsible for the content and the host (Electronic Commerce (EC Directive) Regulations 2002, regulation 6).",
+		"title": "Legal notice",
+		"lead": "The information regulation 6 of the Electronic Commerce (EC Directive) Regulations 2002 requires about the provider of the UK pages of Apercura (apercura.org/gb).",
+		"sections": {
+			"provider": {
+				"heading": "Service provider",
+				"body": [
+					"The UK pages of Apercura are provided by the entity below. It runs the directory and answers for its content."
+				]
+			},
+			"service": {
+				"heading": "The service",
+				"body": [
+					"A free directory of NHS GP practices, dental practices and pharmacies in England, Wales, Scotland and Northern Ireland, built from open government data, without advertising, with a space where a practice can complete its own page. No appointment is booked through Apercura in the United Kingdom."
+				]
+			},
+			"editor": {
+				"heading": "Person responsible for the content",
+				"body": [
+					"The person below is responsible for what the provider publishes. Information a practice adds to its own page is its own responsibility."
+				]
+			},
+			"hosting": {
+				"heading": "Hosting provider",
+				"body": ["The site, its database and its files are hosted by the company below."]
+			},
+			"liability": {
+				"heading": "Content of the pages",
+				"body": [
+					"The directory is built from the organisation data NHS England, Public Health Scotland and the Business Services Organisation publish under the Open Government Licence. It can be incomplete or out of date: check the information with the practice before you go. Every page says how to report an error."
+				]
+			},
+			"ip": {
+				"heading": "Code and data",
+				"body": [
+					"The source code of Apercura is published under the AGPL-3.0 licence. The directory data is reused under the Open Government Licence v3.0: the data page lists every source with the attribution it requires."
+				]
+			},
+			"review": {
+				"heading": "Status of this text",
+				"body": [
+					"This text is a draft, written before the legal entity was set up. It will be reviewed by a lawyer qualified in the United Kingdom before the UK pages are announced."
+				]
+			}
+		},
+		"fields": {
+			"name": "Name",
+			"legalForm": "Legal form",
+			"address": "Geographic address",
+			"phone": "Phone",
+			"email": "Email address",
+			"registration": "Register and registration number",
+			"vatId": "VAT identification number",
+			"editor": "Responsible for the content",
+			"hostName": "Hosting provider",
+			"hostAddress": "Address of the hosting provider",
+			"hostPhone": "Phone of the hosting provider"
+		},
+		"dataLink": "Data and sources"
+	},
+	"PrivacyGb": {
+		"metaTitle": "Privacy notice (United Kingdom) · Apercura",
+		"metaDescription": "Data processed by the UK pages of Apercura: sources, purposes, lawful bases, retention, recipients and your rights, including objection (UK GDPR articles 13, 14 and 21).",
+		"title": "Privacy notice",
+		"lead": "What data the UK pages of Apercura process, where it comes from, why, for how long and by whom, and how to exercise your rights under the UK GDPR and the Data Protection Act 2018, as amended by the Data (Use and Access) Act 2025.",
+		"sections": {
+			"controller": {
+				"heading": "Who is responsible",
+				"body": [
+					"The service provider named in the legal notice is the controller of the directory, of practice accounts, of claims and of the requests sent through the site."
+				]
+			},
+			"directory": {
+				"heading": "Directory: data about practices",
+				"body": [
+					"Data: the name of the practice, its kind (GP practice, dental practice, pharmacy), the address of each site, including the branch surgeries of a GP practice, its location by postcode and its telephone number where the source gives one, as NHS England (Organisation Data Service), Public Health Scotland and the Business Services Organisation publish them. A practice that claims its page can add a presentation, languages, a photo and opening hours.",
+					"Identifiers: the code each source gives the practice (an ODS code in England and Wales, a Public Health Scotland or Business Services Organisation number elsewhere); Northern Ireland’s dental list gives none, so the identifier of such a page is derived from its address.",
+					"Purpose: letting the public find a practice, where it is and how to reach it. Lawful basis: legitimate interests (UK GDPR article 6(1)(f)), assessed below.",
+					"Retention: as long as the practice appears in its source. A page disappears after two weekly updates in which the practice is no longer in its source; a page removed after an objection is never published again.",
+					"Information: the data does not come from the practices themselves (UK GDPR article 14). Writing to each of them would involve a disproportionate effort (article 14(5)(e)); as article 14(7) asks, this notice, the data page and a notice on every page make the information public."
+				]
+			},
+			"people": {
+				"heading": "Practices, not people",
+				"body": [
+					"The UK pages list practices, never clinicians: the Open Government Licence under which the sources are published does not cover personal data, and the registers of individual doctors, dentists and nurses are not open data.",
+					"Some practices are published under the name of the person who runs them (for example “Dr A Example & Partners”). Such a practice is shown under the name of its premises, else its street, else its town, and the person’s name is never stored. The sources’ lists of named clinicians (Public Health Scotland’s GP contact details, the Business Services Organisation’s dentist list) are not imported.",
+					"A practice run by one person can still be about that person: its page follows the safeguards below, and it can be removed on request."
+				]
+			},
+			"sources": {
+				"heading": "Sources",
+				"body": [
+					"Every page is built from open government data published under the Open Government Licence v3.0, reused with the attribution statement of each publisher:"
+				]
+			},
+			"balancing": {
+				"heading": "Legitimate interests assessment",
+				"body": [
+					"Purpose: patients and the public need to know which practices are where and how to reach them, a need the NHS bodies already meet by publishing these lists as open data.",
+					"Necessity: only the organisation data of the lists is shown, the data a practice makes public anyway; nothing about private life, no ratings, no reviews, no clinician.",
+					"Balance: a neutral order, no advertising, a name that never names a person, an objection that hides a page at once and keeps it from coming back, corrections at the source, and pages that follow every update of the lists. A practice listed by the NHS expects to be found in a directory repeating that information. Weighing these points, the interests of the public prevail, and anyone a page is about can object without giving a reason."
+				]
+			},
+			"accounts": {
+				"heading": "Practice accounts and claims",
+				"body": [
+					"Data: email address, name, password (stored hashed), second authentication factor, the documents sent to claim a page (proof that the claimant runs the practice or acts for it) and team members.",
+					"Purposes: managing the account and checking that a page is claimed by the right practice. Lawful bases: performance of the terms of use (article 6(1)(b)) and the legitimate interests of securing the service (article 6(1)(f)).",
+					"Retention: the account is kept until it is deleted; supporting documents, encrypted, are erased 30 days after the decision."
+				]
+			},
+			"requests": {
+				"heading": "Error reports, objections and contact requests",
+				"body": [
+					"Data: the message, the contact email address when one is given and the page concerned; for an “I run this practice” request also the name and phone number. Free text is encrypted.",
+					"Purposes: correcting errors, applying objections and helping a practice that cannot claim its page online. Lawful bases: legitimate interests (article 6(1)(f)) and the right to object (article 21).",
+					"Retention: a report is deleted 6 months after it is closed, a rejected objection one year after its decision, a contact request 12 months after the last exchange. Once an objection is confirmed, or the holder of a claimed page removes it, the page and the data about it are deleted at once, the objection included; all that is kept is a record of the removal (the identifier of the page, the country, the reason, who recorded it and when), so that it is never published again. A holder who removes their page keeps, in their account only and never published, the name, profession and identifier shown in their space, their claim and the places their agenda uses, until the account is deleted."
+				]
+			},
+			"technical": {
+				"heading": "Technical data and cookies",
+				"body": [
+					"Only cookies strictly necessary to the service are set: the session of signed-in practices and the chosen language. No advertising or audience measurement cookies, no trackers.",
+					"To limit abuse, IP addresses are transformed with a keyed function before being counted and never stored as such; practice sessions record a truncated IP address. Views of claimed pages are counted without a cookie or identifier, and only the page’s holder sees them."
+				]
+			},
+			"recipients": {
+				"heading": "Recipients and processors",
+				"body": [
+					"Data is neither sold nor rented, and never used for advertising. Only the provider’s team and the processors below receive it, each for its own part. Maps are loaded from a tile server, which receives the visitor’s IP address like any website."
+				]
+			},
+			"transfers": {
+				"heading": "Transfers outside the United Kingdom",
+				"body": [
+					"The data is hosted and processed in the European Economic Area. A transfer from the United Kingdom to an EEA state is approved by UK law (Data Protection Act 2018, schedule 21, paragraphs 4 and 5, under UK GDPR article 45A): no other safeguard is needed. Nothing is transferred elsewhere; any change of processor will be announced here before it takes effect."
+				]
+			},
+			"automated": {
+				"heading": "Automated decisions",
+				"body": [
+					"No decision about you is taken by automated means alone. A claim is decided by a person, who reads its documents."
+				]
+			},
+			"rights": {
+				"heading": "Your rights",
+				"body": [
+					"You can ask to access your data, to have it corrected or erased, to restrict its processing, to receive it in a portable format and to object to its processing. Write to the address below; you will get an answer within one month.",
+					"You can make a complaint to us at the same address (Data Protection Act 2018, section 164A), and to the Information Commissioner’s Office, the UK’s supervisory authority: Wycliffe House, Water Lane, Wilmslow, Cheshire SK9 5AF, helpline 0303 123 1113, ico.org.uk."
+				]
+			},
+			"objection": {
+				"heading": "Objecting to a page (UK GDPR article 21)",
+				"body": [
+					"Anyone a page is about can object to its publication at any time, without giving a reason. If the page is unclaimed, a form is enough: the page is hidden as soon as the request arrives, deleted after a light check, and the updates of the lists never publish it again. If it is claimed, its holder removes it from their space."
+				]
+			},
+			"changes": {
+				"heading": "Updates to this notice",
+				"body": [
+					"This notice is a draft. It will be reviewed by a lawyer qualified in the United Kingdom and by the data protection officer; every version is dated."
+				]
+			}
+		},
+		"fields": {
+			"controller": "Controller",
+			"address": "Address",
+			"email": "Contact for requests",
+			"dpo": "Data protection officer",
+			"effectiveDate": "Effective date",
+			"hostingProvider": "Hosting provider (processor)",
+			"smtp": "Email delivery (processor)"
+		},
+		"objectLink": "How to object to a page",
+		"icoLink": "Make a complaint to the Information Commissioner’s Office"
+	},
+	"TermsGb": {
+		"metaTitle": "Terms of use (United Kingdom) · Apercura",
+		"metaDescription": "Terms of use of the UK pages of Apercura: a free, factual directory of NHS GP practices, dental practices and pharmacies, without online booking.",
+		"title": "Terms of use",
+		"lead": "The rules for using the UK pages of Apercura, for the public and for practices alike.",
+		"sections": {
+			"service": {
+				"heading": "The service",
+				"body": [
+					"Apercura lists, free of charge, the GP practices, dental practices and pharmacies of the NHS organisation data of England, Wales, Scotland and Northern Ireland. It is a directory only: no appointment is booked through Apercura in the United Kingdom. It is run by the service provider named in the legal notice.",
+					"Using the directory requires no account. Using the site means accepting these terms."
+				]
+			},
+			"content": {
+				"heading": "What the pages contain",
+				"body": [
+					"Pages show factual information from public lists, in a neutral order, without ratings, reviews, advertising or paid placement. They list practices, never individual clinicians.",
+					"The information may be incomplete or out of date: check it with the practice before you go. Every page says how to report an error."
+				]
+			},
+			"health": {
+				"heading": "Not medical advice",
+				"body": [
+					"Apercura gives no medical advice and is not an emergency service. In an emergency, call 999 or 112. For urgent advice, call NHS 111 in England and Wales or NHS 24 on 111 in Scotland; in Northern Ireland, contact your GP practice or its out-of-hours service."
+				]
+			},
+			"practices": {
+				"heading": "For practices",
+				"body": [
+					"Claiming a page is free. It requires a document proving that the claimant runs the practice or acts for it, checked by a person before the page is handed over.",
+					"The holder of a page is responsible for the information they add. It must stay factual, accurate and up to date, as the professional rules on information about health services require."
+				]
+			},
+			"removal": {
+				"heading": "Removing a page",
+				"body": [
+					"Anyone a page is about can ask for it to be removed at any time: the data page explains how. A claimed page can only be removed by its holder."
+				]
+			},
+			"liability": {
+				"heading": "Liability",
+				"body": [
+					"The provider does its best to keep the service available and accurate, but cannot guarantee it. It is not responsible for the information practices add to their pages. These limits will be specified during the legal review."
+				]
+			},
+			"ip": {
+				"heading": "Code and data",
+				"body": [
+					"The source code is published under the AGPL-3.0 licence. Directory data is reused under the Open Government Licence v3.0."
+				]
+			},
+			"law": {
+				"heading": "Governing law and disputes",
+				"body": [
+					"The governing law and the competent courts will be specified during the legal review; the mandatory consumer protection rules of the country of residence always apply. In case of a dispute, first write to the contact address to look for an amicable solution."
+				]
+			}
+		},
+		"fields": {
+			"publisher": "Service provider",
+			"effectiveDate": "Effective date",
+			"contact": "Contact"
+		}
+	},
+	"AccessibilityGb": {
+		"metaTitle": "Accessibility (United Kingdom) · Apercura",
+		"metaDescription": "Accessibility of the UK pages of Apercura: the WCAG 2.2 AA target, what was checked, what remains, and how to report a problem.",
+		"title": "Accessibility",
+		"lead": "Apercura is designed for everyone, including older and low-vision people. This statement says where the UK pages stand.",
+		"sections": {
+			"scope": {
+				"heading": "Scope",
+				"body": [
+					"The Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018 bind public sector bodies, which Apercura is not. Its provider nevertheless aims at the same standard on every page: WCAG 2.2 level AA."
+				]
+			},
+			"status": {
+				"heading": "Where the site stands",
+				"body": [
+					"The UK pages share the code of the French pages and their tests. The site partially meets WCAG 2.2 AA: this rests on a self-assessment and automated tests, not yet on a full audit, which is in progress."
+				]
+			},
+			"tests": {
+				"heading": "What was checked",
+				"list": [
+					"Automated axe-core checks (WCAG 2.0, 2.1 and 2.2 rules, levels A and AA) on every page type, at every release.",
+					"Keyboard-only journeys with a visible focus.",
+					"Body text of at least 18 px, targets of at least 44 px, nothing that relies on colour alone, no horizontal scrolling at 390 px."
+				]
+			},
+			"pending": {
+				"heading": "What remains to be checked",
+				"list": [
+					"A manual pass with the VoiceOver and NVDA screen readers.",
+					"A full audit against WCAG 2.2 AA on a sample of pages."
+				]
+			},
+			"feedback": {
+				"heading": "Report a problem",
+				"body": [
+					"If a page or a feature is hard to use, write to the address below: say which page and what blocked you. We answer within one month and, where needed, give you the information in another form."
+				]
+			}
+		},
+		"fields": {
+			"contact": "Contact",
+			"date": "Date of this statement"
+		}
+	},
+	"DataGb": {
+		"metaTitle": "Data and sources (United Kingdom) · Apercura",
+		"metaDescription": "Where the UK pages of Apercura come from: NHS organisation data and Ordnance Survey and ONS geography under the Open Government Licence, update dates, and how to correct or remove a page.",
+		"title": "Data and sources",
+		"lead": "Every UK page is built from open government data. Here is where it comes from, under which licence and attribution, when it was updated, and how to correct or remove a page.",
+		"status": {
+			"heading": "Last update",
+			"body": "The directory is imported from the sources every week. A page changes only when its facts change in a source.",
+			"importedAt": "Last import",
+			"checkedAt": "Sources last checked",
+			"notImported": "The UK directory has not been imported yet on this site.",
+			"notImportedValue": "Not imported yet"
+		},
+		"sources": {
+			"heading": "Sources",
+			"body": "The sources are published under the Open Government Licence v3.0, which allows reuse, including commercial reuse, provided the source is acknowledged; it does not cover personal data. Each attribution statement below is printed word for word.",
+			"caption": "Data sources of the UK directory",
+			"columns": {
+				"source": "Source",
+				"use": "Used for",
+				"licence": "Licence and attribution",
+				"frequency": "Updated"
+			},
+			"items": {
+				"gb-ods-gp": {
+					"use": "GP practices of England and Wales and their branch surgeries: names, addresses, postcodes, phone numbers",
+					"frequency": "Every night, by NHS England (data supplied weekly by the NHS Business Services Authority)"
+				},
+				"gb-ods-dent": {
+					"use": "NHS dental practices of England and Wales: names, addresses, postcodes",
+					"frequency": "Every night, by NHS England (data supplied monthly by NHS Dental Services)"
+				},
+				"gb-ods-pharm": {
+					"use": "Pharmacies of England and Wales: names, addresses, postcodes, phone numbers",
+					"frequency": "Every night, by NHS England (data supplied weekly by the NHS Business Services Authority)"
+				},
+				"gb-phs-gp": {
+					"use": "GP practices of Scotland: names, addresses, postcodes, phone numbers",
+					"frequency": "Every quarter"
+				},
+				"gb-phs-dent": {
+					"use": "NHS dental practices of Scotland: names, addresses, postcodes, council areas",
+					"frequency": "Every quarter"
+				},
+				"gb-phs-pharm": {
+					"use": "Pharmacies (dispensers) of Scotland: names, addresses, postcodes, phone numbers",
+					"frequency": "Every month"
+				},
+				"gb-bso-gp": {
+					"use": "GP practices of Northern Ireland: the practice’s own name, addresses, postcodes (the partners’ names are not used)",
+					"frequency": "Every quarter"
+				},
+				"gb-bso-dent": {
+					"use": "Dental surgeries of Northern Ireland: names, addresses, postcodes, phone numbers, districts",
+					"frequency": "Every quarter"
+				},
+				"gb-postcodes": {
+					"use": "The location of each postcode of Great Britain and its local authority",
+					"frequency": "Every quarter"
+				},
+				"gb-towns": {
+					"use": "The cities, towns and villages of Great Britain and their location",
+					"frequency": "Every quarter"
+				},
+				"gb-local-authorities": {
+					"use": "Local authorities, England’s regions and the nations, and their boundaries",
+					"frequency": "Every year"
+				},
+				"gb-ni-towns": {
+					"use": "The towns and villages of Northern Ireland and their location",
+					"frequency": "Published in 2015"
+				},
+				"map": {
+					"name": "Map data",
+					"publisher": "OpenStreetMap contributors, tiles by OpenFreeMap",
+					"use": "Maps on the pages",
+					"frequency": "Continuously"
+				}
+			},
+			"ogl": "Open Government Licence v3.0",
+			"odbl": "ODbL"
+		},
+		"coverage": {
+			"heading": "Nations covered",
+			"body": [
+				"Pages are generated for the four nations, each from the open data of the NHS body that runs its practices.",
+				"Left out: practices of the Isle of Man, Guernsey and Jersey, which the English lists include but which are not in the United Kingdom; services inside prisons and immigration removal centres, which are not open to the public; and organisations that are not GP practices, dental practices or pharmacies.",
+				"Northern Irish postcodes cannot be located with open data: their location is licensed by Land & Property Services. Practices in Northern Ireland are placed in their town, from the OSNI gazetteer, and shown without a map pin."
+			],
+			"nations": {
+				"E92000001": "GP practices, dental practices, pharmacies (NHS England)",
+				"W92000004": "GP practices, dental practices, pharmacies (NHS England, for NHS Wales)",
+				"S92000003": "GP practices, dental practices, pharmacies (Public Health Scotland)",
+				"N92000002": "GP practices, dental surgeries (Business Services Organisation)"
+			}
+		},
+		"identifiers": {
+			"heading": "Identifiers",
+			"body": [
+				"The address of every page ends with the code its source gives the practice, so a page can be found and checked against its source:"
+			],
+			"list": [
+				"England and Wales: the ODS code of NHS England’s Organisation Data Service (A81001 for a GP practice, V00003 for a dental practice, FM474 for a pharmacy).",
+				"Scotland: Public Health Scotland’s practice, dental practice or dispenser code, after the letters sg, sd or sp (sg10002).",
+				"Northern Ireland: the Business Services Organisation’s practice number after ng (ng1); its dental list gives no number, so a dental surgery’s key is derived from its address, after nd."
+			]
+		},
+		"correct": {
+			"heading": "Correct an error",
+			"body": [
+				"The pages repeat the NHS lists: a lasting correction is made at the source, and the page follows at the next weekly import.",
+				"For anything else, use the form: we check every report."
+			],
+			"list": [
+				"England and Wales: the practice asks its commissioner (the integrated care board, or the local health board in Wales), which updates NHS England’s Organisation Data Service.",
+				"Scotland: the practice tells its NHS board, which updates Public Health Scotland’s lists.",
+				"Northern Ireland: the practice tells the Business Services Organisation."
+			],
+			"formTitle": "Report an error",
+			"formBody": "Give the address of the page and what is wrong."
+		},
+		"remove": {
+			"heading": "Remove a page",
+			"body": [
+				"Anyone a page is about can object to its publication at any time, without giving a reason (UK GDPR article 21). An unclaimed page is hidden as soon as the request arrives and deleted after a light check; it never comes back with the updates of the lists. A claimed page is removed by its holder, from their space."
+			],
+			"formTitle": "Ask for a page to be removed",
+			"formBody": "Give the address of the page and an email address where we can answer you."
+		}
 	}
 }

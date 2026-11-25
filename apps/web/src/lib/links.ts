@@ -21,4 +21,9 @@ export const LINKS = {
 	dsbComplaint: "https://dsb.gv.at/eingabe-an-die-dsb/beschwerde",
 	/** Creative Commons Attribution 4.0, the licence of the Austrian sources. */
 	ccBy4: "https://creativecommons.org/licenses/by/4.0/deed.de",
+	/** The Open Government Licence v3.0, the licence of the UK sources. */
+	ogl: "https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/",
+	/** The Information Commissioner's Office's data protection complaints (checked 2026-11-25). */
+	icoComplaint:
+		"https://ico.org.uk/make-a-complaint/data-protection-complaints/data-protection-complaints/",
 } as const;

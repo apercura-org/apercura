@@ -1,6 +1,7 @@
-import { austria } from "@apercura/core/country";
+import { austria, unitedKingdom } from "@apercura/core/country";
 import {
 	AT_PROFESSIONS,
+	GB_PROFESSIONS,
 	hasBillingSectors,
 	listingHasBillingSectors,
 	professionFor,
@@ -39,9 +40,14 @@ export function marketBooks(locale: Locale): boolean {
 	return marketAdapter(locale).features.booking;
 }
 
-/** The profession slug of either market's profession code (`10` → `medecin`, `ARZT` → `aerzte`). */
+/**
+ * The profession slug of any market's profession code (`10` → `medecin`, `ARZT` → `aerzte`,
+ * `GB_GP` → `gp-practices`).
+ */
 export function professionSlugOf(code: string): string {
-	return professionFor(code)?.slug ?? AT_PROFESSIONS[code]?.slug ?? "";
+	return (
+		professionFor(code)?.slug ?? AT_PROFESSIONS[code]?.slug ?? GB_PROFESSIONS[code]?.slug ?? ""
+	);
 }
 
 /**
@@ -57,4 +63,46 @@ export function austrianSourcesOf(
 	return austria.registries
 		.filter((registry) => ids.has(registry.id) && registry.attribution)
 		.map((registry) => ({ name: registry.name, attribution: registry.attribution ?? "" }));
+}
+
+/** The UK registry of a site source: a branch surgery comes from the ODS GP practices' reports. */
+const GB_REGISTRY_OF_SOURCE: Readonly<Record<string, string>> = { "gb-ods-branch": "gb-ods-gp" };
+
+/**
+ * The sources a UK practice's page is built from, with their Open Government Licence
+ * attribution word for word: the practice's list (`gb-ods-gp`, `gb-phs-gp`…) and, when one of
+ * its places is located by its postcode (Great Britain only: Northern Irish postcodes are not
+ * in Code-Point Open), Ordnance Survey's Code-Point Open.
+ */
+export function ukSourcesOf(
+	activities: readonly {
+		source?: string;
+		site?: { postcode: string | null; geoPrecision: string | null } | null;
+	}[],
+): { name: string; attribution: string }[] {
+	const ids = new Set<string>();
+	for (const activity of activities) {
+		if (!activity.source) continue;
+		ids.add(GB_REGISTRY_OF_SOURCE[activity.source] ?? activity.source);
+		const site = activity.site;
+		if (site?.postcode && !site.postcode.startsWith("BT") && site.geoPrecision === "street") {
+			ids.add("gb-postcodes");
+		}
+	}
+	return unitedKingdom.registries
+		.filter((registry) => ids.has(registry.id) && registry.attribution)
+		.map((registry) => ({ name: registry.name, attribution: registry.attribution ?? "" }));
+}
+
+/**
+ * The open-data sources of a page in a market whose licences require their attribution
+ * (Austria's CC BY 4.0, the UK's OGL); empty for France, whose provenance line is the catalog's.
+ */
+export function openDataSourcesOf(
+	country: string,
+	activities: Parameters<typeof ukSourcesOf>[0],
+): { name: string; attribution: string }[] {
+	if (country === "AT") return austrianSourcesOf(activities.map((activity) => activity.source));
+	if (country === "GB") return ukSourcesOf(activities);
+	return [];
 }

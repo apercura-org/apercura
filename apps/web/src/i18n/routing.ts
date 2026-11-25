@@ -3,23 +3,32 @@ import { DEFAULT_LOCALE, LOCALE_PREFIXES, LOCALES } from "./locales";
 
 type Pathnames = Record<
 	string,
-	string | Record<Exclude<(typeof LOCALES)[number], "de-AT">, string>
+	string | Record<Exclude<(typeof LOCALES)[number], "de-AT" | "en-GB">, string>
 >;
 
 /**
- * Austria's paths (`de-AT`): the German ones, with a doctor's page under `/arzt` (every
- * practitioner of its sources is a doctor or a dentist). Derived, not listed, so the table
- * every client island ships stays the size of France's.
+ * The paths of the markets opened after France, derived from a language's own, not listed, so
+ * the table every client island ships stays the size of France's:
+ * - Austria (`de-AT`): the German paths, with a doctor's page under `/arzt` (every practitioner
+ *   of its sources is a doctor or a dentist);
+ * - the United Kingdom (`en-GB`): the English paths, with a practice's page under `/practice`
+ *   (the UK lists practices, never people).
  */
-function withAustria<T extends Pathnames>(pathnames: T) {
+function withMarkets<T extends Pathnames>(pathnames: T) {
 	return Object.fromEntries(
 		Object.entries(pathnames).map(([key, value]) => [
 			key,
 			typeof value === "string"
 				? value
-				: { ...value, "de-AT": value.de.replace("/behandler/", "/arzt/") },
+				: {
+						...value,
+						"de-AT": value.de.replace("/behandler/", "/arzt/"),
+						"en-GB": value.en.replace("/practitioner/", "/practice/"),
+					},
 		]),
-	) as { [K in keyof T]: T[K] extends string ? T[K] : T[K] & { "de-AT": string } };
+	) as {
+		[K in keyof T]: T[K] extends string ? T[K] : T[K] & { "de-AT": string; "en-GB": string };
+	};
 }
 
 export const routing = defineRouting({
@@ -37,9 +46,9 @@ export const routing = defineRouting({
 	/**
 	 * Internal (French) pathnames and their forms in the other locales. Listing
 	 * pages keep their market's slugs in every locale: they are data, not interface
-	 * text. Austria's are derived from the German ones (`withAustria`).
+	 * text. Austria's and the UK's are derived from the German and English ones (`withMarkets`).
 	 */
-	pathnames: withAustria({
+	pathnames: withMarkets({
 		"/": "/",
 		"/pro": "/pro",
 		// Practitioner space: the same French paths in every locale (never indexed).

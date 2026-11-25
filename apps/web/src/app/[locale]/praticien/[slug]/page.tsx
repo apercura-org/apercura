@@ -31,7 +31,7 @@ import { relatedGuides } from "~/lib/guides/catalog";
 import { genderOf, getTaxonomyLabels, inSentence } from "~/lib/labels";
 import { getMapStrings } from "~/lib/map-strings";
 import {
-	austrianSourcesOf,
+	openDataSourcesOf,
 	professionFees,
 	professionSlugOf,
 	showsBillingFacts,
@@ -134,12 +134,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 	const gender = genderOf(payload.civilityCode);
 	const name = labels.personName(payload);
 	const occupation = inSentence(
-		labels.listing(payload.listingSlug, gender) ??
+		labels.occupation(payload.listingSlug, gender) ??
 			labels.profession(payload.listingSlug ?? "", gender) ??
 			"",
 		locale,
 	);
-	const place = page.commune ? shortPlaceName(page.commune.name) : null;
+	// A London practice is listed in its borough, without a town: the borough names its place.
+	const locality = page.commune ?? (payload.country === "GB" ? page.department : null);
+	const place = locality ? shortPlaceName(locality.name) : null;
 	const href = { pathname: "/praticien/[slug]", params: { slug: page.slug } } as const;
 	// The description only mentions online booking when the agenda is open.
 	const bookable = page.booking.open;
@@ -172,7 +174,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 		ownImage:
 			(await practitionerOgImageOf(
 				{
-					country: payload.country === "AT" ? "AT" : "FR",
+					country: marketOf(locale),
 					idScheme: payload.idScheme,
 					nationalId: payload.nationalId,
 				},
@@ -197,13 +199,16 @@ export default async function PractitionerPage({ params }: Props) {
 	const professionSlug = payload.listingSlug ?? "";
 	const professionLabel =
 		labels.profession(professionSlugOf(payload.professionCode), gender) ?? t("unknownProfession");
-	const listingLabel = labels.listing(payload.listingSlug, gender) ?? professionLabel;
+	const listingLabel = labels.occupation(payload.listingSlug, gender) ?? professionLabel;
 	const specialty =
 		payload.listingSlug && labels.profession(professionSlug, gender) === null ? listingLabel : null;
 	// The owner may hide the practice's phone from the page.
-	const sites = siteViews(payload).map((site) =>
-		content.showPhone ? site : { ...site, phone: null },
-	);
+	const sites = siteViews(payload)
+		.map((site) => (content.showPhone ? site : { ...site, phone: null }))
+		// A UK practice's own address is the practice: its card carries the practice's name.
+		.map((site, index) =>
+			payload.country === "GB" && index === 0 && !site.name ? { ...site, name } : site,
+		);
 	const plan = actionPlan(sites);
 	const empty = tP("notProvided");
 	const claimed = payload.claimStatus === "claimed";
@@ -211,6 +216,8 @@ export default async function PractitionerPage({ params }: Props) {
 	const href = { pathname: "/praticien/[slug]", params: { slug: page.slug } } as const;
 	const url = absoluteUrl(href, locale);
 	const austrian = payload.country === "AT";
+	// The UK lists practices: no specialty, no other qualification, no person.
+	const practice = payload.country === "GB";
 	// France: the registry's other skills. Austria: the other specialties of the lists ("Fach").
 	const otherQualifications = payload.qualifications
 		.filter((item) =>
@@ -220,14 +227,13 @@ export default async function PractitionerPage({ params }: Props) {
 		)
 		.map((item) => item.label as string);
 	const identifier = displayId(payload);
-	const sources = austrian
-		? austrianSourcesOf(payload.activities.map((activity) => activity.source))
-		: [];
+	// Open licences (CC BY 4.0, OGL) require each source's attribution, word for word.
+	const sources = openDataSourcesOf(payload.country, payload.activities);
 
 	const trail: TrailItem[] = [];
 	if (payload.listingSlug && page.listings.country) {
 		trail.push({
-			label: listingLabel,
+			label: labels.listing(payload.listingSlug, gender) ?? listingLabel,
 			href: { pathname: "/[specialite]", params: { specialite: payload.listingSlug } },
 		});
 	}
@@ -358,16 +364,22 @@ export default async function PractitionerPage({ params }: Props) {
 									value={professionLabel}
 									emptyLabel={empty}
 								/>
-								<FieldRow label={tP("fields.specialty")} value={specialty} emptyLabel={empty} />
-								<FieldRow
-									label={t("otherQualifications")}
-									value={
-										otherQualifications.length > 0 ? (
-											<span lang={austrian ? "de" : "fr"}>{otherQualifications.join(", ")}</span>
-										) : null
-									}
-									emptyLabel={empty}
-								/>
+								{practice ? null : (
+									<>
+										<FieldRow label={tP("fields.specialty")} value={specialty} emptyLabel={empty} />
+										<FieldRow
+											label={t("otherQualifications")}
+											value={
+												otherQualifications.length > 0 ? (
+													<span lang={austrian ? "de" : "fr"}>
+														{otherQualifications.join(", ")}
+													</span>
+												) : null
+											}
+											emptyLabel={empty}
+										/>
+									</>
+								)}
 								<FieldRow label={tP("fields.hours")} emptyLabel={empty} />
 							</FieldList>
 						</section>
@@ -452,7 +464,10 @@ export default async function PractitionerPage({ params }: Props) {
 					<section aria-labelledby="ring-heading" className="flex flex-col gap-4">
 						<h2 id="ring-heading" className={sectionHeading}>
 							{t("ring.heading", {
-								occupation: inSentence(listingLabel, locale),
+								occupation: inSentence(
+									labels.listing(payload.listingSlug, gender) ?? listingLabel,
+									locale,
+								),
 								place: page.commune.name,
 							})}
 						</h2>
@@ -481,7 +496,7 @@ export default async function PractitionerPage({ params }: Props) {
 					sourceLabel={tP("source.label")}
 					source={
 						sources.length > 0
-							? // CC BY 4.0: each list named with its attribution, word for word.
+							? // CC BY 4.0 and the OGL: each list named with its attribution, word for word.
 								sources.map((source) => `${source.name} (${source.attribution})`).join("; ")
 							: tP("source.name")
 					}
@@ -527,11 +542,14 @@ async function SiteSection({
 				externalLabel={tSite("externalLink")}
 			>
 				<FieldList>
-					<FieldRow
-						label={t("practiceType")}
-						value={[labels.kind, labels.mode].filter(Boolean).join(" · ")}
-						emptyLabel={empty}
-					/>
+					{/* A UK practice's addresses are all its own premises: no type to tell apart. */}
+					{marketOf(locale) === "GB" ? null : (
+						<FieldRow
+							label={t("practiceType")}
+							value={[labels.kind, labels.mode].filter(Boolean).join(" · ")}
+							emptyLabel={empty}
+						/>
+					)}
 					<FieldRow
 						label={tP("fields.phone")}
 						value={
@@ -681,8 +699,8 @@ async function Action({
 				/>
 			);
 		case "no_phone":
-			// The Ameli directory is French: an Austrian page has no such pointer.
-			if (marketOf(locale) === "AT") {
+			// The Ameli directory is French: an Austrian or UK page has no such pointer.
+			if (marketOf(locale) !== "FR") {
 				return <ActionBlock kind="notice" title={title} statement={t("action.noPhone")} />;
 			}
 			return (

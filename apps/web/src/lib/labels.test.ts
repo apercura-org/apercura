@@ -9,7 +9,15 @@ import fr from "../../messages/fr.json";
 import it_ from "../../messages/it.json";
 import { inSentence } from "./labels";
 
-const CATALOGS = { fr, en, de, es, it: it_, "de-AT": messagesFor("de-AT") } as const;
+const CATALOGS = {
+	fr,
+	en,
+	de,
+	es,
+	it: it_,
+	"de-AT": messagesFor("de-AT"),
+	"en-GB": messagesFor("en-GB"),
+} as const;
 
 /** A label of the catalog's taxonomy, rendered like `getTaxonomyLabels` does. */
 function listing(locale: Locale, slug: string, gender: "female" | "male" = "female") {

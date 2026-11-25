@@ -1,4 +1,10 @@
-import { formatPhoneAt, formatPhoneFr, formatStreetText, publicActivities } from "@apercura/core";
+import {
+	formatPhoneAt,
+	formatPhoneFr,
+	formatPhoneGb,
+	formatStreetText,
+	publicActivities,
+} from "@apercura/core";
 import type { ActivityPayload, PractitionerPayload, SitePayload } from "~/server/queries/types";
 
 export type SiteView = {
@@ -25,18 +31,20 @@ export function label(value: string | null | undefined): string | null {
 	return value ? formatStreetText(value) || null : null;
 }
 
-/** A phone number of any market as written there (`04 72 00 00 00`, `01 7673315`). */
+/** A phone number of any market as written there (`04 72 00 00 00`, `01 7673315`, `020 7946 0000`). */
 export function formatPhone(e164: string): string {
-	return e164.startsWith("+43") ? formatPhoneAt(e164) : formatPhoneFr(e164);
+	if (e164.startsWith("+43")) return formatPhoneAt(e164);
+	if (e164.startsWith("+44")) return formatPhoneGb(e164);
+	return formatPhoneFr(e164);
 }
 
 /**
  * A source text as printed for a market. French registry labels are restored
- * (`label`); Austrian lists publish their streets as written, so they are only trimmed
- * (`63A` stays `63A`).
+ * (`label`); Austrian lists publish their streets as written, and the UK's are cased by the
+ * import (`titleCaseGb`), so they are only trimmed (`63A` stays `63A`).
  */
 export function marketLabel(value: string | null | undefined, country = "FR"): string | null {
-	if (country !== "AT") return label(value);
+	if (country !== "AT" && country !== "GB") return label(value);
 	return value?.trim() || null;
 }
 
@@ -48,16 +56,40 @@ function townLine(postcode: string | null, placeName: string | null, country: st
 	return [postcode, localityOf(placeName, country)].filter(Boolean).join(" ");
 }
 
+/**
+ * The town part of a one-line address on a card: `69001 Lyon`, `1090 Wien`, and in the UK the
+ * town before its postcode (`Stockton-on-Tees TS18 1ZA`).
+ */
+export function cardTownLine(
+	postcode: string | null,
+	placeName: string | null,
+	country = "FR",
+): string {
+	const locality = localityOf(placeName, country);
+	return (country === "GB" ? [locality, postcode] : [postcode, locality]).filter(Boolean).join(" ");
+}
+
 /** The locality of an address as written in its market: a Vienna district is `Wien`. */
 export function localityOf(placeName: string | null, country = "FR"): string | null {
 	return country === "AT" && placeName?.startsWith("Wien-") ? "Wien" : placeName;
 }
 
-/** Address lines of a site, street first, in the market's form. */
+/**
+ * Address lines of a site, street first, in the market's form: the town and the postcode on
+ * lines of their own in the UK (Royal Mail), together elsewhere (`69001 Lyon`, `1090 Wien`).
+ */
 export function addressLines(
 	site: Pick<SitePayload, "addressLine" | "addressComplement" | "postcode" | "placeName">,
 	country = "FR",
 ): string[] {
+	if (country === "GB") {
+		return [
+			marketLabel(site.addressLine, country),
+			marketLabel(site.addressComplement, country),
+			site.placeName,
+			site.postcode,
+		].filter((line): line is string => Boolean(line?.trim()));
+	}
 	const town = townLine(site.postcode, site.placeName, country);
 	return [
 		marketLabel(site.addressLine, country),

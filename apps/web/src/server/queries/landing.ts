@@ -2,7 +2,7 @@ import "server-only";
 
 import { LISTING_PAGE_SIZE } from "@apercura/core";
 import { cacheLife, cacheTag } from "next/cache";
-import { NOT_DEPARTMENT_CITY } from "~/lib/places";
+import { NOT_DEPARTMENT_CITY, REGION_LISTING_MARKETS } from "~/lib/places";
 import { label } from "~/lib/practitioner-view";
 import { cacheTags } from "../cache-tags";
 import { getSql } from "../db";
@@ -81,6 +81,8 @@ export async function getLandingPage(scope: LandingScope): Promise<LandingPage |
 	const offset = (page - 1) * LISTING_PAGE_SIZE;
 	const placeId = place?.id ?? null;
 	const departmentCode = place?.kind === "department" ? place.code : null;
+	// A UK region lists the practices of its local authorities' places.
+	const regionCode = place?.kind === "region" ? place.code : null;
 	// The France-wide hub links to departments; it does not list practitioners.
 	const rows =
 		!place || offset >= landing.practitionerCount
@@ -101,6 +103,7 @@ export async function getLandingPage(scope: LandingScope): Promise<LandingPage |
 							s.place_id = ${placeId}
 							OR (${isCity} AND pl.parent_id = ${placeId})
 							OR (pl.department_code = ${departmentCode} AND pl.country = ${country})
+							OR (pl.region_code = ${regionCode} AND pl.country = ${country})
 						)
 					ORDER BY p.id, a.is_primary DESC, a.id
 				)
@@ -128,7 +131,8 @@ export async function getLandingPage(scope: LandingScope): Promise<LandingPage |
 
 /**
  * Places a listing page links to: every commune of the department (by count),
- * the nearest communes of a commune, or the departments of the market.
+ * the nearest communes of a commune, the local authorities of a UK region, or the
+ * departments of the market (the UK: its regions and nations).
  */
 async function nearbyPlaces(
 	country: string,
@@ -137,14 +141,26 @@ async function nearbyPlaces(
 ): Promise<NearbyPlace[]> {
 	const sql = getSql();
 	if (!place) {
+		const kind = REGION_LISTING_MARKETS.has(country) ? "region" : "department";
+		return sql<NearbyPlace[]>`
+			SELECT p.id, p.kind, p.code, p.name, p.slug, p.department_code AS "departmentCode",
+				lp.practitioner_count AS "practitionerCount", lp.indexable, p.slug AS "departmentSlug"
+			FROM directory.landing_pages lp
+			JOIN directory.places p ON p.id = lp.place_id AND p.kind = ${kind}
+				AND p.country = ${country}
+			WHERE lp.listing_slug = ${listingSlug}
+			ORDER BY ${kind === "region" ? sql`p.name` : sql`p.code`}
+		`;
+	}
+	if (place.kind === "region") {
 		return sql<NearbyPlace[]>`
 			SELECT p.id, p.kind, p.code, p.name, p.slug, p.department_code AS "departmentCode",
 				lp.practitioner_count AS "practitionerCount", lp.indexable, p.slug AS "departmentSlug"
 			FROM directory.landing_pages lp
 			JOIN directory.places p ON p.id = lp.place_id AND p.kind = 'department'
 				AND p.country = ${country}
-			WHERE lp.listing_slug = ${listingSlug}
-			ORDER BY p.code
+			WHERE lp.listing_slug = ${listingSlug} AND p.region_code = ${place.code}
+			ORDER BY lp.practitioner_count DESC, p.name, p.id
 		`;
 	}
 	if (place.kind === "department") {
@@ -210,8 +226,8 @@ async function establishmentsOf(
 export async function sampleLandingParams(limit: number, country = "FR") {
 	return getSql()<{ listingSlug: string; departmentSlug: string; placeSlug: string | null }[]>`
 		SELECT lp.listing_slug AS "listingSlug",
-			CASE WHEN p.kind = 'department' THEN p.slug ELSE d.slug END AS "departmentSlug",
-			CASE WHEN p.kind = 'department' THEN NULL ELSE p.slug END AS "placeSlug"
+			CASE WHEN p.kind IN ('department', 'region') THEN p.slug ELSE d.slug END AS "departmentSlug",
+			CASE WHEN p.kind IN ('department', 'region') THEN NULL ELSE p.slug END AS "placeSlug"
 		FROM directory.landing_pages lp
 		JOIN directory.places p ON p.id = lp.place_id
 		LEFT JOIN directory.places d ON d.country = p.country AND d.kind = 'department'

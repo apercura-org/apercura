@@ -8,7 +8,7 @@ import { type Href, Link } from "~/i18n/navigation";
 import type { Locale } from "~/i18n/routing";
 import { genderOf, getTaxonomyLabels } from "~/lib/labels";
 import { showsBillingFacts } from "~/lib/market";
-import { localityOf } from "~/lib/practitioner-view";
+import { cardTownLine } from "~/lib/practitioner-view";
 import type { ListedPractitioner } from "~/server/queries/landing";
 import type { LandingPayload } from "~/server/queries/types";
 
@@ -205,7 +205,7 @@ export async function PractitionerTable({
 					const sector = labels.billingSector(row.billingSector, bySector);
 					const address = [
 						row.addressLine,
-						[row.postcode, localityOf(row.placeName, marketOf(locale))].filter(Boolean).join(" "),
+						cardTownLine(row.postcode, row.placeName, marketOf(locale)),
 					]
 						.filter(Boolean)
 						.join(", ");
@@ -219,8 +219,11 @@ export async function PractitionerTable({
 									{labels.personName(row)}
 								</Link>
 								<p className="mt-1 text-meta text-ink">
-									{labels.listing(row.listingSlug, genderOf(row.civilityCode))}
-									{row.practiceKind ? ` · ${labels.practiceKind(row.practiceKind) ?? ""}` : ""}
+									{labels.occupation(row.listingSlug, genderOf(row.civilityCode))}
+									{/* A UK practice is its premises: no kind of place to tell apart. */}
+									{row.practiceKind && marketOf(locale) !== "GB"
+										? ` · ${labels.practiceKind(row.practiceKind) ?? ""}`
+										: ""}
 								</p>
 								{address ? <p className="text-meta text-ink-muted">{address}</p> : null}
 								{billing ? (

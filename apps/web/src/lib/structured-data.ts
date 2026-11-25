@@ -14,6 +14,7 @@ import type {
 	OpeningHoursSpecification,
 	Organization,
 	Person,
+	Pharmacy,
 	PhysiciansOffice,
 	PostalAddress,
 	PropertyValue,
@@ -227,6 +228,9 @@ const MEDICAL_SPECIALTIES: Record<string, readonly MedicalSpecialty[]> = {
 	unfallchirurgie: ["https://schema.org/Surgical", "https://schema.org/Musculoskeletal"],
 	urologie: ["https://schema.org/Urologic"],
 	zahnaerzte: ["https://schema.org/Dentistry"],
+	// The United Kingdom's practices.
+	"gp-practices": ["https://schema.org/PrimaryCare"],
+	"dental-practices": ["https://schema.org/Dentistry"],
 };
 
 /**
@@ -420,7 +424,19 @@ const PLACE_TYPES = {
 /** Profession codes of doctors: France's `10`, Austria's `ARZT`. */
 const DOCTOR_PROFESSIONS = new Set(["10", "ARZT"]);
 
+/**
+ * schema.org types of the UK's practices: the practice itself is the page's subject (the UK
+ * lists practices, not people), and its branch surgeries are places of the same type.
+ */
+const PRACTICE_TYPES: Readonly<Record<string, "MedicalClinic" | "Dentist" | "Pharmacy">> = {
+	GB_GP: "MedicalClinic",
+	GB_DENTAL: "Dentist",
+	GB_PHARMACY: "Pharmacy",
+};
+
 function placeTypeOf(practiceKind: string, professionCode: string) {
+	const practice = PRACTICE_TYPES[professionCode];
+	if (practice) return practice;
 	if (practiceKind === "office" && !DOCTOR_PROFESSIONS.has(professionCode))
 		return "MedicalBusiness";
 	return PLACE_TYPES[practiceKind as keyof typeof PLACE_TYPES] ?? "MedicalClinic";
@@ -456,7 +472,7 @@ function placeNode(practitionerUrl: string, professionCode: string, place: Pract
 		telephone: e164(place.phone),
 		openingHoursSpecification: openingHoursOf(place.openingHours),
 	};
-	return node as PhysiciansOffice | MedicalBusiness | MedicalClinic | Hospital;
+	return node as PhysiciansOffice | MedicalBusiness | MedicalClinic | Hospital | Dentist | Pharmacy;
 }
 
 function reserveAction(bookingUrl: string): ReserveAction {
@@ -478,7 +494,9 @@ function reserveAction(bookingUrl: string): ReserveAction {
  * `IndividualPhysician` with `practicesAt`; dentists `Dentist` (a local
  * business: address, geo and phone sit on it, the other places are
  * `location`s); midwives `Person` with `hasOccupation` and `workLocation`.
- * Every one carries the RPPS as a `PropertyValue`.
+ * Every one carries the RPPS as a `PropertyValue`. A UK practice is itself the
+ * organisation (`MedicalClinic`, `Dentist`, `Pharmacy`), its ODS or list code its
+ * identifier, its branch surgeries further `location`s.
  */
 export function practitionerNodes(input: PractitionerInput): Thing[] {
 	const primary = input.places[0];
@@ -515,6 +533,19 @@ export function practitionerNodes(input: PractitionerInput): Thing[] {
 	const specialty = one(medicalSpecialtiesOf(input.listingSlug));
 
 	let person: Thing;
+	const practiceType = PRACTICE_TYPES[input.professionCode];
+	// A UK practice: an organisation (a local business), its own address first, its branch
+	// surgeries as further `location`s.
+	if (practiceType) {
+		const practice = {
+			"@type": practiceType,
+			...common,
+			...localBusiness,
+			medicalSpecialty: specialty,
+			location: one(placeRefs.slice(1)),
+		};
+		return [practice as MedicalClinic | Dentist | Pharmacy, ...places.slice(1)].map(compact);
+	}
 	// Physicians: French profession 10, Austrian ARZT. Dentists: 40, ZAHNARZT.
 	if (input.professionCode === "10" || input.professionCode === "ARZT") {
 		person = {

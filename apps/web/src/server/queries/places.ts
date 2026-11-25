@@ -1,7 +1,7 @@
 import "server-only";
 
 import { cacheLife, cacheTag } from "next/cache";
-import { CITY_IS_DEPARTMENT, isDepartmentCity } from "~/lib/places";
+import { CITY_IS_DEPARTMENT, isDepartmentCity, REGION_LISTING_MARKETS } from "~/lib/places";
 import { cacheTags } from "../cache-tags";
 import { getSql } from "../db";
 import type { PlaceRef } from "./types";
@@ -19,7 +19,7 @@ const PLACE_COLUMNS = `id, kind, code, name, slug, department_code AS "departmen
 
 /**
  * Resolves `/{dept}[/{commune}]` slugs to the places of one market (`FR`,
- * `AT`). Slugs are stored once and never recomputed: renamed places answer
+ * `AT`, `GB`; in the UK the first slug may also name a region). Slugs are stored once and never recomputed: renamed places answer
  * through their aliases, merged communes through their successor, and the
  * Paris and Wien cities through their department.
  */
@@ -33,9 +33,12 @@ export async function resolvePlace(
 	cacheTag(cacheTags.coarse.place);
 	const sql = getSql();
 
+	// The UK lists by region too (England's regions and the other nations): a region's slug
+	// takes the department's slot, and has no commune below it (its places are authorities).
+	const kinds = REGION_LISTING_MARKETS.has(country) ? ["department", "region"] : ["department"];
 	let [department] = await sql<PlaceRef[]>`
 		SELECT ${sql.unsafe(PLACE_COLUMNS)} FROM directory.places
-		WHERE country = ${country} AND kind = 'department' AND slug = ${departmentSlug}
+		WHERE country = ${country} AND kind = ANY (${kinds}::text[]) AND slug = ${departmentSlug}
 			AND removed_at IS NULL
 	`;
 	let moved = false;
@@ -43,13 +46,14 @@ export async function resolvePlace(
 		[department] = await sql<PlaceRef[]>`
 			SELECT p.id, p.kind, p.code, p.name, p.slug, p.department_code AS "departmentCode"
 			FROM directory.place_slug_aliases a
-			JOIN directory.places p ON p.id = a.place_id AND p.kind = 'department'
+			JOIN directory.places p ON p.id = a.place_id AND p.kind = ANY (${kinds}::text[])
 			WHERE a.country = ${country} AND a.department_code IS NULL AND a.slug = ${departmentSlug}
 		`;
 		if (!department) return { kind: "not_found" };
 		moved = true;
 	}
 	cacheTag(cacheTags.place(department.id));
+	if (department.kind === "region" && placeSlug !== null) return { kind: "not_found" };
 
 	if (placeSlug === null) {
 		return moved

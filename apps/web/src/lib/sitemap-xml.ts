@@ -109,11 +109,13 @@ export const STATIC_PATHS = [
 ] as const;
 
 /**
- * The static pages of each market's sitemap. Austria lists no practitioner space (its claims
- * go through documents, the space's entry pages are France's) and no accessibility statement
- * of its own (none is required of a private site there).
+ * The static pages of each market's sitemap. Austria and the UK list no practitioner space
+ * (their claims go through documents, the space's entry pages are France's); Austria has no
+ * accessibility statement of its own (none is required of a private site there), the UK has
+ * one (`/gb/accessibility`).
  */
 export const MARKET_STATIC_PATHS: Record<SitemapMarket, readonly string[]> = {
 	fr: STATIC_PATHS,
 	at: STATIC_PATHS.filter((path) => path !== "/pro" && path !== "/accessibilite"),
+	gb: STATIC_PATHS.filter((path) => path !== "/pro"),
 };

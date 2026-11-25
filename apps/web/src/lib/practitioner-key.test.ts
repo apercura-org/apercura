@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
 	displayId,
 	marketAdapter,
+	marketSegmentOf,
 	parseAnyPractitionerKey,
 	parsePractitionerKey,
 } from "./practitioner-key";
@@ -41,5 +42,31 @@ describe("parsePractitionerKey", () => {
 		expect(parseAnyPractitionerKey("anna-muster")).toBeNull();
 		expect(displayId({ idScheme: "RPPS", nationalId: "19999990013" })).toBe("19999990013");
 		expect(displayId({ idScheme: "AT-WIEN", nationalId: "7983" })).toBe("w7983");
+	});
+});
+
+describe("UK practice keys", () => {
+	it("read a practice page segment in the UK only", () => {
+		expect(parsePractitionerKey("en-GB", "the-example-surgery-a99001")).toEqual({
+			country: "GB",
+			idScheme: "GB-ODS-GP",
+			nationalId: "A99001",
+			namePart: "the-example-surgery",
+		});
+		expect(parsePractitionerKey("en-GB", "anna-muster-w7983")).toBeNull();
+		expect(parsePractitionerKey("de-AT", "the-example-surgery-a99001")).toBeNull();
+		expect(marketAdapter("en-GB").features.booking).toBe(false);
+	});
+
+	it("mark a UK segment outside a locale, and print the NHS identifier", () => {
+		expect(marketSegmentOf("GB", "meddygfa-w91234")).toBe("gb.meddygfa-w91234");
+		expect(marketSegmentOf("AT", "anna-muster-w7983")).toBe("anna-muster-w7983");
+		expect(parseAnyPractitionerKey("gb.meddygfa-w91234")).toMatchObject({
+			country: "GB",
+			nationalId: "W91234",
+		});
+		expect(parseAnyPractitionerKey("meddygfa-w91234")?.country).toBe("AT");
+		expect(displayId({ idScheme: "GB-ODS-GP", nationalId: "A99001" })).toBe("A99001");
+		expect(displayId({ idScheme: "GB-PHS-GP", nationalId: "89001" })).toBe("sg89001");
 	});
 });

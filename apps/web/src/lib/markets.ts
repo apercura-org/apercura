@@ -19,12 +19,12 @@ export type Market =
 export const MARKETS: readonly Market[] = [
 	{ country: "FR", status: "open", locale: "fr" },
 	{ country: "AT", status: "open", locale: MARKET_LOCALES.AT },
+	{ country: "GB", status: "open", locale: MARKET_LOCALES.GB },
 	{ country: "BE", status: "planned" },
 	{ country: "DE", status: "planned" },
 	{ country: "ES", status: "planned" },
 	{ country: "IT", status: "planned" },
 	{ country: "CH", status: "planned" },
-	{ country: "GB", status: "planned" },
 ];
 
 /** The language of the international home (`/`): English, the source catalog. */
