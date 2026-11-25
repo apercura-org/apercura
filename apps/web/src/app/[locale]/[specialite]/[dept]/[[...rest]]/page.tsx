@@ -133,9 +133,19 @@ async function resolve(params: Props["params"]) {
 		page,
 		pages,
 		data,
-		indexable: decision.indexable && page === 1,
+		// Every page of an indexable listing is indexable, each its own canonical: the
+		// practitioners of page 187 are one click from an indexed page, not only from
+		// the sitemap (docs/public-site.md, SEO checklist).
+		indexable: decision.indexable,
 		href: landingHref(specialite, dept, placeSlug, page),
 	};
+}
+
+/** The first and last names of a page, which tell its description apart from the others'. */
+function nameRange(rows: readonly { firstName: string; lastName: string }[]) {
+	const name = (row: (typeof rows)[number] | undefined) =>
+		[row?.firstName, row?.lastName].filter(Boolean).join(" ");
+	return { first: name(rows[0]), last: name(rows.at(-1)) };
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -169,7 +179,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 						t("metaTitleShort", shortValues),
 					]),
 		description: fitText(
-			[t(page > 1 ? "metaDescriptionPage" : "metaDescription", values)],
+			page > 1
+				? [
+						t("metaDescriptionPageRange", { ...values, ...nameRange(data.rows) }),
+						t("metaDescriptionPage", values),
+					]
+				: [t("metaDescription", values)],
 			DESCRIPTION_MAX,
 		),
 		indexable: resolved.indexable,

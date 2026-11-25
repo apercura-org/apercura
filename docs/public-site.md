@@ -19,7 +19,7 @@ market: its pages live under `/fr`, their interface translations under
 | `/fr` (France home)                            | `/fr-en`                      | yes                                        |
 | `/fr/praticien/{prenom-nom}-{rpps}`            | `/fr-en/practitioner/…`       | when the read model says `indexable` (fr)  |
 | `/fr/{specialite}`                             | same                          | from 3 practitioners                       |
-| `/fr/{specialite}/{dept}[/{commune}][/{page}]` | same                          | from 3, deindexed below 2; page 2+ noindex |
+| `/fr/{specialite}/{dept}[/{commune}][/{page}]` | same                          | from 3, deindexed below 2; page 2+ as well |
 | `/fr/annuaire`, `/fr/annuaire/{dept}[/{c}]`    | `/fr-en/directory/…`          | when one of its listings is                |
 | `/fr/etablissement/{nom}-{finess}`             | `/fr-en/establishment/…`      | with one indexable practitioner            |
 | `/fr/recherche?quoi=&ou=&pres=`                | `/fr-en/search`               | never (and disallowed in robots.txt)       |
@@ -434,19 +434,52 @@ routes, the metadata or the structured data.
 | Withheld page (removal request being checked)                               | **Fixed**: answered 200 with `noindex, nofollow` and a notice; now a 404 like an unknown page                                                                                                                                  |
 | Internal links that redirect                                                | **Fixed**: every Paris listing linked the Paris city (`/{listing}/75-paris/paris`), which answers 308 to the listing itself                                                                                                    |
 | Thin listings                                                               | Pass: below 3 practitioners `noindex, follow` and out of the sitemaps (hysteresis down to 2)                                                                                                                                   |
-| Pagination                                                                  | Page 2+ `noindex, follow`, self canonical, `rel="next"`; see the recommendations                                                                                                                                               |
+| Pagination                                                                  | **Fixed** (#112): the last of 219 pages was 218 clicks from the first, through `noindex` pages; now any page is at most 3 clicks away, and every page of an indexable listing is indexable ([below](#listing-depth))           |
 | Former domain                                                               | Pass over HTTPS: one 301 to the new URL, path and query mapped. Over HTTP, two hops (see below)                                                                                                                                |
 | Core Web Vitals (Lighthouse, mobile)                                        | Pass: performance, accessibility, best practices and SEO 100 on all three pages; LCP 1.2–1.3 s, CLS 0, TBT 10–60 ms, about 370 KB transferred                                                                                  |
 
+### Listing depth
+
+A listing is in alphabetical order, 20 practitioners a page: the Paris
+generalists (4,375) fill 219 pages. With previous and next links only, the
+last page was 218 clicks from the first. Two changes (#112):
+
+- **The pager** (`pager` in `packages/core/src/pagination.ts`, drawn by
+  `Pagination` in `apps/web/src/components/listing.tsx`) links, besides the
+  previous and next pages, to every page of the current block of ten, then to
+  the first and the last page and to the round pages of the larger blocks: from
+  page 187 of 219, pages 180 to 189, then 1, 100, 110… 190, 200 and 219. Any
+  page is then at most `digits(pages)` clicks from any other: 3 below 1,000
+  pages (20,000 practitioners), e.g. 1 → 100 → 180 → 187, with at most 30
+  numbered links. `pagination.test.ts` checks the bound by a breadth-first walk
+  of the pager's links for every listing size up to 1,200 pages, and
+  `e2e/pager.spec.ts` walks the largest listing of the fixtures through its
+  pager and its indexable pages only. A `<nav>` named "Pages de la liste", the
+  current page as text with `aria-current="page"`, every number read as "Page
+  12", 44 px targets, plain links (no JavaScript); the numbered links are not
+  prefetched (two dozen pages on every view).
+- **Every page of an indexable listing is indexable** (`index, follow`, each its
+  own canonical; pages 2+ were `noindex, follow`). Google asks for exactly that
+  (a canonical per page, never page 1 for all), and it stops following the links
+  of a page that stays `noindex` for long: practitioners past page 1 of their
+  commune or arrondissement (most of those of a big town) would then be known
+  from the sitemaps alone, with no internal link from an indexed page. A page
+  2+ has a title of its own ("…, page 12") and a description naming its first
+  and last practitioners ("Page 12 sur 219, de … à … : …"). Thin listings keep
+  their rule: below three practitioners every page is `noindex, follow`.
+
+Together: every indexable practitioner is in a sitemap and listed on an indexed
+listing page, itself at most 3 clicks from that listing's first page, which the
+sitemaps and the place hubs list. Pages 2+ stay out of the sitemaps (a sitemap
+lists the entry points; the pager reaches the rest) and so out of the cache
+warm-up, which walks the sitemaps: a crawler may render one cold, as it already
+could. Splitting big listings into indexable sub-listings by name ("A–C") was
+weighed and left out: the arrondissements and communes already split the
+department listings by place, and slices of the alphabet would add
+near-duplicate pages without a query of their own.
+
 ### Recommendations (not done)
 
-- **Pagination depth** (medium): a listing links only to the next and the
-  previous page, so the last of the 219 pages of the Paris generalists is 218
-  clicks away, and Google stops following the links of pages that stay
-  `noindex` for long. Practitioners are reachable through their arrondissement
-  or commune listing and the sitemaps, but a pager with the first, last and
-  nearby page numbers would bound the depth to a few clicks. Indexing pages 2+
-  (each its own canonical, as Google recommends) is worth weighing with it.
 - **HTTP on the former domain** (low): `http://apercura.fr/…` answers a 301 to
   `https://apercura.fr/…` from the hosting proxy before the app's 301 to
   apercura.org. Routing plain HTTP of the former hosts to the app too would make
