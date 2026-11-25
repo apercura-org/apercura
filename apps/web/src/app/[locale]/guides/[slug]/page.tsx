@@ -137,7 +137,7 @@ export default async function GuidePage({ params }: Props) {
 			/>
 			<div className="surface-shade border-b border-rule-soft">
 				<div className="mx-auto flex w-full max-w-6xl flex-col gap-4 px-5 pt-10 pb-10 sm:px-8 sm:pb-12">
-					<p className="caps text-ink">
+					<p className="type-caption text-ink">
 						{t("title")} · {category}
 					</p>
 					<h1 lang={lang} className="max-w-[26ch] type-headline">
@@ -148,11 +148,11 @@ export default async function GuidePage({ params }: Props) {
 					</p>
 					<p className="flex flex-wrap gap-x-5 gap-y-1 text-meta text-ink">
 						<span>
-							<span className="caps me-1.5">{t("imprintUpdated")}</span>
+							<span className="type-caption me-1.5">{t("imprintUpdated")}</span>
 							<time dateTime={guide.updatedAt}>{updated}</time>
 						</span>
 						<span>
-							<span className="caps me-1.5">{t("imprintReviewed")}</span>
+							<span className="type-caption me-1.5">{t("imprintReviewed")}</span>
 							<time dateTime={guide.reviewedAt}>{reviewed}</time>
 						</span>
 						<span>{t("readingTime", { minutes: readingMinutes(guide.wordCount) })}</span>
@@ -161,7 +161,7 @@ export default async function GuidePage({ params }: Props) {
 					{lang ? <p className="text-meta text-ink">{t("frenchOnly")}</p> : null}
 				</div>
 			</div>
-			<BookletPage runningHead={tSite("runningHead")}>
+			<BookletPage>
 				<Trail locale={locale} items={trail} />
 				<div className="grid gap-10 lg:grid-cols-[minmax(0,8fr)_minmax(0,4fr)] lg:gap-16">
 					<article lang={lang} className="flex min-w-0 flex-col gap-8">
@@ -189,10 +189,10 @@ export default async function GuidePage({ params }: Props) {
 						) : null}
 						{guide.listings.length > 0 ? (
 							<nav aria-labelledby="guide-listings-heading" className="flex flex-col gap-2">
-								<h2 id="guide-listings-heading" className="caps text-ink">
+								<h2 id="guide-listings-heading" className="type-caption text-ink">
 									{t("findPractitioners")}
 								</h2>
-								<ul className="flex flex-col border-t border-ink">
+								<ul className="flex flex-col border-t border-rule-soft">
 									{guide.listings.map((listing) => (
 										<li key={listing} className="border-b border-rule-soft">
 											<Link

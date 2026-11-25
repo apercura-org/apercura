@@ -24,7 +24,7 @@ export async function GuideList({
 	const Heading = headingLevel === 2 ? "h2" : "h3";
 	const lang = locale === "fr" ? undefined : "fr";
 	return (
-		<ul className="flex flex-col border-t border-ink">
+		<ul className="flex flex-col border-t border-rule-soft">
 			{guides.map((guide) => (
 				<li key={guide.slug} className="flex flex-col gap-1 border-b border-rule-soft py-4">
 					<Heading lang={lang} className="text-ink">
@@ -61,10 +61,13 @@ export async function GuideToc({
 	const t = await getTranslations({ locale, namespace: "Guides" });
 	return (
 		<nav aria-labelledby="guide-toc-heading" className="flex flex-col gap-2">
-			<h2 id="guide-toc-heading" className="caps text-ink">
+			<h2 id="guide-toc-heading" className="type-caption text-ink">
 				{t("toc")}
 			</h2>
-			<ol lang={locale === "fr" ? undefined : "fr"} className="flex flex-col border-t border-ink">
+			<ol
+				lang={locale === "fr" ? undefined : "fr"}
+				className="flex flex-col border-t border-rule-soft"
+			>
 				{headings.map((heading) => (
 					<li key={heading.id} className="border-b border-rule-soft">
 						<a
@@ -94,7 +97,7 @@ export async function GuideSources({
 		<section
 			id="sources"
 			aria-labelledby="sources-heading"
-			className="flex scroll-mt-6 flex-col gap-4 border-t border-ink pt-6"
+			className="flex scroll-mt-6 flex-col gap-4 border-t border-rule-soft pt-6"
 		>
 			<h2 id="sources-heading" className="type-title text-ink">
 				{t("sourcesHeading")}

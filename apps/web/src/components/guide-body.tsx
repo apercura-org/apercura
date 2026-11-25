@@ -29,7 +29,7 @@ function block(token: Token, key: number, external: string): ReactNode {
 				<h2
 					key={key}
 					id={heading.anchor}
-					className="mt-6 scroll-mt-6 border-t border-ink pt-6 type-title text-ink first:mt-0"
+					className="mt-6 scroll-mt-6 border-t border-rule-soft pt-6 type-title text-ink first:mt-0"
 				>
 					{children}
 				</h2>

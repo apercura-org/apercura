@@ -34,7 +34,6 @@ export default async function GuidesIndex({ params }: PageProps<"/[locale]/guide
 	const locale = await localeOf(params);
 	setRequestLocale(locale);
 	const t = await getTranslations({ locale, namespace: "Guides" });
-	const tSite = await getTranslations({ locale, namespace: "Site" });
 	const origin = siteOrigin();
 	const url = `${origin}${getPathname({ href: HREF, locale })}`;
 
@@ -45,7 +44,7 @@ export default async function GuidesIndex({ params }: PageProps<"/[locale]/guide
 				lead={t("lead")}
 				note={locale === "fr" ? null : t("frenchOnly")}
 			/>
-			<BookletPage runningHead={tSite("runningHead")}>
+			<BookletPage>
 				<PageGraph
 					locale={locale}
 					href={HREF}
@@ -73,7 +72,7 @@ export default async function GuidesIndex({ params }: PageProps<"/[locale]/guide
 						key={category}
 						id={category}
 						aria-labelledby={`${category}-heading`}
-						className="grid scroll-mt-6 gap-5 border-t border-ink pt-6 md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] md:gap-12"
+						className="grid scroll-mt-6 gap-5 border-t border-rule-soft pt-6 md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] md:gap-12"
 					>
 						<div className="flex flex-col gap-3">
 							<h2 id={`${category}-heading`} className="type-title text-ink">

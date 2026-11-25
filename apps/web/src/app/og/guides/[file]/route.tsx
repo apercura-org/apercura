@@ -3,6 +3,7 @@ import { ImageResponse } from "next/og";
 import { getTranslations } from "next-intl/server";
 import { GUIDES, guideBySlug } from "~/lib/guides/catalog";
 import { formatGuideDate } from "~/lib/guides/format";
+import { OG_FONT_FAMILY } from "~/server/og/font-files";
 import { ogFonts } from "~/server/og/fonts";
 
 /**
@@ -44,7 +45,7 @@ export async function GET(_request: Request, { params }: RouteContext<"/og/guide
 				justifyContent: "space-between",
 				background: PAPER,
 				color: INK,
-				fontFamily: "Archivo",
+				fontFamily: OG_FONT_FAMILY,
 			}}
 		>
 			<div style={{ display: "flex", flexDirection: "column", padding: "64px 80px 0" }}>
@@ -56,10 +57,10 @@ export async function GET(_request: Request, { params }: RouteContext<"/og/guide
 						fontSize: 26,
 						fontWeight: 500,
 						color: INK_MUTED,
-						letterSpacing: 1.5,
+						letterSpacing: 0,
 					}}
 				>
-					{t("ogRunningHead").toUpperCase()}
+					{t("ogRunningHead")}
 				</div>
 			</div>
 			<div style={{ display: "flex", flexDirection: "column", gap: 24, padding: "0 80px" }}>
