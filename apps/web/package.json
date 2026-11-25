@@ -35,7 +35,7 @@
 		"drizzle-orm": "0.45.4",
 		"marked": "18.3.0",
 		"next": "16.4.6",
-		"next-intl": "4.15.3",
+		"next-intl": "4.16.2",
 		"nodemailer": "10.6.1",
 		"qrcode": "1.5.4",
 		"react": "^19.3.1",
