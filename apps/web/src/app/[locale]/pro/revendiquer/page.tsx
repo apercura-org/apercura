@@ -13,6 +13,7 @@ import { NO_INDEX, resolveLocale } from "~/lib/locale";
 import { PRO_ROUTES } from "~/lib/pro-routes";
 import { requireProAccess } from "~/server/auth/guard";
 import { claimDocumentsEnabled, pscConfigured } from "~/server/features";
+import { getProContext } from "~/server/pro-context";
 import { caller } from "~/trpc/server";
 
 export const instant = false;
@@ -31,7 +32,7 @@ async function Start({ locale, rpps }: { locale: Locale; rpps: string | null }) 
 	// Outside the `(app)` group on purpose: a visitor coming from "Claim this
 	// page" signs in (or up) and comes back here for the same RPPS.
 	const valid = rpps !== null && isValidRpps(rpps);
-	await requireProAccess(
+	const access = await requireProAccess(
 		locale,
 		["ready"],
 		valid ? { pathname: "/pro/revendiquer", query: { rpps } } : null,
@@ -40,6 +41,12 @@ async function Start({ locale, rpps }: { locale: Locale; rpps: string | null }) 
 	const tP = await getTranslations({ locale, namespace: "Practitioner" });
 	const labels = await getTaxonomyLabels(locale);
 	const practitioner = valid ? await caller.claims.preview({ rpps }).catch(() => null) : null;
+	// The owner of this page removes it from their editor; anyone else objects through the form.
+	const ownsPage = practitioner
+		? (await getProContext(access.session.user.id)).pages.some(
+				(page) => page.practitionerId === practitioner.id,
+			)
+		: false;
 	const methods = [
 		...(pscConfigured() ? (["psc"] as const) : []),
 		"registry_email" as const,
@@ -86,6 +93,32 @@ async function Start({ locale, rpps }: { locale: Locale; rpps: string | null }) 
 						</Notice>
 					) : null}
 					<ClaimStartButton rpps={practitioner.nationalId} />
+					<div className="flex max-w-[65ch] flex-col gap-1 border-t border-rule-soft pt-4">
+						{practitioner.claimStatus === "claimed" ? null : (
+							<Link
+								href={{
+									pathname: "/praticien/[slug]/c-est-moi",
+									params: { slug: practitioner.slug },
+								}}
+								className={`${linkStyles()} inline-flex min-h-11 items-center text-body`}
+							>
+								{t("start.contactLink")}
+							</Link>
+						)}
+						<Link
+							href={
+								ownsPage
+									? { pathname: "/pro/page", hash: "editor-remove" }
+									: {
+											pathname: "/praticien/[slug]/retrait",
+											params: { slug: practitioner.slug },
+										}
+							}
+							className={`${linkStyles({ tone: "muted" })} inline-flex min-h-11 items-center text-meta`}
+						>
+							{t("start.optOutLink")}
+						</Link>
+					</div>
 				</section>
 			) : (
 				<section aria-labelledby="claim-find" className="flex max-w-2xl flex-col gap-5">

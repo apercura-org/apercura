@@ -7,6 +7,13 @@ import {
 	rejectClaim,
 	verifyPhoneCallback,
 } from "~/server/claims/service";
+import {
+	CONTACT_REQUEST_STATUSES,
+	contactRequestCounts,
+	contactRequestQueue,
+	readContactRequest,
+	setContactRequestStatus,
+} from "~/server/contact-requests/service";
 import { claimDocumentsEnabled, pscConfigured } from "~/server/features";
 import {
 	decideRemoval,
@@ -26,8 +33,8 @@ const id = z.object({ id: z.uuid() });
 const reason = z.string().trim().min(3).max(500);
 
 /**
- * Platform administration: the claims queue, error reports and removal
- * requests. Platform administrators carry no organization and never reach
+ * Platform administration: the claims queue, error reports, removal requests and the "I am this
+ * practitioner" contact requests. Platform administrators carry no organization and never reach
  * patient data; every decryption is written to the platform audit log.
  */
 export const adminRouter = createTRPCRouter({
@@ -115,6 +122,40 @@ export const adminRouter = createTRPCRouter({
 						adminId: ctx.user.id,
 						status: input.status,
 						note: input.note || null,
+						headers: ctx.headers,
+					}),
+				);
+				return { ok: true as const };
+			}),
+	}),
+
+	contacts: createTRPCRouter({
+		queue: platformAdminProcedure
+			.input(z.object({ status: z.enum(CONTACT_REQUEST_STATUSES).default("new") }))
+			.query(async ({ ctx, input }) => ({
+				items: await contactRequestQueue(ctx.db(), input.status),
+				counts: await contactRequestCounts(ctx.db()),
+			})),
+
+		/** Decrypts the requester's details and message (audited). */
+		read: platformAdminProcedure.input(id).mutation(({ ctx, input }) =>
+			service(() =>
+				readContactRequest(ctx.db(), {
+					id: input.id,
+					adminId: ctx.user.id,
+					headers: ctx.headers,
+				}),
+			),
+		),
+
+		setStatus: platformAdminProcedure
+			.input(z.object({ id: z.uuid(), status: z.enum(CONTACT_REQUEST_STATUSES) }))
+			.mutation(async ({ ctx, input }) => {
+				await service(() =>
+					setContactRequestStatus(ctx.db(), {
+						id: input.id,
+						adminId: ctx.user.id,
+						status: input.status,
 						headers: ctx.headers,
 					}),
 				);

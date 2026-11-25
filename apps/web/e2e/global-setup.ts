@@ -20,8 +20,11 @@ export default async function globalSetup() {
 		await sql`
 			delete from directory.rate_limits
 			where key like 'claim:%' or key like 'claim-link:%' or key like 'removal:%'
-				or key like 'report:%' or key like 'user:%'
+				or key like 'report:%' or key like 'user:%' or key like 'contact:%'
+				or key like 'contact-ack:%' or key like 'contact-challenge:%'
 		`;
+		// Admin alerts are batched (one per queue every 15 minutes): start each run fresh.
+		await sql`delete from directory.admin_alerts`;
 		await seedBookingAgendas(sql);
 	} finally {
 		await sql.end();

@@ -75,6 +75,8 @@ export default defineConfig({
 				LEGACY_HOSTS: "apercura.fr,www.apercura.fr",
 				// Mailpit catches the emails, without STARTTLS: allowed in tests only.
 				SMTP_ALLOW_INSECURE: "true",
+				// The administrators' alerts (claims, contact requests), read back from Mailpit.
+				ADMIN_NOTIFY_EMAIL: "admin-alerts@example.test",
 				...PSC,
 				...E2E_BOOKING_ENV,
 			},

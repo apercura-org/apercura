@@ -359,7 +359,9 @@ test("objecting to an unclaimed page hides it at once; an administrator then sup
 	await resetPractitioner(OPT_OUT_PRACTITIONER.rpps);
 	await page.goto(`/fr/praticien/${OPT_OUT_PRACTITIONER.slug}`);
 	await page
-		.getByRole("link", { name: "Vous êtes ce praticien et vous opposez à cette page ?" })
+		.getByRole("link", {
+			name: "Vous êtes le titulaire de cette page et ne souhaitez pas apparaître publiquement ? C’est ici",
+		})
 		.click();
 	await expect(
 		page.getByRole("heading", { level: 1, name: "Demander le retrait de cette page" }),
@@ -374,6 +376,8 @@ test("objecting to an unclaimed page hides it at once; an administrator then sup
 		.click();
 	await page.getByRole("button", { name: "Masquer et retirer la page" }).click();
 	await expect(page.getByText("La page est masquée")).toBeVisible();
+	// What happens next, and when: no promise of an instant deletion.
+	await expect(page.getByText(/dans un délai d’un mois au plus/)).toBeVisible();
 
 	// Hidden at once: nothing about the person, noindex, out of sitemaps and searches.
 	await page.goto(`/fr/praticien/${OPT_OUT_PRACTITIONER.slug}`);

@@ -19,6 +19,7 @@ import { BookingLauncher } from "~/components/booking/booking-launcher";
 import { BookletPage } from "~/components/booklet-page";
 import { BOOKING_PANEL_MESSAGES, ClientIsland } from "~/components/client-island";
 import { JsonLd } from "~/components/json-ld";
+import { OwnerBlock } from "~/components/owner-block";
 import { FeesSection, PracticalSection, PresentationSection } from "~/components/owner-sections";
 import { PublicPage } from "~/components/public-page";
 import { Trail, type TrailItem, trailEntries } from "~/components/trail";
@@ -375,25 +376,13 @@ export default async function PractitionerPage({ params }: Props) {
 							practitionerId={page.practitionerId}
 							practitionerName={name}
 						/>
-						<section
-							aria-labelledby="claim-heading"
-							className="flex flex-col gap-2 border-t border-ink pt-4"
-						>
-							<h2 id="claim-heading" className="type-subtitle text-ink">
-								{claimed ? t("claim.claimedHeading") : t("claim.heading")}
-							</h2>
-							<p className="text-body text-ink">
-								{claimed ? t("claim.claimedBody") : t("claim.body")}
-							</p>
-							{claimed ? null : (
-								<Link
-									href={{ pathname: "/pro/revendiquer", query: { rpps: payload.nationalId } }}
-									className={`${linkStyles()} inline-flex min-h-11 items-center text-body font-semibold`}
-								>
-									{t("claim.link")}
-								</Link>
-							)}
-						</section>
+						<OwnerBlock
+							locale={locale}
+							claimed={claimed}
+							rpps={payload.nationalId}
+							slug={page.slug}
+							practitionerId={page.practitionerId}
+						/>
 						<section
 							aria-labelledby="report-heading"
 							className="flex flex-col gap-2 border-t border-rule-soft pt-4"
@@ -408,14 +397,6 @@ export default async function PractitionerPage({ params }: Props) {
 							>
 								{t("report.link")}
 							</Link>
-							{claimed ? null : (
-								<Link
-									href={{ pathname: "/praticien/[slug]/retrait", params: { slug: page.slug } }}
-									className={`${linkStyles({ tone: "muted" })} inline-flex min-h-11 items-center text-meta`}
-								>
-									{t("report.removalLink")}
-								</Link>
-							)}
 						</section>
 					</aside>
 				</div>

@@ -208,10 +208,15 @@ Kanta, and Greece for a legal opinion on Law 3418/2005 art. 17.
 
 Smaller additions to the pro area, most of them inherited from Medic Remplacement:
 
-- **Page statistics**: views per day (an aggregated daily counter, no visitor tracking and no
+- ~~**Page statistics**: views per day (an aggregated daily counter, no visitor tracking and no
   cookie), bookings per week, and a checklist of what is missing from the page with a completion
-  score.
-- **Share kit**: the page link and a printable QR code for the waiting room or the door plate.
+  score.~~ Done (#92): `/pro/statistiques`, counted for claimed pages only, kept 13 months.
+- ~~**Share kit**: the page link and a printable QR code for the waiting room or the door plate.~~
+  Done (#92): `/pro/partager`, with the QR code as SVG and PNG, an A4 or A5 poster to print and
+  a "Find me on Apercura" badge without script or cookie.
+- ~~**"I am this practitioner" contact path and admin alerts**~~. Done (#92): a public form for
+  those who cannot claim online, stored encrypted for the admin queue, and batched email alerts
+  of new claims and requests.
 - **Opening hours**, entered by the practitioner for each place and shown on the page, then
   published in the JSON-LD (`openingHoursSpecification`, which `src/lib/structured-data.ts`
   already accepts). Not taken from the booking agenda: its weekly windows

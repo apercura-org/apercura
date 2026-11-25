@@ -34,10 +34,17 @@ const STRING_KEYS = [
 
 /**
  * The ALTCHA proof of work (self-hosted widget, no third-party request): a checkbox that ticks
- * itself while the browser solves a challenge signed by our server (`booking.challenge`). It
- * starts when the details step shows, so it is usually done before the patient submits.
+ * itself while the browser solves a challenge signed by our server (`booking.challenge`, or the
+ * form's own `source`). It starts when it shows, so it is usually done before the person submits.
  */
-export function AltchaCheck({ ref }: { ref?: Ref<AltchaHandle> }) {
+export function AltchaCheck({
+	ref,
+	source = "booking",
+}: {
+	ref?: Ref<AltchaHandle>;
+	/** Which procedure signs the challenge: the booking form's or the practitioner contact form's. */
+	source?: "booking" | "practitionerContact";
+}) {
 	const t = useTranslations("booking.panel.altcha");
 	const locale = useLocale();
 	const client = useTRPCClient();
@@ -69,12 +76,17 @@ export function AltchaCheck({ ref }: { ref?: Ref<AltchaHandle> }) {
 			globalThis.$altcha.i18n.set(language, strings);
 			await element.configure({
 				// Never fetched as is: the custom fetch asks our tRPC endpoint for a signed challenge.
-				challenge: "/api/trpc/booking.challenge",
+				challenge: `/api/trpc/${source}.challenge`,
 				fetch: Object.assign(
 					async () =>
-						new Response(JSON.stringify(await client.booking.challenge.query()), {
-							headers: { "content-type": "application/json" },
-						}),
+						new Response(
+							JSON.stringify(
+								source === "booking"
+									? await client.booking.challenge.query()
+									: await client.practitionerContact.challenge.query(),
+							),
+							{ headers: { "content-type": "application/json" } },
+						),
 					{ preconnect: () => undefined },
 				),
 				language,
@@ -87,7 +99,7 @@ export function AltchaCheck({ ref }: { ref?: Ref<AltchaHandle> }) {
 			});
 		})();
 		return () => element.removeEventListener("statechange", onState);
-	}, [client, locale, t]);
+	}, [client, locale, t, source]);
 
 	useImperativeHandle(
 		ref,

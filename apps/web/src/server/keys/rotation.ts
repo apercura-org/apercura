@@ -1,6 +1,11 @@
 import "server-only";
 import type { Database } from "@apercura/db";
-import { claimDocuments, removalRequests, reports } from "@apercura/db/schema";
+import {
+	claimDocuments,
+	practitionerContactRequests,
+	removalRequests,
+	reports,
+} from "@apercura/db/schema";
 import { eq, isNull } from "drizzle-orm";
 import { resealBytes, resealText } from "../crypto/platform";
 import { rewrapDataKeys } from "../phi";
@@ -9,7 +14,7 @@ import type { StorageDriver } from "../storage";
 export interface RotationResult {
 	/** Organization data keys re-wrapped by the active master key, and those left. */
 	dataKeys: { rewrapped: number; remaining: number };
-	/** Platform-key texts (reports, removal requests) re-encrypted with the active key. */
+	/** Platform-key texts (reports, removal and contact requests) re-encrypted with the active key. */
 	texts: number;
 	/** Claim documents re-encrypted in object storage (null: no storage configured). */
 	documents: number | null;
@@ -21,7 +26,7 @@ export interface RotationResult {
  *
  * 1. organization data keys are re-wrapped (patient data itself is encrypted
  *    with them and does not change);
- * 2. the platform-key texts of reports and removal requests are re-encrypted;
+ * 2. the platform-key texts of reports, removal requests and contact requests are re-encrypted;
  * 3. claim documents still held in object storage are re-encrypted.
  *
  * Idempotent: a second run finds nothing to do. Once `dataKeys.remaining` is 0
@@ -61,6 +66,26 @@ export async function rotateKeys(
 				...(message ? { messageEnc: message } : {}),
 			})
 			.where(eq(removalRequests.id, row.id));
+		texts += 1;
+	}
+	for (const row of await db
+		.select({
+			id: practitionerContactRequests.id,
+			contentEnc: practitionerContactRequests.contentEnc,
+		})
+		.from(practitionerContactRequests)) {
+		const content = resealText(
+			row.contentEnc,
+			"practitioner_contact_requests",
+			"content_enc",
+			row.id,
+		);
+		if (!content) continue;
+		// The status clock (`updated_at`, the retention's start) is kept as it was.
+		await db
+			.update(practitionerContactRequests)
+			.set({ contentEnc: content })
+			.where(eq(practitionerContactRequests.id, row.id));
 		texts += 1;
 	}
 

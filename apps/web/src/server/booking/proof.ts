@@ -100,7 +100,10 @@ export function encodeProof(challenge: Challenge, solution: Solution): string {
  * Whether `payload` (base64 JSON `{ challenge, solution }`) solves one of our challenges that has
  * not expired and was never used before.
  */
-export async function verifyProof(rt: BookingRuntime, payload: string): Promise<boolean> {
+export async function verifyProof(
+	rt: Pick<BookingRuntime, "rateLimit">,
+	payload: string,
+): Promise<boolean> {
 	let decoded: z.infer<typeof payloadSchema>;
 	try {
 		decoded = payloadSchema.parse(JSON.parse(Buffer.from(payload, "base64").toString("utf8")));

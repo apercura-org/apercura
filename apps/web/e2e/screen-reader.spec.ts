@@ -166,6 +166,8 @@ test("home search, results and an unclaimed practitioner page read in order", as
 		"link, Appeler le 01 99 00 01 01",
 		"region, C’est vous ?",
 		"link, Revendiquer cette page",
+		"link, Pas de carte CPS ? Contactez-nous",
+		"link, Vous êtes le titulaire de cette page et ne souhaitez pas apparaître publiquement ? C’est ici",
 		"region, Une erreur ?",
 		"link, Signaler une erreur",
 		"end of complementary, Rendez-vous et page",

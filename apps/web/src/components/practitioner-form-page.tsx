@@ -28,13 +28,19 @@ export async function PractitionerFormPage({
 	pathname,
 	title,
 	lead,
+	extraNamespaces = [],
 	children,
 }: {
 	locale: Locale;
 	page: Awaited<ReturnType<typeof formPractitioner>>;
-	pathname: "/praticien/[slug]/signaler" | "/praticien/[slug]/retrait";
+	pathname:
+		| "/praticien/[slug]/signaler"
+		| "/praticien/[slug]/retrait"
+		| "/praticien/[slug]/c-est-moi";
 	title: string;
 	lead: string;
+	/** Messages the form needs beyond `Gdpr` (the ALTCHA widget's). */
+	extraNamespaces?: readonly string[];
 	children: ReactNode;
 }) {
 	const tSite = await getTranslations({ locale, namespace: "Site" });
@@ -65,7 +71,7 @@ export async function PractitionerFormPage({
 						</p>
 					) : null}
 				</div>
-				<ClientIsland locale={locale} namespaces={GDPR_MESSAGES}>
+				<ClientIsland locale={locale} namespaces={[...GDPR_MESSAGES, ...extraNamespaces]}>
 					<TRPCReactProvider>{children}</TRPCReactProvider>
 				</ClientIsland>
 			</BookletPage>

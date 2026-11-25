@@ -110,6 +110,12 @@ const EXPECTED: Record<string, ProcedureMeta> = {
 
 	"gdpr.requestRemoval": PUBLIC,
 	"gdpr.report": PUBLIC,
+	// "I am this practitioner": rate limited, proof of work, stored encrypted, no access granted.
+	"practitionerContact.challenge": PUBLIC,
+	"practitionerContact.submit": PUBLIC,
+
+	// Aggregated counts and the checklist, for those who may read the page (not assistants).
+	"stats.page": PAGE_READ,
 
 	"admin.claims.queue": ADMIN,
 	"admin.claims.detail": ADMIN,
@@ -119,6 +125,9 @@ const EXPECTED: Record<string, ProcedureMeta> = {
 	"admin.reports.queue": ADMIN,
 	"admin.reports.read": ADMIN,
 	"admin.reports.resolve": ADMIN,
+	"admin.contacts.queue": ADMIN,
+	"admin.contacts.read": ADMIN,
+	"admin.contacts.setStatus": ADMIN,
 	"admin.removals.queue": ADMIN,
 	"admin.removals.read": ADMIN,
 	"admin.removals.decide": ADMIN,

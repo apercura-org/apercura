@@ -33,6 +33,9 @@ export const routing = defineRouting({
 		"/pro/revendication-email": "/pro/revendication-email",
 		"/pro/bienvenue": "/pro/bienvenue",
 		"/pro/page": "/pro/page",
+		"/pro/statistiques": "/pro/statistiques",
+		"/pro/partager": "/pro/partager",
+		"/pro/partager/affiche": "/pro/partager/affiche",
 		"/pro/aujourdhui": "/pro/aujourdhui",
 		"/pro/agenda": "/pro/agenda",
 		"/pro/agenda/reglages": "/pro/agenda/reglages",
@@ -42,6 +45,7 @@ export const routing = defineRouting({
 		"/pro/admin/revendications": "/pro/admin/revendications",
 		"/pro/admin/revendications/[id]": "/pro/admin/revendications/[id]",
 		"/pro/admin/signalements": "/pro/admin/signalements",
+		"/pro/admin/contacts": "/pro/admin/contacts",
 		"/_ui": "/_ui",
 		// Manage an appointment from the email link (token in the fragment, never indexed).
 		"/rdv": "/rdv",
@@ -66,6 +70,14 @@ export const routing = defineRouting({
 			de: "/behandler/[slug]/entfernung",
 			es: "/profesional/[slug]/retirada",
 			it: "/professionista/[slug]/rimozione",
+		},
+		// "I am this practitioner, contact me": for those who cannot claim the page themselves.
+		"/praticien/[slug]/c-est-moi": {
+			fr: "/praticien/[slug]/c-est-moi",
+			en: "/practitioner/[slug]/this-is-me",
+			de: "/behandler/[slug]/das-bin-ich",
+			es: "/profesional/[slug]/soy-yo",
+			it: "/professionista/[slug]/sono-io",
 		},
 		"/etablissement/[slug]": {
 			fr: "/etablissement/[slug]",

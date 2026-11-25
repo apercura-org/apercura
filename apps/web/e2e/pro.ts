@@ -192,7 +192,8 @@ export async function signIn(
 
 /**
  * Puts a synthetic practitioner back as the import left it: no claim, no
- * owner, no profile, no removal request or suppression, every place shown.
+ * owner, no profile, no removal or contact request, no suppression, no view
+ * counted, every place shown.
  * Specs call it first, so they can run again on the same database.
  */
 export async function resetPractitioner(rpps: string) {
@@ -206,6 +207,8 @@ export async function resetPractitioner(rpps: string) {
 			await tx`DELETE FROM directory.claims WHERE practitioner_id = ${row.id}`;
 			await tx`DELETE FROM directory.removal_requests WHERE practitioner_id = ${row.id}`;
 			await tx`DELETE FROM directory.reports WHERE practitioner_id = ${row.id}`;
+			await tx`DELETE FROM directory.practitioner_contact_requests WHERE practitioner_id = ${row.id}`;
+			await tx`DELETE FROM directory.page_view_days WHERE practitioner_id = ${row.id}`;
 			await tx`DELETE FROM directory.practitioner_profiles WHERE practitioner_id = ${row.id}`;
 			await tx`DELETE FROM directory.suppressions WHERE national_id = ${rpps}`;
 			// A Pro Santé Connect identity links to one account only: free it for the next run.

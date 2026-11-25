@@ -47,7 +47,9 @@ export default async function RemovalPage({ params }: Props) {
 				<Notice tone="info" title={t("claimedTitle")}>
 					<span className="flex flex-col gap-2">
 						<span>{t("claimedBody")}</span>
-						<Link href="/pro/connexion" className={linkStyles()}>
+						{/* Signed in, the owner lands on the editor, whose last section removes the page;
+						    signed out, the practitioner space asks to sign in first. */}
+						<Link href={{ pathname: "/pro/page", hash: "editor-remove" }} className={linkStyles()}>
 							{t("claimedLink")}
 						</Link>
 					</span>

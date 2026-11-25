@@ -1,40 +1,34 @@
 "use client";
 
-import QRCode from "qrcode";
 import { useMemo } from "react";
+import { qrPath } from "~/lib/qr";
 
 /** A QR code drawn as ink squares on paper (no external image, no innerHTML). */
 export function QrCode({
 	value,
 	label,
 	size = 208,
+	className = "border border-ink",
 }: {
 	value: string;
 	label: string;
-	size?: number;
+	/** Pixels, or any CSS length (`"60mm"` on the printed poster). */
+	size?: number | string;
+	className?: string;
 }) {
-	const path = useMemo(() => {
-		const { modules } = QRCode.create(value, { errorCorrectionLevel: "M" });
-		let d = "";
-		for (let row = 0; row < modules.size; row++) {
-			for (let col = 0; col < modules.size; col++) {
-				if (modules.get(row, col)) {
-					d += `M${col + 4} ${row + 4}h1v1h-1z`;
-				}
-			}
-		}
-		return { d, size: modules.size + 8 };
-	}, [value]);
+	const path = useMemo(() => qrPath(value), [value]);
 
 	return (
 		<svg
 			role="img"
 			aria-label={label}
 			viewBox={`0 0 ${path.size} ${path.size}`}
-			width={size}
-			height={size}
+			// A CSS length (`48cqw` on the poster) only works as a style, not as an SVG attribute.
+			width={typeof size === "number" ? size : undefined}
+			height={typeof size === "number" ? size : undefined}
+			style={typeof size === "string" ? { width: size, height: size } : undefined}
 			shapeRendering="crispEdges"
-			className="border border-ink bg-paper text-ink"
+			className={`${className} bg-paper text-ink`}
 		>
 			<rect width={path.size} height={path.size} className="fill-paper" />
 			<path d={path.d} fill="currentColor" />

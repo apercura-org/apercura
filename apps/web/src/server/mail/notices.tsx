@@ -16,7 +16,10 @@ export type NoticeKind =
 	| "removalReceived"
 	| "removalConfirmed"
 	| "removalRejected"
-	| "teamInvitation";
+	| "teamInvitation"
+	| "contactReceived"
+	| "adminClaims"
+	| "adminContactRequests";
 
 /**
  * Sends one of the platform's short notices in the recipient's locale.
@@ -26,7 +29,8 @@ export async function sendNotice(options: {
 	to: string;
 	locale: unknown;
 	kind: NoticeKind;
-	values?: Record<string, string>;
+	/** ICU values: strings, or numbers for plurals (`{count, plural, …}`). */
+	values?: Record<string, string | number>;
 	actionUrl?: string;
 }) {
 	const locale: Locale = emailLocale(options.locale);

@@ -215,6 +215,27 @@ async function Onboarding({ locale, step }: { locale: Locale; step: Step }) {
 					) : (
 						<PublishButton organizationId={page.organizationId} />
 					)}
+					<div className="flex max-w-[65ch] flex-col gap-2 border-t border-rule-soft pt-4">
+						<p className="text-body text-ink">{t("steps.publish.shareLead")}</p>
+						<ul className="flex flex-wrap gap-x-6 gap-y-1">
+							<li>
+								<Link
+									href={PRO_ROUTES.share}
+									className={`${linkStyles()} inline-flex min-h-11 items-center`}
+								>
+									{t("steps.publish.shareLink")}
+								</Link>
+							</li>
+							<li>
+								<Link
+									href={PRO_ROUTES.stats}
+									className={`${linkStyles()} inline-flex min-h-11 items-center`}
+								>
+									{t("steps.publish.statsLink")}
+								</Link>
+							</li>
+						</ul>
+					</div>
 				</section>
 			) : null}
 

@@ -1,6 +1,8 @@
 import { formatPersonName } from "@apercura/core";
+import type { Database } from "@apercura/db";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
+import { alertAdminsQuietly } from "~/server/admin-alerts";
 import {
 	afterApproval,
 	notifyClaimReceived,
@@ -22,7 +24,7 @@ import {
 } from "~/server/claims/service";
 import { claimDocumentsEnabled, pscConfigured } from "~/server/features";
 import { clientRateLimitKey } from "~/server/rate-limit";
-import { createTRPCRouter, mfaProcedure, publicProcedure } from "../init";
+import { type Context, createTRPCRouter, mfaProcedure, publicProcedure } from "../init";
 import { service } from "./errors";
 
 /** Claims per account and day (plan §10: 3/24 h). */
@@ -33,6 +35,16 @@ const LINK_LIMIT = { max: 10, windowSeconds: 60 * 60 };
 
 const claimId = z.object({ claimId: z.uuid() });
 const rpps = z.object({ rpps: z.string().regex(/^\d{11}$/) });
+
+/**
+ * The administrators' alert of a claim that reached their queue (batched: see
+ * ~/server/admin-alerts), after the response when the request allows it.
+ */
+function alertClaimQueue(ctx: Context, db: Database) {
+	const task = () => alertAdminsQuietly(db, "claims");
+	if (ctx.defer) ctx.defer(task);
+	else void task();
+}
 
 const methodOptions = () => ({
 	pscEnabled: pscConfigured(),
@@ -87,6 +99,8 @@ export const claimsRouter = createTRPCRouter({
 		await service(() => recordPscResult(ctx.db(), input.claimId, ctx.user.id));
 		const approval = await service(() => evaluateClaim(ctx.db(), input.claimId));
 		if (approval) await afterApproval(ctx.db(), approval);
+		// A contest goes to the administrators' queue instead of being verified.
+		else alertClaimQueue(ctx, ctx.db());
 		return { verified: approval !== null };
 	}),
 
@@ -100,6 +114,7 @@ export const claimsRouter = createTRPCRouter({
 	submit: mfaProcedure.input(claimId).mutation(async ({ ctx, input }) => {
 		await service(() => submitClaim(ctx.db(), input.claimId, ctx.user.id));
 		await notifyClaimReceived(ctx.db(), ctx.user.id);
+		alertClaimQueue(ctx, ctx.db());
 		return { ok: true as const };
 	}),
 
@@ -120,6 +135,7 @@ export const claimsRouter = createTRPCRouter({
 				? null
 				: await service(() => evaluateClaim(ctx.db(), confirmed.claimId));
 			if (approval) await afterApproval(ctx.db(), approval);
+			else if (!confirmed.alreadyDone) alertClaimQueue(ctx, ctx.db());
 			return { verified: approval !== null || confirmed.alreadyDone };
 		}),
 

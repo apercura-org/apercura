@@ -4,4 +4,5 @@ export * from "./claims";
 export * from "./directory";
 export * from "./schemas";
 export * from "./staging";
+export * from "./stats";
 export * from "./types";
