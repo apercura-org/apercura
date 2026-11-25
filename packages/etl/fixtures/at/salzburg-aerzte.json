@@ -1,0 +1,7068 @@
+{
+	"displayFieldName": "Nachname",
+	"geometryType": "esriGeometryPoint",
+	"spatialReference": { "wkid": 31258, "latestWkid": 31258 },
+	"fields": [],
+	"features": [
+		{
+			"attributes": {
+				"OBJECTID": 1,
+				"Titel": "Dr.",
+				"Nachname": "BEISPIELER",
+				"Vorname": "Hanna",
+				"TitelNachg": null,
+				"HNR": "10",
+				"Strasse": "Fiktivstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Arzt für Allgemeinmedizin",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9800001",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430800, "y": 298400 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 2,
+				"Titel": "Dr.",
+				"Nachname": "BEISPIELER",
+				"Vorname": "Hanna",
+				"TitelNachg": null,
+				"HNR": "2A",
+				"Strasse": "Probeplatz",
+				"Ort": "Hallein",
+				"PLZ": 5400,
+				"Fach": "Innere Medizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9800002",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 434500, "y": 285500 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 3,
+				"Titel": "Dr. Priv.-Doz.",
+				"Nachname": "MUSTERMANN",
+				"Vorname": "Felix",
+				"TitelNachg": "PhD",
+				"HNR": "5",
+				"Strasse": "Exempelgasse",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Orthopädie und Traumatologie",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": "Gruppenpraxis Fiktiv OG",
+				"GeschlechtCode": "M",
+				"ADRCD": "9800003",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 431200, "y": 297900 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 4,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0000",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "1",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810000",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430000, "y": 297000 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 5,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0001",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "2",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810001",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430020, "y": 297020 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 6,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0002",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "3",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810002",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430040, "y": 297040 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 7,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0003",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "4",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810003",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430060, "y": 297060 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 8,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0004",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "5",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810004",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430080, "y": 297080 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 9,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0005",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "6",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810005",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430100, "y": 297100 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 10,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0006",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "7",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810006",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430120, "y": 297120 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 11,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0007",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "8",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810007",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430140, "y": 297140 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 12,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0008",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "9",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810008",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430160, "y": 297160 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 13,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0009",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "10",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810009",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430180, "y": 297180 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 14,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0010",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "11",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810010",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430200, "y": 297200 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 15,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0011",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "12",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810011",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430220, "y": 297220 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 16,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0012",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "13",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810012",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430240, "y": 297240 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 17,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0013",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "14",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810013",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430260, "y": 297260 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 18,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0014",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "15",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810014",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430280, "y": 297280 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 19,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0015",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "16",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810015",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430300, "y": 297300 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 20,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0016",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "17",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810016",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430320, "y": 297320 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 21,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0017",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "18",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810017",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430340, "y": 297340 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 22,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0018",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "19",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810018",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430360, "y": 297360 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 23,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0019",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "20",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810019",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430380, "y": 297380 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 24,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0020",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "21",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810020",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430400, "y": 297400 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 25,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0021",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "22",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810021",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430420, "y": 297420 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 26,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0022",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "23",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810022",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430440, "y": 297440 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 27,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0023",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "24",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810023",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430460, "y": 297460 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 28,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0024",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "25",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810024",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430480, "y": 297480 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 29,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0025",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "26",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810025",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430500, "y": 297500 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 30,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0026",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "27",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810026",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430520, "y": 297520 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 31,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0027",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "28",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810027",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430540, "y": 297540 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 32,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0028",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "29",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810028",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430560, "y": 297560 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 33,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0029",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "30",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810029",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430580, "y": 297580 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 34,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0030",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "31",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810030",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430600, "y": 297600 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 35,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0031",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "32",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810031",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430620, "y": 297620 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 36,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0032",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "33",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810032",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430640, "y": 297640 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 37,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0033",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "34",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810033",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430660, "y": 297660 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 38,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0034",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "35",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810034",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430680, "y": 297680 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 39,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0035",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "36",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810035",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430700, "y": 297700 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 40,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0036",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "37",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810036",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430720, "y": 297720 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 41,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0037",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "38",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810037",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430740, "y": 297740 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 42,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0038",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "39",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810038",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430760, "y": 297760 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 43,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0039",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "40",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810039",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430780, "y": 297780 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 44,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0040",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "41",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810040",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430800, "y": 297000 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 45,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0041",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "42",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810041",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430820, "y": 297020 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 46,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0042",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "43",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810042",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430840, "y": 297040 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 47,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0043",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "44",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810043",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430860, "y": 297060 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 48,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0044",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "45",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810044",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430880, "y": 297080 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 49,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0045",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "46",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810045",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430900, "y": 297100 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 50,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0046",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "47",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810046",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430920, "y": 297120 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 51,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0047",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "48",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810047",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430940, "y": 297140 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 52,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0048",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "49",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810048",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430960, "y": 297160 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 53,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0049",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "50",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810049",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430980, "y": 297180 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 54,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0050",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "51",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810050",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430000, "y": 297200 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 55,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0051",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "52",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810051",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430020, "y": 297220 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 56,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0052",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "53",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810052",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430040, "y": 297240 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 57,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0053",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "54",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810053",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430060, "y": 297260 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 58,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0054",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "55",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810054",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430080, "y": 297280 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 59,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0055",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "56",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810055",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430100, "y": 297300 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 60,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0056",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "57",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810056",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430120, "y": 297320 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 61,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0057",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "58",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810057",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430140, "y": 297340 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 62,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0058",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "59",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810058",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430160, "y": 297360 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 63,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0059",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "60",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810059",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430180, "y": 297380 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 64,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0060",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "61",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810060",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430200, "y": 297400 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 65,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0061",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "62",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810061",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430220, "y": 297420 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 66,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0062",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "63",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810062",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430240, "y": 297440 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 67,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0063",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "64",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810063",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430260, "y": 297460 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 68,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0064",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "65",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810064",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430280, "y": 297480 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 69,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0065",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "66",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810065",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430300, "y": 297500 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 70,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0066",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "67",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810066",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430320, "y": 297520 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 71,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0067",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "68",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810067",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430340, "y": 297540 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 72,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0068",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "69",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810068",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430360, "y": 297560 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 73,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0069",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "70",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810069",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430380, "y": 297580 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 74,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0070",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "71",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810070",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430400, "y": 297600 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 75,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0071",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "72",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810071",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430420, "y": 297620 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 76,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0072",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "73",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810072",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430440, "y": 297640 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 77,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0073",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "74",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810073",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430460, "y": 297660 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 78,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0074",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "75",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810074",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430480, "y": 297680 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 79,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0075",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "76",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810075",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430500, "y": 297700 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 80,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0076",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "77",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810076",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430520, "y": 297720 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 81,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0077",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "78",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810077",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430540, "y": 297740 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 82,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0078",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "79",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810078",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430560, "y": 297760 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 83,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0079",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "80",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810079",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430580, "y": 297780 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 84,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0080",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "81",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810080",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430600, "y": 297000 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 85,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0081",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "82",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810081",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430620, "y": 297020 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 86,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0082",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "83",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810082",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430640, "y": 297040 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 87,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0083",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "84",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810083",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430660, "y": 297060 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 88,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0084",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "85",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810084",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430680, "y": 297080 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 89,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0085",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "86",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810085",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430700, "y": 297100 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 90,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0086",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "87",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810086",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430720, "y": 297120 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 91,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0087",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "88",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810087",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430740, "y": 297140 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 92,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0088",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "89",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810088",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430760, "y": 297160 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 93,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0089",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "90",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810089",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430780, "y": 297180 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 94,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0090",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "91",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810090",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430800, "y": 297200 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 95,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0091",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "92",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810091",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430820, "y": 297220 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 96,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0092",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "93",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810092",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430840, "y": 297240 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 97,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0093",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "94",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810093",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430860, "y": 297260 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 98,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0094",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "95",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810094",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430880, "y": 297280 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 99,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0095",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "96",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810095",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430900, "y": 297300 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 100,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0096",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "97",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810096",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430920, "y": 297320 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 101,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0097",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "98",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810097",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430940, "y": 297340 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 102,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0098",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "99",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810098",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430960, "y": 297360 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 103,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0099",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "100",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810099",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430980, "y": 297380 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 104,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0100",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "101",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810100",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430000, "y": 297400 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 105,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0101",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "102",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810101",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430020, "y": 297420 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 106,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0102",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "103",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810102",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430040, "y": 297440 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 107,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0103",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "104",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810103",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430060, "y": 297460 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 108,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0104",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "105",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810104",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430080, "y": 297480 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 109,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0105",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "106",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810105",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430100, "y": 297500 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 110,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0106",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "107",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810106",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430120, "y": 297520 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 111,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0107",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "108",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810107",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430140, "y": 297540 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 112,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0108",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "109",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810108",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430160, "y": 297560 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 113,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0109",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "110",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810109",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430180, "y": 297580 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 114,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0110",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "111",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810110",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430200, "y": 297600 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 115,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0111",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "112",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810111",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430220, "y": 297620 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 116,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0112",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "113",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810112",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430240, "y": 297640 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 117,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0113",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "114",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810113",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430260, "y": 297660 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 118,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0114",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "115",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810114",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430280, "y": 297680 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 119,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0115",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "116",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810115",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430300, "y": 297700 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 120,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0116",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "117",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810116",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430320, "y": 297720 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 121,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0117",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "118",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810117",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430340, "y": 297740 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 122,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0118",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "119",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810118",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430360, "y": 297760 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 123,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0119",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "120",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810119",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430380, "y": 297780 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 124,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0120",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "121",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810120",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430400, "y": 297000 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 125,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0121",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "122",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810121",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430420, "y": 297020 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 126,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0122",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "123",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810122",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430440, "y": 297040 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 127,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0123",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "124",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810123",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430460, "y": 297060 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 128,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0124",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "125",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810124",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430480, "y": 297080 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 129,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0125",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "126",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810125",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430500, "y": 297100 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 130,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0126",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "127",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810126",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430520, "y": 297120 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 131,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0127",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "128",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810127",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430540, "y": 297140 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 132,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0128",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "129",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810128",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430560, "y": 297160 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 133,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0129",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "130",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810129",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430580, "y": 297180 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 134,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0130",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "131",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810130",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430600, "y": 297200 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 135,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0131",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "132",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810131",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430620, "y": 297220 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 136,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0132",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "133",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810132",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430640, "y": 297240 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 137,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0133",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "134",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810133",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430660, "y": 297260 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 138,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0134",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "135",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810134",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430680, "y": 297280 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 139,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0135",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "136",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810135",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430700, "y": 297300 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 140,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0136",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "137",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810136",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430720, "y": 297320 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 141,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0137",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "138",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810137",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430740, "y": 297340 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 142,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0138",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "139",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810138",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430760, "y": 297360 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 143,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0139",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "140",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810139",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430780, "y": 297380 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 144,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0140",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "141",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810140",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430800, "y": 297400 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 145,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0141",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "142",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810141",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430820, "y": 297420 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 146,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0142",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "143",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810142",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430840, "y": 297440 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 147,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0143",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "144",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810143",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430860, "y": 297460 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 148,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0144",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "145",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810144",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430880, "y": 297480 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 149,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0145",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "146",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810145",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430900, "y": 297500 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 150,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0146",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "147",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810146",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430920, "y": 297520 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 151,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0147",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "148",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810147",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430940, "y": 297540 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 152,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0148",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "149",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810148",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430960, "y": 297560 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 153,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0149",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "150",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810149",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430980, "y": 297580 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 154,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0150",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "151",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810150",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430000, "y": 297600 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 155,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0151",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "152",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810151",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430020, "y": 297620 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 156,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0152",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "153",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810152",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430040, "y": 297640 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 157,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0153",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "154",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810153",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430060, "y": 297660 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 158,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0154",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "155",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810154",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430080, "y": 297680 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 159,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0155",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "156",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810155",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430100, "y": 297700 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 160,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0156",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "157",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810156",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430120, "y": 297720 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 161,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0157",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "158",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810157",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430140, "y": 297740 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 162,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0158",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "159",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810158",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430160, "y": 297760 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 163,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0159",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "160",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810159",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430180, "y": 297780 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 164,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0160",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "161",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810160",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430200, "y": 297000 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 165,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0161",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "162",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810161",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430220, "y": 297020 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 166,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0162",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "163",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810162",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430240, "y": 297040 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 167,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0163",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "164",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810163",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430260, "y": 297060 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 168,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0164",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "165",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810164",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430280, "y": 297080 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 169,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0165",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "166",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810165",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430300, "y": 297100 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 170,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0166",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "167",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810166",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430320, "y": 297120 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 171,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0167",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "168",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810167",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430340, "y": 297140 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 172,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0168",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "169",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810168",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430360, "y": 297160 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 173,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0169",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "170",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810169",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430380, "y": 297180 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 174,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0170",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "171",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810170",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430400, "y": 297200 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 175,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0171",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "172",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810171",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430420, "y": 297220 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 176,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0172",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "173",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810172",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430440, "y": 297240 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 177,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0173",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "174",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810173",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430460, "y": 297260 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 178,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0174",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "175",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810174",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430480, "y": 297280 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 179,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0175",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "176",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810175",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430500, "y": 297300 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 180,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0176",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "177",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810176",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430520, "y": 297320 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 181,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0177",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "178",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810177",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430540, "y": 297340 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 182,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0178",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "179",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810178",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430560, "y": 297360 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 183,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0179",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "180",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810179",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430580, "y": 297380 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 184,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0180",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "181",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810180",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430600, "y": 297400 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 185,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0181",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "182",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810181",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430620, "y": 297420 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 186,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0182",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "183",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810182",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430640, "y": 297440 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 187,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0183",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "184",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810183",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430660, "y": 297460 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 188,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0184",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "185",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810184",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430680, "y": 297480 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 189,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0185",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "186",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810185",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430700, "y": 297500 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 190,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0186",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "187",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810186",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430720, "y": 297520 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 191,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0187",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "188",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810187",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430740, "y": 297540 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 192,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0188",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "189",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810188",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430760, "y": 297560 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 193,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0189",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "190",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810189",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430780, "y": 297580 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 194,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0190",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "191",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810190",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430800, "y": 297600 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 195,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0191",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "192",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810191",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430820, "y": 297620 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 196,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0192",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "193",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810192",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430840, "y": 297640 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 197,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0193",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "194",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810193",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430860, "y": 297660 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 198,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0194",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "195",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810194",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430880, "y": 297680 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 199,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0195",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "196",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810195",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430900, "y": 297700 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 200,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0196",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "197",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810196",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430920, "y": 297720 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 201,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0197",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "198",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810197",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430940, "y": 297740 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 202,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0198",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "199",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810198",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430960, "y": 297760 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 203,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0199",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "200",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810199",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430980, "y": 297780 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 204,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0200",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "201",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810200",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430000, "y": 297000 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 205,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0201",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "202",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810201",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430020, "y": 297020 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 206,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0202",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "203",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810202",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430040, "y": 297040 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 207,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0203",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "204",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810203",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430060, "y": 297060 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 208,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0204",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "205",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810204",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430080, "y": 297080 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 209,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0205",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "206",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810205",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430100, "y": 297100 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 210,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0206",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "207",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810206",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430120, "y": 297120 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 211,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0207",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "208",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810207",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430140, "y": 297140 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 212,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0208",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "209",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810208",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430160, "y": 297160 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 213,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0209",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "210",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810209",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430180, "y": 297180 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 214,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0210",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "211",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810210",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430200, "y": 297200 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 215,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0211",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "212",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810211",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430220, "y": 297220 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 216,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0212",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "213",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810212",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430240, "y": 297240 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 217,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0213",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "214",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810213",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430260, "y": 297260 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 218,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0214",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "215",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810214",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430280, "y": 297280 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 219,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0215",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "216",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810215",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430300, "y": 297300 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 220,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0216",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "217",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810216",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430320, "y": 297320 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 221,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0217",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "218",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810217",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430340, "y": 297340 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 222,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0218",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "219",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810218",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430360, "y": 297360 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 223,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0219",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "220",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810219",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430380, "y": 297380 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 224,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0220",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "221",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810220",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430400, "y": 297400 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 225,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0221",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "222",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810221",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430420, "y": 297420 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 226,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0222",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "223",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810222",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430440, "y": 297440 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 227,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0223",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "224",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810223",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430460, "y": 297460 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 228,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0224",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "225",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810224",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430480, "y": 297480 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 229,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0225",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "226",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810225",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430500, "y": 297500 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 230,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0226",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "227",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810226",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430520, "y": 297520 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 231,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0227",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "228",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810227",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430540, "y": 297540 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 232,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0228",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "229",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810228",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430560, "y": 297560 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 233,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0229",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "230",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810229",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430580, "y": 297580 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 234,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0230",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "231",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810230",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430600, "y": 297600 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 235,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0231",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "232",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810231",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430620, "y": 297620 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 236,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0232",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "233",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810232",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430640, "y": 297640 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 237,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0233",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "234",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810233",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430660, "y": 297660 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 238,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0234",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "235",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810234",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430680, "y": 297680 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 239,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0235",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "236",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810235",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430700, "y": 297700 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 240,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0236",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "237",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810236",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430720, "y": 297720 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 241,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0237",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "238",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810237",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430740, "y": 297740 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 242,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0238",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "239",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810238",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430760, "y": 297760 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 243,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0239",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "240",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810239",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430780, "y": 297780 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 244,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0240",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "241",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810240",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430800, "y": 297000 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 245,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0241",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "242",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810241",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430820, "y": 297020 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 246,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0242",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "243",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810242",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430840, "y": 297040 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 247,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0243",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "244",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810243",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430860, "y": 297060 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 248,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0244",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "245",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810244",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430880, "y": 297080 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 249,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0245",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "246",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810245",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430900, "y": 297100 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 250,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0246",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "247",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810246",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430920, "y": 297120 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 251,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0247",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "248",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810247",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430940, "y": 297140 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 252,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0248",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "249",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810248",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430960, "y": 297160 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 253,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0249",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "250",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810249",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430980, "y": 297180 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 254,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0250",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "251",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810250",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430000, "y": 297200 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 255,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0251",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "252",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810251",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430020, "y": 297220 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 256,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0252",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "253",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810252",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430040, "y": 297240 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 257,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0253",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "254",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810253",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430060, "y": 297260 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 258,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0254",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "255",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810254",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430080, "y": 297280 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 259,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0255",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "256",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810255",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430100, "y": 297300 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 260,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0256",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "257",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810256",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430120, "y": 297320 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 261,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0257",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "258",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810257",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430140, "y": 297340 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 262,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0258",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "259",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810258",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430160, "y": 297360 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 263,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0259",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "260",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810259",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430180, "y": 297380 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 264,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0260",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "261",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810260",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430200, "y": 297400 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 265,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0261",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "262",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810261",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430220, "y": 297420 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 266,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0262",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "263",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810262",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430240, "y": 297440 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 267,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0263",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "264",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810263",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430260, "y": 297460 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 268,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0264",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "265",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810264",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430280, "y": 297480 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 269,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0265",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "266",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810265",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430300, "y": 297500 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 270,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0266",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "267",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810266",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430320, "y": 297520 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 271,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0267",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "268",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810267",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430340, "y": 297540 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 272,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0268",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "269",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810268",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430360, "y": 297560 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 273,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0269",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "270",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810269",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430380, "y": 297580 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 274,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0270",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "271",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810270",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430400, "y": 297600 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 275,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0271",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "272",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810271",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430420, "y": 297620 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 276,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0272",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "273",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810272",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430440, "y": 297640 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 277,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0273",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "274",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810273",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430460, "y": 297660 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 278,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0274",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "275",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810274",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430480, "y": 297680 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 279,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0275",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "276",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810275",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430500, "y": 297700 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 280,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0276",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "277",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810276",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430520, "y": 297720 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 281,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0277",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "278",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810277",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430540, "y": 297740 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 282,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0278",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "279",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810278",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430560, "y": 297760 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 283,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0279",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "280",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810279",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430580, "y": 297780 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 284,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0280",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "281",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810280",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430600, "y": 297000 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 285,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0281",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "282",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810281",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430620, "y": 297020 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 286,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0282",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "283",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810282",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430640, "y": 297040 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 287,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0283",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "284",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810283",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430660, "y": 297060 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 288,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0284",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "285",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810284",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430680, "y": 297080 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 289,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0285",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "286",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810285",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430700, "y": 297100 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 290,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0286",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "287",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810286",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430720, "y": 297120 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 291,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0287",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "288",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810287",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430740, "y": 297140 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 292,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0288",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "289",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810288",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430760, "y": 297160 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 293,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0289",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "290",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810289",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430780, "y": 297180 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 294,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0290",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "291",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810290",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430800, "y": 297200 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 295,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0291",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "292",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810291",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430820, "y": 297220 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 296,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0292",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "293",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810292",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430840, "y": 297240 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 297,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0293",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "294",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810293",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430860, "y": 297260 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 298,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0294",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "295",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810294",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430880, "y": 297280 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 299,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0295",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "296",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810295",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430900, "y": 297300 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 300,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0296",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "297",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810296",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430920, "y": 297320 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 301,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0297",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "298",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810297",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430940, "y": 297340 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 302,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0298",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "299",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810298",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430960, "y": 297360 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 303,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0299",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "300",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810299",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430980, "y": 297380 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 304,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0300",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "301",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810300",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430000, "y": 297400 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 305,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0301",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "302",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810301",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430020, "y": 297420 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 306,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0302",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "303",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810302",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430040, "y": 297440 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 307,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0303",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "304",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810303",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430060, "y": 297460 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 308,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0304",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "305",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810304",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430080, "y": 297480 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 309,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0305",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "306",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810305",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430100, "y": 297500 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 310,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0306",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "307",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810306",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430120, "y": 297520 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 311,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0307",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "308",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810307",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430140, "y": 297540 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 312,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0308",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "309",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810308",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430160, "y": 297560 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 313,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0309",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "310",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810309",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430180, "y": 297580 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 314,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0310",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "311",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810310",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430200, "y": 297600 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 315,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0311",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "312",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810311",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430220, "y": 297620 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 316,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0312",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "313",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810312",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430240, "y": 297640 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 317,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0313",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "314",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810313",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430260, "y": 297660 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 318,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0314",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "315",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810314",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430280, "y": 297680 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 319,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0315",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "316",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810315",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430300, "y": 297700 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 320,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0316",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "317",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810316",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430320, "y": 297720 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 321,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0317",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "318",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810317",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430340, "y": 297740 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 322,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0318",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "319",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810318",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430360, "y": 297760 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 323,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0319",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "320",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810319",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430380, "y": 297780 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 324,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0320",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "321",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810320",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430400, "y": 297000 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 325,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0321",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "322",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810321",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430420, "y": 297020 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 326,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0322",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "323",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810322",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430440, "y": 297040 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 327,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0323",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "324",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810323",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430460, "y": 297060 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 328,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0324",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "325",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810324",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430480, "y": 297080 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 329,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0325",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "326",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810325",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430500, "y": 297100 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 330,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0326",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "327",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810326",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430520, "y": 297120 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 331,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0327",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "328",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810327",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430540, "y": 297140 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 332,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0328",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "329",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810328",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430560, "y": 297160 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 333,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0329",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "330",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810329",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430580, "y": 297180 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 334,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0330",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "331",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810330",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430600, "y": 297200 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 335,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0331",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "332",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810331",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430620, "y": 297220 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 336,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0332",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "333",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810332",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430640, "y": 297240 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 337,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0333",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "334",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810333",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430660, "y": 297260 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 338,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0334",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "335",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810334",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430680, "y": 297280 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 339,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0335",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "336",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810335",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430700, "y": 297300 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 340,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0336",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "337",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810336",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430720, "y": 297320 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 341,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0337",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "338",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810337",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430740, "y": 297340 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 342,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0338",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "339",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810338",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430760, "y": 297360 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 343,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0339",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "340",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810339",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430780, "y": 297380 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 344,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0340",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "341",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810340",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430800, "y": 297400 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 345,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0341",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "342",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810341",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430820, "y": 297420 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 346,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0342",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "343",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810342",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430840, "y": 297440 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 347,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0343",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "344",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810343",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430860, "y": 297460 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 348,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0344",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "345",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810344",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430880, "y": 297480 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 349,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0345",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "346",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810345",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430900, "y": 297500 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 350,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0346",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "347",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810346",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430920, "y": 297520 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 351,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0347",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "348",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810347",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430940, "y": 297540 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 352,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0348",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "349",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Allgemeinmedizin",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "W",
+				"ADRCD": "9810348",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430960, "y": 297560 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 353,
+				"Titel": "Dr.",
+				"Nachname": "SBGFIKTIV0349",
+				"Vorname": "Testi",
+				"TitelNachg": null,
+				"HNR": "350",
+				"Strasse": "Fillerstraße",
+				"Ort": "Salzburg",
+				"PLZ": 5020,
+				"Fach": "Haut- und Geschlechtskrankheiten",
+				"Kategorie": "Facharzt",
+				"Gruppenpraxis": null,
+				"GeschlechtCode": "M",
+				"ADRCD": "9810349",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430980, "y": 297580 }
+		}
+	]
+}

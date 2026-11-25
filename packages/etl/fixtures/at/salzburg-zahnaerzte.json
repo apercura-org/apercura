@@ -1,0 +1,876 @@
+{
+	"displayFieldName": "Name",
+	"geometryType": "esriGeometryPoint",
+	"spatialReference": { "wkid": 31258, "latestWkid": 31258 },
+	"fields": [],
+	"features": [
+		{
+			"attributes": {
+				"OBJECTID": 1,
+				"Strasse": "Fiktivweg",
+				"Name": "DDr. Nora Zahnbeispiel",
+				"PLZ": 5020,
+				"Ort": "Salzburg",
+				"HNR": "1",
+				"SKZ_HNR": null,
+				"ADRCD": "9820000",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430600, "y": 298100 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 2,
+				"Strasse": "Probegasse",
+				"Name": "Dr. med. dent. Tom Probezahn, MSc",
+				"PLZ": 5400,
+				"Ort": "Hallein",
+				"HNR": "8",
+				"SKZ_HNR": null,
+				"ADRCD": "9820001",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 434400, "y": 285300 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 3,
+				"Strasse": "Fillerweg",
+				"Name": "Dr. Testu Zahnfiktiv0000",
+				"PLZ": 5020,
+				"Ort": "Salzburg",
+				"HNR": "1",
+				"SKZ_HNR": null,
+				"ADRCD": "9820002",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430000, "y": 297500 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 4,
+				"Strasse": "Fillerweg",
+				"Name": "Dr. Testu Zahnfiktiv0001",
+				"PLZ": 5020,
+				"Ort": "Salzburg",
+				"HNR": "2",
+				"SKZ_HNR": null,
+				"ADRCD": "9820003",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430010, "y": 297500 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 5,
+				"Strasse": "Fillerweg",
+				"Name": "Dr. Testu Zahnfiktiv0002",
+				"PLZ": 5020,
+				"Ort": "Salzburg",
+				"HNR": "3",
+				"SKZ_HNR": null,
+				"ADRCD": "9820004",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430020, "y": 297500 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 6,
+				"Strasse": "Fillerweg",
+				"Name": "Dr. Testu Zahnfiktiv0003",
+				"PLZ": 5020,
+				"Ort": "Salzburg",
+				"HNR": "4",
+				"SKZ_HNR": null,
+				"ADRCD": "9820005",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430030, "y": 297500 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 7,
+				"Strasse": "Fillerweg",
+				"Name": "Dr. Testu Zahnfiktiv0004",
+				"PLZ": 5020,
+				"Ort": "Salzburg",
+				"HNR": "5",
+				"SKZ_HNR": null,
+				"ADRCD": "9820006",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430040, "y": 297500 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 8,
+				"Strasse": "Fillerweg",
+				"Name": "Dr. Testu Zahnfiktiv0005",
+				"PLZ": 5020,
+				"Ort": "Salzburg",
+				"HNR": "6",
+				"SKZ_HNR": null,
+				"ADRCD": "9820007",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430050, "y": 297500 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 9,
+				"Strasse": "Fillerweg",
+				"Name": "Dr. Testu Zahnfiktiv0006",
+				"PLZ": 5020,
+				"Ort": "Salzburg",
+				"HNR": "7",
+				"SKZ_HNR": null,
+				"ADRCD": "9820008",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430060, "y": 297500 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 10,
+				"Strasse": "Fillerweg",
+				"Name": "Dr. Testu Zahnfiktiv0007",
+				"PLZ": 5020,
+				"Ort": "Salzburg",
+				"HNR": "8",
+				"SKZ_HNR": null,
+				"ADRCD": "9820009",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430070, "y": 297500 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 11,
+				"Strasse": "Fillerweg",
+				"Name": "Dr. Testu Zahnfiktiv0008",
+				"PLZ": 5020,
+				"Ort": "Salzburg",
+				"HNR": "9",
+				"SKZ_HNR": null,
+				"ADRCD": "9820010",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430080, "y": 297500 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 12,
+				"Strasse": "Fillerweg",
+				"Name": "Dr. Testu Zahnfiktiv0009",
+				"PLZ": 5020,
+				"Ort": "Salzburg",
+				"HNR": "10",
+				"SKZ_HNR": null,
+				"ADRCD": "9820011",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430090, "y": 297500 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 13,
+				"Strasse": "Fillerweg",
+				"Name": "Dr. Testu Zahnfiktiv0010",
+				"PLZ": 5020,
+				"Ort": "Salzburg",
+				"HNR": "11",
+				"SKZ_HNR": null,
+				"ADRCD": "9820012",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430100, "y": 297500 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 14,
+				"Strasse": "Fillerweg",
+				"Name": "Dr. Testu Zahnfiktiv0011",
+				"PLZ": 5020,
+				"Ort": "Salzburg",
+				"HNR": "12",
+				"SKZ_HNR": null,
+				"ADRCD": "9820013",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430110, "y": 297500 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 15,
+				"Strasse": "Fillerweg",
+				"Name": "Dr. Testu Zahnfiktiv0012",
+				"PLZ": 5020,
+				"Ort": "Salzburg",
+				"HNR": "13",
+				"SKZ_HNR": null,
+				"ADRCD": "9820014",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430120, "y": 297500 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 16,
+				"Strasse": "Fillerweg",
+				"Name": "Dr. Testu Zahnfiktiv0013",
+				"PLZ": 5020,
+				"Ort": "Salzburg",
+				"HNR": "14",
+				"SKZ_HNR": null,
+				"ADRCD": "9820015",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430130, "y": 297500 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 17,
+				"Strasse": "Fillerweg",
+				"Name": "Dr. Testu Zahnfiktiv0014",
+				"PLZ": 5020,
+				"Ort": "Salzburg",
+				"HNR": "15",
+				"SKZ_HNR": null,
+				"ADRCD": "9820016",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430140, "y": 297500 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 18,
+				"Strasse": "Fillerweg",
+				"Name": "Dr. Testu Zahnfiktiv0015",
+				"PLZ": 5020,
+				"Ort": "Salzburg",
+				"HNR": "16",
+				"SKZ_HNR": null,
+				"ADRCD": "9820017",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430150, "y": 297500 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 19,
+				"Strasse": "Fillerweg",
+				"Name": "Dr. Testu Zahnfiktiv0016",
+				"PLZ": 5020,
+				"Ort": "Salzburg",
+				"HNR": "17",
+				"SKZ_HNR": null,
+				"ADRCD": "9820018",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430160, "y": 297500 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 20,
+				"Strasse": "Fillerweg",
+				"Name": "Dr. Testu Zahnfiktiv0017",
+				"PLZ": 5020,
+				"Ort": "Salzburg",
+				"HNR": "18",
+				"SKZ_HNR": null,
+				"ADRCD": "9820019",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430170, "y": 297500 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 21,
+				"Strasse": "Fillerweg",
+				"Name": "Dr. Testu Zahnfiktiv0018",
+				"PLZ": 5020,
+				"Ort": "Salzburg",
+				"HNR": "19",
+				"SKZ_HNR": null,
+				"ADRCD": "9820020",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430180, "y": 297500 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 22,
+				"Strasse": "Fillerweg",
+				"Name": "Dr. Testu Zahnfiktiv0019",
+				"PLZ": 5020,
+				"Ort": "Salzburg",
+				"HNR": "20",
+				"SKZ_HNR": null,
+				"ADRCD": "9820021",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430190, "y": 297500 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 23,
+				"Strasse": "Fillerweg",
+				"Name": "Dr. Testu Zahnfiktiv0020",
+				"PLZ": 5020,
+				"Ort": "Salzburg",
+				"HNR": "21",
+				"SKZ_HNR": null,
+				"ADRCD": "9820022",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430200, "y": 297500 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 24,
+				"Strasse": "Fillerweg",
+				"Name": "Dr. Testu Zahnfiktiv0021",
+				"PLZ": 5020,
+				"Ort": "Salzburg",
+				"HNR": "22",
+				"SKZ_HNR": null,
+				"ADRCD": "9820023",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430210, "y": 297500 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 25,
+				"Strasse": "Fillerweg",
+				"Name": "Dr. Testu Zahnfiktiv0022",
+				"PLZ": 5020,
+				"Ort": "Salzburg",
+				"HNR": "23",
+				"SKZ_HNR": null,
+				"ADRCD": "9820024",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430220, "y": 297500 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 26,
+				"Strasse": "Fillerweg",
+				"Name": "Dr. Testu Zahnfiktiv0023",
+				"PLZ": 5020,
+				"Ort": "Salzburg",
+				"HNR": "24",
+				"SKZ_HNR": null,
+				"ADRCD": "9820025",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430230, "y": 297500 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 27,
+				"Strasse": "Fillerweg",
+				"Name": "Dr. Testu Zahnfiktiv0024",
+				"PLZ": 5020,
+				"Ort": "Salzburg",
+				"HNR": "25",
+				"SKZ_HNR": null,
+				"ADRCD": "9820026",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430240, "y": 297500 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 28,
+				"Strasse": "Fillerweg",
+				"Name": "Dr. Testu Zahnfiktiv0025",
+				"PLZ": 5020,
+				"Ort": "Salzburg",
+				"HNR": "26",
+				"SKZ_HNR": null,
+				"ADRCD": "9820027",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430250, "y": 297500 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 29,
+				"Strasse": "Fillerweg",
+				"Name": "Dr. Testu Zahnfiktiv0026",
+				"PLZ": 5020,
+				"Ort": "Salzburg",
+				"HNR": "27",
+				"SKZ_HNR": null,
+				"ADRCD": "9820028",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430260, "y": 297500 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 30,
+				"Strasse": "Fillerweg",
+				"Name": "Dr. Testu Zahnfiktiv0027",
+				"PLZ": 5020,
+				"Ort": "Salzburg",
+				"HNR": "28",
+				"SKZ_HNR": null,
+				"ADRCD": "9820029",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430270, "y": 297500 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 31,
+				"Strasse": "Fillerweg",
+				"Name": "Dr. Testu Zahnfiktiv0028",
+				"PLZ": 5020,
+				"Ort": "Salzburg",
+				"HNR": "29",
+				"SKZ_HNR": null,
+				"ADRCD": "9820030",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430280, "y": 297500 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 32,
+				"Strasse": "Fillerweg",
+				"Name": "Dr. Testu Zahnfiktiv0029",
+				"PLZ": 5020,
+				"Ort": "Salzburg",
+				"HNR": "30",
+				"SKZ_HNR": null,
+				"ADRCD": "9820031",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430290, "y": 297500 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 33,
+				"Strasse": "Fillerweg",
+				"Name": "Dr. Testu Zahnfiktiv0030",
+				"PLZ": 5020,
+				"Ort": "Salzburg",
+				"HNR": "31",
+				"SKZ_HNR": null,
+				"ADRCD": "9820032",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430300, "y": 297500 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 34,
+				"Strasse": "Fillerweg",
+				"Name": "Dr. Testu Zahnfiktiv0031",
+				"PLZ": 5020,
+				"Ort": "Salzburg",
+				"HNR": "32",
+				"SKZ_HNR": null,
+				"ADRCD": "9820033",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430310, "y": 297500 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 35,
+				"Strasse": "Fillerweg",
+				"Name": "Dr. Testu Zahnfiktiv0032",
+				"PLZ": 5020,
+				"Ort": "Salzburg",
+				"HNR": "33",
+				"SKZ_HNR": null,
+				"ADRCD": "9820034",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430320, "y": 297500 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 36,
+				"Strasse": "Fillerweg",
+				"Name": "Dr. Testu Zahnfiktiv0033",
+				"PLZ": 5020,
+				"Ort": "Salzburg",
+				"HNR": "34",
+				"SKZ_HNR": null,
+				"ADRCD": "9820035",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430330, "y": 297500 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 37,
+				"Strasse": "Fillerweg",
+				"Name": "Dr. Testu Zahnfiktiv0034",
+				"PLZ": 5020,
+				"Ort": "Salzburg",
+				"HNR": "35",
+				"SKZ_HNR": null,
+				"ADRCD": "9820036",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430340, "y": 297500 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 38,
+				"Strasse": "Fillerweg",
+				"Name": "Dr. Testu Zahnfiktiv0035",
+				"PLZ": 5020,
+				"Ort": "Salzburg",
+				"HNR": "36",
+				"SKZ_HNR": null,
+				"ADRCD": "9820037",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430350, "y": 297500 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 39,
+				"Strasse": "Fillerweg",
+				"Name": "Dr. Testu Zahnfiktiv0036",
+				"PLZ": 5020,
+				"Ort": "Salzburg",
+				"HNR": "37",
+				"SKZ_HNR": null,
+				"ADRCD": "9820038",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430360, "y": 297500 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 40,
+				"Strasse": "Fillerweg",
+				"Name": "Dr. Testu Zahnfiktiv0037",
+				"PLZ": 5020,
+				"Ort": "Salzburg",
+				"HNR": "38",
+				"SKZ_HNR": null,
+				"ADRCD": "9820039",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430370, "y": 297500 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 41,
+				"Strasse": "Fillerweg",
+				"Name": "Dr. Testu Zahnfiktiv0038",
+				"PLZ": 5020,
+				"Ort": "Salzburg",
+				"HNR": "39",
+				"SKZ_HNR": null,
+				"ADRCD": "9820040",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430380, "y": 297500 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 42,
+				"Strasse": "Fillerweg",
+				"Name": "Dr. Testu Zahnfiktiv0039",
+				"PLZ": 5020,
+				"Ort": "Salzburg",
+				"HNR": "40",
+				"SKZ_HNR": null,
+				"ADRCD": "9820041",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430390, "y": 297500 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 43,
+				"Strasse": "Fillerweg",
+				"Name": "Dr. Testu Zahnfiktiv0040",
+				"PLZ": 5020,
+				"Ort": "Salzburg",
+				"HNR": "41",
+				"SKZ_HNR": null,
+				"ADRCD": "9820042",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430400, "y": 297500 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 44,
+				"Strasse": "Fillerweg",
+				"Name": "Dr. Testu Zahnfiktiv0041",
+				"PLZ": 5020,
+				"Ort": "Salzburg",
+				"HNR": "42",
+				"SKZ_HNR": null,
+				"ADRCD": "9820043",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430410, "y": 297500 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 45,
+				"Strasse": "Fillerweg",
+				"Name": "Dr. Testu Zahnfiktiv0042",
+				"PLZ": 5020,
+				"Ort": "Salzburg",
+				"HNR": "43",
+				"SKZ_HNR": null,
+				"ADRCD": "9820044",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430420, "y": 297500 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 46,
+				"Strasse": "Fillerweg",
+				"Name": "Dr. Testu Zahnfiktiv0043",
+				"PLZ": 5020,
+				"Ort": "Salzburg",
+				"HNR": "44",
+				"SKZ_HNR": null,
+				"ADRCD": "9820045",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430430, "y": 297500 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 47,
+				"Strasse": "Fillerweg",
+				"Name": "Dr. Testu Zahnfiktiv0044",
+				"PLZ": 5020,
+				"Ort": "Salzburg",
+				"HNR": "45",
+				"SKZ_HNR": null,
+				"ADRCD": "9820046",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430440, "y": 297500 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 48,
+				"Strasse": "Fillerweg",
+				"Name": "Dr. Testu Zahnfiktiv0045",
+				"PLZ": 5020,
+				"Ort": "Salzburg",
+				"HNR": "46",
+				"SKZ_HNR": null,
+				"ADRCD": "9820047",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430450, "y": 297500 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 49,
+				"Strasse": "Fillerweg",
+				"Name": "Dr. Testu Zahnfiktiv0046",
+				"PLZ": 5020,
+				"Ort": "Salzburg",
+				"HNR": "47",
+				"SKZ_HNR": null,
+				"ADRCD": "9820048",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430460, "y": 297500 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 50,
+				"Strasse": "Fillerweg",
+				"Name": "Dr. Testu Zahnfiktiv0047",
+				"PLZ": 5020,
+				"Ort": "Salzburg",
+				"HNR": "48",
+				"SKZ_HNR": null,
+				"ADRCD": "9820049",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430470, "y": 297500 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 51,
+				"Strasse": "Fillerweg",
+				"Name": "Dr. Testu Zahnfiktiv0048",
+				"PLZ": 5020,
+				"Ort": "Salzburg",
+				"HNR": "49",
+				"SKZ_HNR": null,
+				"ADRCD": "9820050",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430480, "y": 297500 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 52,
+				"Strasse": "Fillerweg",
+				"Name": "Dr. Testu Zahnfiktiv0049",
+				"PLZ": 5020,
+				"Ort": "Salzburg",
+				"HNR": "50",
+				"SKZ_HNR": null,
+				"ADRCD": "9820051",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430490, "y": 297500 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 53,
+				"Strasse": "Fillerweg",
+				"Name": "Dr. Testu Zahnfiktiv0050",
+				"PLZ": 5020,
+				"Ort": "Salzburg",
+				"HNR": "51",
+				"SKZ_HNR": null,
+				"ADRCD": "9820052",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430500, "y": 297500 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 54,
+				"Strasse": "Fillerweg",
+				"Name": "Dr. Testu Zahnfiktiv0051",
+				"PLZ": 5020,
+				"Ort": "Salzburg",
+				"HNR": "52",
+				"SKZ_HNR": null,
+				"ADRCD": "9820053",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430510, "y": 297500 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 55,
+				"Strasse": "Fillerweg",
+				"Name": "Dr. Testu Zahnfiktiv0052",
+				"PLZ": 5020,
+				"Ort": "Salzburg",
+				"HNR": "53",
+				"SKZ_HNR": null,
+				"ADRCD": "9820054",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430520, "y": 297500 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 56,
+				"Strasse": "Fillerweg",
+				"Name": "Dr. Testu Zahnfiktiv0053",
+				"PLZ": 5020,
+				"Ort": "Salzburg",
+				"HNR": "54",
+				"SKZ_HNR": null,
+				"ADRCD": "9820055",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430530, "y": 297500 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 57,
+				"Strasse": "Fillerweg",
+				"Name": "Dr. Testu Zahnfiktiv0054",
+				"PLZ": 5020,
+				"Ort": "Salzburg",
+				"HNR": "55",
+				"SKZ_HNR": null,
+				"ADRCD": "9820056",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430540, "y": 297500 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 58,
+				"Strasse": "Fillerweg",
+				"Name": "Dr. Testu Zahnfiktiv0055",
+				"PLZ": 5020,
+				"Ort": "Salzburg",
+				"HNR": "56",
+				"SKZ_HNR": null,
+				"ADRCD": "9820057",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430550, "y": 297500 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 59,
+				"Strasse": "Fillerweg",
+				"Name": "Dr. Testu Zahnfiktiv0056",
+				"PLZ": 5020,
+				"Ort": "Salzburg",
+				"HNR": "57",
+				"SKZ_HNR": null,
+				"ADRCD": "9820058",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430560, "y": 297500 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 60,
+				"Strasse": "Fillerweg",
+				"Name": "Dr. Testu Zahnfiktiv0057",
+				"PLZ": 5020,
+				"Ort": "Salzburg",
+				"HNR": "58",
+				"SKZ_HNR": null,
+				"ADRCD": "9820059",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430570, "y": 297500 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 61,
+				"Strasse": "Fillerweg",
+				"Name": "Dr. Testu Zahnfiktiv0058",
+				"PLZ": 5020,
+				"Ort": "Salzburg",
+				"HNR": "59",
+				"SKZ_HNR": null,
+				"ADRCD": "9820060",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430580, "y": 297500 }
+		},
+		{
+			"attributes": {
+				"OBJECTID": 62,
+				"Strasse": "Fillerweg",
+				"Name": "Dr. Testu Zahnfiktiv0059",
+				"PLZ": 5020,
+				"Ort": "Salzburg",
+				"HNR": "60",
+				"SKZ_HNR": null,
+				"ADRCD": "9820061",
+				"SUBCD": "001"
+			},
+			"geometry": { "x": 430590, "y": 297500 }
+		}
+	]
+}

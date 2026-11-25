@@ -16,7 +16,9 @@
 		"etl:places": "bun src/cli.ts etl:places",
 		"fixtures": "bun fixtures/generate.ts",
 		"typecheck": "tsc --noEmit",
-		"test": "vitest run"
+		"test": "vitest run",
+		"etl:at": "bun src/cli.ts etl:at",
+		"fixtures:at": "bun fixtures/generate-at.ts"
 	},
 	"dependencies": {
 		"@apercura/core": "workspace:*",

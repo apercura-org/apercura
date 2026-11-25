@@ -21,6 +21,7 @@
 		"jobs:tick": "bun run --cwd apps/web jobs:tick",
 		"keys:generate": "bun scripts/generate-keys.ts",
 		"etl:fr": "bun packages/etl/src/cli.ts etl:fr",
+		"etl:at": "bun packages/etl/src/cli.ts etl:at",
 		"etl:places": "bun packages/etl/src/cli.ts etl:places"
 	},
 	"devDependencies": {
