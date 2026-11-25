@@ -74,7 +74,7 @@ export async function getPractitionerPage(
 		// expires the miss at once.
 		const [known] = await sql<{ id: number }[]>`
 			SELECT id FROM directory.practitioners
-			WHERE country = 'FR' AND id_scheme = 'RPPS' AND national_id = ${rpps}
+			WHERE country = ${country} AND id_scheme = ${idScheme} AND national_id = ${nationalId}
 		`;
 		if (known) cacheTag(cacheTags.practitioner(known.id));
 		cacheLife("days");
