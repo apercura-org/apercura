@@ -6,7 +6,7 @@ name: apercura
 
 services:
   postgres:
-    image: postgis/postgis:17-3.5
+    image: postgis/postgis:17-3.7
     # The official PostGIS image is published for amd64 only; Apple Silicon runs it emulated.
     platform: linux/amd64
     restart: unless-stopped

@@ -50,18 +50,22 @@ repository, to open as an issue.
 
 ## 3. HDS hosting (Clever Cloud by default, Scalingo as alternative)
 
+Low-cost interim path, before the HDS contract and with `FEATURE_BOOKING=false` only: a single
+generic VPS with Docker Compose and automatic deploys from `main`
+([deploy-vps](deploy-vps.md)). A generic VPS is not HDS-certified: it never holds health data.
+
 - [ ] **[founder]** Quotes from both; written confirmation of the HDS scope of **every**
       service used (application, PostgreSQL, tasks, Cellar, backups); sign the HDS contract.
 - [ ] **[founder]** Create the Clever Cloud organisation and the applications in the HDS
       region `parhds` ([deploy-clever-cloud §1](deploy-clever-cloud.md#1-applications-and-add-ons)).
 - [ ] **[founder]** Support tickets for the database
-      ([§2](deploy-clever-cloud.md#2-database)): the three roles `apercura_app`,
-      `apercura_etl`, `apercura_readonly`; check the extensions (`postgis`, `pg_trgm`,
-      `unaccent`, `btree_gist`); point-in-time recovery (pgBackRest).
-- [ ] **[founder]** Secrets on a trusted machine (`bun run keys:generate`, plus
-      `openssl rand -base64 32` for `REVALIDATE_SECRET` and `JOBS_SECRET`), stored only in the
-      host's environment; set `RATE_LIMIT_KEY` and `ALTCHA_HMAC_KEY` explicitly and
-      `TRUSTED_PROXY_COUNT=1` ([§3](deploy-clever-cloud.md#3-environment-of-the-web-app)).
+      ([§2](deploy-clever-cloud.md#2-database)): the four roles `apercura_app`,
+      `apercura_etl`, `apercura_readonly` and `apercura_jobs`; check the extensions
+      (`postgis`, `pg_trgm`, `unaccent`, `btree_gist`); point-in-time recovery (pgBackRest).
+- [ ] **[founder]** Secrets on a trusted machine (`bun run keys:generate` prints all eight,
+      `REVALIDATE_SECRET` and `JOBS_SECRET` included), stored only in the host's environment;
+      set `RATE_LIMIT_KEY` and `ALTCHA_HMAC_KEY` explicitly and `TRUSTED_PROXY_COUNT=1`
+      ([§3](deploy-clever-cloud.md#3-environment-of-the-web-app)).
 - [ ] **[founder]** First deployment with `FEATURE_BOOKING=false`.
 
 ## 4. Email and Pro Santé Connect

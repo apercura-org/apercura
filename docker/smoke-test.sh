@@ -77,8 +77,23 @@ step "Write a throwaway environment"
 step "Start the stack (postgres, migrate, minio, app, scheduler, mailpit)"
 compose --profile dev up -d --wait --wait-timeout 300
 
-step "Migrations are a no-op the second time"
-compose run --rm --no-deps migrate | grep "Migrations applied"
+step "Migrations are a no-op the second time, and set the roles' passwords again"
+# As under Coolify, where the init script is not mounted: the app role exists without login.
+# Over the container's own address, not loopback, so the password is checked (scram).
+app_password=$(sed -n 's/^APERCURA_APP_DB_PASSWORD=//p' "$env_file")
+app_login() {
+	# shellcheck disable=SC2016 # expanded by the container's shell
+	compose exec -T -e PGPASSWORD="$app_password" postgres \
+		sh -c 'psql -h "$(hostname -i)" -U apercura_app -d apercura -tA -c "SELECT 1"'
+}
+compose exec -T postgres psql -U postgres -d apercura -c "ALTER ROLE apercura_app NOLOGIN PASSWORD NULL" >/dev/null
+if app_login >/dev/null 2>&1; then
+	echo "apercura_app still logs in after NOLOGIN PASSWORD NULL" >&2
+	exit 1
+fi
+compose run --rm --no-deps migrate | tee "$work/migrate.log" | grep "Migrations applied"
+grep "Role passwords applied: apercura_app, apercura_etl" "$work/migrate.log"
+app_login | grep -qx 1
 
 step "Import the synthetic fixtures"
 compose run --rm -v "$root/packages/etl/fixtures/fr:/fixtures:ro" etl --source-dir /fixtures --offline

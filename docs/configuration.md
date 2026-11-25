@@ -82,22 +82,23 @@ overlap constraint is missing, and in production with an `SMTP_URL` that breaks 
 
 ## Self-hosting (`docker/compose.selfhost.yml`)
 
-The Compose file builds the connection URLs and passes the variables above to
-each service; these only exist there (template: `docker/.env.selfhost.example`,
+The Compose file builds the connection URLs (the image's entry point builds
+`DATABASE_URL_JOBS`, unless it is set) and passes the variables above to each
+service; these only exist there (template: `docker/.env.selfhost.example`,
 guide: `docs/self-hosting.md`).
 
-| Variable                                               | Role                                                                                                          |
-| ------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------- |
-| `POSTGRES_PASSWORD`                                    | Superuser of the database container, used by the migrations only.                                             |
-| `APERCURA_APP_DB_PASSWORD`, `APERCURA_ETL_DB_PASSWORD` | Passwords of `apercura_app` and `apercura_etl`, set by `docker/postgres/10-apercura-roles.sh` on first start. |
-| `APERCURA_READONLY_DB_PASSWORD`                        | Optional; empty leaves `apercura_readonly` without login.                                                     |
-| `APERCURA_JOBS_DB_PASSWORD`                            | Optional; set, `apercura_jobs` can log in and the scheduler gets `DATABASE_URL_JOBS` (audit log retention).   |
-| `MINIO_ROOT_USER`, `MINIO_ROOT_PASSWORD`               | MinIO administrator; `minio-init` creates the bucket and the app's key (`S3_ACCESS_KEY_ID`) limited to it.    |
-| `APP_BIND`, `APP_PORT`                                 | Host address and port the app is published on (default `127.0.0.1:3000`).                                     |
-| `MAILPIT_UI_PORT`                                      | Host port of Mailpit's web UI (profile `dev`, with `SMTP_ALLOW_INSECURE=true`).                               |
-| `ETL_SCHEDULE_ARGS`                                    | Flags of the scheduler's weekly import, e.g. `--department 75`. Empty: all of France.                         |
-| `INTERNAL_APP_URL`                                     | Set by the Compose file (`http://app:3000`): where the import sends its cache tags instead of `APP_URL`.      |
-| `APERCURA_IMAGE`                                       | Tag of the image the stack builds and runs (default `apercura:local`).                                        |
+| Variable                                               | Role                                                                                                                                                                                                                  |
+| ------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `POSTGRES_PASSWORD`                                    | Superuser of the database container, used by the migrations only.                                                                                                                                                     |
+| `APERCURA_APP_DB_PASSWORD`, `APERCURA_ETL_DB_PASSWORD` | Passwords of `apercura_app` and `apercura_etl`: set by `docker/postgres/10-apercura-roles.sh` on first start, then again by `migrate` on every deploy (`LOGIN PASSWORD`), so changing one and redeploying rotates it. |
+| `APERCURA_READONLY_DB_PASSWORD`                        | Optional; set, `migrate` gives `apercura_readonly` its login and password on every deploy. Empty: the role is left as is (no login on a new volume; never turned off).                                                |
+| `APERCURA_JOBS_DB_PASSWORD`                            | Optional; set, `migrate` gives `apercura_jobs` its login and password and the image builds the scheduler's `DATABASE_URL_JOBS` from it. Empty: left as is.                                                            |
+| `MINIO_ROOT_USER`, `MINIO_ROOT_PASSWORD`               | MinIO administrator; `minio-init` creates the bucket and the app's key (`S3_ACCESS_KEY_ID`) limited to it.                                                                                                            |
+| `APP_BIND`, `APP_PORT`                                 | Host address and port the app is published on (default `127.0.0.1:3000`).                                                                                                                                             |
+| `MAILPIT_UI_PORT`                                      | Host port of Mailpit's web UI (profile `dev`, with `SMTP_ALLOW_INSECURE=true`).                                                                                                                                       |
+| `ETL_SCHEDULE_ARGS`                                    | Flags of the scheduler's weekly import, e.g. `--department 75`. Empty: all of France.                                                                                                                                 |
+| `INTERNAL_APP_URL`                                     | Set by the Compose file (`http://app:3000`): where the import sends its cache tags instead of `APP_URL`.                                                                                                              |
+| `APERCURA_IMAGE`                                       | Tag of the image the stack builds and runs (default `apercura:local`).                                                                                                                                                |
 
 `GET /api/health` answers `200 {"status":"ok"}` when the app reaches its
 database and `503 {"status":"unavailable"}` otherwise, without details: the
@@ -142,7 +143,7 @@ and every document or message they decrypt is written to
 
 | Variable                     | Role                                                                                                                        |
 | ---------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
-| `VERIFY_IMAGE`               | PostGIS image `scripts/verify-backup.sh` restores into (default `postgis/postgis:17-3.5`).                                  |
+| `VERIFY_IMAGE`               | PostGIS image `scripts/verify-backup.sh` restores into (default `postgis/postgis:17-3.7`).                                  |
 | `VERIFY_PLATFORM`            | Platform of that image (default `linux/amd64`, the only one PostGIS publishes).                                             |
 | `VERIFY_MIN_PRACTITIONERS`   | Fewest practitioners a restored dump must hold (default 1; 0 for a dump taken before the first import).                     |
 | `VERIFY_EXPECTED_MIGRATIONS` | Migrations the restored dump must record (default: those of the checkout).                                                  |

@@ -28,7 +28,8 @@ docker compose -f docker/compose.selfhost.yml --env-file docker/.env.selfhost ru
 Read [docs/self-hosting.md](./docs/self-hosting.md) first: prerequisites, the first import and the
 first administrator, backups, upgrades, key rotation, the reverse proxy, and what hosting health
 data for others requires (an HDS-certified host). Production deployment:
-[Clever Cloud](./docs/deploy-clever-cloud.md) (default) or [Scalingo](./docs/deploy-scalingo.md).
+[Clever Cloud](./docs/deploy-clever-cloud.md) (default) or [Scalingo](./docs/deploy-scalingo.md);
+as a low-cost interim with booking off, a [single VPS](./docs/deploy-vps.md).
 Directory only, without booking, it runs on any Node.js host (see
 [Directory-only mode](./docs/self-hosting.md#directory-only-mode)). What remains before the
 public launch (legal entity, HDS contract, DPIA, audits) is in the
@@ -82,6 +83,8 @@ packages/
 docker/
   compose.yml          Development services: PostgreSQL (PostGIS), Mailpit, MinIO
   compose.selfhost.yml Self-hosting: the whole stack (docs/self-hosting.md)
+  compose.vps.yml      Override for a single VPS behind a host Caddy (docs/deploy-vps.md)
+  deploy-vps.sh        Server side of the GitHub deploy (docs/deploy-vps.md)
   Dockerfile           Production image: app, scheduler, import and migrations
 clevercloud/           Clever Cloud hooks and cron jobs (docs/deploy-clever-cloud.md)
 ```

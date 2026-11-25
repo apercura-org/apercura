@@ -12,3 +12,5 @@ console.log(`BLIND_INDEX_KEY=${key()}`);
 console.log(`BETTER_AUTH_SECRET=${key()}`);
 console.log(`RATE_LIMIT_KEY=${key()}`);
 console.log(`ALTCHA_HMAC_KEY=${key()}`);
+console.log(`REVALIDATE_SECRET=${key()}`);
+console.log(`JOBS_SECRET=${key()}`);

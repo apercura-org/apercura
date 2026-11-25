@@ -1,8 +1,10 @@
 #!/bin/sh
 # First start of the self-hosted database only (docker-entrypoint-initdb.d): creates the four
 # roles of Apercura with the passwords of the environment. Migration 0004 then finds them
-# and only applies the grants. To change a password later:
-#   ALTER ROLE apercura_app WITH PASSWORD '…';
+# and only applies the grants. A convenience, not a requirement: the `migrate` service
+# (packages/db/src/roles.ts) sets the same passwords after the migrations on every deploy, so
+# a password changes with its variable and a redeploy, and a stack where this file is not
+# mounted (Coolify skips single-file bind mounts) still converges.
 set -eu
 
 : "${APERCURA_APP_DB_PASSWORD:?APERCURA_APP_DB_PASSWORD is required}"

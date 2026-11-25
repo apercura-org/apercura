@@ -1,0 +1,180 @@
+name: Deploy
+
+# Deploys main to production through the Coolify API once CI has passed on a push to main
+# (docs/deploy-vps.md, "Under Coolify"). Coolify builds and restarts the stack itself; the runner
+# only asks for a deployment, follows it, then checks the public health endpoint. No code,
+# image or environment file leaves GitHub or the server.
+#
+# Coolify deploys the head of the application's branch: it cannot be given a commit. So the job
+# only deploys when the head of main is the commit CI tested, and checks after the deploy which
+# commit Coolify built (a push in between shows as a warning in the job summary).
+#
+# Secret (environment `production` or repository): COOLIFY_TOKEN, an API token with the `deploy`
+# and `read` abilities only. Variables: COOLIFY_URL (e.g. https://coolify.example.org),
+# COOLIFY_APP_UUID, PRODUCTION_URL (health check). Without COOLIFY_TOKEN or COOLIFY_APP_UUID
+# (forks) every step is skipped and the job succeeds.
+#
+# A plain Compose VPS without Coolify deploys over SSH instead: docs/deploy-vps.md, "Deploy
+# over SSH".
+
+on:
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  # To check, on a manual run, that CI passed on the head of main.
+  actions: read
+
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Deploy main with Coolify
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      (github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.event == 'push')
+    runs-on: ubuntu-latest
+    # The image is built on the server: about 20 minutes, plus the start and the health check.
+    timeout-minutes: 40
+    environment: production
+    env:
+      COOLIFY_TOKEN: ${{ secrets.COOLIFY_TOKEN }}
+      COOLIFY_URL: ${{ vars.COOLIFY_URL }}
+      COOLIFY_APP_UUID: ${{ vars.COOLIFY_APP_UUID }}
+      PRODUCTION_URL: ${{ vars.PRODUCTION_URL }}
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - name: Skip without a deploy target
+        if: env.COOLIFY_TOKEN == '' || env.COOLIFY_APP_UUID == ''
+        run: |
+          echo "COOLIFY_TOKEN or COOLIFY_APP_UUID is not set; nothing to deploy." >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Resolve the tested commit
+        id: sha
+        if: env.COOLIFY_TOKEN != '' && env.COOLIFY_APP_UUID != ''
+        env:
+          RUN_SHA: ${{ github.event.workflow_run.head_sha }}
+        run: |
+          set -euo pipefail
+          if [ -z "$COOLIFY_URL" ]; then
+            echo "::error::COOLIFY_URL is not set"
+            exit 1
+          fi
+          head=$(gh api "repos/$GH_REPO/commits/main" --jq .sha)
+          if [ "$GITHUB_EVENT_NAME" = "workflow_run" ]; then
+            sha="$RUN_SHA"
+          else
+            # By hand: the head of main, only if CI passed on it.
+            sha="$head"
+            passed=$(gh api "repos/$GH_REPO/actions/workflows/ci.yml/runs?head_sha=$sha&status=success&per_page=1" --jq .total_count)
+            if [ "$passed" = "0" ]; then
+              echo "::error::CI has not passed on the head of main ($sha)"
+              exit 1
+            fi
+          fi
+          if ! [[ "$sha" =~ ^[0-9a-f]{40}$ ]]; then
+            echo "::error::not a full commit sha: ${sha:0:80}"
+            exit 1
+          fi
+          echo "sha=$sha" >> "$GITHUB_OUTPUT"
+          if [ "$head" != "$sha" ]; then
+            # A newer push is on its way through CI and deploys itself when it passes; deploying
+            # now would ship the head of main, which CI has not tested yet.
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+            echo "Skipped \`$sha\`: main has moved on to \`$head\`, whose own CI run deploys it." >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Deploy with Coolify
+        id: deploy
+        if: steps.sha.outputs.skip == 'false'
+        timeout-minutes: 32
+        env:
+          SHA: ${{ steps.sha.outputs.sha }}
+        run: |
+          set -euo pipefail
+          api="${COOLIFY_URL%/}/api/v1"
+          # The token goes through a header file, never on a command line or in the log.
+          headers="$RUNNER_TEMP/coolify-headers"
+          install -m 600 /dev/null "$headers"
+          printf 'Authorization: Bearer %s\n' "$COOLIFY_TOKEN" > "$headers"
+          trap 'rm -f "$headers"' EXIT
+          coolify() { curl -fsS --max-time 30 -H @"$headers" "$@"; }
+
+          body=$(jq -nc --arg uuid "$COOLIFY_APP_UUID" '{uuid: $uuid}')
+          # Not retried: a lost answer must not queue a second deployment.
+          response=$(coolify -X POST -H "Content-Type: application/json" --data "$body" "$api/deploy")
+          deployment=$(jq -r '.deployments[0].deployment_uuid // empty' <<<"$response")
+          if [ -z "$deployment" ]; then
+            echo "::error::Coolify queued no deployment: $(jq -r '[.deployments[]?.message, .message] | map(select(.)) | join("; ")' <<<"$response" | cut -c1-300)"
+            exit 1
+          fi
+          echo "Coolify deployment \`$deployment\` for \`$SHA\`."
+
+          # Poll until a final status, for up to 30 minutes.
+          deadline=$((SECONDS + 1800))
+          status=""
+          details="{}"
+          while [ "$SECONDS" -lt "$deadline" ]; do
+            details=$(coolify --retry 3 --retry-all-errors "$api/deployments/$deployment") || {
+              sleep 15
+              continue
+            }
+            status=$(jq -r '.status // empty' <<<"$details")
+            case "$status" in
+            "" | queued | in_progress) sleep 15 ;;
+            *) break ;;
+            esac
+          done
+          echo "Final status: ${status:-unknown}"
+          if [ "$status" != "finished" ]; then
+            echo "::error::Coolify deployment $deployment ended as '${status:-timeout}'"
+            echo "Deploy of \`$SHA\` failed in Coolify (\`${status:-timeout}\`, deployment \`$deployment\`)." >> "$GITHUB_STEP_SUMMARY"
+            exit 1
+          fi
+
+          # Coolify built the head of its branch: say so when it is not the commit CI tested.
+          built=$(jq -r '.commit // empty' <<<"$details")
+          if [[ "$built" =~ ^[0-9a-f]{40}$ ]]; then
+            if [ "$built" != "$SHA" ]; then
+              echo "::warning::Coolify built $built, not the tested $SHA"
+              echo "**Warning:** Coolify built \`$built\`, not \`$SHA\`, the commit CI tested." >> "$GITHUB_STEP_SUMMARY"
+            fi
+          else
+            head=$(gh api "repos/$GH_REPO/commits/main" --jq .sha)
+            if [ "$head" != "$SHA" ]; then
+              echo "::warning::main moved to $head during the deploy of $SHA"
+              echo "**Warning:** main moved to \`$head\` during the deploy; Coolify may have built it instead of \`$SHA\`." >> "$GITHUB_STEP_SUMMARY"
+            fi
+          fi
+          echo "Coolify deployment \`$deployment\` finished (commit tested by CI: \`$SHA\`)." >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Health check
+        if: steps.deploy.outcome == 'success'
+        run: |
+          set -euo pipefail
+          if [ -z "$PRODUCTION_URL" ]; then
+            echo "PRODUCTION_URL is not set: health check skipped." >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          url="${PRODUCTION_URL%/}/api/health"
+          # The new containers may take a moment to answer behind the proxy.
+          for _ in $(seq 1 12); do
+            code=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 15 "$url" || true)
+            if [ "$code" = "200" ]; then
+              echo "$url answers 200."
+              exit 0
+            fi
+            sleep 10
+          done
+          echo "::error::$url answered ${code:-nothing}, not 200"
+          exit 1

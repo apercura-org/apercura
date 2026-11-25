@@ -114,6 +114,8 @@ services:
       APERCURA_JOBS_DB_PASSWORD: ${APERCURA_JOBS_DB_PASSWORD:-}
     volumes:
       - postgres-data:/var/lib/postgresql/data
+      # First start only, and not mounted by orchestrators that skip single-file bind mounts
+      # (Coolify): `migrate` sets the passwords on every deploy either way.
       - ./postgres/10-apercura-roles.sh:/docker-entrypoint-initdb.d/10-apercura-roles.sh:ro
     healthcheck:
       # Over TCP: during the first start the init scripts run on a socket-only server, which
@@ -124,7 +126,9 @@ services:
       retries: 20
       start_period: 30s
 
-  # Applies pending migrations, then exits. Runs on every `up`; a no-op when up to date.
+  # Applies pending migrations, then the roles' passwords below (LOGIN PASSWORD; an empty one
+  # leaves its role as is), then exits. Runs on every `up`: changing a password here and
+  # redeploying rotates it, even where the init script of the postgres service never ran.
   migrate:
     <<: *image
     command: ["migrate"]
@@ -133,6 +137,10 @@ services:
       disable: true
     environment:
       DATABASE_URL_MIGRATE: postgres://postgres:${POSTGRES_PASSWORD}@postgres:5432/apercura
+      APERCURA_APP_DB_PASSWORD: ${APERCURA_APP_DB_PASSWORD:-}
+      APERCURA_ETL_DB_PASSWORD: ${APERCURA_ETL_DB_PASSWORD:-}
+      APERCURA_READONLY_DB_PASSWORD: ${APERCURA_READONLY_DB_PASSWORD:-}
+      APERCURA_JOBS_DB_PASSWORD: ${APERCURA_JOBS_DB_PASSWORD:-}
     depends_on:
       postgres:
         condition: service_healthy
@@ -162,8 +170,11 @@ services:
     environment:
       <<: [*app-env, *etl-env]
       ETL_SCHEDULE_ARGS: ${ETL_SCHEDULE_ARGS:-}
-      # The audit log retention's own role (docker/postgres/10-apercura-roles.sh); empty: skipped.
-      DATABASE_URL_JOBS: ${APERCURA_JOBS_DB_PASSWORD:+postgres://apercura_jobs:${APERCURA_JOBS_DB_PASSWORD}@postgres:5432/apercura}
+      # The audit log retention's own role (docker/postgres/10-apercura-roles.sh): the entry
+      # point builds DATABASE_URL_JOBS from the password unless a URL is given; both empty:
+      # skipped.
+      APERCURA_JOBS_DB_PASSWORD: ${APERCURA_JOBS_DB_PASSWORD:-}
+      DATABASE_URL_JOBS: ${DATABASE_URL_JOBS:-}
     depends_on:
       migrate:
         condition: service_completed_successfully
@@ -172,7 +183,6 @@ services:
   etl:
     <<: *image
     entrypoint: ["apercura", "etl:fr"]
-    command: []
     restart: "no"
     profiles: [tools]
     healthcheck:

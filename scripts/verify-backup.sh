@@ -28,7 +28,7 @@ fi
 command -v docker >/dev/null || { echo "docker is required" >&2; exit 2; }
 
 root="$(cd "$(dirname "$0")/.." && pwd)"
-image="${VERIFY_IMAGE:-postgis/postgis:17-3.5}"
+image="${VERIFY_IMAGE:-postgis/postgis:17-3.7}"
 min_practitioners="${VERIFY_MIN_PRACTITIONERS:-1}"
 expected_migrations="${VERIFY_EXPECTED_MIGRATIONS:-$(find "$root/packages/db/drizzle" -maxdepth 1 -name '[0-9]*.sql' | wc -l | tr -d ' ')}"
 name="apercura-verify-backup-$$"

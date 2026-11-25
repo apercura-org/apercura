@@ -1,0 +1,42 @@
+# Override of compose.selfhost.yml for a single VPS behind a reverse proxy on the host (Caddy,
+# terminating TLS). See docs/deploy-vps.md.
+#
+#   docker compose -f docker/compose.selfhost.yml -f docker/compose.vps.yml \
+#     --env-file docker/.env.selfhost up -d --build
+#
+# It only adds two things: the public host name resolved to the host for the scheduler, and a
+# size limit on every container's logs.
+
+# Rotated JSON logs: at most 5 files of 10 MB per container, so a chatty service never fills
+# the disk. `docker compose logs` keeps working.
+x-logging: &logging
+  logging:
+    driver: json-file
+    options:
+      max-size: 10m
+      max-file: "5"
+
+services:
+  postgres:
+    <<: *logging
+  migrate:
+    <<: *logging
+  app:
+    <<: *logging
+  # The jobs refresh cached pages through APP_URL/api/revalidate. Resolving the public name to
+  # the host (`host-gateway`, the Docker bridge's address on the host) sends them to the host's
+  # Caddy directly, even where the server cannot reach its own public address (no hairpin
+  # NAT). Caddy must listen on every interface (its default), not only on the public address.
+  # The app itself never calls APP_URL; the import uses INTERNAL_APP_URL (http://app:3000).
+  scheduler:
+    <<: *logging
+    extra_hosts:
+      - "${APP_HOST:?set APP_HOST in docker/.env.selfhost: the host name of APP_URL}:host-gateway"
+  etl:
+    <<: *logging
+  minio:
+    <<: *logging
+  minio-init:
+    <<: *logging
+  mailpit:
+    <<: *logging
