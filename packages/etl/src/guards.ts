@@ -284,3 +284,109 @@ export function checkAtPlaces(staged: { sites: number; placed: number }): GuardC
 		},
 	];
 }
+
+// ---------------------------------------------------------------------------
+// United Kingdom (`etl:gb`): the same verdicts, per list
+// ---------------------------------------------------------------------------
+
+/**
+ * Limits of the UK lists. ODS refreshes its reports every night, so a size or row change is
+ * allowed the Austrian lists' room. A floor of rows per list (about a sixth of the November
+ * 2026 files) catches an empty or truncated report on a first run; afterwards the change
+ * since the last successful run (5%) blocks anything smaller.
+ */
+export const GB_LIMITS = {
+	fileSizeDelta: 0.15,
+	quarantineRatio: 0.01,
+	rowsDelta: 0.05,
+	/** Sites placed in a local authority (a town, else the authority itself). */
+	minPlacedRatio: 0.98,
+	/** Sites of Great Britain located by their postcode (Northern Ireland is placed by town). */
+	minLocatedRatio: 0.97,
+	minRows: {
+		"ods-gp": 1_000,
+		"ods-branches": 300,
+		"ods-dent": 1_500,
+		"ods-pharm": 1_500,
+		"phs-gp": 100,
+		"phs-dent": 100,
+		"phs-pharm": 150,
+		"bso-gp": 40,
+		"bso-dent": 40,
+	} as Record<string, number>,
+} as const;
+
+/**
+ * Per-list checks before the merge, as in Austria: quarantine within 1%, a floor of rows
+ * (never approvable), and at most 5% more or fewer practices or 15% more or fewer bytes than
+ * the last successful run (approvable).
+ */
+export function checkGbSource(
+	source: string,
+	current: AtSourceStats & { bytes: number },
+	previous: (AtSourceStats & { bytes?: number }) | null,
+): GuardCheck[] {
+	const ratio = current.lines === 0 ? 1 : current.quarantined / current.lines;
+	const floor = GB_LIMITS.minRows[source] ?? 1;
+	const checks: GuardCheck[] = [
+		{
+			name: `${source}.quarantine`,
+			ok: current.lines > 0 && ratio <= GB_LIMITS.quarantineRatio,
+			approvable: false,
+			detail: `${current.quarantined} of ${current.lines} lines quarantined (${percent(ratio)})`,
+		},
+		{
+			name: `${source}.rows`,
+			ok: current.rows >= floor,
+			approvable: false,
+			detail: `${current.rows} rows (at least ${floor} expected)`,
+		},
+	];
+	if (previous) {
+		const rows = delta(current.people, previous.people);
+		checks.push({
+			name: `${source}.practices`,
+			ok: rows <= GB_LIMITS.rowsDelta,
+			approvable: true,
+			detail: `${current.people} practices vs ${previous.people} last time (${percent(rows)})`,
+		});
+		if (previous.bytes !== undefined) {
+			const size = delta(current.bytes, previous.bytes);
+			checks.push({
+				name: `${source}.size`,
+				ok: size <= GB_LIMITS.fileSizeDelta,
+				approvable: true,
+				detail: `${current.bytes} bytes vs ${previous.bytes} last time (${percent(size)})`,
+			});
+		}
+	}
+	return checks;
+}
+
+/**
+ * After staging: nearly every site must be placed in a local authority, and nearly every site
+ * of Great Britain located by its postcode, or the listings and maps would lose it.
+ */
+export function checkGbPlaces(staged: {
+	sites: number;
+	placed: number;
+	britishSites: number;
+	located: number;
+}): GuardCheck[] {
+	const placed = staged.sites === 0 ? 1 : staged.placed / staged.sites;
+	const located = staged.britishSites === 0 ? 1 : staged.located / staged.britishSites;
+	return [
+		{
+			name: "gb.places",
+			ok: placed >= GB_LIMITS.minPlacedRatio,
+			approvable: true,
+			detail: `${staged.placed} of ${staged.sites} sites placed in a local authority (${percent(placed)})`,
+		},
+		{
+			name: "gb.postcodes",
+			ok: located >= GB_LIMITS.minLocatedRatio,
+			approvable: true,
+			detail: `${staged.located} of ${staged.britishSites} sites in Great Britain located by postcode (${percent(located)})`,
+		},
+	];
+}

@@ -2,7 +2,7 @@
  * Minimal ZIP reader for the open-data archives (a shapefile in a ZIP): reads
  * the central directory and inflates the entries asked for. No streaming: the
  * archives the import reads are a few megabytes at most, and the caller
- * checks their size before reading them.
+ * checks their size before reading them. `zipEntries` inflates one entry at a time.
  */
 import { inflateRawSync } from "node:zlib";
 
@@ -21,6 +21,17 @@ const LOCAL_FILE_HEADER = 0x04034b50;
  * or holds an entry over the size limit.
  */
 export function readZipEntries(archive: Buffer, wanted: (name: string) => boolean): ZipEntry[] {
+	return [...zipEntries(archive, wanted)];
+}
+
+/**
+ * The same entries one at a time, each inflated only when the caller reaches it: an
+ * archive of many entries (OS Open Names, 800 CSV files) never sits inflated in memory.
+ */
+export function* zipEntries(
+	archive: Buffer,
+	wanted: (name: string) => boolean,
+): Generator<ZipEntry> {
 	// The end-of-central-directory record: 22 bytes plus a comment of up to 64 KiB.
 	let end = -1;
 	for (let offset = archive.length - 22; offset >= Math.max(0, archive.length - 65_557); offset--) {
@@ -32,7 +43,6 @@ export function readZipEntries(archive: Buffer, wanted: (name: string) => boolea
 	if (end < 0) throw new Error("Not a ZIP archive (no end of central directory)");
 	const count = archive.readUInt16LE(end + 10);
 	let offset = archive.readUInt32LE(end + 16);
-	const entries: ZipEntry[] = [];
 	for (let index = 0; index < count; index++) {
 		if (archive.readUInt32LE(offset) !== CENTRAL_FILE_HEADER) {
 			throw new Error("Corrupt ZIP central directory");
@@ -62,9 +72,8 @@ export function readZipEntries(archive: Buffer, wanted: (name: string) => boolea
 		else if (method === 8) data = inflateRawSync(raw, { maxOutputLength: MAX_ENTRY_BYTES });
 		else throw new Error(`ZIP entry ${name} uses unsupported compression method ${method}`);
 		if (data.length !== size) throw new Error(`ZIP entry ${name} is truncated`);
-		entries.push({ name, data });
+		yield { name, data };
 	}
-	return entries;
 }
 
 /** CRC-32 (IEEE), for writing stored ZIP archives (test fixtures). */
