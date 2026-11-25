@@ -1,113 +1,131 @@
 ---
 
 name: Apercura
-description: The open directory and free booking tool for every health practitioner in France, set as a pre-printed health booklet in a quiet, neutral print.
+description: The open directory and free booking tool for every health practitioner in France, set as a calm, sober health-service interface in light and dark.
 colors:
 paper: "oklch(1 0 0)"
-paper-shade: "oklch(0.975 0.003 255)"
-ink: "oklch(0.24 0.012 255)"
-ink-muted: "oklch(0.46 0.012 255)"
-ink-disabled: "oklch(0.6 0.008 255)"
-rule-soft: "oklch(0.88 0.006 255)"
-field-edge: "oklch(0.56 0.01 255)"
-stamp: "oklch(0.42 0.09 290)"
-stamp-strong: "oklch(0.35 0.08 290)"
-stamp-tint: "oklch(0.965 0.014 290)"
-error: "oklch(0.5 0.15 25)"
-error-tint: "oklch(0.97 0.012 25)"
+paper-shade: "oklch(0.977 0.003 260)"
+ink: "oklch(0.23 0.014 260)"
+ink-muted: "oklch(0.47 0.014 260)"
+ink-disabled: "oklch(0.6 0.01 260)"
+rule-soft: "oklch(0.91 0.005 260)"
+field-edge: "oklch(0.6 0.012 260)"
+stamp: "oklch(0.47 0.13 285)"
+stamp-strong: "oklch(0.4 0.12 285)"
+stamp-tint: "oklch(0.965 0.016 285)"
+error: "oklch(0.52 0.16 25)"
+error-tint: "oklch(0.97 0.013 25)"
+colorsDark:
+paper: "oklch(0.2 0.01 260)"
+paper-shade: "oklch(0.235 0.011 260)"
+ink: "oklch(0.95 0.005 260)"
+ink-muted: "oklch(0.77 0.012 260)"
+ink-disabled: "oklch(0.59 0.01 260)"
+rule-soft: "oklch(0.32 0.012 260)"
+field-edge: "oklch(0.6 0.012 260)"
+stamp: "oklch(0.78 0.1 285)"
+stamp-strong: "oklch(0.85 0.075 285)"
+stamp-tint: "oklch(0.28 0.04 285)"
+error: "oklch(0.74 0.14 25)"
+error-tint: "oklch(0.27 0.045 25)"
 typography:
 display:
-fontFamily: "Archivo Variable, Archivo Fallback, sans-serif"
-fontSize: "clamp(2.5rem, 1.75rem + 3vw, 3.75rem)"
+fontFamily: "Allo, Allo Fallback, sans-serif"
+fontSize: "clamp(2.5rem, 1.9rem + 2.6vw, 3.5rem)"
 fontWeight: 600
-lineHeight: 1.02
-letterSpacing: "-0.02em"
-fontVariation: "'wdth' 115"
+lineHeight: 1.05
+letterSpacing: "-0.028em"
 headline:
-fontFamily: "Archivo Variable, Archivo Fallback, sans-serif"
-fontSize: "clamp(1.875rem, 1.5rem + 1.5vw, 2.5rem)"
+fontFamily: "Allo, Allo Fallback, sans-serif"
+fontSize: "clamp(1.875rem, 1.55rem + 1.3vw, 2.375rem)"
 fontWeight: 600
-lineHeight: 1.12
-letterSpacing: "-0.018em"
-fontVariation: "'wdth' 102"
+lineHeight: 1.15
+letterSpacing: "-0.022em"
 title:
-fontFamily: "Archivo Variable, Archivo Fallback, sans-serif"
+fontFamily: "Allo, Allo Fallback, sans-serif"
 fontSize: "1.5rem"
 fontWeight: 600
 lineHeight: 1.25
-letterSpacing: "-0.01em"
-fontVariation: "'wdth' 100"
+letterSpacing: "-0.014em"
+subtitle:
+fontFamily: "Allo, Allo Fallback, sans-serif"
+fontSize: "1.25rem"
+fontWeight: 600
+lineHeight: 1.3
+letterSpacing: "-0.008em"
 lead:
-fontFamily: "Atkinson Hyperlegible Next Variable, Atkinson Fallback, sans-serif"
+fontFamily: "Allo, Allo Fallback, sans-serif"
 fontSize: "1.25rem"
 fontWeight: 400
 lineHeight: 1.5
 body:
-fontFamily: "Atkinson Hyperlegible Next Variable, Atkinson Fallback, sans-serif"
+fontFamily: "Allo, Allo Fallback, sans-serif"
 fontSize: "1.125rem"
 fontWeight: 400
 lineHeight: 1.6
+fontFeature: "'cv03', 'cv04'"
 meta:
-fontFamily: "Atkinson Hyperlegible Next Variable, Atkinson Fallback, sans-serif"
+fontFamily: "Allo, Allo Fallback, sans-serif"
 fontSize: "1rem"
 fontWeight: 400
 lineHeight: 1.5
 label:
-fontFamily: "Archivo Variable, Archivo Fallback, sans-serif"
+fontFamily: "Allo, Allo Fallback, sans-serif"
 fontSize: "1rem"
-fontWeight: 500
+fontWeight: 600
 lineHeight: 1.5
-fontVariation: "'wdth' 87.5"
-caps:
-fontFamily: "Archivo Variable, Archivo Fallback, sans-serif"
+caption:
+fontFamily: "Allo, Allo Fallback, sans-serif"
 fontSize: "0.875rem"
-fontWeight: 560
-lineHeight: 1.3
-letterSpacing: "0.045em"
-fontVariation: "'wdth' 87.5"
+fontWeight: 600
+lineHeight: 1.35
 rounded:
-field: "2px"
+field: "6px"
+panel: "10px"
 full: "9999px"
 spacing:
 page-gutter: "20px"
 page-gutter-wide: "32px"
-section: "56px"
+section: "64px"
 target: "44px"
+shadows:
+overlay: "0 12px 32px -12px, 0 2px 6px -2px (ink at 16 %, black at 50 % in dark)"
 components:
-button-stamp:
+button-accent:
 backgroundColor: "{colors.stamp}"
 textColor: "{colors.paper}"
 rounded: "{rounded.field}"
-padding: "0 20px"
+padding: "0 18px"
 height: "44px"
-button-stamp-hover:
+button-accent-hover:
 backgroundColor: "{colors.stamp-strong}"
 textColor: "{colors.paper}"
-button-ink:
+button-outline:
 backgroundColor: "{colors.paper}"
 textColor: "{colors.ink}"
+borderColor: "{colors.field-edge}"
 rounded: "{rounded.field}"
-padding: "0 20px"
+padding: "0 18px"
 height: "44px"
-button-ink-hover:
+button-outline-hover:
 backgroundColor: "{colors.paper-shade}"
+borderColor: "{colors.ink}"
 field:
 backgroundColor: "{colors.paper}"
 textColor: "{colors.ink}"
+borderColor: "{colors.field-edge}"
 rounded: "{rounded.field}"
 padding: "10px 14px"
 height: "48px"
 badge-verified:
 backgroundColor: "{colors.stamp-tint}"
 textColor: "{colors.stamp}"
-typography: "{typography.caps}"
-tab-selected:
-backgroundColor: "{colors.paper}"
-textColor: "{colors.ink}"
-typography: "{typography.label}"
+rounded: "{rounded.full}"
+typography: "{typography.caption}"
 slot-booked:
 backgroundColor: "{colors.stamp}"
 textColor: "{colors.paper}"
+rounded: "{rounded.field}"
 width: "80px"
 height: "56px"
 ---
@@ -116,172 +134,154 @@ height: "56px"
 
 ## Overview
 
-**Creative North Star: "The Pre-Printed Health Booklet"**
+**Creative North Star: "The Well-Kept Practice Sheet"**
 
-Every practitioner in France already has a page, like a page of a health booklet whose fields the national register has filled in. Claiming the page means completing the form; booking means stamping a box. The interface is set in the printed-form grammar of that booklet, in a quiet, professional print: white paper, a pale neutral shade for openings and secondary areas, one cool graphite ink for type, rules and field labels, and a single muted violet stamp ink. Nothing shouts: the character lives in the form itself (ruled tables, dotted leaders, honest empty fields, engraved seals), not in saturated colour or heavy type.
+Every practitioner in France already has a page, filled in from the national register. The interface reads like a well-kept practice information sheet at a good clinic: plain facts on a white (or, in the dark theme, deep graphite) ground, hairline rules between them, one clear next action, and the source of every fact printed underneath. It is sober and professional on purpose: patients arrive worried, on a phone, often older; practitioners are busy and wary of platforms. Nothing decorates, nothing shouts.
 
-The booklet is translated away from any state look. There is no Marianne typeface, no tricolour, no DSFR component and no seal of the Republic; Apercura is a public-interest project, not a government service. It also refuses the category default (blue cards over stock photos) and the cream-and-serif editorial default: the paper is pure white and the faces are a grotesque and a hyperlegible sans.
+It replaces the first version's "pre-printed booklet" costume (caps running heads, dotted leaders, a stamp with an inner frame, square 2 px corners): the honesty of that world stays (empty fields say so, every page states its source), its printed-form props go.
 
-Patients of every age, including older and low-vision readers, use it on a phone, sometimes unwell. So the booklet is generous: 18 px body text, 44 px targets, rules instead of boxes, and honest states that always say what the patient can do next.
+Apercura is a public-interest project, not a government service: no Marianne, no tricolour, no DSFR component. It does not imitate Doctolib: no bright blue, no cards over stock photos, no ratings.
 
-**Key Characteristics:**
+**Key characteristics**
 
-- Pure white paper, a quiet neutral shade, one graphite ink, one muted violet stamp, muted red only for errors.
-- No saturated bands. The running head is white with a hairline; page openings (home search, page titles), action block and dialog title strips, and the footer sit on the quiet shade, closed by hairlines.
-- Ruled tables with small-caps column headers; field rows with dotted leaders; a running head on every booklet page, and a folio only where it means something.
-- A deterministic seal per practitioner, derived from the RPPS number.
-- Square corners (2 px), no shadows: depth is hairlines, 1 px rules and the quiet shade.
+- White paper and a cool near-neutral shade, one graphite ink, one indigo-violet accent, muted red only for errors. The same roles in a dark theme.
+- Allo, one family, with tabular figures for times, fees, counts and numbers.
+- Hairline borders (1 px), 6 px control corners, 10 px panel corners. One shadow, for overlays only.
+- Generous space: 64 px between sections, 18 px body text, 44 px targets.
+- Calm motion: short colour transitions, a 180 ms slip for overlays, nothing else.
 
 ## Colors
 
-One graphite ink and one stamp on white paper, with a near-neutral shade for secondary areas. Colour lives in the stamp and in errors only; everything else is a neutral, cool by a few degrees (hue 255, chroma ≤ 0.012) so it never reads as warm grey or as blue.
+Restrained: neutrals tinted a few degrees cool (hue 260, chroma ≤ 0.015) and one accent. The values live in `packages/ui/src/tokens/index.ts` (`palette`, `paletteDark`) and `packages/ui/src/styles/theme.css` (`--light-*`, `--dark-*`); `tokens.test.ts` keeps them in sync and checks every pair below in both themes.
 
-### Primary
+| Role           | Token          | Light            | Dark             | Use                                                                                                                          |
+| -------------- | -------------- | ---------------- | ---------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| Ground         | `paper`        | #ffffff          | #13161b          | Page ground, the header, fields, panels.                                                                                     |
+| Quiet surface  | `paper-shade`  | #f6f7f9          | #1b1e23          | Page openings, the footer, panel title strips, hovered rows, skeletons.                                                      |
+| Ink            | `ink`          | #191d24 (16.9:1) | #eceff2 (15.6:1) | All text, selected tabs, checked boxes, the "now" markers, blocks in the agenda.                                             |
+| Muted ink      | `ink-muted`    | #565b63 (6.8:1)  | #b0b4bc (8.7:1)  | Secondary facts, hints, placeholders, field labels in fact lists, "Non renseigné".                                           |
+| Disabled ink   | `ink-disabled` | #7d8086 (3.9:1)  | #7a7d83 (4.4:1)  | Disabled controls (exempt, kept ≥ 3:1).                                                                                      |
+| Hairline       | `rule-soft`    | #dfe1e5          | #2f3339          | Borders of panels and rows. Decorative: never the only boundary of a control.                                                |
+| Control edge   | `field-edge`   | #7c8088 (3.9:1)  | #7c8088 (4.6:1)  | Field, outline button and search frame borders (≥ 3:1 on paper and shade).                                                   |
+| Accent         | `stamp`        | #554da0          | #b0aff5          | The primary action, verified pages, booked slots, the focus ring. Its label (`paper` on `stamp`) is 7.1:1 light, 8.9:1 dark. |
+| Accent pressed | `stamp-strong` | #433a85          | #c8c8fe          | Hover and press of the accent button.                                                                                        |
+| Accent wash    | `stamp-tint`   | #f2f2fe          | #27263c          | Behind verified and booked marks (accent text on it 6.4:1, 7.2:1).                                                           |
+| Error          | `error`        | #b33736 (6.0:1)  | #f7857d (7.4:1)  | Error text, invalid field edges, the error mark.                                                                             |
+| Error wash     | `error-tint`   | #fef2f1          | #3a1d1b          | Behind error notices.                                                                                                        |
 
-- **Graphite Ink** (`oklch(0.24 0.012 255)`, #1b2025): all type, 1 px structural rules, field labels, selected tabs (underline), selected dates, checked boxes, the "now" markers, seals' line work, the map pin. 16.4:1 on paper, 15.3:1 on shade.
+The token names `stamp*` are kept from v1 for code stability; in prose they are "the accent".
 
-### Secondary
+**The accent law.** The accent means exactly: an action that moves the visitor forward (search, book, claim, confirm, save), a verified page, a booked slot, and the keyboard focus ring. It covers 10 % of a screen or less. A selection that is not a booking (a chosen date, a checked box, a selected tab, the current language) is ink, never the accent.
 
-- **Stamp Violet** (`oklch(0.42 0.09 290)`, #4d437a): a desaturated, darker violet for primary actions, verified pages, booked slots and the focus ring. White on it is 8.7:1; on paper it is 8.7:1 (focus ring and verified marks). **Stamp Pressed** (#3a3261) for hover and press; **Stamp Wash** (#f3f2fd) behind verified marks (stamp text on it 7.9:1). Used on 10 % of a screen or less.
+**The red law.** Red is for errors only, and every error also carries the boxed exclamation and words.
 
-### Tertiary
+**The achromatic text law.** Running text is ink or muted ink, never the accent or red (badges and the error message line excepted, both also marked by an icon or a border).
 
-- **Error Ink** (`oklch(0.5 0.15 25)`, #a83634): a muted red for error text, invalid field edges and the error mark. 6.5:1 on paper, 5.9:1 on **Error Wash** (#fdf2f1).
+**What stays light in the dark theme.** QR codes (`QrCode`) and the share kit's poster preview carry the `scheme-light` utility: dark modules on a white quiet zone, which every scanner reads, and a preview of what will be printed. Photos are dimmed to 92 % brightness on the dark ground. Emails are not themed.
 
-### Neutral
+## Theme
 
-- **Paper** (#ffffff): the page ground and the running head. Never cream.
-- **Paper Shade** (`oklch(0.975 0.003 255)`, #f5f7f9): the quiet surface. Page openings (home search, page titles), action block and dialog title strips, the footer, information notices, hovered rows, skeletons.
-- **Muted Ink** (#54585f): hints, placeholders, secondary facts, "not provided", unselected tabs. 7.1:1 on paper, 6.6:1 on shade.
-- **Field Edge** (#71757a): control borders and the search cells. 4.7:1 on paper, 4.3:1 on shade (non-text minimum is 3:1).
-- **Soft Rule** (`oklch(0.88 0.006 255)`, #d5d8db): hairlines between rows, under the running head and around openings, and dotted leaders. Decorative only, never the only boundary of a control.
-- **Disabled Ink** (#7d8085): disabled controls, kept at 3.9:1 although exempt.
+Light, dark, or the system's (the default), chosen in the footer and remembered on the device (`localStorage`, key `apercura-theme`).
 
-### Named Rules
-
-**The Stamp Law.** The one accent, a muted violet, means exactly three things: an action that moves the visitor forward (search, book, claim, confirm), a verified page, a booked slot; it also draws the keyboard focus ring. It covers 10 % of any screen or less. A selection that is not yet a booking (a chosen date, a checked box, a selected tab) is graphite, never violet.
-
-**The Red Law.** Muted red is for errors only, and every error also carries a mark (the boxed exclamation) and words. Nothing is conveyed by colour alone.
-
-**The Achromatic Text Law.** Running text is never violet or red. Colour sits in edges, fills and stamps; letters stay in graphite.
-
-**The Quiet Ground Law.** No saturated ground anywhere. Regions are set apart by the pale neutral shade and hairlines, never by a solid colour band.
-
-Every token pair the UI uses is verified by `packages/ui/src/tokens/tokens.test.ts` (WCAG 2.2: 4.5:1 text, 3:1 large text, edges and focus), which also keeps every neutral at chroma ≤ 0.015 and the accent at ≤ 0.1.
+- `/theme.js` (`apps/web/src/app/theme.js/route.ts`, body in `src/lib/theme.ts`) is a small same-origin script that every root layout loads in `<head>`, so it runs before the first paint: it sets `data-theme="light|dark"` on `<html>` when a choice is stored, and `data-js` always. It also drives the theme control (checks the stored choice, stores a new one, follows other tabs and client-side navigations), so the control ships no React code. It is prerendered at build time and cached an hour; the CSP (`script-src 'self'`) is unchanged.
+- The pages stay static: the HTML is the same for every visitor and every theme, and no request reads the choice.
+- `theme.css` points the `--color-*` tokens at the dark values under `:root[data-theme="dark"]` and under `@media (prefers-color-scheme: dark)` for `:root:not([data-theme="light"])`. Without JavaScript the system decides and the theme control (which needs JavaScript) stays hidden.
+- `<meta name="theme-color">` follows the system scheme; `color-scheme: light dark` lets form controls and scrollbars follow.
+- The map re-inks itself from `mapPalette` or `mapPaletteDark` (`packages/ui/src/map/map-runtime.ts`) and follows a theme change while open.
 
 ## Typography
 
-**Display Font:** Archivo Variable (weight 100–900, width 62–125 %), fallback metric-adjusted Arial.
-**Body Font:** Atkinson Hyperlegible Next Variable (weight 200–800), fallback metric-adjusted Arial.
+**Allo** (Josh Puckett, SIL OFL 1.1, npm `allo-font`), the only family. A humanist-leaning grotesque with softened corners, optical sizes and a full set of figures; calm and friendly without being cute.
 
-**Character:** Archivo is a grotesque with a width axis, set calm: semibold and close to its normal width for the wordmark and titles, semi-condensed for labels and column heads, like a form's printed captions. Hierarchy comes from small, regular size steps and from space, never from black weights; only the home wordmark keeps a wide cut, as a signature. Atkinson Hyperlegible Next was drawn for low-vision readers and sets the body and every numeral (RPPS numbers, times, counts). Both are self-hosted from Fontsource, latin and latin-ext subsets only.
+- **Files.** `apps/web/src/fonts/allo/build.sh` cuts the variable font down to what the site sets and vendors the result with `OFL.txt`: roundness fixed at 25, optical size fixed at 18 (text and headings share one file), weights 400–700, Fontsource's latin and latin-ext ranges, the default features plus `tnum`, `case`, `cv03` and `cv04`. `allo-latin.woff2` is 54 KB (Archivo plus Atkinson weighed about 135 KB) and is preloaded; `allo-latin-ext.woff2` loads only on a page that needs it. Loaded by `next/font/local` (`apps/web/src/app/fonts.ts`), `font-display: swap`, served from the site's own origin. The fallback is Arial scaled to Allo's metrics (`fonts.css`), so the swap does not reflow.
+- **Open Graph images** use static WOFF cuts (500 and 600, Display optical size) in `src/fonts/allo/og`, listed in `src/server/og/font-files.ts` and shipped with the standalone build through `outputFileTracingIncludes`.
+- **Legibility.** Body copy turns on the tailed l and the serifed I (`cv03`, `cv04`), so Il1 never read alike for low-vision readers; headings, labels and captions keep the plain forms.
+- **Figures.** Times, fees, counts, phone and RPPS numbers use `tabular` (tabular lining figures), and every table does by default.
 
-### Hierarchy
+### Scale
 
-Each display role is a utility in `theme.css` (`type-display`, `type-headline`, `type-title`, `type-subtitle`, `type-wordmark`), so the scale lives in one place.
+Each role is a utility in `theme.css`.
 
-- **Display** (`type-display`: 600, wdth 115, clamp 2.5–3.75 rem, 1.02): the wordmark in the home opening only. Its wide cut is the brand's signature; the weight stays semibold.
-- **Headline** (`type-headline`: 600, wdth 102, clamp 1.875–2.5 rem, 1.12): page titles (practitioner name, "Votre page existe déjà.").
-- **Title** (`type-title`: 600, wdth 100, 1.5 rem, 1.25): section headings on a booklet page.
-- **Subtitle** (`type-subtitle`: 600, 1.25 rem, 1.3): sub-sections, dialog titles, place names, list headings.
-- **Wordmark** (`type-wordmark`: 650, wdth 106, 1.25 rem): the running head and the footer.
-- **Lead** (400, 1.25 rem, 1.5): hooks, introductions, slot and field values that need weight.
-- **Body** (400, 1.125 rem = 18 px, 1.6): running text, at most 65 ch. The floor for patient surfaces.
-- **Meta** (400, 1 rem, 1.5): hints, secondary facts, provenance.
-- **Label** (500, wdth 87.5, 1 rem): field labels and row labels.
-- **Caps** (560, wdth 87.5, 0.875 rem, +0.045 em, uppercase): column headers, running heads, folios, badges, the search cell captions "QUI ?" and "OÙ ?". Archivo has no small-caps feature, so caps are set small.
-- **Buttons** (Archivo 600, normal width, sentence case): actions never shout in capitals.
+| Role     | Utility         | Size                  | Weight | Line height | Tracking  | Use                                                                             |
+| -------- | --------------- | --------------------- | ------ | ----------- | --------- | ------------------------------------------------------------------------------- |
+| Display  | `type-display`  | clamp 2.5–3.5 rem     | 600    | 1.05        | −0.028 em | The home page heading only.                                                     |
+| Headline | `type-headline` | clamp 1.875–2.375 rem | 600    | 1.15        | −0.022 em | Page titles (practitioner name, "Agenda").                                      |
+| Title    | `type-title`    | 1.5 rem               | 600    | 1.25        | −0.014 em | Section headings.                                                               |
+| Subtitle | `type-subtitle` | 1.25 rem              | 600    | 1.3         | −0.008 em | Sub-sections, panel and dialog titles, place names.                             |
+| Wordmark | `type-wordmark` | 1.25 rem              | 650    | 1.2         | −0.02 em  | Header and footer.                                                              |
+| Lead     | `text-lead`     | 1.25 rem              | 400    | 1.5         |           | Introductions, professions under a name.                                        |
+| Body     | `text-body`     | 1.125 rem (18 px)     | 400    | 1.6         |           | Running text, at most 65 ch. The floor on patient surfaces.                     |
+| Meta     | `text-meta`     | 1 rem                 | 400    | 1.5         |           | Hints, secondary facts, provenance, navigation.                                 |
+| Label    | field `label`   | 1 rem                 | 600    | 1.5         |           | Form field labels.                                                              |
+| Caption  | `type-caption`  | 0.875 rem             | 600    | 1.35        |           | Column headers, search cell captions, badges, the "now" markers. Sentence case. |
 
-### Named Rules
+Hierarchy comes from size steps, weight and space; colour never carries it. No capitals for emphasis, no tracked-out labels, no kicker above a heading.
 
-**The Two Families Rule.** Archivo for what is printed on the form, Atkinson for what is written into it. No third family; numerals are always Atkinson with tabular figures.
+## Layout and spacing
 
-## Layout
+- One centred column, `max-width: 72rem`, 20 px gutters (32 px from 640 px).
+- The header: 64 px, white, a hairline below; wordmark left, "Professionnels de santé" and the language picker right. The practitioner space adds its navigation as quiet tabs (current page: shade, semibold, underlined).
+- Page openings (home, search, institutional pages, the practitioner space) sit on the quiet shade closed by a hairline; practitioner, listing and establishment pages open on the ground under their breadcrumb.
+- Sections are 64 px apart (`BookletPage`), more space above a heading than below. Content splits 5/7 from 768 px (heading and intro left, facts right) and stacks below.
+- The home opening: the display heading, a muted lead, then the search, left-aligned; below it the specimen page, the four commitments in a ruled row of four columns (two on tablets, stacked on phones), the register figures, and the practitioners' call.
+- Every target is at least 44 px; the layout survives 400 % zoom.
 
-A booklet page is a single centred column, `max-width: 72rem`, with 20 px gutters (32 px from 640 px up). Each page opens with a running head (caps, left) over a 1 px ink rule, then sections separated by 56 px. The running head lives only there, never as a caps label in an opening above a title. Section content uses a 5/7 split on wide screens (heading and intro left, facts right) and stacks below 768 px.
+## Elevation and shape
 
-The home opening sits on the quiet shade and holds about 60 % of the viewport (`min-height: calc(60svh - header)`), content bottom-aligned so the search sits just above the fold line, closed by a hairline. From 768 px Apercura's own seal (the same engraving generator, fed a fixed brand seed that no RPPS can reach) is engraved in graphite on the opening's right; practitioner pages only ever carry their RPPS seal. Other openings (page titles of the practitioner space, sign-in, search, institutional pages) use the same shade and hairline; practitioner, listing and establishment pages open straight on white paper under the running head. Page 1 opens with the proof: the unclaimed specimen page (seal, field rows, provenance, labelled "Exemple fictif"), then the commitments table. Form cells sit side by side from 768 px and stack below; field rows switch from label-leader-value to label-over-value under a 28 rem container width.
-
-Every target is at least 44 px; type and layout survive 400 % zoom (rows stack, the slot grid scrolls on its own axis).
-
-## Elevation & Depth
-
-Flat, as print is. There are no shadows. Depth comes from the quiet shade, 1 px graphite rules for table, section and field-list edges, Soft Rule hairlines between rows, and dashed borders for blank or preview forms. Heavier strokes are functional only: the 2 px error edge (fields and the error badge), the 2 px selected-tab underline, the 2 px dashed edge of an agenda request, checkbox and radio outlines. Overlays are paper slips with a 1 px ink border; modal backdrops are ink at 40 %. Inset rules are used only for the stamp's inner frame.
-
-## Shapes
-
-Square. Fields, buttons, badges, popovers and dialogs use a 2 px corner (`rounded-field`), close to a printed box. Circles appear only where the object is round: radio buttons, switch knobs, the seal, the map pin. Dotted leaders join labels to values; dashed boxes mark an unfilled form (empty states, page previews).
+- **Borders, not boxes.** Hairline (`rule-soft`) borders around panels and between rows; `field-edge` for controls. No heavy ink rules.
+- **Corners.** 6 px (`rounded-field`) for fields, buttons, menus and slots; 10 px (`rounded-panel`) for panels, dialogs, notices, the specimen, the map and the agenda; full round for badges, radios, switch knobs, seals.
+- **One shadow** (`shadow-overlay`), for what floats: popovers, the language list, dialogs, sheets, toasts. Nothing on the page itself casts one.
+- Modal backdrops are a fixed graphite scrim at 45 %, the same in both themes.
 
 ## Components
 
-All primitives are built on React Aria Components, styled with `tailwind-variants` recipes in `packages/ui/src/recipes`. Server components style plain elements with the same recipes (`buttonStyles`, `tableStyles`, `linkStyles`).
+All primitives are React Aria Components styled with `tailwind-variants` recipes (`packages/ui/src/recipes`); server components style plain elements with the same recipes.
 
-### Buttons
+- **Buttons.** Default is the outline (`ink`): ground, a `field-edge` border that turns ink on hover. The accent (`intent="stamp"`) is a solid fill with its label in the ground's colour; hover and press darken it (lighten in dark). `quiet` is an underlined text action for dense rows. Disabled: the ground with a disabled edge. `apps/web/src/lib/stamp-law.test.ts` fails if the accent carries a step back, a cancellation or a removal.
+- **Fields.** Label above (semibold), 48 px box with a `field-edge` border turning ink on hover and focus, hint in muted ink, error under it with the boxed exclamation and a red edge.
+- **Search.** One framed row (10 px corners, `field-edge`, 6 px inner padding): the "Qui ?" and "Où ?" cells side by side from 768 px with a hairline between them, captions in muted ink, the accent button inside the frame. A plain GET form; suggestions open in a popover.
+- **Fact list** (`FieldList`/`FieldRow`): label in muted ink, value in ink, two columns from a 28 rem container, a hairline between rows. An empty field prints "— Non renseigné" in muted ink; it never disappears.
+- **Practitioner header.** Seal (or photo with the seal on its corner), name as headline, profession in muted lead, the RPPS in tabular figures, the page status badge and its one-line explanation, a hairline below.
+- **Action block.** The "what can I do next" panel: title strip on the quiet shade, the statement, the next slot on a shade tile, one action. Five honest states (book, call, establishment, locum, notice); only booking takes the accent.
+- **Badges.** Small pills in caption type: neutral (`field-edge` edge on the shade), verified (accent on the accent wash, with a tick), error.
+- **Tables.** Caption-type headers in muted ink over a `field-edge` rule, hairlines between rows.
+- **Notices.** Panels: information on the shade, success with a tick, errors on the error wash with a red edge.
+- **Empty states.** A quiet panel on the shade: what is missing, in plain words, and the next step as a button.
+- **Dialogs and sheets.** A panel with its title on a shade strip, a 44 px close control, the overlay shadow.
+- **Language picker** (`apps/web/src/components/language-picker.tsx`). A `<details>` disclosure in the header: the toggle shows a globe, the current language and a chevron, and is named "Langue : Français"; the list holds a link per language to the same page in that language (ADR 0002 §2, query and, on `/rdv`, fragment kept), the current one marked `aria-current` and ticked. Works without JavaScript; with it, ArrowDown opens and focuses the current language, arrows, Home and End move, Escape closes and returns focus, a click or focus outside closes. Links, not a `<select>`: a language changes only on an explicit activation (WCAG 3.2.2), and crawlers still see every URL. Non-French pages keep their `noindex`.
+- **Theme switch** (`apps/web/src/components/theme-switch.tsx`, a server component driven by `/theme.js`). In the footer: a radio group "Thème" of three segments (Clair, Sombre, Système, each with an icon) in a `field-edge` frame, native radios (arrow keys move and choose), the checked one on the shade, semibold, ringed in ink. The agenda's Week/Day switch uses the same segmented look.
+- **SlotPicker.** One row of 80 × 56 px cells per day; the selected slot turns into an accent tile with a tick and settles in with a 200 ms scale from 96 %; past slots are muted, taken slots struck through; a ruled "now" marker in ink.
+- **WeekGrid** (agenda). One column per day, 44 px rows in a 10 px-cornered panel; closed hours on the shade under a hairline hatch; entries as 6 px-cornered tiles: confirmed in the accent, requests in a dashed ink box, holds dashed on the shade, blocks solid ink, no-shows struck through; today's header in solid ink.
+- **Seal.** The deterministic engraved mark derived from the RPPS stays the practitioner's placeholder portrait: graphite line work (light line work in dark), the outer ring in the accent on a verified page. Decorative (`aria-hidden`).
+- **Map.** MapLibre with the site palette, light or dark, the pin in the accent with a ground-coloured ring; controls bordered in `field-edge`, icons inverted in dark; attribution always visible.
+- **QR code.** Always dark on a white quiet zone (`scheme-light`).
 
-Buttons default to **Ink**: the stamp is always written out (`intent="stamp"`), and `apps/web/src/lib/stamp-law.test.ts` fails if a stamped button carries a step back, a cancellation, a pause or a removal.
+## Motion
 
-- **Stamp** (`intent="stamp"`): muted violet fill, white sentence-case Archivo semibold, a 1 px white inner frame 3 px in, like a rubber stamp. Hover and press darken to Stamp Pressed; press nudges 1 px down.
-- **Ink**: white with a 1 px graphite border (its labels can be long: "Appeler le 01 00 00 00 00"); hover Paper Shade. Also the secondary action on the quiet shade.
-- **Quiet**: underlined text action for dense rows.
-- States: disabled (paper fill, a 1 px disabled-ink edge and disabled ink, no stamp, so it reads as a button on paper and shade alike), pending (spinner plus announced label), focus (3 px violet ring on paper and shade alike).
+Calm and short. Colour transitions of 150 ms on hover and focus; overlays slip in 4 px over 180 ms; a sheet slides in over 240 ms; a selected slot settles in over 200 ms. `prefers-reduced-motion` removes all of it.
 
-### Fields
+## Accessibility
 
-Label above (Label role), 48 px box with a 1 px Field Edge border that turns ink on hover and focus, hint in Muted Ink below, error below with the boxed exclamation. Invalid fields get a 2 px error edge. TextField, SearchField (search mark, clear button), ComboBox, Select, DatePicker, TimeField (24-hour segments) share this anatomy. **OtpField** is one real input (`inputmode="numeric"`, `autocomplete="one-time-code"`) over a comb of printed boxes; the next box to fill takes the focus ring.
-
-### Choices
-
-Checkbox (24 px square, ink fill and white tick), Switch (state shown by knob position), RadioGroup (ink dot). Selection is ink, never violet.
-
-### Overlays
-
-Dialog and Sheet open on a paper slip whose title is printed on a quiet-shade strip closed by a hairline, with a 44 px close control. Alert dialogs hide the close control and ignore outside clicks. Popover, Menu and ListBox are bordered slips with hairline-ruled rows. Tooltip is ink with white text, never the only home of essential information. Toasts are 1 px bordered slips in a labelled region: ink for notices, violet edge and tick for bookings, red edge and mark for errors. Notices: information on the quiet shade with a Field Edge border, success with an ink edge and a tick, errors on Error Wash with a red edge.
-
-### Navigation and data
-
-Tabs sit on a hairline baseline; unselected tabs are muted ink, the selected tab is graphite, semibold and underlined 2 px. Breadcrumbs read like a running head with the current page unlinked. Tables are ruled: 1 px graphite top and bottom and under the caps header, hairlines between rows, sortable columns marked with a chevron.
-
-### Feedback
-
-Badges are printed marks in light caps: a Field Edge outline (unclaimed, informational), stamped violet with a quiet double edge (1 px edge, 1 px inner line) on Stamp Wash (verified, booked), a 2 px red edge on Error Wash (error). Skeletons are Paper Shade blocks with a soft pulse (off under reduced motion) and an announced status. EmptyState is a dashed blank form that says what is missing and offers the next step.
-
-### Domain
-
-- **Seal**: a deterministic engraved mark derived from the RPPS (FNV-1a hash seeding a Mulberry32 PRNG): outer ruled ring, optional inner ring, a tick ring with accented ticks, two to four wavy guilloché bands (some braided), and a boss. Graphite line work only; a verified page prints the outer ring in stamp violet, the seal's only colour. Decorative (`aria-hidden`).
-- **PractitionerHeader**: seal, name (headline), profession (lead), RPPS (caps label and tabular number), page status badge and a one-line explanation.
-- **FieldRow / FieldList**: label, dotted leader, value. An empty field prints an em dash and "Non renseigné" in Muted Ink; it never disappears.
-- **ActionBlock**: the "what can I do next" box, a 1 px graphite frame with its title on a quiet-shade strip, in five honest states: book (stamp), call the practice (ink, `tel:`), book via the establishment (ink, to its page or site), locum not bookable (statement and hint, no button), and a notice when no contact is published (statement and hint, no button). Until online booking opens, a practice's block says so and offers the call.
-- **SlotPicker**: each day is one unbroken row of 80 × 56 px cells, like a step sequencer. A ruled "now" marker with a caret moves through today's row; past slots (open, but their time has gone) are plain muted ink, taken slots are struck through; both are disabled. The marker stands on the boundary after the last slot that has started, never across a slot, with a 0.875 rem caps label printed in a strip of its own under today's cells (on the side of the past slots once two have gone), so it never covers a cell. Taken slots keep their column, so the times of every day line up. Selecting stamps the cell violet with a hairline white inner frame, a tick and a short, subtle stamp animation; a live region announces the selection. Keyboard: arrows, Home/End, Page Up/Down, Enter/Space.
-- **WeekGrid** (practice agenda): a timetable with one column per day (a single column on phones) and one ruled row per quarter or half hour, 44 px high; opening hours on paper, closed hours on the quiet shade under a 1 px Soft Rule hatch, with a Field Edge hairline where opening hours begin or end (no hue; the legend names it). Entries are printed over the cells they cover, at least one row high: confirmed appointments stamped violet (a booked slot), requests in a 2 px dashed ink box, blocks solid ink, holds (a patient is booking) in a 1 px dashed Field Edge box on the shade, no-shows struck through. Today's header is printed solid ink and a ruled "now" marker crosses today's column; its caps label is printed in a strip of its own, the time column, at the rule's height (it takes the hour's place when they would overlap), so it never covers a cell, and a week that holds "now" opens scrolled to it. ARIA grid with roving focus: arrows move by time and day, Home/End jump to the first and last time, Page Up/Down change the week (focus stays on the same cell), Enter or Space opens the entry or adds one; each cell's label starts with its printed text.
-- **SiteCard**: place name, postal address, optional facts, and directions as plain links to OpenStreetMap, Apple Maps and Google Maps (no API, no key).
-- **ProvenanceNote**: source and refresh date set as a printer's imprint.
-- **MapView**: MapLibre GL, loaded only when the map nears the viewport; shows the address until ready or if WebGL fails. Style from `NEXT_PUBLIC_MAP_STYLE_URL` (default OpenFreeMap positron), re-inked by `themeMapStyle` (`packages/ui/src/map/map-style.ts`) from the neutral `mapPalette`: white land, grey streets with slightly darker casings, muted blue-grey water, a barely green park tint, graphite labels on white halos, and a graphite pin. It also hides city, town and village names from zoom 13 so the pin never covers them; attribution always visible. The map is the only place a third hue may appear.
-- **BookletSearch**: the search printed as white form cells ("QUI ?", "OÙ ?") in a 1 px Field Edge frame on the quiet shade, with a stamp at the end; a plain GET form that ships no JavaScript.
-- **BookletComboField / BookletSearchFrame**: the same cells enhanced with a suggestion slip (caps group headers on a Paper Shade strip, hairline rows). The typed text is always what the GET form submits, so search works without JavaScript. "Autour de moi" is an ink outline button under the cells, shown only where geolocation exists, with a status line when it is refused.
-- **MapView markers**: several result pins on one lazy map, fitted in view; a single pin stays the default.
-- **Listing pages**: a headline with a factual lead closed by a 1 px rule, practitioners as a ruled table (name as a bold link, listing and address in meta below; sector and Carte Vitale columns from 768 px, folded into a meta line below), a "Page x sur y" caps folio between previous and next links, and counted links (place or establishment, count in tabular muted ink) in ruled columns.
-- **Unfinished facts**: legal facts not known yet print as empty field rows reading "À compléter" under a "Brouillon" mark in the opening; forms that do not exist yet are an EmptyState with a "Bientôt disponible" ink badge, never a fake form.
-
-### Motion
-
-One authored moment, kept subtle: the stamp (220 ms, ease-out-quart, a 5 % scale and 1.5° rotation settling flat). Everything else is short colour or position transitions. `prefers-reduced-motion` removes all of it.
+WCAG 2.2 AA and RGAA 4.1 in both themes. Every token pair is checked in `tokens.test.ts` for both palettes; the end-to-end suite runs axe on every page type in light and in dark (`apps/web/e2e/axe.ts`); the focus ring is a 3 px accent outline 2 px off the element, visible on the ground and the shade in both themes, and `Highlight` in forced colours.
 
 ## Do's and Don'ts
 
 **Do**
 
-- Print every region in the world's material: white paper, graphite rules and hairlines, the quiet shade for openings, title strips and the footer.
+- Keep the ground white (or deep graphite), regions set apart by the quiet shade and hairlines.
 - Say what is missing ("Non renseigné") and what the patient can do next, in every state.
-- Use the stamp only for action, verified and booked; check new token pairs in `tokens.test.ts`.
-- Keep body text at 18 px or more on patient surfaces, targets at 44 px, focus rings visible on both paper and shade.
+- Use the accent only for action, verified, booked and focus; check new token pairs in `tokens.test.ts`, in both themes.
+- Use `tabular` for every number that lines up: times, fees, counts, phone and RPPS numbers.
+- Keep body text at 18 px or more on patient surfaces and targets at 44 px.
+- Check a new surface in light and dark, and keep what is printed or scanned light (`scheme-light`).
 - Use synthetic, obviously fictitious data in examples ("Dr Exemple Martin", RPPS 10000000009).
 
 **Don't**
 
 - Don't use the Marianne typeface, the tricolour, DSFR components or any state emblem, and don't imitate Doctolib.
-- Don't put blue cards over stock photos, cream paper or serif editorial type.
-- Don't colour text violet or red, or use violet for mere selection.
-- Don't add shadows, glass, gradients, pill buttons or rounded cards; depth is rules, hairlines and the quiet shade.
-- Don't bring back saturated bands, black (900) weights, wide cuts beyond the home wordmark, uppercase buttons, or a stamp that is not written out.
+- Don't add a second family, capitals for emphasis, tracked-out labels, or a kicker above a heading.
+- Don't colour running text with the accent or red, or use the accent for mere selection.
+- Don't add shadows to things on the page, gradients, glass, or heavy ink rules; one overlay shadow is the whole elevation system.
 - Don't add ratings, promotional badges or anything that ranks practitioners.
 - Don't invent figures: registry counts come with their source and date.
+- Don't read the theme on the server or make a public page dynamic for it.
