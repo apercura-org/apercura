@@ -14,8 +14,18 @@ import {
 
 /*
  * The sitemaps' cached queries (the SQL lives in `./sitemap-sql`, shared with the cache
- * warm-up). Cached for hours and expired with the read models they list.
+ * warm-up). Expired with the read models they list and at once by the `sitemap` tag, which
+ * the import sends with any change.
  */
+
+/**
+ * Five minutes at most, whatever happens to the tags. The in-memory "use cache" handler of
+ * a production server drops an entry past its `revalidate`, so a sitemap can never lag
+ * behind the data longer than that, even when a revalidation does not reach it (issue #97:
+ * Next.js compares cache entries and tag marks taken from two different clocks). A query
+ * per sitemap file every five minutes, when it is requested, is cheap.
+ */
+const SITEMAP_CACHE_LIFE = { stale: 300, revalidate: 300, expire: 3600 };
 
 export {
 	SITEMAP_CHUNK,
@@ -35,7 +45,7 @@ const tagsOf = (kind: SitemapKind) =>
 /** Non-empty chunks of every kind, with the latest change in each. */
 export async function getSitemapChunks(): Promise<SitemapChunk[]> {
 	"use cache";
-	cacheLife("hours");
+	cacheLife(SITEMAP_CACHE_LIFE);
 	cacheTag(cacheTags.sitemap, ...SITEMAP_KINDS.flatMap(tagsOf));
 	return selectSitemapChunks(getSql());
 }
@@ -43,7 +53,7 @@ export async function getSitemapChunks(): Promise<SitemapChunk[]> {
 /** The URLs of one chunk, ordered by id. */
 export async function getSitemapEntries(kind: SitemapKind, chunk: number): Promise<SitemapEntry[]> {
 	"use cache";
-	cacheLife("hours");
+	cacheLife(SITEMAP_CACHE_LIFE);
 	cacheTag(cacheTags.sitemap, ...tagsOf(kind));
 	return selectSitemapEntries(getSql(), kind, chunk);
 }

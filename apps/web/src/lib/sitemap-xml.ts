@@ -37,11 +37,18 @@ export function urlSetXml(entries: { loc: string; lastmod?: string }[]): string 
 	return `${HEADER}<urlset xmlns="${NAMESPACE}">\n${items}\n</urlset>\n`;
 }
 
+/**
+ * Sitemaps change with every import: browsers ask again on every visit and a shared cache
+ * keeps one five minutes at most (`max-age=3600` let any cache serve the index from before an
+ * import for an hour).
+ */
+export const SITEMAP_CACHE_CONTROL = "public, max-age=0, s-maxage=300";
+
 export const xmlResponse = (body: string) =>
 	new Response(body, {
 		headers: {
 			"content-type": "application/xml; charset=utf-8",
-			"cache-control": "public, max-age=3600",
+			"cache-control": SITEMAP_CACHE_CONTROL,
 		},
 	});
 

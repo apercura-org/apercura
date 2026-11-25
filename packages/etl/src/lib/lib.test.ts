@@ -320,6 +320,8 @@ describe("outbox", () => {
 	it("derives coarse tags", () => {
 		expect(coarseTag("practitioner:12")).toBe("practitioner:*");
 		expect(coarseTag("listing:cardiologue:75")).toBe("listing:*");
+		// A tag without a kind is sent as it is: `sitemap:*` would match nothing.
+		expect(coarseTag("sitemap")).toBe("sitemap");
 	});
 });
 

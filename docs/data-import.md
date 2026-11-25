@@ -126,7 +126,10 @@ The URLs can be overridden with `ETL_ANS_URLS`, `ETL_AMELI_URL`,
    the next run (`bun packages/etl/src/cli.ts etl:outbox` drains them on its
    own). Above 20,000 tags, coarse tags (`practitioner:*`, `listing:*`,
    `site:*`, `place:*`) are sent instead: page queries must tag themselves with
-   both the precise and the coarse tag.
+   both the precise and the coarse tag. With any change the drain also sends
+   `sitemap` (queued with the others, so it waits with them when the app is
+   unreachable), which the app expires at once: the sitemaps list the new pages
+   on the next request ([public-site.md](./public-site.md#revalidation-after-an-import)).
 
 A session advisory lock prevents two imports from running at the same time.
 Every run, whatever its outcome, is recorded in `directory.etl_runs` (status

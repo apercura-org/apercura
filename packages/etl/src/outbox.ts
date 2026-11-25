@@ -3,11 +3,14 @@
  * to the web app's `/api/revalidate`, at most 100 tags per request, retried.
  * When the app is unreachable the rows stay for the next run (or the next
  * drain). Above 20,000 tags, coarse tags (`practitioner:*`…) replace them.
+ * Any change also sends the sitemaps' tag (`sitemap`): they list what is
+ * indexable, and a precise tag (`practitioner:12`) never reaches them.
  */
 import {
 	REVALIDATE_MAX_TAGS,
 	REVALIDATE_SIGNATURE_HEADER,
 	REVALIDATE_TIMESTAMP_HEADER,
+	SITEMAP_CACHE_TAG,
 	signRevalidation,
 } from "@apercura/core/revalidation";
 import type { Sql } from "./lib/db";
@@ -15,8 +18,12 @@ import { sleep } from "./lib/files";
 
 export const COARSE_TAG_THRESHOLD = 20_000;
 
-/** `practitioner:12` -> `practitioner:*`, `listing:cardiologue:75` -> `listing:*`. */
+/**
+ * `practitioner:12` -> `practitioner:*`, `listing:cardiologue:75` -> `listing:*`. A tag
+ * without a kind (`sitemap`) is already as coarse as it gets: kept as it is.
+ */
 export function coarseTag(tag: string): string {
+	if (!tag.includes(":")) return tag;
 	const prefix = tag.split(":")[0] ?? tag;
 	return `${prefix}:*`;
 }
@@ -78,6 +85,13 @@ export async function drainOutbox(
 	sql: Sql,
 	options: { appUrl: string | null; secret: string | null; log?: (message: string) => void },
 ): Promise<DrainResult> {
+	// Whatever changed may change what the sitemaps list: their tag goes with the others (and
+	// stays with them when the app cannot be reached).
+	await sql`
+		INSERT INTO directory.invalidation_outbox (tag)
+		SELECT ${SITEMAP_CACHE_TAG}::text WHERE EXISTS (SELECT 1 FROM directory.invalidation_outbox)
+		ON CONFLICT (tag) DO NOTHING
+	`;
 	const [{ pending } = { pending: 0 }] = await sql<{ pending: number }[]>`
 		SELECT count(*)::integer AS pending FROM directory.invalidation_outbox
 	`;
@@ -89,7 +103,9 @@ export async function drainOutbox(
 
 	if (pending > COARSE_TAG_THRESHOLD) {
 		const rows = await sql<{ tag: string }[]>`
-			SELECT DISTINCT split_part(tag, ':', 1) || ':*' AS tag FROM directory.invalidation_outbox
+			SELECT DISTINCT CASE WHEN strpos(tag, ':') = 0 THEN tag ELSE split_part(tag, ':', 1) || ':*' END
+				AS tag
+			FROM directory.invalidation_outbox
 		`;
 		const tags = rows.map((row) => row.tag);
 		try {

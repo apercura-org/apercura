@@ -17,6 +17,12 @@ export const REVALIDATE_MAX_TAG_LENGTH = 256;
 /** Accepted clock skew between sender and receiver, in seconds. */
 export const REVALIDATE_MAX_SKEW_SECONDS = 300;
 
+/**
+ * The tag of every sitemap query. The import sends it with any change, and the app expires
+ * it at once (`expire: 0`) instead of serving the old sitemaps once more.
+ */
+export const SITEMAP_CACHE_TAG = "sitemap";
+
 export function signRevalidation(secret: string, timestamp: number, body: string): string {
 	return createHmac("sha256", secret).update(`${timestamp}.${body}`).digest("hex");
 }

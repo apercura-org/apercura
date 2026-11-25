@@ -46,6 +46,10 @@ describe("outbox drain and cache warm-up", () => {
 		const result = await drainOutbox(sql, { appUrl: "http://app:3000", secret: "s".repeat(32) });
 		expect(result).toMatchObject({ status: "done", sent: 2 });
 		expect(queries.at(-1)).toBe(restartQuery);
+		// The sitemaps' tag joins the others first (the fake database leaves it out).
+		expect(queries[0]).toMatch(
+			/^INSERT INTO directory\.invalidation_outbox \(tag\) SELECT \?::text WHERE EXISTS/,
+		);
 	});
 
 	it("leaves the warm-up alone when nothing was sent", async () => {
