@@ -145,3 +145,94 @@ export function parseAtPractitionerSegment(segment: string): AtPractitionerSegme
 	if (!idScheme) return null;
 	return { idScheme, nationalId: match[3] ?? "", namePart: match[1] ?? "" };
 }
+
+/**
+ * United Kingdom identifiers: one scheme per open list (a list that fails to import keeps its
+ * rows), and the shape of the key each list gives a practice. NHS England's Organisation Data
+ * Service (England and Wales) codes are national and printed as they are (`A81001` for a GP
+ * practice, `V00003` for a dental practice, `FM474` for a pharmacy); the Scottish and
+ * Northern Irish lists number their practices, so their key carries letters naming the list
+ * (`sg10002`). Northern Ireland's dental list gives no number: its key is derived from the
+ * address (docs/data-import.md, "United Kingdom").
+ */
+export const GB_ID_SCHEMES = {
+	/** England and Wales GP practices: the ODS code (`A81001`, a letter and 5 digits). */
+	"GB-ODS-GP": { prefix: "", pattern: /^[A-UW-Z]\d{5}$/ },
+	/** England and Wales dental practices: the ODS code (`V00003`, `V012345`). */
+	"GB-ODS-DENT": { prefix: "", pattern: /^V\d{5,6}$/ },
+	/** England and Wales pharmacies: the ODS code (`FM474`, `FA123`). */
+	"GB-ODS-PHARM": { prefix: "", pattern: /^F[A-Z][A-Z\d]\d{2}$/ },
+	/** Scotland GP practices: Public Health Scotland's practice code (5 digits). */
+	"GB-PHS-GP": { prefix: "sg", pattern: /^\d{1,6}$/ },
+	/** Scotland dental practices: Public Health Scotland's dental practice code. */
+	"GB-PHS-DENT": { prefix: "sd", pattern: /^\d{1,6}$/ },
+	/** Scotland pharmacies: Public Health Scotland's dispenser code. */
+	"GB-PHS-PHARM": { prefix: "sp", pattern: /^\d{1,6}$/ },
+	/** Northern Ireland GP practices: the Business Services Organisation's practice number. */
+	"GB-BSO-GP": { prefix: "ng", pattern: /^\d{1,6}$/ },
+	/** Northern Ireland dental surgeries: 10 hex digits derived from the address (no number published). */
+	"GB-BSO-DENT": { prefix: "nd", pattern: /^[0-9a-f]{10}$/ },
+} as const;
+
+export type GbIdScheme = keyof typeof GB_ID_SCHEMES;
+
+const GB_SCHEMES = Object.keys(GB_ID_SCHEMES) as GbIdScheme[];
+
+/** True when `value` is a key of the UK scheme (syntax only: the practice may not exist). */
+export function isValidGbSourceId(scheme: string, value: string): boolean {
+	const entry = GB_ID_SCHEMES[scheme as GbIdScheme];
+	return entry ? entry.pattern.test(value) : false;
+}
+
+/** The key of a UK practice as its page URL ends (`a81001`, `sg10002`, `nd0a1b2c3d4e`). */
+export function gbUrlKey(scheme: GbIdScheme, nationalId: string): string {
+	return `${GB_ID_SCHEMES[scheme].prefix}${nationalId}`.toLowerCase();
+}
+
+/**
+ * Canonical path segment of a UK practice page: `{practice-name}-{key}`
+ * (`the-densham-surgery-a81001`, `muirhead-medical-centre-sg10002`).
+ */
+export function gbPracticeSlug(name: string, scheme: GbIdScheme, nationalId: string): string {
+	const key = gbUrlKey(scheme, nationalId);
+	const base = slugify(name);
+	return base ? `${base}-${key}` : key;
+}
+
+export type GbPracticeKey = {
+	idScheme: GbIdScheme;
+	nationalId: string;
+};
+
+/**
+ * Reads a UK practice key as its page URL ends (`a81001`, `sg10002`): the scheme
+ * and the identifier as stored. Null for anything else.
+ */
+export function parseGbKey(token: string): GbPracticeKey | null {
+	const lower = token.toLowerCase();
+	for (const idScheme of GB_SCHEMES) {
+		const { prefix, pattern } = GB_ID_SCHEMES[idScheme];
+		if (prefix ? !lower.startsWith(prefix) : /^(sg|sd|sp|ng|nd)/.test(lower)) continue;
+		const rest = lower.slice(prefix.length);
+		const nationalId = prefix ? rest : rest.toUpperCase();
+		if (pattern.test(nationalId)) return { idScheme, nationalId };
+	}
+	return null;
+}
+
+export type GbPracticeSegment = GbPracticeKey & {
+	/** Name part before the key, possibly empty. */
+	namePart: string;
+};
+
+/**
+ * Parses the last segment of a UK practice URL (`{practice-name}-{key}`). Returns
+ * null unless it ends with a valid key, so invalid URLs never reach the database.
+ */
+export function parseGbPracticeSegment(segment: string): GbPracticeSegment | null {
+	if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(segment)) return null;
+	const dash = segment.lastIndexOf("-");
+	const key = parseGbKey(dash < 0 ? segment : segment.slice(dash + 1));
+	if (!key) return null;
+	return { ...key, namePart: dash < 0 ? "" : segment.slice(0, dash) };
+}

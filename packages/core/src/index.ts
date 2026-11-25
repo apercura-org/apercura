@@ -16,6 +16,7 @@ export {
 } from "./normalize";
 export * from "./pagination";
 export { formatPhoneAt, toE164At } from "./phone-at";
+export { formatPhoneGb, GB_POSTCODE, normalizeGbPostcode, toE164Gb } from "./phone-gb";
 export * from "./profile";
 export { isValidRpps } from "./rpps";
 export { slugify, slugifyDe } from "./slugify";
@@ -28,10 +29,19 @@ export {
 	departmentSlug,
 	type EstablishmentSegment,
 	establishmentSlug,
+	GB_ID_SCHEMES,
+	type GbIdScheme,
+	type GbPracticeKey,
+	type GbPracticeSegment,
+	gbPracticeSlug,
+	gbUrlKey,
 	isValidAtSourceId,
+	isValidGbSourceId,
 	type PractitionerSegment,
 	parseAtPractitionerSegment,
 	parseEstablishmentSegment,
+	parseGbKey,
+	parseGbPracticeSegment,
 	parsePractitionerSegment,
 	practitionerSlug,
 	regionSlug,
