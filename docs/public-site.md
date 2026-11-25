@@ -332,7 +332,8 @@ Next.js separates them with `Vary: rsc, …` and a `?_rsc=` parameter.
   name, the profession or specialty, the commune, the RPPS number and the
   Apercura print, graphite ink on white paper (the site's own contrast pairs),
   in French like the other images. The photo only when the owner published one
-  on the page. Fonts are read from `@fontsource/archivo` on disk, never fetched.
+  on the page. Fonts are static Allo cuts vendored in `apps/web/src/fonts/allo/og`, read
+  on disk, never fetched.
   The PNG is cached (`"use cache"`) with the page's tags (`practitioner:{id}`,
   `practitioner:*` and those of its commune and listing), so an import or an
   owner's edit renders it again; an unknown, malformed or withheld page answers

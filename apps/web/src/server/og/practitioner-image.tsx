@@ -10,6 +10,7 @@ import { type OwnOgImage, practitionerOgImageUrl, shortPlaceName } from "~/lib/s
 import { cacheTags } from "~/server/cache-tags";
 import { getPractitionerPage } from "~/server/queries/practitioner";
 import { getStorage, storageConfigured } from "~/server/storage";
+import { OG_FONT_FAMILY } from "./font-files";
 import { ogFonts } from "./fonts";
 
 /**
@@ -140,7 +141,7 @@ export async function practitionerOgImage(rpps: string): Promise<Uint8Array | nu
 				justifyContent: "space-between",
 				background: PAPER,
 				color: INK,
-				fontFamily: "Archivo",
+				fontFamily: OG_FONT_FAMILY,
 			}}
 		>
 			<div style={{ display: "flex", padding: "56px 80px 0" }}>
@@ -155,10 +156,10 @@ export async function practitionerOgImage(rpps: string): Promise<Uint8Array | nu
 						fontSize: 26,
 						fontWeight: 500,
 						color: INK_MUTED,
-						letterSpacing: 1.5,
+						letterSpacing: 0,
 					}}
 				>
-					<div style={{ display: "flex" }}>{t("runningHead").toUpperCase()}</div>
+					<div style={{ display: "flex" }}>{t("runningHead")}</div>
 					<div
 						style={{
 							display: "flex",

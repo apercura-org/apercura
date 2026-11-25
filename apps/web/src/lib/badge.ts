@@ -33,8 +33,8 @@ export function badgeSvg(
 		`<circle cx="28" cy="28" r="15" fill="none" stroke="${colors.ink}" stroke-width="1.5"/>`,
 		`<circle cx="28" cy="28" r="10.5" fill="none" stroke="${colors.ink}" stroke-width="0.75"/>`,
 		`<circle cx="28" cy="28" r="2.5" fill="${colors.ink}"/>`,
-		`<text x="54" y="23" font-family="Atkinson Hyperlegible Next, Atkinson Hyperlegible, Arial, Helvetica, sans-serif" font-size="12" fill="${colors.inkMuted}">${lead}</text>`,
-		`<text x="54" y="42" font-family="Archivo, Arial, Helvetica, sans-serif" font-size="18" font-weight="600" fill="${colors.ink}">${brand}</text>`,
+		`<text x="54" y="23" font-family="Allo, Arial, Helvetica, sans-serif" font-size="12" fill="${colors.inkMuted}">${lead}</text>`,
+		`<text x="54" y="42" font-family="Allo, Arial, Helvetica, sans-serif" font-size="18" font-weight="600" fill="${colors.ink}">${brand}</text>`,
 		"</svg>",
 	].join("");
 }
