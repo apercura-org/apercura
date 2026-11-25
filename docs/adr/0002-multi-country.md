@@ -1,8 +1,8 @@
 # ADR 0002: Multi-country foundation (DE, GB, ES, IT)
 
 - Status: accepted (foundation only; no market other than France is open)
-- Date: 2026-11-22
-- Issue: #45
+- Date: 2026-11-22; section 2 amended 2026-11-25
+- Issue: #45; section 2: #81
 
 ## Context
 
@@ -19,7 +19,7 @@ Two things must not be confused:
 - an **interface locale** is a language of the interface (`fr`, `en`, `de`,
   `es`, `it`); anyone can read the French directory in German;
 - a **market** is a country whose practitioners are listed, with its own
-  registry, rules and domain.
+  registry, rules and URL segment.
 
 This ADR sets the foundation for markets without opening any. The interface is
 translated now; markets open one at a time, each after the research listed
@@ -30,56 +30,122 @@ below has been verified.
 ### 1. Interface locales now, markets later
 
 `apps/web/src/i18n/locales.ts` lists the five interface locales. French is the
-default (no prefix), English is the source catalog (British English, the
-language of the UK market), German, Spanish and Italian live under `/de`, `/es`
-and `/it` with translated route segments (`docs/public-site.md`).
+language of France's pages (`/fr`), English is the source catalog (British
+English, the language of the UK market); English, German, Spanish and Italian
+interfaces of France's pages live under `/fr-en`, `/fr-de`, `/fr-es` and
+`/fr-it` with translated route segments (section 2, `docs/public-site.md`).
 
 Until a market opens, every non-French page is `noindex`, absent from the
 sitemaps and announced by no hreflang (`INDEXABLE_LOCALES = ["fr"]`). A locale
 becomes indexable only with its market, because a German page of a French
 directory is not what a German searching for a doctor near Munich expects.
 
-### 2. One domain per market
+### 2. One domain, one path segment per market
 
-Each market gets its own domain, with its language as the default locale and
-the other languages as prefixed alternatives, through next-intl's `domains`
-routing. Planned shape, once a second market opens:
+Decided on 2026-11-25 (#81), replacing "one domain per market": every market
+lives on **apercura.org**, under its own first path segment. One domain keeps
+one reputation, one certificate, one cookie and passkey scope, one Search
+Console property and one set of mail records, and lets a market open without
+buying, securing and warming up a new domain. apercura.fr, the French site's
+first domain, only redirects.
 
-```ts
-// apps/web/src/i18n/routing.ts (future)
-defineRouting({
-	locales: LOCALES,
-	defaultLocale: "fr",
-	localePrefix: "as-needed",
-	domains: [
-		{ domain: "apercura.fr", defaultLocale: "fr", locales: ["fr", "en"] },
-		{ domain: "apercura.de", defaultLocale: "de", locales: ["de", "en"] },
-		{ domain: "apercura.co.uk", defaultLocale: "en", locales: ["en"] },
-		{ domain: "apercura.es", defaultLocale: "es", locales: ["es", "en"] },
-		{ domain: "apercura.it", defaultLocale: "it", locales: ["it", "en"] },
-	],
-});
-```
+#### The scheme
 
-Domain names are placeholders: none of them is registered yet.
+| Path                                                       | What                                                            | Indexed           |
+| ---------------------------------------------------------- | --------------------------------------------------------------- | ----------------- |
+| `/`                                                        | International home, in English: what Apercura is, the countries | yes (`x-default`) |
+| `/fr/…`                                                    | France, in French                                               | yes               |
+| `/fr-en/…`, `/fr-de/…`, `/fr-es/…`, `/fr-it/…`             | France's pages, interface in another language                   | never             |
+| `/gb/…`, `/de/…`, `/es/…`, `/it/…`                         | Later: a market in its language                                 | once open         |
+| `/ch-fr/…`, `/ch-de/…`, `/ch-it/…`, `/be-fr/…`, `/be-nl/…` | Later: a market in each of its official languages               | once open         |
 
-What changes with it:
+The rule is `/{market}` for a market's main language and
+`/{market}-{language}` for any other language of it, whether an official
+language of the market (`/ch-de`, indexed once Switzerland opens) or an
+interface translation for visitors (`/fr-en`, never indexed: a French
+directory read in English is not what someone searching in English expects).
+A country with several official languages and no main one (Switzerland,
+Belgium) has only `-{language}` segments. Market codes are ISO 3166-1 alpha-2
+in lowercase (`gb`, not `uk`), language codes ISO 639-1. Translated route
+segments follow the prefix (`/fr-de/behandler/…`, `docs/public-site.md`).
 
-- `APP_URL` becomes one origin per market (`MARKET_ORIGINS`); the proxy's
-  canonical-host redirect checks the request host against that list instead of
-  a single origin.
-- Canonical URLs, Open Graph, JSON-LD and email links take the origin of the
-  page's market (`siteOrigin(market)`), never of the request.
-- Sitemaps and robots.txt are served per domain and list only that market's
-  indexable pages.
-- hreflang links pages that are really translated, across domains only when
-  both pages describe the same practitioner (a German page of a French
-  practitioner is not an alternate of a French page in a German market).
-- The data model already carries `country` on `directory.practitioners` and
-  `directory.suppressions`, and the unique key is
-  `(country, id_scheme, national_id)`, so two markets never collide.
+Why one segment, market first:
 
-Until then the single-domain configuration stays as it is.
+- next-intl routes one locale segment (`app/[locale]`) and maps each locale to
+  any URL prefix (`localePrefix: { mode: "always", prefixes }`). The locale
+  stays the internal key of the catalogs, formats, the user's stored locale and
+  the email links; only `LOCALE_PREFIXES` changed. A nested `/fr/en/…` would
+  need two dynamic segments, a custom proxy and one pathnames table per market.
+- Market first keeps all of a market's URLs under one prefix: robots rules,
+  sitemaps (`/sitemaps/fr/…`), analytics and a Search Console URL-prefix view
+  all filter on `/fr`. The BCP 47 order (`/en-fr`) would scatter France's pages
+  over `/en-fr`, `/de-fr`…, and make `/de` ambiguous between Germany and German.
+- The segment is not a language tag (`ch-fr` would read as Chamorro): `lang`,
+  `og:locale`, JSON-LD `inLanguage` and hreflang use real tags (`LOCALE_TAGS`,
+  `HREFLANGS`: `fr-FR`, later `fr-CH`, `de-CH`).
+
+When a second market opens, its languages become locales of their own (a
+German interface of France's pages and German pages of Germany are not the
+same thing): the internal locale ids then move to the segments themselves
+(`fr`, `fr-de`, `de`, `ch-fr`…), each with its catalog language and its BCP 47
+tag. Today's ids map one to one (`en` is `/fr-en`).
+
+#### Indexing
+
+- **Canonical**: always self, absolute on `APP_URL` (`https://apercura.org`),
+  whatever host the request came from.
+- **Indexed**: the international home and each open market's own languages
+  (`/fr` today). Interface translations (`/fr-en`…) are `noindex`, absent from
+  the sitemaps and never targeted by hreflang (`INDEXABLE_LOCALES`).
+- **hreflang**: only between indexed pages that are the same thing in another
+  language or market. The homes form one cluster, printed by both: `x-default`
+  → `/`, `fr-FR` → `/fr`, later `en-GB` → `/gb`, `fr-CH` → `/ch-fr`, `de-CH`
+  → `/ch-de`… Below the homes, hreflang links the languages of one market only
+  (a Swiss practitioner's `/ch-fr/…` and `/ch-de/…` pages), never two markets:
+  a French practitioner has no German-market page. With France alone, no other
+  page has an alternate.
+- **Sitemaps**: one index, `/sitemap.xml`, listing
+  `/sitemaps/international.xml` and each open market's files under its segment
+  (`/sitemaps/fr/{kind}-{k}.xml`). Only indexed URLs.
+- **robots.txt**: one file for the domain, with per-prefix rules (search
+  results, the practitioner app area, the component gallery of every locale).
+- **The root** never redirects on the visitor's language, so crawlers and
+  people see the same `x-default`. A browser preferring another language of an
+  open market sees a link to it, added in the browser. Markets still to open
+  are listed as plain text ("coming soon"): no page exists for a market until
+  its checklist (section 4) passes, so the root creates no thin or duplicate
+  page.
+
+#### The former domain
+
+Until the switch the French directory lived on apercura.fr without a prefix,
+its interface translations under `/en`, `/de`, `/es`, `/it`. Every former URL
+answers a permanent redirect to its new address on apercura.org, path and
+query kept (301 for GET and HEAD, 308 otherwise), in one hop:
+
+| apercura.fr                                   | apercura.org                                   |
+| --------------------------------------------- | ---------------------------------------------- |
+| `/`                                           | `/fr`                                          |
+| `/praticien/{slug}`, any French page          | `/fr/praticien/{slug}`, `/fr/…`                |
+| `/en/…`, `/de/…`, `/es/…`, `/it/…`            | `/fr-en/…`, `/fr-de/…`, `/fr-es/…`, `/fr-it/…` |
+| `/sitemaps/{kind}-{k}.xml`                    | `/sitemaps/fr/{kind}-{k}.xml`                  |
+| robots.txt, sitemap.xml, images, security.txt | same path                                      |
+
+The former hosts are configured (`LEGACY_HOSTS`); the mapping is
+`apps/web/src/lib/market-path.ts`. On apercura.org itself, an old unprefixed
+French path answers 301 as well, while an old locale prefix answers a
+temporary 307: `/de`, `/es` and `/it` are the segments of markets still to
+open, and their redirect is dropped the day the market opens (the apercura.fr
+mapping stays). The data model already carries `country` on
+`directory.practitioners` and `directory.suppressions`, and the unique key is
+`(country, id_scheme, national_id)`, so two markets never collide.
+
+What the move costs, once: sessions (cookies are host-only) and passkeys (the
+relying party is the host) registered on apercura.fr do not carry over;
+calendar invitations sent before the switch keep their `@apercura.fr` UIDs;
+the Pro Santé Connect redirect URI, the mail domain (Brevo authentication,
+DKIM, DMARC, `contact@apercura.org`) and the Search Console property change
+(`docs/deploy-vps.md`, "Moving production to apercura.org").
 
 ### 3. `CountryAdapter`
 
@@ -123,7 +189,10 @@ specialties mapped to the market's own terms, with catalog labels under
 3. Sign a hosting contract that meets the market's health-data rules.
 4. Write the adapter, the ETL source and the taxonomy; add the legal pages the
    market requires.
-5. Add the domain, then make the market's locale indexable on that domain only.
+5. Add the market's segments (section 2) with their locales, sitemaps and
+   legal pages, list it as open on the international home, join its home to
+   the homes' hreflang, then make its languages indexable under its segments
+   only.
 
 ## What is known per market
 
@@ -244,8 +313,8 @@ reliable source is marked **UNVERIFIED**.
 ## Consequences
 
 - The interface reads in five languages today; only French pages are indexed.
-- New markets plug in through an adapter, an ETL source and a domain, without
-  changing the French code paths.
+- New markets plug in through an adapter, an ETL source and a path segment on
+  apercura.org, without changing the French code paths.
 - Germany, the United Kingdom and Italy have no open register of individual
   practitioners that allows republication: opening them needs a licence or a
   claimed-pages-only product. Spain needs the same check for REPS.
