@@ -5,8 +5,9 @@
  */
 
 /**
- * French is the default (served without a prefix); English is the source
- * catalog (British English); German, Spanish and Italian prepare future markets.
+ * French is the default (the language of the only open market); English is the
+ * source catalog (British English); German, Spanish and Italian prepare future
+ * markets.
  */
 export const LOCALES = ["fr", "en", "de", "es", "it"] as const;
 
@@ -14,8 +15,38 @@ export type Locale = (typeof LOCALES)[number];
 
 export const DEFAULT_LOCALE: Locale = "fr";
 
-/** The locales served under a prefix (`/en`, `/de`…). */
-export const PREFIXED_LOCALES = LOCALES.filter((locale) => locale !== DEFAULT_LOCALE);
+/**
+ * The path segment of the France market: every page of the French directory
+ * lives under it (`/fr/annuaire`), on one domain shared by all markets
+ * (docs/adr/0002-multi-country.md, section 2).
+ */
+export const FRANCE_SEGMENT = "fr";
+
+/**
+ * The URL prefix of each interface locale: `/{market}` for the market's own
+ * language, `/{market}-{language}` for an interface translation of its pages
+ * (`/fr-en/practitioner/…`). The locale stays the internal `[locale]` segment;
+ * next-intl rewrites the prefix to it.
+ */
+export const LOCALE_PREFIXES = {
+	fr: `/${FRANCE_SEGMENT}`,
+	en: `/${FRANCE_SEGMENT}-en`,
+	de: `/${FRANCE_SEGMENT}-de`,
+	es: `/${FRANCE_SEGMENT}-es`,
+	it: `/${FRANCE_SEGMENT}-it`,
+} as const satisfies Record<Locale, `/${string}`>;
+
+/** The first path segment of each locale's pages (`fr`, `fr-en`…). */
+export const LOCALE_SEGMENTS: readonly string[] = Object.values(LOCALE_PREFIXES).map((prefix) =>
+	prefix.slice(1),
+);
+
+/**
+ * The prefixes of the site before every market moved under its own segment:
+ * French had none, the other locales their code (`/en/directory`). Old links
+ * redirect to the prefixes above (~/lib/market-path).
+ */
+export const LEGACY_LOCALE_SEGMENTS = ["en", "de", "es", "it"] as const satisfies readonly Locale[];
 
 /**
  * Locales whose pages may be indexed: those of an open market. Only France is
@@ -23,6 +54,12 @@ export const PREFIXED_LOCALES = LOCALES.filter((locale) => locale !== DEFAULT_LO
  * the sitemaps and without hreflang until their market opens.
  */
 export const INDEXABLE_LOCALES: readonly Locale[] = ["fr"];
+
+/**
+ * hreflang of the indexable locales: language and market (`fr-FR`), so a later
+ * `fr-BE` or `fr-CH` page of another market never reads as the same audience.
+ */
+export const HREFLANGS: Partial<Record<Locale, string>> = { fr: "fr-FR" };
 
 /** BCP 47 tag used to format dates and numbers, and as the content language (JSON-LD). */
 export const LOCALE_TAGS: Record<Locale, string> = {

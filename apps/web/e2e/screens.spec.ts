@@ -140,7 +140,7 @@ for (const { name, viewport, isMobile } of VIEWPORTS) {
 		});
 
 		test(`manage page states (${name})`, async ({ page }) => {
-			await page.goto(`/rdv#t=${"A".repeat(43)}`);
+			await page.goto(`/fr/rdv#t=${"A".repeat(43)}`);
 			await expect(page.getByRole("heading", { name: "Ce lien ne fonctionne plus" })).toBeVisible();
 			await capture(page, `rdv-invalid-${name}`);
 

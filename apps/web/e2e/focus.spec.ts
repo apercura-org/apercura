@@ -30,10 +30,10 @@ async function focusOutline(page: Page) {
 }
 
 const CASES = [
-	{ surface: "quiet shade, stamp", path: "/", name: "Chercher" },
-	{ surface: "quiet shade, ink", path: "/", name: "Autour de moi" },
-	{ surface: "paper, stamp", path: "/pro/connexion", name: "Se connecter" },
-	{ surface: "paper, ink", path: "/pro/connexion", name: "Se connecter avec une clé d’accès" },
+	{ surface: "quiet shade, stamp", path: "/fr", name: "Chercher" },
+	{ surface: "quiet shade, ink", path: "/fr", name: "Autour de moi" },
+	{ surface: "paper, stamp", path: "/fr/pro/connexion", name: "Se connecter" },
+	{ surface: "paper, ink", path: "/fr/pro/connexion", name: "Se connecter avec une clé d’accès" },
 ] as const;
 
 for (const { surface, path, name } of CASES) {

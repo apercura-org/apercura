@@ -35,7 +35,8 @@
 			"accessibility": "Accessibilité",
 			"privacy": "Confidentialité",
 			"legal": "Mentions légales",
-			"terms": "Conditions d’utilisation"
+			"terms": "Conditions d’utilisation",
+			"international": "Apercura dans d’autres pays"
 		}
 	},
 	"LocaleSwitcher": {
@@ -104,6 +105,35 @@
 		},
 		"tagline": "L’annuaire ouvert et l’outil de prise de rendez-vous gratuit pour tous les professionnels de santé en France.",
 		"status": "Projet en cours de construction."
+	},
+	"International": {
+		"metaTitle": "Apercura · Annuaires ouverts des professionnels de santé",
+		"metaDescription": "Une page gratuite et factuelle pour chaque professionnel de santé inscrit, tirée des registres publics, pays par pays. Ouvert en France.",
+		"runningHead": "Annuaires ouverts des professionnels de santé",
+		"title": "Chaque professionnel de santé, une page ouverte",
+		"lead": "Apercura publie une page gratuite et factuelle pour chaque professionnel de santé inscrit, à partir des registres publics de chaque pays. Ni note, ni publicité, ni classement payant, et un code source ouvert.",
+		"suggestion": "En français : Apercura France",
+		"countries": {
+			"heading": "Choisir un pays",
+			"intro": "Un pays ouvre quand ses registres publics, ses pages légales et l’hébergement de ses données de santé sont prêts.",
+			"open": "Ouvert",
+			"soon": "Bientôt",
+			"enter": "Apercura {country}",
+			"alsoIn": "Aussi en"
+		},
+		"principles": {
+			"heading": "Ce qu’est Apercura",
+			"list": [
+				"Chaque professionnel est présenté de la même façon, qu’il utilise Apercura ou non.",
+				"Des informations factuelles issues des registres officiels, chaque page avec ses sources et sa date.",
+				"Gratuit pour les professionnels et les patients : ni abonnement, ni commission, ni publicité.",
+				"Open source sous licence AGPL-3.0 : chacun peut vérifier comment il fonctionne."
+			]
+		},
+		"more": {
+			"heading": "En savoir plus",
+			"intro": "Ces pages décrivent Apercura tel qu’il fonctionne en France, son premier pays."
+		}
 	},
 	"ProPage": {
 		"title": "Votre page existe déjà.",

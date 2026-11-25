@@ -1,5 +1,5 @@
 import { connection } from "next/server";
-import { PREFIXED_LOCALES } from "~/i18n/locales";
+import { LOCALE_PREFIXES } from "~/i18n/locales";
 import { getPathname } from "~/i18n/navigation";
 import { routing } from "~/i18n/routing";
 import { siteOrigin } from "~/lib/site-url";
@@ -21,6 +21,9 @@ const PRO_APP = [
 	"/pro/revendiquer/",
 ];
 
+/** Every locale's prefix (`/fr`, `/fr-en`…): the international home `/` has no private area. */
+const PREFIXES = Object.values(LOCALE_PREFIXES);
+
 /**
  * robots.txt. Only search results (also `noindex`; a crawl trap of endless
  * query combinations), the API, the component gallery and the practitioner app
@@ -33,12 +36,8 @@ export async function GET() {
 		"User-agent: *",
 		...routing.locales.map((locale) => `Disallow: ${getPathname({ href: "/recherche", locale })}`),
 		"Disallow: /api/",
-		"Disallow: /_ui",
-		...PREFIXED_LOCALES.map((locale) => `Disallow: /${locale}/_ui`),
-		...PRO_APP.flatMap((path) => [
-			`Disallow: ${path}`,
-			...PREFIXED_LOCALES.map((locale) => `Disallow: /${locale}${path}`),
-		]),
+		...PREFIXES.map((prefix) => `Disallow: ${prefix}/_ui`),
+		...PRO_APP.flatMap((path) => PREFIXES.map((prefix) => `Disallow: ${prefix}${path}`)),
 		"",
 		`Sitemap: ${siteOrigin()}/sitemap.xml`,
 		"",

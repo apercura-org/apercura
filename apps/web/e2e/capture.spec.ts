@@ -40,7 +40,7 @@ test("capture the claim flow, the editor and the admin queue", async ({
 	await resetPractitioner("19999990138");
 	await createProAccount(page, request, { name: "Chloe Essai", baseURL: baseURL as string });
 
-	await page.goto(`/pro/revendiquer?rpps=${rpps}`);
+	await page.goto(`/fr/pro/revendiquer?rpps=${rpps}`);
 	await capture(page, "claim-start");
 	await page.getByRole("button", { name: "C’est moi : revendiquer la page" }).click();
 	await expect(page).toHaveURL(/\/pro\/revendiquer\/[0-9a-f-]{36}$/);
@@ -51,9 +51,9 @@ test("capture the claim flow, the editor and the admin queue", async ({
 	await expect(page).toHaveURL(/\?psc=verified$/);
 	await capture(page, "claim-verified");
 
-	await page.goto("/pro/bienvenue?etape=2");
+	await page.goto("/fr/pro/bienvenue?etape=2");
 	await capture(page, "onboarding-booking");
-	await page.goto("/pro/bienvenue?etape=3");
+	await page.goto("/fr/pro/bienvenue?etape=3");
 	await page.getByRole("button", { name: "Publier ma page" }).click();
 	await expect(page).toHaveURL(/\/pro\/page$/);
 	await page
@@ -77,7 +77,7 @@ test("capture the claim flow, the editor and the admin queue", async ({
 	const claimantContext = await browser.newContext();
 	const claimant = await claimantContext.newPage();
 	await createProAccount(claimant, request, { name: "Kevin Doublon", baseURL: baseURL as string });
-	await claimant.goto("/pro/revendiquer?rpps=19999990138");
+	await claimant.goto("/fr/pro/revendiquer?rpps=19999990138");
 	await claimant.getByRole("button", { name: "C’est moi : revendiquer la page" }).click();
 	await claimant
 		.locator('input[type="file"]')
@@ -110,12 +110,12 @@ test("capture the claim flow, the editor and the admin queue", async ({
 		baseURL: baseURL as string,
 		platformAdmin: true,
 	});
-	await admin.goto("/pro/admin/revendications");
+	await admin.goto("/fr/pro/admin/revendications");
 	await capture(admin, "admin-queue");
 	await admin.getByRole("link", { name: /Doublon/ }).click();
 	await expect(admin.getByRole("heading", { name: "Rappel téléphonique" })).toBeVisible();
 	await capture(admin, "admin-claim");
-	await admin.goto("/pro/admin/signalements");
+	await admin.goto("/fr/pro/admin/signalements");
 	await capture(admin, "admin-reports");
 	await adminContext.close();
 });

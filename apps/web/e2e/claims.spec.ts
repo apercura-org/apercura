@@ -67,16 +67,16 @@ test("signed-out visitors and non-administrators cannot reach the practitioner a
 	baseURL,
 }) => {
 	for (const path of [
-		"/pro/page",
-		"/pro/bienvenue",
-		"/pro/revendiquer",
-		"/pro/admin/revendications",
+		"/fr/pro/page",
+		"/fr/pro/bienvenue",
+		"/fr/pro/revendiquer",
+		"/fr/pro/admin/revendications",
 	]) {
 		await page.goto(path);
 		await expect(page).toHaveURL(/\/pro\/connexion$/);
 	}
 	const plain = await reviewerSession(browser, request, baseURL as string, { admin: false });
-	for (const path of ["/pro/admin/revendications", "/pro/admin/signalements"]) {
+	for (const path of ["/fr/pro/admin/revendications", "/fr/pro/admin/signalements"]) {
 		await plain.goto(path);
 		await expect(plain).toHaveURL(/\/pro\/tableau-de-bord$/);
 	}
@@ -95,7 +95,7 @@ test("a visitor from “Claim this page” comes back to the claim of that RPPS 
 	const account = reviewer?.account as ProAccount;
 	const context = await browser.newContext();
 	const page = await context.newPage();
-	await page.goto("/praticien/camille-exemple-19999990013");
+	await page.goto("/fr/praticien/camille-exemple-19999990013");
 	await page.getByRole("link", { name: "Revendiquer cette page" }).click();
 	await expect(page).toHaveURL(
 		/\/pro\/connexion\?suite=%2Fpro%2Frevendiquer%3Frpps%3D19999990013$/,
@@ -103,16 +103,16 @@ test("a visitor from “Claim this page” comes back to the claim of that RPPS 
 	// The sign-up link keeps the intent too.
 	await expect(page.getByRole("link", { name: "Créer un compte" })).toHaveAttribute(
 		"href",
-		"/pro/inscription?suite=%2Fpro%2Frevendiquer%3Frpps%3D19999990013",
+		"/fr/pro/inscription?suite=%2Fpro%2Frevendiquer%3Frpps%3D19999990013",
 	);
 	await signIn(page, account, { from: page.url() });
 	await expect(page).toHaveURL(/\/pro\/revendiquer\?rpps=19999990013$/);
 	await expect(page.getByRole("button", { name: "C’est moi : revendiquer la page" })).toBeVisible();
 	// A foreign target is ignored: the space opens instead.
-	await page.goto("/pro/connexion?suite=https%3A%2F%2Fevil.example%2F");
+	await page.goto("/fr/pro/connexion?suite=https%3A%2F%2Fevil.example%2F");
 	await expect(page.getByRole("link", { name: "Créer un compte" })).toHaveAttribute(
 		"href",
-		"/pro/inscription",
+		"/fr/pro/inscription",
 	);
 	await context.close();
 });
@@ -130,7 +130,7 @@ test("claim with Pro Santé Connect, complete the page, and the public page foll
 	});
 
 	// 1. Start the claim from the RPPS number.
-	await page.goto(`/pro/revendiquer?rpps=${PSC_PRACTITIONER.rpps}`);
+	await page.goto(`/fr/pro/revendiquer?rpps=${PSC_PRACTITIONER.rpps}`);
 	await expect(page.getByRole("heading", { name: "La page que vous revendiquez" })).toBeVisible();
 	await expectNoAxeViolations(page);
 	await page.getByRole("button", { name: "C’est moi : revendiquer la page" }).click();
@@ -222,7 +222,7 @@ test("claim with Pro Santé Connect, complete the page, and the public page foll
 	expect(metadata.exif).toBeUndefined();
 
 	// 5. The public page shows the owner's content and the verified stamp.
-	await page.goto(`/praticien/${PSC_PRACTITIONER.slug}`);
+	await page.goto(`/fr/praticien/${PSC_PRACTITIONER.slug}`);
 	await expect(page.getByText("Page vérifiée", { exact: true })).toBeVisible();
 	await expect(page.getByText(headline)).toBeVisible();
 	await expect(page.getByText("Suivi des patients après un séjour à l’hôpital.")).toBeVisible();
@@ -234,7 +234,7 @@ test("claim with Pro Santé Connect, complete the page, and the public page foll
 	await expectNoAxeViolations(page);
 
 	// 6. Pro Santé Connect now signs this account in, as strong authentication.
-	await page.goto("/pro/tableau-de-bord");
+	await page.goto("/fr/pro/tableau-de-bord");
 	await page.getByRole("button", { name: "Se déconnecter" }).click();
 	await expect(page).toHaveURL(/\/pro\/connexion$/);
 	await page.getByRole("button", { name: "Se connecter avec Pro Santé Connect" }).click();
@@ -242,7 +242,7 @@ test("claim with Pro Santé Connect, complete the page, and the public page foll
 	await page.getByRole("button", { name: "Valider avec e-CPS" }).click();
 	await expect(page).toHaveURL(/\/pro\/tableau-de-bord$/);
 	await expect(page.getByText(`Connecté avec ${account.email}.`)).toBeVisible();
-	await page.goto("/pro/page");
+	await page.goto("/fr/pro/page");
 	await expect(page.getByRole("textbox", { name: "Accroche" })).toHaveValue(headline);
 });
 
@@ -258,7 +258,7 @@ test("claim with a document and a registry phone callback; an administrator appr
 		name: "David Temoin",
 		baseURL: baseURL as string,
 	});
-	await page.goto(`/pro/revendiquer?rpps=${DOCUMENT_PRACTITIONER.rpps}`);
+	await page.goto(`/fr/pro/revendiquer?rpps=${DOCUMENT_PRACTITIONER.rpps}`);
 	await page.getByRole("button", { name: "C’est moi : revendiquer la page" }).click();
 	await expect(page.getByRole("heading", { name: "Un justificatif et un appel" })).toBeVisible();
 
@@ -303,7 +303,7 @@ test("claim with a document and a registry phone callback; an administrator appr
 
 	// The administrator, in another browser context.
 	const admin = await reviewerSession(browser, request, baseURL as string, { admin: true });
-	await admin.goto("/pro/admin/revendications");
+	await admin.goto("/fr/pro/admin/revendications");
 	await expect(admin.getByRole("heading", { level: 1, name: "Revendications" })).toBeVisible();
 	await expectNoAxeViolations(admin);
 	await admin.getByRole("link", { name: /Temoin/ }).click();
@@ -345,7 +345,7 @@ test("claim with a document and a registry phone callback; an administrator appr
 	}
 	expect(await latestEmailText(request, claimant.email)).toContain("Votre page est vérifiée");
 
-	await page.goto(`/praticien/${DOCUMENT_PRACTITIONER.slug}`);
+	await page.goto(`/fr/praticien/${DOCUMENT_PRACTITIONER.slug}`);
 	await expect(page.getByText("Page vérifiée", { exact: true })).toBeVisible();
 });
 
@@ -357,7 +357,7 @@ test("objecting to an unclaimed page hides it at once; an administrator then sup
 }) => {
 	test.setTimeout(120_000);
 	await resetPractitioner(OPT_OUT_PRACTITIONER.rpps);
-	await page.goto(`/praticien/${OPT_OUT_PRACTITIONER.slug}`);
+	await page.goto(`/fr/praticien/${OPT_OUT_PRACTITIONER.slug}`);
 	await page
 		.getByRole("link", { name: "Vous êtes ce praticien et vous opposez à cette page ?" })
 		.click();
@@ -376,7 +376,7 @@ test("objecting to an unclaimed page hides it at once; an administrator then sup
 	await expect(page.getByText("La page est masquée")).toBeVisible();
 
 	// Hidden at once: nothing about the person, noindex, out of sitemaps and searches.
-	await page.goto(`/praticien/${OPT_OUT_PRACTITIONER.slug}`);
+	await page.goto(`/fr/praticien/${OPT_OUT_PRACTITIONER.slug}`);
 	await expect(
 		page.getByRole("heading", { level: 1, name: "Cette page est masquée" }),
 	).toBeVisible();
@@ -409,7 +409,7 @@ test("objecting to an unclaimed page hides it at once; an administrator then sup
 
 	// The light check: an administrator confirms, the page is suppressed for good.
 	const admin = await reviewerSession(browser, request, baseURL as string, { admin: true });
-	await admin.goto("/pro/admin/signalements");
+	await admin.goto("/fr/pro/admin/signalements");
 	await expect(
 		admin.getByRole("heading", { level: 1, name: "Signalements et retraits" }),
 	).toBeVisible();
@@ -420,7 +420,7 @@ test("objecting to an unclaimed page hides it at once; an administrator then sup
 	await row.getByRole("button", { name: "Supprimer la page" }).click();
 	await expect(admin.getByRole("row", { name: /Modele/ })).toHaveCount(0);
 
-	const gone = await request.get(`/praticien/${OPT_OUT_PRACTITIONER.slug}`);
+	const gone = await request.get(`/fr/praticien/${OPT_OUT_PRACTITIONER.slug}`);
 	expect(gone.status()).toBe(404);
 	const suppressed = testDb();
 	try {
@@ -435,7 +435,7 @@ test("objecting to an unclaimed page hides it at once; an administrator then sup
 
 test("reporting an error stores the message encrypted", async ({ page }) => {
 	await resetPractitioner(REPORTED_PRACTITIONER.rpps);
-	await page.goto(`/praticien/${REPORTED_PRACTITIONER.slug}/signaler`);
+	await page.goto(`/fr/praticien/${REPORTED_PRACTITIONER.slug}/signaler`);
 	await expect(page.getByRole("heading", { level: 1, name: "Signaler une erreur" })).toBeVisible();
 	await expectNoAxeViolations(page);
 	await page.locator("label").filter({ hasText: "Le praticien est à la retraite" }).click();
@@ -460,7 +460,7 @@ test("reporting an error stores the message encrypted", async ({ page }) => {
 	}
 });
 
-for (const path of ["/donnees", "/pro/revendication-email"]) {
+for (const path of ["/fr/donnees", "/fr/pro/revendication-email"]) {
 	test(`${path} has no axe violations`, async ({ page }) => {
 		await page.goto(path);
 		await expectNoAxeViolations(page);

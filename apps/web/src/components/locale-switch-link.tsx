@@ -73,8 +73,8 @@ export function LocaleSwitchLink({
 			{...props}
 			href={target}
 			locale={locale}
-			// next-intl never prefetches a link to another locale; nor is the current one: a cached
-			// prefetch of `/fr/…` (made under the previous locale cookie) would replay its redirect.
+			// next-intl never prefetches a link to another locale, and a language switch is rare:
+			// no prefetch for the current one either.
 			prefetch={false}
 			// The URL can change without an event (a panel opened in place): read it again first.
 			onPointerEnter={sync}

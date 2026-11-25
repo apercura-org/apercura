@@ -25,9 +25,9 @@ const it = catalog("it");
 const SLUG = "camille-exemple-19999990013";
 
 const LOCALES = [
-	{ locale: "de", name: "Deutsch", messages: de, practitioner: `/de/behandler/${SLUG}` },
-	{ locale: "es", name: "Español", messages: es, practitioner: `/es/profesional/${SLUG}` },
-	{ locale: "it", name: "Italiano", messages: it, practitioner: `/it/professionista/${SLUG}` },
+	{ locale: "de", name: "Deutsch", messages: de, practitioner: `/fr-de/behandler/${SLUG}` },
+	{ locale: "es", name: "Español", messages: es, practitioner: `/fr-es/profesional/${SLUG}` },
+	{ locale: "it", name: "Italiano", messages: it, practitioner: `/fr-it/professionista/${SLUG}` },
 ] as const;
 
 const SWITCHER = ["Français", "English", "Deutsch", "Español", "Italiano"];
@@ -52,7 +52,7 @@ async function printedKeys(page: Page) {
 
 for (const { locale, name, messages, practitioner } of LOCALES) {
 	test.describe(`${name} interface`, () => {
-		for (const path of [`/${locale}`, practitioner]) {
+		for (const path of [`/fr-${locale}`, practitioner]) {
 			test(`${path} renders in ${name}, noindex, with every message`, async ({ page }) => {
 				const problems = watchMessages(page);
 				const response = await page.goto(path);
@@ -73,9 +73,9 @@ for (const { locale, name, messages, practitioner } of LOCALES) {
 
 		test(`the ${name} home page is translated, not the English fallback`, async ({ page }) => {
 			const description = page.locator('meta[name="description"]');
-			await page.goto("/en");
+			await page.goto("/fr-en");
 			const english = await description.getAttribute("content");
-			await page.goto(`/${locale}`);
+			await page.goto(`/fr-${locale}`);
 			expect(await description.getAttribute("content")).not.toBe(english);
 			await expect(page.getByText(en.HomePage.hook)).toHaveCount(0);
 		});
@@ -87,7 +87,7 @@ for (const { locale, name, messages, practitioner } of LOCALES) {
 			await expect(nav.getByRole("link", { name })).toHaveAttribute("aria-current", "true");
 			await expect(nav.getByRole("link", { name })).toHaveAttribute("lang", locale);
 			await nav.getByRole("link", { name: "Français" }).click();
-			await expect(page).toHaveURL(new RegExp(`/praticien/${SLUG}$`));
+			await expect(page).toHaveURL(new RegExp(`/fr/praticien/${SLUG}$`));
 			await expect(page.locator("html")).toHaveAttribute("lang", "fr");
 		});
 	});
@@ -96,13 +96,13 @@ for (const { locale, name, messages, practitioner } of LOCALES) {
 test("the language switch reaches every locale from French and keeps the search", async ({
 	page,
 }) => {
-	await page.goto("/recherche?quoi=Exemple&ou=Lyon");
+	await page.goto("/fr/recherche?quoi=Exemple&ou=Lyon");
 	const nav = page.getByRole("navigation", { name: "Langue" });
 	await expect(nav.getByRole("link")).toHaveText(SWITCHER);
 	const targets = {
-		Deutsch: "/de/suche",
-		Español: "/es/buscar",
-		Italiano: "/it/cerca",
+		Deutsch: "/fr-de/suche",
+		Español: "/fr-es/buscar",
+		Italiano: "/fr-it/cerca",
 	} as const;
 	for (const [language, path] of Object.entries(targets)) {
 		await expect(nav.getByRole("link", { name: language })).toHaveAttribute(
@@ -111,18 +111,18 @@ test("the language switch reaches every locale from French and keeps the search"
 		);
 	}
 	await nav.getByRole("link", { name: "Deutsch" }).click();
-	await expect(page).toHaveURL(/\/de\/suche\?quoi=Exemple&ou=Lyon$/);
+	await expect(page).toHaveURL(/\/fr-de\/suche\?quoi=Exemple&ou=Lyon$/);
 	await expect(page.locator("html")).toHaveAttribute("lang", "de");
 });
 
 test("the language switch on /rdv keeps the token in every locale", async ({ page }) => {
 	const token = "A".repeat(43);
-	await page.goto(`/rdv#t=${token}`);
+	await page.goto(`/fr/rdv#t=${token}`);
 	const nav = page.getByRole("navigation", { name: "Langue" });
 	for (const { locale, name } of LOCALES) {
 		await expect(nav.getByRole("link", { name })).toHaveAttribute(
 			"href",
-			`/${locale}/rdv#t=${token}`,
+			`/fr-${locale}/rdv#t=${token}`,
 		);
 	}
 });

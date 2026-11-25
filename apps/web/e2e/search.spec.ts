@@ -8,13 +8,13 @@ import { axeViolations } from "./axe";
  */
 
 const FICTIF_RPPS = "19999990021";
-const FICTIF_PAGE = new RegExp(`/praticien/jean-pierre-fictif-${FICTIF_RPPS}$`);
+const FICTIF_PAGE = new RegExp(`/fr/praticien/jean-pierre-fictif-${FICTIF_RPPS}$`);
 
 test.describe("without JavaScript", () => {
 	test.use({ javaScriptEnabled: false });
 
 	test("a name search lists the practitioner with a link to the page", async ({ page }) => {
-		await page.goto("/recherche?quoi=Fictif");
+		await page.goto("/fr/recherche?quoi=Fictif");
 		const results = page.getByRole("table", { name: "Résultats" });
 		await expect(results).toBeVisible();
 		const link = results.getByRole("link", { name: /Jean-Pierre Fictif/ });
@@ -24,7 +24,7 @@ test.describe("without JavaScript", () => {
 	});
 
 	test("the home form submits Qui and Où and lands on results", async ({ page }) => {
-		await page.goto("/");
+		await page.goto("/fr");
 		await page.getByLabel("Qui ?").fill("Essai");
 		await page.getByLabel("Où ?").fill("75015");
 		await page.getByRole("button", { name: "Chercher" }).click();
@@ -35,7 +35,7 @@ test.describe("without JavaScript", () => {
 
 test("a specialty and a place redirect (307) to the listing page", async ({ request }) => {
 	const response = await request.get(
-		`/recherche?quoi=${encodeURIComponent("Médecin généraliste")}&ou=75015`,
+		`/fr/recherche?quoi=${encodeURIComponent("Médecin généraliste")}&ou=75015`,
 		{ maxRedirects: 0 },
 	);
 	expect(response.status()).toBe(307);
@@ -45,18 +45,18 @@ test("a specialty and a place redirect (307) to the listing page", async ({ requ
 });
 
 test("an RPPS number redirects (307) to the practitioner page", async ({ request }) => {
-	const response = await request.get(`/recherche?quoi=${FICTIF_RPPS}`, { maxRedirects: 0 });
+	const response = await request.get(`/fr/recherche?quoi=${FICTIF_RPPS}`, { maxRedirects: 0 });
 	expect(response.status()).toBe(307);
 	expect(response.headers().location).toMatch(FICTIF_PAGE);
 });
 
 test("an unknown RPPS number says honestly that there is no page", async ({ page }) => {
-	await page.goto("/recherche?quoi=19999990022");
+	await page.goto("/fr/recherche?quoi=19999990022");
 	await expect(page.getByRole("heading", { name: /Aucune page publique/ })).toBeVisible();
 });
 
 test("“Qui ?” suggests practitioners and opens the chosen page", async ({ page }) => {
-	await page.goto("/recherche");
+	await page.goto("/fr/recherche");
 	await page.getByRole("combobox", { name: "Qui ?" }).pressSequentially("Fict");
 	const option = page.getByRole("option", { name: /Jean-Pierre Fictif/ });
 	await expect(option).toBeVisible();
@@ -65,7 +65,7 @@ test("“Qui ?” suggests practitioners and opens the chosen page", async ({ pa
 });
 
 test("“Où ?” suggests places with their department", async ({ page }) => {
-	await page.goto("/en/search");
+	await page.goto("/fr-en/search");
 	await page.getByRole("combobox", { name: "Where?" }).pressSequentially("Paris 15");
 	const option = page.getByRole("option", { name: /Paris 15e Arrondissement/ });
 	await expect(option).toBeVisible();
@@ -78,7 +78,7 @@ test("“Où ?” suggests places with their department", async ({ page }) => {
 test("the home search gets its suggestions on first use, keeping the text and the focus", async ({
 	page,
 }) => {
-	await page.goto("/");
+	await page.goto("/fr");
 	// The plain GET form until the visitor reaches it: no combo box code at load.
 	await expect(page.getByLabel("Qui ?")).toHaveAttribute("type", "search");
 	await expect(page.getByRole("combobox")).toHaveCount(0);
@@ -95,11 +95,11 @@ test("the home search gets its suggestions on first use, keeping the text and th
 });
 
 for (const path of [
-	"/recherche?quoi=Essai&ou=75015",
-	"/recherche",
-	"/recherche?quoi=Zzzzzz",
-	"/recherche?ou=Nullepart",
-	"/en/search?quoi=Essai",
+	"/fr/recherche?quoi=Essai&ou=75015",
+	"/fr/recherche",
+	"/fr/recherche?quoi=Zzzzzz",
+	"/fr/recherche?ou=Nullepart",
+	"/fr-en/search?quoi=Essai",
 ]) {
 	test(`${path} has no axe violations`, async ({ page }) => {
 		await page.goto(path);

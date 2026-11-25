@@ -194,7 +194,7 @@ clever domain add www.apercura.health --app apercura-web
 Point the DNS records the Console shows for the `parhds` region, then check
 that `https://apercura.health/api/health` answers. TLS certificates are managed
 by Clever Cloud. Any other host (the `cleverapps.io` domain, `www.`) answers a
-308 to `APP_URL`.
+permanent redirect to the same page on `APP_URL`.
 
 ## 8. Environments
 

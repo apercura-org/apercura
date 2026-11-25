@@ -24,9 +24,9 @@
 const port = Number(process.env.LHCI_PORT ?? 4100);
 const base = `http://localhost:${port}`;
 
-const HOME = `${base}/`;
-const PRACTITIONER = `${base}/praticien/camille-exemple-19999990013`;
-const LISTING = `${base}/medecin-generaliste/75-paris`;
+const HOME = `${base}/fr`;
+const PRACTITIONER = `${base}/fr/praticien/camille-exemple-19999990013`;
+const LISTING = `${base}/fr/medecin-generaliste/75-paris`;
 const URLS = [HOME, PRACTITIONER, LISTING];
 
 /** Web vitals every public page must meet. */
@@ -58,8 +58,7 @@ module.exports = {
 			numberOfRuns: 5,
 			settings: {
 				chromeFlags: "--headless=new --no-sandbox --lang=fr-FR",
-				// A French visitor: an English browser would be sent to the (noindex) /en pages
-				// by the locale detection.
+				// A French visitor, as most visitors of the France pages.
 				extraHeaders: JSON.stringify({ "Accept-Language": "fr-FR,fr;q=0.9" }),
 			},
 		},
@@ -74,7 +73,7 @@ module.exports = {
 					assertions: { ...vitals, "resource-summary:script:size": script(330) },
 				},
 				{
-					matchingUrlPattern: `^${base}/$`,
+					matchingUrlPattern: `^${base}/fr$`,
 					assertions: { ...vitals, "resource-summary:script:size": script(330) },
 				},
 			],

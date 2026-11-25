@@ -81,7 +81,7 @@ async function readPage(page: Page) {
 }
 
 test("home search, results and an unclaimed practitioner page read in order", async ({ page }) => {
-	await page.goto("/");
+	await page.goto("/fr");
 	const home = await readPage(page);
 	expectPhrasesInOrder(home, [
 		"link, Aller au contenu",
@@ -146,7 +146,7 @@ test("home search, results and an unclaimed practitioner page read in order", as
 
 	await page.getByRole("link", { name: FICTIF.name }).focus();
 	await page.keyboard.press("Enter");
-	await expect(page).toHaveURL(new RegExp(`/praticien/${FICTIF.slug}$`));
+	await expect(page).toHaveURL(new RegExp(`/fr/praticien/${FICTIF.slug}$`));
 	const practitioner = await readPage(page);
 	expectPhrasesInOrder(practitioner, [
 		"main",
@@ -202,7 +202,7 @@ test.describe("booking, the appointment page and the practice's agenda", () => {
 	}) => {
 		test.setTimeout(120_000);
 		await ownClientAddress(page);
-		await page.goto(`/praticien/${elsa.slug}`);
+		await page.goto(`/fr/praticien/${elsa.slug}`);
 		const openLink = page.getByRole("link", { name: "Prendre rendez-vous" });
 		await expect(openLink).toBeVisible();
 		const reader = await ScreenReader.start(page);
@@ -333,7 +333,7 @@ test.describe("booking, the appointment page and the practice's agenda", () => {
 		expectFieldRow(done, "Motif", "Consultation");
 	});
 
-	test("/rdv reads the appointment as field rows, then what the patient can do", async ({
+	test("/fr/rdv reads the appointment as field rows, then what the patient can do", async ({
 		page,
 	}) => {
 		const link = await manageLink(page.request, who.email);
@@ -359,7 +359,7 @@ test.describe("booking, the appointment page and the practice's agenda", () => {
 		expectFieldRow(appointment, "Patient", `${who.firstName} ${who.lastName}`);
 
 		// Without its token the page says what happened and what to do next.
-		await page.goto("/rdv");
+		await page.goto("/fr/rdv");
 		await expect(page.getByRole("heading", { name: "Ce lien est incomplet" })).toBeVisible();
 		expectPhrasesInOrder(await readPage(page), [
 			"heading, Votre rendez-vous, level 1",
@@ -399,7 +399,7 @@ test.describe("booking, the appointment page and the practice's agenda", () => {
 			await sql.end();
 		}
 
-		await page.goto("/pro/aujourdhui");
+		await page.goto("/fr/pro/aujourdhui");
 		await expect(page.getByRole("region", { name: "Les rendez-vous du jour" })).toBeVisible();
 		await expect(page.locator('[role="status"]')).toHaveCount(0);
 		const today = await readPage(page);
@@ -448,7 +448,7 @@ test.describe("booking, the appointment page and the practice's agenda", () => {
 
 		// The week: view switch, week navigation, legend and keyboard help, then a grid whose
 		// columns are days and rows are times.
-		await page.goto("/pro/agenda");
+		await page.goto("/fr/pro/agenda");
 		await expect(page.getByRole("grid")).toBeVisible();
 		const reader = await ScreenReader.start(page);
 		const week = await reader.readUntil(/^gridcell, /);

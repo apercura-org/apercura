@@ -1,21 +1,31 @@
 import { connection } from "next/server";
+import { FRANCE_SEGMENT } from "~/i18n/locales";
 import { siteOrigin } from "~/lib/site-url";
-import { STATIC_PATHS, urlSetXml, xmlResponse } from "~/lib/sitemap-xml";
+import { francePath, STATIC_PATHS, urlSetXml, xmlResponse } from "~/lib/sitemap-xml";
 import { hasDatabaseUrl } from "~/server/db";
 import { getSitemapEntries, SITEMAP_KINDS, type SitemapKind } from "~/server/queries/sitemap";
 
 const FILE = /^([a-z]+)-(\d{1,6})\.xml$/;
 
-/** One sitemap chunk: `/sitemaps/{kind}-{chunk}.xml` (at most 20,000 URLs). */
-export async function GET(_request: Request, { params }: RouteContext<"/sitemaps/[file]">) {
+/**
+ * One sitemap chunk of a market: `/sitemaps/{market}/{kind}-{chunk}.xml` (at most 20,000
+ * URLs), its indexable pages only. France (`fr`) is the only open market.
+ */
+export async function GET(
+	_request: Request,
+	{ params }: RouteContext<"/sitemaps/[market]/[file]">,
+) {
 	await connection();
-	const { file } = await params;
+	const { market, file } = await params;
+	if (market !== FRANCE_SEGMENT) return new Response("Not found", { status: 404 });
 	const match = FILE.exec(file);
 	const kind = match?.[1];
 	const chunk = Number(match?.[2]);
 	const origin = siteOrigin();
 	if (kind === "pages" && chunk === 0) {
-		return xmlResponse(urlSetXml(STATIC_PATHS.map((path) => ({ loc: `${origin}${path}` }))));
+		return xmlResponse(
+			urlSetXml(STATIC_PATHS.map((path) => ({ loc: `${origin}${francePath(path)}` }))),
+		);
 	}
 	if (!kind || !(SITEMAP_KINDS as readonly string[]).includes(kind) || !hasDatabaseUrl()) {
 		return new Response("Not found", { status: 404 });
@@ -23,6 +33,11 @@ export async function GET(_request: Request, { params }: RouteContext<"/sitemaps
 	const entries = await getSitemapEntries(kind as SitemapKind, chunk);
 	if (entries.length === 0) return new Response("Not found", { status: 404 });
 	return xmlResponse(
-		urlSetXml(entries.map((entry) => ({ loc: `${origin}${entry.path}`, lastmod: entry.lastmod }))),
+		urlSetXml(
+			entries.map((entry) => ({
+				loc: `${origin}${francePath(entry.path)}`,
+				lastmod: entry.lastmod,
+			})),
+		),
 	);
 }

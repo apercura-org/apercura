@@ -2,9 +2,11 @@ import { parseSearchQuery } from "@apercura/core";
 import { NextRequest, NextResponse } from "next/server";
 import createMiddleware from "next-intl/middleware";
 import { clientEnv } from "./env";
+import { LOCALE_SEGMENTS } from "./i18n/locales";
 import { getPathname } from "./i18n/navigation";
 import { type Locale, routing } from "./i18n/routing";
 import { canonicalPath } from "./lib/canonical-path";
+import { isPagePath, marketPath, parseHosts } from "./lib/market-path";
 import {
 	contentSecurityPolicy,
 	newNonce,
@@ -15,7 +17,7 @@ import { searchRedirect } from "./server/search-redirect";
 
 const intl = createMiddleware(routing);
 
-const NONCE_PATHS = noncePathPattern(routing.locales);
+const NONCE_PATHS = noncePathPattern(LOCALE_SEGMENTS);
 
 function cspOptions() {
 	const production = process.env.NODE_ENV === "production";
@@ -91,7 +93,55 @@ function requestHost(request: NextRequest): string | null {
 	return forwarded || request.headers.get("host");
 }
 
-/** Search pages by locale (`/recherche`, `/en/search`, `/de/suche`…). */
+/**
+ * Former hosts of the French site (`LEGACY_HOSTS`, e.g. `apercura.fr,www.apercura.fr`): all of
+ * their URLs redirect, robots.txt, sitemaps and Open Graph images included, and their home `/`
+ * is France's (`/fr`). Any other host only has its pages redirected, its home to the
+ * international one.
+ */
+function isLegacyHost(host: string): boolean {
+	return parseHosts(process.env.LEGACY_HOSTS).includes(host.toLowerCase());
+}
+
+/** 301 for GET and HEAD (understood by every client), 308 otherwise (keeps method and body). */
+const permanent = (request: NextRequest) =>
+	request.method === "GET" || request.method === "HEAD" ? 301 : 308;
+
+/**
+ * The redirect from any host other than APP_URL's to the same page there, moved to the
+ * current scheme on the way (`apercura.fr/praticien/x` → `apercura.org/fr/praticien/x`).
+ */
+function offHostRedirect(request: NextRequest, canonical: URL, host: string): NextResponse | null {
+	const pathname = request.nextUrl.pathname;
+	const page = isPagePath(pathname);
+	const legacy = isLegacyHost(host);
+	// API calls and files of an unknown host (the container name the import calls, a provider's
+	// default domain) are served where they are, as before.
+	if (!page && !legacy) return null;
+	// `www.` of the canonical host is the same site: its home stays the international one.
+	const legacyRoot = legacy && host.toLowerCase() !== `www.${canonical.host}`;
+	const moved = marketPath(pathname, { legacyRoot })?.path ?? pathname;
+	const path = page ? (canonicalPath(moved) ?? moved) : moved;
+	return NextResponse.redirect(
+		new URL(path + request.nextUrl.search, canonical),
+		permanent(request),
+	);
+}
+
+/**
+ * The redirect of a path of the former scheme on the canonical host itself (`/annuaire` →
+ * `/fr/annuaire`, `/en/about` → `/fr-en/about`). Former locale prefixes answer a temporary
+ * 307: `/de`, `/es` and `/it` are the segments of markets still to open.
+ */
+function marketRedirect(request: NextRequest): NextResponse | null {
+	const moved = marketPath(request.nextUrl.pathname, { legacyRoot: false });
+	if (!moved) return null;
+	const target = request.nextUrl.clone();
+	target.pathname = canonicalPath(moved.path) ?? moved.path;
+	return NextResponse.redirect(target, moved.move === "locale" ? 307 : permanent(request));
+}
+
+/** Search pages by locale (`/fr/recherche`, `/fr-en/search`, `/fr-de/suche`…). */
 const SEARCH_PATHS: Record<string, Locale> = Object.fromEntries(
 	routing.locales.map((locale) => [getPathname({ href: "/recherche", locale }), locale]),
 );
@@ -122,30 +172,45 @@ async function searchShortcut(request: NextRequest): Promise<NextResponse | null
 	}
 }
 
-const LOCALE_PREFIX = new RegExp(`^/(?:${routing.locales.join("|")})(?:/|$)`);
+const LOCALE_PREFIX = new RegExp(`^/(?:${LOCALE_SEGMENTS.join("|")})(?:/|$)`, "i");
 
 /**
- * 1. Canonical host: any other host (www., the hosting provider's default
- *    domain) answers 308 to the same path on APP_URL. Loopback hosts are left
- *    alone so health checks and local runs of a production build keep working.
- * 2. Canonical path: 308 to the unprefixed, lowercase form (`canonicalPath`).
- * 3. Search shortcuts: 307 to the page a query names.
- * 4. Locale routing (next-intl): French without a prefix, other locales under
- *    theirs (/en, /de, /es, /it).
- *    Its redirects of an explicitly prefixed path (`/en/annuaire` →
- *    `/en/directory`) are permanent; the locale detection of an unprefixed
- *    path stays temporary (307), as it depends on the visitor.
+ * 1. Canonical host: any other host (apercura.fr, www., the hosting provider's default
+ *    domain) answers a permanent redirect (301 for GET and HEAD, 308 otherwise) to the same
+ *    page on APP_URL, moved to the current scheme (~/lib/market-path). The former hosts listed
+ *    in LEGACY_HOSTS redirect their robots.txt, sitemaps and images too. Loopback hosts are
+ *    left alone so health checks and local runs of a production build keep working.
+ * 2. Files and metadata routes on the canonical host are served as they are (old sitemap
+ *    names redirect to France's).
+ * 3. The root `/` is the international home (`app/(international)`), outside the locales.
+ * 4. Former scheme: unprefixed French paths and the old locale prefixes redirect under
+ *    `/fr`, `/fr-en`… (`marketRedirect`).
+ * 5. Canonical path: 308 to the lowercase form (`canonicalPath`).
+ * 6. Search shortcuts: 307 to the page a query names.
+ * 7. Locale routing (next-intl): every locale under its prefix (`/fr`, `/fr-en`, `/fr-de`…).
+ *    Its redirects of a localized path in the wrong form (`/fr-en/annuaire` →
+ *    `/fr-en/directory`) are permanent.
  *
- * Every answer carries the page's Content-Security-Policy (`pagePolicy`).
+ * Every page answer carries the page's Content-Security-Policy (`pagePolicy`).
  */
 export default async function proxy(request: NextRequest) {
-	const policy = pagePolicy(request);
 	const canonical = canonicalOrigin();
 	const host = requestHost(request);
 	if (canonical && host && host !== canonical.host && !LOOPBACK.test(host)) {
-		const target = new URL(request.nextUrl.pathname + request.nextUrl.search, canonical);
-		return secured(NextResponse.redirect(target, 308), policy);
+		const redirect = offHostRedirect(request, canonical, host);
+		// Files keep the headers they always had; pages get their policy, as every page answer.
+		if (redirect && !isPagePath(request.nextUrl.pathname)) return redirect;
+		if (redirect) return secured(redirect, pagePolicy(request));
 	}
+	if (!isPagePath(request.nextUrl.pathname)) {
+		return marketRedirect(request) ?? NextResponse.next();
+	}
+	const policy = pagePolicy(request);
+	if (request.nextUrl.pathname === "/") {
+		return secured(NextResponse.next(), policy);
+	}
+	const moved = marketRedirect(request);
+	if (moved) return secured(moved, policy);
 	const path = canonicalPath(request.nextUrl.pathname);
 	if (path) {
 		const target = request.nextUrl.clone();
@@ -162,9 +227,20 @@ export default async function proxy(request: NextRequest) {
 }
 
 export const config = {
-	// Skip API routes, Next.js internals and files with an extension (sitemaps,
-	// robots.txt, images), which the canonical host check does not need either:
-	// crawlers reach them from the canonical robots.txt.
-	// The site icons (`/icon/{size}`, `/apple-icon`) are metadata routes, outside the locales.
-	matcher: "/((?!api|trpc|_next|_vercel|icon/|apple-icon|.*\\..*).*)",
+	matcher: [
+		// Pages: everything but API routes, Next.js internals and files with an extension.
+		// The site icons (`/icon/{size}`, `/apple-icon`) are metadata routes, outside the locales.
+		"/((?!api|trpc|_next|_vercel|icon/|apple-icon|.*\\..*).*)",
+		// What a former host must redirect too, for crawlers and shared links: robots.txt,
+		// sitemaps, the Open Graph images, security.txt and the icons. Never API routes, whose
+		// request bodies a proxy would buffer.
+		"/robots.txt",
+		"/sitemap.xml",
+		"/sitemaps/:path*",
+		"/og/:path*",
+		"/.well-known/:path*",
+		"/manifest.webmanifest",
+		"/icon/:path*",
+		"/apple-icon",
+	],
 };

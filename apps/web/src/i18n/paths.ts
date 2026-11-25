@@ -1,9 +1,9 @@
-import type { Locale } from "./locales";
+import { LOCALE_PREFIXES, type Locale } from "./locales";
 import { type AppPathname, routing } from "./routing";
 
 /**
  * The public path of an internal pathname in a locale, from the routing table
- * alone (`/praticien/[slug]` → `/de/behandler/…`). Free of React and Next.js, so
+ * alone (`/praticien/[slug]` → `/fr-de/behandler/…`). Free of React and Next.js, so
  * emails, jobs and configuration can build links outside a request.
  * Catch-all segments are not supported.
  */
@@ -19,6 +19,6 @@ export function localePath(
 		if (value === undefined) throw new Error(`Missing route parameter: ${name}`);
 		return encodeURIComponent(value);
 	});
-	if (locale === routing.defaultLocale) return path;
-	return path === "/" ? `/${locale}` : `/${locale}${path}`;
+	const prefix = LOCALE_PREFIXES[locale];
+	return path === "/" ? prefix : `${prefix}${path}`;
 }

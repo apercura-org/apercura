@@ -30,8 +30,8 @@ async function stubMapStyle(page: Page) {
 }
 
 for (const { locale, path } of [
-	{ locale: "fr", path: `/praticien/${SLUG}` },
-	{ locale: "de", path: `/de/behandler/${SLUG}` },
+	{ locale: "fr", path: `/fr/praticien/${SLUG}` },
+	{ locale: "de", path: `/fr-de/behandler/${SLUG}` },
 ]) {
 	test(`the map speaks ${locale}`, async ({ page }) => {
 		const strings = catalog(locale).Map;

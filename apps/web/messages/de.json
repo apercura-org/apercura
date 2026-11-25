@@ -35,7 +35,8 @@
 			"accessibility": "Barrierefreiheit",
 			"privacy": "Datenschutz",
 			"legal": "Impressum",
-			"terms": "Nutzungsbedingungen"
+			"terms": "Nutzungsbedingungen",
+			"international": "Apercura in anderen Ländern"
 		}
 	},
 	"LocaleSwitcher": {
@@ -104,6 +105,35 @@
 		},
 		"tagline": "Das offene Verzeichnis und das kostenlose Buchungstool für alle Gesundheitsfachkräfte in Frankreich.",
 		"status": "In Arbeit."
+	},
+	"International": {
+		"metaTitle": "Apercura · Offene Verzeichnisse der Gesundheitsfachkräfte",
+		"metaDescription": "Eine kostenlose, sachliche Seite für jede registrierte Gesundheitsfachkraft, aus öffentlichen Registern, Land für Land. Offen in Frankreich.",
+		"runningHead": "Offene Verzeichnisse der Gesundheitsfachkräfte",
+		"title": "Jede Gesundheitsfachkraft, eine offene Seite",
+		"lead": "Apercura veröffentlicht eine kostenlose, sachliche Seite für jede registrierte Gesundheitsfachkraft, aus den öffentlichen Registern jedes Landes. Keine Bewertungen, keine Werbung, kein bezahltes Ranking, und der Quellcode ist offen.",
+		"suggestion": "Auf Deutsch: Apercura Frankreich",
+		"countries": {
+			"heading": "Land wählen",
+			"intro": "Ein Land öffnet, sobald seine öffentlichen Register, seine rechtlichen Seiten und das Hosting seiner Gesundheitsdaten bereit sind.",
+			"open": "Offen",
+			"soon": "Demnächst",
+			"enter": "Apercura {country}",
+			"alsoIn": "Auch auf"
+		},
+		"principles": {
+			"heading": "Was Apercura ist",
+			"list": [
+				"Alle Gesundheitsfachkräfte werden gleich dargestellt, ob sie Apercura nutzen oder nicht.",
+				"Sachliche Informationen aus amtlichen Registern, jede Seite mit ihren Quellen und ihrem Datum.",
+				"Kostenlos für Gesundheitsfachkräfte und Patienten: kein Abonnement, keine Provision, keine Werbung.",
+				"Open Source unter der Lizenz AGPL-3.0: Alle können prüfen, wie es funktioniert."
+			]
+		},
+		"more": {
+			"heading": "Mehr erfahren",
+			"intro": "Diese Seiten beschreiben Apercura, wie es in Frankreich, seinem ersten Land, betrieben wird."
+		}
 	},
 	"ProPage": {
 		"title": "Ihre Seite existiert bereits.",

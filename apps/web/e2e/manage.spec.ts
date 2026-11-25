@@ -13,7 +13,7 @@ import {
 import { BOOKING_PRACTITIONERS } from "./booking-seed";
 
 /*
- * The manage page (`/rdv#t=…`) from the confirmation email: the token only ever travels in the
+ * The manage page (`/fr/rdv#t=…`) from the confirmation email: the token only ever travels in the
  * URL fragment and in POST bodies, and nothing reachable by GET changes an appointment.
  */
 
@@ -44,13 +44,13 @@ async function statusOf(token: string): Promise<string | undefined> {
 }
 
 test("without a token, or with a wrong one, the page says so honestly", async ({ page }) => {
-	await page.goto("/rdv");
+	await page.goto("/fr/rdv");
 	await expect(page.getByRole("heading", { name: "Ce lien est incomplet" })).toBeVisible();
-	await page.goto(`/rdv#t=${"A".repeat(43)}`);
+	await page.goto(`/fr/rdv#t=${"A".repeat(43)}`);
 	await expect(page.getByRole("heading", { name: "Ce lien ne fonctionne plus" })).toBeVisible();
 	await expect(page.getByRole("link", { name: "Chercher un praticien" })).toHaveAttribute(
 		"href",
-		"/recherche",
+		"/fr/recherche",
 	);
 	expect(await axeViolations(page)).toEqual([]);
 });
@@ -59,7 +59,7 @@ test("the page sends no referrer, is never indexed and loads no third-party scri
 	page,
 	request,
 }) => {
-	const response = await request.get("/rdv");
+	const response = await request.get("/fr/rdv");
 	expect(response.status()).toBe(200);
 	expect(response.headers()["referrer-policy"]).toBe("no-referrer");
 	expect(response.headers()["x-robots-tag"]).toContain("noindex");
@@ -69,7 +69,7 @@ test("the page sends no referrer, is never indexed and loads no third-party scri
 
 	const origins = new Set<string>();
 	page.on("request", (entry) => origins.add(new URL(entry.url()).origin));
-	await page.goto(`/rdv#t=${"A".repeat(43)}`);
+	await page.goto(`/fr/rdv#t=${"A".repeat(43)}`);
 	await expect(page.getByRole("heading", { name: "Ce lien ne fonctionne plus" })).toBeVisible();
 	const own = new URL(page.url()).origin;
 	expect([...origins].filter((origin) => origin !== own && origin !== "null")).toEqual([]);
@@ -82,7 +82,7 @@ test("a patient moves then cancels an appointment from the email link", async ({
 		panel(page).getByRole("heading", { name: "Votre rendez-vous est confirmé" }),
 	).toBeVisible();
 	const link = await manageLink(page.request, who.email);
-	expect(link.path).toMatch(/^\/rdv#t=/);
+	expect(link.path).toMatch(/^\/fr\/rdv#t=/);
 
 	await page.goto(link.path);
 	await expect(page.getByRole("heading", { name: "Votre rendez-vous", level: 1 })).toBeVisible();
@@ -127,7 +127,7 @@ test("a GET never changes an appointment", async ({ page, request }) => {
 
 	// What a mail scanner does: fetch the link (the fragment never leaves the client)…
 	expect((await request.get(link.path)).status()).toBe(200);
-	expect((await request.get(`/rdv?t=${link.token}`)).status()).toBe(200);
+	expect((await request.get(`/fr/rdv?t=${link.token}`)).status()).toBe(200);
 	// …or even guess the procedures: tRPC serves mutations by POST only.
 	const input = encodeURIComponent(JSON.stringify({ json: { token: link.token } }));
 	for (const procedure of ["cancel", "get", "confirm", "slots", "reschedule"]) {

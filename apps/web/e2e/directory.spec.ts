@@ -6,27 +6,27 @@ import { axeViolations } from "./axe";
  * packages/etl/fixtures (fictitious people, RPPS in the 1999999xxxx range).
  */
 
-const OFFICE = "/praticien/camille-exemple-19999990013";
-const HOSPITAL = "/praticien/fanny-placebo-19999990088";
-const ESTABLISHMENT = "/etablissement/centre-hospitalier-fictif-2a9999001";
-const LANDING = "/medecin-generaliste/75-paris";
-const SMALL_LANDING = "/cardiologue/75-paris";
+const OFFICE = "/fr/praticien/camille-exemple-19999990013";
+const HOSPITAL = "/fr/praticien/fanny-placebo-19999990088";
+const ESTABLISHMENT = "/fr/etablissement/centre-hospitalier-fictif-2a9999001";
+const LANDING = "/fr/medecin-generaliste/75-paris";
+const SMALL_LANDING = "/fr/cardiologue/75-paris";
 /** A self-employed nurse (fixture 18), contracted according to Ameli. */
-const NURSE = "/praticien/pauline-soignante-19999990187";
-const NURSE_LANDING = "/infirmier/75-paris/paris-15e-arrondissement";
+const NURSE = "/fr/praticien/pauline-soignante-19999990187";
+const NURSE_LANDING = "/fr/infirmier/75-paris/paris-15e-arrondissement";
 
 const PAGES = [
 	OFFICE,
 	HOSPITAL,
-	"/en/practitioner/camille-exemple-19999990013",
+	"/fr-en/practitioner/camille-exemple-19999990013",
 	ESTABLISHMENT,
 	LANDING,
 	`${LANDING}/2`,
-	"/medecin-generaliste",
-	"/orthodontiste/69-rhone/lyon-3e-arrondissement",
-	"/annuaire",
-	"/annuaire/75-paris",
-	"/annuaire/69-rhone/lyon",
+	"/fr/medecin-generaliste",
+	"/fr/orthodontiste/69-rhone/lyon-3e-arrondissement",
+	"/fr/annuaire",
+	"/fr/annuaire/75-paris",
+	"/fr/annuaire/69-rhone/lyon",
 	NURSE,
 	NURSE_LANDING,
 ];
@@ -51,7 +51,7 @@ test("an office practitioner page: header, call action, JSON-LD and indexing", a
 	await expect(page.getByText(/pas encore ouverte/)).toBeVisible();
 	await expect(page.getByRole("link", { name: "Revendiquer cette page" })).toHaveAttribute(
 		"href",
-		"/pro/revendiquer?rpps=19999990013",
+		"/fr/pro/revendiquer?rpps=19999990013",
 	);
 	expect(await robotsOf(page)).toBe("index, follow");
 	const jsonLd = await page.locator('script[type="application/ld+json"]').allTextContents();
@@ -107,24 +107,24 @@ test("a hospital practitioner is reached through the establishment page", async 
 });
 
 test("English pages exist but are never indexed", async ({ page }) => {
-	await page.goto("/en/practitioner/camille-exemple-19999990013");
+	await page.goto("/fr-en/practitioner/camille-exemple-19999990013");
 	expect(await robotsOf(page)).toBe("noindex, follow");
 });
 
 test.describe("status codes", () => {
 	test("a wrong name part redirects (308) to the canonical page", async ({ request }) => {
-		const response = await request.get("/praticien/autre-nom-19999990013", { maxRedirects: 0 });
+		const response = await request.get("/fr/praticien/autre-nom-19999990013", { maxRedirects: 0 });
 		expect(response.status()).toBe(308);
 		expect(response.headers().location).toMatch(/\/praticien\/camille-exemple-19999990013$/);
 	});
 
 	for (const [label, path] of [
-		["a bad Luhn check", "/praticien/camille-exemple-19999990014"],
-		["an unknown RPPS", "/praticien/inconnu-10000000009"],
-		["a locum without a place", "/praticien/gaspard-remplacant-19999990096"],
-		["a reserved first segment", "/praticien"],
-		["an unknown listing", "/inconnu/75-paris"],
-		["an empty listing", "/cardiologue/13-bouches-du-rhone"],
+		["a bad Luhn check", "/fr/praticien/camille-exemple-19999990014"],
+		["an unknown RPPS", "/fr/praticien/inconnu-10000000009"],
+		["a locum without a place", "/fr/praticien/gaspard-remplacant-19999990096"],
+		["a reserved first segment", "/fr/praticien"],
+		["an unknown listing", "/fr/inconnu/75-paris"],
+		["an empty listing", "/fr/cardiologue/13-bouches-du-rhone"],
 		["a page past the end", `${LANDING}/99`],
 	] as const) {
 		test(`${label} answers 404`, async ({ request }) => {
@@ -155,19 +155,20 @@ test("the sitemap index lists chunks of indexable canonical URLs", async ({ requ
 	const xml = await index.text();
 	expect(xml).toContain("<sitemapindex");
 	expect(xml).not.toContain("changefreq");
-	const chunk = /<loc>[^<]*(\/sitemaps\/praticiens-\d+\.xml)<\/loc>/.exec(xml)?.[1];
+	const chunk = /<loc>[^<]*(\/sitemaps\/fr\/praticiens-\d+\.xml)<\/loc>/.exec(xml)?.[1];
 	expect(chunk).toBeTruthy();
 	const urls = await (await request.get(chunk as string)).text();
-	expect(urls).toContain("/praticien/camille-exemple-19999990013</loc>");
+	expect(urls).toContain("/fr/praticien/camille-exemple-19999990013</loc>");
 	expect(urls).not.toContain("gaspard-remplacant");
 	expect(urls).toMatch(/<lastmod>\d{4}-\d{2}-\d{2}<\/lastmod>/);
 });
 
 test("robots.txt disallows search and the API, never directory pages", async ({ request }) => {
 	const body = await (await request.get("/robots.txt")).text();
-	expect(body).toContain("Disallow: /recherche");
+	expect(body).toContain("Disallow: /fr/recherche");
 	expect(body).toContain("Disallow: /api/");
-	expect(body).not.toMatch(/Disallow: \/praticien/);
+	expect(body).not.toMatch(/Disallow: \/(?:fr\/)?praticien/);
+	expect(body).not.toMatch(/^Disallow: \/$/m);
 	expect(body).toMatch(/Sitemap: .*\/sitemap\.xml/);
 });
 
@@ -180,7 +181,7 @@ test("one Open Graph image per profession", async ({ request }) => {
 });
 
 test("search results offer the next step and stay in the searched place", async ({ page }) => {
-	await page.goto("/recherche?quoi=Essai&ou=75015");
+	await page.goto("/fr/recherche?quoi=Essai&ou=75015");
 	const results = page.getByRole("table", { name: "Résultats" });
 	await expect(results).toBeVisible();
 	const calls = results.getByRole("link", { name: /^Appeler le / });
@@ -192,8 +193,8 @@ test("search results offer the next step and stay in the searched place", async 
 test.describe("on a phone", () => {
 	test.use({ viewport: { width: 390, height: 844 } });
 
-	test("/donnees never scrolls sideways", async ({ page }) => {
-		await page.goto("/donnees");
+	test("/fr/donnees never scrolls sideways", async ({ page }) => {
+		await page.goto("/fr/donnees");
 		const width = await page.evaluate(() => document.documentElement.scrollWidth);
 		expect(width).toBeLessThanOrEqual(390);
 	});

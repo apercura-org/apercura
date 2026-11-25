@@ -13,6 +13,9 @@ is ready.
 
 Production is live on [apercura.fr](https://apercura.fr), with TLS, backups, monitoring and
 alerts, deployed in [#34](https://github.com/maxgfr/apercura/issues/34). Online booking is on.
+It moves to [apercura.org/fr](https://apercura.org/fr), every market on one domain, apercura.fr
+redirecting ([#81](https://github.com/maxgfr/apercura/issues/81),
+[the switch](./docs/deploy-vps.md#moving-production-to-apercuraorg)).
 
 To keep costs down at launch, it runs on an interim host in the European Economic Area that is
 **not HDS-certified**. Moving to an HDS-certified host is the first priority once the first users
@@ -62,7 +65,7 @@ test, reflow at 390 px and a Lighthouse CI score of 100. What is left is manual:
 
 - Register with Pro Santé Connect: iSC account, Datapass, sandbox, then production, with the
   redirect URI `{APP_URL}/api/auth/callback/psc`.
-- Buy the other domains (apercura.health, apercura.eu, apercura.org) and redirect them to apercura.fr.
+- Buy the other domains (apercura.health, apercura.eu) and redirect them to apercura.org.
 - Submit the domain to the HSTS preload list once every subdomain is served over HTTPS for good.
 - Order an external penetration test.
 - Keep an off-site copy of the backups (an S3 bucket), if it is not set up yet.

@@ -4,7 +4,7 @@ import "./src/env";
 
 import type { NextConfig } from "next";
 import createNextIntlPlugin from "next-intl/plugin";
-import { PREFIXED_LOCALES } from "./src/i18n/locales";
+import { INDEXABLE_LOCALES, LOCALE_PREFIXES, LOCALE_SEGMENTS } from "./src/i18n/locales";
 import { routing } from "./src/i18n/routing";
 import { API_CONTENT_SECURITY_POLICY, baseSecurityHeaders } from "./src/lib/security-headers";
 
@@ -43,29 +43,32 @@ const nextConfig: NextConfig = {
 			{ key: "Cache-Control", value: "private, no-store" },
 		];
 		// The same directives as the pages' robots meta, for crawlers that read headers only:
-		// pages in a locale other than French are never indexed in v1, nor search results, the
-		// practitioner space and the per-practitioner forms. `/pro` itself (the practitioners'
-		// page) stays indexable.
+		// pages in a locale other than French (`/fr-en`, `/fr-de`…) are never indexed in v1, nor
+		// search results, the practitioner space and the per-practitioner forms. `/fr/pro` itself
+		// (the practitioners' page) and the international home `/` stay indexable.
 		const noindex = [{ key: "X-Robots-Tag", value: "noindex" }];
 		const noindexNofollow = [{ key: "X-Robots-Tag", value: "noindex, nofollow" }];
-		const prefixed = `:locale(${PREFIXED_LOCALES.join("|")})`;
+		const unindexed = routing.locales
+			.filter((locale) => !INDEXABLE_LOCALES.includes(locale))
+			.map((locale) => LOCALE_PREFIXES[locale].slice(1));
+		const notIndexed = `:prefix(${unindexed.join("|")})`;
+		const anyPrefix = `:prefix(${LOCALE_SEGMENTS.join("|")})`;
 		const forms = ["/praticien/[slug]/signaler", "/praticien/[slug]/retrait"] as const;
 		return [
 			{ source: "/:path*", headers: security },
 			{ source: "/api/:path((?!admin/claim-documents/).*)", headers: api },
-			{ source: `/${prefixed}`, headers: noindex },
-			{ source: `/${prefixed}/:path*`, headers: noindex },
-			{ source: "/recherche", headers: noindex },
-			{ source: `/${prefixed}?/pro/:path+`, headers: noindexNofollow },
+			{ source: `/${notIndexed}`, headers: noindex },
+			{ source: `/${notIndexed}/:path*`, headers: noindex },
+			{ source: `${LOCALE_PREFIXES.fr}/recherche`, headers: noindex },
+			{ source: `/${anyPrefix}/pro/:path+`, headers: noindexNofollow },
 			...routing.locales.flatMap((locale) =>
 				forms.map((form) => ({
-					source: `${locale === routing.defaultLocale ? "" : `/${locale}`}${routing.pathnames[form][locale].replace("[slug]", ":slug")}`,
+					source: `${LOCALE_PREFIXES[locale]}${routing.pathnames[form][locale].replace("[slug]", ":slug")}`,
 					headers: noindexNofollow,
 				})),
 			),
 			// Last, so they win over the rules above.
-			{ source: "/rdv", headers: manage },
-			{ source: `/${prefixed}/rdv`, headers: manage },
+			{ source: `/${anyPrefix}/rdv`, headers: manage },
 		];
 	},
 };

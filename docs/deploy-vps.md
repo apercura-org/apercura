@@ -165,7 +165,10 @@ other.example.org {
 ```
 
 `sudo systemctl reload caddy` after each change. Any other host name that
-reaches the app answers a 308 to `APP_URL` (`CANONICAL_HOST_REDIRECT`).
+reaches the app answers a permanent redirect to the same page on `APP_URL`
+(`CANONICAL_HOST_REDIRECT`). A former domain whose old paths must be mapped
+(apercura.fr) is proxied to the app, never `redir`ected by Caddy: the app
+knows where each old path lives now ([Moving to apercura.org](#moving-production-to-apercuraorg)).
 
 ## First start
 
@@ -252,7 +255,7 @@ then:
 | Variable            | `COOLIFY_URL`              | `https://coolify.example.org`                                      |
 | Variable            | `COOLIFY_APP_UUID`         | The application's UUID                                             |
 | Repository variable | `PRODUCTION_URL`           | `https://example.org`: the deploy's health check, and `uptime.yml` |
-| Repository variable | `UPTIME_PRACTITIONER_PATH` | Optional, e.g. `/praticien/<slug>`                                 |
+| Repository variable | `UPTIME_PRACTITIONER_PATH` | Optional, e.g. `/fr/praticien/<slug>`                              |
 
 Without `COOLIFY_TOKEN` or `COOLIFY_APP_UUID` (forks) the deploy job does
 nothing. The token never appears in the logs: it is sent through a header
@@ -343,6 +346,91 @@ commit" step):
 
 The SSH deploy can target an older commit of `main` (pass its sha in place of
 the resolved one); that is only safe when no migration came in between.
+
+## Moving production to apercura.org
+
+Every market lives on apercura.org, France under `/fr`
+([ADR 0002, section 2](./adr/0002-multi-country.md)); apercura.fr only
+redirects, each old URL to its new one (`apercura.fr/praticien/x` →
+`apercura.org/fr/praticien/x`, `apercura.fr/en/about` →
+`apercura.org/fr-en/about`, the home to `/fr`;
+[the mapping](./public-site.md#former-urls)). The switch, in order:
+
+1. **DNS.** Point `apercura.org` and `www.apercura.org` (A and AAAA) to the
+   server. Keep `apercura.fr` and `www.apercura.fr` pointing to it too, and keep
+   the domain registered: the redirects must answer for good (Google asks for
+   at least 180 days; links in old emails and on other sites live longer).
+2. **Domains.** Under Coolify, put all four on the `app` service, port 3000:
+   `https://apercura.org,https://www.apercura.org,https://apercura.fr,https://www.apercura.fr`
+   (Traefik gets a certificate for each). With Caddy, one block
+   `apercura.org, www.apercura.org, apercura.fr, www.apercura.fr { reverse_proxy 127.0.0.1:3000 }`:
+   no `redir` for apercura.fr, the app maps the paths.
+3. **Mail.** In Brevo, add and authenticate the domain apercura.org (**Senders,
+   domains and dedicated IPs > Domains**): create the DNS records it lists (its
+   verification code and the DKIM records), and a DMARC record, starting with
+   `_dmarc.apercura.org TXT "v=DMARC1; p=none; rua=mailto:dmarc@apercura.org"`,
+   then `p=quarantine` once the reports are clean. Add the sender
+   `no-reply@apercura.org`, and a mailbox or a forward for `contact@apercura.org`
+   (MX records). Wait for Brevo to show the domain as authenticated before the
+   next step.
+4. **Pro Santé Connect.** Ask for the redirect URI
+   `https://apercura.org/api/auth/callback/psc` on the production client (API
+   routes are not redirected: the old one stops being used at the switch).
+5. **Environment.** Set, then redeploy (the image is rebuilt: `APP_URL` and the
+   `LEGAL_*` facts are baked into static pages):
+
+   | Variable              | Value                                                       |
+   | --------------------- | ----------------------------------------------------------- |
+   | `APP_URL`             | `https://apercura.org`                                      |
+   | `BETTER_AUTH_URL`     | unset, or `https://apercura.org`                            |
+   | `LEGACY_HOSTS`        | `apercura.fr,www.apercura.fr`                               |
+   | `APP_HOST`            | `apercura.org` (SSH deploys only, `docker/compose.vps.yml`) |
+   | `MAIL_FROM`           | `Apercura <no-reply@apercura.org>`                          |
+   | `LEGAL_CONTACT_EMAIL` | `contact@apercura.org`                                      |
+   | `SECURITY_CONTACT`    | `mailto:` an `@apercura.org` address, if set                |
+
+   `www.apercura.org` needs no variable: any host other than `APP_URL`'s
+   redirects its pages, and `www.` of the canonical host keeps the
+   international home at `/`.
+6. **Check.**
+
+   ```sh
+   curl -sI https://apercura.fr/ | grep -i '^location'                 # https://apercura.org/fr (301)
+   curl -sI https://apercura.fr/en/about | grep -i '^location'         # https://apercura.org/fr-en/about
+   curl -sI https://apercura.fr/sitemap.xml | grep -i '^location'      # https://apercura.org/sitemap.xml
+   curl -s https://apercura.org/ | grep -o 'hrefLang="[^"]*"'          # fr-FR, x-default
+   curl -s https://apercura.org/robots.txt | tail -2                   # Sitemap: https://apercura.org/sitemap.xml
+   curl -s https://apercura.org/.well-known/security.txt | grep Canonical
+   ```
+
+   Then send yourself a sign-up email and check its links and its
+   authentication (DKIM and DMARC `pass` in the headers).
+7. **Search engines.** In Google Search Console, add a Domain property for
+   apercura.org (DNS TXT record; or a URL-prefix property through
+   `GOOGLE_SITE_VERIFICATION`, read at build time) and submit
+   `https://apercura.org/sitemap.xml`. Then, on the apercura.fr property,
+   **Settings > Change of address** to apercura.org: the tool checks that the
+   home and sample pages answer a 301 to the new site. In Bing Webmaster Tools,
+   add apercura.org and use **Site Move** (`BING_SITE_VERIFICATION`).
+8. **GitHub.** Set the repository variable `PRODUCTION_URL` to
+   `https://apercura.org` (deploy health check, `uptime.yml`), and
+   `UPTIME_PRACTITIONER_PATH`, if set, to its `/fr/…` form.
+
+What people notice:
+
+- **Sessions.** Session cookies belong to the host: everyone signed in on
+  apercura.fr signs in again on apercura.org.
+- **Passkeys.** A passkey is bound to the domain it was registered on (the
+  relying party is `BETTER_AUTH_URL`'s host): passkeys registered on
+  apercura.fr no longer work. Practitioners sign in with their password and
+  second factor, then register a new passkey. Acceptable while production has
+  only just launched.
+- **Calendar invitations.** An appointment's `.ics` UID is
+  `{id}@{APP_URL host}`: an update or a cancellation sent after the switch for
+  an appointment booked before it carries a new UID, so the patient's calendar
+  adds an event instead of updating the first one (the email itself is
+  right). Calendar feed subscriptions on apercura.fr keep answering, since API
+  routes are not redirected.
 
 ## Backups
 

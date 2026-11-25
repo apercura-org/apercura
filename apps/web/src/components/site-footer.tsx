@@ -44,6 +44,12 @@ export async function SiteFooter({ locale }: { locale: Locale }) {
 								</Link>
 							</li>
 						))}
+						<li>
+							{/* The international home, outside the locales (and in English): a plain link. */}
+							<a href="/" hrefLang="en" className={footerLink}>
+								{t("footerNav.international")}
+							</a>
+						</li>
 					</ul>
 				</nav>
 			</div>

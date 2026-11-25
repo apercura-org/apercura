@@ -22,6 +22,7 @@
 		"PORT",
 		"RATE_LIMIT_KEY",
 		"CANONICAL_HOST_REDIRECT",
+		"LEGACY_HOSTS",
 		"DATABASE_POOL_MAX"
 	],
 	"tasks": {

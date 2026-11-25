@@ -8,8 +8,9 @@ import { testDb } from "./pro";
  * Technical SEO of every public page type, read from the SERVER HTML (what
  * crawlers get): one title and description of the right length, a self
  * canonical, the robots policy, one parseable JSON-LD @graph of linked
- * entities, one h1, no hreflang. Then status codes and the sitemaps. Against
- * the SYNTHETIC fixtures (fictitious people, RPPS 1999999xxxx).
+ * entities, one h1, hreflang on the two homes only. Then status codes, the
+ * redirects of the former scheme and hosts, and the sitemaps. Against the
+ * SYNTHETIC fixtures (fictitious people, RPPS 1999999xxxx).
  */
 
 const OWNER = { rpps: "19999991383", slug: "ines-essaibm-19999991383" };
@@ -21,65 +22,78 @@ type Expected = {
 	/** schema.org types the page's graph must contain. */
 	types: string[];
 	lang?: "fr" | "en" | "de" | "es" | "it";
+	/** The homes (`/fr` and the international `/`) print hreflang `fr-FR` and `x-default`. */
+	hreflang?: true;
 };
 
 const PAGES: Expected[] = [
-	{ path: "/", robots: "index, follow", types: ["WebPage", "WebSite", "Organization"] },
-	{ path: "/medecin-generaliste", robots: "index, follow", types: ["CollectionPage", "ItemList"] },
+	// The international home: in English, indexed, outside the locales.
+	{ path: "/", robots: "index, follow", types: ["WebPage"], lang: "en", hreflang: true },
 	{
-		path: "/medecin-generaliste/75-paris",
+		path: "/fr",
+		robots: "index, follow",
+		types: ["WebPage", "WebSite", "Organization"],
+		hreflang: true,
+	},
+	{
+		path: "/fr/medecin-generaliste",
+		robots: "index, follow",
+		types: ["CollectionPage", "ItemList"],
+	},
+	{
+		path: "/fr/medecin-generaliste/75-paris",
 		robots: "index, follow",
 		types: ["CollectionPage", "BreadcrumbList", "ItemList"],
 	},
 	{
-		path: "/medecin-generaliste/75-paris/2",
+		path: "/fr/medecin-generaliste/75-paris/2",
 		robots: "noindex, follow",
 		types: ["CollectionPage", "BreadcrumbList", "ItemList"],
 	},
 	{
-		path: "/medecin-generaliste/75-paris/paris-15e-arrondissement",
+		path: "/fr/medecin-generaliste/75-paris/paris-15e-arrondissement",
 		robots: "index, follow",
 		types: ["CollectionPage", "BreadcrumbList", "ItemList"],
 	},
-	{ path: "/cardiologue/75-paris", robots: "noindex, follow", types: ["CollectionPage"] },
-	{ path: "/annuaire", robots: "index, follow", types: ["CollectionPage", "ItemList"] },
-	{ path: "/annuaire/75-paris", robots: "index, follow", types: ["CollectionPage", "ItemList"] },
+	{ path: "/fr/cardiologue/75-paris", robots: "noindex, follow", types: ["CollectionPage"] },
+	{ path: "/fr/annuaire", robots: "index, follow", types: ["CollectionPage", "ItemList"] },
+	{ path: "/fr/annuaire/75-paris", robots: "index, follow", types: ["CollectionPage", "ItemList"] },
 	// Lyon has fewer than three practitioners per listing in the fixtures.
-	{ path: "/annuaire/69-rhone/lyon", robots: "noindex, follow", types: ["CollectionPage"] },
+	{ path: "/fr/annuaire/69-rhone/lyon", robots: "noindex, follow", types: ["CollectionPage"] },
 	{
-		path: "/praticien/camille-exemple-19999990013",
+		path: "/fr/praticien/camille-exemple-19999990013",
 		robots: "index, follow",
 		types: ["WebPage", "BreadcrumbList", "IndividualPhysician", "PhysiciansOffice"],
 	},
 	{
-		path: "/praticien/fanny-placebo-19999990088",
+		path: "/fr/praticien/fanny-placebo-19999990088",
 		robots: "index, follow",
 		types: ["Person", "Hospital"],
 	},
 	{
-		path: "/praticien/alice-specimen-19999990039",
+		path: "/fr/praticien/alice-specimen-19999990039",
 		robots: "index, follow",
 		types: ["IndividualPhysician", "MedicalClinic"],
 	},
-	{ path: `/praticien/${OWNER.slug}`, robots: "index, follow", types: ["Dentist"] },
-	{ path: `/praticien/${BOOKABLE}`, robots: "index, follow", types: ["IndividualPhysician"] },
+	{ path: `/fr/praticien/${OWNER.slug}`, robots: "index, follow", types: ["Dentist"] },
+	{ path: `/fr/praticien/${BOOKABLE}`, robots: "index, follow", types: ["IndividualPhysician"] },
 	{
-		path: "/etablissement/centre-hospitalier-fictif-2a9999001",
+		path: "/fr/etablissement/centre-hospitalier-fictif-2a9999001",
 		robots: "index, follow",
 		types: ["WebPage", "BreadcrumbList", "Hospital"],
 	},
-	{ path: "/pro", robots: "index, follow", types: ["WebPage"] },
-	{ path: "/a-propos", robots: "index, follow", types: ["AboutPage", "BreadcrumbList"] },
-	{ path: "/donnees", robots: "index, follow", types: ["WebPage", "BreadcrumbList"] },
-	{ path: "/mentions-legales", robots: "index, follow", types: ["WebPage"] },
-	{ path: "/en", robots: "noindex, follow", types: ["WebSite"], lang: "en" },
+	{ path: "/fr/pro", robots: "index, follow", types: ["WebPage"] },
+	{ path: "/fr/a-propos", robots: "index, follow", types: ["AboutPage", "BreadcrumbList"] },
+	{ path: "/fr/donnees", robots: "index, follow", types: ["WebPage", "BreadcrumbList"] },
+	{ path: "/fr/mentions-legales", robots: "index, follow", types: ["WebPage"] },
+	{ path: "/fr-en", robots: "noindex, follow", types: ["WebSite"], lang: "en" },
 	{
-		path: "/en/practitioner/camille-exemple-19999990013",
+		path: "/fr-en/practitioner/camille-exemple-19999990013",
 		robots: "noindex, follow",
 		types: ["IndividualPhysician"],
 		lang: "en",
 	},
-	{ path: "/en/directory", robots: "noindex, follow", types: ["CollectionPage"], lang: "en" },
+	{ path: "/fr-en/directory", robots: "noindex, follow", types: ["CollectionPage"], lang: "en" },
 	// German, Spanish and Italian: interface only, never indexed in v1.
 	...(
 		[
@@ -88,14 +102,19 @@ const PAGES: Expected[] = [
 			["it", "professionista", "elenco"],
 		] as const
 	).flatMap(([lang, practitioner, directory]): Expected[] => [
-		{ path: `/${lang}`, robots: "noindex, follow", types: ["WebSite"], lang },
+		{ path: `/fr-${lang}`, robots: "noindex, follow", types: ["WebSite"], lang },
 		{
-			path: `/${lang}/${practitioner}/camille-exemple-19999990013`,
+			path: `/fr-${lang}/${practitioner}/camille-exemple-19999990013`,
 			robots: "noindex, follow",
 			types: ["IndividualPhysician"],
 			lang,
 		},
-		{ path: `/${lang}/${directory}`, robots: "noindex, follow", types: ["CollectionPage"], lang },
+		{
+			path: `/fr-${lang}/${directory}`,
+			robots: "noindex, follow",
+			types: ["CollectionPage"],
+			lang,
+		},
 	]),
 ];
 
@@ -125,7 +144,8 @@ const decode = (text: string) =>
 /** The SEO-relevant parts of a server-rendered page. */
 function parse(html: string) {
 	const attr = (tag: string, name: string) => {
-		const value = new RegExp(`\\b${name}="([^"]*)"`).exec(tag)?.[1];
+		// Attribute names are case-insensitive (React prints `hrefLang`).
+		const value = new RegExp(`\\b${name}="([^"]*)"`, "i").exec(tag)?.[1];
 		return value === undefined ? null : decode(value);
 	};
 	const tags = (pattern: RegExp) => [...html.matchAll(pattern)].map((match) => match[0]);
@@ -226,7 +246,7 @@ for (const expected of PAGES) {
 		expect(description?.length).toBeLessThanOrEqual(155);
 		expect(page.h1).toBe(1);
 
-		// Self canonical, absolute; robots by the indexing rules; never hreflang in v1.
+		// Self canonical, absolute; robots by the indexing rules; hreflang on the homes only.
 		const canonical = page.links.filter((link) => link.rel === "canonical");
 		expect(canonical).toHaveLength(1);
 		expect(new URL(canonical[0]?.href ?? "").pathname.replace(/\/$/, "")).toBe(
@@ -234,10 +254,29 @@ for (const expected of PAGES) {
 		);
 		expect(canonical[0]?.href?.startsWith(origin)).toBe(true);
 		expect(page.meta("robots")).toEqual([expected.robots]);
-		expect(page.links.filter((link) => link.hreflang)).toEqual([]);
+		const alternates = page.links
+			.filter((link) => link.hreflang)
+			.map((link) => ({
+				rel: link.rel,
+				hreflang: link.hreflang,
+				href: link.href?.replace(/\/$/, ""),
+			}));
+		if (expected.hreflang) {
+			expect(alternates).toHaveLength(2);
+			expect(alternates).toEqual(
+				expect.arrayContaining([
+					{ rel: "alternate", hreflang: "fr-FR", href: `${origin}/fr` },
+					{ rel: "alternate", hreflang: "x-default", href: origin },
+				]),
+			);
+		} else {
+			expect(alternates).toEqual([]);
+		}
 		expect(response.headers().link ?? "").not.toContain("hreflang");
-		if ((expected.lang ?? "fr") !== "fr") {
+		if (expected.robots === "noindex, follow" && (expected.lang ?? "fr") !== "fr") {
 			expect(response.headers()["x-robots-tag"]).toContain("noindex");
+		} else if (expected.robots === "index, follow") {
+			expect(response.headers()["x-robots-tag"]).toBeUndefined();
 		}
 
 		// Open Graph and Twitter cards.
@@ -284,7 +323,7 @@ for (const expected of PAGES) {
 		for (const crumbs of nodes.filter((item) => item["@type"] === "BreadcrumbList")) {
 			const items = crumbs.itemListElement as { position: number; name: string; item: string }[];
 			const lang = expected.lang ?? "fr";
-			expect(items[0]?.item).toBe(lang === "fr" ? `${origin}/` : `${origin}/${lang}`);
+			expect(items[0]?.item).toBe(lang === "fr" ? `${origin}/fr` : `${origin}/fr-${lang}`);
 			items.forEach((item, index) => {
 				expect(item.position).toBe(index + 1);
 				expect(item.name).toBeTruthy();
@@ -297,7 +336,7 @@ for (const expected of PAGES) {
 test("the practitioner graph: RPPS, specialty enum, places and geo with six decimals", async ({
 	request,
 }) => {
-	const html = await (await request.get("/praticien/camille-exemple-19999990013")).text();
+	const html = await (await request.get("/fr/praticien/camille-exemple-19999990013")).text();
 	const nodes = JSON.parse(parse(html).jsonLd[0] ?? "")["@graph"] as Node[];
 	const person = nodes.find((node) => node["@type"] === "IndividualPhysician") as Node;
 	expect(person.identifier).toEqual({
@@ -318,7 +357,7 @@ test("the practitioner graph: RPPS, specialty enum, places and geo with six deci
 });
 
 test("only a bookable page carries a ReserveAction and promises booking", async ({ request }) => {
-	const html = await (await request.get(`/praticien/${BOOKABLE}`)).text();
+	const html = await (await request.get(`/fr/praticien/${BOOKABLE}`)).text();
 	const page = parse(html);
 	const person = (JSON.parse(page.jsonLd[0] ?? "")["@graph"] as Node[]).find(
 		(node) => node["@type"] === "IndividualPhysician",
@@ -329,7 +368,9 @@ test("only a bookable page carries a ReserveAction and promises booking", async 
 	});
 	expect(page.meta("description")[0]).toMatch(/rendez-vous en ligne/);
 
-	const closed = parse(await (await request.get("/praticien/camille-exemple-19999990013")).text());
+	const closed = parse(
+		await (await request.get("/fr/praticien/camille-exemple-19999990013")).text(),
+	);
 	expect(closed.meta("description")[0]).not.toMatch(/rendez-vous/);
 });
 
@@ -338,7 +379,7 @@ test("an owner-completed page links the owner's website and languages", async ({
 	await expect
 		.poll(
 			async () => {
-				const html = await (await request.get(`/praticien/${OWNER.slug}`)).text();
+				const html = await (await request.get(`/fr/praticien/${OWNER.slug}`)).text();
 				const nodes = JSON.parse(parse(html).jsonLd[0] ?? "")["@graph"] as Node[];
 				const dentist = nodes.find((node) => node["@type"] === "Dentist");
 				return { sameAs: dentist?.sameAs, knowsLanguage: dentist?.knowsLanguage };
@@ -349,7 +390,7 @@ test("an owner-completed page links the owner's website and languages", async ({
 });
 
 test("the sitelinks search box target answers", async ({ request }) => {
-	const html = await (await request.get("/")).text();
+	const html = await (await request.get("/fr")).text();
 	const nodes = JSON.parse(parse(html).jsonLd[0] ?? "")["@graph"] as Node[];
 	const website = nodes.find((node) => node["@type"] === "WebSite") as Node;
 	const template = (website.potentialAction as { target: { urlTemplate: string } }).target
@@ -374,37 +415,82 @@ test("icons, manifest and the favicon answer outside the locale routing", async 
 });
 
 test.describe("status codes and redirects", () => {
+	/** The single target of a redirect (Next.js 16.4 may repeat an identical Location header). */
+	const locationOf = (response: { headers(): Record<string, string> }) => {
+		const targets = new Set(
+			(response.headers().location ?? "").split(/,\s*/).map((location) => {
+				const url = new URL(location, "http://x");
+				return `${url.pathname}${url.search}`;
+			}),
+		);
+		expect(targets.size).toBe(1);
+		return [...targets][0];
+	};
+
 	for (const [from, to] of [
-		["/fr", "/"],
-		["/fr/medecin-generaliste/75-paris", "/medecin-generaliste/75-paris"],
-		["/Medecin-Generaliste/75-Paris", "/medecin-generaliste/75-paris"],
-		["/praticien/Camille-Exemple-19999990013", "/praticien/camille-exemple-19999990013"],
-		["/medecin-generaliste/", "/medecin-generaliste"],
-		["/en/annuaire", "/en/directory"],
-		["/medecin-generaliste/75-paris/paris", "/medecin-generaliste/75-paris"],
-		["/annuaire/75-paris/paris", "/annuaire/75-paris"],
-		["/etablissement/autre-nom-2a9999001", "/etablissement/centre-hospitalier-fictif-2a9999001"],
+		["/fr/Medecin-Generaliste/75-Paris", "/fr/medecin-generaliste/75-paris"],
+		["/FR/annuaire", "/fr/annuaire"],
+		["/fr/praticien/Camille-Exemple-19999990013", "/fr/praticien/camille-exemple-19999990013"],
+		["/fr/medecin-generaliste/", "/fr/medecin-generaliste"],
+		["/fr-en/annuaire", "/fr-en/directory"],
+		["/fr/medecin-generaliste/75-paris/paris", "/fr/medecin-generaliste/75-paris"],
+		["/fr/annuaire/75-paris/paris", "/fr/annuaire/75-paris"],
+		[
+			"/fr/etablissement/autre-nom-2a9999001",
+			"/fr/etablissement/centre-hospitalier-fictif-2a9999001",
+		],
 	] as const) {
 		test(`${from} answers 308 to ${to}`, async ({ request }) => {
 			const response = await request.get(from, { maxRedirects: 0 });
 			expect(response.status()).toBe(308);
-			// Next.js 16.4 repeats the (identical) Location header on the first, uncached render
-			// of a page-level redirect; clients follow either copy.
-			const targets = new Set(
-				(response.headers().location ?? "")
-					.split(/,\s*/)
-					.map((location) => new URL(location, "http://x").pathname),
-			);
-			expect([...targets]).toEqual([to]);
+			expect(locationOf(response)).toBe(to);
 		});
 	}
 
+	// The former scheme on the canonical host itself: French pages had no prefix, other
+	// locales their code. Old locale prefixes stay temporary: /de, /es, /it are future markets.
+	for (const [from, to, status] of [
+		["/medecin-generaliste/75-paris", "/fr/medecin-generaliste/75-paris", 301],
+		["/Medecin-Generaliste/75-Paris?page=2", "/fr/medecin-generaliste/75-paris?page=2", 301],
+		["/praticien/camille-exemple-19999990013", "/fr/praticien/camille-exemple-19999990013", 301],
+		["/mentions-legales", "/fr/mentions-legales", 301],
+		["/pro/connexion", "/fr/pro/connexion", 301],
+		["/en", "/fr-en", 307],
+		["/en/legal-notice", "/fr-en/legal-notice", 307],
+		["/de/impressum", "/fr-de/impressum", 307],
+		[
+			"/it/professionista/camille-exemple-19999990013",
+			"/fr-it/professionista/camille-exemple-19999990013",
+			307,
+		],
+		["/sitemaps/pages-0.xml", "/sitemaps/fr/pages-0.xml", 301],
+	] as const) {
+		test(`${from} (former scheme) answers ${status} to ${to}`, async ({ request }) => {
+			const response = await request.get(from, { maxRedirects: 0 });
+			expect(response.status()).toBe(status);
+			expect(locationOf(response)).toBe(to);
+		});
+	}
+
+	test("the root is the international home, never a redirect on the visitor's language", async ({
+		request,
+	}) => {
+		for (const language of ["fr-FR,fr;q=0.9", "de-DE", "en-GB", ""]) {
+			const response = await request.get("/", {
+				maxRedirects: 0,
+				headers: language ? { "accept-language": language } : {},
+			});
+			expect(response.status(), language).toBe(200);
+			expect(response.headers()["set-cookie"], language).toBeUndefined();
+		}
+	});
+
 	test("unknown pages answer a real 404 with noindex, never a soft 404", async ({ request }) => {
 		for (const path of [
-			"/inconnu",
-			"/m%C3%A9decin-generaliste",
-			"/praticien/camille-exemple-19999990014",
-			"/etablissement/inconnu-759999999",
+			"/fr/inconnu",
+			"/fr/m%C3%A9decin-generaliste",
+			"/fr/praticien/camille-exemple-19999990014",
+			"/fr/etablissement/inconnu-759999999",
 		]) {
 			const response = await request.get(path, { maxRedirects: 0 });
 			expect(response.status(), path).toBe(404);
@@ -416,14 +502,16 @@ test.describe("status codes and redirects", () => {
 		request,
 	}) => {
 		for (const path of [
-			"/recherche?quoi=Exemple",
-			"/pro/connexion",
-			"/praticien/camille-exemple-19999990013/signaler",
+			"/fr/recherche?quoi=Exemple",
+			"/fr/pro/connexion",
+			"/fr/praticien/camille-exemple-19999990013/signaler",
+			"/fr-en/practitioner/camille-exemple-19999990013/report",
 		]) {
 			const response = await request.get(path, { maxRedirects: 0 });
 			expect(response.headers()["x-robots-tag"], path).toContain("noindex");
 		}
-		expect((await request.get("/pro")).headers()["x-robots-tag"]).toBeUndefined();
+		expect((await request.get("/fr/pro")).headers()["x-robots-tag"]).toBeUndefined();
+		expect((await request.get("/")).headers()["x-robots-tag"]).toBeUndefined();
 	});
 });
 
@@ -444,7 +532,14 @@ test.describe("sitemaps", () => {
 			/^<\?xml version="1\.0" encoding="UTF-8"\?>\n<sitemapindex xmlns="http:\/\/www\.sitemaps\.org\/schemas\/sitemap\/0\.9">/,
 		);
 		const chunks = [...indexXml.matchAll(LOC)].map((match) => match[1] ?? "");
-		expect(chunks.length).toBeGreaterThan(1);
+		expect(chunks.length).toBeGreaterThan(2);
+		// The international home, then France's files under its segment.
+		expect(chunks.slice(0, 2)).toEqual([
+			`${origin}/sitemaps/international.xml`,
+			`${origin}/sitemaps/fr/pages-0.xml`,
+		]);
+		for (const chunk of chunks.slice(1))
+			expect(chunk.startsWith(`${origin}/sitemaps/fr/`)).toBe(true);
 		for (const lastmod of indexXml.matchAll(LASTMOD)) {
 			expect(lastmod[1]).toMatch(/^\d{4}-\d{2}-\d{2}$/);
 		}
@@ -466,11 +561,16 @@ test.describe("sitemaps", () => {
 			urls.push(...locs);
 		}
 		expect(new Set(urls).size).toBe(urls.length);
+		expect(urls).toContain(`${origin}/`);
+		expect(urls).toContain(`${origin}/fr`);
 
 		for (const url of urls) {
-			expect(url.startsWith(origin), url).toBe(true);
-			// French pages only: no other locale is indexed in v1.
-			expect(url, url).not.toMatch(/\/(en|de|es|it)(\/|$)|\/recherche|\/pro\/|\/rdv/);
+			// The international home and France's French pages only: no other locale is indexed in v1.
+			expect(
+				url === `${origin}/` || url === `${origin}/fr` || url.startsWith(`${origin}/fr/`),
+				url,
+			).toBe(true);
+			expect(url, url).not.toMatch(/\/recherche|\/pro\/|\/rdv/);
 			const response = await request.get(url, { maxRedirects: 0 });
 			expect(response.status(), url).toBe(200);
 			expect(response.headers()["x-robots-tag"], url).toBeUndefined();
@@ -488,16 +588,18 @@ test.describe("sitemaps", () => {
 		expect(body).toMatch(/^Sitemap: https?:\/\/[^\s]+\/sitemap\.xml$/m);
 		const disallowed = [...body.matchAll(/^Disallow: (.+)$/gm)].map((match) => match[1] ?? "");
 		for (const path of [
-			"/pro",
-			"/pro/connexion",
-			"/pro/inscription",
-			"/pro/revendiquer?rpps=19999990013",
-			"/praticien/camille-exemple-19999990013/signaler",
-			"/en/practitioner/camille-exemple-19999990013",
-			"/de/behandler/camille-exemple-19999990013",
-			"/es/profesional/camille-exemple-19999990013",
-			"/it/professionista/camille-exemple-19999990013",
-			"/it/professionista/camille-exemple-19999990013/segnalazione",
+			"/",
+			"/fr",
+			"/fr/pro",
+			"/fr/pro/connexion",
+			"/fr/pro/inscription",
+			"/fr/pro/revendiquer?rpps=19999990013",
+			"/fr/praticien/camille-exemple-19999990013/signaler",
+			"/fr-en/practitioner/camille-exemple-19999990013",
+			"/fr-de/behandler/camille-exemple-19999990013",
+			"/fr-es/profesional/camille-exemple-19999990013",
+			"/fr-it/professionista/camille-exemple-19999990013",
+			"/fr-it/professionista/camille-exemple-19999990013/segnalazione",
 		]) {
 			expect(
 				disallowed.some((prefix) => path.startsWith(prefix)),

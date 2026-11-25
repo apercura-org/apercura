@@ -224,9 +224,11 @@ HTTPS. `HSTS_PRELOAD=true` at build time adds `preload`; only set it once the do
 every subdomain serve HTTPS for good, then submit the domain at <https://hstspreload.org>.
 Leaving the list takes months.
 
-In production, any other host name answers a 308 to `APP_URL`
-(`CANONICAL_HOST_REDIRECT=false` turns it off). Loopback hosts and `/api/*`
-are left alone, so `curl http://127.0.0.1:3000/api/health` keeps working.
+In production, any other host name answers a permanent redirect (301 for GET and HEAD, 308
+otherwise) to the same page on `APP_URL` (`CANONICAL_HOST_REDIRECT=false` turns it off). A
+former domain listed in `LEGACY_HOSTS` has its files redirected too (robots.txt, sitemaps,
+images) and its old paths mapped ([public site](./public-site.md#former-urls)). Loopback
+hosts and `/api/*` are left alone, so `curl http://127.0.0.1:3000/api/health` keeps working.
 
 ## Online booking
 

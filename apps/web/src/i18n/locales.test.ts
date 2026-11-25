@@ -3,11 +3,14 @@ import { describe, expect, it } from "vitest";
 import { robotsFor } from "~/lib/robots";
 import {
 	DEFAULT_LOCALE,
+	HREFLANGS,
 	INDEXABLE_LOCALES,
+	LEGACY_LOCALE_SEGMENTS,
+	LOCALE_PREFIXES,
+	LOCALE_SEGMENTS,
 	LOCALE_TAGS,
 	LOCALES,
 	OG_LOCALES,
-	PREFIXED_LOCALES,
 	toLocale,
 } from "./locales";
 import { getPathname } from "./navigation";
@@ -23,6 +26,8 @@ const PARAMS: Record<string, string> = {
 
 const pathnames = Object.keys(routing.pathnames) as AppPathname[];
 
+const TRANSLATIONS = LOCALES.filter((locale) => locale !== "fr");
+
 /** Pathnames without a catch-all segment, with example params. */
 const simple = pathnames.filter((pathname) => !pathname.includes("..."));
 
@@ -34,13 +39,30 @@ function hrefOf(pathname: AppPathname) {
 }
 
 describe("locale configuration", () => {
-	it("serves five locales, French by default and without a prefix", () => {
+	it("serves five locales under France's segment: /fr, then /fr-{language}", () => {
 		expect(LOCALES).toEqual(["fr", "en", "de", "es", "it"]);
 		expect(routing.locales).toEqual(LOCALES);
 		expect(routing.defaultLocale).toBe("fr");
 		expect(DEFAULT_LOCALE).toBe("fr");
-		expect(PREFIXED_LOCALES).toEqual(["en", "de", "es", "it"]);
-		expect(routing.localePrefix).toBe("as-needed");
+		expect(LOCALE_PREFIXES).toEqual({
+			fr: "/fr",
+			en: "/fr-en",
+			de: "/fr-de",
+			es: "/fr-es",
+			it: "/fr-it",
+		});
+		expect(LOCALE_SEGMENTS).toEqual(["fr", "fr-en", "fr-de", "fr-es", "fr-it"]);
+		expect(routing.localePrefix).toEqual({ mode: "always", prefixes: LOCALE_PREFIXES });
+		// The root never redirects on the visitor's language, and public pages set no cookie.
+		expect(routing.localeDetection).toBe(false);
+		expect(routing.localeCookie).toBe(false);
+	});
+
+	it("keeps the former prefixes apart from the current ones", () => {
+		expect(LEGACY_LOCALE_SEGMENTS).toEqual(["en", "de", "es", "it"]);
+		for (const segment of LEGACY_LOCALE_SEGMENTS) {
+			expect(LOCALE_SEGMENTS).not.toContain(segment);
+		}
 	});
 
 	it("formats each locale with its own country and a BCP 47 tag", () => {
@@ -66,11 +88,12 @@ describe("locale configuration", () => {
 		}
 	});
 
-	it("indexes French pages only and announces no alternates", () => {
+	it("indexes French pages only, announced as fr-FR, and leaves hreflang to the pages", () => {
 		expect(INDEXABLE_LOCALES).toEqual(["fr"]);
+		expect(HREFLANGS).toEqual({ fr: "fr-FR" });
 		expect(routing.alternateLinks).toBe(false);
 		expect(robotsFor("fr", true)).toEqual({ index: true, follow: true });
-		for (const locale of PREFIXED_LOCALES) {
+		for (const locale of TRANSLATIONS) {
 			expect(robotsFor(locale, true)).toEqual({ index: false, follow: true });
 		}
 	});
@@ -98,8 +121,9 @@ describe("locale configuration", () => {
 		}
 	});
 
-	it("keeps translated first segments clear of listing slugs and reserves the prefixes", () => {
-		for (const locale of PREFIXED_LOCALES) {
+	it("keeps translated first segments clear of listing slugs and reserves the former prefixes", () => {
+		for (const locale of TRANSLATIONS) {
+			// Former prefixes: an old `/en/…` link must never resolve to a listing.
 			expect(isReservedSegment(locale), locale).toBe(true);
 			for (const pathname of simple) {
 				const [first] = getPathname({ href: hrefOf(pathname) as never, locale })
@@ -112,7 +136,8 @@ describe("locale configuration", () => {
 		for (const pathname of simple.filter((pathname) => !pathname.startsWith("/["))) {
 			const [first] = getPathname({ href: hrefOf(pathname) as never, locale: "fr" })
 				.split("/")
-				.filter(Boolean);
+				.filter(Boolean)
+				.slice(1);
 			if (first) expect(isReservedSegment(first), pathname).toBe(true);
 		}
 	});
@@ -128,9 +153,10 @@ describe("locale configuration", () => {
 			}
 		}
 		expect(localePath("de", "/praticien/[slug]", { slug: "camille-exemple-19999990013" })).toBe(
-			"/de/behandler/camille-exemple-19999990013",
+			"/fr-de/behandler/camille-exemple-19999990013",
 		);
-		expect(localePath("fr", "/rdv")).toBe("/rdv");
-		expect(localePath("it", "/")).toBe("/it");
+		expect(localePath("fr", "/rdv")).toBe("/fr/rdv");
+		expect(localePath("fr", "/")).toBe("/fr");
+		expect(localePath("it", "/")).toBe("/fr-it");
 	});
 });
