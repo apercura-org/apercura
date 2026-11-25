@@ -567,12 +567,6 @@
 			"heading": "Other practitioners: {occupation} in {place}"
 		},
 		"photoAlt": "Photo of {name}",
-		"withheld": {
-			"metaTitle": "Page hidden · Apercura",
-			"title": "This page is hidden",
-			"body": "A removal request is being checked for this page. It is not shown in the meantime.",
-			"dataLink": "How pages are published and removed"
-		},
 		"metaTitleName": "{name} · Apercura",
 		"metaDescriptionBookable": "{name}, {occupation}: online booking, address, contact details and {fees, select, sector {agreement sector} other {fee agreement}}.",
 		"metaDescriptionBookablePlace": "{name}, {occupation} in {place}: online booking, address, contact details and {fees, select, sector {agreement sector} other {fee agreement}}."

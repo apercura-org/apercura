@@ -38,6 +38,7 @@ import {
 	pageMetadata,
 	pickTitle,
 	shortPlaceName,
+	withoutBrand,
 } from "~/lib/seo";
 import { absoluteUrl, siteOrigin } from "~/lib/site-url";
 import { slotParts, slotTime } from "~/lib/slot-format";
@@ -96,7 +97,10 @@ async function resolve(params: Props["params"]) {
 			})),
 		},
 	);
-	if (decision.kind === "not_found" || !page) notFound();
+	// A page withheld while a removal request is checked (GDPR art. 21) answers like an unknown
+	// one: a real 404 (noindex), so search engines drop it at once and nothing about the person
+	// is shown, as its Open Graph image and the contact form already do.
+	if (decision.kind === "not_found" || !page || page.payload.withheld) notFound();
 	if (decision.kind === "redirect") {
 		permanentRedirect({
 			href: { pathname: "/praticien/[slug]", params: { slug: decision.to } },
@@ -111,9 +115,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 	const t = await getTranslations({ locale, namespace: "PractitionerPage" });
 	const labels = await getTaxonomyLabels(locale);
 	const { payload } = page;
-	if (payload.withheld) {
-		return { title: t("withheld.metaTitle"), robots: { index: false, follow: false } };
-	}
 	const gender = genderOf(payload.civilityCode);
 	const name = labels.personName(payload);
 	const occupation = inSentence(
@@ -139,8 +140,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 	return pageMetadata({
 		locale,
 		href,
+		// The commune tells namesakes apart: the brand goes before it does.
 		title: pickTitle([
-			...(place ? [t("metaTitlePlace", values)] : []),
+			...(place ? [t("metaTitlePlace", values), withoutBrand(t("metaTitlePlace", values))] : []),
 			t("metaTitle", values),
 			t("metaTitleName", values),
 		]),
@@ -165,7 +167,6 @@ export default async function PractitionerPage({ params }: Props) {
 	const labels = await getTaxonomyLabels(locale);
 
 	const { payload } = page;
-	if (payload.withheld) return <WithheldPage locale={locale} slug={page.slug} />;
 	const gender = genderOf(payload.civilityCode);
 	const name = labels.personName(payload);
 	const content = ownerContentOf(payload, photoUrl);
@@ -640,29 +641,4 @@ async function Action({
 				/>
 			);
 	}
-}
-
-/**
- * A page withheld while a removal request is checked (GDPR art. 21): nothing
- * about the person is shown, the page is not indexed and has left listings,
- * searches and sitemaps.
- */
-async function WithheldPage({ locale, slug }: { locale: Locale; slug: string }) {
-	const t = await getTranslations({ locale, namespace: "PractitionerPage" });
-	const tSite = await getTranslations({ locale, namespace: "Site" });
-	return (
-		<PublicPage locale={locale} href={{ pathname: "/praticien/[slug]", params: { slug } }}>
-			<BookletPage runningHead={tSite("runningHead")}>
-				<div className="flex max-w-[65ch] flex-col gap-4">
-					<h1 className="type-headline text-ink">{t("withheld.title")}</h1>
-					<p className="text-lead text-ink">{t("withheld.body")}</p>
-					<p className="text-body text-ink">
-						<Link href="/donnees" className={linkStyles()}>
-							{t("withheld.dataLink")}
-						</Link>
-					</p>
-				</div>
-			</BookletPage>
-		</PublicPage>
-	);
 }

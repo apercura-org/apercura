@@ -38,10 +38,12 @@ export function selectSitemapChunks(sql: Sql): Promise<SitemapChunk[]> {
 		WHERE lp.indexable AND (p.id IS NULL OR p.code <> '75056')
 		GROUP BY 2
 		UNION ALL
-		SELECT 'lieux', place_id / ${SITEMAP_CHUNK},
-			to_char(max(content_updated_at) AT TIME ZONE 'UTC', 'YYYY-MM-DD'),
-			count(DISTINCT place_id)::integer
-		FROM directory.landing_pages WHERE indexable AND place_id IS NOT NULL
+		SELECT 'lieux', lp.place_id / ${SITEMAP_CHUNK},
+			to_char(max(lp.content_updated_at) AT TIME ZONE 'UTC', 'YYYY-MM-DD'),
+			count(DISTINCT lp.place_id)::integer
+		FROM directory.landing_pages lp
+		JOIN directory.places p ON p.id = lp.place_id AND p.code <> '75056'
+		WHERE lp.indexable
 		GROUP BY 2
 		UNION ALL
 		SELECT 'etablissements', s.id / ${SITEMAP_CHUNK},

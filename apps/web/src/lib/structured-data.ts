@@ -1,11 +1,13 @@
 import type {
 	BreadcrumbList,
+	CategoryCode,
 	Dentist,
 	GeoCoordinates,
 	Graph,
 	Hospital,
 	IndividualPhysician,
 	ItemList,
+	MedicalBusiness,
 	MedicalClinic,
 	MedicalOrganization,
 	MedicalSpecialty,
@@ -16,11 +18,9 @@ import type {
 	PostalAddress,
 	PropertyValue,
 	ReserveAction,
-	SearchAction,
 	Thing,
 	WebPage,
 	WebSite,
-	WithActionConstraints,
 } from "schema-dts";
 
 /*
@@ -119,6 +119,18 @@ const ISCO_CATEGORIES: Readonly<Record<string, string>> = {
 	"69": "2221",
 };
 
+/** The ISCO-08 unit group of a profession as a `CategoryCode` naming its code set. */
+function iscoCategory(professionCode: string): CategoryCode | undefined {
+	const code = ISCO_CATEGORIES[professionCode];
+	return code
+		? {
+				"@type": "CategoryCode",
+				codeValue: code,
+				inCodeSet: { "@type": "CategoryCodeSet", name: "ISCO-08" },
+			}
+		: undefined;
+}
+
 /** Listing slugs whose meaning matches a schema.org `MedicalSpecialty` exactly. */
 const MEDICAL_SPECIALTIES: Record<string, readonly MedicalSpecialty[]> = {
 	anatomopathologiste: ["https://schema.org/Pathology"],
@@ -193,40 +205,40 @@ const one = <T>(values: readonly T[]): T | readonly T[] | undefined =>
 export type SiteInput = {
 	origin: string;
 	name: string;
-	description: string;
-	/** BCP 47 language of the site (`fr-FR`). */
-	language: string;
 	/** Absolute logo URL (square PNG, at least 112 px). */
 	logo: string;
-	/** Search results URL with `{search_term_string}` where the query goes. */
-	searchUrlTemplate: string;
-	/** Public source repository. */
+	/** Profiles of Apercura on other sites (its public source repository). */
 	sameAs: readonly string[];
 };
 
-/** `WebSite` with its `SearchAction`, and the publishing `Organization`: home page only. */
+/**
+ * The `WebSite` and its publishing `Organization`, printed on the homes: the international one
+ * (`/`, the site's home page, where Google reads the site name) and France's (`/fr`). Both
+ * print the same two nodes: an `@id` names one entity, so nothing in them depends on the page's
+ * language. No `SearchAction`: Google retired the sitelinks search box in November 2024 and the
+ * search pages are disallowed in robots.txt.
+ */
 export function siteNodes(input: SiteInput): Thing[] {
-	const search: WithActionConstraints<SearchAction> = {
-		"@type": "SearchAction",
-		target: { "@type": "EntryPoint", urlTemplate: input.searchUrlTemplate },
-		"query-input": "required name=search_term_string",
-	};
 	const website: WebSite = {
 		"@type": "WebSite",
 		"@id": ids.website(input.origin),
 		url: `${input.origin}/`,
 		name: input.name,
-		description: input.description,
-		inLanguage: input.language,
 		publisher: ref(ids.organization(input.origin)),
-		potentialAction: search,
 	};
 	const organization: Organization = {
 		"@type": "Organization",
 		"@id": ids.organization(input.origin),
 		name: input.name,
 		url: `${input.origin}/`,
-		logo: { "@type": "ImageObject", url: input.logo, width: "512", height: "512" },
+		logo: {
+			"@type": "ImageObject",
+			"@id": `${input.origin}/#logo`,
+			url: input.logo,
+			contentUrl: input.logo,
+			width: "512",
+			height: "512",
+		},
 		sameAs: [...input.sameAs],
 	};
 	return [website, organization].map(compact);
@@ -355,6 +367,16 @@ const PLACE_TYPES = {
 	hospital: "Hospital",
 } as const;
 
+/**
+ * schema.org type of a place of practice. A private office is a `PhysiciansOffice` for a
+ * doctor only (it is "a doctor's office"): a dentist's, midwife's or nurse's office is a
+ * `MedicalBusiness`, the generic medical local business.
+ */
+function placeTypeOf(practiceKind: string, professionCode: string) {
+	if (practiceKind === "office" && professionCode !== "10") return "MedicalBusiness";
+	return PLACE_TYPES[practiceKind as keyof typeof PLACE_TYPES] ?? "MedicalClinic";
+}
+
 function openingHoursOf(
 	hours: readonly OpeningHoursInput[] | undefined,
 ): OpeningHoursSpecification[] {
@@ -371,8 +393,8 @@ function openingHoursOf(
  * page) is identified by its own page's `@id`, so both pages describe the same
  * entity; a private office by a fragment of the practitioner's page.
  */
-function placeNode(practitionerUrl: string, place: PracticePlaceInput) {
-	const type = PLACE_TYPES[place.practiceKind as keyof typeof PLACE_TYPES] ?? "MedicalClinic";
+function placeNode(practitionerUrl: string, professionCode: string, place: PracticePlaceInput) {
+	const type = placeTypeOf(place.practiceKind, professionCode);
 	const node = {
 		"@type": type,
 		"@id": place.establishmentUrl
@@ -385,7 +407,7 @@ function placeNode(practitionerUrl: string, place: PracticePlaceInput) {
 		telephone: e164(place.phone),
 		openingHoursSpecification: openingHoursOf(place.openingHours),
 	};
-	return node as PhysiciansOffice | MedicalClinic | Hospital;
+	return node as PhysiciansOffice | MedicalBusiness | MedicalClinic | Hospital;
 }
 
 function reserveAction(bookingUrl: string): ReserveAction {
@@ -411,7 +433,7 @@ function reserveAction(bookingUrl: string): ReserveAction {
  */
 export function practitionerNodes(input: PractitionerInput): Thing[] {
 	const primary = input.places[0];
-	const places = input.places.map((place) => placeNode(input.url, place));
+	const places = input.places.map((place) => placeNode(input.url, input.professionCode, place));
 	const placeRefs = places.map((place) => ref((place as { "@id": string })["@id"]));
 	const identifier: PropertyValue = {
 		"@type": "PropertyValue",
@@ -465,7 +487,7 @@ export function practitionerNodes(input: PractitionerInput): Thing[] {
 				"@type": "Occupation",
 				name: input.occupation,
 				// ISCO-08 2222: midwifery professionals; 2221: nursing professionals.
-				occupationalCategory: ISCO_CATEGORIES[input.professionCode],
+				occupationalCategory: iscoCategory(input.professionCode),
 			},
 			address: localBusiness.address,
 			telephone: localBusiness.telephone,

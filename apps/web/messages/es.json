@@ -567,12 +567,6 @@
 			"heading": "Otros profesionales sanitarios: {occupation} en {place}"
 		},
 		"photoAlt": "Foto de {name}",
-		"withheld": {
-			"metaTitle": "Página oculta · Apercura",
-			"title": "Esta página está oculta",
-			"body": "Se está comprobando una solicitud de retirada de esta página. Mientras tanto, no se muestra.",
-			"dataLink": "Cómo se publican y retiran las páginas"
-		},
 		"metaTitleName": "{name} · Apercura",
 		"metaDescriptionBookable": "{name}, {occupation}: reserva en línea, dirección, datos de contacto y {fees, select, sector {sector de tarifas} other {convenio de honorarios}}.",
 		"metaDescriptionBookablePlace": "{name}, {occupation} en {place}: reserva en línea, dirección, datos de contacto y {fees, select, sector {sector de tarifas} other {convenio de honorarios}}."

@@ -146,7 +146,9 @@ async function nearbyPlaces(listingSlug: string, place: PlaceRef | null): Promis
 				${place.slug} AS "departmentSlug"
 			FROM directory.landing_pages lp
 			JOIN directory.places p ON p.id = lp.place_id AND p.kind IN ('commune', 'arrondissement')
+			-- The Paris city has no page of its own: its link would redirect back to this one.
 			WHERE lp.listing_slug = ${listingSlug} AND p.department_code = ${place.code}
+				AND p.code <> '75056'
 			ORDER BY lp.practitioner_count DESC, p.name, p.id
 			LIMIT 40
 		`;

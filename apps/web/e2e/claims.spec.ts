@@ -379,15 +379,14 @@ test("objecting to an unclaimed page hides it at once; an administrator then sup
 	// What happens next, and when: no promise of an instant deletion.
 	await expect(page.getByText(/dans un délai d’un mois au plus/)).toBeVisible();
 
-	// Hidden at once: nothing about the person, noindex, out of sitemaps and searches.
-	await page.goto(`/fr/praticien/${OPT_OUT_PRACTITIONER.slug}`);
-	await expect(
-		page.getByRole("heading", { level: 1, name: "Cette page est masquée" }),
-	).toBeVisible();
+	// Hidden at once: a real 404 like an unknown page (never a soft 404, nothing about the
+	// person), noindex, out of sitemaps and searches.
+	const hidden = await page.goto(`/fr/praticien/${OPT_OUT_PRACTITIONER.slug}`);
+	expect(hidden?.status()).toBe(404);
 	await expect(page.getByText("Modele")).toHaveCount(0);
 	await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", /noindex/);
 	const index = await (await request.get("/sitemap.xml")).text();
-	for (const chunk of index.match(/\/sitemaps\/praticiens-\d+\.xml/g) ?? []) {
+	for (const chunk of index.match(/\/sitemaps\/fr\/praticiens-\d+\.xml/g) ?? []) {
 		expect(await (await request.get(chunk)).text()).not.toContain(OPT_OUT_PRACTITIONER.slug);
 	}
 	const sql = testDb();
