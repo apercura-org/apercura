@@ -134,11 +134,24 @@ test("a booking can be made with the keyboard only", async ({ page }) => {
 
 	const cell = firstFreeCell(dialog);
 	await expect(cell).toBeVisible();
+	const first = dialog.getByRole("gridcell", {
+		name: (await cell.getAttribute("aria-label")) ?? "",
+		exact: true,
+	});
 	await tabTo(page, dialog.locator('[role="gridcell"][tabindex="0"]'));
-	// The grid opens on the first free time; move away and back, then stamp it.
-	await page.keyboard.press("ArrowRight");
-	await page.keyboard.press("ArrowLeft");
+	// The grid opens on the first free time; move away and back, then stamp it. Down to the next
+	// day and back up, never sideways: late in the day the first free time is the day's last
+	// one, where Right stays put and Left lands on a time that cannot be stamped (taken, or
+	// inside the notice). Every seeded day has the same times and later days follow, so the
+	// column survives the round trip at any hour.
+	await expect(first).toBeFocused();
+	await page.keyboard.press("ArrowDown");
+	await expect(first).not.toBeFocused();
+	await expect(dialog.locator('[role="gridcell"]:focus')).toHaveCount(1);
+	await page.keyboard.press("ArrowUp");
+	await expect(first).toBeFocused();
 	await page.keyboard.press("Enter");
+	await expect(first).toHaveAttribute("aria-selected", "true");
 	await expect(dialog.locator('[role="gridcell"][aria-selected="true"]')).toHaveCount(1);
 	await tabTo(page, dialog.getByRole("button", { name: "Continuer" }));
 	await page.keyboard.press("Enter");
