@@ -83,7 +83,7 @@ describe("formatting", () => {
 
 	it("keeps the manage token in the URL fragment", () => {
 		const url = new URL(manageUrl("en", "token123"));
-		expect(url.pathname).toBe("/en/rdv");
+		expect(url.pathname).toBe("/fr-en/rdv");
 		expect(url.search).toBe("");
 		expect(url.hash).toBe("#t=token123");
 	});

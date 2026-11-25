@@ -151,11 +151,14 @@ export function baseSecurityHeaders(options: {
 	return headers;
 }
 
-/** The practitioner space and the appointment page, in any locale: rendered per request. */
-export function noncePathPattern(locales: readonly string[]): RegExp {
-	const prefix = locales.map((locale) => locale.replace(/[^A-Za-z-]/g, "")).join("|");
+/**
+ * The practitioner space and the appointment page, under any locale prefix (`fr`, `fr-en`…):
+ * rendered per request.
+ */
+export function noncePathPattern(prefixes: readonly string[]): RegExp {
+	const prefix = prefixes.map((segment) => segment.replace(/[^A-Za-z-]/g, "")).join("|");
 	// `/pro` itself is the public, cached presentation page: static policy.
-	return new RegExp(`^(?:/(?:${prefix}))?/(?:pro/.+|rdv/?)$`);
+	return new RegExp(`^/(?:${prefix})/(?:pro/.+|rdv/?)$`);
 }
 
 /** A fresh nonce: 16 random bytes in base64. */

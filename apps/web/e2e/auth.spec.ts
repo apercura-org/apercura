@@ -27,10 +27,10 @@ async function freshCode(totp: OTPAuth.TOTP, used: Set<string>) {
 }
 
 for (const path of [
-	"/pro/connexion",
-	"/pro/inscription",
-	"/en/pro/connexion",
-	"/en/pro/inscription",
+	"/fr/pro/connexion",
+	"/fr/pro/inscription",
+	"/fr-en/pro/connexion",
+	"/fr-en/pro/inscription",
 ]) {
 	test(`${path} has no axe violations and is not indexed`, async ({ page }) => {
 		await page.goto(path);
@@ -39,7 +39,11 @@ for (const path of [
 	});
 }
 
-for (const path of ["/pro/tableau-de-bord", "/pro/securite", "/pro/connexion/verification"]) {
+for (const path of [
+	"/fr/pro/tableau-de-bord",
+	"/fr/pro/securite",
+	"/fr/pro/connexion/verification",
+]) {
 	test(`${path} sends signed-out visitors to sign in`, async ({ page }) => {
 		await page.goto(path);
 		await expect(page).toHaveURL(/\/pro\/connexion$/);
@@ -47,7 +51,7 @@ for (const path of ["/pro/tableau-de-bord", "/pro/securite", "/pro/connexion/ver
 }
 
 test("a broken email link says so and offers to sign in", async ({ page }) => {
-	await page.goto("/pro/verification-email?error=invalid_token");
+	await page.goto("/fr/pro/verification-email?error=invalid_token");
 	await expect(page.getByText("Ce lien ne fonctionne plus.")).toBeVisible();
 	await expectNoAxeViolations(page);
 });
@@ -62,7 +66,7 @@ test("sign up, confirm the email, enrol TOTP, then sign in with password and cod
 	const usedCodes = new Set<string>();
 
 	// 1. Sign up.
-	await page.goto("/pro/inscription");
+	await page.goto("/fr/pro/inscription");
 	await page.getByLabel("Prénom et nom").fill("Exemple Martin");
 	await page.getByLabel("Adresse e-mail", { exact: true }).fill(email);
 	await page.getByLabel("Mot de passe", { exact: true }).fill(password);
@@ -90,7 +94,7 @@ test("sign up, confirm the email, enrol TOTP, then sign in with password and cod
 	await expectNoAxeViolations(page);
 
 	// The space and the session list stay closed until then.
-	await page.goto("/pro/tableau-de-bord");
+	await page.goto("/fr/pro/tableau-de-bord");
 	await expect(page).toHaveURL(/\/pro\/securite$/);
 
 	// 4. Enrol the authenticator app.
@@ -121,7 +125,7 @@ test("sign up, confirm the email, enrol TOTP, then sign in with password and cod
 	// 6. Sign out, then sign in again: password, then the TOTP code.
 	await page.getByRole("button", { name: "Se déconnecter" }).click();
 	await expect(page).toHaveURL(/\/pro\/connexion$/);
-	await page.goto("/pro/tableau-de-bord");
+	await page.goto("/fr/pro/tableau-de-bord");
 	await expect(page).toHaveURL(/\/pro\/connexion$/);
 	// Let the form hydrate first: values typed before it can be reset under load.
 	await page.waitForLoadState("networkidle");

@@ -35,7 +35,8 @@
 			"accessibility": "Accessibilità",
 			"privacy": "Privacy",
 			"legal": "Note legali",
-			"terms": "Condizioni d’uso"
+			"terms": "Condizioni d’uso",
+			"international": "Apercura in altri paesi"
 		}
 	},
 	"LocaleSwitcher": {
@@ -104,6 +105,35 @@
 		},
 		"tagline": "L’elenco aperto e lo strumento di prenotazione gratuito per tutti i professionisti sanitari in Francia.",
 		"status": "Lavori in corso."
+	},
+	"International": {
+		"metaTitle": "Apercura · Elenchi aperti dei professionisti sanitari",
+		"metaDescription": "Una pagina gratuita e oggettiva per ogni professionista sanitario iscritto, dai registri pubblici, paese per paese. Aperto in Francia.",
+		"runningHead": "Elenchi aperti dei professionisti sanitari",
+		"title": "Ogni professionista sanitario, una pagina aperta",
+		"lead": "Apercura pubblica una pagina gratuita e oggettiva per ogni professionista sanitario iscritto, a partire dai registri pubblici di ogni paese. Nessuna valutazione, nessuna pubblicità, nessun posizionamento a pagamento, e il codice è aperto.",
+		"suggestion": "In italiano: Apercura Francia",
+		"countries": {
+			"heading": "Scegliere un paese",
+			"intro": "Un paese apre quando i suoi registri pubblici, le sue pagine legali e l’hosting dei suoi dati sanitari sono pronti.",
+			"open": "Aperto",
+			"soon": "Prossimamente",
+			"enter": "Apercura {country}",
+			"alsoIn": "Anche in"
+		},
+		"principles": {
+			"heading": "Che cos’è Apercura",
+			"list": [
+				"Ogni professionista è presentato allo stesso modo, che usi o meno Apercura.",
+				"Informazioni oggettive dai registri ufficiali, ogni pagina con le sue fonti e la sua data.",
+				"Gratuito per professionisti e pazienti: nessun abbonamento, nessuna commissione, nessuna pubblicità.",
+				"Open source con licenza AGPL-3.0: chiunque può verificare come funziona."
+			]
+		},
+		"more": {
+			"heading": "Per saperne di più",
+			"intro": "Queste pagine descrivono Apercura come funziona in Francia, il suo primo paese."
+		}
 	},
 	"ProPage": {
 		"title": "La sua pagina esiste già.",

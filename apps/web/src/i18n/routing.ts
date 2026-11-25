@@ -1,12 +1,17 @@
 import { defineRouting } from "next-intl/routing";
-import { DEFAULT_LOCALE, LOCALES } from "./locales";
+import { DEFAULT_LOCALE, LOCALE_PREFIXES, LOCALES } from "./locales";
 
 export const routing = defineRouting({
 	locales: LOCALES,
-	// French is served without a prefix (`/`), every other locale under its own (`/en`, `/de`…).
 	defaultLocale: DEFAULT_LOCALE,
-	localePrefix: "as-needed",
-	// Only French pages are indexed in v1: no hreflang alternates until another market opens.
+	// Every locale under its prefix: `/fr` (France, in French), `/fr-en`, `/fr-de`… The root `/`
+	// is the international home, outside the locales; the proxy handles unprefixed paths.
+	localePrefix: { mode: "always", prefixes: LOCALE_PREFIXES },
+	// The root never redirects on the visitor's language (crawlers would never see it), so
+	// neither detection nor its cookie is needed: public pages stay cacheable, cookie-free.
+	localeDetection: false,
+	localeCookie: false,
+	// hreflang is written by the pages themselves (`pageMetadata`), only between indexed pages.
 	alternateLinks: false,
 	/**
 	 * Internal (French) pathnames and their forms in the other locales. Listing

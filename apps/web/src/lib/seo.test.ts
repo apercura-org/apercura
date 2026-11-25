@@ -1,17 +1,18 @@
-import { describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import { canonicalPath } from "./canonical-path";
 import { pickMessages } from "./client-messages";
 import { robotsFor } from "./robots";
 import {
 	DESCRIPTION_MAX,
 	fitText,
+	homeAlternates,
 	ogImageOf,
 	pickTitle,
 	shortPlaceName,
 	siteVerification,
 	TITLE_MAX,
 } from "./seo";
-import { sitemapIndexXml, urlSetXml } from "./sitemap-xml";
+import { francePath, sitemapIndexXml, urlSetXml } from "./sitemap-xml";
 
 describe("Open Graph images", () => {
 	it("picks one image per profession", () => {
@@ -53,19 +54,42 @@ describe("robots", () => {
 });
 
 describe("canonicalPath", () => {
-	it("drops the default locale prefix", () => {
-		expect(canonicalPath("/fr")).toBe("/");
-		expect(canonicalPath("/fr/cardiologue/75-paris")).toBe("/cardiologue/75-paris");
-		expect(canonicalPath("/francais")).toBeNull();
+	it("keeps France's prefix: every page of the French directory lives under /fr", () => {
+		expect(canonicalPath("/fr")).toBeNull();
+		expect(canonicalPath("/fr/cardiologue/75-paris")).toBeNull();
+		expect(canonicalPath("/fr-en/directory")).toBeNull();
 	});
 
 	it("lowercases public paths but keeps percent-escapes and the practitioner space", () => {
-		expect(canonicalPath("/Cardiologue/75-PARIS")).toBe("/cardiologue/75-paris");
+		expect(canonicalPath("/fr/Cardiologue/75-PARIS")).toBe("/fr/cardiologue/75-paris");
 		expect(canonicalPath("/FR/Cardiologue")).toBe("/fr/cardiologue");
-		expect(canonicalPath("/m%C3%A9decin")).toBeNull();
-		expect(canonicalPath("/pro/revendiquer/AbC")).toBeNull();
-		expect(canonicalPath("/en/pro/admin/revendications/AbC")).toBeNull();
-		expect(canonicalPath("/praticien/camille-exemple-19999990013")).toBeNull();
+		expect(canonicalPath("/fr/m%C3%A9decin")).toBeNull();
+		expect(canonicalPath("/fr/pro/revendiquer/AbC")).toBeNull();
+		expect(canonicalPath("/fr-en/pro/admin/revendications/AbC")).toBeNull();
+		expect(canonicalPath("/fr/praticien/camille-exemple-19999990013")).toBeNull();
+	});
+});
+
+describe("hreflang of the homes", () => {
+	afterEach(() => {
+		vi.unstubAllEnvs();
+	});
+
+	it("links France's home in French and the international home as x-default, on APP_URL", () => {
+		vi.stubEnv("APP_URL", "https://apercura.org");
+		expect(homeAlternates()).toEqual({
+			"fr-FR": "https://apercura.org/fr",
+			"x-default": "https://apercura.org/",
+		});
+	});
+});
+
+describe("sitemap paths", () => {
+	it("puts the French paths of the read models under France's segment", () => {
+		expect(francePath("/")).toBe("/fr");
+		expect(francePath("/praticien/camille-exemple-19999990013")).toBe(
+			"/fr/praticien/camille-exemple-19999990013",
+		);
 	});
 });
 

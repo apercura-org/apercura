@@ -85,12 +85,12 @@ export async function freshCode(account: ProAccount) {
  */
 async function submitPassword(page: Page, email: string, password: string, from?: string) {
 	for (let attempt = 0; ; attempt++) {
-		await page.goto(from ?? "/pro/connexion");
+		await page.goto(from ?? "/fr/pro/connexion");
 		await page.getByLabel("Adresse e-mail", { exact: true }).fill(email);
 		await page.getByLabel("Mot de passe", { exact: true }).fill(password);
 		await page.getByRole("button", { name: "Se connecter", exact: true }).click();
 		const limited = page.getByText("Trop de tentatives. Attendez une minute, puis réessayez.");
-		const left = page.waitForURL((url) => !url.pathname.endsWith("/pro/connexion"), {
+		const left = page.waitForURL((url) => !url.pathname.endsWith("/fr/pro/connexion"), {
 			timeout: 10_000,
 		});
 		const outcome = await Promise.race([

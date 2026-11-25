@@ -4,7 +4,7 @@ name: Uptime
 # production site. A failure opens an issue labelled `uptime` (or comments on the one already
 # open); the next successful check closes it. Set the repository variable PRODUCTION_URL
 # (Settings > Secrets and variables > Actions > Variables), e.g. https://apercura.health; the job
-# skips while it is unset. UPTIME_PRACTITIONER_PATH (optional, e.g. /praticien/<slug>) pins the
+# skips while it is unset. UPTIME_PRACTITIONER_PATH (optional, e.g. /fr/praticien/<slug>) pins the
 # page; otherwise the first page of the practitioner sitemap is checked.
 
 on:
@@ -50,7 +50,7 @@ jobs:
           path="${UPTIME_PRACTITIONER_PATH:-}"
           if [ -z "$path" ]; then
             index=$(curl -sS --max-time 20 -A "apercura-uptime" "$base/sitemap.xml" || true)
-            chunk=$(grep -o '<loc>[^<]*/sitemaps/praticiens-[0-9]*\.xml</loc>' <<<"$index" | head -n 1 | sed 's/<[^>]*>//g')
+            chunk=$(grep -o '<loc>[^<]*/sitemaps/\(fr/\)\{0,1\}praticiens-[0-9]*\.xml</loc>' <<<"$index" | head -n 1 | sed 's/<[^>]*>//g')
             if [ -n "$chunk" ]; then
               page=$(curl -sS --max-time 20 -A "apercura-uptime" "$chunk" | grep -o '<loc>[^<]*</loc>' | head -n 1 | sed 's/<[^>]*>//g')
               path="${page#"$base"}"

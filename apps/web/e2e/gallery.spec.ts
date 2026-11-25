@@ -3,7 +3,7 @@ import { axeViolations } from "./axe";
 
 test.describe.configure({ timeout: 180_000 });
 
-for (const path of ["/_ui", "/en/_ui"]) {
+for (const path of ["/fr/_ui", "/fr-en/_ui"]) {
 	test(`${path} has no axe violations`, async ({ page }) => {
 		await page.goto(path);
 		await expect(page.locator("main h1")).toBeVisible();
@@ -12,7 +12,7 @@ for (const path of ["/_ui", "/en/_ui"]) {
 }
 
 test("slot picker: arrows move, Enter stamps the slot and announces it", async ({ page }) => {
-	await page.goto("/en/_ui");
+	await page.goto("/fr-en/_ui");
 	const grid = page.getByRole("grid", { name: "Available times" }).first();
 	await grid.locator('[role="gridcell"][tabindex="0"]').focus();
 	const focused = grid.locator('[role="gridcell"]:focus');
@@ -31,7 +31,7 @@ test("slot picker: arrows move, Enter stamps the slot and announces it", async (
 });
 
 test("slot picker: past and closed slots cannot be stamped", async ({ page }) => {
-	await page.goto("/en/_ui");
+	await page.goto("/fr-en/_ui");
 	const grid = page.getByRole("grid", { name: "Available times" }).first();
 	const closed = grid.locator('[role="gridcell"][aria-disabled="true"]').first();
 	// Playwright waits for aria-disabled elements to become enabled; force the click through.

@@ -1,3 +1,5 @@
+import { LOCALE_PREFIXES } from "~/i18n/locales";
+
 /** XML of sitemaps and sitemap indexes (sitemaps.org 0.9), without changefreq or priority. */
 
 const escapeXml = (value: string) =>
@@ -42,6 +44,10 @@ export const xmlResponse = (body: string) =>
 			"cache-control": "public, max-age=3600",
 		},
 	});
+
+/** A French path of the directory (`/praticien/…`, `/` for the home) under France's segment. */
+export const francePath = (path: string) =>
+	path === "/" ? LOCALE_PREFIXES.fr : `${LOCALE_PREFIXES.fr}${path}`;
 
 /** Indexable pages that do not come from the read models, as French paths. */
 export const STATIC_PATHS = [

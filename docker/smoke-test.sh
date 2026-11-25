@@ -102,14 +102,15 @@ step "Pages and health answer from the app container"
 base="http://127.0.0.1:$port"
 curl -fsS "$base/api/health" | grep -q '"ok"'
 curl -fsS -o /dev/null "$base/"
-curl -fsS -o /dev/null "$base/en"
+curl -fsS -o /dev/null "$base/fr"
+curl -fsS -o /dev/null "$base/fr-en"
 slug=$(compose exec -T postgres psql -U postgres -d apercura -tA \
 	-c "SELECT slug FROM directory.practitioner_pages WHERE indexable ORDER BY slug LIMIT 1")
 test -n "$slug"
-curl -fsS "$base/praticien/$slug" | grep -q "<h1"
-curl -fsS "$base/mentions-legales" | grep -q "$publisher"
+curl -fsS "$base/fr/praticien/$slug" | grep -q "<h1"
+curl -fsS "$base/fr/mentions-legales" | grep -q "$publisher"
 curl -fsS "$base/.well-known/security.txt" | grep -q "^Contact: mailto:contact@example.test"
-echo "home, /en, /praticien/$slug, the legal notice, security.txt and /api/health: OK"
+echo "home, /fr, /fr-en, /fr/praticien/$slug, the legal notice, security.txt and /api/health: OK"
 
 step "Scheduled jobs run in the scheduler"
 compose exec -T scheduler apercura jobs:tick | grep '"job":"tick"'

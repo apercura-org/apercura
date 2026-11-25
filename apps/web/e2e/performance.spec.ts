@@ -14,12 +14,14 @@ import { expect, test } from "@playwright/test";
 
 const BUDGETS_KB: Record<string, number> = {
 	// The map and the booking panel load on demand: neither counts here.
-	"/praticien/camille-exemple-19999990013": 60,
-	"/praticien/anne-essaiaa-19999991003": 60,
-	"/medecin-generaliste/75-paris": 60,
-	"/etablissement/centre-hospitalier-fictif-2a9999001": 60,
-	"/annuaire/75-paris": 60,
+	"/fr/praticien/camille-exemple-19999990013": 60,
+	"/fr/praticien/anne-essaiaa-19999991003": 60,
+	"/fr/medecin-generaliste/75-paris": 60,
+	"/fr/etablissement/centre-hospitalier-fictif-2a9999001": 60,
+	"/fr/annuaire/75-paris": 60,
 	// The search form's combo boxes and API client load on first interaction.
+	"/fr": 60,
+	// The international home: one small island (the language suggestion).
 	"/": 60,
 };
 

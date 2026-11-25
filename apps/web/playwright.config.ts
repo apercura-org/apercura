@@ -6,7 +6,7 @@ import { E2E_BOOKING_ENV } from "./e2e/booking-env";
  *
  * - `production`: the built app (`next start`). Run `bun run test:e2e` from the
  *   repository root, which builds first.
- * - `development`: `next dev`, only for the component gallery (`/_ui`), which
+ * - `development`: `next dev`, only for the component gallery (`/fr/_ui`), which
  *   production builds answer with 404.
  *
  * The auth flow (`auth.spec.ts`) needs PostgreSQL with migrations applied
@@ -42,7 +42,7 @@ export default defineConfig({
 	timeout: 60_000,
 	use: {
 		...devices["Desktop Chrome"],
-		// French is the default locale; without this the locale detection would redirect to /en.
+		// A French browser, as most visitors of the France pages (dates and numbers in the forms).
 		locale: "fr-FR",
 		trace: "retain-on-failure",
 	},
@@ -71,6 +71,8 @@ export default defineConfig({
 				// Booking tests send X-Forwarded-For so each one has its own rate-limit bucket;
 				// requests without it share one bucket, as with no proxy.
 				TRUSTED_PROXY_COUNT: "1",
+				// The former hosts the redirect specs send as X-Forwarded-Host (seo.spec.ts).
+				LEGACY_HOSTS: "apercura.fr,www.apercura.fr",
 				// Mailpit catches the emails, without STARTTLS: allowed in tests only.
 				SMTP_ALLOW_INSECURE: "true",
 				...PSC,
@@ -88,7 +90,7 @@ export default defineConfig({
 		},
 		{
 			command: `bun run dev --port ${DEV_PORT}`,
-			url: `http://localhost:${DEV_PORT}/_ui`,
+			url: `http://localhost:${DEV_PORT}/fr/_ui`,
 			env: { SKIP_ENV_VALIDATION: "1", SMTP_ALLOW_INSECURE: "true" },
 			reuseExistingServer: !isCI,
 			timeout: 180_000,

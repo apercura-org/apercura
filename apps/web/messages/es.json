@@ -35,7 +35,8 @@
 			"accessibility": "Accesibilidad",
 			"privacy": "Privacidad",
 			"legal": "Aviso legal",
-			"terms": "Condiciones de uso"
+			"terms": "Condiciones de uso",
+			"international": "Apercura en otros países"
 		}
 	},
 	"LocaleSwitcher": {
@@ -104,6 +105,35 @@
 		},
 		"tagline": "El directorio abierto y la herramienta de reserva gratuita para todos los profesionales sanitarios de Francia.",
 		"status": "Trabajo en curso."
+	},
+	"International": {
+		"metaTitle": "Apercura · Directorios abiertos de profesionales sanitarios",
+		"metaDescription": "Una página gratuita y factual para cada profesional sanitario registrado, a partir de registros públicos, país por país. Abierto en Francia.",
+		"runningHead": "Directorios abiertos de profesionales sanitarios",
+		"title": "Cada profesional sanitario, una página abierta",
+		"lead": "Apercura publica una página gratuita y factual para cada profesional sanitario registrado, a partir de los registros públicos de cada país. Sin valoraciones, sin publicidad, sin posicionamiento de pago, y con código abierto.",
+		"suggestion": "En español: Apercura Francia",
+		"countries": {
+			"heading": "Elegir un país",
+			"intro": "Un país abre cuando sus registros públicos, sus páginas legales y el alojamiento de sus datos de salud están listos.",
+			"open": "Abierto",
+			"soon": "Próximamente",
+			"enter": "Apercura {country}",
+			"alsoIn": "También en"
+		},
+		"principles": {
+			"heading": "Qué es Apercura",
+			"list": [
+				"Todos los profesionales sanitarios figuran de la misma manera, usen o no Apercura.",
+				"Información factual de los registros oficiales, cada página con sus fuentes y su fecha.",
+				"Gratuito para profesionales sanitarios y pacientes: sin suscripción, sin comisión, sin publicidad.",
+				"Código abierto con licencia AGPL-3.0: cualquiera puede comprobar cómo funciona."
+			]
+		},
+		"more": {
+			"heading": "Más información",
+			"intro": "Estas páginas describen Apercura tal como funciona en Francia, su primer país."
+		}
 	},
 	"ProPage": {
 		"title": "Su página ya existe.",

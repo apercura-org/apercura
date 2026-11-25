@@ -1,7 +1,14 @@
 import { paletteHex } from "@apercura/ui/tokens";
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
-import { LOCALE_TAGS, type Locale, OG_LOCALES } from "~/i18n/locales";
+import {
+	HREFLANGS,
+	INDEXABLE_LOCALES,
+	isIndexableLocale,
+	LOCALE_TAGS,
+	type Locale,
+	OG_LOCALES,
+} from "~/i18n/locales";
 import type { Href } from "~/i18n/navigation";
 import { robotsFor } from "./robots";
 import { absoluteUrl, siteOrigin } from "./site-url";
@@ -85,18 +92,62 @@ export type PageMetadataInput = {
 	indexable: boolean;
 	image?: OgImage;
 	type?: "website" | "profile";
+	/** hreflang alternates (absolute URLs by language tag), printed only on an indexed page. */
+	languages?: Record<string, string>;
 };
+
+/**
+ * hreflang of the two homes: France's in French (`fr-FR`, `/fr`) and the international one
+ * (`x-default`, `/`), the country chooser for every other visitor. Both print the same set.
+ * Other pages have no alternate yet: each is indexed in one language of one market only, and
+ * pages in other locales are `noindex` (hreflang never points at them).
+ */
+export function homeAlternates(): Record<string, string> {
+	const languages: Record<string, string> = {};
+	for (const locale of INDEXABLE_LOCALES) {
+		const tag = HREFLANGS[locale];
+		if (tag) languages[tag] = absoluteUrl("/", locale);
+	}
+	languages["x-default"] = `${siteOrigin()}/`;
+	return languages;
+}
 
 /**
  * The metadata of a public page: title, description, self canonical, robots
  * and complete Open Graph and Twitter cards (Next.js replaces a parent's
  * `openGraph` instead of merging it, so every page states all of it).
  *
- * No hreflang alternates: English pages are `noindex` in v1, and hreflang is
- * only announced between pages that are really translated and indexed.
+ * hreflang only between indexed pages (`languages`, the homes today): pages in
+ * other locales are `noindex` in v1.
  */
 export async function pageMetadata(input: PageMetadataInput): Promise<Metadata> {
-	const url = absoluteUrl(input.href, input.locale);
+	const indexed = isIndexableLocale(input.locale) && input.indexable;
+	return documentMetadata({
+		url: absoluteUrl(input.href, input.locale),
+		ogLocale: OG_LOCALES[input.locale],
+		title: input.title,
+		description: input.description,
+		robots: robotsFor(input.locale, input.indexable),
+		image: input.image,
+		type: input.type,
+		languages: indexed ? input.languages : undefined,
+	});
+}
+
+/**
+ * The metadata of a page from its absolute URL: `pageMetadata` for the pages of a
+ * locale, and the international home, which lives outside the locales.
+ */
+export async function documentMetadata(input: {
+	url: string;
+	ogLocale: string;
+	title: string;
+	description: string;
+	robots: Metadata["robots"];
+	image?: OgImage;
+	type?: "website" | "profile";
+	languages?: Record<string, string>;
+}): Promise<Metadata> {
 	const name = input.image ?? "annuaire";
 	// The images are printed in French (shared on French results): so is their text alternative.
 	const tImage = await getTranslations({ locale: "fr", namespace: "OgImage" });
@@ -110,15 +161,18 @@ export async function pageMetadata(input: PageMetadataInput): Promise<Metadata> 
 	return {
 		title: input.title,
 		description: input.description,
-		robots: robotsFor(input.locale, input.indexable),
-		alternates: { canonical: url },
+		robots: input.robots,
+		alternates: {
+			canonical: input.url,
+			...(input.languages ? { languages: input.languages } : {}),
+		},
 		openGraph: {
 			type: input.type ?? "website",
-			url,
+			url: input.url,
 			title: input.title,
 			description: input.description,
 			siteName: BRAND,
-			locale: OG_LOCALES[input.locale],
+			locale: input.ogLocale,
 			images: [image],
 		},
 		twitter: {

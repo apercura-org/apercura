@@ -90,6 +90,13 @@ const serverFields = z.object({
 	REVALIDATE_SECRET: optionalString,
 	TRUSTED_PROXY_COUNT: z.coerce.number().int().min(0).default(0),
 	/**
+	 * Former hosts of the French site, comma-separated (`apercura.fr,www.apercura.fr`). In
+	 * production every URL they receive, robots.txt, sitemaps and images included, answers a
+	 * permanent redirect to the same page on APP_URL under the current scheme, their home to
+	 * France's (`/fr`). Any other host still has its pages redirected (CANONICAL_HOST_REDIRECT).
+	 */
+	LEGACY_HOSTS: optionalString,
+	/**
 	 * Secret HMAC-SHA256 key that turns client IP addresses into rate-limit keys
 	 * (public search suggestions, Better Auth's limits), so neither
 	 * `directory.rate_limits` nor `directory.auth_rate_limit` stores a raw IP. Any random string of at least 32 bytes, e.g. base64 of 32 random bytes:

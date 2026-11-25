@@ -20,7 +20,7 @@ import { getPathname, Link } from "~/i18n/navigation";
 import { routing } from "~/i18n/routing";
 import { LINKS } from "~/lib/links";
 import { getPillars } from "~/lib/pillars";
-import { BRAND, CONTENT_LANGUAGES, pageMetadata } from "~/lib/seo";
+import { BRAND, CONTENT_LANGUAGES, homeAlternates, pageMetadata } from "~/lib/seo";
 import { siteOrigin } from "~/lib/site-url";
 import { siteNodes } from "~/lib/structured-data";
 
@@ -45,6 +45,7 @@ export async function generateMetadata({ params }: PageProps<"/[locale]">): Prom
 		title: t("homeTitle"),
 		description: t("description"),
 		indexable: true,
+		languages: homeAlternates(),
 	});
 }
 

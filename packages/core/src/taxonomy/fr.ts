@@ -390,7 +390,7 @@ export const RESERVED_SEGMENTS = [
 	"confidentialite",
 	"mentions-legales",
 	"conditions",
-	// Locale prefixes.
+	// Former locale prefixes: old `/en/…` links still redirect (to `/fr-en/…`).
 	"en",
 	"de",
 	"es",

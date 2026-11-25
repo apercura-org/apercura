@@ -35,7 +35,8 @@
 			"accessibility": "Accessibility",
 			"privacy": "Privacy",
 			"legal": "Legal notice",
-			"terms": "Terms of use"
+			"terms": "Terms of use",
+			"international": "Apercura in other countries"
 		}
 	},
 	"LocaleSwitcher": {
@@ -104,6 +105,35 @@
 		},
 		"tagline": "The open directory and free booking tool for every health practitioner in France.",
 		"status": "Work in progress."
+	},
+	"International": {
+		"metaTitle": "Apercura · Open directories of health practitioners",
+		"metaDescription": "A free, factual page for every registered health practitioner, built from public registers, one country at a time. Open in France.",
+		"runningHead": "Open directories of health practitioners",
+		"title": "Every health practitioner, one open page",
+		"lead": "Apercura publishes a free, factual page for every registered health practitioner, built from each country’s public registers. No ratings, no ads, no paid ranking, and the code is open source.",
+		"suggestion": "In English: Apercura France",
+		"countries": {
+			"heading": "Choose a country",
+			"intro": "A country opens once its public registers, its legal pages and its health-data hosting are ready.",
+			"open": "Open",
+			"soon": "Coming soon",
+			"enter": "Apercura {country}",
+			"alsoIn": "Also in"
+		},
+		"principles": {
+			"heading": "What Apercura is",
+			"list": [
+				"Every practitioner is listed the same way, whether or not they use Apercura.",
+				"Factual information from official registers, each page with its sources and its date.",
+				"Free for practitioners and patients: no subscription, no commission, no ads.",
+				"Open source under the AGPL-3.0 licence, so anyone can check how it works."
+			]
+		},
+		"more": {
+			"heading": "Learn more",
+			"intro": "These pages describe Apercura as it runs in France, its first country."
+		}
 	},
 	"ProPage": {
 		"title": "Your page already exists.",

@@ -97,17 +97,17 @@ describe("content security policy", () => {
 });
 
 describe("nonce routes", () => {
-	const pattern = noncePathPattern(["fr", "en", "de"]);
+	const pattern = noncePathPattern(["fr", "fr-en", "fr-de"]);
 
 	it("covers the practitioner space and the appointment page in every locale", () => {
 		for (const path of [
-			"/pro/connexion",
-			"/pro/agenda/reglages",
-			"/pro/admin/revendications/2f0e8c4e-1111-4a4a-9b9b-123456789abc",
-			"/en/pro/securite",
-			"/de/pro/inscription",
-			"/rdv",
-			"/en/rdv",
+			"/fr/pro/connexion",
+			"/fr/pro/agenda/reglages",
+			"/fr/pro/admin/revendications/2f0e8c4e-1111-4a4a-9b9b-123456789abc",
+			"/fr-en/pro/securite",
+			"/fr-de/pro/inscription",
+			"/fr/rdv",
+			"/fr-en/rdv",
 		]) {
 			expect(pattern.test(path), path).toBe(true);
 		}
@@ -116,11 +116,14 @@ describe("nonce routes", () => {
 	it("leaves cached public pages, the /pro presentation included, to the static policy", () => {
 		for (const path of [
 			"/",
-			"/pro",
-			"/en/pro",
-			"/praticien/camille-exemple-1",
-			"/prothesiste",
-			"/rdvx",
+			"/fr",
+			"/fr/pro",
+			"/fr-en/pro",
+			"/fr/praticien/camille-exemple-1",
+			"/fr/prothesiste",
+			"/fr/rdvx",
+			// Unprefixed paths only ever answer a redirect.
+			"/pro/connexion",
 		]) {
 			expect(pattern.test(path), path).toBe(false);
 		}

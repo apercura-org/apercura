@@ -127,7 +127,7 @@ test("the owner sets up a place from presets and weekly hours, then opens the ag
 	await seedOwnedPage(PRACTITIONER.rpps, account.email);
 
 	// Onboarding now leads to the booking settings.
-	await page.goto("/pro/bienvenue?etape=2");
+	await page.goto("/fr/pro/bienvenue?etape=2");
 	await page.getByRole("link", { name: "Régler horaires et prise de rendez-vous" }).click();
 	await expect(page).toHaveURL(/\/pro\/agenda\/reglages$/);
 	await expect(page.getByRole("heading", { level: 1, name: "Prise de rendez-vous" })).toBeVisible();
@@ -215,7 +215,7 @@ test("a patient's request shows on Today; the owner accepts it, finds it in the 
 	const who = patient("agenda");
 	// The cached page may need one refresh to show the new agenda.
 	await expect(async () => {
-		await patientPage.goto(`/praticien/${PRACTITIONER.slug}`);
+		await patientPage.goto(`/fr/praticien/${PRACTITIONER.slug}`);
 		await expect(patientPage.getByRole("link", { name: "Prendre rendez-vous" })).toBeVisible({
 			timeout: 2_000,
 		});
@@ -226,7 +226,7 @@ test("a patient's request shows on Today; the owner accepts it, finds it in the 
 
 	// The request is in the week too, as a request (dashed box), at its time (this week on a
 	// weekday, as today is closed; next week on a weekend).
-	await page.goto("/pro/agenda");
+	await page.goto("/fr/pro/agenda");
 	const request = page.getByRole("gridcell", {
 		name: new RegExp(`${who.firstName} ${who.lastName}.*Demande à traiter`),
 	});
@@ -236,7 +236,7 @@ test("a patient's request shows on Today; the owner accepts it, finds it in the 
 	);
 
 	// Today: the request to answer, the discreet access note.
-	await page.goto("/pro/aujourdhui");
+	await page.goto("/fr/pro/aujourdhui");
 	await expect(page.getByRole("heading", { level: 1, name: "Aujourd’hui" })).toBeVisible();
 	const requests = page.getByRole("region", { name: "Demandes à traiter" });
 	await expect(
@@ -258,7 +258,7 @@ test("a patient's request shows on Today; the owner accepts it, finds it in the 
 	await expect(requests.getByText("Aucune demande en attente.")).toBeVisible();
 
 	// The week: find the appointment (it may be next week), open it, cancel with a message.
-	await page.goto("/pro/agenda");
+	await page.goto("/fr/pro/agenda");
 	await expect(page.getByRole("grid")).toBeVisible();
 	await expectNoAxeViolations(page);
 	const entry = page.getByRole("gridcell", {
@@ -285,7 +285,7 @@ test("a patient's request shows on Today; the owner accepts it, finds it in the 
 test("the week works with the keyboard only: move, change week, add an appointment and a block", async () => {
 	test.setTimeout(120_000);
 	const page = ownerPage();
-	await page.goto("/pro/agenda");
+	await page.goto("/fr/pro/agenda");
 	const heading = page.getByRole("heading", { level: 2, name: /^Semaine du / });
 	await expect(heading).toBeVisible();
 	// Desktop opens on the week view; the next week is in the future whatever today is.
@@ -399,7 +399,7 @@ test("the owner invites an assistant, who joins with a second factor and runs th
 	test.setTimeout(180_000);
 	const page = ownerPage();
 	const assistantEmail = `exemple.secretaire.${Date.now()}@example.test`;
-	await page.goto("/pro/equipe");
+	await page.goto("/fr/pro/equipe");
 	await expect(page.getByRole("heading", { level: 1, name: "Équipe" })).toBeVisible();
 	await expect(page.getByText("L’agenda seulement", { exact: false })).toBeVisible();
 	await expectNoAxeViolations(page);
@@ -443,34 +443,34 @@ test("the owner invites an assistant, who joins with a second factor and runs th
 	await expect(nav.getByRole("link", { name: "Agenda" })).toBeVisible();
 	await expect(nav.getByRole("link", { name: "Votre page" })).toHaveCount(0);
 	await expect(nav.getByRole("link", { name: "Équipe" })).toHaveCount(0);
-	await assistantPage.goto("/pro/agenda");
+	await assistantPage.goto("/fr/pro/agenda");
 	await expect(assistantPage.getByRole("grid")).toBeVisible();
 	// The appointment the owner took by phone, next week (its details are decrypted for her).
 	await assistantPage.getByRole("button", { name: "Semaine suivante" }).click();
 	await expect(
 		assistantPage.getByRole("gridcell", { name: /Alexis Telephone/ }).first(),
 	).toBeVisible();
-	await assistantPage.goto("/pro/page");
+	await assistantPage.goto("/fr/pro/page");
 	await expect(assistantPage.getByRole("textbox", { name: "Accroche" })).toHaveCount(0);
-	await assistantPage.goto("/pro/equipe");
+	await assistantPage.goto("/fr/pro/equipe");
 	await expect(assistantPage.getByText("Seul le titulaire gère l’équipe")).toBeVisible();
-	await assistantPage.goto("/pro/agenda/reglages");
+	await assistantPage.goto("/fr/pro/agenda/reglages");
 	await expect(
 		assistantPage.getByText("Seul le titulaire règle la prise de rendez-vous"),
 	).toBeVisible();
-	await assistantPage.goto("/pro/agenda/journal");
+	await assistantPage.goto("/fr/pro/agenda/journal");
 	await expect(
 		assistantPage.getByText("Seul le titulaire consulte le journal des accès"),
 	).toBeVisible();
 	await context.close();
 
 	// The owner sees the new member, with a second factor, and who read patient details.
-	await page.goto("/pro/equipe");
+	await page.goto("/fr/pro/equipe");
 	const row = page.getByRole("row", {
 		name: new RegExp(assistantEmail.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")),
 	});
 	await expect(row.getByText("Configuré")).toBeVisible();
-	await page.goto("/pro/agenda/journal");
+	await page.goto("/fr/pro/agenda/journal");
 	await expect(page.getByRole("heading", { level: 1, name: "Journal des accès" })).toBeVisible();
 	await expect(page.getByRole("cell", { name: /Exemple Secretaire/ }).first()).toBeVisible();
 	await expectNoAxeViolations(page);

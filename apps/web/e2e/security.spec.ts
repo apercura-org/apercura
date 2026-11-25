@@ -11,21 +11,22 @@ import { BOOKING_PRACTITIONERS } from "./booking-seed";
  */
 
 const NONCE_PAGES = [
-	"/pro/connexion",
-	"/pro/inscription",
-	"/pro/revendication-email",
-	"/pro/securite",
-	"/pro/tableau-de-bord",
-	"/rdv",
-	"/en/rdv",
+	"/fr/pro/connexion",
+	"/fr/pro/inscription",
+	"/fr/pro/revendication-email",
+	"/fr/pro/securite",
+	"/fr/pro/tableau-de-bord",
+	"/fr/rdv",
+	"/fr-en/rdv",
 ];
 const STATIC_PAGES = [
 	"/",
-	"/pro",
-	"/annuaire",
-	"/medecin-generaliste/75-paris",
-	`/praticien/${BOOKING_PRACTITIONERS.direct.slug}`,
-	"/a-propos",
+	"/fr",
+	"/fr/pro",
+	"/fr/annuaire",
+	"/fr/medecin-generaliste/75-paris",
+	`/fr/praticien/${BOOKING_PRACTITIONERS.direct.slug}`,
+	"/fr/a-propos",
 ];
 
 /** Records CSP violations from the first script on, before the page's own code runs. */
@@ -121,7 +122,7 @@ for (const path of STATIC_PAGES) {
 }
 
 test("the appointment page sends no referrer at all", async ({ request }) => {
-	const response = await request.get("/rdv");
+	const response = await request.get("/fr/rdv");
 	expect(response.headers()["referrer-policy"]).toBe("no-referrer");
 	expect(response.headers()["cache-control"]).toContain("no-store");
 });
