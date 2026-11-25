@@ -160,3 +160,51 @@ export async function tabTo(page: Page, target: Locator, max = 60) {
 	}
 	throw new Error("Could not reach the element with Tab");
 }
+
+/** The seeded practices' time zone: their days and hours are Paris days and hours. */
+const PRACTICE_TIME_ZONE = "Europe/Paris";
+
+/** The practice's calendar day (`YYYY-MM-DD`) at `at`. */
+export function practiceDay(at: Date): string {
+	return new Intl.DateTimeFormat("en-CA", { timeZone: PRACTICE_TIME_ZONE }).format(at);
+}
+
+/** `day` (`YYYY-MM-DD`) moved by `days` calendar days. */
+export function addDays(day: string, days: number): string {
+	const [year = 0, month = 1, date = 1] = day.split("-").map(Number);
+	return new Date(Date.UTC(year, month - 1, date + days)).toISOString().slice(0, 10);
+}
+
+/** The instant of `hour:minute` on `day` (`YYYY-MM-DD`) in the practice's time zone. */
+export function practiceTime(day: string, hour: number, minute = 0): Date {
+	const pad = (value: number) => String(value).padStart(2, "0");
+	const guess = Date.parse(`${day}T${pad(hour)}:${pad(minute)}:00Z`);
+	// The wall time the guess shows in the practice's zone, read back as UTC: the gap is the
+	// zone's offset (UTC+1 or UTC+2 in Paris).
+	const parts = Object.fromEntries(
+		new Intl.DateTimeFormat("en-GB", {
+			timeZone: PRACTICE_TIME_ZONE,
+			hourCycle: "h23",
+			year: "numeric",
+			month: "2-digit",
+			day: "2-digit",
+			hour: "2-digit",
+			minute: "2-digit",
+		})
+			.formatToParts(guess)
+			.map((part) => [part.type, Number(part.value)]),
+	);
+	const part = (type: string) => parts[type] ?? 0;
+	const wall = Date.UTC(part("year"), part("month") - 1, part("day"), part("hour"), part("minute"));
+	return new Date(guess - (wall - guess));
+}
+
+/** A day as the French pages print it in labels, e.g. "jeudi 26 novembre". */
+export function frenchDayLabel(day: string): string {
+	return new Intl.DateTimeFormat("fr-FR", {
+		weekday: "long",
+		day: "numeric",
+		month: "long",
+		timeZone: PRACTICE_TIME_ZONE,
+	}).format(practiceTime(day, 12));
+}

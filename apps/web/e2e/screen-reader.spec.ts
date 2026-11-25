@@ -1,16 +1,20 @@
 import { randomUUID } from "node:crypto";
 import { expect, type Page, test } from "@playwright/test";
 import {
+	addDays,
 	fillDetails,
 	firstFreeCell,
+	frenchDayLabel,
 	manageLink,
 	ownClientAddress,
 	panel,
 	patient,
+	practiceDay,
+	practiceTime,
 	readCode,
 } from "./booking-helpers";
 import { BOOKING_PRACTITIONERS } from "./booking-seed";
-import { createProAccount, pageAgendaUntil, testDb } from "./pro";
+import { createProAccount, expectAgendaLoaded, testDb } from "./pro";
 import { expectPhrasesInOrder, ScreenReader } from "./screen-reader";
 
 /*
@@ -198,6 +202,8 @@ test.describe("booking, the appointment page and the practice's agenda", () => {
 
 	const who = patient("screen-reader");
 	let slotLabel = "";
+	/** The practice day (`YYYY-MM-DD`) of the booked time: always tomorrow at booking time. */
+	let bookedDay = "";
 
 	test("the booking panel announces each step, the chosen time and code errors", async ({
 		page,
@@ -245,7 +251,8 @@ test.describe("booking, the appointment page and the practice's agenda", () => {
 		]);
 
 		// Step 2, time: the focus lands on the step's heading; the grid reads days as row headers
-		// and every time with its date and state (past times say so and cannot be chosen).
+		// and every time with its date and state (past times say so and cannot be chosen; the
+		// first time of the day is still free before 07:00, inside the notice until 08:00).
 		await reader.clear();
 		await dialog.getByText("Consultation", { exact: true }).click();
 		await dialog.getByRole("button", { name: "Continuer" }).click();
@@ -260,14 +267,19 @@ test.describe("booking, the appointment page and the practice's agenda", () => {
 			"Heures du cabinet (heure d’Europe centrale).",
 			"grid, Horaires disponibles",
 			/^rowheader, /,
-			/^gridcell, \S+ \d+ \S+, \d\d:\d\d, (passé, disabled, )?not selected$/,
+			/^gridcell, \S+ \d+ \S+, \d\d:\d\d, ((passé|indisponible), disabled, )?not selected$/,
 		]);
 
-		// Choosing a time is confirmed by a polite announcement naming it.
+		// Choosing a time is confirmed by a polite announcement naming it. The time is tomorrow's
+		// first free one (the grid's second row), never the next one today: late in the day that
+		// is the day's last time, or there is none left. Today and the week below then find the
+		// appointment on a known day, at the top of its day, whatever the hour of the run.
 		await reader.clear();
-		const cell = firstFreeCell(dialog);
+		bookedDay = addDays(practiceDay(new Date()), 1);
+		const cell = firstFreeCell(dialog.getByRole("grid").getByRole("row").nth(1));
 		slotLabel = (await cell.getAttribute("aria-label")) ?? "";
 		expect(slotLabel).toMatch(/^\S+ \d+ \S+, \d\d:\d\d$/);
+		expect(slotLabel.startsWith(`${frenchDayLabel(bookedDay)}, `), slotLabel).toBe(true);
 		await cell.focus();
 		await page.keyboard.press("Enter");
 		await expect(cell).toHaveAttribute("aria-selected", "true");
@@ -401,45 +413,41 @@ test.describe("booking, the appointment page and the practice's agenda", () => {
 			await sql.end();
 		}
 
-		await page.goto("/fr/pro/aujourdhui");
-		await expect(page.getByRole("region", { name: "Les rendez-vous du jour" })).toBeVisible();
-		await expect(page.locator('[role="status"]')).toHaveCount(0);
-		const today = await readPage(page);
-		const todayLabel = new Intl.DateTimeFormat("fr-FR", {
-			weekday: "long",
-			day: "numeric",
-			month: "long",
-			timeZone: "Europe/Paris",
-		}).format(new Date());
+		// Today is the browser's day (the view reads the client clock): pin it to the booked day,
+		// before the appointment, so the day always reads as a table holding it; then to the day
+		// after, which is empty. The hour of the run no longer decides what Today shows.
+		const openToday = async (day: string) => {
+			await page.clock.setFixedTime(practiceTime(day, 7));
+			await page.goto("/fr/pro/aujourdhui");
+			await expect(page.getByRole("region", { name: "Les rendez-vous du jour" })).toBeVisible();
+			await expect(page.locator('[role="status"]')).toHaveCount(0);
+			return readPage(page);
+		};
+		const today = await openToday(bookedDay);
 		expectPhrasesInOrder(today, [
 			"navigation, Espace praticien",
 			"link, Aujourd’hui, current page",
 			"main",
 			"heading, Aujourd’hui, level 1",
-			todayLabel,
+			frenchDayLabel(bookedDay),
 			"region, Prochain patient",
 			"region, Les rendez-vous du jour",
 			"button, Ajouter un rendez-vous",
 			"button, Bloquer une plage",
 			"link, Voir la semaine",
 		]);
-		if (slotLabel.startsWith(todayLabel)) {
-			// Booked for today (the usual case): the day is a table named by its heading.
-			const time = slotLabel.split(", ").at(-1) ?? "";
-			expectPhrasesInOrder(today, [
-				"region, Les rendez-vous du jour",
-				"table, Les rendez-vous du jour",
-				"columnheader, Heure",
-				"columnheader, Rendez-vous",
-				"columnheader, État",
-				"columnheader, Actions",
-				new RegExp(`^row, ${time} à \\d\\d:\\d\\d Alexis Fictif Consultation Confirmé`),
-				"region, Demandes à traiter",
-			]);
-		} else {
-			// Booked for a later day (late runs): the empty day says so once.
-			expectPhrasesInOrder(today, ["Aucun rendez-vous aujourd’hui."]);
-		}
+		// The day is a table named by its heading.
+		const time = slotLabel.split(", ").at(-1) ?? "";
+		expectPhrasesInOrder(today, [
+			"region, Les rendez-vous du jour",
+			"table, Les rendez-vous du jour",
+			"columnheader, Heure",
+			"columnheader, Rendez-vous",
+			"columnheader, État",
+			"columnheader, Actions",
+			new RegExp(`^row, ${time} à \\d\\d:\\d\\d Alexis Fictif Consultation Confirmé`),
+			"region, Demandes à traiter",
+		]);
 		expectPhrasesInOrder(today, [
 			"region, Demandes à traiter",
 			"Aucune demande en attente.",
@@ -448,8 +456,24 @@ test.describe("booking, the appointment page and the practice's agenda", () => {
 		]);
 		expectHeadingOutline(today);
 
+		// An empty day says so once, under "Next patient", and has no table.
+		const empty = await openToday(addDays(bookedDay, 1));
+		expectPhrasesInOrder(empty, [
+			"heading, Aujourd’hui, level 1",
+			frenchDayLabel(addDays(bookedDay, 1)),
+			"region, Prochain patient",
+			"Aucun rendez-vous aujourd’hui.",
+			"region, Les rendez-vous du jour",
+			"button, Ajouter un rendez-vous",
+			"region, Demandes à traiter",
+		]);
+		expect(empty.filter((phrase) => phrase === "Aucun rendez-vous aujourd’hui.")).toHaveLength(1);
+		expect(empty.filter((phrase) => phrase.startsWith("table, "))).toEqual([]);
+		expectHeadingOutline(empty);
+
 		// The week: view switch, week navigation, legend and keyboard help, then a grid whose
-		// columns are days and rows are times.
+		// columns are days and rows are times. It opens on the browser's week: the booked day's.
+		await page.clock.setFixedTime(practiceTime(bookedDay, 7));
 		await page.goto("/fr/pro/agenda");
 		await expect(page.getByRole("grid")).toBeVisible();
 		const reader = await ScreenReader.start(page);
@@ -470,14 +494,19 @@ test.describe("booking, the appointment page and the practice's agenda", () => {
 			/^columnheader, lundi \d+ \S+$/,
 			/^columnheader, dimanche \d+ \S+$/,
 			/^rowheader, \d\d:\d\d$/,
-			/^gridcell, lundi \d+ \S+, \d\d:\d\d, /,
+			// Monday's first time, or the appointment itself when it was booked for a Monday.
+			/^gridcell, (\d\d:\d\d .+, )?lundi \d+ \S+, \d\d:\d\d/,
 		]);
 		expectHeadingOutline(week);
 
-		// The appointment's cell reads its date, time, patient and state when focused (it may be
-		// next week); arrows move one day or one time step and read the new cell.
-		const entry = page.getByRole("gridcell", { name: /Alexis Fictif.*Confirmé/ });
-		await pageAgendaUntil(page, entry, { next: "Semaine suivante", max: 3 });
+		// The appointment's cell reads its date, time, patient and state when focused; arrows move
+		// one day or one time step and read the new cell. The booked time is at the top of its
+		// day, so the next time step down always exists.
+		const entry = page.getByRole("gridcell", {
+			name: new RegExp(`Alexis Fictif, ${slotLabel} à \\d\\d:\\d\\d, Confirmé$`),
+		});
+		await expectAgendaLoaded(page);
+		await expect(entry.first()).toBeVisible();
 		await reader.clear();
 		await entry.first().focus();
 		await page.keyboard.press("ArrowDown");
