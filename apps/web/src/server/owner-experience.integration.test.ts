@@ -23,6 +23,7 @@ import { solveChallenge } from "altcha-lib";
 import { deriveKey as sha } from "altcha-lib/algorithms/sha";
 import { and, eq, inArray, sql } from "drizzle-orm";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
+import { isolatedDatabase } from "~/test/isolated-database";
 import type { AdminAlertMessage } from "./admin-alerts";
 
 const url = process.env.DATABASE_URL_TEST;
@@ -68,6 +69,9 @@ describe.skipIf(!url)("owner experience (database)", async () => {
 	const { consumeRateLimit } = await import("./rate-limit");
 
 	let db: Database;
+	// A database of its own: the admin alerts count every new request and claim, and the retention
+	// purges delete the old rows of every file running alongside.
+	const isolated = isolatedDatabase("owner_experience");
 	const run = randomUUID().slice(0, 8);
 	const ids = (name: string) => `${name}-${run}`;
 	const users = { owner: ids("owner"), assistant: ids("assistant"), admin: ids("admin") };
@@ -144,7 +148,7 @@ describe.skipIf(!url)("owner experience (database)", async () => {
 	}
 
 	beforeAll(async () => {
-		db = createDb({ url: url as string, max: 3 });
+		db = createDb({ url: await isolated.create(), max: 3 });
 		await db.insert(user).values(
 			Object.values(users).map((id) => ({
 				id,
@@ -165,7 +169,7 @@ describe.skipIf(!url)("owner experience (database)", async () => {
 	});
 
 	afterAll(async () => {
-		if (!db) return;
+		if (!db) return isolated.drop();
 		await db
 			.delete(practitionerContactRequests)
 			.where(inArray(practitionerContactRequests.practitionerId, created));
@@ -177,6 +181,7 @@ describe.skipIf(!url)("owner experience (database)", async () => {
 		await db.delete(user).where(inArray(user.id, Object.values(users)));
 		await db.delete(adminAlerts);
 		await db.close();
+		await isolated.drop();
 	});
 
 	it("stores a contact request encrypted, refuses claimed pages and checks the proof of work", async () => {
@@ -334,9 +339,11 @@ describe.skipIf(!url)("owner experience (database)", async () => {
 		expect(sent).toHaveLength(1);
 		// …and the tick after the interval sends one email for what came meanwhile.
 		const later = await alerts.sendAdminAlerts(db, t0 + 16 * 60_000, { env, send });
-		expect(later.contact_requests).toEqual({ status: "sent", count: 2 });
-		// (The claims queue may have news from the claims suite running alongside: ignore it.)
-		expect(sent.filter((message) => message.kind === "contact_requests")).toHaveLength(2);
+		expect(later).toEqual({
+			contact_requests: { status: "sent", count: 2 },
+			claims: { status: "nothing" },
+		});
+		expect(sent).toHaveLength(2);
 		// Nothing new: nothing sent, however long it waits.
 		expect(
 			(await alerts.sendAdminAlert(db, "contact_requests", { nowMs: t0 + 90 * 60_000, env, send }))
@@ -593,9 +600,8 @@ describe.skipIf(!url)("owner experience (database)", async () => {
 			{ practitionerId: owned.id, day: monthsAgo(12), views: 1 },
 		]);
 
-		// The retention suite may purge at the same moment: check what is left, not the count.
 		const purged = await retention.purgeClosedRequests(db, now);
-		expect(purged.contactRequests).toBeGreaterThanOrEqual(0);
+		expect(purged.contactRequests).toBe(2);
 		const left = await db
 			.select({ id: practitionerContactRequests.id })
 			.from(practitionerContactRequests)
@@ -603,7 +609,7 @@ describe.skipIf(!url)("owner experience (database)", async () => {
 		expect(left.map((row) => row.id)).toEqual([ids("recent")]);
 
 		const viewPurge = await retention.purgePageViews(db, now);
-		expect(viewPurge.months).toBe(13);
+		expect(viewPurge).toEqual({ months: 13, pageViewDays: 1 });
 		const kept = await db
 			.select({ day: pageViewDays.day })
 			.from(pageViewDays)

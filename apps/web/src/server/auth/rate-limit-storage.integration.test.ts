@@ -13,6 +13,7 @@ import { betterAuth } from "better-auth";
 import { eq, inArray, like, sql } from "drizzle-orm";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { authRateLimitKey, consumeRateLimit, purgeExpiredRateLimits } from "~/server/rate-limit";
+import { isolatedDatabase } from "~/test/isolated-database";
 import { CLIENT_IP_HEADER } from "./client-ip";
 import { AUTH_RATE_LIMIT_RULES, authRateLimitStorage } from "./rate-limit-storage";
 
@@ -21,6 +22,9 @@ const env = { RATE_LIMIT_KEY: "synthetic-rate-limit-key-for-tests-only" };
 
 describe.skipIf(!url)("auth rate limits (database)", () => {
 	let db: Database;
+	// A database of its own: `purgeExpiredRateLimits` deletes the elapsed counters of every file
+	// running alongside (and those of a test clock in the past).
+	const isolated = isolatedDatabase("rate_limit_storage");
 	const run = randomUUID().slice(0, 8);
 	// Distinct documentation addresses per run, so parallel runs never share a bucket.
 	const octet = Number.parseInt(run.slice(0, 2), 16);
@@ -29,12 +33,12 @@ describe.skipIf(!url)("auth rate limits (database)", () => {
 	const createdKeys: string[] = [];
 	const signInKeys: string[] = [];
 
-	beforeAll(() => {
-		db = createDb({ url: url as string, max: 4 });
+	beforeAll(async () => {
+		db = createDb({ url: await isolated.create(), max: 4 });
 	});
 
 	afterAll(async () => {
-		if (!db) return;
+		if (!db) return isolated.drop();
 		if (createdKeys.length > 0) {
 			await db.delete(rateLimits).where(inArray(rateLimits.key, createdKeys));
 		}
@@ -43,6 +47,7 @@ describe.skipIf(!url)("auth rate limits (database)", () => {
 			await db.delete(authRateLimit).where(inArray(authRateLimit.key, signInKeys));
 		}
 		await db.close();
+		await isolated.drop();
 	});
 
 	function testAuth() {
