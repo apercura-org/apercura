@@ -8,7 +8,7 @@ takes a few minutes.
 | Service      | Role                                                                                       |
 | ------------ | ------------------------------------------------------------------------------------------ |
 | `postgres`   | PostgreSQL 17 + PostGIS. Creates the database roles on its first start                     |
-| `migrate`    | Applies pending migrations, then exits. Runs before the app at every `up`                  |
+| `migrate`    | Migrations, then the roles' passwords, then exits. Runs before the app at every `up`       |
 | `app`        | The web app (Next.js standalone server), one replica, published on `127.0.0.1:${APP_PORT}` |
 | `scheduler`  | supercronic: `jobs:tick` every 5 minutes, the open data import every Monday at 03:00 UTC   |
 | `etl`        | The import, on demand (`docker compose … run --rm etl`)                                    |
@@ -116,10 +116,16 @@ use it in production: nothing is delivered. With a real provider, remove
 `SMTP_ALLOW_INSECURE` and use `smtps://` or an `smtp://` server with STARTTLS.
 
 The scheduler purges both access logs after a year (`AUDIT_LOG_RETENTION_MONTHS`) with the
-`apercura_jobs` role, which may only call that purge: set `APERCURA_JOBS_DB_PASSWORD` before
-the first start. On an existing volume, enable the role once with
-`ALTER ROLE apercura_jobs WITH LOGIN PASSWORD '…';` in `psql`, set the same password in the
-file and `apercura-compose up -d`. Without it the purge is skipped with a warning.
+`apercura_jobs` role, which may only call that purge: set `APERCURA_JOBS_DB_PASSWORD`. On an
+existing volume too: `apercura-compose up -d` reruns `migrate`, which gives the role its login
+and password. Without it the purge is skipped with a warning.
+
+The database roles' passwords are applied twice: by `docker/postgres/10-apercura-roles.sh` when
+the volume is first created, and by `migrate` after the migrations on every `up`
+(`ALTER ROLE … WITH LOGIN PASSWORD …` for each `APERCURA_*_DB_PASSWORD` set). An empty
+variable leaves its role as it is: `migrate` never turns a role's login off, so a role you
+enabled by hand keeps working; disable one with `ALTER ROLE … NOLOGIN` in `psql`. Passwords
+are never logged.
 
 ## First import
 
@@ -257,7 +263,8 @@ apercura-compose up -d                     # migrations, app, scheduler
 ```
 
 The roles are not part of a `pg_dump`: the init script recreates them on an
-empty volume with the passwords of the environment file, before the restore.
+empty volume with the passwords of the environment file, before the restore (and the last
+`up -d` sets them again through `migrate`).
 
 ### Verify a backup
 
@@ -306,7 +313,7 @@ To move to a new PostgreSQL major version, dump, change the image in
 | `BETTER_AUTH_SECRET`                | Replace it: every session ends, users sign in again (without `RATE_LIMIT_KEY`, the sign-in rate-limit counters reset too).                                                                                                                                                                                                                                                                                              |
 | `RATE_LIMIT_KEY`, `ALTCHA_HMAC_KEY` | Replace at any time: rate-limit counters reset, pending booking challenges fail once.                                                                                                                                                                                                                                                                                                                                   |
 | `REVALIDATE_SECRET`, `JOBS_SECRET`  | Replace at any time; the app, the scheduler and the import read the same file.                                                                                                                                                                                                                                                                                                                                          |
-| Database passwords                  | `ALTER ROLE apercura_app WITH PASSWORD '…';` in `psql`, update the file, `apercura-compose up -d`. The init script only runs on an empty volume.                                                                                                                                                                                                                                                                        |
+| Database passwords                  | Change `APERCURA_APP_DB_PASSWORD` (or `_ETL_`, `_READONLY_`, `_JOBS_`) in the file and `apercura-compose up -d`: `migrate` sets the new password, then the services using it restart with it. `POSTGRES_PASSWORD` is only read on first start: `ALTER ROLE postgres WITH PASSWORD '…';` in `psql`, then the file and `up -d`.                                                                                           |
 | `S3_SECRET_ACCESS_KEY`              | Update the file and rerun `apercura-compose up -d`: `minio-init` sets the new secret.                                                                                                                                                                                                                                                                                                                                   |
 
 `apercura-compose up -d` recreates every container whose environment changed.

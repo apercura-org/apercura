@@ -102,7 +102,7 @@ values for this setup:
 | `APP_HOST`                  | `example.org`: the host name of `APP_URL`, read by `docker/compose.vps.yml`         |
 | `APP_PORT`                  | `3000`, or any port no other app of the server uses; the Caddyfile points to it     |
 | `TRUSTED_PROXY_COUNT`       | `1`: the host's Caddy is the only proxy                                             |
-| `APERCURA_JOBS_DB_PASSWORD` | Set it **before the first start**: the init script only runs on an empty volume     |
+| `APERCURA_JOBS_DB_PASSWORD` | Set it: `migrate` gives `apercura_jobs` its login and password on every deploy      |
 | `FEATURE_BOOKING`           | `false`                                                                             |
 | `PUBLIC_HDS_HOST`           | empty                                                                               |
 | Other `LEGAL_*`             | The publisher's facts ([self-hosting, Start](./self-hosting.md#start), step 5)      |
@@ -248,7 +248,13 @@ The same stack also runs under [Coolify](https://coolify.io) as a "Docker
 Compose" application pointed at `docker/compose.selfhost.yml`:
 
 - the variables of the environment file are set in Coolify, not in a file on
-  the server (`APERCURA_JOBS_DB_PASSWORD` before the first start, as above);
+  the server;
+- Coolify does not mount single files from the repository: in place of
+  `docker/postgres/10-apercura-roles.sh` it creates an empty directory, so the
+  database's first-start script does not run. Nothing to do: `migrate` sets
+  the roles' logins and passwords from `APERCURA_*_DB_PASSWORD` after the
+  migrations, on every deploy. Changing one of them in Coolify and redeploying
+  rotates it;
 - the domain goes on the `app` service, port `3000`;
 - Coolify's Traefik is the only proxy: no Caddy on the host, and
   `TRUSTED_PROXY_COUNT=1`;
