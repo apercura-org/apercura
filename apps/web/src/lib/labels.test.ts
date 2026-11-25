@@ -1,5 +1,6 @@
 import { createTranslator } from "next-intl";
 import { describe, expect, it } from "vitest";
+import { messagesFor } from "~/i18n/catalogs";
 import type { Locale } from "~/i18n/locales";
 import de from "../../messages/de.json";
 import en from "../../messages/en.json";
@@ -8,7 +9,7 @@ import fr from "../../messages/fr.json";
 import it_ from "../../messages/it.json";
 import { inSentence } from "./labels";
 
-const CATALOGS = { fr, en, de, es, it: it_ } as const;
+const CATALOGS = { fr, en, de, es, it: it_, "de-AT": messagesFor("de-AT") } as const;
 
 /** A label of the catalog's taxonomy, rendered like `getTaxonomyLabels` does. */
 function listing(locale: Locale, slug: string, gender: "female" | "male" = "female") {

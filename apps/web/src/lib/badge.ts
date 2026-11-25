@@ -11,7 +11,7 @@ export function badgeFile(locale: Locale): string {
 }
 
 export function badgeLocale(file: string): Locale | null {
-	const match = /^apercura-([a-z]{2})\.svg$/.exec(file);
+	const match = /^apercura-([a-z]{2}(?:-[A-Z]{2})?)\.svg$/.exec(file);
 	const locale = match?.[1];
 	return locale && (LOCALES as readonly string[]).includes(locale) ? (locale as Locale) : null;
 }

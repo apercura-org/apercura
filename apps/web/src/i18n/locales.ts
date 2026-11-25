@@ -5,11 +5,15 @@
  */
 
 /**
- * French is the default (the language of the only open market); English is the
- * source catalog (British English); German, Spanish and Italian prepare future
- * markets.
+ * French is the default (the language of the first market); English is the
+ * source catalog (British English); German, Spanish and Italian are interface
+ * translations of France's pages. `de-AT` is Austria's own locale: the pages
+ * of the Austrian market, in German, under `/at` (docs/adr/0002-multi-country.md,
+ * section 2: once a second market opens, a market's languages are locales of
+ * their own). Locale ids are BCP 47 tags, so next-intl formats dates, numbers
+ * and plurals the market's way; the URL prefix is the segment.
  */
-export const LOCALES = ["fr", "en", "de", "es", "it"] as const;
+export const LOCALES = ["fr", "en", "de", "es", "it", "de-AT"] as const;
 
 export type Locale = (typeof LOCALES)[number];
 
@@ -21,6 +25,9 @@ export const DEFAULT_LOCALE: Locale = "fr";
  * (docs/adr/0002-multi-country.md, section 2).
  */
 export const FRANCE_SEGMENT = "fr";
+
+/** The path segment of the Austria market (`/at/allgemeinmedizin/wien`). */
+export const AUSTRIA_SEGMENT = "at";
 
 /**
  * The URL prefix of each interface locale: `/{market}` for the market's own
@@ -34,7 +41,45 @@ export const LOCALE_PREFIXES = {
 	de: `/${FRANCE_SEGMENT}-de`,
 	es: `/${FRANCE_SEGMENT}-es`,
 	it: `/${FRANCE_SEGMENT}-it`,
+	"de-AT": `/${AUSTRIA_SEGMENT}`,
 } as const satisfies Record<Locale, `/${string}`>;
+
+/**
+ * The market whose pages a locale shows (ISO 3166-1 alpha-2): France for `fr`
+ * and its interface translations, Austria for `de-AT`. Every query of a public
+ * page is scoped to it, so a market never lists another market's practitioners.
+ */
+export const LOCALE_MARKETS = {
+	fr: "FR",
+	en: "FR",
+	de: "FR",
+	es: "FR",
+	it: "FR",
+	"de-AT": "AT",
+} as const satisfies Record<Locale, string>;
+
+export type MarketCountry = (typeof LOCALE_MARKETS)[Locale];
+
+/** The market of a locale's pages. */
+export function marketOf(locale: Locale): MarketCountry {
+	return LOCALE_MARKETS[locale];
+}
+
+/** The locale of a market's own language (`FR` → `fr`, `AT` → `de-AT`). */
+export const MARKET_LOCALES: Record<MarketCountry, Locale> = { FR: "fr", AT: "de-AT" };
+
+/**
+ * The language of each locale's catalog: `de-AT` reads the German catalog, with
+ * Austrian overrides (`messages/at.json`) where Austria words or rules differ.
+ */
+export const CATALOG_LANGUAGES = {
+	fr: "fr",
+	en: "en",
+	de: "de",
+	es: "es",
+	it: "it",
+	"de-AT": "de",
+} as const satisfies Record<Locale, string>;
 
 /** The first path segment of each locale's pages (`fr`, `fr-en`…). */
 export const LOCALE_SEGMENTS: readonly string[] = Object.values(LOCALE_PREFIXES).map((prefix) =>
@@ -49,17 +94,18 @@ export const LOCALE_SEGMENTS: readonly string[] = Object.values(LOCALE_PREFIXES)
 export const LEGACY_LOCALE_SEGMENTS = ["en", "de", "es", "it"] as const satisfies readonly Locale[];
 
 /**
- * Locales whose pages may be indexed: those of an open market. Only France is
- * open in v1; the other languages exist for visitors and stay `noindex`, out of
- * the sitemaps and without hreflang until their market opens.
+ * Locales whose pages may be indexed: those of an open market, in its own
+ * language (France in French, Austria in German). Interface translations of a
+ * market's pages (`/fr-de`) stay `noindex`, out of the sitemaps and without
+ * hreflang.
  */
-export const INDEXABLE_LOCALES: readonly Locale[] = ["fr"];
+export const INDEXABLE_LOCALES: readonly Locale[] = ["fr", "de-AT"];
 
 /**
- * hreflang of the indexable locales: language and market (`fr-FR`), so a later
- * `fr-BE` or `fr-CH` page of another market never reads as the same audience.
+ * hreflang of the indexable locales: language and market (`fr-FR`, `de-AT`),
+ * so a page of one market never reads as the same audience as another's.
  */
-export const HREFLANGS: Partial<Record<Locale, string>> = { fr: "fr-FR" };
+export const HREFLANGS: Partial<Record<Locale, string>> = { fr: "fr-FR", "de-AT": "de-AT" };
 
 /** BCP 47 tag used to format dates and numbers, and as the content language (JSON-LD). */
 export const LOCALE_TAGS: Record<Locale, string> = {
@@ -68,6 +114,7 @@ export const LOCALE_TAGS: Record<Locale, string> = {
 	de: "de-DE",
 	es: "es-ES",
 	it: "it-IT",
+	"de-AT": "de-AT",
 };
 
 /** Open Graph locales (`og:locale`). */
@@ -77,6 +124,7 @@ export const OG_LOCALES: Record<Locale, string> = {
 	de: "de_DE",
 	es: "es_ES",
 	it: "it_IT",
+	"de-AT": "de_AT",
 };
 
 export function isLocale(value: unknown): value is Locale {
@@ -94,7 +142,7 @@ export function isIndexableLocale(locale: Locale): boolean {
 
 /** Weekday names written in running text with a capital: English and German. */
 export function capitalisesWeekdays(locale: Locale): boolean {
-	return locale === "en" || locale === "de";
+	return locale === "en" || CATALOG_LANGUAGES[locale] === "de";
 }
 
 /**
@@ -103,5 +151,5 @@ export function capitalisesWeekdays(locale: Locale): boolean {
  * cardiologue à Paris", "Dr. Marie Dubois, Kardiologin in Paris").
  */
 export function capitalisesNouns(locale: Locale): boolean {
-	return locale === "de";
+	return CATALOG_LANGUAGES[locale] === "de";
 }

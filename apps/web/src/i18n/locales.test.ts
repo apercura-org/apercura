@@ -1,11 +1,18 @@
-import { isListingSlug, isReservedSegment } from "@apercura/core/taxonomy";
+import {
+	AT_RESERVED_SEGMENTS,
+	isAtListingSlug,
+	isListingSlug,
+	isReservedSegment,
+} from "@apercura/core/taxonomy";
 import { describe, expect, it } from "vitest";
 import { robotsFor } from "~/lib/robots";
 import {
+	CATALOG_LANGUAGES,
 	DEFAULT_LOCALE,
 	HREFLANGS,
 	INDEXABLE_LOCALES,
 	LEGACY_LOCALE_SEGMENTS,
+	LOCALE_MARKETS,
 	LOCALE_PREFIXES,
 	LOCALE_SEGMENTS,
 	LOCALE_TAGS,
@@ -26,7 +33,8 @@ const PARAMS: Record<string, string> = {
 
 const pathnames = Object.keys(routing.pathnames) as AppPathname[];
 
-const TRANSLATIONS = LOCALES.filter((locale) => locale !== "fr");
+/** Interface translations of France's pages: never indexed. */
+const TRANSLATIONS = LOCALES.filter((locale) => locale !== "fr" && locale !== "de-AT");
 
 /** Pathnames without a catch-all segment, with example params. */
 const simple = pathnames.filter((pathname) => !pathname.includes("..."));
@@ -39,8 +47,8 @@ function hrefOf(pathname: AppPathname) {
 }
 
 describe("locale configuration", () => {
-	it("serves five locales under France's segment: /fr, then /fr-{language}", () => {
-		expect(LOCALES).toEqual(["fr", "en", "de", "es", "it"]);
+	it("serves France under /fr and /fr-{language}, and Austria under /at", () => {
+		expect(LOCALES).toEqual(["fr", "en", "de", "es", "it", "de-AT"]);
 		expect(routing.locales).toEqual(LOCALES);
 		expect(routing.defaultLocale).toBe("fr");
 		expect(DEFAULT_LOCALE).toBe("fr");
@@ -50,8 +58,18 @@ describe("locale configuration", () => {
 			de: "/fr-de",
 			es: "/fr-es",
 			it: "/fr-it",
+			"de-AT": "/at",
 		});
-		expect(LOCALE_SEGMENTS).toEqual(["fr", "fr-en", "fr-de", "fr-es", "fr-it"]);
+		expect(LOCALE_SEGMENTS).toEqual(["fr", "fr-en", "fr-de", "fr-es", "fr-it", "at"]);
+		expect(LOCALE_MARKETS).toEqual({
+			fr: "FR",
+			en: "FR",
+			de: "FR",
+			es: "FR",
+			it: "FR",
+			"de-AT": "AT",
+		});
+		expect(CATALOG_LANGUAGES["de-AT"]).toBe("de");
 		expect(routing.localePrefix).toEqual({ mode: "always", prefixes: LOCALE_PREFIXES });
 		// The root never redirects on the visitor's language, and public pages set no cookie.
 		expect(routing.localeDetection).toBe(false);
@@ -72,8 +90,16 @@ describe("locale configuration", () => {
 			de: "de-DE",
 			es: "es-ES",
 			it: "it-IT",
+			"de-AT": "de-AT",
 		});
-		expect(OG_LOCALES).toEqual({ fr: "fr_FR", en: "en_GB", de: "de_DE", es: "es_ES", it: "it_IT" });
+		expect(OG_LOCALES).toEqual({
+			fr: "fr_FR",
+			en: "en_GB",
+			de: "de_DE",
+			es: "es_ES",
+			it: "it_IT",
+			"de-AT": "de_AT",
+		});
 		for (const locale of LOCALES) {
 			expect(Intl.DateTimeFormat.supportedLocalesOf([LOCALE_TAGS[locale]])).toEqual([
 				LOCALE_TAGS[locale],
@@ -88,11 +114,12 @@ describe("locale configuration", () => {
 		}
 	});
 
-	it("indexes French pages only, announced as fr-FR, and leaves hreflang to the pages", () => {
-		expect(INDEXABLE_LOCALES).toEqual(["fr"]);
-		expect(HREFLANGS).toEqual({ fr: "fr-FR" });
+	it("indexes each market in its own language only, and leaves hreflang to the pages", () => {
+		expect(INDEXABLE_LOCALES).toEqual(["fr", "de-AT"]);
+		expect(HREFLANGS).toEqual({ fr: "fr-FR", "de-AT": "de-AT" });
 		expect(routing.alternateLinks).toBe(false);
 		expect(robotsFor("fr", true)).toEqual({ index: true, follow: true });
+		expect(robotsFor("de-AT", true)).toEqual({ index: true, follow: true });
 		for (const locale of TRANSLATIONS) {
 			expect(robotsFor(locale, true)).toEqual({ index: false, follow: true });
 		}
@@ -140,6 +167,19 @@ describe("locale configuration", () => {
 				.slice(1);
 			if (first) expect(isReservedSegment(first), pathname).toBe(true);
 		}
+		// Austria: every German first segment is reserved and never an Austrian listing slug.
+		for (const pathname of simple.filter((pathname) => !pathname.startsWith("/["))) {
+			const [first] = getPathname({ href: hrefOf(pathname) as never, locale: "de-AT" })
+				.split("/")
+				.filter(Boolean)
+				.slice(1);
+			if (!first) continue;
+			expect(AT_RESERVED_SEGMENTS as readonly string[], pathname).toContain(first);
+			expect(isAtListingSlug(first), pathname).toBe(false);
+		}
+		expect(localePath("de-AT", "/praticien/[slug]", { slug: "anna-muster-w7983" })).toBe(
+			"/at/arzt/anna-muster-w7983",
+		);
 	});
 
 	it("builds email links like the router does", () => {

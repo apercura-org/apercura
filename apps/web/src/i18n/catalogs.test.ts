@@ -7,15 +7,24 @@ import {
 	TYPE,
 } from "@formatjs/icu-messageformat-parser";
 import { describe, expect, it } from "vitest";
+import at from "../../messages/at.json";
 import de from "../../messages/de.json";
 import en from "../../messages/en.json";
 import es from "../../messages/es.json";
 import fr from "../../messages/fr.json";
 import it_ from "../../messages/it.json";
-import { messagesFor } from "./catalogs";
-import { LOCALES, type Locale } from "./locales";
+import { mergeMessages, messagesFor } from "./catalogs";
+import { CATALOG_LANGUAGES, LOCALES, type Locale } from "./locales";
 
-const CATALOGS: Record<Locale, unknown> = { fr, en, de, es, it: it_ };
+/** Austria's catalog is the German one with the Austrian overrides on top. */
+const CATALOGS: Record<Locale, unknown> = {
+	fr,
+	en,
+	de,
+	es,
+	it: it_,
+	"de-AT": mergeMessages(de, at as Record<string, unknown>),
+};
 
 /** Every message of a catalog by its dotted key (array items are indexed). */
 function flatten(tree: unknown, prefix = "", out = new Map<string, string>()) {
@@ -91,7 +100,8 @@ describe.each(LOCALES)("the %s catalog", (locale) => {
 	});
 
 	it("gives every plural the forms its language selects", () => {
-		const categories = new Intl.PluralRules(locale).resolvedOptions().pluralCategories;
+		const categories = new Intl.PluralRules(CATALOG_LANGUAGES[locale]).resolvedOptions()
+			.pluralCategories;
 		const short: string[] = [];
 		for (const [key, message] of target) {
 			for (const plural of shapeOf(message).plurals) {
@@ -104,5 +114,12 @@ describe.each(LOCALES)("the %s catalog", (locale) => {
 
 	it("falls back to English for nothing: the merged catalog is the catalog", () => {
 		expect(flatten(messagesFor(locale))).toEqual(target);
+	});
+});
+
+describe("the Austrian overrides", () => {
+	it("only override keys of the German catalog", () => {
+		const german = flatten(de);
+		expect([...flatten(at).keys()].filter((key) => !german.has(key))).toEqual([]);
 	});
 });
