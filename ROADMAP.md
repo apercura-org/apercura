@@ -62,7 +62,7 @@ test, reflow at 390 px and a Lighthouse CI score of 100. What is left is manual:
 
 - Register with Pro Santé Connect: iSC account, Datapass, sandbox, then production, with the
   redirect URI `{APP_URL}/api/auth/callback/psc`.
-- Redirect the other domains (apercura.health, apercura.eu, apercura.org) to apercura.fr.
+- Buy the other domains (apercura.health, apercura.eu, apercura.org) and redirect them to apercura.fr.
 - Submit the domain to the HSTS preload list once every subdomain is served over HTTPS for good.
 - Order an external penetration test.
 - Keep an off-site copy of the backups (an S3 bucket), if it is not set up yet.
