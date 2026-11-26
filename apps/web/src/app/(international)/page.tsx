@@ -1,4 +1,4 @@
-import { Badge, BrandLockup, linkStyles } from "@apercura/ui";
+import { Badge, BrandLogo, linkStyles } from "@apercura/ui";
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { BookletPage } from "~/components/booklet-page";
@@ -115,7 +115,7 @@ export default async function InternationalHome() {
 						aria-label={tSite("wordmark")}
 						className="-ms-1 inline-flex min-h-11 items-center rounded-field px-1 text-ink no-underline"
 					>
-						<BrandLockup height={24} />
+						<BrandLogo height={24} />
 					</a>
 					<LanguageSuggestion
 						offers={offers}

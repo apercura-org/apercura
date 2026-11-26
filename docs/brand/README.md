@@ -34,6 +34,7 @@ Colours are the design tokens (see [DESIGN.md](../../DESIGN.md)): ink `#191d24` 
 ## Source
 
 The geometry lives in [`packages/ui/src/brand/geometry.ts`](../../packages/ui/src/brand/geometry.ts).
-The header, the site icons and the Open Graph images are drawn from it, and a unit test keeps
+The site icons, the Open Graph images and the header's symbol are drawn from it (the header
+sets the wordmark as live text in the web font, matched to the outlines), and a unit test keeps
 these files (and the favicon, `apps/web/src/app/icon.svg`) equal to its output. To change the
 logo, change the geometry and write the files again from its builders.

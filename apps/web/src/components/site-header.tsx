@@ -1,4 +1,4 @@
-import { BrandLockup } from "@apercura/ui";
+import { BrandLogo } from "@apercura/ui";
 import { getTranslations } from "next-intl/server";
 import { marketOf } from "~/i18n/locales";
 import { type Href, Link } from "~/i18n/navigation";
@@ -33,7 +33,7 @@ export async function SiteHeader({ locale, href }: SiteHeaderProps) {
 					aria-label={t("homeLink")}
 					className="-ms-1 inline-flex min-h-11 items-center rounded-field px-1 text-ink no-underline"
 				>
-					<BrandLockup height={24} />
+					<BrandLogo height={24} />
 				</Link>
 				<div className="flex flex-wrap items-center gap-x-2">
 					<nav aria-label={t("navLabel")}>

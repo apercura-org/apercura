@@ -1,7 +1,7 @@
 /**
  * @apercura/ui: the booklet design system.
  *
- * - Server-safe: tokens, recipes, icons, the logo (BrandSymbol, BrandLockup), Badge, Notice,
+ * - Server-safe: tokens, recipes, icons, the logo (BrandLogo, BrandSymbol, BrandLockup), Badge, Notice,
  *   Skeleton, EmptyState, Seal and
  *   the static domain components (FieldRow, PractitionerHeader, ActionBlock,
  *   SiteCard, ProvenanceNote, BookletSearch).
@@ -15,7 +15,7 @@ export {
 	type BrandVariant,
 	brandLockupWidth,
 } from "./brand/geometry";
-export { BrandLockup, type BrandMarkProps, BrandSymbol } from "./brand/logo";
+export { BrandLockup, BrandLogo, type BrandMarkProps, BrandSymbol } from "./brand/logo";
 export { Badge, type BadgeProps } from "./components/badge";
 export {
 	Breadcrumb,
