@@ -51,7 +51,7 @@ export default async function OpenSourcePage({ params }: PageProps<"/[locale]/op
 							label={t("facts.repository")}
 							value={
 								<ExternalLink href={LINKS.repository} externalLabel={external}>
-									github.com/maxgfr/apercura
+									github.com/apercura-org/apercura
 								</ExternalLink>
 							}
 							emptyLabel=""

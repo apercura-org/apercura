@@ -3,7 +3,7 @@
 What Apercura does today is described in the [README](./README.md) and in [`docs/`](./docs).
 This file lists what comes next, roughly in order of expected value. Nothing here is a promise
 or a date; the work in progress is tracked in the
-[issues](https://github.com/maxgfr/apercura/issues).
+[issues](https://github.com/apercura-org/apercura/issues).
 
 Every module below plugs into an extension point that already exists, or adds one. A new module
 ships behind its own feature flag (`apps/web/src/server/features.ts`), off by default until it
@@ -12,9 +12,9 @@ is ready.
 ## Launch status
 
 Production is live on [apercura.fr](https://apercura.fr), with TLS, backups, monitoring and
-alerts, deployed in [#34](https://github.com/maxgfr/apercura/issues/34). Online booking is on.
+alerts, deployed in [#34](https://github.com/apercura-org/apercura/issues/34). Online booking is on.
 It moves to [apercura.org/fr](https://apercura.org/fr), every market on one domain, apercura.fr
-redirecting ([#81](https://github.com/maxgfr/apercura/issues/81),
+redirecting ([#81](https://github.com/apercura-org/apercura/issues/81),
 [the switch](./docs/deploy-vps.md#moving-production-to-apercuraorg)).
 
 To keep costs down at launch, it runs on an interim host in the European Economic Area that is
@@ -35,7 +35,7 @@ signature, an account, a contract, a paid service or a manual test. This list re
 
 - Move production to the HDS-certified host and set `PUBLIC_HDS_HOST` (see above).
 
-### Legal ([#33](https://github.com/maxgfr/apercura/issues/33))
+### Legal ([#33](https://github.com/apercura-org/apercura/issues/33))
 
 - Create the legal entity (association or company) and fill in the publisher facts.
 - Have a lawyer review every legal text, then set `LEGAL_TEXTS_REVIEWED` in
@@ -50,7 +50,7 @@ signature, an account, a contract, a paid service or a manual test. This list re
 - Sign the HDS hosting contract, with written confirmation of the HDS scope of each service.
 - Search and file the "Apercura" trademark (INPI, EUIPO).
 
-### Accessibility ([#32](https://github.com/maxgfr/apercura/issues/32))
+### Accessibility ([#32](https://github.com/apercura-org/apercura/issues/32))
 
 The automated part is done: no axe violation across the 224 end-to-end tests, a keyboard focus
 test, reflow at 390 px and a Lighthouse CI score of 100. What is left is manual:
@@ -61,7 +61,7 @@ test, reflow at 390 px and a Lighthouse CI score of 100. What is left is manual:
   ([`docs/accessibility/rgaa-self-assessment.md`](./docs/accessibility/rgaa-self-assessment.md)),
   then the published accessibility statement.
 
-### Operations ([#34](https://github.com/maxgfr/apercura/issues/34))
+### Operations ([#34](https://github.com/apercura-org/apercura/issues/34))
 
 - Register with Pro Santé Connect: iSC account, Datapass, sandbox, then production, with the
   redirect URI `{APP_URL}/api/auth/callback/psc`.
@@ -103,7 +103,7 @@ test, reflow at 390 px and a Lighthouse CI score of 100. What is left is manual:
 12. **Teleconsultation**, with a video provider that meets the same hosting requirements as the
     rest of the booking data.
 13. **Home visits, next steps.** Self-employed nurses already book home visits
-    ([#75](https://github.com/maxgfr/apercura/issues/75)): a service area of communes, the
+    ([#75](https://github.com/apercura-org/apercura/issues/75)): a service area of communes, the
     patient's address encrypted and shown to the practice only, a fixed travel time kept free
     between a visit and the practice, and once between two visits. Still to come:
     - **Travel time from the distance** between consecutive visits (commune centres first, then
@@ -114,7 +114,7 @@ test, reflow at 390 px and a Lighthouse CI score of 100. What is left is manual:
 ## International launch
 
 Every market lives on apercura.org under its own path
-([#81](https://github.com/maxgfr/apercura/issues/81), paths as in ADR 0002 section 2). The order below comes from the market study
+([#81](https://github.com/apercura-org/apercura/issues/81), paths as in ADR 0002 section 2). The order below comes from the market study
 in [ADR 0002](./docs/adr/0002-multi-country.md#launch-order) (#82, 2026-11-25), which records the
 sources and what is still UNVERIFIED. No market opens before its checklist is done.
 
@@ -131,7 +131,7 @@ Every market needs, on top of its own items:
 
 ### 1. Austria (`/at`): open, directory from open data
 
-Done in [#107](https://github.com/maxgfr/apercura/issues/107): `/at` in German, built weekly by
+Done in [#107](https://github.com/apercura-org/apercura/issues/107): `/at` in German, built weekly by
 `etl:at` from the CC BY 4.0 lists of Vienna, Styria and Salzburg (10,377 doctors and dentists),
 with the attributions on the data sources page, the Impressum and Datenschutzerklärung, claims by
 documents, no booking ([data import](./docs/data-import.md#austria), [ADR 0002](./docs/adr/0002-multi-country.md#austria-at)).
@@ -161,7 +161,7 @@ Left:
 
 ### 4. United Kingdom (`/gb`): open, practice pages from NHS open data
 
-Done in [#125](https://github.com/maxgfr/apercura/issues/125): `/gb` in British English, built
+Done in [#125](https://github.com/apercura-org/apercura/issues/125): `/gb` in British English, built
 weekly by `etl:gb` from the NHS organisation data under the Open Government Licence (ODS for
 England and Wales, Public Health Scotland, the Business Services Organisation in Northern
 Ireland): about 31,000 GP practices, dental practices and pharmacies, located by postcode
@@ -243,7 +243,7 @@ Smaller additions to the pro area, most of them inherited from Medic Remplacemen
   appointment types or between two dates, not when the practice is open (phone hours,
   appointments booked elsewhere, walk-ins). Published as opening hours, they would tell search
   engines a practice is closed when it is only not bookable online
-  ([#91](https://github.com/maxgfr/apercura/issues/91)).
+  ([#91](https://github.com/apercura-org/apercura/issues/91)).
 - **In-app notifications**: a bell in the pro area for new bookings, pending requests and claim
   decisions, in addition to the e-mails. Booking e-mails already go through an outbox, so this is
   a second reader of the same events.

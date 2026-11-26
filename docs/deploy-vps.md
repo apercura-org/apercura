@@ -83,7 +83,7 @@ A dedicated `deploy` user owns the checkout and runs the deploys. Being in the
 sudo adduser --disabled-password --gecos "" deploy
 sudo usermod -aG docker deploy
 sudo install -d -o deploy -g deploy /srv/apps
-sudo -u deploy git clone https://github.com/maxgfr/apercura.git /srv/apps/apercura
+sudo -u deploy git clone https://github.com/apercura-org/apercura.git /srv/apps/apercura
 ```
 
 The repository is public: the server fetches it over HTTPS without credentials.

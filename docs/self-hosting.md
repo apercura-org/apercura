@@ -69,7 +69,7 @@ With `FEATURE_BOOKING=false` (the default) there is no health data at all: see
 ## Start
 
 ```sh
-git clone https://github.com/maxgfr/apercura.git
+git clone https://github.com/apercura-org/apercura.git
 cd apercura
 cp docker/.env.selfhost.example docker/.env.selfhost
 chmod 600 docker/.env.selfhost

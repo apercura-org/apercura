@@ -180,8 +180,8 @@ test("security.txt says where to report a vulnerability, until when (RFC 9116)",
 			.map((line) => [line.slice(0, line.indexOf(":")), line.slice(line.indexOf(":") + 2)]),
 	);
 	// No contact configured on the e2e server: the repository's private advisories.
-	expect(fields.Contact).toBe("https://github.com/maxgfr/apercura/security/advisories/new");
-	expect(fields.Policy).toBe("https://github.com/maxgfr/apercura/security/policy");
+	expect(fields.Contact).toBe("https://github.com/apercura-org/apercura/security/advisories/new");
+	expect(fields.Policy).toBe("https://github.com/apercura-org/apercura/security/policy");
 	expect(fields.Canonical).toBe(`${baseURL}/.well-known/security.txt`);
 	const expires = Date.parse(fields.Expires ?? "");
 	expect(expires).toBeGreaterThan(Date.now());

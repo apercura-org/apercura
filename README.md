@@ -12,7 +12,7 @@ open data (RPPS / Annuaire Santé), and gives every practitioner a free online b
   ([guide](./docs/self-hosting.md)).
 
 > **Status: work in progress.** Nothing here is production-ready yet. See the
-> [roadmap](./ROADMAP.md) and the [issues](https://github.com/maxgfr/apercura/issues).
+> [roadmap](./ROADMAP.md) and the [issues](https://github.com/apercura-org/apercura/issues).
 
 ## Run it yourself
 
