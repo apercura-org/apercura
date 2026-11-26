@@ -5,7 +5,7 @@ type Pathnames = Record<
 	string,
 	| string
 	| Record<
-			Exclude<(typeof LOCALES)[number], "de-AT" | "en-GB" | "cs-CZ" | "es-ES" | "it-IT">,
+			Exclude<(typeof LOCALES)[number], "de-AT" | "en-GB" | "cs-CZ" | "es-ES" | "it-IT" | "de-DE">,
 			string
 	  >
 >;
@@ -58,6 +58,17 @@ function italianMarketPath(path: string): string {
 }
 
 /**
+ * The German market's form of a German path: a facility's page under `/einrichtung` (Germany
+ * lists hospitals, clinics and pharmacies, never people), so an establishment's page moves from
+ * `/einrichtung` to `/organisation`. Every first segment is a German reserved segment of
+ * `@apercura/core/taxonomy` (`DE_RESERVED_SEGMENTS`, tested), which never names a listing.
+ */
+function germanMarketPath(path: string): string {
+	if (path.startsWith("/einrichtung/")) return path.replace("/einrichtung/", "/organisation/");
+	return path.replace("/behandler/", "/einrichtung/");
+}
+
+/**
  * The paths of the markets opened after France, derived from a language's own, not listed, so
  * the table every client island ships stays the size of France's:
  * - Austria (`de-AT`): the German paths, with a doctor's page under `/arzt` (every practitioner
@@ -69,7 +80,9 @@ function italianMarketPath(path: string): string {
  * - Spain (`es-ES`): the Spanish paths, with a centre's page under `/centro` and an
  *   establishment's under `/organizacion` (`spanishMarketPath`);
  * - Italy (`it-IT`): the Italian paths, with a place's page under `/struttura` and an
- *   establishment's under `/organizzazione` (`italianMarketPath`).
+ *   establishment's under `/organizzazione` (`italianMarketPath`);
+ * - Germany (`de-DE`): the German paths, with a facility's page under `/einrichtung` and an
+ *   establishment's under `/organisation` (`germanMarketPath`).
  */
 function withMarkets<T extends Pathnames>(pathnames: T) {
 	return Object.fromEntries(
@@ -84,6 +97,7 @@ function withMarkets<T extends Pathnames>(pathnames: T) {
 						"cs-CZ": czechPath(value.en),
 						"es-ES": spanishMarketPath(value.es),
 						"it-IT": italianMarketPath(value.it),
+						"de-DE": germanMarketPath(value.de),
 					},
 		]),
 	) as {
@@ -95,6 +109,7 @@ function withMarkets<T extends Pathnames>(pathnames: T) {
 					"cs-CZ": string;
 					"es-ES": string;
 					"it-IT": string;
+					"de-DE": string;
 				};
 	};
 }

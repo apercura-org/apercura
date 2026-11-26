@@ -29,6 +29,12 @@ const LOCALIZED = [
 	{ path: "/cz/neexistuje", title: "Tato stránka neexistuje", lang: "cs-CZ", search: "Hledat" },
 	{ path: "/es/no-existe", title: "Esta página no existe", lang: "es-ES", search: "Buscar" },
 	{ path: "/it/inesistente", title: "Questa pagina non esiste", lang: "it-IT", search: "Ricerca" },
+	{
+		path: "/de/gibt-es-nicht",
+		title: "Diese Seite gibt es nicht",
+		lang: "de-DE",
+		search: "Suchen",
+	},
 ];
 
 for (const { path, title, lang, search } of LOCALIZED) {
@@ -61,5 +67,6 @@ test("an address outside every locale gets the root 404", async ({ page }) => {
 	await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", /noindex/);
 	await expect(page.getByRole("link", { name: "France" })).toHaveAttribute("href", "/fr");
 	await expect(page.getByRole("link", { name: "Spain" })).toHaveAttribute("href", "/es");
+	await expect(page.getByRole("link", { name: "Germany" })).toHaveAttribute("href", "/de");
 	expect(await axeViolations(page)).toEqual([]);
 });

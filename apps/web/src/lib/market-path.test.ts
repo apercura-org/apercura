@@ -40,7 +40,7 @@ const pathnames = Object.keys(routing.pathnames) as AppPathname[];
 const move = (path: string, legacyRoot = true) => marketPath(path, { legacyRoot })?.path ?? null;
 
 /** The markets opened after the move: their pages never had another address. */
-const NEW_MARKET_LOCALES = ["de-AT", "en-GB", "cs-CZ", "es-ES", "it-IT"] as const;
+const NEW_MARKET_LOCALES = ["de-AT", "en-GB", "cs-CZ", "es-ES", "it-IT", "de-DE"] as const;
 
 /** The locales of the former scheme. */
 const FORMER_LOCALES = LOCALES.filter(
@@ -48,14 +48,14 @@ const FORMER_LOCALES = LOCALES.filter(
 );
 
 describe("marketPath: every page of the former scheme has a new address", () => {
-	it("leaves Austria's, the UK's, Czechia's, Spain's and Italy's pages where they are", () => {
+	it("leaves Austria's, the UK's, Czechia's, Spain's, Italy's and Germany's pages where they are", () => {
 		for (const locale of NEW_MARKET_LOCALES) {
 			for (const pathname of pathnames) {
 				const path = currentPath(locale, pathname);
 				expect(marketPath(path, { legacyRoot: false }), path).toBeNull();
-				// On the former French host, `/es` and `/it` were France in Spanish and in Italian:
-				// their old links still move.
-				if (locale !== "es-ES" && locale !== "it-IT") {
+				// On the former French host, `/es`, `/it` and `/de` were France in Spanish, Italian and
+				// German: their old links still move.
+				if (locale !== "es-ES" && locale !== "it-IT" && locale !== "de-DE") {
 					expect(marketPath(path, { legacyRoot: true }), path).toBeNull();
 				}
 			}
@@ -67,7 +67,15 @@ describe("marketPath: every page of the former scheme has a new address", () => 
 		expect(move("/es")).toBe("/fr-es");
 		expect(move("/es/aviso-legal", false)).toBeNull();
 		expect(move("/es", false)).toBeNull();
-		expect(move("/de/impressum", false)).toBe("/fr-de/impressum");
+	});
+
+	it("moves `/de` to France in German on the former host only: it is Germany's segment now", () => {
+		expect(move("/de/impressum")).toBe("/fr-de/impressum");
+		expect(move("/de")).toBe("/fr-de");
+		expect(move("/de/impressum", false)).toBeNull();
+		expect(move("/de", false)).toBeNull();
+		// The one former prefix that is no market's: always France in English.
+		expect(move("/en/legal-notice", false)).toBe("/fr-en/legal-notice");
 	});
 
 	it("moves `/it` to France in Italian on the former host only: it is Italy's segment now", () => {
@@ -75,7 +83,6 @@ describe("marketPath: every page of the former scheme has a new address", () => 
 		expect(move("/it")).toBe("/fr-it");
 		expect(move("/it/note-legali", false)).toBeNull();
 		expect(move("/it", false)).toBeNull();
-		expect(move("/de/impressum", false)).toBe("/fr-de/impressum");
 	});
 
 	for (const locale of FORMER_LOCALES) {
@@ -164,10 +171,10 @@ describe("marketPath: every page of the former scheme has a new address", () => 
 		for (const segment of LEGACY_LOCALE_SEGMENTS) {
 			expect(marketPath(`/${segment}/x`, { legacyRoot: true })?.move).toBe("locale");
 		}
-		expect(marketPath("/de/x", { legacyRoot: false })?.move).toBe("locale");
+		expect(marketPath("/en/x", { legacyRoot: false })?.move).toBe("locale");
 		expect(marketPath("/es/x", { legacyRoot: false })).toBeNull();
-		expect(marketPath("/de/x", { legacyRoot: false })?.move).toBe("locale");
 		expect(marketPath("/it/x", { legacyRoot: false })).toBeNull();
+		expect(marketPath("/de/x", { legacyRoot: false })).toBeNull();
 		expect(marketPath("/sitemaps/pages-0.xml", { legacyRoot: false })?.move).toBe("sitemap");
 	});
 });

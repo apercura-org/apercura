@@ -1,4 +1,10 @@
-import { allCzListingSlugs, allEsTaxonomySlugs, allItListingSlugs } from "@apercura/core/taxonomy";
+import {
+	allCzListingSlugs,
+	allDeTaxonomySlugs,
+	allEsTaxonomySlugs,
+	allItListingSlugs,
+	DE_DEFAULT_PROFESSIONS,
+} from "@apercura/core/taxonomy";
 import {
 	isPluralElement,
 	isSelectElement,
@@ -11,6 +17,7 @@ import { describe, expect, it } from "vitest";
 import at from "../../messages/at.json";
 import cz from "../../messages/cz.json";
 import de from "../../messages/de.json";
+import deDE from "../../messages/de-DE.json";
 import en from "../../messages/en.json";
 import es from "../../messages/es.json";
 import esES from "../../messages/es-ES.json";
@@ -24,7 +31,8 @@ import { CATALOG_LANGUAGES, LOCALES, type Locale } from "./locales";
 /**
  * Austria's catalog is the German one with the Austrian overrides on top; the UK's the English
  * one with the UK's overrides; Czechia's the English one with the Czech texts on top; Spain's the
- * Spanish one with Spain's overrides; Italy's the Italian one with Italy's overrides.
+ * Spanish one with Spain's overrides; Italy's the Italian one with Italy's overrides; Germany's the
+ * German one with Germany's overrides.
  */
 const CATALOGS: Record<Locale, unknown> = {
 	fr,
@@ -42,6 +50,10 @@ const CATALOGS: Record<Locale, unknown> = {
 	"it-IT": mergeMessages(
 		mergeMessages(en, it_ as Record<string, unknown>),
 		itIT as Record<string, unknown>,
+	),
+	"de-DE": mergeMessages(
+		mergeMessages(en, de as Record<string, unknown>),
+		deDE as Record<string, unknown>,
 	),
 };
 
@@ -201,5 +213,37 @@ describe("Italy's overrides", () => {
 		const italian = flatten(it_);
 		expect(italian.get("taxonomy.listing.farmacie")).toBe("Farmacie");
 		expect(italian.get("taxonomy.profession.ospedali")).toBe("Ospedale");
+	});
+});
+
+describe("Germany's overrides", () => {
+	it("only override keys of the German catalog", () => {
+		const german = flatten(de);
+		expect([...flatten(deDE).keys()].filter((key) => !german.has(key))).toEqual([]);
+	});
+
+	it("name every German listing and kind of facility, in every catalog", () => {
+		for (const catalog of [de, en, fr, es, it_]) {
+			const labels = flatten(catalog);
+			for (const slug of allDeTaxonomySlugs()) {
+				expect(labels.get(`taxonomy.profession.${slug}`), slug).toBeTruthy();
+			}
+		}
+		const german = flatten(de);
+		expect(german.get("taxonomy.listing.krankenhaeuser")).toBe("Krankenhäuser");
+		expect(german.get("taxonomy.profession.reha-klinik")).toBe("Reha-Klinik");
+	});
+
+	it("write Germany's legal pages in German and list every kind of facility", () => {
+		const german = flatten(messagesFor("de-DE"));
+		expect(german.get("ImpressumDe.title")).toBe("Impressum");
+		expect(german.get("PrivacyDe.title")).toBe("Datenschutzerklärung");
+		for (const code of DE_DEFAULT_PROFESSIONS) {
+			expect(german.get(`DataDe.coverage.kinds.${code}`), code).toBeTruthy();
+		}
+		// France in German (`/fr-de`) and Austria (`/at`) keep their own texts.
+		expect(flatten(messagesFor("de")).get("HomePage.title")).not.toBe(german.get("HomePage.title"));
+		expect(flatten(messagesFor("de-AT")).get("HomePage.title")).toMatch(/Österreich/);
+		expect(german.get("HomePage.title")).toMatch(/Deutschland/);
 	});
 });

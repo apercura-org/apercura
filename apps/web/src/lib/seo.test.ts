@@ -109,6 +109,7 @@ describe("hreflang of the homes", () => {
 			"cs-CZ": "https://apercura.org/cz",
 			"es-ES": "https://apercura.org/es",
 			"it-IT": "https://apercura.org/it",
+			"de-DE": "https://apercura.org/de",
 			"x-default": "https://apercura.org/",
 		});
 	});

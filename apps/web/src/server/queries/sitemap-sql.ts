@@ -19,7 +19,7 @@ export const SITEMAP_KINDS = ["praticiens", "listes", "lieux", "etablissements"]
 export type SitemapKind = (typeof SITEMAP_KINDS)[number];
 
 /** The markets with sitemaps, by their path segment. */
-export const SITEMAP_MARKETS = ["fr", "at", "gb", "cz", "es", "it"] as const;
+export const SITEMAP_MARKETS = ["fr", "at", "gb", "cz", "es", "it", "de"] as const;
 export type SitemapMarket = (typeof SITEMAP_MARKETS)[number];
 
 /** A non-empty chunk of a market: its latest change and how many URLs it lists. */
@@ -33,9 +33,12 @@ export type SitemapChunk = {
 /** A path (internal French form, no locale prefix) and its last change (ISO date). */
 export type SitemapEntry = { path: string; lastmod: string };
 
-/** The cities whose page is their department's (Paris, Wien) never get a URL of their own. */
+/**
+ * The cities whose page is their department's (Paris, Wien, Germany's kreisfreie Städte, whose
+ * Gemeinde code is their Kreis's and `000`) never get a URL of their own.
+ */
 const NOT_CITY = (alias: string) =>
-	`NOT (${alias}.country = 'FR' AND ${alias}.code = '75056') AND NOT (${alias}.country = 'AT' AND ${alias}.code = '90001')`;
+	`NOT (${alias}.country = 'FR' AND ${alias}.code = '75056') AND NOT (${alias}.country = 'AT' AND ${alias}.code = '90001') AND NOT (${alias}.country = 'DE' AND ${alias}.kind = 'commune' AND ${alias}.code LIKE '_____000')`;
 
 /** Non-empty chunks of every kind and market, with the latest change in each. */
 export function selectSitemapChunks(sql: Sql): Promise<SitemapChunk[]> {

@@ -91,7 +91,8 @@
 			"GB": "Regno Unito",
 			"CZ": "Cechia",
 			"IT": "Italia",
-			"ES": "Spagna"
+			"ES": "Spagna",
+			"DE": "Germania"
 		}
 	},
 	"HomePage": {
@@ -155,7 +156,7 @@
 	},
 	"International": {
 		"metaTitle": "Apercura · Elenchi aperti dei professionisti sanitari",
-		"metaDescription": "Una pagina gratuita e oggettiva per ogni professionista sanitario, dai registri pubblici. Aperto in Francia, Austria, Regno Unito, Cechia, Spagna e Italia.",
+		"metaDescription": "Una pagina gratuita e oggettiva per ogni professionista sanitario, dai registri pubblici. Aperto in Francia, Austria, UK, Cechia, Spagna, Italia, Germania.",
 		"runningHead": "Elenchi aperti dei professionisti sanitari",
 		"title": "Ogni professionista sanitario, una pagina aperta",
 		"lead": "Apercura pubblica una pagina gratuita e oggettiva per ogni professionista sanitario iscritto, a partire dai registri pubblici di ogni paese. Nessuna valutazione, nessuna pubblicità, nessun posizionamento a pagamento, e il codice è aperto.",
@@ -627,7 +628,15 @@
 		"photoAlt": "Foto di {name}",
 		"metaTitleName": "{name} · Apercura",
 		"metaDescriptionBookable": "{name}, {occupation}: prenotazione online, indirizzo, recapiti e {fees, select, sector {settore tariffario} other {convenzione tariffaria}}.",
-		"metaDescriptionBookablePlace": "{name}, {occupation} a {place}: prenotazione online, indirizzo, recapiti e {fees, select, sector {settore tariffario} other {convenzione tariffaria}}."
+		"metaDescriptionBookablePlace": "{name}, {occupation} a {place}: prenotazione online, indirizzo, recapiti e {fees, select, sector {settore tariffario} other {convenzione tariffaria}}.",
+		"germanFacts": {
+			"departments": "Reparti",
+			"emergencyCare": "Pronto soccorso",
+			"facilityType": "Accreditamento",
+			"operator": "Gestore",
+			"pharmacyType": "Farmacia principale o succursale",
+			"accessibility": "Accessibilità"
+		}
 	},
 	"Institutional": {
 		"toBeCompleted": "Da completare",
@@ -1567,7 +1576,8 @@
 		"metaDescriptionPage": "{count, plural, one {Pagina {page} di {pages}: # professionista registrato come {occupation} a {place} nel registro nazionale.} many {Pagina {page} di {pages}: # di professionisti registrati come {occupation} a {place} nel registro nazionale.} other {Pagina {page} di {pages}: # professionisti registrati come {occupation} a {place} nel registro nazionale.}}",
 		"metaDescriptionPageRange": "{count, plural, one {Pagina {page} di {pages}, da {first} a {last}: # professionista registrato come {occupation} a {place} nel registro nazionale.} many {Pagina {page} di {pages}, da {first} a {last}: # di professionisti registrati come {occupation} a {place} nel registro nazionale.} other {Pagina {page} di {pages}, da {first} a {last}: # professionisti registrati come {occupation} a {place} nel registro nazionale.}}",
 		"hubMetaTitleShort": "{listing} in Francia · Apercura",
-		"authoritiesHeading": "{listing}: autorità locali di {place}"
+		"authoritiesHeading": "{listing}: autorità locali di {place}",
+		"pharmacyCoverage": "Le farmacie sono elencate solo per {states}: gli altri Länder non pubblicano un elenco aggiornato delle loro farmacie come dati aperti."
 	},
 	"Directory": {
 		"metaTitle": "Elenco dei professionisti sanitari per luogo · Apercura",
@@ -1774,7 +1784,17 @@
 			"consulta-sanitaria": "Studio sanitario",
 			"policlinica": "Poliambulatorio",
 			"clinica-dental": "Studio dentistico",
-			"farmacia": "Farmacia"
+			"farmacia": "Farmacia",
+			"krankenhaeuser": "Ospedale",
+			"psychiatrische-kliniken": "Ospedale psichiatrico",
+			"kinderkliniken": "Ospedale pediatrico",
+			"reha-kliniken": "Clinica di riabilitazione",
+			"apotheken": "Farmacia",
+			"krankenhaus": "Ospedale",
+			"psychiatrische-klinik": "Ospedale psichiatrico",
+			"kinderklinik": "Ospedale pediatrico",
+			"reha-klinik": "Clinica di riabilitazione",
+			"apotheke": "Farmacia"
 		},
 		"listing": {
 			"aerzte": "Medici senza specialità indicata",
@@ -2008,7 +2028,12 @@
 			"podologos": "Podologi",
 			"nutricionistas": "Dietisti",
 			"fisioterapeutas": "Fisioterapisti",
-			"enfermeria": "Infermieristica"
+			"enfermeria": "Infermieristica",
+			"krankenhaeuser": "Ospedali",
+			"psychiatrische-kliniken": "Ospedali psichiatrici",
+			"kinderkliniken": "Ospedali pediatrici",
+			"reha-kliniken": "Cliniche di riabilitazione",
+			"apotheken": "Farmacie"
 		},
 		"practiceKind": {
 			"office": "Studio",
@@ -5315,6 +5340,399 @@
 			],
 			"formTitle": "Chiedere la rimozione di una pagina",
 			"formBody": "Indichi l’indirizzo della pagina e un indirizzo e-mail a cui possiamo risponderle."
+		}
+	},
+	"ImpressumDe": {
+		"metaTitle": "Legal notice (Germany) · Apercura",
+		"metaDescription": "Legal notice of the German pages of Apercura: the provider, contact, registration and the person responsible for the content (§ 5 DDG, § 18(2) MStV).",
+		"title": "Legal notice",
+		"lead": "Who provides the German pages of Apercura (apercura.org/de), as section 5 of the Digital Services Act (Digitale-Dienste-Gesetz, DDG) and section 18(2) of the Interstate Media Treaty (Medienstaatsvertrag, MStV) ask of a website.",
+		"sections": {
+			"provider": {
+				"heading": "Provider (§ 5 DDG)",
+				"body": [
+					"The German pages of Apercura are provided by the entity below. It runs the directory and answers for its content."
+				]
+			},
+			"service": {
+				"heading": "The service",
+				"body": [
+					"A free directory of the facilities of Germany that patients visit (hospitals, psychiatric hospitals, children’s hospitals, prevention and rehabilitation clinics, and the pharmacies of Thuringia and Brandenburg), built from the directory of hospitals and of prevention and rehabilitation clinics that the statistical offices of the Federation and the Länder publish every year and from the pharmacy lists Thuringia and Brandenburg publish as open data, without advertising, with a space where a facility can complete its own page. Doctors, dentists and the other health professions are not listed. No appointment is booked through Apercura in Germany."
+				]
+			},
+			"editor": {
+				"heading": "Responsible for the content (§ 18(2) MStV)",
+				"body": [
+					"The person below is responsible for the editorial content the provider publishes. Information a facility adds to its own page is its own responsibility; as a host of information provided by its users, the provider answers for it only under the conditions of the Digital Services Act (Regulation (EU) 2022/2065, article 6)."
+				]
+			},
+			"liability": {
+				"heading": "Content of the pages",
+				"body": [
+					"The directory is built from public directories (the statistical offices’ directory of hospitals and rehabilitation clinics, the pharmacy lists of Thuringia and Brandenburg, Destatis’s directory of municipalities). It can be incomplete or out of date: check the information with the facility before you go. Every page says how to report an error."
+				]
+			},
+			"ip": {
+				"heading": "Code and data",
+				"body": [
+					"The source code of Apercura is published under the AGPL-3.0 licence. The statistical offices’ data is reproduced with its source, as their terms allow; Thuringia’s pharmacy list under the CC BY 4.0 licence, Brandenburg’s under the Data licence Germany – Attribution – Version 2.0. The data page lists every source with the attribution it requires."
+				]
+			},
+			"dispute": {
+				"heading": "Consumer dispute resolution",
+				"body": [
+					"The provider is neither willing nor obliged to take part in dispute resolution proceedings before a consumer arbitration board (§ 36 VSBG). The service is free of charge."
+				]
+			},
+			"review": {
+				"heading": "Status of this text",
+				"body": [
+					"This text is a draft, written before the legal entity was set up. It will be reviewed by a lawyer qualified in Germany before the German pages are announced."
+				]
+			}
+		},
+		"fields": {
+			"name": "Name",
+			"legalForm": "Legal form",
+			"address": "Registered office",
+			"phone": "Phone",
+			"email": "Email address",
+			"registration": "Register and registration number",
+			"vatId": "VAT identification number (§ 27a UStG)",
+			"editor": "Responsible for the content"
+		},
+		"dataLink": "Data and sources"
+	},
+	"PrivacyDe": {
+		"metaTitle": "Privacy (Germany) · Apercura",
+		"metaDescription": "What data the German pages of Apercura process, where from, why and for how long, and your rights, objection included (GDPR articles 13, 14, 21).",
+		"title": "Privacy",
+		"lead": "What data the German pages of Apercura process, where it comes from, why, for how long and by whom, and how to exercise your rights under the General Data Protection Regulation (GDPR) and the Federal Data Protection Act (Bundesdatenschutzgesetz, BDSG).",
+		"sections": {
+			"controller": {
+				"heading": "Who is responsible",
+				"body": [
+					"The provider named in the legal notice is the controller of the directory, of facility accounts, of claims and of the requests sent through the site."
+				]
+			},
+			"directory": {
+				"heading": "Directory: data about facilities",
+				"body": [
+					"Data: the name of the hospital, clinic or pharmacy as the directory publishes it, its kind, its departments, whether it takes part in emergency care and at which level, the kind of its operator (public, non-profit or private) and of the facility, its address and its telephone number when it is that facility’s own; for a pharmacy of Thuringia, whether it is a main pharmacy or a branch and how accessible it is. A facility that claims its page can add a presentation, languages, a photo and opening hours.",
+					"Never stored, although the sources publish them: the e-mail and web addresses, the name of the operator, the number of beds and the pseudonymous identifier the hospital directory draws anew every year. A telephone number that a source gives for more than three facilities is a head office’s and is not shown. The hospital directory publishes no coordinates: a hospital or clinic is placed at the geographic centre of its municipality, never at its address; a pharmacy is placed at the point its Land publishes.",
+					"Identifier: a key that names the source and the facility (for example k0a1b2c3d4e), at the end of the page’s address. The sources publish no national number: for a hospital or clinic the key is derived from its municipality, address and names; for a pharmacy of Thuringia it is the number of its file at the supervising authority.",
+					"Purpose: letting the public find a hospital, a clinic or a pharmacy, where it is and how to reach it. Legal basis: legitimate interests (GDPR article 6(1)(f)), assessed below.",
+					"Retention: as long as the facility appears in its source. A page disappears when an edition of its source no longer lists the facility; a page removed after an objection is never published again.",
+					"Information: the data does not come from the facilities themselves (GDPR article 14). Writing to each of them would involve a disproportionate effort (article 14(5)(b)); this notice, the data page and a notice on every page make the information public."
+				]
+			},
+			"people": {
+				"heading": "Facilities, and the people they name",
+				"body": [
+					"A German page is a facility, never a person’s profile: Germany’s registers of doctors and dentists are not open, and no person is listed. A pharmacy belongs to a pharmacist; when its name as the Land publishes it includes the owner’s name, the page shows it, as a professional detail.",
+					"Nothing else about any person is collected: no date of birth, no identity or tax number, no private address, no ratings and no reviews. No patient’s data, and no health data, is processed by the directory.",
+					"Anyone a page is about can object to it at any time, and the page is removed."
+				]
+			},
+			"sources": {
+				"heading": "Sources",
+				"body": [
+					"Hospitals and clinics come from the directory of hospitals and of prevention and rehabilitation clinics (Verzeichnis der Krankenhäuser und Vorsorge- oder Rehabilitationseinrichtungen) that the Federal Statistical Office publishes every year on behalf of the statistical offices of the Federation and the Länder; its terms allow reproduction and distribution, even in part, with the source. Pharmacies come from the lists of the supervising authorities of Thuringia (CC BY 4.0) and Brandenburg (Data licence Germany – Attribution – Version 2.0); the other Länder publish no current list as open data, so their pharmacies are not listed. Places come from Destatis’s directory of municipalities. Each source is reused with its attribution:"
+				]
+			},
+			"balancing": {
+				"heading": "Legitimate interests assessment",
+				"body": [
+					"Purpose: patients need to know which hospitals, clinics and pharmacies are where, what care they offer and how to reach them, a need the State already meets by publishing these directories.",
+					"Necessity: only the facility’s data from the directories is shown, the data they publish anyway, and less of it; nothing about private life, no ratings, no reviews.",
+					"Balance: a neutral order, no advertising, the minimum of the directories’ fields, an objection that hides a page at once and keeps it from coming back, corrections at the source, and pages that follow every edition of the directories. A facility listed in a public directory expects to be found in a directory repeating that information. Weighing these points, the interests of patients prevail, and anyone a page is about can object without giving a reason."
+				]
+			},
+			"accounts": {
+				"heading": "Facility accounts and claims",
+				"body": [
+					"Data: email address, name, password (stored hashed), second authentication factor, the documents sent to claim a page (proof that the claimant runs the facility or acts for it) and team members.",
+					"Purposes: managing the account and checking that a page is claimed by the right facility. Legal bases: performance of the terms of use (article 6(1)(b)) and the legitimate interests of securing the service (article 6(1)(f)).",
+					"Retention: the account is kept until it is deleted; supporting documents, encrypted, are erased 30 days after the decision."
+				]
+			},
+			"requests": {
+				"heading": "Error reports, objections and contact requests",
+				"body": [
+					"Data: the message, the contact email address when one is given and the page concerned; for a “this is my page” request also the name and phone number. Free text is encrypted.",
+					"Purposes: correcting errors, applying objections and helping a facility that cannot claim its page online. Legal bases: legitimate interests (article 6(1)(f)) and the right to object (article 21).",
+					"Retention: a report is deleted 6 months after it is closed, a rejected objection one year after its decision, a contact request 12 months after the last exchange. Once an objection is confirmed, or the holder of a claimed page removes it, the page and the data about it are deleted at once, the objection included; all that is kept is a record of the removal (the identifier of the page, the country, the reason, who recorded it and when), so that it is never published again."
+				]
+			},
+			"technical": {
+				"heading": "Technical data and cookies",
+				"body": [
+					"Only cookies strictly necessary to the service are set (§ 25(2) TDDDG): the session of signed-in facilities and the chosen language. No advertising or audience measurement cookies, no trackers.",
+					"To limit abuse, IP addresses are transformed with a keyed function before being counted and never stored as such; facility sessions record a truncated IP address. Views of claimed pages are counted without a cookie or identifier, and only the page’s holder sees them."
+				]
+			},
+			"recipients": {
+				"heading": "Recipients and processors",
+				"body": [
+					"Data is neither sold nor rented, and never used for advertising. Only the provider’s team and the processors below receive it, each for its own part, under a contract that meets GDPR article 28. Maps are loaded from a tile server, which receives the visitor’s IP address like any website."
+				]
+			},
+			"transfers": {
+				"heading": "Transfers outside the European Union",
+				"body": [
+					"Data is transferred outside the European Union and the European Economic Area only under the safeguards of chapter V of the GDPR (an adequacy decision or standard contractual clauses). Any change of processor will be announced here before it takes effect."
+				]
+			},
+			"automated": {
+				"heading": "Automated decisions",
+				"body": [
+					"No decision about you is taken by automated means alone. A claim is decided by a person, who reads its documents."
+				]
+			},
+			"rights": {
+				"heading": "Your rights",
+				"body": [
+					"You can ask to access your data, to have it corrected or erased, to restrict its processing, to receive it in a portable format and to object to its processing. Write to the address below; you will get an answer within one month.",
+					"You can also lodge a complaint with a data protection supervisory authority (GDPR article 77), in particular the one of the Land where you live. The data protection conference (Datenschutzkonferenz) lists the authorities of the Federation and the Länder."
+				]
+			},
+			"objection": {
+				"heading": "Objecting to a page (GDPR article 21)",
+				"body": [
+					"Anyone a page is about can object to its publication at any time, without giving a reason. If the page is unclaimed, a form is enough: the page is hidden as soon as the request arrives, deleted after a light check, and the updates of the directories never publish it again. If it is claimed, its holder removes it from their space."
+				]
+			},
+			"changes": {
+				"heading": "Updates to this notice",
+				"body": [
+					"This notice is a draft. It will be reviewed by a lawyer qualified in Germany and by the data protection officer; every version is dated."
+				]
+			}
+		},
+		"fields": {
+			"controller": "Controller",
+			"address": "Address",
+			"email": "Contact for requests",
+			"dpo": "Data protection officer",
+			"effectiveDate": "Effective date",
+			"hostingProvider": "Hosting provider (processor)",
+			"smtp": "Email delivery (processor)"
+		},
+		"objectLink": "How to object to a page",
+		"authorityLink": "The data protection supervisory authorities of the Federation and the Länder"
+	},
+	"TermsDe": {
+		"metaTitle": "Terms of use (Germany) · Apercura",
+		"metaDescription": "Terms of use of the German pages of Apercura: a free, factual directory of hospitals, clinics and pharmacies from public directories, without booking.",
+		"title": "Terms of use",
+		"lead": "The rules for using the German pages of Apercura, for the public and for facilities alike.",
+		"sections": {
+			"service": {
+				"heading": "The service",
+				"body": [
+					"Apercura lists, free of charge, the hospitals, psychiatric hospitals, children’s hospitals and prevention and rehabilitation clinics of the statistical offices’ directory, and the pharmacies of Thuringia and Brandenburg. It lists facilities, not doctors. It is a directory only: no appointment is booked through Apercura in Germany. It is run by the provider named in the legal notice.",
+					"Using the directory requires no account. Using the site means accepting these terms."
+				]
+			},
+			"content": {
+				"heading": "What the pages contain",
+				"body": [
+					"Pages show factual information from public directories, in a neutral order, without ratings, reviews, advertising or paid placement.",
+					"The information may be incomplete or out of date (the hospital directory is published once a year), and a hospital or clinic is shown at its municipality, not at its exact address on a map: check the information with the facility before you go. Every page says how to report an error."
+				]
+			},
+			"health": {
+				"heading": "Not medical advice",
+				"body": [
+					"Apercura gives no medical advice and is not an emergency service. In an emergency, call 112. Outside surgery hours, the on-call medical service answers at 116 117."
+				]
+			},
+			"practices": {
+				"heading": "For facilities",
+				"body": [
+					"Claiming a page is free. It requires a document proving that the claimant runs the facility or acts for it, checked by a person before the page is handed over.",
+					"The holder of a page is responsible for the information they add. It must stay factual, accurate and up to date, as the rules on health advertising (Heilmittelwerbegesetz) and the professional codes require."
+				]
+			},
+			"removal": {
+				"heading": "Removing a page",
+				"body": [
+					"Anyone a page is about can ask for it to be removed at any time: the data page explains how. A claimed page can only be removed by its holder."
+				]
+			},
+			"liability": {
+				"heading": "Liability",
+				"body": [
+					"The provider does its best to keep the service available and accurate, but cannot guarantee it. It is not responsible for the information facilities add to their pages. These limits will be specified during the legal review."
+				]
+			},
+			"ip": {
+				"heading": "Code and data",
+				"body": [
+					"The source code is published under the AGPL-3.0 licence. The statistical offices’ data is reproduced with its source, Thuringia’s pharmacy list under CC BY 4.0, Brandenburg’s under the Data licence Germany – Attribution – Version 2.0."
+				]
+			},
+			"law": {
+				"heading": "Governing law and disputes",
+				"body": [
+					"The governing law and the competent courts will be specified during the legal review; the mandatory consumer protection rules of the country of residence always apply. In case of a dispute, first write to the contact address to look for an amicable solution."
+				]
+			}
+		},
+		"fields": {
+			"publisher": "Provider",
+			"effectiveDate": "Effective date",
+			"contact": "Contact"
+		}
+	},
+	"AccessibilityDe": {
+		"metaTitle": "Accessibility (Germany) · Apercura",
+		"metaDescription": "Accessibility of the German pages of Apercura: the WCAG 2.2 AA target, what was checked, what remains, and how to report a problem.",
+		"title": "Accessibility",
+		"lead": "Apercura is designed for everyone, including older and low-vision people. This statement says where the German pages stand.",
+		"sections": {
+			"scope": {
+				"heading": "Scope",
+				"body": [
+					"The accessibility regulation for federal information technology (BITV 2.0) binds public bodies, and the Accessibility Strengthening Act (Barrierefreiheitsstärkungsgesetz, BFSG) covers services that a free directory is not. Apercura’s provider nevertheless aims at the same standard on every page: WCAG 2.2 level AA (EN 301 549)."
+				]
+			},
+			"status": {
+				"heading": "Where the site stands",
+				"body": [
+					"The German pages share the code of the French pages and their tests. The site partially meets WCAG 2.2 AA: this rests on a self-assessment and automated tests, not yet on a full audit, which is in progress."
+				]
+			},
+			"tests": {
+				"heading": "What was checked",
+				"list": [
+					"Automated axe-core checks (WCAG 2.0, 2.1 and 2.2 rules, levels A and AA) on every page type, at every release.",
+					"Keyboard-only journeys with a visible focus.",
+					"Body text of at least 18 px, targets of at least 44 px, nothing that relies on colour alone, no horizontal scrolling at 390 px."
+				]
+			},
+			"pending": {
+				"heading": "What remains to be checked",
+				"list": [
+					"A manual pass with the VoiceOver and NVDA screen readers, in German.",
+					"A full audit against WCAG 2.2 AA on a sample of pages."
+				]
+			},
+			"feedback": {
+				"heading": "Report a problem",
+				"body": [
+					"If a page or a feature is hard to use, write to the address below: say which page and what blocked you. We answer within one month and, where needed, give you the information in another form."
+				]
+			}
+		},
+		"fields": {
+			"contact": "Contact",
+			"date": "Date of this statement"
+		}
+	},
+	"DataDe": {
+		"metaTitle": "Data and sources (Germany) · Apercura",
+		"metaDescription": "Where the German pages of Apercura come from (Destatis, the pharmacy lists of Thuringia and Brandenburg) and how to correct or remove a page.",
+		"title": "Data and sources",
+		"lead": "Every German page is built from public data. Here is where it comes from, under which conditions and attribution, when it was updated, and how to correct or remove a page.",
+		"status": {
+			"heading": "Last update",
+			"body": "The statistical offices publish the directory of hospitals once a year, the Länder their pharmacy lists when they change; the directory checks them every month and imports a source when it has changed. A page changes only when its facts change in its source.",
+			"importedAt": "Last import",
+			"checkedAt": "Sources last checked",
+			"notImported": "The German directory has not been imported yet on this site.",
+			"notImportedValue": "Not imported yet"
+		},
+		"sources": {
+			"heading": "Sources",
+			"body": "The statistical offices allow the reproduction and distribution of their publications, even in part, with the source; Thuringia publishes its pharmacies under the Creative Commons Attribution 4.0 International licence (CC BY 4.0), Brandenburg under the Data licence Germany – Attribution – Version 2.0 (dl-de/by-2-0). Each attribution below is printed word for word.",
+			"caption": "Data sources of the German directory",
+			"columns": {
+				"source": "Source",
+				"use": "Used for",
+				"licence": "Licence and attribution",
+				"frequency": "Updated"
+			},
+			"items": {
+				"de-destatis-khv": {
+					"use": "Hospitals and prevention and rehabilitation clinics: names, kinds, departments, emergency care, kinds of operator, addresses, telephone numbers",
+					"frequency": "Every year, by the statistical offices"
+				},
+				"de-destatis-gv": {
+					"use": "Länder, Kreise and municipalities, and the geographic centre of each municipality, where its hospitals and clinics are placed",
+					"frequency": "Every quarter, by the Federal Statistical Office"
+				},
+				"de-apo-th": {
+					"use": "Pharmacies of Thuringia: names, main pharmacy or branch, accessibility, addresses and points",
+					"frequency": "When it changes, by the Thuringian consumer protection office"
+				},
+				"de-apo-bb": {
+					"use": "Pharmacies of Brandenburg: names, addresses, telephone numbers and points",
+					"frequency": "Every quarter, by the Brandenburg office for health"
+				},
+				"map": {
+					"name": "Map data",
+					"publisher": "OpenStreetMap contributors, tiles by OpenFreeMap",
+					"use": "Maps on the pages",
+					"frequency": "Continuously"
+				}
+			},
+			"destatis": "Reproduction allowed with the source",
+			"ccBy": "CC BY 4.0",
+			"dlDeBy": "dl-de/by-2-0",
+			"odbl": "ODbL",
+			"conditionsHeading": "Conditions of the sources",
+			"conditions": "The statistical offices’ editions read: “Vervielfältigung und Verbreitung, auch auszugsweise, mit Quellenangabe gestattet” (reproduction and distribution, even in part, allowed with the source). The data is shown as published, never changed in meaning.",
+			"changes": "Changes made to the data (dl-de/by-2-0): the pharmacies of hospitals in Brandenburg’s list are left out (they do not serve the public); names and streets are shown as published; every facility is placed in its municipality by its official code or its town’s name; a telephone number shared by more than three facilities is left out.",
+			"licenceLink": "The Data licence Germany – Attribution – Version 2.0",
+			"datasetLink": "Brandenburg’s pharmacy dataset"
+		},
+		"coverage": {
+			"heading": "Facilities covered",
+			"body": [
+				"Pages are generated for every hospital site and every prevention or rehabilitation clinic of the statistical offices’ directory, and for the public pharmacies of Thuringia and Brandenburg. A hospital whose every department is psychiatric or psychosomatic is listed with the psychiatric hospitals, one whose every department is a children’s one with the children’s hospitals; a site without departments (a day or outpatient clinic) is told by its name. Every department is shown on the page.",
+				"Not listed: doctors, dentists, psychotherapists and the other health professions, whose registers are not open; medical care centres (MVZ), nursing homes and hospices; the pharmacies of the other Länder, whose lists are not open data or not current (Saarland’s open list dates from March 2021).",
+				"The hospital directory publishes no coordinates: a hospital or clinic is placed at the geographic centre of its municipality (Destatis). Its map position and its distance are those of the municipality, never of its address. Pharmacies are placed at the point their Land publishes."
+			],
+			"kinds": {
+				"DE_HOSPITAL": "Hospitals (university hospitals, hospitals of the Länder’s plans, hospitals with or without a care contract, Bundeswehr hospitals)",
+				"DE_PSYCHIATRIC_HOSPITAL": "Psychiatric and psychosomatic hospitals, their day and outpatient clinics",
+				"DE_CHILDRENS_HOSPITAL": "Children’s hospitals",
+				"DE_REHAB_CLINIC": "Prevention and rehabilitation clinics",
+				"DE_PHARMACY": "Pharmacies of Thuringia and Brandenburg"
+			},
+			"kindsLabel": "Imported"
+		},
+		"identifiers": {
+			"heading": "Identifiers",
+			"body": [
+				"No source publishes a national number: the address of every page ends with a key that names its source, so a page can be found and checked against it:"
+			],
+			"list": [
+				"/de/einrichtung/klinikum-beispiel-k0a1b2c3d4e: a hospital site (k) or a clinic (r) of the statistical offices’ directory, with a key derived from its municipality, address and names. The directory’s own identifier is a pseudonym drawn anew every year, and is not used.",
+				"/de/einrichtung/beispiel-apotheke-th420: a pharmacy of Thuringia (th) and the number of its file at the supervising authority; bb: a pharmacy of Brandenburg, with a key derived from its name and address."
+			]
+		},
+		"correct": {
+			"heading": "Correct an error",
+			"body": [
+				"The pages repeat the directories: a lasting correction is made at the source, and the page follows at the next import.",
+				"For anything else, use the form: we check every report."
+			],
+			"list": [
+				"Hospitals and clinics: the facility reports the change to the statistical office of its Land, which collects the hospital statistics; the next edition of the directory carries it.",
+				"Pharmacies: the owner reports the change to the supervising authority of the Land (in Thuringia the Landesamt für Verbraucherschutz, in Brandenburg the Landesamt für Arbeitsschutz, Verbraucherschutz und Gesundheit)."
+			],
+			"formTitle": "Report an error",
+			"formBody": "Give the address of the page and what is wrong."
+		},
+		"remove": {
+			"heading": "Remove a page",
+			"body": [
+				"Anyone a page is about can object to its publication at any time, without giving a reason (GDPR article 21). An unclaimed page is hidden as soon as the request arrives and deleted after a light check; it never comes back with the updates of the directories. A claimed page is removed by its holder, from their space."
+			],
+			"formTitle": "Ask for a page to be removed",
+			"formBody": "Give the address of the page and an email address where we can answer you."
 		}
 	},
 	"LegalNoticeEs": {

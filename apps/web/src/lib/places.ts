@@ -13,19 +13,31 @@ export const CITY_IS_DEPARTMENT: Readonly<Record<string, string>> = {
 	CZ: PRAGUE_CODE,
 };
 
-/** True for the city that is its own department page (Paris, Wien, Praha). */
+/**
+ * Germany's kreisfreie Städte: a city that is a Kreis of its own (München, Berlin, Hamburg) is
+ * the Gemeinde whose official code is its Kreis's followed by `000` (`09162000`, `11000000`).
+ * Its Kreis is its department, so its city page is the Kreis's page, like Paris's.
+ */
+const DE_KREISFREIE_STADT = /^\d{5}000$/;
+
+/** True for the city that is its own department page (Paris, Wien, Praha, a kreisfreie Stadt). */
 export function isDepartmentCity(country: string, code: string): boolean {
+	if (country === "DE") return DE_KREISFREIE_STADT.test(code);
 	return CITY_IS_DEPARTMENT[country] === code;
 }
 
 /**
  * SQL condition excluding the department cities of every market for the place alias `p`
- * (a plain string, no parameters: the codes are constants).
+ * (a plain string, no parameters: the codes are constants): Paris, Wien, Praha and Germany's
+ * kreisfreie Städte.
  */
 export const NOT_DEPARTMENT_CITY = (alias: string) =>
-	Object.entries(CITY_IS_DEPARTMENT)
-		.map(([country, code]) => `NOT (${alias}.country = '${country}' AND ${alias}.code = '${code}')`)
-		.join(" AND ");
+	[
+		...Object.entries(CITY_IS_DEPARTMENT).map(
+			([country, code]) => `NOT (${alias}.country = '${country}' AND ${alias}.code = '${code}')`,
+		),
+		`NOT (${alias}.country = 'DE' AND ${alias}.code LIKE '_____000')`,
+	].join(" AND ");
 
 /**
  * Markets whose regions have listing and hub pages of their own: the United Kingdom (migration
@@ -46,11 +58,17 @@ export const AT_STATE_SLUGS: ReadonlySet<string> = new Set(
  * region (England's regions and the other nations list in the same slot), never only
  * digits. Czechia: the slug of a district (okres, `brno-mesto`, `praha`). Spain: the slug of a
  * province (`madrid`, `barcelona`). Italy: the slug of a province or of a region (`roma`,
- * `lazio`).
+ * `lazio`). Germany: the slug of a Kreis (`landkreis-muenchen`, `berlin`).
  */
 export function isDepartmentSlug(slug: string, country = "FR"): boolean {
 	if (country === "AT") return AT_STATE_SLUGS.has(slug);
-	if (country === "GB" || country === "CZ" || country === "ES" || country === "IT") {
+	if (
+		country === "GB" ||
+		country === "CZ" ||
+		country === "ES" ||
+		country === "IT" ||
+		country === "DE"
+	) {
 		return isPlaceSlug(slug);
 	}
 	return /^(?:\d{2,3}|2[ab])-[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug);
@@ -67,8 +85,8 @@ export function isPlaceSlug(slug: string): boolean {
  * Austrian and UK places carry no code: nobody knows a Bundesland or Gemeinde by its
  * Statistik Austria number, nor a local authority by its ONS code, nor a Czech district or
  * municipality by its NUTS or RÚIAN code, nor a Spanish province or municipality by its INE
- * code, nor an Italian province or comune by its ISTAT code, and Vienna's and Prague's districts
- * say their city
+ * code, nor an Italian province or comune by its ISTAT code, nor a German Kreis or Gemeinde by
+ * its AGS, and Vienna's and Prague's districts say their city
  * ("Wien-Alsergrund", "Praha 8").
  */
 export function placeLabel(

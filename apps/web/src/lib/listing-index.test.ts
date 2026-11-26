@@ -126,6 +126,14 @@ describe("listing index", () => {
 			listing("centros-de-salud"),
 		);
 		expect(translateSearchTerm("dentista", "ES", "FR")).toEqual(listing("chirurgien-dentiste"));
+		// Germany: "hôpital" typed on /fr, "hospital" on /es or /gb, "pharmacie" on /fr, for Berlin.
+		expect(translateSearchTerm("hôpital", "FR", "DE")).toEqual(listing("krankenhaeuser"));
+		expect(translateSearchTerm("hospital", "ES", "DE")).toEqual(listing("krankenhaeuser"));
+		expect(translateSearchTerm("hospital", "GB", "DE")).toEqual(listing("krankenhaeuser"));
+		expect(translateSearchTerm("pharmacie", "FR", "DE")).toEqual(listing("apotheken"));
+		expect(translateSearchTerm("Kinderklinik", "AT", "DE")).toEqual(listing("kinderkliniken"));
+		expect(translateSearchTerm("dentiste", "FR", "DE")).toEqual({ kind: "unlisted" });
+		expect(translateSearchTerm("Hausarzt", "DE", "AT")).toEqual(listing("allgemeinmedizin"));
 		expect(translateSearchTerm("Zahnarzt", "GB", "AT")).toEqual(listing("zahnaerzte"));
 		// Italy: "pharmacie" typed on /fr, "lékárna" on /cz, "pharmacy" on /gb, for Roma.
 		expect(translateSearchTerm("pharmacie", "FR", "IT")).toEqual(listing("farmacie"));
@@ -160,6 +168,8 @@ describe("listing index", () => {
 			["dentistas", "es-ES", "ES"],
 			["farmacie", "it-IT", "IT"],
 			["case-di-cura", "it-IT", "IT"],
+			["krankenhaeuser", "de-DE", "DE"],
+			["reha-kliniken", "de-DE", "DE"],
 			["chirurgien-dentiste", "en", "FR"],
 		] as const) {
 			expect(resolveListing(listingLabel(slug, locale) ?? "", country)).toBe(slug);

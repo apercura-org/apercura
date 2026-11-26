@@ -730,3 +730,99 @@ describe("practitionerNodes for Italy", () => {
 		).toMatchObject({ addressCountry: "IT" });
 	});
 });
+
+describe("practitionerNodes for Germany", () => {
+	const place: PracticePlaceInput = {
+		siteId: 1,
+		practiceKind: "office",
+		name: "Klinikum Beispiel",
+		addressLine: "Musterstraße 1",
+		addressComplement: null,
+		postcode: "10117",
+		placeName: "Berlin",
+		// City precision: the hospital directory publishes no coordinates.
+		coordinates: null,
+		phone: "+493099990000",
+		establishmentUrl: null,
+	};
+	const facility: PractitionerInput = {
+		...doctor,
+		url: `${ORIGIN}/de/einrichtung/klinikum-beispiel-k0a1b2c3d4e`,
+		professionCode: "DE_HOSPITAL",
+		rpps: "0a1b2c3d4e",
+		idScheme: "DE-KHV",
+		country: "DE",
+		name: "Klinikum Beispiel",
+		givenName: "",
+		familyName: "Klinikum Beispiel",
+		honorificPrefix: null,
+		occupation: "Krankenhaus",
+		listingSlug: "krankenhaeuser",
+		places: [place],
+	};
+
+	it("publishes a hospital site as a Hospital with its key, never a person", () => {
+		const nodes = practitionerNodes(facility);
+		const hospital = nodeOf(nodes, "Hospital");
+		expect(hospital.identifier).toEqual({
+			"@type": "PropertyValue",
+			propertyID: "DE-KHV",
+			value: "0a1b2c3d4e",
+		});
+		expect(hospital.address).toMatchObject({
+			addressCountry: "DE",
+			postalCode: "10117",
+			addressLocality: "Berlin",
+		});
+		expect(hospital.geo).toBeUndefined();
+		expect(JSON.stringify(nodes)).not.toMatch(
+			/Person|IndividualPhysician|Physician"|givenName|familyName/,
+		);
+	});
+
+	it("publishes every hospital kind as a Hospital, a clinic as a MedicalClinic, a pharmacy as a Pharmacy", () => {
+		expect(
+			nodeOf(
+				practitionerNodes({
+					...facility,
+					professionCode: "DE_PSYCHIATRIC_HOSPITAL",
+					listingSlug: "psychiatrische-kliniken",
+				}),
+				"Hospital",
+			).medicalSpecialty,
+		).toBe("https://schema.org/Psychiatric");
+		expect(
+			nodeOf(
+				practitionerNodes({
+					...facility,
+					professionCode: "DE_CHILDRENS_HOSPITAL",
+					listingSlug: "kinderkliniken",
+				}),
+				"Hospital",
+			).medicalSpecialty,
+		).toBe("https://schema.org/Pediatric");
+		expect(
+			nodeOf(
+				practitionerNodes({
+					...facility,
+					professionCode: "DE_REHAB_CLINIC",
+					idScheme: "DE-RHV",
+					listingSlug: "reha-kliniken",
+				}),
+				"MedicalClinic",
+			).address,
+		).toMatchObject({ addressCountry: "DE" });
+		expect(
+			nodeOf(
+				practitionerNodes({
+					...facility,
+					professionCode: "DE_PHARMACY",
+					idScheme: "DE-APO-TH",
+					rpps: "9001",
+					listingSlug: "apotheken",
+				}),
+				"Pharmacy",
+			).medicalSpecialty,
+		).toBe("https://schema.org/PharmacySpecialty");
+	});
+});

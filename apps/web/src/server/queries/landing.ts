@@ -171,9 +171,10 @@ async function nearbyPlaces(
 			FROM directory.landing_pages lp
 			JOIN directory.places p ON p.id = lp.place_id AND p.kind IN ('commune', 'arrondissement')
 				AND p.country = ${country}
-			-- Paris and Wien have no city page of their own: the link would redirect back here.
+			-- Paris, Wien, Praha and Germany's kreisfreie Städte have no city page of their own: the
+			-- link would redirect back here.
 			WHERE lp.listing_slug = ${listingSlug} AND p.department_code = ${place.code}
-				AND NOT (p.country = 'FR' AND p.code = '75056') AND NOT (p.country = 'AT' AND p.code = '90001')
+				AND ${sql.unsafe(NOT_DEPARTMENT_CITY("p"))}
 			ORDER BY lp.practitioner_count DESC, p.name, p.id
 			LIMIT 40
 		`;

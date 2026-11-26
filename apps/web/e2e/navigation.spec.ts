@@ -105,6 +105,7 @@ test("the country menu, beside the language menu, moves to another market's home
 		"Tschechien",
 		"Spanien",
 		"Italien",
+		"Deutschland",
 	]);
 	await expect(countries.getByRole("link", { name: "Frankreich" })).toHaveAttribute(
 		"aria-current",
@@ -121,6 +122,8 @@ test("the country menu, beside the language menu, moves to another market's home
 	);
 	await expect(countries.getByRole("link", { name: "Spanien" })).toHaveAttribute("href", "/es");
 	await expect(countries.getByRole("link", { name: "Italien" })).toHaveAttribute("href", "/it");
+	// Germany in German: France read in German leads to Germany's own pages.
+	await expect(countries.getByRole("link", { name: "Deutschland" })).toHaveAttribute("href", "/de");
 	await countries.getByRole("link", { name: "Österreich" }).click();
 	await expect(page).toHaveURL(/\/at$/);
 	await expect(page.locator("html")).toHaveAttribute("lang", "de-AT");

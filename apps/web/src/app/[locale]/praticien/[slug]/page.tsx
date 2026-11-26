@@ -1,6 +1,7 @@
 import { practitionerRoute } from "@apercura/core";
 import {
 	CZ_SPECIALIST,
+	deKindSlugOf,
 	ES_MEDICAL_PRACTICE,
 	ES_OTHER_PRACTICE,
 	esKindSlugOf,
@@ -206,10 +207,13 @@ export default async function PractitionerPage({ params }: Props) {
 	const name = labels.personName(payload);
 	const content = ownerContentOf(payload, photoUrl);
 	const professionSlug = payload.listingSlug ?? "";
-	// A Spanish centre's kind has a singular label of its own ("Consultorio local").
+	// A Spanish centre's or German facility's kind has a singular label of its own
+	// ("Consultorio local", "Reha-Klinik").
 	const professionLabel =
 		labels.profession(
-			esKindSlugOf(payload.professionCode) ?? professionSlugOf(payload.professionCode),
+			esKindSlugOf(payload.professionCode) ??
+				deKindSlugOf(payload.professionCode) ??
+				professionSlugOf(payload.professionCode),
 			gender,
 		) ?? t("unknownProfession");
 	const listingLabel =
@@ -287,6 +291,37 @@ export default async function PractitionerPage({ params }: Props) {
 	const ownership = spanish
 		? (payload.qualifications.find((item) => item.source === "dependencia") ?? null)
 		: null;
+	// Germany lists facilities: a hospital or clinic has its departments, its emergency care
+	// level and modules, the kind of its operator and of the facility (the Destatis directory's
+	// words, in German); a Thuringian pharmacy whether it is a main pharmacy or a branch and its
+	// accessibility as the Land publishes it.
+	const german = payload.country === "DE";
+	const germanLabels = (source: string) =>
+		german
+			? payload.qualifications
+					.filter((item) => item.source === source && item.label)
+					.map((item) => item.label as string)
+			: [];
+	const germanFacts = german
+		? [
+				{ key: "departments", values: germanLabels("fachabteilung") },
+				{
+					key: "emergencyCare",
+					values: [...germanLabels("notfallstufe"), ...germanLabels("notfallmodul")],
+				},
+				{ key: "facilityType", values: germanLabels("einrichtungstyp") },
+				{ key: "operator", values: germanLabels("traeger") },
+				{ key: "pharmacyType", values: germanLabels("apotheke") },
+				{ key: "accessibility", values: germanLabels("barrierefreiheit") },
+			].filter(
+				(fact) =>
+					fact.values.length > 0 ||
+					// A hospital or clinic without departments says so; a pharmacy has none.
+					(fact.key === "departments" &&
+						payload.idScheme.startsWith("DE-") &&
+						!payload.idScheme.startsWith("DE-APO")),
+			)
+		: [];
 	const identifier = displayId(payload);
 	// Open licences (CC BY 4.0, OGL) require each source's attribution, word for word; Spain's
 	// Ministry of Health asks for the date of its data: the last Spanish import's; Italy's is cited
@@ -448,7 +483,20 @@ export default async function PractitionerPage({ params }: Props) {
 									value={professionLabel}
 									emptyLabel={empty}
 								/>
-								{practice ? null : spanish ? (
+								{practice ? null : german ? (
+									germanFacts.map((fact) => (
+										<FieldRow
+											key={fact.key}
+											label={t(`germanFacts.${fact.key}` as never)}
+											value={
+												fact.values.length > 0 ? (
+													<span lang="de">{fact.values.join(", ")}</span>
+												) : null
+											}
+											emptyLabel={empty}
+										/>
+									))
+								) : spanish ? (
 									<>
 										{spanishPractice ? (
 											<FieldRow

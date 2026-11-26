@@ -176,3 +176,36 @@ describe("Italian place references", () => {
 		expect(parsePractitionerRef(practitionerRefOf(pharmacy))).toEqual(pharmacy);
 	});
 });
+
+describe("German facility references", () => {
+	const hospital = { country: "DE", idScheme: "DE-KHV", nationalId: "0a1b2c3d4e" };
+	const pharmacy = { country: "DE", idScheme: "DE-APO-TH", nationalId: "9001" };
+
+	it("read the `de:` reference, a German page address, and a key typed on a German page", () => {
+		expect(parsePractitionerRef("de:k0a1b2c3d4e")).toEqual(hospital);
+		expect(parsePractitionerRef(" DE: K0A1B2C3D4E ")).toEqual(hospital);
+		expect(
+			parsePractitionerRef("https://apercura.org/de/einrichtung/klinikum-beispiel-k0a1b2c3d4e"),
+		).toEqual(hospital);
+		expect(parsePractitionerRef("/de/einrichtung/beispiel-apotheke-th9001/")).toEqual(pharmacy);
+		expect(parsePractitionerRef("th9001", "DE")).toEqual(pharmacy);
+		expect(parsePractitionerRef("klinikum-beispiel-k0a1b2c3d4e", "DE")).toEqual(hospital);
+		expect(parsePractitionerRef("de:k0a1b2c3d4")).toBeNull();
+		expect(parsePractitionerRef("de:")).toBeNull();
+	});
+
+	it("still read France's former German addresses, RPPS numbers and Austrian keys as theirs", () => {
+		expect(
+			parsePractitionerRef("https://apercura.fr/de/behandler/camille-19999990013")?.country,
+		).toBe("FR");
+		expect(parsePractitionerRef("19999990013", "DE")?.country).toBe("FR");
+		expect(parsePractitionerRef("w7983")?.country).toBe("AT");
+	});
+
+	it("write the reference back with its market", () => {
+		expect(practitionerRefOf(hospital)).toBe("de:k0a1b2c3d4e");
+		expect(practitionerRefOf(pharmacy)).toBe("de:th9001");
+		expect(marketRef("th9001", "DE")).toBe("de:th9001");
+		expect(parsePractitionerRef(practitionerRefOf(pharmacy))).toEqual(pharmacy);
+	});
+});

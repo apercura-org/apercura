@@ -111,3 +111,19 @@ describe("returning to an Italian claim", () => {
 		expect(parseReturnTo("/pro/revendiquer?rpps=it:")).toBeNull();
 	});
 });
+
+describe("returning to a German claim", () => {
+	it("accepts a `de:` facility key, never anything that looks like a path", () => {
+		expect(parseReturnTo("/pro/revendiquer?rpps=de:k0a1b2c3d4e")).toEqual({
+			pathname: "/pro/revendiquer",
+			query: { rpps: "de:k0a1b2c3d4e" },
+		});
+		expect(parseReturnTo("/pro/revendiquer?rpps=de:th9001")).toEqual({
+			pathname: "/pro/revendiquer",
+			query: { rpps: "de:th9001" },
+		});
+		expect(parseReturnTo("/pro/revendiquer?rpps=de:k0a1b2c3d4e/..")).toBeNull();
+		expect(parseReturnTo("/pro/revendiquer?rpps=de:x0a1b2c3d4e")).toBeNull();
+		expect(parseReturnTo("/pro/revendiquer?rpps=de:")).toBeNull();
+	});
+});

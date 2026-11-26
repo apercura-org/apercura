@@ -1,11 +1,15 @@
 import {
 	AT_ID_SCHEMES,
 	type AtIdScheme,
+	DE_ID_SCHEMES,
+	type DeIdScheme,
+	deUrlKey,
 	GB_ID_SCHEMES,
 	type GbIdScheme,
 	gbUrlKey,
 	parseAtPractitionerSegment,
 	parseCzFacilitySegment,
+	parseDeFacilitySegment,
 	parseEsCentreSegment,
 	parseGbPracticeSegment,
 	parseItPlaceSegment,
@@ -31,7 +35,8 @@ export type PractitionerKey = {
  * (`the-densham-surgery-a81001`, `muirhead-medical-centre-sg10002`), `{facility-name}-{number}`
  * in Czechia (`mudr-hana-bohackova-39781`, the NRPZS number), `{centre-name}-{code}` in Spain
  * (`clinica-dental-ejemplo-1328000001`, the REGCESS code), `{name}-{list}{code}` in Italy
- * (`farmacia-esempio-f9000001`, the ministry's code). Null for anything else,
+ * (`farmacia-esempio-f9000001`, the ministry's code), `{facility-name}-{source}{key}` in Germany
+ * (`klinikum-beispiel-k0a1b2c3d4e`, `beispiel-apotheke-th9001`). Null for anything else,
  * so malformed or other-market URLs never reach the database.
  */
 export function parsePractitionerKey(locale: Locale, segment: string): PractitionerKey | null {
@@ -46,6 +51,10 @@ export function parsePractitionerKey(locale: Locale, segment: string): Practitio
 	}
 	if (country === "IT") {
 		const parsed = parseItPlaceSegment(segment);
+		return parsed ? { country, ...parsed } : null;
+	}
+	if (country === "DE") {
+		const parsed = parseDeFacilitySegment(segment);
 		return parsed ? { country, ...parsed } : null;
 	}
 	if (country === "GB") {
@@ -88,19 +97,27 @@ export const ES_SEGMENT_MARKER = "es.";
  */
 export const IT_SEGMENT_MARKER = "it.";
 
+/**
+ * The marker of a German page's segment outside a locale (`de.{slug}`): a pharmacy key of
+ * Thuringia (`th420`) would otherwise read like an Austrian list key.
+ */
+export const DE_SEGMENT_MARKER = "de.";
+
 /** The marker of each market whose segments are marked outside a locale. */
 const SEGMENT_MARKERS: Readonly<Partial<Record<MarketCountry, string>>> = {
 	GB: GB_SEGMENT_MARKER,
 	CZ: CZ_SEGMENT_MARKER,
 	ES: ES_SEGMENT_MARKER,
 	IT: IT_SEGMENT_MARKER,
+	DE: DE_SEGMENT_MARKER,
 };
 
 /**
  * The segment naming a practitioner page outside a locale (the Open Graph image): its slug,
- * marked with its market for a UK, Czech, Spanish or Italian page (`gb.the-densham-surgery-a81001`,
- * `cz.mudr-hana-bohackova-39781`, `es.clinica-dental-ejemplo-1328000001`,
- * `it.farmacia-esempio-f9000001`).
+ * marked with its market for a UK, Czech, Spanish, Italian or German page
+ * (`gb.the-densham-surgery-a81001`, `cz.mudr-hana-bohackova-39781`,
+ * `es.clinica-dental-ejemplo-1328000001`, `it.farmacia-esempio-f9000001`,
+ * `de.klinikum-beispiel-k0a1b2c3d4e`).
  */
 export function marketSegmentOf(country: string, slug: string): string {
 	const marker = SEGMENT_MARKERS[country as MarketCountry];
@@ -129,9 +146,14 @@ export function parseAnyPractitionerKey(segment: string): PractitionerKey | null
  * Austria the list letter and number of the page URL (`w7983`), since the lists publish no
  * national number; in the UK the ODS code as the NHS prints it (`A81001`), else the list
  * letters and number of the page URL (`sg10002`); in Czechia the NRPZS facility number; in
- * Spain the REGCESS centre code; in Italy the ministry's code (`9000001`, `002112`, `010030`).
+ * Spain the REGCESS centre code; in Italy the ministry's code (`9000001`, `002112`, `010030`); in
+ * Germany the source letters and key of the page URL (`k0a1b2c3d4e`, `th9001`), since no German
+ * source publishes a national number.
  */
 export function displayId(key: Pick<PractitionerKey, "idScheme" | "nationalId">): string {
+	if (DE_ID_SCHEMES[key.idScheme as DeIdScheme]) {
+		return deUrlKey(key.idScheme as DeIdScheme, key.nationalId);
+	}
 	const gb = GB_ID_SCHEMES[key.idScheme as GbIdScheme];
 	if (gb) return gb.prefix ? gbUrlKey(key.idScheme as GbIdScheme, key.nationalId) : key.nationalId;
 	const prefix = AT_ID_SCHEMES[key.idScheme as AtIdScheme];

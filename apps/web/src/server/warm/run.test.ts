@@ -6,7 +6,7 @@ import type { CursorRow, WarmStore } from "./store";
 
 const CHUNKS: SitemapChunk[] = [
 	{ market: "fr", kind: "listes", chunk: 0, lastmod: "2026-11-25", urls: 3 },
-	{ market: "fr", kind: "praticiens", chunk: 0, lastmod: "2026-11-25", urls: 5 },
+	{ market: "fr", kind: "praticiens", chunk: 0, lastmod: "2026-11-25", urls: 12 },
 ];
 const ENTRIES: Record<string, string[]> = {
 	"listes-0": ["/medecin-generaliste", "/sage-femme", "/infirmier"],
@@ -16,10 +16,17 @@ const ENTRIES: Record<string, string[]> = {
 		"/praticien/c-3",
 		"/praticien/d-4",
 		"/praticien/e-5",
+		"/praticien/f-6",
+		"/praticien/g-7",
+		"/praticien/h-8",
+		"/praticien/i-9",
+		"/praticien/j-10",
+		"/praticien/k-11",
+		"/praticien/l-12",
 	],
 };
 const PAGES = pagesPaths(CHUNKS).length;
-const TOTAL = PAGES + 3 + 5;
+const TOTAL = PAGES + 3 + 12;
 
 /** The cursor row and the sitemap queries, in memory. */
 function memoryStore(importRun = 1) {
@@ -121,7 +128,7 @@ describe("cache warm-up run", () => {
 		expect(state.generation).toBe("build:build-1|import:1");
 
 		const runs = [first];
-		while (!state.completedAt && runs.length < 20) runs.push(await runWarm(deps));
+		while (!state.completedAt && runs.length < 40) runs.push(await runWarm(deps));
 		expect(runs.at(-1)).toMatchObject({ completed: true, remaining: 0, total: TOTAL });
 		// Each URL once, in order: the pages, the listings, then the practitioners.
 		expect(app.requested).toHaveLength(TOTAL);
@@ -130,11 +137,7 @@ describe("cache warm-up run", () => {
 			"/fr/medecin-generaliste",
 			"/fr/sage-femme",
 			"/fr/infirmier",
-			"/fr/praticien/a-1",
-			"/fr/praticien/b-2",
-			"/fr/praticien/c-3",
-			"/fr/praticien/d-4",
-			"/fr/praticien/e-5",
+			...(ENTRIES["praticiens-0"] ?? []).map((path) => `/fr${path}`),
 		]);
 		expect(app.hosts).toEqual(new Set(["apercura.org"]));
 		expect(app.maxInFlight).toBeLessThanOrEqual(4);
@@ -225,9 +228,10 @@ describe("cache warm-up run", () => {
 		const report = await runWarm({ store, fetch, env, buildId: "b", now });
 		expect(report).toMatchObject({ stopped: "latency" });
 		expect(state.unit).toBe("praticiens-0");
-		// Twenty requests in the window, of which the slow ones take the p95 over 1000 ms.
+		// The slow ones take the p95 of the window over 1000 ms before the unit ends (every
+		// market's static pages come first, so the window is full of fast ones).
 		expect(state.position).toBeGreaterThan(0);
-		expect(state.position).toBeLessThan(5);
+		expect(state.position).toBeLessThan(12);
 		const done = app.requested.length;
 
 		const fast = fakeApp();

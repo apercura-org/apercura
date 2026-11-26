@@ -15,7 +15,7 @@ import { getPathname, type Href, Link } from "~/i18n/navigation";
 import { type Locale, routing } from "~/i18n/routing";
 import { guidesForListing } from "~/lib/guides/catalog";
 import { getTaxonomyLabels, inSentence } from "~/lib/labels";
-import { isMarketListingSlug, listingFees } from "~/lib/market";
+import { isMarketListingSlug, listingFees, pharmacyCoverageOf } from "~/lib/market";
 import { placeLabel } from "~/lib/places";
 import { CONTENT_LANGUAGES, DESCRIPTION_MAX, fitText, pageMetadata, pickTitle } from "~/lib/seo";
 import { absoluteUrl, siteOrigin } from "~/lib/site-url";
@@ -94,6 +94,8 @@ export default async function SpecialtyHub({ params }: Props) {
 	const listing = labels.listing(listingSlug) ?? listingSlug;
 	const count = data.landing.practitionerCount;
 	const title = t("hubTitle", { listing });
+	// Germany's pharmacies: two Länder only, said under the title.
+	const coverage = pharmacyCoverageOf(locale, listingSlug);
 	const trail: TrailItem[] = [{ label: listing, href }];
 	const url = absoluteUrl(href, locale);
 	const origin = siteOrigin();
@@ -130,7 +132,11 @@ export default async function SpecialtyHub({ params }: Props) {
 			<BookletPage>
 				<div className="flex flex-col gap-6">
 					<Trail locale={locale} items={trail} />
-					<ListingTitle title={title} lead={t("hubLead", { count, listing })} />
+					<ListingTitle
+						title={title}
+						lead={t("hubLead", { count, listing })}
+						note={coverage ? t("pharmacyCoverage", { states: coverage }) : null}
+					/>
 				</div>
 
 				<ListingSection

@@ -308,6 +308,11 @@ const MEDICAL_SPECIALTIES: Record<string, readonly MedicalSpecialty[]> = {
 	// Italy's places (Italian listing slugs).
 	farmacie: ["https://schema.org/PharmacySpecialty"],
 	parafarmacie: ["https://schema.org/PharmacySpecialty"],
+	// Germany's facilities (German listing slugs).
+	"psychiatrische-kliniken": ["https://schema.org/Psychiatric"],
+	kinderkliniken: ["https://schema.org/Pediatric"],
+	"reha-kliniken": ["https://schema.org/Physiotherapy"],
+	apotheken: ["https://schema.org/PharmacySpecialty"],
 };
 
 /**
@@ -502,13 +507,14 @@ const PLACE_TYPES = {
 const DOCTOR_PROFESSIONS = new Set(["10", "ARZT"]);
 
 /**
- * schema.org types of the UK's practices, Czechia's facilities, Spain's centres and Italy's places:
- * the practice, facility, centre or place itself is the page's subject (those markets list places
- * of care, not people), and its branch surgeries are places of the same type. A Czech facility or
- * a Spanish centre is a `MedicalClinic` unless it is a dental practice, a pharmacy or (in Spain) a
- * hospital. An Italian hospital or accredited private clinic (both have inpatient beds) is a
- * `Hospital`, a pharmacy a `Pharmacy`, a parapharmacy (a shop allowed to sell non-prescription
- * medicines) a `MedicalBusiness`.
+ * schema.org types of the UK's practices, Czechia's facilities, Spain's centres, Italy's places and
+ * Germany's facilities: the practice, facility, centre or place itself is the page's subject (those
+ * markets list places of care, not people), and its branch surgeries are places of the same type.
+ * A Czech facility or a Spanish centre is a `MedicalClinic` unless it is a dental practice, a
+ * pharmacy or (in Spain) a hospital. An Italian hospital or accredited private clinic (both have
+ * inpatient beds) is a `Hospital`, a pharmacy a `Pharmacy`, a parapharmacy (a shop allowed to sell
+ * non-prescription medicines) a `MedicalBusiness`. A German hospital of any kind is a `Hospital`,
+ * a rehabilitation clinic a `MedicalClinic`, a pharmacy a `Pharmacy`.
  */
 type PracticeType = "MedicalClinic" | "Dentist" | "Pharmacy" | "Hospital" | "MedicalBusiness";
 
@@ -525,6 +531,11 @@ const PRACTICE_TYPES: Readonly<Record<string, PracticeType>> = {
 	IT_PARAPHARMACY: "MedicalBusiness",
 	IT_HOSPITAL: "Hospital",
 	IT_CLINIC: "Hospital",
+	DE_HOSPITAL: "Hospital",
+	DE_PSYCHIATRIC_HOSPITAL: "Hospital",
+	DE_CHILDRENS_HOSPITAL: "Hospital",
+	DE_REHAB_CLINIC: "MedicalClinic",
+	DE_PHARMACY: "Pharmacy",
 };
 
 /** The schema.org type of a market of practices' page subject (`PRACTICE_TYPES`), if any. */

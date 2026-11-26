@@ -20,6 +20,7 @@ const CATALOGS = {
 	"cs-CZ": messagesFor("cs-CZ"),
 	"es-ES": messagesFor("es-ES"),
 	"it-IT": messagesFor("it-IT"),
+	"de-DE": messagesFor("de-DE"),
 } as const;
 
 /** A label of the catalog's taxonomy, rendered like `getTaxonomyLabels` does. */
@@ -170,5 +171,21 @@ describe("Italy's labels", () => {
 		expect(t("listing.farmacie" as never)).toBe("Farmacie");
 		expect(t("profession.case-di-cura" as never)).toBe("Casa di cura accreditata");
 		expect(inSentence(t("profession.ospedali" as never), "it-IT")).toBe("ospedale");
+	});
+});
+
+describe("Germany's labels", () => {
+	it("name a listing in the plural and a facility's kind in the singular", () => {
+		const t = createTranslator({
+			locale: "de-DE",
+			messages: CATALOGS["de-DE"],
+			namespace: "taxonomy",
+		});
+		expect(t("listing.krankenhaeuser" as never)).toBe("Krankenhäuser");
+		expect(t("listing.reha-kliniken" as never)).toBe("Reha-Kliniken");
+		expect(t("profession.kinderklinik" as never)).toBe("Kinderklinik");
+		expect(t("profession.apotheke" as never)).toBe("Apotheke");
+		// German keeps the capital of a noun inside a sentence.
+		expect(inSentence(t("profession.krankenhaus" as never), "de-DE")).toBe("Krankenhaus");
 	});
 });

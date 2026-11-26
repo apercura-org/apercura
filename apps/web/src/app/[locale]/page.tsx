@@ -3,6 +3,7 @@ import {
 	AT_DENTIST,
 	AT_DOCTOR,
 	CZ_DEFAULT_PROFESSIONS,
+	DE_DEFAULT_PROFESSIONS,
 	ES_DEFAULT_PROFESSIONS,
 	GB_DENTAL_PRACTICE,
 	GB_GP_PRACTICE,
@@ -58,8 +59,8 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
 	const t = await getTranslations({ locale, namespace: "HomePage" });
 
 	const tMeta = await getTranslations({ locale, namespace: "Metadata" });
-	// Austria, the UK, Czechia, Spain and Italy: a directory from open lists, without booking or
-	// the French registry.
+	// Austria, the UK, Czechia, Spain, Italy and Germany: a directory from open lists, without
+	// booking or the French registry.
 	const market = marketOf(locale);
 	const austrian = market !== "FR";
 	const pillars: Pillar[] = austrian
@@ -204,8 +205,13 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
 /**
  * The home of a market opened from open lists: its largest listings and its places, from the
  * read models. Austria lists its Bundesländer; the UK its regions and nations, each a hub;
- * Czechia its districts (okresy); Spain its provinces; Italy its twenty regions, each a hub.
+ * Czechia its districts (okresy); Spain its provinces; Italy its twenty regions, each a hub;
+ * Germany its Kreise with the most facilities (four hundred would bury the page: the directory
+ * lists them all).
  */
+/** How many Kreise Germany's home lists. */
+const GERMAN_HOME_PLACES = 30;
+
 async function MarketDirectory({ locale }: { locale: Locale }) {
 	const t = await getTranslations({ locale, namespace: "HomePage" });
 	const labels = await getTaxonomyLabels(locale);
@@ -226,7 +232,13 @@ async function MarketDirectory({ locale }: { locale: Locale }) {
 						0,
 					),
 				}))
-		: index.regions.flatMap((region) => region.departments);
+		: country === "DE"
+			? index.regions
+					.flatMap((region) => region.departments)
+					.filter((department) => department.practitionerCount > 0)
+					.sort((a, b) => b.practitionerCount - a.practitionerCount || a.name.localeCompare(b.name))
+					.slice(0, GERMAN_HOME_PLACES)
+			: index.regions.flatMap((region) => region.departments);
 	if (overview.listings.length === 0 && states.length === 0) return null;
 	return (
 		<>
@@ -269,8 +281,8 @@ async function MarketDirectory({ locale }: { locale: Locale }) {
 /**
  * The sources and figures of a market opened from open lists: pages by profession (Austria's
  * doctors and dentists, the UK's GP practices, dental practices and pharmacies, Czechia's kinds
- * of facility, Spain's kinds of centre, Italy's pharmacies, parapharmacies, hospitals and clinics)
- * and the lists.
+ * of facility, Spain's kinds of centre, Italy's pharmacies, parapharmacies, hospitals and clinics,
+ * Germany's kinds of facility) and the lists.
  */
 async function OpenDataRegistry({ locale }: { locale: Locale }) {
 	const t = await getTranslations({ locale, namespace: "HomePage" });
@@ -310,10 +322,12 @@ async function OpenDataRegistry({ locale }: { locale: Locale }) {
 					? byListing(ES_DEFAULT_PROFESSIONS)
 					: country === "IT"
 						? byListing(IT_DEFAULT_PROFESSIONS)
-						: [
-								{ code: AT_DOCTOR, codes: [AT_DOCTOR], label: t("registry.doctors") },
-								{ code: AT_DENTIST, codes: [AT_DENTIST], label: t("registry.dentists") },
-							];
+						: country === "DE"
+							? byListing(DE_DEFAULT_PROFESSIONS)
+							: [
+									{ code: AT_DOCTOR, codes: [AT_DOCTOR], label: t("registry.doctors") },
+									{ code: AT_DENTIST, codes: [AT_DENTIST], label: t("registry.dentists") },
+								];
 	return (
 		<section
 			aria-labelledby="registry-heading"

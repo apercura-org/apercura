@@ -1,0 +1,264 @@
+{
+	"Metadata": {
+		"description": "Die Krankenhäuser, Kliniken und Reha-Kliniken Deutschlands nach dem amtlichen Krankenhausverzeichnis, dazu die Apotheken in Thüringen und Brandenburg.",
+		"proDescription": "Eine sachliche Seite für jedes Krankenhaus, jede Reha-Klinik und jede Apotheke der offenen Verzeichnisse. Finden und beanspruchen Sie Ihre Seite kostenlos.",
+		"homeTitle": "Apercura · Krankenhäuser und Apotheken in Deutschland"
+	},
+	"Site": {
+		"runningHead": "Offenes Verzeichnis der Krankenhäuser und Kliniken in Deutschland",
+		"navPro": "Für Einrichtungen",
+		"footer": {
+			"free": "Kostenlos für Einrichtungen und Patienten."
+		},
+		"folioRpps": "Kennung {rpps}"
+	},
+	"Search": {
+		"label": "Krankenhaus, Klinik oder Apotheke finden",
+		"whoHint": "Name der Einrichtung, oder Krankenhaus, Kinderklinik, Reha-Klinik, Apotheke",
+		"whereHint": "Ort oder Kreis"
+	},
+	"SearchForm": {
+		"practitioners": "Einrichtungen",
+		"department": "Kreis",
+		"geoDenied": "Die Standortfreigabe ist für diese Website deaktiviert. Geben Sie stattdessen einen Ort ein.",
+		"geoUnavailable": "Ihr Standort konnte nicht ermittelt werden. Geben Sie stattdessen einen Ort ein."
+	},
+	"SearchPage": {
+		"emptyTitle": "Keine passende Einrichtung",
+		"emptyBody": "Prüfen Sie die Schreibweise, versuchen Sie einen Nachbarort oder einen allgemeineren Begriff wie „Krankenhaus“.",
+		"queryOnlyNear": "Einrichtungen in Ihrer Nähe (ungefähre Lage: die Mitte der Gemeinde)",
+		"startTitle": "Was suchen Sie?",
+		"startBody": "Geben Sie unter „Wer?“ den Namen einer Einrichtung ein, oder Krankenhaus, Kinderklinik, psychiatrische Klinik, Reha-Klinik oder Apotheke, und unter „Wo?“ einen Ort oder einen Kreis. Sie können das Verzeichnis auch nach Land und Kreis durchsuchen.",
+		"unknownPlaceBody": "Prüfen Sie die Schreibweise oder geben Sie einen Nachbarort ein.",
+		"unlistedBody": "In Deutschland enthält das Verzeichnis vorerst Einrichtungen, keine Ärztinnen und Ärzte: Krankenhäuser, psychiatrische Kliniken, Kinderkliniken, Vorsorge- und Reha-Kliniken sowie die Apotheken in Thüringen und Brandenburg. Suchen Sie nach dem Namen einer Einrichtung oder durchsuchen Sie das Verzeichnis.",
+		"departmentPlace": "Kreis",
+		"bookingNotOpen": "In Deutschland bietet Apercura keine Online-Terminbuchung an: Rufen Sie die Einrichtung an.",
+		"columns": {
+			"practitioner": "Einrichtung",
+			"place": "Adresse",
+			"appointments": "Kontakt"
+		},
+		"outsidePlace": "Außerhalb von {where}",
+		"rppsBody": "Diese Kennung ist ungültig, oder die Einrichtung hat keine öffentliche Seite: Das Verzeichnis enthält Krankenhäuser, Reha-Kliniken und die Apotheken in Thüringen und Brandenburg. Die Leitung einer Einrichtung kann ihre Seite trotzdem finden und beanspruchen.",
+		"distance": "Etwa {km} km entfernt (Mitte der Gemeinde)"
+	},
+	"HomePage": {
+		"title": "Finden Sie ein Krankenhaus, eine Reha-Klinik oder eine Apotheke in Deutschland",
+		"hook": "Jedes Krankenhaus und jede Vorsorge- oder Reha-Klinik des Krankenhausverzeichnisses hat bereits eine Seite, ebenso die Apotheken in Thüringen und Brandenburg.",
+		"pillars": {
+			"free": {
+				"description": "Kostenlos für Einrichtungen und Patienten, ohne Abonnement und ohne Provision."
+			}
+		},
+		"registry": {
+			"heading": "Aus offenen amtlichen Verzeichnissen erstellt",
+			"intro": "Jede Seite eines Krankenhauses oder einer Klinik beruht auf dem Verzeichnis der Krankenhäuser und Vorsorge- oder Rehabilitationseinrichtungen, das die Statistischen Ämter des Bundes und der Länder jedes Jahr veröffentlichen. Apotheken werden nur für Thüringen und Brandenburg aufgeführt, deren Landesbehörden ihre Apothekenliste als offene Daten veröffentlichen. Aufgeführt werden Einrichtungen, keine Ärztinnen und Ärzte. Niemand zahlt für einen Eintrag, und niemand wird ausgelassen.",
+			"sourceName": "Statistisches Bundesamt (Destatis), GDI-Th, LAVG Brandenburg"
+		},
+		"pro": {
+			"heading": "Leiten Sie ein Krankenhaus, eine Klinik oder eine Apotheke?",
+			"body": "Die Seite Ihrer Einrichtung gibt es bereits. Sie zu beanspruchen ist kostenlos."
+		},
+		"tagline": "Das offene Verzeichnis der Krankenhäuser, Kliniken und Apotheken in Deutschland.",
+		"market": {
+			"listingsHeading": "Nach Art der Einrichtung",
+			"placesHeading": "Kreise und kreisfreie Städte mit den meisten Einrichtungen"
+		},
+		"specimen": {
+			"heading": "Jede Einrichtung hat bereits ihre Seite"
+		}
+	},
+	"Practitioner": {
+		"rpps": "Kennung",
+		"specimen": "Beispiel, keine echte Einrichtung",
+		"statusNote": {
+			"unclaimed": "Aus offenen amtlichen Verzeichnissen erstellt. Die Einrichtung hat diese Seite noch nicht vervollständigt.",
+			"verified": "Von der Einrichtung vervollständigt; ihre Beanspruchung wurde geprüft."
+		},
+		"fields": {
+			"profession": "Art der Einrichtung"
+		},
+		"source": {
+			"name": "Statistisches Bundesamt (Destatis), Verzeichnis der Krankenhäuser und Vorsorge- oder Rehabilitationseinrichtungen"
+		},
+		"action": {
+			"call": {
+				"statement": "Über Apercura ist in Deutschland keine Online-Terminbuchung möglich. Rufen Sie die Einrichtung an, um einen Termin zu vereinbaren."
+			}
+		},
+		"sitesHeading": "Adresse"
+	},
+	"PractitionerPage": {
+		"metaTitle": "{name}, {occupation} · Apercura",
+		"metaTitlePlace": "{name}, {occupation} in {place} · Apercura",
+		"metaDescription": "{name}, {occupation}: {fees, select, sector {Adresse, Telefon und Honorare} other {Adresse, Telefon und Fachabteilungen}}, nach offenen amtlichen Verzeichnissen.",
+		"metaDescriptionPlace": "{name}, {occupation} in {place}: {fees, select, sector {Adresse, Telefon und Honorare} other {Adresse, Telefon und Fachabteilungen}}, nach offenen amtlichen Verzeichnissen.",
+		"unknownProfession": "Einrichtung",
+		"professionHeading": "Einrichtung",
+		"unnamedPlace": "Einrichtung",
+		"asideLabel": "Kontakt und Seite",
+		"action": {
+			"callNotYetOpen": "In Deutschland bietet Apercura keine Online-Terminbuchung an. Um einen Termin zu vereinbaren, rufen Sie die Einrichtung an.",
+			"noPhone": "Das Verzeichnis veröffentlicht für diese Einrichtung keine Telefonnummer."
+		},
+		"claim": {
+			"heading": "Ist das Ihre Einrichtung?",
+			"body": "Diese Seite beruht auf offenen amtlichen Verzeichnissen. Beanspruchen Sie sie, um sie zu prüfen und zu vervollständigen:",
+			"claimedHeading": "Von der Einrichtung verwaltete Seite",
+			"claimedBody": "Die Einrichtung hat diese Seite beansprucht; die Beanspruchung wurde geprüft, und die Einrichtung vervollständigt die Seite selbst.",
+			"contactLink": "Kein Nachweis zur Hand? Kontaktieren Sie uns",
+			"benefits": [
+				"kostenlos, ohne Abonnement und ohne Verpflichtung;",
+				"Ihr Foto, Ihre Öffnungs- und Sprechzeiten und die gesprochenen Sprachen;",
+				"Ihre Website und Angaben zur Barrierefreiheit;",
+				"Statistiken zu den Aufrufen Ihrer Seite;",
+				"ein Teilen-Paket: Link, QR-Code und Aushang."
+			]
+		},
+		"report": {
+			"body": "Wenn eine Adresse, eine Telefonnummer oder ein Name falsch ist, sagen Sie uns, wie wir sie berichtigen können."
+		},
+		"ring": {
+			"heading": "Weitere Einrichtungen: {occupation} in {place}"
+		}
+	},
+	"Listing": {
+		"count": "{count, plural, one {# Einrichtung} other {# Einrichtungen}}",
+		"metaTitle": "{count, plural, one {{listing} in {place}: # Einrichtung · Apercura} other {{listing} in {place}: # Einrichtungen · Apercura}}",
+		"metaDescription": "{count, plural, one {# Einrichtung unter „{occupation}“ in {place}: {fees, select, sector {Adresse, Telefon und Honorare} other {Adresse und Telefon}}, nach offenen amtlichen Verzeichnissen.} other {# Einrichtungen unter „{occupation}“ in {place}: {fees, select, sector {Adressen, Telefonnummern und Honorare} other {Adressen und Telefonnummern}}, nach offenen amtlichen Verzeichnissen.}}",
+		"lead": "{count, plural, one {Die offenen amtlichen Verzeichnisse führen unter dieser Rubrik # Einrichtung in {place}.} other {Die offenen amtlichen Verzeichnisse führen unter dieser Rubrik # Einrichtungen in {place}.}}",
+		"practitionersHeading": "{count, plural, one {Die Einrichtung} other {Die # Einrichtungen}}",
+		"columns": {
+			"practitioner": "Einrichtung"
+		},
+		"facts": {
+			"sources": "Statistisches Bundesamt (Destatis); Apotheken: GDI-Th (Thüringen), LAVG Brandenburg"
+		},
+		"communesHeading": "{listing}: Gemeinden in {place}",
+		"nearbyHeading": "{listing}: Gemeinden in der Nähe",
+		"authoritiesHeading": "{listing}: Kreise in {place}",
+		"hubMetaTitle": "{count, plural, one {{listing} in Deutschland: # Einrichtung · Apercura} other {{listing} in Deutschland: # Einrichtungen · Apercura}}",
+		"hubMetaDescription": "{count, plural, one {# Einrichtung unter „{occupation}“ in Deutschland, nach Kreis: {fees, select, sector {Adresse, Telefon und Honorare} other {Adresse und Telefon}}, nach offenen amtlichen Verzeichnissen.} other {# Einrichtungen unter „{occupation}“ in Deutschland, nach Kreis: {fees, select, sector {Adressen, Telefonnummern und Honorare} other {Adressen und Telefonnummern}}, nach offenen amtlichen Verzeichnissen.}}",
+		"hubTitle": "{listing} in Deutschland",
+		"hubLead": "{count, plural, one {Die offenen amtlichen Verzeichnisse führen unter dieser Rubrik # Einrichtung in Deutschland.} other {Die offenen amtlichen Verzeichnisse führen unter dieser Rubrik # Einrichtungen in Deutschland.}}",
+		"departmentsHeading": "{listing} nach Kreis",
+		"departmentsIntro": "Wählen Sie einen Kreis oder eine kreisfreie Stadt, um seine Gemeinden und Einrichtungen zu sehen.",
+		"metaDescriptionPage": "{count, plural, one {Seite {page} von {pages}: # Einrichtung unter „{occupation}“ in {place}.} other {Seite {page} von {pages}: # Einrichtungen unter „{occupation}“ in {place}.}}",
+		"metaDescriptionPageRange": "{count, plural, one {Seite {page} von {pages}, {first} bis {last}: # Einrichtung unter „{occupation}“ in {place}.} other {Seite {page} von {pages}, {first} bis {last}: # Einrichtungen unter „{occupation}“ in {place}.}}",
+		"hubMetaTitleShort": "{listing} in Deutschland · Apercura",
+		"allSpecialties": "Alle Arten von Einrichtungen in {place}"
+	},
+	"Directory": {
+		"metaTitle": "Krankenhäuser und Kliniken nach Ort · Apercura",
+		"metaDescription": "Die Länder und Kreise Deutschlands mit ihren Krankenhäusern, Kliniken und Reha-Kliniken, nach dem Krankenhausverzeichnis der Statistischen Ämter, und den Apotheken in Thüringen und Brandenburg.",
+		"lead": "{count, plural, one {# Einrichtung, nach Land und Kreis.} other {# Einrichtungen, nach Land und Kreis.}}",
+		"otherRegion": "Weitere Orte",
+		"emptyBody": "Die Verzeichnisse wurden auf diesem Server noch nicht importiert. Schauen Sie nach dem nächsten Import wieder vorbei.",
+		"placeMetaTitle": "Krankenhäuser, Kliniken und Apotheken in {place} · Apercura",
+		"placeMetaDescription": "{count, plural, one {# Einrichtung in {place}, nach Art, nach offenen amtlichen Verzeichnissen.} other {# Einrichtungen in {place}, nach Art, nach offenen amtlichen Verzeichnissen.}}",
+		"placeTitle": "Einrichtungen in {place}",
+		"placeLead": "{count, plural, one {# Einrichtung in {place}.} other {# Einrichtungen in {place}.}}",
+		"specialtiesHeading": "Nach Art der Einrichtung",
+		"communesHeading": "Gemeinden in {place}",
+		"authoritiesHeading": "Kreise in {place}",
+		"placeMetaTitleShort": "Einrichtungen in {place} · Apercura"
+	},
+	"OgImage": {
+		"runningHead": "Offenes Verzeichnis der Krankenhäuser und Kliniken",
+		"practitioner": {
+			"folio": "Kennung {rpps}"
+		}
+	},
+	"taxonomy": {
+		"practiceKind": {
+			"office": "Einrichtung"
+		}
+	},
+	"Claim": {
+		"errors": {
+			"NOT_FOUND": "Keine Seite hat diese Kennung.",
+			"INVALID_RPPS": "Diese Kennung ist ungültig: Sie steht am Ende der Adresse der Seite Ihrer Einrichtung, zum Beispiel k0a1b2c3d4e."
+		},
+		"start": {
+			"lead": "Eine Beanspruchung bezieht sich auf die Seite einer Einrichtung, nie auf einen Namen.",
+			"contestBody": "Wenn es die Seite Ihrer Einrichtung ist (zum Beispiel, weil Sie den Zugang zu Ihrem Konto verloren haben), können Sie sie trotzdem beanspruchen: Ein Administrator prüft Ihren Nachweis und entscheidet. Die Wiederherstellung eines Kontos erfordert immer eine neue Prüfung.",
+			"findHeading": "Finden Sie die Seite Ihrer Einrichtung",
+			"notFound": "Noch keine öffentliche Seite hat diese Kennung.",
+			"rppsLabel": "Kennung oder Adresse der Seite",
+			"rppsHint": "Die Kennung steht am Ende der Adresse der Seite, zum Beispiel k0a1b2c3d4e in apercura.org/de/einrichtung/klinikum-beispiel-k0a1b2c3d4e. Sie können auch die ganze Adresse einfügen.",
+			"contactLink": "Kein Nachweis zur Hand? Kontaktieren Sie uns"
+		},
+		"methods": {
+			"document": {
+				"summary": "Ein Nachweis, dass Sie die Einrichtung leiten oder in ihrem Namen handeln: ein Auszug aus dem Handelsregister oder Vereinsregister des Trägers, die Betriebserlaubnis der Apotheke, oder ein Schreiben auf dem Briefkopf der Einrichtung, das Ihre Funktion nennt. Ein Mitglied unseres Teams prüft ihn, in der Regel innerhalb von 48 Stunden.",
+				"lead": "Senden Sie einen Nachweis, dass Sie die Einrichtung leiten oder in ihrem Namen handeln: einen Registerauszug des Trägers, die Betriebserlaubnis der Apotheke oder ein Schreiben auf dem Briefkopf der Einrichtung. Er wird vor dem Speichern verschlüsselt und 30 Tage nach der Entscheidung gelöscht."
+			}
+		},
+		"documents": {
+			"kind": {
+				"cps_card": "Schreiben auf dem Briefkopf der Einrichtung, das Ihre Funktion nennt",
+				"ordre_attestation": "Registerauszug des Trägers oder Betriebserlaubnis der Apotheke"
+			}
+		},
+		"status": {
+			"contestReview": "Diese Seite hatte bereits einen verifizierten Inhaber: Ein Administrator entscheidet anhand Ihres Nachweises.",
+			"reviewBody": "Ein Mitglied unseres Teams prüft Ihren Nachweis und meldet sich per E-Mail.",
+			"contestBody": "Ein Administrator wird anhand Ihres Nachweises entscheiden."
+		}
+	},
+	"Gdpr": {
+		"rpps": "Kennung der Seite",
+		"rppsHint": "Das Ende der Adresse der Seite, zum Beispiel k0a1b2c3d4e in apercura.org/de/einrichtung/klinikum-beispiel-k0a1b2c3d4e, oder die ganze Adresse.",
+		"errors": {
+			"notFound": "Keine Seite hat diese Kennung."
+		},
+		"report": {
+			"doneBody": "Wir prüfen die Meldung. Angaben aus den Verzeichnissen werden an der Quelle berichtigt: beim Statistischen Landesamt für Krankenhäuser und Kliniken, bei der Apothekenaufsicht des Landes für Apotheken. Wenn Sie eine Adresse hinterlassen haben, informieren wir Sie."
+		},
+		"removal": {
+			"doneBody": "Sie wird nicht mehr angezeigt, indexiert oder aufgeführt. Wir prüfen den Antrag und antworten per E-Mail innerhalb von höchstens einem Monat. Wird er bestätigt, wird die Seite endgültig gelöscht und kehrt mit den Aktualisierungen der Verzeichnisse nicht zurück.",
+			"privacy": "Eine gelöschte Seite erscheint beim nächsten Import der Verzeichnisse nicht wieder.",
+			"claimedBody": "Nur ihre Inhaberin oder ihr Inhaber kann sie entfernen, im Seiten-Editor des eigenen Bereichs: Die Seite verschwindet dann sofort und kehrt mit den Aktualisierungen der Verzeichnisse nicht zurück."
+		},
+		"contact": {
+			"lead": "Sie können die Seite Ihrer Einrichtung nicht mit einem Nachweis beanspruchen? Hinterlassen Sie uns Ihre Kontaktdaten: Ein Mitglied des Apercura-Teams meldet sich, um zu prüfen, dass Sie im Namen der Einrichtung handeln, und um Ihnen zu helfen.",
+			"claimFirst": "Mit einem Nachweis, dass Sie im Namen der Einrichtung handeln, geht die Beanspruchung schneller:",
+			"rpps": "Kennung der Seite"
+		}
+	},
+	"emails": {
+		"claimReceived": {
+			"body": [
+				"Guten Tag {name},",
+				"Wir haben Ihre Beanspruchung und die zugehörigen Dokumente erhalten. Ein Mitglied des Apercura-Teams prüft sie und meldet sich per E-Mail.",
+				"Wir prüfen Beanspruchungen innerhalb von 48 Stunden an Werktagen."
+			]
+		},
+		"claimRejected": {
+			"body": [
+				"Guten Tag {name},",
+				"Wir konnten Ihre Beanspruchung nicht verifizieren. Vom Prüfer angegebener Grund: {reason}",
+				"Sie können in Ihrem Bereich eine neue Beanspruchung eröffnen, mit einem gut lesbaren Nachweis, dass Sie im Namen der Einrichtung handeln."
+			]
+		},
+		"removalReceived": {
+			"body": [
+				"Die Seite ist ab sofort ausgeblendet: Sie wird nicht mehr angezeigt, indexiert oder aufgeführt.",
+				"Wir prüfen den Antrag und antworten innerhalb von höchstens einem Monat. Wird er bestätigt, wird die Seite gelöscht; eine gelöschte Seite kehrt mit dem nächsten Import der Verzeichnisse nicht zurück."
+			]
+		},
+		"removalConfirmed": {
+			"body": [
+				"Die Seite, deren Entfernung Sie beantragt haben, wurde aus Apercura gelöscht. Sie erscheint auch beim nächsten Import der Verzeichnisse nicht wieder."
+			]
+		}
+	},
+	"Onboarding": {
+		"steps": {
+			"check": {
+				"lead": "Ihre Seite beruht auf einem offenen amtlichen Verzeichnis. Prüfen Sie den Namen der Einrichtung, ihre Art, ihre Fachabteilungen und ihre Adresse.",
+				"registryNote": "Etwas ist falsch? Die dauerhafte Berichtigung erfolgt an der Quelle (beim Statistischen Landesamt, für Apotheken bei der Apothekenaufsicht des Landes); die Seite übernimmt sie beim nächsten Import. Im Seiten-Editor können Sie eine Adresse ausblenden oder hinzufügen."
+			}
+		}
+	}
+}

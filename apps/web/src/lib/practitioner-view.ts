@@ -1,6 +1,7 @@
 import {
 	formatPhoneAt,
 	formatPhoneCz,
+	formatPhoneDe,
 	formatPhoneEs,
 	formatPhoneFr,
 	formatPhoneGb,
@@ -36,7 +37,7 @@ export function label(value: string | null | undefined): string | null {
 
 /**
  * A phone number of any market as written there (`04 72 00 00 00`, `01 7673315`,
- * `020 7946 0000`, `326 357 125`, `910 000 001`, `06 12345678`).
+ * `020 7946 0000`, `326 357 125`, `910 000 001`, `06 12345678`, `030 45050`).
  */
 export function formatPhone(e164: string): string {
 	if (e164.startsWith("+43")) return formatPhoneAt(e164);
@@ -44,13 +45,14 @@ export function formatPhone(e164: string): string {
 	if (e164.startsWith("+420")) return formatPhoneCz(e164);
 	if (e164.startsWith("+34")) return formatPhoneEs(e164);
 	if (e164.startsWith("+39")) return formatPhoneIt(e164);
+	if (e164.startsWith("+49")) return formatPhoneDe(e164);
 	return formatPhoneFr(e164);
 }
 
 /**
  * A source text as printed for a market. French registry labels are restored
- * (`label`); Austrian and Czech lists publish their streets as written, and the UK's, Spain's and
- * Italy's are cased by their imports, so they are only trimmed (`63A` stays `63A`).
+ * (`label`); Austrian, Czech and German lists publish their streets as written, and the UK's,
+ * Spain's and Italy's are cased by their imports, so they are only trimmed (`63A` stays `63A`).
  */
 export function marketLabel(value: string | null | undefined, country = "FR"): string | null {
 	if (country === "FR") return label(value);
