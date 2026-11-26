@@ -2,6 +2,7 @@
 import { monorepoRoot } from "./src/load-root-env";
 import "./src/env";
 
+import path from "node:path";
 import type { NextConfig } from "next";
 import createNextIntlPlugin from "next-intl/plugin";
 import { INDEXABLE_LOCALES, LOCALE_PREFIXES, LOCALE_SEGMENTS } from "./src/i18n/locales";
@@ -18,6 +19,15 @@ const nextConfig: NextConfig = {
 	// follow: ship those exact files with the routes that draw them.
 	outputFileTracingIncludes: {
 		"/og/**": OG_FONT_FILES.map((file) => `./${file}`),
+	},
+	// Pages, route responses and "use cache" results go to Valkey when CACHE_REDIS_URL is set
+	// at run time, bounded by its memory limit; otherwise these handlers hand every call to
+	// Next.js's own caches (see cache-handler/runtime.mjs). Next.js traces them, and their
+	// imports, into the standalone output.
+	cacheHandler: path.resolve("cache-handler/incremental.mjs"),
+	cacheHandlers: {
+		default: path.resolve("cache-handler/data.mjs"),
+		remote: path.resolve("cache-handler/data.mjs"),
 	},
 	// The guides (content/guides/*.md) are imported as their text and parsed at build time.
 	turbopack: {

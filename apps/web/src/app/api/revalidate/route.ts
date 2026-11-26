@@ -8,7 +8,8 @@
  *   x-apercura-signature: hex digest (applied once: a replay changes nothing)
  * Tags are revalidated with the `max` profile: stale pages keep being served
  * while they are regenerated in the background. The sitemaps' tag (`sitemap`)
- * is expired at once instead (`revalidationProfile`).
+ * is expired at once instead (`revalidationProfile`). With the Valkey cache on and not
+ * answering, 503 (the import's outbox keeps the tags and sends them again).
  */
 import {
 	parseRevalidationTags,
@@ -22,6 +23,7 @@ import { revalidationProfile } from "~/server/cache-tags";
 import { getDb } from "~/server/db";
 import { readBodyCapped, tooLarge } from "~/server/http/body";
 import { acceptRevalidationOnce } from "~/server/revalidation-replay";
+import { sharedCacheWritable } from "~/server/shared-cache";
 
 const MAX_BODY_BYTES = 64 * 1024;
 
@@ -41,6 +43,11 @@ export async function POST(request: Request): Promise<Response> {
 	});
 	if (!check.ok) {
 		return Response.json({ error: "invalid signature" }, { status: 401 });
+	}
+	// With the Valkey cache, a tag mark Valkey cannot take now would be lost after a restart:
+	// answer 503 before burning the signature, and the import sends the tags again later.
+	if (!(await sharedCacheWritable())) {
+		return Response.json({ error: "cache unavailable" }, { status: 503 });
 	}
 	// A signed request is applied once: a replay within the timestamp window (captured, or
 	// the same tags sent twice in one second) succeeds without revalidating anything again.
