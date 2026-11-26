@@ -9,7 +9,7 @@ import { PublicPage } from "~/components/public-page";
 import { ResultsMap } from "~/components/results-map";
 import { SearchForm } from "~/components/search-form";
 import { clientEnv } from "~/env";
-import { marketOf } from "~/i18n/locales";
+import { type MarketCountry, marketOf, marketOfSegment } from "~/i18n/locales";
 import { Link, redirect } from "~/i18n/navigation";
 import { type Locale, routing } from "~/i18n/routing";
 import { genderOf, getTaxonomyLabels } from "~/lib/labels";
@@ -69,10 +69,15 @@ type Outcome =
  * RPPS number goes to its practitioner page, a specialty in a place to its
  * listing page, a specialty alone to its hub. Everything else is a list.
  */
-async function run(query: SearchQuery, page: number, locale: Locale): Promise<Outcome> {
+async function run(
+	query: SearchQuery,
+	page: number,
+	locale: Locale,
+	chosen: MarketCountry | null,
+): Promise<Outcome> {
 	const country = marketOf(locale);
-	const target = await searchRedirect(query, page, country);
-	if (target) redirect({ href: target, locale });
+	const target = await searchRedirect(query, page, locale, chosen);
+	if (target) redirect(target);
 	if (query.rpps && country === "FR") return { kind: "rpps_missing", rpps: query.rpps };
 	const term = query.who ? resolveSearchTerm(query.who, country) : null;
 	const listingSlug = term?.kind === "listing" ? term.slug : null;
@@ -126,7 +131,7 @@ export default async function SearchPage({ params, searchParams }: Props) {
 		pres: first(raw.pres),
 	});
 	const page = pageOf(first(raw.page));
-	const outcome = await run(query, page, locale);
+	const outcome = await run(query, page, locale, marketOfSegment(first(raw.pays)));
 
 	const t = await getTranslations({ locale, namespace: "SearchPage" });
 

@@ -57,7 +57,14 @@
 		"whoHint": "Nom, spécialité ou profession",
 		"where": "Où ?",
 		"whereHint": "Ville ou code postal",
-		"submit": "Chercher"
+		"submit": "Chercher",
+		"market": "Pays",
+		"markets": {
+			"FR": "France",
+			"AT": "Autriche",
+			"GB": "Royaume-Uni",
+			"CZ": "Tchéquie"
+		}
 	},
 	"HomePage": {
 		"title": "Trouvez un professionnel de santé en France",

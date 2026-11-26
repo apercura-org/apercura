@@ -22,7 +22,11 @@ import {
 	LOCALE_SEGMENTS,
 	LOCALE_TAGS,
 	LOCALES,
+	MARKET_COUNTRIES,
+	marketLocaleFor,
 	marketOf,
+	marketOfSegment,
+	marketSegment,
 	OG_LOCALES,
 	toLocale,
 } from "./locales";
@@ -274,5 +278,32 @@ describe("locale configuration", () => {
 		expect(localePath("fr", "/rdv")).toBe("/fr/rdv");
 		expect(localePath("fr", "/")).toBe("/fr");
 		expect(localePath("it", "/")).toBe("/fr-it");
+	});
+});
+
+describe("the markets a search can move to", () => {
+	it("are the open markets, France first, each at its own segment", () => {
+		expect(MARKET_COUNTRIES).toEqual(["FR", "AT", "GB", "CZ"]);
+		expect(MARKET_COUNTRIES.map(marketSegment)).toEqual(["fr", "at", "gb", "cz"]);
+		for (const country of MARKET_COUNTRIES) {
+			expect(marketOfSegment(marketSegment(country))).toBe(country);
+		}
+		expect(marketOfSegment(" GB ")).toBe("GB");
+		expect(marketOfSegment("fr-en")).toBeNull();
+		expect(marketOfSegment("de")).toBeNull();
+		expect(marketOfSegment(null)).toBeNull();
+	});
+
+	it("open in the visitor's language when the market offers it", () => {
+		expect(marketLocaleFor("FR", "en")).toBe("en");
+		expect(marketLocaleFor("GB", "fr")).toBe("en-GB");
+		expect(marketLocaleFor("GB", "en")).toBe("en-GB");
+		expect(marketLocaleFor("FR", "en-GB")).toBe("en");
+		expect(marketLocaleFor("FR", "de-AT")).toBe("de");
+		expect(marketLocaleFor("AT", "de")).toBe("de-AT");
+		expect(marketLocaleFor("CZ", "fr")).toBe("cs-CZ");
+		expect(marketLocaleFor("FR", "cs-CZ")).toBe("fr");
+		// A visitor already in the market keeps the locale.
+		expect(marketLocaleFor("FR", "it")).toBe("it");
 	});
 });

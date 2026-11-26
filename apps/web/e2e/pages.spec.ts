@@ -27,7 +27,7 @@ test.describe("without JavaScript", () => {
 		await page.getByLabel("Qui ?").fill("Exemple");
 		await page.getByLabel("Où ?").fill("Lyon");
 		await page.getByRole("button", { name: "Chercher" }).click();
-		await expect(page).toHaveURL(/\/fr\/recherche\?quoi=Exemple&ou=Lyon$/);
+		await expect(page).toHaveURL(/\/fr\/recherche\?quoi=Exemple&ou=Lyon&pays=fr$/);
 	});
 });
 
@@ -36,7 +36,7 @@ test("the English home page searches under /fr-en", async ({ page }) => {
 	await page.getByLabel("Who?").fill("Exemple");
 	// The open suggestion slip hides the rest of the page from assistive tech (React Aria).
 	await page.getByRole("button", { name: "Search", includeHidden: true }).click();
-	await expect(page).toHaveURL(/\/fr-en\/search\?quoi=Exemple&ou=$/);
+	await expect(page).toHaveURL(/\/fr-en\/search\?quoi=Exemple&ou=&pays=fr$/);
 });
 
 test("the skip link moves focus to the main content", async ({ page }) => {

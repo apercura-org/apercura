@@ -5,11 +5,19 @@ import {
 	type BookletComboOption,
 	type BookletComboSection,
 	BookletSearchFrame,
+	BookletSelectField,
 	buttonStyles,
 } from "@apercura/ui";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { useLocale, useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
+import {
+	MARKET_COUNTRIES,
+	type MarketCountry,
+	marketOf,
+	marketOfSegment,
+	marketSegment,
+} from "~/i18n/locales";
 import { getPathname, useRouter } from "~/i18n/navigation";
 import type { Locale } from "~/i18n/routing";
 import { searchFormId } from "~/lib/search-form-id";
@@ -30,6 +38,8 @@ export interface SearchFormProps {
 	/** Current query, printed back into the fields. */
 	defaultWho?: string;
 	defaultWhere?: string;
+	/** Market the search runs in (the `pays` choice): the page's own by default. */
+	defaultMarket?: MarketCountry;
 	/** Prefix for input ids, when several searches share a page. */
 	idPrefix?: string;
 	/**
@@ -41,13 +51,16 @@ export interface SearchFormProps {
 }
 
 /**
- * The booklet search ("Qui ?" / "Où ?") with suggestions and "near me". The
+ * The booklet search ("Qui ?" / "Où ?" / the country) with suggestions and "near me". The
  * fields are plain inputs of a GET form to `/recherche`: without JavaScript the
- * form submits exactly the same text; with it, suggestions come from tRPC.
+ * form submits exactly the same text; with it, suggestions come from tRPC, the places from
+ * the country chosen. Another country moves the search to its market (`pays`, read by
+ * `searchRedirect`).
  */
 export function SearchForm({
 	defaultWho = "",
 	defaultWhere = "",
+	defaultMarket,
 	idPrefix = "search",
 	landmark = true,
 }: SearchFormProps) {
@@ -61,6 +74,7 @@ export function SearchForm({
 
 	const [who, setWho] = useState(defaultWho);
 	const [where, setWhere] = useState(defaultWhere);
+	const [market, setMarket] = useState<MarketCountry>(defaultMarket ?? marketOf(locale));
 	// Suggestions are fetched only once the visitor types, never for the printed-back query.
 	const [touched, setTouched] = useState({ who: false, where: false });
 	const whoQuery = useDebounced(who.trim());
@@ -74,7 +88,11 @@ export function SearchForm({
 		retry: false,
 	});
 	const whereResults = useQuery({
-		...trpc.search.where.queryOptions({ q: whereQuery, locale }),
+		...trpc.search.where.queryOptions({
+			q: whereQuery,
+			locale,
+			...(market === marketOf(locale) ? {} : { market }),
+		}),
 		enabled: touched.where && whereQuery.length >= 2 && whereQuery.length <= 80,
 		placeholderData: keepPreviousData,
 		staleTime: 60_000,
@@ -212,6 +230,17 @@ export function SearchForm({
 					setTouched((current) => (current.where ? current : { ...current, where: true }));
 				}}
 				emptyStatus={whereStatus}
+			/>
+			<BookletSelectField
+				id={`${idPrefix}-pays`}
+				name="pays"
+				label={t("market")}
+				defaultValue={marketSegment(market)}
+				options={MARKET_COUNTRIES.map((country) => ({
+					value: marketSegment(country),
+					label: t(`markets.${country}`),
+				}))}
+				onChange={(value) => setMarket(marketOfSegment(value) ?? marketOf(locale))}
 			/>
 			{/* Filled by the "near me" action. */}
 			<input type="hidden" data-near-me="" />

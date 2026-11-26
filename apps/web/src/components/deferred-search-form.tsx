@@ -9,6 +9,7 @@ import {
 	useState,
 } from "react";
 import { flushSync } from "react-dom";
+import { type MarketCountry, marketOfSegment } from "~/i18n/locales";
 import { searchFormId } from "~/lib/search-form-id";
 import type { SearchFormProps } from "./search-form";
 
@@ -28,13 +29,15 @@ const INTERACTIONS = ["pointerenter", "pointerdown", "touchstart", "focusin", "k
 interface Carried {
 	who: string;
 	where: string;
+	/** The country chosen (`pays`). */
+	market: MarketCountry | null;
 	/** The focused control, as a selector inside the form, and its text selection. */
 	focus: { selector: string; start: number | null; end: number | null } | null;
 }
 
 const fieldValue = (form: HTMLFormElement, name: string) => {
 	const field = form.elements.namedItem(name);
-	return field instanceof HTMLInputElement ? field.value : "";
+	return field instanceof HTMLInputElement || field instanceof HTMLSelectElement ? field.value : "";
 };
 
 function carry(form: HTMLFormElement): Carried {
@@ -46,6 +49,8 @@ function carry(form: HTMLFormElement): Carried {
 			start: active.selectionStart,
 			end: active.selectionEnd,
 		};
+	} else if (active instanceof HTMLSelectElement && active.name && form.contains(active)) {
+		focus = { selector: `select[name="${active.name}"]`, start: null, end: null };
 	} else if (
 		active instanceof HTMLButtonElement &&
 		active.type === "submit" &&
@@ -53,7 +58,12 @@ function carry(form: HTMLFormElement): Carried {
 	) {
 		focus = { selector: 'button[type="submit"]', start: null, end: null };
 	}
-	return { who: fieldValue(form, "quoi"), where: fieldValue(form, "ou"), focus };
+	return {
+		who: fieldValue(form, "quoi"),
+		where: fieldValue(form, "ou"),
+		market: marketOfSegment(fieldValue(form, "pays")),
+		focus,
+	};
 }
 
 /**
@@ -121,6 +131,7 @@ export function DeferredSearchForm({
 			landmark={false}
 			defaultWho={carried.current?.who}
 			defaultWhere={carried.current?.where}
+			defaultMarket={carried.current?.market ?? undefined}
 		/>
 	);
 }

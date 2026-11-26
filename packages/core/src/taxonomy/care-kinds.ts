@@ -1,0 +1,124 @@
+/**
+ * Kinds of care shared by the markets: the listing that lists one kind in each market, so a
+ * search typed on one market's pages ("dentiste" on `/fr`) leads to the same kind of care in
+ * another market's ("dental-practices" in Bristol, "zubni-lekar" in Brno).
+ *
+ * Each market names its listings in its own slugs and its own cut of the field: the UK lists
+ * practices (one listing for every kind of dentistry), Austria one listing for dentists,
+ * France and Czechia an orthodontist listing of their own. A kind a market does not list is
+ * absent from its column. Several kinds may lead to one listing of a market (orthodontics and
+ * dentistry both lead to the UK's dental practices); read back, a listing names the first kind
+ * of the table that leads to it.
+ *
+ * Every slug is a listing slug of its market (tested).
+ */
+
+/** The open markets (ISO 3166-1 alpha-2), as `SEARCH_ALIASES` keys them. */
+export type CareMarket = "FR" | "AT" | "GB" | "CZ";
+
+export const CARE_KINDS = {
+	"general-practice": {
+		FR: "medecin-generaliste",
+		AT: "allgemeinmedizin",
+		GB: "gp-practices",
+		CZ: "prakticky-lekar",
+	},
+	dentistry: {
+		FR: "chirurgien-dentiste",
+		AT: "zahnaerzte",
+		GB: "dental-practices",
+		CZ: "zubni-lekar",
+	},
+	orthodontics: {
+		FR: "orthodontiste",
+		AT: "zahnaerzte",
+		GB: "dental-practices",
+		CZ: "ortodontista",
+	},
+	pharmacy: { FR: "pharmacien", GB: "pharmacies", CZ: "lekarna" },
+	paediatrics: { FR: "pediatre", AT: "kinderheilkunde", CZ: "detsky-lekar" },
+	gynaecology: { FR: "gynecologue", AT: "frauenheilkunde", CZ: "gynekolog" },
+	obstetrics: { FR: "gynecologue-obstetricien", AT: "frauenheilkunde", CZ: "gynekolog" },
+	midwifery: { FR: "sage-femme", CZ: "porodni-asistentka" },
+	"home-nursing": { FR: "infirmier", CZ: "domaci-pece" },
+	physiotherapy: { FR: "masseur-kinesitherapeute", CZ: "fyzioterapeut" },
+	psychology: { FR: "psychologue", CZ: "psycholog" },
+	"speech-therapy": { FR: "orthophoniste", CZ: "logoped" },
+	ophthalmology: { FR: "ophtalmologue", AT: "augenheilkunde", CZ: "ocni-lekar" },
+	"ear-nose-throat": { FR: "orl", AT: "hals-nasen-ohrenheilkunde", CZ: "usni-nosni-krcni" },
+	dermatology: { FR: "dermatologue", AT: "dermatologie", CZ: "dermatolog" },
+	cardiology: { FR: "cardiologue", AT: "kardiologie", CZ: "kardiolog" },
+	pneumology: { FR: "pneumologue", AT: "pneumologie", CZ: "pneumolog" },
+	gastroenterology: { FR: "gastro-enterologue", AT: "gastroenterologie", CZ: "gastroenterolog" },
+	endocrinology: { FR: "endocrinologue", AT: "endokrinologie", CZ: "endokrinolog" },
+	oncology: { FR: "oncologue", AT: "haematologie-und-onkologie", CZ: "onkolog" },
+	haematology: { FR: "hematologue", AT: "haematologie-und-onkologie" },
+	rheumatology: { FR: "rhumatologue", AT: "rheumatologie", CZ: "revmatolog" },
+	nephrology: { FR: "nephrologue", AT: "nephrologie", CZ: "nefrolog" },
+	angiology: { FR: "medecin-vasculaire", AT: "angiologie", CZ: "angiolog" },
+	infectiology: { FR: "infectiologue", AT: "infektiologie" },
+	"internal-medicine": { FR: "interniste", AT: "innere-medizin", CZ: "internista" },
+	allergology: { FR: "allergologue", CZ: "alergolog" },
+	urology: { FR: "urologue", AT: "urologie", CZ: "urolog" },
+	neurology: { FR: "neurologue", AT: "neurologie", CZ: "neurolog" },
+	psychiatry: { FR: "psychiatre", AT: "psychiatrie", CZ: "psychiatr" },
+	"child-psychiatry": {
+		FR: "pedopsychiatre",
+		AT: "kinder-und-jugendpsychiatrie",
+		CZ: "detsky-psychiatr",
+	},
+	orthopaedics: { FR: "chirurgien-orthopediste", AT: "orthopaedie", CZ: "ortoped" },
+	"trauma-surgery": { FR: "chirurgien-orthopediste", AT: "unfallchirurgie" },
+	"general-surgery": { FR: "chirurgien-general", AT: "chirurgie", CZ: "chirurg" },
+	"visceral-surgery": { FR: "chirurgien-visceral", AT: "chirurgie", CZ: "chirurg" },
+	"plastic-surgery": {
+		FR: "chirurgien-plasticien",
+		AT: "plastische-chirurgie",
+		CZ: "plasticky-chirurg",
+	},
+	"vascular-surgery": { FR: "chirurgien-vasculaire", AT: "gefaesschirurgie", CZ: "cevni-chirurg" },
+	neurosurgery: { FR: "neurochirurgien", AT: "neurochirurgie", CZ: "neurochirurg" },
+	"thoracic-surgery": { FR: "chirurgien-thoracique-et-cardiovasculaire", AT: "thoraxchirurgie" },
+	"cardiac-surgery": { FR: "chirurgien-thoracique-et-cardiovasculaire", AT: "herzchirurgie" },
+	"paediatric-surgery": { FR: "chirurgien-pediatrique", AT: "kinderchirurgie" },
+	"maxillofacial-surgery": { FR: "chirurgien-maxillo-facial", AT: "mund-kiefer-gesichtschirurgie" },
+	anaesthesiology: { FR: "anesthesiste-reanimateur", AT: "anaesthesiologie", CZ: "anesteziolog" },
+	radiology: { FR: "radiologue", AT: "radiologie", CZ: "radiolog" },
+	"nuclear-medicine": { FR: "medecin-nucleaire", AT: "nuklearmedizin" },
+	radiotherapy: { FR: "radiotherapeute", AT: "strahlentherapie" },
+	pathology: { FR: "anatomopathologiste", AT: "pathologie" },
+	"laboratory-medicine": { FR: "biologiste-medical", AT: "labordiagnostik" },
+	genetics: { FR: "geneticien", AT: "medizinische-genetik", CZ: "genetik" },
+	rehabilitation: {
+		FR: "medecin-reeducateur",
+		AT: "physikalische-medizin",
+		CZ: "rehabilitacni-lekar",
+	},
+	"occupational-medicine": { FR: "medecin-du-travail", AT: "arbeitsmedizin" },
+	"forensic-medicine": { FR: "medecin-legiste", AT: "gerichtsmedizin" },
+} as const satisfies Readonly<Record<string, Readonly<Partial<Record<CareMarket, string>>>>>;
+
+/** A kind of care shared by the markets (`general-practice`, `dentistry`…). */
+export type CareKind = keyof typeof CARE_KINDS;
+
+const KINDS = Object.entries(CARE_KINDS) as [CareKind, Partial<Record<CareMarket, string>>][];
+
+/** The kind of care a listing of a market lists (`dental-practices` in GB → `dentistry`), or null. */
+export function careKindOfListing(slug: string, market: CareMarket): CareKind | null {
+	return KINDS.find(([, listings]) => listings[market] === slug)?.[0] ?? null;
+}
+
+/** The listing of a market that lists a kind of care, or null when the market has none. */
+export function listingOfCareKind(kind: CareKind, market: CareMarket): string | null {
+	return (CARE_KINDS[kind] as Partial<Record<CareMarket, string>>)[market] ?? null;
+}
+
+/**
+ * The listing of `to` that lists what a listing of `from` lists (`chirurgien-dentiste` in FR →
+ * `dental-practices` in GB), or null when `to` does not list that kind of care.
+ */
+export function equivalentListing(slug: string, from: CareMarket, to: CareMarket): string | null {
+	if (from === to) return slug;
+	const kind = careKindOfListing(slug, from);
+	return kind ? listingOfCareKind(kind, to) : null;
+}

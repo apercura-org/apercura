@@ -1,6 +1,6 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
-import { marketOf } from "~/i18n/locales";
+import { MARKET_COUNTRIES, type MarketCountry, marketOf } from "~/i18n/locales";
 import { routing } from "~/i18n/routing";
 import { suggestListings } from "~/lib/listing-index";
 import { suggestPlaces, suggestPractitioners } from "~/server/queries/search";
@@ -38,20 +38,29 @@ export const searchRouter = createTRPCRouter({
 			return { listings, practitioners };
 		}),
 
-	/** "Où ?": communes, arrondissements and departments, with their department. */
+	/**
+	 * "Où ?": communes, arrondissements and departments, with their department: those of the
+	 * locale's market, or of the market chosen in the form (`market`).
+	 */
 	where: publicProcedure
-		.input(z.object({ q: query, locale: z.enum(routing.locales).default("fr") }))
+		.input(
+			z.object({
+				q: query,
+				locale: z.enum(routing.locales).default("fr"),
+				market: z.enum(MARKET_COUNTRIES as [MarketCountry, ...MarketCountry[]]).optional(),
+			}),
+		)
 		.query(async ({ ctx, input }) => {
 			await limitSuggestions(ctx);
-			const places =
-				input.q.length >= 2 ? await suggestPlaces(input.q, 8, marketOf(input.locale)) : [];
+			const country = input.market ?? marketOf(input.locale);
+			const places = input.q.length >= 2 ? await suggestPlaces(input.q, 8, country) : [];
 			return {
 				places: places.map((place) => ({
 					id: place.id,
 					kind: place.kind,
 					name: place.name,
 					// Austrian and UK places are known by name: no Statistik Austria or ONS code to print.
-					departmentCode: marketOf(input.locale) === "FR" ? place.departmentCode : null,
+					departmentCode: country === "FR" ? place.departmentCode : null,
 					departmentName: place.departmentName,
 				})),
 			};

@@ -57,7 +57,14 @@
 		"whoHint": "Name, specialty or profession",
 		"where": "Where?",
 		"whereHint": "Town or postcode",
-		"submit": "Search"
+		"submit": "Search",
+		"market": "Country",
+		"markets": {
+			"FR": "France",
+			"AT": "Austria",
+			"GB": "United Kingdom",
+			"CZ": "Czechia"
+		}
 	},
 	"HomePage": {
 		"title": "Find a health practitioner in France",
