@@ -196,10 +196,15 @@ export function esUnitsOf(raw: string | null | undefined): { code: string; label
 	const units: { code: string; label: string }[] = [];
 	const seen = new Set<string>();
 	const text = (raw ?? "").replace(/\s+/g, " ");
-	const pattern = /U\.(\d{1,4})\s+(.*?)(?=,\s*U\.\d|,?\s*$)/g;
-	for (const match of text.matchAll(pattern)) {
+	// Where each unit starts (`U.7 ` at the start or after a comma): one linear scan, then each
+	// label runs to the next start.
+	const starts = [...text.matchAll(/(?:^|,) ?U\.(\d{1,4}) /g)];
+	for (const [index, match] of starts.entries()) {
+		const from = (match.index ?? 0) + match[0].length;
+		const to = starts[index + 1]?.index ?? text.length;
+		let label = text.slice(from, to).trim();
+		while (label.endsWith(",")) label = label.slice(0, -1).trimEnd();
 		const code = `U.${match[1]}`;
-		const label = (match[2] ?? "").replace(/,\s*$/, "").trim();
 		if (!label || seen.has(code)) continue;
 		seen.add(code);
 		units.push({ code, label });
