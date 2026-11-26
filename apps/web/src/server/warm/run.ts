@@ -12,6 +12,11 @@
  * The cursor is saved as it goes, so the next run continues where this one stopped. A new
  * build, a new successful import, or the import's restart request (after it expired cache
  * tags) starts the walk over; a finished walk waits for one of them.
+ *
+ * A walk warms at most its budget (WARM_CACHE_BUDGET_URLS, by default what half of the page
+ * cache holds, `warmBudget`), in the walk's order: the home and static pages, the listings
+ * and place hubs, then establishments and practitioners. Past it, a bounded cache would only
+ * evict what the walk warmed first, so the walk is over (`stopped: "budget"`).
  */
 import { marketPagePath } from "~/lib/sitemap-xml";
 import {
@@ -32,7 +37,14 @@ import {
 } from "./plan";
 import type { WarmStore } from "./store";
 
-export type StopReason = "time" | "count" | "latency" | "unhealthy" | "throttled" | "errors";
+export type StopReason =
+	| "time"
+	| "count"
+	| "latency"
+	| "unhealthy"
+	| "throttled"
+	| "errors"
+	| "budget";
 
 export type WarmReport =
 	| { skipped: "disabled" }
@@ -173,6 +185,7 @@ export async function runWarm(deps: WarmDeps): Promise<WarmReport> {
 		if (dispatched >= config.maxUrls) return "count";
 		if (latencies.count >= config.minSamples && latencies.p95() > config.maxP95Ms) return "latency";
 		if (tooManyErrors(counts.error + counts.throttled, dispatched)) return "errors";
+		if (config.budgetUrls > 0 && row.warmed + counts.warmed >= config.budgetUrls) return "budget";
 		return null;
 	};
 
@@ -246,7 +259,7 @@ export async function runWarm(deps: WarmDeps): Promise<WarmReport> {
 		if (following) currentSize = following.size;
 	}
 
-	const completed = point === null;
+	const completed = point === null || stopped === "budget";
 	await save(completed);
 	const index = units.findIndex((unit) => unit.key === cursor.unit);
 	const remaining = completed

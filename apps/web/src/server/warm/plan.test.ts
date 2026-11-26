@@ -5,6 +5,7 @@ import {
 	LatencyWindow,
 	outcomeOf,
 	pagesPaths,
+	parseMemorySize,
 	percentile,
 	rankOf,
 	remainingUrls,
@@ -13,6 +14,7 @@ import {
 	WARM_DEFAULTS,
 	WARM_USER_AGENT,
 	Watermark,
+	warmBudget,
 	warmConfig,
 	warmHeaders,
 	warmUnits,
@@ -217,6 +219,32 @@ describe("settings", () => {
 				WARM_CACHE_MAX_P95_MS: "1500",
 			}),
 		).toMatchObject({ concurrency: 2, maxUrls: 100, maxSeconds: 60, maxP95Ms: 1500 });
+	});
+
+	it("warms what half of the page cache holds, unless told otherwise", () => {
+		const base = { APP_URL: "https://apercura.org" };
+		// 1gb by default: half of it, 32 KB a page.
+		expect(warmConfig(base)?.budgetUrls).toBe(16_384);
+		expect(warmConfig({ ...base, CACHE_MAX_MEMORY: "2gb" })?.budgetUrls).toBe(32_768);
+		expect(warmConfig({ ...base, CACHE_MAX_MEMORY: "512mb" })?.budgetUrls).toBe(8192);
+		expect(warmConfig({ ...base, WARM_CACHE_BUDGET_URLS: "500" })?.budgetUrls).toBe(500);
+		// 0: every sitemap URL, as before the cache was bounded.
+		expect(warmConfig({ ...base, WARM_CACHE_BUDGET_URLS: "0" })?.budgetUrls).toBe(0);
+		expect(warmBudget({ CACHE_MAX_MEMORY: "1073741824" })).toBe(16_384);
+		expect(() => warmConfig({ ...base, CACHE_MAX_MEMORY: "a lot" })).toThrow("CACHE_MAX_MEMORY");
+		expect(() => warmConfig({ ...base, WARM_CACHE_BUDGET_URLS: "-1" })).toThrow(
+			"WARM_CACHE_BUDGET_URLS",
+		);
+	});
+
+	it("reads memory sizes as Valkey does", () => {
+		expect(parseMemorySize("1gb")).toBe(1024 ** 3);
+		expect(parseMemorySize("1G")).toBe(1000 ** 3);
+		expect(parseMemorySize("256mb")).toBe(256 * 1024 ** 2);
+		expect(parseMemorySize("100kb")).toBe(102_400);
+		expect(parseMemorySize("12345")).toBe(12_345);
+		expect(parseMemorySize("1tb")).toBeNull();
+		expect(parseMemorySize("")).toBeNull();
 	});
 
 	it("names a malformed or missing value", () => {
