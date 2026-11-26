@@ -721,6 +721,41 @@ test.describe("status codes and redirects", () => {
 /** Pages another spec unpublishes and publishes again during the run (owner.spec.ts). */
 const MUTATED_BY_OTHER_SPECS = ["/fr/praticien/benoit-essaial-19999991110"];
 
+/** Requests in flight at once when the sitemap test walks its chunks and their URLs. */
+const SITEMAP_CONCURRENCY = 10;
+
+/**
+ * `fn` over every item with at most `limit` calls in flight, results in the items' order.
+ * After a failure no new item starts, and the calls already running are awaited before the
+ * first error is rethrown, so none outlives the test and its request context.
+ */
+async function mapConcurrently<T, R>(
+	items: readonly T[],
+	limit: number,
+	fn: (item: T) => Promise<R>,
+): Promise<R[]> {
+	const results: R[] = new Array(items.length);
+	let next = 0;
+	let failed = false;
+	const worker = async () => {
+		while (!failed && next < items.length) {
+			const index = next++;
+			try {
+				results[index] = await fn(items[index] as T);
+			} catch (error) {
+				failed = true;
+				throw error;
+			}
+		}
+	};
+	const settled = await Promise.allSettled(
+		Array.from({ length: Math.min(limit, items.length) }, worker),
+	);
+	const rejected = settled.find((outcome) => outcome.status === "rejected");
+	if (rejected) throw rejected.reason;
+	return results;
+}
+
 test.describe("sitemaps", () => {
 	const LOC = /<loc>([^<]+)<\/loc>/g;
 	const LASTMOD = /<lastmod>([^<]+)<\/lastmod>/g;
@@ -755,22 +790,26 @@ test.describe("sitemaps", () => {
 			expect(lastmod[1]).toMatch(/^\d{4}-\d{2}-\d{2}$/);
 		}
 
-		const urls: string[] = [];
-		for (const chunk of chunks) {
-			expect(chunk.startsWith(`${origin}/sitemaps/`)).toBe(true);
+		const started = Date.now();
+		const chunkLocs = await mapConcurrently(chunks, SITEMAP_CONCURRENCY, async (chunk) => {
+			expect(chunk.startsWith(`${origin}/sitemaps/`), chunk).toBe(true);
 			const response = await request.get(chunk);
 			expect(response.status(), chunk).toBe(200);
 			const xml = await response.text();
-			expect(xml).toMatch(/<urlset xmlns="http:\/\/www\.sitemaps\.org\/schemas\/sitemap\/0\.9">/);
-			expect(xml).not.toMatch(/changefreq|priority/);
+			expect(xml, chunk).toMatch(
+				/<urlset xmlns="http:\/\/www\.sitemaps\.org\/schemas\/sitemap\/0\.9">/,
+			);
+			expect(xml, chunk).not.toMatch(/changefreq|priority/);
 			const locs = [...xml.matchAll(LOC)].map((match) => match[1] ?? "");
-			expect(locs.length).toBeGreaterThan(0);
-			expect(locs.length).toBeLessThanOrEqual(50_000);
+			expect(locs.length, chunk).toBeGreaterThan(0);
+			expect(locs.length, chunk).toBeLessThanOrEqual(50_000);
 			for (const lastmod of xml.matchAll(LASTMOD)) {
-				expect(lastmod[1]).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+				expect(lastmod[1], chunk).toMatch(/^\d{4}-\d{2}-\d{2}$/);
 			}
-			urls.push(...locs);
-		}
+			return locs;
+		});
+		// In the index's order, whatever order the chunks answered in.
+		const urls = chunkLocs.flat();
 		expect(new Set(urls).size).toBe(urls.length);
 		expect(urls).toContain(`${origin}/`);
 		expect(urls).toContain(`${origin}/fr`);
@@ -778,10 +817,10 @@ test.describe("sitemaps", () => {
 		expect(urls).toContain(`${origin}/gb`);
 		expect(urls).toContain(`${origin}/cz`);
 
-		for (const url of urls) {
+		await mapConcurrently(urls, SITEMAP_CONCURRENCY, async (url) => {
 			// owner.spec.ts removes and restores this claimed page while the specs run in
 			// parallel (#119): the sitemap, cached up to five minutes, may still list it meanwhile.
-			if (MUTATED_BY_OTHER_SPECS.some((path) => url === `${origin}${path}`)) continue;
+			if (MUTATED_BY_OTHER_SPECS.some((path) => url === `${origin}${path}`)) return;
 			// The international home and each market's own language: France in French, Austria in
 			// German, the UK in English, Czechia in Czech. Interface translations (/fr-de…) are never
 			// listed.
@@ -800,7 +839,11 @@ test.describe("sitemaps", () => {
 			expect(page.meta("robots"), url).toEqual(["index, follow"]);
 			const canonical = page.links.find((link) => link.rel === "canonical")?.href ?? "";
 			expect(canonical.replace(/\/$/, ""), url).toBe(url.replace(/\/$/, ""));
-		}
+		});
+		test.info().annotations.push({
+			type: "sitemap",
+			description: `${chunks.length} chunks and ${urls.length} URLs checked in ${Date.now() - started} ms (concurrency ${SITEMAP_CONCURRENCY})`,
+		});
 	});
 
 	test("robots.txt points to the index and never hides a noindex page linked publicly", async ({
