@@ -63,12 +63,14 @@ export const buttonStyles = tv({
 
 /**
  * The search, printed as a row of the form: ruled fields ("Qui ?", "Où ?"), each a small printed
- * label over a line to write on, and the violet stamp box at the end of the row.
+ * label over a line to write on, and the violet stamp box at the end of the row. A short choice
+ * (the country searched) is printed under the row from 768 px, so the fields keep its width.
  */
 export const searchStyles = tv({
 	slots: {
-		form: "flex flex-col gap-5 md:flex-row md:items-end md:gap-6",
-		cells: "flex flex-1 flex-col gap-5 md:flex-row md:gap-6",
+		form: "flex flex-col gap-5 md:flex-row md:flex-wrap md:items-end md:gap-x-6 md:gap-y-3",
+		// From 768 px the cells are items of the form's row itself, beside the stamp box.
+		cells: "flex flex-col gap-5 md:contents",
 		cell: [
 			// "Qui ?" takes the wider share of the row: its hint is the longer one.
 			"group relative flex min-w-0 flex-1 flex-col border-b border-ink pt-1 text-ink md:first-of-type:flex-[1.4]",
@@ -81,6 +83,13 @@ export const searchStyles = tv({
 			"placeholder:text-ink-muted [&::-webkit-search-cancel-button]:hidden",
 		],
 		submit: "min-h-14 text-body md:min-w-44",
+		choice: "flex items-center gap-3 md:order-last md:basis-full",
+		choiceBox: [
+			"relative inline-flex items-center border-b border-ink text-ink",
+			"has-[select:focus-visible]:outline-3 has-[select:focus-visible]:outline-solid has-[select:focus-visible]:outline-offset-2 has-[select:focus-visible]:outline-(--focus-ring)",
+		],
+		choiceSelect:
+			"min-h-11 cursor-pointer appearance-none bg-transparent py-1 pe-7 text-body text-ink outline-none [&>option]:bg-paper [&>option]:text-ink",
 	},
 });
 

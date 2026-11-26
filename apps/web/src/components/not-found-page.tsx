@@ -1,5 +1,6 @@
 import { BookletSearch, linkStyles, Stamp, StampFoot } from "@apercura/ui";
 import { getTranslations } from "next-intl/server";
+import { MARKET_COUNTRIES, marketOf, marketSegment } from "~/i18n/locales";
 import { getPathname, type Href, Link } from "~/i18n/navigation";
 import type { Locale } from "~/i18n/routing";
 import { PublicPage } from "./public-page";
@@ -49,6 +50,15 @@ export async function NotFoundPage({ locale }: { locale: Locale }) {
 									autoComplete: "address-level2",
 								},
 							]}
+							select={{
+								name: "pays",
+								label: tSearch("market"),
+								defaultValue: marketSegment(marketOf(locale)),
+								options: MARKET_COUNTRIES.map((country) => ({
+									value: marketSegment(country),
+									label: tSearch(`markets.${country}`),
+								})),
+							}}
 						/>
 					</div>
 					<div className="lg:col-span-4 lg:border-s lg:border-rule-soft lg:ps-8">

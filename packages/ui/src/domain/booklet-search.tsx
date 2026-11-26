@@ -1,5 +1,5 @@
 import { ChevronDownIcon, SearchIcon } from "../icons";
-import { buttonStyles, cn, searchStyles } from "../recipes";
+import { buttonStyles, searchStyles } from "../recipes";
 
 const search = searchStyles();
 
@@ -35,9 +35,9 @@ export interface BookletSelectFieldProps {
 }
 
 /**
- * A printed search cell holding a short native choice (the country searched): ruled like the
- * text cells, its label printed small above a plain `<select>` submitted with the GET form,
- * sized to its longest option so the text cells keep the room.
+ * A short native choice of the search (the country searched), printed as an option of the form
+ * rather than a field: its small label, then a plain `<select>` on a rule, submitted with the
+ * GET form. Under the row of fields from 768 px, between the fields and the stamp box on a phone.
  */
 export function BookletSelectField({
 	id,
@@ -49,24 +49,17 @@ export function BookletSelectField({
 	className,
 }: BookletSelectFieldProps) {
 	return (
-		<div
-			className={cn(
-				search.cell(),
-				"md:flex-none",
-				"has-[select:focus-visible]:outline-3 has-[select:focus-visible]:outline-solid has-[select:focus-visible]:outline-offset-2 has-[select:focus-visible]:outline-(--focus-ring)",
-				className,
-			)}
-		>
+		<div className={search.choice({ className })}>
 			<label htmlFor={id} className={search.label()}>
 				{label}
 			</label>
-			<div className="relative flex items-center">
+			<div className={search.choiceBox()}>
 				<select
 					id={id}
 					name={name}
 					defaultValue={defaultValue}
 					onChange={onChange ? (event) => onChange(event.target.value) : undefined}
-					className="min-h-12 w-full cursor-pointer appearance-none truncate bg-transparent py-1.5 pe-7 text-body text-ink outline-none sm:text-lead md:w-auto md:max-w-48 [&>option]:bg-paper [&>option]:text-ink"
+					className={search.choiceSelect()}
 				>
 					{options.map((option) => (
 						<option key={option.value} value={option.value}>
@@ -139,9 +132,7 @@ export function BookletSearch({
 						</div>
 					);
 				})}
-				{select ? (
-					<BookletSelectField {...select} id={`${idPrefix}-${select.name}`} />
-				) : null}
+				{select ? <BookletSelectField {...select} id={`${idPrefix}-${select.name}`} /> : null}
 			</div>
 			<button
 				type="submit"
