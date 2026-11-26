@@ -236,3 +236,41 @@ export function parseGbPracticeSegment(segment: string): GbPracticeSegment | nul
 	if (!key) return null;
 	return { ...key, namePart: dash < 0 ? "" : segment.slice(0, dash) };
 }
+
+/**
+ * Czech identifiers: the National Register of Healthcare Providers (NRPZS) gives every
+ * healthcare facility (zdravotnické zařízení) a unique number (`ZZ_ID`), the page's key. The
+ * provider's company number (IČO), which for a sole trader names a person, is not used.
+ */
+export const CZ_ID_SCHEME = "CZ-NRPZS";
+
+/** True for an NRPZS facility number: 1 to 9 digits, no leading 0 (syntax only). */
+export function isValidCzSourceId(value: string): boolean {
+	return /^[1-9]\d{0,8}$/.test(value);
+}
+
+/**
+ * Canonical path segment of a Czech facility page: `{facility-name}-{number}`
+ * (`mudr-hana-bohackova-39781`, `lekarna-u-ceske-koruny-54227`), diacritics dropped.
+ */
+export function czFacilitySlug(name: string, nationalId: string): string {
+	const base = slugify(name).slice(0, 80).replace(/-+$/, "");
+	return base ? `${base}-${nationalId}` : nationalId;
+}
+
+export type CzFacilitySegment = {
+	idScheme: typeof CZ_ID_SCHEME;
+	nationalId: string;
+	/** Name part before the number, possibly empty. */
+	namePart: string;
+};
+
+/**
+ * Parses the last segment of a Czech facility URL (`{facility-name}-{number}`). Returns null
+ * unless it ends with a valid NRPZS number, so invalid URLs never reach the database.
+ */
+export function parseCzFacilitySegment(segment: string): CzFacilitySegment | null {
+	const match = /^(?:([a-z0-9]+(?:-[a-z0-9]+)*)-)?([1-9]\d{0,8})$/.exec(segment);
+	if (!match) return null;
+	return { idScheme: CZ_ID_SCHEME, nationalId: match[2] ?? "", namePart: match[1] ?? "" };
+}

@@ -1,6 +1,6 @@
 /**
  * Everything that differs from one country market to the next, behind one
- * interface. France and Austria are implemented; docs/adr/0002-multi-country.md
+ * interface. France, Austria, the United Kingdom and Czechia are implemented; docs/adr/0002-multi-country.md
  * lists what is known about every other European market.
  *
  * Adapters are pure data and pure functions: no network, no database. Imports
@@ -8,7 +8,7 @@
  */
 
 /** ISO 3166-1 alpha-2 codes of the markets the data model is prepared for. */
-export const COUNTRY_CODES = ["FR", "AT", "DE", "GB", "ES", "IT"] as const;
+export const COUNTRY_CODES = ["FR", "AT", "DE", "GB", "ES", "IT", "CZ"] as const;
 
 export type CountryCode = (typeof COUNTRY_CODES)[number];
 
