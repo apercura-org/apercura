@@ -7,7 +7,7 @@ Apercura handles health-related data, so we take security reports seriously.
 **Do not open a public issue, pull request or discussion for a security problem.**
 
 Report it privately through GitHub Security Advisories:
-<https://github.com/maxgfr/apercura/security/advisories/new>
+<https://github.com/apercura-org/apercura/security/advisories/new>
 (repository **Security** tab, then **Report a vulnerability**).
 
 Please include:

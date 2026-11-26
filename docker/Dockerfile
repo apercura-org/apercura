@@ -98,7 +98,7 @@ FROM node:${NODE_VERSION}-trixie-slim AS runtime
 LABEL org.opencontainers.image.title="Apercura" \
       org.opencontainers.image.description="Open directory and free booking tool for health practitioners" \
       org.opencontainers.image.licenses="AGPL-3.0-only" \
-      org.opencontainers.image.source="https://github.com/maxgfr/apercura"
+      org.opencontainers.image.source="https://github.com/apercura-org/apercura"
 ENV NODE_ENV=production \
     NEXT_TELEMETRY_DISABLED=1 \
     HOSTNAME=0.0.0.0 \

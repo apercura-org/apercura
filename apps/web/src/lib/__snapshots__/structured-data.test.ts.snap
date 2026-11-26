@@ -125,7 +125,7 @@ exports[`page entities > describes the website and its publisher, with a logo an
       },
       "name": "Apercura",
       "sameAs": [
-        "https://github.com/maxgfr/apercura",
+        "https://github.com/apercura-org/apercura",
       ],
       "url": "https://apercura.example/",
     },

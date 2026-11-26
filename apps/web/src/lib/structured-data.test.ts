@@ -274,7 +274,7 @@ describe("page entities", () => {
 			origin: ORIGIN,
 			name: "Apercura",
 			logo: `${ORIGIN}/icon/512`,
-			sameAs: ["https://github.com/maxgfr/apercura"],
+			sameAs: ["https://github.com/apercura-org/apercura"],
 		});
 		expect(graph(nodes)).toMatchSnapshot();
 		const website = nodeOf(nodes, "WebSite");
@@ -295,7 +295,7 @@ describe("page entities", () => {
 			width: "512",
 			height: "512",
 		});
-		expect(organization.sameAs).toEqual(["https://github.com/maxgfr/apercura"]);
+		expect(organization.sameAs).toEqual(["https://github.com/apercura-org/apercura"]);
 	});
 
 	it("prints nothing language-dependent in the site entities (one @id, one entity)", () => {

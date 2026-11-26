@@ -25,7 +25,7 @@ export type SourceFile = {
 	endsWithNewline: boolean;
 };
 
-const USER_AGENT = "apercura-etl (open data import; https://github.com/maxgfr/apercura)";
+const USER_AGENT = "apercura-etl (open data import; https://github.com/apercura-org/apercura)";
 
 /** Hashes, counts and validates bytes as they stream through. */
 class Inspector extends Transform {
