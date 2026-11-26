@@ -1,6 +1,6 @@
 "use client";
 
-import { type ReactNode, useState } from "react";
+import { type FormEvent, type ReactNode, useState } from "react";
 import {
 	Collection,
 	Header,
@@ -14,7 +14,7 @@ import {
 	ComboBox as RACComboBox,
 } from "react-aria-components";
 import { SearchIcon } from "../icons";
-import { buttonStyles, cn, listBoxItemStyles, popoverStyles } from "../recipes";
+import { buttonStyles, cn, listBoxItemStyles, popoverStyles, searchStyles } from "../recipes";
 
 export interface BookletComboOption {
 	id: string;
@@ -58,12 +58,7 @@ export interface BookletComboFieldProps {
 	emptyStatus?: string;
 }
 
-const cell = cn(
-	"group relative flex flex-1 flex-col rounded-field px-3.5 pt-2 pb-1 text-ink",
-	"has-[input:focus-visible]:outline-3 has-[input:focus-visible]:outline-solid has-[input:focus-visible]:outline-offset-0 has-[input:focus-visible]:outline-stamp",
-);
-const input =
-	"min-h-11 w-full text-ellipsis bg-transparent py-1 text-body text-ink sm:text-lead outline-none placeholder:text-ink-muted [&::-webkit-search-cancel-button]:hidden";
+const search = searchStyles();
 
 /**
  * One printed search cell with suggestions: a React Aria combo box whose text
@@ -112,15 +107,15 @@ export function BookletComboField({
 			onSelectionChange={choose}
 			items={visible}
 			allowsEmptyCollection={emptyStatus !== undefined}
-			className={cell}
+			className={search.cell()}
 		>
-			<Label className="type-caption text-ink-muted">{label}</Label>
+			<Label className={search.label()}>{label}</Label>
 			<Input
 				type="search"
 				placeholder={hint}
 				autoComplete={autoComplete}
 				enterKeyHint="search"
-				className={input}
+				className={search.input()}
 			/>
 			<Popover
 				placement="bottom start"
@@ -183,7 +178,18 @@ export interface BookletSearchFrameProps {
 }
 
 /**
- * The search as one framed row of cells with the accent button at the end, holding
+ * Submitted with the keyboard, the stamp box presses as it does under a pointer (`.ink-press`):
+ * the ink gives for 120 ms while the browser loads the results.
+ */
+function pressStamp(event: FormEvent<HTMLFormElement>) {
+	const stamp = event.currentTarget.querySelector<HTMLElement>("button[type=submit]");
+	if (!stamp) return;
+	stamp.setAttribute("data-pressed", "");
+	window.setTimeout(() => stamp.removeAttribute("data-pressed"), 120);
+}
+
+/**
+ * The search as a row of the printed form, ruled fields then the stamp box, holding
  * interactive cells. Same look and GET contract as `BookletSearch`.
  */
 export function BookletSearchFrame({
@@ -197,27 +203,14 @@ export function BookletSearchFrame({
 	landmark = true,
 }: BookletSearchFrameProps) {
 	const form = (
-		<form
-			id={formId}
-			action={action}
-			method="get"
-			className="flex flex-col gap-1.5 rounded-panel border border-field-edge bg-paper p-1.5 md:flex-row"
-		>
-			<div
-				className={cn(
-					"flex flex-1 flex-col md:flex-row",
-					// Rules between the cells only: React Aria puts a <template> before each cell.
-					"[&>div~div]:border-t [&>div~div]:border-rule-soft md:[&>div~div]:border-t-0 md:[&>div~div]:border-s",
-				)}
-			>
-				{children}
-			</div>
+		<form id={formId} action={action} method="get" onSubmit={pressStamp} className={search.form()}>
+			<div className={search.cells()}>{children}</div>
 			<button
 				type="submit"
 				className={buttonStyles({
 					intent: "stamp",
 					size: "lg",
-					className: "min-h-14 text-body md:min-w-40",
+					className: search.submit(),
 				})}
 			>
 				<SearchIcon className="size-5" />

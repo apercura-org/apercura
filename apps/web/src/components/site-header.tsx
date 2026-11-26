@@ -12,9 +12,12 @@ interface SiteHeaderProps {
 }
 
 const navLink =
-	"inline-flex min-h-11 items-center rounded-field px-2.5 text-meta font-medium text-ink no-underline hover:bg-paper-shade";
+	"inline-flex min-h-11 items-center rounded-field px-2.5 text-meta font-medium text-ink no-underline decoration-1 underline-offset-[0.3em] hover:underline";
 
-/** The header on white, closed by a hairline: the logo (to the market's home), navigation, language. */
+/**
+ * The head of the form: the logo (to the market's home), navigation and language on the paper,
+ * closed by a double rule.
+ */
 export async function SiteHeader({ locale, href }: SiteHeaderProps) {
 	const t = await getTranslations({ locale, namespace: "Site" });
 	const tLocale = await getTranslations({ locale, namespace: "LocaleSwitcher" });
@@ -26,7 +29,7 @@ export async function SiteHeader({ locale, href }: SiteHeaderProps) {
 	) as Record<Locale, string>;
 
 	return (
-		<header className="surface-paper border-b border-rule-soft">
+		<header className="surface-paper rule-double-b">
 			<div className="mx-auto flex min-h-16 max-w-6xl flex-wrap items-center justify-between gap-x-4 gap-y-1 px-5 py-2 sm:px-8">
 				<Link
 					href="/"

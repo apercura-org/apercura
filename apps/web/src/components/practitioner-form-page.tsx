@@ -1,5 +1,5 @@
 import { formatPersonName } from "@apercura/core";
-import { linkStyles } from "@apercura/ui";
+import { linkStyles, Stamp, stampInkOf } from "@apercura/ui";
 import { notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import type { ReactNode } from "react";
@@ -22,7 +22,7 @@ export async function formPractitioner(slug: string, locale: Locale) {
 	return page;
 }
 
-/** A short public form about one page: title, the page it is about, the form. */
+/** A short public form about one page: title, the page it is about (its stamp), the form. */
 export async function PractitionerFormPage({
 	locale,
 	page,
@@ -45,6 +45,10 @@ export async function PractitionerFormPage({
 	children: ReactNode;
 }) {
 	const t = await getTranslations({ locale, namespace: "Gdpr" });
+	const tP = await getTranslations({ locale, namespace: "Practitioner" });
+	const claimStatus = page.payload.claimStatus;
+	const status =
+		claimStatus === "claimed" ? "verified" : claimStatus === "pending" ? "claimed" : "unclaimed";
 	const labels = await getTaxonomyLabels(locale);
 	const name = page.payload.withheld
 		? null
@@ -55,20 +59,26 @@ export async function PractitionerFormPage({
 	return (
 		<PublicPage locale={locale} href={{ pathname, params: { slug: page.slug } }}>
 			<BookletPage>
-				<div className="flex max-w-[65ch] flex-col gap-3 border-b border-rule-soft pb-5">
-					<h1 className="type-headline text-ink">{title}</h1>
-					<p className="text-lead text-ink">{lead}</p>
+				<div className="rule-double-b flex flex-col gap-4 pb-6">
+					<div className="flex max-w-[65ch] flex-col gap-3">
+						<h1 className="type-headline text-ink">{title}</h1>
+						<p className="text-lead text-ink">{lead}</p>
+					</div>
 					{name ? (
-						<p className="text-body text-ink">
-							{t("about")}{" "}
-							<Link
-								href={{ pathname: "/praticien/[slug]", params: { slug: page.slug } }}
-								className={linkStyles()}
-							>
-								{name}
-							</Link>{" "}
-							<span className="text-ink-muted tabular">({page.payload.nationalId})</span>
-						</p>
+						// The page it is about, as its stamp: inked as the page's state, which it prints in words.
+						<Stamp ink={stampInkOf(status)} className="w-fit max-w-full">
+							<p className="flex flex-wrap items-baseline gap-x-3 gap-y-0.5 px-4 py-2.5 text-body">
+								<span>{t("about")}</span>
+								<Link
+									href={{ pathname: "/praticien/[slug]", params: { slug: page.slug } }}
+									className={linkStyles({ className: "font-semibold text-current" })}
+								>
+									{name}
+								</Link>
+								<span className="tabular text-meta">{page.payload.nationalId}</span>
+								<span className="type-caption">{tP(`status.${status}`)}</span>
+							</p>
+						</Stamp>
 					) : null}
 				</div>
 				<ClientIsland locale={locale} namespaces={[...GDPR_MESSAGES, ...extraNamespaces]}>

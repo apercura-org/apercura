@@ -112,6 +112,7 @@ export {
 export { ProvenanceNote, type ProvenanceNoteProps } from "./domain/provenance-note";
 export { SiteCard, type SiteCardProps } from "./domain/site-card";
 export { type Slot, type SlotDay, SlotPicker, type SlotPickerProps } from "./domain/slot-picker";
+export { Stamp, StampFoot, type StampInk, type StampProps, stampInkOf } from "./domain/stamp";
 export {
 	WeekGrid,
 	type WeekGridDay,

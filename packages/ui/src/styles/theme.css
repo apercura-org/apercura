@@ -19,7 +19,7 @@
 	--light-ink: oklch(0.23 0.014 260);
 	--light-ink-muted: oklch(0.47 0.014 260);
 	--light-ink-disabled: oklch(0.6 0.01 260);
-	--light-rule-soft: oklch(0.91 0.005 260);
+	--light-rule-soft: oklch(0.885 0.007 260);
 	--light-field-edge: oklch(0.6 0.012 260);
 	--light-stamp: oklch(0.47 0.13 285);
 	--light-stamp-strong: oklch(0.4 0.12 285);
@@ -33,7 +33,7 @@
 	--dark-ink: oklch(0.95 0.005 260);
 	--dark-ink-muted: oklch(0.77 0.012 260);
 	--dark-ink-disabled: oklch(0.59 0.01 260);
-	--dark-rule-soft: oklch(0.32 0.012 260);
+	--dark-rule-soft: oklch(0.34 0.013 262);
 	--dark-field-edge: oklch(0.6 0.012 260);
 	--dark-stamp: oklch(0.78 0.1 285);
 	--dark-stamp-strong: oklch(0.85 0.075 285);
@@ -86,14 +86,16 @@
 	--text-title--line-height: 1.25;
 	--text-headline: clamp(1.875rem, 1.55rem + 1.3vw, 2.375rem);
 	--text-headline--line-height: 1.15;
-	--text-display: clamp(2.5rem, 1.9rem + 2.6vw, 3.5rem);
-	--text-display--line-height: 1.05;
+	--text-display: clamp(2.625rem, 1.55rem + 3.8vw, 4.75rem);
+	--text-display--line-height: 1.02;
 
 	--radius-*: initial;
-	/* Controls: fields, buttons, badges, popovers. */
-	--radius-field: 0.375rem;
-	/* Containers: the action block, dialogs, the specimen, notices. */
-	--radius-panel: 0.625rem;
+	/*
+	 * A printed form has square corners: controls (fields, buttons, badges, popovers) and
+	 * containers (dialogs, notices, the agenda) keep only the slight softening of a guillotine cut.
+	 */
+	--radius-field: 0.125rem;
+	--radius-panel: 0.125rem;
 	--radius-full: 9999px;
 
 	/* One elevation, for what floats over the page (popovers, menus, dialogs). Nothing else casts a shadow. */
@@ -239,7 +241,7 @@
 	font-size: var(--text-display);
 	line-height: var(--text-display--line-height);
 	font-weight: 600;
-	letter-spacing: -0.028em;
+	letter-spacing: -0.032em;
 }
 
 @utility type-headline {
@@ -301,6 +303,18 @@
 		var(--color-rule-soft) 0 1px,
 		transparent 1px 8px
 	);
+}
+
+/*
+ * The form's printed rules. A double rule (two ink hairlines) opens and closes a sheet: the
+ * header, a page opening, a section of the form; single hairlines (`rule-soft`) rule its rows.
+ */
+@utility rule-double-t {
+	border-top: 3px double var(--color-ink);
+}
+
+@utility rule-double-b {
+	border-bottom: 3px double var(--color-ink);
 }
 
 /* Times, fees, counts and numbers that line up: Allo's tabular figures. */
@@ -436,6 +450,83 @@
 	/* Inline text link, always underlined; thicker underline on hover. */
 	.link-base {
 		@apply cursor-pointer rounded-[2px] underline decoration-1 underline-offset-[0.2em] transition-[text-decoration-thickness] duration-100 hover:decoration-2 data-hovered:decoration-2;
+	}
+
+	/*
+	 * The practitioner's stamp (`Stamp`): a double-rule frame in the violet ink, square on the
+	 * grid, its face set in type. Its state is the ink treatment: outlined (the page is not
+	 * claimed), solid ink (claimed and verified), hatched between the rules (a claim being
+	 * checked). Plain CSS, a few bytes per stamp however many a page prints.
+	 */
+	.stamp {
+		--stamp-ink: var(--color-stamp);
+		display: flex;
+		flex-direction: column;
+		border: 1px solid var(--stamp-ink);
+		padding: 3px;
+		background-color: var(--color-paper);
+		color: var(--stamp-ink);
+	}
+
+	.stamp-face {
+		display: flex;
+		flex: 1;
+		flex-direction: column;
+		border: 1px solid var(--stamp-ink);
+		background-color: var(--color-paper);
+	}
+
+	.stamp[data-ink="solid"] > .stamp-face {
+		--focus-ring: var(--color-paper);
+		background-color: var(--stamp-ink);
+		color: var(--color-paper);
+	}
+
+	.stamp[data-ink="hatched"] {
+		padding: 5px;
+		background-image: repeating-linear-gradient(
+			-45deg,
+			var(--stamp-ink) 0 1px,
+			transparent 1px 5px
+		);
+	}
+
+	/* The primary action printed as the form's stamp box: an inner rule 3 px inside its edge. */
+	.stamp-box::after {
+		content: "";
+		position: absolute;
+		inset: 3px;
+		border: 1px solid var(--color-paper);
+		border-radius: 1px;
+		pointer-events: none;
+	}
+
+	.stamp-box:disabled::after,
+	.stamp-box[data-disabled]::after {
+		display: none;
+	}
+}
+
+/*
+ * The signature move: pressed, the violet ink gives a little (97 %, a touch lighter) and settles
+ * back in 120 ms. Outside the layers, so it outranks the recipes' transition utilities; without
+ * motion, only the ink lightens.
+ */
+.ink-press {
+	transition-property: background-color, border-color, color, opacity, transform;
+	transition-duration: 120ms;
+	transition-timing-function: cubic-bezier(0.2, 0.9, 0.3, 1);
+}
+
+.ink-press:active,
+.ink-press[data-pressed] {
+	opacity: 0.88;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	.ink-press:active,
+	.ink-press[data-pressed] {
+		transform: scale(0.97);
 	}
 }
 

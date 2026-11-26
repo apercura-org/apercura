@@ -107,7 +107,7 @@ export default async function InternationalHome() {
 					...apercuraSiteNodes(),
 				])}
 			/>
-			<header className="surface-paper border-b border-rule-soft">
+			<header className="surface-paper rule-double-b">
 				<div className="mx-auto flex min-h-16 max-w-6xl flex-wrap items-center justify-between gap-x-6 gap-y-1 px-5 py-2 sm:px-8">
 					<a
 						href="/"
@@ -215,7 +215,7 @@ export default async function InternationalHome() {
 					</section>
 				</BookletPage>
 			</main>
-			<footer className="surface-shade mt-auto border-t border-rule-soft">
+			<footer className="surface-paper rule-double-t mt-auto">
 				<div className="mx-auto flex max-w-6xl flex-col gap-6 px-5 py-10 sm:px-8">
 					<div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
 						<div className="flex flex-col gap-1">

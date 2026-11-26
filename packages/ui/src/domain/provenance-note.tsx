@@ -18,7 +18,10 @@ export interface ProvenanceNoteProps {
 	className?: string;
 }
 
-/** Where a page's facts come from and when they were last refreshed, set as a printer's imprint. */
+/**
+ * Where facts come from and when they were last imported, printed under them like the source
+ * line of a form: the register, then the date.
+ */
 export function ProvenanceNote({
 	sourceLabel,
 	source,
@@ -33,12 +36,7 @@ export function ProvenanceNote({
 		new Date(`${updatedAt}T00:00:00Z`),
 	);
 	return (
-		<p
-			className={cn(
-				"flex flex-wrap gap-x-4 gap-y-1 border-t border-rule-soft pt-3 text-meta text-ink-muted",
-				className,
-			)}
-		>
+		<p className={cn("flex flex-wrap gap-x-5 gap-y-0.5 pt-2 text-meta text-ink-muted", className)}>
 			<span>
 				<span className="type-caption me-1.5 text-ink">{sourceLabel}</span>
 				{sourceHref ? (

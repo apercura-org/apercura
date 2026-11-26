@@ -214,7 +214,8 @@ export default async function PractitionerPage({ params }: Props) {
 	const plan = actionPlan(sites);
 	const empty = tP("notProvided");
 	const claimed = payload.claimStatus === "claimed";
-	const status = claimed ? "verified" : "unclaimed";
+	// The stamp's ink: outlined while unclaimed, hatched while a claim is checked, solid once verified.
+	const status = claimed ? "verified" : payload.claimStatus === "pending" ? "claimed" : "unclaimed";
 	const href = { pathname: "/praticien/[slug]", params: { slug: page.slug } } as const;
 	const url = absoluteUrl(href, locale);
 	const austrian = payload.country === "AT";
@@ -244,6 +245,21 @@ export default async function PractitionerPage({ params }: Props) {
 	const identifier = displayId(payload);
 	// Open licences (CC BY 4.0, OGL) require each source's attribution, word for word.
 	const sources = openDataSourcesOf(payload.country, payload.activities);
+
+	// Where the facts come from and when they were imported: under each block of facts, the
+	// register's name; at the foot of the page, each source with its attribution.
+	const provenanceOf = (source: string) => (
+		<ProvenanceNote
+			locale={locale}
+			sourceLabel={tP("source.label")}
+			source={source}
+			updatedLabel={tP("source.updated")}
+			updatedAt={page.updatedAt}
+		/>
+	);
+	const provenance = provenanceOf(
+		sources.length > 0 ? sources.map((source) => source.name).join("; ") : tP("source.name"),
+	);
 
 	const trail: TrailItem[] = [];
 	if (payload.listingSlug && page.listings.country) {
@@ -344,8 +360,9 @@ export default async function PractitionerPage({ params }: Props) {
 						rppsLabel={tP("rpps")}
 						status={status}
 						statusLabel={tP(`status.${status}`)}
-						statusNote={tP(`statusNote.${status}`)}
+						statusNote={status === "claimed" ? undefined : tP(`statusNote.${status}`)}
 						headline={content.headline}
+						address={sites[0]?.addressLines.join(", ")}
 						photo={
 							content.photoUrl ? { src: content.photoUrl, alt: t("photoAlt", { name }) } : null
 						}
@@ -412,6 +429,7 @@ export default async function PractitionerPage({ params }: Props) {
 								)}
 								<FieldRow label={tP("fields.hours")} emptyLabel={empty} />
 							</FieldList>
+							{provenance}
 						</section>
 
 						<section aria-labelledby="sites-heading" className="flex flex-col gap-6">
@@ -430,6 +448,7 @@ export default async function PractitionerPage({ params }: Props) {
 									}}
 								/>
 							))}
+							{provenance}
 						</section>
 
 						<PracticalSection
@@ -521,18 +540,14 @@ export default async function PractitionerPage({ params }: Props) {
 					guides={relatedGuides([payload.listingSlug, professionSlugOf(payload.professionCode)])}
 				/>
 
-				<ProvenanceNote
-					locale={locale}
-					sourceLabel={tP("source.label")}
-					source={
+				<div className="rule-double-t">
+					{provenanceOf(
 						sources.length > 0
 							? // CC BY 4.0 and the OGL: each source named with its attribution, word for word.
 								sources.map((source) => `${source.name} (${source.attribution})`).join("; ")
-							: tP("source.name")
-					}
-					updatedLabel={tP("source.updated")}
-					updatedAt={page.updatedAt}
-				/>
+							: tP("source.name"),
+					)}
+				</div>
 			</BookletPage>
 		</PublicPage>
 	);

@@ -37,11 +37,8 @@ export async function OwnerBlock({
 	);
 	if (claimed) {
 		return (
-			<section
-				aria-labelledby="claim-heading"
-				className="flex flex-col gap-2 border-t border-rule-soft pt-4"
-			>
-				<h2 id="claim-heading" className="type-subtitle text-ink">
+			<section aria-labelledby="claim-heading" className="rule-double-t flex flex-col gap-2 pt-4">
+				<h2 id="claim-heading" className="type-title text-ink">
 					{t("claimedHeading")}
 				</h2>
 				<p className="text-body text-ink">{t("claimedBody")}</p>
@@ -52,11 +49,8 @@ export async function OwnerBlock({
 	}
 	const benefits = t.raw("benefits") as string[];
 	return (
-		<section
-			aria-labelledby="claim-heading"
-			className="flex flex-col gap-3 border-t border-rule-soft pt-4"
-		>
-			<h2 id="claim-heading" className="type-subtitle text-ink">
+		<section aria-labelledby="claim-heading" className="rule-double-t flex flex-col gap-3 pt-4">
+			<h2 id="claim-heading" className="type-title text-ink">
 				{t("heading")}
 			</h2>
 			<p className="text-body text-ink">{t("body")}</p>

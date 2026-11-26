@@ -3,14 +3,14 @@ import { oklchToHex } from "./color";
 /**
  * Apercura design tokens.
  *
- * A sober health-service palette: white (or, in the dark theme, a dark graphite) ground, a
- * pale neutral shade for secondary areas, one cool graphite ink, and a single indigo-violet
- * accent. `theme.css` declares the same values as CSS custom properties (`--light-*`,
- * `--dark-*`); a unit test keeps both in sync.
+ * A health booklet's printed form: white paper (a deep graphite ground in the dark theme),
+ * near-black type, fine neutral rules, and a single violet reserved for the practitioners' stamps
+ * and the primary action. `theme.css` declares the same values
+ * as CSS custom properties (`--light-*`, `--dark-*`); a unit test keeps both in sync.
  *
  * Palette laws:
- * - text is always `ink` or `inkMuted` (never the accent, never red body copy);
- * - `stamp*` (the accent) is reserved for actions, verified pages, booked slots and focus;
+ * - running text is `ink` or `inkMuted` (never red body copy); inside a stamp, the stamp's ink;
+ * - `stamp*` (the violet ink) is reserved for stamps, actions, booked slots and focus;
  * - `error*` is reserved for errors;
  * - nothing else is coloured (the map excepted).
  */
@@ -25,8 +25,8 @@ export const palette = {
 	inkMuted: "oklch(0.47 0.014 260)",
 	/** Disabled controls (exempt from contrast, kept ≥ 3:1). */
 	inkDisabled: "oklch(0.6 0.01 260)",
-	/** Hairline borders between rows and around panels (decorative only). */
-	ruleSoft: "oklch(0.91 0.005 260)",
+	/** The printed form rules: hairlines between rows and fields (decorative only). */
+	ruleSoft: "oklch(0.885 0.007 260)",
 	/** Input and control edges (≥ 3:1 on paper and shade). */
 	fieldEdge: "oklch(0.6 0.012 260)",
 	/** The one accent, an indigo violet: action, verified, booked, the focus ring. (Token name kept from v1.) */
@@ -51,7 +51,7 @@ export const paletteDark = {
 	ink: "oklch(0.95 0.005 260)",
 	inkMuted: "oklch(0.77 0.012 260)",
 	inkDisabled: "oklch(0.59 0.01 260)",
-	ruleSoft: "oklch(0.32 0.012 260)",
+	ruleSoft: "oklch(0.34 0.013 262)",
 	fieldEdge: "oklch(0.6 0.012 260)",
 	stamp: "oklch(0.78 0.1 285)",
 	stampStrong: "oklch(0.85 0.075 285)",

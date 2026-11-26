@@ -54,9 +54,9 @@ export async function HomeSearch({ locale, idPrefix }: { locale: Locale; idPrefi
 			<NearMeButton
 				formId={formId}
 				className={buttonStyles({
-					intent: "ink",
+					intent: "quiet",
 					size: "md",
-					className: "normal-case tracking-normal",
+					className: "-ms-2 text-meta",
 				})}
 				labels={{
 					nearMe: tForm("nearMe"),

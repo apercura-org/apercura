@@ -71,8 +71,8 @@ export type ActionBlockProps =
 	| NoticeAction;
 
 /**
- * "What can I do next?": a bordered panel with its title on the quiet shade. Every state says
- * plainly what the patient can actually do; only online booking takes the accent.
+ * "What can I do next?": the first entry of the form, opened by a double rule. Every state says
+ * plainly what the patient can actually do; only online booking takes the violet ink.
  */
 export function ActionBlock(props: ActionBlockProps) {
 	const { title, headingLevel = 2, className } = props;
@@ -80,13 +80,11 @@ export function ActionBlock(props: ActionBlockProps) {
 	return (
 		<section
 			data-kind={props.kind}
-			className={cn("overflow-hidden rounded-panel border border-rule-soft bg-paper", className)}
+			className={cn("rule-double-t flex flex-col gap-4 pt-4", className)}
 			aria-label={title}
 		>
-			<div className="surface-shade border-b border-rule-soft px-5 py-3">
-				<Heading className="type-subtitle">{title}</Heading>
-			</div>
-			<div className="flex flex-col gap-4 p-5">
+			<Heading className="type-title text-ink">{title}</Heading>
+			<div className="flex flex-col gap-4">
 				<p className="flex items-start gap-3 text-body text-ink">
 					{props.kind === "locum" || props.kind === "notice" ? (
 						<InfoIcon className="mt-0.5 size-6 shrink-0" />
@@ -94,7 +92,7 @@ export function ActionBlock(props: ActionBlockProps) {
 					<span>{props.statement}</span>
 				</p>
 				{props.kind === "book" && props.nextSlot ? (
-					<p className="flex flex-col gap-0.5 rounded-field bg-paper-shade px-4 py-3">
+					<p className="flex flex-col gap-0.5 border-y border-rule-soft py-2.5">
 						<span className="type-caption text-ink-muted">{props.nextSlot.label}</span>
 						<span className="tabular text-lead font-semibold text-ink">{props.nextSlot.value}</span>
 					</p>

@@ -137,8 +137,8 @@ export default async function SearchPage({ params, searchParams }: Props) {
 
 	return (
 		<PublicPage locale={locale} href="/recherche">
-			<div className="surface-shade border-b border-rule-soft">
-				<div className="mx-auto flex w-full max-w-6xl flex-col gap-6 px-5 pt-8 pb-10 sm:px-8">
+			<div className="rule-double-b">
+				<div className="mx-auto flex w-full max-w-6xl flex-col gap-6 px-5 pt-8 pb-10 sm:px-8 lg:pe-[calc(33.333%+1rem)]">
 					<h1 className="type-headline">{t("title")}</h1>
 					<ClientIsland locale={locale} namespaces={SEARCH_FORM_MESSAGES}>
 						<TRPCReactProvider>

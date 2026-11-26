@@ -7,6 +7,8 @@ import {
 	MapView,
 	ProvenanceNote,
 	SiteCard,
+	Stamp,
+	StampFoot,
 } from "@apercura/ui";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
@@ -14,7 +16,7 @@ import { hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { BookletPage } from "~/components/booklet-page";
 import { JsonLd } from "~/components/json-ld";
-import { ListingSection, ListingTitle } from "~/components/listing";
+import { ListingSection } from "~/components/listing";
 import { PublicPage } from "~/components/public-page";
 import { Trail, type TrailItem, trailEntries } from "~/components/trail";
 import { clientEnv } from "~/env";
@@ -105,6 +107,16 @@ export default async function EstablishmentPage({ params }: Props) {
 	const mapStrings = await getMapStrings(locale);
 	const empty = tP("notProvided");
 	const lines = addressLines(page);
+	// Where the facts come from and when they were imported, printed under them.
+	const provenance = (
+		<ProvenanceNote
+			locale={locale}
+			sourceLabel={tP("source.label")}
+			source={t("source")}
+			updatedLabel={tP("source.updated")}
+			updatedAt={page.updatedAt}
+		/>
+	);
 	const precise = page.geoPrecision === "address" || page.geoPrecision === "street";
 	const coordinates =
 		precise && page.latitude !== null && page.longitude !== null
@@ -172,13 +184,30 @@ export default async function EstablishmentPage({ params }: Props) {
 			<BookletPage>
 				<div className="flex flex-col gap-6">
 					<Trail locale={locale} items={trail} />
-					<ListingTitle
-						title={page.name}
-						lead={t("lead", {
-							count: page.practitioners.length,
-							kind: labels.practiceKind(page.kind) ?? "",
-						})}
-					/>
+					{/* The establishment's identity as its stamp: name, kind, address, FINESS number. */}
+					<header className="rule-double-b flex flex-col gap-4 pb-6">
+						<Stamp ink="outlined" className="w-full min-w-0 sm:w-fit sm:min-w-[22rem]">
+							<div className="flex flex-col gap-1 px-4 pt-3 pb-3.5 sm:px-5 sm:pt-4">
+								<h1 className="type-headline">{page.name}</h1>
+								{labels.practiceKind(page.kind) ? (
+									<p className="text-lead">{labels.practiceKind(page.kind)}</p>
+								) : null}
+								<p className="text-meta">{lines.join(", ")}</p>
+							</div>
+							<StampFoot>
+								<span>
+									<span className="me-1.5">{t("finess")}</span>
+									<span>{page.finessEt}</span>
+								</span>
+							</StampFoot>
+						</Stamp>
+						<p className="max-w-[65ch] text-lead text-ink">
+							{t("lead", {
+								count: page.practitioners.length,
+								kind: labels.practiceKind(page.kind) ?? "",
+							})}
+						</p>
+					</header>
 				</div>
 
 				<div className="grid gap-10 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:gap-12">
@@ -214,6 +243,7 @@ export default async function EstablishmentPage({ params }: Props) {
 									emptyLabel={empty}
 								/>
 							</FieldList>
+							{provenance}
 						</SiteCard>
 						{coordinates ? (
 							<MapView
@@ -276,13 +306,7 @@ export default async function EstablishmentPage({ params }: Props) {
 					</div>
 				</ListingSection>
 
-				<ProvenanceNote
-					locale={locale}
-					sourceLabel={tP("source.label")}
-					source={t("source")}
-					updatedLabel={tP("source.updated")}
-					updatedAt={page.updatedAt}
-				/>
+				<div className="rule-double-t">{provenance}</div>
 			</BookletPage>
 		</PublicPage>
 	);
