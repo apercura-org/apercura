@@ -390,3 +390,81 @@ export function parseItPlaceSegment(segment: string): ItPlaceSegment | null {
 	if (!key) return null;
 	return { ...key, namePart: dash < 0 ? "" : segment.slice(0, dash) };
 }
+
+/**
+ * German identifiers: one scheme per source, so a source that fails to import keeps its rows.
+ * Neither the Destatis directory of hospitals and of prevention and rehabilitation clinics nor
+ * the Länder's pharmacy lists publish a national number: the hospital directory's `KH_ID` is a
+ * pseudonym drawn anew for every edition. A site's key is therefore derived from what it is
+ * (its municipality, address and names, `packages/etl/src/sources/de`), ten hexadecimal digits; a pharmacy list's
+ * key is the number the supervising authority gives the pharmacy where the list prints one. The
+ * letters before the key name the source in a page URL (docs/data-import.md, "Germany").
+ */
+export const DE_ID_SCHEMES = {
+	/** A hospital site of the Destatis directory (`Verzeichnis der Krankenhäuser`): derived key. */
+	"DE-KHV": { prefix: "k", pattern: /^[0-9a-f]{10}$/ },
+	/** A prevention or rehabilitation clinic of the Destatis directory: derived key. */
+	"DE-RHV": { prefix: "r", pattern: /^[0-9a-f]{10}$/ },
+	/** A pharmacy of Thuringia's list: the number of its file at the Landesamt (`Az_VIS`). */
+	"DE-APO-TH": { prefix: "th", pattern: /^[1-9]\d{0,6}$/ },
+	/** A pharmacy of Brandenburg's list: derived key (the list's feature ids are row numbers). */
+	"DE-APO-BB": { prefix: "bb", pattern: /^[0-9a-f]{10}$/ },
+} as const;
+
+export type DeIdScheme = keyof typeof DE_ID_SCHEMES;
+
+/** Schemes by prefix, the longest prefix first (`th` before any one-letter prefix). */
+const DE_SCHEMES = (Object.keys(DE_ID_SCHEMES) as DeIdScheme[]).sort(
+	(a, b) => DE_ID_SCHEMES[b].prefix.length - DE_ID_SCHEMES[a].prefix.length,
+);
+
+/** True when `value` is a key of the German scheme (syntax only: the site may not exist). */
+export function isValidDeSourceId(scheme: string, value: string): boolean {
+	const entry = DE_ID_SCHEMES[scheme as DeIdScheme];
+	return entry ? entry.pattern.test(value) : false;
+}
+
+/** The key of a German site as its page URL ends (`k0a1b2c3d4e`, `th420`). */
+export function deUrlKey(scheme: DeIdScheme, nationalId: string): string {
+	return `${DE_ID_SCHEMES[scheme].prefix}${nationalId}`;
+}
+
+/**
+ * Canonical path segment of a German facility page: `{name}-{key}`
+ * (`klinikum-musterstadt-k0a1b2c3d4e`, `rosen-apotheke-am-markt-th420`), umlauts spelled out.
+ */
+export function deFacilitySlug(name: string, scheme: DeIdScheme, nationalId: string): string {
+	const key = deUrlKey(scheme, nationalId);
+	const base = slugifyDe(name).slice(0, 80).replace(/-+$/, "");
+	return base ? `${base}-${key}` : key;
+}
+
+export type DeFacilityKey = { idScheme: DeIdScheme; nationalId: string };
+
+/** Reads a German facility key as its page URL ends (`k0a1b2c3d4e`, `th420`). Null for anything else. */
+export function parseDeKey(token: string): DeFacilityKey | null {
+	for (const idScheme of DE_SCHEMES) {
+		const { prefix, pattern } = DE_ID_SCHEMES[idScheme];
+		if (!token.startsWith(prefix)) continue;
+		const nationalId = token.slice(prefix.length);
+		if (pattern.test(nationalId)) return { idScheme, nationalId };
+	}
+	return null;
+}
+
+export type DeFacilitySegment = DeFacilityKey & {
+	/** Name part before the key, possibly empty. */
+	namePart: string;
+};
+
+/**
+ * Parses the last segment of a German facility URL (`{name}-{key}`). Returns null unless it
+ * ends with a valid key, so invalid URLs never reach the database.
+ */
+export function parseDeFacilitySegment(segment: string): DeFacilitySegment | null {
+	if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(segment)) return null;
+	const dash = segment.lastIndexOf("-");
+	const key = parseDeKey(dash < 0 ? segment : segment.slice(dash + 1));
+	if (!key) return null;
+	return { ...key, namePart: dash < 0 ? "" : segment.slice(0, dash) };
+}

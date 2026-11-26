@@ -1,8 +1,9 @@
 /**
  * European countries and their largest cities, as people type them. The site
- * search uses it to recognise a place in a country Apercura does not cover yet
- * ("Berlin", "München", "Allemagne", "Warszawa") and to say so in the
- * visitor's language. Plain data and pure functions, no I/O.
+ * search uses it to move a search to the market of a country typed alone
+ * ("Allemagne", "Deutschland" → `/de`), and to recognise a place in a country
+ * Apercura does not cover yet ("Warszawa", "Pologne", "Bruxelles") and say so in
+ * the visitor's language. Plain data and pure functions, no I/O.
  */
 
 /** The interface languages a country's name is given in. */

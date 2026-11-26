@@ -17,7 +17,7 @@ describe("the Austrian adapter", () => {
 		expect(austria.features).toEqual({ directory: true, booking: false, eIdentityClaim: false });
 		expect(adapterOfSegment("at")).toBe(austria);
 		expect(adapterOfSegment("fr")).toBe(france);
-		expect(adapterOfSegment("de")).toBeUndefined();
+		expect(adapterOfSegment("pl")).toBeUndefined();
 	});
 
 	it("has one time zone and refuses unknown state codes", () => {
