@@ -25,7 +25,8 @@
 		"etl:places": "bun packages/etl/src/cli.ts etl:places",
 		"etl:gb": "bun packages/etl/src/cli.ts etl:gb",
 		"etl:cz": "bun packages/etl/src/cli.ts etl:cz",
-		"etl:es": "bun packages/etl/src/cli.ts etl:es"
+		"etl:es": "bun packages/etl/src/cli.ts etl:es",
+		"etl:it": "bun packages/etl/src/cli.ts etl:it"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "2.6.9",

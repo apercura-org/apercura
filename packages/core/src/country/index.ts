@@ -11,7 +11,13 @@ export { CZ_REGIONS, czechia, PRAGUE_CODE, PRAGUE_DISTRICT_CODE } from "./cz";
 export { ES_COMMUNITIES, ES_PROVINCE_COMMUNITIES, spain } from "./es";
 export { france } from "./fr";
 export { GB_NATIONS, GB_REGIONS, gbNationOf, unitedKingdom } from "./gb";
-export { ISTAT_BOUNDARIES_YEAR, IT_REGIONS, italy, itRegionOfMinistryCode } from "./it";
+export {
+	ISTAT_BOUNDARIES_YEAR,
+	IT_HOSPITAL_BEDS_YEAR,
+	IT_REGIONS,
+	italy,
+	itRegionOfMinistryCode,
+} from "./it";
 export * from "./types";
 
 /**

@@ -18,6 +18,13 @@ const IODL_URL = "https://www.dati.gov.it/iodl/2.0/";
 export const ISTAT_BOUNDARIES_YEAR = 2026;
 
 /**
+ * The year of the latest hospital bed counts the ministry publishes (a dataset per year, on 1
+ * January of it: "Posti letto per struttura ospedaliera 2023"); the import looks for newer ones
+ * first.
+ */
+export const IT_HOSPITAL_BEDS_YEAR = 2023;
+
+/**
  * The twenty regions by ISTAT code (`COD_REG`, two digits). The Ministry of Health's lists
  * write a region as ten times its ISTAT code (`010` Piemonte, `120` Lazio), with Trentino-Alto
  * Adige's two autonomous provinces apart (`041` Bolzano, `042` Trento): `itRegionOfMinistryCode`.
@@ -132,7 +139,7 @@ export const italy: CountryAdapter = {
 			id: "it-posti-letto",
 			name: "Posti letto per struttura ospedaliera",
 			publisher: "Ministero della Salute",
-			url: "https://www.dati.salute.gov.it/it/dataset/posti-letto-per-struttura-ospedaliera/",
+			url: `https://www.dati.salute.gov.it/it/dataset/posti-letto-struttura-ospedaliera-${IT_HOSPITAL_BEDS_YEAR}/`,
 			licence: IODL,
 			licenceUrl: IODL_URL,
 			attribution: "Fonte: Ministero della Salute, Posti letto per struttura ospedaliera, IODL 2.0",

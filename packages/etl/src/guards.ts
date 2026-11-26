@@ -599,3 +599,105 @@ export function checkEsPlaces(staged: {
 		},
 	];
 }
+
+/**
+ * Limits of the Ministry of Health's lists. Each list has its floors, which catch an empty or
+ * broken file on a first run (26 November 2026: 59,309 pharmacy lines and 20,779 pharmacies
+ * open, 13,938 parapharmacy lines and 7,179 open, 1,798 bed-count lines and 1,044 hospitals and
+ * clinics); afterwards the change since the last successful run (5% of places, 15% of bytes,
+ * approvable) blocks a truncated one.
+ */
+export const IT_LIMITS = {
+	fileSizeDelta: 0.15,
+	quarantineRatio: 0.01,
+	rowsDelta: 0.05,
+	floors: {
+		farmacie: { minLines: 100, minRows: 50 },
+		parafarmacie: { minLines: 20, minRows: 10 },
+		"posti-letto": { minLines: 10, minRows: 5 },
+	} as Readonly<Record<string, { minLines: number; minRows: number }>>,
+	/** Sites placed in their municipality (by code or name; else only in their province). */
+	minPlacedRatio: 0.99,
+	/** Sites located (at their municipality's point, or at the register's). */
+	minLocatedRatio: 0.98,
+} as const;
+
+/**
+ * Checks of one list before the merge: quarantine within 1%, floors of lines and places (never
+ * approvable), and at most 5% more or fewer places or 15% more or fewer bytes than the last
+ * successful run that read it (approvable).
+ */
+export function checkItSource(
+	source: string,
+	current: AtSourceStats & { bytes: number },
+	previous: (AtSourceStats & { bytes?: number }) | null,
+): GuardCheck[] {
+	const floors = IT_LIMITS.floors[source] ?? { minLines: 1, minRows: 1 };
+	const ratio = current.lines === 0 ? 1 : current.quarantined / current.lines;
+	const checks: GuardCheck[] = [
+		{
+			name: `${source}.quarantine`,
+			ok: current.lines > 0 && ratio <= IT_LIMITS.quarantineRatio,
+			approvable: false,
+			detail: `${current.quarantined} of ${current.lines} lines quarantined (${percent(ratio)})`,
+		},
+		{
+			name: `${source}.lines`,
+			ok: current.lines >= floors.minLines,
+			approvable: false,
+			detail: `${current.lines} data lines (at least ${floors.minLines} expected)`,
+		},
+		{
+			name: `${source}.rows`,
+			ok: current.rows >= floors.minRows,
+			approvable: false,
+			detail: `${current.rows} places imported (at least ${floors.minRows} expected)`,
+		},
+	];
+	if (previous) {
+		const rows = delta(current.people, previous.people);
+		checks.push({
+			name: `${source}.places`,
+			ok: rows <= IT_LIMITS.rowsDelta,
+			approvable: true,
+			detail: `${current.people} places vs ${previous.people} last time (${percent(rows)})`,
+		});
+		if (previous.bytes !== undefined) {
+			const size = delta(current.bytes, previous.bytes);
+			checks.push({
+				name: `${source}.size`,
+				ok: size <= IT_LIMITS.fileSizeDelta,
+				approvable: true,
+				detail: `${current.bytes} bytes vs ${previous.bytes} last time (${percent(size)})`,
+			});
+		}
+	}
+	return checks;
+}
+
+/**
+ * After staging: nearly every site must be placed in its municipality and located, or the
+ * listings and the distances would lose it.
+ */
+export function checkItPlaces(staged: {
+	sites: number;
+	located: number;
+	inMunicipality: number;
+}): GuardCheck[] {
+	const local = staged.sites === 0 ? 1 : staged.inMunicipality / staged.sites;
+	const located = staged.sites === 0 ? 1 : staged.located / staged.sites;
+	return [
+		{
+			name: "it.places",
+			ok: local >= IT_LIMITS.minPlacedRatio,
+			approvable: true,
+			detail: `${staged.inMunicipality} of ${staged.sites} sites placed in their municipality (${percent(local)})`,
+		},
+		{
+			name: "it.points",
+			ok: located >= IT_LIMITS.minLocatedRatio,
+			approvable: true,
+			detail: `${staged.located} of ${staged.sites} sites located (${percent(located)})`,
+		},
+	];
+}
