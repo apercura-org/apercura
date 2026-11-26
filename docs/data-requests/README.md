@@ -11,8 +11,9 @@ public phone), under the Open Data Directive (EU) 2019/1024 and its national tra
 Re-use of Public Sector Information Regulations 2015, or as a plain licence request where no law
 gives a right to re-use.
 
-Austria has its own request, prepared separately (`at.md`); the United Kingdom's and Czechia's
-candidates are in `gb.md` and `cz.md`.
+Austria has its own request, prepared separately (`at.md`); the United Kingdom's, Czechia's and
+Spain's candidates are in `gb.md`, `cz.md` and `es.md` (Spain opened from the register of centres,
+REGCESS; the requests below for its registers of people still stand).
 
 ## Tracking
 

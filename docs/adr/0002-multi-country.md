@@ -1,8 +1,8 @@
 # ADR 0002: Multi-country foundation and European market study
 
-- Status: accepted; France, Austria and the United Kingdom are open
-- Date: 2026-11-22; section 2 amended 2026-11-25; Austria opened 2026-11-25; the United Kingdom opened 2026-11-25
-- Issue: #45; section 2: #81; market study: #82 (2026-11-25); Austria: #107; United Kingdom: #125
+- Status: accepted; France, Austria, the United Kingdom, Czechia and Spain are open
+- Date: 2026-11-22; section 2 amended 2026-11-25; Austria opened 2026-11-25; the United Kingdom opened 2026-11-25; Czechia opened 2026-11-26; Spain opened 2026-11-26
+- Issue: #45; section 2: #81; market study: #82 (2026-11-25); Austria: #107; United Kingdom: #125; Czechia: #131; Spain: #148
 
 ## Context
 
@@ -38,9 +38,9 @@ interfaces of France's pages live under `/fr-en`, `/fr-de`, `/fr-es` and
 `/fr-it` with translated route segments (section 2, `docs/public-site.md`).
 
 Until a market opens, its pages are `noindex`, absent from the sitemaps and
-announced by no hreflang (`INDEXABLE_LOCALES = ["fr", "de-AT", "en-GB"]` since
-the United Kingdom opened: France in French, Austria in German, the UK in British
-English). A locale becomes indexable only
+announced by no hreflang (`INDEXABLE_LOCALES = ["fr", "de-AT", "en-GB", "cs-CZ",
+"es-ES"]` since Spain opened: France in French, Austria in German, the UK in British
+English, Czechia in Czech, Spain in Spanish). A locale becomes indexable only
 with its market, because a German page of a French
 directory is not what a German searching for a doctor near Munich expects.
 
@@ -62,7 +62,8 @@ first domain, only redirects.
 | `/fr-en/…`, `/fr-de/…`, `/fr-es/…`, `/fr-it/…`             | France's pages, interface in another language                   | never             |
 | `/at/…`                                                    | Austria, in German (open since #107)                            | yes               |
 | `/gb/…`                                                    | United Kingdom, in British English (open since #125)            | yes               |
-| `/de/…`, `/es/…`, `/it/…`                                  | Later: a market in its language                                 | once open         |
+| `/es/…`                                                    | Spain, in Spanish (open since #148)                             | yes               |
+| `/de/…`, `/it/…`                                           | Later: a market in its language                                 | once open         |
 | `/ch-fr/…`, `/ch-de/…`, `/ch-it/…`, `/be-fr/…`, `/be-nl/…` | Later: a market in each of its official languages               | once open         |
 
 The rule is `/{market}` for a market's main language and
@@ -102,11 +103,11 @@ ids map one to one (`en` is `/fr-en`).
 - **Canonical**: always self, absolute on `APP_URL` (`https://apercura.org`),
   whatever host the request came from.
 - **Indexed**: the international home and each open market's own languages
-  (`/fr`, `/at` and `/gb` today). Interface translations (`/fr-en`…) are `noindex`, absent from
+  (`/fr`, `/at`, `/gb`, `/cz` and `/es` today). Interface translations (`/fr-en`…) are `noindex`, absent from
   the sitemaps and never targeted by hreflang (`INDEXABLE_LOCALES`).
 - **hreflang**: only between indexed pages that are the same thing in another
   language or market. The homes form one cluster, printed by both: `x-default`
-  → `/`, `fr-FR` → `/fr`, `de-AT` → `/at`, `en-GB` → `/gb`, later `fr-CH` → `/ch-fr`, `de-CH`
+  → `/`, `fr-FR` → `/fr`, `de-AT` → `/at`, `en-GB` → `/gb`, `cs-CZ` → `/cz`, `es-ES` → `/es`, later `fr-CH` → `/ch-fr`, `de-CH`
   → `/ch-de`… Below the homes, hreflang links the languages of one market only
   (a Swiss practitioner's `/ch-fr/…` and `/ch-de/…` pages), never two markets:
   a French practitioner has no German-market page. With France alone, no other
@@ -141,9 +142,9 @@ query kept (301 for GET and HEAD, 308 otherwise), in one hop:
 The former hosts are configured (`LEGACY_HOSTS`); the mapping is
 `apps/web/src/lib/market-path.ts`. On apercura.org itself, an old unprefixed
 French path answers 301 as well, while an old locale prefix answers a
-temporary 307: `/de`, `/es` and `/it` are the segments of markets still to
+temporary 307: `/de` and `/it` are the segments of markets still to
 open, and their redirect is dropped the day the market opens (the apercura.fr
-mapping stays). The data model already carries `country` on
+mapping stays); `/es`'s was dropped when Spain opened (#148). The data model already carries `country` on
 `directory.practitioners` and `directory.suppressions`, and the unique key is
 `(country, id_scheme, national_id)`, so two markets never collide.
 
@@ -160,23 +161,23 @@ DKIM, DMARC, `contact@apercura.org`) and the Search Console property change
 for everything that differs per market. Adapters are pure: no network, no
 database. France wraps the code the app already used; Austria (#107) is the
 first market written against the interface, the United Kingdom (#125) the second, Czechia (#131) the
-third.
+third, Spain (#148) the fourth.
 
-| Member               | France                                                                    | Austria                                                                                                                         | United Kingdom                                                                                                                                                                                     | Czechia                                                                                                                                        |
-| -------------------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
-| `segment`            | `fr`                                                                      | `at`                                                                                                                            | `gb`                                                                                                                                                                                               | `cz`                                                                                                                                           |
-| `defaultLocale`      | `fr`                                                                      | `de` (web locale `de-AT` under `/at`: the German catalog with Austrian overrides)                                               | `en` (web locale `en-GB` under `/gb`: the English catalog with UK overrides)                                                                                                                       | `cs` (web locale `cs-CZ` under `/cz`: the English catalog with the Czech translation on top)                                                   |
-| `defaultTimeZone`    | `Europe/Paris`                                                            | `Europe/Vienna`                                                                                                                 | `Europe/London`                                                                                                                                                                                    | `Europe/Prague`                                                                                                                                |
-| `timeZones`          | Paris and the 8 overseas zones                                            | Vienna only                                                                                                                     | London only                                                                                                                                                                                        | Prague only                                                                                                                                    |
-| `timeZoneOf(region)` | `timeZoneForDepartment` (INSEE department code, throws if unknown)        | Bundesland number `1`–`9` (throws if unknown)                                                                                   | any ONS area code (`E12000007`, `S92000003`, `E09000007`; throws otherwise)                                                                                                                        | region or district NUTS/LAU code (`CZ010`, `CZ0642`; throws otherwise)                                                                         |
-| `registries`         | Annuaire Santé (RPPS), FINESS+, Ameli, under the Licence Ouverte 2.0      | Vienna, Styria, Salzburg doctors and Salzburg dentists lists, Statistik Austria Gemeinden, CC BY 4.0, each with its attribution | ODS (England and Wales), Public Health Scotland, BSO (Northern Ireland) practice lists, Code-Point Open, OS Open Names, ONS local authorities, OSNI gazetteer, OGL v3.0, each with its attribution | NRPZS places of care (ÚZIS ČR) and RÚIAN territorial units (ČÚZK), CC BY 4.0, each with its attribution                                        |
-| `practitionerIds`    | RPPS, 11 digits with a Luhn check digit (`isValidRpps`)                   | One scheme per list (`AT-WIEN`, `AT-STMK`, `AT-SBG`, `AT-SBGZ`): no national number is published                                | One scheme per list (`GB-ODS-GP`, `GB-ODS-DENT`, `GB-ODS-PHARM`, `GB-PHS-*`, `GB-BSO-*`): ODS codes, PHS and BSO numbers, an address-derived key for NI dental                                     | One scheme, `CZ-NRPZS`: the register's facility number `ZZ_ID` (the provider's IČO is never used)                                              |
-| `taxonomy`           | `FR_PROFESSIONS`, `listingSlugFor`, `isListingSlug`                       | `AT_PROFESSIONS` (doctors, dentists), `atListingSlugFor`, `isAtListingSlug`, German slugs                                       | `GB_PROFESSIONS` (GP practices, dental practices, pharmacies), `gbListingSlugFor`, `isGbListingSlug`, English slugs, no specialty                                                                  | `CZ_PROFESSIONS` (eleven facility kinds), `CZ_SPECIALTIES` (fields of care of specialists), `czListingSlugFor`, `isCzListingSlug`, Czech slugs |
-| `phone`              | `toE164Fr`, `formatPhoneFr` (`+33` and the overseas codes)                | `toE164At`, `formatPhoneAt` (`+43`, national form `01 7673315`)                                                                 | `toE164Gb`, `formatPhoneGb` (`+44`, national form `020 7946 0000`, `01642 672351`)                                                                                                                 | `toE164Cz`, `formatPhoneCz` (`+420`, nine digits, `326 357 125`)                                                                               |
-| `address`            | 5-digit postcode, `street` then `postcode city`                           | 4-digit postcode, `street` then `postcode city`                                                                                 | UK postcode (`SW1A 1AA`), `street`, then the town and the postcode on lines of their own                                                                                                           | 5-digit postcode written `110 00`, `street` then `postcode town`                                                                               |
-| `legalPages`         | mentions légales (LCEN), privacy (GDPR art. 13–14), terms, RGAA statement | Impressum (ECG § 5, MedienG § 25), Datenschutzerklärung (DSGVO art. 13, 14, 21), Nutzungsbedingungen                            | legal notice (E-Commerce Regulations 2002, reg. 6), privacy notice (UK GDPR art. 13, 14, 21), terms                                                                                                | legal notice (Civil Code § 435, Act 480/2004), privacy notice (GDPR art. 13, 14, 21, Act 110/2019), terms, voluntary accessibility statement   |
-| `healthDataHosting`  | HDS (Code de la santé publique, art. L1111-8)                             | No certification: DSGVO and DSG; Gesundheitstelematikgesetz 2012 for electronic health data exchange                            | No certification: UK GDPR and DPA 2018 (as amended by the DUAA 2025); the DSPT binds organisations with access to NHS patient data and systems                                                     | No certification: GDPR and Act 110/2019; Act 372/2011 governs providers' records                                                               |
-| `features`           | directory, booking and e-identity claim (Pro Santé Connect)               | directory only: no booking, claims with documents and an administrator's review                                                 | directory only (practices, no clinician): no booking, claims with documents and an administrator's review                                                                                          | directory only (facilities): no booking, claims with documents and an administrator's review                                                   |
+| Member               | France                                                                    | Austria                                                                                                                         | United Kingdom                                                                                                                                                                                     | Czechia                                                                                                                                        | Spain                                                                                                                                             |
+| -------------------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `segment`            | `fr`                                                                      | `at`                                                                                                                            | `gb`                                                                                                                                                                                               | `cz`                                                                                                                                           | `es`                                                                                                                                              |
+| `defaultLocale`      | `fr`                                                                      | `de` (web locale `de-AT` under `/at`: the German catalog with Austrian overrides)                                               | `en` (web locale `en-GB` under `/gb`: the English catalog with UK overrides)                                                                                                                       | `cs` (web locale `cs-CZ` under `/cz`: the English catalog with the Czech translation on top)                                                   | `es` (web locale `es-ES` under `/es`: the Spanish catalog with Spanish-market overrides, `messages/es-ES.json`)                                   |
+| `defaultTimeZone`    | `Europe/Paris`                                                            | `Europe/Vienna`                                                                                                                 | `Europe/London`                                                                                                                                                                                    | `Europe/Prague`                                                                                                                                | `Europe/Madrid`                                                                                                                                   |
+| `timeZones`          | Paris and the 8 overseas zones                                            | Vienna only                                                                                                                     | London only                                                                                                                                                                                        | Prague only                                                                                                                                    | Madrid and `Atlantic/Canary`                                                                                                                      |
+| `timeZoneOf(region)` | `timeZoneForDepartment` (INSEE department code, throws if unknown)        | Bundesland number `1`–`9` (throws if unknown)                                                                                   | any ONS area code (`E12000007`, `S92000003`, `E09000007`; throws otherwise)                                                                                                                        | region or district NUTS/LAU code (`CZ010`, `CZ0642`; throws otherwise)                                                                         | INE province code (`35`, `38`: Canary) or `C` + community code (`C05`); throws otherwise                                                          |
+| `registries`         | Annuaire Santé (RPPS), FINESS+, Ameli, under the Licence Ouverte 2.0      | Vienna, Styria, Salzburg doctors and Salzburg dentists lists, Statistik Austria Gemeinden, CC BY 4.0, each with its attribution | ODS (England and Wales), Public Health Scotland, BSO (Northern Ireland) practice lists, Code-Point Open, OS Open Names, ONS local authorities, OSNI gazetteer, OGL v3.0, each with its attribution | NRPZS places of care (ÚZIS ČR) and RÚIAN territorial units (ČÚZK), CC BY 4.0, each with its attribution                                        | REGCESS monthly extracts (Ministerio de Sanidad, reuse under Ley 37/2007: source and date) and the IGN's units and population centres (CC BY 4.0) |
+| `practitionerIds`    | RPPS, 11 digits with a Luhn check digit (`isValidRpps`)                   | One scheme per list (`AT-WIEN`, `AT-STMK`, `AT-SBG`, `AT-SBGZ`): no national number is published                                | One scheme per list (`GB-ODS-GP`, `GB-ODS-DENT`, `GB-ODS-PHARM`, `GB-PHS-*`, `GB-BSO-*`): ODS codes, PHS and BSO numbers, an address-derived key for NI dental                                     | One scheme, `CZ-NRPZS`: the register's facility number `ZZ_ID` (the provider's IČO is never used)                                              | One scheme, `ES-REGCESS`: the normalised centre code `CCN` (ten digits); the regional code is not used                                            |
+| `taxonomy`           | `FR_PROFESSIONS`, `listingSlugFor`, `isListingSlug`                       | `AT_PROFESSIONS` (doctors, dentists), `atListingSlugFor`, `isAtListingSlug`, German slugs                                       | `GB_PROFESSIONS` (GP practices, dental practices, pharmacies), `gbListingSlugFor`, `isGbListingSlug`, English slugs, no specialty                                                                  | `CZ_PROFESSIONS` (eleven facility kinds), `CZ_SPECIALTIES` (fields of care of specialists), `czListingSlugFor`, `isCzListingSlug`, Czech slugs | `ES_PROFESSIONS` (eight centre kinds), `ES_SPECIALTIES` (care units U.x of the practices), `esListingSlugFor`, `isEsListingSlug`, Spanish slugs   |
+| `phone`              | `toE164Fr`, `formatPhoneFr` (`+33` and the overseas codes)                | `toE164At`, `formatPhoneAt` (`+43`, national form `01 7673315`)                                                                 | `toE164Gb`, `formatPhoneGb` (`+44`, national form `020 7946 0000`, `01642 672351`)                                                                                                                 | `toE164Cz`, `formatPhoneCz` (`+420`, nine digits, `326 357 125`)                                                                               | `toE164Es`, `formatPhoneEs` (`+34`, nine digits, `965 950 865`)                                                                                   |
+| `address`            | 5-digit postcode, `street` then `postcode city`                           | 4-digit postcode, `street` then `postcode city`                                                                                 | UK postcode (`SW1A 1AA`), `street`, then the town and the postcode on lines of their own                                                                                                           | 5-digit postcode written `110 00`, `street` then `postcode town`                                                                               | 5-digit postcode, `street, number` then `postcode town`                                                                                           |
+| `legalPages`         | mentions légales (LCEN), privacy (GDPR art. 13–14), terms, RGAA statement | Impressum (ECG § 5, MedienG § 25), Datenschutzerklärung (DSGVO art. 13, 14, 21), Nutzungsbedingungen                            | legal notice (E-Commerce Regulations 2002, reg. 6), privacy notice (UK GDPR art. 13, 14, 21), terms                                                                                                | legal notice (Civil Code § 435, Act 480/2004), privacy notice (GDPR art. 13, 14, 21, Act 110/2019), terms, voluntary accessibility statement   | aviso legal (LSSI, Ley 34/2002 art. 10), privacy notice (GDPR art. 13, 14, 21, LOPDGDD), terms, voluntary accessibility statement                 |
+| `healthDataHosting`  | HDS (Code de la santé publique, art. L1111-8)                             | No certification: DSGVO and DSG; Gesundheitstelematikgesetz 2012 for electronic health data exchange                            | No certification: UK GDPR and DPA 2018 (as amended by the DUAA 2025); the DSPT binds organisations with access to NHS patient data and systems                                                     | No certification: GDPR and Act 110/2019; Act 372/2011 governs providers' records                                                               | No certification: GDPR and LOPDGDD; Ley 41/2002 governs clinical records                                                                          |
+| `features`           | directory, booking and e-identity claim (Pro Santé Connect)               | directory only: no booking, claims with documents and an administrator's review                                                 | directory only (practices, no clinician): no booking, claims with documents and an administrator's review                                                                                          | directory only (facilities): no booking, claims with documents and an administrator's review                                                   | directory only (centres): no booking, claims with documents and an administrator's review                                                         |
 
 Per-country feature flags are the adapter's `features`: what a market can
 support once it is open. The global environment flags (`FEATURE_BOOKING`…)
@@ -290,6 +291,30 @@ specialties mapped to the market's own terms, with catalog labels under
   top (`messages/cz.json`); every plural reachable in it carries `one`, `few`, `many` and `other`.
   The client islands now receive only their market's taxonomy labels, so opening a market adds no
   page weight elsewhere.
+
+#### What the Spanish opening proved (#148)
+
+- **A register of authorised centres can open a market whose people are closed.** Spain's
+  registers of professionals (REGCESS's sibling REPS, the colegios' lists) are not reusable, but
+  the General Register of health centres, services and establishments publishes every authorised
+  centre monthly, and the Ministry's legal notice allows reuse with the source and its date: one
+  page per centre, the UK's and Czechia's model (`listsPractices`), about 115,000 pages.
+- **A market can have no coordinates.** REGCESS gives an INE municipality code and an address,
+  no point. Centres are placed by code (no name matching, no geocoder) and located at their
+  municipality's main population centre (the IGN's, CC BY 4.0) at `city` precision: no map pin,
+  distances said to be approximate. The places came from an API (OGC API Features) rather than a
+  file, because the CNIG's download centre cannot be scripted.
+- **A market's segment can be a language's.** `es` was the Spanish interface of France's pages
+  (`/fr-es`, locale `es`) and is now Spain's segment: the market is the locale `es-ES` under `/es`,
+  reading the Spanish catalog with Spain's overrides in `messages/es-ES.json` (the segment-named
+  file the other markets use, `messages/es.json`, is the language's). `/fr-es` stays France in
+  Spanish; the temporary redirect of the former `/es` prefix on apercura.org was dropped.
+- **Several extracts, one register.** C1, C2 and E are fetched, guarded and left out one at a time,
+  like Austria's lists, with their own site source, so an extract that cannot be read keeps its
+  centres; a run that left one out never makes the next one skip unchanged files.
+- **A spreadsheet is a source like a CSV.** The extracts are XLSX workbooks (135 MB of sheet XML
+  for C2): a small streamed reader (`packages/etl/src/lib/xlsx.ts`) over the ZIP reader, no
+  dependency.
 
 ## What is known per market
 
@@ -1003,6 +1028,52 @@ Providers, in Czech.
 - **Verdict.** Directory from open data for personal doctors and dentists, partial and scraped
   from HTML; claimed pages for others.
 
+### Spain (ES)
+
+Open since 2026-11-26 (#148) at `/es`: centre pages from the General Register of health centres,
+services and establishments, in Spanish.
+
+- **Registry.** REPS, the state register of health professionals (RD 640/2014), has public fields
+  but no bulk access or reuse licence (UNVERIFIED as a negative [ES1][ES4]); the colegios publish
+  their registers of members for consultation (Ley 2/1974 [ES5]). REGCESS, the General Register of
+  health centres, services and establishments (RD 1277/2003), publishes monthly extracts per
+  listing at `https://regcesslm.sanidad.gob.es/recesAdminWeb/lm/GetExcelListadoMensual?tipoListado={C1|C2|C3|E}`
+  (VERIFIED [ES9], 2026-11-26): C1 929 hospitals, C2 119,577 centres without inpatient care, C3
+  services within centres, E 40,541 establishments (22,389 pharmacies). A row has the normalised
+  centre code (CCN), the regional code, name, type (RD 1277/2003 annex), community, province and
+  INE municipality codes, address, postcode, e-mail, fax, phone, web address, functional
+  dependency and its public or private group, authorisation dates and, for C1 and C2, the care
+  units offered (`U.1`…`U.900`). No coordinates. Many practices and pharmacies carry the
+  professional's name.
+- **Access and licence.** `open data` by the Ministry's legal notice: reuse of the Ministry's
+  content is authorised, for commercial or non-commercial purposes, under Ley 37/2007, provided
+  the source is cited, the date of the last update is given and the data are not distorted
+  (VERIFIED [ES2][ES3]). Places: the IGN's OGC API Features (`administrativeunit`,
+  `nuc`), CC BY 4.0 under Orden FOM/2807/2015, attributed "Obra derivada de <producto> <fecha>
+  CC-BY 4.0 ign.es" (VERIFIED [ES10][ES11]); the CNIG's download centre needs a browser session.
+  OpenStreetMap is not used (ODbL share-alike).
+- **Health data hosting.** No certification: GDPR and the LOPDGDD (Ley Orgánica 3/2018); Ley
+  41/2002 governs clinical records; the ENS (RD 311/2022) binds the public sector and its
+  providers [ES6]. No HDS-like scheme found (UNVERIFIED as a negative). Supervisory authority: the
+  Agencia Española de Protección de Datos (AEPD).
+- **Personal data.** The data of sole traders and liberal professionals, processed in that
+  capacity, fall under LOPDGDD art. 19.3 (VERIFIED [ES12]); the pages show the centre's
+  registered name and professional fields only, with the article 14 information and removal on
+  objection. E-mail, fax and web address are not stored.
+- **Formats.** `Europe/Madrid` and `Atlantic/Canary` (provinces 35 and 38); phone `+34` and nine
+  digits, printed `965 950 865` [ES7]; postcode five digits, the province's INE code first [ES8].
+- **Legal pages.** Aviso legal under LSSI (Ley 34/2002) art. 10; privacy notice under GDPR art.
+  13, 14 and 21 and the LOPDGDD; terms; RD 1112/2018 on accessibility binds public sector bodies:
+  the statement is voluntary.
+- **Market.** Spanish (Catalan, Galician and Basque are co-official in their communities: later
+  `/es-ca`, `/es-gl`, `/es-eu`). Doctoralia (Docplanner), Top Doctors.
+- **Verdict.** Directory of centres from open data: 114,795 centres from the extracts of 26
+  November 2026 (real-data dry run on a fresh database: hospitals 881, health centres 3,097,
+  local surgeries 9,920, doctors' practices 12,366, other professionals' practices 30,410,
+  polyclinics 12,892, dental clinics 22,840, pharmacies 22,389; all placed in their municipality
+  by INE code, 114,778 at its point; 28,159 listing pages, 8,178 indexable); claimed pages for
+  centres; booking later.
+
 ### Sweden (SE)
 
 - **Registry.** HOSP (Socialstyrelsen) holds licensed health staff. `restricted`: no public
@@ -1033,39 +1104,39 @@ other languages, and only `-{language}` segments where a market has no main lang
 Luxembourg (`/lu-fr`, `/lu-de`) are proposals: each has two or three official languages, and the
 English or French interface comes first. Finland's Swedish pages go under `/fi-sv`.
 
-| #   | Market         | Path                         | Fast path                                    | Why                                                                                                                                                                |
-| --- | -------------- | ---------------------------- | -------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| 1   | Austria        | `/at`                        | Open: directory (Vienna, Styria, Salzburg)   | Opened 2026-11-25 (#107): CC BY 4.0 lists of Vienna, Styria and Salzburg (10,377 doctors and dentists); German interface; no hosting certification; booking off    |
-| 2   | Switzerland    | `/ch-fr`, `/ch-de`, `/ch-it` | Claimed pages, French-speaking cantons first | High-value market, French interface exists; registers restricted, ask the FOPH for MedReg access; Swiss representative; OneDoc leads                               |
-| 3   | Czechia        | `/cz`                        | Open: directory (places of care)             | Opened 2026-11-26 (#131): NRPZS places of care under CC BY 4.0 (33,173 facilities), RÚIAN places; Czech interface; booking off                                     |
-| 4   | United Kingdom | `/gb`                        | Open: practice pages (four nations)          | Opened 2026-11-25 (#125): NHS ODS, PHS and BSO practice lists under the OGL (about 31,000 practices), located by postcode; no clinician (GMC licence); booking off |
-| 5   | Poland         | `/pl`                        | Directory (registered practices), opt-out    | RPWDL under CC BY 4.0, daily; large market; listing without consent litigated (III OSK 1052/21); Docplanner's home; needs Polish                                   |
-| 6   | Belgium        | `/be-fr`, `/be-nl`, `/be-de` | Claimed pages, opt-in only                   | DPA decision 149/2023 forbids listing practitioners who did not opt in; French exists, Dutch and German needed; Doctoranytime                                      |
-| 7   | Luxembourg     | `/lu-fr`, `/lu-de`           | Claimed pages                                | French exists; the Collège médical charter bans paid priority, which fits; small; Doctena                                                                          |
-| 8   | Spain          | `/es`                        | Claimed pages                                | Spanish exists; college registers are public by law, so claims are easy to verify; no reusable register; Doctoralia, Top Doctors                                   |
-| 9   | Italy          | `/it`                        | Claimed pages                                | Italian exists; Albo Unico forbids commercial reuse; booking needs explicit consent (Garante); MioDottore, Doctolib                                                |
-| 10  | Ireland        | `/ie-en`                     | Claimed pages                                | English exists; a PSI re-use request could open the Medical Council register                                                                                       |
-| 11  | Malta          | `/mt-en`                     | Directory, once confirmed                    | Doctor and dentist registers under CC BY 4.0 in the national catalogue; English; tiny; many addresses withheld                                                     |
-| 12  | Germany        | `/de`                        | Claimed pages, booking not yet               | Largest market, German exists; no reusable register; booking for contracted doctors needs a C5 Type 2 host and GeDIG is pending                                    |
-| 13  | Estonia        | `/ee`                        | Directory, once confirmed                    | Individuals with workplaces in open data, but CC BY-NC-SA 3.0; pages must show the activity licence number; tiny                                                   |
-| 14  | Slovenia       | `/si`                        | Partial directory (personal doctors)         | ZZZS list under CC BY 4.0, HTML only; small                                                                                                                        |
-| 15  | Latvia         | `/lv`                        | Partial directory (GPs)                      | NVD GP lists under CC0; small                                                                                                                                      |
-| 16  | Netherlands    | `/nl`                        | Claimed pages                                | BIG register is CC0 but one lookup at a time and without addresses; courts accepted ZorgkaartNederland; needs Dutch                                                |
-| 17  | Portugal       | `/pt`                        | Claimed pages                                | Registers public by law (Lei 2/2013) but no licence; Doctoralia                                                                                                    |
-| 18  | Croatia        | `/hr`                        | Claimed pages, directory if HZZO confirms    | HZZO lists have names and addresses, licence "not specified"                                                                                                       |
-| 19  | Cyprus         | `/cy`                        | Claimed pages, directory if licensed         | Full register online without a licence; the ethics code requires uniform listings                                                                                  |
-| 20  | Romania        | `/ro`                        | Claimed pages                                | CNAS lists are CC BY 4.0 but carry no address or specialty                                                                                                         |
-| 21  | Denmark        | `/dk`                        | Claimed pages                                | Lookup-only register; SOR could seed establishments                                                                                                                |
-| 22  | Norway         | `/no`                        | Claimed pages                                | HPR API gated and onward sharing barred                                                                                                                            |
-| 23  | Sweden         | `/se`                        | Claimed pages                                | HOSP has no public search; concentrated digital-care market                                                                                                        |
-| 24  | Lithuania      | `/lt`                        | Claimed pages                                | Named search has no licence; institutions are open data                                                                                                            |
-| 25  | Slovakia       | `/sk`                        | Claimed pages                                | No licensed register                                                                                                                                               |
-| 26  | Hungary        | `/hu`                        | Claimed pages                                | Lookup-only register                                                                                                                                               |
-| 27  | Bulgaria       | `/bg`                        | Claimed pages                                | Lookup-only registers                                                                                                                                              |
-| 28  | Iceland        | `/is`                        | Claimed pages                                | Lookup-only register; very small                                                                                                                                   |
-| 29  | Liechtenstein  | `/li`                        | Claimed pages, with Switzerland              | About 130 doctors                                                                                                                                                  |
-| 30  | Finland        | `/fi`, `/fi-sv`              | Not yet                                      | Booking means system registration and Kanta appointment records (Act 784/2021)                                                                                     |
-| 31  | Greece         | `/gr`                        | Not yet                                      | Law 3418/2005 art. 17 bans indirect advertising; needs a Greek legal opinion first                                                                                 |
+| #   | Market         | Path                         | Fast path                                    | Why                                                                                                                                                                   |
+| --- | -------------- | ---------------------------- | -------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1   | Austria        | `/at`                        | Open: directory (Vienna, Styria, Salzburg)   | Opened 2026-11-25 (#107): CC BY 4.0 lists of Vienna, Styria and Salzburg (10,377 doctors and dentists); German interface; no hosting certification; booking off       |
+| 2   | Switzerland    | `/ch-fr`, `/ch-de`, `/ch-it` | Claimed pages, French-speaking cantons first | High-value market, French interface exists; registers restricted, ask the FOPH for MedReg access; Swiss representative; OneDoc leads                                  |
+| 3   | Czechia        | `/cz`                        | Open: directory (places of care)             | Opened 2026-11-26 (#131): NRPZS places of care under CC BY 4.0 (33,173 facilities), RÚIAN places; Czech interface; booking off                                        |
+| 4   | United Kingdom | `/gb`                        | Open: practice pages (four nations)          | Opened 2026-11-25 (#125): NHS ODS, PHS and BSO practice lists under the OGL (about 31,000 practices), located by postcode; no clinician (GMC licence); booking off    |
+| 5   | Poland         | `/pl`                        | Directory (registered practices), opt-out    | RPWDL under CC BY 4.0, daily; large market; listing without consent litigated (III OSK 1052/21); Docplanner's home; needs Polish                                      |
+| 6   | Belgium        | `/be-fr`, `/be-nl`, `/be-de` | Claimed pages, opt-in only                   | DPA decision 149/2023 forbids listing practitioners who did not opt in; French exists, Dutch and German needed; Doctoranytime                                         |
+| 7   | Luxembourg     | `/lu-fr`, `/lu-de`           | Claimed pages                                | French exists; the Collège médical charter bans paid priority, which fits; small; Doctena                                                                             |
+| 8   | Spain          | `/es`                        | Open: directory (health centres)             | Opened 2026-11-26 (#148): REGCESS centres (114,795) reusable under the Ministry's notice, IGN places; Spanish interface; no coordinates (city precision); booking off |
+| 9   | Italy          | `/it`                        | Claimed pages                                | Italian exists; Albo Unico forbids commercial reuse; booking needs explicit consent (Garante); MioDottore, Doctolib                                                   |
+| 10  | Ireland        | `/ie-en`                     | Claimed pages                                | English exists; a PSI re-use request could open the Medical Council register                                                                                          |
+| 11  | Malta          | `/mt-en`                     | Directory, once confirmed                    | Doctor and dentist registers under CC BY 4.0 in the national catalogue; English; tiny; many addresses withheld                                                        |
+| 12  | Germany        | `/de`                        | Claimed pages, booking not yet               | Largest market, German exists; no reusable register; booking for contracted doctors needs a C5 Type 2 host and GeDIG is pending                                       |
+| 13  | Estonia        | `/ee`                        | Directory, once confirmed                    | Individuals with workplaces in open data, but CC BY-NC-SA 3.0; pages must show the activity licence number; tiny                                                      |
+| 14  | Slovenia       | `/si`                        | Partial directory (personal doctors)         | ZZZS list under CC BY 4.0, HTML only; small                                                                                                                           |
+| 15  | Latvia         | `/lv`                        | Partial directory (GPs)                      | NVD GP lists under CC0; small                                                                                                                                         |
+| 16  | Netherlands    | `/nl`                        | Claimed pages                                | BIG register is CC0 but one lookup at a time and without addresses; courts accepted ZorgkaartNederland; needs Dutch                                                   |
+| 17  | Portugal       | `/pt`                        | Claimed pages                                | Registers public by law (Lei 2/2013) but no licence; Doctoralia                                                                                                       |
+| 18  | Croatia        | `/hr`                        | Claimed pages, directory if HZZO confirms    | HZZO lists have names and addresses, licence "not specified"                                                                                                          |
+| 19  | Cyprus         | `/cy`                        | Claimed pages, directory if licensed         | Full register online without a licence; the ethics code requires uniform listings                                                                                     |
+| 20  | Romania        | `/ro`                        | Claimed pages                                | CNAS lists are CC BY 4.0 but carry no address or specialty                                                                                                            |
+| 21  | Denmark        | `/dk`                        | Claimed pages                                | Lookup-only register; SOR could seed establishments                                                                                                                   |
+| 22  | Norway         | `/no`                        | Claimed pages                                | HPR API gated and onward sharing barred                                                                                                                               |
+| 23  | Sweden         | `/se`                        | Claimed pages                                | HOSP has no public search; concentrated digital-care market                                                                                                           |
+| 24  | Lithuania      | `/lt`                        | Claimed pages                                | Named search has no licence; institutions are open data                                                                                                               |
+| 25  | Slovakia       | `/sk`                        | Claimed pages                                | No licensed register                                                                                                                                                  |
+| 26  | Hungary        | `/hu`                        | Claimed pages                                | Lookup-only register                                                                                                                                                  |
+| 27  | Bulgaria       | `/bg`                        | Claimed pages                                | Lookup-only registers                                                                                                                                                 |
+| 28  | Iceland        | `/is`                        | Claimed pages                                | Lookup-only register; very small                                                                                                                                      |
+| 29  | Liechtenstein  | `/li`                        | Claimed pages, with Switzerland              | About 130 doctors                                                                                                                                                     |
+| 30  | Finland        | `/fi`, `/fi-sv`              | Not yet                                      | Booking means system registration and Kanta appointment records (Act 784/2021)                                                                                        |
+| 31  | Greece         | `/gr`                        | Not yet                                      | Law 3418/2005 art. 17 bans indirect advertising; needs a Greek legal opinion first                                                                                    |
 
 The realistic fast path:
 
@@ -1074,9 +1145,11 @@ The realistic fast path:
   Latvia). Each needs a legitimate-interest assessment and an art. 14 notice: an open licence
   settles reuse rights, not the GDPR.
 - **Practice pages from open data:** the United Kingdom (open: GP practices, dental practices,
-  pharmacies; clinicians need a GMC licence).
+  pharmacies; clinicians need a GMC licence) and Spain (open: every authorised centre of
+  REGCESS's hospitals, health centres, practices, dental clinics and pharmacies; professionals
+  need REPS or the colegios).
 - **Claimed pages only:** Switzerland, Belgium
-  (opt-in, never listed by default), Luxembourg, Spain, Italy, Ireland, then the other markets. A
+  (opt-in, never listed by default), Luxembourg, Italy, Ireland, then the other markets. A
   claimed-pages market is worth opening only where Apercura can reach practitioners, so the ones
   with an existing interface language come first.
 - **Not yet:** Finland and Greece; booking in Germany.
@@ -1089,15 +1162,15 @@ Germany's §393 SGB V.
 ## Consequences
 
 - The interface reads in five languages; France's pages are indexed in French
-  (`/fr`), Austria's in German (`/at`), the UK's in British English (`/gb`)
-  and Czechia's in Czech (`/cz`),
+  (`/fr`), Austria's in German (`/at`), the UK's in British English (`/gb`),
+  Czechia's in Czech (`/cz`) and Spain's in Spanish (`/es`),
   every interface translation stays `noindex`.
 - New markets plug in through an adapter, an ETL source and a path segment on
   apercura.org, without changing the French code paths.
 - Only a handful of markets publish practitioners under a reuse licence
   (Austria's Vienna and Styria lists, Czechia, Poland, and partially Malta,
-  Estonia, Slovenia and Latvia); the United Kingdom publishes practices, not
-  people. Everywhere else, including Germany, Spain, Italy and Switzerland, a
+  Estonia, Slovenia and Latvia); the United Kingdom and Spain publish practices
+  and centres, not people. Everywhere else, including Germany, Italy and Switzerland, a
   market opens with claimed pages only,
   so `features.directory` must be false by default for a new adapter.
 - Belgium's DPA forbids listing practitioners who have not opted in: the
@@ -1209,6 +1282,10 @@ Market study (#82), labelled by country, all checked on 2026-11-25:
 - ES6. RD 311/2022 (ENS): <https://www.boe.es/buscar/act.php?id=BOE-A-2022-7191>
 - ES7. RD 2296/2004 (numbering plan): <https://www.boe.es/eli/es/rd/2004/12/10/2296/con>
 - ES8. UPU addressing guide, Spain: <https://www.upu.int/UPU/media/upu/PostalEntitiesFiles/addressingUnit/espEn.pdf>
+- ES9. REGCESS, monthly extracts: <https://regcess.mscbs.es/regcessWeb/inicioDescargaCentrosAction.do>
+- ES10. IGN, OGC API Features: <https://api-features.ign.es/collections>
+- ES11. IGN licence (Orden FOM/2807/2015): <https://www.ign.es/resources/licencia/Condiciones_licenciaUso_IGN.pdf>
+- ES12. Ley Orgánica 3/2018 (LOPDGDD), art. 19: <https://www.boe.es/eli/es/lo/2018/12/05/3/con>
 - IT1. FNOMCeO, Albo Unico Nazionale: <https://albounico.fnomceo.it/>
 - IT2. dati.gov.it catalogue, Milan GPs (and the Campania dataset `medici-medicina-generale`): <https://www.dati.gov.it/opendata/api/3/action/package_show?id=sanita-medici-di-medicina-generale>
 - IT3. UPU addressing guide, Italy: <https://www.upu.int/UPU/media/upu/PostalEntitiesFiles/addressingUnit/itaEn.pdf>

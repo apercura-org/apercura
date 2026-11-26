@@ -208,6 +208,20 @@ and skips an unchanged export (`ETL_CZ_SCHEDULE_ARGS` adds flags); one list
 only, so it exits `1` when the export cannot be read
 ([data-import.md](./data-import.md#czechia)).
 
+Spain (`/es`) has its own import, from the monthly extracts of the General
+Register of health centres (REGCESS, Ministerio de Sanidad, about 115,000
+centres):
+
+```sh
+apercura-compose run --rm --entrypoint "apercura etl:es" etl
+```
+
+Its first run imports the Spanish communities, provinces and municipalities
+(the IGN's API, about 30 MB of JSON, under a minute). The scheduler reruns it
+every Monday at 08:30 UTC and skips unchanged extracts (`ETL_ES_SCHEDULE_ARGS`
+narrows it, e.g. `--sources regcess-e`); exit code `3` when an extract was left
+out, as for Austria ([data-import.md](./data-import.md#spain)).
+
 ## Scheduled jobs
 
 The `scheduler` service runs [`docker/crontab`](../docker/crontab) with

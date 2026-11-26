@@ -207,23 +207,44 @@ Practices only: no clinician is listed. Left:
 - Luxembourg: check the Collège médical charter (no priority placement) and the rule on
   directories for other health professions.
 
-### 7. Spain (`/es`), Italy (`/it`) and Ireland (`/ie-en`): claimed pages
+### 7. Spain (`/es`): open, directory of health centres
 
-- Spain: verify claims against the college registers (Ley 2/1974 art. 10); check the
-  regional registers.
+Done in [#148](https://github.com/apercura-org/apercura/issues/148): `/es` in Spanish, built weekly
+by `etl:es` from the monthly extracts of the General Register of health centres, services and
+establishments (REGCESS, Ministerio de Sanidad, reuse under Ley 37/2007 citing the source and its
+date): one page per hospital, health centre or local surgery, doctor's practice (listed by
+specialty), other health professional's practice, polyclinic, dental clinic and pharmacy (about
+115,000), placed by INE code in the IGN's provinces and municipalities (CC BY 4.0) at their
+municipality's point (city precision: the register publishes no coordinates), with the
+attributions on the data sources page, a GDPR and LOPDGDD privacy notice with the article 14
+information, claims by documents, no booking ([data import](./docs/data-import.md#spain),
+[ADR 0002](./docs/adr/0002-multi-country.md#spain-es)). Left:
+
+- Have a native speaker review the Spanish market texts, and a Spanish lawyer the aviso legal,
+  privacy notice and terms (LSSI, LOPDGDD); decide whether home-visit practices registered at a
+  person's address should show their street.
+- Send the requests of [`docs/data-requests/es.md`](./docs/data-requests/es.md),
+  [`es-reps.md`](./docs/data-requests/es-reps.md) and
+  [`es-cgcom.md`](./docs/data-requests/es-cgcom.md) (founder); verify claims against the college
+  registers (Ley 2/1974 art. 10).
+- Exact locations (a geocoder whose terms allow bulk use), opening hours, and the centre types
+  left out (mental health centres, opticians, diagnostics).
+
+### 8. Italy (`/it`) and Ireland (`/ie-en`): claimed pages
+
 - Italy: an explicit consent step before booking (Garante, 2024 compendium); the DPIA; check
   regional GP open data (Milan, Campania) for later.
 - Ireland: file a re-use request to the Medical Council under the Open Data and PSI
   Regulations 2021.
 
-### 8. Small open-data markets
+### 9. Small open-data markets
 
 - Malta (doctors and dentists, CC BY 4.0): written confirmation from the Medical Council.
 - Estonia (MEDRE, CC BY-NC-SA 3.0): confirmation that the NonCommercial and ShareAlike terms fit;
   show the activity licence number on every provider page.
 - Slovenia (ZZZS personal doctors, CC BY 4.0) and Latvia (NVD GPs, CC0): partial directories.
 
-### 9. Germany (`/de`): claimed pages, booking later
+### 10. Germany (`/de`): claimed pages, booking later
 
 - Booking only with a host holding a BSI C5 Type 2 attestation, after a legal opinion on §393
   SGB V (processor or controller, establishment in Germany) and once the GeDIG rules for private
