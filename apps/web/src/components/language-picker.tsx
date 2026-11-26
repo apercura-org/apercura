@@ -1,4 +1,5 @@
 import { CheckIcon } from "@apercura/ui";
+import type { ReactNode } from "react";
 import type { Href } from "~/i18n/navigation";
 import type { Locale } from "~/i18n/routing";
 import { HeaderMenu } from "./header-menu";
@@ -10,10 +11,10 @@ interface LanguagePickerProps {
 	locale: Locale;
 	/** The current page: every option links to it in another language (ADR 0002 §2). */
 	href: Href;
-	/** Landmark name and printed caption, e.g. "Langue". */
+	/** Landmark name, e.g. "Langue". */
 	label: string;
-	/** The toggle's accessible name, naming the current language, e.g. "Langue : Français". */
-	currentLabel: string;
+	/** The toggle's text and accessible name, naming the current language: "Langue : Français". */
+	current: ReactNode;
 	/** Each language offered, named in itself ("Français", "English"…). */
 	names: Partial<Record<Locale, string>>;
 	/** Keep the fragment (the appointment page's token lives there). */
@@ -29,19 +30,13 @@ export function LanguagePicker({
 	locale,
 	href,
 	label,
-	currentLabel,
+	current,
 	names,
 	keepHash = false,
 	className,
 }: LanguagePickerProps) {
 	return (
-		<HeaderMenu
-			label={label}
-			toggleLabel={currentLabel}
-			caption={label}
-			current={<span lang={locale}>{names[locale]}</span>}
-			className={className}
-		>
+		<HeaderMenu label={label} toggle={current} className={className}>
 			{(Object.keys(names) as Locale[]).map((other) => (
 				<li key={other}>
 					<LocaleSwitchLink

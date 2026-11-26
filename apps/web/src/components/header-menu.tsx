@@ -6,12 +6,11 @@ import { type KeyboardEvent, type MouseEvent, type ReactNode, useEffect, useRef 
 interface HeaderMenuProps {
 	/** Landmark name, e.g. "Langue" or "Pays". */
 	label: string;
-	/** The toggle's accessible name, naming the current choice, e.g. "Langue : Français". */
-	toggleLabel: string;
-	/** The toggle's printed caption, e.g. "Langue". */
-	caption: string;
-	/** The current choice as printed on the toggle, e.g. "Français". */
-	current: ReactNode;
+	/**
+	 * The toggle's text, which is also its accessible name: the caption and the current choice,
+	 * e.g. "Langue : Français", the choice wrapped in `HEADER_MENU_VALUE`.
+	 */
+	toggle: ReactNode;
 	/**
 	 * The menu's `<li>` items, each holding one link (rendered by the server: the menu ships
 	 * only this disclosure's behaviour). The current one carries `aria-current="true"`.
@@ -35,9 +34,7 @@ interface HeaderMenuProps {
  */
 export function HeaderMenu({
 	label,
-	toggleLabel,
-	caption,
-	current,
+	toggle: toggleText,
 	children,
 	align = "end",
 	className,
@@ -112,11 +109,9 @@ export function HeaderMenu({
 			<details ref={details} className="group" onKeyDown={onKeyDown}>
 				<summary
 					ref={toggle}
-					aria-label={toggleLabel}
-					className="flex min-h-11 cursor-pointer list-none items-center gap-1.5 rounded-field px-2.5 text-meta text-ink outline-none hover:bg-paper-shade focus-visible:outline-3 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-(--focus-ring) group-open:bg-paper-shade [&::-webkit-details-marker]:hidden"
+					className="flex min-h-11 cursor-pointer list-none items-center gap-1.5 rounded-field px-2.5 text-meta text-ink-muted outline-none hover:bg-paper-shade focus-visible:outline-3 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-(--focus-ring) group-open:bg-paper-shade [&::-webkit-details-marker]:hidden"
 				>
-					<span className="text-ink-muted">{caption}</span>
-					<span className="font-medium">{current}</span>
+					<span>{toggleText}</span>
 					<ChevronDownIcon className="size-4 text-ink-muted transition-transform duration-150 group-open:rotate-180" />
 				</summary>
 				{/* biome-ignore lint/a11y/useKeyWithClickEvents: the links handle the keyboard; this only closes the menu after one is chosen. */}

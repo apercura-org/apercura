@@ -4,6 +4,7 @@ import { marketOf } from "~/i18n/locales";
 import { type Href, Link } from "~/i18n/navigation";
 import { type Locale, routing } from "~/i18n/routing";
 import { CountryPicker } from "./country-picker";
+import { HEADER_MENU_VALUE } from "./header-menu-item";
 import { LanguagePicker } from "./language-picker";
 
 interface SiteHeaderProps {
@@ -54,7 +55,14 @@ export async function SiteHeader({ locale, href }: SiteHeaderProps) {
 							locale={locale}
 							href={href}
 							label={tLocale("label")}
-							currentLabel={tLocale("current", { language: names[locale] })}
+							current={tLocale.rich("current", {
+								language: names[locale],
+								value: (chunks) => (
+									<span lang={locale} className={HEADER_MENU_VALUE}>
+										{chunks}
+									</span>
+								),
+							})}
 							names={names}
 							// The appointment page keeps its token, which lives in the fragment.
 							keepHash={href === "/rdv"}

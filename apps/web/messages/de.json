@@ -49,11 +49,11 @@
 	"LocaleSwitcher": {
 		"label": "Sprache",
 		"locale": "{locale, select, fr {Français} en {English} de {Deutsch} es {Español} it {Italiano} other {Unbekannte Sprache}}",
-		"current": "Sprache: {language}"
+		"current": "Sprache: <value>{language}</value>"
 	},
 	"CountrySwitcher": {
 		"label": "Land",
-		"current": "Land: {country}"
+		"current": "Land: <value>{country}</value>"
 	},
 	"ErrorPages": {
 		"notFound": {

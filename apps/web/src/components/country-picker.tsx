@@ -4,7 +4,7 @@ import { type MarketCountry, marketOf } from "~/i18n/locales";
 import type { Locale } from "~/i18n/routing";
 import { marketHomes } from "~/lib/market-homes";
 import { HeaderMenu } from "./header-menu";
-import { HEADER_MENU_ITEM } from "./header-menu-item";
+import { HEADER_MENU_ITEM, HEADER_MENU_VALUE } from "./header-menu-item";
 
 /**
  * The country menu of the header: the open markets, each a plain link to its home, in the
@@ -30,9 +30,10 @@ export async function CountryPicker({
 	return (
 		<HeaderMenu
 			label={t("label")}
-			toggleLabel={t("current", { country: name(here) })}
-			caption={t("label")}
-			current={name(here)}
+			toggle={t.rich("current", {
+				country: name(here),
+				value: (chunks) => <span className={HEADER_MENU_VALUE}>{chunks}</span>,
+			})}
 			align={align}
 			className={className}
 		>
