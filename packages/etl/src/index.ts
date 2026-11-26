@@ -3,6 +3,7 @@ export const COMMANDS = [
 	"etl:at",
 	"etl:gb",
 	"etl:cz",
+	"etl:es",
 	"etl:places",
 	"etl:outbox",
 ] as const;
@@ -22,12 +23,18 @@ Commands:
   etl:cz        Import Czech healthcare facilities (practices, pharmacies, home care…)
                 from the National Register of Healthcare Providers (NRPZS, ÚZIS;
                 CC BY 4.0), placed in RÚIAN's municipalities, rebuild read models.
+  etl:es        Import Spanish health centres (hospitals, health centres, practices,
+                dental clinics, pharmacies…) from the monthly extracts of REGCESS
+                (Ministerio de Sanidad; reuse citing the source and date), placed in
+                the IGN's municipalities by INE code, rebuild read models.
   etl:places    Import regions, departments, communes and arrondissements
                 (geo.api.gouv.fr), or with --country at the Austrian
                 Bundesländer and Gemeinden (Statistik Austria), or with --country gb
                 the UK regions, local authorities (ONS) and towns (OS Open Names,
                 OSNI), or with --country cz the Czech regions, districts,
-                municipalities and Prague districts (RÚIAN, ČÚZK). Run once, then yearly.
+                municipalities and Prague districts (RÚIAN, ČÚZK), or with --country es
+                the Spanish autonomous communities, provinces and municipalities
+                (IGN, CC BY 4.0). Run once, then yearly.
   etl:outbox    Send pending cache invalidations to the web app.
 
 Flags (etl:fr):
@@ -58,6 +65,12 @@ Flags (etl:cz):
                           As for etl:fr. One list: when it cannot be fetched or read the run
                           fails (exit code 1).
 
+Flags (etl:es):
+  --sources <ids>         Extracts to import: regcess-c1, regcess-c2, regcess-e (default
+                          ETL_ES_SOURCES, else all).
+  --dry-run, --approve=<run_id>, --force, --source-dir <path>, --offline, --work-dir <path>
+                          As for etl:at.
+
 Environment:
   DATABASE_URL_ETL (or DATABASE_URL), ETL_PROFESSIONS, ETL_ANS_URLS, ETL_AMELI_URL,
   ETL_FINESS_DATASET_URL, ETL_GEO_API_URL, ETL_GEOCODER_URL, ETL_SOURCE_DIR, ETL_WORK_DIR,
@@ -67,20 +80,25 @@ Environment:
   ETL_GB_LAD_LOOKUP_URL, ETL_GB_LAD_BOUNDARIES_URL, ETL_GB_TOWNS_URL, ETL_GB_NI_TOWNS_URL,
   ETL_GB_SOURCE_DIR,
   ETL_CZ_URL, ETL_CZ_PLACES_URL, ETL_CZ_SOURCE_DIR,
+  ETL_ES_SOURCES, ETL_ES_C1_URL, ETL_ES_C2_URL, ETL_ES_E_URL, ETL_ES_PLACES_URL,
+  ETL_ES_SOURCE_DIR,
   APP_URL and REVALIDATE_SECRET (cache revalidation).`;
 
 export {
 	type AtOptions,
 	buildAtOptions,
 	buildCzOptions,
+	buildEsOptions,
 	buildFrOptions,
 	buildGbOptions,
 	type CzOptions,
+	type EsOptions,
 	type FrOptions,
 	type GbOptions,
 	parseArgs,
 } from "./config";
 export { type AtRunOutcome, runAt } from "./run-at";
 export { type CzRunOutcome, runCz } from "./run-cz";
+export { type EsRunOutcome, runEs } from "./run-es";
 export { type RunOutcome, runFr } from "./run-fr";
 export { type GbRunOutcome, runGb } from "./run-gb";

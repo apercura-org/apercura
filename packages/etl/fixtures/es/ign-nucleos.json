@@ -1,0 +1,286 @@
+{
+	"type": "FeatureCollection",
+	"features": [
+		{
+			"type": "Feature",
+			"id": 100000001,
+			"properties": {
+				"nombre": "Madrid",
+				"codine": "28079000101",
+				"capital": "111100",
+				"habitantes": 3422416,
+				"longitud": -3.691978,
+				"latitud": 40.419026,
+				"tipo": "NUCL"
+			},
+			"geometry": null
+		},
+		{
+			"type": "Feature",
+			"id": 100000002,
+			"properties": {
+				"nombre": "Madrid (núcleo secundario)",
+				"codine": "28079000201",
+				"capital": "000000",
+				"habitantes": 34224,
+				"longitud": -3.6619780000000004,
+				"latitud": 40.439026000000005,
+				"tipo": "NUCL"
+			},
+			"geometry": null
+		},
+		{
+			"type": "Feature",
+			"id": 100000003,
+			"properties": {
+				"nombre": "Alcobendas",
+				"codine": "28006000101",
+				"capital": "000100",
+				"habitantes": 121330,
+				"longitud": -3.641871,
+				"latitud": 40.547459,
+				"tipo": "NUCL"
+			},
+			"geometry": null
+		},
+		{
+			"type": "Feature",
+			"id": 100000004,
+			"properties": {
+				"nombre": "Alcobendas (núcleo secundario)",
+				"codine": "28006000201",
+				"capital": "000000",
+				"habitantes": 1213,
+				"longitud": -3.6118710000000003,
+				"latitud": 40.56745900000001,
+				"tipo": "NUCL"
+			},
+			"geometry": null
+		},
+		{
+			"type": "Feature",
+			"id": 100000005,
+			"properties": {
+				"nombre": "Getafe",
+				"codine": "28065000101",
+				"capital": "000000",
+				"habitantes": 161160,
+				"longitud": -3.732332,
+				"latitud": 40.305551,
+				"tipo": "NUCL"
+			},
+			"geometry": null
+		},
+		{
+			"type": "Feature",
+			"id": 100000006,
+			"properties": {
+				"nombre": "Getafe (núcleo secundario)",
+				"codine": "28065000201",
+				"capital": "000000",
+				"habitantes": 1611,
+				"longitud": -3.702332,
+				"latitud": 40.325551000000004,
+				"tipo": "NUCL"
+			},
+			"geometry": null
+		},
+		{
+			"type": "Feature",
+			"id": 100000007,
+			"properties": {
+				"nombre": "Barcelona",
+				"codine": "08019000101",
+				"capital": "011100",
+				"habitantes": 1686208,
+				"longitud": 2.15465,
+				"latitud": 41.394708,
+				"tipo": "NUCL"
+			},
+			"geometry": null
+		},
+		{
+			"type": "Feature",
+			"id": 100000008,
+			"properties": {
+				"nombre": "Barcelona (núcleo secundario)",
+				"codine": "08019000201",
+				"capital": "000000",
+				"habitantes": 16862,
+				"longitud": 2.18465,
+				"latitud": 41.414708000000005,
+				"tipo": "NUCL"
+			},
+			"geometry": null
+		},
+		{
+			"type": "Feature",
+			"id": 100000009,
+			"properties": {
+				"nombre": "L'Hospitalet de Llobregat",
+				"codine": "08101000101",
+				"capital": "000100",
+				"habitantes": 282299,
+				"longitud": 2.111387,
+				"latitud": 41.36383,
+				"tipo": "NUCL"
+			},
+			"geometry": null
+		},
+		{
+			"type": "Feature",
+			"id": 100000010,
+			"properties": {
+				"nombre": "L'Hospitalet de Llobregat (núcleo secundario)",
+				"codine": "08101000201",
+				"capital": "000000",
+				"habitantes": 2822,
+				"longitud": 2.141387,
+				"latitud": 41.38383,
+				"tipo": "NUCL"
+			},
+			"geometry": null
+		},
+		{
+			"type": "Feature",
+			"id": 100000011,
+			"properties": {
+				"nombre": "València",
+				"codine": "46250000101",
+				"capital": "011100",
+				"habitantes": 784303,
+				"longitud": -0.377393,
+				"latitud": 39.469901,
+				"tipo": "NUCL"
+			},
+			"geometry": null
+		},
+		{
+			"type": "Feature",
+			"id": 100000012,
+			"properties": {
+				"nombre": "València (núcleo secundario)",
+				"codine": "46250000201",
+				"capital": "000000",
+				"habitantes": 7843,
+				"longitud": -0.34739299999999995,
+				"latitud": 39.489901,
+				"tipo": "NUCL"
+			},
+			"geometry": null
+		},
+		{
+			"type": "Feature",
+			"id": 100000013,
+			"properties": {
+				"nombre": "Alacant/Alicante",
+				"codine": "03014000101",
+				"capital": "001100",
+				"habitantes": 345455,
+				"longitud": -0.491955,
+				"latitud": 38.354831,
+				"tipo": "NUCL"
+			},
+			"geometry": null
+		},
+		{
+			"type": "Feature",
+			"id": 100000014,
+			"properties": {
+				"nombre": "Alacant/Alicante (núcleo secundario)",
+				"codine": "03014000201",
+				"capital": "000000",
+				"habitantes": 3454,
+				"longitud": -0.461955,
+				"latitud": 38.374831,
+				"tipo": "NUCL"
+			},
+			"geometry": null
+		},
+		{
+			"type": "Feature",
+			"id": 100000015,
+			"properties": {
+				"nombre": "Mutxamel",
+				"codine": "03090000101",
+				"capital": "000100",
+				"habitantes": 15107,
+				"longitud": -0.446237,
+				"latitud": 38.415027,
+				"tipo": "NUCL"
+			},
+			"geometry": null
+		},
+		{
+			"type": "Feature",
+			"id": 100000016,
+			"properties": {
+				"nombre": "Mutxamel (núcleo secundario)",
+				"codine": "03090000201",
+				"capital": "000000",
+				"habitantes": 151,
+				"longitud": -0.41623699999999997,
+				"latitud": 38.435027000000005,
+				"tipo": "NUCL"
+			},
+			"geometry": null
+		},
+		{
+			"type": "Feature",
+			"id": 100000017,
+			"properties": {
+				"nombre": "Sevilla",
+				"codine": "41091000101",
+				"capital": "011100",
+				"habitantes": 685914,
+				"longitud": -5.994477,
+				"latitud": 37.388637,
+				"tipo": "NUCL"
+			},
+			"geometry": null
+		},
+		{
+			"type": "Feature",
+			"id": 100000018,
+			"properties": {
+				"nombre": "Sevilla (núcleo secundario)",
+				"codine": "41091000201",
+				"capital": "000000",
+				"habitantes": 6859,
+				"longitud": -5.964477,
+				"latitud": 37.408637000000006,
+				"tipo": "NUCL"
+			},
+			"geometry": null
+		},
+		{
+			"type": "Feature",
+			"id": 100000019,
+			"properties": {
+				"nombre": "Las Palmas de Gran Canaria",
+				"codine": "35016000101",
+				"capital": "011100",
+				"habitantes": 302202,
+				"longitud": -15.42847,
+				"latitud": 28.124924,
+				"tipo": "NUCL"
+			},
+			"geometry": null
+		},
+		{
+			"type": "Feature",
+			"id": 100000020,
+			"properties": {
+				"nombre": "Las Palmas de Gran Canaria (núcleo secundario)",
+				"codine": "35016000201",
+				"capital": "000000",
+				"habitantes": 3022,
+				"longitud": -15.398470000000001,
+				"latitud": 28.144924,
+				"tipo": "NUCL"
+			},
+			"geometry": null
+		}
+	],
+	"numberMatched": 20
+}

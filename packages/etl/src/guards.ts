@@ -493,3 +493,109 @@ export function checkCzPlaces(staged: {
 		},
 	];
 }
+
+// ---------------------------------------------------------------------------
+// Spain (`etl:es`): the same verdicts, per extract of the register
+// ---------------------------------------------------------------------------
+
+/**
+ * Limits of the REGCESS monthly extracts. Each extract has its floors, which catch an empty or
+ * broken file on a first run (November 2026: 929 hospital lines and 881 hospitals imported,
+ * 119,577 lines of centres without inpatient care and 91,525 imported, 40,541 establishment
+ * lines and 22,389 pharmacies); afterwards the change since the last successful run (5% of
+ * centres, 15% of bytes, approvable) blocks a truncated one.
+ */
+export const ES_LIMITS = {
+	fileSizeDelta: 0.15,
+	quarantineRatio: 0.01,
+	rowsDelta: 0.05,
+	floors: {
+		"regcess-c1": { minLines: 50, minRows: 30 },
+		"regcess-c2": { minLines: 1_000, minRows: 100 },
+		"regcess-e": { minLines: 300, minRows: 30 },
+	} as Readonly<Record<string, { minLines: number; minRows: number }>>,
+	/** Sites placed in their municipality (else only in their province). */
+	minPlacedRatio: 0.99,
+	/** Sites located at their municipality's point. */
+	minLocatedRatio: 0.98,
+} as const;
+
+/**
+ * Checks of one extract before the merge: quarantine within 1%, floors of lines and centres
+ * (never approvable), and at most 5% more or fewer centres or 15% more or fewer bytes than the
+ * last successful run that read it (approvable).
+ */
+export function checkEsSource(
+	source: string,
+	current: AtSourceStats & { bytes: number },
+	previous: (AtSourceStats & { bytes?: number }) | null,
+): GuardCheck[] {
+	const floors = ES_LIMITS.floors[source] ?? { minLines: 1, minRows: 1 };
+	const ratio = current.lines === 0 ? 1 : current.quarantined / current.lines;
+	const checks: GuardCheck[] = [
+		{
+			name: `${source}.quarantine`,
+			ok: current.lines > 0 && ratio <= ES_LIMITS.quarantineRatio,
+			approvable: false,
+			detail: `${current.quarantined} of ${current.lines} lines quarantined (${percent(ratio)})`,
+		},
+		{
+			name: `${source}.lines`,
+			ok: current.lines >= floors.minLines,
+			approvable: false,
+			detail: `${current.lines} data lines (at least ${floors.minLines} expected)`,
+		},
+		{
+			name: `${source}.rows`,
+			ok: current.rows >= floors.minRows,
+			approvable: false,
+			detail: `${current.rows} centres imported (at least ${floors.minRows} expected)`,
+		},
+	];
+	if (previous) {
+		const rows = delta(current.people, previous.people);
+		checks.push({
+			name: `${source}.centres`,
+			ok: rows <= ES_LIMITS.rowsDelta,
+			approvable: true,
+			detail: `${current.people} centres vs ${previous.people} last time (${percent(rows)})`,
+		});
+		if (previous.bytes !== undefined) {
+			const size = delta(current.bytes, previous.bytes);
+			checks.push({
+				name: `${source}.size`,
+				ok: size <= ES_LIMITS.fileSizeDelta,
+				approvable: true,
+				detail: `${current.bytes} bytes vs ${previous.bytes} last time (${percent(size)})`,
+			});
+		}
+	}
+	return checks;
+}
+
+/**
+ * After staging: nearly every site must be placed in its municipality and located at its point,
+ * or the listings and the distances would lose it.
+ */
+export function checkEsPlaces(staged: {
+	sites: number;
+	located: number;
+	inMunicipality: number;
+}): GuardCheck[] {
+	const local = staged.sites === 0 ? 1 : staged.inMunicipality / staged.sites;
+	const located = staged.sites === 0 ? 1 : staged.located / staged.sites;
+	return [
+		{
+			name: "es.places",
+			ok: local >= ES_LIMITS.minPlacedRatio,
+			approvable: true,
+			detail: `${staged.inMunicipality} of ${staged.sites} sites placed in their municipality (${percent(local)})`,
+		},
+		{
+			name: "es.points",
+			ok: located >= ES_LIMITS.minLocatedRatio,
+			approvable: true,
+			detail: `${staged.located} of ${staged.sites} sites located at their municipality's point (${percent(located)})`,
+		},
+	];
+}
