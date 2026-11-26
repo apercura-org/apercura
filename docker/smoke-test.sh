@@ -48,6 +48,8 @@ network="${project}_default"
 # The external variant's data services, outside the Compose project.
 db_container="$project-postgres"
 s3_container="$project-minio"
+# The app's image run apart, read-only and without valkey (see below).
+readonly_container="$project-readonly"
 
 compose() {
 	docker compose -p "$project" -f "$compose_file" --env-file "$env_file" "$@"
@@ -63,6 +65,7 @@ cleanup() {
 		fi
 	fi
 	if [ "${SMOKE_KEEP:-0}" != "1" ]; then
+		docker rm -f -v "$readonly_container" >/dev/null 2>&1 || true
 		# The data containers first: they hold the project's network.
 		if [ "$variant" = external ]; then
 			docker rm -f -v "$db_container" "$s3_container" >/dev/null 2>&1 || true
@@ -226,6 +229,68 @@ curl -fsS "$base/.well-known/security.txt" | grep -q "^Contact: mailto:contact@e
 curl -fsS "$base/theme.js" | grep -q "apercura-theme"
 curl -fsS "$base/fr" | grep -q '<script src="/theme.js"></script>'
 echo "home, /fr, /fr-en, /fr/praticien/$slug, the legal notice, a guide, security.txt, /theme.js and /api/health: OK"
+
+step "Pages are cached in valkey, compressed, and never on the app's disk"
+cache_state() { curl -fsS -D - -o /dev/null "$base$1" | tr -d '\r' | sed -n 's/^[Xx]-[Nn]extjs-[Cc]ache: //p'; }
+cache_state "/fr/praticien/$slug" >/dev/null
+test "$(cache_state "/fr/praticien/$slug")" = HIT
+test "$(compose exec -T valkey valkey-cli --scan --pattern 'apercura:*:route:*' | wc -l)" -gt 0
+test "$(compose exec -T valkey valkey-cli --scan --pattern 'apercura:*:data:*' | wc -l)" -gt 0
+if compose exec -T app test -e /app/apps/web/.next/server/route-cache; then
+	echo "the app wrote pages to .next/server/route-cache with valkey on" >&2
+	exit 1
+fi
+compose exec -T valkey valkey-cli config get maxmemory-policy | grep -qx allkeys-lru
+echo "a practitioner page is a hit from valkey; nothing in .next/server/route-cache: OK"
+
+step "A signed revalidation marks the page's tag in valkey: served stale once, then fresh"
+revalidate_secret=$(password_of REVALIDATE_SECRET)
+practitioner_id=$(db_psql -tA -c "SELECT practitioner_id FROM directory.practitioner_pages WHERE slug = '$slug'")
+timestamp=$(date +%s)
+body="{\"tags\":[\"practitioner:$practitioner_id\"]}"
+signature=$(printf '%s.%s' "$timestamp" "$body" | openssl dgst -sha256 -hmac "$revalidate_secret" | sed 's/^.* //')
+curl -fsS -X POST -H "content-type: application/json" -H "x-apercura-timestamp: $timestamp" \
+	-H "x-apercura-signature: $signature" --data "$body" "$base/api/revalidate" | grep -q '"revalidated":1'
+compose exec -T valkey valkey-cli --scan --pattern "apercura:*:stale:practitioner:$practitioner_id" | grep -q stale
+test "$(cache_state "/fr/praticien/$slug")" = STALE
+sleep 2
+test "$(cache_state "/fr/praticien/$slug")" = HIT
+
+step "Valkey stopped: pages are rendered and the health check answers"
+compose stop valkey
+curl -fsS "$base/fr/praticien/$slug" | grep -q "<h1"
+curl -fsS -o /dev/null "$base/fr"
+curl -fsS "$base/api/health" | grep -q '"ok"'
+compose start valkey
+compose up -d --wait --wait-timeout 120 valkey
+
+step "Without valkey, a read-only disk never makes a page fail"
+# The app's own container settings, without CACHE_REDIS_URL: Next.js's file system cache, on a
+# root file system it cannot write to.
+docker inspect -f '{{range .Config.Env}}{{println .}}{{end}}' "$(compose ps -q app)" |
+	grep -v -e '^CACHE_REDIS_URL=' -e '^$' >"$work/app.env"
+readonly_port=$((port + 2))
+docker run -d --name "$readonly_container" --read-only --tmpfs /tmp --network "$network" \
+	--env-file "$work/app.env" -p "127.0.0.1:$readonly_port:3000" "$image" serve >/dev/null
+tries=0
+until curl -fsS "http://127.0.0.1:$readonly_port/api/health" 2>/dev/null | grep -q '"ok"'; do
+	tries=$((tries + 1))
+	if [ "$tries" -ge 60 ]; then
+		docker logs --tail 40 "$readonly_container" >&2
+		echo "the read-only app did not become healthy" >&2
+		exit 1
+	fi
+	sleep 1
+done
+for page in "/fr/praticien/$slug" /fr /fr/medecin-generaliste "/fr/praticien/$slug"; do
+	curl -fsS -H "Host: localhost:$port" "http://127.0.0.1:$readonly_port$page" | grep -q "<h1"
+done
+if docker exec "$readonly_container" test -e /app/apps/web/.next/server/route-cache; then
+	echo "the read-only app wrote pages" >&2
+	exit 1
+fi
+docker rm -f -v "$readonly_container" >/dev/null
+echo "read-only, without valkey: pages and /api/health answer: OK"
 
 step "Open Graph images render in the app container (their fonts ship with the build)"
 # 200 and a PNG: a font missing from the standalone output answers 500.

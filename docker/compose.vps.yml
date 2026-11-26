@@ -23,6 +23,8 @@ services:
     <<: *logging
   app:
     <<: *logging
+  valkey:
+    <<: *logging
   # The jobs refresh cached pages through APP_URL/api/revalidate. Resolving the public name to
   # the host (`host-gateway`, the Docker bridge's address on the host) sends them to the host's
   # Caddy directly, even where the server cannot reach its own public address (no hairpin

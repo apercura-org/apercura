@@ -10,6 +10,7 @@ takes a few minutes.
 | `postgres`   | PostgreSQL 17 + PostGIS. Creates the database roles on its first start                     |
 | `migrate`    | Migrations, then the roles' passwords, then exits. Runs before the app at every `up`       |
 | `app`        | The web app (Next.js standalone server), one replica, published on `127.0.0.1:${APP_PORT}` |
+| `valkey`     | The app's page cache, in memory only, bounded (`CACHE_MAX_MEMORY`, 1 GB), not published    |
 | `scheduler`  | supercronic: `jobs:tick` and the cache warm-up every 5 minutes, the weekly import          |
 | `etl`        | The import, on demand (`docker compose … run --rm etl`)                                    |
 | `minio`      | S3-compatible storage for photos and encrypted claim documents (not published on the host) |
@@ -20,7 +21,8 @@ The files are in [`docker/`](../docker): `Dockerfile`, `compose.selfhost.yml`,
 `compose.app.yml`, `.env.selfhost.example`, the Postgres init script and the
 scheduler's `crontab`. `compose.selfhost.yml` includes `compose.app.yml` (the
 application stack: `migrate`, `app`, `scheduler`, `etl`, `minio-init`) and adds
-the data services (`postgres`, `minio`, `mailpit`); to run the application
+the data services (`postgres`, `minio`, `mailpit`; `valkey` is part of the
+application stack, it holds nothing that outlives a restart); to run the application
 against a database and an S3 storage of your own, see
 [External database and S3](#external-database-and-s3). `docker/compose.yml` is
 something else: the services of local development.
@@ -53,8 +55,8 @@ With `FEATURE_BOOKING=false` (the default) there is no health data at all: see
   makes the import several times slower.
 - Docker Engine with Compose v2.24 or later (`compose.selfhost.yml` uses
   `include`).
-- 2 vCPU, 4 GB of RAM (the import peaks at about 0.8 GB, plus PostgreSQL), and
-  20 GB of disk. The import downloads about 1.2 GB of files into the
+- 2 vCPU, 4 GB of RAM (the import peaks at about 0.8 GB, plus PostgreSQL and
+  the page cache, 1 GB by default: [Page cache](#page-cache)), and 20 GB of disk. The import downloads about 1.2 GB of files into the
   container's temporary folder at each run.
 - A domain name and a reverse proxy that terminates TLS (Caddy, nginx,
   Traefik).
@@ -215,16 +217,19 @@ The import sends its tags straight to `http://app:3000` instead.
 
 ### Cache warm-up
 
-Pages are cached on the app's disk (`next-cache` volume) on their first visit.
-A deploy that replaces the build, or an import that changes pages, leaves them
+Pages are cached in the [page cache](#page-cache) on their first visit. A
+deploy that replaces the build, or an import that changes pages, leaves them
 to be rendered again; so the first visitor is not a crawler waiting on a cold
 page, the scheduler also runs `jobs:tick warm` every 5 minutes, two minutes
 after `jobs:tick`. Each run requests the next slice of the sitemap URLs from
 `INTERNAL_APP_URL` (`http://app:3000`) as `APP_URL`'s host: up to 4 at a time,
 5,000 URLs or 4 minutes, whichever comes first, and it stops early when the
 app's health check or latency degrades. It continues where the last run
-stopped, starts over after a deploy or an import, and is idle once the whole
-site is warm. Each run logs one line:
+stopped, starts over after a deploy or an import, and stops for good once it
+has warmed its budget: what half of the page cache holds (16,384 pages for
+the default 1 GB), highest-value pages first (the homes and static pages, the
+listings and place hubs, then establishments and practitioners). Warming more
+would only evict what it warmed first. Each run logs one line:
 
 ```sh
 apercura-compose logs scheduler | grep '"job":"warm"'
@@ -234,8 +239,10 @@ apercura-compose exec scheduler apercura jobs:tick warm --restart   # walk again
 ```
 
 `WARM_CACHE=false` turns it off; `WARM_CACHE_CONCURRENCY`,
-`WARM_CACHE_MAX_URLS`, `WARM_CACHE_MAX_SECONDS` and `WARM_CACHE_MAX_P95_MS` tune
-it ([configuration.md](./configuration.md#cache-warm-up-bun-run-jobstick-warm)).
+`WARM_CACHE_MAX_URLS`, `WARM_CACHE_MAX_SECONDS`, `WARM_CACHE_MAX_P95_MS` and
+`WARM_CACHE_BUDGET_URLS` (`0`: every sitemap URL) tune it
+([configuration.md](./configuration.md#cache-warm-up-bun-run-jobstick-warm)).
+A larger `CACHE_MAX_MEMORY` raises the budget with it.
 On a small server, lower the concurrency to 2 rather than turning it off.
 
 Public pages answer `Cache-Control: public, max-age=0, s-maxage=300,
@@ -368,8 +375,9 @@ apercura-compose up -d --build
 The image is rebuilt, `migrate` applies the new migrations, then the app and
 the scheduler restart on the new version. Read the release notes first and take
 a backup: migrations only go forward, a rollback is a restore. Pages cached by
-the previous version are regenerated on their first request; the `next-cache`
-volume can be deleted at any time.
+the previous version are never served again (the page cache's keys carry the
+build id; Valkey evicts the old ones) and are regenerated on their first
+request or by the warm-up; the `next-cache` volume can be deleted at any time.
 
 To move to a new PostgreSQL major version, dump, change the image in
 `docker/compose.selfhost.yml`, restore into a new volume.
@@ -420,14 +428,46 @@ that is not a superuser, create the roles beforehand (see
 passwords to you. Coolify's version of this layout is in
 [deploy-vps.md](./deploy-vps.md#under-coolify).
 
-## Cache and scaling
+## Page cache
 
-Pages are rendered on their first visit and cached on the app's disk
-(`next-cache` volume and the container's build folder). Run **one replica**:
-several replicas would each keep their own cache and miss each other's
-revalidations. Beyond one instance, a shared cache handler (Redis or Valkey)
-is needed; it is not provided yet. A single instance with 2 to 4 GB of RAM
-serves the whole of France.
+Pages are rendered on their first visit and cached in the `valkey` service:
+the HTML, the RSC payload and the segments of each page, compressed (about
+25 KB a page), and the results of the cached queries. The app's handlers
+(`apps/web/cache-handler`, [configuration.md](./configuration.md#page-cache-appswebcache-handler))
+use it when `CACHE_REDIS_URL` is set, which `docker/compose.app.yml` does
+(`redis://valkey:6379`). Its size is fixed:
+
+- `CACHE_MAX_MEMORY` (default `1gb`, about 32,000 pages with their queries) is
+  Valkey's `maxmemory`; past it, the least recently used entries are evicted
+  (`allkeys-lru`). `CACHE_MEM_LIMIT` (default `1280m`) is the container's
+  memory limit: keep it about a quarter above `CACHE_MAX_MEMORY`. Raise both
+  together where RAM allows, e.g. `2gb` and `2560m`.
+- Nothing is persisted (no RDB, no AOF, no volume): a restart of `valkey`
+  starts empty, pages are rendered again on demand and by the warm-up.
+- Keys carry the build id: a new image never serves the previous build's pages
+  (whose scripts are gone); the old keys are evicted as the new ones come in.
+- It is never a dependency: Valkey down, slow or full makes a page a cache
+  miss (rendered, as on its first visit), never an error, and `/api/health`
+  does not look at it. `/api/revalidate` answers 503 while it is unreachable,
+  so the import sends its cache tags again later.
+- Not published, no port on the host. Under Coolify's predefined network, where
+  another stack may have a `valkey` service too, set `CACHE_REDIS_PASSWORD`
+  (letters and digits): the server then requires it, and the app sends it.
+
+```sh
+apercura-compose exec valkey valkey-cli info memory | grep used_memory_human
+apercura-compose exec valkey valkey-cli dbsize
+```
+
+Without `CACHE_REDIS_URL` (another deployment, `next start` by hand), the app
+keeps Next.js's own caches: pages on its disk (`.next/server`, uncompressed,
+about 225 KB a page) and a 50 MB memory cache. Disk writes then stop while the
+disk has less than `CACHE_DISK_MIN_FREE_MB` (1024) free, and a full or
+read-only disk never makes a page fail.
+
+Run **one replica** of the app: the scheduler and the import send their cache
+tags to `app`, one instance. A single instance with 2 to 4 GB of RAM, plus the
+page cache's, serves the whole of France.
 
 ## Directory-only mode
 

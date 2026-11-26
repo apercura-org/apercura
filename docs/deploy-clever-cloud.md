@@ -241,8 +241,10 @@ Once `apercura.health` serves production for good:
 ## Cache
 
 `next start` keeps rendered pages on the instance's disk: they are lost at each
-deployment and rendered again on demand, which is acceptable. Stay on one
-instance; beyond one, a shared cache handler (Clever Cloud's Redis-compatible
-add-on) is needed, with the same `deploymentId` and
-`NEXT_SERVER_ACTIONS_ENCRYPTION_KEY` everywhere. It is not implemented yet. No
-third-party CDN in front of routes that carry patient data.
+deployment and rendered again on demand, which is acceptable; page writes stop
+while the disk is short of space (`CACHE_DISK_MIN_FREE_MB`). To bound the cache
+in memory instead, link a Redis-compatible add-on and set `CACHE_REDIS_URL` to
+it ([configuration.md](./configuration.md#page-cache-appswebcache-handler)). Stay
+on one instance: several would also need the same `deploymentId` and
+`NEXT_SERVER_ACTIONS_ENCRYPTION_KEY` everywhere. No third-party CDN in front of
+routes that carry patient data.

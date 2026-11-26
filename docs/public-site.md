@@ -233,10 +233,11 @@ page, `jobs:tick warm` (scheduled every five minutes by the image's crontab,
 `apps/web/src/server/warm/`) requests the site's pages from the app itself,
 as a visitor would:
 
-- **What**: every URL of the sitemaps, from the same queries
-  (`src/server/queries/sitemap-sql.ts`): first the homes, the static pages and
-  the sitemap files themselves, then the listings, the place hubs, the
-  establishments and the practitioners, chunk by chunk.
+- **What**: the URLs of the sitemaps, from the same queries
+  (`src/server/queries/sitemap-sql.ts`), highest value first: the homes, the
+  static pages and the sitemap files themselves, then the listings, the place
+  hubs, the establishments and the practitioners, chunk by chunk, up to the
+  walk's budget (below).
 - **Where**: `INTERNAL_APP_URL` (`http://app:3000` in the image's stack), with
   `APP_URL`'s host as `Host` and `X-Forwarded-Host`, so the canonical host
   redirect lets it through.
@@ -246,6 +247,14 @@ as a visitor would:
   health check fails or takes over 2 seconds, when the p95 of its last 100
   requests exceeds `WARM_CACHE_MAX_P95_MS` (3000), on a 429 or 503, or when
   errors pass a tenth of its requests: live traffic always comes first.
+- **Within what the cache holds**: a walk warms at most `WARM_CACHE_BUDGET_URLS`
+  URLs, by default what half of the page cache holds (`CACHE_MAX_MEMORY`, 1 GB
+  by default, at 32 KB a page: 16,384 URLs). The page cache is bounded and
+  evicts the least recently used pages first, so warming more than it holds
+  would only push out what the walk warmed first, the hubs and listings, to
+  make room for practitioners nobody asked for yet. Once the budget is reached
+  the walk is over (`"stopped":"budget"`) until the next build or import.
+  `WARM_CACHE_BUDGET_URLS=0` walks every URL, as before the cache was bounded.
 - **Resumable**: its cursor (`directory.cache_warmup`, one row: the unit
   reached and the offset in it) is saved as it goes, so the next run continues
   there. A finished walk waits.
@@ -258,11 +267,18 @@ as a visitor would:
   `{"job":"warm","result":{"warmed":5000,"errors":0,"remaining":182000,"stopped":"count",…}}`
   (`"locked"` when a run is still going). `WARM_CACHE=false` turns it off.
 
-At the default budget a run warms up to 5,000 pages in four minutes, 288 runs
-a day: a walk of the whole of France (hundreds of thousands of URLs) takes about
-a day when a cold page renders in a few hundred milliseconds, longer when the
-guards slow it down. The listings and hubs, which crawlers and visitors reach
-first, are warm within the first runs.
+A run warms up to 5,000 pages in four minutes: at the default budget a walk is
+over within its first four runs, twenty minutes after a deploy or an import.
+The pages past the budget (most practitioners) are rendered on their first
+request, a few hundred milliseconds, and kept while they are visited.
+
+Why a budget: a page weighs about 24 KB compressed in the cache (a
+practitioner, a listing with its place, the home; 13 KB for a country-wide
+listing, measured on the synthetic fixtures), 32 KB with the cached queries it
+brings along and some margin for real pages, which list more. Before the cache
+was bounded, every page went to the app's disk uncompressed (about 330 KB
+each: HTML, segments and RSC payload), and a walk of every market's sitemaps
+filled the disk ([issue #129](https://github.com/maxgfr/apercura/issues/129)).
 
 ### Cache-Control
 
