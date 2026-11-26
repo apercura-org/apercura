@@ -61,7 +61,7 @@ export function PractitionerHeader({
 						alt={photo.alt}
 						width={128}
 						height={128}
-						className="block size-32 shrink-0 self-start rounded-field border border-rule-soft bg-paper-shade object-cover sm:self-center"
+						className="block size-32 shrink-0 self-start rounded-panel border border-rule-soft bg-paper-shade object-cover sm:self-center"
 					/>
 				) : null}
 				<Stamp ink={stampInkOf(status)} className="w-full min-w-0 sm:w-fit sm:min-w-[22rem]">

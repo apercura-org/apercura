@@ -71,7 +71,7 @@ export type ActionBlockProps =
 	| NoticeAction;
 
 /**
- * "What can I do next?": the first entry of the form, opened by a double rule. Every state says
+ * "What can I do next?": the first entry of the form, opened by a hairline. Every state says
  * plainly what the patient can actually do; only online booking takes the violet ink.
  */
 export function ActionBlock(props: ActionBlockProps) {
@@ -80,7 +80,7 @@ export function ActionBlock(props: ActionBlockProps) {
 	return (
 		<section
 			data-kind={props.kind}
-			className={cn("rule-double-t flex flex-col gap-4 pt-4", className)}
+			className={cn("rule-t flex flex-col gap-4 pt-4", className)}
 			aria-label={title}
 		>
 			<Heading className="type-title text-ink">{title}</Heading>

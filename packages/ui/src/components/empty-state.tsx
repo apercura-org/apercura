@@ -12,7 +12,7 @@ export interface EmptyStateProps {
 }
 
 /**
- * Empty state: a ruled entry of the form, opened by a double rule, that says plainly what is
+ * Empty state: a ruled entry of the form, opened by a hairline, that says plainly what is
  * missing and what to do next.
  */
 export function EmptyState({
@@ -26,7 +26,7 @@ export function EmptyState({
 	return (
 		<div
 			className={cn(
-				"rule-double-t flex flex-col items-start gap-3 border-b border-rule-soft py-6 sm:py-8",
+				"rule-t flex flex-col items-start gap-3 border-b border-rule-soft py-6 sm:py-8",
 				className,
 			)}
 		>

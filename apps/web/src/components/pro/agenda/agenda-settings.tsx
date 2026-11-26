@@ -39,7 +39,7 @@ type AppointmentType = Calendar["types"][number];
 type AreaCommune = AppointmentType["serviceArea"][number];
 
 const WEEKDAYS = [1, 2, 3, 4, 5, 6, 7] as const;
-/** Long labels wrap on phones: give the stamp's lines room inside its inner frame. */
+/** Long labels wrap on phones: give the stamp button's lines room inside its soft corners. */
 const GATE_BUTTON = "h-auto py-3 text-start leading-snug whitespace-normal";
 const WORKDAYS = [1, 2, 3, 4, 5] as const;
 
@@ -764,7 +764,7 @@ function ServiceAreaEditor({
 					{area.map((commune) => (
 						<li
 							key={commune.code}
-							className="flex items-center gap-1 border border-rule-soft ps-3 text-meta text-ink"
+							className="flex items-center gap-1 rounded-mark border border-rule-soft ps-3 text-meta text-ink"
 						>
 							<span>
 								{commune.name}

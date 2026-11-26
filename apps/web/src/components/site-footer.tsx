@@ -22,13 +22,13 @@ const footerLink =
 	"inline-flex min-h-11 items-center text-meta text-ink underline decoration-field-edge decoration-1 underline-offset-[0.25em] hover:decoration-ink";
 
 /**
- * The foot of the form, opened by a double rule: the commitments that hold for every page, the
+ * The foot of the form, opened by a hairline: the commitments that hold for every page, the
  * site's pages, the theme.
  */
 export async function SiteFooter({ locale }: { locale: Locale }) {
 	const t = await getTranslations({ locale, namespace: "Site" });
 	return (
-		<footer className="surface-paper rule-double-t mt-auto">
+		<footer className="surface-paper rule-t mt-auto">
 			<div className="mx-auto flex max-w-6xl flex-col gap-6 px-5 py-10 sm:px-8">
 				<div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
 					<div className="flex flex-col gap-1">

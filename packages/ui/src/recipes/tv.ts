@@ -10,7 +10,7 @@ const twMergeConfig = {
 		theme: {
 			text: ["folio", "meta", "body", "lead", "title", "headline", "display"],
 			font: ["display", "body"],
-			radius: ["field", "full"],
+			radius: ["mark", "field", "panel", "full"],
 		},
 	},
 };

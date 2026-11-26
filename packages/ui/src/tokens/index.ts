@@ -138,6 +138,18 @@ export const typeScale = {
 	title: 1.5,
 } as const;
 
+/**
+ * Corner radii, in CSS pixels: one scale of soft corners for the whole interface, declared in
+ * `theme.css` as `--radius-*` (in rem; a unit test keeps both in sync). Marks (badges, menu rows,
+ * agenda tiles, checkboxes), controls (fields, buttons, selects), panels (stamps, dialogs,
+ * notices, menus, the map).
+ */
+export const radii = {
+	mark: 6,
+	field: 10,
+	panel: 14,
+} as const;
+
 /** Minimum target size for any interactive element, in CSS pixels. */
 export const minTargetSize = 44;
 

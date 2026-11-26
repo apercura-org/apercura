@@ -280,7 +280,7 @@ export function WeekView({
 									aria-pressed={view === option}
 									onPress={() => setView(option)}
 									className={cn(
-										"min-h-10 rounded-[0.25rem] px-3 font-medium no-underline hover:bg-paper-shade",
+										"min-h-10 rounded-mark px-3 font-medium no-underline hover:bg-paper-shade",
 										view === option && "bg-paper-shade font-semibold ring-1 ring-ink",
 									)}
 								>

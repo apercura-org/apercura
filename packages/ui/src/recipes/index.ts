@@ -29,11 +29,11 @@ export const buttonStyles = tv({
 	variants: {
 		intent: {
 			/**
-			 * The violet ink: the primary action, printed as the form's stamp box (a solid fill, an
-			 * inner rule, its label in the paper's colour) that presses and settles in 120 ms.
+			 * The violet ink: the primary action, a solid fill with soft corners and its label in the
+			 * paper's colour, that presses and settles in 120 ms.
 			 */
 			stamp: [
-				"stamp-box ink-press border border-stamp bg-stamp text-paper",
+				"ink-press border border-stamp bg-stamp text-paper",
 				"hover:border-stamp-strong hover:bg-stamp-strong data-pressed:border-stamp-strong data-pressed:bg-stamp-strong",
 				// Disabled: the ground with a disabled-ink edge, so it still reads as a button on paper and on the shade.
 				"data-disabled:border-ink-disabled data-disabled:bg-paper data-disabled:text-ink-disabled",
@@ -62,40 +62,39 @@ export const buttonStyles = tv({
 });
 
 /**
- * The search, printed as a row of the form: ruled fields ("Qui ?", "Où ?"), each a small printed
- * label over a line to write on, and the violet stamp box at the end of the row. A short choice
- * (the country searched) is printed under the row from 768 px, so the fields keep its width.
+ * The search, printed as a row of the form: soft fields ("Qui ?", "Où ?"), each a small printed
+ * label over a rounded box to write in, and the violet stamp button at the end of the row. A short
+ * choice (the country searched) is printed under the row from 768 px, so the fields keep its width.
  */
 export const searchStyles = tv({
 	slots: {
-		form: "flex flex-col gap-5 md:flex-row md:flex-wrap md:items-end md:gap-x-6 md:gap-y-3",
-		// From 768 px the cells are items of the form's row itself, beside the stamp box.
-		cells: "flex flex-col gap-5 md:contents",
-		cell: [
-			// "Qui ?" takes the wider share of the row: its hint is the longer one.
-			"group relative flex min-w-0 flex-1 flex-col border-b border-ink pt-1 text-ink md:first-of-type:flex-[1.4]",
-			"transition-[box-shadow] duration-150 hover:shadow-[inset_0_-1px_0_var(--color-ink)]",
-			"has-[input:focus-visible]:outline-3 has-[input:focus-visible]:outline-solid has-[input:focus-visible]:outline-offset-2 has-[input:focus-visible]:outline-(--focus-ring)",
-		],
+		form: "flex flex-col gap-4 md:flex-row md:flex-wrap md:items-end md:gap-x-3 md:gap-y-4",
+		// From 768 px the cells are items of the form's row itself, beside the stamp button.
+		cells: "flex flex-col gap-4 md:contents",
+		// "Qui ?" takes the wider share of the row: its hint is the longer one.
+		cell: "group relative flex min-w-0 flex-1 flex-col gap-1.5 text-ink md:first-of-type:flex-[1.4]",
 		label: "type-caption text-ink-muted",
 		input: [
-			"min-h-12 w-full text-ellipsis bg-transparent py-1.5 text-body text-ink outline-none sm:text-lead",
+			"min-h-13 w-full text-ellipsis rounded-field border border-field-edge bg-paper px-4 py-2 text-body text-ink sm:text-lead",
+			"transition-[border-color] duration-150 hover:border-ink focus-visible:border-stamp",
+			"outline-none focus-visible:outline-3 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-(--focus-ring)",
 			"placeholder:text-ink-muted [&::-webkit-search-cancel-button]:hidden",
 		],
-		submit: "min-h-14 text-body md:min-w-44",
+		submit: "min-h-13 text-body md:min-w-40",
 		choice: "flex items-center gap-3 md:order-last md:basis-full",
 		choiceBox: [
-			"relative inline-flex items-center border-b border-ink text-ink",
+			"relative inline-flex items-center rounded-field border border-field-edge bg-paper text-ink",
+			"transition-[border-color] duration-150 hover:border-ink has-[select:focus-visible]:border-stamp",
 			"has-[select:focus-visible]:outline-3 has-[select:focus-visible]:outline-solid has-[select:focus-visible]:outline-offset-2 has-[select:focus-visible]:outline-(--focus-ring)",
 		],
 		choiceSelect:
-			"min-h-11 cursor-pointer appearance-none bg-transparent py-1 pe-7 text-body text-ink outline-none [&>option]:bg-paper [&>option]:text-ink",
+			"min-h-11 cursor-pointer appearance-none rounded-field bg-transparent py-1 ps-3.5 pe-10 text-body text-ink outline-none [&>option]:bg-paper [&>option]:text-ink",
 	},
 });
 
 export const linkStyles = tv({
 	base: [
-		// cursor-pointer rounded-[2px] underline decoration-1 underline-offset-[0.2em], a 100 ms
+		// cursor-pointer rounded-mark underline decoration-1 underline-offset-[0.2em], a 100 ms
 		// transition of the underline's thickness, 2 px on hover (`styles/theme.css`).
 		"link-base",
 		focusRing,
@@ -134,7 +133,7 @@ export const fieldStyles = tv({
 /** Popover: a hairline-bordered panel with the one overlay shadow. */
 export const popoverStyles = tv({
 	base: [
-		"min-w-(--trigger-width) overflow-auto rounded-field border border-rule-soft bg-paper text-ink shadow-overlay outline-none",
+		"min-w-(--trigger-width) overflow-auto rounded-panel border border-rule-soft bg-paper text-ink shadow-overlay outline-none",
 		"data-entering:animate-slip-in",
 		"forced-colors:border-[CanvasText]",
 	],
@@ -150,9 +149,9 @@ export const listBoxItemStyles = tv({
 	],
 });
 
-/** A printed mark: a small ruled box in caption type, square like everything on the form. */
+/** A printed mark: a small ruled box in caption type, with the marks' soft corners. */
 export const badgeStyles = tv({
-	base: "type-caption inline-flex min-h-7 items-center gap-1.5 rounded-field border px-2.5 py-0.5",
+	base: "type-caption inline-flex min-h-7 items-center gap-1.5 rounded-mark border px-2.5 py-0.5",
 	variants: {
 		tone: {
 			/** Neutral mark: unclaimed, not provided, informational. */

@@ -13,7 +13,7 @@ const checkbox = tv({
 	slots: {
 		root: "group flex min-h-11 cursor-pointer items-center gap-3 text-body text-ink data-disabled:cursor-not-allowed data-disabled:text-ink-disabled",
 		box: [
-			"flex size-6 shrink-0 items-center justify-center rounded-field border-2 border-ink bg-paper text-paper transition-colors duration-100",
+			"flex size-6 shrink-0 items-center justify-center rounded-mark border-2 border-ink bg-paper text-paper transition-colors duration-100",
 			"group-data-selected:bg-ink group-data-indeterminate:bg-ink",
 			"group-data-invalid:border-error group-data-disabled:border-ink-disabled",
 			"group-data-focus-visible:outline-3 group-data-focus-visible:outline-solid group-data-focus-visible:outline-offset-2 group-data-focus-visible:outline-(--focus-ring)",

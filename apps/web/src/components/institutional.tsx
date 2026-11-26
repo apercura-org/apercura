@@ -28,7 +28,7 @@ export function InstitutionalCover({
 	note?: string | null;
 }) {
 	return (
-		<div className="rule-double-b">
+		<div className="rule-b">
 			<div className="mx-auto flex w-full max-w-6xl flex-col gap-4 px-5 pt-10 pb-10 sm:px-8 sm:pb-12">
 				{mark ? (
 					<p>

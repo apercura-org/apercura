@@ -43,7 +43,7 @@ export async function RootNotFound() {
 				 * inserts itself runs.
 				 */}
 				<script async src="/theme.js" />
-				<header className="surface-paper rule-double-b">
+				<header className="surface-paper rule-b">
 					<div className="mx-auto flex min-h-16 max-w-6xl items-center px-5 py-2 sm:px-8">
 						<a
 							href="/"

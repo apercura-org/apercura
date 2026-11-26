@@ -78,9 +78,9 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
 			<main id="main" tabIndex={-1} className="flex-1 outline-none">
 				{/*
 				 * The opening, set like the top of a form: the title and the search on two thirds of the
-				 * twelve columns, the sample stamps on the last third, closed by a double rule.
+				 * twelve columns, the sample stamps on the last third, closed by a hairline.
 				 */}
-				<div className="rule-double-b">
+				<div className="rule-b">
 					<div className="mx-auto grid w-full max-w-6xl gap-x-8 gap-y-10 px-5 pt-10 pb-12 sm:px-8 sm:pt-14 lg:grid-cols-12 lg:pt-16 lg:pb-16">
 						<div className={`flex flex-col gap-8 ${austrian ? "lg:col-span-10" : "lg:col-span-8"}`}>
 							<div className="flex flex-col gap-4">
@@ -179,7 +179,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
 
 					<section
 						aria-labelledby="pro-heading"
-						className="rule-double-t flex flex-col gap-4 border-b border-rule-soft pt-6 pb-7 sm:flex-row sm:items-center sm:justify-between"
+						className="rule-t flex flex-col gap-4 border-b border-rule-soft pt-6 pb-7 sm:flex-row sm:items-center sm:justify-between"
 					>
 						<div className="flex flex-col gap-1">
 							<h2 id="pro-heading" className="type-subtitle">

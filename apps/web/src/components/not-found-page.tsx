@@ -29,7 +29,7 @@ export async function NotFoundPage({ locale }: { locale: Locale }) {
 			 * runs it), it applies the stored theme and shows the theme control.
 			 */}
 			<script async src="/theme.js" />
-			<div className="rule-double-b">
+			<div className="rule-b">
 				<div className="mx-auto grid w-full max-w-6xl gap-x-8 gap-y-10 px-5 pt-10 pb-12 sm:px-8 sm:pt-14 lg:grid-cols-12 lg:pt-16 lg:pb-16">
 					<div className="flex flex-col gap-8 lg:col-span-8">
 						<div className="flex flex-col gap-4">

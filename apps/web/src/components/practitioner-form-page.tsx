@@ -59,7 +59,7 @@ export async function PractitionerFormPage({
 	return (
 		<PublicPage locale={locale} href={{ pathname, params: { slug: page.slug } }}>
 			<BookletPage>
-				<div className="rule-double-b flex flex-col gap-4 pb-6">
+				<div className="rule-b flex flex-col gap-4 pb-6">
 					<div className="flex max-w-[65ch] flex-col gap-3">
 						<h1 className="type-headline text-ink">{title}</h1>
 						<p className="text-lead text-ink">{lead}</p>

@@ -8,6 +8,7 @@ import {
 	paletteDark,
 	paletteHex,
 	parseOklch,
+	radii,
 	themes,
 } from "./index";
 
@@ -39,6 +40,12 @@ describe("token sources", () => {
 				.map((match) => match[1])
 				.filter((token) => token !== "overlay-shadow");
 			expect(declared.sort()).toEqual(Object.keys(palette).map(kebab).sort());
+		}
+	});
+
+	it("declares the radius scale in theme.css, in rem", () => {
+		for (const [name, px] of Object.entries(radii)) {
+			expect(themeCss).toContain(`--radius-${name}: ${px / 16}rem;`);
 		}
 	});
 

@@ -117,7 +117,7 @@ export function LanguagePicker({
 				</summary>
 				<ul
 					ref={list}
-					className="absolute end-0 top-full z-50 mt-1.5 flex min-w-52 flex-col gap-0.5 rounded-field border border-rule-soft bg-paper p-1.5 shadow-overlay group-open:motion-safe:animate-slip-in"
+					className="absolute end-0 top-full z-50 mt-1.5 flex min-w-52 flex-col gap-0.5 rounded-panel border border-rule-soft bg-paper p-1.5 shadow-overlay group-open:motion-safe:animate-slip-in"
 				>
 					{(Object.keys(names) as Locale[]).map((other) => (
 						<li key={other}>
@@ -132,7 +132,7 @@ export function LanguagePicker({
 									if (details.current) details.current.open = false;
 								}}
 								className={cn(
-									"flex min-h-11 items-center justify-between gap-4 rounded-[0.25rem] px-3 text-meta text-ink no-underline",
+									"flex min-h-11 items-center justify-between gap-4 rounded-mark px-3 text-meta text-ink no-underline",
 									"hover:bg-paper-shade aria-[current]:font-semibold",
 									"outline-none focus-visible:outline-3 focus-visible:outline-solid focus-visible:-outline-offset-3 focus-visible:outline-(--focus-ring)",
 								)}

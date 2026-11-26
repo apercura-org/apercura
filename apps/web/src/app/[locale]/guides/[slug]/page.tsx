@@ -136,7 +136,7 @@ export default async function GuidePage({ params }: Props) {
 					}),
 				])}
 			/>
-			<div className="rule-double-b">
+			<div className="rule-b">
 				<div className="mx-auto flex w-full max-w-6xl flex-col gap-4 px-5 pt-10 pb-10 sm:px-8 sm:pb-12">
 					<p className="type-caption text-ink">
 						{t("title")} · {category}

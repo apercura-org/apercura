@@ -178,7 +178,7 @@ export interface BookletSearchFrameProps {
 }
 
 /**
- * Submitted with the keyboard, the stamp box presses as it does under a pointer (`.ink-press`):
+ * Submitted with the keyboard, the stamp button presses as it does under a pointer (`.ink-press`):
  * the ink gives for 120 ms while the browser loads the results.
  */
 function pressStamp(event: FormEvent<HTMLFormElement>) {
@@ -189,7 +189,7 @@ function pressStamp(event: FormEvent<HTMLFormElement>) {
 }
 
 /**
- * The search as a row of the printed form, ruled fields then the stamp box, holding
+ * The search as a row of the printed form, soft fields then the stamp button, holding
  * interactive cells. Same look and GET contract as `BookletSearch`.
  */
 export function BookletSearchFrame({

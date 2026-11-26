@@ -540,7 +540,7 @@ export default async function PractitionerPage({ params }: Props) {
 					guides={relatedGuides([payload.listingSlug, professionSlugOf(payload.professionCode)])}
 				/>
 
-				<div className="rule-double-t">
+				<div className="rule-t">
 					{provenanceOf(
 						sources.length > 0
 							? // CC BY 4.0 and the OGL: each source named with its attribution, word for word.

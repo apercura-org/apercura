@@ -16,7 +16,7 @@ const navLink =
 
 /**
  * The head of the form: the logo (to the market's home), navigation and language on the paper,
- * closed by a double rule.
+ * closed by a hairline.
  */
 export async function SiteHeader({ locale, href }: SiteHeaderProps) {
 	const t = await getTranslations({ locale, namespace: "Site" });
@@ -29,7 +29,7 @@ export async function SiteHeader({ locale, href }: SiteHeaderProps) {
 	) as Record<Locale, string>;
 
 	return (
-		<header className="surface-paper rule-double-b">
+		<header className="surface-paper rule-b">
 			<div className="mx-auto flex min-h-16 max-w-6xl flex-wrap items-center justify-between gap-x-4 gap-y-1 px-5 py-2 sm:px-8">
 				<Link
 					href="/"

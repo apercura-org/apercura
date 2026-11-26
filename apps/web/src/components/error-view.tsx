@@ -6,7 +6,7 @@ import { BrandLogo } from "@apercura/ui";
  * `buttonStyles({ intent: "stamp", size: "lg" })` and `linkStyles()`, written out.
  */
 const STAMP_BUTTON =
-	"stamp-box ink-press focus-ring relative inline-flex min-h-13 min-w-44 max-w-full cursor-pointer select-none items-center justify-center gap-2 rounded-field border border-stamp bg-stamp px-6 font-display text-body font-semibold tracking-[-0.003em] text-paper no-underline hover:border-stamp-strong hover:bg-stamp-strong forced-colors:border-2 forced-colors:border-[ButtonText]";
+	"ink-press focus-ring relative inline-flex min-h-13 min-w-44 max-w-full cursor-pointer select-none items-center justify-center gap-2 rounded-field border border-stamp bg-stamp px-6 font-display text-body font-semibold tracking-[-0.003em] text-paper no-underline hover:border-stamp-strong hover:bg-stamp-strong forced-colors:border-2 forced-colors:border-[ButtonText]";
 const TEXT_LINK = "link-base focus-ring inline-flex min-h-11 items-center text-body text-ink";
 const LOGO_LINK =
 	"focus-ring -ms-1 inline-flex min-h-11 items-center rounded-field px-1 text-ink no-underline";
@@ -26,8 +26,8 @@ export interface ErrorViewText {
 }
 
 /**
- * What a visitor sees when a page fails: the logo back home over a double rule, what happened
- * in a sentence, "try again" as the stamp box (it presses like every primary action), the way
+ * What a visitor sees when a page fails: the logo back home over a hairline, what happened
+ * in a sentence, "try again" as the stamp button (it presses like every primary action), the way
  * home, and the digest of a server error as a reference for support, never the error itself.
  */
 export function ErrorView({
@@ -50,7 +50,7 @@ export function ErrorView({
 }) {
 	return (
 		<>
-			<header className="surface-paper rule-double-b">
+			<header className="surface-paper rule-b">
 				<div className="mx-auto flex min-h-16 max-w-6xl items-center px-5 py-2 sm:px-8">
 					<a href={home} aria-label={homeLabel} className={LOGO_LINK}>
 						<BrandLogo height={24} />

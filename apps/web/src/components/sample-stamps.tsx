@@ -47,7 +47,7 @@ const SAMPLES = [
 }[];
 
 /**
- * The home's sample stamps, one under the other with a hairline between them: how every
+ * The home's sample stamps, one under the other: how every
  * practitioner appears, in each state of their page (unclaimed, verified, claim being checked).
  * Labelled as fictitious; phones show the first one only.
  */
@@ -59,12 +59,9 @@ export async function SampleStamps({ locale }: { locale: Locale }) {
 			<p id="sample-stamps" className="type-caption text-ink-muted">
 				{t("specimen")}
 			</p>
-			<ul aria-labelledby="sample-stamps" className="flex flex-col border-t border-rule-soft">
+			<ul aria-labelledby="sample-stamps" className="flex flex-col gap-4">
 				{SAMPLES.map((sample, index) => (
-					<li
-						key={sample.rpps}
-						className={`border-b border-rule-soft py-4 ${index > 0 ? "max-lg:hidden" : ""}`}
-					>
+					<li key={sample.rpps} className={index > 0 ? "max-lg:hidden" : undefined}>
 						<Stamp ink={sample.ink}>
 							<div className="flex flex-col gap-0.5 px-4 pt-3 pb-3">
 								<p className="font-display text-lead leading-tight font-semibold tracking-[-0.01em]">

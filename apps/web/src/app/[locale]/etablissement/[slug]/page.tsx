@@ -185,7 +185,7 @@ export default async function EstablishmentPage({ params }: Props) {
 				<div className="flex flex-col gap-6">
 					<Trail locale={locale} items={trail} />
 					{/* The establishment's identity as its stamp: name, kind, address, FINESS number. */}
-					<header className="rule-double-b flex flex-col gap-4 pb-6">
+					<header className="rule-b flex flex-col gap-4 pb-6">
 						<Stamp ink="outlined" className="w-full min-w-0 sm:w-fit sm:min-w-[22rem]">
 							<div className="flex flex-col gap-1 px-4 pt-3 pb-3.5 sm:px-5 sm:pt-4">
 								<h1 className="type-headline">{page.name}</h1>
@@ -306,7 +306,7 @@ export default async function EstablishmentPage({ params }: Props) {
 					</div>
 				</ListingSection>
 
-				<div className="rule-double-t">{provenance}</div>
+				<div className="rule-t">{provenance}</div>
 			</BookletPage>
 		</PublicPage>
 	);

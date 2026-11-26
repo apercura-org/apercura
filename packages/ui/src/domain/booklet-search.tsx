@@ -36,8 +36,9 @@ export interface BookletSelectFieldProps {
 
 /**
  * A short native choice of the search (the country searched), printed as an option of the form
- * rather than a field: its small label, then a plain `<select>` on a rule, submitted with the
- * GET form. Under the row of fields from 768 px, between the fields and the stamp box on a phone.
+ * rather than a field: its small label, then a plain `<select>` in a soft box like the fields',
+ * submitted with the GET form. Under the row of fields from 768 px, between the fields and the
+ * stamp button on a phone.
  */
 export function BookletSelectField({
 	id,
@@ -67,7 +68,7 @@ export function BookletSelectField({
 						</option>
 					))}
 				</select>
-				<ChevronDownIcon className="pointer-events-none absolute end-0 size-5 text-ink-muted" />
+				<ChevronDownIcon className="pointer-events-none absolute end-3 size-5 text-ink-muted" />
 			</div>
 		</div>
 	);
@@ -95,7 +96,7 @@ export interface BookletSearchProps {
 }
 
 /**
- * The search as a row of the printed form: ruled fields, the stamp box at the end. A plain GET form:
+ * The search as a row of the printed form: soft fields, the stamp button at the end. A plain GET form:
  * it works without JavaScript and ships none.
  */
 export function BookletSearch({
