@@ -11,6 +11,7 @@ import { allCzListingSlugs } from "./cz";
 import { allEsListingSlugs } from "./es";
 import { allListingSlugs } from "./fr";
 import { allGbListingSlugs } from "./gb";
+import { allItListingSlugs } from "./it";
 
 const LISTINGS: Record<CareMarket, Set<string>> = {
 	FR: allListingSlugs(),
@@ -18,6 +19,7 @@ const LISTINGS: Record<CareMarket, Set<string>> = {
 	GB: allGbListingSlugs(),
 	CZ: allCzListingSlugs(),
 	ES: allEsListingSlugs(),
+	IT: allItListingSlugs(),
 };
 
 describe("the kinds of care shared by the markets", () => {
