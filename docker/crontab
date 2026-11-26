@@ -34,3 +34,10 @@
 # export is skipped. ETL_CZ_SCHEDULE_ARGS adds flags. Exit codes: 1 failed (the export could not
 # be fetched or read), 2 blocked (see docs/data-import.md, "Czechia").
 30 7 * * 1 apercura etl:cz $ETL_CZ_SCHEDULE_ARGS
+
+# Spain's register of health centres (REGCESS, Ministerio de Sanidad, extracts published
+# monthly), every Monday at 08:30 UTC, after Czechia's import (the same advisory lock: one import
+# at a time); unchanged extracts are skipped. ETL_ES_SCHEDULE_ARGS narrows it, e.g.
+# `--sources regcess-e`. Exit codes: 1 failed, 2 blocked, 3 imported without an extract that
+# could not be fetched or read (see docs/data-import.md, "Spain").
+30 8 * * 1 apercura etl:es $ETL_ES_SCHEDULE_ARGS
