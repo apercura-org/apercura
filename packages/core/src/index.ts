@@ -17,6 +17,7 @@ export {
 export * from "./pagination";
 export { formatPhoneAt, toE164At } from "./phone-at";
 export { CZ_POSTCODE, formatPhoneCz, normalizeCzPostcode, toE164Cz } from "./phone-cz";
+export { ES_POSTCODE, formatPhoneEs, normalizeEsPostcode, toE164Es } from "./phone-es";
 export { formatPhoneGb, GB_POSTCODE, normalizeGbPostcode, toE164Gb } from "./phone-gb";
 export * from "./profile";
 export { isValidRpps } from "./rpps";
@@ -31,7 +32,10 @@ export {
 	communeSlug,
 	czFacilitySlug,
 	departmentSlug,
+	ES_ID_SCHEME,
+	type EsCentreSegment,
 	type EstablishmentSegment,
+	esCentreSlug,
 	establishmentSlug,
 	GB_ID_SCHEMES,
 	type GbIdScheme,
@@ -41,10 +45,12 @@ export {
 	gbUrlKey,
 	isValidAtSourceId,
 	isValidCzSourceId,
+	isValidEsSourceId,
 	isValidGbSourceId,
 	type PractitionerSegment,
 	parseAtPractitionerSegment,
 	parseCzFacilitySegment,
+	parseEsCentreSegment,
 	parseEstablishmentSegment,
 	parseGbKey,
 	parseGbPracticeSegment,

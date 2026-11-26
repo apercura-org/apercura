@@ -127,7 +127,7 @@ describe("the United Kingdom adapter", () => {
 		expect(isGbListingSlug("practice")).toBe(false);
 		expect(isGbListingSlug("allgemeinmedizin")).toBe(false);
 		expect(gbProfessionOfListingSlug("dental-practices")).toBe("GB_DENTAL");
-		expect(Object.keys(COUNTRY_ADAPTERS)).toEqual(["FR", "AT", "GB", "CZ"]);
+		expect(Object.keys(COUNTRY_ADAPTERS)).toEqual(["FR", "AT", "GB", "CZ", "ES"]);
 	});
 });
 

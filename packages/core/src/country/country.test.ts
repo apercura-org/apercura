@@ -6,11 +6,12 @@ import { timeZoneForDepartment } from "../time/departments";
 import { COUNTRY_ADAPTERS, COUNTRY_CODES, countryAdapter, france } from "./index";
 
 describe("country adapters", () => {
-	it("serves France, Austria, the United Kingdom and Czechia and refuses markets that are not open", () => {
+	it("serves France, Austria, the United Kingdom, Czechia and Spain and refuses markets that are not open", () => {
 		expect(countryAdapter("FR")).toBe(france);
 		expect(() => countryAdapter("DE")).toThrow(RangeError);
+		expect(() => countryAdapter("IT")).toThrow(RangeError);
 		expect(() => countryAdapter("XX")).toThrow(RangeError);
-		expect(Object.keys(COUNTRY_ADAPTERS)).toEqual(["FR", "AT", "GB", "CZ"]);
+		expect(Object.keys(COUNTRY_ADAPTERS)).toEqual(["FR", "AT", "GB", "CZ", "ES"]);
 		expect(COUNTRY_CODES).toEqual(["FR", "AT", "DE", "GB", "ES", "IT", "CZ"]);
 	});
 
