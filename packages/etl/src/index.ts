@@ -6,6 +6,7 @@ export const COMMANDS = [
 	"etl:es",
 	"etl:it",
 	"etl:de",
+	"etl:ch",
 	"etl:places",
 	"etl:outbox",
 ] as const;
@@ -37,6 +38,10 @@ Commands:
                 Destatis; reproduction with the source) and the pharmacies of
                 Thuringia (CC BY 4.0) and Brandenburg (dl-de/by-2-0), placed in
                 GV-ISys's Gemeinden by municipality key, rebuild read models.
+  etl:ch        Import Swiss hospitals and clinics (FOPH, Kennzahlen der Schweizer
+                Spitäler 2023) and the cantons' open lists of hospitals, nursing homes
+                and pharmacies (Bern, Geneva, Basel-Landschaft, Basel-Stadt, Zürich,
+                Jura), placed by postcode in the BFS communes, rebuild read models.
   etl:places    Import regions, departments, communes and arrondissements
                 (geo.api.gouv.fr), or with --country at the Austrian
                 Bundesländer and Gemeinden (Statistik Austria), or with --country gb
@@ -47,7 +52,9 @@ Commands:
                 (IGN, CC BY 4.0), or with --country it the Italian regions,
                 provinces and municipalities (ISTAT boundaries, CC BY 4.0), or with
                 --country de the German Länder, Kreise and Gemeinden (GV-ISys,
-                Destatis). Run once, then yearly.
+                Destatis), or with --country ch the Swiss cantons, districts and
+                communes (BFS commune register, swisstopo's postcode directory). Run
+                once, then yearly.
   etl:outbox    Send pending cache invalidations to the web app.
 
 Flags (etl:fr):
@@ -100,6 +107,13 @@ Flags (etl:de):
   --dry-run, --approve=<run_id>, --force, --source-dir <path>, --offline, --work-dir <path>
                           As for etl:at. Unchanged files end the run at once (exit code 0).
 
+Flags (etl:ch):
+  --sources <ids>         Lists to import: bag, be-spitaeler, be-heime, ge-hopitaux, ge-ems,
+                          ge-pharmacies, bl-apotheken, bl-heime, bs-spitaeler, bs-heime,
+                          zh-heime, ju-institutions (default ETL_CH_SOURCES, else all).
+  --dry-run, --approve=<run_id>, --force, --source-dir <path>, --offline, --work-dir <path>
+                          As for etl:at. Without bag, the cantons' hospitals are not read.
+
 Environment:
   DATABASE_URL_ETL (or DATABASE_URL), ETL_PROFESSIONS, ETL_ANS_URLS, ETL_AMELI_URL,
   ETL_FINESS_DATASET_URL, ETL_GEO_API_URL, ETL_GEOCODER_URL, ETL_SOURCE_DIR, ETL_WORK_DIR,
@@ -115,17 +129,21 @@ Environment:
   ETL_IT_PORTAL_URL, ETL_IT_PLACES_URL, ETL_IT_REGISTER_COORDINATES, ETL_IT_SOURCE_DIR,
   ETL_DE_SOURCES, ETL_DE_KHV_URL, ETL_DE_KHV_INDEX_URL, ETL_DE_KHV_MIRROR_URL,
   ETL_DE_APO_TH_URL, ETL_DE_APO_BB_URL, ETL_DE_PLACES_URL, ETL_DE_SOURCE_DIR,
+  ETL_CH_SOURCES, ETL_CH_{SOURCE}_URL (ETL_CH_BAG_URL, ETL_CH_ZH_HEIME_URL…),
+  ETL_CH_POSTCODES_URL, ETL_CH_COMMUNES_URL, ETL_CH_SOURCE_DIR,
   APP_URL and REVALIDATE_SECRET (cache revalidation).`;
 
 export {
 	type AtOptions,
 	buildAtOptions,
+	buildChOptions,
 	buildCzOptions,
 	buildDeOptions,
 	buildEsOptions,
 	buildFrOptions,
 	buildGbOptions,
 	buildItOptions,
+	type ChOptions,
 	type CzOptions,
 	type DeOptions,
 	type EsOptions,
@@ -135,6 +153,7 @@ export {
 	parseArgs,
 } from "./config";
 export { type AtRunOutcome, runAt } from "./run-at";
+export { type ChRunOutcome, runCh } from "./run-ch";
 export { type CzRunOutcome, runCz } from "./run-cz";
 export { type DeRunOutcome, runDe } from "./run-de";
 export { type EsRunOutcome, runEs } from "./run-es";

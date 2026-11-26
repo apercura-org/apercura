@@ -1,0 +1,293 @@
+{
+ "type": "FeatureCollection",
+ "features": [
+  {
+   "type": "Feature",
+   "properties": {
+    "gln_betrieb": "7699999000001",
+    "betriebsname": "Apotheke Beispiel Liestal",
+    "zusatzname": "Fiktiv Apotheken AG",
+    "strasse": "Apothekerweg",
+    "hausnummer": "1",
+    "plz": "4410",
+    "ort": "Liestal",
+    "name_verantw_person": "Fiktiva",
+    "vorname_verantw_person": "Erika",
+    "medizinalperson": "Ja",
+    "e_eingangskoordinate": 2622000,
+    "n_eingangskoordinate": 1259000
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     7.733,
+     47.484
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "gln_betrieb": "7699999000002",
+    "betriebsname": "Muster Apotheke 2",
+    "zusatzname": "Fiktiv Apotheken AG",
+    "strasse": "Apothekerweg",
+    "hausnummer": "2",
+    "plz": "4102",
+    "ort": "Binningen",
+    "name_verantw_person": "Fiktiva",
+    "vorname_verantw_person": "Erika",
+    "medizinalperson": "Ja",
+    "e_eingangskoordinate": 2622001,
+    "n_eingangskoordinate": 1259001
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     7.57,
+     47.5407
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "gln_betrieb": "7699999000003",
+    "betriebsname": "Muster Apotheke 3",
+    "zusatzname": "Fiktiv Apotheken AG",
+    "strasse": "Apothekerweg",
+    "hausnummer": "3",
+    "plz": "4410",
+    "ort": "Liestal",
+    "name_verantw_person": "Fiktiva",
+    "vorname_verantw_person": "Erika",
+    "medizinalperson": "Ja",
+    "e_eingangskoordinate": 2622002,
+    "n_eingangskoordinate": 1259002
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     7.735,
+     47.4854
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "gln_betrieb": "7699999000004",
+    "betriebsname": "Muster Apotheke 4",
+    "zusatzname": "Fiktiv Apotheken AG",
+    "strasse": "Apothekerweg",
+    "hausnummer": "4",
+    "plz": "4102",
+    "ort": "Binningen",
+    "name_verantw_person": "Fiktiva",
+    "vorname_verantw_person": "Erika",
+    "medizinalperson": "Ja",
+    "e_eingangskoordinate": 2622003,
+    "n_eingangskoordinate": 1259003
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     7.572,
+     47.5421
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "gln_betrieb": "7699999000005",
+    "betriebsname": "Muster Apotheke 5",
+    "zusatzname": "Fiktiv Apotheken AG",
+    "strasse": "Apothekerweg",
+    "hausnummer": "5",
+    "plz": "4410",
+    "ort": "Liestal",
+    "name_verantw_person": "Fiktiva",
+    "vorname_verantw_person": "Erika",
+    "medizinalperson": "Ja",
+    "e_eingangskoordinate": 2622004,
+    "n_eingangskoordinate": 1259004
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     7.737,
+     47.4868
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "gln_betrieb": "7699999000006",
+    "betriebsname": "Muster Apotheke 6",
+    "zusatzname": "Fiktiv Apotheken AG",
+    "strasse": "Apothekerweg",
+    "hausnummer": "6",
+    "plz": "4102",
+    "ort": "Binningen",
+    "name_verantw_person": "Fiktiva",
+    "vorname_verantw_person": "Erika",
+    "medizinalperson": "Ja",
+    "e_eingangskoordinate": 2622005,
+    "n_eingangskoordinate": 1259005
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     7.574,
+     47.54
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "gln_betrieb": "7699999000007",
+    "betriebsname": "Muster Apotheke 7",
+    "zusatzname": "Fiktiv Apotheken AG",
+    "strasse": "Apothekerweg",
+    "hausnummer": "7",
+    "plz": "4410",
+    "ort": "Liestal",
+    "name_verantw_person": "Fiktiva",
+    "vorname_verantw_person": "Erika",
+    "medizinalperson": "Ja",
+    "e_eingangskoordinate": 2622006,
+    "n_eingangskoordinate": 1259006
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     7.739,
+     47.4847
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "gln_betrieb": "7699999000008",
+    "betriebsname": "Muster Apotheke 8",
+    "zusatzname": "Fiktiv Apotheken AG",
+    "strasse": "Apothekerweg",
+    "hausnummer": "8",
+    "plz": "4102",
+    "ort": "Binningen",
+    "name_verantw_person": "Fiktiva",
+    "vorname_verantw_person": "Erika",
+    "medizinalperson": "Ja",
+    "e_eingangskoordinate": 2622007,
+    "n_eingangskoordinate": 1259007
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     7.569,
+     47.5414
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "gln_betrieb": "7699999000009",
+    "betriebsname": "Muster Apotheke 9",
+    "zusatzname": "Fiktiv Apotheken AG",
+    "strasse": "Apothekerweg",
+    "hausnummer": "9",
+    "plz": "4410",
+    "ort": "Liestal",
+    "name_verantw_person": "Fiktiva",
+    "vorname_verantw_person": "Erika",
+    "medizinalperson": "Ja",
+    "e_eingangskoordinate": 2622008,
+    "n_eingangskoordinate": 1259008
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     7.734,
+     47.4861
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "gln_betrieb": "7699999000010",
+    "betriebsname": "Muster Apotheke 10",
+    "zusatzname": "Fiktiv Apotheken AG",
+    "strasse": "Apothekerweg",
+    "hausnummer": "10",
+    "plz": "4102",
+    "ort": "Binningen",
+    "name_verantw_person": "Fiktiva",
+    "vorname_verantw_person": "Erika",
+    "medizinalperson": "Ja",
+    "e_eingangskoordinate": 2622009,
+    "n_eingangskoordinate": 1259009
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     7.571,
+     47.5428
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "gln_betrieb": "7699999000011",
+    "betriebsname": "Muster Apotheke 11",
+    "zusatzname": "Fiktiv Apotheken AG",
+    "strasse": "Apothekerweg",
+    "hausnummer": "11",
+    "plz": "4410",
+    "ort": "Liestal",
+    "name_verantw_person": "Fiktiva",
+    "vorname_verantw_person": "Erika",
+    "medizinalperson": "Ja",
+    "e_eingangskoordinate": 2622010,
+    "n_eingangskoordinate": 1259010
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     7.736,
+     47.484
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "gln_betrieb": "7699999000012",
+    "betriebsname": "Muster Apotheke 12",
+    "zusatzname": "Fiktiv Apotheken AG",
+    "strasse": "Apothekerweg",
+    "hausnummer": "12",
+    "plz": "4102",
+    "ort": "Binningen",
+    "name_verantw_person": "Fiktiva",
+    "vorname_verantw_person": "Erika",
+    "medizinalperson": "Ja",
+    "e_eingangskoordinate": 2622011,
+    "n_eingangskoordinate": 1259011
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     7.573,
+     47.5407
+    ]
+   }
+  }
+ ]
+}

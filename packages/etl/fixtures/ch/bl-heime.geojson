@@ -1,0 +1,180 @@
+{
+ "type": "FeatureCollection",
+ "features": [
+  {
+   "type": "Feature",
+   "properties": {
+    "bfs_nummer": "2701",
+    "gemeinde": "Basel",
+    "versorgungsregion_code": null,
+    "versorgungsregion": null,
+    "institution": "Pflegezentrum Muster Basel",
+    "post_adresse": "Musterstrasse 15",
+    "plz": "4056",
+    "ort": "Basel",
+    "telefon": "061 999 40 00",
+    "e_mail": "erika.fiktiva@example.ch",
+    "website": "https://www.example.ch",
+    "gkode": 2610000,
+    "gkodn": 1267000
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     7.58,
+     47.562
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "bfs_nummer": "2765",
+    "gemeinde": "Binningen",
+    "versorgungsregion_code": 1,
+    "versorgungsregion": "VR Alter Modell",
+    "institution": "Alterszentrum Modell 2",
+    "post_adresse": "Modellstrasse 2",
+    "plz": "4102",
+    "ort": "Binningen",
+    "telefon": "061 999 41 00",
+    "e_mail": "erika.fiktiva@example.ch",
+    "website": "https://www.example.ch",
+    "gkode": 2610001,
+    "gkodn": 1267001
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     7.57,
+     47.5407
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "bfs_nummer": "2829",
+    "gemeinde": "Liestal",
+    "versorgungsregion_code": 1,
+    "versorgungsregion": "VR Alter Modell",
+    "institution": "Alterszentrum Modell 3",
+    "post_adresse": "Modellstrasse 3",
+    "plz": "4410",
+    "ort": "Liestal",
+    "telefon": "061 999 42 00",
+    "e_mail": "erika.fiktiva@example.ch",
+    "website": "https://www.example.ch",
+    "gkode": 2610002,
+    "gkodn": 1267002
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     7.735,
+     47.4854
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "bfs_nummer": "2765",
+    "gemeinde": "Binningen",
+    "versorgungsregion_code": 1,
+    "versorgungsregion": "VR Alter Modell",
+    "institution": "Alterszentrum Modell 4",
+    "post_adresse": "Modellstrasse 4",
+    "plz": "4102",
+    "ort": "Binningen",
+    "telefon": "061 999 43 00",
+    "e_mail": "erika.fiktiva@example.ch",
+    "website": "https://www.example.ch",
+    "gkode": 2610003,
+    "gkodn": 1267003
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     7.572,
+     47.5421
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "bfs_nummer": "2829",
+    "gemeinde": "Liestal",
+    "versorgungsregion_code": 1,
+    "versorgungsregion": "VR Alter Modell",
+    "institution": "Alterszentrum Modell 5",
+    "post_adresse": "Modellstrasse 5",
+    "plz": "4410",
+    "ort": "Liestal",
+    "telefon": "061 999 44 00",
+    "e_mail": "erika.fiktiva@example.ch",
+    "website": "https://www.example.ch",
+    "gkode": 2610004,
+    "gkodn": 1267004
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     7.737,
+     47.4868
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "bfs_nummer": "2765",
+    "gemeinde": "Binningen",
+    "versorgungsregion_code": 1,
+    "versorgungsregion": "VR Alter Modell",
+    "institution": "Alterszentrum Modell 6",
+    "post_adresse": "Modellstrasse 6",
+    "plz": "4102",
+    "ort": "Binningen",
+    "telefon": "061 999 45 00",
+    "e_mail": "erika.fiktiva@example.ch",
+    "website": "https://www.example.ch",
+    "gkode": 2610005,
+    "gkodn": 1267005
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     7.574,
+     47.54
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "bfs_nummer": "2829",
+    "gemeinde": "Liestal",
+    "versorgungsregion_code": 1,
+    "versorgungsregion": "VR Alter Modell",
+    "institution": "Alterszentrum Modell 7",
+    "post_adresse": "Modellstrasse 7",
+    "plz": "4410",
+    "ort": "Liestal",
+    "telefon": "061 999 46 00",
+    "e_mail": "erika.fiktiva@example.ch",
+    "website": "https://www.example.ch",
+    "gkode": 2610006,
+    "gkodn": 1267006
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     7.739,
+     47.4847
+    ]
+   }
+  }
+ ]
+}

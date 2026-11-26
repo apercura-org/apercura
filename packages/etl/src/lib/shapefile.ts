@@ -11,10 +11,14 @@ export type DbfTable = { fields: DbfField[]; records: Record<string, string>[] }
 
 /**
  * Parses a .dbf file. Text is decoded as UTF-8 (the `.cpg` of the source says
- * so) and trimmed; deleted records are dropped. Throws on a header that does
- * not add up, so a truncated file never yields a partial table.
+ * so), or as `encoding` for a file written in another one (Jura's, in
+ * Windows-1252), and trimmed; deleted records are dropped. Throws on a header
+ * that does not add up, so a truncated file never yields a partial table.
  */
-export function readDbf(data: Buffer): DbfTable {
+export function readDbf(
+	data: Buffer,
+	{ encoding = "utf-8" }: { encoding?: "utf-8" | "windows-1252" } = {},
+): DbfTable {
 	if (data.length < 33) throw new Error("DBF file too short");
 	const count = data.readUInt32LE(4);
 	const headerLength = data.readUInt16LE(8);
@@ -34,7 +38,7 @@ export function readDbf(data: Buffer): DbfTable {
 	if (headerLength + count * recordLength > data.length) {
 		throw new Error(`DBF file truncated: ${count} records announced`);
 	}
-	const decoder = new TextDecoder("utf-8", { fatal: true });
+	const decoder = new TextDecoder(encoding, { fatal: true });
 	const records: Record<string, string>[] = [];
 	for (let index = 0; index < count; index++) {
 		const start = headerLength + index * recordLength;
@@ -54,15 +58,19 @@ export function readDbf(data: Buffer): DbfTable {
 export type ShpPoint = { x: number; y: number } | null;
 
 /**
- * Parses the records of a point .shp file (shape type 1). A null shape or a
- * point at (0, 0) reads as null: the source has no location for that record.
+ * Parses the records of a point .shp file (shape type 1), or of a multipoint one
+ * (type 8, Jura's institutions: one point per record, its first one read). A null
+ * shape or a point at (0, 0) reads as null: the source has no location for that
+ * record.
  */
 export function readShpPoints(data: Buffer): ShpPoint[] {
 	if (data.length < 100 || data.readInt32BE(0) !== 9994) throw new Error("Not a shapefile");
 	const fileLength = data.readInt32BE(24) * 2;
 	if (fileLength > data.length) throw new Error("Shapefile truncated");
 	const shapeType = data.readInt32LE(32);
-	if (shapeType !== 1 && shapeType !== 0) throw new Error(`Shapefile of shape type ${shapeType}`);
+	if (shapeType !== 1 && shapeType !== 8 && shapeType !== 0) {
+		throw new Error(`Shapefile of shape type ${shapeType}`);
+	}
 	const points: ShpPoint[] = [];
 	let offset = 100;
 	while (offset + 8 <= fileLength) {
@@ -71,6 +79,12 @@ export function readShpPoints(data: Buffer): ShpPoint[] {
 		if (type === 1) {
 			const x = data.readDoubleLE(offset + 12);
 			const y = data.readDoubleLE(offset + 20);
+			points.push(x === 0 && y === 0 ? null : { x, y });
+		} else if (type === 8) {
+			// Bounding box (32 bytes), number of points, then the points.
+			const count = data.readInt32LE(offset + 44);
+			const x = count > 0 ? data.readDoubleLE(offset + 48) : 0;
+			const y = count > 0 ? data.readDoubleLE(offset + 56) : 0;
 			points.push(x === 0 && y === 0 ? null : { x, y });
 		} else if (type === 0) {
 			points.push(null);
@@ -83,7 +97,11 @@ export function readShpPoints(data: Buffer): ShpPoint[] {
 }
 
 /** Writes a .dbf of text fields: fixtures only. */
-export function writeDbf(fields: readonly DbfField[], records: readonly Record<string, string>[]) {
+export function writeDbf(
+	fields: readonly DbfField[],
+	records: readonly Record<string, string>[],
+	{ encoding = "utf8" }: { encoding?: "utf8" | "latin1" } = {},
+) {
 	const headerLength = 32 + fields.length * 32 + 1;
 	const recordLength = 1 + fields.reduce((sum, field) => sum + field.length, 0);
 	const data = Buffer.alloc(headerLength + records.length * recordLength + 1, 0x20);
@@ -102,7 +120,7 @@ export function writeDbf(fields: readonly DbfField[], records: readonly Record<s
 	records.forEach((record, index) => {
 		let offset = headerLength + index * recordLength + 1;
 		for (const field of fields) {
-			const value = Buffer.from(record[field.name] ?? "", "utf8").subarray(0, field.length);
+			const value = Buffer.from(record[field.name] ?? "", encoding).subarray(0, field.length);
 			value.copy(data, offset);
 			offset += field.length;
 		}

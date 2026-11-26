@@ -1,0 +1,299 @@
+{
+ "type": "FeatureCollection",
+ "crs": {
+  "type": "name",
+  "properties": {
+   "name": "EPSG:4326"
+  }
+ },
+ "features": [
+  {
+   "type": "Feature",
+   "properties": {
+    "GmlID": "SPITAL_SPITKLIN_VW_8200.1",
+    "Object-Id": 1,
+    "AKUT": 0,
+    "BEZ_FIRMA": "Psychiatrische Klinik Beispielhof AG",
+    "BEZ_STO": "Psychiatrische Klinik Beispielhof",
+    "GEBURT": 0,
+    "LOKALISAT": "Beispielhofstrasse 20",
+    "ORTSCHAFT": "Bern",
+    "PLZ": 3008,
+    "PSYCHKLIN": 1,
+    "REHAKLIN": 0,
+    "URL": "null"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     7.43,
+     46.9487
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "GmlID": "SPITAL_SPITKLIN_VW_8200.2",
+    "Object-Id": 2,
+    "AKUT": 0,
+    "BEZ_FIRMA": "Rehaklinik Fiktiv",
+    "BEZ_STO": "Rehaklinik Fiktiv",
+    "GEBURT": 0,
+    "LOKALISAT": "Kurweg 7",
+    "ORTSCHAFT": "Muri b. Bern",
+    "PLZ": 3074,
+    "PSYCHKLIN": 0,
+    "REHAKLIN": 1,
+    "URL": "null"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     7.489,
+     46.9324
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "GmlID": "SPITAL_SPITKLIN_VW_8200.3",
+    "Object-Id": 3,
+    "AKUT": 1,
+    "BEZ_FIRMA": "Privatklinik Bernmuster AG",
+    "BEZ_STO": "Privatklinik Bernmuster",
+    "GEBURT": 0,
+    "LOKALISAT": "Musterrain 2",
+    "ORTSCHAFT": "Bern",
+    "PLZ": 3010,
+    "PSYCHKLIN": 0,
+    "REHAKLIN": 0,
+    "URL": "null"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     7.428,
+     46.9551
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "GmlID": "SPITAL_SPITKLIN_VW_8200.4",
+    "Object-Id": 4,
+    "AKUT": 0,
+    "BEZ_FIRMA": "Geburtshaus Bielmuster GmbH",
+    "BEZ_STO": "Geburtshaus Bielmuster",
+    "GEBURT": 1,
+    "LOKALISAT": "Seeweg 4",
+    "ORTSCHAFT": "Biel",
+    "PLZ": 2502,
+    "PSYCHKLIN": 0,
+    "REHAKLIN": 0,
+    "URL": "null"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     7.251,
+     47.1398
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "GmlID": "SPITAL_SPITKLIN_VW_8200.5",
+    "Object-Id": 5,
+    "AKUT": 0,
+    "BEZ_FIRMA": "Tagesklinik Modell AG",
+    "BEZ_STO": "Tagesklinik Modell Bern 1",
+    "GEBURT": 0,
+    "LOKALISAT": "Modellgasse 1",
+    "ORTSCHAFT": "Bern",
+    "PLZ": 3010,
+    "PSYCHKLIN": 1,
+    "REHAKLIN": 0,
+    "URL": "null"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     7.43,
+     46.953
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "GmlID": "SPITAL_SPITKLIN_VW_8200.6",
+    "Object-Id": 6,
+    "AKUT": 0,
+    "BEZ_FIRMA": "Tagesklinik Modell AG",
+    "BEZ_STO": "Tagesklinik Modell Bern 2",
+    "GEBURT": 0,
+    "LOKALISAT": "Modellgasse 2",
+    "ORTSCHAFT": "Bern",
+    "PLZ": 3008,
+    "PSYCHKLIN": 1,
+    "REHAKLIN": 0,
+    "URL": "null"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     7.435,
+     46.9487
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "GmlID": "SPITAL_SPITKLIN_VW_8200.7",
+    "Object-Id": 7,
+    "AKUT": 0,
+    "BEZ_FIRMA": "Tagesklinik Modell AG",
+    "BEZ_STO": "Tagesklinik Modell Bern 3",
+    "GEBURT": 0,
+    "LOKALISAT": "Modellgasse 3",
+    "ORTSCHAFT": "Bern",
+    "PLZ": 3010,
+    "PSYCHKLIN": 1,
+    "REHAKLIN": 0,
+    "URL": "null"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     7.425,
+     46.9544
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "GmlID": "SPITAL_SPITKLIN_VW_8200.8",
+    "Object-Id": 8,
+    "AKUT": 0,
+    "BEZ_FIRMA": "Tagesklinik Modell AG",
+    "BEZ_STO": "Tagesklinik Modell Bern 4",
+    "GEBURT": 0,
+    "LOKALISAT": "Modellgasse 4",
+    "ORTSCHAFT": "Bern",
+    "PLZ": 3008,
+    "PSYCHKLIN": 1,
+    "REHAKLIN": 0,
+    "URL": "null"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     7.43,
+     46.9501
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "GmlID": "SPITAL_SPITKLIN_VW_8200.9",
+    "Object-Id": 9,
+    "AKUT": 0,
+    "BEZ_FIRMA": "Tagesklinik Modell AG",
+    "BEZ_STO": "Tagesklinik Modell Bern 5",
+    "GEBURT": 0,
+    "LOKALISAT": "Modellgasse 5",
+    "ORTSCHAFT": "Bern",
+    "PLZ": 3010,
+    "PSYCHKLIN": 1,
+    "REHAKLIN": 0,
+    "URL": "null"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     7.427,
+     46.9558
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "GmlID": "SPITAL_SPITKLIN_VW_8200.10",
+    "Object-Id": 10,
+    "AKUT": 0,
+    "BEZ_FIRMA": "Tagesklinik Modell AG",
+    "BEZ_STO": "Tagesklinik Modell Bern 6",
+    "GEBURT": 0,
+    "LOKALISAT": "Modellgasse 6",
+    "ORTSCHAFT": "Bern",
+    "PLZ": 3008,
+    "PSYCHKLIN": 1,
+    "REHAKLIN": 0,
+    "URL": "null"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     7.432,
+     46.948
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "GmlID": "SPITAL_SPITKLIN_VW_8200.11",
+    "Object-Id": 11,
+    "AKUT": 0,
+    "BEZ_FIRMA": "Tagesklinik Modell AG",
+    "BEZ_STO": "Tagesklinik Modell Bern 7",
+    "GEBURT": 0,
+    "LOKALISAT": "Modellgasse 7",
+    "ORTSCHAFT": "Bern",
+    "PLZ": 3010,
+    "PSYCHKLIN": 1,
+    "REHAKLIN": 0,
+    "URL": "null"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     7.429,
+     46.9537
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "GmlID": "SPITAL_SPITKLIN_VW_8200.12",
+    "Object-Id": 12,
+    "AKUT": 0,
+    "BEZ_FIRMA": "Tagesklinik Modell AG",
+    "BEZ_STO": "Tagesklinik Modell Bern 8",
+    "GEBURT": 0,
+    "LOKALISAT": "Modellgasse 8",
+    "ORTSCHAFT": "Bern",
+    "PLZ": 3008,
+    "PSYCHKLIN": 1,
+    "REHAKLIN": 0,
+    "URL": "null"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     7.434,
+     46.9494
+    ]
+   }
+  }
+ ]
+}
