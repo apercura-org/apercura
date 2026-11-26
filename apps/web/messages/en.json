@@ -51,6 +51,28 @@
 		"locale": "{locale, select, fr {Français} en {English} de {Deutsch} es {Español} it {Italiano} other {Unknown language}}",
 		"current": "Language: {language}"
 	},
+	"ErrorPages": {
+		"notFound": {
+			"metaTitle": "Page not found · Apercura",
+			"title": "This page does not exist",
+			"body": "The address may be mistyped, or the page has been removed. Search the directory, or start again from one of the pages below.",
+			"rootBody": "The address may be mistyped, or the page has been removed. Choose a country to search its directory.",
+			"code": "Error 404",
+			"stamp": "No page at this address",
+			"nextHeading": "Elsewhere on Apercura",
+			"home": "Home page",
+			"directory": "Directory by place",
+			"international": "Apercura in each country"
+		},
+		"error": {
+			"metaTitle": "Page unavailable · Apercura",
+			"title": "This page could not be shown",
+			"body": "Something went wrong on our side while preparing it. Try again; if it still fails, come back in a few minutes.",
+			"retry": "Try again",
+			"home": "Back to the home page",
+			"reference": "Reference for support: {digest}"
+		}
+	},
 	"Search": {
 		"label": "Find a health practitioner",
 		"who": "Who?",

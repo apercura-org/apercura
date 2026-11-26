@@ -51,6 +51,28 @@
 		"locale": "{locale, select, fr {Français} en {English} de {Deutsch} es {Español} it {Italiano} other {Lingua sconosciuta}}",
 		"current": "Lingua: {language}"
 	},
+	"ErrorPages": {
+		"notFound": {
+			"metaTitle": "Pagina non trovata · Apercura",
+			"title": "Questa pagina non esiste",
+			"body": "L’indirizzo potrebbe essere scritto male, oppure la pagina è stata rimossa. Cerchi nell’elenco o riparta da una delle pagine qui sotto.",
+			"rootBody": "L’indirizzo potrebbe essere scritto male, oppure la pagina è stata rimossa. Scelga un paese per cercare nel suo elenco.",
+			"code": "Errore 404",
+			"stamp": "Nessuna pagina a questo indirizzo",
+			"nextHeading": "Altrove su Apercura",
+			"home": "Pagina iniziale",
+			"directory": "Elenco per luogo",
+			"international": "Apercura in ogni paese"
+		},
+		"error": {
+			"metaTitle": "Pagina non disponibile · Apercura",
+			"title": "Non è stato possibile mostrare questa pagina",
+			"body": "Si è verificato un errore da parte nostra durante la preparazione. Riprovi; se il problema continua, torni tra qualche minuto.",
+			"retry": "Riprova",
+			"home": "Torna alla pagina iniziale",
+			"reference": "Riferimento per l’assistenza: {digest}"
+		}
+	},
 	"Search": {
 		"label": "Trovare un professionista sanitario",
 		"who": "Chi?",

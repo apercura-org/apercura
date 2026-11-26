@@ -51,6 +51,28 @@
 		"locale": "{locale, select, fr {Français} en {English} de {Deutsch} es {Español} it {Italiano} other {Langue inconnue}}",
 		"current": "Langue : {language}"
 	},
+	"ErrorPages": {
+		"notFound": {
+			"metaTitle": "Page introuvable · Apercura",
+			"title": "Cette page n’existe pas",
+			"body": "L’adresse est peut-être mal saisie, ou la page a été retirée. Cherchez dans l’annuaire, ou repartez de l’une des pages ci-dessous.",
+			"rootBody": "L’adresse est peut-être mal saisie, ou la page a été retirée. Choisissez un pays pour chercher dans son annuaire.",
+			"code": "Erreur 404",
+			"stamp": "Aucune page à cette adresse",
+			"nextHeading": "Ailleurs sur Apercura",
+			"home": "Page d’accueil",
+			"directory": "Annuaire par lieu",
+			"international": "Apercura dans chaque pays"
+		},
+		"error": {
+			"metaTitle": "Page indisponible · Apercura",
+			"title": "Cette page n’a pas pu s’afficher",
+			"body": "Une erreur s’est produite de notre côté pendant sa préparation. Réessayez ; si elle persiste, revenez dans quelques minutes.",
+			"retry": "Réessayer",
+			"home": "Retour à l’accueil",
+			"reference": "Référence pour le support : {digest}"
+		}
+	},
 	"Search": {
 		"label": "Trouver un professionnel de santé",
 		"who": "Qui ?",

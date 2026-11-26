@@ -12,6 +12,9 @@ import { OG_FONT_FILES } from "./src/server/og/font-files";
 
 const nextConfig: NextConfig = {
 	cacheComponents: true,
+	// The site has two root layouts (the international home and the locales): a URL no route
+	// matches gets app/global-not-found.tsx, a document of its own, instead of Next.js's page.
+	experimental: { globalNotFound: true },
 	partialPrefetching: true,
 	output: "standalone",
 	outputFileTracingRoot: monorepoRoot,

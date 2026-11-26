@@ -51,10 +51,13 @@ export const THEME_SCRIPT = `(function () {
 		for (var i = 0; i < inputs.length; i++) inputs[i].checked = inputs[i].value === (theme || "system");
 	}
 	apply();
-	document.addEventListener("DOMContentLoaded", function () {
+	function watch() {
 		sync();
 		new MutationObserver(sync).observe(document.body, { childList: true, subtree: true });
-	});
+	}
+	// Loaded late (the 404, which the browser renders from its data), the document is ready.
+	if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", watch);
+	else watch();
 	document.addEventListener("change", function (event) {
 		var input = event.target;
 		if (!input || input.name !== key) return;

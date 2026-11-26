@@ -51,6 +51,28 @@
 		"locale": "{locale, select, fr {Français} en {English} de {Deutsch} es {Español} it {Italiano} other {Unbekannte Sprache}}",
 		"current": "Sprache: {language}"
 	},
+	"ErrorPages": {
+		"notFound": {
+			"metaTitle": "Seite nicht gefunden · Apercura",
+			"title": "Diese Seite gibt es nicht",
+			"body": "Die Adresse ist vielleicht falsch geschrieben, oder die Seite wurde entfernt. Suchen Sie im Verzeichnis oder beginnen Sie bei einer der Seiten unten neu.",
+			"rootBody": "Die Adresse ist vielleicht falsch geschrieben, oder die Seite wurde entfernt. Wählen Sie ein Land, um in seinem Verzeichnis zu suchen.",
+			"code": "Fehler 404",
+			"stamp": "Keine Seite unter dieser Adresse",
+			"nextHeading": "Anderswo auf Apercura",
+			"home": "Startseite",
+			"directory": "Verzeichnis nach Ort",
+			"international": "Apercura in jedem Land"
+		},
+		"error": {
+			"metaTitle": "Seite nicht verfügbar · Apercura",
+			"title": "Diese Seite konnte nicht angezeigt werden",
+			"body": "Beim Erstellen der Seite ist bei uns ein Fehler aufgetreten. Versuchen Sie es erneut; wenn es weiterhin nicht klappt, kommen Sie in ein paar Minuten wieder.",
+			"retry": "Erneut versuchen",
+			"home": "Zurück zur Startseite",
+			"reference": "Referenz für den Support: {digest}"
+		}
+	},
 	"Search": {
 		"label": "Gesundheitsfachkraft finden",
 		"who": "Wer?",

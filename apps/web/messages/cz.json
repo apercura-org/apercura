@@ -51,6 +51,28 @@
 		"locale": "{locale, select, fr {Français} en {English} de {Deutsch} es {Español} it {Italiano} other {Neznámý jazyk}}",
 		"current": "Jazyk: {language}"
 	},
+	"ErrorPages": {
+		"notFound": {
+			"metaTitle": "Stránka nenalezena · Apercura",
+			"title": "Tato stránka neexistuje",
+			"body": "Adresa je možná chybně napsaná, nebo byla stránka odstraněna. Hledejte v adresáři, nebo začněte znovu od jedné ze stránek níže.",
+			"rootBody": "Adresa je možná chybně napsaná, nebo byla stránka odstraněna. Vyberte zemi a hledejte v jejím adresáři.",
+			"code": "Chyba 404",
+			"stamp": "Na této adrese není žádná stránka",
+			"nextHeading": "Jinde na Apercuře",
+			"home": "Úvodní stránka",
+			"directory": "Adresář podle místa",
+			"international": "Apercura v jednotlivých zemích"
+		},
+		"error": {
+			"metaTitle": "Stránka není dostupná · Apercura",
+			"title": "Tuto stránku se nepodařilo zobrazit",
+			"body": "Při její přípravě došlo na naší straně k chybě. Zkuste to znovu; pokud chyba přetrvá, vraťte se za pár minut.",
+			"retry": "Zkusit znovu",
+			"home": "Zpět na úvodní stránku",
+			"reference": "Kód pro podporu: {digest}"
+		}
+	},
 	"Search": {
 		"label": "Najít lékaře, zubaře nebo lékárnu",
 		"who": "Kdo?",

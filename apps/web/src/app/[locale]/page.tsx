@@ -9,6 +9,7 @@ import {
 } from "@apercura/core/taxonomy";
 import { buttonStyles, FieldList, FieldRow, ProvenanceNote } from "@apercura/ui";
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { BookletPage } from "~/components/booklet-page";
@@ -32,7 +33,9 @@ import { getRegistryFigures } from "~/server/queries/registry";
 
 export async function generateMetadata({ params }: PageProps<"/[locale]">): Promise<Metadata> {
 	const { locale: requested } = await params;
-	const locale = hasLocale(routing.locales, requested) ? requested : routing.defaultLocale;
+	// A first segment that is no locale (`/missing.txt`) is the root 404, never France's home.
+	if (!hasLocale(routing.locales, requested)) notFound();
+	const locale = requested;
 	const t = await getTranslations({ locale, namespace: "Metadata" });
 	return pageMetadata({
 		locale,
