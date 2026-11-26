@@ -31,6 +31,11 @@ export interface BookletSelectFieldProps {
 	options: BookletSelectOption[];
 	defaultValue?: string;
 	onChange?: (value: string) => void;
+	/**
+	 * Id of an empty slot printed after the select, on the same row, where a client action (the
+	 * search's "near me") renders once the page runs.
+	 */
+	afterSlotId?: string;
 	className?: string;
 }
 
@@ -47,6 +52,7 @@ export function BookletSelectField({
 	options,
 	defaultValue,
 	onChange,
+	afterSlotId,
 	className,
 }: BookletSelectFieldProps) {
 	return (
@@ -70,6 +76,7 @@ export function BookletSelectField({
 				</select>
 				<ChevronDownIcon className="pointer-events-none absolute end-3 size-5 text-ink-muted" />
 			</div>
+			{afterSlotId ? <span id={afterSlotId} className="contents" /> : null}
 		</div>
 	);
 }

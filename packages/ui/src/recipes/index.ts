@@ -81,7 +81,7 @@ export const searchStyles = tv({
 			"placeholder:text-ink-muted [&::-webkit-search-cancel-button]:hidden",
 		],
 		submit: "min-h-13 text-body md:min-w-40",
-		choice: "flex items-center gap-3 md:order-last md:basis-full",
+		choice: "flex flex-wrap items-center gap-x-3 gap-y-2 md:order-last md:basis-full",
 		choiceBox: [
 			"relative inline-flex items-center rounded-field border border-field-edge bg-paper text-ink",
 			"transition-[border-color] duration-150 hover:border-ink has-[select:focus-visible]:border-stamp",

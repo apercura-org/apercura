@@ -20,7 +20,7 @@ import {
 } from "~/i18n/locales";
 import { getPathname, useRouter } from "~/i18n/navigation";
 import type { Locale } from "~/i18n/routing";
-import { searchFormId } from "~/lib/search-form-id";
+import { nearMeSlotId, searchFormId } from "~/lib/search-form-id";
 import { useTRPC } from "~/trpc/client";
 import { NearMeButton } from "./near-me-button";
 
@@ -188,10 +188,8 @@ export function SearchForm({
 				landmark ? (
 					<NearMeButton
 						formId={formId}
-						className={buttonStyles({
-							intent: "ink",
-							size: "md",
-						})}
+						slotId={nearMeSlotId(idPrefix)}
+						className={buttonStyles({ intent: "quiet", size: "md", className: "text-meta" })}
 						labels={{
 							nearMe: tForm("nearMe"),
 							locating: tForm("locating"),
@@ -240,6 +238,7 @@ export function SearchForm({
 					label: t(`markets.${country}`),
 				}))}
 				onChange={(value) => setMarket(marketOfSegment(value) ?? marketOf(locale))}
+				afterSlotId={nearMeSlotId(idPrefix)}
 			/>
 			{/* Filled by the "near me" action. */}
 			<input type="hidden" data-near-me="" />

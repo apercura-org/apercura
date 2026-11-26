@@ -3,7 +3,7 @@ import { getTranslations } from "next-intl/server";
 import { MARKET_COUNTRIES, marketOf, marketSegment } from "~/i18n/locales";
 import { getPathname } from "~/i18n/navigation";
 import type { Locale } from "~/i18n/routing";
-import { searchFormId } from "~/lib/search-form-id";
+import { nearMeSlotId, searchFormId } from "~/lib/search-form-id";
 import { ClientIsland, SEARCH_FORM_MESSAGES } from "./client-island";
 import { DeferredSearchForm } from "./deferred-search-form";
 import { NearMeButton } from "./near-me-button";
@@ -43,6 +43,7 @@ export async function HomeSearch({ locale, idPrefix }: { locale: Locale; idPrefi
 							name: "pays",
 							label: t("market"),
 							defaultValue: marketSegment(marketOf(locale)),
+							afterSlotId: nearMeSlotId(idPrefix),
 							options: MARKET_COUNTRIES.map((country) => ({
 								value: marketSegment(country),
 								label: t(`markets.${country}`),
@@ -53,10 +54,8 @@ export async function HomeSearch({ locale, idPrefix }: { locale: Locale; idPrefi
 			</ClientIsland>
 			<NearMeButton
 				formId={formId}
-				className={buttonStyles({
-					intent: "ink",
-					size: "md",
-				})}
+				slotId={nearMeSlotId(idPrefix)}
+				className={buttonStyles({ intent: "quiet", size: "md", className: "text-meta" })}
 				labels={{
 					nearMe: tForm("nearMe"),
 					locating: tForm("locating"),
