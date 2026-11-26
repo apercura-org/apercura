@@ -23,7 +23,8 @@
 		"RATE_LIMIT_KEY",
 		"CANONICAL_HOST_REDIRECT",
 		"LEGACY_HOSTS",
-		"DATABASE_POOL_MAX"
+		"DATABASE_POOL_MAX",
+		"CACHE_*"
 	],
 	"tasks": {
 		"build": {

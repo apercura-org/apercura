@@ -104,17 +104,40 @@ they are rendered and cached before visitors and crawlers ask
 over. It reads `APP_URL` (sent as the `Host`), `INTERNAL_APP_URL` (where the requests go; default
 `APP_URL`) and:
 
-| Variable                 | Default | Role                                                                                              |
-| ------------------------ | ------- | ------------------------------------------------------------------------------------------------- |
-| `WARM_CACHE`             | `true`  | `false` (or `0`) turns the warm-up off: each run logs `{"skipped":"disabled"}`.                   |
-| `WARM_CACHE_CONCURRENCY` | `4`     | Requests at a time (1 to 16).                                                                     |
-| `WARM_CACHE_MAX_URLS`    | `5000`  | URLs per run, at most.                                                                            |
-| `WARM_CACHE_MAX_SECONDS` | `240`   | Seconds per run, at most (keep it under the five minutes between two runs).                       |
-| `WARM_CACHE_MAX_P95_MS`  | `3000`  | The run stops when the p95 latency of its last 100 requests exceeds this (the app is struggling). |
+| Variable                 | Default | Role                                                                                                                                                                            |
+| ------------------------ | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `WARM_CACHE`             | `true`  | `false` (or `0`) turns the warm-up off: each run logs `{"skipped":"disabled"}`.                                                                                                 |
+| `WARM_CACHE_CONCURRENCY` | `4`     | Requests at a time (1 to 16).                                                                                                                                                   |
+| `WARM_CACHE_MAX_URLS`    | `5000`  | URLs per run, at most.                                                                                                                                                          |
+| `WARM_CACHE_MAX_SECONDS` | `240`   | Seconds per run, at most (keep it under the five minutes between two runs).                                                                                                     |
+| `WARM_CACHE_MAX_P95_MS`  | `3000`  | The run stops when the p95 latency of its last 100 requests exceeds this (the app is struggling).                                                                               |
+| `WARM_CACHE_BUDGET_URLS` | derived | URLs warmed per walk (per build and import), at most; `0` walks every sitemap URL. Unset: what half of `CACHE_MAX_MEMORY` holds at 32 KB a page (16,384 for the default `1gb`). |
+| `CACHE_MAX_MEMORY`       | `1gb`   | The page cache's size (Valkey's `maxmemory`), read here only to derive the budget.                                                                                              |
 
 A run also stops when `/api/health` fails or takes over 2 seconds (checked before it starts and
 every 15 seconds), on a 429 or 503 answer, and when errors pass a tenth of its requests. A
 malformed value stops the job with an error naming the variable.
+
+### Page cache (`apps/web/cache-handler`)
+
+Rendered pages (HTML, RSC payload and segments), route responses and the results of the cached
+queries (`"use cache"`) go to a Valkey (or any Redis-protocol server) when `CACHE_REDIS_URL` is
+set at run time: compressed (Brotli), under keys prefixed with the build id, bounded by the
+server's `maxmemory` and evicted least recently used first. Nothing is then written to
+`.next/server/route-cache`. Without it the app keeps Next.js's own caches, as before: pages on
+the server's disk (plus a 50 MB memory cache), cached queries in memory (50 MB).
+
+| Variable                 | Default | Role                                                                                                                                                                                                        |
+| ------------------------ | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `CACHE_REDIS_URL`        | unset   | `redis://host:6379` (`rediss://` for TLS). Unset or empty: Next.js's own caches. Only read by `next start` / the standalone server in production, never by `next build` or `next dev`.                      |
+| `CACHE_REDIS_PASSWORD`   | unset   | The server's password (`requirepass`), if any; wins over one in the URL. Letters and digits only.                                                                                                           |
+| `CACHE_REDIS_TIMEOUT_MS` | `150`   | Connect and command timeout. A Valkey error or timeout is a cache miss (the page is rendered), never a failed request; Valkey is then left alone for a second, and errors are logged at most once a minute. |
+| `CACHE_DISK_MIN_FREE_MB` | `1024`  | Without Valkey: pages are no longer written to the disk while it has less free space than this (checked every 10 seconds), nor for a minute after a write failed for lack of room or rights. `0`: always.   |
+
+Tags keep their meaning: `revalidateTag(tag, "max")` (the import, owner edits) serves the
+pages once more while they render again, `{ expire: 0 }` and `updateTag` expire them, and
+`/api/revalidate` answers 503 while Valkey is unreachable, so the import's outbox sends the tags
+again later rather than lose them.
 
 ## Self-hosting (`docker/compose.selfhost.yml`, `docker/compose.app.yml`)
 
@@ -146,13 +169,17 @@ application stack; `compose.selfhost.yml` includes it and adds PostgreSQL and Mi
 | `ETL_GB_POSTCODES_URL`, `ETL_GB_LAD_LOOKUP_URL`, `ETL_GB_LAD_BOUNDARIES_URL`, `ETL_GB_TOWNS_URL`, `ETL_GB_NI_TOWNS_URL` | Override Code-Point Open's, the ONS lookup's and boundaries', OS Open Names' and the OSNI gazetteer's URLs (next year's ONS vintage).                                                                                                                                                                           |
 | `ETL_GB_SOURCE_DIR`                                                                                                     | Read the UK lists from a directory (fixtures, offline runs), like `--source-dir`.                                                                                                                                                                                                                               |
 | `INTERNAL_APP_URL`                                                                                                      | Default `http://app:3000`: where the import sends its cache tags and the cache warm-up its requests, instead of `APP_URL`, inside the stack's network. Set it to `APP_URL` where `app` may resolve to another stack (Coolify's predefined network).                                                             |
-| `WARM_CACHE`, `WARM_CACHE_*`                                                                                            | The scheduler's cache warm-up (see [Cache warm-up](#cache-warm-up-bun-run-jobstick-warm)); defaults `true`, 4 requests at a time, 5000 URLs and 240 seconds per run, p95 3000 ms.                                                                                                                               |
+| `WARM_CACHE`, `WARM_CACHE_*`                                                                                            | The scheduler's cache warm-up (see [Cache warm-up](#cache-warm-up-bun-run-jobstick-warm)); defaults `true`, 4 requests at a time, 5000 URLs and 240 seconds per run, p95 3000 ms, a walk of 16,384 URLs.                                                                                                        |
+| `CACHE_MAX_MEMORY`                                                                                                      | The `valkey` service's `maxmemory`, the page cache's size (default `1gb`); the warm-up's budget is derived from it.                                                                                                                                                                                             |
+| `CACHE_MEM_LIMIT`                                                                                                       | The `valkey` container's memory limit (default `1280m`): keep it about a quarter above `CACHE_MAX_MEMORY`.                                                                                                                                                                                                      |
+| `CACHE_REDIS_URL`, `CACHE_REDIS_PASSWORD`                                                                               | Default `redis://valkey:6379` and none: the stack's own `valkey`. Set a password (letters and digits) where another stack's `valkey` may share the network (Coolify's predefined network).                                                                                                                      |
 | `APERCURA_IMAGE`                                                                                                        | Tag of the image the stack builds and runs (default `apercura:local`).                                                                                                                                                                                                                                          |
 
 `GET /api/health` answers `200 {"status":"ok"}` when the app reaches its
 database and `503 {"status":"unavailable"}` otherwise, without details: the
 image's health check, Clever Cloud's `CC_HEALTH_CHECK_PATH` and reverse proxies
-use it.
+use it. It never depends on the page cache: a full or read-only disk, or Valkey
+down, leaves it at 200 (pages are then rendered on each request).
 
 ## Platform administrators
 

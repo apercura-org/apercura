@@ -269,6 +269,8 @@ nothing.
 | `S3_ENDPOINT`                                           | `http://<minio host>:9000`                                                                              |
 | `S3_BUCKET`, `S3_ACCESS_KEY_ID`, `S3_SECRET_ACCESS_KEY` | The app's bucket and its own key (not the administrator's)                                              |
 | `MINIO_ROOT_USER`, `MINIO_ROOT_PASSWORD`                | The MinIO administrator, for `minio-init`; empty if the bucket and key are made by hand                 |
+| `CACHE_REDIS_PASSWORD`                                  | The page cache's password (`openssl rand -hex 24`): another stack's `valkey` may share the network      |
+| `CACHE_MAX_MEMORY`, `CACHE_MEM_LIMIT`                   | Optional: the page cache's size and its container's limit (default `1gb`, `1280m`)                      |
 
 `POSTGRES_PASSWORD` is not used here: `DATABASE_URL_MIGRATE` replaces it.
 Coolify builds the image on the server and runs the file as is: it only uses

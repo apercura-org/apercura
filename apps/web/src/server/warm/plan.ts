@@ -200,6 +200,11 @@ export type WarmConfig = {
 	publicUrl: URL;
 	concurrency: number;
 	maxUrls: number;
+	/**
+	 * URLs warmed per walk (per build and import), at most; 0 for every sitemap URL. Once
+	 * reached, the walk is over until the next build or import.
+	 */
+	budgetUrls: number;
 	maxSeconds: number;
 	maxP95Ms: number;
 	/** The app's health check must answer 200 within this, before and during a run. */
@@ -222,6 +227,56 @@ export const WARM_DEFAULTS = {
 	minSamples: 20,
 } as const;
 
+/**
+ * What a warmed URL takes in the page cache, on average: its page (HTML, RSC payload and
+ * segments, Brotli-compressed: about 24 KB for a practitioner, the home or a listing with its
+ * place, 13 KB for a country-wide listing, measured on the synthetic fixtures) and the cached
+ * queries and tag marks it brings along, rounded up for real pages, which list more.
+ */
+export const WARM_ENTRY_BYTES = 32 * 1024;
+
+/** The part of the page cache the warm-up may fill: the rest is for what visitors ask. */
+export const WARM_CACHE_SHARE = 0.5;
+
+/** The page cache's size by default (CACHE_MAX_MEMORY in docker/compose.app.yml). */
+export const DEFAULT_CACHE_MAX_MEMORY = "1gb";
+
+const SIZE_UNITS: Record<string, number> = {
+	"": 1,
+	b: 1,
+	k: 1000,
+	kb: 1024,
+	m: 1000 ** 2,
+	mb: 1024 ** 2,
+	g: 1000 ** 3,
+	gb: 1024 ** 3,
+};
+
+/** Bytes of a Valkey memory size (`1gb`, `512mb`, `2g`, `1073741824`), or null. */
+export function parseMemorySize(value: string): number | null {
+	const match = /^(\d+(?:\.\d+)?)\s*([a-z]*)$/i.exec(value.trim());
+	const unit = SIZE_UNITS[match?.[2]?.toLowerCase() ?? "x"];
+	if (!match || unit === undefined) return null;
+	const bytes = Math.floor(Number(match[1]) * unit);
+	return bytes > 0 ? bytes : null;
+}
+
+/**
+ * URLs a walk may warm: WARM_CACHE_BUDGET_URLS, else what WARM_CACHE_SHARE of CACHE_MAX_MEMORY
+ * holds at WARM_ENTRY_BYTES each (16,384 for the default 1gb). Warming more than the cache
+ * holds would only evict what the walk warmed first, the most visited pages.
+ */
+export function warmBudget(env: Record<string, string | undefined>): number {
+	const explicit = env.WARM_CACHE_BUDGET_URLS;
+	if (explicit !== undefined && explicit.trim() !== "") {
+		return integer(explicit, 0, 0, 100_000_000);
+	}
+	const raw = env.CACHE_MAX_MEMORY?.trim() || DEFAULT_CACHE_MAX_MEMORY;
+	const bytes = parseMemorySize(raw);
+	if (bytes === null) throw new Error(`expected a size such as 1gb or 512mb, got "${raw}"`);
+	return Math.max(1, Math.floor((bytes * WARM_CACHE_SHARE) / WARM_ENTRY_BYTES));
+}
+
 function integer(value: string | undefined, fallback: number, min: number, max: number): number {
 	if (value === undefined || value.trim() === "") return fallback;
 	const parsed = Number(value);
@@ -243,7 +298,8 @@ function url(name: string, value: string | undefined): URL | null {
 /**
  * The warm-up's settings (docs/configuration.md): WARM_CACHE (`false` turns it off),
  * WARM_CACHE_CONCURRENCY, WARM_CACHE_MAX_URLS, WARM_CACHE_MAX_SECONDS, WARM_CACHE_MAX_P95_MS,
- * APP_URL and INTERNAL_APP_URL. Null when turned off; throws on a malformed value, naming it.
+ * WARM_CACHE_BUDGET_URLS (else CACHE_MAX_MEMORY), APP_URL and INTERNAL_APP_URL. Null when
+ * turned off; throws on a malformed value, naming it.
  */
 export function warmConfig(env: Record<string, string | undefined>): WarmConfig | null {
 	const flag = env.WARM_CACHE?.trim().toLowerCase();
@@ -265,6 +321,16 @@ export function warmConfig(env: Record<string, string | undefined>): WarmConfig 
 		maxUrls: read("WARM_CACHE_MAX_URLS", WARM_DEFAULTS.maxUrls, 1, 1_000_000),
 		maxSeconds: read("WARM_CACHE_MAX_SECONDS", WARM_DEFAULTS.maxSeconds, 5, 86_400),
 		maxP95Ms: read("WARM_CACHE_MAX_P95_MS", WARM_DEFAULTS.maxP95Ms, 100, 120_000),
+		budgetUrls: (() => {
+			try {
+				return warmBudget(env);
+			} catch (error) {
+				const name = env.WARM_CACHE_BUDGET_URLS?.trim()
+					? "WARM_CACHE_BUDGET_URLS"
+					: "CACHE_MAX_MEMORY";
+				throw new Error(`${name}: ${(error as Error).message}`);
+			}
+		})(),
 		healthMaxMs: WARM_DEFAULTS.healthMaxMs,
 		requestTimeoutMs: WARM_DEFAULTS.requestTimeoutMs,
 		healthEverySeconds: WARM_DEFAULTS.healthEverySeconds,

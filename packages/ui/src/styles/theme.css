@@ -411,6 +411,34 @@
 	}
 }
 
+/*
+ * The recipes' longest class lists (src/recipes/index.ts), named once here. A page repeats a
+ * link's or a focusable row's classes on every element, twice (in its HTML and in its React
+ * payload, which the page cache stores again): written out, the focus ring and the link base
+ * made up a quarter of a listing page. Same rules as the utilities they stand for.
+ *
+ * In the components layer, below the utilities: a utility passed next to one of them still
+ * wins, as when tailwind-merge dropped the conflicting class of the recipe. Only variant rules
+ * (hover, focus-visible…) sit here that a plain utility could now beat: no call site passes a
+ * conflicting plain class with them (an outline, a text-decoration thickness).
+ */
+@layer components {
+	/* Focus ring for elements styled outside React Aria; colour comes from the surface. */
+	.focus-ring {
+		@apply outline-none focus-visible:outline-3 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-(--focus-ring) data-focus-visible:outline-3 data-focus-visible:outline-solid data-focus-visible:outline-offset-2 data-focus-visible:outline-(--focus-ring);
+	}
+
+	/* The same ring drawn inside the box: table rows and headers, list box options. */
+	.focus-ring-inset {
+		@apply outline-none data-focus-visible:outline-3 data-focus-visible:outline-solid data-focus-visible:-outline-offset-3 data-focus-visible:outline-(--focus-ring);
+	}
+
+	/* Inline text link, always underlined; thicker underline on hover. */
+	.link-base {
+		@apply cursor-pointer rounded-[2px] underline decoration-1 underline-offset-[0.2em] transition-[text-decoration-thickness] duration-100 hover:decoration-2 data-hovered:decoration-2;
+	}
+}
+
 /* MapLibre surfaces drawn by the library itself, set in the site's tokens (both themes). */
 @layer components {
 	.apercura-map .maplibregl-ctrl-attrib {

@@ -4,6 +4,9 @@
 		"lib": ["DOM", "DOM.Iterable", "ES2023"],
 		"jsx": "react-jsx",
 		"types": ["node"],
+		// The cache handlers are plain JavaScript (Next.js loads them as they are): checked too.
+		"allowJs": true,
+		"checkJs": true,
 		"plugins": [{ "name": "next" }],
 		"paths": {
 			"~/*": ["./src/*"]
@@ -13,6 +16,7 @@
 		"next-env.d.ts",
 		"**/*.ts",
 		"**/*.tsx",
+		"cache-handler/**/*.mjs",
 		".next/types/**/*.ts",
 		".next/dev/types/**/*.ts"
 	],

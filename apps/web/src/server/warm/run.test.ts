@@ -144,6 +144,38 @@ describe("cache warm-up run", () => {
 		expect(app.requested).toHaveLength(TOTAL);
 	});
 
+	it("warms the highest-value pages within its budget, then waits", async () => {
+		const { store, state } = memoryStore();
+		const { app, fetch, now } = fakeApp();
+		const budget = PAGES + 2;
+		const env = { ...ENV, WARM_CACHE_CONCURRENCY: "1", WARM_CACHE_BUDGET_URLS: String(budget) };
+		const deps = { store, fetch, env, buildId: "build-1", now };
+		const report = await runWarm(deps);
+		expect(report).toMatchObject({ stopped: "budget", completed: true, warmed: budget });
+		// The pages first, then the listings: no practitioner.
+		expect(app.requested.slice(PAGES)).toEqual(["/fr/medecin-generaliste", "/fr/sage-femme"]);
+		expect(state.completedAt).not.toBeNull();
+		expect(await runWarm(deps)).toMatchObject({ skipped: "complete" });
+		// Over several runs, the budget is the walk's.
+		const again = memoryStore();
+		const other = fakeApp();
+		const small = { ...env, WARM_CACHE_MAX_URLS: "3" };
+		const runs = [];
+		do {
+			runs.push(
+				await runWarm({
+					store: again.store,
+					fetch: other.fetch,
+					env: small,
+					buildId: "b",
+					now: other.now,
+				}),
+			);
+		} while (!again.state.completedAt && runs.length < 20);
+		expect(other.app.requested).toHaveLength(budget);
+		expect(runs.at(-1)).toMatchObject({ stopped: "budget", total: budget });
+	});
+
 	it("starts over after a deploy, an import, or when the import asks", async () => {
 		const { store, state } = memoryStore();
 		const { app, fetch, now } = fakeApp();

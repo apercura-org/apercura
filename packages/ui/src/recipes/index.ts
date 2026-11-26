@@ -7,9 +7,15 @@ import { tv } from "./tv";
 
 export { cn, tv } from "./tv";
 
-/** Focus ring for elements styled outside React Aria. Colour comes from the surface. */
-export const focusRing =
-	"outline-none focus-visible:outline-3 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-(--focus-ring) data-focus-visible:outline-3 data-focus-visible:outline-solid data-focus-visible:outline-offset-2 data-focus-visible:outline-(--focus-ring)";
+/**
+ * Focus ring for elements styled outside React Aria. Colour comes from the surface. One class
+ * (`styles/theme.css`) for `outline-none` and the `focus-visible:` and `data-focus-visible:`
+ * outlines (3 px, solid, offset 2 px, `--focus-ring`), so pages do not repeat them.
+ */
+export const focusRing = "focus-ring";
+
+/** The focus ring drawn inside the box (offset -3 px): table rows and headers, options. */
+const focusRingInset = "focus-ring-inset";
 
 export const buttonStyles = tv({
 	base: [
@@ -53,8 +59,9 @@ export const buttonStyles = tv({
 
 export const linkStyles = tv({
 	base: [
-		"cursor-pointer rounded-[2px] underline decoration-1 underline-offset-[0.2em] transition-[text-decoration-thickness] duration-100",
-		"hover:decoration-2 data-hovered:decoration-2",
+		// cursor-pointer rounded-[2px] underline decoration-1 underline-offset-[0.2em], a 100 ms
+		// transition of the underline's thickness, 2 px on hover (`styles/theme.css`).
+		"link-base",
 		focusRing,
 	],
 	variants: {
@@ -99,10 +106,10 @@ export const popoverStyles = tv({
 
 export const listBoxItemStyles = tv({
 	base: [
-		"flex min-h-11 cursor-pointer items-center gap-3 border-b border-rule-soft px-3.5 py-2 text-body text-ink outline-none last:border-b-0",
+		"flex min-h-11 cursor-pointer items-center gap-3 border-b border-rule-soft px-3.5 py-2 text-body text-ink last:border-b-0",
 		"data-focused:bg-paper-shade data-hovered:bg-paper-shade",
 		"data-selected:font-semibold",
-		"data-focus-visible:outline-3 data-focus-visible:outline-solid data-focus-visible:-outline-offset-3 data-focus-visible:outline-(--focus-ring)",
+		focusRingInset,
 		"data-disabled:cursor-not-allowed data-disabled:text-ink-disabled",
 	],
 });
@@ -128,9 +135,8 @@ export const tableStyles = tv({
 		table: "w-full border-collapse border-b border-rule-soft text-left text-body",
 		caption: "type-title pb-3 text-left",
 		head: "border-b border-field-edge",
-		column:
-			"type-caption px-3 py-2.5 text-left align-bottom text-ink-muted first:pl-0 last:pr-0 outline-none data-focus-visible:outline-3 data-focus-visible:outline-solid data-focus-visible:-outline-offset-3 data-focus-visible:outline-(--focus-ring)",
-		row: "border-b border-rule-soft last:border-b-0 outline-none data-focus-visible:outline-3 data-focus-visible:outline-solid data-focus-visible:-outline-offset-3 data-focus-visible:outline-(--focus-ring) data-hovered:bg-paper-shade data-selected:bg-paper-shade",
+		column: `type-caption px-3 py-2.5 text-left align-bottom text-ink-muted first:pl-0 last:pr-0 ${focusRingInset}`,
+		row: `border-b border-rule-soft last:border-b-0 ${focusRingInset} data-hovered:bg-paper-shade data-selected:bg-paper-shade`,
 		cell: "px-3 py-3 align-top first:pl-0 last:pr-0",
 	},
 });

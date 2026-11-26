@@ -1,8 +1,8 @@
 # Apercura's application stack, without its data services. See docs/self-hosting.md.
 #
-# Services: migrate (one-shot), app (one replica), scheduler (supercronic: jobs and the cache
-# warm-up every 5 minutes, weekly import), etl (profile `tools`, on demand), minio-init
-# (one-shot bucket bootstrap).
+# Services: migrate (one-shot), app (one replica), valkey (the app's page cache, in memory,
+# bounded), scheduler (supercronic: jobs and the cache warm-up every 5 minutes, weekly import),
+# etl (profile `tools`, on demand), minio-init (one-shot bucket bootstrap).
 #
 # PostgreSQL (17 + PostGIS) and the S3 storage run elsewhere and outlive every deploy of this
 # file: docker/compose.selfhost.yml includes it next to its own postgres and minio services,
@@ -16,7 +16,7 @@
 #
 # Nothing here depends on a database or storage service: `migrate` waits until the database
 # accepts connections (DATABASE_WAIT_SECONDS, default 120), `minio-init` until the S3 endpoint
-# answers, and the app starts once both have succeeded.
+# answers, and the app starts once both have succeeded and valkey answers.
 #
 # Kept within what Coolify reads: only ${VAR}, ${VAR:-default} and ${VAR:?message}, no
 # single-file bind mount, no empty `command`, paths relative to this directory.
@@ -87,6 +87,10 @@ x-app-env: &app-env
   CANONICAL_HOST_REDIRECT: ${CANONICAL_HOST_REDIRECT:-true}
   # Former hosts whose every URL redirects to APP_URL (e.g. apercura.fr,www.apercura.fr).
   LEGACY_HOSTS: ${LEGACY_HOSTS:-}
+  # The page cache (docs/self-hosting.md, "Page cache"): the valkey service below. Its
+  # password, if set, in letters and digits only.
+  CACHE_REDIS_URL: ${CACHE_REDIS_URL:-redis://valkey:6379}
+  CACHE_REDIS_PASSWORD: ${CACHE_REDIS_PASSWORD:-}
   PUBLIC_HDS_HOST: ${PUBLIC_HDS_HOST:-}
   FEATURE_BOOKING: ${FEATURE_BOOKING:-false}
   FEATURE_CLAIM_DOCUMENTS: ${FEATURE_CLAIM_DOCUMENTS:-true}
@@ -152,7 +156,7 @@ services:
     <<: *image
     command: ["serve"]
     restart: unless-stopped
-    # One replica: pages are cached on this instance's disk (see docs/self-hosting.md).
+    # One replica (see docs/self-hosting.md, "Page cache"). Pages are cached in valkey.
     environment: *app-env
     ports:
       - "${APP_BIND:-127.0.0.1}:${APP_PORT:-3000}:3000"
@@ -163,6 +167,49 @@ services:
         condition: service_completed_successfully
       minio-init:
         condition: service_completed_successfully
+      valkey:
+        condition: service_healthy
+
+  # The app's page cache: rendered pages and cached queries, in memory only, at most
+  # CACHE_MAX_MEMORY (default 1gb), the least recently used evicted first. Nothing is saved
+  # (no RDB, no AOF): a restart starts empty and the warm-up fills it again. Not published:
+  # only the app reaches it, on the stack's network. The container's memory limit,
+  # CACHE_MEM_LIMIT (default 1280m), must stay above CACHE_MAX_MEMORY (about a quarter more,
+  # for Valkey's own overhead). BSD-licensed Valkey, pinned.
+  valkey:
+    image: valkey/valkey:8.1.12-alpine
+    restart: unless-stopped
+    environment:
+      CACHE_MAX_MEMORY: ${CACHE_MAX_MEMORY:-1gb}
+      CACHE_REDIS_PASSWORD: ${CACHE_REDIS_PASSWORD:-}
+    # The image's entry point again, so the server drops root as usual; a password only when
+    # one is set.
+    command:
+      - sh
+      - -c
+      - |
+        set -eu
+        if [ -n "$$CACHE_REDIS_PASSWORD" ]; then
+          set -- --requirepass "$$CACHE_REDIS_PASSWORD"
+        fi
+        exec docker-entrypoint.sh valkey-server --maxmemory "$$CACHE_MAX_MEMORY" --maxmemory-policy allkeys-lru --save "" --appendonly no "$$@"
+    mem_limit: ${CACHE_MEM_LIMIT:-1280m}
+    # The image's /data volume, unused without persistence: no volume left behind per deploy.
+    tmpfs:
+      - /data
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - if [ -n "$$CACHE_REDIS_PASSWORD" ]; then export REDISCLI_AUTH="$$CACHE_REDIS_PASSWORD"; fi; valkey-cli ping | grep -q PONG
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 5s
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: "5"
 
   scheduler:
     <<: *image
@@ -182,6 +229,10 @@ services:
       WARM_CACHE_MAX_URLS: ${WARM_CACHE_MAX_URLS:-5000}
       WARM_CACHE_MAX_SECONDS: ${WARM_CACHE_MAX_SECONDS:-240}
       WARM_CACHE_MAX_P95_MS: ${WARM_CACHE_MAX_P95_MS:-3000}
+      # URLs warmed per walk, at most: by default what half of CACHE_MAX_MEMORY holds (16384
+      # for 1gb), the highest-value pages first; 0 walks every sitemap URL.
+      WARM_CACHE_BUDGET_URLS: ${WARM_CACHE_BUDGET_URLS:-}
+      CACHE_MAX_MEMORY: ${CACHE_MAX_MEMORY:-1gb}
       # The audit log retention's own role (packages/db/drizzle/0016): the entry point builds
       # DATABASE_URL_JOBS from the password unless a URL is given; both empty: skipped.
       APERCURA_JOBS_DB_PASSWORD: ${APERCURA_JOBS_DB_PASSWORD:-}
