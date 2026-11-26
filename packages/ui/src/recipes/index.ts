@@ -77,7 +77,7 @@ export const searchStyles = tv({
 		input: [
 			"min-h-13 w-full text-ellipsis rounded-field border border-field-edge bg-paper px-4 py-2 text-body text-ink sm:text-lead",
 			"transition-[border-color] duration-150 hover:border-ink focus-visible:border-stamp",
-			"outline-none focus-visible:outline-3 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-(--focus-ring)",
+			"outline-none focus-visible:outline-3 focus-visible:outline-solid focus-visible:-outline-offset-1 focus-visible:outline-(--focus-ring)",
 			"placeholder:text-ink-muted [&::-webkit-search-cancel-button]:hidden",
 		],
 		submit: "min-h-13 text-body md:min-w-40",
@@ -85,7 +85,7 @@ export const searchStyles = tv({
 		choiceBox: [
 			"relative inline-flex items-center rounded-field border border-field-edge bg-paper text-ink",
 			"transition-[border-color] duration-150 hover:border-ink has-[select:focus-visible]:border-stamp",
-			"has-[select:focus-visible]:outline-3 has-[select:focus-visible]:outline-solid has-[select:focus-visible]:outline-offset-2 has-[select:focus-visible]:outline-(--focus-ring)",
+			"has-[select:focus-visible]:outline-3 has-[select:focus-visible]:outline-solid has-[select:focus-visible]:-outline-offset-1 has-[select:focus-visible]:outline-(--focus-ring)",
 		],
 		choiceSelect:
 			"min-h-11 cursor-pointer appearance-none rounded-field bg-transparent py-1 ps-3.5 pe-10 text-body text-ink outline-none [&>option]:bg-paper [&>option]:text-ink",
@@ -116,7 +116,7 @@ export const fieldStyles = tv({
 		box: [
 			"flex min-h-12 w-full items-center overflow-hidden rounded-field border border-field-edge bg-paper text-ink",
 			"transition-colors duration-150 hover:border-ink",
-			"has-[input:focus-visible]:outline-3 has-[input:focus-visible]:outline-solid has-[input:focus-visible]:outline-offset-2 has-[input:focus-visible]:outline-(--focus-ring)",
+			"has-[input:focus-visible]:outline-3 has-[input:focus-visible]:outline-solid has-[input:focus-visible]:-outline-offset-1 has-[input:focus-visible]:outline-(--focus-ring)",
 			"data-focus-within:border-ink",
 			"group-data-invalid/field:border-2 group-data-invalid/field:border-error",
 			"group-data-disabled/field:border-ink-disabled group-data-disabled/field:bg-paper-shade group-data-disabled/field:text-ink-disabled",
