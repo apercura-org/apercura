@@ -122,3 +122,36 @@ describe("Spanish centre keys", () => {
 		expect(displayId({ idScheme: "ES-REGCESS", nationalId: "1328000001" })).toBe("1328000001");
 	});
 });
+
+describe("Italian place keys", () => {
+	it("read a place page segment in Italy only", () => {
+		expect(parsePractitionerKey("it-IT", "farmacia-esempio-f9000001")).toEqual({
+			country: "IT",
+			idScheme: "IT-FARM",
+			nationalId: "9000001",
+			namePart: "farmacia-esempio",
+		});
+		expect(parsePractitionerKey("it-IT", "ospedale-esempio-s990001")?.idScheme).toBe("IT-HSP");
+		expect(parsePractitionerKey("it-IT", "parafarmacia-esempio-p900001")?.idScheme).toBe(
+			"IT-PFARM",
+		);
+		expect(parsePractitionerKey("it-IT", "camille-exemple-19999990013")).toBeNull();
+		expect(parsePractitionerKey("it-IT", "mudr-jana-ukazkova-900001")).toBeNull();
+		// France in Italian keeps France's keys.
+		expect(parsePractitionerKey("it", "camille-exemple-19999990013")?.country).toBe("FR");
+		expect(parsePractitionerKey("it", "farmacia-esempio-f9000001")).toBeNull();
+		expect(marketAdapter("it-IT").features.booking).toBe(false);
+	});
+
+	it("mark an Italian segment outside a locale, and print the ministry's code", () => {
+		expect(marketSegmentOf("IT", "ospedale-esempio-s990001")).toBe("it.ospedale-esempio-s990001");
+		expect(parseAnyPractitionerKey("it.ospedale-esempio-s990001")).toMatchObject({
+			country: "IT",
+			idScheme: "IT-HSP",
+			nationalId: "990001",
+		});
+		expect(parseAnyPractitionerKey("farmacia-esempio-f9000001")).toBeNull();
+		expect(displayId({ idScheme: "IT-FARM", nationalId: "9000001" })).toBe("9000001");
+		expect(displayId({ idScheme: "IT-PFARM", nationalId: "002112" })).toBe("002112");
+	});
+});

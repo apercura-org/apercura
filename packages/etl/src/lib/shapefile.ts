@@ -1,7 +1,8 @@
 /**
- * Reading the attribute table (.dbf, dBASE III) and the point geometries
- * (.shp) of a point shapefile, the format the Land Steiermark publishes its
- * doctors list in. Records of the two files are in the same order.
+ * Reading the attribute table (.dbf, dBASE III) and the geometries (.shp) of a
+ * point shapefile, the format the Land Steiermark publishes its doctors list
+ * in, or of a polygon shapefile, ISTAT's boundaries. Records of the two files
+ * are in the same order.
  */
 
 export type DbfField = { name: string; type: string; length: number };
@@ -132,5 +133,102 @@ export function writeShpPoints(points: readonly ShpPoint[]): Buffer {
 	header.writeInt32BE(length / 2, 24);
 	header.writeInt32LE(1000, 28);
 	header.writeInt32LE(1, 32);
+	return Buffer.concat([header, ...records]);
+}
+
+/** A ring of a polygon: its points in order, the last one repeating the first. */
+export type ShpRing = { x: number; y: number }[];
+
+/**
+ * Parses the records of a polygon .shp file (shape type 5, the format ISTAT publishes its
+ * boundaries in): each record's rings, outer rings clockwise and holes counterclockwise, or
+ * null for a record without geometry. Records are in the order of the .dbf's.
+ */
+export function readShpPolygons(data: Buffer): (ShpRing[] | null)[] {
+	if (data.length < 100 || data.readInt32BE(0) !== 9994) throw new Error("Not a shapefile");
+	const fileLength = data.readInt32BE(24) * 2;
+	if (fileLength > data.length) throw new Error("Shapefile truncated");
+	const shapeType = data.readInt32LE(32);
+	if (shapeType !== 5 && shapeType !== 0) throw new Error(`Shapefile of shape type ${shapeType}`);
+	const polygons: (ShpRing[] | null)[] = [];
+	let offset = 100;
+	while (offset + 8 <= fileLength) {
+		const contentLength = data.readInt32BE(offset + 4) * 2;
+		const start = offset + 8;
+		if (start + contentLength > fileLength) throw new Error("Shapefile record truncated");
+		const type = data.readInt32LE(start);
+		if (type === 0) {
+			polygons.push(null);
+		} else if (type === 5) {
+			const parts = data.readInt32LE(start + 36);
+			const count = data.readInt32LE(start + 40);
+			const partsAt = start + 44;
+			const pointsAt = partsAt + parts * 4;
+			if (pointsAt + count * 16 > start + contentLength)
+				throw new Error("Polygon record truncated");
+			const rings: ShpRing[] = [];
+			for (let part = 0; part < parts; part++) {
+				const first = data.readInt32LE(partsAt + part * 4);
+				const last = part + 1 < parts ? data.readInt32LE(partsAt + (part + 1) * 4) : count;
+				const ring: ShpRing = [];
+				for (let point = first; point < last; point++) {
+					ring.push({
+						x: data.readDoubleLE(pointsAt + point * 16),
+						y: data.readDoubleLE(pointsAt + point * 16 + 8),
+					});
+				}
+				if (ring.length >= 4) rings.push(ring);
+			}
+			polygons.push(rings.length > 0 ? rings : null);
+		} else {
+			throw new Error(`Shapefile record of shape type ${type}`);
+		}
+		offset = start + contentLength;
+	}
+	return polygons;
+}
+
+/** Writes a polygon .shp (shape type 5): fixtures only. */
+export function writeShpPolygons(polygons: readonly (ShpRing[] | null)[]): Buffer {
+	const records = polygons.map((rings, index) => {
+		if (!rings) {
+			const record = Buffer.alloc(12);
+			record.writeInt32BE(index + 1, 0);
+			record.writeInt32BE(2, 4);
+			record.writeInt32LE(0, 8);
+			return record;
+		}
+		const points = rings.flat();
+		const content = 44 + rings.length * 4 + points.length * 16;
+		const record = Buffer.alloc(8 + content);
+		record.writeInt32BE(index + 1, 0);
+		record.writeInt32BE(content / 2, 4);
+		record.writeInt32LE(5, 8);
+		const xs = points.map((point) => point.x);
+		const ys = points.map((point) => point.y);
+		record.writeDoubleLE(Math.min(...xs), 12);
+		record.writeDoubleLE(Math.min(...ys), 20);
+		record.writeDoubleLE(Math.max(...xs), 28);
+		record.writeDoubleLE(Math.max(...ys), 36);
+		record.writeInt32LE(rings.length, 44);
+		record.writeInt32LE(points.length, 48);
+		let first = 0;
+		rings.forEach((ring, part) => {
+			record.writeInt32LE(first, 52 + part * 4);
+			first += ring.length;
+		});
+		const pointsAt = 52 + rings.length * 4;
+		points.forEach((point, at) => {
+			record.writeDoubleLE(point.x, pointsAt + at * 16);
+			record.writeDoubleLE(point.y, pointsAt + at * 16 + 8);
+		});
+		return record;
+	});
+	const header = Buffer.alloc(100);
+	const length = 100 + records.reduce((sum, record) => sum + record.length, 0);
+	header.writeInt32BE(9994, 0);
+	header.writeInt32BE(length / 2, 24);
+	header.writeInt32LE(1000, 28);
+	header.writeInt32LE(5, 32);
 	return Buffer.concat([header, ...records]);
 }

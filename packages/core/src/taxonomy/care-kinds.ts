@@ -1,7 +1,8 @@
 /**
  * Kinds of care shared by the markets: the listing that lists one kind in each market, so a
  * search typed on one market's pages ("dentiste" on `/fr`) leads to the same kind of care in
- * another market's ("dental-practices" in Bristol, "zubni-lekar" in Brno, "dentistas" in Madrid).
+ * another market's ("dental-practices" in Bristol, "zubni-lekar" in Brno, "dentistas" in Madrid,
+ * "farmacie" for "pharmacie" in Roma).
  *
  * Each market names its listings in its own slugs and its own cut of the field: the UK lists
  * practices (one listing for every kind of dentistry), Austria one listing for dentists,
@@ -14,7 +15,7 @@
  */
 
 /** The open markets (ISO 3166-1 alpha-2), as `SEARCH_ALIASES` keys them. */
-export type CareMarket = "FR" | "AT" | "GB" | "CZ" | "ES";
+export type CareMarket = "FR" | "AT" | "GB" | "CZ" | "ES" | "IT";
 
 export const CARE_KINDS = {
 	"general-practice": {
@@ -38,7 +39,8 @@ export const CARE_KINDS = {
 		CZ: "ortodontista",
 		ES: "dentistas",
 	},
-	pharmacy: { FR: "pharmacien", GB: "pharmacies", CZ: "lekarna", ES: "farmacias" },
+	pharmacy: { FR: "pharmacien", GB: "pharmacies", CZ: "lekarna", ES: "farmacias", IT: "farmacie" },
+	hospital: { ES: "hospitales", IT: "ospedali" },
 	paediatrics: { FR: "pediatre", AT: "kinderheilkunde", CZ: "detsky-lekar", ES: "pediatras" },
 	gynaecology: { FR: "gynecologue", AT: "frauenheilkunde", CZ: "gynekolog", ES: "ginecologos" },
 	obstetrics: {

@@ -51,9 +51,9 @@ export async function getDirectoryIndex(country = "FR"): Promise<DirectoryIndex>
 		LEFT JOIN directory.places r ON r.country = d.country AND r.kind = 'region'
 			AND r.code = d.region_code
 		GROUP BY d.id, r.code, r.name, r.slug
-		-- UK authorities, Czech districts and Spanish provinces by name (their ONS, NUTS and INE
-		-- codes are no order a reader knows).
-		ORDER BY r.name, CASE WHEN d.country IN ('GB', 'CZ', 'ES') THEN d.name ELSE d.code END
+		-- UK authorities, Czech districts, Spanish and Italian provinces by name (their ONS, NUTS, INE
+		-- and ISTAT codes are no order a reader knows).
+		ORDER BY r.name, CASE WHEN d.country IN ('GB', 'CZ', 'ES', 'IT') THEN d.name ELSE d.code END
 	`;
 	const regions: RegionGroup[] = [];
 	for (const { regionCode, regionName, regionSlug, ...department } of rows) {

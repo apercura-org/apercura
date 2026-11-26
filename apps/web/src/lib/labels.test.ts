@@ -19,6 +19,7 @@ const CATALOGS = {
 	"en-GB": messagesFor("en-GB"),
 	"cs-CZ": messagesFor("cs-CZ"),
 	"es-ES": messagesFor("es-ES"),
+	"it-IT": messagesFor("it-IT"),
 } as const;
 
 /** A label of the catalog's taxonomy, rendered like `getTaxonomyLabels` does. */
@@ -156,5 +157,18 @@ describe("Spain's labels", () => {
 		expect(t("profession.consultorio-local" as never)).toBe("Consultorio local");
 		expect(t("profession.cardiologos" as never)).toBe("Consulta de cardiología");
 		expect(inSentence(t("profession.clinica-dental" as never), "es-ES")).toBe("clínica dental");
+	});
+});
+
+describe("Italy's labels", () => {
+	it("name a listing in the plural and a place's kind in the singular", () => {
+		const t = createTranslator({
+			locale: "it-IT",
+			messages: CATALOGS["it-IT"],
+			namespace: "taxonomy",
+		});
+		expect(t("listing.farmacie" as never)).toBe("Farmacie");
+		expect(t("profession.case-di-cura" as never)).toBe("Casa di cura accreditata");
+		expect(inSentence(t("profession.ospedali" as never), "it-IT")).toBe("ospedale");
 	});
 });

@@ -213,7 +213,13 @@ describe("cache warm-up run", () => {
 	it("stops when the pages get slow, and resumes after the last one done", async () => {
 		const { store, state } = memoryStore();
 		const { app, fetch, now } = fakeApp({
-			latency: (path) => (path.startsWith("/fr/praticien/") ? 5000 : 20),
+			// The listings and the practitioners are slow: with every market's static pages in the
+			// window of the last 100 requests, enough slow ones take its p95 over the limit.
+			latency: (path) =>
+				path.startsWith("/fr/praticien/") ||
+				ENTRIES["listes-0"]?.some((slug) => path === `/fr${slug}`)
+					? 5000
+					: 20,
 		});
 		const env = { ...ENV, WARM_CACHE_CONCURRENCY: "1", WARM_CACHE_MAX_P95_MS: "1000" };
 		const report = await runWarm({ store, fetch, env, buildId: "b", now });

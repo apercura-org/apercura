@@ -11,9 +11,10 @@ public phone), under the Open Data Directive (EU) 2019/1024 and its national tra
 Re-use of Public Sector Information Regulations 2015, or as a plain licence request where no law
 gives a right to re-use.
 
-Austria has its own request, prepared separately (`at.md`); the United Kingdom's, Czechia's and
-Spain's candidates are in `gb.md`, `cz.md` and `es.md` (Spain opened from the register of centres,
-REGCESS; the requests below for its registers of people still stand).
+Austria has its own request, prepared separately (`at.md`); the United Kingdom's, Czechia's,
+Spain's and Italy's candidates are in `gb.md`, `cz.md`, `es.md` and `it.md` (Spain opened from the
+register of centres, REGCESS, and Italy from the Ministry of Health's lists of places; the requests
+below for their registers of people still stand).
 
 ## Tracking
 
@@ -32,6 +33,7 @@ Update a row the day something happens. Status: `not sent`, `sent`, `extended`, 
 | Spain (8)          | REPS: [es-reps.md](es-reps.md)                                                    | Ministry of Health, DG Ordenación Profesional    | General electronic registry, or email | Ley 37/2007, art. 10                                                 | not sent |           |        |         |
 | Spain (8)          | Register of colegiados: [es-cgcom.md](es-cgcom.md)                                | CGCOM, copy DPO                                  | Email and burofax                     | None under Ley 37/2007; access under Ley 19/2013, art. 17            | not sent |           |        |         |
 | Italy (9)          | Albo Unico: [it-fnomceo.md](it-fnomceo.md)                                        | FNOMCeO, legal office, copy DPO                  | PEC, or email and raccomandata A/R    | D.lgs. 33/2013, arts. 5 and 7; d.lgs. 36/2006, art. 5 (uncertain)    | not sent |           |        |         |
+| Italy (9)          | Coordinates of the pharmacy lists: [it.md](it.md#how-to-ask)                      | Ministry of Health, the datasets' expert contact | Email                                 | D.lgs. 36/2006, art. 5 (re-use request)                              | not sent |           |        |         |
 | Ireland (10)       | Register of Medical Practitioners: [ie-medical-council.md](ie-medical-council.md) | Medical Council, DPO                             | Email                                 | S.I. 376/2021, reg. 6                                                | not sent |           |        |         |
 | Malta (11)         | Registers of doctors and dentists: [mt-medical-council.md](mt-medical-council.md) | Medical Council, Registrar                       | Email                                 | Cap. 546, arts. 9, 10 and 13; CC BY 4.0 confirmation                 | not sent |           |        |         |
 | Germany (12)       | 116117 Arztsuche: [de-kbv.md](de-kbv.md)                                          | KBV, copy DPO                                    | Email                                 | None (DNG, § 1(2)): licence request                                  | not sent |           |        |         |

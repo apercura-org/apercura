@@ -98,3 +98,16 @@ describe("returning to a Czech claim", () => {
 		expect(parseReturnTo("/pro/revendiquer?rpps=cz:")).toBeNull();
 	});
 });
+
+describe("returning to an Italian claim", () => {
+	it("accepts an `it:` place key, never anything that looks like a path", () => {
+		expect(parseReturnTo("/pro/revendiquer?rpps=it:f9000001")).toEqual({
+			pathname: "/pro/revendiquer",
+			query: { rpps: "it:f9000001" },
+		});
+		expect(parseReturnTo("/pro/revendiquer?rpps=it:s990001")?.pathname).toBe("/pro/revendiquer");
+		expect(parseReturnTo("/pro/revendiquer?rpps=it:f9000001/..")).toBeNull();
+		expect(parseReturnTo("/pro/revendiquer?rpps=it:p2112")).toBeNull();
+		expect(parseReturnTo("/pro/revendiquer?rpps=it:")).toBeNull();
+	});
+});

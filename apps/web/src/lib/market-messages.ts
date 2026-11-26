@@ -3,6 +3,7 @@ import {
 	allCzListingSlugs,
 	allEsTaxonomySlugs,
 	allGbListingSlugs,
+	allItListingSlugs,
 	allListingSlugs,
 } from "@apercura/core/taxonomy";
 import type { MarketCountry } from "~/i18n/locales";
@@ -20,6 +21,7 @@ const MARKET_SLUGS: Readonly<Record<MarketCountry, ReadonlySet<string>>> = {
 	CZ: allCzListingSlugs(),
 	// Spain also names its kinds of centre in the singular (`consultorio-local`).
 	ES: allEsTaxonomySlugs(),
+	IT: allItListingSlugs(),
 };
 
 /** The `taxonomy` groups keyed by listing or profession slug. */

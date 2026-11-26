@@ -11,6 +11,7 @@ import {
 	allCzListingSlugs,
 	allEsListingSlugs,
 	allGbListingSlugs,
+	allItListingSlugs,
 	equivalentListing,
 	FR_PROFESSIONS,
 	professionOfListingSlug,
@@ -30,16 +31,18 @@ const AT_LISTINGS: ReadonlySet<string> = allAtListingSlugs();
 const GB_LISTINGS: ReadonlySet<string> = allGbListingSlugs();
 const CZ_LISTINGS: ReadonlySet<string> = allCzListingSlugs();
 const ES_LISTINGS: ReadonlySet<string> = allEsListingSlugs();
+const IT_LISTINGS: ReadonlySet<string> = allItListingSlugs();
 
 /**
  * True when a listing slug belongs to the market of `locale` (France's, Austria's, the UK's,
- * Czechia's or Spain's taxonomy).
+ * Czechia's, Spain's or Italy's taxonomy).
  */
 function inMarket(slug: string, locale: Locale): boolean {
 	if (marketOf(locale) === "AT") return AT_LISTINGS.has(slug);
 	if (marketOf(locale) === "GB") return GB_LISTINGS.has(slug);
 	if (marketOf(locale) === "CZ") return CZ_LISTINGS.has(slug);
 	if (marketOf(locale) === "ES") return ES_LISTINGS.has(slug);
+	if (marketOf(locale) === "IT") return IT_LISTINGS.has(slug);
 	const profession = professionOfListingSlug(slug);
 	return Boolean(profession && FR_PROFESSIONS[profession]?.enabled);
 }
@@ -82,9 +85,10 @@ function buildIndex(locale: Locale): ListingEntry[] {
 	const { taxonomy } = messagesFor(locale);
 	const listing = taxonomy.listing as Record<string, string>;
 	const professions = taxonomy.profession as Record<string, string>;
-	// A Czech or Spanish listing is plural ("Kardiologové", "Farmacias"), its profession label
-	// singular ("Kardiolog", "Farmacia"): both match.
-	const singular = marketOf(locale) === "CZ" || marketOf(locale) === "ES";
+	// A Czech, Spanish or Italian listing is plural ("Kardiologové", "Farmacias", "Farmacie"), its
+	// profession label singular ("Kardiolog", "Farmacia"): both match.
+	const singular =
+		marketOf(locale) === "CZ" || marketOf(locale) === "ES" || marketOf(locale) === "IT";
 	// The everyday words of the locale's language suggest their listing too ("Hausarzt" →
 	// Allgemeinmedizin).
 	const aliases =
@@ -201,6 +205,9 @@ const LEADING_WORDS: ReadonlySet<string> = new Set([
 	"lo",
 	"gli",
 	"uno",
+	"una",
+	"mio",
+	"mia",
 ]);
 
 /** The forms of a query compared with the labels and the aliases. */

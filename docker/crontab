@@ -41,3 +41,10 @@
 # `--sources regcess-e`. Exit codes: 1 failed, 2 blocked, 3 imported without an extract that
 # could not be fetched or read (see docs/data-import.md, "Spain").
 30 8 * * 1 apercura etl:es $ETL_ES_SCHEDULE_ARGS
+
+# Italy's Ministry of Health open data (pharmacies and parapharmacies, published daily; the
+# yearly hospital bed counts), every Monday at 09:30 UTC, after the other imports (the same
+# advisory lock: one import at a time); unchanged lists are skipped. ETL_IT_SCHEDULE_ARGS narrows
+# it, e.g. `--sources farmacie`. Exit codes: 1 failed, 2 blocked, 3 imported without a list that
+# could not be fetched or read (see docs/data-import.md, "Italy").
+30 9 * * 1 apercura etl:it $ETL_IT_SCHEDULE_ARGS

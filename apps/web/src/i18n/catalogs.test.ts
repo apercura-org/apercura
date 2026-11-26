@@ -1,4 +1,4 @@
-import { allCzListingSlugs, allEsTaxonomySlugs } from "@apercura/core/taxonomy";
+import { allCzListingSlugs, allEsTaxonomySlugs, allItListingSlugs } from "@apercura/core/taxonomy";
 import {
 	isPluralElement,
 	isSelectElement,
@@ -17,13 +17,14 @@ import esES from "../../messages/es-ES.json";
 import fr from "../../messages/fr.json";
 import gb from "../../messages/gb.json";
 import it_ from "../../messages/it.json";
+import itIT from "../../messages/it-IT.json";
 import { mergeMessages, messagesFor } from "./catalogs";
 import { CATALOG_LANGUAGES, LOCALES, type Locale } from "./locales";
 
 /**
  * Austria's catalog is the German one with the Austrian overrides on top; the UK's the English
  * one with the UK's overrides; Czechia's the English one with the Czech texts on top; Spain's the
- * Spanish one with Spain's overrides.
+ * Spanish one with Spain's overrides; Italy's the Italian one with Italy's overrides.
  */
 const CATALOGS: Record<Locale, unknown> = {
 	fr,
@@ -37,6 +38,10 @@ const CATALOGS: Record<Locale, unknown> = {
 	"es-ES": mergeMessages(
 		mergeMessages(en, es as Record<string, unknown>),
 		esES as Record<string, unknown>,
+	),
+	"it-IT": mergeMessages(
+		mergeMessages(en, it_ as Record<string, unknown>),
+		itIT as Record<string, unknown>,
 	),
 };
 
@@ -176,5 +181,25 @@ describe("Spain's overrides", () => {
 		const spanish = flatten(es);
 		expect(spanish.get("taxonomy.listing.dentistas")).toBe("Dentistas");
 		expect(spanish.get("taxonomy.profession.consultorio-local")).toBe("Consultorio local");
+	});
+});
+
+describe("Italy's overrides", () => {
+	it("only override keys of the Italian catalog", () => {
+		const italian = flatten(it_);
+		expect([...flatten(itIT).keys()].filter((key) => !italian.has(key))).toEqual([]);
+	});
+
+	it("name every Italian listing and kind of place in every catalog, in Italian in Italy's", () => {
+		for (const catalog of [it_, en, fr, de, es]) {
+			const labels = flatten(catalog);
+			for (const slug of allItListingSlugs()) {
+				expect(labels.get(`taxonomy.listing.${slug}`), slug).toBeTruthy();
+				expect(labels.get(`taxonomy.profession.${slug}`), slug).toBeTruthy();
+			}
+		}
+		const italian = flatten(it_);
+		expect(italian.get("taxonomy.listing.farmacie")).toBe("Farmacie");
+		expect(italian.get("taxonomy.profession.ospedali")).toBe("Ospedale");
 	});
 });

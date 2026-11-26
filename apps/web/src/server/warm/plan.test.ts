@@ -76,11 +76,13 @@ describe("warm-up units", () => {
 		expect(rankOf("gb-listes-3")).toEqual([3, 3]);
 		expect(rankOf("cz-listes-3")).toEqual([4, 3]);
 		expect(rankOf("es-listes-3")).toEqual([5, 3]);
-		expect(rankOf("praticiens-12")).toEqual([16, 12]);
-		expect(rankOf("at-praticiens-12")).toEqual([17, 12]);
-		expect(rankOf("gb-praticiens-12")).toEqual([18, 12]);
-		expect(rankOf("cz-praticiens-12")).toEqual([19, 12]);
-		expect(rankOf("es-praticiens-12")).toEqual([20, 12]);
+		expect(rankOf("it-listes-3")).toEqual([6, 3]);
+		expect(rankOf("praticiens-12")).toEqual([19, 12]);
+		expect(rankOf("at-praticiens-12")).toEqual([20, 12]);
+		expect(rankOf("gb-praticiens-12")).toEqual([21, 12]);
+		expect(rankOf("cz-praticiens-12")).toEqual([22, 12]);
+		expect(rankOf("es-praticiens-12")).toEqual([23, 12]);
+		expect(rankOf("it-praticiens-12")).toEqual([24, 12]);
 		expect(rankOf("cabinets-1")).toBeNull();
 		expect(rankOf("praticiens")).toBeNull();
 		expect(rankOf("de-listes-1")).toBeNull();

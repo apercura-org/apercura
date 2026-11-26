@@ -4,5 +4,6 @@ export * from "./cz";
 export * from "./es";
 export * from "./fr";
 export * from "./gb";
+export * from "./it";
 export * from "./search-aliases";
 export * from "./types";

@@ -314,3 +314,79 @@ export function parseEsCentreSegment(segment: string): EsCentreSegment | null {
 	if (!match) return null;
 	return { idScheme: ES_ID_SCHEME, nationalId: match[2] ?? "", namePart: match[1] ?? "" };
 }
+
+/**
+ * Italian identifiers: one scheme per list of the Ministry of Health (a list that fails to
+ * import keeps its rows), each the ministry's own code of the place, never the owner's VAT
+ * number (which for a sole trader identifies the person). The pharmacies' list gives every
+ * pharmacy a ministerial identification code (`cod_farmacia`, a number); the parapharmacies'
+ * list a six-digit logistic-site code (`codice_identificativo_sito`, `002112`); the hospital
+ * bed counts the facility code of the HSP.11 model (`Codice struttura`, the region's three
+ * digits then three, `010030`). A page URL ends with the code after a letter naming the list
+ * (`farmacia-san-carlo-f12345`, `parafarmacia-eurosan-p002113`,
+ * `ospedali-riuniti-pinerolo-s010030`), so the three kinds of code never meet.
+ */
+export const IT_ID_SCHEMES = {
+	/** Pharmacies, dispensaries and branches: the ministerial pharmacy code (`12345`). */
+	"IT-FARM": { prefix: "f", pattern: /^(?:0|[1-9]\d{0,7})$/ },
+	/** Parapharmacies: the ministry's logistic-site code, six digits (`002112`). */
+	"IT-PFARM": { prefix: "p", pattern: /^\d{6}$/ },
+	/** Hospitals and accredited private clinics: the HSP.11 facility code (`010030`). */
+	"IT-HSP": { prefix: "s", pattern: /^\d{6}$/ },
+} as const;
+
+export type ItIdScheme = keyof typeof IT_ID_SCHEMES;
+
+const IT_SCHEMES = Object.keys(IT_ID_SCHEMES) as ItIdScheme[];
+
+/** True when `value` is a code of the Italian scheme (syntax only: the place may not exist). */
+export function isValidItSourceId(scheme: string, value: string): boolean {
+	const entry = IT_ID_SCHEMES[scheme as ItIdScheme];
+	return entry ? entry.pattern.test(value) : false;
+}
+
+/** The key of an Italian page as its URL ends (`f12345`, `p002112`, `s010030`). */
+export function itUrlKey(scheme: ItIdScheme, nationalId: string): string {
+	return `${IT_ID_SCHEMES[scheme].prefix}${nationalId}`;
+}
+
+/**
+ * Canonical path segment of an Italian page: `{name}-{key}` (`farmacia-san-carlo-f12345`),
+ * diacritics dropped.
+ */
+export function itPlaceSlug(name: string, scheme: ItIdScheme, nationalId: string): string {
+	const key = itUrlKey(scheme, nationalId);
+	const base = slugify(name).slice(0, 80).replace(/-+$/, "");
+	return base ? `${base}-${key}` : key;
+}
+
+export type ItPlaceKey = { idScheme: ItIdScheme; nationalId: string };
+
+/** Reads an Italian key as its page URL ends (`f12345`, `P002112`): the scheme and the code. */
+export function parseItKey(token: string): ItPlaceKey | null {
+	const lower = token.toLowerCase();
+	for (const idScheme of IT_SCHEMES) {
+		const { prefix, pattern } = IT_ID_SCHEMES[idScheme];
+		if (!lower.startsWith(prefix)) continue;
+		const nationalId = lower.slice(prefix.length);
+		if (pattern.test(nationalId)) return { idScheme, nationalId };
+	}
+	return null;
+}
+
+export type ItPlaceSegment = ItPlaceKey & {
+	/** Name part before the key, possibly empty. */
+	namePart: string;
+};
+
+/**
+ * Parses the last segment of an Italian page URL (`{name}-{key}`). Returns null unless it ends
+ * with a valid key, so invalid URLs never reach the database.
+ */
+export function parseItPlaceSegment(segment: string): ItPlaceSegment | null {
+	if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(segment)) return null;
+	const dash = segment.lastIndexOf("-");
+	const key = parseItKey(dash < 0 ? segment : segment.slice(dash + 1));
+	if (!key) return null;
+	return { ...key, namePart: dash < 0 ? "" : segment.slice(0, dash) };
+}

@@ -127,6 +127,14 @@ describe("listing index", () => {
 		);
 		expect(translateSearchTerm("dentista", "ES", "FR")).toEqual(listing("chirurgien-dentiste"));
 		expect(translateSearchTerm("Zahnarzt", "GB", "AT")).toEqual(listing("zahnaerzte"));
+		// Italy: "pharmacie" typed on /fr, "lékárna" on /cz, "pharmacy" on /gb, for Roma.
+		expect(translateSearchTerm("pharmacie", "FR", "IT")).toEqual(listing("farmacie"));
+		expect(translateSearchTerm("lékárna", "CZ", "IT")).toEqual(listing("farmacie"));
+		expect(translateSearchTerm("pharmacy", "GB", "IT")).toEqual(listing("farmacie"));
+		expect(translateSearchTerm("hôpital", "FR", "IT")).toEqual(listing("ospedali"));
+		expect(translateSearchTerm("parapharmacie", "FR", "IT")).toEqual(listing("parafarmacie"));
+		expect(translateSearchTerm("farmacia", "IT", "GB")).toEqual(listing("pharmacies"));
+		expect(translateSearchTerm("dentiste", "FR", "IT")).toEqual({ kind: "unlisted" });
 		// Care the market searched does not list, and names.
 		expect(translateSearchTerm("cardiologue", "FR", "GB")).toEqual({ kind: "unlisted" });
 		expect(translateSearchTerm("pharmacie", "FR", "AT")).toEqual({ kind: "unlisted" });
@@ -150,9 +158,23 @@ describe("listing index", () => {
 			["zahnaerzte", "de-AT", "AT"],
 			["zubni-lekar", "cs-CZ", "CZ"],
 			["dentistas", "es-ES", "ES"],
+			["farmacie", "it-IT", "IT"],
+			["case-di-cura", "it-IT", "IT"],
 			["chirurgien-dentiste", "en", "FR"],
 		] as const) {
 			expect(resolveListing(listingLabel(slug, locale) ?? "", country)).toBe(slug);
 		}
+	});
+});
+
+describe("Italy's listings", () => {
+	it("are suggested and resolved in Italy only, plural or singular", () => {
+		expect(suggestListings("farmac", "it-IT").map((entry) => entry.slug)[0]).toBe("farmacie");
+		expect(suggestListings("ospedal", "it-IT").map((entry) => entry.slug)[0]).toBe("ospedali");
+		expect(resolveListing("Farmacie", "IT")).toBe("farmacie");
+		expect(resolveListing("Farmacia", "IT")).toBe("farmacie");
+		expect(resolveListing("Casa di cura accreditata", "IT")).toBe("case-di-cura");
+		expect(resolveListing("Farmacie", "FR")).toBeNull();
+		expect(suggestListings("ospedal", "it").map((entry) => entry.slug)).not.toContain("ospedali");
 	});
 });

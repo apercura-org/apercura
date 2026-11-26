@@ -19,7 +19,7 @@ export const SITEMAP_KINDS = ["praticiens", "listes", "lieux", "etablissements"]
 export type SitemapKind = (typeof SITEMAP_KINDS)[number];
 
 /** The markets with sitemaps, by their path segment. */
-export const SITEMAP_MARKETS = ["fr", "at", "gb", "cz", "es"] as const;
+export const SITEMAP_MARKETS = ["fr", "at", "gb", "cz", "es", "it"] as const;
 export type SitemapMarket = (typeof SITEMAP_MARKETS)[number];
 
 /** A non-empty chunk of a market: its latest change and how many URLs it lists. */

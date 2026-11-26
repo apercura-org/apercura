@@ -28,10 +28,11 @@ export const NOT_DEPARTMENT_CITY = (alias: string) =>
 		.join(" AND ");
 
 /**
- * Markets whose regions have listing and hub pages of their own (migration 0026): the United
- * Kingdom. France's regions group its departments on the directory page only.
+ * Markets whose regions have listing and hub pages of their own: the United Kingdom (migration
+ * 0026) and Italy (0028), whose health service is run by its regions. France's regions group its
+ * departments on the directory page only.
  */
-export const REGION_LISTING_MARKETS: ReadonlySet<string> = new Set(["GB"]);
+export const REGION_LISTING_MARKETS: ReadonlySet<string> = new Set(["GB", "IT"]);
 
 /** Slugs of the Austrian Bundesländer (`wien`, `steiermark`, `niederoesterreich`…). */
 export const AT_STATE_SLUGS: ReadonlySet<string> = new Set(
@@ -44,11 +45,14 @@ export const AT_STATE_SLUGS: ReadonlySet<string> = new Set(
  * the nine Bundesländer. The United Kingdom: the slug of a local authority or of a
  * region (England's regions and the other nations list in the same slot), never only
  * digits. Czechia: the slug of a district (okres, `brno-mesto`, `praha`). Spain: the slug of a
- * province (`madrid`, `barcelona`).
+ * province (`madrid`, `barcelona`). Italy: the slug of a province or of a region (`roma`,
+ * `lazio`).
  */
 export function isDepartmentSlug(slug: string, country = "FR"): boolean {
 	if (country === "AT") return AT_STATE_SLUGS.has(slug);
-	if (country === "GB" || country === "CZ" || country === "ES") return isPlaceSlug(slug);
+	if (country === "GB" || country === "CZ" || country === "ES" || country === "IT") {
+		return isPlaceSlug(slug);
+	}
 	return /^(?:\d{2,3}|2[ab])-[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug);
 }
 
@@ -63,7 +67,8 @@ export function isPlaceSlug(slug: string): boolean {
  * Austrian and UK places carry no code: nobody knows a Bundesland or Gemeinde by its
  * Statistik Austria number, nor a local authority by its ONS code, nor a Czech district or
  * municipality by its NUTS or RÚIAN code, nor a Spanish province or municipality by its INE
- * code, and Vienna's and Prague's districts say their city
+ * code, nor an Italian province or comune by its ISTAT code, and Vienna's and Prague's districts
+ * say their city
  * ("Wien-Alsergrund", "Praha 8").
  */
 export function placeLabel(

@@ -20,14 +20,18 @@ import { marketHomes } from "~/lib/market-homes";
 import { cardTownLine, formatPhone } from "~/lib/practitioner-view";
 import { slotParts, slotTime } from "~/lib/slot-format";
 import {
-	matchPlaces,
 	type PlaceSuggestion,
 	SEARCH_PAGE_SIZE,
 	type SearchResult,
 	searchPractitioners,
 	suggestPlaces,
 } from "~/server/queries/search";
-import { isOpenMarket, namedEuropeanPlace, searchRedirect } from "~/server/search-redirect";
+import {
+	isOpenMarket,
+	namedEuropeanPlace,
+	placesOfQuery,
+	searchRedirect,
+} from "~/server/search-redirect";
 import { TRPCReactProvider } from "~/trpc/client";
 
 /**
@@ -90,14 +94,8 @@ async function run(
 	const named = wantsPlace ? namedEuropeanPlace(query) : null;
 	const outside = named && !isOpenMarket(named.country.code) ? named : null;
 	if (outside?.kind === "country") return { kind: "not_covered", country: outside.country };
-	const places = wantsPlace
-		? await matchPlaces({
-				country,
-				where: query.where,
-				...(query.postcode ? { postcode: query.postcode } : {}),
-				...(query.departmentHint ? { departmentHint: query.departmentHint } : {}),
-			})
-		: [];
+	// A city of this market typed in another language ("Rome" on /it) is found by its own name.
+	const places = wantsPlace ? (await placesOfQuery(country, query)).places : [];
 	const place = places.length === 1 ? (places[0] ?? null) : null;
 
 	if (wantsPlace && places.length > 1) return { kind: "ambiguous_place", candidates: places };

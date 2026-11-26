@@ -2,6 +2,8 @@ import { describe, expect, it } from "vitest";
 import {
 	austrianSourcesOf,
 	isMarketListingSlug,
+	italianAttribution,
+	italianSourceDate,
 	listingFees,
 	marketBooks,
 	openDataSourcesOf,
@@ -266,5 +268,63 @@ describe("Spain's pages", () => {
 			"Fuente: Ministerio de Sanidad, REGCESS",
 		);
 		expect(openDataSourcesOf("ES", [])).toEqual([]);
+	});
+});
+
+describe("Italy's pages", () => {
+	it("serve Italy's listings, without booking or French insurance facts", () => {
+		expect(isMarketListingSlug("it-IT", "farmacie")).toBe(true);
+		expect(isMarketListingSlug("it-IT", "case-di-cura")).toBe(true);
+		expect(isMarketListingSlug("it-IT", "struttura")).toBe(false);
+		expect(isMarketListingSlug("it-IT", "pharmacies")).toBe(false);
+		expect(isMarketListingSlug("it", "farmacie")).toBe(false);
+		expect(isMarketListingSlug("fr", "farmacie")).toBe(false);
+		expect(showsBillingFacts("it-IT")).toBe(false);
+		expect(marketBooks("it-IT")).toBe(false);
+		expect(professionSlugOf("IT_PHARMACY")).toBe("farmacie");
+		expect(professionSlugOf("IT_CLINIC")).toBe("case-di-cura");
+	});
+
+	it("check province and region slugs and label places by name, with no city as its province", () => {
+		expect(isDepartmentSlug("roma", "IT")).toBe(true);
+		expect(isDepartmentSlug("lazio", "IT")).toBe(true);
+		expect(isDepartmentSlug("258", "IT")).toBe(false);
+		expect(
+			placeLabel({ kind: "department", code: "258", name: "Roma", departmentCode: "258" }, "IT"),
+		).toBe("Roma");
+		expect(
+			placeLabel({ kind: "commune", code: "058091", name: "Roma", departmentCode: "258" }, "IT"),
+		).toBe("Roma");
+		expect(isDepartmentCity("IT", "058091")).toBe(false);
+	});
+
+	it("write Italian addresses street, then CAP and comune, and Italian numbers", () => {
+		const site = {
+			addressLine: "Via del Corso, 10",
+			addressComplement: null,
+			postcode: "00186",
+			placeName: "Roma",
+		};
+		expect(addressLines(site, "IT")).toEqual(["Via del Corso, 10", "00186 Roma"]);
+		expect(localityOf("Roma", "IT")).toBe("Roma");
+		expect(formatPhone("+390612345678")).toBe("06 12345678");
+		expect(formatPhone("+393331234567")).toBe("333 123 4567");
+	});
+
+	it("credit the ministry's list with the date of its data, and ISTAT with its CC BY 4.0 line", () => {
+		const sources = openDataSourcesOf("IT", [{ source: "it-farmacie", site: null }], "2026-11-26");
+		expect(sources.map((source) => source.attribution)).toEqual([
+			"Fonte: Ministero della Salute, Farmacie, IODL 2.0, aggiornato al 26 novembre 2026",
+			"Fonte: Istat, Confini delle unità amministrative a fini statistici al 1° gennaio 2026, CC BY 4.0 (centroidi dei comuni calcolati da Apercura)",
+		]);
+		expect(
+			openDataSourcesOf("IT", [{ source: "it-posti-letto", site: null }])[0]?.attribution,
+		).toBe("Fonte: Ministero della Salute, Posti letto per struttura ospedaliera, IODL 2.0");
+		expect(openDataSourcesOf("IT", [])).toEqual([]);
+		expect(italianAttribution("it-istat", "2026-11-26")).not.toContain("aggiornato");
+		const status = { importedAt: "2026-11-26", files: { "posti-letto": "2025-07-29" } };
+		expect(italianSourceDate("it-posti-letto", status)).toBe("2025-07-29");
+		expect(italianSourceDate("it-farmacie", status)).toBe("2026-11-26");
+		expect(italianSourceDate("it-farmacie", null)).toBeNull();
 	});
 });

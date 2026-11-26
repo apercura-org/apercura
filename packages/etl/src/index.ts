@@ -4,6 +4,7 @@ export const COMMANDS = [
 	"etl:gb",
 	"etl:cz",
 	"etl:es",
+	"etl:it",
 	"etl:places",
 	"etl:outbox",
 ] as const;
@@ -27,6 +28,9 @@ Commands:
                 dental clinics, pharmacies…) from the monthly extracts of REGCESS
                 (Ministerio de Sanidad; reuse citing the source and date), placed in
                 the IGN's municipalities by INE code, rebuild read models.
+  etl:it        Import Italian pharmacies, parapharmacies, hospitals and accredited
+                private clinics from the Ministry of Health's open data (IODL 2.0),
+                placed in ISTAT's municipalities by code, rebuild read models.
   etl:places    Import regions, departments, communes and arrondissements
                 (geo.api.gouv.fr), or with --country at the Austrian
                 Bundesländer and Gemeinden (Statistik Austria), or with --country gb
@@ -34,7 +38,9 @@ Commands:
                 OSNI), or with --country cz the Czech regions, districts,
                 municipalities and Prague districts (RÚIAN, ČÚZK), or with --country es
                 the Spanish autonomous communities, provinces and municipalities
-                (IGN, CC BY 4.0). Run once, then yearly.
+                (IGN, CC BY 4.0), or with --country it the Italian regions,
+                provinces and municipalities (ISTAT boundaries, CC BY 4.0). Run once,
+                then yearly.
   etl:outbox    Send pending cache invalidations to the web app.
 
 Flags (etl:fr):
@@ -71,6 +77,15 @@ Flags (etl:es):
   --dry-run, --approve=<run_id>, --force, --source-dir <path>, --offline, --work-dir <path>
                           As for etl:at.
 
+Flags (etl:it):
+  --sources <ids>         Lists to import: farmacie, parafarmacie, posti-letto (default
+                          ETL_IT_SOURCES, else all).
+  --register-coordinates  Keep the lists' coordinates (some come from OpenStreetMap, ODbL);
+                          by default a place is located at its municipality's centre.
+  --as-of <YYYY-MM-DD>    The day the lists are read for (default: today in Rome).
+  --dry-run, --approve=<run_id>, --force, --source-dir <path>, --offline, --work-dir <path>
+                          As for etl:at.
+
 Environment:
   DATABASE_URL_ETL (or DATABASE_URL), ETL_PROFESSIONS, ETL_ANS_URLS, ETL_AMELI_URL,
   ETL_FINESS_DATASET_URL, ETL_GEO_API_URL, ETL_GEOCODER_URL, ETL_SOURCE_DIR, ETL_WORK_DIR,
@@ -82,6 +97,8 @@ Environment:
   ETL_CZ_URL, ETL_CZ_PLACES_URL, ETL_CZ_SOURCE_DIR,
   ETL_ES_SOURCES, ETL_ES_C1_URL, ETL_ES_C2_URL, ETL_ES_E_URL, ETL_ES_PLACES_URL,
   ETL_ES_SOURCE_DIR,
+  ETL_IT_SOURCES, ETL_IT_FARMACIE_URL, ETL_IT_PARAFARMACIE_URL, ETL_IT_POSTI_LETTO_URL,
+  ETL_IT_PORTAL_URL, ETL_IT_PLACES_URL, ETL_IT_REGISTER_COORDINATES, ETL_IT_SOURCE_DIR,
   APP_URL and REVALIDATE_SECRET (cache revalidation).`;
 
 export {
@@ -91,10 +108,12 @@ export {
 	buildEsOptions,
 	buildFrOptions,
 	buildGbOptions,
+	buildItOptions,
 	type CzOptions,
 	type EsOptions,
 	type FrOptions,
 	type GbOptions,
+	type ItOptions,
 	parseArgs,
 } from "./config";
 export { type AtRunOutcome, runAt } from "./run-at";
@@ -102,3 +121,4 @@ export { type CzRunOutcome, runCz } from "./run-cz";
 export { type EsRunOutcome, runEs } from "./run-es";
 export { type RunOutcome, runFr } from "./run-fr";
 export { type GbRunOutcome, runGb } from "./run-gb";
+export { type ItRunOutcome, runIt } from "./run-it";

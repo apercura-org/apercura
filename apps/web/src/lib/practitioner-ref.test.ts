@@ -141,3 +141,38 @@ describe("Spanish centre references", () => {
 		expect(parsePractitionerRef(practitionerRefOf(centre))).toEqual(centre);
 	});
 });
+
+describe("Italian place references", () => {
+	const pharmacy = { country: "IT", idScheme: "IT-FARM", nationalId: "9000001" };
+
+	it("read the `it:` reference, an Italian page address, and a key typed on an Italian page", () => {
+		expect(parsePractitionerRef("it:f9000001")).toEqual(pharmacy);
+		expect(parsePractitionerRef(" IT: F9000001 ")).toEqual(pharmacy);
+		expect(
+			parsePractitionerRef("https://apercura.org/it/struttura/farmacia-esempio-f9000001"),
+		).toEqual(pharmacy);
+		expect(parsePractitionerRef("/it/struttura/farmacia-esempio-f9000001/")).toEqual(pharmacy);
+		expect(parsePractitionerRef("f9000001", "IT")).toEqual(pharmacy);
+		expect(parsePractitionerRef("farmacia-esempio-f9000001", "IT")).toEqual(pharmacy);
+		expect(parsePractitionerRef("it:s990001")).toEqual({
+			country: "IT",
+			idScheme: "IT-HSP",
+			nationalId: "990001",
+		});
+		expect(parsePractitionerRef("it:9000001")).toBeNull();
+		expect(parsePractitionerRef("it:")).toBeNull();
+	});
+
+	it("still read France's former Italian addresses and RPPS numbers as French", () => {
+		expect(
+			parsePractitionerRef("https://apercura.fr/it/professionista/camille-19999990013")?.country,
+		).toBe("FR");
+		expect(parsePractitionerRef("19999990013", "IT")?.country).toBe("FR");
+	});
+
+	it("write the reference back with its market", () => {
+		expect(practitionerRefOf(pharmacy)).toBe("it:f9000001");
+		expect(marketRef("F9000001", "IT")).toBe("it:f9000001");
+		expect(parsePractitionerRef(practitionerRefOf(pharmacy))).toEqual(pharmacy);
+	});
+});

@@ -1,10 +1,11 @@
-import { austria, czechia, spain, unitedKingdom } from "@apercura/core/country";
+import { austria, czechia, italy, spain, unitedKingdom } from "@apercura/core/country";
 import {
 	AT_PROFESSIONS,
 	CZ_PROFESSIONS,
 	ES_PROFESSIONS,
 	GB_PROFESSIONS,
 	hasBillingSectors,
+	IT_PROFESSIONS,
 	listingHasBillingSectors,
 	professionFor,
 } from "@apercura/core/taxonomy";
@@ -44,7 +45,8 @@ export function marketBooks(locale: Locale): boolean {
 
 /**
  * The profession slug of any market's profession code (`10` → `medecin`, `ARZT` → `aerzte`,
- * `GB_GP` → `gp-practices`, `CZ_GP` → `prakticky-lekar`, `ES_PHARMACY` → `farmacias`).
+ * `GB_GP` → `gp-practices`, `CZ_GP` → `prakticky-lekar`, `ES_PHARMACY` → `farmacias`,
+ * `IT_PHARMACY` → `farmacie`).
  */
 export function professionSlugOf(code: string): string {
 	return (
@@ -53,6 +55,7 @@ export function professionSlugOf(code: string): string {
 		GB_PROFESSIONS[code]?.slug ??
 		CZ_PROFESSIONS[code]?.slug ??
 		ES_PROFESSIONS[code]?.slug ??
+		IT_PROFESSIONS[code]?.slug ??
 		""
 	);
 }
@@ -150,10 +153,72 @@ export function spanishSourcesOf(
 		}));
 }
 
+/** The ISTAT boundaries that place Italy's sites (no date: they are a year's, named in the line). */
+export const ISTAT_SOURCE_ID = "it-istat";
+
+/**
+ * The file key of an Italian list in `directory.etl_runs.files` (`farmacie`), by its source id
+ * (`it-farmacie`, also its sites' source).
+ */
+export const IT_FILE_OF_SOURCE: Readonly<Record<string, string>> = {
+	"it-farmacie": "farmacie",
+	"it-parafarmacie": "parafarmacie",
+	"it-posti-letto": "posti-letto",
+};
+
+/**
+ * The date of an Italian list's data (`YYYY-MM-DD`): the publication date of the file the last
+ * Italian import read (its `Last-Modified`), else the day of that import; null before any.
+ */
+export function italianSourceDate(
+	sourceId: string | undefined,
+	status: { importedAt: string; files: Readonly<Record<string, string>> } | null,
+): string | null {
+	if (!status) return null;
+	const file = sourceId ? IT_FILE_OF_SOURCE[sourceId] : undefined;
+	return (file ? status.files[file] : undefined) ?? status.importedAt;
+}
+
+/**
+ * The attribution of an Italian source, word for word: the Italian Open Data Licence asks for
+ * the source and the licensor, and the Ministry of Health's lists are cited with the date of
+ * their data ("Fonte: Ministero della Salute, Farmacie, IODL 2.0, aggiornato al 26 novembre
+ * 2026"), written in Italian whatever the interface. Without a date (no import recorded) the
+ * line is the source alone; ISTAT's names the year of its boundaries itself.
+ */
+export function italianAttribution(sourceId: string, updatedAt: string | null): string {
+	const registry = italy.registries.find((source) => source.id === sourceId);
+	const attribution = registry?.attribution ?? "";
+	if (sourceId === ISTAT_SOURCE_ID || !updatedAt || !attribution) return attribution;
+	const date = new Intl.DateTimeFormat("it-IT", { dateStyle: "long", timeZone: "UTC" }).format(
+		new Date(`${updatedAt.slice(0, 10)}T00:00:00Z`),
+	);
+	return `${attribution}, aggiornato al ${date}`;
+}
+
+/**
+ * The sources an Italian page is built from, with the attribution each requires word for word:
+ * the ministry's list of the place (pharmacies, parapharmacies or hospital bed counts), dated by
+ * `updatedAt` (`YYYY-MM-DD`), and ISTAT's boundaries (CC BY 4.0), whose municipalities place it.
+ */
+export function italianSourcesOf(
+	activitySources: readonly (string | undefined)[],
+	updatedAt: string | null,
+): { name: string; attribution: string }[] {
+	const ids = new Set([...activitySources.filter(Boolean), ISTAT_SOURCE_ID]);
+	return italy.registries
+		.filter((registry) => ids.has(registry.id) && registry.attribution)
+		.map((registry) => ({
+			name: registry.name,
+			attribution: italianAttribution(registry.id, updatedAt),
+		}));
+}
+
 /**
  * The open-data sources of a page in a market whose licences require their attribution
- * (Austria's and Czechia's CC BY 4.0, the UK's OGL, Spain's Ministry of Health and IGN); empty
- * for France, whose provenance line is the catalog's. `sourceDate` dates Spain's REGCESS line.
+ * (Austria's and Czechia's CC BY 4.0, the UK's OGL, Spain's Ministry of Health and IGN, Italy's
+ * IODL 2.0 and CC BY 4.0); empty for France, whose provenance line is the catalog's. `sourceDate`
+ * dates Spain's REGCESS line and Italy's list.
  */
 export function openDataSourcesOf(
 	country: string,
@@ -164,5 +229,13 @@ export function openDataSourcesOf(
 	if (country === "GB") return ukSourcesOf(activities);
 	if (country === "CZ") return activities.length > 0 ? czechSourcesOf() : [];
 	if (country === "ES") return activities.length > 0 ? spanishSourcesOf(sourceDate) : [];
+	if (country === "IT") {
+		return activities.length > 0
+			? italianSourcesOf(
+					activities.map((activity) => activity.source),
+					sourceDate,
+				)
+			: [];
+	}
 	return [];
 }

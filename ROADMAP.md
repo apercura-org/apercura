@@ -230,21 +230,41 @@ information, claims by documents, no booking ([data import](./docs/data-import.m
 - Exact locations (a geocoder whose terms allow bulk use), opening hours, and the centre types
   left out (mental health centres, opticians, diagnostics).
 
-### 8. Italy (`/it`) and Ireland (`/ie-en`): claimed pages
+### 8. Italy (`/it`): open, directory of pharmacies and hospitals
 
-- Italy: an explicit consent step before booking (Garante, 2024 compendium); the DPIA; check
-  regional GP open data (Milan, Campania) for later.
-- Ireland: file a re-use request to the Medical Council under the Open Data and PSI
-  Regulations 2021.
+Done in [#150](https://github.com/apercura-org/apercura/issues/150): `/it` in Italian, built weekly
+by `etl:it` from the open data of the Ministry of Health (dati.salute.gov.it, IODL 2.0, cited with
+the date of its data): one page per pharmacy (with its branches and dispensaries), parapharmacy,
+hospital and accredited private clinic (about 29,000), placed by ISTAT code in ISTAT's regions,
+provinces and municipalities (CC BY 4.0) at their municipality's point (city precision: the
+ministry says some of its coordinates come from OpenStreetMap), listed by region too, with the
+attributions on the data sources page, a GDPR and Codice privacy notice with the article 14
+information, claims by documents, no booking ([data import](./docs/data-import.md#italy),
+[ADR 0002](./docs/adr/0002-multi-country.md#italy-it)). Places only: no health worker is listed.
+Left:
 
-### 9. Small open-data markets
+- Decide whether to keep the lists' coordinates (`--register-coordinates`, address precision),
+  and ask the ministry which of them come from OpenStreetMap.
+- Have a native speaker review the Italian market texts, and an Italian lawyer the note legali,
+  privacy notice and terms (D.Lgs. 70/2003, Codice privacy).
+- Send the requests of [`docs/data-requests/it.md`](./docs/data-requests/it.md) and
+  [`it-fnomceo.md`](./docs/data-requests/it-fnomceo.md) (founder): the coordinates' provenance,
+  the outpatient facilities of the SSN (STS.11), the FNOMCeO's Albo unico.
+- Booking only with an explicit consent step (Garante, 2024 compendium) and the DPIA; regional GP
+  open data (Milan, Campania) only after a GDPR assessment.
+
+### 9. Ireland (`/ie-en`): claimed pages
+
+- File a re-use request to the Medical Council under the Open Data and PSI Regulations 2021.
+
+### 10. Small open-data markets
 
 - Malta (doctors and dentists, CC BY 4.0): written confirmation from the Medical Council.
 - Estonia (MEDRE, CC BY-NC-SA 3.0): confirmation that the NonCommercial and ShareAlike terms fit;
   show the activity licence number on every provider page.
 - Slovenia (ZZZS personal doctors, CC BY 4.0) and Latvia (NVD GPs, CC0): partial directories.
 
-### 10. Germany (`/de`): claimed pages, booking later
+### 11. Germany (`/de`): claimed pages, booking later
 
 - Booking only with a host holding a BSI C5 Type 2 attestation, after a legal opinion on §393
   SGB V (processor or controller, establishment in Germany) and once the GeDIG rules for private

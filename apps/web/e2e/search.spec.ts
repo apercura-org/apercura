@@ -137,7 +137,8 @@ test("the home search gets its suggestions on first use, keeping the text and th
 test.describe("a place of another market", () => {
 	/*
 	 * The synthetic places of the other markets: Glasgow (UK dental and GP practices), Salzburg
-	 * (Austrian dentists), Brno and Praha (Czech dentists), Paris (French dentists).
+	 * (Austrian dentists), Brno and Praha (Czech dentists), Paris (French dentists), Roma and
+	 * Milano (Italian pharmacies and hospitals).
 	 */
 	for (const [from, to] of [
 		["/fr/recherche?quoi=dentiste&ou=Glasgow", "/gb/dental-practices/glasgow-city/glasgow"],
@@ -154,6 +155,12 @@ test.describe("a place of another market", () => {
 		["/fr/recherche?ou=Espagne", "/es"],
 		["/es/buscar?quoi=dentista&ou=Paris", "/fr-es/chirurgien-dentiste/75-paris"],
 		["/fr-en/search?quoi=GP&ou=Glasgow", "/gb/gp-practices/glasgow-city/glasgow"],
+		// Italy, the city typed in French or English: its Italian name.
+		["/fr/recherche?quoi=pharmacie&ou=Rome", "/it/farmacie/roma/roma"],
+		["/fr/recherche?quoi=h%C3%B4pital&ou=Rome", "/it/ospedali/roma/roma"],
+		["/gb/search?quoi=pharmacy&ou=Milan", "/it/farmacie/milano/milano"],
+		["/fr-it/cerca?quoi=farmacia&ou=Roma", "/it/farmacie/roma/roma"],
+		["/fr/recherche?ou=Rome", "/it/cerca?ou=Roma"],
 		// In the visitor's language when that market offers it: France in English.
 		["/gb/search?quoi=dentist&ou=Paris", "/fr-en/chirurgien-dentiste/75-paris"],
 		// The UK lists no cardiologists: its search, with the place set.
@@ -187,6 +194,7 @@ test.describe("the country searched", () => {
 			"Royaume-Uni",
 			"Tchéquie",
 			"Espagne",
+			"Italie",
 		]);
 		await country.selectOption({ label: "Royaume-Uni" });
 		// The places suggested are the UK's.
@@ -229,6 +237,7 @@ test.describe("a place in a country Apercura does not cover yet", () => {
 		["Royaume-Uni", "/gb"],
 		["Tchéquie", "/cz"],
 		["Espagne", "/es"],
+		["Italie", "/it"],
 	] as const;
 
 	test("“dentiste” in Berlin says so, lists the open countries, and passes axe", async ({

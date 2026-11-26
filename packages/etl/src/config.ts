@@ -15,6 +15,8 @@ import {
 } from "./sources/gb/places";
 import { DEFAULT_GB_POSTCODES_URL } from "./sources/gb/postcodes";
 import { GB_SOURCE_IDS, type GbSourceId } from "./sources/gb/types";
+import { defaultItPlacesUrl } from "./sources/it/places";
+import { IT_SOURCE_IDS, type ItSourceId } from "./sources/it/types";
 
 /** Stable data.gouv.fr URLs (they redirect to the latest daily file). */
 export const DEFAULT_ANS_URLS = {
@@ -507,6 +509,102 @@ export function buildEsOptions(flags: ParsedArgs["flags"], env: NodeJS.ProcessEn
 			"regcess-e": urlOf("regcess-e"),
 		},
 		placesBase: esPlacesBase(env),
+		workDir: flagString(flags, "work-dir") ?? env.ETL_WORK_DIR ?? null,
+		appUrl: offline ? null : env.APP_URL || null,
+		revalidateSecret: env.REVALIDATE_SECRET || null,
+	};
+}
+
+// ---------------------------------------------------------------------------
+// Italy (`etl:it`)
+// ---------------------------------------------------------------------------
+
+/** The Ministry of Health's open data portal, whose dataset pages name each day's file. */
+export const DEFAULT_IT_PORTAL_URL = "https://www.dati.salute.gov.it";
+
+export type ItOptions = {
+	databaseUrl: string;
+	dryRun: boolean;
+	approveRunId: number | null;
+	force: boolean;
+	sourceDir: string | null;
+	offline: boolean;
+	sources: ItSourceId[];
+	/**
+	 * A list's file when given (`ETL_IT_FARMACIE_URL`, `ETL_IT_PARAFARMACIE_URL`,
+	 * `ETL_IT_POSTI_LETTO_URL`); else null, and the run reads the current file's address from the
+	 * dataset's page on the portal (the pharmacies' file is renamed every day).
+	 */
+	urls: Record<ItSourceId, string | null>;
+	/** The portal (`ETL_IT_PORTAL_URL`). */
+	portalUrl: string;
+	/** ISTAT's boundaries for the places (`ETL_IT_PLACES_URL`). */
+	placesUrl: string;
+	/**
+	 * Keep the lists' coordinates (`--register-coordinates`, `ETL_IT_REGISTER_COORDINATES=1`):
+	 * the ministry says some were found through OpenStreetMap (ODbL), so by default a place is
+	 * located at its municipality's centre.
+	 */
+	registerCoordinates: boolean;
+	/** The day the lists are read for (`--as-of`, else today in Rome), `YYYY-MM-DD`. */
+	asOf: string;
+	workDir: string | null;
+	appUrl: string | null;
+	revalidateSecret: string | null;
+};
+
+/** Parses a comma-separated list of Italian lists (`farmacie,posti-letto`); throws on unknown ones. */
+export function parseItSources(value: string | null | undefined): ItSourceId[] {
+	if (!value) return [...IT_SOURCE_IDS];
+	const sources = value
+		.split(",")
+		.map((source) => source.trim())
+		.filter(Boolean);
+	for (const source of sources) {
+		if (!(IT_SOURCE_IDS as readonly string[]).includes(source)) {
+			throw new Error(`Unknown Italian source "${source}" (one of ${IT_SOURCE_IDS.join(", ")})`);
+		}
+	}
+	if (sources.length === 0) throw new Error("At least one Italian source is required");
+	return [...new Set(sources)] as ItSourceId[];
+}
+
+/** ISTAT's boundaries for the Italian places: `ETL_IT_PLACES_URL`, else the year's. */
+export function itPlacesUrl(env: NodeJS.ProcessEnv): string {
+	return env.ETL_IT_PLACES_URL || defaultItPlacesUrl();
+}
+
+/** Today in Rome, `YYYY-MM-DD`. */
+export function todayInRome(now: Date = new Date()): string {
+	return new Intl.DateTimeFormat("en-CA", { timeZone: "Europe/Rome" }).format(now);
+}
+
+export function buildItOptions(flags: ParsedArgs["flags"], env: NodeJS.ProcessEnv): ItOptions {
+	const approve = flagString(flags, "approve");
+	if (approve !== null && !/^\d+$/.test(approve)) {
+		throw new Error(`--approve needs a run id, got ${approve}`);
+	}
+	const asOf = flagString(flags, "as-of") ?? todayInRome();
+	if (!/^\d{4}-\d{2}-\d{2}$/.test(asOf)) throw new Error(`--as-of needs a date, got ${asOf}`);
+	const offline = flags.has("offline");
+	return {
+		databaseUrl: resolveDatabaseUrl(env),
+		dryRun: flags.has("dry-run"),
+		approveRunId: approve === null ? null : Number(approve),
+		force: flags.has("force"),
+		sourceDir: flagString(flags, "source-dir") ?? env.ETL_IT_SOURCE_DIR ?? null,
+		offline,
+		sources: parseItSources(flagString(flags, "sources") ?? env.ETL_IT_SOURCES),
+		urls: {
+			farmacie: env.ETL_IT_FARMACIE_URL || null,
+			parafarmacie: env.ETL_IT_PARAFARMACIE_URL || null,
+			"posti-letto": env.ETL_IT_POSTI_LETTO_URL || null,
+		},
+		portalUrl: env.ETL_IT_PORTAL_URL || DEFAULT_IT_PORTAL_URL,
+		placesUrl: itPlacesUrl(env),
+		registerCoordinates:
+			flags.has("register-coordinates") || env.ETL_IT_REGISTER_COORDINATES === "1",
+		asOf,
 		workDir: flagString(flags, "work-dir") ?? env.ETL_WORK_DIR ?? null,
 		appUrl: offline ? null : env.APP_URL || null,
 		revalidateSecret: env.REVALIDATE_SECRET || null,

@@ -90,6 +90,7 @@
 			"AT": "Österreich",
 			"GB": "Vereinigtes Königreich",
 			"CZ": "Tschechien",
+			"IT": "Italien",
 			"ES": "Spanien"
 		}
 	},
@@ -154,7 +155,7 @@
 	},
 	"International": {
 		"metaTitle": "Apercura · Offene Verzeichnisse der Gesundheitsfachkräfte",
-		"metaDescription": "Eine kostenlose, sachliche Seite für jede Gesundheitsfachkraft aus öffentlichen Registern. Offen in Frankreich, Österreich und im Vereinigten Königreich.",
+		"metaDescription": "Eine kostenlose, sachliche Seite je Gesundheitsfachkraft, aus öffentlichen Registern. Offen in Frankreich, Österreich, UK, Tschechien, Spanien, Italien.",
 		"runningHead": "Offene Verzeichnisse der Gesundheitsfachkräfte",
 		"title": "Jede Gesundheitsfachkraft, eine offene Seite",
 		"lead": "Apercura veröffentlicht eine kostenlose, sachliche Seite für jede registrierte Gesundheitsfachkraft, aus den öffentlichen Registern jedes Landes. Keine Bewertungen, keine Werbung, kein bezahltes Ranking, und der Quellcode ist offen.",
@@ -561,6 +562,8 @@
 		"professionHeading": "Beruf und Qualifikationen",
 		"otherQualifications": "Weitere Qualifikationen",
 		"fieldsOfCare": "Versorgungsbereiche",
+		"facilityType": "Art",
+		"beds": "Betten",
 		"ownership": "Trägerschaft",
 		"ownershipPublic": "Öffentlich",
 		"ownershipPrivate": "Privat",
@@ -1714,6 +1717,10 @@
 			"anesteziolog": "Anästhesiologische Praxis",
 			"chirurg": "Chirurgische Praxis",
 			"internista": "Internistische Praxis",
+			"farmacie": "Apotheke",
+			"parafarmacie": "Parapharmazie",
+			"ospedali": "Krankenhaus",
+			"case-di-cura": "Akkreditierte Privatklinik",
 			"hospitales": "Krankenhaus",
 			"centros-de-salud": "Gesundheitszentrum",
 			"consultas-medicas": "Arztpraxis",
@@ -1952,6 +1959,10 @@
 			"anesteziolog": "Anästhesiologie und Schmerztherapie",
 			"chirurg": "Chirurgie",
 			"internista": "Innere Medizin",
+			"farmacie": "Apotheken",
+			"parafarmacie": "Parapharmazien",
+			"ospedali": "Krankenhäuser",
+			"case-di-cura": "Akkreditierte Privatkliniken",
 			"hospitales": "Krankenhäuser",
 			"centros-de-salud": "Gesundheitszentren und Gemeindepraxen",
 			"consultas-medicas": "Arztpraxen",
@@ -4910,6 +4921,399 @@
 			"heading": "Remove a page",
 			"body": [
 				"Anyone a page is about can object to its publication at any time, without giving a reason (GDPR article 21). An unclaimed page is hidden as soon as the request arrives and deleted after a light check; it never comes back with the updates of the register. A claimed page is removed by its holder, from their space."
+			],
+			"formTitle": "Ask for a page to be removed",
+			"formBody": "Give the address of the page and an email address where we can answer you."
+		}
+	},
+	"LegalNoticeIt": {
+		"metaTitle": "Legal notice (Italy) · Apercura",
+		"metaDescription": "Legal notice of the Italian pages of Apercura: the provider, its contact details, registration and VAT number, and the person responsible for the content (D.Lgs. 70/2003, article 7).",
+		"title": "Legal notice",
+		"lead": "Who provides the Italian pages of Apercura (apercura.org/it), as article 7 of D.Lgs. 70/2003 on information society services and electronic commerce asks of a website, with the VAT number article 35 of D.P.R. 633/1972 requires.",
+		"sections": {
+			"provider": {
+				"heading": "Provider",
+				"body": [
+					"The Italian pages of Apercura are provided by the entity below. It runs the directory and answers for its content."
+				]
+			},
+			"service": {
+				"heading": "The service",
+				"body": [
+					"A free directory of the places of care in Italy that patients visit (pharmacies with their branches and dispensaries, parapharmacies, hospitals and accredited private clinics), built from the open data of the Ministry of Health, without advertising, with a space where a place can complete its own page. Pages are places, never individual health workers. No appointment is booked through Apercura in Italy."
+				]
+			},
+			"editor": {
+				"heading": "Person responsible for the content",
+				"body": [
+					"The person below is responsible for what the provider publishes. Information a place adds to its own page is its own responsibility; as a service that stores information provided by its users, the provider answers for it only under the conditions of article 16 of D.Lgs. 70/2003."
+				]
+			},
+			"liability": {
+				"heading": "Content of the pages",
+				"body": [
+					"The directory is built from the lists of pharmacies and parapharmacies and from the hospital bed counts per facility that the Ministry of Health publishes as open data, and from Istat’s administrative boundaries. It can be incomplete or out of date: check the information with the place before you go. Every page says how to report an error."
+				]
+			},
+			"ip": {
+				"heading": "Code and data",
+				"body": [
+					"The source code of Apercura is published under the AGPL-3.0 licence. The Ministry of Health’s data is reused under the Italian Open Data Licence v2.0 (IODL 2.0), Istat’s boundaries under the Creative Commons Attribution 4.0 International licence (CC BY 4.0): the data page lists every source with the attribution it requires."
+				]
+			},
+			"review": {
+				"heading": "Status of this text",
+				"body": [
+					"This text is a draft, written before the legal entity was set up. It will be reviewed by a lawyer qualified in Italy before the Italian pages are announced."
+				]
+			}
+		},
+		"fields": {
+			"name": "Name or company name",
+			"legalForm": "Legal form",
+			"address": "Registered office",
+			"phone": "Phone",
+			"email": "Email address",
+			"registration": "Register and registration number",
+			"vatId": "VAT number (partita IVA)",
+			"editor": "Responsible for the content"
+		},
+		"dataLink": "Data and sources"
+	},
+	"PrivacyIt": {
+		"metaTitle": "Privacy (Italy) · Apercura",
+		"metaDescription": "Data processed by the Italian pages of Apercura: sources, purposes, legal bases, retention, recipients and your rights, including objection (GDPR articles 13, 14 and 21, Codice in materia di protezione dei dati personali).",
+		"title": "Privacy",
+		"lead": "What data the Italian pages of Apercura process, where it comes from, why, for how long and by whom, and how to exercise your rights under the General Data Protection Regulation (GDPR) and the Codice in materia di protezione dei dati personali (D.Lgs. 196/2003, as amended by D.Lgs. 101/2018).",
+		"sections": {
+			"controller": {
+				"heading": "Who is responsible",
+				"body": [
+					"The provider named in the legal notice is the controller of the directory, of place accounts, of claims and of the requests sent through the site."
+				]
+			},
+			"directory": {
+				"heading": "Directory: data about places of care",
+				"body": [
+					"Data: the place’s own name, its kind (pharmacy, branch, dispensary, parapharmacy, hospital, accredited private clinic), for a hospital or clinic its type of facility and areas of inpatient care, its address, municipality and province, as the Ministry of Health’s open data lists publish them. A place that claims its page can add a presentation, languages, a photo and opening hours.",
+					"Never read or stored, although the lists publish it: the owner’s VAT number (partita IVA), which for a pharmacist working alone identifies a person. The lists publish no telephone number.",
+					"Location: every place is shown at the centre of its municipality, never at its address, unless the provider of the site chooses to use the coordinates of the ministry’s lists.",
+					"Identifier: the ministry’s own code of the place (pharmacy code, parapharmacy site code or hospital facility code), at the end of the page’s address.",
+					"Purpose: letting the public find a pharmacy, a parapharmacy or a hospital, where it is and what it is. Legal basis: legitimate interests (GDPR article 6(1)(f)), assessed below.",
+					"Retention: as long as the place appears in the ministry’s lists. A page disappears after two imports in which the place is no longer in them (a pharmacy whose period of validity has ended, for example); a page removed after an objection is never published again.",
+					"Information: the data does not come from the places themselves (GDPR article 14). This notice gives the information article 14 requires, the categories of data, their sources, the purposes and legal basis, the retention, the recipients and your rights, including the right to object; it is linked from every page, and the data page lists the sources."
+				]
+			},
+			"people": {
+				"heading": "Places, and the people they name",
+				"body": [
+					"An Italian page is a place of care, never a person’s profile. No list of individual doctors or other health workers is imported, regional lists included.",
+					"A pharmacy can belong to a pharmacist working alone, and its company name often names its pharmacists (for example “Farmacia Esempio S.n.c. del Dott. Mario Rossi”): that name can be personal data. A page prints only the place’s own name, leaving out the company form, the titles and the names that follow them (“Farmacia Esempio”). Nothing else about a person is collected: no date of birth, no tax code, no VAT number, no home address, no ratings and no reviews.",
+					"Anyone a page is about can object to it at any time, and the page is removed."
+				]
+			},
+			"sources": {
+				"heading": "Sources",
+				"body": [
+					"Every page is built from the open data of the Ministry of Health (dati.salute.gov.it): the daily lists of pharmacies, with their branches and dispensaries, and of parapharmacies, and the yearly hospital bed counts per facility, published under the Italian Open Data Licence v2.0 (IODL 2.0), which allows reuse, commercial included, provided the source is credited. Regions, provinces and municipalities come from Istat (CC BY 4.0). Each source is reused with its attribution:"
+				]
+			},
+			"balancing": {
+				"heading": "Legitimate interests assessment",
+				"body": [
+					"Purpose: patients need to know which pharmacies, parapharmacies and hospitals are where, a need the State already meets by publishing these lists as open data.",
+					"Necessity: only the place’s own data from the lists is shown; nothing about private life, no owner’s name or VAT number, no ratings, no reviews.",
+					"Balance: a neutral order, no advertising, the minimum of the lists’ fields, a place shown at its municipality’s centre, an objection that hides a page at once and keeps it from coming back, corrections at the source, and pages that follow every update of the lists. A pharmacy open to the public expects to be found in a directory repeating what the ministry publishes. Weighing these points, the interests of patients prevail, and anyone a page is about can object without giving a reason."
+				]
+			},
+			"accounts": {
+				"heading": "Place accounts and claims",
+				"body": [
+					"Data: email address, name, password (stored hashed), second authentication factor, the documents sent to claim a page (proof that the claimant runs the place or acts for it) and team members.",
+					"Purposes: managing the account and checking that a page is claimed by the right place. Legal bases: performance of the terms of use (article 6(1)(b)) and the legitimate interests of securing the service (article 6(1)(f)).",
+					"Retention: the account is kept until it is deleted; supporting documents, encrypted, are erased 30 days after the decision."
+				]
+			},
+			"requests": {
+				"heading": "Error reports, objections and contact requests",
+				"body": [
+					"Data: the message, the contact email address when one is given and the page concerned; for a “this is my page” request also the name and phone number. Free text is encrypted.",
+					"Purposes: correcting errors, applying objections and helping a place that cannot claim its page online. Legal bases: legitimate interests (article 6(1)(f)) and the right to object (article 21).",
+					"Retention: a report is deleted 6 months after it is closed, a rejected objection one year after its decision, a contact request 12 months after the last exchange. Once an objection is confirmed, or the holder of a claimed page removes it, the page and the data about it are deleted at once, the objection included; all that is kept is a record of the removal (the identifier of the page, the country, the reason, who recorded it and when), so that it is never published again. A holder who removes their page keeps, in their account only and never published, the name, kind and identifier shown in their space and their claim, until the account is deleted."
+				]
+			},
+			"technical": {
+				"heading": "Technical data and cookies",
+				"body": [
+					"Only cookies strictly necessary to the service are set: the session of signed-in places and the chosen language. No advertising or audience measurement cookies, no trackers.",
+					"To limit abuse, IP addresses are transformed with a keyed function before being counted and never stored as such; place sessions record a truncated IP address. Views of claimed pages are counted without a cookie or identifier, and only the page’s holder sees them."
+				]
+			},
+			"recipients": {
+				"heading": "Recipients and processors",
+				"body": [
+					"Data is neither sold nor rented, and never used for advertising. Only the provider’s team and the processors below receive it, each for its own part, under a contract that meets GDPR article 28. Maps are loaded from a tile server, which receives the visitor’s IP address like any website."
+				]
+			},
+			"transfers": {
+				"heading": "Transfers outside the European Union",
+				"body": [
+					"Data is transferred outside the European Union and the European Economic Area only under the safeguards of chapter V of the GDPR (an adequacy decision or standard contractual clauses). Any change of processor will be announced here before it takes effect."
+				]
+			},
+			"automated": {
+				"heading": "Automated decisions",
+				"body": [
+					"No decision about you is taken by automated means alone. A claim is decided by a person, who reads its documents."
+				]
+			},
+			"rights": {
+				"heading": "Your rights",
+				"body": [
+					"You can ask to access your data, to have it corrected or erased, to restrict its processing, to receive it in a portable format and to object to its processing. Write to the address below; you will get an answer within one month.",
+					"You can also lodge a complaint with the Italian supervisory authority, the Garante per la protezione dei dati personali (GDPR article 77): Piazza Venezia 11, 00187 Roma, www.garanteprivacy.it."
+				]
+			},
+			"objection": {
+				"heading": "Objecting to a page (GDPR article 21)",
+				"body": [
+					"Anyone a page is about can object to its publication at any time, without giving a reason. If the page is unclaimed, a form is enough, on the data page or at the page’s own address followed by “/rimozione”: the page is hidden as soon as the request arrives, deleted after a light check, and the updates of the lists never publish it again. If it is claimed, its holder removes it from their space."
+				]
+			},
+			"changes": {
+				"heading": "Updates to this notice",
+				"body": [
+					"This notice is a draft. It will be reviewed by a lawyer qualified in Italy and by the data protection officer; every version is dated."
+				]
+			}
+		},
+		"fields": {
+			"controller": "Controller",
+			"address": "Address",
+			"email": "Contact for requests",
+			"dpo": "Data protection officer",
+			"effectiveDate": "Effective date",
+			"hostingProvider": "Hosting provider (processor)",
+			"smtp": "Email delivery (processor)"
+		},
+		"objectLink": "How to object to a page",
+		"authorityLink": "Lodge a complaint with the Garante per la protezione dei dati personali"
+	},
+	"TermsIt": {
+		"metaTitle": "Terms of use (Italy) · Apercura",
+		"metaDescription": "Terms of use of the Italian pages of Apercura: a free, factual directory of pharmacies, parapharmacies and hospitals from the Ministry of Health’s open data, without online booking.",
+		"title": "Terms of use",
+		"lead": "The rules for using the Italian pages of Apercura, for the public and for places of care alike.",
+		"sections": {
+			"service": {
+				"heading": "The service",
+				"body": [
+					"Apercura lists, free of charge, the pharmacies, parapharmacies, hospitals and accredited private clinics of the Ministry of Health’s open data. It is a directory only: no appointment is booked through Apercura in Italy. It is run by the provider named in the legal notice.",
+					"Using the directory requires no account. Using the site means accepting these terms."
+				]
+			},
+			"content": {
+				"heading": "What the pages contain",
+				"body": [
+					"Pages show factual information from the ministry’s lists, in a neutral order, without ratings, reviews, advertising or paid placement.",
+					"The information may be incomplete or out of date: check it with the place before you go. Every page says how to report an error."
+				]
+			},
+			"health": {
+				"heading": "Not medical advice",
+				"body": [
+					"Apercura gives no medical advice and is not an emergency service. In an emergency, call 112 or 118. At night and on public holidays, the continuità assistenziale (guardia medica) of your local health authority can help, and the pharmacies on duty (farmacie di turno) stay open."
+				]
+			},
+			"practices": {
+				"heading": "For places of care",
+				"body": [
+					"Claiming a page is free. It requires a document proving that the claimant runs the place or acts for it, checked by an administrator before the page is handed over.",
+					"The holder of a page is responsible for the information they add. It must stay factual, accurate and up to date."
+				]
+			},
+			"removal": {
+				"heading": "Removing a page",
+				"body": [
+					"Anyone a page is about can object to it and ask for it to be removed at any time: the data page explains how. A claimed page can only be removed by its holder. Errors in the data are corrected at the source, with the region or the local health authority that reports it to the ministry."
+				]
+			},
+			"liability": {
+				"heading": "Liability",
+				"body": [
+					"The provider does its best to keep the service available and accurate, but cannot guarantee it. It is not responsible for the information places add to their pages. These limits will be specified during the legal review."
+				]
+			},
+			"ip": {
+				"heading": "Code and data",
+				"body": [
+					"The source code is published under the AGPL-3.0 licence. The Ministry of Health’s data is reused under the Italian Open Data Licence v2.0 (IODL 2.0), Istat’s boundaries under the Creative Commons Attribution 4.0 International licence (CC BY 4.0)."
+				]
+			},
+			"law": {
+				"heading": "Governing law and disputes",
+				"body": [
+					"The governing law and the competent courts will be specified during the legal review; the mandatory consumer protection rules of the country of residence always apply. In case of a dispute, first write to the contact address to look for an amicable solution."
+				]
+			}
+		},
+		"fields": {
+			"publisher": "Provider",
+			"effectiveDate": "Effective date",
+			"contact": "Contact"
+		}
+	},
+	"AccessibilityIt": {
+		"metaTitle": "Accessibility (Italy) · Apercura",
+		"metaDescription": "Accessibility of the Italian pages of Apercura: the WCAG 2.2 AA target, what was checked, what remains, and how to report a problem.",
+		"title": "Accessibility",
+		"lead": "Apercura is designed for everyone, including older and low-vision people. This statement says where the Italian pages stand.",
+		"sections": {
+			"scope": {
+				"heading": "Scope",
+				"body": [
+					"Legge 4/2004 (the “Legge Stanca”) on access to IT tools for people with disabilities binds public administrations and the largest private companies; this statement is voluntary. Its provider nevertheless aims at the same standard on every page: WCAG 2.2 level AA."
+				]
+			},
+			"status": {
+				"heading": "Where the site stands",
+				"body": [
+					"The Italian pages share the code of the French pages and their tests. The site partially meets WCAG 2.2 AA: this rests on a self-assessment and automated tests, not yet on a full audit, which is in progress."
+				]
+			},
+			"tests": {
+				"heading": "What was checked",
+				"list": [
+					"Automated axe-core checks (WCAG 2.0, 2.1 and 2.2 rules, levels A and AA) on every page type, at every release.",
+					"Keyboard-only journeys with a visible focus.",
+					"Body text of at least 18 px, targets of at least 44 px, nothing that relies on colour alone, no horizontal scrolling at 390 px."
+				]
+			},
+			"pending": {
+				"heading": "What remains to be checked",
+				"list": [
+					"A manual pass with the VoiceOver and NVDA screen readers, in Italian.",
+					"A full audit against WCAG 2.2 AA on a sample of pages."
+				]
+			},
+			"feedback": {
+				"heading": "Report a problem",
+				"body": [
+					"If a page or a feature is hard to use, write to the address below: say which page and what blocked you. We answer within one month and, where needed, give you the information in another form."
+				]
+			}
+		},
+		"fields": {
+			"contact": "Contact",
+			"date": "Date of this statement"
+		}
+	},
+	"DataIt": {
+		"metaTitle": "Data and sources (Italy) · Apercura",
+		"metaDescription": "Where the Italian pages of Apercura come from: the Ministry of Health’s open data (IODL 2.0) and Istat’s boundaries (CC BY 4.0), update dates, and how to correct or remove a page.",
+		"title": "Data and sources",
+		"lead": "Every Italian page is built from public open data. Here is where it comes from, under which licence and attribution, when it was updated, and how to correct or remove a page.",
+		"status": {
+			"heading": "Last update",
+			"body": "The Ministry of Health publishes its lists of pharmacies and parapharmacies every day and its hospital bed counts once a year; the directory checks them every week and imports a list when it has changed. A page changes only when its facts change in the lists.",
+			"importedAt": "Last import",
+			"checkedAt": "Sources last checked",
+			"notImported": "The Italian directory has not been imported yet on this site.",
+			"notImportedValue": "Not imported yet"
+		},
+		"sources": {
+			"heading": "Sources",
+			"body": "The Ministry of Health’s lists are published under the Italian Open Data Licence v2.0 (IODL 2.0), Istat’s boundaries under the Creative Commons Attribution 4.0 International licence (CC BY 4.0); both allow reuse, commercial included, provided the source is credited. Each attribution below is printed word for word, the ministry’s with the date of the list’s data.",
+			"caption": "Data sources of the Italian directory",
+			"columns": {
+				"source": "Source",
+				"use": "Used for",
+				"licence": "Licence and attribution",
+				"frequency": "Updated"
+			},
+			"items": {
+				"it-farmacie": {
+					"use": "Pharmacies open to the public, with their branches and dispensaries: names, types, addresses, municipalities",
+					"frequency": "Every day, by the Ministry of Health"
+				},
+				"it-parafarmacie": {
+					"use": "Parapharmacies: names, addresses, municipalities",
+					"frequency": "Every day, by the Ministry of Health"
+				},
+				"it-posti-letto": {
+					"use": "Hospitals and accredited private clinics: names, types of facility, addresses, municipalities, areas of inpatient care",
+					"frequency": "Every year (beds on 1 January), by the Ministry of Health"
+				},
+				"it-istat": {
+					"use": "Regions, provinces and metropolitan cities, municipalities, and the centre of each municipality (computed by Apercura from its boundaries), where places are shown",
+					"frequency": "Every year (boundaries on 1 January), by Istat"
+				},
+				"map": {
+					"name": "Map data",
+					"publisher": "OpenStreetMap contributors, tiles by OpenFreeMap",
+					"use": "Maps on the pages",
+					"frequency": "Continuously"
+				}
+			},
+			"iodl": "IODL 2.0",
+			"ccBy": "CC BY 4.0",
+			"odbl": "ODbL",
+			"conditionsHeading": "Conditions of the licence",
+			"conditions": "The lists are shown as published, without changing their meaning: names title-cased, the place’s own name without its company form or its owners, the place’s own data only. Every Italian page cites its sources, the ministry’s list with the date of its data.",
+			"iodlText": "The text of the Italian Open Data Licence v2.0"
+		},
+		"coverage": {
+			"heading": "Places covered",
+			"body": [
+				"Pages are generated for the places of the Ministry of Health’s open data that patients visit. A page is a place, never a person: the ministry’s lists name no health worker, and no list of individual doctors, regional lists included, is imported.",
+				"Left out: pharmacies and parapharmacies whose period of validity has ended, the private clinics that are not accredited (the bed counts cover public and accredited facilities only), and the outpatient clinics, laboratories and other facilities the ministry’s lists do not cover."
+			],
+			"kinds": {
+				"IT_PHARMACY": "Pharmacies open to the public, with their branches and dispensaries (Farmacie)",
+				"IT_PARAPHARMACY": "Parapharmacies (Parafarmacie)",
+				"IT_HOSPITAL": "Hospitals: hospital trusts, directly run hospitals, university hospitals, IRCCS and classified hospitals (Posti letto per struttura ospedaliera)",
+				"IT_CLINIC": "Accredited private clinics, case di cura (Posti letto per struttura ospedaliera)"
+			},
+			"kindsLabel": "Imported (ministry list)"
+		},
+		"locations": {
+			"heading": "Locations",
+			"body": [
+				"Every place is shown at the centre of its municipality, computed by Apercura from Istat’s boundaries: its position on a map and its distance are those of the municipality, never of its address, and no pin marks the place itself.",
+				"The ministry’s lists carry coordinates, but the ministry states that some of them were obtained through OpenStreetMap (© OpenStreetMap contributors, ODbL), whose licence has conditions of its own. They are used only if the provider of the site chooses to enable them."
+			]
+		},
+		"identifiers": {
+			"heading": "Identifiers",
+			"body": [
+				"The address of every page ends with the ministry’s own code of the place, after a letter naming its list, so a page can be found and checked against the list:"
+			],
+			"list": [
+				"/it/struttura/farmacia-esempio-f12345: the ministerial pharmacy code (codice identificativo della farmacia) 12345, after f.",
+				"/it/struttura/parafarmacia-esempio-p002112: the parapharmacy’s logistic-site code (codice identificativo del sito logistico) 002112, after p.",
+				"/it/struttura/ospedale-esempio-s010030: the facility code of the HSP.11 model (codice struttura) 010030, after s.",
+				"The owner’s VAT number (partita IVA) is never read or stored: for a pharmacist working alone, it identifies a person."
+			]
+		},
+		"correct": {
+			"heading": "Correct an error",
+			"body": [
+				"The pages repeat the ministry’s lists: a lasting correction is made at the source, and the page follows at the next import after the ministry publishes the corrected list.",
+				"For anything else, use the form: we check every report."
+			],
+			"list": [
+				"A pharmacy’s or a parapharmacy’s name, address or type: ask the region or the local health authority (ASL) that reports it to the Ministry of Health to correct it.",
+				"A hospital’s or a clinic’s name, address, type or beds: the region reports them to the ministry every year; a correction appears with the next year’s counts.",
+				"Phone and opening hours: the lists publish none; a place adds them by claiming its page."
+			],
+			"formTitle": "Report an error",
+			"formBody": "Give the address of the page and what is wrong."
+		},
+		"remove": {
+			"heading": "Remove a page",
+			"body": [
+				"Anyone a page is about can object to its publication at any time, without giving a reason (GDPR article 21). An unclaimed page is hidden as soon as the request arrives and deleted after a light check; it never comes back with the updates of the lists. A claimed page is removed by its holder, from their space. Every page also has its own removal form, at its address followed by “/rimozione”."
 			],
 			"formTitle": "Ask for a page to be removed",
 			"formBody": "Give the address of the page and an email address where we can answer you."
