@@ -246,8 +246,8 @@ export const config = {
 		// The site icons (`/icon/{size}`, `/apple-icon`) are metadata routes, outside the locales.
 		"/((?!api|trpc|_next|_vercel|icon/|apple-icon|.*\\..*).*)",
 		// What a former host must redirect too, for crawlers and shared links: robots.txt,
-		// sitemaps, the Open Graph images, security.txt and the icons. Never API routes, whose
-		// request bodies a proxy would buffer.
+		// sitemaps, the Open Graph images, security.txt, the icons and the logo files. Never API
+		// routes, whose request bodies a proxy would buffer.
 		"/robots.txt",
 		"/sitemap.xml",
 		"/sitemaps/:path*",
@@ -255,6 +255,8 @@ export const config = {
 		"/.well-known/:path*",
 		"/manifest.webmanifest",
 		"/icon/:path*",
+		"/icon.svg",
 		"/apple-icon",
+		"/brand/:path*",
 	],
 };

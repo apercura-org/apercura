@@ -558,13 +558,30 @@ test("a department listing never links the Paris city, whose URL redirects back 
 });
 
 test("icons, manifest and the favicon answer outside the locale routing", async ({ request }) => {
-	for (const path of ["/icon/48", "/icon/192", "/icon/512", "/apple-icon"]) {
+	const manifest = await (await request.get("/manifest.webmanifest")).json();
+	const icons = manifest.icons as { src: string; sizes: string; purpose: string }[];
+	expect(icons.map(({ sizes, purpose }) => `${sizes} ${purpose}`)).toEqual([
+		"192x192 any",
+		"512x512 any",
+		"192x192 maskable",
+		"512x512 maskable",
+	]);
+	const pngs = ["/icon/48", "/apple-icon", "/brand/apercura-logo.png", ...icons.map((i) => i.src)];
+	for (const path of pngs) {
 		const response = await request.get(path);
 		expect(response.status(), path).toBe(200);
-		expect(response.headers()["content-type"]).toBe("image/png");
+		expect(response.headers()["content-type"], path).toBe("image/png");
 	}
-	const manifest = await (await request.get("/manifest.webmanifest")).json();
-	expect(manifest.icons).toHaveLength(2);
+	// The scheme-aware SVG favicon, linked from every page next to the raster sizes.
+	const html = await (await request.get("/fr")).text();
+	const svgIcon = html.match(
+		/<link rel="icon" href="(\/icon\.svg[^"]*)"[^>]*type="image\/svg\+xml"/,
+	);
+	expect(svgIcon, "an SVG icon link").not.toBeNull();
+	const svg = await request.get(svgIcon?.[1] ?? "");
+	expect(svg.status()).toBe(200);
+	expect(svg.headers()["content-type"]).toContain("image/svg+xml");
+	expect(await svg.text()).toContain("prefers-color-scheme:dark");
 	const favicon = await request.get("/favicon.ico", { maxRedirects: 0 });
 	expect(favicon.status()).toBe(308);
 	expect(favicon.headers().location).toBe("/icon/48");

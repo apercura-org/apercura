@@ -1,3 +1,4 @@
+import { BrandLockup } from "@apercura/ui";
 import { getTranslations } from "next-intl/server";
 import type { ReactNode } from "react";
 import { BookletPage } from "~/components/booklet-page";
@@ -73,9 +74,9 @@ export async function ProShell({
 							<Link
 								href="/"
 								aria-label={t("app.homeLink")}
-								className="type-wordmark -ms-1 inline-flex min-h-11 items-center rounded-field px-1 text-ink no-underline"
+								className="-ms-1 inline-flex min-h-11 items-center rounded-field px-1 text-ink no-underline"
 							>
-								{t("email.wordmark")}
+								<BrandLockup height={24} />
 							</Link>
 							<ProHeaderMenu label={t("app.nav.menu")}>
 								{showNav ? (

@@ -217,6 +217,17 @@ Each role is a utility in `theme.css`.
 
 Hierarchy comes from size steps, weight and space; colour never carries it. No capitals for emphasis, no tracked-out labels, no kicker above a heading.
 
+## Logo
+
+The symbol ("Pin a") is a round tile with one sharp corner, a map pin tipped onto its point and a geometric single-storey a; its counter is a window holding a dot, the point of care. The wordmark is "apercura" in Allo 650 at -0.02 em, outlined, its x-height centred on the symbol. No cross, no snake, no state emblem.
+
+- **Source.** One geometry, `packages/ui/src/brand/geometry.ts` (a 64-unit grid, 4 units to a pixel at 16 px), read by everything that draws the logo. The standalone files are in `docs/brand/` (symbol and lockup in light, dark and mono, and the app icon) with the usage note; `brand.test.ts` keeps them, and the favicon, equal to the geometry.
+- **Colours.** Ink and accent only: `ink` for the tile and the wordmark, `stamp` for the dot (#191d24 and #554da0 light, #eceff2 and #b0aff5 dark). The dot is the one place the accent appears outside the accent law: it is the brand, not an action. Mono files draw everything in the current colour; nothing else is recoloured.
+- **Header.** `BrandLockup` (24 px high), inline SVG in a server component: the ink is `currentColor`, so it follows the theme; the dot is `fill-stamp`, and the current colour in forced colours. Decorative (`aria-hidden`): the link around it carries the name ("Apercura, accueil"), and leads to the market's home.
+- **Icons.** `app/icon.svg` is the favicon, light or dark with the browser's scheme. `/icon/{48,192,512}` are the symbol on white (`/favicon.ico` redirects to the 48 px one); `/apple-icon` and the manifest's maskable icons (`/brand/apercura-maskable-{192,512}.png`) are the app icon, the symbol at 60 % on white, inside the maskable safe zone. The Organization logo is `/brand/apercura-logo.png` (512 px).
+- **Open Graph.** The light lockup takes the place of the printed name: large on the profession images, small under a guide's title, at the top right of a practitioner's card.
+- **Use.** Clear space of a quarter of the symbol's height around it; never under 16 px high, and the symbol alone below about 24 px. Don't stretch, rotate, outline or recolour it.
+
 ## Layout and spacing
 
 - One centred column, `max-width: 72rem`, 20 px gutters (32 px from 640 px).
@@ -281,6 +292,7 @@ WCAG 2.2 AA and RGAA 4.1 in both themes. Every token pair is checked in `tokens.
 **Don't**
 
 - Don't use the Marianne typeface, the tricolour, DSFR components or any state emblem, and don't imitate Doctolib.
+- Don't redraw, recolour or stretch the logo: use `BrandLockup`, `BrandSymbol` or the files of `docs/brand`.
 - Don't add a second family, capitals for emphasis, tracked-out labels, or a kicker above a heading.
 - Don't colour running text with the accent or red, or use the accent for mere selection.
 - Don't add shadows to things on the page, gradients, glass, or heavy ink rules; one overlay shadow is the whole elevation system.

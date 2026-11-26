@@ -5,6 +5,7 @@ import { cacheLife, cacheTag } from "next/cache";
 import { ImageResponse } from "next/og";
 import { getTranslations } from "next-intl/server";
 import { MARKET_LOCALES } from "~/i18n/locales";
+import { lockupHeightFor, OgLockup } from "~/lib/brand-image";
 import { genderOf, getTaxonomyLabels } from "~/lib/labels";
 import { professionSlugOf } from "~/lib/market";
 import { displayId, marketSegmentOf, type PractitionerKey } from "~/lib/practitioner-key";
@@ -17,7 +18,7 @@ import { ogFonts } from "./fonts";
 
 /**
  * The Open Graph image of one practitioner page (`/og/praticien/{slug}.png`, 1200 × 630):
- * name, profession or specialty, commune and the Apercura print, in French like the profession
+ * name, profession or specialty, commune and the Apercura lockup, in French like the profession
  * images. The photo only when the owner published one on the page. Rendered once and cached
  * with the page's own tags, so an import or an owner's edit that changes the page renders it
  * again.
@@ -156,7 +157,7 @@ export async function practitionerOgImage(key: OgKey): Promise<Uint8Array | null
 						display: "flex",
 						flexGrow: 1,
 						justifyContent: "space-between",
-						alignItems: "baseline",
+						alignItems: "center",
 						paddingBottom: 16,
 						borderBottom: `2px solid ${RULE}`,
 						fontSize: 26,
@@ -166,17 +167,7 @@ export async function practitionerOgImage(key: OgKey): Promise<Uint8Array | null
 					}}
 				>
 					<div style={{ display: "flex" }}>{t("runningHead")}</div>
-					<div
-						style={{
-							display: "flex",
-							fontSize: 34,
-							fontWeight: 600,
-							color: INK,
-							letterSpacing: -0.5,
-						}}
-					>
-						{t("wordmark")}
-					</div>
+					<OgLockup height={lockupHeightFor(34)} />
 				</div>
 			</div>
 			<div style={{ display: "flex", alignItems: "center", gap: 48, padding: "0 80px" }}>

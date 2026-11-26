@@ -28,7 +28,7 @@ export type MarketRedirect = { path: string; move: MarketMove };
 
 /** Paths that are not pages of a locale: files, API, framework internals, metadata routes. */
 const NOT_A_PAGE =
-	/^\/(?:api|trpc|_next|_vercel|og|media|icon|apple-icon|sitemaps|\.well-known)(?:\/|$)|\./;
+	/^\/(?:api|trpc|_next|_vercel|og|media|icon|apple-icon|brand|sitemaps|\.well-known)(?:\/|$)|\./;
 
 const OLD_SITEMAP = /^\/sitemaps\/([a-z]+-\d{1,6}\.xml)$/;
 

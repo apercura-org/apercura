@@ -118,9 +118,9 @@ exports[`page entities > describes the website and its publisher, with a logo an
       "logo": {
         "@id": "https://apercura.example/#logo",
         "@type": "ImageObject",
-        "contentUrl": "https://apercura.example/icon/512",
+        "contentUrl": "https://apercura.example/brand/apercura-logo.png",
         "height": "512",
-        "url": "https://apercura.example/icon/512",
+        "url": "https://apercura.example/brand/apercura-logo.png",
         "width": "512",
       },
       "name": "Apercura",

@@ -6,15 +6,16 @@ import { siteNodes } from "./structured-data";
 
 /**
  * Apercura's `WebSite` and `Organization`, the same on both homes (`/` and `/fr`, and the
- * `noindex` homes of the other locales): the logo is the 512 px site icon, `sameAs` only real
- * profiles of Apercura (its public source repository).
+ * `noindex` homes of the other locales): the logo is the symbol on white at 512 px
+ * (`/brand/apercura-logo.png`, a stable URL of its own), `sameAs` only real profiles of Apercura
+ * (its public source repository).
  */
 export function apercuraSiteNodes(): Thing[] {
 	const origin = siteOrigin();
 	return siteNodes({
 		origin,
 		name: BRAND,
-		logo: `${origin}/icon/512`,
+		logo: `${origin}/brand/apercura-logo.png`,
 		sameAs: [LINKS.repository],
 	});
 }

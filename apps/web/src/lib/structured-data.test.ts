@@ -273,7 +273,7 @@ describe("page entities", () => {
 		const nodes = siteNodes({
 			origin: ORIGIN,
 			name: "Apercura",
-			logo: `${ORIGIN}/icon/512`,
+			logo: `${ORIGIN}/brand/apercura-logo.png`,
 			sameAs: ["https://github.com/apercura-org/apercura"],
 		});
 		expect(graph(nodes)).toMatchSnapshot();
@@ -291,7 +291,7 @@ describe("page entities", () => {
 		expect(organization["@id"]).toBe(ids.organization(ORIGIN));
 		expect(organization.logo).toMatchObject({
 			"@type": "ImageObject",
-			url: `${ORIGIN}/icon/512`,
+			url: `${ORIGIN}/brand/apercura-logo.png`,
 			width: "512",
 			height: "512",
 		});
@@ -299,7 +299,12 @@ describe("page entities", () => {
 	});
 
 	it("prints nothing language-dependent in the site entities (one @id, one entity)", () => {
-		const input = { origin: ORIGIN, name: "Apercura", logo: `${ORIGIN}/icon/512`, sameAs: [] };
+		const input = {
+			origin: ORIGIN,
+			name: "Apercura",
+			logo: `${ORIGIN}/brand/apercura-logo.png`,
+			sameAs: [],
+		};
 		const nodes = siteNodes(input);
 		expect(keysOf(nodes)).not.toContain("inLanguage");
 		expect(keysOf(nodes)).not.toContain("description");

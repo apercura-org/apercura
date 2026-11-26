@@ -11,6 +11,7 @@
 		".": "./src/index.ts",
 		"./theme.css": "./src/styles/theme.css",
 		"./tokens": "./src/tokens/index.ts",
+		"./brand": "./src/brand/geometry.ts",
 		"./map-style": "./src/map/map-style.ts"
 	},
 	"scripts": {
