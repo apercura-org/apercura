@@ -131,6 +131,8 @@
 		"unknownPlaceTitle": "Místo „{where}“ neznáme",
 		"unknownPlaceSuggest": "Měli jste na mysli některé z těchto míst?",
 		"unknownPlaceBody": "Zkontrolujte pravopis, nebo napište sousední obec.",
+		"unlistedTitle": "„{who}“ v adresáři zatím není",
+		"unlistedBody": "V Česku adresář zatím uvádí ordinace praktických, dětských a zubních lékařů, gynekologů a specialistů, lékárny, domácí péči, fyzioterapeuty, psychology, logopedy a porodní asistentky. Zkuste raději název zařízení, nebo procházejte adresář.",
 		"departmentPlace": "Okres",
 		"resultsHeading": "Výsledky",
 		"range": "Výsledky {from} až {to}",

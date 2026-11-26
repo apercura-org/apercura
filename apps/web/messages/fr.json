@@ -201,6 +201,8 @@
 		"unknownPlaceTitle": "Nous ne connaissons pas le lieu « {where} »",
 		"unknownPlaceSuggest": "Vouliez-vous dire l’un de ces lieux ?",
 		"unknownPlaceBody": "Vérifiez l’orthographe, ou saisissez un code postal.",
+		"unlistedTitle": "« {who} » n’est pas encore dans l’annuaire",
+		"unlistedBody": "En France, l’annuaire recense pour l’instant les médecins, les chirurgiens-dentistes, les sages-femmes et les infirmiers libéraux. Cherchez plutôt un nom, ou parcourez l’annuaire.",
 		"departmentPlace": "Département",
 		"resultsHeading": "Résultats",
 		"range": "Résultats {from} à {to}",

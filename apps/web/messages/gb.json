@@ -30,6 +30,7 @@
 		"startTitle": "What are you looking for?",
 		"startBody": "Type a practice name, or GP practice, dentist or pharmacy, in “Who?”, and a town or a local authority in “Where?”. You can also browse the directory by region and local authority.",
 		"unknownPlaceBody": "Check the spelling, or type a nearby town.",
+		"unlistedBody": "In the United Kingdom, the directory lists GP practices, dental practices and pharmacies for now. Search for a practice name instead, or browse the directory.",
 		"departmentPlace": "Local authority",
 		"bookingNotOpen": "Apercura does not offer online booking in the UK: call the practice.",
 		"columns": {

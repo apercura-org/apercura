@@ -149,6 +149,17 @@ test("a field of care in a place goes straight to its Czech listing", async ({ p
 	await expect(page).toHaveURL(/\/cz\/prakticky-lekar\/praha\/praha-2$/);
 });
 
+test("everyday words go straight to their Czech listing", async ({ page }) => {
+	await page.goto(`/cz/hledat?quoi=${encodeURIComponent("zubař")}`);
+	await expect(page).toHaveURL(/\/cz\/zubni-lekar$/);
+	await page.goto(`/cz/hledat?quoi=${encodeURIComponent("zubní")}&ou=Ostrava`);
+	await expect(page).toHaveURL(/\/cz\/zubni-lekar\/[^/]+\/ostrava$/);
+	await page.goto(`/cz/hledat?quoi=nemocnice`);
+	await expect(
+		page.getByRole("heading", { name: "„nemocnice“ v adresáři zatím není" }),
+	).toBeVisible();
+});
+
 test("the Czech home lists fields and districts, and joins the homes' hreflang", async ({
 	page,
 }) => {

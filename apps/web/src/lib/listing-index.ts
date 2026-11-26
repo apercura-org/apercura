@@ -2,7 +2,9 @@
  * In-memory index of the listing labels (specialties and professions) for the
  * "Qui ?" search: suggestions by word prefix and exact resolution of a typed
  * label to its listing slug. Only the professions imported by default (v1
- * scope) are offered, so a suggestion always leads to practitioners.
+ * scope) are offered, so a suggestion always leads to practitioners. Besides the
+ * catalogs' labels, the words people type ("dentiste", "GP", "zubař") come from
+ * each market's search aliases (`@apercura/core/taxonomy`, `SEARCH_ALIASES`).
  */
 import {
 	allAtListingSlugs,
@@ -10,9 +12,17 @@ import {
 	allGbListingSlugs,
 	FR_PROFESSIONS,
 	professionOfListingSlug,
+	SEARCH_ALIASES,
+	type SearchAliasLanguage,
 } from "@apercura/core/taxonomy";
 import { messagesFor } from "~/i18n/catalogs";
-import { LOCALES, type Locale, type MarketCountry, marketOf } from "~/i18n/locales";
+import {
+	CATALOG_LANGUAGES,
+	LOCALES,
+	type Locale,
+	type MarketCountry,
+	marketOf,
+} from "~/i18n/locales";
 
 const AT_LISTINGS: ReadonlySet<string> = allAtListingSlugs();
 const GB_LISTINGS: ReadonlySet<string> = allGbListingSlugs();
@@ -71,15 +81,26 @@ function buildIndex(locale: Locale): ListingEntry[] {
 	// A Czech listing is plural ("Kardiologové"), its profession label singular ("Kardiolog"):
 	// both match.
 	const singular = marketOf(locale) === "CZ";
+	// The everyday words of the locale's language suggest their listing too ("Hausarzt" →
+	// Allgemeinmedizin).
+	const aliases =
+		SEARCH_ALIASES[marketOf(locale)][CATALOG_LANGUAGES[locale] as SearchAliasLanguage]?.listings;
 	const entries: ListingEntry[] = [];
 	for (const [slug, message] of Object.entries(listing)) {
 		if (!inMarket(slug, locale)) continue;
 		const profession = singular ? professions[slug] : undefined;
 		const forms = [...labelForms(message), ...(profession ? labelForms(profession) : [])];
+		const words = (aliases?.[slug] ?? []).flatMap(spellings).map(foldText);
 		entries.push({
 			slug,
 			label: forms[0] ?? slug,
-			keys: [...new Set([...forms.map(normalizeText), normalizeText(slug)])],
+			keys: [
+				...new Set([
+					...forms.flatMap((form) => [normalizeText(form), foldText(form)]),
+					normalizeText(slug),
+					...words,
+				]),
+			],
 		});
 	}
 	return entries.sort((a, b) => a.label.localeCompare(b.label, locale));
@@ -112,22 +133,173 @@ export function suggestListings(query: string, locale: Locale, limit = 5): Listi
 		.slice(0, limit);
 }
 
+/** `normalizeText`, with `ß` read as `ss` (a German word typed either way matches). */
+function foldText(value: string): string {
+	return normalizeText(value.replace(/ß/g, "ss"));
+}
+
+/** The spellings of an alias: as written and, for a German word, with `ae`, `oe`, `ue`. */
+function spellings(alias: string): string[] {
+	const transcribed = alias
+		.replace(/ä/g, "ae")
+		.replace(/ö/g, "oe")
+		.replace(/ü/g, "ue")
+		.replace(/Ä/g, "Ae")
+		.replace(/Ö/g, "Oe")
+		.replace(/Ü/g, "Ue");
+	return transcribed === alias ? [alias] : [alias, transcribed];
+}
+
+/** A normalized term without the trailing "s" of each word ("dentistes" → "dentiste"). */
+function singularOf(normalized: string): string {
+	return normalized
+		.split(" ")
+		.map((word) => word.replace(/s$/, ""))
+		.filter(Boolean)
+		.join(" ");
+}
+
 /**
- * The listing slug of a market a query names exactly (a label in any language
- * of the market, in either gender, singular or plural, or the slug), or null.
+ * Words a query may start with before the kind of care it names ("un dentiste", "the GP",
+ * "der Zahnarzt"): articles and possessives of the markets' languages.
  */
-export function resolveListing(query: string, country: MarketCountry = "FR"): string | null {
-	const normalized = normalizeText(query);
-	if (!normalized) return null;
-	const candidates = new Set([normalized, normalized.replace(/s\b/g, "").trim()]);
-	for (const locale of LOCALES.filter((locale) => marketOf(locale) === country)) {
+const LEADING_WORDS: ReadonlySet<string> = new Set([
+	// French
+	"le",
+	"la",
+	"les",
+	"l",
+	"un",
+	"une",
+	"des",
+	"mon",
+	"ma",
+	// English
+	"a",
+	"an",
+	"the",
+	"my",
+	// German
+	"der",
+	"die",
+	"das",
+	"den",
+	"ein",
+	"eine",
+	"einen",
+	"mein",
+	"meine",
+	// Spanish and Italian
+	"el",
+	"los",
+	"las",
+	"il",
+	"lo",
+	"gli",
+	"uno",
+]);
+
+/** The forms of a query compared with the labels and the aliases. */
+function queryForms(query: string): string[] {
+	const forms = [...new Set([foldText(query), normalizeText(query)])].filter(Boolean);
+	for (const form of [...forms]) {
+		const [first, ...rest] = form.split(" ");
+		if (first && rest.length > 0 && LEADING_WORDS.has(first)) forms.push(rest.join(" "));
+	}
+	return [...new Set(forms.flatMap((form) => [form, singularOf(form)]))];
+}
+
+/** What a search alias names: a slug (listed or not in the market), or care the market does not list. */
+const UNLISTED = Symbol("unlisted");
+type AliasTarget = string | typeof UNLISTED;
+
+/** Every alias of a market, normalized, with what it names. The first one wins a tie. */
+function buildAliasIndex(country: MarketCountry): Map<string, AliasTarget> {
+	const index = new Map<string, AliasTarget>();
+	const add = (alias: string, target: AliasTarget) => {
+		for (const spelling of spellings(alias)) {
+			const key = foldText(spelling);
+			for (const form of [key, singularOf(key)]) {
+				if (form && !index.has(form)) index.set(form, target);
+			}
+		}
+	};
+	for (const aliases of Object.values(SEARCH_ALIASES[country])) {
+		for (const [slug, words] of Object.entries(aliases.listings)) {
+			for (const word of words) add(word, slug);
+		}
+		for (const word of aliases.unlisted ?? []) add(word, UNLISTED);
+	}
+	// France: the official labels of the professions mapped but not imported yet
+	// ("Ostéopathe", "Orthoptiste") name them too.
+	if (country === "FR") {
+		for (const locale of marketLocales(country)) {
+			const listing = messagesFor(locale).taxonomy.listing as Record<string, string>;
+			for (const profession of Object.values(FR_PROFESSIONS)) {
+				const message = listing[profession.slug];
+				if (profession.enabled || !message) continue;
+				for (const form of labelForms(message)) add(form, profession.slug);
+				add(profession.slug, profession.slug);
+			}
+		}
+	}
+	return index;
+}
+
+const aliasIndexes = new Map<MarketCountry, Map<string, AliasTarget>>();
+
+function aliasIndexFor(country: MarketCountry): Map<string, AliasTarget> {
+	let index = aliasIndexes.get(country);
+	if (!index) {
+		index = buildAliasIndex(country);
+		aliasIndexes.set(country, index);
+	}
+	return index;
+}
+
+function marketLocales(country: MarketCountry): Locale[] {
+	return LOCALES.filter((locale) => marketOf(locale) === country);
+}
+
+/** True when a listing slug is one of the market's listings (France's imported professions only). */
+function listedIn(slug: string, country: MarketCountry): boolean {
+	return marketLocales(country).some((locale) => inMarket(slug, locale));
+}
+
+/** What a search's "Qui ?" names: a listing of the market, or care the market does not list. */
+export type SearchTerm = { kind: "listing"; slug: string } | { kind: "unlisted" };
+
+/**
+ * What the "Qui ?" of a search names in a market: one of its listings, or care it does not
+ * list ("pharmacie" in France, "Apotheke" in Austria), or null (a name, most likely). Everyday
+ * words of the market's search aliases come first, then the official labels in any language
+ * of the market, in either gender, singular or plural, or the slug. Case, accents,
+ * punctuation, a trailing "s" and a leading article do not matter.
+ */
+export function resolveSearchTerm(query: string, country: MarketCountry = "FR"): SearchTerm | null {
+	const forms = queryForms(query);
+	if (forms.length === 0) return null;
+	const aliases = aliasIndexFor(country);
+	for (const form of forms) {
+		const target = aliases.get(form);
+		if (target === undefined) continue;
+		return target !== UNLISTED && listedIn(target, country)
+			? { kind: "listing", slug: target }
+			: { kind: "unlisted" };
+	}
+	const candidates = new Set(forms);
+	for (const locale of marketLocales(country)) {
 		for (const entry of indexFor(locale)) {
-			if (
-				entry.keys.some((key) => candidates.has(key) || candidates.has(key.replace(/s\b/g, "")))
-			) {
-				return entry.slug;
+			if (entry.keys.some((key) => candidates.has(key) || candidates.has(singularOf(key)))) {
+				return { kind: "listing", slug: entry.slug };
 			}
 		}
 	}
 	return null;
+}
+
+/** The listing slug of a market a query names (`resolveSearchTerm`), or null. */
+export function resolveListing(query: string, country: MarketCountry = "FR"): string | null {
+	const term = resolveSearchTerm(query, country);
+	return term?.kind === "listing" ? term.slug : null;
 }

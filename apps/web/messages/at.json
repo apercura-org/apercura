@@ -27,6 +27,7 @@
 		"queryOnlyNear": "Ärztinnen und Ärzte in Ihrer Nähe",
 		"startBody": "Geben Sie unter „Wer?“ einen Namen oder ein Fachgebiet ein und unter „Wo?“ einen Ort oder einen Wiener Bezirk. Sie können das Verzeichnis auch nach Bundesland durchsuchen.",
 		"unknownPlaceBody": "Prüfen Sie die Schreibweise oder geben Sie einen anderen Ort ein.",
+		"unlistedBody": "In Österreich enthält das Verzeichnis vorerst Ärztinnen und Ärzte sowie Zahnärztinnen und Zahnärzte. Suchen Sie stattdessen nach einem Namen oder durchsuchen Sie das Verzeichnis.",
 		"departmentPlace": "Bundesland",
 		"bookingNotOpen": "In Österreich bietet Apercura keine Online-Terminbuchung an: Rufen Sie die Ordination an.",
 		"columns": {

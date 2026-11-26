@@ -44,6 +44,45 @@ test("a specialty and a place redirect (307) to the listing page", async ({ requ
 	);
 });
 
+test("everyday words redirect (307) to their listing page, in every interface language", async ({
+	request,
+}) => {
+	for (const [path, listing] of [
+		["/fr/recherche?quoi=dentiste&ou=Paris", /\/fr\/chirurgien-dentiste\/75-paris$/],
+		["/fr/recherche?quoi=Dentistes&ou=Paris", /\/fr\/chirurgien-dentiste\/75-paris$/],
+		[
+			`/fr/recherche?quoi=${encodeURIComponent("généraliste")}&ou=75015`,
+			/\/fr\/medecin-generaliste\/75-paris\/paris-15e-arrondissement$/,
+		],
+		[
+			`/fr/recherche?quoi=${encodeURIComponent("médecin traitant")}&ou=75015`,
+			/\/fr\/medecin-generaliste\/75-paris\/paris-15e-arrondissement$/,
+		],
+		["/fr-en/search?quoi=dentist&ou=Paris", /\/fr-en\/[^/]+\/75-paris$/],
+	] as const) {
+		const response = await request.get(path, { maxRedirects: 0 });
+		expect(response.status(), path).toBe(307);
+		expect(response.headers().location, path).toMatch(listing);
+	}
+});
+
+test("a profession France does not list yet says so instead of an empty name search", async ({
+	page,
+}) => {
+	await page.goto(`/fr/recherche?quoi=${encodeURIComponent("kinésithérapeute")}&ou=Paris`);
+	await expect(
+		page.getByRole("heading", { name: "« kinésithérapeute » n’est pas encore dans l’annuaire" }),
+	).toBeVisible();
+	await expect(
+		page.getByRole("heading", { name: "Aucun professionnel ne correspond" }),
+	).toHaveCount(0);
+	await page.goto("/fr-en/search?quoi=pharmacy");
+	await expect(
+		page.getByRole("heading", { name: "“pharmacy” is not in the directory yet" }),
+	).toBeVisible();
+	expect(await axeViolations(page)).toEqual([]);
+});
+
 test("an RPPS number redirects (307) to the practitioner page", async ({ request }) => {
 	const response = await request.get(`/fr/recherche?quoi=${FICTIF_RPPS}`, { maxRedirects: 0 });
 	expect(response.status()).toBe(307);

@@ -201,6 +201,8 @@
 		"unknownPlaceTitle": "Den Ort „{where}“ kennen wir nicht",
 		"unknownPlaceSuggest": "Meinten Sie einen dieser Orte?",
 		"unknownPlaceBody": "Schreibweise prüfen oder eine Postleitzahl eingeben.",
+		"unlistedTitle": "„{who}“ ist noch nicht im Verzeichnis",
+		"unlistedBody": "Für Frankreich enthält das Verzeichnis vorerst Ärztinnen und Ärzte, Zahnärztinnen und Zahnärzte, Hebammen sowie selbstständige Pflegefachkräfte. Suchen Sie stattdessen nach einem Namen oder durchsuchen Sie das Verzeichnis.",
 		"departmentPlace": "Département",
 		"resultsHeading": "Ergebnisse",
 		"range": "Ergebnisse {from} bis {to}",
