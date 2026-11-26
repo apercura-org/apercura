@@ -201,6 +201,8 @@
 		"unknownPlaceTitle": "We do not know the place “{where}”",
 		"unknownPlaceSuggest": "Did you mean one of these places?",
 		"unknownPlaceBody": "Check the spelling, or type a postcode.",
+		"unlistedTitle": "“{who}” is not in the directory yet",
+		"unlistedBody": "In France, the directory lists doctors, dentists, midwives and self-employed nurses for now. Search for a name instead, or browse the directory.",
 		"departmentPlace": "Department",
 		"resultsHeading": "Results",
 		"range": "Results {from} to {to}",

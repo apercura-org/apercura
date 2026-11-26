@@ -201,6 +201,8 @@
 		"unknownPlaceTitle": "Non conosciamo il luogo «{where}»",
 		"unknownPlaceSuggest": "Intendeva uno di questi luoghi?",
 		"unknownPlaceBody": "Verifichi l’ortografia o digiti un codice postale.",
+		"unlistedTitle": "«{who}» non è ancora nell’elenco",
+		"unlistedBody": "In Francia, l’elenco comprende per ora medici, dentisti, ostetriche e infermieri liberi professionisti. Cerchi un nome oppure sfogli l’elenco.",
 		"departmentPlace": "Dipartimento",
 		"resultsHeading": "Risultati",
 		"range": "Risultati da {from} a {to}",

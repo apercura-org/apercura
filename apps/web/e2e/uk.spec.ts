@@ -161,6 +161,19 @@ test("a type of practice in a place goes straight to its UK listing", async ({ p
 	await expect(page).toHaveURL(/\/gb\/gp-practices\/stockton-on-tees\/billingham$/);
 });
 
+test("everyday words go straight to their UK listing", async ({ page }) => {
+	await page.goto("/gb/search?quoi=GP&ou=Billingham");
+	await expect(page).toHaveURL(/\/gb\/gp-practices\/stockton-on-tees\/billingham$/);
+	await page.goto("/gb/search?quoi=doctor&ou=Billingham");
+	await expect(page).toHaveURL(/\/gb\/gp-practices\/stockton-on-tees\/billingham$/);
+	await page.goto("/gb/search?quoi=dentist&ou=Glasgow");
+	await expect(page).toHaveURL(/\/gb\/dental-practices\/glasgow-city\/glasgow$/);
+	await page.goto("/gb/search?quoi=optician&ou=Billingham");
+	await expect(
+		page.getByRole("heading", { name: "“optician” is not in the directory yet" }),
+	).toBeVisible();
+});
+
 test("the UK home lists types of practice and regions, and joins the homes' hreflang", async ({
 	page,
 }) => {

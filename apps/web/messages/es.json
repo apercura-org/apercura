@@ -201,6 +201,8 @@
 		"unknownPlaceTitle": "No reconocemos el lugar «{where}»",
 		"unknownPlaceSuggest": "¿Se refería a uno de estos lugares?",
 		"unknownPlaceBody": "Compruebe la ortografía o escriba un código postal.",
+		"unlistedTitle": "«{who}» todavía no figura en el directorio",
+		"unlistedBody": "En Francia, el directorio incluye por ahora médicos, dentistas, matronas y enfermeros autónomos. Busque un nombre o explore el directorio.",
 		"departmentPlace": "Departamento",
 		"resultsHeading": "Resultados",
 		"range": "Resultados del {from} al {to}",

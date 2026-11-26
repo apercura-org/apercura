@@ -41,7 +41,7 @@ describe("listing index", () => {
 		expect(resolveListing("sages-femmes")).toBe("sage-femme");
 		expect(resolveListing("Infirmières")).toBe("infirmier");
 		expect(resolveListing("infirmière puéricultrice")).toBe("infirmier-puericulteur");
-		expect(resolveListing("cardio")).toBeNull();
+		expect(resolveListing("cardiolo")).toBeNull();
 		expect(resolveListing("Dupont")).toBeNull();
 	});
 

@@ -13,7 +13,7 @@ import { marketOf } from "~/i18n/locales";
 import { Link, redirect } from "~/i18n/navigation";
 import { type Locale, routing } from "~/i18n/routing";
 import { genderOf, getTaxonomyLabels } from "~/lib/labels";
-import { resolveListing } from "~/lib/listing-index";
+import { resolveSearchTerm } from "~/lib/listing-index";
 import { getMapStrings } from "~/lib/map-strings";
 import { cardTownLine, formatPhone } from "~/lib/practitioner-view";
 import { slotParts, slotTime } from "~/lib/slot-format";
@@ -60,7 +60,9 @@ type Outcome =
 	| { kind: "rpps_missing"; rpps: string }
 	| { kind: "unknown_place"; candidates: PlaceSuggestion[] }
 	| { kind: "ambiguous_place"; candidates: PlaceSuggestion[] }
-	| { kind: "results"; results: SearchResult[]; hasNext: boolean };
+	| { kind: "results"; results: SearchResult[]; hasNext: boolean }
+	/** "Qui ?" names care the market does not list: said so, above any practitioner of that name. */
+	| { kind: "unlisted"; results: SearchResult[]; hasNext: boolean };
 
 /**
  * Applies the search rules, redirecting (307) when the query names a page: an
@@ -72,7 +74,8 @@ async function run(query: SearchQuery, page: number, locale: Locale): Promise<Ou
 	const target = await searchRedirect(query, page, country);
 	if (target) redirect({ href: target, locale });
 	if (query.rpps && country === "FR") return { kind: "rpps_missing", rpps: query.rpps };
-	const listingSlug = query.who ? resolveListing(query.who, country) : null;
+	const term = query.who ? resolveSearchTerm(query.who, country) : null;
+	const listingSlug = term?.kind === "listing" ? term.slug : null;
 	const wantsPlace = Boolean((query.where || query.postcode) && !query.near);
 	const places = wantsPlace
 		? await matchPlaces({
@@ -94,7 +97,7 @@ async function run(query: SearchQuery, page: number, locale: Locale): Promise<Ou
 	if (!query.who && !place && !query.near) return { kind: "start" };
 
 	return {
-		kind: "results",
+		kind: term?.kind === "unlisted" ? "unlisted" : "results",
 		...(await searchPractitioners({
 			country,
 			...(listingSlug ? { listingSlug } : query.who ? { name: query.who } : {}),
@@ -275,6 +278,24 @@ async function OutcomeView({
 				);
 			}
 			return <Results locale={locale} outcome={outcome} query={query} page={page} />;
+		case "unlisted":
+			return (
+				<div className="flex flex-col gap-6">
+					<EmptyState
+						title={t("unlistedTitle", { who: query.who })}
+						description={t("unlistedBody")}
+						action={browse}
+					/>
+					{outcome.results.length > 0 ? (
+						<Results
+							locale={locale}
+							outcome={{ ...outcome, kind: "results" }}
+							query={query}
+							page={page}
+						/>
+					) : null}
+				</div>
+			);
 	}
 }
 
