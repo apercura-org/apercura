@@ -128,11 +128,21 @@ minio_password=$(hex)
 		echo "DATABASE_URL_MIGRATE=postgres://postgres:$postgres_password@$db_container:5432/apercura"
 		echo "S3_ENDPOINT=http://$s3_container:9000"
 		echo "MINIO_ROOT_USER=smoke-admin"
+		# As advised under Coolify's shared network: the page cache requires a password.
+		echo "CACHE_REDIS_PASSWORD=$(hex)"
 	fi
 	docker run --rm "$image" keys
 } >"$env_file"
 
 password_of() { sed -n "s/^$1=//p" "$env_file"; }
+
+# valkey-cli in the valkey container, with its password when it has one.
+valkey_cli() {
+	# shellcheck disable=SC2016 # expanded by the container's shell
+	compose exec -T valkey sh -c \
+		'if [ -n "$CACHE_REDIS_PASSWORD" ]; then export REDISCLI_AUTH="$CACHE_REDIS_PASSWORD"; fi; exec valkey-cli "$@"' \
+		valkey-cli "$@"
+}
 
 # psql in the database container, as the superuser over its socket.
 db_psql() {
@@ -234,13 +244,13 @@ step "Pages are cached in valkey, compressed, and never on the app's disk"
 cache_state() { curl -fsS -D - -o /dev/null "$base$1" | tr -d '\r' | sed -n 's/^[Xx]-[Nn]extjs-[Cc]ache: //p'; }
 cache_state "/fr/praticien/$slug" >/dev/null
 test "$(cache_state "/fr/praticien/$slug")" = HIT
-test "$(compose exec -T valkey valkey-cli --scan --pattern 'apercura:*:route:*' | wc -l)" -gt 0
-test "$(compose exec -T valkey valkey-cli --scan --pattern 'apercura:*:data:*' | wc -l)" -gt 0
+test "$(valkey_cli --scan --pattern 'apercura:*:route:*' | wc -l)" -gt 0
+test "$(valkey_cli --scan --pattern 'apercura:*:data:*' | wc -l)" -gt 0
 if compose exec -T app test -e /app/apps/web/.next/server/route-cache; then
 	echo "the app wrote pages to .next/server/route-cache with valkey on" >&2
 	exit 1
 fi
-compose exec -T valkey valkey-cli config get maxmemory-policy | grep -qx allkeys-lru
+valkey_cli config get maxmemory-policy | grep -qx allkeys-lru
 echo "a practitioner page is a hit from valkey; nothing in .next/server/route-cache: OK"
 
 step "A signed revalidation marks the page's tag in valkey: served stale once, then fresh"
@@ -251,7 +261,7 @@ body="{\"tags\":[\"practitioner:$practitioner_id\"]}"
 signature=$(printf '%s.%s' "$timestamp" "$body" | openssl dgst -sha256 -hmac "$revalidate_secret" | sed 's/^.* //')
 curl -fsS -X POST -H "content-type: application/json" -H "x-apercura-timestamp: $timestamp" \
 	-H "x-apercura-signature: $signature" --data "$body" "$base/api/revalidate" | grep -q '"revalidated":1'
-compose exec -T valkey valkey-cli --scan --pattern "apercura:*:stale:practitioner:$practitioner_id" | grep -q stale
+valkey_cli --scan --pattern "apercura:*:stale:practitioner:$practitioner_id" | grep -q stale
 test "$(cache_state "/fr/praticien/$slug")" = STALE
 sleep 2
 test "$(cache_state "/fr/praticien/$slug")" = HIT

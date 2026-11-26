@@ -200,7 +200,7 @@ services:
     healthcheck:
       test:
         - CMD-SHELL
-        - if [ -n "$$CACHE_REDIS_PASSWORD" ]; then export VALKEYCLI_AUTH="$$CACHE_REDIS_PASSWORD"; fi; valkey-cli ping | grep -q PONG
+        - if [ -n "$$CACHE_REDIS_PASSWORD" ]; then export REDISCLI_AUTH="$$CACHE_REDIS_PASSWORD"; fi; valkey-cli ping | grep -q PONG
       interval: 5s
       timeout: 3s
       retries: 10
