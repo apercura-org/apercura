@@ -1,8 +1,9 @@
 # Open data import
 
 `packages/etl` builds the public directory from open data: France (this page,
-first), Austria ([below](#austria)) and the United Kingdom
-([below](#united-kingdom)). It is a Bun CLI that runs as a
+first), Austria ([below](#austria)), the United Kingdom
+([below](#united-kingdom)), Czechia ([below](#czechia)) and Italy
+([below](#italy)). It is a Bun CLI that runs as a
 scheduled task next to the app, with its own database role that cannot reach
 patient data. Each market's import writes the shared `directory` schema with
 its own `country` and never reads or writes another market's rows.
@@ -1158,3 +1159,275 @@ imports them next to the French and Czech fixtures: the other markets untouched
 both ways, nothing unneeded stored, placement by INE code (province fallback, a
 municipality without a point), read models, idempotence, a dry run, an
 unreadable extract left out, absences, objections, the breaker and `--approve`.
+
+## Italy
+
+`etl:it` builds Italy's directory (`/it`) from the open data of the Ministry of
+Health (issue #150, [ADR 0002](./adr/0002-multi-country.md#italy-it)).
+Everything above about roles, ownership, the outbox and `--approve` applies, and
+the per-list behaviour is Austria's; this section says what differs.
+
+```sh
+bun run etl:places --country it   # once (etl:it does it on its first run), then each January
+bun run etl:it                    # weekly (the shop lists are daily, the hospital beds yearly)
+bun run etl:it --sources farmacie # some lists only
+bun run etl:it --dry-run          # everything, then roll back
+bun run etl:it --approve=<run_id> # accept what a blocked run reported
+```
+
+An Italian page is a **place, never a person**: a pharmacy (with its branches
+and dispensaries), a parapharmacy, a hospital or an accredited private clinic.
+No individual health worker is listed: FNOMCeO's Albo unico forbids commercial
+reuse, and the regional open lists of family doctors (on dati.gov.it, for
+instance) are not imported, by choice
+([`docs/data-requests/it.md`](./data-requests/it.md)). A pharmacy's company
+name often names its pharmacists (`FARMACIA ESEMPIO S.N.C. DEI DOTT.RI …`): the
+page prints the place's own name without them (below). A sole trader's pharmacy
+may still carry a name: the article 14 notice is on `/it/privacy`, and an
+objection removes the page.
+
+### Sources
+
+Verified on 26 November 2026 on each publisher's page. The ministry's three
+lists are under the **Italian Open Data Licence v2.0** (the licence field of
+each dataset page), ISTAT's boundaries under **CC BY 4.0**; their attribution is
+printed on every page and on the data sources page (`/it/dati`) and kept in
+`italy.registries` (`packages/core/src/country/it.ts`).
+
+| List (`--sources`)                                    | Distribution                                                                                                                                                                 | Format, update                                                                                                                                                                                                                                                        |
+| ----------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Farmacie (`farmacie`)                                 | the current CSV of `https://www.dati.salute.gov.it/it/dataset/farmacie/`, named by the page's JSON twin `…/page-data/it/dataset/farmacie/page-data.json` (`field_listafile`) | `FRM_FARMA_5_<YYYYMMDD>.csv` (also JSON and XML), a new file every day; one line per period of validity of a pharmacy, branch or dispensary (59,309 lines on 26 November 2026)                                                                                        |
+| Parafarmacie (`parafarmacie`)                         | the current CSV of `…/it/dataset/parafarmacie/`, the same way                                                                                                                | `FRM_PFARMA_7_<YYYYMMDD>.csv`, daily, the same format (13,938 lines)                                                                                                                                                                                                  |
+| Posti letto per struttura ospedaliera (`posti-letto`) | the current CSV of `…/it/dataset/posti-letto-struttura-ospedaliera-{year}/`, last year's first, then each year down to 2023 (`IT_HOSPITAL_BEDS_YEAR`)                        | `Posti letto per struttura ospedaliera_2023.csv`, published 29 July 2025, beds on 1 January 2023; Latin-1, CRLF; one line per facility and area of care (`ACUTI`, `RIABILITAZIONE`, `LUNGODEGENZA`), 1,798 lines; names padded and cut at 40 characters by the source |
+| ISTAT boundaries                                      | `https://www.istat.it/storage/cartografia/confini_amministrativi/generalizzati/2026/Limiti01012026_g.zip`                                                                    | "Confini delle unità amministrative a fini statistici al 1° gennaio 2026", generalized version: a ZIP of about 10 MB, three polygon shapefiles in WGS 84 / UTM 32N (EPSG:32632): `Reg`, `ProvCM` (`COD_UTS`), `Com` (`PRO_COM_T`); places import only, yearly         |
+
+The portal renames the shop files every day and publishes the hospital bed
+counts as one dataset per year, so the run reads each list's current file from
+its dataset page and **throws when the page's licence field is not the IODL
+2.0** (`resolveItSourceUrl` in `src/sources/it/portal.ts`): a changed licence
+never goes unnoticed. `ETL_IT_FARMACIE_URL`, `ETL_IT_PARAFARMACIE_URL` and
+`ETL_IT_POSTI_LETTO_URL` pin a file, `ETL_IT_PORTAL_URL` overrides the portal
+and `ETL_IT_PLACES_URL` the boundaries (next January's).
+
+**Licences.** Every page and the data sources page print the ministry's line
+with the date of its data: "Fonte: Ministero della Salute, Farmacie, IODL 2.0,
+aggiornato al 26 novembre 2026" (the `Last-Modified` of the file the last
+Italian import read, else the day of that import: `italianAttribution` in
+`apps/web/src/lib/market.ts`), in Italian whatever the interface. ISTAT's legal
+notes say "Salvo diversa indicazione, tutti i contenuti pubblicati su questo
+sito sono soggetti alla licenza Creative Commons – Attribuzione – versione 4.0";
+the line is "Fonte: Istat, Confini delle unità amministrative a fini statistici
+al 1° gennaio 2026, CC BY 4.0 (centroidi dei comuni calcolati da Apercura)".
+
+**Format.** Semicolon-separated, double-quoted where a value holds a semicolon,
+with HTML entities in some names (`&amp;`) and decimal commas in the
+coordinates. The pharmacies' list mixes UTF-8 and Latin-1 lines and holds some
+UTF-8 text read twice (`LibertÃ `): the parser decodes it line by line
+(`decodeLines`) and repairs it (`repairMojibake`, `src/sources/it/ministry.ts`).
+The hospital file has no coordinates, no CAP and no phone; none of the lists
+publishes a phone number.
+
+### Identifiers
+
+Each list is its own identifier scheme (a list that fails keeps its rows), and
+the page URL ends with its key after a letter naming the list
+(`/it/struttura/{name}-{key}`, `/it/struttura/farmacia-esempio-f9000001`; a
+reference is `it:f9000001`):
+
+| Scheme     | URL key   | Key                                                                                             |
+| ---------- | --------- | ----------------------------------------------------------------------------------------------- |
+| `IT-FARM`  | `f12345`  | the ministerial pharmacy code `cod_farmacia` (a number)                                         |
+| `IT-PFARM` | `p002112` | the parapharmacy's logistic-site code `codice_identificativo_sito`, six digits                  |
+| `IT-HSP`   | `s010030` | the facility code of the HSP.11 model `Codice struttura`, six digits (the region's three first) |
+
+A place has one site, its address, and one activity. The owner's VAT number is
+never used as a key (nor read: below).
+
+### Minimisation and what is left out
+
+- Read from a pharmacy's line: `cod_farmacia`, `indirizzo`,
+  `descrizione_farmacia`, `cap`, `cod_comune`, `comune`, `frazione`,
+  `sigla_provincia`, `cod_regione`, `data_inizio_validita`,
+  `data_fine_validita`, `codice_tipologia`, `latitudine`, `longitudine`; from a
+  parapharmacy's: `codice_identificativo_sito`, `sito_logistico`, the address,
+  municipality, province and region codes, the validity dates and the
+  coordinates. **Never read into a row, so never stored**: the owner's VAT
+  number (`p_iva`, `partita_iva`), which for a sole trader identifies the
+  person, and the local health unit's code (`cod_farmacia_asl`). Quarantined
+  lines keep their code only (never a name).
+- **History.** The shop lists keep one line per period of validity: the line
+  open on the run's day (`--as-of`, default today in Rome) is kept, the most
+  recent if two are; closed lines and lines not yet open are counted in
+  `stats.sources.{list}.skipped` (`closed`, `future`, `duplicate open line`).
+- **Pharmacy types** (`codice_tipologia`): 1 ordinaria, 2 succursale, 3
+  dispensario, 4 dispensario stagionale. Every type is a pharmacy's page (the
+  `farmacie` listing); a type other than 1 is shown on it
+  (`source = 'tipologia'`).
+- **Hospitals.** One page per facility code; its lines' beds are summed per
+  area of care (`source = 'disciplina'`, "Acuti (250 posti letto)") and its
+  facility type is shown (`source = 'tipo-struttura'`). Type `5.1` "Casa di cura
+  privata accreditata" is an accredited private clinic (`IT_CLINIC`, listing
+  `case-di-cura`); every other type (hospital trusts, directly run hospitals,
+  university hospitals, IRCCS, classified hospitals, research bodies) is a
+  hospital (`IT_HOSPITAL`, listing `ospedali`).
+- **Names.** `pharmacyNameIt`, `parapharmacyNameIt` and `hospitalNameIt`
+  (`src/sources/it/names.ts`) print the place's own name: the company form and
+  what follows it, and a title (`DOTT.`, `DR.SSA`) with the name after it, are
+  left out, the name is cased the Italian way (`Università`, `Sant'Anna`), and
+  "Farmacia" is added when a pharmacy's name does not say it. The published
+  name is **never stored**, not even as the "source" name;
+  `stats.sources.{list}.counters.namesShortened` counts the shortened names. A
+  hospital named after a person keeps the name ("Casa di Cura Prof. …").
+- GDPR objections: the lines of a suppressed code are dropped while parsing
+  (`stats.suppressedLines`), and the purge of #116/#118 runs in the merge, as in
+  the other markets.
+
+### Places and precision
+
+Places (`directory.places`, `country = 'IT'`), from ISTAT's boundaries,
+imported once (the first `etl:it`, or `etl:places --country it`) and again each
+January:
+
+- **regions**: the 20 regions (`COD_REG`, `12` Lazio). Italy's listings exist
+  per region too, like the UK's (migration `0028_it_market`):
+  `/it/farmacie/lazio`. The ministry's lists write a region as ten times its
+  code (`120`), and the autonomous provinces of Bolzano and Trento as `041` and
+  `042` (`itRegionOfMinistryCode`);
+- **departments**: the 110 provinces, metropolitan cities and free municipal
+  consortia (`COD_UTS`, `058`, `258`);
+- **communes**: the 7,896 municipalities (`PRO_COM_T`, `058091`), a slug unique
+  within the province (`-{code}` on a collision): `/it/farmacie/roma/roma`. No
+  arrondissements.
+
+Names are in Italian: a bilingual name keeps its Italian part ("Bolzano/Bozen"
+→ "Bolzano"), and the province of Aosta, which ISTAT names like its region,
+takes its capital's name. A municipality's point is an interior point of its
+largest ring: its centroid when inside, else the middle of the widest stretch
+of the ring on the centroid's latitude (a crescent-shaped or coastal
+municipality), transformed from EPSG:32632 to WGS 84 in PostGIS
+(`interiorPoint`, `src/sources/it/places.ts`). Provinces and regions take the
+centre of their municipalities.
+
+**Coordinates.** The ministry says on both shop datasets: "Alcune coordinate
+geografiche pubblicate sono state reperite tramite © OpenStreetMap
+contributors". OpenStreetMap's data are under the ODbL, a share-alike licence,
+and the lists do not say which points came from it, so **by default the import
+does not use the lists' coordinates**: every site is located at its
+municipality's point, `geo_precision = 'city'`, `geo_source = 'centroid'`, no
+map pin, and distances on Italian pages are approximate. `--register-coordinates`
+(or `ETL_IT_REGISTER_COORDINATES=1`) keeps them at address precision
+(`geo_source = 'source'`); 18,941 of the 20,779 open pharmacies and 7,129 of the
+7,179 open parapharmacies have one (`stats.sources.{list}.counters.withPoint`),
+the hospitals none. Switching it moves nearly every pin, so the
+page-modification circuit breaker blocks the run until it is approved, and a run
+with the other setting never counts as unchanged. **This is an open decision
+for the operator** ([ADR 0002](./adr/0002-multi-country.md#italy-it)).
+
+A site is placed (`stageIt` in `src/merge-it.ts`):
+
+1. in the municipality of the list's ISTAT code;
+2. else (a code ISTAT no longer lists: a merged or renumbered municipality) in
+   the only municipality of that name in the place's region;
+3. else in the province of the list's abbreviation (`RM`): the province most
+   sites with that abbreviation were placed in (ISTAT's places carry no
+   abbreviation). Such a site has no location.
+
+The municipality printed is ISTAT's name of the one the site is placed in, else
+the list's; a pharmacy's hamlet (`frazione`) follows its street.
+
+### Guards
+
+Per list, before the merge (`IT_LIMITS` and `checkItSource` in
+`src/guards.ts`), as Austria's:
+
+- the file is between 2 KB and 200 MB and has the columns read (by header);
+  otherwise the list is **left out**;
+- at most 1% of its lines quarantined, and at least a floor of lines and places
+  (farmacie 100 and 50, parafarmacie 20 and 10, posti-letto 10 and 5; never
+  approvable): low, because the synthetic fixtures are small; on the real lists
+  the change guards below protect a run once one has succeeded;
+- at most 5% more or fewer places and 15% more or fewer bytes than the last
+  successful run that read the list: otherwise **blocked** (approvable).
+
+After staging (`checkItPlaces`): less than 99% of the sites placed in their
+municipality (by code or name) or less than 98% located blocks the run
+(approvable). After the merge, the circuit breakers and the orphan check apply
+to Italy's own pages only. A list that cannot be fetched or read is left out
+and keeps its rows (its places are not counted missing), and the command exits
+with code **3**; when none can be read the run fails (`1`) and the pages stay as
+they are; a breaker blocks it (`2`): review, then rerun with
+`--approve=<run_id>` (same files only). Unchanged lists skip the run, but the
+shop lists change daily, so a weekly run is rarely skipped.
+
+### Schedule and monitoring
+
+The scheduler runs `etl:it $ETL_IT_SCHEDULE_ARGS` every Monday at 09:30 UTC,
+after the other imports (`docker/crontab`; one advisory lock for every import).
+Alert on exit codes 1, 2 and 3 and on the import age, per market (the market
+query of [Austria's monitoring](#schedule-and-monitoring) covers `it`) and per
+list:
+
+```sql
+-- Days since each Italian list was last loaded (alert above 9), and its places then.
+SELECT list, max(r.finished_at) AS last_loaded,
+	extract(day FROM now() - max(r.finished_at))::integer AS age_days,
+	(array_agg((r.stats -> 'sources' -> list ->> 'people')::integer ORDER BY r.id DESC))[1] AS places
+FROM directory.etl_runs r
+CROSS JOIN LATERAL jsonb_object_keys(r.stats -> 'sources') AS list
+WHERE r.source = 'it' AND r.status = 'succeeded'
+	AND NOT coalesce(r.stats -> 'sourceErrors' ? list, false)
+GROUP BY list;
+
+-- Italy's last runs: status, lists left out, placement, minimisation and totals.
+SELECT id, status, finished_at, stats -> 'sourceErrors' AS left_out, stats -> 'staged' AS staged,
+	stats -> 'sources' -> 'farmacie' -> 'counters' AS farmacie, stats -> 'totals' AS totals
+FROM directory.etl_runs WHERE source = 'it' ORDER BY id DESC LIMIT 5;
+```
+
+The hospital bed counts are yearly: watch `etl_runs.files -> 'posti-letto' ->>
+'resolvedUrl'` for a new year's dataset, whose counts may differ by more than 5%
+and block the run until it is reviewed and approved.
+
+### Measured run (files of 26 November 2026)
+
+Dry run on a fresh database with the real files:
+
+|           |                                                                                                                                                                                                 |
+| --------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Duration  | about 35 s                                                                                                                                                                                      |
+| Lines     | farmacie 59,309 (38,418 closed and 112 not yet open skipped), parafarmacie 13,938 (6,755 closed, 4 not yet open), posti letto 2023 1,798 (1,044 facilities); none quarantined in the shop lists |
+| Places    | 29,002: pharmacies 20,779 · parapharmacies 7,179 · hospitals 564 · accredited clinics 480; all indexable                                                                                        |
+| Names     | 12,157 pharmacy, 3,147 parapharmacy and 190 hospital names shortened                                                                                                                            |
+| Points    | 18,941 pharmacies and 7,129 parapharmacies with coordinates in the lists, not used (city precision)                                                                                             |
+| Sites     | 29,002: 28,760 placed in their municipality (1,156 of them by name), 242 in their province only (municipalities merged since, e.g. Corigliano-Rossano); 28,760 located                          |
+| Indexable | 29,002 place pages; 2,758 indexable listing pages of 10,402                                                                                                                                     |
+| Places    | 20 regions, 110 provinces, 7,896 municipalities                                                                                                                                                 |
+
+### Local development
+
+```sh
+bun run etl:it --source-dir packages/etl/fixtures/it --offline   # synthetic data
+bun run --cwd packages/etl fixtures:it                           # regenerate the fixtures
+```
+
+`packages/etl/fixtures/it` holds **synthetic** lists in the ministry's exact
+formats (`farmacie.csv`, `parafarmacie.csv`, `posti-letto.csv`: semicolons,
+quoting, HTML entities, decimal commas, mixed encodings and padded columns) and
+a small ISTAT archive (`istat-confini.zip`: the 20 regions, six provinces and
+eleven municipalities with their real codes, as squares around their real
+interior points), generated by `packages/etl/fixtures/generate-it.ts`: made-up
+places, pharmacists named in made-up company names, streets that do not exist,
+pharmacy codes from 9000001, parapharmacy codes from 900001 and hospital codes
+from 990001 (above the real lists' ranges), and a made-up VAT number starting
+with 999 on every line (to check it is never stored). Never commit real rows.
+The anchors the tests use: `9000001` Farmacia Esempio in Roma
+(`/it/struttura/farmacia-esempio-f9000001`), `9000003` a dispensary in
+Fiumicino (hamlet Fregene), `9000006` placed by name, `9000007` in its province
+only, `9000008` closed, `9000009` not yet open, `9000013` objected to in the
+integration test, `900001` a parapharmacy, `990001` Ospedale Esempio and
+`990003` an accredited clinic, both in Roma. `test/it-integration.test.ts`
+imports them next to the French and Czech fixtures: the other markets untouched
+both ways, nothing of the owners stored, placement (code, name, province, at
+the municipality's centre), region listings, idempotence, the register's
+coordinates only when asked, a dry run, a list left out, absences, objections,
+the breaker and `--approve`.

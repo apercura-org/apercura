@@ -222,6 +222,24 @@ every Monday at 08:30 UTC and skips unchanged extracts (`ETL_ES_SCHEDULE_ARGS`
 narrows it, e.g. `--sources regcess-e`); exit code `3` when an extract was left
 out, as for Austria ([data-import.md](./data-import.md#spain)).
 
+Italy (`/it`) has its own import, from the open data of the Ministry of Health
+(IODL 2.0, about 29,000 pharmacies, parapharmacies, hospitals and accredited
+clinics). Import the places first, then dry-run it once:
+
+```sh
+apercura-compose run --rm --entrypoint "apercura etl:places" etl --country it
+apercura-compose run --rm --entrypoint "apercura etl:it" etl --dry-run
+apercura-compose run --rm --entrypoint "apercura etl:it" etl
+```
+
+The places are ISTAT's regions, provinces and municipalities (CC BY 4.0, about
+10 MB; the first `etl:it` imports them too); rerun `etl:places --country it`
+each January. The scheduler reruns the import every Monday at 09:30 UTC
+(`ETL_IT_SCHEDULE_ARGS=--sources farmacie` keeps it to some lists); exit code
+`3` as for Austria. Every place is located at its municipality's point:
+`ETL_IT_REGISTER_COORDINATES=1` keeps the lists' own coordinates, some of which
+come from OpenStreetMap ([data-import.md](./data-import.md#italy)).
+
 ## Scheduled jobs
 
 The `scheduler` service runs [`docker/crontab`](../docker/crontab) with
