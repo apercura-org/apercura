@@ -573,3 +573,88 @@ describe("practitionerNodes for Czechia", () => {
 		);
 	});
 });
+
+describe("practitionerNodes for Spain", () => {
+	const place: PracticePlaceInput = {
+		siteId: 1,
+		practiceKind: "office",
+		name: "Clinica Dental Ejemplo Centro",
+		addressLine: "Calle Alcala, 10",
+		addressComplement: null,
+		postcode: "28014",
+		placeName: "Madrid",
+		// City precision: no coordinates are published for a centre.
+		coordinates: null,
+		phone: "+34910000001",
+		establishmentUrl: null,
+	};
+	const centre: PractitionerInput = {
+		...doctor,
+		url: `${ORIGIN}/es/centro/clinica-dental-ejemplo-centro-1328000001`,
+		professionCode: "ES_DENTAL",
+		rpps: "1328000001",
+		idScheme: "ES-REGCESS",
+		country: "ES",
+		name: "Clinica Dental Ejemplo Centro",
+		givenName: "",
+		familyName: "Clinica Dental Ejemplo Centro",
+		honorificPrefix: null,
+		occupation: "Clínica dental",
+		listingSlug: "dentistas",
+		places: [place],
+	};
+
+	it("publishes a dental clinic as a Dentist with its REGCESS code, never a person", () => {
+		const nodes = practitionerNodes(centre);
+		const dentist = nodeOf(nodes, "Dentist");
+		expect(dentist.identifier).toEqual({
+			"@type": "PropertyValue",
+			propertyID: "ES-REGCESS",
+			value: "1328000001",
+		});
+		expect(dentist.address).toMatchObject({
+			addressCountry: "ES",
+			postalCode: "28014",
+			addressLocality: "Madrid",
+		});
+		expect(dentist.geo).toBeUndefined();
+		expect(JSON.stringify(nodes)).not.toMatch(
+			/Person|IndividualPhysician|Physician"|givenName|familyName/,
+		);
+	});
+
+	it("publishes a hospital as a Hospital, a pharmacy as a Pharmacy, others as a MedicalClinic", () => {
+		expect(
+			nodeOf(
+				practitionerNodes({ ...centre, professionCode: "ES_HOSPITAL", listingSlug: "hospitales" }),
+				"Hospital",
+			).address,
+		).toMatchObject({ addressCountry: "ES" });
+		expect(
+			nodeOf(
+				practitionerNodes({ ...centre, professionCode: "ES_PHARMACY", listingSlug: "farmacias" }),
+				"Pharmacy",
+			).medicalSpecialty,
+		).toBe("https://schema.org/PharmacySpecialty");
+		expect(
+			nodeOf(
+				practitionerNodes({
+					...centre,
+					professionCode: "ES_MEDICAL_PRACTICE",
+					listingSlug: "cardiologos",
+				}),
+				"MedicalClinic",
+			).medicalSpecialty,
+		).toBe("https://schema.org/Cardiovascular");
+		expect(
+			nodeOf(
+				practitionerNodes({
+					...centre,
+					professionCode: "ES_HEALTH_CENTRE",
+					listingSlug: "centros-de-salud",
+				}),
+				"MedicalClinic",
+			).medicalSpecialty,
+		).toBe("https://schema.org/PrimaryCare");
+	});
+});

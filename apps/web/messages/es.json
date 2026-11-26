@@ -89,7 +89,8 @@
 			"FR": "Francia",
 			"AT": "Austria",
 			"GB": "Reino Unido",
-			"CZ": "Chequia"
+			"CZ": "Chequia",
+			"ES": "España"
 		}
 	},
 	"HomePage": {
@@ -560,6 +561,9 @@
 		"professionHeading": "Profesión y cualificaciones",
 		"otherQualifications": "Otras cualificaciones",
 		"fieldsOfCare": "Ámbitos asistenciales",
+		"ownership": "Titularidad",
+		"ownershipPublic": "Pública",
+		"ownershipPrivate": "Privada",
 		"practiceType": "Tipo de ejercicio",
 		"switchboard": "{phone} (centralita del centro)",
 		"establishment": "Centro",
@@ -1707,7 +1711,63 @@
 			"radiolog": "Radiólogo",
 			"anesteziolog": "Anestesiólogo",
 			"chirurg": "Cirujano",
-			"internista": "Internista"
+			"internista": "Internista",
+			"hospitales": "Hospital",
+			"centros-de-salud": "Centro de salud",
+			"consultas-medicas": "Consulta médica",
+			"otros-profesionales-sanitarios": "Consulta sanitaria",
+			"policlinicas": "Policlínica",
+			"dentistas": "Clínica dental",
+			"farmacias": "Farmacia",
+			"psiquiatras": "Consulta de psiquiatría",
+			"oftalmologos": "Consulta de oftalmología",
+			"pediatras": "Consulta de pediatría",
+			"ginecologos": "Consulta de ginecología",
+			"dermatologos": "Consulta de dermatología",
+			"traumatologos": "Consulta de traumatología",
+			"otorrinos": "Consulta de otorrinolaringología",
+			"cardiologos": "Consulta de cardiología",
+			"urologos": "Consulta de urología",
+			"digestologos": "Consulta de aparato digestivo",
+			"neurocirujanos": "Consulta de neurocirugía",
+			"neurologos": "Consulta de neurología",
+			"alergologos": "Consulta de alergología",
+			"endocrinos": "Consulta de endocrinología",
+			"neumologos": "Consulta de neumología",
+			"reumatologos": "Consulta de reumatología",
+			"nefrologos": "Consulta de nefrología",
+			"oncologos": "Consulta de oncología",
+			"hematologos": "Consulta de hematología",
+			"cirujanos-vasculares": "Consulta de angiología y cirugía vascular",
+			"cirujanos-plasticos": "Consulta de cirugía plástica",
+			"cirujanos-maxilofaciales": "Consulta de cirugía maxilofacial",
+			"geneticistas": "Consulta de genética",
+			"radiologos": "Centro de radiodiagnóstico",
+			"geriatras": "Consulta de geriatría",
+			"medicos-rehabilitadores": "Consulta de rehabilitación",
+			"anestesiologos": "Consulta de anestesia y tratamiento del dolor",
+			"medicos-deportivos": "Consulta de medicina deportiva",
+			"medicos-del-trabajo": "Consulta de medicina del trabajo",
+			"cirujanos": "Consulta de cirugía",
+			"internistas": "Consulta de medicina interna",
+			"medicina-general": "Consulta de medicina general",
+			"medicina-estetica": "Consulta de medicina estética",
+			"psicologos": "Consulta de psicología",
+			"logopedas": "Consulta de logopedia",
+			"terapeutas-ocupacionales": "Consulta de terapia ocupacional",
+			"matronas": "Consulta de matrona",
+			"podologos": "Consulta de podología",
+			"nutricionistas": "Consulta de nutrición y dietética",
+			"fisioterapeutas": "Consulta de fisioterapia",
+			"enfermeria": "Consulta de enfermería",
+			"hospital": "Hospital",
+			"centro-de-salud": "Centro de salud",
+			"consultorio-local": "Consultorio local",
+			"consulta-medica": "Consulta médica",
+			"consulta-sanitaria": "Consulta sanitaria",
+			"policlinica": "Policlínica",
+			"clinica-dental": "Clínica dental",
+			"farmacia": "Farmacia"
 		},
 		"listing": {
 			"aerzte": "Médicos sin especialidad indicada",
@@ -1889,7 +1949,55 @@
 			"radiolog": "Radiólogos",
 			"anesteziolog": "Anestesiólogos y unidades del dolor",
 			"chirurg": "Cirujanos",
-			"internista": "Internistas"
+			"internista": "Internistas",
+			"hospitales": "Hospitales",
+			"centros-de-salud": "Centros de salud y consultorios",
+			"consultas-medicas": "Consultas médicas",
+			"otros-profesionales-sanitarios": "Otros profesionales sanitarios",
+			"policlinicas": "Policlínicas",
+			"dentistas": "Dentistas",
+			"farmacias": "Farmacias",
+			"psiquiatras": "Psiquiatras",
+			"oftalmologos": "Oftalmólogos",
+			"pediatras": "Pediatras",
+			"ginecologos": "Ginecólogos",
+			"dermatologos": "Dermatólogos",
+			"traumatologos": "Traumatólogos",
+			"otorrinos": "Otorrinolaringólogos",
+			"cardiologos": "Cardiólogos",
+			"urologos": "Urólogos",
+			"digestologos": "Especialistas en aparato digestivo",
+			"neurocirujanos": "Neurocirujanos",
+			"neurologos": "Neurólogos",
+			"alergologos": "Alergólogos",
+			"endocrinos": "Endocrinólogos",
+			"neumologos": "Neumólogos",
+			"reumatologos": "Reumatólogos",
+			"nefrologos": "Nefrólogos",
+			"oncologos": "Oncólogos",
+			"hematologos": "Hematólogos",
+			"cirujanos-vasculares": "Cirujanos vasculares",
+			"cirujanos-plasticos": "Cirujanos plásticos",
+			"cirujanos-maxilofaciales": "Cirujanos maxilofaciales",
+			"geneticistas": "Genetistas",
+			"radiologos": "Radiólogos",
+			"geriatras": "Geriatras",
+			"medicos-rehabilitadores": "Médicos rehabilitadores",
+			"anestesiologos": "Anestesiólogos y unidades del dolor",
+			"medicos-deportivos": "Médicos deportivos",
+			"medicos-del-trabajo": "Médicos del trabajo",
+			"cirujanos": "Cirujanos",
+			"internistas": "Internistas",
+			"medicina-general": "Medicina general",
+			"medicina-estetica": "Medicina estética",
+			"psicologos": "Psicólogos",
+			"logopedas": "Logopedas",
+			"terapeutas-ocupacionales": "Terapeutas ocupacionales",
+			"matronas": "Matronas",
+			"podologos": "Podólogos",
+			"nutricionistas": "Dietistas-nutricionistas",
+			"fisioterapeutas": "Fisioterapeutas",
+			"enfermeria": "Enfermería"
 		},
 		"practiceKind": {
 			"office": "Consulta",
@@ -4803,6 +4911,386 @@
 			],
 			"formTitle": "Ask for a page to be removed",
 			"formBody": "Give the address of the page and an email address where we can answer you."
+		}
+	},
+	"LegalNoticeEs": {
+		"metaTitle": "Aviso legal (España) · Apercura",
+		"metaDescription": "Aviso legal de las páginas españolas de Apercura: el titular, sus datos de contacto e inscripción, y el responsable de los contenidos (Ley 34/2002, LSSI, artículo 10).",
+		"title": "Aviso legal",
+		"lead": "Quién gestiona las páginas españolas de Apercura (apercura.org/es), como exige el artículo 10 de la Ley 34/2002, de servicios de la sociedad de la información y de comercio electrónico (LSSI).",
+		"sections": {
+			"provider": {
+				"heading": "Titular",
+				"body": [
+					"Las páginas españolas de Apercura las gestiona la entidad indicada a continuación, que explota el directorio y responde de su contenido."
+				]
+			},
+			"service": {
+				"heading": "El servicio",
+				"body": [
+					"Un directorio gratuito de los centros sanitarios de España que visitan los pacientes (hospitales, centros de salud y consultorios de la red pública, consultas médicas, consultas de otros profesionales sanitarios, policlínicas, clínicas dentales y farmacias), creado a partir del Registro General de centros, servicios y establecimientos sanitarios (REGCESS) del Ministerio de Sanidad, sin publicidad, con un espacio en el que cada centro puede completar su propia página. En España no se reserva ninguna cita a través de Apercura."
+				]
+			},
+			"editor": {
+				"heading": "Responsable de los contenidos",
+				"body": [
+					"La persona indicada a continuación es responsable de lo que publica el titular. La información que un centro añade a su propia página es responsabilidad suya; como servicio de alojamiento de datos facilitados por sus usuarios, el titular solo responde de ella en las condiciones del artículo 16 de la Ley 34/2002."
+				]
+			},
+			"liability": {
+				"heading": "Contenido de las páginas",
+				"body": [
+					"El directorio se crea a partir del REGCESS, que el Ministerio de Sanidad publica cada mes, y de las unidades administrativas y entidades de población del IGN. Puede estar incompleto o desactualizado: compruebe la información con el centro antes de desplazarse. Cada página indica cómo notificar un error."
+				]
+			},
+			"ip": {
+				"heading": "Código y datos",
+				"body": [
+					"El código fuente de Apercura se publica con la licencia AGPL-3.0. Los datos del REGCESS se reutilizan conforme al aviso legal del Ministerio de Sanidad (Ley 37/2007, sobre reutilización de la información del sector público), citando la fuente y la fecha de su última actualización; los del IGN, con la licencia CC BY 4.0. La página de datos enumera cada fuente con la atribución que exige."
+				]
+			},
+			"review": {
+				"heading": "Estado de este texto",
+				"body": [
+					"Este texto es un borrador, redactado antes de constituirse la persona jurídica. Lo revisará un abogado colegiado en España antes de que se anuncien las páginas españolas."
+				]
+			}
+		},
+		"fields": {
+			"name": "Denominación",
+			"legalForm": "Forma jurídica",
+			"address": "Domicilio",
+			"phone": "Teléfono",
+			"email": "Correo electrónico",
+			"registration": "Registro y número de inscripción",
+			"vatId": "Número de identificación fiscal (NIF/IVA)",
+			"editor": "Responsable de los contenidos"
+		},
+		"dataLink": "Datos y fuentes"
+	},
+	"PrivacyEs": {
+		"metaTitle": "Privacidad (España) · Apercura",
+		"metaDescription": "Datos que tratan las páginas españolas de Apercura: fuentes, finalidades, bases jurídicas, conservación, destinatarios y sus derechos, incluida la oposición (RGPD, artículos 13, 14 y 21; LOPDGDD).",
+		"title": "Privacidad",
+		"lead": "Qué datos tratan las páginas españolas de Apercura, de dónde proceden, para qué, durante cuánto tiempo y quién los trata, y cómo ejercer sus derechos conforme al Reglamento General de Protección de Datos (RGPD) y a la Ley Orgánica 3/2018, de Protección de Datos Personales y garantía de los derechos digitales (LOPDGDD).",
+		"sections": {
+			"controller": {
+				"heading": "Responsable del tratamiento",
+				"body": [
+					"El titular indicado en el aviso legal es el responsable del directorio, de las cuentas de los centros, de las reclamaciones de páginas y de las solicitudes enviadas a través del sitio."
+				]
+			},
+			"directory": {
+				"heading": "Directorio: datos de los centros sanitarios",
+				"body": [
+					"Datos: el nombre del centro tal como está inscrito, su tipo (centro de salud, clínica dental, farmacia…), su oferta asistencial, si es público o privado, su dirección y municipio, y su número de teléfono cuando es el del propio centro, tal como los publica el Registro General de centros, servicios y establecimientos sanitarios (REGCESS) del Ministerio de Sanidad. Un centro que reclama su página puede añadir una presentación, idiomas, una foto y un horario.",
+					"Nunca se almacenan, aunque el registro los publica: el correo electrónico y el fax del centro, su código autonómico y las fechas de sus autorizaciones. Un número de teléfono que el registro da para más de tres centros es el de una sede central y no se muestra. El registro no publica coordenadas: cada centro se sitúa en el núcleo principal de su municipio, nunca en su dirección.",
+					"Identificador: el código de centro normalizado (CCN) que el registro asigna a cada centro, al final de la dirección de la página.",
+					"Finalidad: permitir al público encontrar un centro sanitario, saber dónde está y cómo contactarlo. Base jurídica: el interés legítimo (artículo 6.1.f del RGPD), ponderado más abajo.",
+					"Conservación: mientras el centro figure en el registro. Una página desaparece tras dos actualizaciones en las que el centro ya no figura en el registro; una página retirada tras una oposición no se vuelve a publicar nunca.",
+					"Información: los datos no proceden de los propios centros (artículo 14 del RGPD). Escribir a cada uno de ellos supondría un esfuerzo desproporcionado (artículo 14.5.b); este aviso, la página de datos y una nota en cada página hacen pública esta información."
+				]
+			},
+			"people": {
+				"heading": "Los centros y las personas que nombran",
+				"body": [
+					"Una página española es un centro sanitario, la unidad del registro, nunca el perfil de una persona. Muchas consultas y farmacias pertenecen a un profesional que ejerce por cuenta propia y están inscritas con su nombre (por ejemplo, «Ana María Ejemplo Sanz»): esa página nombra a la persona y se refiere a ella.",
+					"Solo se muestra el nombre inscrito del centro, tal como lo publica el registro, con sus datos profesionales: los datos de los empresarios individuales y profesionales liberales referidos a su actividad, cuyo tratamiento presume lícito el artículo 19.3 de la LOPDGDD. No se recoge nada más sobre la persona: ni fecha de nacimiento, ni DNI o NIF, ni más domicilio que el que el registro indica como el del centro, ni valoraciones, ni opiniones.",
+					"Cualquier persona a la que se refiera una página puede oponerse a ella en cualquier momento, y la página se retira."
+				]
+			},
+			"sources": {
+				"heading": "Fuentes",
+				"body": [
+					"Cada página se crea a partir del REGCESS, el registro que el Ministerio de Sanidad lleva conforme al Real Decreto 1277/2003, de autorización de centros sanitarios, y publica cada mes; su aviso legal autoriza la reutilización, comercial o no, citando la fuente y la fecha de la última actualización y sin desnaturalizar los datos (Ley 37/2007). Los lugares proceden del IGN (CC BY 4.0). Cada fuente se reutiliza con su atribución:"
+				]
+			},
+			"balancing": {
+				"heading": "Ponderación del interés legítimo",
+				"body": [
+					"Finalidad: los pacientes necesitan saber qué centros sanitarios hay y dónde, qué atención ofrecen y cómo contactarlos, una necesidad que el Estado ya atiende al llevar el registro y publicarlo.",
+					"Necesidad: solo se muestran los datos del registro sobre el centro, los que ya publica; nada de la vida privada, ni valoraciones, ni opiniones.",
+					"Equilibrio: un orden neutro, sin publicidad, el mínimo de campos del registro, una oposición que oculta la página de inmediato e impide que vuelva, correcciones en la fuente y páginas que siguen cada actualización del registro. Un centro inscrito en un registro público espera figurar en un directorio que repite esa información. Ponderados estos elementos, prevalece el interés de los pacientes, y cualquier persona a la que se refiera una página puede oponerse sin dar motivos."
+				]
+			},
+			"accounts": {
+				"heading": "Cuentas de los centros y reclamaciones",
+				"body": [
+					"Datos: dirección de correo electrónico, nombre, contraseña (almacenada cifrada con hash), segundo factor de autenticación, los documentos enviados para reclamar una página (prueba de que el solicitante dirige el centro o actúa en su nombre) y los miembros del equipo.",
+					"Finalidades: gestionar la cuenta y comprobar que una página la reclama el centro correcto. Bases jurídicas: la ejecución de las condiciones de uso (artículo 6.1.b) y el interés legítimo en la seguridad del servicio (artículo 6.1.f).",
+					"Conservación: la cuenta se conserva hasta que se elimina; los justificantes, cifrados, se borran 30 días después de la decisión."
+				]
+			},
+			"requests": {
+				"heading": "Notificaciones de errores, oposiciones y solicitudes de contacto",
+				"body": [
+					"Datos: el mensaje, la dirección de correo de contacto cuando se indica y la página de que se trate; en una solicitud «Es mi página», además, el nombre y el número de teléfono. El texto libre se cifra.",
+					"Finalidades: corregir errores, aplicar las oposiciones y ayudar a un centro que no puede reclamar su página en línea. Bases jurídicas: el interés legítimo (artículo 6.1.f) y el derecho de oposición (artículo 21).",
+					"Conservación: una notificación se elimina 6 meses después de cerrarse, una oposición rechazada un año después de su decisión, una solicitud de contacto 12 meses después del último intercambio. Una vez confirmada una oposición, o cuando el titular de una página reclamada la retira, la página y los datos que le conciernen se eliminan de inmediato, incluida la oposición; solo se conserva un registro de la retirada (el identificador de la página, el país, el motivo, quién la registró y cuándo), para que no se vuelva a publicar nunca. Un titular que retira su página conserva, solo en su cuenta y sin publicarse nunca, el nombre, el tipo y el identificador mostrados en su espacio y su reclamación, hasta que elimina la cuenta."
+				]
+			},
+			"technical": {
+				"heading": "Datos técnicos y cookies",
+				"body": [
+					"Solo se usan las cookies estrictamente necesarias para el servicio: la sesión de los centros conectados y el idioma elegido. Ninguna cookie publicitaria ni de medición de audiencia, ningún rastreador.",
+					"Para limitar los abusos, las direcciones IP se transforman con una función con clave antes de contarse y nunca se almacenan como tales; las sesiones de los centros registran una dirección IP truncada. Las visitas a las páginas reclamadas se cuentan sin cookie ni identificador, y solo las ve el titular de la página."
+				]
+			},
+			"recipients": {
+				"heading": "Destinatarios y encargados del tratamiento",
+				"body": [
+					"Los datos no se venden ni se alquilan, y nunca se usan con fines publicitarios. Solo los reciben el equipo del titular y los encargados indicados a continuación, cada uno para su parte, con un contrato conforme al artículo 28 del RGPD. Los mapas se cargan desde un servidor de teselas, que recibe la dirección IP del visitante como cualquier sitio web."
+				]
+			},
+			"transfers": {
+				"heading": "Transferencias fuera de la Unión Europea",
+				"body": [
+					"Los datos solo se transfieren fuera de la Unión Europea y del Espacio Económico Europeo con las garantías del capítulo V del RGPD (una decisión de adecuación o cláusulas contractuales tipo). Cualquier cambio de encargado se anunciará aquí antes de que surta efecto."
+				]
+			},
+			"automated": {
+				"heading": "Decisiones automatizadas",
+				"body": [
+					"No se toma ninguna decisión sobre usted por medios únicamente automatizados. Una reclamación la decide una persona, que lee sus documentos."
+				]
+			},
+			"rights": {
+				"heading": "Sus derechos",
+				"body": [
+					"Puede solicitar el acceso a sus datos, su rectificación o supresión, la limitación de su tratamiento, su portabilidad y oponerse a su tratamiento. Escriba a la dirección indicada a continuación; recibirá respuesta en el plazo de un mes.",
+					"También puede presentar una reclamación ante la autoridad de control española, la Agencia Española de Protección de Datos (AEPD): C/ Jorge Juan, 6, 28001 Madrid, www.aepd.es."
+				]
+			},
+			"objection": {
+				"heading": "Oponerse a una página (artículo 21 del RGPD)",
+				"body": [
+					"Cualquier persona a la que se refiera una página puede oponerse a su publicación en cualquier momento, sin dar motivos. Si la página no está reclamada, basta con un formulario: la página se oculta en cuanto llega la solicitud, se elimina tras una comprobación sencilla y las actualizaciones del registro no la vuelven a publicar. Si está reclamada, su titular la retira desde su espacio."
+				]
+			},
+			"changes": {
+				"heading": "Actualizaciones de este aviso",
+				"body": [
+					"Este aviso es un borrador. Lo revisarán un abogado colegiado en España y el delegado de protección de datos; cada versión lleva fecha."
+				]
+			}
+		},
+		"fields": {
+			"controller": "Responsable",
+			"address": "Dirección",
+			"email": "Contacto para solicitudes",
+			"dpo": "Delegado de protección de datos",
+			"effectiveDate": "Fecha de entrada en vigor",
+			"hostingProvider": "Proveedor de alojamiento (encargado)",
+			"smtp": "Envío de correos (encargado)"
+		},
+		"objectLink": "Cómo oponerse a una página",
+		"authorityLink": "Presentar una reclamación ante la Agencia Española de Protección de Datos"
+	},
+	"TermsEs": {
+		"metaTitle": "Condiciones de uso (España) · Apercura",
+		"metaDescription": "Condiciones de uso de las páginas españolas de Apercura: un directorio gratuito y factual de centros sanitarios a partir del registro del Ministerio de Sanidad, sin cita en línea.",
+		"title": "Condiciones de uso",
+		"lead": "Las reglas de uso de las páginas españolas de Apercura, tanto para el público como para los centros sanitarios.",
+		"sections": {
+			"service": {
+				"heading": "El servicio",
+				"body": [
+					"Apercura enumera gratuitamente los centros sanitarios del registro del Ministerio de Sanidad que visitan los pacientes: hospitales, centros de salud y consultorios de la red pública, consultas médicas, consultas de otros profesionales sanitarios, policlínicas, clínicas dentales y farmacias. Es solo un directorio: en España no se reserva ninguna cita a través de Apercura. Lo gestiona el titular indicado en el aviso legal.",
+					"Consultar el directorio no requiere cuenta. Usar el sitio supone aceptar estas condiciones."
+				]
+			},
+			"content": {
+				"heading": "Qué contienen las páginas",
+				"body": [
+					"Las páginas muestran información factual del registro público, en un orden neutro, sin valoraciones, opiniones, publicidad ni posiciones de pago.",
+					"La información puede estar incompleta o desactualizada, y un centro se sitúa en su municipio, no en su dirección exacta en un mapa: compruébela con el centro antes de desplazarse. Cada página indica cómo notificar un error."
+				]
+			},
+			"health": {
+				"heading": "No es consejo médico",
+				"body": [
+					"Apercura no da consejo médico y no es un servicio de urgencias. En caso de urgencia, llame al 112. Fuera del horario de su centro, el servicio de salud de su comunidad autónoma le indica adónde acudir."
+				]
+			},
+			"practices": {
+				"heading": "Para los centros sanitarios",
+				"body": [
+					"Reclamar una página es gratuito. Requiere un documento que demuestre que el solicitante dirige el centro o actúa en su nombre, revisado por una persona antes de entregar la página.",
+					"El titular de una página es responsable de la información que añade. Debe seguir siendo factual, exacta y actualizada, como exigen las normas sobre publicidad e información sanitaria."
+				]
+			},
+			"removal": {
+				"heading": "Retirar una página",
+				"body": [
+					"Cualquier persona a la que se refiera una página puede pedir su retirada en cualquier momento: la página de datos explica cómo. Una página reclamada solo puede retirarla su titular."
+				]
+			},
+			"liability": {
+				"heading": "Responsabilidad",
+				"body": [
+					"El titular hace todo lo posible para que el servicio esté disponible y sea exacto, pero no puede garantizarlo. No es responsable de la información que los centros añaden a sus páginas. Estos límites se precisarán en la revisión jurídica."
+				]
+			},
+			"ip": {
+				"heading": "Código y datos",
+				"body": [
+					"El código fuente se publica con la licencia AGPL-3.0. Los datos del REGCESS se reutilizan en las condiciones del Ministerio de Sanidad (citando la fuente y la fecha), los del IGN con la licencia CC BY 4.0."
+				]
+			},
+			"law": {
+				"heading": "Ley aplicable y litigios",
+				"body": [
+					"La ley aplicable y los tribunales competentes se precisarán en la revisión jurídica; se aplican siempre las normas imperativas de protección de los consumidores del país de residencia. En caso de litigio, escriba primero a la dirección de contacto para buscar una solución amistosa."
+				]
+			}
+		},
+		"fields": {
+			"publisher": "Titular",
+			"effectiveDate": "Fecha de entrada en vigor",
+			"contact": "Contacto"
+		}
+	},
+	"AccessibilityEs": {
+		"metaTitle": "Accesibilidad (España) · Apercura",
+		"metaDescription": "Accesibilidad de las páginas españolas de Apercura: el objetivo WCAG 2.2 AA, lo que se ha comprobado, lo que falta y cómo comunicar un problema.",
+		"title": "Accesibilidad",
+		"lead": "Apercura está pensado para todas las personas, incluidas las mayores y las que tienen baja visión. Esta declaración indica la situación de las páginas españolas.",
+		"sections": {
+			"scope": {
+				"heading": "Ámbito",
+				"body": [
+					"El Real Decreto 1112/2018, sobre accesibilidad de los sitios web y aplicaciones para dispositivos móviles del sector público, obliga a los organismos del sector público, y Apercura no lo es. Aun así, su titular aplica el mismo nivel en todas las páginas: WCAG 2.2, nivel AA (EN 301 549)."
+				]
+			},
+			"status": {
+				"heading": "Situación del sitio",
+				"body": [
+					"Las páginas españolas comparten el código de las páginas francesas y sus pruebas. El sitio cumple parcialmente las WCAG 2.2 AA: se basa en una autoevaluación y en pruebas automatizadas, todavía no en una auditoría completa, que está en curso."
+				]
+			},
+			"tests": {
+				"heading": "Qué se ha comprobado",
+				"list": [
+					"Comprobaciones automatizadas con axe-core (reglas WCAG 2.0, 2.1 y 2.2, niveles A y AA) en cada tipo de página, en cada versión.",
+					"Recorridos solo con teclado, con un foco visible.",
+					"Texto de al menos 18 px, zonas táctiles de al menos 44 px, nada que dependa solo del color, sin desplazamiento horizontal a 390 px."
+				]
+			},
+			"pending": {
+				"heading": "Qué falta por comprobar",
+				"list": [
+					"Una revisión manual con los lectores de pantalla VoiceOver y NVDA, en español.",
+					"Una auditoría completa conforme a las WCAG 2.2 AA sobre una muestra de páginas."
+				]
+			},
+			"feedback": {
+				"heading": "Comunicar un problema",
+				"body": [
+					"Si una página o una función le resulta difícil de usar, escriba a la dirección indicada a continuación: diga qué página y qué le ha bloqueado. Respondemos en el plazo de un mes y, si es necesario, le facilitamos la información en otro formato."
+				]
+			}
+		},
+		"fields": {
+			"contact": "Contacto",
+			"date": "Fecha de esta declaración"
+		}
+	},
+	"DataEs": {
+		"metaTitle": "Datos y fuentes (España) · Apercura",
+		"metaDescription": "De dónde proceden las páginas españolas de Apercura: el registro de centros sanitarios del Ministerio de Sanidad (REGCESS) y el IGN, las fechas de actualización y cómo corregir o retirar una página.",
+		"title": "Datos y fuentes",
+		"lead": "Cada página española se crea a partir de datos públicos. Aquí se indica de dónde proceden, en qué condiciones y con qué atribución, cuándo se actualizaron y cómo corregir o retirar una página.",
+		"status": {
+			"heading": "Última actualización",
+			"body": "El Ministerio de Sanidad publica el registro cada mes; el directorio lo comprueba cada semana y lo importa cuando ha cambiado. Una página solo cambia cuando cambian sus datos en el registro.",
+			"importedAt": "Última importación",
+			"checkedAt": "Última comprobación de las fuentes",
+			"notImported": "El directorio español todavía no se ha importado en este sitio.",
+			"notImportedValue": "Todavía no importado"
+		},
+		"sources": {
+			"heading": "Fuentes",
+			"body": "El registro se reutiliza conforme al aviso legal del Ministerio de Sanidad, que autoriza la reutilización, comercial o no, siempre que se cite la fuente y la fecha de la última actualización y no se desnaturalicen los datos (Ley 37/2007); los datos del IGN, con la licencia Creative Commons Reconocimiento 4.0 Internacional (CC BY 4.0). Cada atribución se reproduce a continuación al pie de la letra.",
+			"caption": "Fuentes de datos del directorio español",
+			"columns": {
+				"source": "Fuente",
+				"use": "Uso",
+				"licence": "Licencia y atribución",
+				"frequency": "Actualización"
+			},
+			"items": {
+				"es-regcess": {
+					"use": "Centros sanitarios: nombres, tipos, oferta asistencial, titularidad pública o privada, direcciones, municipios, teléfonos",
+					"frequency": "Cada mes, por el Ministerio de Sanidad"
+				},
+				"es-ign": {
+					"use": "Comunidades autónomas, provincias y municipios, y el núcleo principal de cada municipio, donde se sitúan sus centros",
+					"frequency": "Cada año, por el IGN"
+				},
+				"map": {
+					"name": "Datos cartográficos",
+					"publisher": "Colaboradores de OpenStreetMap, teselas de OpenFreeMap",
+					"use": "Mapas de las páginas",
+					"frequency": "Continua"
+				}
+			},
+			"reuse": "Reutilización autorizada (Ley 37/2007)",
+			"ccBy": "CC BY 4.0",
+			"odbl": "ODbL",
+			"conditionsHeading": "Condiciones del Ministerio de Sanidad",
+			"conditions": "El registro se muestra tal como se publica: nombres en minúsculas con mayúscula inicial, solo los datos propios del centro, sin alterar nunca su sentido. Cada página española cita la fuente y la fecha de su última actualización.",
+			"legalNotice": "Aviso legal del Ministerio de Sanidad",
+			"ignLicence": "Licencia del IGN (Orden FOM/2807/2015)"
+		},
+		"coverage": {
+			"heading": "Centros incluidos",
+			"body": [
+				"Se generan páginas para los tipos de centro sanitario que visitan los pacientes, según el tipo de centro del registro. Una consulta médica o de otro profesional sanitario figura en el listado de su unidad asistencial principal; sus demás unidades se muestran en su página.",
+				"Quedan fuera: los demás centros con internamiento, los centros móviles, los centros de diagnóstico, de diálisis, de reproducción humana asistida, de cirugía mayor ambulatoria y de transfusión, los bancos de tejidos, los centros de salud mental, los centros de reconocimiento, los demás centros especializados y proveedores, los servicios dentro de un centro y los establecimientos distintos de las farmacias (botiquines, ópticas, ortopedias y establecimientos de audioprótesis).",
+				"El registro no publica coordenadas: cada centro se sitúa en el núcleo principal de su municipio (IGN). Su posición en el mapa y su distancia son las del municipio, nunca las de su dirección."
+			],
+			"kinds": {
+				"ES_HOSPITAL": "Hospitales (C11 a C14)",
+				"ES_HEALTH_CENTRE": "Centros de salud (C231)",
+				"ES_LOCAL_CLINIC": "Consultorios de atención primaria (C232)",
+				"ES_MEDICAL_PRACTICE": "Consultas médicas, por unidad asistencial principal (C21)",
+				"ES_OTHER_PRACTICE": "Consultas de otros profesionales sanitarios, por unidad asistencial principal (C22)",
+				"ES_POLYCLINIC": "Centros polivalentes (C24)",
+				"ES_DENTAL": "Clínicas dentales (C251)",
+				"ES_PHARMACY": "Oficinas de farmacia (E1)"
+			},
+			"kindsLabel": "Importados (tipo del registro)"
+		},
+		"identifiers": {
+			"heading": "Identificadores",
+			"body": [
+				"La dirección de cada página termina con el código de centro normalizado (CCN) que el registro asigna al centro, para que una página pueda encontrarse y contrastarse con el registro:"
+			],
+			"list": [
+				"/es/centro/clinica-dental-ejemplo-centro-1328900001: el código de centro 1328900001.",
+				"No se usan el código autonómico del centro ni el NIF de su titular."
+			]
+		},
+		"correct": {
+			"heading": "Corregir un error",
+			"body": [
+				"Las páginas reproducen el registro: la corrección duradera se hace en la fuente, y la página se actualiza en la siguiente importación tras la publicación mensual del registro.",
+				"Para cualquier otra cosa, use el formulario: revisamos cada notificación."
+			],
+			"list": [
+				"Nombre, dirección, tipo de centro, oferta asistencial: el titular del centro lo comunica a la consejería de sanidad de su comunidad autónoma, que autorizó el centro e inscribe el cambio en el registro.",
+				"Número de teléfono: del mismo modo, ante la consejería de sanidad de la comunidad autónoma."
+			],
+			"formTitle": "Notificar un error",
+			"formBody": "Indique la dirección de la página y qué es incorrecto."
+		},
+		"remove": {
+			"heading": "Retirar una página",
+			"body": [
+				"Cualquier persona a la que se refiera una página puede oponerse a su publicación en cualquier momento, sin dar motivos (artículo 21 del RGPD). Una página no reclamada se oculta en cuanto llega la solicitud y se elimina tras una comprobación sencilla; no vuelve con las actualizaciones del registro. Una página reclamada la retira su titular, desde su espacio."
+			],
+			"formTitle": "Solicitar la retirada de una página",
+			"formBody": "Indique la dirección de la página y una dirección de correo electrónico en la que podamos responderle."
 		}
 	}
 }

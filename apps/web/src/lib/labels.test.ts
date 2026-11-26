@@ -18,6 +18,7 @@ const CATALOGS = {
 	"de-AT": messagesFor("de-AT"),
 	"en-GB": messagesFor("en-GB"),
 	"cs-CZ": messagesFor("cs-CZ"),
+	"es-ES": messagesFor("es-ES"),
 } as const;
 
 /** A label of the catalog's taxonomy, rendered like `getTaxonomyLabels` does. */
@@ -142,4 +143,18 @@ describe("fees of professions without sectors", () => {
 			expect(t("billingAgreement.1")).not.toMatch(/1/);
 		},
 	);
+});
+
+describe("Spain's labels", () => {
+	it("name a listing in the plural and a centre's kind or specialty in the singular", () => {
+		const t = createTranslator({
+			locale: "es-ES",
+			messages: CATALOGS["es-ES"],
+			namespace: "taxonomy",
+		});
+		expect(t("listing.centros-de-salud" as never)).toBe("Centros de salud y consultorios");
+		expect(t("profession.consultorio-local" as never)).toBe("Consultorio local");
+		expect(t("profession.cardiologos" as never)).toBe("Consulta de cardiología");
+		expect(inSentence(t("profession.clinica-dental" as never), "es-ES")).toBe("clínica dental");
+	});
 });

@@ -1,7 +1,8 @@
-import { austria, czechia, unitedKingdom } from "@apercura/core/country";
+import { austria, czechia, spain, unitedKingdom } from "@apercura/core/country";
 import {
 	AT_PROFESSIONS,
 	CZ_PROFESSIONS,
+	ES_PROFESSIONS,
 	GB_PROFESSIONS,
 	hasBillingSectors,
 	listingHasBillingSectors,
@@ -43,7 +44,7 @@ export function marketBooks(locale: Locale): boolean {
 
 /**
  * The profession slug of any market's profession code (`10` → `medecin`, `ARZT` → `aerzte`,
- * `GB_GP` → `gp-practices`, `CZ_GP` → `prakticky-lekar`).
+ * `GB_GP` → `gp-practices`, `CZ_GP` → `prakticky-lekar`, `ES_PHARMACY` → `farmacias`).
  */
 export function professionSlugOf(code: string): string {
 	return (
@@ -51,6 +52,7 @@ export function professionSlugOf(code: string): string {
 		AT_PROFESSIONS[code]?.slug ??
 		GB_PROFESSIONS[code]?.slug ??
 		CZ_PROFESSIONS[code]?.slug ??
+		ES_PROFESSIONS[code]?.slug ??
 		""
 	);
 }
@@ -110,17 +112,57 @@ export function czechSourcesOf(): { name: string; attribution: string }[] {
 		.map((registry) => ({ name: registry.name, attribution: registry.attribution ?? "" }));
 }
 
+/** The REGCESS source of Spain's centres: its attribution takes the date of the data. */
+export const REGCESS_SOURCE_ID = "es-regcess";
+
+/**
+ * The attribution of a Spanish source, word for word: the Ministry of Health's legal notice
+ * asks for the source and the date of its last update ("Fuente: Ministerio de Sanidad, REGCESS,
+ * actualizado 1 de diciembre de 2026"), so REGCESS's line takes the date of the import the page
+ * is built from, written in Spanish whatever the interface. Without a date (no import recorded)
+ * the line is the source alone.
+ */
+export function spanishAttribution(sourceId: string, updatedAt: string | null): string {
+	const registry = spain.registries.find((source) => source.id === sourceId);
+	const attribution = registry?.attribution ?? "";
+	if (sourceId !== REGCESS_SOURCE_ID || !updatedAt) return attribution;
+	const date = new Intl.DateTimeFormat("es-ES", {
+		dateStyle: "long",
+		timeZone: "UTC",
+	}).format(new Date(`${updatedAt.slice(0, 10)}T00:00:00Z`));
+	return `${attribution}, actualizado ${date}`;
+}
+
+/**
+ * The sources a Spanish centre's page is built from, with the attribution each requires word for
+ * word: REGCESS (Ministerio de Sanidad: its name, kind, care units and address), dated by
+ * `updatedAt` (the last Spanish import, `YYYY-MM-DD`), and the IGN (CC BY 4.0), whose
+ * communities, provinces and municipalities place it.
+ */
+export function spanishSourcesOf(
+	updatedAt: string | null,
+): { name: string; attribution: string }[] {
+	return spain.registries
+		.filter((registry) => registry.attribution)
+		.map((registry) => ({
+			name: registry.name,
+			attribution: spanishAttribution(registry.id, updatedAt),
+		}));
+}
+
 /**
  * The open-data sources of a page in a market whose licences require their attribution
- * (Austria's and Czechia's CC BY 4.0, the UK's OGL); empty for France, whose provenance line is
- * the catalog's.
+ * (Austria's and Czechia's CC BY 4.0, the UK's OGL, Spain's Ministry of Health and IGN); empty
+ * for France, whose provenance line is the catalog's. `sourceDate` dates Spain's REGCESS line.
  */
 export function openDataSourcesOf(
 	country: string,
 	activities: Parameters<typeof ukSourcesOf>[0],
+	sourceDate: string | null = null,
 ): { name: string; attribution: string }[] {
 	if (country === "AT") return austrianSourcesOf(activities.map((activity) => activity.source));
 	if (country === "GB") return ukSourcesOf(activities);
 	if (country === "CZ") return activities.length > 0 ? czechSourcesOf() : [];
+	if (country === "ES") return activities.length > 0 ? spanishSourcesOf(sourceDate) : [];
 	return [];
 }

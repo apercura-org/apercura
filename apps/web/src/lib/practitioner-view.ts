@@ -1,6 +1,7 @@
 import {
 	formatPhoneAt,
 	formatPhoneCz,
+	formatPhoneEs,
 	formatPhoneFr,
 	formatPhoneGb,
 	formatStreetText,
@@ -34,19 +35,20 @@ export function label(value: string | null | undefined): string | null {
 
 /**
  * A phone number of any market as written there (`04 72 00 00 00`, `01 7673315`,
- * `020 7946 0000`, `326 357 125`).
+ * `020 7946 0000`, `326 357 125`, `910 000 001`).
  */
 export function formatPhone(e164: string): string {
 	if (e164.startsWith("+43")) return formatPhoneAt(e164);
 	if (e164.startsWith("+44")) return formatPhoneGb(e164);
 	if (e164.startsWith("+420")) return formatPhoneCz(e164);
+	if (e164.startsWith("+34")) return formatPhoneEs(e164);
 	return formatPhoneFr(e164);
 }
 
 /**
  * A source text as printed for a market. French registry labels are restored
- * (`label`); Austrian and Czech lists publish their streets as written, and the UK's are cased
- * by the import (`titleCaseGb`), so they are only trimmed (`63A` stays `63A`).
+ * (`label`); Austrian and Czech lists publish their streets as written, and the UK's and
+ * Spain's are cased by their imports, so they are only trimmed (`63A` stays `63A`).
  */
 export function marketLabel(value: string | null | undefined, country = "FR"): string | null {
 	if (country === "FR") return label(value);

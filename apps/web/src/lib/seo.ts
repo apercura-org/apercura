@@ -48,8 +48,13 @@ export type OgImage = "medecin" | "chirurgien-dentiste" | "sage-femme" | "infirm
 
 export function ogImageOf(professionCode: string): OgImage {
 	// A UK practice: the directory's image (the profession images speak of France's practitioners).
-	// A Czech facility too.
-	if (professionCode.startsWith("GB_") || professionCode.startsWith("CZ_")) return "annuaire";
+	// A Czech facility or a Spanish centre too.
+	if (
+		professionCode.startsWith("GB_") ||
+		professionCode.startsWith("CZ_") ||
+		professionCode.startsWith("ES_")
+	)
+		return "annuaire";
 	if (professionCode === "40") return "chirurgien-dentiste";
 	if (professionCode === "50") return "sage-femme";
 	if (professionCode === "60" || professionCode === "69") return "infirmier";

@@ -23,6 +23,7 @@ describe.skipIf(!url)("owner-added places by market (database)", async () => {
 		sql.raw(`ARRAY[${ids.map(Number).join(",") || "0"}]::integer[]`);
 
 	const place = async (values: {
+		country?: string;
 		kind: string;
 		code: string;
 		name: string;
@@ -31,7 +32,7 @@ describe.skipIf(!url)("owner-added places by market (database)", async () => {
 	}) => {
 		const [row] = await db.execute<{ id: number }>(sql`
 			INSERT INTO directory.places (country, kind, code, name, slug, department_code, postcodes, centroid)
-			VALUES ('AT', ${values.kind}, ${values.code}, ${values.name}, ${values.slug},
+			VALUES (${values.country ?? "AT"}, ${values.kind}, ${values.code}, ${values.name}, ${values.slug},
 				${values.departmentCode}, '{}'::text[],
 				ST_SetSRID(ST_MakePoint(16.37, 48.21), 4326)::geography)
 			RETURNING id
@@ -65,6 +66,7 @@ describe.skipIf(!url)("owner-added places by market (database)", async () => {
 	};
 
 	let gemeinde = 0;
+	let municipio = 0;
 
 	beforeAll(async () => {
 		db = createDb({ url: url as string, max: 2 });
@@ -75,6 +77,15 @@ describe.skipIf(!url)("owner-added places by market (database)", async () => {
 			name: `Fiktivdorf ${run}`,
 			slug: `fiktivdorf-${run}`,
 			departmentCode: "6",
+		});
+		// A Spanish municipality no register has, in the province of Madrid (28).
+		municipio = await place({
+			country: "ES",
+			kind: "commune",
+			code: `x${run}`,
+			name: `Villaficticia ${run}`,
+			slug: `villaficticia-${run}`,
+			departmentCode: "28",
 		});
 	});
 
@@ -115,5 +126,25 @@ describe.skipIf(!url)("owner-added places by market (database)", async () => {
 		await expect(
 			addOwnerSite(db, id, { ...input, postcode: "8010", city: `Fiktivdorf ${run}`, phone: "12" }),
 		).rejects.toThrow("BAD_PHONE");
+	});
+
+	it("places a Spanish centre in its municipality, in the province its postcode names", async () => {
+		const id = await practitioner("ES", "ES-REGCESS");
+		const input = {
+			name: "Consulta",
+			addressLine: "Calle Ficticia, 1",
+			city: `Villaficticia ${run}`,
+			phone: "910 000 123",
+		};
+		const { siteId } = await addOwnerSite(db, id, { ...input, postcode: "28014" });
+		expect(await siteOf(siteId)).toEqual({
+			place_id: municipio,
+			country_code: "ES",
+			phone: "+34910000123",
+		});
+		// Another province's postcode names another municipality: refused.
+		await expect(addOwnerSite(db, id, { ...input, postcode: "08001" })).rejects.toThrow(
+			"UNKNOWN_PLACE",
+		);
 	});
 });

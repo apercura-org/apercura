@@ -37,6 +37,7 @@ const PLACES: Record<MarketCountry, PlaceSuggestion[]> = {
 		place(23, "Newport", "newport-2", "isle-of-wight"),
 	],
 	CZ: [place(30, "Brno", "brno", "brno-mesto"), place(31, "Praha", "praha", "praha")],
+	ES: [place(40, "Madrid", "madrid", "madrid"), place(41, "València", "valencia", "valencia")],
 };
 
 const LANDINGS = new Set([
@@ -49,6 +50,9 @@ const LANDINGS = new Set([
 	"allgemeinmedizin@Wien",
 	"zubni-lekar@Brno",
 	"zubni-lekar@Praha",
+	"dentistas@Madrid",
+	"centros-de-salud@Madrid",
+	"farmacias@Madrid",
 ]);
 
 const HUBS = new Set(["chirurgien-dentiste:fr", "dental-practices:gb"]);
@@ -97,6 +101,29 @@ describe("a search for a place of another market", () => {
 		);
 		expect(await search("en-GB", { quoi: "GP", ou: "Wien" })).toEqual(
 			listing("de-AT", "allgemeinmedizin", "wien", "wien"),
+		);
+	});
+
+	it("moves to Spain's listing from any market, in Spanish", async () => {
+		expect(await search("fr", { quoi: "dentiste", ou: "Madrid" })).toEqual(
+			listing("es-ES", "dentistas", "madrid", "madrid"),
+		);
+		expect(await search("cs-CZ", { quoi: "zubař", ou: "Madrid" })).toEqual(
+			listing("es-ES", "dentistas", "madrid", "madrid"),
+		);
+		expect(await search("en-GB", { quoi: "GP", ou: "Madrid" })).toEqual(
+			listing("es-ES", "centros-de-salud", "madrid", "madrid"),
+		);
+		// France in Spanish moves to Spain in Spanish, and back.
+		expect(await search("es", { quoi: "farmacia", ou: "Madrid" })).toEqual(
+			listing("es-ES", "farmacias", "madrid", "madrid"),
+		);
+		expect(await search("es-ES", { quoi: "dentista", ou: "Paris" })).toEqual(
+			listing("es", "chirurgien-dentiste", "75-paris", "paris"),
+		);
+		// Spain lists no such listing in València: its search, in its own words.
+		expect(await search("fr", { quoi: "dentiste", ou: "València" })).toEqual(
+			searchPage("es-ES", { quoi: listingLabel("dentistas", "es-ES") ?? "", ou: "València" }),
 		);
 	});
 

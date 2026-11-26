@@ -1,4 +1,10 @@
-import { isCzListingSlug, isGbListingSlug } from "@apercura/core/taxonomy";
+import {
+	ES_PROFESSIONS,
+	esKindSlugOf,
+	isCzListingSlug,
+	isEsListingSlug,
+	isGbListingSlug,
+} from "@apercura/core/taxonomy";
 import { getTranslations } from "next-intl/server";
 import { capitalisesNouns } from "~/i18n/locales";
 import type { Locale } from "~/i18n/routing";
@@ -29,14 +35,34 @@ export async function getTaxonomyLabels(locale: Locale) {
 			slug ? lookup(`listing.${slug}`, { gender }) : null,
 		/**
 		 * What one practitioner is, from their listing: the listing's label ("Cardiologist"), but a
-		 * UK practice's kind or a Czech facility's field in the singular ("GP practice",
-		 * "Kardiolog"), their listing being plural ("GP practices", "Kardiologové").
+		 * UK practice's kind, a Czech facility's field or a Spanish centre's kind or specialty in the
+		 * singular ("GP practice", "Kardiolog", "Consulta de cardiología"), their listing being
+		 * plural ("GP practices", "Kardiologové", "Cardiólogos"). With its profession code, a Spanish
+		 * centre listed under its kind's listing reads as its own kind (a local surgery listed with
+		 * the health centres reads "Consultorio local").
 		 */
-		occupation: (slug: string | null | undefined, gender: Gender = "other") =>
-			slug
-				? ((isGbListingSlug(slug) || isCzListingSlug(slug) ? lookup(`profession.${slug}`) : null) ??
-					lookup(`listing.${slug}`, { gender }))
-				: null,
+		occupation: (
+			slug: string | null | undefined,
+			gender: Gender = "other",
+			professionCode?: string | null,
+		) => {
+			if (!slug) return null;
+			if (isEsListingSlug(slug)) {
+				const kind =
+					professionCode && ES_PROFESSIONS[professionCode]?.slug === slug
+						? esKindSlugOf(professionCode)
+						: null;
+				return (
+					(kind ? lookup(`profession.${kind}`) : null) ??
+					lookup(`profession.${slug}`) ??
+					lookup(`listing.${slug}`, { gender })
+				);
+			}
+			return (
+				(isGbListingSlug(slug) || isCzListingSlug(slug) ? lookup(`profession.${slug}`) : null) ??
+				lookup(`listing.${slug}`, { gender })
+			);
+		},
 		profession: (slug: string, gender: Gender = "other") =>
 			lookup(`profession.${slug}`, { gender }),
 		title: (code: string | null | undefined) => (code ? lookup(`title.${code}`) : null),

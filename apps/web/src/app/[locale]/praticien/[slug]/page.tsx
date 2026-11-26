@@ -1,5 +1,10 @@
 import { practitionerRoute } from "@apercura/core";
-import { CZ_SPECIALIST } from "@apercura/core/taxonomy";
+import {
+	CZ_SPECIALIST,
+	ES_MEDICAL_PRACTICE,
+	ES_OTHER_PRACTICE,
+	esKindSlugOf,
+} from "@apercura/core/taxonomy";
 import {
 	ActionBlock,
 	buttonStyles,
@@ -68,6 +73,7 @@ import {
 	type PractitionerPage as PractitionerPageData,
 	samplePractitionerSlugs,
 } from "~/server/queries/practitioner";
+import { getImportStatus } from "~/server/queries/registry";
 import { photoUrl } from "~/server/storage";
 
 /** The first request of a page waits for the complete page, never a shell. */
@@ -136,7 +142,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 	const gender = genderOf(payload.civilityCode);
 	const name = labels.personName(payload);
 	const occupation = inSentence(
-		labels.occupation(payload.listingSlug, gender) ??
+		labels.occupation(payload.listingSlug, gender, payload.professionCode) ??
 			labels.profession(payload.listingSlug ?? "", gender) ??
 			"",
 		locale,
@@ -199,9 +205,14 @@ export default async function PractitionerPage({ params }: Props) {
 	const name = labels.personName(payload);
 	const content = ownerContentOf(payload, photoUrl);
 	const professionSlug = payload.listingSlug ?? "";
+	// A Spanish centre's kind has a singular label of its own ("Consultorio local").
 	const professionLabel =
-		labels.profession(professionSlugOf(payload.professionCode), gender) ?? t("unknownProfession");
-	const listingLabel = labels.occupation(payload.listingSlug, gender) ?? professionLabel;
+		labels.profession(
+			esKindSlugOf(payload.professionCode) ?? professionSlugOf(payload.professionCode),
+			gender,
+		) ?? t("unknownProfession");
+	const listingLabel =
+		labels.occupation(payload.listingSlug, gender, payload.professionCode) ?? professionLabel;
 	const specialty =
 		payload.listingSlug && labels.profession(professionSlug, gender) === null ? listingLabel : null;
 	// The owner may hide the practice's phone from the page.
@@ -242,9 +253,31 @@ export default async function PractitionerPage({ params }: Props) {
 					(item) => item.source === "obor" && item.code === payload.primarySpecialtyCode,
 				)?.label ?? (payload.primarySpecialtyCode ? listingLabel : null))
 			: null;
+	// Spain lists centres: a practice has its specialty (the register's care unit it is listed
+	// under), every centre the care units of its "oferta asistencial" and its ownership.
+	const spanish = payload.country === "ES";
+	const spanishUnits = spanish
+		? payload.qualifications
+				.filter((item) => item.source === "oferta" && item.label)
+				.map((item) => item.label as string)
+		: [];
+	const spanishPractice =
+		spanish &&
+		(payload.professionCode === ES_MEDICAL_PRACTICE ||
+			payload.professionCode === ES_OTHER_PRACTICE);
+	const spanishSpecialty = spanishPractice
+		? (payload.qualifications.find(
+				(item) => item.source === "oferta" && item.code === payload.primarySpecialtyCode,
+			)?.label ?? (payload.primarySpecialtyCode ? listingLabel : null))
+		: null;
+	const ownership = spanish
+		? (payload.qualifications.find((item) => item.source === "dependencia") ?? null)
+		: null;
 	const identifier = displayId(payload);
-	// Open licences (CC BY 4.0, OGL) require each source's attribution, word for word.
-	const sources = openDataSourcesOf(payload.country, payload.activities);
+	// Open licences (CC BY 4.0, OGL) require each source's attribution, word for word; Spain's
+	// Ministry of Health asks for the date of its data: the last Spanish import's.
+	const sourceDate = spanish ? ((await getImportStatus("es"))?.importedAt ?? page.updatedAt) : null;
+	const sources = openDataSourcesOf(payload.country, payload.activities, sourceDate);
 
 	// Where the facts come from and when they were imported: under each block of facts, the
 	// register's name; at the foot of the page, each source with its attribution.
@@ -396,7 +429,31 @@ export default async function PractitionerPage({ params }: Props) {
 									value={professionLabel}
 									emptyLabel={empty}
 								/>
-								{practice ? null : czech ? (
+								{practice ? null : spanish ? (
+									<>
+										{spanishPractice ? (
+											<FieldRow
+												label={tP("fields.specialty")}
+												value={spanishSpecialty}
+												emptyLabel={empty}
+											/>
+										) : null}
+										<FieldRow
+											label={t("fieldsOfCare")}
+											value={spanishUnits.length > 0 ? spanishUnits.join(", ") : null}
+											emptyLabel={empty}
+										/>
+										<FieldRow
+											label={t("ownership")}
+											value={
+												ownership
+													? t(ownership.code === "PUBLIC" ? "ownershipPublic" : "ownershipPrivate")
+													: null
+											}
+											emptyLabel={empty}
+										/>
+									</>
+								) : czech ? (
 									<>
 										{payload.professionCode === CZ_SPECIALIST ? (
 											<FieldRow

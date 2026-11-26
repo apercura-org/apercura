@@ -266,6 +266,45 @@ const MEDICAL_SPECIALTIES: Record<string, readonly MedicalSpecialty[]> = {
 	psycholog: ["https://schema.org/Psychiatric"],
 	logoped: ["https://schema.org/SpeechPathology"],
 	"domaci-pece": ["https://schema.org/Nursing"],
+	// Spain's centres (Spanish listing slugs).
+	"centros-de-salud": ["https://schema.org/PrimaryCare"],
+	"medicina-general": ["https://schema.org/PrimaryCare"],
+	dentistas: ["https://schema.org/Dentistry"],
+	farmacias: ["https://schema.org/PharmacySpecialty"],
+	pediatras: ["https://schema.org/Pediatric"],
+	ginecologos: ["https://schema.org/Gynecologic", "https://schema.org/Obstetric"],
+	oftalmologos: ["https://schema.org/Ophthalmology"],
+	dermatologos: ["https://schema.org/Dermatology"],
+	traumatologos: ["https://schema.org/Musculoskeletal"],
+	otorrinos: ["https://schema.org/Otolaryngologic"],
+	cardiologos: ["https://schema.org/Cardiovascular"],
+	urologos: ["https://schema.org/Urologic"],
+	digestologos: ["https://schema.org/Gastroenterologic"],
+	neurocirujanos: ["https://schema.org/Surgical", "https://schema.org/Neurologic"],
+	neurologos: ["https://schema.org/Neurologic"],
+	endocrinos: ["https://schema.org/Endocrine"],
+	neumologos: ["https://schema.org/Pulmonary"],
+	reumatologos: ["https://schema.org/Rheumatologic"],
+	nefrologos: ["https://schema.org/Renal"],
+	oncologos: ["https://schema.org/Oncologic"],
+	hematologos: ["https://schema.org/Hematologic"],
+	"cirujanos-vasculares": ["https://schema.org/Surgical", "https://schema.org/Cardiovascular"],
+	"cirujanos-plasticos": ["https://schema.org/PlasticSurgery"],
+	"cirujanos-maxilofaciales": ["https://schema.org/Surgical"],
+	geneticistas: ["https://schema.org/Genetic"],
+	radiologos: ["https://schema.org/Radiography"],
+	geriatras: ["https://schema.org/Geriatric"],
+	"medicos-rehabilitadores": ["https://schema.org/Physiotherapy"],
+	anestesiologos: ["https://schema.org/Anesthesia"],
+	cirujanos: ["https://schema.org/Surgical"],
+	psiquiatras: ["https://schema.org/Psychiatric"],
+	psicologos: ["https://schema.org/Psychiatric"],
+	logopedas: ["https://schema.org/SpeechPathology"],
+	matronas: ["https://schema.org/Midwifery"],
+	podologos: ["https://schema.org/Podiatric"],
+	nutricionistas: ["https://schema.org/DietNutrition"],
+	fisioterapeutas: ["https://schema.org/Physiotherapy"],
+	enfermeria: ["https://schema.org/Nursing"],
 };
 
 /**
@@ -460,23 +499,30 @@ const PLACE_TYPES = {
 const DOCTOR_PROFESSIONS = new Set(["10", "ARZT"]);
 
 /**
- * schema.org types of the UK's practices and Czechia's facilities: the practice or facility
- * itself is the page's subject (those markets list places of care, not people), and its branch
- * surgeries are places of the same type. A Czech facility is a `MedicalClinic` unless it is a
- * dental practice or a pharmacy.
+ * schema.org types of the UK's practices, Czechia's facilities and Spain's centres: the practice,
+ * facility or centre itself is the page's subject (those markets list places of care, not
+ * people), and its branch surgeries are places of the same type. A Czech facility or a Spanish
+ * centre is a `MedicalClinic` unless it is a dental practice, a pharmacy or (in Spain) a
+ * hospital.
  */
-const PRACTICE_TYPES: Readonly<Record<string, "MedicalClinic" | "Dentist" | "Pharmacy">> = {
+type PracticeType = "MedicalClinic" | "Dentist" | "Pharmacy" | "Hospital";
+
+const PRACTICE_TYPES: Readonly<Record<string, PracticeType>> = {
 	GB_GP: "MedicalClinic",
 	GB_DENTAL: "Dentist",
 	GB_PHARMACY: "Pharmacy",
 	CZ_DENTIST: "Dentist",
 	CZ_PHARMACY: "Pharmacy",
+	ES_HOSPITAL: "Hospital",
+	ES_DENTAL: "Dentist",
+	ES_PHARMACY: "Pharmacy",
 };
 
 /** The schema.org type of a market of practices' page subject (`PRACTICE_TYPES`), if any. */
-function practiceTypeOf(professionCode: string): "MedicalClinic" | "Dentist" | "Pharmacy" | null {
+function practiceTypeOf(professionCode: string): PracticeType | null {
 	return (
-		PRACTICE_TYPES[professionCode] ?? (professionCode.startsWith("CZ_") ? "MedicalClinic" : null)
+		PRACTICE_TYPES[professionCode] ??
+		(professionCode.startsWith("CZ_") || professionCode.startsWith("ES_") ? "MedicalClinic" : null)
 	);
 }
 
@@ -590,7 +636,9 @@ export function practitionerNodes(input: PractitionerInput): Thing[] {
 			medicalSpecialty: specialty,
 			location: one(placeRefs.slice(1)),
 		};
-		return [practice as MedicalClinic | Dentist | Pharmacy, ...places.slice(1)].map(compact);
+		return [practice as MedicalClinic | Dentist | Pharmacy | Hospital, ...places.slice(1)].map(
+			compact,
+		);
 	}
 	// Physicians: French profession 10, Austrian ARZT. Dentists: 40, ZAHNARZT.
 	if (input.professionCode === "10" || input.professionCode === "ARZT") {

@@ -89,7 +89,8 @@
 			"FR": "Francie",
 			"AT": "Rakousko",
 			"GB": "Spojené království",
-			"CZ": "Česko"
+			"CZ": "Česko",
+			"ES": "Španělsko"
 		}
 	},
 	"HomePage": {
@@ -357,7 +358,10 @@
 		"metaTitleName": "{name} · Apercura",
 		"metaDescriptionBookable": "{name}, {occupation}: objednání online, adresa, kontakt a {fees, select, sector {smluvní vztah} other {smlouvy s pojišťovnami}}.",
 		"metaDescriptionBookablePlace": "{name}, {occupation}, {place}: objednání online, adresa, kontakt a {fees, select, sector {smluvní vztah} other {smlouvy s pojišťovnami}}.",
-		"fieldsOfCare": "Obory péče"
+		"fieldsOfCare": "Obory péče",
+		"ownership": "Zřizovatel",
+		"ownershipPublic": "Veřejný",
+		"ownershipPrivate": "Soukromý"
 	},
 	"Institutional": {
 		"toBeCompleted": "Doplní se",

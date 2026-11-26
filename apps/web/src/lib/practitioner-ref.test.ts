@@ -105,3 +105,39 @@ describe("Czech facility references", () => {
 		expect(parsePractitionerRef(practitionerRefOf(facility))).toEqual(facility);
 	});
 });
+
+describe("Spanish centre references", () => {
+	const centre = { country: "ES", idScheme: "ES-REGCESS", nationalId: "1328000001" };
+
+	it("read the `es:` reference, a Spanish page address, and a code typed on a Spanish page", () => {
+		expect(parsePractitionerRef("es:1328000001")).toEqual(centre);
+		expect(parsePractitionerRef(" ES: 1328000001 ")).toEqual(centre);
+		expect(
+			parsePractitionerRef(
+				"https://apercura.org/es/centro/clinica-dental-ejemplo-centro-1328000001",
+			),
+		).toEqual(centre);
+		expect(parsePractitionerRef("/es/centro/clinica-dental-ejemplo-centro-1328000001/")).toEqual(
+			centre,
+		);
+		expect(parsePractitionerRef("1328000001", "ES")).toEqual(centre);
+		expect(parsePractitionerRef("1328000001")).toEqual(centre);
+		expect(parsePractitionerRef("clinica-dental-ejemplo-centro-1328000001", "ES")).toEqual(centre);
+		expect(parsePractitionerRef("es:328000001")).toBeNull();
+		expect(parsePractitionerRef("es:")).toBeNull();
+	});
+
+	it("still read France's former Spanish addresses and RPPS numbers as French", () => {
+		expect(
+			parsePractitionerRef("https://apercura.fr/es/profesional/camille-19999990013")?.country,
+		).toBe("FR");
+		expect(parsePractitionerRef("19999990013", "ES")?.country).toBe("FR");
+		expect(parsePractitionerRef("900001", "ES")).toBeNull();
+	});
+
+	it("write the reference back with its market", () => {
+		expect(practitionerRefOf(centre)).toBe("es:1328000001");
+		expect(marketRef("1328000001", "ES")).toBe("es:1328000001");
+		expect(parsePractitionerRef(practitionerRefOf(centre))).toEqual(centre);
+	});
+});

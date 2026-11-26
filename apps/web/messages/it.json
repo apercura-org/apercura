@@ -89,7 +89,8 @@
 			"FR": "Francia",
 			"AT": "Austria",
 			"GB": "Regno Unito",
-			"CZ": "Cechia"
+			"CZ": "Cechia",
+			"ES": "Spagna"
 		}
 	},
 	"HomePage": {
@@ -560,6 +561,9 @@
 		"professionHeading": "Professione e qualifiche",
 		"otherQualifications": "Altre qualifiche",
 		"fieldsOfCare": "Ambiti di cura",
+		"ownership": "Titolarità",
+		"ownershipPublic": "Pubblica",
+		"ownershipPrivate": "Privata",
 		"practiceType": "Tipo di esercizio",
 		"switchboard": "{phone} (centralino della struttura)",
 		"establishment": "Struttura",
@@ -1707,7 +1711,63 @@
 			"radiolog": "Radiologo",
 			"anesteziolog": "Anestesista",
 			"chirurg": "Chirurgo",
-			"internista": "Internista"
+			"internista": "Internista",
+			"hospitales": "Ospedale",
+			"centros-de-salud": "Centro di salute",
+			"consultas-medicas": "Studio medico",
+			"otros-profesionales-sanitarios": "Studio sanitario",
+			"policlinicas": "Poliambulatorio",
+			"dentistas": "Studio dentistico",
+			"farmacias": "Farmacia",
+			"psiquiatras": "Studio di psichiatria",
+			"oftalmologos": "Studio oculistico",
+			"pediatras": "Studio pediatrico",
+			"ginecologos": "Studio ginecologico",
+			"dermatologos": "Studio dermatologico",
+			"traumatologos": "Studio ortopedico",
+			"otorrinos": "Studio otorinolaringoiatrico",
+			"cardiologos": "Studio cardiologico",
+			"urologos": "Studio urologico",
+			"digestologos": "Studio gastroenterologico",
+			"neurocirujanos": "Studio di neurochirurgia",
+			"neurologos": "Studio neurologico",
+			"alergologos": "Studio di allergologia",
+			"endocrinos": "Studio endocrinologico",
+			"neumologos": "Studio pneumologico",
+			"reumatologos": "Studio reumatologico",
+			"nefrologos": "Studio nefrologico",
+			"oncologos": "Studio oncologico",
+			"hematologos": "Studio ematologico",
+			"cirujanos-vasculares": "Studio di chirurgia vascolare",
+			"cirujanos-plasticos": "Studio di chirurgia plastica",
+			"cirujanos-maxilofaciales": "Studio di chirurgia maxillo-facciale",
+			"geneticistas": "Studio di genetica",
+			"radiologos": "Studio radiologico",
+			"geriatras": "Studio geriatrico",
+			"medicos-rehabilitadores": "Studio di riabilitazione",
+			"anestesiologos": "Studio di anestesia e terapia del dolore",
+			"medicos-deportivos": "Studio di medicina sportiva",
+			"medicos-del-trabajo": "Studio di medicina del lavoro",
+			"cirujanos": "Studio chirurgico",
+			"internistas": "Studio di medicina interna",
+			"medicina-general": "Studio di medicina generale",
+			"medicina-estetica": "Studio di medicina estetica",
+			"psicologos": "Studio di psicologia",
+			"logopedas": "Studio di logopedia",
+			"terapeutas-ocupacionales": "Studio di terapia occupazionale",
+			"matronas": "Studio ostetrico",
+			"podologos": "Studio podologico",
+			"nutricionistas": "Studio di dietetica",
+			"fisioterapeutas": "Studio di fisioterapia",
+			"enfermeria": "Studio infermieristico",
+			"hospital": "Ospedale",
+			"centro-de-salud": "Centro di salute",
+			"consultorio-local": "Ambulatorio locale",
+			"consulta-medica": "Studio medico",
+			"consulta-sanitaria": "Studio sanitario",
+			"policlinica": "Poliambulatorio",
+			"clinica-dental": "Studio dentistico",
+			"farmacia": "Farmacia"
 		},
 		"listing": {
 			"aerzte": "Medici senza specialità indicata",
@@ -1889,7 +1949,55 @@
 			"radiolog": "Radiologi",
 			"anesteziolog": "Anestesisti e terapia del dolore",
 			"chirurg": "Chirurghi",
-			"internista": "Internisti"
+			"internista": "Internisti",
+			"hospitales": "Ospedali",
+			"centros-de-salud": "Centri di salute e ambulatori locali",
+			"consultas-medicas": "Studi medici",
+			"otros-profesionales-sanitarios": "Altri professionisti sanitari",
+			"policlinicas": "Poliambulatori",
+			"dentistas": "Dentisti",
+			"farmacias": "Farmacie",
+			"psiquiatras": "Psichiatri",
+			"oftalmologos": "Oculisti",
+			"pediatras": "Pediatri",
+			"ginecologos": "Ginecologi",
+			"dermatologos": "Dermatologi",
+			"traumatologos": "Ortopedici",
+			"otorrinos": "Otorinolaringoiatri",
+			"cardiologos": "Cardiologi",
+			"urologos": "Urologi",
+			"digestologos": "Gastroenterologi",
+			"neurocirujanos": "Neurochirurghi",
+			"neurologos": "Neurologi",
+			"alergologos": "Allergologi",
+			"endocrinos": "Endocrinologi",
+			"neumologos": "Pneumologi",
+			"reumatologos": "Reumatologi",
+			"nefrologos": "Nefrologi",
+			"oncologos": "Oncologi",
+			"hematologos": "Ematologi",
+			"cirujanos-vasculares": "Chirurghi vascolari",
+			"cirujanos-plasticos": "Chirurghi plastici",
+			"cirujanos-maxilofaciales": "Chirurghi maxillo-facciali",
+			"geneticistas": "Genetisti",
+			"radiologos": "Radiologi",
+			"geriatras": "Geriatri",
+			"medicos-rehabilitadores": "Fisiatri",
+			"anestesiologos": "Anestesisti e terapia del dolore",
+			"medicos-deportivos": "Medici sportivi",
+			"medicos-del-trabajo": "Medici del lavoro",
+			"cirujanos": "Chirurghi",
+			"internistas": "Internisti",
+			"medicina-general": "Medici di medicina generale (privati)",
+			"medicina-estetica": "Medicina estetica",
+			"psicologos": "Psicologi",
+			"logopedas": "Logopedisti",
+			"terapeutas-ocupacionales": "Terapisti occupazionali",
+			"matronas": "Ostetriche",
+			"podologos": "Podologi",
+			"nutricionistas": "Dietisti",
+			"fisioterapeutas": "Fisioterapisti",
+			"enfermeria": "Infermieristica"
 		},
 		"practiceKind": {
 			"office": "Studio",
@@ -4792,6 +4900,386 @@
 			"list": [
 				"Name, address, kind of facility, fields and forms of care: the provider notifies the authority that granted its authorisation, usually the regional authority (krajský úřad) of the region where the facility is, which records the change in the register.",
 				"Telephone and other contact details, surgery hours: the provider updates them itself in the register."
+			],
+			"formTitle": "Report an error",
+			"formBody": "Give the address of the page and what is wrong."
+		},
+		"remove": {
+			"heading": "Remove a page",
+			"body": [
+				"Anyone a page is about can object to its publication at any time, without giving a reason (GDPR article 21). An unclaimed page is hidden as soon as the request arrives and deleted after a light check; it never comes back with the updates of the register. A claimed page is removed by its holder, from their space."
+			],
+			"formTitle": "Ask for a page to be removed",
+			"formBody": "Give the address of the page and an email address where we can answer you."
+		}
+	},
+	"LegalNoticeEs": {
+		"metaTitle": "Legal notice (Spain) · Apercura",
+		"metaDescription": "Legal notice of the Spanish pages of Apercura: the operator, its contact details and registration, and the person responsible for the content (Ley 34/2002, LSSI, article 10).",
+		"title": "Legal notice",
+		"lead": "Who operates the Spanish pages of Apercura (apercura.org/es), as article 10 of Ley 34/2002 on information society services and electronic commerce (LSSI) asks of a website.",
+		"sections": {
+			"provider": {
+				"heading": "Operator",
+				"body": [
+					"The Spanish pages of Apercura are operated by the entity below. It runs the directory and answers for its content."
+				]
+			},
+			"service": {
+				"heading": "The service",
+				"body": [
+					"A free directory of the health centres of Spain that patients visit (hospitals, the public network’s health centres and local surgeries, doctors’ practices, the practices of the other health professions, polyclinics, dental clinics and pharmacies), built from the General Register of health centres, services and establishments (REGCESS) of the Ministry of Health, without advertising, with a space where a centre can complete its own page. No appointment is booked through Apercura in Spain."
+				]
+			},
+			"editor": {
+				"heading": "Person responsible for the content",
+				"body": [
+					"The person below is responsible for what the operator publishes. Information a centre adds to its own page is its own responsibility; as a service that stores information provided by its users, the operator answers for it only under the conditions of article 16 of Ley 34/2002."
+				]
+			},
+			"liability": {
+				"heading": "Content of the pages",
+				"body": [
+					"The directory is built from REGCESS, which the Ministry of Health publishes every month, and from the IGN’s administrative units and population entities. It can be incomplete or out of date: check the information with the centre before you go. Every page says how to report an error."
+				]
+			},
+			"ip": {
+				"heading": "Code and data",
+				"body": [
+					"The source code of Apercura is published under the AGPL-3.0 licence. REGCESS data is reused under the Ministry of Health’s legal notice (Ley 37/2007 on the reuse of public sector information), citing the source and the date of its last update; the IGN’s data under the CC BY 4.0 licence. The data page lists every source with the attribution it requires."
+				]
+			},
+			"review": {
+				"heading": "Status of this text",
+				"body": [
+					"This text is a draft, written before the legal entity was set up. It will be reviewed by a lawyer qualified in Spain before the Spanish pages are announced."
+				]
+			}
+		},
+		"fields": {
+			"name": "Name",
+			"legalForm": "Legal form",
+			"address": "Registered office",
+			"phone": "Phone",
+			"email": "Email address",
+			"registration": "Register and registration number",
+			"vatId": "Tax identification number (NIF/VAT)",
+			"editor": "Responsible for the content"
+		},
+		"dataLink": "Data and sources"
+	},
+	"PrivacyEs": {
+		"metaTitle": "Privacy (Spain) · Apercura",
+		"metaDescription": "Data processed by the Spanish pages of Apercura: sources, purposes, legal bases, retention, recipients and your rights, including objection (GDPR articles 13, 14 and 21, LOPDGDD).",
+		"title": "Privacy",
+		"lead": "What data the Spanish pages of Apercura process, where it comes from, why, for how long and by whom, and how to exercise your rights under the General Data Protection Regulation (GDPR) and Ley Orgánica 3/2018 on personal data protection and digital rights (LOPDGDD).",
+		"sections": {
+			"controller": {
+				"heading": "Who is responsible",
+				"body": [
+					"The operator named in the legal notice is the controller of the directory, of centre accounts, of claims and of the requests sent through the site."
+				]
+			},
+			"directory": {
+				"heading": "Directory: data about health centres",
+				"body": [
+					"Data: the name of the centre as it is registered, its kind (health centre, dental clinic, pharmacy…), its care units (“oferta asistencial”), whether it is public or private, its address and municipality, and its telephone number when it is that centre’s own, as the General Register of health centres, services and establishments (REGCESS) of the Ministry of Health publishes them. A centre that claims its page can add a presentation, languages, a photo and opening hours.",
+					"Never stored, although the register publishes them: the centre’s e-mail address and fax, its regional code and the dates of its authorisations. A telephone number that the register gives for more than three centres is a head office’s and is not shown. The register publishes no coordinates: a centre is placed at its municipality’s main population centre, never at its address.",
+					"Identifier: the normalised centre code the register gives each centre (CCN), at the end of the page’s address.",
+					"Purpose: letting the public find a health centre, where it is and how to reach it. Legal basis: legitimate interests (GDPR article 6(1)(f)), assessed below.",
+					"Retention: as long as the centre appears in the register. A page disappears after two updates in which the centre is no longer in the register; a page removed after an objection is never published again.",
+					"Information: the data does not come from the centres themselves (GDPR article 14). Writing to each of them would involve a disproportionate effort (article 14(5)(b)); this notice, the data page and a notice on every page make the information public."
+				]
+			},
+			"people": {
+				"heading": "Centres, and the people they name",
+				"body": [
+					"A Spanish page is a health centre, the unit of the register, never a person’s profile. Many practices and pharmacies belong to a professional working on their own account, and are registered under that person’s name (for example “Ana María Ejemplo Sanz”): such a page names the person, and is about them.",
+					"Only the centre’s registered name is shown, as the register publishes it, with its professional details: the data of sole traders and liberal professionals that refer to their professional activity, which article 19(3) of the LOPDGDD presumes may be processed. Nothing else about the person is collected: no date of birth, no identity or tax number, no home address other than the one the register gives as the centre’s, no ratings and no reviews.",
+					"Anyone a page is about can object to it at any time, and the page is removed."
+				]
+			},
+			"sources": {
+				"heading": "Sources",
+				"body": [
+					"Every page is built from REGCESS, the register the Ministry of Health keeps under Real Decreto 1277/2003 on the authorisation of health centres and publishes every month; its legal notice allows reuse, commercial or not, citing the source and the date of the last update and without distorting the data (Ley 37/2007). Places come from the IGN (CC BY 4.0). Each source is reused with its attribution:"
+				]
+			},
+			"balancing": {
+				"heading": "Legitimate interests assessment",
+				"body": [
+					"Purpose: patients need to know which health centres are where, what care they offer and how to reach them, a need the State already meets by keeping the register and publishing it.",
+					"Necessity: only the register’s data about the centre is shown, the data it publishes anyway; nothing about private life, no ratings, no reviews.",
+					"Balance: a neutral order, no advertising, the minimum of the register’s fields, an objection that hides a page at once and keeps it from coming back, corrections at the source, and pages that follow every update of the register. A centre listed in a public register expects to be found in a directory repeating that information. Weighing these points, the interests of patients prevail, and anyone a page is about can object without giving a reason."
+				]
+			},
+			"accounts": {
+				"heading": "Centre accounts and claims",
+				"body": [
+					"Data: email address, name, password (stored hashed), second authentication factor, the documents sent to claim a page (proof that the claimant runs the centre or acts for it) and team members.",
+					"Purposes: managing the account and checking that a page is claimed by the right centre. Legal bases: performance of the terms of use (article 6(1)(b)) and the legitimate interests of securing the service (article 6(1)(f)).",
+					"Retention: the account is kept until it is deleted; supporting documents, encrypted, are erased 30 days after the decision."
+				]
+			},
+			"requests": {
+				"heading": "Error reports, objections and contact requests",
+				"body": [
+					"Data: the message, the contact email address when one is given and the page concerned; for a “this is my page” request also the name and phone number. Free text is encrypted.",
+					"Purposes: correcting errors, applying objections and helping a centre that cannot claim its page online. Legal bases: legitimate interests (article 6(1)(f)) and the right to object (article 21).",
+					"Retention: a report is deleted 6 months after it is closed, a rejected objection one year after its decision, a contact request 12 months after the last exchange. Once an objection is confirmed, or the holder of a claimed page removes it, the page and the data about it are deleted at once, the objection included; all that is kept is a record of the removal (the identifier of the page, the country, the reason, who recorded it and when), so that it is never published again. A holder who removes their page keeps, in their account only and never published, the name, kind and identifier shown in their space and their claim, until the account is deleted."
+				]
+			},
+			"technical": {
+				"heading": "Technical data and cookies",
+				"body": [
+					"Only cookies strictly necessary to the service are set: the session of signed-in centres and the chosen language. No advertising or audience measurement cookies, no trackers.",
+					"To limit abuse, IP addresses are transformed with a keyed function before being counted and never stored as such; centre sessions record a truncated IP address. Views of claimed pages are counted without a cookie or identifier, and only the page’s holder sees them."
+				]
+			},
+			"recipients": {
+				"heading": "Recipients and processors",
+				"body": [
+					"Data is neither sold nor rented, and never used for advertising. Only the operator’s team and the processors below receive it, each for its own part, under a contract that meets GDPR article 28. Maps are loaded from a tile server, which receives the visitor’s IP address like any website."
+				]
+			},
+			"transfers": {
+				"heading": "Transfers outside the European Union",
+				"body": [
+					"Data is transferred outside the European Union and the European Economic Area only under the safeguards of chapter V of the GDPR (an adequacy decision or standard contractual clauses). Any change of processor will be announced here before it takes effect."
+				]
+			},
+			"automated": {
+				"heading": "Automated decisions",
+				"body": [
+					"No decision about you is taken by automated means alone. A claim is decided by a person, who reads its documents."
+				]
+			},
+			"rights": {
+				"heading": "Your rights",
+				"body": [
+					"You can ask to access your data, to have it corrected or erased, to restrict its processing, to receive it in a portable format and to object to its processing. Write to the address below; you will get an answer within one month.",
+					"You can also lodge a complaint with the Spanish supervisory authority, the Agencia Española de Protección de Datos (AEPD): C/ Jorge Juan, 6, 28001 Madrid, www.aepd.es."
+				]
+			},
+			"objection": {
+				"heading": "Objecting to a page (GDPR article 21)",
+				"body": [
+					"Anyone a page is about can object to its publication at any time, without giving a reason. If the page is unclaimed, a form is enough: the page is hidden as soon as the request arrives, deleted after a light check, and the updates of the register never publish it again. If it is claimed, its holder removes it from their space."
+				]
+			},
+			"changes": {
+				"heading": "Updates to this notice",
+				"body": [
+					"This notice is a draft. It will be reviewed by a lawyer qualified in Spain and by the data protection officer; every version is dated."
+				]
+			}
+		},
+		"fields": {
+			"controller": "Controller",
+			"address": "Address",
+			"email": "Contact for requests",
+			"dpo": "Data protection officer",
+			"effectiveDate": "Effective date",
+			"hostingProvider": "Hosting provider (processor)",
+			"smtp": "Email delivery (processor)"
+		},
+		"objectLink": "How to object to a page",
+		"authorityLink": "Lodge a complaint with the Agencia Española de Protección de Datos"
+	},
+	"TermsEs": {
+		"metaTitle": "Terms of use (Spain) · Apercura",
+		"metaDescription": "Terms of use of the Spanish pages of Apercura: a free, factual directory of health centres from the Ministry of Health’s register, without online booking.",
+		"title": "Terms of use",
+		"lead": "The rules for using the Spanish pages of Apercura, for the public and for health centres alike.",
+		"sections": {
+			"service": {
+				"heading": "The service",
+				"body": [
+					"Apercura lists, free of charge, the health centres of the Ministry of Health’s register that patients visit: hospitals, the public network’s health centres and local surgeries, doctors’ practices, the practices of the other health professions, polyclinics, dental clinics and pharmacies. It is a directory only: no appointment is booked through Apercura in Spain. It is run by the operator named in the legal notice.",
+					"Using the directory requires no account. Using the site means accepting these terms."
+				]
+			},
+			"content": {
+				"heading": "What the pages contain",
+				"body": [
+					"Pages show factual information from the public register, in a neutral order, without ratings, reviews, advertising or paid placement.",
+					"The information may be incomplete or out of date, and a centre is shown at its municipality, not at its exact address on a map: check the information with the centre before you go. Every page says how to report an error."
+				]
+			},
+			"health": {
+				"heading": "Not medical advice",
+				"body": [
+					"Apercura gives no medical advice and is not an emergency service. In an emergency, call 112. Outside opening hours, your autonomous community’s health service can tell you where to go."
+				]
+			},
+			"practices": {
+				"heading": "For health centres",
+				"body": [
+					"Claiming a page is free. It requires a document proving that the claimant runs the centre or acts for it, checked by a person before the page is handed over.",
+					"The holder of a page is responsible for the information they add. It must stay factual, accurate and up to date, as the rules on health advertising and information require."
+				]
+			},
+			"removal": {
+				"heading": "Removing a page",
+				"body": [
+					"Anyone a page is about can ask for it to be removed at any time: the data page explains how. A claimed page can only be removed by its holder."
+				]
+			},
+			"liability": {
+				"heading": "Liability",
+				"body": [
+					"The operator does its best to keep the service available and accurate, but cannot guarantee it. It is not responsible for the information centres add to their pages. These limits will be specified during the legal review."
+				]
+			},
+			"ip": {
+				"heading": "Code and data",
+				"body": [
+					"The source code is published under the AGPL-3.0 licence. REGCESS data is reused under the Ministry of Health’s conditions (source and date cited), the IGN’s under CC BY 4.0."
+				]
+			},
+			"law": {
+				"heading": "Governing law and disputes",
+				"body": [
+					"The governing law and the competent courts will be specified during the legal review; the mandatory consumer protection rules of the country of residence always apply. In case of a dispute, first write to the contact address to look for an amicable solution."
+				]
+			}
+		},
+		"fields": {
+			"publisher": "Operator",
+			"effectiveDate": "Effective date",
+			"contact": "Contact"
+		}
+	},
+	"AccessibilityEs": {
+		"metaTitle": "Accessibility (Spain) · Apercura",
+		"metaDescription": "Accessibility of the Spanish pages of Apercura: the WCAG 2.2 AA target, what was checked, what remains, and how to report a problem.",
+		"title": "Accessibility",
+		"lead": "Apercura is designed for everyone, including older and low-vision people. This statement says where the Spanish pages stand.",
+		"sections": {
+			"scope": {
+				"heading": "Scope",
+				"body": [
+					"Real Decreto 1112/2018 on the accessibility of websites and mobile applications binds public sector bodies, which Apercura is not. Its operator nevertheless aims at the same standard on every page: WCAG 2.2 level AA (EN 301 549)."
+				]
+			},
+			"status": {
+				"heading": "Where the site stands",
+				"body": [
+					"The Spanish pages share the code of the French pages and their tests. The site partially meets WCAG 2.2 AA: this rests on a self-assessment and automated tests, not yet on a full audit, which is in progress."
+				]
+			},
+			"tests": {
+				"heading": "What was checked",
+				"list": [
+					"Automated axe-core checks (WCAG 2.0, 2.1 and 2.2 rules, levels A and AA) on every page type, at every release.",
+					"Keyboard-only journeys with a visible focus.",
+					"Body text of at least 18 px, targets of at least 44 px, nothing that relies on colour alone, no horizontal scrolling at 390 px."
+				]
+			},
+			"pending": {
+				"heading": "What remains to be checked",
+				"list": [
+					"A manual pass with the VoiceOver and NVDA screen readers, in Spanish.",
+					"A full audit against WCAG 2.2 AA on a sample of pages."
+				]
+			},
+			"feedback": {
+				"heading": "Report a problem",
+				"body": [
+					"If a page or a feature is hard to use, write to the address below: say which page and what blocked you. We answer within one month and, where needed, give you the information in another form."
+				]
+			}
+		},
+		"fields": {
+			"contact": "Contact",
+			"date": "Date of this statement"
+		}
+	},
+	"DataEs": {
+		"metaTitle": "Data and sources (Spain) · Apercura",
+		"metaDescription": "Where the Spanish pages of Apercura come from: the Ministry of Health’s register of health centres (REGCESS) and the IGN, update dates, and how to correct or remove a page.",
+		"title": "Data and sources",
+		"lead": "Every Spanish page is built from public data. Here is where it comes from, under which conditions and attribution, when it was updated, and how to correct or remove a page.",
+		"status": {
+			"heading": "Last update",
+			"body": "The Ministry of Health publishes the register every month; the directory checks it every week and imports it when it has changed. A page changes only when its facts change in the register.",
+			"importedAt": "Last import",
+			"checkedAt": "Sources last checked",
+			"notImported": "The Spanish directory has not been imported yet on this site.",
+			"notImportedValue": "Not imported yet"
+		},
+		"sources": {
+			"heading": "Sources",
+			"body": "The register is reused under the Ministry of Health’s legal notice, which allows reuse, commercial or not, provided the source and the date of the last update are cited and the data is not distorted (Ley 37/2007); the IGN’s data under the Creative Commons Attribution 4.0 International licence (CC BY 4.0). Each attribution below is printed word for word.",
+			"caption": "Data sources of the Spanish directory",
+			"columns": {
+				"source": "Source",
+				"use": "Used for",
+				"licence": "Licence and attribution",
+				"frequency": "Updated"
+			},
+			"items": {
+				"es-regcess": {
+					"use": "Health centres: names, kinds, care units, public or private, addresses, municipalities, telephone numbers",
+					"frequency": "Every month, by the Ministry of Health"
+				},
+				"es-ign": {
+					"use": "Autonomous communities, provinces and municipalities, and the main population centre of each municipality, where its centres are placed",
+					"frequency": "Every year, by the IGN"
+				},
+				"map": {
+					"name": "Map data",
+					"publisher": "OpenStreetMap contributors, tiles by OpenFreeMap",
+					"use": "Maps on the pages",
+					"frequency": "Continuously"
+				}
+			},
+			"reuse": "Reuse authorised (Ley 37/2007)",
+			"ccBy": "CC BY 4.0",
+			"odbl": "ODbL",
+			"conditionsHeading": "Conditions of the Ministry of Health",
+			"conditions": "The register is shown as published: names title-cased, the centre’s own data only, never changed in meaning. Every Spanish page cites the source and the date of its last update.",
+			"legalNotice": "The Ministry of Health’s legal notice",
+			"ignLicence": "The IGN’s licence (Orden FOM/2807/2015)"
+		},
+		"coverage": {
+			"heading": "Centres covered",
+			"body": [
+				"Pages are generated for the kinds of health centre patients visit, from the register’s type of centre. A doctor’s practice or another health professional’s practice is listed under its main care unit; its other units are shown on its page.",
+				"Left out: other inpatient centres, mobile units, diagnostic, dialysis, assisted reproduction, day surgery and transfusion centres, tissue banks, mental health centres, medical examination centres, other specialised centres and providers, services inside a centre, and the establishments other than pharmacies (first-aid kits, opticians, orthopaedic and hearing-aid shops).",
+				"The register publishes no coordinates: a centre is placed at its municipality’s main population centre (IGN). Its map position and its distance are those of the municipality, never of its address."
+			],
+			"kinds": {
+				"ES_HOSPITAL": "Hospitals (C11 to C14)",
+				"ES_HEALTH_CENTRE": "Health centres (C231)",
+				"ES_LOCAL_CLINIC": "Local primary care surgeries (C232)",
+				"ES_MEDICAL_PRACTICE": "Doctors’ practices, by main care unit (C21)",
+				"ES_OTHER_PRACTICE": "Practices of the other health professions, by main care unit (C22)",
+				"ES_POLYCLINIC": "Polyclinics (C24)",
+				"ES_DENTAL": "Dental clinics (C251)",
+				"ES_PHARMACY": "Pharmacies (E1)"
+			},
+			"kindsLabel": "Imported (register type)"
+		},
+		"identifiers": {
+			"heading": "Identifiers",
+			"body": [
+				"The address of every page ends with the normalised centre code (CCN) the register gives the centre, so a page can be found and checked against the register:"
+			],
+			"list": [
+				"/es/centro/clinica-dental-ejemplo-centro-1328900001: the centre code 1328900001.",
+				"The regional code of the centre and the owner’s tax number are not used."
+			]
+		},
+		"correct": {
+			"heading": "Correct an error",
+			"body": [
+				"The pages repeat the register: a lasting correction is made at the source, and the page follows at the next import after the register’s monthly publication.",
+				"For anything else, use the form: we check every report."
+			],
+			"list": [
+				"Name, address, kind of centre, care units: the centre’s owner notifies the health authority of its autonomous community (consejería de sanidad), which authorised the centre and records the change in the register.",
+				"Telephone number: the same way, with the health authority of the autonomous community."
 			],
 			"formTitle": "Report an error",
 			"formBody": "Give the address of the page and what is wrong."

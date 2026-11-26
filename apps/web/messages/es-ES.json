@@ -1,0 +1,265 @@
+{
+	"Metadata": {
+		"description": "El directorio abierto de los hospitales, centros de salud, consultas, clínicas dentales y farmacias de España, según el registro del Ministerio de Sanidad.",
+		"proDescription": "Apercura publica una página factual para cada centro sanitario de España inscrito en el REGCESS. Encuentre la de su centro y reclámela gratis.",
+		"homeTitle": "Apercura · Centros de salud, dentistas y farmacias de España"
+	},
+	"Site": {
+		"runningHead": "Directorio abierto de centros sanitarios en España",
+		"navPro": "Para centros sanitarios",
+		"footer": {
+			"free": "Gratuito para centros sanitarios y pacientes."
+		},
+		"folioRpps": "Código {rpps}"
+	},
+	"Search": {
+		"label": "Encontrar un centro de salud, una consulta, un dentista o una farmacia",
+		"whoHint": "Nombre del centro, o centro de salud, dentista, farmacia, especialidad",
+		"whereHint": "Municipio o provincia"
+	},
+	"SearchForm": {
+		"practitioners": "Centros",
+		"department": "Provincia",
+		"geoDenied": "La ubicación está desactivada para este sitio. Escriba un municipio.",
+		"geoUnavailable": "No se ha podido encontrar su ubicación. Escriba un municipio."
+	},
+	"SearchPage": {
+		"emptyTitle": "Ningún centro coincide",
+		"emptyBody": "Compruebe la ortografía, pruebe con un municipio cercano o con un término más amplio, como «centro de salud».",
+		"queryOnlyNear": "Centros cerca de usted (ubicación aproximada: el centro del municipio)",
+		"startTitle": "¿Qué busca?",
+		"startBody": "Escriba el nombre de un centro, o centro de salud, dentista, farmacia o una especialidad, en «¿Quién?», y un municipio o una provincia en «¿Dónde?». También puede explorar el directorio por comunidad autónoma y provincia.",
+		"unknownPlaceBody": "Compruebe la ortografía o escriba un municipio cercano.",
+		"unlistedBody": "En España, el directorio incluye por ahora hospitales, centros de salud y consultorios, consultas médicas y de otros profesionales sanitarios, policlínicas, clínicas dentales y farmacias. Busque el nombre de un centro o explore el directorio.",
+		"departmentPlace": "Provincia",
+		"bookingNotOpen": "Apercura no ofrece cita en línea en España: llame al centro.",
+		"columns": {
+			"practitioner": "Centro",
+			"place": "Dirección",
+			"appointments": "Contacto"
+		},
+		"outsidePlace": "Fuera de {where}",
+		"rppsBody": "Este código no es válido o el centro no tiene página pública: el directorio incluye solo los tipos de centro que visitan los pacientes. El titular de un centro puede, no obstante, encontrar y reclamar su ficha.",
+		"distance": "A unos {km} km (centro del municipio)"
+	},
+	"HomePage": {
+		"title": "Encuentre un centro de salud, una consulta, un dentista o una farmacia en España",
+		"hook": "Cada hospital, centro de salud, consulta, clínica dental y farmacia inscritos en el registro del Ministerio de Sanidad ya tiene su página.",
+		"pillars": {
+			"free": {
+				"description": "Gratuito para centros sanitarios y pacientes, sin suscripción ni comisión."
+			}
+		},
+		"registry": {
+			"heading": "Creada a partir del registro del Ministerio de Sanidad",
+			"intro": "Cada página parte del Registro General de centros, servicios y establecimientos sanitarios (REGCESS), que el Ministerio de Sanidad publica cada mes. Se enumeran centros, nunca profesionales a título individual. Nadie paga por figurar y nadie queda excluido.",
+			"sourceName": "REGCESS, Ministerio de Sanidad"
+		},
+		"pro": {
+			"heading": "¿Dirige un centro sanitario, una consulta o una farmacia?",
+			"body": "La página de su centro ya existe. Reclamarla es gratuito."
+		},
+		"tagline": "El directorio abierto de los centros sanitarios de España.",
+		"market": {
+			"listingsHeading": "Por tipo de centro y especialidad",
+			"placesHeading": "Por provincia"
+		},
+		"specimen": {
+			"heading": "Cada centro sanitario ya tiene su página"
+		}
+	},
+	"Practitioner": {
+		"rpps": "Código REGCESS",
+		"specimen": "Ejemplo, no es un centro real",
+		"statusNote": {
+			"unclaimed": "Creada a partir del registro del Ministerio de Sanidad (REGCESS). El centro todavía no ha completado esta página.",
+			"verified": "Completada por el centro, cuya reclamación se ha verificado."
+		},
+		"fields": {
+			"profession": "Tipo de centro"
+		},
+		"source": {
+			"name": "Fuente: Ministerio de Sanidad, REGCESS"
+		},
+		"action": {
+			"call": {
+				"statement": "Apercura no ofrece cita en línea en España. Llame al centro para pedir cita."
+			}
+		},
+		"sitesHeading": "Dirección"
+	},
+	"PractitionerPage": {
+		"metaTitle": "{name}, {occupation} · Apercura",
+		"metaTitlePlace": "{name}, {occupation} en {place} · Apercura",
+		"metaDescription": "{name}, {occupation}: {fees, select, sector {dirección, teléfono y tarifas} other {dirección, teléfono y oferta asistencial}}, según el registro del Ministerio de Sanidad.",
+		"metaDescriptionPlace": "{name}, {occupation} en {place}: {fees, select, sector {dirección, teléfono y tarifas} other {dirección, teléfono y oferta asistencial}}, según el registro del Ministerio de Sanidad.",
+		"unknownProfession": "Centro sanitario",
+		"professionHeading": "Centro",
+		"fieldsOfCare": "Oferta asistencial",
+		"unnamedPlace": "Centro",
+		"asideLabel": "Sobre esta página",
+		"action": {
+			"callNotYetOpen": "Apercura no ofrece cita en línea en España. Para pedir cita, llame al centro.",
+			"noPhone": "El registro no publica ningún número de teléfono para este centro."
+		},
+		"claim": {
+			"heading": "¿Es su centro?",
+			"body": "Esta página se ha creado a partir del registro del Ministerio de Sanidad. Reclámela para comprobarla y completarla:",
+			"claimedHeading": "Página gestionada por el centro",
+			"claimedBody": "El centro ha reclamado esta página: su reclamación se ha verificado y es quien la completa.",
+			"contactLink": "¿No tiene un documento a mano? Contáctenos",
+			"benefits": [
+				"gratis, sin suscripción ni compromiso;",
+				"su foto, su horario y los idiomas que se hablan;",
+				"su sitio web y la información de accesibilidad;",
+				"las estadísticas de visitas de su página;",
+				"un kit para compartir: enlace, código QR y cartel."
+			]
+		},
+		"report": {
+			"body": "Si una dirección, un número de teléfono o un nombre es incorrecto, díganos cómo corregirlo."
+		},
+		"ring": {
+			"heading": "Otros centros: {occupation} en {place}"
+		}
+	},
+	"Listing": {
+		"count": "{count, plural, one {# centro} many {# de centros} other {# centros}}",
+		"metaTitle": "{count, plural, one {{listing} en {place}: # centro · Apercura} many {{listing} en {place}: # de centros · Apercura} other {{listing} en {place}: # centros · Apercura}}",
+		"metaDescription": "{count, plural, one {# centro inscrito como {occupation} en {place}: {fees, select, sector {direcciones, teléfonos y tarifas} other {direcciones y teléfonos}}, según el registro del Ministerio de Sanidad.} many {# de centros inscritos como {occupation} en {place}: {fees, select, sector {direcciones, teléfonos y tarifas} other {direcciones y teléfonos}}, según el registro del Ministerio de Sanidad.} other {# centros inscritos como {occupation} en {place}: {fees, select, sector {direcciones, teléfonos y tarifas} other {direcciones y teléfonos}}, según el registro del Ministerio de Sanidad.}}",
+		"lead": "{count, plural, one {El registro del Ministerio de Sanidad incluye # centro en este apartado en {place}.} many {El registro del Ministerio de Sanidad incluye # de centros en este apartado en {place}.} other {El registro del Ministerio de Sanidad incluye # centros en este apartado en {place}.}}",
+		"practitionersHeading": "{count, plural, one {El centro} many {Los # de centros} other {Los # centros}}",
+		"columns": {
+			"practitioner": "Centro"
+		},
+		"facts": {
+			"sources": "REGCESS (Ministerio de Sanidad) e IGN"
+		},
+		"communesHeading": "{listing}: municipios de {place}",
+		"nearbyHeading": "{listing}: municipios cercanos",
+		"authoritiesHeading": "{listing}: provincias de {place}",
+		"hubMetaTitle": "{count, plural, one {{listing} en España: # centro · Apercura} many {{listing} en España: # de centros · Apercura} other {{listing} en España: # centros · Apercura}}",
+		"hubMetaDescription": "{count, plural, one {# centro inscrito como {occupation} en España, por provincia: {fees, select, sector {direcciones, teléfonos y tarifas} other {direcciones y teléfonos}}, según el registro del Ministerio de Sanidad.} many {# de centros inscritos como {occupation} en España, por provincia: {fees, select, sector {direcciones, teléfonos y tarifas} other {direcciones y teléfonos}}, según el registro del Ministerio de Sanidad.} other {# centros inscritos como {occupation} en España, por provincia: {fees, select, sector {direcciones, teléfonos y tarifas} other {direcciones y teléfonos}}, según el registro del Ministerio de Sanidad.}}",
+		"hubTitle": "{listing} en España",
+		"hubLead": "{count, plural, one {El registro del Ministerio de Sanidad incluye # centro en este apartado en España.} many {El registro del Ministerio de Sanidad incluye # de centros en este apartado en España.} other {El registro del Ministerio de Sanidad incluye # centros en este apartado en España.}}",
+		"departmentsHeading": "{listing} por provincia",
+		"departmentsIntro": "Elija una provincia para ver sus municipios y sus centros.",
+		"metaDescriptionPage": "{count, plural, one {Página {page} de {pages}: # centro inscrito como {occupation} en {place}.} many {Página {page} de {pages}: # de centros inscritos como {occupation} en {place}.} other {Página {page} de {pages}: # centros inscritos como {occupation} en {place}.}}",
+		"metaDescriptionPageRange": "{count, plural, one {Página {page} de {pages}, de {first} a {last}: # centro inscrito como {occupation} en {place}.} many {Página {page} de {pages}, de {first} a {last}: # de centros inscritos como {occupation} en {place}.} other {Página {page} de {pages}, de {first} a {last}: # centros inscritos como {occupation} en {place}.}}",
+		"hubMetaTitleShort": "{listing} en España · Apercura",
+		"allSpecialties": "Todos los tipos de centro en {place}"
+	},
+	"Directory": {
+		"metaTitle": "Directorio de centros sanitarios por lugar · Apercura",
+		"metaDescription": "Las comunidades autónomas y provincias de España con sus hospitales, centros de salud, consultas, dentistas y farmacias, según el Ministerio de Sanidad.",
+		"lead": "{count, plural, one {# centro, por comunidad autónoma y provincia.} many {# de centros, por comunidad autónoma y provincia.} other {# centros, por comunidad autónoma y provincia.}}",
+		"otherRegion": "Otros lugares",
+		"emptyBody": "El registro del Ministerio de Sanidad todavía no se ha importado en este servidor. Vuelva después de la próxima importación.",
+		"placeMetaTitle": "Centros de salud, consultas, dentistas y farmacias en {place} · Apercura",
+		"placeMetaDescription": "{count, plural, one {# centro sanitario en {place}, por tipo, según el registro del Ministerio de Sanidad.} many {# de centros sanitarios en {place}, por tipo, según el registro del Ministerio de Sanidad.} other {# centros sanitarios en {place}, por tipo, según el registro del Ministerio de Sanidad.}}",
+		"placeTitle": "Centros sanitarios en {place}",
+		"placeLead": "{count, plural, one {# centro en {place}.} many {# de centros en {place}.} other {# centros en {place}.}}",
+		"specialtiesHeading": "Por tipo de centro y especialidad",
+		"communesHeading": "Municipios de {place}",
+		"authoritiesHeading": "Provincias de {place}",
+		"placeMetaTitleShort": "Centros sanitarios en {place} · Apercura"
+	},
+	"OgImage": {
+		"runningHead": "Directorio abierto de centros sanitarios",
+		"practitioner": {
+			"folio": "Código {rpps}"
+		}
+	},
+	"taxonomy": {
+		"practiceKind": {
+			"office": "Centro"
+		}
+	},
+	"Claim": {
+		"errors": {
+			"NOT_FOUND": "Ninguna página tiene este código.",
+			"INVALID_RPPS": "Este código no es válido: es el código REGCESS del centro (10 cifras, por ejemplo 1328900001), el final de la dirección de su página o la dirección completa."
+		},
+		"start": {
+			"lead": "Una reclamación se refiere a la página de un centro, nunca a un nombre.",
+			"contestBody": "Si es la de su centro (por ejemplo, si perdió el acceso a su cuenta), puede reclamarla de todos modos: un administrador estudia su documento y decide. Recuperar una cuenta siempre requiere una nueva verificación.",
+			"findHeading": "Encuentre la página de su centro",
+			"notFound": "Ninguna página pública tiene todavía este código.",
+			"rppsLabel": "Código REGCESS o dirección de la página",
+			"rppsHint": "El código REGCESS de su centro (10 cifras, por ejemplo 1328900001), o la dirección de su página, por ejemplo apercura.org/es/centro/clinica-dental-ejemplo-centro-1328900001.",
+			"contactLink": "¿No tiene un documento a mano? Contáctenos"
+		},
+		"methods": {
+			"document": {
+				"summary": "Un documento que demuestre que dirige el centro o actúa en su nombre: la autorización sanitaria de funcionamiento del centro, o su número de colegiado con una carta con membrete del centro. Un miembro de nuestro equipo lo revisa, normalmente en un plazo de 48 horas.",
+				"lead": "Envíe un documento que demuestre que dirige el centro o actúa en su nombre: la autorización sanitaria de funcionamiento, o su colegiación profesional con una carta con membrete del centro. Se cifra antes de almacenarse y se elimina 30 días después de la decisión."
+			}
+		},
+		"documents": {
+			"kind": {
+				"cps_card": "Colegiación profesional con una carta con membrete del centro",
+				"ordre_attestation": "Autorización sanitaria de funcionamiento del centro"
+			}
+		},
+		"status": {
+			"contestReview": "Esta página ya tenía un titular verificado: un administrador decide sobre su documento.",
+			"reviewBody": "Un miembro de nuestro equipo revisa su documento y le escribe por correo electrónico.",
+			"contestBody": "Un administrador decidirá sobre su documento."
+		}
+	},
+	"Gdpr": {
+		"rpps": "Código de la página",
+		"rppsHint": "El código REGCESS del centro (10 cifras), el final de la dirección de la página o la dirección completa.",
+		"errors": {
+			"notFound": "Ninguna página tiene este código."
+		},
+		"report": {
+			"doneBody": "Lo comprobamos. Los datos del registro se corrigen en la fuente, por el titular del centro ante la consejería de sanidad de su comunidad autónoma; le avisaremos si nos ha dejado una dirección."
+		},
+		"removal": {
+			"doneBody": "Ya no se muestra, ni se indexa ni aparece en los listados. Comprobamos la solicitud y le respondemos por correo electrónico en un plazo máximo de un mes. Si se confirma, la página se elimina definitivamente y no vuelve con las actualizaciones del registro.",
+			"privacy": "Una página eliminada no vuelve a aparecer con la siguiente importación del registro.",
+			"claimedBody": "Solo su titular puede retirarla, desde el editor de página de su espacio: la página desaparece entonces de inmediato y no vuelve con las actualizaciones del registro."
+		},
+		"contact": {
+			"lead": "¿No puede reclamar la página de su centro con un documento? Déjenos sus datos: un miembro del equipo de Apercura se pondrá en contacto con usted para comprobar que actúa en nombre del centro y ayudarle.",
+			"claimFirst": "Con un documento que demuestre que actúa en nombre del centro, la reclamación es más rápida:",
+			"rpps": "Código de la página"
+		}
+	},
+	"emails": {
+		"claimReceived": {
+			"body": [
+				"Hola, {name}:",
+				"Hemos recibido su reclamación y sus documentos. Un miembro del equipo de Apercura los revisa y le escribe por correo electrónico.",
+				"Revisamos las reclamaciones en un plazo de 48 horas en días laborables."
+			]
+		},
+		"claimRejected": {
+			"body": [
+				"Hola, {name}:",
+				"No hemos podido verificar su reclamación. Motivo indicado por el revisor: {reason}",
+				"Puede abrir una nueva reclamación desde su espacio, con un documento legible que demuestre que actúa en nombre del centro."
+			]
+		},
+		"removalReceived": {
+			"body": [
+				"La página queda oculta desde ahora: ya no se muestra, ni se indexa ni aparece en los listados.",
+				"Comprobamos la solicitud y le respondemos en un plazo máximo de un mes. Si se confirma, la página se elimina; una página eliminada no vuelve con la siguiente importación del registro del Ministerio de Sanidad."
+			]
+		},
+		"removalConfirmed": {
+			"body": [
+				"La página cuya retirada solicitó se ha eliminado de Apercura. No volverá a aparecer con la próxima importación del registro del Ministerio de Sanidad."
+			]
+		}
+	},
+	"Onboarding": {
+		"steps": {
+			"check": {
+				"lead": "Su página parte del registro del Ministerio de Sanidad (REGCESS). Compruebe el nombre del centro, su tipo, su oferta asistencial y su dirección.",
+				"registryNote": "¿Algo es incorrecto? La corrección duradera se hace ante la consejería de sanidad de su comunidad autónoma, que actualiza el registro; la página se actualiza en la siguiente importación. Puede ocultar una dirección o añadir una en el editor de la página."
+			}
+		}
+	}
+}

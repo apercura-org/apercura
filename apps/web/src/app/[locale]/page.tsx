@@ -3,6 +3,7 @@ import {
 	AT_DENTIST,
 	AT_DOCTOR,
 	CZ_DEFAULT_PROFESSIONS,
+	ES_DEFAULT_PROFESSIONS,
 	GB_DENTAL_PRACTICE,
 	GB_GP_PRACTICE,
 	GB_PHARMACY,
@@ -55,8 +56,8 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
 	const t = await getTranslations({ locale, namespace: "HomePage" });
 
 	const tMeta = await getTranslations({ locale, namespace: "Metadata" });
-	// Austria, the UK and Czechia: a directory from open lists, without booking or the French
-	// registry.
+	// Austria, the UK, Czechia and Spain: a directory from open lists, without booking or the
+	// French registry.
 	const market = marketOf(locale);
 	const austrian = market !== "FR";
 	const pillars: Pillar[] = austrian
@@ -201,7 +202,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
 /**
  * The home of a market opened from open lists: its largest listings and its places, from the
  * read models. Austria lists its Bundesländer; the UK its regions and nations, each a hub;
- * Czechia its districts (okresy).
+ * Czechia its districts (okresy); Spain its provinces.
  */
 async function MarketDirectory({ locale }: { locale: Locale }) {
 	const t = await getTranslations({ locale, namespace: "HomePage" });
@@ -267,15 +268,17 @@ async function MarketDirectory({ locale }: { locale: Locale }) {
 /**
  * The sources and figures of a market opened from open lists: pages by profession (Austria's
  * doctors and dentists, the UK's GP practices, dental practices and pharmacies, Czechia's kinds
- * of facility) and the lists.
+ * of facility, Spain's kinds of centre) and the lists.
  */
 async function OpenDataRegistry({ locale }: { locale: Locale }) {
 	const t = await getTranslations({ locale, namespace: "HomePage" });
 	const labels = await getTaxonomyLabels(locale);
 	const country = marketOf(locale);
 	const overview = await getMarketOverview(country);
-	const countOf = (code: string) =>
-		overview.professions.find((row) => row.professionCode === code)?.practitionerCount ?? 0;
+	const countOf = (codes: readonly string[]) =>
+		overview.professions
+			.filter((row) => codes.includes(row.professionCode))
+			.reduce((sum, row) => sum + row.practitionerCount, 0);
 	const adapter = country === "AT" ? austria : countryAdapter(country);
 	const sources = [
 		...new Set(
@@ -285,19 +288,28 @@ async function OpenDataRegistry({ locale }: { locale: Locale }) {
 				.map((registry) => (country === "GB" ? registry.publisher : registry.name)),
 		),
 	].join(country === "GB" ? "; " : ", ");
+	// One row per listing of a kind: Spain's health centres and local surgeries share one.
+	const byListing = (codes: readonly string[]) => {
+		const rows = new Map<string, { code: string; codes: string[]; label: string }>();
+		for (const code of codes) {
+			const slug = adapter.taxonomy.listingSlugFor(code, null) ?? code;
+			const row = rows.get(slug);
+			if (row) row.codes.push(code);
+			else rows.set(slug, { code, codes: [code], label: labels.listing(slug) ?? code });
+		}
+		return [...rows.values()];
+	};
 	const rows =
-		country === "GB" || country === "CZ"
-			? (country === "GB"
-					? [GB_GP_PRACTICE, GB_DENTAL_PRACTICE, GB_PHARMACY]
-					: CZ_DEFAULT_PROFESSIONS
-				).map((code) => ({
-					code,
-					label: labels.listing(adapter.taxonomy.listingSlugFor(code, null)) ?? code,
-				}))
-			: [
-					{ code: AT_DOCTOR, label: t("registry.doctors") },
-					{ code: AT_DENTIST, label: t("registry.dentists") },
-				];
+		country === "GB"
+			? byListing([GB_GP_PRACTICE, GB_DENTAL_PRACTICE, GB_PHARMACY])
+			: country === "CZ"
+				? byListing(CZ_DEFAULT_PROFESSIONS)
+				: country === "ES"
+					? byListing(ES_DEFAULT_PROFESSIONS)
+					: [
+							{ code: AT_DOCTOR, codes: [AT_DOCTOR], label: t("registry.doctors") },
+							{ code: AT_DENTIST, codes: [AT_DENTIST], label: t("registry.dentists") },
+						];
 	return (
 		<section
 			aria-labelledby="registry-heading"
@@ -317,7 +329,9 @@ async function OpenDataRegistry({ locale }: { locale: Locale }) {
 							label={row.label}
 							emptyLabel=""
 							value={
-								<span className="tabular">{t("registry.count", { count: countOf(row.code) })}</span>
+								<span className="tabular">
+									{t("registry.count", { count: countOf(row.codes) })}
+								</span>
 							}
 						/>
 					))}

@@ -95,3 +95,30 @@ describe("Czech facility keys", () => {
 		expect(displayId({ idScheme: "CZ-NRPZS", nationalId: "900001" })).toBe("900001");
 	});
 });
+
+describe("Spanish centre keys", () => {
+	it("read a centre page segment in Spain only", () => {
+		expect(parsePractitionerKey("es-ES", "clinica-dental-ejemplo-centro-1328000001")).toEqual({
+			country: "ES",
+			idScheme: "ES-REGCESS",
+			nationalId: "1328000001",
+			namePart: "clinica-dental-ejemplo-centro",
+		});
+		expect(parsePractitionerKey("es-ES", "camille-exemple-19999990013")).toBeNull();
+		expect(parsePractitionerKey("es-ES", "mudr-jana-ukazkova-900001")).toBeNull();
+		// France in Spanish keeps France's keys.
+		expect(parsePractitionerKey("es", "camille-exemple-19999990013")?.country).toBe("FR");
+		expect(parsePractitionerKey("es", "clinica-dental-ejemplo-centro-1328000001")).toBeNull();
+		expect(marketAdapter("es-ES").features.booking).toBe(false);
+	});
+
+	it("mark a Spanish segment outside a locale, and print the REGCESS code", () => {
+		expect(marketSegmentOf("ES", "clinica-1328000001")).toBe("es.clinica-1328000001");
+		expect(parseAnyPractitionerKey("es.clinica-1328000001")).toMatchObject({
+			country: "ES",
+			nationalId: "1328000001",
+		});
+		expect(parseAnyPractitionerKey("clinica-1328000001")).toBeNull();
+		expect(displayId({ idScheme: "ES-REGCESS", nationalId: "1328000001" })).toBe("1328000001");
+	});
+});

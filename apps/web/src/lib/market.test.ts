@@ -216,3 +216,55 @@ describe("Czechia's pages", () => {
 		expect(openDataSourcesOf("CZ", [])).toEqual([]);
 	});
 });
+
+describe("Spain's pages", () => {
+	it("serve Spain's listings, without booking or French insurance facts", () => {
+		expect(isMarketListingSlug("es-ES", "dentistas")).toBe(true);
+		expect(isMarketListingSlug("es-ES", "cardiologos")).toBe(true);
+		expect(isMarketListingSlug("es-ES", "centro")).toBe(false);
+		expect(isMarketListingSlug("es-ES", "chirurgien-dentiste")).toBe(false);
+		expect(isMarketListingSlug("es", "dentistas")).toBe(false);
+		expect(isMarketListingSlug("fr", "dentistas")).toBe(false);
+		expect(showsBillingFacts("es-ES")).toBe(false);
+		expect(marketBooks("es-ES")).toBe(false);
+		expect(professionSlugOf("ES_PHARMACY")).toBe("farmacias");
+		expect(professionSlugOf("ES_LOCAL_CLINIC")).toBe("centros-de-salud");
+	});
+
+	it("check province slugs and label places by name, with no city as its province", () => {
+		expect(isDepartmentSlug("madrid", "ES")).toBe(true);
+		expect(isDepartmentSlug("valencia-valencia", "ES")).toBe(true);
+		expect(isDepartmentSlug("28", "ES")).toBe(false);
+		expect(
+			placeLabel({ kind: "department", code: "28", name: "Madrid", departmentCode: "28" }, "ES"),
+		).toBe("Madrid");
+		expect(
+			placeLabel({ kind: "commune", code: "28079", name: "Madrid", departmentCode: "28" }, "ES"),
+		).toBe("Madrid");
+		expect(isDepartmentCity("ES", "28079")).toBe(false);
+	});
+
+	it("write Spanish addresses street, then postcode and town, and Spanish numbers", () => {
+		const site = {
+			addressLine: "Calle Alcala, 10",
+			addressComplement: null,
+			postcode: "28014",
+			placeName: "Madrid",
+		};
+		expect(addressLines(site, "ES")).toEqual(["Calle Alcala, 10", "28014 Madrid"]);
+		expect(localityOf("Madrid", "ES")).toBe("Madrid");
+		expect(formatPhone("+34910000001")).toBe("910 000 001");
+	});
+
+	it("credit REGCESS with the date of its data, and the IGN with its CC BY 4.0 attribution", () => {
+		const sources = openDataSourcesOf("ES", [{ source: "es-regcess", site: null }], "2026-12-01");
+		expect(sources.map((source) => source.attribution)).toEqual([
+			"Fuente: Ministerio de Sanidad, REGCESS, actualizado 1 de diciembre de 2026",
+			"Obra derivada de Líneas Límite Municipales e IGR Poblaciones 2025 CC-BY 4.0 ign.es",
+		]);
+		expect(openDataSourcesOf("ES", [{ source: "es-regcess", site: null }])[0]?.attribution).toBe(
+			"Fuente: Ministerio de Sanidad, REGCESS",
+		);
+		expect(openDataSourcesOf("ES", [])).toEqual([]);
+	});
+});
