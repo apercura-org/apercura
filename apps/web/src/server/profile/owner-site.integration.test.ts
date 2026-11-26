@@ -67,6 +67,8 @@ describe.skipIf(!url)("owner-added places by market (database)", async () => {
 
 	let gemeinde = 0;
 	let municipio = 0;
+	let comune = 0;
+	let homonym = 0;
 
 	beforeAll(async () => {
 		db = createDb({ url: url as string, max: 2 });
@@ -86,6 +88,23 @@ describe.skipIf(!url)("owner-added places by market (database)", async () => {
 			name: `Villaficticia ${run}`,
 			slug: `villaficticia-${run}`,
 			departmentCode: "28",
+		});
+		// Two Italian comuni no register has, of one name, in two provinces (Roma 258, Milano 215).
+		comune = await place({
+			country: "IT",
+			kind: "commune",
+			code: `r${run}`,
+			name: `Borgo Fittizio ${run}`,
+			slug: `borgo-fittizio-${run}`,
+			departmentCode: "258",
+		});
+		homonym = await place({
+			country: "IT",
+			kind: "commune",
+			code: `m${run}`,
+			name: `Borgo Fittizio ${run}`,
+			slug: `borgo-fittizio-${run}`,
+			departmentCode: "215",
 		});
 	});
 
@@ -144,6 +163,33 @@ describe.skipIf(!url)("owner-added places by market (database)", async () => {
 		});
 		// Another province's postcode names another municipality: refused.
 		await expect(addOwnerSite(db, id, { ...input, postcode: "08001" })).rejects.toThrow(
+			"UNKNOWN_PLACE",
+		);
+	});
+
+	it("places an Italian place in its comune by name, its own province's homonym first", async () => {
+		const id = await practitioner("IT", "IT-FARM");
+		await db.execute(
+			sql`UPDATE directory.practitioners SET primary_place_id = ${homonym} WHERE id = ${id}`,
+		);
+		const input = {
+			name: "Farmacia",
+			addressLine: "Via Fittizia, 1",
+			postcode: "20121",
+			city: `Borgo Fittizio ${run}`,
+			phone: "02 1234 5678",
+		};
+		const { siteId } = await addOwnerSite(db, id, input);
+		expect(await siteOf(siteId)).toEqual({
+			place_id: homonym,
+			country_code: "IT",
+			phone: "+390212345678",
+		});
+		await db.execute(
+			sql`UPDATE directory.practitioners SET primary_place_id = ${comune} WHERE id = ${id}`,
+		);
+		expect((await siteOf((await addOwnerSite(db, id, input)).siteId))?.place_id).toBe(comune);
+		await expect(addOwnerSite(db, id, { ...input, postcode: "8010" })).rejects.toThrow(
 			"UNKNOWN_PLACE",
 		);
 	});
