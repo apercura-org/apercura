@@ -5,6 +5,8 @@ import { parseProfessionList } from "@apercura/core/taxonomy";
 import { DEFAULT_AT_PLACES_URL } from "./sources/at/places";
 import { AT_SOURCE_IDS, type AtSourceId } from "./sources/at/types";
 import { defaultCzPlacesUrls } from "./sources/cz/places";
+import { DEFAULT_DE_PLACES_URL } from "./sources/de/places";
+import { DE_SOURCE_IDS, type DeFileId, type DeSourceId } from "./sources/de/types";
 import { DEFAULT_ES_PLACES_BASE } from "./sources/es/places";
 import { ES_SOURCE_IDS, ES_SOURCES, type EsSourceId } from "./sources/es/types";
 import {
@@ -605,6 +607,122 @@ export function buildItOptions(flags: ParsedArgs["flags"], env: NodeJS.ProcessEn
 		registerCoordinates:
 			flags.has("register-coordinates") || env.ETL_IT_REGISTER_COORDINATES === "1",
 		asOf,
+		workDir: flagString(flags, "work-dir") ?? env.ETL_WORK_DIR ?? null,
+		appUrl: offline ? null : env.APP_URL || null,
+		revalidateSecret: env.REVALIDATE_SECRET || null,
+	};
+}
+
+// ---------------------------------------------------------------------------
+// Germany (`etl:de`)
+// ---------------------------------------------------------------------------
+
+/**
+ * Where Destatis publishes each edition of the directory of hospitals and prevention or
+ * rehabilitation clinics: the product number embeds the reporting year's last two digits
+ * (`3500100247005` is 2024's).
+ */
+export const destatisEditionUrl = (year: number) =>
+	`https://www.destatis.de/DE/Themen/Gesellschaft-Umwelt/Gesundheit/Krankenhauser/Publikationen/Downloads-Krankenhaeuser/krankenhausverzeichnis-3500100${String(year % 100).padStart(2, "0")}7005.xlsx?__blob=publicationFile`;
+
+/**
+ * The statistical offices' joint portal's page of the directory, which links its latest edition
+ * (`/sites/default/files/2026-06/krankenhausverzeichnis_24.xlsx`): read to find an edition whose
+ * Destatis address is not the expected one (`ETL_DE_KHV_INDEX_URL`).
+ */
+export const DEFAULT_DE_KHV_INDEX_URL =
+	"https://www.statistikportal.de/de/veroeffentlichungen/krankenhausverzeichnis";
+
+/** The portal's copy of the 2024 edition: the last resort (`ETL_DE_KHV_MIRROR_URL`). */
+export const DEFAULT_DE_KHV_MIRROR_URL =
+	"https://www.statistikportal.de/sites/default/files/2026-06/krankenhausverzeichnis_24.xlsx";
+
+/** The pharmacy lists (`ETL_DE_APO_TH_URL`, `ETL_DE_APO_BB_URL`). */
+export const DEFAULT_DE_PHARMACY_URLS = {
+	"apo-th": "https://www.geoproxy.geoportal-th.de/download-service/opendata/giz/apotheke.zip",
+	"apo-bb":
+		"https://ogc-api.geobasis-bb.de/datasets/apotheken/collections/apotheken/items?bulk=true&f=json",
+} as const;
+
+export type DeOptions = {
+	databaseUrl: string;
+	dryRun: boolean;
+	approveRunId: number | null;
+	force: boolean;
+	sourceDir: string | null;
+	offline: boolean;
+	sources: DeSourceId[];
+	/**
+	 * The URLs tried in turn for each file, the first that downloads wins: for the directory, the
+	 * configured one alone, else the Destatis addresses of the editions that may be the latest
+	 * (last year's first), then the portal's latest link (`khvIndexUrl`), then its known copy.
+	 */
+	urls: Record<DeFileId, string[]>;
+	/** The portal's page read for the latest edition's link, or null not to read it. */
+	khvIndexUrl: string | null;
+	/** GV-ISys's latest extract for the places (`ETL_DE_PLACES_URL`). */
+	placesUrl: string;
+	workDir: string | null;
+	appUrl: string | null;
+	revalidateSecret: string | null;
+};
+
+/** Parses a comma-separated list of German sources (`khv,apo-th`); throws on unknown ones. */
+export function parseDeSources(value: string | null | undefined): DeSourceId[] {
+	if (!value) return [...DE_SOURCE_IDS];
+	const sources = value
+		.split(",")
+		.map((source) => source.trim())
+		.filter(Boolean);
+	for (const source of sources) {
+		if (!(DE_SOURCE_IDS as readonly string[]).includes(source)) {
+			throw new Error(`Unknown German source "${source}" (one of ${DE_SOURCE_IDS.join(", ")})`);
+		}
+	}
+	if (sources.length === 0) throw new Error("At least one German source is required");
+	return [...new Set(sources)] as DeSourceId[];
+}
+
+/**
+ * The addresses of the directory to try, newest edition first: `ETL_DE_KHV_URL` alone when set;
+ * else Destatis's for last year's and the year before's reporting years (an edition comes out
+ * some five months after its year ends), then the mirror (`ETL_DE_KHV_MIRROR_URL`).
+ */
+export function deDirectoryUrls(env: NodeJS.ProcessEnv, now: Date = new Date()): string[] {
+	if (env.ETL_DE_KHV_URL) return [env.ETL_DE_KHV_URL];
+	const year = now.getUTCFullYear();
+	return [
+		destatisEditionUrl(year - 1),
+		destatisEditionUrl(year - 2),
+		env.ETL_DE_KHV_MIRROR_URL || DEFAULT_DE_KHV_MIRROR_URL,
+	];
+}
+
+export function buildDeOptions(
+	flags: ParsedArgs["flags"],
+	env: NodeJS.ProcessEnv,
+	now: Date = new Date(),
+): DeOptions {
+	const approve = flagString(flags, "approve");
+	if (approve !== null && !/^\d+$/.test(approve)) {
+		throw new Error(`--approve needs a run id, got ${approve}`);
+	}
+	const offline = flags.has("offline");
+	return {
+		databaseUrl: resolveDatabaseUrl(env),
+		dryRun: flags.has("dry-run"),
+		approveRunId: approve === null ? null : Number(approve),
+		force: flags.has("force"),
+		sourceDir: flagString(flags, "source-dir") ?? env.ETL_DE_SOURCE_DIR ?? null,
+		offline,
+		sources: parseDeSources(flagString(flags, "sources") ?? env.ETL_DE_SOURCES),
+		urls: {
+			destatis: deDirectoryUrls(env, now),
+			"apo-th": [env.ETL_DE_APO_TH_URL || DEFAULT_DE_PHARMACY_URLS["apo-th"]],
+			"apo-bb": [env.ETL_DE_APO_BB_URL || DEFAULT_DE_PHARMACY_URLS["apo-bb"]],
+		},
+		khvIndexUrl: env.ETL_DE_KHV_URL ? null : env.ETL_DE_KHV_INDEX_URL || DEFAULT_DE_KHV_INDEX_URL,
+		placesUrl: env.ETL_DE_PLACES_URL || DEFAULT_DE_PLACES_URL,
 		workDir: flagString(flags, "work-dir") ?? env.ETL_WORK_DIR ?? null,
 		appUrl: offline ? null : env.APP_URL || null,
 		revalidateSecret: env.REVALIDATE_SECRET || null,

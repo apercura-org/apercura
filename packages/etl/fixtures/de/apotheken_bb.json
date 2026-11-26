@@ -1,0 +1,1015 @@
+{
+	"type": "FeatureCollection",
+	"numberMatched": 63,
+	"numberReturned": 63,
+	"features": [
+		{
+			"type": "Feature",
+			"id": "apotheken_1",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [13.0541, 52.4011]
+			},
+			"properties": {
+				"ap_name": "Fiktiv-Apotheke am Park",
+				"strasse": "Parkstraße",
+				"hausnummer": "2",
+				"plz": "14469",
+				"gemeinde": "Potsdam",
+				"telefon": "0331/9999901"
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "apotheken_3",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [12.9981, 52.5821]
+			},
+			"properties": {
+				"ap_name": "Beispiel-Apotheke Brieselang",
+				"strasse": "Dorfstraße",
+				"hausnummer": "11",
+				"plz": "14656",
+				"gemeinde": "Brieselang (OT Zeestow)",
+				"telefon": "033232/99999"
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "apotheken_5",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [13.0561, 52.4031]
+			},
+			"properties": {
+				"ap_name": "Klinikum Fiktivstadt GmbH",
+				"strasse": "Klinikstraße",
+				"hausnummer": "1",
+				"plz": "14469",
+				"gemeinde": "Potsdam",
+				"telefon": "0331/9999902"
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "apotheken_100",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [13.0535, 52.4003]
+			},
+			"properties": {
+				"ap_name": "Muster-Apotheke 001",
+				"strasse": "Apothekenring",
+				"hausnummer": "1",
+				"plz": "14469",
+				"gemeinde": "Potsdam",
+				"telefon": "0331/9710000"
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "apotheken_102",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [13.054499999999999, 52.4003]
+			},
+			"properties": {
+				"ap_name": "Muster-Apotheke 002",
+				"strasse": "Apothekenring",
+				"hausnummer": "2",
+				"plz": "14469",
+				"gemeinde": "Potsdam",
+				"telefon": "0331/9710001"
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "apotheken_104",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [13.0555, 52.4003]
+			},
+			"properties": {
+				"ap_name": "Muster-Apotheke 003",
+				"strasse": "Apothekenring",
+				"hausnummer": "3",
+				"plz": "14469",
+				"gemeinde": "Potsdam",
+				"telefon": "0331/9710002"
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "apotheken_106",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [13.0565, 52.4003]
+			},
+			"properties": {
+				"ap_name": "Muster-Apotheke 004",
+				"strasse": "Apothekenring",
+				"hausnummer": "4",
+				"plz": "14469",
+				"gemeinde": "Potsdam",
+				"telefon": "0331/9710003"
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "apotheken_108",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [13.0575, 52.4003]
+			},
+			"properties": {
+				"ap_name": "Muster-Apotheke 005",
+				"strasse": "Apothekenring",
+				"hausnummer": "5",
+				"plz": "14469",
+				"gemeinde": "Potsdam",
+				"telefon": "0331/9710004"
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "apotheken_110",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [13.0585, 52.4003]
+			},
+			"properties": {
+				"ap_name": "Muster-Apotheke 006",
+				"strasse": "Apothekenring",
+				"hausnummer": "6",
+				"plz": "14469",
+				"gemeinde": "Potsdam",
+				"telefon": "0331/9710005"
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "apotheken_112",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [13.0595, 52.4003]
+			},
+			"properties": {
+				"ap_name": "Muster-Apotheke 007",
+				"strasse": "Apothekenring",
+				"hausnummer": "7",
+				"plz": "14469",
+				"gemeinde": "Potsdam",
+				"telefon": "0331/9710006"
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "apotheken_114",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [13.0605, 52.4003]
+			},
+			"properties": {
+				"ap_name": "Muster-Apotheke 008",
+				"strasse": "Apothekenring",
+				"hausnummer": "8",
+				"plz": "14469",
+				"gemeinde": "Potsdam",
+				"telefon": "0331/9710007"
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "apotheken_116",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [13.061499999999999, 52.4003]
+			},
+			"properties": {
+				"ap_name": "Muster-Apotheke 009",
+				"strasse": "Apothekenring",
+				"hausnummer": "9",
+				"plz": "14469",
+				"gemeinde": "Potsdam",
+				"telefon": "0331/9710008"
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "apotheken_118",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [13.0625, 52.4003]
+			},
+			"properties": {
+				"ap_name": "Muster-Apotheke 010",
+				"strasse": "Apothekenring",
+				"hausnummer": "10",
+				"plz": "14469",
+				"gemeinde": "Potsdam",
+				"telefon": "0331/9710009"
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "apotheken_120",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [13.0535, 52.4013]
+			},
+			"properties": {
+				"ap_name": "Muster-Apotheke 011",
+				"strasse": "Apothekenring",
+				"hausnummer": "11",
+				"plz": "14469",
+				"gemeinde": "Potsdam",
+				"telefon": "0331/9710010"
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "apotheken_122",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [13.054499999999999, 52.4013]
+			},
+			"properties": {
+				"ap_name": "Muster-Apotheke 012",
+				"strasse": "Apothekenring",
+				"hausnummer": "12",
+				"plz": "14469",
+				"gemeinde": "Potsdam",
+				"telefon": "0331/9710011"
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "apotheken_124",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [13.0555, 52.4013]
+			},
+			"properties": {
+				"ap_name": "Muster-Apotheke 013",
+				"strasse": "Apothekenring",
+				"hausnummer": "13",
+				"plz": "14469",
+				"gemeinde": "Potsdam",
+				"telefon": "0331/9710012"
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "apotheken_126",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [13.0565, 52.4013]
+			},
+			"properties": {
+				"ap_name": "Muster-Apotheke 014",
+				"strasse": "Apothekenring",
+				"hausnummer": "14",
+				"plz": "14469",
+				"gemeinde": "Potsdam",
+				"telefon": "0331/9710013"
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "apotheken_128",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [13.0575, 52.4013]
+			},
+			"properties": {
+				"ap_name": "Muster-Apotheke 015",
+				"strasse": "Apothekenring",
+				"hausnummer": "15",
+				"plz": "14469",
+				"gemeinde": "Potsdam",
+				"telefon": "0331/9710014"
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "apotheken_130",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [13.0585, 52.4013]
+			},
+			"properties": {
+				"ap_name": "Muster-Apotheke 016",
+				"strasse": "Apothekenring",
+				"hausnummer": "16",
+				"plz": "14469",
+				"gemeinde": "Potsdam",
+				"telefon": "0331/9710015"
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "apotheken_132",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [13.0595, 52.4013]
+			},
+			"properties": {
+				"ap_name": "Muster-Apotheke 017",
+				"strasse": "Apothekenring",
+				"hausnummer": "17",
+				"plz": "14469",
+				"gemeinde": "Potsdam",
+				"telefon": "0331/9710016"
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "apotheken_134",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [13.0605, 52.4013]
+			},
+			"properties": {
+				"ap_name": "Muster-Apotheke 018",
+				"strasse": "Apothekenring",
+				"hausnummer": "18",
+				"plz": "14469",
+				"gemeinde": "Potsdam",
+				"telefon": "0331/9710017"
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "apotheken_136",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [13.061499999999999, 52.4013]
+			},
+			"properties": {
+				"ap_name": "Muster-Apotheke 019",
+				"strasse": "Apothekenring",
+				"hausnummer": "19",
+				"plz": "14469",
+				"gemeinde": "Potsdam",
+				"telefon": "0331/9710018"
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "apotheken_138",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [13.0625, 52.4013]
+			},
+			"properties": {
+				"ap_name": "Muster-Apotheke 020",
+				"strasse": "Apothekenring",
+				"hausnummer": "20",
+				"plz": "14469",
+				"gemeinde": "Potsdam",
+				"telefon": "0331/9710019"
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "apotheken_140",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [13.0535, 52.402300000000004]
+			},
+			"properties": {
+				"ap_name": "Muster-Apotheke 021",
+				"strasse": "Apothekenring",
+				"hausnummer": "21",
+				"plz": "14469",
+				"gemeinde": "Potsdam",
+				"telefon": "0331/9710020"
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "apotheken_142",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [13.054499999999999, 52.402300000000004]
+			},
+			"properties": {
+				"ap_name": "Muster-Apotheke 022",
+				"strasse": "Apothekenring",
+				"hausnummer": "22",
+				"plz": "14469",
+				"gemeinde": "Potsdam",
+				"telefon": "0331/9710021"
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "apotheken_144",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [13.0555, 52.402300000000004]
+			},
+			"properties": {
+				"ap_name": "Muster-Apotheke 023",
+				"strasse": "Apothekenring",
+				"hausnummer": "23",
+				"plz": "14469",
+				"gemeinde": "Potsdam",
+				"telefon": "0331/9710022"
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "apotheken_146",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [13.0565, 52.402300000000004]
+			},
+			"properties": {
+				"ap_name": "Muster-Apotheke 024",
+				"strasse": "Apothekenring",
+				"hausnummer": "24",
+				"plz": "14469",
+				"gemeinde": "Potsdam",
+				"telefon": "0331/9710023"
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "apotheken_148",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [13.0575, 52.402300000000004]
+			},
+			"properties": {
+				"ap_name": "Muster-Apotheke 025",
+				"strasse": "Apothekenring",
+				"hausnummer": "25",
+				"plz": "14469",
+				"gemeinde": "Potsdam",
+				"telefon": "0331/9710024"
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "apotheken_150",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [13.0585, 52.402300000000004]
+			},
+			"properties": {
+				"ap_name": "Muster-Apotheke 026",
+				"strasse": "Apothekenring",
+				"hausnummer": "26",
+				"plz": "14469",
+				"gemeinde": "Potsdam",
+				"telefon": "0331/9710025"
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "apotheken_152",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [13.0595, 52.402300000000004]
+			},
+			"properties": {
+				"ap_name": "Muster-Apotheke 027",
+				"strasse": "Apothekenring",
+				"hausnummer": "27",
+				"plz": "14469",
+				"gemeinde": "Potsdam",
+				"telefon": "0331/9710026"
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "apotheken_154",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [13.0605, 52.402300000000004]
+			},
+			"properties": {
+				"ap_name": "Muster-Apotheke 028",
+				"strasse": "Apothekenring",
+				"hausnummer": "28",
+				"plz": "14469",
+				"gemeinde": "Potsdam",
+				"telefon": "0331/9710027"
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "apotheken_156",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [13.061499999999999, 52.402300000000004]
+			},
+			"properties": {
+				"ap_name": "Muster-Apotheke 029",
+				"strasse": "Apothekenring",
+				"hausnummer": "29",
+				"plz": "14469",
+				"gemeinde": "Potsdam",
+				"telefon": "0331/9710028"
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "apotheken_158",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [13.0625, 52.402300000000004]
+			},
+			"properties": {
+				"ap_name": "Muster-Apotheke 030",
+				"strasse": "Apothekenring",
+				"hausnummer": "30",
+				"plz": "14469",
+				"gemeinde": "Potsdam",
+				"telefon": "0331/9710029"
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "apotheken_160",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [13.0535, 52.4033]
+			},
+			"properties": {
+				"ap_name": "Muster-Apotheke 031",
+				"strasse": "Apothekenring",
+				"hausnummer": "31",
+				"plz": "14469",
+				"gemeinde": "Potsdam",
+				"telefon": "0331/9710030"
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "apotheken_162",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [13.054499999999999, 52.4033]
+			},
+			"properties": {
+				"ap_name": "Muster-Apotheke 032",
+				"strasse": "Apothekenring",
+				"hausnummer": "32",
+				"plz": "14469",
+				"gemeinde": "Potsdam",
+				"telefon": "0331/9710031"
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "apotheken_164",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [13.0555, 52.4033]
+			},
+			"properties": {
+				"ap_name": "Muster-Apotheke 033",
+				"strasse": "Apothekenring",
+				"hausnummer": "33",
+				"plz": "14469",
+				"gemeinde": "Potsdam",
+				"telefon": "0331/9710032"
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "apotheken_166",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [13.0565, 52.4033]
+			},
+			"properties": {
+				"ap_name": "Muster-Apotheke 034",
+				"strasse": "Apothekenring",
+				"hausnummer": "34",
+				"plz": "14469",
+				"gemeinde": "Potsdam",
+				"telefon": "0331/9710033"
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "apotheken_168",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [13.0575, 52.4033]
+			},
+			"properties": {
+				"ap_name": "Muster-Apotheke 035",
+				"strasse": "Apothekenring",
+				"hausnummer": "35",
+				"plz": "14469",
+				"gemeinde": "Potsdam",
+				"telefon": "0331/9710034"
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "apotheken_170",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [13.0585, 52.4033]
+			},
+			"properties": {
+				"ap_name": "Muster-Apotheke 036",
+				"strasse": "Apothekenring",
+				"hausnummer": "36",
+				"plz": "14469",
+				"gemeinde": "Potsdam",
+				"telefon": "0331/9710035"
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "apotheken_172",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [13.0595, 52.4033]
+			},
+			"properties": {
+				"ap_name": "Muster-Apotheke 037",
+				"strasse": "Apothekenring",
+				"hausnummer": "37",
+				"plz": "14469",
+				"gemeinde": "Potsdam",
+				"telefon": "0331/9710036"
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "apotheken_174",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [13.0605, 52.4033]
+			},
+			"properties": {
+				"ap_name": "Muster-Apotheke 038",
+				"strasse": "Apothekenring",
+				"hausnummer": "38",
+				"plz": "14469",
+				"gemeinde": "Potsdam",
+				"telefon": "0331/9710037"
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "apotheken_176",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [13.061499999999999, 52.4033]
+			},
+			"properties": {
+				"ap_name": "Muster-Apotheke 039",
+				"strasse": "Apothekenring",
+				"hausnummer": "39",
+				"plz": "14469",
+				"gemeinde": "Potsdam",
+				"telefon": "0331/9710038"
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "apotheken_178",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [13.0625, 52.4033]
+			},
+			"properties": {
+				"ap_name": "Muster-Apotheke 040",
+				"strasse": "Apothekenring",
+				"hausnummer": "40",
+				"plz": "14469",
+				"gemeinde": "Potsdam",
+				"telefon": "0331/9710039"
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "apotheken_180",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [13.0535, 52.4043]
+			},
+			"properties": {
+				"ap_name": "Muster-Apotheke 041",
+				"strasse": "Apothekenring",
+				"hausnummer": "41",
+				"plz": "14469",
+				"gemeinde": "Potsdam",
+				"telefon": "0331/9710040"
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "apotheken_182",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [13.054499999999999, 52.4043]
+			},
+			"properties": {
+				"ap_name": "Muster-Apotheke 042",
+				"strasse": "Apothekenring",
+				"hausnummer": "42",
+				"plz": "14469",
+				"gemeinde": "Potsdam",
+				"telefon": "0331/9710041"
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "apotheken_184",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [13.0555, 52.4043]
+			},
+			"properties": {
+				"ap_name": "Muster-Apotheke 043",
+				"strasse": "Apothekenring",
+				"hausnummer": "43",
+				"plz": "14469",
+				"gemeinde": "Potsdam",
+				"telefon": "0331/9710042"
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "apotheken_186",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [13.0565, 52.4043]
+			},
+			"properties": {
+				"ap_name": "Muster-Apotheke 044",
+				"strasse": "Apothekenring",
+				"hausnummer": "44",
+				"plz": "14469",
+				"gemeinde": "Potsdam",
+				"telefon": "0331/9710043"
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "apotheken_188",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [13.0575, 52.4043]
+			},
+			"properties": {
+				"ap_name": "Muster-Apotheke 045",
+				"strasse": "Apothekenring",
+				"hausnummer": "45",
+				"plz": "14469",
+				"gemeinde": "Potsdam",
+				"telefon": "0331/9710044"
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "apotheken_190",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [13.0585, 52.4043]
+			},
+			"properties": {
+				"ap_name": "Muster-Apotheke 046",
+				"strasse": "Apothekenring",
+				"hausnummer": "46",
+				"plz": "14469",
+				"gemeinde": "Potsdam",
+				"telefon": "0331/9710045"
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "apotheken_192",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [13.0595, 52.4043]
+			},
+			"properties": {
+				"ap_name": "Muster-Apotheke 047",
+				"strasse": "Apothekenring",
+				"hausnummer": "47",
+				"plz": "14469",
+				"gemeinde": "Potsdam",
+				"telefon": "0331/9710046"
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "apotheken_194",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [13.0605, 52.4043]
+			},
+			"properties": {
+				"ap_name": "Muster-Apotheke 048",
+				"strasse": "Apothekenring",
+				"hausnummer": "48",
+				"plz": "14469",
+				"gemeinde": "Potsdam",
+				"telefon": "0331/9710047"
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "apotheken_196",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [13.061499999999999, 52.4043]
+			},
+			"properties": {
+				"ap_name": "Muster-Apotheke 049",
+				"strasse": "Apothekenring",
+				"hausnummer": "49",
+				"plz": "14469",
+				"gemeinde": "Potsdam",
+				"telefon": "0331/9710048"
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "apotheken_198",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [13.0625, 52.4043]
+			},
+			"properties": {
+				"ap_name": "Muster-Apotheke 050",
+				"strasse": "Apothekenring",
+				"hausnummer": "50",
+				"plz": "14469",
+				"gemeinde": "Potsdam",
+				"telefon": "0331/9710049"
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "apotheken_200",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [13.0535, 52.405300000000004]
+			},
+			"properties": {
+				"ap_name": "Muster-Apotheke 051",
+				"strasse": "Apothekenring",
+				"hausnummer": "51",
+				"plz": "14469",
+				"gemeinde": "Potsdam",
+				"telefon": "0331/9710050"
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "apotheken_202",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [13.054499999999999, 52.405300000000004]
+			},
+			"properties": {
+				"ap_name": "Muster-Apotheke 052",
+				"strasse": "Apothekenring",
+				"hausnummer": "52",
+				"plz": "14469",
+				"gemeinde": "Potsdam",
+				"telefon": "0331/9710051"
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "apotheken_204",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [13.0555, 52.405300000000004]
+			},
+			"properties": {
+				"ap_name": "Muster-Apotheke 053",
+				"strasse": "Apothekenring",
+				"hausnummer": "53",
+				"plz": "14469",
+				"gemeinde": "Potsdam",
+				"telefon": "0331/9710052"
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "apotheken_206",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [13.0565, 52.405300000000004]
+			},
+			"properties": {
+				"ap_name": "Muster-Apotheke 054",
+				"strasse": "Apothekenring",
+				"hausnummer": "54",
+				"plz": "14469",
+				"gemeinde": "Potsdam",
+				"telefon": "0331/9710053"
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "apotheken_208",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [13.0575, 52.405300000000004]
+			},
+			"properties": {
+				"ap_name": "Muster-Apotheke 055",
+				"strasse": "Apothekenring",
+				"hausnummer": "55",
+				"plz": "14469",
+				"gemeinde": "Potsdam",
+				"telefon": "0331/9710054"
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "apotheken_210",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [13.0585, 52.405300000000004]
+			},
+			"properties": {
+				"ap_name": "Muster-Apotheke 056",
+				"strasse": "Apothekenring",
+				"hausnummer": "56",
+				"plz": "14469",
+				"gemeinde": "Potsdam",
+				"telefon": "0331/9710055"
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "apotheken_212",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [13.0595, 52.405300000000004]
+			},
+			"properties": {
+				"ap_name": "Muster-Apotheke 057",
+				"strasse": "Apothekenring",
+				"hausnummer": "57",
+				"plz": "14469",
+				"gemeinde": "Potsdam",
+				"telefon": "0331/9710056"
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "apotheken_214",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [13.0605, 52.405300000000004]
+			},
+			"properties": {
+				"ap_name": "Muster-Apotheke 058",
+				"strasse": "Apothekenring",
+				"hausnummer": "58",
+				"plz": "14469",
+				"gemeinde": "Potsdam",
+				"telefon": "0331/9710057"
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "apotheken_216",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [13.061499999999999, 52.405300000000004]
+			},
+			"properties": {
+				"ap_name": "Muster-Apotheke 059",
+				"strasse": "Apothekenring",
+				"hausnummer": "59",
+				"plz": "14469",
+				"gemeinde": "Potsdam",
+				"telefon": "0331/9710058"
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "apotheken_218",
+			"geometry": {
+				"type": "Point",
+				"coordinates": [13.0625, 52.405300000000004]
+			},
+			"properties": {
+				"ap_name": "Muster-Apotheke 060",
+				"strasse": "Apothekenring",
+				"hausnummer": "60",
+				"plz": "14469",
+				"gemeinde": "Potsdam",
+				"telefon": "0331/9710059"
+			}
+		}
+	]
+}

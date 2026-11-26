@@ -5,6 +5,7 @@ export const COMMANDS = [
 	"etl:cz",
 	"etl:es",
 	"etl:it",
+	"etl:de",
 	"etl:places",
 	"etl:outbox",
 ] as const;
@@ -31,6 +32,11 @@ Commands:
   etl:it        Import Italian pharmacies, parapharmacies, hospitals and accredited
                 private clinics from the Ministry of Health's open data (IODL 2.0),
                 placed in ISTAT's municipalities by code, rebuild read models.
+  etl:de        Import German hospitals, psychiatric and children's hospitals,
+                rehabilitation clinics (the statistical offices' yearly directory,
+                Destatis; reproduction with the source) and the pharmacies of
+                Thuringia (CC BY 4.0) and Brandenburg (dl-de/by-2-0), placed in
+                GV-ISys's Gemeinden by municipality key, rebuild read models.
   etl:places    Import regions, departments, communes and arrondissements
                 (geo.api.gouv.fr), or with --country at the Austrian
                 Bundesländer and Gemeinden (Statistik Austria), or with --country gb
@@ -39,8 +45,9 @@ Commands:
                 municipalities and Prague districts (RÚIAN, ČÚZK), or with --country es
                 the Spanish autonomous communities, provinces and municipalities
                 (IGN, CC BY 4.0), or with --country it the Italian regions,
-                provinces and municipalities (ISTAT boundaries, CC BY 4.0). Run once,
-                then yearly.
+                provinces and municipalities (ISTAT boundaries, CC BY 4.0), or with
+                --country de the German Länder, Kreise and Gemeinden (GV-ISys,
+                Destatis). Run once, then yearly.
   etl:outbox    Send pending cache invalidations to the web app.
 
 Flags (etl:fr):
@@ -86,6 +93,13 @@ Flags (etl:it):
   --dry-run, --approve=<run_id>, --force, --source-dir <path>, --offline, --work-dir <path>
                           As for etl:at.
 
+Flags (etl:de):
+  --sources <ids>         Sources to import: khv (hospitals), rhv (prevention and
+                          rehabilitation clinics), apo-th, apo-bb (default ETL_DE_SOURCES,
+                          else all).
+  --dry-run, --approve=<run_id>, --force, --source-dir <path>, --offline, --work-dir <path>
+                          As for etl:at. Unchanged files end the run at once (exit code 0).
+
 Environment:
   DATABASE_URL_ETL (or DATABASE_URL), ETL_PROFESSIONS, ETL_ANS_URLS, ETL_AMELI_URL,
   ETL_FINESS_DATASET_URL, ETL_GEO_API_URL, ETL_GEOCODER_URL, ETL_SOURCE_DIR, ETL_WORK_DIR,
@@ -99,17 +113,21 @@ Environment:
   ETL_ES_SOURCE_DIR,
   ETL_IT_SOURCES, ETL_IT_FARMACIE_URL, ETL_IT_PARAFARMACIE_URL, ETL_IT_POSTI_LETTO_URL,
   ETL_IT_PORTAL_URL, ETL_IT_PLACES_URL, ETL_IT_REGISTER_COORDINATES, ETL_IT_SOURCE_DIR,
+  ETL_DE_SOURCES, ETL_DE_KHV_URL, ETL_DE_KHV_INDEX_URL, ETL_DE_KHV_MIRROR_URL,
+  ETL_DE_APO_TH_URL, ETL_DE_APO_BB_URL, ETL_DE_PLACES_URL, ETL_DE_SOURCE_DIR,
   APP_URL and REVALIDATE_SECRET (cache revalidation).`;
 
 export {
 	type AtOptions,
 	buildAtOptions,
 	buildCzOptions,
+	buildDeOptions,
 	buildEsOptions,
 	buildFrOptions,
 	buildGbOptions,
 	buildItOptions,
 	type CzOptions,
+	type DeOptions,
 	type EsOptions,
 	type FrOptions,
 	type GbOptions,
@@ -118,6 +136,7 @@ export {
 } from "./config";
 export { type AtRunOutcome, runAt } from "./run-at";
 export { type CzRunOutcome, runCz } from "./run-cz";
+export { type DeRunOutcome, runDe } from "./run-de";
 export { type EsRunOutcome, runEs } from "./run-es";
 export { type RunOutcome, runFr } from "./run-fr";
 export { type GbRunOutcome, runGb } from "./run-gb";

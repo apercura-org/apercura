@@ -701,3 +701,120 @@ export function checkItPlaces(staged: {
 		},
 	];
 }
+
+/**
+ * Limits of the German sources. Each has its floors, which catch an empty or broken file on a
+ * first run (the 2024 directory: 2,758 hospital sites and 1,066 clinics; Thuringia's list of
+ * July 2026: 472 pharmacies; Brandenburg's of October 2026: 531, 13 of them hospitals'
+ * pharmacies); afterwards the change since the last successful run that read the source blocks
+ * a truncated one (approvable). The directory changes once a year, so its threshold is wider.
+ */
+export const DE_LIMITS = {
+	quarantineRatio: 0.01,
+	floors: {
+		khv: { minLines: 200, minRows: 150, rowsDelta: 0.1, sizeDelta: 0.3 },
+		rhv: { minLines: 100, minRows: 80, rowsDelta: 0.1, sizeDelta: 0.3 },
+		"apo-th": { minLines: 50, minRows: 40, rowsDelta: 0.1, sizeDelta: 0.3 },
+		"apo-bb": { minLines: 50, minRows: 40, rowsDelta: 0.1, sizeDelta: 0.3 },
+	} as Readonly<
+		Record<string, { minLines: number; minRows: number; rowsDelta: number; sizeDelta: number }>
+	>,
+	/** Sites placed in their Gemeinde (else only in their Kreis, or nowhere). */
+	minPlacedRatio: 0.99,
+	/** Sites located, at their address or their Gemeinde's centre. */
+	minLocatedRatio: 0.98,
+} as const;
+
+/**
+ * Checks of one German source before the merge: quarantine within 1%, floors of lines and
+ * facilities (never approvable), an edition of the directory never older than the last one
+ * imported (never approvable: the pages would go back a year), and at most 10% more or fewer
+ * facilities or 30% more or fewer bytes than the last successful run that read it (approvable).
+ */
+export function checkDeSource(
+	source: string,
+	current: AtSourceStats & { bytes: number; edition: number | null },
+	previous: (AtSourceStats & { bytes?: number; edition?: number | null }) | null,
+): GuardCheck[] {
+	const floors = DE_LIMITS.floors[source] ?? {
+		minLines: 1,
+		minRows: 1,
+		rowsDelta: 0.1,
+		sizeDelta: 0.3,
+	};
+	const ratio = current.lines === 0 ? 1 : current.quarantined / current.lines;
+	const checks: GuardCheck[] = [
+		{
+			name: `${source}.quarantine`,
+			ok: current.lines > 0 && ratio <= DE_LIMITS.quarantineRatio,
+			approvable: false,
+			detail: `${current.quarantined} of ${current.lines} lines quarantined (${percent(ratio)})`,
+		},
+		{
+			name: `${source}.lines`,
+			ok: current.lines >= floors.minLines,
+			approvable: false,
+			detail: `${current.lines} data lines (at least ${floors.minLines} expected)`,
+		},
+		{
+			name: `${source}.rows`,
+			ok: current.rows >= floors.minRows,
+			approvable: false,
+			detail: `${current.rows} facilities imported (at least ${floors.minRows} expected)`,
+		},
+	];
+	if (previous) {
+		if (current.edition !== null && typeof previous.edition === "number") {
+			checks.push({
+				name: `${source}.edition`,
+				ok: current.edition >= previous.edition,
+				approvable: false,
+				detail: `edition ${current.edition} vs ${previous.edition} last time`,
+			});
+		}
+		const rows = delta(current.people, previous.people);
+		checks.push({
+			name: `${source}.facilities`,
+			ok: rows <= floors.rowsDelta,
+			approvable: true,
+			detail: `${current.people} facilities vs ${previous.people} last time (${percent(rows)})`,
+		});
+		if (previous.bytes !== undefined) {
+			const size = delta(current.bytes, previous.bytes);
+			checks.push({
+				name: `${source}.size`,
+				ok: size <= floors.sizeDelta,
+				approvable: true,
+				detail: `${current.bytes} bytes vs ${previous.bytes} last time (${percent(size)})`,
+			});
+		}
+	}
+	return checks;
+}
+
+/**
+ * After staging: nearly every site must be placed in its Gemeinde and located, or the listings
+ * and the distances would lose it.
+ */
+export function checkDePlaces(staged: {
+	sites: number;
+	located: number;
+	inCommune: number;
+}): GuardCheck[] {
+	const local = staged.sites === 0 ? 1 : staged.inCommune / staged.sites;
+	const located = staged.sites === 0 ? 1 : staged.located / staged.sites;
+	return [
+		{
+			name: "de.places",
+			ok: local >= DE_LIMITS.minPlacedRatio,
+			approvable: true,
+			detail: `${staged.inCommune} of ${staged.sites} sites placed in their Gemeinde (${percent(local)})`,
+		},
+		{
+			name: "de.points",
+			ok: located >= DE_LIMITS.minLocatedRatio,
+			approvable: true,
+			detail: `${staged.located} of ${staged.sites} sites located at their address or their Gemeinde's centre (${percent(located)})`,
+		},
+	];
+}

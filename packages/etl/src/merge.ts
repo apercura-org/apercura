@@ -13,6 +13,8 @@ import {
 	CZ_PROFESSIONS,
 	CZ_SPECIALTIES,
 	czListingSlugFor,
+	DE_PROFESSIONS,
+	deListingSlugFor,
 	ES_PROFESSIONS,
 	ES_SPECIALTIES,
 	esListingSlugFor,
@@ -91,7 +93,7 @@ export async function analyzeTables(tx: TransactionSql, tables: readonly string[
 /**
  * Rewrites the taxonomy mirror tables from `@apercura/core/taxonomy`, for every
  * market (profession codes never collide: `10`… in France, `ARZT` in Austria, `GB_GP` in the UK,
- * `CZ_GP` in Czechia, `ES_DENTAL` in Spain,
+ * `CZ_GP` in Czechia, `ES_DENTAL` in Spain, `DE_PHARMACY` in Germany,
  * `IT_PHARMACY` in Italy),
  * so an import of one market keeps the other's rows.
  */
@@ -104,6 +106,7 @@ export async function syncTaxonomy(tx: TransactionSql): Promise<void> {
 		{ professions: CZ_PROFESSIONS, specialties: CZ_SPECIALTIES, slugFor: czListingSlugFor },
 		{ professions: ES_PROFESSIONS, specialties: ES_SPECIALTIES, slugFor: esListingSlugFor },
 		{ professions: IT_PROFESSIONS, specialties: {}, slugFor: itListingSlugFor },
+		{ professions: DE_PROFESSIONS, specialties: {}, slugFor: deListingSlugFor },
 	];
 	for (const { professions, specialties, slugFor } of markets) {
 		for (const code of Object.keys(professions)) {

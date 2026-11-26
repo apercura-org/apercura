@@ -1,11 +1,11 @@
 /**
  * Minimal XLSX (Office Open XML spreadsheet) reader for the open-data workbooks published as
- * spreadsheets (the Spanish register's monthly extracts): the shared strings and the rows of one
- * worksheet, as text. No formulas are evaluated, no styles, dates or number formats are read: a
+ * spreadsheets (the Spanish register's monthly extracts, the German statistical offices'
+ * directories): the shared strings and the rows of one worksheet, as text. No formulas are evaluated, no styles, dates or number formats are read: a
  * cell is the text the file stores (a shared string, an inline string or the raw value). The
  * worksheet is streamed, so a sheet of 135 MB never sits inflated in memory.
  *
- * `writeXlsx` writes the same subset, for test fixtures.
+ * `writeXlsx` and `writeXlsxSheets` write the same subset, for test fixtures.
  */
 import { readZipEntries, writeStoredZip, zipEntryStream } from "./zip";
 
@@ -94,32 +94,56 @@ export function parseRowCells(body: string, shared: readonly string[]): string[]
 	return cells;
 }
 
-/** Path of the first worksheet of a workbook: `xl/worksheets/sheet1.xml` unless the workbook says otherwise. */
-function firstSheetPath(archive: Buffer): string {
+/** A worksheet of a workbook: its name as the workbook gives it and the path of its XML part. */
+export type XlsxSheet = { name: string; path: string };
+
+/**
+ * The worksheets of a workbook, in the workbook's order (`xl/workbook.xml` and its relations).
+ * A workbook without them reads as one sheet at `xl/worksheets/sheet1.xml`.
+ */
+export function xlsxSheets(archive: Buffer): XlsxSheet[] {
 	const [workbook] = readZipEntries(archive, (name) => name === "xl/workbook.xml");
 	const [rels] = readZipEntries(archive, (name) => name === "xl/_rels/workbook.xml.rels");
-	if (!workbook || !rels) return "xl/worksheets/sheet1.xml";
-	const relId = /<sheet\b[^>]*\br:id="([^"]+)"/.exec(workbook.data.toString("utf8"))?.[1];
-	if (!relId) return "xl/worksheets/sheet1.xml";
-	const relations = rels.data.toString("utf8");
-	for (const match of relations.matchAll(/<Relationship\b([^>]*)\/?>/g)) {
+	const fallback = [{ name: "", path: "xl/worksheets/sheet1.xml" }];
+	if (!workbook || !rels) return fallback;
+	const targets = new Map<string, string>();
+	for (const match of rels.data.toString("utf8").matchAll(/<Relationship\b([^>]*)\/?>/g)) {
 		const attributes = match[1] ?? "";
-		if (/\bId="([^"]+)"/.exec(attributes)?.[1] !== relId) continue;
+		const id = /\bId="([^"]+)"/.exec(attributes)?.[1];
 		const target = /\bTarget="([^"]+)"/.exec(attributes)?.[1];
-		if (!target) break;
-		return target.startsWith("/") ? target.slice(1) : `xl/${target.replace(/^\.\//, "")}`;
+		if (!id || !target) continue;
+		targets.set(id, target.startsWith("/") ? target.slice(1) : `xl/${target.replace(/^\.\//, "")}`);
 	}
-	return "xl/worksheets/sheet1.xml";
+	const sheets: XlsxSheet[] = [];
+	for (const match of workbook.data.toString("utf8").matchAll(/<sheet\b([^>]*?)\/?>/g)) {
+		const attributes = match[1] ?? "";
+		const name = decodeXml(/\bname="([^"]*)"/.exec(attributes)?.[1] ?? "");
+		const path = targets.get(/\br:id="([^"]+)"/.exec(attributes)?.[1] ?? "");
+		if (path) sheets.push({ name, path });
+	}
+	return sheets.length > 0 ? sheets : fallback;
 }
 
 /**
- * The rows of a workbook's first worksheet, streamed. Throws when the file is not a ZIP, has no
- * worksheet, or a row is malformed beyond reading.
+ * The rows of a worksheet, streamed: the workbook's first, or the one named `sheet` (a name, or a
+ * test on the name as the workbook gives it, which may carry stray spaces: ` KHV_2024`). Throws
+ * when the file is not a ZIP, has no such worksheet, or a row is malformed beyond reading.
  */
-export async function* xlsxRows(archive: Buffer): AsyncGenerator<XlsxRow> {
+export async function* xlsxRows(
+	archive: Buffer,
+	sheet?: string | ((name: string) => boolean),
+): AsyncGenerator<XlsxRow> {
 	const [sharedEntry] = readZipEntries(archive, (name) => name === "xl/sharedStrings.xml");
 	const shared = sharedEntry ? parseSharedStrings(sharedEntry.data.toString("utf8")) : [];
-	const path = firstSheetPath(archive);
+	const sheets = xlsxSheets(archive);
+	const wanted =
+		sheet === undefined
+			? sheets[0]
+			: sheets.find((candidate) =>
+					typeof sheet === "string" ? candidate.name === sheet : sheet(candidate.name),
+				);
+	if (!wanted) throw new Error(`not a spreadsheet with the worksheet ${String(sheet)}`);
+	const path = wanted.path;
 	const stream = zipEntryStream(archive, path);
 	if (!stream) throw new Error(`not a spreadsheet: no worksheet ${path}`);
 	const decoder = new TextDecoder("utf-8");
@@ -159,33 +183,57 @@ const columnName = (index: number): string => {
  * published files do.
  */
 export function writeXlsx(rows: readonly (readonly string[])[], { deflate = false } = {}): Buffer {
+	return writeXlsxSheets([{ name: "Hoja1", rows }], { deflate });
+}
+
+/**
+ * A workbook of several worksheets, in order, their text in one shared strings table: fixtures
+ * and tests only.
+ */
+export function writeXlsxSheets(
+	sheets: readonly { name: string; rows: readonly (readonly string[])[] }[],
+	{ deflate = false } = {},
+): Buffer {
 	const shared: string[] = [];
 	const indexOf = new Map<string, number>();
-	const sheetRows = rows.map((row, rowIndex) => {
-		const cells = row
-			.map((value, column) => {
-				const reference = `${columnName(column)}${rowIndex + 1}`;
-				if (value === "") return `<c r="${reference}"/>`;
-				let index = indexOf.get(value);
-				if (index === undefined) {
-					index = shared.length;
-					shared.push(value);
-					indexOf.set(value, index);
-				}
-				return `<c r="${reference}" t="s"><v>${index}</v></c>`;
+	const sheetXml = sheets.map(({ rows }) =>
+		rows
+			.map((row, rowIndex) => {
+				const cells = row
+					.map((value, column) => {
+						const reference = `${columnName(column)}${rowIndex + 1}`;
+						if (value === "") return `<c r="${reference}"/>`;
+						let index = indexOf.get(value);
+						if (index === undefined) {
+							index = shared.length;
+							shared.push(value);
+							indexOf.set(value, index);
+						}
+						return `<c r="${reference}" t="s"><v>${index}</v></c>`;
+					})
+					.join("");
+				return `<row r="${rowIndex + 1}">${cells}</row>`;
 			})
-			.join("");
-		return `<row r="${rowIndex + 1}">${cells}</row>`;
-	});
+			.join(""),
+	);
 	const main = "http://schemas.openxmlformats.org/spreadsheetml/2006/main";
 	const relsNs = "http://schemas.openxmlformats.org/officeDocument/2006/relationships";
 	const pkgRels = "http://schemas.openxmlformats.org/package/2006/relationships";
 	const text = (name: string, value: string) => ({ name, data: Buffer.from(value, "utf8") });
+	const numbers = sheets.map((_, index) => index + 1);
+	const sharedId = `rId${sheets.length + 1}`;
 	return writeStoredZip(
 		[
 			text(
 				"[Content_Types].xml",
-				`<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/><Override PartName="/xl/worksheets/sheet1.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/><Override PartName="/xl/sharedStrings.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sharedStrings+xml"/></Types>`,
+				`<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/>${numbers
+					.map(
+						(n) =>
+							`<Override PartName="/xl/worksheets/sheet${n}.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/>`,
+					)
+					.join(
+						"",
+					)}<Override PartName="/xl/sharedStrings.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sharedStrings+xml"/></Types>`,
 			),
 			text(
 				"_rels/.rels",
@@ -193,11 +241,23 @@ export function writeXlsx(rows: readonly (readonly string[])[], { deflate = fals
 			),
 			text(
 				"xl/workbook.xml",
-				`<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n<workbook xmlns="${main}" xmlns:r="${relsNs}"><sheets><sheet name="Hoja1" sheetId="1" r:id="rId1"/></sheets></workbook>`,
+				`<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n<workbook xmlns="${main}" xmlns:r="${relsNs}"><sheets>${sheets
+					.map(
+						(sheet, index) =>
+							`<sheet name="${escapeXml(sheet.name)}" sheetId="${index + 1}" r:id="rId${index + 1}"/>`,
+					)
+					.join("")}</sheets></workbook>`,
 			),
 			text(
 				"xl/_rels/workbook.xml.rels",
-				`<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n<Relationships xmlns="${pkgRels}"><Relationship Id="rId1" Type="${relsNs}/worksheet" Target="worksheets/sheet1.xml"/><Relationship Id="rId2" Type="${relsNs}/sharedStrings" Target="sharedStrings.xml"/></Relationships>`,
+				`<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n<Relationships xmlns="${pkgRels}">${numbers
+					.map(
+						(n) =>
+							`<Relationship Id="rId${n}" Type="${relsNs}/worksheet" Target="worksheets/sheet${n}.xml"/>`,
+					)
+					.join(
+						"",
+					)}<Relationship Id="${sharedId}" Type="${relsNs}/sharedStrings" Target="sharedStrings.xml"/></Relationships>`,
 			),
 			text(
 				"xl/sharedStrings.xml",
@@ -205,9 +265,11 @@ export function writeXlsx(rows: readonly (readonly string[])[], { deflate = fals
 					.map((value) => `<si><t xml:space="preserve">${escapeXml(value)}</t></si>`)
 					.join("")}</sst>`,
 			),
-			text(
-				"xl/worksheets/sheet1.xml",
-				`<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n<worksheet xmlns="${main}"><sheetData>${sheetRows.join("")}</sheetData></worksheet>`,
+			...sheetXml.map((rows, index) =>
+				text(
+					`xl/worksheets/sheet${index + 1}.xml`,
+					`<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n<worksheet xmlns="${main}"><sheetData>${rows}</sheetData></worksheet>`,
+				),
 			),
 		],
 		{ deflate },
