@@ -80,8 +80,9 @@ fontSize: "0.875rem"
 fontWeight: 600
 lineHeight: 1.35
 rounded:
-field: "6px"
-panel: "10px"
+mark: "6px"
+field: "10px"
+panel: "14px"
 full: "9999px"
 spacing:
 page-gutter: "20px"
@@ -146,7 +147,7 @@ Apercura is a public-interest project, not a government service: no Marianne, no
 
 - White paper and a cool near-neutral shade, one graphite ink, one indigo-violet accent, muted red only for errors. The same roles in a dark theme.
 - Allo, one family, with tabular figures for times, fees, counts and numbers.
-- Hairline borders (1 px), 6 px control corners, 10 px panel corners. One shadow, for overlays only.
+- Hairline borders (1 px) and soft corners on one scale: 6 px marks, 10 px controls, 14 px panels and stamps. One shadow, for overlays only.
 - Generous space: 64 px between sections, 18 px body text, 44 px targets.
 - Calm motion: short colour transitions, a 180 ms slip for overlays, nothing else.
 
@@ -231,7 +232,7 @@ The symbol ("Pin a") is a round tile with one sharp corner, a map pin tipped ont
 ## Layout and spacing
 
 - One centred column, `max-width: 72rem`, 20 px gutters (32 px from 640 px).
-- The header: 64 px, white, a hairline below; wordmark left, "Professionnels de santé" and the language picker right. The practitioner space adds its navigation as quiet tabs (current page: shade, semibold, underlined).
+- The header: 64 px, white, a hairline below; wordmark left, "Professionnels de santé", then the country menu ("Pays France") and the language menu ("Langue Français") right: two separate choices, the market and the language its pages are read in. On a phone the two menus take a second row. The practitioner space adds its navigation as quiet tabs (current page: shade, semibold, underlined).
 - Page openings (home, search, institutional pages, the practitioner space) sit on the quiet shade closed by a hairline; practitioner, listing and establishment pages open on the ground under their breadcrumb.
 - Sections are 64 px apart (`BookletPage`), more space above a heading than below. Content splits 5/7 from 768 px (heading and intro left, facts right) and stacks below.
 - The home opening: the promise as the display heading (« Trouvez un professionnel de santé en France »), the complementary line in muted lead, then the search, left-aligned; the brand lives in the header. Below: the specimen page, the four commitments in a ruled row of four columns (two on tablets, stacked on phones), the register figures (live per enabled profession, dated with the last import, left out before the first import), and the practitioners' call.
@@ -241,7 +242,7 @@ The symbol ("Pin a") is a round tile with one sharp corner, a map pin tipped ont
 ## Elevation and shape
 
 - **Borders, not boxes.** Hairline (`rule-soft`) borders around panels and between rows; `field-edge` for controls. No heavy ink rules.
-- **Corners.** 6 px (`rounded-field`) for fields, buttons, menus and slots; 10 px (`rounded-panel`) for panels, dialogs, notices, the specimen, the map and the agenda; full round for badges, radios, switch knobs, seals.
+- **Corners.** One scale (`radii` in `packages/ui/src/tokens/index.ts`, `--radius-*` in `theme.css`, kept in sync by `tokens.test.ts`): 6 px (`rounded-mark`) for badges, menu rows, checkboxes and agenda tiles; 10 px (`rounded-field`) for fields, buttons, selects and slots; 14 px (`rounded-panel`) for the stamps, panels, dialogs, notices, menus, the specimen, the map and the agenda; full round for radios, switch knobs, seals. No square corner, no double rule: sections are closed by a single hairline (`rule-t`, `rule-b`).
 - **One shadow** (`shadow-overlay`), for what floats: popovers, the language list, dialogs, sheets, toasts. Nothing on the page itself casts one.
 - Modal backdrops are a fixed graphite scrim at 45 %, the same in both themes.
 
@@ -251,7 +252,8 @@ All primitives are React Aria Components styled with `tailwind-variants` recipes
 
 - **Buttons.** Default is the outline (`ink`): ground, a `field-edge` border that turns ink on hover. The accent (`intent="stamp"`) is a solid fill with its label in the ground's colour; hover and press darken it (lighten in dark). `quiet` is an underlined text action for dense rows. Disabled: the ground with a disabled edge. `apps/web/src/lib/stamp-law.test.ts` fails if the accent carries a step back, a cancellation or a removal.
 - **Fields.** Label above (semibold), 48 px box with a `field-edge` border turning ink on hover and focus, hint in muted ink, error under it with the boxed exclamation and a red edge.
-- **Search.** One framed row (10 px corners, `field-edge`, 6 px inner padding): the "Qui ?" and "Où ?" cells side by side from 768 px with a hairline between them, captions in muted ink, the accent button inside the frame. A plain GET form; suggestions open in a popover.
+- **Search.** A row of the form: "Qui ?" and "Où ?" side by side from 768 px, each a caption in muted ink over a 52 px soft field (10 px corners, `field-edge`, turning ink on hover and accent on focus, with the focus ring), the accent "Chercher" button of the same height at the end of the row, the "Pays" select in the same soft box under it, with "Autour de moi" beside it on the same row as a quiet text action with the pin (it wraps under it on a narrow phone). A plain GET form; suggestions open in a popover. A place in a European country Apercura does not cover yet ("Berlin", "Allemagne", `@apercura/core/geo`) gets its own answer: "Apercura ne couvre pas encore l'Allemagne", then the open countries as links.
+- **Stamp** (`Stamp`, `.stamp` in `theme.css`). The practitioner's page as a stamp: a single violet rule with 14 px corners, the face set in type (name, profession, address), a foot with the register number and the state in words. Outlined while unclaimed, solid ink once verified, a dashed rule over a faint hatch while a claim is checked. The accent button presses like ink (`.ink-press`: 97 %, a touch lighter, 120 ms, from the centre so the corners hold).
 - **Fact list** (`FieldList`/`FieldRow`): label in muted ink, value in ink, two columns from a 28 rem container, a hairline between rows. An empty field prints "— Non renseigné" in muted ink; it never disappears.
 - **Practitioner header.** Seal (or photo with the seal on its corner), name as headline, profession in muted lead, the RPPS in tabular figures, the page status badge and its one-line explanation, a hairline below.
 - **Action block.** The "what can I do next" panel: title strip on the quiet shade, the statement, the next slot on a shade tile, one action. Five honest states (book, call, establishment, locum, notice); only booking takes the accent.
@@ -261,7 +263,7 @@ All primitives are React Aria Components styled with `tailwind-variants` recipes
 - **Notices.** Panels: information on the shade, success with a tick, errors on the error wash with a red edge.
 - **Empty states.** A quiet panel on the shade: what is missing, in plain words, and the next step as a button.
 - **Dialogs and sheets.** A panel with its title on a shade strip, a 44 px close control, the overlay shadow.
-- **Language picker** (`apps/web/src/components/language-picker.tsx`). A `<details>` disclosure in the header: the toggle shows a globe, the current language and a chevron, and is named "Langue : Français"; the list holds a link per language to the same page in that language (ADR 0002 §2, query and, on `/rdv`, fragment kept), the current one marked `aria-current` and ticked. Works without JavaScript; with it, ArrowDown opens and focuses the current language, arrows, Home and End move, Escape closes and returns focus, a click or focus outside closes. Links, not a `<select>`: a language changes only on an explicit activation (WCAG 3.2.2), and crawlers still see every URL. Non-French pages keep their `noindex`.
+- **Country and language menus** (`apps/web/src/components/country-picker.tsx`, `language-picker.tsx`, both printed by the server on the one client `HeaderMenu`). The country menu links each open market's home, in the visitor's language where that market offers it. The language menu is a `<details>` disclosure in the header: the toggle shows the caption "Langue", the current language and a chevron, and is named "Langue : Français"; the list holds a link per language to the same page in that language (ADR 0002 §2, query and, on `/rdv`, fragment kept), the current one marked `aria-current` and ticked. Works without JavaScript; with it, ArrowDown opens and focuses the current language, arrows, Home and End move, Escape closes and returns focus, a click or focus outside closes. Links, not a `<select>`: a language changes only on an explicit activation (WCAG 3.2.2), and crawlers still see every URL. Non-French pages keep their `noindex`.
 - **Theme switch** (`apps/web/src/components/theme-switch.tsx`, a server component driven by `/theme.js`). In the footer: a radio group "Thème" of three segments (Clair, Sombre, Système, each with an icon) in a `field-edge` frame, native radios (arrow keys move and choose), the checked one on the shade, semibold, ringed in ink. The agenda's Week/Day switch uses the same segmented look.
 - **SlotPicker.** One row of 80 × 56 px cells per day; the selected slot turns into an accent tile with a tick and settles in with a 200 ms scale from 96 %; past slots are muted, taken slots struck through; a ruled "now" marker in ink.
 - **WeekGrid** (agenda). One column per day, 44 px rows in a 10 px-cornered panel; closed hours on the shade under a hairline hatch; entries as 6 px-cornered tiles: confirmed in the accent, requests in a dashed ink box, holds dashed on the shade, blocks solid ink, no-shows struck through; today's header in solid ink.

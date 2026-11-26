@@ -1,8 +1,7 @@
 import type { ReactNode } from "react";
-import { Badge } from "../components/badge";
 import { CheckIcon } from "../icons";
 import { cn } from "../recipes";
-import { Seal } from "../seal/seal";
+import { Stamp, StampFoot, stampInkOf } from "./stamp";
 
 export type PageStatus = "unclaimed" | "claimed" | "verified";
 
@@ -15,25 +14,27 @@ export interface PractitionerHeaderProps {
 	/** "RPPS", or its local name, printed before the number. */
 	rppsLabel: string;
 	status: PageStatus;
-	/** Badge text for the status ("Unclaimed page", "Verified page"). */
+	/** The status in words, printed on the stamp ("Unclaimed page", "Verified page"). */
 	statusLabel: string;
 	/** One sentence that explains the status to a patient. */
 	statusNote?: ReactNode;
 	/** The page title is an `h1`; previews inside another page use a lower level. */
 	headingLevel?: 1 | 2 | 3;
-	/**
-	 * The owner's photo, square with rounded corners, the seal on its corner. Without one, the
-	 * seal stands alone.
-	 */
+	/** The owner's photo, square with rounded corners, beside the stamp. */
 	photo?: { src: string; alt: string } | null;
-	/** The owner's one-line headline, under the profession. Plain text. */
+	/** The owner's one-line headline, under the stamp. Plain text. */
 	headline?: string | null;
+	/** The first place of practice, on one line, as a stamp carries it. */
+	address?: string | null;
 	className?: string;
 }
 
 /**
- * The head of a practitioner's page: seal, name, profession, RPPS and an honest page status.
- * Only a verified page takes the accent.
+ * The head of a practitioner's page: the practitioner's stamp (name, profession, address,
+ * register number and the page's state, inked outlined, solid or hatched), with the owner's
+ * photo beside it when there is one, then the owner's headline and one sentence on what the
+ * state means. The stamp is the page's only mark: it starts on the column's edge, like the
+ * lines under it.
  */
 export function PractitionerHeader({
 	name,
@@ -46,52 +47,49 @@ export function PractitionerHeader({
 	headingLevel = 1,
 	photo,
 	headline,
+	address,
 	className,
 }: PractitionerHeaderProps) {
 	const verified = status === "verified";
 	const Heading = `h${headingLevel}` as const;
 	return (
-		<header
-			className={cn(
-				"flex flex-col gap-4 border-b border-rule-soft pb-7 sm:flex-row sm:items-start sm:gap-6",
-				className,
-			)}
-		>
-			{photo ? (
-				<div className="relative shrink-0 self-start">
+		<header className={cn("flex flex-col gap-4", className)}>
+			<div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-6">
+				{photo ? (
 					<img
 						src={photo.src}
 						alt={photo.alt}
 						width={128}
 						height={128}
-						className="block size-32 rounded-panel border border-rule-soft bg-paper-shade object-cover"
+						className="block size-32 shrink-0 self-start rounded-panel border border-rule-soft bg-paper-shade object-cover sm:self-center"
 					/>
-					<Seal
-						rpps={rpps}
-						verified={verified}
-						size={48}
-						className="absolute -right-3 -bottom-3 rounded-full bg-paper ring-2 ring-paper"
-					/>
-				</div>
-			) : (
-				<Seal rpps={rpps} verified={verified} size={88} className="shrink-0" />
-			)}
-			<div className="flex min-w-0 flex-col gap-1.5">
-				<Heading className="type-headline text-ink">{name}</Heading>
-				<p className="text-lead text-ink-muted">{profession}</p>
-				{headline ? <p className="max-w-[60ch] text-body text-ink">{headline}</p> : null}
-				<p className="text-meta text-ink-muted">
-					<span className="me-1.5">{rppsLabel}</span>
-					<span className="tabular">{rpps}</span>
-				</p>
-				<div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-2">
-					<Badge tone={verified ? "stamp" : "ink"}>
-						{verified ? <CheckIcon className="size-4" strokeWidth={2.5} /> : null}
-						{statusLabel}
-					</Badge>
-					{statusNote ? <p className="text-meta text-ink-muted">{statusNote}</p> : null}
-				</div>
+				) : null}
+				<Stamp ink={stampInkOf(status)} className="w-full min-w-0 sm:w-fit sm:min-w-[22rem]">
+					<div className="flex flex-col gap-1 px-4 pt-3 pb-3.5 sm:px-5 sm:pt-4">
+						<Heading className="type-headline">{name}</Heading>
+						<p className="text-lead">{profession}</p>
+						{address ? <p className="text-meta">{address}</p> : null}
+					</div>
+					<StampFoot>
+						<span>
+							<span className="me-1.5">{rppsLabel}</span>
+							<span>{rpps}</span>
+						</span>
+						<span className="inline-flex items-center gap-1.5">
+							{verified ? <CheckIcon className="size-4" strokeWidth={2.5} /> : null}
+							{statusLabel}
+						</span>
+					</StampFoot>
+				</Stamp>
 			</div>
+			{headline || statusNote ? (
+				<div className="flex flex-col gap-1.5">
+					{headline ? <p className="max-w-[60ch] text-body text-ink">{headline}</p> : null}
+					{statusNote ? (
+						<p className="max-w-[65ch] text-meta text-ink-muted">{statusNote}</p>
+					) : null}
+				</div>
+			) : null}
 		</header>
 	);
 }

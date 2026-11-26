@@ -22,12 +22,14 @@ export const sectionHeading = "type-title text-ink";
 
 const table = tableStyles();
 
-/** The page title block: a headline and a factual lead. */
+/** The page title block: a headline and a factual lead, closed by a hairline. */
 export function ListingTitle({ title, lead }: { title: string; lead: ReactNode }) {
 	return (
-		<div className="flex max-w-[65ch] flex-col gap-3 border-b border-rule-soft pb-5">
-			<h1 className="type-headline text-ink">{title}</h1>
-			<p className="text-lead text-ink">{lead}</p>
+		<div className="rule-b pb-6">
+			<div className="flex max-w-[65ch] flex-col gap-3">
+				<h1 className="type-headline text-ink">{title}</h1>
+				<p className="text-lead text-ink">{lead}</p>
+			</div>
 		</div>
 	);
 }

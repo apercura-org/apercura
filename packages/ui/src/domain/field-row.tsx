@@ -6,9 +6,12 @@ export interface FieldListProps {
 	className?: string;
 }
 
-/** A list of facts (`<dl>`). Rows stack label over value in narrow containers. */
+/**
+ * A list of facts (`<dl>`), ruled like a printed form: an ink rule above, a form hairline under
+ * each row. Rows stack label over value in narrow containers.
+ */
 export function FieldList({ children, className }: FieldListProps) {
-	return <dl className={cn("@container border-t border-rule-soft", className)}>{children}</dl>;
+	return <dl className={cn("@container border-t border-ink", className)}>{children}</dl>;
 }
 
 export interface FieldRowProps {
@@ -36,7 +39,7 @@ export function FieldRow({ label, value, emptyLabel, className }: FieldRowProps)
 		<div
 			data-empty={empty || undefined}
 			className={cn(
-				"grid gap-0.5 border-b border-rule-soft py-3 @md:grid-cols-[minmax(9rem,2fr)_3fr] @md:items-baseline @md:gap-6",
+				"grid min-h-12 gap-0.5 border-b border-rule-soft py-3 @md:grid-cols-[minmax(9rem,2fr)_3fr] @md:items-baseline @md:gap-6",
 				className,
 			)}
 		>

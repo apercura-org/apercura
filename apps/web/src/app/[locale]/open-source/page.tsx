@@ -71,7 +71,7 @@ export default async function OpenSourcePage({ params }: PageProps<"/[locale]/op
 				<ProseSection id="auto-hebergement" content={section("selfHost")} />
 				<section
 					aria-labelledby="repository-heading"
-					className="surface-shade flex flex-col gap-4 px-5 py-6 sm:flex-row sm:items-center sm:justify-between sm:px-8"
+					className="rule-t flex flex-col gap-4 border-b border-rule-soft pt-6 pb-7 sm:flex-row sm:items-center sm:justify-between"
 				>
 					<div className="flex flex-col gap-1">
 						<h2 id="repository-heading" className="type-subtitle">

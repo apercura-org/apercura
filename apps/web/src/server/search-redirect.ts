@@ -1,4 +1,5 @@
 import { isValidRpps, type SearchQuery } from "@apercura/core";
+import { type EuropeanPlace, europeanPlaceOf } from "@apercura/core/geo";
 import {
 	type Locale,
 	MARKET_COUNTRIES,
@@ -19,6 +20,19 @@ import {
 
 /** Where a search goes: a page, in a locale (another market's when the place is there). */
 export type SearchRedirect = { href: Href; locale: Locale };
+
+/** Whether a country (ISO code) is one of the open markets. */
+export function isOpenMarket(code: string): code is MarketCountry {
+	return (MARKET_COUNTRIES as readonly string[]).includes(code);
+}
+
+/**
+ * The European country or city "Où ?" names (`@apercura/core/geo`), when the place is typed
+ * without a postcode: "Allemagne", "Austria", "Berlin", "München"… Null for anything else.
+ */
+export function namedEuropeanPlace(query: SearchQuery): EuropeanPlace | null {
+	return query.where && !query.postcode ? europeanPlaceOf(query.where) : null;
+}
 
 /** "Où ?" as typed, with its department hint. */
 function typedWhere(query: SearchQuery): string {
@@ -59,6 +73,11 @@ function placesIn(country: MarketCountry, query: SearchQuery): Promise<PlaceSugg
  * visitor's language when that market offers it (`marketLocaleFor`): "Qui ?" is carried over by
  * kind of care (`translateSearchTerm`), to the listing page of the place when there is one,
  * else to that market's search with the place set (and the listing, or the name typed).
+ *
+ * A country typed in "Où ?" (`@apercura/core/geo`) moves the search to that market when it is
+ * open ("Autriche": its hub for the care asked, its search for a name, else its home); a country
+ * not covered yet, or a city of one that no market knows ("Berlin"), stays on this page, whose
+ * search says so and lists the open countries.
  */
 export async function searchRedirect(
 	query: SearchQuery,
@@ -105,6 +124,26 @@ export async function searchRedirect(
 	// A later page or a search near the visitor: the chosen market's search lists them.
 	if (page !== 1 || query.near) return home === here ? null : elsewhere(home, whoIn(home));
 
+	// "Où ?" names a country. An open market is searched there, from its hub or its home
+	// ("Autriche", "UK"); any other country is said not to be covered yet, on this page.
+	const named = namedEuropeanPlace(query);
+	if (named?.kind === "country") {
+		const country = named.country.code;
+		if (!isOpenMarket(country)) return null;
+		const term = query.who ? translateSearchTerm(query.who, here, country) : null;
+		const target = marketLocaleFor(country, locale);
+		if (term?.kind === "listing" && (await listingHubExists(term.slug, country))) {
+			return {
+				href: { pathname: "/[specialite]", params: { specialite: term.slug } },
+				locale: target,
+			};
+		}
+		const who = whoIn(country);
+		return who
+			? { href: { pathname: "/recherche", query: { quoi: who } }, locale: target }
+			: { href: "/", locale: target };
+	}
+
 	if (!query.where && !query.postcode) {
 		const term = query.who ? translateSearchTerm(query.who, here, home) : null;
 		if (term?.kind === "listing" && (await listingHubExists(term.slug, home))) {
@@ -128,6 +167,8 @@ export async function searchRedirect(
 		// The page's own market lists what it finds (homonyms, no listing page, a name).
 		return country === here ? null : elsewhere(country, whoIn(country));
 	}
-	// No market knows the place: the chosen market's search says so.
+	// No market knows the place: this page says so when it is a city of a country not covered
+	// yet ("Berlin"), else the chosen market's search does.
+	if (named?.kind === "city" && !isOpenMarket(named.country.code)) return null;
 	return home === here ? null : elsewhere(home, whoIn(home));
 }

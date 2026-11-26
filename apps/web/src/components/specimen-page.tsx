@@ -1,4 +1,4 @@
-import { Badge, FieldList, FieldRow, PractitionerHeader, ProvenanceNote } from "@apercura/ui";
+import { FieldList, FieldRow, PractitionerHeader, ProvenanceNote } from "@apercura/ui";
 import { getTranslations } from "next-intl/server";
 import type { Locale } from "~/i18n/routing";
 
@@ -14,8 +14,8 @@ export const SPECIMEN = {
 } as const;
 
 /**
- * The specimen page: an unclaimed page exactly as the register fills it, with its seal,
- * honest empty fields and provenance, labelled as fictitious.
+ * The specimen page: an unclaimed page exactly as the register fills it, its stamp outlined,
+ * honest empty fields and the source line, labelled as fictitious.
  */
 export async function SpecimenPage({
 	locale,
@@ -30,38 +30,41 @@ export async function SpecimenPage({
 	return (
 		<article
 			aria-label={`${SPECIMEN.name}, ${t("specimen")}`}
-			className="overflow-hidden rounded-panel border border-rule-soft bg-paper"
+			className="rule-t flex flex-col gap-6 pt-3"
 		>
-			<div className="surface-shade flex flex-wrap items-center justify-between gap-x-4 gap-y-1 border-b border-rule-soft px-5 py-2.5 sm:px-8">
-				<Badge tone="ink">{t("specimen")}</Badge>
-				<span className="tabular text-meta text-ink-muted" aria-hidden="true">
+			<div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+				<span className="type-caption text-ink-muted">{t("specimen")}</span>
+				<span className="type-caption tabular text-ink-muted" aria-hidden="true">
 					{tSite("folioRpps", { rpps: SPECIMEN.rpps })}
 				</span>
 			</div>
-			<div className="flex flex-col gap-6 p-5 sm:p-8">
+			<div className="grid gap-8 lg:grid-cols-2 lg:gap-12">
 				<PractitionerHeader
 					headingLevel={headingLevel}
 					name={SPECIMEN.name}
 					profession={t("professions.gp")}
+					address={SPECIMEN.address}
 					rpps={SPECIMEN.rpps}
 					rppsLabel={t("rpps")}
 					status="unclaimed"
 					statusLabel={t("status.unclaimed")}
 					statusNote={t("statusNote.unclaimed")}
 				/>
-				<FieldList className="border-t-0">
-					<FieldRow label={t("fields.address")} value={SPECIMEN.address} emptyLabel={empty} />
-					<FieldRow label={t("fields.phone")} emptyLabel={empty} />
-					<FieldRow label={t("fields.hours")} emptyLabel={empty} />
-					<FieldRow label={t("fields.booking")} emptyLabel={empty} />
-				</FieldList>
-				<ProvenanceNote
-					locale={locale}
-					sourceLabel={t("source.label")}
-					source={t("source.name")}
-					updatedLabel={t("source.updated")}
-					updatedAt={SPECIMEN.updatedAt}
-				/>
+				<div className="flex flex-col">
+					<FieldList>
+						<FieldRow label={t("fields.address")} value={SPECIMEN.address} emptyLabel={empty} />
+						<FieldRow label={t("fields.phone")} emptyLabel={empty} />
+						<FieldRow label={t("fields.hours")} emptyLabel={empty} />
+						<FieldRow label={t("fields.booking")} emptyLabel={empty} />
+					</FieldList>
+					<ProvenanceNote
+						locale={locale}
+						sourceLabel={t("source.label")}
+						source={t("source.name")}
+						updatedLabel={t("source.updated")}
+						updatedAt={SPECIMEN.updatedAt}
+					/>
+				</div>
 			</div>
 		</article>
 	);

@@ -12,8 +12,8 @@ export interface EmptyStateProps {
 }
 
 /**
- * Empty state: a quiet panel on the shade that says plainly what is missing and what to do
- * next.
+ * Empty state: a ruled entry of the form, opened by a hairline, that says plainly what is
+ * missing and what to do next.
  */
 export function EmptyState({
 	title,
@@ -26,7 +26,7 @@ export function EmptyState({
 	return (
 		<div
 			className={cn(
-				"flex flex-col items-start gap-3 rounded-panel border border-rule-soft bg-paper-shade px-5 py-6 sm:px-7 sm:py-8",
+				"rule-t flex flex-col items-start gap-3 border-b border-rule-soft py-6 sm:py-8",
 				className,
 			)}
 		>

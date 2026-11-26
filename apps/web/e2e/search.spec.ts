@@ -201,10 +201,60 @@ test.describe("the country searched", () => {
 		test("the home form submits the country chosen", async ({ page }) => {
 			await page.goto("/fr");
 			await page.getByLabel("Qui ?").fill("dentiste");
-			await page.getByLabel("Pays").selectOption("cz");
+			await page.getByRole("combobox", { name: "Pays" }).selectOption("cz");
 			await page.getByRole("button", { name: "Chercher" }).click();
 			await expect(page).toHaveURL(/\/cz\/zubni-lekar$/);
 		});
+	});
+});
+
+test.describe("a place in a country Apercura does not cover yet", () => {
+	const OPEN_COUNTRIES = [
+		["France", "/fr"],
+		["Autriche", "/at"],
+		["Royaume-Uni", "/gb"],
+		["Tchéquie", "/cz"],
+	] as const;
+
+	test("“dentiste” in Berlin says so, lists the open countries, and passes axe", async ({
+		page,
+	}) => {
+		const response = await page.goto("/fr/recherche?quoi=dentiste&ou=Berlin");
+		// Rendered on the search page itself, not sent to another market.
+		expect(response?.status()).toBe(200);
+		await expect(page).toHaveURL(/\/fr\/recherche\?quoi=dentiste&ou=Berlin$/);
+		await expect(
+			page.getByRole("heading", { name: "Apercura ne couvre pas encore l’Allemagne" }),
+		).toBeVisible();
+		const main = page.getByRole("main");
+		for (const [name, href] of OPEN_COUNTRIES) {
+			await expect(main.getByRole("link", { name, exact: true })).toHaveAttribute("href", href);
+		}
+		// Not the generic answer for a place nobody knows.
+		await expect(page.getByText("Nous ne connaissons pas le lieu")).toHaveCount(0);
+		expect(await axeViolations(page)).toEqual([]);
+	});
+
+	test("a country typed in “Où ?” is named, in the visitor's language", async ({ page }) => {
+		await page.goto("/fr-en/search?quoi=dentist&ou=Allemagne");
+		await expect(
+			page.getByRole("heading", { name: "Apercura does not cover Germany yet" }),
+		).toBeVisible();
+		await expect(page.getByRole("main").getByRole("link", { name: "France" })).toHaveAttribute(
+			"href",
+			"/fr-en",
+		);
+		await expect(
+			page.getByRole("main").getByRole("link", { name: "United Kingdom" }),
+		).toHaveAttribute("href", "/gb");
+	});
+
+	test("an open country typed in “Où ?” moves the search to that market (307)", async ({
+		request,
+	}) => {
+		const response = await request.get("/fr/recherche?ou=Autriche", { maxRedirects: 0 });
+		expect(response.status()).toBe(307);
+		expect(new URL(response.headers().location ?? "", "http://localhost").pathname).toBe("/at");
 	});
 });
 

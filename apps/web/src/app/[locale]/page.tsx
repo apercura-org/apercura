@@ -9,12 +9,14 @@ import {
 } from "@apercura/core/taxonomy";
 import { buttonStyles, FieldList, FieldRow, ProvenanceNote } from "@apercura/ui";
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { BookletPage } from "~/components/booklet-page";
 import { HomeSearch } from "~/components/home-search";
 import { CountLinks } from "~/components/listing";
 import { PageGraph } from "~/components/page-graph";
+import { SampleStamps } from "~/components/sample-stamps";
 import { SiteFooter } from "~/components/site-footer";
 import { SiteHeader } from "~/components/site-header";
 import { SpecimenPage } from "~/components/specimen-page";
@@ -31,7 +33,9 @@ import { getRegistryFigures } from "~/server/queries/registry";
 
 export async function generateMetadata({ params }: PageProps<"/[locale]">): Promise<Metadata> {
 	const { locale: requested } = await params;
-	const locale = hasLocale(routing.locales, requested) ? requested : routing.defaultLocale;
+	// A first segment that is no locale (`/missing.txt`) is the root 404, never France's home.
+	if (!hasLocale(routing.locales, requested)) notFound();
+	const locale = requested;
 	const t = await getTranslations({ locale, namespace: "Metadata" });
 	return pageMetadata({
 		locale,
@@ -72,15 +76,24 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
 			/>
 			<SiteHeader locale={locale} href="/" />
 			<main id="main" tabIndex={-1} className="flex-1 outline-none">
-				<div className="surface-shade border-b border-rule-soft">
-					<div className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-5 pt-12 pb-12 sm:px-8 sm:pt-20 sm:pb-16">
-						<div className="flex max-w-3xl flex-col gap-4">
-							<h1 className="type-display">{t("title")}</h1>
-							<p className="max-w-[46ch] text-lead text-ink-muted sm:text-[1.375rem] sm:leading-snug">
-								{t("hook")}
-							</p>
+				{/*
+				 * The opening, set like the top of a form: the title and the search on two thirds of the
+				 * twelve columns, the sample stamps on the last third, closed by a hairline.
+				 */}
+				<div className="rule-b">
+					<div className="mx-auto grid w-full max-w-6xl gap-x-8 gap-y-10 px-5 pt-10 pb-12 sm:px-8 sm:pt-14 lg:grid-cols-12 lg:pt-16 lg:pb-16">
+						<div className={`flex flex-col gap-8 ${austrian ? "lg:col-span-10" : "lg:col-span-8"}`}>
+							<div className="flex flex-col gap-4">
+								<h1 className="type-display">{t("title")}</h1>
+								<p className="max-w-[46ch] text-lead text-ink-muted">{t("hook")}</p>
+							</div>
+							<HomeSearch locale={locale} idPrefix="home-search" />
 						</div>
-						<HomeSearch locale={locale} idPrefix="home-search" />
+						{austrian ? null : (
+							<div className="lg:col-span-4 lg:border-s lg:border-rule-soft lg:ps-8">
+								<SampleStamps locale={locale} />
+							</div>
+						)}
 					</div>
 				</div>
 
@@ -105,10 +118,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
 						</h2>
 						<ol className="grid gap-x-8 gap-y-6 sm:grid-cols-2 lg:grid-cols-4">
 							{pillars.map((pillar) => (
-								<li
-									key={pillar.key}
-									className="flex flex-col gap-2 border-t border-field-edge pt-4"
-								>
+								<li key={pillar.key} className="flex flex-col gap-2 border-t border-ink pt-4">
 									<h3 className="type-subtitle text-ink">{t(`pillars.${pillar.key}.title`)}</h3>
 									<p className="text-body text-ink-muted">
 										{pillar.key === "hostedInFrance"
@@ -169,7 +179,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
 
 					<section
 						aria-labelledby="pro-heading"
-						className="surface-shade flex flex-col gap-4 rounded-panel border border-rule-soft px-5 py-6 sm:flex-row sm:items-center sm:justify-between sm:px-8"
+						className="rule-t flex flex-col gap-4 border-b border-rule-soft pt-6 pb-7 sm:flex-row sm:items-center sm:justify-between"
 					>
 						<div className="flex flex-col gap-1">
 							<h2 id="pro-heading" className="type-subtitle">

@@ -17,7 +17,7 @@ export function DateSegments({ className, ...props }: Omit<DateInputProps, "chil
 				<DateSegment
 					segment={segment}
 					className={cn(
-						"min-w-6 rounded-[1px] px-0.5 text-end text-ink caret-transparent outline-none data-[type=literal]:min-w-0",
+						"min-w-6 rounded-mark px-0.5 text-end text-ink caret-transparent outline-none data-[type=literal]:min-w-0",
 						"data-placeholder:text-ink-muted data-[type=literal]:px-0",
 						"data-focused:bg-ink data-focused:text-paper",
 						"data-invalid:text-error data-invalid:data-focused:bg-error data-invalid:data-focused:text-paper",

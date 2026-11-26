@@ -5,7 +5,7 @@ import { THEME_SCRIPT, THEME_STORAGE_KEY } from "./theme";
 type Listener = (event: { target?: unknown; key?: string | null }) => void;
 
 /** Just enough of a browser for /theme.js: <html>, radios, listeners, a storage. */
-function fakeBrowser(storage: unknown) {
+function fakeBrowser(storage: unknown, readyState = "loading") {
 	const attributes = new Map<string, string>();
 	const listeners = new Map<string, Listener[]>();
 	const on = (type: string, listener: Listener) =>
@@ -23,6 +23,7 @@ function fakeBrowser(storage: unknown) {
 		body: {},
 		querySelectorAll: () => radios,
 		addEventListener: on,
+		readyState,
 	};
 	class MutationObserver {
 		observe() {}
@@ -58,6 +59,12 @@ describe("/theme.js", () => {
 		expect(dark.checked()).toBe("dark");
 		expect(fakeBrowser(fakeStorage({ [THEME_STORAGE_KEY]: "light" })).checked()).toBe("light");
 		expect(fakeBrowser(fakeStorage()).attributes.has("data-js")).toBe(true);
+	});
+
+	it("checks the stored choice at once when it loads after the document", () => {
+		const late = fakeBrowser(fakeStorage({ [THEME_STORAGE_KEY]: "dark" }), "complete");
+		expect(late.attributes.get("data-theme")).toBe("dark");
+		expect(late.checked()).toBe("dark");
 	});
 
 	it("leaves the theme to the system when nothing valid is stored", () => {

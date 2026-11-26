@@ -74,15 +74,14 @@ const KEYS = new Set<string>(["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight",
 
 const TONES: Record<WeekGridTone, string> = {
 	// The accent law: a booked slot takes the accent.
-	booked: "rounded-field bg-stamp text-paper",
-	done: "rounded-field border border-field-edge bg-paper text-ink",
+	booked: "rounded-mark bg-stamp text-paper",
+	done: "rounded-mark border border-field-edge bg-paper text-ink",
 	// Not yet a booking: a dashed box in ink.
-	pending: "rounded-field border-2 border-dashed border-ink bg-paper text-ink",
-	held: "rounded-field border border-dashed border-field-edge bg-paper-shade text-ink",
+	pending: "rounded-mark border-2 border-dashed border-ink bg-paper text-ink",
+	held: "rounded-mark border border-dashed border-field-edge bg-paper-shade text-ink",
 	// Solid ink.
-	block: "rounded-field bg-ink text-paper",
-	absent:
-		"rounded-field border border-field-edge bg-paper-shade text-ink line-through decoration-1",
+	block: "rounded-mark bg-ink text-paper",
+	absent: "rounded-mark border border-field-edge bg-paper-shade text-ink line-through decoration-1",
 };
 
 /** Lines of 0.875 rem text (leading 1.25) that fit in `rows` rows, split between title and detail. */
@@ -366,7 +365,7 @@ export function WeekGrid({
 											<div
 												aria-hidden="true"
 												className={cn(
-													"absolute inset-x-0.5 z-10 flex flex-col overflow-hidden rounded-field px-1.5 py-0.5 text-start",
+													"absolute inset-x-0.5 z-10 flex flex-col overflow-hidden rounded-mark px-1.5 py-0.5 text-start",
 													TONES[entry.tone],
 												)}
 												style={{

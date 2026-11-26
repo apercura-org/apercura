@@ -49,7 +49,33 @@
 	"LocaleSwitcher": {
 		"label": "Lingua",
 		"locale": "{locale, select, fr {Français} en {English} de {Deutsch} es {Español} it {Italiano} other {Lingua sconosciuta}}",
-		"current": "Lingua: {language}"
+		"current": "Lingua: <value>{language}</value>"
+	},
+	"CountrySwitcher": {
+		"label": "Paese",
+		"current": "Paese: <value>{country}</value>"
+	},
+	"ErrorPages": {
+		"notFound": {
+			"metaTitle": "Pagina non trovata · Apercura",
+			"title": "Questa pagina non esiste",
+			"body": "L’indirizzo potrebbe essere scritto male, oppure la pagina è stata rimossa. Cerchi nell’elenco o riparta da una delle pagine qui sotto.",
+			"rootBody": "L’indirizzo potrebbe essere scritto male, oppure la pagina è stata rimossa. Scelga un paese per cercare nel suo elenco.",
+			"code": "Errore 404",
+			"stamp": "Nessuna pagina a questo indirizzo",
+			"nextHeading": "Altrove su Apercura",
+			"home": "Pagina iniziale",
+			"directory": "Elenco per luogo",
+			"international": "Apercura in ogni paese"
+		},
+		"error": {
+			"metaTitle": "Pagina non disponibile · Apercura",
+			"title": "Non è stato possibile mostrare questa pagina",
+			"body": "Si è verificato un errore da parte nostra durante la preparazione. Riprovi; se il problema continua, torni tra qualche minuto.",
+			"retry": "Riprova",
+			"home": "Torna alla pagina iniziale",
+			"reference": "Riferimento per l’assistenza: {digest}"
+		}
 	},
 	"Search": {
 		"label": "Trovare un professionista sanitario",
@@ -240,7 +266,9 @@
 			"fallback": "La mappa è in caricamento. L’elenco qui sopra contiene tutti gli indirizzi."
 		},
 		"outsidePlace": "Esercita fuori da {where}",
-		"bookingOpenSome": "Alcuni professionisti accettano prenotazioni online: viene mostrato il loro prossimo orario libero. Per gli altri, telefoni allo studio o contatti la struttura."
+		"bookingOpenSome": "Alcuni professionisti accettano prenotazioni online: viene mostrato il loro prossimo orario libero. Per gli altri, telefoni allo studio o contatti la struttura.",
+		"notCoveredTitle": "Apercura non copre ancora {country}",
+		"notCoveredBody": "Per ora Apercura elenca i professionisti di questi paesi. Scegline uno per cercare lì:"
 	},
 	"Practitioner": {
 		"rpps": "RPPS",

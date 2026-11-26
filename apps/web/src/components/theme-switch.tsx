@@ -40,7 +40,7 @@ export function ThemeSwitch({ label, names, className }: ThemeSwitchProps) {
 						<label
 							key={theme}
 							className={cn(
-								"relative flex min-h-11 cursor-pointer items-center gap-1.5 rounded-[0.25rem] px-3 text-meta text-ink",
+								"relative flex min-h-11 cursor-pointer items-center gap-1.5 rounded-mark px-3 text-meta text-ink",
 								"hover:bg-paper-shade",
 								"has-checked:bg-paper-shade has-checked:font-semibold has-checked:ring-1 has-checked:ring-ink",
 								"has-focus-visible:outline-3 has-focus-visible:outline-solid has-focus-visible:outline-offset-2 has-focus-visible:outline-(--focus-ring)",

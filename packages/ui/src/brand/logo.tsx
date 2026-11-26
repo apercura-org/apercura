@@ -1,4 +1,3 @@
-import { cn } from "../recipes";
 import {
 	BRAND_LOCKUP_WIDTH,
 	BRAND_SYMBOL_DOT,
@@ -13,6 +12,12 @@ export interface BrandMarkProps {
 	height?: number;
 	className?: string;
 }
+
+/**
+ * The mark's own classes, then the caller's. A plain join, not the class merger: the logo also
+ * draws the error pages, which load with every page and must not bring the merger along.
+ */
+const classes = (own: string, extra?: string) => (extra ? `${own} ${extra}` : own);
 
 /*
  * The ink is the current colour, so the mark follows the theme and the surface it sits on; the
@@ -33,7 +38,7 @@ export function BrandSymbol({ height = 24, className }: BrandMarkProps) {
 			aria-hidden="true"
 			focusable="false"
 			fill="currentColor"
-			className={cn("shrink-0", className)}
+			className={classes("shrink-0", className)}
 		>
 			<path fillRule="evenodd" d={BRAND_SYMBOL_PATH} />
 			<Dot />
@@ -51,7 +56,7 @@ export function BrandLockup({ height = 24, className }: BrandMarkProps) {
 			aria-hidden="true"
 			focusable="false"
 			fill="currentColor"
-			className={cn("shrink-0", className)}
+			className={classes("shrink-0", className)}
 		>
 			<path fillRule="evenodd" d={BRAND_SYMBOL_PATH} />
 			<Dot />
@@ -85,7 +90,7 @@ const px = (value: number) => `${Math.round(value * 100) / 100}px`;
 export function BrandLogo({ height = 24, className }: BrandMarkProps) {
 	const fontSize = height * XHEIGHT_RATIO;
 	return (
-		<span aria-hidden="true" className={cn("inline-flex shrink-0 items-center", className)}>
+		<span aria-hidden="true" className={classes("inline-flex shrink-0 items-center", className)}>
 			<BrandSymbol height={height} />
 			<span
 				translate="no"
