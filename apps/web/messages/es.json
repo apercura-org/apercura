@@ -51,6 +51,10 @@
 		"locale": "{locale, select, fr {Français} en {English} de {Deutsch} es {Español} it {Italiano} other {Idioma desconocido}}",
 		"current": "Idioma: {language}"
 	},
+	"CountrySwitcher": {
+		"label": "País",
+		"current": "País: {country}"
+	},
 	"ErrorPages": {
 		"notFound": {
 			"metaTitle": "Página no encontrada · Apercura",

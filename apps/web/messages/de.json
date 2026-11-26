@@ -51,6 +51,10 @@
 		"locale": "{locale, select, fr {Français} en {English} de {Deutsch} es {Español} it {Italiano} other {Unbekannte Sprache}}",
 		"current": "Sprache: {language}"
 	},
+	"CountrySwitcher": {
+		"label": "Land",
+		"current": "Land: {country}"
+	},
 	"ErrorPages": {
 		"notFound": {
 			"metaTitle": "Seite nicht gefunden · Apercura",
