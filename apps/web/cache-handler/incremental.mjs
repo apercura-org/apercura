@@ -81,17 +81,34 @@ export function ttlSeconds(data, ctx) {
 }
 
 export default class ApercuraCacheHandler {
-	/** @type {any} */ #fallback = null;
+	/** @type {CacheHandlerContext} */ #ctx;
+	#valkey = Boolean(valkeyConfig());
+	/** @type {any} */ #fileSystem = null;
 
 	/** @param {CacheHandlerContext} ctx */
 	constructor(ctx) {
-		if (!valkeyConfig()) {
+		this.#ctx = ctx;
+	}
+
+	/**
+	 * Valkey's store, or null for Next.js's file system cache: Valkey is off, or could not start
+	 * (no build id).
+	 */
+	async #store() {
+		return this.#valkey ? sharedStore() : null;
+	}
+
+	/** Next.js's file system cache for this request, with the disk guard. */
+	#disk() {
+		if (!this.#fileSystem) {
 			const FileSystemCache = nextFileSystemCache();
-			this.#fallback = new FileSystemCache({
+			const ctx = this.#ctx;
+			this.#fileSystem = new FileSystemCache({
 				...ctx,
 				flushToDisk: Boolean(ctx.flushToDisk) && diskGuard.mayWrite(ctx.serverDistDir),
 			});
 		}
+		return this.#fileSystem;
 	}
 
 	/**
@@ -100,20 +117,17 @@ export default class ApercuraCacheHandler {
 	 * @returns {Promise<CacheHandlerValue | null>}
 	 */
 	async get(key, ctx) {
-		if (this.#fallback) {
+		const store = await this.#store();
+		if (!store) {
 			try {
-				return await this.#fallback.get(key, ctx);
+				return await this.#disk().get(key, ctx);
 			} catch (error) {
 				log("disk-read", "page cache read failed, treated as a miss", error);
 				return null;
 			}
 		}
-		const store = await sharedStore();
-		if (!store) return null;
 		const stored = /** @type {StoredEntry | undefined} */ (await store.read("route", key));
-		if (!stored || typeof stored.lastModified !== "number") return null;
-		const value = stored.value;
-		if (!value) return null;
+		if (!stored || typeof stored.lastModified !== "number" || !stored.value) return null;
 		const tags = entryTags(stored, ctx);
 		if (tags.length > 0) {
 			const marks = await store.tagMarks(tags);
@@ -130,7 +144,7 @@ export default class ApercuraCacheHandler {
 		}
 		return {
 			lastModified: stored.lastModified,
-			value,
+			value: stored.value,
 			...(stored.cacheControl ? { cacheControl: stored.cacheControl } : {}),
 		};
 	}
@@ -141,9 +155,10 @@ export default class ApercuraCacheHandler {
 	 * @param {any} ctx
 	 */
 	async set(key, data, ctx) {
-		if (this.#fallback) {
+		const store = await this.#store();
+		if (!store) {
 			try {
-				await this.#fallback.set(key, data, ctx);
+				await this.#disk().set(key, data, ctx);
 			} catch (error) {
 				diskGuard.failed(error);
 				log("disk-write", "page not written to the disk cache (served as usual)", error);
@@ -151,8 +166,6 @@ export default class ApercuraCacheHandler {
 			return;
 		}
 		if (!data || data.kind === "IMAGE") return;
-		const store = await sharedStore();
-		if (!store) return;
 		/** @type {StoredEntry} */
 		const entry = {
 			lastModified: Date.now(),
@@ -169,14 +182,14 @@ export default class ApercuraCacheHandler {
 	 */
 	async revalidateTag(tags, durations) {
 		const list = typeof tags === "string" ? [tags] : tags;
-		if (this.#fallback) return this.#fallback.revalidateTag(list, durations);
+		const store = await this.#store();
+		if (!store) return this.#disk().revalidateTag(list, durations);
 		if (list.length === 0) return;
 		markInNext(list, durations);
-		const store = await sharedStore();
-		await store?.markTags(list, durations);
+		await store.markTags(list, durations);
 	}
 
 	resetRequestCache() {
-		this.#fallback?.resetRequestCache?.();
+		this.#fileSystem?.resetRequestCache?.();
 	}
 }

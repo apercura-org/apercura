@@ -79,12 +79,24 @@ export function dataTtlSeconds(entry) {
 }
 
 /**
- * A "use cache" handler backed by Valkey (`sharedStore`), as described above.
+ * A "use cache" handler backed by Valkey (`sharedStore`), as described above. When the store
+ * is null (Valkey could not start: no build id), every call goes to `fallback`.
  * @param {{ store: () => Promise<import("./store.mjs").CacheStore | null>,
- *   now?: () => number, wallNow?: () => number }} options
+ *   fallback?: () => CacheHandler, now?: () => number, wallNow?: () => number }} options
  * @returns {CacheHandler}
  */
-export function createValkeyDataHandler({ store, now = nextNow, wallNow = Date.now }) {
+export function createValkeyDataHandler({
+	store,
+	fallback = () => nextDefaultCacheHandler(NEXT_MEMORY_CACHE_BYTES),
+	now = nextNow,
+	wallNow = Date.now,
+}) {
+	/** @type {CacheHandler | null} */
+	let memory = null;
+	const inMemory = () => {
+		memory ??= fallback();
+		return memory;
+	};
 	/** Sets in progress: a `get` of the same key waits for them (the interface requires it). */
 	/** @type {Map<string, Promise<void>>} */
 	const pending = new Map();
@@ -94,7 +106,7 @@ export function createValkeyDataHandler({ store, now = nextNow, wallNow = Date.n
 			const inProgress = pending.get(cacheKey);
 			if (inProgress) await inProgress;
 			const cache = await store();
-			if (!cache) return undefined;
+			if (!cache) return inMemory().get(cacheKey, softTags);
 			const stored = /** @type {StoredData | undefined} */ (await cache.read("data", cacheKey));
 			if (!stored || !Buffer.isBuffer(stored.value)) return undefined;
 			if (now() > stored.timestamp + stored.revalidate * 1000) return undefined;
@@ -125,14 +137,18 @@ export function createValkeyDataHandler({ store, now = nextNow, wallNow = Date.n
 			const marker = new Promise((resolve) => {
 				done = () => resolve(undefined);
 			});
+			// At once, before any await: a `get` of the key from now on waits for this set.
 			pending.set(cacheKey, /** @type {Promise<void>} */ (marker));
 			try {
+				const cache = await store();
+				if (!cache) {
+					await inMemory().set(cacheKey, pendingEntry);
+					return;
+				}
 				const entry = await pendingEntry;
 				const value = await readAll(entry.value);
 				// Dynamic: computed again on every read, never served from a store.
 				if (entry.expire === 0) return;
-				const cache = await store();
-				if (!cache) return;
 				/** @type {StoredData} */
 				const stored = {
 					tags: entry.tags,
@@ -157,16 +173,18 @@ export function createValkeyDataHandler({ store, now = nextNow, wallNow = Date.n
 			// Tag marks are read with each entry.
 		},
 
-		async getExpiration() {
+		async getExpiration(tags) {
+			if (!(await store())) return inMemory().getExpiration(tags);
 			// The implicit tags are checked in `get`.
 			return Number.POSITIVE_INFINITY;
 		},
 
 		async updateTags(tags, durations) {
+			const cache = await store();
+			if (!cache) return inMemory().updateTags(tags, durations);
 			if (tags.length === 0) return;
 			markInNext(tags, durations);
-			const cache = await store();
-			await cache?.markTags(tags, durations);
+			await cache.markTags(tags, durations);
 		},
 	};
 }

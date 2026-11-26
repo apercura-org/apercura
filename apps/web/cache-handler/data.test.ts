@@ -141,9 +141,15 @@ describe('"use cache" handler, with Valkey', () => {
 		expect(await handler.get("other", [])).toBeUndefined();
 	});
 
-	it("is a miss when there is no store", async () => {
+	it("hands every call to Next.js's in-memory handler when Valkey cannot start", async () => {
+		const { entry } = setup();
 		const handler = createValkeyDataHandler({ store: async () => null });
-		expect(await handler.get("key", [])).toBeUndefined();
+		await handler.set(
+			"key",
+			Promise.resolve(entry({ timestamp: performance.timeOrigin + performance.now() })),
+		);
+		const hit = await handler.get("key", []);
+		expect(hit && (await text(hit.value))).toBe('{"name":"Dr Test"}');
 		await expect(handler.updateTags(["a"], undefined)).resolves.toBeUndefined();
 	});
 });
