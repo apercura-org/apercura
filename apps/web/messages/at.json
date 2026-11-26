@@ -37,6 +37,7 @@
 		}
 	},
 	"HomePage": {
+		"title": "Finden Sie eine Ärztin oder einen Arzt in Österreich",
 		"hook": "Finden Sie Ärztinnen und Ärzte in Wien, der Steiermark und Salzburg: Alle haben bereits eine Seite.",
 		"pillars": {
 			"free": {
