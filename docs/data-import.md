@@ -783,3 +783,186 @@ no person's name stored, placement (postcode, town, nearest town, local
 authority, Northern Ireland by town), region listings, idempotence, a dry run, a
 list left out (and branch surgeries kept when only their report fails),
 absences, objections, the breaker and `--approve`.
+
+## Czechia
+
+`etl:cz` builds Czechia's directory (`/cz`) from the National Register of
+Healthcare Providers (issue #131, [ADR 0002](./adr/0002-multi-country.md#czechia-cz)).
+Everything above about roles, ownership, the outbox and `--approve` applies; this
+section says what differs.
+
+```sh
+bun run etl:places --country cz   # once (etl:cz does it on its first run), then yearly
+bun run etl:cz                    # weekly (the register publishes monthly: an unchanged export is skipped)
+bun run etl:cz --dry-run          # everything, then roll back
+bun run etl:cz --approve=<run_id> # accept what a blocked run reported
+```
+
+A Czech page is a **facility** (zdravotnické zařízení) at its place of care, the
+register's own unit: a general practitioner's or a specialist's practice, a
+dental practice, a pharmacy, a home care agency. A facility of a sole trader is
+published under the person's name (`MUDr. Jana Ukázková`): the page keeps the
+name as the register publishes it (the Czech DPA allowed basic profiles in 2013;
+see the ADR), and an objection removes it.
+
+### Sources
+
+Verified on 26 November 2026 on each publisher's page. Both are under
+**CC BY 4.0**; their attribution is printed on the data sources page (`/cz/data`)
+and kept in `czechia.registries` (`packages/core/src/country/cz.ts`).
+
+| Source                                                                    | Distribution                                                                                                                                                              | Format, update                                                                                                                                            |
+| ------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| NRPZS: Místa poskytování zdravotních služeb (ÚZIS ČR, Ministry of Health) | `https://datanzis.uzis.gov.cz/data/NR-01-NRPZS/NR-01-06/Otevrena-data-NR-01-06-nrpzs-mista-poskytovani-zdravotnich-sluzeb.csv` (catalogue page: nzip.cz, dataset 1823)    | CSV with a header, 49 quoted columns, UTF-8, about 27 MB and 41,000 lines; "Aktualizace měsíční" (monthly, the file of November 2026 is dated 1 November) |
+| RÚIAN, state file of the basic data set (ČÚZK)                            | `https://vdp.cuzk.gov.cz/vymenny_format/soucasna/{YYYYMMDD}_ST_UZSZ.xml.zip`, the last day of the previous month (then the month before, while the 1st's file is not out) | VFR 3.1 XML (GML 3.2) in a ZIP, 4.7 MB (51 MB inflated), monthly; definition points in EPSG:5514; places import only                                      |
+
+`ETL_CZ_URL` and `ETL_CZ_PLACES_URL` override them. The NRPZS also has a search
+application (nrpzs.uzis.cz); the bulk export is enough and is the one read.
+
+### Identifiers
+
+One scheme, `CZ-NRPZS`: the facility number `ZZ_ID` ("Jednoznačný identifikátor
+zdravotnického zařízení"), and the page URL ends with it
+(`/cz/zarizeni/mudr-jana-ukazkova-900001`). The site is the place of care
+(`ZZ_misto_poskytovani_ID`), the activity `{ZZ_ID}@{place}`. The facility code
+`ZZ_kod` is not used: it begins with the provider's company number (IČO).
+
+### Minimisation and what is left out
+
+- Read from a line: the facility number, name, kind and fields of care, the place
+  of care (number, municipality, district, region, postcode, street and number,
+  point) and the provider's phone number and legal type. **Never read into a
+  row, so never stored**: the provider's IČO (and `ZZ_kod`), seat (a sole
+  trader's home address), professional representative, e-mail, fax, data box,
+  web address, date of activity, founder and legal form. The file holds no
+  birth number.
+- The provider's phone number is stored as the place's only when at most three
+  lines of the file carry it (`MAX_PHONE_ROWS`): a chain prints its head office's
+  number on every pharmacy (`stats.sources.nrpzs.counters.sharedPhones`).
+- `stats.sources.nrpzs.counters.naturalPersons` counts the facilities of sole
+  traders; quarantined lines keep their facility number only (never a name).
+- Kinds imported (`CZ_FACILITY_KINDS` in `packages/core/src/taxonomy/cz.ts`):
+  320 general practitioners, 321 paediatricians, 322 dentists, 323
+  gynaecologists, 324 specialists (listed under their primary field of care,
+  `primaryCzSpecialty`), 340 clinical psychologists, 341 speech therapists, 350
+  home care, 351 physiotherapists, 353 midwives, 510 pharmacies. Every other kind
+  is left out and counted by kind in `stats.sources.nrpzs.skipped`: hospitals and
+  their wards, spas, laboratories and dental laboratories, opticians, ambulance
+  and transport services, blood and plasma centres, social care homes, the
+  outpatient centres of several fields (`301`, `302`), other non-physician
+  facilities (`359`: mostly dental hygienists) and the rest. The register itself
+  leaves out the facilities of the Ministries of the Interior and of Justice
+  (prisons).
+- Every field of care of a facility is stored as a qualification (`source =
+'obor'`, the label as published).
+- GDPR objections: the lines of a suppressed facility number are dropped while
+  parsing (`stats.suppressedLines.nrpzs`), and the purge of #116/#118 runs in the
+  merge, as in the other markets.
+
+### Places and precision
+
+Places (`directory.places`, `country = 'CZ'`), from RÚIAN, imported once:
+
+- **regions**: the 14 kraje, coded by NUTS 3 (`CZ010`); no listing pages, they
+  group the districts on the directory page (as France's regions);
+- **departments**: the 76 okresy, coded by LAU 1 (`CZ0642`), and Prague, which has
+  no district in RÚIAN, as `CZ0100` "Praha" (the code the register uses);
+- **communes**: the 6,258 obce (RÚIAN code), centre = the definition point
+  transformed to WGS 84 by PostGIS; a slug unique within the district (`pohled`,
+  `pohled-573591`);
+- **arrondissements**: Prague's 22 správní obvody (`Praha 1`…`Praha 22`, slug
+  `praha-1`), whose city page, like Paris's, is the department's (migration
+  `0027_cz_market` skips the municipality of Prague, 554782, as the parent of its
+  districts).
+
+A site takes the register's point (`ZZ_GPS`, `POINT(lat lng)`, latitude first;
+`geo_source = 'source'`, `geo_precision = 'address'`). It is placed (`stageCz` in
+`src/merge-cz.ts`):
+
+1. in Prague, in the district the register names (`Praha 8`);
+2. elsewhere, in the only municipality of the district with the register's
+   municipality name, else the nearer of two that share it;
+3. else in the nearest Prague district, or the nearest municipality of the
+   district within 20 km;
+4. else in the district itself.
+
+A line without a point (0.2%) takes its municipality's centre (`geo_source =
+'centroid'`, `geo_precision = 'city'`, no map pin).
+
+### Guards
+
+Before the merge (`CZ_LIMITS` in `src/guards.ts`):
+
+- the file is between 10 KB and 300 MB and has the register's 49 columns;
+  otherwise the run **fails** (one list: nothing is left out, the pages stay);
+- at most 1% of its lines quarantined, at least 1,000 data lines and 300
+  facilities imported (never approvable);
+- at most 5% more or fewer facilities and 15% more or fewer bytes than the last
+  successful run: otherwise **blocked** (approvable).
+
+After staging: less than 98% of the sites placed in a municipality or a Prague
+district (`cz.places`) or less than 97% located at the register's point
+(`cz.points`) blocks the run (approvable). After the merge, the circuit breakers
+and the orphan check apply to Czechia's own pages only.
+
+### Schedule and monitoring
+
+The scheduler runs `etl:cz $ETL_CZ_SCHEDULE_ARGS` every Monday at 07:30 UTC,
+after the UK's import (`docker/crontab`; one advisory lock for every import).
+Alert on exit codes 1 and 2 and on the import age (the market query of
+[Austria's monitoring](#schedule-and-monitoring) covers `cz`): the export is
+monthly, so a run is `skipped` most weeks and the age of the last `succeeded`
+run can reach five weeks; alert above 40 days.
+
+```sql
+-- Czechia's last runs: status, file date, placement, minimisation and totals.
+SELECT id, status, finished_at, files -> 'nrpzs' ->> 'lastModified' AS published,
+	stats -> 'staged' AS staged, stats -> 'sources' -> 'nrpzs' -> 'counters' AS counters,
+	stats -> 'totals' AS totals
+FROM directory.etl_runs WHERE source = 'cz' ORDER BY id DESC LIMIT 5;
+
+-- Days since the export last changed and was imported (alert above 40).
+SELECT max(finished_at) AS last_import, extract(day FROM now() - max(finished_at))::integer AS age_days
+FROM directory.etl_runs WHERE source = 'cz' AND status = 'succeeded';
+```
+
+### Measured run (files of 1 November 2026)
+
+Laptop, local PostGIS 17 under emulation, fresh database, real downloads (the run
+quoted in the pull request):
+
+|              |                                                                                                                                                                                                                     |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Duration     | places 6 s (download included), peak RSS 0.3 GB; dry run 44 s (download 27 s), peak RSS 1.2 GB; a forced rerun of the same file 20 s, 1.0 GB; an unchanged week 0.1 s                                               |
+| Lines        | 41,136: 33,173 facilities imported, 7,963 of kinds left out, 0 quarantined                                                                                                                                          |
+| Facilities   | GP 5,324 · paediatricians 1,973 · dentists 5,616 · gynaecologists 1,627 · specialists 10,785 · pharmacies 2,527 · home care 949 · physiotherapists 2,767 · psychologists 702 · speech therapists 611 · midwives 292 |
+| Sole traders | 13,373 facilities of a natural person                                                                                                                                                                               |
+| Phones       | 15,221 sites with a number; 2,944 head-office numbers left out (shared by more than three lines)                                                                                                                    |
+| Sites        | 33,173: 33,101 at the register's point (99.8%), 72 at their municipality's centre; 27,598 in a municipality, 5,571 in a Prague district, 4 in their district only                                                   |
+| Indexable    | 33,173 facility pages; 4,318 indexable listing pages of 13,330                                                                                                                                                      |
+| Places       | 14 regions, 77 districts (76 and Prague), 6,258 municipalities, 22 Prague districts                                                                                                                                 |
+
+### Local development
+
+```sh
+bun run etl:cz --source-dir packages/etl/fixtures/cz --offline   # synthetic data
+bun run --cwd packages/etl fixtures:cz                           # regenerate the fixtures
+```
+
+`packages/etl/fixtures/cz` holds a **synthetic** export in the register's exact
+format (`nrpzs.csv`) and a small RÚIAN state file (`ruian-st-uzsz.xml`: the 14
+regions, five districts, twelve municipalities and Prague's 22 districts, with
+their real codes and definition points), generated by
+`packages/etl/fixtures/generate-cz.ts`: made-up facilities and sole traders
+(facility numbers from 900001, company numbers from 99), made-up streets, seats,
+representatives and e-mails (to check they are never stored), a chain sharing a
+head-office number, and lines of kinds left out above the line floor. Never commit
+real rows. The anchors the end-to-end tests use: `900001` MUDr. Jana Ukázková
+(GP, Praha 2), `900002` a pharmacy in Brno, `900003` a cardiologist's practice in
+Ostrava, `900004` a dental practice without a street (Chocerady 15), `900005` a
+physiotherapist objected to in the integration test. `test/cz-integration.test.ts`
+imports them next to the French, Austrian and UK fixtures: the other markets
+untouched both ways, nothing of the provider stored, placement (Prague districts,
+municipality, nearest, centre), read models with Prague's city page skipped,
+idempotence, a dry run, an unreadable export, absences, objections, the breaker
+and `--approve`.

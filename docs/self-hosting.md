@@ -195,6 +195,19 @@ minutes). The scheduler reruns it every Monday at 06:30 UTC
 (`ETL_GB_SCHEDULE_ARGS=--sources ods-gp` keeps it to some lists); exit code `3`
 as for Austria ([data-import.md](./data-import.md#united-kingdom)).
 
+Czechia (`/cz`) has its own import, from the National Register of Healthcare
+Providers (NRPZS, ÚZIS ČR, CC BY 4.0, about 33,000 places of care):
+
+```sh
+apercura-compose run --rm --entrypoint "apercura etl:cz" etl
+```
+
+Its first run imports the Czech regions, districts and municipalities (RÚIAN,
+about 5 MB, a few seconds). The scheduler reruns it every Monday at 07:30 UTC
+and skips an unchanged export (`ETL_CZ_SCHEDULE_ARGS` adds flags); one list
+only, so it exits `1` when the export cannot be read
+([data-import.md](./data-import.md#czechia)).
+
 ## Scheduled jobs
 
 The `scheduler` service runs [`docker/crontab`](../docker/crontab) with
