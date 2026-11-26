@@ -196,7 +196,9 @@
 			"fallback": "Mapa se načítá. Seznam výše obsahuje všechny adresy."
 		},
 		"outsidePlace": "Mimo lokalitu {where}",
-		"bookingOpenSome": "Některá zařízení přijímají objednávky online: zobrazujeme jejich nejbližší volný termín. Do ostatních zavolejte."
+		"bookingOpenSome": "Některá zařízení přijímají objednávky online: zobrazujeme jejich nejbližší volný termín. Do ostatních zavolejte.",
+		"notCoveredTitle": "Apercura zatím nepokrývá {country}",
+		"notCoveredBody": "Apercura zatím uvádí zdravotníky v těchto zemích. Vyberte jednu a hledejte v ní:"
 	},
 	"Practitioner": {
 		"rpps": "Číslo v NRPZS",

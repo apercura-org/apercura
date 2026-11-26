@@ -266,7 +266,9 @@
 			"fallback": "La carte se charge. La liste ci-dessus donne toutes les adresses."
 		},
 		"outsidePlace": "Exerce hors de {where}",
-		"bookingOpenSome": "Certains praticiens prennent les rendez-vous en ligne : leur prochain horaire libre est indiqué. Pour les autres, appelez le cabinet ou contactez l’établissement."
+		"bookingOpenSome": "Certains praticiens prennent les rendez-vous en ligne : leur prochain horaire libre est indiqué. Pour les autres, appelez le cabinet ou contactez l’établissement.",
+		"notCoveredTitle": "Apercura ne couvre pas encore {country}",
+		"notCoveredBody": "Apercura recense pour l’instant les professionnels de ces pays. Choisissez-en un pour y chercher :"
 	},
 	"Practitioner": {
 		"rpps": "RPPS",

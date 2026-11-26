@@ -266,7 +266,9 @@
 			"fallback": "The map is loading. The list above has every address."
 		},
 		"outsidePlace": "Practises outside {where}",
-		"bookingOpenSome": "Some practitioners take online bookings: their next free time is shown. For the others, call the practice or contact the establishment."
+		"bookingOpenSome": "Some practitioners take online bookings: their next free time is shown. For the others, call the practice or contact the establishment.",
+		"notCoveredTitle": "Apercura does not cover {country} yet",
+		"notCoveredBody": "For now, Apercura lists the practitioners of these countries. Choose one to search there:"
 	},
 	"Practitioner": {
 		"rpps": "RPPS",

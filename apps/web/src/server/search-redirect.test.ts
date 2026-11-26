@@ -205,3 +205,49 @@ describe("a search in the country chosen in the form", () => {
 		);
 	});
 });
+
+describe("a search for a European place outside the open markets", () => {
+	it("stays on the page for a country not covered yet, or one of its cities", async () => {
+		expect(await search("fr", { quoi: "dentiste", ou: "Berlin" })).toBeNull();
+		expect(await search("fr", { quoi: "dentiste", ou: "München" })).toBeNull();
+		expect(await search("fr", { quoi: "dentiste", ou: "Allemagne" })).toBeNull();
+		expect(await search("fr", { ou: "Madrid" })).toBeNull();
+		expect(await search("en-GB", { quoi: "dentist", ou: "Germany" })).toBeNull();
+		// Even when another market was chosen in the form: this page says so.
+		expect(await search("fr", { quoi: "dentiste", ou: "Berlin" }, { chosen: "GB" })).toBeNull();
+		expect(await search("fr", { quoi: "Dupont", ou: "Espagne" }, { chosen: "CZ" })).toBeNull();
+	});
+
+	it("still lets a place of an open market win over a homonymous foreign city", async () => {
+		expect(await search("fr", { quoi: "dentiste", ou: "Wien" })).toEqual(
+			searchPage("de-AT", { quoi: listingLabel("zahnaerzte", "de-AT") ?? "", ou: "Wien" }),
+		);
+		expect(await search("fr", { quoi: "dentiste", ou: "Praha" })).toEqual(
+			listing("cs-CZ", "zubni-lekar", "praha", "praha"),
+		);
+	});
+});
+
+describe("a search for an open country by name", () => {
+	it("goes to that market's home when nothing else is asked", async () => {
+		expect(await search("fr", { ou: "Autriche" })).toEqual({ href: "/", locale: "de-AT" });
+		expect(await search("fr", { ou: "Royaume-Uni" })).toEqual({ href: "/", locale: "en-GB" });
+		expect(await search("en", { ou: "UK" })).toEqual({ href: "/", locale: "en-GB" });
+		expect(await search("de-AT", { ou: "Tschechien" })).toEqual({ href: "/", locale: "cs-CZ" });
+		// The page's own market: its home, in the visitor's language.
+		expect(await search("en", { ou: "France" })).toEqual({ href: "/", locale: "en" });
+	});
+
+	it("goes to that market's hub for the care asked, or its search for a name", async () => {
+		expect(await search("fr", { quoi: "dentiste", ou: "UK" })).toEqual({
+			href: { pathname: "/[specialite]", params: { specialite: "dental-practices" } },
+			locale: "en-GB",
+		});
+		expect(await search("fr", { quoi: "Dupont", ou: "Tchéquie" })).toEqual(
+			searchPage("cs-CZ", { quoi: "Dupont" }),
+		);
+		expect(await search("fr", { quoi: "Dupont", ou: "France" })).toEqual(
+			searchPage("fr", { quoi: "Dupont" }),
+		);
+	});
+});

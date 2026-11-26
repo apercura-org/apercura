@@ -266,7 +266,9 @@
 			"fallback": "Die Karte wird geladen. Die Liste oben enthält alle Adressen."
 		},
 		"outsidePlace": "Praktiziert außerhalb von {where}",
-		"bookingOpenSome": "Einige Gesundheitsfachkräfte nehmen Online-Buchungen an: Deren nächster freier Termin wird angezeigt. Bei den anderen rufen Sie die Praxis an oder wenden Sie sich an die Einrichtung."
+		"bookingOpenSome": "Einige Gesundheitsfachkräfte nehmen Online-Buchungen an: Deren nächster freier Termin wird angezeigt. Bei den anderen rufen Sie die Praxis an oder wenden Sie sich an die Einrichtung.",
+		"notCoveredTitle": "Apercura deckt {country} noch nicht ab",
+		"notCoveredBody": "Apercura führt vorerst die Gesundheitsfachkräfte dieser Länder. Wählen Sie eines, um dort zu suchen:"
 	},
 	"Practitioner": {
 		"rpps": "RPPS",

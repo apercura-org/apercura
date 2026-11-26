@@ -266,7 +266,9 @@
 			"fallback": "La mappa è in caricamento. L’elenco qui sopra contiene tutti gli indirizzi."
 		},
 		"outsidePlace": "Esercita fuori da {where}",
-		"bookingOpenSome": "Alcuni professionisti accettano prenotazioni online: viene mostrato il loro prossimo orario libero. Per gli altri, telefoni allo studio o contatti la struttura."
+		"bookingOpenSome": "Alcuni professionisti accettano prenotazioni online: viene mostrato il loro prossimo orario libero. Per gli altri, telefoni allo studio o contatti la struttura.",
+		"notCoveredTitle": "Apercura non copre ancora {country}",
+		"notCoveredBody": "Per ora Apercura elenca i professionisti di questi paesi. Scegline uno per cercare lì:"
 	},
 	"Practitioner": {
 		"rpps": "RPPS",

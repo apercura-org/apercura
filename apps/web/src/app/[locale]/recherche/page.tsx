@@ -1,4 +1,5 @@
 import { parseSearchQuery, type SearchQuery } from "@apercura/core";
+import { type EuropeanCountry, europeanPlaceOf } from "@apercura/core/geo";
 import { buttonStyles, EmptyState, linkStyles, tableStyles } from "@apercura/ui";
 import type { Metadata } from "next";
 import { hasLocale } from "next-intl";
@@ -9,12 +10,13 @@ import { PublicPage } from "~/components/public-page";
 import { ResultsMap } from "~/components/results-map";
 import { SearchForm } from "~/components/search-form";
 import { clientEnv } from "~/env";
-import { type MarketCountry, marketOf, marketOfSegment } from "~/i18n/locales";
+import { CATALOG_LANGUAGES, type MarketCountry, marketOf, marketOfSegment } from "~/i18n/locales";
 import { Link, redirect } from "~/i18n/navigation";
 import { type Locale, routing } from "~/i18n/routing";
 import { genderOf, getTaxonomyLabels } from "~/lib/labels";
 import { resolveSearchTerm } from "~/lib/listing-index";
 import { getMapStrings } from "~/lib/map-strings";
+import { marketHomes } from "~/lib/market-homes";
 import { cardTownLine, formatPhone } from "~/lib/practitioner-view";
 import { slotParts, slotTime } from "~/lib/slot-format";
 import {
@@ -25,7 +27,7 @@ import {
 	searchPractitioners,
 	suggestPlaces,
 } from "~/server/queries/search";
-import { searchRedirect } from "~/server/search-redirect";
+import { isOpenMarket, namedEuropeanPlace, searchRedirect } from "~/server/search-redirect";
 import { TRPCReactProvider } from "~/trpc/client";
 
 /**
@@ -62,7 +64,9 @@ type Outcome =
 	| { kind: "ambiguous_place"; candidates: PlaceSuggestion[] }
 	| { kind: "results"; results: SearchResult[]; hasNext: boolean }
 	/** "Qui ?" names care the market does not list: said so, above any practitioner of that name. */
-	| { kind: "unlisted"; results: SearchResult[]; hasNext: boolean };
+	| { kind: "unlisted"; results: SearchResult[]; hasNext: boolean }
+	/** The place is in a country Apercura does not cover yet ("Berlin", "Allemagne"). */
+	| { kind: "not_covered"; country: EuropeanCountry };
 
 /**
  * Applies the search rules, redirecting (307) when the query names a page: an
@@ -82,6 +86,10 @@ async function run(
 	const term = query.who ? resolveSearchTerm(query.who, country) : null;
 	const listingSlug = term?.kind === "listing" ? term.slug : null;
 	const wantsPlace = Boolean((query.where || query.postcode) && !query.near);
+	// A place of a country not covered yet: a country at once, a city once no market knows it.
+	const named = wantsPlace ? namedEuropeanPlace(query) : null;
+	const outside = named && !isOpenMarket(named.country.code) ? named : null;
+	if (outside?.kind === "country") return { kind: "not_covered", country: outside.country };
 	const places = wantsPlace
 		? await matchPlaces({
 				country,
@@ -94,6 +102,7 @@ async function run(
 
 	if (wantsPlace && places.length > 1) return { kind: "ambiguous_place", candidates: places };
 	if (wantsPlace && places.length === 0) {
+		if (outside) return { kind: "not_covered", country: outside.country };
 		return {
 			kind: "unknown_place",
 			candidates: await suggestPlaces(query.where || query.postcode || "", 5, country),
@@ -101,16 +110,21 @@ async function run(
 	}
 	if (!query.who && !place && !query.near) return { kind: "start" };
 
-	return {
-		kind: term?.kind === "unlisted" ? "unlisted" : "results",
-		...(await searchPractitioners({
-			country,
-			...(listingSlug ? { listingSlug } : query.who ? { name: query.who } : {}),
-			...(place ? { placeId: place.id } : {}),
-			...(query.near ? { near: query.near } : {}),
-			page,
-		})),
-	};
+	const found = await searchPractitioners({
+		country,
+		...(listingSlug ? { listingSlug } : query.who ? { name: query.who } : {}),
+		...(place ? { placeId: place.id } : {}),
+		...(query.near ? { near: query.near } : {}),
+		page,
+	});
+	// "Qui ?" alone named a place of a country not covered yet, and nobody bears that name.
+	if (found.results.length === 0 && page === 1 && query.who && !place && !query.near) {
+		const typed = europeanPlaceOf(query.who);
+		if (typed && !isOpenMarket(typed.country.code)) {
+			return { kind: "not_covered", country: typed.country };
+		}
+	}
+	return { kind: term?.kind === "unlisted" ? "unlisted" : "results", ...found };
 }
 
 /** "Où ?" as typed, with its department hint. */
@@ -283,6 +297,8 @@ async function OutcomeView({
 				);
 			}
 			return <Results locale={locale} outcome={outcome} query={query} page={page} />;
+		case "not_covered":
+			return <NotCovered locale={locale} country={outcome.country} />;
 		case "unlisted":
 			return (
 				<div className="flex flex-col gap-6">
@@ -302,6 +318,37 @@ async function OutcomeView({
 				</div>
 			);
 	}
+}
+
+/**
+ * A place in a country Apercura does not cover yet: said so, by the country's name, then the open
+ * countries, each a link to its home in the visitor's language where it offers it.
+ */
+async function NotCovered({ locale, country }: { locale: Locale; country: EuropeanCountry }) {
+	const t = await getTranslations({ locale, namespace: "SearchPage" });
+	const tSearch = await getTranslations({ locale, namespace: "Search" });
+	return (
+		<div className="flex flex-col gap-4">
+			<EmptyState
+				title={t("notCoveredTitle", { country: country.covered[CATALOG_LANGUAGES[locale]] })}
+				description={t("notCoveredBody")}
+				className="border-b-0 pb-0 sm:pb-0"
+			/>
+			<ul className="flex flex-col border-t border-rule-soft">
+				{marketHomes(locale).map((market) => (
+					<li key={market.country} className="border-b border-rule-soft">
+						<a
+							href={market.href}
+							hrefLang={market.locale}
+							className={`${linkStyles()} flex min-h-12 items-center py-2 text-body font-semibold`}
+						>
+							{tSearch(`markets.${market.country}`)}
+						</a>
+					</li>
+				))}
+			</ul>
+		</div>
+	);
 }
 
 async function Results({

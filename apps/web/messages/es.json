@@ -266,7 +266,9 @@
 			"fallback": "El mapa se está cargando. La lista de arriba contiene todas las direcciones."
 		},
 		"outsidePlace": "Ejerce fuera de {where}",
-		"bookingOpenSome": "Algunos profesionales sanitarios aceptan reservas en línea: se muestra su próxima hora libre. Para los demás, llame a la consulta o póngase en contacto con el centro."
+		"bookingOpenSome": "Algunos profesionales sanitarios aceptan reservas en línea: se muestra su próxima hora libre. Para los demás, llame a la consulta o póngase en contacto con el centro.",
+		"notCoveredTitle": "Apercura todavía no cubre {country}",
+		"notCoveredBody": "Por ahora, Apercura recoge a los profesionales de estos países. Elija uno para buscar allí:"
 	},
 	"Practitioner": {
 		"rpps": "RPPS",
