@@ -149,6 +149,9 @@ test.describe("a place of another market", () => {
 		[`/cz/hledat?quoi=${encodeURIComponent("zubař")}&ou=Madrid`, "/es/dentistas/madrid/madrid"],
 		["/gb/search?quoi=GP&ou=Madrid", "/es/centros-de-salud/madrid/madrid"],
 		["/fr-es/buscar?quoi=farmacia&ou=Madrid", "/es/farmacias/madrid/madrid"],
+		["/fr/recherche?quoi=dentiste&ou=Barcelona", "/es/dentistas/barcelona/barcelona"],
+		// Spain by name: its home, never "not covered yet".
+		["/fr/recherche?ou=Espagne", "/es"],
 		["/es/buscar?quoi=dentista&ou=Paris", "/fr-es/chirurgien-dentiste/75-paris"],
 		["/fr-en/search?quoi=GP&ou=Glasgow", "/gb/gp-practices/glasgow-city/glasgow"],
 		// In the visitor's language when that market offers it: France in English.
@@ -225,6 +228,7 @@ test.describe("a place in a country Apercura does not cover yet", () => {
 		["Autriche", "/at"],
 		["Royaume-Uni", "/gb"],
 		["Tchéquie", "/cz"],
+		["Espagne", "/es"],
 	] as const;
 
 	test("“dentiste” in Berlin says so, lists the open countries, and passes axe", async ({
