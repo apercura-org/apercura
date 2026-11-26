@@ -55,3 +55,11 @@
 # e.g. `--sources khv,rhv`. Exit codes: 1 failed, 2 blocked, 3 imported without a source that
 # could not be fetched or read (see docs/data-import.md, "Germany").
 30 22 2 * * apercura etl:de $ETL_DE_SCHEDULE_ARGS
+
+# Switzerland's facilities (the FOPH's hospital figures, 2023 edition, and the cantons' open lists
+# of hospitals, nursing homes and pharmacies), on the 3rd of each month at 22:30 UTC, after
+# Germany's (the same advisory lock: one import at a time); unchanged lists are skipped.
+# ETL_CH_SCHEDULE_ARGS narrows it, e.g. `--sources zh-heime,bl-apotheken`. Exit codes: 1 failed,
+# 2 blocked, 3 imported without a list that could not be fetched or read (see
+# docs/data-import.md, "Switzerland").
+30 22 3 * * apercura etl:ch $ETL_CH_SCHEDULE_ARGS
