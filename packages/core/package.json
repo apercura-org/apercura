@@ -10,6 +10,7 @@
 		"./claims": "./src/claims.ts",
 		"./country": "./src/country/index.ts",
 		"./crypto": "./src/crypto/index.ts",
+		"./geo": "./src/geo/index.ts",
 		"./profile": "./src/profile.ts",
 		"./revalidation": "./src/revalidation.ts",
 		"./taxonomy": "./src/taxonomy/index.ts",
