@@ -156,7 +156,7 @@ Left:
 
 ### 3. Czechia (`/cz`): open, directory of places of care
 
-Done in [#131](https://github.com/maxgfr/apercura/issues/131): `/cz` in Czech, built weekly by
+Done in [#131](https://github.com/apercura-org/apercura/issues/131): `/cz` in Czech, built weekly by
 `etl:cz` from the National Register of Healthcare Providers (NRPZS, ÚZIS ČR, CC BY 4.0, monthly
 CSV): one page per place of care of general practitioners, paediatricians, dentists,
 gynaecologists, specialists (listed by field of care), pharmacies, home care agencies,
