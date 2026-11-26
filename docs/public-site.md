@@ -138,9 +138,9 @@ decision, `instant = false`), with the pure rules of `@apercura/core`
 - former scheme, in the proxy (`marketPath`): on the canonical host an
   unprefixed French path answers 301 (308 for other methods than GET and HEAD)
   to its `/fr` path, a former locale prefix 307 to `/fr-{locale}` (temporary:
-  `/de` is the segment of a market still to open; `/es` is Spain's since #148 and
-  `/it` Italy's since #150, so only apercura.fr still maps `/es/…` and `/it/…` to
-  `/fr-es/…` and `/fr-it/…`); `/` is the
+  none is left: `/es` is Spain's since #148, `/it` Italy's since #150 and `/de`
+  Germany's since #152, so only apercura.fr still maps `/es/…`, `/it/…` and `/de/…`
+  to `/fr-es/…`, `/fr-it/…` and `/fr-de/…`); `/` is the
   international home and never redirects;
 - canonical path, in the proxy: paths with capitals answer 308 to the
   lowercase path (the practitioner space `/{prefix}/pro/…` and percent-escapes

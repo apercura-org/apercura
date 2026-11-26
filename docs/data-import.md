@@ -2,8 +2,8 @@
 
 `packages/etl` builds the public directory from open data: France (this page,
 first), Austria ([below](#austria)), the United Kingdom
-([below](#united-kingdom)), Czechia ([below](#czechia)) and Italy
-([below](#italy)). It is a Bun CLI that runs as a
+([below](#united-kingdom)), Czechia ([below](#czechia)), Spain
+([below](#spain)), Italy ([below](#italy)) and Germany ([below](#germany)). It is a Bun CLI that runs as a
 scheduled task next to the app, with its own database role that cannot reach
 patient data. Each market's import writes the shared `directory` schema with
 its own `country` and never reads or writes another market's rows.
@@ -1431,3 +1431,238 @@ both ways, nothing of the owners stored, placement (code, name, province, at
 the municipality's centre), region listings, idempotence, the register's
 coordinates only when asked, a dry run, a list left out, absences, objections,
 the breaker and `--approve`.
+
+## Germany
+
+`etl:de` builds Germany's directory (`/de`) from the statistical offices' yearly
+directory of hospitals and of prevention and rehabilitation clinics and from the
+pharmacy lists of the Länder that publish a current one as open data (issue #152,
+[ADR 0002](./adr/0002-multi-country.md#germany-de)). Everything above about
+roles, ownership, the outbox and `--approve` applies; this section says what
+differs.
+
+```sh
+bun run etl:places --country de   # once (etl:de does it on its first run), then yearly
+bun run etl:de                    # monthly (the directory is yearly, the lists change as needed: unchanged files end the run)
+bun run etl:de --dry-run          # everything, then roll back
+bun run etl:de --approve=<run_id> # accept what a blocked run reported
+```
+
+A German page is a **facility**: a hospital site, a prevention or rehabilitation
+clinic, a pharmacy. Germany's registers of doctors and dentists are not open
+(the KBV's Bundesarztregister, the chambers' searches and 116117 forbid reuse;
+ADR 0002), so no page names a practitioner. The directory names facilities by
+their operator's registered name; a page drops the legal form and prints the
+site.
+
+### Sources
+
+Verified on 26 November 2026 on each publisher's page or metadata record.
+
+| Source                                                                                                                                                          | Distribution                                                                                                                                                                                                                                                                                                                             | Format, update                                                                                                                                                                                                                 |
+| --------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Verzeichnis der Krankenhäuser und Vorsorge- oder Rehabilitationseinrichtungen (Statistisches Bundesamt, for the statistical offices of the Bund and the Länder) | `https://www.destatis.de/…/Downloads-Krankenhaeuser/krankenhausverzeichnis-3500100{yy}7005.xlsx?__blob=publicationFile` (2024: `…247005`); the joint portal's page `https://www.statistikportal.de/de/veroeffentlichungen/krankenhausverzeichnis` links the latest edition and holds a copy (`…/2026-06/krankenhausverzeichnis_24.xlsx`) | XLSX, 2.5 MB: ` KHV_2024` (2,758 hospital sites of 1,845 hospitals), `RHV_2024` (1,066 clinics), their record descriptions `DSB_KHV_2024`, `DSB_RHV_2024`; yearly (the 2024 edition came out in May 2026, updated 9 June 2026) |
+| Gemeindeverzeichnis-Informationssystem GV-ISys: all politically independent Gemeinden with selected features (Statistisches Bundesamt)                          | `https://www.destatis.de/DE/Themen/Laender-Regionen/Regionales/Gemeindeverzeichnis/Administrativ/Archiv/GVAuszugQ/AuszugGV4QAktuell.xlsx?__blob=publicationFile` (always the latest fourth quarter)                                                                                                                                      | XLSX, 1.9 MB: Länder, government regions, Kreise, Gemeindeverbände and 10,953 Gemeinden with population, postcode of the seat and geographic centre; quarterly; places import only                                             |
+| Apotheken in Thüringen (Thüringer Landesamt für Verbraucherschutz, through the GDI-Th)                                                                          | `https://www.geoproxy.geoportal-th.de/download-service/opendata/giz/apotheke.zip`; metadata `https://registry.gdi-de.org/id/de.th.csw/259ef2fc-1c82-40cc-99c6-f5b9b1d3dbeb`                                                                                                                                                              | Shapefile in a ZIP, 31 KB, ETRS89 / UTM 32N, 472 pharmacies; updated as needed (data of 14 July 2026)                                                                                                                          |
+| Standorte der Apotheken im Land Brandenburg (Landesamt für Arbeitsschutz, Verbraucherschutz und Gesundheit, LAVG, through the LGB)                              | `https://ogc-api.geobasis-bb.de/datasets/apotheken/collections/apotheken/items?bulk=true&f=json` (OGC API Features); metadata `https://registry.gdi-de.org/id/de.bb.metadata/62474539-faa4-4d28-a7ab-74375cf826b4`                                                                                                                       | GeoJSON, 273 KB, longitude and latitude, 531 pharmacies; quarterly (revision of 19 October 2026)                                                                                                                               |
+
+The edition's address embeds its reporting year, so `etl:de` tries, in turn, the
+Destatis address of last year's and the year before's edition (a reporting
+year's edition comes out about five months after it ends; the address of an
+edition not out yet answers 404 at once), the latest edition the portal's page
+links, then the portal's known copy. The edition is read from the worksheet
+names (`KHV_2024`): one older than the last imported is refused (`khv.edition`,
+never approvable), and `stats.sources.khv.edition` says which one a run read.
+`ETL_DE_KHV_URL` (that address alone), `ETL_DE_KHV_INDEX_URL`,
+`ETL_DE_KHV_MIRROR_URL`, `ETL_DE_APO_TH_URL`, `ETL_DE_APO_BB_URL` and
+`ETL_DE_PLACES_URL` override them. Brandenburg's former ZIP
+(`mugv.brandenburg.de/lua/gis/apotheke.zip`) no longer resolves.
+
+**Licences and attributions** (`germany.registries`, printed on the data sources
+page):
+
+- Both Destatis files say "Vervielfältigung und Verbreitung, auch auszugsweise,
+  mit Quellenangabe gestattet": credited "© Statistisches Bundesamt (Destatis),
+  2026" (`DESTATIS_YEAR` in `packages/core/src/country/de.ts`, raised with the
+  editions).
+- Thuringia: CC BY 4.0, attribution "© GDI-Th" (the metadata record's
+  `quelle`).
+- Brandenburg: Datenlizenz Deutschland – Namensnennung – 2.0, attribution "©
+  Landesamt für Arbeitsschutz, Verbraucherschutz und Gesundheit Brandenburg,
+  dl-de/by-2-0 (Daten geändert)", with the licence's URL and the dataset's URI as
+  the licence asks; the data page says what was changed (hospitals' pharmacies
+  left out, placed in their Gemeinde, phone numbers normalised).
+
+**Not used**: the Bundes-Klinik-Atlas (reuse needs the G-BA's permission), the
+KBV's and 116117's searches, InEK's site list, OpenStreetMap (ODbL share-alike),
+and every per-person source. Saarland's open pharmacy list (CC BY 4.0, "© GDI-SL")
+was digitised in March 2021 and its ids are row numbers: not imported, see
+[`data-requests/de.md`](./data-requests/de.md).
+
+### Identifiers
+
+Neither the directory nor Brandenburg's list publishes a stable id: the
+directory's `KH_ID` is a pseudonym drawn anew for every edition ("zufällig
+generierte"), and Brandenburg's feature ids are row numbers. One scheme per
+source, so a source left out keeps its rows (`DE_ID_SCHEMES` in
+`packages/core/src/slugs.ts`), whose letters name it in the URL:
+
+| Scheme      | Key                                                                                                               | URL                                                    |
+| ----------- | ----------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------ |
+| `DE-KHV`    | derived: ten hex digits of the SHA-256 of the municipality key, street, house number, hospital name and site name | `/de/einrichtung/klinikum-beispiel-erfurt-k40b2300bae` |
+| `DE-RHV`    | derived the same way from the clinic's name                                                                       | `/de/einrichtung/rehaklinik-fiktivia-r161d4b92c2`      |
+| `DE-APO-TH` | the number of the pharmacy's file at the Landesamt (`Az_VIS` `5040-24-2484/420` → `420`)                          | `/de/einrichtung/beispiel-apotheke-th9001`             |
+| `DE-APO-BB` | derived from the postcode, street, house number and name                                                          | `/de/einrichtung/fiktiv-apotheke-am-park-bbef2771a4ae` |
+
+A derived key compares its parts without case, accents, spaces or punctuation and
+reads `Str.` as `Straße` (`deSiteKey`, `src/sources/de/names.ts`), so an edition
+that adds a dash keeps the page; a renamed hospital or a moved site gets a new
+page and the old one is removed. Each facility has one site, keyed by the same
+key (`source` per source: `de-destatis-khv`, `de-destatis-rhv`, `de-apo-th`,
+`de-apo-bb`), and one activity `{key}@{key}`.
+
+### Minimisation and what is left out
+
+- Read from the directory: the Land, Kreis and Gemeinde codes, name, site name,
+  street, house number, postcode, town, phone, operator type, kind of facility,
+  emergency care level and modules, and which departments have beds. **Never
+  read into a row, so never stored**: e-mail and web addresses, the operator's
+  name, the beds and the pseudonymous id (used only to count a hospital's sites
+  while parsing).
+- A phone is stored as a facility's only when at most three hospitals or clinics
+  of its sheet publish it (`MAX_PHONE_OWNERS`): the sites of one hospital share
+  its switchboard, which stays; a number of several facilities is an operator's
+  (`stats.sources.<source>.counters.sharedPhones`: 4 clinics in 2024).
+- Names: the legal form at the end is dropped (`gGmbH`, `SE & Co. KG`, `e. V.`…),
+  and so are the directory's site labels (`Hauptstandort`, `Stationäre
+  Behandlung`); a hospital with several sites prints `{hospital} – {site}` when
+  the site's name adds something (`hospitalSiteName`). Nothing is re-cased.
+- Kinds (`deHospitalKind`, `packages/core/src/taxonomy/de.ts`): a hospital site
+  whose every department is psychiatric or psychosomatic (`29xx`, `30xx`, `31xx`)
+  lists with the psychiatric hospitals, one whose every department is a
+  children's one (`10xx`–`13xx`, `3610`) with the children's hospitals, any other
+  with the hospitals; a site without departments with beds (day clinics,
+  outpatient clinics: 596 in 2024) by its names. `0000` (no department) and
+  `3700` (other) never decide and are not shown.
+- Qualifications (`source`): `fachabteilung` (code and name of each department,
+  without the day-clinic remark), `notfallstufe` (Basis-, Erweiterte, Umfassende
+  Notfallversorgung, § 136c SGB V), `notfallmodul` (Schwerverletzte, Kinder,
+  Spezial, Schlaganfall, Herz), `traeger` (public, non-profit, private),
+  `einrichtungstyp` (Hochschulklinik, Plankrankenhaus…), and for Thuringia
+  `apotheke` (main pharmacy or branch) and `barrierefreiheit` (step-free, or with
+  restrictions as published).
+- Brandenburg's list holds the pharmacies of hospitals under their hospital's
+  name (13 in October 2026): they serve wards, not the public, and are left out
+  (`skipped["hospital pharmacy"]`). Thuringia's location note completes a name
+  only when it says where (`am Markt`).
+- GDPR objections: the rows of a suppressed key are dropped while parsing
+  (`stats.suppressedLines`), and the purge of #116/#118 runs in the merge, as in
+  the other markets.
+
+### Places and precision
+
+Places (`directory.places`, `country = 'DE'`), from GV-ISys, imported once:
+
+- **regions**: the 16 Länder (`09`); no listing pages, slugged after the Kreise
+  (`berlin` is the Kreis, `berlin-11` the Land);
+- **departments**: the 400 Kreise and kreisfreie Städte (`09162`), named the way
+  people say them (`München` the city, `Landkreis München`, `Kreis
+  Dithmarschen`, `Rhein-Sieg-Kreis`, `Region Hannover`);
+- **communes**: the 10,751 Gemeinden (`09162000`), slugged unique within their
+  Kreis; the 202 uninhabited areas outside any Gemeinde (forests, lakes, coastal
+  waters) are left out. A kreisfreie Stadt is a Kreis and a Gemeinde at once (its
+  Gemeinde part is `000`): like Paris, its city page is its Kreis's.
+
+A site is placed (`placeFacility`, `src/sources/de/places.ts`) in the Gemeinde of
+its municipality key; Berlin's and Hamburg's rows carry a district's
+statistical code and are read as their city (`11000000`, `02000000`). Else by
+its town's name in its Land (the variants of a two-part or bracketed name:
+`Cottbus/Chóśebuz`, `Am Mellensee (OT Sperenberg)`), the homonym nearest its
+point when it has one; else, when one Gemeinde in Germany bears the name, that
+one (two 2024 sites are filed under the Land of their hospital's seat: Mainz's
+university hospital's site in Wiesbaden); else the Gemeinde whose centre is
+nearest its point in its Land, within 15 km; else its Kreis.
+
+The directory publishes **no coordinates**: a hospital or clinic is located at
+its Gemeinde's geographic centre (GV-ISys's `Mittelpunktkoordinaten`):
+`geo_precision = 'city'`, `geo_source = 'centroid'`, never a map pin, distances
+approximate. Pharmacies are at their published point (`'address'`, `'source'`;
+Thuringia's converted from UTM 32N, `src/lib/utm.ts`). Postcode areas are not
+open, so nothing is placed by postcode; no geocoder is called.
+
+### Guards
+
+Per source (`checkDeSource`): quarantine within 1%; floors of lines and
+facilities (`khv` 200 and 150, `rhv` 100 and 80, each pharmacy list 50 and 40;
+never approvable); the directory's edition never older than the last imported
+(never approvable); at most 10% more or fewer facilities and 30% more or fewer
+bytes than the last successful run that read it (approvable: a new edition
+changes more than a month does). A source that cannot be fetched, read or pass
+its floors is left out and keeps its facilities (they are not counted missing);
+the run imports the others and exits `3`. After staging (`checkDePlaces`): 99%
+of the sites in their Gemeinde and 98% located (approvable). Then the breakers on
+Germany's own pages, as everywhere.
+
+**Absences** (`DE_MISSING_RUNS`): a run reads a new edition of the directory
+once a year, so a hospital site or clinic missing from it is removed at once;
+a pharmacy missing from its list twice in a row. A claimed page is kept and
+counted for review.
+
+### Schedule and monitoring
+
+The scheduler runs `etl:de $ETL_DE_SCHEDULE_ARGS` on the 2nd of every month at
+22:30 UTC (`docker/crontab`), when no weekly import runs; unchanged files end the
+run after their download (3 MB). Alert on exit codes 1, 2 and 3. The directory
+changes once a year: alert when the edition read (`stats.sources.khv.edition`)
+is more than two years behind the current year, and on the age of the last
+pharmacy change only if a list stops answering (exit 3).
+
+```sql
+-- Germany's last runs: status, edition, per-source counters, placement and totals.
+SELECT id, status, finished_at, stats -> 'sourceErrors' AS errors,
+	stats -> 'sources' -> 'khv' -> 'edition' AS edition, stats -> 'staged' AS staged,
+	stats -> 'totals' AS totals
+FROM directory.etl_runs WHERE source = 'de' ORDER BY id DESC LIMIT 5;
+```
+
+### Measured run (files of 26 November 2026)
+
+Laptop, local PostGIS 17, fresh database, the real files (downloaded once into a
+scratch directory, the run quoted in the pull request):
+
+|           |                                                                                                                                            |
+| --------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| Duration  | places 5 s (download included); dry run 5 s (download 1.9 s, read models 1.3 s), peak RSS 0.16 GB                                          |
+| Lines     | khv 2,758 (2,758 imported), rhv 1,066 (1,065: one duplicate), apo-th 472 (471: one without a file number), apo-bb 531 (518: 13 hospitals') |
+| Kinds     | hospitals 2,095 · psychiatric hospitals 634 · children's hospitals 29 · rehabilitation clinics 1,065 · pharmacies 989 (4,812)              |
+| Phones    | 4,242 sites with a number; 4 shared numbers left out (clinics); 5 of Brandenburg's numbers unreadable                                      |
+| Sites     | 4,812, all in their Gemeinde (4,288 by key, 510 by town, 14 by point); 3,823 at their Gemeinde's centre, 989 at their address              |
+| Indexable | 4,812 facility pages; 936 indexable listing pages of 3,489                                                                                 |
+| Places    | 16 Länder, 400 Kreise, 10,751 Gemeinden (GV-ISys, 31 December 2025)                                                                        |
+
+### Local development
+
+```sh
+bun run etl:places --country de --source-dir packages/etl/fixtures/de   # synthetic places
+bun run etl:de --source-dir packages/etl/fixtures/de --offline          # synthetic data
+bun run --cwd packages/etl fixtures:de                                  # regenerate the fixtures
+```
+
+`packages/etl/fixtures/de` holds **synthetic** files in the sources' exact
+formats (`krankenhausverzeichnis.xlsx` with its stray-space ` KHV_2024` sheet and
+record descriptions, `apotheke_th.zip` in UTM 32N, `apotheken_bb.json`) and a
+municipalities' directory of nine Länder, twelve Kreise and thirteen Gemeinden
+with their real keys, populations and centres (`gemeindeverzeichnis.xlsx`),
+generated deterministically by `packages/etl/fixtures/generate-de.ts`: made-up
+hospitals, clinics and pharmacies, two sites of one university hospital filed
+under Berlin's districts, a children's hospital under one of Hamburg's, two
+hospitals at one address in München, a site filed under the wrong Land, a
+psychiatric day clinic without departments, a chain of clinics sharing a number,
+a hospital's pharmacy, made-up e-mails, web addresses and operators (to check
+they are never stored), and filler rows above the floors. Never commit real
+rows. `test/de-integration.test.ts` imports them next to the French and Spanish
+fixtures: the other markets untouched both ways, names, kinds, qualifications
+and nothing unneeded stored, placement (key, Berlin's districts, town name,
+district names), read models without Land listings, idempotence, a dry run, an
+older edition refused, an unreadable list left out, absences (at once for the
+directory, after two runs for a list), objections, the breaker and `--approve`.
