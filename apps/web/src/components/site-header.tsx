@@ -1,3 +1,4 @@
+import { BrandLogo } from "@apercura/ui";
 import { getTranslations } from "next-intl/server";
 import { marketOf } from "~/i18n/locales";
 import { type Href, Link } from "~/i18n/navigation";
@@ -13,7 +14,7 @@ interface SiteHeaderProps {
 const navLink =
 	"inline-flex min-h-11 items-center rounded-field px-2.5 text-meta font-medium text-ink no-underline hover:bg-paper-shade";
 
-/** The header on white, closed by a hairline: wordmark, navigation, language. */
+/** The header on white, closed by a hairline: the logo (to the market's home), navigation, language. */
 export async function SiteHeader({ locale, href }: SiteHeaderProps) {
 	const t = await getTranslations({ locale, namespace: "Site" });
 	const tLocale = await getTranslations({ locale, namespace: "LocaleSwitcher" });
@@ -30,9 +31,9 @@ export async function SiteHeader({ locale, href }: SiteHeaderProps) {
 				<Link
 					href="/"
 					aria-label={t("homeLink")}
-					className="type-wordmark -ms-1 inline-flex min-h-11 items-center rounded-field px-1 text-ink no-underline"
+					className="-ms-1 inline-flex min-h-11 items-center rounded-field px-1 text-ink no-underline"
 				>
-					{t("wordmark")}
+					<BrandLogo height={24} />
 				</Link>
 				<div className="flex flex-wrap items-center gap-x-2">
 					<nav aria-label={t("navLabel")}>

@@ -37,7 +37,6 @@ export const SITE_VIEWPORT: Viewport = {
 	colorScheme: "light dark",
 };
 export const PAPER_COLOR = paletteHex.paper;
-export const INK_COLOR = paletteHex.ink;
 
 /** Open Graph locales (`og:locale`). English is the British catalogue. */
 export { OG_LOCALES };

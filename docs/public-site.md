@@ -350,7 +350,7 @@ Next.js separates them with `Vary: rsc, …` and a `?_rsc=` parameter.
   page's `@id`), `BreadcrumbList`, `ItemList` on listings and hubs, and on the
   homes (`/`, `/fr` and the other locales' homes) the same `WebSite` and
   `Organization` (`src/lib/site-entities.ts`: `@id`s on the site root,
-  `{origin}/#website` and `#organization`, logo `/icon/512`, `sameAs` the
+  `{origin}/#website` and `#organization`, logo `/brand/apercura-logo.png`, `sameAs` the
   source repository; nothing in them depends on the page's language, and no
   `SearchAction`). Every other page's `WebPage` is `isPartOf` that `WebSite`.
   `medicalSpecialty` only takes the schema.org enumeration;
@@ -358,12 +358,15 @@ Next.js separates them with `Vary: rsc, …` and a `?_rsc=` parameter.
   opening hours only from the owner; never a rating or a review.
 - Open Graph: one static image per profession,
   `/og/{medecin|chirurgien-dentiste|sage-femme|infirmier|annuaire}.png`; site
-  icons `/icon/{48,192,512}`, `/apple-icon` and `/manifest.webmanifest`.
+  icons `/icon.svg` (the favicon, light or dark with the browser's scheme),
+  `/icon/{48,192,512}`, `/apple-icon`, the manifest's maskable
+  `/brand/apercura-maskable-{192,512}.png` and `/manifest.webmanifest` (the
+  logo: DESIGN.md, "Logo").
 - Practitioner pages have their own card, `/og/praticien/{slug}.png`
   (`src/app/og/praticien/[file]`, `src/server/og/practitioner-image.tsx`),
   listed first with the profession's image as the fallback: 1200 × 630, the
   name, the profession or specialty, the commune, the RPPS number and the
-  Apercura print, graphite ink on white paper (the site's own contrast pairs),
+  Apercura lockup, graphite ink on white paper (the site's own contrast pairs),
   in French like the other images. The photo only when the owner published one
   on the page. Fonts are static Allo cuts vendored in `apps/web/src/fonts/allo/og`, read
   on disk, never fetched.

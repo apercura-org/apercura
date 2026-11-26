@@ -162,7 +162,9 @@ describe("marketPath: what stays where it is", () => {
 		"/.well-known/security.txt",
 		"/og/medecin.png",
 		"/icon/48",
+		"/icon.svg",
 		"/apple-icon",
+		"/brand/apercura-logo.png",
 		"/manifest.webmanifest",
 		"/api/ics/abc.ics",
 		"/api/auth/callback/psc",
@@ -181,6 +183,7 @@ describe("marketPath: what stays where it is", () => {
 		expect(isPagePath("/sitemaps/fr/pages-0.xml")).toBe(false);
 		expect(isPagePath("/icon/48")).toBe(false);
 		expect(isPagePath("/apple-icon")).toBe(false);
+		expect(isPagePath("/brand/apercura-logo.png")).toBe(false);
 		expect(isPagePath("/og/medecin.png")).toBe(false);
 	});
 });

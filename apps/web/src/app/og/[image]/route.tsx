@@ -1,6 +1,7 @@
 import { paletteHex } from "@apercura/ui/tokens";
 import { ImageResponse } from "next/og";
 import { getTranslations } from "next-intl/server";
+import { lockupHeightFor, OgLockup } from "~/lib/brand-image";
 import { OG_FONT_FAMILY } from "~/server/og/font-files";
 import { ogFonts } from "~/server/og/fonts";
 
@@ -17,7 +18,10 @@ export function generateStaticParams() {
 	return IMAGES.map((image) => ({ image: `${image}.png` }));
 }
 
-/** The neutral print: white paper, graphite ink, hairlines and the quiet shade. No stamp: nothing here is an action. */
+/**
+ * The neutral print: white paper, graphite ink, hairlines and the quiet shade. No stamp: nothing
+ * here is an action (the logo's dot is the only accent, as everywhere the logo appears).
+ */
 const {
 	paper: PAPER,
 	paperShade: SHADE,
@@ -62,16 +66,9 @@ export async function GET(_request: Request, { params }: RouteContext<"/og/[imag
 				</div>
 			</div>
 			<div style={{ display: "flex", flexDirection: "column", gap: 18, padding: "0 80px" }}>
-				<div
-					style={{
-						display: "flex",
-						fontSize: 112,
-						fontWeight: 600,
-						letterSpacing: -3,
-						lineHeight: 1,
-					}}
-				>
-					{t("wordmark")}
+				{/* The lockup, its wordmark at the 112 px the name was set in. */}
+				<div style={{ display: "flex" }}>
+					<OgLockup height={lockupHeightFor(112)} />
 				</div>
 				<div
 					style={{

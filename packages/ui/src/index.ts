@@ -1,12 +1,21 @@
 /**
  * @apercura/ui: the booklet design system.
  *
- * - Server-safe: tokens, recipes, icons, Badge, Notice, Skeleton, EmptyState, Seal and
+ * - Server-safe: tokens, recipes, icons, the logo (BrandLogo, BrandSymbol, BrandLockup), Badge, Notice,
+ *   Skeleton, EmptyState, Seal and
  *   the static domain components (FieldRow, PractitionerHeader, ActionBlock,
  *   SiteCard, ProvenanceNote, BookletSearch).
  * - Client ("use client"): every React Aria primitive, SlotPicker, WeekGrid and MapView.
  */
 
+export {
+	BRAND_COLORS,
+	BRAND_LOCKUP_WIDTH,
+	BRAND_SYMBOL_SIZE,
+	type BrandVariant,
+	brandLockupWidth,
+} from "./brand/geometry";
+export { BrandLockup, BrandLogo, type BrandMarkProps, BrandSymbol } from "./brand/logo";
 export { Badge, type BadgeProps } from "./components/badge";
 export {
 	Breadcrumb,
@@ -127,5 +136,5 @@ export {
 	tableStyles,
 } from "./recipes";
 export { cn } from "./recipes/tv";
-export { BrandSeal, type BrandSealProps, Seal, type SealProps } from "./seal/seal";
-export { BRAND_SEAL_SEED, brandSealSpec, type SealSpec, sealSpec } from "./seal/seal-spec";
+export { Seal, type SealProps } from "./seal/seal";
+export { type SealSpec, sealSpec } from "./seal/seal-spec";

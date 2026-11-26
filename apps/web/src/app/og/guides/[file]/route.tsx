@@ -1,6 +1,7 @@
 import { paletteHex } from "@apercura/ui/tokens";
 import { ImageResponse } from "next/og";
 import { getTranslations } from "next-intl/server";
+import { lockupHeightFor, OgLockup } from "~/lib/brand-image";
 import { GUIDES, guideBySlug } from "~/lib/guides/catalog";
 import { formatGuideDate } from "~/lib/guides/format";
 import { OG_FONT_FAMILY } from "~/server/og/font-files";
@@ -33,7 +34,6 @@ export async function GET(_request: Request, { params }: RouteContext<"/og/guide
 	if (!guide) return new Response("Not found", { status: 404 });
 	// Shared on French results and social networks, as the guides themselves: printed in French.
 	const t = await getTranslations({ locale: "fr", namespace: "Guides" });
-	const tOg = await getTranslations({ locale: "fr", namespace: "OgImage" });
 	const fonts = await ogFonts(["latin", "latin-ext"]);
 	return new ImageResponse(
 		<div
@@ -76,8 +76,8 @@ export async function GET(_request: Request, { params }: RouteContext<"/og/guide
 				>
 					{guide.title}
 				</div>
-				<div style={{ display: "flex", fontSize: 40, fontWeight: 500, color: INK_MUTED }}>
-					{tOg("wordmark")}
+				<div style={{ display: "flex" }}>
+					<OgLockup height={lockupHeightFor(40)} />
 				</div>
 			</div>
 			<div

@@ -1,8 +1,9 @@
-import { sealIcon } from "~/lib/seal-icon";
+import { siteIconPng } from "~/lib/brand-image";
 
 /*
- * The site icon: 48 px (the favicon of search results, a multiple of 48),
- * 192 px and 512 px (web app manifest, Organization logo). Prerendered.
+ * The raster site icons, beside the scheme-aware `icon.svg` that browsers prefer: 48 px (the
+ * favicon of search results, a multiple of 48, and `/favicon.ico`), 192 px and 512 px (web app
+ * manifest). The symbol on white paper. Prerendered.
  */
 export const contentType = "image/png";
 
@@ -18,5 +19,5 @@ export function generateImageMetadata() {
 
 export default async function Icon({ id }: { id: Promise<string> }) {
 	const size = Number(await id);
-	return sealIcon(SIZES.includes(size) ? size : 48);
+	return siteIconPng(SIZES.includes(size) ? size : 48);
 }

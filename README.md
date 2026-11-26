@@ -1,4 +1,9 @@
-# Apercura
+<h1>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/brand/apercura-lockup-dark.svg">
+    <img src="docs/brand/apercura-lockup-light.svg" alt="Apercura" width="245" height="48">
+  </picture>
+</h1>
 
 The open directory and free booking tool for every health practitioner in France.
 
