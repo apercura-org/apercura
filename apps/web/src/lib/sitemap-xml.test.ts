@@ -45,4 +45,19 @@ describe("market page paths of the sitemaps", () => {
 		expect(MARKET_STATIC_PATHS.gb).not.toContain("/pro");
 		expect(MARKET_STATIC_PATHS.gb).toContain("/accessibilite");
 	});
+
+	it("gives Czechia its Czech route segments under /cz", () => {
+		expect(marketPagePath("cz", "/")).toBe("/cz");
+		expect(marketPagePath("cz", "/praticien/mudr-jana-ukazkova-900001")).toBe(
+			"/cz/zarizeni/mudr-jana-ukazkova-900001",
+		);
+		expect(marketPagePath("cz", "/annuaire/praha/praha-2")).toBe("/cz/adresar/praha/praha-2");
+		expect(marketPagePath("cz", "/prakticky-lekar/praha/praha-2")).toBe(
+			"/cz/prakticky-lekar/praha/praha-2",
+		);
+		expect(marketPagePath("cz", "/donnees")).toBe("/cz/data");
+		expect(marketPagePath("cz", "/accessibilite")).toBe("/cz/pristupnost");
+		expect(MARKET_STATIC_PATHS.cz).not.toContain("/pro");
+		expect(MARKET_STATIC_PATHS.cz).toContain("/accessibilite");
+	});
 });

@@ -21,7 +21,7 @@ type Expected = {
 	robots: "index, follow" | "noindex, follow";
 	/** schema.org types the page's graph must contain. */
 	types: string[];
-	lang?: "fr" | "en" | "de" | "es" | "it" | "de-AT" | "en-GB";
+	lang?: "fr" | "en" | "de" | "es" | "it" | "de-AT" | "en-GB" | "cs-CZ";
 	/** The homes (`/fr` and the international `/`) print hreflang `fr-FR` and `x-default`. */
 	hreflang?: true;
 };
@@ -91,6 +91,26 @@ const PAGES: Expected[] = [
 		robots: "index, follow",
 		types: ["WebPage", "BreadcrumbList", "MedicalClinic"],
 		lang: "en-GB",
+	},
+	// Czechia, indexed in Czech under its own segment.
+	{
+		path: "/cz",
+		robots: "index, follow",
+		types: ["WebPage", "WebSite", "Organization"],
+		lang: "cs-CZ",
+		hreflang: true,
+	},
+	{
+		path: "/cz/prakticky-lekar/praha/praha-2",
+		robots: "index, follow",
+		types: ["CollectionPage", "BreadcrumbList", "ItemList"],
+		lang: "cs-CZ",
+	},
+	{
+		path: "/cz/zarizeni/mudr-jana-ukazkova-900001",
+		robots: "index, follow",
+		types: ["WebPage", "BreadcrumbList", "MedicalClinic"],
+		lang: "cs-CZ",
 	},
 	{
 		path: "/fr/medecin-generaliste/75-paris",
@@ -178,6 +198,7 @@ const OG_LOCALES = {
 	it: "it_IT",
 	"de-AT": "de_AT",
 	"en-GB": "en_GB",
+	"cs-CZ": "cs_CZ",
 } as const;
 
 const FORBIDDEN_KEYS = ["aggregateRating", "review", "reviews", "ratingValue"];
@@ -301,11 +322,11 @@ for (const expected of PAGES) {
 		expect(page.titles).toHaveLength(1);
 		const title = page.titles[0] ?? "";
 		expect(title.length).toBeLessThanOrEqual(60);
-		// The brand ends every title, unless a practitioner's (or a UK practice's) place would not
-		// fit with it.
+		// The brand ends every title, unless a practitioner's (or a UK practice's, a Czech
+		// facility's) place would not fit with it.
 		if (!/ · Apercura$|^Apercura · /.test(title)) {
 			expect(expected.path).toMatch(
-				/^\/(?:fr(?:-[a-z]{2})?\/[a-z]+\/[a-z0-9-]+-\d{11}|at\/arzt\/[a-z0-9-]+-[a-z]{1,2}\d{1,9}|gb\/practice\/[a-z0-9-]+-[a-z0-9]{2,12})$/,
+				/^\/(?:fr(?:-[a-z]{2})?\/[a-z]+\/[a-z0-9-]+-\d{11}|at\/arzt\/[a-z0-9-]+-[a-z]{1,2}\d{1,9}|gb\/practice\/[a-z0-9-]+-[a-z0-9]{2,12}|cz\/zarizeni\/[a-z0-9-]+-\d{1,9})$/,
 			);
 			expect(`${title} · Apercura`.length).toBeGreaterThan(60);
 		}
@@ -331,12 +352,13 @@ for (const expected of PAGES) {
 			}));
 		if (expected.hreflang) {
 			// The homes of the open markets and the international one.
-			expect(alternates).toHaveLength(4);
+			expect(alternates).toHaveLength(5);
 			expect(alternates).toEqual(
 				expect.arrayContaining([
 					{ rel: "alternate", hreflang: "fr-FR", href: `${origin}/fr` },
 					{ rel: "alternate", hreflang: "de-AT", href: `${origin}/at` },
 					{ rel: "alternate", hreflang: "en-GB", href: `${origin}/gb` },
+					{ rel: "alternate", hreflang: "cs-CZ", href: `${origin}/cz` },
 					{ rel: "alternate", hreflang: "x-default", href: origin },
 				]),
 			);
@@ -354,9 +376,9 @@ for (const expected of PAGES) {
 		expect(page.meta("og:locale")).toEqual([OG_LOCALES[expected.lang ?? "fr"]]);
 		expect(page.meta("og:site_name")).toEqual(["Apercura"]);
 		// A practitioner page shows its own card (`/og/praticien/{slug}.png`, `gb.{slug}` for a UK
-		// practice), others a generic image.
+		// practice, `cz.{slug}` for a Czech facility), others a generic image.
 		expect(page.meta("og:image")[0]).toMatch(
-			new RegExp(`^${origin}/og/(?:praticien/(?:gb\\.)?[a-z0-9-]+|[a-z-]+)\\.png$`),
+			new RegExp(`^${origin}/og/(?:praticien/(?:gb\\.|cz\\.)?[a-z0-9-]+|[a-z-]+)\\.png$`),
 		);
 		expect(page.meta("twitter:card")).toEqual(["summary_large_image"]);
 
@@ -393,7 +415,13 @@ for (const expected of PAGES) {
 			expect(node.name, node["@id"]).toBeTruthy();
 			const address = node.address as Record<string, string> | undefined;
 			expect(address?.addressCountry, node["@id"]).toBe(
-				expected.path.startsWith("/at") ? "AT" : expected.path.startsWith("/gb") ? "GB" : "FR",
+				expected.path.startsWith("/at")
+					? "AT"
+					: expected.path.startsWith("/gb")
+						? "GB"
+						: expected.path.startsWith("/cz")
+							? "CZ"
+							: "FR",
 			);
 			expect(address?.addressLocality ?? address?.postalCode, node["@id"]).toBeTruthy();
 		}
@@ -407,7 +435,9 @@ for (const expected of PAGES) {
 						? `${origin}/at`
 						: lang === "en-GB"
 							? `${origin}/gb`
-							: `${origin}/fr-${lang}`;
+							: lang === "cs-CZ"
+								? `${origin}/cz`
+								: `${origin}/fr-${lang}`;
 			expect(items[0]?.item).toBe(home);
 			items.forEach((item, index) => {
 				expect(item.position).toBe(index + 1);
@@ -700,8 +730,10 @@ test.describe("sitemaps", () => {
 		expect(chunks).toContain(`${origin}/sitemaps/at/pages-0.xml`);
 		expect(chunks).toContain(`${origin}/sitemaps/gb/pages-0.xml`);
 		expect(chunks).toContain(`${origin}/sitemaps/gb/praticiens-0.xml`);
+		expect(chunks).toContain(`${origin}/sitemaps/cz/pages-0.xml`);
+		expect(chunks).toContain(`${origin}/sitemaps/cz/praticiens-0.xml`);
 		for (const chunk of chunks.slice(1))
-			expect(/\/sitemaps\/(fr|at|gb)\//.test(chunk), chunk).toBe(true);
+			expect(/\/sitemaps\/(fr|at|gb|cz)\//.test(chunk), chunk).toBe(true);
 		for (const lastmod of indexXml.matchAll(LASTMOD)) {
 			expect(lastmod[1]).toMatch(/^\d{4}-\d{2}-\d{2}$/);
 		}
@@ -727,16 +759,18 @@ test.describe("sitemaps", () => {
 		expect(urls).toContain(`${origin}/fr`);
 		expect(urls).toContain(`${origin}/at`);
 		expect(urls).toContain(`${origin}/gb`);
+		expect(urls).toContain(`${origin}/cz`);
 
 		for (const url of urls) {
 			// owner.spec.ts removes and restores this claimed page while the specs run in
 			// parallel (#119): the sitemap, cached up to five minutes, may still list it meanwhile.
 			if (MUTATED_BY_OTHER_SPECS.some((path) => url === `${origin}${path}`)) continue;
 			// The international home and each market's own language: France in French, Austria in
-			// German, the UK in English. Interface translations (/fr-de…) are never listed.
+			// German, the UK in English, Czechia in Czech. Interface translations (/fr-de…) are never
+			// listed.
 			expect(
 				url === `${origin}/` ||
-					[`${origin}/fr`, `${origin}/at`, `${origin}/gb`].some(
+					[`${origin}/fr`, `${origin}/at`, `${origin}/gb`, `${origin}/cz`].some(
 						(home) => url === home || url.startsWith(`${home}/`),
 					),
 				url,

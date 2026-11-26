@@ -154,10 +154,24 @@ Left:
   professional secrecy (StGB art. 321).
 - Check FMH annex 2 point 3.7 and the cantonal rules on advertising.
 
-### 3. Czechia (`/cz`): directory of providers
+### 3. Czechia (`/cz`): open, directory of places of care
 
-- Import NRPZS (ÚZIS, CC BY 4.0, monthly CSV and API): one page per place of care.
-- Czech interface (`cs`); check the Czech Medical Chamber's ethics code on third-party listings.
+Done in [#131](https://github.com/apercura-org/apercura/issues/131): `/cz` in Czech, built weekly by
+`etl:cz` from the National Register of Healthcare Providers (NRPZS, ÚZIS ČR, CC BY 4.0, monthly
+CSV): one page per place of care of general practitioners, paediatricians, dentists,
+gynaecologists, specialists (listed by field of care), pharmacies, home care agencies,
+physiotherapists, clinical psychologists, speech therapists and midwives, located by the
+register's coordinates and placed in RÚIAN's districts and municipalities (ČÚZK, CC BY 4.0), with
+the attributions on the data sources page, a GDPR privacy notice with the article 14 information,
+claims by documents, no booking ([data import](./docs/data-import.md#czechia),
+[ADR 0002](./docs/adr/0002-multi-country.md#czechia-cz)). Left:
+
+- Have a native speaker review the Czech interface, and a Czech lawyer the legal notice, privacy
+  notice and terms; check the Czech Medical Chamber's ethics code on third-party listings.
+- Send the requests of [`docs/data-requests/cz.md`](./docs/data-requests/cz.md) (founder): the
+  Czech Medical Chamber's member list, SÚKL's pharmacy list (opening hours), the insurers'
+  contracted providers.
+- Hospitals and polyclinics (the same file): pages that tell a ward or a multi-field centre apart.
 
 ### 4. United Kingdom (`/gb`): open, practice pages from NHS open data
 

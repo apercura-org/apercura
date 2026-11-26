@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { isRppsRef, parsePractitionerRef, practitionerRefOf } from "./practitioner-ref";
+import { isRppsRef, marketRef, parsePractitionerRef, practitionerRefOf } from "./practitioner-ref";
 
 describe("practitioner references", () => {
 	it("reads an RPPS, alone or at the end of a French page address", () => {
@@ -68,5 +68,40 @@ describe("UK practice references", () => {
 			"gb:nd0a1b2c3d4e",
 		);
 		expect(parsePractitionerRef(practitionerRefOf(gp))).toEqual(gp);
+	});
+});
+
+describe("Czech facility references", () => {
+	const facility = { country: "CZ", idScheme: "CZ-NRPZS", nationalId: "900001" };
+
+	it("read the `cz:` reference, a Czech page address, and a number typed on a Czech page", () => {
+		expect(parsePractitionerRef("cz:900001")).toEqual(facility);
+		expect(parsePractitionerRef(" CZ: 900001 ")).toEqual(facility);
+		expect(
+			parsePractitionerRef("https://apercura.org/cz/zarizeni/mudr-jana-ukazkova-900001"),
+		).toEqual(facility);
+		expect(parsePractitionerRef("/cz/zarizeni/mudr-jana-ukazkova-900001/")).toEqual(facility);
+		expect(parsePractitionerRef("900001", "CZ")).toEqual(facility);
+		expect(parsePractitionerRef("mudr-jana-ukazkova-900001", "CZ")).toEqual(facility);
+		expect(parsePractitionerRef("cz:0123")).toBeNull();
+		expect(parsePractitionerRef("cz:")).toBeNull();
+	});
+
+	it("never read a bare number as Czech outside Czechia, nor a French RPPS as Czech", () => {
+		expect(parsePractitionerRef("900001")).toBeNull();
+		expect(parsePractitionerRef("19999990013", "CZ")).toEqual({
+			country: "FR",
+			idScheme: "RPPS",
+			nationalId: "19999990013",
+		});
+		expect(
+			parsePractitionerRef("https://apercura.org/fr/praticien/camille-19999990013")?.country,
+		).toBe("FR");
+	});
+
+	it("write the reference back with its market", () => {
+		expect(practitionerRefOf(facility)).toBe("cz:900001");
+		expect(marketRef("900001", "CZ")).toBe("cz:900001");
+		expect(parsePractitionerRef(practitionerRefOf(facility))).toEqual(facility);
 	});
 });

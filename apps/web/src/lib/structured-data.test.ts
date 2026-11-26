@@ -498,3 +498,73 @@ describe("practitionerNodes for the United Kingdom", () => {
 		expect(nodeOf(pharmacy, "Pharmacy").address).toMatchObject({ addressCountry: "GB" });
 	});
 });
+
+describe("practitionerNodes for Czechia", () => {
+	const place: PracticePlaceInput = {
+		siteId: 1,
+		practiceKind: "office",
+		name: "MUDr. Jana Ukázková",
+		addressLine: "Ukázková 1234/12",
+		addressComplement: null,
+		postcode: "120 00",
+		placeName: "Praha 2",
+		coordinates: { lat: 50.0755, lon: 14.4378 },
+		phone: "+420222333444",
+		establishmentUrl: null,
+	};
+	const facility: PractitionerInput = {
+		...doctor,
+		url: `${ORIGIN}/cz/zarizeni/mudr-jana-ukazkova-900001`,
+		professionCode: "CZ_GP",
+		rpps: "900001",
+		idScheme: "CZ-NRPZS",
+		country: "CZ",
+		name: "MUDr. Jana Ukázková",
+		givenName: "",
+		familyName: "MUDr. Jana Ukázková",
+		honorificPrefix: null,
+		occupation: "Praktický lékař",
+		listingSlug: "prakticky-lekar",
+		places: [place],
+	};
+
+	it("publishes a facility as a MedicalClinic with its NRPZS number, never a person", () => {
+		const nodes = practitionerNodes(facility);
+		const clinic = nodeOf(nodes, "MedicalClinic");
+		expect(clinic.identifier).toEqual({
+			"@type": "PropertyValue",
+			propertyID: "CZ-NRPZS",
+			value: "900001",
+		});
+		expect(clinic.address).toMatchObject({
+			addressCountry: "CZ",
+			postalCode: "120 00",
+			addressLocality: "Praha 2",
+		});
+		expect(clinic.medicalSpecialty).toBe("https://schema.org/PrimaryCare");
+		expect(JSON.stringify(nodes)).not.toMatch(/Person|IndividualPhysician|givenName|familyName/);
+	});
+
+	it("publishes a dental practice as a Dentist, a pharmacy as a Pharmacy, a specialist by field", () => {
+		const dental = practitionerNodes({
+			...facility,
+			professionCode: "CZ_DENTIST",
+			listingSlug: "zubni-lekar",
+		});
+		expect(nodeOf(dental, "Dentist").medicalSpecialty).toBe("https://schema.org/Dentistry");
+		const pharmacy = practitionerNodes({
+			...facility,
+			professionCode: "CZ_PHARMACY",
+			listingSlug: "lekarna",
+		});
+		expect(nodeOf(pharmacy, "Pharmacy").address).toMatchObject({ addressCountry: "CZ" });
+		const cardiology = practitionerNodes({
+			...facility,
+			professionCode: "CZ_SPECIALIST",
+			listingSlug: "kardiolog",
+		});
+		expect(nodeOf(cardiology, "MedicalClinic").medicalSpecialty).toBe(
+			"https://schema.org/Cardiovascular",
+		);
+	});
+});

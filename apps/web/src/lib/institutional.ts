@@ -24,12 +24,17 @@ export type InstitutionalNamespace =
 	| "PrivacyGb"
 	| "TermsGb"
 	| "AccessibilityGb"
-	| "DataGb";
+	| "DataGb"
+	| "LegalNoticeCz"
+	| "PrivacyCz"
+	| "TermsCz"
+	| "AccessibilityCz"
+	| "DataCz";
 
 /**
- * The namespace of a page in the locale's market: Austria's pages (`/at/impressum`…) and the
- * UK's (`/gb/privacy`…) have texts of their own, written for their law, under the same routes as
- * France's.
+ * The namespace of a page in the locale's market: Austria's pages (`/at/impressum`…), the
+ * UK's (`/gb/privacy`…) and Czechia's (`/cz/ochrana-osobnich-udaju`…) have texts of their own,
+ * written for their law, under the same routes as France's.
  */
 export function marketNamespace(
 	locale: Locale,

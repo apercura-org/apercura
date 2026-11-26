@@ -1,7 +1,9 @@
 import {
 	AT_RESERVED_SEGMENTS,
+	CZ_RESERVED_SEGMENTS,
 	GB_RESERVED_SEGMENTS,
 	isAtListingSlug,
+	isCzListingSlug,
 	isGbListingSlug,
 	isListingSlug,
 	isReservedSegment,
@@ -26,7 +28,7 @@ import {
 } from "./locales";
 import { getPathname } from "./navigation";
 import { localePath } from "./paths";
-import { type AppPathname, routing } from "./routing";
+import { type AppPathname, CZECH_SEGMENTS, routing } from "./routing";
 
 const PARAMS: Record<string, string> = {
 	slug: "camille-exemple-19999990013",
@@ -39,7 +41,7 @@ const pathnames = Object.keys(routing.pathnames) as AppPathname[];
 
 /** Interface translations of France's pages: never indexed. */
 const TRANSLATIONS = LOCALES.filter(
-	(locale) => locale !== "fr" && locale !== "de-AT" && locale !== "en-GB",
+	(locale) => locale !== "fr" && locale !== "de-AT" && locale !== "en-GB" && locale !== "cs-CZ",
 );
 
 /** Pathnames without a catch-all segment, with example params. */
@@ -53,8 +55,8 @@ function hrefOf(pathname: AppPathname) {
 }
 
 describe("locale configuration", () => {
-	it("serves France under /fr and /fr-{language}, Austria under /at and the UK under /gb", () => {
-		expect(LOCALES).toEqual(["fr", "en", "de", "es", "it", "de-AT", "en-GB"]);
+	it("serves France under /fr and /fr-{language}, Austria under /at, the UK under /gb and Czechia under /cz", () => {
+		expect(LOCALES).toEqual(["fr", "en", "de", "es", "it", "de-AT", "en-GB", "cs-CZ"]);
 		expect(routing.locales).toEqual(LOCALES);
 		expect(routing.defaultLocale).toBe("fr");
 		expect(DEFAULT_LOCALE).toBe("fr");
@@ -66,8 +68,9 @@ describe("locale configuration", () => {
 			it: "/fr-it",
 			"de-AT": "/at",
 			"en-GB": "/gb",
+			"cs-CZ": "/cz",
 		});
-		expect(LOCALE_SEGMENTS).toEqual(["fr", "fr-en", "fr-de", "fr-es", "fr-it", "at", "gb"]);
+		expect(LOCALE_SEGMENTS).toEqual(["fr", "fr-en", "fr-de", "fr-es", "fr-it", "at", "gb", "cz"]);
 		expect(LOCALE_MARKETS).toEqual({
 			fr: "FR",
 			en: "FR",
@@ -76,9 +79,11 @@ describe("locale configuration", () => {
 			it: "FR",
 			"de-AT": "AT",
 			"en-GB": "GB",
+			"cs-CZ": "CZ",
 		});
 		expect(CATALOG_LANGUAGES["de-AT"]).toBe("de");
 		expect(CATALOG_LANGUAGES["en-GB"]).toBe("en");
+		expect(CATALOG_LANGUAGES["cs-CZ"]).toBe("cs");
 		for (const locale of LOCALES) {
 			expect(marketOf(locale), locale).toBe(LOCALE_MARKETS[locale]);
 			expect(locale.split("-")[0], locale).toBe(CATALOG_LANGUAGES[locale]);
@@ -108,6 +113,7 @@ describe("locale configuration", () => {
 			it: "it-IT",
 			"de-AT": "de-AT",
 			"en-GB": "en-GB",
+			"cs-CZ": "cs-CZ",
 		});
 		expect(OG_LOCALES).toEqual({
 			fr: "fr_FR",
@@ -117,6 +123,7 @@ describe("locale configuration", () => {
 			it: "it_IT",
 			"de-AT": "de_AT",
 			"en-GB": "en_GB",
+			"cs-CZ": "cs_CZ",
 		});
 		for (const locale of LOCALES) {
 			expect(Intl.DateTimeFormat.supportedLocalesOf([LOCALE_TAGS[locale]])).toEqual([
@@ -133,12 +140,18 @@ describe("locale configuration", () => {
 	});
 
 	it("indexes each market in its own language only, and leaves hreflang to the pages", () => {
-		expect(INDEXABLE_LOCALES).toEqual(["fr", "de-AT", "en-GB"]);
-		expect(HREFLANGS).toEqual({ fr: "fr-FR", "de-AT": "de-AT", "en-GB": "en-GB" });
+		expect(INDEXABLE_LOCALES).toEqual(["fr", "de-AT", "en-GB", "cs-CZ"]);
+		expect(HREFLANGS).toEqual({
+			fr: "fr-FR",
+			"de-AT": "de-AT",
+			"en-GB": "en-GB",
+			"cs-CZ": "cs-CZ",
+		});
 		expect(routing.alternateLinks).toBe(false);
 		expect(robotsFor("fr", true)).toEqual({ index: true, follow: true });
 		expect(robotsFor("de-AT", true)).toEqual({ index: true, follow: true });
 		expect(robotsFor("en-GB", true)).toEqual({ index: true, follow: true });
+		expect(robotsFor("cs-CZ", true)).toEqual({ index: true, follow: true });
 		for (const locale of TRANSLATIONS) {
 			expect(robotsFor(locale, true)).toEqual({ index: false, follow: true });
 		}
@@ -213,6 +226,36 @@ describe("locale configuration", () => {
 			"/gb/practice/the-example-surgery-a99001",
 		);
 		expect(localePath("en-GB", "/annuaire")).toBe("/gb/directory");
+		// Czechia: every Czech first segment is reserved and never a Czech listing slug.
+		for (const pathname of simple.filter((pathname) => !pathname.startsWith("/["))) {
+			const [first] = getPathname({ href: hrefOf(pathname) as never, locale: "cs-CZ" })
+				.split("/")
+				.filter(Boolean)
+				.slice(1);
+			if (!first) continue;
+			expect(CZ_RESERVED_SEGMENTS as readonly string[], pathname).toContain(first);
+			expect(isCzListingSlug(first), pathname).toBe(false);
+		}
+		expect(localePath("cs-CZ", "/praticien/[slug]", { slug: "mudr-jana-ukazkova-900001" })).toBe(
+			"/cz/zarizeni/mudr-jana-ukazkova-900001",
+		);
+		expect(
+			localePath("cs-CZ", "/praticien/[slug]/signaler", { slug: "mudr-jana-ukazkova-900001" }),
+		).toBe("/cz/zarizeni/mudr-jana-ukazkova-900001/nahlasit");
+		expect(localePath("cs-CZ", "/annuaire")).toBe("/cz/adresar");
+		expect(localePath("cs-CZ", "/confidentialite")).toBe("/cz/ochrana-osobnich-udaju");
+		expect(localePath("cs-CZ", "/mentions-legales")).toBe("/cz/pravni-informace");
+	});
+
+	it("translates into Czech only segments reserved in Czechia", () => {
+		for (const czech of Object.values(CZECH_SEGMENTS)) {
+			expect(isCzListingSlug(czech), czech).toBe(false);
+		}
+		const firsts = Object.values(routing.pathnames)
+			.filter((entry) => typeof entry !== "string")
+			.map((entry) => entry["cs-CZ"].split("/")[1] ?? "")
+			.filter((first) => first && !first.startsWith("["));
+		for (const first of firsts) expect(CZ_RESERVED_SEGMENTS as readonly string[]).toContain(first);
 	});
 
 	it("builds email links like the router does", () => {

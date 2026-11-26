@@ -1,4 +1,5 @@
 import at from "../../messages/at.json";
+import cz from "../../messages/cz.json";
 import de from "../../messages/de.json";
 import en from "../../messages/en.json";
 import es from "../../messages/es.json";
@@ -25,7 +26,13 @@ export function mergeMessages(base: Tree, override: Tree): Tree {
 	return result;
 }
 
-const CATALOGS: Record<Exclude<Locale, "de-AT" | "en-GB">, unknown> = { fr, en, de, es, it };
+const CATALOGS: Record<Exclude<Locale, "de-AT" | "en-GB" | "cs-CZ">, unknown> = {
+	fr,
+	en,
+	de,
+	es,
+	it,
+};
 
 const merged = new Map<Locale, Messages>();
 
@@ -44,7 +51,10 @@ export function messagesFor(locale: Locale): Messages {
 				: locale === "en-GB"
 					? // The United Kingdom: the English catalog, with the UK's overrides on top.
 						(mergeMessages(en, gb as Tree) as Messages)
-					: (mergeMessages(en, CATALOGS[locale] as Tree) as Messages);
+					: locale === "cs-CZ"
+						? // Czechia: the English catalog, with the Czech texts on top.
+							(mergeMessages(en, cz as Tree) as Messages)
+						: (mergeMessages(en, CATALOGS[locale] as Tree) as Messages);
 		merged.set(locale, found);
 	}
 	return found;
@@ -55,3 +65,6 @@ export const AUSTRIAN_OVERRIDES: unknown = at;
 
 /** The UK's overrides of the English catalog (`messages/gb.json`), for tests. */
 export const UK_OVERRIDES: unknown = gb;
+
+/** The Czech texts over the English catalog (`messages/cz.json`), for tests. */
+export const CZECH_OVERRIDES: unknown = cz;

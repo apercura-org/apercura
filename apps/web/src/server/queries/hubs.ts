@@ -51,8 +51,9 @@ export async function getDirectoryIndex(country = "FR"): Promise<DirectoryIndex>
 		LEFT JOIN directory.places r ON r.country = d.country AND r.kind = 'region'
 			AND r.code = d.region_code
 		GROUP BY d.id, r.code, r.name, r.slug
-		-- UK authorities by name (their ONS codes group them by type, not by place).
-		ORDER BY r.name, CASE WHEN d.country = 'GB' THEN d.name ELSE d.code END
+		-- UK authorities and Czech districts by name (their ONS and NUTS codes are no order a
+		-- reader knows).
+		ORDER BY r.name, CASE WHEN d.country IN ('GB', 'CZ') THEN d.name ELSE d.code END
 	`;
 	const regions: RegionGroup[] = [];
 	for (const { regionCode, regionName, regionSlug, ...department } of rows) {

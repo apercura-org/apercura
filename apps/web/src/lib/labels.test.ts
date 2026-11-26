@@ -17,6 +17,7 @@ const CATALOGS = {
 	it: it_,
 	"de-AT": messagesFor("de-AT"),
 	"en-GB": messagesFor("en-GB"),
+	"cs-CZ": messagesFor("cs-CZ"),
 } as const;
 
 /** A label of the catalog's taxonomy, rendered like `getTaxonomyLabels` does. */

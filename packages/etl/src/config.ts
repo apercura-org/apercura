@@ -4,6 +4,7 @@
 import { parseProfessionList } from "@apercura/core/taxonomy";
 import { DEFAULT_AT_PLACES_URL } from "./sources/at/places";
 import { AT_SOURCE_IDS, type AtSourceId } from "./sources/at/types";
+import { defaultCzPlacesUrls } from "./sources/cz/places";
 import {
 	DEFAULT_GB_LAD_BOUNDARIES_URL,
 	DEFAULT_GB_LAD_LOOKUP_URL,
@@ -371,6 +372,61 @@ export function buildGbOptions(flags: ParsedArgs["flags"], env: NodeJS.ProcessEn
 		urls,
 		postcodesUrl: env.ETL_GB_POSTCODES_URL || DEFAULT_GB_POSTCODES_URL,
 		placesUrls: gbPlacesUrls(env),
+		workDir: flagString(flags, "work-dir") ?? env.ETL_WORK_DIR ?? null,
+		appUrl: offline ? null : env.APP_URL || null,
+		revalidateSecret: env.REVALIDATE_SECRET || null,
+	};
+}
+
+// ---------------------------------------------------------------------------
+// Czechia (`etl:cz`)
+// ---------------------------------------------------------------------------
+
+/**
+ * The NRPZS places of care (ÚZIS ČR, monthly, CC BY 4.0), overridable with `ETL_CZ_URL`.
+ * Catalogue page: https://www.nzip.cz/data/1823-narodni-registr-poskytovatelu-zdravotnich-sluzeb-otevrena-data
+ */
+export const DEFAULT_CZ_URL =
+	"https://datanzis.uzis.gov.cz/data/NR-01-NRPZS/NR-01-06/Otevrena-data-NR-01-06-nrpzs-mista-poskytovani-zdravotnich-sluzeb.csv";
+
+/** File name expected in `--source-dir` for `etl:cz` (fixtures, offline runs). */
+export const CZ_SOURCE_FILE = "nrpzs.csv";
+
+export type CzOptions = {
+	databaseUrl: string;
+	dryRun: boolean;
+	approveRunId: number | null;
+	force: boolean;
+	sourceDir: string | null;
+	offline: boolean;
+	url: string;
+	/** RÚIAN state files to try in turn for the places (`ETL_CZ_PLACES_URL`, else the latest month's). */
+	placesUrls: string[];
+	workDir: string | null;
+	appUrl: string | null;
+	revalidateSecret: string | null;
+};
+
+/** The RÚIAN state file of the places: `ETL_CZ_PLACES_URL`, else last month's, then the month before. */
+export function czPlacesUrls(env: NodeJS.ProcessEnv, now: Date = new Date()): string[] {
+	return env.ETL_CZ_PLACES_URL ? [env.ETL_CZ_PLACES_URL] : defaultCzPlacesUrls(now);
+}
+
+export function buildCzOptions(flags: ParsedArgs["flags"], env: NodeJS.ProcessEnv): CzOptions {
+	const approve = flagString(flags, "approve");
+	if (approve !== null && !/^\d+$/.test(approve)) {
+		throw new Error(`--approve needs a run id, got ${approve}`);
+	}
+	const offline = flags.has("offline");
+	return {
+		databaseUrl: resolveDatabaseUrl(env),
+		dryRun: flags.has("dry-run"),
+		approveRunId: approve === null ? null : Number(approve),
+		force: flags.has("force"),
+		sourceDir: flagString(flags, "source-dir") ?? env.ETL_CZ_SOURCE_DIR ?? null,
+		offline,
+		url: env.ETL_CZ_URL || DEFAULT_CZ_URL,
+		placesUrls: czPlacesUrls(env),
 		workDir: flagString(flags, "work-dir") ?? env.ETL_WORK_DIR ?? null,
 		appUrl: offline ? null : env.APP_URL || null,
 		revalidateSecret: env.REVALIDATE_SECRET || null,

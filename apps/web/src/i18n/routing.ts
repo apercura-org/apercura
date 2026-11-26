@@ -3,8 +3,33 @@ import { DEFAULT_LOCALE, LOCALE_PREFIXES, LOCALES } from "./locales";
 
 type Pathnames = Record<
 	string,
-	string | Record<Exclude<(typeof LOCALES)[number], "de-AT" | "en-GB">, string>
+	string | Record<Exclude<(typeof LOCALES)[number], "de-AT" | "en-GB" | "cs-CZ">, string>
 >;
+
+/**
+ * The Czech form of each English path segment (`/practitioner/[slug]/report` ->
+ * `/zarizeni/[slug]/nahlasit`). The first segments are the Czech reserved segments of
+ * `@apercura/core/taxonomy` (`CZ_RESERVED_SEGMENTS`, tested), which never name a listing.
+ */
+export const CZECH_SEGMENTS: Readonly<Record<string, string>> = {
+	search: "hledat",
+	practitioner: "zarizeni",
+	report: "nahlasit",
+	removal: "odstraneni",
+	"this-is-me": "to-jsem-ja",
+	establishment: "organizace",
+	directory: "adresar",
+	about: "o-projektu",
+	accessibility: "pristupnost",
+	privacy: "ochrana-osobnich-udaju",
+	"legal-notice": "pravni-informace",
+	terms: "podminky-uziti",
+};
+
+/** An English path with its segments in Czech; parameters and unknown segments stay. */
+function czechPath(path: string): string {
+	return path.replace(/[^/]+/g, (segment) => CZECH_SEGMENTS[segment] ?? segment);
+}
 
 /**
  * The paths of the markets opened after France, derived from a language's own, not listed, so
@@ -12,7 +37,9 @@ type Pathnames = Record<
  * - Austria (`de-AT`): the German paths, with a doctor's page under `/arzt` (every practitioner
  *   of its sources is a doctor or a dentist);
  * - the United Kingdom (`en-GB`): the English paths, with a practice's page under `/practice`
- *   (the UK lists practices, never people).
+ *   (the UK lists practices, never people);
+ * - Czechia (`cs-CZ`): the English paths with their segments in Czech (`CZECH_SEGMENTS`), a
+ *   facility's page under `/zarizeni`.
  */
 function withMarkets<T extends Pathnames>(pathnames: T) {
 	return Object.fromEntries(
@@ -24,10 +51,13 @@ function withMarkets<T extends Pathnames>(pathnames: T) {
 						...value,
 						"de-AT": value.de.replace("/behandler/", "/arzt/"),
 						"en-GB": value.en.replace("/practitioner/", "/practice/"),
+						"cs-CZ": czechPath(value.en),
 					},
 		]),
 	) as {
-		[K in keyof T]: T[K] extends string ? T[K] : T[K] & { "de-AT": string; "en-GB": string };
+		[K in keyof T]: T[K] extends string
+			? T[K]
+			: T[K] & { "de-AT": string; "en-GB": string; "cs-CZ": string };
 	};
 }
 

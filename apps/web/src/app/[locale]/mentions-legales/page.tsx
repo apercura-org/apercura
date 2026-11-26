@@ -3,6 +3,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { BookletPage } from "~/components/booklet-page";
 import { InstitutionalCover, LegalFactRow, ProseSection } from "~/components/institutional";
 import { ImpressumAt } from "~/components/legal-at";
+import { LegalNoticeCz } from "~/components/legal-cz";
 import { LegalNoticeGb } from "~/components/legal-gb";
 import { PageGraph } from "~/components/page-graph";
 import { PublicPage } from "~/components/public-page";
@@ -20,7 +21,7 @@ const HREF = "/mentions-legales" as const;
 export function generateMetadata({ params }: PageProps<"/[locale]/mentions-legales">) {
 	return marketInstitutionalMetadata(
 		params,
-		{ FR: "LegalPage", AT: "ImpressumAt", GB: "LegalNoticeGb" },
+		{ FR: "LegalPage", AT: "ImpressumAt", GB: "LegalNoticeGb", CZ: "LegalNoticeCz" },
 		HREF,
 	);
 }
@@ -33,9 +34,10 @@ export function generateMetadata({ params }: PageProps<"/[locale]/mentions-legal
 export default async function LegalPage({ params }: PageProps<"/[locale]/mentions-legales">) {
 	const locale = await localeOf(params);
 	setRequestLocale(locale);
-	// Austria's and the UK's pages have texts of their own, written for their law.
+	// Austria's, the UK's and Czechia's pages have texts of their own, written for their law.
 	if (marketOf(locale) === "AT") return <ImpressumAt locale={locale} />;
 	if (marketOf(locale) === "GB") return <LegalNoticeGb locale={locale} />;
+	if (marketOf(locale) === "CZ") return <LegalNoticeCz locale={locale} />;
 	const t = await getTranslations({ locale, namespace: "LegalPage" });
 	const tI = await getTranslations({ locale, namespace: "Institutional" });
 	const section = await proseSections(locale, "LegalPage");

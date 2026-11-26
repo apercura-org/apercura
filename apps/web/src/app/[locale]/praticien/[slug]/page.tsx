@@ -1,4 +1,5 @@
 import { practitionerRoute } from "@apercura/core";
+import { CZ_SPECIALIST } from "@apercura/core/taxonomy";
 import {
 	ActionBlock,
 	buttonStyles,
@@ -36,6 +37,7 @@ import {
 	professionSlugOf,
 	showsBillingFacts,
 } from "~/lib/market";
+import { listsPractices } from "~/lib/markets";
 import { ownerContentOf } from "~/lib/owner-content";
 import { isDepartmentCity } from "~/lib/places";
 import { displayId, identityOf, parsePractitionerKey } from "~/lib/practitioner-key";
@@ -140,7 +142,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 		locale,
 	);
 	// A London practice is listed in its borough, without a town: the borough names its place.
-	const locality = page.commune ?? (payload.country === "GB" ? page.department : null);
+	const locality = page.commune ?? (listsPractices(payload.country) ? page.department : null);
 	const place = locality ? shortPlaceName(locality.name) : null;
 	const href = { pathname: "/praticien/[slug]", params: { slug: page.slug } } as const;
 	// The description only mentions online booking when the agenda is open.
@@ -205,9 +207,9 @@ export default async function PractitionerPage({ params }: Props) {
 	// The owner may hide the practice's phone from the page.
 	const sites = siteViews(payload)
 		.map((site) => (content.showPhone ? site : { ...site, phone: null }))
-		// A UK practice's own address is the practice: its card carries the practice's name.
+		// A practice's or facility's own address is the place of care: its card carries its name.
 		.map((site, index) =>
-			payload.country === "GB" && index === 0 && !site.name ? { ...site, name } : site,
+			listsPractices(payload.country) && index === 0 && !site.name ? { ...site, name } : site,
 		);
 	const plan = actionPlan(sites);
 	const empty = tP("notProvided");
@@ -216,16 +218,29 @@ export default async function PractitionerPage({ params }: Props) {
 	const href = { pathname: "/praticien/[slug]", params: { slug: page.slug } } as const;
 	const url = absoluteUrl(href, locale);
 	const austrian = payload.country === "AT";
+	// Czechia lists facilities: no person, but a specialist's practice has its field and every
+	// facility the fields of care the register gives it ("obory péče").
+	const czech = payload.country === "CZ";
 	// The UK lists practices: no specialty, no other qualification, no person.
 	const practice = payload.country === "GB";
 	// France: the registry's other skills. Austria: the other specialties of the lists ("Fach").
+	// Czechia: every field of care of the facility.
 	const otherQualifications = payload.qualifications
 		.filter((item) =>
-			austrian
-				? item.source === "fach" && item.code !== payload.primarySpecialtyCode && item.label
-				: item.source === "savoir_faire" && item.typeCode !== "S" && item.label,
+			czech
+				? item.source === "obor" && item.label
+				: austrian
+					? item.source === "fach" && item.code !== payload.primarySpecialtyCode && item.label
+					: item.source === "savoir_faire" && item.typeCode !== "S" && item.label,
 		)
 		.map((item) => item.label as string);
+	// A Czech specialist's field as the register names it (`kardiologie`), else its listing.
+	const czechSpecialty =
+		czech && payload.professionCode === CZ_SPECIALIST
+			? (payload.qualifications.find(
+					(item) => item.source === "obor" && item.code === payload.primarySpecialtyCode,
+				)?.label ?? (payload.primarySpecialtyCode ? listingLabel : null))
+			: null;
 	const identifier = displayId(payload);
 	// Open licences (CC BY 4.0, OGL) require each source's attribution, word for word.
 	const sources = openDataSourcesOf(payload.country, payload.activities);
@@ -364,7 +379,22 @@ export default async function PractitionerPage({ params }: Props) {
 									value={professionLabel}
 									emptyLabel={empty}
 								/>
-								{practice ? null : (
+								{practice ? null : czech ? (
+									<>
+										{payload.professionCode === CZ_SPECIALIST ? (
+											<FieldRow
+												label={tP("fields.specialty")}
+												value={czechSpecialty}
+												emptyLabel={empty}
+											/>
+										) : null}
+										<FieldRow
+											label={t("fieldsOfCare")}
+											value={otherQualifications.length > 0 ? otherQualifications.join(", ") : null}
+											emptyLabel={empty}
+										/>
+									</>
+								) : (
 									<>
 										<FieldRow label={tP("fields.specialty")} value={specialty} emptyLabel={empty} />
 										<FieldRow
@@ -496,7 +526,7 @@ export default async function PractitionerPage({ params }: Props) {
 					sourceLabel={tP("source.label")}
 					source={
 						sources.length > 0
-							? // CC BY 4.0 and the OGL: each list named with its attribution, word for word.
+							? // CC BY 4.0 and the OGL: each source named with its attribution, word for word.
 								sources.map((source) => `${source.name} (${source.attribution})`).join("; ")
 							: tP("source.name")
 					}
@@ -542,8 +572,8 @@ async function SiteSection({
 				externalLabel={tSite("externalLink")}
 			>
 				<FieldList>
-					{/* A UK practice's addresses are all its own premises: no type to tell apart. */}
-					{marketOf(locale) === "GB" ? null : (
+					{/* A UK practice's or Czech facility's addresses are its own premises: no type to tell apart. */}
+					{listsPractices(marketOf(locale)) ? null : (
 						<FieldRow
 							label={t("practiceType")}
 							value={[labels.kind, labels.mode].filter(Boolean).join(" · ")}

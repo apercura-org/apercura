@@ -159,23 +159,24 @@ DKIM, DMARC, `contact@apercura.org`) and the Search Console property change
 `packages/core/src/country` (`@apercura/core/country`) defines one interface
 for everything that differs per market. Adapters are pure: no network, no
 database. France wraps the code the app already used; Austria (#107) is the
-first market written against the interface, the United Kingdom (#125) the second.
+first market written against the interface, the United Kingdom (#125) the second, Czechia (#131) the
+third.
 
-| Member               | France                                                                    | Austria                                                                                                                         | United Kingdom                                                                                                                                                                                     |
-| -------------------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `segment`            | `fr`                                                                      | `at`                                                                                                                            | `gb`                                                                                                                                                                                               |
-| `defaultLocale`      | `fr`                                                                      | `de` (web locale `de-AT` under `/at`: the German catalog with Austrian overrides)                                               | `en` (web locale `en-GB` under `/gb`: the English catalog with UK overrides)                                                                                                                       |
-| `defaultTimeZone`    | `Europe/Paris`                                                            | `Europe/Vienna`                                                                                                                 | `Europe/London`                                                                                                                                                                                    |
-| `timeZones`          | Paris and the 8 overseas zones                                            | Vienna only                                                                                                                     | London only                                                                                                                                                                                        |
-| `timeZoneOf(region)` | `timeZoneForDepartment` (INSEE department code, throws if unknown)        | Bundesland number `1`–`9` (throws if unknown)                                                                                   | any ONS area code (`E12000007`, `S92000003`, `E09000007`; throws otherwise)                                                                                                                        |
-| `registries`         | Annuaire Santé (RPPS), FINESS+, Ameli, under the Licence Ouverte 2.0      | Vienna, Styria, Salzburg doctors and Salzburg dentists lists, Statistik Austria Gemeinden, CC BY 4.0, each with its attribution | ODS (England and Wales), Public Health Scotland, BSO (Northern Ireland) practice lists, Code-Point Open, OS Open Names, ONS local authorities, OSNI gazetteer, OGL v3.0, each with its attribution |
-| `practitionerIds`    | RPPS, 11 digits with a Luhn check digit (`isValidRpps`)                   | One scheme per list (`AT-WIEN`, `AT-STMK`, `AT-SBG`, `AT-SBGZ`): no national number is published                                | One scheme per list (`GB-ODS-GP`, `GB-ODS-DENT`, `GB-ODS-PHARM`, `GB-PHS-*`, `GB-BSO-*`): ODS codes, PHS and BSO numbers, an address-derived key for NI dental                                     |
-| `taxonomy`           | `FR_PROFESSIONS`, `listingSlugFor`, `isListingSlug`                       | `AT_PROFESSIONS` (doctors, dentists), `atListingSlugFor`, `isAtListingSlug`, German slugs                                       | `GB_PROFESSIONS` (GP practices, dental practices, pharmacies), `gbListingSlugFor`, `isGbListingSlug`, English slugs, no specialty                                                                  |
-| `phone`              | `toE164Fr`, `formatPhoneFr` (`+33` and the overseas codes)                | `toE164At`, `formatPhoneAt` (`+43`, national form `01 7673315`)                                                                 | `toE164Gb`, `formatPhoneGb` (`+44`, national form `020 7946 0000`, `01642 672351`)                                                                                                                 |
-| `address`            | 5-digit postcode, `street` then `postcode city`                           | 4-digit postcode, `street` then `postcode city`                                                                                 | UK postcode (`SW1A 1AA`), `street`, then the town and the postcode on lines of their own                                                                                                           |
-| `legalPages`         | mentions légales (LCEN), privacy (GDPR art. 13–14), terms, RGAA statement | Impressum (ECG § 5, MedienG § 25), Datenschutzerklärung (DSGVO art. 13, 14, 21), Nutzungsbedingungen                            | legal notice (E-Commerce Regulations 2002, reg. 6), privacy notice (UK GDPR art. 13, 14, 21), terms                                                                                                |
-| `healthDataHosting`  | HDS (Code de la santé publique, art. L1111-8)                             | No certification: DSGVO and DSG; Gesundheitstelematikgesetz 2012 for electronic health data exchange                            | No certification: UK GDPR and DPA 2018 (as amended by the DUAA 2025); the DSPT binds organisations with access to NHS patient data and systems                                                     |
-| `features`           | directory, booking and e-identity claim (Pro Santé Connect)               | directory only: no booking, claims with documents and an administrator's review                                                 | directory only (practices, no clinician): no booking, claims with documents and an administrator's review                                                                                          |
+| Member               | France                                                                    | Austria                                                                                                                         | United Kingdom                                                                                                                                                                                     | Czechia                                                                                                                                        |
+| -------------------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| `segment`            | `fr`                                                                      | `at`                                                                                                                            | `gb`                                                                                                                                                                                               | `cz`                                                                                                                                           |
+| `defaultLocale`      | `fr`                                                                      | `de` (web locale `de-AT` under `/at`: the German catalog with Austrian overrides)                                               | `en` (web locale `en-GB` under `/gb`: the English catalog with UK overrides)                                                                                                                       | `cs` (web locale `cs-CZ` under `/cz`: the English catalog with the Czech translation on top)                                                   |
+| `defaultTimeZone`    | `Europe/Paris`                                                            | `Europe/Vienna`                                                                                                                 | `Europe/London`                                                                                                                                                                                    | `Europe/Prague`                                                                                                                                |
+| `timeZones`          | Paris and the 8 overseas zones                                            | Vienna only                                                                                                                     | London only                                                                                                                                                                                        | Prague only                                                                                                                                    |
+| `timeZoneOf(region)` | `timeZoneForDepartment` (INSEE department code, throws if unknown)        | Bundesland number `1`–`9` (throws if unknown)                                                                                   | any ONS area code (`E12000007`, `S92000003`, `E09000007`; throws otherwise)                                                                                                                        | region or district NUTS/LAU code (`CZ010`, `CZ0642`; throws otherwise)                                                                         |
+| `registries`         | Annuaire Santé (RPPS), FINESS+, Ameli, under the Licence Ouverte 2.0      | Vienna, Styria, Salzburg doctors and Salzburg dentists lists, Statistik Austria Gemeinden, CC BY 4.0, each with its attribution | ODS (England and Wales), Public Health Scotland, BSO (Northern Ireland) practice lists, Code-Point Open, OS Open Names, ONS local authorities, OSNI gazetteer, OGL v3.0, each with its attribution | NRPZS places of care (ÚZIS ČR) and RÚIAN territorial units (ČÚZK), CC BY 4.0, each with its attribution                                        |
+| `practitionerIds`    | RPPS, 11 digits with a Luhn check digit (`isValidRpps`)                   | One scheme per list (`AT-WIEN`, `AT-STMK`, `AT-SBG`, `AT-SBGZ`): no national number is published                                | One scheme per list (`GB-ODS-GP`, `GB-ODS-DENT`, `GB-ODS-PHARM`, `GB-PHS-*`, `GB-BSO-*`): ODS codes, PHS and BSO numbers, an address-derived key for NI dental                                     | One scheme, `CZ-NRPZS`: the register's facility number `ZZ_ID` (the provider's IČO is never used)                                              |
+| `taxonomy`           | `FR_PROFESSIONS`, `listingSlugFor`, `isListingSlug`                       | `AT_PROFESSIONS` (doctors, dentists), `atListingSlugFor`, `isAtListingSlug`, German slugs                                       | `GB_PROFESSIONS` (GP practices, dental practices, pharmacies), `gbListingSlugFor`, `isGbListingSlug`, English slugs, no specialty                                                                  | `CZ_PROFESSIONS` (eleven facility kinds), `CZ_SPECIALTIES` (fields of care of specialists), `czListingSlugFor`, `isCzListingSlug`, Czech slugs |
+| `phone`              | `toE164Fr`, `formatPhoneFr` (`+33` and the overseas codes)                | `toE164At`, `formatPhoneAt` (`+43`, national form `01 7673315`)                                                                 | `toE164Gb`, `formatPhoneGb` (`+44`, national form `020 7946 0000`, `01642 672351`)                                                                                                                 | `toE164Cz`, `formatPhoneCz` (`+420`, nine digits, `326 357 125`)                                                                               |
+| `address`            | 5-digit postcode, `street` then `postcode city`                           | 4-digit postcode, `street` then `postcode city`                                                                                 | UK postcode (`SW1A 1AA`), `street`, then the town and the postcode on lines of their own                                                                                                           | 5-digit postcode written `110 00`, `street` then `postcode town`                                                                               |
+| `legalPages`         | mentions légales (LCEN), privacy (GDPR art. 13–14), terms, RGAA statement | Impressum (ECG § 5, MedienG § 25), Datenschutzerklärung (DSGVO art. 13, 14, 21), Nutzungsbedingungen                            | legal notice (E-Commerce Regulations 2002, reg. 6), privacy notice (UK GDPR art. 13, 14, 21), terms                                                                                                | legal notice (Civil Code § 435, Act 480/2004), privacy notice (GDPR art. 13, 14, 21, Act 110/2019), terms, voluntary accessibility statement   |
+| `healthDataHosting`  | HDS (Code de la santé publique, art. L1111-8)                             | No certification: DSGVO and DSG; Gesundheitstelematikgesetz 2012 for electronic health data exchange                            | No certification: UK GDPR and DPA 2018 (as amended by the DUAA 2025); the DSPT binds organisations with access to NHS patient data and systems                                                     | No certification: GDPR and Act 110/2019; Act 372/2011 governs providers' records                                                               |
+| `features`           | directory, booking and e-identity claim (Pro Santé Connect)               | directory only: no booking, claims with documents and an administrator's review                                                 | directory only (practices, no clinician): no booking, claims with documents and an administrator's review                                                                                          | directory only (facilities): no booking, claims with documents and an administrator's review                                                   |
 
 Per-country feature flags are the adapter's `features`: what a market can
 support once it is open. The global environment flags (`FEATURE_BOOKING`…)
@@ -267,6 +268,28 @@ specialties mapped to the market's own terms, with catalog labels under
   that are not open to the public.
 - **Write the data-request file first.** The UK's is
   [`docs/data-requests/gb.md`](../data-requests/gb.md).
+
+#### What the Czech opening proved (#131)
+
+- **A national register can be the whole market.** One monthly CSV (NRPZS, CC BY 4.0) gives every
+  place of care with its coordinates, kind and fields of care: one list, one identifier scheme
+  (`CZ-NRPZS`, the register's facility number), one guard set. A list that cannot be read fails the
+  run (exit code 1) and the pages stay as they are; there is no list to leave out.
+- **A page can name a facility that names a person.** A sole trader's facility carries their name
+  in the register ("MUDr. Hana Boháčková"): the page shows it as published, as the DPA allowed for
+  basic profiles in 2013, with an article 14 notice and removal on objection. What the page does
+  not need is never stored: the provider's company number (and the facility code that embeds it),
+  seat, professional representative, e-mail, data box and fax; a head office's phone shared by more
+  than three places of care is dropped (2,944 rows of the November 2026 export).
+- **Specialists list by their field.** The register's fields of care map to Czech listing slugs,
+  the most specific field first (`kardiolog` before `internista`); every field is shown on the page.
+- **Prague is Paris again.** A region, a district (LAU 1 `CZ0100`, which RÚIAN does not have) and a
+  municipality at once: its 22 administrative districts are arrondissements of the municipality,
+  whose city page is the district's (migration `0027_cz_market`). Regions keep no listing pages.
+- **A language with four plural forms.** `cs-CZ` is the English catalog with the Czech texts on
+  top (`messages/cz.json`); every plural reachable in it carries `one`, `few`, `many` and `other`.
+  The client islands now receive only their market's taxonomy labels, so opening a market adds no
+  page weight elsewhere.
 
 ## What is known per market
 
@@ -578,23 +601,64 @@ Salzburg, claimed pages elsewhere.
 
 ### Czechia (CZ)
 
-- **Registry.** The Czech Medical Chamber's list of doctors (Act 220/1991 §6a), with workplace,
-  hours and insurer contracts, is "všechna práva vyhrazena" (VERIFIED [CZ1]). The national register
-  of health workers (NRZP) is not public (UNVERIFIED [CZ2]). The national register of healthcare
-  providers (NRPZS, ÚZIS): about 40,000 places of care with name, address, GPS, phone, email,
-  fields of care and the professional representative; most providers are natural persons named
-  after the doctor (VERIFIED [CZ3][CZ4]).
-- **Access and licence.** NRPZS: `open data`, "Autorské dílo licencované CC BY 4.0", monthly CSV and
-  an API (VERIFIED [CZ3][CZ5]). Chamber list: `searchable website only`.
-- **Health data.** No hosting certification found (UNVERIFIED).
+Open since 2026-11-26 (#131) at `/cz`: facility pages from the National Register of Healthcare
+Providers, in Czech.
+
+- **Registry.** The Czech Medical Chamber's list of doctors (Act 220/1991 §6a), searchable by name,
+  specialty and district, says "Všechna práva vyhrazena Česká lékařská komora" (VERIFIED [CZ1],
+  2026-11-26). The national register of health workers (NRZP) is not public (UNVERIFIED [CZ2]). The
+  national register of healthcare providers (NRPZS, ÚZIS): the open dataset "NRPZS: Místa
+  poskytování zdravotních služeb" lists every current place of care, one row per facility and place
+  (41,136 rows on 1 November 2026), with the facility's name, kind (`ZZ_druh_kod`, ÚZIS code list),
+  fields, forms and kinds of care, the address of the place with its RÚIAN address code, WGS 84
+  coordinates (`POINT(lat lng)`), the region, district and administrative-district codes, and the
+  provider's company number, seat, phone, e-mail, website, data box and professional
+  representative (VERIFIED [CZ3][CZ4]). "Datová sada neobsahuje již zaniklé subjekty" and leaves out
+  the facilities of the Ministries of the Interior and of Justice (prisons) (VERIFIED [CZ3]). About
+  38% of the places of care (15,643 rows) belong to a natural person, whose facility is named after
+  them ("MUDr. Hana Boháčková").
+- **Access and licence.** NRPZS: `open data`, "Autorské dílo licencované CC BY 4.0", "Není
+  autorskoprávně chráněnou databází", "Není chráněna zvláštním právem", "Aktualizace měsíční",
+  27 MB CSV at
+  `https://datanzis.uzis.gov.cz/data/NR-01-NRPZS/NR-01-06/Otevrena-data-NR-01-06-nrpzs-mista-poskytovani-zdravotnich-sluzeb.csv`
+  (`Last-Modified` of the 1st of the month), with a citation the publisher asks for (VERIFIED
+  [CZ3], 2026-11-26). The dataset's personal-data note: "Datová sada může obsahovat identifikační
+  údaje právnických osob a osobní údaje, v souladu s ust. § 73 odst. 8, § 74 § 75 zák. č. 372/2011
+  Sb. … a ust. § 16 zák. č. 110/2019 Sb." (VERIFIED [CZ3]). No API is documented on the NRPZS site
+  or the dataset page (read 2026-11-26; the first round's "API" is not confirmed) [CZ5]. Places:
+  RÚIAN's state basic dataset `ST_UZSZ` (VFR XML, monthly, regions, districts, municipalities,
+  Prague's administrative districts with definition points in EPSG:5514), open data "bezúplatně na
+  základě licence Creative Commons CC-BY 4.0", credited „ČÚZK, [rok]“ (VERIFIED on ČÚZK's terms
+  [CZ8]). SÚKL's pharmacy list is open data under SÚKL's own terms (VERIFIED [CZ9]), not read yet.
+  Everything not imported and whom to ask: [`docs/data-requests/cz.md`](../data-requests/cz.md).
+- **Identifiers.** `ZZ_ID`, "Jednoznačný identifikátor zdravotnického zařízení" (VERIFIED [CZ3]),
+  1 to 6 digits today, is the page's key (`/cz/zarizeni/mudr-hana-bohackova-39781`). The facility
+  code `ZZ_kod` is the provider's IČO followed by the facility and branch numbers: for a sole trader
+  the IČO identifies the person, so neither is stored. No birth number (rodné číslo) is published.
+- **Health data.** GDPR and Act No. 110/2019 Coll.; Act No. 372/2011 Coll. on health services
+  governs the providers' records. No hosting certification found (UNVERIFIED as a negative).
+  Supervisory authority: the Úřad pro ochranu osobních údajů (ÚOOÚ).
+- **Formats.** `Europe/Prague`; phone `+420` and nine digits, no trunk prefix, printed `326 357 125`;
+  postcode five digits written `110 00`.
+- **Legal pages.** A business website names its operator (§ 435 of the Civil Code, Act No.
+  89/2012 Coll.); Act No. 480/2004 Coll. on certain information society services; a privacy notice
+  with the article 14 information. Act No. 99/2019 Coll. on accessibility binds public sector bodies:
+  the statement at `/cz/pristupnost` is voluntary.
 - **Booking and advertising.** The chamber's ethics code bans undignified self-promotion,
-  including through third parties (UNVERIFIED [CZ6]). The DPA inspected ZnanyLekarz in 2013: basic
-  profile data may be published without consent, opinion data on unregistered doctors may not
-  (VERIFIED summary, pre-GDPR [CZ7]).
+  including through third parties (UNVERIFIED [CZ6]). The DPA inspected ZnanyLekarz in 2013:
+  doctors' basic profile data "mohou být zpracovávány (zveřejněny) bez jejich souhlasu" because they
+  come from public sources (§ 5(2)(d) of the former Act 101/2000), opinions on unregistered doctors
+  may not, and a doctor who withdraws must be deleted (VERIFIED [CZ7], pre-GDPR). Booking stays off
+  (`features.booking`).
 - **Market.** Czech. 43,810 doctors, 7,914 dentists, 92,664 nurses, 4,248 midwives (2020) [EU1].
   Znamylekar.cz (Docplanner), TopDoktor.
-- **Verdict.** Directory from open data at the level of providers and places of care (one page per
-  practice, naming the practitioner where the provider is a natural person).
+- **Verdict.** Directory of facilities from open data: 33,173 places of care from the export of 1 November
+  2026 (real-data dry run on a fresh database: general practitioners 5,324, paediatricians 1,973,
+  dentists 5,616, gynaecologists 1,627, specialists 10,785, pharmacies 2,527, home care 949,
+  physiotherapists 2,767, clinical psychologists 702, speech therapists 611, midwives 292; all
+  indexable; 33,101 at the register's point, 72 at their municipality's centre; 33,169 placed in a
+  municipality or a Prague district by name; 13,330 listing pages, 4,318 indexable); claimed pages
+  for facilities; booking later.
 
 ### Denmark (DK)
 
@@ -973,7 +1037,7 @@ English or French interface comes first. Finland's Swedish pages go under `/fi-s
 | --- | -------------- | ---------------------------- | -------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | 1   | Austria        | `/at`                        | Open: directory (Vienna, Styria, Salzburg)   | Opened 2026-11-25 (#107): CC BY 4.0 lists of Vienna, Styria and Salzburg (10,377 doctors and dentists); German interface; no hosting certification; booking off    |
 | 2   | Switzerland    | `/ch-fr`, `/ch-de`, `/ch-it` | Claimed pages, French-speaking cantons first | High-value market, French interface exists; registers restricted, ask the FOPH for MedReg access; Swiss representative; OneDoc leads                               |
-| 3   | Czechia        | `/cz`                        | Directory (providers and places of care)     | NRPZS under CC BY 4.0 with an API; DPA allowed basic profiles in 2013; needs a Czech interface; Znamylekar (Docplanner)                                            |
+| 3   | Czechia        | `/cz`                        | Open: directory (places of care)             | Opened 2026-11-26 (#131): NRPZS places of care under CC BY 4.0 (33,173 facilities), RÚIAN places; Czech interface; booking off                                     |
 | 4   | United Kingdom | `/gb`                        | Open: practice pages (four nations)          | Opened 2026-11-25 (#125): NHS ODS, PHS and BSO practice lists under the OGL (about 31,000 practices), located by postcode; no clinician (GMC licence); booking off |
 | 5   | Poland         | `/pl`                        | Directory (registered practices), opt-out    | RPWDL under CC BY 4.0, daily; large market; listing without consent litigated (III OSK 1052/21); Docplanner's home; needs Polish                                   |
 | 6   | Belgium        | `/be-fr`, `/be-nl`, `/be-de` | Claimed pages, opt-in only                   | DPA decision 149/2023 forbids listing practitioners who did not opt in; French exists, Dutch and German needed; Doctoranytime                                      |
@@ -1005,7 +1069,7 @@ English or French interface comes first. Finland's Swedish pages go under `/fi-s
 
 The realistic fast path:
 
-- **Directory from open data:** Austria (open: Vienna, Styria, Salzburg), Czechia, Poland, then the small markets
+- **Directory from open data:** Austria (open: Vienna, Styria, Salzburg), Czechia (open), Poland, then the small markets
   whose licence must be confirmed in writing (Malta, Estonia) or that cover one segment (Slovenia,
   Latvia). Each needs a legitimate-interest assessment and an art. 14 notice: an open licence
   settles reuse rights, not the GDPR.
@@ -1025,7 +1089,8 @@ Germany's §393 SGB V.
 ## Consequences
 
 - The interface reads in five languages; France's pages are indexed in French
-  (`/fr`), Austria's in German (`/at`) and the UK's in British English (`/gb`),
+  (`/fr`), Austria's in German (`/at`), the UK's in British English (`/gb`)
+  and Czechia's in Czech (`/cz`),
   every interface translation stays `noindex`.
 - New markets plug in through an adapter, an ETL source and a path segment on
   apercura.org, without changing the French code paths.
@@ -1267,6 +1332,8 @@ Market study (#82), labelled by country, all checked on 2026-11-25:
 - CZ5. NRPZS: <https://nrpzs.uzis.cz/>
 - CZ6. Czech Medical Chamber, ethics code: <https://www.lkcr.cz/doc/cms_library/13-sp-c-10-eticky-kodex-clk-101313.pdf>
 - CZ7. ÚOOÚ, 2013 inspection of ZnanyLekarz: <https://uoou.gov.cz/cinnost/ochrana-osobnich-udaju/ukoncene-kontroly/kontroly-za-rok-2013/kontrola-spolecnosti-znanylekarz>
+- CZ8. ČÚZK, Podmínky poskytování prostorových dat ČÚZK: <https://www.cuzk.gov.cz/Predpisy/Podminky-poskytovani-prostor-dat-a-sitovych-sluzeb/Podminky-poskytovani-prostorovych-dat-CUZK.aspx>; RÚIAN state files: <https://vdp.cuzk.gov.cz/vymenny_format/soucasna/>
+- CZ9. SÚKL, Podmínky užití otevřených dat: <https://opendata.sukl.gov.cz/podminky-uziti-otevrenych-dat>
 - SK1. Slovak Medical Chamber, register of doctors: <https://lekom.sk/register-lekarov-slk>
 - SK2. NCZI, national register of health workers: <https://www.nczisk.sk/registre/narodne-administrativne-registre/narodny-register-zdravotnickych-pracovnikov/Pages/default.aspx>
 - SK3. ÚDZS, provider codes: <https://www.udzs-sk.sk/urad/kody-poskytovatelov-zdravotnej-starostlivosti-a-zdravotnickych-pracovnikov/>

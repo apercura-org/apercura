@@ -1,12 +1,15 @@
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import type { ReactNode } from "react";
+import { marketOf } from "~/i18n/locales";
 import type { Locale } from "~/i18n/routing";
 import { pickMessages } from "~/lib/client-messages";
+import { forMarket } from "~/lib/market-messages";
 
 /**
  * The messages an interactive part of a page reads on the client, never the
- * whole catalogue (it would be serialized into every page's HTML). Parts that
+ * whole catalogue (it would be serialized into every page's HTML), and of the
+ * taxonomy only the labels of the page's market (`forMarket`). Parts that
  * call the API also wrap themselves in `<TRPCReactProvider>`, imported where
  * used: a client module imported here would ship with every page.
  *
@@ -25,7 +28,11 @@ export async function ClientIsland({
 	const messages = await getMessages({ locale });
 	return (
 		<NextIntlClientProvider
-			messages={namespaces === "all" ? messages : pickMessages(messages, namespaces)}
+			messages={
+				namespaces === "all"
+					? messages
+					: forMarket(pickMessages(messages, namespaces), marketOf(locale))
+			}
 		>
 			{children}
 		</NextIntlClientProvider>

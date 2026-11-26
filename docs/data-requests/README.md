@@ -11,7 +11,8 @@ public phone), under the Open Data Directive (EU) 2019/1024 and its national tra
 Re-use of Public Sector Information Regulations 2015, or as a plain licence request where no law
 gives a right to re-use.
 
-Austria has its own request, prepared separately (`at.md`).
+Austria has its own request, prepared separately (`at.md`); the United Kingdom's and Czechia's
+candidates are in `gb.md` and `cz.md`.
 
 ## Tracking
 
@@ -23,6 +24,7 @@ Update a row the day something happens. Status: `not sent`, `sent`, `extended`, 
 | Switzerland (2)    | MedReg: [ch-medreg.md](ch-medreg.md)                                              | FOPH, Register of Health Professions             | Email with the FOPH application form  | RegV MedBG, art. 11 (written application)                            | not sent |           |        |         |
 | Switzerland (2)    | doctorfmh.ch: [ch-fmh.md](ch-fmh.md)                                              | FMH, legal service                               | Email                                 | None (private association): licence request                          | not sent |           |        |         |
 | Switzerland (2)    | GLN partner data: [ch-refdata.md](ch-refdata.md)                                  | Stiftung Refdata                                 | Email                                 | None (private foundation): consent request                           | not sent |           |        |         |
+| Czechia (3)        | Czech Medical Chamber list: [cz.md](cz.md#how-to-ask)                             | Česká lékařská komora                            | Email                                 | None (Act No. 220/1991 Coll., § 6a publication): licence request     | not sent |           |        |         |
 | United Kingdom (4) | LRMP: [GMC licence quote](#united-kingdom-gmc-licence-quote)                      | GMC registration data team                       | Email                                 | Commercial licence; RPSI 2015, reg. 6, in the alternative (doubtful) | not sent |           |        |         |
 | Belgium (6)        | INAMI list of care providers: [be-inami.md](be-inami.md)                          | INAMI, DPO                                       | Email and registered post             | Law of 4 May 2016, art. 11                                           | not sent |           |        |         |
 | Luxembourg (7)     | Register of doctors: [lu-college-medical.md](lu-college-medical.md)               | Collège médical, copy Ministry of Health         | Email                                 | Law of 29 November 2021, art. 4 (Collège uncertain, Ministry yes)    | not sent |           |        |         |

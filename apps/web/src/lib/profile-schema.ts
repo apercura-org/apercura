@@ -85,12 +85,14 @@ export const ownerSiteSchema = z.object({
 	addressLine: plainText(LIMITS.addressLine).refine((value) => value.length > 0, {
 		message: "required",
 	}),
-	// Five digits in France, four in Austria, a UK postcode (`TS18 1HU`): the service checks
-	// the practitioner's market.
+	// Five digits in France, four in Austria, a UK postcode (`TS18 1HU`), five digits in Czechia
+	// written `110 00` or `11000`: the service checks the practitioner's market.
 	postcode: z
 		.string()
 		.trim()
-		.regex(/^(?:\d{4,5}|[A-Za-z]{1,2}\d[A-Za-z\d]? ?\d[A-Za-z]{2})$/, { message: "postcode" }),
+		.regex(/^(?:\d{4,5}|\d{3} \d{2}|[A-Za-z]{1,2}\d[A-Za-z\d]? ?\d[A-Za-z]{2})$/, {
+			message: "postcode",
+		}),
 	city: plainText(80).refine((value) => value.length > 0, { message: "required" }),
 	phone: z
 		.string()

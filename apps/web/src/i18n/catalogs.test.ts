@@ -1,3 +1,4 @@
+import { allCzListingSlugs } from "@apercura/core/taxonomy";
 import {
 	isPluralElement,
 	isSelectElement,
@@ -8,6 +9,7 @@ import {
 } from "@formatjs/icu-messageformat-parser";
 import { describe, expect, it } from "vitest";
 import at from "../../messages/at.json";
+import cz from "../../messages/cz.json";
 import de from "../../messages/de.json";
 import en from "../../messages/en.json";
 import es from "../../messages/es.json";
@@ -19,7 +21,7 @@ import { CATALOG_LANGUAGES, LOCALES, type Locale } from "./locales";
 
 /**
  * Austria's catalog is the German one with the Austrian overrides on top; the UK's the English
- * one with the UK's overrides.
+ * one with the UK's overrides; Czechia's the English one with the Czech texts on top.
  */
 const CATALOGS: Record<Locale, unknown> = {
 	fr,
@@ -29,6 +31,7 @@ const CATALOGS: Record<Locale, unknown> = {
 	it: it_,
 	"de-AT": mergeMessages(de, at as Record<string, unknown>),
 	"en-GB": mergeMessages(en, gb as Record<string, unknown>),
+	"cs-CZ": mergeMessages(en, cz as Record<string, unknown>),
 };
 
 /** Every message of a catalog by its dotted key (array items are indexed). */
@@ -133,5 +136,20 @@ describe("the UK overrides", () => {
 	it("only override keys of the English catalog", () => {
 		const english = flatten(en);
 		expect([...flatten(gb).keys()].filter((key) => !english.has(key))).toEqual([]);
+	});
+});
+
+describe("the Czech texts", () => {
+	it("only override keys of the English catalog", () => {
+		const english = flatten(en);
+		expect([...flatten(cz).keys()].filter((key) => !english.has(key))).toEqual([]);
+	});
+
+	it("name every Czech listing and profession in Czech", () => {
+		const czech = flatten(cz);
+		for (const slug of allCzListingSlugs()) {
+			expect(czech.get(`taxonomy.listing.${slug}`), slug).toBeTruthy();
+			expect(czech.get(`taxonomy.profession.${slug}`), slug).toBeTruthy();
+		}
 	});
 });
