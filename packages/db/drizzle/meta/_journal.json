@@ -197,6 +197,13 @@
       "when": 1795645807104,
       "tag": "0027_cz_market",
       "breakpoints": true
+    },
+    {
+      "idx": 28,
+      "version": "7",
+      "when": 1795728290610,
+      "tag": "0028_it_market",
+      "breakpoints": true
     }
   ]
 }
