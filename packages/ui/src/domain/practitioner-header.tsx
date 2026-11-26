@@ -1,7 +1,6 @@
 import type { ReactNode } from "react";
 import { CheckIcon } from "../icons";
 import { cn } from "../recipes";
-import { Seal } from "../seal/seal";
 import { Stamp, StampFoot, stampInkOf } from "./stamp";
 
 export type PageStatus = "unclaimed" | "claimed" | "verified";
@@ -21,10 +20,7 @@ export interface PractitionerHeaderProps {
 	statusNote?: ReactNode;
 	/** The page title is an `h1`; previews inside another page use a lower level. */
 	headingLevel?: 1 | 2 | 3;
-	/**
-	 * The owner's photo, square with rounded corners, the seal on its corner. Without one, the
-	 * seal stands alone.
-	 */
+	/** The owner's photo, square with rounded corners, beside the stamp. */
 	photo?: { src: string; alt: string } | null;
 	/** The owner's one-line headline, under the stamp. Plain text. */
 	headline?: string | null;
@@ -35,8 +31,10 @@ export interface PractitionerHeaderProps {
 
 /**
  * The head of a practitioner's page: the practitioner's stamp (name, profession, address,
- * register number and the page's state, inked outlined, solid or hatched), with the seal or the
- * owner's photo beside it, then the owner's headline and one sentence on what the state means.
+ * register number and the page's state, inked outlined, solid or hatched), with the owner's
+ * photo beside it when there is one, then the owner's headline and one sentence on what the
+ * state means. The stamp is the page's only mark: it starts on the column's edge, like the
+ * lines under it.
  */
 export function PractitionerHeader({
 	name,
@@ -58,25 +56,14 @@ export function PractitionerHeader({
 		<header className={cn("flex flex-col gap-4", className)}>
 			<div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-6">
 				{photo ? (
-					<div className="relative shrink-0 self-start sm:self-center">
-						<img
-							src={photo.src}
-							alt={photo.alt}
-							width={128}
-							height={128}
-							className="block size-32 rounded-field border border-rule-soft bg-paper-shade object-cover"
-						/>
-						<Seal
-							rpps={rpps}
-							verified={verified}
-							size={48}
-							className="absolute -right-3 -bottom-3 rounded-full bg-paper ring-2 ring-paper"
-						/>
-					</div>
-				) : (
-					// Beside the stamp from 640 px; on a phone the stamp leads alone.
-					<Seal rpps={rpps} verified={verified} size={88} className="shrink-0 max-sm:hidden" />
-				)}
+					<img
+						src={photo.src}
+						alt={photo.alt}
+						width={128}
+						height={128}
+						className="block size-32 shrink-0 self-start rounded-field border border-rule-soft bg-paper-shade object-cover sm:self-center"
+					/>
+				) : null}
 				<Stamp ink={stampInkOf(status)} className="w-full min-w-0 sm:w-fit sm:min-w-[22rem]">
 					<div className="flex flex-col gap-1 px-4 pt-3 pb-3.5 sm:px-5 sm:pt-4">
 						<Heading className="type-headline">{name}</Heading>
