@@ -1,0 +1,1909 @@
+{
+	"Metadata": {
+		"title": "Apercura",
+		"description": "Otevřený adresář zdravotnických zařízení v Česku: praktičtí a dětští lékaři, zubní lékaři, specialisté, lékárny a další, z otevřených dat NRPZS.",
+		"proTitle": "Vaše stránka už existuje · Apercura",
+		"proDescription": "Apercura zveřejňuje věcnou stránku každého zdravotnického zařízení z Národního registru poskytovatelů zdravotních služeb. Najděte stránku svého zařízení a převezměte ji zdarma.",
+		"searchTitle": "Hledání · Apercura",
+		"galleryTitle": "Galerie komponent · Apercura",
+		"homeTitle": "Apercura · Lékaři, zubaři a lékárny v Česku"
+	},
+	"Site": {
+		"skipLink": "Přejít na obsah",
+		"wordmark": "Apercura",
+		"homeLink": "Apercura, úvodní stránka",
+		"runningHead": "Otevřený adresář zdravotnických zařízení v Česku",
+		"navLabel": "Hlavní navigace",
+		"navPro": "Pro zařízení",
+		"navPatients": "Pro pacienty",
+		"folio": "Strana {number}",
+		"externalLink": "otevře jiný web",
+		"footer": {
+			"free": "Zdarma pro poskytovatele i pacienty.",
+			"license": "Zdrojový kód pod licencí AGPL-3.0",
+			"noAds": "Žádná hodnocení, žádná reklama, žádné placené pořadí."
+		},
+		"folioRpps": "Číslo {rpps}",
+		"home": "Úvod",
+		"breadcrumbs": "Nacházíte se zde",
+		"footerNav": {
+			"label": "O projektu Apercura",
+			"directory": "Adresář",
+			"guides": "Průvodci",
+			"about": "O projektu",
+			"openSource": "Otevřený kód",
+			"data": "Data a zdroje",
+			"accessibility": "Přístupnost",
+			"privacy": "Ochrana osobních údajů",
+			"legal": "Právní informace",
+			"terms": "Podmínky užití",
+			"international": "Apercura v dalších zemích"
+		},
+		"theme": {
+			"label": "Vzhled",
+			"light": "Světlý",
+			"dark": "Tmavý",
+			"system": "Podle systému"
+		}
+	},
+	"LocaleSwitcher": {
+		"label": "Jazyk",
+		"locale": "{locale, select, fr {Français} en {English} de {Deutsch} es {Español} it {Italiano} other {Neznámý jazyk}}",
+		"current": "Jazyk: {language}"
+	},
+	"Search": {
+		"label": "Najít lékaře, zubaře nebo lékárnu",
+		"who": "Kdo?",
+		"whoHint": "Název zařízení, nebo obor: praktický lékař, zubní lékař, kardiolog, lékárna",
+		"where": "Kde?",
+		"whereHint": "Obec, městská část Prahy nebo okres",
+		"submit": "Hledat"
+	},
+	"HomePage": {
+		"title": "Najděte lékaře, zubaře nebo lékárnu v Česku",
+		"hook": "Každá ordinace, lékárna a další zdravotnické zařízení z Národního registru poskytovatelů zdravotních služeb už má svou stránku.",
+		"specimen": {
+			"heading": "Každé zařízení už má svou stránku",
+			"intro": "Takto vypadá stránka vyplněná z registru, než ji poskytovatel převezme: známé údaje jsou vyplněné, u ostatních je jasně uvedeno, že nejsou k dispozici."
+		},
+		"pillarsHeading": "K čemu se Apercura zavazuje",
+		"columns": {
+			"number": "Č.",
+			"commitment": "Závazek"
+		},
+		"pillars": {
+			"free": {
+				"title": "Zdarma",
+				"description": "Zdarma pro poskytovatele i pacienty, bez předplatného a bez provizí."
+			},
+			"openSource": {
+				"title": "Otevřený kód",
+				"description": "Celý zdrojový kód je zveřejněn pod licencí AGPL-3.0."
+			},
+			"selfHostable": {
+				"title": "Vlastní provoz",
+				"description": "Celou platformu si můžete provozovat sami pomocí Dockeru, včetně importu otevřených dat."
+			}
+		},
+		"registry": {
+			"heading": "Z otevřených dat NRPZS",
+			"intro": "Každá stránka vychází z Národního registru poskytovatelů zdravotních služeb (NRPZS), který Ústav zdravotnických informací a statistiky ČR zveřejňuje jako otevřená data pod licencí CC BY 4.0. Kraje, okresy a obce pocházejí z RÚIAN (ČÚZK). Stránka popisuje zařízení, nikoli jednotlivé zdravotníky. Za zápis nikdo neplatí a nikdo není vynechán.",
+			"doctors": "Lékaři",
+			"dentists": "Zubní lékaři",
+			"midwives": "Porodní asistentky",
+			"nurses": "Domácí péče",
+			"withAddress": "S veřejnou adresou místa poskytování péče",
+			"count": "{count, number}",
+			"sourceLabel": "Zdroj",
+			"sourceName": "Národní registr poskytovatelů zdravotních služeb, ÚZIS ČR",
+			"updatedLabel": "Údaje k"
+		},
+		"pro": {
+			"heading": "Provozujete ordinaci, lékárnu nebo jiné zdravotnické zařízení?",
+			"body": "Stránka vašeho zařízení už existuje. Její převzetí je zdarma.",
+			"cta": "Najít svou stránku"
+		},
+		"tagline": "Otevřený adresář zdravotnických zařízení v Česku z otevřených dat NRPZS.",
+		"status": "Rozpracováno.",
+		"market": {
+			"listingsHeading": "Podle oboru",
+			"placesHeading": "Podle okresu"
+		}
+	},
+	"SearchPage": {
+		"title": "Hledání",
+		"query": "Hledali jste „{who}“",
+		"queryWhere": "Hledali jste „{who}“ v lokalitě „{where}“",
+		"queryOnlyWhere": "Hledali jste v lokalitě „{where}“",
+		"emptyTitle": "Žádné zařízení neodpovídá",
+		"emptyBody": "Zkontrolujte pravopis, zkuste sousední obec nebo obecnější výraz, například „praktický lékař“.",
+		"queryNear": "Hledali jste „{who}“ ve vašem okolí",
+		"queryOnlyNear": "Zařízení ve vašem okolí",
+		"startTitle": "Co hledáte?",
+		"startBody": "Do pole „Kdo?“ napište název zařízení nebo obor, například praktický lékař, zubař nebo lékárna, a do pole „Kde?“ obec nebo okres. Adresář můžete procházet také podle krajů a okresů.",
+		"noMoreTitle": "Další výsledky nejsou",
+		"browseDirectory": "Procházet adresář",
+		"rppsTitle": "Zařízení č. {rpps} nemá veřejnou stránku",
+		"rppsBody": "Toto číslo není platné, nebo zařízení nemá veřejnou stránku: uvádíme jen druhy zařízení, které pacienti navštěvují. Poskytovatel může svůj záznam přesto najít a převzít.",
+		"rppsPro": "Poskytovatelé: najděte svůj záznam",
+		"ambiguousTitle": "Názvu „{where}“ odpovídá více míst",
+		"ambiguousBody": "Vyberte to, které máte na mysli:",
+		"unknownPlaceTitle": "Místo „{where}“ neznáme",
+		"unknownPlaceSuggest": "Měli jste na mysli některé z těchto míst?",
+		"unknownPlaceBody": "Zkontrolujte pravopis, nebo napište sousední obec.",
+		"departmentPlace": "Okres",
+		"resultsHeading": "Výsledky",
+		"range": "Výsledky {from} až {to}",
+		"orderName": "Výsledky jsou seřazeny podle shody s názvem, potom abecedně. Nikdo neplatí za vyšší pozici.",
+		"orderNear": "Výsledky jsou seřazeny podle vzdálenosti od vás. Nikdo neplatí za vyšší pozici.",
+		"bookingNotOpen": "Apercura v Česku nenabízí online objednávání: zavolejte přímo do zařízení.",
+		"columns": {
+			"practitioner": "Zařízení",
+			"place": "Adresa",
+			"appointments": "Kontakt"
+		},
+		"action": {
+			"call": "Zavolat na {phone}",
+			"establishment": "Prostřednictvím nemocnice",
+			"locum": "Zástup: přímé objednání není možné",
+			"page": "Zobrazit stránku",
+			"noPhone": "Telefon není zveřejněn",
+			"nextFree": "Objednat: {slot}"
+		},
+		"distance": "vzdálenost {km} km",
+		"pagination": "Stránky výsledků",
+		"previous": "Předchozí výsledky",
+		"next": "Další výsledky",
+		"map": {
+			"show": "Zobrazit na mapě",
+			"hide": "Skrýt mapu",
+			"region": "Mapa výsledků",
+			"fallback": "Mapa se načítá. Seznam výše obsahuje všechny adresy."
+		},
+		"outsidePlace": "Mimo lokalitu {where}",
+		"bookingOpenSome": "Některá zařízení přijímají objednávky online: zobrazujeme jejich nejbližší volný termín. Do ostatních zavolejte."
+	},
+	"Practitioner": {
+		"rpps": "Číslo v NRPZS",
+		"status": {
+			"unclaimed": "Nepřevzatá stránka",
+			"claimed": "Převzatá stránka",
+			"verified": "Ověřená stránka"
+		},
+		"statusNote": {
+			"unclaimed": "Vytvořeno z otevřených dat NRPZS. Zařízení tuto stránku zatím nedoplnilo.",
+			"verified": "Doplněno zařízením, jehož převzetí stránky bylo ověřeno."
+		},
+		"notProvided": "Neuvedeno",
+		"fields": {
+			"profession": "Druh zařízení",
+			"specialty": "Obor",
+			"address": "Adresa místa poskytování",
+			"phone": "Telefon",
+			"hours": "Ordinační hodiny",
+			"languages": "Jazyky",
+			"convention": "Smlouvy s pojišťovnami",
+			"booking": "Objednání online",
+			"access": "Přístup"
+		},
+		"sitesHeading": "Adresa",
+		"directions": "Navigace",
+		"providers": {
+			"openStreetMap": "OpenStreetMap",
+			"appleMaps": "Apple Mapy",
+			"googleMaps": "Google Mapy"
+		},
+		"mapLabel": "Mapa: {place}",
+		"mapPin": "Poloha: {place}",
+		"source": {
+			"label": "Zdroj",
+			"name": "Národní registr poskytovatelů zdravotních služeb (ÚZIS ČR), CC BY 4.0",
+			"updated": "Aktualizováno"
+		},
+		"action": {
+			"title": "Objednání",
+			"book": {
+				"statement": "Objednávání online je otevřené. Je zdarma a nevyžaduje účet.",
+				"label": "Objednat se"
+			},
+			"call": {
+				"statement": "Apercura v Česku nenabízí online objednávání. Pro objednání zavolejte do zařízení.",
+				"label": "Zavolat na {phone}"
+			},
+			"establishment": {
+				"statement": "K tomuto lékaři se objednáte prostřednictvím zařízení {establishment}.",
+				"label": "Objednat se v zařízení {establishment}"
+			},
+			"locum": {
+				"statement": "Tento lékař pracuje jako zástup za jiné lékaře. Nelze se k němu objednat přímo.",
+				"hint": "Objednejte se v ordinaci, kde právě zastupuje."
+			}
+		},
+		"slots": {
+			"heading": "Vyberte termín",
+			"label": "Volné termíny",
+			"now": "nyní",
+			"unavailable": "nedostupné",
+			"selected": "Vybráno: {slot}",
+			"emptyDay": "V tento den nejsou volné termíny",
+			"slotLabel": "{day}, {time}",
+			"past": "uplynulo"
+		},
+		"professions": {
+			"gp": "Praktický lékař",
+			"dentist": "Zubní lékař",
+			"midwife": "Porodní asistentka",
+			"physio": "Fyzioterapeut"
+		},
+		"specimen": "Ukázka, nejde o skutečné zařízení"
+	},
+	"Map": {
+		"map": "Mapa",
+		"marker": "Značka na mapě",
+		"zoomIn": "Přiblížit",
+		"zoomOut": "Oddálit",
+		"resetBearing": "Tažením mapu otočíte, kliknutím ji natočíte zpět k severu",
+		"toggleAttribution": "Zobrazit nebo skrýt autory mapy",
+		"mapFeedback": "Zpětná vazba k mapě",
+		"logo": "Logo MapLibre",
+		"closePopup": "Zavřít okno",
+		"scrollZoomWindows": "Mapu přiblížíte kolečkem myši se stisknutou klávesou Ctrl",
+		"scrollZoomMac": "Mapu přiblížíte kolečkem myši se stisknutou klávesou ⌘",
+		"twoFingers": "Mapou posunete dvěma prsty"
+	},
+	"PractitionerPage": {
+		"metaTitle": "{name}, {occupation} · Apercura",
+		"metaTitlePlace": "{name}, {occupation}, {place} · Apercura",
+		"metaDescription": "{name}, {occupation}: {fees, select, sector {adresa, telefon a ceny} other {adresa, telefon a obory péče}}, z otevřených dat Národního registru poskytovatelů zdravotních služeb.",
+		"metaDescriptionPlace": "{name}, {occupation}, {place}: {fees, select, sector {adresa, telefon a ceny} other {adresa, telefon a obory péče}}, z otevřených dat Národního registru poskytovatelů zdravotních služeb.",
+		"unknownProfession": "Zdravotnické zařízení",
+		"professionHeading": "Zařízení",
+		"otherQualifications": "Další kvalifikace",
+		"practiceType": "Druh místa",
+		"switchboard": "{phone} (ústředna)",
+		"establishment": "Nemocnice",
+		"unnamedPlace": "Místo poskytování péče",
+		"asideLabel": "O této stránce",
+		"action": {
+			"callNotYetOpen": "Apercura v Česku nenabízí online objednávání. Pro objednání zavolejte do zařízení.",
+			"establishmentLink": "Kontaktovat zařízení",
+			"noPhone": "Registr pro toto zařízení neuvádí telefonní číslo.",
+			"noPhoneHint": "Ověřte si kontakt na <link>webu zdravotní pojišťovny</link>, nebo se obraťte přímo na zařízení.",
+			"bookStatement": "Objednávání online je otevřené. Je zdarma a nevyžaduje účet.",
+			"bookNoSlot": "Objednávání online je otevřené, ale v příštích týdnech není volný žádný termín. Zkuste to později, nebo zavolejte.",
+			"nextSlot": "Nejbližší volný termín",
+			"bookLabel": "Objednat se",
+			"orCall": "Nebo volejte {phone}."
+		},
+		"fees": {
+			"heading": "Ceny a zdravotní pojištění",
+			"sector": "Smluvní vztah",
+			"agreement": "Smlouvy s pojišťovnami",
+			"optam": "Omezené doplatky (OPTAM)",
+			"optamNo": "Není členem",
+			"carteVitale": "Karta pojištěnce",
+			"accepted": "Přijímá",
+			"notAccepted": "Nepřijímá",
+			"fromAmeli": "Tyto údaje pocházejí z adresáře zdravotní pojišťovny.",
+			"notMatched": "Zařízení se v adresáři pojišťovny nepodařilo jednoznačně dohledat, proto tyto údaje nezobrazujeme.",
+			"regulatoryNotice": "Smluvní vztah určuje, jak se péče hradí: ceny a úhrady si před návštěvou ověřte na",
+			"regulatoryNoticeAgreement": "Smlouvy s pojišťovnami určují, jak se péče hradí: ceny a úhrady si před návštěvou ověřte na",
+			"ameliLink": "webu své zdravotní pojišťovny",
+			"source": "Zdravotní pojišťovna",
+			"sourceOwner": "Poskytovatel"
+		},
+		"claim": {
+			"heading": "Je to vaše zařízení?",
+			"body": "Tato stránka vychází z otevřených dat NRPZS. Převezměte ji, abyste ji mohli zkontrolovat a doplnit:",
+			"link": "Převzít tuto stránku",
+			"claimedHeading": "Stránku spravuje poskytovatel",
+			"claimedBody": "Poskytovatel tuto stránku převzal: jeho žádost byla ověřena a stránku doplňuje.",
+			"benefits": [
+				"zdarma, bez předplatného a bez závazků;",
+				"vaše fotografie, ordinační hodiny a jazyky, kterými mluvíte;",
+				"váš web a informace o přístupnosti;",
+				"statistiky návštěvnosti vaší stránky;",
+				"materiály ke sdílení: odkaz, QR kód a plakát."
+			],
+			"contactLink": "Nemáte po ruce doklad? Napište nám",
+			"optOutLink": "Jste držitelem této stránky a nepřejete si být veřejně uvedeni? Začněte zde"
+		},
+		"report": {
+			"heading": "Je tu chyba?",
+			"body": "Je-li adresa, telefon nebo název nesprávný, dejte nám vědět, jak je opravit.",
+			"link": "Nahlásit chybu"
+		},
+		"ring": {
+			"heading": "Další zařízení: {occupation}, {place}"
+		},
+		"photoAlt": "Fotografie: {name}",
+		"metaTitleName": "{name} · Apercura",
+		"metaDescriptionBookable": "{name}, {occupation}: objednání online, adresa, kontakt a {fees, select, sector {smluvní vztah} other {smlouvy s pojišťovnami}}.",
+		"metaDescriptionBookablePlace": "{name}, {occupation}, {place}: objednání online, adresa, kontakt a {fees, select, sector {smluvní vztah} other {smlouvy s pojišťovnami}}.",
+		"fieldsOfCare": "Obory péče"
+	},
+	"Institutional": {
+		"toBeCompleted": "Doplní se",
+		"legalDraftMark": "Návrh: před spuštěním ho musí posoudit právník",
+		"auditMark": "Předběžné prohlášení: doplní se po ručním auditu",
+		"comingMark": "Připravujeme",
+		"placeholderNote": "Údaje psané velkými písmeny ve dvojitých složených závorkách zatím nejsou známy: doplní se, jakmile vznikne právnická osoba a budou uzavřeny smlouvy."
+	},
+	"AboutPage": {
+		"metaTitle": "O projektu · Apercura",
+		"metaDescription": "Apercura zdarma zveřejňuje věcnou stránku každého zdravotnického zařízení v Česku, postavenou na veřejných otevřených datech.",
+		"title": "O projektu Apercura",
+		"lead": "Otevřený adresář zdravotnických zařízení v Česku: ordinací, lékáren a dalších míst péče, která pacienti navštěvují.",
+		"sections": {
+			"what": {
+				"heading": "Co Apercura dělá",
+				"body": [
+					"Apercura zveřejňuje stránku každého zdravotnického zařízení, které pacienti navštěvují – praktických a dětských lékařů, zubařů, gynekologů, specialistů, lékáren, domácí péče, fyzioterapeutů, psychologů, logopedů a porodních asistentek – podle Národního registru poskytovatelů zdravotních služeb.",
+					"Pacienti najdou jakékoli zařízení, nejen to, které platí nějaké platformě. Poskytovatelé mohou stránku svého zařízení zdarma převzít, zkontrolovat a doplnit. V Česku Apercura nenabízí objednávání online."
+				]
+			},
+			"principles": {
+				"heading": "Zásady",
+				"list": [
+					"Každé zařízení je uvedeno stejně, ať Apercuru používá, nebo ne.",
+					"Pouze věcné informace: žádná hodnocení, recenze, reklama ani placené pořadí.",
+					"Zdarma pro poskytovatele i pacienty, bez předplatného a bez provizí.",
+					"Každá stránka uvádí, odkud její údaje pocházejí a kdy byly naposledy aktualizovány.",
+					"Jen nezbytné údaje, shromážděné pro uvedený účel a mazané podle stanovených lhůt."
+				]
+			},
+			"how": {
+				"heading": "Odkud stránky pocházejí",
+				"body": [
+					"Stránky se každý týden ověřují podle Národního registru poskytovatelů zdravotních služeb, který Ústav zdravotnických informací a statistiky ČR zveřejňuje jako otevřená data, a obce, okresy a kraje pocházejí z registru RÚIAN (ČÚZK). Stránka s daty uvádí každý zdroj, jeho licenci a datum."
+				]
+			},
+			"who": {
+				"heading": "Kdo Apercuru provozuje",
+				"body": [
+					"Apercura je projekt ve veřejném zájmu. Není to státní služba a nemá žádnou vazbu na Ministerstvo zdravotnictví, ÚZIS ČR, zdravotní pojišťovny ani profesní komory."
+				]
+			}
+		},
+		"fields": {
+			"publisher": "Provozovatel",
+			"contact": "Kontakt"
+		},
+		"links": {
+			"data": "Data a zdroje",
+			"openSource": "Zdrojový kód a licence"
+		}
+	},
+	"OpenSourcePage": {
+		"metaTitle": "Otevřený kód · Apercura",
+		"metaDescription": "Celý zdrojový kód Apercury je veřejný pod licencí AGPL-3.0. Můžete ho číst, prověřit nebo si celou platformu provozovat sami.",
+		"title": "Kód je veřejný.",
+		"lead": "Každý řádek Apercury je zveřejněn pod licencí AGPL-3.0: můžete ho číst, prověřit a celou platformu provozovat sami.",
+		"sections": {
+			"licence": {
+				"heading": "Licence AGPL-3.0",
+				"body": [
+					"AGPL-3.0 je licence svobodného softwaru. Kód smí kdokoli používat, studovat, upravovat a sdílet. Kdo nabízí upravenou verzi jako online službu, musí své úpravy zveřejnit pod stejnou licencí."
+				]
+			},
+			"can": {
+				"heading": "Co můžete dělat",
+				"list": [
+					"Prohlédnout si, jak vzniká každá stránka a jak se importují otevřená data.",
+					"Ověřit si, jak se šifrují údaje pacientů a jak dlouho se uchovávají.",
+					"Nahlásit problém nebo navrhnout změnu ve veřejném repozitáři.",
+					"Provozovat celou platformu na vlastní infrastruktuře pomocí Dockeru, včetně importu otevřených dat."
+				]
+			},
+			"selfHost": {
+				"heading": "Vlastní provoz",
+				"body": [
+					"Nasazení pouze s adresářem neobsahuje žádné zdravotní údaje. Objednávky pacientů jsou zdravotní údaje: pokud objednávání provozujete pro druhé, musíte splnit pravidla, která pro zdravotní údaje platí ve vaší zemi."
+				]
+			}
+		},
+		"facts": {
+			"licence": "Licence",
+			"licenceValue": "GNU Affero General Public License v3.0",
+			"repository": "Repozitář",
+			"data": "Data adresáře"
+		},
+		"dataValue": "CC BY 4.0, viz stránku s daty",
+		"cta": {
+			"heading": "Přečtěte si zdrojový kód",
+			"body": "Repozitář obsahuje kód, dokumentaci a návod k vlastnímu provozu.",
+			"link": "Otevřít repozitář"
+		}
+	},
+	"Listing": {
+		"count": "{count, plural, one {# zařízení} few {# zařízení} many {# zařízení} other {# zařízení}}",
+		"metaTitle": "{count, plural, one {{listing} – {place}: # zařízení · Apercura} few {{listing} – {place}: # zařízení · Apercura} many {{listing} – {place}: # zařízení · Apercura} other {{listing} – {place}: # zařízení · Apercura}}",
+		"metaTitlePage": "{listing} – {place}, strana {page} · Apercura",
+		"metaDescription": "{count, plural, one {# zařízení v kategorii „{occupation}“ v lokalitě {place}: {fees, select, sector {adresa, telefon a ceny} other {adresa a telefon}}, z Národního registru poskytovatelů zdravotních služeb.} few {# zařízení v kategorii „{occupation}“ v lokalitě {place}: {fees, select, sector {adresy, telefony a ceny} other {adresy a telefony}}, z Národního registru poskytovatelů zdravotních služeb.} many {# zařízení v kategorii „{occupation}“ v lokalitě {place}: {fees, select, sector {adresy, telefony a ceny} other {adresy a telefony}}, z Národního registru poskytovatelů zdravotních služeb.} other {# zařízení v kategorii „{occupation}“ v lokalitě {place}: {fees, select, sector {adresy, telefony a ceny} other {adresy a telefony}}, z Národního registru poskytovatelů zdravotních služeb.}}",
+		"title": "{listing} – {place}",
+		"lead": "{count, plural, one {Národní registr poskytovatelů zdravotních služeb uvádí v této kategorii v lokalitě {place} # zařízení.} few {Národní registr poskytovatelů zdravotních služeb uvádí v této kategorii v lokalitě {place} # zařízení.} many {Národní registr poskytovatelů zdravotních služeb uvádí v této kategorii v lokalitě {place} # zařízení.} other {Národní registr poskytovatelů zdravotních služeb uvádí v této kategorii v lokalitě {place} # zařízení.}}",
+		"practitionersHeading": "{count, plural, one {Zařízení} few {# zařízení} many {# zařízení} other {# zařízení}}",
+		"practitionersIntro": "V abecedním pořadí. Nikdo neplatí za to, aby tu byl uveden, a nikdo není řazen výš.",
+		"rowFacts": "Smluvní vztah: {sector} · Karta pojištěnce: {carteVitale}",
+		"rowFactsAgreement": "Smlouvy s pojišťovnami: {sector} · Karta pojištěnce: {carteVitale}",
+		"columns": {
+			"practitioner": "Zařízení",
+			"sector": "Smluvní vztah",
+			"agreement": "Smlouvy s pojišťovnami",
+			"carteVitale": "Karta pojištěnce"
+		},
+		"pagination": {
+			"label": "Stránky seznamu",
+			"previous": "Předchozí stránka",
+			"next": "Další stránka",
+			"status": "Strana {page} z {pages}",
+			"page": "<hidden>Strana </hidden>{page}",
+			"jumps": "Přejít na stranu"
+		},
+		"facts": {
+			"heading": "V číslech",
+			"intro": "Smluvní vztahy pocházejí z adresáře zdravotní pojišťovny, pro zařízení, která se v něm podařilo dohledat.",
+			"introAgreement": "Smlouvy s pojišťovnami pocházejí z adresáře zdravotní pojišťovny, pro zařízení, která se v něm podařilo dohledat.",
+			"sectorUnknown": "Smluvní vztah neznámý",
+			"agreementUnknown": "Smlouvy s pojišťovnami neznámé",
+			"carteVitaleYes": "Přijímají kartu pojištěnce",
+			"carteVitaleNo": "Nepřijímají kartu pojištěnce",
+			"bookingNotOpen": "Zatím není k dispozici",
+			"sources": "NRPZS (ÚZIS ČR), RÚIAN (ČÚZK)"
+		},
+		"communesHeading": "{listing} – obce okresu {place}",
+		"nearbyHeading": "{listing} – okolní obce",
+		"establishmentsHeading": "Nemocnice v lokalitě {place}",
+		"establishmentsIntro": "Nemocnice, kliniky a zdravotní střediska, kde působí zařízení v kategorii „{occupation}“.",
+		"allSpecialties": "Všechny druhy péče v lokalitě {place}",
+		"hubMetaTitle": "{count, plural, one {{listing} v Česku: # zařízení · Apercura} few {{listing} v Česku: # zařízení · Apercura} many {{listing} v Česku: # zařízení · Apercura} other {{listing} v Česku: # zařízení · Apercura}}",
+		"hubMetaDescription": "{count, plural, one {# zařízení v kategorii „{occupation}“ v Česku, podle okresů: {fees, select, sector {adresa, telefon a ceny} other {adresa a telefon}}, z Národního registru poskytovatelů zdravotních služeb.} few {# zařízení v kategorii „{occupation}“ v Česku, podle okresů: {fees, select, sector {adresy, telefony a ceny} other {adresy a telefony}}, z Národního registru poskytovatelů zdravotních služeb.} many {# zařízení v kategorii „{occupation}“ v Česku, podle okresů: {fees, select, sector {adresy, telefony a ceny} other {adresy a telefony}}, z Národního registru poskytovatelů zdravotních služeb.} other {# zařízení v kategorii „{occupation}“ v Česku, podle okresů: {fees, select, sector {adresy, telefony a ceny} other {adresy a telefony}}, z Národního registru poskytovatelů zdravotních služeb.}}",
+		"hubTitle": "{listing} v Česku",
+		"hubLead": "{count, plural, one {Národní registr poskytovatelů zdravotních služeb uvádí v této kategorii v Česku # zařízení.} few {Národní registr poskytovatelů zdravotních služeb uvádí v této kategorii v Česku # zařízení.} many {Národní registr poskytovatelů zdravotních služeb uvádí v této kategorii v Česku # zařízení.} other {Národní registr poskytovatelů zdravotních služeb uvádí v této kategorii v Česku # zařízení.}}",
+		"departmentsHeading": "{listing} podle okresů",
+		"departmentsIntro": "Vyberte okres a zobrazte jeho obce a zařízení.",
+		"browseDirectory": "Procházet adresář podle místa",
+		"metaTitleShort": "{listing} – {place} · Apercura",
+		"metaDescriptionPage": "{count, plural, one {Strana {page} z {pages}: # zařízení v kategorii „{occupation}“ v lokalitě {place}.} few {Strana {page} z {pages}: # zařízení v kategorii „{occupation}“ v lokalitě {place}.} many {Strana {page} z {pages}: # zařízení v kategorii „{occupation}“ v lokalitě {place}.} other {Strana {page} z {pages}: # zařízení v kategorii „{occupation}“ v lokalitě {place}.}}",
+		"metaDescriptionPageRange": "{count, plural, one {Strana {page} z {pages}, {first} až {last}: # zařízení v kategorii „{occupation}“ v lokalitě {place}.} few {Strana {page} z {pages}, {first} až {last}: # zařízení v kategorii „{occupation}“ v lokalitě {place}.} many {Strana {page} z {pages}, {first} až {last}: # zařízení v kategorii „{occupation}“ v lokalitě {place}.} other {Strana {page} z {pages}, {first} až {last}: # zařízení v kategorii „{occupation}“ v lokalitě {place}.}}",
+		"hubMetaTitleShort": "{listing} v Česku · Apercura",
+		"authoritiesHeading": "{listing}: okresy kraje {place}"
+	},
+	"Directory": {
+		"metaTitle": "Adresář zdravotnických zařízení podle místa · Apercura",
+		"metaDescription": "Všechny kraje a okresy Česka se zdravotnickými zařízeními z Národního registru poskytovatelů zdravotních služeb: praktičtí lékaři, zubní lékaři, specialisté, lékárny a další.",
+		"title": "Adresář podle místa",
+		"lead": "{count, plural, one {# zařízení podle kraje a okresu.} few {# zařízení podle kraje a okresu.} many {# zařízení podle kraje a okresu.} other {# zařízení podle kraje a okresu.}}",
+		"otherRegion": "Ostatní",
+		"emptyTitle": "Adresář zatím není naimportován",
+		"emptyBody": "Registr NRPZS zatím nebyl na tomto serveru načten. Vraťte se po příštím importu.",
+		"placeMetaTitle": "Lékaři, zubaři a lékárny – {place} · Apercura",
+		"placeMetaDescription": "{count, plural, one {# zdravotnické zařízení v lokalitě {place}, podle druhu péče, z Národního registru poskytovatelů zdravotních služeb.} few {# zdravotnická zařízení v lokalitě {place}, podle druhu péče, z Národního registru poskytovatelů zdravotních služeb.} many {# zdravotnického zařízení v lokalitě {place}, podle druhu péče, z Národního registru poskytovatelů zdravotních služeb.} other {# zdravotnických zařízení v lokalitě {place}, podle druhu péče, z Národního registru poskytovatelů zdravotních služeb.}}",
+		"placeTitle": "Zdravotnická zařízení – {place}",
+		"placeLead": "{count, plural, one {# zařízení v lokalitě {place}.} few {# zařízení v lokalitě {place}.} many {# zařízení v lokalitě {place}.} other {# zařízení v lokalitě {place}.}}",
+		"specialtiesHeading": "Podle druhu péče",
+		"communesHeading": "Obce okresu {place}",
+		"arrondissementsHeading": "Podle správního obvodu",
+		"establishmentsHeading": "Nemocnice v lokalitě {place}",
+		"placeMetaTitleShort": "Zařízení – {place} · Apercura",
+		"authoritiesHeading": "Okresy kraje {place}",
+		"regionLink": "Vše v kraji {place}"
+	},
+	"Establishment": {
+		"metaTitle": "{name} · Apercura",
+		"metaTitlePlace": "{name}, {place} · Apercura",
+		"metaDescription": "{count, plural, one {{name}: adresa, ústředna a # lékař, který zde působí, podle národního registru.} few {{name}: adresa, ústředna a # lékaři, kteří zde působí, podle národního registru.} many {{name}: adresa, ústředna a # lékaře, kteří zde působí, podle národního registru.} other {{name}: adresa, ústředna a # lékařů, kteří zde působí, podle národního registru.}}",
+		"directory": "Adresář",
+		"folio": "FINESS {finess}",
+		"lead": "{count, plural, one {{kind}. Národní registr uvádí # lékaře, který zde působí.} few {{kind}. Národní registr uvádí # lékaře, kteří zde působí.} many {{kind}. Národní registr uvádí # lékaře, kteří zde působí.} other {{kind}. Národní registr uvádí # lékařů, kteří zde působí.}}",
+		"addressHeading": "Adresa",
+		"finess": "Číslo FINESS",
+		"action": {
+			"call": "K vyšetření se objednáte prostřednictvím zařízení. Zavolejte na ústřednu a požádejte o oddělení, které potřebujete.",
+			"noPhone": "Pro toto zařízení není zveřejněn telefon.",
+			"noPhoneHint": "Kontakt najdete na jeho vlastním webu."
+		},
+		"practitionersHeading": "{count, plural, one {Lékař, který zde působí} few {# lékaři, kteří zde působí} many {# lékaře, kteří zde působí} other {# lékařů, kteří zde působí}}",
+		"practitionersIntro": "Podle oboru, v abecedním pořadí.",
+		"otherProfessions": "Další profese",
+		"source": "Annuaire Santé (ANS) a FINESS+"
+	},
+	"SearchForm": {
+		"specialties": "Obory",
+		"practitioners": "Zařízení",
+		"places": "Místa",
+		"department": "Okres",
+		"nearMe": "V mém okolí",
+		"locating": "Zjišťujeme vaši polohu…",
+		"geoDenied": "Zjišťování polohy je pro tento web vypnuté. Napište raději název obce.",
+		"geoUnavailable": "Vaši polohu se nepodařilo zjistit. Napište raději název obce.",
+		"searching": "Hledáme…",
+		"noSuggestion": "Žádný návrh. Všechny výsledky uvidíte po stisknutí tlačítka Hledat."
+	},
+	"OgImage": {
+		"runningHead": "Otevřený adresář zdravotnických zařízení",
+		"wordmark": "Apercura",
+		"titles": {
+			"medecin": "Každý lékař už má svou stránku.",
+			"chirurgien-dentiste": "Každý zubní lékař už má svou stránku.",
+			"sage-femme": "Každá porodní asistentka už má svou stránku.",
+			"infirmier": "Každá agentura domácí péče už má svou stránku.",
+			"annuaire": "Zdravotnická zařízení podle oboru a podle místa."
+		},
+		"footer": "Zdarma · Otevřený kód · Bez hodnocení a reklamy",
+		"practitioner": {
+			"folio": "Číslo {rpps}",
+			"alt": "{name}, {occupation}, {place}",
+			"altNoPlace": "{name}, {occupation}"
+		}
+	},
+	"taxonomy": {
+		"practiceKind": {
+			"office": "Zdravotnické zařízení"
+		},
+		"listing": {
+			"prakticky-lekar": "Praktičtí lékaři",
+			"detsky-lekar": "Dětští lékaři",
+			"zubni-lekar": "Zubní lékaři",
+			"gynekolog": "Gynekologové",
+			"lekar-specialista": "Lékaři specialisté",
+			"lekarna": "Lékárny",
+			"domaci-pece": "Domácí zdravotní péče",
+			"fyzioterapeut": "Fyzioterapeuti",
+			"psycholog": "Kliničtí psychologové",
+			"logoped": "Kliničtí logopedi",
+			"porodni-asistentka": "Porodní asistentky",
+			"ocni-lekar": "Oční lékaři",
+			"detsky-psychiatr": "Dětští psychiatři",
+			"psychiatr": "Psychiatři",
+			"ortoped": "Ortopedi",
+			"plasticky-chirurg": "Plastičtí chirurgové",
+			"cevni-chirurg": "Cévní chirurgové",
+			"neurochirurg": "Neurochirurgové",
+			"dermatolog": "Dermatologové",
+			"neurolog": "Neurologové",
+			"rehabilitacni-lekar": "Rehabilitační lékaři",
+			"endokrinolog": "Endokrinologové a diabetologové",
+			"usni-nosni-krcni": "Ušní, nosní, krční lékaři",
+			"kardiolog": "Kardiologové",
+			"urolog": "Urologové",
+			"alergolog": "Alergologové",
+			"ortodontista": "Ortodontisté",
+			"pneumolog": "Plicní lékaři",
+			"gastroenterolog": "Gastroenterologové",
+			"revmatolog": "Revmatologové",
+			"angiolog": "Angiologové",
+			"onkolog": "Onkologové",
+			"nefrolog": "Nefrologové",
+			"genetik": "Lékařští genetici",
+			"radiolog": "Radiologové",
+			"anesteziolog": "Anesteziologové a léčba bolesti",
+			"chirurg": "Chirurgové",
+			"internista": "Internisté"
+		},
+		"profession": {
+			"prakticky-lekar": "Praktický lékař",
+			"detsky-lekar": "Dětský lékař",
+			"zubni-lekar": "Zubní lékař",
+			"gynekolog": "Gynekolog",
+			"lekar-specialista": "Lékař specialista",
+			"lekarna": "Lékárna",
+			"domaci-pece": "Domácí zdravotní péče",
+			"fyzioterapeut": "Fyzioterapeut",
+			"psycholog": "Klinický psycholog",
+			"logoped": "Klinický logoped",
+			"porodni-asistentka": "Porodní asistentka",
+			"ocni-lekar": "Oční lékař",
+			"detsky-psychiatr": "Dětský psychiatr",
+			"psychiatr": "Psychiatr",
+			"ortoped": "Ortoped",
+			"plasticky-chirurg": "Plastický chirurg",
+			"cevni-chirurg": "Cévní chirurg",
+			"neurochirurg": "Neurochirurg",
+			"dermatolog": "Dermatolog",
+			"neurolog": "Neurolog",
+			"rehabilitacni-lekar": "Rehabilitační lékař",
+			"endokrinolog": "Endokrinolog a diabetolog",
+			"usni-nosni-krcni": "Ušní, nosní, krční lékař",
+			"kardiolog": "Kardiolog",
+			"urolog": "Urolog",
+			"alergolog": "Alergolog",
+			"ortodontista": "Ortodontista",
+			"pneumolog": "Plicní lékař",
+			"gastroenterolog": "Gastroenterolog",
+			"revmatolog": "Revmatolog",
+			"angiolog": "Angiolog",
+			"onkolog": "Onkolog",
+			"nefrolog": "Nefrolog",
+			"genetik": "Lékařský genetik",
+			"radiolog": "Radiolog",
+			"anesteziolog": "Anesteziolog",
+			"chirurg": "Chirurg",
+			"internista": "Internista"
+		}
+	},
+	"booking": {
+		"panel": {
+			"code": {
+				"sendsLeft": "{count, plural, one {Můžete si vyžádat ještě # kód.} few {Můžete si vyžádat ještě # kódy.} many {Můžete si vyžádat ještě # kódu.} other {Můžete si vyžádat ještě # kódů.}}",
+				"invalid": "{count, plural, one {Tento kód není správný. Zbývá # pokus.} few {Tento kód není správný. Zbývají # pokusy.} many {Tento kód není správný. Zbývá # pokusu.} other {Tento kód není správný. Zbývá # pokusů.}}"
+			}
+		},
+		"manage": {
+			"cutoffPassed": "{hours, plural, one {Online změny se uzavírají # hodinu před návštěvou. Chcete-li ji nyní zrušit nebo přesunout, zavolejte do zařízení.} few {Online změny se uzavírají # hodiny před návštěvou. Chcete-li ji nyní zrušit nebo přesunout, zavolejte do zařízení.} many {Online změny se uzavírají # hodiny před návštěvou. Chcete-li ji nyní zrušit nebo přesunout, zavolejte do zařízení.} other {Online změny se uzavírají # hodin před návštěvou. Chcete-li ji nyní zrušit nebo přesunout, zavolejte do zařízení.}}"
+		}
+	},
+	"auth": {
+		"runningHead": "Sekce pro poskytovatele",
+		"metadata": {
+			"signIn": "Přihlášení · Apercura",
+			"signUp": "Vytvoření účtu · Apercura",
+			"verifyEmail": "Potvrzení e-mailu · Apercura",
+			"challenge": "Potvrďte, že jste to vy · Apercura",
+			"security": "Zabezpečení · Apercura",
+			"home": "Vaše sekce · Apercura"
+		},
+		"common": {
+			"email": "E-mailová adresa",
+			"password": "Heslo",
+			"pending": "Čekejte prosím",
+			"loading": "Načítání",
+			"signOut": "Odhlásit se",
+			"signingOut": "Odhlašování",
+			"totpCode": "Šestimístný kód z ověřovací aplikace"
+		},
+		"errors": {
+			"generic": "Něco se pokazilo. Zkuste to prosím za chvíli znovu.",
+			"tooManyRequests": "Příliš mnoho pokusů. Počkejte minutu a zkuste to znovu.",
+			"invalidCredentials": "E-mailová adresa a heslo si neodpovídají.",
+			"emailNotVerified": "Nejprve potvrďte svou e-mailovou adresu: právě jsme vám poslali nový odkaz.",
+			"invalidCode": "Tento kód není platný. Zkontrolujte ho a zkuste to znovu.",
+			"locked": "Příliš mnoho chybných kódů. Počkejte 15 minut a přihlaste se znovu.",
+			"passwordTooShort": "Heslo je příliš krátké: použijte alespoň 12 znaků.",
+			"passwordTooLong": "Heslo je příliš dlouhé: použijte nejvýše 128 znaků.",
+			"userExists": "Tuto e-mailovou adresu už používá jiný účet. Přihlaste se.",
+			"invalidPassword": "Heslo není správné.",
+			"mfaRequired": "Nejprve potvrďte svou totožnost druhým faktorem.",
+			"lastFactor": "Než tento druhý faktor odstraníte, přidejte jiný: váš účet musí mít vždy alespoň jeden.",
+			"passkeyFailed": "Přístupový klíč se nepodařilo použít. Zkuste to znovu, nebo použijte heslo a kód.",
+			"accountFrozen": "Tento účet je po námitce ke stránce zablokovaný. Napište nám a obnovíme ho po novém ověření totožnosti."
+		},
+		"signIn": {
+			"title": "Přihlášení",
+			"lead": "Vaše sekce pro poskytovatele: stránka, diář, tým.",
+			"asideFactor": "Každý účet s přístupem k objednávkám potřebuje druhý faktor: kód z ověřovací aplikace nebo přístupový klíč.",
+			"asidePasskey": "Přístupový klíč je uložený ve vašem telefonu nebo počítači a odemyká se otiskem prstu, obličejem nebo PINem.",
+			"passwordHeading": "Heslem",
+			"submit": "Přihlásit se",
+			"passkeyHeading": "Přístupovým klíčem",
+			"passkeyHint": "Bez hesla: vaše zařízení potvrdí, že jste to vy.",
+			"passkey": "Přihlásit se přístupovým klíčem",
+			"noAccount": "Ještě nemáte účet?",
+			"signUpLink": "Vytvořit účet",
+			"totpHeading": "Zadejte kód",
+			"backupHeading": "Zadejte záložní kód",
+			"totpLead": "Otevřete ověřovací aplikaci a zadejte šestimístný kód zobrazený pro Apercuru.",
+			"backupLead": "Každý záložní kód lze použít jednou. Obdrželi jste je při nastavení ověřovací aplikace.",
+			"backupCode": "Záložní kód",
+			"verify": "Potvrdit",
+			"useBackupCode": "Použít raději záložní kód",
+			"useTotp": "Použít raději ověřovací aplikaci",
+			"pscHeading": "Přes Pro Santé Connect",
+			"pscHint": "Jakmile ho propojíte se svým účtem v rámci převzetí stránky, aplikace e-CPS nebo karta CPS vás přihlásí bez dalšího kódu.",
+			"psc": "Přihlásit se přes Pro Santé Connect",
+			"pscFailed": "Přihlášení přes Pro Santé Connect se nezdařilo. Nejprve ho propojte se svým účtem v rámci převzetí stránky, nebo se přihlaste heslem."
+		},
+		"signUp": {
+			"title": "Vytvoření účtu",
+			"lead": "Zdarma pro poskytovatele a jejich spolupracovníky.",
+			"asideSteps": "Tři kroky: vytvořte účet, potvrďte e-mailovou adresu a nastavte druhý faktor.",
+			"asideFree": "Vytvoření účtu nemění žádnou veřejnou stránku. Převzetí stránky následuje potom.",
+			"name": "Jméno a příjmení",
+			"emailHint": "Na tuto adresu pošleme odkaz k potvrzení.",
+			"passwordHint": "Alespoň {min} znaků. Dlouhá věta se dobře pamatuje.",
+			"submit": "Vytvořit účet",
+			"haveAccount": "Už máte účet?",
+			"signInLink": "Přihlásit se",
+			"sentHeading": "Zkontrolujte svou schránku",
+			"sentTitle": "Na adresu {email} jsme poslali odkaz k potvrzení.",
+			"sentBody": "Otevřete e-mail a do hodiny klikněte na odkaz. Pak se přihlaste a nastavte druhý faktor.",
+			"sentHint": "Po několika minutách stále nic? Podívejte se do spamu, nebo se přihlaste: pošleme vám nový odkaz."
+		},
+		"verifyEmail": {
+			"title": "Potvrzení e-mailu",
+			"successTitle": "Vaše e-mailová adresa je potvrzena.",
+			"successBody": "Přihlaste se heslem a nastavte druhý faktor.",
+			"errorTitle": "Tento odkaz už nefunguje.",
+			"errorBody": "Možná vypršel, nebo už byl použit. Přihlaste se: pošleme vám nový odkaz.",
+			"signIn": "Přihlásit se"
+		},
+		"challenge": {
+			"title": "Potvrďte, že jste to vy",
+			"lead": "Váš účet má druhý faktor: použijte ho k otevření své sekce.",
+			"aside": "Samotné heslo k přístupu k objednávkám nestačí.",
+			"passkeyHeading": "Přístupovým klíčem",
+			"passkeyLead": "Zařízení vás požádá o otisk prstu, obličej nebo PIN.",
+			"passkey": "Použít přístupový klíč",
+			"totpHeading": "Ověřovací aplikací",
+			"otherHeading": "Nejste to vy, nebo nemáte přístup ke svému faktoru?",
+			"otherLead": "Odhlaste se. Obnovení účtu znamená nové ověření totožnosti."
+		},
+		"security": {
+			"title": "Zabezpečení",
+			"lead": "Jak se přihlašujete a kde jste přihlášeni.",
+			"enrolLead": "Poslední krok před vstupem do sekce: nastavte druhý faktor.",
+			"enrolTitle": "Pro pokračování zvolte druhý faktor",
+			"enrolBody": "Apercura ho vyžaduje u každého účtu s přístupem k objednávkám. Funguje ověřovací aplikace i přístupový klíč; druhou možnost můžete přidat později.",
+			"continue": "Pokračovat do sekce",
+			"actions": "Akce",
+			"totp": {
+				"heading": "Ověřovací aplikace",
+				"lead": "Aplikace v telefonu (například FreeOTP, Aegis nebo Google Authenticator) každých 30 sekund zobrazí nový šestimístný kód.",
+				"enabledTitle": "Ověřovací aplikace je nastavená.",
+				"enabledBody": "Při každém přihlášení heslem budete požádáni o kód.",
+				"scanHeading": "1. Naskenujte QR kód",
+				"scanLead": "V ověřovací aplikaci přidejte účet a naskenujte tento kód. Pokud ho naskenovat nemůžete, zadejte klíč ručně.",
+				"qrLabel": "QR kód pro přidání Apercury do ověřovací aplikace",
+				"manualKey": "Klíč pro nastavení",
+				"codesHeading": "2. Uschovejte si záložní kódy",
+				"codesLead": "Pokud ztratíte telefon, každý z těchto kódů vám umožní jedno přihlášení. Vytiskněte si je nebo je uložte do správce hesel; zobrazují se jen teď.",
+				"confirmHeading": "3. Zadejte kód zobrazený v aplikaci",
+				"confirm": "Zapnout",
+				"password": "Vaše heslo",
+				"passwordHint": "Před změnou způsobu přihlášení se na něj zeptáme znovu.",
+				"start": "Nastavit aplikaci"
+			},
+			"passkeys": {
+				"heading": "Přístupové klíče",
+				"lead": "Přístupový klíč zůstává ve vašem telefonu, počítači nebo bezpečnostním klíči a odemyká se otiskem prstu, obličejem nebo PINem. Nic se nepíše, nic nelze ukrást.",
+				"addedTitle": "Přístupový klíč je přidán.",
+				"name": "Název",
+				"added": "Přidáno",
+				"unnamed": "Přístupový klíč",
+				"removeNamed": "Odstranit {name}",
+				"remove": "Odstranit",
+				"none": "Zatím žádný přístupový klíč.",
+				"nameLabel": "Název nového přístupového klíče (nepovinné)",
+				"nameHint": "Například: počítač v ordinaci.",
+				"add": "Přidat přístupový klíč"
+			},
+			"sessions": {
+				"heading": "Kde jste přihlášeni",
+				"lead": "Relace skončí po 12 hodinách nečinnosti. Odhlaste každou relaci, kterou nepoznáváte.",
+				"device": "Zařízení",
+				"lastActive": "Naposledy aktivní",
+				"unknownDevice": "Neznámé zařízení",
+				"current": "Tato relace",
+				"revoke": "Odhlásit",
+				"everywhereHint": "Ztratili jste zařízení nebo jste někomu sdělili heslo? Odhlaste všechny relace včetně této.",
+				"everywhere": "Odhlásit se všude"
+			},
+			"data": {
+				"heading": "Vaše údaje",
+				"lead": "Kopie všeho, co o vašem účtu uchováváme, a jeho smazání.",
+				"exportHeading": "Stáhnout své údaje",
+				"exportBody": "Soubor JSON s vaším účtem, způsoby přihlášení (nikdy jejich tajné klíče), relacemi, pracovišti, žádostmi o převzetí a obsahem stránky.",
+				"export": "Stáhnout mé údaje",
+				"deleteHeading": "Smazat účet",
+				"deleteBody": "Váš účet, relace, žádosti a doklady se smažou. Vaše stránka se vrátí k údajům z registru: nepřevzatá, bez vašeho obsahu a fotografie.",
+				"closeEffect": "Zrušením pracoviště se zruší jeho nadcházející objednávky (pacienti dostanou e-mail), zneplatní se odkazy na jeho kalendář a údaje jeho pacientů se do jednoho dne vymažou. Záznam o přístupech se uchovává jeden rok.",
+				"practiceChoice": "Co se stane s pracovištěm {name}?",
+				"close": "Zrušit pracoviště: jeho členové ztratí přístup",
+				"transfer": "Předat ho uživateli {name} ({email})",
+				"practiceAlone": "Pracoviště {name} se zruší spolu s vaším účtem (jste jeho jediným členem).",
+				"confirmEmail": "Pro potvrzení napište svou e-mailovou adresu",
+				"confirmEmailHint": "Smazání nelze vrátit.",
+				"mismatch": "Toto není e-mailová adresa vašeho účtu.",
+				"hasTeam": "U každého pracoviště s týmem zvolte, co se s ním stane.",
+				"lastAdmin": "Jste poslední administrátor platformy: nejprve jmenujte jiného.",
+				"failed": "Účet se nepodařilo smazat. Zkuste to za chvíli znovu.",
+				"delete": "Smazat můj účet"
+			}
+		},
+		"app": {
+			"title": "Vaše sekce",
+			"lead": "Přihlášeni jako {email}.",
+			"homeLink": "Apercura, úvodní stránka",
+			"nav": {
+				"label": "Sekce pro poskytovatele",
+				"home": "Vaše sekce",
+				"security": "Zabezpečení",
+				"page": "Vaše stránka",
+				"adminClaims": "Žádosti o převzetí",
+				"adminReports": "Hlášení",
+				"today": "Dnes",
+				"agenda": "Diář",
+				"team": "Tým",
+				"menu": "Nabídka",
+				"stats": "Statistiky",
+				"share": "Sdílení",
+				"adminContacts": "Žádosti o kontakt"
+			},
+			"practicesHeading": "Vaše pracoviště",
+			"columns": {
+				"practice": "Pracoviště",
+				"role": "Vaše role",
+				"page": "Stránka",
+				"status": "Stav",
+				"next": "Další krok"
+			},
+			"emptyTitle": "Zatím žádné pracoviště",
+			"emptyBody": "Vaše pracoviště se zde zobrazí, jakmile převezmete svou stránku a převzetí bude ověřeno.",
+			"emptyAction": "Najít mou stránku",
+			"securityHeading": "Zabezpečení účtu",
+			"securityBody": "Váš účet chrání druhý faktor. Spravujte ověřovací aplikaci, přístupové klíče a relace.",
+			"securityLink": "Nastavení zabezpečení",
+			"claimsHeading": "Vaše stránka a žádosti o převzetí",
+			"editPage": "Upravit stránku",
+			"openClaim": "Otevřít žádost",
+			"adminRunningHead": "Administrace",
+			"agendaHeading": "Diář",
+			"agendaBody": "Váš den, týden, žádosti k vyřízení a nastavení objednávání.",
+			"agendaLink": "Otevřít dnešní diář",
+			"invitationsHeading": "Pozvánky",
+			"invitationBody": "Pracoviště {practice} vás zve do svého týmu.",
+			"invitationLink": "Odpovědět na pozvánku",
+			"pageHeading": "Vaše stránka",
+			"pageSummary": "{views, plural, =0 {Žádné zobrazení} one {# zobrazení} few {# zobrazení} many {# zobrazení} other {# zobrazení}} za posledních 30 dní; stránka je vyplněná z {score} %.",
+			"statsLink": "Zobrazit statistiky a co chybí",
+			"shareLink": "Sdílet stránku: odkaz, QR kód, plakát"
+		},
+		"roles": {
+			"owner": "Vlastník",
+			"practitioner": "Zdravotník",
+			"assistant": "Asistent"
+		},
+		"email": {
+			"wordmark": "Apercura",
+			"runningHead": "Sekce pro poskytovatele",
+			"footer": "Apercura: otevřený adresář zdravotnických zařízení. Zdarma a s otevřeným kódem.",
+			"verify": {
+				"subject": "Potvrďte svou e-mailovou adresu",
+				"preview": "Potvrďte svou e-mailovou adresu a dokončete vytvoření účtu v Apercuře.",
+				"title": "Potvrďte svou e-mailovou adresu",
+				"greeting": "Dobrý den, {name},",
+				"body": "právě jste si vytvořili účet v Apercuře. Pro pokračování potvrďte, že tato adresa patří vám.",
+				"action": "Potvrdit adresu",
+				"fallback": "Pokud tlačítko nefunguje, zkopírujte tento odkaz do prohlížeče:",
+				"expiry": "Odkaz platí jednu hodinu.",
+				"ignore": "Tento účet jste nevytvořili? E-mail ignorujte: nic se nestane."
+			}
+		}
+	},
+	"emails": {
+		"fallback": "Pokud tlačítko nefunguje, zkopírujte tento odkaz do prohlížeče:",
+		"claimRegistryLink": {
+			"subject": "Potvrďte převzetí stránky zařízení",
+			"title": "Je to zařízení: {practitioner}?",
+			"body": [
+				"Někdo požádal o správu stránky v Apercuře: {practitioner}. Tento e-mail jsme poslali na adresu, kterou národní registr uvádí u tohoto zařízení.",
+				"Pokud žádost pochází od poskytovatele ({practitioner}), otevřete odkaz a potvrďte ji. Stránka tím bude ověřena."
+			],
+			"action": "Potvrdit převzetí",
+			"notes": [
+				"Odkaz platí 24 hodin.",
+				"Nic takového jste nečekali? Tento e-mail ignorujte: nic se nezmění a stránka zůstane, jak je."
+			]
+		},
+		"claimReceived": {
+			"subject": "Vaše žádost o převzetí se posuzuje",
+			"title": "Vaše žádost o převzetí se posuzuje",
+			"body": [
+				"Dobrý den, {name},",
+				"přijali jsme vaši žádost i doklady. Člen týmu Apercury je posoudí a napíše vám e-mail.",
+				"Žádosti vyřizujeme do 48 hodin v pracovní dny."
+			]
+		},
+		"claimVerified": {
+			"subject": "Vaše stránka je ověřena",
+			"title": "Vaše stránka je ověřena",
+			"body": [
+				"Dobrý den, {name},",
+				"vaše stránka nyní nese označení ověřené stránky. Zkontrolujte převzaté údaje, doplňte ceny a způsoby platby a stránku zveřejněte."
+			],
+			"action": "Doplnit stránku"
+		},
+		"claimRejected": {
+			"subject": "Vaše žádost o převzetí nebyla přijata",
+			"title": "Vaše žádost o převzetí nebyla přijata",
+			"body": [
+				"Dobrý den, {name},",
+				"vaši žádost se nepodařilo ověřit. Důvod uvedený posuzovatelem: {reason}",
+				"Ve své sekci můžete podat novou žádost s čitelným dokladem, že za zařízení jednáte."
+			]
+		},
+		"claimSuperseded": {
+			"subject": "Váš přístup ke stránce byl odebrán",
+			"title": "Váš přístup ke stránce byl odebrán",
+			"body": [
+				"Dobrý den, {name},",
+				"jiný účet prokázal, že patří poskytovateli stránky, kterou spravoval váš účet. Váš účet je zablokovaný a jeho přístup k zařízení byl odebrán.",
+				"Pokud jste poskytovatelem vy, napište nám: účet lze obnovit jen po novém ověření totožnosti."
+			]
+		},
+		"removalReceived": {
+			"subject": "Vaši žádost o odstranění jsme přijali",
+			"title": "Vaši žádost o odstranění jsme přijali",
+			"body": [
+				"Stránka je od této chvíle skrytá: nezobrazuje se, není indexována ani uvedena v seznamech.",
+				"Žádost prověříme a odpovíme nejpozději do jednoho měsíce. Po jejím potvrzení stránku smažeme; smazaná stránka se s dalším importem registru nevrátí."
+			]
+		},
+		"removalConfirmed": {
+			"subject": "Stránka byla smazána",
+			"title": "Stránka byla smazána",
+			"body": [
+				"Stránka, o jejíž odstranění jste požádali, byla z Apercury smazána. S dalším importem registru se nevrátí."
+			]
+		},
+		"removalRejected": {
+			"subject": "Vaše žádost o odstranění nebyla přijata",
+			"title": "Vaše žádost o odstranění nebyla přijata",
+			"body": [
+				"Vaši žádost o odstranění se nepodařilo potvrdit, a proto se stránka znovu zobrazuje. Důvod: {reason}",
+				"Pokud jste poskytovatelem uvedeným na stránce, můžete ji také převzít a odstranit sami ve své sekci."
+			]
+		},
+		"teamInvitation": {
+			"subject": "{inviter} vás zve do týmu {practice}",
+			"title": "Připojte se k týmu {practice}",
+			"body": [
+				"Dobrý den,",
+				"{inviter} vás zve do týmu {practice} v Apercuře, v roli: {role}.",
+				"Chcete-li se připojit, přihlaste se nebo si vytvořte účet s touto e-mailovou adresou a nastavte druhý faktor (ověřovací aplikaci nebo přístupový klíč): chrání údaje pacientů, které uvidíte."
+			],
+			"action": "Připojit se k týmu",
+			"notes": [
+				"Pozvánka platí 48 hodin.",
+				"Nečekali jste ji? Tento e-mail ignorujte: bez vás se nic nestane."
+			]
+		},
+		"contactReceived": {
+			"subject": "Vaši žádost jsme přijali",
+			"title": "Vaši žádost jsme přijali",
+			"body": [
+				"Dobrý den,",
+				"přijali jsme vaši žádost týkající se stránky v adresáři Apercura. Člen týmu se vám ozve, ověří vaši totožnost a pomůže vám stránku převzít.",
+				"Pokud jste tuto žádost neposlali, tento e-mail ignorujte: žádná stránka ani účet se nezměnily."
+			]
+		},
+		"adminClaims": {
+			"subject": "{count, plural, one {# žádost o převzetí ke kontrole} few {# žádosti o převzetí ke kontrole} many {# žádosti o převzetí ke kontrole} other {# žádostí o převzetí ke kontrole}}",
+			"title": "{count, plural, one {Na rozhodnutí čeká jedna žádost o převzetí} few {Na rozhodnutí čekají # žádosti o převzetí} many {Na rozhodnutí čeká # žádosti o převzetí} other {Na rozhodnutí čeká # žádostí o převzetí}}",
+			"body": [
+				"{count, plural, one {Od posledního upozornění byla ke kontrole odeslána jedna žádost} few {Od posledního upozornění byly ke kontrole odeslány # žádosti} many {Od posledního upozornění bylo ke kontrole odesláno # žádosti} other {Od posledního upozornění bylo ke kontrole odesláno # žádostí}}.",
+				"Podrobnosti najdete ve frontě sekce pro poskytovatele, za vaším druhým faktorem."
+			],
+			"action": "Otevřít žádosti"
+		},
+		"adminContactRequests": {
+			"subject": "{count, plural, one {# žádost „Jsem poskytovatelem tohoto zařízení“} few {# žádosti „Jsem poskytovatelem tohoto zařízení“} many {# žádosti „Jsem poskytovatelem tohoto zařízení“} other {# žádostí „Jsem poskytovatelem tohoto zařízení“}}",
+			"title": "{count, plural, one {Na odpověď čeká jedna žádost o kontakt} few {Na odpověď čekají # žádosti o kontakt} many {Na odpověď čeká # žádosti o kontakt} other {Na odpověď čeká # žádostí o kontakt}}",
+			"body": [
+				"{count, plural, one {Od posledního upozornění žádá o kontakt jeden poskytovatel, který nemůže převzít svou stránku} few {Od posledního upozornění žádají o kontakt # poskytovatelé, kteří nemohou převzít svou stránku} many {Od posledního upozornění žádá o kontakt # poskytovatele, kteří nemohou převzít svou stránku} other {Od posledního upozornění žádá o kontakt # poskytovatelů, kteří nemohou převzít svou stránku}}.",
+				"Jejich zašifrované údaje si přečtete ve frontě sekce pro poskytovatele."
+			],
+			"action": "Otevřít žádosti"
+		}
+	},
+	"Profile": {
+		"presentationHeading": "Představení",
+		"practicalHeading": "Praktické informace",
+		"fields": {
+			"languages": "Jazyky",
+			"accessibility": "Přístup",
+			"website": "Web",
+			"fees": "Ceny",
+			"paymentMethods": "Způsoby platby"
+		},
+		"accessibility": {
+			"stepFree": "Bezbariérový přístup",
+			"lift": "Výtah",
+			"parking": "Parkování poblíž"
+		},
+		"languages": {
+			"fr": "francouzština",
+			"en": "angličtina",
+			"es": "španělština",
+			"de": "němčina",
+			"it": "italština",
+			"pt": "portugalština",
+			"ar": "arabština",
+			"zh": "čínština",
+			"ru": "ruština",
+			"tr": "turečtina",
+			"ro": "rumunština",
+			"pl": "polština",
+			"nl": "nizozemština",
+			"vi": "vietnamština",
+			"fa": "perština",
+			"he": "hebrejština",
+			"uk": "ukrajinština",
+			"lsf": "francouzský znakový jazyk"
+		},
+		"paymentMethods": {
+			"card": "Platební karta",
+			"cash": "Hotovost",
+			"cheque": "Šek",
+			"transfer": "Bankovní převod"
+		},
+		"fees": {
+			"range": "{min} až {max}",
+			"fromOwner": "Ceny uvádí poskytovatel."
+		}
+	},
+	"Claim": {
+		"metadata": {
+			"start": "Převzetí stránky · Apercura",
+			"claim": "Vaše žádost o převzetí · Apercura",
+			"emailLink": "Potvrzení žádosti o převzetí · Apercura"
+		},
+		"pending": "Čekejte prosím",
+		"errors": {
+			"generic": "Něco se pokazilo. Zkuste to prosím za chvíli znovu.",
+			"TOO_MANY": "Na dnešek je žádostí příliš mnoho. Zkuste to zítra.",
+			"ALREADY_OWNER": "Tato stránka už je vaše.",
+			"FROZEN": "Tento účet je zablokovaný a nemůže převzít stránku.",
+			"NOT_FOUND": "Žádná stránka nemá toto číslo.",
+			"INVALID_RPPS": "Toto číslo není platné: zadejte číslo zařízení z adresy jeho stránky (například cz:39781), konec adresy stránky nebo celou adresu.",
+			"NOT_OPEN": "Tato žádost je uzavřená: už ji nelze měnit.",
+			"METHOD_UNAVAILABLE": "Tento způsob ověření není pro tuto stránku k dispozici.",
+			"TOO_MANY_ATTEMPTS": "Příliš mnoho pokusů tímto způsobem. Zvolte jiný.",
+			"NOT_SUBMITTABLE": "Před odesláním žádosti ke kontrole přidejte doklad.",
+			"BAD_DOCUMENT": "Tento soubor nelze použít: pošlete PDF, JPEG, PNG nebo WebP o velikosti nejvýše 10 MB.",
+			"PSC_MISSING": "Pro Santé Connect nevrátil žádnou identitu. Zkuste to znovu."
+		},
+		"start": {
+			"title": "Převezměte svou stránku",
+			"lead": "Převzetí se týká stránky jednoho zařízení, nikdy jména.",
+			"recordHeading": "Stránka, kterou přebíráte",
+			"unknownProfession": "Zdravotnické zařízení",
+			"viewPage": "Zobrazit veřejnou stránku",
+			"contestTitle": "Tato stránka už má ověřeného správce",
+			"contestBody": "Pokud jde o vaše zařízení (například jste ztratili přístup ke svému účtu), můžete ji přesto převzít: váš doklad posoudí administrátor a rozhodne. Obnovení účtu vždy vyžaduje nové ověření.",
+			"confirm": "Jsem to já: zahájit převzetí",
+			"goToPage": "Přejít na mou stránku",
+			"findHeading": "Najděte stránku svého zařízení",
+			"notFound": "Žádná veřejná stránka zatím nemá toto číslo.",
+			"rppsLabel": "Číslo nebo adresa stránky",
+			"rppsHint": "Číslo zařízení na konci adresy jeho stránky (například 39781), nebo celá adresa, například apercura.org/cz/zarizeni/mudr-jana-ukazkova-39781.",
+			"find": "Najít mou stránku",
+			"searchHint": "Stránku můžete také vyhledat podle názvu:",
+			"searchLink": "hledat v adresáři",
+			"howHeading": "Jak ověřujeme, že jste to vy",
+			"factorNote": "Váš účet už má druhý faktor: je povinný před každým převzetím a od té chvíle chrání vaši stránku.",
+			"contactLink": "Nemáte po ruce doklad? Napište nám",
+			"optOutLink": "Jste držitelem této stránky a nepřejete si být veřejně uvedeni? Začněte zde",
+			"identifierLabel": "Číslo zařízení"
+		},
+		"methods": {
+			"psc": {
+				"title": "Pro Santé Connect",
+				"short": "Pro Santé Connect",
+				"summary": "Pomocí aplikace e-CPS nebo karty CPS. Ověření proběhne okamžitě a objednávání online lze hned otevřít.",
+				"lead": "Přihlaste se aplikací e-CPS nebo kartou CPS. Stránka je ověřena, jakmile identita odpovídá jejímu číslu RPPS.",
+				"action": "Pokračovat přes Pro Santé Connect",
+				"hint": "Opustíte Apercuru a přejdete na stránku Pro Santé Connect, pak se sem vrátíte.",
+				"done": "Pro Santé Connect potvrdil vaši totožnost."
+			},
+			"registry_email": {
+				"title": "E-mail zařízení",
+				"short": "E-mail z registru",
+				"summary": "Odkaz zaslaný na e-mailovou adresu, kterou registr uvádí u vašeho zařízení. Ověření proběhne, jakmile odkaz otevřete; objednávání se otevře o 7 dní později.",
+				"lead": "Pošleme odkaz na {email}, adresu uvedenou v registru u vašeho zařízení. Otevřete ho a potvrďte.",
+				"action": "Poslat odkaz",
+				"resend": "Poslat znovu",
+				"sent": "Odkaz byl odeslán. Platí 24 hodin.",
+				"done": "Schránka zařízení žádost potvrdila."
+			},
+			"document": {
+				"title": "Doklad a telefonát",
+				"short": "Doklad",
+				"summary": "Doklad, že za zařízení jednáte: rozhodnutí krajského úřadu o udělení oprávnění k poskytování zdravotních služeb, nebo výpis z obchodního rejstříku s plnou mocí na hlavičkovém papíře zařízení. Člen našeho týmu jej obvykle do 48 hodin zkontroluje.",
+				"lead": "Pošlete doklad, že za zařízení jednáte: rozhodnutí o udělení oprávnění k poskytování zdravotních služeb, nebo výpis z obchodního rejstříku s plnou mocí na hlavičkovém papíře zařízení. Před uložením je zašifrován a 30 dní po rozhodnutí smazán."
+			},
+			"phone_callback": {
+				"title": "Ověřovací telefonát",
+				"short": "Telefonát",
+				"lead": "Během kontroly zavolá člen našeho týmu do zařízení na číslo {phone} uvedené v registru (nikdy na číslo, které nám dáte vy). Ten, kdo hovor přijme, přečte kód zobrazený zde.",
+				"action": "Zobrazit můj kód",
+				"newCode": "Zobrazit nový kód",
+				"hint": "Zobrazte si ho, až budete v zařízení, nebo ho předejte tomu, kdo bere telefon. Vyžádáním nového kódu se předchozí zruší.",
+				"codeLabel": "Kód k přečtení",
+				"codeHint": "Nechte si ho na obrazovce nebo si ho poznamenejte: kvůli vaší bezpečnosti ho ukazujeme jen teď.",
+				"done": "Ověřovací telefonát žádost potvrdil."
+			}
+		},
+		"check": {
+			"passed": "Hotovo",
+			"failed": "Neúspěšné",
+			"pending": "Probíhá",
+			"notStarted": "Nezahájeno",
+			"claim": {
+				"open": "Probíhá",
+				"in_review": "Ve schvalování",
+				"verified": "Ověřeno",
+				"rejected": "Zamítnuto",
+				"withdrawn": "Staženo",
+				"superseded": "Staženo po námitce"
+			}
+		},
+		"workspace": {
+			"title": "Převzetí stránky: {name}",
+			"lead": {
+				"open": "Prokažte jedním ze způsobů níže, že za toto zařízení jednáte.",
+				"in_review": "Vaše žádost se posuzuje.",
+				"verified": "Další krok: doplňte svou stránku.",
+				"rejected": "Tato žádost nebyla přijata.",
+				"withdrawn": "Tato žádost byla stažena.",
+				"superseded": "Tato žádost byla stažena po námitce."
+			}
+		},
+		"psc": {
+			"outcome": {
+				"verified": "Pro Santé Connect potvrdil vaši totožnost: vaše stránka je ověřena.",
+				"passed": "Pro Santé Connect potvrdil vaši totožnost. Žádost nyní posoudí administrátor.",
+				"mismatch": "Identita z Pro Santé Connect neodpovídá číslu RPPS této stránky.",
+				"error": "Pro Santé Connect není dostupný, nebo bylo přihlášení zrušeno. Zkuste to znovu.",
+				"linkedElsewhere": "Tato identita Pro Santé Connect je už propojená s jiným účtem Apercury. Chcete-li ho použít, přihlaste se přes Pro Santé Connect."
+			}
+		},
+		"documents": {
+			"kind": {
+				"cps_card": "Výpis z obchodního rejstříku s plnou mocí na hlavičkovém papíře zařízení",
+				"ordre_attestation": "Rozhodnutí o udělení oprávnění k poskytování zdravotních služeb"
+			},
+			"kindLabel": "Druh dokladu",
+			"add": "Vybrat soubor",
+			"hint": "PDF, JPEG, PNG nebo WebP, nejvýše 10 MB. Nejvýše 4 soubory.",
+			"kilobytes": "kB"
+		},
+		"review": {
+			"title": "Odeslat ke kontrole",
+			"lead": "Administrátor zkontroluje váš doklad a zavolá do zařízení. Odpověď dostanete e-mailem do 48 hodin v pracovní dny.",
+			"submit": "Odeslat ke kontrole",
+			"notYet": "Nejprve přidejte doklad."
+		},
+		"withdraw": "Stáhnout tuto žádost",
+		"status": {
+			"verified": "Vaše stránka je ověřena",
+			"bookingDelay": "Bez Pro Santé Connect končí sedmidenní čekací lhůta před objednáváním online {date}.",
+			"continue": "Doplnit stránku",
+			"in_review": "Vaše žádost se posuzuje",
+			"contestReview": "Tato stránka už měla ověřeného správce: o vašem dokladu rozhodne administrátor.",
+			"reviewBody": "Člen našeho týmu posoudí váš doklad a napíše vám e-mail.",
+			"rejected": "Tato žádost nebyla přijata",
+			"reason": "Důvod: {reason}",
+			"withdrawn": "Tato žádost byla stažena",
+			"superseded": "Tato žádost byla stažena po námitce",
+			"contestTitle": "Tato stránka už má ověřeného správce",
+			"contestBody": "O vašem dokladu rozhodne administrátor.",
+			"verifiedBadge": "Ověřená stránka"
+		},
+		"emailLink": {
+			"title": "Potvrďte žádost o převzetí",
+			"lead": "Tento odkaz byl zaslán na e-mailovou adresu, kterou národní registr uvádí u zařízení.",
+			"reading": "Načítáme odkaz…",
+			"invalidTitle": "Tento odkaz už nefunguje",
+			"invalidBody": "Vypršel (platí 24 hodin), nebo už byl použit. Poskytovatel si může ze své žádosti poslat nový.",
+			"tooMany": "Příliš mnoho pokusů. Počkejte hodinu a zkuste to znovu.",
+			"doneTitle": "Žádost je potvrzena",
+			"doneBody": "Poskytovatel se nyní může přihlásit a stránku doplnit.",
+			"goToSpace": "Přejít do sekce pro poskytovatele",
+			"body": "Pokud poskytovatel tohoto zařízení požádal o správu své stránky v Apercuře, potvrďte to. Jinak tuto stránku zavřete: nic se nezmění.",
+			"confirm": "Potvrdit žádost",
+			"pending": "Čekejte prosím"
+		},
+		"withdrawDialog": {
+			"title": "Stáhnout tuto žádost?",
+			"body": "Žádost se definitivně uzavře: její důkazy přestanou platit a doklady se za 30 dní smažou. Později můžete podat novou žádost, opět od ověření.",
+			"confirm": "Stáhnout žádost",
+			"cancel": "Ponechat žádost"
+		},
+		"identifiers": {
+			"RPPS": "RPPS",
+			"AT-WIEN": "Seznam Vídně",
+			"AT-STMK": "Seznam Štýrska",
+			"AT-SBG": "Seznam Salcburska",
+			"AT-SBGZ": "Seznam zubních lékařů Salcburska",
+			"GB-ODS-GP": "Kód ODS",
+			"GB-ODS-DENT": "Kód ODS",
+			"GB-ODS-PHARM": "Kód ODS",
+			"GB-PHS-GP": "Kód Public Health Scotland",
+			"GB-PHS-DENT": "Kód Public Health Scotland",
+			"GB-PHS-PHARM": "Kód Public Health Scotland",
+			"GB-BSO-GP": "Číslo praxe BSO",
+			"GB-BSO-DENT": "Zubní ordinace BSO",
+			"CZ-NRPZS": "Číslo zařízení v NRPZS"
+		}
+	},
+	"Onboarding": {
+		"metaTitle": "Nastavení stránky · Apercura",
+		"title": "Nastavte svou stránku",
+		"lead": "Tři kroky ke kompletní stránce zařízení {name}.",
+		"stepsLabel": "Kroky",
+		"stepNumber": "Krok {n} z {total}:",
+		"continue": "Pokračovat",
+		"pending": "Čekejte prosím",
+		"publishFailed": "Stránku se nepodařilo zveřejnit. Zkuste to za chvíli znovu.",
+		"fields": {
+			"name": "Název",
+			"profession": "Druh zařízení"
+		},
+		"steps": {
+			"check": {
+				"label": "Zkontrolujte převzaté údaje",
+				"title": "Zkontrolujte převzaté údaje",
+				"lead": "Vaše stránka vychází z otevřených dat NRPZS. Zkontrolujte název, druh a adresu zařízení.",
+				"sites": "Místa poskytování péče",
+				"unnamed": "Místo bez názvu",
+				"hidden": "Skryto",
+				"registryNote": "Něco nesedí? Trvalou opravu provede správní orgán, který vám udělil oprávnění (obvykle krajský úřad) a který aktualizuje registr; stránka se změní při příštím týdenním importu. V editoru stránky můžete adresu skrýt nebo přidat."
+			},
+			"booking": {
+				"label": "Ordinační hodiny a objednávání",
+				"title": "Ordinační hodiny a objednávání",
+				"lead": "Pacienti se na vaší stránce objednávají, jakmile otevřete diář. Než ho otevřete, musí vaše stránka uvádět ceny a způsoby platby, které přijímáte.",
+				"fees": "Ceny",
+				"payments": "Způsoby platby",
+				"done": "Uvedeno",
+				"todo": "Doplnit",
+				"deontology": "Zdravotník, který svou činnost prezentuje online, uvádí ceny a přijímané způsoby platby.",
+				"editFees": "Doplnit ceny a způsoby platby",
+				"settingsNote": "Místa, ordinační hodiny a druhy návštěv nastavíte v nastavení objednávání.",
+				"waitingPeriod": "Čekací lhůta po ověření",
+				"waitingEnds": "Sedmidenní čekací lhůta končí {date}",
+				"noWaiting": "Žádná",
+				"settingsLink": "Nastavit ordinační hodiny a objednávání"
+			},
+			"publish": {
+				"label": "Zveřejnění",
+				"title": "Zveřejněte svou stránku",
+				"lead": "Zveřejněním se na veřejné stránce zobrazí vaše představení, jazyky, ceny a praktické informace. Kdykoli je můžete změnit nebo skrýt.",
+				"already": "Vaše stránka je zveřejněná. Každá uložená změna je hned online.",
+				"edit": "Upravit stránku",
+				"action": "Zveřejnit stránku",
+				"shareLead": "Dejte o své stránce vědět: připravili jsme odkaz, QR kód a plakát do čekárny.",
+				"shareLink": "Otevřít materiály ke sdílení",
+				"statsLink": "Zobrazit statistiky stránky"
+			}
+		}
+	},
+	"Editor": {
+		"metaTitle": "Vaše stránka · Apercura",
+		"title": "Vaše stránka",
+		"lead": "Doplňte veřejnou stránku zařízení {name}. Pouze prostý text; co skryjete, se nikdy nezobrazí.",
+		"empty": {
+			"title": "Zatím nemáte žádnou stránku k úpravě",
+			"body": "Stránka se zde zobrazí, jakmile bude vaše žádost o převzetí ověřena.",
+			"action": "Převzít mou stránku"
+		},
+		"pending": "Čekejte prosím",
+		"viewPublic": "Zobrazit veřejnou stránku",
+		"jumpToPreview": "Přejít na náhled",
+		"formLabel": "Obsah stránky",
+		"removed": {
+			"title": "Vaše stránka je odstraněna z adresáře",
+			"body": "Nikdo ji nevidí a její obsah je smazaný. Obnovit ji můžete dole na této stránce: vrátí se s další týdenní aktualizací registru."
+		},
+		"unpublished": {
+			"title": "Váš obsah zatím není zveřejněn",
+			"link": "Dokončit nastavení stránky"
+		},
+		"photo": {
+			"title": "Fotografie",
+			"lead": "Nepovinné. Aktuální portrét, například jako na průkaz, nebo fotografie zařízení.",
+			"current": "Současná fotografie",
+			"none": "Bez fotografie.",
+			"add": "Přidat fotografii",
+			"replace": "Nahradit fotografii",
+			"remove": "Odstranit fotografii",
+			"hint": "JPEG, PNG nebo WebP, nejvýše 5 MB. Ořízneme ji na čtverec a odstraníme z ní metadata (polohu, zařízení)."
+		},
+		"visibility": {
+			"label": "Zobrazit na stránce: {field}",
+			"shown": "Zobrazeno"
+		},
+		"presentation": {
+			"title": "Představení",
+			"lead": "Pouze věcné informace: žádné reference pacientů ani srovnávání s ostatními.",
+			"headline": "Podtitul",
+			"headlineHint": "Jeden řádek pod druhem zařízení, nejvýše {max} znaků.",
+			"bio": "Představení",
+			"bioHint": "Prostý text, nejvýše {max} znaků. Odstavce oddělte prázdným řádkem."
+		},
+		"languages": {
+			"title": "Jazyky"
+		},
+		"fees": {
+			"title": "Ceny a zdravotní pojištění",
+			"lead": "Povinné, než lze otevřít objednávání online: vaše ceny a způsoby platby, které přijímáte.",
+			"requiredBadge": "Povinné pro objednávání",
+			"ameliPrefill": "Předvyplněno z adresáře zdravotní pojišťovny. Na stránce ho nahradí váš údaj.",
+			"sector": "Smluvní vztah",
+			"agreement": "Smlouvy s pojišťovnami",
+			"notStated": "Neuvedeno",
+			"optam": "Omezené doplatky (OPTAM)",
+			"optamNone": "Není členem",
+			"carteVitale": "Karta pojištěnce",
+			"carteVitaleYes": "Přijímá",
+			"carteVitaleNo": "Nepřijímá",
+			"itemsTitle": "Ceny",
+			"noItem": "Zatím žádná cena.",
+			"itemLabel": "Cena {n}: za co",
+			"itemPlaceholder": "Vyšetření",
+			"amount": "Částka (€)",
+			"maxAmount": "Až do (€)",
+			"removeItem": "Odstranit cenu {n}",
+			"remove": "Odstranit",
+			"addItem": "Přidat cenu",
+			"note": "Poznámka k cenám",
+			"noteHint": "Například na čem závisí doplatky.",
+			"payments": "Přijímané způsoby platby",
+			"requiredHint": "Objednávání zůstane zavřené, dokud neuvedete alespoň jednu cenu a jeden způsob platby."
+		},
+		"access": {
+			"title": "Přístup",
+			"notes": "Jak se k nám dostanete",
+			"notesHint": "Patro, vchod, městská hromadná doprava."
+		},
+		"contact": {
+			"title": "Web a telefon",
+			"website": "Web",
+			"websiteHint": "Web vašeho zařízení, začínající https://",
+			"showPhone": "Zobrazit telefon zařízení",
+			"showPhoneHint": "Když je skrytý, stránka už nenabízí zavolat do zařízení."
+		},
+		"failure": {
+			"generic": "Něco se pokazilo. Zkuste to prosím za chvíli znovu.",
+			"invalid": "Některá pole je třeba opravit: viz zprávy pod nimi.",
+			"lastSite": "Alespoň jedno místo musí zůstat zobrazené: stránku bez místa nelze zveřejnit.",
+			"unknownPlace": "Toto PSČ a obec neznáme. Zkontrolujte je.",
+			"badPhone": "Toto telefonní číslo není platné.",
+			"photoTooLarge": "Fotografie je větší než 5 MB.",
+			"photoUnsupported": "Tento soubor nelze použít jako fotografii: pošlete JPEG, PNG nebo WebP."
+		},
+		"saved": "Uloženo. Vaše veřejná stránka je aktuální.",
+		"savedDraft": "Uloženo. Aby se změny zobrazily, stránku zveřejněte.",
+		"save": "Uložit stránku",
+		"lastSaved": "Naposledy uloženo {date}",
+		"sites": {
+			"title": "Místa poskytování péče",
+			"lead": "Vyberte, která místa vaše stránka zobrazí. Místa z registru lze skrýt, ne upravit.",
+			"unnamed": "Místo bez názvu",
+			"added": "Přidáno vámi",
+			"shownNamed": "Zobrazit na stránce: {name}",
+			"remove": "Odstranit",
+			"registryNote": "Je místo z registru chybné? Opravu provedete u krajského úřadu, který vám vydal oprávnění; stránka se upraví při některém z dalších importů.",
+			"addTitle": "Přidat místo",
+			"name": "Název místa",
+			"address": "Ulice a číslo",
+			"postcode": "PSČ",
+			"city": "Obec",
+			"phone": "Telefon (nepovinné)",
+			"phoneHint": "Telefon zařízení, zobrazí se na stránce.",
+			"add": "Přidat místo"
+		},
+		"remove": {
+			"title": "Odstranit stránku",
+			"lead": "Vaše stránka zmizí z adresáře, vyhledávání i vyhledávačů a s dalším importem se nevrátí. Její místa, představení, fotografie, ceny a statistiky se okamžitě smažou; váš účet a diář zůstanou. Stránku zde můžete obnovit: stránka z registru se vrátí s další týdenní aktualizací a vy ji znovu doplníte.",
+			"action": "Odstranit stránku z adresáře",
+			"restore": "Obnovit stránku",
+			"dialog": {
+				"title": "Odstranit stránku z adresáře?",
+				"intro": "Vaše stránka okamžitě zmizí z adresáře, vyhledávání i vyhledávačů. Tento obsah se natrvalo smaže:",
+				"items": {
+					"places": "vaše místa poskytování péče",
+					"presentation": "vaše představení (podtitul, popis, jazyky, zaměření)",
+					"photo": "vaše fotografie",
+					"fees": "vaše ceny a způsoby platby",
+					"statistics": "statistiky stránky"
+				},
+				"restore": "Váš účet a diář zůstanou. Pokud stránku obnovíte, vrátí se z registru s dalším týdenním importem a vy ji znovu vyplníte.",
+				"understood": "Rozumím, že se tento obsah smaže",
+				"confirm": "Odstranit stránku",
+				"cancel": "Zrušit"
+			},
+			"busy": "Adresář se právě aktualizuje týdenním importem: vaše stránka se nezměnila. Zkuste to za pár minut znovu."
+		},
+		"preview": {
+			"title": "Náhled",
+			"note": "Zatím neuloženo",
+			"noSite": "Žádné zobrazené místo.",
+			"unnamedPlace": "Místo poskytování péče"
+		},
+		"issues": {
+			"tooLong": "Tento text je příliš dlouhý.",
+			"markup": "Pouze prostý text: žádné HTML ani odkazy v závorkách.",
+			"required": "Toto pole je povinné.",
+			"range": "Horní částka musí být vyšší než částka.",
+			"website": "Tato adresa není web (https://…).",
+			"postcode": "PSČ má 5 číslic.",
+			"invalid": "Tato hodnota není platná."
+		}
+	},
+	"Admin": {
+		"claims": {
+			"queueHeading": "{count, plural, one {# žádost čeká} few {# žádosti čekají} many {# žádosti čeká} other {# žádostí čeká}}"
+		}
+	},
+	"Gdpr": {
+		"about": "Ke stránce",
+		"rpps": "Číslo stránky",
+		"rppsHint": "Číslo zařízení na konci adresy stránky (například cz:39781), nebo celá adresa stránky.",
+		"pending": "Čekejte prosím",
+		"errors": {
+			"tooMany": "Z tohoto připojení přišlo příliš mnoho žádostí. Zkuste to znovu za hodinu.",
+			"notFound": "Žádná stránka nemá toto číslo.",
+			"claimed": "Tuto stránku spravuje poskytovatel: odstranit ji může jen on, ze své sekce.",
+			"invalid": "Zkontrolujte formulář: některé pole chybí nebo je příliš dlouhé.",
+			"generic": "Něco se pokazilo. Zkuste to prosím za chvíli znovu."
+		},
+		"report": {
+			"metaTitle": "Nahlásit chybu · Apercura",
+			"title": "Nahlásit chybu",
+			"lead": "Napište nám, co je na této stránce špatně. Vaše zpráva je zašifrovaná a čte ji jen tým Apercury.",
+			"doneTitle": "Děkujeme, hlášení jsme přijali",
+			"doneBody": "Zkontrolujeme to. Údaje z registru NRPZS opravuje u zdroje příslušný správní orgán, který poskytovateli udělil oprávnění (obvykle krajský úřad); pokud jste nechali adresu, dáme vám vědět.",
+			"kind": "Co je špatně?",
+			"kinds": {
+				"wrong_info": "Chybný údaj (adresa, telefon, název)",
+				"retired": "Zařízení ukončilo činnost",
+				"deceased": "Poskytovatel zemřel",
+				"impersonation": "Někdo tuto stránku používá jménem poskytovatele"
+			},
+			"message": "Podrobnosti",
+			"messageHint": "Co je špatně a, pokud to víte, jak je to správně.",
+			"contact": "Váš e-mail (nepovinné)",
+			"contactHint": "Jen abychom vám mohli odpovědět.",
+			"privacy": "Neuvádějte žádné informace o zdravotním stavu.",
+			"submit": "Odeslat hlášení"
+		},
+		"removal": {
+			"metaTitle": "Žádost o odstranění stránky · Apercura",
+			"title": "Požádat o odstranění této stránky",
+			"lead": "Podle článku 21 GDPR můžete vznést námitku proti zveřejnění své stránky. Stránku skryjeme hned po přijetí žádosti a po krátkém ověření ji smažeme.",
+			"doneTitle": "Stránka je skrytá",
+			"doneBody": "Už se nezobrazuje, není indexována ani uvedena v seznamech. Žádost prověříme a odpovíme e-mailem nejpozději do jednoho měsíce. Po jejím potvrzení stránku natrvalo smažeme a s aktualizacemi registru se už nevrátí.",
+			"contact": "Váš e-mail",
+			"contactHint": "Abychom s vámi mohli žádost potvrdit. Je zašifrovaný a k ničemu jinému se nepoužije.",
+			"message": "Zpráva (nepovinné)",
+			"messageHint": "Cokoli, co nám pomůže žádost ověřit.",
+			"confirm": "Jsem poskytovatelem uvedeným na této stránce",
+			"privacy": "Smazaná stránka se s dalším importem registru NRPZS nevrátí.",
+			"submit": "Skrýt a odstranit stránku",
+			"claimedTitle": "Tuto stránku spravuje poskytovatel",
+			"claimedBody": "Odstranit ji může jen její držitel, v editoru stránky ve své sekci: stránka pak okamžitě zmizí a s aktualizacemi registru se nevrátí.",
+			"claimedLink": "Odstranit svou stránku ze sekce pro poskytovatele",
+			"alreadyTitle": "Žádost o odstranění se prověřuje",
+			"alreadyBody": "Stránka je už skrytá."
+		},
+		"contact": {
+			"metaTitle": "Jsem poskytovatelem tohoto zařízení · Apercura",
+			"title": "Jsem poskytovatelem tohoto zařízení",
+			"lead": "Nemůžete stránku svého zařízení převzít pomocí dokladu? Zanechte nám kontakt: člen týmu Apercury se vám ozve, ověří, že za zařízení jednáte, a pomůže vám.",
+			"patientsTitle": "Tento formulář je určen jen poskytovateli uvedenému na této stránce",
+			"patientsBody": "Neslouží k objednání ani ke kontaktu se zařízením: k tomu použijte kontaktní údaje na stránce.",
+			"claimFirst": "S dokladem, že za zařízení jednáte, je převzetí rychlejší:",
+			"claimFirstLink": "převzít tuto stránku",
+			"rpps": "Číslo stránky",
+			"rppsHint": "Číslo stránky, ze které přicházíte. Nelze ho změnit.",
+			"name": "Vaše jméno a příjmení",
+			"email": "Váš pracovní e-mail",
+			"emailHint": "Abychom vám mohli odpovědět. Pošleme vám také potvrzení.",
+			"phone": "Váš telefon (nepovinné)",
+			"phoneHint": "Pokud chcete, abychom vám zavolali.",
+			"message": "Vaše zpráva",
+			"messageHint": "Napište nám, proč vám převzetí online nevyhovuje.",
+			"privacy": "Vaše údaje a zpráva jsou zašifrované, čte je jen tým Apercury, aby vám mohl odpovědět, a mažou se 12 měsíců po poslední komunikaci. Neuvádějte žádné informace o zdravotním stavu.",
+			"submit": "Odeslat žádost",
+			"doneTitle": "Vaši žádost jsme přijali",
+			"doneBody": [
+				"Člen týmu Apercury se vám ozve e-mailem nebo telefonicky, ověří vaši totožnost a pomůže vám stránku převzít.",
+				"Na zadanou adresu jsme vám právě poslali potvrzení."
+			],
+			"claimedTitle": "Tuto stránku už spravuje poskytovatel",
+			"claimedBody": "Její držitel byl ověřen. Pokud je to vaše stránka a už k ní nemáte přístup, podejte žádost o převzetí: tým ji posoudí.",
+			"claimedLink": "Převzít tuto stránku",
+			"withheldTitle": "Tato stránka je skrytá",
+			"withheldBody": "Prověřuje se žádost o její odstranění.",
+			"errors": {
+				"proof": "Ochrana proti robotům se nedokončila. Zkuste to za chvíli znovu.",
+				"claimed": "Tuto stránku už spravuje poskytovatel: podejte žádost o převzetí."
+			}
+		}
+	},
+	"Agenda": {
+		"settings": {
+			"types": {
+				"areaAdded": "{count, plural, =0 {Žádná nová obec.} one {Přidána # obec.} few {Přidány # obce.} many {Přidáno # obce.} other {Přidáno # obcí.}}"
+			}
+		},
+		"log": {
+			"records": "{count, plural, one {# záznam} few {# záznamy} many {# záznamu} other {# záznamů}}"
+		}
+	},
+	"Stats": {
+		"chartSummary": "{total, plural, one {# zobrazení} few {# zobrazení} many {# zobrazení} other {# zobrazení}} za 30 dní; nejvíce: {max} dne {day}."
+	},
+	"LegalNoticeCz": {
+		"metaTitle": "Právní informace · Apercura",
+		"metaDescription": "Právní informace o českých stránkách Apercura: provozovatel, jeho kontaktní údaje a zápis v rejstříku a osoba odpovědná za obsah (§ 435 občanského zákoníku, zákon č. 480/2004 Sb.).",
+		"title": "Právní informace",
+		"lead": "Kdo provozuje české stránky Apercura (apercura.org/cz), jak to § 435 občanského zákoníku (zákon č. 89/2012 Sb.) vyžaduje u informací, které podnikatel zpřístupňuje veřejnosti na internetu.",
+		"sections": {
+			"provider": {
+				"heading": "Provozovatel",
+				"body": [
+					"České stránky Apercura provozuje níže uvedený subjekt. Spravuje adresář a odpovídá za jeho obsah."
+				]
+			},
+			"service": {
+				"heading": "Služba",
+				"body": [
+					"Bezplatný adresář zdravotnických zařízení v Česku (praktičtí lékaři, praktičtí lékaři pro děti a dorost, zubní lékaři, gynekologové, ambulantní specialisté, lékárny, domácí péče, fyzioterapeuti, kliničtí psychologové, kliničtí logopedi a porodní asistentky), sestavený z otevřených dat Národního registru poskytovatelů zdravotních služeb, bez reklamy, s prostorem, kde může zařízení doplnit svou vlastní stránku. V Česku se přes Apercura neobjednávají žádné termíny."
+				]
+			},
+			"editor": {
+				"heading": "Osoba odpovědná za obsah",
+				"body": [
+					"Níže uvedená osoba odpovídá za to, co provozovatel zveřejňuje. Za informace, které zařízení doplní na svou stránku, odpovídá samo; jako služba, která ukládá informace poskytnuté uživateli, za ně provozovatel odpovídá jen za podmínek zákona č. 480/2004 Sb., o některých službách informační společnosti."
+				]
+			},
+			"liability": {
+				"heading": "Obsah stránek",
+				"body": [
+					"Adresář vychází z Národního registru poskytovatelů zdravotních služeb (NRPZS), který Ústav zdravotnických informací a statistiky ČR (ÚZIS ČR) zveřejňuje jako otevřená data pod licencí CC BY 4.0. Může být neúplný nebo neaktuální: než do zařízení vyrazíte, ověřte si údaje přímo u něj. Na každé stránce je uvedeno, jak nahlásit chybu."
+				]
+			},
+			"ip": {
+				"heading": "Kód a data",
+				"body": [
+					"Zdrojový kód Apercura je zveřejněn pod licencí AGPL-3.0. Data adresáře jsou převzata pod licencí Creative Commons Uveďte původ 4.0 Mezinárodní (CC BY 4.0): stránka o datech uvádí každý zdroj s označením původu, které vyžaduje."
+				]
+			},
+			"review": {
+				"heading": "Stav tohoto textu",
+				"body": [
+					"Tento text je koncept, napsaný před založením právnické osoby. Před oznámením českých stránek ho zkontroluje advokát s oprávněním v Česku."
+				]
+			}
+		},
+		"fields": {
+			"name": "Název",
+			"legalForm": "Právní forma",
+			"address": "Sídlo",
+			"phone": "Telefon",
+			"email": "E-mail",
+			"registration": "Rejstřík a číslo zápisu",
+			"vatId": "DIČ",
+			"editor": "Odpovědná osoba"
+		},
+		"dataLink": "Data a zdroje"
+	},
+	"PrivacyCz": {
+		"metaTitle": "Ochrana osobních údajů · Apercura",
+		"metaDescription": "Jaké údaje zpracovávají české stránky Apercura: zdroje, účely, právní základy, doba uchování, příjemci a vaše práva včetně námitky (články 13, 14 a 21 GDPR).",
+		"title": "Ochrana osobních údajů",
+		"lead": "Jaké údaje české stránky Apercura zpracovávají, odkud pocházejí, proč, jak dlouho a kdo je zpracovává, a jak uplatnit svá práva podle obecného nařízení o ochraně osobních údajů (GDPR) a zákona č. 110/2019 Sb., o zpracování osobních údajů.",
+		"sections": {
+			"controller": {
+				"heading": "Kdo za zpracování odpovídá",
+				"body": [
+					"Správcem adresáře, účtů zařízení, žádostí o převzetí stránek a požadavků zaslaných přes web je provozovatel uvedený v právních informacích."
+				]
+			},
+			"directory": {
+				"heading": "Adresář: údaje o zdravotnických zařízeních",
+				"body": [
+					"Údaje: název zařízení tak, jak je zapsán v registru, jeho druh (praktický lékař, lékárna, domácí péče…), jeho obory péče, adresa a souřadnice místa poskytování péče a telefon poskytovatele, pokud patří tomuto místu, tak jak je zveřejňuje Národní registr poskytovatelů zdravotních služeb (NRPZS). Zařízení, které svou stránku převezme, může doplnit představení, jazyky, fotografii a ordinační hodiny.",
+					"Nikdy neukládáme, ačkoli je registr zveřejňuje: IČO poskytovatele, jeho sídlo, odborného zástupce, e-mailovou adresu, datovou schránku ani fax. Telefonní číslo, které registr uvádí u více než tří míst poskytování péče, patří centrále a nezobrazujeme ho.",
+					"Identifikátor: číslo, které registr přiděluje každému zdravotnickému zařízení (ZZ_ID), na konci adresy stránky.",
+					"Účel: umožnit veřejnosti najít zdravotnické zařízení, zjistit, kde je, a jak ho kontaktovat. Právní základ: oprávněný zájem (čl. 6 odst. 1 písm. f) GDPR), posouzený níže.",
+					"Doba uchování: po dobu, kdy je zařízení v registru. Stránka zmizí po dvou týdenních aktualizacích, v nichž zařízení v registru už není; stránka odstraněná na základě námitky se už nikdy nezveřejní.",
+					"Informování: údaje nepocházejí od samotných zařízení (článek 14 GDPR). Psát každému z nich by vyžadovalo nepřiměřené úsilí (čl. 14 odst. 5 písm. b)); informace proto zveřejňuje toto oznámení, stránka o datech a upozornění na každé stránce."
+				]
+			},
+			"people": {
+				"heading": "Zařízení a osoby, které jmenují",
+				"body": [
+					"Česká stránka je zdravotnické zařízení, tedy jednotka registru, nikdy profil osoby. Většinu ordinací provozuje fyzická osoba a její zařízení je zapsáno pod jejím jménem (například „MUDr. Jana Ukázková“): taková stránka tuto osobu jmenuje a týká se jí.",
+					"Zobrazujeme jen název zařízení, jak ho registr zveřejňuje. O osobě nic dalšího neshromažďujeme: žádné datum narození, žádné rodné číslo, žádnou adresu bydliště (registr je sám nezveřejňuje), žádné IČO, žádná hodnocení ani recenze.",
+					"Každý, koho se stránka týká, proti ní může kdykoli vznést námitku a stránka bude odstraněna."
+				]
+			},
+			"sources": {
+				"heading": "Zdroje",
+				"body": [
+					"Každá stránka vychází z otevřených dat NRPZS, která ÚZIS ČR zveřejňuje pod licencí CC BY 4.0. Registr je veden podle § 73 až 75 zákona č. 372/2011 Sb., o zdravotních službách, podle nichž je jeho obsah veřejný; poznámka vydavatele k osobním údajům odkazuje na § 73 odst. 8, § 74 a § 75 tohoto zákona a na § 16 zákona č. 110/2019 Sb. Místa pocházejí z RÚIAN (ČÚZK). Každý zdroj přebíráme s jeho označením původu:"
+				]
+			},
+			"balancing": {
+				"heading": "Posouzení oprávněného zájmu",
+				"body": [
+					"Účel: pacienti potřebují vědět, která zdravotnická zařízení kde jsou, jakou péči poskytují a jak je kontaktovat; tuto potřebu stát už naplňuje tím, že registr zpřístupňuje veřejnosti a zveřejňuje ho jako otevřená data.",
+					"Nezbytnost: zobrazujeme jen údaje registru o místě poskytování péče, tedy údaje, které zákon tak jako tak zveřejňuje; nic ze soukromého života, žádná hodnocení, žádné recenze.",
+					"Vyvážení: neutrální řazení, žádná reklama, minimum polí registru, námitka, která stránku okamžitě skryje a zabrání jejímu návratu, opravy u zdroje a stránky, které sledují každou aktualizaci registru. Poskytovatel zapsaný ve veřejném registru očekává, že ho lze najít v adresáři, který tyto údaje opakuje. V roce 2013, před účinností GDPR, Úřad pro ochranu osobních údajů (ÚOOÚ) po kontrole jednoho adresáře lékařů dospěl k závěru, že základní profilové údaje lze zveřejnit bez souhlasu; toto oznámení na tento závěr nespoléhá a uvádí ho jen pro souvislost. Po zvážení těchto bodů převažují zájmy pacientů a každý, koho se stránka týká, může vznést námitku bez udání důvodu."
+				]
+			},
+			"accounts": {
+				"heading": "Účty zařízení a převzetí stránek",
+				"body": [
+					"Údaje: e-mailová adresa, jméno, heslo (uložené jako hash), druhý ověřovací faktor, doklady zaslané k převzetí stránky (doklad o tom, že žadatel zařízení provozuje nebo za ně jedná) a členové týmu.",
+					"Účely: správa účtu a ověření, že stránku přebírá to správné zařízení. Právní základy: plnění podmínek užití (čl. 6 odst. 1 písm. b)) a oprávněný zájem na zabezpečení služby (čl. 6 odst. 1 písm. f)).",
+					"Doba uchování: účet uchováváme, dokud není smazán; podklady, uložené šifrovaně, mažeme 30 dní po rozhodnutí."
+				]
+			},
+			"requests": {
+				"heading": "Nahlášení chyb, námitky a žádosti o kontakt",
+				"body": [
+					"Údaje: zpráva, kontaktní e-mailová adresa, pokud je uvedena, a dotčená stránka; u žádosti „To je moje stránka“ také jméno a telefonní číslo. Volný text je šifrován.",
+					"Účely: oprava chyb, vyřízení námitek a pomoc zařízení, které nemůže svou stránku převzít online. Právní základy: oprávněný zájem (čl. 6 odst. 1 písm. f)) a právo vznést námitku (článek 21).",
+					"Doba uchování: nahlášení mažeme 6 měsíců po uzavření, zamítnutou námitku rok po rozhodnutí, žádost o kontakt 12 měsíců po poslední komunikaci. Jakmile je námitka potvrzena nebo držitel převzaté stránky stránku odstraní, stránka i údaje o ní jsou okamžitě smazány, včetně námitky; zůstává jen záznam o odstranění (identifikátor stránky, země, důvod, kdo a kdy ho zapsal), aby se stránka už nikdy nezveřejnila. Držitel, který svou stránku odstraní, si ve svém účtu, nikdy veřejně, ponechá název, profesi a identifikátor zobrazené v jeho prostoru a svou žádost o převzetí, dokud účet nesmaže."
+				]
+			},
+			"technical": {
+				"heading": "Technické údaje a cookies",
+				"body": [
+					"Používáme jen cookies nezbytné pro fungování služby: relaci přihlášených zařízení a zvolený jazyk. Žádné reklamní cookies ani cookies pro měření návštěvnosti, žádné sledovací nástroje.",
+					"Abychom omezili zneužití, IP adresy před započítáním převádíme klíčovanou funkcí a nikdy je jako takové neukládáme; relace zařízení zaznamenávají zkrácenou IP adresu. Zobrazení převzatých stránek počítáme bez cookies a bez identifikátoru a vidí je jen držitel stránky."
+				]
+			},
+			"recipients": {
+				"heading": "Příjemci a zpracovatelé",
+				"body": [
+					"Údaje neprodáváme, nepronajímáme a nikdy je nepoužíváme k reklamě. Dostává je jen tým provozovatele a níže uvedení zpracovatelé, každý pro svou část, na základě smlouvy splňující článek 28 GDPR. Mapy se načítají z mapového serveru, který jako každý web obdrží IP adresu návštěvníka."
+				]
+			},
+			"transfers": {
+				"heading": "Předávání mimo Evropskou unii",
+				"body": [
+					"Mimo Evropskou unii a Evropský hospodářský prostor předáváme údaje jen se zárukami podle kapitoly V GDPR (rozhodnutí o odpovídající ochraně nebo standardní smluvní doložky). Jakoukoli změnu zpracovatele zde oznámíme předtím, než nabude účinnosti."
+				]
+			},
+			"automated": {
+				"heading": "Automatizované rozhodování",
+				"body": [
+					"Žádné rozhodnutí o vás nečiní výhradně automatizované prostředky. O převzetí stránky rozhoduje člověk, který si přečte doložené doklady."
+				]
+			},
+			"rights": {
+				"heading": "Vaše práva",
+				"body": [
+					"Můžete požádat o přístup ke svým údajům, o jejich opravu nebo výmaz, o omezení zpracování, o jejich předání ve strojově čitelném formátu a vznést námitku proti zpracování. Napište na níže uvedenou adresu; odpověď dostanete do jednoho měsíce.",
+					"Stížnost můžete podat také u českého dozorového úřadu, Úřadu pro ochranu osobních údajů (ÚOOÚ): Pplk. Sochora 727/27, 170 00 Praha 7, posta@uoou.gov.cz, uoou.gov.cz."
+				]
+			},
+			"objection": {
+				"heading": "Námitka proti stránce (článek 21 GDPR)",
+				"body": [
+					"Každý, koho se stránka týká, může proti jejímu zveřejnění kdykoli vznést námitku, bez udání důvodu. Pokud stránka není převzatá, stačí formulář: stránka se skryje hned po doručení žádosti, po krátké kontrole se smaže a aktualizace registru ji už nikdy znovu nezveřejní. Pokud je převzatá, odstraní ji její držitel ve svém prostoru."
+				]
+			},
+			"changes": {
+				"heading": "Změny tohoto oznámení",
+				"body": [
+					"Toto oznámení je koncept. Zkontroluje ho advokát s oprávněním v Česku a pověřenec pro ochranu osobních údajů; každá verze je datována."
+				]
+			}
+		},
+		"fields": {
+			"controller": "Správce",
+			"address": "Adresa",
+			"email": "Kontakt pro žádosti",
+			"dpo": "Pověřenec pro ochranu osobních údajů",
+			"effectiveDate": "Platnost od",
+			"hostingProvider": "Poskytovatel hostingu (zpracovatel)",
+			"smtp": "Doručování e-mailů (zpracovatel)"
+		},
+		"objectLink": "Jak vznést námitku proti stránce",
+		"authorityLink": "Podat stížnost u Úřadu pro ochranu osobních údajů"
+	},
+	"TermsCz": {
+		"metaTitle": "Podmínky užití · Apercura",
+		"metaDescription": "Podmínky užití českých stránek Apercura: bezplatný, věcný adresář zdravotnických zařízení z Národního registru poskytovatelů zdravotních služeb, bez online objednávání.",
+		"title": "Podmínky užití",
+		"lead": "Pravidla používání českých stránek Apercura, pro veřejnost i pro zdravotnická zařízení.",
+		"sections": {
+			"service": {
+				"heading": "Služba",
+				"body": [
+					"Apercura bezplatně uvádí zdravotnická zařízení z Národního registru poskytovatelů zdravotních služeb, která pacienti navštěvují: praktické lékaře, praktické lékaře pro děti a dorost, zubní lékaře, gynekology, ambulantní specialisty, lékárny, domácí péči, fyzioterapeuty, klinické psychology, klinické logopedy a porodní asistentky. Jde jen o adresář: v Česku se přes Apercura neobjednávají žádné termíny. Provozuje ho provozovatel uvedený v právních informacích.",
+					"Používání adresáře nevyžaduje žádný účet. Používáním webu přijímáte tyto podmínky."
+				]
+			},
+			"content": {
+				"heading": "Co stránky obsahují",
+				"body": [
+					"Stránky zobrazují věcné informace z veřejného registru, v neutrálním pořadí, bez hodnocení, recenzí, reklamy a placeného zvýraznění.",
+					"Informace mohou být neúplné nebo neaktuální: než do zařízení vyrazíte, ověřte si je přímo u něj. Na každé stránce je uvedeno, jak nahlásit chybu."
+				]
+			},
+			"health": {
+				"heading": "Nejde o lékařskou radu",
+				"body": [
+					"Apercura neposkytuje lékařské rady a není tísňovou službou. V naléhavém případě volejte 155 (zdravotnická záchranná služba) nebo 112. Mimo ordinační hodiny vám pomůže lékařská pohotovostní služba ve vašem kraji."
+				]
+			},
+			"practices": {
+				"heading": "Pro zdravotnická zařízení",
+				"body": [
+					"Převzetí stránky je zdarma. Vyžaduje doklad o tom, že žadatel zařízení provozuje nebo za ně jedná; ten před předáním stránky zkontroluje člověk.",
+					"Držitel stránky odpovídá za informace, které doplní. Musí zůstat věcné, přesné a aktuální, jak to vyžadují profesní pravidla pro informování o zdravotních službách."
+				]
+			},
+			"removal": {
+				"heading": "Odstranění stránky",
+				"body": [
+					"Každý, koho se stránka týká, může kdykoli požádat o její odstranění: postup popisuje stránka o datech. Převzatou stránku může odstranit jen její držitel."
+				]
+			},
+			"liability": {
+				"heading": "Odpovědnost",
+				"body": [
+					"Provozovatel se snaží udržet službu dostupnou a přesnou, nemůže to však zaručit. Neodpovídá za informace, které zařízení doplní na své stránky. Tato omezení upřesní právní kontrola."
+				]
+			},
+			"ip": {
+				"heading": "Kód a data",
+				"body": [
+					"Zdrojový kód je zveřejněn pod licencí AGPL-3.0. Data adresáře jsou převzata pod licencí Creative Commons Uveďte původ 4.0 Mezinárodní (CC BY 4.0)."
+				]
+			},
+			"law": {
+				"heading": "Rozhodné právo a spory",
+				"body": [
+					"Rozhodné právo a příslušné soudy upřesní právní kontrola; kogentní pravidla na ochranu spotřebitele země bydliště platí vždy. V případě sporu nejprve napište na kontaktní adresu, abychom hledali smírné řešení."
+				]
+			}
+		},
+		"fields": {
+			"publisher": "Provozovatel",
+			"effectiveDate": "Platnost od",
+			"contact": "Kontakt"
+		}
+	},
+	"AccessibilityCz": {
+		"metaTitle": "Přístupnost · Apercura",
+		"metaDescription": "Přístupnost českých stránek Apercura: cíl WCAG 2.2 AA, co bylo ověřeno, co zbývá a jak nahlásit problém.",
+		"title": "Přístupnost",
+		"lead": "Apercura je navržena pro všechny, včetně starších a slabozrakých lidí. Toto prohlášení popisuje, jak na tom české stránky jsou.",
+		"sections": {
+			"scope": {
+				"heading": "Rozsah",
+				"body": [
+					"Zákon č. 99/2019 Sb., o přístupnosti internetových stránek a mobilních aplikací, zavazuje subjekty veřejného sektoru, mezi které Apercura nepatří. Její provozovatel přesto u každé stránky usiluje o stejnou úroveň: WCAG 2.2 na úrovni AA."
+				]
+			},
+			"status": {
+				"heading": "Současný stav",
+				"body": [
+					"České stránky sdílejí kód francouzských stránek i jejich testy. Web částečně splňuje WCAG 2.2 AA: vychází to ze sebehodnocení a automatizovaných testů, zatím ne z úplného auditu, který probíhá."
+				]
+			},
+			"tests": {
+				"heading": "Co bylo ověřeno",
+				"list": [
+					"Automatizované kontroly axe-core (pravidla WCAG 2.0, 2.1 a 2.2, úrovně A a AA) u každého typu stránky při každém vydání.",
+					"Průchody pouze klávesnicí s viditelným zaměřením.",
+					"Text o velikosti alespoň 18 px, ovládací prvky alespoň 44 px, nic, co by záviselo jen na barvě, žádné vodorovné posouvání při šířce 390 px."
+				]
+			},
+			"pending": {
+				"heading": "Co zbývá ověřit",
+				"list": [
+					"Ruční kontrola s odečítači obrazovky VoiceOver a NVDA v češtině.",
+					"Úplný audit podle WCAG 2.2 AA na vzorku stránek."
+				]
+			},
+			"feedback": {
+				"heading": "Nahlásit problém",
+				"body": [
+					"Pokud se vám některá stránka nebo funkce špatně používá, napište na níže uvedenou adresu: uveďte, o kterou stránku jde a co vám bránilo. Odpovíme do jednoho měsíce a v případě potřeby vám informace poskytneme v jiné podobě."
+				]
+			}
+		},
+		"fields": {
+			"contact": "Kontakt",
+			"date": "Datum tohoto prohlášení"
+		}
+	},
+	"DataCz": {
+		"metaTitle": "Data a zdroje · Apercura",
+		"metaDescription": "Odkud pocházejí české stránky Apercura: Národní registr poskytovatelů zdravotních služeb (ÚZIS ČR) a RÚIAN (ČÚZK) pod licencí CC BY 4.0, data aktualizací a jak stránku opravit nebo odstranit.",
+		"title": "Data a zdroje",
+		"lead": "Každá česká stránka vychází z otevřených dat veřejných registrů. Zde zjistíte, odkud data pocházejí, pod jakou licencí a s jakým označením původu, kdy byla aktualizována a jak stránku opravit nebo odstranit.",
+		"status": {
+			"heading": "Poslední aktualizace",
+			"body": "Registr zveřejňuje svá otevřená data každý měsíc; adresář je kontroluje každý týden a při změně je načte. Stránka se mění, jen když se v registru změní její údaje.",
+			"importedAt": "Poslední načtení",
+			"checkedAt": "Poslední kontrola zdrojů",
+			"notImported": "Český adresář zatím na tomto webu nebyl načten.",
+			"notImportedValue": "Zatím nenačteno"
+		},
+		"sources": {
+			"heading": "Zdroje",
+			"body": "Oba zdroje jsou zveřejněny pod licencí Creative Commons Uveďte původ 4.0 Mezinárodní (CC BY 4.0), která umožňuje další užití včetně komerčního, pokud je uveden zdroj. Každé označení původu níže uvádíme doslovně.",
+			"caption": "Zdroje dat českého adresáře",
+			"columns": {
+				"source": "Zdroj",
+				"use": "K čemu slouží",
+				"licence": "Licence a označení původu",
+				"frequency": "Aktualizace"
+			},
+			"items": {
+				"cz-nrpzs": {
+					"use": "Zdravotnická zařízení a místa poskytování péče: názvy, druhy, obory péče, adresy, souřadnice, telefony",
+					"frequency": "Každý měsíc, ÚZIS ČR"
+				},
+				"cz-ruian": {
+					"use": "Kraje, okresy, obce a správní obvody Prahy s jejich středy (definiční body převedené na souřadnice GPS)",
+					"frequency": "Každý měsíc, ČÚZK"
+				},
+				"map": {
+					"name": "Mapová data",
+					"publisher": "Přispěvatelé OpenStreetMap, dlaždice OpenFreeMap",
+					"use": "Mapy na stránkách",
+					"frequency": "Průběžně"
+				}
+			},
+			"ccBy": "CC BY 4.0",
+			"odbl": "ODbL",
+			"citationHeading": "Citace požadovaná ÚZIS ČR",
+			"citation": "Zelinková H., Klimeš D., Šnábl I., Májek T., Jarkovský J., Klika P., Vičar M., Jochcová M., Komenda M., Dušek L.. NRPZS: Místa poskytování zdravotních služeb. Národní zdravotnický informační portál [online]. Praha: Ministerstvo zdravotnictví ČR a Ústav zdravotnických informací a statistiky ČR, 2026. Dostupné z: https://www.nzip.cz/data/1823-narodni-registr-poskytovatelu-zdravotnich-sluzeb-otevrena-data. ISSN 2695-0340",
+			"ruianTerms": "Podmínky poskytování otevřených dat ČÚZK"
+		},
+		"coverage": {
+			"heading": "Zahrnutá zařízení",
+			"body": [
+				"Stránky vznikají pro druhy zdravotnických zařízení, které pacienti navštěvují, podle druhu zdravotnického zařízení uvedeného v registru.",
+				"Nezahrnujeme: nemocnice a jejich oddělení, lázeňská a dlouhodobá lůžková zařízení, laboratoře a zubní laboratoře, oční optiky, odběrová místa krve a plazmy, zdravotnickou záchrannou a dopravní službu, pracovnělékařské služby, péči v zařízeních sociálních služeb, ambulantní zařízení více oborů (jejichž obory nejsou vázány na jednu ordinaci) a další druhy. Zařízení zřízená Ministerstvem vnitra nebo Ministerstvem spravedlnosti (například věznice) registr sám nezveřejňuje."
+			],
+			"kinds": {
+				"CZ_GP": "Praktičtí lékaři pro dospělé (320)",
+				"CZ_PAEDIATRIC": "Praktičtí lékaři pro děti a dorost (321)",
+				"CZ_DENTIST": "Zubní lékaři (322)",
+				"CZ_GYNAECOLOGY": "Gynekologové (323)",
+				"CZ_SPECIALIST": "Ambulantní specialisté, podle hlavního oboru péče (324)",
+				"CZ_PSYCHOLOGY": "Kliničtí psychologové (340)",
+				"CZ_SPEECH_THERAPY": "Kliničtí logopedi (341)",
+				"CZ_HOME_CARE": "Domácí péče, především ošetřovatelská (350)",
+				"CZ_PHYSIOTHERAPY": "Fyzioterapeuti (351)",
+				"CZ_MIDWIFERY": "Porodní asistentky (353)",
+				"CZ_PHARMACY": "Lékárny (510)"
+			},
+			"kindsLabel": "Zahrnuto (kód registru)"
+		},
+		"identifiers": {
+			"heading": "Identifikátory",
+			"body": [
+				"Adresa každé stránky končí číslem, které registr přiděluje zdravotnickému zařízení (ZZ_ID), takže stránku lze dohledat a porovnat s registrem:"
+			],
+			"list": [
+				"/cz/zarizeni/mudr-jana-ukazkova-900001: zařízení číslo 900001.",
+				"IČO poskytovatele nepoužíváme: u fyzické osoby identifikuje člověka."
+			]
+		},
+		"correct": {
+			"heading": "Opravit chybu",
+			"body": [
+				"Stránky opakují údaje registru: trvalá oprava se provádí u zdroje a stránka ji převezme při prvním načtení po měsíčním zveřejnění registru.",
+				"Ve všech ostatních případech použijte formulář: každé nahlášení prověříme."
+			],
+			"list": [
+				"Název, adresa, druh zařízení, obory a formy péče: poskytovatel oznámí změnu správnímu orgánu, který mu udělil oprávnění, obvykle krajskému úřadu kraje, v němž zařízení je; ten změnu zapíše do registru.",
+				"Telefon a další kontaktní údaje, ordinační doba: poskytovatel je v registru aktualizuje sám."
+			],
+			"formTitle": "Nahlásit chybu",
+			"formBody": "Uveďte adresu stránky a co je na ní špatně."
+		},
+		"remove": {
+			"heading": "Odstranit stránku",
+			"body": [
+				"Každý, koho se stránka týká, může proti jejímu zveřejnění kdykoli vznést námitku, bez udání důvodu (článek 21 GDPR). Nepřevzatá stránka se skryje hned po doručení žádosti a po krátké kontrole se smaže; s aktualizacemi registru se už nikdy nevrátí. Převzatou stránku odstraní její držitel ve svém prostoru."
+			],
+			"formTitle": "Požádat o odstranění stránky",
+			"formBody": "Uveďte adresu stránky a e-mailovou adresu, na kterou vám můžeme odpovědět."
+		}
+	}
+}

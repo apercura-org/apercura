@@ -73,3 +73,16 @@ describe("returning to a UK claim", () => {
 		expect(parseReturnTo("/pro/revendiquer?rpps=gb:")).toBeNull();
 	});
 });
+
+describe("returning to a Czech claim", () => {
+	it("accepts a `cz:` facility number, never anything that looks like a path", () => {
+		expect(parseReturnTo("/pro/revendiquer?rpps=cz:900001")).toEqual({
+			pathname: "/pro/revendiquer",
+			query: { rpps: "cz:900001" },
+		});
+		expect(parseReturnTo("/pro/revendiquer?rpps=cz%3A900001")?.pathname).toBe("/pro/revendiquer");
+		expect(parseReturnTo("/pro/revendiquer?rpps=cz:900001/..")).toBeNull();
+		expect(parseReturnTo("/pro/revendiquer?rpps=cz:0900001")).toBeNull();
+		expect(parseReturnTo("/pro/revendiquer?rpps=cz:")).toBeNull();
+	});
+});

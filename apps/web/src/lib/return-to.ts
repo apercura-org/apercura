@@ -5,7 +5,8 @@
  * Only an allowlist of internal practitioner-space paths is accepted, parsed
  * into a typed route (never echoed back as a raw string), so the parameter
  * can never become an open redirect: the claim of one page (an RPPS in France, a list key such
- * as `w7983` in Austria, `gb:a81001` in the UK, see ~/lib/practitioner-ref), or one team
+ * as `w7983` in Austria, `gb:a81001` in the UK, `cz:39781` in Czechia, see ~/lib/practitioner-ref),
+ * or one team
  * invitation (an invited person creates their account first).
  */
 
@@ -20,10 +21,10 @@ export type ReturnTo =
 const PRO_ROUTE =
 	/^(?:\/en)?\/pro\/(revendiquer|invitation)(?:\/([0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}))?$/;
 /**
- * A practitioner reference: an RPPS (France), a regional list key (Austria, `w7983`) or a UK
- * practice key (`gb:a81001`).
+ * A practitioner reference: an RPPS (France), a regional list key (Austria, `w7983`), a UK
+ * practice key (`gb:a81001`) or a Czech facility number (`cz:39781`).
  */
-const RPPS = /^(?:\d{11}|[a-z]{1,2}[1-9]\d{0,8}|gb:[a-z0-9]{2,12})$/;
+const RPPS = /^(?:\d{11}|[a-z]{1,2}[1-9]\d{0,8}|gb:[a-z0-9]{2,12}|cz:[1-9]\d{0,8})$/;
 const BASE = "http://internal.invalid";
 
 /** The allowlisted route a `?suite=` value designates, or null for anything else. */

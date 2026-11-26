@@ -1,7 +1,8 @@
-import { austria, unitedKingdom } from "@apercura/core/country";
+import { austria, countryAdapter } from "@apercura/core/country";
 import {
 	AT_DENTIST,
 	AT_DOCTOR,
+	CZ_DEFAULT_PROFESSIONS,
 	GB_DENTAL_PRACTICE,
 	GB_GP_PRACTICE,
 	GB_PHARMACY,
@@ -50,7 +51,8 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
 	const t = await getTranslations({ locale, namespace: "HomePage" });
 
 	const tMeta = await getTranslations({ locale, namespace: "Metadata" });
-	// Austria and the UK: a directory from open lists, without booking or the French registry.
+	// Austria, the UK and Czechia: a directory from open lists, without booking or the French
+	// registry.
 	const market = marketOf(locale);
 	const austrian = market !== "FR";
 	const pillars: Pillar[] = austrian
@@ -188,7 +190,8 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
 
 /**
  * The home of a market opened from open lists: its largest listings and its places, from the
- * read models. Austria lists its Bundesländer; the UK its regions and nations, each a hub.
+ * read models. Austria lists its Bundesländer; the UK its regions and nations, each a hub;
+ * Czechia its districts (okresy).
  */
 async function MarketDirectory({ locale }: { locale: Locale }) {
 	const t = await getTranslations({ locale, namespace: "HomePage" });
@@ -253,7 +256,8 @@ async function MarketDirectory({ locale }: { locale: Locale }) {
 
 /**
  * The sources and figures of a market opened from open lists: pages by profession (Austria's
- * doctors and dentists, the UK's GP practices, dental practices and pharmacies) and the lists.
+ * doctors and dentists, the UK's GP practices, dental practices and pharmacies, Czechia's kinds
+ * of facility) and the lists.
  */
 async function OpenDataRegistry({ locale }: { locale: Locale }) {
 	const t = await getTranslations({ locale, namespace: "HomePage" });
@@ -262,7 +266,7 @@ async function OpenDataRegistry({ locale }: { locale: Locale }) {
 	const overview = await getMarketOverview(country);
 	const countOf = (code: string) =>
 		overview.professions.find((row) => row.professionCode === code)?.practitionerCount ?? 0;
-	const adapter = country === "GB" ? unitedKingdom : austria;
+	const adapter = country === "AT" ? austria : countryAdapter(country);
 	const sources = [
 		...new Set(
 			adapter.registries
@@ -272,10 +276,13 @@ async function OpenDataRegistry({ locale }: { locale: Locale }) {
 		),
 	].join(country === "GB" ? "; " : ", ");
 	const rows =
-		country === "GB"
-			? [GB_GP_PRACTICE, GB_DENTAL_PRACTICE, GB_PHARMACY].map((code) => ({
+		country === "GB" || country === "CZ"
+			? (country === "GB"
+					? [GB_GP_PRACTICE, GB_DENTAL_PRACTICE, GB_PHARMACY]
+					: CZ_DEFAULT_PROFESSIONS
+				).map((code) => ({
 					code,
-					label: labels.listing(unitedKingdom.taxonomy.listingSlugFor(code, null)) ?? code,
+					label: labels.listing(adapter.taxonomy.listingSlugFor(code, null)) ?? code,
 				}))
 			: [
 					{ code: AT_DOCTOR, label: t("registry.doctors") },

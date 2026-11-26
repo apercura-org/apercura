@@ -522,6 +522,7 @@
 		"unknownProfession": "Gesundheitsfachkraft",
 		"professionHeading": "Beruf und Qualifikationen",
 		"otherQualifications": "Weitere Qualifikationen",
+		"fieldsOfCare": "Versorgungsbereiche",
 		"practiceType": "Art der Tätigkeit",
 		"switchboard": "{phone} (Zentrale der Einrichtung)",
 		"establishment": "Einrichtung",
@@ -1634,7 +1635,45 @@
 			"zahnaerzte": "{gender, select, female {Zahnärztin} male {Zahnarzt} other {Zahnärztin/Zahnarzt}}",
 			"gp-practices": "Hausarztpraxis",
 			"dental-practices": "Zahnarztpraxis",
-			"pharmacies": "Apotheke"
+			"pharmacies": "Apotheke",
+			"prakticky-lekar": "Allgemeinmedizinische Praxis",
+			"detsky-lekar": "Kinderarztpraxis",
+			"zubni-lekar": "Zahnarztpraxis",
+			"gynekolog": "Frauenarztpraxis",
+			"lekar-specialista": "Facharztpraxis",
+			"lekarna": "Apotheke",
+			"domaci-pece": "Hauskrankenpflegedienst",
+			"fyzioterapeut": "Physiotherapiepraxis",
+			"psycholog": "Praxis für klinische Psychologie",
+			"logoped": "Logopädiepraxis",
+			"porodni-asistentka": "Hebamme",
+			"ocni-lekar": "Augenarztpraxis",
+			"detsky-psychiatr": "Kinder- und Jugendpsychiatrie",
+			"psychiatr": "Psychiatrische Praxis",
+			"ortoped": "Orthopädische Praxis",
+			"plasticky-chirurg": "Praxis für plastische Chirurgie",
+			"cevni-chirurg": "Gefäßchirurgische Praxis",
+			"neurochirurg": "Neurochirurgische Praxis",
+			"dermatolog": "Hautarztpraxis",
+			"neurolog": "Neurologische Praxis",
+			"rehabilitacni-lekar": "Praxis für physikalische Medizin",
+			"endokrinolog": "Praxis für Endokrinologie und Diabetologie",
+			"usni-nosni-krcni": "HNO-Praxis",
+			"kardiolog": "Kardiologische Praxis",
+			"urolog": "Urologische Praxis",
+			"alergolog": "Allergologische Praxis",
+			"ortodontista": "Kieferorthopädische Praxis",
+			"pneumolog": "Lungenfachpraxis",
+			"gastroenterolog": "Gastroenterologische Praxis",
+			"revmatolog": "Rheumatologische Praxis",
+			"angiolog": "Angiologische Praxis",
+			"onkolog": "Onkologische Praxis",
+			"nefrolog": "Nephrologische Praxis",
+			"genetik": "Praxis für medizinische Genetik",
+			"radiolog": "Radiologische Praxis",
+			"anesteziolog": "Anästhesiologische Praxis",
+			"chirurg": "Chirurgische Praxis",
+			"internista": "Internistische Praxis"
 		},
 		"listing": {
 			"aerzte": "Ärztinnen und Ärzte ohne Fachangabe",
@@ -1778,7 +1817,45 @@
 			"zahnaerzte": "Zahnmedizin",
 			"gp-practices": "Hausarztpraxen",
 			"dental-practices": "Zahnarztpraxen",
-			"pharmacies": "Apotheken"
+			"pharmacies": "Apotheken",
+			"prakticky-lekar": "Allgemeinmedizinerinnen und -mediziner",
+			"detsky-lekar": "Kinderärztinnen und -ärzte",
+			"zubni-lekar": "Zahnarztpraxen",
+			"gynekolog": "Frauenarztpraxen",
+			"lekar-specialista": "Facharztpraxen",
+			"lekarna": "Apotheken",
+			"domaci-pece": "Hauskrankenpflege",
+			"fyzioterapeut": "Physiotherapiepraxen",
+			"psycholog": "Klinische Psychologie",
+			"logoped": "Logopädiepraxen",
+			"porodni-asistentka": "Hebammen",
+			"ocni-lekar": "Augenarztpraxen",
+			"detsky-psychiatr": "Kinder- und Jugendpsychiatrie",
+			"psychiatr": "Psychiatrie",
+			"ortoped": "Orthopädie",
+			"plasticky-chirurg": "Plastische Chirurgie",
+			"cevni-chirurg": "Gefäßchirurgie",
+			"neurochirurg": "Neurochirurgie",
+			"dermatolog": "Dermatologie",
+			"neurolog": "Neurologie",
+			"rehabilitacni-lekar": "Physikalische Medizin",
+			"endokrinolog": "Endokrinologie und Diabetologie",
+			"usni-nosni-krcni": "Hals-Nasen-Ohrenheilkunde",
+			"kardiolog": "Kardiologie",
+			"urolog": "Urologie",
+			"alergolog": "Allergologie",
+			"ortodontista": "Kieferorthopädie",
+			"pneumolog": "Pneumologie",
+			"gastroenterolog": "Gastroenterologie",
+			"revmatolog": "Rheumatologie",
+			"angiolog": "Angiologie",
+			"onkolog": "Onkologie",
+			"nefrolog": "Nephrologie",
+			"genetik": "Medizinische Genetik",
+			"radiolog": "Radiologie",
+			"anesteziolog": "Anästhesiologie und Schmerztherapie",
+			"chirurg": "Chirurgie",
+			"internista": "Innere Medizin"
 		},
 		"practiceKind": {
 			"office": "Praxis",
@@ -2801,7 +2878,8 @@
 			"GB-PHS-DENT": "Code von Public Health Scotland",
 			"GB-PHS-PHARM": "Code von Public Health Scotland",
 			"GB-BSO-GP": "Praxisnummer der BSO",
-			"GB-BSO-DENT": "Zahnarztpraxis der BSO"
+			"GB-BSO-DENT": "Zahnarztpraxis der BSO",
+			"CZ-NRPZS": "NRPZS-Einrichtungsnummer"
 		}
 	},
 	"Onboarding": {
@@ -4308,6 +4386,386 @@
 			"heading": "Remove a page",
 			"body": [
 				"Anyone a page is about can object to its publication at any time, without giving a reason (UK GDPR article 21). An unclaimed page is hidden as soon as the request arrives and deleted after a light check; it never comes back with the updates of the lists. A claimed page is removed by its holder, from their space."
+			],
+			"formTitle": "Ask for a page to be removed",
+			"formBody": "Give the address of the page and an email address where we can answer you."
+		}
+	},
+	"LegalNoticeCz": {
+		"metaTitle": "Legal information (Czechia) · Apercura",
+		"metaDescription": "Legal information of the Czech pages of Apercura: the operator, its contact details and registration, and the person responsible for the content (§ 435 of the Civil Code, Act No. 480/2004 Coll.).",
+		"title": "Legal information",
+		"lead": "Who operates the Czech pages of Apercura (apercura.org/cz), as § 435 of the Civil Code (Act No. 89/2012 Coll.) asks of information a business makes public online.",
+		"sections": {
+			"provider": {
+				"heading": "Operator",
+				"body": [
+					"The Czech pages of Apercura are operated by the entity below. It runs the directory and answers for its content."
+				]
+			},
+			"service": {
+				"heading": "The service",
+				"body": [
+					"A free directory of healthcare facilities in Czechia (general practitioners, paediatricians, dentists, gynaecologists, specialists, pharmacies, home care, physiotherapists, clinical psychologists, speech therapists and midwives), built from the open data of the National Register of Healthcare Providers, without advertising, with a space where a facility can complete its own page. No appointment is booked through Apercura in Czechia."
+				]
+			},
+			"editor": {
+				"heading": "Person responsible for the content",
+				"body": [
+					"The person below is responsible for what the operator publishes. Information a facility adds to its own page is its own responsibility; as a service that stores information provided by its users, the operator answers for it only under the conditions of Act No. 480/2004 Coll. on certain information society services."
+				]
+			},
+			"liability": {
+				"heading": "Content of the pages",
+				"body": [
+					"The directory is built from the National Register of Healthcare Providers (NRPZS), which the Institute of Health Information and Statistics of the Czech Republic (ÚZIS ČR) publishes as open data under CC BY 4.0. It can be incomplete or out of date: check the information with the facility before you go. Every page says how to report an error."
+				]
+			},
+			"ip": {
+				"heading": "Code and data",
+				"body": [
+					"The source code of Apercura is published under the AGPL-3.0 licence. The directory data is reused under the Creative Commons Attribution 4.0 International licence (CC BY 4.0): the data page lists every source with the attribution it requires."
+				]
+			},
+			"review": {
+				"heading": "Status of this text",
+				"body": [
+					"This text is a draft, written before the legal entity was set up. It will be reviewed by a lawyer qualified in Czechia before the Czech pages are announced."
+				]
+			}
+		},
+		"fields": {
+			"name": "Name",
+			"legalForm": "Legal form",
+			"address": "Registered office",
+			"phone": "Phone",
+			"email": "Email address",
+			"registration": "Register and registration number",
+			"vatId": "VAT identification number",
+			"editor": "Responsible for the content"
+		},
+		"dataLink": "Data and sources"
+	},
+	"PrivacyCz": {
+		"metaTitle": "Personal data protection (Czechia) · Apercura",
+		"metaDescription": "Data processed by the Czech pages of Apercura: sources, purposes, legal bases, retention, recipients and your rights, including objection (GDPR articles 13, 14 and 21).",
+		"title": "Personal data protection",
+		"lead": "What data the Czech pages of Apercura process, where it comes from, why, for how long and by whom, and how to exercise your rights under the General Data Protection Regulation (GDPR) and Act No. 110/2019 Coll. on personal data processing.",
+		"sections": {
+			"controller": {
+				"heading": "Who is responsible",
+				"body": [
+					"The operator named in the legal information is the controller of the directory, of facility accounts, of claims and of the requests sent through the site."
+				]
+			},
+			"directory": {
+				"heading": "Directory: data about healthcare facilities",
+				"body": [
+					"Data: the name of the facility as it is registered, its kind (general practitioner, pharmacy, home care…), its fields of care, the address and the coordinates of its place of care, and the provider’s telephone number when it is that place’s own, as the National Register of Healthcare Providers (NRPZS) publishes them. A facility that claims its page can add a presentation, languages, a photo and opening hours.",
+					"Never stored, although the register publishes them: the provider’s company number (IČO), its registered office or seat, its professional representative, its e-mail address, its data box and its fax. A telephone number that the register gives for more than three places of care is a head office’s and is not shown.",
+					"Identifier: the number the register gives each healthcare facility (ZZ_ID), at the end of the page’s address.",
+					"Purpose: letting the public find a healthcare facility, where it is and how to reach it. Legal basis: legitimate interests (GDPR article 6(1)(f)), assessed below.",
+					"Retention: as long as the facility appears in the register. A page disappears after two weekly updates in which the facility is no longer in the register; a page removed after an objection is never published again.",
+					"Information: the data does not come from the facilities themselves (GDPR article 14). Writing to each of them would involve a disproportionate effort (article 14(5)(b)); this notice, the data page and a notice on every page make the information public."
+				]
+			},
+			"people": {
+				"heading": "Facilities, and the people they name",
+				"body": [
+					"A Czech page is a healthcare facility, the unit of the register, never a person’s profile. Most practices are run by a sole trader, and their facility is registered under that person’s name (for example “MUDr. Jana Ukázková”): such a page names the person, and is about them.",
+					"Only the facility’s registered name is shown, as the register publishes it. Nothing else about the person is collected: no date of birth, no personal identification number, no home address (the register itself does not publish them), no company number, no ratings and no reviews.",
+					"Anyone a page is about can object to it at any time, and the page is removed."
+				]
+			},
+			"sources": {
+				"heading": "Sources",
+				"body": [
+					"Every page is built from the NRPZS open data, which ÚZIS ČR publishes under CC BY 4.0. The register is kept under §§ 73 to 75 of Act No. 372/2011 Coll. on health services, which make its content public; the publisher’s own note on personal data cites § 73(8), §§ 74 and 75 of that Act and § 16 of Act No. 110/2019 Coll. Places come from RÚIAN (ČÚZK). Each source is reused with its attribution:"
+				]
+			},
+			"balancing": {
+				"heading": "Legitimate interests assessment",
+				"body": [
+					"Purpose: patients need to know which healthcare facilities are where, what care they provide and how to reach them, a need the State already meets by making the register public and publishing it as open data.",
+					"Necessity: only the register’s data about the place of care is shown, the data the law makes public anyway; nothing about private life, no ratings, no reviews.",
+					"Balance: a neutral order, no advertising, the minimum of the register’s fields, an objection that hides a page at once and keeps it from coming back, corrections at the source, and pages that follow every update of the register. A provider listed in a public register expects to be found in a directory repeating that information. In 2013, before the GDPR, the Office for Personal Data Protection (ÚOOÚ) found after an inspection of a doctors’ directory that basic profile data may be published without consent; this notice does not rely on that finding, which is given as context only. Weighing these points, the interests of patients prevail, and anyone a page is about can object without giving a reason."
+				]
+			},
+			"accounts": {
+				"heading": "Facility accounts and claims",
+				"body": [
+					"Data: email address, name, password (stored hashed), second authentication factor, the documents sent to claim a page (proof that the claimant runs the facility or acts for it) and team members.",
+					"Purposes: managing the account and checking that a page is claimed by the right facility. Legal bases: performance of the terms of use (article 6(1)(b)) and the legitimate interests of securing the service (article 6(1)(f)).",
+					"Retention: the account is kept until it is deleted; supporting documents, encrypted, are erased 30 days after the decision."
+				]
+			},
+			"requests": {
+				"heading": "Error reports, objections and contact requests",
+				"body": [
+					"Data: the message, the contact email address when one is given and the page concerned; for a “this is my page” request also the name and phone number. Free text is encrypted.",
+					"Purposes: correcting errors, applying objections and helping a facility that cannot claim its page online. Legal bases: legitimate interests (article 6(1)(f)) and the right to object (article 21).",
+					"Retention: a report is deleted 6 months after it is closed, a rejected objection one year after its decision, a contact request 12 months after the last exchange. Once an objection is confirmed, or the holder of a claimed page removes it, the page and the data about it are deleted at once, the objection included; all that is kept is a record of the removal (the identifier of the page, the country, the reason, who recorded it and when), so that it is never published again. A holder who removes their page keeps, in their account only and never published, the name, profession and identifier shown in their space and their claim, until the account is deleted."
+				]
+			},
+			"technical": {
+				"heading": "Technical data and cookies",
+				"body": [
+					"Only cookies strictly necessary to the service are set: the session of signed-in facilities and the chosen language. No advertising or audience measurement cookies, no trackers.",
+					"To limit abuse, IP addresses are transformed with a keyed function before being counted and never stored as such; facility sessions record a truncated IP address. Views of claimed pages are counted without a cookie or identifier, and only the page’s holder sees them."
+				]
+			},
+			"recipients": {
+				"heading": "Recipients and processors",
+				"body": [
+					"Data is neither sold nor rented, and never used for advertising. Only the operator’s team and the processors below receive it, each for its own part, under a contract that meets GDPR article 28. Maps are loaded from a tile server, which receives the visitor’s IP address like any website."
+				]
+			},
+			"transfers": {
+				"heading": "Transfers outside the European Union",
+				"body": [
+					"Data is transferred outside the European Union and the European Economic Area only under the safeguards of chapter V of the GDPR (an adequacy decision or standard contractual clauses). Any change of processor will be announced here before it takes effect."
+				]
+			},
+			"automated": {
+				"heading": "Automated decisions",
+				"body": [
+					"No decision about you is taken by automated means alone. A claim is decided by a person, who reads its documents."
+				]
+			},
+			"rights": {
+				"heading": "Your rights",
+				"body": [
+					"You can ask to access your data, to have it corrected or erased, to restrict its processing, to receive it in a portable format and to object to its processing. Write to the address below; you will get an answer within one month.",
+					"You can also lodge a complaint with the Czech supervisory authority, the Office for Personal Data Protection (Úřad pro ochranu osobních údajů, ÚOOÚ): Pplk. Sochora 727/27, 170 00 Praha 7, posta@uoou.gov.cz, uoou.gov.cz."
+				]
+			},
+			"objection": {
+				"heading": "Objecting to a page (GDPR article 21)",
+				"body": [
+					"Anyone a page is about can object to its publication at any time, without giving a reason. If the page is unclaimed, a form is enough: the page is hidden as soon as the request arrives, deleted after a light check, and the updates of the register never publish it again. If it is claimed, its holder removes it from their space."
+				]
+			},
+			"changes": {
+				"heading": "Updates to this notice",
+				"body": [
+					"This notice is a draft. It will be reviewed by a lawyer qualified in Czechia and by the data protection officer; every version is dated."
+				]
+			}
+		},
+		"fields": {
+			"controller": "Controller",
+			"address": "Address",
+			"email": "Contact for requests",
+			"dpo": "Data protection officer",
+			"effectiveDate": "Effective date",
+			"hostingProvider": "Hosting provider (processor)",
+			"smtp": "Email delivery (processor)"
+		},
+		"objectLink": "How to object to a page",
+		"authorityLink": "Lodge a complaint with the Office for Personal Data Protection"
+	},
+	"TermsCz": {
+		"metaTitle": "Terms of use (Czechia) · Apercura",
+		"metaDescription": "Terms of use of the Czech pages of Apercura: a free, factual directory of healthcare facilities from the National Register of Healthcare Providers, without online booking.",
+		"title": "Terms of use",
+		"lead": "The rules for using the Czech pages of Apercura, for the public and for healthcare facilities alike.",
+		"sections": {
+			"service": {
+				"heading": "The service",
+				"body": [
+					"Apercura lists, free of charge, the healthcare facilities of the National Register of Healthcare Providers that patients visit: general practitioners, paediatricians, dentists, gynaecologists, specialists, pharmacies, home care, physiotherapists, clinical psychologists, speech therapists and midwives. It is a directory only: no appointment is booked through Apercura in Czechia. It is run by the operator named in the legal information.",
+					"Using the directory requires no account. Using the site means accepting these terms."
+				]
+			},
+			"content": {
+				"heading": "What the pages contain",
+				"body": [
+					"Pages show factual information from the public register, in a neutral order, without ratings, reviews, advertising or paid placement.",
+					"The information may be incomplete or out of date: check it with the facility before you go. Every page says how to report an error."
+				]
+			},
+			"health": {
+				"heading": "Not medical advice",
+				"body": [
+					"Apercura gives no medical advice and is not an emergency service. In an emergency, call 155 (emergency medical service) or 112. Outside surgery hours, the out-of-hours medical service (lékařská pohotovostní služba) of your region can help."
+				]
+			},
+			"practices": {
+				"heading": "For healthcare facilities",
+				"body": [
+					"Claiming a page is free. It requires a document proving that the claimant runs the facility or acts for it, checked by a person before the page is handed over.",
+					"The holder of a page is responsible for the information they add. It must stay factual, accurate and up to date, as the professional rules on information about health services require."
+				]
+			},
+			"removal": {
+				"heading": "Removing a page",
+				"body": [
+					"Anyone a page is about can ask for it to be removed at any time: the data page explains how. A claimed page can only be removed by its holder."
+				]
+			},
+			"liability": {
+				"heading": "Liability",
+				"body": [
+					"The operator does its best to keep the service available and accurate, but cannot guarantee it. It is not responsible for the information facilities add to their pages. These limits will be specified during the legal review."
+				]
+			},
+			"ip": {
+				"heading": "Code and data",
+				"body": [
+					"The source code is published under the AGPL-3.0 licence. Directory data is reused under the Creative Commons Attribution 4.0 International licence (CC BY 4.0)."
+				]
+			},
+			"law": {
+				"heading": "Governing law and disputes",
+				"body": [
+					"The governing law and the competent courts will be specified during the legal review; the mandatory consumer protection rules of the country of residence always apply. In case of a dispute, first write to the contact address to look for an amicable solution."
+				]
+			}
+		},
+		"fields": {
+			"publisher": "Operator",
+			"effectiveDate": "Effective date",
+			"contact": "Contact"
+		}
+	},
+	"AccessibilityCz": {
+		"metaTitle": "Accessibility (Czechia) · Apercura",
+		"metaDescription": "Accessibility of the Czech pages of Apercura: the WCAG 2.2 AA target, what was checked, what remains, and how to report a problem.",
+		"title": "Accessibility",
+		"lead": "Apercura is designed for everyone, including older and low-vision people. This statement says where the Czech pages stand.",
+		"sections": {
+			"scope": {
+				"heading": "Scope",
+				"body": [
+					"Act No. 99/2019 Coll. on the accessibility of websites and mobile applications binds public sector bodies, which Apercura is not. Its operator nevertheless aims at the same standard on every page: WCAG 2.2 level AA."
+				]
+			},
+			"status": {
+				"heading": "Where the site stands",
+				"body": [
+					"The Czech pages share the code of the French pages and their tests. The site partially meets WCAG 2.2 AA: this rests on a self-assessment and automated tests, not yet on a full audit, which is in progress."
+				]
+			},
+			"tests": {
+				"heading": "What was checked",
+				"list": [
+					"Automated axe-core checks (WCAG 2.0, 2.1 and 2.2 rules, levels A and AA) on every page type, at every release.",
+					"Keyboard-only journeys with a visible focus.",
+					"Body text of at least 18 px, targets of at least 44 px, nothing that relies on colour alone, no horizontal scrolling at 390 px."
+				]
+			},
+			"pending": {
+				"heading": "What remains to be checked",
+				"list": [
+					"A manual pass with the VoiceOver and NVDA screen readers, in Czech.",
+					"A full audit against WCAG 2.2 AA on a sample of pages."
+				]
+			},
+			"feedback": {
+				"heading": "Report a problem",
+				"body": [
+					"If a page or a feature is hard to use, write to the address below: say which page and what blocked you. We answer within one month and, where needed, give you the information in another form."
+				]
+			}
+		},
+		"fields": {
+			"contact": "Contact",
+			"date": "Date of this statement"
+		}
+	},
+	"DataCz": {
+		"metaTitle": "Data and sources (Czechia) · Apercura",
+		"metaDescription": "Where the Czech pages of Apercura come from: the National Register of Healthcare Providers (ÚZIS ČR) and RÚIAN (ČÚZK) under CC BY 4.0, update dates, and how to correct or remove a page.",
+		"title": "Data and sources",
+		"lead": "Every Czech page is built from the open data of public registers. Here is where it comes from, under which licence and attribution, when it was updated, and how to correct or remove a page.",
+		"status": {
+			"heading": "Last update",
+			"body": "The register publishes its open data every month; the directory checks it every week and imports it when it has changed. A page changes only when its facts change in the register.",
+			"importedAt": "Last import",
+			"checkedAt": "Sources last checked",
+			"notImported": "The Czech directory has not been imported yet on this site.",
+			"notImportedValue": "Not imported yet"
+		},
+		"sources": {
+			"heading": "Sources",
+			"body": "Both sources are published under the Creative Commons Attribution 4.0 International licence (CC BY 4.0), which allows reuse, including commercial reuse, provided the source is credited. Each attribution below is printed word for word.",
+			"caption": "Data sources of the Czech directory",
+			"columns": {
+				"source": "Source",
+				"use": "Used for",
+				"licence": "Licence and attribution",
+				"frequency": "Updated"
+			},
+			"items": {
+				"cz-nrpzs": {
+					"use": "Healthcare facilities and their places of care: names, kinds, fields of care, addresses, coordinates, telephone numbers",
+					"frequency": "Every month, by ÚZIS ČR"
+				},
+				"cz-ruian": {
+					"use": "Regions, districts, municipalities and Prague’s administrative districts, with their centres (definition points converted to GPS coordinates)",
+					"frequency": "Every month, by ČÚZK"
+				},
+				"map": {
+					"name": "Map data",
+					"publisher": "OpenStreetMap contributors, tiles by OpenFreeMap",
+					"use": "Maps on the pages",
+					"frequency": "Continuously"
+				}
+			},
+			"ccBy": "CC BY 4.0",
+			"odbl": "ODbL",
+			"citationHeading": "Citation requested by ÚZIS ČR",
+			"citation": "Zelinková H., Klimeš D., Šnábl I., Májek T., Jarkovský J., Klika P., Vičar M., Jochcová M., Komenda M., Dušek L.. NRPZS: Místa poskytování zdravotních služeb. Národní zdravotnický informační portál [online]. Praha: Ministerstvo zdravotnictví ČR a Ústav zdravotnických informací a statistiky ČR, 2026. Dostupné z: https://www.nzip.cz/data/1823-narodni-registr-poskytovatelu-zdravotnich-sluzeb-otevrena-data. ISSN 2695-0340",
+			"ruianTerms": "ČÚZK’s terms for its open data"
+		},
+		"coverage": {
+			"heading": "Facilities covered",
+			"body": [
+				"Pages are generated for the kinds of healthcare facility patients visit, from the register’s facility kind (druh zdravotnického zařízení).",
+				"Left out: hospitals and their wards, spa and long-term care institutions, laboratories and dental laboratories, opticians, blood and plasma collection centres, ambulance and patient transport services, occupational health services, care in social care homes, outpatient centres of several fields (whose fields are not tied to one practice) and the other kinds. The register itself does not publish facilities set up by the Ministry of the Interior or the Ministry of Justice (prisons, for example)."
+			],
+			"kinds": {
+				"CZ_GP": "General practitioners for adults (320)",
+				"CZ_PAEDIATRIC": "General practitioners for children and adolescents (321)",
+				"CZ_DENTIST": "Dentists (322)",
+				"CZ_GYNAECOLOGY": "Gynaecologists (323)",
+				"CZ_SPECIALIST": "Specialists, listed by their main field of care (324)",
+				"CZ_PSYCHOLOGY": "Clinical psychologists (340)",
+				"CZ_SPEECH_THERAPY": "Speech therapists (341)",
+				"CZ_HOME_CARE": "Home care, mostly nursing (350)",
+				"CZ_PHYSIOTHERAPY": "Physiotherapists (351)",
+				"CZ_MIDWIFERY": "Midwives (353)",
+				"CZ_PHARMACY": "Pharmacies (510)"
+			},
+			"kindsLabel": "Imported (register code)"
+		},
+		"identifiers": {
+			"heading": "Identifiers",
+			"body": [
+				"The address of every page ends with the number the register gives the healthcare facility (ZZ_ID), so a page can be found and checked against the register:"
+			],
+			"list": [
+				"/cz/zarizeni/mudr-jana-ukazkova-900001: the facility number 900001.",
+				"The provider’s company number (IČO) is not used: for a sole trader, it identifies a person."
+			]
+		},
+		"correct": {
+			"heading": "Correct an error",
+			"body": [
+				"The pages repeat the register: a lasting correction is made at the source, and the page follows at the next import after the register’s monthly publication.",
+				"For anything else, use the form: we check every report."
+			],
+			"list": [
+				"Name, address, kind of facility, fields and forms of care: the provider notifies the authority that granted its authorisation, usually the regional authority (krajský úřad) of the region where the facility is, which records the change in the register.",
+				"Telephone and other contact details, surgery hours: the provider updates them itself in the register."
+			],
+			"formTitle": "Report an error",
+			"formBody": "Give the address of the page and what is wrong."
+		},
+		"remove": {
+			"heading": "Remove a page",
+			"body": [
+				"Anyone a page is about can object to its publication at any time, without giving a reason (GDPR article 21). An unclaimed page is hidden as soon as the request arrives and deleted after a light check; it never comes back with the updates of the register. A claimed page is removed by its holder, from their space."
 			],
 			"formTitle": "Ask for a page to be removed",
 			"formBody": "Give the address of the page and an email address where we can answer you."

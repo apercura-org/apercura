@@ -63,13 +63,14 @@ describe("places of a market", () => {
 		expect(isDepartmentSlug("69-rhone", "AT")).toBe(false);
 	});
 
-	it("treats Paris and Wien as their department's page", () => {
+	it("treats Paris, Wien and Praha as their department's page", () => {
 		expect(isDepartmentCity("FR", "75056")).toBe(true);
 		expect(isDepartmentCity("AT", "90001")).toBe(true);
 		expect(isDepartmentCity("AT", "75056")).toBe(false);
-		expect(CITY_IS_DEPARTMENT).toEqual({ FR: "75056", AT: "90001" });
+		expect(isDepartmentCity("CZ", "554782")).toBe(true);
+		expect(CITY_IS_DEPARTMENT).toEqual({ FR: "75056", AT: "90001", CZ: "554782" });
 		expect(NOT_DEPARTMENT_CITY("p")).toBe(
-			"NOT (p.country = 'FR' AND p.code = '75056') AND NOT (p.country = 'AT' AND p.code = '90001')",
+			"NOT (p.country = 'FR' AND p.code = '75056') AND NOT (p.country = 'AT' AND p.code = '90001') AND NOT (p.country = 'CZ' AND p.code = '554782')",
 		);
 	});
 
@@ -160,5 +161,58 @@ describe("the UK's pages", () => {
 			"GP Practice List Sizes (GP Practice Reference File)",
 		]);
 		expect(openDataSourcesOf("FR", [{ source: "ans", site: located }])).toEqual([]);
+	});
+});
+
+describe("Czechia's pages", () => {
+	it("serve Czechia's listings, without booking or French insurance facts", () => {
+		expect(isMarketListingSlug("cs-CZ", "prakticky-lekar")).toBe(true);
+		expect(isMarketListingSlug("cs-CZ", "kardiolog")).toBe(true);
+		expect(isMarketListingSlug("cs-CZ", "zarizeni")).toBe(false);
+		expect(isMarketListingSlug("cs-CZ", "cardiologue")).toBe(false);
+		expect(isMarketListingSlug("fr", "kardiolog")).toBe(false);
+		expect(showsBillingFacts("cs-CZ")).toBe(false);
+		expect(marketBooks("cs-CZ")).toBe(false);
+		expect(professionSlugOf("CZ_PHARMACY")).toBe("lekarna");
+		expect(professionSlugOf("CZ_SPECIALIST")).toBe("lekar-specialista");
+	});
+
+	it("check district slugs and label places by name, Prague's city being its district", () => {
+		expect(isDepartmentSlug("brno-mesto", "CZ")).toBe(true);
+		expect(isDepartmentSlug("praha", "CZ")).toBe(true);
+		expect(isDepartmentSlug("69-rhone", "CZ")).toBe(true);
+		expect(isDepartmentSlug("12", "CZ")).toBe(false);
+		expect(
+			placeLabel(
+				{ kind: "department", code: "CZ0642", name: "Brno-město", departmentCode: "CZ0642" },
+				"CZ",
+			),
+		).toBe("Brno-město");
+		expect(
+			placeLabel({ kind: "commune", code: "582786", name: "Brno", departmentCode: "CZ0642" }, "CZ"),
+		).toBe("Brno");
+		expect(isDepartmentCity("CZ", "554782")).toBe(true);
+		expect(isDepartmentCity("CZ", "582786")).toBe(false);
+	});
+
+	it("write Czech addresses street, then postcode and town, and Czech numbers", () => {
+		const site = {
+			addressLine: "Ukázková 1234/12",
+			addressComplement: null,
+			postcode: "120 00",
+			placeName: "Praha 2",
+		};
+		expect(addressLines(site, "CZ")).toEqual(["Ukázková 1234/12", "120 00 Praha 2"]);
+		expect(localityOf("Praha 2", "CZ")).toBe("Praha 2");
+		expect(formatPhone("+420222333444")).toBe("222 333 444");
+	});
+
+	it("credit the NRPZS and RÚIAN with their CC BY 4.0 attribution", () => {
+		const sources = openDataSourcesOf("CZ", [{ source: "cz-nrpzs", site: null }]);
+		expect(sources.map((source) => source.attribution)).toEqual([
+			"Zdroj: Ministerstvo zdravotnictví ČR a Ústav zdravotnických informací a statistiky ČR, Národní registr poskytovatelů zdravotních služeb (nzip.cz)",
+			"ČÚZK, 2026",
+		]);
+		expect(openDataSourcesOf("CZ", [])).toEqual([]);
 	});
 });

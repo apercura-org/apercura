@@ -231,6 +231,41 @@ const MEDICAL_SPECIALTIES: Record<string, readonly MedicalSpecialty[]> = {
 	// The United Kingdom's practices.
 	"gp-practices": ["https://schema.org/PrimaryCare"],
 	"dental-practices": ["https://schema.org/Dentistry"],
+	// Czechia's facilities (Czech listing slugs).
+	"prakticky-lekar": ["https://schema.org/PrimaryCare"],
+	"detsky-lekar": ["https://schema.org/Pediatric", "https://schema.org/PrimaryCare"],
+	"zubni-lekar": ["https://schema.org/Dentistry"],
+	ortodontista: ["https://schema.org/Dentistry"],
+	gynekolog: ["https://schema.org/Gynecologic", "https://schema.org/Obstetric"],
+	"ocni-lekar": ["https://schema.org/Ophthalmology"],
+	psychiatr: ["https://schema.org/Psychiatric"],
+	"detsky-psychiatr": ["https://schema.org/Pediatric", "https://schema.org/Psychiatric"],
+	ortoped: ["https://schema.org/Musculoskeletal"],
+	"plasticky-chirurg": ["https://schema.org/PlasticSurgery"],
+	"cevni-chirurg": ["https://schema.org/Surgical", "https://schema.org/Cardiovascular"],
+	neurochirurg: ["https://schema.org/Surgical", "https://schema.org/Neurologic"],
+	chirurg: ["https://schema.org/Surgical"],
+	dermatolog: ["https://schema.org/Dermatology"],
+	neurolog: ["https://schema.org/Neurologic"],
+	"rehabilitacni-lekar": ["https://schema.org/Physiotherapy"],
+	fyzioterapeut: ["https://schema.org/Physiotherapy"],
+	endokrinolog: ["https://schema.org/Endocrine"],
+	"usni-nosni-krcni": ["https://schema.org/Otolaryngologic"],
+	kardiolog: ["https://schema.org/Cardiovascular"],
+	urolog: ["https://schema.org/Urologic"],
+	pneumolog: ["https://schema.org/Pulmonary"],
+	gastroenterolog: ["https://schema.org/Gastroenterologic"],
+	revmatolog: ["https://schema.org/Rheumatologic"],
+	onkolog: ["https://schema.org/Oncologic"],
+	nefrolog: ["https://schema.org/Renal"],
+	genetik: ["https://schema.org/Genetic"],
+	radiolog: ["https://schema.org/Radiography"],
+	anesteziolog: ["https://schema.org/Anesthesia"],
+	lekarna: ["https://schema.org/PharmacySpecialty"],
+	"porodni-asistentka": ["https://schema.org/Midwifery"],
+	psycholog: ["https://schema.org/Psychiatric"],
+	logoped: ["https://schema.org/SpeechPathology"],
+	"domaci-pece": ["https://schema.org/Nursing"],
 };
 
 /**
@@ -425,17 +460,28 @@ const PLACE_TYPES = {
 const DOCTOR_PROFESSIONS = new Set(["10", "ARZT"]);
 
 /**
- * schema.org types of the UK's practices: the practice itself is the page's subject (the UK
- * lists practices, not people), and its branch surgeries are places of the same type.
+ * schema.org types of the UK's practices and Czechia's facilities: the practice or facility
+ * itself is the page's subject (those markets list places of care, not people), and its branch
+ * surgeries are places of the same type. A Czech facility is a `MedicalClinic` unless it is a
+ * dental practice or a pharmacy.
  */
 const PRACTICE_TYPES: Readonly<Record<string, "MedicalClinic" | "Dentist" | "Pharmacy">> = {
 	GB_GP: "MedicalClinic",
 	GB_DENTAL: "Dentist",
 	GB_PHARMACY: "Pharmacy",
+	CZ_DENTIST: "Dentist",
+	CZ_PHARMACY: "Pharmacy",
 };
 
+/** The schema.org type of a market of practices' page subject (`PRACTICE_TYPES`), if any. */
+function practiceTypeOf(professionCode: string): "MedicalClinic" | "Dentist" | "Pharmacy" | null {
+	return (
+		PRACTICE_TYPES[professionCode] ?? (professionCode.startsWith("CZ_") ? "MedicalClinic" : null)
+	);
+}
+
 function placeTypeOf(practiceKind: string, professionCode: string) {
-	const practice = PRACTICE_TYPES[professionCode];
+	const practice = practiceTypeOf(professionCode);
 	if (practice) return practice;
 	if (practiceKind === "office" && !DOCTOR_PROFESSIONS.has(professionCode))
 		return "MedicalBusiness";
@@ -533,7 +579,7 @@ export function practitionerNodes(input: PractitionerInput): Thing[] {
 	const specialty = one(medicalSpecialtiesOf(input.listingSlug));
 
 	let person: Thing;
-	const practiceType = PRACTICE_TYPES[input.professionCode];
+	const practiceType = practiceTypeOf(input.professionCode);
 	// A UK practice: an organisation (a local business), its own address first, its branch
 	// surgeries as further `location`s.
 	if (practiceType) {

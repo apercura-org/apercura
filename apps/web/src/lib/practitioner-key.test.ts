@@ -70,3 +70,28 @@ describe("UK practice keys", () => {
 		expect(displayId({ idScheme: "GB-PHS-GP", nationalId: "89001" })).toBe("sg89001");
 	});
 });
+
+describe("Czech facility keys", () => {
+	it("read a facility page segment in Czechia only", () => {
+		expect(parsePractitionerKey("cs-CZ", "mudr-jana-ukazkova-900001")).toEqual({
+			country: "CZ",
+			idScheme: "CZ-NRPZS",
+			nationalId: "900001",
+			namePart: "mudr-jana-ukazkova",
+		});
+		expect(parsePractitionerKey("cs-CZ", "camille-exemple-19999990013")).toBeNull();
+		expect(parsePractitionerKey("cs-CZ", "the-example-surgery-a99001")).toBeNull();
+		expect(parsePractitionerKey("fr", "mudr-jana-ukazkova-900001")).toBeNull();
+		expect(marketAdapter("cs-CZ").features.booking).toBe(false);
+	});
+
+	it("mark a Czech segment outside a locale, and print the NRPZS number", () => {
+		expect(marketSegmentOf("CZ", "mudr-jana-ukazkova-900001")).toBe("cz.mudr-jana-ukazkova-900001");
+		expect(parseAnyPractitionerKey("cz.mudr-jana-ukazkova-900001")).toMatchObject({
+			country: "CZ",
+			nationalId: "900001",
+		});
+		expect(parseAnyPractitionerKey("mudr-jana-ukazkova-900001")).toBeNull();
+		expect(displayId({ idScheme: "CZ-NRPZS", nationalId: "900001" })).toBe("900001");
+	});
+});

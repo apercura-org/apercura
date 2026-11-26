@@ -8,6 +8,7 @@ import { type Href, Link } from "~/i18n/navigation";
 import type { Locale } from "~/i18n/routing";
 import { genderOf, getTaxonomyLabels } from "~/lib/labels";
 import { showsBillingFacts } from "~/lib/market";
+import { listsPractices } from "~/lib/markets";
 import { cardTownLine } from "~/lib/practitioner-view";
 import type { ListedPractitioner } from "~/server/queries/landing";
 import type { LandingPayload } from "~/server/queries/types";
@@ -220,8 +221,8 @@ export async function PractitionerTable({
 								</Link>
 								<p className="mt-1 text-meta text-ink">
 									{labels.occupation(row.listingSlug, genderOf(row.civilityCode))}
-									{/* A UK practice is its premises: no kind of place to tell apart. */}
-									{row.practiceKind && marketOf(locale) !== "GB"
+									{/* A UK practice or Czech facility is its premises: no kind of place to tell apart. */}
+									{row.practiceKind && !listsPractices(marketOf(locale))
 										? ` · ${labels.practiceKind(row.practiceKind) ?? ""}`
 										: ""}
 								</p>

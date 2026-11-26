@@ -1,6 +1,7 @@
-import { austria, unitedKingdom } from "@apercura/core/country";
+import { austria, czechia, unitedKingdom } from "@apercura/core/country";
 import {
 	AT_PROFESSIONS,
+	CZ_PROFESSIONS,
 	GB_PROFESSIONS,
 	hasBillingSectors,
 	listingHasBillingSectors,
@@ -42,11 +43,15 @@ export function marketBooks(locale: Locale): boolean {
 
 /**
  * The profession slug of any market's profession code (`10` → `medecin`, `ARZT` → `aerzte`,
- * `GB_GP` → `gp-practices`).
+ * `GB_GP` → `gp-practices`, `CZ_GP` → `prakticky-lekar`).
  */
 export function professionSlugOf(code: string): string {
 	return (
-		professionFor(code)?.slug ?? AT_PROFESSIONS[code]?.slug ?? GB_PROFESSIONS[code]?.slug ?? ""
+		professionFor(code)?.slug ??
+		AT_PROFESSIONS[code]?.slug ??
+		GB_PROFESSIONS[code]?.slug ??
+		CZ_PROFESSIONS[code]?.slug ??
+		""
 	);
 }
 
@@ -95,8 +100,20 @@ export function ukSourcesOf(
 }
 
 /**
+ * The sources a Czech facility's page is built from, with their CC BY 4.0 attribution word for
+ * word: the NRPZS (its name, address, kind and fields of care) and RÚIAN (ČÚZK), whose regions,
+ * districts and municipalities place it.
+ */
+export function czechSourcesOf(): { name: string; attribution: string }[] {
+	return czechia.registries
+		.filter((registry) => registry.attribution)
+		.map((registry) => ({ name: registry.name, attribution: registry.attribution ?? "" }));
+}
+
+/**
  * The open-data sources of a page in a market whose licences require their attribution
- * (Austria's CC BY 4.0, the UK's OGL); empty for France, whose provenance line is the catalog's.
+ * (Austria's and Czechia's CC BY 4.0, the UK's OGL); empty for France, whose provenance line is
+ * the catalog's.
  */
 export function openDataSourcesOf(
 	country: string,
@@ -104,5 +121,6 @@ export function openDataSourcesOf(
 ): { name: string; attribution: string }[] {
 	if (country === "AT") return austrianSourcesOf(activities.map((activity) => activity.source));
 	if (country === "GB") return ukSourcesOf(activities);
+	if (country === "CZ") return activities.length > 0 ? czechSourcesOf() : [];
 	return [];
 }

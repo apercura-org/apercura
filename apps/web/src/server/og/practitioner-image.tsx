@@ -7,6 +7,7 @@ import { getTranslations } from "next-intl/server";
 import { MARKET_LOCALES } from "~/i18n/locales";
 import { genderOf, getTaxonomyLabels } from "~/lib/labels";
 import { professionSlugOf } from "~/lib/market";
+import { listsPractices } from "~/lib/markets";
 import { displayId, marketSegmentOf, type PractitionerKey } from "~/lib/practitioner-key";
 import { type OwnOgImage, practitionerOgImageUrl, shortPlaceName } from "~/lib/seo";
 import { cacheTags } from "~/server/cache-tags";
@@ -68,7 +69,7 @@ export async function practitionerCard(key: OgKey): Promise<PractitionerCard | n
 		occupation: labels.occupation(payload.listingSlug, gender) ?? profession,
 		place: (() => {
 			// A London practice is listed in its borough, without a town.
-			const locality = page.commune ?? (payload.country === "GB" ? page.department : null);
+			const locality = page.commune ?? (listsPractices(payload.country) ? page.department : null);
 			return locality ? shortPlaceName(locality.name) : null;
 		})(),
 		rpps: displayId(payload),

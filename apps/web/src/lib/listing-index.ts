@@ -6,6 +6,7 @@
  */
 import {
 	allAtListingSlugs,
+	allCzListingSlugs,
 	allGbListingSlugs,
 	FR_PROFESSIONS,
 	professionOfListingSlug,
@@ -15,11 +16,16 @@ import { LOCALES, type Locale, type MarketCountry, marketOf } from "~/i18n/local
 
 const AT_LISTINGS: ReadonlySet<string> = allAtListingSlugs();
 const GB_LISTINGS: ReadonlySet<string> = allGbListingSlugs();
+const CZ_LISTINGS: ReadonlySet<string> = allCzListingSlugs();
 
-/** True when a listing slug belongs to the market of `locale` (France's, Austria's or the UK's taxonomy). */
+/**
+ * True when a listing slug belongs to the market of `locale` (France's, Austria's, the UK's or
+ * Czechia's taxonomy).
+ */
 function inMarket(slug: string, locale: Locale): boolean {
 	if (marketOf(locale) === "AT") return AT_LISTINGS.has(slug);
 	if (marketOf(locale) === "GB") return GB_LISTINGS.has(slug);
+	if (marketOf(locale) === "CZ") return CZ_LISTINGS.has(slug);
 	const profession = professionOfListingSlug(slug);
 	return Boolean(profession && FR_PROFESSIONS[profession]?.enabled);
 }
@@ -59,11 +65,17 @@ export type ListingEntry = {
 };
 
 function buildIndex(locale: Locale): ListingEntry[] {
-	const listing = messagesFor(locale).taxonomy.listing as Record<string, string>;
+	const { taxonomy } = messagesFor(locale);
+	const listing = taxonomy.listing as Record<string, string>;
+	const professions = taxonomy.profession as Record<string, string>;
+	// A Czech listing is plural ("Kardiologové"), its profession label singular ("Kardiolog"):
+	// both match.
+	const singular = marketOf(locale) === "CZ";
 	const entries: ListingEntry[] = [];
 	for (const [slug, message] of Object.entries(listing)) {
 		if (!inMarket(slug, locale)) continue;
-		const forms = labelForms(message);
+		const profession = singular ? professions[slug] : undefined;
+		const forms = [...labelForms(message), ...(profession ? labelForms(profession) : [])];
 		entries.push({
 			slug,
 			label: forms[0] ?? slug,

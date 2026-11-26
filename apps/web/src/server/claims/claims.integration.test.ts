@@ -841,6 +841,108 @@ describe.skipIf(!url)("claims, ownership and objections (database)", async () =>
 		expect(suppression).toEqual({ country: "GB", id_scheme: "GB-ODS-GP" });
 	});
 
+	/**
+	 * A synthetic Czech facility (NRPZS): its number alone names no market, so the Czech references
+	 * carry it (`cz:`, a `/cz/` address).
+	 */
+	async function czechFacility() {
+		const sql = db.$client;
+		const nationalId = `8${String(Math.floor(Math.random() * 10_000_000)).padStart(7, "0")}`;
+		const [place] = await sql<{ id: number }[]>`
+			INSERT INTO directory.places (country, kind, code, name, slug, department_code, centroid)
+			VALUES ('CZ', 'commune', ${`T${run}${created.places.length}`}, 'Ukázkov',
+				${`ukazkov-${run}-${created.places.length}`}, 'CZ0642', 'SRID=4326;POINT(16.61 49.2)')
+			RETURNING id
+		`;
+		const [facility] = await sql<{ id: number }[]>`
+			INSERT INTO directory.practitioners (country, id_scheme, national_id, first_name, last_name,
+				first_name_source, last_name_source, profession_code, listing_slug, slug, primary_place_id,
+				indexable)
+			VALUES ('CZ', 'CZ-NRPZS', ${nationalId}, '', 'MUDr. Jana Ukázková', '', 'MUDr. Jana Ukázková',
+				'CZ_GP', 'prakticky-lekar', ${`mudr-jana-ukazkova-${nationalId}`}, ${place?.id ?? null}, true)
+			RETURNING id
+		`;
+		const [site] = await sql<{ id: number }[]>`
+			INSERT INTO directory.sites (source, source_key, kind, address_line, postcode, place_id,
+				location, geo_precision, phone, phone_kind)
+			VALUES ('cz-nrpzs', ${`test-${nationalId}`}, 'office', 'Ukázková 12', '602 00',
+				${place?.id ?? null}, 'SRID=4326;POINT(16.61 49.2)', 'address', '+420222333444', 'direct')
+			RETURNING id
+		`;
+		await sql`
+			INSERT INTO directory.activities (practitioner_id, site_id, source, source_key, practice_kind, is_primary)
+			VALUES (${facility?.id ?? 0}, ${site?.id ?? 0}, 'cz-nrpzs', ${`test-${nationalId}`}, 'office', true)
+		`;
+		created.practitioners.push(facility?.id ?? 0);
+		created.places.push(place?.id ?? 0);
+		created.sites.push(site?.id ?? 0);
+		return { id: facility?.id ?? 0, nationalId, ref: `cz:${nationalId}` };
+	}
+
+	it("claims a Czech facility with a document reviewed by an administrator, found by its Czech reference", async () => {
+		const target = await czechFacility();
+		const options = { pscEnabled: true, documentsEnabled: true };
+		const preview = await caller(users.alice).claims.preview({ ref: target.ref });
+		expect(preview).toMatchObject({ id: target.id, country: "CZ", idScheme: "CZ-NRPZS" });
+		const claim = await caller(users.alice).claims.start({
+			ref: `https://apercura.org/cz/zarizeni/mudr-jana-ukazkova-${target.nationalId}`,
+		});
+		const view = await service.claimForClaimant(db, claim.id, users.alice, options);
+		expect(view.methods).toEqual(["document"]);
+		expect(await codeOf(service.issuePhoneCode(db, claim.id, users.alice))).toBe(
+			"METHOD_UNAVAILABLE",
+		);
+		expect(await codeOf(service.recordPscResult(db, claim.id, users.alice))).toBe(
+			"METHOD_UNAVAILABLE",
+		);
+		await service.addClaimDocument(db, storage, {
+			claimId: claim.id,
+			userId: users.alice,
+			kind: "ordre_attestation",
+			bytes: Buffer.from("%PDF-1.4\n% synthetic registration decision\n%%EOF\n"),
+		});
+		await service.submitClaim(db, claim.id, users.alice);
+		expect(await service.evaluateClaim(db, claim.id)).toBeNull();
+		const queue = await caller(users.admin).admin.claims.queue();
+		expect(queue.find((item) => item.id === claim.id)).toMatchObject({
+			country: "CZ",
+			idScheme: "CZ-NRPZS",
+		});
+		const approval = await service.approveClaim(db, claim.id, users.admin, null);
+		expect(approval.via).toBe("review");
+		const [after] = await db
+			.select({ claimStatus: practitioners.claimStatus })
+			.from(practitioners)
+			.where(eq(practitioners.id, target.id));
+		expect(after?.claimStatus).toBe("claimed");
+	});
+
+	it("withholds a Czech facility on objection, found by its Czech reference", async () => {
+		const target = await czechFacility();
+		const request = await gdpr.requestRemoval(db, {
+			ref: target.ref,
+			contact: "namitka@example.test",
+			message: null,
+			locale: "cs-CZ",
+		});
+		const [row] = await db
+			.select({ withheldAt: practitioners.withheldAt, indexable: practitioners.indexable })
+			.from(practitioners)
+			.where(eq(practitioners.id, target.id));
+		expect(row?.withheldAt).not.toBeNull();
+		expect(row?.indexable).toBe(false);
+		await gdpr.decideRemoval(db, {
+			id: request.id,
+			adminId: users.admin,
+			confirm: true,
+			reason: null,
+		});
+		const [suppression] = await db.$client<{ country: string; id_scheme: string }[]>`
+			SELECT country, id_scheme FROM directory.suppressions WHERE national_id = ${target.nationalId}
+		`;
+		expect(suppression).toEqual({ country: "CZ", id_scheme: "CZ-NRPZS" });
+	});
+
 	it("withholds an Austrian page on objection, found by its list key", async () => {
 		const target = await austrianPractitioner();
 		expect(

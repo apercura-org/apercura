@@ -66,4 +66,14 @@ describe("listing index", () => {
 		expect(resolveListing("Pharmacies", "GB")).toBe("pharmacies");
 		expect(resolveListing("GP practices", "FR")).toBeNull();
 	});
+
+	it("suggests and resolves Czechia's listings in Czechia only, by plural or singular", () => {
+		expect(suggestListings("Kardio", "cs-CZ").map((entry) => entry.slug)).toEqual(["kardiolog"]);
+		expect(suggestListings("lékárn", "cs-CZ").map((entry) => entry.slug)).toEqual(["lekarna"]);
+		expect(resolveListing("Praktický lékař", "CZ")).toBe("prakticky-lekar");
+		expect(resolveListing("Praktičtí lékaři", "CZ")).toBe("prakticky-lekar");
+		expect(resolveListing("zubni lekar", "CZ")).toBe("zubni-lekar");
+		expect(resolveListing("Kardiologové", "FR")).toBeNull();
+		expect(suggestListings("Kardio", "fr").map((entry) => entry.slug)).not.toContain("kardiolog");
+	});
 });
