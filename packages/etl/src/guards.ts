@@ -390,3 +390,106 @@ export function checkGbPlaces(staged: {
 		},
 	];
 }
+
+// ---------------------------------------------------------------------------
+// Czechia (`etl:cz`): the same verdicts, on the one list
+// ---------------------------------------------------------------------------
+
+/**
+ * Limits of the NRPZS export. It is published monthly, so a change since the last success is
+ * allowed the Austrian lists' room. Two floors catch an empty or broken file on a first run:
+ * its data lines (every kind of facility: about 41,000 in November 2026, at least 1,000) and the
+ * facilities imported from them (about 33,000, at least 300); afterwards the change since the last successful run (5%,
+ * approvable) blocks a truncated one.
+ */
+export const CZ_LIMITS = {
+	fileSizeDelta: 0.15,
+	quarantineRatio: 0.01,
+	rowsDelta: 0.05,
+	minLines: 1_000,
+	minRows: 300,
+	/** Sites placed in a municipality or a Prague district (else only in their district). */
+	minPlacedRatio: 0.98,
+	/** Sites located at the register's own point. */
+	minLocatedRatio: 0.97,
+} as const;
+
+/**
+ * Checks of the list before the merge: quarantine within 1%, floors of lines and facilities
+ * (never approvable), and at most 5% more or fewer facilities or 15% more or fewer bytes than
+ * the last successful run (approvable).
+ */
+export function checkCzSource(
+	source: string,
+	current: AtSourceStats & { bytes: number },
+	previous: (AtSourceStats & { bytes?: number }) | null,
+): GuardCheck[] {
+	const ratio = current.lines === 0 ? 1 : current.quarantined / current.lines;
+	const checks: GuardCheck[] = [
+		{
+			name: `${source}.quarantine`,
+			ok: current.lines > 0 && ratio <= CZ_LIMITS.quarantineRatio,
+			approvable: false,
+			detail: `${current.quarantined} of ${current.lines} lines quarantined (${percent(ratio)})`,
+		},
+		{
+			name: `${source}.lines`,
+			ok: current.lines >= CZ_LIMITS.minLines,
+			approvable: false,
+			detail: `${current.lines} data lines (at least ${CZ_LIMITS.minLines} expected)`,
+		},
+		{
+			name: `${source}.rows`,
+			ok: current.rows >= CZ_LIMITS.minRows,
+			approvable: false,
+			detail: `${current.rows} facilities imported (at least ${CZ_LIMITS.minRows} expected)`,
+		},
+	];
+	if (previous) {
+		const rows = delta(current.people, previous.people);
+		checks.push({
+			name: `${source}.facilities`,
+			ok: rows <= CZ_LIMITS.rowsDelta,
+			approvable: true,
+			detail: `${current.people} facilities vs ${previous.people} last time (${percent(rows)})`,
+		});
+		if (previous.bytes !== undefined) {
+			const size = delta(current.bytes, previous.bytes);
+			checks.push({
+				name: `${source}.size`,
+				ok: size <= CZ_LIMITS.fileSizeDelta,
+				approvable: true,
+				detail: `${current.bytes} bytes vs ${previous.bytes} last time (${percent(size)})`,
+			});
+		}
+	}
+	return checks;
+}
+
+/**
+ * After staging: nearly every site must be placed in its municipality (or Prague district) and
+ * located at the register's point, or the listings and maps would lose it.
+ */
+export function checkCzPlaces(staged: {
+	sites: number;
+	located: number;
+	inDistrict: number;
+	placed: number;
+}): GuardCheck[] {
+	const local = staged.sites === 0 ? 1 : (staged.placed - staged.inDistrict) / staged.sites;
+	const located = staged.sites === 0 ? 1 : staged.located / staged.sites;
+	return [
+		{
+			name: "cz.places",
+			ok: local >= CZ_LIMITS.minPlacedRatio,
+			approvable: true,
+			detail: `${staged.placed - staged.inDistrict} of ${staged.sites} sites placed in a municipality or Prague district (${percent(local)})`,
+		},
+		{
+			name: "cz.points",
+			ok: located >= CZ_LIMITS.minLocatedRatio,
+			approvable: true,
+			detail: `${staged.located} of ${staged.sites} sites located at the register's point (${percent(located)})`,
+		},
+	];
+}
