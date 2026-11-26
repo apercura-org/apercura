@@ -38,6 +38,11 @@ const PLACES: Record<MarketCountry, PlaceSuggestion[]> = {
 	],
 	CZ: [place(30, "Brno", "brno", "brno-mesto"), place(31, "Praha", "praha", "praha")],
 	ES: [place(40, "Madrid", "madrid", "madrid"), place(41, "València", "valencia", "valencia")],
+	IT: [
+		place(40, "Roma", "roma", "roma"),
+		place(41, "Milano", "milano", "milano"),
+		place(42, "Napoli", "napoli", "napoli"),
+	],
 };
 
 const LANDINGS = new Set([
@@ -53,6 +58,9 @@ const LANDINGS = new Set([
 	"dentistas@Madrid",
 	"centros-de-salud@Madrid",
 	"farmacias@Madrid",
+	"farmacie@Roma",
+	"ospedali@Roma",
+	"farmacie@Milano",
 ]);
 
 const HUBS = new Set(["chirurgien-dentiste:fr", "dental-practices:gb"]);
@@ -125,6 +133,38 @@ describe("a search for a place of another market", () => {
 		expect(await search("fr", { quoi: "dentiste", ou: "València" })).toEqual(
 			searchPage("es-ES", { quoi: listingLabel("dentistas", "es-ES") ?? "", ou: "València" }),
 		);
+	});
+
+	it("moves to Italy's listing from any market, under the city's Italian name", async () => {
+		expect(await search("fr", { quoi: "pharmacie", ou: "Rome" })).toEqual(
+			listing("it-IT", "farmacie", "roma", "roma"),
+		);
+		expect(await search("fr", { quoi: "pharmacie", ou: "Roma" })).toEqual(
+			listing("it-IT", "farmacie", "roma", "roma"),
+		);
+		expect(await search("en-GB", { quoi: "pharmacy", ou: "Milan" })).toEqual(
+			listing("it-IT", "farmacie", "milano", "milano"),
+		);
+		expect(await search("fr", { quoi: "hôpital", ou: "Rome" })).toEqual(
+			listing("it-IT", "ospedali", "roma", "roma"),
+		);
+		expect(await search("cs-CZ", { quoi: "lékárna", ou: "Řím" })).toEqual(
+			listing("it-IT", "farmacie", "roma", "roma"),
+		);
+		// France in Italian moves to Italy in Italian.
+		expect(await search("it", { quoi: "farmacia", ou: "Roma" })).toEqual(
+			listing("it-IT", "farmacie", "roma", "roma"),
+		);
+		// No listing page fits: Italy's search, the place under its own name.
+		expect(await search("fr", { ou: "Rome" })).toEqual(searchPage("it-IT", { ou: "Roma" }));
+		expect(await search("fr", { quoi: "pharmacie", ou: "Naples" })).toEqual(
+			searchPage("it-IT", { quoi: listingLabel("farmacie", "it-IT") ?? "", ou: "Napoli" }),
+		);
+		// An Italian city the places do not know: Italy's search says so, never "not covered".
+		expect(await search("fr", { quoi: "pharmacie", ou: "Turin" })).toEqual(
+			searchPage("it-IT", { quoi: listingLabel("farmacie", "it-IT") ?? "", ou: "Turin" }),
+		);
+		expect(await search("it-IT", { quoi: "farmacia", ou: "Torino" })).toBeNull();
 	});
 
 	it("reads the words of the market searched too", async () => {
@@ -238,12 +278,12 @@ describe("a search for a European place outside the open markets", () => {
 		expect(await search("fr", { quoi: "dentiste", ou: "Berlin" })).toBeNull();
 		expect(await search("fr", { quoi: "dentiste", ou: "München" })).toBeNull();
 		expect(await search("fr", { quoi: "dentiste", ou: "Allemagne" })).toBeNull();
-		expect(await search("fr", { ou: "Roma" })).toBeNull();
-		expect(await search("fr", { quoi: "dentiste", ou: "Milan" })).toBeNull();
+		expect(await search("fr", { ou: "Hamburg" })).toBeNull();
+		expect(await search("fr", { quoi: "dentiste", ou: "Cologne" })).toBeNull();
 		expect(await search("en-GB", { quoi: "dentist", ou: "Germany" })).toBeNull();
 		// Even when another market was chosen in the form: this page says so.
 		expect(await search("fr", { quoi: "dentiste", ou: "Berlin" }, { chosen: "GB" })).toBeNull();
-		expect(await search("fr", { quoi: "Dupont", ou: "Italie" }, { chosen: "CZ" })).toBeNull();
+		expect(await search("fr", { quoi: "Dupont", ou: "Allemagne" }, { chosen: "CZ" })).toBeNull();
 	});
 
 	it("never says Spain is not covered: its cities move the search to /es", async () => {
@@ -279,6 +319,10 @@ describe("a search for an open country by name", () => {
 		expect(await search("en-GB", { ou: "Spain" })).toEqual({ href: "/", locale: "es-ES" });
 		// France in Spanish reads Spain in Spanish.
 		expect(await search("es", { ou: "España" })).toEqual({ href: "/", locale: "es-ES" });
+		// Italy is open since #150: its name, in any language, leads to /it.
+		expect(await search("fr", { ou: "Italie" })).toEqual({ href: "/", locale: "it-IT" });
+		expect(await search("en-GB", { ou: "Italy" })).toEqual({ href: "/", locale: "it-IT" });
+		expect(await search("it", { ou: "Italia" })).toEqual({ href: "/", locale: "it-IT" });
 		// The page's own market: its home, in the visitor's language.
 		expect(await search("en", { ou: "France" })).toEqual({ href: "/", locale: "en" });
 	});
@@ -296,6 +340,12 @@ describe("a search for an open country by name", () => {
 		);
 		expect(await search("fr", { quoi: "Dupont", ou: "Espagne" })).toEqual(
 			searchPage("es-ES", { quoi: "Dupont" }),
+		);
+		expect(await search("fr", { quoi: "pharmacie", ou: "Italie" })).toEqual(
+			searchPage("it-IT", { quoi: listingLabel("farmacie", "it-IT") ?? "" }),
+		);
+		expect(await search("fr", { quoi: "Dupont", ou: "Italie" })).toEqual(
+			searchPage("it-IT", { quoi: "Dupont" }),
 		);
 	});
 });

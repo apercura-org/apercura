@@ -305,6 +305,9 @@ const MEDICAL_SPECIALTIES: Record<string, readonly MedicalSpecialty[]> = {
 	nutricionistas: ["https://schema.org/DietNutrition"],
 	fisioterapeutas: ["https://schema.org/Physiotherapy"],
 	enfermeria: ["https://schema.org/Nursing"],
+	// Italy's places (Italian listing slugs).
+	farmacie: ["https://schema.org/PharmacySpecialty"],
+	parafarmacie: ["https://schema.org/PharmacySpecialty"],
 };
 
 /**
@@ -499,13 +502,15 @@ const PLACE_TYPES = {
 const DOCTOR_PROFESSIONS = new Set(["10", "ARZT"]);
 
 /**
- * schema.org types of the UK's practices, Czechia's facilities and Spain's centres: the practice,
- * facility or centre itself is the page's subject (those markets list places of care, not
- * people), and its branch surgeries are places of the same type. A Czech facility or a Spanish
- * centre is a `MedicalClinic` unless it is a dental practice, a pharmacy or (in Spain) a
- * hospital.
+ * schema.org types of the UK's practices, Czechia's facilities, Spain's centres and Italy's places:
+ * the practice, facility, centre or place itself is the page's subject (those markets list places
+ * of care, not people), and its branch surgeries are places of the same type. A Czech facility or
+ * a Spanish centre is a `MedicalClinic` unless it is a dental practice, a pharmacy or (in Spain) a
+ * hospital. An Italian hospital or accredited private clinic (both have inpatient beds) is a
+ * `Hospital`, a pharmacy a `Pharmacy`, a parapharmacy (a shop allowed to sell non-prescription
+ * medicines) a `MedicalBusiness`.
  */
-type PracticeType = "MedicalClinic" | "Dentist" | "Pharmacy" | "Hospital";
+type PracticeType = "MedicalClinic" | "Dentist" | "Pharmacy" | "Hospital" | "MedicalBusiness";
 
 const PRACTICE_TYPES: Readonly<Record<string, PracticeType>> = {
 	GB_GP: "MedicalClinic",
@@ -516,6 +521,10 @@ const PRACTICE_TYPES: Readonly<Record<string, PracticeType>> = {
 	ES_HOSPITAL: "Hospital",
 	ES_DENTAL: "Dentist",
 	ES_PHARMACY: "Pharmacy",
+	IT_PHARMACY: "Pharmacy",
+	IT_PARAPHARMACY: "MedicalBusiness",
+	IT_HOSPITAL: "Hospital",
+	IT_CLINIC: "Hospital",
 };
 
 /** The schema.org type of a market of practices' page subject (`PRACTICE_TYPES`), if any. */
@@ -636,9 +645,10 @@ export function practitionerNodes(input: PractitionerInput): Thing[] {
 			medicalSpecialty: specialty,
 			location: one(placeRefs.slice(1)),
 		};
-		return [practice as MedicalClinic | Dentist | Pharmacy | Hospital, ...places.slice(1)].map(
-			compact,
-		);
+		return [
+			practice as MedicalClinic | Dentist | Pharmacy | Hospital | MedicalBusiness,
+			...places.slice(1),
+		].map(compact);
 	}
 	// Physicians: French profession 10, Austrian ARZT. Dentists: 40, ZAHNARZT.
 	if (input.professionCode === "10" || input.professionCode === "ARZT") {

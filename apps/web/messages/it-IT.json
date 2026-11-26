@@ -1,0 +1,265 @@
+{
+	"Metadata": {
+		"description": "L’elenco aperto delle farmacie, parafarmacie, ospedali e case di cura d’Italia, dai dati aperti del Ministero della Salute.",
+		"proDescription": "Apercura pubblica una pagina oggettiva per ogni farmacia, parafarmacia, ospedale e casa di cura accreditata d’Italia. Trovi quella della sua struttura e la rivendichi gratuitamente.",
+		"homeTitle": "Apercura · Farmacie, parafarmacie e ospedali d’Italia"
+	},
+	"Site": {
+		"runningHead": "Elenco aperto delle strutture sanitarie in Italia",
+		"navPro": "Per le strutture sanitarie",
+		"footer": {
+			"free": "Gratuito per le strutture sanitarie e per i pazienti."
+		},
+		"folioRpps": "Codice {rpps}"
+	},
+	"Search": {
+		"label": "Trovare una farmacia, una parafarmacia, un ospedale o una casa di cura",
+		"whoHint": "Nome della struttura, o farmacia, parafarmacia, ospedale",
+		"whereHint": "Comune o provincia"
+	},
+	"SearchForm": {
+		"practitioners": "Strutture",
+		"department": "Provincia",
+		"geoDenied": "La posizione è disattivata per questo sito. Scriva un comune.",
+		"geoUnavailable": "Non è stato possibile trovare la sua posizione. Scriva un comune."
+	},
+	"SearchPage": {
+		"emptyTitle": "Nessuna struttura corrisponde",
+		"emptyBody": "Controlli l’ortografia, provi con un comune vicino o con un termine più ampio, come «farmacia».",
+		"queryOnlyNear": "Strutture vicino a lei (posizione approssimativa: il centro del comune)",
+		"startTitle": "Che cosa cerca?",
+		"startBody": "Scriva il nome di una struttura, o farmacia, parafarmacia, ospedale o casa di cura, in «Chi?», e un comune o una provincia in «Dove?». Può anche consultare l’elenco per regione e provincia.",
+		"unknownPlaceBody": "Controlli l’ortografia o scriva un comune vicino.",
+		"unlistedBody": "In Italia l’elenco comprende per ora le farmacie (con le succursali e i dispensari), le parafarmacie, gli ospedali e le case di cura private accreditate, secondo i dati del Ministero della Salute. Medici, dentisti e altri professionisti non sono elencati. Cerchi il nome di una struttura o consulti l’elenco.",
+		"departmentPlace": "Provincia",
+		"bookingNotOpen": "Apercura non offre la prenotazione online in Italia: contatti la struttura.",
+		"columns": {
+			"practitioner": "Struttura",
+			"place": "Indirizzo",
+			"appointments": "Contatto"
+		},
+		"outsidePlace": "Fuori da {where}",
+		"rppsBody": "Questo codice non è valido o la struttura non ha una pagina pubblica: l’elenco comprende solo farmacie, parafarmacie, ospedali e case di cura accreditate. Il titolare di una struttura può comunque trovare e rivendicare la sua pagina.",
+		"distance": "A circa {km} km (centro del comune)"
+	},
+	"HomePage": {
+		"title": "Trovi una farmacia, una parafarmacia, un ospedale o una casa di cura in Italia",
+		"hook": "Ogni farmacia, parafarmacia, ospedale e casa di cura accreditata dei dati aperti del Ministero della Salute ha già la sua pagina.",
+		"pillars": {
+			"free": {
+				"description": "Gratuito per le strutture sanitarie e per i pazienti, senza abbonamento né commissioni."
+			}
+		},
+		"registry": {
+			"heading": "Costruito sui dati aperti del Ministero della Salute",
+			"intro": "Ogni pagina parte dagli elenchi delle farmacie e delle parafarmacie, aggiornati ogni giorno, e dai posti letto delle strutture ospedaliere, che il Ministero della Salute pubblica in open data. Sono elencate strutture, mai singoli professionisti. Nessuno paga per comparire e nessuno è escluso.",
+			"sourceName": "Ministero della Salute, dati aperti"
+		},
+		"pro": {
+			"heading": "Gestisce una farmacia, una parafarmacia o una struttura ospedaliera?",
+			"body": "La pagina della sua struttura esiste già. Rivendicarla è gratuito."
+		},
+		"tagline": "L’elenco aperto delle strutture sanitarie d’Italia.",
+		"market": {
+			"listingsHeading": "Per tipo di struttura",
+			"placesHeading": "Per regione"
+		},
+		"specimen": {
+			"heading": "Ogni struttura sanitaria ha già la sua pagina"
+		}
+	},
+	"Practitioner": {
+		"rpps": "Codice ministeriale",
+		"specimen": "Esempio, non è una struttura reale",
+		"statusNote": {
+			"unclaimed": "Creata a partire dai dati aperti del Ministero della Salute. La struttura non ha ancora completato questa pagina.",
+			"verified": "Completata dalla struttura, la cui rivendicazione è stata verificata."
+		},
+		"fields": {
+			"profession": "Tipo di struttura"
+		},
+		"source": {
+			"name": "Fonte: Ministero della Salute"
+		},
+		"action": {
+			"call": {
+				"statement": "Apercura non offre la prenotazione online in Italia. Contatti la struttura."
+			}
+		},
+		"sitesHeading": "Indirizzo"
+	},
+	"PractitionerPage": {
+		"metaTitle": "{name}, {occupation} · Apercura",
+		"metaTitlePlace": "{name}, {occupation} a {place} · Apercura",
+		"metaDescription": "{name}, {occupation}: {fees, select, sector {indirizzo, telefono e tariffe} other {indirizzo e tipo di struttura}}, secondo i dati aperti del Ministero della Salute.",
+		"metaDescriptionPlace": "{name}, {occupation} a {place}: {fees, select, sector {indirizzo, telefono e tariffe} other {indirizzo e tipo di struttura}}, secondo i dati aperti del Ministero della Salute.",
+		"unknownProfession": "Struttura sanitaria",
+		"professionHeading": "Struttura",
+		"fieldsOfCare": "Aree di ricovero",
+		"unnamedPlace": "Struttura",
+		"asideLabel": "Su questa pagina",
+		"action": {
+			"callNotYetOpen": "Apercura non offre la prenotazione online in Italia. Per informazioni, contatti la struttura.",
+			"noPhone": "I dati del Ministero della Salute non riportano un numero di telefono per questa struttura."
+		},
+		"claim": {
+			"heading": "È la sua struttura?",
+			"body": "Questa pagina è stata creata dai dati aperti del Ministero della Salute. La rivendichi per verificarla e completarla:",
+			"claimedHeading": "Pagina gestita dalla struttura",
+			"claimedBody": "La struttura ha rivendicato questa pagina: la sua rivendicazione è stata verificata ed è lei a completarla.",
+			"contactLink": "Non ha un documento a portata di mano? Ci contatti",
+			"benefits": [
+				"gratis, senza abbonamento né impegno;",
+				"la sua foto, gli orari e le lingue parlate;",
+				"il suo sito web e le informazioni sull’accessibilità;",
+				"le statistiche delle visite alla sua pagina;",
+				"un kit da condividere: link, codice QR e locandina."
+			]
+		},
+		"report": {
+			"body": "Se un indirizzo o un nome è sbagliato, ci dica come correggerlo."
+		},
+		"ring": {
+			"heading": "Altre strutture: {occupation} a {place}"
+		}
+	},
+	"Listing": {
+		"count": "{count, plural, one {# struttura} many {# di strutture} other {# strutture}}",
+		"metaTitle": "{count, plural, one {{listing} a {place}: # struttura · Apercura} many {{listing} a {place}: # di strutture · Apercura} other {{listing} a {place}: # strutture · Apercura}}",
+		"metaDescription": "{count, plural, one {# struttura registrata come {occupation} a {place}: {fees, select, sector {indirizzi, telefoni e tariffe} other {indirizzi e tipi di struttura}}, secondo i dati aperti del Ministero della Salute.} many {# di strutture registrate come {occupation} a {place}: {fees, select, sector {indirizzi, telefoni e tariffe} other {indirizzi e tipi di struttura}}, secondo i dati aperti del Ministero della Salute.} other {# strutture registrate come {occupation} a {place}: {fees, select, sector {indirizzi, telefoni e tariffe} other {indirizzi e tipi di struttura}}, secondo i dati aperti del Ministero della Salute.}}",
+		"lead": "{count, plural, one {I dati del Ministero della Salute contano # struttura di questo tipo a {place}.} many {I dati del Ministero della Salute contano # di strutture di questo tipo a {place}.} other {I dati del Ministero della Salute contano # strutture di questo tipo a {place}.}}",
+		"practitionersHeading": "{count, plural, one {La struttura} many {Le # di strutture} other {Le # strutture}}",
+		"columns": {
+			"practitioner": "Struttura"
+		},
+		"facts": {
+			"sources": "Ministero della Salute e Istat"
+		},
+		"communesHeading": "{listing}: comuni di {place}",
+		"nearbyHeading": "{listing}: comuni vicini",
+		"authoritiesHeading": "{listing}: province di {place}",
+		"hubMetaTitle": "{count, plural, one {{listing} in Italia: # struttura · Apercura} many {{listing} in Italia: # di strutture · Apercura} other {{listing} in Italia: # strutture · Apercura}}",
+		"hubMetaDescription": "{count, plural, one {# struttura registrata come {occupation} in Italia, per regione: {fees, select, sector {indirizzi, telefoni e tariffe} other {indirizzi e tipi di struttura}}, secondo i dati aperti del Ministero della Salute.} many {# di strutture registrate come {occupation} in Italia, per regione: {fees, select, sector {indirizzi, telefoni e tariffe} other {indirizzi e tipi di struttura}}, secondo i dati aperti del Ministero della Salute.} other {# strutture registrate come {occupation} in Italia, per regione: {fees, select, sector {indirizzi, telefoni e tariffe} other {indirizzi e tipi di struttura}}, secondo i dati aperti del Ministero della Salute.}}",
+		"hubTitle": "{listing} in Italia",
+		"hubLead": "{count, plural, one {I dati del Ministero della Salute contano # struttura di questo tipo in Italia.} many {I dati del Ministero della Salute contano # di strutture di questo tipo in Italia.} other {I dati del Ministero della Salute contano # strutture di questo tipo in Italia.}}",
+		"departmentsHeading": "{listing} per regione",
+		"departmentsIntro": "Scelga una regione o una provincia per vederne i comuni e le strutture.",
+		"metaDescriptionPage": "{count, plural, one {Pagina {page} di {pages}: # struttura registrata come {occupation} a {place}.} many {Pagina {page} di {pages}: # di strutture registrate come {occupation} a {place}.} other {Pagina {page} di {pages}: # strutture registrate come {occupation} a {place}.}}",
+		"metaDescriptionPageRange": "{count, plural, one {Pagina {page} di {pages}, da {first} a {last}: # struttura registrata come {occupation} a {place}.} many {Pagina {page} di {pages}, da {first} a {last}: # di strutture registrate come {occupation} a {place}.} other {Pagina {page} di {pages}, da {first} a {last}: # strutture registrate come {occupation} a {place}.}}",
+		"hubMetaTitleShort": "{listing} in Italia · Apercura",
+		"allSpecialties": "Tutti i tipi di struttura a {place}"
+	},
+	"Directory": {
+		"metaTitle": "Elenco delle strutture sanitarie per luogo · Apercura",
+		"metaDescription": "Le regioni e le province d’Italia con le loro farmacie, parafarmacie, ospedali e case di cura, secondo i dati aperti del Ministero della Salute.",
+		"lead": "{count, plural, one {# struttura, per regione e provincia.} many {# di strutture, per regione e provincia.} other {# strutture, per regione e provincia.}}",
+		"otherRegion": "Altri luoghi",
+		"emptyBody": "I dati del Ministero della Salute non sono ancora stati importati su questo server. Torni dopo la prossima importazione.",
+		"placeMetaTitle": "Farmacie, parafarmacie e ospedali a {place} · Apercura",
+		"placeMetaDescription": "{count, plural, one {# struttura sanitaria a {place}, per tipo, secondo i dati aperti del Ministero della Salute.} many {# di strutture sanitarie a {place}, per tipo, secondo i dati aperti del Ministero della Salute.} other {# strutture sanitarie a {place}, per tipo, secondo i dati aperti del Ministero della Salute.}}",
+		"placeTitle": "Strutture sanitarie a {place}",
+		"placeLead": "{count, plural, one {# struttura a {place}.} many {# di strutture a {place}.} other {# strutture a {place}.}}",
+		"specialtiesHeading": "Per tipo di struttura",
+		"communesHeading": "Comuni di {place}",
+		"authoritiesHeading": "Province di {place}",
+		"placeMetaTitleShort": "Strutture sanitarie a {place} · Apercura"
+	},
+	"OgImage": {
+		"runningHead": "Elenco aperto delle strutture sanitarie",
+		"practitioner": {
+			"folio": "Codice {rpps}"
+		}
+	},
+	"taxonomy": {
+		"practiceKind": {
+			"office": "Struttura"
+		}
+	},
+	"Claim": {
+		"errors": {
+			"NOT_FOUND": "Nessuna pagina ha questo codice.",
+			"INVALID_RPPS": "Questo codice non è valido: è la fine dell’indirizzo della pagina della struttura (una lettera e il codice del Ministero, per esempio f9000001), preceduta da it:, oppure l’indirizzo completo."
+		},
+		"start": {
+			"lead": "Una rivendicazione riguarda la pagina di una struttura, mai un nome.",
+			"contestBody": "Se è quella della sua struttura (per esempio ha perso l’accesso al suo account), può comunque rivendicarla: un amministratore esamina il suo documento e decide. Recuperare un account richiede sempre una nuova verifica.",
+			"findHeading": "Trovi la pagina della sua struttura",
+			"notFound": "Nessuna pagina pubblica ha ancora questo codice.",
+			"rppsLabel": "Codice o indirizzo della pagina",
+			"rppsHint": "L’indirizzo della pagina della sua struttura, per esempio apercura.org/it/struttura/farmacia-esempio-f9000001, o la sua fine preceduta da it: (it:f9000001).",
+			"contactLink": "Non ha un documento a portata di mano? Ci contatti"
+		},
+		"methods": {
+			"document": {
+				"summary": "Un documento che dimostri che dirige la struttura o agisce per suo conto: l’autorizzazione all’esercizio o il provvedimento di titolarità della farmacia, oppure la sua iscrizione all’albo con una lettera su carta intestata della struttura. Un membro del nostro team lo esamina, di solito entro 48 ore.",
+				"lead": "Invii un documento che dimostri che dirige la struttura o agisce per suo conto: l’autorizzazione all’esercizio o il provvedimento di titolarità, oppure la sua iscrizione all’albo con una lettera su carta intestata della struttura. Viene cifrato prima di essere conservato ed eliminato 30 giorni dopo la decisione."
+			}
+		},
+		"documents": {
+			"kind": {
+				"cps_card": "Iscrizione all’albo con una lettera su carta intestata della struttura",
+				"ordre_attestation": "Autorizzazione all’esercizio o provvedimento di titolarità"
+			}
+		},
+		"status": {
+			"contestReview": "Questa pagina aveva già un titolare verificato: un amministratore decide sul suo documento.",
+			"reviewBody": "Un membro del nostro team esamina il suo documento e le scrive via e-mail.",
+			"contestBody": "Un amministratore deciderà sul suo documento."
+		}
+	},
+	"Gdpr": {
+		"rpps": "Codice della pagina",
+		"rppsHint": "La fine dell’indirizzo della pagina (per esempio farmacia-esempio-f9000001) o l’indirizzo completo.",
+		"errors": {
+			"notFound": "Nessuna pagina ha questo codice."
+		},
+		"report": {
+			"doneBody": "La verifichiamo. I dati del Ministero della Salute si correggono alla fonte, presso la regione o l’azienda sanitaria che li comunica; la avvisiamo se ci ha lasciato un indirizzo."
+		},
+		"removal": {
+			"doneBody": "Non è più mostrata, indicizzata né elencata. Verifichiamo la richiesta e le rispondiamo via e-mail entro un mese al massimo. Se viene confermata, la pagina è eliminata definitivamente e non ricompare con gli aggiornamenti dei dati del Ministero.",
+			"privacy": "Una pagina eliminata non ricompare con la successiva importazione dei dati del Ministero della Salute.",
+			"claimedBody": "Solo il suo titolare può rimuoverla, dall’editor della pagina nel proprio spazio: la pagina scompare allora subito e non ricompare con gli aggiornamenti dei dati del Ministero."
+		},
+		"contact": {
+			"lead": "Non può rivendicare la pagina della sua struttura con un documento? Ci lasci i suoi recapiti: un membro del team Apercura la contatterà per verificare che agisce per conto della struttura e aiutarla.",
+			"claimFirst": "Con un documento che dimostri che agisce per conto della struttura, la rivendicazione è più rapida:",
+			"rpps": "Codice della pagina"
+		}
+	},
+	"emails": {
+		"claimReceived": {
+			"body": [
+				"Gentile {name},",
+				"Abbiamo ricevuto la sua rivendicazione e i relativi documenti. Un membro del team di Apercura li esamina e le scrive via e-mail.",
+				"Esaminiamo le rivendicazioni entro 48 ore nei giorni lavorativi."
+			]
+		},
+		"claimRejected": {
+			"body": [
+				"Gentile {name},",
+				"Non abbiamo potuto verificare la sua rivendicazione. Motivo indicato dal revisore: {reason}",
+				"Può aprire una nuova rivendicazione dal suo spazio, con un documento leggibile che dimostri che agisce per conto della struttura."
+			]
+		},
+		"removalReceived": {
+			"body": [
+				"La pagina è nascosta da ora: non è più mostrata, indicizzata né elencata.",
+				"Verifichiamo la richiesta e le rispondiamo entro un mese al massimo. Se viene confermata, la pagina è eliminata; una pagina eliminata non ricompare con la successiva importazione dei dati del Ministero della Salute."
+			]
+		},
+		"removalConfirmed": {
+			"body": [
+				"La pagina di cui ci ha chiesto la rimozione è stata eliminata da Apercura. Non ricomparirà con la prossima importazione dei dati del Ministero della Salute."
+			]
+		}
+	},
+	"Onboarding": {
+		"steps": {
+			"check": {
+				"lead": "La sua pagina parte dai dati aperti del Ministero della Salute. Verifichi il nome della struttura, il suo tipo e il suo indirizzo.",
+				"registryNote": "Qualcosa non va? La correzione duratura si fa presso la regione o l’azienda sanitaria che comunica i dati al Ministero; la pagina si aggiorna alla successiva importazione. Può nascondere un indirizzo o aggiungerne uno nell’editor della pagina."
+			}
+		}
+	}
+}

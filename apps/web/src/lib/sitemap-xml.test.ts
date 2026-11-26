@@ -76,3 +76,21 @@ describe("market page paths of the sitemaps", () => {
 		expect(MARKET_STATIC_PATHS.es).toContain("/accessibilite");
 	});
 });
+
+describe("Italy's sitemap paths", () => {
+	it("gives Italy its Italian route segments under /it", () => {
+		expect(marketPagePath("it", "/")).toBe("/it");
+		expect(marketPagePath("it", "/praticien/farmacia-esempio-f9000001")).toBe(
+			"/it/struttura/farmacia-esempio-f9000001",
+		);
+		expect(marketPagePath("it", "/etablissement/x-1")).toBe("/it/organizzazione/x-1");
+		expect(marketPagePath("it", "/annuaire/roma/roma")).toBe("/it/elenco/roma/roma");
+		expect(marketPagePath("it", "/farmacie/roma/roma")).toBe("/it/farmacie/roma/roma");
+		expect(marketPagePath("it", "/farmacie/lazio")).toBe("/it/farmacie/lazio");
+		expect(marketPagePath("it", "/donnees")).toBe("/it/dati");
+		expect(marketPagePath("it", "/accessibilite")).toBe("/it/accessibilita");
+		expect(marketPagePath("it", "/mentions-legales")).toBe("/it/note-legali");
+		expect(MARKET_STATIC_PATHS.it).not.toContain("/pro");
+		expect(MARKET_STATIC_PATHS.it).toContain("/accessibilite");
+	});
+});

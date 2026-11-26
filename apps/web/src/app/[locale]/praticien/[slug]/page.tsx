@@ -37,6 +37,7 @@ import { relatedGuides } from "~/lib/guides/catalog";
 import { genderOf, getTaxonomyLabels, inSentence } from "~/lib/labels";
 import { getMapStrings } from "~/lib/map-strings";
 import {
+	italianSourceDate,
 	openDataSourcesOf,
 	professionFees,
 	professionSlugOf,
@@ -235,6 +236,19 @@ export default async function PractitionerPage({ params }: Props) {
 	const czech = payload.country === "CZ";
 	// The UK lists practices: no specialty, no other qualification, no person.
 	const practice = payload.country === "GB";
+	// Italy lists places: a pharmacy's type when it is a branch or a dispensary, a hospital's type
+	// and its areas of inpatient care with their beds, as the Ministry of Health names them.
+	const italian = payload.country === "IT";
+	const italianType = italian
+		? (payload.qualifications.find(
+				(item) => (item.source === "tipologia" || item.source === "tipo-struttura") && item.label,
+			)?.label ?? null)
+		: null;
+	const italianBeds = italian
+		? payload.qualifications
+				.filter((item) => item.source === "disciplina" && item.label)
+				.map((item) => item.label as string)
+		: [];
 	// France: the registry's other skills. Austria: the other specialties of the lists ("Fach").
 	// Czechia: every field of care of the facility.
 	const otherQualifications = payload.qualifications
@@ -275,8 +289,13 @@ export default async function PractitionerPage({ params }: Props) {
 		: null;
 	const identifier = displayId(payload);
 	// Open licences (CC BY 4.0, OGL) require each source's attribution, word for word; Spain's
-	// Ministry of Health asks for the date of its data: the last Spanish import's.
-	const sourceDate = spanish ? ((await getImportStatus("es"))?.importedAt ?? page.updatedAt) : null;
+	// Ministry of Health asks for the date of its data: the last Spanish import's; Italy's is cited
+	// with the date of its list's data.
+	const sourceDate = spanish
+		? ((await getImportStatus("es"))?.importedAt ?? page.updatedAt)
+		: italian
+			? italianSourceDate(payload.activities[0]?.source, await getImportStatus("it"))
+			: null;
 	const sources = openDataSourcesOf(payload.country, payload.activities, sourceDate);
 
 	// Where the facts come from and when they were imported: under each block of facts, the
@@ -452,6 +471,23 @@ export default async function PractitionerPage({ params }: Props) {
 											}
 											emptyLabel={empty}
 										/>
+									</>
+								) : italian ? (
+									<>
+										{italianType ? (
+											<FieldRow
+												label={t("facilityType")}
+												value={<span lang="it">{italianType}</span>}
+												emptyLabel={empty}
+											/>
+										) : null}
+										{italianBeds.length > 0 ? (
+											<FieldRow
+												label={t("beds")}
+												value={<span lang="it">{italianBeds.join(", ")}</span>}
+												emptyLabel={empty}
+											/>
+										) : null}
 									</>
 								) : czech ? (
 									<>

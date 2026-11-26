@@ -62,6 +62,27 @@ function placesIn(country: MarketCountry, query: SearchQuery): Promise<PlaceSugg
 }
 
 /**
+ * The places of `country` "Où ?" names, and the name they were found by: the name as typed, else,
+ * for a city of that country typed in another language ("Rome", "Milan", "Prague"), its own name
+ * ("Roma", "Milano", "Praha"), which the market's places carry.
+ */
+export async function placesOfQuery(
+	country: MarketCountry,
+	query: SearchQuery,
+): Promise<{ places: PlaceSuggestion[]; where: string }> {
+	const places = await placesIn(country, query);
+	if (places.length > 0 || query.postcode) return { places, where: query.where };
+	const named = namedEuropeanPlace(query);
+	if (named?.kind !== "city" || named.country.code !== country || !named.city) {
+		return { places, where: query.where };
+	}
+	if (named.city.toLowerCase() === query.where.trim().toLowerCase()) {
+		return { places, where: query.where };
+	}
+	return { places: await placesIn(country, { ...query, where: named.city }), where: named.city };
+}
+
+/**
  * The page a search query names, if any: an RPPS number goes to its
  * practitioner page, a specialty in one place to its listing page, a specialty
  * alone to its hub. Applied by the proxy (a real 307 before anything renders)
@@ -88,12 +109,16 @@ export async function searchRedirect(
 	const here = marketOf(locale);
 	const home = chosen ?? here;
 	const where = typedWhere(query);
-	const elsewhere = (country: MarketCountry, who: string | null): SearchRedirect => ({
+	const elsewhere = (
+		country: MarketCountry,
+		who: string | null,
+		ou: string = where,
+	): SearchRedirect => ({
 		href: {
 			pathname: "/recherche",
 			query: {
 				...(who ? { quoi: who } : {}),
-				...(where ? { ou: where } : {}),
+				...(ou ? { ou } : {}),
 				...(query.near ? { pres: `${query.near.lat},${query.near.lon}` } : {}),
 				...(page > 1 ? { page: String(page) } : {}),
 			},
@@ -156,7 +181,8 @@ export async function searchRedirect(
 	}
 
 	for (const country of [home, ...MARKET_COUNTRIES.filter((other) => other !== home)]) {
-		const places = await placesIn(country, query);
+		const found = await placesOfQuery(country, query);
+		const places = found.places;
 		if (places.length === 0) continue;
 		const term = query.who ? translateSearchTerm(query.who, here, country) : null;
 		const place = places.length === 1 ? places[0] : undefined;
@@ -164,8 +190,15 @@ export async function searchRedirect(
 			const target = await landingTarget(term.slug, place, country);
 			if (target) return { href: listingHref(target), locale: marketLocaleFor(country, locale) };
 		}
-		// The page's own market lists what it finds (homonyms, no listing page, a name).
-		return country === here ? null : elsewhere(country, whoIn(country));
+		// The page's own market lists what it finds (homonyms, no listing page, a name), under the
+		// name its places carry ("Roma" for "Rome").
+		return country === here
+			? null
+			: elsewhere(
+					country,
+					whoIn(country),
+					found.where === query.where ? where : typedWhere({ ...query, where: found.where }),
+				);
 	}
 	// No market knows the place: this page says so when it is a city of a country not covered
 	// yet ("Berlin"), else the chosen market's search does.

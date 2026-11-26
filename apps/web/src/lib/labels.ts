@@ -4,6 +4,7 @@ import {
 	isCzListingSlug,
 	isEsListingSlug,
 	isGbListingSlug,
+	isItListingSlug,
 } from "@apercura/core/taxonomy";
 import { getTranslations } from "next-intl/server";
 import { capitalisesNouns } from "~/i18n/locales";
@@ -35,11 +36,12 @@ export async function getTaxonomyLabels(locale: Locale) {
 			slug ? lookup(`listing.${slug}`, { gender }) : null,
 		/**
 		 * What one practitioner is, from their listing: the listing's label ("Cardiologist"), but a
-		 * UK practice's kind, a Czech facility's field or a Spanish centre's kind or specialty in the
-		 * singular ("GP practice", "Kardiolog", "Consulta de cardiología"), their listing being
-		 * plural ("GP practices", "Kardiologové", "Cardiólogos"). With its profession code, a Spanish
-		 * centre listed under its kind's listing reads as its own kind (a local surgery listed with
-		 * the health centres reads "Consultorio local").
+		 * UK practice's kind, a Czech facility's field, a Spanish centre's kind or specialty or an
+		 * Italian place's kind in the singular ("GP practice", "Kardiolog", "Consulta de cardiología",
+		 * "Farmacia"), their listing being plural ("GP practices", "Kardiologové", "Cardiólogos",
+		 * "Farmacie"). With its profession code, a Spanish centre listed under its kind's listing
+		 * reads as its own kind (a local surgery listed with the health centres reads "Consultorio
+		 * local").
 		 */
 		occupation: (
 			slug: string | null | undefined,
@@ -59,8 +61,9 @@ export async function getTaxonomyLabels(locale: Locale) {
 				);
 			}
 			return (
-				(isGbListingSlug(slug) || isCzListingSlug(slug) ? lookup(`profession.${slug}`) : null) ??
-				lookup(`listing.${slug}`, { gender })
+				(isGbListingSlug(slug) || isCzListingSlug(slug) || isItListingSlug(slug)
+					? lookup(`profession.${slug}`)
+					: null) ?? lookup(`listing.${slug}`, { gender })
 			);
 		},
 		profession: (slug: string, gender: Gender = "other") =>

@@ -7,6 +7,7 @@ import {
 	GB_DENTAL_PRACTICE,
 	GB_GP_PRACTICE,
 	GB_PHARMACY,
+	IT_DEFAULT_PROFESSIONS,
 } from "@apercura/core/taxonomy";
 import { buttonStyles, FieldList, FieldRow, ProvenanceNote } from "@apercura/ui";
 import type { Metadata } from "next";
@@ -27,6 +28,7 @@ import { Link } from "~/i18n/navigation";
 import { type Locale, routing } from "~/i18n/routing";
 import { getTaxonomyLabels } from "~/lib/labels";
 import { getPillars, type Pillar } from "~/lib/pillars";
+import { REGION_LISTING_MARKETS } from "~/lib/places";
 import { homeAlternates, pageMetadata } from "~/lib/seo";
 import { apercuraSiteNodes } from "~/lib/site-entities";
 import { getDirectoryIndex, getMarketOverview } from "~/server/queries/hubs";
@@ -56,8 +58,8 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
 	const t = await getTranslations({ locale, namespace: "HomePage" });
 
 	const tMeta = await getTranslations({ locale, namespace: "Metadata" });
-	// Austria, the UK, Czechia and Spain: a directory from open lists, without booking or the
-	// French registry.
+	// Austria, the UK, Czechia, Spain and Italy: a directory from open lists, without booking or
+	// the French registry.
 	const market = marketOf(locale);
 	const austrian = market !== "FR";
 	const pillars: Pillar[] = austrian
@@ -202,7 +204,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
 /**
  * The home of a market opened from open lists: its largest listings and its places, from the
  * read models. Austria lists its Bundesländer; the UK its regions and nations, each a hub;
- * Czechia its districts (okresy); Spain its provinces.
+ * Czechia its districts (okresy); Spain its provinces; Italy its twenty regions, each a hub.
  */
 async function MarketDirectory({ locale }: { locale: Locale }) {
 	const t = await getTranslations({ locale, namespace: "HomePage" });
@@ -212,20 +214,19 @@ async function MarketDirectory({ locale }: { locale: Locale }) {
 		getMarketOverview(country),
 		getDirectoryIndex(country),
 	]);
-	const states =
-		country === "GB"
-			? index.regions
-					.filter((region) => region.slug)
-					.map((region) => ({
-						id: region.code,
-						name: region.name,
-						slug: region.slug,
-						practitionerCount: region.departments.reduce(
-							(sum, department) => sum + department.practitionerCount,
-							0,
-						),
-					}))
-			: index.regions.flatMap((region) => region.departments);
+	const states = REGION_LISTING_MARKETS.has(country)
+		? index.regions
+				.filter((region) => region.slug)
+				.map((region) => ({
+					id: region.code,
+					name: region.name,
+					slug: region.slug,
+					practitionerCount: region.departments.reduce(
+						(sum, department) => sum + department.practitionerCount,
+						0,
+					),
+				}))
+		: index.regions.flatMap((region) => region.departments);
 	if (overview.listings.length === 0 && states.length === 0) return null;
 	return (
 		<>
@@ -268,7 +269,8 @@ async function MarketDirectory({ locale }: { locale: Locale }) {
 /**
  * The sources and figures of a market opened from open lists: pages by profession (Austria's
  * doctors and dentists, the UK's GP practices, dental practices and pharmacies, Czechia's kinds
- * of facility, Spain's kinds of centre) and the lists.
+ * of facility, Spain's kinds of centre, Italy's pharmacies, parapharmacies, hospitals and clinics)
+ * and the lists.
  */
 async function OpenDataRegistry({ locale }: { locale: Locale }) {
 	const t = await getTranslations({ locale, namespace: "HomePage" });
@@ -306,10 +308,12 @@ async function OpenDataRegistry({ locale }: { locale: Locale }) {
 				? byListing(CZ_DEFAULT_PROFESSIONS)
 				: country === "ES"
 					? byListing(ES_DEFAULT_PROFESSIONS)
-					: [
-							{ code: AT_DOCTOR, codes: [AT_DOCTOR], label: t("registry.doctors") },
-							{ code: AT_DENTIST, codes: [AT_DENTIST], label: t("registry.dentists") },
-						];
+					: country === "IT"
+						? byListing(IT_DEFAULT_PROFESSIONS)
+						: [
+								{ code: AT_DOCTOR, codes: [AT_DOCTOR], label: t("registry.doctors") },
+								{ code: AT_DENTIST, codes: [AT_DENTIST], label: t("registry.dentists") },
+							];
 	return (
 		<section
 			aria-labelledby="registry-heading"

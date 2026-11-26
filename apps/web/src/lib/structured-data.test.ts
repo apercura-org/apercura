@@ -658,3 +658,75 @@ describe("practitionerNodes for Spain", () => {
 		).toBe("https://schema.org/PrimaryCare");
 	});
 });
+
+describe("practitionerNodes for Italy", () => {
+	const place: PracticePlaceInput = {
+		siteId: 1,
+		practiceKind: "office",
+		name: "Farmacia Esempio",
+		addressLine: "Via dell'Esempio, 1",
+		addressComplement: null,
+		postcode: "00184",
+		placeName: "Roma",
+		// City precision by default: no coordinates for an Italian place.
+		coordinates: null,
+		phone: null,
+		establishmentUrl: null,
+	};
+	const pharmacy: PractitionerInput = {
+		...doctor,
+		url: `${ORIGIN}/it/struttura/farmacia-esempio-f9000001`,
+		professionCode: "IT_PHARMACY",
+		rpps: "9000001",
+		idScheme: "IT-FARM",
+		country: "IT",
+		name: "Farmacia Esempio",
+		givenName: "",
+		familyName: "Farmacia Esempio",
+		honorificPrefix: null,
+		occupation: "Farmacia",
+		listingSlug: "farmacie",
+		places: [place],
+	};
+
+	it("publishes a pharmacy as a Pharmacy with the ministry's code, never a person", () => {
+		const nodes = practitionerNodes(pharmacy);
+		const node = nodeOf(nodes, "Pharmacy");
+		expect(node.identifier).toEqual({
+			"@type": "PropertyValue",
+			propertyID: "IT-FARM",
+			value: "9000001",
+		});
+		expect(node.address).toMatchObject({
+			addressCountry: "IT",
+			postalCode: "00184",
+			addressLocality: "Roma",
+		});
+		expect(node.medicalSpecialty).toBe("https://schema.org/PharmacySpecialty");
+		expect(node.geo).toBeUndefined();
+		expect(JSON.stringify(nodes)).not.toMatch(
+			/Person|IndividualPhysician|Physician"|givenName|familyName/,
+		);
+	});
+
+	it("publishes a hospital or an accredited clinic as a Hospital, a parapharmacy as a MedicalBusiness", () => {
+		for (const professionCode of ["IT_HOSPITAL", "IT_CLINIC"]) {
+			expect(
+				nodeOf(
+					practitionerNodes({ ...pharmacy, professionCode, listingSlug: "ospedali" }),
+					"Hospital",
+				).address,
+			).toMatchObject({ addressCountry: "IT" });
+		}
+		expect(
+			nodeOf(
+				practitionerNodes({
+					...pharmacy,
+					professionCode: "IT_PARAPHARMACY",
+					listingSlug: "parafarmacie",
+				}),
+				"MedicalBusiness",
+			).address,
+		).toMatchObject({ addressCountry: "IT" });
+	});
+});

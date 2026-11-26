@@ -90,6 +90,7 @@
 			"AT": "Austria",
 			"GB": "Regno Unito",
 			"CZ": "Cechia",
+			"IT": "Italia",
 			"ES": "Spagna"
 		}
 	},
@@ -154,7 +155,7 @@
 	},
 	"International": {
 		"metaTitle": "Apercura · Elenchi aperti dei professionisti sanitari",
-		"metaDescription": "Una pagina gratuita e oggettiva per ogni professionista sanitario iscritto, dai registri pubblici. Aperto in Francia, in Austria e nel Regno Unito.",
+		"metaDescription": "Una pagina gratuita e oggettiva per ogni professionista sanitario, dai registri pubblici. Aperto in Francia, Austria, Regno Unito, Cechia, Spagna e Italia.",
 		"runningHead": "Elenchi aperti dei professionisti sanitari",
 		"title": "Ogni professionista sanitario, una pagina aperta",
 		"lead": "Apercura pubblica una pagina gratuita e oggettiva per ogni professionista sanitario iscritto, a partire dai registri pubblici di ogni paese. Nessuna valutazione, nessuna pubblicità, nessun posizionamento a pagamento, e il codice è aperto.",
@@ -561,6 +562,8 @@
 		"professionHeading": "Professione e qualifiche",
 		"otherQualifications": "Altre qualifiche",
 		"fieldsOfCare": "Ambiti di cura",
+		"facilityType": "Tipologia",
+		"beds": "Posti letto",
 		"ownership": "Titolarità",
 		"ownershipPublic": "Pubblica",
 		"ownershipPrivate": "Privata",
@@ -1712,6 +1715,10 @@
 			"anesteziolog": "Anestesista",
 			"chirurg": "Chirurgo",
 			"internista": "Internista",
+			"farmacie": "Farmacia",
+			"parafarmacie": "Parafarmacia",
+			"ospedali": "Ospedale",
+			"case-di-cura": "Casa di cura accreditata",
 			"hospitales": "Ospedale",
 			"centros-de-salud": "Centro di salute",
 			"consultas-medicas": "Studio medico",
@@ -1950,6 +1957,10 @@
 			"anesteziolog": "Anestesisti e terapia del dolore",
 			"chirurg": "Chirurghi",
 			"internista": "Internisti",
+			"farmacie": "Farmacie",
+			"parafarmacie": "Parafarmacie",
+			"ospedali": "Ospedali",
+			"case-di-cura": "Case di cura accreditate",
 			"hospitales": "Ospedali",
 			"centros-de-salud": "Centri di salute e ambulatori locali",
 			"consultas-medicas": "Studi medici",
@@ -4911,6 +4922,399 @@
 			],
 			"formTitle": "Ask for a page to be removed",
 			"formBody": "Give the address of the page and an email address where we can answer you."
+		}
+	},
+	"LegalNoticeIt": {
+		"metaTitle": "Note legali · Apercura",
+		"metaDescription": "Note legali delle pagine italiane di Apercura: il prestatore, i suoi recapiti, l’iscrizione e la partita IVA, e il responsabile dei contenuti (D.Lgs. 70/2003, articolo 7).",
+		"title": "Note legali",
+		"lead": "Chi fornisce le pagine italiane di Apercura (apercura.org/it), come chiede a un sito l’articolo 7 del D.Lgs. 70/2003 sui servizi della società dell’informazione e il commercio elettronico, con la partita IVA richiesta dall’articolo 35 del D.P.R. 633/1972.",
+		"sections": {
+			"provider": {
+				"heading": "Prestatore del servizio",
+				"body": [
+					"Le pagine italiane di Apercura sono fornite dal soggetto indicato qui sotto, che gestisce l’elenco e risponde dei suoi contenuti."
+				]
+			},
+			"service": {
+				"heading": "Il servizio",
+				"body": [
+					"Un elenco gratuito dei luoghi di cura in Italia a cui si rivolgono i pazienti (farmacie con le loro succursali e i dispensari, parafarmacie, ospedali e case di cura private accreditate), costruito a partire dagli open data del Ministero della Salute, senza pubblicità, con uno spazio in cui una struttura può completare la propria pagina. Le pagine sono luoghi, mai singoli operatori sanitari. In Italia non si prenota alcun appuntamento tramite Apercura."
+				]
+			},
+			"editor": {
+				"heading": "Responsabile dei contenuti",
+				"body": [
+					"La persona indicata qui sotto è responsabile di ciò che pubblica il prestatore. Le informazioni che una struttura aggiunge alla propria pagina sono sotto la sua responsabilità; in quanto servizio che memorizza informazioni fornite dai suoi utenti, il prestatore ne risponde solo alle condizioni dell’articolo 16 del D.Lgs. 70/2003."
+				]
+			},
+			"liability": {
+				"heading": "Contenuto delle pagine",
+				"body": [
+					"L’elenco è costruito a partire dagli elenchi delle farmacie e delle parafarmacie e dai posti letto per struttura ospedaliera che il Ministero della Salute pubblica come open data, e dai confini amministrativi dell’Istat. Può essere incompleto o non aggiornato: verifichi le informazioni con la struttura prima di recarvisi. Ogni pagina indica come segnalare un errore."
+				]
+			},
+			"ip": {
+				"heading": "Codice e dati",
+				"body": [
+					"Il codice sorgente di Apercura è pubblicato con licenza AGPL-3.0. I dati del Ministero della Salute sono riutilizzati con la Italian Open Data Licence v2.0 (IODL 2.0), i confini dell’Istat con la licenza Creative Commons Attribuzione 4.0 Internazionale (CC BY 4.0): la pagina dei dati elenca ogni fonte con l’attribuzione che richiede."
+				]
+			},
+			"review": {
+				"heading": "Stato di questo testo",
+				"body": [
+					"Questo testo è una bozza, scritta prima della costituzione del soggetto giuridico. Sarà rivisto da un avvocato abilitato in Italia prima che le pagine italiane siano annunciate."
+				]
+			}
+		},
+		"fields": {
+			"name": "Nome o ragione sociale",
+			"legalForm": "Forma giuridica",
+			"address": "Sede legale",
+			"phone": "Telefono",
+			"email": "Indirizzo e-mail",
+			"registration": "Registro e numero di iscrizione",
+			"vatId": "Partita IVA",
+			"editor": "Responsabile dei contenuti"
+		},
+		"dataLink": "Dati e fonti"
+	},
+	"PrivacyIt": {
+		"metaTitle": "Informativa sulla privacy · Apercura",
+		"metaDescription": "Dati trattati dalle pagine italiane di Apercura: fonti, finalità, basi giuridiche, conservazione, destinatari e i suoi diritti, compresa l’opposizione (articoli 13, 14 e 21 del GDPR, Codice in materia di protezione dei dati personali).",
+		"title": "Informativa sulla privacy",
+		"lead": "Quali dati trattano le pagine italiane di Apercura, da dove provengono, perché, per quanto tempo e da parte di chi, e come esercitare i suoi diritti secondo il Regolamento generale sulla protezione dei dati (GDPR) e il Codice in materia di protezione dei dati personali (D.Lgs. 196/2003, come modificato dal D.Lgs. 101/2018).",
+		"sections": {
+			"controller": {
+				"heading": "Chi è il titolare",
+				"body": [
+					"Il prestatore indicato nelle note legali è il titolare del trattamento dell’elenco, degli account delle strutture, delle rivendicazioni e delle richieste inviate tramite il sito."
+				]
+			},
+			"directory": {
+				"heading": "Elenco: dati sui luoghi di cura",
+				"body": [
+					"Dati: il nome proprio della struttura, il suo tipo (farmacia, succursale, dispensario, parafarmacia, ospedale, casa di cura privata accreditata), per un ospedale o una casa di cura la tipologia di struttura e le aree di ricovero, l’indirizzo, il comune e la provincia, come li pubblicano gli elenchi open data del Ministero della Salute. Una struttura che rivendica la propria pagina può aggiungere una presentazione, le lingue, una foto e gli orari di apertura.",
+					"Mai letta né conservata, benché gli elenchi la pubblichino: la partita IVA del titolare, che per un farmacista che lavora da solo identifica una persona. Gli elenchi non pubblicano alcun numero di telefono.",
+					"Posizione: ogni struttura è mostrata al centro del suo comune, mai al suo indirizzo, a meno che il gestore del sito scelga di usare le coordinate degli elenchi del Ministero.",
+					"Identificativo: il codice della struttura assegnato dal Ministero (codice della farmacia, codice del sito della parafarmacia o codice della struttura ospedaliera), alla fine dell’indirizzo della pagina.",
+					"Finalità: permettere al pubblico di trovare una farmacia, una parafarmacia o un ospedale, dove si trova e di che cosa si tratta. Base giuridica: legittimo interesse (articolo 6, paragrafo 1, lettera f) del GDPR), valutato qui sotto.",
+					"Conservazione: finché la struttura figura negli elenchi del Ministero. Una pagina scompare dopo due importazioni in cui la struttura non vi figura più (per esempio una farmacia il cui periodo di validità è terminato); una pagina rimossa dopo un’opposizione non viene mai più pubblicata.",
+					"Informazioni: i dati non provengono dalle strutture stesse (articolo 14 del GDPR). Questa informativa fornisce le informazioni richieste dall’articolo 14, cioè le categorie di dati, le loro fonti, le finalità e la base giuridica, la conservazione, i destinatari e i suoi diritti, compreso il diritto di opposizione; è raggiungibile da ogni pagina, e la pagina dei dati elenca le fonti."
+				]
+			},
+			"people": {
+				"heading": "Le strutture e le persone che nominano",
+				"body": [
+					"Una pagina italiana è un luogo di cura, mai il profilo di una persona. Non viene importato alcun elenco di singoli medici o di altri operatori sanitari, compresi quelli regionali.",
+					"Una farmacia può appartenere a un farmacista che lavora da solo, e la sua ragione sociale nomina spesso i suoi farmacisti (per esempio «Farmacia Esempio S.n.c. del Dott. Mario Rossi»): quel nome può essere un dato personale. Una pagina stampa solo il nome proprio della struttura, senza la forma societaria, i titoli e i nomi che li seguono («Farmacia Esempio»). Nient’altro viene raccolto su una persona: nessuna data di nascita, nessun codice fiscale, nessuna partita IVA, nessun indirizzo di casa, nessuna valutazione e nessuna recensione.",
+					"Chiunque sia oggetto di una pagina può opporsi in qualsiasi momento, e la pagina viene rimossa."
+				]
+			},
+			"sources": {
+				"heading": "Fonti",
+				"body": [
+					"Ogni pagina è costruita a partire dagli open data del Ministero della Salute (dati.salute.gov.it): gli elenchi giornalieri delle farmacie, con le succursali e i dispensari, e delle parafarmacie, e i posti letto annuali per struttura ospedaliera, pubblicati con la Italian Open Data Licence v2.0 (IODL 2.0), che consente il riutilizzo, anche commerciale, a condizione di citare la fonte. Regioni, province e comuni provengono dall’Istat (CC BY 4.0). Ogni fonte è riutilizzata con la sua attribuzione:"
+				]
+			},
+			"balancing": {
+				"heading": "Valutazione del legittimo interesse",
+				"body": [
+					"Finalità: i pazienti hanno bisogno di sapere dove si trovano le farmacie, le parafarmacie e gli ospedali, un bisogno a cui lo Stato risponde già pubblicando questi elenchi come open data.",
+					"Necessità: si mostrano solo i dati propri della struttura tratti dagli elenchi; nulla sulla vita privata, né il nome né la partita IVA del titolare, nessuna valutazione, nessuna recensione.",
+					"Bilanciamento: un ordine neutro, nessuna pubblicità, il minimo dei campi degli elenchi, una struttura mostrata al centro del suo comune, un’opposizione che nasconde subito una pagina e le impedisce di ricomparire, correzioni alla fonte, e pagine che seguono ogni aggiornamento degli elenchi. Una farmacia aperta al pubblico si aspetta di essere trovata in un elenco che riprende ciò che pubblica il Ministero. Ponderati questi elementi, prevalgono gli interessi dei pazienti, e chiunque sia oggetto di una pagina può opporsi senza indicarne il motivo."
+				]
+			},
+			"accounts": {
+				"heading": "Account delle strutture e rivendicazioni",
+				"body": [
+					"Dati: indirizzo e-mail, nome, password (conservata in forma di hash), secondo fattore di autenticazione, i documenti inviati per rivendicare una pagina (la prova che chi la rivendica gestisce la struttura o agisce per suo conto) e i membri del team.",
+					"Finalità: gestire l’account e verificare che una pagina sia rivendicata dalla struttura giusta. Basi giuridiche: esecuzione delle condizioni d’uso (articolo 6, paragrafo 1, lettera b)) e legittimo interesse a proteggere il servizio (articolo 6, paragrafo 1, lettera f)).",
+					"Conservazione: l’account è conservato finché non viene eliminato; i documenti giustificativi, cifrati, sono cancellati 30 giorni dopo la decisione."
+				]
+			},
+			"requests": {
+				"heading": "Segnalazioni di errori, opposizioni e richieste di contatto",
+				"body": [
+					"Dati: il messaggio, l’indirizzo e-mail di contatto se indicato e la pagina interessata; per una richiesta «questa è la mia pagina» anche il nome e il numero di telefono. Il testo libero è cifrato.",
+					"Finalità: correggere gli errori, applicare le opposizioni e aiutare una struttura che non riesce a rivendicare la propria pagina online. Basi giuridiche: legittimo interesse (articolo 6, paragrafo 1, lettera f)) e diritto di opposizione (articolo 21).",
+					"Conservazione: una segnalazione è eliminata 6 mesi dopo la sua chiusura, un’opposizione respinta un anno dopo la decisione, una richiesta di contatto 12 mesi dopo l’ultimo scambio. Una volta confermata un’opposizione, o quando il titolare di una pagina rivendicata la rimuove, la pagina e i dati che la riguardano sono eliminati subito, opposizione compresa; si conserva solo una traccia della rimozione (l’identificativo della pagina, il paese, il motivo, chi l’ha registrata e quando), perché non venga mai più pubblicata. Un titolare che rimuove la propria pagina conserva, solo nel suo account e mai pubblicati, il nome, il tipo e l’identificativo mostrati nel suo spazio e la sua rivendicazione, fino all’eliminazione dell’account."
+				]
+			},
+			"technical": {
+				"heading": "Dati tecnici e cookie",
+				"body": [
+					"Si usano solo i cookie strettamente necessari al servizio: la sessione delle strutture connesse e la lingua scelta. Nessun cookie pubblicitario o di misurazione dell’audience, nessun tracciatore.",
+					"Per limitare gli abusi, gli indirizzi IP sono trasformati con una funzione a chiave prima di essere contati e mai conservati come tali; le sessioni delle strutture registrano un indirizzo IP troncato. Le visite delle pagine rivendicate sono contate senza cookie né identificativo, e solo il titolare della pagina le vede."
+				]
+			},
+			"recipients": {
+				"heading": "Destinatari e responsabili del trattamento",
+				"body": [
+					"I dati non sono né venduti né affittati, e mai usati per la pubblicità. Li ricevono solo il team del prestatore e i responsabili del trattamento indicati qui sotto, ciascuno per la propria parte, con un contratto conforme all’articolo 28 del GDPR. Le mappe sono caricate da un server di tessere, che riceve l’indirizzo IP del visitatore come qualsiasi sito web."
+				]
+			},
+			"transfers": {
+				"heading": "Trasferimenti fuori dall’Unione europea",
+				"body": [
+					"I dati sono trasferiti fuori dall’Unione europea e dallo Spazio economico europeo solo con le garanzie del capo V del GDPR (una decisione di adeguatezza o clausole contrattuali tipo). Ogni cambio di responsabile del trattamento sarà annunciato qui prima di diventare effettivo."
+				]
+			},
+			"automated": {
+				"heading": "Decisioni automatizzate",
+				"body": [
+					"Nessuna decisione che la riguarda è presa unicamente con mezzi automatizzati. Una rivendicazione è decisa da una persona, che ne legge i documenti."
+				]
+			},
+			"rights": {
+				"heading": "I suoi diritti",
+				"body": [
+					"Può chiedere di accedere ai suoi dati, di farli rettificare o cancellare, di limitarne il trattamento, di riceverli in un formato portabile e di opporsi al loro trattamento. Scriva all’indirizzo qui sotto; riceverà una risposta entro un mese.",
+					"Può anche proporre reclamo all’autorità di controllo italiana, il Garante per la protezione dei dati personali (articolo 77 del GDPR): Piazza Venezia 11, 00187 Roma, www.garanteprivacy.it."
+				]
+			},
+			"objection": {
+				"heading": "Opporsi a una pagina (articolo 21 del GDPR)",
+				"body": [
+					"Chiunque sia oggetto di una pagina può opporsi alla sua pubblicazione in qualsiasi momento, senza indicarne il motivo. Se la pagina non è rivendicata, basta un modulo, nella pagina dei dati o all’indirizzo della pagina stessa seguito da «/rimozione»: la pagina viene nascosta non appena arriva la richiesta, eliminata dopo una breve verifica, e gli aggiornamenti degli elenchi non la pubblicano mai più. Se è rivendicata, il suo titolare la rimuove dal proprio spazio."
+				]
+			},
+			"changes": {
+				"heading": "Aggiornamenti di questa informativa",
+				"body": [
+					"Questa informativa è una bozza. Sarà rivista da un avvocato abilitato in Italia e dal responsabile della protezione dei dati; ogni versione è datata."
+				]
+			}
+		},
+		"fields": {
+			"controller": "Titolare del trattamento",
+			"address": "Indirizzo",
+			"email": "Contatto per le richieste",
+			"dpo": "Responsabile della protezione dei dati",
+			"effectiveDate": "Data di entrata in vigore",
+			"hostingProvider": "Fornitore di hosting (responsabile del trattamento)",
+			"smtp": "Invio delle e-mail (responsabile del trattamento)"
+		},
+		"objectLink": "Come opporsi a una pagina",
+		"authorityLink": "Proporre reclamo al Garante per la protezione dei dati personali"
+	},
+	"TermsIt": {
+		"metaTitle": "Condizioni d’uso · Apercura",
+		"metaDescription": "Condizioni d’uso delle pagine italiane di Apercura: un elenco gratuito e fattuale di farmacie, parafarmacie e ospedali tratto dagli open data del Ministero della Salute, senza prenotazione online.",
+		"title": "Condizioni d’uso",
+		"lead": "Le regole per usare le pagine italiane di Apercura, per il pubblico come per le strutture.",
+		"sections": {
+			"service": {
+				"heading": "Il servizio",
+				"body": [
+					"Apercura elenca, gratuitamente, le farmacie, le parafarmacie, gli ospedali e le case di cura private accreditate degli open data del Ministero della Salute. È solo un elenco: in Italia non si prenota alcun appuntamento tramite Apercura. È gestito dal prestatore indicato nelle note legali.",
+					"Consultare l’elenco non richiede alcun account. Usare il sito significa accettare queste condizioni."
+				]
+			},
+			"content": {
+				"heading": "Che cosa contengono le pagine",
+				"body": [
+					"Le pagine mostrano informazioni fattuali tratte dagli elenchi del Ministero, in un ordine neutro, senza valutazioni, recensioni, pubblicità né posizionamento a pagamento.",
+					"Le informazioni possono essere incomplete o non aggiornate: le verifichi con la struttura prima di recarvisi. Ogni pagina indica come segnalare un errore."
+				]
+			},
+			"health": {
+				"heading": "Non è un consiglio medico",
+				"body": [
+					"Apercura non dà consigli medici e non è un servizio di emergenza. In caso di emergenza chiami il 112 o il 118. Di notte e nei giorni festivi può rivolgersi alla continuità assistenziale (guardia medica) della sua azienda sanitaria, e le farmacie di turno restano aperte."
+				]
+			},
+			"practices": {
+				"heading": "Per le strutture",
+				"body": [
+					"Rivendicare una pagina è gratuito. Richiede un documento che dimostri che chi la rivendica gestisce la struttura o agisce per suo conto, verificato da un amministratore prima che la pagina venga affidata.",
+					"Il titolare di una pagina è responsabile delle informazioni che aggiunge. Devono restare fattuali, esatte e aggiornate."
+				]
+			},
+			"removal": {
+				"heading": "Rimuovere una pagina",
+				"body": [
+					"Chiunque sia oggetto di una pagina può opporsi e chiederne la rimozione in qualsiasi momento: la pagina dei dati spiega come. Una pagina rivendicata può essere rimossa solo dal suo titolare. Gli errori nei dati si correggono alla fonte, presso la regione o l’azienda sanitaria che li comunica al Ministero."
+				]
+			},
+			"liability": {
+				"heading": "Responsabilità",
+				"body": [
+					"Il prestatore fa il possibile per mantenere il servizio disponibile ed esatto, ma non può garantirlo. Non è responsabile delle informazioni che le strutture aggiungono alle loro pagine. Questi limiti saranno precisati durante la revisione legale."
+				]
+			},
+			"ip": {
+				"heading": "Codice e dati",
+				"body": [
+					"Il codice sorgente è pubblicato con licenza AGPL-3.0. I dati del Ministero della Salute sono riutilizzati con la Italian Open Data Licence v2.0 (IODL 2.0), i confini dell’Istat con la licenza Creative Commons Attribuzione 4.0 Internazionale (CC BY 4.0)."
+				]
+			},
+			"law": {
+				"heading": "Legge applicabile e controversie",
+				"body": [
+					"La legge applicabile e il foro competente saranno precisati durante la revisione legale; si applicano sempre le norme imperative a tutela dei consumatori del paese di residenza. In caso di controversia, scriva prima all’indirizzo di contatto per cercare una soluzione amichevole."
+				]
+			}
+		},
+		"fields": {
+			"publisher": "Prestatore",
+			"effectiveDate": "Data di entrata in vigore",
+			"contact": "Contatto"
+		}
+	},
+	"AccessibilityIt": {
+		"metaTitle": "Accessibilità · Apercura",
+		"metaDescription": "Accessibilità delle pagine italiane di Apercura: l’obiettivo WCAG 2.2 AA, che cosa è stato verificato, che cosa resta e come segnalare un problema.",
+		"title": "Accessibilità",
+		"lead": "Apercura è pensato per tutti, comprese le persone anziane e ipovedenti. Questa dichiarazione dice a che punto sono le pagine italiane.",
+		"sections": {
+			"scope": {
+				"heading": "Ambito",
+				"body": [
+					"La Legge 4/2004 (la «Legge Stanca») sull’accesso delle persone con disabilità agli strumenti informatici vincola le pubbliche amministrazioni e le imprese private più grandi; questa dichiarazione è volontaria. Il suo prestatore punta comunque allo stesso livello su ogni pagina: WCAG 2.2 livello AA."
+				]
+			},
+			"status": {
+				"heading": "A che punto è il sito",
+				"body": [
+					"Le pagine italiane condividono il codice delle pagine francesi e i loro test. Il sito è parzialmente conforme alle WCAG 2.2 AA: questo si basa su un’autovalutazione e su test automatici, non ancora su un audit completo, che è in corso."
+				]
+			},
+			"tests": {
+				"heading": "Che cosa è stato verificato",
+				"list": [
+					"Controlli automatici axe-core (regole WCAG 2.0, 2.1 e 2.2, livelli A e AA) su ogni tipo di pagina, a ogni rilascio.",
+					"Percorsi con la sola tastiera, con un focus visibile.",
+					"Testo di almeno 18 px, aree cliccabili di almeno 44 px, nulla che dipenda dal solo colore, nessuno scorrimento orizzontale a 390 px."
+				]
+			},
+			"pending": {
+				"heading": "Che cosa resta da verificare",
+				"list": [
+					"Una verifica manuale con i lettori di schermo VoiceOver e NVDA, in italiano.",
+					"Un audit completo rispetto alle WCAG 2.2 AA su un campione di pagine."
+				]
+			},
+			"feedback": {
+				"heading": "Segnalare un problema",
+				"body": [
+					"Se una pagina o una funzione è difficile da usare, scriva all’indirizzo qui sotto: indichi quale pagina e che cosa l’ha bloccata. Rispondiamo entro un mese e, se serve, le forniamo le informazioni in un’altra forma."
+				]
+			}
+		},
+		"fields": {
+			"contact": "Contatto",
+			"date": "Data di questa dichiarazione"
+		}
+	},
+	"DataIt": {
+		"metaTitle": "Dati e fonti · Apercura",
+		"metaDescription": "Da dove provengono le pagine italiane di Apercura: gli open data del Ministero della Salute (IODL 2.0) e i confini dell’Istat (CC BY 4.0), le date di aggiornamento e come correggere o rimuovere una pagina.",
+		"title": "Dati e fonti",
+		"lead": "Ogni pagina italiana è costruita a partire da open data pubblici. Ecco da dove provengono, con quale licenza e attribuzione, quando sono stati aggiornati e come correggere o rimuovere una pagina.",
+		"status": {
+			"heading": "Ultimo aggiornamento",
+			"body": "Il Ministero della Salute pubblica ogni giorno gli elenchi delle farmacie e delle parafarmacie e una volta all’anno i posti letto per struttura ospedaliera; l’elenco li controlla ogni settimana e importa un elenco quando è cambiato. Una pagina cambia solo quando cambiano i suoi dati negli elenchi.",
+			"importedAt": "Ultima importazione",
+			"checkedAt": "Ultimo controllo delle fonti",
+			"notImported": "L’elenco italiano non è ancora stato importato su questo sito.",
+			"notImportedValue": "Non ancora importato"
+		},
+		"sources": {
+			"heading": "Fonti",
+			"body": "Gli elenchi del Ministero della Salute sono pubblicati con la Italian Open Data Licence v2.0 (IODL 2.0), i confini dell’Istat con la licenza Creative Commons Attribuzione 4.0 Internazionale (CC BY 4.0); entrambe consentono il riutilizzo, anche commerciale, a condizione di citare la fonte. Ogni attribuzione qui sotto è riportata parola per parola, quelle del Ministero con la data dei dati dell’elenco.",
+			"caption": "Fonti dei dati dell’elenco italiano",
+			"columns": {
+				"source": "Fonte",
+				"use": "Usata per",
+				"licence": "Licenza e attribuzione",
+				"frequency": "Aggiornamento"
+			},
+			"items": {
+				"it-farmacie": {
+					"use": "Farmacie aperte al pubblico, con le succursali e i dispensari: nomi, tipologie, indirizzi, comuni",
+					"frequency": "Ogni giorno, dal Ministero della Salute"
+				},
+				"it-parafarmacie": {
+					"use": "Parafarmacie: nomi, indirizzi, comuni",
+					"frequency": "Ogni giorno, dal Ministero della Salute"
+				},
+				"it-posti-letto": {
+					"use": "Ospedali e case di cura private accreditate: nomi, tipologie di struttura, indirizzi, comuni, aree di ricovero",
+					"frequency": "Ogni anno (posti letto al 1° gennaio), dal Ministero della Salute"
+				},
+				"it-istat": {
+					"use": "Regioni, province e città metropolitane, comuni, e il centro di ogni comune (calcolato da Apercura dai suoi confini), dove sono mostrate le strutture",
+					"frequency": "Ogni anno (confini al 1° gennaio), dall’Istat"
+				},
+				"map": {
+					"name": "Dati delle mappe",
+					"publisher": "Contributori di OpenStreetMap, tessere di OpenFreeMap",
+					"use": "Mappe delle pagine",
+					"frequency": "In continuo"
+				}
+			},
+			"iodl": "IODL 2.0",
+			"ccBy": "CC BY 4.0",
+			"odbl": "ODbL",
+			"conditionsHeading": "Condizioni della licenza",
+			"conditions": "Gli elenchi sono mostrati come pubblicati, senza alterarne il significato: nomi con le maiuscole corrette, il nome proprio della struttura senza la forma societaria né i titolari, solo i dati propri della struttura. Ogni pagina italiana cita le sue fonti, l’elenco del Ministero con la data dei suoi dati.",
+			"iodlText": "Il testo della Italian Open Data Licence v2.0"
+		},
+		"coverage": {
+			"heading": "Strutture incluse",
+			"body": [
+				"Le pagine sono generate per le strutture degli open data del Ministero della Salute a cui si rivolgono i pazienti. Una pagina è un luogo, mai una persona: gli elenchi del Ministero non nominano alcun operatore sanitario, e non viene importato alcun elenco di singoli medici, compresi quelli regionali.",
+				"Escluse: le farmacie e le parafarmacie il cui periodo di validità è terminato, le case di cura private non accreditate (i posti letto riguardano solo le strutture pubbliche e accreditate), e gli ambulatori, i laboratori e le altre strutture che gli elenchi del Ministero non comprendono."
+			],
+			"kinds": {
+				"IT_PHARMACY": "Farmacie aperte al pubblico, con le succursali e i dispensari (elenco «Farmacie»)",
+				"IT_PARAPHARMACY": "Parafarmacie (elenco «Parafarmacie»)",
+				"IT_HOSPITAL": "Ospedali: aziende ospedaliere, presidi ospedalieri a gestione diretta, aziende ospedaliero-universitarie, IRCCS e ospedali classificati (elenco «Posti letto per struttura ospedaliera»)",
+				"IT_CLINIC": "Case di cura private accreditate (elenco «Posti letto per struttura ospedaliera»)"
+			},
+			"kindsLabel": "Importate (elenco del Ministero)"
+		},
+		"locations": {
+			"heading": "Posizioni",
+			"body": [
+				"Ogni struttura è mostrata al centro del suo comune, calcolato da Apercura a partire dai confini dell’Istat: la sua posizione su una mappa e la sua distanza sono quelle del comune, mai del suo indirizzo, e nessun segnaposto indica la struttura stessa.",
+				"Gli elenchi del Ministero riportano delle coordinate, ma il Ministero indica che alcune sono state ottenute tramite OpenStreetMap (© OpenStreetMap contributors, ODbL), la cui licenza ha condizioni proprie. Sono usate solo se il gestore del sito sceglie di attivarle."
+			]
+		},
+		"identifiers": {
+			"heading": "Identificativi",
+			"body": [
+				"L’indirizzo di ogni pagina termina con il codice della struttura assegnato dal Ministero, dopo una lettera che indica il suo elenco, così che una pagina possa essere trovata e confrontata con l’elenco:"
+			],
+			"list": [
+				"/it/struttura/farmacia-esempio-f12345: il codice identificativo della farmacia 12345, dopo la f.",
+				"/it/struttura/parafarmacia-esempio-p002112: il codice identificativo del sito logistico della parafarmacia 002112, dopo la p.",
+				"/it/struttura/ospedale-esempio-s010030: il codice struttura del modello HSP.11 010030, dopo la s.",
+				"La partita IVA del titolare non viene mai letta né conservata: per un farmacista che lavora da solo identifica una persona."
+			]
+		},
+		"correct": {
+			"heading": "Correggere un errore",
+			"body": [
+				"Le pagine riprendono gli elenchi del Ministero: una correzione duratura si fa alla fonte, e la pagina la segue alla prima importazione dopo che il Ministero ha pubblicato l’elenco corretto.",
+				"Per tutto il resto, usi il modulo: verifichiamo ogni segnalazione."
+			],
+			"list": [
+				"Nome, indirizzo o tipologia di una farmacia o di una parafarmacia: chieda la correzione alla regione o all’azienda sanitaria locale (ASL) che li comunica al Ministero della Salute.",
+				"Nome, indirizzo, tipologia o posti letto di un ospedale o di una casa di cura: la regione li comunica al Ministero ogni anno; una correzione compare con i dati dell’anno successivo.",
+				"Telefono e orari di apertura: gli elenchi non li pubblicano; una struttura li aggiunge rivendicando la propria pagina."
+			],
+			"formTitle": "Segnalare un errore",
+			"formBody": "Indichi l’indirizzo della pagina e che cosa è sbagliato."
+		},
+		"remove": {
+			"heading": "Rimuovere una pagina",
+			"body": [
+				"Chiunque sia oggetto di una pagina può opporsi alla sua pubblicazione in qualsiasi momento, senza indicarne il motivo (articolo 21 del GDPR). Una pagina non rivendicata viene nascosta non appena arriva la richiesta ed eliminata dopo una breve verifica; non ricompare mai con gli aggiornamenti degli elenchi. Una pagina rivendicata è rimossa dal suo titolare, dal proprio spazio. Ogni pagina ha anche un proprio modulo di rimozione, al suo indirizzo seguito da «/rimozione»."
+			],
+			"formTitle": "Chiedere la rimozione di una pagina",
+			"formBody": "Indichi l’indirizzo della pagina e un indirizzo e-mail a cui possiamo risponderle."
 		}
 	},
 	"LegalNoticeEs": {
