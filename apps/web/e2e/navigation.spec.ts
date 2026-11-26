@@ -89,3 +89,38 @@ test("the language switch drops the fragment of other pages", async ({ page }) =
 	const nav = await languages(page, "Langue");
 	await expect(nav.getByRole("link", { name: "English" })).toHaveAttribute("href", "/fr-en/data");
 });
+
+test("the country menu, beside the language menu, moves to another market's home", async ({
+	page,
+}) => {
+	await page.goto("/fr-de");
+	const countries = page.getByRole("navigation", { name: "Land" });
+	// Two separate choices: the market, and the language its pages are read in.
+	await expect(page.getByRole("navigation", { name: "Sprache" })).toBeVisible();
+	await countries.locator("summary").click();
+	await expect(countries.getByRole("link")).toHaveText([
+		"Frankreich",
+		"Österreich",
+		"Vereinigtes Königreich",
+		"Tschechien",
+	]);
+	await expect(countries.getByRole("link", { name: "Frankreich" })).toHaveAttribute(
+		"aria-current",
+		"true",
+	);
+	// In the visitor's language where the market offers it, else in the market's own.
+	await expect(countries.getByRole("link", { name: "Frankreich" })).toHaveAttribute(
+		"href",
+		"/fr-de",
+	);
+	await expect(countries.getByRole("link", { name: "Vereinigtes Königreich" })).toHaveAttribute(
+		"href",
+		"/gb",
+	);
+	await countries.getByRole("link", { name: "Österreich" }).click();
+	await expect(page).toHaveURL(/\/at$/);
+	await expect(page.locator("html")).toHaveAttribute("lang", "de-AT");
+	// Austria has one language: the country menu stays, the language menu goes.
+	await expect(page.getByRole("navigation", { name: "Land" })).toBeVisible();
+	await expect(page.getByRole("navigation", { name: "Sprache" })).toHaveCount(0);
+});
