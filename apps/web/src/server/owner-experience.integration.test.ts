@@ -424,6 +424,10 @@ describe.skipIf(!url)("owner experience (database)", async () => {
 		const today = new Date(now).toLocaleDateString("en-CA", { timeZone: "Europe/Paris" });
 		const daysAgo = (days: number) =>
 			new Date(new Date(`${today}T12:00:00Z`).getTime() - days * DAY).toISOString().slice(0, 10);
+		// The Europe/Paris day of an instant: `now - n * DAY` is not always `daysAgo(n)` (a DST change
+		// in between shifts it by an hour, enough to cross midnight late in the evening).
+		const parisDate = (ms: number) =>
+			new Date(ms).toLocaleDateString("en-CA", { timeZone: "Europe/Paris" });
 		await db.insert(pageViewDays).values([
 			{ practitionerId: owned.id, day: daysAgo(0), views: 4 },
 			{ practitionerId: owned.id, day: daysAgo(3), views: 2 },
@@ -491,7 +495,7 @@ describe.skipIf(!url)("owner experience (database)", async () => {
 		expect(result.completion.items.find((item) => item.key === "hours")?.done).toBe(false);
 		expect(JSON.stringify(result)).not.toMatch(/patient|email/i);
 
-		expect(result.countedSince).toBe(daysAgo(60));
+		expect(result.countedSince).toBe(parisDate(now - 60 * DAY));
 
 		// The page changed hands two days ago: the new owner never sees the former owner's views.
 		await db
@@ -499,7 +503,7 @@ describe.skipIf(!url)("owner experience (database)", async () => {
 			.set({ verifiedAt: new Date(now - 2 * DAY) })
 			.where(eq(claims.id, claimId));
 		const handedOver = await caller(users.owner).stats.page({ organizationId: orgId });
-		expect(handedOver.countedSince).toBe(daysAgo(2));
+		expect(handedOver.countedSince).toBe(parisDate(now - 2 * DAY));
 		expect(handedOver.totals.viewsLast30Days).toBe(4);
 		expect(handedOver.weekly.reduce((sum, week) => sum + week.views, 0)).toBe(4);
 		expect(handedOver.daily.find((day) => day.day === daysAgo(3))?.views).toBe(0);
