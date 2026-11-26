@@ -468,3 +468,95 @@ export function parseDeFacilitySegment(segment: string): DeFacilitySegment | nul
 	if (!key) return null;
 	return { ...key, namePart: dash < 0 ? "" : segment.slice(0, dash) };
 }
+
+/**
+ * Swiss identifiers: one scheme per list (a list that fails to import keeps its rows), since
+ * Switzerland publishes no open national number of a health facility (the BUR/UID numbers
+ * identify companies, and a sole trader's is the person's). Where a list numbers its rows, the
+ * key is that number; where it does not (the FOPH's hospital figures name sites without a code),
+ * the key is derived from what identifies the row in the list (its canton, name and postcode:
+ * docs/data-import.md, "Switzerland"), nine digits. A page URL ends with the key after letters
+ * naming the list (`kantonsspital-baden-h123456789`, `amavita-apotheke-binningen-blp7601001796874`), so two
+ * lists' numbers never meet.
+ */
+export const CH_ID_SCHEMES = {
+	/** Hospital sites of the FOPH's "Kennzahlen der Schweizer Spitäler": derived (nine digits). */
+	"CH-BAG": { prefix: "h", pattern: /^[1-9]\d{8}$/ },
+	/** Canton of Bern, hospitals and clinics not in the FOPH's figures: derived. */
+	"CH-BE-SPITAL": { prefix: "beh", pattern: /^[1-9]\d{8}$/ },
+	/** Canton of Bern, nursing homes (Alters- und Pflegeheime): derived. */
+	"CH-BE-PH": { prefix: "bee", pattern: /^[1-9]\d{8}$/ },
+	/** Canton of Geneva (SITG), hospitals and clinics not in the FOPH's figures: derived. */
+	"CH-GE-HOP": { prefix: "geh", pattern: /^[1-9]\d{8}$/ },
+	/** Canton of Geneva (SITG), nursing homes (EMS): the cantonal address id (`IDPADR`). */
+	"CH-GE-EMS": { prefix: "gee", pattern: /^[1-9]\d{5,13}$/ },
+	/** Canton of Geneva (SITG), pharmacies that vaccinate: derived. */
+	"CH-GE-PHARM": { prefix: "gep", pattern: /^[1-9]\d{8}$/ },
+	/** Canton of Basel-Landschaft, pharmacies: the business's GLN (thirteen digits, `76…`). */
+	"CH-BL-PHARM": { prefix: "blp", pattern: /^76\d{11}$/ },
+	/** Canton of Basel-Landschaft, nursing homes: derived. */
+	"CH-BL-PH": { prefix: "ble", pattern: /^[1-9]\d{8}$/ },
+	/** Canton of Basel-Stadt, hospitals and clinics not in the FOPH's figures: derived. */
+	"CH-BS-SPITAL": { prefix: "bsh", pattern: /^[1-9]\d{8}$/ },
+	/** Canton of Basel-Stadt, nursing homes: derived. */
+	"CH-BS-PH": { prefix: "bse", pattern: /^[1-9]\d{8}$/ },
+	/** Canton of Zürich, nursing homes: the home's id (eight hexadecimal digits), as a number. */
+	"CH-ZH-PH": { prefix: "zhe", pattern: /^[1-9]\d{0,9}$/ },
+	/** Republic and Canton of Jura, care institutions not in the FOPH's figures: derived. */
+	"CH-JU": { prefix: "ju", pattern: /^[1-9]\d{8}$/ },
+} as const;
+
+export type ChIdScheme = keyof typeof CH_ID_SCHEMES;
+
+const CH_SCHEMES = Object.keys(CH_ID_SCHEMES) as ChIdScheme[];
+
+/** True when `value` is a key of the Swiss scheme (syntax only: the facility may not exist). */
+export function isValidChSourceId(scheme: string, value: string): boolean {
+	const entry = CH_ID_SCHEMES[scheme as ChIdScheme];
+	return entry ? entry.pattern.test(value) : false;
+}
+
+/** The key of a Swiss page as its URL ends (`h123456789`, `blp7601001796874`). */
+export function chUrlKey(scheme: ChIdScheme, nationalId: string): string {
+	return `${CH_ID_SCHEMES[scheme].prefix}${nationalId}`;
+}
+
+/**
+ * Canonical path segment of a Swiss facility page: `{name}-{key}`
+ * (`kantonsspital-baden-h123456789`), umlauts spelled out the German way (`zuerich`) and other
+ * diacritics dropped (`geneve`), as Swiss URLs write them.
+ */
+export function chFacilitySlug(name: string, scheme: ChIdScheme, nationalId: string): string {
+	const key = chUrlKey(scheme, nationalId);
+	const base = slugifyDe(name).slice(0, 80).replace(/-+$/, "");
+	return base ? `${base}-${key}` : key;
+}
+
+export type ChFacilityKey = { idScheme: ChIdScheme; nationalId: string };
+
+/** Reads a Swiss key as its page URL ends (`h123456789`, `GEE930225001723`): the scheme and the key. */
+export function parseChKey(token: string): ChFacilityKey | null {
+	const match = /^([a-z]{1,3})(\d{1,14})$/.exec(token.toLowerCase());
+	if (!match) return null;
+	const [, prefix = "", nationalId = ""] = match;
+	const idScheme = CH_SCHEMES.find((scheme) => CH_ID_SCHEMES[scheme].prefix === prefix);
+	if (!idScheme || !CH_ID_SCHEMES[idScheme].pattern.test(nationalId)) return null;
+	return { idScheme, nationalId };
+}
+
+export type ChFacilitySegment = ChFacilityKey & {
+	/** Name part before the key, possibly empty. */
+	namePart: string;
+};
+
+/**
+ * Parses the last segment of a Swiss page URL (`{name}-{key}`). Returns null unless it ends
+ * with a valid key, so invalid URLs never reach the database.
+ */
+export function parseChFacilitySegment(segment: string): ChFacilitySegment | null {
+	if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(segment)) return null;
+	const dash = segment.lastIndexOf("-");
+	const key = parseChKey(dash < 0 ? segment : segment.slice(dash + 1));
+	if (!key) return null;
+	return { ...key, namePart: dash < 0 ? "" : segment.slice(0, dash) };
+}

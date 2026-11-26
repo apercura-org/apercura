@@ -1,6 +1,6 @@
 /**
  * Everything that differs from one country market to the next, behind one
- * interface. France, Austria, the United Kingdom, Czechia, Spain, Italy and Germany are implemented; docs/adr/0002-multi-country.md
+ * interface. France, Austria, the United Kingdom, Czechia, Spain, Italy, Germany and Switzerland are implemented; docs/adr/0002-multi-country.md
  * lists what is known about every other European market.
  *
  * Adapters are pure data and pure functions: no network, no database. Imports
@@ -8,7 +8,7 @@
  */
 
 /** ISO 3166-1 alpha-2 codes of the markets the data model is prepared for. */
-export const COUNTRY_CODES = ["FR", "AT", "DE", "GB", "ES", "IT", "CZ"] as const;
+export const COUNTRY_CODES = ["FR", "AT", "DE", "GB", "ES", "IT", "CZ", "CH"] as const;
 
 export type CountryCode = (typeof COUNTRY_CODES)[number];
 
@@ -39,6 +39,12 @@ export interface RegistrySource {
 	 * for it (CC BY 4.0 sources). Printed on the data sources page.
 	 */
 	readonly attribution?: string;
+	/**
+	 * The attribution in each language the publisher words it in, for a market of several
+	 * languages (Switzerland: the FOPH's in German, French and Italian), keyed by ISO 639-1; a page
+	 * prints its language's, else `attribution`.
+	 */
+	readonly attributions?: Readonly<Partial<Record<string, string>>>;
 	/** What the source provides to the directory. */
 	readonly provides: readonly (
 		| "practitioners"

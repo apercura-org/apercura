@@ -2,7 +2,7 @@
  * Kinds of care shared by the markets: the listing that lists one kind in each market, so a
  * search typed on one market's pages ("dentiste" on `/fr`) leads to the same kind of care in
  * another market's ("dental-practices" in Bristol, "zubni-lekar" in Brno, "dentistas" in Madrid,
- * "farmacie" for "pharmacie" in Roma).
+ * "farmacie" for "pharmacie" in Roma, "apotheke" for "pharmacy" in Basel).
  *
  * Each market names its listings in its own slugs and its own cut of the field: the UK lists
  * practices (one listing for every kind of dentistry), Austria one listing for dentists,
@@ -15,7 +15,7 @@
  */
 
 /** The open markets (ISO 3166-1 alpha-2), as `SEARCH_ALIASES` keys them. */
-export type CareMarket = "FR" | "AT" | "GB" | "CZ" | "ES" | "IT" | "DE";
+export type CareMarket = "FR" | "AT" | "GB" | "CZ" | "ES" | "IT" | "DE" | "CH";
 
 export const CARE_KINDS = {
 	"general-practice": {
@@ -46,8 +46,9 @@ export const CARE_KINDS = {
 		ES: "farmacias",
 		IT: "farmacie",
 		DE: "apotheken",
+		CH: "apotheke",
 	},
-	hospital: { ES: "hospitales", IT: "ospedali", DE: "krankenhaeuser" },
+	hospital: { ES: "hospitales", IT: "ospedali", DE: "krankenhaeuser", CH: "spital" },
 	paediatrics: { FR: "pediatre", AT: "kinderheilkunde", CZ: "detsky-lekar", ES: "pediatras" },
 	gynaecology: { FR: "gynecologue", AT: "frauenheilkunde", CZ: "gynekolog", ES: "ginecologos" },
 	obstetrics: {
@@ -56,7 +57,7 @@ export const CARE_KINDS = {
 		CZ: "gynekolog",
 		ES: "ginecologos",
 	},
-	midwifery: { FR: "sage-femme", CZ: "porodni-asistentka", ES: "matronas" },
+	midwifery: { FR: "sage-femme", CZ: "porodni-asistentka", ES: "matronas", CH: "geburtshaus" },
 	"home-nursing": { FR: "infirmier", CZ: "domaci-pece", ES: "enfermeria" },
 	physiotherapy: { FR: "masseur-kinesitherapeute", CZ: "fyzioterapeut", ES: "fisioterapeutas" },
 	psychology: { FR: "psychologue", CZ: "psycholog", ES: "psicologos" },
@@ -108,7 +109,13 @@ export const CARE_KINDS = {
 	allergology: { FR: "allergologue", CZ: "alergolog", ES: "alergologos" },
 	urology: { FR: "urologue", AT: "urologie", CZ: "urolog", ES: "urologos" },
 	neurology: { FR: "neurologue", AT: "neurologie", CZ: "neurolog", ES: "neurologos" },
-	psychiatry: { FR: "psychiatre", AT: "psychiatrie", CZ: "psychiatr", ES: "psiquiatras" },
+	psychiatry: {
+		FR: "psychiatre",
+		AT: "psychiatrie",
+		CZ: "psychiatr",
+		ES: "psiquiatras",
+		CH: "psychiatrische-klinik",
+	},
 	"child-psychiatry": {
 		FR: "pedopsychiatre",
 		AT: "kinder-und-jugendpsychiatrie",
