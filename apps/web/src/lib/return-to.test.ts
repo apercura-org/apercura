@@ -74,6 +74,18 @@ describe("returning to a UK claim", () => {
 	});
 });
 
+describe("returning to a Spanish claim", () => {
+	it("accepts an `es:` centre code, never anything that looks like a path", () => {
+		expect(parseReturnTo("/pro/revendiquer?rpps=es:1328000001")).toEqual({
+			pathname: "/pro/revendiquer",
+			query: { rpps: "es:1328000001" },
+		});
+		expect(parseReturnTo("/pro/revendiquer?rpps=es:1328000001/..")).toBeNull();
+		expect(parseReturnTo("/pro/revendiquer?rpps=es:2328000001")).toBeNull();
+		expect(parseReturnTo("/pro/revendiquer?rpps=es:")).toBeNull();
+	});
+});
+
 describe("returning to a Czech claim", () => {
 	it("accepts a `cz:` facility number, never anything that looks like a path", () => {
 		expect(parseReturnTo("/pro/revendiquer?rpps=cz:900001")).toEqual({

@@ -966,3 +966,195 @@ untouched both ways, nothing of the provider stored, placement (Prague districts
 municipality, nearest, centre), read models with Prague's city page skipped,
 idempotence, a dry run, an unreadable export, absences, objections, the breaker
 and `--approve`.
+
+## Spain
+
+`etl:es` builds Spain's directory (`/es`) from the General Register of health
+centres, services and establishments (REGCESS, Ministerio de Sanidad; issue #148,
+[ADR 0002](./adr/0002-multi-country.md#spain-es)). Everything above about roles,
+ownership, the outbox and `--approve` applies; this section says what differs.
+
+```sh
+bun run etl:places --country es   # once (etl:es does it on its first run), then yearly
+bun run etl:es                    # weekly (the register publishes monthly: unchanged extracts are skipped)
+bun run etl:es --dry-run          # everything, then roll back
+bun run etl:es --approve=<run_id> # accept what a blocked run reported
+```
+
+A Spanish page is a **centre** (centro or establecimiento sanitario), the
+register's own unit: a hospital, a health centre or local surgery of the public
+network, a doctor's practice, another health professional's practice, a
+polyclinic, a dental clinic, a pharmacy. Many practices and most pharmacies are
+registered under the professional's name (`DRA. ANA EJEMPLAR FICTICIA`, a
+titular pharmacist): the page keeps the name as the register publishes it,
+cased, as the data of a sole trader or liberal professional in that capacity
+(LOPDGDD, art. 19.3), with the article 14 information on the privacy page, and an
+objection removes it.
+
+### Sources
+
+Verified on 26 November 2026 on each publisher's page.
+
+| Source                                                                                                          | Distribution                                                                                                                                                  | Format, update                                                                                                                                                                                     |
+| --------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| REGCESS, monthly extracts (Ministerio de Sanidad)                                                               | `https://regcesslm.sanidad.gob.es/recesAdminWeb/lm/GetExcelListadoMensual?tipoListado={C1,C2,E}` (linked from the register's download page, regcess.mscbs.es) | XLSX, one worksheet, shared strings: `centros_C1.xlsx` 0.2 MB (929 hospitals), `centros_C2.xlsx` 18 MB (119,577 centres), `centros_E.xlsx` 5.6 MB (40,541 establishments); monthly, no date header |
+| IGN, OGC API Features: `administrativeunit` (Líneas Límite Municipales) and `nuc` (IGR Poblaciones, INE nuclei) | `https://api-features.ign.es/collections/{administrativeunit,nuc}/items?f=json&limit=10000&skipGeometry=true`, following the `next` links                     | GeoJSON without geometry: 8,294 units (4 MB) and 37,497 population centres (26 MB, 4 pages); places import only                                                                                    |
+
+The register's server answers a descriptive client (`apercura-etl …`, the import's
+user agent); the old host regcess.mscbs.es refuses a bare browser user agent.
+`ETL_ES_C1_URL`, `ETL_ES_C2_URL`, `ETL_ES_E_URL` and `ETL_ES_PLACES_URL` (the
+API's base) override them. The services within centres (`C3`) are not read.
+
+**Licences.** The Ministry's legal notice (sanidad.gob.es/avisoLegal, Ley
+37/2007 on the reuse of public sector information) authorises reuse, commercial
+or not, on three conditions: cite the source, give the date of the last update,
+and not distort the data. Pages and the data sources page print "Fuente:
+Ministerio de Sanidad, REGCESS, actualizado {date}" (the date of the import that
+read the extracts). The IGN's data are under CC BY 4.0 (Orden FOM/2807/2015,
+Condiciones_licenciaUso_IGN.pdf), attributed as a derived work: "Obra derivada de
+Líneas Límite Municipales e IGR Poblaciones 2025 CC-BY 4.0 ign.es". Both are in
+`spain.registries` (`packages/core/src/country/es.ts`). OpenStreetMap is not
+used (ODbL share-alike).
+
+### Identifiers
+
+One scheme, `ES-REGCESS`: the normalised centre code `CCN` (ten digits, the
+community's INE code first, `1328900001`), and the page URL ends with it
+(`/es/centro/clinica-dental-ejemplo-centro-1328900001`). A centre has one site,
+its address, keyed by the same code (`source` per extract: `es-regcess-c1`,
+`es-regcess-c2`, `es-regcess-e`), and one activity `{CCN}@{CCN}`. The regional
+code (`Código Autonómico`) is not used.
+
+### Minimisation and what is left out
+
+- Read from a row: the centre code, type, name, community, province and INE
+  municipality codes, municipality name, type of way, street, number, postcode,
+  phone, dependency group (public or private) and care units. **Never read into a
+  row, so never stored**: e-mail, fax, web address, regional code, health area,
+  functional dependency, authorisation dates, structural changes and beds. No
+  per-person register (REPS, the colegios' lists) is read.
+- A phone is stored as the centre's only when at most three rows of its extract
+  carry it (`MAX_PHONE_ROWS`): a chain or a regional switchboard prints one
+  number on many centres (`stats.sources.<extract>.counters.sharedPhones`);
+  `000000000` stands for no number.
+- Names and streets are in capitals without most accents: `titleCaseEs`
+  (`src/sources/es/names.ts`) cases them (`Centro de Salud de Albatera`, `Calle
+  Alcala, 10`, `S.L.`, `Dra.`); no accent is added.
+- Types imported (`ES_CENTRE_TYPES` in `packages/core/src/taxonomy/es.ts`): C11
+  to C14 hospitals, C231 health centres and C232 local surgeries (one listing,
+  `centros-de-salud`), C21 doctors' practices and C22 other health professionals'
+  practices (listed under their primary care unit, `primaryEsSpecialty`), C24
+  polyclinics, C251 dental clinics, E1 pharmacies. Every other type is left out
+  and counted by type in `stats.sources.<extract>.skipped`: other inpatient
+  centres, mobile units, diagnostic, dialysis, assisted reproduction, day surgery,
+  abortion, transfusion, tissue bank, mental health, medical examination and other
+  specialised centres, other outpatient providers; first-aid kits, opticians,
+  orthopaedic and hearing-aid shops.
+- A practice of another profession whose only unit is "U.900 Otras unidades
+  asistenciales" and whose name says psychology is listed with the
+  psychologists (general health psychologists, whom the register files there):
+  `stats.sources.regcess-c2.counters.psychologistsByName`.
+- Every care unit of a centre is stored as a qualification (`source =
+'oferta'`, `U.7` "Cardiología"), and its dependency (`source = 'dependencia'`,
+  `PUBLIC` "Público" or `PRIVATE` "Privado").
+- GDPR objections: the rows of a suppressed centre code are dropped while parsing
+  (`stats.suppressedLines`), and the purge of #116/#118 runs in the merge, as in
+  the other markets.
+
+### Places and precision
+
+Places (`directory.places`, `country = 'ES'`), from the IGN, imported once:
+
+- **regions**: the 17 autonomous communities and Ceuta and Melilla (INE code
+  `01`–`19`); no listing pages, they group the provinces on the directory page;
+- **departments**: the 52 provinces (INE code `01`–`52`), slugged before the
+  communities, so `cantabria` is the province and `cantabria-06` the community;
+- **communes**: the 8,132 municipalities (INE code `28079`), a bilingual name's
+  two forms slugged once when they read the same (`València/Valencia` →
+  `valencia`), unique within the province; the shared territories (province `53`)
+  are left out.
+
+The register publishes **no coordinates**. A municipality's point is its capital
+population centre's (the IGN's `nuc` with the municipality flag), else its most
+populous centre's; 33 municipalities have none (8,099 of 8,132 located, 8,056 by
+their capital). A site is placed (`stageEs` in `src/merge-es.ts`) in the
+municipality of the register's INE code, else in its province, and located at the
+municipality's point: `geo_precision = 'city'`, `geo_source = 'centroid'`, never
+a map pin; a site whose municipality has no point has no location. Distances on
+Spanish pages are therefore approximate, which the pages say. No geocoder is
+called: addresses are not sent anywhere.
+
+### Guards
+
+Per extract (`checkEsSource`): quarantine within 1%, floors of lines and centres
+(C1 50 and 30, C2 1,000 and 100, E 300 and 30; never approvable), and at most 5%
+more or fewer centres and 15% more or fewer bytes than the last successful run
+that read it (approvable). An extract that cannot be fetched, read or pass its
+floors is left out and keeps its centres (its centres are not counted missing);
+the run imports the others and exits `3`. After staging (`checkEsPlaces`): 99% of
+the sites in their municipality and 98% at a point (approvable). Then the
+breakers on Spain's own pages, as everywhere. A run that left an extract out
+never makes the next one skip unchanged files.
+
+### Schedule and monitoring
+
+The scheduler runs `etl:es $ETL_ES_SCHEDULE_ARGS` every Monday at 08:30 UTC,
+after Czechia's import (`docker/crontab`; one advisory lock for every import).
+Alert on exit codes 1, 2 and 3 and on the import age: the extracts are monthly,
+so most weeks are `skipped` and the age of the last `succeeded` run can reach
+five weeks; alert above 40 days.
+
+```sql
+-- Spain's last runs: status, per-extract counters, placement and totals.
+SELECT id, status, finished_at, stats -> 'sourceErrors' AS errors, stats -> 'staged' AS staged,
+	jsonb_object_agg(k, v -> 'counters') AS counters, stats -> 'totals' AS totals
+FROM directory.etl_runs, jsonb_each(coalesce(stats -> 'sources', '{}')) AS s (k, v)
+WHERE source = 'es' GROUP BY id ORDER BY id DESC LIMIT 5;
+
+-- Days since the extracts last changed and were imported (alert above 40).
+SELECT max(finished_at) AS last_import, extract(day FROM now() - max(finished_at))::integer AS age_days
+FROM directory.etl_runs WHERE source = 'es' AND status = 'succeeded';
+```
+
+### Measured run (extracts of 26 November 2026)
+
+Laptop, local PostGIS 17, fresh database, the real extracts (downloaded once) and
+the IGN's API (the run quoted in the pull request):
+
+|           |                                                                                                                                                                                                             |
+| --------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Duration  | places 41 s (download included); dry run 72 s (parse 2 s, read models 36 s), peak RSS 0.64 GB                                                                                                               |
+| Lines     | C1 929 (881 imported), C2 119,577 (91,525), E 40,541 (22,389); 0 quarantined                                                                                                                                |
+| Centres   | hospitals 881 · health centres 3,097 · local surgeries 9,920 · doctors' practices 12,366 · other professionals' 30,410 · polyclinics 12,892 · dental clinics 22,840 · pharmacies 22,389 (114,795)           |
+| Listings  | dentistas 22,856 · farmacias 22,389 · centros-de-salud 13,017 · policlinicas 12,892 · fisioterapeutas 9,790 · psicologos 8,469 (7,061 by name) · otros-profesionales-sanitarios 5,051 · podologos 4,620 · … |
+| Phones    | 95,293 sites with a number; 6,166 shared numbers left out (11 + 5,592 + 563)                                                                                                                                |
+| Sites     | 114,795, all in their municipality; 114,778 at their municipality's point, 17 without one                                                                                                                   |
+| Indexable | 114,795 centre pages; 8,178 indexable listing pages of 28,159                                                                                                                                               |
+| Places    | 19 communities and cities, 52 provinces, 8,132 municipalities                                                                                                                                               |
+
+### Local development
+
+```sh
+bun run etl:es --source-dir packages/etl/fixtures/es --offline   # synthetic data
+bun run --cwd packages/etl fixtures:es                           # regenerate the fixtures
+```
+
+`packages/etl/fixtures/es` holds **synthetic** extracts in the register's exact
+format (`centros_C1.xlsx`, `centros_C2.xlsx`, `centros_E.xlsx`) and the two IGN
+collections (`ign-unidades-administrativas.json`, `ign-nucleos.json`: five
+communities, six provinces and eleven municipalities with their real codes and
+capital points, el Brull without one), generated deterministically by
+`packages/etl/fixtures/generate-es.ts`: made-up centres and professionals (codes
+in the sequence 9xxxxx, above the register's), made-up streets, e-mails, faxes,
+web addresses, regional codes and dates (to check they are never stored), a
+chain sharing a number, a placeholder number, and rows of types left out above
+the line floors. Never commit real rows. The anchors the end-to-end tests use
+(`ES_ANCHORS`): `1328900001` Clinica Dental Ejemplo Centro, `1328900002` a health
+centre, `1328900003` a pharmacy, `1328900004` a public hospital, `1328900005` a
+cardiology practice, `1328900006` a psychologist listed by name, `1328900007` a
+local surgery, all in Madrid; `1328900008` a practice named after a made-up
+doctor, objected to in the integration test. `test/es-integration.test.ts`
+imports them next to the French and Czech fixtures: the other markets untouched
+both ways, nothing unneeded stored, placement by INE code (province fallback, a
+municipality without a point), read models, idempotence, a dry run, an
+unreadable extract left out, absences, objections, the breaker and `--approve`.

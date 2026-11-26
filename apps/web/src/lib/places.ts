@@ -43,11 +43,12 @@ export const AT_STATE_SLUGS: ReadonlySet<string> = new Set(
  * `{code}-{name}` (2 or 3 digits, or 2a/2b for Corsica). Austria: the slug of one of
  * the nine Bundesländer. The United Kingdom: the slug of a local authority or of a
  * region (England's regions and the other nations list in the same slot), never only
- * digits. Czechia: the slug of a district (okres, `brno-mesto`, `praha`).
+ * digits. Czechia: the slug of a district (okres, `brno-mesto`, `praha`). Spain: the slug of a
+ * province (`madrid`, `barcelona`).
  */
 export function isDepartmentSlug(slug: string, country = "FR"): boolean {
 	if (country === "AT") return AT_STATE_SLUGS.has(slug);
-	if (country === "GB" || country === "CZ") return isPlaceSlug(slug);
+	if (country === "GB" || country === "CZ" || country === "ES") return isPlaceSlug(slug);
 	return /^(?:\d{2,3}|2[ab])-[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug);
 }
 
@@ -61,7 +62,8 @@ export function isPlaceSlug(slug: string): boolean {
  * ("Saint-Denis (974)", "Rhône (69)"). Arrondissements already say their city.
  * Austrian and UK places carry no code: nobody knows a Bundesland or Gemeinde by its
  * Statistik Austria number, nor a local authority by its ONS code, nor a Czech district or
- * municipality by its NUTS or RÚIAN code, and Vienna's and Prague's districts say their city
+ * municipality by its NUTS or RÚIAN code, nor a Spanish province or municipality by its INE
+ * code, and Vienna's and Prague's districts say their city
  * ("Wien-Alsergrund", "Praha 8").
  */
 export function placeLabel(

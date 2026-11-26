@@ -169,6 +169,12 @@ export async function searchRedirect(
 	}
 	// No market knows the place: this page says so when it is a city of a country not covered
 	// yet ("Berlin"), else the chosen market's search does.
-	if (named?.kind === "city" && !isOpenMarket(named.country.code)) return null;
+	if (named?.kind === "city") {
+		if (!isOpenMarket(named.country.code)) return null;
+		// A city of an open market its places do not know yet ("Barcelona" before Spain's places
+		// are imported): that market's search says so, never "not covered".
+		const country = named.country.code;
+		if (country !== here) return elsewhere(country, whoIn(country));
+	}
 	return home === here ? null : elsewhere(home, whoIn(home));
 }

@@ -144,6 +144,15 @@ test.describe("a place of another market", () => {
 		["/fr/recherche?quoi=dentiste&ou=Salzburg", "/at/zahnaerzte/salzburg/salzburg"],
 		["/fr/recherche?quoi=dentiste&ou=Praha", "/cz/zubni-lekar/praha"],
 		["/fr/recherche?quoi=zubar&ou=Brno", "/cz/zubni-lekar/brno-mesto/brno"],
+		// Spain: "dentiste" on /fr, "zubař" on /cz, "GP" on /gb, for Madrid; France in Spanish too.
+		["/fr/recherche?quoi=dentiste&ou=Madrid", "/es/dentistas/madrid/madrid"],
+		[`/cz/hledat?quoi=${encodeURIComponent("zubař")}&ou=Madrid`, "/es/dentistas/madrid/madrid"],
+		["/gb/search?quoi=GP&ou=Madrid", "/es/centros-de-salud/madrid/madrid"],
+		["/fr-es/buscar?quoi=farmacia&ou=Madrid", "/es/farmacias/madrid/madrid"],
+		["/fr/recherche?quoi=dentiste&ou=Barcelona", "/es/dentistas/barcelona/barcelona"],
+		// Spain by name: its home, never "not covered yet".
+		["/fr/recherche?ou=Espagne", "/es"],
+		["/es/buscar?quoi=dentista&ou=Paris", "/fr-es/chirurgien-dentiste/75-paris"],
 		["/fr-en/search?quoi=GP&ou=Glasgow", "/gb/gp-practices/glasgow-city/glasgow"],
 		// In the visitor's language when that market offers it: France in English.
 		["/gb/search?quoi=dentist&ou=Paris", "/fr-en/chirurgien-dentiste/75-paris"],
@@ -177,6 +186,7 @@ test.describe("the country searched", () => {
 			"Autriche",
 			"Royaume-Uni",
 			"Tchéquie",
+			"Espagne",
 		]);
 		await country.selectOption({ label: "Royaume-Uni" });
 		// The places suggested are the UK's.
@@ -193,6 +203,10 @@ test.describe("the country searched", () => {
 		await expect(page.getByRole("combobox", { name: "Země" })).toHaveValue("cz");
 		await page.goto("/at/suche");
 		await expect(page.getByRole("combobox", { name: "Land" })).toHaveValue("at");
+		await page.goto("/es/buscar");
+		await expect(page.getByRole("combobox", { name: "País" })).toHaveValue("es");
+		await page.goto("/fr-es/buscar");
+		await expect(page.getByRole("combobox", { name: "País" })).toHaveValue("fr");
 	});
 
 	test.describe("without JavaScript", () => {
@@ -214,6 +228,7 @@ test.describe("a place in a country Apercura does not cover yet", () => {
 		["Autriche", "/at"],
 		["Royaume-Uni", "/gb"],
 		["Tchéquie", "/cz"],
+		["Espagne", "/es"],
 	] as const;
 
 	test("“dentiste” in Berlin says so, lists the open countries, and passes axe", async ({

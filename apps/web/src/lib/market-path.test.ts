@@ -39,19 +39,32 @@ const pathnames = Object.keys(routing.pathnames) as AppPathname[];
 
 const move = (path: string, legacyRoot = true) => marketPath(path, { legacyRoot })?.path ?? null;
 
-/** The locales of the former scheme: Austria's, the UK's and Czechia's pages never had another address. */
+/** The markets opened after the move: their pages never had another address. */
+const NEW_MARKET_LOCALES = ["de-AT", "en-GB", "cs-CZ", "es-ES"] as const;
+
+/** The locales of the former scheme. */
 const FORMER_LOCALES = LOCALES.filter(
-	(locale) => locale !== "de-AT" && locale !== "en-GB" && locale !== "cs-CZ",
+	(locale) => !(NEW_MARKET_LOCALES as readonly Locale[]).includes(locale),
 );
 
 describe("marketPath: every page of the former scheme has a new address", () => {
-	it("leaves Austria's, the UK's and Czechia's pages where they are", () => {
-		for (const locale of ["de-AT", "en-GB", "cs-CZ"] as const) {
+	it("leaves Austria's, the UK's, Czechia's and Spain's pages where they are", () => {
+		for (const locale of NEW_MARKET_LOCALES) {
 			for (const pathname of pathnames) {
 				const path = currentPath(locale, pathname);
-				expect(marketPath(path, { legacyRoot: true }), path).toBeNull();
+				expect(marketPath(path, { legacyRoot: false }), path).toBeNull();
+				// On the former French host, `/es` was France in Spanish: its old links still move.
+				if (locale !== "es-ES") expect(marketPath(path, { legacyRoot: true }), path).toBeNull();
 			}
 		}
+	});
+
+	it("moves `/es` to France in Spanish on the former host only: it is Spain's segment now", () => {
+		expect(move("/es/aviso-legal")).toBe("/fr-es/aviso-legal");
+		expect(move("/es")).toBe("/fr-es");
+		expect(move("/es/aviso-legal", false)).toBeNull();
+		expect(move("/es", false)).toBeNull();
+		expect(move("/de/impressum", false)).toBe("/fr-de/impressum");
 	});
 
 	for (const locale of FORMER_LOCALES) {
@@ -138,8 +151,10 @@ describe("marketPath: every page of the former scheme has a new address", () => 
 		expect(marketPath("/", { legacyRoot: true })?.move).toBe("root");
 		expect(marketPath("/annuaire", { legacyRoot: false })?.move).toBe("french");
 		for (const segment of LEGACY_LOCALE_SEGMENTS) {
-			expect(marketPath(`/${segment}/x`, { legacyRoot: false })?.move).toBe("locale");
+			expect(marketPath(`/${segment}/x`, { legacyRoot: true })?.move).toBe("locale");
 		}
+		expect(marketPath("/de/x", { legacyRoot: false })?.move).toBe("locale");
+		expect(marketPath("/es/x", { legacyRoot: false })).toBeNull();
 		expect(marketPath("/sitemaps/pages-0.xml", { legacyRoot: false })?.move).toBe("sitemap");
 	});
 });

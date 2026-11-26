@@ -5,6 +5,8 @@ import { parseProfessionList } from "@apercura/core/taxonomy";
 import { DEFAULT_AT_PLACES_URL } from "./sources/at/places";
 import { AT_SOURCE_IDS, type AtSourceId } from "./sources/at/types";
 import { defaultCzPlacesUrls } from "./sources/cz/places";
+import { DEFAULT_ES_PLACES_BASE } from "./sources/es/places";
+import { ES_SOURCE_IDS, ES_SOURCES, type EsSourceId } from "./sources/es/types";
 import {
 	DEFAULT_GB_LAD_BOUNDARIES_URL,
 	DEFAULT_GB_LAD_LOOKUP_URL,
@@ -427,6 +429,84 @@ export function buildCzOptions(flags: ParsedArgs["flags"], env: NodeJS.ProcessEn
 		offline,
 		url: env.ETL_CZ_URL || DEFAULT_CZ_URL,
 		placesUrls: czPlacesUrls(env),
+		workDir: flagString(flags, "work-dir") ?? env.ETL_WORK_DIR ?? null,
+		appUrl: offline ? null : env.APP_URL || null,
+		revalidateSecret: env.REVALIDATE_SECRET || null,
+	};
+}
+
+// ---------------------------------------------------------------------------
+// Spain (`etl:es`)
+// ---------------------------------------------------------------------------
+
+/**
+ * The monthly extracts of REGCESS (Ministerio de Sanidad), one per listing, each overridable
+ * (`ETL_ES_C1_URL`, `ETL_ES_C2_URL`, `ETL_ES_E_URL`). Search page:
+ * https://regcess.mscbs.es/regcessWeb/inicioDescargaCentrosAction.do
+ */
+export const DEFAULT_ES_URL_BASE =
+	"https://regcesslm.sanidad.gob.es/recesAdminWeb/lm/GetExcelListadoMensual?tipoListado=";
+
+export type EsOptions = {
+	databaseUrl: string;
+	dryRun: boolean;
+	approveRunId: number | null;
+	force: boolean;
+	sourceDir: string | null;
+	offline: boolean;
+	sources: EsSourceId[];
+	urls: Record<EsSourceId, string>;
+	/** The IGN's OGC API Features for the places (`ETL_ES_PLACES_URL`). */
+	placesBase: string;
+	workDir: string | null;
+	appUrl: string | null;
+	revalidateSecret: string | null;
+};
+
+/** Parses a comma-separated list of Spanish extracts (`regcess-c1,regcess-e`); throws on unknown ones. */
+export function parseEsSources(value: string | null | undefined): EsSourceId[] {
+	if (!value) return [...ES_SOURCE_IDS];
+	const sources = value
+		.split(",")
+		.map((source) => source.trim())
+		.filter(Boolean);
+	for (const source of sources) {
+		if (!(ES_SOURCE_IDS as readonly string[]).includes(source)) {
+			throw new Error(`Unknown Spanish source "${source}" (one of ${ES_SOURCE_IDS.join(", ")})`);
+		}
+	}
+	if (sources.length === 0) throw new Error("At least one Spanish source is required");
+	return [...new Set(sources)] as EsSourceId[];
+}
+
+/** The IGN's API base for the Spanish places: `ETL_ES_PLACES_URL`, else api-features.ign.es. */
+export function esPlacesBase(env: NodeJS.ProcessEnv): string {
+	return env.ETL_ES_PLACES_URL || DEFAULT_ES_PLACES_BASE;
+}
+
+export function buildEsOptions(flags: ParsedArgs["flags"], env: NodeJS.ProcessEnv): EsOptions {
+	const approve = flagString(flags, "approve");
+	if (approve !== null && !/^\d+$/.test(approve)) {
+		throw new Error(`--approve needs a run id, got ${approve}`);
+	}
+	const offline = flags.has("offline");
+	const urlOf = (source: EsSourceId) =>
+		env[`ETL_ES_${ES_SOURCES[source].listing}_URL`] ||
+		`${DEFAULT_ES_URL_BASE}${ES_SOURCES[source].listing}`;
+	return {
+		databaseUrl: resolveDatabaseUrl(env),
+		dryRun: flags.has("dry-run"),
+		approveRunId: approve === null ? null : Number(approve),
+		force: flags.has("force"),
+		sourceDir: flagString(flags, "source-dir") ?? env.ETL_ES_SOURCE_DIR ?? null,
+		offline,
+		sources: parseEsSources(flagString(flags, "sources") ?? env.ETL_ES_SOURCES),
+		urls: {
+			"regcess-c1": urlOf("regcess-c1"),
+			"regcess-c2": urlOf("regcess-c2"),
+			"regcess-e": urlOf("regcess-e"),
+		},
+		placesBase: esPlacesBase(env),
 		workDir: flagString(flags, "work-dir") ?? env.ETL_WORK_DIR ?? null,
 		appUrl: offline ? null : env.APP_URL || null,
 		revalidateSecret: env.REVALIDATE_SECRET || null,

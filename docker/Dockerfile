@@ -11,6 +11,7 @@
 #   docker run … apercura etl:fr [flags]     open data import (e.g. --department 75)
 #   docker run … apercura etl:gb [flags]     UK NHS open data import (etl:at for Austria)
 #   docker run … apercura etl:cz [flags]     Czech NRPZS open data import
+#   docker run … apercura etl:es [flags]     Spanish REGCESS open data import
 #   docker run … apercura scheduler          supercronic: jobs and cache warm-up every 5 minutes,
 #                                            weekly import
 #

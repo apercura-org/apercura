@@ -3,7 +3,7 @@ import { DEFAULT_LOCALE, LOCALE_PREFIXES, LOCALES } from "./locales";
 
 type Pathnames = Record<
 	string,
-	string | Record<Exclude<(typeof LOCALES)[number], "de-AT" | "en-GB" | "cs-CZ">, string>
+	string | Record<Exclude<(typeof LOCALES)[number], "de-AT" | "en-GB" | "cs-CZ" | "es-ES">, string>
 >;
 
 /**
@@ -32,6 +32,17 @@ function czechPath(path: string): string {
 }
 
 /**
+ * The Spanish market's form of a Spanish path: a centre's page under `/centro` (Spain lists
+ * centres, never people), so an establishment's page moves from `/centro` to `/organizacion`.
+ * Every first segment is a Spanish reserved segment of `@apercura/core/taxonomy`
+ * (`ES_RESERVED_SEGMENTS`, tested), which never names a listing.
+ */
+function spanishMarketPath(path: string): string {
+	if (path.startsWith("/centro/")) return path.replace("/centro/", "/organizacion/");
+	return path.replace("/profesional/", "/centro/");
+}
+
+/**
  * The paths of the markets opened after France, derived from a language's own, not listed, so
  * the table every client island ships stays the size of France's:
  * - Austria (`de-AT`): the German paths, with a doctor's page under `/arzt` (every practitioner
@@ -39,7 +50,9 @@ function czechPath(path: string): string {
  * - the United Kingdom (`en-GB`): the English paths, with a practice's page under `/practice`
  *   (the UK lists practices, never people);
  * - Czechia (`cs-CZ`): the English paths with their segments in Czech (`CZECH_SEGMENTS`), a
- *   facility's page under `/zarizeni`.
+ *   facility's page under `/zarizeni`;
+ * - Spain (`es-ES`): the Spanish paths, with a centre's page under `/centro` and an
+ *   establishment's under `/organizacion` (`spanishMarketPath`).
  */
 function withMarkets<T extends Pathnames>(pathnames: T) {
 	return Object.fromEntries(
@@ -52,12 +65,13 @@ function withMarkets<T extends Pathnames>(pathnames: T) {
 						"de-AT": value.de.replace("/behandler/", "/arzt/"),
 						"en-GB": value.en.replace("/practitioner/", "/practice/"),
 						"cs-CZ": czechPath(value.en),
+						"es-ES": spanishMarketPath(value.es),
 					},
 		]),
 	) as {
 		[K in keyof T]: T[K] extends string
 			? T[K]
-			: T[K] & { "de-AT": string; "en-GB": string; "cs-CZ": string };
+			: T[K] & { "de-AT": string; "en-GB": string; "cs-CZ": string; "es-ES": string };
 	};
 }
 

@@ -274,3 +274,43 @@ export function parseCzFacilitySegment(segment: string): CzFacilitySegment | nul
 	if (!match) return null;
 	return { idScheme: CZ_ID_SCHEME, nationalId: match[2] ?? "", namePart: match[1] ?? "" };
 }
+
+/**
+ * Spanish identifiers: the General Register of health centres, services and establishments
+ * (REGCESS, Ministerio de Sanidad) gives every authorised centre its normalised centre code
+ * (`CCN`, Código de Centro Normalizado), ten digits that begin with the code of the autonomous
+ * community (`1003000254`), the page's key. The regional code and the owner's tax number are
+ * never used.
+ */
+export const ES_ID_SCHEME = "ES-REGCESS";
+
+/** True for a REGCESS centre code: ten digits, the first two an autonomous community (`01`–`19`). */
+export function isValidEsSourceId(value: string): boolean {
+	return /^(?:0[1-9]|1\d)\d{8}$/.test(value);
+}
+
+/**
+ * Canonical path segment of a Spanish centre page: `{centre-name}-{ccn}`
+ * (`clinica-dental-sonrisa-1003000254`, `farmacia-ana-maria-1106002194`), diacritics dropped.
+ */
+export function esCentreSlug(name: string, nationalId: string): string {
+	const base = slugify(name).slice(0, 80).replace(/-+$/, "");
+	return base ? `${base}-${nationalId}` : nationalId;
+}
+
+export type EsCentreSegment = {
+	idScheme: typeof ES_ID_SCHEME;
+	nationalId: string;
+	/** Name part before the code, possibly empty. */
+	namePart: string;
+};
+
+/**
+ * Parses the last segment of a Spanish centre URL (`{centre-name}-{ccn}`). Returns null unless
+ * it ends with a valid REGCESS centre code, so invalid URLs never reach the database.
+ */
+export function parseEsCentreSegment(segment: string): EsCentreSegment | null {
+	const match = /^(?:([a-z0-9]+(?:-[a-z0-9]+)*)-)?((?:0[1-9]|1\d)\d{8})$/.exec(segment);
+	if (!match) return null;
+	return { idScheme: ES_ID_SCHEME, nationalId: match[2] ?? "", namePart: match[1] ?? "" };
+}

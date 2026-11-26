@@ -21,8 +21,10 @@ describe("Open Graph images", () => {
 		expect(ogImageOf("40")).toBe("chirurgien-dentiste");
 		expect(ogImageOf("50")).toBe("sage-femme");
 		expect(ogImageOf("60")).toBe("infirmier");
-		// A UK practice or a Czech facility: the directory's image.
+		// A UK practice, a Czech facility or a Spanish centre: the directory's image.
 		expect(ogImageOf("GB_GP")).toBe("annuaire");
+		expect(ogImageOf("ES_DENTAL")).toBe("annuaire");
+		expect(ogImageOf("ES_HOSPITAL")).toBe("annuaire");
 		expect(ogImageOf("CZ_GP")).toBe("annuaire");
 		expect(ogImageOf("CZ_DENTIST")).toBe("annuaire");
 	});
@@ -103,6 +105,7 @@ describe("hreflang of the homes", () => {
 			"de-AT": "https://apercura.org/at",
 			"en-GB": "https://apercura.org/gb",
 			"cs-CZ": "https://apercura.org/cz",
+			"es-ES": "https://apercura.org/es",
 			"x-default": "https://apercura.org/",
 		});
 	});

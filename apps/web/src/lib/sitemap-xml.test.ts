@@ -60,4 +60,19 @@ describe("market page paths of the sitemaps", () => {
 		expect(MARKET_STATIC_PATHS.cz).not.toContain("/pro");
 		expect(MARKET_STATIC_PATHS.cz).toContain("/accessibilite");
 	});
+
+	it("gives Spain its Spanish route segments under /es", () => {
+		expect(marketPagePath("es", "/")).toBe("/es");
+		expect(marketPagePath("es", "/praticien/clinica-dental-ejemplo-centro-1328000001")).toBe(
+			"/es/centro/clinica-dental-ejemplo-centro-1328000001",
+		);
+		expect(marketPagePath("es", "/etablissement/x-1")).toBe("/es/organizacion/x-1");
+		expect(marketPagePath("es", "/annuaire/madrid/madrid")).toBe("/es/directorio/madrid/madrid");
+		expect(marketPagePath("es", "/dentistas/madrid/madrid")).toBe("/es/dentistas/madrid/madrid");
+		expect(marketPagePath("es", "/donnees")).toBe("/es/datos");
+		expect(marketPagePath("es", "/accessibilite")).toBe("/es/accesibilidad");
+		expect(marketPagePath("es", "/mentions-legales")).toBe("/es/aviso-legal");
+		expect(MARKET_STATIC_PATHS.es).not.toContain("/pro");
+		expect(MARKET_STATIC_PATHS.es).toContain("/accessibilite");
+	});
 });

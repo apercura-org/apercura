@@ -85,6 +85,19 @@ describe("listing index", () => {
 		expect(suggestListings("Kardio", "fr").map((entry) => entry.slug)).not.toContain("kardiolog");
 	});
 
+	it("suggests and resolves Spain's listings in Spain only, by plural or singular", () => {
+		expect(suggestListings("Cardiol", "es-ES").map((entry) => entry.slug)).toEqual(["cardiologos"]);
+		expect(suggestListings("farmac", "es-ES").map((entry) => entry.slug)).toEqual(["farmacias"]);
+		expect(resolveListing("Dentistas", "ES")).toBe("dentistas");
+		expect(resolveListing("Clínica dental", "ES")).toBe("dentistas");
+		expect(resolveListing("farmacia", "ES")).toBe("farmacias");
+		expect(resolveListing("Cardiólogos", "ES")).toBe("cardiologos");
+		expect(resolveListing("Farmacias", "FR")).toBeNull();
+		expect(suggestListings("Cardiol", "es").map((entry) => entry.slug)).not.toContain(
+			"cardiologos",
+		);
+	});
+
 	it("carries a term over to another market by kind of care", () => {
 		const listing = (slug: string) => ({ kind: "listing", slug });
 		// The page's own words first: "dentiste" typed on /fr, for Bristol, Wien, Brno.
@@ -99,6 +112,20 @@ describe("listing index", () => {
 		expect(translateSearchTerm("pharmacie", "FR", "GB")).toEqual(listing("pharmacies"));
 		// Then the words of the market searched: "zubař" typed on a French page, for Brno.
 		expect(translateSearchTerm("zubař", "FR", "CZ")).toEqual(listing("zubni-lekar"));
+		// Spain: "dentiste" typed on /fr, "zubař" on /cz, "Zahnarzt" on /at, for Madrid.
+		expect(translateSearchTerm("dentiste", "FR", "ES")).toEqual(listing("dentistas"));
+		expect(translateSearchTerm("zubař", "CZ", "ES")).toEqual(listing("dentistas"));
+		expect(translateSearchTerm("Zahnarzt", "AT", "ES")).toEqual(listing("dentistas"));
+		expect(translateSearchTerm("GP", "GB", "ES")).toEqual(listing("centros-de-salud"));
+		expect(translateSearchTerm("médecin généraliste", "FR", "ES")).toEqual(
+			listing("centros-de-salud"),
+		);
+		expect(translateSearchTerm("pharmacie", "FR", "ES")).toEqual(listing("farmacias"));
+		// A Spanish word typed on a French page, for Madrid; and back.
+		expect(translateSearchTerm("médico de cabecera", "FR", "ES")).toEqual(
+			listing("centros-de-salud"),
+		);
+		expect(translateSearchTerm("dentista", "ES", "FR")).toEqual(listing("chirurgien-dentiste"));
 		expect(translateSearchTerm("Zahnarzt", "GB", "AT")).toEqual(listing("zahnaerzte"));
 		// Care the market searched does not list, and names.
 		expect(translateSearchTerm("cardiologue", "FR", "GB")).toEqual({ kind: "unlisted" });
@@ -122,6 +149,7 @@ describe("listing index", () => {
 			["dental-practices", "en-GB", "GB"],
 			["zahnaerzte", "de-AT", "AT"],
 			["zubni-lekar", "cs-CZ", "CZ"],
+			["dentistas", "es-ES", "ES"],
 			["chirurgien-dentiste", "en", "FR"],
 		] as const) {
 			expect(resolveListing(listingLabel(slug, locale) ?? "", country)).toBe(slug);

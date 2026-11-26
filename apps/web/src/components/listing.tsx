@@ -223,7 +223,7 @@ export async function PractitionerTable({
 								</Link>
 								<p className="mt-1 text-meta text-ink">
 									{labels.occupation(row.listingSlug, genderOf(row.civilityCode))}
-									{/* A UK practice or Czech facility is its premises: no kind of place to tell apart. */}
+									{/* A UK practice, Czech facility or Spanish centre is its premises: no kind of place. */}
 									{row.practiceKind && !listsPractices(marketOf(locale))
 										? ` · ${labels.practiceKind(row.practiceKind) ?? ""}`
 										: ""}

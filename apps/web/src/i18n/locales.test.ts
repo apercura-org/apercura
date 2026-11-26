@@ -1,9 +1,11 @@
 import {
 	AT_RESERVED_SEGMENTS,
 	CZ_RESERVED_SEGMENTS,
+	ES_RESERVED_SEGMENTS,
 	GB_RESERVED_SEGMENTS,
 	isAtListingSlug,
 	isCzListingSlug,
+	isEsListingSlug,
 	isGbListingSlug,
 	isListingSlug,
 	isReservedSegment,
@@ -45,7 +47,12 @@ const pathnames = Object.keys(routing.pathnames) as AppPathname[];
 
 /** Interface translations of France's pages: never indexed. */
 const TRANSLATIONS = LOCALES.filter(
-	(locale) => locale !== "fr" && locale !== "de-AT" && locale !== "en-GB" && locale !== "cs-CZ",
+	(locale) =>
+		locale !== "fr" &&
+		locale !== "de-AT" &&
+		locale !== "en-GB" &&
+		locale !== "cs-CZ" &&
+		locale !== "es-ES",
 );
 
 /** Pathnames without a catch-all segment, with example params. */
@@ -59,8 +66,8 @@ function hrefOf(pathname: AppPathname) {
 }
 
 describe("locale configuration", () => {
-	it("serves France under /fr and /fr-{language}, Austria under /at, the UK under /gb and Czechia under /cz", () => {
-		expect(LOCALES).toEqual(["fr", "en", "de", "es", "it", "de-AT", "en-GB", "cs-CZ"]);
+	it("serves France under /fr and /fr-{language}, Austria under /at, the UK under /gb, Czechia under /cz and Spain under /es", () => {
+		expect(LOCALES).toEqual(["fr", "en", "de", "es", "it", "de-AT", "en-GB", "cs-CZ", "es-ES"]);
 		expect(routing.locales).toEqual(LOCALES);
 		expect(routing.defaultLocale).toBe("fr");
 		expect(DEFAULT_LOCALE).toBe("fr");
@@ -73,8 +80,19 @@ describe("locale configuration", () => {
 			"de-AT": "/at",
 			"en-GB": "/gb",
 			"cs-CZ": "/cz",
+			"es-ES": "/es",
 		});
-		expect(LOCALE_SEGMENTS).toEqual(["fr", "fr-en", "fr-de", "fr-es", "fr-it", "at", "gb", "cz"]);
+		expect(LOCALE_SEGMENTS).toEqual([
+			"fr",
+			"fr-en",
+			"fr-de",
+			"fr-es",
+			"fr-it",
+			"at",
+			"gb",
+			"cz",
+			"es",
+		]);
 		expect(LOCALE_MARKETS).toEqual({
 			fr: "FR",
 			en: "FR",
@@ -84,10 +102,12 @@ describe("locale configuration", () => {
 			"de-AT": "AT",
 			"en-GB": "GB",
 			"cs-CZ": "CZ",
+			"es-ES": "ES",
 		});
 		expect(CATALOG_LANGUAGES["de-AT"]).toBe("de");
 		expect(CATALOG_LANGUAGES["en-GB"]).toBe("en");
 		expect(CATALOG_LANGUAGES["cs-CZ"]).toBe("cs");
+		expect(CATALOG_LANGUAGES["es-ES"]).toBe("es");
 		for (const locale of LOCALES) {
 			expect(marketOf(locale), locale).toBe(LOCALE_MARKETS[locale]);
 			expect(locale.split("-")[0], locale).toBe(CATALOG_LANGUAGES[locale]);
@@ -103,9 +123,11 @@ describe("locale configuration", () => {
 
 	it("keeps the former prefixes apart from the current ones", () => {
 		expect(LEGACY_LOCALE_SEGMENTS).toEqual(["en", "de", "es", "it"]);
-		for (const segment of LEGACY_LOCALE_SEGMENTS) {
+		// `/es` is Spain's segment since the market opened: only the others are free.
+		for (const segment of LEGACY_LOCALE_SEGMENTS.filter((segment) => segment !== "es")) {
 			expect(LOCALE_SEGMENTS).not.toContain(segment);
 		}
+		expect(LOCALE_SEGMENTS).toContain("es");
 	});
 
 	it("formats each locale with its own country and a BCP 47 tag", () => {
@@ -118,6 +140,7 @@ describe("locale configuration", () => {
 			"de-AT": "de-AT",
 			"en-GB": "en-GB",
 			"cs-CZ": "cs-CZ",
+			"es-ES": "es-ES",
 		});
 		expect(OG_LOCALES).toEqual({
 			fr: "fr_FR",
@@ -128,6 +151,7 @@ describe("locale configuration", () => {
 			"de-AT": "de_AT",
 			"en-GB": "en_GB",
 			"cs-CZ": "cs_CZ",
+			"es-ES": "es_ES",
 		});
 		for (const locale of LOCALES) {
 			expect(Intl.DateTimeFormat.supportedLocalesOf([LOCALE_TAGS[locale]])).toEqual([
@@ -144,18 +168,21 @@ describe("locale configuration", () => {
 	});
 
 	it("indexes each market in its own language only, and leaves hreflang to the pages", () => {
-		expect(INDEXABLE_LOCALES).toEqual(["fr", "de-AT", "en-GB", "cs-CZ"]);
+		expect(INDEXABLE_LOCALES).toEqual(["fr", "de-AT", "en-GB", "cs-CZ", "es-ES"]);
 		expect(HREFLANGS).toEqual({
 			fr: "fr-FR",
 			"de-AT": "de-AT",
 			"en-GB": "en-GB",
 			"cs-CZ": "cs-CZ",
+			"es-ES": "es-ES",
 		});
 		expect(routing.alternateLinks).toBe(false);
 		expect(robotsFor("fr", true)).toEqual({ index: true, follow: true });
 		expect(robotsFor("de-AT", true)).toEqual({ index: true, follow: true });
 		expect(robotsFor("en-GB", true)).toEqual({ index: true, follow: true });
 		expect(robotsFor("cs-CZ", true)).toEqual({ index: true, follow: true });
+		expect(robotsFor("es-ES", true)).toEqual({ index: true, follow: true });
+		expect(robotsFor("es", true)).toEqual({ index: false, follow: true });
 		for (const locale of TRANSLATIONS) {
 			expect(robotsFor(locale, true)).toEqual({ index: false, follow: true });
 		}
@@ -249,6 +276,35 @@ describe("locale configuration", () => {
 		expect(localePath("cs-CZ", "/annuaire")).toBe("/cz/adresar");
 		expect(localePath("cs-CZ", "/confidentialite")).toBe("/cz/ochrana-osobnich-udaju");
 		expect(localePath("cs-CZ", "/mentions-legales")).toBe("/cz/pravni-informace");
+		// Spain: every Spanish first segment is reserved and never a Spanish listing slug.
+		for (const pathname of simple.filter((pathname) => !pathname.startsWith("/["))) {
+			const [first] = getPathname({ href: hrefOf(pathname) as never, locale: "es-ES" })
+				.split("/")
+				.filter(Boolean)
+				.slice(1);
+			if (!first) continue;
+			expect(ES_RESERVED_SEGMENTS as readonly string[], pathname).toContain(first);
+			expect(isEsListingSlug(first), pathname).toBe(false);
+		}
+		expect(
+			localePath("es-ES", "/praticien/[slug]", { slug: "clinica-dental-ejemplo-1328000001" }),
+		).toBe("/es/centro/clinica-dental-ejemplo-1328000001");
+		expect(
+			localePath("es-ES", "/praticien/[slug]/retrait", {
+				slug: "clinica-dental-ejemplo-1328000001",
+			}),
+		).toBe("/es/centro/clinica-dental-ejemplo-1328000001/retirada");
+		expect(localePath("es-ES", "/etablissement/[slug]", { slug: "x-1" })).toBe(
+			"/es/organizacion/x-1",
+		);
+		expect(localePath("es-ES", "/annuaire")).toBe("/es/directorio");
+		expect(localePath("es-ES", "/confidentialite")).toBe("/es/privacidad");
+		expect(localePath("es-ES", "/mentions-legales")).toBe("/es/aviso-legal");
+		expect(localePath("es-ES", "/donnees")).toBe("/es/datos");
+		// France in Spanish keeps its own paths.
+		expect(localePath("es", "/praticien/[slug]", { slug: "camille-exemple-19999990013" })).toBe(
+			"/fr-es/profesional/camille-exemple-19999990013",
+		);
 	});
 
 	it("translates into Czech only segments reserved in Czechia", () => {
@@ -283,14 +339,16 @@ describe("locale configuration", () => {
 
 describe("the markets a search can move to", () => {
 	it("are the open markets, France first, each at its own segment", () => {
-		expect(MARKET_COUNTRIES).toEqual(["FR", "AT", "GB", "CZ"]);
-		expect(MARKET_COUNTRIES.map(marketSegment)).toEqual(["fr", "at", "gb", "cz"]);
+		expect(MARKET_COUNTRIES).toEqual(["FR", "AT", "GB", "CZ", "ES"]);
+		expect(MARKET_COUNTRIES.map(marketSegment)).toEqual(["fr", "at", "gb", "cz", "es"]);
 		for (const country of MARKET_COUNTRIES) {
 			expect(marketOfSegment(marketSegment(country))).toBe(country);
 		}
 		expect(marketOfSegment(" GB ")).toBe("GB");
 		expect(marketOfSegment("fr-en")).toBeNull();
 		expect(marketOfSegment("de")).toBeNull();
+		expect(marketOfSegment("es")).toBe("ES");
+		expect(marketOfSegment("fr-es")).toBeNull();
 		expect(marketOfSegment(null)).toBeNull();
 	});
 
@@ -303,6 +361,11 @@ describe("the markets a search can move to", () => {
 		expect(marketLocaleFor("AT", "de")).toBe("de-AT");
 		expect(marketLocaleFor("CZ", "fr")).toBe("cs-CZ");
 		expect(marketLocaleFor("FR", "cs-CZ")).toBe("fr");
+		// A reader of France in Spanish lands on Spain in Spanish, and back.
+		expect(marketLocaleFor("ES", "es")).toBe("es-ES");
+		expect(marketLocaleFor("FR", "es-ES")).toBe("es");
+		expect(marketLocaleFor("ES", "fr")).toBe("es-ES");
+		expect(marketLocaleFor("ES", "en-GB")).toBe("es-ES");
 		// A visitor already in the market keeps the locale.
 		expect(marketLocaleFor("FR", "it")).toBe("it");
 	});

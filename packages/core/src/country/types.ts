@@ -1,6 +1,6 @@
 /**
  * Everything that differs from one country market to the next, behind one
- * interface. France, Austria, the United Kingdom and Czechia are implemented; docs/adr/0002-multi-country.md
+ * interface. France, Austria, the United Kingdom, Czechia and Spain are implemented; docs/adr/0002-multi-country.md
  * lists what is known about every other European market.
  *
  * Adapters are pure data and pure functions: no network, no database. Imports

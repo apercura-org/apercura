@@ -223,6 +223,7 @@ services:
       ETL_AT_SCHEDULE_ARGS: ${ETL_AT_SCHEDULE_ARGS:-}
       ETL_GB_SCHEDULE_ARGS: ${ETL_GB_SCHEDULE_ARGS:-}
       ETL_CZ_SCHEDULE_ARGS: ${ETL_CZ_SCHEDULE_ARGS:-}
+      ETL_ES_SCHEDULE_ARGS: ${ETL_ES_SCHEDULE_ARGS:-}
       # Cache warm-up (`jobs:tick warm`, docs/self-hosting.md): requests INTERNAL_APP_URL as
       # APP_URL's host, a budget at a time; `false` turns it off.
       WARM_CACHE: ${WARM_CACHE:-true}

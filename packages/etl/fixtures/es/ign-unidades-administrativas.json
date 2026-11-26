@@ -1,0 +1,270 @@
+{
+	"type": "FeatureCollection",
+	"features": [
+		{
+			"type": "Feature",
+			"properties": {
+				"nameunit": "España",
+				"country": "ES",
+				"nationalcode": "34000000000",
+				"nationallevel": "https://inspire.ec.europa.eu/codelist/AdministrativeHierarchyLevel/1stOrder",
+				"nationallevelname": "País"
+			},
+			"geometry": null
+		},
+		{
+			"type": "Feature",
+			"properties": {
+				"nameunit": "Andalucía",
+				"country": "ES",
+				"nationalcode": "34010000000",
+				"nationallevel": "https://inspire.ec.europa.eu/codelist/AdministrativeHierarchyLevel/2ndOrder",
+				"nationallevelname": "Comunidad autónoma"
+			},
+			"geometry": null
+		},
+		{
+			"type": "Feature",
+			"properties": {
+				"nameunit": "Canarias",
+				"country": "ES",
+				"nationalcode": "34050000000",
+				"nationallevel": "https://inspire.ec.europa.eu/codelist/AdministrativeHierarchyLevel/2ndOrder",
+				"nationallevelname": "Comunidad autónoma"
+			},
+			"geometry": null
+		},
+		{
+			"type": "Feature",
+			"properties": {
+				"nameunit": "Cataluña/Catalunya",
+				"country": "ES",
+				"nationalcode": "34090000000",
+				"nationallevel": "https://inspire.ec.europa.eu/codelist/AdministrativeHierarchyLevel/2ndOrder",
+				"nationallevelname": "Comunidad autónoma"
+			},
+			"geometry": null
+		},
+		{
+			"type": "Feature",
+			"properties": {
+				"nameunit": "Comunitat Valenciana",
+				"country": "ES",
+				"nationalcode": "34100000000",
+				"nationallevel": "https://inspire.ec.europa.eu/codelist/AdministrativeHierarchyLevel/2ndOrder",
+				"nationallevelname": "Comunidad autónoma"
+			},
+			"geometry": null
+		},
+		{
+			"type": "Feature",
+			"properties": {
+				"nameunit": "Comunidad de Madrid",
+				"country": "ES",
+				"nationalcode": "34130000000",
+				"nationallevel": "https://inspire.ec.europa.eu/codelist/AdministrativeHierarchyLevel/2ndOrder",
+				"nationallevelname": "Comunidad autónoma"
+			},
+			"geometry": null
+		},
+		{
+			"type": "Feature",
+			"properties": {
+				"nameunit": "Alacant/Alicante",
+				"country": "ES",
+				"nationalcode": "34100300000",
+				"nationallevel": "https://inspire.ec.europa.eu/codelist/AdministrativeHierarchyLevel/3rdOrder",
+				"nationallevelname": "Provincia"
+			},
+			"geometry": null
+		},
+		{
+			"type": "Feature",
+			"properties": {
+				"nameunit": "Barcelona",
+				"country": "ES",
+				"nationalcode": "34090800000",
+				"nationallevel": "https://inspire.ec.europa.eu/codelist/AdministrativeHierarchyLevel/3rdOrder",
+				"nationallevelname": "Provincia"
+			},
+			"geometry": null
+		},
+		{
+			"type": "Feature",
+			"properties": {
+				"nameunit": "Madrid",
+				"country": "ES",
+				"nationalcode": "34132800000",
+				"nationallevel": "https://inspire.ec.europa.eu/codelist/AdministrativeHierarchyLevel/3rdOrder",
+				"nationallevelname": "Provincia"
+			},
+			"geometry": null
+		},
+		{
+			"type": "Feature",
+			"properties": {
+				"nameunit": "Las Palmas",
+				"country": "ES",
+				"nationalcode": "34053500000",
+				"nationallevel": "https://inspire.ec.europa.eu/codelist/AdministrativeHierarchyLevel/3rdOrder",
+				"nationallevelname": "Provincia"
+			},
+			"geometry": null
+		},
+		{
+			"type": "Feature",
+			"properties": {
+				"nameunit": "Sevilla",
+				"country": "ES",
+				"nationalcode": "34014100000",
+				"nationallevel": "https://inspire.ec.europa.eu/codelist/AdministrativeHierarchyLevel/3rdOrder",
+				"nationallevelname": "Provincia"
+			},
+			"geometry": null
+		},
+		{
+			"type": "Feature",
+			"properties": {
+				"nameunit": "València/Valencia",
+				"country": "ES",
+				"nationalcode": "34104600000",
+				"nationallevel": "https://inspire.ec.europa.eu/codelist/AdministrativeHierarchyLevel/3rdOrder",
+				"nationallevelname": "Provincia"
+			},
+			"geometry": null
+		},
+		{
+			"type": "Feature",
+			"properties": {
+				"nameunit": "Madrid",
+				"country": "ES",
+				"nationalcode": "34132828079",
+				"nationallevel": "https://inspire.ec.europa.eu/codelist/AdministrativeHierarchyLevel/4thOrder",
+				"nationallevelname": "Municipio"
+			},
+			"geometry": null
+		},
+		{
+			"type": "Feature",
+			"properties": {
+				"nameunit": "Alcobendas",
+				"country": "ES",
+				"nationalcode": "34132828006",
+				"nationallevel": "https://inspire.ec.europa.eu/codelist/AdministrativeHierarchyLevel/4thOrder",
+				"nationallevelname": "Municipio"
+			},
+			"geometry": null
+		},
+		{
+			"type": "Feature",
+			"properties": {
+				"nameunit": "Getafe",
+				"country": "ES",
+				"nationalcode": "34132828065",
+				"nationallevel": "https://inspire.ec.europa.eu/codelist/AdministrativeHierarchyLevel/4thOrder",
+				"nationallevelname": "Municipio"
+			},
+			"geometry": null
+		},
+		{
+			"type": "Feature",
+			"properties": {
+				"nameunit": "Barcelona",
+				"country": "ES",
+				"nationalcode": "34090808019",
+				"nationallevel": "https://inspire.ec.europa.eu/codelist/AdministrativeHierarchyLevel/4thOrder",
+				"nationallevelname": "Municipio"
+			},
+			"geometry": null
+		},
+		{
+			"type": "Feature",
+			"properties": {
+				"nameunit": "L'Hospitalet de Llobregat",
+				"country": "ES",
+				"nationalcode": "34090808101",
+				"nationallevel": "https://inspire.ec.europa.eu/codelist/AdministrativeHierarchyLevel/4thOrder",
+				"nationallevelname": "Municipio"
+			},
+			"geometry": null
+		},
+		{
+			"type": "Feature",
+			"properties": {
+				"nameunit": "el Brull",
+				"country": "ES",
+				"nationalcode": "34090808026",
+				"nationallevel": "https://inspire.ec.europa.eu/codelist/AdministrativeHierarchyLevel/4thOrder",
+				"nationallevelname": "Municipio"
+			},
+			"geometry": null
+		},
+		{
+			"type": "Feature",
+			"properties": {
+				"nameunit": "València",
+				"country": "ES",
+				"nationalcode": "34104646250",
+				"nationallevel": "https://inspire.ec.europa.eu/codelist/AdministrativeHierarchyLevel/4thOrder",
+				"nationallevelname": "Municipio"
+			},
+			"geometry": null
+		},
+		{
+			"type": "Feature",
+			"properties": {
+				"nameunit": "Alacant/Alicante",
+				"country": "ES",
+				"nationalcode": "34100303014",
+				"nationallevel": "https://inspire.ec.europa.eu/codelist/AdministrativeHierarchyLevel/4thOrder",
+				"nationallevelname": "Municipio"
+			},
+			"geometry": null
+		},
+		{
+			"type": "Feature",
+			"properties": {
+				"nameunit": "Mutxamel",
+				"country": "ES",
+				"nationalcode": "34100303090",
+				"nationallevel": "https://inspire.ec.europa.eu/codelist/AdministrativeHierarchyLevel/4thOrder",
+				"nationallevelname": "Municipio"
+			},
+			"geometry": null
+		},
+		{
+			"type": "Feature",
+			"properties": {
+				"nameunit": "Sevilla",
+				"country": "ES",
+				"nationalcode": "34014141091",
+				"nationallevel": "https://inspire.ec.europa.eu/codelist/AdministrativeHierarchyLevel/4thOrder",
+				"nationallevelname": "Municipio"
+			},
+			"geometry": null
+		},
+		{
+			"type": "Feature",
+			"properties": {
+				"nameunit": "Las Palmas de Gran Canaria",
+				"country": "ES",
+				"nationalcode": "34053535016",
+				"nationallevel": "https://inspire.ec.europa.eu/codelist/AdministrativeHierarchyLevel/4thOrder",
+				"nationallevelname": "Municipio"
+			},
+			"geometry": null
+		},
+		{
+			"type": "Feature",
+			"properties": {
+				"nameunit": "Parzonería ficticia",
+				"country": "ES",
+				"nationalcode": "34205354001",
+				"nationallevel": "https://inspire.ec.europa.eu/codelist/AdministrativeHierarchyLevel/4thOrder",
+				"nationallevelname": "Territorio"
+			},
+			"geometry": null
+		}
+	],
+	"numberMatched": 24
+}

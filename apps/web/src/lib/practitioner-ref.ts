@@ -2,12 +2,14 @@ import {
 	AT_ID_SCHEMES,
 	type AtIdScheme,
 	CZ_ID_SCHEME,
+	ES_ID_SCHEME,
 	GB_ID_SCHEMES,
 	type GbIdScheme,
 	gbUrlKey,
 	isValidRpps,
 	parseAtPractitionerSegment,
 	parseCzFacilitySegment,
+	parseEsCentreSegment,
 	parseGbPracticeSegment,
 } from "@apercura/core";
 import type { MarketCountry } from "~/i18n/locales";
@@ -44,16 +46,29 @@ function czRef(segment: string): PractitionerRef | null {
 		: null;
 }
 
+/** The prefix of a Spanish reference (`es:1328000001`): a bare code names no market by itself. */
+const ES_REF = "es:";
+
+/** A Spanish centre from the end of a page address or slug, or from its REGCESS code alone. */
+function esRef(segment: string): PractitionerRef | null {
+	const parsed = parseEsCentreSegment(segment);
+	return parsed
+		? { country: "ES", idScheme: parsed.idScheme, nationalId: parsed.nationalId }
+		: null;
+}
+
 /**
  * Reads the short reference forms and the services take (claims, removal
  * requests, error reports, contact requests): an RPPS in France
  * (`19999990013`), the list letters and number in Austria (`w7983`, the end of
  * an Austrian page address), `gb:` and the key in the United Kingdom (`gb:a81001`,
- * `gb:sg10002`), `cz:` and the NRPZS number in Czechia (`cz:39781`). A page address is read
- * from its last segment, in the market its first path segment names (`/gb/practice/…`,
- * `/cz/zarizeni/…`). Whitespace and case are forgiven. `market` is the market the reference was
- * typed in: on a UK page a bare key (`A81001`, `W91234`) is the UK's, on a Czech page a bare
- * number (`39781`) is Czechia's.
+ * `gb:sg10002`), `cz:` and the NRPZS number in Czechia (`cz:39781`), `es:` and the REGCESS
+ * centre code in Spain (`es:1328000001`). A page address is read from its last segment, in the
+ * market its first path segment names (`/gb/practice/…`, `/cz/zarizeni/…`, `/es/centro/…`).
+ * Whitespace and case are forgiven. `market` is the market the reference was typed in: on a UK
+ * page a bare key (`A81001`, `W91234`) is the UK's, on a Czech page a bare number (`39781`) is
+ * Czechia's, on a Spanish page a ten-digit code is Spain's (as is any ten-digit code: no other
+ * market has one).
  * Null for anything else.
  */
 export function parsePractitionerRef(
@@ -68,6 +83,9 @@ export function parsePractitionerRef(
 	if (trimmed.toLowerCase().startsWith(CZ_REF)) {
 		return czRef(trimmed.slice(CZ_REF.length).replace(/\s+/g, "").toLowerCase());
 	}
+	if (trimmed.toLowerCase().startsWith(ES_REF)) {
+		return esRef(trimmed.slice(ES_REF.length).replace(/\s+/g, "").toLowerCase());
+	}
 	const parts = trimmed.split(/[?#]/)[0]?.split("/").filter(Boolean) ?? [];
 	const segment = trimmed.split(/[/?#]/).filter(Boolean).at(-1) ?? "";
 	const compact = segment.replace(/\s+/g, "").toLowerCase();
@@ -76,9 +94,19 @@ export function parsePractitionerRef(
 	if (path.length > 1 && path[0]?.toLowerCase() === "gb") return gbRef(compact);
 	// A page address of Czechia (`/cz/zarizeni/…`), or a number typed on a Czech page.
 	if (path.length > 1 && path[0]?.toLowerCase() === "cz") return czRef(compact);
+	// A page address of Spain (`/es/centro/…`; `/es/` was France in Spanish before, whose RPPS
+	// addresses still read below), or a code typed on a Spanish page.
+	if (path.length > 1 && path[0]?.toLowerCase() === "es") {
+		const spanish = esRef(compact);
+		if (spanish) return spanish;
+	}
 	if (market === "CZ") {
 		const czech = czRef(compact);
 		if (czech) return czech;
+	}
+	if (market === "ES" || /^\d{10}$/.test(compact)) {
+		const spanish = esRef(compact);
+		if (spanish) return spanish;
 	}
 	if (market === "GB") {
 		const british = gbRef(compact);
@@ -97,11 +125,12 @@ export function parsePractitionerRef(
 }
 
 /**
- * The short reference of a practitioner (`19999990013`, `w7983`, `gb:a81001`, `cz:39781`), as
- * `parsePractitionerRef` reads it.
+ * The short reference of a practitioner (`19999990013`, `w7983`, `gb:a81001`, `cz:39781`,
+ * `es:1328000001`), as `parsePractitionerRef` reads it.
  */
 export function practitionerRefOf(practitioner: { idScheme: string; nationalId: string }): string {
 	if (practitioner.idScheme === CZ_ID_SCHEME) return `${CZ_REF}${practitioner.nationalId}`;
+	if (practitioner.idScheme === ES_ID_SCHEME) return `${ES_REF}${practitioner.nationalId}`;
 	if (GB_ID_SCHEMES[practitioner.idScheme as GbIdScheme]) {
 		return `${GB_REF}${gbUrlKey(practitioner.idScheme as GbIdScheme, practitioner.nationalId)}`;
 	}
@@ -112,7 +141,8 @@ export function practitionerRefOf(practitioner: { idScheme: string; nationalId: 
 /**
  * A reference as typed in a market's form, in the form every service reads the same way: a bare
  * key typed on a UK page (`W91234`) becomes `gb:w91234`, never an Austrian key, and a number
- * typed on a Czech page (`39781`) `cz:39781`. A value that
+ * typed on a Czech page (`39781`) `cz:39781`, a code typed on a Spanish page (`1328000001`)
+ * `es:1328000001`. A value that
  * names no page is kept as typed, so the service answers its own error.
  */
 export function marketRef(value: string, market: MarketCountry): string {

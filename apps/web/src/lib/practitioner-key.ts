@@ -6,6 +6,7 @@ import {
 	gbUrlKey,
 	parseAtPractitionerSegment,
 	parseCzFacilitySegment,
+	parseEsCentreSegment,
 	parseGbPracticeSegment,
 	parsePractitionerSegment,
 } from "@apercura/core";
@@ -27,13 +28,18 @@ export type PractitionerKey = {
  * `{prenom-nom}-{rpps}` in France (Luhn-checked), `{vorname-nachname}-{list}{number}`
  * in Austria (`anna-muster-w7983`), `{practice-name}-{key}` in the United Kingdom
  * (`the-densham-surgery-a81001`, `muirhead-medical-centre-sg10002`), `{facility-name}-{number}`
- * in Czechia (`mudr-hana-bohackova-39781`, the NRPZS number). Null for anything else,
+ * in Czechia (`mudr-hana-bohackova-39781`, the NRPZS number), `{centre-name}-{code}` in Spain
+ * (`clinica-dental-ejemplo-1328000001`, the REGCESS code). Null for anything else,
  * so malformed or other-market URLs never reach the database.
  */
 export function parsePractitionerKey(locale: Locale, segment: string): PractitionerKey | null {
 	const country = marketOf(locale);
 	if (country === "CZ") {
 		const parsed = parseCzFacilitySegment(segment);
+		return parsed ? { country, ...parsed } : null;
+	}
+	if (country === "ES") {
+		const parsed = parseEsCentreSegment(segment);
 		return parsed ? { country, ...parsed } : null;
 	}
 	if (country === "GB") {
@@ -67,16 +73,20 @@ export const GB_SEGMENT_MARKER = "gb.";
  */
 export const CZ_SEGMENT_MARKER = "cz.";
 
+/** The marker of a Spanish page's segment outside a locale (`es.{slug}`). */
+export const ES_SEGMENT_MARKER = "es.";
+
 /** The marker of each market whose segments are marked outside a locale. */
 const SEGMENT_MARKERS: Readonly<Partial<Record<MarketCountry, string>>> = {
 	GB: GB_SEGMENT_MARKER,
 	CZ: CZ_SEGMENT_MARKER,
+	ES: ES_SEGMENT_MARKER,
 };
 
 /**
  * The segment naming a practitioner page outside a locale (the Open Graph image): its slug,
- * marked with its market for a UK or Czech page (`gb.the-densham-surgery-a81001`,
- * `cz.mudr-hana-bohackova-39781`).
+ * marked with its market for a UK, Czech or Spanish page (`gb.the-densham-surgery-a81001`,
+ * `cz.mudr-hana-bohackova-39781`, `es.clinica-dental-ejemplo-1328000001`).
  */
 export function marketSegmentOf(country: string, slug: string): string {
 	const marker = SEGMENT_MARKERS[country as MarketCountry];
@@ -104,7 +114,8 @@ export function parseAnyPractitionerKey(segment: string): PractitionerKey | null
  * The identifier printed on a practitioner's page and card: the RPPS number in France; in
  * Austria the list letter and number of the page URL (`w7983`), since the lists publish no
  * national number; in the UK the ODS code as the NHS prints it (`A81001`), else the list
- * letters and number of the page URL (`sg10002`); in Czechia the NRPZS facility number.
+ * letters and number of the page URL (`sg10002`); in Czechia the NRPZS facility number; in
+ * Spain the REGCESS centre code.
  */
 export function displayId(key: Pick<PractitionerKey, "idScheme" | "nationalId">): string {
 	const gb = GB_ID_SCHEMES[key.idScheme as GbIdScheme];

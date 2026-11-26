@@ -11,6 +11,7 @@ import {
 } from "~/components/institutional";
 import { DataAt } from "~/components/legal-at";
 import { DataCz } from "~/components/legal-cz";
+import { DataEs } from "~/components/legal-es";
 import { DataGb } from "~/components/legal-gb";
 import { PageGraph } from "~/components/page-graph";
 import { PublicPage } from "~/components/public-page";
@@ -69,7 +70,7 @@ function formatDate(date: string, locale: Locale) {
 export function generateMetadata({ params }: PageProps<"/[locale]/donnees">) {
 	return marketInstitutionalMetadata(
 		params,
-		{ FR: "DataPage", AT: "DataAt", GB: "DataGb", CZ: "DataCz" },
+		{ FR: "DataPage", AT: "DataAt", GB: "DataGb", CZ: "DataCz", ES: "DataEs" },
 		HREF,
 	);
 }
@@ -77,10 +78,12 @@ export function generateMetadata({ params }: PageProps<"/[locale]/donnees">) {
 export default async function DataPage({ params }: PageProps<"/[locale]/donnees">) {
 	const locale = await localeOf(params);
 	setRequestLocale(locale);
-	// Austria's, the UK's and Czechia's pages have texts of their own, written for their law.
+	// Austria's, the UK's, Czechia's and Spain's pages have texts of their own, written for their
+	// law.
 	if (marketOf(locale) === "AT") return <DataAt locale={locale} />;
 	if (marketOf(locale) === "GB") return <DataGb locale={locale} />;
 	if (marketOf(locale) === "CZ") return <DataCz locale={locale} />;
+	if (marketOf(locale) === "ES") return <DataEs locale={locale} />;
 	const t = await getTranslations({ locale, namespace: "DataPage" });
 	const tSite = await getTranslations({ locale, namespace: "Site" });
 	const registry = await getRegistryStatus();

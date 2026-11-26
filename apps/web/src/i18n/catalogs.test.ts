@@ -1,4 +1,4 @@
-import { allCzListingSlugs } from "@apercura/core/taxonomy";
+import { allCzListingSlugs, allEsTaxonomySlugs } from "@apercura/core/taxonomy";
 import {
 	isPluralElement,
 	isSelectElement,
@@ -13,6 +13,7 @@ import cz from "../../messages/cz.json";
 import de from "../../messages/de.json";
 import en from "../../messages/en.json";
 import es from "../../messages/es.json";
+import esES from "../../messages/es-ES.json";
 import fr from "../../messages/fr.json";
 import gb from "../../messages/gb.json";
 import it_ from "../../messages/it.json";
@@ -21,7 +22,8 @@ import { CATALOG_LANGUAGES, LOCALES, type Locale } from "./locales";
 
 /**
  * Austria's catalog is the German one with the Austrian overrides on top; the UK's the English
- * one with the UK's overrides; Czechia's the English one with the Czech texts on top.
+ * one with the UK's overrides; Czechia's the English one with the Czech texts on top; Spain's the
+ * Spanish one with Spain's overrides.
  */
 const CATALOGS: Record<Locale, unknown> = {
 	fr,
@@ -32,6 +34,10 @@ const CATALOGS: Record<Locale, unknown> = {
 	"de-AT": mergeMessages(de, at as Record<string, unknown>),
 	"en-GB": mergeMessages(en, gb as Record<string, unknown>),
 	"cs-CZ": mergeMessages(en, cz as Record<string, unknown>),
+	"es-ES": mergeMessages(
+		mergeMessages(en, es as Record<string, unknown>),
+		esES as Record<string, unknown>,
+	),
 };
 
 /** Every message of a catalog by its dotted key (array items are indexed). */
@@ -151,5 +157,24 @@ describe("the Czech texts", () => {
 			expect(czech.get(`taxonomy.listing.${slug}`), slug).toBeTruthy();
 			expect(czech.get(`taxonomy.profession.${slug}`), slug).toBeTruthy();
 		}
+	});
+});
+
+describe("Spain's overrides", () => {
+	it("only override keys of the Spanish catalog", () => {
+		const spanish = flatten(es);
+		expect([...flatten(esES).keys()].filter((key) => !spanish.has(key))).toEqual([]);
+	});
+
+	it("name every Spanish listing and kind of centre in Spanish, in every catalog", () => {
+		for (const catalog of [es, en, fr, de, it_]) {
+			const labels = flatten(catalog);
+			for (const slug of allEsTaxonomySlugs()) {
+				expect(labels.get(`taxonomy.profession.${slug}`), slug).toBeTruthy();
+			}
+		}
+		const spanish = flatten(es);
+		expect(spanish.get("taxonomy.listing.dentistas")).toBe("Dentistas");
+		expect(spanish.get("taxonomy.profession.consultorio-local")).toBe("Consultorio local");
 	});
 });

@@ -67,7 +67,8 @@ export async function practitionerCard(key: OgKey): Promise<PractitionerCard | n
 		labels.profession(professionSlugOf(payload.professionCode), gender) ?? t("unknownProfession");
 	return {
 		name: labels.personName(payload),
-		occupation: labels.occupation(payload.listingSlug, gender) ?? profession,
+		occupation:
+			labels.occupation(payload.listingSlug, gender, payload.professionCode) ?? profession,
 		place: (() => {
 			// A London practice is listed in its borough, without a town.
 			const locality = page.commune ?? (listsPractices(payload.country) ? page.department : null);

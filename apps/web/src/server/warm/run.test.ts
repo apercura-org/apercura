@@ -171,7 +171,7 @@ describe("cache warm-up run", () => {
 					now: other.now,
 				}),
 			);
-		} while (!again.state.completedAt && runs.length < 20);
+		} while (!again.state.completedAt && runs.length < 40);
 		expect(other.app.requested).toHaveLength(budget);
 		expect(runs.at(-1)).toMatchObject({ stopped: "budget", total: budget });
 	});
