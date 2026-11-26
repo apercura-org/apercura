@@ -50,9 +50,12 @@ jobs:
           path="${UPTIME_PRACTITIONER_PATH:-}"
           if [ -z "$path" ]; then
             index=$(curl -sS --max-time 20 -A "apercura-uptime" "$base/sitemap.xml" || true)
-            chunk=$(grep -o '<loc>[^<]*/sitemaps/\(fr/\)\{0,1\}praticiens-[0-9]*\.xml</loc>' <<<"$index" | head -n 1 | sed 's/<[^>]*>//g')
+            chunk=$(grep -o -m 1 '<loc>[^<]*/sitemaps/\(fr/\)\{0,1\}praticiens-[0-9]*\.xml</loc>' <<<"$index" | sed 's/<[^>]*>//g' || true)
             if [ -n "$chunk" ]; then
-              page=$(curl -sS --max-time 20 -A "apercura-uptime" "$chunk" | grep -o '<loc>[^<]*</loc>' | head -n 1 | sed 's/<[^>]*>//g')
+              # Read the whole chunk first: piping curl into `head` makes curl fail on SIGPIPE
+              # (exit 23), which `pipefail` turns into a failed check.
+              sitemap=$(curl -sS --max-time 20 -A "apercura-uptime" "$chunk" || true)
+              page=$(grep -o -m 1 '<loc>[^<]*</loc>' <<<"$sitemap" | sed 's/<[^>]*>//g' || true)
               path="${page#"$base"}"
             fi
           fi
