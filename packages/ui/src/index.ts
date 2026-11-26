@@ -90,6 +90,9 @@ export {
 	BookletSearch,
 	type BookletSearchField,
 	type BookletSearchProps,
+	BookletSelectField,
+	type BookletSelectFieldProps,
+	type BookletSelectOption,
 } from "./domain/booklet-search";
 export {
 	BookletComboField,

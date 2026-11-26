@@ -1,4 +1,4 @@
-import { SearchIcon } from "../icons";
+import { ChevronDownIcon, SearchIcon } from "../icons";
 import { buttonStyles, cn } from "../recipes";
 
 export interface BookletSearchField {
@@ -12,11 +12,78 @@ export interface BookletSearchField {
 	autoComplete?: string;
 }
 
+export interface BookletSelectOption {
+	/** Submitted value, e.g. `gb`. */
+	value: string;
+	/** Printed text, e.g. "United Kingdom". */
+	label: string;
+}
+
+export interface BookletSelectFieldProps {
+	/** Select id, unique on the page. */
+	id: string;
+	/** Query parameter name, e.g. `pays`. */
+	name: string;
+	/** Printed field label, e.g. "Country". */
+	label: string;
+	options: BookletSelectOption[];
+	defaultValue?: string;
+	onChange?: (value: string) => void;
+	className?: string;
+}
+
+/**
+ * A printed search cell holding a short native choice (the country searched): a plain
+ * `<select>` submitted with the GET form, sized to its longest option so the text cells
+ * keep the room.
+ */
+export function BookletSelectField({
+	id,
+	name,
+	label,
+	options,
+	defaultValue,
+	onChange,
+	className,
+}: BookletSelectFieldProps) {
+	return (
+		<div
+			className={cn(
+				"group relative flex flex-col rounded-field px-3.5 pt-2 pb-1 text-ink md:flex-none",
+				"has-[select:focus-visible]:outline-3 has-[select:focus-visible]:outline-solid has-[select:focus-visible]:outline-offset-0 has-[select:focus-visible]:outline-stamp",
+				className,
+			)}
+		>
+			<label htmlFor={id} className="type-caption text-ink-muted">
+				{label}
+			</label>
+			<div className="relative flex items-center">
+				<select
+					id={id}
+					name={name}
+					defaultValue={defaultValue}
+					onChange={onChange ? (event) => onChange(event.target.value) : undefined}
+					className="min-h-11 w-full cursor-pointer appearance-none truncate bg-transparent py-1 pe-7 text-body text-ink outline-none sm:text-lead md:w-auto md:max-w-48 [&>option]:bg-paper [&>option]:text-ink"
+				>
+					{options.map((option) => (
+						<option key={option.value} value={option.value}>
+							{option.label}
+						</option>
+					))}
+				</select>
+				<ChevronDownIcon className="pointer-events-none absolute end-0 size-5 text-ink-muted" />
+			</div>
+		</div>
+	);
+}
+
 export interface BookletSearchProps {
 	/** Form action (a GET URL), e.g. `/recherche`. */
 	action: string;
 	/** One or two printed fields. */
 	fields: BookletSearchField[];
+	/** A short choice printed after the fields (the country searched). */
+	select?: Omit<BookletSelectFieldProps, "id" | "onChange" | "className">;
 	submitLabel: string;
 	/** Accessible name of the search landmark. */
 	label: string;
@@ -38,6 +105,7 @@ export interface BookletSearchProps {
 export function BookletSearch({
 	action,
 	fields,
+	select,
 	submitLabel,
 	label,
 	idPrefix = "booklet-search",
@@ -80,6 +148,15 @@ export function BookletSearch({
 						</div>
 					);
 				})}
+				{select ? (
+					<BookletSelectField
+						{...select}
+						id={`${idPrefix}-${select.name}`}
+						className={
+							fields.length > 0 ? "border-t border-rule-soft md:border-t-0 md:border-s" : undefined
+						}
+					/>
+				) : null}
 			</div>
 			<button
 				type="submit"

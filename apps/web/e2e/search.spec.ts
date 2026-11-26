@@ -28,7 +28,7 @@ test.describe("without JavaScript", () => {
 		await page.getByLabel("Qui ?").fill("Essai");
 		await page.getByLabel("Où ?").fill("75015");
 		await page.getByRole("button", { name: "Chercher" }).click();
-		await expect(page).toHaveURL(/\/recherche\?quoi=Essai&ou=75015$/);
+		await expect(page).toHaveURL(/\/recherche\?quoi=Essai&ou=75015&pays=fr$/);
 		await expect(page.getByRole("table", { name: "Résultats" })).toBeVisible();
 	});
 });
@@ -118,9 +118,10 @@ test("the home search gets its suggestions on first use, keeping the text and th
 	page,
 }) => {
 	await page.goto("/fr");
-	// The plain GET form until the visitor reaches it: no combo box code at load.
+	// The plain GET form until the visitor reaches it: no combo box code at load (the country
+	// is a native select, a combo box to assistive tech, in both forms).
 	await expect(page.getByLabel("Qui ?")).toHaveAttribute("type", "search");
-	await expect(page.getByRole("combobox")).toHaveCount(0);
+	await expect(page.getByRole("combobox", { name: /^(Qui|Où) \?$/ })).toHaveCount(0);
 	await page.getByLabel("Qui ?").focus();
 	await page.keyboard.type("Fic");
 	const who = page.getByRole("combobox", { name: "Qui ?" });
@@ -131,6 +132,80 @@ test("the home search gets its suggestions on first use, keeping the text and th
 	await expect(option).toBeVisible();
 	await option.click();
 	await expect(page).toHaveURL(FICTIF_PAGE);
+});
+
+test.describe("a place of another market", () => {
+	/*
+	 * The synthetic places of the other markets: Glasgow (UK dental and GP practices), Salzburg
+	 * (Austrian dentists), Brno and Praha (Czech dentists), Paris (French dentists).
+	 */
+	for (const [from, to] of [
+		["/fr/recherche?quoi=dentiste&ou=Glasgow", "/gb/dental-practices/glasgow-city/glasgow"],
+		["/fr/recherche?quoi=dentiste&ou=Salzburg", "/at/zahnaerzte/salzburg/salzburg"],
+		["/fr/recherche?quoi=dentiste&ou=Praha", "/cz/zubni-lekar/praha"],
+		["/fr/recherche?quoi=zubar&ou=Brno", "/cz/zubni-lekar/brno-mesto/brno"],
+		["/fr-en/search?quoi=GP&ou=Glasgow", "/gb/gp-practices/glasgow-city/glasgow"],
+		// In the visitor's language when that market offers it: France in English.
+		["/gb/search?quoi=dentist&ou=Paris", "/fr-en/chirurgien-dentiste/75-paris"],
+		// The UK lists no cardiologists: its search, with the place set.
+		["/fr/recherche?quoi=cardiologue&ou=Glasgow", "/gb/search?ou=Glasgow"],
+	] as const) {
+		test(`${from} redirects (307) to ${to}`, async ({ request }) => {
+			const response = await request.get(from, { maxRedirects: 0 });
+			expect(response.status()).toBe(307);
+			const location = new URL(response.headers().location ?? "", "http://localhost");
+			expect(location.pathname + location.search).toBe(to);
+		});
+	}
+
+	test("a search of the page's own market stays there", async ({ request }) => {
+		const response = await request.get("/fr/recherche?quoi=dentiste&ou=Paris", {
+			maxRedirects: 0,
+		});
+		expect(response.status()).toBe(307);
+		expect(response.headers().location).toMatch(/\/fr\/chirurgien-dentiste\/75-paris$/);
+	});
+});
+
+test.describe("the country searched", () => {
+	test("is the page's market, and another one moves the search there", async ({ page }) => {
+		await page.goto("/fr/recherche");
+		const country = page.getByRole("combobox", { name: "Pays" });
+		await expect(country).toHaveValue("fr");
+		await expect(country.getByRole("option")).toHaveText([
+			"France",
+			"Autriche",
+			"Royaume-Uni",
+			"Tchéquie",
+		]);
+		await country.selectOption({ label: "Royaume-Uni" });
+		// The places suggested are the UK's.
+		await page.getByRole("combobox", { name: "Où ?" }).pressSequentially("Glasg");
+		await expect(page.getByRole("option", { name: /Glasgow/ }).first()).toBeVisible();
+		await page.getByRole("combobox", { name: "Où ?" }).fill("");
+		await page.getByRole("combobox", { name: "Qui ?" }).fill("dentiste");
+		await page.getByRole("button", { name: "Chercher", includeHidden: true }).click();
+		await expect(page).toHaveURL(/\/gb\/dental-practices$/);
+	});
+
+	test("is printed in the market's language on its pages", async ({ page }) => {
+		await page.goto("/cz/hledat");
+		await expect(page.getByRole("combobox", { name: "Země" })).toHaveValue("cz");
+		await page.goto("/at/suche");
+		await expect(page.getByRole("combobox", { name: "Land" })).toHaveValue("at");
+	});
+
+	test.describe("without JavaScript", () => {
+		test.use({ javaScriptEnabled: false });
+
+		test("the home form submits the country chosen", async ({ page }) => {
+			await page.goto("/fr");
+			await page.getByLabel("Qui ?").fill("dentiste");
+			await page.getByLabel("Pays").selectOption("cz");
+			await page.getByRole("button", { name: "Chercher" }).click();
+			await expect(page).toHaveURL(/\/cz\/zubni-lekar$/);
+		});
+	});
 });
 
 for (const path of [

@@ -57,7 +57,14 @@
 		"whoHint": "Nombre, especialidad o profesión",
 		"where": "¿Dónde?",
 		"whereHint": "Localidad o código postal",
-		"submit": "Buscar"
+		"submit": "Buscar",
+		"market": "País",
+		"markets": {
+			"FR": "Francia",
+			"AT": "Austria",
+			"GB": "Reino Unido",
+			"CZ": "Chequia"
+		}
 	},
 	"HomePage": {
 		"title": "Encuentre un profesional sanitario en Francia",

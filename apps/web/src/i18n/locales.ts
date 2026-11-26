@@ -87,6 +87,35 @@ export const MARKET_LOCALES: Record<MarketCountry, Locale> = {
 	CZ: "cs-CZ",
 };
 
+/** The open markets, France first: the order a search looks a place up in after its own. */
+export const MARKET_COUNTRIES = Object.keys(MARKET_LOCALES) as MarketCountry[];
+
+/** The path segment of a market's own pages (`GB` → `gb`), also the search's `pays` value. */
+export function marketSegment(country: MarketCountry): string {
+	return LOCALE_PREFIXES[MARKET_LOCALES[country]].slice(1);
+}
+
+/** The market a segment names (`gb` → `GB`, any case), or null. */
+export function marketOfSegment(value: string | null | undefined): MarketCountry | null {
+	const segment = value?.trim().toLowerCase();
+	return MARKET_COUNTRIES.find((country) => marketSegment(country) === segment) ?? null;
+}
+
+/**
+ * The locale of a market's pages for a visitor reading `visitor`: the visitor's own locale in
+ * its market, else the market's locale in the visitor's language when it has one (an English
+ * reader of `/gb` reads France at `/fr-en`), else the market's own language (`/fr` → `/cz`).
+ */
+export function marketLocaleFor(country: MarketCountry, visitor: Locale): Locale {
+	if (marketOf(visitor) === country) return visitor;
+	return (
+		LOCALES.find(
+			(locale) =>
+				marketOf(locale) === country && CATALOG_LANGUAGES[locale] === CATALOG_LANGUAGES[visitor],
+		) ?? MARKET_LOCALES[country]
+	);
+}
+
 /**
  * The language of each locale's catalog: `de-AT` reads the German catalog, with
  * Austrian overrides (`messages/at.json`) where Austria words or rules differ; `en-GB`

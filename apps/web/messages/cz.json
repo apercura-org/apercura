@@ -57,7 +57,14 @@
 		"whoHint": "Název zařízení, nebo obor: praktický lékař, zubní lékař, kardiolog, lékárna",
 		"where": "Kde?",
 		"whereHint": "Obec, městská část Prahy nebo okres",
-		"submit": "Hledat"
+		"submit": "Hledat",
+		"market": "Země",
+		"markets": {
+			"FR": "Francie",
+			"AT": "Rakousko",
+			"GB": "Spojené království",
+			"CZ": "Česko"
+		}
 	},
 	"HomePage": {
 		"title": "Najděte lékaře, zubaře nebo lékárnu v Česku",

@@ -10,6 +10,7 @@ import {
 	allAtListingSlugs,
 	allCzListingSlugs,
 	allGbListingSlugs,
+	equivalentListing,
 	FR_PROFESSIONS,
 	professionOfListingSlug,
 	SEARCH_ALIASES,
@@ -270,6 +271,27 @@ function listedIn(slug: string, country: MarketCountry): boolean {
 export type SearchTerm = { kind: "listing"; slug: string } | { kind: "unlisted" };
 
 /**
+ * What a query names in a market's words, listed there or not: the slug of an alias or of an
+ * official label, `UNLISTED` for care the market has no slug for, or null.
+ */
+function namedIn(forms: string[], country: MarketCountry): AliasTarget | null {
+	const aliases = aliasIndexFor(country);
+	for (const form of forms) {
+		const target = aliases.get(form);
+		if (target !== undefined) return target;
+	}
+	const candidates = new Set(forms);
+	for (const locale of marketLocales(country)) {
+		for (const entry of indexFor(locale)) {
+			if (entry.keys.some((key) => candidates.has(key) || candidates.has(singularOf(key)))) {
+				return entry.slug;
+			}
+		}
+	}
+	return null;
+}
+
+/**
  * What the "Qui ?" of a search names in a market: one of its listings, or care it does not
  * list ("pharmacie" in France, "Apotheke" in Austria), or null (a name, most likely). Everyday
  * words of the market's search aliases come first, then the official labels in any language
@@ -279,27 +301,42 @@ export type SearchTerm = { kind: "listing"; slug: string } | { kind: "unlisted" 
 export function resolveSearchTerm(query: string, country: MarketCountry = "FR"): SearchTerm | null {
 	const forms = queryForms(query);
 	if (forms.length === 0) return null;
-	const aliases = aliasIndexFor(country);
-	for (const form of forms) {
-		const target = aliases.get(form);
-		if (target === undefined) continue;
-		return target !== UNLISTED && listedIn(target, country)
-			? { kind: "listing", slug: target }
-			: { kind: "unlisted" };
-	}
-	const candidates = new Set(forms);
-	for (const locale of marketLocales(country)) {
-		for (const entry of indexFor(locale)) {
-			if (entry.keys.some((key) => candidates.has(key) || candidates.has(singularOf(key)))) {
-				return { kind: "listing", slug: entry.slug };
-			}
-		}
-	}
-	return null;
+	const named = namedIn(forms, country);
+	if (named === null) return null;
+	return named !== UNLISTED && listedIn(named, country)
+		? { kind: "listing", slug: named }
+		: { kind: "unlisted" };
 }
 
 /** The listing slug of a market a query names (`resolveSearchTerm`), or null. */
 export function resolveListing(query: string, country: MarketCountry = "FR"): string | null {
 	const term = resolveSearchTerm(query, country);
 	return term?.kind === "listing" ? term.slug : null;
+}
+
+/**
+ * What a "Qui ?" typed on the pages of market `from` names in market `to` (the place searched
+ * is there): read in `from`'s words first and carried over by kind of care ("dentiste" in
+ * France → the UK's `dental-practices`), else read in `to`'s own words ("zubař" typed on a
+ * French page, for Brno). Care that `to` does not list is `unlisted`; null is a name.
+ */
+export function translateSearchTerm(
+	query: string,
+	from: MarketCountry,
+	to: MarketCountry,
+): SearchTerm | null {
+	if (from === to) return resolveSearchTerm(query, to);
+	const forms = queryForms(query);
+	if (forms.length === 0) return null;
+	const named = namedIn(forms, from);
+	if (typeof named === "string") {
+		const slug = equivalentListing(named, from, to);
+		if (slug && listedIn(slug, to)) return { kind: "listing", slug };
+	}
+	return resolveSearchTerm(query, to) ?? (named === null ? null : { kind: "unlisted" });
+}
+
+/** The label of a listing in a locale (`dental-practices` → "Dental practices"), or null. */
+export function listingLabel(slug: string, locale: Locale): string | null {
+	return indexFor(locale).find((entry) => entry.slug === slug)?.label ?? null;
 }

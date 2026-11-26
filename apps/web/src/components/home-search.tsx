@@ -1,5 +1,6 @@
 import { BookletSearch, buttonStyles } from "@apercura/ui";
 import { getTranslations } from "next-intl/server";
+import { MARKET_COUNTRIES, marketOf, marketSegment } from "~/i18n/locales";
 import { getPathname } from "~/i18n/navigation";
 import type { Locale } from "~/i18n/routing";
 import { searchFormId } from "~/lib/search-form-id";
@@ -38,6 +39,15 @@ export async function HomeSearch({ locale, idPrefix }: { locale: Locale; idPrefi
 								autoComplete: "address-level2",
 							},
 						]}
+						select={{
+							name: "pays",
+							label: t("market"),
+							defaultValue: marketSegment(marketOf(locale)),
+							options: MARKET_COUNTRIES.map((country) => ({
+								value: marketSegment(country),
+								label: t(`markets.${country}`),
+							})),
+						}}
 					/>
 				</DeferredSearchForm>
 			</ClientIsland>

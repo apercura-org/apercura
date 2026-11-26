@@ -2,7 +2,7 @@ import { parseSearchQuery } from "@apercura/core";
 import { NextRequest, NextResponse } from "next/server";
 import createMiddleware from "next-intl/middleware";
 import { clientEnv } from "./env";
-import { LOCALE_SEGMENTS, marketOf } from "./i18n/locales";
+import { LOCALE_SEGMENTS, marketOf, marketOfSegment } from "./i18n/locales";
 import { getPathname } from "./i18n/navigation";
 import { type Locale, routing } from "./i18n/routing";
 import { canonicalPath } from "./lib/canonical-path";
@@ -148,13 +148,15 @@ const SEARCH_PATHS: Record<string, Locale> = Object.fromEntries(
 );
 
 /**
- * A search query that names a page (an RPPS number, a specialty in a place)
- * answers a real 307, decided here before the page starts streaming.
+ * A search query that names a page (an RPPS number, a specialty in a place, a place of another
+ * market) answers a real 307, decided here before the page starts streaming.
  */
 async function searchShortcut(request: NextRequest): Promise<NextResponse | null> {
 	const locale = SEARCH_PATHS[request.nextUrl.pathname];
 	const params = request.nextUrl.searchParams;
-	if (!locale || (!params.get("quoi") && !params.get("ou"))) return null;
+	const chosen = marketOfSegment(params.get("pays"));
+	const switching = chosen !== null && chosen !== (locale ? marketOf(locale) : null);
+	if (!locale || (!params.get("quoi") && !params.get("ou") && !switching)) return null;
 	const page = Number(params.get("page") ?? "1");
 	try {
 		const target = await searchRedirect(
@@ -164,10 +166,11 @@ async function searchShortcut(request: NextRequest): Promise<NextResponse | null
 				pres: params.get("pres"),
 			}),
 			Number.isInteger(page) && page > 0 ? page : 1,
-			marketOf(locale),
+			locale,
+			chosen,
 		);
 		if (!target) return null;
-		return NextResponse.redirect(new URL(getPathname({ href: target, locale }), request.url), 307);
+		return NextResponse.redirect(new URL(getPathname(target), request.url), 307);
 	} catch {
 		// The page applies the same rules; never fail a search in the proxy.
 		return null;

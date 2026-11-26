@@ -57,7 +57,14 @@
 		"whoHint": "Name, Fachgebiet oder Beruf",
 		"where": "Wo?",
 		"whereHint": "Ort oder Postleitzahl",
-		"submit": "Suchen"
+		"submit": "Suchen",
+		"market": "Land",
+		"markets": {
+			"FR": "Frankreich",
+			"AT": "Österreich",
+			"GB": "Vereinigtes Königreich",
+			"CZ": "Tschechien"
+		}
 	},
 	"HomePage": {
 		"title": "Finden Sie eine Gesundheitsfachkraft in Frankreich",

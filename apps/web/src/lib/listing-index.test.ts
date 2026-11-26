@@ -1,5 +1,13 @@
 import { describe, expect, it } from "vitest";
-import { labelForms, normalizeText, resolveListing, suggestListings } from "./listing-index";
+import {
+	labelForms,
+	listingLabel,
+	normalizeText,
+	resolveListing,
+	resolveSearchTerm,
+	suggestListings,
+	translateSearchTerm,
+} from "./listing-index";
 
 describe("listing index", () => {
 	it("normalizes like directory.text_norm()", () => {
@@ -75,5 +83,48 @@ describe("listing index", () => {
 		expect(resolveListing("zubni lekar", "CZ")).toBe("zubni-lekar");
 		expect(resolveListing("Kardiologové", "FR")).toBeNull();
 		expect(suggestListings("Kardio", "fr").map((entry) => entry.slug)).not.toContain("kardiolog");
+	});
+
+	it("carries a term over to another market by kind of care", () => {
+		const listing = (slug: string) => ({ kind: "listing", slug });
+		// The page's own words first: "dentiste" typed on /fr, for Bristol, Wien, Brno.
+		expect(translateSearchTerm("dentiste", "FR", "GB")).toEqual(listing("dental-practices"));
+		expect(translateSearchTerm("un dentiste", "FR", "AT")).toEqual(listing("zahnaerzte"));
+		expect(translateSearchTerm("Dentistes", "FR", "CZ")).toEqual(listing("zubni-lekar"));
+		expect(translateSearchTerm("médecin généraliste", "FR", "GB")).toEqual(listing("gp-practices"));
+		expect(translateSearchTerm("dentist", "GB", "FR")).toEqual(listing("chirurgien-dentiste"));
+		expect(translateSearchTerm("GP", "GB", "AT")).toEqual(listing("allgemeinmedizin"));
+		expect(translateSearchTerm("Hausarzt", "AT", "CZ")).toEqual(listing("prakticky-lekar"));
+		// A profession France maps but does not list yet still names its kind of care.
+		expect(translateSearchTerm("pharmacie", "FR", "GB")).toEqual(listing("pharmacies"));
+		// Then the words of the market searched: "zubař" typed on a French page, for Brno.
+		expect(translateSearchTerm("zubař", "FR", "CZ")).toEqual(listing("zubni-lekar"));
+		expect(translateSearchTerm("Zahnarzt", "GB", "AT")).toEqual(listing("zahnaerzte"));
+		// Care the market searched does not list, and names.
+		expect(translateSearchTerm("cardiologue", "FR", "GB")).toEqual({ kind: "unlisted" });
+		expect(translateSearchTerm("pharmacie", "FR", "AT")).toEqual({ kind: "unlisted" });
+		expect(translateSearchTerm("Dupont", "FR", "GB")).toBeNull();
+		expect(translateSearchTerm("", "FR", "GB")).toBeNull();
+	});
+
+	it("reads a term in its own market as the search always did", () => {
+		for (const word of ["dentiste", "pharmacie", "Dupont", "GP"]) {
+			expect(translateSearchTerm(word, "FR", "FR")).toEqual(resolveSearchTerm(word, "FR"));
+		}
+	});
+
+	it("names a listing in a locale's words", () => {
+		expect(listingLabel("dental-practices", "en-GB")).toBe("Dental practices");
+		expect(listingLabel("chirurgien-dentiste", "fr")).toBe("Chirurgien-dentiste");
+		expect(listingLabel("chirurgien-dentiste", "en-GB")).toBeNull();
+		// A label resolves back to its listing in its market.
+		for (const [slug, locale, country] of [
+			["dental-practices", "en-GB", "GB"],
+			["zahnaerzte", "de-AT", "AT"],
+			["zubni-lekar", "cs-CZ", "CZ"],
+			["chirurgien-dentiste", "en", "FR"],
+		] as const) {
+			expect(resolveListing(listingLabel(slug, locale) ?? "", country)).toBe(slug);
+		}
 	});
 });
