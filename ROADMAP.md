@@ -57,9 +57,11 @@ signature, an account, a contract, a paid service or a manual test. This list re
   [`docs/data-requests/no.md`](./docs/data-requests/no.md) asking for a licence for its list of
   pharmacies ("Landets apotek", none stated); the market opened from the register of legal
   entities without it.
-- Finland: order a key for version 12 of the Finnish Service Catalogue's API (PTV self-service,
-  free, the organisation's contact details) and have `etl:fi` moved to it before version 11 is
-  switched off in April 2027 ([`docs/data-requests/fi.md`](./docs/data-requests/fi.md#ptv-version-12)).
+- **Deadline 31 March 2027.** Finland: order a key for version 12 of the Finnish Service
+  Catalogue's API (PTV self-service, free, the organisation's contact details) and have `etl:fi`
+  moved to it. DVV switches version 11 off in April 2027 (its roadmap, read 2026-11-27, gives no
+  day yet): after that the weekly Finnish import fails and the pages stop being refreshed
+  ([`docs/data-requests/fi.md`](./docs/data-requests/fi.md#ptv-version-12)).
 - Finland: send THL the letter of [`docs/data-requests/fi.md`](./docs/data-requests/fi.md#how-to-ask)
   asking for a licence for the SOTE organisation register (private providers).
 
@@ -440,7 +442,8 @@ notice with the article 14 information, claims by documents, no booking
 ([data import](./docs/data-import.md#finland),
 [ADR 0002](./docs/adr/0002-multi-country.md#finland-fi)). Places, not people. Left:
 
-- Order the version 12 API key and move the fetch before April 2027 (founder, above).
+- Order the version 12 API key and move the fetch by 31 March 2027, before version 11 is
+  switched off in April 2027 (founder, above).
 - Have a native speaker review the Finnish interface and legal texts, and a lawyer admitted in
   Finland the legal notice (confirm § 176 of Act 917/2014), privacy notice and terms.
 - Booking: only once it is settled whether a booking tool must be a registered class A or B

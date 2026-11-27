@@ -170,6 +170,18 @@ describe("a kind of care searched from another market", () => {
 		expect(translateSearchTerm("nemocnice", "CZ", "PL")).toEqual(listing("szpitale"));
 	});
 
+	it("reaches Finland's listings from other markets' words, and theirs from Finnish ones", () => {
+		const listing = (slug: string) => ({ kind: "listing", slug });
+		expect(translateSearchTerm("hôpital", "FR", "FI")).toEqual(listing("sairaalat"));
+		expect(translateSearchTerm("dentist", "GB", "FI")).toEqual(listing("hammashoitolat"));
+		expect(translateSearchTerm("Zahnarzt", "AT", "FI")).toEqual(listing("hammashoitolat"));
+		expect(translateSearchTerm("médecin généraliste", "FR", "FI")).toEqual(
+			listing("terveysasemat"),
+		);
+		expect(translateSearchTerm("sairaala", "FI", "PL")).toEqual(listing("szpitale"));
+		expect(translateSearchTerm("hammaslääkäri", "FI", "GB")).toEqual(listing("dental-practices"));
+	});
+
 	it("falls back as before in a market without the kind", () => {
 		// Austria lists no hospital: "hôpital" stays the words typed, "hospital" and
 		// "Krankenhaus" read as care Austria does not list.
