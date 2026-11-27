@@ -935,8 +935,13 @@ test.describe("status codes and redirects", () => {
 /** Pages another spec unpublishes and publishes again during the run (owner.spec.ts). */
 const MUTATED_BY_OTHER_SPECS = ["/fr/praticien/benoit-essaial-19999991110"];
 
-/** Requests in flight at once when the sitemap test walks its chunks and their URLs. */
-const SITEMAP_CONCURRENCY = 10;
+/**
+ * Requests in flight at once when a sitemap test walks its chunks and their URLs. The server
+ * renders on one core: the walk of every URL took 107 s one at a time, 62 s four at a time and
+ * 57–59 s from six to twenty locally, so more only queues. Two groups' tests may run at once on
+ * the two CI workers, which keeps about ten requests in flight, as one walk of ten did (#157).
+ */
+const SITEMAP_CONCURRENCY = 5;
 
 /**
  * `fn` over every item with at most `limit` calls in flight, results in the items' order.
@@ -970,15 +975,84 @@ async function mapConcurrently<T, R>(
 	return results;
 }
 
+/**
+ * The sitemap index's groups of files: the international home's own file, then each open
+ * market's files under its segment (France in French, Austria in German, the UK in English,
+ * Czechia in Czech, Spain in Spanish, Italy in Italian, Germany in German, Switzerland in its
+ * three). Interface translations (/fr-de, /fr-es…) are never listed.
+ */
+const SITEMAP_GROUPS = [
+	"international",
+	"fr",
+	"at",
+	"gb",
+	"cz",
+	"es",
+	"it",
+	"de",
+	"ch",
+	"ch-fr",
+	"ch-it",
+] as const;
+type SitemapGroup = (typeof SITEMAP_GROUPS)[number];
+
+/** The group a chunk of the index belongs to, from its path. */
+function sitemapGroupOf(chunk: string, origin: string): SitemapGroup | null {
+	if (chunk === `${origin}/sitemaps/international.xml`) return "international";
+	const segment = /^\/sitemaps\/([a-z-]+)\/[a-z]+-\d+\.xml$/.exec(chunk.slice(origin.length))?.[1];
+	return SITEMAP_GROUPS.find((group) => group !== "international" && group === segment) ?? null;
+}
+
+/** True when `url` is a page of the group's own site: its home or a path under it. */
+function inSitemapGroup(url: string, group: SitemapGroup, origin: string): boolean {
+	if (group === "international") return url === `${origin}/`;
+	const home = `${origin}/${group}`;
+	return url === home || url.startsWith(`${home}/`);
+}
+
+/**
+ * The time each sitemap URL may take on CI, on top of a fixed allowance. The full walk ran at
+ * 31–39 ms a URL on the two-worker runner (6,684 URLs in 258 s on b0a261f), so a group's test
+ * gets about three times that: its timeout grows with its URL count, never a fixed cap the
+ * fixtures outgrow as markets open (#157).
+ */
+const SITEMAP_MS_PER_URL = 100;
+const SITEMAP_BASE_TIMEOUT_MS = 30_000;
+
 test.describe("sitemaps", () => {
 	const LOC = /<loc>([^<]+)<\/loc>/g;
 	const LASTMOD = /<lastmod>([^<]+)<\/lastmod>/g;
 
-	test("the index and every chunk are valid sitemaps of indexable canonical 200 URLs", async ({
+	/** The chunk URLs of the index, in its order. */
+	async function indexChunks(request: APIRequestContext): Promise<string[]> {
+		const index = await request.get("/sitemap.xml");
+		expect(index.status()).toBe(200);
+		return [...(await index.text()).matchAll(LOC)].map((match) => match[1] ?? "");
+	}
+
+	/** A chunk's URLs, once the chunk is checked to be a valid sitemap. */
+	async function chunkLocs(request: APIRequestContext, origin: string, chunk: string) {
+		expect(chunk.startsWith(`${origin}/sitemaps/`), chunk).toBe(true);
+		const response = await request.get(chunk);
+		expect(response.status(), chunk).toBe(200);
+		const xml = await response.text();
+		expect(xml, chunk).toMatch(
+			/<urlset xmlns="http:\/\/www\.sitemaps\.org\/schemas\/sitemap\/0\.9">/,
+		);
+		expect(xml, chunk).not.toMatch(/changefreq|priority/);
+		const locs = [...xml.matchAll(LOC)].map((match) => match[1] ?? "");
+		expect(locs.length, chunk).toBeGreaterThan(0);
+		expect(locs.length, chunk).toBeLessThanOrEqual(50_000);
+		for (const lastmod of xml.matchAll(LASTMOD)) {
+			expect(lastmod[1], chunk).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+		}
+		return locs;
+	}
+
+	test("the index lists valid chunks of unique URLs, each under its market's segment", async ({
 		request,
 		baseURL,
 	}) => {
-		test.setTimeout(240_000);
 		const origin = new URL(baseURL ?? "").origin;
 		const index = await request.get("/sitemap.xml");
 		expect(index.headers()["content-type"]).toContain("xml");
@@ -1008,32 +1082,17 @@ test.describe("sitemaps", () => {
 			expect(chunks).toContain(`${origin}/sitemaps/${segment}/pages-0.xml`);
 			expect(chunks).toContain(`${origin}/sitemaps/${segment}/praticiens-0.xml`);
 		}
-		for (const chunk of chunks.slice(1))
-			expect(/\/sitemaps\/(fr|at|gb|cz|es|it|de|ch|ch-fr|ch-it)\//.test(chunk), chunk).toBe(true);
+		// Every chunk belongs to one group, so the groups' tests below check every URL.
+		for (const chunk of chunks) expect(sitemapGroupOf(chunk, origin), chunk).not.toBeNull();
 		for (const lastmod of indexXml.matchAll(LASTMOD)) {
 			expect(lastmod[1]).toMatch(/^\d{4}-\d{2}-\d{2}$/);
 		}
 
-		const started = Date.now();
-		const chunkLocs = await mapConcurrently(chunks, SITEMAP_CONCURRENCY, async (chunk) => {
-			expect(chunk.startsWith(`${origin}/sitemaps/`), chunk).toBe(true);
-			const response = await request.get(chunk);
-			expect(response.status(), chunk).toBe(200);
-			const xml = await response.text();
-			expect(xml, chunk).toMatch(
-				/<urlset xmlns="http:\/\/www\.sitemaps\.org\/schemas\/sitemap\/0\.9">/,
-			);
-			expect(xml, chunk).not.toMatch(/changefreq|priority/);
-			const locs = [...xml.matchAll(LOC)].map((match) => match[1] ?? "");
-			expect(locs.length, chunk).toBeGreaterThan(0);
-			expect(locs.length, chunk).toBeLessThanOrEqual(50_000);
-			for (const lastmod of xml.matchAll(LASTMOD)) {
-				expect(lastmod[1], chunk).toMatch(/^\d{4}-\d{2}-\d{2}$/);
-			}
-			return locs;
-		});
-		// In the index's order, whatever order the chunks answered in.
-		const urls = chunkLocs.flat();
+		const urls = (
+			await mapConcurrently(chunks, SITEMAP_CONCURRENCY, (chunk) =>
+				chunkLocs(request, origin, chunk),
+			)
+		).flat();
 		expect(new Set(urls).size).toBe(urls.length);
 		expect(urls).toContain(`${origin}/`);
 		expect(urls).toContain(`${origin}/fr`);
@@ -1048,45 +1107,48 @@ test.describe("sitemaps", () => {
 		expect(urls).toContain(`${origin}/ch`);
 		expect(urls).toContain(`${origin}/ch-fr`);
 		expect(urls).toContain(`${origin}/ch-it`);
-
-		await mapConcurrently(urls, SITEMAP_CONCURRENCY, async (url) => {
-			// owner.spec.ts removes and restores this claimed page while the specs run in
-			// parallel (#119): the sitemap, cached up to five minutes, may still list it meanwhile.
-			if (MUTATED_BY_OTHER_SPECS.some((path) => url === `${origin}${path}`)) return;
-			// The international home and each market's own language: France in French, Austria in
-			// German, the UK in English, Czechia in Czech, Spain in Spanish, Italy in Italian, Germany
-			// in German,
-			// Switzerland in its three. Interface translations (/fr-de, /fr-es…) are never listed.
-			expect(
-				url === `${origin}/` ||
-					[
-						`${origin}/fr`,
-						`${origin}/at`,
-						`${origin}/gb`,
-						`${origin}/cz`,
-						`${origin}/es`,
-						`${origin}/it`,
-						`${origin}/de`,
-						`${origin}/ch`,
-						`${origin}/ch-fr`,
-						`${origin}/ch-it`,
-					].some((home) => url === home || url.startsWith(`${home}/`)),
-				url,
-			).toBe(true);
-			expect(url, url).not.toMatch(/\/recherche|\/pro\/|\/rdv/);
-			const response = await request.get(url, { maxRedirects: 0 });
-			expect(response.status(), url).toBe(200);
-			expect(response.headers()["x-robots-tag"], url).toBeUndefined();
-			const page = parse(await response.text());
-			expect(page.meta("robots"), url).toEqual(["index, follow"]);
-			const canonical = page.links.find((link) => link.rel === "canonical")?.href ?? "";
-			expect(canonical.replace(/\/$/, ""), url).toBe(url.replace(/\/$/, ""));
-		});
-		test.info().annotations.push({
-			type: "sitemap",
-			description: `${chunks.length} chunks and ${urls.length} URLs checked in ${Date.now() - started} ms (concurrency ${SITEMAP_CONCURRENCY})`,
-		});
 	});
+
+	// One test a group rather than one walk of the whole sitemap: the groups share the workers,
+	// a retry walks one group again, and each timeout follows its own URL count (#157).
+	for (const group of SITEMAP_GROUPS) {
+		test(`every URL of the ${group} sitemaps is an indexable canonical 200 page`, async ({
+			request,
+			baseURL,
+		}) => {
+			const origin = new URL(baseURL ?? "").origin;
+			const chunks = (await indexChunks(request)).filter(
+				(chunk) => sitemapGroupOf(chunk, origin) === group,
+			);
+			expect(chunks.length, group).toBeGreaterThan(0);
+			const urls = (
+				await mapConcurrently(chunks, SITEMAP_CONCURRENCY, (chunk) =>
+					chunkLocs(request, origin, chunk),
+				)
+			).flat();
+			test.setTimeout(SITEMAP_BASE_TIMEOUT_MS + urls.length * SITEMAP_MS_PER_URL);
+			const started = Date.now();
+			await mapConcurrently(urls, SITEMAP_CONCURRENCY, async (url) => {
+				// owner.spec.ts removes and restores this claimed page while the specs run in
+				// parallel (#119): the sitemap, cached up to five minutes, may still list it meanwhile.
+				if (MUTATED_BY_OTHER_SPECS.some((path) => url === `${origin}${path}`)) return;
+				// A group lists its own site's pages only, in that site's language.
+				expect(inSitemapGroup(url, group, origin), url).toBe(true);
+				expect(url, url).not.toMatch(/\/recherche|\/pro\/|\/rdv/);
+				const response = await request.get(url, { maxRedirects: 0 });
+				expect(response.status(), url).toBe(200);
+				expect(response.headers()["x-robots-tag"], url).toBeUndefined();
+				const page = parse(await response.text());
+				expect(page.meta("robots"), url).toEqual(["index, follow"]);
+				const canonical = page.links.find((link) => link.rel === "canonical")?.href ?? "";
+				expect(canonical.replace(/\/$/, ""), url).toBe(url.replace(/\/$/, ""));
+			});
+			test.info().annotations.push({
+				type: "sitemap",
+				description: `${group}: ${chunks.length} chunks and ${urls.length} URLs checked in ${Date.now() - started} ms (concurrency ${SITEMAP_CONCURRENCY})`,
+			});
+		});
+	}
 
 	test("robots.txt points to the index and never hides a noindex page linked publicly", async ({
 		request,
