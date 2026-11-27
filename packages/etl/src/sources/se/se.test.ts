@@ -24,6 +24,8 @@ describe("the Swedish lists' text", () => {
 		expect(placeKey("Upplands-Väsby")).toBe(placeKey("Upplands väsby"));
 		expect(placeKey("Malung-sälen")).toBe("malung sälen");
 		expect(placeKey("Ale kommun")).toBe("ale");
+		expect(placeKey("Ale - - kommun")).toBe("ale");
+		expect(placeKey(`a${" -".repeat(50_000)}x`)).toBe("a x");
 	});
 
 	it("reads Excel serial days and ISO dates", () => {

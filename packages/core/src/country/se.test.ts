@@ -69,6 +69,11 @@ describe("the Swedish adapter", () => {
 		expect(seCountyOfName("Gävleborg")).toBe("21");
 		expect(seCountyOfName("Lappland")).toBeNull();
 		expect(seCountyOfName("")).toBeNull();
+		expect(seCountyOfName("  Västra   Götalands  län ")).toBe("14");
+		// A long run of whitespace is read in one pass.
+		const started = performance.now();
+		expect(seCountyOfName(`${"\t".repeat(50_000)}x`)).toBeNull();
+		expect(performance.now() - started).toBeLessThan(500);
 	});
 
 	it("names every source with its licence and attribution, the pharmacies' under CC BY 4.0", () => {

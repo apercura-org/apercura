@@ -59,12 +59,14 @@ export const SE_HEALTH_CENTRE_COUNTIES: readonly string[] = [SE_VGR_COUNTY];
  * `Skåne län`), without case or the word `län`, or null.
  */
 export function seCountyOfName(name: string): string | null {
-	const key = (text: string) =>
-		text
-			.toLocaleLowerCase("sv-SE")
-			.replace(/\s+län$/, "")
-			.replace(/s$/, "")
-			.trim();
+	// Words, not a pattern over the whole name: a trailing `län` is dropped word by word, so a
+	// long run of spaces costs one pass (no backtracking on input from the register).
+	const key = (text: string) => {
+		const words = text.toLocaleLowerCase("sv-SE").split(/\s/).filter(Boolean);
+		if (words.at(-1) === "län") words.pop();
+		const joined = words.join(" ");
+		return joined.endsWith("s") ? joined.slice(0, -1) : joined;
+	};
 	const wanted = key(name);
 	if (!wanted) return null;
 	for (const [code, county] of Object.entries(SE_COUNTIES)) {

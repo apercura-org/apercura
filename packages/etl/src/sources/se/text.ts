@@ -13,12 +13,15 @@ export function cleanText(value: string | null | undefined): string {
 
 /** A municipality's or town's name as compared (`Upplands-Väsby`, `UPPLANDS VÄSBY` → `upplands väsby`). */
 export function placeKey(value: string | null | undefined): string {
-	return cleanText(value)
+	// Words, not a pattern over the whole name: a trailing `kommun` is dropped word by word, so a
+	// long run of spaces or hyphens costs one pass (no backtracking).
+	const words = cleanText(value)
 		.toLocaleLowerCase("sv-SE")
 		.replace(/[-\u2010\u2013]/g, " ")
-		.replace(/\s+kommun$/, "")
-		.replace(/\s+/g, " ")
-		.trim();
+		.split(" ")
+		.filter(Boolean);
+	if (words.length > 1 && words.at(-1) === "kommun") words.pop();
+	return words.join(" ");
 }
 
 /** Thrown when a list's distribution no longer names the licence the import relies on. */
