@@ -379,6 +379,9 @@ const MEDICAL_SPECIALTIES: Record<string, readonly MedicalSpecialty[]> = {
 	"otroski-zdravnik": ["https://schema.org/Pediatric"],
 	ginekolog: ["https://schema.org/Gynecologic"],
 	zobozdravnik: ["https://schema.org/Dentistry"],
+	// Sweden's facilities (Swedish listing slugs).
+	apoteken: ["https://schema.org/PharmacySpecialty"],
+	vardcentraler: ["https://schema.org/PrimaryCare"],
 };
 
 /**
@@ -592,7 +595,7 @@ const DOCTOR_PROFESSIONS = new Set(["10", "ARZT"]);
  * (`MedicalOrganization`: its care is mostly given at the patient's home).
  * Ireland's the same way: a pharmacy is a `Pharmacy`, a hospital a `Hospital`, an HSE health
  * centre a `MedicalClinic`, a nursing home a `MedicalOrganization` (schema.org has no type of its
- * own for one).
+ * own for one). A Swedish pharmacy is a `Pharmacy`, a health centre a `MedicalClinic`.
  */
 type PracticeType =
 	| "MedicalClinic"
@@ -667,6 +670,8 @@ const PRACTICE_TYPES: Readonly<Record<string, PracticeType>> = {
 	LV_GP_PRACTICE: "MedicalClinic",
 	LV_HOSPITAL: "Hospital",
 	LV_PHARMACY: "Pharmacy",
+	SE_PHARMACY: "Pharmacy",
+	SE_HEALTH_CENTRE: "MedicalClinic",
 };
 
 /** The schema.org type of a market of practices' page subject (`PRACTICE_TYPES`), if any. */

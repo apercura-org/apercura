@@ -16,6 +16,7 @@ import {
 	normalizeNoPostcode,
 	normalizePlPostcode,
 	normalizeSiPostcode,
+	normalizeSePostcode,
 } from "@apercura/core";
 import { countryAdapter } from "@apercura/core/country";
 import type { Database } from "@apercura/db";
@@ -282,7 +283,9 @@ export async function addOwnerSite(db: Database, practitionerId: number, input: 
 																? (normalizeCyPostcode(input.postcode) ?? input.postcode)
 																: country === "LV"
 																	? (normalizeLvPostcode(input.postcode) ?? input.postcode)
-																	: input.postcode;
+																	: country === "SE"
+																		? (normalizeSePostcode(input.postcode) ?? input.postcode)
+																		: input.postcode;
 		if (!adapter.address.postcode.test(postcode)) throw new ProfileError("UNKNOWN_PLACE");
 		const district = country === "AT" ? /^1(\d{2})0$/.exec(postcode)?.[1] : undefined;
 		const [place] =
@@ -300,18 +303,19 @@ export async function addOwnerSite(db: Database, practitionerId: number, input: 
 						p.population DESC NULLS LAST, p.id
 					LIMIT 1
 				`)
-				: country === "NO"
-					? // A Norwegian address names its post town (`2050 Jessheim`), not always its municipality
-						// (Ullensaker), and Kartverket's municipalities carry no postcodes: the municipality
-						// the register's establishments of that postcode are in, else by its name.
+				: country === "NO" || country === "SE"
+					? // A Norwegian or Swedish address names its post town (`2050 Jessheim`, `417 05
+						// Göteborg`), not always its municipality (Ullensaker, Partille), and neither market's
+						// municipalities carry postcodes: the municipality the register's facilities of that
+						// postcode are in, else by its name.
 						await tx.execute<{ id: number }>(sql`
 					WITH by_postcode AS (
 						SELECT s.place_id FROM directory.sites s
-						WHERE s.country_code = 'NO' AND s.postcode = ${postcode} AND s.removed_at IS NULL
+						WHERE s.country_code = ${country} AND s.postcode = ${postcode} AND s.removed_at IS NULL
 							AND s.place_id IS NOT NULL
 					)
 					SELECT p.id FROM directory.places p
-					WHERE p.country = 'NO' AND p.kind = 'commune' AND p.removed_at IS NULL
+					WHERE p.country = ${country} AND p.kind = 'commune' AND p.removed_at IS NULL
 						AND (p.id IN (SELECT place_id FROM by_postcode)
 							OR similarity(directory.text_norm(p.name), directory.text_norm(${input.city})) > 0.5)
 					ORDER BY (SELECT count(*) FROM by_postcode b WHERE b.place_id = p.id) DESC,

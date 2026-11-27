@@ -25,6 +25,7 @@ type Pathnames = Record<
 				| "lt-LT"
 				| "el-CY"
 				| "lv-LV"
+				| "sv-SE"
 			>,
 			string
 	  >
@@ -276,6 +277,34 @@ function latvianPath(path: string): string {
 }
 
 /**
+ * The Swedish form of each English path segment (`/practitioner/[slug]/report` ->
+ * `/verksamhet/[slug]/rapportera-fel`): a page is a pharmacy or a health centre ("verksamhet"),
+ * never a person, so an establishment's page is an organisation's. The first segments are the
+ * Swedish reserved segments of `@apercura/core/taxonomy` (`SE_RESERVED_SEGMENTS`, tested), which
+ * never name a listing.
+ */
+export const SWEDISH_SEGMENTS: Readonly<Record<string, string>> = {
+	search: "sok",
+	practitioner: "verksamhet",
+	report: "rapportera-fel",
+	removal: "borttagning",
+	"this-is-me": "det-har-ar-jag",
+	establishment: "organisation",
+	directory: "katalog",
+	about: "om",
+	data: "data",
+	accessibility: "tillganglighet",
+	privacy: "integritet",
+	"legal-notice": "juridisk-information",
+	terms: "villkor",
+};
+
+/** An English path with its segments in Swedish; parameters and unknown segments stay. */
+function swedishPath(path: string): string {
+	return path.replace(/[^/]+/g, (segment) => SWEDISH_SEGMENTS[segment] ?? segment);
+}
+
+/**
  * The Spanish market's form of a Spanish path: a centre's page under `/centro` (Spain lists
  * centres, never people), so an establishment's page moves from `/centro` to `/organizacion`.
  * Every first segment is a Spanish reserved segment of `@apercura/core/taxonomy`
@@ -356,7 +385,11 @@ function swissMarketPath(path: string, person: string, facility: string): string
  * - Lithuania (`lt-LT`): the English paths with their segments in Lithuanian
  *   (`LITHUANIAN_SEGMENTS`), an institution's page under `/istaiga`;
  * - Cyprus (`el-CY`): the English paths with their segments in Greek (`CYPRIOT_SEGMENTS`), a
- *   facility's page under `/monada`.
+ *   facility's page under `/monada`;
+ * - Latvia (`lv-LV`): the English paths with their segments in Latvian (`LATVIAN_SEGMENTS`), an
+ *   institution's page under `/iestade`;
+ * - Sweden (`sv-SE`): the English paths with their segments in Swedish (`SWEDISH_SEGMENTS`), a
+ *   pharmacy's or health centre's page under `/verksamhet`.
  */
 function withMarkets<T extends Pathnames>(pathnames: T) {
 	return Object.fromEntries(
@@ -384,6 +417,7 @@ function withMarkets<T extends Pathnames>(pathnames: T) {
 						"sl-SI": slovenianPath(value.en),
 						"el-CY": cypriotPath(value.en),
 						"lv-LV": latvianPath(value.en),
+						"sv-SE": swedishPath(value.en),
 					},
 		]),
 	) as {
@@ -408,6 +442,7 @@ function withMarkets<T extends Pathnames>(pathnames: T) {
 					"sl-SI": string;
 					"el-CY": string;
 					"lv-LV": string;
+					"sv-SE": string;
 				};
 	};
 }

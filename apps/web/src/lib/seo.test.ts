@@ -133,6 +133,7 @@ describe("hreflang of the homes", () => {
 			"sl-SI": "https://apercura.org/si",
 			"el-CY": "https://apercura.org/cy",
 			"lv-LV": "https://apercura.org/lv",
+			"sv-SE": "https://apercura.org/se",
 			"x-default": "https://apercura.org/",
 		});
 	});
@@ -183,6 +184,7 @@ describe("hreflang below the homes", () => {
 	it("gives no alternate to a market of one indexed language, nor to an interface translation", () => {
 		expect(marketAlternates("/annuaire", "it-IT")).toBeUndefined();
 		expect(marketAlternates("/annuaire", "en-IE")).toBeUndefined();
+		expect(marketAlternates("/annuaire", "sv-SE")).toBeUndefined();
 		expect(marketAlternates("/annuaire", "fr")).toBeUndefined();
 		expect(marketAlternates("/annuaire", "en")).toBeUndefined();
 	});

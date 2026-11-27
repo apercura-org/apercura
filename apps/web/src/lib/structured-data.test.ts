@@ -1069,3 +1069,63 @@ describe("practitionerNodes for Lithuania", () => {
 		).toBe("https://schema.org/PrimaryCare");
 	});
 });
+
+describe("practitionerNodes for Sweden", () => {
+	const site: PracticePlaceInput = {
+		siteId: 1,
+		practiceKind: "office",
+		name: "Exempelapoteket Storgatan",
+		addressLine: "Exempelgatan 1",
+		addressComplement: null,
+		postcode: "111 22",
+		placeName: "Stockholm",
+		coordinates: { lat: 59.33, lon: 18.06 },
+		phone: null,
+		establishmentUrl: null,
+	};
+	const pharmacy: PractitionerInput = {
+		...doctor,
+		url: `${ORIGIN}/se/verksamhet/exempelapoteket-storgatan-a7359999000014`,
+		professionCode: "SE_PHARMACY",
+		rpps: "7359999000014",
+		idScheme: "SE-GLN",
+		country: "SE",
+		name: "Exempelapoteket Storgatan",
+		givenName: "",
+		familyName: "Exempelapoteket Storgatan",
+		honorificPrefix: null,
+		occupation: "Öppenvårdsapotek",
+		listingSlug: "apoteken",
+		places: [site],
+	};
+
+	it("publishes a pharmacy as a Pharmacy with its GLN, never a person", () => {
+		const nodes = practitionerNodes(pharmacy);
+		const node = nodeOf(nodes, "Pharmacy");
+		expect(node.identifier).toEqual({
+			"@type": "PropertyValue",
+			propertyID: "SE-GLN",
+			value: "7359999000014",
+		});
+		expect(node.address).toMatchObject({ addressCountry: "SE", addressLocality: "Stockholm" });
+		expect(node.medicalSpecialty).toBe("https://schema.org/PharmacySpecialty");
+		expect(JSON.stringify(nodes)).not.toMatch(
+			/Person|IndividualPhysician|Physician"|givenName|familyName/,
+		);
+	});
+
+	it("publishes a health centre as a MedicalClinic with its HSA-id", () => {
+		const node = nodeOf(
+			practitionerNodes({
+				...pharmacy,
+				professionCode: "SE_HEALTH_CENTRE",
+				idScheme: "SE-HSA",
+				rpps: "SE5560000000-EX0001",
+				listingSlug: "vardcentraler",
+			}),
+			"MedicalClinic",
+		);
+		expect(node.identifier).toMatchObject({ propertyID: "SE-HSA", value: "SE5560000000-EX0001" });
+		expect(node.medicalSpecialty).toBe("https://schema.org/PrimaryCare");
+	});
+});

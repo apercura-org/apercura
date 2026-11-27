@@ -5,9 +5,9 @@ import { type Locale, type MarketCountry, marketOf } from "~/i18n/locales";
  * opening. Each market shows what its directory lists, in its own language: practitioners in
  * France, Austria and Slovenia (their doctors) and Czechia (practices under a doctor's name, a
  * pharmacy); practices, facilities, pharmacies or hospitals in the UK, Spain, Italy, Germany,
- * Switzerland, Estonia, Poland, Ireland, Finland and Cyprus, licensed institutions in Lithuania. The names
+ * Switzerland, Estonia, Poland, Ireland, Finland, Cyprus and Sweden, licensed institutions in Lithuania. The names
  * and addresses say plainly that they are examples ("Exemple", "Muster", "Example", "Ejemplo",
- * "Esempio", "Příklad", "Näidis", "Przykład", "Esimerkki", "Pavyzdys", "Primer", "Zgled", "Παράδειγμα"), never a
+ * "Esempio", "Příklad", "Näidis", "Przykład", "Esimerkki", "Pavyzdys", "Primer", "Zgled", "Παράδειγμα", "Exempel"), never a
  * real person, practice or place of care; the identifiers are shaped like the market's but
  * synthetic.
  *
@@ -337,6 +337,35 @@ const SAMPLES: Readonly<Record<Exclude<MarketCountry, "CH">, HomeSamples>> = {
 			gender: "other",
 			address: "Eksempelgata 12, 0151 Oslo",
 			identifier: "910 000 152",
+			status: "claimed",
+		},
+	],
+	// Sweden: pharmacies of the Swedish Medical Products Agency's register, keyed by a synthetic
+	// GLN (check digit valid, under no company's prefix), and a health centre of Västra Götaland,
+	// keyed by a synthetic HSA-id.
+	SE: [
+		{
+			name: "Exempelapoteket Storgatan",
+			listing: "apoteken",
+			gender: "other",
+			address: "Exempelgatan 1, 111 22 Stockholm",
+			identifier: "7359999000014",
+			status: "unclaimed",
+		},
+		{
+			name: "Exempel vårdcentral",
+			listing: "vardcentraler",
+			gender: "other",
+			address: "Exempelvägen 7, 411 01 Göteborg",
+			identifier: "SE5560000000-EX0001",
+			status: "verified",
+		},
+		{
+			name: "Apotek Exempel Malmö",
+			listing: "apoteken",
+			gender: "other",
+			address: "Exempeltorget 3, 211 01 Malmö",
+			identifier: "7359999000021",
 			status: "claimed",
 		},
 	],

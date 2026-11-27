@@ -24,6 +24,7 @@ import {
 	allNoListingSlugs,
 	allPlListingSlugs,
 	allSiListingSlugs,
+	allSeListingSlugs,
 	type CareKind,
 	careKindsOfListing,
 	equivalentListing,
@@ -58,10 +59,11 @@ const LT_LISTINGS: ReadonlySet<string> = allLtListingSlugs();
 const SI_LISTINGS: ReadonlySet<string> = allSiListingSlugs();
 const CY_LISTINGS: ReadonlySet<string> = allCyListingSlugs();
 const LV_LISTINGS: ReadonlySet<string> = allLvListingSlugs();
+const SE_LISTINGS: ReadonlySet<string> = allSeListingSlugs();
 
 /**
  * True when a listing slug belongs to the market of `locale` (France's, Austria's, the UK's,
- * Czechia's, Spain's, Italy's, Germany's, Switzerland's, Estonia's, Lithuania's, Poland's, Ireland's or Slovenia's taxonomy).
+ * Czechia's, Spain's, Italy's, Germany's, Switzerland's, Estonia's, Lithuania's, Poland's, Norway's, Ireland's, Slovenia's or Sweden's taxonomy).
  */
 function inMarket(slug: string, locale: Locale): boolean {
 	if (marketOf(locale) === "AT") return AT_LISTINGS.has(slug);
@@ -80,6 +82,7 @@ function inMarket(slug: string, locale: Locale): boolean {
 	if (marketOf(locale) === "SI") return SI_LISTINGS.has(slug);
 	if (marketOf(locale) === "CY") return CY_LISTINGS.has(slug);
 	if (marketOf(locale) === "LV") return LV_LISTINGS.has(slug);
+	if (marketOf(locale) === "SE") return SE_LISTINGS.has(slug);
 	const profession = professionOfListingSlug(slug);
 	return Boolean(profession && FR_PROFESSIONS[profession]?.enabled);
 }
@@ -127,10 +130,10 @@ function buildIndex(locale: Locale): ListingEntry[] {
 	const listing = taxonomy.listing as Record<string, string>;
 	const professions = taxonomy.profession as Record<string, string>;
 	// A Czech, Spanish, Italian, German, Swiss, Estonian, Polish, Norwegian, Irish, Finnish,
-	// Lithuanian, Slovenian, Cypriot or Latvian listing is plural ("Kardiologové", "Farmacias",
-	// "Farmacie", "Apotheken", "Spitäler", "Apteegid", "Ligoninės", "Zobozdravniki", "Aptiekas"),
+	// Lithuanian, Slovenian, Cypriot, Latvian or Swedish listing is plural ("Kardiologové", "Farmacias",
+	// "Farmacie", "Apotheken", "Spitäler", "Apteegid", "Ligoninės", "Zobozdravniki", "Aptiekas", "Apoteken"),
 	// its profession label singular or a field ("Kardiolog", "Farmacia", "Apotheke", "Spital",
-	// "Apteek", "Ligoninė", "Zobozdravstvo", "Aptieka"): both match.
+	// "Apteek", "Ligoninė", "Zobozdravstvo", "Aptieka", "Öppenvårdsapotek"): both match.
 	const singular = [
 		"CZ",
 		"ES",
@@ -146,6 +149,7 @@ function buildIndex(locale: Locale): ListingEntry[] {
 		"SI",
 		"CY",
 		"LV",
+		"SE",
 	].includes(marketOf(locale));
 	// The everyday words of the locale's language suggest their listing too ("Hausarzt" →
 	// Allgemeinmedizin).

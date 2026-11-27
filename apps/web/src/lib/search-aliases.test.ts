@@ -15,6 +15,7 @@ import {
 	allNoListingSlugs,
 	allPlListingSlugs,
 	allSiListingSlugs,
+	allSeListingSlugs,
 	FR_PROFESSIONS,
 	professionOfListingSlug,
 	SEARCH_ALIASES,
@@ -48,6 +49,7 @@ const MARKETS = [
 	"SI",
 	"CY",
 	"LV",
+	"SE",
 ] as const satisfies readonly MarketCountry[];
 
 /** The listings of each market (France: its imported professions only). */
@@ -72,6 +74,7 @@ const LISTED: Record<MarketCountry, (slug: string) => boolean> = {
 	SI: (slug) => allSiListingSlugs().has(slug),
 	CY: (slug) => allCyListingSlugs().has(slug),
 	LV: (slug) => allLvListingSlugs().has(slug),
+	SE: (slug) => allSeListingSlugs().has(slug),
 };
 
 /** Slugs a market maps but does not list yet: France's professions not imported. */
@@ -93,6 +96,7 @@ const MAPPED: Record<MarketCountry, (slug: string) => boolean> = {
 	SI: () => false,
 	CY: () => false,
 	LV: () => false,
+	SE: () => false,
 };
 
 const listing = (slug: string): SearchTerm => ({ kind: "listing", slug });
@@ -589,6 +593,24 @@ const EVERYDAY: Record<MarketCountry, [string, SearchTerm][]> = {
 		["ginekologs", UNLISTED],
 		["dentist", UNLISTED],
 	],
+	SE: [
+		["apotek", listing("apoteken")],
+		["Apoteket", listing("apoteken")],
+		["apotekare", listing("apoteken")],
+		["vårdcentral", listing("vardcentraler")],
+		["Vardcentralen", listing("vardcentraler")],
+		["hälsocentral", listing("vardcentraler")],
+		["husläkare", listing("vardcentraler")],
+		["läkare", listing("vardcentraler")],
+		["sjukhus", UNLISTED],
+		["tandläkare", UNLISTED],
+		["fysioterapeut", UNLISTED],
+		// Visitors' languages.
+		["pharmacy", listing("apoteken")],
+		["pharmacie", listing("apoteken")],
+		["health centre", listing("vardcentraler")],
+		["médecin généraliste", listing("vardcentraler")],
+	],
 };
 
 describe.each(MARKETS)("the everyday words of %s", (country) => {
@@ -616,6 +638,7 @@ describe("a name", () => {
 		["Example Pharmacy Cork", "IE"],
 		["Ana Primer", "SI"],
 		["Kolar", "SI"],
+		["Exempel Storgatan", "SE"],
 		["", "FR"],
 	] as const)("%j is a name search in %s", (word, country) => {
 		expect(resolveSearchTerm(word, country)).toBeNull();

@@ -16,6 +16,7 @@ import {
 	allNoTaxonomySlugs,
 	allPlListingSlugs,
 	allSiListingSlugs,
+	allSeTaxonomySlugs,
 } from "@apercura/core/taxonomy";
 import type { MarketCountry } from "~/i18n/locales";
 
@@ -48,6 +49,8 @@ const MARKET_SLUGS: Readonly<Record<MarketCountry, ReadonlySet<string>>> = {
 	// Cyprus names its kinds of facility by keys of their own (`farmakeio`, `nosokomeio`).
 	CY: allCyTaxonomySlugs(),
 	LV: allLvListingSlugs(),
+	// Sweden names its kinds of facility by keys of their own too (`oppenvardsapotek`, `vardcentral`).
+	SE: allSeTaxonomySlugs(),
 };
 
 /** The `taxonomy` groups keyed by listing or profession slug. */

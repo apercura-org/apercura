@@ -46,6 +46,7 @@ import {
 	parsePlFacilitySegment,
 	parsePractitionerSegment,
 	parseSiPractitionerSegment,
+	parseSeFacilitySegment,
 } from "@apercura/core";
 import { type CountryAdapter, countryAdapter } from "@apercura/core/country";
 import { type Locale, MARKET_LOCALES, type MarketCountry, marketOf } from "~/i18n/locales";
@@ -77,7 +78,8 @@ export type PractitionerKey = {
  * (`eksempel-legesenter-910000039`, the establishment's organisation number), `{name}-{list}{key}` in Ireland (`example-pharmacy-p10000612`,
  * `example-hospital-h123456789`), `{name}-{number}-{address}` in Lithuania
  * (`uab-pavyzdine-klinika-5271-12679435`, VASPVT's institution number and the Address Register's
- * code). Null for anything else,
+ * code), `{name}-{list}{key}` in Sweden (`exempelapoteket-a7312446003969`, the pharmacy's GLN,
+ * `exempel-vardcentral-v2321000131e000000007600`, the unit's HSA-id). Null for anything else,
  * so malformed or other-market URLs never reach the database.
  */
 export function parsePractitionerKey(locale: Locale, segment: string): PractitionerKey | null {
@@ -136,6 +138,10 @@ export function parsePractitionerKey(locale: Locale, segment: string): Practitio
 	}
 	if (country === "LV") {
 		const parsed = parseLvFacilitySegment(segment);
+		return parsed ? { country, ...parsed } : null;
+	}
+	if (country === "SE") {
+		const parsed = parseSeFacilitySegment(segment);
 		return parsed ? { country, ...parsed } : null;
 	}
 	if (country === "GB") {
@@ -229,6 +235,12 @@ export const LT_SEGMENT_MARKER = "lt.";
  */
 export const LV_SEGMENT_MARKER = "lv.";
 
+/**
+ * The marker of a Swedish page's segment outside a locale (`se.{slug}`): a pharmacy key
+ * (`a7312446003969`) would otherwise have to be guessed among the markets' keys.
+ */
+export const SE_SEGMENT_MARKER = "se.";
+
 /** The marker of each market whose segments are marked outside a locale. */
 const SEGMENT_MARKERS: Readonly<Partial<Record<MarketCountry, string>>> = {
 	GB: GB_SEGMENT_MARKER,
@@ -245,6 +257,7 @@ const SEGMENT_MARKERS: Readonly<Partial<Record<MarketCountry, string>>> = {
 	LT: LT_SEGMENT_MARKER,
 	CY: CY_SEGMENT_MARKER,
 	LV: LV_SEGMENT_MARKER,
+	SE: SE_SEGMENT_MARKER,
 };
 
 /**
@@ -298,7 +311,9 @@ export function parseAnyPractitionerKey(segment: string): PractitionerKey | null
  * `h123456789`), since a bare PSI or HIQA number names neither list; in Finland the Finnish Service Catalogue's id
  * of the service location, in its own form (`b18aa7f8-7eca-4b97-a8e8-b438d2e29427`); in Lithuania
  * the page key (`5271-12679435`); in Cyprus the key of the page URL (`f101`, `m3fa9c01b2e`),
- * since only the pharmacies' list numbers its rows.
+ * since only the pharmacies' list numbers its rows; in Sweden the GLN of a pharmacy
+ * (`7312446003969`) and the HSA-id of a health centre (`SE2321000131-E000000007600`), as their
+ * registers print them.
  */
 export function displayId(key: Pick<PractitionerKey, "idScheme" | "nationalId">): string {
 	if (NO_ID_SCHEMES[key.idScheme as NoIdScheme]) return noOrgNumber(key.nationalId);

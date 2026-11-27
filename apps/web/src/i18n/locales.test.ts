@@ -29,8 +29,10 @@ import {
 	isSiListingSlug,
 	LT_RESERVED_SEGMENTS,
 	LV_RESERVED_SEGMENTS,
+	isSeListingSlug,
 	NO_RESERVED_SEGMENTS,
 	SI_RESERVED_SEGMENTS,
+	SE_RESERVED_SEGMENTS,
 } from "@apercura/core/taxonomy";
 import { describe, expect, it } from "vitest";
 import { robotsFor } from "~/lib/robots";
@@ -69,6 +71,7 @@ import {
 	NORWEGIAN_SEGMENTS,
 	routing,
 	SLOVENIAN_SEGMENTS,
+	SWEDISH_SEGMENTS,
 } from "./routing";
 
 const PARAMS: Record<string, string> = {
@@ -99,6 +102,7 @@ const TRANSLATIONS = LOCALES.filter(
 		locale !== "sl-SI" &&
 		locale !== "el-CY" &&
 		locale !== "lv-LV" &&
+		locale !== "sv-SE" &&
 		marketOf(locale) !== "CH",
 );
 
@@ -138,6 +142,7 @@ describe("locale configuration", () => {
 			"sl-SI",
 			"el-CY",
 			"lv-LV",
+			"sv-SE",
 		]);
 		expect(routing.locales).toEqual(LOCALES);
 		expect(routing.defaultLocale).toBe("fr");
@@ -166,6 +171,7 @@ describe("locale configuration", () => {
 			"sl-SI": "/si",
 			"el-CY": "/cy",
 			"lv-LV": "/lv",
+			"sv-SE": "/se",
 		});
 		expect(LOCALE_SEGMENTS).toEqual([
 			"fr",
@@ -191,6 +197,7 @@ describe("locale configuration", () => {
 			"si",
 			"cy",
 			"lv",
+			"se",
 		]);
 		expect(LOCALE_MARKETS).toEqual({
 			fr: "FR",
@@ -216,6 +223,7 @@ describe("locale configuration", () => {
 			"sl-SI": "SI",
 			"el-CY": "CY",
 			"lv-LV": "LV",
+			"sv-SE": "SE",
 		});
 		expect(CATALOG_LANGUAGES["de-AT"]).toBe("de");
 		expect(CATALOG_LANGUAGES["lv-LV"]).toBe("lv");
@@ -248,6 +256,10 @@ describe("locale configuration", () => {
 		expect(CATALOG_LANGUAGES["en-IE"]).toBe("en");
 		expect(MARKET_LOCALES.IE).toBe("en-IE");
 		expect(marketLanguages("IE")).toEqual(["en-IE"]);
+		// Sweden: Swedish, the English catalog with the Swedish texts on top.
+		expect(CATALOG_LANGUAGES["sv-SE"]).toBe("sv");
+		expect(MARKET_LOCALES.SE).toBe("sv-SE");
+		expect(marketLanguages("SE")).toEqual(["sv-SE"]);
 		for (const locale of LOCALES) {
 			expect(marketOf(locale), locale).toBe(LOCALE_MARKETS[locale]);
 			expect(locale.split("-")[0], locale).toBe(CATALOG_LANGUAGES[locale]);
@@ -300,6 +312,7 @@ describe("locale configuration", () => {
 			"sl-SI": "sl-SI",
 			"el-CY": "el-CY",
 			"lv-LV": "lv-LV",
+			"sv-SE": "sv-SE",
 		});
 		expect(OG_LOCALES).toEqual({
 			fr: "fr_FR",
@@ -325,6 +338,7 @@ describe("locale configuration", () => {
 			"sl-SI": "sl_SI",
 			"el-CY": "el_CY",
 			"lv-LV": "lv_LV",
+			"sv-SE": "sv_SE",
 		});
 		for (const locale of LOCALES) {
 			expect(Intl.DateTimeFormat.supportedLocalesOf([LOCALE_TAGS[locale]])).toEqual([
@@ -364,6 +378,7 @@ describe("locale configuration", () => {
 			"sl-SI",
 			"el-CY",
 			"lv-LV",
+			"sv-SE",
 		]);
 		expect(HREFLANGS).toEqual({
 			fr: "fr-FR",
@@ -385,6 +400,7 @@ describe("locale configuration", () => {
 			"sl-SI": "sl-SI",
 			"el-CY": "el-CY",
 			"lv-LV": "lv-LV",
+			"sv-SE": "sv-SE",
 		});
 		expect(routing.alternateLinks).toBe(false);
 		expect(robotsFor("fr", true)).toEqual({ index: true, follow: true });
@@ -408,6 +424,7 @@ describe("locale configuration", () => {
 		expect(robotsFor("sl-SI", true)).toEqual({ index: true, follow: true });
 		expect(robotsFor("el-CY", true)).toEqual({ index: true, follow: true });
 		expect(robotsFor("lv-LV", true)).toEqual({ index: true, follow: true });
+		expect(robotsFor("sv-SE", true)).toEqual({ index: true, follow: true });
 		for (const locale of TRANSLATIONS) {
 			expect(robotsFor(locale, true)).toEqual({ index: false, follow: true });
 		}
@@ -816,6 +833,33 @@ describe("locale configuration", () => {
 		expect(localePath("sl-SI", "/[specialite]", { specialite: "zobozdravnik" })).toBe(
 			"/si/zobozdravnik",
 		);
+		// Sweden: every first segment is reserved and never a Swedish listing slug.
+		for (const pathname of simple.filter((pathname) => !pathname.startsWith("/["))) {
+			const [first] = getPathname({ href: hrefOf(pathname) as never, locale: "sv-SE" })
+				.split("/")
+				.filter(Boolean)
+				.slice(1);
+			if (!first) continue;
+			expect(SE_RESERVED_SEGMENTS as readonly string[], pathname).toContain(first);
+			expect(isSeListingSlug(first), pathname).toBe(false);
+		}
+		expect(
+			localePath("sv-SE", "/praticien/[slug]", { slug: "exempelapoteket-a7359999000014" }),
+		).toBe("/se/verksamhet/exempelapoteket-a7359999000014");
+		expect(
+			localePath("sv-SE", "/praticien/[slug]/retrait", { slug: "exempelapoteket-a7359999000014" }),
+		).toBe("/se/verksamhet/exempelapoteket-a7359999000014/borttagning");
+		expect(localePath("sv-SE", "/etablissement/[slug]", { slug: "x-1" })).toBe(
+			"/se/organisation/x-1",
+		);
+		expect(localePath("sv-SE", "/annuaire")).toBe("/se/katalog");
+		expect(localePath("sv-SE", "/recherche")).toBe("/se/sok");
+		expect(localePath("sv-SE", "/mentions-legales")).toBe("/se/juridisk-information");
+		expect(localePath("sv-SE", "/confidentialite")).toBe("/se/integritet");
+		expect(localePath("sv-SE", "/conditions")).toBe("/se/villkor");
+		expect(localePath("sv-SE", "/accessibilite")).toBe("/se/tillganglighet");
+		expect(localePath("sv-SE", "/donnees")).toBe("/se/data");
+		expect(localePath("sv-SE", "/[specialite]", { specialite: "apoteken" })).toBe("/se/apoteken");
 	});
 
 	it("translates into Estonian only segments reserved in Estonia", () => {
@@ -906,6 +950,17 @@ describe("locale configuration", () => {
 		for (const first of firsts) expect(CY_RESERVED_SEGMENTS as readonly string[]).toContain(first);
 	});
 
+	it("translates into Swedish only segments reserved in Sweden", () => {
+		for (const swedish of Object.values(SWEDISH_SEGMENTS)) {
+			expect(isSeListingSlug(swedish), swedish).toBe(false);
+		}
+		const firsts = Object.values(routing.pathnames)
+			.filter((entry) => typeof entry !== "string")
+			.map((entry) => entry["sv-SE"].split("/")[1] ?? "")
+			.filter((first) => first && !first.startsWith("["));
+		for (const first of firsts) expect(SE_RESERVED_SEGMENTS as readonly string[]).toContain(first);
+	});
+
 	it("translates into Czech only segments reserved in Czechia", () => {
 		for (const czech of Object.values(CZECH_SEGMENTS)) {
 			expect(isCzListingSlug(czech), czech).toBe(false);
@@ -978,6 +1033,7 @@ describe("the markets a search can move to", () => {
 			"SI",
 			"CY",
 			"LV",
+			"SE",
 		]);
 		expect(MARKET_COUNTRIES.map(marketSegment)).toEqual([
 			"fr",
@@ -997,6 +1053,7 @@ describe("the markets a search can move to", () => {
 			"si",
 			"cy",
 			"lv",
+			"se",
 		]);
 		for (const country of MARKET_COUNTRIES) {
 			expect(marketOfSegment(marketSegment(country))).toBe(country);
@@ -1018,6 +1075,7 @@ describe("the markets a search can move to", () => {
 		expect(marketOfSegment("ie")).toBe("IE");
 		expect(marketOfSegment("lt")).toBe("LT");
 		expect(marketOfSegment("lv")).toBe("LV");
+		expect(marketOfSegment("se")).toBe("SE");
 		expect(marketOfSegment(null)).toBeNull();
 	});
 
@@ -1090,5 +1148,9 @@ describe("the markets a search can move to", () => {
 		expect(marketLocaleFor("CY", "fr")).toBe("el-CY");
 		expect(marketLocaleFor("CY", "en-GB")).toBe("el-CY");
 		expect(marketLocaleFor("CY", "el-CY")).toBe("el-CY");
+		// Sweden too: every visitor lands on its Swedish pages.
+		expect(marketLocaleFor("SE", "fr")).toBe("sv-SE");
+		expect(marketLocaleFor("SE", "nb-NO")).toBe("sv-SE");
+		expect(marketLocaleFor("SE", "sv-SE")).toBe("sv-SE");
 	});
 });

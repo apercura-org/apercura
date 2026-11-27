@@ -52,6 +52,11 @@ import {
 	parsePlFacilitySegment,
 	parseSiPractitionerSegment,
 	SI_ID_SCHEME,
+	parseSeFacilitySegment,
+	parseSeKey,
+	SE_ID_SCHEMES,
+	type SeIdScheme,
+	seUrlKey,
 } from "@apercura/core";
 import type { MarketCountry } from "~/i18n/locales";
 
@@ -271,6 +276,24 @@ function lvRef(segment: string): PractitionerRef | null {
 		: null;
 }
 
+/**
+ * The prefix of a Swedish reference (`se:a7312446003969`, `se:v2321000131e000000007600`): a GLN
+ * alone is thirteen digits any market could read.
+ */
+const SE_REF = "se:";
+
+/**
+ * A Swedish facility from the end of a page address or slug, from its key (`a7312446003969`),
+ * or from its GLN (`7312446003969`, check digit verified) or HSA-id
+ * (`SE2321000131-E000000007600`) as typed.
+ */
+function seRef(segment: string): PractitionerRef | null {
+	const parsed = parseSeFacilitySegment(segment) ?? parseSeKey(segment);
+	return parsed
+		? { country: "SE", idScheme: parsed.idScheme, nationalId: parsed.nationalId }
+		: null;
+}
+
 /** The first path segments of Switzerland's pages, in its three languages (`ch`, `ch-fr`, `ch-it`). */
 const CH_PATH = /^ch(?:-[a-z]{2})?$/;
 
@@ -289,18 +312,19 @@ const CH_PATH = /^ch(?:-[a-z]{2})?$/;
  * establishment number in Poland (`pl:290629`), `no:` and the organisation
  * number in Norway (`no:910000039`), `ie:` and the list letter and key in Ireland
  * (`ie:p10000612`, `ie:n738`), `lt:` and the page key in Lithuania (`lt:5271-12679435`), `cy:` and the publisher letter and
- * key in Cyprus (`cy:f101`, `cy:m3fa9c01b2e`). A page
+ * key in Cyprus (`cy:f101`, `cy:m3fa9c01b2e`), `se:` and the list letter and key in Sweden (`se:a7312446003969`). A page
  * address is read from its last segment, in the market its first path segment names
  * (`/gb/practice/…`, `/cz/zarizeni/…`, `/es/centro/…`, `/it/struttura/…`,
  * `/de/einrichtung/…`, `/ch/einrichtung/…`,
- * `/ch-fr/etablissement/…`, `/ch-it/struttura/…`, `/ee/asutus/…`, `/pl/placowka/…`, `/no/virksomhet/…`, `/ie/facility/…`, `/lt/istaiga/…`, `/cy/monada/…`, `/lv/iestade/…`).
+ * `/ch-fr/etablissement/…`, `/ch-it/struttura/…`, `/ee/asutus/…`, `/pl/placowka/…`, `/no/virksomhet/…`, `/ie/facility/…`, `/lt/istaiga/…`, `/cy/monada/…`, `/lv/iestade/…`, `/se/verksamhet/…`).
  * Whitespace and case are forgiven. `market` is the market the reference was typed in: on a UK
  * page a bare key (`A81001`, `W91234`) is the UK's, on a Czech page a bare number (`39781`) is
  * Czechia's, on a Spanish page a ten-digit code is Spain's (as is any ten-digit code: no other
  * market has one), on an Italian page a list key (`f9000001`) is Italy's, on a German page a key
  * (`th9001`) is Germany's, on a Swiss page a list
  * key (`h123456789`) Switzerland's, on a Polish page a bare number (`290629`) Poland's, on a Norwegian page an organisation number (`910 000 039`)
- * Norway's, on an Irish page a list key (`p10000612`, `h123456789`) Ireland's, on a Lithuanian page a key (`5271-12679435`) Lithuania's, on a Cypriot page a key (`f101`) Cyprus's, on a Latvian page a key (`a324`) Latvia's.
+ * Norway's, on an Irish page a list key (`p10000612`, `h123456789`) Ireland's, on a Lithuanian page a key (`5271-12679435`) Lithuania's, on a Cypriot page a key (`f101`) Cyprus's, on a Latvian page a key (`a324`) Latvia's, on a Swedish page a GLN or an
+ * HSA-id Sweden's.
  * Null for anything else.
  */
 export function parsePractitionerRef(
@@ -350,6 +374,9 @@ export function parsePractitionerRef(
 	}
 	if (trimmed.toLowerCase().startsWith(LV_REF)) {
 		return lvRef(trimmed.slice(LV_REF.length).replace(/\s+/g, "").toLowerCase());
+	}
+	if (trimmed.toLowerCase().startsWith(SE_REF)) {
+		return seRef(trimmed.slice(SE_REF.length).replace(/\s+/g, "").toLowerCase());
 	}
 	const parts = trimmed.split(/[?#]/)[0]?.split("/").filter(Boolean) ?? [];
 	const segment = trimmed.split(/[/?#]/).filter(Boolean).at(-1) ?? "";
@@ -421,6 +448,11 @@ export function parsePractitionerRef(
 		const cypriot = cyRef(compact);
 		if (cypriot) return cypriot;
 	}
+	// A page address of Sweden (`/se/verksamhet/…`), or a GLN or HSA-id typed on a Swedish page.
+	if ((path.length > 1 && path[0]?.toLowerCase() === "se") || market === "SE") {
+		const swedish = seRef(compact);
+		if (swedish) return swedish;
+	}
 	if (market === "CZ") {
 		const czech = czRef(compact);
 		if (czech) return czech;
@@ -457,7 +489,7 @@ export function parsePractitionerRef(
 /**
  * The short reference of a practitioner (`19999990013`, `w7983`, `gb:a81001`, `cz:39781`,
  * `es:1328000001`, `it:f9000001`, `de:k0a1b2c3d4e`, `ch:h123456789`, `ee:l01909`, `pl:290629`, `ie:p10000612`, `fi:b18aa7f87eca4b97a8e8b438d2e29427`,
- * `lt:5271-12679435`, `si7774`), as `parsePractitionerRef` reads it.
+ * `lt:5271-12679435`, `si7774`, `se:a7312446003969`), as `parsePractitionerRef` reads it.
  */
 export function practitionerRefOf(practitioner: { idScheme: string; nationalId: string }): string {
 	if (CH_ID_SCHEMES[practitioner.idScheme as ChIdScheme]) {
@@ -468,6 +500,9 @@ export function practitionerRefOf(practitioner: { idScheme: string; nationalId: 
 	}
 	if (LV_ID_SCHEMES[practitioner.idScheme as LvIdScheme]) {
 		return `${LV_REF}${lvUrlKey(practitioner.idScheme as LvIdScheme, practitioner.nationalId)}`;
+	}
+	if (SE_ID_SCHEMES[practitioner.idScheme as SeIdScheme]) {
+		return `${SE_REF}${seUrlKey(practitioner.idScheme as SeIdScheme, practitioner.nationalId)}`;
 	}
 	if (practitioner.idScheme === CZ_ID_SCHEME) return `${CZ_REF}${practitioner.nationalId}`;
 	if (practitioner.idScheme === PL_ID_SCHEME) return `${PL_REF}${practitioner.nationalId}`;
@@ -507,7 +542,8 @@ export function practitionerRefOf(practitioner: { idScheme: string; nationalId: 
  * Swiss page (`H123456789`) `ch:h123456789`, a licence number typed on an Estonian page (`L01909`)
  * `ee:l01909`, an organisation number typed on a Norwegian page (`910 000 039`) `no:910000039`, a key typed
  * on an Irish page (`P10000612`) `ie:p10000612`, a key typed on a Lithuanian page (`5271-12679435`)
- * `lt:5271-12679435`, a key typed on a Cypriot page (`F101`) `cy:f101`.
+ * `lt:5271-12679435`, a key typed on a Cypriot page (`F101`) `cy:f101`, a GLN typed on a Swedish page (`7312446003969`)
+ * `se:a7312446003969`.
  * A value that
  * names no page is kept as typed, so the service answers its own error.
  */

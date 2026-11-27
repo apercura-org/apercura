@@ -17,7 +17,10 @@ import {
 	PL_PRODUCED_AT,
 	poland,
 	slovenia,
+	SE_COUNTIES,
+	SE_HEALTH_CENTRE_COUNTIES,
 	spain,
+	sweden,
 	switzerland,
 	unitedKingdom,
 } from "@apercura/core/country";
@@ -43,6 +46,8 @@ import {
 	PL_PROFESSIONS,
 	professionFor,
 	SI_PROFESSIONS,
+	SE_HEALTH_CENTRE,
+	SE_PROFESSIONS,
 } from "@apercura/core/taxonomy";
 import { type Locale, marketOf } from "~/i18n/locales";
 import { marketAdapter } from "./practitioner-key";
@@ -83,7 +88,7 @@ export function marketBooks(locale: Locale): boolean {
  * `GB_GP` → `gp-practices`, `CZ_GP` → `prakticky-lekar`, `ES_PHARMACY` → `farmacias`,
  * `IT_PHARMACY` → `farmacie`, `DE_PHARMACY` → `apotheken`, `CH_HOSPITAL` → `spital`,
  * `EE_PHARMACY` → `apteegid`, `NO_PHARMACY` → `apotek`,
- * `IE_PHARMACY` → `pharmacy`, `LT_DENTAL` → `odontologijos-klinikos`, `SI_DENTIST` → `zobozdravnik`, `CY_PHARMACY` → `farmakeia`).
+ * `IE_PHARMACY` → `pharmacy`, `LT_DENTAL` → `odontologijos-klinikos`, `SI_DENTIST` → `zobozdravnik`, `CY_PHARMACY` → `farmakeia`, `SE_PHARMACY` → `apoteken`).
  */
 export function professionSlugOf(code: string): string {
 	return (
@@ -104,6 +109,7 @@ export function professionSlugOf(code: string): string {
 		SI_PROFESSIONS[code]?.slug ??
 		CY_PROFESSIONS[code]?.slug ??
 		LV_PROFESSIONS[code]?.slug ??
+		SE_PROFESSIONS[code]?.slug ??
 		""
 	);
 }
@@ -599,6 +605,26 @@ export function irishSourcesOf(
 		.map((registry) => ({ name: registry.name, attribution: registry.attribution ?? "" }));
 }
 
+/** Statistics Sweden's counties and municipalities, which place every Swedish page (CC0 1.0). */
+export const SE_PLACE_SOURCE_IDS: readonly string[] = ["se-scb-granser"];
+
+/**
+ * The sources a Swedish facility's page is built from, with the credit each asks for: the
+ * facility's list (Läkemedelsverket's register of licensed pharmacies under CC BY 4.0, the change
+ * said, or Västra Götalandsregionen's health centres under CC0 1.0: the site's source is the
+ * registry's id) and Statistics Sweden's counties and municipalities.
+ */
+export function swedishSourcesOf(
+	activitySources: readonly (string | undefined)[],
+): { name: string; attribution: string }[] {
+	const listed = activitySources.filter((source): source is string => Boolean(source));
+	if (listed.length === 0) return [];
+	const ids = new Set([...listed, ...SE_PLACE_SOURCE_IDS]);
+	return sweden.registries
+		.filter((registry) => ids.has(registry.id) && registry.attribution)
+		.map((registry) => ({ name: registry.name, attribution: registry.attribution ?? "" }));
+}
+
 /** The sources of the HSE's Health Atlas, a March 2020 snapshot (`IE_HSE_ATLAS_DATE`). */
 export const IE_HSE_SOURCES: ReadonlySet<string> = new Set([
 	"ie-hse-hospitals",
@@ -611,7 +637,8 @@ export const IE_HSE_SOURCES: ReadonlySet<string> = new Set([
  * IODL 2.0 and CC BY 4.0, Germany's Destatis, CC BY 4.0 and dl-de/by-2-0 sources, Slovenia's
  * CC BY 4.0 lists and places); empty for
  * IODL 2.0 and CC BY 4.0, Germany's Destatis, CC BY 4.0 and dl-de/by-2-0 sources, Switzerland's,
- * Estonia's CC BY-NC-SA 3.0, CC0 and Land Board sources, Ireland's re-use conditions and CC BY 4.0, Lithuania's CC BY 4.0); empty for
+ * Estonia's CC BY-NC-SA 3.0, CC0 and Land Board sources, Ireland's re-use conditions and CC BY 4.0, Lithuania's CC BY 4.0,
+ * Sweden's CC BY 4.0 and CC0 lists); empty for
  * France, whose provenance line is the catalog's. `sourceDate` dates Spain's REGCESS line,
  * Italy's list and the obtaining of Poland's register, `producedAt` the production of Poland's.
  */
@@ -662,6 +689,7 @@ export function openDataSourcesOf(
 	}
 	if (country === "CY") return cypriotSourcesOf(activities.map((activity) => activity.source));
 	if (country === "LV") return latvianSourcesOf(activities.map((activity) => activity.source));
+	if (country === "SE") return swedishSourcesOf(activities.map((activity) => activity.source));
 	if (country === "CH") {
 		return activities.length > 0
 			? swissSourcesOf(
@@ -693,4 +721,28 @@ export function pharmacyCoverageOf(locale: Locale, listingSlug: string): string 
 	return new Intl.ListFormat(locale, { type: "conjunction" }).format(
 		DE_PHARMACY_STATES.map((code) => DE_STATES[code] ?? code),
 	);
+}
+
+/**
+ * What a listing of a locale's market covers when it does not cover the whole country, as a
+ * catalog key of `Listing` and the places in the locale's words: Germany's pharmacies, listed for
+ * the Länder that publish a current open list (`pharmacyCoverage`), and Sweden's health centres,
+ * listed for the regions that publish theirs under an open licence (`healthCentreCoverage`,
+ * "Västra Götalands län"). Null for a listing that covers its whole market.
+ */
+export function listingCoverageOf(
+	locale: Locale,
+	listingSlug: string,
+): { key: "pharmacyCoverage" | "healthCentreCoverage"; places: string } | null {
+	const pharmacies = pharmacyCoverageOf(locale, listingSlug);
+	if (pharmacies) return { key: "pharmacyCoverage", places: pharmacies };
+	if (marketOf(locale) !== "SE" || listingSlug !== SE_PROFESSIONS[SE_HEALTH_CENTRE]?.slug) {
+		return null;
+	}
+	return {
+		key: "healthCentreCoverage",
+		places: new Intl.ListFormat(locale, { type: "conjunction" }).format(
+			SE_HEALTH_CENTRE_COUNTIES.map((code) => SE_COUNTIES[code] ?? code),
+		),
+	};
 }

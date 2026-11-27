@@ -1,6 +1,7 @@
 import { slugifyDe } from "@apercura/core";
 import {
 	AT_STATES,
+	GOTLAND_MUNICIPALITY,
 	HELSINKI_CODE,
 	LT_CITY_MUNICIPALITIES,
 	LV_STATE_CITIES,
@@ -12,8 +13,9 @@ import type { PlaceRef } from "~/server/queries/types";
 /**
  * Cities whose page is their department's, by market: Paris (INSEE 75056, department 75),
  * Wien (Statistik Austria 90001, Bundesland 9), Praha (RÚIAN 554782, district CZ0100), Oslo
- * (municipality 0301, county 03, the only municipality of its county) and Helsinki (Statistics
- * Finland 091, which organises its own health care: department 90). Their districts list under
+ * (municipality 0301, county 03, the only municipality of its county), Helsinki (Statistics
+ * Finland 091, which organises its own health care: department 90) and Gotland (municipality
+ * 0980, the only municipality of Gotlands län). Their districts list under
  * the department page, and the city itself has no listing or hub page.
  */
 export const CITY_IS_DEPARTMENT: Readonly<Record<string, string>> = {
@@ -22,6 +24,7 @@ export const CITY_IS_DEPARTMENT: Readonly<Record<string, string>> = {
 	CZ: PRAGUE_CODE,
 	NO: OSLO_MUNICIPALITY,
 	FI: HELSINKI_CODE,
+	SE: GOTLAND_MUNICIPALITY,
 };
 
 /**
@@ -132,7 +135,8 @@ export const AT_STATE_SLUGS: ReadonlySet<string> = new Set(
  * `lazio`). Germany: the slug of a Kreis (`landkreis-muenchen`, `berlin`). Switzerland: the slug of a district or of a canton (`bezirk-zuerich`, `zuerich`). Estonia: the slug of a municipality (`tallinn`,
  * `tartu-linn`, `rae-vald`). Poland: the slug of a powiat or of a voivodeship (`powiat-krakowski`, `krakow`, `malopolskie`). Norway: the slug of a county (`vestland`, `trondelag`). Ireland: the slug of a county (`cork`, `dublin`). Finland: the slug of a wellbeing services county (`pirkanmaan-hyvinvointialue`, `helsinki`).
  * Lithuania: the slug of a municipality or of a county (`vilniaus-miesto-savivaldybe`,
- * `vilniaus-apskritis`). Cyprus: the slug of a district (`eparchia-lefkosias`).
+ * `vilniaus-apskritis`). Cyprus: the slug of a district (`eparchia-lefkosias`). Sweden: the slug of a county
+ * (`stockholms-lan`, `skane-lan`).
  */
 export function isDepartmentSlug(slug: string, country = "FR"): boolean {
 	if (country === "AT") return AT_STATE_SLUGS.has(slug);
@@ -151,7 +155,8 @@ export function isDepartmentSlug(slug: string, country = "FR"): boolean {
 		country === "LT" ||
 		country === "SI" ||
 		country === "CY" ||
-		country === "LV"
+		country === "LV" ||
+		country === "SE"
 	) {
 		return isPlaceSlug(slug);
 	}
@@ -172,7 +177,7 @@ export function isPlaceSlug(slug: string): boolean {
  * code, nor an Italian province or comune by its ISTAT code, nor a German Kreis or Gemeinde by
  * its AGS, nor an Estonian municipality or settlement by its EHAK code, nor a Norwegian county or
  * municipality by its number, nor an Irish county or town by its Tailte Éireann or CSO
- * code, nor a Cypriot district, municipality or community by its CYSTAT code, and Vienna's and Prague's
+ * code, nor a Cypriot district, municipality or community by its CYSTAT code, nor a Swedish county or municipality by its SCB code, and Vienna's and Prague's
  * districts say their city
  * ("Wien-Alsergrund", "Praha 8").
  */

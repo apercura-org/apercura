@@ -1,0 +1,1334 @@
+{
+	"Metadata": {
+		"title": "Apercura",
+		"description": "Öppen katalog över vården i Sverige: alla apotek med tillstånd från Läkemedelsverket och vårdcentralerna i Västra Götaland.",
+		"proTitle": "Er sida finns redan · Apercura",
+		"proDescription": "Apercura publicerar en saklig sida för varje apotek med tillstånd från Läkemedelsverket och för vårdcentralerna i Västra Götaland. Hitta er sida och ta över den kostnadsfritt.",
+		"searchTitle": "Sök · Apercura",
+		"galleryTitle": "Komponentgalleri · Apercura",
+		"homeTitle": "Apercura · Apotek och vårdcentraler i Sverige"
+	},
+	"Site": {
+		"skipLink": "Gå till innehållet",
+		"wordmark": "Apercura",
+		"homeLink": "Apercura, startsida",
+		"runningHead": "Öppen katalog över vården i Sverige",
+		"navLabel": "Huvudmeny",
+		"navPro": "För verksamheter",
+		"navPatients": "För patienter",
+		"folio": "Sida {number}",
+		"externalLink": "öppnar en annan webbplats",
+		"footer": {
+			"free": "Kostnadsfritt för verksamheter och patienter.",
+			"license": "Källkod under AGPL-3.0-licensen",
+			"noAds": "Inga betyg, ingen reklam, ingen betald placering."
+		},
+		"folioRpps": "Nr {rpps}",
+		"home": "Startsida",
+		"breadcrumbs": "Du är här",
+		"footerNav": {
+			"label": "Om Apercura",
+			"directory": "Katalog",
+			"guides": "Guider",
+			"about": "Om",
+			"openSource": "Öppen källkod",
+			"data": "Data och källor",
+			"accessibility": "Tillgänglighet",
+			"privacy": "Integritet",
+			"legal": "Juridisk information",
+			"terms": "Användarvillkor",
+			"international": "Apercura i andra länder"
+		},
+		"theme": {
+			"label": "Utseende",
+			"light": "Ljust",
+			"dark": "Mörkt",
+			"system": "Som systemet"
+		}
+	},
+	"LocaleSwitcher": {
+		"label": "Språk",
+		"locale": "{locale, select, fr {Français} en {English} de {Deutsch} es {Español} it {Italiano} other {Okänt språk}}",
+		"current": "Språk: <value>{language}</value>"
+	},
+	"CountrySwitcher": {
+		"label": "Land",
+		"current": "Land: <value>{country}</value>"
+	},
+	"ErrorPages": {
+		"notFound": {
+			"metaTitle": "Sidan finns inte · Apercura",
+			"title": "Den här sidan finns inte",
+			"body": "Adressen kan vara felstavad, eller så har sidan tagits bort. Sök i katalogen, eller börja om från någon av sidorna nedan.",
+			"rootBody": "Adressen kan vara felstavad, eller så har sidan tagits bort. Välj ett land för att söka i katalogen där.",
+			"code": "Fel 404",
+			"stamp": "Ingen sida på den här adressen",
+			"nextHeading": "Annat på Apercura",
+			"home": "Startsidan",
+			"directory": "Katalog efter plats",
+			"international": "Apercura i varje land"
+		},
+		"error": {
+			"metaTitle": "Sidan är inte tillgänglig · Apercura",
+			"title": "Vi kunde inte visa den här sidan",
+			"body": "Något gick fel hos oss när sidan skulle skapas. Försök igen; om det fortfarande inte fungerar kan du komma tillbaka om några minuter.",
+			"retry": "Försök igen",
+			"home": "Tillbaka till startsidan",
+			"reference": "Referens för support: {digest}"
+		}
+	},
+	"Search": {
+		"label": "Hitta ett apotek eller en vårdcentral",
+		"who": "Vad?",
+		"whoHint": "Namn, eller till exempel apotek, vårdcentral",
+		"where": "Var?",
+		"whereHint": "Kommun eller län",
+		"submit": "Sök",
+		"market": "Land",
+		"markets": {
+			"FR": "Frankrike",
+			"AT": "Österrike",
+			"GB": "Storbritannien",
+			"CZ": "Tjeckien",
+			"IT": "Italien",
+			"CH": "Schweiz",
+			"ES": "Spanien",
+			"DE": "Tyskland",
+			"EE": "Estland",
+			"PL": "Polen",
+			"NO": "Norge",
+			"IE": "Irland",
+			"SE": "Sverige"
+		}
+	},
+	"HomePage": {
+		"title": "Hitta ett apotek eller en vårdcentral i Sverige",
+		"hook": "Varje apotek med tillstånd från Läkemedelsverket har redan en sida, liksom vårdcentralerna i Västra Götaland.",
+		"specimen": {
+			"heading": "Varje verksamhet har redan en sida",
+			"intro": "Så här ser en sida ut när de offentliga registren har fyllt i den, innan verksamheten tar över den: kända uppgifter är ifyllda, och de andra säger tydligt att uppgiften saknas."
+		},
+		"pillarsHeading": "Det Apercura lovar",
+		"columns": {
+			"number": "Nr",
+			"commitment": "Löfte"
+		},
+		"pillars": {
+			"free": {
+				"title": "Kostnadsfritt",
+				"description": "Kostnadsfritt för verksamheter och patienter, utan abonnemang och utan provision."
+			},
+			"openSource": {
+				"title": "Öppen källkod",
+				"description": "All källkod är publicerad under AGPL-3.0-licensen."
+			},
+			"hostedInFrance": {
+				"title": "Hälsodata lagras i Frankrike",
+				"description": "Hälsodata lagras i Frankrike hos en HDS-certifierad leverantör ({host}) och krypteras på applikationsnivå."
+			},
+			"encrypted": {
+				"title": "Krypterade uppgifter",
+				"description": "Dokument för att ta över en sida, felanmälningar och, där onlinebokning är öppen, tidsbokningar krypteras på applikationsnivå."
+			},
+			"selfHostable": {
+				"title": "Kan drivas i egen regi",
+				"description": "Hela plattformen kan köras med Docker på egen infrastruktur, import av öppna data inräknad."
+			}
+		},
+		"registry": {
+			"heading": "Byggd på offentliga register",
+			"intro": "Varje sida utgår från en offentlig förteckning: Läkemedelsverkets register över apotek med tillstånd (CC BY 4.0), som täcker hela Sverige, och Västra Götalandsregionens förteckning över vårdcentraler i Vårdval vårdcentral (CC0). Vårdcentraler finns hittills bara för Västra Götaland: ingen annan region publicerar sina vårdcentraler under en öppen licens. Sjukhus, tandvård och vårdpersonal finns inte i katalogen, eftersom det inte finns någon öppen nationell förteckning över dem. Län och kommuner kommer från SCB. Ingen betalar för att finnas i katalogen.",
+			"doctors": "Läkare",
+			"dentists": "Tandläkare",
+			"midwives": "Barnmorskor",
+			"nurses": "Sjuksköterskor",
+			"withAddress": "Med en offentlig adress",
+			"count": "{count, number}",
+			"sourceLabel": "Källa",
+			"sourceName": "Läkemedelsverket; Västra Götalandsregionen",
+			"updatedLabel": "Siffror per"
+		},
+		"pro": {
+			"heading": "Driver ni ett apotek eller en vårdcentral?",
+			"body": "Er sida finns redan. Det är kostnadsfritt att ta över den.",
+			"cta": "Hitta vår sida"
+		},
+		"tagline": "Öppen katalog över apotek och vårdcentraler i Sverige, från offentliga register.",
+		"status": "Under arbete.",
+		"market": {
+			"listingsHeading": "Efter typ av verksamhet",
+			"placesHeading": "Efter län"
+		}
+	},
+	"SearchPage": {
+		"title": "Sök",
+		"query": "Du sökte efter ”{who}”",
+		"queryWhere": "Du sökte efter ”{who}” i ”{where}”",
+		"queryOnlyWhere": "Du sökte i ”{where}”",
+		"emptyTitle": "Ingen verksamhet matchar",
+		"emptyBody": "Kontrollera stavningen, prova en kommun i närheten eller ett bredare ord, som ”apotek”.",
+		"queryNear": "Du sökte efter ”{who}” nära dig",
+		"queryOnlyNear": "Verksamheter nära dig (ungefärliga avstånd)",
+		"startTitle": "Vad letar du efter?",
+		"startBody": "Skriv namnet på en verksamhet, eller till exempel apotek eller vårdcentral, i ”Vad?”, och en kommun eller ett län i ”Var?”. Du kan också bläddra i katalogen efter län och kommun.",
+		"noMoreTitle": "Inga fler träffar",
+		"browseDirectory": "Bläddra i katalogen",
+		"rppsTitle": "Ingen offentlig sida har numret {rpps}",
+		"rppsBody": "Numret är inte giltigt, eller så har verksamheten ingen offentlig sida: katalogen visar bara apotek med tillstånd och vårdcentraler från regionernas öppna förteckningar. Den som driver verksamheten kan ändå hitta och ta över sidan.",
+		"rppsPro": "Verksamheter: hitta er sida",
+		"ambiguousTitle": "Flera platser heter ”{where}”",
+		"ambiguousBody": "Välj den du menar:",
+		"unknownPlaceTitle": "Vi känner inte till platsen ”{where}”",
+		"unknownPlaceSuggest": "Menade du någon av de här platserna?",
+		"unknownPlaceBody": "Kontrollera stavningen, eller skriv namnet på kommunen.",
+		"unlistedTitle": "”{who}” finns inte i katalogen ännu",
+		"unlistedBody": "I Sverige visar katalogen än så länge verksamheter, inte vårdpersonalen som arbetar där: apotek med tillstånd i hela landet och vårdcentraler i Västra Götaland. Sjukhus, tandvård, fysioterapi, psykologer och barnmorskor har ingen öppen nationell förteckning. Sök på en verksamhets namn i stället, eller bläddra i katalogen.",
+		"departmentPlace": "Län",
+		"resultsHeading": "Träffar",
+		"range": "Träff {from} till {to}",
+		"orderName": "Träffarna är ordnade efter hur väl namnet matchar, sedan i bokstavsordning. Ingen betalar för att hamna högre upp.",
+		"orderNear": "Träffarna är ordnade efter avstånd från dig. Ingen betalar för att hamna högre upp.",
+		"bookingNotOpen": "Apercura har ingen onlinebokning i Sverige: kontakta verksamheten.",
+		"columns": {
+			"practitioner": "Verksamhet",
+			"place": "Adress",
+			"appointments": "Kontakt"
+		},
+		"action": {
+			"call": "Ring {phone}",
+			"establishment": "Via verksamheten",
+			"locum": "Vikarie: ingen direkt bokning",
+			"page": "Se sidan",
+			"noPhone": "Inget telefonnummer publicerat",
+			"nextFree": "Boka: {slot}"
+		},
+		"distance": "Cirka {km} km bort",
+		"pagination": "Sidor med träffar",
+		"previous": "Föregående träffar",
+		"next": "Fler träffar",
+		"map": {
+			"show": "Visa på karta",
+			"hide": "Dölj kartan",
+			"region": "Karta över träffarna",
+			"fallback": "Kartan laddas. Listan ovan har alla adresser."
+		},
+		"outsidePlace": "Ligger utanför {where}",
+		"bookingOpenSome": "Några verksamheter tar emot onlinebokningar: nästa lediga tid visas. Ring de andra.",
+		"notCoveredTitle": "Apercura täcker inte {country} ännu",
+		"notCoveredBody": "Än så länge visar Apercura verksamheterna i de här länderna. Välj ett för att söka där:"
+	},
+	"Practitioner": {
+		"rpps": "Nr",
+		"status": {
+			"unclaimed": "Sida som inte tagits över",
+			"claimed": "Övertagen sida",
+			"verified": "Bekräftad sida"
+		},
+		"statusNote": {
+			"unclaimed": "Byggd på offentliga registers öppna data. Verksamheten har inte kompletterat sidan ännu.",
+			"verified": "Kompletterad av verksamheten, efter att övertagandet kontrollerats."
+		},
+		"notProvided": "Inte angivet",
+		"fields": {
+			"profession": "Typ av verksamhet",
+			"specialty": "Inriktning",
+			"address": "Adress",
+			"phone": "Telefon",
+			"hours": "Öppettider",
+			"languages": "Språk",
+			"convention": "Avtal",
+			"booking": "Onlinebokning",
+			"access": "Tillgänglighet"
+		},
+		"sitesHeading": "Adress",
+		"directions": "Vägbeskrivning",
+		"providers": {
+			"openStreetMap": "OpenStreetMap",
+			"appleMaps": "Apple Kartor",
+			"googleMaps": "Google Maps"
+		},
+		"mapLabel": "Karta: {place}",
+		"mapPin": "Plats för {place}",
+		"source": {
+			"label": "Källa",
+			"name": "Läkemedelsverket och Västra Götalandsregionen",
+			"updated": "Uppdaterad"
+		},
+		"action": {
+			"title": "Kontakt",
+			"book": {
+				"statement": "Onlinebokning är öppen. Det är kostnadsfritt och kräver inget konto.",
+				"label": "Boka tid"
+			},
+			"call": {
+				"statement": "Apercura har ingen onlinebokning i Sverige. Kontakta verksamheten.",
+				"label": "Ring {phone}"
+			},
+			"establishment": {
+				"statement": "Tider bokas via {establishment}.",
+				"label": "Boka hos {establishment}"
+			},
+			"locum": {
+				"statement": "Den här läkaren är vikarie och kan inte bokas direkt.",
+				"hint": "Boka tid på mottagningen där vikarien arbetar just nu."
+			}
+		},
+		"slots": {
+			"heading": "Välj en tid",
+			"label": "Lediga tider",
+			"now": "nu",
+			"unavailable": "inte ledig",
+			"selected": "Vald: {slot}",
+			"emptyDay": "Inga lediga tider den här dagen",
+			"slotLabel": "{day}, {time}",
+			"past": "passerad"
+		},
+		"professions": {
+			"gp": "Allmänläkare",
+			"dentist": "Tandläkare",
+			"midwife": "Barnmorska",
+			"physio": "Fysioterapeut"
+		},
+		"specimen": "Exempel, inte en riktig verksamhet"
+	},
+	"Map": {
+		"map": "Karta",
+		"marker": "Kartmarkör",
+		"zoomIn": "Zooma in",
+		"zoomOut": "Zooma ut",
+		"resetBearing": "Dra för att rotera kartan, klicka för att vända norr uppåt",
+		"toggleAttribution": "Visa eller dölj kartkällorna",
+		"mapFeedback": "Synpunkter på kartan",
+		"logo": "MapLibre-logotyp",
+		"closePopup": "Stäng",
+		"scrollZoomWindows": "Använd Ctrl + rullning för att zooma i kartan",
+		"scrollZoomMac": "Använd ⌘ + rullning för att zooma i kartan",
+		"twoFingers": "Använd två fingrar för att flytta kartan"
+	},
+	"PractitionerPage": {
+		"metaTitle": "{name}, {occupation} · Apercura",
+		"metaTitlePlace": "{name}, {occupation} i {place} · Apercura",
+		"metaDescription": "{name}, {occupation}: {fees, select, sector {adress, telefon och avgifter} other {adress och typ av verksamhet}}, från Läkemedelsverkets och Västra Götalandsregionens öppna data.",
+		"metaDescriptionPlace": "{name}, {occupation} i {place}: {fees, select, sector {adress, telefon och avgifter} other {adress och typ av verksamhet}}, från Läkemedelsverkets och Västra Götalandsregionens öppna data.",
+		"unknownProfession": "Vårdverksamhet",
+		"professionHeading": "Verksamheten",
+		"otherQualifications": "Övriga uppgifter",
+		"fieldsOfCare": "Vårdområden",
+		"ownership": "Huvudman",
+		"ownershipPublic": "Offentlig",
+		"ownershipPrivate": "Privat",
+		"practiceType": "Typ av verksamhet",
+		"switchboard": "{phone} (växel)",
+		"establishment": "Verksamhet",
+		"unnamedPlace": "Adress",
+		"asideLabel": "Om den här sidan",
+		"action": {
+			"callNotYetOpen": "Apercura har ingen onlinebokning i Sverige. Kontakta verksamheten för tider eller frågor.",
+			"establishmentLink": "Kontakta verksamheten",
+			"noPhone": "Förteckningen som sidan bygger på anger inget telefonnummer.",
+			"noPhoneHint": "Hitta kontaktuppgifterna på <link>verksamhetens uppgifter hos källan</link>, eller kontakta stället direkt.",
+			"bookStatement": "Onlinebokning är öppen. Det är kostnadsfritt och kräver inget konto.",
+			"bookNoSlot": "Onlinebokning är öppen, men det finns inga lediga tider de närmaste veckorna. Titta igen senare, eller ring verksamheten.",
+			"nextSlot": "Nästa lediga tid",
+			"bookLabel": "Boka tid",
+			"orCall": "Eller ring {phone}."
+		},
+		"fees": {
+			"heading": "Avgifter och ersättning",
+			"sector": "Avtal",
+			"agreement": "Avtal",
+			"optam": "Begränsade tilläggsarvoden (OPTAM)",
+			"optamNo": "Ingår inte",
+			"carteVitale": "Carte Vitale",
+			"accepted": "Godtas",
+			"notAccepted": "Godtas inte",
+			"fromAmeli": "Uppgifterna kommer från försäkringskassans register.",
+			"notMatched": "Verksamheten kunde inte hittas säkert i försäkringskassans register, så uppgifterna visas inte.",
+			"regulatoryNotice": "Avtalet styr hur avgifter tas ut och ersätts: kontrollera avgift och ersättning före besöket på",
+			"regulatoryNoticeAgreement": "Avtalet styr hur avgifter tas ut och ersätts: kontrollera avgift och ersättning före besöket på",
+			"ameliLink": "ameli.fr, Assurance Maladies register",
+			"source": "Assurance Maladie",
+			"sourceOwner": "Verksamheten"
+		},
+		"claim": {
+			"heading": "Är det här er verksamhet?",
+			"body": "Den här sidan bygger på offentliga registers öppna data. Ta över den för att kontrollera och komplettera den:",
+			"link": "Ta över den här sidan",
+			"claimedHeading": "Sidan förvaltas av verksamheten",
+			"claimedBody": "Verksamheten har tagit över den här sidan: övertagandet har kontrollerats, och verksamheten kompletterar sidan själv.",
+			"benefits": [
+				"kostnadsfritt, utan abonnemang eller bindningstid;",
+				"bild, öppettider och språk;",
+				"en presentation av verksamheten;",
+				"statistik över vem som ser sidan;",
+				"ett delningspaket: länk, QR-kod och affisch."
+			],
+			"contactLink": "Har ni inget dokument till hands? Kontakta oss",
+			"optOutLink": "Gäller sidan er, och vill ni hellre inte synas offentligt? Börja här"
+		},
+		"report": {
+			"heading": "Något fel?",
+			"body": "Om en adress, ett telefonnummer eller ett namn är fel, berätta hur det ska rättas.",
+			"link": "Anmäl ett fel"
+		},
+		"ring": {
+			"heading": "Andra verksamheter: {occupation} i {place}"
+		},
+		"photoAlt": "Bild av {name}",
+		"metaTitleName": "{name} · Apercura",
+		"metaDescriptionBookable": "{name}, {occupation}: onlinebokning, adress, telefon och {fees, select, sector {avgifter} other {typ av verksamhet}}.",
+		"metaDescriptionBookablePlace": "{name}, {occupation} i {place}: onlinebokning, adress, telefon och {fees, select, sector {avgifter} other {typ av verksamhet}}.",
+		"swedishFacts": {
+			"gln": "GLN",
+			"glnNote": "Apotekets globala lokaliseringsnummer, som Läkemedelsverkets register anger.",
+			"hsaId": "HSA-id",
+			"hsaIdNote": "Vårdenhetens id i HSA, den nationella katalogen över vården.",
+			"licence": "Tillstånd",
+			"licenceFrom": "Giltigt från {date}",
+			"holder": "Tillståndshavare",
+			"holderNumber": "Organisationsnummer {number}",
+			"operator": "Vårdgivare"
+		}
+	},
+	"Institutional": {
+		"toBeCompleted": "Fylls i senare",
+		"legalDraftMark": "Utkast: ska granskas av en advokat före lansering",
+		"auditMark": "Preliminär redogörelse: kompletteras efter den manuella granskningen",
+		"comingMark": "Kommer snart",
+		"placeholderNote": "Värden skrivna med versaler mellan dubbla klammerparenteser är inte kända ännu: de fylls i när den juridiska personen och avtalen finns."
+	},
+	"AboutPage": {
+		"metaTitle": "Om · Apercura",
+		"metaDescription": "Apercura publicerar en kostnadsfri, saklig sida för varje apotek med tillstånd i Sverige och för vårdcentralerna i Västra Götaland, från offentliga öppna data.",
+		"title": "Om Apercura",
+		"lead": "En öppen katalog över vården i Sverige: apotek med tillstånd i hela landet och vårdcentraler där regionerna publicerar dem öppet.",
+		"sections": {
+			"what": {
+				"heading": "Vad Apercura gör",
+				"body": [
+					"Apercura publicerar en sida för varje apotek som Läkemedelsverket har gett tillstånd att bedriva detaljhandel med läkemedel till konsument, och för varje vårdcentral i Västra Götalandsregionens Vårdval vårdcentral.",
+					"Patienter hittar alla verksamheter, inte bara dem som betalar en plattform. Verksamheterna kan ta över sin sida kostnadsfritt, kontrollera den och komplettera den. Apercura har ingen onlinebokning i Sverige."
+				]
+			},
+			"principles": {
+				"heading": "Principer",
+				"list": [
+					"Alla verksamheter visas på samma sätt, oavsett om de använder Apercura eller inte.",
+					"Bara saklig information: inga betyg, inga omdömen, ingen reklam och ingen betald placering.",
+					"Kostnadsfritt för verksamheter och patienter, utan abonnemang och utan provision.",
+					"Varje sida visar var uppgifterna kommer ifrån och när de senast uppdaterades.",
+					"Så lite data som möjligt, insamlad för ett angivet ändamål och raderad enligt plan."
+				]
+			},
+			"how": {
+				"heading": "Var sidorna kommer ifrån",
+				"body": [
+					"Sidorna skapas varje vecka från Läkemedelsverkets register över apotek med tillstånd (CC BY 4.0) och Västra Götalandsregionens förteckning över vårdcentraler (CC0); län och kommuner kommer från SCB:s digitala gränser (CC0). Datasidan visar varje källa med licens och datum."
+				]
+			},
+			"who": {
+				"heading": "Vem som driver Apercura",
+				"body": [
+					"Apercura är ett projekt i allmänhetens intresse. Det är ingen myndighetstjänst och har ingen koppling till Läkemedelsverket, E-hälsomyndigheten, Inera, SCB eller regionerna."
+				]
+			}
+		},
+		"fields": {
+			"publisher": "Utgivare",
+			"contact": "Kontakt"
+		},
+		"links": {
+			"data": "Data och källor",
+			"openSource": "Källkod och licens"
+		}
+	},
+	"OpenSourcePage": {
+		"metaTitle": "Öppen källkod · Apercura",
+		"metaDescription": "All källkod i Apercura är offentlig under AGPL-3.0-licensen. Läs den, granska den eller kör hela plattformen själv.",
+		"title": "Koden är offentlig.",
+		"lead": "Varje rad i Apercura är publicerad under AGPL-3.0-licensen: du kan läsa den, granska den och köra hela plattformen själv.",
+		"sections": {
+			"licence": {
+				"heading": "AGPL-3.0-licensen",
+				"body": [
+					"AGPL-3.0 är en fri programvarulicens. Alla får använda, studera, ändra och dela koden. Den som erbjuder en ändrad version som nättjänst måste publicera ändringarna under samma licens."
+				]
+			},
+			"can": {
+				"heading": "Vad du kan göra",
+				"list": [
+					"Läsa hur varje sida byggs och hur de öppna data importeras.",
+					"Kontrollera hur uppgifter krypteras och hur länge de sparas.",
+					"Anmäla ett problem eller föreslå en ändring i det offentliga kodförrådet.",
+					"Köra hela plattformen på egen infrastruktur med Docker, import av öppna data inräknad."
+				]
+			},
+			"selfHost": {
+				"heading": "Driva den själv",
+				"body": [
+					"En installation med bara katalogen innehåller inga hälsodata. Tidsbokningar är hälsodata: om du driver tidsbokning åt andra måste du följa de regler för hälsodata som gäller i ditt land. Läkemedelsverkets data får användas under CC BY 4.0, med angivande av källa; Västra Götalandsregionens och SCB:s under CC0."
+				]
+			}
+		},
+		"facts": {
+			"licence": "Licens",
+			"licenceValue": "GNU Affero General Public License v3.0",
+			"repository": "Kodförråd",
+			"data": "Katalogens data"
+		},
+		"dataValue": "Läkemedelsverket under CC BY 4.0, Västra Götalandsregionen och SCB under CC0, se datasidan",
+		"cta": {
+			"heading": "Läs källkoden",
+			"body": "Kodförrådet innehåller koden, dokumentationen och guiden för egen drift.",
+			"link": "Öppna kodförrådet"
+		}
+	},
+	"Listing": {
+		"count": "{count, plural, one {# verksamhet} other {# verksamheter}}",
+		"metaTitle": "{count, plural, one {{listing} i {place}: # verksamhet · Apercura} other {{listing} i {place}: # verksamheter · Apercura}}",
+		"metaTitlePage": "{listing} i {place}, sida {page} · Apercura",
+		"metaDescription": "{count, plural, one {# verksamhet under ”{occupation}” i {place}: {fees, select, sector {adress, telefon och avgifter} other {adress}}, från offentliga registers öppna data.} other {# verksamheter under ”{occupation}” i {place}: {fees, select, sector {adresser, telefonnummer och avgifter} other {adresser}}, från offentliga registers öppna data.}}",
+		"title": "{listing} i {place}",
+		"lead": "{count, plural, one {De offentliga registren förtecknar # verksamhet av det här slaget i {place}.} other {De offentliga registren förtecknar # verksamheter av det här slaget i {place}.}}",
+		"practitionersHeading": "{count, plural, one {Verksamheten} other {De # verksamheterna}}",
+		"practitionersIntro": "I bokstavsordning. Ingen betalar för att finnas här, och ingen rangordnas.",
+		"rowFacts": "Avtal: {sector} · Carte Vitale: {carteVitale}",
+		"rowFactsAgreement": "Avtal: {sector} · Carte Vitale: {carteVitale}",
+		"columns": {
+			"practitioner": "Verksamhet",
+			"sector": "Avtal",
+			"agreement": "Avtal",
+			"carteVitale": "Carte Vitale"
+		},
+		"pagination": {
+			"label": "Sidor i listan",
+			"previous": "Föregående sida",
+			"next": "Nästa sida",
+			"status": "Sida {page} av {pages}",
+			"page": "<hidden>Sida </hidden>{page}",
+			"jumps": "Gå till sida"
+		},
+		"facts": {
+			"heading": "I siffror",
+			"intro": "Avtal kommer från försäkringskassans register, för de verksamheter som kunde hittas där.",
+			"introAgreement": "Avtal kommer från försäkringskassans register, för de verksamheter som kunde hittas där.",
+			"sectorUnknown": "Avtal okänt",
+			"agreementUnknown": "Avtal okänt",
+			"carteVitaleYes": "Tar Carte Vitale",
+			"carteVitaleNo": "Tar inte Carte Vitale",
+			"bookingNotOpen": "Inte öppen ännu",
+			"sources": "Läkemedelsverket, Västra Götalandsregionen, SCB"
+		},
+		"communesHeading": "{listing}: kommuner i {place}",
+		"nearbyHeading": "{listing}: kommuner i närheten",
+		"establishmentsHeading": "Verksamheter i {place}",
+		"establishmentsIntro": "Sjukhus, kliniker och vårdcentraler där verksamheter under ”{occupation}” finns.",
+		"allSpecialties": "Alla typer av verksamheter i {place}",
+		"hubMetaTitle": "{count, plural, one {{listing} i Sverige: # verksamhet · Apercura} other {{listing} i Sverige: # verksamheter · Apercura}}",
+		"hubMetaDescription": "{count, plural, one {# verksamhet under ”{occupation}” i Sverige, efter län: {fees, select, sector {adress, telefon och avgifter} other {adress}}, från offentliga registers öppna data.} other {# verksamheter under ”{occupation}” i Sverige, efter län: {fees, select, sector {adresser, telefonnummer och avgifter} other {adresser}}, från offentliga registers öppna data.}}",
+		"hubTitle": "{listing} i Sverige",
+		"hubLead": "{count, plural, one {De offentliga registren förtecknar # verksamhet av det här slaget i Sverige.} other {De offentliga registren förtecknar # verksamheter av det här slaget i Sverige.}}",
+		"departmentsHeading": "{listing} efter län",
+		"departmentsIntro": "Välj ett län för att se kommunerna och verksamheterna där.",
+		"browseDirectory": "Bläddra i katalogen efter plats",
+		"metaTitleShort": "{listing} i {place} · Apercura",
+		"metaDescriptionPage": "{count, plural, one {Sida {page} av {pages}: # verksamhet under ”{occupation}” i {place}.} other {Sida {page} av {pages}: # verksamheter under ”{occupation}” i {place}.}}",
+		"metaDescriptionPageRange": "{count, plural, one {Sida {page} av {pages}, {first} till {last}: # verksamhet under ”{occupation}” i {place}.} other {Sida {page} av {pages}, {first} till {last}: # verksamheter under ”{occupation}” i {place}.}}",
+		"hubMetaTitleShort": "{listing} i Sverige · Apercura",
+		"authoritiesHeading": "{listing}: kommuner i {place}",
+		"healthCentreCoverage": "Vårdcentraler finns hittills bara för {regions}: de andra regionerna publicerar inte sina vårdcentraler under en öppen licens."
+	},
+	"Directory": {
+		"metaTitle": "Katalog över vården efter plats · Apercura",
+		"metaDescription": "Sveriges län och kommuner med apotek med tillstånd och vårdcentraler, från offentliga registers öppna data.",
+		"title": "Katalog efter plats",
+		"lead": "{count, plural, one {# verksamhet efter län och kommun.} other {# verksamheter efter län och kommun.}}",
+		"otherRegion": "Andra platser",
+		"emptyTitle": "Katalogen är inte importerad ännu",
+		"emptyBody": "De offentliga registren har inte importerats till den här servern ännu. Kom tillbaka efter nästa import.",
+		"placeMetaTitle": "Apotek och vårdcentraler i {place} · Apercura",
+		"placeMetaDescription": "{count, plural, one {# vårdverksamhet i {place}, efter typ, från offentliga registers öppna data.} other {# vårdverksamheter i {place}, efter typ, från offentliga registers öppna data.}}",
+		"placeTitle": "Vården i {place}",
+		"placeLead": "{count, plural, one {# verksamhet i {place}.} other {# verksamheter i {place}.}}",
+		"specialtiesHeading": "Efter typ av verksamhet",
+		"communesHeading": "Kommuner i {place}",
+		"arrondissementsHeading": "Efter stadsdel",
+		"establishmentsHeading": "Verksamheter i {place}",
+		"placeMetaTitleShort": "Vården i {place} · Apercura",
+		"authoritiesHeading": "Kommuner i {place}",
+		"regionLink": "Allt i {place}"
+	},
+	"Establishment": {
+		"metaTitle": "{name} · Apercura",
+		"metaTitlePlace": "{name}, {place} · Apercura",
+		"metaDescription": "{count, plural, one {{name}: adress, växel och # verksamhet på platsen, från offentliga registers öppna data.} other {{name}: adress, växel och # verksamheter på platsen, från offentliga registers öppna data.}}",
+		"directory": "Katalog",
+		"folio": "Nr {finess}",
+		"lead": "{count, plural, one {{kind}. Registret förtecknar # verksamhet här.} other {{kind}. Registret förtecknar # verksamheter här.}}",
+		"addressHeading": "Adress",
+		"finess": "Nummer",
+		"action": {
+			"call": "Tider bokas via verksamheten. Ring växeln och fråga efter den avdelning du behöver.",
+			"noPhone": "Inget telefonnummer har publicerats för den här verksamheten.",
+			"noPhoneHint": "Hitta kontaktuppgifterna på verksamhetens egen webbplats."
+		},
+		"practitionersHeading": "{count, plural, one {Verksamheten här} other {De # verksamheterna här}}",
+		"practitionersIntro": "Efter typ, i bokstavsordning.",
+		"otherProfessions": "Andra typer",
+		"source": "Läkemedelsverket, Västra Götalandsregionen"
+	},
+	"SearchForm": {
+		"specialties": "Typer av verksamhet",
+		"practitioners": "Verksamheter",
+		"places": "Platser",
+		"department": "Län",
+		"nearMe": "Nära mig",
+		"locating": "Hittar din position …",
+		"geoDenied": "Positionen är avstängd för den här webbplatsen. Skriv en kommun i stället.",
+		"geoUnavailable": "Din position kunde inte hittas. Skriv en kommun i stället.",
+		"searching": "Söker …",
+		"noSuggestion": "Inga förslag. Tryck på Sök för att se alla träffar."
+	},
+	"OgImage": {
+		"runningHead": "Öppen katalog över vården",
+		"titles": {
+			"medecin": "Varje vårdcentral i Västra Götaland har redan en sida.",
+			"chirurgien-dentiste": "Varje apotek i Sverige har redan en sida.",
+			"sage-femme": "Varje apotek i Sverige har redan en sida.",
+			"infirmier": "Varje apotek i Sverige har redan en sida.",
+			"annuaire": "Apotek och vårdcentraler, efter typ och plats."
+		},
+		"footer": "Kostnadsfritt · Öppen källkod · Inga betyg, ingen reklam",
+		"practitioner": {
+			"folio": "Nr {rpps}",
+			"alt": "{name}, {occupation}, {place}",
+			"altNoPlace": "{name}, {occupation}"
+		}
+	},
+	"taxonomy": {
+		"profession": {
+			"apoteken": "Apotek",
+			"oppenvardsapotek": "Öppenvårdsapotek",
+			"vardcentraler": "Vårdcentral",
+			"vardcentral": "Vårdcentral"
+		},
+		"listing": {
+			"apoteken": "Apotek",
+			"vardcentraler": "Vårdcentraler"
+		},
+		"practiceKind": {
+			"office": "Adress"
+		}
+	},
+	"Profile": {
+		"fees": {
+			"fromOwner": "Avgifterna har angetts av verksamheten."
+		}
+	},
+	"Editor": {
+		"photo": {
+			"lead": "Valfritt. En bild av verksamheten, eller av entrén."
+		},
+		"presentation": {
+			"headlineHint": "En rad under typen av verksamhet, högst {max} tecken."
+		},
+		"contact": {
+			"websiteHint": "Verksamhetens webbplats, börjar med https://",
+			"showPhone": "Visa verksamhetens telefonnummer",
+			"showPhoneHint": "När det är dolt föreslår sidan inte längre att man ringer verksamheten."
+		},
+		"sites": {
+			"registryNote": "Är en adress från registret fel? Rättelsen görs hos källan: ett apotek anmäler ändringen till Läkemedelsverket, en vårdcentral till Västra Götalandsregionen; sidan följer efter vid nästa import.",
+			"phoneHint": "Verksamhetens nummer, så som det visas på sidan."
+		},
+		"issues": {
+			"postcode": "Ett svenskt postnummer har 5 siffror (till exempel 111 22)."
+		}
+	},
+	"Claim": {
+		"metadata": {
+			"start": "Ta över en sida · Apercura",
+			"claim": "Ert övertagande · Apercura",
+			"emailLink": "Bekräfta ett övertagande · Apercura"
+		},
+		"pending": "Vänta lite",
+		"errors": {
+			"generic": "Något gick fel. Försök igen om en stund.",
+			"TOO_MANY": "För många begäranden om övertagande i dag. Försök igen i morgon.",
+			"ALREADY_OWNER": "Den här sidan är redan er.",
+			"FROZEN": "Det här kontot är fryst och kan inte ta över en sida.",
+			"NOT_FOUND": "Ingen sida har det här numret.",
+			"INVALID_RPPS": "Numret är inte giltigt: skriv slutet av sidans adress, till exempel a7359999000014 i apercura.org/se/verksamhet/exempelapoteket-a7359999000014, apotekets GLN eller vårdcentralens HSA-id, eller hela adressen.",
+			"NOT_OPEN": "Det här övertagandet är avslutat och kan inte längre ändras.",
+			"METHOD_UNAVAILABLE": "Den här metoden finns inte för den här sidan.",
+			"TOO_MANY_ATTEMPTS": "För många försök med den här metoden. Använd en annan.",
+			"NOT_SUBMITTABLE": "Bifoga ett dokument innan ni skickar övertagandet för kontroll.",
+			"BAD_DOCUMENT": "Den här filen kan inte användas: skicka en PDF, JPEG, PNG eller WebP på högst 10 MB.",
+			"PSC_MISSING": "Pro Santé Connect returnerade ingen identitet. Försök igen."
+		},
+		"start": {
+			"title": "Ta över er sida",
+			"lead": "Ett övertagande gäller en verksamhets sida, aldrig ett namn.",
+			"recordHeading": "Sidan ni vill ta över",
+			"unknownProfession": "Vårdverksamhet",
+			"viewPage": "Se den offentliga sidan",
+			"contestTitle": "Den här sidan har redan en bekräftad ägare",
+			"contestBody": "Om det är er verksamhets sida (till exempel för att ni har förlorat åtkomsten till kontot) kan ni ändå ta över den: en administratör granskar dokumentet och avgör ärendet. Att återställa ett konto kräver alltid en ny kontroll.",
+			"confirm": "Det här är vår verksamhet: börja övertagandet",
+			"goToPage": "Gå till vår sida",
+			"findHeading": "Hitta verksamhetens sida",
+			"notFound": "Ingen offentlig sida har det här numret ännu.",
+			"rppsLabel": "Sidans nummer eller adress",
+			"rppsHint": "Till exempel slutet av sidans adress, till exempel a7359999000014 i apercura.org/se/verksamhet/exempelapoteket-a7359999000014, apotekets GLN eller vårdcentralens HSA-id. Ni kan också klistra in hela adressen.",
+			"find": "Hitta vår sida",
+			"searchHint": "Ni kan också söka efter sidan med namnet:",
+			"searchLink": "sök i katalogen",
+			"howHeading": "Så kontrollerar vi att det är ni",
+			"factorNote": "Kontot har redan en andra faktor: den krävs före ett övertagande, och den skyddar sidan från och med då.",
+			"contactLink": "Har ni inget dokument till hands? Kontakta oss",
+			"optOutLink": "Gäller sidan er, och vill ni hellre inte synas offentligt? Börja här",
+			"identifierLabel": "Nummer"
+		},
+		"methods": {
+			"psc": {
+				"title": "Pro Santé Connect",
+				"short": "Pro Santé Connect",
+				"summary": "Med e-CPS-appen eller CPS-kortet. Bekräftas direkt, och onlinebokning kan öppnas med en gång.",
+				"lead": "Logga in med e-CPS-appen eller CPS-kortet. Sidan bekräftas så snart identiteten stämmer med sidans nummer.",
+				"action": "Fortsätt med Pro Santé Connect",
+				"hint": "Ni lämnar Apercura för Pro Santé Connects sida och kommer sedan tillbaka hit.",
+				"done": "Pro Santé Connect bekräftade identiteten."
+			},
+			"registry_email": {
+				"title": "Verksamhetens e-post",
+				"short": "E-post från registret",
+				"summary": "En länk skickad till den e-postadress som registret publicerar för verksamheten. Bekräftas så snart ni öppnar den; onlinebokning öppnas 7 dagar senare.",
+				"lead": "Vi skickar en länk till {email}, den adress som registret publicerar för verksamheten. Öppna den och bekräfta.",
+				"action": "Skicka länken",
+				"resend": "Skicka den igen",
+				"sent": "Länken har skickats. Den fungerar i 24 timmar.",
+				"done": "Verksamhetens e-postlåda bekräftade övertagandet."
+			},
+			"document": {
+				"title": "Ett dokument och ett telefonsamtal",
+				"short": "Dokument",
+				"summary": "Ett dokument som visar att ni driver verksamheten eller företräder den: ett registreringsbevis från Bolagsverket, Läkemedelsverkets beslut om tillstånd eller en fullmakt på verksamhetens brevpapper. En person i vårt team granskar det, oftast inom 48 timmar.",
+				"lead": "Skicka ett dokument som visar att ni driver verksamheten eller företräder den: ett registreringsbevis från Bolagsverket, Läkemedelsverkets beslut om tillstånd eller en fullmakt på verksamhetens brevpapper. Det krypteras innan det sparas och raderas 30 dagar efter beslutet."
+			},
+			"phone_callback": {
+				"title": "Uppringning",
+				"short": "Uppringning",
+				"lead": "Under kontrollen ringer en person i vårt team verksamheten på {phone}, numret i registret (aldrig ett nummer ni ger oss). Den som svarar läser upp koden som visas här.",
+				"action": "Visa min kod",
+				"newCode": "Visa en ny kod",
+				"hint": "Visa den när ni är på plats i verksamheten, eller ge den till den som svarar i telefon där. En ny kod ersätter den förra.",
+				"codeLabel": "Kod att läsa upp",
+				"codeHint": "Låt den stå kvar på skärmen eller skriv ner den: av säkerhetsskäl visas den bara nu.",
+				"done": "Uppringningen bekräftade övertagandet."
+			}
+		},
+		"check": {
+			"passed": "Klart",
+			"failed": "Misslyckades",
+			"pending": "Pågår",
+			"notStarted": "Inte påbörjat",
+			"claim": {
+				"open": "Pågår",
+				"in_review": "Under kontroll",
+				"verified": "Bekräftat",
+				"rejected": "Avslaget",
+				"withdrawn": "Återkallat",
+				"superseded": "Återkallat efter en invändning"
+			}
+		},
+		"workspace": {
+			"title": "Övertagande av {name}",
+			"lead": {
+				"open": "Visa med någon av metoderna nedan att ni företräder den här verksamheten.",
+				"in_review": "Övertagandet är under kontroll.",
+				"verified": "Nästa steg: komplettera sidan.",
+				"rejected": "Det här övertagandet godtogs inte.",
+				"withdrawn": "Det här övertagandet återkallades.",
+				"superseded": "Det här övertagandet återkallades efter en invändning."
+			}
+		},
+		"documents": {
+			"kind": {
+				"cps_card": "Fullmakt på verksamhetens brevpapper",
+				"ordre_attestation": "Registreringsbevis från Bolagsverket eller Läkemedelsverkets beslut om tillstånd"
+			},
+			"kindLabel": "Typ av dokument",
+			"add": "Välj en fil",
+			"hint": "PDF, JPEG, PNG eller WebP, högst 10 MB. Upp till 4 filer.",
+			"kilobytes": "kB"
+		},
+		"review": {
+			"title": "Skicka för kontroll",
+			"lead": "En administratör kontrollerar dokumentet och skriver till er via e-post inom 48 timmar på vardagar.",
+			"submit": "Skicka för kontroll",
+			"notYet": "Bifoga ett dokument först."
+		},
+		"withdraw": "Återkalla det här övertagandet",
+		"status": {
+			"verified": "Sidan är bekräftad",
+			"bookingDelay": "Väntetiden på 7 dagar före onlinebokning slutar {date}.",
+			"continue": "Komplettera sidan",
+			"in_review": "Övertagandet är under kontroll",
+			"contestReview": "Den här sidan hade redan en bekräftad ägare: en administratör avgör ärendet utifrån ert dokument.",
+			"reviewBody": "En person i vårt team granskar ert dokument och skriver till er via e-post.",
+			"rejected": "Det här övertagandet godtogs inte",
+			"reason": "Motivering: {reason}",
+			"withdrawn": "Det här övertagandet återkallades",
+			"superseded": "Det här övertagandet återkallades efter en invändning",
+			"contestTitle": "Den här sidan har redan en bekräftad ägare",
+			"contestBody": "En administratör avgör ärendet utifrån ert dokument.",
+			"verifiedBadge": "Bekräftad sida"
+		},
+		"emailLink": {
+			"title": "Bekräfta övertagandet",
+			"lead": "Den här länken skickades till den e-postadress som det offentliga registret publicerar för verksamheten.",
+			"reading": "Läser länken …",
+			"invalidTitle": "Den här länken fungerar inte längre",
+			"invalidBody": "Den har gått ut (den fungerar i 24 timmar) eller redan använts. Verksamheten kan skicka en ny från sitt övertagande.",
+			"tooMany": "För många försök. Vänta en timme och försök igen.",
+			"doneTitle": "Övertagandet är bekräftat",
+			"doneBody": "Verksamheten kan nu logga in och komplettera sidan.",
+			"goToSpace": "Gå till verksamhetens utrymme",
+			"body": "Om den här verksamheten bad om att få förvalta sin sida på Apercura, bekräfta det. Annars kan ni stänga sidan: ingenting ändras.",
+			"confirm": "Bekräfta övertagandet",
+			"pending": "Vänta lite"
+		},
+		"withdrawDialog": {
+			"title": "Återkalla det här övertagandet?",
+			"body": "Övertagandet avslutas för gott: bevisen räknas inte längre, och dokumenten raderas om 30 dagar. Ni kan öppna ett nytt övertagande senare och börja kontrollen om.",
+			"confirm": "Återkalla övertagandet",
+			"cancel": "Behåll övertagandet"
+		},
+		"identifiers": {
+			"SE-GLN": "GLN",
+			"SE-HSA": "HSA-id"
+		}
+	},
+	"Onboarding": {
+		"metaTitle": "Kom igång med sidan · Apercura",
+		"title": "Kom igång med sidan",
+		"lead": "Tre steg till en komplett sida för {name}.",
+		"stepsLabel": "Steg",
+		"stepNumber": "Steg {n} av {total}:",
+		"continue": "Fortsätt",
+		"pending": "Vänta lite",
+		"publishFailed": "Sidan kunde inte publiceras. Försök igen om en stund.",
+		"fields": {
+			"name": "Namn",
+			"profession": "Typ av verksamhet"
+		},
+		"steps": {
+			"check": {
+				"label": "Kontrollera de importerade uppgifterna",
+				"title": "Kontrollera de importerade uppgifterna",
+				"lead": "Sidan utgår från ett offentligt register. Kontrollera verksamhetens namn, typ och adress.",
+				"sites": "Adresser",
+				"unnamed": "Adress utan namn",
+				"hidden": "Dold",
+				"registryNote": "Något fel? Den varaktiga rättelsen görs hos källan: ett apotek anmäler ändringen till Läkemedelsverket, en vårdcentral till Västra Götalandsregionen; sidan följer efter vid nästa veckovisa import. I sidredigeringen kan ni dölja eller lägga till en adress."
+			},
+			"publish": {
+				"label": "Publicera",
+				"title": "Publicera sidan",
+				"lead": "När ni publicerar visas presentationen, språken och den praktiska informationen på den offentliga sidan. Ni kan ändra eller dölja dem när som helst.",
+				"already": "Sidan är publicerad. Varje ändring ni sparar syns direkt.",
+				"edit": "Redigera sidan",
+				"action": "Publicera sidan",
+				"shareLead": "Gör sidan känd: en länk, en QR-kod och en affisch till väntrummet ligger färdiga.",
+				"shareLink": "Öppna delningspaketet",
+				"statsLink": "Se statistiken för sidan"
+			}
+		}
+	},
+	"Gdpr": {
+		"about": "Om sidan för",
+		"rpps": "Sidans nummer",
+		"rppsHint": "Slutet av sidans adress, till exempel exempelapoteket-a7359999000014, eller hela adressen.",
+		"pending": "Vänta lite",
+		"errors": {
+			"tooMany": "För många begäranden från den här anslutningen. Försök igen om en timme.",
+			"notFound": "Ingen sida har det här numret.",
+			"claimed": "Den här sidan förvaltas av verksamheten: bara verksamheten kan ta bort den, från sitt utrymme.",
+			"invalid": "Kontrollera formuläret: ett fält saknas eller är för långt.",
+			"generic": "Något gick fel. Försök igen om en stund."
+		},
+		"report": {
+			"metaTitle": "Anmäl ett fel · Apercura",
+			"title": "Anmäl ett fel",
+			"lead": "Berätta vad som är fel på den här sidan. Meddelandet krypteras och läses bara av Apercuras team.",
+			"doneTitle": "Tack, anmälan har tagits emot",
+			"doneBody": "Vi kontrollerar den. Uppgifter från de offentliga registren rättas hos källan, Läkemedelsverket eller Västra Götalandsregionen; vi hör av oss om du har lämnat en adress.",
+			"kind": "Vad är fel?",
+			"kinds": {
+				"wrong_info": "Felaktig uppgift (adress, telefon, namn)",
+				"retired": "Verksamheten har lagts ner",
+				"deceased": "Verksamheten finns inte längre",
+				"impersonation": "Någon använder den här sidan i verksamhetens namn"
+			},
+			"message": "Detaljer",
+			"messageHint": "Vad som är fel, och vad som är rätt om du vet det.",
+			"contact": "Din e-postadress (valfritt)",
+			"contactHint": "Bara för att kunna svara dig.",
+			"privacy": "Skriv inga hälsouppgifter.",
+			"submit": "Skicka anmälan"
+		},
+		"removal": {
+			"metaTitle": "Begär att en sida tas bort · Apercura",
+			"title": "Begär att den här sidan tas bort",
+			"lead": "Enligt dataskyddsförordningen artikel 21 kan du invända mot att en sida om dig publiceras. Den döljs så snart vi tar emot begäran och raderas efter en enkel kontroll.",
+			"doneTitle": "Sidan är dold",
+			"doneBody": "Den visas, indexeras och listas inte längre. Vi kontrollerar begäran och svarar via e-post inom högst en månad. När den har bekräftats raderas sidan för gott och kommer inte tillbaka med uppdateringarna av registren.",
+			"contact": "Din e-postadress",
+			"contactHint": "För att bekräfta begäran med dig. Den krypteras och används inte till något annat.",
+			"message": "Meddelande (valfritt)",
+			"messageHint": "Allt som hjälper oss att kontrollera begäran.",
+			"confirm": "Sidan gäller mig eller verksamheten jag företräder",
+			"privacy": "En raderad sida kommer inte tillbaka vid nästa import av registren.",
+			"submit": "Dölj och ta bort sidan",
+			"claimedTitle": "Den här sidan förvaltas av verksamheten",
+			"claimedBody": "Bara innehavaren kan ta bort den, från sidredigeringen i sitt utrymme: sidan försvinner då direkt och kommer inte tillbaka med uppdateringarna av registren.",
+			"claimedLink": "Ta bort vår sida från verksamhetens utrymme",
+			"alreadyTitle": "En begäran om borttagning kontrolleras",
+			"alreadyBody": "Sidan är redan dold."
+		},
+		"contact": {
+			"metaTitle": "Det här är vår verksamhet · Apercura",
+			"title": "Det här är vår verksamhet",
+			"lead": "Kan ni inte ta över verksamhetens sida med ett dokument? Lämna era kontaktuppgifter: en person i Apercuras team hör av sig för att kontrollera att ni företräder verksamheten, och hjälper er.",
+			"patientsTitle": "Det här formuläret är bara för verksamheten på den här sidan",
+			"patientsBody": "Det är inte till för att boka tid eller nå verksamheten: använd kontaktuppgifterna på sidan till det.",
+			"claimFirst": "Med ett dokument som visar att ni företräder verksamheten går övertagandet snabbare:",
+			"claimFirstLink": "ta över den här sidan",
+			"rpps": "Sidans nummer",
+			"rppsHint": "Numret på sidan du kom från. Det kan inte ändras.",
+			"name": "Fullständigt namn",
+			"email": "Din e-postadress i arbetet",
+			"emailHint": "För att kunna svara dig. Vi skickar också en bekräftelse.",
+			"phone": "Ditt telefonnummer (valfritt)",
+			"phoneHint": "Om du hellre vill bli uppringd.",
+			"message": "Ditt meddelande",
+			"messageHint": "Berätta varför övertagande online inte fungerar för er.",
+			"privacy": "Uppgifterna och meddelandet krypteras, läses bara av Apercuras team för att svara dig och raderas 12 månader efter senaste kontakt. Skriv inga hälsouppgifter.",
+			"submit": "Skicka förfrågan",
+			"doneTitle": "Förfrågan har tagits emot",
+			"doneBody": [
+				"En person i Apercuras team hör av sig via e-post eller telefon för att kontrollera att ni företräder verksamheten, och hjälper er sedan att ta över sidan.",
+				"En bekräftelse har just skickats till adressen du angav."
+			],
+			"claimedTitle": "Den här sidan förvaltas redan av verksamheten",
+			"claimedBody": "Innehavaren är kontrollerad. Om det är er sida och ni inte längre har åtkomst till den, öppna ett övertagande: teamet granskar det.",
+			"claimedLink": "Ta över den här sidan",
+			"withheldTitle": "Den här sidan är dold",
+			"withheldBody": "En begäran om borttagning kontrolleras.",
+			"errors": {
+				"proof": "Robotkontrollen slutfördes inte. Försök igen om en stund.",
+				"claimed": "Den här sidan förvaltas redan av verksamheten: öppna ett övertagande."
+			}
+		}
+	},
+	"LegalNoticeSe": {
+		"metaTitle": "Juridisk information · Apercura",
+		"metaDescription": "Juridisk information om Apercuras svenska sidor: tjänsteleverantören, dess adress, e-postadress samt organisations- och momsregistreringsnummer (e-handelslagen 8 §).",
+		"title": "Juridisk information",
+		"lead": "Vem som tillhandahåller Apercuras svenska sidor (apercura.org/se): de uppgifter som 8 § lagen (2002:562) om elektronisk handel och andra informationssamhällets tjänster kräver att en tjänsteleverantör lämnar.",
+		"sections": {
+			"provider": {
+				"heading": "Tjänsteleverantör (e-handelslagen 8 §)",
+				"body": [
+					"Apercuras svenska sidor tillhandahålls av den juridiska person som anges nedan: dess namn, dess adress i etableringsstaten, dess e-postadress och, i förekommande fall, organisationsnummer och registreringsnummer för mervärdesskatt. Den driver katalogen och ansvarar för dess innehåll.",
+					"Tjänsteleverantören är etablerad i en annan stat inom Europeiska ekonomiska samarbetsområdet: tjänsten följer den statens regler inom e-handelsdirektivets samordnade område, och den här informationen lämnar också de uppgifter som svensk lag kräver. Det krävs inget tillstånd för att driva en katalog, så ingen tillståndsmyndighet anges."
+				]
+			},
+			"service": {
+				"heading": "Tjänsten",
+				"body": [
+					"En kostnadsfri katalog över Sveriges apotek med tillstånd från Läkemedelsverket och över vårdcentralerna i de regioner som publicerar dem under en öppen licens, hittills Västra Götaland, utan reklam, med ett utrymme där ett apotek eller en vårdcentral kan komplettera sin egen sida. Sidorna beskriver verksamheter, aldrig vårdpersonalen som arbetar där. Inga tider bokas och inga läkemedel säljs via Apercura."
+				]
+			},
+			"marketing": {
+				"heading": "Sakliga sidor",
+				"body": [
+					"Sidorna är inte reklam: de visar uppgifter ur offentliga register (namn, adress, tillstånd, tillståndshavare eller vårdgivare, identifierare) i en neutral ordning, utan betyg, omdömen, reklam eller betald placering, i linje med marknadsföringslagen (2008:486), som kräver att marknadsföring stämmer överens med god marknadsföringssed och aldrig är vilseledande. Inget läkemedel nämns eller framhävs, så läkemedelslagens regler om marknadsföring av läkemedel (2015:315, 12 kap.) blir aldrig tillämpliga. En verksamhet som kompletterar sin sida är bunden av samma regler."
+				]
+			},
+			"editor": {
+				"heading": "Ansvarig för innehållet",
+				"body": [
+					"Personen nedan ansvarar för det som tjänsteleverantören publicerar. Uppgifter som en verksamhet lägger till på sin egen sida är verksamhetens eget ansvar; som värd för information från sina användare ansvarar tjänsteleverantören för den endast på de villkor som anges i förordningen om digitala tjänster (förordning (EU) 2022/2065, artikel 6)."
+				]
+			},
+			"liability": {
+				"heading": "Sidornas innehåll",
+				"body": [
+					"Katalogen bygger på offentliga förteckningar (Läkemedelsverkets register över apotek med tillstånd, Västra Götalandsregionens förteckning över vårdcentraler) och är indelad efter SCB:s län och kommuner. Den kan vara ofullständig eller inaktuell: kontrollera uppgifterna med apoteket eller vårdcentralen innan du åker dit. Varje sida talar om hur du anmäler ett fel."
+				]
+			},
+			"ip": {
+				"heading": "Kod och data",
+				"body": [
+					"Apercuras källkod är publicerad under AGPL-3.0-licensen. Läkemedelsverkets register återanvänds under Creative Commons Erkännande 4.0 (CC BY 4.0), Västra Götalandsregionens förteckning över vårdcentraler och SCB:s gränser under Creative Commons Zero (CC0 1.0). Datasidan visar varje källa med dess källangivelse."
+				]
+			},
+			"review": {
+				"heading": "Textens status",
+				"body": [
+					"Den här texten är ett utkast, skrivet innan den juridiska personen bildades. Den granskas av en advokat verksam i Sverige innan de svenska sidorna lanseras."
+				]
+			}
+		},
+		"fields": {
+			"name": "Namn",
+			"legalForm": "Juridisk form",
+			"registration": "Register och organisationsnummer",
+			"address": "Adress",
+			"phone": "Telefon",
+			"email": "E-postadress",
+			"vatId": "Momsregistreringsnummer",
+			"editor": "Ansvarig för innehållet"
+		},
+		"dataLink": "Data och källor"
+	},
+	"PrivacySe": {
+		"metaTitle": "Integritet · Apercura",
+		"metaDescription": "Vilka personuppgifter Apercuras svenska sidor behandlar, varifrån, varför och hur länge, och dina rättigheter, invändning inräknad (dataskyddsförordningen artiklarna 13, 14, 21).",
+		"title": "Integritet",
+		"lead": "Vilka uppgifter Apercuras svenska sidor behandlar, varifrån de kommer, varför, hur länge och av vem, och hur du utövar dina rättigheter enligt dataskyddsförordningen (GDPR) och lagen (2018:218) med kompletterande bestämmelser till EU:s dataskyddsförordning.",
+		"sections": {
+			"controller": {
+				"heading": "Vem som är ansvarig",
+				"body": [
+					"Tjänsteleverantören som anges i den juridiska informationen är personuppgiftsansvarig för katalogen, för verksamheternas konton, för övertaganden och för de förfrågningar som skickas via webbplatsen."
+				]
+			},
+			"directory": {
+				"heading": "Katalogen: uppgifter om verksamheter",
+				"body": [
+					"Uppgifter: för ett apotek dess namn, besöksadress, GLN, tillstånd (Läkemedelsverkets diarienummer och den dag tillståndet började gälla) och det företag som innehar det, med organisationsnummer, så som registret publicerar dem; för en vårdcentral dess namn, adress, HSA-id och den vårdgivare som driver den, så som Västra Götalandsregionen publicerar dem. En verksamhet som tar över sin sida kan lägga till en presentation, språk, en bild och öppettider.",
+					"Sparas aldrig: en tillståndshavare vars organisationsnummer är ett personnummer, det vill säga en enskild näringsidkare, vars namn då utelämnas; de apotek som registret anger är stängda för allmänheten. Ingen av förteckningarna publicerar telefonnummer, e-postadresser eller namn på farmaceuter eller läkare.",
+					"Identifierare: en sida slutar med apotekets GLN eller vårdcentralens HSA-id, aldrig med någons personnummer.",
+					"Ändamål: att allmänheten ska kunna hitta ett apotek eller en vårdcentral, var den ligger och vem som driver den. Rättslig grund: berättigat intresse (dataskyddsförordningen artikel 6.1 f), bedömt nedan.",
+					"Lagringstid: så länge källan förtecknar verksamheten. En sida försvinner när källan inte längre förtecknar den; en sida som tagits bort efter en invändning publiceras aldrig igen.",
+					"Information: uppgifterna kommer inte från verksamheterna själva (artikel 14). Att skriva till var och en av dem skulle innebära en oproportionerligt stor ansträngning (artikel 14.5 b); den här informationen, datasidan och en upplysning på varje sida gör informationen offentlig."
+				]
+			},
+			"people": {
+				"heading": "Verksamheter, inte personer",
+				"body": [
+					"En svensk sida beskriver ett apotek eller en vårdcentral, aldrig en persons profil: farmaceuter, läkare och sjuksköterskor som arbetar där förtecknas inte. Tillståndshavarna är företag; ett företagsnamn kan ändå innehålla en persons namn (”Exempel Farmaci AB”), och det namnet är då en personuppgift om den personen. Den som berörs kan invända, och sidan tas bort.",
+					"Inget annat om någon person samlas in: inget personnummer, ingen privat adress, ingen e-post, inga betyg och inga omdömen. Katalogen behandlar inga uppgifter om patienter och inga hälsouppgifter."
+				]
+			},
+			"sources": {
+				"heading": "Källor",
+				"body": [
+					"Apoteken kommer från Läkemedelsverkets register över apotek med tillstånd (”Apotek med tillstånd”), publicerat under Creative Commons Erkännande 4.0 (CC BY 4.0); vårdcentralerna från Västra Götalandsregionens förteckning över vårdcentralerna i Vårdval vårdcentral, och län och kommuner från SCB:s digitala gränser, båda under Creative Commons Zero (CC0 1.0). Varje källa anges:"
+				]
+			},
+			"balancing": {
+				"heading": "Intresseavvägning",
+				"body": [
+					"Ändamål: patienter behöver veta vilka apotek och vårdcentraler som finns var och vem som driver dem, ett behov som staten och regionerna redan tillgodoser genom att publicera förteckningarna för vidareutnyttjande.",
+					"Nödvändighet: bara verksamhetens uppgifter ur förteckningarna visas, uppgifter som utgivarna ändå offentliggör, och färre av dem: ingen person förtecknas, ingen enskild näringsidkares namn eller personnummer, ingenting om privatlivet, inga betyg, inga omdömen.",
+					"Avvägning: ett yrkesmässigt sammanhang, saklig information, en neutral ordning, ingen reklam, ett minimum av förteckningarnas fält, en invändning som döljer en sida direkt och hindrar att den kommer tillbaka, rättelser hos källan och sidor som följer varje uppdatering av förteckningarna. Ett företag med tillstånd att driva apotek, eller en vårdgivare i en regions vårdval, räknar med att finnas i en katalog som återger de uppgifterna. Vid en avvägning väger patienternas intresse tyngst, och den som en sida berör kan invända utan att ange skäl."
+				]
+			},
+			"accounts": {
+				"heading": "Verksamheternas konton och övertaganden",
+				"body": [
+					"Uppgifter: e-postadress, namn, lösenord (lagrat som hash), andra autentiseringsfaktor, de dokument som skickas för att ta över en sida (bevis på att den som begär övertagandet driver eller företräder verksamheten) och teammedlemmar.",
+					"Ändamål: att hantera kontot och kontrollera att en sida tas över av rätt verksamhet. Rättsliga grunder: fullgörande av användarvillkoren (artikel 6.1 b) och berättigat intresse av att skydda tjänsten (artikel 6.1 f).",
+					"Lagringstid: kontot sparas tills det raderas; styrkande dokument, krypterade, raderas 30 dagar efter beslutet."
+				]
+			},
+			"requests": {
+				"heading": "Felanmälningar, invändningar och kontaktförfrågningar",
+				"body": [
+					"Uppgifter: meddelandet, kontaktadressen för e-post när en sådan anges och den berörda sidan; för en förfrågan om att ”det här är vår verksamhet” även namn och telefonnummer. Fritext krypteras.",
+					"Ändamål: att rätta fel, tillämpa invändningar och hjälpa en verksamhet som inte kan ta över sin sida online. Rättsliga grunder: berättigat intresse (artikel 6.1 f) och rätten att invända (artikel 21).",
+					"Lagringstid: en felanmälan raderas 6 månader efter att den avslutats, en avslagen invändning ett år efter beslutet, en kontaktförfrågan 12 månader efter senaste kontakt. När en invändning har bekräftats, eller innehavaren av en övertagen sida tar bort den, raderas sidan och uppgifterna om den direkt, invändningen inräknad; det enda som sparas är en uppgift om borttagningen (sidans identifierare, landet, skälet, vem som registrerade den och när), så att den aldrig publiceras igen."
+				]
+			},
+			"technical": {
+				"heading": "Tekniska uppgifter och kakor",
+				"body": [
+					"Bara kakor som är strikt nödvändiga för tjänsten används: sessionen för inloggade verksamheter och det valda språket. Inga kakor för reklam eller besöksmätning, inga spårare och inga pixlar från tredje part.",
+					"För att begränsa missbruk omvandlas IP-adresser med en nyckelbaserad funktion innan de räknas, och de sparas aldrig som sådana; verksamheternas sessioner registrerar en förkortad IP-adress. Visningar av övertagna sidor räknas utan kaka eller identifierare, och bara sidans innehavare ser dem."
+				]
+			},
+			"recipients": {
+				"heading": "Mottagare och personuppgiftsbiträden",
+				"body": [
+					"Uppgifterna säljs inte, hyrs inte ut och används aldrig för reklam. Bara tjänsteleverantörens team och personuppgiftsbiträdena nedan tar emot dem, var och en för sin del, enligt ett avtal som uppfyller dataskyddsförordningen artikel 28. Uppgifterna lagras inom Europeiska ekonomiska samarbetsområdet. Kartor laddas från en kartserver, som tar emot besökarens IP-adress som vilken webbplats som helst."
+				]
+			},
+			"transfers": {
+				"heading": "Överföringar utanför Europeiska ekonomiska samarbetsområdet",
+				"body": [
+					"Uppgifter överförs utanför Europeiska ekonomiska samarbetsområdet endast med de skyddsåtgärder som anges i kapitel V i dataskyddsförordningen (ett beslut om adekvat skyddsnivå eller standardavtalsklausuler). Varje byte av personuppgiftsbiträde meddelas här innan det träder i kraft."
+				]
+			},
+			"automated": {
+				"heading": "Automatiserade beslut",
+				"body": [
+					"Inget beslut om dig fattas enbart automatiserat. Ett övertagande avgörs av en person, som läser dokumenten."
+				]
+			},
+			"rights": {
+				"heading": "Dina rättigheter",
+				"body": [
+					"Du kan begära tillgång till dina uppgifter, rättelse eller radering, begränsning av behandlingen, att få ut dem i ett överförbart format och invända mot behandlingen. Skriv till adressen nedan; du får svar inom en månad.",
+					"Du kan också lämna klagomål till Integritetsskyddsmyndigheten (IMY), Sveriges tillsynsmyndighet (dataskyddsförordningen artikel 77), eller till tillsynsmyndigheten i det land där du bor eller arbetar. Ett beslut av IMY kan överklagas till allmän förvaltningsdomstol (förvaltningsrätten)."
+				]
+			},
+			"objection": {
+				"heading": "Invända mot en sida (dataskyddsförordningen artikel 21)",
+				"body": [
+					"Den som en sida berör kan när som helst invända mot att den publiceras, utan att ange skäl. Om sidan inte har tagits över räcker ett formulär: sidan döljs så snart begäran kommer in, raderas efter en enkel kontroll och publiceras aldrig igen vid uppdateringarna av förteckningarna. Om den har tagits över tar innehavaren bort den från sitt utrymme."
+				]
+			},
+			"changes": {
+				"heading": "Ändringar av den här informationen",
+				"body": [
+					"Den här informationen är ett utkast. Den granskas av en advokat verksam i Sverige och av dataskyddsombudet; varje version dateras."
+				]
+			}
+		},
+		"fields": {
+			"controller": "Personuppgiftsansvarig",
+			"address": "Adress",
+			"email": "Kontakt för förfrågningar",
+			"dpo": "Dataskyddsombud",
+			"effectiveDate": "Gäller från",
+			"hostingProvider": "Webbhotell (personuppgiftsbiträde)",
+			"smtp": "E-postutskick (personuppgiftsbiträde)",
+			"authority": "Tillsynsmyndighet"
+		},
+		"objectLink": "Så invänder du mot en sida",
+		"authorityLink": "Integritetsskyddsmyndigheten (IMY)",
+		"authorityAddress": "Integritetsskyddsmyndigheten, Box 8114, 104 20 Stockholm, 08-657 61 00"
+	},
+	"TermsSe": {
+		"metaTitle": "Användarvillkor · Apercura",
+		"metaDescription": "Användarvillkor för Apercuras svenska sidor: en kostnadsfri, saklig katalog över apotek med tillstånd och vårdcentraler från offentliga förteckningar, utan bokning.",
+		"title": "Användarvillkor",
+		"lead": "Reglerna för att använda Apercuras svenska sidor, för allmänheten och för verksamheterna.",
+		"sections": {
+			"service": {
+				"heading": "Tjänsten",
+				"body": [
+					"Apercura förtecknar kostnadsfritt de apotek som har tillstånd från Läkemedelsverket och vårdcentralerna i de regioner som publicerar dem under en öppen licens (hittills Västra Götaland). Katalogen förtecknar verksamheter, inte vårdpersonalen som arbetar där. Den är bara en katalog: inga tider bokas och inga läkemedel säljs via Apercura. Den drivs av tjänsteleverantören som anges i den juridiska informationen.",
+					"Det krävs inget konto för att använda katalogen. Den som använder webbplatsen godtar de här villkoren."
+				]
+			},
+			"content": {
+				"heading": "Vad sidorna innehåller",
+				"body": [
+					"Sidorna visar saklig information ur offentliga förteckningar, så som de publicerar den, i en neutral ordning, utan betyg, omdömen, reklam eller betald placering, och nämner inga läkemedel.",
+					"Uppgifterna kan vara ofullständiga eller inaktuella, och ett apotek visas vid sin kommun, inte vid sin exakta adress på kartan: kontrollera uppgifterna med apoteket eller vårdcentralen innan du åker dit. Varje sida talar om hur du anmäler ett fel."
+				]
+			},
+			"health": {
+				"heading": "Ingen medicinsk rådgivning",
+				"body": [
+					"Apercura ger ingen medicinsk rådgivning och är ingen larmtjänst. Vid nödsituationer, ring 112. För sjukvårdsrådgivning, ring 1177 eller besök 1177.se."
+				]
+			},
+			"providers": {
+				"heading": "För verksamheter",
+				"body": [
+					"Det är kostnadsfritt att ta över en sida. Det kräver ett dokument som visar att den som begär övertagandet driver eller företräder verksamheten, och en person kontrollerar det innan sidan lämnas över.",
+					"Innehavaren av en sida ansvarar för de uppgifter som läggs till. De ska vara sakliga, korrekta och aktuella, i enlighet med god marknadsföringssed; de får inte marknadsföra läkemedel och inte namnge vårdpersonal som inte har samtyckt till det."
+				]
+			},
+			"removal": {
+				"heading": "Ta bort en sida",
+				"body": [
+					"Den som en sida berör kan när som helst begära att den tas bort: datasidan förklarar hur. En övertagen sida kan bara tas bort av sin innehavare."
+				]
+			},
+			"liability": {
+				"heading": "Ansvar",
+				"body": [
+					"Tjänsteleverantören gör sitt bästa för att hålla tjänsten tillgänglig och korrekt, men kan inte garantera det. Den ansvarar inte för de uppgifter som verksamheterna lägger till på sina sidor. Gränserna preciseras vid den juridiska granskningen."
+				]
+			},
+			"ip": {
+				"heading": "Kod och data",
+				"body": [
+					"Källkoden är publicerad under AGPL-3.0-licensen. Läkemedelsverkets register återanvänds under CC BY 4.0: vem som helst får vidareutnyttja det, från registret eller från de här sidorna, med källangivelse och en upplysning om ändringarna. Västra Götalandsregionens förteckning och SCB:s gränser är under CC0 1.0."
+				]
+			},
+			"law": {
+				"heading": "Tillämplig lag och tvister",
+				"body": [
+					"Tillämplig lag preciseras vid den juridiska granskningen; tvingande konsumentskyddsregler i bosättningslandet gäller alltid. Vid en tvist, skriv först till kontaktadressen för att söka en lösning i godo."
+				]
+			}
+		},
+		"fields": {
+			"publisher": "Tjänsteleverantör",
+			"effectiveDate": "Gäller från",
+			"contact": "Kontakt"
+		}
+	},
+	"AccessibilitySe": {
+		"metaTitle": "Tillgänglighet · Apercura",
+		"metaDescription": "Tillgängligheten på Apercuras svenska sidor: målet WCAG 2.2 AA, vad som har kontrollerats, vad som återstår och hur du rapporterar ett problem.",
+		"title": "Tillgänglighetsredogörelse",
+		"lead": "Apercura är utformad för alla, även äldre och personer med nedsatt syn. Den här redogörelsen beskriver hur de svenska sidorna uppfyller kraven.",
+		"sections": {
+			"scope": {
+				"heading": "Omfattning",
+				"body": [
+					"Lagen (2018:1937) om tillgänglighet till digital offentlig service kräver tillgängliga tjänster och en tillgänglighetsredogörelse av offentliga aktörer, och av privata aktörer som bedriver offentligt finansierad skola, hälso- och sjukvård eller omsorg (4 och 13 §§). Apercura är en privat katalog utan offentlig finansiering, så den här redogörelsen är frivillig. Apercuras tjänsteleverantör siktar på samma nivå på varje sida: WCAG 2.1 nivå AA (EN 301 549), och WCAG 2.2 AA därutöver. Myndigheten för digital förvaltning (DIGG) utövar tillsyn över lagen för de aktörer den gäller."
+				]
+			},
+			"status": {
+				"heading": "Hur webbplatsen uppfyller kraven",
+				"body": [
+					"De svenska sidorna delar kod och tester med de andra ländernas sidor. Webbplatsen uppfyller delvis WCAG 2.2 AA: det bygger på en egen bedömning och automatiska tester, ännu inte på en fullständig granskning, som pågår."
+				]
+			},
+			"tests": {
+				"heading": "Vad som har kontrollerats",
+				"list": [
+					"Automatiska kontroller med axe-core (reglerna för WCAG 2.0, 2.1 och 2.2, nivå A och AA) på varje sidtyp, vid varje version.",
+					"Navigering med enbart tangentbord, med synligt fokus.",
+					"Brödtext på minst 18 px, klickytor på minst 44 px, inget som bara förmedlas med färg, ingen horisontell rullning vid 390 px."
+				]
+			},
+			"pending": {
+				"heading": "Vad som återstår att kontrollera",
+				"list": [
+					"En manuell genomgång med skärmläsarna VoiceOver och NVDA, på svenska.",
+					"En fullständig granskning mot WCAG 2.2 AA av ett urval sidor, de svenska texterna inräknade."
+				]
+			},
+			"feedback": {
+				"heading": "Rapportera ett problem",
+				"body": [
+					"Om en sida eller en funktion är svår att använda, skriv till adressen nedan: ange vilken sida och vad som hindrade dig. Vi svarar inom en månad och ger dig vid behov informationen i en annan form. DIGG (digg.se) informerar om de tillgänglighetsregler som gäller i Sverige."
+				]
+			}
+		},
+		"fields": {
+			"contact": "Kontakt",
+			"date": "Redogörelsens datum"
+		},
+		"authorityLink": "Myndigheten för digital förvaltning (digg.se)"
+	},
+	"DataSe": {
+		"metaTitle": "Data och källor · Apercura",
+		"metaDescription": "Var Apercuras svenska sidor kommer ifrån (Läkemedelsverket, Västra Götalandsregionen, SCB), under vilken licens, och hur du rättar eller tar bort en sida.",
+		"title": "Data och källor",
+		"lead": "Varje svensk sida bygger på en offentlig förteckning. Här ser du var uppgifterna kommer ifrån, under vilken licens och källangivelse, vad som behålls och varför, när de uppdaterades och hur du rättar eller tar bort en sida.",
+		"status": {
+			"heading": "Senaste uppdatering",
+			"body": "Läkemedelsverket uppdaterar sitt register över apotek med tillstånd varje dag, Västra Götalandsregionen sin förteckning över vårdcentraler när den ändras; katalogen läser båda varje vecka. En sida ändras bara när dess uppgifter ändras hos källan.",
+			"importedAt": "Senaste import",
+			"checkedAt": "Källorna senast kontrollerade",
+			"notImported": "Den svenska katalogen har inte importerats på den här webbplatsen ännu.",
+			"notImportedValue": "Inte importerad ännu"
+		},
+		"sources": {
+			"heading": "Källor",
+			"body": "Läkemedelsverket publicerar sitt register över apotek med tillstånd under Creative Commons Erkännande 4.0 (CC BY 4.0); Västra Götalandsregionen sin förteckning över vårdcentraler och SCB sina digitala gränser för län och kommuner under Creative Commons Zero (CC0 1.0). Varje källangivelse nedan återges ordagrant.",
+			"caption": "Den svenska katalogens datakällor",
+			"columns": {
+				"source": "Källa",
+				"use": "Används till",
+				"licence": "Licens och källangivelse",
+				"frequency": "Uppdateras"
+			},
+			"items": {
+				"se-apotek": {
+					"use": "Apotek: namn, besöksadresser, kommuner, GLN, tillstånd (diarienummer, giltigt från) och tillståndshavare",
+					"frequency": "Varje dag, av Läkemedelsverket"
+				},
+				"se-vgr-vardcentraler": {
+					"use": "Vårdcentraler i Västra Götaland: namn, adresser, HSA-id, vårdgivare och deras punkter på kartan",
+					"frequency": "När förteckningen ändras, av Västra Götalandsregionen"
+				},
+				"se-scb-granser": {
+					"use": "Län och kommuner, en punkt i varje kommun och den kommun som en vårdcentrals punkt ligger i",
+					"frequency": "När indelningen ändras, av SCB"
+				},
+				"map": {
+					"name": "Kartdata",
+					"publisher": "OpenStreetMaps bidragsgivare, kartbilder från OpenFreeMap",
+					"use": "Kartor på sidorna",
+					"frequency": "Löpande"
+				}
+			},
+			"ccBy": "CC BY 4.0",
+			"cc0": "CC0 1.0",
+			"odbl": "ODbL"
+		},
+		"licence": {
+			"heading": "Förteckningarnas licenser",
+			"body": [
+				"Läkemedelsverkets register över apotek med tillstånd återanvänds under Creative Commons Erkännande 4.0 Internationell (CC BY 4.0), den licens som myndighetens egen datakatalog anger för förteckningen. Den låter vem som helst kopiera, dela och bearbeta uppgifterna, för alla ändamål, med källangivelse."
+			],
+			"list": [
+				"Källangivelse (CC BY 4.0, avsnitt 3 a): varje sida som bygger på registret anger Läkemedelsverket och licensen, länkar till båda och talar om att Apercura har bearbetat uppgifterna (”bearbetat av Apercura”).",
+				"Västra Götalandsregionens förteckning över vårdcentraler och SCB:s gränser är fria från upphovsrätt (CC0 1.0): de kräver ingen källangivelse, men anges ändå (”Källa: SCB”, som SCB föreslår).",
+				"Personuppgifter: ingen licens är en rättslig grund för att behandla personuppgifter. Katalogen förtecknar verksamheter, aldrig personer, och sparar aldrig en tillståndshavare vars organisationsnummer är ett personnummer.",
+				"Sidorna återger förteckningarnas uppgifter utan att förvränga dem, och använder aldrig en utgivares namn för att rekommendera Apercura."
+			],
+			"changesHeading": "Vad som behålls, och varför",
+			"changes": "Registret förtecknar varje apotek med tillstånd att sälja läkemedel till konsument. Katalogen behåller vart och ett med namn, besöksadress, kommun, GLN (det första giltiga när flera anges), tillstånd och tillståndshavare, och utelämnar de apotek som registret anger är stängda för allmänheten (”stängt för allmänheten”), som ingen patient kan besöka, samt tillståndshavare vars organisationsnummer är ett personnummer. Ett apotek placeras i sin kommun och visas vid kommunens punkt, inte vid sin adress: registret publicerar inga koordinater. En vårdcentral i Västra Götaland visas vid den punkt regionen publicerar och placeras i den kommun där punkten ligger.",
+			"licenceLink": "Creative Commons Erkännande 4.0 (CC BY 4.0)",
+			"datasetLink": "Registret över apotek med tillstånd (lakemedelsverket.se)"
+		},
+		"coverage": {
+			"heading": "Verksamheter som ingår",
+			"body": [
+				"Sidor skapas för varje apotek med tillstånd från Läkemedelsverket, i hela Sverige, och för vårdcentralerna i de regioner som publicerar dem under en öppen licens: hittills bara Västra Götaland. Ingen annan region publicerar sina vårdcentraler under en öppen licens; de läggs till när de gör det.",
+				"Ingår inte: sjukhus, tandvård, fysioterapi, psykologer, barnmorskor, äldreboenden och vårdpersonal. Det finns ingen öppen nationell förteckning över dem: IVO:s vårdgivarregister, HSA-katalogen och Socialstyrelsens register över legitimerad hälso- och sjukvårdspersonal är inte öppna data.",
+				"Ett apotek placeras vid sin kommuns punkt: dess läge på kartan och dess avstånd är kommunens, aldrig adressens. En vårdcentral placeras vid sin egen punkt."
+			],
+			"kinds": {
+				"SE_HEALTH_CENTRE": "Vårdcentraler i Västra Götalandsregionens Vårdval vårdcentral",
+				"SE_PHARMACY": "Apotek med tillstånd från Läkemedelsverket (öppenvårdsapotek)"
+			},
+			"kindsLabel": "Importeras"
+		},
+		"identifiers": {
+			"heading": "Identifierare",
+			"body": [
+				"Adressen till varje sida slutar med en nyckel som bygger på verksamhetens egen identifierare, så att en sida kan hittas och kontrolleras hos källan:"
+			],
+			"list": [
+				"/se/verksamhet/exempelapoteket-a7359999000014: ett apotek och dess GLN (globalt lokaliseringsnummer) i Läkemedelsverkets register, numret som sidan visar (7359999000014).",
+				"/se/verksamhet/exempel-vardcentral-v5560000000ex0001: en vårdcentral och dess HSA-id, vårdenhetens id i den nationella katalogen (SE5560000000-EX0001).",
+				"Ingen persons personnummer används någonsin."
+			]
+		},
+		"correct": {
+			"heading": "Rätta ett fel",
+			"body": [
+				"Sidorna återger förteckningarna: en varaktig rättelse görs hos källan, och sidan följer efter vid nästa import.",
+				"För allt annat, använd formuläret: vi kontrollerar varje anmälan."
+			],
+			"list": [
+				"Ett apoteks tillståndshavare anmäler ändrat namn, ändrad adress eller ändrat ägande till Läkemedelsverket, som uppdaterar registret.",
+				"En vårdcentral anmäler en ändring till Västra Götalandsregionen (Vårdval Vårdcentral), som uppdaterar förteckningen."
+			],
+			"formTitle": "Anmäl ett fel",
+			"formBody": "Ange sidans adress och vad som är fel."
+		},
+		"remove": {
+			"heading": "Ta bort en sida",
+			"body": [
+				"Den som en sida berör kan när som helst invända mot att den publiceras, utan att ange skäl (dataskyddsförordningen artikel 21). En sida som inte har tagits över döljs så snart begäran kommer in och raderas efter en enkel kontroll; den kommer aldrig tillbaka med uppdateringarna av förteckningarna. En övertagen sida tas bort av sin innehavare, från sitt utrymme."
+			],
+			"formTitle": "Begär att en sida tas bort",
+			"formBody": "Ange sidans adress och en e-postadress där vi kan svara dig."
+		}
+	}
+}

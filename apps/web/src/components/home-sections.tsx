@@ -19,6 +19,7 @@ import {
 	NO_DEFAULT_PROFESSIONS,
 	PL_DEFAULT_PROFESSIONS,
 	SI_DEFAULT_PROFESSIONS,
+	SE_DEFAULT_PROFESSIONS,
 } from "@apercura/core/taxonomy";
 import { FieldList, FieldRow, linkStyles, ProvenanceNote } from "@apercura/ui";
 import { getTranslations } from "next-intl/server";
@@ -116,6 +117,7 @@ const COUNTED: Readonly<Record<Exclude<MarketCountry, "FR" | "AT">, readonly str
 	SI: SI_DEFAULT_PROFESSIONS,
 	CY: CY_DEFAULT_PROFESSIONS,
 	LV: LV_DEFAULT_PROFESSIONS,
+	SE: SE_DEFAULT_PROFESSIONS,
 };
 
 type Figures = {
