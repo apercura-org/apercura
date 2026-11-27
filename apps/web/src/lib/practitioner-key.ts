@@ -3,7 +3,10 @@ import {
 	type AtIdScheme,
 	CH_ID_SCHEMES,
 	type ChIdScheme,
+	CY_ID_SCHEMES,
+	type CyIdScheme,
 	chUrlKey,
+	cyUrlKey,
 	DE_ID_SCHEMES,
 	type DeIdScheme,
 	deUrlKey,
@@ -25,6 +28,7 @@ import {
 	noOrgNumber,
 	parseAtPractitionerSegment,
 	parseChFacilitySegment,
+	parseCyFacilitySegment,
 	parseCzFacilitySegment,
 	parseDeFacilitySegment,
 	parseEeFacilitySegment,
@@ -122,6 +126,10 @@ export function parsePractitionerKey(locale: Locale, segment: string): Practitio
 		const parsed = parseSiPractitionerSegment(segment);
 		return parsed ? { country, ...parsed } : null;
 	}
+	if (country === "CY") {
+		const parsed = parseCyFacilitySegment(segment);
+		return parsed ? { country, ...parsed } : null;
+	}
 	if (country === "GB") {
 		const parsed = parseGbPracticeSegment(segment);
 		return parsed ? { country, ...parsed } : null;
@@ -186,6 +194,11 @@ export const PL_SEGMENT_MARKER = "pl.";
  * otherwise read like another market's number.
  */
 export const NO_SEGMENT_MARKER = "no.";
+/**
+ * The marker of a Cypriot page's segment outside a locale (`cy.{slug}`): a pharmacy key
+ * (`f101`) would otherwise read like another market's list key.
+ */
+export const CY_SEGMENT_MARKER = "cy.";
 
 /**
  * The marker of an Irish page's segment outside a locale (`ie.{slug}`): a hospital key
@@ -216,6 +229,7 @@ const SEGMENT_MARKERS: Readonly<Partial<Record<MarketCountry, string>>> = {
 	IE: IE_SEGMENT_MARKER,
 	FI: FI_SEGMENT_MARKER,
 	LT: LT_SEGMENT_MARKER,
+	CY: CY_SEGMENT_MARKER,
 };
 
 /**
@@ -268,10 +282,14 @@ export function parseAnyPractitionerKey(segment: string): PractitionerKey | null
  * number in groups of three, as Norway prints it (`910 000 039`); in Ireland the key of the page URL too (`p10000612`, `n738`,
  * `h123456789`), since a bare PSI or HIQA number names neither list; in Finland the Finnish Service Catalogue's id
  * of the service location, in its own form (`b18aa7f8-7eca-4b97-a8e8-b438d2e29427`); in Lithuania
- * the page key (`5271-12679435`).
+ * the page key (`5271-12679435`); in Cyprus the key of the page URL (`f101`, `m3fa9c01b2e`),
+ * since only the pharmacies' list numbers its rows.
  */
 export function displayId(key: Pick<PractitionerKey, "idScheme" | "nationalId">): string {
 	if (NO_ID_SCHEMES[key.idScheme as NoIdScheme]) return noOrgNumber(key.nationalId);
+	if (CY_ID_SCHEMES[key.idScheme as CyIdScheme]) {
+		return cyUrlKey(key.idScheme as CyIdScheme, key.nationalId);
+	}
 	if (key.idScheme === "EE-TTL") return eeLicenceNumber(key.nationalId);
 	if (FI_ID_SCHEMES[key.idScheme as FiIdScheme]) return fiPtvChannelId(key.nationalId);
 	if (EE_ID_SCHEMES[key.idScheme as EeIdScheme]) {

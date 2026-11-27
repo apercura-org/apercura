@@ -1,6 +1,7 @@
 import {
 	austria,
 	CH_ATTRIBUTION_DATE,
+	cyprus,
 	czechia,
 	DE_PHARMACY_STATES,
 	DE_STATES,
@@ -22,6 +23,7 @@ import {
 import {
 	AT_PROFESSIONS,
 	CH_PROFESSIONS,
+	CY_PROFESSIONS,
 	CZ_PROFESSIONS,
 	DE_PHARMACY,
 	DE_PROFESSIONS,
@@ -78,7 +80,7 @@ export function marketBooks(locale: Locale): boolean {
  * `GB_GP` → `gp-practices`, `CZ_GP` → `prakticky-lekar`, `ES_PHARMACY` → `farmacias`,
  * `IT_PHARMACY` → `farmacie`, `DE_PHARMACY` → `apotheken`, `CH_HOSPITAL` → `spital`,
  * `EE_PHARMACY` → `apteegid`, `NO_PHARMACY` → `apotek`,
- * `IE_PHARMACY` → `pharmacy`, `LT_DENTAL` → `odontologijos-klinikos`, `SI_DENTIST` → `zobozdravnik`).
+ * `IE_PHARMACY` → `pharmacy`, `LT_DENTAL` → `odontologijos-klinikos`, `SI_DENTIST` → `zobozdravnik`, `CY_PHARMACY` → `farmakeia`).
  */
 export function professionSlugOf(code: string): string {
 	return (
@@ -97,6 +99,7 @@ export function professionSlugOf(code: string): string {
 		FI_PROFESSIONS[code]?.slug ??
 		LT_PROFESSIONS[code]?.slug ??
 		SI_PROFESSIONS[code]?.slug ??
+		CY_PROFESSIONS[code]?.slug ??
 		""
 	);
 }
@@ -356,6 +359,30 @@ export function finnishSourcesOf(
 }
 
 /**
+ * The sources that place and locate every Cypriot page: Cyprus Post's table of postcodes by
+ * municipality and community (their codes, centres and Latin names) and the Statistical
+ * Service's 2021 census (the municipalities and communities it counted, their population).
+ */
+export const CY_PLACE_SOURCE_IDS: readonly string[] = ["cy-tk", "cy-apografi"];
+
+/**
+ * The sources a Cypriot page is built from, with the attribution each asks for word for word:
+ * the Ministry of Health's list the facility comes from (private pharmacies, state hospitals or
+ * state health centres, CC BY 4.0, the change said), then Cyprus Post's postcodes and CYSTAT's
+ * census (CC BY 4.0).
+ */
+export function cypriotSourcesOf(
+	activitySources: readonly (string | undefined)[],
+): { name: string; attribution: string }[] {
+	const ids = new Set(activitySources.filter((source): source is string => Boolean(source)));
+	if (ids.size === 0) return [];
+	for (const id of CY_PLACE_SOURCE_IDS) ids.add(id);
+	return cyprus.registries
+		.filter((registry) => ids.has(registry.id) && registry.attribution)
+		.map((registry) => ({ name: registry.name, attribution: registry.attribution ?? "" }));
+}
+
+/**
  * The places of Switzerland's pages: the Federal Statistical Office's communes, districts and
  * cantons and swisstopo's localities, credited on every Swiss page.
  */
@@ -602,6 +629,7 @@ export function openDataSourcesOf(
 			dates,
 		);
 	}
+	if (country === "CY") return cypriotSourcesOf(activities.map((activity) => activity.source));
 	if (country === "CH") {
 		return activities.length > 0
 			? swissSourcesOf(

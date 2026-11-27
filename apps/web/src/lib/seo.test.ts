@@ -28,6 +28,7 @@ describe("Open Graph images", () => {
 		expect(ogImageOf("ES_HOSPITAL")).toBe("annuaire");
 		expect(ogImageOf("IT_PHARMACY")).toBe("annuaire");
 		expect(ogImageOf("IT_HOSPITAL")).toBe("annuaire");
+		expect(ogImageOf("CY_PHARMACY")).toBe("annuaire");
 		expect(ogImageOf("CZ_GP")).toBe("annuaire");
 		expect(ogImageOf("CZ_DENTIST")).toBe("annuaire");
 		expect(ogImageOf("CH_HOSPITAL")).toBe("annuaire");
@@ -130,6 +131,7 @@ describe("hreflang of the homes", () => {
 			"fi-FI": "https://apercura.org/fi",
 			"lt-LT": "https://apercura.org/lt",
 			"sl-SI": "https://apercura.org/si",
+			"el-CY": "https://apercura.org/cy",
 			"x-default": "https://apercura.org/",
 		});
 	});

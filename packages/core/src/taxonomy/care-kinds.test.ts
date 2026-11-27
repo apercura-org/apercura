@@ -9,6 +9,7 @@ import {
 	listingOfCareKind,
 } from "./care-kinds";
 import { allChListingSlugs } from "./ch";
+import { allCyListingSlugs } from "./cy";
 import { allCzListingSlugs } from "./cz";
 import { allDeListingSlugs } from "./de";
 import { allEeListingSlugs } from "./ee";
@@ -39,6 +40,7 @@ const LISTINGS: Record<CareMarket, Set<string>> = {
 	FI: allFiListingSlugs(),
 	LT: allLtListingSlugs(),
 	SI: allSiListingSlugs(),
+	CY: allCyListingSlugs(),
 };
 
 describe("the kinds of care shared by the markets", () => {

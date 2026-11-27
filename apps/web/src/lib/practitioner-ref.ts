@@ -3,8 +3,11 @@ import {
 	type AtIdScheme,
 	CH_ID_SCHEMES,
 	type ChIdScheme,
+	CY_ID_SCHEMES,
+	type CyIdScheme,
 	CZ_ID_SCHEME,
 	chUrlKey,
+	cyUrlKey,
 	DE_ID_SCHEMES,
 	type DeIdScheme,
 	deUrlKey,
@@ -31,6 +34,7 @@ import {
 	PL_ID_SCHEME,
 	parseAtPractitionerSegment,
 	parseChFacilitySegment,
+	parseCyFacilitySegment,
 	parseCzFacilitySegment,
 	parseDeFacilitySegment,
 	parseEeFacilitySegment,
@@ -232,6 +236,23 @@ function siRef(segment: string): PractitionerRef | null {
 		: null;
 }
 
+/**
+ * The prefix of a Cypriot reference (`cy:f101`, `cy:m3fa9c01b2e`): a pharmacy's key alone would
+ * read like an Austrian list key.
+ */
+const CY_REF = "cy:";
+
+/**
+ * A Cypriot facility from the end of a page address or slug, or from its key (`f101`,
+ * `m3fa9c01b2e`).
+ */
+function cyRef(segment: string): PractitionerRef | null {
+	const parsed = parseCyFacilitySegment(segment);
+	return parsed
+		? { country: "CY", idScheme: parsed.idScheme, nationalId: parsed.nationalId }
+		: null;
+}
+
 /** The first path segments of Switzerland's pages, in its three languages (`ch`, `ch-fr`, `ch-it`). */
 const CH_PATH = /^ch(?:-[a-z]{2})?$/;
 
@@ -249,18 +270,19 @@ const CH_PATH = /^ch(?:-[a-z]{2})?$/;
  * the source letters and key in Estonia (`ee:l01909`, `ee:ap457`), `pl:` and the RPWDL
  * establishment number in Poland (`pl:290629`), `no:` and the organisation
  * number in Norway (`no:910000039`), `ie:` and the list letter and key in Ireland
- * (`ie:p10000612`, `ie:n738`), `lt:` and the page key in Lithuania (`lt:5271-12679435`). A page
+ * (`ie:p10000612`, `ie:n738`), `lt:` and the page key in Lithuania (`lt:5271-12679435`), `cy:` and the publisher letter and
+ * key in Cyprus (`cy:f101`, `cy:m3fa9c01b2e`). A page
  * address is read from its last segment, in the market its first path segment names
  * (`/gb/practice/…`, `/cz/zarizeni/…`, `/es/centro/…`, `/it/struttura/…`,
  * `/de/einrichtung/…`, `/ch/einrichtung/…`,
- * `/ch-fr/etablissement/…`, `/ch-it/struttura/…`, `/ee/asutus/…`, `/pl/placowka/…`, `/no/virksomhet/…`, `/ie/facility/…`, `/lt/istaiga/…`).
+ * `/ch-fr/etablissement/…`, `/ch-it/struttura/…`, `/ee/asutus/…`, `/pl/placowka/…`, `/no/virksomhet/…`, `/ie/facility/…`, `/lt/istaiga/…`, `/cy/monada/…`).
  * Whitespace and case are forgiven. `market` is the market the reference was typed in: on a UK
  * page a bare key (`A81001`, `W91234`) is the UK's, on a Czech page a bare number (`39781`) is
  * Czechia's, on a Spanish page a ten-digit code is Spain's (as is any ten-digit code: no other
  * market has one), on an Italian page a list key (`f9000001`) is Italy's, on a German page a key
  * (`th9001`) is Germany's, on a Swiss page a list
  * key (`h123456789`) Switzerland's, on a Polish page a bare number (`290629`) Poland's, on a Norwegian page an organisation number (`910 000 039`)
- * Norway's, on an Irish page a list key (`p10000612`, `h123456789`) Ireland's, on a Lithuanian page a key (`5271-12679435`) Lithuania's.
+ * Norway's, on an Irish page a list key (`p10000612`, `h123456789`) Ireland's, on a Lithuanian page a key (`5271-12679435`) Lithuania's, on a Cypriot page a key (`f101`) Cyprus's.
  * Null for anything else.
  */
 export function parsePractitionerRef(
@@ -304,6 +326,9 @@ export function parsePractitionerRef(
 	}
 	if (trimmed.toLowerCase().startsWith(LT_REF)) {
 		return ltRef(trimmed.slice(LT_REF.length).replace(/\s+/g, "").toLowerCase());
+	}
+	if (trimmed.toLowerCase().startsWith(CY_REF)) {
+		return cyRef(trimmed.slice(CY_REF.length).replace(/\s+/g, "").toLowerCase());
 	}
 	const parts = trimmed.split(/[?#]/)[0]?.split("/").filter(Boolean) ?? [];
 	const segment = trimmed.split(/[/?#]/).filter(Boolean).at(-1) ?? "";
@@ -365,6 +390,11 @@ export function parsePractitionerRef(
 	// market's key starts with `si` and a digit.
 	const slovenian = siRef(compact);
 	if (slovenian) return slovenian;
+	// A page address of Cyprus (`/cy/monada/…`), or a key typed on a Cypriot page.
+	if ((path.length > 1 && path[0]?.toLowerCase() === "cy") || market === "CY") {
+		const cypriot = cyRef(compact);
+		if (cypriot) return cypriot;
+	}
 	if (market === "CZ") {
 		const czech = czRef(compact);
 		if (czech) return czech;
@@ -420,6 +450,9 @@ export function practitionerRefOf(practitioner: { idScheme: string; nationalId: 
 	if (IT_ID_SCHEMES[practitioner.idScheme as ItIdScheme]) {
 		return `${IT_REF}${itUrlKey(practitioner.idScheme as ItIdScheme, practitioner.nationalId)}`;
 	}
+	if (CY_ID_SCHEMES[practitioner.idScheme as CyIdScheme]) {
+		return `${CY_REF}${cyUrlKey(practitioner.idScheme as CyIdScheme, practitioner.nationalId)}`;
+	}
 	if (NO_ID_SCHEMES[practitioner.idScheme as NoIdScheme]) {
 		return `${NO_REF}${noUrlKey(practitioner.idScheme as NoIdScheme, practitioner.nationalId)}`;
 	}
@@ -445,7 +478,7 @@ export function practitionerRefOf(practitioner: { idScheme: string; nationalId: 
  * Swiss page (`H123456789`) `ch:h123456789`, a licence number typed on an Estonian page (`L01909`)
  * `ee:l01909`, an organisation number typed on a Norwegian page (`910 000 039`) `no:910000039`, a key typed
  * on an Irish page (`P10000612`) `ie:p10000612`, a key typed on a Lithuanian page (`5271-12679435`)
- * `lt:5271-12679435`.
+ * `lt:5271-12679435`, a key typed on a Cypriot page (`F101`) `cy:f101`.
  * A value that
  * names no page is kept as typed, so the service answers its own error.
  */

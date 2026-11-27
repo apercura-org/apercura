@@ -1,6 +1,7 @@
 import {
 	allAtListingSlugs,
 	allChListingSlugs,
+	allCyTaxonomySlugs,
 	allCzListingSlugs,
 	allDeTaxonomySlugs,
 	allEeTaxonomySlugs,
@@ -43,6 +44,8 @@ const MARKET_SLUGS: Readonly<Record<MarketCountry, ReadonlySet<string>>> = {
 	FI: allFiTaxonomySlugs(),
 	LT: allLtListingSlugs(),
 	SI: allSiListingSlugs(),
+	// Cyprus names its kinds of facility by keys of their own (`farmakeio`, `nosokomeio`).
+	CY: allCyTaxonomySlugs(),
 };
 
 /** The `taxonomy` groups keyed by listing or profession slug. */

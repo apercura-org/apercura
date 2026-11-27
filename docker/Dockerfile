@@ -22,6 +22,7 @@
 #   docker run … apercura etl:fi [flags]     Finnish Service Catalogue (PTV) open data import
 #   docker run … apercura etl:lt [flags]     Lithuanian VASPVT licence register import
 #   docker run … apercura etl:si [flags]     Slovenian ZZZS personal doctors open data import
+#   docker run … apercura etl:cy [flags]     Cypriot Ministry of Health lists import
 #   docker run … apercura scheduler          supercronic: jobs and cache warm-up every 5 minutes,
 #                                            weekly and monthly imports
 #

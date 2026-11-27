@@ -1,5 +1,6 @@
 import { AT_SEARCH_ALIASES } from "./at";
 import { CH_SEARCH_ALIASES } from "./ch";
+import { CY_SEARCH_ALIASES } from "./cy";
 import { CZ_SEARCH_ALIASES } from "./cz";
 import { DE_SEARCH_ALIASES } from "./de";
 import { EE_SEARCH_ALIASES } from "./ee";
@@ -19,6 +20,7 @@ export * from "./types";
 export {
 	AT_SEARCH_ALIASES,
 	CH_SEARCH_ALIASES,
+	CY_SEARCH_ALIASES,
 	CZ_SEARCH_ALIASES,
 	DE_SEARCH_ALIASES,
 	EE_SEARCH_ALIASES,
@@ -51,7 +53,8 @@ export const SEARCH_ALIASES: Readonly<
 		| "IE"
 		| "FI"
 		| "LT"
-		| "SI",
+		| "SI"
+		| "CY",
 		SearchAliasTable
 	>
 > = {
@@ -70,4 +73,5 @@ export const SEARCH_ALIASES: Readonly<
 	FI: FI_SEARCH_ALIASES,
 	LT: LT_SEARCH_ALIASES,
 	SI: SI_SEARCH_ALIASES,
+	CY: CY_SEARCH_ALIASES,
 };

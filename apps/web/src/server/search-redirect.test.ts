@@ -104,6 +104,12 @@ const PLACES: Record<MarketCountry, PlaceSuggestion[]> = {
 		place(60, "Ljubljana", "ljubljana", "osrednjeslovenska"),
 		place(61, "Maribor", "maribor", "podravska"),
 	],
+	CY: [
+		place(80, "Λεμεσός", "lemesos", "eparchia-lemesou", "5000"),
+		place(81, "Στρόβολος", "strovolos", "eparchia-lefkosias", "1012"),
+		place(82, "Λευκωσία", "lefkosia", "eparchia-lefkosias", "1000"),
+		place(83, "Λάρνακα", "larnaka", "eparchia-larnakas", "4000"),
+	],
 };
 
 const LANDINGS = new Set([
@@ -151,6 +157,12 @@ const LANDINGS = new Set([
 	"zobozdravnik@Ljubljana",
 	"druzinski-zdravnik@Ljubljana",
 	"druzinski-zdravnik@Maribor",
+	"farmakeia@Λεμεσός",
+	"nosokomeia@Λεμεσός",
+	"farmakeia@Στρόβολος",
+	"kentra-ygeias@Στρόβολος",
+	"farmakeia@Λευκωσία",
+	"nosokomeia@Λάρνακα",
 ]);
 
 const HUBS = new Set([
@@ -322,6 +334,36 @@ describe("a search for a place of another market", () => {
 		);
 		// "Norvège" moves to Norway's home.
 		expect(await search("fr", { ou: "Norvège" })).toEqual({ href: "/", locale: "nb-NO" });
+	});
+	it("moves to Cyprus's listing, in Greek, for the care it lists", async () => {
+		expect(await search("fr", { quoi: "pharmacie", ou: "Limassol" })).toEqual(
+			listing("el-CY", "farmakeia", "eparchia-lemesou", "lemesos"),
+		);
+		expect(await search("en-GB", { quoi: "hospital", ou: "Limassol" })).toEqual(
+			listing("el-CY", "nosokomeia", "eparchia-lemesou", "lemesos"),
+		);
+		expect(await search("el-CY", { quoi: "φαρμακείο", ou: "Στρόβολος" })).toEqual(
+			listing("el-CY", "farmakeia", "eparchia-lefkosias", "strovolos"),
+		);
+		expect(await search("el-CY", { quoi: "κέντρο υγείας", ou: "Στρόβολος" })).toEqual(
+			listing("el-CY", "kentra-ygeias", "eparchia-lefkosias", "strovolos"),
+		);
+		// The main cities by their exonyms, straight to their listing.
+		expect(await search("fr", { quoi: "pharmacie", ou: "Nicosie" })).toEqual(
+			listing("el-CY", "farmakeia", "eparchia-lefkosias", "lefkosia"),
+		);
+		expect(await search("en-GB", { quoi: "pharmacy", ou: "Nicosia" })).toEqual(
+			listing("el-CY", "farmakeia", "eparchia-lefkosias", "lefkosia"),
+		);
+		expect(await search("en-GB", { quoi: "hospital", ou: "Larnaca" })).toEqual(
+			listing("el-CY", "nosokomeia", "eparchia-larnakas", "larnaka"),
+		);
+		expect(await search("el-CY", { quoi: "φαρμακείο", ou: "Λευκωσία" })).toEqual(
+			listing("el-CY", "farmakeia", "eparchia-lefkosias", "lefkosia"),
+		);
+		// "Chypre" and "Κύπρος" move to Cyprus's home.
+		expect(await search("fr", { ou: "Chypre" })).toEqual({ href: "/", locale: "el-CY" });
+		expect(await search("de-DE", { ou: "Κύπρος" })).toEqual({ href: "/", locale: "el-CY" });
 	});
 	it("moves to Switzerland's listing in the visitor's language, the city under its own name", async () => {
 		// A French reader lands on Switzerland in French, an Italian one in Italian, the others

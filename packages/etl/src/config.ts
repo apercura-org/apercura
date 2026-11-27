@@ -5,6 +5,8 @@ import { parseProfessionList } from "@apercura/core/taxonomy";
 import { DEFAULT_AT_PLACES_URL } from "./sources/at/places";
 import { AT_SOURCE_IDS, type AtSourceId } from "./sources/at/types";
 import { CH_SOURCE_IDS, type ChSourceId, chSourceUrlVariable } from "./sources/ch/sources";
+import { DEFAULT_CY_CENSUS_URL, DEFAULT_CY_POSTCODES_URL } from "./sources/cy/places";
+import { CY_SOURCE_IDS, type CySourceId } from "./sources/cy/types";
 import { defaultCzPlacesUrls } from "./sources/cz/places";
 import { DEFAULT_DE_PLACES_URL } from "./sources/de/places";
 import { DE_SOURCE_IDS, type DeFileId, type DeSourceId } from "./sources/de/types";
@@ -1358,6 +1360,82 @@ export function buildSiOptions(flags: ParsedArgs["flags"], env: NodeJS.ProcessEn
 		pageUrl: env.ETL_SI_PAGE_URL || ZZZS_LISTS_PAGE,
 		placesUrl: env.ETL_SI_PLACES_URL || GURS_WFS,
 		today: todayInLjubljana(),
+		workDir: flagString(flags, "work-dir") ?? env.ETL_WORK_DIR ?? null,
+		appUrl: offline ? null : env.APP_URL || null,
+		revalidateSecret: env.REVALIDATE_SECRET || null,
+	};
+}
+
+// ---------------------------------------------------------------------------
+// Cyprus (`etl:cy`)
+// ---------------------------------------------------------------------------
+
+/** The Cypriot lists on data.gov.cy (Ministry of Health, CC BY 4.0). */
+export const DEFAULT_CY_URLS: Readonly<Record<CySourceId, string>> = {
+	farmakeia:
+		"https://www.data.gov.cy/sites/default/files/%CE%9A%CE%B1%CF%84%CE%AC%CE%BB%CE%BF%CE%B3%CE%BF%CF%82%20%CE%99%CE%B4%CE%B9%CF%89%CF%84%CE%B9%CE%BA%CF%8E%CE%BD%20%CE%A6%CE%B1%CF%81%CE%BC%CE%B1%CE%BA%CE%B5%CE%AF%CF%89%CE%BD%202024-2025.csv",
+	nosokomeia:
+		"https://www.data.gov.cy/sites/default/files/%CE%9A%CE%B1%CF%84%CE%AC%CE%BB%CE%BF%CE%B3%CE%BF%CF%82%20%CE%9D%CE%BF%CF%83%CE%BF%CE%BA%CE%BF%CE%BC%CE%B5%CE%AF%CF%89%CE%BD%20%CE%9A%CF%8D%CF%80%CF%81%CE%BF%CF%85_1.csv",
+	kentra:
+		"https://www.data.gov.cy/sites/default/files/%CE%9A%CE%AD%CE%BD%CF%84%CF%81%CE%B1%20%CE%A5%CE%B3%CE%B5%CE%AF%CE%B1%CF%82%20%CE%9A%CF%8D%CF%80%CF%81%CE%BF%CF%85.csv",
+};
+
+export type CyOptions = {
+	databaseUrl: string;
+	dryRun: boolean;
+	approveRunId: number | null;
+	force: boolean;
+	sourceDir: string | null;
+	offline: boolean;
+	sources: CySourceId[];
+	/** Each list's CSV file on data.gov.cy. */
+	urls: Record<CySourceId, string>;
+	/** CYSTAT's census table and Cyprus Post's postcodes, for the places. */
+	placesUrls: { census: string; postcodes: string };
+	workDir: string | null;
+	appUrl: string | null;
+	revalidateSecret: string | null;
+};
+
+/** Parses a comma-separated list of Cypriot sources (`farmakeia,nosokomeia,kentra`); throws on unknown ones. */
+export function parseCySources(value: string | null | undefined): CySourceId[] {
+	if (!value) return [...CY_SOURCE_IDS];
+	const sources = value
+		.split(",")
+		.map((source) => source.trim())
+		.filter(Boolean);
+	for (const source of sources) {
+		if (!(CY_SOURCE_IDS as readonly string[]).includes(source)) {
+			throw new Error(`Unknown Cypriot source "${source}" (one of ${CY_SOURCE_IDS.join(", ")})`);
+		}
+	}
+	if (sources.length === 0) throw new Error("At least one Cypriot source is required");
+	return [...new Set(sources)] as CySourceId[];
+}
+
+export function buildCyOptions(flags: ParsedArgs["flags"], env: NodeJS.ProcessEnv): CyOptions {
+	const approve = flagString(flags, "approve");
+	if (approve !== null && !/^\d+$/.test(approve)) {
+		throw new Error(`--approve needs a run id, got ${approve}`);
+	}
+	const offline = flags.has("offline");
+	return {
+		databaseUrl: resolveDatabaseUrl(env),
+		dryRun: flags.has("dry-run"),
+		approveRunId: approve === null ? null : Number(approve),
+		force: flags.has("force"),
+		sourceDir: flagString(flags, "source-dir") ?? env.ETL_CY_SOURCE_DIR ?? null,
+		offline,
+		sources: parseCySources(flagString(flags, "sources") ?? env.ETL_CY_SOURCES),
+		urls: {
+			farmakeia: env.ETL_CY_FARMAKEIA_URL || DEFAULT_CY_URLS.farmakeia,
+			nosokomeia: env.ETL_CY_NOSOKOMEIA_URL || DEFAULT_CY_URLS.nosokomeia,
+			kentra: env.ETL_CY_KENTRA_URL || DEFAULT_CY_URLS.kentra,
+		},
+		placesUrls: {
+			census: env.ETL_CY_CENSUS_URL || DEFAULT_CY_CENSUS_URL,
+			postcodes: env.ETL_CY_POSTCODES_URL || DEFAULT_CY_POSTCODES_URL,
+		},
 		workDir: flagString(flags, "work-dir") ?? env.ETL_WORK_DIR ?? null,
 		appUrl: offline ? null : env.APP_URL || null,
 		revalidateSecret: env.REVALIDATE_SECRET || null,

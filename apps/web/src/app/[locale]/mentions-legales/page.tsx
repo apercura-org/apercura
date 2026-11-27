@@ -4,6 +4,7 @@ import { BookletPage } from "~/components/booklet-page";
 import { InstitutionalCover, LegalFactRow, ProseSection } from "~/components/institutional";
 import { ImpressumAt } from "~/components/legal-at";
 import { LegalNoticeCh } from "~/components/legal-ch";
+import { LegalNoticeCy } from "~/components/legal-cy";
 import { LegalNoticeCz } from "~/components/legal-cz";
 import { ImpressumDe } from "~/components/legal-de";
 import { LegalNoticeEe } from "~/components/legal-ee";
@@ -48,6 +49,7 @@ export function generateMetadata({ params }: PageProps<"/[locale]/mentions-legal
 			FI: "LegalNoticeFi",
 			LT: "LegalNoticeLt",
 			SI: "LegalNoticeSi",
+			CY: "LegalNoticeCy",
 		},
 		HREF,
 	);
@@ -61,7 +63,7 @@ export function generateMetadata({ params }: PageProps<"/[locale]/mentions-legal
 export default async function LegalPage({ params }: PageProps<"/[locale]/mentions-legales">) {
 	const locale = await localeOf(params);
 	setRequestLocale(locale);
-	// Austria's, the UK's, Czechia's, Spain's, Italy's, Germany's, Switzerland's, Estonia's, Poland's, Norway's, Finland's and Lithuania's pages
+	// Austria's, the UK's, Czechia's, Spain's, Italy's, Germany's, Switzerland's, Estonia's, Poland's, Norway's, Finland's, Lithuania's and Cyprus's pages
 	// have texts of their own, written for their law.
 	if (marketOf(locale) === "AT") return <ImpressumAt locale={locale} />;
 	if (marketOf(locale) === "GB") return <LegalNoticeGb locale={locale} />;
@@ -77,6 +79,7 @@ export default async function LegalPage({ params }: PageProps<"/[locale]/mention
 	if (marketOf(locale) === "IE") return <LegalNoticeIe locale={locale} />;
 	if (marketOf(locale) === "LT") return <LegalNoticeLt locale={locale} />;
 	if (marketOf(locale) === "SI") return <LegalNoticeSi locale={locale} />;
+	if (marketOf(locale) === "CY") return <LegalNoticeCy locale={locale} />;
 	const t = await getTranslations({ locale, namespace: "LegalPage" });
 	const tI = await getTranslations({ locale, namespace: "Institutional" });
 	const section = await proseSections(locale, "LegalPage");

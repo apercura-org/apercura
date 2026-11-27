@@ -157,6 +157,19 @@ Slovenian too (`/si/druzinski-zdravnik/osrednjeslovenska`). A doctor's page list
 each practice with its ZZZS activities and, for each, whether the doctor takes
 new patients, with the date of the insurer's list it comes from.
 
+Cyprus (#174) is `/cy`, in Greek (`el-CY`, the English catalog with the Greek
+texts on top, `messages/cy.json`). Its route segments are the English ones in
+Greek written in Latin letters (`CYPRIOT_SEGMENTS` in `src/i18n/routing.ts`): a
+facility's page under `/cy/monada/…` (a facility, never a person), an
+organisation's under `/cy/foreas/…`, the directory under `/cy/katalogos`, the
+search under `/cy/anazitisi`, and the legal pages under `/cy/nomiki-dilosi`,
+`/cy/aporrito`, `/cy/oroi-chrisis`, `/cy/prosvasimotita` and `/cy/dedomena`. Its
+listing slugs are Greek transliterated as ELOT 743 writes it
+(`/cy/farmakeia/eparchia-lefkosias/strovolos`, `/cy/nosokomeia`,
+`/cy/kentra-ygeias`); a district is a listing of its own, and a reference reads
+`cy:f1197` (a pharmacy) or `cy:m3fa9c01b2e` (a state facility). An English
+interface (`/cy-en`) is a follow-up.
+
 Each segment follows the locale's prefix: `/fr/annuaire`, `/fr-de/verzeichnis`.
 
 Only French pages are indexed in v1 (`INDEXABLE_LOCALES`): pages in the other

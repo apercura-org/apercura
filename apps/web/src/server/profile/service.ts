@@ -3,6 +3,7 @@ import { randomUUID } from "node:crypto";
 import {
 	type Fees,
 	normalizeChPostcode,
+	normalizeCyPostcode,
 	normalizeCzPostcode,
 	normalizeDePostcode,
 	normalizeEePostcode,
@@ -276,15 +277,31 @@ export async function addOwnerSite(db: Database, practitionerId: number, input: 
 														? (normalizeLtPostcode(input.postcode) ?? input.postcode)
 														: country === "SI"
 															? (normalizeSiPostcode(input.postcode) ?? input.postcode)
-															: input.postcode;
+															: country === "CY"
+																? (normalizeCyPostcode(input.postcode) ?? input.postcode)
+																: input.postcode;
 		if (!adapter.address.postcode.test(postcode)) throw new ProfileError("UNKNOWN_PLACE");
 		const district = country === "AT" ? /^1(\d{2})0$/.exec(postcode)?.[1] : undefined;
 		const [place] =
-			country === "NO"
-				? // A Norwegian address names its post town (`2050 Jessheim`), not always its municipality
-					// (Ullensaker), and Kartverket's municipalities carry no postcodes: the municipality
-					// the register's establishments of that postcode are in, else by its name.
+			country === "CY"
+				? // Cyprus Post's postcodes name the municipality or community they serve: the
+					// commune whose postcodes hold the postcode, else the one of that name.
 					await tx.execute<{ id: number }>(sql`
+					SELECT p.id FROM directory.places p
+					WHERE p.country = 'CY' AND p.kind = 'commune' AND p.removed_at IS NULL
+						AND (p.postcodes @> ARRAY[${postcode}]::text[]
+							OR similarity(directory.text_norm(p.name), directory.text_norm(${input.city})) > 0.5)
+					ORDER BY (p.postcodes @> ARRAY[${postcode}]::text[]) DESC,
+						(directory.text_norm(p.name) = directory.text_norm(${input.city})) DESC,
+						similarity(directory.text_norm(p.name), directory.text_norm(${input.city})) DESC,
+						p.population DESC NULLS LAST, p.id
+					LIMIT 1
+				`)
+				: country === "NO"
+					? // A Norwegian address names its post town (`2050 Jessheim`), not always its municipality
+						// (Ullensaker), and Kartverket's municipalities carry no postcodes: the municipality
+						// the register's establishments of that postcode are in, else by its name.
+						await tx.execute<{ id: number }>(sql`
 					WITH by_postcode AS (
 						SELECT s.place_id FROM directory.sites s
 						WHERE s.country_code = 'NO' AND s.postcode = ${postcode} AND s.removed_at IS NULL
@@ -300,10 +317,10 @@ export async function addOwnerSite(db: Database, practitionerId: number, input: 
 						p.population DESC NULLS LAST, p.id
 					LIMIT 1
 				`)
-				: country === "EE"
-					? // Estonia's settlements carry no postcodes and their names their kind ("Tartu linn",
-						// "Haabneeme alevik"): the settlement by its name, with or without its kind.
-						await tx.execute<{ id: number }>(sql`
+					: country === "EE"
+						? // Estonia's settlements carry no postcodes and their names their kind ("Tartu linn",
+							// "Haabneeme alevik"): the settlement by its name, with or without its kind.
+							await tx.execute<{ id: number }>(sql`
 					SELECT p.id FROM directory.places p
 					WHERE p.country = 'EE' AND p.kind = 'commune' AND p.removed_at IS NULL
 						AND (directory.text_norm(p.name) LIKE directory.text_norm(${input.city}) || ' %'
@@ -314,10 +331,10 @@ export async function addOwnerSite(db: Database, practitionerId: number, input: 
 						p.population DESC NULLS LAST, p.id
 					LIMIT 1
 				`)
-					: country === "DE"
-						? // A German postcode crosses Gemeinde and Land borders: the Gemeinde by its name, the
-							// one whose postcodes hold the postcode first.
-							await tx.execute<{ id: number }>(sql`
+						: country === "DE"
+							? // A German postcode crosses Gemeinde and Land borders: the Gemeinde by its name, the
+								// one whose postcodes hold the postcode first.
+								await tx.execute<{ id: number }>(sql`
 					SELECT p.id FROM directory.places p
 					WHERE p.country = 'DE' AND p.kind = 'commune' AND p.removed_at IS NULL
 						AND similarity(directory.text_norm(p.name), directory.text_norm(${input.city})) > 0.5
@@ -327,10 +344,10 @@ export async function addOwnerSite(db: Database, practitionerId: number, input: 
 						p.population DESC NULLS LAST, p.id
 					LIMIT 1
 				`)
-						: country === "LT"
-							? // Lithuania's settlements carry no postcodes: the settlement by its name, in the
-								// page's municipality first.
-								await tx.execute<{ id: number }>(sql`
+							: country === "LT"
+								? // Lithuania's settlements carry no postcodes: the settlement by its name, in the
+									// page's municipality first.
+									await tx.execute<{ id: number }>(sql`
 					SELECT p.id FROM directory.places p
 					WHERE p.country = 'LT' AND p.kind = 'commune' AND p.removed_at IS NULL
 						AND similarity(directory.text_norm(p.name), directory.text_norm(${input.city})) > 0.5
@@ -344,9 +361,9 @@ export async function addOwnerSite(db: Database, practitionerId: number, input: 
 						p.id
 					LIMIT 1
 				`)
-							: country === "IT"
-								? // ISTAT's comuni carry no postcodes: the comune by its name, in the page's province first.
-									await tx.execute<{ id: number }>(sql`
+								: country === "IT"
+									? // ISTAT's comuni carry no postcodes: the comune by its name, in the page's province first.
+										await tx.execute<{ id: number }>(sql`
 					SELECT p.id FROM directory.places p
 					WHERE p.country = 'IT' AND p.kind = 'commune' AND p.removed_at IS NULL
 						AND similarity(directory.text_norm(p.name), directory.text_norm(${input.city})) > 0.5
@@ -360,9 +377,9 @@ export async function addOwnerSite(db: Database, practitionerId: number, input: 
 						p.id
 					LIMIT 1
 				`)
-								: country === "ES"
-									? // Spain's municipalities carry no postcodes: by name, in the postcode's province.
-										await tx.execute<{ id: number }>(sql`
+									: country === "ES"
+										? // Spain's municipalities carry no postcodes: by name, in the postcode's province.
+											await tx.execute<{ id: number }>(sql`
 					SELECT p.id FROM directory.places p
 					WHERE p.country = 'ES' AND p.kind = 'commune' AND p.removed_at IS NULL
 						AND p.department_code = ${postcode.slice(0, 2)}
@@ -372,10 +389,10 @@ export async function addOwnerSite(db: Database, practitionerId: number, input: 
 						p.id
 					LIMIT 1
 				`)
-									: country === "PL" || country === "FI"
-										? // Polish gminas and Finnish municipalities carry no postcodes: the commune by its
-											// name, the page's powiat or wellbeing services county first.
-											await tx.execute<{ id: number }>(sql`
+										: country === "PL" || country === "FI"
+											? // Polish gminas and Finnish municipalities carry no postcodes: the commune by its
+												// name, the page's powiat or wellbeing services county first.
+												await tx.execute<{ id: number }>(sql`
 					SELECT p.id FROM directory.places p
 					WHERE p.country = ${country} AND p.kind = 'commune' AND p.removed_at IS NULL
 						AND similarity(directory.text_norm(p.name), directory.text_norm(${input.city})) > 0.5
@@ -389,9 +406,9 @@ export async function addOwnerSite(db: Database, practitionerId: number, input: 
 						p.id
 					LIMIT 1
 				`)
-										: country === "CZ"
-											? // Czech municipalities carry no postcodes: the municipality or Prague district by name.
-												await tx.execute<{ id: number }>(sql`
+											: country === "CZ"
+												? // Czech municipalities carry no postcodes: the municipality or Prague district by name.
+													await tx.execute<{ id: number }>(sql`
 					SELECT p.id FROM directory.places p
 					WHERE p.country = 'CZ' AND p.kind IN ('commune', 'arrondissement') AND p.removed_at IS NULL
 						AND similarity(directory.text_norm(p.name), directory.text_norm(${input.city})) > 0.5
@@ -400,10 +417,10 @@ export async function addOwnerSite(db: Database, practitionerId: number, input: 
 						p.kind = 'arrondissement' DESC, p.id
 					LIMIT 1
 				`)
-											: country === "GB" || country === "IE"
-												? // The UK's and Ireland's towns carry no postcodes either (an Eircode never
-													// places anything): the town by its name.
-													await tx.execute<{ id: number }>(sql`
+												: country === "GB" || country === "IE"
+													? // The UK's and Ireland's towns carry no postcodes either (an Eircode never
+														// places anything): the town by its name.
+														await tx.execute<{ id: number }>(sql`
 					SELECT p.id FROM directory.places p
 					WHERE p.country = ${country} AND p.kind = 'commune' AND p.removed_at IS NULL
 						AND similarity(directory.text_norm(p.name), directory.text_norm(${input.city})) > 0.5
@@ -412,8 +429,8 @@ export async function addOwnerSite(db: Database, practitionerId: number, input: 
 						p.id
 					LIMIT 1
 				`)
-												: country === "AT"
-													? await tx.execute<{ id: number }>(sql`
+													: country === "AT"
+														? await tx.execute<{ id: number }>(sql`
 					SELECT p.id FROM directory.places p
 					WHERE p.country = 'AT' AND p.removed_at IS NULL AND (
 						(p.kind = 'arrondissement' AND p.code = ${district ? `9${district}01` : ""})
@@ -425,7 +442,7 @@ export async function addOwnerSite(db: Database, practitionerId: number, input: 
 						similarity(directory.text_norm(p.name), directory.text_norm(${input.city})) DESC
 					LIMIT 1
 				`)
-													: await tx.execute<{ id: number }>(sql`
+														: await tx.execute<{ id: number }>(sql`
 					SELECT p.id FROM directory.places p
 					WHERE p.country = ${country === "CH" || country === "SI" ? country : "FR"}
 						AND p.kind IN ('commune', 'arrondissement') AND p.removed_at IS NULL

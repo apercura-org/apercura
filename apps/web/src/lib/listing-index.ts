@@ -6,9 +6,11 @@
  * catalogs' labels, the words people type ("dentiste", "GP", "zubař") come from
  * each market's search aliases (`@apercura/core/taxonomy`, `SEARCH_ALIASES`).
  */
+import { transliterateGreek } from "@apercura/core";
 import {
 	allAtListingSlugs,
 	allChListingSlugs,
+	allCyListingSlugs,
 	allCzListingSlugs,
 	allDeListingSlugs,
 	allEeListingSlugs,
@@ -53,6 +55,7 @@ const IE_LISTINGS: ReadonlySet<string> = allIeListingSlugs();
 const FI_LISTINGS: ReadonlySet<string> = allFiListingSlugs();
 const LT_LISTINGS: ReadonlySet<string> = allLtListingSlugs();
 const SI_LISTINGS: ReadonlySet<string> = allSiListingSlugs();
+const CY_LISTINGS: ReadonlySet<string> = allCyListingSlugs();
 
 /**
  * True when a listing slug belongs to the market of `locale` (France's, Austria's, the UK's,
@@ -73,13 +76,18 @@ function inMarket(slug: string, locale: Locale): boolean {
 	if (marketOf(locale) === "FI") return FI_LISTINGS.has(slug);
 	if (marketOf(locale) === "LT") return LT_LISTINGS.has(slug);
 	if (marketOf(locale) === "SI") return SI_LISTINGS.has(slug);
+	if (marketOf(locale) === "CY") return CY_LISTINGS.has(slug);
 	const profession = professionOfListingSlug(slug);
 	return Boolean(profession && FR_PROFESSIONS[profession]?.enabled);
 }
 
-/** Unaccented lowercase words, the same normalization as `directory.text_norm()`. */
+/**
+ * Unaccented lowercase words, the same normalization as `directory.text_norm()`: Greek is
+ * written in Latin letters first (`Φαρμακεία` → `farmakeia`), so a Greek word typed in either
+ * alphabet matches.
+ */
 export function normalizeText(value: string): string {
-	return value
+	return transliterateGreek(value)
 		.replace(/[œŒ]/g, "oe")
 		.replace(/[æÆ]/g, "ae")
 		.normalize("NFKD")
@@ -116,7 +124,7 @@ function buildIndex(locale: Locale): ListingEntry[] {
 	const listing = taxonomy.listing as Record<string, string>;
 	const professions = taxonomy.profession as Record<string, string>;
 	// A Czech, Spanish, Italian, German, Swiss, Estonian, Polish, Norwegian, Irish, Finnish,
-	// Lithuanian or Slovenian listing is plural ("Kardiologové", "Farmacias", "Farmacie",
+	// Lithuanian, Slovenian or Cypriot listing is plural ("Kardiologové", "Farmacias", "Farmacie",
 	// "Apotheken", "Spitäler", "Apteegid", "Ligoninės", "Zobozdravniki"), its profession label
 	// singular or a field ("Kardiolog", "Farmacia", "Apotheke", "Spital", "Apteek", "Ligoninė",
 	// "Zobozdravstvo"): both match.
@@ -133,6 +141,7 @@ function buildIndex(locale: Locale): ListingEntry[] {
 		"FI",
 		"LT",
 		"SI",
+		"CY",
 	].includes(marketOf(locale));
 	// The everyday words of the locale's language suggest their listing too ("Hausarzt" →
 	// Allgemeinmedizin).

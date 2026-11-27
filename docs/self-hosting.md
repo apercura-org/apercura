@@ -341,6 +341,24 @@ file (152 MB, 813 MB inflated and streamed), about 370 MB in all: give the work
 directory (`ETL_WORK_DIR`) the room. The scheduler reruns the import every Friday
 at 03:30 UTC; a file that cannot be fetched or read fails the run (exit code
 `1`) and leaves the pages as they are ([data-import.md](./data-import.md#norway)).
+Cyprus (`/cy`) has its own import, from the Ministry of Health's lists on
+data.gov.cy (about 700 facilities: private pharmacies, state hospitals and state
+health centres; CC BY 4.0, the pharmacist each pharmacy is listed under never
+read):
+
+```sh
+apercura-compose run --rm --entrypoint "apercura etl:places" etl --country cy
+apercura-compose run --rm --entrypoint "apercura etl:cy" etl --dry-run
+apercura-compose run --rm --entrypoint "apercura etl:cy" etl
+```
+
+The places are CYSTAT's 2021 census municipalities and communities (a 28 kB
+answer of its PxWeb API) with Cyprus Post's postcodes and centres (a 240 kB
+workbook); the first `etl:cy` imports them too. Each run downloads the three
+lists, about 130 kB in all. The scheduler reruns the import on the 5th of every
+month at 22:30 UTC; unchanged lists are skipped (`ETL_CY_SCHEDULE_ARGS` adds
+flags). A list that cannot be fetched or read is left out of the run and keeps
+its pages (exit code `3`) ([data-import.md](./data-import.md#cyprus)).
 
 Ireland (`/ie`) has its own import, from the PSI's register of pharmacies,
 HIQA's register of nursing homes and the HSE's hospitals and health centres

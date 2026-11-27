@@ -371,3 +371,37 @@ describe("Finnish service location keys", () => {
 		);
 	});
 });
+
+describe("Cypriot facility keys", () => {
+	it("read a Cypriot page segment in Cyprus only", () => {
+		expect(parsePractitionerKey("el-CY", "farmakeio-odos-paradeigmatos-12-lefkosia-f101")).toEqual({
+			country: "CY",
+			idScheme: "CY-FARM",
+			nationalId: "101",
+			namePart: "farmakeio-odos-paradeigmatos-12-lefkosia",
+		});
+		expect(parsePractitionerKey("el-CY", "geniko-nosokomeio-paradeigmatos-m00000000b2")).toEqual({
+			country: "CY",
+			idScheme: "CY-MOH",
+			nationalId: "00000000b2",
+			namePart: "geniko-nosokomeio-paradeigmatos",
+		});
+		expect(parsePractitionerKey("el-CY", "farmakeio-101")).toBeNull();
+		expect(parsePractitionerKey("el-CY", "eksempel-legesenter-910000039")).toBeNull();
+		expect(parsePractitionerKey("fr", "farmakeio-odos-paradeigmatos-12-lefkosia-f101")).toBeNull();
+		expect(marketAdapter("el-CY").features.booking).toBe(false);
+	});
+
+	it("mark a Cypriot segment outside a locale, and print the page key", () => {
+		expect(marketSegmentOf("CY", "farmakeio-paradeigmatos-f101")).toBe(
+			"cy.farmakeio-paradeigmatos-f101",
+		);
+		expect(parseAnyPractitionerKey("cy.farmakeio-paradeigmatos-f101")).toMatchObject({
+			country: "CY",
+			idScheme: "CY-FARM",
+			nationalId: "101",
+		});
+		expect(displayId({ idScheme: "CY-FARM", nationalId: "101" })).toBe("f101");
+		expect(displayId({ idScheme: "CY-MOH", nationalId: "00000000b2" })).toBe("m00000000b2");
+	});
+});

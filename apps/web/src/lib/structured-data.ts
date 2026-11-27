@@ -661,6 +661,9 @@ const PRACTICE_TYPES: Readonly<Record<string, PracticeType>> = {
 	LT_DENTAL: "Dentist",
 	LT_OPTOMETRY: "MedicalBusiness",
 	LT_NURSING: "MedicalOrganization",
+	CY_HOSPITAL: "Hospital",
+	CY_HEALTH_CENTRE: "MedicalClinic",
+	CY_PHARMACY: "Pharmacy",
 };
 
 /** The schema.org type of a market of practices' page subject (`PRACTICE_TYPES`), if any. */

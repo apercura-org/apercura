@@ -143,6 +143,7 @@ describe("the United Kingdom adapter", () => {
 			"FI",
 			"LT",
 			"SI",
+			"CY",
 		]);
 	});
 });

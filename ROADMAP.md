@@ -64,6 +64,12 @@ signature, an account, a contract, a paid service or a manual test. This list re
   ([`docs/data-requests/fi.md`](./docs/data-requests/fi.md#ptv-version-12)).
 - Finland: send THL the letter of [`docs/data-requests/fi.md`](./docs/data-requests/fi.md#how-to-ask)
   asking for a licence for the SOTE organisation register (private providers).
+- Cyprus: send the two letters of [`docs/data-requests/cy.md`](./docs/data-requests/cy.md): to
+  the Ministry of Health and the State Health Services Organisation (ΟΚΥπΥ), asking for updated
+  lists of state hospitals and health centres with addresses on data.gov.cy (the files date from
+  2018), and to the Pharmaceutical Services, asking them to confirm that the list's ΑΜ is the
+  pharmacy's registration number and to add a pharmacy name. The market opened without the
+  answers.
 
 ### Accessibility ([#32](https://github.com/apercura-org/apercura/issues/32))
 
@@ -507,12 +513,39 @@ documents, no booking ([data import](./docs/data-import.md#slovenia),
   market of doctors' pages needs its own page handling.
 - Booking stays off.
 
+### 14. Cyprus (`/cy`): open, directory of pharmacies, state hospitals and health centres
+
+Done in [#174](https://github.com/apercura-org/apercura/issues/174): `/cy` in Greek (`el-CY`),
+built monthly by `etl:cy` from the Ministry of Health's open lists on data.gov.cy (CC BY 4.0: 658
+private pharmacies of the Pharmaceutical Services, named after their address since the list
+names only the pharmacist, whose name and house telephone are never read; 8 state hospitals; 33
+state health centres), placed in the five districts and the 404 municipalities and communities
+of CYSTAT's 2021 census with Cyprus Post's postcodes and centres, every page printing its credit,
+with a legal notice (Law 156(I)/2004), a privacy notice with the article 14 information and the
+Commissioner for Personal Data Protection, claims by documents, no booking
+([data import](./docs/data-import.md#cyprus), [ADR 0002](./docs/adr/0002-multi-country.md#cyprus-cy)).
+Left:
+
+- Have a native Greek speaker review the Greek interface and legal texts, and a lawyer admitted in
+  Cyprus the legal notice (confirm the citation of Law 156(I)/2004, section 8), the privacy notice
+  and the terms; confirm the reading of article 45 of the Code of Medical Ethics (listings
+  "uniform for all") and of the pharmacies' advertising rules.
+- An English interface, `/cy-en` (`en-CY`), as Switzerland's languages, and a Turkish one.
+- Map pins for the pharmacies and health centres: they sit at their municipality's or
+  community's centre, as no open address points cover the island (the Department of Lands and
+  Surveys' cover about 4%).
+- The two health centres left out ("Δευτεράς/ Ανθούπολης", "Παλαιοχωρίου": their name fits no
+  single place), and the 2018 state lists' staleness: the letter above.
+- The twenty municipalities of the 2024 local-government reform as a listing level.
+- Private clinics, doctors and dentists, when an open source exists (the Medical Council's
+  register states no licence).
+
 ### Later
 
-The Netherlands, Portugal, Croatia, Cyprus, Romania, Denmark, Sweden, Slovakia,
+The Netherlands, Portugal, Croatia, Romania, Denmark, Sweden, Slovakia,
 Hungary, Bulgaria, Iceland and Liechtenstein open with claimed pages when there is demand.
-Croatia (HZZO) and Cyprus (Medical Council) become directories if their publisher confirms an open
-licence. Booking in Finland waits for a ruling on whether a booking site is a registered system
+Croatia (HZZO) becomes a directory if its publisher confirms an open licence, and Cyprus adds
+its doctors if the Medical Council's register is published under one. Booking in Finland waits for a ruling on whether a booking site is a registered system
 connected to Kanta, and Greece for a legal opinion on Law 3418/2005 art. 17.
 
 ## Practitioner tools

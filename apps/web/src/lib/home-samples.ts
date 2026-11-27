@@ -5,9 +5,9 @@ import { type Locale, type MarketCountry, marketOf } from "~/i18n/locales";
  * opening. Each market shows what its directory lists, in its own language: practitioners in
  * France, Austria and Slovenia (their doctors) and Czechia (practices under a doctor's name, a
  * pharmacy); practices, facilities, pharmacies or hospitals in the UK, Spain, Italy, Germany,
- * Switzerland, Estonia, Poland, Ireland and Finland, licensed institutions in Lithuania. The names
+ * Switzerland, Estonia, Poland, Ireland, Finland and Cyprus, licensed institutions in Lithuania. The names
  * and addresses say plainly that they are examples ("Exemple", "Muster", "Example", "Ejemplo",
- * "Esempio", "Příklad", "Näidis", "Przykład", "Esimerkki", "Pavyzdys", "Primer", "Zgled"), never a
+ * "Esempio", "Příklad", "Näidis", "Przykład", "Esimerkki", "Pavyzdys", "Primer", "Zgled", "Παράδειγμα"), never a
  * real person, practice or place of care; the identifiers are shaped like the market's but
  * synthetic.
  *
@@ -421,6 +421,34 @@ const SAMPLES: Readonly<Record<Exclude<MarketCountry, "CH">, HomeSamples>> = {
 			gender: "other",
 			address: "Pavyzdžių a. 8, Klaipėda",
 			identifier: "9002-90000025",
+			status: "claimed",
+		},
+	],
+	// Cyprus: facilities of the Ministry of Health's lists, a pharmacy named after its address (the
+	// list names its pharmacist, never read), printed with the page key (synthetic).
+	CY: [
+		{
+			name: "Φαρμακείο, Οδός Παραδείγματος 12, Λευκωσία",
+			listing: "farmakeia",
+			gender: "other",
+			address: "Οδός Παραδείγματος 12, 1010 Λευκωσία",
+			identifier: "f901",
+			status: "unclaimed",
+		},
+		{
+			name: "Κέντρο Υγείας Παραδείγματος",
+			listing: "kentra-ygeias",
+			gender: "other",
+			address: "Λεωφόρος Παραδείγματος 3, 2003 Στρόβολος",
+			identifier: "m00000000a1",
+			status: "verified",
+		},
+		{
+			name: "Γενικό Νοσοκομείο Παραδείγματος",
+			listing: "nosokomeia",
+			gender: "other",
+			address: "Οδός Υποδείγματος 215, 2029 Στρόβολος",
+			identifier: "m00000000b2",
 			status: "claimed",
 		},
 	],

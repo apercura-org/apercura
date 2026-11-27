@@ -14,6 +14,7 @@ export const COMMANDS = [
 	"etl:fi",
 	"etl:lt",
 	"etl:si",
+	"etl:cy",
 	"etl:places",
 	"etl:outbox",
 ] as const;
@@ -82,6 +83,11 @@ Commands:
                 daily lists (ZZZS; CC BY 4.0), with whether each takes new patients,
                 placed on the register's streets and settlements (GURS), rebuild
                 read models.
+  etl:cy        Import Cypriot facilities: the Ministry of Health's open lists on
+                data.gov.cy (CC BY 4.0) of private pharmacies (Pharmaceutical
+                Services; the pharmacist's name and house telephone are never read),
+                state hospitals and state health centres, placed in the municipalities
+                and communities, rebuild read models.
   etl:places    Import regions, departments, communes and arrondissements
                 (geo.api.gouv.fr), or with --country at the Austrian
                 Bundesländer and Gemeinden (Statistik Austria), or with --country gb
@@ -106,7 +112,9 @@ Commands:
                 Registrų centras, CC BY 4.0), or with --country si the Slovenian
                 statistical regions and municipalities, and the settlements, postal
                 areas and streets that locate the practices (GURS, Register prostorskih
-                enot, CC BY 4.0). Run once, then yearly.
+                enot, CC BY 4.0), or with --country cy the Cypriot districts,
+                municipalities and communities (CYSTAT's 2021 census, Cyprus Post's
+                postcodes). Run once, then yearly.
   etl:outbox    Send pending cache invalidations to the web app.
 
 Flags (etl:fr):
@@ -181,6 +189,12 @@ Flags (etl:pl):
   --dry-run, --approve=<run_id>, --force, --source-dir <path>, --offline, --work-dir <path>
                           As for etl:fr. One register: when it cannot be fetched or read the
                           run fails (exit code 1).
+Flags (etl:cy):
+  --sources <ids>         Lists to import: farmakeia, nosokomeia, kentra
+                          (default ETL_CY_SOURCES, else all three).
+  --dry-run, --approve=<run_id>, --force, --source-dir <path>, --offline, --work-dir <path>
+                          As for etl:at. A list that cannot be fetched or read is left out of
+                          the run (exit code 3).
 Flags (etl:no):
   --sources <ids>         Sources to import: brreg (the register's establishments)
                           (default ETL_NO_SOURCES, else brreg).
@@ -246,12 +260,15 @@ Environment:
   ETL_LT_VASPVT_URL, ETL_LT_ADDRESS_URL, ETL_LT_DATASET_PAGE, ETL_LT_REQUEST_INTERVAL_MS,
   ETL_LT_REQUEST_ATTEMPTS, ETL_LT_SOURCE_DIR,
   ETL_SI_SOURCES, ETL_SI_PAGE_URL, ETL_SI_PLACES_URL, ETL_SI_SOURCE_DIR,
+  ETL_CY_SOURCES, ETL_CY_FARMAKEIA_URL, ETL_CY_NOSOKOMEIA_URL, ETL_CY_KENTRA_URL,
+  ETL_CY_CENSUS_URL, ETL_CY_POSTCODES_URL, ETL_CY_SOURCE_DIR,
   APP_URL and REVALIDATE_SECRET (cache revalidation).`;
 
 export {
 	type AtOptions,
 	buildAtOptions,
 	buildChOptions,
+	buildCyOptions,
 	buildCzOptions,
 	buildDeOptions,
 	buildEeOptions,
@@ -266,6 +283,7 @@ export {
 	buildPlOptions,
 	buildSiOptions,
 	type ChOptions,
+	type CyOptions,
 	type CzOptions,
 	type DeOptions,
 	type EeOptions,
@@ -283,6 +301,7 @@ export {
 } from "./config";
 export { type AtRunOutcome, runAt } from "./run-at";
 export { type ChRunOutcome, runCh } from "./run-ch";
+export { type CyRunOutcome, runCy } from "./run-cy";
 export { type CzRunOutcome, runCz } from "./run-cz";
 export { type DeRunOutcome, runDe } from "./run-de";
 export { type EeRunOutcome, runEe } from "./run-ee";

@@ -121,3 +121,11 @@
 # `--sources sa,zob`. Exit codes: 1 failed, 2 blocked, 3 imported without a list that could not
 # be fetched or read (see docs/data-import.md, "Slovenia").
 30 5 * * 3 apercura etl:si $ETL_SI_SCHEDULE_ARGS
+
+# Cyprus's facilities (the Ministry of Health's open lists on data.gov.cy, CC BY 4.0: private
+# pharmacies, published yearly; state hospitals and health centres), on the 5th of every month
+# at 22:30 UTC, when no other import runs (the same advisory lock: one import at a time);
+# unchanged lists end the run after their download (about 130 kB). ETL_CY_SCHEDULE_ARGS adds
+# flags, e.g. `--sources farmakeia`. Exit codes: 1 failed, 2 blocked, 3 imported without a list
+# that could not be fetched or read (see docs/data-import.md, "Cyprus").
+30 22 5 * * apercura etl:cy $ETL_CY_SCHEDULE_ARGS

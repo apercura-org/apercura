@@ -17,7 +17,7 @@
  * `de-CH` under `/ch` (German, the majority language), `fr-CH` under `/ch-fr` and `it-CH` under
  * `/ch-it`, all three market languages of their own, indexed, not interface translations; and
  * `et-EE` Estonia's, in Estonian, under `/ee`; `pl-PL` is
- * Poland's, in Polish, under `/pl`; and `nb-NO` Norway's, in Norwegian Bokmål, under `/no`; `en-IE` Ireland's, in English, under `/ie`; `fi-FI` Finland's, in Finnish, under `/fi`; and `sl-SI` Slovenia's, in Slovenian, under `/si`
+ * Poland's, in Polish, under `/pl`; and `nb-NO` Norway's, in Norwegian Bokmål, under `/no`; `en-IE` Ireland's, in English, under `/ie`; `fi-FI` Finland's, in Finnish, under `/fi`; `sl-SI` Slovenia's, in Slovenian, under `/si`; and `el-CY` Cyprus's, in Greek, under `/cy`
  * (docs/adr/0002-multi-country.md, section 2: once a second market opens, a
  * market's languages are locales of their own); `lt-LT` is Lithuania's, in Lithuanian, under `/lt`. Locale ids are BCP 47 tags, so next-intl formats dates, numbers
  * and plurals the market's way; the URL prefix is the segment.
@@ -44,6 +44,7 @@ export const LOCALES = [
 	"fi-FI",
 	"lt-LT",
 	"sl-SI",
+	"el-CY",
 ] as const;
 
 export type Locale = (typeof LOCALES)[number];
@@ -89,6 +90,8 @@ export const ESTONIA_SEGMENT = "ee";
 export const POLAND_SEGMENT = "pl";
 /** The path segment of the Norwegian market (`/no/legekontorer/oslo`). */
 export const NORWAY_SEGMENT = "no";
+/** The path segment of the Cypriot market (`/cy/farmakeia/eparchia-lefkosias`). */
+export const CYPRUS_SEGMENT = "cy";
 
 /** The path segment of the Irish market (`/ie/pharmacy/cork`). */
 export const IRELAND_SEGMENT = "ie";
@@ -130,11 +133,12 @@ export const LOCALE_PREFIXES = {
 	"fi-FI": `/${FINLAND_SEGMENT}`,
 	"lt-LT": `/${LITHUANIA_SEGMENT}`,
 	"sl-SI": `/${SLOVENIA_SEGMENT}`,
+	"el-CY": `/${CYPRUS_SEGMENT}`,
 } as const satisfies Record<Locale, `/${string}`>;
 
 /**
  * The market whose pages a locale shows (ISO 3166-1 alpha-2): France for `fr`
- * and its interface translations, Austria for `de-AT`, the UK for `en-GB`, Czechia for `cs-CZ`, Spain for `es-ES`, Italy for `it-IT`, Germany for `de-DE`, Switzerland for `de-CH`, `fr-CH` and `it-CH`, Estonia for `et-EE`, Poland for `pl-PL`, Norway for `nb-NO`, Ireland for `en-IE`, Finland for `fi-FI`, Lithuania for `lt-LT`, Slovenia for `sl-SI`. Every query of a public
+ * and its interface translations, Austria for `de-AT`, the UK for `en-GB`, Czechia for `cs-CZ`, Spain for `es-ES`, Italy for `it-IT`, Germany for `de-DE`, Switzerland for `de-CH`, `fr-CH` and `it-CH`, Estonia for `et-EE`, Poland for `pl-PL`, Norway for `nb-NO`, Ireland for `en-IE`, Finland for `fi-FI`, Lithuania for `lt-LT`, Slovenia for `sl-SI`, Cyprus for `el-CY`. Every query of a public
  * page is scoped to it, so a market never lists another market's practitioners.
  */
 export const LOCALE_MARKETS = {
@@ -159,6 +163,7 @@ export const LOCALE_MARKETS = {
 	"fi-FI": "FI",
 	"lt-LT": "LT",
 	"sl-SI": "SI",
+	"el-CY": "CY",
 } as const satisfies Record<Locale, string>;
 
 export type MarketCountry = (typeof LOCALE_MARKETS)[Locale];
@@ -174,7 +179,7 @@ export function marketOf(locale: Locale): MarketCountry {
  * The locale of a market's own language (`FR` → `fr`, `AT` → `de-AT`, `GB` → `en-GB`,
  * `CZ` → `cs-CZ`, `ES` → `es-ES`, `IT` → `it-IT`, `DE` → `de-DE`, `PL` → `pl-PL`, `FI` → `fi-FI`, `LT` → `lt-LT`, `CH` → `de-CH`: German under `/ch`, the
  * search's `pays` value; a French or Italian reader lands on `/ch-fr` or `/ch-it` through
- * `marketLocaleFor`), `EE` → `et-EE`, `NO` → `nb-NO`, `IE` → `en-IE`, `SI` → `sl-SI`.
+ * `marketLocaleFor`), `EE` → `et-EE`, `NO` → `nb-NO`, `IE` → `en-IE`, `SI` → `sl-SI`, `CY` → `el-CY`.
  */
 export const MARKET_LOCALES: Record<MarketCountry, Locale> = {
 	FR: "fr",
@@ -192,6 +197,7 @@ export const MARKET_LOCALES: Record<MarketCountry, Locale> = {
 	FI: "fi-FI",
 	LT: "lt-LT",
 	SI: "sl-SI",
+	CY: "el-CY",
 };
 
 /** The open markets, France first: the order a search looks a place up in after its own. */
@@ -242,7 +248,8 @@ export function marketLocaleFor(country: MarketCountry, visitor: Locale): Locale
  * Bokmål texts on top (`messages/no.json`), `sl-SI` with the Slovenian texts on top
  * (`messages/si.json`); `en-IE` reads the English catalog with Ireland's overrides
  * (`messages/en-IE.json`; `en-GB` is the UK's), and `fi-FI` the English catalog with the Finnish texts on top
- * (`messages/fi.json`); `lt-LT` reads it with the Lithuanian texts on top (`messages/lt.json`).
+ * (`messages/fi.json`); `lt-LT` reads it with the Lithuanian texts on top (`messages/lt.json`), and `el-CY` the English catalog with the Greek texts on top
+ * (`messages/cy.json`).
  */
 export const CATALOG_LANGUAGES = {
 	fr: "fr",
@@ -266,6 +273,7 @@ export const CATALOG_LANGUAGES = {
 	"fi-FI": "fi",
 	"lt-LT": "lt",
 	"sl-SI": "sl",
+	"el-CY": "el",
 } as const satisfies Record<Locale, string>;
 
 /** The first path segment of each locale's pages (`fr`, `fr-en`…). */
@@ -285,7 +293,7 @@ export const LEGACY_LOCALE_SEGMENTS = ["en", "de", "es", "it"] as const satisfie
  * language (France in French, Austria in German, the UK in English, Czechia in Czech, Spain in
  * Spanish, Italy in Italian, Germany in German, Switzerland in each of its three languages, Estonia in
  * Estonian, Poland in
- * Polish, Norway in Norwegian, Ireland in English, Lithuania in Lithuanian, Slovenia in Slovenian). Interface translations
+ * Polish, Norway in Norwegian, Ireland in English, Lithuania in Lithuanian, Slovenia in Slovenian, Cyprus in Greek). Interface translations
  * of a market's pages (`/fr-de`) stay `noindex`, out of the sitemaps and without hreflang.
  */
 export const INDEXABLE_LOCALES: readonly Locale[] = [
@@ -306,6 +314,7 @@ export const INDEXABLE_LOCALES: readonly Locale[] = [
 	"fi-FI",
 	"lt-LT",
 	"sl-SI",
+	"el-CY",
 ];
 
 /**
@@ -339,6 +348,7 @@ export const HREFLANGS: Partial<Record<Locale, string>> = {
 	"fi-FI": "fi-FI",
 	"lt-LT": "lt-LT",
 	"sl-SI": "sl-SI",
+	"el-CY": "el-CY",
 };
 
 /** BCP 47 tag used to format dates and numbers, and as the content language (JSON-LD). */
@@ -364,6 +374,7 @@ export const LOCALE_TAGS: Record<Locale, string> = {
 	"fi-FI": "fi-FI",
 	"lt-LT": "lt-LT",
 	"sl-SI": "sl-SI",
+	"el-CY": "el-CY",
 };
 
 /** Open Graph locales (`og:locale`). */
@@ -389,6 +400,7 @@ export const OG_LOCALES: Record<Locale, string> = {
 	"fi-FI": "fi_FI",
 	"lt-LT": "lt_LT",
 	"sl-SI": "sl_SI",
+	"el-CY": "el_CY",
 };
 
 export function isLocale(value: unknown): value is Locale {

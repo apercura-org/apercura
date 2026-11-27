@@ -1,5 +1,6 @@
 import { austria } from "./at";
 import { switzerland } from "./ch";
+import { cyprus } from "./cy";
 import { czechia } from "./cz";
 import { germany } from "./de";
 import { estonia } from "./ee";
@@ -24,6 +25,7 @@ export {
 	chCantonOfNumber,
 	switzerland,
 } from "./ch";
+export { CY_DISTRICTS, CY_SCHEME_IDS, cyprus } from "./cy";
 export { CZ_REGIONS, czechia, PRAGUE_CODE, PRAGUE_DISTRICT_CODE } from "./cz";
 export { DE_PHARMACY_STATES, DE_SCHEME_IDS, DE_STATES, DESTATIS_YEAR, germany } from "./de";
 export { EE_COUNTIES, EE_PLACES_DATE, EE_SCHEME_IDS, estonia } from "./ee";
@@ -79,6 +81,7 @@ export const COUNTRY_ADAPTERS: Readonly<Partial<Record<CountryCode, CountryAdapt
 	FI: finland,
 	LT: lithuania,
 	SI: slovenia,
+	CY: cyprus,
 };
 
 /** The adapter of a market, or an error naming a country the code does not support yet. */
@@ -88,7 +91,7 @@ export function countryAdapter(code: string): CountryAdapter {
 	return adapter;
 }
 
-/** The adapter whose pages live under a path segment (`fr`, `at`, `gb`, `cz`, `es`, `it`, `de`, `ch`, `pl`, `ee`, `no`, `ie`, `lt`, `si`), or undefined. */
+/** The adapter whose pages live under a path segment (`fr`, `at`, `gb`, `cz`, `es`, `it`, `de`, `ch`, `pl`, `ee`, `no`, `ie`, `lt`, `si`, `cy`), or undefined. */
 export function adapterOfSegment(segment: string): CountryAdapter | undefined {
 	return Object.values(COUNTRY_ADAPTERS).find((adapter) => adapter?.segment === segment);
 }

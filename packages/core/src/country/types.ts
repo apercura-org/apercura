@@ -24,6 +24,7 @@ export const COUNTRY_CODES = [
 	"FI",
 	"LT",
 	"SI",
+	"CY",
 ] as const;
 
 export type CountryCode = (typeof COUNTRY_CODES)[number];
