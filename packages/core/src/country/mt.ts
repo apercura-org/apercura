@@ -191,6 +191,41 @@ function index(): Map<string, string> {
 	return map;
 }
 
+/** The island words a register's place may end with, lower case. */
+const ISLAND_WORDS: Readonly<Record<string, "Gozo" | "Malta">> = {
+	għawdex: "Gozo",
+	ghawdex: "Gozo",
+	gozo: "Gozo",
+	malta: "Malta",
+};
+
+/**
+ * `Ir-Rabat, Għawdex` → `{ name: "Ir-Rabat", which: "Gozo" }`: the last word when it names an
+ * island and a space or comma comes before it, read without a backtracking pattern (a run of
+ * blanks costs one pass).
+ */
+function islandSuffix(text: string): { name: string; which: "Gozo" | "Malta" } | null {
+	let end = text.length;
+	let start = end;
+	while (start > 0 && !/[\s,]/.test(text.charAt(start - 1))) start -= 1;
+	const which = ISLAND_WORDS[text.slice(start, end).toLowerCase()];
+	if (!which || start === 0) return null;
+	end = start;
+	while (end > 0 && /[\s,]/.test(text.charAt(end - 1))) end -= 1;
+	const name = text.slice(0, end);
+	return name ? { name, which } : null;
+}
+
+/** `St. Andrews (Swieqi)` → `{ name: "St. Andrews", inner: "Swieqi" }`, or null. */
+function bracketedLocality(text: string): { name: string; inner: string } | null {
+	if (!text.endsWith(")")) return null;
+	const open = text.lastIndexOf("(");
+	if (open < 0) return null;
+	const inner = text.slice(open + 1, -1);
+	if (!inner || inner.includes(")")) return null;
+	return { name: text.slice(0, open).trimEnd(), inner };
+}
+
 /**
  * The locality code of a place as the register writes it (`Ħal Luqa`, `Ir-Rabat, Għawdex`,
  * `Pembroke, St. Andrews`, `Bulebel, Iż-Żejtun`, `St. Paul’s Bay`), or null. The whole name is
@@ -211,17 +246,16 @@ export function mtLocalityOfName(raw: string | null | undefined): string | null 
 	const whole = tryKeys(text);
 	if (whole) return whole;
 	// `Ir-Rabat, Għawdex`, `L-Għarb Għawdex`, `L-Imġarr, Malta`: the island in brackets.
-	const island = /^(.*?)[\s,]+(għawdex|ghawdex|gozo|malta)$/i.exec(text);
-	if (island?.[1]) {
-		const name = island[1];
-		const which = /malta/i.test(island[2] ?? "") ? "Malta" : "Gozo";
+	const island = islandSuffix(text);
+	if (island) {
+		const { name, which } = island;
 		const code = tryKeys(`${name} (${which})`) ?? tryKeys(name);
 		if (code) return code;
 	}
 	// `St. Andrews (Swieqi)`, `L-Imsida (Tal-Pietà)`: the locality in brackets, then the name.
-	const bracketed = /^(.*?)\s*\(([^)]+)\)$/.exec(text);
-	if (bracketed?.[2]) {
-		const code = tryKeys(bracketed[2]) ?? tryKeys(bracketed[1] ?? "");
+	const bracketed = bracketedLocality(text);
+	if (bracketed) {
+		const code = tryKeys(bracketed.inner) ?? tryKeys(bracketed.name);
 		if (code) return code;
 	}
 	// `Pembroke, St. Andrews`, `Bulebel, Iż-Żejtun`: each part, the first one first.

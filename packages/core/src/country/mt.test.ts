@@ -132,6 +132,17 @@ describe("the Maltese adapter", () => {
 		for (const [raw, code] of cases) expect(mtLocalityOfName(raw), raw).toBe(code);
 	});
 
+	it("reads a long run of blanks before an island or a bracket in one pass", () => {
+		const blanks = "\t".repeat(50_000);
+		const started = performance.now();
+		expect(mtLocalityOfName(`Ir-Rabat,${blanks}Għawdex`)).toBe(
+			mtLocalityOfName("Ir-Rabat, Għawdex"),
+		);
+		expect(mtLocalityOfName(`${blanks}x${blanks}(`)).toBeNull();
+		expect(mtLocalityOfName(`x${blanks}Għawdex!`)).toBeNull();
+		expect(performance.now() - started).toBeLessThan(1_000);
+	});
+
 	it("keys a pharmacy by its licence number", () => {
 		expect(Object.keys(MT_ID_SCHEMES)).toEqual(["MT-MA"]);
 		expect(mtLicenceKey("DL 001")).toBe("001");

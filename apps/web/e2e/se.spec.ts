@@ -214,6 +214,7 @@ test("the home is Sweden's, in Swedish, with Swedish samples and its coverage", 
 		"Cypern",
 		"Lettland",
 		"Sverige",
+		"Malta",
 	]);
 	await expect(countries.getByRole("link", { name: "Sverige" })).toHaveAttribute(
 		"aria-current",
