@@ -431,6 +431,51 @@ export function parseItPlaceSegment(segment: string): ItPlaceSegment | null {
 }
 
 /**
+ * Lithuanian identifiers: the State Accreditation Service for Health Care Activities (VASPVT)
+ * numbers every licensed institution (`spi_id`) and gives each of its licensed activity
+ * addresses a GUID. A page is an activity address: its key is the institution's number and the
+ * Address Register's code of the address (`adreso_id`, permanent), `5271-12679435`; an activity
+ * address without an address code takes the first eight hexadecimal digits of its GUID after a
+ * `v` (`5271-v00141024`). The legal entity code (`ja_kodas`) is never used.
+ */
+export const LT_ID_SCHEME = "LT-VASPVT";
+
+const LT_ID = /^[1-9]\d{0,6}-(?:[1-9]\d{0,9}|v[0-9a-f]{8})$/;
+
+/** True for a Lithuanian page key (`5271-12679435`, `5271-v00141024`), syntax only. */
+export function isValidLtSourceId(value: string): boolean {
+	return LT_ID.test(value);
+}
+
+/**
+ * Canonical path segment of a Lithuanian page: `{name}-{key}`
+ * (`uab-pavyzdine-klinika-5271-12679435`), diacritics dropped.
+ */
+export function ltFacilitySlug(name: string, nationalId: string): string {
+	const base = slugify(name).slice(0, 80).replace(/-+$/, "");
+	return base ? `${base}-${nationalId}` : nationalId;
+}
+
+export type LtFacilitySegment = {
+	idScheme: typeof LT_ID_SCHEME;
+	nationalId: string;
+	/** Name part before the key, possibly empty. */
+	namePart: string;
+};
+
+/**
+ * Parses the last segment of a Lithuanian page URL (`{name}-{key}`): the key is always its last
+ * two parts. Returns null unless it ends with a valid key, so invalid URLs never reach the
+ * database.
+ */
+export function parseLtFacilitySegment(segment: string): LtFacilitySegment | null {
+	const match =
+		/^(?:([a-z0-9]+(?:-[a-z0-9]+)*)-)?([1-9]\d{0,6}-(?:[1-9]\d{0,9}|v[0-9a-f]{8}))$/.exec(segment);
+	if (!match) return null;
+	return { idScheme: LT_ID_SCHEME, nationalId: match[2] ?? "", namePart: match[1] ?? "" };
+}
+
+/**
  * German identifiers: one scheme per source, so a source that fails to import keeps its rows.
  * Neither the Destatis directory of hospitals and of prevention and rehabilitation clinics nor
  * the Länder's pharmacy lists publish a national number: the hospital directory's `KH_ID` is a

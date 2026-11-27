@@ -19,6 +19,7 @@ const LANGUAGES: readonly GeoLanguage[] = [
 	"pl",
 	"nb",
 	"fi",
+	"lt",
 ];
 
 /** Countries of 5 million people or more, which list at least 10 cities. */
@@ -158,6 +159,8 @@ describe("EUROPEAN_COUNTRIES", () => {
 		expect(europeanCountry("DE")?.covered.cs).toBe("Německo");
 		expect(europeanCountry("FR")?.covered.cs).toBe("Francii");
 		expect(europeanCountry("UA")?.covered.cs).toBe("Ukrajinu");
+		expect(europeanCountry("FR")?.covered.lt).toBe("Prancūzijos");
+		expect(europeanCountry("NL")?.covered.lt).toBe("Nyderlandų");
 	});
 });
 
