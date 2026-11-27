@@ -1,5 +1,7 @@
 import { createTranslator } from "next-intl";
 import { describe, expect, it } from "vitest";
+import { messagesFor } from "~/i18n/catalogs";
+import { CATALOG_LANGUAGES, LOCALES } from "~/i18n/locales";
 import en from "../../messages/en.json";
 import fr from "../../messages/fr.json";
 import { getPillars } from "./pillars";
@@ -48,7 +50,7 @@ describe("hosting pillar copy", () => {
 		expect(printed("fr", undefined)[2]).toEqual({
 			title: "Données chiffrées",
 			description:
-				"Les données des patients sont chiffrées au niveau applicatif. Hébergez-les chez vous ou chez un hébergeur certifié HDS.",
+				"Les justificatifs, les signalements d’erreur et, là où la réservation en ligne est ouverte, les rendez-vous sont chiffrés au niveau applicatif.",
 		});
 		expect(printed("en", undefined)[2]?.title).toBe("Encrypted data");
 		for (const locale of ["fr", "en"] as const) {
@@ -61,6 +63,20 @@ describe("hosting pillar copy", () => {
 	it("never says Apercura itself is HDS-certified", () => {
 		for (const catalog of [en, fr]) {
 			expect(JSON.stringify(catalog)).not.toMatch(/Apercura[^".]*(certifi|HDS)/i);
+		}
+	});
+
+	it("words the encryption pillar for every market, in its language, without a host or a place", () => {
+		const english = en.HomePage.pillars.encrypted;
+		for (const locale of LOCALES) {
+			const pillar = messagesFor(locale).HomePage.pillars.encrypted;
+			// Every market shows it: never the HDS regime, a hosting place or a host.
+			expect(`${pillar.title} ${pillar.description}`).not.toMatch(
+				/HDS|France|Frankreich|Francia|Francie|EEA|EWR|hébergeur|host/i,
+			);
+			if (CATALOG_LANGUAGES[locale] !== "en") {
+				expect(pillar.description, locale).not.toBe(english.description);
+			}
 		}
 	});
 });

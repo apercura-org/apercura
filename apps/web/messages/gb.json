@@ -60,6 +60,10 @@
 		"market": {
 			"listingsHeading": "By type of practice",
 			"placesHeading": "By region and nation"
+		},
+		"specimen": {
+			"heading": "Every practice already has a page",
+			"intro": "This is a page as NHS open data fills it, before the practice claims it: known fields are filled, the others say plainly that they are not provided."
 		}
 	},
 	"Practitioner": {
@@ -79,7 +83,8 @@
 				"statement": "Apercura does not offer online booking in the UK. Call the practice to make an appointment."
 			}
 		},
-		"sitesHeading": "Addresses"
+		"sitesHeading": "Addresses",
+		"specimen": "Sample, not a real practice"
 	},
 	"PractitionerPage": {
 		"metaTitle": "{name}, {occupation} · Apercura",

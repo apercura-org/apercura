@@ -54,9 +54,8 @@ test("without PUBLIC_HDS_HOST the home page claims encryption, not HDS hosting",
 }) => {
 	await page.goto("/fr");
 	await expect(page.getByText("Données chiffrées", { exact: true })).toBeVisible();
-	await expect(
-		page.getByText(/Hébergez-les chez vous ou chez un hébergeur certifié HDS\./),
-	).toBeVisible();
+	await expect(page.getByText(/sont chiffrés au niveau applicatif\./)).toBeVisible();
+	await expect(page.getByText(/HDS/)).toHaveCount(0);
 	await expect(page.getByText(/hébergées en France/)).toHaveCount(0);
 	await page.goto("/fr-en");
 	await expect(page.getByText("Encrypted data", { exact: true })).toBeVisible();

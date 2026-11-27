@@ -1,24 +1,11 @@
-import { austria, countryAdapter } from "@apercura/core/country";
-import {
-	AT_DENTIST,
-	AT_DOCTOR,
-	CH_DEFAULT_PROFESSIONS,
-	CZ_DEFAULT_PROFESSIONS,
-	DE_DEFAULT_PROFESSIONS,
-	ES_DEFAULT_PROFESSIONS,
-	GB_DENTAL_PRACTICE,
-	GB_GP_PRACTICE,
-	GB_PHARMACY,
-	IT_DEFAULT_PROFESSIONS,
-} from "@apercura/core/taxonomy";
-import { buttonStyles, FieldList, FieldRow, ProvenanceNote } from "@apercura/ui";
+import { buttonStyles } from "@apercura/ui";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { BookletPage } from "~/components/booklet-page";
 import { HomeSearch } from "~/components/home-search";
-import { CountLinks } from "~/components/listing";
+import { HomeDirectory, HomeSources } from "~/components/home-sections";
 import { PageGraph } from "~/components/page-graph";
 import { SampleStamps } from "~/components/sample-stamps";
 import { SiteFooter } from "~/components/site-footer";
@@ -27,15 +14,11 @@ import { SpecimenPage } from "~/components/specimen-page";
 import { serverEnv } from "~/env";
 import { marketOf } from "~/i18n/locales";
 import { Link } from "~/i18n/navigation";
-import { type Locale, routing } from "~/i18n/routing";
-import { getTaxonomyLabels } from "~/lib/labels";
-import { getPillars, type Pillar } from "~/lib/pillars";
-import { REGION_LISTING_MARKETS } from "~/lib/places";
+import { routing } from "~/i18n/routing";
+import { getPillars } from "~/lib/pillars";
 import { homeAlternates, pageMetadata } from "~/lib/seo";
 import { apercuraSiteNodes } from "~/lib/site-entities";
-import { getDirectoryIndex, getMarketOverview } from "~/server/queries/hubs";
-import { getRegistryFigures } from "~/server/queries/registry";
-import { getSwissCoverage, getSwissCoverageTexts } from "~/server/queries/swiss-coverage";
+import { getSwissCoverageTexts } from "~/server/queries/swiss-coverage";
 
 export async function generateMetadata({ params }: PageProps<"/[locale]">): Promise<Metadata> {
 	const { locale: requested } = await params;
@@ -61,17 +44,11 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
 	const t = await getTranslations({ locale, namespace: "HomePage" });
 
 	const tMeta = await getTranslations({ locale, namespace: "Metadata" });
-	// Austria, the UK, Czechia, Spain, Italy and Germany: a directory from open lists, without
-	// booking or the French registry.
-	const market = marketOf(locale);
-	const austrian = market !== "FR";
-	const pillars: Pillar[] = austrian
-		? [{ key: "free" }, { key: "openSource" }, { key: "selfHostable" }]
-		: getPillars(serverEnv.PUBLIC_HDS_HOST);
-	// Live from the directory; left out before the first import.
-	const figures = austrian ? null : await getRegistryFigures();
-	// Switzerland names the cantons whose lists it publishes, live from the directory too.
-	const hook = market === "CH" ? (await getSwissCoverageTexts(locale)).hook : t("hook");
+	// One home for every market: the same sections in the same order, each filled with the
+	// market's own pages, sources and figures (#163).
+	const pillars = getPillars(serverEnv.PUBLIC_HDS_HOST);
+	// Switzerland names the cantons whose lists it publishes, live from the directory.
+	const hook = marketOf(locale) === "CH" ? (await getSwissCoverageTexts(locale)).hook : t("hook");
 
 	return (
 		<>
@@ -90,35 +67,31 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
 				 */}
 				<div className="rule-b">
 					<div className="mx-auto grid w-full max-w-6xl gap-x-8 gap-y-10 px-5 pt-10 pb-12 sm:px-8 sm:pt-14 lg:grid-cols-12 lg:pt-16 lg:pb-16">
-						<div className={`flex flex-col gap-8 ${austrian ? "lg:col-span-10" : "lg:col-span-8"}`}>
+						<div className="flex flex-col gap-8 lg:col-span-8">
 							<div className="flex flex-col gap-4">
 								<h1 className="type-display">{t("title")}</h1>
 								<p className="max-w-[46ch] text-lead text-ink-muted">{hook}</p>
 							</div>
 							<HomeSearch locale={locale} idPrefix="home-search" />
 						</div>
-						{austrian ? null : (
-							<div className="lg:col-span-4 lg:border-s lg:border-rule-soft lg:ps-8">
-								<SampleStamps locale={locale} />
-							</div>
-						)}
+						<div className="lg:col-span-4 lg:border-s lg:border-rule-soft lg:ps-8">
+							<SampleStamps locale={locale} />
+						</div>
 					</div>
 				</div>
 
 				<BookletPage>
-					{austrian ? (
-						<MarketDirectory locale={locale} />
-					) : (
-						<section aria-labelledby="specimen-heading" className="flex flex-col gap-5">
-							<div className="flex max-w-[65ch] flex-col gap-2">
-								<h2 id="specimen-heading" className="type-title text-ink">
-									{t("specimen.heading")}
-								</h2>
-								<p className="text-body text-ink">{t("specimen.intro")}</p>
-							</div>
-							<SpecimenPage locale={locale} />
-						</section>
-					)}
+					<section aria-labelledby="specimen-heading" className="flex flex-col gap-5">
+						<div className="flex max-w-[65ch] flex-col gap-2">
+							<h2 id="specimen-heading" className="type-title text-ink">
+								{t("specimen.heading")}
+							</h2>
+							<p className="text-body text-ink">{t("specimen.intro")}</p>
+						</div>
+						<SpecimenPage locale={locale} />
+					</section>
+
+					<HomeDirectory locale={locale} />
 
 					<section aria-labelledby="pillars-heading" className="flex flex-col gap-5">
 						<h2 id="pillars-heading" className="type-title text-ink">
@@ -138,52 +111,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
 						</ol>
 					</section>
 
-					{austrian ? <OpenDataRegistry locale={locale} /> : null}
-					{figures ? (
-						<section
-							aria-labelledby="registry-heading"
-							className="grid gap-6 md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] md:gap-12"
-						>
-							<div className="flex flex-col gap-3">
-								<h2 id="registry-heading" className="type-title text-ink">
-									{t("registry.heading")}
-								</h2>
-								<p className="max-w-[60ch] text-body text-ink">{t("registry.intro")}</p>
-							</div>
-							<div className="flex flex-col gap-3">
-								<FieldList>
-									{figures.professions.map((profession) => (
-										<FieldRow
-											key={profession.key}
-											label={t(`registry.${profession.key}`)}
-											emptyLabel=""
-											value={
-												<span className="tabular">
-													{t("registry.count", { count: profession.count })}
-												</span>
-											}
-										/>
-									))}
-									<FieldRow
-										label={t("registry.withAddress")}
-										emptyLabel=""
-										value={
-											<span className="tabular">
-												{t("registry.count", { count: figures.withAddress })}
-											</span>
-										}
-									/>
-								</FieldList>
-								<ProvenanceNote
-									locale={locale}
-									sourceLabel={t("registry.sourceLabel")}
-									source={t("registry.sourceName")}
-									updatedLabel={t("registry.updatedLabel")}
-									updatedAt={figures.importedAt}
-								/>
-							</div>
-						</section>
-					) : null}
+					<HomeSources locale={locale} />
 
 					<section
 						aria-labelledby="pro-heading"
@@ -203,188 +131,5 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
 			</main>
 			<SiteFooter locale={locale} />
 		</>
-	);
-}
-
-/**
- * The home of a market opened from open lists: its largest listings and its places, from the
- * read models. Austria lists its Bundesländer; the UK its regions and nations, each a hub;
- * Czechia its districts (okresy); Spain its provinces; Italy its twenty regions, each a hub;
- * Germany its Kreise with the most facilities (four hundred would bury the page: the directory
- * lists them all);
- * Switzerland its cantons, each a hub.
- */
-/** How many Kreise Germany's home lists. */
-const GERMAN_HOME_PLACES = 30;
-
-async function MarketDirectory({ locale }: { locale: Locale }) {
-	const t = await getTranslations({ locale, namespace: "HomePage" });
-	const labels = await getTaxonomyLabels(locale);
-	const country = marketOf(locale);
-	const [overview, index] = await Promise.all([
-		getMarketOverview(country),
-		getDirectoryIndex(country),
-	]);
-	const states = REGION_LISTING_MARKETS.has(country)
-		? index.regions
-				.filter((region) => region.slug)
-				.map((region) => ({
-					id: region.code,
-					name: region.name,
-					slug: region.slug,
-					practitionerCount: region.departments.reduce(
-						(sum, department) => sum + department.practitionerCount,
-						0,
-					),
-				}))
-		: country === "DE"
-			? index.regions
-					.flatMap((region) => region.departments)
-					.filter((department) => department.practitionerCount > 0)
-					.sort((a, b) => b.practitionerCount - a.practitionerCount || a.name.localeCompare(b.name))
-					.slice(0, GERMAN_HOME_PLACES)
-			: index.regions.flatMap((region) => region.departments);
-	if (overview.listings.length === 0 && states.length === 0) return null;
-	return (
-		<>
-			{overview.listings.length > 0 ? (
-				<section aria-labelledby="listings-heading" className="flex flex-col gap-4">
-					<h2 id="listings-heading" className="type-title text-ink">
-						{t("market.listingsHeading")}
-					</h2>
-					<CountLinks
-						locale={locale}
-						items={overview.listings.map((listing) => ({
-							key: listing.listingSlug,
-							label: labels.listing(listing.listingSlug) ?? listing.listingSlug,
-							href: { pathname: "/[specialite]", params: { specialite: listing.listingSlug } },
-							count: listing.practitionerCount,
-						}))}
-					/>
-				</section>
-			) : null}
-			{states.length > 0 ? (
-				<section aria-labelledby="places-heading" className="flex flex-col gap-4">
-					<h2 id="places-heading" className="type-title text-ink">
-						{t("market.placesHeading")}
-					</h2>
-					<CountLinks
-						locale={locale}
-						items={states.map((state) => ({
-							key: state.id,
-							label: state.name,
-							href: { pathname: "/annuaire/[dept]", params: { dept: state.slug } },
-							count: state.practitionerCount,
-						}))}
-					/>
-				</section>
-			) : null}
-		</>
-	);
-}
-
-/**
- * The sources and figures of a market opened from open lists: pages by profession (Austria's
- * doctors and dentists, the UK's GP practices, dental practices and pharmacies, Czechia's kinds
- * of facility, Spain's kinds of centre, Italy's pharmacies, parapharmacies, hospitals and clinics,
- * Germany's kinds of facility) and the lists.
- */
-async function OpenDataRegistry({ locale }: { locale: Locale }) {
-	const t = await getTranslations({ locale, namespace: "HomePage" });
-	const labels = await getTaxonomyLabels(locale);
-	const country = marketOf(locale);
-	const overview = await getMarketOverview(country);
-	const countOf = (codes: readonly string[]) =>
-		overview.professions
-			.filter((row) => codes.includes(row.professionCode))
-			.reduce((sum, row) => sum + row.practitionerCount, 0);
-	const adapter = country === "AT" ? austria : countryAdapter(country);
-	// Switzerland credits the lists its published facilities come from, and says which cantons
-	// they cover: a list that was never imported is neither credited nor claimed.
-	const swiss = country === "CH";
-	const [coverage, swissTexts] = swiss
-		? await Promise.all([getSwissCoverage(), getSwissCoverageTexts(locale)])
-		: [null, null];
-	const sources = [
-		...new Set(
-			adapter.registries
-				.filter((registry) => registry.provides.includes("practitioners"))
-				.filter((registry) => !coverage || coverage.registries.includes(registry.id))
-				// The UK's eight lists come from three publishers, Switzerland's twelve from eight:
-				// named by publisher.
-				.map((registry) =>
-					country === "GB" || country === "CH" ? registry.publisher : registry.name,
-				),
-		),
-	].join(country === "GB" || country === "CH" ? "; " : ", ");
-	// One row per listing of a kind: Spain's health centres and local surgeries share one.
-	const byListing = (codes: readonly string[]) => {
-		const rows = new Map<string, { code: string; codes: string[]; label: string }>();
-		for (const code of codes) {
-			const slug = adapter.taxonomy.listingSlugFor(code, null) ?? code;
-			const row = rows.get(slug);
-			if (row) row.codes.push(code);
-			else rows.set(slug, { code, codes: [code], label: labels.listing(slug) ?? code });
-		}
-		return [...rows.values()];
-	};
-	const rows =
-		country === "GB"
-			? byListing([GB_GP_PRACTICE, GB_DENTAL_PRACTICE, GB_PHARMACY])
-			: country === "CZ"
-				? byListing(CZ_DEFAULT_PROFESSIONS)
-				: country === "ES"
-					? byListing(ES_DEFAULT_PROFESSIONS)
-					: country === "IT"
-						? byListing(IT_DEFAULT_PROFESSIONS)
-						: country === "DE"
-							? byListing(DE_DEFAULT_PROFESSIONS)
-							: country === "CH"
-								? byListing(CH_DEFAULT_PROFESSIONS)
-								: [
-										{ code: AT_DOCTOR, codes: [AT_DOCTOR], label: t("registry.doctors") },
-										{ code: AT_DENTIST, codes: [AT_DENTIST], label: t("registry.dentists") },
-									];
-	return (
-		<section
-			aria-labelledby="registry-heading"
-			className="grid gap-6 md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] md:gap-12"
-		>
-			<div className="flex flex-col gap-3">
-				<h2 id="registry-heading" className="type-title text-ink">
-					{t("registry.heading")}
-				</h2>
-				<p className="max-w-[60ch] text-body text-ink">
-					{swissTexts
-						? [...swissTexts.summary, t("registry.intro")].join(" ")
-						: t("registry.intro")}
-				</p>
-			</div>
-			<div className="flex flex-col gap-3">
-				<FieldList>
-					{rows.map((row) => (
-						<FieldRow
-							key={row.code}
-							label={row.label}
-							emptyLabel=""
-							value={
-								<span className="tabular">
-									{t("registry.count", { count: countOf(row.codes) })}
-								</span>
-							}
-						/>
-					))}
-				</FieldList>
-				{overview.updatedAt ? (
-					<ProvenanceNote
-						locale={locale}
-						sourceLabel={t("registry.sourceLabel")}
-						source={sources}
-						updatedLabel={t("registry.updatedLabel")}
-						updatedAt={overview.updatedAt}
-					/>
-				) : null}
-			</div>
-		</section>
 	);
 }

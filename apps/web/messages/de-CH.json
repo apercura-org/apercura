@@ -63,7 +63,8 @@
 			"placesHeading": "Nach Kanton"
 		},
 		"specimen": {
-			"heading": "Jede Gesundheitseinrichtung hat schon ihre Seite"
+			"heading": "Jede Gesundheitseinrichtung hat schon ihre Seite",
+			"intro": "So sieht eine Seite aus, wie die offenen Daten des Bundes und der Kantone sie füllen, bevor die Einrichtung sie beansprucht: Bekannte Felder sind ausgefüllt, bei den anderen steht klar, dass sie nicht angegeben sind."
 		}
 	},
 	"Practitioner": {
@@ -74,7 +75,8 @@
 			"verified": "Ergänzt von der Einrichtung, deren Beanspruchung geprüft wurde."
 		},
 		"fields": {
-			"profession": "Art der Einrichtung"
+			"profession": "Art der Einrichtung",
+			"address": "Adresse"
 		},
 		"source": {
 			"name": "Quelle: BAG und Kantone"

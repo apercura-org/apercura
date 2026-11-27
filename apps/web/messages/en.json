@@ -123,7 +123,7 @@
 			},
 			"encrypted": {
 				"title": "Encrypted data",
-				"description": "Patient data is encrypted at the application level. Host it yourself or with an HDS-certified host."
+				"description": "Claim documents, error reports and, where online booking is open, appointments are encrypted at the application level."
 			},
 			"selfHostable": {
 				"title": "Self-hostable",
@@ -152,7 +152,7 @@
 		"status": "Work in progress.",
 		"market": {
 			"listingsHeading": "By specialty",
-			"placesHeading": "By state"
+			"placesHeading": "The départements with the most practitioners"
 		}
 	},
 	"International": {

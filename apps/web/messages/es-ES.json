@@ -65,7 +65,8 @@
 			"placesHeading": "Por provincia"
 		},
 		"specimen": {
-			"heading": "Cada centro sanitario ya tiene su página"
+			"heading": "Cada centro sanitario ya tiene su página",
+			"intro": "Esta es una página tal como la rellena el registro del Ministerio de Sanidad, antes de que el centro la reclame: los campos conocidos están completos y los demás indican claramente que no se han facilitado."
 		}
 	},
 	"Practitioner": {
@@ -76,7 +77,8 @@
 			"verified": "Completada por el centro, cuya reclamación se ha verificado."
 		},
 		"fields": {
-			"profession": "Tipo de centro"
+			"profession": "Tipo de centro",
+			"address": "Dirección"
 		},
 		"source": {
 			"name": "Fuente: Ministerio de Sanidad, REGCESS"
