@@ -848,3 +848,77 @@ export function parseIeFacilitySegment(segment: string): IeFacilitySegment | nul
 	if (!key) return null;
 	return { ...key, namePart: dash < 0 ? "" : segment.slice(0, dash) };
 }
+
+/**
+ * Finnish identifiers. A service location (palvelupiste, "toimipiste") of the national Finnish
+ * Service Catalogue (Suomi.fi-palvelutietovaranto, PTV, run by the Digital and Population Data
+ * Services Agency) is keyed by its service channel id, the catalogue's permanent UUID of the
+ * location, written as 32 lower-case hexadecimal digits without dashes
+ * (`b18aa7f87eca4b97a8e8b438d2e29427`). A page URL ends with it after the location's name
+ * (`lapuan-sosiaali-ja-terveyskeskus-b18aa7f87eca4b97a8e8b438d2e29427`). No business id is used:
+ * every location belongs to a public organiser, never to a person.
+ */
+export const FI_ID_SCHEMES = {
+	/** A service location of the Finnish Service Catalogue: its channel id, without dashes. */
+	"FI-PTV": { prefix: "", pattern: /^[0-9a-f]{32}$/ },
+} as const;
+
+export type FiIdScheme = keyof typeof FI_ID_SCHEMES;
+
+/** True when `value` is a key of the Finnish scheme (syntax only: the location may not exist). */
+export function isValidFiSourceId(scheme: string, value: string): boolean {
+	const entry = FI_ID_SCHEMES[scheme as FiIdScheme];
+	return entry ? entry.pattern.test(value) : false;
+}
+
+/**
+ * The key of a PTV service channel id as Apercura stores it and a page URL ends with it
+ * (`B18AA7F8-7ECA-4B97-A8E8-B438D2E29427` → `b18aa7f87eca4b97a8e8b438d2e29427`); null when it is
+ * not a UUID.
+ */
+export function fiPtvKey(channelId: string): string | null {
+	const key = channelId.trim().toLowerCase().replace(/-/g, "");
+	return FI_ID_SCHEMES["FI-PTV"].pattern.test(key) ? key : null;
+}
+
+/** A stored key in the catalogue's own UUID form (`b18aa7f8-7eca-4b97-a8e8-b438d2e29427`). */
+export function fiPtvChannelId(key: string): string {
+	return `${key.slice(0, 8)}-${key.slice(8, 12)}-${key.slice(12, 16)}-${key.slice(16, 20)}-${key.slice(20)}`;
+}
+
+/**
+ * Canonical path segment of a Finnish page: `{name}-{key}`
+ * (`lapuan-sosiaali-ja-terveyskeskus-b18aa7f87eca4b97a8e8b438d2e29427`), diacritics dropped
+ * (`ä`, `ö`, `å` → `a`, `o`, `a`).
+ */
+export function fiFacilitySlug(name: string, nationalId: string): string {
+	const base = slugify(name).slice(0, 80).replace(/-+$/, "");
+	return base ? `${base}-${nationalId}` : nationalId;
+}
+
+export type FiFacilityKey = { idScheme: FiIdScheme; nationalId: string };
+
+/** Reads a Finnish key as its page URL ends (32 hexadecimal digits). Null for anything else. */
+export function parseFiKey(token: string): FiFacilityKey | null {
+	const lower = token.toLowerCase();
+	return FI_ID_SCHEMES["FI-PTV"].pattern.test(lower)
+		? { idScheme: "FI-PTV", nationalId: lower }
+		: null;
+}
+
+export type FiFacilitySegment = FiFacilityKey & {
+	/** Name part before the key, possibly empty. */
+	namePart: string;
+};
+
+/**
+ * Parses the last segment of a Finnish page URL (`{name}-{key}`). Returns null unless it ends
+ * with a valid key, so invalid URLs never reach the database.
+ */
+export function parseFiFacilitySegment(segment: string): FiFacilitySegment | null {
+	if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(segment)) return null;
+	const dash = segment.lastIndexOf("-");
+	const key = parseFiKey(dash < 0 ? segment : segment.slice(dash + 1));
+	if (!key) return null;
+	return { ...key, namePart: dash < 0 ? "" : segment.slice(0, dash) };
+}
