@@ -139,6 +139,7 @@ describe("the United Kingdom adapter", () => {
 			"EE",
 			"PL",
 			"NO",
+			"IE",
 		]);
 	});
 });

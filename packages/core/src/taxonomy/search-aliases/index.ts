@@ -6,6 +6,7 @@ import { EE_SEARCH_ALIASES } from "./ee";
 import { ES_SEARCH_ALIASES } from "./es";
 import { FR_SEARCH_ALIASES } from "./fr";
 import { GB_SEARCH_ALIASES } from "./gb";
+import { IE_SEARCH_ALIASES } from "./ie";
 import { IT_SEARCH_ALIASES } from "./it";
 import { NO_SEARCH_ALIASES } from "./no";
 import { PL_SEARCH_ALIASES } from "./pl";
@@ -21,6 +22,7 @@ export {
 	ES_SEARCH_ALIASES,
 	FR_SEARCH_ALIASES,
 	GB_SEARCH_ALIASES,
+	IE_SEARCH_ALIASES,
 	IT_SEARCH_ALIASES,
 	NO_SEARCH_ALIASES,
 	PL_SEARCH_ALIASES,
@@ -29,7 +31,7 @@ export {
 /** The search aliases of each open market. */
 export const SEARCH_ALIASES: Readonly<
 	Record<
-		"FR" | "AT" | "GB" | "CZ" | "ES" | "IT" | "DE" | "CH" | "EE" | "PL" | "NO",
+		"FR" | "AT" | "GB" | "CZ" | "ES" | "IT" | "DE" | "CH" | "EE" | "PL" | "NO" | "IE",
 		SearchAliasTable
 	>
 > = {
@@ -44,4 +46,5 @@ export const SEARCH_ALIASES: Readonly<
 	EE: EE_SEARCH_ALIASES,
 	PL: PL_SEARCH_ALIASES,
 	NO: NO_SEARCH_ALIASES,
+	IE: IE_SEARCH_ALIASES,
 };

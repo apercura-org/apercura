@@ -15,7 +15,19 @@
  */
 
 /** The open markets (ISO 3166-1 alpha-2), as `SEARCH_ALIASES` keys them. */
-export type CareMarket = "FR" | "AT" | "GB" | "CZ" | "ES" | "IT" | "DE" | "CH" | "EE" | "PL" | "NO";
+export type CareMarket =
+	| "FR"
+	| "AT"
+	| "GB"
+	| "CZ"
+	| "ES"
+	| "IT"
+	| "DE"
+	| "CH"
+	| "EE"
+	| "PL"
+	| "NO"
+	| "IE";
 
 export const CARE_KINDS = {
 	"general-practice": {
@@ -58,6 +70,7 @@ export const CARE_KINDS = {
 		CH: "apotheke",
 		EE: "apteegid",
 		NO: "apotek",
+		IE: "pharmacy",
 	},
 	hospital: {
 		ES: "hospitales",
@@ -67,7 +80,9 @@ export const CARE_KINDS = {
 		EE: "haiglad",
 		PL: "szpitale",
 		NO: "sykehus",
+		IE: "hospitals",
 	},
+	"nursing-home": { CH: "pflegeheim", IE: "nursing-homes" },
 	paediatrics: {
 		FR: "pediatre",
 		AT: "kinderheilkunde",
