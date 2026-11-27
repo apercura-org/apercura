@@ -5,7 +5,10 @@ type Pathnames = Record<
 	string,
 	| string
 	| Record<
-			Exclude<(typeof LOCALES)[number], "de-AT" | "en-GB" | "cs-CZ" | "es-ES" | "it-IT" | "de-DE">,
+			Exclude<
+				(typeof LOCALES)[number],
+				"de-AT" | "en-GB" | "cs-CZ" | "es-ES" | "it-IT" | "de-DE" | "de-CH" | "fr-CH" | "it-CH"
+			>,
 			string
 	  >
 >;
@@ -69,6 +72,18 @@ function germanMarketPath(path: string): string {
 }
 
 /**
+ * The Swiss market's form of a German or French path: a facility's page under `/einrichtung`
+ * (German) or `/etablissement` (French), since Switzerland lists facilities, never people, so an
+ * establishment's page moves to `/organisation` in both. Italian takes Italy's form
+ * (`italianMarketPath`). Every first segment is a Swiss reserved segment of
+ * `@apercura/core/taxonomy` (`CH_RESERVED_SEGMENTS`, tested), which never names a listing.
+ */
+function swissMarketPath(path: string, person: string, facility: string): string {
+	if (path.startsWith(`/${facility}/`)) return path.replace(`/${facility}/`, "/organisation/");
+	return path.replace(`/${person}/`, `/${facility}/`);
+}
+
+/**
  * The paths of the markets opened after France, derived from a language's own, not listed, so
  * the table every client island ships stays the size of France's:
  * - Austria (`de-AT`): the German paths, with a doctor's page under `/arzt` (every practitioner
@@ -82,7 +97,11 @@ function germanMarketPath(path: string): string {
  * - Italy (`it-IT`): the Italian paths, with a place's page under `/struttura` and an
  *   establishment's under `/organizzazione` (`italianMarketPath`);
  * - Germany (`de-DE`): the German paths, with a facility's page under `/einrichtung` and an
- *   establishment's under `/organisation` (`germanMarketPath`).
+ *   establishment's under `/organisation` (`germanMarketPath`);
+ * - Switzerland: the German paths under `/ch` (`de-CH`, a facility under `/einrichtung`), the
+ *   French ones under `/ch-fr` (`fr-CH`, under `/etablissement`), an establishment under
+ *   `/organisation` in both (`swissMarketPath`), and Italy's Italian ones under `/ch-it`
+ *   (`it-CH`).
  */
 function withMarkets<T extends Pathnames>(pathnames: T) {
 	return Object.fromEntries(
@@ -98,6 +117,9 @@ function withMarkets<T extends Pathnames>(pathnames: T) {
 						"es-ES": spanishMarketPath(value.es),
 						"it-IT": italianMarketPath(value.it),
 						"de-DE": germanMarketPath(value.de),
+						"de-CH": swissMarketPath(value.de, "behandler", "einrichtung"),
+						"fr-CH": swissMarketPath(value.fr, "praticien", "etablissement"),
+						"it-CH": italianMarketPath(value.it),
 					},
 		]),
 	) as {
@@ -110,6 +132,9 @@ function withMarkets<T extends Pathnames>(pathnames: T) {
 					"es-ES": string;
 					"it-IT": string;
 					"de-DE": string;
+					"de-CH": string;
+					"fr-CH": string;
+					"it-CH": string;
 				};
 	};
 }

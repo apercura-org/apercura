@@ -1,6 +1,9 @@
 import {
 	AT_ID_SCHEMES,
 	type AtIdScheme,
+	CH_ID_SCHEMES,
+	type ChIdScheme,
+	chUrlKey,
 	DE_ID_SCHEMES,
 	type DeIdScheme,
 	deUrlKey,
@@ -8,6 +11,7 @@ import {
 	type GbIdScheme,
 	gbUrlKey,
 	parseAtPractitionerSegment,
+	parseChFacilitySegment,
 	parseCzFacilitySegment,
 	parseDeFacilitySegment,
 	parseEsCentreSegment,
@@ -36,7 +40,8 @@ export type PractitionerKey = {
  * in Czechia (`mudr-hana-bohackova-39781`, the NRPZS number), `{centre-name}-{code}` in Spain
  * (`clinica-dental-ejemplo-1328000001`, the REGCESS code), `{name}-{list}{code}` in Italy
  * (`farmacia-esempio-f9000001`, the ministry's code), `{facility-name}-{source}{key}` in Germany
- * (`klinikum-beispiel-k0a1b2c3d4e`, `beispiel-apotheke-th9001`). Null for anything else,
+ * (`klinikum-beispiel-k0a1b2c3d4e`, `beispiel-apotheke-th9001`), `{name}-{list}{key}` in Switzerland
+ * (`kantonsspital-beispiel-h123456789`, in each of its three languages). Null for anything else,
  * so malformed or other-market URLs never reach the database.
  */
 export function parsePractitionerKey(locale: Locale, segment: string): PractitionerKey | null {
@@ -55,6 +60,10 @@ export function parsePractitionerKey(locale: Locale, segment: string): Practitio
 	}
 	if (country === "DE") {
 		const parsed = parseDeFacilitySegment(segment);
+		return parsed ? { country, ...parsed } : null;
+	}
+	if (country === "CH") {
+		const parsed = parseChFacilitySegment(segment);
 		return parsed ? { country, ...parsed } : null;
 	}
 	if (country === "GB") {
@@ -102,6 +111,11 @@ export const IT_SEGMENT_MARKER = "it.";
  * Thuringia (`th420`) would otherwise read like an Austrian list key.
  */
 export const DE_SEGMENT_MARKER = "de.";
+/**
+ * The marker of a Swiss page's segment outside a locale (`ch.{slug}`): a list key (`ju123456789`)
+ * would otherwise read as another market's.
+ */
+export const CH_SEGMENT_MARKER = "ch.";
 
 /** The marker of each market whose segments are marked outside a locale. */
 const SEGMENT_MARKERS: Readonly<Partial<Record<MarketCountry, string>>> = {
@@ -110,6 +124,7 @@ const SEGMENT_MARKERS: Readonly<Partial<Record<MarketCountry, string>>> = {
 	ES: ES_SEGMENT_MARKER,
 	IT: IT_SEGMENT_MARKER,
 	DE: DE_SEGMENT_MARKER,
+	CH: CH_SEGMENT_MARKER,
 };
 
 /**
@@ -126,7 +141,7 @@ export function marketSegmentOf(country: string, slug: string): string {
 
 /**
  * Parses the segment of a practitioner URL of any market, for routes outside a locale (the
- * Open Graph image): a marked segment is British, Czech or Italian (`marketSegmentOf`), an RPPS slug
+ * Open Graph image): a marked segment is British, Czech, Spanish, Italian or Swiss (`marketSegmentOf`), an RPPS slug
  * French, a regional list key Austrian.
  */
 export function parseAnyPractitionerKey(segment: string): PractitionerKey | null {
@@ -148,11 +163,16 @@ export function parseAnyPractitionerKey(segment: string): PractitionerKey | null
  * letters and number of the page URL (`sg10002`); in Czechia the NRPZS facility number; in
  * Spain the REGCESS centre code; in Italy the ministry's code (`9000001`, `002112`, `010030`); in
  * Germany the source letters and key of the page URL (`k0a1b2c3d4e`, `th9001`), since no German
- * source publishes a national number.
+ * source publishes a national number; in
+ * Switzerland the key of the page URL (`h123456789`, `blp7601001796874`), what its `ch:`
+ * reference reads, since most lists number no facility and a derived key alone means nothing.
  */
 export function displayId(key: Pick<PractitionerKey, "idScheme" | "nationalId">): string {
 	if (DE_ID_SCHEMES[key.idScheme as DeIdScheme]) {
 		return deUrlKey(key.idScheme as DeIdScheme, key.nationalId);
+	}
+	if (CH_ID_SCHEMES[key.idScheme as ChIdScheme]) {
+		return chUrlKey(key.idScheme as ChIdScheme, key.nationalId);
 	}
 	const gb = GB_ID_SCHEMES[key.idScheme as GbIdScheme];
 	if (gb) return gb.prefix ? gbUrlKey(key.idScheme as GbIdScheme, key.nationalId) : key.nationalId;

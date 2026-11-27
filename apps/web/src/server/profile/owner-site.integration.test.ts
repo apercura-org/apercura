@@ -29,11 +29,12 @@ describe.skipIf(!url)("owner-added places by market (database)", async () => {
 		name: string;
 		slug: string;
 		departmentCode: string | null;
+		postcodes?: string[];
 	}) => {
 		const [row] = await db.execute<{ id: number }>(sql`
 			INSERT INTO directory.places (country, kind, code, name, slug, department_code, postcodes, centroid)
 			VALUES (${values.country ?? "AT"}, ${values.kind}, ${values.code}, ${values.name}, ${values.slug},
-				${values.departmentCode}, '{}'::text[],
+				${values.departmentCode}, ${`{${(values.postcodes ?? []).join(",")}}`}::text[],
 				ST_SetSRID(ST_MakePoint(16.37, 48.21), 4326)::geography)
 			RETURNING id
 		`);
@@ -69,6 +70,7 @@ describe.skipIf(!url)("owner-added places by market (database)", async () => {
 	let municipio = 0;
 	let comune = 0;
 	let homonym = 0;
+	let gemeindeCh = 0;
 
 	beforeAll(async () => {
 		db = createDb({ url: url as string, max: 2 });
@@ -105,6 +107,16 @@ describe.skipIf(!url)("owner-added places by market (database)", async () => {
 			name: `Borgo Fittizio ${run}`,
 			slug: `borgo-fittizio-${run}`,
 			departmentCode: "215",
+		});
+		// A Swiss commune no register has, with swisstopo's postcodes.
+		gemeindeCh = await place({
+			country: "CH",
+			kind: "commune",
+			code: `c${run}`,
+			name: `Beispielwil ${run}`,
+			slug: `beispielwil-${run}`,
+			departmentCode: "112",
+			postcodes: ["8999"],
 		});
 	});
 
@@ -190,6 +202,29 @@ describe.skipIf(!url)("owner-added places by market (database)", async () => {
 		);
 		expect((await siteOf((await addOwnerSite(db, id, input)).siteId))?.place_id).toBe(comune);
 		await expect(addOwnerSite(db, id, { ...input, postcode: "8010" })).rejects.toThrow(
+			"UNKNOWN_PLACE",
+		);
+	});
+
+	it("places a Swiss facility in the commune of its postcode, with a Swiss phone number", async () => {
+		const id = await practitioner("CH", "CH-BAG");
+		const input = {
+			name: "Spital",
+			addressLine: "Spitalstrasse 1",
+			postcode: "CH-8999",
+			city: `Beispielwil ${run}`,
+			phone: "044 268 31 11",
+		};
+		const { siteId } = await addOwnerSite(db, id, input);
+		expect(await siteOf(siteId)).toEqual({
+			place_id: gemeindeCh,
+			country_code: "CH",
+			phone: "+41442683111",
+		});
+		await expect(addOwnerSite(db, id, { ...input, postcode: "8998" })).rejects.toThrow(
+			"UNKNOWN_PLACE",
+		);
+		await expect(addOwnerSite(db, id, { ...input, postcode: "89990" })).rejects.toThrow(
 			"UNKNOWN_PLACE",
 		);
 	});

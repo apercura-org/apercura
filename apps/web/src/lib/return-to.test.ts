@@ -127,3 +127,17 @@ describe("returning to a German claim", () => {
 		expect(parseReturnTo("/pro/revendiquer?rpps=de:")).toBeNull();
 	});
 });
+describe("returning to a Swiss claim", () => {
+	it("accepts a `ch:` facility key, never anything that looks like a path", () => {
+		expect(parseReturnTo("/pro/revendiquer?rpps=ch:h123456789")).toEqual({
+			pathname: "/pro/revendiquer",
+			query: { rpps: "ch:h123456789" },
+		});
+		expect(parseReturnTo("/pro/revendiquer?rpps=ch:blp7601001796874")?.pathname).toBe(
+			"/pro/revendiquer",
+		);
+		expect(parseReturnTo("/pro/revendiquer?rpps=ch:h123456789/..")).toBeNull();
+		expect(parseReturnTo("/pro/revendiquer?rpps=ch:h0123")).toBeNull();
+		expect(parseReturnTo("/pro/revendiquer?rpps=ch:")).toBeNull();
+	});
+});

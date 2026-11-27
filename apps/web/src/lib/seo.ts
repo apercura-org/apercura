@@ -7,6 +7,8 @@ import {
 	isIndexableLocale,
 	LOCALE_TAGS,
 	type Locale,
+	marketLanguages,
+	marketOf,
 	OG_LOCALES,
 } from "~/i18n/locales";
 import type { Href } from "~/i18n/navigation";
@@ -54,7 +56,8 @@ export function ogImageOf(professionCode: string): OgImage {
 		professionCode.startsWith("CZ_") ||
 		professionCode.startsWith("ES_") ||
 		professionCode.startsWith("IT_") ||
-		professionCode.startsWith("DE_")
+		professionCode.startsWith("DE_") ||
+		professionCode.startsWith("CH_")
 	)
 		return "annuaire";
 	if (professionCode === "40") return "chirurgien-dentiste";
@@ -124,15 +127,19 @@ export type PageMetadataInput = {
 	/** The page's own image (a practitioner's card), with `image` as the fallback. */
 	ownImage?: OwnOgImage;
 	type?: "website" | "profile";
-	/** hreflang alternates (absolute URLs by language tag), printed only on an indexed page. */
+	/**
+	 * hreflang alternates (absolute URLs by language tag), printed only on an indexed page. By
+	 * default, the page in the other languages of its market when it has several (`marketAlternates`).
+	 */
 	languages?: Record<string, string>;
 };
 
 /**
- * hreflang of the two homes: France's in French (`fr-FR`, `/fr`) and the international one
- * (`x-default`, `/`), the country chooser for every other visitor. Both print the same set.
- * Other pages have no alternate yet: each is indexed in one language of one market only, and
- * pages in other locales are `noindex` (hreflang never points at them).
+ * hreflang of the homes: every market's home in its indexed languages (Switzerland's three:
+ * `/ch`, `/ch-fr`, `/ch-it`) and the international one (`x-default`, `/`), the country chooser
+ * for every other visitor. Every home prints the same set. Below the homes, only a market of
+ * several languages has alternates (`marketAlternates`); pages in other locales are `noindex`
+ * (hreflang never points at them).
  */
 export function homeAlternates(): Record<string, string> {
 	const languages: Record<string, string> = {};
@@ -145,15 +152,33 @@ export function homeAlternates(): Record<string, string> {
 }
 
 /**
+ * hreflang of a page below the homes in a market of several indexed languages (Switzerland: the
+ * same facility, listing, hub or legal page under `/ch`, `/ch-fr` and `/ch-it`): each language's
+ * URL of the page, and nothing towards another market, whose pages are other pages. Undefined for
+ * a market of one indexed language, whose pages have no alternate.
+ */
+export function marketAlternates(href: Href, locale: Locale): Record<string, string> | undefined {
+	const locales = marketLanguages(marketOf(locale));
+	if (locales.length < 2 || !locales.includes(locale)) return undefined;
+	const languages: Record<string, string> = {};
+	for (const other of locales) {
+		const tag = HREFLANGS[other];
+		if (tag) languages[tag] = absoluteUrl(href, other);
+	}
+	return languages;
+}
+
+/**
  * The metadata of a public page: title, description, self canonical, robots
  * and complete Open Graph and Twitter cards (Next.js replaces a parent's
  * `openGraph` instead of merging it, so every page states all of it).
  *
- * hreflang only between indexed pages (`languages`, the homes today): pages in
- * other locales are `noindex` in v1.
+ * hreflang only between indexed pages (`languages`: the homes, and the pages of a market of
+ * several languages, `marketAlternates`): pages in other locales are `noindex`.
  */
 export async function pageMetadata(input: PageMetadataInput): Promise<Metadata> {
 	const indexed = isIndexableLocale(input.locale) && input.indexable;
+	const languages = input.languages ?? marketAlternates(input.href, input.locale);
 	return documentMetadata({
 		url: absoluteUrl(input.href, input.locale),
 		ogLocale: OG_LOCALES[input.locale],
@@ -163,7 +188,7 @@ export async function pageMetadata(input: PageMetadataInput): Promise<Metadata> 
 		image: input.image,
 		ownImage: input.ownImage,
 		type: input.type,
-		languages: indexed ? input.languages : undefined,
+		languages: indexed ? languages : undefined,
 	});
 }
 

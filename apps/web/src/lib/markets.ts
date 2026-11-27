@@ -24,8 +24,8 @@ export const MARKETS: readonly Market[] = [
 	{ country: "ES", status: "open", locale: MARKET_LOCALES.ES },
 	{ country: "IT", status: "open", locale: MARKET_LOCALES.IT },
 	{ country: "DE", status: "open", locale: MARKET_LOCALES.DE },
+	{ country: "CH", status: "open", locale: MARKET_LOCALES.CH },
 	{ country: "BE", status: "planned" },
-	{ country: "CH", status: "planned" },
 ];
 
 /**
@@ -35,7 +35,7 @@ export const MARKETS: readonly Market[] = [
  * names a place of care, without a
  * person's name split into first and last names, a gender or a kind of practice to tell apart.
  */
-export const PRACTICE_MARKETS: ReadonlySet<string> = new Set(["GB", "CZ", "ES", "IT", "DE"]);
+export const PRACTICE_MARKETS: ReadonlySet<string> = new Set(["GB", "CZ", "ES", "IT", "DE", "CH"]);
 
 /** True when the market's pages are practices or facilities (`PRACTICE_MARKETS`). */
 export function listsPractices(country: string): boolean {

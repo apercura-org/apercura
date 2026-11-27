@@ -18,9 +18,39 @@ export const SITEMAP_CHUNK = 20_000;
 export const SITEMAP_KINDS = ["praticiens", "listes", "lieux", "etablissements"] as const;
 export type SitemapKind = (typeof SITEMAP_KINDS)[number];
 
-/** The markets with sitemaps, by their path segment. */
-export const SITEMAP_MARKETS = ["fr", "at", "gb", "cz", "es", "it", "de"] as const;
+/**
+ * The markets with sitemaps, by the path segment of each indexed language: one per market, and
+ * Switzerland's three (`ch`, `ch-fr`, `ch-it`), each the same pages at its own paths.
+ */
+export const SITEMAP_MARKETS = [
+	"fr",
+	"at",
+	"gb",
+	"cz",
+	"es",
+	"it",
+	"de",
+	"ch",
+	"ch-fr",
+	"ch-it",
+] as const;
 export type SitemapMarket = (typeof SITEMAP_MARKETS)[number];
+
+/** The country a sitemap segment lists (`ch-fr` → `CH`). */
+export const sitemapCountryOf = (market: SitemapMarket) => market.slice(0, 2).toUpperCase();
+
+/**
+ * The chunks of the market of one country (`lower(country)` in SQL), in each of its languages:
+ * Switzerland's under `ch`, `ch-fr` and `ch-it`.
+ */
+export function inEveryLanguage(chunks: readonly SitemapChunk[]): SitemapChunk[] {
+	return chunks.flatMap((chunk) =>
+		SITEMAP_MARKETS.filter((market) => market.slice(0, 2) === chunk.market).map((market) => ({
+			...chunk,
+			market,
+		})),
+	);
+}
 
 /** A non-empty chunk of a market: its latest change and how many URLs it lists. */
 export type SitemapChunk = {
@@ -40,9 +70,12 @@ export type SitemapEntry = { path: string; lastmod: string };
 const NOT_CITY = (alias: string) =>
 	`NOT (${alias}.country = 'FR' AND ${alias}.code = '75056') AND NOT (${alias}.country = 'AT' AND ${alias}.code = '90001') AND NOT (${alias}.country = 'DE' AND ${alias}.kind = 'commune' AND ${alias}.code LIKE '_____000')`;
 
-/** Non-empty chunks of every kind and market, with the latest change in each. */
-export function selectSitemapChunks(sql: Sql): Promise<SitemapChunk[]> {
-	return sql<SitemapChunk[]>`
+/**
+ * Non-empty chunks of every kind and market, with the latest change in each, once per language of
+ * a market of several (`inEveryLanguage`).
+ */
+export async function selectSitemapChunks(sql: Sql): Promise<SitemapChunk[]> {
+	const chunks = await sql<SitemapChunk[]>`
 		SELECT lower(country) AS market, 'praticiens' AS kind,
 			practitioner_id / ${SITEMAP_CHUNK} AS chunk,
 			to_char(max(content_updated_at) AT TIME ZONE 'UTC', 'YYYY-MM-DD') AS lastmod,
@@ -77,6 +110,7 @@ export function selectSitemapChunks(sql: Sql): Promise<SitemapChunk[]> {
 		GROUP BY 1, 3
 		ORDER BY 1 DESC, 2, 3
 	`;
+	return inEveryLanguage(chunks);
 }
 
 /** The URLs of one chunk of a market, ordered by id. */
@@ -88,7 +122,7 @@ export function selectSitemapEntries(
 ): Promise<SitemapEntry[]> {
 	const from = chunk * SITEMAP_CHUNK;
 	const to = from + SITEMAP_CHUNK;
-	const country = market.toUpperCase();
+	const country = sitemapCountryOf(market);
 	switch (kind) {
 		case "praticiens":
 			return sql<SitemapEntry[]>`

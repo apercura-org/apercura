@@ -190,3 +190,40 @@ describe("German facility keys", () => {
 		expect(displayId({ idScheme: "DE-APO-BB", nationalId: "ef2771a4ae" })).toBe("bbef2771a4ae");
 	});
 });
+describe("Swiss facility keys", () => {
+	it("read a facility page segment in Switzerland's three languages only", () => {
+		for (const locale of ["de-CH", "fr-CH", "it-CH"] as const) {
+			expect(parsePractitionerKey(locale, "kantonsspital-beispiel-h123456789")).toEqual({
+				country: "CH",
+				idScheme: "CH-BAG",
+				nationalId: "123456789",
+				namePart: "kantonsspital-beispiel",
+			});
+		}
+		expect(parsePractitionerKey("de-CH", "apotheke-beispiel-blp7601001796874")?.idScheme).toBe(
+			"CH-BL-PHARM",
+		);
+		expect(parsePractitionerKey("fr-CH", "ems-exemple-gee930225001723")?.idScheme).toBe(
+			"CH-GE-EMS",
+		);
+		expect(parsePractitionerKey("de-CH", "camille-exemple-19999990013")).toBeNull();
+		expect(parsePractitionerKey("de-CH", "farmacia-esempio-f9000001")).toBeNull();
+		// Other markets never read a Swiss key.
+		expect(parsePractitionerKey("it-IT", "kantonsspital-beispiel-h123456789")).toBeNull();
+		expect(parsePractitionerKey("fr", "kantonsspital-beispiel-h123456789")).toBeNull();
+		expect(marketAdapter("fr-CH").features.booking).toBe(false);
+	});
+
+	it("mark a Swiss segment outside a locale, and print the page's key", () => {
+		expect(marketSegmentOf("CH", "heim-beispiel-zhe1234")).toBe("ch.heim-beispiel-zhe1234");
+		expect(parseAnyPractitionerKey("ch.heim-beispiel-zhe1234")).toMatchObject({
+			country: "CH",
+			idScheme: "CH-ZH-PH",
+			nationalId: "1234",
+		});
+		expect(displayId({ idScheme: "CH-BAG", nationalId: "123456789" })).toBe("h123456789");
+		expect(displayId({ idScheme: "CH-BL-PHARM", nationalId: "7601001796874" })).toBe(
+			"blp7601001796874",
+		);
+	});
+});

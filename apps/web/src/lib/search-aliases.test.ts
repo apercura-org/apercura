@@ -1,5 +1,6 @@
 import {
 	allAtListingSlugs,
+	allChListingSlugs,
 	allCzListingSlugs,
 	allDeListingSlugs,
 	allEsListingSlugs,
@@ -28,6 +29,7 @@ const MARKETS = [
 	"ES",
 	"IT",
 	"DE",
+	"CH",
 ] as const satisfies readonly MarketCountry[];
 
 /** The listings of each market (France: its imported professions only). */
@@ -42,6 +44,7 @@ const LISTED: Record<MarketCountry, (slug: string) => boolean> = {
 	ES: (slug) => allEsListingSlugs().has(slug),
 	IT: (slug) => allItListingSlugs().has(slug),
 	DE: (slug) => allDeListingSlugs().has(slug),
+	CH: (slug) => allChListingSlugs().has(slug),
 };
 
 /** Slugs a market maps but does not list yet: France's professions not imported. */
@@ -53,6 +56,7 @@ const MAPPED: Record<MarketCountry, (slug: string) => boolean> = {
 	ES: () => false,
 	IT: () => false,
 	DE: () => false,
+	CH: () => false,
 };
 
 const listing = (slug: string): SearchTerm => ({ kind: "listing", slug });
@@ -318,6 +322,36 @@ const EVERYDAY: Record<MarketCountry, [string, SearchTerm][]> = {
 		["médecin", UNLISTED],
 		["dentist", UNLISTED],
 	],
+	CH: [
+		["Spital", listing("spital")],
+		["das Spital", listing("spital")],
+		["Kantonsspital", listing("spital")],
+		["Notfall", listing("spital")],
+		["hôpital", listing("spital")],
+		["l'hôpital", listing("spital")],
+		["urgences", listing("spital")],
+		["ospedale", listing("spital")],
+		["pronto soccorso", listing("spital")],
+		["hospital", listing("spital")],
+		["Psychiatrie", listing("psychiatrische-klinik")],
+		["clinique psychiatrique", listing("psychiatrische-klinik")],
+		["Reha", listing("rehaklinik")],
+		["Geburtshaus", listing("geburtshaus")],
+		["maison de naissance", listing("geburtshaus")],
+		["Altersheim", listing("pflegeheim")],
+		["Pflegeheim", listing("pflegeheim")],
+		["EMS", listing("pflegeheim")],
+		["casa per anziani", listing("pflegeheim")],
+		["Apotheke", listing("apotheke")],
+		["pharmacie", listing("apotheke")],
+		["farmacia", listing("apotheke")],
+		["pharmacy", listing("apotheke")],
+		["Arzt", UNLISTED],
+		["Hausarzt", UNLISTED],
+		["Zahnarzt", UNLISTED],
+		["médecin", UNLISTED],
+		["medico", UNLISTED],
+	],
 };
 
 describe.each(MARKETS)("the everyday words of %s", (country) => {
@@ -340,6 +374,8 @@ describe("a name", () => {
 		["Farmacia Ejemplo Mayor", "ES"],
 		["Rossi", "IT"],
 		["Farmacia Esempio", "IT"],
+		["Kantonsspital Beispiel AG", "CH"],
+		["Muster", "CH"],
 		["", "FR"],
 	] as const)("%j is a name search in %s", (word, country) => {
 		expect(resolveSearchTerm(word, country)).toBeNull();
@@ -354,6 +390,8 @@ describe("a name", () => {
 		expect(resolveListing("dentiste", "ES")).toBeNull();
 		expect(resolveListing("zubař", "IT")).toBeNull();
 		expect(resolveListing("farmacia", "FR")).toBeNull();
+		expect(resolveListing("Spital", "AT")).toBeNull();
+		expect(resolveListing("zubař", "CH")).toBeNull();
 	});
 });
 
@@ -369,6 +407,9 @@ describe("the suggestions of “Qui ?”", () => {
 		expect(slugs("doctor", "en-GB")).toEqual(["gp-practices"]);
 		expect(slugs("farmacia di", "it-IT")).toEqual(["farmacie"]);
 		expect(slugs("pronto", "it-IT")).toEqual(["ospedali"]);
+		expect(slugs("Apothe", "de-CH")).toEqual(["apotheke"]);
+		expect(slugs("EMS", "fr-CH")).toEqual(["pflegeheim"]);
+		expect(slugs("casa per an", "it-CH")).toEqual(["pflegeheim"]);
 		expect(slugs("médecin trait", "fr")).toEqual(["medecin-generaliste"]);
 		expect(slugs("dentist", "en")).toContain("chirurgien-dentiste");
 	});
@@ -380,5 +421,7 @@ describe("the suggestions of “Qui ?”", () => {
 		expect(slugs("optician", "en-GB")).toEqual([]);
 		expect(slugs("óptica", "es-ES")).toEqual([]);
 		expect(slugs("dentista", "it-IT")).toEqual([]);
+		expect(slugs("Zahnarzt", "de-CH")).toEqual([]);
+		expect(slugs("Apotheke", "it-IT")).toEqual([]);
 	});
 });

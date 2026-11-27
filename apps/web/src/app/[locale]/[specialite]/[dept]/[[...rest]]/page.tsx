@@ -281,8 +281,18 @@ export default async function LandingPage({ params }: Props) {
 					<Trail locale={locale} items={trail} />
 					<ListingTitle
 						title={t("title", { listing, place: placeName })}
-						lead={t("lead", { count, listing, place: placeName })}
-						note={coverage ? t("pharmacyCoverage", { states: coverage }) : null}
+						lead={
+							// Switzerland's lists cover some cantons only: the lead says which.
+							country === "CH" ? (
+								<>
+									{t("lead", { count, listing, place: placeName })}
+									note={coverage ? t("pharmacyCoverage", { states: coverage }) : null}{" "}
+									{t("swissCoverage", { kind: listingSlug })}
+								</>
+							) : (
+								t("lead", { count, listing, place: placeName })
+							)
+						}
 					/>
 				</div>
 

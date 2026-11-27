@@ -10,6 +10,7 @@ import {
 	professionFees,
 	professionSlugOf,
 	showsBillingFacts,
+	swissAttribution,
 } from "./market";
 import {
 	CITY_IS_DEPARTMENT,
@@ -19,6 +20,7 @@ import {
 	placeLabel,
 } from "./places";
 import { addressLines, formatPhone, localityOf } from "./practitioner-view";
+import { swissFacilityFacts } from "./swiss-facility";
 
 describe("what a market's pages show", () => {
 	it("serves each market's own listing slugs only", () => {
@@ -364,5 +366,132 @@ describe("Italy's pages", () => {
 		expect(italianSourceDate("it-posti-letto", status)).toBe("2025-07-29");
 		expect(italianSourceDate("it-farmacie", status)).toBe("2026-11-26");
 		expect(italianSourceDate("it-farmacie", null)).toBeNull();
+	});
+});
+
+describe("Switzerland's pages", () => {
+	it("serve Switzerland's listings in its three languages, without booking or French facts", () => {
+		for (const locale of ["de-CH", "fr-CH", "it-CH"] as const) {
+			expect(isMarketListingSlug(locale, "spital")).toBe(true);
+			expect(isMarketListingSlug(locale, "pflegeheim")).toBe(true);
+			expect(isMarketListingSlug(locale, "apotheke")).toBe(true);
+			expect(isMarketListingSlug(locale, "einrichtung")).toBe(false);
+			expect(isMarketListingSlug(locale, "farmacie")).toBe(false);
+			expect(showsBillingFacts(locale)).toBe(false);
+			expect(marketBooks(locale)).toBe(false);
+		}
+		expect(isMarketListingSlug("de-AT", "spital")).toBe(false);
+		expect(isMarketListingSlug("fr", "apotheke")).toBe(false);
+		expect(professionSlugOf("CH_HOSPITAL")).toBe("spital");
+		expect(professionSlugOf("CH_NURSING_HOME")).toBe("pflegeheim");
+	});
+
+	it("check canton and district slugs and label places by name", () => {
+		expect(isDepartmentSlug("zuerich", "CH")).toBe(true);
+		expect(isDepartmentSlug("bezirk-zuerich", "CH")).toBe(true);
+		expect(isDepartmentSlug("112", "CH")).toBe(false);
+		expect(
+			placeLabel(
+				{ kind: "department", code: "112", name: "Bezirk Zürich", departmentCode: "112" },
+				"CH",
+			),
+		).toBe("Bezirk Zürich");
+		expect(
+			placeLabel({ kind: "commune", code: "261", name: "Zürich", departmentCode: "112" }, "CH"),
+		).toBe("Zürich");
+	});
+
+	it("write Swiss addresses street, then postcode and locality, and Swiss numbers", () => {
+		const site = {
+			addressLine: "Rämistrasse 100",
+			addressComplement: null,
+			postcode: "8091",
+			placeName: "Zürich",
+		};
+		expect(addressLines(site, "CH")).toEqual(["Rämistrasse 100", "8091 Zürich"]);
+		expect(formatPhone("+41442683111")).toBe("044 268 31 11");
+	});
+
+	it("credit each list in the page's language, the places of the BFS and swisstopo on every page", () => {
+		const bag = [{ source: "ch-bag-kzp", site: null }];
+		expect(
+			openDataSourcesOf("CH", bag, "2026-11-27", { language: "de" }).map((s) => s.attribution),
+		).toEqual([
+			"Quelle: © Bundesamt für Gesundheit (BAG), Kennzahlen der Schweizer Spitäler 2023",
+			"Quelle: BFS – Amtliches Gemeindeverzeichnis der Schweiz",
+			"© swisstopo, Amtliches Ortschaftenverzeichnis mit Postleitzahl und Perimeter",
+		]);
+		expect(
+			openDataSourcesOf("CH", bag, "2026-11-27", { language: "fr" }).map((s) => s.attribution),
+		).toEqual([
+			"Source : © Office fédéral de la santé publique (OFSP), Chiffres-clés des hôpitaux suisses 2023",
+			"Source : OFS – Répertoire officiel des communes de Suisse",
+			"© swisstopo, Répertoire officiel des localités avec code postal et périmètre",
+		]);
+		// A list worded in one language only prints that wording on every page.
+		expect(
+			openDataSourcesOf("CH", [{ source: "ch-zh-heime", site: null }], null, { language: "it" })[0]
+				?.attribution,
+		).toBe("Quelle: Kanton Zürich, Gesundheitsdirektion, Alters- und Pflegeheime Kanton Zürich");
+		// A FOPH site completed from Bern's list credits both.
+		expect(
+			openDataSourcesOf("CH", bag, null, { language: "fr", sources: ["ch-be-spitaeler"] }).map(
+				(s) => s.attribution,
+			)[1],
+		).toBe("Hôpitaux et cliniques © Office de la santé du canton de Berne");
+		expect(openDataSourcesOf("CH", [], null, { language: "de" })).toEqual([]);
+	});
+
+	it("date Geneva's SITG line with the day of the Swiss import, in French", () => {
+		expect(swissAttribution("ch-ge-ems", "de", "2026-11-27")).toBe(
+			"Source : Portail des données SITG (État de Genève), téléchargé en date du 27 novembre 2026 ; données compilées par Apercura",
+		);
+		expect(swissAttribution("ch-ge-pharmacies", "it", null)).toBe(
+			"Source : Portail des données SITG (État de Genève) ; données compilées par Apercura",
+		);
+		expect(swissAttribution("ch-ge-hopitaux", "fr", "2026-01-05")).not.toContain("{date}");
+	});
+
+	it("read a hospital's type, activities, services, offer, ownership, operator and category", () => {
+		const q = (source: string, code: string, label: string | null = null) => ({
+			source,
+			typeCode: "",
+			code,
+			label,
+		});
+		const qualifications = [
+			q("typ", "K112", "Allgemeinspital, Zentrumsversorgung"),
+			q("akt", "P"),
+			q("akt", "A"),
+			q("leistung", "IPS"),
+			q("leistung", "NF"),
+			q("angebot", "STAT"),
+			q("angebot", "AMB"),
+			q("rechtsform", "R4"),
+			q("betrieb", "", "Spital Beispiel AG"),
+			q("kategorie", "fr", "Clinique"),
+			q("quelle", "ch-be-spitaeler"),
+			q("quelle", "ch-be-spitaeler"),
+		];
+		expect(swissFacilityFacts(qualifications, "fr")).toEqual({
+			hospitalType: "Hôpital de soins généraux, prise en charge centralisée",
+			activities: ["A", "P"],
+			services: ["NF", "IPS"],
+			offers: ["AMB", "STAT"],
+			ownership: "public",
+			operator: "Spital Beispiel AG",
+			categories: [{ language: "fr", label: "Clinique" }],
+			sources: ["ch-be-spitaeler"],
+		});
+		expect(swissFacilityFacts(qualifications, "it").hospitalType).toBe(
+			"Ospedale per cure generali, presa a carico centralizzata",
+		);
+		expect(swissFacilityFacts([q("rechtsform", "R2")], "de")).toMatchObject({
+			ownership: "private",
+			hospitalType: null,
+			operator: null,
+			activities: [],
+		});
+		expect(swissFacilityFacts([q("rechtsform", "R9")], "de").ownership).toBeNull();
 	});
 });

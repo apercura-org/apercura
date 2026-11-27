@@ -134,7 +134,16 @@ export default async function SpecialtyHub({ params }: Props) {
 					<Trail locale={locale} items={trail} />
 					<ListingTitle
 						title={title}
-						lead={t("hubLead", { count, listing })}
+						lead={
+							// Switzerland's lists cover some cantons only: the lead says which.
+							country === "CH" ? (
+								<>
+									{t("hubLead", { count, listing })} {t("swissCoverage", { kind: listingSlug })}
+								</>
+							) : (
+								t("hubLead", { count, listing })
+							)
+						}
 						note={coverage ? t("pharmacyCoverage", { states: coverage }) : null}
 					/>
 				</div>

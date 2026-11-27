@@ -209,3 +209,42 @@ describe("German facility references", () => {
 		expect(parsePractitionerRef(practitionerRefOf(pharmacy))).toEqual(pharmacy);
 	});
 });
+describe("Swiss facility references", () => {
+	const hospital = { country: "CH", idScheme: "CH-BAG", nationalId: "123456789" };
+
+	it("read the `ch:` reference, a Swiss page address in any language, and a key typed on a Swiss page", () => {
+		expect(parsePractitionerRef("ch:h123456789")).toEqual(hospital);
+		expect(parsePractitionerRef(" CH: H123456789 ")).toEqual(hospital);
+		for (const path of [
+			"https://apercura.org/ch/einrichtung/kantonsspital-beispiel-h123456789",
+			"https://apercura.org/ch-fr/etablissement/hopital-exemple-h123456789",
+			"/ch-it/struttura/ospedale-esempio-h123456789/",
+		]) {
+			expect(parsePractitionerRef(path), path).toEqual(hospital);
+		}
+		expect(parsePractitionerRef("h123456789", "CH")).toEqual(hospital);
+		expect(parsePractitionerRef("kantonsspital-beispiel-h123456789", "CH")).toEqual(hospital);
+		expect(parsePractitionerRef("ch:ju123456789")).toEqual({
+			country: "CH",
+			idScheme: "CH-JU",
+			nationalId: "123456789",
+		});
+		expect(parsePractitionerRef("ch:123456789")).toBeNull();
+		expect(parsePractitionerRef("ch:")).toBeNull();
+		expect(parsePractitionerRef("ch:f9000001")).toBeNull();
+	});
+
+	it("still read other markets' references on a Swiss page", () => {
+		expect(parsePractitionerRef("19999990013", "CH")?.country).toBe("FR");
+		expect(parsePractitionerRef("it:f9000001", "CH")?.country).toBe("IT");
+	});
+
+	it("write the reference back with its market", () => {
+		expect(practitionerRefOf(hospital)).toBe("ch:h123456789");
+		expect(marketRef("H123456789", "CH")).toBe("ch:h123456789");
+		expect(parsePractitionerRef(practitionerRefOf(hospital))).toEqual(hospital);
+		expect(practitionerRefOf({ idScheme: "CH-BL-PHARM", nationalId: "7601001796874" })).toBe(
+			"ch:blp7601001796874",
+		);
+	});
+});

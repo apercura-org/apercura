@@ -1,0 +1,264 @@
+{
+	"Metadata": {
+		"description": "L’annuaire ouvert des hôpitaux, cliniques, EMS et pharmacies de Suisse, d’après les données ouvertes de la Confédération et des cantons.",
+		"proDescription": "Apercura publie une page factuelle pour chaque hôpital, clinique, EMS et pharmacie des listes ouvertes de Suisse. Trouvez celle de votre établissement et revendiquez-la gratuitement.",
+		"homeTitle": "Apercura · Hôpitaux, cliniques, EMS et pharmacies de Suisse"
+	},
+	"Site": {
+		"runningHead": "Annuaire ouvert des établissements de santé de Suisse",
+		"navPro": "Pour les établissements de santé",
+		"footer": {
+			"free": "Gratuit pour les établissements de santé et pour les patients."
+		},
+		"folioRpps": "Clé {rpps}"
+	},
+	"Search": {
+		"label": "Trouver un hôpital, une clinique, un EMS ou une pharmacie",
+		"whoHint": "Nom de l’établissement, ou hôpital, EMS, pharmacie",
+		"whereHint": "Commune, district ou canton"
+	},
+	"SearchForm": {
+		"practitioners": "Établissements",
+		"department": "District",
+		"geoDenied": "La localisation est désactivée pour ce site. Saisissez une commune.",
+		"geoUnavailable": "Votre position n’a pas pu être trouvée. Saisissez une commune."
+	},
+	"SearchPage": {
+		"emptyTitle": "Aucun établissement ne correspond",
+		"emptyBody": "Vérifiez l’orthographe, essayez une commune voisine ou un terme plus large, comme « hôpital ».",
+		"queryOnlyNear": "Établissements autour de vous (distances approximatives)",
+		"startTitle": "Que cherchez-vous ?",
+		"startBody": "Saisissez le nom d’un établissement, ou hôpital, clinique, EMS ou pharmacie, dans « Qui ? », et une commune, un district ou un canton dans « Où ? ». Vous pouvez aussi parcourir l’annuaire par canton et par district.",
+		"unknownPlaceBody": "Vérifiez l’orthographe ou saisissez une commune voisine.",
+		"unlistedBody": "En Suisse, l’annuaire recense pour l’instant des établissements, jamais des personnes : les hôpitaux et cliniques de tous les cantons (chiffres-clés des hôpitaux suisses 2023 de l’Office fédéral de la santé publique et listes des cantons de Berne, Genève, Bâle-Ville et du Jura), les EMS des seuls cantons de Zurich, Berne, Genève, Bâle-Ville, Bâle-Campagne et du Jura, et les pharmacies de Bâle-Campagne (toutes) et de Genève (seulement celles qui vaccinent). Les médecins, dentistes, psychologues et autres professionnels de santé ne sont pas encore listés ici : aucun registre ouvert ne les publie. Cherchez le nom d’un établissement ou parcourez l’annuaire.",
+		"departmentPlace": "District",
+		"bookingNotOpen": "Apercura ne propose pas la prise de rendez-vous en ligne en Suisse : contactez l’établissement.",
+		"columns": {
+			"practitioner": "Établissement",
+			"place": "Adresse",
+			"appointments": "Contact"
+		},
+		"outsidePlace": "Hors de {where}",
+		"rppsBody": "Cette clé n’est pas valide ou l’établissement n’a pas de page publique : l’annuaire ne recense que des hôpitaux, cliniques, EMS et pharmacies. Qui dirige un établissement peut tout de même trouver et revendiquer sa page.",
+		"distance": "À environ {km} km"
+	},
+	"HomePage": {
+		"title": "Trouvez un hôpital, une clinique, un EMS ou une pharmacie en Suisse",
+		"hook": "Chaque hôpital et chaque clinique de Suisse a déjà sa page, de même que les EMS des cantons de Zurich, Berne, Genève, Bâle-Ville, Bâle-Campagne et du Jura et les pharmacies de Bâle-Campagne et de Genève.",
+		"pillars": {
+			"free": {
+				"description": "Gratuit pour les établissements de santé et pour les patients, sans abonnement ni commission."
+			}
+		},
+		"registry": {
+			"heading": "Construit sur les données ouvertes de la Confédération et des cantons",
+			"intro": "Hôpitaux et cliniques : tous les cantons, d’après les chiffres-clés des hôpitaux suisses 2023 de l’Office fédéral de la santé publique (OFSP) et les listes des cantons de Berne, Genève, Bâle-Ville et du Jura. EMS : seulement les cantons de Zurich, Berne, Genève, Bâle-Ville, Bâle-Campagne et du Jura. Pharmacies : seulement Bâle-Campagne (toutes les pharmacies) et Genève (seulement celles qui vaccinent). Les autres cantons n’en publient pas de liste ouverte. Sont listés des établissements, jamais des professionnels. Personne ne paie pour y figurer et personne n’en est exclu.",
+			"sourceName": "OFSP et cantons, données ouvertes"
+		},
+		"pro": {
+			"heading": "Vous dirigez un hôpital, une clinique, un EMS ou une pharmacie ?",
+			"body": "La page de votre établissement existe déjà. La revendiquer est gratuit."
+		},
+		"tagline": "L’annuaire ouvert des établissements de santé de Suisse.",
+		"market": {
+			"listingsHeading": "Par type d’établissement",
+			"placesHeading": "Par canton"
+		},
+		"specimen": {
+			"heading": "Chaque établissement de santé a déjà sa page"
+		}
+	},
+	"Practitioner": {
+		"rpps": "Clé de la page",
+		"specimen": "Exemple, pas un établissement réel",
+		"statusNote": {
+			"unclaimed": "Créée d’après les données ouvertes de la Confédération et des cantons. L’établissement n’a pas encore complété cette page.",
+			"verified": "Complétée par l’établissement, dont la revendication a été vérifiée."
+		},
+		"fields": {
+			"profession": "Type d’établissement"
+		},
+		"source": {
+			"name": "Source : OFSP et cantons"
+		},
+		"action": {
+			"call": {
+				"statement": "Apercura ne propose pas la prise de rendez-vous en ligne en Suisse. Contactez l’établissement."
+			}
+		},
+		"sitesHeading": "Adresse"
+	},
+	"PractitionerPage": {
+		"metaTitle": "{name}, {occupation} · Apercura",
+		"metaTitlePlace": "{name}, {occupation} à {place} · Apercura",
+		"metaDescription": "{name}, {occupation} : {fees, select, sector {adresse, téléphone et tarifs} other {adresse et type d’établissement}}, d’après les données ouvertes de la Confédération et des cantons.",
+		"metaDescriptionPlace": "{name}, {occupation} à {place} : {fees, select, sector {adresse, téléphone et tarifs} other {adresse et type d’établissement}}, d’après les données ouvertes de la Confédération et des cantons.",
+		"unknownProfession": "Établissement de santé",
+		"professionHeading": "Établissement",
+		"unnamedPlace": "Établissement",
+		"asideLabel": "Sur cette page",
+		"action": {
+			"callNotYetOpen": "Apercura ne propose pas la prise de rendez-vous en ligne en Suisse. Pour tout renseignement, contactez l’établissement.",
+			"noPhone": "La liste dont cette page est tirée n’indique pas de numéro de téléphone pour cet établissement."
+		},
+		"claim": {
+			"heading": "C’est votre établissement ?",
+			"body": "Cette page a été créée d’après les données ouvertes de la Confédération et des cantons. Revendiquez-la pour la vérifier et la compléter :",
+			"claimedHeading": "Page gérée par l’établissement",
+			"claimedBody": "L’établissement a revendiqué cette page : sa revendication a été vérifiée et c’est lui qui la complète.",
+			"contactLink": "Pas de document sous la main ? Contactez-nous",
+			"benefits": [
+				"gratuit, sans abonnement ni engagement ;",
+				"votre photo, vos horaires et les langues parlées ;",
+				"votre site web et les informations d’accessibilité ;",
+				"les statistiques de consultation de votre page ;",
+				"un kit de partage : lien, QR code et affiche."
+			]
+		},
+		"report": {
+			"body": "Si une adresse ou un nom est faux, dites-nous comment le corriger."
+		},
+		"ring": {
+			"heading": "Autres établissements : {occupation} à {place}"
+		}
+	},
+	"Listing": {
+		"count": "{count, plural, one {# établissement} many {# établissements} other {# établissements}}",
+		"metaTitle": "{count, plural, one {{listing} à {place} : # établissement · Apercura} many {{listing} à {place} : # établissements · Apercura} other {{listing} à {place} : # établissements · Apercura}}",
+		"metaDescription": "{count, plural, one {# établissement recensé comme {occupation} à {place} : {fees, select, sector {adresses, téléphones et tarifs} other {adresses et types d’établissement}}, d’après les données ouvertes de la Confédération et des cantons.} many {# établissements recensés comme {occupation} à {place} : {fees, select, sector {adresses, téléphones et tarifs} other {adresses et types d’établissement}}, d’après les données ouvertes de la Confédération et des cantons.} other {# établissements recensés comme {occupation} à {place} : {fees, select, sector {adresses, téléphones et tarifs} other {adresses et types d’établissement}}, d’après les données ouvertes de la Confédération et des cantons.}}",
+		"lead": "{count, plural, one {Les listes ouvertes comptent # établissement de ce type à {place}.} many {Les listes ouvertes comptent # établissements de ce type à {place}.} other {Les listes ouvertes comptent # établissements de ce type à {place}.}}",
+		"practitionersHeading": "{count, plural, one {L’établissement} many {Les # établissements} other {Les # établissements}}",
+		"columns": {
+			"practitioner": "Établissement"
+		},
+		"facts": {
+			"sources": "OFSP, cantons, OFS et swisstopo"
+		},
+		"communesHeading": "{listing} : communes de {place}",
+		"nearbyHeading": "{listing} : communes voisines",
+		"authoritiesHeading": "{listing} : districts de {place}",
+		"hubMetaTitle": "{count, plural, one {{listing} en Suisse : # établissement · Apercura} many {{listing} en Suisse : # établissements · Apercura} other {{listing} en Suisse : # établissements · Apercura}}",
+		"hubMetaDescription": "{count, plural, one {# établissement recensé comme {occupation} en Suisse, par canton : {fees, select, sector {adresses, téléphones et tarifs} other {adresses et types d’établissement}}, d’après les données ouvertes de la Confédération et des cantons.} many {# établissements recensés comme {occupation} en Suisse, par canton : {fees, select, sector {adresses, téléphones et tarifs} other {adresses et types d’établissement}}, d’après les données ouvertes de la Confédération et des cantons.} other {# établissements recensés comme {occupation} en Suisse, par canton : {fees, select, sector {adresses, téléphones et tarifs} other {adresses et types d’établissement}}, d’après les données ouvertes de la Confédération et des cantons.}}",
+		"hubTitle": "{listing} en Suisse",
+		"hubLead": "{count, plural, one {Les listes ouvertes comptent # établissement de ce type en Suisse.} many {Les listes ouvertes comptent # établissements de ce type en Suisse.} other {Les listes ouvertes comptent # établissements de ce type en Suisse.}}",
+		"departmentsHeading": "{listing} par canton",
+		"departmentsIntro": "Choisissez un canton ou un district pour voir ses communes et ses établissements.",
+		"metaDescriptionPage": "{count, plural, one {Page {page} sur {pages} : # établissement recensé comme {occupation} à {place}.} many {Page {page} sur {pages} : # établissements recensés comme {occupation} à {place}.} other {Page {page} sur {pages} : # établissements recensés comme {occupation} à {place}.}}",
+		"metaDescriptionPageRange": "{count, plural, one {Page {page} sur {pages}, de {first} à {last} : # établissement recensé comme {occupation} à {place}.} many {Page {page} sur {pages}, de {first} à {last} : # établissements recensés comme {occupation} à {place}.} other {Page {page} sur {pages}, de {first} à {last} : # établissements recensés comme {occupation} à {place}.}}",
+		"hubMetaTitleShort": "{listing} en Suisse · Apercura",
+		"allSpecialties": "Tous les types d’établissement à {place}"
+	},
+	"Directory": {
+		"metaTitle": "Annuaire des établissements de santé par lieu · Apercura",
+		"metaDescription": "Les cantons et les districts de Suisse avec leurs hôpitaux, cliniques, EMS et pharmacies, d’après les données ouvertes de la Confédération et des cantons.",
+		"lead": "{count, plural, one {# établissement, par canton et par district.} many {# établissements, par canton et par district.} other {# établissements, par canton et par district.}}",
+		"otherRegion": "Autres lieux",
+		"emptyBody": "Les données ouvertes de Suisse n’ont pas encore été importées ici. Revenez après le prochain import.",
+		"placeMetaTitle": "Hôpitaux, EMS et pharmacies à {place} · Apercura",
+		"placeMetaDescription": "{count, plural, one {# établissement de santé à {place}, par type, d’après les données ouvertes de la Confédération et des cantons.} many {# établissements de santé à {place}, par type, d’après les données ouvertes de la Confédération et des cantons.} other {# établissements de santé à {place}, par type, d’après les données ouvertes de la Confédération et des cantons.}}",
+		"placeTitle": "Établissements de santé à {place}",
+		"placeLead": "{count, plural, one {# établissement à {place}.} many {# établissements à {place}.} other {# établissements à {place}.}}",
+		"specialtiesHeading": "Par type d’établissement",
+		"communesHeading": "Communes de {place}",
+		"authoritiesHeading": "Districts de {place}",
+		"placeMetaTitleShort": "Établissements de santé à {place} · Apercura"
+	},
+	"OgImage": {
+		"runningHead": "Annuaire ouvert des établissements de santé",
+		"practitioner": {
+			"folio": "Clé {rpps}"
+		}
+	},
+	"taxonomy": {
+		"practiceKind": {
+			"office": "Établissement"
+		}
+	},
+	"Claim": {
+		"errors": {
+			"NOT_FOUND": "Aucune page n’a cette clé.",
+			"INVALID_RPPS": "Cette clé n’est pas valide : c’est la fin de l’adresse de la page de votre établissement (des lettres et des chiffres, par exemple h123456789), précédée de ch:, ou l’adresse complète."
+		},
+		"start": {
+			"lead": "Une revendication porte sur la page d’un établissement, jamais sur un nom.",
+			"contestBody": "S’il s’agit de celle de votre établissement (par exemple, vous avez perdu l’accès à votre compte), vous pouvez tout de même la revendiquer : un administrateur examine votre document et décide. Récupérer un compte demande toujours une nouvelle vérification.",
+			"findHeading": "Trouvez la page de votre établissement",
+			"notFound": "Aucune page publique n’a encore cette clé.",
+			"rppsLabel": "Clé ou adresse de la page",
+			"rppsHint": "L’adresse de la page de votre établissement, par exemple apercura.org/ch-fr/etablissement/hopital-exemple-h123456789, ou sa fin précédée de ch: (ch:h123456789).",
+			"contactLink": "Pas de document sous la main ? Contactez-nous"
+		},
+		"methods": {
+			"document": {
+				"summary": "Un document qui prouve que vous dirigez l’établissement ou agissez pour son compte : l’autorisation d’exploiter de l’établissement, ou une lettre sur son papier à en-tête qui vous y autorise. Un membre de notre équipe l’examine, en général sous 48 heures.",
+				"lead": "Envoyez un document qui prouve que vous dirigez l’établissement ou agissez pour son compte : l’autorisation d’exploiter de l’établissement, ou une lettre sur son papier à en-tête qui vous y autorise. Il est chiffré avant d’être conservé et supprimé 30 jours après la décision."
+			}
+		},
+		"documents": {
+			"kind": {
+				"cps_card": "Lettre sur le papier à en-tête de l’établissement",
+				"ordre_attestation": "Autorisation d’exploiter de l’établissement"
+			}
+		},
+		"status": {
+			"contestReview": "Cette page avait déjà un titulaire vérifié : un administrateur statue sur votre document.",
+			"reviewBody": "Un membre de notre équipe examine votre document et vous écrit par e-mail.",
+			"contestBody": "Un administrateur statuera sur votre document."
+		}
+	},
+	"Gdpr": {
+		"rpps": "Clé de la page",
+		"rppsHint": "La fin de l’adresse de la page (par exemple hopital-exemple-h123456789) ou l’adresse complète.",
+		"errors": {
+			"notFound": "Aucune page n’a cette clé."
+		},
+		"report": {
+			"doneBody": "Nous vérifions le signalement. Les données se corrigent à la source, auprès de l’Office fédéral de la santé publique ou du canton qui publie la liste ; nous vous prévenons si vous nous avez laissé une adresse."
+		},
+		"removal": {
+			"doneBody": "Elle n’est plus affichée, indexée ni listée. Nous vérifions la demande et vous répondons par e-mail dans un délai d’un mois au plus. Si elle est confirmée, la page est supprimée définitivement et ne revient pas avec les mises à jour des listes ouvertes.",
+			"privacy": "Une page supprimée ne revient pas au prochain import des listes ouvertes.",
+			"claimedBody": "Seul son titulaire peut la retirer, depuis l’éditeur de page de son espace : la page disparaît alors aussitôt et ne revient pas avec les mises à jour des listes ouvertes."
+		},
+		"contact": {
+			"lead": "Vous ne pouvez pas revendiquer la page de votre établissement avec un document ? Laissez-nous vos coordonnées : un membre de l’équipe Apercura vous contacte pour vérifier que vous agissez pour le compte de l’établissement et vous aider.",
+			"claimFirst": "Avec un document qui prouve que vous agissez pour le compte de l’établissement, la revendication est plus rapide :",
+			"rpps": "Clé de la page"
+		}
+	},
+	"emails": {
+		"claimReceived": {
+			"body": [
+				"Bonjour {name},",
+				"Nous avons bien reçu votre revendication et ses documents. Un membre de l’équipe Apercura les examine et vous écrit par e-mail.",
+				"Nous examinons les revendications sous 48 heures les jours ouvrables."
+			]
+		},
+		"claimRejected": {
+			"body": [
+				"Bonjour {name},",
+				"Nous n’avons pas pu vérifier votre revendication. Motif indiqué : {reason}",
+				"Vous pouvez ouvrir une nouvelle revendication depuis votre espace, avec un document lisible qui prouve que vous agissez pour le compte de l’établissement."
+			]
+		},
+		"removalReceived": {
+			"body": [
+				"La page est masquée dès maintenant : elle n’est plus affichée, indexée ni listée.",
+				"Nous vérifions la demande et vous répondons dans un délai d’un mois au plus. Si elle est confirmée, la page est supprimée ; une page supprimée ne revient pas au prochain import des listes ouvertes."
+			]
+		},
+		"removalConfirmed": {
+			"body": [
+				"La page dont vous avez demandé le retrait a été supprimée d’Apercura. Elle ne reviendra pas au prochain import des listes ouvertes."
+			]
+		}
+	},
+	"Onboarding": {
+		"steps": {
+			"check": {
+				"lead": "Votre page part des données ouvertes de la Confédération et des cantons. Vérifiez le nom de l’établissement, son type et son adresse.",
+				"registryNote": "Quelque chose ne va pas ? La correction durable se fait à la source, auprès de l’Office fédéral de la santé publique ou du canton qui publie la liste ; la page la reprend au prochain import. Vous pouvez masquer une adresse ou en ajouter une dans l’éditeur de page."
+			}
+		}
+	}
+}

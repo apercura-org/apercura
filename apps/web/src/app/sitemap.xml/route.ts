@@ -7,7 +7,8 @@ import { getSitemapChunks, SITEMAP_MARKETS } from "~/server/queries/sitemap";
 /**
  * Sitemap index, written by hand (Next.js generates sitemaps but no index): the
  * international home, then each open market's files under its segment
- * (`/sitemaps/fr/…`, `/sitemaps/at/…`), its static pages first, then every
+ * (`/sitemaps/fr/…`, `/sitemaps/at/…`; Switzerland's under each of its languages', `/sitemaps/ch/…`,
+ * `/sitemaps/ch-fr/…`, `/sitemaps/ch-it/…`), its static pages first, then every
  * non-empty chunk of its read models. Rendered at request time (APP_URL and the
  * data are runtime values), cached.
  */

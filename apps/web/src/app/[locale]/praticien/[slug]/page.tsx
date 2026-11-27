@@ -31,7 +31,7 @@ import { FeesSection, PracticalSection, PresentationSection } from "~/components
 import { PublicPage } from "~/components/public-page";
 import { Trail, type TrailItem, trailEntries } from "~/components/trail";
 import { clientEnv } from "~/env";
-import { marketOf } from "~/i18n/locales";
+import { CATALOG_LANGUAGES, marketOf } from "~/i18n/locales";
 import { getPathname, Link, permanentRedirect } from "~/i18n/navigation";
 import { type Locale, routing } from "~/i18n/routing";
 import { relatedGuides } from "~/lib/guides/catalog";
@@ -68,6 +68,7 @@ import {
 import { absoluteUrl, siteOrigin } from "~/lib/site-url";
 import { slotParts, slotTime } from "~/lib/slot-format";
 import { breadcrumbNode, graph, ids, practitionerNodes, webPageNode } from "~/lib/structured-data";
+import { swissFacilityFacts } from "~/lib/swiss-facility";
 import { databaseAvailable } from "~/server/db";
 import { practitionerOgImageOf } from "~/server/og/practitioner-image";
 import {
@@ -322,16 +323,32 @@ export default async function PractitionerPage({ params }: Props) {
 						!payload.idScheme.startsWith("DE-APO")),
 			)
 		: [];
+	// Switzerland lists facilities: a hospital's type, activities, services and offer as the
+	// FOPH's figures give them, its ownership and operator, and its category as its canton's list
+	// names it (in that list's language).
+	const swiss = payload.country === "CH";
+	const language = CATALOG_LANGUAGES[locale];
+	const swissFacts = swiss ? swissFacilityFacts(payload.qualifications, language) : null;
 	const identifier = displayId(payload);
 	// Open licences (CC BY 4.0, OGL) require each source's attribution, word for word; Spain's
 	// Ministry of Health asks for the date of its data: the last Spanish import's; Italy's is cited
-	// with the date of its list's data.
+	// with the date of its list's data; Geneva's SITG with the day of the last Swiss import.
 	const sourceDate = spanish
 		? ((await getImportStatus("es"))?.importedAt ?? page.updatedAt)
 		: italian
 			? italianSourceDate(payload.activities[0]?.source, await getImportStatus("it"))
-			: null;
-	const sources = openDataSourcesOf(payload.country, payload.activities, sourceDate);
+			: swiss
+				? ((await getImportStatus("ch"))?.importedAt ?? page.updatedAt)
+				: null;
+	const sources = openDataSourcesOf(payload.country, payload.activities, sourceDate, {
+		language,
+		sources: swissFacts?.sources ?? [],
+	});
+	/** A list of lowercase labels as a sentence-case value ("Acute care, psychiatry"). */
+	const listValue = (labels: string[]) => {
+		const value = labels.join(", ");
+		return value ? value.charAt(0).toLocaleUpperCase(locale) + value.slice(1) : null;
+	};
 
 	// Where the facts come from and when they were imported: under each block of facts, the
 	// register's name; at the foot of the page, each source with its attribution.
@@ -533,6 +550,80 @@ export default async function PractitionerPage({ params }: Props) {
 											<FieldRow
 												label={t("beds")}
 												value={<span lang="it">{italianBeds.join(", ")}</span>}
+												emptyLabel={empty}
+											/>
+										) : null}
+									</>
+								) : swissFacts ? (
+									<>
+										{swissFacts.hospitalType ? (
+											<FieldRow
+												label={t("swiss.hospitalType")}
+												value={swissFacts.hospitalType}
+												emptyLabel={empty}
+											/>
+										) : null}
+										{swissFacts.activities.length > 0 ? (
+											<FieldRow
+												label={t("swiss.activities")}
+												value={listValue(
+													swissFacts.activities.map((code) => t("swiss.activity", { code })),
+												)}
+												emptyLabel={empty}
+											/>
+										) : null}
+										{swissFacts.offers.length > 0 ? (
+											<FieldRow
+												label={t("swiss.offer")}
+												value={listValue(
+													swissFacts.offers.map((code) => t("swiss.offerKind", { code })),
+												)}
+												emptyLabel={empty}
+											/>
+										) : null}
+										{swissFacts.services.length > 0 ? (
+											<FieldRow
+												label={t("swiss.services")}
+												value={
+													<>
+														{swissFacts.services
+															.map((code) => t("swiss.service", { code }))
+															.join(" ")}
+														<span className="mt-1 block text-meta text-ink-muted">
+															{t("swiss.servicesNote")}
+														</span>
+													</>
+												}
+												emptyLabel={empty}
+											/>
+										) : null}
+										{swissFacts.ownership ? (
+											<FieldRow
+												label={t("ownership")}
+												value={t(
+													swissFacts.ownership === "public"
+														? "ownershipPublic"
+														: "ownershipPrivate",
+												)}
+												emptyLabel={empty}
+											/>
+										) : null}
+										{swissFacts.operator ? (
+											<FieldRow
+												label={t("swiss.operator")}
+												value={swissFacts.operator}
+												emptyLabel={empty}
+											/>
+										) : null}
+										{swissFacts.categories.length > 0 ? (
+											<FieldRow
+												label={t("swiss.category")}
+												value={swissFacts.categories.map((category, index) => (
+													<span key={`${category.language}-${category.label}`}>
+														{index > 0 ? ", " : null}
+														<span lang={category.language}>{category.label}</span>
+													</span>
+												))}
 												emptyLabel={empty}
 											/>
 										) : null}

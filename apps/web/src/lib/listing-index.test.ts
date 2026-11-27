@@ -188,3 +188,28 @@ describe("Italy's listings", () => {
 		expect(suggestListings("ospedal", "it").map((entry) => entry.slug)).not.toContain("ospedali");
 	});
 });
+
+describe("Switzerland's listings", () => {
+	it("are suggested and resolved in Switzerland only, in each of its languages", () => {
+		expect(suggestListings("Spit", "de-CH").map((entry) => entry.slug)[0]).toBe("spital");
+		expect(suggestListings("hôpi", "fr-CH").map((entry) => entry.slug)[0]).toBe("spital");
+		expect(suggestListings("ospe", "it-CH").map((entry) => entry.slug)[0]).toBe("spital");
+		expect(resolveListing("Spitäler", "CH")).toBe("spital");
+		expect(resolveListing("Spital", "CH")).toBe("spital");
+		expect(resolveListing("Pharmacies", "CH")).toBe("apotheke");
+		expect(resolveListing("Casa per anziani", "CH")).toBe("pflegeheim");
+		expect(resolveListing("Spitäler", "AT")).toBeNull();
+		expect(suggestListings("Spit", "de-AT").map((entry) => entry.slug)).not.toContain("spital");
+		expect(listingLabel("spital", "fr-CH")).toBe("Hôpitaux");
+	});
+
+	it("carry a search typed in another market over to Switzerland's kind of care", () => {
+		const listing = (slug: string) => ({ kind: "listing", slug });
+		expect(translateSearchTerm("pharmacie", "FR", "CH")).toEqual(listing("apotheke"));
+		expect(translateSearchTerm("farmacia", "IT", "CH")).toEqual(listing("apotheke"));
+		expect(translateSearchTerm("pharmacy", "GB", "CH")).toEqual(listing("apotheke"));
+		expect(translateSearchTerm("ospedale", "IT", "CH")).toEqual(listing("spital"));
+		expect(translateSearchTerm("Apotheke", "CH", "IT")).toEqual(listing("farmacie"));
+		expect(translateSearchTerm("dentiste", "FR", "CH")).toEqual({ kind: "unlisted" });
+	});
+});

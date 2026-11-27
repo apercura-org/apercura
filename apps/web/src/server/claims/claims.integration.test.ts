@@ -1143,6 +1143,105 @@ describe.skipIf(!url)("claims, ownership and objections (database)", async () =>
 		expect(suppression).toEqual({ country: "IT", id_scheme: "IT-FARM" });
 	});
 
+	/**
+	 * A synthetic Swiss hospital site (the FOPH's figures): its key carries the list's letters
+	 * (`h…`), and the Swiss references carry them too (`ch:`, a `/ch/`, `/ch-fr/` or `/ch-it/`
+	 * address).
+	 */
+	async function swissHospital() {
+		const sql = db.$client;
+		const nationalId = `9${String(Math.floor(Math.random() * 100_000_000)).padStart(8, "0")}`;
+		const [place] = await sql<{ id: number }[]>`
+			INSERT INTO directory.places (country, kind, code, name, slug, department_code, centroid)
+			VALUES ('CH', 'commune', ${`T${run}${created.places.length}`}, 'Beispielwil',
+				${`beispielwil-${run}-${created.places.length}`}, '112', 'SRID=4326;POINT(8.54 47.37)')
+			RETURNING id
+		`;
+		const [hospital] = await sql<{ id: number }[]>`
+			INSERT INTO directory.practitioners (country, id_scheme, national_id, first_name, last_name,
+				first_name_source, last_name_source, profession_code, listing_slug, slug, primary_place_id,
+				indexable)
+			VALUES ('CH', 'CH-BAG', ${nationalId}, '', 'Kantonsspital Beispiel', '', 'Kantonsspital Beispiel',
+				'CH_HOSPITAL', 'spital', ${`kantonsspital-beispiel-h${nationalId}`}, ${place?.id ?? null}, true)
+			RETURNING id
+		`;
+		const [site] = await sql<{ id: number }[]>`
+			INSERT INTO directory.sites (source, source_key, kind, address_line, postcode, place_id,
+				location, geo_precision)
+			VALUES ('ch-bag-kzp', ${`test-${nationalId}`}, 'hospital', 'Spitalstrasse 1', '8001',
+				${place?.id ?? null}, 'SRID=4326;POINT(8.54 47.37)', 'city')
+			RETURNING id
+		`;
+		await sql`
+			INSERT INTO directory.activities (practitioner_id, site_id, source, source_key, practice_kind, is_primary)
+			VALUES (${hospital?.id ?? 0}, ${site?.id ?? 0}, 'ch-bag-kzp', ${`test-${nationalId}`}, 'hospital', true)
+		`;
+		created.practitioners.push(hospital?.id ?? 0);
+		created.places.push(place?.id ?? 0);
+		created.sites.push(site?.id ?? 0);
+		return { id: hospital?.id ?? 0, nationalId, ref: `ch:h${nationalId}` };
+	}
+
+	it("claims a Swiss hospital with a document reviewed by an administrator, found by its Swiss reference", async () => {
+		const target = await swissHospital();
+		const options = { pscEnabled: true, documentsEnabled: true };
+		const preview = await caller(users.alice).claims.preview({ ref: target.ref });
+		expect(preview).toMatchObject({ id: target.id, country: "CH", idScheme: "CH-BAG" });
+		// Its French page's address names it as well as its German one.
+		const claim = await caller(users.alice).claims.start({
+			ref: `https://apercura.org/ch-fr/etablissement/hopital-exemple-h${target.nationalId}`,
+		});
+		const view = await service.claimForClaimant(db, claim.id, users.alice, options);
+		expect(view.methods).toEqual(["document"]);
+		expect(await codeOf(service.issuePhoneCode(db, claim.id, users.alice))).toBe(
+			"METHOD_UNAVAILABLE",
+		);
+		expect(await codeOf(service.recordPscResult(db, claim.id, users.alice))).toBe(
+			"METHOD_UNAVAILABLE",
+		);
+		await service.addClaimDocument(db, storage, {
+			claimId: claim.id,
+			userId: users.alice,
+			kind: "ordre_attestation",
+			bytes: Buffer.from("%PDF-1.4\n% synthetic operating licence\n%%EOF\n"),
+		});
+		await service.submitClaim(db, claim.id, users.alice);
+		expect(await service.evaluateClaim(db, claim.id)).toBeNull();
+		const approval = await service.approveClaim(db, claim.id, users.admin, null);
+		expect(approval.via).toBe("review");
+		const [after] = await db
+			.select({ claimStatus: practitioners.claimStatus })
+			.from(practitioners)
+			.where(eq(practitioners.id, target.id));
+		expect(after?.claimStatus).toBe("claimed");
+	});
+
+	it("withholds a Swiss hospital on objection, found by its Italian page address", async () => {
+		const target = await swissHospital();
+		const request = await gdpr.requestRemoval(db, {
+			ref: `/ch-it/struttura/ospedale-esempio-h${target.nationalId}`,
+			contact: "widerspruch@example.test",
+			message: null,
+			locale: "it-CH",
+		});
+		const [row] = await db
+			.select({ withheldAt: practitioners.withheldAt, indexable: practitioners.indexable })
+			.from(practitioners)
+			.where(eq(practitioners.id, target.id));
+		expect(row?.withheldAt).not.toBeNull();
+		expect(row?.indexable).toBe(false);
+		await gdpr.decideRemoval(db, {
+			id: request.id,
+			adminId: users.admin,
+			confirm: true,
+			reason: null,
+		});
+		const [suppression] = await db.$client<{ country: string; id_scheme: string }[]>`
+			SELECT country, id_scheme FROM directory.suppressions WHERE national_id = ${target.nationalId}
+		`;
+		expect(suppression).toEqual({ country: "CH", id_scheme: "CH-BAG" });
+	});
+
 	it("withholds an Austrian page on objection, found by its list key", async () => {
 		const target = await austrianPractitioner();
 		expect(

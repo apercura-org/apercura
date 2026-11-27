@@ -91,6 +91,7 @@
 			"GB": "Vereinigtes Königreich",
 			"CZ": "Tschechien",
 			"IT": "Italien",
+			"CH": "Schweiz",
 			"ES": "Spanien",
 			"DE": "Deutschland"
 		}
@@ -156,7 +157,7 @@
 	},
 	"International": {
 		"metaTitle": "Apercura · Offene Verzeichnisse der Gesundheitsfachkräfte",
-		"metaDescription": "Eine kostenlose, sachliche Seite je Gesundheitsfachkraft. Offen in Frankreich, Österreich, UK, Tschechien, Spanien, Italien und Deutschland.",
+		"metaDescription": "Kostenlose, sachliche Seiten für Gesundheitsfachkräfte. Offen in Frankreich, Österreich, UK, Tschechien, Spanien, Italien, Deutschland, Schweiz.",
 		"runningHead": "Offene Verzeichnisse der Gesundheitsfachkräfte",
 		"title": "Jede Gesundheitsfachkraft, eine offene Seite",
 		"lead": "Apercura veröffentlicht eine kostenlose, sachliche Seite für jede registrierte Gesundheitsfachkraft, aus den öffentlichen Registern jedes Landes. Keine Bewertungen, keine Werbung, kein bezahltes Ranking, und der Quellcode ist offen.",
@@ -565,6 +566,18 @@
 		"fieldsOfCare": "Versorgungsbereiche",
 		"facilityType": "Art",
 		"beds": "Betten",
+		"swiss": {
+			"hospitalType": "Spitaltyp",
+			"activities": "Tätigkeitsbereiche",
+			"activity": "{code, select, A {Akutsomatik} P {Psychiatrie} R {Rehabilitation} B {Geburtshaus} other {andere}}",
+			"offer": "Angebot",
+			"offerKind": "{code, select, AMB {ambulant} STAT {stationär} other {andere}}",
+			"services": "Leistungen des Spitals",
+			"service": "{code, select, NF {Das Spital hat eine Notfallstation.} IPS {Das Spital hat eine Intensivstation.} other {}}",
+			"servicesNote": "Leistungen des Spitals, zu dem dieser Standort gehört; manche werden womöglich an einem anderen seiner Standorte erbracht.",
+			"operator": "Betrieben von",
+			"category": "Kategorie in der kantonalen Liste"
+		},
 		"ownership": "Trägerschaft",
 		"ownershipPublic": "Öffentlich",
 		"ownershipPrivate": "Privat",
@@ -1579,7 +1592,8 @@
 		"metaDescriptionPageRange": "{count, plural, one {Seite {page} von {pages}, {first} bis {last}: # als {occupation} in {place} im nationalen Register geführte Gesundheitsfachkraft.} other {Seite {page} von {pages}, {first} bis {last}: # als {occupation} in {place} im nationalen Register geführte Gesundheitsfachkräfte.}}",
 		"hubMetaTitleShort": "{listing} in Frankreich · Apercura",
 		"authoritiesHeading": "{listing}: Gebietskörperschaften von {place}",
-		"pharmacyCoverage": "Apotheken werden nur für {states} aufgeführt: Die übrigen Länder veröffentlichen keine aktuelle Liste ihrer Apotheken als offene Daten."
+		"pharmacyCoverage": "Apotheken werden nur für {states} aufgeführt: Die übrigen Länder veröffentlichen keine aktuelle Liste ihrer Apotheken als offene Daten.",
+		"swissCoverage": "{kind, select, pflegeheim {Alters- und Pflegeheime sind nur in den Kantonen Zürich, Bern, Genf, Basel-Stadt, Basel-Landschaft und Jura aufgeführt: Die anderen Kantone veröffentlichen keine offene Liste davon.} apotheke {Apotheken sind nur in Basel-Landschaft (alle Apotheken) und Genf (nur die Apotheken, die impfen) aufgeführt: Die anderen Kantone veröffentlichen keine offene Liste davon.} other {Spitäler und Kliniken sind in allen Kantonen aufgeführt, aus den Kennzahlen der Schweizer Spitäler 2023 des Bundesamts für Gesundheit und den Listen der Kantone Bern, Genf, Basel-Stadt und Jura.}}"
 	},
 	"Directory": {
 		"metaTitle": "Verzeichnis der Gesundheitsfachkräfte nach Ort · Apercura",
@@ -1731,6 +1745,13 @@
 			"parafarmacie": "Parapharmazie",
 			"ospedali": "Krankenhaus",
 			"case-di-cura": "Akkreditierte Privatklinik",
+			"spital": "Spital",
+			"psychiatrische-klinik": "Psychiatrische Klinik",
+			"rehaklinik": "Rehabilitationsklinik",
+			"spezialklinik": "Spezialklinik",
+			"geburtshaus": "Geburtshaus",
+			"pflegeheim": "Alters- und Pflegeheim",
+			"apotheke": "Apotheke",
 			"hospitales": "Krankenhaus",
 			"centros-de-salud": "Gesundheitszentrum",
 			"consultas-medicas": "Arztpraxis",
@@ -1793,10 +1814,8 @@
 			"reha-kliniken": "Reha-Klinik",
 			"apotheken": "Apotheke",
 			"krankenhaus": "Krankenhaus",
-			"psychiatrische-klinik": "Psychiatrische Klinik",
 			"kinderklinik": "Kinderklinik",
-			"reha-klinik": "Reha-Klinik",
-			"apotheke": "Apotheke"
+			"reha-klinik": "Reha-Klinik"
 		},
 		"listing": {
 			"aerzte": "Ärztinnen und Ärzte ohne Fachangabe",
@@ -1983,6 +2002,13 @@
 			"parafarmacie": "Parapharmazien",
 			"ospedali": "Krankenhäuser",
 			"case-di-cura": "Akkreditierte Privatkliniken",
+			"spital": "Spitäler",
+			"psychiatrische-klinik": "Psychiatrische Kliniken",
+			"rehaklinik": "Rehabilitationskliniken",
+			"spezialklinik": "Spezialkliniken",
+			"geburtshaus": "Geburtshäuser",
+			"pflegeheim": "Alters- und Pflegeheime",
+			"apotheke": "Apotheken",
 			"hospitales": "Krankenhäuser",
 			"centros-de-salud": "Gesundheitszentren und Gemeindepraxen",
 			"consultas-medicas": "Arztpraxen",
@@ -6115,6 +6141,495 @@
 			],
 			"formTitle": "Ask for a page to be removed",
 			"formBody": "Give the address of the page and an email address where we can answer you."
+		}
+	},
+	"LegalNoticeCh": {
+		"metaTitle": "Impressum (Schweiz) · Apercura",
+		"metaDescription": "Impressum der Schweizer Seiten von Apercura: die Anbieterin, ihre Kontaktadresse samt E-Mail, Registereintrag und Mehrwertsteuernummer sowie die für den Inhalt verantwortliche Person (Art. 3 Abs. 1 Bst. s UWG).",
+		"title": "Impressum",
+		"lead": "Wer die Schweizer Seiten von Apercura (apercura.org/ch, /ch-fr und /ch-it) anbietet: Identität und Kontaktadresse einschliesslich E-Mail, wie sie Art. 3 Abs. 1 Bst. s des Bundesgesetzes gegen den unlauteren Wettbewerb (UWG) von Anbietern im elektronischen Geschäftsverkehr verlangt und wie sie in der Schweiz üblicherweise im Impressum stehen.",
+		"sections": {
+			"provider": {
+				"heading": "Anbieterin",
+				"body": [
+					"Die Schweizer Seiten von Apercura werden von der unten genannten Stelle angeboten. Sie betreibt das Verzeichnis und ist für seinen Inhalt verantwortlich."
+				]
+			},
+			"service": {
+				"heading": "Das Angebot",
+				"body": [
+					"Ein kostenloses Verzeichnis der Spitäler und Kliniken, Alters- und Pflegeheime und Apotheken der Schweiz, erstellt aus den offenen Daten des Bundesamts für Gesundheit und der Kantone, ohne Werbung und mit einem Bereich, in dem eine Einrichtung ihre eigene Seite ergänzen kann. Jede Seite ist eine Einrichtung, nie eine einzelne Gesundheitsfachperson. In der Schweiz werden über Apercura keine Termine gebucht."
+				]
+			},
+			"editor": {
+				"heading": "Für den Inhalt verantwortlich",
+				"body": [
+					"Die unten genannte Person ist für die Inhalte verantwortlich, die die Anbieterin veröffentlicht. Für Angaben, die eine Einrichtung auf ihrer eigenen Seite ergänzt, ist die Einrichtung selbst verantwortlich."
+				]
+			},
+			"liability": {
+				"heading": "Inhalt der Seiten",
+				"body": [
+					"Das Verzeichnis beruht auf den Kennzahlen der Schweizer Spitäler 2023 des Bundesamts für Gesundheit und auf den Listen von Spitälern, Alters- und Pflegeheimen und Apotheken, die Kantone als offene Daten veröffentlichen; verortet wird mit dem Gemeindeverzeichnis des Bundesamts für Statistik und dem Ortschaftenverzeichnis von swisstopo. Es kann unvollständig oder veraltet sein: Prüfen Sie die Angaben vor Ihrem Besuch bei der Einrichtung. Jede Seite sagt, wie Sie einen Fehler melden."
+				]
+			},
+			"ip": {
+				"heading": "Code und Daten",
+				"body": [
+					"Der Quellcode von Apercura ist unter der Lizenz AGPL-3.0 veröffentlicht. Die Daten werden nach den Nutzungsbedingungen von opendata.swiss und der jeweiligen Herausgeberin weiterverwendet, mit der Quellenangabe, die jede verlangt: Die Seite «Daten und Quellen» nennt jede Quelle."
+				]
+			},
+			"review": {
+				"heading": "Stand dieses Textes",
+				"body": [
+					"Dieser Text ist ein Entwurf, verfasst vor der Gründung der juristischen Person. Er wird von einer in der Schweiz zugelassenen Anwältin oder einem in der Schweiz zugelassenen Anwalt geprüft, bevor die Schweizer Seiten angekündigt werden."
+				]
+			}
+		},
+		"fields": {
+			"name": "Name oder Firma",
+			"legalForm": "Rechtsform",
+			"address": "Adresse",
+			"phone": "Telefon",
+			"email": "E-Mail-Adresse",
+			"registration": "Register und Registernummer",
+			"vatId": "Mehrwertsteuernummer",
+			"editor": "Verantwortlich für den Inhalt"
+		},
+		"dataLink": "Daten und Quellen"
+	},
+	"PrivacyCh": {
+		"metaTitle": "Datenschutzerklärung (Schweiz) · Apercura",
+		"metaDescription": "Welche Daten die Schweizer Seiten von Apercura bearbeiten: Quellen, Zwecke, Grundsätze und Rechtfertigung, Bekanntgabe ins Ausland, Aufbewahrung, Empfänger und Ihre Rechte, auch der Widerspruch (revidiertes Datenschutzgesetz, DSG, und DSGVO).",
+		"title": "Datenschutzerklärung",
+		"lead": "Welche Daten die Schweizer Seiten von Apercura bearbeiten, woher sie stammen, wozu, wie lange und durch wen, und wie Sie Ihre Rechte nach dem revidierten Datenschutzgesetz (revDSG), in Kraft seit dem 1. September 2023, und der Datenschutzverordnung (DSV) ausüben.",
+		"sections": {
+			"controller": {
+				"heading": "Verantwortliche",
+				"body": [
+					"Die im Impressum genannte Anbieterin ist Verantwortliche für das Verzeichnis, die Konten der Einrichtungen, die Beanspruchungen von Seiten und die über die Website gesendeten Anfragen. Für jede Frage zu Ihren Daten schreiben Sie an die unten stehende Adresse."
+				]
+			},
+			"law": {
+				"heading": "Anwendbares Recht",
+				"body": [
+					"Die Bearbeitung der Schweizer Seiten untersteht dem Bundesgesetz über den Datenschutz (DSG, SR 235.1) und der Datenschutzverordnung (DSV, SR 235.11). Da die Anbieterin in der Europäischen Union niedergelassen ist, gilt für ihre Bearbeitung auch die Datenschutz-Grundverordnung (DSGVO); ein Abschnitt weiter unten sagt, was sie hinzufügt."
+				]
+			},
+			"directory": {
+				"heading": "Verzeichnis: Daten über Einrichtungen",
+				"body": [
+					"Daten: der Name der Einrichtung, wie ihre Liste ihn veröffentlicht; ihre Art (Spital- oder Klinikstandort, Alters- und Pflegeheim, Apotheke); bei einem Spital oder einer Klinik der Typ nach der Typologie des Bundesamts für Statistik, die Aktivitätstypen, Notfallstation und Intensivstation, das ambulante und stationäre Angebot, die Rechtsformgruppe des Spitals und die Betreiberin; die Kategorie, die ihr die Liste ihres Kantons gibt; Adresse, Postleitzahl, Ortschaft, Gemeinde und Kanton; Telefonnummer, wo ihre Liste sie angibt, und ihre Lage, wo ihre Liste Koordinaten enthält. Eine Einrichtung, die ihre Seite beansprucht, kann eine Vorstellung, Sprachen, ein Foto und Öffnungszeiten ergänzen.",
+					"Es handelt sich um Daten über Organisationen. Das DSG schützt nur Daten natürlicher Personen: Die Daten einer Einrichtung sind Personendaten, wenn ihr Name eine Person bezeichnet, wie der nächste Abschnitt erklärt.",
+					"Zweck: der Öffentlichkeit zu ermöglichen, ein Spital, eine Klinik, ein Alters- und Pflegeheim oder eine Apotheke zu finden, zu wissen, wo sie liegt und was sie ist.",
+					"Aufbewahrung: solange die Einrichtung in ihrer Liste steht. Eine Seite verschwindet nach zwei Importen, in denen die Einrichtung nicht mehr in der Liste steht; eine nach einem Widerspruch entfernte Seite wird nie wieder veröffentlicht."
+				]
+			},
+			"people": {
+				"heading": "Einrichtungen und die Personen, die sie nennen",
+				"body": [
+					"Eine Schweizer Seite ist eine Einrichtung, nie das Profil einer Person. Es werden keine Gesundheitsfachpersonen aufgeführt: Kein Register einzelner Ärztinnen und Ärzte, Apothekerinnen und Apotheker oder anderer Fachpersonen wird importiert.",
+					"Der Name einer Einrichtung kann eine Person bezeichnen, etwa eine Apotheke, die nach ihrem Apotheker benannt ist («Apotheke Dr. Muster»): Dieser Name ist dann ein Personendatum, entnommen einer Liste, die der Bund oder ein Kanton veröffentlicht. Eine Seite zeigt den Namen so, wie ihn ihre Liste veröffentlicht, ohne einen c/o-Vermerk und was darauf folgt, denn dieser kann eine andere Person nennen. Weiteres über eine Person wird nicht erhoben: Die Namen verantwortlicher Apothekerinnen und Apotheker, die E-Mail-Adressen und die Benutzernamen der Bearbeitenden der Listen werden nie gelesen; es gibt kein Geburtsdatum, keine Wohnadresse, keine Bewertung und keinen Erfahrungsbericht.",
+					"Wen eine Seite betrifft, kann jederzeit widersprechen, und die Seite wird entfernt."
+				]
+			},
+			"sources": {
+				"heading": "Quellen",
+				"body": [
+					"Jede Seite beruht auf offenen Behördendaten: den «Kennzahlen der Schweizer Spitäler 2023» des Bundesamts für Gesundheit (BAG), den Listen von Spitälern, Alters- und Pflegeheimen und Apotheken, die die Kantone Zürich, Bern, Genf, Basel-Stadt, Basel-Landschaft und Jura auf opendata.swiss veröffentlichen, dem Amtlichen Gemeindeverzeichnis des Bundesamts für Statistik und dem Amtlichen Ortschaftenverzeichnis mit Postleitzahl von swisstopo. Jede Quelle wird mit der Quellenangabe weiterverwendet, die sie verlangt:"
+				]
+			},
+			"grounds": {
+				"heading": "Grundsätze und Rechtfertigung",
+				"body": [
+					"Nach dem DSG darf eine private Person Personendaten ohne Einwilligung bearbeiten, solange die Bearbeitung die Grundsätze der Art. 6 und 8 einhält (Rechtmässigkeit, Treu und Glauben, Verhältnismässigkeit, ein erkennbarer und begrenzter Zweck, Richtigkeit, Datensicherheit) und die betroffene Person nicht ausdrücklich widersprochen hat (Art. 30 Abs. 2). Die Einwilligung ist nicht die allgemeine Grundlage der Bearbeitung, und das Verzeichnis verlangt keine.",
+					"Wo eine Seite eine Person nennt, stützt sich die Anbieterin auf ein überwiegendes Interesse (Art. 31 Abs. 1): Die Öffentlichkeit muss wissen, welche Spitäler, Kliniken, Alters- und Pflegeheime und Apotheken es wo gibt, ein Bedürfnis, dem Bund und Kantone bereits mit der Veröffentlichung dieser Listen als offene Daten nachkommen. Gezeigt werden nur die eigenen Angaben der Einrichtung, in neutraler Reihenfolge, ohne Werbung, Bewertungen oder Erfahrungsberichte; ein Widerspruch blendet eine Seite sofort aus und verhindert, dass sie zurückkehrt.",
+					"Konten und Beanspruchungen von Seiten beruhen auf den Nutzungsbedingungen, einem Vertrag mit der Kontoinhaberin oder dem Kontoinhaber (Art. 31 Abs. 2 Bst. a), und auf dem Interesse der Anbieterin an einem sicheren Betrieb."
+				]
+			},
+			"information": {
+				"heading": "Wie Sie informiert werden",
+				"body": [
+					"Die Daten der Einrichtungen stammen nicht von den Einrichtungen selbst. Werden Personendaten nicht bei der betroffenen Person beschafft, verlangt Art. 19 DSG, dass die Verantwortliche auch die Kategorien der bearbeiteten Daten mitteilt (Abs. 3), spätestens einen Monat nachdem sie die Daten erhalten hat (Abs. 5).",
+					"Diese Erklärung gibt diese Informationen: die Verantwortliche und ihre Kontaktangaben, die Zwecke, die Kategorien der Daten, die Quellen, die Empfänger, die Bekanntgabe ins Ausland und Ihre Rechte. Sie ist von jeder Seite aus verlinkt, und die Seite «Daten und Quellen» nennt jede Quelle. Die Personen, die der Name einer Einrichtung bezeichnen kann, sind der Anbieterin nicht einzeln bekannt: Sie alle einzeln zu informieren, würde einen unverhältnismässigen Aufwand erfordern (Art. 20 Abs. 2 Bst. b)."
+				]
+			},
+			"objection": {
+				"heading": "Widerspruch gegen eine Seite",
+				"body": [
+					"Wen eine Seite betrifft, kann ihrer Veröffentlichung jederzeit und ohne Begründung widersprechen (Art. 30 Abs. 2 Bst. b und Art. 32 Abs. 2 DSG; Art. 21 DSGVO). Ist die Seite nicht beansprucht, genügt ein Formular, auf der Seite «Daten und Quellen» oder auf der Seite selbst: Die Seite wird ausgeblendet, sobald die Anfrage eintrifft, nach einer kurzen Prüfung gelöscht, und die Aktualisierungen der Listen veröffentlichen sie nie wieder. Ist sie beansprucht, entfernt sie ihre Inhaberin oder ihr Inhaber im eigenen Bereich."
+				]
+			},
+			"accounts": {
+				"heading": "Konten der Einrichtungen und Beanspruchungen",
+				"body": [
+					"Daten: E-Mail-Adresse, Name, Passwort (als Hash gespeichert), zweiter Authentifizierungsfaktor, die zur Beanspruchung einer Seite gesendeten Unterlagen (Nachweis, dass die antragstellende Person die Einrichtung führt oder für sie handelt) und die Mitglieder des Teams.",
+					"Zwecke: das Konto zu verwalten und zu prüfen, dass eine Seite von der richtigen Einrichtung beansprucht wird. Rechtfertigung: die Nutzungsbedingungen (Art. 31 Abs. 2 Bst. a DSG; Art. 6 Abs. 1 Bst. b DSGVO) und das Interesse an einem sicheren Betrieb (Art. 6 Abs. 1 Bst. f DSGVO).",
+					"Aufbewahrung: Das Konto bleibt bestehen, bis es gelöscht wird; die Unterlagen, verschlüsselt, werden 30 Tage nach dem Entscheid gelöscht."
+				]
+			},
+			"requests": {
+				"heading": "Fehlermeldungen, Widersprüche und Kontaktanfragen",
+				"body": [
+					"Daten: die Nachricht, die E-Mail-Adresse für die Antwort, wenn eine angegeben wird, und die betroffene Seite; bei einer Anfrage «Das ist meine Seite» zudem Name und Telefonnummer. Freitext wird verschlüsselt.",
+					"Zwecke: Fehler zu berichtigen, Widersprüche umzusetzen und einer Einrichtung zu helfen, die ihre Seite nicht online beanspruchen kann. Rechtfertigung: das Interesse an einem richtigen Verzeichnis und das Widerspruchsrecht (Art. 31 Abs. 1 und Art. 32 Abs. 2 DSG; Art. 6 Abs. 1 Bst. f und Art. 21 DSGVO).",
+					"Aufbewahrung: Eine Meldung wird 6 Monate nach ihrem Abschluss gelöscht, ein abgelehnter Widerspruch ein Jahr nach dem Entscheid, eine Kontaktanfrage 12 Monate nach dem letzten Austausch. Sobald ein Widerspruch bestätigt ist oder die Inhaberin oder der Inhaber einer beanspruchten Seite sie entfernt, werden die Seite und die Daten dazu sofort gelöscht, auch der Widerspruch; aufbewahrt wird nur ein Vermerk der Entfernung (die Kennung der Seite, das Land, der Grund, wer sie wann erfasst hat), damit sie nie wieder veröffentlicht wird. Wer seine Seite entfernt, behält in seinem Konto, nie veröffentlicht, den Namen, die Art und die Kennung, die in seinem Bereich und seiner Beanspruchung angezeigt werden, bis das Konto gelöscht wird."
+				]
+			},
+			"technical": {
+				"heading": "Technische Daten, Cookies und lokaler Speicher",
+				"body": [
+					"In Ihrem Browser wird nur gespeichert, was der Dienst technisch braucht: das Sitzungscookie angemeldeter Einrichtungen und, im lokalen Speicher des Browsers, die von Ihnen gewählte helle oder dunkle Darstellung, die nie an den Server gesendet wird. Keine Werbe- oder Reichweiten-Cookies, keine Tracker.",
+					"Art. 45c des Fernmeldegesetzes (FMG) verlangt, dass Sie erfahren, was auf Ihrem Gerät gespeichert wird und wozu, und dass Sie es ablehnen können: Sie können diese Elemente in den Einstellungen Ihres Browsers sperren oder löschen; die Anmeldung funktioniert dann nicht mehr.",
+					"Um Missbrauch einzuschränken, werden IP-Adressen vor dem Zählen mit einem geheimen Schlüssel umgewandelt und nie als solche gespeichert; Sitzungen der Einrichtungen speichern eine gekürzte IP-Adresse. Aufrufe beanspruchter Seiten werden ohne Cookie und ohne Kennung gezählt, und nur die Inhaberin oder der Inhaber der Seite sieht sie."
+				]
+			},
+			"recipients": {
+				"heading": "Empfänger und Auftragsbearbeiter",
+				"body": [
+					"Daten werden weder verkauft noch vermietet und nie für Werbung verwendet. Nur das Team der Anbieterin und die unten genannten Auftragsbearbeiter erhalten sie, jeder für seinen Teil, vertraglich verpflichtet, sie nur nach den Weisungen der Anbieterin zu bearbeiten und sie zu schützen (Art. 9 DSG; Art. 28 DSGVO). Karten werden von einem Kachelserver geladen, der wie jede Website die IP-Adresse der Besucherin oder des Besuchers erhält."
+				]
+			},
+			"abroad": {
+				"heading": "Bekanntgabe ins Ausland",
+				"body": [
+					"Daten können in Staaten des Europäischen Wirtschaftsraums bearbeitet werden, deren Gesetzgebung nach Feststellung des Bundesrates einen angemessenen Schutz gewährleistet (Art. 16 Abs. 1 DSG und Anhang 1 DSV): Weitere Garantien sind nicht nötig. In andere Staaten wird nichts bekanntgegeben; jeder Wechsel eines Auftragsbearbeiters wird hier angekündigt, bevor er wirksam wird."
+				]
+			},
+			"automated": {
+				"heading": "Automatisierte Einzelentscheidungen",
+				"body": [
+					"Keine Entscheidung über Sie beruht ausschliesslich auf einer automatisierten Bearbeitung (Art. 21 DSG). Über eine Beanspruchung entscheidet ein Mensch, der ihre Unterlagen liest."
+				]
+			},
+			"rights": {
+				"heading": "Ihre Rechte",
+				"body": [
+					"Sie können Auskunft darüber verlangen, ob Daten über Sie bearbeitet werden, und diese erhalten (Auskunftsrecht, Art. 25 DSG), die von Ihnen bekanntgegebenen Daten in einem gängigen elektronischen Format erhalten oder einer anderen Verantwortlichen übertragen lassen (Art. 28), unrichtige Daten berichtigen und Daten löschen oder ihre Bearbeitung oder Bekanntgabe unterbinden lassen (Art. 32). Schreiben Sie an die unten stehende Adresse; die Auskunft ist kostenlos und erfolgt innert 30 Tagen.",
+					"Sie können eine Bearbeitung, die Sie für datenschutzwidrig halten, zudem dem Eidgenössischen Datenschutz- und Öffentlichkeitsbeauftragten (EDÖB) melden, Feldeggweg 1, 3003 Bern, www.edoeb.admin.ch, der eine Untersuchung eröffnen kann (Art. 49)."
+				]
+			},
+			"gdpr": {
+				"heading": "Besucherinnen und Besucher in der Europäischen Union und im EWR",
+				"body": [
+					"Für die Bearbeitung der Anbieterin gilt auch die DSGVO, namentlich für Besucherinnen und Besucher in der Europäischen Union und im Europäischen Wirtschaftsraum. Diese Erklärung gibt die Informationen, die ihre Art. 13 und 14 verlangen; die Daten der Einrichtungen werden gestützt auf berechtigte Interessen bearbeitet (Art. 6 Abs. 1 Bst. f), abgewogen wie oben. Sie können der Bearbeitung von Daten über Sie jederzeit widersprechen (Art. 21), die Einschränkung ihrer Bearbeitung verlangen (Art. 18) und sich bei der Aufsichtsbehörde des Staates beschweren, in dem Sie wohnen oder arbeiten (Art. 77). Anfragen gehen an dieselbe Adresse und werden innert eines Monats beantwortet."
+				]
+			},
+			"changes": {
+				"heading": "Änderungen dieser Erklärung",
+				"body": [
+					"Diese Erklärung ist ein Entwurf. Sie wird von einer in der Schweiz zugelassenen Anwältin oder einem in der Schweiz zugelassenen Anwalt und von der oder dem Datenschutzbeauftragten geprüft; jede Fassung ist datiert."
+				]
+			}
+		},
+		"fields": {
+			"controller": "Verantwortliche",
+			"address": "Adresse",
+			"email": "Kontakt für Anfragen",
+			"dpo": "Datenschutzbeauftragte Person",
+			"effectiveDate": "Gültig ab",
+			"hostingProvider": "Hosting (Auftragsbearbeiter)",
+			"smtp": "E-Mail-Versand (Auftragsbearbeiter)"
+		},
+		"objectLink": "So widersprechen Sie einer Seite",
+		"authorityLink": "Der Eidgenössische Datenschutz- und Öffentlichkeitsbeauftragte (EDÖB)"
+	},
+	"TermsCh": {
+		"metaTitle": "Nutzungsbedingungen (Schweiz) · Apercura",
+		"metaDescription": "Nutzungsbedingungen der Schweizer Seiten von Apercura: ein kostenloses, sachliches Verzeichnis von Spitälern und Kliniken, Alters- und Pflegeheimen und Apotheken aus den offenen Daten des Bundesamts für Gesundheit und der Kantone, ohne Online-Terminbuchung.",
+		"title": "Nutzungsbedingungen",
+		"lead": "Die Regeln für die Nutzung der Schweizer Seiten von Apercura, für die Öffentlichkeit wie für die Einrichtungen.",
+		"sections": {
+			"service": {
+				"heading": "Das Angebot",
+				"body": [
+					"Apercura führt kostenlos die Spital- und Klinikstandorte, Alters- und Pflegeheime und Apotheken der offenen Listen auf, die das Bundesamt für Gesundheit und die Kantone veröffentlichen. Es ist nur ein Verzeichnis: In der Schweiz werden über Apercura keine Termine gebucht. Betrieben wird es von der im Impressum genannten Anbieterin.",
+					"Für die Nutzung des Verzeichnisses braucht es kein Konto. Wer die Website nutzt, akzeptiert diese Bedingungen."
+				]
+			},
+			"content": {
+				"heading": "Was die Seiten enthalten",
+				"body": [
+					"Die Seiten zeigen sachliche Angaben aus den öffentlichen Listen, in neutraler Reihenfolge, ohne Bewertungen, Erfahrungsberichte, Werbung oder bezahlte Platzierung.",
+					"Die Angaben können unvollständig oder veraltet sein: Prüfen Sie sie vor Ihrem Besuch bei der Einrichtung. Jede Seite sagt, wie Sie einen Fehler melden."
+				]
+			},
+			"health": {
+				"heading": "Keine medizinische Beratung",
+				"body": [
+					"Apercura gibt keine medizinischen Ratschläge und ist kein Notfalldienst. Im Notfall wählen Sie 144 (Sanitätsnotruf) oder 112. Bei Vergiftungen hilft Tox Info Suisse unter 145. Ausserhalb der Sprechzeiten helfen der ärztliche Notfalldienst Ihres Kantons und die Notfallapotheken."
+				]
+			},
+			"practices": {
+				"heading": "Für Einrichtungen",
+				"body": [
+					"Das Beanspruchen einer Seite ist kostenlos. Sie setzt einen Nachweis voraus, dass die antragstellende Person die Einrichtung führt oder für sie handelt; eine Administratorin oder ein Administrator prüft ihn, bevor die Seite übergeben wird.",
+					"Wer eine Seite beansprucht, ist für die ergänzten Angaben verantwortlich. Sie müssen sachlich, richtig und aktuell bleiben."
+				]
+			},
+			"removal": {
+				"heading": "Entfernung einer Seite",
+				"body": [
+					"Wen eine Seite betrifft, kann jederzeit widersprechen und ihre Entfernung verlangen: Die Seite «Daten und Quellen» erklärt, wie. Eine beanspruchte Seite kann nur ihre Inhaberin oder ihr Inhaber entfernen. Fehler in den Daten werden an der Quelle berichtigt, beim Kanton oder beim Bundesamt, das die Liste veröffentlicht, oder mit dem Formular der Seite «Daten und Quellen» gemeldet."
+				]
+			},
+			"liability": {
+				"heading": "Haftung",
+				"body": [
+					"Die Anbieterin setzt sich dafür ein, dass das Angebot verfügbar und richtig ist, kann dies aber nicht garantieren. Für die Angaben, die Einrichtungen auf ihren Seiten ergänzen, ist sie nicht verantwortlich. Diese Grenzen werden bei der rechtlichen Prüfung präzisiert."
+				]
+			},
+			"ip": {
+				"heading": "Code und Daten",
+				"body": [
+					"Der Quellcode ist unter der Lizenz AGPL-3.0 veröffentlicht. Die Daten werden nach den Nutzungsbedingungen von opendata.swiss und der jeweiligen Herausgeberin weiterverwendet (die Listen von Basel-Stadt unter der Lizenz Creative Commons Namensnennung 4.0 International, CC BY 4.0), mit der Quellenangabe, die jede verlangt."
+				]
+			},
+			"law": {
+				"heading": "Anwendbares Recht und Streitigkeiten",
+				"body": [
+					"Das anwendbare Recht und der Gerichtsstand werden bei der rechtlichen Prüfung festgelegt; die zwingenden Bestimmungen zum Schutz der Konsumentinnen und Konsumenten des Wohnsitzstaates gelten in jedem Fall. Bei einer Streitigkeit schreiben Sie zuerst an die Kontaktadresse, um eine gütliche Lösung zu suchen."
+				]
+			}
+		},
+		"fields": {
+			"publisher": "Anbieterin",
+			"effectiveDate": "Gültig ab",
+			"contact": "Kontakt"
+		}
+	},
+	"AccessibilityCh": {
+		"metaTitle": "Barrierefreiheit (Schweiz) · Apercura",
+		"metaDescription": "Barrierefreiheit der Schweizer Seiten von Apercura: eine freiwillige Erklärung, das Ziel eCH-0059 und WCAG 2.2 AA, was geprüft wurde, was noch aussteht und wie Sie ein Problem melden.",
+		"title": "Barrierefreiheit",
+		"lead": "Apercura ist für alle gestaltet, auch für ältere und sehbehinderte Menschen. Diese Erklärung sagt, wo die Schweizer Seiten stehen.",
+		"sections": {
+			"scope": {
+				"heading": "Geltungsbereich",
+				"body": [
+					"Das Behindertengleichstellungsgesetz (BehiG, SR 151.3) verpflichtet den Bund, seine eigenen Internetangebote barrierefrei zu gestalten; für private Websites sieht es keine solche Pflicht vor, und diese Erklärung ist freiwillig. Die Anbieterin orientiert sich dennoch am Standard, den der Bund für seine eigenen Websites anwendet, eCH-0059, der auf den Web Content Accessibility Guidelines beruht, und strebt auf jeder Seite WCAG 2.2 Stufe AA an."
+				]
+			},
+			"status": {
+				"heading": "Stand der Website",
+				"body": [
+					"Die Schweizer Seiten teilen den Code der französischen Seiten und deren Tests. Die Website erfüllt WCAG 2.2 AA teilweise: Dies beruht auf einer Selbstbewertung und automatisierten Tests, noch nicht auf einem vollständigen Audit, das in Arbeit ist."
+				]
+			},
+			"tests": {
+				"heading": "Was geprüft wurde",
+				"list": [
+					"Automatisierte Prüfungen mit axe-core (Regeln der WCAG 2.0, 2.1 und 2.2, Stufen A und AA) auf jedem Seitentyp, bei jeder Veröffentlichung.",
+					"Abläufe nur mit der Tastatur, mit sichtbarem Fokus.",
+					"Fliesstext von mindestens 18 px, Bedienelemente von mindestens 44 px, nichts, das allein auf Farbe beruht, kein horizontales Scrollen bei 390 px."
+				]
+			},
+			"pending": {
+				"heading": "Was noch zu prüfen ist",
+				"list": [
+					"Ein manueller Durchgang mit den Screenreadern VoiceOver und NVDA, auf Deutsch, Französisch und Italienisch.",
+					"Ein vollständiges Audit nach WCAG 2.2 AA an einer Auswahl von Seiten."
+				]
+			},
+			"feedback": {
+				"heading": "Ein Problem melden",
+				"body": [
+					"Ist eine Seite oder eine Funktion schwer zu benutzen, schreiben Sie an die unten stehende Adresse: Nennen Sie die Seite und was Sie behindert hat. Wir antworten innert eines Monats und stellen Ihnen die Information bei Bedarf in anderer Form zur Verfügung."
+				]
+			}
+		},
+		"fields": {
+			"contact": "Kontakt",
+			"date": "Datum dieser Erklärung"
+		}
+	},
+	"DataCh": {
+		"metaTitle": "Daten und Quellen (Schweiz) · Apercura",
+		"metaDescription": "Woher die Schweizer Seiten von Apercura stammen: die Spitalkennzahlen des BAG, die offenen Listen der Kantone, das Gemeindeverzeichnis des BFS und die Ortschaften von swisstopo, mit ihren Bedingungen, den Daten der Aktualisierung, was nicht importiert wird und wie Sie eine Seite berichtigen oder entfernen lassen.",
+		"title": "Daten und Quellen",
+		"lead": "Jede Schweizer Seite beruht auf offenen Behördendaten. Hier steht, woher sie stammen, unter welchen Bedingungen und mit welcher Quellenangabe, wann sie aktualisiert wurden, was weggelassen wird und warum, und wie Sie eine Seite berichtigen oder entfernen lassen.",
+		"status": {
+			"heading": "Letzte Aktualisierung",
+			"body": "Die Spitalkennzahlen des BAG erscheinen als jährliche Ausgabe, und das Verzeichnis liest jene von 2023; die Kantone aktualisieren ihre Listen in eigenem Rhythmus. Das Verzeichnis prüft die Listen jeden Monat und importiert eine Liste, wenn sie sich geändert hat. Eine Seite ändert sich nur, wenn sich ihre Angaben in ihrer Liste ändern.",
+			"importedAt": "Letzter Import",
+			"checkedAt": "Quellen zuletzt geprüft",
+			"notImported": "Das Schweizer Verzeichnis wurde auf dieser Website noch nicht importiert.",
+			"notImportedValue": "Noch nicht importiert"
+		},
+		"sources": {
+			"heading": "Quellen",
+			"body": "Die Listen sind auf opendata.swiss veröffentlicht, nach dessen Nutzungsbedingungen und den Bedingungen jeder Herausgeberin; alle erlauben die Weiterverwendung, auch die kommerzielle, und die meisten verlangen die Angabe der Quelle. Jede Quellenangabe unten steht wortgetreu, in der Sprache dieser Seite, wo die Herausgeberin sie in dieser Sprache formuliert; die Quellenangabe der Genfer Listen nennt den Tag ihres Herunterladens, den Tag des letzten Schweizer Imports.",
+			"caption": "Datenquellen des Schweizer Verzeichnisses",
+			"columns": {
+				"source": "Quelle",
+				"use": "Verwendet für",
+				"licence": "Bedingungen und Quellenangabe",
+				"frequency": "Aktualisierung"
+			},
+			"items": {
+				"ch-bag-kzp": {
+					"use": "Spital- und Klinikstandorte in allen Kantonen: Namen, Adressen, Spitaltyp des BFS, Aktivitätstypen, Notfallstation und Intensivstation, ambulantes und stationäres Angebot, Rechtsformgruppe, Betreiberin",
+					"frequency": "Jährliche Ausgabe; gelesen werden die Kennzahlen 2023"
+				},
+				"ch-be-spitaeler": {
+					"use": "Spitäler und Kliniken des Kantons Bern, auch jene, die in den Kennzahlen des BAG fehlen: Namen, Adressen",
+					"frequency": "Wenn der Kanton seine Liste aktualisiert"
+				},
+				"ch-be-heime": {
+					"use": "Alters- und Pflegeheime des Kantons Bern: Namen, Adressen",
+					"frequency": "Wenn der Kanton seine Liste aktualisiert"
+				},
+				"ch-ge-hopitaux": {
+					"use": "Spitäler und Kliniken des Kantons Genf, auch jene, die in den Kennzahlen des BAG fehlen: Namen, Adressen",
+					"frequency": "Wenn der Kanton seine Liste aktualisiert"
+				},
+				"ch-ge-ems": {
+					"use": "Alters- und Pflegeheime (EMS) des Kantons Genf: Namen, Adressen",
+					"frequency": "Wenn der Kanton seine Liste aktualisiert"
+				},
+				"ch-ge-pharmacies": {
+					"use": "Die Apotheken des Kantons Genf, die impfen, die einzigen aufgeführten Genfer Apotheken: Namen, Adressen",
+					"frequency": "Wenn der Kanton seine Liste aktualisiert"
+				},
+				"ch-bl-apotheken": {
+					"use": "Apotheken des Kantons Basel-Landschaft: Namen, Adressen",
+					"frequency": "Wenn der Kanton seine Liste aktualisiert"
+				},
+				"ch-bl-heime": {
+					"use": "Alters- und Pflegeheime des Kantons Basel-Landschaft: Namen, Adressen",
+					"frequency": "Wenn der Kanton seine Liste aktualisiert"
+				},
+				"ch-bs-spitaeler": {
+					"use": "Spitäler und Kliniken des Kantons Basel-Stadt, auch jene, die in den Kennzahlen des BAG fehlen: Namen, Adressen",
+					"frequency": "Wenn der Kanton seine Liste aktualisiert"
+				},
+				"ch-bs-heime": {
+					"use": "Alters- und Pflegeheime des Kantons Basel-Stadt: Namen, Adressen",
+					"frequency": "Wenn der Kanton seine Liste aktualisiert"
+				},
+				"ch-zh-heime": {
+					"use": "Alters- und Pflegeheime des Kantons Zürich: Namen, Adressen",
+					"frequency": "Wenn der Kanton seine Liste aktualisiert"
+				},
+				"ch-ju-institutions": {
+					"use": "Spitäler und Alters- und Pflegeheime des Kantons Jura: Namen, Adressen",
+					"frequency": "Wenn der Kanton seine Liste aktualisiert"
+				},
+				"ch-bfs-gemeinden": {
+					"use": "Kantone, Bezirke und Gemeinden mit ihren Nummern, in denen die Einrichtungen verortet werden",
+					"frequency": "Bei jeder Änderung des Gemeindebestands, durch das BFS"
+				},
+				"ch-swisstopo-plz": {
+					"use": "Postleitzahlen und Ortschaften sowie der Punkt jeder Ortschaft, an dem eine Einrichtung ohne Koordinaten gezeigt wird",
+					"frequency": "Regelmässig, durch swisstopo"
+				},
+				"map": {
+					"name": "Kartendaten",
+					"publisher": "OpenStreetMap-Mitwirkende, Kacheln von OpenFreeMap",
+					"use": "Die Grundkarte der Seiten",
+					"frequency": "Laufend"
+				}
+			},
+			"licences": {
+				"termsBy": "Freie Nutzung. Quellenangabe ist Pflicht.",
+				"termsOpen": "Freie Nutzung.",
+				"ccBy": "CC BY 4.0",
+				"sitg": "Nutzungsbedingungen des SITG, Stufe A (freier Zugang)",
+				"swisstopo": "Open Government Data von swisstopo, freie Nutzung mit Quellenangabe",
+				"odbl": "ODbL"
+			},
+			"conditionsHeading": "Bedingungen der Weiterverwendung",
+			"conditions": "Die Listen werden so gezeigt, wie sie veröffentlicht sind, ohne ihren Sinn zu verändern: der Name einer Einrichtung, wie ihn ihre Liste schreibt, ohne einen c/o-Vermerk und was darauf folgt, und nur die eigenen Angaben der Einrichtung. Jede Schweizer Seite nennt die Listen, auf denen sie beruht, mit ihren Quellenangaben.",
+			"termsText": "Die Nutzungsbedingungen von opendata.swiss"
+		},
+		"coverage": {
+			"heading": "Erfasste Einrichtungen",
+			"body": [
+				"Eine Seite ist eine Einrichtung, nie eine Person. Was aufgeführt wird, hängt davon ab, was jeder Kanton als offene Daten veröffentlicht:"
+			],
+			"cantons": [
+				"Spital- und Klinikstandorte: in allen Kantonen, aus den Kennzahlen des BAG, ergänzt durch die Spitallisten der Kantone Bern, Genf, Basel-Stadt und Jura.",
+				"Alters- und Pflegeheime: nur in den Kantonen Zürich, Bern, Genf, Basel-Stadt, Basel-Landschaft und Jura.",
+				"Apotheken: im Kanton Basel-Landschaft, und im Kanton Genf nur die Apotheken, die impfen.",
+				"Anderswo sind noch keine Alters- und Pflegeheime und Apotheken aufgeführt, und Arzt- oder Zahnarztpraxen sind nirgends aufgeführt."
+			],
+			"kinds": {
+				"CH_HOSPITAL": "Allgemeinspitäler: Universitätsspitäler, Zentrumsversorgung und Grundversorgung (BFS-Typen K111 bis K123)",
+				"CH_PSYCHIATRIC_CLINIC": "Psychiatrische Kliniken (K211, K212)",
+				"CH_REHAB_CLINIC": "Rehabilitationskliniken (K221)",
+				"CH_SPECIALTY_CLINIC": "Spezialkliniken: Chirurgie, Gynäkologie und Neonatologie, Pädiatrie, Geriatrie und weitere (K231 bis K235)",
+				"CH_BIRTH_CENTRE": "Geburtshäuser",
+				"CH_NURSING_HOME": "Alters- und Pflegeheime, wo ein Kanton sie aufführt",
+				"CH_PHARMACY": "Apotheken, wo ein Kanton sie aufführt"
+			},
+			"kindsLabel": "Arten von Einrichtungen"
+		},
+		"excluded": {
+			"heading": "Was nicht importiert wird, und warum",
+			"body": [
+				"Manche Daten würden das Verzeichnis ergänzen, dürfen aber nicht weiterverwendet werden oder werden nicht gebraucht:"
+			],
+			"list": [
+				"Gesundheitsfachpersonen: Die Register des Bundes für die universitären Medizinalberufe (MedReg), die Psychologieberufe (PsyReg) und die Gesundheitsberufe (GesReg) lassen sich Eintrag für Eintrag abfragen; ihre Daten als Ganzes setzen eine Vereinbarung mit dem BAG voraus, die das Verzeichnis nicht hat. Keine Person wird aufgeführt.",
+				"Die Partnerdaten von Refdata (GLN von Fachpersonen und Betrieben): keine offenen Daten; ihre Weiterveröffentlichung setzt die schriftliche Zustimmung von Refdata voraus.",
+				"OpenStreetMap: nur für die Grundkarte verwendet, nie als Quelle von Einrichtungen oder ihrer Lage, da ihre Open Database Licence (ODbL) die Weitergabe unter gleichen Bedingungen verlangt.",
+				"Die Spitalkennzahlen 2024 des BAG: Ihre Bedingungen verlangen vor jeder kommerziellen Nutzung eine Bewilligung; gelesen wird deshalb die Ausgabe 2023, frei nutzbar mit Quellenangabe.",
+				"Daten über einzelne Personen, nie: kein Personenregister, keine Bewertungen, keine Erfahrungsberichte."
+			]
+		},
+		"unread": {
+			"heading": "Felder, die nie gelesen werden",
+			"body": [
+				"Die Listen enthalten Felder, die eine Seite nicht braucht, darunter solche, die eine Person nennen oder erreichen. Sie werden nie gelesen oder gespeichert:"
+			],
+			"list": [
+				"Der Name der verantwortlichen Apothekerin oder des verantwortlichen Apothekers in der Apothekenliste des Kantons Basel-Landschaft.",
+				"E-Mail-Adressen, in allen Listen.",
+				"Der Benutzername der Person, die einen Eintrag in der Datei des Kantons Jura bearbeitet hat.",
+				"Die Kennzahlen der Arbeitsmappe des BAG (Kosten, Personal, Fälle): Eine Seite braucht keine davon.",
+				"Ein c/o- oder Zuhanden-Vermerk im Namen einer Einrichtung, und was darauf folgt."
+			]
+		},
+		"locations": {
+			"heading": "Lage",
+			"body": [
+				"Jede Einrichtung wird in ihrem Kanton, ihrem Bezirk und ihrer Gemeinde verortet, nach dem Amtlichen Gemeindeverzeichnis des Bundesamts für Statistik: über die Gemeindenummer, wo ihre Liste sie angibt, sonst über Postleitzahl und Ortschaft, nach dem Amtlichen Ortschaftenverzeichnis von swisstopo.",
+				"Ihr Punkt ist jener, den ihre Liste angibt, bei Bedarf aus den Schweizer Landeskoordinaten umgerechnet. Die Kennzahlen des BAG und einige Listen enthalten keine Koordinaten: Eine solche Einrichtung wird am Punkt ihrer Ortschaft im Verzeichnis von swisstopo gezeigt. Keine Markierung bezeichnet sie auf einer Karte, und ihre Entfernung ist ungefähr."
+			]
+		},
+		"identifiers": {
+			"heading": "Kennungen",
+			"body": [
+				"Die Schweiz veröffentlicht keine offene nationale Nummer von Gesundheitseinrichtungen: Die Adresse jeder Seite endet mit dem Schlüssel ihrer Liste, nach Buchstaben, die diese Liste bezeichnen, damit sich eine Seite finden und mit ihrer Quelle vergleichen lässt:"
+			],
+			"list": [
+				"/ch/einrichtung/spital-beispiel-h123456789: ein Standort aus den Kennzahlen des BAG, die ihm keine Nummer geben; sein Schlüssel wird aus Kanton, Spital, Name und Postleitzahl gebildet, nach h.",
+				"/ch/einrichtung/apotheke-beispiel-blp7601000000000: die Global Location Number (GLN) einer Apotheke aus der Liste des Kantons Basel-Landschaft, nach blp.",
+				"/ch/einrichtung/pflegeheim-beispiel-gee123456: die kantonale Adresskennung (IDPADR) eines Alters- und Pflegeheims aus der Genfer Liste, nach gee; die Kennung eines Heims aus der Liste des Kantons Zürich folgt auf zhe.",
+				"Die übrigen Listen nummerieren keine Einrichtung: Ihr Schlüssel wird aus Name und Adresse der Einrichtung gebildet, nach Buchstaben, die Kanton und Liste bezeichnen (beh, bee, geh, gep, ble, bsh, bse, ju)."
+			]
+		},
+		"correct": {
+			"heading": "Einen Fehler berichtigen",
+			"body": [
+				"Die Seiten geben die öffentlichen Listen wieder: Eine dauerhafte Berichtigung erfolgt an der Quelle, und die Seite folgt beim nächsten Import, nachdem die berichtigte Liste veröffentlicht ist.",
+				"Für alles andere nutzen Sie das Formular: Wir prüfen jede Meldung."
+			],
+			"list": [
+				"Eine Einrichtung aus der Liste eines Kantons: Bitten Sie die kantonale Stelle, die die Liste veröffentlicht und oben bei den Quellen genannt ist, um die Berichtigung.",
+				"Ein Spital- oder Klinikstandort aus den Kennzahlen des BAG: Die Kennzahlen 2023 werden nicht neu veröffentlicht; melden Sie den Fehler mit dem Formular unten.",
+				"Telefon, Website und Öffnungszeiten: Wo die Liste keine angibt, ergänzt sie eine Einrichtung, indem sie ihre Seite beansprucht."
+			],
+			"formTitle": "Einen Fehler melden",
+			"formBody": "Geben Sie die Adresse der Seite an und was falsch ist."
+		},
+		"remove": {
+			"heading": "Eine Seite entfernen lassen",
+			"body": [
+				"Wen eine Seite betrifft, kann ihrer Veröffentlichung jederzeit und ohne Begründung widersprechen (Art. 30 Abs. 2 Bst. b und Art. 32 Abs. 2 DSG; Art. 21 DSGVO). Eine nicht beanspruchte Seite wird ausgeblendet, sobald die Anfrage eintrifft, und nach einer kurzen Prüfung gelöscht; mit den Aktualisierungen der Listen kehrt sie nie zurück. Eine beanspruchte Seite entfernt ihre Inhaberin oder ihr Inhaber im eigenen Bereich. Jede Seite hat zudem ihr eigenes Formular für die Entfernung."
+			],
+			"formTitle": "Die Entfernung einer Seite verlangen",
+			"formBody": "Geben Sie die Adresse der Seite an und eine E-Mail-Adresse, unter der wir Ihnen antworten können."
 		}
 	}
 }

@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { inEveryLanguage, sitemapCountryOf } from "~/server/queries/sitemap-sql";
 import { MARKET_STATIC_PATHS, marketPagePath } from "./sitemap-xml";
 
 describe("market page paths of the sitemaps", () => {
@@ -109,5 +110,52 @@ describe("Italy's sitemap paths", () => {
 		expect(marketPagePath("it", "/mentions-legales")).toBe("/it/note-legali");
 		expect(MARKET_STATIC_PATHS.it).not.toContain("/pro");
 		expect(MARKET_STATIC_PATHS.it).toContain("/accessibilite");
+	});
+});
+
+describe("Switzerland's sitemap paths", () => {
+	it("gives each of Switzerland's languages its route segments under its own segment", () => {
+		expect(marketPagePath("ch", "/")).toBe("/ch");
+		expect(marketPagePath("ch-fr", "/")).toBe("/ch-fr");
+		expect(marketPagePath("ch-it", "/")).toBe("/ch-it");
+		const facility = "/praticien/kantonsspital-beispiel-h123456789";
+		expect(marketPagePath("ch", facility)).toBe(
+			"/ch/einrichtung/kantonsspital-beispiel-h123456789",
+		);
+		expect(marketPagePath("ch-fr", facility)).toBe(
+			"/ch-fr/etablissement/kantonsspital-beispiel-h123456789",
+		);
+		expect(marketPagePath("ch-it", facility)).toBe(
+			"/ch-it/struttura/kantonsspital-beispiel-h123456789",
+		);
+		expect(marketPagePath("ch", "/etablissement/x-1")).toBe("/ch/organisation/x-1");
+		expect(marketPagePath("ch-it", "/etablissement/x-1")).toBe("/ch-it/organizzazione/x-1");
+		expect(marketPagePath("ch", "/annuaire/zuerich")).toBe("/ch/verzeichnis/zuerich");
+		expect(marketPagePath("ch-fr", "/annuaire/canton-de-geneve/geneve")).toBe(
+			"/ch-fr/annuaire/canton-de-geneve/geneve",
+		);
+		expect(marketPagePath("ch-it", "/spital/bezirk-zuerich/zuerich")).toBe(
+			"/ch-it/spital/bezirk-zuerich/zuerich",
+		);
+		expect(marketPagePath("ch", "/mentions-legales")).toBe("/ch/impressum");
+		expect(marketPagePath("ch-fr", "/mentions-legales")).toBe("/ch-fr/mentions-legales");
+		expect(marketPagePath("ch-it", "/donnees")).toBe("/ch-it/dati");
+		for (const market of ["ch", "ch-fr", "ch-it"] as const) {
+			expect(MARKET_STATIC_PATHS[market]).not.toContain("/pro");
+			expect(MARKET_STATIC_PATHS[market]).toContain("/accessibilite");
+		}
+	});
+
+	it("lists a Swiss chunk of the read models once per language, every other market's once", () => {
+		const chunk = (market: string) =>
+			({ market, kind: "praticiens", chunk: 0, lastmod: "2026-11-27", urls: 12 }) as never;
+		expect(inEveryLanguage([chunk("ch"), chunk("it")]).map((item) => item.market)).toEqual([
+			"ch",
+			"ch-fr",
+			"ch-it",
+			"it",
+		]);
+		expect(sitemapCountryOf("ch-fr")).toBe("CH");
+		expect(sitemapCountryOf("fr")).toBe("FR");
 	});
 });

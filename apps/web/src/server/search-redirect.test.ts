@@ -47,6 +47,12 @@ const PLACES: Record<MarketCountry, PlaceSuggestion[]> = {
 		place(50, "Berlin", "berlin", "berlin", "11000000"),
 		place(51, "Unterhaching", "unterhaching", "landkreis-muenchen", "09184148"),
 	],
+	CH: [
+		place(50, "Genève", "geneve", "canton-de-geneve"),
+		place(51, "Zürich", "zuerich", "bezirk-zuerich"),
+		place(52, "Basel", "basel", "kanton-basel-stadt"),
+		place(53, "Lugano", "lugano", "distretto-di-lugano"),
+	],
 };
 
 const LANDINGS = new Set([
@@ -68,6 +74,10 @@ const LANDINGS = new Set([
 	"krankenhaeuser@Berlin",
 	"apotheken@Berlin",
 	"krankenhaeuser@Unterhaching",
+	"apotheke@Genève",
+	"spital@Genève",
+	"spital@Zürich",
+	"spital@Lugano",
 ]);
 
 const HUBS = new Set(["chirurgien-dentiste:fr", "dental-practices:gb", "krankenhaeuser:de"]);
@@ -199,6 +209,47 @@ describe("a search for a place of another market", () => {
 			searchPage("de-DE", { ou: "Berlin" }),
 		);
 		expect(await search("de-DE", { quoi: "Hausarzt", ou: "Berlin" })).toBeNull();
+	});
+	it("moves to Switzerland's listing in the visitor's language, the city under its own name", async () => {
+		// A French reader lands on Switzerland in French, an Italian one in Italian, the others
+		// on its German pages.
+		expect(await search("fr", { quoi: "pharmacie", ou: "Genève" })).toEqual(
+			listing("fr-CH", "apotheke", "canton-de-geneve", "geneve"),
+		);
+		expect(await search("fr", { quoi: "pharmacie", ou: "Genf" })).toEqual(
+			listing("fr-CH", "apotheke", "canton-de-geneve", "geneve"),
+		);
+		expect(await search("en-GB", { quoi: "hospital", ou: "Zurich" })).toEqual(
+			listing("de-CH", "spital", "bezirk-zuerich", "zuerich"),
+		);
+		expect(await search("it-IT", { quoi: "ospedale", ou: "Zurigo" })).toEqual(
+			listing("it-CH", "spital", "bezirk-zuerich", "zuerich"),
+		);
+		expect(await search("it", { quoi: "ospedale", ou: "Lugano" })).toEqual(
+			listing("it-CH", "spital", "distretto-di-lugano", "lugano"),
+		);
+		expect(await search("fr", { quoi: "hôpital", ou: "Ginevra" })).toEqual(
+			listing("fr-CH", "spital", "canton-de-geneve", "geneve"),
+		);
+		// From Switzerland in French, France stays France in French.
+		expect(await search("fr-CH", { quoi: "dentiste", ou: "Paris" })).toEqual(
+			listing("fr", "chirurgien-dentiste", "75-paris", "paris"),
+		);
+		// No listing page fits: Switzerland's search, the place under its own name.
+		expect(await search("fr", { quoi: "hôpital", ou: "Bâle" })).toEqual(
+			searchPage("fr-CH", { quoi: listingLabel("spital", "fr-CH") ?? "", ou: "Basel" }),
+		);
+		// A doctor is not listed in Switzerland: its search, without the care it does not list.
+		expect(await search("fr", { quoi: "médecin", ou: "Genève" })).toEqual(
+			searchPage("fr-CH", { ou: "Genève" }),
+		);
+		// A Swiss city the places do not know: Switzerland's search says so, never "not covered".
+		expect(await search("fr", { quoi: "pharmacie", ou: "Lausanne" })).toEqual(
+			searchPage("fr-CH", { quoi: listingLabel("apotheke", "fr-CH") ?? "", ou: "Lausanne" }),
+		);
+		expect(await search("en-GB", { ou: "Bern" })).toEqual(searchPage("de-CH", { ou: "Bern" }));
+		expect(await search("fr-CH", { quoi: "pharmacie", ou: "Lausanne" })).toBeNull();
+		expect(await search("de-CH", { quoi: "Apotheke", ou: "Zürich" })).toBeNull();
 	});
 
 	it("reads the words of the market searched too", async () => {
@@ -373,6 +424,11 @@ describe("a search for an open country by name", () => {
 			href: { pathname: "/[specialite]", params: { specialite: "krankenhaeuser" } },
 			locale: "de-DE",
 		});
+		// Switzerland is open: its name leads to /ch, /ch-fr or /ch-it, in the visitor's language.
+		expect(await search("fr", { ou: "Suisse" })).toEqual({ href: "/", locale: "fr-CH" });
+		expect(await search("en-GB", { ou: "Switzerland" })).toEqual({ href: "/", locale: "de-CH" });
+		expect(await search("it-IT", { ou: "Svizzera" })).toEqual({ href: "/", locale: "it-CH" });
+		expect(await search("de-AT", { ou: "Schweiz" })).toEqual({ href: "/", locale: "de-CH" });
 		// The page's own market: its home, in the visitor's language.
 		expect(await search("en", { ou: "France" })).toEqual({ href: "/", locale: "en" });
 	});
@@ -396,6 +452,9 @@ describe("a search for an open country by name", () => {
 		);
 		expect(await search("fr", { quoi: "Dupont", ou: "Italie" })).toEqual(
 			searchPage("it-IT", { quoi: "Dupont" }),
+		);
+		expect(await search("fr", { quoi: "pharmacie", ou: "Suisse" })).toEqual(
+			searchPage("fr-CH", { quoi: listingLabel("apotheke", "fr-CH") ?? "" }),
 		);
 	});
 });

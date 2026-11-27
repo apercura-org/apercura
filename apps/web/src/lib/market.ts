@@ -1,15 +1,18 @@
 import {
 	austria,
+	CH_ATTRIBUTION_DATE,
 	czechia,
 	DE_PHARMACY_STATES,
 	DE_STATES,
 	germany,
 	italy,
 	spain,
+	switzerland,
 	unitedKingdom,
 } from "@apercura/core/country";
 import {
 	AT_PROFESSIONS,
+	CH_PROFESSIONS,
 	CZ_PROFESSIONS,
 	DE_PHARMACY,
 	DE_PROFESSIONS,
@@ -57,7 +60,7 @@ export function marketBooks(locale: Locale): boolean {
 /**
  * The profession slug of any market's profession code (`10` → `medecin`, `ARZT` → `aerzte`,
  * `GB_GP` → `gp-practices`, `CZ_GP` → `prakticky-lekar`, `ES_PHARMACY` → `farmacias`,
- * `IT_PHARMACY` → `farmacie`, `DE_PHARMACY` → `apotheken`).
+ * `IT_PHARMACY` → `farmacie`, `DE_PHARMACY` → `apotheken`, `CH_HOSPITAL` → `spital`).
  */
 export function professionSlugOf(code: string): string {
 	return (
@@ -68,6 +71,7 @@ export function professionSlugOf(code: string): string {
 		ES_PROFESSIONS[code]?.slug ??
 		IT_PROFESSIONS[code]?.slug ??
 		DE_PROFESSIONS[code]?.slug ??
+		CH_PROFESSIONS[code]?.slug ??
 		""
 	);
 }
@@ -257,6 +261,58 @@ export function germanSourcesOf(
 }
 
 /**
+ * The places of Switzerland's pages: the Federal Statistical Office's communes, districts and
+ * cantons and swisstopo's localities, credited on every Swiss page.
+ */
+export const CH_PLACE_SOURCE_IDS: readonly string[] = ["ch-bfs-gemeinden", "ch-swisstopo-plz"];
+
+/**
+ * The attribution of a Swiss source, word for word, in the page's language when its publisher
+ * words it in that language (the FOPH's in German, French and Italian), else as published. SITG's
+ * (Geneva) asks for the day the data was downloaded: the day of the Swiss import the page is
+ * built from, written in French like the rest of its line. Without a date (no import recorded),
+ * the line says the import's day is unknown rather than printing the placeholder.
+ */
+export function swissAttribution(
+	sourceId: string,
+	language: string,
+	importedAt: string | null,
+): string {
+	const registry = switzerland.registries.find((source) => source.id === sourceId);
+	const attribution = registry?.attributions?.[language] ?? registry?.attribution ?? "";
+	if (!attribution.includes(CH_ATTRIBUTION_DATE)) return attribution;
+	const date = importedAt
+		? new Intl.DateTimeFormat("fr-CH", { dateStyle: "long", timeZone: "UTC" }).format(
+				new Date(`${importedAt.slice(0, 10)}T00:00:00Z`),
+			)
+		: null;
+	return date
+		? attribution.replace(CH_ATTRIBUTION_DATE, date)
+		: attribution.replace(/,? (?:téléchargé )?en date du \{date\}/, "");
+}
+
+/**
+ * The sources a Swiss facility's page is built from, with the attribution each requires word for
+ * word in the page's language (`language`: `de`, `fr`, `it`): the list of its activity (the
+ * FOPH's hospital figures or a canton's list), the further lists it is completed from (`quelle`
+ * qualifications: a FOPH site with the Bern list's coordinates), and the places of the Federal
+ * Statistical Office and swisstopo. `importedAt` dates SITG's line (Geneva's lists).
+ */
+export function swissSourcesOf(
+	sourceIds: readonly (string | undefined)[],
+	language: string,
+	importedAt: string | null,
+): { name: string; attribution: string }[] {
+	const ids = new Set([...sourceIds.filter(Boolean), ...CH_PLACE_SOURCE_IDS]);
+	return switzerland.registries
+		.filter((registry) => ids.has(registry.id) && registry.attribution)
+		.map((registry) => ({
+			name: registry.name,
+			attribution: swissAttribution(registry.id, language, importedAt),
+		}));
+}
+
+/**
  * The open-data sources of a page in a market whose licences require their attribution
  * (Austria's and Czechia's CC BY 4.0, the UK's OGL, Spain's Ministry of Health and IGN, Italy's
  * IODL 2.0 and CC BY 4.0, Germany's Destatis, CC BY 4.0 and dl-de/by-2-0 sources); empty for
@@ -267,6 +323,7 @@ export function openDataSourcesOf(
 	country: string,
 	activities: Parameters<typeof ukSourcesOf>[0],
 	sourceDate: string | null = null,
+	{ language = "de", sources = [] }: { language?: string; sources?: readonly string[] } = {},
 ): { name: string; attribution: string }[] {
 	if (country === "AT") return austrianSourcesOf(activities.map((activity) => activity.source));
 	if (country === "GB") return ukSourcesOf(activities);
@@ -281,6 +338,15 @@ export function openDataSourcesOf(
 			: [];
 	}
 	if (country === "DE") return germanSourcesOf(activities.map((activity) => activity.source));
+	if (country === "CH") {
+		return activities.length > 0
+			? swissSourcesOf(
+					[...activities.map((activity) => activity.source), ...sources],
+					language,
+					sourceDate,
+				)
+			: [];
+	}
 	return [];
 }
 

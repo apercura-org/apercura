@@ -35,6 +35,25 @@ const LOCALIZED = [
 		lang: "de-DE",
 		search: "Suchen",
 	},
+	// Switzerland, in each of its languages.
+	{
+		path: "/ch/gibt-es-nicht",
+		title: "Diese Seite gibt es nicht",
+		lang: "de-CH",
+		search: "Suchen",
+	},
+	{
+		path: "/ch-fr/cette-page-n-existe-pas",
+		title: "Cette page n’existe pas",
+		lang: "fr-CH",
+		search: "Chercher",
+	},
+	{
+		path: "/ch-it/inesistente",
+		title: "Questa pagina non esiste",
+		lang: "it-CH",
+		search: "Ricerca",
+	},
 ];
 
 for (const { path, title, lang, search } of LOCALIZED) {
@@ -68,5 +87,6 @@ test("an address outside every locale gets the root 404", async ({ page }) => {
 	await expect(page.getByRole("link", { name: "France" })).toHaveAttribute("href", "/fr");
 	await expect(page.getByRole("link", { name: "Spain" })).toHaveAttribute("href", "/es");
 	await expect(page.getByRole("link", { name: "Germany" })).toHaveAttribute("href", "/de");
+	await expect(page.getByRole("link", { name: "Switzerland" })).toHaveAttribute("href", "/ch");
 	expect(await axeViolations(page)).toEqual([]);
 });

@@ -6,6 +6,7 @@ import {
 	DESCRIPTION_MAX,
 	fitText,
 	homeAlternates,
+	marketAlternates,
 	ogImageOf,
 	pickTitle,
 	shortPlaceName,
@@ -29,6 +30,8 @@ describe("Open Graph images", () => {
 		expect(ogImageOf("IT_HOSPITAL")).toBe("annuaire");
 		expect(ogImageOf("CZ_GP")).toBe("annuaire");
 		expect(ogImageOf("CZ_DENTIST")).toBe("annuaire");
+		expect(ogImageOf("CH_HOSPITAL")).toBe("annuaire");
+		expect(ogImageOf("CH_NURSING_HOME")).toBe("annuaire");
 	});
 });
 
@@ -110,8 +113,60 @@ describe("hreflang of the homes", () => {
 			"es-ES": "https://apercura.org/es",
 			"it-IT": "https://apercura.org/it",
 			"de-DE": "https://apercura.org/de",
+			"de-CH": "https://apercura.org/ch",
+			"fr-CH": "https://apercura.org/ch-fr",
+			"it-CH": "https://apercura.org/ch-it",
 			"x-default": "https://apercura.org/",
 		});
+	});
+});
+
+describe("hreflang below the homes", () => {
+	afterEach(() => {
+		vi.unstubAllEnvs();
+	});
+
+	it("links a Swiss page to itself in the market's three languages, and to nothing else", () => {
+		vi.stubEnv("APP_URL", "https://apercura.org");
+		const facility = {
+			pathname: "/praticien/[slug]",
+			params: { slug: "kantonsspital-beispiel-h123456789" },
+		} as const;
+		const expected = {
+			"de-CH": "https://apercura.org/ch/einrichtung/kantonsspital-beispiel-h123456789",
+			"fr-CH": "https://apercura.org/ch-fr/etablissement/kantonsspital-beispiel-h123456789",
+			"it-CH": "https://apercura.org/ch-it/struttura/kantonsspital-beispiel-h123456789",
+		};
+		for (const locale of ["de-CH", "fr-CH", "it-CH"] as const) {
+			expect(marketAlternates(facility, locale)).toEqual(expected);
+		}
+		expect(
+			marketAlternates(
+				{
+					pathname: "/[specialite]/[dept]/[[...rest]]",
+					params: { specialite: "spital", dept: "bezirk-zuerich", rest: ["zuerich"] },
+				},
+				"it-CH",
+			),
+		).toEqual({
+			"de-CH": "https://apercura.org/ch/spital/bezirk-zuerich/zuerich",
+			"fr-CH": "https://apercura.org/ch-fr/spital/bezirk-zuerich/zuerich",
+			"it-CH": "https://apercura.org/ch-it/spital/bezirk-zuerich/zuerich",
+		});
+		expect(marketAlternates("/mentions-legales", "fr-CH")).toEqual({
+			"de-CH": "https://apercura.org/ch/impressum",
+			"fr-CH": "https://apercura.org/ch-fr/mentions-legales",
+			"it-CH": "https://apercura.org/ch-it/note-legali",
+		});
+		expect(marketAlternates("/annuaire", "de-CH")?.["it-CH"]).toBe(
+			"https://apercura.org/ch-it/elenco",
+		);
+	});
+
+	it("gives no alternate to a market of one indexed language, nor to an interface translation", () => {
+		expect(marketAlternates("/annuaire", "it-IT")).toBeUndefined();
+		expect(marketAlternates("/annuaire", "fr")).toBeUndefined();
+		expect(marketAlternates("/annuaire", "en")).toBeUndefined();
 	});
 });
 

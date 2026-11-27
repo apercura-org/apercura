@@ -78,16 +78,63 @@ describe("warm-up units", () => {
 		expect(rankOf("es-listes-3")).toEqual([5, 3]);
 		expect(rankOf("it-listes-3")).toEqual([6, 3]);
 		expect(rankOf("de-listes-3")).toEqual([7, 3]);
-		expect(rankOf("praticiens-12")).toEqual([22, 12]);
-		expect(rankOf("at-praticiens-12")).toEqual([23, 12]);
-		expect(rankOf("gb-praticiens-12")).toEqual([24, 12]);
-		expect(rankOf("cz-praticiens-12")).toEqual([25, 12]);
-		expect(rankOf("es-praticiens-12")).toEqual([26, 12]);
-		expect(rankOf("it-praticiens-12")).toEqual([27, 12]);
-		expect(rankOf("de-praticiens-12")).toEqual([28, 12]);
+		expect(rankOf("ch-listes-3")).toEqual([8, 3]);
+		expect(rankOf("ch-fr-listes-3")).toEqual([9, 3]);
+		expect(rankOf("ch-it-listes-3")).toEqual([10, 3]);
+		expect(rankOf("praticiens-12")).toEqual([31, 12]);
+		expect(rankOf("at-praticiens-12")).toEqual([32, 12]);
+		expect(rankOf("gb-praticiens-12")).toEqual([33, 12]);
+		expect(rankOf("cz-praticiens-12")).toEqual([34, 12]);
+		expect(rankOf("es-praticiens-12")).toEqual([35, 12]);
+		expect(rankOf("it-praticiens-12")).toEqual([36, 12]);
+		expect(rankOf("de-praticiens-12")).toEqual([37, 12]);
+		expect(rankOf("ch-praticiens-12")).toEqual([38, 12]);
+		expect(rankOf("ch-it-praticiens-12")).toEqual([40, 12]);
 		expect(rankOf("cabinets-1")).toBeNull();
 		expect(rankOf("praticiens")).toBeNull();
-		expect(rankOf("ch-listes-1")).toBeNull();
+		expect(rankOf("ch-de-listes-1")).toBeNull();
+	});
+
+	it("walks Switzerland's chunks in each of its three languages", () => {
+		const swiss = ["ch", "ch-fr", "ch-it"] as const;
+		const chunks = [
+			...CHUNKS,
+			...swiss.map((market) => chunk("listes", 0, 30, market)),
+			...swiss.map((market) => chunk("praticiens", 0, 200, market)),
+		];
+		expect(warmUnits(chunks).map((unit) => unit.key)).toEqual([
+			"pages",
+			"listes-0",
+			"ch-listes-0",
+			"ch-fr-listes-0",
+			"ch-it-listes-0",
+			"lieux-0",
+			"etablissements-0",
+			"praticiens-0",
+			"praticiens-2",
+			"ch-praticiens-0",
+			"ch-fr-praticiens-0",
+			"ch-it-praticiens-0",
+		]);
+		const paths = pagesPaths(chunks);
+		for (const path of [
+			"/ch",
+			"/ch-fr",
+			"/ch-it",
+			"/ch/verzeichnis",
+			"/ch-fr/annuaire",
+			"/ch-it/elenco",
+			"/ch/impressum",
+			"/ch-fr/mentions-legales",
+			"/ch-it/note-legali",
+			"/sitemaps/ch/pages-0.xml",
+			"/sitemaps/ch-fr/pages-0.xml",
+			"/sitemaps/ch-it/praticiens-0.xml",
+		]) {
+			expect(paths, path).toContain(path);
+		}
+		expect(paths).not.toContain("/ch/pro");
+		expect(new Set(paths).size).toBe(paths.length);
 	});
 
 	it("walks Austria's chunks beside France's, kind by kind", () => {

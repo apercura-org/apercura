@@ -1,0 +1,264 @@
+{
+	"Metadata": {
+		"description": "Das offene Verzeichnis der Spitäler, Kliniken, Alters- und Pflegeheime und Apotheken der Schweiz, aus den offenen Daten des Bundes und der Kantone.",
+		"proDescription": "Apercura veröffentlicht eine sachliche Seite für jedes Spital, jede Klinik, jedes Alters- und Pflegeheim und jede Apotheke der offenen Listen der Schweiz. Finden Sie die Seite Ihrer Einrichtung und beanspruchen Sie sie kostenlos.",
+		"homeTitle": "Apercura · Spitäler, Heime und Apotheken der Schweiz"
+	},
+	"Site": {
+		"runningHead": "Offenes Verzeichnis der Gesundheitseinrichtungen der Schweiz",
+		"navPro": "Für Gesundheitseinrichtungen",
+		"footer": {
+			"free": "Kostenlos für Gesundheitseinrichtungen und für Patientinnen und Patienten."
+		},
+		"folioRpps": "Schlüssel {rpps}"
+	},
+	"Search": {
+		"label": "Ein Spital, eine Klinik, ein Heim oder eine Apotheke finden",
+		"whoHint": "Name der Einrichtung, oder Spital, Pflegeheim, Apotheke",
+		"whereHint": "Gemeinde, Bezirk oder Kanton"
+	},
+	"SearchForm": {
+		"practitioners": "Einrichtungen",
+		"department": "Bezirk",
+		"geoDenied": "Der Standort ist für diese Website deaktiviert. Geben Sie eine Gemeinde ein.",
+		"geoUnavailable": "Ihr Standort konnte nicht ermittelt werden. Geben Sie eine Gemeinde ein."
+	},
+	"SearchPage": {
+		"emptyTitle": "Keine Einrichtung entspricht der Suche",
+		"emptyBody": "Prüfen Sie die Schreibweise, versuchen Sie es mit einer Nachbargemeinde oder mit einem allgemeineren Begriff wie «Spital».",
+		"queryOnlyNear": "Einrichtungen in Ihrer Nähe (ungefähre Entfernungen)",
+		"startTitle": "Was suchen Sie?",
+		"startBody": "Geben Sie unter «Wer?» den Namen einer Einrichtung ein, oder Spital, Klinik, Pflegeheim oder Apotheke, und unter «Wo?» eine Gemeinde, einen Bezirk oder einen Kanton. Sie können das Verzeichnis auch nach Kanton und Bezirk durchsuchen.",
+		"unknownPlaceBody": "Prüfen Sie die Schreibweise oder geben Sie eine Nachbargemeinde ein.",
+		"unlistedBody": "In der Schweiz führt das Verzeichnis vorerst Einrichtungen, keine Personen: die Spitäler und Kliniken aller Kantone (Kennzahlen der Schweizer Spitäler 2023 des Bundesamts für Gesundheit und Listen der Kantone Bern, Genf, Basel-Stadt und Jura), die Alters- und Pflegeheime nur der Kantone Zürich, Bern, Genf, Basel-Stadt, Basel-Landschaft und Jura und die Apotheken nur von Basel-Landschaft (alle) und Genf (nur die Apotheken, die impfen). Ärztinnen und Ärzte, Zahnärztinnen und Zahnärzte, Psychologinnen und Psychologen und andere Gesundheitsfachpersonen sind hier noch nicht aufgeführt: Kein offenes Register führt sie. Suchen Sie nach dem Namen einer Einrichtung oder durchsuchen Sie das Verzeichnis.",
+		"departmentPlace": "Bezirk",
+		"bookingNotOpen": "Apercura bietet in der Schweiz keine Online-Terminbuchung an: Kontaktieren Sie die Einrichtung.",
+		"columns": {
+			"practitioner": "Einrichtung",
+			"place": "Adresse",
+			"appointments": "Kontakt"
+		},
+		"outsidePlace": "Ausserhalb von {where}",
+		"rppsBody": "Dieser Schlüssel ist ungültig oder die Einrichtung hat keine öffentliche Seite: Das Verzeichnis führt nur Spitäler, Kliniken, Alters- und Pflegeheime und Apotheken. Wer eine Einrichtung führt, kann ihre Seite trotzdem finden und beanspruchen.",
+		"distance": "Etwa {km} km entfernt"
+	},
+	"HomePage": {
+		"title": "Finden Sie ein Spital, eine Klinik, ein Pflegeheim oder eine Apotheke in der Schweiz",
+		"hook": "Jedes Spital und jede Klinik der Schweiz hat schon eine Seite, ebenso die Alters- und Pflegeheime der Kantone Zürich, Bern, Genf, Basel-Stadt, Basel-Landschaft und Jura und die Apotheken von Basel-Landschaft und Genf.",
+		"pillars": {
+			"free": {
+				"description": "Kostenlos für Gesundheitseinrichtungen und für Patientinnen und Patienten, ohne Abonnement und ohne Provision."
+			}
+		},
+		"registry": {
+			"heading": "Aus den offenen Daten des Bundes und der Kantone",
+			"intro": "Spitäler und Kliniken: alle Kantone, aus den Kennzahlen der Schweizer Spitäler 2023 des Bundesamts für Gesundheit (BAG) und den Listen der Kantone Bern, Genf, Basel-Stadt und Jura. Alters- und Pflegeheime: nur die Kantone Zürich, Bern, Genf, Basel-Stadt, Basel-Landschaft und Jura. Apotheken: nur Basel-Landschaft (alle Apotheken) und Genf (nur die Apotheken, die impfen). Die anderen Kantone veröffentlichen keine offene Liste davon. Aufgeführt sind Einrichtungen, nie einzelne Fachpersonen. Niemand bezahlt für einen Eintrag, und niemand wird ausgeschlossen.",
+			"sourceName": "BAG und Kantone, offene Daten"
+		},
+		"pro": {
+			"heading": "Führen Sie ein Spital, eine Klinik, ein Heim oder eine Apotheke?",
+			"body": "Die Seite Ihrer Einrichtung gibt es schon. Sie zu beanspruchen ist kostenlos."
+		},
+		"tagline": "Das offene Verzeichnis der Gesundheitseinrichtungen der Schweiz.",
+		"market": {
+			"listingsHeading": "Nach Art der Einrichtung",
+			"placesHeading": "Nach Kanton"
+		},
+		"specimen": {
+			"heading": "Jede Gesundheitseinrichtung hat schon ihre Seite"
+		}
+	},
+	"Practitioner": {
+		"rpps": "Schlüssel der Seite",
+		"specimen": "Beispiel, keine echte Einrichtung",
+		"statusNote": {
+			"unclaimed": "Erstellt aus den offenen Daten des Bundes und der Kantone. Die Einrichtung hat diese Seite noch nicht ergänzt.",
+			"verified": "Ergänzt von der Einrichtung, deren Beanspruchung geprüft wurde."
+		},
+		"fields": {
+			"profession": "Art der Einrichtung"
+		},
+		"source": {
+			"name": "Quelle: BAG und Kantone"
+		},
+		"action": {
+			"call": {
+				"statement": "Apercura bietet in der Schweiz keine Online-Terminbuchung an. Kontaktieren Sie die Einrichtung."
+			}
+		},
+		"sitesHeading": "Adresse"
+	},
+	"PractitionerPage": {
+		"metaTitle": "{name}, {occupation} · Apercura",
+		"metaTitlePlace": "{name}, {occupation} in {place} · Apercura",
+		"metaDescription": "{name}, {occupation}: {fees, select, sector {Adresse, Telefon und Tarife} other {Adresse und Art der Einrichtung}}, aus den offenen Daten des Bundes und der Kantone.",
+		"metaDescriptionPlace": "{name}, {occupation} in {place}: {fees, select, sector {Adresse, Telefon und Tarife} other {Adresse und Art der Einrichtung}}, aus den offenen Daten des Bundes und der Kantone.",
+		"unknownProfession": "Gesundheitseinrichtung",
+		"professionHeading": "Einrichtung",
+		"unnamedPlace": "Einrichtung",
+		"asideLabel": "Auf dieser Seite",
+		"action": {
+			"callNotYetOpen": "Apercura bietet in der Schweiz keine Online-Terminbuchung an. Für Auskünfte kontaktieren Sie die Einrichtung.",
+			"noPhone": "Die Liste, aus der diese Seite stammt, nennt keine Telefonnummer dieser Einrichtung."
+		},
+		"claim": {
+			"heading": "Ist das Ihre Einrichtung?",
+			"body": "Diese Seite wurde aus den offenen Daten des Bundes und der Kantone erstellt. Beanspruchen Sie sie, um sie zu prüfen und zu ergänzen:",
+			"claimedHeading": "Seite von der Einrichtung verwaltet",
+			"claimedBody": "Die Einrichtung hat diese Seite beansprucht: Ihre Beanspruchung wurde geprüft, und sie ergänzt die Seite selbst.",
+			"contactLink": "Kein Dokument zur Hand? Kontaktieren Sie uns",
+			"benefits": [
+				"kostenlos, ohne Abonnement und ohne Verpflichtung;",
+				"Ihr Foto, Ihre Öffnungszeiten und die gesprochenen Sprachen;",
+				"Ihre Website und die Angaben zur Barrierefreiheit;",
+				"Statistiken zu den Aufrufen Ihrer Seite;",
+				"ein Teilen-Paket: Link, QR-Code und Aushang."
+			]
+		},
+		"report": {
+			"body": "Wenn eine Adresse oder ein Name falsch ist, sagen Sie uns, wie wir sie korrigieren sollen."
+		},
+		"ring": {
+			"heading": "Weitere Einrichtungen: {occupation} in {place}"
+		}
+	},
+	"Listing": {
+		"count": "{count, plural, one {# Einrichtung} other {# Einrichtungen}}",
+		"metaTitle": "{count, plural, one {{listing} in {place}: # Einrichtung · Apercura} other {{listing} in {place}: # Einrichtungen · Apercura}}",
+		"metaDescription": "{count, plural, one {# Einrichtung als {occupation} in {place} aufgeführt: {fees, select, sector {Adressen, Telefonnummern und Tarife} other {Adressen und Art der Einrichtung}}, aus den offenen Daten des Bundes und der Kantone.} other {# Einrichtungen als {occupation} in {place} aufgeführt: {fees, select, sector {Adressen, Telefonnummern und Tarife} other {Adressen und Art der Einrichtung}}, aus den offenen Daten des Bundes und der Kantone.}}",
+		"lead": "{count, plural, one {Die offenen Listen führen # Einrichtung dieser Art in {place}.} other {Die offenen Listen führen # Einrichtungen dieser Art in {place}.}}",
+		"practitionersHeading": "{count, plural, one {Die Einrichtung} other {Die # Einrichtungen}}",
+		"columns": {
+			"practitioner": "Einrichtung"
+		},
+		"facts": {
+			"sources": "BAG, Kantone, BFS und swisstopo"
+		},
+		"communesHeading": "{listing}: Gemeinden von {place}",
+		"nearbyHeading": "{listing}: Nachbargemeinden",
+		"authoritiesHeading": "{listing}: Bezirke von {place}",
+		"hubMetaTitle": "{count, plural, one {{listing} in der Schweiz: # Einrichtung · Apercura} other {{listing} in der Schweiz: # Einrichtungen · Apercura}}",
+		"hubMetaDescription": "{count, plural, one {# Einrichtung als {occupation} in der Schweiz aufgeführt, nach Kanton: {fees, select, sector {Adressen, Telefonnummern und Tarife} other {Adressen und Art der Einrichtung}}, aus den offenen Daten des Bundes und der Kantone.} other {# Einrichtungen als {occupation} in der Schweiz aufgeführt, nach Kanton: {fees, select, sector {Adressen, Telefonnummern und Tarife} other {Adressen und Art der Einrichtung}}, aus den offenen Daten des Bundes und der Kantone.}}",
+		"hubTitle": "{listing} in der Schweiz",
+		"hubLead": "{count, plural, one {Die offenen Listen führen # Einrichtung dieser Art in der Schweiz.} other {Die offenen Listen führen # Einrichtungen dieser Art in der Schweiz.}}",
+		"departmentsHeading": "{listing} nach Kanton",
+		"departmentsIntro": "Wählen Sie einen Kanton oder einen Bezirk, um seine Gemeinden und Einrichtungen zu sehen.",
+		"metaDescriptionPage": "{count, plural, one {Seite {page} von {pages}: # Einrichtung als {occupation} in {place} aufgeführt.} other {Seite {page} von {pages}: # Einrichtungen als {occupation} in {place} aufgeführt.}}",
+		"metaDescriptionPageRange": "{count, plural, one {Seite {page} von {pages}, von {first} bis {last}: # Einrichtung als {occupation} in {place} aufgeführt.} other {Seite {page} von {pages}, von {first} bis {last}: # Einrichtungen als {occupation} in {place} aufgeführt.}}",
+		"hubMetaTitleShort": "{listing} in der Schweiz · Apercura",
+		"allSpecialties": "Alle Arten von Einrichtungen in {place}"
+	},
+	"Directory": {
+		"metaTitle": "Verzeichnis der Gesundheitseinrichtungen nach Ort · Apercura",
+		"metaDescription": "Kantone und Bezirke der Schweiz mit ihren Spitälern, Kliniken, Alters- und Pflegeheimen und Apotheken, aus den offenen Daten des Bundes und der Kantone.",
+		"lead": "{count, plural, one {# Einrichtung, nach Kanton und Bezirk.} other {# Einrichtungen, nach Kanton und Bezirk.}}",
+		"otherRegion": "Andere Orte",
+		"emptyBody": "Die offenen Daten der Schweiz wurden hier noch nicht importiert. Schauen Sie nach dem nächsten Import wieder vorbei.",
+		"placeMetaTitle": "Spitäler, Heime und Apotheken in {place} · Apercura",
+		"placeMetaDescription": "{count, plural, one {# Gesundheitseinrichtung in {place}, nach Art, aus den offenen Daten des Bundes und der Kantone.} other {# Gesundheitseinrichtungen in {place}, nach Art, aus den offenen Daten des Bundes und der Kantone.}}",
+		"placeTitle": "Gesundheitseinrichtungen in {place}",
+		"placeLead": "{count, plural, one {# Einrichtung in {place}.} other {# Einrichtungen in {place}.}}",
+		"specialtiesHeading": "Nach Art der Einrichtung",
+		"communesHeading": "Gemeinden von {place}",
+		"authoritiesHeading": "Bezirke von {place}",
+		"placeMetaTitleShort": "Gesundheitseinrichtungen in {place} · Apercura"
+	},
+	"OgImage": {
+		"runningHead": "Offenes Verzeichnis der Gesundheitseinrichtungen",
+		"practitioner": {
+			"folio": "Schlüssel {rpps}"
+		}
+	},
+	"taxonomy": {
+		"practiceKind": {
+			"office": "Einrichtung"
+		}
+	},
+	"Claim": {
+		"errors": {
+			"NOT_FOUND": "Keine Seite hat diesen Schlüssel.",
+			"INVALID_RPPS": "Dieser Schlüssel ist ungültig: Es ist das Ende der Adresse der Seite Ihrer Einrichtung (Buchstaben und Ziffern, zum Beispiel h123456789) mit vorangestelltem ch:, oder die vollständige Adresse."
+		},
+		"start": {
+			"lead": "Eine Beanspruchung betrifft die Seite einer Einrichtung, nie einen Namen.",
+			"contestBody": "Wenn es die Seite Ihrer Einrichtung ist (zum Beispiel, weil Sie den Zugang zu Ihrem Konto verloren haben), können Sie sie trotzdem beanspruchen: Ein Administrator prüft Ihr Dokument und entscheidet. Die Wiederherstellung eines Kontos erfordert immer eine neue Prüfung.",
+			"findHeading": "Finden Sie die Seite Ihrer Einrichtung",
+			"notFound": "Noch keine öffentliche Seite hat diesen Schlüssel.",
+			"rppsLabel": "Schlüssel oder Adresse der Seite",
+			"rppsHint": "Die Adresse der Seite Ihrer Einrichtung, zum Beispiel apercura.org/ch/einrichtung/kantonsspital-beispiel-h123456789, oder ihr Ende mit vorangestelltem ch: (ch:h123456789).",
+			"contactLink": "Kein Dokument zur Hand? Kontaktieren Sie uns"
+		},
+		"methods": {
+			"document": {
+				"summary": "Ein Dokument, das belegt, dass Sie die Einrichtung führen oder in ihrem Auftrag handeln: die Betriebsbewilligung der Einrichtung oder ein Schreiben auf ihrem Briefpapier, das Sie dazu ermächtigt. Ein Mitglied unseres Teams prüft es, in der Regel innerhalb von 48 Stunden.",
+				"lead": "Senden Sie ein Dokument, das belegt, dass Sie die Einrichtung führen oder in ihrem Auftrag handeln: die Betriebsbewilligung der Einrichtung oder ein Schreiben auf ihrem Briefpapier, das Sie dazu ermächtigt. Es wird vor der Speicherung verschlüsselt und 30 Tage nach dem Entscheid gelöscht."
+			}
+		},
+		"documents": {
+			"kind": {
+				"cps_card": "Schreiben auf dem Briefpapier der Einrichtung",
+				"ordre_attestation": "Betriebsbewilligung der Einrichtung"
+			}
+		},
+		"status": {
+			"contestReview": "Diese Seite hatte schon einen geprüften Inhaber: Ein Administrator entscheidet über Ihr Dokument.",
+			"reviewBody": "Ein Mitglied unseres Teams prüft Ihr Dokument und schreibt Ihnen per E-Mail.",
+			"contestBody": "Ein Administrator wird über Ihr Dokument entscheiden."
+		}
+	},
+	"Gdpr": {
+		"rpps": "Schlüssel der Seite",
+		"rppsHint": "Das Ende der Adresse der Seite (zum Beispiel kantonsspital-beispiel-h123456789) oder die vollständige Adresse.",
+		"errors": {
+			"notFound": "Keine Seite hat diesen Schlüssel."
+		},
+		"report": {
+			"doneBody": "Wir prüfen die Meldung. Die Angaben werden an der Quelle korrigiert, beim Bundesamt für Gesundheit oder beim Kanton, der die Liste veröffentlicht; wenn Sie eine Adresse hinterlassen haben, informieren wir Sie."
+		},
+		"removal": {
+			"doneBody": "Sie wird nicht mehr angezeigt, indexiert oder aufgeführt. Wir prüfen den Antrag und antworten per E-Mail innerhalb von höchstens einem Monat. Wird er bestätigt, wird die Seite endgültig gelöscht und kehrt mit den Aktualisierungen der offenen Listen nicht zurück.",
+			"privacy": "Eine gelöschte Seite erscheint beim nächsten Import der offenen Listen nicht wieder.",
+			"claimedBody": "Nur ihr Inhaber kann sie entfernen, im Seiten-Editor seines Bereichs: Die Seite verschwindet dann sofort und kehrt mit den Aktualisierungen der offenen Listen nicht zurück."
+		},
+		"contact": {
+			"lead": "Sie können die Seite Ihrer Einrichtung nicht mit einem Dokument beanspruchen? Hinterlassen Sie uns Ihre Kontaktdaten: Ein Mitglied des Apercura-Teams meldet sich, um zu prüfen, dass Sie im Auftrag der Einrichtung handeln, und um Ihnen zu helfen.",
+			"claimFirst": "Mit einem Dokument, das belegt, dass Sie im Auftrag der Einrichtung handeln, geht die Beanspruchung schneller:",
+			"rpps": "Schlüssel der Seite"
+		}
+	},
+	"emails": {
+		"claimReceived": {
+			"body": [
+				"Guten Tag {name},",
+				"Wir haben Ihre Beanspruchung und die zugehörigen Dokumente erhalten. Ein Mitglied des Apercura-Teams prüft sie und schreibt Ihnen per E-Mail.",
+				"Wir prüfen Beanspruchungen innerhalb von 48 Stunden an Werktagen."
+			]
+		},
+		"claimRejected": {
+			"body": [
+				"Guten Tag {name},",
+				"Wir konnten Ihre Beanspruchung nicht bestätigen. Von der prüfenden Person angegebener Grund: {reason}",
+				"Sie können in Ihrem Bereich eine neue Beanspruchung eröffnen, mit einem lesbaren Dokument, das belegt, dass Sie im Auftrag der Einrichtung handeln."
+			]
+		},
+		"removalReceived": {
+			"body": [
+				"Die Seite ist ab sofort ausgeblendet: Sie wird nicht mehr angezeigt, indexiert oder aufgeführt.",
+				"Wir prüfen den Antrag und antworten innerhalb von höchstens einem Monat. Wird er bestätigt, wird die Seite gelöscht; eine gelöschte Seite kehrt mit dem nächsten Import der offenen Listen nicht zurück."
+			]
+		},
+		"removalConfirmed": {
+			"body": [
+				"Die Seite, deren Entfernung Sie beantragt haben, wurde aus Apercura gelöscht. Sie erscheint auch beim nächsten Import der offenen Listen nicht wieder."
+			]
+		}
+	},
+	"Onboarding": {
+		"steps": {
+			"check": {
+				"lead": "Ihre Seite stammt aus den offenen Daten des Bundes und der Kantone. Prüfen Sie den Namen der Einrichtung, ihre Art und ihre Adresse.",
+				"registryNote": "Etwas ist falsch? Die dauerhafte Korrektur erfolgt an der Quelle, beim Bundesamt für Gesundheit oder beim Kanton, der die Liste veröffentlicht; die Seite übernimmt sie beim nächsten Import. Im Seiten-Editor können Sie eine Adresse ausblenden oder hinzufügen."
+			}
+		}
+	}
+}

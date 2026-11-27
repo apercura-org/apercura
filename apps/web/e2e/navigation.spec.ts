@@ -106,6 +106,7 @@ test("the country menu, beside the language menu, moves to another market's home
 		"Spanien",
 		"Italien",
 		"Deutschland",
+		"Schweiz",
 	]);
 	await expect(countries.getByRole("link", { name: "Frankreich" })).toHaveAttribute(
 		"aria-current",
@@ -124,10 +125,44 @@ test("the country menu, beside the language menu, moves to another market's home
 	await expect(countries.getByRole("link", { name: "Italien" })).toHaveAttribute("href", "/it");
 	// Germany in German: France read in German leads to Germany's own pages.
 	await expect(countries.getByRole("link", { name: "Deutschland" })).toHaveAttribute("href", "/de");
+	// Switzerland in German, the visitor's language.
+	await expect(countries.getByRole("link", { name: "Schweiz" })).toHaveAttribute("href", "/ch");
 	await countries.getByRole("link", { name: "Österreich" }).click();
 	await expect(page).toHaveURL(/\/at$/);
 	await expect(page.locator("html")).toHaveAttribute("lang", "de-AT");
 	// Austria has one language: the country menu stays, the language menu goes.
 	await expect(page.getByRole("navigation", { name: "Land" })).toBeVisible();
 	await expect(page.getByRole("navigation", { name: "Sprache" })).toHaveCount(0);
+});
+
+test("Switzerland's pages offer its three languages, each the same page", async ({ page }) => {
+	await page.goto("/ch/verzeichnis");
+	await expect(page.locator("html")).toHaveAttribute("lang", "de-CH");
+	const languages = page.getByRole("navigation", { name: "Sprache" });
+	await languages.locator("summary").click();
+	await expect(languages.getByRole("link")).toHaveText(["Deutsch", "Français", "Italiano"]);
+	await expect(languages.getByRole("link", { name: "Deutsch" })).toHaveAttribute(
+		"aria-current",
+		"true",
+	);
+	await expect(languages.getByRole("link", { name: "Français" })).toHaveAttribute(
+		"href",
+		"/ch-fr/annuaire",
+	);
+	await expect(languages.getByRole("link", { name: "Italiano" })).toHaveAttribute(
+		"href",
+		"/ch-it/elenco",
+	);
+	await languages.getByRole("link", { name: "Français" }).click();
+	await expect(page).toHaveURL(/\/ch-fr\/annuaire$/);
+	await expect(page.locator("html")).toHaveAttribute("lang", "fr-CH");
+	// From Switzerland in French, the country menu leads to the other markets in French.
+	const countries = page.getByRole("navigation", { name: "Pays" });
+	await countries.locator("summary").click();
+	await expect(countries.getByRole("link", { name: "France" })).toHaveAttribute("href", "/fr");
+	await expect(countries.getByRole("link", { name: "Suisse" })).toHaveAttribute(
+		"aria-current",
+		"true",
+	);
+	await expect(countries.getByRole("link", { name: "Suisse" })).toHaveAttribute("href", "/ch-fr");
 });

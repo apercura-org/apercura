@@ -1,4 +1,5 @@
 import {
+	allChListingSlugs,
 	allCzListingSlugs,
 	allDeTaxonomySlugs,
 	allEsTaxonomySlugs,
@@ -17,22 +18,27 @@ import { describe, expect, it } from "vitest";
 import at from "../../messages/at.json";
 import cz from "../../messages/cz.json";
 import de from "../../messages/de.json";
+import deCH from "../../messages/de-CH.json";
 import deDE from "../../messages/de-DE.json";
 import en from "../../messages/en.json";
 import es from "../../messages/es.json";
 import esES from "../../messages/es-ES.json";
 import fr from "../../messages/fr.json";
+import frCH from "../../messages/fr-CH.json";
 import gb from "../../messages/gb.json";
 import it_ from "../../messages/it.json";
+import itCH from "../../messages/it-CH.json";
 import itIT from "../../messages/it-IT.json";
-import { mergeMessages, messagesFor } from "./catalogs";
+import { mergeMessages, messagesFor, withoutEszett } from "./catalogs";
 import { CATALOG_LANGUAGES, LOCALES, type Locale } from "./locales";
 
 /**
  * Austria's catalog is the German one with the Austrian overrides on top; the UK's the English
  * one with the UK's overrides; Czechia's the English one with the Czech texts on top; Spain's the
  * Spanish one with Spain's overrides; Italy's the Italian one with Italy's overrides; Germany's the
- * German one with Germany's overrides.
+ * German one with Germany's overrides;
+ * Switzerland's the German, French and Italian ones with the Swiss texts on top, German without
+ * "ß".
  */
 const CATALOGS: Record<Locale, unknown> = {
 	fr,
@@ -54,6 +60,20 @@ const CATALOGS: Record<Locale, unknown> = {
 	"de-DE": mergeMessages(
 		mergeMessages(en, de as Record<string, unknown>),
 		deDE as Record<string, unknown>,
+	),
+	"de-CH": withoutEszett(
+		mergeMessages(
+			mergeMessages(en, de as Record<string, unknown>),
+			deCH as Record<string, unknown>,
+		),
+	),
+	"fr-CH": mergeMessages(
+		mergeMessages(en, fr as Record<string, unknown>),
+		frCH as Record<string, unknown>,
+	),
+	"it-CH": mergeMessages(
+		mergeMessages(en, it_ as Record<string, unknown>),
+		itCH as Record<string, unknown>,
 	),
 };
 
@@ -245,5 +265,48 @@ describe("Germany's overrides", () => {
 		expect(flatten(messagesFor("de")).get("HomePage.title")).not.toBe(german.get("HomePage.title"));
 		expect(flatten(messagesFor("de-AT")).get("HomePage.title")).toMatch(/Österreich/);
 		expect(german.get("HomePage.title")).toMatch(/Deutschland/);
+	});
+});
+describe("Switzerland's texts", () => {
+	it("only override keys of the German, French and Italian catalogs", () => {
+		for (const [overrides, base] of [
+			[deCH, de],
+			[frCH, fr],
+			[itCH, it_],
+		] as const) {
+			const keys = flatten(base);
+			expect([...flatten(overrides).keys()].filter((key) => !keys.has(key))).toEqual([]);
+		}
+	});
+
+	it("write Swiss Standard German: never an ß, in the German texts or the Swiss ones", () => {
+		expect([...flatten(deCH).values()].filter((message) => message.includes("ß"))).toEqual([]);
+		const swiss = flatten(messagesFor("de-CH"));
+		expect([...swiss.values()].filter((message) => message.includes("ß"))).toEqual([]);
+		// The German catalog keeps its ß for Austria and France in German.
+		expect([...flatten(messagesFor("de-AT")).values()].some((m) => m.includes("ß"))).toBe(true);
+		expect(
+			withoutEszett({ street: "Hauptstraße", list: ["groß", 1], nested: { foot: "Fuß" } }),
+		).toEqual({ street: "Hauptstrasse", list: ["gross", 1], nested: { foot: "Fuss" } });
+	});
+
+	it("name every Swiss listing and kind of facility in every catalog", () => {
+		for (const catalog of [de, en, fr, it_, es]) {
+			const labels = flatten(catalog);
+			for (const slug of allChListingSlugs()) {
+				expect(labels.get(`taxonomy.listing.${slug}`), slug).toBeTruthy();
+				expect(labels.get(`taxonomy.profession.${slug}`), slug).toBeTruthy();
+			}
+		}
+		expect(messagesFor("de-CH").taxonomy.profession.spital).toBe("Spital");
+		expect(messagesFor("fr-CH").taxonomy.profession.spital).toBe("Hôpital");
+		expect(messagesFor("it-CH").taxonomy.profession.spital).toBe("Ospedale");
+	});
+
+	it("give Italian-speaking Switzerland its own texts, not Italy's", () => {
+		expect(messagesFor("it-CH").Metadata.homeTitle).not.toBe(
+			messagesFor("it-IT").Metadata.homeTitle,
+		);
+		expect(JSON.stringify(itCH)).not.toMatch(/Ministero della Salute|Istat|provinc/i);
 	});
 });

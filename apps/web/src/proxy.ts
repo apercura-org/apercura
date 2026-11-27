@@ -2,11 +2,12 @@ import { parseSearchQuery } from "@apercura/core";
 import { NextRequest, NextResponse } from "next/server";
 import createMiddleware from "next-intl/middleware";
 import { clientEnv } from "./env";
-import { LOCALE_SEGMENTS, marketOf, marketOfSegment } from "./i18n/locales";
+import { LOCALE_PREFIXES, LOCALE_SEGMENTS, marketOf, marketOfSegment } from "./i18n/locales";
 import { getPathname } from "./i18n/navigation";
 import { type Locale, routing } from "./i18n/routing";
 import { canonicalPath } from "./lib/canonical-path";
 import { isPagePath, marketPath, parseHosts } from "./lib/market-path";
+import { hasOwnStaticForm, ownPathnames } from "./lib/own-pathname";
 import { publicPageCacheControl } from "./lib/public-cache";
 import {
 	contentSecurityPolicy,
@@ -17,6 +18,31 @@ import {
 import { searchRedirect } from "./server/search-redirect";
 
 const intl = createMiddleware(routing);
+
+/** The middleware that reads a path with one locale's route table only (~/lib/own-pathname). */
+const ownIntl = new Map<Locale, ReturnType<typeof createMiddleware>>();
+
+/**
+ * next-intl's middleware for a page path: its locale's own table when the path is that locale's
+ * own form of a page (France's `/fr/etablissement/…` is never read as the Swiss French form of a
+ * facility's page and redirected), else the shared one.
+ */
+function intlFor(pathname: string) {
+	const [, segment = "", ...rest] = pathname.split("/");
+	const locale = (Object.keys(LOCALE_PREFIXES) as Locale[]).find(
+		(candidate) => LOCALE_PREFIXES[candidate] === `/${segment.toLowerCase()}`,
+	);
+	if (!locale || !hasOwnStaticForm(routing.pathnames, locale, `/${rest.join("/")}`)) return intl;
+	let middleware = ownIntl.get(locale);
+	if (!middleware) {
+		middleware = createMiddleware({
+			...routing,
+			pathnames: ownPathnames(routing.pathnames, locale),
+		});
+		ownIntl.set(locale, middleware);
+	}
+	return middleware;
+}
 
 const NONCE_PATHS = noncePathPattern(LOCALE_SEGMENTS);
 
@@ -133,7 +159,8 @@ function offHostRedirect(request: NextRequest, canonical: URL, host: string): Ne
  * The redirect of a path of the former scheme on the canonical host itself (`/annuaire` →
  * `/fr/annuaire`, `/en/about` → `/fr-en/about`). Former locale prefixes answer a temporary
  * 307: no former locale prefix is a market still to open any more (`/es` is Spain's since #148,
- * `/it` Italy's since #150 and `/de` Germany's since #152: they move only on the former hosts).
+ * `/it` Italy's since #150 and `/de` Germany's since #152: they move only on the former hosts). `/ch-de/…` moves to Switzerland's
+ * German pages at `/ch/…` for good.
  */
 function marketRedirect(request: NextRequest): NextResponse | null {
 	const moved = marketPath(request.nextUrl.pathname, { legacyRoot: false });
@@ -237,7 +264,7 @@ export default async function proxy(request: NextRequest) {
 	}
 	const shortcut = await searchShortcut(request);
 	if (shortcut) return secured(shortcut, policy);
-	const response = intl(withPolicy(request, policy));
+	const response = intlFor(request.nextUrl.pathname)(withPolicy(request, policy));
 	if (response.status === 307 && LOCALE_PREFIX.test(request.nextUrl.pathname)) {
 		return secured(new NextResponse(null, { status: 308, headers: response.headers }), policy);
 	}

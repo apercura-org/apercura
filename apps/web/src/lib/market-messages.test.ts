@@ -32,4 +32,23 @@ describe("the messages of a market's client islands", () => {
 		expect(title).toEqual((picked.taxonomy as Record<string, unknown>).title);
 		expect(forMarket({ Search: {} }, "CZ")).toEqual({ Search: {} });
 	});
+
+	it("give Switzerland's islands its labels only, and no other market Switzerland's", () => {
+		for (const locale of ["de-CH", "fr-CH", "it-CH"] as const) {
+			const swiss = taxonomyOf(forMarket(pickMessages(messagesFor(locale), ["taxonomy"]), "CH"));
+			expect(swiss.listing.spital, locale).toBeTruthy();
+			expect(swiss.profession.pflegeheim, locale).toBeTruthy();
+			expect(swiss.listing.farmacie, locale).toBeUndefined();
+			expect(swiss.listing.cardiologue, locale).toBeUndefined();
+		}
+		for (const [locale, market] of [
+			["fr", "FR"],
+			["de-AT", "AT"],
+			["it-IT", "IT"],
+		] as const) {
+			const other = taxonomyOf(forMarket(pickMessages(messagesFor(locale), ["taxonomy"]), market));
+			expect(other.listing.spital, locale).toBeUndefined();
+			expect(other.profession.apotheke, locale).toBeUndefined();
+		}
+	});
 });

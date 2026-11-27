@@ -40,7 +40,17 @@ const pathnames = Object.keys(routing.pathnames) as AppPathname[];
 const move = (path: string, legacyRoot = true) => marketPath(path, { legacyRoot })?.path ?? null;
 
 /** The markets opened after the move: their pages never had another address. */
-const NEW_MARKET_LOCALES = ["de-AT", "en-GB", "cs-CZ", "es-ES", "it-IT", "de-DE"] as const;
+const NEW_MARKET_LOCALES = [
+	"de-AT",
+	"en-GB",
+	"cs-CZ",
+	"es-ES",
+	"it-IT",
+	"de-DE",
+	"de-CH",
+	"fr-CH",
+	"it-CH",
+] as const;
 
 /** The locales of the former scheme. */
 const FORMER_LOCALES = LOCALES.filter(
@@ -48,7 +58,7 @@ const FORMER_LOCALES = LOCALES.filter(
 );
 
 describe("marketPath: every page of the former scheme has a new address", () => {
-	it("leaves Austria's, the UK's, Czechia's, Spain's, Italy's and Germany's pages where they are", () => {
+	it("leaves Austria's, the UK's, Czechia's, Spain's, Italy's, Germany's and Switzerland's pages where they are", () => {
 		for (const locale of NEW_MARKET_LOCALES) {
 			for (const pathname of pathnames) {
 				const path = currentPath(locale, pathname);
@@ -175,7 +185,23 @@ describe("marketPath: every page of the former scheme has a new address", () => 
 		expect(marketPath("/es/x", { legacyRoot: false })).toBeNull();
 		expect(marketPath("/it/x", { legacyRoot: false })).toBeNull();
 		expect(marketPath("/de/x", { legacyRoot: false })).toBeNull();
+		expect(marketPath("/ch-de/x", { legacyRoot: false })?.move).toBe("alias");
 		expect(marketPath("/sitemaps/pages-0.xml", { legacyRoot: false })?.move).toBe("sitemap");
+	});
+
+	it("moves `/ch-de` to Switzerland's German pages at `/ch`, for good, on every host", () => {
+		for (const legacyRoot of [false, true]) {
+			expect(move("/ch-de", legacyRoot)).toBe("/ch");
+			expect(move("/ch-de/", legacyRoot)).toBe("/ch");
+			expect(move("/ch-de/impressum", legacyRoot)).toBe("/ch/impressum");
+			expect(move("/CH-DE/spital/Zuerich", legacyRoot)).toBe("/ch/spital/Zuerich");
+			expect(move("/ch-de/einrichtung/kantonsspital-beispiel-h123456789", legacyRoot)).toBe(
+				"/ch/einrichtung/kantonsspital-beispiel-h123456789",
+			);
+		}
+		expect(move("/ch", false)).toBeNull();
+		expect(move("/ch-fr/annuaire", false)).toBeNull();
+		expect(move("/ch-it/elenco", false)).toBeNull();
 	});
 });
 

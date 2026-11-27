@@ -91,6 +91,7 @@
 			"GB": "United Kingdom",
 			"CZ": "Czechia",
 			"IT": "Italy",
+			"CH": "Switzerland",
 			"ES": "Spain",
 			"DE": "Germany"
 		}
@@ -156,7 +157,7 @@
 	},
 	"International": {
 		"metaTitle": "Apercura · Open directories of health practitioners",
-		"metaDescription": "A free, factual page for every registered health practitioner, from public registers. Open in France, Austria, the UK, Czechia, Spain, Italy, Germany.",
+		"metaDescription": "A free, factual page for every health practitioner, from public registers. Open in France, Austria, the UK, Czechia, Spain, Italy, Germany, Switzerland.",
 		"runningHead": "Open directories of health practitioners",
 		"title": "Every health practitioner, one open page",
 		"lead": "Apercura publishes a free, factual page for every registered health practitioner, built from each country’s public registers. No ratings, no ads, no paid ranking, and the code is open source.",
@@ -565,6 +566,18 @@
 		"fieldsOfCare": "Fields of care",
 		"facilityType": "Type",
 		"beds": "Inpatient beds",
+		"swiss": {
+			"hospitalType": "Hospital type",
+			"activities": "Activities",
+			"activity": "{code, select, A {acute care} P {psychiatry} R {rehabilitation} B {birth centre} other {other}}",
+			"offer": "Care offered",
+			"offerKind": "{code, select, AMB {outpatient} STAT {inpatient} other {other}}",
+			"services": "Hospital services",
+			"service": "{code, select, NF {The hospital has an emergency department.} IPS {The hospital has an intensive care unit.} other {}}",
+			"servicesNote": "Services of the hospital this site belongs to; some may be provided at another of its sites.",
+			"operator": "Operated by",
+			"category": "Category in the cantonal list"
+		},
 		"ownership": "Ownership",
 		"ownershipPublic": "Public",
 		"ownershipPrivate": "Private",
@@ -1577,7 +1590,8 @@
 		"metaDescriptionPageRange": "{count, plural, one {Page {page} of {pages}, {first} to {last}: # practitioner listed as {occupation} in {place} in the national register.} other {Page {page} of {pages}, {first} to {last}: # practitioners listed as {occupation} in {place} in the national register.}}",
 		"hubMetaTitleShort": "{listing} in France · Apercura",
 		"authoritiesHeading": "{listing}: local authorities of {place}",
-		"pharmacyCoverage": "Pharmacies are listed for {states} only: the other Länder publish no current list of their pharmacies as open data."
+		"pharmacyCoverage": "Pharmacies are listed for {states} only: the other Länder publish no current list of their pharmacies as open data.",
+		"swissCoverage": "{kind, select, pflegeheim {Nursing homes are listed in the cantons of Zürich, Bern, Geneva, Basel-Stadt, Basel-Landschaft and Jura only: the other cantons publish no open list of them.} apotheke {Pharmacies are listed in Basel-Landschaft (every pharmacy) and Geneva (only the pharmacies that vaccinate) only: the other cantons publish no open list of them.} other {Hospitals and clinics are listed in every canton, from the Federal Office of Public Health’s 2023 hospital figures and the lists of the cantons of Bern, Geneva, Basel-Stadt and Jura.}}"
 	},
 	"Directory": {
 		"metaTitle": "Directory of health practitioners by place · Apercura",
@@ -1729,6 +1743,13 @@
 			"parafarmacie": "Parapharmacy",
 			"ospedali": "Hospital",
 			"case-di-cura": "Accredited private clinic",
+			"spital": "Hospital",
+			"psychiatrische-klinik": "Psychiatric hospital",
+			"rehaklinik": "Rehabilitation clinic",
+			"spezialklinik": "Specialised clinic",
+			"geburtshaus": "Birth centre",
+			"pflegeheim": "Nursing home",
+			"apotheke": "Pharmacy",
 			"hospitales": "Hospital",
 			"centros-de-salud": "Health centre",
 			"consultas-medicas": "Doctor's practice",
@@ -1791,10 +1812,8 @@
 			"reha-kliniken": "Rehabilitation clinic",
 			"apotheken": "Pharmacy",
 			"krankenhaus": "Hospital",
-			"psychiatrische-klinik": "Psychiatric hospital",
 			"kinderklinik": "Children's hospital",
-			"reha-klinik": "Rehabilitation clinic",
-			"apotheke": "Pharmacy"
+			"reha-klinik": "Rehabilitation clinic"
 		},
 		"listing": {
 			"aerzte": "Doctors without a stated specialty",
@@ -1981,6 +2000,13 @@
 			"parafarmacie": "Parapharmacies",
 			"ospedali": "Hospitals",
 			"case-di-cura": "Accredited private clinics",
+			"spital": "Hospitals",
+			"psychiatrische-klinik": "Psychiatric clinics",
+			"rehaklinik": "Rehabilitation clinics",
+			"spezialklinik": "Specialised clinics",
+			"geburtshaus": "Birth centres",
+			"pflegeheim": "Nursing homes",
+			"apotheke": "Pharmacies",
 			"hospitales": "Hospitals",
 			"centros-de-salud": "Health centres and local surgeries",
 			"consultas-medicas": "Doctors' practices",
@@ -6113,6 +6139,493 @@
 			],
 			"formTitle": "Ask for a page to be removed",
 			"formBody": "Give the address of the page and an email address where we can answer you."
+		}
+	},
+	"LegalNoticeCh": {
+		"metaTitle": "Impressum (Switzerland) · Apercura",
+		"metaDescription": "Impressum of the Swiss pages of Apercura: the provider, its contact address including e-mail, its registration and VAT number, and the person responsible for the content (Federal Act against Unfair Competition, UWG, article 3(1)(s)).",
+		"title": "Impressum",
+		"lead": "Who provides the Swiss pages of Apercura (apercura.org/ch, /ch-fr and /ch-it): the identity and the contact address, e-mail included, that article 3(1)(s) of the Federal Act against Unfair Competition (UWG) asks of anyone offering services online, as Swiss practice gives them in an Impressum.",
+		"sections": {
+			"provider": {
+				"heading": "Provider",
+				"body": [
+					"The Swiss pages of Apercura are provided by the entity below. It runs the directory and answers for its content."
+				]
+			},
+			"service": {
+				"heading": "The service",
+				"body": [
+					"A free directory of the hospitals and clinics, nursing homes and pharmacies of Switzerland, built from the open data of the Federal Office of Public Health and of the cantons, without advertising, with a space where a facility can complete its own page. Pages are facilities, never individual health professionals. No appointment is booked through Apercura in Switzerland."
+				]
+			},
+			"editor": {
+				"heading": "Person responsible for the content",
+				"body": [
+					"The person below is responsible for what the provider publishes. Information a facility adds to its own page is the facility’s own responsibility."
+				]
+			},
+			"liability": {
+				"heading": "Content of the pages",
+				"body": [
+					"The directory is built from the Federal Office of Public Health’s hospital figures for 2023 and from the lists of hospitals, nursing homes and pharmacies that cantons publish as open data, placed with the Federal Statistical Office’s commune register and swisstopo’s directory of localities. It can be incomplete or out of date: check the information with the facility before you go. Every page says how to report an error."
+				]
+			},
+			"ip": {
+				"heading": "Code and data",
+				"body": [
+					"The source code of Apercura is published under the AGPL-3.0 licence. The data is reused under the terms of use of opendata.swiss and of each publisher, with the attribution each one asks for: the data page lists every source."
+				]
+			},
+			"review": {
+				"heading": "Status of this text",
+				"body": [
+					"This text is a draft, written before the legal entity was set up. It will be reviewed by a lawyer admitted in Switzerland before the Swiss pages are announced."
+				]
+			}
+		},
+		"fields": {
+			"name": "Name or company name",
+			"legalForm": "Legal form",
+			"address": "Address",
+			"phone": "Phone",
+			"email": "E-mail address",
+			"registration": "Register and registration number",
+			"vatId": "VAT number",
+			"editor": "Responsible for the content"
+		},
+		"dataLink": "Data and sources"
+	},
+	"PrivacyCh": {
+		"metaTitle": "Privacy (Switzerland) · Apercura",
+		"metaDescription": "Data processed by the Swiss pages of Apercura: sources, purposes, principles and grounds, disclosure abroad, retention, recipients and your rights, including objection (revised Federal Act on Data Protection, nFADP, and the GDPR).",
+		"title": "Privacy",
+		"lead": "What data the Swiss pages of Apercura process, where it comes from, why, for how long and by whom, and how to exercise your rights under the revised Federal Act on Data Protection (nFADP), in force since 1 September 2023, and its ordinance (DSV).",
+		"sections": {
+			"controller": {
+				"heading": "Who is responsible",
+				"body": [
+					"The provider named in the Impressum is the controller of the directory, of facility accounts, of claims and of the requests sent through the site. Write to the address below with any question about your data."
+				]
+			},
+			"law": {
+				"heading": "Which law applies",
+				"body": [
+					"The processing of the Swiss pages is subject to the revised Federal Act on Data Protection (nFADP, SR 235.1) and to the Data Protection Ordinance (DSV, SR 235.11). As the provider is established in the European Union, the General Data Protection Regulation (GDPR) applies to its processing as well: a section below says what it adds."
+				]
+			},
+			"directory": {
+				"heading": "Directory: data about facilities",
+				"body": [
+					"Data: the facility’s name as its list publishes it; its kind (hospital or clinic site, nursing home, pharmacy); for a hospital or clinic, its type in the Federal Statistical Office’s typology, its activity types, its emergency department and intensive care unit, its outpatient and inpatient offer, the legal form group of its hospital and its operator; the category its canton’s list gives it; its address, postcode, locality, commune and canton; its phone number where its list gives one, and its position where its list gives coordinates. A facility that claims its page can add a presentation, languages, a photo and opening hours.",
+					"This is data about organisations. The nFADP protects data about natural persons only: a facility’s data is personal data where its name designates a person, as the next section explains.",
+					"Purpose: letting the public find a hospital, a clinic, a nursing home or a pharmacy, where it is and what it is.",
+					"Retention: as long as the facility appears in its list. A page disappears after two imports in which the facility is no longer in it; a page removed after an objection is never published again."
+				]
+			},
+			"people": {
+				"heading": "Facilities, and the people they name",
+				"body": [
+					"A Swiss page is a facility, never a person’s profile. No health professional is listed: no register of individual doctors, pharmacists or other professionals is imported.",
+					"A facility’s name can designate a person, for example a pharmacy named after its pharmacist (“Apotheke Dr. Muster”): that name is then personal data, taken from a list the Confederation or a canton publishes. A page prints the name as its list publishes it, without a care-of address and what follows it, which can name someone else. Nothing else about a person is collected: the names of responsible pharmacists, the e-mail addresses and the user names of the lists’ editors are never read, and there is no date of birth, no home address, no rating and no review.",
+					"Anyone a page is about can object to it at any time, and the page is removed."
+				]
+			},
+			"sources": {
+				"heading": "Sources",
+				"body": [
+					"Every page is built from open government data: the Federal Office of Public Health’s (FOPH) “Kennzahlen der Schweizer Spitäler 2023”, the lists of hospitals, nursing homes and pharmacies that the cantons of Zürich, Bern, Geneva, Basel-Stadt, Basel-Landschaft and Jura publish on opendata.swiss, the Federal Statistical Office’s official commune register and swisstopo’s official directory of localities with their postcodes. Each source is reused with the attribution it asks for:"
+				]
+			},
+			"grounds": {
+				"heading": "Principles and grounds",
+				"body": [
+					"Under the nFADP, a private person may process personal data without consent as long as the processing follows the principles of articles 6 and 8 (lawfulness, good faith, proportionality, a recognisable and limited purpose, accuracy, data security) and the person concerned has not expressly objected to it (article 30(2)). Consent is not the general ground of processing, and the directory asks for none.",
+					"Where a page names a person, the provider relies on an overriding interest (article 31(1)): the public needs to know which hospitals, clinics, nursing homes and pharmacies are where, a need the Confederation and the cantons already meet by publishing these lists as open data. Only the facility’s own data is shown, in a neutral order, without advertising, ratings or reviews; an objection hides a page at once and keeps it from coming back.",
+					"Facility accounts and claims rest on the terms of use, a contract with the account holder (article 31(2)(a)), and on the provider’s interest in securing the service."
+				]
+			},
+			"information": {
+				"heading": "How you are informed",
+				"body": [
+					"The facility data does not come from the facilities themselves. For data not collected from the person concerned, article 19 of the nFADP asks the controller to give also the categories of data processed (paragraph 3), at the latest one month after obtaining them (paragraph 5).",
+					"This notice gives that information: the controller and its contact details, the purposes, the categories of data, the sources, the recipients, the disclosure abroad and your rights. It is linked from every page, and the data page lists each source. The people a facility’s name may designate are not known to the provider one by one: informing each of them individually would require a disproportionate effort (article 20(2)(b))."
+				]
+			},
+			"objection": {
+				"heading": "Objecting to a page",
+				"body": [
+					"Anyone a page is about can object to its publication at any time, without giving a reason (nFADP articles 30(2)(b) and 32(2); GDPR article 21). If the page is unclaimed, a form is enough, on the data page or on the page itself: the page is hidden as soon as the request arrives, deleted after a light check, and the updates of the lists never publish it again. If it is claimed, its holder removes it from their space."
+				]
+			},
+			"accounts": {
+				"heading": "Facility accounts and claims",
+				"body": [
+					"Data: e-mail address, name, password (stored hashed), second authentication factor, the documents sent to claim a page (proof that the claimant runs the facility or acts for it) and team members.",
+					"Purposes: managing the account and checking that a page is claimed by the right facility. Grounds: the terms of use (nFADP article 31(2)(a); GDPR article 6(1)(b)) and the interest in securing the service (GDPR article 6(1)(f)).",
+					"Retention: the account is kept until it is deleted; supporting documents, encrypted, are erased 30 days after the decision."
+				]
+			},
+			"requests": {
+				"heading": "Error reports, objections and contact requests",
+				"body": [
+					"Data: the message, the contact e-mail address when one is given and the page concerned; for a “this is my page” request also the name and phone number. Free text is encrypted.",
+					"Purposes: correcting errors, applying objections and helping a facility that cannot claim its page online. Grounds: the interest in an accurate directory and the right to object (nFADP articles 31(1) and 32(2); GDPR articles 6(1)(f) and 21).",
+					"Retention: a report is deleted 6 months after it is closed, a rejected objection one year after its decision, a contact request 12 months after the last exchange. Once an objection is confirmed, or the holder of a claimed page removes it, the page and the data about it are deleted at once, the objection included; all that is kept is a record of the removal (the identifier of the page, the country, the reason, who recorded it and when), so that it is never published again. A holder who removes their page keeps, in their account only and never published, the name, kind and identifier shown in their space and their claim, until the account is deleted."
+				]
+			},
+			"technical": {
+				"heading": "Technical data, cookies and local storage",
+				"body": [
+					"Only what the service technically needs is stored in your browser: the session cookie of signed-in facilities and, in the browser’s local storage, the light or dark display you chose, which is never sent to the server. No advertising or audience measurement cookies, no trackers.",
+					"Article 45c of the Telecommunications Act (TCA) asks that you be told what is stored on your device and why, and that you can refuse it: you can block or delete these items in your browser’s settings, signing in then no longer works.",
+					"To limit abuse, IP addresses are transformed with a keyed function before being counted and never stored as such; facility sessions record a truncated IP address. Views of claimed pages are counted without a cookie or identifier, and only the page’s holder sees them."
+				]
+			},
+			"recipients": {
+				"heading": "Recipients and processors",
+				"body": [
+					"Data is neither sold nor rented, and never used for advertising. Only the provider’s team and the processors below receive it, each for its own part, bound by contract to process it only as the provider instructs and to keep it secure (nFADP article 9; GDPR article 28). Maps are loaded from a tile server, which receives the visitor’s IP address like any website."
+				]
+			},
+			"abroad": {
+				"heading": "Disclosure abroad",
+				"body": [
+					"Data may be processed in states of the European Economic Area, whose legislation the Federal Council recognises as providing adequate protection (nFADP article 16(1) and annex 1 of the DSV): no other safeguard is needed. Nothing is disclosed elsewhere; any change of processor will be announced here before it takes effect."
+				]
+			},
+			"automated": {
+				"heading": "Automated individual decisions",
+				"body": [
+					"No decision about you is based exclusively on automated processing (nFADP article 21). A claim is decided by a person, who reads its documents."
+				]
+			},
+			"rights": {
+				"heading": "Your rights",
+				"body": [
+					"You can ask whether data about you is processed and receive it (right of access, nFADP article 25), receive the data you provided in a common electronic format or have it transmitted to another controller (article 28), have inaccurate data corrected, and have data erased or its processing or disclosure stopped (article 32). Write to the address below; access is given free of charge, within 30 days.",
+					"You can also report a processing you consider contrary to data protection rules to the Federal Data Protection and Information Commissioner (FDPIC), Feldeggweg 1, 3003 Bern, www.edoeb.admin.ch, who can open an investigation (article 49)."
+				]
+			},
+			"gdpr": {
+				"heading": "Visitors in the European Union and the EEA",
+				"body": [
+					"The GDPR applies to the provider’s processing as well, in particular for visitors in the European Union and the European Economic Area. This notice gives the information its articles 13 and 14 require; the facility data is processed on the ground of legitimate interests (article 6(1)(f)), weighed as above. You can object at any time to the processing of data about you (article 21), ask for its processing to be restricted (article 18), and lodge a complaint with the supervisory authority of the state where you live or work (article 77). Requests go to the same address and are answered within one month."
+				]
+			},
+			"changes": {
+				"heading": "Updates to this notice",
+				"body": [
+					"This notice is a draft. It will be reviewed by a lawyer admitted in Switzerland and by the data protection officer; every version is dated."
+				]
+			}
+		},
+		"fields": {
+			"controller": "Controller",
+			"address": "Address",
+			"email": "Contact for requests",
+			"dpo": "Data protection officer",
+			"effectiveDate": "Effective date",
+			"hostingProvider": "Hosting provider (processor)",
+			"smtp": "E-mail delivery (processor)"
+		},
+		"objectLink": "How to object to a page",
+		"authorityLink": "The Federal Data Protection and Information Commissioner (FDPIC)"
+	},
+	"TermsCh": {
+		"metaTitle": "Terms of use (Switzerland) · Apercura",
+		"metaDescription": "Terms of use of the Swiss pages of Apercura: a free, factual directory of hospitals and clinics, nursing homes and pharmacies from the open data of the Federal Office of Public Health and the cantons, without online booking.",
+		"title": "Terms of use",
+		"lead": "The rules for using the Swiss pages of Apercura, for the public and for facilities alike.",
+		"sections": {
+			"service": {
+				"heading": "The service",
+				"body": [
+					"Apercura lists, free of charge, the hospital and clinic sites, nursing homes and pharmacies of the open lists the Federal Office of Public Health and the cantons publish. It is a directory only: no appointment is booked through Apercura in Switzerland. It is run by the provider named in the Impressum.",
+					"Using the directory requires no account. Using the site means accepting these terms."
+				]
+			},
+			"content": {
+				"heading": "What the pages contain",
+				"body": [
+					"Pages show factual information from the public lists, in a neutral order, without ratings, reviews, advertising or paid placement.",
+					"The information may be incomplete or out of date: check it with the facility before you go. Every page says how to report an error."
+				]
+			},
+			"health": {
+				"heading": "Not medical advice",
+				"body": [
+					"Apercura gives no medical advice and is not an emergency service. In an emergency, call 144 (ambulance) or 112. For poisoning, Tox Info Suisse answers on 145. Out of hours, your canton’s on-call medical service and the pharmacies on duty can help."
+				]
+			},
+			"practices": {
+				"heading": "For facilities",
+				"body": [
+					"Claiming a page is free. It requires a document proving that the claimant runs the facility or acts for it, checked by an administrator before the page is handed over.",
+					"The holder of a page is responsible for the information they add. It must stay factual, accurate and up to date."
+				]
+			},
+			"removal": {
+				"heading": "Removing a page",
+				"body": [
+					"Anyone a page is about can object to it and ask for it to be removed at any time: the data page explains how. A claimed page can only be removed by its holder. Errors in the data are corrected at the source, with the canton or the federal office that publishes the list, or reported with the form of the data page."
+				]
+			},
+			"liability": {
+				"heading": "Liability",
+				"body": [
+					"The provider does its best to keep the service available and accurate, but cannot guarantee it. It is not responsible for the information facilities add to their pages. These limits will be specified during the legal review."
+				]
+			},
+			"ip": {
+				"heading": "Code and data",
+				"body": [
+					"The source code is published under the AGPL-3.0 licence. The data is reused under the terms of use of opendata.swiss and of each publisher (Basel-Stadt’s lists under the Creative Commons Attribution 4.0 International licence, CC BY 4.0), with the attribution each one asks for."
+				]
+			},
+			"law": {
+				"heading": "Governing law and disputes",
+				"body": [
+					"The governing law and the competent courts will be specified during the legal review; the mandatory consumer protection rules of the country of residence always apply. In case of a dispute, first write to the contact address to look for an amicable solution."
+				]
+			}
+		},
+		"fields": {
+			"publisher": "Provider",
+			"effectiveDate": "Effective date",
+			"contact": "Contact"
+		}
+	},
+	"AccessibilityCh": {
+		"metaTitle": "Accessibility (Switzerland) · Apercura",
+		"metaDescription": "Accessibility of the Swiss pages of Apercura: a voluntary statement, the eCH-0059 and WCAG 2.2 AA target, what was checked, what remains, and how to report a problem.",
+		"title": "Accessibility",
+		"lead": "Apercura is designed for everyone, including older and low-vision people. This statement says where the Swiss pages stand.",
+		"sections": {
+			"scope": {
+				"heading": "Scope",
+				"body": [
+					"The Disability Discrimination Act (BehiG, SR 151.3) requires the Confederation to make its own online services accessible; it sets no such duty for private websites, and this statement is voluntary. Its provider nevertheless aims at the standard the Confederation applies to its own sites, eCH-0059, which builds on the Web Content Accessibility Guidelines, and at WCAG 2.2 level AA on every page."
+				]
+			},
+			"status": {
+				"heading": "Where the site stands",
+				"body": [
+					"The Swiss pages share the code of the French pages and their tests. The site partially meets WCAG 2.2 AA: this rests on a self-assessment and automated tests, not yet on a full audit, which is in progress."
+				]
+			},
+			"tests": {
+				"heading": "What was checked",
+				"list": [
+					"Automated axe-core checks (WCAG 2.0, 2.1 and 2.2 rules, levels A and AA) on every page type, at every release.",
+					"Keyboard-only journeys with a visible focus.",
+					"Body text of at least 18 px, targets of at least 44 px, nothing that relies on colour alone, no horizontal scrolling at 390 px."
+				]
+			},
+			"pending": {
+				"heading": "What remains to be checked",
+				"list": [
+					"A manual pass with the VoiceOver and NVDA screen readers, in German, French and Italian.",
+					"A full audit against WCAG 2.2 AA on a sample of pages."
+				]
+			},
+			"feedback": {
+				"heading": "Report a problem",
+				"body": [
+					"If a page or a feature is hard to use, write to the address below: say which page and what blocked you. We answer within one month and, where needed, give you the information in another form."
+				]
+			}
+		},
+		"fields": {
+			"contact": "Contact",
+			"date": "Date of this statement"
+		}
+	},
+	"DataCh": {
+		"metaTitle": "Data and sources (Switzerland) · Apercura",
+		"metaDescription": "Where the Swiss pages of Apercura come from: the FOPH’s hospital figures, the cantons’ open lists, the FSO’s commune register and swisstopo’s localities, with their licences, update dates, what is not imported, and how to correct or remove a page.",
+		"title": "Data and sources",
+		"lead": "Every Swiss page is built from open government data. Here is where it comes from, under which terms and attribution, when it was updated, what is left out and why, and how to correct or remove a page.",
+		"status": {
+			"heading": "Last update",
+			"body": "The FOPH’s hospital figures are a yearly edition, and the directory reads the 2023 one; the cantons update their lists at their own pace. The directory checks the lists every month and imports a list when it has changed. A page changes only when its facts change in its list.",
+			"importedAt": "Last import",
+			"checkedAt": "Sources last checked",
+			"notImported": "The Swiss directory has not been imported yet on this site.",
+			"notImportedValue": "Not imported yet"
+		},
+		"sources": {
+			"heading": "Sources",
+			"body": "The lists are published on opendata.swiss, under its terms of use and the conditions of each publisher; all allow reuse, commercial included, and most ask for the source to be credited. Each attribution below is printed word for word, in this page’s language where the publisher words it in that language; the attribution of Geneva’s lists names the day they were downloaded, the day of the last Swiss import.",
+			"caption": "Data sources of the Swiss directory",
+			"columns": {
+				"source": "Source",
+				"use": "Used for",
+				"licence": "Terms and attribution",
+				"frequency": "Updated"
+			},
+			"items": {
+				"ch-bag-kzp": {
+					"use": "Hospital and clinic sites in every canton: names, addresses, the FSO’s hospital type, activity types, emergency department and intensive care, outpatient and inpatient offer, legal form group, operator",
+					"frequency": "A yearly edition; the 2023 figures are read"
+				},
+				"ch-be-spitaeler": {
+					"use": "Hospitals and clinics of the canton of Bern, with those the FOPH’s figures lack: names, addresses",
+					"frequency": "When the canton updates its list"
+				},
+				"ch-be-heime": {
+					"use": "Nursing homes of the canton of Bern: names, addresses",
+					"frequency": "When the canton updates its list"
+				},
+				"ch-ge-hopitaux": {
+					"use": "Hospitals and clinics of the canton of Geneva, with those the FOPH’s figures lack: names, addresses",
+					"frequency": "When the canton updates its list"
+				},
+				"ch-ge-ems": {
+					"use": "Nursing homes (EMS) of the canton of Geneva: names, addresses",
+					"frequency": "When the canton updates its list"
+				},
+				"ch-ge-pharmacies": {
+					"use": "The pharmacies of the canton of Geneva that vaccinate, the only Geneva pharmacies listed: names, addresses",
+					"frequency": "When the canton updates its list"
+				},
+				"ch-bl-apotheken": {
+					"use": "Pharmacies of the canton of Basel-Landschaft: names, addresses",
+					"frequency": "When the canton updates its list"
+				},
+				"ch-bl-heime": {
+					"use": "Nursing homes of the canton of Basel-Landschaft: names, addresses",
+					"frequency": "When the canton updates its list"
+				},
+				"ch-bs-spitaeler": {
+					"use": "Hospitals and clinics of the canton of Basel-Stadt, with those the FOPH’s figures lack: names, addresses",
+					"frequency": "When the canton updates its list"
+				},
+				"ch-bs-heime": {
+					"use": "Nursing homes of the canton of Basel-Stadt: names, addresses",
+					"frequency": "When the canton updates its list"
+				},
+				"ch-zh-heime": {
+					"use": "Nursing homes of the canton of Zürich: names, addresses",
+					"frequency": "When the canton updates its list"
+				},
+				"ch-ju-institutions": {
+					"use": "Hospitals and nursing homes of the canton of Jura: names, addresses",
+					"frequency": "When the canton updates its list"
+				},
+				"ch-bfs-gemeinden": {
+					"use": "Cantons, districts and communes, with their numbers, in which facilities are placed",
+					"frequency": "With every change of communes, by the FSO"
+				},
+				"ch-swisstopo-plz": {
+					"use": "Postcodes and localities, and the point of each locality at which a facility without coordinates is shown",
+					"frequency": "Regularly, by swisstopo"
+				},
+				"map": {
+					"name": "Map data",
+					"publisher": "OpenStreetMap contributors, tiles by OpenFreeMap",
+					"use": "The base map of the pages",
+					"frequency": "Continuously"
+				}
+			},
+			"licences": {
+				"termsBy": "Open use. Must provide the source.",
+				"termsOpen": "Open use.",
+				"ccBy": "CC BY 4.0",
+				"sitg": "SITG terms of use, level A (open access)",
+				"swisstopo": "swisstopo open government data, free use with the source",
+				"odbl": "ODbL"
+			},
+			"conditionsHeading": "Conditions of reuse",
+			"conditions": "The lists are shown as published, without changing their meaning: a facility’s name as its list writes it, without a care-of address and what follows it, and the facility’s own data only. Every Swiss page cites the lists it is built from, with their attributions.",
+			"termsText": "The terms of use of opendata.swiss"
+		},
+		"coverage": {
+			"heading": "Facilities covered",
+			"body": [
+				"A page is a facility, never a person. What is listed depends on what each canton publishes as open data:"
+			],
+			"cantons": [
+				"Hospital and clinic sites: in every canton, from the FOPH’s figures, completed by the hospital lists of the cantons of Bern, Geneva, Basel-Stadt and Jura.",
+				"Nursing homes: in the cantons of Zürich, Bern, Geneva, Basel-Stadt, Basel-Landschaft and Jura only.",
+				"Pharmacies: in the canton of Basel-Landschaft, and in the canton of Geneva only the pharmacies that vaccinate.",
+				"Elsewhere, no nursing home or pharmacy is listed yet, and no medical or dental practice is listed anywhere."
+			],
+			"kinds": {
+				"CH_HOSPITAL": "General hospitals: university hospitals, centre care and basic care (FSO types K111 to K123)",
+				"CH_PSYCHIATRIC_CLINIC": "Psychiatric clinics (K211, K212)",
+				"CH_REHAB_CLINIC": "Rehabilitation clinics (K221)",
+				"CH_SPECIALTY_CLINIC": "Specialised clinics: surgery, gynaecology and neonatology, paediatrics, geriatrics and others (K231 to K235)",
+				"CH_BIRTH_CENTRE": "Birth centres",
+				"CH_NURSING_HOME": "Nursing homes, where a canton lists them",
+				"CH_PHARMACY": "Pharmacies, where a canton lists them"
+			},
+			"kindsLabel": "Kinds of facility"
+		},
+		"excluded": {
+			"heading": "What is not imported, and why",
+			"body": ["Some data would complete the directory but cannot be reused, or is not needed:"],
+			"list": [
+				"Health professionals: the federal registers of the medical professions (MedReg), the psychology professions (PsyReg) and the health professions (GesReg) can be consulted one entry at a time; their bulk data needs an agreement with the FOPH, which the directory does not have. No person is listed.",
+				"Refdata’s partner data (GLN numbers of professionals and businesses): not open data; republishing it needs Refdata’s written consent.",
+				"OpenStreetMap: used for the base map only, never as a source of facilities or of their positions, since its Open Database Licence (ODbL) is share-alike.",
+				"The FOPH’s hospital figures for 2024: their terms ask for permission before any commercial use, so the 2023 edition, open with the source, is read.",
+				"Data about individuals, never: no register of people, no ratings, no reviews."
+			]
+		},
+		"unread": {
+			"heading": "Fields never read",
+			"body": [
+				"The lists hold some fields a page does not need, some of which name or reach a person. They are never read or stored:"
+			],
+			"list": [
+				"The name of the responsible pharmacist in the canton of Basel-Landschaft’s list of pharmacies.",
+				"E-mail addresses, in every list.",
+				"The user name of the editor of each record in the canton of Jura’s file.",
+				"The figures of the FOPH’s workbook (costs, staff, cases): a page needs none of them.",
+				"A care-of or attention mention in a facility’s name, and what follows it."
+			]
+		},
+		"locations": {
+			"heading": "Locations",
+			"body": [
+				"Every facility is placed in its canton, district and commune, from the Federal Statistical Office’s official commune register: by the commune number where its list gives one, else by its postcode and locality, from swisstopo’s official directory of localities.",
+				"Its point is the one its list gives, converted from the Swiss national grid where needed. The FOPH’s figures and some lists give no coordinates: such a facility is shown at the point of its locality in swisstopo’s directory. No pin marks it on a map, and its distance is approximate."
+			]
+		},
+		"identifiers": {
+			"heading": "Identifiers",
+			"body": [
+				"Switzerland publishes no open national number of a health facility: the address of every page ends with the key of its list, after letters naming that list, so that a page can be found and checked against its source:"
+			],
+			"list": [
+				"/ch/einrichtung/spital-beispiel-h123456789: a site of the FOPH’s figures, which give it no number; its key is derived from its canton, hospital, name and postcode, after h.",
+				"/ch/einrichtung/apotheke-beispiel-blp7601000000000: the Global Location Number (GLN) of a pharmacy in the canton of Basel-Landschaft’s list, after blp.",
+				"/ch/einrichtung/pflegeheim-beispiel-gee123456: the cantonal address identifier (IDPADR) of a nursing home in Geneva’s list, after gee; the identifier of a home in the canton of Zürich’s list follows zhe.",
+				"The other lists number no facility: their key is derived from the facility’s name and address, after letters naming the canton and the list (beh, bee, geh, gep, ble, bsh, bse, ju)."
+			]
+		},
+		"correct": {
+			"heading": "Correct an error",
+			"body": [
+				"The pages repeat the public lists: a lasting correction is made at the source, and the page follows at the next import after the corrected list is published.",
+				"For anything else, use the form: we check every report."
+			],
+			"list": [
+				"A facility from a canton’s list: ask the cantonal office that publishes the list, named in the sources above, to correct it.",
+				"A hospital or clinic site from the FOPH’s figures: the 2023 figures are not published again; report the error with the form below.",
+				"Phone, website and opening hours: where the list gives none, a facility adds them by claiming its page."
+			],
+			"formTitle": "Report an error",
+			"formBody": "Give the address of the page and what is wrong."
+		},
+		"remove": {
+			"heading": "Remove a page",
+			"body": [
+				"Anyone a page is about can object to its publication at any time, without giving a reason (nFADP articles 30(2)(b) and 32(2); GDPR article 21). An unclaimed page is hidden as soon as the request arrives and deleted after a light check; it never comes back with the updates of the lists. A claimed page is removed by its holder, from their space. Every page also has its own removal form."
+			],
+			"formTitle": "Ask for a page to be removed",
+			"formBody": "Give the address of the page and an e-mail address where we can answer you."
 		}
 	}
 }
