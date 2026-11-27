@@ -138,6 +138,7 @@ describe("the United Kingdom adapter", () => {
 			"CH",
 			"EE",
 			"PL",
+			"NO",
 		]);
 	});
 });

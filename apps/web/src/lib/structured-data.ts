@@ -603,6 +603,14 @@ const PRACTICE_TYPES: Readonly<Record<string, PracticeType>> = {
 	PL_LONG_TERM_CARE: "MedicalOrganization",
 	PL_HOSPICE: "MedicalOrganization",
 	PL_NURSING: "MedicalBusiness",
+	NO_HOSPITAL: "Hospital",
+	NO_MENTAL_HEALTH: "Hospital",
+	NO_GP: "MedicalClinic",
+	NO_EMERGENCY: "MedicalClinic",
+	NO_SPECIALIST: "MedicalClinic",
+	NO_DENTAL: "Dentist",
+	NO_NURSING_HOME: "MedicalOrganization",
+	NO_PHARMACY: "Pharmacy",
 };
 
 /** The schema.org type of a market of practices' page subject (`PRACTICE_TYPES`), if any. */

@@ -20,8 +20,21 @@ describe("country adapters", () => {
 			"CH",
 			"EE",
 			"PL",
+			"NO",
 		]);
-		expect(COUNTRY_CODES).toEqual(["FR", "AT", "DE", "GB", "ES", "IT", "CZ", "CH", "EE", "PL"]);
+		expect(COUNTRY_CODES).toEqual([
+			"FR",
+			"AT",
+			"DE",
+			"GB",
+			"ES",
+			"IT",
+			"CZ",
+			"CH",
+			"EE",
+			"PL",
+			"NO",
+		]);
 	});
 
 	it("wraps the existing French rules without changing them", () => {

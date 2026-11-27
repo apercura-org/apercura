@@ -10,7 +10,7 @@
  * - Establishment: `{name}-{finess}`.
  */
 import { isValidRpps } from "./rpps";
-import { slugify, slugifyDe, slugifyPl } from "./slugify";
+import { slugify, slugifyDe, slugifyNo, slugifyPl } from "./slugify";
 
 /** Builds the canonical path segment of a practitioner page. */
 export function practitionerSlug(firstName: string, lastName: string, rpps: string): string {
@@ -681,6 +681,94 @@ export function parseEeFacilitySegment(segment: string): EeFacilitySegment | nul
 	if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(segment)) return null;
 	const dash = segment.lastIndexOf("-");
 	const key = parseEeKey(dash < 0 ? segment : segment.slice(dash + 1));
+	if (!key) return null;
+	return { ...key, namePart: dash < 0 ? "" : segment.slice(0, dash) };
+}
+
+/**
+ * Norwegian identifiers. A page is an establishment (underenhet) of the Brønnøysund Register
+ * Centre's Central Coordinating Register for Legal Entities (Enhetsregisteret): a hospital, a
+ * medical or dental practice, a nursing home or a pharmacy, keyed by its own organisation number
+ * (nine digits, the last a modulus 11 check digit, `925781584`). The establishment's number is
+ * never a person's: sole proprietorships (enkeltpersonforetak), named after their owner, are not
+ * listed. A page URL ends with the number (`ahus-gardermoen-925781584`).
+ */
+export const NO_ID_SCHEMES = {
+	/** An establishment of the Central Coordinating Register: its organisation number. */
+	"NO-ORGNR": { prefix: "", pattern: /^[89]\d{8}$/ },
+} as const;
+
+export type NoIdScheme = keyof typeof NO_ID_SCHEMES;
+
+/** The weights of the organisation number's check digit (modulus 11). */
+const NO_ORGNR_WEIGHTS = [3, 2, 7, 6, 5, 4, 3, 2] as const;
+
+/**
+ * True when `value` is a Norwegian organisation number: nine digits, the first 8 or 9, and a
+ * check digit that matches (syntax only: the unit may not exist).
+ */
+export function isValidNoOrgNumber(value: string): boolean {
+	if (!NO_ID_SCHEMES["NO-ORGNR"].pattern.test(value)) return false;
+	const sum = NO_ORGNR_WEIGHTS.reduce(
+		(total, weight, index) => total + weight * Number(value[index]),
+		0,
+	);
+	const remainder = sum % 11;
+	const check = remainder === 0 ? 0 : 11 - remainder;
+	return check !== 10 && check === Number(value[8]);
+}
+
+/** True when `value` is a key of the Norwegian scheme (syntax and check digit only). */
+export function isValidNoSourceId(scheme: string, value: string): boolean {
+	return scheme === "NO-ORGNR" && isValidNoOrgNumber(value);
+}
+
+/** The key of a Norwegian page as its URL ends (`925781584`). */
+export function noUrlKey(_scheme: NoIdScheme, nationalId: string): string {
+	return nationalId;
+}
+
+/** An organisation number the way Norway prints it, in groups of three (`925 781 584`). */
+export function noOrgNumber(nationalId: string): string {
+	return /^\d{9}$/.test(nationalId)
+		? `${nationalId.slice(0, 3)} ${nationalId.slice(3, 6)} ${nationalId.slice(6)}`
+		: nationalId;
+}
+
+/**
+ * Canonical path segment of a Norwegian page: `{name}-{orgnr}` (`ahus-gardermoen-925781584`),
+ * `ø` written `o`, `æ` `ae`, `å` `a`.
+ */
+export function noFacilitySlug(name: string, scheme: NoIdScheme, nationalId: string): string {
+	const key = noUrlKey(scheme, nationalId);
+	const base = slugifyNo(name).slice(0, 80).replace(/-+$/, "");
+	return base ? `${base}-${key}` : key;
+}
+
+export type NoFacilityKey = { idScheme: NoIdScheme; nationalId: string };
+
+/**
+ * Reads a Norwegian key as its page URL ends or as typed (`925781584`, `925 781 584`). Null for
+ * anything else, a wrong check digit included.
+ */
+export function parseNoKey(token: string): NoFacilityKey | null {
+	const compact = token.replace(/\s+/g, "");
+	return isValidNoOrgNumber(compact) ? { idScheme: "NO-ORGNR", nationalId: compact } : null;
+}
+
+export type NoFacilitySegment = NoFacilityKey & {
+	/** Name part before the key, possibly empty. */
+	namePart: string;
+};
+
+/**
+ * Parses the last segment of a Norwegian page URL (`{name}-{orgnr}`). Returns null unless it
+ * ends with a valid organisation number, so invalid URLs never reach the database.
+ */
+export function parseNoFacilitySegment(segment: string): NoFacilitySegment | null {
+	if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(segment)) return null;
+	const dash = segment.lastIndexOf("-");
+	const key = parseNoKey(dash < 0 ? segment : segment.slice(dash + 1));
 	if (!key) return null;
 	return { ...key, namePart: dash < 0 ? "" : segment.slice(0, dash) };
 }

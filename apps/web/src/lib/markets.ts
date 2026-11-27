@@ -27,6 +27,7 @@ export const MARKETS: readonly Market[] = [
 	{ country: "CH", status: "open", locale: MARKET_LOCALES.CH },
 	{ country: "EE", status: "open", locale: MARKET_LOCALES.EE },
 	{ country: "PL", status: "open", locale: MARKET_LOCALES.PL },
+	{ country: "NO", status: "open", locale: MARKET_LOCALES.NO },
 	{ country: "BE", status: "planned" },
 ];
 
@@ -48,6 +49,7 @@ export const PRACTICE_MARKETS: ReadonlySet<string> = new Set([
 	"CH",
 	"EE",
 	"PL",
+	"NO",
 ]);
 
 /** True when the market's pages are practices or facilities (`PRACTICE_MARKETS`). */

@@ -9,6 +9,7 @@ export const COMMANDS = [
 	"etl:ch",
 	"etl:ee",
 	"etl:pl",
+	"etl:no",
 	"etl:places",
 	"etl:outbox",
 ] as const;
@@ -53,6 +54,11 @@ Commands:
                 care homes, sanatoria, laboratories…) of the healthcare entities of
                 RPWDL (Centrum e-Zdrowia; CC BY 4.0, with the times of production and
                 obtaining stated), placed in TERYT's gminas, rebuild read models.
+  etl:no        Import Norwegian establishments of care (the Brønnøysund Register
+                Centre's Enhetsregisteret, its establishments under health and pharmacy
+                industry codes, NLOD 2.0; no sole proprietorships), located with
+                Kartverket's addresses (Matrikkelen – Adresse, CC BY 4.0), placed in its
+                municipalities, rebuild read models.
   etl:places    Import regions, departments, communes and arrondissements
                 (geo.api.gouv.fr), or with --country at the Austrian
                 Bundesländer and Gemeinden (Statistik Austria), or with --country gb
@@ -68,7 +74,8 @@ Commands:
                 with --country pl the Polish voivodeships, powiats and gminas (TERYT
                 TERC, GUS; the gminas' points from PRG's boundaries, GUGiK), or with
                 --country ee the Estonian counties, municipalities and settlements
-                (EHAK units, Maa- ja Ruumiamet). Run once, then yearly.
+                (EHAK units, Maa- ja Ruumiamet), or with --country no the Norwegian
+                counties and municipalities (Kartverket). Run once, then yearly.
   etl:outbox    Send pending cache invalidations to the web app.
 
 Flags (etl:fr):
@@ -143,6 +150,12 @@ Flags (etl:pl):
   --dry-run, --approve=<run_id>, --force, --source-dir <path>, --offline, --work-dir <path>
                           As for etl:fr. One register: when it cannot be fetched or read the
                           run fails (exit code 1).
+Flags (etl:no):
+  --sources <ids>         Sources to import: brreg (the register's establishments)
+                          (default ETL_NO_SOURCES, else brreg).
+  --dry-run, --approve=<run_id>, --force, --source-dir <path>, --offline, --work-dir <path>
+                          As for etl:at. The address file locates every establishment:
+                          without it the run fails (exit code 1).
 
 Environment:
   DATABASE_URL_ETL (or DATABASE_URL), ETL_PROFESSIONS, ETL_ANS_URLS, ETL_AMELI_URL,
@@ -164,6 +177,8 @@ Environment:
   ETL_EE_SOURCES, ETL_EE_MEDRE_URL, ETL_EE_APTEEGID_URL, ETL_EE_ADS_URL, ETL_EE_PLACES_URL,
   ETL_EE_SOURCE_DIR,
   ETL_PL_URL, ETL_PL_TERC_URL, ETL_PL_PRG_URL, ETL_PL_SOURCE_DIR,
+  ETL_NO_SOURCES, ETL_NO_UNDERENHETER_URL, ETL_NO_ENHETER_URL, ETL_NO_ADRESSER_URL,
+  ETL_NO_PLACES_URL, ETL_NO_SOURCE_DIR,
   APP_URL and REVALIDATE_SECRET (cache revalidation).`;
 
 export {
@@ -177,6 +192,7 @@ export {
 	buildFrOptions,
 	buildGbOptions,
 	buildItOptions,
+	buildNoOptions,
 	buildPlOptions,
 	type ChOptions,
 	type CzOptions,
@@ -186,6 +202,7 @@ export {
 	type FrOptions,
 	type GbOptions,
 	type ItOptions,
+	type NoOptions,
 	type PlOptions,
 	parseArgs,
 } from "./config";
@@ -198,4 +215,5 @@ export { type EsRunOutcome, runEs } from "./run-es";
 export { type RunOutcome, runFr } from "./run-fr";
 export { type GbRunOutcome, runGb } from "./run-gb";
 export { type ItRunOutcome, runIt } from "./run-it";
+export { type NoRunOutcome, runNo } from "./run-no";
 export { type PlRunOutcome, runPl } from "./run-pl";

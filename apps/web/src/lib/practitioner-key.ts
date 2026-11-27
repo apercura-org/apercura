@@ -14,6 +14,9 @@ import {
 	GB_ID_SCHEMES,
 	type GbIdScheme,
 	gbUrlKey,
+	NO_ID_SCHEMES,
+	type NoIdScheme,
+	noOrgNumber,
 	parseAtPractitionerSegment,
 	parseChFacilitySegment,
 	parseCzFacilitySegment,
@@ -22,6 +25,7 @@ import {
 	parseEsCentreSegment,
 	parseGbPracticeSegment,
 	parseItPlaceSegment,
+	parseNoFacilitySegment,
 	parsePlFacilitySegment,
 	parsePractitionerSegment,
 } from "@apercura/core";
@@ -49,7 +53,8 @@ export type PractitionerKey = {
  * (`klinikum-beispiel-k0a1b2c3d4e`, `beispiel-apotheke-th9001`), `{name}-{list}{key}` in Switzerland
  * (`kantonsspital-beispiel-h123456789`, in each of its three languages), `{name}-{source}{key}`
  * in Estonia (`perearstikeskus-naide-l01909`, `naidisapteek-ap457`), `{name}-{number}` in
- * Poland (`przychodnia-przykladowa-290629`, the RPWDL establishment number). Null for anything else,
+ * Poland (`przychodnia-przykladowa-290629`, the RPWDL establishment number), `{name}-{orgnr}` in Norway
+ * (`eksempel-legesenter-910000039`, the establishment's organisation number). Null for anything else,
  * so malformed or other-market URLs never reach the database.
  */
 export function parsePractitionerKey(locale: Locale, segment: string): PractitionerKey | null {
@@ -80,6 +85,10 @@ export function parsePractitionerKey(locale: Locale, segment: string): Practitio
 	}
 	if (country === "PL") {
 		const parsed = parsePlFacilitySegment(segment);
+		return parsed ? { country, ...parsed } : null;
+	}
+	if (country === "NO") {
+		const parsed = parseNoFacilitySegment(segment);
 		return parsed ? { country, ...parsed } : null;
 	}
 	if (country === "GB") {
@@ -141,6 +150,11 @@ export const EE_SEGMENT_MARKER = "ee.";
 
 /** The marker of a Polish page's segment outside a locale (`pl.{slug}`): a bare RPWDL number reads as Czechia's. */
 export const PL_SEGMENT_MARKER = "pl.";
+/**
+ * The marker of a Norwegian page's segment outside a locale (`no.{slug}`): its nine digits would
+ * otherwise read like another market's number.
+ */
+export const NO_SEGMENT_MARKER = "no.";
 
 /** The marker of each market whose segments are marked outside a locale. */
 const SEGMENT_MARKERS: Readonly<Partial<Record<MarketCountry, string>>> = {
@@ -152,6 +166,7 @@ const SEGMENT_MARKERS: Readonly<Partial<Record<MarketCountry, string>>> = {
 	CH: CH_SEGMENT_MARKER,
 	EE: EE_SEGMENT_MARKER,
 	PL: PL_SEGMENT_MARKER,
+	NO: NO_SEGMENT_MARKER,
 };
 
 /**
@@ -194,9 +209,11 @@ export function parseAnyPractitionerKey(segment: string): PractitionerKey | null
  * Switzerland the key of the page URL (`h123456789`, `blp7601001796874`), what its `ch:`
  * reference reads, since most lists number no facility and a derived key alone means nothing; in
  * Estonia a provider's first activity licence number as the Health Board writes it (`L01909`)
- * and a pharmacy's key of the page URL (`ap457`).
+ * and a pharmacy's key of the page URL (`ap457`); in Norway the establishment's organisation
+ * number in groups of three, as Norway prints it (`910 000 039`).
  */
 export function displayId(key: Pick<PractitionerKey, "idScheme" | "nationalId">): string {
+	if (NO_ID_SCHEMES[key.idScheme as NoIdScheme]) return noOrgNumber(key.nationalId);
 	if (key.idScheme === "EE-TTL") return eeLicenceNumber(key.nationalId);
 	if (EE_ID_SCHEMES[key.idScheme as EeIdScheme]) {
 		return eeUrlKey(key.idScheme as EeIdScheme, key.nationalId);

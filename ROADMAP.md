@@ -53,6 +53,10 @@ signature, an account, a contract, a paid service or a manual test. This list re
   [`docs/data-requests/ee.md`](./docs/data-requests/ee.md) asking it to confirm that Apercura's
   reuse of the MEDRE open data fits CC BY-NC-SA 3.0 (non-commercial, share-alike, the credit,
   self-hosted instances). The market opened without waiting for the answer; follow it.
+- Norway: send the Norwegian Medical Products Agency (DMP) the letter of
+  [`docs/data-requests/no.md`](./docs/data-requests/no.md) asking for a licence for its list of
+  pharmacies ("Landets apotek", none stated); the market opened from the register of legal
+  entities without it.
 
 ### Accessibility ([#32](https://github.com/apercura-org/apercura/issues/32))
 
@@ -367,9 +371,36 @@ the register names with each provider are not listed. Left:
 - Listings by specialist field (a cardiology listing rather than "specialist care") and by
   county (`/ee/haiglad/harju-maakond` would need a migration like Italy's region listings).
 
+### 13. Norway (`/no`): open, directory of establishments of care
+
+Done in [#172](https://github.com/apercura-org/apercura/issues/172): `/no` in Norwegian Bokmål,
+built weekly by `etl:no` from the Brønnøysund Register Centre's Central Coordinating Register for
+Legal Entities (Enhetsregisteret, NLOD 2.0: 5,821 establishments under health and pharmacy
+industry codes, kept when they read as a place of care, no sole proprietorship and no practice
+named after a person), placed in Kartverket's counties and municipalities and located at the
+cadastre's addresses (Matrikkelen – Adresse, CC BY 4.0), every page printing NLOD's credit, with a
+legal notice (ehandelsloven § 8), a privacy notice with the article 14 information and
+Datatilsynet, claims by documents, no booking ([data import](./docs/data-import.md#norway),
+[ADR 0002](./docs/adr/0002-multi-country.md#norway-no)). Left:
+
+- Have a native speaker review the Norwegian interface and legal texts, and a lawyer admitted in
+  Norway the legal notice, privacy notice and terms, and confirm the reading of helsepersonelloven
+  § 13 (factual pages) and of NLOD § 3 (no sole proprietorships).
+- Send the letter to DMP (founder, above); with a licence, print each pharmacy's licence.
+- Nynorsk (`/no-nn`) and Northern Sámi (`/no-se`) interfaces, and the municipalities' Sámi, Kven
+  and Finnish official names.
+- Physiotherapists, psychologists, chiropractors, home nursing and health stations (SN2025 86.950,
+  86.930, 86.941, 86.942): mostly sole proprietorships, so the same filters and a review of what
+  they keep.
+- The practices left out because their owner is a company and their name carries no care word
+  (2,471 in November 2026): a licence register (HPR, Helsedirektoratet's lists) would tell the
+  clinics among them from the holding companies.
+- Named practitioners: only from HPR under an agreement with Helsedirektoratet, after a
+  legitimate-interest assessment.
+
 ### Later
 
-The Netherlands, Portugal, Croatia, Cyprus, Romania, Denmark, Norway, Sweden, Lithuania, Slovakia,
+The Netherlands, Portugal, Croatia, Cyprus, Romania, Denmark, Sweden, Lithuania, Slovakia,
 Hungary, Bulgaria, Iceland and Liechtenstein open with claimed pages when there is demand.
 Croatia (HZZO) and Cyprus (Medical Council) become directories if their publisher confirms an open
 licence. Finland waits for a ruling on whether a booking site is a registered system connected to

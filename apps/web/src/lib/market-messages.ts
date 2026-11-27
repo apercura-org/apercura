@@ -8,6 +8,7 @@ import {
 	allGbListingSlugs,
 	allItListingSlugs,
 	allListingSlugs,
+	allNoTaxonomySlugs,
 	allPlListingSlugs,
 } from "@apercura/core/taxonomy";
 import type { MarketCountry } from "~/i18n/locales";
@@ -31,7 +32,8 @@ const MARKET_SLUGS: Readonly<Record<MarketCountry, ReadonlySet<string>>> = {
 	CH: allChListingSlugs(),
 	// Estonia names its kinds of provider in the singular (`perearstikeskus`, `apteek`).
 	EE: allEeTaxonomySlugs(),
-	PL: allPlListingSlugs(),
+	PL: allPlListingSlugs(), // Norway names its kinds of establishment by keys of their own (`legekontor`, `apoteket`).
+	NO: allNoTaxonomySlugs(),
 };
 
 /** The `taxonomy` groups keyed by listing or profession slug. */

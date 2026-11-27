@@ -30,7 +30,7 @@ const PRO_ROUTE =
  * establishment number (`pl:290629`).
  */
 const RPPS =
-	/^(?:\d{11}|[a-z]{1,2}[1-9]\d{0,8}|gb:[a-z0-9]{2,12}|cz:[1-9]\d{0,8}|es:(?:0[1-9]|1\d)\d{8}|it:(?:f\d{1,8}|[ps]\d{6})|de:(?:k|r|bb)[0-9a-f]{10}|de:th[1-9]\d{0,6}|ch:[a-z]{1,3}[1-9]\d{0,13}|ee:(?:l\d{5}|ap[1-9]\d{0,6})|pl:[1-9]\d{0,9})$/;
+	/^(?:\d{11}|[a-z]{1,2}[1-9]\d{0,8}|gb:[a-z0-9]{2,12}|cz:[1-9]\d{0,8}|es:(?:0[1-9]|1\d)\d{8}|it:(?:f\d{1,8}|[ps]\d{6})|de:(?:k|r|bb)[0-9a-f]{10}|de:th[1-9]\d{0,6}|ch:[a-z]{1,3}[1-9]\d{0,13}|ee:(?:l\d{5}|ap[1-9]\d{0,6})|pl:[1-9]\d{0,9}|no:[89]\d{8})$/;
 const BASE = "http://internal.invalid";
 
 /** The allowlisted route a `?suite=` value designates, or null for anything else. */

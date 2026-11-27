@@ -1,3 +1,4 @@
+import { OSLO_MUNICIPALITY } from "@apercura/core/country";
 import type { Sql } from "@apercura/db";
 import { EE_TOWN_CODES } from "~/lib/places";
 
@@ -36,6 +37,7 @@ export const SITEMAP_MARKETS = [
 	"ch-it",
 	"ee",
 	"pl",
+	"no",
 ] as const;
 export type SitemapMarket = (typeof SITEMAP_MARKETS)[number];
 
@@ -73,7 +75,7 @@ export type SitemapEntry = { path: string; lastmod: string };
  * numbered from 61) never get a URL of their own.
  */
 const NOT_CITY = (alias: string) =>
-	`NOT (${alias}.country = 'FR' AND ${alias}.code = '75056') AND NOT (${alias}.country = 'AT' AND ${alias}.code = '90001') AND NOT (${alias}.country = 'DE' AND ${alias}.kind = 'commune' AND ${alias}.code LIKE '_____000') AND NOT (${alias}.country = 'EE' AND ${alias}.kind = 'commune' AND ${alias}.code IN (${EE_TOWN_CODES})) AND NOT (${alias}.country = 'PL' AND ${alias}.kind = 'commune' AND substr(${alias}.code, 3, 1) IN ('6', '7', '8', '9'))`;
+	`NOT (${alias}.country = 'FR' AND ${alias}.code = '75056') AND NOT (${alias}.country = 'AT' AND ${alias}.code = '90001') AND NOT (${alias}.country = 'DE' AND ${alias}.kind = 'commune' AND ${alias}.code LIKE '_____000') AND NOT (${alias}.country = 'EE' AND ${alias}.kind = 'commune' AND ${alias}.code IN (${EE_TOWN_CODES})) AND NOT (${alias}.country = 'PL' AND ${alias}.kind = 'commune' AND substr(${alias}.code, 3, 1) IN ('6', '7', '8', '9')) AND NOT (${alias}.country = 'NO' AND ${alias}.kind = 'commune' AND ${alias}.code = '${OSLO_MUNICIPALITY}')`;
 
 /**
  * Non-empty chunks of every kind and market, with the latest change in each, once per language of

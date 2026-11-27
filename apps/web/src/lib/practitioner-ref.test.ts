@@ -279,3 +279,32 @@ describe("Estonian provider and pharmacy references", () => {
 		expect(parsePractitionerRef(practitionerRefOf(pharmacy))).toEqual(pharmacy);
 	});
 });
+
+describe("Norwegian establishment references", () => {
+	const establishment = { country: "NO", idScheme: "NO-ORGNR", nationalId: "910000039" };
+
+	it("read the `no:` reference, a Norwegian page address, and a number typed on a Norwegian page", () => {
+		expect(parsePractitionerRef("no:910000039")).toEqual(establishment);
+		expect(parsePractitionerRef(" NO: 910 000 039 ")).toEqual(establishment);
+		expect(
+			parsePractitionerRef("https://apercura.org/no/virksomhet/eksempel-legesenter-910000039"),
+		).toEqual(establishment);
+		expect(parsePractitionerRef("/no/virksomhet/eksempel-legesenter-910000039/")).toEqual(
+			establishment,
+		);
+		// The number as a Norwegian page prints it.
+		expect(parsePractitionerRef("910 000 039", "NO")).toEqual(establishment);
+		expect(parsePractitionerRef("no:910000038")).toBeNull();
+		expect(parsePractitionerRef("no:")).toBeNull();
+	});
+
+	it("still read RPPS numbers as French", () => {
+		expect(parsePractitionerRef("19999990013", "NO")?.country).toBe("FR");
+	});
+
+	it("write the reference back with its market", () => {
+		expect(practitionerRefOf(establishment)).toBe("no:910000039");
+		expect(marketRef("910 000 039", "NO")).toBe("no:910000039");
+		expect(parsePractitionerRef(practitionerRefOf(establishment))).toEqual(establishment);
+	});
+});

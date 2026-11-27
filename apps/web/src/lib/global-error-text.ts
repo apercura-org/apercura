@@ -82,4 +82,12 @@ export const GLOBAL_ERROR_TEXT: Record<CatalogLanguage, GlobalErrorText> = {
 		home: "Wróć na stronę główną",
 		reference: "Numer dla pomocy technicznej: {digest}",
 	},
+	nb: {
+		metaTitle: "Siden er ikke tilgjengelig · Apercura",
+		title: "Vi kunne ikke vise denne siden",
+		body: "Noe gikk galt hos oss da siden skulle lages. Prøv igjen; hvis det fortsatt ikke virker, kan du komme tilbake om noen minutter.",
+		retry: "Prøv igjen",
+		home: "Tilbake til forsiden",
+		reference: "Referanse for kundestøtte: {digest}",
+	},
 };

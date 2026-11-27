@@ -8,7 +8,19 @@
  */
 
 /** ISO 3166-1 alpha-2 codes of the markets the data model is prepared for. */
-export const COUNTRY_CODES = ["FR", "AT", "DE", "GB", "ES", "IT", "CZ", "CH", "EE", "PL"] as const;
+export const COUNTRY_CODES = [
+	"FR",
+	"AT",
+	"DE",
+	"GB",
+	"ES",
+	"IT",
+	"CZ",
+	"CH",
+	"EE",
+	"PL",
+	"NO",
+] as const;
 
 export type CountryCode = (typeof COUNTRY_CODES)[number];
 

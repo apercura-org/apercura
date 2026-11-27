@@ -7,7 +7,7 @@
  */
 
 /** The interface languages a country's name is given in. */
-export type GeoLanguage = "en" | "fr" | "de" | "es" | "it" | "cs" | "et" | "pl";
+export type GeoLanguage = "en" | "fr" | "de" | "es" | "it" | "cs" | "et" | "pl" | "nb";
 
 export interface EuropeanCountry {
 	/** ISO 3166-1 alpha-2, uppercase ("DE"; the UK is "GB"). */
@@ -55,6 +55,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Rusko",
 			et: "Venemaa",
 			pl: "Rosja",
+			nb: "Russland",
 		},
 		covered: {
 			en: "Russia",
@@ -65,6 +66,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Rusko",
 			et: "Venemaad",
 			pl: "Rosja",
+			nb: "Russland",
 		},
 		aliases: [
 			"Россия",
@@ -140,6 +142,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Turecko",
 			et: "Türgi",
 			pl: "Turcja",
+			nb: "Tyrkia",
 		},
 		covered: {
 			en: "Turkey",
@@ -150,6 +153,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Turecko",
 			et: "Türgit",
 			pl: "Turcja",
+			nb: "Tyrkia",
 		},
 		aliases: ["Türkiye", "Turkiye", "Republic of Türkiye"],
 		cities: [
@@ -189,6 +193,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Německo",
 			et: "Saksamaa",
 			pl: "Niemcy",
+			nb: "Tyskland",
 		},
 		covered: {
 			en: "Germany",
@@ -199,6 +204,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Německo",
 			et: "Saksamaad",
 			pl: "Niemcy",
+			nb: "Tyskland",
 		},
 		aliases: [
 			"BRD",
@@ -274,6 +280,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Spojené království",
 			et: "Ühendkuningriik",
 			pl: "Wielka Brytania",
+			nb: "Storbritannia",
 		},
 		covered: {
 			en: "the United Kingdom",
@@ -284,6 +291,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Spojené království",
 			et: "Ühendkuningriiki",
 			pl: "Wielka Brytania",
+			nb: "Storbritannia",
 		},
 		aliases: [
 			"UK",
@@ -363,6 +371,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Francie",
 			et: "Prantsusmaa",
 			pl: "Francja",
+			nb: "Frankrike",
 		},
 		covered: {
 			en: "France",
@@ -373,6 +382,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Francii",
 			et: "Prantsusmaad",
 			pl: "Francja",
+			nb: "Frankrike",
 		},
 		aliases: ["République française"],
 		cities: [
@@ -420,6 +430,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Itálie",
 			et: "Itaalia",
 			pl: "Włochy",
+			nb: "Italia",
 		},
 		covered: {
 			en: "Italy",
@@ -430,6 +441,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Itálii",
 			et: "Itaaliat",
 			pl: "Włochy",
+			nb: "Italia",
 		},
 		aliases: ["Repubblica Italiana"],
 		cities: [
@@ -481,6 +493,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Španělsko",
 			et: "Hispaania",
 			pl: "Hiszpania",
+			nb: "Spania",
 		},
 		covered: {
 			en: "Spain",
@@ -491,6 +504,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Španělsko",
 			et: "Hispaaniat",
 			pl: "Hiszpania",
+			nb: "Spania",
 		},
 		aliases: ["Espanya", "Reino de España"],
 		cities: [
@@ -539,6 +553,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Ukrajina",
 			et: "Ukraina",
 			pl: "Ukraina",
+			nb: "Ukraina",
 		},
 		covered: {
 			en: "Ukraine",
@@ -549,6 +564,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Ukrajinu",
 			et: "Ukrainat",
 			pl: "Ukraina",
+			nb: "Ukraina",
 		},
 		aliases: ["Україна", "Ukraina"],
 		cities: [
@@ -604,6 +620,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Polsko",
 			et: "Poola",
 			pl: "Polska",
+			nb: "Polen",
 		},
 		covered: {
 			en: "Poland",
@@ -614,6 +631,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Polsko",
 			et: "Poolat",
 			pl: "Polska",
+			nb: "Polen",
 		},
 		aliases: ["Polska", "Rzeczpospolita Polska"],
 		cities: [
@@ -655,6 +673,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Rumunsko",
 			et: "Rumeenia",
 			pl: "Rumunia",
+			nb: "Romania",
 		},
 		covered: {
 			en: "Romania",
@@ -665,6 +684,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Rumunsko",
 			et: "Rumeeniat",
 			pl: "Rumunia",
+			nb: "Romania",
 		},
 		aliases: ["România", "Rumania"],
 		cities: [
@@ -700,6 +720,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Nizozemsko",
 			et: "Madalmaad",
 			pl: "Holandia",
+			nb: "Nederland",
 		},
 		covered: {
 			en: "the Netherlands",
@@ -710,6 +731,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Nizozemsko",
 			et: "Madalmaid",
 			pl: "Holandia",
+			nb: "Nederland",
 		},
 		aliases: [
 			"Nederland",
@@ -756,6 +778,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Belgie",
 			et: "Belgia",
 			pl: "Belgia",
+			nb: "Belgia",
 		},
 		covered: {
 			en: "Belgium",
@@ -766,6 +789,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Belgii",
 			et: "Belgiat",
 			pl: "Belgia",
+			nb: "Belgia",
 		},
 		aliases: ["België", "Belgique", "Belgien"],
 		cities: [
@@ -798,6 +822,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Česko",
 			et: "Tšehhi",
 			pl: "Czechy",
+			nb: "Tsjekkia",
 		},
 		covered: {
 			en: "Czechia",
@@ -808,6 +833,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Česko",
 			et: "Tšehhit",
 			pl: "Czechy",
+			nb: "Tsjekkia",
 		},
 		aliases: [
 			"Czech Republic",
@@ -854,6 +880,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Švédsko",
 			et: "Rootsi",
 			pl: "Szwecja",
+			nb: "Sverige",
 		},
 		covered: {
 			en: "Sweden",
@@ -864,6 +891,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Švédsko",
 			et: "Rootsit",
 			pl: "Szwecja",
+			nb: "Sverige",
 		},
 		aliases: ["Sverige"],
 		cities: [
@@ -901,6 +929,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Portugalsko",
 			et: "Portugal",
 			pl: "Portugalia",
+			nb: "Portugal",
 		},
 		covered: {
 			en: "Portugal",
@@ -911,6 +940,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Portugalsko",
 			et: "Portugali",
 			pl: "Portugalia",
+			nb: "Portugal",
 		},
 		aliases: ["República Portuguesa"],
 		cities: [
@@ -945,6 +975,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Řecko",
 			et: "Kreeka",
 			pl: "Grecja",
+			nb: "Hellas",
 		},
 		covered: {
 			en: "Greece",
@@ -955,6 +986,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Řecko",
 			et: "Kreekat",
 			pl: "Grecja",
+			nb: "Hellas",
 		},
 		aliases: ["Ελλάδα", "Ελλάς", "Elláda", "Hellas"],
 		cities: [
@@ -1006,6 +1038,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Maďarsko",
 			et: "Ungari",
 			pl: "Węgry",
+			nb: "Ungarn",
 		},
 		covered: {
 			en: "Hungary",
@@ -1016,6 +1049,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Maďarsko",
 			et: "Ungarit",
 			pl: "Węgry",
+			nb: "Ungarn",
 		},
 		aliases: ["Magyarország"],
 		cities: [
@@ -1049,6 +1083,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Bělorusko",
 			et: "Valgevene",
 			pl: "Białoruś",
+			nb: "Belarus",
 		},
 		covered: {
 			en: "Belarus",
@@ -1059,6 +1094,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Bělorusko",
 			et: "Valgevenet",
 			pl: "Białoruś",
+			nb: "Belarus",
 		},
 		aliases: ["Беларусь", "Белоруссия", "Bélarus", "Weißrussland", "Byelorussia"],
 		cities: [
@@ -1088,6 +1124,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Rakousko",
 			et: "Austria",
 			pl: "Austria",
+			nb: "Østerrike",
 		},
 		covered: {
 			en: "Austria",
@@ -1098,6 +1135,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Rakousko",
 			et: "Austriat",
 			pl: "Austria",
+			nb: "Østerrike",
 		},
 		aliases: ["Republik Österreich"],
 		cities: [
@@ -1129,6 +1167,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Švýcarsko",
 			et: "Šveits",
 			pl: "Szwajcaria",
+			nb: "Sveits",
 		},
 		covered: {
 			en: "Switzerland",
@@ -1139,6 +1178,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Švýcarsko",
 			et: "Šveitsi",
 			pl: "Szwajcaria",
+			nb: "Sveits",
 		},
 		aliases: ["Schweiz", "Suisse", "Svizzera", "Svizra", "Confédération suisse", "Helvetia"],
 		cities: [
@@ -1172,6 +1212,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Srbsko",
 			et: "Serbia",
 			pl: "Serbia",
+			nb: "Serbia",
 		},
 		covered: {
 			en: "Serbia",
@@ -1182,6 +1223,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Srbsko",
 			et: "Serbiat",
 			pl: "Serbia",
+			nb: "Serbia",
 		},
 		aliases: ["Srbija", "Србија"],
 		cities: [
@@ -1214,6 +1256,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Bulharsko",
 			et: "Bulgaaria",
 			pl: "Bułgaria",
+			nb: "Bulgaria",
 		},
 		covered: {
 			en: "Bulgaria",
@@ -1224,6 +1267,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Bulharsko",
 			et: "Bulgaariat",
 			pl: "Bułgaria",
+			nb: "Bulgaria",
 		},
 		aliases: ["България", "Balgariya"],
 		cities: [
@@ -1256,6 +1300,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Dánsko",
 			et: "Taani",
 			pl: "Dania",
+			nb: "Danmark",
 		},
 		covered: {
 			en: "Denmark",
@@ -1266,6 +1311,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Dánsko",
 			et: "Taanit",
 			pl: "Dania",
+			nb: "Danmark",
 		},
 		aliases: ["Danmark"],
 		cities: [
@@ -1297,6 +1343,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Finsko",
 			et: "Soome",
 			pl: "Finlandia",
+			nb: "Finland",
 		},
 		covered: {
 			en: "Finland",
@@ -1307,6 +1354,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Finsko",
 			et: "Soomet",
 			pl: "Finlandia",
+			nb: "Finland",
 		},
 		aliases: ["Suomi"],
 		cities: [
@@ -1340,6 +1388,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Norsko",
 			et: "Norra",
 			pl: "Norwegia",
+			nb: "Norge",
 		},
 		covered: {
 			en: "Norway",
@@ -1350,26 +1399,36 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Norsko",
 			et: "Norrat",
 			pl: "Norwegia",
+			nb: "Norge",
 		},
-		aliases: ["Norge", "Noreg"],
+		aliases: ["Norge", "Noreg", "Norga", "Kongeriket Norge", "Kingdom of Norway"],
 		cities: [
-			["Oslo"],
+			["Oslo", "Christiania", "Kristiania"],
 			["Bergen"],
-			["Trondheim"],
+			["Trondheim", "Trondhjem", "Tråante"],
 			["Stavanger"],
 			["Drammen"],
 			["Fredrikstad"],
 			["Kristiansand"],
 			["Sandnes"],
-			["Tromsø"],
+			["Tromsø", "Tromso", "Romsa"],
 			["Sarpsborg"],
 			["Skien"],
-			["Ålesund"],
+			["Ålesund", "Alesund", "Aalesund"],
 			["Sandefjord"],
 			["Haugesund"],
-			["Tønsberg"],
-			["Bodø"],
+			["Tønsberg", "Tonsberg"],
+			["Bodø", "Bodo"],
 			["Arendal"],
+			["Hamar"],
+			["Larvik"],
+			["Halden"],
+			["Lillehammer"],
+			["Moss"],
+			["Molde"],
+			["Harstad", "Hárstták"],
+			["Gjøvik", "Gjovik"],
+			["Alta", "Áltá"],
 		],
 	},
 	{
@@ -1383,6 +1442,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Slovensko",
 			et: "Slovakkia",
 			pl: "Słowacja",
+			nb: "Slovakia",
 		},
 		covered: {
 			en: "Slovakia",
@@ -1393,6 +1453,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Slovensko",
 			et: "Slovakkiat",
 			pl: "Słowacja",
+			nb: "Slovakia",
 		},
 		aliases: ["Slovak Republic", "Slovenská republika"],
 		cities: [
@@ -1426,6 +1487,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Irsko",
 			et: "Iirimaa",
 			pl: "Irlandia",
+			nb: "Irland",
 		},
 		covered: {
 			en: "Ireland",
@@ -1436,6 +1498,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Irsko",
 			et: "Iirimaad",
 			pl: "Irlandia",
+			nb: "Irland",
 		},
 		aliases: ["Éire", "Republic of Ireland", "République d’Irlande"],
 		cities: [
@@ -1467,6 +1530,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Chorvatsko",
 			et: "Horvaatia",
 			pl: "Chorwacja",
+			nb: "Kroatia",
 		},
 		covered: {
 			en: "Croatia",
@@ -1477,6 +1541,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Chorvatsko",
 			et: "Horvaatiat",
 			pl: "Chorwacja",
+			nb: "Kroatia",
 		},
 		aliases: ["Hrvatska"],
 		cities: [
@@ -1504,6 +1569,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Bosna a Hercegovina",
 			et: "Bosnia ja Hertsegoviina",
 			pl: "Bośnia i Hercegowina",
+			nb: "Bosnia-Hercegovina",
 		},
 		covered: {
 			en: "Bosnia and Herzegovina",
@@ -1514,6 +1580,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Bosnu a Hercegovinu",
 			et: "Bosnia ja Hertsegoviinat",
 			pl: "Bośnia i Hercegowina",
+			nb: "Bosnia-Hercegovina",
 		},
 		aliases: [
 			"Bosna i Hercegovina",
@@ -1548,6 +1615,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Litva",
 			et: "Leedu",
 			pl: "Litwa",
+			nb: "Litauen",
 		},
 		covered: {
 			en: "Lithuania",
@@ -1558,6 +1626,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Litvu",
 			et: "Leedut",
 			pl: "Litwa",
+			nb: "Litauen",
 		},
 		aliases: ["Lietuva"],
 		cities: [
@@ -1581,6 +1650,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Albánie",
 			et: "Albaania",
 			pl: "Albania",
+			nb: "Albania",
 		},
 		covered: {
 			en: "Albania",
@@ -1591,6 +1661,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Albánii",
 			et: "Albaaniat",
 			pl: "Albania",
+			nb: "Albania",
 		},
 		aliases: ["Shqipëria", "Shqipëri"],
 		cities: [
@@ -1615,6 +1686,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Moldavsko",
 			et: "Moldova",
 			pl: "Mołdawia",
+			nb: "Moldova",
 		},
 		covered: {
 			en: "Moldova",
@@ -1625,6 +1697,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Moldavsko",
 			et: "Moldovat",
 			pl: "Mołdawia",
+			nb: "Moldova",
 		},
 		aliases: ["Republica Moldova", "Republic of Moldova", "Moldau", "Moldawien"],
 		cities: [
@@ -1650,6 +1723,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Slovinsko",
 			et: "Sloveenia",
 			pl: "Słowenia",
+			nb: "Slovenia",
 		},
 		covered: {
 			en: "Slovenia",
@@ -1660,6 +1734,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Slovinsko",
 			et: "Sloveeniat",
 			pl: "Słowenia",
+			nb: "Slovenia",
 		},
 		aliases: ["Slovenija"],
 		cities: [
@@ -1684,6 +1759,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Lotyšsko",
 			et: "Läti",
 			pl: "Łotwa",
+			nb: "Latvia",
 		},
 		covered: {
 			en: "Latvia",
@@ -1694,6 +1770,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Lotyšsko",
 			et: "Lätit",
 			pl: "Łotwa",
+			nb: "Latvia",
 		},
 		aliases: ["Latvija"],
 		cities: [
@@ -1717,6 +1794,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Severní Makedonie",
 			et: "Põhja-Makedoonia",
 			pl: "Macedonia Północna",
+			nb: "Nord-Makedonia",
 		},
 		covered: {
 			en: "North Macedonia",
@@ -1727,6 +1805,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Severní Makedonii",
 			et: "Põhja-Makedooniat",
 			pl: "Macedonia Północna",
+			nb: "Nord-Makedonia",
 		},
 		aliases: [
 			"Северна Македонија",
@@ -1762,6 +1841,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Kosovo",
 			et: "Kosovo",
 			pl: "Kosowo",
+			nb: "Kosovo",
 		},
 		covered: {
 			en: "Kosovo",
@@ -1772,6 +1852,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Kosovo",
 			et: "Kosovot",
 			pl: "Kosowo",
+			nb: "Kosovo",
 		},
 		aliases: ["Kosova", "Kosovë", "Косово"],
 		cities: [
@@ -1796,6 +1877,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Estonsko",
 			et: "Eesti",
 			pl: "Estonia",
+			nb: "Estland",
 		},
 		covered: {
 			en: "Estonia",
@@ -1806,6 +1888,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Estonsko",
 			et: "Eestit",
 			pl: "Estonia",
+			nb: "Estland",
 		},
 		aliases: ["Eesti", "Eesti Vabariik", "Republic of Estonia", "Эстония"],
 		cities: [
@@ -1838,6 +1921,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Kypr",
 			et: "Küpros",
 			pl: "Cypr",
+			nb: "Kypros",
 		},
 		covered: {
 			en: "Cyprus",
@@ -1848,6 +1932,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Kypr",
 			et: "Küprost",
 			pl: "Cypr",
+			nb: "Kypros",
 		},
 		aliases: ["Κύπρος", "Kýpros", "Kıbrıs"],
 		cities: [
@@ -1869,6 +1954,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Lucembursko",
 			et: "Luksemburg",
 			pl: "Luksemburg",
+			nb: "Luxembourg",
 		},
 		covered: {
 			en: "Luxembourg",
@@ -1879,6 +1965,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Lucembursko",
 			et: "Luksemburgi",
 			pl: "Luksemburg",
+			nb: "Luxembourg",
 		},
 		aliases: ["Lëtzebuerg", "Grand-Duché de Luxembourg"],
 		cities: [
@@ -1901,6 +1988,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Černá Hora",
 			et: "Montenegro",
 			pl: "Czarnogóra",
+			nb: "Montenegro",
 		},
 		covered: {
 			en: "Montenegro",
@@ -1911,6 +1999,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Černou Horu",
 			et: "Montenegrot",
 			pl: "Czarnogóra",
+			nb: "Montenegro",
 		},
 		aliases: ["Crna Gora", "Црна Гора"],
 		cities: [
@@ -1935,6 +2024,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Malta",
 			et: "Malta",
 			pl: "Malta",
+			nb: "Malta",
 		},
 		covered: {
 			en: "Malta",
@@ -1945,6 +2035,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Maltu",
 			et: "Maltat",
 			pl: "Malta",
+			nb: "Malta",
 		},
 		aliases: [],
 		cities: [
@@ -1967,6 +2058,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Island",
 			et: "Island",
 			pl: "Islandia",
+			nb: "Island",
 		},
 		covered: {
 			en: "Iceland",
@@ -1977,6 +2069,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Island",
 			et: "Islandit",
 			pl: "Islandia",
+			nb: "Island",
 		},
 		aliases: ["Ísland"],
 		cities: [
@@ -1998,6 +2091,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Andorra",
 			et: "Andorra",
 			pl: "Andora",
+			nb: "Andorra",
 		},
 		covered: {
 			en: "Andorra",
@@ -2008,6 +2102,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Andorru",
 			et: "Andorrat",
 			pl: "Andora",
+			nb: "Andorra",
 		},
 		aliases: ["Principat d’Andorra"],
 		cities: [
@@ -2029,6 +2124,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Lichtenštejnsko",
 			et: "Liechtenstein",
 			pl: "Liechtenstein",
+			nb: "Liechtenstein",
 		},
 		covered: {
 			en: "Liechtenstein",
@@ -2039,6 +2135,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Lichtenštejnsko",
 			et: "Liechtensteini",
 			pl: "Liechtenstein",
+			nb: "Liechtenstein",
 		},
 		aliases: ["Fürstentum Liechtenstein"],
 		cities: [["Vaduz"], ["Schaan"], ["Triesen"], ["Balzers"], ["Eschen"]],
@@ -2054,6 +2151,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Monako",
 			et: "Monaco",
 			pl: "Monako",
+			nb: "Monaco",
 		},
 		covered: {
 			en: "Monaco",
@@ -2064,6 +2162,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Monako",
 			et: "Monacot",
 			pl: "Monako",
+			nb: "Monaco",
 		},
 		aliases: ["Principauté de Monaco"],
 		cities: [
@@ -2083,6 +2182,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "San Marino",
 			et: "San Marino",
 			pl: "San Marino",
+			nb: "San Marino",
 		},
 		covered: {
 			en: "San Marino",
@@ -2093,6 +2193,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "San Marino",
 			et: "San Marinot",
 			pl: "San Marino",
+			nb: "San Marino",
 		},
 		aliases: ["Repubblica di San Marino"],
 		cities: [
@@ -2113,6 +2214,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Vatikán",
 			et: "Vatikan",
 			pl: "Watykan",
+			nb: "Vatikanstaten",
 		},
 		covered: {
 			en: "Vatican City",
@@ -2123,6 +2225,7 @@ export const EUROPEAN_COUNTRIES: readonly EuropeanCountry[] = [
 			cs: "Vatikán",
 			et: "Vatikani",
 			pl: "Watykan",
+			nb: "Vatikanstaten",
 		},
 		aliases: ["Vatican", "Vaticano", "Vatikan", "Holy See", "Saint-Siège", "Santa Sede"],
 		cities: [

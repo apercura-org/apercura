@@ -157,3 +157,15 @@ describe("returning to an Estonian claim", () => {
 		expect(parseReturnTo("/pro/revendiquer?rpps=ee:")).toBeNull();
 	});
 });
+
+describe("returning to a Norwegian claim", () => {
+	it("accepts a `no:` organisation number, never anything that looks like a path", () => {
+		expect(parseReturnTo("/pro/revendiquer?rpps=no:910000039")).toEqual({
+			pathname: "/pro/revendiquer",
+			query: { rpps: "no:910000039" },
+		});
+		expect(parseReturnTo("/pro/revendiquer?rpps=no:910000039/..")).toBeNull();
+		expect(parseReturnTo("/pro/revendiquer?rpps=no:91000003")).toBeNull();
+		expect(parseReturnTo("/pro/revendiquer?rpps=no:")).toBeNull();
+	});
+});

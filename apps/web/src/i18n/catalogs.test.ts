@@ -5,9 +5,11 @@ import {
 	allEeTaxonomySlugs,
 	allEsTaxonomySlugs,
 	allItListingSlugs,
+	allNoTaxonomySlugs,
 	allPlListingSlugs,
 	DE_DEFAULT_PROFESSIONS,
 	EE_DEFAULT_PROFESSIONS,
+	NO_DEFAULT_PROFESSIONS,
 	PL_DEFAULT_PROFESSIONS,
 } from "@apercura/core/taxonomy";
 import {
@@ -34,6 +36,7 @@ import gb from "../../messages/gb.json";
 import it_ from "../../messages/it.json";
 import itCH from "../../messages/it-CH.json";
 import itIT from "../../messages/it-IT.json";
+import no from "../../messages/no.json";
 import pl from "../../messages/pl.json";
 import { mergeMessages, messagesFor, withoutEszett } from "./catalogs";
 import { CATALOG_LANGUAGES, LOCALES, type Locale } from "./locales";
@@ -44,7 +47,7 @@ import { CATALOG_LANGUAGES, LOCALES, type Locale } from "./locales";
  * Spanish one with Spain's overrides; Italy's the Italian one with Italy's overrides; Germany's the
  * German one with Germany's overrides;
  * Switzerland's the German, French and Italian ones with the Swiss texts on top, German without
- * "ß"; Estonia's the English one with the Estonian texts on top; Poland's the English one with the Polish texts on top.
+ * "ß"; Estonia's the English one with the Estonian texts on top; Poland's the English one with the Polish texts on top, Norway's with the Norwegian ones.
  */
 const CATALOGS: Record<Locale, unknown> = {
 	fr,
@@ -83,6 +86,7 @@ const CATALOGS: Record<Locale, unknown> = {
 	),
 	"et-EE": mergeMessages(en, ee as Record<string, unknown>),
 	"pl-PL": mergeMessages(en, pl as Record<string, unknown>),
+	"nb-NO": mergeMessages(en, no as Record<string, unknown>),
 };
 
 /** Every message of a catalog by its dotted key (array items are indexed). */
@@ -384,5 +388,40 @@ describe("the Estonian texts", () => {
 			expect(estonian.get(`DataEe.coverage.kinds.${code}`), code).toBeTruthy();
 		}
 		expect(estonian.get("HomePage.title")).not.toBe(english.get("HomePage.title"));
+	});
+});
+
+describe("the Norwegian texts", () => {
+	it("only override keys of the English catalog", () => {
+		const english = flatten(en);
+		expect([...flatten(no).keys()].filter((key) => !english.has(key))).toEqual([]);
+	});
+
+	it("name every Norwegian listing and kind of establishment, in every catalog and in Norwegian", () => {
+		for (const catalog of [en, fr, de, es, it_, no]) {
+			const labels = flatten(catalog);
+			for (const slug of allNoTaxonomySlugs()) {
+				expect(labels.get(`taxonomy.profession.${slug}`), slug).toBeTruthy();
+			}
+		}
+		const norwegian = flatten(no);
+		expect(norwegian.get("taxonomy.listing.legekontorer")).toBe("Legekontorer");
+		expect(norwegian.get("taxonomy.profession.legekontor")).toBe("Legekontor");
+		expect(norwegian.get("taxonomy.listing.apotek")).toBe("Apotek");
+	});
+
+	it("write Norway's legal pages in Norwegian and list every kind of establishment", () => {
+		const norwegian = flatten(messagesFor("nb-NO"));
+		const english = flatten(en);
+		for (const key of ["LegalNoticeNo.title", "PrivacyNo.title", "DataNo.title", "TermsNo.title"]) {
+			expect(norwegian.get(key), key).toBeTruthy();
+			expect(norwegian.get(key), key).not.toBe(english.get(key));
+		}
+		for (const code of NO_DEFAULT_PROFESSIONS) {
+			expect(norwegian.get(`DataNo.coverage.kinds.${code}`), code).toBeTruthy();
+		}
+		expect(norwegian.get("HomePage.title")).not.toBe(english.get("HomePage.title"));
+		// The register's credit names the licence, as NLOD 2.0 asks.
+		expect(norwegian.get("DataNo.licence.licenceLink")).toMatch(/NLOD 2\.0/);
 	});
 });

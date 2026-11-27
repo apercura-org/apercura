@@ -283,6 +283,33 @@ const SAMPLES: Readonly<Record<Exclude<MarketCountry, "CH">, HomeSamples>> = {
 			identifier: "900003",
 			status: "claimed",
 		},
+	], // Norway: establishments of the Central Coordinating Register for Legal Entities, printed
+	// with their organisation number (synthetic, the check digit valid).
+	NO: [
+		{
+			name: "Eksempel Legesenter",
+			listing: "legekontorer",
+			gender: "other",
+			address: "Eksempelgata 10, 0150 Oslo",
+			identifier: "910 000 039",
+			status: "unclaimed",
+		},
+		{
+			name: "Eksempel Tannklinikk",
+			listing: "tannklinikker",
+			gender: "other",
+			address: "Eksempelvegen 7, 2050 Jessheim",
+			identifier: "910 000 101",
+			status: "verified",
+		},
+		{
+			name: "Apotek 1 Eksempel",
+			listing: "apotek",
+			gender: "other",
+			address: "Eksempelgata 12, 0151 Oslo",
+			identifier: "910 000 152",
+			status: "claimed",
+		},
 	],
 };
 

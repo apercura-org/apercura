@@ -7,6 +7,7 @@ import {
 	estonia,
 	germany,
 	italy,
+	norway,
 	PL_OBTAINED_AT,
 	PL_PRODUCED_AT,
 	poland,
@@ -26,6 +27,7 @@ import {
 	hasBillingSectors,
 	IT_PROFESSIONS,
 	listingHasBillingSectors,
+	NO_PROFESSIONS,
 	PL_PROFESSIONS,
 	professionFor,
 } from "@apercura/core/taxonomy";
@@ -67,7 +69,7 @@ export function marketBooks(locale: Locale): boolean {
  * The profession slug of any market's profession code (`10` → `medecin`, `ARZT` → `aerzte`,
  * `GB_GP` → `gp-practices`, `CZ_GP` → `prakticky-lekar`, `ES_PHARMACY` → `farmacias`,
  * `IT_PHARMACY` → `farmacie`, `DE_PHARMACY` → `apotheken`, `CH_HOSPITAL` → `spital`,
- * `EE_PHARMACY` → `apteegid`).
+ * `EE_PHARMACY` → `apteegid`, `NO_PHARMACY` → `apotek`).
  */
 export function professionSlugOf(code: string): string {
 	return (
@@ -81,6 +83,7 @@ export function professionSlugOf(code: string): string {
 		CH_PROFESSIONS[code]?.slug ??
 		EE_PROFESSIONS[code]?.slug ??
 		PL_PROFESSIONS[code]?.slug ??
+		NO_PROFESSIONS[code]?.slug ??
 		""
 	);
 }
@@ -292,6 +295,28 @@ export function estonianSourcesOf(
 }
 
 /**
+ * Kartverket's sources that place and locate every Norwegian page: the cadastre's addresses
+ * (Matrikkelen – Adresse) and the counties and municipalities (administrative divisions).
+ */
+export const NO_PLACE_SOURCE_IDS: readonly string[] = ["no-adresser", "no-kommuner"];
+
+/**
+ * The sources a Norwegian page is built from, with the attribution each asks for word for word:
+ * the Central Coordinating Register for Legal Entities (NLOD 2.0, the change said, as its § 5
+ * asks) and Kartverket's addresses, counties and municipalities (CC BY 4.0).
+ */
+export function norwegianSourcesOf(
+	activitySources: readonly (string | undefined)[],
+): { name: string; attribution: string }[] {
+	const ids = new Set(activitySources.filter((source): source is string => Boolean(source)));
+	if (ids.size === 0) return [];
+	for (const id of NO_PLACE_SOURCE_IDS) ids.add(id);
+	return norway.registries
+		.filter((registry) => ids.has(registry.id) && registry.attribution)
+		.map((registry) => ({ name: registry.name, attribution: registry.attribution ?? "" }));
+}
+
+/**
  * The places of Switzerland's pages: the Federal Statistical Office's communes, districts and
  * cantons and swisstopo's localities, credited on every Swiss page.
  */
@@ -429,6 +454,7 @@ export function openDataSourcesOf(
 		// `sourceDate` is the import's day (the time of obtaining), `producedAt` the register's report's.
 		return activities.length > 0 ? polishSourcesOf(producedAt, sourceDate) : [];
 	}
+	if (country === "NO") return norwegianSourcesOf(activities.map((activity) => activity.source));
 	if (country === "CH") {
 		return activities.length > 0
 			? swissSourcesOf(

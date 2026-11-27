@@ -1126,3 +1126,110 @@ export function checkPlPlaces(staged: {
 		},
 	];
 }
+/**
+ * Limits of the Norwegian source. Floors catch an empty or broken file on a first run (the
+ * register's files of 27 November 2026: 873,697 establishments, about 54,000 under a health or
+ * pharmacy code, 6,000 kept); afterwards the change since the last successful run blocks a
+ * truncated file or filters gone wrong (approvable).
+ */
+export const NO_LIMITS = {
+	quarantineRatio: 0.01,
+	floors: {
+		brreg: { minLines: 100, minRows: 100, rowsDelta: 0.1, sizeDelta: 0.3 },
+	} as Readonly<
+		Record<string, { minLines: number; minRows: number; rowsDelta: number; sizeDelta: number }>
+	>,
+	/** Establishments placed in their municipality (else left out). */
+	minPlacedRatio: 0.98,
+	/** Establishments located at their address (else at their postcode's centre). */
+	minAddressRatio: 0.75,
+} as const;
+
+/**
+ * Checks of the Norwegian source before the merge: quarantine within 1% of the establishments
+ * under a listed code, floors of records and establishments kept (never approvable), and at most
+ * 10% more or fewer establishments kept or 30% more or fewer bytes than the last successful run
+ * (approvable).
+ */
+export function checkNoSource(
+	source: string,
+	current: AtSourceStats & { bytes: number; candidates: number },
+	previous: (AtSourceStats & { bytes?: number }) | null,
+): GuardCheck[] {
+	const floors = NO_LIMITS.floors[source] ?? {
+		minLines: 1,
+		minRows: 1,
+		rowsDelta: 0.1,
+		sizeDelta: 0.3,
+	};
+	const ratio = current.candidates === 0 ? 1 : current.quarantined / current.candidates;
+	const checks: GuardCheck[] = [
+		{
+			name: `${source}.quarantine`,
+			ok: current.candidates > 0 && ratio <= NO_LIMITS.quarantineRatio,
+			approvable: false,
+			detail: `${current.quarantined} of ${current.candidates} establishments under a listed code quarantined (${percent(ratio)})`,
+		},
+		{
+			name: `${source}.lines`,
+			ok: current.lines >= floors.minLines,
+			approvable: false,
+			detail: `${current.lines} establishments in the file (at least ${floors.minLines} expected)`,
+		},
+		{
+			name: `${source}.rows`,
+			ok: current.rows >= floors.minRows,
+			approvable: false,
+			detail: `${current.rows} establishments kept (at least ${floors.minRows} expected)`,
+		},
+	];
+	if (previous) {
+		const rows = delta(current.people, previous.people);
+		checks.push({
+			name: `${source}.establishments`,
+			ok: rows <= floors.rowsDelta,
+			approvable: true,
+			detail: `${current.people} establishments vs ${previous.people} last time (${percent(rows)})`,
+		});
+		if (previous.bytes !== undefined) {
+			const size = delta(current.bytes, previous.bytes);
+			checks.push({
+				name: `${source}.size`,
+				ok: size <= floors.sizeDelta,
+				approvable: true,
+				detail: `${current.bytes} bytes vs ${previous.bytes} last time (${percent(size)})`,
+			});
+		}
+	}
+	return checks;
+}
+
+/**
+ * After placing: nearly every establishment must be found in its municipality, and most at their
+ * address, or the address file or the places are not the expected ones.
+ */
+export function checkNoPlaces(placement: {
+	address: number;
+	postcode: number;
+	municipality: number;
+	unplaced: number;
+}): GuardCheck[] {
+	const placed = placement.address + placement.postcode + placement.municipality;
+	const all = placed + placement.unplaced;
+	const local = all === 0 ? 1 : placed / all;
+	const atAddress = placed === 0 ? 1 : placement.address / placed;
+	return [
+		{
+			name: "no.places",
+			ok: local >= NO_LIMITS.minPlacedRatio,
+			approvable: true,
+			detail: `${placed} of ${all} establishments placed in their municipality (${percent(local)})`,
+		},
+		{
+			name: "no.points",
+			ok: atAddress >= NO_LIMITS.minAddressRatio,
+			approvable: true,
+			detail: `${placement.address} of ${placed} establishments located at their address (${percent(atAddress)})`,
+		},
+	];
+}

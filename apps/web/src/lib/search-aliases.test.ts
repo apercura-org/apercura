@@ -7,6 +7,7 @@ import {
 	allEsListingSlugs,
 	allGbListingSlugs,
 	allItListingSlugs,
+	allNoListingSlugs,
 	allPlListingSlugs,
 	FR_PROFESSIONS,
 	professionOfListingSlug,
@@ -34,6 +35,7 @@ const MARKETS = [
 	"CH",
 	"EE",
 	"PL",
+	"NO",
 ] as const satisfies readonly MarketCountry[];
 
 /** The listings of each market (France: its imported professions only). */
@@ -51,6 +53,7 @@ const LISTED: Record<MarketCountry, (slug: string) => boolean> = {
 	CH: (slug) => allChListingSlugs().has(slug),
 	EE: (slug) => allEeListingSlugs().has(slug),
 	PL: (slug) => allPlListingSlugs().has(slug),
+	NO: (slug) => allNoListingSlugs().has(slug),
 };
 
 /** Slugs a market maps but does not list yet: France's professions not imported. */
@@ -65,6 +68,7 @@ const MAPPED: Record<MarketCountry, (slug: string) => boolean> = {
 	CH: () => false,
 	EE: () => false,
 	PL: () => false,
+	NO: () => false,
 };
 
 const listing = (slug: string): SearchTerm => ({ kind: "listing", slug });
@@ -409,6 +413,32 @@ const EVERYDAY: Record<MarketCountry, [string, SearchTerm][]> = {
 		["hospital", listing("szpitale")],
 		["apteka", UNLISTED],
 		["pharmacy", UNLISTED],
+	],
+	NO: [
+		["fastlege", listing("legekontorer")],
+		["Fastlege", listing("legekontorer")],
+		["legesenter", listing("legekontorer")],
+		["legevakt", listing("legevakter")],
+		["sykehus", listing("sykehus")],
+		["sjukehus", listing("sykehus")],
+		["DPS", listing("psykisk-helsevern")],
+		["BUP", listing("psykisk-helsevern")],
+		["øyelege", listing("legespesialister")],
+		["hudlege", listing("legespesialister")],
+		["tannlege", listing("tannklinikker")],
+		["kjeveortoped", listing("tannklinikker")],
+		["sykehjem", listing("sykehjem")],
+		["sjukeheim", listing("sykehjem")],
+		["apotek", listing("apotek")],
+		["Apotek", listing("apotek")],
+		["fysioterapeut", UNLISTED],
+		["psykolog", UNLISTED],
+		// Visitors' languages.
+		["pharmacy", listing("apotek")],
+		["dentist", listing("tannklinikker")],
+		["family doctor", listing("legekontorer")],
+		["hôpital", listing("sykehus")],
+		["pharmacie", listing("apotek")],
 	],
 };
 

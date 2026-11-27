@@ -24,6 +24,8 @@ Usage: apercura <command> [arguments]
   etl:ee [flags]         Import the Estonian Health Board's providers and the State Agency of
                          Medicines' pharmacies (non-commercial use only: CC BY-NC-SA 3.0)
   etl:pl [flags]         Import the Polish register of healthcare entities (RPWDL)
+  etl:no [flags]         Import the Norwegian establishments of care (Brønnøysundregistrene's
+                         Enhetsregisteret, NLOD 2.0) located with Kartverket's addresses
   etl:places [flags]     Import the communes, departments and regions (--country at: the
                          Austrian Bundesländer and Gemeinden; --country gb: the UK regions,
                          local authorities and towns; --country cz: the Czech regions,
@@ -33,7 +35,8 @@ Usage: apercura <command> [arguments]
                          German Länder, Kreise and Gemeinden; --country ch: the Swiss
                          cantons, districts and communes; --country ee: the Estonian
                          counties, municipalities and settlements; --country pl: the Polish
-                         voivodeships, powiats and gminas)
+                         voivodeships, powiats and gminas; --country no: the
+                         Norwegian counties and municipalities)
   etl:outbox             Send the pending cache tags to the app
   scheduler              Run jobs:tick and the cache warm-up every 5 minutes and the open data
                          imports (supercronic)
@@ -92,7 +95,7 @@ jobs | jobs:tick)
 	jobs_database_url
 	exec bun /app/cli/jobs.js "$@"
 	;;
-etl:fr | etl:at | etl:gb | etl:cz | etl:es | etl:it | etl:de | etl:ch | etl:ee | etl:pl | etl:places | etl:outbox)
+etl:fr | etl:at | etl:gb | etl:cz | etl:es | etl:it | etl:de | etl:ch | etl:ee | etl:no | etl:pl | etl:places | etl:outbox)
 	# The import only uses APP_URL to send cache tags to the app: inside a private network it
 	# can reach it directly (INTERNAL_APP_URL, e.g. http://app:3000) instead of the public URL.
 	if [ -n "${INTERNAL_APP_URL:-}" ]; then

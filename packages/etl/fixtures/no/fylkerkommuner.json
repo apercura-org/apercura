@@ -1,0 +1,158 @@
+[
+	{
+		"fylkesnavn": "Oslo",
+		"fylkesnummer": "03",
+		"kommuner": [
+			{
+				"fylkesnavn": "Oslo",
+				"fylkesnummer": "03",
+				"kommunenavn": "Oslo",
+				"kommunenavnNorsk": "Oslo",
+				"kommunenummer": "0301",
+				"punktIOmrade": {
+					"coordinates": [10.775729, 59.972397],
+					"crs": {
+						"properties": {
+							"name": "EPSG:4258"
+						},
+						"type": "name"
+					},
+					"type": "Point"
+				},
+				"samiskForvaltningsomrade": false
+			}
+		]
+	},
+	{
+		"fylkesnavn": "Akershus",
+		"fylkesnummer": "32",
+		"kommuner": [
+			{
+				"fylkesnavn": "Akershus",
+				"fylkesnummer": "32",
+				"kommunenavn": "Bærum",
+				"kommunenavnNorsk": "Bærum",
+				"kommunenummer": "3201",
+				"punktIOmrade": {
+					"coordinates": [10.49971, 59.928964],
+					"crs": {
+						"properties": {
+							"name": "EPSG:4258"
+						},
+						"type": "name"
+					},
+					"type": "Point"
+				},
+				"samiskForvaltningsomrade": false
+			},
+			{
+				"fylkesnavn": "Akershus",
+				"fylkesnummer": "32",
+				"kommunenavn": "Ullensaker",
+				"kommunenavnNorsk": "Ullensaker",
+				"kommunenummer": "3209",
+				"punktIOmrade": {
+					"coordinates": [11.198429, 60.154107],
+					"crs": {
+						"properties": {
+							"name": "EPSG:4258"
+						},
+						"type": "name"
+					},
+					"type": "Point"
+				},
+				"samiskForvaltningsomrade": false
+			}
+		]
+	},
+	{
+		"fylkesnavn": "Vestland",
+		"fylkesnummer": "46",
+		"kommuner": [
+			{
+				"fylkesnavn": "Vestland",
+				"fylkesnummer": "46",
+				"kommunenavn": "Bergen",
+				"kommunenavnNorsk": "Bergen",
+				"kommunenummer": "4601",
+				"punktIOmrade": {
+					"coordinates": [5.379239, 60.356091],
+					"crs": {
+						"properties": {
+							"name": "EPSG:4258"
+						},
+						"type": "name"
+					},
+					"type": "Point"
+				},
+				"samiskForvaltningsomrade": false
+			},
+			{
+				"fylkesnavn": "Vestland",
+				"fylkesnummer": "46",
+				"kommunenavn": "Alver",
+				"kommunenavnNorsk": "Alver",
+				"kommunenummer": "4631",
+				"punktIOmrade": {
+					"coordinates": [5.230794, 60.67072],
+					"crs": {
+						"properties": {
+							"name": "EPSG:4258"
+						},
+						"type": "name"
+					},
+					"type": "Point"
+				},
+				"samiskForvaltningsomrade": false
+			}
+		]
+	},
+	{
+		"fylkesnavn": "Trøndelag",
+		"fylkesnummer": "50",
+		"kommuner": [
+			{
+				"fylkesnavn": "Trøndelag",
+				"fylkesnummer": "50",
+				"kommunenavn": "Trondheim",
+				"kommunenavnNorsk": "Trondheim",
+				"kommunenummer": "5001",
+				"punktIOmrade": {
+					"coordinates": [10.475124, 63.338075],
+					"crs": {
+						"properties": {
+							"name": "EPSG:4258"
+						},
+						"type": "name"
+					},
+					"type": "Point"
+				},
+				"samiskForvaltningsomrade": false
+			}
+		]
+	},
+	{
+		"fylkesnavn": "Troms",
+		"fylkesnummer": "55",
+		"kommuner": [
+			{
+				"fylkesnavn": "Troms",
+				"fylkesnummer": "55",
+				"kommunenavn": "Tromsø",
+				"kommunenavnNorsk": "Tromsø",
+				"kommunenummer": "5501",
+				"punktIOmrade": {
+					"coordinates": [18.687659, 69.723858],
+					"crs": {
+						"properties": {
+							"name": "EPSG:4258"
+						},
+						"type": "name"
+					},
+					"type": "Point"
+				},
+				"samiskForvaltningsomrade": false
+			}
+		]
+	}
+]

@@ -10,6 +10,7 @@ import { LegalNoticeEe } from "~/components/legal-ee";
 import { LegalNoticeEs } from "~/components/legal-es";
 import { LegalNoticeGb } from "~/components/legal-gb";
 import { LegalNoticeIt } from "~/components/legal-it";
+import { LegalNoticeNo } from "~/components/legal-no";
 import { LegalNoticePl } from "~/components/legal-pl";
 import { PageGraph } from "~/components/page-graph";
 import { PublicPage } from "~/components/public-page";
@@ -38,6 +39,7 @@ export function generateMetadata({ params }: PageProps<"/[locale]/mentions-legal
 			CH: "LegalNoticeCh",
 			EE: "LegalNoticeEe",
 			PL: "LegalNoticePl",
+			NO: "LegalNoticeNo",
 		},
 		HREF,
 	);
@@ -51,7 +53,7 @@ export function generateMetadata({ params }: PageProps<"/[locale]/mentions-legal
 export default async function LegalPage({ params }: PageProps<"/[locale]/mentions-legales">) {
 	const locale = await localeOf(params);
 	setRequestLocale(locale);
-	// Austria's, the UK's, Czechia's, Spain's, Italy's, Germany's, Switzerland's and Poland's, Switzerland's and Estonia's pages
+	// Austria's, the UK's, Czechia's, Spain's, Italy's, Germany's, Switzerland's, Estonia's, Poland's and Norway's pages
 	// have texts of their own, written for their law.
 	if (marketOf(locale) === "AT") return <ImpressumAt locale={locale} />;
 	if (marketOf(locale) === "GB") return <LegalNoticeGb locale={locale} />;
@@ -62,6 +64,7 @@ export default async function LegalPage({ params }: PageProps<"/[locale]/mention
 	if (marketOf(locale) === "DE") return <ImpressumDe locale={locale} />;
 	if (marketOf(locale) === "CH") return <LegalNoticeCh locale={locale} />;
 	if (marketOf(locale) === "EE") return <LegalNoticeEe locale={locale} />;
+	if (marketOf(locale) === "NO") return <LegalNoticeNo locale={locale} />;
 	const t = await getTranslations({ locale, namespace: "LegalPage" });
 	const tI = await getTranslations({ locale, namespace: "Institutional" });
 	const section = await proseSections(locale, "LegalPage");

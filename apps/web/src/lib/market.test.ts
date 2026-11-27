@@ -74,7 +74,7 @@ describe("places of a market", () => {
 		expect(isDepartmentCity("AT", "90001")).toBe(true);
 		expect(isDepartmentCity("AT", "75056")).toBe(false);
 		expect(isDepartmentCity("CZ", "554782")).toBe(true);
-		expect(CITY_IS_DEPARTMENT).toEqual({ FR: "75056", AT: "90001", CZ: "554782" });
+		expect(CITY_IS_DEPARTMENT).toEqual({ FR: "75056", AT: "90001", CZ: "554782", NO: "0301" });
 		// A kreisfreie Stadt is the Gemeinde `000` of its Kreis: München, Berlin, Hamburg.
 		expect(isDepartmentCity("DE", "09162000")).toBe(true);
 		expect(isDepartmentCity("DE", "11000000")).toBe(true);
@@ -82,7 +82,7 @@ describe("places of a market", () => {
 		expect(isDepartmentCity("DE", "09162")).toBe(false);
 		expect(isDepartmentCity("FR", "09162000")).toBe(false);
 		expect(NOT_DEPARTMENT_CITY("p")).toBe(
-			"NOT (p.country = 'FR' AND p.code = '75056') AND NOT (p.country = 'AT' AND p.code = '90001') AND NOT (p.country = 'CZ' AND p.code = '554782') AND NOT (p.country = 'DE' AND p.code LIKE '_____000') AND NOT (p.country = 'EE' AND p.kind = 'commune' AND p.code IN ('0296', '0424', '0446', '0511', '0663', '0736', '0897', '0919')) AND NOT (p.country = 'PL' AND p.kind = 'commune' AND substr(p.code, 3, 1) IN ('6', '7', '8', '9'))",
+			"NOT (p.country = 'FR' AND p.code = '75056') AND NOT (p.country = 'AT' AND p.code = '90001') AND NOT (p.country = 'CZ' AND p.code = '554782') AND NOT (p.country = 'NO' AND p.code = '0301') AND NOT (p.country = 'DE' AND p.code LIKE '_____000') AND NOT (p.country = 'EE' AND p.kind = 'commune' AND p.code IN ('0296', '0424', '0446', '0511', '0663', '0736', '0897', '0919')) AND NOT (p.country = 'PL' AND p.kind = 'commune' AND substr(p.code, 3, 1) IN ('6', '7', '8', '9'))",
 		);
 		// Narva is the municipality of Narva's only settlement, which shares its code; Tartu's holds
 		// villages too.
@@ -95,6 +95,11 @@ describe("places of a market", () => {
 		expect(isDepartmentCity("PL", "1206113")).toBe(false);
 		expect(isDepartmentCity("PL", "1261")).toBe(false);
 		expect(isDepartmentCity("CZ", "1261011")).toBe(false);
+		// Oslo is a county and its only municipality: the municipality's page is the county's.
+		expect(isDepartmentCity("NO", "0301")).toBe(true);
+		expect(isDepartmentCity("NO", "4601")).toBe(false);
+		expect(isDepartmentSlug("vestland", "NO")).toBe(true);
+		expect(isDepartmentSlug("46", "NO")).toBe(false);
 	});
 
 	it("labels Austrian places without codes", () => {
@@ -348,6 +353,37 @@ describe("Spain's pages", () => {
 		expect(isMarketListingSlug("et-EE", "perearstikeskused")).toBe(true);
 		expect(isMarketListingSlug("et-EE", "krankenhaeuser")).toBe(false);
 		expect(marketBooks("et-EE")).toBe(false);
+	});
+});
+
+describe("Norway's pages", () => {
+	it("write Norwegian addresses street, then postcode and post town, and Norwegian numbers", () => {
+		const site = {
+			addressLine: "Eksempelgata 10",
+			addressComplement: null,
+			postcode: "0150",
+			placeName: "Oslo",
+		};
+		expect(addressLines(site, "NO")).toEqual(["Eksempelgata 10", "0150 Oslo"]);
+		expect(formatPhone("+4722123456")).toBe("22 12 34 56");
+		expect(formatPhone("+4791234567")).toBe("912 34 567");
+		// Czechia's +420 and Austria's +43 are not Norway's +47.
+		expect(formatPhone("+420326357125")).not.toBe(formatPhone("+4722123456"));
+	});
+
+	it("credit the register a page is built from, and Kartverket's addresses and places", () => {
+		const page = openDataSourcesOf("NO", [{ source: "no-brreg", site: null }]);
+		expect(page.map((source) => source.attribution)).toEqual([
+			"Inneholder data under Norsk lisens for offentlige data (NLOD) tilgjengeliggjort av Brønnøysundregistrene; endret av Apercura",
+			"Adresser: © Kartverket, CC BY 4.0",
+			"Fylker og kommuner: © Kartverket, CC BY 4.0",
+		]);
+		expect(openDataSourcesOf("NO", [])).toEqual([]);
+		expect(professionSlugOf("NO_PHARMACY")).toBe("apotek");
+		expect(professionSlugOf("NO_GP")).toBe("legekontorer");
+		expect(isMarketListingSlug("nb-NO", "legekontorer")).toBe(true);
+		expect(isMarketListingSlug("nb-NO", "apteegid")).toBe(false);
+		expect(marketBooks("nb-NO")).toBe(false);
 	});
 });
 

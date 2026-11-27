@@ -109,6 +109,17 @@ under `/pl/katalog`, the search under `/pl/szukaj`, and `/pl/o-projekcie`,
 `/pl/regulamin`; its listing slugs are Polish (`/pl/szpitale/malopolskie`,
 `/pl/stomatologia/powiat-krakowski/skawina`), and a reference reads `pl:290629`.
 
+Norway (#172) is `/no`, in Norwegian Bokmål (`nb-NO`, the English catalog with
+the Bokmål texts on top, `messages/no.json`). Its route segments are the English
+ones in Norwegian (`NORWEGIAN_SEGMENTS` in `src/i18n/routing.ts`): an
+establishment's page under `/no/virksomhet/…` (an establishment, never a
+person), an organisation's under `/no/organisasjon/…`, the directory under
+`/no/katalog`, the search under `/no/sok`, and the legal pages under
+`/no/juridisk`, `/no/personvern`, `/no/vilkar`, `/no/tilgjengelighet` and
+`/no/data`. Its listing slugs are Norwegian, `ø` written `o`
+(`/no/legekontorer/vestland/bergen`, `/no/apotek`); a county is a listing of its
+own, and Oslo, a county and a municipality, has the county's page only.
+
 Each segment follows the locale's prefix: `/fr/annuaire`, `/fr-de/verzeichnis`.
 
 Only French pages are indexed in v1 (`INDEXABLE_LOCALES`): pages in the other

@@ -323,6 +323,24 @@ scheduler reruns the import every Tuesday at 04:30 UTC, when no other import
 runs; an unchanged export is skipped (`ETL_PL_SCHEDULE_ARGS` adds flags). One
 register: exit code `1` when it cannot be fetched or read, the pages staying as
 they are ([data-import.md](./data-import.md#poland)).
+Norway (`/no`) has its own import, from the Brønnøysund Register Centre's
+register of legal entities (about 5,800 establishments of care: hospitals, GP
+offices, emergency clinics, specialists, dental clinics, nursing homes and
+pharmacies; NLOD 2.0, no sole proprietorship):
+
+```sh
+apercura-compose run --rm --entrypoint "apercura etl:places" etl --country no
+apercura-compose run --rm --entrypoint "apercura etl:no" etl --dry-run
+apercura-compose run --rm --entrypoint "apercura etl:no" etl
+```
+
+The places are Kartverket's counties and municipalities (270 kB; the first
+`etl:no` imports them too). Each run downloads the register's full files of
+establishments and entities (62 and 155 MB) and Kartverket's national address
+file (152 MB, 813 MB inflated and streamed), about 370 MB in all: give the work
+directory (`ETL_WORK_DIR`) the room. The scheduler reruns the import every Friday
+at 03:30 UTC; a file that cannot be fetched or read fails the run (exit code
+`1`) and leaves the pages as they are ([data-import.md](./data-import.md#norway)).
 
 ## Scheduled jobs
 

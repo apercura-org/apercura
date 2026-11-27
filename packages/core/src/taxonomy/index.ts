@@ -8,6 +8,7 @@ export * from "./es";
 export * from "./fr";
 export * from "./gb";
 export * from "./it";
+export * from "./no";
 export * from "./pl";
 export * from "./search-aliases";
 export * from "./types";
