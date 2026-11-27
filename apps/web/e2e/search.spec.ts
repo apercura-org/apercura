@@ -1,4 +1,4 @@
-import { expect, type Locator, test } from "@playwright/test";
+import { expect, test } from "@playwright/test";
 import { axeViolations } from "./axe";
 
 /*
@@ -9,20 +9,6 @@ import { axeViolations } from "./axe";
 
 const FICTIF_RPPS = "19999990021";
 const FICTIF_PAGE = new RegExp(`/fr/praticien/jean-pierre-fictif-${FICTIF_RPPS}$`);
-
-/**
- * Types `text` in a suggestion box until `option` is suggested. The box is printed before React
- * hydrates it, and text typed before then never opens the suggestions: under a loaded CI runner
- * the page's `load` can come first (#157, reproduced with the CPU slowed four times). A visitor
- * would type again; so does the test.
- */
-async function typeUntilSuggested(box: Locator, text: string, option: Locator) {
-	await expect(async () => {
-		await box.fill("");
-		await box.pressSequentially(text);
-		await expect(option).toBeVisible({ timeout: 2_000 });
-	}).toPass({ timeout: 15_000 });
-}
 
 test.describe("without JavaScript", () => {
 	test.use({ javaScriptEnabled: false });
@@ -110,21 +96,47 @@ test("an unknown RPPS number says honestly that there is no page", async ({ page
 
 test("“Qui ?” suggests practitioners and opens the chosen page", async ({ page }) => {
 	await page.goto("/fr/recherche");
+	await page.getByRole("combobox", { name: "Qui ?" }).pressSequentially("Fict");
 	const option = page.getByRole("option", { name: /Jean-Pierre Fictif/ });
-	await typeUntilSuggested(page.getByRole("combobox", { name: "Qui ?" }), "Fict", option);
 	await option.click();
 	await expect(page).toHaveURL(FICTIF_PAGE);
 });
 
 test("“Où ?” suggests places with their department", async ({ page }) => {
 	await page.goto("/fr-en/search");
-	const option = page.getByRole("option", { name: /Paris 15e Arrondissement/ });
-	await typeUntilSuggested(page.getByRole("combobox", { name: "Where?" }), "Paris 15", option);
-	await option.click();
+	await page.getByRole("combobox", { name: "Where?" }).pressSequentially("Paris 15");
+	await page.getByRole("option", { name: /Paris 15e Arrondissement/ }).click();
 	await expect(page.getByRole("combobox", { name: "Where?" })).toHaveValue(
 		"Paris 15e Arrondissement (75)",
 	);
 });
+
+for (const [path, box, typed, suggested] of [
+	["/fr/recherche", "Qui ?", "Fict", /Jean-Pierre Fictif/],
+	["/fr-en/search", "Where?", "Paris 15", /Paris 15e Arrondissement/],
+] as const) {
+	test(`“${box}” suggests what was typed before the page hydrated (#159)`, async ({ page }) => {
+		// The page's JavaScript is held: the box stays the printed one until it is released.
+		let release = () => {};
+		const released = new Promise<void>((resolve) => {
+			release = resolve;
+		});
+		await page.route(/\/_next\/static\/chunks\/.+\.js$/, async (route) => {
+			await released;
+			await route.continue();
+		});
+		await page.goto(path, { waitUntil: "domcontentloaded" });
+		const field = page.getByRole("combobox", { name: box });
+		await field.pressSequentially(typed);
+		const option = page.getByRole("option", { name: suggested });
+		await expect(option).toHaveCount(0);
+		release();
+		// Without another keystroke.
+		await expect(option).toBeVisible();
+		await expect(field).toHaveValue(typed);
+		await expect(field).toBeFocused();
+	});
+}
 
 test("the home search gets its suggestions on first use, keeping the text and the focus", async ({
 	page,
@@ -240,11 +252,8 @@ test.describe("the country searched", () => {
 		]);
 		await country.selectOption({ label: "Royaume-Uni" });
 		// The places suggested are the UK's.
-		await typeUntilSuggested(
-			page.getByRole("combobox", { name: "Où ?" }),
-			"Glasg",
-			page.getByRole("option", { name: /Glasgow/ }).first(),
-		);
+		await page.getByRole("combobox", { name: "Où ?" }).pressSequentially("Glasg");
+		await expect(page.getByRole("option", { name: /Glasgow/ }).first()).toBeVisible();
 		await page.getByRole("combobox", { name: "Où ?" }).fill("");
 		await page.getByRole("combobox", { name: "Qui ?" }).fill("dentiste");
 		await page.getByRole("button", { name: "Chercher", includeHidden: true }).click();

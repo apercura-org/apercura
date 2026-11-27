@@ -75,6 +75,13 @@ export function SearchForm({
 	const [who, setWho] = useState(defaultWho);
 	const [where, setWhere] = useState(defaultWhere);
 	const [market, setMarket] = useState<MarketCountry>(defaultMarket ?? marketOf(locale));
+	// A country chosen before hydration: the select shows it, the state does not (#159).
+	useEffect(() => {
+		const chosen = document.getElementById(`${idPrefix}-pays`);
+		if (chosen instanceof HTMLSelectElement) {
+			setMarket((current) => marketOfSegment(chosen.value) ?? current);
+		}
+	}, [idPrefix]);
 	// Suggestions are fetched only once the visitor types, never for the printed-back query.
 	const [touched, setTouched] = useState({ who: false, where: false });
 	const whoQuery = useDebounced(who.trim());

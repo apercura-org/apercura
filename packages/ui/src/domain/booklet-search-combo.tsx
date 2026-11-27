@@ -1,8 +1,17 @@
 "use client";
 
-import { type FormEvent, type ReactNode, useState } from "react";
+import {
+	type FormEvent,
+	type ReactNode,
+	type RefObject,
+	useContext,
+	useEffect,
+	useRef,
+	useState,
+} from "react";
 import {
 	Collection,
+	ComboBoxStateContext,
 	Header,
 	Input,
 	type Key,
@@ -61,6 +70,23 @@ export interface BookletComboFieldProps {
 const search = searchStyles();
 
 /**
+ * What the visitor did before React hydrated the box (#159): the input keeps its focus and
+ * text, the state knows neither, so no suggestion opens until the next keystroke, or at all
+ * if the box was focused then. On mount both are taken as if just done.
+ */
+function TypedBeforeHydration({ input }: { input: RefObject<HTMLInputElement | null> }) {
+	const state = useContext(ComboBoxStateContext);
+	// biome-ignore lint/correctness/useExhaustiveDependencies: once, on hydration.
+	useEffect(() => {
+		const field = input.current;
+		if (!state || !field) return;
+		if (field === document.activeElement) state.setFocused(true);
+		if (field.value !== state.inputValue) state.setInputValue(field.value);
+	}, []);
+	return null;
+}
+
+/**
  * One printed search cell with suggestions: a React Aria combo box whose text
  * is submitted with the surrounding GET form, so the form works the same with
  * or without JavaScript. Suggestions open on a paper slip with hairline rows.
@@ -78,6 +104,7 @@ export function BookletComboField({
 	emptyStatus,
 }: BookletComboFieldProps) {
 	const [value, setValue] = useState(defaultValue);
+	const input = useRef<HTMLInputElement>(null);
 	const visible = sections.filter((section) => section.options.length > 0);
 
 	const choose = (key: Key | null) => {
@@ -110,7 +137,9 @@ export function BookletComboField({
 			className={search.cell()}
 		>
 			<Label className={search.label()}>{label}</Label>
+			<TypedBeforeHydration input={input} />
 			<Input
+				ref={input}
 				type="search"
 				placeholder={hint}
 				autoComplete={autoComplete}
