@@ -22,7 +22,8 @@ export type SearchAliasLanguage =
 	| "pl"
 	| "nb"
 	| "fi"
-	| "lt";
+	| "lt"
+	| "sl";
 
 export type SearchAliases = {
 	/**

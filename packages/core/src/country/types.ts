@@ -1,6 +1,6 @@
 /**
  * Everything that differs from one country market to the next, behind one
- * interface. France, Austria, the United Kingdom, Czechia, Spain, Italy, Germany, Switzerland, Poland, Estonia, Norway, Ireland, Finland and Lithuania are implemented; docs/adr/0002-multi-country.md
+ * interface. France, Austria, the United Kingdom, Czechia, Spain, Italy, Germany, Switzerland, Poland, Estonia, Norway, Ireland, Finland, Lithuania and Slovenia are implemented; docs/adr/0002-multi-country.md
  * lists what is known about every other European market.
  *
  * Adapters are pure data and pure functions: no network, no database. Imports
@@ -23,6 +23,7 @@ export const COUNTRY_CODES = [
 	"IE",
 	"FI",
 	"LT",
+	"SI",
 ] as const;
 
 export type CountryCode = (typeof COUNTRY_CODES)[number];

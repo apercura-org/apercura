@@ -21,6 +21,7 @@ import { allItListingSlugs } from "./it";
 import { allLtListingSlugs } from "./lt";
 import { allNoListingSlugs } from "./no";
 import { allPlListingSlugs } from "./pl";
+import { allSiListingSlugs } from "./si";
 
 const LISTINGS: Record<CareMarket, Set<string>> = {
 	FR: allListingSlugs(),
@@ -37,6 +38,7 @@ const LISTINGS: Record<CareMarket, Set<string>> = {
 	IE: allIeListingSlugs(),
 	FI: allFiListingSlugs(),
 	LT: allLtListingSlugs(),
+	SI: allSiListingSlugs(),
 };
 
 describe("the kinds of care shared by the markets", () => {
@@ -96,5 +98,17 @@ describe("the kinds of care shared by the markets", () => {
 		expect(equivalentListing("krankenhaeuser", "DE", "PL")).toBe("szpitale");
 		expect(equivalentListing("przychodnie-poz", "PL", "GB")).toBe("gp-practices");
 		expect(equivalentListing("pharmacien", "FR", "PL")).toBeNull();
+		// Slovenia lists its personal doctors: family doctors, children's doctors, gynaecologists
+		// and dentists, and nothing else.
+		expect(equivalentListing("chirurgien-dentiste", "FR", "SI")).toBe("zobozdravnik");
+		expect(equivalentListing("orthodontiste", "FR", "SI")).toBe("zobozdravnik");
+		expect(equivalentListing("medecin-generaliste", "FR", "SI")).toBe("druzinski-zdravnik");
+		expect(equivalentListing("gp-practices", "GB", "SI")).toBe("druzinski-zdravnik");
+		expect(equivalentListing("detsky-lekar", "CZ", "SI")).toBe("otroski-zdravnik");
+		expect(equivalentListing("frauenheilkunde", "AT", "SI")).toBe("ginekolog");
+		expect(equivalentListing("zobozdravnik", "SI", "AT")).toBe("zahnaerzte");
+		expect(equivalentListing("druzinski-zdravnik", "SI", "FR")).toBe("medecin-generaliste");
+		expect(equivalentListing("pharmacien", "FR", "SI")).toBeNull();
+		expect(equivalentListing("cardiologue", "FR", "SI")).toBeNull();
 	});
 });

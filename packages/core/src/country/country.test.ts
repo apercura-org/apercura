@@ -24,6 +24,7 @@ describe("country adapters", () => {
 			"IE",
 			"FI",
 			"LT",
+			"SI",
 		]);
 		expect(COUNTRY_CODES).toEqual([
 			"FR",
@@ -40,6 +41,7 @@ describe("country adapters", () => {
 			"IE",
 			"FI",
 			"LT",
+			"SI",
 		]);
 	});
 

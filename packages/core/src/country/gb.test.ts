@@ -142,6 +142,7 @@ describe("the United Kingdom adapter", () => {
 			"IE",
 			"FI",
 			"LT",
+			"SI",
 		]);
 	});
 });

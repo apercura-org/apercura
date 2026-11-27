@@ -967,3 +967,58 @@ export function parseFiFacilitySegment(segment: string): FiFacilitySegment | nul
 	if (!key) return null;
 	return { ...key, namePart: dash < 0 ? "" : segment.slice(0, dash) };
 }
+
+/**
+ * Slovenian identifiers: the health insurer (ZZZS) numbers every doctor of its lists of personal
+ * doctors (`Šifra zdravnika`), the page's key, printed in the URL after `si` so a Slovenian
+ * page's segment never reads as another market's (`/si/zdravnik/miran-kolar-si7774`). The
+ * providers' numbers (`Šifra izvajalca`) key their practices, never a page.
+ */
+export const SI_ID_SCHEME = "SI-ZZZS";
+
+/** True for a ZZZS doctor number: 1 to 8 digits, no leading 0 (syntax only). */
+export function isValidSiSourceId(value: string): boolean {
+	return /^[1-9]\d{0,7}$/.test(value);
+}
+
+/** Slovenian letters that do not decompose into a base letter and a mark (`đ` → `d`). */
+const SLOVENIAN_LETTERS: Record<string, string> = { đ: "d", Đ: "D" };
+
+/**
+ * {@link slugify} for Slovenian text: `č`, `š`, `ž`, `ć` lose their marks (`Škofja Loka` →
+ * `skofja-loka`), and `đ`, which has none to lose, is written `d` (`Đurić` → `duric`).
+ */
+export function slugifySl(text: string): string {
+	return slugify(text.replace(/[đĐ]/g, (char) => SLOVENIAN_LETTERS[char] ?? char));
+}
+
+/**
+ * Canonical path segment of a Slovenian doctor's page: `{ime-priimek}-si{number}`
+ * (`miran-kolar-si7774`), diacritics dropped.
+ */
+export function siPractitionerSlug(
+	firstName: string,
+	lastName: string,
+	nationalId: string,
+): string {
+	const key = `si${nationalId}`;
+	const name = slugifySl(`${firstName} ${lastName}`).slice(0, 80).replace(/-+$/, "");
+	return name ? `${name}-${key}` : key;
+}
+
+export type SiPractitionerSegment = {
+	idScheme: typeof SI_ID_SCHEME;
+	nationalId: string;
+	/** Name part before the key, possibly empty. */
+	namePart: string;
+};
+
+/**
+ * Parses the last segment of a Slovenian doctor's URL (`{ime-priimek}-si{number}`). Returns null
+ * unless it ends with `si` and a valid ZZZS number, so invalid URLs never reach the database.
+ */
+export function parseSiPractitionerSegment(segment: string): SiPractitionerSegment | null {
+	const match = /^(?:([a-z0-9]+(?:-[a-z0-9]+)*)-)?si([1-9]\d{0,7})$/.exec(segment);
+	if (!match) return null;
+	return { idScheme: SI_ID_SCHEME, nationalId: match[2] ?? "", namePart: match[1] ?? "" };
+}

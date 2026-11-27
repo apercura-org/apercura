@@ -29,7 +29,8 @@ export type CareMarket =
 	| "NO"
 	| "IE"
 	| "FI"
-	| "LT";
+	| "LT"
+	| "SI";
 
 export const CARE_KINDS = {
 	"general-practice": {
@@ -43,6 +44,7 @@ export const CARE_KINDS = {
 		NO: "legekontorer",
 		FI: "terveysasemat",
 		LT: "seimos-medicina",
+		SI: "druzinski-zdravnik",
 	},
 	dentistry: {
 		FR: "chirurgien-dentiste",
@@ -55,6 +57,7 @@ export const CARE_KINDS = {
 		NO: "tannklinikker",
 		FI: "hammashoitolat",
 		LT: "odontologijos-klinikos",
+		SI: "zobozdravnik",
 	},
 	orthodontics: {
 		FR: "orthodontiste",
@@ -67,6 +70,7 @@ export const CARE_KINDS = {
 		NO: "tannklinikker",
 		FI: "hammashoitolat",
 		LT: "odontologijos-klinikos",
+		SI: "zobozdravnik",
 	},
 	pharmacy: {
 		FR: "pharmacien",
@@ -103,6 +107,7 @@ export const CARE_KINDS = {
 		ES: "pediatras",
 		PL: "poradnie-pediatryczne",
 		LT: "medicinos-centrai",
+		SI: "otroski-zdravnik",
 	},
 	gynaecology: {
 		FR: "gynecologue",
@@ -112,6 +117,7 @@ export const CARE_KINDS = {
 		PL: "poradnie-ginekologiczne",
 		FI: "sairaalat",
 		LT: "medicinos-centrai",
+		SI: "ginekolog",
 	},
 	obstetrics: {
 		FR: "gynecologue-obstetricien",
@@ -121,6 +127,7 @@ export const CARE_KINDS = {
 		PL: "poradnie-ginekologiczne",
 		FI: "neuvolat",
 		LT: "medicinos-centrai",
+		SI: "ginekolog",
 	},
 	midwifery: {
 		FR: "sage-femme",
