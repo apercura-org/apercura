@@ -41,7 +41,8 @@ const SITEMAP_MS_PER_URL = 100;
 /**
  * The index's groups of files: the international home's own file, then each open market's files
  * under its segment (France in French, Austria in German, the UK in English, Czechia in Czech,
- * Spain in Spanish, Italy in Italian, Germany in German, Switzerland in its three). Interface
+ * Spain in Spanish, Italy in Italian, Germany in German, Switzerland in its three, Estonia in
+ * Estonian). Interface
  * translations (/fr-de, /fr-es…) are never listed.
  */
 const SITEMAP_GROUPS = [
@@ -56,6 +57,7 @@ const SITEMAP_GROUPS = [
 	"ch",
 	"ch-fr",
 	"ch-it",
+	"ee",
 ] as const;
 type SitemapGroup = (typeof SITEMAP_GROUPS)[number];
 
@@ -177,6 +179,8 @@ test("the index lists valid chunks of unique URLs, each under its market's segme
 		expect(chunks).toContain(`${origin}/sitemaps/${segment}/pages-0.xml`);
 		expect(chunks).toContain(`${origin}/sitemaps/${segment}/praticiens-0.xml`);
 	}
+	expect(chunks).toContain(`${origin}/sitemaps/ee/pages-0.xml`);
+	expect(chunks).toContain(`${origin}/sitemaps/ee/praticiens-0.xml`);
 	for (const chunk of chunks) expect(sitemapGroupOf(chunk, origin), chunk).not.toBeNull();
 	for (const lastmod of indexXml.matchAll(LASTMOD)) {
 		expect(lastmod[1]).toMatch(/^\d{4}-\d{2}-\d{2}$/);
@@ -199,6 +203,9 @@ test("the index lists valid chunks of unique URLs, each under its market's segme
 	expect(urls).toContain(`${origin}/ch`);
 	expect(urls).toContain(`${origin}/ch-fr`);
 	expect(urls).toContain(`${origin}/ch-it`);
+	expect(urls).toContain(`${origin}/ee`);
+	// A town that is its own municipality has the municipality's page only.
+	expect(urls).not.toContain(`${origin}/ee/hambaravi/keila-linn/keila-linn`);
 });
 
 // Every URL is checked: the parts are consecutive runs of the index's URLs that together cover

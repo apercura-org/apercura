@@ -3,6 +3,7 @@ import {
 	CH_RESERVED_SEGMENTS,
 	CZ_RESERVED_SEGMENTS,
 	DE_RESERVED_SEGMENTS,
+	EE_RESERVED_SEGMENTS,
 	ES_RESERVED_SEGMENTS,
 	GB_RESERVED_SEGMENTS,
 	IT_RESERVED_SEGMENTS,
@@ -10,6 +11,7 @@ import {
 	isChListingSlug,
 	isCzListingSlug,
 	isDeListingSlug,
+	isEeListingSlug,
 	isEsListingSlug,
 	isGbListingSlug,
 	isItListingSlug,
@@ -42,7 +44,7 @@ import {
 } from "./locales";
 import { getPathname } from "./navigation";
 import { localePath } from "./paths";
-import { type AppPathname, CZECH_SEGMENTS, routing } from "./routing";
+import { type AppPathname, CZECH_SEGMENTS, ESTONIAN_SEGMENTS, routing } from "./routing";
 
 const PARAMS: Record<string, string> = {
 	slug: "camille-exemple-19999990013",
@@ -63,6 +65,7 @@ const TRANSLATIONS = LOCALES.filter(
 		locale !== "es-ES" &&
 		locale !== "it-IT" &&
 		locale !== "de-DE" &&
+		locale !== "et-EE" &&
 		marketOf(locale) !== "CH",
 );
 
@@ -77,7 +80,7 @@ function hrefOf(pathname: AppPathname) {
 }
 
 describe("locale configuration", () => {
-	it("serves France under /fr and /fr-{language}, Austria under /at, the UK under /gb, Czechia under /cz, Spain under /es, Italy under /it, Germany under /de and Switzerland under /ch, /ch-fr and /ch-it", () => {
+	it("serves France under /fr and /fr-{language}, Austria under /at, the UK under /gb, Czechia under /cz, Spain under /es, Italy under /it, Germany under /de, Switzerland under /ch, /ch-fr and /ch-it and Estonia under /ee", () => {
 		expect(LOCALES).toEqual([
 			"fr",
 			"en",
@@ -93,6 +96,7 @@ describe("locale configuration", () => {
 			"de-CH",
 			"fr-CH",
 			"it-CH",
+			"et-EE",
 		]);
 		expect(routing.locales).toEqual(LOCALES);
 		expect(routing.defaultLocale).toBe("fr");
@@ -112,6 +116,7 @@ describe("locale configuration", () => {
 			"de-CH": "/ch",
 			"fr-CH": "/ch-fr",
 			"it-CH": "/ch-it",
+			"et-EE": "/ee",
 		});
 		expect(LOCALE_SEGMENTS).toEqual([
 			"fr",
@@ -128,6 +133,7 @@ describe("locale configuration", () => {
 			"ch",
 			"ch-fr",
 			"ch-it",
+			"ee",
 		]);
 		expect(LOCALE_MARKETS).toEqual({
 			fr: "FR",
@@ -144,6 +150,7 @@ describe("locale configuration", () => {
 			"de-CH": "CH",
 			"fr-CH": "CH",
 			"it-CH": "CH",
+			"et-EE": "EE",
 		});
 		expect(CATALOG_LANGUAGES["de-AT"]).toBe("de");
 		expect(CATALOG_LANGUAGES["en-GB"]).toBe("en");
@@ -155,6 +162,8 @@ describe("locale configuration", () => {
 		expect(CATALOG_LANGUAGES["de-CH"]).toBe("de");
 		expect(CATALOG_LANGUAGES["fr-CH"]).toBe("fr");
 		expect(CATALOG_LANGUAGES["it-CH"]).toBe("it");
+		// Estonia: Estonian, read over the English catalog like Czech.
+		expect(CATALOG_LANGUAGES["et-EE"]).toBe("et");
 		expect(MARKET_LOCALES.CH).toBe("de-CH");
 		expect(marketLanguages("CH")).toEqual(["de-CH", "fr-CH", "it-CH"]);
 		expect(marketLanguages("IT")).toEqual(["it-IT"]);
@@ -202,6 +211,7 @@ describe("locale configuration", () => {
 			"de-CH": "de-CH",
 			"fr-CH": "fr-CH",
 			"it-CH": "it-CH",
+			"et-EE": "et-EE",
 		});
 		expect(OG_LOCALES).toEqual({
 			fr: "fr_FR",
@@ -218,6 +228,7 @@ describe("locale configuration", () => {
 			"de-CH": "de_CH",
 			"fr-CH": "fr_CH",
 			"it-CH": "it_CH",
+			"et-EE": "et_EE",
 		});
 		for (const locale of LOCALES) {
 			expect(Intl.DateTimeFormat.supportedLocalesOf([LOCALE_TAGS[locale]])).toEqual([
@@ -245,6 +256,7 @@ describe("locale configuration", () => {
 			"de-CH",
 			"fr-CH",
 			"it-CH",
+			"et-EE",
 		]);
 		expect(HREFLANGS).toEqual({
 			fr: "fr-FR",
@@ -257,6 +269,7 @@ describe("locale configuration", () => {
 			"de-CH": "de-CH",
 			"fr-CH": "fr-CH",
 			"it-CH": "it-CH",
+			"et-EE": "et-EE",
 		});
 		expect(routing.alternateLinks).toBe(false);
 		expect(robotsFor("fr", true)).toEqual({ index: true, follow: true });
@@ -273,6 +286,7 @@ describe("locale configuration", () => {
 		expect(robotsFor("de-CH", true)).toEqual({ index: true, follow: true });
 		expect(robotsFor("fr-CH", true)).toEqual({ index: true, follow: true });
 		expect(robotsFor("it-CH", true)).toEqual({ index: true, follow: true });
+		expect(robotsFor("et-EE", true)).toEqual({ index: true, follow: true });
 		for (const locale of TRANSLATIONS) {
 			expect(robotsFor(locale, true)).toEqual({ index: false, follow: true });
 		}
@@ -506,6 +520,44 @@ describe("locale configuration", () => {
 		expect(localePath("it-CH", "/confidentialite")).toBe("/ch-it/privacy");
 		// Listing slugs are the same in every language of the market.
 		expect(localePath("fr-CH", "/[specialite]", { specialite: "spital" })).toBe("/ch-fr/spital");
+		// Estonia: every first segment is reserved and never an Estonian listing slug.
+		for (const pathname of simple.filter((pathname) => !pathname.startsWith("/["))) {
+			const [first] = getPathname({ href: hrefOf(pathname) as never, locale: "et-EE" })
+				.split("/")
+				.filter(Boolean)
+				.slice(1);
+			if (!first) continue;
+			expect(EE_RESERVED_SEGMENTS as readonly string[], pathname).toContain(first);
+			expect(isEeListingSlug(first), pathname).toBe(false);
+		}
+		expect(
+			localePath("et-EE", "/praticien/[slug]", { slug: "naidise-perearstikeskus-l00009" }),
+		).toBe("/ee/asutus/naidise-perearstikeskus-l00009");
+		expect(
+			localePath("et-EE", "/praticien/[slug]/retrait", { slug: "naidise-perearstikeskus-l00009" }),
+		).toBe("/ee/asutus/naidise-perearstikeskus-l00009/eemaldamine");
+		expect(localePath("et-EE", "/etablissement/[slug]", { slug: "x-1" })).toBe(
+			"/ee/organisatsioon/x-1",
+		);
+		expect(localePath("et-EE", "/annuaire")).toBe("/ee/kataloog");
+		expect(localePath("et-EE", "/recherche")).toBe("/ee/otsing");
+		expect(localePath("et-EE", "/mentions-legales")).toBe("/ee/oigusteave");
+		expect(localePath("et-EE", "/confidentialite")).toBe("/ee/privaatsus");
+		expect(localePath("et-EE", "/conditions")).toBe("/ee/kasutustingimused");
+		expect(localePath("et-EE", "/accessibilite")).toBe("/ee/ligipaasetavus");
+		expect(localePath("et-EE", "/donnees")).toBe("/ee/andmed");
+		expect(localePath("et-EE", "/[specialite]", { specialite: "apteegid" })).toBe("/ee/apteegid");
+	});
+
+	it("translates into Estonian only segments reserved in Estonia", () => {
+		for (const estonian of Object.values(ESTONIAN_SEGMENTS)) {
+			expect(isEeListingSlug(estonian), estonian).toBe(false);
+		}
+		const firsts = Object.values(routing.pathnames)
+			.filter((entry) => typeof entry !== "string")
+			.map((entry) => entry["et-EE"].split("/")[1] ?? "")
+			.filter((first) => first && !first.startsWith("["));
+		for (const first of firsts) expect(EE_RESERVED_SEGMENTS as readonly string[]).toContain(first);
 	});
 
 	it("translates into Czech only segments reserved in Czechia", () => {
@@ -540,7 +592,7 @@ describe("locale configuration", () => {
 
 describe("the markets a search can move to", () => {
 	it("are the open markets, France first, each at its own segment", () => {
-		expect(MARKET_COUNTRIES).toEqual(["FR", "AT", "GB", "CZ", "ES", "IT", "DE", "CH"]);
+		expect(MARKET_COUNTRIES).toEqual(["FR", "AT", "GB", "CZ", "ES", "IT", "DE", "CH", "EE"]);
 		expect(MARKET_COUNTRIES.map(marketSegment)).toEqual([
 			"fr",
 			"at",
@@ -550,6 +602,7 @@ describe("the markets a search can move to", () => {
 			"it",
 			"de",
 			"ch",
+			"ee",
 		]);
 		for (const country of MARKET_COUNTRIES) {
 			expect(marketOfSegment(marketSegment(country))).toBe(country);
@@ -564,6 +617,7 @@ describe("the markets a search can move to", () => {
 		expect(marketOfSegment("fr-it")).toBeNull();
 		// The search's `pays` value of Switzerland is its own segment, whatever the language.
 		expect(marketOfSegment("ch")).toBe("CH");
+		expect(marketOfSegment("ee")).toBe("EE");
 		expect(marketOfSegment("ch-fr")).toBeNull();
 		expect(marketOfSegment(null)).toBeNull();
 	});
@@ -607,5 +661,10 @@ describe("the markets a search can move to", () => {
 		// A visitor already in the market keeps the locale.
 		expect(marketLocaleFor("FR", "it")).toBe("it");
 		expect(marketLocaleFor("CH", "it-CH")).toBe("it-CH");
+		// Estonia has one language: every visitor lands on its Estonian pages.
+		expect(marketLocaleFor("EE", "fr")).toBe("et-EE");
+		expect(marketLocaleFor("EE", "en-GB")).toBe("et-EE");
+		expect(marketLocaleFor("EE", "et-EE")).toBe("et-EE");
+		expect(marketLocaleFor("FR", "et-EE")).toBe("fr");
 	});
 });

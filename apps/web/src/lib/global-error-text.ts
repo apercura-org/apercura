@@ -66,4 +66,12 @@ export const GLOBAL_ERROR_TEXT: Record<CatalogLanguage, GlobalErrorText> = {
 		home: "Zpět na úvodní stránku",
 		reference: "Kód pro podporu: {digest}",
 	},
+	et: {
+		metaTitle: "Leht ei ole kättesaadav · Apercura",
+		title: "Seda lehte ei õnnestunud kuvada",
+		body: "Lehe ettevalmistamisel läks meie poolel midagi valesti. Proovige uuesti; kui see ikka ei õnnestu, tulge mõne minuti pärast tagasi.",
+		retry: "Proovi uuesti",
+		home: "Tagasi avalehele",
+		reference: "Viide kasutajatoe jaoks: {digest}",
+	},
 };

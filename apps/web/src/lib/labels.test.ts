@@ -24,6 +24,7 @@ const CATALOGS = {
 	"de-CH": messagesFor("de-CH"),
 	"fr-CH": messagesFor("fr-CH"),
 	"it-CH": messagesFor("it-CH"),
+	"et-EE": messagesFor("et-EE"),
 } as const;
 
 /** A label of the catalog's taxonomy, rendered like `getTaxonomyLabels` does. */
@@ -203,5 +204,20 @@ describe("Switzerland's labels", () => {
 		expect(inSentence(t("fr-CH")("profession.spital" as never), "fr-CH")).toBe("hôpital");
 		expect(t("it-CH")("listing.spital" as never)).toBe("Ospedali");
 		expect(inSentence(t("it-CH")("profession.apotheke" as never), "it-CH")).toBe("farmacia");
+	});
+});
+
+describe("Estonia's labels", () => {
+	it("name a listing in the plural and a provider's kind in the singular", () => {
+		const t = createTranslator({
+			locale: "et-EE",
+			messages: CATALOGS["et-EE"],
+			namespace: "taxonomy",
+		});
+		expect(t("listing.perearstikeskused" as never)).toBe("Perearstikeskused");
+		expect(t("listing.apteegid" as never)).toBe("Apteegid");
+		expect(t("profession.hambakliinik" as never)).toBe("Hambakliinik");
+		// Estonian writes a common noun in lower case inside a sentence.
+		expect(inSentence(t("profession.haigla" as never), "et-EE")).toBe("haigla");
 	});
 });

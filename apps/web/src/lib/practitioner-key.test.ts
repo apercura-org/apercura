@@ -227,3 +227,34 @@ describe("Swiss facility keys", () => {
 		);
 	});
 });
+
+describe("Estonian provider and pharmacy keys", () => {
+	it("read an Estonian page segment in Estonia only", () => {
+		expect(parsePractitionerKey("et-EE", "naidise-perearstikeskus-l00009")).toEqual({
+			country: "EE",
+			idScheme: "EE-TTL",
+			nationalId: "00009",
+			namePart: "naidise-perearstikeskus",
+		});
+		expect(parsePractitionerKey("et-EE", "naidisapteek-ap25")).toMatchObject({
+			idScheme: "EE-APT",
+			nationalId: "25",
+		});
+		expect(parsePractitionerKey("et-EE", "camille-exemple-19999990013")).toBeNull();
+		expect(parsePractitionerKey("et-EE", "anna-muster-w7983")).toBeNull();
+		expect(parsePractitionerKey("fr", "naidise-perearstikeskus-l00009")).toBeNull();
+		expect(marketAdapter("et-EE").features.booking).toBe(false);
+	});
+
+	it("mark an Estonian segment outside a locale, and print the licence number", () => {
+		expect(marketSegmentOf("EE", "naidisapteek-ap25")).toBe("ee.naidisapteek-ap25");
+		expect(parseAnyPractitionerKey("ee.naidisapteek-ap25")).toMatchObject({
+			country: "EE",
+			idScheme: "EE-APT",
+			nationalId: "25",
+		});
+		// A provider's identifier is its first activity licence, as the register writes it.
+		expect(displayId({ idScheme: "EE-TTL", nationalId: "01909" })).toBe("L01909");
+		expect(displayId({ idScheme: "EE-APT", nationalId: "457" })).toBe("ap457");
+	});
+});

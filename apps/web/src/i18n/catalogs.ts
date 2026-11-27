@@ -4,6 +4,8 @@ import de from "../../messages/de.json";
 import deCH from "../../messages/de-CH.json";
 // Germany's overrides of the German catalog: `de.json` is the language's, the one `/fr-de` reads.
 import deDE from "../../messages/de-DE.json";
+// Estonia's texts over the English catalog, as Czechia's (`ee.json`, named after the segment).
+import ee from "../../messages/ee.json";
 import en from "../../messages/en.json";
 import es from "../../messages/es.json";
 // Spain's overrides of the Spanish catalog: `es.json` is the language's, the one `/fr-es` reads.
@@ -57,7 +59,16 @@ export function mergeMessages(base: Tree, override: Tree): Tree {
 const CATALOGS: Record<
 	Exclude<
 		Locale,
-		"de-AT" | "en-GB" | "cs-CZ" | "es-ES" | "it-IT" | "de-DE" | "de-CH" | "fr-CH" | "it-CH"
+		| "de-AT"
+		| "en-GB"
+		| "cs-CZ"
+		| "es-ES"
+		| "it-IT"
+		| "de-DE"
+		| "de-CH"
+		| "fr-CH"
+		| "it-CH"
+		| "et-EE"
 	>,
 	unknown
 > = {
@@ -107,7 +118,10 @@ export function messagesFor(locale: Locale): Messages {
 									: locale === "de-CH" || locale === "fr-CH" || locale === "it-CH"
 										? // Switzerland: its language's catalog, with the Swiss texts on top.
 											SWISS[locale]()
-										: (mergeMessages(en, CATALOGS[locale] as Tree) as Messages);
+										: locale === "et-EE"
+											? // Estonia: the English catalog, with the Estonian texts on top.
+												(mergeMessages(en, ee as Tree) as Messages)
+											: (mergeMessages(en, CATALOGS[locale] as Tree) as Messages);
 		merged.set(locale, found);
 	}
 	return found;
@@ -130,6 +144,9 @@ export const ITALIAN_MARKET_OVERRIDES: unknown = itIT;
 
 /** Germany's overrides of the German catalog (`messages/de-DE.json`), for tests. */
 export const GERMAN_MARKET_OVERRIDES: unknown = deDE;
+/** The Estonian texts over the English catalog (`messages/ee.json`), for tests. */
+export const ESTONIAN_OVERRIDES: unknown = ee;
+
 /** Switzerland's texts over the German, French and Italian catalogs, for tests. */
 export const SWISS_MARKET_OVERRIDES: Readonly<Record<"de-CH" | "fr-CH" | "it-CH", unknown>> = {
 	"de-CH": deCH,

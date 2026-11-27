@@ -8,7 +8,10 @@ import {
 	DE_ID_SCHEMES,
 	type DeIdScheme,
 	deUrlKey,
+	EE_ID_SCHEMES,
+	type EeIdScheme,
 	ES_ID_SCHEME,
+	eeUrlKey,
 	GB_ID_SCHEMES,
 	type GbIdScheme,
 	gbUrlKey,
@@ -20,6 +23,7 @@ import {
 	parseChFacilitySegment,
 	parseCzFacilitySegment,
 	parseDeFacilitySegment,
+	parseEeFacilitySegment,
 	parseEsCentreSegment,
 	parseGbPracticeSegment,
 	parseItPlaceSegment,
@@ -111,6 +115,23 @@ function chRef(segment: string): PractitionerRef | null {
 		: null;
 }
 
+/**
+ * The prefix of an Estonian reference (`ee:l01909`, `ee:ap457`): a pharmacy's key alone would
+ * read like an Austrian list key.
+ */
+const EE_REF = "ee:";
+
+/**
+ * An Estonian provider or pharmacy from the end of a page address or slug, or from its key
+ * (`l01909`, `ap457`; the licence number as printed, `L01909`, too).
+ */
+function eeRef(segment: string): PractitionerRef | null {
+	const parsed = parseEeFacilitySegment(segment);
+	return parsed
+		? { country: "EE", idScheme: parsed.idScheme, nationalId: parsed.nationalId }
+		: null;
+}
+
 /** The first path segments of Switzerland's pages, in its three languages (`ch`, `ch-fr`, `ch-it`). */
 const CH_PATH = /^ch(?:-[a-z]{2})?$/;
 
@@ -122,11 +143,12 @@ const CH_PATH = /^ch(?:-[a-z]{2})?$/;
  * `gb:sg10002`), `cz:` and the NRPZS number in Czechia (`cz:39781`), `es:` and the REGCESS
  * centre code in Spain (`es:1328000001`), `it:` and the list letter and ministry code in Italy
  * (`it:f9000001`), `de:` and the source letters and key in Germany (`de:k0a1b2c3d4e`,
- * `de:th9001`), `ch:` and the list letters and key in Switzerland (`ch:h123456789`). A page
+ * `de:th9001`), `ch:` and the list letters and key in Switzerland (`ch:h123456789`), `ee:` and
+ * the source letters and key in Estonia (`ee:l01909`, `ee:ap457`). A page
  * address is read from its last segment, in the market its first path segment names
  * (`/gb/practice/…`, `/cz/zarizeni/…`, `/es/centro/…`, `/it/struttura/…`,
  * `/de/einrichtung/…`, `/ch/einrichtung/…`,
- * `/ch-fr/etablissement/…`, `/ch-it/struttura/…`).
+ * `/ch-fr/etablissement/…`, `/ch-it/struttura/…`, `/ee/asutus/…`).
  * Whitespace and case are forgiven. `market` is the market the reference was typed in: on a UK
  * page a bare key (`A81001`, `W91234`) is the UK's, on a Czech page a bare number (`39781`) is
  * Czechia's, on a Spanish page a ten-digit code is Spain's (as is any ten-digit code: no other
@@ -159,6 +181,9 @@ export function parsePractitionerRef(
 	if (trimmed.toLowerCase().startsWith(CH_REF)) {
 		return chRef(trimmed.slice(CH_REF.length).replace(/\s+/g, "").toLowerCase());
 	}
+	if (trimmed.toLowerCase().startsWith(EE_REF)) {
+		return eeRef(trimmed.slice(EE_REF.length).replace(/\s+/g, "").toLowerCase());
+	}
 	const parts = trimmed.split(/[?#]/)[0]?.split("/").filter(Boolean) ?? [];
 	const segment = trimmed.split(/[/?#]/).filter(Boolean).at(-1) ?? "";
 	const compact = segment.replace(/\s+/g, "").toLowerCase();
@@ -190,6 +215,11 @@ export function parsePractitionerRef(
 		const german = deRef(compact);
 		if (german) return german;
 	}
+	// A page address of Estonia (`/ee/asutus/…`), or a key typed on an Estonian page.
+	if ((path.length > 1 && path[0]?.toLowerCase() === "ee") || market === "EE") {
+		const estonian = eeRef(compact);
+		if (estonian) return estonian;
+	}
 	if (market === "CZ") {
 		const czech = czRef(compact);
 		if (czech) return czech;
@@ -216,7 +246,8 @@ export function parsePractitionerRef(
 
 /**
  * The short reference of a practitioner (`19999990013`, `w7983`, `gb:a81001`, `cz:39781`,
- * `es:1328000001`, `it:f9000001`, `de:k0a1b2c3d4e`, `ch:h123456789`), as `parsePractitionerRef` reads it.
+ * `es:1328000001`, `it:f9000001`, `de:k0a1b2c3d4e`, `ch:h123456789`, `ee:l01909`), as
+ * `parsePractitionerRef` reads it.
  */
 export function practitionerRefOf(practitioner: { idScheme: string; nationalId: string }): string {
 	if (CH_ID_SCHEMES[practitioner.idScheme as ChIdScheme]) {
@@ -226,6 +257,9 @@ export function practitionerRefOf(practitioner: { idScheme: string; nationalId: 
 	if (practitioner.idScheme === ES_ID_SCHEME) return `${ES_REF}${practitioner.nationalId}`;
 	if (IT_ID_SCHEMES[practitioner.idScheme as ItIdScheme]) {
 		return `${IT_REF}${itUrlKey(practitioner.idScheme as ItIdScheme, practitioner.nationalId)}`;
+	}
+	if (EE_ID_SCHEMES[practitioner.idScheme as EeIdScheme]) {
+		return `${EE_REF}${eeUrlKey(practitioner.idScheme as EeIdScheme, practitioner.nationalId)}`;
 	}
 	if (DE_ID_SCHEMES[practitioner.idScheme as DeIdScheme]) {
 		return `${DE_REF}${deUrlKey(practitioner.idScheme as DeIdScheme, practitioner.nationalId)}`;
@@ -243,7 +277,8 @@ export function practitionerRefOf(practitioner: { idScheme: string; nationalId: 
  * typed on a Czech page (`39781`) `cz:39781`, a code typed on a Spanish page (`1328000001`)
  * `es:1328000001`, a key typed on an Italian page (`F9000001`) `it:f9000001`, a key typed on a
  * German page (`th9001`) `de:th9001`, a key typed on a
- * Swiss page (`H123456789`) `ch:h123456789`. A value that
+ * Swiss page (`H123456789`) `ch:h123456789`, a licence number typed on an Estonian page (`L01909`)
+ * `ee:l01909`. A value that
  * names no page is kept as typed, so the service answers its own error.
  */
 export function marketRef(value: string, market: MarketCountry): string {

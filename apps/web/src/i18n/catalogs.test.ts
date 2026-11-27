@@ -2,9 +2,11 @@ import {
 	allChListingSlugs,
 	allCzListingSlugs,
 	allDeTaxonomySlugs,
+	allEeTaxonomySlugs,
 	allEsTaxonomySlugs,
 	allItListingSlugs,
 	DE_DEFAULT_PROFESSIONS,
+	EE_DEFAULT_PROFESSIONS,
 } from "@apercura/core/taxonomy";
 import {
 	isPluralElement,
@@ -20,6 +22,7 @@ import cz from "../../messages/cz.json";
 import de from "../../messages/de.json";
 import deCH from "../../messages/de-CH.json";
 import deDE from "../../messages/de-DE.json";
+import ee from "../../messages/ee.json";
 import en from "../../messages/en.json";
 import es from "../../messages/es.json";
 import esES from "../../messages/es-ES.json";
@@ -38,7 +41,7 @@ import { CATALOG_LANGUAGES, LOCALES, type Locale } from "./locales";
  * Spanish one with Spain's overrides; Italy's the Italian one with Italy's overrides; Germany's the
  * German one with Germany's overrides;
  * Switzerland's the German, French and Italian ones with the Swiss texts on top, German without
- * "ß".
+ * "ß"; Estonia's the English one with the Estonian texts on top.
  */
 const CATALOGS: Record<Locale, unknown> = {
 	fr,
@@ -75,6 +78,7 @@ const CATALOGS: Record<Locale, unknown> = {
 		mergeMessages(en, it_ as Record<string, unknown>),
 		itCH as Record<string, unknown>,
 	),
+	"et-EE": mergeMessages(en, ee as Record<string, unknown>),
 };
 
 /** Every message of a catalog by its dotted key (array items are indexed). */
@@ -308,5 +312,37 @@ describe("Switzerland's texts", () => {
 			messagesFor("it-IT").Metadata.homeTitle,
 		);
 		expect(JSON.stringify(itCH)).not.toMatch(/Ministero della Salute|Istat|provinc/i);
+	});
+});
+
+describe("the Estonian texts", () => {
+	it("only override keys of the English catalog", () => {
+		const english = flatten(en);
+		expect([...flatten(ee).keys()].filter((key) => !english.has(key))).toEqual([]);
+	});
+
+	it("name every Estonian listing and kind of provider, in every catalog and in Estonian", () => {
+		for (const catalog of [en, fr, de, es, it_, ee]) {
+			const labels = flatten(catalog);
+			for (const slug of allEeTaxonomySlugs()) {
+				expect(labels.get(`taxonomy.profession.${slug}`), slug).toBeTruthy();
+			}
+		}
+		const estonian = flatten(ee);
+		expect(estonian.get("taxonomy.listing.apteegid")).toBe("Apteegid");
+		expect(estonian.get("taxonomy.profession.perearstikeskus")).toBe("Perearstikeskus");
+	});
+
+	it("write Estonia's legal pages in Estonian and list every kind of provider", () => {
+		const estonian = flatten(messagesFor("et-EE"));
+		const english = flatten(en);
+		for (const key of ["LegalNoticeEe.title", "PrivacyEe.title", "DataEe.title"]) {
+			expect(estonian.get(key), key).toBeTruthy();
+			expect(estonian.get(key), key).not.toBe(english.get(key));
+		}
+		for (const code of EE_DEFAULT_PROFESSIONS) {
+			expect(estonian.get(`DataEe.coverage.kinds.${code}`), code).toBeTruthy();
+		}
+		expect(estonian.get("HomePage.title")).not.toBe(english.get("HomePage.title"));
 	});
 });

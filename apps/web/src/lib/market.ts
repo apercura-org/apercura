@@ -4,6 +4,7 @@ import {
 	czechia,
 	DE_PHARMACY_STATES,
 	DE_STATES,
+	estonia,
 	germany,
 	italy,
 	spain,
@@ -16,6 +17,7 @@ import {
 	CZ_PROFESSIONS,
 	DE_PHARMACY,
 	DE_PROFESSIONS,
+	EE_PROFESSIONS,
 	ES_PROFESSIONS,
 	GB_PROFESSIONS,
 	hasBillingSectors,
@@ -60,7 +62,8 @@ export function marketBooks(locale: Locale): boolean {
 /**
  * The profession slug of any market's profession code (`10` → `medecin`, `ARZT` → `aerzte`,
  * `GB_GP` → `gp-practices`, `CZ_GP` → `prakticky-lekar`, `ES_PHARMACY` → `farmacias`,
- * `IT_PHARMACY` → `farmacie`, `DE_PHARMACY` → `apotheken`, `CH_HOSPITAL` → `spital`).
+ * `IT_PHARMACY` → `farmacie`, `DE_PHARMACY` → `apotheken`, `CH_HOSPITAL` → `spital`,
+ * `EE_PHARMACY` → `apteegid`).
  */
 export function professionSlugOf(code: string): string {
 	return (
@@ -72,6 +75,7 @@ export function professionSlugOf(code: string): string {
 		IT_PROFESSIONS[code]?.slug ??
 		DE_PROFESSIONS[code]?.slug ??
 		CH_PROFESSIONS[code]?.slug ??
+		EE_PROFESSIONS[code]?.slug ??
 		""
 	);
 }
@@ -261,6 +265,28 @@ export function germanSourcesOf(
 }
 
 /**
+ * The Land and Spatial Development Board's sources that place and locate every Estonian page:
+ * the administrative and settlement units (EHAK) and the address data system's points (ADS).
+ */
+export const EE_PLACE_SOURCE_IDS: readonly string[] = ["ee-ehak", "ee-ads"];
+
+/**
+ * The sources an Estonian page is built from, with the attribution each asks for word for word:
+ * its register (the Health Board's providers, CC BY-NC-SA 3.0, or the State Agency of Medicines'
+ * pharmacies) and the Land and Spatial Development Board's places and addresses.
+ */
+export function estonianSourcesOf(
+	activitySources: readonly (string | undefined)[],
+): { name: string; attribution: string }[] {
+	const ids = new Set(activitySources.filter((source): source is string => Boolean(source)));
+	if (ids.size === 0) return [];
+	for (const id of EE_PLACE_SOURCE_IDS) ids.add(id);
+	return estonia.registries
+		.filter((registry) => ids.has(registry.id) && registry.attribution)
+		.map((registry) => ({ name: registry.name, attribution: registry.attribution ?? "" }));
+}
+
+/**
  * The places of Switzerland's pages: the Federal Statistical Office's communes, districts and
  * cantons and swisstopo's localities, credited on every Swiss page.
  */
@@ -315,7 +341,8 @@ export function swissSourcesOf(
 /**
  * The open-data sources of a page in a market whose licences require their attribution
  * (Austria's and Czechia's CC BY 4.0, the UK's OGL, Spain's Ministry of Health and IGN, Italy's
- * IODL 2.0 and CC BY 4.0, Germany's Destatis, CC BY 4.0 and dl-de/by-2-0 sources); empty for
+ * IODL 2.0 and CC BY 4.0, Germany's Destatis, CC BY 4.0 and dl-de/by-2-0 sources, Switzerland's,
+ * Estonia's CC BY-NC-SA 3.0, CC0 and Land Board sources); empty for
  * France, whose provenance line is the catalog's. `sourceDate` dates Spain's REGCESS line and
  * Italy's list.
  */
@@ -338,6 +365,7 @@ export function openDataSourcesOf(
 			: [];
 	}
 	if (country === "DE") return germanSourcesOf(activities.map((activity) => activity.source));
+	if (country === "EE") return estonianSourcesOf(activities.map((activity) => activity.source));
 	if (country === "CH") {
 		return activities.length > 0
 			? swissSourcesOf(

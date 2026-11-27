@@ -50,6 +50,7 @@ const NEW_MARKET_LOCALES = [
 	"de-CH",
 	"fr-CH",
 	"it-CH",
+	"et-EE",
 ] as const;
 
 /** The locales of the former scheme. */

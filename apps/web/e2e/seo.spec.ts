@@ -37,7 +37,8 @@ type Expected = {
 		| "de-DE"
 		| "de-CH"
 		| "fr-CH"
-		| "it-CH";
+		| "it-CH"
+		| "et-EE";
 	/** The homes (`/fr` and the international `/`) print hreflang `fr-FR` and `x-default`. */
 	hreflang?: true;
 	/**
@@ -270,6 +271,14 @@ const PAGES: Expected[] = [
 		},
 		{ robots: "index, follow", types: ["CollectionPage", "BreadcrumbList", "ItemList"] },
 	),
+	// Estonia, indexed in Estonian under its own segment.
+	{
+		path: "/ee",
+		robots: "index, follow",
+		types: ["WebPage", "WebSite", "Organization"],
+		lang: "et-EE",
+		hreflang: true,
+	},
 	// A canton without districts: its stand-in district's listing is never indexed.
 	{
 		path: "/ch/apotheke/canton-de-geneve",
@@ -370,6 +379,7 @@ const OG_LOCALES = {
 	"de-CH": "de_CH",
 	"fr-CH": "fr_CH",
 	"it-CH": "it_CH",
+	"et-EE": "et_EE",
 } as const;
 
 const FORBIDDEN_KEYS = ["aggregateRating", "review", "reviews", "ratingValue"];
@@ -484,7 +494,7 @@ for (const expected of PAGES) {
 			}));
 		if (expected.hreflang) {
 			// The homes of the open markets (Switzerland's three) and the international one.
-			expect(alternates).toHaveLength(11);
+			expect(alternates).toHaveLength(12);
 			expect(alternates).toEqual(
 				expect.arrayContaining([
 					{ rel: "alternate", hreflang: "fr-FR", href: `${origin}/fr` },
@@ -497,6 +507,7 @@ for (const expected of PAGES) {
 					{ rel: "alternate", hreflang: "de-CH", href: `${origin}/ch` },
 					{ rel: "alternate", hreflang: "fr-CH", href: `${origin}/ch-fr` },
 					{ rel: "alternate", hreflang: "it-CH", href: `${origin}/ch-it` },
+					{ rel: "alternate", hreflang: "et-EE", href: `${origin}/ee` },
 					{ rel: "alternate", hreflang: "x-default", href: origin },
 				]),
 			);
@@ -587,7 +598,9 @@ for (const expected of PAGES) {
 										? "DE"
 										: expected.path.startsWith("/ch")
 											? "CH"
-											: "FR",
+											: expected.path.startsWith("/ee")
+												? "EE"
+												: "FR",
 			);
 			expect(address?.addressLocality ?? address?.postalCode, node["@id"]).toBeTruthy();
 		}
@@ -615,7 +628,9 @@ for (const expected of PAGES) {
 													? `${origin}/ch-fr`
 													: lang === "it-CH"
 														? `${origin}/ch-it`
-														: `${origin}/fr-${lang}`;
+														: lang === "et-EE"
+															? `${origin}/ee`
+															: `${origin}/fr-${lang}`;
 			expect(items[0]?.item).toBe(home);
 			items.forEach((item, index) => {
 				expect(item.position).toBe(index + 1);
