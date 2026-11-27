@@ -29,6 +29,20 @@ describe("standoutPlace", () => {
 		expect(standoutPlace([place(5, "1206113"), powiat], "PL", "Kraków")).toBe(powiat);
 	});
 
+	it.each([
+		// The main cities production asked about (#195), with their real codes.
+		["LT", "Vilnius", "31003", ["57123"]],
+		["LT", "Šiauliai", "28338", ["88012", "94045"]],
+		["LT", "Alytus", "10278", ["33061"]],
+		["DE", "Münster", "05515000", ["03358016", "09779186"]],
+		["PL", "Olsztyn", "2862011", ["2404092"]],
+		["EE", "Maardu", "0446", ["0245"]],
+	] as const)("finds %s's %s by its level", (country, name, code, others) => {
+		const city = place(1, code);
+		const homonyms = others.map((other, index) => place(index + 2, other));
+		expect(standoutPlace([...homonyms, city], country, name)).toBe(city);
+	});
+
 	it("takes the largest of a main city's homonyms when every one carries its population", () => {
 		const large = place(2, "B", 120_000);
 		expect(standoutPlace([place(1, "A", 90_000), large], "IE", "Cork")).toBe(large);
