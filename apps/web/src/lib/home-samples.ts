@@ -349,7 +349,7 @@ const SAMPLES: Readonly<Record<Exclude<MarketCountry, "CH">, HomeSamples>> = {
 			listing: "apoteken",
 			gender: "other",
 			address: "Exempelgatan 1, 111 22 Stockholm",
-			identifier: "7359999000014",
+			identifier: "7359999900017",
 			status: "unclaimed",
 		},
 		{
@@ -365,7 +365,7 @@ const SAMPLES: Readonly<Record<Exclude<MarketCountry, "CH">, HomeSamples>> = {
 			listing: "apoteken",
 			gender: "other",
 			address: "Exempeltorget 3, 211 01 Malmö",
-			identifier: "7359999000021",
+			identifier: "7359999900024",
 			status: "claimed",
 		},
 	],

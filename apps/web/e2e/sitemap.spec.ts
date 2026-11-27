@@ -43,7 +43,7 @@ const SITEMAP_MS_PER_URL = 100;
  * under its segment (France in French, Austria in German, the UK in English, Czechia in Czech,
  * Spain in Spanish, Italy in Italian, Germany in German, Switzerland in its three, Estonia in
  * Estonian, Poland in
- * Polish, Norway in Norwegian, Ireland in English, Finland in Finnish, Lithuania in Lithuanian, Slovenia in Slovenian, Cyprus in Greek, Latvia in Latvian). Interface
+ * Polish, Norway in Norwegian, Ireland in English, Finland in Finnish, Lithuania in Lithuanian, Slovenia in Slovenian, Cyprus in Greek, Latvia in Latvian, Sweden in Swedish). Interface
  * translations (/fr-de, /fr-es…) are never listed.
  */
 const SITEMAP_GROUPS = [
@@ -67,6 +67,7 @@ const SITEMAP_GROUPS = [
 	"si",
 	"cy",
 	"lv",
+	"se",
 ] as const;
 type SitemapGroup = (typeof SITEMAP_GROUPS)[number];
 
@@ -205,6 +206,9 @@ test("the index lists valid chunks of unique URLs, each under its market's segme
 	expect(chunks).toContain(`${origin}/sitemaps/cy/praticiens-0.xml`);
 	expect(chunks).toContain(`${origin}/sitemaps/lv/pages-0.xml`);
 	expect(chunks).toContain(`${origin}/sitemaps/lv/praticiens-0.xml`);
+	// Sweden's files under /se.
+	expect(chunks).toContain(`${origin}/sitemaps/se/pages-0.xml`);
+	expect(chunks).toContain(`${origin}/sitemaps/se/praticiens-0.xml`);
 	for (const chunk of chunks) expect(sitemapGroupOf(chunk, origin), chunk).not.toBeNull();
 	for (const lastmod of indexXml.matchAll(LASTMOD)) {
 		expect(lastmod[1]).toMatch(/^\d{4}-\d{2}-\d{2}$/);
@@ -233,6 +237,10 @@ test("the index lists valid chunks of unique URLs, each under its market's segme
 	expect(urls).toContain(`${origin}/ch`);
 	expect(urls).toContain(`${origin}/ie`);
 	expect(urls).toContain(`${origin}/ie/data`);
+	expect(urls).toContain(`${origin}/se`);
+	expect(urls).toContain(`${origin}/se/data`);
+	// Gotland, a municipality that is its county, has the county's page only.
+	expect(urls).not.toContain(`${origin}/se/apoteken/gotlands-lan/gotland`);
 	expect(urls).toContain(`${origin}/ch-fr`);
 	expect(urls).toContain(`${origin}/ch-it`);
 	expect(urls).toContain(`${origin}/ee`);
