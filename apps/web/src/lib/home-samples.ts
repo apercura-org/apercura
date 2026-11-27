@@ -6,7 +6,7 @@ import { type Locale, type MarketCountry, marketOf } from "~/i18n/locales";
  * France, Austria (its doctors) and Czechia (practices under a doctor's name, a pharmacy);
  * practices, facilities, pharmacies or hospitals in the UK, Spain, Italy, Germany, Switzerland
  * and Estonia. The names and addresses say plainly that they are examples ("Exemple",
- * "Muster", "Example", "Ejemplo", "Esempio", "Příklad", "Näidis"), never a real person, practice or place
+ * "Muster", "Example", "Ejemplo", "Esempio", "Příklad", "Näidis", "Przykład"), never a real person, practice or place
  * of care; the identifiers are shaped like the market's but synthetic.
  *
  * One sample per state of a page, as the stamp prints it (DESIGN.md, "Stamp"): unclaimed
@@ -254,6 +254,33 @@ const SAMPLES: Readonly<Record<Exclude<MarketCountry, "CH">, HomeSamples>> = {
 			gender: "other",
 			address: "Näidise väljak 8, 80010 Pärnu",
 			identifier: "ap25",
+			status: "claimed",
+		},
+	],
+	// Poland: RPWDL's establishments, a primary care clinic, a dental clinic, a hospital.
+	PL: [
+		{
+			name: "Przychodnia Przykładowa",
+			listing: "przychodnie-poz",
+			gender: "other",
+			address: "ul. Przykładowa 12, 00-950 Warszawa",
+			identifier: "900001",
+			status: "unclaimed",
+		},
+		{
+			name: "Gabinet Stomatologiczny Wzorcowy",
+			listing: "stomatologia",
+			gender: "other",
+			address: "pl. Przykładowy 3, 31-001 Kraków",
+			identifier: "900002",
+			status: "verified",
+		},
+		{
+			name: "Szpital Przykładowy",
+			listing: "szpitale",
+			gender: "other",
+			address: "ul. Wzorcowa 8, 50-001 Wrocław",
+			identifier: "900003",
 			status: "claimed",
 		},
 	],

@@ -7,6 +7,9 @@ import {
 	estonia,
 	germany,
 	italy,
+	PL_OBTAINED_AT,
+	PL_PRODUCED_AT,
+	poland,
 	spain,
 	switzerland,
 	unitedKingdom,
@@ -23,6 +26,7 @@ import {
 	hasBillingSectors,
 	IT_PROFESSIONS,
 	listingHasBillingSectors,
+	PL_PROFESSIONS,
 	professionFor,
 } from "@apercura/core/taxonomy";
 import { type Locale, marketOf } from "~/i18n/locales";
@@ -76,6 +80,7 @@ export function professionSlugOf(code: string): string {
 		DE_PROFESSIONS[code]?.slug ??
 		CH_PROFESSIONS[code]?.slug ??
 		EE_PROFESSIONS[code]?.slug ??
+		PL_PROFESSIONS[code]?.slug ??
 		""
 	);
 }
@@ -338,19 +343,73 @@ export function swissSourcesOf(
 		}));
 }
 
+/** RPWDL, the register of Poland's establishments: its attribution states two dates. */
+export const RPWDL_SOURCE_ID = "pl-rpwdl";
+
+/**
+ * The attribution of a Polish source, word for word: the reuse conditions of RPWDL on dane.gov.pl
+ * ask for the source, the time the information was produced and the time it was obtained (art. 15
+ * ust. 1 pkt 1 of the open data act), so its line takes the date of the register's report the
+ * last Polish import read (`producedAt`) and the day of that import (`obtainedAt`, both
+ * `YYYY-MM-DD`), written in Polish like the rest of the line. Without a date (no import
+ * recorded) the line says the source and its licence only. TERYT's and PRG's lines name no date
+ * to fill.
+ */
+export function polishAttribution(
+	sourceId: string,
+	producedAt: string | null,
+	obtainedAt: string | null,
+): string {
+	const registry = poland.registries.find((source) => source.id === sourceId);
+	const attribution = registry?.attribution ?? "";
+	if (!attribution.includes(PL_PRODUCED_AT)) return attribution;
+	const date = (value: string) =>
+		new Intl.DateTimeFormat("pl-PL", { dateStyle: "long", timeZone: "UTC" }).format(
+			new Date(`${value.slice(0, 10)}T00:00:00Z`),
+		);
+	if (!producedAt || !obtainedAt) {
+		return attribution.replace(/ Czas wytworzenia: .*?; czas pozyskania: .*?\./, "");
+	}
+	return attribution
+		.replace(PL_PRODUCED_AT, date(producedAt))
+		.replace(PL_OBTAINED_AT, date(obtainedAt));
+}
+
+/**
+ * The sources a Polish establishment's page is built from, with the attribution each requires
+ * word for word: RPWDL (Centrum e-Zdrowia: its name, kind, cells and addresses), dated by the
+ * register's report and the import (`polishAttribution`), TERYT (GUS), whose voivodeships,
+ * powiats and gminas place it, and PRG (GUGiK), whose boundaries locate it.
+ */
+export function polishSourcesOf(
+	producedAt: string | null,
+	obtainedAt: string | null,
+): { name: string; attribution: string }[] {
+	return poland.registries
+		.filter((registry) => registry.attribution)
+		.map((registry) => ({
+			name: registry.name,
+			attribution: polishAttribution(registry.id, producedAt, obtainedAt),
+		}));
+}
+
 /**
  * The open-data sources of a page in a market whose licences require their attribution
  * (Austria's and Czechia's CC BY 4.0, the UK's OGL, Spain's Ministry of Health and IGN, Italy's
  * IODL 2.0 and CC BY 4.0, Germany's Destatis, CC BY 4.0 and dl-de/by-2-0 sources, Switzerland's,
  * Estonia's CC BY-NC-SA 3.0, CC0 and Land Board sources); empty for
- * France, whose provenance line is the catalog's. `sourceDate` dates Spain's REGCESS line and
- * Italy's list.
+ * France, whose provenance line is the catalog's. `sourceDate` dates Spain's REGCESS line,
+ * Italy's list and the obtaining of Poland's register, `producedAt` the production of Poland's.
  */
 export function openDataSourcesOf(
 	country: string,
 	activities: Parameters<typeof ukSourcesOf>[0],
 	sourceDate: string | null = null,
-	{ language = "de", sources = [] }: { language?: string; sources?: readonly string[] } = {},
+	{
+		language = "de",
+		sources = [],
+		producedAt = null,
+	}: { language?: string; sources?: readonly string[]; producedAt?: string | null } = {},
 ): { name: string; attribution: string }[] {
 	if (country === "AT") return austrianSourcesOf(activities.map((activity) => activity.source));
 	if (country === "GB") return ukSourcesOf(activities);
@@ -366,6 +425,10 @@ export function openDataSourcesOf(
 	}
 	if (country === "DE") return germanSourcesOf(activities.map((activity) => activity.source));
 	if (country === "EE") return estonianSourcesOf(activities.map((activity) => activity.source));
+	if (country === "PL") {
+		// `sourceDate` is the import's day (the time of obtaining), `producedAt` the register's report's.
+		return activities.length > 0 ? polishSourcesOf(producedAt, sourceDate) : [];
+	}
 	if (country === "CH") {
 		return activities.length > 0
 			? swissSourcesOf(

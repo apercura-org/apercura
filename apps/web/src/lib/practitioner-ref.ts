@@ -19,6 +19,7 @@ import {
 	type ItIdScheme,
 	isValidRpps,
 	itUrlKey,
+	PL_ID_SCHEME,
 	parseAtPractitionerSegment,
 	parseChFacilitySegment,
 	parseCzFacilitySegment,
@@ -27,6 +28,7 @@ import {
 	parseEsCentreSegment,
 	parseGbPracticeSegment,
 	parseItPlaceSegment,
+	parsePlFacilitySegment,
 } from "@apercura/core";
 import type { MarketCountry } from "~/i18n/locales";
 
@@ -132,6 +134,17 @@ function eeRef(segment: string): PractitionerRef | null {
 		: null;
 }
 
+/** The prefix of a Polish reference (`pl:290629`): a bare number names no market by itself. */
+const PL_REF = "pl:";
+
+/** A Polish establishment from the end of a page address or slug, or from its RPWDL number alone. */
+function plRef(segment: string): PractitionerRef | null {
+	const parsed = parsePlFacilitySegment(segment);
+	return parsed
+		? { country: "PL", idScheme: parsed.idScheme, nationalId: parsed.nationalId }
+		: null;
+}
+
 /** The first path segments of Switzerland's pages, in its three languages (`ch`, `ch-fr`, `ch-it`). */
 const CH_PATH = /^ch(?:-[a-z]{2})?$/;
 
@@ -144,17 +157,18 @@ const CH_PATH = /^ch(?:-[a-z]{2})?$/;
  * centre code in Spain (`es:1328000001`), `it:` and the list letter and ministry code in Italy
  * (`it:f9000001`), `de:` and the source letters and key in Germany (`de:k0a1b2c3d4e`,
  * `de:th9001`), `ch:` and the list letters and key in Switzerland (`ch:h123456789`), `ee:` and
- * the source letters and key in Estonia (`ee:l01909`, `ee:ap457`). A page
+ * the source letters and key in Estonia (`ee:l01909`, `ee:ap457`), `pl:` and the RPWDL
+ * establishment number in Poland (`pl:290629`). A page
  * address is read from its last segment, in the market its first path segment names
  * (`/gb/practice/…`, `/cz/zarizeni/…`, `/es/centro/…`, `/it/struttura/…`,
  * `/de/einrichtung/…`, `/ch/einrichtung/…`,
- * `/ch-fr/etablissement/…`, `/ch-it/struttura/…`, `/ee/asutus/…`).
+ * `/ch-fr/etablissement/…`, `/ch-it/struttura/…`, `/ee/asutus/…`, `/pl/placowka/…`).
  * Whitespace and case are forgiven. `market` is the market the reference was typed in: on a UK
  * page a bare key (`A81001`, `W91234`) is the UK's, on a Czech page a bare number (`39781`) is
  * Czechia's, on a Spanish page a ten-digit code is Spain's (as is any ten-digit code: no other
  * market has one), on an Italian page a list key (`f9000001`) is Italy's, on a German page a key
  * (`th9001`) is Germany's, on a Swiss page a list
- * key (`h123456789`) Switzerland's.
+ * key (`h123456789`) Switzerland's, on a Polish page a bare number (`290629`) Poland's.
  * Null for anything else.
  */
 export function parsePractitionerRef(
@@ -184,6 +198,9 @@ export function parsePractitionerRef(
 	if (trimmed.toLowerCase().startsWith(EE_REF)) {
 		return eeRef(trimmed.slice(EE_REF.length).replace(/\s+/g, "").toLowerCase());
 	}
+	if (trimmed.toLowerCase().startsWith(PL_REF)) {
+		return plRef(trimmed.slice(PL_REF.length).replace(/\s+/g, "").toLowerCase());
+	}
 	const parts = trimmed.split(/[?#]/)[0]?.split("/").filter(Boolean) ?? [];
 	const segment = trimmed.split(/[/?#]/).filter(Boolean).at(-1) ?? "";
 	const compact = segment.replace(/\s+/g, "").toLowerCase();
@@ -192,6 +209,8 @@ export function parsePractitionerRef(
 	if (path.length > 1 && path[0]?.toLowerCase() === "gb") return gbRef(compact);
 	// A page address of Czechia (`/cz/zarizeni/…`), or a number typed on a Czech page.
 	if (path.length > 1 && path[0]?.toLowerCase() === "cz") return czRef(compact);
+	// A page address of Poland (`/pl/placowka/…`).
+	if (path.length > 1 && path[0]?.toLowerCase() === "pl") return plRef(compact);
 	// A page address of Spain (`/es/centro/…`; `/es/` was France in Spanish before, whose RPPS
 	// addresses still read below), or a code typed on a Spanish page.
 	if (path.length > 1 && path[0]?.toLowerCase() === "es") {
@@ -224,6 +243,10 @@ export function parsePractitionerRef(
 		const czech = czRef(compact);
 		if (czech) return czech;
 	}
+	if (market === "PL") {
+		const polish = plRef(compact);
+		if (polish) return polish;
+	}
 	if (market === "ES" || /^\d{10}$/.test(compact)) {
 		const spanish = esRef(compact);
 		if (spanish) return spanish;
@@ -246,7 +269,7 @@ export function parsePractitionerRef(
 
 /**
  * The short reference of a practitioner (`19999990013`, `w7983`, `gb:a81001`, `cz:39781`,
- * `es:1328000001`, `it:f9000001`, `de:k0a1b2c3d4e`, `ch:h123456789`, `ee:l01909`), as
+ * `es:1328000001`, `it:f9000001`, `de:k0a1b2c3d4e`, `ch:h123456789`, `ee:l01909`, `pl:290629`), as
  * `parsePractitionerRef` reads it.
  */
 export function practitionerRefOf(practitioner: { idScheme: string; nationalId: string }): string {
@@ -254,6 +277,7 @@ export function practitionerRefOf(practitioner: { idScheme: string; nationalId: 
 		return `${CH_REF}${chUrlKey(practitioner.idScheme as ChIdScheme, practitioner.nationalId)}`;
 	}
 	if (practitioner.idScheme === CZ_ID_SCHEME) return `${CZ_REF}${practitioner.nationalId}`;
+	if (practitioner.idScheme === PL_ID_SCHEME) return `${PL_REF}${practitioner.nationalId}`;
 	if (practitioner.idScheme === ES_ID_SCHEME) return `${ES_REF}${practitioner.nationalId}`;
 	if (IT_ID_SCHEMES[practitioner.idScheme as ItIdScheme]) {
 		return `${IT_REF}${itUrlKey(practitioner.idScheme as ItIdScheme, practitioner.nationalId)}`;

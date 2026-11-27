@@ -35,6 +35,7 @@ export const SITEMAP_MARKETS = [
 	"ch-fr",
 	"ch-it",
 	"ee",
+	"pl",
 ] as const;
 export type SitemapMarket = (typeof SITEMAP_MARKETS)[number];
 
@@ -68,10 +69,11 @@ export type SitemapEntry = { path: string; lastmod: string };
 /**
  * The cities whose page is their department's (Paris, Wien, Germany's kreisfreie Städte, whose
  * Gemeinde code is their Kreis's and `000`, Estonia's towns that are a municipality, whose
- * settlement code is the municipality's) never get a URL of their own.
+ * settlement code is the municipality's, Poland's cities with powiat rights, whose powiat is
+ * numbered from 61) never get a URL of their own.
  */
 const NOT_CITY = (alias: string) =>
-	`NOT (${alias}.country = 'FR' AND ${alias}.code = '75056') AND NOT (${alias}.country = 'AT' AND ${alias}.code = '90001') AND NOT (${alias}.country = 'DE' AND ${alias}.kind = 'commune' AND ${alias}.code LIKE '_____000') AND NOT (${alias}.country = 'EE' AND ${alias}.kind = 'commune' AND ${alias}.code IN (${EE_TOWN_CODES}))`;
+	`NOT (${alias}.country = 'FR' AND ${alias}.code = '75056') AND NOT (${alias}.country = 'AT' AND ${alias}.code = '90001') AND NOT (${alias}.country = 'DE' AND ${alias}.kind = 'commune' AND ${alias}.code LIKE '_____000') AND NOT (${alias}.country = 'EE' AND ${alias}.kind = 'commune' AND ${alias}.code IN (${EE_TOWN_CODES})) AND NOT (${alias}.country = 'PL' AND ${alias}.kind = 'commune' AND substr(${alias}.code, 3, 1) IN ('6', '7', '8', '9'))`;
 
 /**
  * Non-empty chunks of every kind and market, with the latest change in each, once per language of

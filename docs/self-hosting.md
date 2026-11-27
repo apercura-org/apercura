@@ -304,6 +304,26 @@ run it with `ETL_EE_SOURCES=apteegid` (the State Agency of Medicines' pharmacies
 are CC0 1.0). Whoever imports it republishes it under CC BY-NC-SA 3.0 and keeps
 the attribution the pages print.
 
+Poland (`/pl`) has its own import, from RPWDL, the register of entities
+performing medical activity (Centrum e-Zdrowia, daily, about 34,000 healthcare
+establishments: hospitals, clinics, hospices, care homes, sanatoria,
+laboratories). Import the places first, then dry-run it once:
+
+```sh
+apercura-compose run --rm --entrypoint "apercura etl:places" etl --country pl
+apercura-compose run --rm --entrypoint "apercura etl:pl" etl --dry-run
+apercura-compose run --rm --entrypoint "apercura etl:pl" etl
+```
+
+The places are TERYT's voivodeships, powiats and gminas (GUS, a small file
+served by eTERYT's download form) with each gmina's interior point computed from
+GUGiK's State Register of Boundaries (a 380 MB archive, read once; the first
+`etl:pl` imports them too); rerun `etl:places --country pl` each January. The
+scheduler reruns the import every Tuesday at 04:30 UTC, when no other import
+runs; an unchanged export is skipped (`ETL_PL_SCHEDULE_ARGS` adds flags). One
+register: exit code `1` when it cannot be fetched or read, the pages staying as
+they are ([data-import.md](./data-import.md#poland)).
+
 ## Scheduled jobs
 
 The `scheduler` service runs [`docker/crontab`](../docker/crontab) with

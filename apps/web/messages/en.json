@@ -94,7 +94,8 @@
 			"CH": "Switzerland",
 			"ES": "Spain",
 			"DE": "Germany",
-			"EE": "Estonia"
+			"EE": "Estonia",
+			"PL": "Poland"
 		}
 	},
 	"HomePage": {
@@ -657,6 +658,12 @@
 			"hospitalKind": "Kind of hospital",
 			"services": "Services",
 			"pharmacyLicence": "Pharmacy activity licence"
+		},
+		"polish": {
+			"activityKind": "Kind of care",
+			"activity": "{code, select, 1 {Inpatient and round-the-clock hospital care} 2 {Inpatient and round-the-clock care outside hospitals} other {Outpatient care}}",
+			"cells": "Clinics, wards and units",
+			"operator": "Operated by"
 		}
 	},
 	"Institutional": {
@@ -1840,7 +1847,45 @@
 			"logopeedia": "Speech therapy practice",
 			"logopeedia-osutaja": "Speech therapy practice",
 			"apteegid": "Pharmacy",
-			"apteek": "Pharmacy"
+			"apteek": "Pharmacy",
+			"szpitale": "Hospital",
+			"hospicja": "Hospice",
+			"zaklady-opiekuncze": "Care home",
+			"sanatoria": "Sanatorium",
+			"leczenie-uzaleznien": "Addiction treatment centre",
+			"opieka-stacjonarna": "Inpatient care facility",
+			"przychodnie-poz": "Primary care clinic",
+			"nocna-pomoc-lekarska": "Night and holiday care",
+			"przychodnie-specjalistyczne": "Specialist clinic",
+			"stomatologia": "Dental clinic",
+			"rehabilitacja": "Rehabilitation and physiotherapy",
+			"pielegniarki-i-polozne": "Nurse or midwife practice",
+			"diagnostyka": "Laboratory or diagnostic centre",
+			"inne-placowki": "Outpatient establishment",
+			"poradnie-ginekologiczne": "Gynaecology clinic",
+			"poradnie-okulistyczne": "Ophthalmology clinic",
+			"poradnie-leczenia-uzaleznien": "Addiction clinic",
+			"poradnie-zdrowia-psychicznego": "Mental health clinic",
+			"poradnie-psychologiczne": "Psychology clinic",
+			"poradnie-logopedyczne": "Speech therapy clinic",
+			"poradnie-ortopedyczne": "Orthopaedics clinic",
+			"poradnie-dermatologiczne": "Dermatology clinic",
+			"poradnie-laryngologiczne": "Ear, nose and throat clinic",
+			"poradnie-kardiologiczne": "Cardiology clinic",
+			"poradnie-urologiczne": "Urology clinic",
+			"poradnie-diabetologiczne": "Diabetes clinic",
+			"poradnie-endokrynologiczne": "Endocrinology clinic",
+			"poradnie-alergologiczne": "Allergy clinic",
+			"poradnie-gastroenterologiczne": "Gastroenterology clinic",
+			"poradnie-chorob-pluc": "Lung disease clinic",
+			"poradnie-reumatologiczne": "Rheumatology clinic",
+			"poradnie-onkologiczne": "Oncology clinic",
+			"poradnie-nefrologiczne": "Nephrology clinic",
+			"poradnie-neurologiczne": "Neurology clinic",
+			"poradnie-medycyny-pracy": "Occupational medicine clinic",
+			"poradnie-chirurgiczne": "Surgery clinic",
+			"poradnie-pediatryczne": "Paediatric clinic",
+			"poradnie-chorob-wewnetrznych": "Internal medicine clinic"
 		},
 		"listing": {
 			"aerzte": "Doctors without a stated specialty",
@@ -2096,7 +2141,45 @@
 			"fusioteraapia": "Physiotherapy",
 			"psuhholoogiline-ravi": "Clinical psychology",
 			"logopeedia": "Speech therapy",
-			"apteegid": "Pharmacies"
+			"apteegid": "Pharmacies",
+			"szpitale": "Hospitals",
+			"hospicja": "Hospices",
+			"zaklady-opiekuncze": "Care and nursing homes",
+			"sanatoria": "Sanatoria and spa hospitals",
+			"leczenie-uzaleznien": "Addiction treatment centres",
+			"opieka-stacjonarna": "Other inpatient care",
+			"przychodnie-poz": "Primary care clinics (GP)",
+			"nocna-pomoc-lekarska": "Night and holiday care",
+			"przychodnie-specjalistyczne": "Specialist clinics",
+			"stomatologia": "Dental clinics",
+			"rehabilitacja": "Rehabilitation and physiotherapy",
+			"pielegniarki-i-polozne": "Nurses and midwives",
+			"diagnostyka": "Laboratories and diagnostic imaging",
+			"inne-placowki": "Other outpatient establishments",
+			"poradnie-ginekologiczne": "Gynaecology clinics",
+			"poradnie-okulistyczne": "Ophthalmology clinics",
+			"poradnie-leczenia-uzaleznien": "Addiction clinics",
+			"poradnie-zdrowia-psychicznego": "Mental health clinics",
+			"poradnie-psychologiczne": "Psychology clinics",
+			"poradnie-logopedyczne": "Speech therapy clinics",
+			"poradnie-ortopedyczne": "Orthopaedics clinics",
+			"poradnie-dermatologiczne": "Dermatology clinics",
+			"poradnie-laryngologiczne": "Ear, nose and throat clinics",
+			"poradnie-kardiologiczne": "Cardiology clinics",
+			"poradnie-urologiczne": "Urology clinics",
+			"poradnie-diabetologiczne": "Diabetes clinics",
+			"poradnie-endokrynologiczne": "Endocrinology clinics",
+			"poradnie-alergologiczne": "Allergy clinics",
+			"poradnie-gastroenterologiczne": "Gastroenterology clinics",
+			"poradnie-chorob-pluc": "Lung disease clinics",
+			"poradnie-reumatologiczne": "Rheumatology clinics",
+			"poradnie-onkologiczne": "Oncology clinics",
+			"poradnie-nefrologiczne": "Nephrology clinics",
+			"poradnie-neurologiczne": "Neurology clinics",
+			"poradnie-medycyny-pracy": "Occupational medicine clinics",
+			"poradnie-chirurgiczne": "Surgery clinics",
+			"poradnie-pediatryczne": "Paediatric clinics",
+			"poradnie-chorob-wewnetrznych": "Internal medicine clinics"
 		},
 		"practiceKind": {
 			"office": "Practice",
@@ -3122,7 +3205,8 @@
 			"GB-BSO-DENT": "BSO dental surgery",
 			"CZ-NRPZS": "NRPZS facility number",
 			"EE-TTL": "Activity licence",
-			"EE-APT": "Pharmacy place of business"
+			"EE-APT": "Pharmacy place of business",
+			"PL-RPWDL": "RPWDL establishment number (ID ZOZ)"
 		}
 	},
 	"Onboarding": {
@@ -7112,6 +7196,429 @@
 			],
 			"formTitle": "Ask for a page to be removed",
 			"formBody": "Give the address of the page and an e-mail address where we can answer you."
+		}
+	},
+	"LegalNoticePl": {
+		"metaTitle": "Legal notice (Poland) · Apercura",
+		"metaDescription": "Legal notice of the Polish pages of Apercura: the service provider, its contact details and registration, the person responsible for the content, and why the pages are not advertising (art. 5 of the Act on providing services by electronic means).",
+		"title": "Legal notice",
+		"lead": "Who provides the Polish pages of Apercura (apercura.org/pl), as article 5 of the Act of 18 July 2002 on providing services by electronic means asks of a service provider.",
+		"sections": {
+			"provider": {
+				"heading": "Service provider",
+				"body": [
+					"The Polish pages of Apercura are provided by the entity below. It runs the directory and answers for its content."
+				]
+			},
+			"service": {
+				"heading": "The service",
+				"body": [
+					"A free directory of healthcare establishments in Poland (hospitals, outpatient clinics, specialist clinics, dental clinics, hospices, care and treatment homes, sanatoria, rehabilitation centres, laboratories), built from the open data of the register of entities performing medical activity (RPWDL), without advertising, with a space where an establishment can complete its own page. No appointment is booked through Apercura in Poland. The individual and group practices of doctors, dentists, nurses and midwives are not listed."
+				]
+			},
+			"editor": {
+				"heading": "Person responsible for the content",
+				"body": [
+					"The person below is responsible for what the service provider publishes. Information an establishment adds to its own page is its own responsibility; as a service that stores information provided by its users, the provider answers for it only under the conditions of article 14 of the Act of 18 July 2002 on providing services by electronic means."
+				]
+			},
+			"liability": {
+				"heading": "Content of the pages",
+				"body": [
+					"The directory is built from the register of entities performing medical activity (Rejestr Podmiotów Wykonujących Działalność Leczniczą, RPWDL), which Centrum e-Zdrowia publishes on dane.gov.pl under CC BY 4.0. The register is public by law (article 106(1a) of the Act of 15 April 2011 on medical activity: “Rejestr jest jawny.”). It can be incomplete or out of date: check the information with the establishment before you go. Every page says how to report an error."
+				]
+			},
+			"advertising": {
+				"heading": "Information, not advertising",
+				"body": [
+					"Article 14(1) of the Act of 15 April 2011 on medical activity asks every provider of medical activity to make public the scope and kinds of the health services it provides, and says that the content and form of that information must not have the features of advertising. That duty binds the providers, about their own information.",
+					"Apercura is not a provider of medical activity and is paid by no one for a page. It publishes the same facts, from the public register, for every establishment and in the same form: name, kind, cells, address, telephone. No ranking, no rating, no review, no paid placement, no promotional wording; listings follow a neutral order. An establishment that claims its page may add factual information only (a presentation, languages, opening hours), under the same rule."
+				]
+			},
+			"ip": {
+				"heading": "Code and data",
+				"body": [
+					"The source code of Apercura is published under the AGPL-3.0 licence. The directory data is reused under the Creative Commons Attribution 4.0 International licence (CC BY 4.0): the data page lists every source with the attribution it requires, and the times of production and of obtaining of the register’s data."
+				]
+			},
+			"review": {
+				"heading": "Status of this text",
+				"body": [
+					"This text is a draft, written before the legal entity was set up. It will be reviewed by a lawyer qualified in Poland, and its Polish version by a native speaker, before the Polish pages are announced."
+				]
+			}
+		},
+		"fields": {
+			"name": "Name",
+			"legalForm": "Legal form",
+			"address": "Registered office",
+			"phone": "Phone",
+			"email": "Email address",
+			"registration": "Register and registration number",
+			"vatId": "VAT identification number",
+			"editor": "Responsible for the content"
+		},
+		"dataLink": "Data and sources"
+	},
+	"PrivacyPl": {
+		"metaTitle": "Privacy policy (Poland) · Apercura",
+		"metaDescription": "Data processed by the Polish pages of Apercura: sources, purposes, legal bases, retention, recipients and your rights, including objection (GDPR articles 13, 14 and 21).",
+		"title": "Privacy policy",
+		"lead": "What data the Polish pages of Apercura process, where it comes from, why, for how long and by whom, and how to exercise your rights under the General Data Protection Regulation (GDPR) and the Act of 10 May 2018 on personal data protection.",
+		"sections": {
+			"controller": {
+				"heading": "Who is responsible",
+				"body": [
+					"The service provider named in the legal notice is the controller of the directory, of establishment accounts, of claims and of the requests sent through the site."
+				]
+			},
+			"directory": {
+				"heading": "Directory: data about healthcare establishments",
+				"body": [
+					"Data: the name of the establishment as the register publishes it (without the name of the natural person who runs it, where the register gives that name: see below), its kind (hospital, outpatient clinic, dental clinic…), the kinds of its cells (clinics, wards, laboratories), its beds, whether its operator is public or private, the name of the operating entity when it is a company or a public body, and the address and telephone number of each of its places of care, as the register of entities performing medical activity (RPWDL) publishes them. An establishment that claims its page can add a presentation, languages, a photo and opening hours.",
+					"Never stored, although the register publishes them: the operating entity’s tax and statistical numbers (NIP, REGON), its register book number, its registered seat, its e-mail addresses and websites, and the name of an entity that is a natural person or a partnership of natural persons. A telephone number the register gives for more than three establishments is a chain’s and is not shown.",
+					"Identifier: the number the register gives each healthcare establishment (ID ZOZ), at the end of the page’s address.",
+					"Purpose: letting the public find a healthcare establishment, where it is and how to reach it. Legal basis: legitimate interests (GDPR article 6(1)(f)), assessed below.",
+					"Retention: as long as the establishment appears in the register. A page disappears after two weekly updates in which the establishment is no longer in the register; a page removed after an objection is never published again.",
+					"Information: the data does not come from the establishments themselves (GDPR article 14). Writing to each of them would involve a disproportionate effort (article 14(5)(b)); this policy, the data page and a notice on every page make the information public."
+				]
+			},
+			"people": {
+				"heading": "Establishments, and the people they may name",
+				"body": [
+					"A Polish page is a healthcare establishment (zakład leczniczy), the unit of the register, never a person’s profile. The individual and group practices of doctors, dentists, nurses and midwives (praktyki zawodowe), the register’s other part, are not listed.",
+					"Some establishments are run by a natural person carrying on a business, whose business name is their own name, or by a partnership of natural persons. Their entity’s name is never shown. When the establishment’s name repeats the name of the person who runs it, that name is taken out wherever the register allows it to be recognised; some names may still carry a person’s name as the register publishes it. A place’s telephone number may be a person’s.",
+					"Nothing else about the person is collected: no date of birth, no PESEL number, no home address, no tax number, no ratings and no reviews.",
+					"Anyone a page names or is about can object to it at any time, and the page is removed."
+				]
+			},
+			"sources": {
+				"heading": "Sources",
+				"body": [
+					"Every page is built from the RPWDL open data, which Centrum e-Zdrowia publishes on dane.gov.pl under CC BY 4.0, with the condition to state the times of production and of obtaining. The register is public by law (article 106(1a) of the Act of 15 April 2011 on medical activity). Places come from TERYT (Statistics Poland) and the State Register of Boundaries (Head Office of Geodesy and Cartography). Each source is reused with its attribution:"
+				]
+			},
+			"balancing": {
+				"heading": "Legitimate interests assessment",
+				"body": [
+					"Purpose: patients need to know which healthcare establishments are where, what care they provide and how to reach them, a need the State already meets by making the register public and publishing it as open data.",
+					"Necessity: only the register’s data about the establishment and its places of care is shown, the data the law makes public anyway, with the name of a person who runs it taken out where it can be; nothing about private life, no ratings, no reviews.",
+					"Balance: a neutral order, no advertising, the minimum of the register’s fields, an objection that hides a page at once and keeps it from coming back, corrections at the source, and pages that follow every update of the register. An entity entered in a public register expects to be found in a directory repeating that information. The case law on listing named practitioners without their consent is not settled (Supreme Administrative Court, III OSK 1052/21): for that reason practitioners’ practices are not listed at all. Weighing these points, the interests of patients prevail, and anyone a page names can object without giving a reason."
+				]
+			},
+			"accounts": {
+				"heading": "Establishment accounts and claims",
+				"body": [
+					"Data: email address, name, password (stored hashed), second authentication factor, the documents sent to claim a page (proof that the claimant runs the establishment or acts for it) and team members.",
+					"Purposes: managing the account and checking that a page is claimed by the right establishment. Legal bases: performance of the terms (article 6(1)(b)) and the legitimate interests of securing the service (article 6(1)(f)).",
+					"Retention: the account is kept until it is deleted; supporting documents, encrypted, are erased 30 days after the decision."
+				]
+			},
+			"requests": {
+				"heading": "Error reports, objections and contact requests",
+				"body": [
+					"Data: the message, the contact email address when one is given and the page concerned; for a “this is my page” request also the name and phone number. Free text is encrypted.",
+					"Purposes: correcting errors, applying objections and helping an establishment that cannot claim its page online. Legal bases: legitimate interests (article 6(1)(f)) and the right to object (article 21).",
+					"Retention: a report is deleted 6 months after it is closed, a rejected objection one year after its decision, a contact request 12 months after the last exchange. Once an objection is confirmed, or the holder of a claimed page removes it, the page and the data about it are deleted at once, the objection included; all that is kept is a record of the removal (the identifier of the page, the country, the reason, who recorded it and when), so that it is never published again."
+				]
+			},
+			"technical": {
+				"heading": "Technical data and cookies",
+				"body": [
+					"Only cookies strictly necessary to the service are set: the session of signed-in establishments and the chosen language. No advertising or audience measurement cookies, no trackers.",
+					"To limit abuse, IP addresses are transformed with a keyed function before being counted and never stored as such; establishment sessions record a truncated IP address. Views of claimed pages are counted without a cookie or identifier, and only the page’s holder sees them."
+				]
+			},
+			"recipients": {
+				"heading": "Recipients and processors",
+				"body": [
+					"Data is neither sold nor rented, and never used for advertising. Only the service provider’s team and the processors below receive it, each for its own part, under a contract that meets GDPR article 28. Maps are loaded from a tile server, which receives the visitor’s IP address like any website."
+				]
+			},
+			"transfers": {
+				"heading": "Transfers outside the European Economic Area",
+				"body": [
+					"Data is hosted in the European Economic Area. It is transferred outside it only under the safeguards of chapter V of the GDPR (an adequacy decision or standard contractual clauses). Any change of processor will be announced here before it takes effect."
+				]
+			},
+			"automated": {
+				"heading": "Automated decisions",
+				"body": [
+					"No decision about you is taken by automated means alone. A claim is decided by a person, who reads its documents."
+				]
+			},
+			"rights": {
+				"heading": "Your rights",
+				"body": [
+					"You can ask to access your data, to have it corrected or erased, to restrict its processing, to receive it in a portable format and to object to its processing. Write to the address below; you will get an answer within one month.",
+					"You can also lodge a complaint with the Polish supervisory authority, the President of the Personal Data Protection Office (Prezes Urzędu Ochrony Danych Osobowych, UODO): ul. Stanisława Moniuszki 1A, 00-014 Warszawa, uodo.gov.pl."
+				]
+			},
+			"objection": {
+				"heading": "Objecting to a page (GDPR article 21)",
+				"body": [
+					"Anyone a page names or is about can object to its publication at any time, without giving a reason. If the page is unclaimed, a form is enough: the page is hidden as soon as the request arrives, deleted after a light check, and the updates of the register never publish it again. If it is claimed, its holder removes it from their space."
+				]
+			},
+			"changes": {
+				"heading": "Updates to this policy",
+				"body": [
+					"This policy is a draft. It will be reviewed by a lawyer qualified in Poland and by the data protection officer, and its Polish version by a native speaker; every version is dated."
+				]
+			}
+		},
+		"fields": {
+			"controller": "Controller",
+			"address": "Address",
+			"email": "Contact for requests",
+			"dpo": "Data protection officer",
+			"effectiveDate": "Effective date",
+			"hostingProvider": "Hosting provider (processor)",
+			"smtp": "Email delivery (processor)"
+		},
+		"objectLink": "How to object to a page",
+		"authorityLink": "Contact the Personal Data Protection Office (UODO)"
+	},
+	"TermsPl": {
+		"metaTitle": "Terms of service (Poland) · Apercura",
+		"metaDescription": "Terms of service of the Polish pages of Apercura (article 8 of the Act on providing services by electronic means): a free, factual directory of healthcare establishments from RPWDL, without online booking.",
+		"title": "Terms of service",
+		"lead": "The terms of the service provided electronically through the Polish pages of Apercura (article 8 of the Act of 18 July 2002 on providing services by electronic means), for the public and for healthcare establishments alike.",
+		"sections": {
+			"service": {
+				"heading": "The service",
+				"body": [
+					"Apercura lists, free of charge, the healthcare establishments of the register of entities performing medical activity (RPWDL) that patients visit: hospitals, outpatient and specialist clinics, dental clinics, rehabilitation, nurses and midwives, laboratories, hospices, care and treatment homes, sanatoria and addiction treatment centres. It is a directory only: no appointment is booked through Apercura in Poland. It is provided by the service provider named in the legal notice.",
+					"The services provided electronically are: browsing and searching the directory, reporting an error, objecting to a page, asking for contact, and, for an establishment, an account to claim and complete its page. Browsing requires no account. Using the site means accepting these terms."
+				]
+			},
+			"content": {
+				"heading": "What the pages contain",
+				"body": [
+					"Pages show factual information from the public register, in a neutral order, without ratings, reviews, advertising or paid placement.",
+					"The information may be incomplete or out of date: check it with the establishment before you go. Every page says how to report an error."
+				]
+			},
+			"health": {
+				"heading": "Not medical advice",
+				"body": [
+					"Apercura gives no medical advice and is not an emergency service. In an emergency, call 112 or 999. Outside clinic hours, night and holiday care (nocna i świąteczna opieka zdrowotna) can help; the National Health Fund’s helpline is 800 190 590."
+				]
+			},
+			"practices": {
+				"heading": "For healthcare establishments",
+				"body": [
+					"Claiming a page is free. It requires a document proving that the claimant runs the establishment or acts for it, checked by a person before the page is handed over.",
+					"The holder of a page is responsible for the information they add. It must stay factual, accurate and up to date, and must not have the features of advertising (article 14 of the Act of 15 April 2011 on medical activity)."
+				]
+			},
+			"removal": {
+				"heading": "Removing a page",
+				"body": [
+					"Anyone a page names or is about can ask for it to be removed at any time: the data page explains how. A claimed page can only be removed by its holder."
+				]
+			},
+			"technical": {
+				"heading": "Technical requirements",
+				"body": [
+					"A device with an Internet connection and an up-to-date web browser is enough; JavaScript is needed for the forms and the establishment space only. An establishment account needs an e-mail address. Like any service provided over the Internet, the site carries the usual risks of the network; the provider protects it with encrypted connections and encrypts the documents and free text sent to it."
+				]
+			},
+			"unlawful": {
+				"heading": "Unlawful content",
+				"body": [
+					"Users must not provide unlawful content: false information, content that infringes the rights of others, advertising of medical activity, or malicious code. Such content is removed, and an account used for it may be closed."
+				]
+			},
+			"complaints": {
+				"heading": "Complaints",
+				"body": [
+					"A complaint about the service can be sent to the address below, saying what is wrong and how to reach you. The provider answers within 14 days."
+				]
+			},
+			"liability": {
+				"heading": "Liability",
+				"body": [
+					"The provider does its best to keep the service available and accurate, but cannot guarantee it. It is not responsible for the information establishments add to their pages. These limits will be specified during the legal review."
+				]
+			},
+			"ip": {
+				"heading": "Code and data",
+				"body": [
+					"The source code is published under the AGPL-3.0 licence. Directory data is reused under the Creative Commons Attribution 4.0 International licence (CC BY 4.0)."
+				]
+			},
+			"law": {
+				"heading": "Governing law and disputes",
+				"body": [
+					"The governing law and the competent courts will be specified during the legal review; the mandatory consumer protection rules of the country of residence always apply. In case of a dispute, first write to the contact address to look for an amicable solution."
+				]
+			}
+		},
+		"fields": {
+			"publisher": "Service provider",
+			"effectiveDate": "Effective date",
+			"contact": "Contact"
+		}
+	},
+	"AccessibilityPl": {
+		"metaTitle": "Accessibility statement (Poland) · Apercura",
+		"metaDescription": "Accessibility of the Polish pages of Apercura: the WCAG 2.2 AA target, what was checked, what remains, and how to report a problem.",
+		"title": "Accessibility statement",
+		"lead": "Apercura is designed for everyone, including older and low-vision people. This statement says where the Polish pages stand.",
+		"sections": {
+			"scope": {
+				"heading": "Scope",
+				"body": [
+					"The Act of 4 April 2019 on the digital accessibility of websites and mobile applications of public bodies binds public bodies (article 2), which Apercura is not. Its service provider nevertheless aims at the same standard on every page, WCAG 2.2 level AA, and follows the structure of the statement that article 10 of that Act asks for."
+				]
+			},
+			"status": {
+				"heading": "Where the site stands",
+				"body": [
+					"The Polish pages share the code of the other markets’ pages and their tests. The site partially meets WCAG 2.2 AA: this rests on a self-assessment and automated tests, not yet on a full audit, which is in progress."
+				]
+			},
+			"tests": {
+				"heading": "How it was assessed",
+				"list": [
+					"Automated axe-core checks (WCAG 2.0, 2.1 and 2.2 rules, levels A and AA) on every page type, at every release.",
+					"Keyboard-only journeys with a visible focus.",
+					"Body text of at least 18 px, targets of at least 44 px, nothing that relies on colour alone, no horizontal scrolling at 390 px."
+				]
+			},
+			"pending": {
+				"heading": "What remains to be checked",
+				"list": [
+					"A manual pass with the VoiceOver and NVDA screen readers, in Polish.",
+					"A full audit against WCAG 2.2 AA on a sample of pages."
+				]
+			},
+			"other": {
+				"heading": "Premises, sign language and mobile application",
+				"body": [
+					"Apercura has no premises open to the public and no mobile application. It offers no Polish Sign Language interpreter; write to the address below and you will get the information in another form."
+				]
+			},
+			"feedback": {
+				"heading": "Report a lack of accessibility",
+				"body": [
+					"If a page or a feature is hard to use, write to the address below: say which page and what blocked you. We answer within one month and, where needed, give you the information in another form."
+				]
+			}
+		},
+		"fields": {
+			"contact": "Contact",
+			"date": "Date of this statement"
+		}
+	},
+	"DataPl": {
+		"metaTitle": "Data and sources (Poland) · Apercura",
+		"metaDescription": "Where the Polish pages of Apercura come from: the register of entities performing medical activity (Centrum e-Zdrowia), TERYT (GUS) and the State Register of Boundaries (GUGiK) under CC BY 4.0, the times of production and obtaining, and how to correct or remove a page.",
+		"title": "Data and sources",
+		"lead": "Every Polish page is built from the open data of public registers. Here is where it comes from, under which licence and attribution, when it was produced and obtained, and how to correct or remove a page.",
+		"status": {
+			"heading": "Last update",
+			"body": "Centrum e-Zdrowia publishes the register every day, as it stood at midnight; the directory checks it every week and imports it when it has changed. A page changes only when its facts change in the register.",
+			"importedAt": "Obtained (last import)",
+			"producedAt": "Produced (date of the register’s report)",
+			"checkedAt": "Sources last checked",
+			"notImported": "The Polish directory has not been imported yet on this site.",
+			"notImportedValue": "Not imported yet"
+		},
+		"sources": {
+			"heading": "Sources",
+			"body": "The three sources are published under the Creative Commons Attribution 4.0 International licence (CC BY 4.0), which allows reuse, including commercial reuse, provided the source is credited. Each attribution below is printed word for word.",
+			"caption": "Data sources of the Polish directory",
+			"columns": {
+				"source": "Source",
+				"use": "Used for",
+				"licence": "Licence and attribution",
+				"frequency": "Updated"
+			},
+			"items": {
+				"pl-rpwdl": {
+					"use": "Healthcare establishments of the healthcare entities: names, kinds of activity, cells, beds, addresses, telephone numbers",
+					"frequency": "Every day, by Centrum e-Zdrowia; imported every week"
+				},
+				"pl-teryt": {
+					"use": "Voivodeships, powiats and gminas, with their official codes and names",
+					"frequency": "Every year, by Statistics Poland (GUS)"
+				},
+				"pl-prg": {
+					"use": "The boundaries of the gminas, from which each gmina’s point is computed",
+					"frequency": "Every week, by the Head Office of Geodesy and Cartography (GUGiK)"
+				},
+				"map": {
+					"name": "Map data",
+					"publisher": "OpenStreetMap contributors, tiles by OpenFreeMap",
+					"use": "Maps on the pages",
+					"frequency": "Continuously"
+				}
+			},
+			"ccBy": "CC BY 4.0",
+			"odbl": "ODbL",
+			"conditionsHeading": "Conditions of reuse of the register",
+			"conditions": "RPWDL is published on dane.gov.pl (dataset 728) with the condition, under article 15(1)(1) of the Act of 11 August 2021 on open data and the re-use of public sector information, to state the source, the time the information was produced and the time it was obtained. Every Polish page prints this line, with the dates of the import it is built from:",
+			"prgStatement": "The points of the gminas were computed from the State Register of Boundaries, material of the State Geodetic and Cartographic Resource, which the geodetic law asks to credit in every publication that uses it.",
+			"openDataAct": "The Act on open data and the re-use of public sector information"
+		},
+		"coverage": {
+			"heading": "Establishments covered",
+			"body": [
+				"Pages are generated for the healthcare establishments (zakłady lecznicze) of the healthcare entities (podmioty lecznicze) that are active on the day of the import, from the kind of activity of each establishment (hospital, other inpatient care, outpatient care) and the kinds of its active cells (part VIII of the ministry’s identification codes). A specialist clinic of one or two fields is listed under the more specific one; a clinic of three fields or more as a specialist clinic.",
+				"Left out: establishments whose cells are only school nurses, emergency medical teams, sanitary transport or blood banks; closed or suspended establishments, units and cells. Not listed at all: the individual and group practices of doctors, dentists, nurses and midwives (praktyki zawodowe), until a legal opinion on listing named practitioners (the Supreme Administrative Court’s case III OSK 1052/21), and pharmacies: the pharmacy register is open under CC BY 4.0, but it is published only as a legacy spreadsheet and names owners and managers, so it is planned for later.",
+				"An establishment run by a natural person is shown under its establishment’s name, with that person’s name taken out where the register allows it to be recognised; the entity’s own name, which is the person’s, is never shown.",
+				"Every place is located at the point of its gmina: the register publishes addresses, no coordinates, so distances are approximate and pages show no map pin."
+			],
+			"kinds": {
+				"PL_HOSPITAL": "Hospitals (kind of activity 1)",
+				"PL_HOSPICE": "Hospices, inpatient and home",
+				"PL_LONG_TERM_CARE": "Care and treatment homes, nursing and care homes",
+				"PL_SPA": "Sanatoria and spa hospitals",
+				"PL_ADDICTION": "Residential addiction treatment centres",
+				"PL_RESIDENTIAL": "Other inpatient care outside hospitals (kind of activity 2)",
+				"PL_PRIMARY_CARE": "Primary care clinics with a doctor (POZ)",
+				"PL_OUT_OF_HOURS": "Night and holiday care",
+				"PL_SPECIALIST": "Specialist clinics, listed by their field",
+				"PL_DENTAL": "Dental clinics",
+				"PL_REHABILITATION": "Rehabilitation and physiotherapy",
+				"PL_NURSING": "Primary care nurses and midwives, long-term home nursing",
+				"PL_DIAGNOSTICS": "Laboratories, collection points and imaging",
+				"PL_OTHER": "Other outpatient establishments"
+			},
+			"kindsLabel": "Imported"
+		},
+		"identifiers": {
+			"heading": "Identifiers",
+			"body": [
+				"The address of every page ends with the number the register gives the healthcare establishment (ID ZOZ), so a page can be found and checked against the register:"
+			],
+			"list": [
+				"/pl/placowka/przychodnia-przykladowa-900001: the establishment number 900001.",
+				"The operating entity’s tax and statistical numbers (NIP, REGON) are not used: for a natural person, they identify a person."
+			]
+		},
+		"correct": {
+			"heading": "Correct an error",
+			"body": [
+				"The pages repeat the register: a lasting correction is made at the source, and the page follows at the next weekly import.",
+				"For anything else, use the form: we check every report."
+			],
+			"list": [
+				"Name, address, kind of activity, cells, telephone: the entity applies to change its entry to the voivode (wojewoda) who keeps its register book, through the RPWDL system.",
+				"A correction of Apercura’s own reading (a kind or a place that looks wrong): the form below."
+			],
+			"formTitle": "Report an error",
+			"formBody": "Give the address of the page and what is wrong."
+		},
+		"remove": {
+			"heading": "Remove a page",
+			"body": [
+				"Anyone a page names or is about can object to its publication at any time, without giving a reason (GDPR article 21). An unclaimed page is hidden as soon as the request arrives and deleted after a light check; it never comes back with the updates of the register. A claimed page is removed by its holder, from their space."
+			],
+			"formTitle": "Ask for a page to be removed",
+			"formBody": "Give the address of the page and an email address where we can answer you."
 		}
 	}
 }

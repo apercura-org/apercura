@@ -12,12 +12,13 @@ Re-use of Public Sector Information Regulations 2015, or as a plain licence requ
 gives a right to re-use.
 
 Austria has its own request, prepared separately (`at.md`); the United Kingdom's, Czechia's,
-Spain's, Italy's, Germany's, Switzerland's and Estonia's candidates are in `gb.md`, `cz.md`, `es.md`,
-`it.md`, `de.md`, `ch.md` and `ee.md` (Spain opened from the register of centres, REGCESS, Italy from
-the Ministry of Health's lists of places, Germany from the statistical offices' directory of
-hospitals and the Länder's pharmacy lists, Switzerland from the FOPH's hospital figures and the
-cantons' lists, and Estonia from the Health Board's register of providers and the State Agency of
-Medicines' pharmacies; the requests below for their registers of people still stand).
+Spain's, Italy's, Germany's, Switzerland's, Estonia's and Poland's candidates are in `gb.md`, `cz.md`,
+`es.md`, `it.md`, `de.md`, `ch.md`, `ee.md` and `pl.md` (Spain opened from the register of centres,
+REGCESS, Italy from the Ministry of Health's lists of places, Germany from the statistical offices'
+directory of hospitals and the Länder's pharmacy lists, Switzerland from the FOPH's hospital
+figures and the cantons' lists, Estonia from the Health Board's register of providers and the State
+Agency of Medicines' pharmacies, and Poland from RPWDL's healthcare entities; the requests below
+for their registers of people still stand).
 
 ## Tracking
 

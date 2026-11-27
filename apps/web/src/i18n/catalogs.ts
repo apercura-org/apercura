@@ -17,6 +17,7 @@ import it from "../../messages/it.json";
 import itCH from "../../messages/it-CH.json";
 // Italy's overrides of the Italian catalog: `it.json` is the language's, the one `/fr-it` reads.
 import itIT from "../../messages/it-IT.json";
+import pl from "../../messages/pl.json";
 import type { Locale } from "./locales";
 
 /** The shape of every catalog: the English source catalog's. */
@@ -69,6 +70,7 @@ const CATALOGS: Record<
 		| "fr-CH"
 		| "it-CH"
 		| "et-EE"
+		| "pl-PL"
 	>,
 	unknown
 > = {
@@ -121,7 +123,10 @@ export function messagesFor(locale: Locale): Messages {
 										: locale === "et-EE"
 											? // Estonia: the English catalog, with the Estonian texts on top.
 												(mergeMessages(en, ee as Tree) as Messages)
-											: (mergeMessages(en, CATALOGS[locale] as Tree) as Messages);
+											: locale === "pl-PL"
+												? // Poland: the English catalog, with the Polish texts on top.
+													(mergeMessages(en, pl as Tree) as Messages)
+												: (mergeMessages(en, CATALOGS[locale] as Tree) as Messages);
 		merged.set(locale, found);
 	}
 	return found;
@@ -135,6 +140,9 @@ export const UK_OVERRIDES: unknown = gb;
 
 /** The Czech texts over the English catalog (`messages/cz.json`), for tests. */
 export const CZECH_OVERRIDES: unknown = cz;
+
+/** The Polish texts over the English catalog (`messages/pl.json`), for tests. */
+export const POLISH_OVERRIDES: unknown = pl;
 
 /** Spain's overrides of the Spanish catalog (`messages/es-ES.json`), for tests. */
 export const SPANISH_MARKET_OVERRIDES: unknown = esES;

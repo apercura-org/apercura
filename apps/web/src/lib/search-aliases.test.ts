@@ -7,6 +7,7 @@ import {
 	allEsListingSlugs,
 	allGbListingSlugs,
 	allItListingSlugs,
+	allPlListingSlugs,
 	FR_PROFESSIONS,
 	professionOfListingSlug,
 	SEARCH_ALIASES,
@@ -32,6 +33,7 @@ const MARKETS = [
 	"DE",
 	"CH",
 	"EE",
+	"PL",
 ] as const satisfies readonly MarketCountry[];
 
 /** The listings of each market (France: its imported professions only). */
@@ -48,6 +50,7 @@ const LISTED: Record<MarketCountry, (slug: string) => boolean> = {
 	DE: (slug) => allDeListingSlugs().has(slug),
 	CH: (slug) => allChListingSlugs().has(slug),
 	EE: (slug) => allEeListingSlugs().has(slug),
+	PL: (slug) => allPlListingSlugs().has(slug),
 };
 
 /** Slugs a market maps but does not list yet: France's professions not imported. */
@@ -61,6 +64,7 @@ const MAPPED: Record<MarketCountry, (slug: string) => boolean> = {
 	DE: () => false,
 	CH: () => false,
 	EE: () => false,
+	PL: () => false,
 };
 
 const listing = (slug: string): SearchTerm => ({ kind: "listing", slug });
@@ -385,6 +389,26 @@ const EVERYDAY: Record<MarketCountry, [string, SearchTerm][]> = {
 		["family doctor", listing("perearstikeskused")],
 		["hôpital", listing("haiglad")],
 		["pharmacie", listing("apteegid")],
+	],
+	PL: [
+		["szpital", listing("szpitale")],
+		["SOR", listing("szpitale")],
+		["lekarz rodzinny", listing("przychodnie-poz")],
+		["przychodnia", listing("przychodnie-poz")],
+		["POZ", listing("przychodnie-poz")],
+		["dentysta", listing("stomatologia")],
+		["stomatolog", listing("stomatologia")],
+		["ginekolog", listing("poradnie-ginekologiczne")],
+		["kardiolog", listing("poradnie-kardiologiczne")],
+		["okulista", listing("poradnie-okulistyczne")],
+		["psychiatra", listing("poradnie-zdrowia-psychicznego")],
+		["fizjoterapeuta", listing("rehabilitacja")],
+		["laboratorium", listing("diagnostyka")],
+		["hospicjum", listing("hospicja")],
+		["dentist", listing("stomatologia")],
+		["hospital", listing("szpitale")],
+		["apteka", UNLISTED],
+		["pharmacy", UNLISTED],
 	],
 };
 

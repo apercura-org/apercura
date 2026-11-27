@@ -101,6 +101,14 @@ establishment's under `/ee/organisatsioon/…`, the directory under
 `/ee/ligipaasetavus` and `/ee/andmed`. Its listing slugs are Estonian, without
 diacritics (`/ee/perearstikeskused/tartu-linn/tartu-linn`, `/ee/apteegid`).
 
+Poland (#164) is the locale `pl-PL` under `/pl`: the English paths with their
+segments in Polish (`POLISH_SEGMENTS` in `routing.ts`), an establishment's page
+under `/pl/placowka/…` (`…/zgloszenie`, `…/usuniecie`, `…/to-ja`), the directory
+under `/pl/katalog`, the search under `/pl/szukaj`, and `/pl/o-projekcie`,
+`/pl/dane`, `/pl/dostepnosc`, `/pl/prywatnosc`, `/pl/nota-prawna`,
+`/pl/regulamin`; its listing slugs are Polish (`/pl/szpitale/malopolskie`,
+`/pl/stomatologia/powiat-krakowski/skawina`), and a reference reads `pl:290629`.
+
 Each segment follows the locale's prefix: `/fr/annuaire`, `/fr-de/verzeichnis`.
 
 Only French pages are indexed in v1 (`INDEXABLE_LOCALES`): pages in the other

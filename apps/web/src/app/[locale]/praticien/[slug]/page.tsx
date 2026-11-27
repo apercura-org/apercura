@@ -6,6 +6,7 @@ import {
 	ES_OTHER_PRACTICE,
 	eeKindSlugOf,
 	esKindSlugOf,
+	PL_SPECIALIST,
 } from "@apercura/core/taxonomy";
 import {
 	ActionBlock,
@@ -346,6 +347,24 @@ export default async function PractitionerPage({ params }: Props) {
 	const swiss = payload.country === "CH";
 	const language = CATALOG_LANGUAGES[locale];
 	const swissFacts = swiss ? swissFacilityFacts(payload.qualifications, language) : null;
+	// Poland lists establishments: their kind of activity, the kinds of their cells (clinics,
+	// wards, laboratories) as the ministry's dictionary names them, their beds, their ownership and,
+	// for an operator that is not a natural person, the operating entity, from RPWDL.
+	const polish = payload.country === "PL";
+	const polishFact = (source: string) =>
+		polish ? payload.qualifications.filter((item) => item.source === source) : [];
+	const polishFacts = polish
+		? {
+				activityKind: polishFact("rodzaj")[0]?.code ?? null,
+				cells: polishFact("komorka")
+					.map((item) => item.label)
+					.filter((label): label is string => Boolean(label)),
+				beds: Number(polishFact("lozka")[0]?.label ?? 0) || null,
+				ownership: polishFact("forma")[0]?.code ?? null,
+				operator: polishFact("podmiot")[0]?.label ?? null,
+			}
+		: null;
+	const polishStatus = polish ? await getImportStatus("pl") : null;
 	const identifier = displayId(payload);
 	// Open licences (CC BY 4.0, OGL) require each source's attribution, word for word; Spain's
 	// Ministry of Health asks for the date of its data: the last Spanish import's; Italy's is cited
@@ -356,10 +375,14 @@ export default async function PractitionerPage({ params }: Props) {
 			? italianSourceDate(payload.activities[0]?.source, await getImportStatus("it"))
 			: swiss
 				? ((await getImportStatus("ch"))?.importedAt ?? page.updatedAt)
-				: null;
+				: polish
+					? (polishStatus?.importedAt ?? null)
+					: null;
 	const sources = openDataSourcesOf(payload.country, payload.activities, sourceDate, {
 		language,
 		sources: swissFacts?.sources ?? [],
+		// RPWDL is cited with the time its report was produced and the time it was obtained.
+		producedAt: polishStatus?.files.rpwdl ?? null,
 	});
 	/** A list of lowercase labels as a sentence-case value ("Acute care, psychiatry"). */
 	const listValue = (labels: string[]) => {
@@ -697,6 +720,57 @@ export default async function PractitionerPage({ params }: Props) {
 														<span lang={category.language}>{category.label}</span>
 													</span>
 												))}
+												emptyLabel={empty}
+											/>
+										) : null}
+									</>
+								) : polishFacts ? (
+									<>
+										{payload.professionCode === PL_SPECIALIST && payload.primarySpecialtyCode ? (
+											<FieldRow
+												label={tP("fields.specialty")}
+												value={listingLabel}
+												emptyLabel={empty}
+											/>
+										) : null}
+										{polishFacts.activityKind ? (
+											<FieldRow
+												label={t("polish.activityKind")}
+												value={t("polish.activity", { code: polishFacts.activityKind })}
+												emptyLabel={empty}
+											/>
+										) : null}
+										<FieldRow
+											label={t("polish.cells")}
+											value={
+												polishFacts.cells.length > 0 ? (
+													<span lang="pl">{listValue(polishFacts.cells)}</span>
+												) : null
+											}
+											emptyLabel={empty}
+										/>
+										{polishFacts.beds ? (
+											<FieldRow
+												label={t("beds")}
+												value={new Intl.NumberFormat(locale).format(polishFacts.beds)}
+												emptyLabel={empty}
+											/>
+										) : null}
+										{polishFacts.ownership ? (
+											<FieldRow
+												label={t("ownership")}
+												value={t(
+													polishFacts.ownership === "PUBLIC"
+														? "ownershipPublic"
+														: "ownershipPrivate",
+												)}
+												emptyLabel={empty}
+											/>
+										) : null}
+										{polishFacts.operator ? (
+											<FieldRow
+												label={t("polish.operator")}
+												value={<span lang="pl">{polishFacts.operator}</span>}
 												emptyLabel={empty}
 											/>
 										) : null}

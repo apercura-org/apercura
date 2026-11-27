@@ -69,7 +69,7 @@ describe("places of a market", () => {
 		expect(isDepartmentSlug("09162", "DE")).toBe(false);
 	});
 
-	it("treats Paris, Wien, Praha and Germany's kreisfreie Städte as their department's page", () => {
+	it("treats Paris, Wien, Praha, Germany's kreisfreie Städte and Poland's cities with powiat rights as their department's page", () => {
 		expect(isDepartmentCity("FR", "75056")).toBe(true);
 		expect(isDepartmentCity("AT", "90001")).toBe(true);
 		expect(isDepartmentCity("AT", "75056")).toBe(false);
@@ -82,13 +82,19 @@ describe("places of a market", () => {
 		expect(isDepartmentCity("DE", "09162")).toBe(false);
 		expect(isDepartmentCity("FR", "09162000")).toBe(false);
 		expect(NOT_DEPARTMENT_CITY("p")).toBe(
-			"NOT (p.country = 'FR' AND p.code = '75056') AND NOT (p.country = 'AT' AND p.code = '90001') AND NOT (p.country = 'CZ' AND p.code = '554782') AND NOT (p.country = 'DE' AND p.code LIKE '_____000') AND NOT (p.country = 'EE' AND p.kind = 'commune' AND p.code IN ('0296', '0424', '0446', '0511', '0663', '0736', '0897', '0919'))",
+			"NOT (p.country = 'FR' AND p.code = '75056') AND NOT (p.country = 'AT' AND p.code = '90001') AND NOT (p.country = 'CZ' AND p.code = '554782') AND NOT (p.country = 'DE' AND p.code LIKE '_____000') AND NOT (p.country = 'EE' AND p.kind = 'commune' AND p.code IN ('0296', '0424', '0446', '0511', '0663', '0736', '0897', '0919')) AND NOT (p.country = 'PL' AND p.kind = 'commune' AND substr(p.code, 3, 1) IN ('6', '7', '8', '9'))",
 		);
 		// Narva is the municipality of Narva's only settlement, which shares its code; Tartu's holds
 		// villages too.
 		expect(isDepartmentCity("EE", "0511")).toBe(true);
 		expect(isDepartmentCity("EE", "8151")).toBe(false);
 		expect(isDepartmentCity("FR", "0511")).toBe(false);
+		// A city with powiat rights is the gmina of a powiat numbered from 61: Kraków, Warszawa.
+		expect(isDepartmentCity("PL", "1261011")).toBe(true);
+		expect(isDepartmentCity("PL", "1465011")).toBe(true);
+		expect(isDepartmentCity("PL", "1206113")).toBe(false);
+		expect(isDepartmentCity("PL", "1261")).toBe(false);
+		expect(isDepartmentCity("CZ", "1261011")).toBe(false);
 	});
 
 	it("labels Austrian places without codes", () => {

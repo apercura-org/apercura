@@ -11,6 +11,7 @@ import {
 	GB_GP_PRACTICE,
 	GB_PHARMACY,
 	IT_DEFAULT_PROFESSIONS,
+	PL_DEFAULT_PROFESSIONS,
 } from "@apercura/core/taxonomy";
 import { FieldList, FieldRow, linkStyles, ProvenanceNote } from "@apercura/ui";
 import { getTranslations } from "next-intl/server";
@@ -100,6 +101,7 @@ const COUNTED: Readonly<Record<Exclude<MarketCountry, "FR" | "AT">, readonly str
 	DE: DE_DEFAULT_PROFESSIONS,
 	CH: CH_DEFAULT_PROFESSIONS,
 	EE: EE_DEFAULT_PROFESSIONS,
+	PL: PL_DEFAULT_PROFESSIONS,
 };
 
 type Figures = {

@@ -4,7 +4,8 @@
 first), Austria ([below](#austria)), the United Kingdom
 ([below](#united-kingdom)), Czechia ([below](#czechia)), Spain
 ([below](#spain)), Italy ([below](#italy)), Germany ([below](#germany)),
-Switzerland ([below](#switzerland)) and Estonia ([below](#estonia)). It is a Bun CLI that runs as a
+Switzerland ([below](#switzerland)), Estonia ([below](#estonia)) and Poland ([below](#poland)). It is a
+Bun CLI that runs as a
 scheduled task next to the app, with its own database role that cannot reach
 patient data. Each market's import writes the shared `directory` schema with
 its own `country` and never reads or writes another market's rows.
@@ -2148,3 +2149,224 @@ stored, placement and precision, read models without county listings,
 idempotence, a dry run, an older extract refused, an unreadable source left out,
 a missing address file failing the run, absences after two runs, objections, the
 breaker and `--approve`.
+
+## Poland
+
+`etl:pl` builds Poland's directory (`/pl`) from RPWDL, the register of entities
+performing medical activity (issue #164,
+[ADR 0002](./adr/0002-multi-country.md#poland-pl)). Everything above about roles,
+ownership, the outbox and `--approve` applies; this section says what differs.
+
+```sh
+bun run etl:places --country pl   # once (etl:pl does it on its first run), then yearly
+bun run etl:pl                    # weekly (the register is published daily: an unchanged export is skipped)
+bun run etl:pl --dry-run          # everything, then roll back
+bun run etl:pl --as-of 2026-11-27 # read the register for another day (default: today in Warsaw)
+bun run etl:pl --approve=<run_id> # accept what a blocked run reported
+```
+
+A Polish page is a **healthcare establishment** (zakład leczniczy) of a
+healthcare entity (podmiot leczniczy), the register's unit of care at one or more
+addresses: a hospital, a primary care or specialist clinic, a dental clinic, a
+hospice, a care home, a sanatorium, a laboratory. Its places of care are the
+distinct addresses of its active units (jednostki) and cells (komórki). The
+register's other part, the **individual and group practices** of doctors,
+dentists, nurses, midwives and physiotherapists (praktyki zawodowe), is never
+read: listing named practitioners without their consent waits for a Polish legal
+opinion (NSA III OSK 1052/21; see the ADR and ROADMAP.md).
+
+### Sources
+
+Verified on 27 November 2026 on dane.gov.pl (through its API), eTERYT and
+geoportal.gov.pl. Their attributions are printed on every page and on the data
+sources page (`/pl/dane`) and kept in `poland.registries`
+(`packages/core/src/country/pl.ts`).
+
+| Source                                                                                   | Distribution                                                                                                                                                                                                                           | Licence, format, update                                                                                                                                                                                                                                                                                    |
+| ---------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| RPWDL, healthcare entities (Centrum e-Zdrowia; dane.gov.pl dataset 728)                  | `https://api.dane.gov.pl/resources/70070/file` (a stable link to the nightly copy; Centrum e-Zdrowia serves the same ZIP at `rpwdl2.ezdrowie.gov.pl/api/rpwdl-public-resource/ledgers-zip/initial?…activityType=HEALTHCARE_PROVIDER…`) | **CC BY 4.0** with the reuse condition of art. 15 ust. 1 pkt 1 of the open data act (the source, the time of production and the time of obtaining); a ZIP of `;`-separated, quoted UTF-8 CSV files (`NULL` for empty), 35 MB (300 MB inflated); daily, "stan rejestru aktualny na 24:00 poprzedniego dnia" |
+| TERYT: TERC, the official file (Główny Urząd Statystyczny)                               | eTERYT's page of the full files, whose form serves `TERC_Urzedowy_{date}.zip` (posted back as its "Pobierz" button does: no login, no CAPTCHA)                                                                                         | public and free ("jawny… bezpłatnie wszystkim użytkownikom"), CC BY 4.0 on the GUS portal; a CSV of 4,360 rows, `STAN_NA` 2026-01-01; places import only                                                                                                                                                   |
+| PRG: administrative units (Główny Urząd Geodezji i Kartografii; dane.gov.pl dataset 726) | `https://opendata.geoportal.gov.pl/prg/granice/00_jednostki_administracyjne.zip`                                                                                                                                                       | **CC BY 4.0**, material of the State Geodetic and Cartographic Resource, free (geodetic law art. 40a ust. 2 pkt 1 lit. a), the source stated (art. 40c ust. 3); polygon shapefiles in ETRS89 degrees, 377 MB, weekly; only `A03_Granice_gmin` (2,479 gminas) is read; places import only                   |
+
+`ETL_PL_URL`, `ETL_PL_TERC_URL` and `ETL_PL_PRG_URL` override them. The export's
+`Info.txt` gives the date and time the report was generated ("Raport wygenerowany
+na podstawie danych w systemie RPWDL z dnia 2026-11-27 00:00:00"): the run records
+it as the file's date (`files.rpwdl.lastModified`, `stats.producedAt`), the time of
+production a page's attribution states, next to the time of obtaining (the day of
+the run). RPWDL also publishes the struck-off entities (`activeLedgers=false`):
+not read.
+
+### Identifiers
+
+One scheme, `PL-RPWDL`: the establishment number `ID ZOZ`, and the page URL ends
+with it (`/pl/placowka/przychodnia-przykladowa-900001`; the reference
+`pl:900001`). A site is one address of the establishment's units and cells, keyed
+by the establishment number and a hash of its TERYT, SIMC, street, building and
+flat (`290629:3f2a9c01d4`), the activity `{ID ZOZ}@{site}`. The entity's register
+book number, NIP and REGON are never used: a sole trader's identify a person.
+
+### Kinds and fields
+
+`classifyPlEstablishment` (`packages/core/src/taxonomy/pl.ts`) reads an
+establishment's kind from its kind of activity (`Rodzaj działalności`: `1`
+hospital care, `2` inpatient care outside hospitals, `3` outpatient care; a
+misprinted or empty one from the cells) and the part VIII codes of its active
+cells (the ministry's identification codes, `kodResortVIII`):
+
+- `1`: a hospital (`szpitale`), a sanatorium when its only wards are spa wards;
+- `2`: a hospice (`hospicja`), a care home (`zaklady-opiekuncze`, ZOL and ZPO), a
+  sanatorium (`sanatoria`), an addiction treatment centre (`leczenie-uzaleznien`),
+  else other inpatient care (`opieka-stacjonarna`);
+- `3`, in this order: a hospice, a primary care clinic with a doctor
+  (`przychodnie-poz`), night and holiday care (`nocna-pomoc-lekarska`), a
+  specialist clinic, a dental clinic (`stomatologia`), rehabilitation
+  (`rehabilitacja`), nurses and midwives (`pielegniarki-i-polozne`), diagnostics
+  (`diagnostyka`), else another outpatient establishment (`inne-placowki`).
+
+A specialist clinic of one or two of the 24 fields with a listing
+(`PL_SPECIALTIES`: `poradnie-kardiologiczne`, `poradnie-ginekologiczne`…) is listed
+under the most specific; a clinic of three fields or more, or of fields without a
+listing, under `przychodnie-specjalistyczne`. Left out, counted in
+`stats.sources.rpwdl.skipped`: establishments whose only cells are school nurses,
+emergency or sanitary transport teams, or blood banks; closed establishments
+(`Data zakończenia działalności` on or before `--as-of`), establishments not yet
+open, and those of a struck-off or closed entity. A unit or cell that has ended,
+or is suspended on the day, is not active. Every cell kind is stored as a
+qualification (`source = 'komorka'`, the dictionary's label), with the kind of
+activity (`rodzaj`), the beds (`lozka`), the ownership (`forma`: public for an
+SP ZOZ, a budget unit, a research institute or a company at least 51% public)
+and, for an operator that is not a natural person, the entity's name
+(`podmiot`).
+
+### Minimisation and what is left out
+
+- Read from the files: the entities' book id, legal form, name, activity dates;
+  the establishments' number, kind, name, address, phone and dates; the units'
+  and cells' address, phone, part VIII code and label, beds and dates. **Never
+  read into a row, so never stored**: the entities' NIP, REGON, register book
+  number, seat, phone, e-mail and website; every e-mail address and website; the
+  services (`swiadczenia.csv`), inspections and accreditations.
+- **Natural persons.** 11,259 entities are sole traders (forms `0700`, `0702`),
+  whose business name is their first and last name; partnerships (`08xx`–`12xx`)
+  usually name their partners. Their entity name is never stored, nor their
+  units' names. The page is named after the establishment, whose name loses the
+  person's name where the entity's name gives it (`src/sources/pl/names.ts`):
+  first names are learnt from the register itself (common among natural persons,
+  rare among companies), the surname is the word after or before one, a business
+  word (by its stem, "stomat", "med", "dent", "gabinet"…, or by how often the
+  companies use it) is never a name, initials and spaced hyphenated surnames are
+  read, and an entity named by a foreign name alone has its whole name taken out;
+  the professional titles left before it go too ("lek. stom."). A name that was
+  the person's only is replaced by the establishment's address. The rule is
+  best-effort: some names slip through (a plural family name, a surname alone,
+  "Nowak i Partnerzy"), and some brand words go with a name; the article 14
+  notice and removal on objection cover them
+  (`stats.sources.rpwdl.counters.namesStripped`, `namedByAddress`,
+  `naturalPersons`).
+- A published number is stored as the place's only when at most three
+  establishments carry it (`MAX_PHONE_ESTABLISHMENTS`): a laboratory network prints
+  its call centre's number on its collection points (`counters.sharedPhones`).
+- Quarantined lines keep their establishment number only (never a name).
+- GDPR objections: the suppressed establishments are dropped before staging, and
+  the purge of #116/#118 runs in the merge, as in the other markets.
+
+### Places and precision
+
+Places (`directory.places`, `country = 'PL'`), from TERC and PRG, imported once:
+
+- **regions**: the 16 voivodeships (`12`), named `województwo małopolskie`,
+  slugged by their adjective (`malopolskie`), with listings of their own
+  (migration `0030_pl_market`: each voivodeship has its branch of the National
+  Health Fund and its wojewoda keeps the register);
+- **departments**: the 380 powiats (`1206`), named the way people say them
+  (`powiat krakowski`), the 66 cities with powiat rights by their city (`Kraków`,
+  `1261`);
+- **communes**: the 2,479 gminas, coded by TERYT with their kind (`1206113`); a
+  rural gmina named like another gmina of its powiat reads `Bolesławiec (gmina
+  wiejska)`. A city with powiat rights is a powiat and a gmina at once
+  (`1261011`): like a kreisfreie Stadt, its city page is its powiat's (the web app
+  skips a gmina of a powiat numbered from 61). Each gmina's centre is an interior
+  point of its boundary in PRG (the centroid of its largest ring when inside the
+  gmina, holes counted: a rural gmina often surrounds its town; else the middle of
+  its widest stretch), in ETRS89 degrees.
+
+No arrondissement: a town or the rural area of an urban-rural gmina (kinds `4`,
+`5`) is read as its gmina (`3`), and a district of Warsaw (`8`) or a delegation
+of Kraków, Łódź, Poznań or Wrocław (`9`) as its city, since two thirds of the
+register's Warsaw units carry the city's code only. A site is placed (`stagePl`
+in `src/merge-pl.ts`) in the gmina of its TERYT code, else the only gmina named
+like its locality, else the powiat of its code, and located at its gmina's point
+(`geo_source = 'centroid'`, `geo_precision = 'city'`, no map pin): the register
+publishes no coordinates.
+
+### Guards
+
+Before the merge (`PL_LIMITS` in `src/guards.ts`):
+
+- the ZIP is between 1 KB and 400 MB and holds the four CSV files with the
+  register's columns; otherwise the run **fails** (one register: the pages stay);
+- at most 1% of the establishments' lines quarantined, at least 1,000 lines and
+  300 establishments imported (never approvable);
+- at most 5% more or fewer establishments and 15% more or fewer bytes than the
+  last successful run: otherwise **blocked** (approvable).
+
+After staging: less than 98% of the sites placed in a gmina (`pl.places`) blocks
+the run (approvable). After the merge, the circuit breakers and the orphan check
+apply to Poland's own pages only.
+
+### Schedule and monitoring
+
+The scheduler runs `etl:pl $ETL_PL_SCHEDULE_ARGS` every Tuesday at 04:30 UTC, when
+no other import runs (`docker/crontab`; one advisory lock for every import). Exit
+codes: 1 failed, 2 blocked. Alert on both and on the import age above 10 days (the
+export is daily, so most weeks bring a change).
+
+```sql
+-- Poland's last runs: status, the report's date, placement, minimisation and totals.
+SELECT id, status, finished_at, files -> 'rpwdl' ->> 'lastModified' AS produced,
+	stats -> 'staged' AS staged, stats -> 'sources' -> 'rpwdl' -> 'counters' AS counters,
+	stats -> 'totals' AS totals
+FROM directory.etl_runs WHERE source = 'pl' ORDER BY id DESC LIMIT 5;
+```
+
+### Measured run (export of 27 November 2026)
+
+Laptop, local PostGIS, fresh database, the real files downloaded that day (the
+run quoted in the pull request):
+
+|                 |                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Duration        | places 1 s (from the downloaded files); dry run 37 s (parse 5.7 s, read models 12 s), peak RSS 0.4 GB in the parse                                                                                                                                                                                                                                                                                                  |
+| Lines           | 37,888 establishments: 34,072 imported, 2 quarantined (no place of care); left out 3,100 closed, 75 not yet open, 2 of struck-off entities, 350 emergency or transport teams only, 260 school nurses only, 27 blood banks only                                                                                                                                                                                      |
+| Establishments  | przychodnie-poz 7,076 · stomatologia 5,521 · specialist clinics 8,775 (3,546 of many fields; e.g. ginekologiczne 642, okulistyczne 628, zdrowia psychicznego 592) · inne-placowki 5,275 · rehabilitacja 2,294 · szpitale 1,372 · diagnostyka 986 · pielegniarki-i-polozne 756 · hospicja 674 · zaklady-opiekuncze 515 · opieka-stacjonarna 297 · sanatoria 217 · nocna-pomoc-lekarska 192 · leczenie-uzaleznien 122 |
+| Natural persons | 17,681 establishments of a natural person or a partnership of them; 4,258 names without the person's, 64 named after their address                                                                                                                                                                                                                                                                                  |
+| Phones          | 57,429 sites with a number; 2,262 shared numbers left out, 610 not plausible                                                                                                                                                                                                                                                                                                                                        |
+| Sites           | 61,408, all at their gmina's point: 61,147 placed by TERYT code, 169 by locality name, 92 in their powiat only, none unplaced                                                                                                                                                                                                                                                                                       |
+| Indexable       | 34,072 establishment pages; 7,036 indexable listing pages of 20,499                                                                                                                                                                                                                                                                                                                                                 |
+| Places          | 16 voivodeships, 380 powiats, 2,479 gminas, every gmina located                                                                                                                                                                                                                                                                                                                                                     |
+
+### Local development
+
+```sh
+bun run etl:pl --source-dir packages/etl/fixtures/pl --offline --as-of 2026-11-27   # synthetic data
+bun run --cwd packages/etl fixtures:pl                                               # regenerate the fixtures
+```
+
+`packages/etl/fixtures/pl` holds a **synthetic** export in the register's exact
+format (`rpwdl.zip`: the four CSV files and `Info.txt`), a small TERC file
+(`terc.csv`: three voivodeships, five powiats, eight gminas and their parts, real
+codes and names) and a small PRG archive (`prg-jednostki-administracyjne.zip`:
+made-up square boundaries, a rural gmina surrounding its town), generated by
+`packages/etl/fixtures/generate-pl.ts`: made-up establishments and sole traders
+(establishment numbers from 900001, tax and statistical numbers from 99), made-up
+streets, seats and e-mail addresses ending in `example.invalid` (to check they are
+never stored), a laboratory sharing one number, a closed establishment and one of
+a closed entity, school nurses only, and 1,000 dental clinics above the floors.
+Never commit real rows. The anchors the end-to-end tests use: `900001` Szpital
+Przykładowy (Warszawa), `900002` a sole trader's dental clinic in Kraków (her
+name taken out), `900003` a cardiology clinic in Skawina, `900004` a primary care
+clinic at two places in Bolesławiec's two gminas, `900005` objected to in the
+integration test. `test/pl-integration.test.ts` imports them next to the Czech
+fixtures: Czechia untouched, nothing of a natural person stored, placement by
+code, voivodeship listings, idempotence, an unreadable export, absences,
+objections, the breaker and `--approve`.

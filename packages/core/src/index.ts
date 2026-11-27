@@ -23,9 +23,10 @@ export { EE_POSTCODE, formatPhoneEe, normalizeEePostcode, toE164Ee } from "./pho
 export { ES_POSTCODE, formatPhoneEs, normalizeEsPostcode, toE164Es } from "./phone-es";
 export { formatPhoneGb, GB_POSTCODE, normalizeGbPostcode, toE164Gb } from "./phone-gb";
 export { formatPhoneIt, IT_POSTCODE, normalizeItPostcode, toE164It } from "./phone-it";
+export { formatPhonePl, normalizePlPostcode, PL_POSTCODE, toE164Pl } from "./phone-pl";
 export * from "./profile";
 export { isValidRpps } from "./rpps";
-export { slugify, slugifyDe } from "./slugify";
+export { slugify, slugifyDe, slugifyPl } from "./slugify";
 export {
 	AT_ID_SCHEMES,
 	type AtIdScheme,
@@ -78,8 +79,11 @@ export {
 	isValidEsSourceId,
 	isValidGbSourceId,
 	isValidItSourceId,
+	isValidPlSourceId,
 	itPlaceSlug,
 	itUrlKey,
+	PL_ID_SCHEME,
+	type PlFacilitySegment,
 	type PractitionerSegment,
 	parseAtPractitionerSegment,
 	parseChFacilitySegment,
@@ -95,7 +99,9 @@ export {
 	parseGbPracticeSegment,
 	parseItKey,
 	parseItPlaceSegment,
+	parsePlFacilitySegment,
 	parsePractitionerSegment,
+	plFacilitySlug,
 	practitionerSlug,
 	regionSlug,
 } from "./slugs";

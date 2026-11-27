@@ -45,3 +45,11 @@ const GERMAN_LETTERS: Record<string, string> = {
 export function slugifyDe(text: string): string {
 	return slugify(text.replace(/[äÄöÖüÜßẞ]/g, (char) => GERMAN_LETTERS[char] ?? char));
 }
+
+/**
+ * {@link slugify} for Polish text: `ł` has no decomposition and would be lost, so it is written
+ * `l` first (`Łódź` -> `lodz`, `Białystok` -> `bialystok`), the way Polish URLs write it.
+ */
+export function slugifyPl(text: string): string {
+	return slugify(text.replace(/[łŁ]/g, "l"));
+}

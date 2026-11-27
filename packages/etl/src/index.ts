@@ -8,6 +8,7 @@ export const COMMANDS = [
 	"etl:de",
 	"etl:ch",
 	"etl:ee",
+	"etl:pl",
 	"etl:places",
 	"etl:outbox",
 ] as const;
@@ -48,6 +49,10 @@ Commands:
                 use only) and general pharmacies (the State Agency of Medicines' register,
                 CC0 1.0), located with the Land Board's addresses (ADS, CC0 1.0), placed in
                 EHAK's settlements, rebuild read models.
+  etl:pl        Import Polish healthcare establishments (hospitals, clinics, hospices,
+                care homes, sanatoria, laboratories…) of the healthcare entities of
+                RPWDL (Centrum e-Zdrowia; CC BY 4.0, with the times of production and
+                obtaining stated), placed in TERYT's gminas, rebuild read models.
   etl:places    Import regions, departments, communes and arrondissements
                 (geo.api.gouv.fr), or with --country at the Austrian
                 Bundesländer and Gemeinden (Statistik Austria), or with --country gb
@@ -59,7 +64,9 @@ Commands:
                 provinces and municipalities (ISTAT boundaries, CC BY 4.0), or with
                 --country de the German Länder, Kreise and Gemeinden (GV-ISys,
                 Destatis), or with --country ch the Swiss cantons, districts and
-                communes (BFS commune register, swisstopo's postcode directory), or with
+                communes (BFS commune register, swisstopo's postcode directory), or
+                with --country pl the Polish voivodeships, powiats and gminas (TERYT
+                TERC, GUS; the gminas' points from PRG's boundaries, GUGiK), or with
                 --country ee the Estonian counties, municipalities and settlements
                 (EHAK units, Maa- ja Ruumiamet). Run once, then yearly.
   etl:outbox    Send pending cache invalidations to the web app.
@@ -131,6 +138,12 @@ Flags (etl:ee):
                           As for etl:at. The ADS address file locates both: without it the
                           run fails (exit code 1).
 
+Flags (etl:pl):
+  --as-of <YYYY-MM-DD>    The day the register is read for (default: today in Warsaw).
+  --dry-run, --approve=<run_id>, --force, --source-dir <path>, --offline, --work-dir <path>
+                          As for etl:fr. One register: when it cannot be fetched or read the
+                          run fails (exit code 1).
+
 Environment:
   DATABASE_URL_ETL (or DATABASE_URL), ETL_PROFESSIONS, ETL_ANS_URLS, ETL_AMELI_URL,
   ETL_FINESS_DATASET_URL, ETL_GEO_API_URL, ETL_GEOCODER_URL, ETL_SOURCE_DIR, ETL_WORK_DIR,
@@ -150,6 +163,7 @@ Environment:
   ETL_CH_POSTCODES_URL, ETL_CH_COMMUNES_URL, ETL_CH_SOURCE_DIR,
   ETL_EE_SOURCES, ETL_EE_MEDRE_URL, ETL_EE_APTEEGID_URL, ETL_EE_ADS_URL, ETL_EE_PLACES_URL,
   ETL_EE_SOURCE_DIR,
+  ETL_PL_URL, ETL_PL_TERC_URL, ETL_PL_PRG_URL, ETL_PL_SOURCE_DIR,
   APP_URL and REVALIDATE_SECRET (cache revalidation).`;
 
 export {
@@ -163,6 +177,7 @@ export {
 	buildFrOptions,
 	buildGbOptions,
 	buildItOptions,
+	buildPlOptions,
 	type ChOptions,
 	type CzOptions,
 	type DeOptions,
@@ -171,6 +186,7 @@ export {
 	type FrOptions,
 	type GbOptions,
 	type ItOptions,
+	type PlOptions,
 	parseArgs,
 } from "./config";
 export { type AtRunOutcome, runAt } from "./run-at";
@@ -182,3 +198,4 @@ export { type EsRunOutcome, runEs } from "./run-es";
 export { type RunOutcome, runFr } from "./run-fr";
 export { type GbRunOutcome, runGb } from "./run-gb";
 export { type ItRunOutcome, runIt } from "./run-it";
+export { type PlRunOutcome, runPl } from "./run-pl";

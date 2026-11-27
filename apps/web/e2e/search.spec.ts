@@ -254,6 +254,7 @@ test.describe("the country searched", () => {
 			"Allemagne",
 			"Suisse",
 			"Estonie",
+			"Pologne",
 		]);
 		await country.selectOption({ label: "Royaume-Uni" });
 		// The places suggested are the UK's.
@@ -311,17 +312,18 @@ test.describe("a place in a country Apercura does not cover yet", () => {
 		["Allemagne", "/de"],
 		["Suisse", "/ch-fr"],
 		["Estonie", "/ee"],
+		["Pologne", "/pl"],
 	] as const;
 
-	test("“dentiste” in Warszawa says so, lists the open countries, and passes axe", async ({
+	test("“dentiste” in Budapest says so, lists the open countries, and passes axe", async ({
 		page,
 	}) => {
-		const response = await page.goto("/fr/recherche?quoi=dentiste&ou=Warszawa");
+		const response = await page.goto("/fr/recherche?quoi=dentiste&ou=Budapest");
 		// Rendered on the search page itself, not sent to another market.
 		expect(response?.status()).toBe(200);
-		await expect(page).toHaveURL(/\/fr\/recherche\?quoi=dentiste&ou=Warszawa$/);
+		await expect(page).toHaveURL(/\/fr\/recherche\?quoi=dentiste&ou=Budapest$/);
 		await expect(
-			page.getByRole("heading", { name: "Apercura ne couvre pas encore la Pologne" }),
+			page.getByRole("heading", { name: "Apercura ne couvre pas encore la Hongrie" }),
 		).toBeVisible();
 		const main = page.getByRole("main");
 		for (const [name, href] of OPEN_COUNTRIES) {
@@ -333,9 +335,9 @@ test.describe("a place in a country Apercura does not cover yet", () => {
 	});
 
 	test("a country typed in “Où ?” is named, in the visitor's language", async ({ page }) => {
-		await page.goto("/fr-en/search?quoi=dentist&ou=Pologne");
+		await page.goto("/fr-en/search?quoi=dentist&ou=Hongrie");
 		await expect(
-			page.getByRole("heading", { name: "Apercura does not cover Poland yet" }),
+			page.getByRole("heading", { name: "Apercura does not cover Hungary yet" }),
 		).toBeVisible();
 		await expect(page.getByRole("main").getByRole("link", { name: "France" })).toHaveAttribute(
 			"href",

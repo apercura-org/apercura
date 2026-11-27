@@ -57,6 +57,10 @@ const PLACES: Record<MarketCountry, PlaceSuggestion[]> = {
 		place(60, "Tartu linn", "tartu-linn", "tartu-linn", "8151"),
 		place(61, "Tallinn", "tallinn", "tallinn", "0784"),
 	],
+	PL: [
+		place(60, "Kraków", "krakow", "krakow", "1261011"),
+		place(61, "Skawina", "skawina", "powiat-krakowski", "1206113"),
+	],
 };
 
 const LANDINGS = new Set([
@@ -85,6 +89,8 @@ const LANDINGS = new Set([
 	"perearstikeskused@Tartu linn",
 	"apteegid@Tartu linn",
 	"haiglad@Tallinn",
+	"szpitale@Kraków",
+	"stomatologia@Skawina",
 ]);
 
 const HUBS = new Set(["chirurgien-dentiste:fr", "dental-practices:gb", "krankenhaeuser:de"]);
@@ -283,6 +289,13 @@ describe("a search for a place of another market", () => {
 		expect(await search("en-GB", { quoi: "Zahnarzt", ou: "Salzburg" })).toEqual(
 			listing("de-AT", "zahnaerzte", "salzburg", "salzburg"),
 		);
+		// Poland: a French or Polish word for a dentist, in a Polish gmina.
+		expect(await search("fr", { quoi: "dentiste", ou: "Skawina" })).toEqual(
+			listing("pl-PL", "stomatologia", "powiat-krakowski", "skawina"),
+		);
+		expect(await search("en-GB", { quoi: "dentysta", ou: "Skawina" })).toEqual(
+			listing("pl-PL", "stomatologia", "powiat-krakowski", "skawina"),
+		);
 	});
 
 	it("opens in the visitor's language when the market offers it", async () => {
@@ -384,15 +397,20 @@ describe("a search in the country chosen in the form", () => {
 
 describe("a search for a European place outside the open markets", () => {
 	it("stays on the page for a country not covered yet, or one of its cities", async () => {
-		expect(await search("fr", { quoi: "dentiste", ou: "Warszawa" })).toBeNull();
-		expect(await search("fr", { quoi: "dentiste", ou: "Kraków" })).toBeNull();
-		expect(await search("fr", { quoi: "dentiste", ou: "Pologne" })).toBeNull();
+		expect(await search("fr", { quoi: "dentiste", ou: "Budapest" })).toBeNull();
+		expect(await search("fr", { quoi: "dentiste", ou: "Debrecen" })).toBeNull();
+		expect(await search("fr", { quoi: "dentiste", ou: "Hongrie" })).toBeNull();
 		expect(await search("fr", { ou: "Bruxelles" })).toBeNull();
-		expect(await search("fr", { quoi: "dentiste", ou: "Wrocław" })).toBeNull();
-		expect(await search("en-GB", { quoi: "dentist", ou: "Poland" })).toBeNull();
+		expect(await search("fr", { quoi: "dentiste", ou: "Szeged" })).toBeNull();
+		expect(await search("en-GB", { quoi: "dentist", ou: "Hungary" })).toBeNull();
 		// Even when another market was chosen in the form: this page says so.
-		expect(await search("fr", { quoi: "dentiste", ou: "Warszawa" }, { chosen: "GB" })).toBeNull();
-		expect(await search("fr", { quoi: "Dupont", ou: "Pologne" }, { chosen: "CZ" })).toBeNull();
+		expect(await search("fr", { quoi: "dentiste", ou: "Budapest" }, { chosen: "GB" })).toBeNull();
+		expect(await search("fr", { quoi: "Dupont", ou: "Hongrie" }, { chosen: "CZ" })).toBeNull();
+	});
+
+	it("never says Poland is not covered: its places move the search to /pl", async () => {
+		expect(await search("fr", { quoi: "dentiste", ou: "Kraków" })).not.toBeNull();
+		expect(await search("fr", { ou: "Pologne" })).not.toBeNull();
 	});
 
 	it("never says Spain is not covered: its cities move the search to /es", async () => {
