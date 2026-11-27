@@ -213,3 +213,39 @@ describe("Switzerland's listings", () => {
 		expect(translateSearchTerm("dentiste", "FR", "CH")).toEqual({ kind: "unlisted" });
 	});
 });
+
+describe("Ireland's listings", () => {
+	it("are suggested and resolved in Ireland only, plural, singular or in Irish English", () => {
+		expect(suggestListings("pharm", "en-IE").map((entry) => entry.slug)[0]).toBe("pharmacy");
+		expect(suggestListings("nursing", "en-IE").map((entry) => entry.slug)[0]).toBe("nursing-homes");
+		expect(suggestListings("chemist", "en-IE").map((entry) => entry.slug)[0]).toBe("pharmacy");
+		expect(resolveListing("Pharmacies", "IE")).toBe("pharmacy");
+		expect(resolveListing("Pharmacy", "IE")).toBe("pharmacy");
+		expect(resolveListing("Health centre", "IE")).toBe("health-centres");
+		expect(resolveListing("Pharmacies", "GB")).toBe("pharmacies");
+		expect(suggestListings("pharm", "en-GB").map((entry) => entry.slug)).not.toContain("pharmacy");
+		// Care carried over between markets: from the UK, France, Germany, Switzerland.
+		expect(translateSearchTerm("pharmacy", "GB", "IE")).toEqual({
+			kind: "listing",
+			slug: "pharmacy",
+		});
+		expect(translateSearchTerm("pharmacie", "FR", "IE")).toEqual({
+			kind: "listing",
+			slug: "pharmacy",
+		});
+		expect(translateSearchTerm("Krankenhaus", "DE", "IE")).toEqual({
+			kind: "listing",
+			slug: "hospitals",
+		});
+		expect(translateSearchTerm("Pflegeheim", "CH", "IE")).toEqual({
+			kind: "listing",
+			slug: "nursing-homes",
+		});
+		expect(translateSearchTerm("pharmacy", "IE", "GB")).toEqual({
+			kind: "listing",
+			slug: "pharmacies",
+		});
+		expect(translateSearchTerm("dentist", "GB", "IE")).toEqual({ kind: "unlisted" });
+		expect(listingLabel("pharmacy", "en-IE")).toBe("Pharmacies");
+	});
+});

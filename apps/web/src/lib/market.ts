@@ -6,6 +6,7 @@ import {
 	DE_STATES,
 	estonia,
 	germany,
+	ireland,
 	italy,
 	norway,
 	PL_OBTAINED_AT,
@@ -25,6 +26,7 @@ import {
 	ES_PROFESSIONS,
 	GB_PROFESSIONS,
 	hasBillingSectors,
+	IE_PROFESSIONS,
 	IT_PROFESSIONS,
 	listingHasBillingSectors,
 	NO_PROFESSIONS,
@@ -69,7 +71,8 @@ export function marketBooks(locale: Locale): boolean {
  * The profession slug of any market's profession code (`10` → `medecin`, `ARZT` → `aerzte`,
  * `GB_GP` → `gp-practices`, `CZ_GP` → `prakticky-lekar`, `ES_PHARMACY` → `farmacias`,
  * `IT_PHARMACY` → `farmacie`, `DE_PHARMACY` → `apotheken`, `CH_HOSPITAL` → `spital`,
- * `EE_PHARMACY` → `apteegid`, `NO_PHARMACY` → `apotek`).
+ * `EE_PHARMACY` → `apteegid`, `NO_PHARMACY` → `apotek`,
+ * `IE_PHARMACY` → `pharmacy`).
  */
 export function professionSlugOf(code: string): string {
 	return (
@@ -84,6 +87,7 @@ export function professionSlugOf(code: string): string {
 		EE_PROFESSIONS[code]?.slug ??
 		PL_PROFESSIONS[code]?.slug ??
 		NO_PROFESSIONS[code]?.slug ??
+		IE_PROFESSIONS[code]?.slug ??
 		""
 	);
 }
@@ -419,10 +423,39 @@ export function polishSourcesOf(
 }
 
 /**
+ * The places of Ireland's pages: Tailte Éireann's counties and the CSO's towns (Census Built Up
+ * Areas), credited on every Irish page (CC BY 4.0).
+ */
+export const IE_PLACE_SOURCE_IDS: readonly string[] = ["ie-counties", "ie-towns"];
+
+/**
+ * The sources an Irish facility's page is built from, with the attribution each publisher asks
+ * for word for word: the facility's list (the PSI's register of pharmacies, HIQA's register of
+ * designated centres for older people, or the HSE's Health Atlas layer of hospitals or of health
+ * centres: the site's source is the registry's id) and the places of Tailte Éireann and the CSO.
+ */
+export function irishSourcesOf(
+	activitySources: readonly (string | undefined)[],
+): { name: string; attribution: string }[] {
+	const listed = activitySources.filter((source): source is string => Boolean(source));
+	if (listed.length === 0) return [];
+	const ids = new Set([...listed, ...IE_PLACE_SOURCE_IDS]);
+	return ireland.registries
+		.filter((registry) => ids.has(registry.id) && registry.attribution)
+		.map((registry) => ({ name: registry.name, attribution: registry.attribution ?? "" }));
+}
+
+/** The sources of the HSE's Health Atlas, a March 2020 snapshot (`IE_HSE_ATLAS_DATE`). */
+export const IE_HSE_SOURCES: ReadonlySet<string> = new Set([
+	"ie-hse-hospitals",
+	"ie-hse-health-centres",
+]);
+
+/**
  * The open-data sources of a page in a market whose licences require their attribution
  * (Austria's and Czechia's CC BY 4.0, the UK's OGL, Spain's Ministry of Health and IGN, Italy's
  * IODL 2.0 and CC BY 4.0, Germany's Destatis, CC BY 4.0 and dl-de/by-2-0 sources, Switzerland's,
- * Estonia's CC BY-NC-SA 3.0, CC0 and Land Board sources); empty for
+ * Estonia's CC BY-NC-SA 3.0, CC0 and Land Board sources, Ireland's re-use conditions and CC BY 4.0); empty for
  * France, whose provenance line is the catalog's. `sourceDate` dates Spain's REGCESS line,
  * Italy's list and the obtaining of Poland's register, `producedAt` the production of Poland's.
  */
@@ -455,6 +488,7 @@ export function openDataSourcesOf(
 		return activities.length > 0 ? polishSourcesOf(producedAt, sourceDate) : [];
 	}
 	if (country === "NO") return norwegianSourcesOf(activities.map((activity) => activity.source));
+	if (country === "IE") return irishSourcesOf(activities.map((activity) => activity.source));
 	if (country === "CH") {
 		return activities.length > 0
 			? swissSourcesOf(

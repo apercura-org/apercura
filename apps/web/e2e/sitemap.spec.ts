@@ -43,7 +43,7 @@ const SITEMAP_MS_PER_URL = 100;
  * under its segment (France in French, Austria in German, the UK in English, Czechia in Czech,
  * Spain in Spanish, Italy in Italian, Germany in German, Switzerland in its three, Estonia in
  * Estonian, Poland in
- * Polish, Norway in Norwegian). Interface
+ * Polish, Norway in Norwegian, Ireland in English). Interface
  * translations (/fr-de, /fr-es…) are never listed.
  */
 const SITEMAP_GROUPS = [
@@ -61,6 +61,7 @@ const SITEMAP_GROUPS = [
 	"ee",
 	"pl",
 	"no",
+	"ie",
 ] as const;
 type SitemapGroup = (typeof SITEMAP_GROUPS)[number];
 
@@ -188,6 +189,9 @@ test("the index lists valid chunks of unique URLs, each under its market's segme
 	expect(chunks).toContain(`${origin}/sitemaps/ee/praticiens-0.xml`);
 	expect(chunks).toContain(`${origin}/sitemaps/no/pages-0.xml`);
 	expect(chunks).toContain(`${origin}/sitemaps/no/praticiens-0.xml`);
+	// Ireland's files under /ie.
+	expect(chunks).toContain(`${origin}/sitemaps/ie/pages-0.xml`);
+	expect(chunks).toContain(`${origin}/sitemaps/ie/praticiens-0.xml`);
 	for (const chunk of chunks) expect(sitemapGroupOf(chunk, origin), chunk).not.toBeNull();
 	for (const lastmod of indexXml.matchAll(LASTMOD)) {
 		expect(lastmod[1]).toMatch(/^\d{4}-\d{2}-\d{2}$/);
@@ -211,6 +215,8 @@ test("the index lists valid chunks of unique URLs, each under its market's segme
 	// A kreisfreie Stadt's city page is its Kreis's: never a URL of its own.
 	expect(urls).not.toContain(`${origin}/de/krankenhaeuser/potsdam/potsdam`);
 	expect(urls).toContain(`${origin}/ch`);
+	expect(urls).toContain(`${origin}/ie`);
+	expect(urls).toContain(`${origin}/ie/data`);
 	expect(urls).toContain(`${origin}/ch-fr`);
 	expect(urls).toContain(`${origin}/ch-it`);
 	expect(urls).toContain(`${origin}/ee`);

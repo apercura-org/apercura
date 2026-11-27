@@ -287,3 +287,41 @@ describe("Norwegian establishment keys", () => {
 		expect(displayId({ idScheme: "NO-ORGNR", nationalId: "910000039" })).toBe("910 000 039");
 	});
 });
+
+describe("Irish facility keys", () => {
+	it("read a facility page segment of each Irish list, in Ireland only", () => {
+		expect(parsePractitionerKey("en-IE", "example-pharmacy-p1234")).toEqual({
+			country: "IE",
+			idScheme: "IE-PSI",
+			nationalId: "1234",
+			namePart: "example-pharmacy",
+		});
+		expect(parsePractitionerKey("en-IE", "example-nursing-home-n738")?.idScheme).toBe("IE-HIQA");
+		expect(parsePractitionerKey("en-IE", "example-hospital-h123456789")?.idScheme).toBe(
+			"IE-HSE-HOSP",
+		);
+		expect(parsePractitionerKey("en-IE", "example-health-centre-c123456789")?.idScheme).toBe(
+			"IE-HSE-HC",
+		);
+		expect(parsePractitionerKey("en-IE", "camille-exemple-19999990013")).toBeNull();
+		expect(parsePractitionerKey("en-IE", "example-surgery-a81001")).toBeNull();
+		// Other markets never read an Irish key as Ireland's.
+		expect(parsePractitionerKey("en-GB", "example-pharmacy-p1234")?.country).not.toBe("IE");
+		expect(parsePractitionerKey("de-CH", "example-hospital-h123456789")?.country).toBe("CH");
+		expect(marketAdapter("en-IE").features.booking).toBe(false);
+	});
+
+	it("mark an Irish segment outside a locale, and print the page's key", () => {
+		expect(marketSegmentOf("IE", "example-hospital-h123456789")).toBe(
+			"ie.example-hospital-h123456789",
+		);
+		expect(parseAnyPractitionerKey("ie.example-hospital-h123456789")).toMatchObject({
+			country: "IE",
+			idScheme: "IE-HSE-HOSP",
+			nationalId: "123456789",
+		});
+		expect(displayId({ idScheme: "IE-PSI", nationalId: "1234" })).toBe("p1234");
+		expect(displayId({ idScheme: "IE-HIQA", nationalId: "738" })).toBe("n738");
+		expect(displayId({ idScheme: "IE-HSE-HC", nationalId: "123456789" })).toBe("c123456789");
+	});
+});

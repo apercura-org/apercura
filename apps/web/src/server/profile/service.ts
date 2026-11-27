@@ -6,6 +6,7 @@ import {
 	normalizeCzPostcode,
 	normalizeDePostcode,
 	normalizeEePostcode,
+	normalizeEircode,
 	normalizeEsPostcode,
 	normalizeGbPostcode,
 	normalizeNoPostcode,
@@ -230,7 +231,8 @@ export async function setSiteHidden(
  * a homonym in the province of the page's own place first; Germany by the Gemeinde's name, the one
  * whose postcodes hold the postcode first; Switzerland, whose communes carry
  * swisstopo's postcodes, like France: the commune of the postcode, the one named first; Poland
- * by the gmina's name, a homonym in the page's own powiat first.
+ * by the gmina's name, a homonym in the page's own powiat first; Ireland, like the
+ * UK, by the town's name (an Eircode is printed, never used to place).
  */
 export async function addOwnerSite(db: Database, practitionerId: number, input: OwnerSiteData) {
 	return db.transaction(async (tx) => {
@@ -259,7 +261,9 @@ export async function addOwnerSite(db: Database, practitionerId: number, input: 
 										? (normalizePlPostcode(input.postcode) ?? input.postcode)
 										: country === "NO"
 											? (normalizeNoPostcode(input.postcode) ?? input.postcode)
-											: input.postcode;
+											: country === "IE"
+												? (normalizeEircode(input.postcode) ?? input.postcode)
+												: input.postcode;
 		if (!adapter.address.postcode.test(postcode)) throw new ProfileError("UNKNOWN_PLACE");
 		const district = country === "AT" ? /^1(\d{2})0$/.exec(postcode)?.[1] : undefined;
 		const [place] =
@@ -365,11 +369,12 @@ export async function addOwnerSite(db: Database, practitionerId: number, input: 
 						p.kind = 'arrondissement' DESC, p.id
 					LIMIT 1
 				`)
-										: country === "GB"
-											? // The UK's towns carry no postcodes either: the town by its name.
+										: country === "GB" || country === "IE"
+											? // The UK's and Ireland's towns carry no postcodes either (an Eircode never
+												// places anything): the town by its name.
 												await tx.execute<{ id: number }>(sql`
 					SELECT p.id FROM directory.places p
-					WHERE p.country = 'GB' AND p.kind = 'commune' AND p.removed_at IS NULL
+					WHERE p.country = ${country} AND p.kind = 'commune' AND p.removed_at IS NULL
 						AND similarity(directory.text_norm(p.name), directory.text_norm(${input.city})) > 0.5
 					ORDER BY (directory.text_norm(p.name) = directory.text_norm(${input.city})) DESC,
 						similarity(directory.text_norm(p.name), directory.text_norm(${input.city})) DESC,

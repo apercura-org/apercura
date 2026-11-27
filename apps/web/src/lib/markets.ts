@@ -28,6 +28,7 @@ export const MARKETS: readonly Market[] = [
 	{ country: "EE", status: "open", locale: MARKET_LOCALES.EE },
 	{ country: "PL", status: "open", locale: MARKET_LOCALES.PL },
 	{ country: "NO", status: "open", locale: MARKET_LOCALES.NO },
+	{ country: "IE", status: "open", locale: MARKET_LOCALES.IE },
 	{ country: "BE", status: "planned" },
 ];
 
@@ -37,7 +38,8 @@ export const MARKETS: readonly Market[] = [
  * Health's pharmacies and hospitals), Germany (hospitals, clinics and pharmacies), Switzerland
  * (hospitals, homes, pharmacies) and Poland (RPWDL's establishments), Switzerland
  * (hospitals, nursing homes and pharmacies) and Estonia (healthcare providers holding an activity
- * licence, and pharmacies). Their page names a place of care, without a
+ * licence, and pharmacies) and Ireland (pharmacies, nursing homes, hospitals and health
+ * centres). Their page names a place of care, without a
  * person's name split into first and last names, a gender or a kind of practice to tell apart.
  */
 export const PRACTICE_MARKETS: ReadonlySet<string> = new Set([
@@ -50,6 +52,7 @@ export const PRACTICE_MARKETS: ReadonlySet<string> = new Set([
 	"EE",
 	"PL",
 	"NO",
+	"IE",
 ]);
 
 /** True when the market's pages are practices or facilities (`PRACTICE_MARKETS`). */

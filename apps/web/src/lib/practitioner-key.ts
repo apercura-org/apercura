@@ -14,6 +14,9 @@ import {
 	GB_ID_SCHEMES,
 	type GbIdScheme,
 	gbUrlKey,
+	IE_ID_SCHEMES,
+	type IeIdScheme,
+	ieUrlKey,
 	NO_ID_SCHEMES,
 	type NoIdScheme,
 	noOrgNumber,
@@ -24,6 +27,7 @@ import {
 	parseEeFacilitySegment,
 	parseEsCentreSegment,
 	parseGbPracticeSegment,
+	parseIeFacilitySegment,
 	parseItPlaceSegment,
 	parseNoFacilitySegment,
 	parsePlFacilitySegment,
@@ -54,7 +58,8 @@ export type PractitionerKey = {
  * (`kantonsspital-beispiel-h123456789`, in each of its three languages), `{name}-{source}{key}`
  * in Estonia (`perearstikeskus-naide-l01909`, `naidisapteek-ap457`), `{name}-{number}` in
  * Poland (`przychodnia-przykladowa-290629`, the RPWDL establishment number), `{name}-{orgnr}` in Norway
- * (`eksempel-legesenter-910000039`, the establishment's organisation number). Null for anything else,
+ * (`eksempel-legesenter-910000039`, the establishment's organisation number), `{name}-{list}{key}` in Ireland (`example-pharmacy-p10000612`,
+ * `example-hospital-h123456789`). Null for anything else,
  * so malformed or other-market URLs never reach the database.
  */
 export function parsePractitionerKey(locale: Locale, segment: string): PractitionerKey | null {
@@ -89,6 +94,10 @@ export function parsePractitionerKey(locale: Locale, segment: string): Practitio
 	}
 	if (country === "NO") {
 		const parsed = parseNoFacilitySegment(segment);
+		return parsed ? { country, ...parsed } : null;
+	}
+	if (country === "IE") {
+		const parsed = parseIeFacilitySegment(segment);
 		return parsed ? { country, ...parsed } : null;
 	}
 	if (country === "GB") {
@@ -156,6 +165,12 @@ export const PL_SEGMENT_MARKER = "pl.";
  */
 export const NO_SEGMENT_MARKER = "no.";
 
+/**
+ * The marker of an Irish page's segment outside a locale (`ie.{slug}`): a hospital key
+ * (`h123456789`) would otherwise read as a Swiss one.
+ */
+export const IE_SEGMENT_MARKER = "ie.";
+
 /** The marker of each market whose segments are marked outside a locale. */
 const SEGMENT_MARKERS: Readonly<Partial<Record<MarketCountry, string>>> = {
 	GB: GB_SEGMENT_MARKER,
@@ -167,6 +182,7 @@ const SEGMENT_MARKERS: Readonly<Partial<Record<MarketCountry, string>>> = {
 	EE: EE_SEGMENT_MARKER,
 	PL: PL_SEGMENT_MARKER,
 	NO: NO_SEGMENT_MARKER,
+	IE: IE_SEGMENT_MARKER,
 };
 
 /**
@@ -174,7 +190,7 @@ const SEGMENT_MARKERS: Readonly<Partial<Record<MarketCountry, string>>> = {
  * marked with its market for a UK, Czech, Spanish, Italian or German page
  * (`gb.the-densham-surgery-a81001`, `cz.mudr-hana-bohackova-39781`,
  * `es.clinica-dental-ejemplo-1328000001`, `it.farmacia-esempio-f9000001`,
- * `de.klinikum-beispiel-k0a1b2c3d4e`).
+ * `de.klinikum-beispiel-k0a1b2c3d4e`, `ie.example-pharmacy-p10000612`).
  */
 export function marketSegmentOf(country: string, slug: string): string {
 	const marker = SEGMENT_MARKERS[country as MarketCountry];
@@ -183,7 +199,7 @@ export function marketSegmentOf(country: string, slug: string): string {
 
 /**
  * Parses the segment of a practitioner URL of any market, for routes outside a locale (the
- * Open Graph image): a marked segment is British, Czech, Spanish, Italian or Swiss (`marketSegmentOf`), an RPPS slug
+ * Open Graph image): a marked segment is British, Czech, Spanish, Italian, German, Swiss or Irish (`marketSegmentOf`), an RPPS slug
  * French, a regional list key Austrian.
  */
 export function parseAnyPractitionerKey(segment: string): PractitionerKey | null {
@@ -210,7 +226,8 @@ export function parseAnyPractitionerKey(segment: string): PractitionerKey | null
  * reference reads, since most lists number no facility and a derived key alone means nothing; in
  * Estonia a provider's first activity licence number as the Health Board writes it (`L01909`)
  * and a pharmacy's key of the page URL (`ap457`); in Norway the establishment's organisation
- * number in groups of three, as Norway prints it (`910 000 039`).
+ * number in groups of three, as Norway prints it (`910 000 039`); in Ireland the key of the page URL too (`p10000612`, `n738`,
+ * `h123456789`), since a bare PSI or HIQA number names neither list.
  */
 export function displayId(key: Pick<PractitionerKey, "idScheme" | "nationalId">): string {
 	if (NO_ID_SCHEMES[key.idScheme as NoIdScheme]) return noOrgNumber(key.nationalId);
@@ -223,6 +240,9 @@ export function displayId(key: Pick<PractitionerKey, "idScheme" | "nationalId">)
 	}
 	if (CH_ID_SCHEMES[key.idScheme as ChIdScheme]) {
 		return chUrlKey(key.idScheme as ChIdScheme, key.nationalId);
+	}
+	if (IE_ID_SCHEMES[key.idScheme as IeIdScheme]) {
+		return ieUrlKey(key.idScheme as IeIdScheme, key.nationalId);
 	}
 	const gb = GB_ID_SCHEMES[key.idScheme as GbIdScheme];
 	if (gb) return gb.prefix ? gbUrlKey(key.idScheme as GbIdScheme, key.nationalId) : key.nationalId;

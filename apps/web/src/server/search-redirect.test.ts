@@ -65,6 +65,11 @@ const PLACES: Record<MarketCountry, PlaceSuggestion[]> = {
 		place(70, "Bergen", "bergen", "vestland", "4601"),
 		place(71, "Tromsø", "tromso", "troms", "5501"),
 	],
+	IE: [
+		place(60, "Dublin", "dublin", "dublin"),
+		place(61, "Cork", "cork", "cork"),
+		place(62, "An Spidéal", "an-spideal", "galway"),
+	],
 };
 
 const LANDINGS = new Set([
@@ -98,9 +103,18 @@ const LANDINGS = new Set([
 	"tannklinikker@Bergen",
 	"sykehus@Bergen",
 	"apotek@Tromsø",
+	"pharmacy@Cork",
+	"pharmacy@Dublin",
+	"hospitals@Dublin",
+	"nursing-homes@Cork",
 ]);
 
-const HUBS = new Set(["chirurgien-dentiste:fr", "dental-practices:gb", "krankenhaeuser:de"]);
+const HUBS = new Set([
+	"chirurgien-dentiste:fr",
+	"dental-practices:gb",
+	"krankenhaeuser:de",
+	"pharmacy:ie",
+]);
 
 vi.mock("./queries/search", () => ({
 	matchPlaces: async ({ country, where }: { country: MarketCountry; where: string }) =>
@@ -458,6 +472,36 @@ describe("a search for a European place outside the open markets", () => {
 		expect(await search("de-DE", { quoi: "Krankenhaus", ou: "München" })).toBeNull();
 	});
 
+	it("never says Ireland is not covered: its towns move the search to /ie, in English", async () => {
+		expect(await search("fr", { ou: "Dublin" })).toEqual(searchPage("en-IE", { ou: "Dublin" }));
+		expect(await search("en-GB", { ou: "Dublin" })).toEqual(searchPage("en-IE", { ou: "Dublin" }));
+		expect(await search("en-GB", { quoi: "pharmacy", ou: "Cork" })).toEqual(
+			listing("en-IE", "pharmacy", "cork", "cork"),
+		);
+		expect(await search("fr", { quoi: "pharmacie", ou: "Cork" })).toEqual(
+			listing("en-IE", "pharmacy", "cork", "cork"),
+		);
+		expect(await search("de-DE", { quoi: "Krankenhaus", ou: "Dublin" })).toEqual(
+			listing("en-IE", "hospitals", "dublin", "dublin"),
+		);
+		expect(await search("de-CH", { quoi: "Pflegeheim", ou: "Cork" })).toEqual(
+			listing("en-IE", "nursing-homes", "cork", "cork"),
+		);
+		// "Chemist" is Irish English for a pharmacy.
+		expect(await search("en-IE", { quoi: "chemist", ou: "Cork" })).toEqual(
+			listing("en-IE", "pharmacy", "cork", "cork"),
+		);
+		// An Irish town the places do not know: Ireland's search says so, not this page.
+		expect(await search("fr", { quoi: "pharmacie", ou: "Galway" })).toEqual(
+			searchPage("en-IE", { quoi: listingLabel("pharmacy", "en-IE") ?? "", ou: "Galway" }),
+		);
+		expect(await search("en-IE", { quoi: "pharmacy", ou: "Galway" })).toBeNull();
+		// A GP is not listed in Ireland: its search, without the care it does not list.
+		expect(await search("en-GB", { quoi: "GP", ou: "Cork" })).toEqual(
+			searchPage("en-IE", { ou: "Cork" }),
+		);
+	});
+
 	it("still lets a place of an open market win over a homonymous foreign city", async () => {
 		expect(await search("fr", { quoi: "dentiste", ou: "Wien" })).toEqual(
 			searchPage("de-AT", { quoi: listingLabel("zahnaerzte", "de-AT") ?? "", ou: "Wien" }),
@@ -495,6 +539,18 @@ describe("a search for an open country by name", () => {
 		expect(await search("en-GB", { ou: "Switzerland" })).toEqual({ href: "/", locale: "de-CH" });
 		expect(await search("it-IT", { ou: "Svizzera" })).toEqual({ href: "/", locale: "it-CH" });
 		expect(await search("de-AT", { ou: "Schweiz" })).toEqual({ href: "/", locale: "de-CH" });
+		// Ireland is open: "Ireland", "Irlande", "Éire" and "Baile Átha Cliath" lead to /ie.
+		expect(await search("fr", { ou: "Irlande" })).toEqual({ href: "/", locale: "en-IE" });
+		expect(await search("en-GB", { ou: "Ireland" })).toEqual({ href: "/", locale: "en-IE" });
+		expect(await search("en-GB", { ou: "Éire" })).toEqual({ href: "/", locale: "en-IE" });
+		expect(await search("fr", { quoi: "pharmacie", ou: "Irlande" })).toEqual({
+			href: { pathname: "/[specialite]", params: { specialite: "pharmacy" } },
+			locale: "en-IE",
+		});
+		// Dublin's Irish name: Ireland's search, under the name its places carry.
+		expect(await search("fr", { ou: "Baile Átha Cliath" })).toEqual(
+			searchPage("en-IE", { ou: "Dublin" }),
+		);
 		// The page's own market: its home, in the visitor's language.
 		expect(await search("en", { ou: "France" })).toEqual({ href: "/", locale: "en" });
 	});

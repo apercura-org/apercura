@@ -23,6 +23,7 @@ const HOMES = [
 	"/ee",
 	"/pl",
 	"/no",
+	"/ie",
 ];
 
 /** The opening's title, then the sections' headings in order. */

@@ -64,13 +64,18 @@ export type InstitutionalNamespace =
 	| "PrivacyNo"
 	| "TermsNo"
 	| "AccessibilityNo"
-	| "DataNo";
+	| "DataNo"
+	| "LegalNoticeIe"
+	| "PrivacyIe"
+	| "TermsIe"
+	| "AccessibilityIe"
+	| "DataIe";
 
 /**
  * The namespace of a page in the locale's market: Austria's pages (`/at/impressum`…), the
  * UK's (`/gb/privacy`…), Czechia's (`/cz/ochrana-osobnich-udaju`…), Spain's (`/es/privacidad`…),
  * Italy's (`/it/privacy`…), Germany's (`/de/datenschutz`…), Switzerland's, Estonia's
- * (`/ee/privaatsus`…) and Norway's (`/no/personvern`…) have texts of their own, written for their law, under the same routes as
+ * (`/ee/privaatsus`…) , Norway's (`/no/personvern`…) and Ireland's (`/ie/privacy`…) have texts of their own, written for their law, under the same routes as
  * France's.
  */
 export function marketNamespace(

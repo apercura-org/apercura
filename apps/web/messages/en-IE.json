@@ -1,0 +1,265 @@
+{
+	"Metadata": {
+		"description": "The open directory of Ireland's pharmacies, nursing homes, hospitals and health centres, from the PSI's and HIQA's registers and the HSE's open data.",
+		"proDescription": "Apercura publishes a factual page for every registered pharmacy and nursing home in Ireland, and for the HSE's hospitals and health centres. Find your facility's page and claim it for free.",
+		"homeTitle": "Apercura · Pharmacies and nursing homes in Ireland"
+	},
+	"Site": {
+		"runningHead": "Open directory of health facilities in Ireland",
+		"navPro": "For facilities",
+		"footer": {
+			"free": "Free for facilities and patients."
+		},
+		"folioRpps": "Key {rpps}"
+	},
+	"Search": {
+		"label": "Find a pharmacy, nursing home, hospital or health centre",
+		"whoHint": "Facility name, or pharmacy, nursing home, hospital",
+		"whereHint": "Town or county"
+	},
+	"SearchForm": {
+		"practitioners": "Facilities",
+		"department": "County",
+		"geoDenied": "Location is turned off for this site. Type a town instead.",
+		"geoUnavailable": "Your location could not be found. Type a town instead."
+	},
+	"SearchPage": {
+		"emptyTitle": "No facility matches",
+		"emptyBody": "Check the spelling, try a nearby town, or a broader term such as “pharmacy”.",
+		"queryOnlyNear": "Facilities near you (approximate distances)",
+		"startTitle": "What are you looking for?",
+		"startBody": "Type a facility's name, or pharmacy, nursing home, hospital or health centre, in “Who?”, and a town or a county in “Where?”. You can also browse the directory by county and town.",
+		"unknownPlaceBody": "Check the spelling, or type a nearby town.",
+		"unlistedBody": "In Ireland, the directory lists facilities for now, not doctors or other clinicians: pharmacies, nursing homes, hospitals and health centres. Search for a facility's name instead, or browse the directory.",
+		"departmentPlace": "County",
+		"bookingNotOpen": "Apercura does not offer online booking in Ireland: contact the facility.",
+		"columns": {
+			"practitioner": "Facility",
+			"place": "Address",
+			"appointments": "Contact"
+		},
+		"outsidePlace": "Outside {where}",
+		"rppsBody": "This key is not valid, or the facility has no public page: the directory lists pharmacies, nursing homes, hospitals and health centres only. Whoever runs a facility can still find and claim its page.",
+		"distance": "About {km} km away"
+	},
+	"HomePage": {
+		"title": "Find a pharmacy, nursing home, hospital or health centre in Ireland",
+		"hook": "Every pharmacy on the PSI's register and every nursing home on HIQA's already has a page, as do the HSE's hospitals and health centres.",
+		"pillars": {
+			"free": {
+				"description": "Free for facilities and patients, with no subscription and no commission."
+			}
+		},
+		"registry": {
+			"heading": "Built from Ireland's public registers",
+			"intro": "Each page starts from a public list: the Pharmaceutical Society of Ireland's register of pharmacies, HIQA's register of nursing homes, and the HSE's Health Atlas layers of hospitals and health centres. Facilities are listed, never individual clinicians. Nobody pays to be listed, and nobody is left out.",
+			"sourceName": "PSI, HIQA and HSE"
+		},
+		"pro": {
+			"heading": "Do you run a pharmacy, nursing home, hospital or health centre?",
+			"body": "Your facility's page already exists. Claiming it is free."
+		},
+		"tagline": "The open directory of health facilities in Ireland.",
+		"market": {
+			"listingsHeading": "By type of facility",
+			"placesHeading": "By county"
+		},
+		"specimen": {
+			"heading": "Every facility already has a page",
+			"intro": "This is a page as the public registers fill it, before the facility claims it: known fields are filled, the others say plainly that they are not provided."
+		}
+	},
+	"Practitioner": {
+		"rpps": "Page key",
+		"specimen": "Sample, not a real facility",
+		"statusNote": {
+			"unclaimed": "Built from Ireland's public registers. The facility has not completed this page yet.",
+			"verified": "Completed by the facility, whose claim has been verified."
+		},
+		"fields": {
+			"profession": "Type of facility",
+			"address": "Address"
+		},
+		"source": {
+			"name": "Source: PSI, HIQA and HSE"
+		},
+		"action": {
+			"call": {
+				"statement": "Apercura does not offer online booking in Ireland. Contact the facility."
+			}
+		},
+		"sitesHeading": "Address"
+	},
+	"PractitionerPage": {
+		"metaTitle": "{name}, {occupation} · Apercura",
+		"metaTitlePlace": "{name}, {occupation} in {place} · Apercura",
+		"metaDescription": "{name}, {occupation}: {fees, select, sector {address, phone and fees} other {address, phone and type of facility}}, from Ireland's public registers.",
+		"metaDescriptionPlace": "{name}, {occupation} in {place}: {fees, select, sector {address, phone and fees} other {address, phone and type of facility}}, from Ireland's public registers.",
+		"unknownProfession": "Health facility",
+		"professionHeading": "Facility",
+		"unnamedPlace": "Facility",
+		"asideLabel": "About this page",
+		"action": {
+			"callNotYetOpen": "Apercura does not offer online booking in Ireland. For an appointment or information, contact the facility.",
+			"noPhone": "The list this page comes from gives no phone number for this facility."
+		},
+		"claim": {
+			"heading": "Is this your facility?",
+			"body": "This page is built from Ireland's public registers. Claim it to check and complete it:",
+			"claimedHeading": "Page managed by the facility",
+			"claimedBody": "The facility has claimed this page: its claim was verified, and it completes the page.",
+			"contactLink": "No document to hand? Contact us",
+			"benefits": [
+				"free, with no subscription or commitment;",
+				"your photo, your opening hours and the languages spoken;",
+				"your website and accessibility details;",
+				"statistics on who views your page;",
+				"a share kit: link, QR code and poster."
+			]
+		},
+		"report": {
+			"body": "If an address, a phone number or a name is wrong, tell us how to correct it."
+		},
+		"ring": {
+			"heading": "Other facilities: {occupation} in {place}"
+		}
+	},
+	"Listing": {
+		"count": "{count, plural, one {# facility} other {# facilities}}",
+		"metaTitle": "{count, plural, one {{listing} in {place}: # facility · Apercura} other {{listing} in {place}: # facilities · Apercura}}",
+		"metaDescription": "{count, plural, one {# facility listed as {occupation} in {place}: {fees, select, sector {addresses, phone numbers and fees} other {addresses and phone numbers}}, from Ireland's public registers.} other {# facilities listed as {occupation} in {place}: {fees, select, sector {addresses, phone numbers and fees} other {addresses and phone numbers}}, from Ireland's public registers.}}",
+		"lead": "{count, plural, one {The public registers list # facility of this kind in {place}.} other {The public registers list # facilities of this kind in {place}.}}",
+		"practitionersHeading": "{count, plural, one {The facility} other {The # facilities}}",
+		"columns": {
+			"practitioner": "Facility"
+		},
+		"facts": {
+			"sources": "PSI, HIQA, HSE, Tailte Éireann and the CSO"
+		},
+		"communesHeading": "{listing}: towns of {place}",
+		"nearbyHeading": "{listing}: nearby towns",
+		"hubMetaTitle": "{count, plural, one {{listing} in Ireland: # facility · Apercura} other {{listing} in Ireland: # facilities · Apercura}}",
+		"hubMetaDescription": "{count, plural, one {# facility listed as {occupation} in Ireland, by county: {fees, select, sector {addresses, phone numbers and fees} other {addresses and phone numbers}}, from Ireland's public registers.} other {# facilities listed as {occupation} in Ireland, by county: {fees, select, sector {addresses, phone numbers and fees} other {addresses and phone numbers}}, from Ireland's public registers.}}",
+		"hubTitle": "{listing} in Ireland",
+		"hubLead": "{count, plural, one {The public registers list # facility of this kind in Ireland.} other {The public registers list # facilities of this kind in Ireland.}}",
+		"departmentsHeading": "{listing} by county",
+		"departmentsIntro": "Choose a county to see its towns and facilities.",
+		"metaDescriptionPage": "{count, plural, one {Page {page} of {pages}: # facility listed as {occupation} in {place}.} other {Page {page} of {pages}: # facilities listed as {occupation} in {place}.}}",
+		"metaDescriptionPageRange": "{count, plural, one {Page {page} of {pages}, {first} to {last}: # facility listed as {occupation} in {place}.} other {Page {page} of {pages}, {first} to {last}: # facilities listed as {occupation} in {place}.}}",
+		"hubMetaTitleShort": "{listing} in Ireland · Apercura",
+		"allSpecialties": "Every type of facility in {place}"
+	},
+	"Directory": {
+		"metaTitle": "Directory of health facilities by place · Apercura",
+		"metaDescription": "Every county of Ireland with its pharmacies, nursing homes, hospitals and health centres, from Ireland's public registers.",
+		"lead": "{count, plural, one {# facility, by province and county.} other {# facilities, by province and county.}}",
+		"otherRegion": "Other places",
+		"emptyBody": "Ireland's public registers have not been imported on this server yet. Come back after the next import.",
+		"placeMetaTitle": "Pharmacies, nursing homes and hospitals in {place} · Apercura",
+		"placeMetaDescription": "{count, plural, one {# health facility in {place}, by type, from Ireland's public registers.} other {# health facilities in {place}, by type, from Ireland's public registers.}}",
+		"placeTitle": "Health facilities in {place}",
+		"placeLead": "{count, plural, one {# facility in {place}.} other {# facilities in {place}.}}",
+		"specialtiesHeading": "By type of facility",
+		"communesHeading": "Towns of {place}",
+		"authoritiesHeading": "Counties of {place}",
+		"placeMetaTitleShort": "Health facilities in {place} · Apercura"
+	},
+	"OgImage": {
+		"runningHead": "Open directory of health facilities",
+		"practitioner": {
+			"folio": "Key {rpps}"
+		}
+	},
+	"taxonomy": {
+		"practiceKind": {
+			"office": "Facility"
+		}
+	},
+	"Claim": {
+		"errors": {
+			"NOT_FOUND": "No page has this key.",
+			"INVALID_RPPS": "This key is not valid: it is the end of the address of your facility's page (a letter and digits, for example p1234), after ie:, or the whole address."
+		},
+		"start": {
+			"lead": "A claim targets one facility's page, never a name.",
+			"contestBody": "If it is your facility's (for instance you lost access to your account), you can still claim it: an administrator reviews your document and decides. Recovering an account always goes through a new verification.",
+			"findHeading": "Find your facility's page",
+			"notFound": "No public page has this key yet.",
+			"rppsLabel": "Key or address of the page",
+			"rppsHint": "The address of your facility's page, for example apercura.org/ie/facility/example-pharmacy-p1234, or its end after ie: (ie:p1234).",
+			"contactLink": "No document to hand? Contact us"
+		},
+		"methods": {
+			"document": {
+				"summary": "A document that shows you run the facility or act for it: its certificate of registration (PSI or HIQA), or a letter on its letterhead authorising you. A member of our team reviews it, usually within 48 hours.",
+				"lead": "Send a document that shows you run the facility or act for it: its certificate of registration (PSI or HIQA), or a letter on its letterhead authorising you. It is encrypted before it is stored, and deleted 30 days after the decision."
+			}
+		},
+		"documents": {
+			"kind": {
+				"cps_card": "Letter on the facility's letterhead",
+				"ordre_attestation": "The facility's certificate of registration (PSI or HIQA)"
+			}
+		},
+		"status": {
+			"contestReview": "This page already had a verified owner: an administrator decides on your document.",
+			"reviewBody": "A member of our team reviews your document and writes to you by email.",
+			"contestBody": "An administrator will decide on your document."
+		}
+	},
+	"Gdpr": {
+		"rpps": "Page key",
+		"rppsHint": "The end of the address of the page (for example example-pharmacy-p1234), or the whole address.",
+		"errors": {
+			"notFound": "No page has this key."
+		},
+		"report": {
+			"doneBody": "We check it. Facts from the public registers are corrected at the source, with the PSI, HIQA or the HSE, whichever publishes the list; we tell you if you left an address."
+		},
+		"removal": {
+			"doneBody": "It is no longer shown, indexed or listed. We check the request and answer by email within one month at most. Once it is confirmed, the page is deleted for good and does not come back with the registers' updates.",
+			"privacy": "A deleted page does not come back with the next import of the public registers.",
+			"claimedBody": "Only its holder can remove it, from the page editor of their space: the page then disappears at once and does not come back with the registers' updates."
+		},
+		"contact": {
+			"lead": "You cannot claim your facility's page with a document? Leave us your details: a member of the Apercura team gets back to you to check that you act for the facility and help you.",
+			"claimFirst": "With a document that shows you act for the facility, claiming is quicker:",
+			"rpps": "Page key"
+		}
+	},
+	"emails": {
+		"claimReceived": {
+			"body": [
+				"Hello {name},",
+				"We have received your claim and its documents. A member of the Apercura team reviews them and writes to you by email.",
+				"We review claims within 48 hours on working days."
+			]
+		},
+		"claimRejected": {
+			"body": [
+				"Hello {name},",
+				"We could not verify your claim. Reason given by the reviewer: {reason}",
+				"You can open a new claim from your space, with a legible document that shows you act for the facility."
+			]
+		},
+		"removalReceived": {
+			"body": [
+				"The page is hidden from now on: it is no longer shown, indexed or listed.",
+				"We check the request and answer within one month at most. Once it is confirmed, the page is deleted; a deleted page does not come back with the next import of the public registers."
+			]
+		},
+		"removalConfirmed": {
+			"body": [
+				"The page you asked us to remove has been deleted from Apercura. It will not come back with the next import of the public registers."
+			]
+		}
+	},
+	"Onboarding": {
+		"steps": {
+			"check": {
+				"lead": "Your page starts from Ireland's public registers. Check the facility's name, type and address.",
+				"registryNote": "Something wrong? The lasting fix is made at the source, with the PSI, HIQA or the HSE, whichever publishes the list; the page follows at the next import. You can hide an address or add one in the page editor."
+			}
+		}
+	}
+}

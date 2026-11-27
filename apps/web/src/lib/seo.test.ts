@@ -32,6 +32,8 @@ describe("Open Graph images", () => {
 		expect(ogImageOf("CZ_DENTIST")).toBe("annuaire");
 		expect(ogImageOf("CH_HOSPITAL")).toBe("annuaire");
 		expect(ogImageOf("CH_NURSING_HOME")).toBe("annuaire");
+		expect(ogImageOf("IE_PHARMACY")).toBe("annuaire");
+		expect(ogImageOf("IE_HEALTH_CENTRE")).toBe("annuaire");
 	});
 });
 
@@ -119,6 +121,7 @@ describe("hreflang of the homes", () => {
 			"et-EE": "https://apercura.org/ee",
 			"pl-PL": "https://apercura.org/pl",
 			"nb-NO": "https://apercura.org/no",
+			"en-IE": "https://apercura.org/ie",
 			"x-default": "https://apercura.org/",
 		});
 	});
@@ -168,6 +171,7 @@ describe("hreflang below the homes", () => {
 
 	it("gives no alternate to a market of one indexed language, nor to an interface translation", () => {
 		expect(marketAlternates("/annuaire", "it-IT")).toBeUndefined();
+		expect(marketAlternates("/annuaire", "en-IE")).toBeUndefined();
 		expect(marketAlternates("/annuaire", "fr")).toBeUndefined();
 		expect(marketAlternates("/annuaire", "en")).toBeUndefined();
 	});

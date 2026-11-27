@@ -4,11 +4,13 @@ import {
 	allDeTaxonomySlugs,
 	allEeTaxonomySlugs,
 	allEsTaxonomySlugs,
+	allIeListingSlugs,
 	allItListingSlugs,
 	allNoTaxonomySlugs,
 	allPlListingSlugs,
 	DE_DEFAULT_PROFESSIONS,
 	EE_DEFAULT_PROFESSIONS,
+	IE_DEFAULT_PROFESSIONS,
 	NO_DEFAULT_PROFESSIONS,
 	PL_DEFAULT_PROFESSIONS,
 } from "@apercura/core/taxonomy";
@@ -28,6 +30,7 @@ import deCH from "../../messages/de-CH.json";
 import deDE from "../../messages/de-DE.json";
 import ee from "../../messages/ee.json";
 import en from "../../messages/en.json";
+import enIE from "../../messages/en-IE.json";
 import es from "../../messages/es.json";
 import esES from "../../messages/es-ES.json";
 import fr from "../../messages/fr.json";
@@ -87,6 +90,7 @@ const CATALOGS: Record<Locale, unknown> = {
 	"et-EE": mergeMessages(en, ee as Record<string, unknown>),
 	"pl-PL": mergeMessages(en, pl as Record<string, unknown>),
 	"nb-NO": mergeMessages(en, no as Record<string, unknown>),
+	"en-IE": mergeMessages(en, enIE as Record<string, unknown>),
 };
 
 /** Every message of a catalog by its dotted key (array items are indexed). */
@@ -423,5 +427,43 @@ describe("the Norwegian texts", () => {
 		expect(norwegian.get("HomePage.title")).not.toBe(english.get("HomePage.title"));
 		// The register's credit names the licence, as NLOD 2.0 asks.
 		expect(norwegian.get("DataNo.licence.licenceLink")).toMatch(/NLOD 2\.0/);
+	});
+});
+
+describe("Ireland's overrides", () => {
+	it("only override keys of the English catalog", () => {
+		const english = flatten(en);
+		expect([...flatten(enIE).keys()].filter((key) => !english.has(key))).toEqual([]);
+	});
+
+	it("name every Irish listing and kind of facility in every catalog", () => {
+		for (const catalog of [de, en, fr, it_, es]) {
+			const labels = flatten(catalog);
+			for (const slug of allIeListingSlugs()) {
+				expect(labels.get(`taxonomy.listing.${slug}`), slug).toBeTruthy();
+				expect(labels.get(`taxonomy.profession.${slug}`), slug).toBeTruthy();
+			}
+		}
+		expect(messagesFor("en-IE").taxonomy.listing.pharmacy).toBe("Pharmacies");
+		expect(messagesFor("fr").taxonomy.listing.pharmacy).toBe("Pharmacies");
+	});
+
+	it("write Ireland's pages in Irish English, not the UK's, with every kind on the data page", () => {
+		const irish = flatten(messagesFor("en-IE"));
+		expect(irish.get("HomePage.title")).toMatch(/Ireland/);
+		expect(irish.get("HomePage.title")).not.toBe(
+			flatten(messagesFor("en-GB")).get("HomePage.title"),
+		);
+		expect(JSON.stringify(enIE)).not.toMatch(/\bNHS\b|United Kingdom|\bODS\b/);
+		expect(irish.get("LegalNoticeIe.title")).toBe("Legal notice");
+		for (const code of IE_DEFAULT_PROFESSIONS) {
+			expect(irish.get(`DataIe.coverage.kinds.${code}`), code).toBeTruthy();
+		}
+		// The PSI's condition on advertising, word for word.
+		expect(irish.get("DataIe.sources.conditions.0")).toContain(
+			"“Not use the information for the principal purpose of advertising or promoting a particular product or service”",
+		);
+		// The privacy notice never names a host, and keeps the data in the EEA.
+		expect(irish.get("PrivacyIe.sections.transfers.body.0")).toContain("European Economic Area");
 	});
 });

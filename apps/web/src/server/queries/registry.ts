@@ -68,7 +68,7 @@ export type ImportStatus = Omit<RegistryStatus, "files"> & { files: Record<strin
  * import (`Last-Modified`), whatever their keys. Null before the first import.
  */
 export async function getImportStatus(
-	source: "fr" | "at" | "gb" | "cz" | "es" | "it" | "de" | "ch" | "ee" | "pl" | "no",
+	source: "fr" | "at" | "gb" | "cz" | "es" | "it" | "de" | "ch" | "ee" | "pl" | "no" | "ie",
 ): Promise<ImportStatus | null> {
 	"use cache";
 	cacheTag("registry");

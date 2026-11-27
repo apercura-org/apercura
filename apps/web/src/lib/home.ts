@@ -80,13 +80,16 @@ export function listingRows(
 	return [...rows.values()];
 }
 
-/** Markets whose lists are credited by publisher: the UK's eight lists come from three. */
-const BY_PUBLISHER: ReadonlySet<string> = new Set(["GB", "CH"]);
+/**
+ * Markets whose lists are credited by publisher: the UK's eight lists come from three, Ireland's
+ * two HSE layers from one.
+ */
+const BY_PUBLISHER: ReadonlySet<string> = new Set(["GB", "CH", "IE"]);
 
 /**
  * The sources a market's figures and specimen credit: the registries that provide its
  * practitioners or facilities, by name, or by publisher where several lists share one (the UK,
- * Switzerland). `covered`, when given, keeps only the registries actually imported
+ * Switzerland, Ireland). `covered`, when given, keeps only the registries actually imported
  * (Switzerland's cantonal lists): a list that was never imported is not credited.
  */
 export function sourceLine(

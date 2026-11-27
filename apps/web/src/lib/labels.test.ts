@@ -27,6 +27,7 @@ const CATALOGS = {
 	"et-EE": messagesFor("et-EE"),
 	"pl-PL": messagesFor("pl-PL"),
 	"nb-NO": messagesFor("nb-NO"),
+	"en-IE": messagesFor("en-IE"),
 } as const;
 
 /** A label of the catalog's taxonomy, rendered like `getTaxonomyLabels` does. */
@@ -236,5 +237,19 @@ describe("Norway's labels", () => {
 		expect(t("profession.legekontor" as never)).toBe("Legekontor");
 		// Norwegian writes a common noun in lower case inside a sentence.
 		expect(inSentence(t("profession.tannklinikk" as never), "nb-NO")).toBe("tannklinikk");
+	});
+});
+
+describe("Ireland's labels", () => {
+	it("name a listing in the plural and a facility's kind in the singular", () => {
+		const t = createTranslator({
+			locale: "en-IE",
+			messages: CATALOGS["en-IE"],
+			namespace: "taxonomy",
+		});
+		expect(t("listing.pharmacy" as never)).toBe("Pharmacies");
+		expect(t("listing.nursing-homes" as never)).toBe("Nursing homes");
+		expect(t("profession.health-centres" as never)).toBe("Health centre");
+		expect(inSentence(t("profession.hospitals" as never), "en-IE")).toBe("hospital");
 	});
 });

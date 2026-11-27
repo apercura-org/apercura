@@ -4,8 +4,8 @@ import { type Locale, type MarketCountry, marketOf } from "~/i18n/locales";
  * The fictitious pages a market's home shows: the specimen page and the sample stamps of the
  * opening. Each market shows what its directory lists, in its own language: practitioners in
  * France, Austria (its doctors) and Czechia (practices under a doctor's name, a pharmacy);
- * practices, facilities, pharmacies or hospitals in the UK, Spain, Italy, Germany, Switzerland
- * and Estonia. The names and addresses say plainly that they are examples ("Exemple",
+ * practices, facilities, pharmacies or hospitals in the UK, Spain, Italy, Germany, Switzerland,
+ * Estonia and Ireland. The names and addresses say plainly that they are examples ("Exemple",
  * "Muster", "Example", "Ejemplo", "Esempio", "Příklad", "Näidis", "Przykład"), never a real person, practice or place
  * of care; the identifiers are shaped like the market's but synthetic.
  *
@@ -308,6 +308,34 @@ const SAMPLES: Readonly<Record<Exclude<MarketCountry, "CH">, HomeSamples>> = {
 			gender: "other",
 			address: "Eksempelgata 12, 0151 Oslo",
 			identifier: "910 000 152",
+			status: "claimed",
+		},
+	],
+	// Ireland: pharmacies of the PSI's register, nursing homes of HIQA's, the HSE's hospitals. No
+	// Eircode: a real one could name a real address.
+	IE: [
+		{
+			name: "Example Pharmacy",
+			listing: "pharmacy",
+			gender: "other",
+			address: "12 Sample Street, Cork",
+			identifier: "p9009",
+			status: "unclaimed",
+		},
+		{
+			name: "Example House Nursing Home",
+			listing: "nursing-homes",
+			gender: "other",
+			address: "3 Specimen Road, Galway",
+			identifier: "n9017",
+			status: "verified",
+		},
+		{
+			name: "Example Community Hospital",
+			listing: "hospitals",
+			gender: "other",
+			address: "8 Example Avenue, Limerick",
+			identifier: "h900000025",
 			status: "claimed",
 		},
 	],
