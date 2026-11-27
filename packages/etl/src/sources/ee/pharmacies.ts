@@ -21,6 +21,7 @@ import { toE164Ee } from "@apercura/core";
 import { EE_PHARMACY } from "@apercura/core/taxonomy";
 import { USER_AGENT } from "../../lib/files";
 import { mapColumns, parseQuotedRecord } from "../../lib/text";
+import { decodeXml } from "../../lib/xlsx";
 import { clean, firstAddress, providerName } from "./names";
 import {
 	type EeProvider,
@@ -131,12 +132,8 @@ export function parsePharmacies(data: Buffer | string): ParseResult {
 function attributes(tag: string): Record<string, string> {
 	const out: Record<string, string> = {};
 	for (const match of tag.matchAll(/([\w:.-]+)\s*=\s*"([^"]*)"/g)) {
-		out[(match[1] ?? "").toLowerCase()] = (match[2] ?? "")
-			.replace(/&amp;/g, "&")
-			.replace(/&quot;/g, '"')
-			.replace(/&lt;/g, "<")
-			.replace(/&gt;/g, ">")
-			.replace(/&#39;/g, "'");
+		// One pass over the entities, so `&amp;lt;` reads `&lt;`, never `<`.
+		out[(match[1] ?? "").toLowerCase()] = decodeXml(match[2] ?? "");
 	}
 	return out;
 }
