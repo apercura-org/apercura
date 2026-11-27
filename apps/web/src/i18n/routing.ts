@@ -24,6 +24,7 @@ type Pathnames = Record<
 				| "fi-FI"
 				| "lt-LT"
 				| "el-CY"
+				| "lv-LV"
 			>,
 			string
 	  >
@@ -248,6 +249,33 @@ function cypriotPath(path: string): string {
 }
 
 /**
+ * The Latvian form of each English path segment (`/practitioner/[slug]/report` ->
+ * `/iestade/[slug]/zinot`): Latvia lists places, so a page is an institution's (`iestāde`). The
+ * first segments are the Latvian reserved segments of `@apercura/core/taxonomy`
+ * (`LV_RESERVED_SEGMENTS`, tested), which never name a listing.
+ */
+export const LATVIAN_SEGMENTS: Readonly<Record<string, string>> = {
+	search: "meklet",
+	practitioner: "iestade",
+	report: "zinot",
+	removal: "dzesana",
+	"this-is-me": "tas-esmu-es",
+	establishment: "organizacija",
+	directory: "katalogs",
+	about: "par-projektu",
+	data: "dati",
+	accessibility: "pieklustamiba",
+	privacy: "privatums",
+	"legal-notice": "juridiska-informacija",
+	terms: "lietosanas-noteikumi",
+};
+
+/** An English path with its segments in Latvian; parameters and unknown segments stay. */
+function latvianPath(path: string): string {
+	return path.replace(/[^/]+/g, (segment) => LATVIAN_SEGMENTS[segment] ?? segment);
+}
+
+/**
  * The Spanish market's form of a Spanish path: a centre's page under `/centro` (Spain lists
  * centres, never people), so an establishment's page moves from `/centro` to `/organizacion`.
  * Every first segment is a Spanish reserved segment of `@apercura/core/taxonomy`
@@ -355,6 +383,7 @@ function withMarkets<T extends Pathnames>(pathnames: T) {
 						"lt-LT": lithuanianPath(value.en),
 						"sl-SI": slovenianPath(value.en),
 						"el-CY": cypriotPath(value.en),
+						"lv-LV": latvianPath(value.en),
 					},
 		]),
 	) as {
@@ -378,6 +407,7 @@ function withMarkets<T extends Pathnames>(pathnames: T) {
 					"lt-LT": string;
 					"sl-SI": string;
 					"el-CY": string;
+					"lv-LV": string;
 				};
 	};
 }

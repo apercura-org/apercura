@@ -115,6 +115,7 @@ test("the country menu, beside the language menu, moves to another market's home
 		"Litauen",
 		"Slowenien",
 		"Zypern",
+		"Lettland",
 	]);
 	await expect(countries.getByRole("link", { name: "Frankreich" })).toHaveAttribute(
 		"aria-current",
@@ -150,6 +151,8 @@ test("the country menu, beside the language menu, moves to another market's home
 	await expect(countries.getByRole("link", { name: "Slowenien" })).toHaveAttribute("href", "/si");
 	// Cyprus in Greek, its only language here.
 	await expect(countries.getByRole("link", { name: "Zypern" })).toHaveAttribute("href", "/cy");
+	// Latvia in Latvian, its only language.
+	await expect(countries.getByRole("link", { name: "Lettland" })).toHaveAttribute("href", "/lv");
 	await countries.getByRole("link", { name: "Österreich" }).click();
 	await expect(page).toHaveURL(/\/at$/);
 	await expect(page.locator("html")).toHaveAttribute("lang", "de-AT");
@@ -188,4 +191,40 @@ test("Switzerland's pages offer its three languages, each the same page", async 
 		"true",
 	);
 	await expect(countries.getByRole("link", { name: "Suisse" })).toHaveAttribute("href", "/ch-fr");
+});
+
+test("Latvia's pages offer the country menu in Latvian, and no language menu", async ({ page }) => {
+	await page.goto("/lv/katalogs");
+	await expect(page.locator("html")).toHaveAttribute("lang", "lv-LV");
+	// Latvia has one language: the country menu stays, the language menu goes.
+	await expect(page.getByRole("navigation", { name: "Valoda" })).toHaveCount(0);
+	const countries = page.getByRole("navigation", { name: "Valsts" });
+	await countries.locator("summary").click();
+	await expect(countries.getByRole("link")).toHaveText([
+		"Francija",
+		"Austrija",
+		"Lielbritānija",
+		"Čehija",
+		"Spānija",
+		"Itālija",
+		"Vācija",
+		"Šveice",
+		"Igaunija",
+		"Polija",
+		"Norvēģija",
+		"Īrija",
+		"Somija",
+		"Lietuva",
+		"Slovēnija",
+		"Kipra",
+		"Latvija",
+	]);
+	await expect(countries.getByRole("link", { name: "Latvija" })).toHaveAttribute(
+		"aria-current",
+		"true",
+	);
+	await expect(countries.getByRole("link", { name: "Latvija" })).toHaveAttribute("href", "/lv");
+	await countries.getByRole("link", { name: "Šveice" }).click();
+	await expect(page).toHaveURL(/\/ch$/);
+	await expect(page.locator("html")).toHaveAttribute("lang", "de-CH");
 });

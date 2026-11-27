@@ -30,6 +30,8 @@ import { IE_SOURCE_IDS, type IeSourceId, ieSourceUrlVariable } from "./sources/i
 import { defaultItPlacesUrl } from "./sources/it/places";
 import { IT_SOURCE_IDS, type ItSourceId } from "./sources/it/types";
 import { DEFAULT_LT_ADDRESS_BASE } from "./sources/lt/places";
+import { DEFAULT_LV_PORTAL_URL } from "./sources/lv/portal";
+import { LV_SOURCE_IDS, type LvFileId, type LvSourceId } from "./sources/lv/types";
 import { DEFAULT_NO_ADRESSER_URL } from "./sources/no/addresses";
 import { DEFAULT_NO_ENHETER_URL, DEFAULT_NO_UNDERENHETER_URL } from "./sources/no/brreg";
 import { DEFAULT_NO_PLACES_URL } from "./sources/no/places";
@@ -1436,6 +1438,69 @@ export function buildCyOptions(flags: ParsedArgs["flags"], env: NodeJS.ProcessEn
 			census: env.ETL_CY_CENSUS_URL || DEFAULT_CY_CENSUS_URL,
 			postcodes: env.ETL_CY_POSTCODES_URL || DEFAULT_CY_POSTCODES_URL,
 		},
+		workDir: flagString(flags, "work-dir") ?? env.ETL_WORK_DIR ?? null,
+		appUrl: offline ? null : env.APP_URL || null,
+		revalidateSecret: env.REVALIDATE_SECRET || null,
+	};
+}
+
+// ---------------------------------------------------------------------------
+// Latvia (`etl:lv`)
+// ---------------------------------------------------------------------------
+
+export type LvOptions = {
+	databaseUrl: string;
+	dryRun: boolean;
+	approveRunId: number | null;
+	force: boolean;
+	sourceDir: string | null;
+	offline: boolean;
+	sources: LvSourceId[];
+	/** A file's address when overridden (`ETL_LV_NVD_URL`, `ETL_LV_VKCP_URL`, `ETL_LV_ZVA_URL`). */
+	urls: Partial<Record<LvFileId, string>>;
+	/** The national open data portal whose datasets name the current files (`ETL_LV_PORTAL_URL`). */
+	portalUrl: string;
+	workDir: string | null;
+	appUrl: string | null;
+	revalidateSecret: string | null;
+};
+
+/** Parses a comma-separated list of Latvian lists (`gp,pharmacies`); throws on unknown ones. */
+export function parseLvSources(value: string | null | undefined): LvSourceId[] {
+	if (!value) return [...LV_SOURCE_IDS];
+	const sources = value
+		.split(",")
+		.map((source) => source.trim())
+		.filter(Boolean);
+	for (const source of sources) {
+		if (!(LV_SOURCE_IDS as readonly string[]).includes(source)) {
+			throw new Error(`Unknown Latvian list "${source}" (one of ${LV_SOURCE_IDS.join(", ")})`);
+		}
+	}
+	if (sources.length === 0) throw new Error("At least one Latvian list is required");
+	return [...new Set(sources)] as LvSourceId[];
+}
+
+export function buildLvOptions(flags: ParsedArgs["flags"], env: NodeJS.ProcessEnv): LvOptions {
+	const approve = flagString(flags, "approve");
+	if (approve !== null && !/^\d+$/.test(approve)) {
+		throw new Error(`--approve needs a run id, got ${approve}`);
+	}
+	const offline = flags.has("offline");
+	const urls: Partial<Record<LvFileId, string>> = {};
+	if (env.ETL_LV_NVD_URL) urls.nvd = env.ETL_LV_NVD_URL;
+	if (env.ETL_LV_VKCP_URL) urls.vkcp = env.ETL_LV_VKCP_URL;
+	if (env.ETL_LV_ZVA_URL) urls.zva = env.ETL_LV_ZVA_URL;
+	return {
+		databaseUrl: resolveDatabaseUrl(env),
+		dryRun: flags.has("dry-run"),
+		approveRunId: approve === null ? null : Number(approve),
+		force: flags.has("force"),
+		sourceDir: flagString(flags, "source-dir") ?? env.ETL_LV_SOURCE_DIR ?? null,
+		offline,
+		sources: parseLvSources(flagString(flags, "sources") ?? env.ETL_LV_SOURCES),
+		urls,
+		portalUrl: env.ETL_LV_PORTAL_URL || DEFAULT_LV_PORTAL_URL,
 		workDir: flagString(flags, "work-dir") ?? env.ETL_WORK_DIR ?? null,
 		appUrl: offline ? null : env.APP_URL || null,
 		revalidateSecret: env.REVALIDATE_SECRET || null,

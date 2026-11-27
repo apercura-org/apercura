@@ -23,6 +23,9 @@ import {
 	IE_ID_SCHEMES,
 	type IeIdScheme,
 	ieUrlKey,
+	LV_ID_SCHEMES,
+	type LvIdScheme,
+	lvUrlKey,
 	NO_ID_SCHEMES,
 	type NoIdScheme,
 	noOrgNumber,
@@ -38,6 +41,7 @@ import {
 	parseIeFacilitySegment,
 	parseItPlaceSegment,
 	parseLtFacilitySegment,
+	parseLvFacilitySegment,
 	parseNoFacilitySegment,
 	parsePlFacilitySegment,
 	parsePractitionerSegment,
@@ -130,6 +134,10 @@ export function parsePractitionerKey(locale: Locale, segment: string): Practitio
 		const parsed = parseCyFacilitySegment(segment);
 		return parsed ? { country, ...parsed } : null;
 	}
+	if (country === "LV") {
+		const parsed = parseLvFacilitySegment(segment);
+		return parsed ? { country, ...parsed } : null;
+	}
 	if (country === "GB") {
 		const parsed = parseGbPracticeSegment(segment);
 		return parsed ? { country, ...parsed } : null;
@@ -215,6 +223,12 @@ export const FI_SEGMENT_MARKER = "fi.";
  */
 export const LT_SEGMENT_MARKER = "lt.";
 
+/**
+ * The marker of a Latvian page's segment outside a locale (`lv.{slug}`): a pharmacy key (`a324`)
+ * would otherwise read as nobody's, a GP practice's (`g010000006`) as nothing.
+ */
+export const LV_SEGMENT_MARKER = "lv.";
+
 /** The marker of each market whose segments are marked outside a locale. */
 const SEGMENT_MARKERS: Readonly<Partial<Record<MarketCountry, string>>> = {
 	GB: GB_SEGMENT_MARKER,
@@ -230,6 +244,7 @@ const SEGMENT_MARKERS: Readonly<Partial<Record<MarketCountry, string>>> = {
 	FI: FI_SEGMENT_MARKER,
 	LT: LT_SEGMENT_MARKER,
 	CY: CY_SEGMENT_MARKER,
+	LV: LV_SEGMENT_MARKER,
 };
 
 /**
@@ -303,6 +318,9 @@ export function displayId(key: Pick<PractitionerKey, "idScheme" | "nationalId">)
 	}
 	if (IE_ID_SCHEMES[key.idScheme as IeIdScheme]) {
 		return ieUrlKey(key.idScheme as IeIdScheme, key.nationalId);
+	}
+	if (LV_ID_SCHEMES[key.idScheme as LvIdScheme]) {
+		return lvUrlKey(key.idScheme as LvIdScheme, key.nationalId);
 	}
 	const gb = GB_ID_SCHEMES[key.idScheme as GbIdScheme];
 	if (gb) return gb.prefix ? gbUrlKey(key.idScheme as GbIdScheme, key.nationalId) : key.nationalId;

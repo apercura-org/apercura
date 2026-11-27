@@ -12,6 +12,7 @@ export * from "./gb";
 export * from "./ie";
 export * from "./it";
 export * from "./lt";
+export * from "./lv";
 export * from "./no";
 export * from "./pl";
 export * from "./search-aliases";

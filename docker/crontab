@@ -129,3 +129,14 @@
 # flags, e.g. `--sources farmakeia`. Exit codes: 1 failed, 2 blocked, 3 imported without a list
 # that could not be fetched or read (see docs/data-import.md, "Cyprus").
 30 22 5 * * apercura etl:cy $ETL_CY_SCHEDULE_ARGS
+
+# Latvia's open data (the National Health Service's quarterly list of GPs, the Ministry of the
+# Interior's addresses of medical institutions, the State Agency of Medicines' daily register of
+# pharmacies), every Saturday at 04:30 UTC, when no other import runs (the same advisory lock:
+# one import at a time). The GP list changes four times a year and the addresses rarely; the
+# pharmacies' register changes daily, so a weekly run keeps closed pharmacies off the pages
+# within two weeks, and an unchanged set of files ends the run after its download (about 4 MB).
+# ETL_LV_SCHEDULE_ARGS narrows it, e.g. `--sources pharmacies`. Exit codes: 1 failed, 2 blocked,
+# 3 imported without a list that could not be fetched or read (see docs/data-import.md,
+# "Latvia").
+30 4 * * 6 apercura etl:lv $ETL_LV_SCHEDULE_ARGS

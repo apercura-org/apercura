@@ -43,7 +43,7 @@ const SITEMAP_MS_PER_URL = 100;
  * under its segment (France in French, Austria in German, the UK in English, Czechia in Czech,
  * Spain in Spanish, Italy in Italian, Germany in German, Switzerland in its three, Estonia in
  * Estonian, Poland in
- * Polish, Norway in Norwegian, Ireland in English, Finland in Finnish, Lithuania in Lithuanian, Slovenia in Slovenian, Cyprus in Greek). Interface
+ * Polish, Norway in Norwegian, Ireland in English, Finland in Finnish, Lithuania in Lithuanian, Slovenia in Slovenian, Cyprus in Greek, Latvia in Latvian). Interface
  * translations (/fr-de, /fr-es…) are never listed.
  */
 const SITEMAP_GROUPS = [
@@ -66,6 +66,7 @@ const SITEMAP_GROUPS = [
 	"lt",
 	"si",
 	"cy",
+	"lv",
 ] as const;
 type SitemapGroup = (typeof SITEMAP_GROUPS)[number];
 
@@ -202,6 +203,8 @@ test("the index lists valid chunks of unique URLs, each under its market's segme
 	expect(chunks).toContain(`${origin}/sitemaps/si/praticiens-0.xml`);
 	expect(chunks).toContain(`${origin}/sitemaps/cy/pages-0.xml`);
 	expect(chunks).toContain(`${origin}/sitemaps/cy/praticiens-0.xml`);
+	expect(chunks).toContain(`${origin}/sitemaps/lv/pages-0.xml`);
+	expect(chunks).toContain(`${origin}/sitemaps/lv/praticiens-0.xml`);
 	for (const chunk of chunks) expect(sitemapGroupOf(chunk, origin), chunk).not.toBeNull();
 	for (const lastmod of indexXml.matchAll(LASTMOD)) {
 		expect(lastmod[1]).toMatch(/^\d{4}-\d{2}-\d{2}$/);
@@ -241,6 +244,10 @@ test("the index lists valid chunks of unique URLs, each under its market's segme
 	expect(urls).toContain(`${origin}/si`);
 	expect(urls).toContain(`${origin}/si/zdravnik/ana-primer-si90001`);
 	expect(urls).toContain(`${origin}/cy`);
+	expect(urls).toContain(`${origin}/lv`);
+	// A state city's town page is its own: never a URL of its own.
+	expect(urls).not.toContain(`${origin}/lv/gimenes-arstu-prakses/riga/riga`);
+	expect(urls).not.toContain(`${origin}/lv/katalogs/riga/riga`);
 });
 
 // Every URL is checked: the parts are consecutive runs of the index's URLs that together cover

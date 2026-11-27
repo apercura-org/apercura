@@ -3,6 +3,7 @@ import {
 	AT_STATES,
 	HELSINKI_CODE,
 	LT_CITY_MUNICIPALITIES,
+	LV_STATE_CITIES,
 	OSLO_MUNICIPALITY,
 	PRAGUE_CODE,
 } from "@apercura/core/country";
@@ -65,15 +66,23 @@ const PL_CITY_POWIAT = /^\d{2}[6-9]\d{4}$/;
 const LT_CITY_CODES: readonly string[] = Object.keys(LT_CITY_MUNICIPALITIES);
 
 /**
+ * Latvia's seven state cities (valstspilsētas: Rīga, Daugavpils…): a territory of their own, so a
+ * department, and a town, so a commune of that department under the same ATVK code. Their city
+ * page is the department's, like Paris's.
+ */
+const LV_CITY_CODES: ReadonlySet<string> = new Set(LV_STATE_CITIES);
+
+/**
  * True for the city that is its own department page (Paris, Wien, Praha, a kreisfreie Stadt, an
  * Estonian town that is a municipality, a
- * Polish city with powiat rights, a Lithuanian city municipality's city).
+ * Polish city with powiat rights, a Lithuanian city municipality's city, a Latvian state city). `code` is a commune's.
  */
 export function isDepartmentCity(country: string, code: string): boolean {
 	if (country === "DE") return DE_KREISFREIE_STADT.test(code);
 	if (country === "EE") return EE_TOWN_MUNICIPALITIES.has(code);
 	if (country === "PL") return PL_CITY_POWIAT.test(code);
 	if (country === "LT") return LT_CITY_CODES.includes(code);
+	if (country === "LV") return LV_CITY_CODES.has(code);
 	return CITY_IS_DEPARTMENT[country] === code;
 }
 
@@ -92,6 +101,7 @@ export const NOT_DEPARTMENT_CITY = (alias: string) =>
 		`NOT (${alias}.country = 'EE' AND ${alias}.kind = 'commune' AND ${alias}.code IN (${EE_TOWN_CODES}))`,
 		`NOT (${alias}.country = 'PL' AND ${alias}.kind = 'commune' AND substr(${alias}.code, 3, 1) IN ('6', '7', '8', '9'))`,
 		`NOT (${alias}.country = 'LT' AND ${alias}.code IN (${LT_CITY_CODES.map((code) => `'${code}'`).join(", ")}))`,
+		`NOT (${alias}.country = 'LV' AND ${alias}.kind = 'commune' AND ${alias}.code IN (${[...LV_CITY_CODES].map((code) => `'${code}'`).join(", ")}))`,
 	].join(" AND ");
 
 /**
@@ -140,7 +150,8 @@ export function isDepartmentSlug(slug: string, country = "FR"): boolean {
 		country === "FI" ||
 		country === "LT" ||
 		country === "SI" ||
-		country === "CY"
+		country === "CY" ||
+		country === "LV"
 	) {
 		return isPlaceSlug(slug);
 	}

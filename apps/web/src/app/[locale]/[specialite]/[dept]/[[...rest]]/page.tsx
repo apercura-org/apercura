@@ -22,7 +22,12 @@ import { getPathname, type Href, Link, permanentRedirect } from "~/i18n/navigati
 import { type Locale, routing } from "~/i18n/routing";
 import { guidesForListing } from "~/lib/guides/catalog";
 import { getTaxonomyLabels, inSentence } from "~/lib/labels";
-import { isMarketListingSlug, listingFees, pharmacyCoverageOf } from "~/lib/market";
+import {
+	gpCoverageNoteOf,
+	isMarketListingSlug,
+	listingFees,
+	pharmacyCoverageOf,
+} from "~/lib/market";
 import { isDepartmentSlug, isPlaceSlug, placeLabel } from "~/lib/places";
 import {
 	CONTENT_LANGUAGES,
@@ -219,6 +224,8 @@ export default async function LandingPage({ params }: Props) {
 	const count = data.landing.practitionerCount;
 	// Germany's pharmacies: two Länder only, said under the title.
 	const coverage = pharmacyCoverageOf(locale, listingSlug);
+	// Latvia's GP practices: those with a published address only, said under the title.
+	const gpCoverage = gpCoverageNoteOf(locale, listingSlug);
 	// Switzerland's lists cover some cantons only: the ones its published facilities come from.
 	const swissCoverage =
 		country === "CH" ? (await getSwissCoverageTexts(locale)).listing(listingSlug) : null;
@@ -295,7 +302,13 @@ export default async function LandingPage({ params }: Props) {
 								t("lead", { count, listing, place: placeName })
 							)
 						}
-						note={coverage ? t("pharmacyCoverage", { states: coverage }) : null}
+						note={
+							coverage
+								? t("pharmacyCoverage", { states: coverage })
+								: gpCoverage
+									? t("gpCoverage")
+									: null
+						}
 					/>
 				</div>
 

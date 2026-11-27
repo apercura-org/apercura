@@ -1,0 +1,2084 @@
+{
+	"Metadata": {
+		"title": "Apercura",
+		"description": "Atvērts katalogs: ģimenes ārstu prakses, slimnīcas un aptiekas Latvijā, no valsts iestāžu atvērtajiem datiem portālā data.gov.lv.",
+		"proTitle": "Jūsu lapa jau ir izveidota · Apercura",
+		"proDescription": "Apercura publicē faktu lapu par ģimenes ārstu praksēm, slimnīcām un aptiekām no valsts atvērtajiem datiem. Atrodiet savas iestādes lapu un pārņemiet to bez maksas.",
+		"searchTitle": "Meklēšana · Apercura",
+		"galleryTitle": "Komponentu galerija · Apercura",
+		"homeTitle": "Apercura · Ģimenes ārsti, slimnīcas un aptiekas Latvijā"
+	},
+	"Site": {
+		"skipLink": "Pāriet uz saturu",
+		"wordmark": "Apercura",
+		"homeLink": "Apercura, sākumlapa",
+		"runningHead": "Atvērts veselības aprūpes iestāžu katalogs Latvijā",
+		"navLabel": "Galvenā navigācija",
+		"navPro": "Iestādēm",
+		"navPatients": "Pacientiem",
+		"folio": "{number}. lapa",
+		"externalLink": "atver citu vietni",
+		"footer": {
+			"free": "Bez maksas iestādēm un pacientiem.",
+			"license": "Pirmkods ar AGPL-3.0 licenci",
+			"noAds": "Bez vērtējumiem, bez reklāmas, bez apmaksātas ranžēšanas."
+		},
+		"folioRpps": "Kods {rpps}",
+		"home": "Sākums",
+		"breadcrumbs": "Jūs atrodaties šeit",
+		"footerNav": {
+			"label": "Par Apercuru",
+			"directory": "Katalogs",
+			"guides": "Ceļveži",
+			"about": "Par projektu",
+			"openSource": "Atvērtais kods",
+			"data": "Dati un avoti",
+			"accessibility": "Piekļūstamība",
+			"privacy": "Privātums",
+			"legal": "Juridiskā informācija",
+			"terms": "Lietošanas noteikumi",
+			"international": "Apercura citās valstīs"
+		},
+		"theme": {
+			"label": "Izskats",
+			"light": "Gaišs",
+			"dark": "Tumšs",
+			"system": "Kā sistēmā"
+		}
+	},
+	"LocaleSwitcher": {
+		"label": "Valoda",
+		"locale": "{locale, select, fr {Français} en {English} de {Deutsch} es {Español} it {Italiano} other {Nezināma valoda}}",
+		"current": "Valoda: <value>{language}</value>"
+	},
+	"CountrySwitcher": {
+		"label": "Valsts",
+		"current": "Valsts: <value>{country}</value>"
+	},
+	"ErrorPages": {
+		"notFound": {
+			"metaTitle": "Lapa nav atrasta · Apercura",
+			"title": "Šī lapa nepastāv",
+			"body": "Iespējams, adrese ir ierakstīta kļūdaini vai lapa ir izņemta. Meklējiet katalogā vai sāciet no kādas no tālāk norādītajām lapām.",
+			"rootBody": "Iespējams, adrese ir ierakstīta kļūdaini vai lapa ir izņemta. Izvēlieties valsti, lai meklētu tās katalogā.",
+			"code": "Kļūda 404",
+			"stamp": "Šajā adresē lapas nav",
+			"nextHeading": "Citur Apercurā",
+			"home": "Sākumlapa",
+			"directory": "Katalogs pa vietām",
+			"international": "Apercura katrā valstī"
+		},
+		"error": {
+			"metaTitle": "Lapa nav pieejama · Apercura",
+			"title": "Šo lapu neizdevās parādīt",
+			"body": "To sagatavojot, mūsu pusē radās kļūda. Mēģiniet vēlreiz; ja kļūda atkārtojas, atgriezieties pēc dažām minūtēm.",
+			"retry": "Mēģināt vēlreiz",
+			"home": "Atpakaļ uz sākumlapu",
+			"reference": "Kods atbalsta dienestam: {digest}"
+		}
+	},
+	"Search": {
+		"label": "Atrast ģimenes ārstu, slimnīcu vai aptieku",
+		"who": "Kas?",
+		"whoHint": "Iestādes nosaukums vai veids: ģimenes ārsts, slimnīca, aptieka",
+		"where": "Kur?",
+		"whereHint": "Pilsēta, pagasts vai novads",
+		"submit": "Meklēt",
+		"market": "Valsts",
+		"markets": {
+			"FR": "Francija",
+			"AT": "Austrija",
+			"GB": "Lielbritānija",
+			"CZ": "Čehija",
+			"IT": "Itālija",
+			"CH": "Šveice",
+			"SI": "Slovēnija",
+			"ES": "Spānija",
+			"DE": "Vācija",
+			"LV": "Latvija",
+			"LT": "Lietuva",
+			"EE": "Igaunija",
+			"PL": "Polija",
+			"NO": "Norvēģija",
+			"IE": "Īrija",
+			"FI": "Somija",
+			"CY": "Kipra"
+		}
+	},
+	"HomePage": {
+		"title": "Atrodiet ģimenes ārstu, slimnīcu vai aptieku Latvijā",
+		"hook": "Slimnīcām, aptiekām un ģimenes ārstu praksēm, kuru adrese ir publicēta atvērtajos datos, jau ir sava lapa.",
+		"specimen": {
+			"heading": "Katrai iestādei jau ir sava lapa",
+			"intro": "Šādi izskatās lapa, ko aizpilda atvērtie dati, pirms iestāde to pārņem: zināmie lauki ir aizpildīti, pie pārējiem skaidri norādīts, ka dati nav sniegti."
+		},
+		"pillarsHeading": "Ko Apercura apņemas",
+		"columns": {
+			"number": "Nr.",
+			"commitment": "Apņemšanās"
+		},
+		"pillars": {
+			"free": {
+				"title": "Bez maksas",
+				"description": "Bez maksas iestādēm un pacientiem, bez abonementa un bez komisijas maksas."
+			},
+			"openSource": {
+				"title": "Atvērtais kods",
+				"description": "Viss pirmkods ir publicēts ar AGPL-3.0 licenci."
+			},
+			"hostedInFrance": {
+				"title": "Veselības dati Eiropas Ekonomikas zonā",
+				"description": "Veselības datus Eiropas Ekonomikas zonā glabā mitināšanas pakalpojumu sniedzējs ({host}), un tie ir šifrēti lietotnes līmenī."
+			},
+			"encrypted": {
+				"title": "Šifrēti dati",
+				"description": "Pārņemšanas dokumenti, ziņojumi par kļūdām un, kur ir atvērts pieraksts tiešsaistē, arī pieraksti tiek šifrēti lietotnes līmenī."
+			},
+			"selfHostable": {
+				"title": "Pašu darbināma",
+				"description": "Visu platformu varat darbināt paši ar Docker, ieskaitot atvērto datu importu."
+			}
+		},
+		"registry": {
+			"heading": "No valsts atvērtajiem datiem",
+			"intro": "Katra lapa balstās uz atvērtajiem datiem portālā data.gov.lv: Nacionālā veselības dienesta ceturkšņa sarakstu ar ģimenes ārstiem un viņu praksēm, Iekšlietu ministrijas Informācijas centra ārstniecības iestāžu adrešu sarakstu, kurā ir arī slimnīcas, un Zāļu valsts aģentūras Farmaceitiskās darbības uzņēmumu reģistru (visi ar CC0 1.0 licenci). Pilsētas, pagasti un novadi ņemti no Valsts zemes dienesta Valsts adrešu reģistra (CC BY 4.0). Lapa apraksta iestādi, nevis atsevišķus cilvēkus; ģimenes ārsta prakses lapā ir norādīti tās ārsti, kā tos publicē Nacionālais veselības dienests. Ģimenes ārstu prakses ir iekļautas, ja to adrese ir Iekšlietu ministrijas sarakstā. Neviens nemaksā par iekļaušanu katalogā.",
+			"doctors": "Ārsti",
+			"dentists": "Zobārsti",
+			"midwives": "Vecmātes",
+			"nurses": "Privātprakses māsas",
+			"withAddress": "Ar publisku adresi",
+			"count": "{count, number}",
+			"sourceLabel": "Avots",
+			"sourceName": "Nacionālais veselības dienests, Iekšlietu ministrijas Informācijas centrs, Zāļu valsts aģentūra",
+			"updatedLabel": "Dati uz"
+		},
+		"pro": {
+			"heading": "Vadāt ģimenes ārsta praksi, slimnīcu vai aptieku?",
+			"body": "Jūsu iestādes lapa jau ir izveidota. Tās pārņemšana ir bez maksas.",
+			"cta": "Atrast savu lapu"
+		},
+		"tagline": "Atvērts ģimenes ārstu prakšu, slimnīcu un aptieku katalogs Latvijā no valsts atvērtajiem datiem.",
+		"status": "Izstrādes stadijā.",
+		"market": {
+			"listingsHeading": "Pēc iestādes veida",
+			"placesHeading": "Pašvaldības ar visvairāk iestādēm"
+		}
+	},
+	"SearchPage": {
+		"title": "Meklēšana",
+		"query": "Jūs meklējāt „{who}”",
+		"queryWhere": "Jūs meklējāt „{who}” vietā „{where}”",
+		"queryOnlyWhere": "Jūs meklējāt vietā „{where}”",
+		"emptyTitle": "Neviena iestāde neatbilst",
+		"emptyBody": "Pārbaudiet rakstību, izmēģiniet kaimiņu pilsētu vai pagastu vai vispārīgāku vārdu, piemēram, „ģimenes ārsts”.",
+		"queryNear": "Jūs meklējāt „{who}” savā tuvumā",
+		"queryOnlyNear": "Iestādes jūsu tuvumā",
+		"startTitle": "Ko jūs meklējat?",
+		"startBody": "Laukā „Kas?” ierakstiet iestādes nosaukumu vai veidu, piemēram, ģimenes ārsts, slimnīca vai aptieka, un laukā „Kur?” – pilsētu, pagastu vai novadu. Katalogu varat pārlūkot arī pa reģioniem un pašvaldībām.",
+		"noMoreTitle": "Vairāk rezultātu nav",
+		"browseDirectory": "Pārlūkot katalogu",
+		"rppsTitle": "Iestādei ar kodu {rpps} nav publiskas lapas",
+		"rppsBody": "Šis kods nav derīgs, vai arī iestādei nav publiskas lapas: katalogā ir slimnīcas, aptiekas un ģimenes ārstu prakses, kuru adrese ir Iekšlietu ministrijas sarakstā. Iestādes pārstāvis savu ierakstu tomēr var atrast un pārņemt.",
+		"rppsPro": "Iestādēm: atrodiet savu ierakstu",
+		"ambiguousTitle": "Nosaukums „{where}” atbilst vairākām vietām",
+		"ambiguousBody": "Izvēlieties vajadzīgo:",
+		"unknownPlaceTitle": "Vieta „{where}” mums nav zināma",
+		"unknownPlaceSuggest": "Vai domājāt kādu no šīm vietām?",
+		"unknownPlaceBody": "Pārbaudiet rakstību vai ierakstiet tuvāko pilsētu vai pagastu.",
+		"unlistedTitle": "„{who}” katalogā vēl nav",
+		"unlistedBody": "Latvijā katalogā pagaidām ir ģimenes ārstu prakses, slimnīcas un aptiekas; zobārstu, speciālistu un poliklīniku tajā nav. Meklējiet pēc iestādes nosaukuma vai pārlūkojiet katalogu.",
+		"departmentPlace": "Pašvaldība",
+		"resultsHeading": "Rezultāti",
+		"range": "Rezultāti no {from} līdz {to}",
+		"orderName": "Rezultāti sakārtoti pēc tā, cik precīzi atbilst nosaukums, pēc tam alfabētiski. Neviens nemaksā par augstāku vietu.",
+		"orderNear": "Rezultāti sakārtoti pēc attāluma no jums. Neviens nemaksā par augstāku vietu.",
+		"bookingNotOpen": "Apercura Latvijā nepiedāvā pierakstu tiešsaistē: zvaniet iestādei.",
+		"columns": {
+			"practitioner": "Iestāde",
+			"place": "Adrese",
+			"appointments": "Kontakti"
+		},
+		"action": {
+			"call": "Zvanīt: {phone}",
+			"establishment": "Ar slimnīcas starpniecību",
+			"locum": "Aizvietotājs: tiešs pieraksts nav iespējams",
+			"page": "Skatīt lapu",
+			"noPhone": "Tālrunis nav publicēts",
+			"nextFree": "Pierakstīties: {slot}"
+		},
+		"distance": "{km} km attālumā",
+		"pagination": "Rezultātu lapas",
+		"previous": "Iepriekšējie rezultāti",
+		"next": "Vairāk rezultātu",
+		"map": {
+			"show": "Rādīt kartē",
+			"hide": "Paslēpt karti",
+			"region": "Rezultātu karte",
+			"fallback": "Karte ielādējas. Sarakstā augstāk ir visas adreses."
+		},
+		"outsidePlace": "Ārpus vietas „{where}”",
+		"bookingOpenSome": "Dažas iestādes pieņem pierakstu tiešsaistē: rādām to tuvāko brīvo laiku. Pārējām iestādēm zvaniet.",
+		"notCoveredTitle": "Apercura vēl nav pieejama {country}",
+		"notCoveredBody": "Pagaidām Apercura aptver iestādes šajās valstīs. Izvēlieties valsti, lai meklētu tajā:"
+	},
+	"Practitioner": {
+		"rpps": "Iestādes kods",
+		"status": {
+			"unclaimed": "Nepārņemta lapa",
+			"claimed": "Pārņemta lapa",
+			"verified": "Pārbaudīta lapa"
+		},
+		"statusNote": {
+			"unclaimed": "Izveidota no valsts atvērtajiem datiem. Iestāde šo lapu vēl nav papildinājusi.",
+			"verified": "Papildinājusi iestāde, kuras lapas pārņemšana ir pārbaudīta."
+		},
+		"notProvided": "Nav norādīts",
+		"fields": {
+			"profession": "Iestādes veids",
+			"specialty": "Joma",
+			"address": "Adrese",
+			"phone": "Tālrunis",
+			"hours": "Darba laiks",
+			"languages": "Valodas",
+			"convention": "Līgums ar Nacionālo veselības dienestu",
+			"booking": "Pieraksts tiešsaistē",
+			"access": "Piekļuve"
+		},
+		"sitesHeading": "Adrese",
+		"directions": "Maršruts",
+		"providers": {
+			"openStreetMap": "OpenStreetMap",
+			"appleMaps": "Apple Kartes",
+			"googleMaps": "Google Maps"
+		},
+		"mapLabel": "Karte: {place}",
+		"mapPin": "Atrašanās vieta: {place}",
+		"source": {
+			"label": "Avots",
+			"name": "Nacionālais veselības dienests, Iekšlietu ministrijas Informācijas centrs, Zāļu valsts aģentūra (data.gov.lv, CC0 1.0)",
+			"updated": "Atjaunināts"
+		},
+		"action": {
+			"title": "Pieraksts",
+			"book": {
+				"statement": "Pieraksts tiešsaistē ir atvērts. Tas ir bez maksas un neprasa kontu.",
+				"label": "Pierakstīties"
+			},
+			"call": {
+				"statement": "Apercura Latvijā nepiedāvā pierakstu tiešsaistē. Lai pierakstītos, zvaniet iestādei.",
+				"label": "Zvanīt: {phone}"
+			},
+			"establishment": {
+				"statement": "Pie šī ārsta var pierakstīties, sazinoties ar iestādi: {establishment}.",
+				"label": "Pierakstīties: {establishment}"
+			},
+			"locum": {
+				"statement": "Šis ārsts strādā kā aizvietotājs citu ārstu vietā. Pie viņa nevar pierakstīties tieši.",
+				"hint": "Pierakstieties praksē, kurā viņš pašlaik aizvieto."
+			}
+		},
+		"slots": {
+			"heading": "Izvēlieties laiku",
+			"label": "Brīvie laiki",
+			"now": "tagad",
+			"unavailable": "nav pieejams",
+			"selected": "Izvēlēts: {slot}",
+			"emptyDay": "Šajā dienā brīvu laiku nav",
+			"slotLabel": "{day}, {time}",
+			"past": "pagājis"
+		},
+		"professions": {
+			"gp": "Ģimenes ārsts",
+			"dentist": "Zobārsts",
+			"midwife": "Vecmāte",
+			"physio": "Fizioterapeits"
+		},
+		"specimen": "Paraugs, nevis īsta iestāde"
+	},
+	"Map": {
+		"map": "Karte",
+		"marker": "Kartes marķieris",
+		"zoomIn": "Tuvināt",
+		"zoomOut": "Tālināt",
+		"resetBearing": "Velciet, lai pagrieztu karti; noklikšķiniet, lai to atkal vērstu uz ziemeļiem",
+		"toggleAttribution": "Rādīt vai paslēpt kartes autorus",
+		"mapFeedback": "Atsauksmes par karti",
+		"logo": "MapLibre logotips",
+		"closePopup": "Aizvērt logu",
+		"scrollZoomWindows": "Lai tuvinātu karti, ritiniet, turot nospiestu taustiņu Ctrl",
+		"scrollZoomMac": "Lai tuvinātu karti, ritiniet, turot nospiestu taustiņu ⌘",
+		"twoFingers": "Pārvietojiet karti ar diviem pirkstiem"
+	},
+	"PractitionerPage": {
+		"metaTitle": "{name}, {occupation} · Apercura",
+		"metaTitlePlace": "{name}, {occupation}, {place} · Apercura",
+		"metaDescription": "{name}, {occupation}: {fees, select, sector {adrese, tālrunis un cenas} other {adrese un tālrunis}}, no valsts atvērtajiem datiem (data.gov.lv).",
+		"metaDescriptionPlace": "{name}, {occupation}, {place}: {fees, select, sector {adrese, tālrunis un cenas} other {adrese un tālrunis}}, no valsts atvērtajiem datiem (data.gov.lv).",
+		"unknownProfession": "Veselības aprūpes iestāde",
+		"professionHeading": "Iestāde",
+		"otherQualifications": "Citas kvalifikācijas",
+		"fieldsOfCare": "Jomas",
+		"ownership": "Īpašuma forma",
+		"ownershipPublic": "Publiska",
+		"ownershipPrivate": "Privāta",
+		"practiceType": "Vietas veids",
+		"switchboard": "{phone} (iestādes centrālais tālrunis)",
+		"establishment": "Slimnīca",
+		"unnamedPlace": "Darbības vieta",
+		"asideLabel": "Par šo lapu",
+		"action": {
+			"callNotYetOpen": "Apercura Latvijā nepiedāvā pierakstu tiešsaistē. Lai pierakstītos, zvaniet iestādei.",
+			"establishmentLink": "Sazināties ar iestādi",
+			"noPhone": "Šai iestādei tālruņa numurs nav publicēts.",
+			"noPhoneHint": "Pārbaudiet kontaktinformāciju <link>Nacionālā veselības dienesta vietnē</link> vai sazinieties ar iestādi tieši.",
+			"bookStatement": "Pieraksts tiešsaistē ir atvērts. Tas ir bez maksas un neprasa kontu.",
+			"bookNoSlot": "Pieraksts tiešsaistē ir atvērts, bet tuvākajās nedēļās brīvu laiku nav. Pamēģiniet vēlāk vai zvaniet iestādei.",
+			"nextSlot": "Tuvākais brīvais laiks",
+			"bookLabel": "Pierakstīties",
+			"orCall": "Vai zvaniet: {phone}."
+		},
+		"fees": {
+			"heading": "Cenas un valsts apmaksa",
+			"sector": "Līgums ar NVD",
+			"agreement": "Līgums ar NVD",
+			"optam": "Ierobežotas piemaksas (OPTAM)",
+			"optamNo": "Nav dalībnieks",
+			"carteVitale": "Apdrošināšanas karte",
+			"accepted": "Pieņem",
+			"notAccepted": "Nepieņem",
+			"fromAmeli": "Šie dati ir no Nacionālā veselības dienesta.",
+			"notMatched": "Iestādi neizdevās viennozīmīgi atrast Nacionālā veselības dienesta datos, tāpēc šie dati netiek rādīti.",
+			"regulatoryNotice": "Līgums ar Nacionālo veselības dienestu nosaka, kā pakalpojumi tiek apmaksāti: pirms vizītes pārbaudiet cenas un valsts apmaksu",
+			"regulatoryNoticeAgreement": "Līgums ar Nacionālo veselības dienestu nosaka, kā pakalpojumi tiek apmaksāti: pirms vizītes pārbaudiet cenas un valsts apmaksu",
+			"ameliLink": "Nacionālā veselības dienesta vietnē",
+			"source": "Nacionālais veselības dienests",
+			"sourceOwner": "Iestāde"
+		},
+		"claim": {
+			"heading": "Vai šī ir jūsu iestāde?",
+			"body": "Šī lapa ir izveidota no valsts atvērtajiem datiem. Pārņemiet to, lai to pārbaudītu un papildinātu:",
+			"link": "Pārņemt šo lapu",
+			"claimedHeading": "Lapu pārvalda iestāde",
+			"claimedBody": "Iestāde ir pārņēmusi šo lapu: tās pieteikums ir pārbaudīts, un iestāde lapu papildina.",
+			"benefits": [
+				"bez maksas, bez abonementa un bez saistībām;",
+				"jūsu fotoattēls, darba laiks un valodas, kurās runājat;",
+				"jūsu tīmekļvietne un informācija par piekļūstamību;",
+				"statistika par jūsu lapas apmeklējumiem;",
+				"materiāli kopīgošanai: saite, QR kods un plakāts."
+			],
+			"contactLink": "Nav dokumenta pie rokas? Rakstiet mums",
+			"optOutLink": "Šī ir jūsu lapa, un nevēlaties būt publiski redzami? Sāciet šeit"
+		},
+		"report": {
+			"heading": "Vai šeit ir kļūda?",
+			"body": "Ja adrese, tālrunis vai nosaukums nav pareizs, pastāstiet mums, kā to labot.",
+			"link": "Ziņot par kļūdu"
+		},
+		"ring": {
+			"heading": "Citas iestādes: {occupation}, {place}"
+		},
+		"photoAlt": "Fotoattēls: {name}",
+		"metaTitleName": "{name} · Apercura",
+		"metaDescriptionBookable": "{name}, {occupation}: pieraksts tiešsaistē, adrese, kontakti un {fees, select, sector {līgums ar NVD} other {līgums ar NVD}}.",
+		"metaDescriptionBookablePlace": "{name}, {occupation}, {place}: pieraksts tiešsaistē, adrese, kontakti un {fees, select, sector {līgums ar NVD} other {līgums ar NVD}}.",
+		"latvianFacts": {
+			"gps": "Ģimenes ārsti",
+			"pharmacyType": "Aptieka vai filiāle",
+			"pharmacyMain": "Aptieka",
+			"pharmacyBranch": "Aptiekas filiāle"
+		}
+	},
+	"Institutional": {
+		"toBeCompleted": "Tiks papildināts",
+		"legalDraftMark": "Projekts: pirms darbības sākuma jāpārskata juristam",
+		"auditMark": "Pagaidu paziņojums: tiks papildināts pēc manuāla audita",
+		"comingMark": "Drīzumā",
+		"placeholderNote": "Ar lielajiem burtiem dubultās figūriekavās rakstītās vērtības vēl nav zināmas: tās tiks aizpildītas, tiklīdz būs izveidota juridiskā persona un noslēgti līgumi."
+	},
+	"AboutPage": {
+		"metaTitle": "Par projektu · Apercura",
+		"metaDescription": "Apercura bez maksas publicē faktu lapas par ģimenes ārstu praksēm, slimnīcām un aptiekām Latvijā, balstoties uz valsts atvērtajiem datiem.",
+		"title": "Par projektu Apercura",
+		"lead": "Atvērts ģimenes ārstu prakšu, slimnīcu un aptieku katalogs Latvijā.",
+		"sections": {
+			"what": {
+				"heading": "Ko dara Apercura",
+				"body": [
+					"Apercura publicē lapas par ģimenes ārstu praksēm, slimnīcām, aptiekām un aptieku filiālēm Latvijā, balstoties uz Nacionālā veselības dienesta, Iekšlietu ministrijas Informācijas centra un Zāļu valsts aģentūras atvērtajiem datiem. Ģimenes ārsta prakses lapā ir norādīti tās ārsti, kā tos publicē Nacionālais veselības dienests.",
+					"Pacienti atrod jebkuru iestādi, ne tikai tās, kas maksā kādai platformai. Iestādes savu lapu var bez maksas pārņemt, pārbaudīt un papildināt. Latvijā Apercura nepiedāvā pierakstu tiešsaistē."
+				]
+			},
+			"principles": {
+				"heading": "Principi",
+				"list": [
+					"Katra iestāde ir iekļauta vienādi neatkarīgi no tā, vai tā izmanto Apercuru.",
+					"Tikai faktu informācija: bez vērtējumiem, atsauksmēm, reklāmas un apmaksātas ranžēšanas.",
+					"Bez maksas iestādēm un pacientiem, bez abonementa un bez komisijas maksas.",
+					"Katrā lapā ir norādīts, no kurienes nāk tās dati un kad tie pēdējoreiz atjaunināti.",
+					"Tikai nepieciešamie dati, kas vākti noteiktam mērķim un dzēsti noteiktos termiņos."
+				]
+			},
+			"how": {
+				"heading": "No kurienes nāk lapas",
+				"body": [
+					"Lapas tiek regulāri atjauninātas no atvērtajiem datiem portālā data.gov.lv: Nacionālā veselības dienesta ceturkšņa saraksta „Ģimenes ārsta praksē reģistrēto pacientu skaits”, Iekšlietu ministrijas Informācijas centra saraksta „VKCP IĢIS – ārstniecības iestāžu adreses” un Zāļu valsts aģentūras Farmaceitiskās darbības uzņēmumu reģistra; pilsētas, pagasti un novadi ņemti no Valsts zemes dienesta Valsts adrešu reģistra. Datu lapā ir norādīts katrs avots, tā licence un datums."
+				]
+			},
+			"who": {
+				"heading": "Kas uztur Apercuru",
+				"body": [
+					"Apercura ir sabiedriska labuma projekts. Tas nav valsts pakalpojums, un tam nav nekādas saistības ar Veselības ministriju, Nacionālo veselības dienestu, Zāļu valsts aģentūru vai profesionālajām organizācijām."
+				]
+			}
+		},
+		"fields": {
+			"publisher": "Uzturētājs",
+			"contact": "Kontakti"
+		},
+		"links": {
+			"data": "Dati un avoti",
+			"openSource": "Pirmkods un licence"
+		}
+	},
+	"OpenSourcePage": {
+		"metaTitle": "Atvērtais kods · Apercura",
+		"metaDescription": "Viss Apercuras pirmkods ir publisks ar AGPL-3.0 licenci. Varat to lasīt, pārbaudīt vai darbināt visu platformu paši.",
+		"title": "Kods ir publisks.",
+		"lead": "Katra Apercuras koda rinda ir publicēta ar AGPL-3.0 licenci: varat to lasīt, pārbaudīt un darbināt visu platformu paši.",
+		"sections": {
+			"licence": {
+				"heading": "AGPL-3.0 licence",
+				"body": [
+					"AGPL-3.0 ir brīvās programmatūras licence. Ikviens drīkst kodu izmantot, pētīt, mainīt un izplatīt. Kas piedāvā modificētu versiju kā tiešsaistes pakalpojumu, tam savas izmaiņas jāpublicē ar to pašu licenci."
+				]
+			},
+			"can": {
+				"heading": "Ko jūs varat darīt",
+				"list": [
+					"Izlasīt, kā tiek veidota katra lapa un kā tiek importēti atvērtie dati.",
+					"Pārbaudīt, kā tiks šifrēti pacientu dati un cik ilgi tie tiek glabāti.",
+					"Ziņot par problēmu vai ierosināt izmaiņas publiskajā repozitorijā.",
+					"Darbināt visu platformu savā infrastruktūrā ar Docker, ieskaitot atvērto datu importu."
+				]
+			},
+			"selfHost": {
+				"heading": "Darbināšana pašiem",
+				"body": [
+					"Izvietojums, kurā ir tikai katalogs, nesatur veselības datus. Pacientu pieraksti ir veselības dati: ja darbināt pierakstu sistēmu citu vajadzībām, jums jāievēro noteikumi, kas uz veselības datiem attiecas jūsu valstī."
+				]
+			}
+		},
+		"facts": {
+			"licence": "Licence",
+			"licenceValue": "GNU Affero General Public License v3.0",
+			"repository": "Repozitorijs",
+			"data": "Kataloga dati"
+		},
+		"dataValue": "CC0 1.0 un CC BY 4.0, skatiet datu lapu",
+		"cta": {
+			"heading": "Izlasiet pirmkodu",
+			"body": "Repozitorijā ir kods, dokumentācija un ceļvedis platformas darbināšanai pašiem.",
+			"link": "Atvērt repozitoriju"
+		}
+	},
+	"Listing": {
+		"count": "{count, plural, zero {# iestāžu} one {# iestāde} other {# iestādes}}",
+		"metaTitle": "{count, plural, zero {{listing} – {place}: # iestāžu · Apercura} one {{listing} – {place}: # iestāde · Apercura} other {{listing} – {place}: # iestādes · Apercura}}",
+		"metaTitlePage": "{listing} – {place}, {page}. lapa · Apercura",
+		"metaDescription": "{count, plural, zero {{place}: # iestāžu sadaļā „{occupation}”, {fees, select, sector {adreses, tālruņi un cenas} other {adreses un tālruņi}}, no valsts atvērtajiem datiem.} one {{place}: # iestāde sadaļā „{occupation}”, {fees, select, sector {adrese, tālrunis un cenas} other {adrese un tālrunis}}, no valsts atvērtajiem datiem.} other {{place}: # iestādes sadaļā „{occupation}”, {fees, select, sector {adreses, tālruņi un cenas} other {adreses un tālruņi}}, no valsts atvērtajiem datiem.}}",
+		"title": "{listing} – {place}",
+		"lead": "{count, plural, zero {{place}: valsts atvērtajos datos šajā sadaļā ir # iestāžu.} one {{place}: valsts atvērtajos datos šajā sadaļā ir # iestāde.} other {{place}: valsts atvērtajos datos šajā sadaļā ir # iestādes.}}",
+		"practitionersHeading": "{count, plural, zero {# iestāžu} one {# iestāde} other {# iestādes}}",
+		"practitionersIntro": "Alfabētiskā secībā. Neviens nemaksā, lai būtu šeit, un neviens netiek izcelts.",
+		"rowFacts": "Līgums ar NVD: {sector} · Apdrošināšanas karte: {carteVitale}",
+		"rowFactsAgreement": "Līgums ar NVD: {sector} · Apdrošināšanas karte: {carteVitale}",
+		"columns": {
+			"practitioner": "Iestāde",
+			"sector": "Līgums ar NVD",
+			"agreement": "Līgums ar NVD",
+			"carteVitale": "Apdrošināšanas karte"
+		},
+		"pagination": {
+			"label": "Saraksta lapas",
+			"previous": "Iepriekšējā lapa",
+			"next": "Nākamā lapa",
+			"status": "{page}. lapa no {pages}",
+			"page": "<hidden>Lapa </hidden>{page}",
+			"jumps": "Pāriet uz lapu"
+		},
+		"facts": {
+			"heading": "Skaitļos",
+			"intro": "Līgumi ar NVD ir no Nacionālā veselības dienesta datiem, iestādēm, kuras tajos izdevās atrast.",
+			"introAgreement": "Līgumi ar NVD ir no Nacionālā veselības dienesta datiem, iestādēm, kuras tajos izdevās atrast.",
+			"sectorUnknown": "Līgums nav zināms",
+			"agreementUnknown": "Līgums nav zināms",
+			"carteVitaleYes": "Pieņem apdrošināšanas karti",
+			"carteVitaleNo": "Nepieņem apdrošināšanas karti",
+			"bookingNotOpen": "Pagaidām nav pieejams",
+			"sources": "NVD, IeM IC, ZVA (data.gov.lv, CC0 1.0); VZD Valsts adrešu reģistrs (CC BY 4.0)"
+		},
+		"communesHeading": "{listing} – {place}: pilsētas un pagasti",
+		"nearbyHeading": "{listing}: tuvākās pilsētas un pagasti",
+		"establishmentsHeading": "Slimnīcas – {place}",
+		"establishmentsIntro": "Slimnīcas, klīnikas un veselības centri, kuros strādā speciālisti no sadaļas „{occupation}”.",
+		"allSpecialties": "Visi iestāžu veidi – {place}",
+		"hubMetaTitle": "{count, plural, zero {{listing} Latvijā: # iestāžu · Apercura} one {{listing} Latvijā: # iestāde · Apercura} other {{listing} Latvijā: # iestādes · Apercura}}",
+		"hubMetaDescription": "{count, plural, zero {# iestāžu sadaļā „{occupation}” Latvijā, pa pašvaldībām: {fees, select, sector {adreses, tālruņi un cenas} other {adreses un tālruņi}}, no valsts atvērtajiem datiem.} one {# iestāde sadaļā „{occupation}” Latvijā, pa pašvaldībām: {fees, select, sector {adrese, tālrunis un cenas} other {adrese un tālrunis}}, no valsts atvērtajiem datiem.} other {# iestādes sadaļā „{occupation}” Latvijā, pa pašvaldībām: {fees, select, sector {adreses, tālruņi un cenas} other {adreses un tālruņi}}, no valsts atvērtajiem datiem.}}",
+		"hubTitle": "{listing} Latvijā",
+		"hubLead": "{count, plural, zero {Valsts atvērtajos datos šajā sadaļā Latvijā ir # iestāžu.} one {Valsts atvērtajos datos šajā sadaļā Latvijā ir # iestāde.} other {Valsts atvērtajos datos šajā sadaļā Latvijā ir # iestādes.}}",
+		"departmentsHeading": "{listing} pa pašvaldībām",
+		"departmentsIntro": "Izvēlieties pašvaldību, lai redzētu tās pilsētas, pagastus un iestādes.",
+		"browseDirectory": "Pārlūkot katalogu pa vietām",
+		"metaTitleShort": "{listing} – {place} · Apercura",
+		"metaDescriptionPage": "{count, plural, zero {{page}. lapa no {pages}: {place}, # iestāžu sadaļā „{occupation}”.} one {{page}. lapa no {pages}: {place}, # iestāde sadaļā „{occupation}”.} other {{page}. lapa no {pages}: {place}, # iestādes sadaļā „{occupation}”.}}",
+		"metaDescriptionPageRange": "{count, plural, zero {{page}. lapa no {pages}, no {first} līdz {last}: {place}, # iestāžu sadaļā „{occupation}”.} one {{page}. lapa no {pages}, no {first} līdz {last}: {place}, # iestāde sadaļā „{occupation}”.} other {{page}. lapa no {pages}, no {first} līdz {last}: {place}, # iestādes sadaļā „{occupation}”.}}",
+		"hubMetaTitleShort": "{listing} Latvijā · Apercura",
+		"authoritiesHeading": "{listing} – {place}: pašvaldības",
+		"gpCoverage": "Ģimenes ārstu prakses ir iekļautas katalogā, ja to adrese ir Iekšlietu ministrijas ārstniecības iestāžu sarakstā: tā ir aptuveni ceturtā daļa no praksēm, ar kurām Nacionālajam veselības dienestam ir līgums. Pārējās tiks iekļautas, tiklīdz to adrese būs publicēta kā atvērtie dati."
+	},
+	"Directory": {
+		"metaTitle": "Veselības aprūpes iestāžu katalogs pa vietām · Apercura",
+		"metaDescription": "Visi Latvijas reģioni un pašvaldības ar ģimenes ārstu praksēm, slimnīcām un aptiekām no valsts iestāžu atvērtajiem datiem portālā data.gov.lv.",
+		"title": "Katalogs pa vietām",
+		"lead": "{count, plural, zero {# iestāžu pa reģioniem un pašvaldībām.} one {# iestāde pa reģioniem un pašvaldībām.} other {# iestādes pa reģioniem un pašvaldībām.}}",
+		"otherRegion": "Citas vietas",
+		"emptyTitle": "Katalogs vēl nav importēts",
+		"emptyBody": "Atvērtie dati šajā serverī vēl nav importēti. Atgriezieties pēc nākamā importa.",
+		"placeMetaTitle": "Ģimenes ārsti, slimnīcas un aptiekas – {place} · Apercura",
+		"placeMetaDescription": "{count, plural, zero {{place}: # iestāžu pa veidiem, no valsts atvērtajiem datiem.} one {{place}: # iestāde pa veidiem, no valsts atvērtajiem datiem.} other {{place}: # iestādes pa veidiem, no valsts atvērtajiem datiem.}}",
+		"placeTitle": "Veselības aprūpes iestādes – {place}",
+		"placeLead": "{count, plural, zero {{place}: katalogā ir # iestāžu.} one {{place}: katalogā ir # iestāde.} other {{place}: katalogā ir # iestādes.}}",
+		"specialtiesHeading": "Pa iestāžu veidiem",
+		"communesHeading": "Pilsētas un pagasti – {place}",
+		"arrondissementsHeading": "Pa administratīvajām teritorijām",
+		"establishmentsHeading": "Slimnīcas – {place}",
+		"placeMetaTitleShort": "Iestādes – {place} · Apercura",
+		"authoritiesHeading": "Pašvaldības – {place}",
+		"regionLink": "Visas iestādes – {place}"
+	},
+	"Establishment": {
+		"metaTitle": "{name} · Apercura",
+		"metaTitlePlace": "{name}, {place} · Apercura",
+		"metaDescription": "{count, plural, zero {{name}: adrese, centrālais tālrunis un # ārstu, kas tur strādā, no valsts reģistra.} one {{name}: adrese, centrālais tālrunis un # ārsts, kas tur strādā, no valsts reģistra.} other {{name}: adrese, centrālais tālrunis un # ārsti, kas tur strādā, no valsts reģistra.}}",
+		"directory": "Katalogs",
+		"folio": "FINESS {finess}",
+		"lead": "{count, plural, zero {{kind}. Valsts reģistrā norādīts # ārstu, kas strādā šeit.} one {{kind}. Valsts reģistrā norādīts # ārsts, kas strādā šeit.} other {{kind}. Valsts reģistrā norādīti # ārsti, kas strādā šeit.}}",
+		"addressHeading": "Adrese",
+		"finess": "FINESS numurs",
+		"action": {
+			"call": "Pie speciālistiem pierakstās ar iestādes starpniecību. Zvaniet uz centrālo tālruni un lūdziet savienot ar vajadzīgo nodaļu.",
+			"noPhone": "Šai iestādei tālruņa numurs nav publicēts.",
+			"noPhoneHint": "Kontaktinformāciju meklējiet iestādes tīmekļvietnē."
+		},
+		"practitionersHeading": "{count, plural, zero {# šeit strādājošo ārstu} one {# šeit strādājošais ārsts} other {# šeit strādājošie ārsti}}",
+		"practitionersIntro": "Pa specialitātēm, alfabētiskā secībā.",
+		"otherProfessions": "Citas profesijas",
+		"source": "Annuaire Santé (ANS) un FINESS+"
+	},
+	"SearchForm": {
+		"specialties": "Iestāžu veidi",
+		"practitioners": "Iestādes",
+		"places": "Vietas",
+		"department": "Pašvaldība",
+		"nearMe": "Manā tuvumā",
+		"locating": "Nosakām jūsu atrašanās vietu…",
+		"geoDenied": "Atrašanās vietas noteikšana šai vietnei ir izslēgta. Ierakstiet pilsētas vai pagasta nosaukumu.",
+		"geoUnavailable": "Jūsu atrašanās vietu neizdevās noteikt. Ierakstiet pilsētas vai pagasta nosaukumu.",
+		"searching": "Meklējam…",
+		"noSuggestion": "Nav ieteikumu. Nospiediet „Meklēt”, lai redzētu visus rezultātus."
+	},
+	"OgImage": {
+		"runningHead": "Atvērts veselības aprūpes iestāžu katalogs",
+		"titles": {
+			"medecin": "Katram ārstam jau ir sava lapa.",
+			"chirurgien-dentiste": "Katram zobārstam jau ir sava lapa.",
+			"sage-femme": "Katrai vecmātei jau ir sava lapa.",
+			"infirmier": "Katrai privātprakses māsai jau ir sava lapa.",
+			"annuaire": "Veselības aprūpes iestādes pa veidiem un vietām."
+		},
+		"footer": "Bez maksas · Atvērtais kods · Bez vērtējumiem un reklāmas",
+		"practitioner": {
+			"folio": "Kods {rpps}",
+			"alt": "{name}, {occupation}, {place}",
+			"altNoPlace": "{name}, {occupation}"
+		}
+	},
+	"taxonomy": {
+		"profession": {
+			"gimenes-arstu-prakses": "Ģimenes ārsta prakse",
+			"slimnicas": "Slimnīca",
+			"aptiekas": "Aptieka"
+		},
+		"listing": {
+			"gimenes-arstu-prakses": "Ģimenes ārstu prakses",
+			"slimnicas": "Slimnīcas",
+			"aptiekas": "Aptiekas"
+		},
+		"practiceKind": {
+			"office": "Veselības aprūpes iestāde"
+		}
+	},
+	"booking": {
+		"panel": {
+			"code": {
+				"sendsLeft": "{count, plural, zero {Varat pieprasīt vēl # kodu.} one {Varat pieprasīt vēl # kodu.} other {Varat pieprasīt vēl # kodus.}}",
+				"invalid": "{count, plural, zero {Šis kods nav pareizs. Atlicis # mēģinājumu.} one {Šis kods nav pareizs. Atlicis # mēģinājums.} other {Šis kods nav pareizs. Atlikuši # mēģinājumi.}}"
+			}
+		},
+		"manage": {
+			"cutoffPassed": "{hours, plural, zero {Tiešsaistē izmaiņas var veikt ne vēlāk kā # stundu pirms vizītes. Lai to atceltu vai pārceltu tagad, zvaniet iestādei.} one {Tiešsaistē izmaiņas var veikt ne vēlāk kā # stundu pirms vizītes. Lai to atceltu vai pārceltu tagad, zvaniet iestādei.} other {Tiešsaistē izmaiņas var veikt ne vēlāk kā # stundas pirms vizītes. Lai to atceltu vai pārceltu tagad, zvaniet iestādei.}}"
+		}
+	},
+	"auth": {
+		"runningHead": "Sadaļa iestādēm",
+		"metadata": {
+			"signIn": "Pieteikšanās · Apercura",
+			"signUp": "Konta izveide · Apercura",
+			"verifyEmail": "E-pasta apstiprināšana · Apercura",
+			"challenge": "Apstipriniet, ka tas esat jūs · Apercura",
+			"security": "Drošība · Apercura",
+			"home": "Jūsu sadaļa · Apercura"
+		},
+		"common": {
+			"email": "E-pasta adrese",
+			"password": "Parole",
+			"pending": "Lūdzu, uzgaidiet",
+			"loading": "Ielādē",
+			"signOut": "Izrakstīties",
+			"signingOut": "Notiek izrakstīšanās",
+			"totpCode": "Sešu ciparu kods no autentifikācijas lietotnes"
+		},
+		"errors": {
+			"generic": "Kaut kas nogāja greizi. Lūdzu, pēc brīža mēģiniet vēlreiz.",
+			"tooManyRequests": "Pārāk daudz mēģinājumu. Uzgaidiet minūti un mēģiniet vēlreiz.",
+			"invalidCredentials": "Šī e-pasta adrese un parole nesakrīt.",
+			"emailNotVerified": "Vispirms apstipriniet savu e-pasta adresi: tikko nosūtījām jums jaunu saiti.",
+			"invalidCode": "Šis kods nav derīgs. Pārbaudiet kodu un mēģiniet vēlreiz.",
+			"locked": "Pārāk daudz nepareizu kodu. Uzgaidiet 15 minūtes un piesakieties vēlreiz.",
+			"passwordTooShort": "Parole ir pārāk īsa: izmantojiet vismaz 12 rakstzīmes.",
+			"passwordTooLong": "Parole ir pārāk gara: izmantojiet ne vairāk kā 128 rakstzīmes.",
+			"userExists": "Šo e-pasta adresi jau izmanto cits konts. Piesakieties.",
+			"invalidPassword": "Parole nav pareiza.",
+			"mfaRequired": "Vispirms apstipriniet savu identitāti ar otro faktoru.",
+			"lastFactor": "Pirms šī otrā faktora noņemšanas pievienojiet citu: jūsu kontam vienmēr jābūt vismaz vienam.",
+			"passkeyFailed": "Piekļuves atslēgu neizdevās izmantot. Mēģiniet vēlreiz vai izmantojiet paroli un kodu.",
+			"accountFrozen": "Šis konts ir iesaldēts pēc lapas apstrīdēšanas. Rakstiet mums, lai to atjaunotu pēc jaunas identitātes pārbaudes."
+		},
+		"signIn": {
+			"title": "Pieteikšanās",
+			"lead": "Jūsu iestādes sadaļa: lapa, kalendārs, komanda.",
+			"asideFactor": "Katram kontam, kam ir piekļuve pierakstiem, nepieciešams otrais faktors: kods no autentifikācijas lietotnes vai piekļuves atslēga.",
+			"asidePasskey": "Piekļuves atslēga glabājas jūsu tālrunī vai datorā un tiek atbloķēta ar pirksta nospiedumu, seju vai PIN kodu.",
+			"passwordHeading": "Ar paroli",
+			"submit": "Pieteikties",
+			"passkeyHeading": "Ar piekļuves atslēgu",
+			"passkeyHint": "Parole nav vajadzīga: jūsu ierīce apstiprina, ka tas esat jūs.",
+			"passkey": "Pieteikties ar piekļuves atslēgu",
+			"noAccount": "Vēl nav konta?",
+			"signUpLink": "Izveidot kontu",
+			"totpHeading": "Ievadiet kodu",
+			"backupHeading": "Ievadiet rezerves kodu",
+			"totpLead": "Atveriet autentifikācijas lietotni un ievadiet sešu ciparu kodu, kas parādīts Apercura kontam.",
+			"backupLead": "Katru rezerves kodu var izmantot vienu reizi. Jūs tos saņēmāt, iestatot autentifikācijas lietotni.",
+			"backupCode": "Rezerves kods",
+			"verify": "Apstiprināt",
+			"useBackupCode": "Izmantot rezerves kodu",
+			"useTotp": "Izmantot autentifikācijas lietotni",
+			"pscHeading": "Ar Pro Santé Connect",
+			"pscHint": "Kad tas pārņemšanas laikā ir piesaistīts jūsu kontam, lietotne e-CPS vai CPS karte ļauj pieteikties bez cita koda.",
+			"psc": "Pieteikties ar Pro Santé Connect",
+			"pscFailed": "Pieteikšanās ar Pro Santé Connect neizdevās. Vispirms piesaistiet to savam kontam pārņemšanas pieteikumā vai piesakieties ar paroli."
+		},
+		"signUp": {
+			"title": "Konta izveide",
+			"lead": "Bez maksas iestādēm un to darbiniekiem.",
+			"asideSteps": "Trīs soļi: izveidojiet kontu, apstipriniet e-pasta adresi un iestatiet otro faktoru.",
+			"asideFree": "Konta izveide nemaina nevienu publisku lapu. Lapas pārņemšana seko pēc tam.",
+			"name": "Vārds un uzvārds",
+			"emailHint": "Uz šo adresi nosūtīsim apstiprinājuma saiti.",
+			"passwordHint": "Vismaz {min} rakstzīmes. Garu teikumu ir viegli atcerēties.",
+			"submit": "Izveidot kontu",
+			"haveAccount": "Jums jau ir konts?",
+			"signInLink": "Pieteikties",
+			"sentHeading": "Pārbaudiet savu pastkastīti",
+			"sentTitle": "Nosūtījām apstiprinājuma saiti uz {email}.",
+			"sentBody": "Atveriet e-pastu un stundas laikā atveriet saiti. Pēc tam piesakieties, lai iestatītu otro faktoru.",
+			"sentHint": "Pēc dažām minūtēm vēl nekā nav? Pārbaudiet surogātpasta mapi vai piesakieties: nosūtīsim jaunu saiti."
+		},
+		"verifyEmail": {
+			"title": "E-pasta apstiprināšana",
+			"successTitle": "Jūsu e-pasta adrese ir apstiprināta.",
+			"successBody": "Piesakieties ar paroli, lai iestatītu otro faktoru.",
+			"errorTitle": "Šī saite vairs nedarbojas.",
+			"errorBody": "Iespējams, tās derīgums ir beidzies vai tā jau ir izmantota. Piesakieties: mēs nosūtīsim jums jaunu saiti.",
+			"signIn": "Pieteikties"
+		},
+		"challenge": {
+			"title": "Apstipriniet, ka tas esat jūs",
+			"lead": "Jūsu kontam ir otrais faktors: izmantojiet to, lai atvērtu savu sadaļu.",
+			"aside": "Ar paroli vien nepietiek, lai piekļūtu pierakstiem.",
+			"passkeyHeading": "Ar piekļuves atslēgu",
+			"passkeyLead": "Ierīce prasīs pirksta nospiedumu, seju vai PIN kodu.",
+			"passkey": "Izmantot manu piekļuves atslēgu",
+			"totpHeading": "Ar autentifikācijas lietotni",
+			"otherHeading": "Tas neesat jūs, vai jums nav piekļuves savam faktoram?",
+			"otherLead": "Izrakstieties. Konta atjaunošana nozīmē atkārtotu identitātes pārbaudi."
+		},
+		"security": {
+			"title": "Drošība",
+			"lead": "Kā jūs piesakāties un kurās ierīcēs ir aktīvas sesijas.",
+			"enrolLead": "Pēdējais solis pirms ieejas sadaļā: iestatiet otro faktoru.",
+			"enrolTitle": "Lai turpinātu, izvēlieties otro faktoru",
+			"enrolBody": "Apercura to pieprasa katram kontam, kam ir piekļuve pierakstiem. Der gan autentifikācijas lietotne, gan piekļuves atslēga; otru varēsiet pievienot vēlāk.",
+			"continue": "Turpināt uz savu sadaļu",
+			"actions": "Darbības",
+			"totp": {
+				"heading": "Autentifikācijas lietotne",
+				"lead": "Lietotne jūsu tālrunī (piemēram, FreeOTP, Aegis vai Google Authenticator) ik pēc 30 sekundēm parāda jaunu sešu ciparu kodu.",
+				"enabledTitle": "Autentifikācijas lietotne ir iestatīta.",
+				"enabledBody": "Ikreiz, kad piesakāties ar paroli, jums tiks prasīts kods.",
+				"scanHeading": "1. Noskenējiet QR kodu",
+				"scanLead": "Autentifikācijas lietotnē pievienojiet kontu un noskenējiet šo kodu. Ja nevarat to noskenēt, ievadiet iestatīšanas atslēgu.",
+				"qrLabel": "QR kods, lai pievienotu Apercura autentifikācijas lietotnei",
+				"manualKey": "Iestatīšanas atslēga",
+				"codesHeading": "2. Saglabājiet rezerves kodus",
+				"codesLead": "Ja pazaudēsiet tālruni, ar katru no šiem kodiem varēsiet pieteikties vienu reizi. Izdrukājiet tos vai saglabājiet paroļu pārvaldniekā; tie tiek parādīti tikai tagad.",
+				"confirmHeading": "3. Ievadiet lietotnes parādīto kodu",
+				"confirm": "Ieslēgt",
+				"password": "Jūsu parole",
+				"passwordHint": "Pirms pieteikšanās veida maiņas mēs to pajautāsim vēlreiz.",
+				"start": "Iestatīt lietotni"
+			},
+			"passkeys": {
+				"heading": "Piekļuves atslēgas",
+				"lead": "Piekļuves atslēga paliek jūsu tālrunī, datorā vai drošības atslēgā un tiek atbloķēta ar pirksta nospiedumu, seju vai PIN kodu. Nekas nav jāraksta, nekas nav nozogams.",
+				"addedTitle": "Piekļuves atslēga ir pievienota.",
+				"name": "Nosaukums",
+				"added": "Pievienota",
+				"unnamed": "Piekļuves atslēga",
+				"removeNamed": "Noņemt {name}",
+				"remove": "Noņemt",
+				"none": "Vēl nav nevienas piekļuves atslēgas.",
+				"nameLabel": "Jaunās piekļuves atslēgas nosaukums (nav obligāts)",
+				"nameHint": "Piemēram: prakses dators.",
+				"add": "Pievienot piekļuves atslēgu"
+			},
+			"sessions": {
+				"heading": "Aktīvās sesijas",
+				"lead": "Sesija beidzas pēc 12 stundām bez lietošanas. Izbeidziet katru sesiju, kuru neatpazīstat.",
+				"device": "Ierīce",
+				"lastActive": "Pēdējā aktivitāte",
+				"unknownDevice": "Nezināma ierīce",
+				"current": "Šī sesija",
+				"revoke": "Izbeigt",
+				"everywhereHint": "Pazaudējāt ierīci vai kādam atklājāt paroli? Izbeidziet visas sesijas, ieskaitot šo.",
+				"everywhere": "Izrakstīties visur"
+			},
+			"data": {
+				"heading": "Jūsu dati",
+				"lead": "Visu jūsu konta datu kopija un konta dzēšana.",
+				"exportHeading": "Lejupielādēt savus datus",
+				"exportBody": "JSON fails ar jūsu kontu, pieteikšanās veidiem (nekad ne to slepenajām atslēgām), sesijām, iestādēm, pārņemšanas pieteikumiem un lapas saturu.",
+				"export": "Lejupielādēt manus datus",
+				"deleteHeading": "Dzēst kontu",
+				"deleteBody": "Jūsu konts, sesijas, pieteikumi un dokumenti tiek dzēsti. Jūsu lapa atgriežas pie reģistra datiem: nepārņemta, bez jūsu satura un fotoattēla.",
+				"closeEffect": "Slēdzot iestādi, tiek atcelti tās gaidāmie pieraksti (pacienti saņem e-pastu), atsauktas tās kalendāra saites un dienas laikā dzēsti tās pacientu dati. Piekļuves žurnāls tiek glabāts vienu gadu.",
+				"practiceChoice": "Kas notiks ar {name}?",
+				"close": "Slēgt iestādi: tās dalībnieki zaudē piekļuvi",
+				"transfer": "Nodot to lietotājam {name} ({email})",
+				"practiceAlone": "Iestāde {name} tiks slēgta kopā ar jūsu kontu (jūs esat tās vienīgais dalībnieks).",
+				"confirmEmail": "Lai apstiprinātu, ierakstiet savu e-pasta adresi",
+				"confirmEmailHint": "Dzēšanu nevar atsaukt.",
+				"mismatch": "Šī nav jūsu konta e-pasta adrese.",
+				"hasTeam": "Katrai iestādei ar komandu izvēlieties, kas ar to notiks.",
+				"lastAdmin": "Jūs esat pēdējais platformas administrators: vispirms ieceliet citu.",
+				"failed": "Kontu neizdevās dzēst. Mēģiniet vēlreiz pēc brīža.",
+				"delete": "Dzēst manu kontu"
+			}
+		},
+		"app": {
+			"title": "Jūsu sadaļa",
+			"lead": "Konts: {email}.",
+			"homeLink": "Apercura, sākumlapa",
+			"nav": {
+				"label": "Sadaļa iestādēm",
+				"home": "Jūsu sadaļa",
+				"security": "Drošība",
+				"page": "Jūsu lapa",
+				"adminClaims": "Pārņemšanas pieteikumi",
+				"adminReports": "Ziņojumi",
+				"today": "Šodien",
+				"agenda": "Kalendārs",
+				"team": "Komanda",
+				"menu": "Izvēlne",
+				"stats": "Statistika",
+				"share": "Kopīgošana",
+				"adminContacts": "Saziņas pieprasījumi"
+			},
+			"practicesHeading": "Jūsu iestādes",
+			"columns": {
+				"practice": "Iestāde",
+				"role": "Jūsu loma",
+				"page": "Lapa",
+				"status": "Statuss",
+				"next": "Nākamais solis"
+			},
+			"emptyTitle": "Vēl nav iestādes",
+			"emptyBody": "Jūsu iestāde šeit parādīsies, kad tās lapas pārņemšana būs pārbaudīta.",
+			"emptyAction": "Atrast savu lapu",
+			"securityHeading": "Konta drošība",
+			"securityBody": "Jūsu kontu aizsargā otrais faktors. Pārvaldiet autentifikācijas lietotni, piekļuves atslēgas un sesijas.",
+			"securityLink": "Drošības iestatījumi",
+			"claimsHeading": "Jūsu lapa un pārņemšanas pieteikumi",
+			"editPage": "Rediģēt lapu",
+			"openClaim": "Atvērt pieteikumu",
+			"adminRunningHead": "Administrēšana",
+			"agendaHeading": "Kalendārs",
+			"agendaBody": "Jūsu diena, nedēļa, pieprasījumi, uz kuriem jāatbild, un pierakstu iestatījumi.",
+			"agendaLink": "Atvērt šodienas kalendāru",
+			"invitationsHeading": "Uzaicinājumi",
+			"invitationBody": "Iestāde {practice} aicina jūs pievienoties tās komandai.",
+			"invitationLink": "Atbildēt uz uzaicinājumu",
+			"pageHeading": "Jūsu lapa",
+			"pageSummary": "{views, plural, =0 {Nav skatījumu} zero {# skatījumu} one {# skatījums} other {# skatījumi}} pēdējās 30 dienās; lapa aizpildīta par {score} %.",
+			"statsLink": "Skatīt statistiku un to, kas trūkst",
+			"shareLink": "Kopīgot lapu: saite, QR kods, plakāts"
+		},
+		"roles": {
+			"owner": "Īpašnieks",
+			"practitioner": "Speciālists",
+			"assistant": "Asistents"
+		},
+		"email": {
+			"wordmark": "Apercura",
+			"runningHead": "Sadaļa iestādēm",
+			"footer": "Apercura: atvērts veselības aprūpes iestāžu katalogs. Bez maksas un ar atvērtu pirmkodu.",
+			"verify": {
+				"subject": "Apstipriniet savu e-pasta adresi",
+				"preview": "Apstipriniet savu e-pasta adresi, lai pabeigtu Apercura konta izveidi.",
+				"title": "Apstipriniet savu e-pasta adresi",
+				"greeting": "Labdien, {name}!",
+				"body": "Jūs tikko izveidojāt Apercura kontu. Lai turpinātu, apstipriniet, ka šī adrese pieder jums.",
+				"action": "Apstiprināt adresi",
+				"fallback": "Ja poga nedarbojas, iekopējiet šo saiti pārlūkā:",
+				"expiry": "Saite ir derīga vienu stundu.",
+				"ignore": "Jūs neizveidojāt šo kontu? Neņemiet vērā šo e-pastu: nekas nenotiks."
+			}
+		}
+	},
+	"emails": {
+		"fallback": "Ja poga nedarbojas, iekopējiet šo saiti pārlūkā:",
+		"claimRegistryLink": {
+			"subject": "Apstipriniet iestādes lapas pārņemšanu",
+			"title": "Vai šī ir iestāde {practitioner}?",
+			"body": [
+				"Kāds ir lūdzis pārvaldīt Apercura lapu: {practitioner}. Šis e-pasts nosūtīts uz adresi, ko valsts reģistrs norāda šai iestādei.",
+				"Ja pieprasījums nāk no iestādes {practitioner}, atveriet saiti un apstipriniet to. Tad lapa būs pārbaudīta."
+			],
+			"action": "Apstiprināt pārņemšanu",
+			"notes": [
+				"Saite ir derīga 24 stundas.",
+				"Negaidījāt šo e-pastu? Neņemiet to vērā: nekas nemainīsies, un lapa paliks, kāda ir."
+			]
+		},
+		"claimReceived": {
+			"subject": "Jūsu pārņemšanas pieteikums tiek izskatīts",
+			"title": "Jūsu pārņemšanas pieteikums tiek izskatīts",
+			"body": [
+				"Labdien, {name}!",
+				"Esam saņēmuši jūsu pieteikumu un dokumentus. Apercura komandas loceklis tos izskatīs un rakstīs jums e-pastu.",
+				"Pieteikumus izskatām 48 stundu laikā darba dienās."
+			]
+		},
+		"claimVerified": {
+			"subject": "Jūsu lapa ir pārbaudīta",
+			"title": "Jūsu lapa ir pārbaudīta",
+			"body": [
+				"Labdien, {name}!",
+				"Jūsu lapai tagad ir pārbaudītas lapas zīme. Pārbaudiet importētos datus, papildiniet cenas un maksājumu veidus, pēc tam publicējiet lapu."
+			],
+			"action": "Papildināt manu lapu"
+		},
+		"claimRejected": {
+			"subject": "Jūsu pārņemšanas pieteikums netika pieņemts",
+			"title": "Jūsu pārņemšanas pieteikums netika pieņemts",
+			"body": [
+				"Labdien, {name}!",
+				"Jūsu pieteikumu neizdevās pārbaudīt. Izskatītāja norādītais iemesls: {reason}",
+				"Savā sadaļā varat iesniegt jaunu pieteikumu ar salasāmu dokumentu, kas apliecina, ka rīkojaties iestādes vārdā."
+			]
+		},
+		"claimSuperseded": {
+			"subject": "Jūsu piekļuve lapai ir atsaukta",
+			"title": "Jūsu piekļuve lapai ir atsaukta",
+			"body": [
+				"Labdien, {name}!",
+				"Cits konts pierādīja, ka tas pieder tās lapas iestādei, kuru pārvaldīja jūsu konts. Jūsu konts ir iesaldēts, un tā piekļuve iestādei ir atsaukta.",
+				"Ja iestādes pārstāvis esat jūs, rakstiet mums: kontu var atjaunot tikai pēc jaunas identitātes pārbaudes."
+			]
+		},
+		"removalReceived": {
+			"subject": "Jūsu lūgums dzēst lapu ir saņemts",
+			"title": "Jūsu lūgums dzēst lapu ir saņemts",
+			"body": [
+				"Lapa no šī brīža ir paslēpta: tā vairs netiek rādīta, indeksēta vai iekļauta sarakstos.",
+				"Mēs pārbaudīsim lūgumu un atbildēsim ne vēlāk kā viena mēneša laikā. Kad tas būs apstiprināts, lapa tiks dzēsta; dzēsta lapa neatgriežas ar nākamo reģistra importu."
+			]
+		},
+		"removalConfirmed": {
+			"subject": "Lapa ir dzēsta",
+			"title": "Lapa ir dzēsta",
+			"body": [
+				"Lapa, kuras dzēšanu lūdzāt, ir dzēsta no Apercuras. Tā neatgriezīsies ar nākamo reģistra importu."
+			]
+		},
+		"removalRejected": {
+			"subject": "Jūsu lūgums dzēst lapu netika pieņemts",
+			"title": "Jūsu lūgums dzēst lapu netika pieņemts",
+			"body": [
+				"Jūsu lūgumu dzēst lapu neizdevās apstiprināt, tāpēc lapa atkal tiek rādīta. Iemesls: {reason}",
+				"Ja esat lapā norādītās iestādes pārstāvis, varat arī pārņemt lapu un dzēst to paši savā sadaļā."
+			]
+		},
+		"teamInvitation": {
+			"subject": "{inviter} aicina jūs pievienoties komandai: {practice}",
+			"title": "Pievienojieties komandai: {practice}",
+			"body": [
+				"Labdien!",
+				"{inviter} aicina jūs Apercurā pievienoties komandai {practice} ar lomu: {role}.",
+				"Lai pievienotos, piesakieties vai izveidojiet kontu ar šo e-pasta adresi, pēc tam iestatiet otro faktoru (autentifikācijas lietotni vai piekļuves atslēgu): tas aizsargā pacientu datus, ko redzēsiet."
+			],
+			"action": "Pievienoties komandai",
+			"notes": [
+				"Uzaicinājums ir derīgs 48 stundas.",
+				"Negaidījāt to? Neņemiet vērā šo e-pastu: bez jums nekas nenotiks."
+			]
+		},
+		"contactReceived": {
+			"subject": "Jūsu pieprasījums ir saņemts",
+			"title": "Jūsu pieprasījums ir saņemts",
+			"body": [
+				"Labdien!",
+				"Esam saņēmuši jūsu pieprasījumu par lapu Apercuras katalogā. Komandas loceklis ar jums sazināsies, lai pārbaudītu jūsu identitāti un palīdzētu pārņemt lapu.",
+				"Ja šo pieprasījumu nesūtījāt, neņemiet vērā šo e-pastu: neviena lapa un neviens konts nav mainīts."
+			]
+		},
+		"adminClaims": {
+			"subject": "{count, plural, zero {# pārņemšanas pieteikumu jāizskata} one {# pārņemšanas pieteikums jāizskata} other {# pārņemšanas pieteikumi jāizskata}}",
+			"title": "{count, plural, zero {Lēmumu gaida # pārņemšanas pieteikumu} one {Lēmumu gaida # pārņemšanas pieteikums} other {Lēmumu gaida # pārņemšanas pieteikumi}}",
+			"body": [
+				"Kopš pēdējā paziņojuma {count, plural, zero {izskatīšanai nosūtīts # pieteikumu} one {izskatīšanai nosūtīts # pieteikums} other {izskatīšanai nosūtīti # pieteikumi}}.",
+				"Sīkāka informācija ir iestāžu sadaļas rindā, aiz jūsu otrā faktora."
+			],
+			"action": "Atvērt pieteikumus"
+		},
+		"adminContactRequests": {
+			"subject": "{count, plural, zero {# pieprasījumu „Esmu šīs iestādes pārstāvis”} one {# pieprasījums „Esmu šīs iestādes pārstāvis”} other {# pieprasījumi „Esmu šīs iestādes pārstāvis”}}",
+			"title": "{count, plural, zero {Atbildi gaida # saziņas pieprasījumu} one {Atbildi gaida # saziņas pieprasījums} other {Atbildi gaida # saziņas pieprasījumi}}",
+			"body": [
+				"Kopš pēdējā paziņojuma {count, plural, zero {# iestāžu pārstāvju, kas nevar pārņemt savu lapu, lūdz ar viņiem sazināties} one {# iestādes pārstāvis, kas nevar pārņemt savu lapu, lūdz ar viņu sazināties} other {# iestāžu pārstāvji, kas nevar pārņemt savu lapu, lūdz ar viņiem sazināties}}.",
+				"Viņu šifrētie dati ir lasāmi iestāžu sadaļas rindā."
+			],
+			"action": "Atvērt pieprasījumus"
+		}
+	},
+	"Profile": {
+		"presentationHeading": "Apraksts",
+		"practicalHeading": "Praktiskā informācija",
+		"fields": {
+			"languages": "Valodas",
+			"accessibility": "Piekļuve",
+			"website": "Tīmekļvietne",
+			"fees": "Cenas",
+			"paymentMethods": "Maksājumu veidi"
+		},
+		"accessibility": {
+			"stepFree": "Piekļuve bez pakāpieniem",
+			"lift": "Lifts",
+			"parking": "Autostāvvieta tuvumā"
+		},
+		"languages": {
+			"fr": "franču valoda",
+			"en": "angļu valoda",
+			"es": "spāņu valoda",
+			"de": "vācu valoda",
+			"it": "itāļu valoda",
+			"pt": "portugāļu valoda",
+			"ar": "arābu valoda",
+			"zh": "ķīniešu valoda",
+			"ru": "krievu valoda",
+			"tr": "turku valoda",
+			"ro": "rumāņu valoda",
+			"pl": "poļu valoda",
+			"nl": "nīderlandiešu valoda",
+			"vi": "vjetnamiešu valoda",
+			"fa": "persiešu valoda",
+			"he": "ivrits",
+			"uk": "ukraiņu valoda",
+			"lsf": "franču zīmju valoda"
+		},
+		"paymentMethods": {
+			"card": "Bankas karte",
+			"cash": "Skaidra nauda",
+			"cheque": "Čeks",
+			"transfer": "Bankas pārskaitījums"
+		},
+		"fees": {
+			"range": "no {min} līdz {max}",
+			"fromOwner": "Cenas norāda iestāde."
+		}
+	},
+	"Claim": {
+		"metadata": {
+			"start": "Lapas pārņemšana · Apercura",
+			"claim": "Jūsu pārņemšanas pieteikums · Apercura",
+			"emailLink": "Pārņemšanas apstiprināšana · Apercura"
+		},
+		"pending": "Lūdzu, uzgaidiet",
+		"errors": {
+			"generic": "Kaut kas nogāja greizi. Lūdzu, pēc brīža mēģiniet vēlreiz.",
+			"TOO_MANY": "Šodien ir pārāk daudz pieteikumu. Mēģiniet rīt.",
+			"ALREADY_OWNER": "Šī lapa jau ir jūsu.",
+			"FROZEN": "Šis konts ir iesaldēts un nevar pārņemt lapu.",
+			"NOT_FOUND": "Nevienai lapai nav šāda koda.",
+			"INVALID_RPPS": "Šis kods nav derīgs: ievadiet iestādes kodu no tās lapas adreses beigām (piemēram, g010000006), lapas adreses beigas vai visu adresi.",
+			"NOT_OPEN": "Šis pieteikums ir slēgts: to vairs nevar mainīt.",
+			"METHOD_UNAVAILABLE": "Šis pārbaudes veids šai lapai nav pieejams.",
+			"TOO_MANY_ATTEMPTS": "Pārāk daudz mēģinājumu ar šo veidu. Izvēlieties citu.",
+			"NOT_SUBMITTABLE": "Pirms pieteikuma nosūtīšanas izskatīšanai pievienojiet dokumentu.",
+			"BAD_DOCUMENT": "Šo failu nevar izmantot: nosūtiet PDF, JPEG, PNG vai WebP failu, ne lielāku par 10 MB.",
+			"PSC_MISSING": "Pro Santé Connect neatgrieza identitāti. Mēģiniet vēlreiz."
+		},
+		"start": {
+			"title": "Pārņemiet savu lapu",
+			"lead": "Pārņemšana attiecas uz vienas iestādes lapu, nekad uz vārdu.",
+			"recordHeading": "Lapa, kuru pārņemat",
+			"unknownProfession": "Veselības aprūpes iestāde",
+			"viewPage": "Skatīt publisko lapu",
+			"contestTitle": "Šai lapai jau ir pārbaudīts pārvaldītājs",
+			"contestBody": "Ja tā ir jūsu iestādes lapa (piemēram, ja vairs nevarat piekļūt savam kontam), jūs to tomēr varat pārņemt: jūsu dokumentu izskatīs administrators un pieņems lēmumu. Konta atjaunošanai vienmēr nepieciešama jauna pārbaude.",
+			"confirm": "Tā ir mana iestāde: sākt pārņemšanu",
+			"goToPage": "Pāriet uz manu lapu",
+			"findHeading": "Atrodiet savas iestādes lapu",
+			"notFound": "Nevienai publiskai lapai vēl nav šāda koda.",
+			"rppsLabel": "Lapas kods vai adrese",
+			"rppsHint": "Kods ir lapas adreses beigās, piemēram, g010000006 adresē apercura.org/lv/iestade/ilzes-paraugas-gimenes-arsta-prakse-g010000006. Varat ielīmēt arī visu adresi.",
+			"find": "Atrast manu lapu",
+			"searchHint": "Lapu varat meklēt arī pēc nosaukuma:",
+			"searchLink": "meklēt katalogā",
+			"howHeading": "Kā mēs pārbaudām, ka tas esat jūs",
+			"factorNote": "Jūsu kontam jau ir otrais faktors: tas ir obligāts pirms jebkuras pārņemšanas un turpmāk aizsargā jūsu lapu.",
+			"contactLink": "Nav dokumenta pie rokas? Rakstiet mums",
+			"optOutLink": "Šī ir jūsu lapa, un nevēlaties būt publiski redzami? Sāciet šeit",
+			"identifierLabel": "Iestādes kods"
+		},
+		"methods": {
+			"psc": {
+				"title": "Pro Santé Connect",
+				"short": "Pro Santé Connect",
+				"summary": "Ar lietotni e-CPS vai CPS karti. Pārbaude notiek uzreiz, un pierakstu tiešsaistē var atvērt nekavējoties.",
+				"lead": "Piesakieties ar lietotni e-CPS vai CPS karti. Jūsu lapa ir pārbaudīta, tiklīdz identitāte atbilst tās RPPS numuram.",
+				"action": "Turpināt ar Pro Santé Connect",
+				"hint": "Jūs atstāsiet Apercuru un pāriesiet uz Pro Santé Connect lapu, pēc tam atgriezīsieties šeit.",
+				"done": "Pro Santé Connect apstiprināja jūsu identitāti."
+			},
+			"registry_email": {
+				"title": "Iestādes e-pasts",
+				"short": "E-pasts no reģistra",
+				"summary": "Saite, kas nosūtīta uz e-pasta adresi, ko reģistrs norāda jūsu iestādei. Pārbaude notiek, tiklīdz atverat saiti; pieraksts tiek atvērts pēc 7 dienām.",
+				"lead": "Nosūtīsim saiti uz {email} – adresi, kas reģistrā norādīta jūsu iestādei. Atveriet to un apstipriniet.",
+				"action": "Nosūtīt saiti",
+				"resend": "Nosūtīt vēlreiz",
+				"sent": "Saite nosūtīta. Tā ir derīga 24 stundas.",
+				"done": "Iestādes pastkastīte apstiprināja pieteikumu."
+			},
+			"document": {
+				"title": "Dokuments un tālruņa zvans",
+				"short": "Dokuments",
+				"summary": "Dokuments, kas apliecina, ka rīkojaties iestādes vārdā: līgums ar Nacionālo veselības dienestu, izziņa no Ārstniecības iestāžu reģistra vai aptiekas speciālā atļauja (licence), vai arī Uzņēmumu reģistra izziņa ar pilnvaru uz iestādes veidlapas. Mūsu komandas loceklis to parasti pārbauda 48 stundu laikā.",
+				"lead": "Nosūtiet dokumentu, kas apliecina, ka rīkojaties iestādes vārdā: līgumu ar Nacionālo veselības dienestu, izziņu no Ārstniecības iestāžu reģistra vai aptiekas speciālo atļauju (licenci), vai arī Uzņēmumu reģistra izziņu ar pilnvaru uz iestādes veidlapas. Pirms saglabāšanas tas tiek šifrēts, un 30 dienas pēc lēmuma tas tiek dzēsts."
+			},
+			"phone_callback": {
+				"title": "Pārbaudes zvans",
+				"short": "Zvans",
+				"lead": "Izskatīšanas laikā mūsu komandas loceklis piezvanīs uz iestādi pa reģistrā norādīto numuru {phone} (nekad ne pa numuru, ko norādāt jūs). Tas, kurš atbild, nolasa šeit parādīto kodu.",
+				"action": "Parādīt manu kodu",
+				"newCode": "Parādīt jaunu kodu",
+				"hint": "Parādiet to, kad esat iestādē, vai nododiet tam, kurš atbild uz iestādes tālruni. Pieprasot jaunu kodu, iepriekšējais tiek atcelts.",
+				"codeLabel": "Nolasāmais kods",
+				"codeHint": "Paturiet to ekrānā vai pierakstiet: jūsu drošības labad rādām to tikai tagad.",
+				"done": "Pārbaudes zvans apstiprināja pieteikumu."
+			}
+		},
+		"check": {
+			"passed": "Izdarīts",
+			"failed": "Neizdevās",
+			"pending": "Notiek",
+			"notStarted": "Nav sākts",
+			"claim": {
+				"open": "Notiek",
+				"in_review": "Tiek izskatīts",
+				"verified": "Pārbaudīts",
+				"rejected": "Noraidīts",
+				"withdrawn": "Atsaukts",
+				"superseded": "Atsaukts pēc apstrīdēšanas"
+			}
+		},
+		"workspace": {
+			"title": "Lapas pārņemšana: {name}",
+			"lead": {
+				"open": "Ar kādu no tālāk norādītajiem veidiem pierādiet, ka rīkojaties šīs iestādes vārdā.",
+				"in_review": "Jūsu pieteikums tiek izskatīts.",
+				"verified": "Nākamais solis: papildiniet savu lapu.",
+				"rejected": "Šis pieteikums netika pieņemts.",
+				"withdrawn": "Šis pieteikums tika atsaukts.",
+				"superseded": "Šis pieteikums tika atsaukts pēc apstrīdēšanas."
+			}
+		},
+		"psc": {
+			"outcome": {
+				"verified": "Pro Santé Connect apstiprināja jūsu identitāti: jūsu lapa ir pārbaudīta.",
+				"passed": "Pro Santé Connect apstiprināja jūsu identitāti. Tagad pieteikumu izskatīs administrators.",
+				"mismatch": "Pro Santé Connect identitāte neatbilst šīs lapas RPPS numuram.",
+				"error": "Pro Santé Connect nav sasniedzams, vai arī pieteikšanās tika atcelta. Mēģiniet vēlreiz.",
+				"linkedElsewhere": "Šī Pro Santé Connect identitāte jau ir piesaistīta citam Apercura kontam. Lai izmantotu to kontu, piesakieties ar Pro Santé Connect."
+			}
+		},
+		"documents": {
+			"kind": {
+				"cps_card": "Uzņēmumu reģistra izziņa ar pilnvaru uz iestādes veidlapas",
+				"ordre_attestation": "Līgums ar Nacionālo veselības dienestu, Ārstniecības iestāžu reģistra izziņa vai aptiekas speciālā atļauja (licence)"
+			},
+			"kindLabel": "Dokumenta veids",
+			"add": "Izvēlēties failu",
+			"hint": "PDF, JPEG, PNG vai WebP, ne lielāks par 10 MB. Ne vairāk kā 4 faili.",
+			"kilobytes": "KB"
+		},
+		"review": {
+			"title": "Nosūtīt izskatīšanai",
+			"lead": "Administrators pārbaudīs jūsu dokumentu un, ja vajadzīgs, piezvanīs uz iestādi. Atbildi saņemsiet e-pastā 48 stundu laikā darba dienās.",
+			"submit": "Nosūtīt izskatīšanai",
+			"notYet": "Vispirms pievienojiet dokumentu."
+		},
+		"withdraw": "Atsaukt šo pieteikumu",
+		"status": {
+			"verified": "Jūsu lapa ir pārbaudīta",
+			"bookingDelay": "Bez Pro Santé Connect 7 dienu gaidīšanas periods līdz pieraksta tiešsaistē atvēršanai beidzas {date}.",
+			"continue": "Papildināt lapu",
+			"in_review": "Jūsu pieteikums tiek izskatīts",
+			"contestReview": "Šai lapai jau bija pārbaudīts pārvaldītājs: par jūsu dokumentu lems administrators.",
+			"reviewBody": "Mūsu komandas loceklis izskatīs jūsu dokumentu un rakstīs jums e-pastu.",
+			"rejected": "Šis pieteikums netika pieņemts",
+			"reason": "Iemesls: {reason}",
+			"withdrawn": "Šis pieteikums tika atsaukts",
+			"superseded": "Šis pieteikums tika atsaukts pēc apstrīdēšanas",
+			"contestTitle": "Šai lapai jau ir pārbaudīts pārvaldītājs",
+			"contestBody": "Par jūsu dokumentu lems administrators.",
+			"verifiedBadge": "Pārbaudīta lapa"
+		},
+		"emailLink": {
+			"title": "Apstipriniet pārņemšanu",
+			"lead": "Šī saite tika nosūtīta uz e-pasta adresi, ko valsts reģistrs norāda iestādei.",
+			"reading": "Nolasām saiti…",
+			"invalidTitle": "Šī saite vairs nedarbojas",
+			"invalidBody": "Tās derīgums ir beidzies (tā ir derīga 24 stundas), vai arī tā jau ir izmantota. Iestādes pārstāvis var nosūtīt jaunu saiti no sava pieteikuma.",
+			"tooMany": "Pārāk daudz mēģinājumu. Uzgaidiet stundu un mēģiniet vēlreiz.",
+			"doneTitle": "Pārņemšana ir apstiprināta",
+			"doneBody": "Iestādes pārstāvis tagad var pieteikties un papildināt lapu.",
+			"goToSpace": "Pāriet uz sadaļu iestādēm",
+			"body": "Ja šīs iestādes pārstāvis ir lūdzis pārvaldīt tās Apercura lapu, apstipriniet to. Pretējā gadījumā aizveriet šo lapu: nekas nemainīsies.",
+			"confirm": "Apstiprināt pārņemšanu",
+			"pending": "Lūdzu, uzgaidiet"
+		},
+		"withdrawDialog": {
+			"title": "Atsaukt šo pieteikumu?",
+			"body": "Pieteikums tiek slēgts galīgi: tā pierādījumi vairs nav spēkā, un dokumenti tiks dzēsti pēc 30 dienām. Vēlāk varat iesniegt jaunu pieteikumu, atkal sākot ar pārbaudi.",
+			"confirm": "Atsaukt pieteikumu",
+			"cancel": "Paturēt pieteikumu"
+		},
+		"identifiers": {
+			"RPPS": "RPPS",
+			"AT-WIEN": "Vīnes saraksts",
+			"AT-STMK": "Štīrijas saraksts",
+			"AT-SBG": "Zalcburgas saraksts",
+			"AT-SBGZ": "Zalcburgas zobārstu saraksts",
+			"GB-ODS-GP": "ODS kods",
+			"GB-ODS-DENT": "ODS kods",
+			"GB-ODS-PHARM": "ODS kods",
+			"GB-PHS-GP": "Public Health Scotland kods",
+			"GB-PHS-DENT": "Public Health Scotland kods",
+			"GB-PHS-PHARM": "Public Health Scotland kods",
+			"GB-BSO-GP": "BSO prakses numurs",
+			"GB-BSO-DENT": "BSO zobārstu prakse",
+			"CZ-NRPZS": "NRPZS iestādes numurs"
+		}
+	},
+	"Onboarding": {
+		"metaTitle": "Lapas iestatīšana · Apercura",
+		"title": "Iestatiet savu lapu",
+		"lead": "Trīs soļi līdz pilnīgai lapai: {name}.",
+		"stepsLabel": "Soļi",
+		"stepNumber": "{n}. solis no {total}:",
+		"continue": "Turpināt",
+		"pending": "Lūdzu, uzgaidiet",
+		"publishFailed": "Lapu neizdevās publicēt. Mēģiniet vēlreiz pēc brīža.",
+		"fields": {
+			"name": "Nosaukums",
+			"profession": "Iestādes veids"
+		},
+		"steps": {
+			"check": {
+				"label": "Pārbaudiet importētos datus",
+				"title": "Pārbaudiet importētos datus",
+				"lead": "Jūsu lapa balstās uz valsts atvērtajiem datiem. Pārbaudiet iestādes nosaukumu, veidu un adresi.",
+				"sites": "Darbības vietas",
+				"unnamed": "Vieta bez nosaukuma",
+				"hidden": "Paslēpta",
+				"registryNote": "Kaut kas nav pareizi? Ilgstošu labojumu veic datu avotā: ģimenes ārsta prakses datus – Nacionālajā veselības dienestā, aptiekas datus – Zāļu valsts aģentūrā; lapa mainīsies pēc nākamā iknedēļas importa. Lapas redaktorā varat vietu paslēpt vai pievienot."
+			},
+			"booking": {
+				"label": "Darba laiks un pieraksts",
+				"title": "Darba laiks un pieraksts",
+				"lead": "Pacienti pierakstās jūsu lapā, tiklīdz atverat kalendāru. Pirms to var atvērt, jūsu lapā jānorāda cenas un pieņemtie maksājumu veidi.",
+				"fees": "Cenas",
+				"payments": "Maksājumu veidi",
+				"done": "Norādīts",
+				"todo": "Jāpapildina",
+				"deontology": "Veselības aprūpes speciālists, kas savu darbību prezentē tiešsaistē, norāda cenas un pieņemtos maksājumu veidus.",
+				"editFees": "Papildināt cenas un maksājumu veidus",
+				"settingsNote": "Vietas, darba laiku un vizīšu veidus iestata pierakstu iestatījumos.",
+				"waitingPeriod": "Gaidīšanas periods pēc pārbaudes",
+				"waitingEnds": "7 dienu gaidīšanas periods beidzas {date}",
+				"noWaiting": "Nav",
+				"settingsLink": "Iestatīt darba laiku un pierakstu"
+			},
+			"publish": {
+				"label": "Publicēšana",
+				"title": "Publicējiet savu lapu",
+				"lead": "Pēc publicēšanas jūsu publiskajā lapā redzams apraksts, valodas, cenas un praktiskā informācija. Jebkurā laikā varat tos mainīt vai paslēpt.",
+				"already": "Jūsu lapa ir publicēta. Katra saglabātā izmaiņa uzreiz ir redzama tiešsaistē.",
+				"edit": "Rediģēt manu lapu",
+				"action": "Publicēt manu lapu",
+				"shareLead": "Pastāstiet par savu lapu: saite, QR kods un plakāts uzgaidāmajai telpai ir gatavi.",
+				"shareLink": "Atvērt kopīgošanas materiālus",
+				"statsLink": "Skatīt lapas statistiku"
+			}
+		}
+	},
+	"Editor": {
+		"metaTitle": "Jūsu lapa · Apercura",
+		"title": "Jūsu lapa",
+		"lead": "Papildiniet iestādes {name} publisko lapu. Tikai vienkāršs teksts; tas, ko paslēpjat, netiek rādīts nekad.",
+		"empty": {
+			"title": "Vēl nav lapas, ko rediģēt",
+			"body": "Jūsu lapa šeit parādīsies, tiklīdz jūsu pārņemšanas pieteikums būs pārbaudīts.",
+			"action": "Pārņemt manu lapu"
+		},
+		"pending": "Lūdzu, uzgaidiet",
+		"viewPublic": "Skatīt publisko lapu",
+		"jumpToPreview": "Pāriet uz priekšskatījumu",
+		"formLabel": "Lapas saturs",
+		"removed": {
+			"title": "Jūsu lapa ir izņemta no kataloga",
+			"body": "To neviens neredz, un tās saturs ir dzēsts. To varat atjaunot šīs lapas apakšā: tā atgriezīsies ar nākamo iknedēļas reģistra atjauninājumu."
+		},
+		"unpublished": {
+			"title": "Jūsu saturs vēl nav publicēts",
+			"link": "Pabeigt lapas iestatīšanu"
+		},
+		"photo": {
+			"title": "Fotoattēls",
+			"lead": "Nav obligāts. Nesens portrets, piemēram, kā dokumentu fotoattēlā, vai iestādes fotoattēls.",
+			"current": "Pašreizējais fotoattēls",
+			"none": "Fotoattēla nav.",
+			"add": "Pievienot fotoattēlu",
+			"replace": "Aizstāt fotoattēlu",
+			"remove": "Noņemt fotoattēlu",
+			"hint": "JPEG, PNG vai WebP, ne lielāks par 5 MB. Mēs to apgriežam kvadrātā un noņemam tā metadatus (atrašanās vietu, ierīci)."
+		},
+		"visibility": {
+			"label": "Rādīt lapā: {field}",
+			"shown": "Redzams"
+		},
+		"presentation": {
+			"title": "Apraksts",
+			"lead": "Tikai faktu informācija: bez pacientu atsauksmēm un bez salīdzinājumiem ar citiem.",
+			"headline": "Apakšvirsraksts",
+			"headlineHint": "Viena rinda zem iestādes veida, ne vairāk kā {max} rakstzīmes.",
+			"bio": "Apraksts",
+			"bioHint": "Vienkāršs teksts, ne vairāk kā {max} rakstzīmes. Rindkopas atdaliet ar tukšu rindu."
+		},
+		"languages": {
+			"title": "Valodas"
+		},
+		"fees": {
+			"title": "Cenas un valsts apmaksa",
+			"lead": "Obligāti, pirms var atvērt pierakstu tiešsaistē: jūsu cenas un pieņemtie maksājumu veidi.",
+			"requiredBadge": "Obligāti pierakstam",
+			"ameliPrefill": "Iepriekš aizpildīts no Nacionālā veselības dienesta datiem. Jūsu lapā to aizstās jūsu norādītais.",
+			"sector": "Līgums ar NVD",
+			"agreement": "Līgums ar NVD",
+			"notStated": "Nav norādīts",
+			"optam": "Ierobežotas piemaksas (OPTAM)",
+			"optamNone": "Nav dalībnieks",
+			"carteVitale": "Apdrošināšanas karte",
+			"carteVitaleYes": "Pieņem",
+			"carteVitaleNo": "Nepieņem",
+			"itemsTitle": "Cenas",
+			"noItem": "Vēl nav nevienas cenas.",
+			"itemLabel": "{n}. cena: par ko",
+			"itemPlaceholder": "Konsultācija",
+			"amount": "Summa (€)",
+			"maxAmount": "Līdz (€)",
+			"removeItem": "Noņemt {n}. cenu",
+			"remove": "Noņemt",
+			"addItem": "Pievienot cenu",
+			"note": "Piezīme par cenām",
+			"noteHint": "Piemēram, no kā atkarīgas piemaksas.",
+			"payments": "Pieņemtie maksājumu veidi",
+			"requiredHint": "Pieraksts paliek slēgts, līdz norādīta vismaz viena cena un viens maksājumu veids."
+		},
+		"access": {
+			"title": "Piekļuve",
+			"notes": "Kā pie mums nokļūt",
+			"notesHint": "Stāvs, ieeja, sabiedriskais transports."
+		},
+		"contact": {
+			"title": "Tīmekļvietne un tālrunis",
+			"website": "Tīmekļvietne",
+			"websiteHint": "Jūsu iestādes vietne, kas sākas ar https://",
+			"showPhone": "Rādīt iestādes tālruni",
+			"showPhoneHint": "Ja tālrunis ir paslēpts, lapa vairs nepiedāvā zvanīt iestādei."
+		},
+		"failure": {
+			"generic": "Kaut kas nogāja greizi. Lūdzu, pēc brīža mēģiniet vēlreiz.",
+			"invalid": "Dažos laukos nepieciešams labojums: skatiet ziņojumus zem tiem.",
+			"lastSite": "Vismaz vienai vietai jāpaliek redzamai: lapu bez vietas nevar publicēt.",
+			"unknownPlace": "Šāds pasta indekss un pilsēta mums nav zināmi. Pārbaudiet tos.",
+			"badPhone": "Šis tālruņa numurs nav derīgs.",
+			"photoTooLarge": "Fotoattēls ir lielāks par 5 MB.",
+			"photoUnsupported": "Šo failu nevar izmantot kā fotoattēlu: nosūtiet JPEG, PNG vai WebP."
+		},
+		"saved": "Saglabāts. Jūsu publiskā lapa ir aktuāla.",
+		"savedDraft": "Saglabāts. Publicējiet lapu, lai izmaiņas būtu redzamas.",
+		"save": "Saglabāt lapu",
+		"lastSaved": "Pēdējoreiz saglabāts {date}",
+		"sites": {
+			"title": "Darbības vietas",
+			"lead": "Izvēlieties, kuras vietas rāda jūsu lapa. Vietas no reģistra var paslēpt, bet ne rediģēt.",
+			"unnamed": "Vieta bez nosaukuma",
+			"added": "Pievienojāt jūs",
+			"shownNamed": "Rādīt lapā: {name}",
+			"remove": "Noņemt",
+			"registryNote": "Vieta no reģistra ir kļūdaina? Labojumu veic datu avotā: Nacionālajā veselības dienestā, Ārstniecības iestāžu reģistrā vai Zāļu valsts aģentūrā; lapa tiks atjaunināta pēc kāda no nākamajiem importiem.",
+			"addTitle": "Pievienot vietu",
+			"name": "Vietas nosaukums",
+			"address": "Iela un mājas numurs",
+			"postcode": "Pasta indekss",
+			"city": "Pilsēta vai pagasts",
+			"phone": "Tālrunis (nav obligāts)",
+			"phoneHint": "Iestādes tālrunis, tiks rādīts lapā.",
+			"add": "Pievienot vietu"
+		},
+		"remove": {
+			"title": "Izņemt savu lapu",
+			"lead": "Jūsu lapa pazūd no kataloga, meklēšanas rezultātiem un meklētājprogrammām un neatgriežas ar nākamo importu. Tās vietas, apraksts, fotoattēls, cenas un statistika tiek dzēsti nekavējoties; jūsu konts un kalendārs paliek. Lapu varat atjaunot šeit: reģistra lapa atgriežas ar nākamo iknedēļas atjauninājumu, un jūs to papildināt no jauna.",
+			"action": "Izņemt manu lapu no kataloga",
+			"restore": "Atjaunot manu lapu",
+			"dialog": {
+				"title": "Izņemt savu lapu no kataloga?",
+				"intro": "Jūsu lapa nekavējoties pazūd no kataloga, meklēšanas rezultātiem un meklētājprogrammām. Šis saturs tiek dzēsts neatgriezeniski:",
+				"items": {
+					"places": "jūsu darbības vietas",
+					"presentation": "jūsu apraksts (apakšvirsraksts, apraksts, valodas, specializācijas)",
+					"photo": "jūsu fotoattēls",
+					"fees": "jūsu cenas un maksājumu veidi",
+					"statistics": "lapas statistika"
+				},
+				"restore": "Jūsu konts un kalendārs paliek. Ja lapu atjaunosiet, tā atgriezīsies no reģistra ar nākamo iknedēļas importu, un jūs to aizpildīsiet no jauna.",
+				"understood": "Es saprotu, ka šis saturs tiks dzēsts",
+				"confirm": "Izņemt manu lapu",
+				"cancel": "Atcelt"
+			},
+			"busy": "Katalogs pašlaik tiek atjaunināts ar iknedēļas importu: jūsu lapa netika mainīta. Mēģiniet vēlreiz pēc dažām minūtēm."
+		},
+		"preview": {
+			"title": "Priekšskatījums",
+			"note": "Vēl nav saglabāts",
+			"noSite": "Nav redzamas vietas.",
+			"unnamedPlace": "Darbības vieta"
+		},
+		"issues": {
+			"tooLong": "Šis teksts ir pārāk garš.",
+			"markup": "Tikai vienkāršs teksts: bez HTML un bez saitēm iekavās.",
+			"required": "Šis lauks ir obligāts.",
+			"range": "Augšējai summai jābūt lielākai par summu.",
+			"website": "Šī adrese nav tīmekļvietne (https://…).",
+			"postcode": "Latvijas pasta indekss ir formā LV-1234.",
+			"invalid": "Šī vērtība nav derīga."
+		}
+	},
+	"Admin": {
+		"claims": {
+			"queueHeading": "{count, plural, zero {Gaida # pieteikumu} one {Gaida # pieteikums} other {Gaida # pieteikumi}}"
+		}
+	},
+	"Gdpr": {
+		"about": "Par lapu",
+		"rpps": "Lapas kods",
+		"rppsHint": "Lapas adreses beigas, piemēram, g010000006 adresē apercura.org/lv/iestade/ilzes-paraugas-gimenes-arsta-prakse-g010000006, vai visa adrese.",
+		"pending": "Lūdzu, uzgaidiet",
+		"errors": {
+			"tooMany": "No šī savienojuma ir pārāk daudz pieprasījumu. Mēģiniet vēlreiz pēc stundas.",
+			"notFound": "Nevienai lapai nav šāda koda.",
+			"claimed": "Šo lapu pārvalda iestāde: to var izņemt tikai iestāde savā sadaļā.",
+			"invalid": "Pārbaudiet veidlapu: kāds lauks nav aizpildīts vai ir pārāk garš.",
+			"generic": "Kaut kas nogāja greizi. Lūdzu, pēc brīža mēģiniet vēlreiz."
+		},
+		"report": {
+			"metaTitle": "Ziņot par kļūdu · Apercura",
+			"title": "Ziņot par kļūdu",
+			"lead": "Pastāstiet mums, kas šajā lapā nav pareizi. Jūsu ziņojums ir šifrēts, un to lasa tikai Apercura komanda.",
+			"doneTitle": "Paldies, jūsu ziņojums ir saņemts",
+			"doneBody": "Mēs to pārbaudīsim. Reģistru datus labo avotā: ģimenes ārstu prakšu datus – Nacionālais veselības dienests, adreses – Iekšlietu ministrijas Informācijas centrs, aptieku datus – Zāļu valsts aģentūra. Ja atstājāt adresi, mēs jums paziņosim.",
+			"kind": "Kas nav pareizi?",
+			"kinds": {
+				"wrong_info": "Nepareizi dati (adrese, tālrunis, nosaukums)",
+				"retired": "Iestāde ir beigusi darbību",
+				"deceased": "Ārsts ir miris",
+				"impersonation": "Kāds izmanto šo lapu iestādes vārdā"
+			},
+			"message": "Sīkāka informācija",
+			"messageHint": "Kas nav pareizi un, ja zināt, kā ir pareizi.",
+			"contact": "Jūsu e-pasts (nav obligāts)",
+			"contactHint": "Tikai lai varētu jums atbildēt.",
+			"privacy": "Nenorādiet nekādu informāciju par veselību.",
+			"submit": "Nosūtīt ziņojumu"
+		},
+		"removal": {
+			"metaTitle": "Lūgums dzēst lapu · Apercura",
+			"title": "Lūgt dzēst šo lapu",
+			"lead": "Saskaņā ar VDAR 21. pantu varat iebilst pret savas lapas publicēšanu. Lapa tiek paslēpta, tiklīdz saņemam lūgumu, un pēc vienkāršas pārbaudes dzēsta.",
+			"doneTitle": "Lapa ir paslēpta",
+			"doneBody": "Tā vairs netiek rādīta, indeksēta vai iekļauta sarakstos. Mēs pārbaudīsim lūgumu un atbildēsim pa e-pastu ne vēlāk kā viena mēneša laikā. Kad tas būs apstiprināts, lapa tiks dzēsta neatgriezeniski un neatgriezīsies ar reģistra atjauninājumiem.",
+			"contact": "Jūsu e-pasts",
+			"contactHint": "Lai apstiprinātu lūgumu ar jums. Tas ir šifrēts un netiek izmantots nekam citam.",
+			"message": "Ziņa (nav obligāta)",
+			"messageHint": "Jebkas, kas palīdz mums pārbaudīt lūgumu.",
+			"confirm": "Esmu šajā lapā norādītās iestādes pārstāvis",
+			"privacy": "Dzēsta lapa neatgriežas ar nākamo reģistra importu.",
+			"submit": "Paslēpt un dzēst lapu",
+			"claimedTitle": "Šo lapu pārvalda iestāde",
+			"claimedBody": "To var izņemt tikai tās pārvaldītājs savas sadaļas lapas redaktorā: lapa tad nekavējoties pazūd un neatgriežas ar reģistra atjauninājumiem.",
+			"claimedLink": "Izņemt savu lapu iestāžu sadaļā",
+			"alreadyTitle": "Lūgums dzēst lapu tiek pārbaudīts",
+			"alreadyBody": "Lapa jau ir paslēpta."
+		},
+		"contact": {
+			"metaTitle": "Esmu šīs iestādes pārstāvis · Apercura",
+			"title": "Esmu šīs iestādes pārstāvis",
+			"lead": "Nevarat pārņemt savas iestādes lapu ar dokumentu? Atstājiet mums savu kontaktinformāciju: Apercura komandas loceklis ar jums sazināsies, pārbaudīs, ka rīkojaties iestādes vārdā, un palīdzēs.",
+			"patientsTitle": "Šī veidlapa paredzēta tikai šajā lapā norādītās iestādes pārstāvim",
+			"patientsBody": "Tā nav paredzēta pierakstam vai saziņai ar iestādi: šim nolūkam izmantojiet lapā norādīto kontaktinformāciju.",
+			"claimFirst": "Ar dokumentu, kas apliecina, ka rīkojaties iestādes vārdā, pārņemšana ir ātrāka:",
+			"claimFirstLink": "pārņemt šo lapu",
+			"rpps": "Lapas kods",
+			"rppsHint": "Tās lapas kods, no kuras atnācāt. To nevar mainīt.",
+			"name": "Jūsu vārds un uzvārds",
+			"email": "Jūsu darba e-pasts",
+			"emailHint": "Lai varētu jums atbildēt. Nosūtīsim jums arī apstiprinājumu.",
+			"phone": "Jūsu tālrunis (nav obligāts)",
+			"phoneHint": "Ja vēlaties, lai jums piezvanām.",
+			"message": "Jūsu ziņa",
+			"messageHint": "Pastāstiet, kāpēc pārņemšana tiešsaistē jums neder.",
+			"privacy": "Jūsu dati un ziņa ir šifrēti, tos lasa tikai Apercura komanda, lai jums atbildētu, un tie tiek dzēsti 12 mēnešus pēc pēdējās saziņas. Nenorādiet nekādu informāciju par veselību.",
+			"submit": "Nosūtīt pieprasījumu",
+			"doneTitle": "Jūsu pieprasījums ir saņemts",
+			"doneBody": [
+				"Apercura komandas loceklis ar jums sazināsies pa e-pastu vai tālruni, pārbaudīs jūsu identitāti un palīdzēs pārņemt lapu.",
+				"Uz norādīto adresi tikko nosūtījām apstiprinājumu."
+			],
+			"claimedTitle": "Šo lapu jau pārvalda iestāde",
+			"claimedBody": "Tās pārvaldītājs ir pārbaudīts. Ja tā ir jūsu lapa un jums tai vairs nav piekļuves, iesniedziet pārņemšanas pieteikumu: komanda to izskatīs.",
+			"claimedLink": "Pārņemt šo lapu",
+			"withheldTitle": "Šī lapa ir paslēpta",
+			"withheldBody": "Tiek pārbaudīts lūgums to dzēst.",
+			"errors": {
+				"proof": "Pretrobotu pārbaude netika pabeigta. Mēģiniet vēlreiz pēc brīža.",
+				"claimed": "Šo lapu jau pārvalda iestāde: iesniedziet pārņemšanas pieteikumu."
+			}
+		}
+	},
+	"Agenda": {
+		"settings": {
+			"types": {
+				"areaAdded": "{count, plural, =0 {Nav jaunu vietu.} zero {Pievienots # vietu.} one {Pievienota # vieta.} other {Pievienotas # vietas.}}"
+			}
+		},
+		"log": {
+			"records": "{count, plural, zero {# ierakstu} one {# ieraksts} other {# ieraksti}}"
+		}
+	},
+	"Stats": {
+		"chartSummary": "{total, plural, zero {# skatījumu} one {# skatījums} other {# skatījumi}} 30 dienās; visvairāk: {max} ({day})."
+	},
+	"LegalNoticeLv": {
+		"metaTitle": "Juridiskā informācija (Latvija) · Apercura",
+		"metaDescription": "Apercura Latvijas lapu juridiskā informācija: pakalpojuma sniedzējs, tā kontaktinformācija un reģistrācijas dati, kā arī par saturu atbildīgā persona (Informācijas sabiedrības pakalpojumu likuma 4. pants).",
+		"title": "Juridiskā informācija",
+		"lead": "Kas nodrošina Apercura Latvijas lapas (apercura.org/lv), kā to pakalpojuma sniedzējam prasa Informācijas sabiedrības pakalpojumu likuma 4. pants.",
+		"sections": {
+			"provider": {
+				"heading": "Pakalpojuma sniedzējs",
+				"body": [
+					"Apercura Latvijas lapas nodrošina turpmāk norādītā persona. Tā uztur katalogu un atbild par tā saturu. Informācijas sabiedrības pakalpojumu likuma 4. pants prasa norādīt tās nosaukumu, adresi, elektroniskā pasta adresi un, ja tādi ir, reģistrācijas numuru un pievienotās vērtības nodokļa maksātāja reģistrācijas numuru: tie norādīti turpmāk."
+				]
+			},
+			"service": {
+				"heading": "Pakalpojums",
+				"body": [
+					"Bezmaksas ārstniecības un aprūpes vietu katalogs Latvijā (ģimenes ārstu prakses, slimnīcas un aptiekas), kas veidots no Nacionālā veselības dienesta, Iekšlietu ministrijas Informācijas centra un Zāļu valsts aģentūras atvērtajiem datiem, bez reklāmas un ar sadaļu, kurā vieta var papildināt savu lapu. Apercura Latvijā nepieraksta pie ārsta un nerezervē vizītes."
+				]
+			},
+			"editor": {
+				"heading": "Par saturu atbildīgā persona",
+				"body": [
+					"Turpmāk norādītā persona atbild par to, ko publicē pakalpojuma sniedzējs. Par informāciju, ko vieta pati pievieno savai lapai, atbild šī vieta; kā pakalpojums, kas uzglabā lietotāju sniegto informāciju, pakalpojuma sniedzējs par to atbild tikai Digitālo pakalpojumu akta (Regula (ES) 2022/2065) 6. pantā un Informācijas sabiedrības pakalpojumu likumā noteiktajos gadījumos."
+				]
+			},
+			"liability": {
+				"heading": "Lapu saturs",
+				"body": [
+					"Katalogs veidots no atvērtajiem datiem, ko Latvijas valsts iestādes publicē Latvijas Atvērto datu portālā (data.gov.lv): Nacionālā veselības dienesta ģimenes ārstu prakšu saraksta, Iekšlietu ministrijas Informācijas centra ārstniecības iestāžu adrešu saraksta, Zāļu valsts aģentūras aptieku reģistra un Valsts zemes dienesta Valsts adrešu reģistra. Dati var būt nepilnīgi vai novecojuši: pirms apmeklējuma pārbaudiet informāciju pašā vietā. Katrā lapā norādīts, kā ziņot par kļūdu."
+				]
+			},
+			"ip": {
+				"heading": "Kods un dati",
+				"body": [
+					"Apercura pirmkods ir publicēts saskaņā ar AGPL-3.0 licenci. Kataloga dati tiek atkalizmantoti saskaņā ar to avotu licencēm: CC0 1.0 – ģimenes ārstu prakšu, ārstniecības iestāžu un aptieku sarakstiem, Creative Commons Attribution 4.0 International (CC BY 4.0) – Valsts adrešu reģistram. Datu lapā uzskaitīti visi avoti ar to licenci un atsauci."
+				]
+			},
+			"review": {
+				"heading": "Šī teksta statuss",
+				"body": [
+					"Šis teksts ir projekts, kas sagatavots pirms juridiskās personas izveides. Pirms Latvijas lapu publiskošanas to pārskatīs Latvijā kvalificēts jurists."
+				]
+			}
+		},
+		"fields": {
+			"name": "Nosaukums",
+			"legalForm": "Juridiskā forma",
+			"address": "Juridiskā adrese",
+			"phone": "Tālrunis",
+			"email": "E-pasta adrese",
+			"registration": "Reģistrs un reģistrācijas numurs",
+			"vatId": "PVN maksātāja reģistrācijas numurs",
+			"editor": "Par saturu atbildīgā persona"
+		},
+		"dataLink": "Dati un avoti"
+	},
+	"PrivacyLv": {
+		"metaTitle": "Privātuma politika (Latvija) · Apercura",
+		"metaDescription": "Apercura Latvijas lapās apstrādātie dati, tostarp ģimenes ārstu prakšu lapās norādītie ģimenes ārstu vārdi: avoti, nolūki, tiesiskie pamati, glabāšana, saņēmēji un jūsu tiesības, tostarp tiesības iebilst (VDAR 13., 14. un 21. pants).",
+		"title": "Privātuma politika",
+		"lead": "Kādus datus apstrādā Apercura Latvijas lapas, no kurienes tie iegūti, kādam nolūkam, cik ilgi un kas tos apstrādā, kā arī kā izmantot savas tiesības saskaņā ar Vispārīgo datu aizsardzības regulu (VDAR) un Fizisko personu datu apstrādes likumu.",
+		"sections": {
+			"controller": {
+				"heading": "Pārzinis",
+				"body": [
+					"Juridiskajā informācijā norādītais pakalpojuma sniedzējs ir kataloga, vietu kontu, lapu pieteikumu un vietnē nosūtīto pieprasījumu pārzinis."
+				]
+			},
+			"directory": {
+				"heading": "Katalogs: dati par ārstniecības un aprūpes vietām",
+				"body": [
+					"Dati: vietas nosaukums, kā to publicē tās avots, tās veids (ģimenes ārsta prakse, slimnīca vai aptieka), adrese un atrašanās vieta kartē, kā arī tālruņa numurs, ja avots to norāda tieši šai vietai; aptiekai – vai tā ir aptieka vai aptiekas filiāle; ģimenes ārsta praksei – tajā strādājošie ģimenes ārsti (sk. turpmāk). Vieta, kas pieteikusies uz savu lapu, var pievienot aprakstu, valodas, fotoattēlu un darba laiku.",
+					"Netiek glabāti, lai gan avoti tos publicē: ģimenes ārstu identifikatori un praksē reģistrēto pacientu skaits (Nacionālais veselības dienests), kā arī aptieku vadītāju vārdi, uzvārdi un e-pasta adreses (Zāļu valsts aģentūra). Netiek glabāta neviena e-pasta adrese.",
+					"Identifikators: ārstniecības iestādes kods (ģimenes ārsta praksei vai slimnīcai) vai aptiekas numurs Zāļu valsts aģentūras reģistrā, kas norādīts lapas adreses beigās.",
+					"Nolūks: palīdzēt pacientiem atrast un izvēlēties ģimenes ārsta praksi, aptieku vai slimnīcu – kur tā atrodas un kā ar to sazināties. Tiesiskais pamats: leģitīmās intereses (VDAR 6. panta 1. punkta f) apakšpunkts), kas izvērtētas turpmāk.",
+					"Glabāšana: kamēr vieta ir norādīta savā avotā. Lapa tiek izņemta, kad jaunā avota datnē šī vieta vairs nav norādīta; pēc iebilduma dzēsta lapa vairs nekad netiek publicēta.",
+					"Informēšana: dati netiek iegūti no pašām vietām (VDAR 14. pants). Rakstīt katrai no tām prasītu nesamērīgas pūles (14. panta 5. punkta b) apakšpunkts); informāciju publisko šis paziņojums, datu lapa un paziņojums katrā lapā."
+				]
+			},
+			"gps": {
+				"heading": "Ģimenes ārsti, kas norādīti ģimenes ārstu prakšu lapās (VDAR 14. pants)",
+				"body": [
+					"Ģimenes ārsta prakses lapā norādīti praksē strādājošie ģimenes ārsti (vārds un uzvārds), kā tos publicē Nacionālais veselības dienests savā reizi ceturksnī publicētajā atvērto datu kopā “Ģimenes ārsta praksē reģistrēto pacientu skaits” (CC0 1.0, data.gov.lv), lai pacienti varētu izvēlēties ģimenes ārstu. Šajā sadaļā šiem ārstiem sniegta VDAR 14. pantā prasītā informācija.",
+					"Pārzinis un kontaktinformācija: juridiskajā informācijā norādītais pakalpojuma sniedzējs; ar to un tā datu aizsardzības speciālistu var sazināties, izmantojot iepriekš norādīto adresi.",
+					"Glabātās datu kategorijas: ģimenes ārsta vārds un uzvārds; prakses nosaukums, kurā bieži ietverts ārsta vārds; prakses adrese no Iekšlietu ministrijas Informācijas centra ārstniecības iestāžu adrešu datu kopas. Netiek glabāti: ģimenes ārsta identifikators, reģistrēto pacientu skaits un nevienas personas privātā adrese, e-pasta adrese vai tālruņa numurs.",
+					"Nolūks: palīdzēt pacientiem atrast un izvēlēties ģimenes ārsta praksi, aptieku vai slimnīcu. Tiesiskais pamats: leģitīmās intereses (VDAR 6. panta 1. punkta f) apakšpunkts), kas līdzsvarotas rakstiskā izvērtējumā, kura kopsavilkums sniegts turpmāk: dati jau ir publicēti, un tos tieši šim nolūkam publicē valsts iestāde; tie attiecas uz ārstiem tikai viņu profesionālajā darbībā; tiek glabāts tikai nepieciešamais datu apjoms; nav ne vērtējumu, ne maksas izvietojuma, ne atsauksmju; iebildums tiek ievērots jebkurā laikā.",
+					"Saņēmēji: sabiedrība, jo lapas ir publiskas un tās var indeksēt meklētājprogrammas; mitināšanas pakalpojuma sniedzējs Eiropas Ekonomikas zonā kā apstrādātājs.",
+					"Avots: iepriekš minētā Nacionālā veselības dienesta datu kopa, kas ir publiski pieejams avots (VDAR 14. panta 2. punkta f) apakšpunkts).",
+					"Glabāšana: kamēr ģimenes ārsts ir norādīts Nacionālā veselības dienesta sarakstā. Ārsta vārds un uzvārds tiek izņemts no prakses lapas ar pirmo jaunās saraksta datnes importu, kurā tas vairs nav norādīts; prakse, kas sarakstā vairs nav norādīta, tiek izņemta pēc diviem šādiem secīgiem importiem. Pēc iebilduma lapa tiek dzēsta, un tiek saglabāta tikai prakses atslēga un iebilduma iemesls, lai lapa netiktu publicēta atkārtoti.",
+					"Tiesības: piekļuve, labošana, dzēšana, apstrādes ierobežošana un iebildumi (VDAR 21. pants), izmantojot katrā lapā pieejamo dzēšanas veidlapu vai rakstot uz turpmāk norādīto e-pasta adresi, kā arī sūdzība Datu valsts inspekcijai.",
+					"Kāpēc ārsti netiek informēti individuāli: Nacionālais veselības dienests nepublicē ģimenes ārstu kontaktinformāciju, un tās vākšana nozīmētu apstrādāt par viņiem vairāk datu, nekā katalogam nepieciešams (VDAR 14. panta 5. punkta b) apakšpunkts). Tā vietā informācija ir publiskota: šajā lapā, datu lapā un paziņojumā ar saiti iebilduma iesniegšanai katrā ģimenes ārsta prakses lapā."
+				]
+			},
+			"people": {
+				"heading": "Aptiekas, slimnīcas un tajās nosauktās personas",
+				"body": [
+					"Aptiekas vai slimnīcas lapa ir par vietu, nevis personas profils. Ja aptieka pieder individuālajam komersantam, tās nosaukumā, kā to norāda Zāļu valsts aģentūras reģistrs, var būt šīs personas vārds: šāda lapa nosauc personu, un uz to attiecas tās pašas tiesības.",
+					"Par personām netiek vākti nekādi citi dati: ne personas kods, ne dzimšanas datums, ne privātā adrese, ne vērtējumi, ne atsauksmes. Zāļu valsts aģentūras reģistrā norādītie aptieku vadītāju vārdi, uzvārdi un e-pasta adreses netiek nolasīti. Katalogs neapstrādā pacientu datus un veselības datus.",
+					"Ikviens, par kuru ir lapa, var jebkurā laikā iebilst pret to, un lapa tiek dzēsta."
+				]
+			},
+			"sources": {
+				"heading": "Avoti",
+				"body": [
+					"Katra lapa veidota no atvērtajiem datiem, ko Latvijas valsts iestādes publicē Latvijas Atvērto datu portālā (data.gov.lv): trīs saraksti ar CC0 1.0 (Nacionālā veselības dienesta ģimenes ārstu prakšu un ārstu saraksts, Iekšlietu ministrijas Informācijas centra ārstniecības iestāžu adrešu saraksts un Zāļu valsts aģentūras aptieku reģistrs) un Valsts zemes dienesta Valsts adrešu reģistrs ar CC BY 4.0. CC0 neprasa norādīt avotu, tomēr katrs avots ir norādīts:"
+				]
+			},
+			"balancing": {
+				"heading": "Leģitīmo interešu izvērtējums",
+				"body": [
+					"Nolūks: pacientiem jāzina, kur atrodas ģimenes ārstu prakses, slimnīcas un aptiekas un kā ar tām sazināties, turklāt ģimenes ārstu pacienti izvēlas paši; Nacionālais veselības dienests publicē prakšu un to ārstu sarakstu kā atvērtos datus tieši tādēļ, lai viņi to varētu izdarīt.",
+					"Nepieciešamība: tiek glabāti tikai šim nolūkam vajadzīgie lauki: vietas un tās ģimenes ārstu vārdi, vietas veids un adrese. Ārstu identifikatori, pacientu skaits, aptieku vadītāji un e-pasta adreses netiek iekļauti.",
+					"Līdzsvars: dati jau ir publiski, un tos šim nolūkam publicē valsts iestāde; tie attiecas uz ārstiem tikai viņu profesionālajā darbībā; lapas ir sakārtotas neitrāli, bez vērtējumiem, maksas izvietojuma, reklāmas un atsauksmēm; iebildums lapu nekavējoties paslēpj un neļauj tai atgriezties; lapas seko katram avotu atjauninājumam. Ģimenes ārsts, kurš noslēdzis līgumu ar Nacionālo veselības dienestu, var sagaidīt, ka pacienti viņu atradīs pēc vārda. Izvērtējot šos apsvērumus, kas fiksēti rakstiskā izvērtējumā, pacientu intereses ir svarīgākas, un ikviens, par kuru ir lapa, var iebilst, nenorādot iemeslu."
+				]
+			},
+			"accounts": {
+				"heading": "Vietu konti un lapu pieteikumi",
+				"body": [
+					"Dati: e-pasta adrese, vārds, parole (glabāta jaucējkoda veidā), otrais autentifikācijas faktors, lapas pieteikšanai iesniegtie dokumenti (pierādījums, ka pieteicējs vada vietu vai rīkojas tās vārdā) un komandas locekļi.",
+					"Nolūki: konta pārvaldība un pārbaude, vai lapu piesaka pareizā vieta. Tiesiskie pamati: lietošanas noteikumu izpilde (6. panta 1. punkta b) apakšpunkts) un leģitīmās intereses nodrošināt pakalpojuma drošību (6. panta 1. punkta f) apakšpunkts).",
+					"Glabāšana: konts tiek glabāts līdz tā dzēšanai; pamatojošie dokumenti, kas glabāti šifrētā veidā, tiek dzēsti 30 dienas pēc lēmuma pieņemšanas."
+				]
+			},
+			"requests": {
+				"heading": "Ziņojumi par kļūdām, iebildumi un saziņas pieprasījumi",
+				"body": [
+					"Dati: ziņojums, saziņas e-pasta adrese, ja tā norādīta, un attiecīgā lapa; pieprasījumam “šī ir mana lapa” arī vārds un tālruņa numurs. Brīvais teksts tiek šifrēts.",
+					"Nolūki: kļūdu labošana, iebildumu izpilde un palīdzība vietai, kas nevar pieteikties uz savu lapu tiešsaistē. Tiesiskie pamati: leģitīmās intereses (6. panta 1. punkta f) apakšpunkts) un tiesības iebilst (21. pants).",
+					"Glabāšana: ziņojums tiek dzēsts 6 mēnešus pēc tā slēgšanas, noraidīts iebildums – vienu gadu pēc lēmuma, saziņas pieprasījums – 12 mēnešus pēc pēdējās saziņas. Tiklīdz iebildums ir apstiprināts vai pieteiktas lapas turētājs to dzēš, lapa un ar to saistītie dati, arī iebildums, tiek nekavējoties dzēsti; tiek saglabāts tikai ieraksts par dzēšanu (lapas identifikators, valsts, iemesls, kas to reģistrēja un kad), lai lapa nekad netiktu publicēta atkārtoti. Turētājs, kurš dzēš savu lapu, līdz konta dzēšanai saglabā tikai savā kontā un nekad nepublicējot savā sadaļā redzamo vārdu, profesiju un identifikatoru, kā arī savu pieteikumu."
+				]
+			},
+			"technical": {
+				"heading": "Tehniskie dati un sīkdatnes",
+				"body": [
+					"Tiek izmantotas tikai pakalpojuma darbībai noteikti nepieciešamās sīkdatnes: pieteikušos vietu sesija un izvēlētā valoda. Nav reklāmas vai apmeklējuma mērīšanas sīkdatņu, nav izsekotāju.",
+					"Lai ierobežotu ļaunprātīgu izmantošanu, IP adreses pirms uzskaites tiek pārveidotas ar atslēgas funkciju un nekad netiek glabātas sākotnējā veidā; vietu sesijās tiek reģistrēta saīsināta IP adrese. Pieteikto lapu skatījumi tiek skaitīti bez sīkdatnēm un identifikatoriem, un tos redz tikai lapas turētājs."
+				]
+			},
+			"recipients": {
+				"heading": "Saņēmēji un apstrādātāji",
+				"body": [
+					"Dati netiek pārdoti vai iznomāti un nekad netiek izmantoti reklāmai. Kataloga lapas ir publiskas, un tās var indeksēt meklētājprogrammas. Citādi datus saņem tikai pakalpojuma sniedzēja komanda un turpmāk norādītie apstrādātāji, katrs savas daļas apjomā, saskaņā ar līgumu, kas atbilst VDAR 28. pantam; mitināšanas pakalpojuma sniedzējs atrodas Eiropas Ekonomikas zonā. Kartes tiek ielādētas no karšu fragmentu servera, kas, tāpat kā jebkura vietne, saņem apmeklētāja IP adresi."
+				]
+			},
+			"transfers": {
+				"heading": "Nosūtīšana ārpus Eiropas Savienības",
+				"body": [
+					"Dati tiek nosūtīti ārpus Eiropas Savienības un Eiropas Ekonomikas zonas tikai ar VDAR V nodaļā paredzētajām garantijām (lēmums par aizsardzības līmeņa pietiekamību vai līguma standartklauzulas). Par jebkuru apstrādātāja maiņu šeit tiks paziņots pirms tās stāšanās spēkā."
+				]
+			},
+			"automated": {
+				"heading": "Automatizēti lēmumi",
+				"body": [
+					"Neviens lēmums par jums netiek pieņemts, pamatojoties tikai uz automatizētu apstrādi. Par lapas pieteikumu lemj cilvēks, kurš izskata iesniegtos dokumentus."
+				]
+			},
+			"rights": {
+				"heading": "Jūsu tiesības",
+				"body": [
+					"Jūs varat pieprasīt piekļuvi saviem datiem, to labošanu vai dzēšanu, apstrādes ierobežošanu, datu saņemšanu pārnesamā formātā, kā arī iebilst pret to apstrādi. Rakstiet uz turpmāk norādīto adresi; atbildi saņemsiet viena mēneša laikā.",
+					"Jūs varat arī iesniegt sūdzību Latvijas uzraudzības iestādei – Datu valsts inspekcijai: Elijas iela 17, Rīga, LV-1050, pasts@dvi.gov.lv, www.dvi.gov.lv."
+				]
+			},
+			"objection": {
+				"heading": "Iebildums pret lapu (VDAR 21. pants)",
+				"body": [
+					"Ikviens, par kuru ir lapa, var jebkurā laikā iebilst pret tās publicēšanu, nenorādot iemeslu. Ja uz lapu neviens nav pieteicies, pietiek ar veidlapu: lapa tiek paslēpta, tiklīdz pieprasījums saņemts, pēc vienkāršas pārbaudes dzēsta, un avotu importi to vairs nekad nepublicē. Ja uz lapu ir pieteicies tās turētājs, viņš to dzēš savā sadaļā."
+				]
+			},
+			"changes": {
+				"heading": "Šī paziņojuma izmaiņas",
+				"body": [
+					"Šis paziņojums ir projekts. To pārskatīs Latvijā kvalificēts jurists un datu aizsardzības speciālists; katrai versijai ir norādīts datums."
+				]
+			}
+		},
+		"fields": {
+			"controller": "Pārzinis",
+			"address": "Adrese",
+			"email": "Kontaktadrese pieprasījumiem",
+			"dpo": "Datu aizsardzības speciālists",
+			"effectiveDate": "Spēkā stāšanās datums",
+			"hostingProvider": "Mitināšanas pakalpojuma sniedzējs (apstrādātājs)",
+			"smtp": "E-pasta piegāde (apstrādātājs)"
+		},
+		"objectLink": "Kā iebilst pret lapu",
+		"authorityLink": "Iesniegt sūdzību Datu valsts inspekcijai"
+	},
+	"TermsLv": {
+		"metaTitle": "Lietošanas noteikumi (Latvija) · Apercura",
+		"metaDescription": "Apercura Latvijas lapu lietošanas noteikumi: bezmaksas, faktos balstīts ģimenes ārstu prakšu, slimnīcu un aptieku katalogs no Latvijas valsts iestāžu atvērtajiem datiem, bez pieraksta tiešsaistē.",
+		"title": "Lietošanas noteikumi",
+		"lead": "Apercura Latvijas lapu lietošanas noteikumi – gan sabiedrībai, gan ārstniecības un aprūpes vietām.",
+		"sections": {
+			"service": {
+				"heading": "Pakalpojums",
+				"body": [
+					"Apercura bez maksas uzskaita Latvijas ģimenes ārstu prakses, slimnīcas un aptiekas, kas norādītas Latvijas valsts iestāžu atvērtajos datos. Tas ir tikai katalogs: Apercura Latvijā nepieraksta pie ārsta un nerezervē vizītes. To uztur juridiskajā informācijā norādītais pakalpojuma sniedzējs.",
+					"Kataloga lietošanai konts nav nepieciešams. Lietojot vietni, jūs piekrītat šiem noteikumiem."
+				]
+			},
+			"content": {
+				"heading": "Lapu saturs",
+				"body": [
+					"Lapās sniegta faktiska informācija no publiskiem avotiem, neitrālā secībā, bez vērtējumiem, atsauksmēm, reklāmas vai maksas izvietojuma.",
+					"Atvērtie dati var būt nepilnīgi vai novecojuši: pirms apmeklējuma pārbaudiet informāciju pašā vietā. Katrā lapā norādīts, kā ziņot par kļūdu."
+				]
+			},
+			"health": {
+				"heading": "Tā nav medicīniska konsultācija",
+				"body": [
+					"Apercura nesniedz medicīniskas konsultācijas un nav neatliekamās palīdzības dienests. Ārkārtas gadījumā zvaniet 113 (neatliekamā medicīniskā palīdzība) vai 112. Ārpus ģimenes ārsta darba laika palīdzēs ģimenes ārstu konsultatīvais tālrunis 66016001."
+				]
+			},
+			"practices": {
+				"heading": "Ārstniecības un aprūpes vietām",
+				"body": [
+					"Pieteikšanās uz lapu ir bez maksas. Tai nepieciešams dokuments, kas apliecina, ka pieteicējs vada vietu vai rīkojas tās vārdā; pirms lapas nodošanas to pārbauda administrators.",
+					"Lapas turētājs atbild par informāciju, ko tas pievieno. Tai jābūt faktiskai, precīzai un aktuālai."
+				]
+			},
+			"removal": {
+				"heading": "Lapas dzēšana",
+				"body": [
+					"Ikviens, par kuru ir lapa, var jebkurā laikā lūgt to dzēst: kā to izdarīt, skaidrots datu lapā. Pieteiktu lapu var dzēst tikai tās turētājs."
+				]
+			},
+			"liability": {
+				"heading": "Atbildība",
+				"body": [
+					"Pakalpojuma sniedzējs dara visu iespējamo, lai pakalpojums būtu pieejams un precīzs, taču to nevar garantēt. Tas neatbild par informāciju, ko vietas pievieno savām lapām. Šie ierobežojumi tiks precizēti juridiskās pārskatīšanas laikā."
+				]
+			},
+			"ip": {
+				"heading": "Kods un dati",
+				"body": [
+					"Pirmkods ir publicēts saskaņā ar AGPL-3.0 licenci. Kataloga dati tiek atkalizmantoti saskaņā ar to avotu licencēm (CC0 1.0 un CC BY 4.0), kas norādītas datu lapā."
+				]
+			},
+			"law": {
+				"heading": "Piemērojamie tiesību akti un strīdi",
+				"body": [
+					"Piemērojamie tiesību akti un piekritīgās tiesas tiks precizētas juridiskās pārskatīšanas laikā; vienmēr piemērojami dzīvesvietas valsts obligātie patērētāju tiesību aizsardzības noteikumi. Strīda gadījumā vispirms rakstiet uz kontaktadresi, lai rastu izlīgumu."
+				]
+			}
+		},
+		"fields": {
+			"publisher": "Pakalpojuma sniedzējs",
+			"effectiveDate": "Spēkā stāšanās datums",
+			"contact": "Kontakti"
+		}
+	},
+	"AccessibilityLv": {
+		"metaTitle": "Piekļūstamība (Latvija) · Apercura",
+		"metaDescription": "Apercura Latvijas lapu piekļūstamība: mērķis WCAG 2.2 AA, kas ir pārbaudīts, kas vēl jāpārbauda un kā ziņot par problēmu.",
+		"title": "Piekļūstamība",
+		"lead": "Apercura ir veidots ikvienam, arī gados vecākiem cilvēkiem un cilvēkiem ar redzes traucējumiem. Šajā paziņojumā aprakstīts Latvijas lapu stāvoklis.",
+		"sections": {
+			"scope": {
+				"heading": "Piemērošanas joma",
+				"body": [
+					"Ministru kabineta 2020. gada 14. jūlija noteikumi Nr. 445 “Kārtība, kādā iestādes ievieto informāciju internetā” nosaka piekļūstamības prasības iestāžu tīmekļvietnēm, bet Apercura nav iestāde: bezmaksas privāts katalogs uz tiem neattiecas, un šis paziņojums ir brīvprātīgs. Tā pakalpojuma sniedzējs tomēr tiecas visās lapās sasniegt to pašu līmeni: WCAG 2.2 AA."
+				]
+			},
+			"status": {
+				"heading": "Vietnes atbilstība",
+				"body": [
+					"Latvijas lapām ir kopīgs kods un testi ar franču lapām. Vietne daļēji atbilst WCAG 2.2 AA: tas balstās uz pašnovērtējumu un automatizētiem testiem, vēl ne uz pilnu auditu, kas pašlaik notiek."
+				]
+			},
+			"tests": {
+				"heading": "Kas ir pārbaudīts",
+				"list": [
+					"Automatizētas axe-core pārbaudes (WCAG 2.0, 2.1 un 2.2 noteikumi, A un AA līmenis) katram lapu veidam katrā laidienā.",
+					"Pārvietošanās tikai ar tastatūru ar redzamu fokusu.",
+					"Pamatteksts vismaz 18 px, mērķi vismaz 44 px, nekas nav atkarīgs tikai no krāsas, nav horizontālās ritināšanas 390 px platumā."
+				]
+			},
+			"pending": {
+				"heading": "Kas vēl jāpārbauda",
+				"list": [
+					"Manuāla pārbaude ar ekrāna lasītājiem VoiceOver un NVDA latviešu valodā.",
+					"Pilns audits atbilstoši WCAG 2.2 AA lapu izlasē."
+				]
+			},
+			"feedback": {
+				"heading": "Ziņot par problēmu",
+				"body": [
+					"Ja kādu lapu vai funkciju ir grūti izmantot, rakstiet uz turpmāk norādīto adresi: norādiet, kura lapa un kas jums traucēja. Mēs atbildam viena mēneša laikā un, ja nepieciešams, sniedzam informāciju citā formā."
+				]
+			}
+		},
+		"fields": {
+			"contact": "Kontakti",
+			"date": "Paziņojuma datums"
+		}
+	},
+	"DataLv": {
+		"metaTitle": "Dati un avoti (Latvija) · Apercura",
+		"metaDescription": "No kurienes nāk Apercura Latvijas lapu dati: Nacionālais veselības dienests, Iekšlietu ministrijas Informācijas centrs un Zāļu valsts aģentūra (CC0 1.0) un Valsts zemes dienesta Valsts adrešu reģistrs (CC BY 4.0), atjaunināšanas datumi un kā labot vai dzēst lapu.",
+		"title": "Dati un avoti",
+		"lead": "Katra Latvijas lapa veidota no Latvijas valsts iestāžu publicētajiem atvērtajiem datiem. Šeit norādīts, no kurienes tie nāk, ar kādu licenci un atsauci, kad tie atjaunināti, kas katalogā iekļauts un kas nav, kā arī kā labot vai dzēst lapu.",
+		"status": {
+			"heading": "Pēdējais atjauninājums",
+			"body": "Nacionālais veselības dienests savu ģimenes ārstu prakšu sarakstu publicē reizi ceturksnī; katalogs regulāri pārbauda savus avotus un importē jaunu datni, kad tā ir publicēta. Lapa mainās tikai tad, kad tās fakti mainās avotā.",
+			"importedAt": "Pēdējais imports",
+			"checkedAt": "Avoti pēdējo reizi pārbaudīti",
+			"notImported": "Latvijas katalogs šajā vietnē vēl nav importēts.",
+			"notImportedValue": "Vēl nav importēts"
+		},
+		"sources": {
+			"heading": "Avoti",
+			"body": "Trīs avoti ir nodoti publiskajā domēnā ar CC0 1.0, kas neprasa norādīt avotu; Valsts adrešu reģistrs ir publicēts ar Creative Commons Attribution 4.0 International licenci (CC BY 4.0), kas atļauj atkalizmantošanu, arī komerciālu, ja tiek norādīts avots un veiktās izmaiņas. Turpmāk norādīts katrs avots, katra atsauce – burtiski.",
+			"caption": "Latvijas kataloga datu avoti",
+			"columns": {
+				"source": "Avots",
+				"use": "Izmantojums",
+				"licence": "Licence un atsauce",
+				"frequency": "Atjaunināšana"
+			},
+			"items": {
+				"lv-nvd-gp": {
+					"use": "Ģimenes ārstu prakses un tajās strādājošo ģimenes ārstu vārdi un uzvārdi (nekad ārstu identifikatori vai pacientu skaits)",
+					"frequency": "Reizi ceturksnī, Nacionālais veselības dienests"
+				},
+				"lv-vkcp": {
+					"use": "Ģimenes ārstu prakšu un slimnīcu nosaukumi un adreses no VKCP ģeogrāfiskās informācijas sistēmas (VKCP IĢIS)",
+					"frequency": "Neregulāri, Iekšlietu ministrijas Informācijas centrs (pēdējo reizi atjaunināts 2024. gadā)"
+				},
+				"lv-zva": {
+					"use": "Vispārēja tipa aptiekas un aptieku filiāles ar derīgu speciālo atļauju (licenci): nosaukumi, veidi un adreses (nekad to vadītāji vai e-pasta adreses)",
+					"frequency": "Līdz ar reģistra izmaiņām, Zāļu valsts aģentūra"
+				},
+				"lv-var": {
+					"use": "Valstspilsētas, novadi, pilsētas un pagasti ar to centriem",
+					"frequency": "Regulāri, Valsts zemes dienests"
+				},
+				"map": {
+					"name": "Kartes dati",
+					"publisher": "OpenStreetMap dalībnieki, karšu fragmenti – OpenFreeMap",
+					"use": "Kartes lapās",
+					"frequency": "Nepārtraukti"
+				}
+			},
+			"cc0": "CC0 1.0",
+			"ccBy": "CC BY 4.0",
+			"odbl": "ODbL",
+			"creditHeading": "Valsts zemes dienesta prasītā atsauce",
+			"changes": "Valsts adrešu reģistra dati ir apvienoti ar citu avotu datiem: kataloga vietas ir piesaistītas tā valstspilsētām, novadiem, pilsētām un pagastiem.",
+			"cc0Credit": "CC0 1.0 neprasa norādīt avotu; tomēr Nacionālais veselības dienests, Iekšlietu ministrijas Informācijas centrs un Zāļu valsts aģentūra ir norādīti, kā redzams tabulā."
+		},
+		"coverage": {
+			"heading": "Iekļautās vietas",
+			"body": [
+				"Lapas tiek veidotas triju veidu vietām.",
+				"Ģimenes ārstu prakses tiek iekļautas tikai tad, ja Iekšlietu ministrijas ārstniecības iestāžu sarakstā ir norādīta to adrese: tā ir aptuveni ceturtā daļa no praksēm, ar kurām Nacionālais veselības dienests noslēdzis līgumus. Šī adrešu datu kopa pēdējo reizi atjaunināta 2024. gadā; pārējās prakses tiks iekļautas, tiklīdz to adreses tiks publicētas kā atvērtie dati.",
+				"Slimnīcas ir tās, kas norādītas tajā pašā sarakstā. Aptiekas ir vispārēja tipa aptiekas un aptieku filiāles ar derīgu speciālo atļauju (licenci); slēgta tipa (slimnīcu) aptiekas, zāļu lieltirgotavas un ražotāji nav iekļauti.",
+				"Nekad netiek glabāti: ģimenes ārstu identifikatori, praksēs reģistrēto pacientu skaits, aptieku vadītāji un jebkādas e-pasta adreses."
+			],
+			"kinds": {
+				"LV_GP_PRACTICE": "Ģimenes ārstu prakses (Nacionālais veselības dienests)",
+				"LV_HOSPITAL": "Slimnīcas (Iekšlietu ministrijas Informācijas centra ārstniecības iestāžu saraksts)",
+				"LV_PHARMACY": "Vispārēja tipa aptiekas un aptieku filiāles (Zāļu valsts aģentūra)"
+			},
+			"kindsLabel": "Importēts (avots)"
+		},
+		"identifiers": {
+			"heading": "Identifikatori",
+			"body": [
+				"Katras lapas adrese beidzas ar atslēgu, kas norāda sarakstu un vietas numuru tajā, lai lapu varētu atrast un salīdzināt ar avotu:"
+			],
+			"list": [
+				"/lv/iestade/ilzes-paraugas-gimenes-arsta-prakse-g010000006: g – ģimenes ārsta prakse, kam seko tās ārstniecības iestādes kods 010000006.",
+				"/lv/iestade/paraugu-slimnica-s8958: s – slimnīca, kam seko tās rindas numurs Iekšlietu ministrijas Informācijas centra ārstniecības iestāžu sarakstā (slimnīcas filiālēm ir savas rindas).",
+				"/lv/iestade/paraugu-aptieka-a324: a – aptieka, kam seko tās numurs Zāļu valsts aģentūras reģistrā.",
+				"Ģimenes ārstu personīgie identifikatori netiek ne izmantoti, ne glabāti."
+			]
+		},
+		"correct": {
+			"heading": "Labot kļūdu",
+			"body": [
+				"Lapas atkārto savus avotus: ilgstošs labojums tiek veikts avotā, un lapa tam seko nākamajā jaunas datnes importā.",
+				"Visos citos gadījumos izmantojiet veidlapu: mēs pārbaudām katru ziņojumu."
+			],
+			"list": [
+				"Ģimenes ārsta prakse un tās ārsti: prakse informē Nacionālo veselības dienestu, ar kuru tai ir noslēgts līgums.",
+				"Ģimenes ārsta prakses vai slimnīcas adrese: ārstniecības iestāde atjaunina savus datus Veselības inspekcijas uzturētajā ārstniecības iestāžu reģistrā; ja Iekšlietu ministrijas saraksts joprojām atšķiras, ziņojiet par to ar veidlapu.",
+				"Aptieka: speciālās atļaujas (licences) turētājs informē Zāļu valsts aģentūru, kas atjaunina savu reģistru."
+			],
+			"formTitle": "Ziņot par kļūdu",
+			"formBody": "Norādiet lapas adresi un to, kas ir nepareizi."
+		},
+		"remove": {
+			"heading": "Dzēst lapu",
+			"body": [
+				"Ikviens, par kuru ir lapa, var jebkurā laikā iebilst pret tās publicēšanu, nenorādot iemeslu (VDAR 21. pants). Lapa, uz kuru neviens nav pieteicies, tiek paslēpta, tiklīdz pieprasījums saņemts, un pēc vienkāršas pārbaudes dzēsta; avotu importi to vairs neatjauno. Pieteiktu lapu dzēš tās turētājs savā sadaļā."
+			],
+			"formTitle": "Lūgt dzēst lapu",
+			"formBody": "Norādiet lapas adresi un e-pasta adresi, uz kuru varam jums atbildēt."
+		}
+	},
+	"Astryx": {
+		"button": {
+			"loading": "Ielādē"
+		},
+		"calendar": {
+			"dayInRange": "{date}, diapazonā",
+			"dayRangeEnd": "{date}, diapazona beigas",
+			"dayRangeStart": "{date}, diapazona sākums",
+			"dayRangeStartAndEnd": "{date}, diapazona sākums un beigas",
+			"daySelected": "{date}, atlasīts",
+			"nextMonth": "Nākamais mēnesis",
+			"previousMonth": "Iepriekšējais mēnesis",
+			"rangeClearedAnnounce": "Sākuma datums {date} notīrīts. Izvēlieties sākuma datumu.",
+			"rangeCompleteAnnounce": "Izvēlētais diapazons: no {start} līdz {end}.",
+			"rangeStartAnnounce": "Sākuma datums {date}. Izvēlieties beigu datumu."
+		},
+		"contextMenu": {
+			"label": "Konteksta izvēlne"
+		},
+		"dateInput": {
+			"calendarDescription": "Datumi pēc kalendāra: {calendar}",
+			"chooseMonthYear": "{monthYear}, izvēlieties mēnesi un gadu",
+			"clear": "Notīrīt: {label}",
+			"closeCalendar": "Aizvērt kalendāru",
+			"dialogLabel": "Izvēlieties datumu",
+			"doneChoosingMonth": "Gatavs",
+			"formatHint": "piem., {example}",
+			"invalidDate": "Nederīgs datums",
+			"monthWheel": "Mēnesis",
+			"nonexistentDate": "{named, select, yes {Ievadiet reālu datumu ({calendar})} other {Ievadiet reālu datumu}}",
+			"openCalendar": "Atvērt kalendāru",
+			"outOfRangeDate": "{bounds, select, both {Ievadiet datumu no {min} līdz {max}} min {Ievadiet datumu, kas nav agrāks par {min}} max {Ievadiet datumu, kas nav vēlāks par {max}} other {Ievadiet pieejamu datumu}}",
+			"placeholder": "Izvēlieties datumu",
+			"resetPicking": "Atiestatīt",
+			"savePicking": "Saglabāt",
+			"toggleCalendarClose": "Aizvērt kalendāru",
+			"yearWheel": "Gads"
+		},
+		"dateTimeInput": {
+			"hourWheel": "Stunda",
+			"meridiemAM": "AM",
+			"meridiemPM": "PM",
+			"meridiemWheel": "AM/PM",
+			"minuteWheel": "Minūte",
+			"secondWheel": "Sekunde",
+			"timeHint12h": "piem., 2:30 PM",
+			"timeHint24h": "piem., 14:30"
+		},
+		"dropdownMenu": {
+			"back": "Atpakaļ",
+			"backTo": "Atpakaļ uz: {parent}",
+			"label": "Izvēlne"
+		},
+		"field": {
+			"errorFallback": "Nederīga vērtība",
+			"labelTooltip": "Par: {label}",
+			"optional": "Neobligāts",
+			"required": "Obligāts"
+		},
+		"infoTip": {
+			"label": "Vairāk informācijas"
+		},
+		"input": {
+			"readOnly": "Tikai lasāms",
+			"statusButton": {
+				"error": "Kļūdas informācija",
+				"success": "Sekmīgas darbības informācija",
+				"warning": "Brīdinājuma informācija"
+			}
+		},
+		"inputClearButton": {
+			"tooltip": "Notīrīt"
+		},
+		"kbd": {
+			"key": {
+				"alt": "Alt",
+				"altShort": "Alt",
+				"backspace": "Atpakaļatkāpe",
+				"command": "Command",
+				"control": "Control",
+				"controlShort": "Ctrl",
+				"down": "Bultiņa uz leju",
+				"enter": "Enter",
+				"escape": "Escape",
+				"escapeShort": "Esc",
+				"left": "Bultiņa pa kreisi",
+				"plus": "Plus",
+				"right": "Bultiņa pa labi",
+				"shift": "Shift",
+				"shiftShort": "Shift",
+				"tab": "Tab",
+				"up": "Bultiņa uz augšu",
+				"windowsShort": "Win"
+			},
+			"shortcut": "{shortcut} + {key}"
+		},
+		"keyboardHint": {
+			"toNavigate": "lai pārvietotos"
+		},
+		"link": {
+			"newTab": "(atveras jaunā cilnē)"
+		},
+		"popover": {
+			"close": "Aizvērt uznirstošo logu"
+		},
+		"selector": {
+			"clearLabel": "Notīrīt: {label}",
+			"empty": "Nav iespēju",
+			"emptySearchResults": "Nekas nav atrasts",
+			"placeholder": "Izvēlieties…",
+			"resultCount": "{count, number} {count, plural, zero {rezultātu} one {rezultāts} other {rezultāti}}",
+			"searchOptions": "Meklēt iespējas",
+			"searchPlaceholder": "Meklēt…"
+		},
+		"spinner": {
+			"loading": "Ielādē"
+		},
+		"switch": {
+			"loading": "Ielādē"
+		},
+		"table": {
+			"label": "Tabula",
+			"noData": "Nav datu"
+		},
+		"tabList": {
+			"label": "Cilnes"
+		},
+		"textArea": {
+			"charactersOverLimit": "{count, plural, zero {{count, number} rakstzīmju} one {{count, number} rakstzīme} other {{count, number} rakstzīmes}} pāri limitam",
+			"charactersRemaining": "{count, plural, zero {Atlikušas {count, number} rakstzīmju} one {Atlikusi {count, number} rakstzīme} other {Atlikušas {count, number} rakstzīmes}}",
+			"counter": "{count, number}/{limit, number}"
+		},
+		"textInput": {
+			"clearLabel": "Notīrīt: {label}"
+		},
+		"timeInput": {
+			"clearLabel": "Notīrīt: {label}",
+			"invalidTime": "Nederīgs laiks",
+			"openPicker": "Atvērt: {label}",
+			"placeholder": "Izvēlieties laiku"
+		},
+		"toast": {
+			"dismiss": "Aizvērt paziņojumu",
+			"viewport": "Paziņojumi"
+		},
+		"token": {
+			"remove": "Noņemt: {label}"
+		},
+		"typeahead": {
+			"clearSelection": "Notīrīt izvēli",
+			"emptySearchResults": "Nekas nav atrasts",
+			"loading": "Ielādē",
+			"resultCount": "{count, number} {count, plural, zero {rezultātu} one {rezultāts} other {rezultāti}}",
+			"searchPlaceholder": "Meklēt…",
+			"searchResults": "Meklēšanas rezultāti",
+			"selectionCleared": "Notīrīts: {label}"
+		}
+	}
+}

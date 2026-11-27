@@ -405,3 +405,40 @@ describe("Cypriot facility keys", () => {
 		expect(displayId({ idScheme: "CY-MOH", nationalId: "00000000b2" })).toBe("m00000000b2");
 	});
 });
+
+describe("Latvian place keys", () => {
+	it("read a place's page segment in Latvia only", () => {
+		expect(parsePractitionerKey("lv-LV", "ilzes-paraugas-gimenes-arsta-prakse-g010000006")).toEqual(
+			{
+				country: "LV",
+				idScheme: "LV-GP",
+				nationalId: "010000006",
+				namePart: "ilzes-paraugas-gimenes-arsta-prakse",
+			},
+		);
+		expect(parsePractitionerKey("lv-LV", "paraugu-slimnica-s8958")).toMatchObject({
+			idScheme: "LV-SLIM",
+			nationalId: "8958",
+		});
+		expect(parsePractitionerKey("lv-LV", "paraugu-aptieka-a324")).toMatchObject({
+			idScheme: "LV-APT",
+			nationalId: "324",
+		});
+		expect(parsePractitionerKey("lv-LV", "camille-exemple-19999990013")).toBeNull();
+		expect(parsePractitionerKey("lv-LV", "beispiel-apotheke-th9001")).toBeNull();
+		expect(parsePractitionerKey("fr", "paraugu-aptieka-a324")).toBeNull();
+		expect(marketAdapter("lv-LV").features.booking).toBe(false);
+	});
+
+	it("mark a Latvian segment outside a locale, and print the list's letter and key", () => {
+		expect(marketSegmentOf("LV", "paraugu-aptieka-a324")).toBe("lv.paraugu-aptieka-a324");
+		expect(parseAnyPractitionerKey("lv.paraugu-aptieka-a324")).toMatchObject({
+			country: "LV",
+			idScheme: "LV-APT",
+			nationalId: "324",
+		});
+		expect(parseAnyPractitionerKey("paraugu-aptieka-a324")).toBeNull();
+		expect(displayId({ idScheme: "LV-GP", nationalId: "010000006" })).toBe("g010000006");
+		expect(displayId({ idScheme: "LV-APT", nationalId: "324" })).toBe("a324");
+	});
+});

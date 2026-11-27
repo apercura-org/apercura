@@ -45,7 +45,8 @@ type Expected = {
 		| "fi-FI"
 		| "lt-LT"
 		| "sl-SI"
-		| "el-CY";
+		| "el-CY"
+		| "lv-LV";
 	/** The homes (`/fr` and the international `/`) print hreflang `fr-FR` and `x-default`. */
 	hreflang?: true;
 	/**
@@ -397,6 +398,58 @@ const PAGES: Expected[] = [
 		types: ["CollectionPage", "BreadcrumbList"],
 		lang: "de-CH",
 	},
+	// Latvia, indexed in Latvian under its own segment: GP practices, hospitals and pharmacies.
+	{
+		path: "/lv",
+		robots: "index, follow",
+		types: ["WebPage", "WebSite", "Organization"],
+		lang: "lv-LV",
+		hreflang: true,
+	},
+	{
+		path: "/lv/katalogs",
+		robots: "index, follow",
+		types: ["CollectionPage", "ItemList"],
+		lang: "lv-LV",
+	},
+	// A state city: a municipality whose listing is its town's too.
+	{
+		path: "/lv/gimenes-arstu-prakses/riga",
+		robots: "index, follow",
+		types: ["CollectionPage", "BreadcrumbList", "ItemList"],
+		lang: "lv-LV",
+	},
+	{
+		path: "/lv/gimenes-arstu-prakses/siguldas-novads/mores-pagasts",
+		robots: "index, follow",
+		types: ["CollectionPage", "BreadcrumbList", "ItemList"],
+		lang: "lv-LV",
+	},
+	{
+		path: "/lv/iestade/ilzes-paraugas-gimenes-arsta-prakse-g010000006",
+		robots: "index, follow",
+		types: ["WebPage", "BreadcrumbList", "MedicalClinic"],
+		lang: "lv-LV",
+	},
+	// Two sites: two MedicalClinic entities, and a title whose place leaves no room for the brand.
+	{
+		path: "/lv/iestade/paraugu-veselibas-centrs-g900000014",
+		robots: "index, follow",
+		types: ["WebPage", "BreadcrumbList", "MedicalClinic"],
+		lang: "lv-LV",
+	},
+	{
+		path: "/lv/iestade/paraugu-aptieka-1-a900001",
+		robots: "index, follow",
+		types: ["WebPage", "BreadcrumbList", "Pharmacy"],
+		lang: "lv-LV",
+	},
+	{
+		path: "/lv/iestade/paraugu-regionala-slimnica-s9004",
+		robots: "index, follow",
+		types: ["WebPage", "BreadcrumbList", "Hospital"],
+		lang: "lv-LV",
+	},
 	{
 		path: "/fr/medecin-generaliste/75-paris",
 		robots: "index, follow",
@@ -498,6 +551,7 @@ const OG_LOCALES = {
 	"lt-LT": "lt_LT",
 	"sl-SI": "sl_SI",
 	"el-CY": "el_CY",
+	"lv-LV": "lv_LV",
 } as const;
 
 const FORBIDDEN_KEYS = ["aggregateRating", "review", "reviews", "ratingValue"];
@@ -586,7 +640,7 @@ for (const expected of PAGES) {
 		// facility's, an Italian place's) place would not fit with it.
 		if (!/ · Apercura$|^Apercura · /.test(title)) {
 			expect(expected.path).toMatch(
-				/^\/(?:fr(?:-[a-z]{2})?\/[a-z]+\/[a-z0-9-]+-\d{11}|at\/arzt\/[a-z0-9-]+-[a-z]{1,2}\d{1,9}|gb\/practice\/[a-z0-9-]+-[a-z0-9]{2,12}|cz\/zarizeni\/[a-z0-9-]+-\d{1,9}|es\/centro\/[a-z0-9-]+-\d{10}|it\/struttura\/[a-z0-9-]+-[fps]\d{1,8}|de\/einrichtung\/[a-z0-9-]+-(?:k|r|bb)[0-9a-f]{10}|de\/einrichtung\/[a-z0-9-]+-th\d{1,7}|ch(?:-fr|-it)?\/(?:einrichtung|etablissement|struttura)\/[a-z0-9-]+-[a-z]{1,3}\d{1,14}|pl\/placowka\/[a-z0-9-]+-\d{1,10}|fi\/toimipiste\/[a-z0-9-]+-[0-9a-f]{32})$/,
+				/^\/(?:fr(?:-[a-z]{2})?\/[a-z]+\/[a-z0-9-]+-\d{11}|at\/arzt\/[a-z0-9-]+-[a-z]{1,2}\d{1,9}|gb\/practice\/[a-z0-9-]+-[a-z0-9]{2,12}|cz\/zarizeni\/[a-z0-9-]+-\d{1,9}|es\/centro\/[a-z0-9-]+-\d{10}|it\/struttura\/[a-z0-9-]+-[fps]\d{1,8}|de\/einrichtung\/[a-z0-9-]+-(?:k|r|bb)[0-9a-f]{10}|de\/einrichtung\/[a-z0-9-]+-th\d{1,7}|ch(?:-fr|-it)?\/(?:einrichtung|etablissement|struttura)\/[a-z0-9-]+-[a-z]{1,3}\d{1,14}|pl\/placowka\/[a-z0-9-]+-\d{1,10}|lv\/iestade\/[a-z0-9-]+-[gas]\d{1,9}|fi\/toimipiste\/[a-z0-9-]+-[0-9a-f]{32})$/,
 			);
 			expect(`${title} · Apercura`.length).toBeGreaterThan(60);
 		}
@@ -612,7 +666,7 @@ for (const expected of PAGES) {
 			}));
 		if (expected.hreflang) {
 			// The homes of the open markets (Switzerland's three) and the international one.
-			expect(alternates).toHaveLength(19);
+			expect(alternates).toHaveLength(20);
 			expect(alternates).toEqual(
 				expect.arrayContaining([
 					{ rel: "alternate", hreflang: "fr-FR", href: `${origin}/fr` },
@@ -633,6 +687,7 @@ for (const expected of PAGES) {
 					{ rel: "alternate", hreflang: "lt-LT", href: `${origin}/lt` },
 					{ rel: "alternate", hreflang: "sl-SI", href: `${origin}/si` },
 					{ rel: "alternate", hreflang: "el-CY", href: `${origin}/cy` },
+					{ rel: "alternate", hreflang: "lv-LV", href: `${origin}/lv` },
 					{ rel: "alternate", hreflang: "x-default", href: origin },
 				]),
 			);
@@ -668,10 +723,11 @@ for (const expected of PAGES) {
 		expect(page.meta("og:site_name")).toEqual(["Apercura"]);
 		// A practitioner page shows its own card (`/og/praticien/{slug}.png`, `gb.{slug}` for a UK
 		// practice, `cz.{slug}` for a Czech facility, `es.{slug}` for a Spanish centre, `it.{slug}`
-		// for an Italian place, `de.{slug}` for a German facility), others a generic image.
+		// for an Italian place, `de.{slug}` for a German facility, `lv.{slug}` for a Latvian
+		// place), others a generic image.
 		expect(page.meta("og:image")[0]).toMatch(
 			new RegExp(
-				`^${origin}/og/(?:praticien/(?:gb\\.|cz\\.|es\\.|it\\.|de\\.|ch\\.|pl\\.|fi\\.|lt\\.)?[a-z0-9-]+|[a-z-]+)\\.png$`,
+				`^${origin}/og/(?:praticien/(?:gb\\.|cz\\.|es\\.|it\\.|de\\.|ch\\.|pl\\.|fi\\.|lt\\.|lv\\.)?[a-z0-9-]+|[a-z-]+)\\.png$`,
 			),
 		);
 		expect(page.meta("twitter:card")).toEqual(["summary_large_image"]);
@@ -737,7 +793,9 @@ for (const expected of PAGES) {
 																	? "SI"
 																	: expected.path.startsWith("/cy")
 																		? "CY"
-																		: "FR",
+																		: expected.path.startsWith("/lv")
+																			? "LV"
+																			: "FR",
 			);
 			expect(address?.addressLocality ?? address?.postalCode, node["@id"]).toBeTruthy();
 		}
@@ -781,7 +839,9 @@ for (const expected of PAGES) {
 																					? `${origin}/si`
 																					: lang === "el-CY"
 																						? `${origin}/cy`
-																						: `${origin}/fr-${lang}`;
+																						: lang === "lv-LV"
+																							? `${origin}/lv`
+																							: `${origin}/fr-${lang}`;
 			expect(items[0]?.item).toBe(home);
 			items.forEach((item, index) => {
 				expect(item.position).toBe(index + 1);

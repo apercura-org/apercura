@@ -12,6 +12,7 @@ import {
 	normalizeFiPostcode,
 	normalizeGbPostcode,
 	normalizeLtPostcode,
+	normalizeLvPostcode,
 	normalizeNoPostcode,
 	normalizePlPostcode,
 	normalizeSiPostcode,
@@ -279,7 +280,9 @@ export async function addOwnerSite(db: Database, practitionerId: number, input: 
 															? (normalizeSiPostcode(input.postcode) ?? input.postcode)
 															: country === "CY"
 																? (normalizeCyPostcode(input.postcode) ?? input.postcode)
-																: input.postcode;
+																: country === "LV"
+																	? (normalizeLvPostcode(input.postcode) ?? input.postcode)
+																	: input.postcode;
 		if (!adapter.address.postcode.test(postcode)) throw new ProfileError("UNKNOWN_PLACE");
 		const district = country === "AT" ? /^1(\d{2})0$/.exec(postcode)?.[1] : undefined;
 		const [place] =
@@ -417,15 +420,18 @@ export async function addOwnerSite(db: Database, practitionerId: number, input: 
 						p.kind = 'arrondissement' DESC, p.id
 					LIMIT 1
 				`)
-												: country === "GB" || country === "IE"
+												: country === "GB" || country === "IE" || country === "LV"
 													? // The UK's and Ireland's towns carry no postcodes either (an Eircode never
-														// places anything): the town by its name.
+														// places anything), nor Latvia's towns and parishes: the place by its name (a
+														// parish without its word: `Mores` for `Mores pagasts`).
 														await tx.execute<{ id: number }>(sql`
 					SELECT p.id FROM directory.places p
 					WHERE p.country = ${country} AND p.kind = 'commune' AND p.removed_at IS NULL
-						AND similarity(directory.text_norm(p.name), directory.text_norm(${input.city})) > 0.5
+						AND similarity(directory.text_norm(regexp_replace(p.name, ' pagasts$', '')),
+							directory.text_norm(${input.city})) > 0.5
 					ORDER BY (directory.text_norm(p.name) = directory.text_norm(${input.city})) DESC,
-						similarity(directory.text_norm(p.name), directory.text_norm(${input.city})) DESC,
+						similarity(directory.text_norm(regexp_replace(p.name, ' pagasts$', '')),
+							directory.text_norm(${input.city})) DESC,
 						p.id
 					LIMIT 1
 				`)

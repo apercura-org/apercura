@@ -170,6 +170,13 @@ listing slugs are Greek transliterated as ELOT 743 writes it
 `cy:f1197` (a pharmacy) or `cy:m3fa9c01b2e` (a state facility). An English
 interface (`/cy-en`) is a follow-up.
 
+Latvia (#166) is `/lv` (`lv-LV`): the English route segments in Latvian, as
+Czechia's are in Czech, a place's page under `/lv/iestade/…` (`/zinot` to report
+an error, `/dzesana` to ask for removal), `/lv/katalogs`, `/lv/meklet`,
+`/lv/dati`, `/lv/privatums`, `/lv/juridiska-informacija`,
+`/lv/lietosanas-noteikumi`, `/lv/pieklustamiba`; its listing slugs are Latvian
+(`/lv/aptiekas/riga`, `/lv/gimenes-arstu-prakses/siguldas-novads/sigulda`).
+
 Each segment follows the locale's prefix: `/fr/annuaire`, `/fr-de/verzeichnis`.
 
 Only French pages are indexed in v1 (`INDEXABLE_LOCALES`): pages in the other

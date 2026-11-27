@@ -110,6 +110,10 @@ const PLACES: Record<MarketCountry, PlaceSuggestion[]> = {
 		place(82, "Λευκωσία", "lefkosia", "eparchia-lefkosias", "1000"),
 		place(83, "Λάρνακα", "larnaka", "eparchia-larnakas", "4000"),
 	],
+	LV: [
+		place(60, "Rīga", "riga", "riga", "0001000"),
+		place(61, "Sigulda", "sigulda", "siguldas-novads", "0048200"),
+	],
 };
 
 const LANDINGS = new Set([
@@ -163,6 +167,9 @@ const LANDINGS = new Set([
 	"kentra-ygeias@Στρόβολος",
 	"farmakeia@Λευκωσία",
 	"nosokomeia@Λάρνακα",
+	"aptiekas@Rīga",
+	"gimenes-arstu-prakses@Rīga",
+	"slimnicas@Sigulda",
 ]);
 
 const HUBS = new Set([
@@ -202,6 +209,26 @@ const listing = (locale: Locale, specialite: string, dept: string, commune: stri
 const searchPage = (locale: Locale, query: Record<string, string>) => ({
 	href: { pathname: "/recherche", query },
 	locale,
+});
+
+describe("a search for a place of Latvia", () => {
+	it("moves to Latvia's listing from any market, in Latvian", async () => {
+		expect(await search("fr", { quoi: "pharmacie", ou: "Rīga" })).toEqual(
+			listing("lv-LV", "aptiekas", "riga", "riga"),
+		);
+		expect(await search("en-GB", { quoi: "GP", ou: "Riga" })).toEqual(
+			listing("lv-LV", "gimenes-arstu-prakses", "riga", "riga"),
+		);
+		expect(await search("de-DE", { quoi: "Krankenhaus", ou: "Sigulda" })).toEqual(
+			listing("lv-LV", "slimnicas", "siguldas-novads", "sigulda"),
+		);
+	});
+
+	it("keeps a Latvian search in Latvia", async () => {
+		expect(await search("lv-LV", { quoi: "ģimenes ārsts", ou: "Rīga" })).toEqual(
+			listing("lv-LV", "gimenes-arstu-prakses", "riga", "riga"),
+		);
+	});
 });
 
 describe("a search for a place of another market", () => {

@@ -28,6 +28,9 @@ import {
 	isValidRpps,
 	itUrlKey,
 	LT_ID_SCHEME,
+	LV_ID_SCHEMES,
+	type LvIdScheme,
+	lvUrlKey,
 	NO_ID_SCHEMES,
 	type NoIdScheme,
 	noUrlKey,
@@ -44,6 +47,7 @@ import {
 	parseIeFacilitySegment,
 	parseItPlaceSegment,
 	parseLtFacilitySegment,
+	parseLvFacilitySegment,
 	parseNoFacilitySegment,
 	parsePlFacilitySegment,
 	parseSiPractitionerSegment,
@@ -253,6 +257,20 @@ function cyRef(segment: string): PractitionerRef | null {
 		: null;
 }
 
+/**
+ * The prefix of a Latvian reference (`lv:g010000006`, `lv:a324`): a pharmacy's key alone (`a324`)
+ * names no market by itself.
+ */
+const LV_REF = "lv:";
+
+/** A Latvian place from the end of a page address or slug, or from its key (`g010000006`). */
+function lvRef(segment: string): PractitionerRef | null {
+	const parsed = parseLvFacilitySegment(segment);
+	return parsed
+		? { country: "LV", idScheme: parsed.idScheme, nationalId: parsed.nationalId }
+		: null;
+}
+
 /** The first path segments of Switzerland's pages, in its three languages (`ch`, `ch-fr`, `ch-it`). */
 const CH_PATH = /^ch(?:-[a-z]{2})?$/;
 
@@ -275,14 +293,14 @@ const CH_PATH = /^ch(?:-[a-z]{2})?$/;
  * address is read from its last segment, in the market its first path segment names
  * (`/gb/practice/…`, `/cz/zarizeni/…`, `/es/centro/…`, `/it/struttura/…`,
  * `/de/einrichtung/…`, `/ch/einrichtung/…`,
- * `/ch-fr/etablissement/…`, `/ch-it/struttura/…`, `/ee/asutus/…`, `/pl/placowka/…`, `/no/virksomhet/…`, `/ie/facility/…`, `/lt/istaiga/…`, `/cy/monada/…`).
+ * `/ch-fr/etablissement/…`, `/ch-it/struttura/…`, `/ee/asutus/…`, `/pl/placowka/…`, `/no/virksomhet/…`, `/ie/facility/…`, `/lt/istaiga/…`, `/cy/monada/…`, `/lv/iestade/…`).
  * Whitespace and case are forgiven. `market` is the market the reference was typed in: on a UK
  * page a bare key (`A81001`, `W91234`) is the UK's, on a Czech page a bare number (`39781`) is
  * Czechia's, on a Spanish page a ten-digit code is Spain's (as is any ten-digit code: no other
  * market has one), on an Italian page a list key (`f9000001`) is Italy's, on a German page a key
  * (`th9001`) is Germany's, on a Swiss page a list
  * key (`h123456789`) Switzerland's, on a Polish page a bare number (`290629`) Poland's, on a Norwegian page an organisation number (`910 000 039`)
- * Norway's, on an Irish page a list key (`p10000612`, `h123456789`) Ireland's, on a Lithuanian page a key (`5271-12679435`) Lithuania's, on a Cypriot page a key (`f101`) Cyprus's.
+ * Norway's, on an Irish page a list key (`p10000612`, `h123456789`) Ireland's, on a Lithuanian page a key (`5271-12679435`) Lithuania's, on a Cypriot page a key (`f101`) Cyprus's, on a Latvian page a key (`a324`) Latvia's.
  * Null for anything else.
  */
 export function parsePractitionerRef(
@@ -330,6 +348,9 @@ export function parsePractitionerRef(
 	if (trimmed.toLowerCase().startsWith(CY_REF)) {
 		return cyRef(trimmed.slice(CY_REF.length).replace(/\s+/g, "").toLowerCase());
 	}
+	if (trimmed.toLowerCase().startsWith(LV_REF)) {
+		return lvRef(trimmed.slice(LV_REF.length).replace(/\s+/g, "").toLowerCase());
+	}
 	const parts = trimmed.split(/[?#]/)[0]?.split("/").filter(Boolean) ?? [];
 	const segment = trimmed.split(/[/?#]/).filter(Boolean).at(-1) ?? "";
 	const compact = segment.replace(/\s+/g, "").toLowerCase();
@@ -362,6 +383,11 @@ export function parsePractitionerRef(
 	if ((path.length > 1 && CH_PATH.test(path[0]?.toLowerCase() ?? "")) || market === "CH") {
 		const swiss = chRef(compact);
 		if (swiss) return swiss;
+	}
+	// A page address of Latvia (`/lv/iestade/…`), or a key typed on a Latvian page.
+	if ((path.length > 1 && path[0]?.toLowerCase() === "lv") || market === "LV") {
+		const latvian = lvRef(compact);
+		if (latvian) return latvian;
 	}
 	// A page address of Italy (`/it/struttura/…`; `/it/` was France in Italian before, whose RPPS
 	// addresses still read below), or a key typed on an Italian page.
@@ -439,6 +465,9 @@ export function practitionerRefOf(practitioner: { idScheme: string; nationalId: 
 	}
 	if (IE_ID_SCHEMES[practitioner.idScheme as IeIdScheme]) {
 		return `${IE_REF}${ieUrlKey(practitioner.idScheme as IeIdScheme, practitioner.nationalId)}`;
+	}
+	if (LV_ID_SCHEMES[practitioner.idScheme as LvIdScheme]) {
+		return `${LV_REF}${lvUrlKey(practitioner.idScheme as LvIdScheme, practitioner.nationalId)}`;
 	}
 	if (practitioner.idScheme === CZ_ID_SCHEME) return `${CZ_REF}${practitioner.nationalId}`;
 	if (practitioner.idScheme === PL_ID_SCHEME) return `${PL_REF}${practitioner.nationalId}`;

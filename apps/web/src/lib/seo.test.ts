@@ -132,6 +132,7 @@ describe("hreflang of the homes", () => {
 			"lt-LT": "https://apercura.org/lt",
 			"sl-SI": "https://apercura.org/si",
 			"el-CY": "https://apercura.org/cy",
+			"lv-LV": "https://apercura.org/lv",
 			"x-default": "https://apercura.org/",
 		});
 	});

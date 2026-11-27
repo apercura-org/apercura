@@ -163,6 +163,7 @@ describe("cache warm-up run", () => {
 		const again = memoryStore();
 		const other = fakeApp();
 		const small = { ...env, WARM_CACHE_MAX_URLS: "3" };
+		// Three URLs a run: enough runs for every market's static pages and two listings.
 		const runs = [];
 		do {
 			runs.push(

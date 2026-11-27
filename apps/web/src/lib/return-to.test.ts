@@ -226,3 +226,19 @@ describe("returning to a Cypriot claim", () => {
 		expect(parseReturnTo("/pro/revendiquer?rpps=cy:")).toBeNull();
 	});
 });
+
+describe("returning to a Latvian claim", () => {
+	it("accepts an `lv:` place key, never anything that looks like a path", () => {
+		expect(parseReturnTo("/pro/revendiquer?rpps=lv:g010000006")).toEqual({
+			pathname: "/pro/revendiquer",
+			query: { rpps: "lv:g010000006" },
+		});
+		expect(parseReturnTo("/pro/revendiquer?rpps=lv:a324")).toEqual({
+			pathname: "/pro/revendiquer",
+			query: { rpps: "lv:a324" },
+		});
+		expect(parseReturnTo("/pro/revendiquer?rpps=lv:g0100/..")).toBeNull();
+		expect(parseReturnTo("/pro/revendiquer?rpps=lv:x324")).toBeNull();
+		expect(parseReturnTo("/pro/revendiquer?rpps=lv:")).toBeNull();
+	});
+});
