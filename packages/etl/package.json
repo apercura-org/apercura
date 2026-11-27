@@ -48,7 +48,9 @@
 		"etl:cy": "bun src/cli.ts etl:cy",
 		"fixtures:cy": "bun fixtures/generate-cy.ts",
 		"etl:lv": "bun src/cli.ts etl:lv",
-		"fixtures:lv": "bun fixtures/generate-lv.ts"
+		"fixtures:lv": "bun fixtures/generate-lv.ts",
+		"etl:se": "bun src/cli.ts etl:se",
+		"fixtures:se": "bun fixtures/generate-se.ts"
 	},
 	"dependencies": {
 		"@apercura/core": "workspace:*",

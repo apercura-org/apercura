@@ -41,6 +41,8 @@ import {
 	plListingSlugFor,
 	SI_PROFESSIONS,
 	siListingSlugFor,
+	SE_PROFESSIONS,
+	seListingSlugFor,
 } from "@apercura/core/taxonomy";
 import type { TransactionSql } from "./lib/db";
 
@@ -130,6 +132,7 @@ export async function syncTaxonomy(tx: TransactionSql): Promise<void> {
 		{ professions: FI_PROFESSIONS, specialties: {}, slugFor: fiListingSlugFor },
 		{ professions: SI_PROFESSIONS, specialties: {}, slugFor: siListingSlugFor },
 		{ professions: LV_PROFESSIONS, specialties: {}, slugFor: lvListingSlugFor },
+		{ professions: SE_PROFESSIONS, specialties: {}, slugFor: seListingSlugFor },
 	];
 	for (const { professions, specialties, slugFor } of markets) {
 		for (const code of Object.keys(professions)) {

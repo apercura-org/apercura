@@ -3,7 +3,8 @@
  * spreadsheets (the Spanish register's monthly extracts, the German statistical offices'
  * directories): the shared strings and the rows of one worksheet, as text. No formulas are evaluated, no styles, dates or number formats are read: a
  * cell is the text the file stores (a shared string, an inline string or the raw value). The
- * worksheet is streamed, so a sheet of 135 MB never sits inflated in memory.
+ * worksheet is streamed, so a sheet of 135 MB never sits inflated in memory. Elements may carry a
+ * namespace prefix (`<x:row>`, as Läkemedelsverket's export writes them).
  *
  * `writeXlsx` and `writeXlsxSheets` write the same subset, for test fixtures.
  */
@@ -34,10 +35,10 @@ export function decodeXml(value: string): string {
 
 /** The text of a string item (`<si>` or `<is>`): its `<t>` runs, without phonetic runs (`<rPh>`). */
 function itemText(body: string): string {
-	const withoutPhonetics = body.replace(/<rPh\b[\s\S]*?<\/rPh>/g, "");
+	const withoutPhonetics = body.replace(/<(?:\w+:)?rPh\b[\s\S]*?<\/(?:\w+:)?rPh>/g, "");
 	let text = "";
 	for (const match of withoutPhonetics.matchAll(
-		/<t(?:\s[^>]*)?>([\s\S]*?)<\/t>|<t(?:\s[^>]*)?\/>/g,
+		/<(?:\w+:)?t(?:\s[^>]*)?>([\s\S]*?)<\/(?:\w+:)?t>|<(?:\w+:)?t(?:\s[^>]*)?\/>/g,
 	)) {
 		text += decodeXml(match[1] ?? "");
 	}
@@ -47,7 +48,7 @@ function itemText(body: string): string {
 /** The shared strings of a workbook (`xl/sharedStrings.xml`), in order. */
 export function parseSharedStrings(xml: string): string[] {
 	const strings: string[] = [];
-	for (const match of xml.matchAll(/<si>([\s\S]*?)<\/si>|<si\/>/g))
+	for (const match of xml.matchAll(/<(?:\w+:)?si>([\s\S]*?)<\/(?:\w+:)?si>|<(?:\w+:)?si\/>/g))
 		strings.push(itemText(match[1] ?? ""));
 	return strings;
 }
@@ -67,7 +68,7 @@ export function columnIndex(reference: string): number {
 export function parseRowCells(body: string, shared: readonly string[]): string[] {
 	const cells: string[] = [];
 	let next = 0;
-	for (const match of body.matchAll(/<c\b([^>]*?)(?:\/>|>([\s\S]*?)<\/c>)/g)) {
+	for (const match of body.matchAll(/<(?:\w+:)?c\b([^>]*?)(?:\/>|>([\s\S]*?)<\/(?:\w+:)?c>)/g)) {
 		const attributes = match[1] ?? "";
 		const content = match[2] ?? "";
 		const reference = /\br="([A-Z]+)\d*"/.exec(attributes)?.[1];
@@ -76,9 +77,9 @@ export function parseRowCells(body: string, shared: readonly string[]): string[]
 		const type = /\bt="([^"]*)"/.exec(attributes)?.[1] ?? "n";
 		let value = "";
 		if (type === "inlineStr") {
-			value = itemText(/<is>([\s\S]*?)<\/is>/.exec(content)?.[1] ?? "");
+			value = itemText(/<(?:\w+:)?is>([\s\S]*?)<\/(?:\w+:)?is>/.exec(content)?.[1] ?? "");
 		} else {
-			const raw = /<v>([\s\S]*?)<\/v>/.exec(content)?.[1];
+			const raw = /<(?:\w+:)?v>([\s\S]*?)<\/(?:\w+:)?v>/.exec(content)?.[1];
 			if (raw !== undefined) {
 				if (type === "s") {
 					const index = Number(raw);
@@ -115,7 +116,7 @@ export function xlsxSheets(archive: Buffer): XlsxSheet[] {
 		targets.set(id, target.startsWith("/") ? target.slice(1) : `xl/${target.replace(/^\.\//, "")}`);
 	}
 	const sheets: XlsxSheet[] = [];
-	for (const match of workbook.data.toString("utf8").matchAll(/<sheet\b([^>]*?)\/?>/g)) {
+	for (const match of workbook.data.toString("utf8").matchAll(/<(?:\w+:)?sheet\b([^>]*?)\/?>/g)) {
 		const attributes = match[1] ?? "";
 		const name = decodeXml(/\bname="([^"]*)"/.exec(attributes)?.[1] ?? "");
 		const path = targets.get(/\br:id="([^"]+)"/.exec(attributes)?.[1] ?? "");
@@ -149,7 +150,7 @@ export async function* xlsxRows(
 	const decoder = new TextDecoder("utf-8");
 	let buffer = "";
 	let implicit = 0;
-	const rowPattern = /<row\b([^>]*?)(?:\/>|>([\s\S]*?)<\/row>)/g;
+	const rowPattern = /<(?:\w+:)?row\b([^>]*?)(?:\/>|>([\s\S]*?)<\/(?:\w+:)?row>)/g;
 	for await (const chunk of stream) {
 		buffer += decoder.decode(chunk as Buffer, { stream: true });
 		let consumed = 0;
@@ -163,7 +164,7 @@ export async function* xlsxRows(
 		buffer = buffer.slice(consumed);
 	}
 	buffer += decoder.decode();
-	if (/<row\b/.test(buffer)) throw new Error("truncated worksheet: an unfinished row");
+	if (/<(?:\w+:)?row\b/.test(buffer)) throw new Error("truncated worksheet: an unfinished row");
 }
 
 const escapeXml = (value: string) =>

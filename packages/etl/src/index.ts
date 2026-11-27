@@ -16,6 +16,7 @@ export const COMMANDS = [
 	"etl:si",
 	"etl:cy",
 	"etl:lv",
+	"etl:se",
 	"etl:places",
 	"etl:outbox",
 ] as const;
@@ -94,6 +95,9 @@ Commands:
                 institutions), hospitals and pharmacies (the State Agency of
                 Medicines' register), all CC0 1.0 on data.gov.lv, placed in the
                 address register's towns and parishes (VZD), rebuild read models.
+  etl:se        Import Swedish licensed pharmacies (Läkemedelsverket, "Apotek med
+                tillstånd", CC BY 4.0) and Västra Götaland's health centres (Vårdval
+                vårdcentral, CC0 1.0), placed in SCB's municipalities, rebuild read models.
   etl:places    Import regions, departments, communes and arrondissements
                 (geo.api.gouv.fr), or with --country at the Austrian
                 Bundesländer and Gemeinden (Statistik Austria), or with --country gb
@@ -122,7 +126,8 @@ Commands:
                 municipalities and communities (CYSTAT's 2021 census, Cyprus Post's
                 postcodes), or with --country lv the Latvian statistical regions, state
                 cities, municipalities, towns and parishes (VZD address register, CC BY
-                4.0). Run once, then yearly.
+                4.0), or with --country se the Swedish counties and municipalities (SCB's
+                digital boundaries, CC0 1.0). Run once, then yearly.
   etl:outbox    Send pending cache invalidations to the web app.
 
 Flags (etl:fr):
@@ -245,6 +250,14 @@ Flags (etl:lv):
   --dry-run, --approve=<run_id>, --force, --source-dir <path>, --offline, --work-dir <path>
                           As for etl:at. Unchanged files end the run at once (exit code 0).
 
+Flags (etl:se):
+  --sources <ids>         Lists to import: apotek, vardcentraler (default ETL_SE_SOURCES, else
+                          both), or every list but some: -vardcentraler. A list turned off keeps
+                          its rows (exit code 0).
+  --dry-run, --approve=<run_id>, --force, --source-dir <path>, --offline, --work-dir <path>
+                          As for etl:at. A list that cannot be read, whose licence changed or
+                          whose export is filtered is left out (exit code 3).
+
 Environment:
   DATABASE_URL_ETL (or DATABASE_URL), ETL_PROFESSIONS, ETL_ANS_URLS, ETL_AMELI_URL,
   ETL_FINESS_DATASET_URL, ETL_GEO_API_URL, ETL_GEOCODER_URL, ETL_SOURCE_DIR, ETL_WORK_DIR,
@@ -278,6 +291,8 @@ Environment:
   ETL_CY_CENSUS_URL, ETL_CY_POSTCODES_URL, ETL_CY_SOURCE_DIR,
   ETL_LV_SOURCES, ETL_LV_NVD_URL, ETL_LV_VKCP_URL, ETL_LV_ZVA_URL, ETL_LV_PORTAL_URL,
   ETL_LV_SOURCE_DIR,
+  ETL_SE_SOURCES, ETL_SE_APOTEK_URL, ETL_SE_VARDCENTRALER_URL, ETL_SE_PLACES_URL,
+  ETL_SE_PLACES_PAGE_URL, ETL_SE_SOURCE_DIR,
   APP_URL and REVALIDATE_SECRET (cache revalidation).`;
 
 export {
@@ -299,6 +314,7 @@ export {
 	buildNoOptions,
 	buildPlOptions,
 	buildSiOptions,
+	buildSeOptions,
 	type ChOptions,
 	type CyOptions,
 	type CzOptions,
@@ -316,6 +332,7 @@ export {
 	type PlOptions,
 	parseArgs,
 	type SiOptions,
+	type SeOptions,
 } from "./config";
 export { type AtRunOutcome, runAt } from "./run-at";
 export { type ChRunOutcome, runCh } from "./run-ch";
@@ -334,3 +351,4 @@ export { type LvRunOutcome, runLv } from "./run-lv";
 export { type NoRunOutcome, runNo } from "./run-no";
 export { type PlRunOutcome, runPl } from "./run-pl";
 export { runSi, type SiRunOutcome } from "./run-si";
+export { runSe, type SeRunOutcome } from "./run-se";
