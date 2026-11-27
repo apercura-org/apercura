@@ -29,6 +29,7 @@ import {
 import { LINKS } from "~/lib/links";
 import { swissAttribution } from "~/lib/market";
 import { getImportStatus } from "~/server/queries/registry";
+import { getSwissCoverageTexts } from "~/server/queries/swiss-coverage";
 import { TRPCReactProvider } from "~/trpc/client";
 
 /*
@@ -617,7 +618,8 @@ export async function DataCh({ locale }: { locale: Locale }) {
 				content={{
 					heading: t("coverage.heading"),
 					body: raw("coverage.body") as string[],
-					list: raw("coverage.cantons") as string[],
+					// The cantons covered, kind by kind, live from the directory.
+					list: [...(await getSwissCoverageTexts(locale)).summary, t("coverage.elsewhere")],
 				}}
 			>
 				<div className="flex flex-col gap-2">

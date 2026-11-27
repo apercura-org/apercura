@@ -30,7 +30,6 @@
 		"startTitle": "Was suchen Sie?",
 		"startBody": "Geben Sie unter «Wer?» den Namen einer Einrichtung ein, oder Spital, Klinik, Pflegeheim oder Apotheke, und unter «Wo?» eine Gemeinde, einen Bezirk oder einen Kanton. Sie können das Verzeichnis auch nach Kanton und Bezirk durchsuchen.",
 		"unknownPlaceBody": "Prüfen Sie die Schreibweise oder geben Sie eine Nachbargemeinde ein.",
-		"unlistedBody": "In der Schweiz führt das Verzeichnis vorerst Einrichtungen, keine Personen: die Spitäler und Kliniken aller Kantone (Kennzahlen der Schweizer Spitäler 2023 des Bundesamts für Gesundheit und Listen der Kantone Bern, Genf, Basel-Stadt und Jura), die Alters- und Pflegeheime nur der Kantone Zürich, Bern, Genf, Basel-Stadt, Basel-Landschaft und Jura und die Apotheken nur von Basel-Landschaft (alle) und Genf (nur die Apotheken, die impfen). Ärztinnen und Ärzte, Zahnärztinnen und Zahnärzte, Psychologinnen und Psychologen und andere Gesundheitsfachpersonen sind hier noch nicht aufgeführt: Kein offenes Register führt sie. Suchen Sie nach dem Namen einer Einrichtung oder durchsuchen Sie das Verzeichnis.",
 		"departmentPlace": "Bezirk",
 		"bookingNotOpen": "Apercura bietet in der Schweiz keine Online-Terminbuchung an: Kontaktieren Sie die Einrichtung.",
 		"columns": {
@@ -44,7 +43,6 @@
 	},
 	"HomePage": {
 		"title": "Finden Sie ein Spital, eine Klinik, ein Pflegeheim oder eine Apotheke in der Schweiz",
-		"hook": "Jedes Spital und jede Klinik der Schweiz hat schon eine Seite, ebenso die Alters- und Pflegeheime der Kantone Zürich, Bern, Genf, Basel-Stadt, Basel-Landschaft und Jura und die Apotheken von Basel-Landschaft und Genf.",
 		"pillars": {
 			"free": {
 				"description": "Kostenlos für Gesundheitseinrichtungen und für Patientinnen und Patienten, ohne Abonnement und ohne Provision."
@@ -52,7 +50,7 @@
 		},
 		"registry": {
 			"heading": "Aus den offenen Daten des Bundes und der Kantone",
-			"intro": "Spitäler und Kliniken: alle Kantone, aus den Kennzahlen der Schweizer Spitäler 2023 des Bundesamts für Gesundheit (BAG) und den Listen der Kantone Bern, Genf, Basel-Stadt und Jura. Alters- und Pflegeheime: nur die Kantone Zürich, Bern, Genf, Basel-Stadt, Basel-Landschaft und Jura. Apotheken: nur Basel-Landschaft (alle Apotheken) und Genf (nur die Apotheken, die impfen). Die anderen Kantone veröffentlichen keine offene Liste davon. Aufgeführt sind Einrichtungen, nie einzelne Fachpersonen. Niemand bezahlt für einen Eintrag, und niemand wird ausgeschlossen.",
+			"intro": "Aufgeführt sind Einrichtungen, nie einzelne Fachpersonen. Niemand bezahlt für einen Eintrag, und niemand wird ausgeschlossen.",
 			"sourceName": "BAG und Kantone, offene Daten"
 		},
 		"pro": {

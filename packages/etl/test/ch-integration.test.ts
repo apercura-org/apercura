@@ -278,6 +278,48 @@ describe.skipIf(!url)("etl:ch on synthetic fixtures, next to France", () => {
 		expect(await snapshot("CH")).toEqual(before);
 	});
 
+	it("turns lists off without leaving them out: their rows stay as the last run that read them left them", async () => {
+		const active = (scheme: string) =>
+			count(
+				`directory.practitioners WHERE country = 'CH' AND id_scheme = '${scheme}' AND status = 'active' AND missing_runs = 0`,
+			);
+		const before = {
+			hospitals: await active("CH-GE-HOP"),
+			homes: await active("CH-GE-EMS"),
+			pharmacies: await active("CH-GE-PHARM"),
+			pages: await count(
+				"directory.practitioner_pages pg JOIN directory.practitioners p ON p.id = pg.practitioner_id WHERE p.id_scheme LIKE 'CH-GE-%'",
+			),
+		};
+		expect(before.homes).toBeGreaterThan(0);
+		expect(before.pharmacies).toBeGreaterThan(0);
+		const off = { sources: "-ge-hopitaux,-ge-ems,-ge-pharmacies", force: true } as const;
+		for (let run = 0; run < 2; run++) {
+			const outcome = await runSwitzerland(base, off);
+			expect(outcome.status).toBe("succeeded");
+			// Not selected is not left out: no source error, so the command exits 0.
+			expect(outcome.sourceErrors).toEqual({});
+			expect(Object.keys(outcome.stats.sources as object)).not.toContain("ge-ems");
+		}
+		// Two runs without them, and Geneva's facilities are neither missing nor removed.
+		expect({
+			hospitals: await active("CH-GE-HOP"),
+			homes: await active("CH-GE-EMS"),
+			pharmacies: await active("CH-GE-PHARM"),
+			pages: await count(
+				"directory.practitioner_pages pg JOIN directory.practitioners p ON p.id = pg.practitioner_id WHERE p.id_scheme LIKE 'CH-GE-%'",
+			),
+		}).toEqual(before);
+		const [scope] = await sql<{ sources: string[] }[]>`
+			SELECT scope -> 'sources' AS sources FROM directory.etl_runs
+			WHERE source = 'ch' ORDER BY id DESC LIMIT 1
+		`;
+		expect(scope?.sources).not.toContain("ge-pharmacies");
+		// The same selection on the same files is unchanged; turning the lists back on is not.
+		expect((await runSwitzerland(base, { sources: off.sources })).status).toBe("skipped");
+		expect((await runSwitzerland(base)).status).toBe("succeeded");
+	});
+
 	it("leaves out the FOPH's figures when they cannot be read, keeping every hospital", async () => {
 		const dir = chDir();
 		copyFileSync(join(dir, "ge-ems.zip"), join(dir, "bag-kzp.xlsx"));

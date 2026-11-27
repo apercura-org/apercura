@@ -1590,8 +1590,7 @@
 		"metaDescriptionPageRange": "{count, plural, one {Page {page} sur {pages}, de {first} à {last} : # praticien inscrit comme {occupation} à {place} au registre national.} many {Page {page} sur {pages}, de {first} à {last} : # praticiens inscrits comme {occupation} à {place} au registre national.} other {Page {page} sur {pages}, de {first} à {last} : # praticiens inscrits comme {occupation} à {place} au registre national.}}",
 		"hubMetaTitleShort": "{listing} en France · Apercura",
 		"authoritiesHeading": "{listing} : autorités locales de {place}",
-		"pharmacyCoverage": "Les pharmacies ne sont recensées que pour {states} : les autres Länder ne publient pas de liste à jour de leurs pharmacies en données ouvertes.",
-		"swissCoverage": "{kind, select, pflegeheim {Les EMS ne sont listés que dans les cantons de Zurich, Berne, Genève, Bâle-Ville, Bâle-Campagne et du Jura : les autres cantons n’en publient pas de liste ouverte.} apotheke {Les pharmacies ne sont listées qu’à Bâle-Campagne (toutes les pharmacies) et à Genève (seulement les pharmacies qui vaccinent) : les autres cantons n’en publient pas de liste ouverte.} other {Les hôpitaux et cliniques sont listés dans tous les cantons, d’après les chiffres-clés 2023 des hôpitaux de l’Office fédéral de la santé publique et les listes des cantons de Berne, Genève, Bâle-Ville et du Jura.}}"
+		"pharmacyCoverage": "Les pharmacies ne sont recensées que pour {states} : les autres Länder ne publient pas de liste à jour de leurs pharmacies en données ouvertes."
 	},
 	"Directory": {
 		"metaTitle": "Annuaire des professionnels de santé par lieu · Apercura",
@@ -6545,12 +6544,7 @@
 			"body": [
 				"Une page est un établissement, jamais une personne. Ce qui est répertorié dépend de ce que chaque canton publie en données ouvertes :"
 			],
-			"cantons": [
-				"Sites d’hôpitaux et de cliniques : dans tous les cantons, à partir des chiffres de l’OFSP, complétés par les listes d’hôpitaux des cantons de Berne, Genève, Bâle-Ville et du Jura.",
-				"Établissements médico-sociaux : dans les cantons de Zurich, Berne, Genève, Bâle-Ville, Bâle-Campagne et du Jura seulement.",
-				"Pharmacies : dans le canton de Bâle-Campagne, et dans le canton de Genève seulement les pharmacies qui vaccinent.",
-				"Ailleurs, aucun établissement médico-social ni aucune pharmacie n’est encore répertorié, et aucun cabinet médical ou dentaire ne l’est nulle part."
-			],
+			"elsewhere": "Ailleurs, aucun établissement médico-social ni aucune pharmacie n’est encore répertorié, et aucun cabinet médical ou dentaire ne l’est nulle part.",
 			"kinds": {
 				"CH_HOSPITAL": "Hôpitaux de soins généraux : hôpitaux universitaires, prise en charge centralisée et soins de base (types OFS K111 à K123)",
 				"CH_PSYCHIATRIC_CLINIC": "Cliniques psychiatriques (K211, K212)",
@@ -6629,5 +6623,46 @@
 			"formTitle": "Demander le retrait d’une page",
 			"formBody": "Indiquez l’adresse de la page et une adresse e-mail où nous pouvons vous répondre."
 		}
+	},
+	"SwissCoverage": {
+		"cantons": {
+			"ZH": "de Zurich",
+			"BE": "de Berne",
+			"LU": "de Lucerne",
+			"UR": "d’Uri",
+			"SZ": "de Schwytz",
+			"OW": "d’Obwald",
+			"NW": "de Nidwald",
+			"GL": "de Glaris",
+			"ZG": "de Zoug",
+			"FR": "de Fribourg",
+			"SO": "de Soleure",
+			"BS": "de Bâle-Ville",
+			"BL": "de Bâle-Campagne",
+			"SH": "de Schaffhouse",
+			"AR": "d’Appenzell Rhodes-Extérieures",
+			"AI": "d’Appenzell Rhodes-Intérieures",
+			"SG": "de Saint-Gall",
+			"GR": "des Grisons",
+			"AG": "d’Argovie",
+			"TG": "de Thurgovie",
+			"TI": "du Tessin",
+			"VD": "de Vaud",
+			"VS": "du Valais",
+			"NE": "de Neuchâtel",
+			"GE": "de Genève",
+			"JU": "du Jura"
+		},
+		"pharmacyCanton": "{canton, select, BL {{name} (toutes les pharmacies)} GE {{name} (seulement celles qui vaccinent)} other {{name}}}",
+		"homesOf": "{amount, select, one {les EMS du canton {cantons}} other {les EMS des cantons {cantons}}}",
+		"pharmaciesOf": "{amount, select, one {les pharmacies du canton {cantons}} other {les pharmacies des cantons {cantons}}}",
+		"hook": "Chaque hôpital et chaque clinique de Suisse a déjà sa page.",
+		"hookWith": "Chaque hôpital et chaque clinique de Suisse a déjà sa page, de même que {others}.",
+		"hospitals": "Hôpitaux et cliniques : tous les cantons, d’après les chiffres-clés des hôpitaux suisses 2023 de l’Office fédéral de la santé publique (OFSP){amount, select, none {} one { et la liste d’hôpitaux du canton {cantons}} other { et les listes d’hôpitaux des cantons {cantons}}}.",
+		"homes": "EMS : {amount, select, none {aucun n’est encore listé.} one {seulement le canton {cantons}.} other {seulement les cantons {cantons}.}}",
+		"pharmacies": "Pharmacies : {amount, select, none {aucune n’est encore listée.} one {seulement le canton {cantons}.} other {seulement les cantons {cantons}.}}",
+		"listing": "{kind, select, pflegeheim {{amount, select, none {Aucun EMS n’est encore listé : aucune liste cantonale n’a encore été importée.} one {Les EMS ne sont listés que pour le canton {cantons} : ceux des autres cantons ne le sont pas encore.} other {Les EMS ne sont listés que pour les cantons {cantons} : ceux des autres cantons ne le sont pas encore.}}} apotheke {{amount, select, none {Aucune pharmacie n’est encore listée : aucune liste cantonale n’a encore été importée.} one {Les pharmacies ne sont listées que pour le canton {cantons} : celles des autres cantons ne le sont pas encore.} other {Les pharmacies ne sont listées que pour les cantons {cantons} : celles des autres cantons ne le sont pas encore.}}} other {Les hôpitaux et cliniques sont listés dans tous les cantons, d’après les chiffres-clés 2023 des hôpitaux de l’Office fédéral de la santé publique{amount, select, none {.} one { et la liste d’hôpitaux du canton {cantons}.} other { et les listes d’hôpitaux des cantons {cantons}.}}}}",
+		"hospitalsEverywhere": "les hôpitaux et cliniques de tous les cantons",
+		"unlisted": "En Suisse, l’annuaire recense pour l’instant des établissements, jamais des personnes : {listed}. Les médecins, dentistes, psychologues et autres professionnels de santé ne sont pas encore listés ici : aucun registre ouvert ne les publie. Cherchez le nom d’un établissement ou parcourez l’annuaire."
 	}
 }

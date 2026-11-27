@@ -1693,7 +1693,11 @@ a person (Basel-Landschaft's responsible pharmacist, an e-mail address that
 names its owner, a care-of person in a hospital's name) is never read into a
 row.
 
-What each canton has, plainly (the listings and the home say it too):
+What each canton's lists hold once imported. The pages never print this table
+as fixed text: the home, the listings, the search and the data page name, for
+each kind, the cantons whose list has at least one published facility (see
+[Coverage on the pages](#coverage-on-the-pages)), so a list that is left out,
+turned off or never imported is never claimed:
 
 | Kind of facility                  | Where                                                                                                                                                                |
 | --------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -1732,6 +1736,68 @@ languages, and kept in `switzerland.registries`
 address, `ETL_CH_POSTCODES_URL` and `ETL_CH_COMMUNES_URL` the places'. Bern's
 layer names are numbered by its server and may change: a list that cannot be
 fetched is left out, and the run says so.
+
+### Turning a list off
+
+`--sources` (or `ETL_CH_SOURCES`, which `--sources` overrides) names the lists a
+run imports (`bag,zh-heime`), or every list but some, each prefixed with a
+minus (`-ge-hopitaux,-ge-ems,-ge-pharmacies`). The two forms never mix, an
+unknown id is an error, and at least one list must be left.
+
+A list that is not selected is not "left out": it is not fetched, it never
+appears in `stats.sourceErrors`, and the run exits 0. `etl_runs.scope.sources`
+records the selection. Its rows are not touched either: its facilities are
+neither counted missing nor removed, its activities and sites stay, and their
+pages stay as the last run that read the list left them (so the pages keep
+naming its canton while they are published). Only a run that reads the list
+again and no longer finds a facility removes it, after two runs as everywhere.
+A run with the same selection on unchanged files is skipped; changing the
+selection always runs.
+
+#### Geneva's lists from the production server
+
+Geneva's SITG servers (`extract.sitg.ge.ch`, `vector.sitg.ge.ch`) answer HTTP
+406, with a page saying the visitor probably uses a VPN, to requests from some
+datacenter addresses, the production server's among them. `ge-hopitaux`,
+`ge-ems` and `ge-pharmacies` are then left out of every run (`stats.sourceErrors`,
+exit code 3), and production publishes no Geneva nursing home or pharmacy.
+Geneva's hospitals and clinics still come from the FOPH's figures, without the
+points and phones the canton's list adds, and the pages say so on their own:
+they stop naming Geneva for the kinds it no longer has.
+
+The import does not work around the block. Until SITG allows the server, turn
+the three lists off so the monthly run exits 0 and an exit code 3 means a new
+problem again:
+
+```sh
+# The Docker stack's scheduler (docker/compose.app.yml passes it this variable only):
+ETL_CH_SCHEDULE_ARGS="--sources -ge-hopitaux,-ge-ems,-ge-pharmacies"
+# Any other run of etl:ch (a host's cron, a run by hand) reads its environment:
+ETL_CH_SOURCES=-ge-hopitaux,-ge-ems,-ge-pharmacies
+```
+
+The fix is to ask SITG to allow the server
+([`data-requests/ch.md`](./data-requests/ch.md#genevas-lists-blocked-from-the-server)),
+then drop the setting: the next run reads Geneva's lists again and the pages
+name Geneva for every kind its lists give.
+
+### Coverage on the pages
+
+The cantons a Swiss page names come from the directory, never from the
+catalogs: `getSwissCoverage` (`apps/web/src/server/queries/swiss-coverage.ts`)
+reads the registries of the published Swiss facilities (active, not withheld,
+with a page), from their current activities' sources and their `quelle`
+credits, and maps each cantonal registry to its canton (`CH_LIST_CANTONS` in
+`packages/core/src/country/ch.ts`, checked against `CH_SOURCES`). A canton is
+named for nursing homes or pharmacies when its list has one published facility
+of that kind, and for hospitals when its hospital list gives a page or is
+credited on a FOPH site; the FOPH's figures stand for every canton. The texts
+(`SwissCoverage` in the catalogs) give each canton's name in the page's
+language and join them as the language joins a list, with the cases of one
+canton and of none. The query is cached for days and tagged like the home's
+figures (`registry`, `sitemap`, `practitioner:*`): the import sends `sitemap`
+with any change, so the first visitor after a run that adds or drops a list
+reads the new coverage.
 
 ### Identifiers and deduplication
 
@@ -1793,7 +1859,8 @@ own pages as everywhere.
 
 The scheduler runs `etl:ch` on the 3rd of each month at 22:30 UTC
 (`docker/crontab`), `ETL_CH_SCHEDULE_ARGS` narrows it; exit codes as for
-Austria (3: imported without a list). The FOPH's 2023 figures do not change: a
+Austria (3: imported without a list; a list turned off is not one, see
+[Turning a list off](#turning-a-list-off)). The FOPH's 2023 figures do not change: a
 later edition is read only once its terms allow commercial use, by changing
 `CH_HOSPITAL_FIGURES_YEAR` (its sites' keys change with their names: review
 the blocked run).

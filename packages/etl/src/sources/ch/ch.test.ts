@@ -1,8 +1,10 @@
 import { mkdtempSync, readFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
+import { CH_LIST_CANTONS } from "@apercura/core/country";
 import { beforeAll, describe, expect, it } from "vitest";
 import { generateChFixtures } from "../../../fixtures/generate-ch";
+import { buildChOptions, parseChSources } from "../../config";
 import { checkChSource } from "../../guards";
 import { pageName, parseBag } from "./bag";
 import { parseCantonalSource, splitAddress } from "./cantons";
@@ -395,6 +397,42 @@ describe("Swiss guards and sources", () => {
 			null,
 		);
 		expect(quarantined.find((check) => check.name === "zh-heime.quarantine")?.ok).toBe(true);
+	});
+
+	it("select the lists to import, or every list but some", () => {
+		const DB = { DATABASE_URL: "postgres://localhost/unused" };
+		expect(parseChSources(undefined)).toEqual([...CH_SOURCE_IDS]);
+		expect(parseChSources("")).toEqual([...CH_SOURCE_IDS]);
+		expect(parseChSources("bag, zh-heime,bag")).toEqual(["bag", "zh-heime"]);
+		// Geneva's three lists turned off, in the order of the others.
+		expect(parseChSources("-ge-hopitaux, -ge-ems,-ge-pharmacies")).toEqual(
+			CH_SOURCE_IDS.filter((id) => !id.startsWith("ge-")),
+		);
+		expect(buildChOptions(new Map(), { ...DB, ETL_CH_SOURCES: "-ge-ems" }).sources).not.toContain(
+			"ge-ems",
+		);
+		// The flag wins over the variable, in either form.
+		expect(
+			buildChOptions(new Map([["sources", "-bag"]]), { ...DB, ETL_CH_SOURCES: "bag" }).sources,
+		).toHaveLength(CH_SOURCE_IDS.length - 1);
+		expect(() => parseChSources("bag,-ge-ems")).toThrow(/never both/);
+		expect(() => parseChSources("-ge-spitaeler")).toThrow(/Unknown Swiss source "ge-spitaeler"/);
+		expect(() => parseChSources("zh-spitaeler")).toThrow(/Unknown Swiss source/);
+		expect(() => parseChSources(CH_SOURCE_IDS.map((id) => `-${id}`).join(","))).toThrow(
+			/At least one/,
+		);
+	});
+
+	it("give each canton's list the canton the pages credit it to", () => {
+		for (const id of CH_SOURCE_IDS) {
+			const { canton, registry } = CH_SOURCES[id];
+			expect(CH_LIST_CANTONS[registry] ?? null, id).toBe(canton);
+		}
+		expect(Object.keys(CH_LIST_CANTONS).sort()).toEqual(
+			CH_SOURCE_IDS.filter((id) => CH_SOURCES[id].canton)
+				.map((id) => CH_SOURCES[id].registry)
+				.sort(),
+		);
 	});
 
 	it("name each list's address variable", () => {

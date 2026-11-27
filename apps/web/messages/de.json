@@ -1592,8 +1592,7 @@
 		"metaDescriptionPageRange": "{count, plural, one {Seite {page} von {pages}, {first} bis {last}: # als {occupation} in {place} im nationalen Register geführte Gesundheitsfachkraft.} other {Seite {page} von {pages}, {first} bis {last}: # als {occupation} in {place} im nationalen Register geführte Gesundheitsfachkräfte.}}",
 		"hubMetaTitleShort": "{listing} in Frankreich · Apercura",
 		"authoritiesHeading": "{listing}: Gebietskörperschaften von {place}",
-		"pharmacyCoverage": "Apotheken werden nur für {states} aufgeführt: Die übrigen Länder veröffentlichen keine aktuelle Liste ihrer Apotheken als offene Daten.",
-		"swissCoverage": "{kind, select, pflegeheim {Alters- und Pflegeheime sind nur in den Kantonen Zürich, Bern, Genf, Basel-Stadt, Basel-Landschaft und Jura aufgeführt: Die anderen Kantone veröffentlichen keine offene Liste davon.} apotheke {Apotheken sind nur in Basel-Landschaft (alle Apotheken) und Genf (nur die Apotheken, die impfen) aufgeführt: Die anderen Kantone veröffentlichen keine offene Liste davon.} other {Spitäler und Kliniken sind in allen Kantonen aufgeführt, aus den Kennzahlen der Schweizer Spitäler 2023 des Bundesamts für Gesundheit und den Listen der Kantone Bern, Genf, Basel-Stadt und Jura.}}"
+		"pharmacyCoverage": "Apotheken werden nur für {states} aufgeführt: Die übrigen Länder veröffentlichen keine aktuelle Liste ihrer Apotheken als offene Daten."
 	},
 	"Directory": {
 		"metaTitle": "Verzeichnis der Gesundheitsfachkräfte nach Ort · Apercura",
@@ -6547,12 +6546,7 @@
 			"body": [
 				"Eine Seite ist eine Einrichtung, nie eine Person. Was aufgeführt wird, hängt davon ab, was jeder Kanton als offene Daten veröffentlicht:"
 			],
-			"cantons": [
-				"Spital- und Klinikstandorte: in allen Kantonen, aus den Kennzahlen des BAG, ergänzt durch die Spitallisten der Kantone Bern, Genf, Basel-Stadt und Jura.",
-				"Alters- und Pflegeheime: nur in den Kantonen Zürich, Bern, Genf, Basel-Stadt, Basel-Landschaft und Jura.",
-				"Apotheken: im Kanton Basel-Landschaft, und im Kanton Genf nur die Apotheken, die impfen.",
-				"Anderswo sind noch keine Alters- und Pflegeheime und Apotheken aufgeführt, und Arzt- oder Zahnarztpraxen sind nirgends aufgeführt."
-			],
+			"elsewhere": "Anderswo sind noch keine Alters- und Pflegeheime und Apotheken aufgeführt, und Arzt- oder Zahnarztpraxen sind nirgends aufgeführt.",
 			"kinds": {
 				"CH_HOSPITAL": "Allgemeinspitäler: Universitätsspitäler, Zentrumsversorgung und Grundversorgung (BFS-Typen K111 bis K123)",
 				"CH_PSYCHIATRIC_CLINIC": "Psychiatrische Kliniken (K211, K212)",
@@ -6631,5 +6625,46 @@
 			"formTitle": "Die Entfernung einer Seite verlangen",
 			"formBody": "Geben Sie die Adresse der Seite an und eine E-Mail-Adresse, unter der wir Ihnen antworten können."
 		}
+	},
+	"SwissCoverage": {
+		"cantons": {
+			"ZH": "Zürich",
+			"BE": "Bern",
+			"LU": "Luzern",
+			"UR": "Uri",
+			"SZ": "Schwyz",
+			"OW": "Obwalden",
+			"NW": "Nidwalden",
+			"GL": "Glarus",
+			"ZG": "Zug",
+			"FR": "Freiburg",
+			"SO": "Solothurn",
+			"BS": "Basel-Stadt",
+			"BL": "Basel-Landschaft",
+			"SH": "Schaffhausen",
+			"AR": "Appenzell Ausserrhoden",
+			"AI": "Appenzell Innerrhoden",
+			"SG": "St. Gallen",
+			"GR": "Graubünden",
+			"AG": "Aargau",
+			"TG": "Thurgau",
+			"TI": "Tessin",
+			"VD": "Waadt",
+			"VS": "Wallis",
+			"NE": "Neuenburg",
+			"GE": "Genf",
+			"JU": "Jura"
+		},
+		"pharmacyCanton": "{canton, select, BL {{name} (alle Apotheken)} GE {{name} (nur die Apotheken, die impfen)} other {{name}}}",
+		"homesOf": "{amount, select, one {die Alters- und Pflegeheime des Kantons {cantons}} other {die Alters- und Pflegeheime der Kantone {cantons}}}",
+		"pharmaciesOf": "{amount, select, one {die Apotheken des Kantons {cantons}} other {die Apotheken der Kantone {cantons}}}",
+		"hook": "Jedes Spital und jede Klinik der Schweiz hat schon eine Seite.",
+		"hookWith": "Jedes Spital und jede Klinik der Schweiz hat schon eine Seite, ebenso {others}.",
+		"hospitals": "Spitäler und Kliniken: alle Kantone, aus den Kennzahlen der Schweizer Spitäler 2023 des Bundesamts für Gesundheit (BAG){amount, select, none {} one { und der Spitalliste des Kantons {cantons}} other { und den Spitallisten der Kantone {cantons}}}.",
+		"homes": "Alters- und Pflegeheime: {amount, select, none {noch keine aufgeführt.} one {nur der Kanton {cantons}.} other {nur die Kantone {cantons}.}}",
+		"pharmacies": "Apotheken: {amount, select, none {noch keine aufgeführt.} one {nur der Kanton {cantons}.} other {nur die Kantone {cantons}.}}",
+		"listing": "{kind, select, pflegeheim {{amount, select, none {Noch sind keine Alters- und Pflegeheime aufgeführt: Bisher wurde keine Liste eines Kantons übernommen.} one {Alters- und Pflegeheime sind nur für den Kanton {cantons} aufgeführt: Die Heime der anderen Kantone sind noch nicht erfasst.} other {Alters- und Pflegeheime sind nur für die Kantone {cantons} aufgeführt: Die Heime der anderen Kantone sind noch nicht erfasst.}}} apotheke {{amount, select, none {Noch sind keine Apotheken aufgeführt: Bisher wurde keine Liste eines Kantons übernommen.} one {Apotheken sind nur für den Kanton {cantons} aufgeführt: Die Apotheken der anderen Kantone sind noch nicht erfasst.} other {Apotheken sind nur für die Kantone {cantons} aufgeführt: Die Apotheken der anderen Kantone sind noch nicht erfasst.}}} other {Spitäler und Kliniken sind in allen Kantonen aufgeführt, aus den Kennzahlen der Schweizer Spitäler 2023 des Bundesamts für Gesundheit{amount, select, none {.} one { und der Spitalliste des Kantons {cantons}.} other { und den Spitallisten der Kantone {cantons}.}}}}",
+		"hospitalsEverywhere": "die Spitäler und Kliniken aller Kantone",
+		"unlisted": "In der Schweiz führt das Verzeichnis vorerst Einrichtungen, keine Personen: {listed}. Ärztinnen und Ärzte, Zahnärztinnen und Zahnärzte, Psychologinnen und Psychologen und andere Gesundheitsfachpersonen sind hier noch nicht aufgeführt: Kein offenes Register führt sie. Suchen Sie nach dem Namen einer Einrichtung oder durchsuchen Sie das Verzeichnis."
 	}
 }

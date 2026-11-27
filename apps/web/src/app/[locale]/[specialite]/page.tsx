@@ -22,6 +22,7 @@ import { absoluteUrl, siteOrigin } from "~/lib/site-url";
 import { breadcrumbNode, graph, ids, itemListNode, webPageNode } from "~/lib/structured-data";
 import { databaseAvailable } from "~/server/db";
 import { getLandingPage, sampleListingSlugs } from "~/server/queries/landing";
+import { getSwissCoverageTexts } from "~/server/queries/swiss-coverage";
 
 export const ensureStatic = "navigation";
 /**
@@ -96,6 +97,9 @@ export default async function SpecialtyHub({ params }: Props) {
 	const title = t("hubTitle", { listing });
 	// Germany's pharmacies: two Länder only, said under the title.
 	const coverage = pharmacyCoverageOf(locale, listingSlug);
+	// Switzerland's lists cover some cantons only: the ones its published facilities come from.
+	const swissCoverage =
+		country === "CH" ? (await getSwissCoverageTexts(locale)).listing(listingSlug) : null;
 	const trail: TrailItem[] = [{ label: listing, href }];
 	const url = absoluteUrl(href, locale);
 	const origin = siteOrigin();
@@ -135,10 +139,10 @@ export default async function SpecialtyHub({ params }: Props) {
 					<ListingTitle
 						title={title}
 						lead={
-							// Switzerland's lists cover some cantons only: the lead says which.
-							country === "CH" ? (
+							// The cantons Switzerland covers for this kind, after the count.
+							swissCoverage ? (
 								<>
-									{t("hubLead", { count, listing })} {t("swissCoverage", { kind: listingSlug })}
+									{t("hubLead", { count, listing })} {swissCoverage}
 								</>
 							) : (
 								t("hubLead", { count, listing })
