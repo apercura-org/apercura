@@ -82,6 +82,65 @@ export async function placesOfQuery(
 	return { places: await placesIn(country, { ...query, where: named.city }), where: named.city };
 }
 
+/** A market whose places "Où ?" names, with the listing page of the care asked there, if any. */
+type PlaceMarket = {
+	country: MarketCountry;
+	found: { places: PlaceSuggestion[]; where: string };
+	target: LandingTarget | null;
+};
+
+/** The largest population among a market's places, or null when one of them has none. */
+function populationOf(found: { places: PlaceSuggestion[] }): number | null {
+	let largest = 0;
+	for (const place of found.places) {
+		if (place.population === null) return null;
+		largest = Math.max(largest, place.population);
+	}
+	return largest;
+}
+
+/**
+ * The market a place typed in "Où ?" is searched in, among the open markets knowing a place of
+ * that name ("Bergen": Norway's city and a German Gemeinde): the country whose city `named` is
+ * (`@apercura/core/geo`, Europe's main cities: Bergen is Norway's), then `home`, then a market
+ * with a listing page for the care asked there, then the largest place when every one carries
+ * its population (most markets publish none), then the order of the markets. Null when no
+ * market knows the place.
+ */
+async function marketOfPlace(
+	query: SearchQuery,
+	home: MarketCountry,
+	here: MarketCountry,
+	named: EuropeanPlace | null,
+): Promise<PlaceMarket | null> {
+	const candidate = async (country: MarketCountry): Promise<PlaceMarket | null> => {
+		const found = await placesOfQuery(country, query);
+		if (found.places.length === 0) return null;
+		const term = query.who ? translateSearchTerm(query.who, here, country) : null;
+		const place = found.places.length === 1 ? found.places[0] : undefined;
+		const target =
+			term?.kind === "listing" && place ? await landingTarget(term.slug, place, country) : null;
+		return { country, found, target };
+	};
+	const markets = (
+		await Promise.all([home, ...MARKET_COUNTRIES.filter((other) => other !== home)].map(candidate))
+	).filter((market): market is PlaceMarket => market !== null);
+	const populations = markets.map(({ found }) => populationOf(found));
+	const byPopulation = populations.every((population) => population !== null);
+	const city = named?.kind === "city" ? named.country.code : null;
+	const ranked = markets
+		.map((market, order) => ({ market, order, population: populations[order] ?? 0 }))
+		.sort(
+			(a, b) =>
+				Number(b.market.country === city) - Number(a.market.country === city) ||
+				Number(b.market.country === home) - Number(a.market.country === home) ||
+				Number(b.market.target !== null) - Number(a.market.target !== null) ||
+				(byPopulation ? b.population - a.population : 0) ||
+				a.order - b.order,
+		);
+	return ranked[0]?.market ?? null;
+}
+
 /**
  * The page a search query names, if any: an RPPS number goes to its
  * practitioner page, a specialty in one place to its listing page, a specialty
@@ -89,10 +148,11 @@ export async function placesOfQuery(
  * and again by the page for client-side navigations.
  *
  * A search runs in the market of its page (`locale`), or the one the visitor chose in the form
- * (`chosen`, the `pays` parameter). A place that market does not know is looked up in the other
- * open markets, the chosen one first, and the search moves to the first that knows it, in the
- * visitor's language when that market offers it (`marketLocaleFor`): "Qui ?" is carried over by
- * kind of care (`translateSearchTerm`), to the listing page of the place when there is one,
+ * (`chosen`, the `pays` parameter). The place is looked up in every open market, and the search
+ * runs in the likeliest that knows it (`marketOfPlace`: that market first, but "Bergen" is
+ * Norway's city, not a German Gemeinde), in the visitor's language when that market offers it
+ * (`marketLocaleFor`): "Qui ?" is carried over by kind of care (`translateSearchTerm`), to the
+ * listing page of the place when there is one,
  * else to that market's search with the place set (and the listing, or the name typed).
  *
  * A country typed in "Où ?" (`@apercura/core/geo`) moves the search to that market when it is
@@ -180,16 +240,10 @@ export async function searchRedirect(
 		return home === here ? null : elsewhere(home, whoIn(home));
 	}
 
-	for (const country of [home, ...MARKET_COUNTRIES.filter((other) => other !== home)]) {
-		const found = await placesOfQuery(country, query);
-		const places = found.places;
-		if (places.length === 0) continue;
-		const term = query.who ? translateSearchTerm(query.who, here, country) : null;
-		const place = places.length === 1 ? places[0] : undefined;
-		if (term?.kind === "listing" && place) {
-			const target = await landingTarget(term.slug, place, country);
-			if (target) return { href: listingHref(target), locale: marketLocaleFor(country, locale) };
-		}
+	const chosenPlace = await marketOfPlace(query, home, here, named);
+	if (chosenPlace) {
+		const { country, found, target } = chosenPlace;
+		if (target) return { href: listingHref(target), locale: marketLocaleFor(country, locale) };
 		// The page's own market lists what it finds (homonyms, no listing page, a name), under the
 		// name its places carry ("Roma" for "Rome").
 		return country === here
