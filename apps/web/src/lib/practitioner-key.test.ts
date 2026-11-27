@@ -258,3 +258,32 @@ describe("Estonian provider and pharmacy keys", () => {
 		expect(displayId({ idScheme: "EE-APT", nationalId: "457" })).toBe("ap457");
 	});
 });
+
+describe("Norwegian establishment keys", () => {
+	it("read a Norwegian page segment in Norway only, its check digit verified", () => {
+		expect(parsePractitionerKey("nb-NO", "eksempel-legesenter-910000039")).toEqual({
+			country: "NO",
+			idScheme: "NO-ORGNR",
+			nationalId: "910000039",
+			namePart: "eksempel-legesenter",
+		});
+		expect(parsePractitionerKey("nb-NO", "eksempel-legesenter-910000038")).toBeNull();
+		expect(parsePractitionerKey("nb-NO", "camille-exemple-19999990013")).toBeNull();
+		expect(parsePractitionerKey("nb-NO", "naidisapteek-ap25")).toBeNull();
+		expect(parsePractitionerKey("fr", "eksempel-legesenter-910000039")).toBeNull();
+		expect(marketAdapter("nb-NO").features.booking).toBe(false);
+	});
+
+	it("mark a Norwegian segment outside a locale, and print the organisation number", () => {
+		expect(marketSegmentOf("NO", "apotek-1-eksempel-910000152")).toBe(
+			"no.apotek-1-eksempel-910000152",
+		);
+		expect(parseAnyPractitionerKey("no.apotek-1-eksempel-910000152")).toMatchObject({
+			country: "NO",
+			idScheme: "NO-ORGNR",
+			nationalId: "910000152",
+		});
+		// The number in groups of three, as Norway prints it.
+		expect(displayId({ idScheme: "NO-ORGNR", nationalId: "910000039" })).toBe("910 000 039");
+	});
+});

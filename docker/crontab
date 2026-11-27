@@ -79,3 +79,12 @@
 # 1 failed (the export could not be fetched or read), 2 blocked (see docs/data-import.md,
 # "Poland").
 30 4 * * 2 apercura etl:pl $ETL_PL_SCHEDULE_ARGS
+
+# Norway's establishments of care (the Brønnøysund Register Centre's Enhetsregisteret, NLOD 2.0,
+# full files rebuilt every night), every Friday at 03:30 UTC, when no other import runs (the same
+# advisory lock: one import at a time); unchanged files end the run after their download (about
+# 370 MB: the register's establishments and entities, Kartverket's addresses).
+# ETL_NO_SCHEDULE_ARGS adds flags, e.g. `--work-dir /data/etl-no`. Exit codes: 1 failed (a file
+# that could not be fetched or read: the pages stay as they are), 2 blocked (see
+# docs/data-import.md, "Norway").
+30 3 * * 5 apercura etl:no $ETL_NO_SCHEDULE_ARGS

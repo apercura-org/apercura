@@ -12,12 +12,13 @@ Re-use of Public Sector Information Regulations 2015, or as a plain licence requ
 gives a right to re-use.
 
 Austria has its own request, prepared separately (`at.md`); the United Kingdom's, Czechia's,
-Spain's, Italy's, Germany's, Switzerland's, Estonia's and Poland's candidates are in `gb.md`, `cz.md`,
-`es.md`, `it.md`, `de.md`, `ch.md`, `ee.md` and `pl.md` (Spain opened from the register of centres,
+Spain's, Italy's, Germany's, Switzerland's, Estonia's, Poland's and Norway's candidates are in
+`gb.md`, `cz.md`, `es.md`, `it.md`, `de.md`, `ch.md`, `ee.md`, `pl.md` and `no.md` (Spain opened from the register of centres,
 REGCESS, Italy from the Ministry of Health's lists of places, Germany from the statistical offices'
 directory of hospitals and the Länder's pharmacy lists, Switzerland from the FOPH's hospital
 figures and the cantons' lists, Estonia from the Health Board's register of providers and the State
-Agency of Medicines' pharmacies, and Poland from RPWDL's healthcare entities; the requests below
+Agency of Medicines' pharmacies, Poland from RPWDL's healthcare entities, and Norway from the establishments of the Central
+Coordinating Register for Legal Entities; the requests below
 for their registers of people still stand).
 
 ## Tracking
@@ -45,6 +46,7 @@ Update a row the day something happens. Status: `not sent`, `sent`, `extended`, 
 | Germany (12)       | Chamber doctor searches: [de-aerztekammern.md](de-aerztekammern.md)               | Each of the 17 Landesärztekammern                | Email, one per chamber                | None: licence request                                                | not sent |           |        |         |
 | Estonia (13)       | MEDRE open data: [ee-terviseamet.md](ee-terviseamet.md)                           | Terviseamet                                      | Email                                 | Public Information Act, § 3¹ (licence change or confirmation)        | not sent |           |        |         |
 | Estonia (13)       | CC BY-NC-SA 3.0 reading: [ee.md](ee.md#how-to-ask)                                | Terviseamet                                      | Email                                 | Public Information Act, § 3¹ (confirmation of the licence's terms)   | not sent |           |        |         |
+| Norway             | Licence of "Landets apotek": [no.md](no.md#how-to-ask)                            | Direktoratet for medisinske produkter (DMP)      | Email                                 | None stated: licence request (NLOD 2.0 asked)                        | not sent |           |        |         |
 | Netherlands (16)   | BIG-register: [nl-big-register.md](nl-big-register.md)                            | CIBG, copy Ministry DPO                          | Email or contact form                 | None under the Who (art. 2(1)(h)): permission request                | not sent |           |        |         |
 | Portugal (17)      | Register of doctors: [pt-ordem-dos-medicos.md](pt-ordem-dos-medicos.md)           | Ordem dos Médicos, access-to-information officer | Email, subject `RAI \|`               | Lei 26/2016, arts. 19 and 21                                         | not sent |           |        |         |
 | Croatia (18)       | Contracted primary care: [hr-hzzo.md](hr-hzzo.md)                                 | HZZO, information officer                        | Email or HZZO form                    | ZPPI, arts. 27 and 29                                                | not sent |           |        |         |

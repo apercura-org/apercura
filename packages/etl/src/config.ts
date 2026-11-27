@@ -24,6 +24,10 @@ import { DEFAULT_GB_POSTCODES_URL } from "./sources/gb/postcodes";
 import { GB_SOURCE_IDS, type GbSourceId } from "./sources/gb/types";
 import { defaultItPlacesUrl } from "./sources/it/places";
 import { IT_SOURCE_IDS, type ItSourceId } from "./sources/it/types";
+import { DEFAULT_NO_ADRESSER_URL } from "./sources/no/addresses";
+import { DEFAULT_NO_ENHETER_URL, DEFAULT_NO_UNDERENHETER_URL } from "./sources/no/brreg";
+import { DEFAULT_NO_PLACES_URL } from "./sources/no/places";
+import { NO_SOURCE_IDS, type NoFileId, type NoSourceId } from "./sources/no/types";
 import { DEFAULT_PL_PRG_URL, DEFAULT_PL_TERC_URL } from "./sources/pl/places";
 
 /** Stable data.gouv.fr URLs (they redirect to the latest daily file). */
@@ -968,6 +972,71 @@ export function buildPlOptions(flags: ParsedArgs["flags"], env: NodeJS.ProcessEn
 		url: env.ETL_PL_URL || DEFAULT_PL_URL,
 		placesUrls: plPlacesUrls(env),
 		asOf,
+		workDir: flagString(flags, "work-dir") ?? env.ETL_WORK_DIR ?? null,
+		appUrl: offline ? null : env.APP_URL || null,
+		revalidateSecret: env.REVALIDATE_SECRET || null,
+	};
+}
+// ---------------------------------------------------------------------------
+// Norway (`etl:no`)
+// ---------------------------------------------------------------------------
+
+export type NoOptions = {
+	databaseUrl: string;
+	dryRun: boolean;
+	approveRunId: number | null;
+	force: boolean;
+	sourceDir: string | null;
+	offline: boolean;
+	sources: NoSourceId[];
+	/**
+	 * Each file's address: the register's establishments and entities (full files, gzipped CSV)
+	 * and Kartverket's national address file.
+	 */
+	urls: Record<NoFileId, string>;
+	/** The counties and municipalities for the places (`ETL_NO_PLACES_URL`). */
+	placesUrl: string;
+	workDir: string | null;
+	appUrl: string | null;
+	revalidateSecret: string | null;
+};
+
+/** Parses a comma-separated list of Norwegian sources (`brreg`); throws on unknown ones. */
+export function parseNoSources(value: string | null | undefined): NoSourceId[] {
+	if (!value) return [...NO_SOURCE_IDS];
+	const sources = value
+		.split(",")
+		.map((source) => source.trim())
+		.filter(Boolean);
+	for (const source of sources) {
+		if (!(NO_SOURCE_IDS as readonly string[]).includes(source)) {
+			throw new Error(`Unknown Norwegian source "${source}" (one of ${NO_SOURCE_IDS.join(", ")})`);
+		}
+	}
+	if (sources.length === 0) throw new Error("At least one Norwegian source is required");
+	return [...new Set(sources)] as NoSourceId[];
+}
+
+export function buildNoOptions(flags: ParsedArgs["flags"], env: NodeJS.ProcessEnv): NoOptions {
+	const approve = flagString(flags, "approve");
+	if (approve !== null && !/^\d+$/.test(approve)) {
+		throw new Error(`--approve needs a run id, got ${approve}`);
+	}
+	const offline = flags.has("offline");
+	return {
+		databaseUrl: resolveDatabaseUrl(env),
+		dryRun: flags.has("dry-run"),
+		approveRunId: approve === null ? null : Number(approve),
+		force: flags.has("force"),
+		sourceDir: flagString(flags, "source-dir") ?? env.ETL_NO_SOURCE_DIR ?? null,
+		offline,
+		sources: parseNoSources(flagString(flags, "sources") ?? env.ETL_NO_SOURCES),
+		urls: {
+			underenheter: env.ETL_NO_UNDERENHETER_URL || DEFAULT_NO_UNDERENHETER_URL,
+			enheter: env.ETL_NO_ENHETER_URL || DEFAULT_NO_ENHETER_URL,
+			adresser: env.ETL_NO_ADRESSER_URL || DEFAULT_NO_ADRESSER_URL,
+		},
+		placesUrl: env.ETL_NO_PLACES_URL || DEFAULT_NO_PLACES_URL,
 		workDir: flagString(flags, "work-dir") ?? env.ETL_WORK_DIR ?? null,
 		appUrl: offline ? null : env.APP_URL || null,
 		revalidateSecret: env.REVALIDATE_SECRET || null,

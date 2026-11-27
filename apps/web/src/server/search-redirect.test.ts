@@ -61,6 +61,10 @@ const PLACES: Record<MarketCountry, PlaceSuggestion[]> = {
 		place(60, "Kraków", "krakow", "krakow", "1261011"),
 		place(61, "Skawina", "skawina", "powiat-krakowski", "1206113"),
 	],
+	NO: [
+		place(70, "Bergen", "bergen", "vestland", "4601"),
+		place(71, "Tromsø", "tromso", "troms", "5501"),
+	],
 };
 
 const LANDINGS = new Set([
@@ -91,6 +95,9 @@ const LANDINGS = new Set([
 	"haiglad@Tallinn",
 	"szpitale@Kraków",
 	"stomatologia@Skawina",
+	"tannklinikker@Bergen",
+	"sykehus@Bergen",
+	"apotek@Tromsø",
 ]);
 
 const HUBS = new Set(["chirurgien-dentiste:fr", "dental-practices:gb", "krankenhaeuser:de"]);
@@ -239,6 +246,23 @@ describe("a search for a place of another market", () => {
 		);
 		// "Estonie" moves to Estonia's home.
 		expect(await search("fr", { ou: "Estonie" })).toEqual({ href: "/", locale: "et-EE" });
+	});
+	it("moves to Norway's listing, in Norwegian, for the care it lists", async () => {
+		expect(await search("fr", { quoi: "dentiste", ou: "Bergen" })).toEqual(
+			listing("nb-NO", "tannklinikker", "vestland", "bergen"),
+		);
+		expect(await search("de-DE", { quoi: "Krankenhaus", ou: "Bergen" })).toEqual(
+			listing("nb-NO", "sykehus", "vestland", "bergen"),
+		);
+		// A city typed without its Norwegian letter is looked up under its own name.
+		expect(await search("en-GB", { quoi: "pharmacy", ou: "Tromso" })).toEqual(
+			listing("nb-NO", "apotek", "troms", "tromso"),
+		);
+		expect(await search("nb-NO", { quoi: "tannlege", ou: "Bergen" })).toEqual(
+			listing("nb-NO", "tannklinikker", "vestland", "bergen"),
+		);
+		// "Norvège" moves to Norway's home.
+		expect(await search("fr", { ou: "Norvège" })).toEqual({ href: "/", locale: "nb-NO" });
 	});
 	it("moves to Switzerland's listing in the visitor's language, the city under its own name", async () => {
 		// A French reader lands on Switzerland in French, an Italian one in Italian, the others

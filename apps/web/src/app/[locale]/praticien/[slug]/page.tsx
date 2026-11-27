@@ -6,6 +6,7 @@ import {
 	ES_OTHER_PRACTICE,
 	eeKindSlugOf,
 	esKindSlugOf,
+	noKindSlugOf,
 	PL_SPECIALIST,
 } from "@apercura/core/taxonomy";
 import {
@@ -210,13 +211,15 @@ export default async function PractitionerPage({ params }: Props) {
 	const name = labels.personName(payload);
 	const content = ownerContentOf(payload, photoUrl);
 	const professionSlug = payload.listingSlug ?? "";
-	// A Spanish centre's, German facility's or Estonian provider's kind has a singular label of its
-	// own ("Consultorio local", "Reha-Klinik", "Perearstikeskus").
+	// A Spanish centre's, German facility's, Estonian provider's or Norwegian establishment's kind
+	// has a singular label of its own ("Consultorio local", "Reha-Klinik", "Perearstikeskus",
+	// "Legekontor").
 	const professionLabel =
 		labels.profession(
 			esKindSlugOf(payload.professionCode) ??
 				deKindSlugOf(payload.professionCode) ??
 				eeKindSlugOf(payload.professionCode) ??
+				noKindSlugOf(payload.professionCode) ??
 				professionSlugOf(payload.professionCode),
 			gender,
 		) ?? t("unknownProfession");
@@ -341,6 +344,16 @@ export default async function PractitionerPage({ params }: Props) {
 		.map((item) => item.label)
 		.filter((label): label is string => Boolean(label));
 	const estonianPharmacyLicences = estonianOf("apteegi-tegevusluba");
+	// Norway lists establishments of the Central Coordinating Register for Legal Entities: their
+	// organisation number, the industry they registered (SN2025, in the register's words) and,
+	// for a public or foundation-run establishment, the body that runs it.
+	const norwegian = payload.country === "NO";
+	const norwegianOf = (source: string) =>
+		norwegian ? payload.qualifications.filter((item) => item.source === source) : [];
+	const norwegianIndustries = norwegianOf("naeringskode");
+	const norwegianOwners = norwegianOf("eier")
+		.map((item) => item.label)
+		.filter((label): label is string => Boolean(label));
 	// Switzerland lists facilities: a hospital's type, activities, services and offer as the
 	// FOPH's figures give them, its ownership and operator, and its category as its canton's list
 	// names it (in that list's language).
@@ -540,7 +553,50 @@ export default async function PractitionerPage({ params }: Props) {
 									value={professionLabel}
 									emptyLabel={empty}
 								/>
-								{practice ? null : estonian ? (
+								{practice ? null : norwegian ? (
+									<>
+										<FieldRow
+											label={t("norwegianFacts.orgNumber")}
+											value={
+												<>
+													<span className="tabular-nums">{identifier}</span>
+													<span className="mt-1 block text-meta text-ink-muted">
+														{t("norwegianFacts.orgNumberNote")}
+													</span>
+												</>
+											}
+											emptyLabel={empty}
+										/>
+										{norwegianIndustries.length > 0 ? (
+											<FieldRow
+												label={t("norwegianFacts.industry")}
+												value={
+													<ul className="flex flex-col gap-1">
+														{norwegianIndustries.map((industry) => (
+															<li key={industry.code}>
+																<span className="tabular-nums">{industry.code}</span>
+																{industry.label ? (
+																	<>
+																		{" · "}
+																		<span lang="nb">{industry.label}</span>
+																	</>
+																) : null}
+															</li>
+														))}
+													</ul>
+												}
+												emptyLabel={empty}
+											/>
+										) : null}
+										{norwegianOwners.length > 0 ? (
+											<FieldRow
+												label={t("norwegianFacts.owner")}
+												value={<span lang="nb">{norwegianOwners.join(", ")}</span>}
+												emptyLabel={empty}
+											/>
+										) : null}
+									</>
+								) : estonian ? (
 									<>
 										{payload.idScheme === "EE-TTL" ? (
 											<FieldRow

@@ -217,6 +217,10 @@ test.describe("a place of another market", () => {
 		["/fr/recherche?ou=Estonie", "/ee"],
 		["/gb/search?ou=Estonia", "/ee"],
 		["/de/suche?ou=Estland", "/ee"],
+		// Norway by name: its home, in Norwegian.
+		["/fr/recherche?ou=Norv%C3%A8ge", "/no"],
+		["/gb/search?ou=Norway", "/no"],
+		["/de/suche?ou=Norwegen", "/no"],
 		// In the visitor's language when that market offers it: France in English.
 		["/gb/search?quoi=dentist&ou=Paris", "/fr-en/chirurgien-dentiste/75-paris"],
 		// The UK lists no cardiologists: its search, with the place set.
@@ -255,6 +259,7 @@ test.describe("the country searched", () => {
 			"Suisse",
 			"Estonie",
 			"Pologne",
+			"Norvège",
 		]);
 		await country.selectOption({ label: "Royaume-Uni" });
 		// The places suggested are the UK's.
@@ -313,6 +318,7 @@ test.describe("a place in a country Apercura does not cover yet", () => {
 		["Suisse", "/ch-fr"],
 		["Estonie", "/ee"],
 		["Pologne", "/pl"],
+		["Norvège", "/no"],
 	] as const;
 
 	test("“dentiste” in Budapest says so, lists the open countries, and passes axe", async ({

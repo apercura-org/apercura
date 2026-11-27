@@ -53,3 +53,23 @@ export function slugifyDe(text: string): string {
 export function slugifyPl(text: string): string {
 	return slugify(text.replace(/[łŁ]/g, "l"));
 }
+/** Norwegian and Sámi letters NFKD leaves whole, as Norwegian URLs write them. */
+const NORWEGIAN_LETTERS: Record<string, string> = {
+	ø: "o",
+	Ø: "o",
+	đ: "d",
+	Đ: "d",
+	ŧ: "t",
+	Ŧ: "t",
+	ŋ: "n",
+	Ŋ: "n",
+};
+
+/**
+ * {@link slugify} for Norwegian text: `ø` reads `o` (`Tromsø` -> `tromso`), `æ` `ae`
+ * (`Bærum` -> `baerum`) and `å` `a` (`Ålesund` -> `alesund`), as Norwegian addresses on the web
+ * write them; the Sámi `đ`, `ŧ`, `ŋ` lose their stroke (`Guovdageaidnu`, `Unjárga`).
+ */
+export function slugifyNo(text: string): string {
+	return slugify(text.replace(/[øØđĐŧŦŋŊ]/g, (char) => NORWEGIAN_LETTERS[char] ?? char));
+}

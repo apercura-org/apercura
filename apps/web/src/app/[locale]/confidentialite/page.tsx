@@ -15,6 +15,7 @@ import { PrivacyEe } from "~/components/legal-ee";
 import { PrivacyEs } from "~/components/legal-es";
 import { PrivacyGb } from "~/components/legal-gb";
 import { PrivacyIt } from "~/components/legal-it";
+import { PrivacyNo } from "~/components/legal-no";
 import { PrivacyPl } from "~/components/legal-pl";
 import { PageGraph } from "~/components/page-graph";
 import { PublicPage } from "~/components/public-page";
@@ -44,6 +45,7 @@ export function generateMetadata({ params }: PageProps<"/[locale]/confidentialit
 			CH: "PrivacyCh",
 			EE: "PrivacyEe",
 			PL: "PrivacyPl",
+			NO: "PrivacyNo",
 		},
 		HREF,
 	);
@@ -57,7 +59,7 @@ export function generateMetadata({ params }: PageProps<"/[locale]/confidentialit
 export default async function PrivacyPage({ params }: PageProps<"/[locale]/confidentialite">) {
 	const locale = await localeOf(params);
 	setRequestLocale(locale);
-	// Austria's, the UK's, Czechia's, Spain's, Italy's, Germany's, Switzerland's and Poland's, Switzerland's and Estonia's pages
+	// Austria's, the UK's, Czechia's, Spain's, Italy's, Germany's, Switzerland's, Estonia's, Poland's and Norway's pages
 	// have texts of their own, written for their law.
 	if (marketOf(locale) === "AT") return <PrivacyAt locale={locale} />;
 	if (marketOf(locale) === "GB") return <PrivacyGb locale={locale} />;
@@ -68,6 +70,7 @@ export default async function PrivacyPage({ params }: PageProps<"/[locale]/confi
 	if (marketOf(locale) === "DE") return <PrivacyDe locale={locale} />;
 	if (marketOf(locale) === "CH") return <PrivacyCh locale={locale} />;
 	if (marketOf(locale) === "EE") return <PrivacyEe locale={locale} />;
+	if (marketOf(locale) === "NO") return <PrivacyNo locale={locale} />;
 	const t = await getTranslations({ locale, namespace: "PrivacyPage" });
 	const tSite = await getTranslations({ locale, namespace: "Site" });
 	const tI = await getTranslations({ locale, namespace: "Institutional" });

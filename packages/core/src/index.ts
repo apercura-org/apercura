@@ -23,10 +23,11 @@ export { EE_POSTCODE, formatPhoneEe, normalizeEePostcode, toE164Ee } from "./pho
 export { ES_POSTCODE, formatPhoneEs, normalizeEsPostcode, toE164Es } from "./phone-es";
 export { formatPhoneGb, GB_POSTCODE, normalizeGbPostcode, toE164Gb } from "./phone-gb";
 export { formatPhoneIt, IT_POSTCODE, normalizeItPostcode, toE164It } from "./phone-it";
+export { formatPhoneNo, NO_POSTCODE, normalizeNoPostcode, toE164No } from "./phone-no";
 export { formatPhonePl, normalizePlPostcode, PL_POSTCODE, toE164Pl } from "./phone-pl";
 export * from "./profile";
 export { isValidRpps } from "./rpps";
-export { slugify, slugifyDe, slugifyPl } from "./slugify";
+export { slugify, slugifyDe, slugifyNo, slugifyPl } from "./slugify";
 export {
 	AT_ID_SCHEMES,
 	type AtIdScheme,
@@ -79,9 +80,18 @@ export {
 	isValidEsSourceId,
 	isValidGbSourceId,
 	isValidItSourceId,
+	isValidNoOrgNumber,
+	isValidNoSourceId,
 	isValidPlSourceId,
 	itPlaceSlug,
 	itUrlKey,
+	NO_ID_SCHEMES,
+	type NoFacilityKey,
+	type NoFacilitySegment,
+	type NoIdScheme,
+	noFacilitySlug,
+	noOrgNumber,
+	noUrlKey,
 	PL_ID_SCHEME,
 	type PlFacilitySegment,
 	type PractitionerSegment,
@@ -99,6 +109,8 @@ export {
 	parseGbPracticeSegment,
 	parseItKey,
 	parseItPlaceSegment,
+	parseNoFacilitySegment,
+	parseNoKey,
 	parsePlFacilitySegment,
 	parsePractitionerSegment,
 	plFacilitySlug,

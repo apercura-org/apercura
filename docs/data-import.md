@@ -4,7 +4,7 @@
 first), Austria ([below](#austria)), the United Kingdom
 ([below](#united-kingdom)), Czechia ([below](#czechia)), Spain
 ([below](#spain)), Italy ([below](#italy)), Germany ([below](#germany)),
-Switzerland ([below](#switzerland)), Estonia ([below](#estonia)) and Poland ([below](#poland)). It is a
+Switzerland ([below](#switzerland)), Estonia ([below](#estonia)), Poland ([below](#poland)) and Norway ([below](#norway)). It is a
 Bun CLI that runs as a
 scheduled task next to the app, with its own database role that cannot reach
 patient data. Each market's import writes the shared `directory` schema with
@@ -2370,3 +2370,250 @@ integration test. `test/pl-integration.test.ts` imports them next to the Czech
 fixtures: Czechia untouched, nothing of a natural person stored, placement by
 code, voivodeship listings, idempotence, an unreadable export, absences,
 objections, the breaker and `--approve`.
+
+## Norway
+
+`etl:no` builds Norway's directory (`/no`) from the Brønnøysund Register
+Centre's Central Coordinating Register for Legal Entities (Enhetsregisteret):
+its establishments (underenheter) registered under a health or pharmacy industry
+code (issue #172, [ADR 0002](./adr/0002-multi-country.md#norway-no)). Everything
+above about roles, ownership, the outbox and `--approve` applies; this section
+says what differs.
+
+```sh
+bun run etl:places --country no   # once (etl:no does it on its first run), then when the division changes
+bun run etl:no                    # weekly (the register's files are rebuilt every night)
+bun run etl:no --dry-run          # everything, then roll back
+bun run etl:no --approve=<run_id> # accept what a blocked run reported
+```
+
+A Norwegian page is an **establishment**: a physical place of business with its
+own organisation number, location address and main industry code, owned by a
+main entity (a health trust, a municipality, a company). People are **never
+listed**: a sole proprietorship (enkeltpersonforetak) is named after its owner,
+and so are many one-doctor companies; both are left out by the filters below.
+The register is a business register, not a licence register: an industry code
+is what the undertaking declared, so the filters decide what is a place of care.
+
+### Sources
+
+Verified on 27 November 2026 on the publishers' pages, the API documentation and
+Geonorge's metadata catalogue (`kartkatalog.geonorge.no/api/getdata/{uuid}`).
+
+| Source                                                                | Distribution                                                                                                                                                                      | Licence, format, update                                                                                                                                                                                                                                              |
+| --------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Enhetsregisteret: underenheter (Brønnøysundregistrene)                | `https://data.brreg.no/enhetsregisteret/api/underenheter/lastned/csv` ("Last ned totalbestand av underenheter i csv format")                                                      | **NLOD 2.0** (the API documentation: "License: Norsk lisens for offentlige data (NLOD)"; brreg.no: "Dataene i tjenesten er lisensiert med Norsk lisens for offentlige data (NLOD)"); gzipped CSV, 62 MB, 873,697 establishments; produced every night at about 05:00 |
+| Enhetsregisteret: enheter (Brønnøysundregistrene)                     | `https://data.brreg.no/enhetsregisteret/api/enheter/lastned/csv`                                                                                                                  | **NLOD 2.0**; gzipped CSV, 155 MB, 1,182,050 entities; nightly. Read for the owners of the establishments kept only                                                                                                                                                  |
+| Matrikkelen – Adresse (Kartverket), the cadastre's official addresses | `https://nedlasting.geonorge.no/geonorge/Basisdata/MatrikkelenAdresse/CSV/Basisdata_0000_Norge_4258_MatrikkelenAdresse_CSV.zip`; metadata `f7df7a18-b30f-4745-bd64-d0863812350c`  | **CC BY 4.0** (the metadata record's constraint, "Åpne data"); one `;` CSV in a ZIP, 152 MB (813 MB inflated), 2,605,320 addresses with their postcode and point in EUREF89 (EPSG:4258); updated continuously, extract of 21 November 2026                           |
+| Administrative inndelinger: fylker og kommuner (Kartverket)           | `https://ws.geonorge.no/kommuneinfo/v1/fylkerkommuner`; metadata `3fcce35c-759b-4c6e-adb9-f03478c6fb72` (the API) and `041f1e6e-bdbc-4091-b48f-8a5990f3cc5b` (the municipalities) | open data, "no conditions apply" for the API; the municipalities **CC BY 4.0**, credited as such; JSON, 270 kB, 15 counties and 357 municipalities with a point inside each; places import only                                                                      |
+
+`ETL_NO_UNDERENHETER_URL`, `ETL_NO_ENHETER_URL`, `ETL_NO_ADRESSER_URL` and
+`ETL_NO_PLACES_URL` override them. The full files are the way the register's
+documentation gives for a copy: its search API stops at 10,000 results
+(`(page+1)*size`), and no rate limit, login or CAPTCHA stands in the way.
+
+**Licences and attributions** (`norway.registries`, printed on the data sources
+page and the pages built from them):
+
+- The register: **NLOD 2.0**, whose § 5 asks to name the licensor as it says,
+  else «Inneholder data under Norsk lisens for offentlige data (NLOD)
+  tilgjengeliggjort av [lisensgiver]», with a link to the licence and the
+  source, and to say when the data was changed. Brønnøysundregistrene specifies
+  no wording, so every page prints «Inneholder data under Norsk lisens for
+  offentlige data (NLOD) tilgjengeliggjort av Brønnøysundregistrene; endret av
+  Apercura». NLOD § 3 does not cover personal data "unless there is a legitimate
+  basis for the disclosure and further processing": one more reason the import
+  lists establishments, never people.
+- Kartverket's addresses and municipalities: **CC BY 4.0**, credited "Adresser:
+  © Kartverket, CC BY 4.0" and "Fylker og kommuner: © Kartverket, CC BY 4.0".
+
+**Not used**: the Norwegian Medical Products Agency's (DMP) list of pharmacies
+("Landets apotek", 1,070 licences, no street addresses): no licence is stated on
+dmp.no, so it is not republished (a request is in
+[`data-requests/no.md`](./data-requests/no.md)); Helsedirektoratet's register of
+health personnel (HPR), closed to bulk reuse; the GP lists (fastlegeordningen),
+not open data; Norsk helsenett's address register, for members of the health
+network only.
+
+### Identifiers
+
+One scheme, `NO-ORGNR`: the **establishment's** own organisation number (nine
+digits, a modulus 11 check digit, verified before any lookup). The page URL ends
+with it (`/no/virksomhet/eksempel-legesenter-910000039`), the reference is
+`no:910000039`, and the page prints it as Norway writes it (`910 000 039`). An
+establishment's number never names a person: sole proprietorships are not
+listed.
+
+### What is kept, and why
+
+Read from the establishments' file, by header name: organisation number, name,
+main industry code and its description, location address (street lines,
+postcode, post town, municipality number, country), closure date, owner, and
+the `telefon` number. Never read: e-mails, mobile numbers (`mobil`, often a
+person's), websites, postal addresses, staff numbers, registration dates. From
+the entities' file, for the owners of the establishments read: name, legal form,
+and whether it is bankrupt or being wound up.
+
+The industry codes read (SN2025, Statistics Norway's NACE) and the listing each
+gives:
+
+| Code                   | Description                                                               | Listing (`/no/…`)                                  |
+| ---------------------- | ------------------------------------------------------------------------- | -------------------------------------------------- |
+| 86.101                 | Somatiske sykehustjenester                                                | `sykehus`                                          |
+| 86.102, 86.103, 86.104 | Psychiatric hospitals (adults, children), specialised addiction treatment | `psykisk-helsevern`                                |
+| 86.210                 | Allmennlegetjenester                                                      | `legekontorer`; `legevakter` when named a legevakt |
+| 86.221, 86.222         | Specialist medical practice, psychiatric practice                         | `legespesialister`                                 |
+| 86.230                 | Tannlegetjenester                                                         | `tannklinikker`                                    |
+| 87.102                 | Sykehjemstjenester                                                        | `sykehjem`                                         |
+| 47.730                 | Detaljhandel med apotekvarer                                              | `apotek`                                           |
+
+Physiotherapy (86.950), psychologists (86.930), ambulances, health stations and
+the other codes are not read yet (ROADMAP.md): they are mostly sole
+proprietorships. An establishment under a listed code is kept only when
+(`exclusionOf`, `src/sources/no/filters.ts`, in this order; `stats.skipped`
+counts each reason):
+
+1. its owner is known and is **not a sole proprietorship** (`ENK`;
+   `sole-proprietorship`, `owner-unknown`);
+2. neither it nor its owner is **closed, bankrupt or being wound up**
+   (`closed`, `winding-up`);
+3. it has a **location address in Norway** (`no-address`);
+4. its name names **no holding, investment, consulting, property, locum,
+   purchasing, IT, building or administrative unit**, nor a bankrupt's estate
+   (`not-a-place-of-care`: a health trust registers its purchasing and IT units
+   under hospital codes);
+5. its name is **not a person's practice** (`named-after-a-person`): a word
+   naming a profession or a title on its own (`Lege Ola Nordmann AS`,
+   `Dr. Hansen AS`, `Øyelege Kari Nordmann AS`, never a compound such as
+   `legesenter` or `øyelegekontor`), or the plural first (`Legene Hansen og
+   Berg`, `Tannlegene Nordmann`; `Tannlegene i Sentrum` is a place);
+6. a GP, emergency, specialist or dental practice owned by anyone but a public
+   body or a foundation (`KOMM`, `ORGL`, `KF`, `FYLK`, `FKF`, `STAT`, `SF`,
+   `SÆR`, `IKS`, `KIRK`, `STI`) **names a place of care** (`legesenter`,
+   `legekontor`, `klinikk`, `tannlegesenter`, `tannhelse`, `spesialistsenter`…;
+   `no-place-of-care-in-name`); a pharmacy names an `apotek` (`not-a-pharmacy`).
+
+A second establishment of the same kind, name and street in a municipality (a
+practice registered by its company and by its partnership) is the same place:
+the lower number is kept (`same-place`).
+
+What remains can still be named after a person ("Klinikk Kleppe"): the privacy
+notice gives the article 14 information and the objection form removes the page
+for good. Minimisation:
+
+- Names are printed re-cased (the register writes capitals only) with the
+  trailing company form dropped (`AS`, `ASA`, `DA`, `ANS`, `NUF`, `SA`, `STI`,
+  `BA`, `KF`, `IKS`, `FKF`); abbreviations stay (`HF`, `DPS`, `BUP`, `TSB`).
+- An address line that is a care-of line (`c/o …`, which may name a person) is
+  never kept (`counters.careOfLines`); a line naming a floor or an entrance is
+  skipped for the street.
+- A number shared by more than three establishments (a chain's switchboard) is
+  dropped (`counters.sharedPhones`); one that is no Norwegian subscriber number
+  too (`counters.invalidPhones`).
+- Qualifications (`source`): `naeringskode` (the registered code and the
+  register's description of it), and `eier` (the owner's number and name) only
+  when the owner is a public body or a foundation (a health trust, a
+  municipality, a county), never a company.
+- GDPR objections: the rows of a suppressed number are dropped while parsing
+  (`stats.suppressedLines`), and the purge of #116/#118 runs in the merge, as in
+  the other markets.
+
+### Places and precision
+
+Places (`directory.places`, `country = 'NO'`), from Kartverket's counties with
+their municipalities (`fylkerkommuner.json`), imported once:
+
+- **departments**: the 15 counties of the 2024 reform (`46` Vestland), slugged
+  `vestland`, `more-og-romsdal` (`slugifyNo`: `ø` → `o`, `æ` → `ae`, `å` → `a`);
+- **communes**: the 357 municipalities (`4601` Bergen), each at the point
+  Kartverket gives inside it (`punktIOmrade`), slugged unique within its county.
+  Oslo is a county and a municipality (`0301`): like Paris, its city page is its
+  county's. No regions, no migration: a county listing is a department listing.
+- Names are Norwegian (`kommunenavnNorsk`: Kautokeino, Karasjok); the Sámi,
+  Kven and Finnish official names come with the Sámi interface (ROADMAP.md).
+
+An establishment is placed in the municipality its location address names
+(`kommunenummer`); Svalbard (`21xx`) is no municipality and is left out. It is
+**located** (`buildNoBatch`, `src/merge-no.ts`) at the cadastre's point of its
+street address in that municipality, compared without case, punctuation or a
+house number range (`Tunveien 5 - 7` → `tunveien 5`): `geo_precision =
+'address'`, `geo_source = 'source'`, a map pin. An address the file does not
+have (a building's name, a shopping centre) is located at its postcode's centre,
+the mean of the postcode's address points (`'city'`, `'postcode'`, no pin), else
+at the municipality's point (`'city'`, `'centroid'`). The address prints the
+street, then the postcode and the post town (`2050 Jessheim`). No geocoder is
+called.
+
+### Guards
+
+On the source (`checkNoSource`): quarantine within 1% of the establishments
+under a listed code; floors of 100 establishments in the file and 100 kept, and
+for a real download 500,000 establishments, 800,000 entities and 2,000,000
+addresses (a truncated file; never approvable); at most 10% more or fewer
+establishments kept and 30% more or fewer bytes than the last successful run
+(approvable: a change of the filters or of the register's coding shows here
+first). Norway has one source read from two files: when either cannot be
+fetched or read, the run fails and the pages stay as they are; so does a run
+without the address file. After placing (`checkNoPlaces`): 98% of the
+establishments in their municipality and 75% at their address (approvable).
+Then the breakers on Norway's own pages, as everywhere.
+
+**Absences** (`NO_MISSING_RUNS`): an establishment missing from the register, or
+no longer passing the filters, twice in a row is removed. A claimed page is kept
+and counted for review.
+
+### Schedule and monitoring
+
+The scheduler runs `etl:no $ETL_NO_SCHEDULE_ARGS` every Friday at 03:30 UTC
+(`docker/crontab`), when no other import runs. The register's files are rebuilt
+every night, so a weekly run always imports; it takes about 10 seconds after its
+downloads (370 MB, a few minutes). Alert on exit codes 1 and 2, and on a sharp
+change of `stats.sources.brreg.skipped`.
+
+```sql
+-- Norway's last runs: status, counters, what the filters left out, placement and totals.
+SELECT id, status, finished_at, stats -> 'sourceErrors' AS errors,
+	stats -> 'sources' -> 'brreg' -> 'skipped' AS skipped, stats -> 'batch' -> 'placement' AS placement,
+	stats -> 'totals' AS totals
+FROM directory.etl_runs WHERE source = 'no' ORDER BY id DESC LIMIT 5;
+```
+
+### Measured run (files of 27 November 2026)
+
+Laptop, local PostGIS 17, fresh database, the real files (downloaded once into a
+scratch directory), offline:
+
+|           |                                                                                                                                                                                                                                                                                                                                                                                                   |
+| --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Duration  | places 0.4 s; dry run 10 s (reading the register's two files 3.4 s, the address file 3.2 s, read models 1.2 s), peak RSS 0.47 GB                                                                                                                                                                                                                                                                  |
+| Register  | 873,697 establishments; 25,832 under a listed code; 5,823 kept. Left out: 15,474 sole proprietorships, 2,471 practices without a place of care in their name, 1,220 named after a person, 622 holding, consulting or administrative units, 82 with an owner bankrupt or being wound up, 47 non-pharmacies, 51 without an address, 25 without a known owner, 17 registered twice; none quarantined |
+| Kinds     | hospitals 191 · mental health and addiction 586 · GP offices 1,515 · emergency clinics 108 · specialists 348 · dental clinics 1,118 · nursing homes 916 · pharmacies 1,039 (5,821)                                                                                                                                                                                                                |
+| Places    | 5,821 sites in their municipality (2 on Svalbard left out): 5,206 at their address (89%), 609 at their postcode's centre, 6 at their municipality's point; 1,753 with a phone (93 shared numbers and 68 unreadable ones dropped); 1,777 care-of lines dropped                                                                                                                                     |
+| Indexable | 5,821 establishment pages; 668 indexable listing pages of 1,761                                                                                                                                                                                                                                                                                                                                   |
+| Places    | 15 counties, 357 municipalities                                                                                                                                                                                                                                                                                                                                                                   |
+
+### Local development
+
+```sh
+bun run etl:places --country no --source-dir packages/etl/fixtures/no   # synthetic places
+bun run etl:no --source-dir packages/etl/fixtures/no --offline          # synthetic data
+bun run --cwd packages/etl fixtures:no                                  # regenerate the fixtures
+```
+
+`packages/etl/fixtures/no` holds **synthetic** files in the sources' exact
+formats (`underenheter.csv.gz` and `enheter.csv.gz` with the register's real
+headers, every field quoted, an address of two lines; `adresser.zip` with
+Kartverket's header and EPSG:4258 points; `fylkerkommuner.json`) for seven real
+municipalities of five counties, generated deterministically by
+`packages/etl/fixtures/generate-no.ts`: made-up establishments of every kind, a
+pharmacy whose address is not in the file, a care-of line, a sole
+proprietorship, a company named after a doctor, a practice named after its
+dentists, a holding company, a practice without a care word, physiotherapy, a
+bankrupt owner, a purchasing unit, a closed nursing home, a unit on Svalbard, and
+e-mails and mobile numbers (to check they are never stored), with filler rows
+above the floors. Never commit real rows. `test/no-integration.test.ts` imports
+them next to the French fixtures: France untouched both ways, names, kinds,
+owners and nothing unneeded stored, placement and precision, county and
+municipality listings, idempotence, a dry run, an unreadable file failing the
+run, a missing address file failing it too, absences after two runs, objections,
+the breaker and `--approve`.

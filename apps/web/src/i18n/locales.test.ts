@@ -16,7 +16,9 @@ import {
 	isGbListingSlug,
 	isItListingSlug,
 	isListingSlug,
+	isNoListingSlug,
 	isReservedSegment,
+	NO_RESERVED_SEGMENTS,
 } from "@apercura/core/taxonomy";
 import { describe, expect, it } from "vitest";
 import { robotsFor } from "~/lib/robots";
@@ -44,7 +46,13 @@ import {
 } from "./locales";
 import { getPathname } from "./navigation";
 import { localePath } from "./paths";
-import { type AppPathname, CZECH_SEGMENTS, ESTONIAN_SEGMENTS, routing } from "./routing";
+import {
+	type AppPathname,
+	CZECH_SEGMENTS,
+	ESTONIAN_SEGMENTS,
+	NORWEGIAN_SEGMENTS,
+	routing,
+} from "./routing";
 
 const PARAMS: Record<string, string> = {
 	slug: "camille-exemple-19999990013",
@@ -67,6 +75,7 @@ const TRANSLATIONS = LOCALES.filter(
 		locale !== "de-DE" &&
 		locale !== "et-EE" &&
 		locale !== "pl-PL" &&
+		locale !== "nb-NO" &&
 		marketOf(locale) !== "CH",
 );
 
@@ -99,6 +108,7 @@ describe("locale configuration", () => {
 			"it-CH",
 			"et-EE",
 			"pl-PL",
+			"nb-NO",
 		]);
 		expect(routing.locales).toEqual(LOCALES);
 		expect(routing.defaultLocale).toBe("fr");
@@ -120,6 +130,7 @@ describe("locale configuration", () => {
 			"it-CH": "/ch-it",
 			"et-EE": "/ee",
 			"pl-PL": "/pl",
+			"nb-NO": "/no",
 		});
 		expect(LOCALE_SEGMENTS).toEqual([
 			"fr",
@@ -138,6 +149,7 @@ describe("locale configuration", () => {
 			"ch-it",
 			"ee",
 			"pl",
+			"no",
 		]);
 		expect(LOCALE_MARKETS).toEqual({
 			fr: "FR",
@@ -156,6 +168,7 @@ describe("locale configuration", () => {
 			"it-CH": "CH",
 			"et-EE": "EE",
 			"pl-PL": "PL",
+			"nb-NO": "NO",
 		});
 		expect(CATALOG_LANGUAGES["de-AT"]).toBe("de");
 		expect(CATALOG_LANGUAGES["en-GB"]).toBe("en");
@@ -169,6 +182,8 @@ describe("locale configuration", () => {
 		expect(CATALOG_LANGUAGES["it-CH"]).toBe("it");
 		// Estonia: Estonian, read over the English catalog like Czech.
 		expect(CATALOG_LANGUAGES["et-EE"]).toBe("et");
+		// Norway: Norwegian Bokmål, read over the English catalog like Estonian.
+		expect(CATALOG_LANGUAGES["nb-NO"]).toBe("nb");
 		expect(MARKET_LOCALES.CH).toBe("de-CH");
 		expect(marketLanguages("CH")).toEqual(["de-CH", "fr-CH", "it-CH"]);
 		expect(marketLanguages("IT")).toEqual(["it-IT"]);
@@ -218,6 +233,7 @@ describe("locale configuration", () => {
 			"it-CH": "it-CH",
 			"et-EE": "et-EE",
 			"pl-PL": "pl-PL",
+			"nb-NO": "nb-NO",
 		});
 		expect(OG_LOCALES).toEqual({
 			fr: "fr_FR",
@@ -236,6 +252,7 @@ describe("locale configuration", () => {
 			"it-CH": "it_CH",
 			"et-EE": "et_EE",
 			"pl-PL": "pl_PL",
+			"nb-NO": "nb_NO",
 		});
 		for (const locale of LOCALES) {
 			expect(Intl.DateTimeFormat.supportedLocalesOf([LOCALE_TAGS[locale]])).toEqual([
@@ -265,6 +282,7 @@ describe("locale configuration", () => {
 			"it-CH",
 			"et-EE",
 			"pl-PL",
+			"nb-NO",
 		]);
 		expect(HREFLANGS).toEqual({
 			fr: "fr-FR",
@@ -279,6 +297,7 @@ describe("locale configuration", () => {
 			"it-CH": "it-CH",
 			"et-EE": "et-EE",
 			"pl-PL": "pl-PL",
+			"nb-NO": "nb-NO",
 		});
 		expect(routing.alternateLinks).toBe(false);
 		expect(robotsFor("fr", true)).toEqual({ index: true, follow: true });
@@ -296,6 +315,7 @@ describe("locale configuration", () => {
 		expect(robotsFor("fr-CH", true)).toEqual({ index: true, follow: true });
 		expect(robotsFor("it-CH", true)).toEqual({ index: true, follow: true });
 		expect(robotsFor("et-EE", true)).toEqual({ index: true, follow: true });
+		expect(robotsFor("nb-NO", true)).toEqual({ index: true, follow: true });
 		for (const locale of TRANSLATIONS) {
 			expect(robotsFor(locale, true)).toEqual({ index: false, follow: true });
 		}
@@ -556,6 +576,35 @@ describe("locale configuration", () => {
 		expect(localePath("et-EE", "/accessibilite")).toBe("/ee/ligipaasetavus");
 		expect(localePath("et-EE", "/donnees")).toBe("/ee/andmed");
 		expect(localePath("et-EE", "/[specialite]", { specialite: "apteegid" })).toBe("/ee/apteegid");
+		// Norway: every first segment is reserved and never a Norwegian listing slug.
+		for (const pathname of simple.filter((pathname) => !pathname.startsWith("/["))) {
+			const [first] = getPathname({ href: hrefOf(pathname) as never, locale: "nb-NO" })
+				.split("/")
+				.filter(Boolean)
+				.slice(1);
+			if (!first) continue;
+			expect(NO_RESERVED_SEGMENTS as readonly string[], pathname).toContain(first);
+			expect(isNoListingSlug(first), pathname).toBe(false);
+		}
+		expect(
+			localePath("nb-NO", "/praticien/[slug]", { slug: "eksempel-legesenter-910000039" }),
+		).toBe("/no/virksomhet/eksempel-legesenter-910000039");
+		expect(
+			localePath("nb-NO", "/praticien/[slug]/retrait", { slug: "eksempel-legesenter-910000039" }),
+		).toBe("/no/virksomhet/eksempel-legesenter-910000039/fjerning");
+		expect(localePath("nb-NO", "/etablissement/[slug]", { slug: "x-1" })).toBe(
+			"/no/organisasjon/x-1",
+		);
+		expect(localePath("nb-NO", "/annuaire")).toBe("/no/katalog");
+		expect(localePath("nb-NO", "/recherche")).toBe("/no/sok");
+		expect(localePath("nb-NO", "/mentions-legales")).toBe("/no/juridisk");
+		expect(localePath("nb-NO", "/confidentialite")).toBe("/no/personvern");
+		expect(localePath("nb-NO", "/conditions")).toBe("/no/vilkar");
+		expect(localePath("nb-NO", "/accessibilite")).toBe("/no/tilgjengelighet");
+		expect(localePath("nb-NO", "/donnees")).toBe("/no/data");
+		expect(localePath("nb-NO", "/[specialite]", { specialite: "legekontorer" })).toBe(
+			"/no/legekontorer",
+		);
 	});
 
 	it("translates into Estonian only segments reserved in Estonia", () => {
@@ -567,6 +616,17 @@ describe("locale configuration", () => {
 			.map((entry) => entry["et-EE"].split("/")[1] ?? "")
 			.filter((first) => first && !first.startsWith("["));
 		for (const first of firsts) expect(EE_RESERVED_SEGMENTS as readonly string[]).toContain(first);
+	});
+
+	it("translates into Norwegian only segments reserved in Norway", () => {
+		for (const norwegian of Object.values(NORWEGIAN_SEGMENTS)) {
+			expect(isNoListingSlug(norwegian), norwegian).toBe(false);
+		}
+		const firsts = Object.values(routing.pathnames)
+			.filter((entry) => typeof entry !== "string")
+			.map((entry) => entry["nb-NO"].split("/")[1] ?? "")
+			.filter((first) => first && !first.startsWith("["));
+		for (const first of firsts) expect(NO_RESERVED_SEGMENTS as readonly string[]).toContain(first);
 	});
 
 	it("translates into Czech only segments reserved in Czechia", () => {
@@ -601,7 +661,19 @@ describe("locale configuration", () => {
 
 describe("the markets a search can move to", () => {
 	it("are the open markets, France first, each at its own segment", () => {
-		expect(MARKET_COUNTRIES).toEqual(["FR", "AT", "GB", "CZ", "ES", "IT", "DE", "CH", "EE", "PL"]);
+		expect(MARKET_COUNTRIES).toEqual([
+			"FR",
+			"AT",
+			"GB",
+			"CZ",
+			"ES",
+			"IT",
+			"DE",
+			"CH",
+			"EE",
+			"PL",
+			"NO",
+		]);
 		expect(MARKET_COUNTRIES.map(marketSegment)).toEqual([
 			"fr",
 			"at",
@@ -613,6 +685,7 @@ describe("the markets a search can move to", () => {
 			"ch",
 			"ee",
 			"pl",
+			"no",
 		]);
 		for (const country of MARKET_COUNTRIES) {
 			expect(marketOfSegment(marketSegment(country))).toBe(country);
@@ -628,6 +701,7 @@ describe("the markets a search can move to", () => {
 		// The search's `pays` value of Switzerland is its own segment, whatever the language.
 		expect(marketOfSegment("ch")).toBe("CH");
 		expect(marketOfSegment("ee")).toBe("EE");
+		expect(marketOfSegment("no")).toBe("NO");
 		expect(marketOfSegment("ch-fr")).toBeNull();
 		expect(marketOfSegment(null)).toBeNull();
 	});
@@ -676,5 +750,9 @@ describe("the markets a search can move to", () => {
 		expect(marketLocaleFor("EE", "en-GB")).toBe("et-EE");
 		expect(marketLocaleFor("EE", "et-EE")).toBe("et-EE");
 		expect(marketLocaleFor("FR", "et-EE")).toBe("fr");
+		// Norway has one language here: every visitor lands on its Norwegian pages.
+		expect(marketLocaleFor("NO", "fr")).toBe("nb-NO");
+		expect(marketLocaleFor("NO", "en-GB")).toBe("nb-NO");
+		expect(marketLocaleFor("NO", "nb-NO")).toBe("nb-NO");
 	});
 });

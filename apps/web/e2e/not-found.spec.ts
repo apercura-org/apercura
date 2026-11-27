@@ -56,6 +56,7 @@ const LOCALIZED = [
 		search: "Ricerca",
 	},
 	{ path: "/ee/ei-ole-olemas", title: "Sellist lehte ei ole", lang: "et-EE", search: "Otsi" },
+	{ path: "/no/finnes-ikke", title: "Denne siden finnes ikke", lang: "nb-NO", search: "Søk" },
 ];
 
 for (const { path, title, lang, search } of LOCALIZED) {

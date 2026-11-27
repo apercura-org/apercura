@@ -18,6 +18,7 @@ type Pathnames = Record<
 				| "it-CH"
 				| "et-EE"
 				| "pl-PL"
+				| "nb-NO"
 			>,
 			string
 	  >
@@ -104,6 +105,34 @@ function polishPath(path: string): string {
 }
 
 /**
+ * The Norwegian form of each English path segment (`/practitioner/[slug]/report` ->
+ * `/virksomhet/[slug]/meld-feil`): a page is an establishment of the Central Coordinating
+ * Register for Legal Entities ("virksomhet"), never a person, so an establishment's page is an
+ * organisation's. The first segments are the Norwegian reserved segments of
+ * `@apercura/core/taxonomy` (`NO_RESERVED_SEGMENTS`, tested), which never name a listing.
+ */
+export const NORWEGIAN_SEGMENTS: Readonly<Record<string, string>> = {
+	search: "sok",
+	practitioner: "virksomhet",
+	report: "meld-feil",
+	removal: "fjerning",
+	"this-is-me": "dette-er-meg",
+	establishment: "organisasjon",
+	directory: "katalog",
+	about: "om",
+	data: "data",
+	accessibility: "tilgjengelighet",
+	privacy: "personvern",
+	"legal-notice": "juridisk",
+	terms: "vilkar",
+};
+
+/** An English path with its segments in Norwegian; parameters and unknown segments stay. */
+function norwegianPath(path: string): string {
+	return path.replace(/[^/]+/g, (segment) => NORWEGIAN_SEGMENTS[segment] ?? segment);
+}
+
+/**
  * The Spanish market's form of a Spanish path: a centre's page under `/centro` (Spain lists
  * centres, never people), so an establishment's page moves from `/centro` to `/organizacion`.
  * Every first segment is a Spanish reserved segment of `@apercura/core/taxonomy`
@@ -170,7 +199,9 @@ function swissMarketPath(path: string, person: string, facility: string): string
  * - Estonia (`et-EE`): the English paths with their segments in Estonian (`ESTONIAN_SEGMENTS`),
  *   a provider's or pharmacy's page under `/asutus`;
  * - Poland (`pl-PL`): the English paths with their segments in Polish (`POLISH_SEGMENTS`), an
- *   establishment's page under `/placowka`.
+ *   establishment's page under `/placowka`;
+ * - Norway (`nb-NO`): the English paths with their segments in Norwegian (`NORWEGIAN_SEGMENTS`),
+ *   an establishment's page under `/virksomhet`.
  */
 function withMarkets<T extends Pathnames>(pathnames: T) {
 	return Object.fromEntries(
@@ -191,6 +222,7 @@ function withMarkets<T extends Pathnames>(pathnames: T) {
 						"it-CH": italianMarketPath(value.it),
 						"et-EE": estonianPath(value.en),
 						"pl-PL": polishPath(value.en),
+						"nb-NO": norwegianPath(value.en),
 					},
 		]),
 	) as {
@@ -208,6 +240,7 @@ function withMarkets<T extends Pathnames>(pathnames: T) {
 					"it-CH": string;
 					"et-EE": string;
 					"pl-PL": string;
+					"nb-NO": string;
 				};
 	};
 }

@@ -1,0 +1,1347 @@
+{
+	"Metadata": {
+		"title": "Apercura",
+		"description": "Åpen katalog over helsetjenester i Norge: sykehus, legekontorer, legevakter, tannklinikker, sykehjem og apotek fra Enhetsregisteret.",
+		"proTitle": "Siden deres finnes allerede · Apercura",
+		"proDescription": "Apercura publiserer en saklig side for hvert sykehus, legekontor, tannklinikk, sykehjem og apotek i Enhetsregisteret. Finn virksomhetens side og overta den gratis.",
+		"searchTitle": "Søk · Apercura",
+		"galleryTitle": "Komponentgalleri · Apercura",
+		"homeTitle": "Apercura · Sykehus, leger, tannleger og apotek i Norge"
+	},
+	"Site": {
+		"skipLink": "Gå til innholdet",
+		"wordmark": "Apercura",
+		"homeLink": "Apercura, forside",
+		"runningHead": "Åpen katalog over helsetjenester i Norge",
+		"navLabel": "Hovedmeny",
+		"navPro": "For virksomheter",
+		"navPatients": "For pasienter",
+		"folio": "Side {number}",
+		"externalLink": "åpner et annet nettsted",
+		"footer": {
+			"free": "Gratis for virksomheter og pasienter.",
+			"license": "Kildekode under AGPL-3.0-lisensen",
+			"noAds": "Ingen vurderinger, ingen reklame, ingen betalt rangering."
+		},
+		"folioRpps": "Org.nr. {rpps}",
+		"home": "Forside",
+		"breadcrumbs": "Du er her",
+		"footerNav": {
+			"label": "Om Apercura",
+			"directory": "Katalog",
+			"guides": "Veiledninger",
+			"about": "Om",
+			"openSource": "Åpen kildekode",
+			"data": "Data og kilder",
+			"accessibility": "Tilgjengelighet",
+			"privacy": "Personvern",
+			"legal": "Juridisk informasjon",
+			"terms": "Vilkår for bruk",
+			"international": "Apercura i andre land"
+		},
+		"theme": {
+			"label": "Utseende",
+			"light": "Lyst",
+			"dark": "Mørkt",
+			"system": "Som systemet"
+		}
+	},
+	"LocaleSwitcher": {
+		"label": "Språk",
+		"locale": "{locale, select, fr {Français} en {English} de {Deutsch} es {Español} it {Italiano} other {Ukjent språk}}",
+		"current": "Språk: <value>{language}</value>"
+	},
+	"CountrySwitcher": {
+		"label": "Land",
+		"current": "Land: <value>{country}</value>"
+	},
+	"ErrorPages": {
+		"notFound": {
+			"metaTitle": "Siden finnes ikke · Apercura",
+			"title": "Denne siden finnes ikke",
+			"body": "Adressen kan være feilskrevet, eller siden er fjernet. Søk i katalogen, eller start på nytt fra en av sidene nedenfor.",
+			"rootBody": "Adressen kan være feilskrevet, eller siden er fjernet. Velg et land for å søke i katalogen der.",
+			"code": "Feil 404",
+			"stamp": "Ingen side på denne adressen",
+			"nextHeading": "Andre steder på Apercura",
+			"home": "Forsiden",
+			"directory": "Katalog etter sted",
+			"international": "Apercura i hvert land"
+		},
+		"error": {
+			"metaTitle": "Siden er ikke tilgjengelig · Apercura",
+			"title": "Vi kunne ikke vise denne siden",
+			"body": "Noe gikk galt hos oss da siden skulle lages. Prøv igjen; hvis det fortsatt ikke virker, kan du komme tilbake om noen minutter.",
+			"retry": "Prøv igjen",
+			"home": "Tilbake til forsiden",
+			"reference": "Referanse for kundestøtte: {digest}"
+		}
+	},
+	"Search": {
+		"label": "Finn sykehus, legekontor, tannlege eller apotek",
+		"who": "Hva?",
+		"whoHint": "Navn, eller for eksempel fastlege, tannlege, legevakt, apotek",
+		"where": "Hvor?",
+		"whereHint": "Kommune, fylke eller postnummer",
+		"submit": "Søk",
+		"market": "Land",
+		"markets": {
+			"FR": "Frankrike",
+			"AT": "Østerrike",
+			"GB": "Storbritannia",
+			"CZ": "Tsjekkia",
+			"IT": "Italia",
+			"CH": "Sveits",
+			"ES": "Spania",
+			"DE": "Tyskland",
+			"EE": "Estland",
+			"NO": "Norge"
+		}
+	},
+	"HomePage": {
+		"title": "Finn sykehus, legekontor, tannlege eller apotek i Norge",
+		"hook": "Hvert sykehus, legekontor, tannklinikk, sykehjem og apotek i Enhetsregisteret har allerede en side.",
+		"specimen": {
+			"heading": "Hver virksomhet har allerede en side",
+			"intro": "Slik ser en side ut når det offentlige registeret har fylt den ut, før virksomheten overtar den: kjente felt er utfylt, og de andre sier tydelig at opplysningen mangler."
+		},
+		"pillarsHeading": "Det Apercura lover",
+		"columns": {
+			"number": "Nr.",
+			"commitment": "Løfte"
+		},
+		"pillars": {
+			"free": {
+				"title": "Gratis",
+				"description": "Gratis for virksomheter og pasienter, uten abonnement og uten provisjon."
+			},
+			"openSource": {
+				"title": "Åpen kildekode",
+				"description": "All kildekode er publisert under AGPL-3.0-lisensen."
+			},
+			"hostedInFrance": {
+				"title": "Helsedata lagret i Frankrike",
+				"description": "Helsedata lagres i Frankrike hos en HDS-sertifisert leverandør ({host}) og krypteres på applikasjonsnivå."
+			},
+			"encrypted": {
+				"title": "Krypterte data",
+				"description": "Dokumenter for overtakelse av en side, feilmeldinger og, der nettbestilling er åpen, timebestillinger krypteres på applikasjonsnivå."
+			},
+			"selfHostable": {
+				"title": "Kan driftes selv",
+				"description": "Hele plattformen kan kjøres med Docker på egen infrastruktur, import av åpne data inkludert."
+			}
+		},
+		"registry": {
+			"heading": "Bygget på Enhetsregisteret",
+			"intro": "Hver side bygger på en virksomhet (underenhet) som Brønnøysundregistrenes Enhetsregister fører under en næringskode for helse eller apotek, publisert som åpne data under Norsk lisens for offentlige data (NLOD 2.0). Fylker, kommuner og adresser kommer fra Kartverket. En side beskriver en virksomhet, aldri helsepersonellet som arbeider der. Ingen betaler for å stå i katalogen.",
+			"doctors": "Leger",
+			"dentists": "Tannleger",
+			"midwives": "Jordmødre",
+			"nurses": "Sykepleiere",
+			"withAddress": "Med en offentlig adresse",
+			"count": "{count, number}",
+			"sourceLabel": "Kilde",
+			"sourceName": "Enhetsregisteret, Brønnøysundregistrene",
+			"updatedLabel": "Tall per"
+		},
+		"pro": {
+			"heading": "Driver du et sykehus, et legekontor, en tannklinikk, et sykehjem eller et apotek?",
+			"body": "Virksomhetens side finnes allerede. Det er gratis å overta den.",
+			"cta": "Finn siden vår"
+		},
+		"tagline": "Åpen katalog over sykehus, legekontorer, tannklinikker, sykehjem og apotek i Norge, fra Enhetsregisteret.",
+		"status": "Under arbeid.",
+		"market": {
+			"listingsHeading": "Etter type virksomhet",
+			"placesHeading": "Etter fylke"
+		}
+	},
+	"SearchPage": {
+		"title": "Søk",
+		"query": "Du søkte etter «{who}»",
+		"queryWhere": "Du søkte etter «{who}» i «{where}»",
+		"queryOnlyWhere": "Du søkte i «{where}»",
+		"emptyTitle": "Ingen virksomhet passer",
+		"emptyBody": "Sjekk stavemåten, prøv en kommune i nærheten, eller et bredere ord, som «legekontor» i stedet for en spesialitet.",
+		"queryNear": "Du søkte etter «{who}» i nærheten av deg",
+		"queryOnlyNear": "Virksomheter i nærheten av deg",
+		"startTitle": "Hva leter du etter?",
+		"startBody": "Skriv navnet på en virksomhet, eller for eksempel fastlege, tannlege, legevakt, sykehjem eller apotek, i «Hva?», og en kommune eller et postnummer i «Hvor?». Du kan også bla i katalogen etter fylke og kommune.",
+		"noMoreTitle": "Ingen flere treff",
+		"browseDirectory": "Bla i katalogen",
+		"rppsTitle": "Ingen offentlig side har organisasjonsnummer {rpps}",
+		"rppsBody": "Nummeret er ikke gyldig, eller virksomheten har ingen offentlig side: katalogen viser bare steder der pasienter tas imot, og aldri enkeltpersonforetak. Virksomheten kan likevel finne og overta oppføringen sin.",
+		"rppsPro": "Virksomheter: finn oppføringen deres",
+		"ambiguousTitle": "Flere steder heter «{where}»",
+		"ambiguousBody": "Velg det du mener:",
+		"unknownPlaceTitle": "Vi kjenner ikke stedet «{where}»",
+		"unknownPlaceSuggest": "Mente du et av disse stedene?",
+		"unknownPlaceBody": "Sjekk stavemåten, eller skriv et postnummer.",
+		"unlistedTitle": "«{who}» er ikke i katalogen ennå",
+		"unlistedBody": "I Norge viser katalogen foreløpig virksomheter, ikke helsepersonellet som arbeider i dem: sykehus, psykisk helsevern og rusbehandling, legekontorer, legevakter, legespesialister, tannklinikker, sykehjem og apotek. Søk etter navnet på en virksomhet, eller bla i katalogen.",
+		"departmentPlace": "Fylke",
+		"resultsHeading": "Treff",
+		"range": "Treff {from} til {to}",
+		"orderName": "Treffene er ordnet etter hvor godt navnet passer, deretter alfabetisk. Ingen betaler for å komme høyere opp.",
+		"orderNear": "Treffene er ordnet etter avstand fra deg. Ingen betaler for å komme høyere opp.",
+		"bookingNotOpen": "Apercura har ikke nettbestilling i Norge: ring virksomheten.",
+		"columns": {
+			"practitioner": "Virksomhet",
+			"place": "Adresse",
+			"appointments": "Timer"
+		},
+		"action": {
+			"call": "Ring {phone}",
+			"establishment": "Via virksomheten",
+			"locum": "Vikar: ingen direkte timebestilling",
+			"page": "Se siden",
+			"noPhone": "Ingen telefonnummer publisert",
+			"nextFree": "Bestill: {slot}"
+		},
+		"distance": "{km} km unna",
+		"pagination": "Sider med treff",
+		"previous": "Forrige treff",
+		"next": "Flere treff",
+		"map": {
+			"show": "Vis på kart",
+			"hide": "Skjul kartet",
+			"region": "Kart over treffene",
+			"fallback": "Kartet lastes. Listen over har alle adressene."
+		},
+		"outsidePlace": "Ligger utenfor {where}",
+		"bookingOpenSome": "Noen virksomheter tar imot nettbestillinger: neste ledige tid vises. Ring de andre.",
+		"notCoveredTitle": "Apercura dekker ikke {country} ennå",
+		"notCoveredBody": "Foreløpig viser Apercura virksomhetene i disse landene. Velg ett for å søke der:"
+	},
+	"Practitioner": {
+		"rpps": "Org.nr.",
+		"status": {
+			"unclaimed": "Ikke overtatt side",
+			"claimed": "Overtatt side",
+			"verified": "Bekreftet side"
+		},
+		"statusNote": {
+			"unclaimed": "Bygget på åpne data fra Enhetsregisteret. Virksomheten har ikke fullført siden ennå.",
+			"verified": "Fullført av virksomheten, etter at overtakelsen ble kontrollert."
+		},
+		"notProvided": "Ikke oppgitt",
+		"fields": {
+			"profession": "Type virksomhet",
+			"specialty": "Spesialitet",
+			"address": "Adresse",
+			"phone": "Telefon",
+			"hours": "Åpningstider",
+			"languages": "Språk",
+			"convention": "Avtale",
+			"booking": "Nettbestilling",
+			"access": "Adkomst"
+		},
+		"sitesHeading": "Adresse",
+		"directions": "Veibeskrivelse",
+		"providers": {
+			"openStreetMap": "OpenStreetMap",
+			"appleMaps": "Apple Kart",
+			"googleMaps": "Google Maps"
+		},
+		"mapLabel": "Kart: {place}",
+		"mapPin": "Plassering av {place}",
+		"source": {
+			"label": "Kilde",
+			"name": "Enhetsregisteret, Brønnøysundregistrene (NLOD 2.0)",
+			"updated": "Oppdatert"
+		},
+		"action": {
+			"title": "Timer",
+			"book": {
+				"statement": "Nettbestilling er åpen. Det er gratis og krever ingen konto.",
+				"label": "Bestill time"
+			},
+			"call": {
+				"statement": "Apercura har ikke nettbestilling i Norge. Ring virksomheten for å få time.",
+				"label": "Ring {phone}"
+			},
+			"establishment": {
+				"statement": "Timer bestilles via {establishment}.",
+				"label": "Bestill hos {establishment}"
+			},
+			"locum": {
+				"statement": "Denne legen er vikar for andre leger og kan ikke bestilles direkte.",
+				"hint": "Bestill time hos legekontoret der vikaren arbeider nå."
+			}
+		},
+		"slots": {
+			"heading": "Velg et tidspunkt",
+			"label": "Ledige tider",
+			"now": "nå",
+			"unavailable": "ikke ledig",
+			"selected": "Valgt: {slot}",
+			"emptyDay": "Ingen ledige tider denne dagen",
+			"slotLabel": "{day}, {time}",
+			"past": "passert"
+		},
+		"professions": {
+			"gp": "Fastlege",
+			"dentist": "Tannlege",
+			"midwife": "Jordmor",
+			"physio": "Fysioterapeut"
+		},
+		"specimen": "Eksempel, ikke en ekte virksomhet"
+	},
+	"Map": {
+		"map": "Kart",
+		"marker": "Kartmarkør",
+		"zoomIn": "Zoom inn",
+		"zoomOut": "Zoom ut",
+		"resetBearing": "Dra for å rotere kartet, klikk for å vende nord opp",
+		"toggleAttribution": "Vis eller skjul kartkildene",
+		"mapFeedback": "Tilbakemelding om kartet",
+		"logo": "MapLibre-logo",
+		"closePopup": "Lukk",
+		"scrollZoomWindows": "Bruk Ctrl + rulling for å zoome i kartet",
+		"scrollZoomMac": "Bruk ⌘ + rulling for å zoome i kartet",
+		"twoFingers": "Bruk to fingre for å flytte kartet"
+	},
+	"PractitionerPage": {
+		"metaTitle": "{name}, {occupation} · Apercura",
+		"metaTitlePlace": "{name}, {occupation} i {place} · Apercura",
+		"metaDescription": "{name}, {occupation}: {fees, select, sector {adresse, telefon og priser} other {adresse, telefon og organisasjonsnummer}}, fra Enhetsregisterets åpne data.",
+		"metaDescriptionPlace": "{name}, {occupation} i {place}: {fees, select, sector {adresse, telefon og priser} other {adresse, telefon og organisasjonsnummer}}, fra Enhetsregisterets åpne data.",
+		"unknownProfession": "Helsevirksomhet",
+		"professionHeading": "Virksomheten",
+		"otherQualifications": "Andre opplysninger",
+		"fieldsOfCare": "Fagområder",
+		"ownership": "Eierskap",
+		"ownershipPublic": "Offentlig",
+		"ownershipPrivate": "Privat",
+		"practiceType": "Type virksomhet",
+		"switchboard": "{phone} (sentralbord)",
+		"establishment": "Virksomhet",
+		"unnamedPlace": "Adresse",
+		"asideLabel": "Om denne siden",
+		"action": {
+			"callNotYetOpen": "Apercura har ikke nettbestilling i Norge. Ring virksomheten for å få time.",
+			"establishmentLink": "Kontakt virksomheten",
+			"noPhone": "Det er ikke publisert noe telefonnummer for denne adressen.",
+			"noPhoneHint": "Finn kontaktopplysningene på <link>virksomhetens oppføring i Enhetsregisteret</link>, eller kontakt stedet direkte.",
+			"bookStatement": "Nettbestilling er åpen. Det er gratis og krever ingen konto.",
+			"bookNoSlot": "Nettbestilling er åpen, men det er ingen ledige tider de nærmeste ukene. Se igjen senere, eller ring virksomheten.",
+			"nextSlot": "Neste ledige tid",
+			"bookLabel": "Bestill time",
+			"orCall": "Eller ring {phone}."
+		},
+		"fees": {
+			"heading": "Priser og refusjon",
+			"sector": "Avtale",
+			"agreement": "Avtale",
+			"optam": "Begrensede tilleggshonorarer (OPTAM)",
+			"optamNo": "Ikke med",
+			"carteVitale": "Carte Vitale",
+			"accepted": "Godtas",
+			"notAccepted": "Godtas ikke",
+			"fromAmeli": "Disse opplysningene kommer fra trygdens register.",
+			"notMatched": "Virksomheten kunne ikke finnes sikkert i trygdens register, så disse opplysningene vises ikke.",
+			"regulatoryNotice": "Avtalen bestemmer hvordan priser tas og refunderes: sjekk pris og refusjon før timen på",
+			"regulatoryNoticeAgreement": "Avtalen bestemmer hvordan priser tas og refunderes: sjekk pris og refusjon før timen på",
+			"ameliLink": "ameli.fr, Assurance Maladies register",
+			"source": "Assurance Maladie",
+			"sourceOwner": "Virksomheten"
+		},
+		"claim": {
+			"heading": "Er dette virksomheten deres?",
+			"body": "Denne siden er bygget på Enhetsregisterets åpne data. Overta den for å kontrollere og fullføre den:",
+			"link": "Overta denne siden",
+			"claimedHeading": "Siden forvaltes av virksomheten",
+			"claimedBody": "Virksomheten har overtatt denne siden: overtakelsen ble kontrollert, og virksomheten fullfører siden selv.",
+			"benefits": [
+				"gratis, uten abonnement eller binding;",
+				"bilde, åpningstider og språk;",
+				"en presentasjon av virksomheten;",
+				"statistikk over hvem som ser siden;",
+				"et delingssett: lenke, QR-kode og plakat."
+			],
+			"contactLink": "Får dere ikke overtatt siden? Kontakt oss",
+			"optOutLink": "Gjelder siden dere, og vil dere heller ikke vises offentlig? Start her"
+		},
+		"report": {
+			"heading": "Noe feil?",
+			"body": "Hvis en adresse, et telefonnummer eller et navn er feil, si fra hvordan det skal rettes.",
+			"link": "Meld fra om en feil"
+		},
+		"ring": {
+			"heading": "Andre virksomheter: {occupation} i {place}"
+		},
+		"photoAlt": "Bilde av {name}",
+		"metaTitleName": "{name} · Apercura",
+		"metaDescriptionBookable": "{name}, {occupation}: nettbestilling, adresse, telefon og {fees, select, sector {priser} other {organisasjonsnummer}}.",
+		"metaDescriptionBookablePlace": "{name}, {occupation} i {place}: nettbestilling, adresse, telefon og {fees, select, sector {priser} other {organisasjonsnummer}}.",
+		"norwegianFacts": {
+			"orgNumber": "Organisasjonsnummer",
+			"orgNumberNote": "Virksomhetens eget nummer i Enhetsregisteret.",
+			"industry": "Registrert næring",
+			"owner": "Drives av"
+		}
+	},
+	"Institutional": {
+		"toBeCompleted": "Fylles ut senere",
+		"legalDraftMark": "Utkast: skal gjennomgås av en advokat før lansering",
+		"auditMark": "Foreløpig erklæring: fullføres etter den manuelle revisjonen",
+		"comingMark": "Kommer snart",
+		"placeholderNote": "Verdier skrevet med store bokstaver mellom doble klammer er ikke kjent ennå: de fylles ut når den juridiske enheten og avtalene finnes."
+	},
+	"AboutPage": {
+		"metaTitle": "Om · Apercura",
+		"metaDescription": "Apercura publiserer en gratis, saklig side for hvert sykehus, legekontor, tannklinikk, sykehjem og apotek i Norge, fra offentlige åpne data.",
+		"title": "Om Apercura",
+		"lead": "En åpen katalog over helsetjenestene i Norge: sykehus, legekontorer og legevakter, legespesialister, tannklinikker, sykehjem og apotek.",
+		"sections": {
+			"what": {
+				"heading": "Hva Apercura gjør",
+				"body": [
+					"Apercura publiserer en side for hver virksomhet som Enhetsregisteret fører som sykehus, psykisk helsevern og rusbehandling, legekontor eller legevakt, legespesialist, tannklinikk, sykehjem eller apotek.",
+					"Pasienter finner alle virksomhetene, ikke bare dem som betaler en plattform. Virksomhetene kan overta siden sin gratis, kontrollere den og fullføre den. Apercura har ikke nettbestilling i Norge."
+				]
+			},
+			"principles": {
+				"heading": "Prinsipper",
+				"list": [
+					"Alle virksomheter vises på samme måte, enten de bruker Apercura eller ikke.",
+					"Bare saklig informasjon: ingen vurderinger, ingen omtaler, ingen reklame og ingen betalt rangering.",
+					"Gratis for virksomheter og pasienter, uten abonnement og uten provisjon.",
+					"Hver side viser hvor opplysningene kommer fra og når de sist ble oppdatert.",
+					"Så lite data som mulig, samlet inn for et oppgitt formål og slettet etter plan."
+				]
+			},
+			"how": {
+				"heading": "Hvor sidene kommer fra",
+				"body": [
+					"Sidene lages hver uke fra Brønnøysundregistrenes Enhetsregister (åpne data under NLOD 2.0); fylker og kommuner kommer fra Kartverkets administrative inndelinger, og adressepunktene fra matrikkelens adresser (CC BY 4.0). Datasiden viser hver kilde med lisens og dato."
+				]
+			},
+			"who": {
+				"heading": "Hvem som driver Apercura",
+				"body": [
+					"Apercura er et prosjekt i allmennhetens interesse. Det er ingen offentlig tjeneste og har ingen tilknytning til Brønnøysundregistrene, Helsedirektoratet, Kartverket eller helseforetakene."
+				]
+			}
+		},
+		"fields": {
+			"publisher": "Utgiver",
+			"contact": "Kontakt"
+		},
+		"links": {
+			"data": "Data og kilder",
+			"openSource": "Kildekode og lisens"
+		}
+	},
+	"OpenSourcePage": {
+		"metaTitle": "Åpen kildekode · Apercura",
+		"metaDescription": "All kildekode i Apercura er offentlig under AGPL-3.0-lisensen. Les den, revider den, eller kjør hele plattformen selv.",
+		"title": "Koden er offentlig.",
+		"lead": "Hver linje i Apercura er publisert under AGPL-3.0-lisensen: du kan lese den, revidere den og kjøre hele plattformen selv.",
+		"sections": {
+			"licence": {
+				"heading": "AGPL-3.0-lisensen",
+				"body": [
+					"AGPL-3.0 er en fri programvarelisens. Alle kan bruke, studere, endre og dele koden. Den som tilbyr en endret versjon som nettjeneste, må publisere endringene under samme lisens."
+				]
+			},
+			"can": {
+				"heading": "Hva du kan gjøre",
+				"list": [
+					"Lese hvordan hver side bygges og hvordan de åpne dataene importeres.",
+					"Kontrollere hvordan data krypteres og hvor lenge de lagres.",
+					"Melde fra om et problem eller foreslå en endring i det offentlige repositoriet.",
+					"Kjøre hele plattformen på egen infrastruktur med Docker, import av åpne data inkludert."
+				]
+			},
+			"selfHost": {
+				"heading": "Drifte den selv",
+				"body": [
+					"En installasjon med bare katalogen inneholder ingen helsedata. Timebestillinger er helsedata: hvis du driver timebestilling for andre, må du følge reglene for helsedata som gjelder i ditt land. Enhetsregisterets data kan brukes under NLOD 2.0, med kreditering."
+				]
+			}
+		},
+		"facts": {
+			"licence": "Lisens",
+			"licenceValue": "GNU Affero General Public License v3.0",
+			"repository": "Repositorium",
+			"data": "Katalogens data"
+		},
+		"dataValue": "Enhetsregisteret under NLOD 2.0, se datasiden",
+		"cta": {
+			"heading": "Les kildekoden",
+			"body": "Repositoriet inneholder koden, dokumentasjonen og veiledningen for egen drift.",
+			"link": "Åpne repositoriet"
+		}
+	},
+	"Listing": {
+		"count": "{count, plural, one {# virksomhet} other {# virksomheter}}",
+		"metaTitle": "{count, plural, one {{listing} i {place}: # virksomhet · Apercura} other {{listing} i {place}: # virksomheter · Apercura}}",
+		"metaTitlePage": "{listing} i {place}, side {page} · Apercura",
+		"metaDescription": "{count, plural, one {# virksomhet under «{occupation}» i {place}: {fees, select, sector {adresse, telefon og priser} other {adresse og telefon}}, fra Enhetsregisterets åpne data.} other {# virksomheter under «{occupation}» i {place}: {fees, select, sector {adresser, telefoner og priser} other {adresser og telefoner}}, fra Enhetsregisterets åpne data.}}",
+		"title": "{listing} i {place}",
+		"lead": "{count, plural, one {Enhetsregisteret fører # virksomhet under denne overskriften i {place}.} other {Enhetsregisteret fører # virksomheter under denne overskriften i {place}.}}",
+		"practitionersHeading": "{count, plural, one {Virksomheten} other {De # virksomhetene}}",
+		"practitionersIntro": "I alfabetisk rekkefølge. Ingen betaler for å stå her, og ingen rangeres.",
+		"rowFacts": "Avtale: {sector} · Carte Vitale: {carteVitale}",
+		"rowFactsAgreement": "Avtale: {sector} · Carte Vitale: {carteVitale}",
+		"columns": {
+			"practitioner": "Virksomhet",
+			"sector": "Avtale",
+			"agreement": "Avtale",
+			"carteVitale": "Carte Vitale"
+		},
+		"pagination": {
+			"label": "Sider i listen",
+			"previous": "Forrige side",
+			"next": "Neste side",
+			"status": "Side {page} av {pages}",
+			"page": "<hidden>Side </hidden>{page}",
+			"jumps": "Gå til side"
+		},
+		"facts": {
+			"heading": "I tall",
+			"intro": "Avtaler kommer fra trygdens register, for virksomhetene som kunne finnes der.",
+			"introAgreement": "Avtaler kommer fra trygdens register, for virksomhetene som kunne finnes der.",
+			"sectorUnknown": "Avtale ikke kjent",
+			"agreementUnknown": "Avtale ikke kjent",
+			"carteVitaleYes": "Tar Carte Vitale",
+			"carteVitaleNo": "Tar ikke Carte Vitale",
+			"bookingNotOpen": "Ikke åpen ennå",
+			"sources": "Enhetsregisteret (Brønnøysundregistrene), Kartverket"
+		},
+		"communesHeading": "{listing}: kommuner i {place}",
+		"nearbyHeading": "{listing}: kommuner i nærheten",
+		"establishmentsHeading": "Virksomheter i {place}",
+		"establishmentsIntro": "Sykehus, klinikker og helsesentre der virksomheter under «{occupation}» holder til.",
+		"allSpecialties": "Alle typer virksomheter i {place}",
+		"hubMetaTitle": "{count, plural, one {{listing} i Norge: # virksomhet · Apercura} other {{listing} i Norge: # virksomheter · Apercura}}",
+		"hubMetaDescription": "{count, plural, one {# virksomhet under «{occupation}» i Norge, etter fylke: {fees, select, sector {adresse, telefon og priser} other {adresse og telefon}}, fra Enhetsregisterets åpne data.} other {# virksomheter under «{occupation}» i Norge, etter fylke: {fees, select, sector {adresser, telefoner og priser} other {adresser og telefoner}}, fra Enhetsregisterets åpne data.}}",
+		"hubTitle": "{listing} i Norge",
+		"hubLead": "{count, plural, one {Enhetsregisteret fører # virksomhet under denne overskriften i Norge.} other {Enhetsregisteret fører # virksomheter under denne overskriften i Norge.}}",
+		"departmentsHeading": "{listing} etter fylke",
+		"departmentsIntro": "Velg et fylke for å se kommunene og virksomhetene der.",
+		"browseDirectory": "Bla i katalogen etter sted",
+		"metaTitleShort": "{listing} i {place} · Apercura",
+		"metaDescriptionPage": "{count, plural, one {Side {page} av {pages}: # virksomhet under «{occupation}» i {place}.} other {Side {page} av {pages}: # virksomheter under «{occupation}» i {place}.}}",
+		"metaDescriptionPageRange": "{count, plural, one {Side {page} av {pages}, {first} til {last}: # virksomhet under «{occupation}» i {place}.} other {Side {page} av {pages}, {first} til {last}: # virksomheter under «{occupation}» i {place}.}}",
+		"hubMetaTitleShort": "{listing} i Norge · Apercura",
+		"authoritiesHeading": "{listing}: kommuner i {place}"
+	},
+	"Directory": {
+		"metaTitle": "Katalog over helsetjenester etter sted · Apercura",
+		"metaDescription": "Norges fylker og kommuner med sykehus, legekontorer, tannklinikker, sykehjem og apotek fra Enhetsregisteret.",
+		"title": "Katalog etter sted",
+		"lead": "{count, plural, one {# virksomhet etter fylke og kommune.} other {# virksomheter etter fylke og kommune.}}",
+		"otherRegion": "Andre steder",
+		"emptyTitle": "Katalogen er ikke importert ennå",
+		"emptyBody": "Enhetsregisterets data er ikke importert til denne serveren ennå. Kom tilbake etter neste import.",
+		"placeMetaTitle": "Helsetjenester i {place} · Apercura",
+		"placeMetaDescription": "{count, plural, one {# helsevirksomhet i {place}, etter type, fra Enhetsregisterets åpne data.} other {# helsevirksomheter i {place}, etter type, fra Enhetsregisterets åpne data.}}",
+		"placeTitle": "Helsetjenester i {place}",
+		"placeLead": "{count, plural, one {# virksomhet i {place}.} other {# virksomheter i {place}.}}",
+		"specialtiesHeading": "Etter type virksomhet",
+		"communesHeading": "Kommuner i {place}",
+		"arrondissementsHeading": "Etter bydel",
+		"establishmentsHeading": "Virksomheter i {place}",
+		"placeMetaTitleShort": "Helsetjenester i {place} · Apercura",
+		"authoritiesHeading": "Kommuner i {place}",
+		"regionLink": "Alt i {place}"
+	},
+	"Establishment": {
+		"metaTitle": "{name} · Apercura",
+		"metaTitlePlace": "{name}, {place} · Apercura",
+		"metaDescription": "{count, plural, one {{name}: adresse, sentralbord og # virksomhet på stedet, fra Enhetsregisterets åpne data.} other {{name}: adresse, sentralbord og # virksomheter på stedet, fra Enhetsregisterets åpne data.}}",
+		"directory": "Katalog",
+		"folio": "Nr. {finess}",
+		"lead": "{count, plural, one {{kind}. Registeret fører # virksomhet her.} other {{kind}. Registeret fører # virksomheter her.}}",
+		"addressHeading": "Adresse",
+		"finess": "Nummer",
+		"action": {
+			"call": "Timer bestilles via virksomheten. Ring sentralbordet og spør etter avdelingen du trenger.",
+			"noPhone": "Det er ikke publisert noe telefonnummer for denne virksomheten.",
+			"noPhoneHint": "Finn kontaktopplysningene på virksomhetens eget nettsted."
+		},
+		"practitionersHeading": "{count, plural, one {Virksomheten her} other {De # virksomhetene her}}",
+		"practitionersIntro": "Etter type, i alfabetisk rekkefølge.",
+		"otherProfessions": "Andre typer",
+		"source": "Enhetsregisteret (Brønnøysundregistrene)"
+	},
+	"SearchForm": {
+		"specialties": "Typer virksomhet",
+		"practitioners": "Virksomheter",
+		"places": "Steder",
+		"department": "Fylke",
+		"nearMe": "I nærheten",
+		"locating": "Finner posisjonen din …",
+		"geoDenied": "Posisjon er slått av for dette nettstedet. Skriv en kommune eller et postnummer i stedet.",
+		"geoUnavailable": "Posisjonen din ble ikke funnet. Skriv en kommune eller et postnummer i stedet.",
+		"searching": "Søker …",
+		"noSuggestion": "Ingen forslag. Trykk Søk for å se alle treff."
+	},
+	"OgImage": {
+		"runningHead": "Åpen katalog over helsetjenester",
+		"titles": {
+			"medecin": "Hvert legekontor i Norge har allerede en side.",
+			"chirurgien-dentiste": "Hver tannklinikk i Norge har allerede en side.",
+			"sage-femme": "Hver helsevirksomhet i Norge har allerede en side.",
+			"infirmier": "Hvert sykehjem i Norge har allerede en side.",
+			"annuaire": "Sykehus, legekontorer, tannklinikker og apotek, etter type og sted."
+		},
+		"footer": "Gratis · Åpen kildekode · Ingen vurderinger, ingen reklame",
+		"practitioner": {
+			"folio": "Org.nr. {rpps}",
+			"alt": "{name}, {occupation}, {place}",
+			"altNoPlace": "{name}, {occupation}"
+		}
+	},
+	"taxonomy": {
+		"profession": {
+			"sykehus": "Sykehus",
+			"sykehuset": "Sykehus",
+			"psykisk-helsevern": "Psykisk helsevern og rusbehandling",
+			"psykisk-helsevern-institusjon": "Psykisk helsevern og rusbehandling",
+			"legekontorer": "Legekontor",
+			"legekontor": "Legekontor",
+			"legevakter": "Legevakt",
+			"legevakt": "Legevakt",
+			"legespesialister": "Spesialistpraksis",
+			"spesialistpraksis": "Spesialistpraksis",
+			"tannklinikker": "Tannklinikk",
+			"tannklinikk": "Tannklinikk",
+			"sykehjem": "Sykehjem",
+			"sykehjemmet": "Sykehjem",
+			"apotek": "Apotek",
+			"apoteket": "Apotek"
+		},
+		"listing": {
+			"sykehus": "Sykehus",
+			"psykisk-helsevern": "Psykisk helsevern og rusbehandling",
+			"legekontorer": "Legekontorer",
+			"legevakter": "Legevakter",
+			"legespesialister": "Legespesialister",
+			"tannklinikker": "Tannklinikker",
+			"sykehjem": "Sykehjem",
+			"apotek": "Apotek"
+		},
+		"practiceKind": {
+			"office": "Adresse"
+		}
+	},
+	"Profile": {
+		"fees": {
+			"fromOwner": "Prisene er oppgitt av virksomheten."
+		}
+	},
+	"Claim": {
+		"metadata": {
+			"start": "Overta en side · Apercura",
+			"claim": "Overtakelsen deres · Apercura",
+			"emailLink": "Bekreft en overtakelse · Apercura"
+		},
+		"pending": "Vent litt",
+		"errors": {
+			"generic": "Noe gikk galt. Prøv igjen om et øyeblikk.",
+			"TOO_MANY": "For mange forespørsler om overtakelse i dag. Prøv igjen i morgen.",
+			"ALREADY_OWNER": "Denne siden er allerede deres.",
+			"FROZEN": "Denne kontoen er frosset og kan ikke overta en side.",
+			"NOT_FOUND": "Ingen side har dette organisasjonsnummeret.",
+			"INVALID_RPPS": "Dette organisasjonsnummeret er ikke gyldig: skriv de ni sifrene på slutten av sidens adresse (for eksempel 910000039), slutten av adressen eller hele adressen.",
+			"NOT_OPEN": "Denne overtakelsen er avsluttet og kan ikke lenger endres.",
+			"METHOD_UNAVAILABLE": "Denne metoden er ikke tilgjengelig for denne siden.",
+			"TOO_MANY_ATTEMPTS": "For mange forsøk med denne metoden. Bruk en annen.",
+			"NOT_SUBMITTABLE": "Legg ved et dokument før dere sender overtakelsen til kontroll.",
+			"BAD_DOCUMENT": "Denne filen kan ikke brukes: send en PDF, JPEG, PNG eller WebP på høyst 10 MB.",
+			"PSC_MISSING": "Pro Santé Connect returnerte ingen identitet. Prøv igjen."
+		},
+		"start": {
+			"title": "Overta siden deres",
+			"lead": "En overtakelse gjelder én virksomhets side, aldri et navn.",
+			"recordHeading": "Siden dere vil overta",
+			"unknownProfession": "Helsevirksomhet",
+			"viewPage": "Se den offentlige siden",
+			"contestTitle": "Denne siden har allerede en bekreftet eier",
+			"contestBody": "Hvis det er virksomhetens side (for eksempel fordi dere har mistet tilgangen til kontoen), kan dere likevel overta den: en administrator går gjennom dokumentet og avgjør saken. Å gjenopprette en konto krever alltid en ny kontroll.",
+			"confirm": "Dette er vår virksomhet: start overtakelsen",
+			"goToPage": "Gå til siden vår",
+			"findHeading": "Finn virksomhetens side",
+			"notFound": "Ingen offentlig side har dette organisasjonsnummeret ennå.",
+			"rppsLabel": "Organisasjonsnummer eller sidens adresse",
+			"rppsHint": "Ni sifre på slutten av sidens adresse, for eksempel 910000039 i apercura.org/no/virksomhet/eksempel-legesenter-910000039. Dere kan også lime inn hele adressen.",
+			"find": "Finn siden vår",
+			"searchHint": "Dere kan også søke etter siden med navnet:",
+			"searchLink": "søk i katalogen",
+			"howHeading": "Slik kontrollerer vi at det er dere",
+			"factorNote": "Kontoen har allerede en andre faktor: den kreves før en overtakelse, og den beskytter siden fra da av.",
+			"contactLink": "Får dere ikke overtatt siden? Kontakt oss",
+			"optOutLink": "Gjelder siden dere, og vil dere heller ikke vises offentlig? Start her",
+			"identifierLabel": "Organisasjonsnummer"
+		},
+		"methods": {
+			"psc": {
+				"title": "Pro Santé Connect",
+				"short": "Pro Santé Connect",
+				"summary": "Med e-CPS-appen eller CPS-kortet. Bekreftet med en gang, og nettbestilling kan åpnes straks.",
+				"lead": "Logg inn med e-CPS-appen eller CPS-kortet. Siden bekreftes så snart identiteten stemmer med sidens nummer.",
+				"action": "Fortsett med Pro Santé Connect",
+				"hint": "Dere forlater Apercura for Pro Santé Connect-siden, og kommer så tilbake hit.",
+				"done": "Pro Santé Connect bekreftet identiteten."
+			},
+			"registry_email": {
+				"title": "Virksomhetens e-post",
+				"short": "E-post fra registeret",
+				"summary": "En lenke sendt til e-postadressen registeret publiserer for virksomheten. Bekreftet så snart dere åpner den; nettbestilling åpnes 7 dager senere.",
+				"lead": "Vi sender en lenke til {email}, adressen registeret publiserer for virksomheten. Åpne den og bekreft.",
+				"action": "Send lenken",
+				"resend": "Send den igjen",
+				"sent": "Lenken er sendt. Den virker i 24 timer.",
+				"done": "Virksomhetens e-postkasse bekreftet overtakelsen."
+			},
+			"document": {
+				"title": "Et dokument og en telefonsamtale",
+				"short": "Dokument",
+				"summary": "Et dokument som viser at dere driver virksomheten eller handler på dens vegne: en firmaattest fra Brønnøysundregistrene, eller en fullmakt på virksomhetens brevark. Et medlem av teamet vårt går gjennom det, vanligvis innen 48 timer.",
+				"lead": "Send et dokument som viser at dere driver virksomheten eller handler på dens vegne: en firmaattest fra Brønnøysundregistrene, eller en fullmakt på virksomhetens brevark. Det krypteres før det lagres, og slettes 30 dager etter avgjørelsen."
+			},
+			"phone_callback": {
+				"title": "Telefonoppringning",
+				"short": "Oppringning",
+				"lead": "Under kontrollen ringer et medlem av teamet vårt virksomheten på {phone}, nummeret i registeret (aldri et nummer dere gir oss). Den som svarer, leser opp koden som vises her.",
+				"action": "Vis koden min",
+				"newCode": "Vis en ny kode",
+				"hint": "Vis den når dere er i virksomheten, eller gi den til den som svarer i telefonen der. En ny kode opphever den forrige.",
+				"codeLabel": "Kode som skal leses opp",
+				"codeHint": "La den stå på skjermen eller skriv den ned: av sikkerhetshensyn vises den bare nå.",
+				"done": "Telefonoppringningen bekreftet overtakelsen."
+			}
+		},
+		"check": {
+			"passed": "Fullført",
+			"failed": "Mislyktes",
+			"pending": "Pågår",
+			"notStarted": "Ikke startet",
+			"claim": {
+				"open": "Pågår",
+				"in_review": "Til kontroll",
+				"verified": "Bekreftet",
+				"rejected": "Avslått",
+				"withdrawn": "Trukket tilbake",
+				"superseded": "Trukket tilbake etter en innsigelse"
+			}
+		},
+		"workspace": {
+			"title": "Overtakelse av {name}",
+			"lead": {
+				"open": "Vis med en av metodene nedenfor at dere handler på vegne av denne virksomheten.",
+				"in_review": "Overtakelsen er til kontroll.",
+				"verified": "Neste steg: fullfør siden.",
+				"rejected": "Denne overtakelsen ble ikke godtatt.",
+				"withdrawn": "Denne overtakelsen ble trukket tilbake.",
+				"superseded": "Denne overtakelsen ble trukket tilbake etter en innsigelse."
+			}
+		},
+		"documents": {
+			"kind": {
+				"cps_card": "Fullmakt på virksomhetens brevark",
+				"ordre_attestation": "Firmaattest fra Brønnøysundregistrene"
+			},
+			"kindLabel": "Type dokument",
+			"add": "Velg en fil",
+			"hint": "PDF, JPEG, PNG eller WebP, høyst 10 MB. Opptil 4 filer.",
+			"kilobytes": "kB"
+		},
+		"review": {
+			"title": "Send til kontroll",
+			"lead": "En administrator kontrollerer dokumentet og ringer virksomheten. Dere får svar på e-post innen 48 timer på virkedager.",
+			"submit": "Send til kontroll",
+			"notYet": "Legg ved et dokument først."
+		},
+		"withdraw": "Trekk tilbake denne overtakelsen",
+		"status": {
+			"verified": "Siden er bekreftet",
+			"bookingDelay": "Ventetiden på 7 dager før nettbestilling slutter {date}.",
+			"continue": "Fullfør siden",
+			"in_review": "Overtakelsen er til kontroll",
+			"contestReview": "Denne siden hadde allerede en bekreftet eier: en administrator avgjør saken.",
+			"reviewBody": "Ha koden for oppringningen for hånden: vi ringer virksomheten på nummeret i registeret.",
+			"rejected": "Denne overtakelsen ble ikke godtatt",
+			"reason": "Begrunnelse: {reason}",
+			"withdrawn": "Denne overtakelsen ble trukket tilbake",
+			"superseded": "Denne overtakelsen ble trukket tilbake etter en innsigelse",
+			"contestTitle": "Denne siden har allerede en bekreftet eier",
+			"contestBody": "En administrator avgjør saken, med et dokument og en oppringning.",
+			"verifiedBadge": "Bekreftet side"
+		},
+		"emailLink": {
+			"title": "Bekreft overtakelsen",
+			"lead": "Denne lenken ble sendt til e-postadressen det offentlige registeret publiserer for virksomheten.",
+			"reading": "Leser lenken …",
+			"invalidTitle": "Denne lenken virker ikke lenger",
+			"invalidBody": "Den er utløpt (den virker i 24 timer) eller allerede brukt. Virksomheten kan sende en ny fra overtakelsen sin.",
+			"tooMany": "For mange forsøk. Vent en time, og prøv igjen.",
+			"doneTitle": "Overtakelsen er bekreftet",
+			"doneBody": "Virksomheten kan nå logge inn og fullføre siden.",
+			"goToSpace": "Gå til virksomhetsområdet",
+			"body": "Hvis denne virksomheten ba om å forvalte Apercura-siden sin, bekreft det. Ellers kan dere lukke denne siden: ingenting endres.",
+			"confirm": "Bekreft overtakelsen",
+			"pending": "Vent litt"
+		},
+		"withdrawDialog": {
+			"title": "Trekke tilbake denne overtakelsen?",
+			"body": "Overtakelsen avsluttes for godt: bevisene teller ikke lenger, og dokumentene slettes om 30 dager. Dere kan åpne en ny overtakelse senere og starte kontrollen på nytt.",
+			"confirm": "Trekk tilbake overtakelsen",
+			"cancel": "Behold overtakelsen"
+		},
+		"identifiers": {
+			"NO-ORGNR": "Organisasjonsnummer"
+		}
+	},
+	"Onboarding": {
+		"metaTitle": "Sett opp siden · Apercura",
+		"title": "Sett opp siden",
+		"lead": "Tre steg til en fullstendig side for {name}.",
+		"stepsLabel": "Steg",
+		"stepNumber": "Steg {n} av {total}:",
+		"continue": "Fortsett",
+		"pending": "Vent litt",
+		"publishFailed": "Siden kunne ikke publiseres. Prøv igjen om et øyeblikk.",
+		"fields": {
+			"name": "Navn",
+			"profession": "Type virksomhet"
+		},
+		"steps": {
+			"check": {
+				"label": "Kontroller de importerte opplysningene",
+				"title": "Kontroller de importerte opplysningene",
+				"lead": "Siden bygger på Enhetsregisteret. Kontroller virksomhetens navn, type og adresse.",
+				"sites": "Adresser",
+				"unnamed": "Adresse uten navn",
+				"hidden": "Skjult",
+				"registryNote": "Noe feil? Den varige rettelsen gjøres i Enhetsregisteret (meld endringen til Brønnøysundregistrene via Altinn); siden følger etter ved neste ukentlige import. I sideredigeringen kan dere skjule eller legge til en adresse."
+			},
+			"publish": {
+				"label": "Publiser",
+				"title": "Publiser siden",
+				"lead": "Når dere publiserer, vises presentasjonen, språkene og den praktiske informasjonen på den offentlige siden. Dere kan endre eller skjule dem når som helst.",
+				"already": "Siden er publisert. Hver endring dere lagrer, er på nett med en gang.",
+				"edit": "Rediger siden",
+				"action": "Publiser siden",
+				"shareLead": "Gjør siden kjent: en lenke, en QR-kode og en plakat til venterommet ligger klare.",
+				"shareLink": "Åpne delingssettet",
+				"statsLink": "Se statistikken for siden"
+			}
+		}
+	},
+	"Editor": {
+		"photo": {
+			"lead": "Valgfritt. Et bilde av virksomheten, eller av inngangen."
+		},
+		"presentation": {
+			"headlineHint": "Én linje under virksomhetstypen, høyst {max} tegn."
+		},
+		"contact": {
+			"websiteHint": "Virksomhetens nettsted, begynner med https://",
+			"showPhone": "Vis virksomhetens telefonnummer",
+			"showPhoneHint": "Når det er skjult, foreslår ikke siden lenger å ringe virksomheten."
+		},
+		"sites": {
+			"registryNote": "Er en adresse fra registeret feil? Rettelsen gjøres i Enhetsregisteret, via Altinn; siden følger etter ved neste import.",
+			"phoneHint": "Virksomhetens nummer, slik det vises på siden."
+		},
+		"issues": {
+			"postcode": "Et norsk postnummer har 4 sifre."
+		}
+	},
+	"Gdpr": {
+		"about": "Om siden til",
+		"rpps": "Sidens organisasjonsnummer",
+		"rppsHint": "Slutten av sidens adresse, for eksempel 910000039 i apercura.org/no/virksomhet/eksempel-legesenter-910000039, eller hele adressen.",
+		"pending": "Vent litt",
+		"errors": {
+			"tooMany": "For mange forespørsler fra denne tilkoblingen. Prøv igjen om en time.",
+			"notFound": "Ingen side har dette organisasjonsnummeret.",
+			"claimed": "Denne siden forvaltes av virksomheten: bare virksomheten kan fjerne den, fra sitt område.",
+			"invalid": "Sjekk skjemaet: et felt mangler eller er for langt.",
+			"generic": "Noe gikk galt. Prøv igjen om et øyeblikk."
+		},
+		"report": {
+			"metaTitle": "Meld fra om en feil · Apercura",
+			"title": "Meld fra om en feil",
+			"lead": "Fortell oss hva som er feil på denne siden. Meldingen krypteres og leses bare av Apercura-teamet.",
+			"doneTitle": "Takk, meldingen er mottatt",
+			"doneBody": "Vi sjekker den. Opplysninger fra registeret rettes ved kilden, i Enhetsregisteret; vi gir beskjed hvis du har oppgitt en adresse.",
+			"kind": "Hva er feil?",
+			"kinds": {
+				"wrong_info": "Feil opplysning (adresse, telefon, navn)",
+				"retired": "Virksomheten er nedlagt",
+				"deceased": "Virksomheten finnes ikke lenger",
+				"impersonation": "Noen bruker denne siden i virksomhetens navn"
+			},
+			"message": "Detaljer",
+			"messageHint": "Hva som er feil, og hva som er riktig hvis du vet det.",
+			"contact": "E-postadressen din (valgfritt)",
+			"contactHint": "Bare for å svare deg.",
+			"privacy": "Ikke skriv noen helseopplysninger.",
+			"submit": "Send meldingen"
+		},
+		"removal": {
+			"metaTitle": "Be om å fjerne en side · Apercura",
+			"title": "Be om å fjerne denne siden",
+			"lead": "Etter personvernforordningen artikkel 21 kan du protestere mot at en side om deg publiseres. Den skjules så snart vi mottar forespørselen, og slettes etter en enkel kontroll.",
+			"doneTitle": "Siden er skjult",
+			"doneBody": "Den vises, indekseres og listes ikke lenger. Vi kontrollerer forespørselen og svarer på e-post innen høyst én måned. Når den er bekreftet, slettes siden for godt og kommer ikke tilbake med oppdateringene av registeret.",
+			"contact": "E-postadressen din",
+			"contactHint": "For å bekrefte forespørselen med deg. Den krypteres og brukes ikke til noe annet.",
+			"message": "Melding (valgfritt)",
+			"messageHint": "Alt som hjelper oss å kontrollere forespørselen.",
+			"confirm": "Siden gjelder meg eller virksomheten jeg representerer",
+			"privacy": "En slettet side kommer ikke tilbake med neste import av registeret.",
+			"submit": "Skjul og fjern siden",
+			"claimedTitle": "Denne siden forvaltes av virksomheten",
+			"claimedBody": "Bare innehaveren kan fjerne den, fra sideredigeringen i sitt område: siden forsvinner da med en gang og kommer ikke tilbake med oppdateringene av registeret.",
+			"claimedLink": "Fjern siden vår fra virksomhetsområdet",
+			"alreadyTitle": "En forespørsel om fjerning blir kontrollert",
+			"alreadyBody": "Siden er allerede skjult."
+		},
+		"contact": {
+			"metaTitle": "Dette er vår virksomhet · Apercura",
+			"title": "Dette er vår virksomhet",
+			"lead": "Får dere ikke overtatt virksomhetens side med et dokument? Gi oss kontaktopplysningene deres: et medlem av Apercura-teamet tar kontakt for å kontrollere at dere handler på vegne av virksomheten, og hjelper dere.",
+			"patientsTitle": "Dette skjemaet er bare for virksomheten på denne siden",
+			"patientsBody": "Det er ikke for å bestille time eller nå virksomheten: bruk kontaktopplysningene på siden til det.",
+			"claimFirst": "Med et dokument som viser at dere handler på vegne av virksomheten, går overtakelsen raskere:",
+			"claimFirstLink": "overta denne siden",
+			"rpps": "Sidens organisasjonsnummer",
+			"rppsHint": "Nummeret til siden du kom fra. Det kan ikke endres.",
+			"name": "Fullt navn",
+			"email": "E-postadressen din i jobben",
+			"emailHint": "For å svare deg. Vi sender også en bekreftelse.",
+			"phone": "Telefonnummeret ditt (valgfritt)",
+			"phoneHint": "Hvis du heller vil bli ringt opp.",
+			"message": "Meldingen din",
+			"messageHint": "Fortell oss hvorfor overtakelse på nett ikke fungerer for dere.",
+			"privacy": "Opplysningene og meldingen krypteres, leses bare av Apercura-teamet for å svare deg, og slettes 12 måneder etter siste kontakt. Ikke skriv noen helseopplysninger.",
+			"submit": "Send forespørselen",
+			"doneTitle": "Forespørselen er mottatt",
+			"doneBody": [
+				"Et medlem av Apercura-teamet tar kontakt på e-post eller telefon for å kontrollere at dere handler på vegne av virksomheten, og hjelper dere så å overta siden.",
+				"En bekreftelse er nettopp sendt til adressen du oppga."
+			],
+			"claimedTitle": "Denne siden forvaltes allerede av virksomheten",
+			"claimedBody": "Innehaveren er kontrollert. Hvis det er deres side og dere ikke lenger har tilgang til den, åpne en overtakelse: teamet går gjennom den.",
+			"claimedLink": "Overta denne siden",
+			"withheldTitle": "Denne siden er skjult",
+			"withheldBody": "En forespørsel om fjerning blir kontrollert.",
+			"errors": {
+				"proof": "Robotkontrollen ble ikke fullført. Prøv igjen om et øyeblikk.",
+				"claimed": "Denne siden forvaltes allerede av virksomheten: åpne en overtakelse."
+			}
+		}
+	},
+	"LegalNoticeNo": {
+		"metaTitle": "Juridisk informasjon (Norge) · Apercura",
+		"metaDescription": "Juridisk informasjon for Apercuras norske sider: tjenesteyteren, register og organisasjonsnummer, adresse og kontaktopplysninger, e-post inkludert (ehandelsloven § 8).",
+		"title": "Juridisk informasjon",
+		"lead": "Hvem som står bak Apercuras norske sider (apercura.org/no): opplysningene ehandelsloven § 8 krever at en tjenesteyter alltid gir.",
+		"sections": {
+			"provider": {
+				"heading": "Tjenesteyter (ehandelsloven § 8)",
+				"body": [
+					"Apercuras norske sider leveres av virksomheten nedenfor: navn, adresse, e-postadresse og de andre opplysningene som gjør det mulig å komme i direkte forbindelse med den, registeret den er registrert i og organisasjonsnummeret, og om den er merverdiavgiftspliktig. Den driver katalogen og svarer for innholdet.",
+					"Tjenesteyteren er etablert i en annen EØS-stat: etter ehandelsloven § 5 følger tjenesten reglene i den staten innenfor det koordinerte regelområdet, og denne siden gir i tillegg opplysningene norsk lov krever."
+				]
+			},
+			"service": {
+				"heading": "Tjenesten",
+				"body": [
+					"En gratis katalog over Norges sykehus, tjenester innen psykisk helsevern og rusbehandling, legekontorer, legevakter, legespesialister, tannklinikker, sykehjem og apotek, bygget på virksomhetene som Brønnøysundregistrenes Enhetsregister fører under en næringskode for helse eller apotek, uten reklame, med et område der en virksomhet kan fullføre sin egen side. Sidene er virksomheter, aldri helsepersonellet som arbeider i dem. Ingen timer bestilles via Apercura i Norge."
+				]
+			},
+			"marketing": {
+				"heading": "Saklige sider",
+				"body": [
+					"Helsepersonelloven § 13 krever at markedsføring av helse- og omsorgstjenester, og av virksomheter som yter slike tjenester, skal være forsvarlig, nøktern og saklig. Sidene viser fakta fra offentlige registre (navn, adresse, telefonnummer, organisasjonsnummer, registrert næring) i en nøytral rekkefølge, uten vurderinger, omtaler, reklame eller betalt plassering. En virksomhet som fullfører siden sin, er bundet av samme regel."
+				]
+			},
+			"editor": {
+				"heading": "Ansvarlig for innholdet",
+				"body": [
+					"Personen nedenfor er ansvarlig for det tjenesteyteren publiserer. Opplysninger en virksomhet legger til på sin egen side, er virksomhetens eget ansvar; som vert for opplysninger fra brukerne svarer tjenesteyteren for dem bare på vilkårene i ehandelsloven § 18 og forordningen om digitale tjenester (forordning (EU) 2022/2065, artikkel 6)."
+				]
+			},
+			"liability": {
+				"heading": "Innholdet på sidene",
+				"body": [
+					"Katalogen bygger på et offentlig register (Enhetsregisteret) og plasseres med Kartverkets fylker, kommuner og adresser. En virksomhets næringskode er det virksomheten selv har meldt til registeret, ikke en tillatelse eller godkjenning: katalogen kan være ufullstendig, utdatert eller vise en enhet som ikke lenger tar imot pasienter. Sjekk opplysningene med virksomheten før du drar dit. Hver side forteller hvordan du melder fra om en feil."
+				]
+			},
+			"ip": {
+				"heading": "Kode og data",
+				"body": [
+					"Apercuras kildekode er publisert under AGPL-3.0-lisensen. Registerets data brukes under Norsk lisens for offentlige data (NLOD 2.0), Kartverkets adresser og administrative inndelinger under Creative Commons Navngivelse 4.0 (CC BY 4.0). Datasiden viser hver kilde med krediteringen den krever."
+				]
+			},
+			"review": {
+				"heading": "Status for denne teksten",
+				"body": [
+					"Denne teksten er et utkast, skrevet før den juridiske enheten ble opprettet. Den skal gjennomgås av en advokat med rett til å praktisere i Norge før de norske sidene lanseres."
+				]
+			}
+		},
+		"fields": {
+			"name": "Navn",
+			"legalForm": "Organisasjonsform",
+			"registration": "Register og organisasjonsnummer",
+			"address": "Adresse",
+			"phone": "Telefon",
+			"email": "E-postadresse",
+			"vatId": "MVA-nummer",
+			"editor": "Ansvarlig for innholdet"
+		},
+		"dataLink": "Data og kilder"
+	},
+	"PrivacyNo": {
+		"metaTitle": "Personvern (Norge) · Apercura",
+		"metaDescription": "Hvilke opplysninger Apercuras norske sider behandler, hvor de kommer fra, hvorfor og hvor lenge, og rettighetene dine, protest inkludert (GDPR art. 13, 14, 21).",
+		"title": "Personvern",
+		"lead": "Hvilke opplysninger Apercuras norske sider behandler, hvor de kommer fra, hvorfor, hvor lenge og av hvem, og hvordan du bruker rettighetene dine etter personvernforordningen (GDPR), som gjelder i Norge gjennom EØS-avtalen og personopplysningsloven.",
+		"sections": {
+			"controller": {
+				"heading": "Hvem som er ansvarlig",
+				"body": [
+					"Tjenesteyteren som er nevnt i den juridiske informasjonen, er behandlingsansvarlig for katalogen, for virksomhetskontoene, for overtakelsene og for forespørslene som sendes via nettstedet."
+				]
+			},
+			"directory": {
+				"heading": "Katalogen: opplysninger om virksomheter",
+				"body": [
+					"Opplysninger: virksomhetens navn, adressen der den holder til, telefonnummeret, organisasjonsnummeret og næringskoden den har registrert, slik Enhetsregisteret publiserer dem, og for en virksomhet som drives av et offentlig organ eller en stiftelse, navnet på dette organet. En virksomhet som overtar siden sin, kan legge til en presentasjon, språk, et bilde og åpningstider.",
+					"Aldri lagret, selv om registeret publiserer dem: underenhetene til enkeltpersonforetak, som bærer innehaverens navn; virksomheter som er oppkalt etter en lege eller tannlege («Lege Ola Nordmann AS»); c/o-linjene i en adresse; e-postadresser, mobilnumre og nettsteder; antall ansatte; registerets roller (daglig leder, styremedlemmer, eiere). Et telefonnummer som registeret oppgir for mer enn tre virksomheter, er et sentralbord og vises ikke.",
+					"Identifikator: en side slutter med virksomhetens organisasjonsnummer i registeret (for eksempel 910000039), aldri en persons fødselsnummer.",
+					"Formål: å la allmennheten finne et sykehus, et legekontor, en tannklinikk, et sykehjem eller et apotek, hvor det ligger og hvordan man når det. Behandlingsgrunnlag: berettiget interesse (personvernforordningen artikkel 6 nr. 1 bokstav f), vurdert nedenfor.",
+					"Lagringstid: så lenge registeret fører virksomheten under en av næringskodene som leses. En side forsvinner når registeret ikke lenger fører den, når virksomheten er nedlagt eller når eieren er konkurs eller under avvikling; en side som er fjernet etter en protest, publiseres aldri igjen.",
+					"Informasjon: opplysningene kommer ikke fra virksomhetene selv (personvernforordningen artikkel 14). Å skrive til hver av dem ville kreve en uforholdsmessig stor innsats (artikkel 14 nr. 5 bokstav b); denne erklæringen, datasiden og en merknad på hver side gjør informasjonen offentlig."
+				]
+			},
+			"people": {
+				"heading": "Virksomheter, ikke personer",
+				"body": [
+					"En norsk side er en virksomhet, aldri en persons profil: helsepersonellet som arbeider der, vises ikke, og registerets roller leses aldri. Norsk lisens for offentlige data omfatter ikke personopplysninger uten lovlig behandlingsgrunnlag for den videre behandlingen (NLOD 2.0 punkt 3), enda en grunn til at katalogen utelater enkeltpersonforetak, som bærer innehaverens navn, og virksomheter som er oppkalt etter en lege eller tannlege. Navnet på et selskap kan likevel inneholde en persons navn; den det gjelder, kan protestere, og siden fjernes.",
+					"Ingenting annet om noen person samles inn: ikke fødselsnummer, ikke privatadresse, ikke e-post, ingen vurderinger og ingen omtaler. Katalogen behandler ingen pasientopplysninger og ingen helseopplysninger."
+				]
+			},
+			"sources": {
+				"heading": "Kilder",
+				"body": [
+					"Virksomhetene kommer fra Brønnøysundregistrenes Enhetsregister, publisert som åpne data under Norsk lisens for offentlige data (NLOD 2.0); eiernes organisasjonsform, som leses for å utelate enkeltpersonforetak, fra samme register. Fylker og kommuner kommer fra Kartverkets administrative inndelinger, og adressepunktene fra matrikkelens adresser (Matrikkelen – Adresse), begge under CC BY 4.0. Hver kilde krediteres slik den ber om:"
+				]
+			},
+			"balancing": {
+				"heading": "Vurdering av berettiget interesse",
+				"body": [
+					"Formål: pasienter trenger å vite hvilke sykehus, legekontorer, tannklinikker, sykehjem og apotek som finnes hvor, og hvordan de når dem, et behov staten allerede dekker ved å publisere registeret til allmenn bruk.",
+					"Nødvendighet: bare virksomhetens opplysninger fra registeret vises, opplysninger registeret uansett publiserer, og færre av dem: ingen personer, ingen e-post, ingen mobilnumre, ingen roller; ingenting om privatlivet, ingen vurderinger, ingen omtaler.",
+					"Avveining: en yrkesmessig sammenheng, saklige opplysninger slik helsepersonelloven § 13 krever, en nøytral rekkefølge, ingen reklame, et minimum av registerets felt, en protest som skjuler siden straks og hindrer at den kommer tilbake, rettelser ved kilden, og sider som følger hver oppdatering av registeret. Et selskap eller et offentlig organ som står i et offentlig register under en næringskode for helse, forventer å bli funnet i en katalog som gjengir disse opplysningene. Etter en samlet vurdering veier pasientenes interesser tyngst, og den en side gjelder, kan protestere uten å oppgi grunn."
+				]
+			},
+			"accounts": {
+				"heading": "Virksomhetskontoer og overtakelser",
+				"body": [
+					"Opplysninger: e-postadresse, navn, passord (lagret som hash), andre autentiseringsfaktor, dokumentene som sendes for å overta en side (bevis på at den som overtar, driver virksomheten eller handler på dens vegne) og teammedlemmer.",
+					"Formål: å forvalte kontoen og kontrollere at en side overtas av riktig virksomhet. Behandlingsgrunnlag: oppfyllelse av vilkårene for bruk (artikkel 6 nr. 1 bokstav b) og den berettigede interessen i å sikre tjenesten (artikkel 6 nr. 1 bokstav f).",
+					"Lagringstid: kontoen beholdes til den slettes; dokumentasjonen, kryptert, slettes 30 dager etter avgjørelsen."
+				]
+			},
+			"requests": {
+				"heading": "Feilmeldinger, protester og kontaktforespørsler",
+				"body": [
+					"Opplysninger: meldingen, e-postadressen for kontakt når den oppgis, og siden det gjelder; for en forespørsel «dette er vår virksomhet» også navn og telefonnummer. Fritekst krypteres.",
+					"Formål: å rette feil, gjennomføre protester og hjelpe en virksomhet som ikke kan overta siden sin på nett. Behandlingsgrunnlag: berettiget interesse (artikkel 6 nr. 1 bokstav f) og retten til å protestere (artikkel 21).",
+					"Lagringstid: en feilmelding slettes 6 måneder etter at den er lukket, en avslått protest ett år etter avgjørelsen, en kontaktforespørsel 12 måneder etter siste kontakt. Når en protest er bekreftet, eller innehaveren av en overtatt side fjerner den, slettes siden og opplysningene om den straks, protesten inkludert; bare en registrering av fjerningen beholdes (sidens identifikator, landet, grunnen, hvem som registrerte den og når), slik at siden aldri publiseres igjen."
+				]
+			},
+			"technical": {
+				"heading": "Tekniske data og informasjonskapsler",
+				"body": [
+					"Bare informasjonskapsler som er strengt nødvendige for tjenesten, settes: økten til innloggede virksomheter og valgt språk. Ingen informasjonskapsler for reklame eller måling av publikum, ingen sporing.",
+					"For å begrense misbruk omdannes IP-adresser med en nøkkelbasert funksjon før de telles, og lagres aldri som de er; virksomhetenes økter registrerer en avkortet IP-adresse. Visninger av overtatte sider telles uten informasjonskapsel eller identifikator, og bare sidens innehaver ser dem."
+				]
+			},
+			"recipients": {
+				"heading": "Mottakere og databehandlere",
+				"body": [
+					"Opplysningene selges ikke, leies ikke ut og brukes aldri til reklame. Bare tjenesteyterens team og databehandlerne nedenfor mottar dem, hver for sin del, etter en avtale som oppfyller personvernforordningen artikkel 28. Opplysningene lagres i EØS. Kart lastes fra en kartflisserver, som mottar den besøkendes IP-adresse slik ethvert nettsted gjør."
+				]
+			},
+			"transfers": {
+				"heading": "Overføring ut av EØS",
+				"body": [
+					"Opplysninger overføres ut av EØS bare med garantiene i personvernforordningen kapittel V (en beslutning om tilstrekkelig beskyttelsesnivå eller standard personvernbestemmelser). En endring av databehandler varsles her før den trer i kraft."
+				]
+			},
+			"automated": {
+				"heading": "Automatiserte avgjørelser",
+				"body": [
+					"Ingen avgjørelse om deg treffes bare automatisk. En overtakelse avgjøres av en person, som leser dokumentene."
+				]
+			},
+			"rights": {
+				"heading": "Rettighetene dine",
+				"body": [
+					"Du kan be om innsyn i opplysningene om deg, om retting eller sletting, om begrenset behandling, om å få dem i et flyttbart format og protestere mot behandlingen. Skriv til adressen nedenfor; du får svar innen én måned.",
+					"Du kan også klage til Datatilsynet, Norges tilsynsmyndighet (personvernforordningen artikkel 77), eller til tilsynsmyndigheten i landet der du bor eller arbeider. Et vedtak fra Datatilsynet kan påklages til Personvernnemnda."
+				]
+			},
+			"objection": {
+				"heading": "Protestere mot en side (personvernforordningen artikkel 21)",
+				"body": [
+					"Den en side gjelder, kan når som helst protestere mot at den publiseres, uten å oppgi grunn. Er siden ikke overtatt, er et skjema nok: siden skjules så snart forespørselen kommer, slettes etter en enkel kontroll, og oppdateringene av registeret publiserer den aldri igjen. Er den overtatt, fjerner innehaveren den fra sitt område."
+				]
+			},
+			"changes": {
+				"heading": "Endringer i denne erklæringen",
+				"body": [
+					"Denne erklæringen er et utkast. Den skal gjennomgås av en advokat med rett til å praktisere i Norge og av personvernombudet; hver versjon dateres."
+				]
+			}
+		},
+		"fields": {
+			"controller": "Behandlingsansvarlig",
+			"address": "Adresse",
+			"email": "Kontakt for forespørsler",
+			"dpo": "Personvernombud",
+			"effectiveDate": "Gjelder fra",
+			"hostingProvider": "Driftsleverandør (databehandler)",
+			"smtp": "Utsending av e-post (databehandler)",
+			"authority": "Tilsynsmyndighet"
+		},
+		"objectLink": "Slik protesterer du mot en side",
+		"authorityLink": "Datatilsynet",
+		"authorityAddress": "Datatilsynet, Postboks 458 Sentrum, 0105 Oslo, tlf. 22 39 69 00"
+	},
+	"TermsNo": {
+		"metaTitle": "Vilkår for bruk (Norge) · Apercura",
+		"metaDescription": "Vilkår for bruk av Apercuras norske sider: en gratis, saklig katalog over sykehus, legekontorer, sykehjem og apotek fra et offentlig register, uten timebestilling.",
+		"title": "Vilkår for bruk",
+		"lead": "Reglene for bruk av Apercuras norske sider, for allmennheten og for virksomhetene.",
+		"sections": {
+			"service": {
+				"heading": "Tjenesten",
+				"body": [
+					"Apercura viser gratis de virksomhetene Enhetsregisteret fører som sykehus, psykisk helsevern og rusbehandling, legekontorer og legevakter, legespesialister, tannklinikker, sykehjem og apotek. Katalogen viser virksomheter, ikke helsepersonellet som arbeider i dem. Den er bare en katalog: ingen timer bestilles via Apercura i Norge. Den drives av tjenesteyteren som er nevnt i den juridiske informasjonen.",
+					"Det kreves ingen konto for å bruke katalogen. Ved å bruke nettstedet godtar du disse vilkårene."
+				]
+			},
+			"content": {
+				"heading": "Hva sidene inneholder",
+				"body": [
+					"Sidene viser saklige opplysninger fra et offentlig register, slik det publiserer dem, i en nøytral rekkefølge, uten vurderinger, omtaler, reklame eller betalt plassering, slik helsepersonelloven § 13 krever av all markedsføring av helsetjenester.",
+					"En virksomhets næringskode er virksomhetens egen melding til registeret, ikke en godkjenning; opplysningene kan være ufullstendige eller utdaterte, og en adresse som matrikkelen ikke kjenner, vises ved postnummeret, ikke på den nøyaktige adressen på kartet: sjekk opplysningene med virksomheten før du drar dit. Hver side forteller hvordan du melder fra om en feil."
+				]
+			},
+			"health": {
+				"heading": "Ikke medisinske råd",
+				"body": [
+					"Apercura gir ikke medisinske råd og er ingen nødtjeneste. Ved akutt sykdom eller skade, ring 113. Legevakten svarer på 116 117."
+				]
+			},
+			"providers": {
+				"heading": "For virksomheter",
+				"body": [
+					"Det er gratis å overta en side. Det krever et dokument som viser at den som overtar, driver virksomheten eller handler på dens vegne, og som kontrolleres av en person før siden overleveres.",
+					"Innehaveren av en side er ansvarlig for opplysningene hun eller han legger til. De skal være forsvarlige, nøkterne og saklige (helsepersonelloven § 13), riktige og oppdaterte; de skal ikke nevne helsepersonell som ikke har samtykket."
+				]
+			},
+			"removal": {
+				"heading": "Fjerne en side",
+				"body": [
+					"Den en side gjelder, kan når som helst be om at den fjernes: datasiden forklarer hvordan. En overtatt side kan bare fjernes av innehaveren."
+				]
+			},
+			"liability": {
+				"heading": "Ansvar",
+				"body": [
+					"Tjenesteyteren gjør sitt beste for å holde tjenesten tilgjengelig og riktig, men kan ikke garantere det. Den er ikke ansvarlig for opplysningene virksomhetene legger til på sidene sine. Disse grensene presiseres under den juridiske gjennomgangen."
+				]
+			},
+			"ip": {
+				"heading": "Kode og data",
+				"body": [
+					"Kildekoden er publisert under AGPL-3.0-lisensen. Registerets data brukes under Norsk lisens for offentlige data (NLOD 2.0): alle kan bruke dem videre, fra registeret eller fra disse sidene, under den lisensen og med dens kreditering. Kartverkets adresser og administrative inndelinger er under CC BY 4.0."
+				]
+			},
+			"law": {
+				"heading": "Lovvalg og tvister",
+				"body": [
+					"Lovvalget presiseres under den juridiske gjennomgangen; de ufravikelige forbrukerreglene i landet der du bor, gjelder alltid. Ved en tvist, skriv først til kontaktadressen for å finne en minnelig løsning."
+				]
+			}
+		},
+		"fields": {
+			"publisher": "Tjenesteyter",
+			"effectiveDate": "Gjelder fra",
+			"contact": "Kontakt"
+		}
+	},
+	"AccessibilityNo": {
+		"metaTitle": "Tilgjengelighet (Norge) · Apercura",
+		"metaDescription": "Tilgjengeligheten til Apercuras norske sider: målet WCAG 2.2 AA, hva som er kontrollert, hva som gjenstår, og hvordan du melder fra om et problem.",
+		"title": "Tilgjengelighet",
+		"lead": "Apercura er laget for alle, også eldre og svaksynte. Denne erklæringen sier hvor de norske sidene står.",
+		"sections": {
+			"scope": {
+				"heading": "Omfang",
+				"body": [
+					"Forskrift om universell utforming av IKT-løsninger krever at private virksomheters nettløsninger oppfyller WCAG 2.0 på nivå A og AA (§ 4); tilgjengelighetserklæringen i § 4e gjelder offentlige virksomheter, så denne erklæringen er frivillig. Apercuras tjenesteyter sikter høyere på hver side: WCAG 2.2 nivå AA (EN 301 549). Tilsynet for universell utforming av IKT, en del av Digitaliseringsdirektoratet, fører tilsyn med disse reglene."
+				]
+			},
+			"status": {
+				"heading": "Hvor nettstedet står",
+				"body": [
+					"De norske sidene deler koden og testene med de andre landenes sider. Nettstedet oppfyller delvis WCAG 2.2 AA: dette bygger på en egenvurdering og automatiske tester, ennå ikke på en full revisjon, som pågår."
+				]
+			},
+			"tests": {
+				"heading": "Hva som er kontrollert",
+				"list": [
+					"Automatiske axe-core-kontroller (regler for WCAG 2.0, 2.1 og 2.2, nivå A og AA) på hver sidetype, ved hver utgivelse.",
+					"Bruk med bare tastatur, med synlig fokus.",
+					"Brødtekst på minst 18 px, klikkflater på minst 44 px, ingenting som bare bygger på farge, ingen vannrett rulling ved 390 px."
+				]
+			},
+			"pending": {
+				"heading": "Hva som gjenstår å kontrollere",
+				"list": [
+					"En manuell gjennomgang med skjermleserne VoiceOver og NVDA, på norsk.",
+					"En full revisjon mot WCAG 2.2 AA på et utvalg sider, de norske tekstene inkludert."
+				]
+			},
+			"feedback": {
+				"heading": "Meld fra om et problem",
+				"body": [
+					"Hvis en side eller en funksjon er vanskelig å bruke, skriv til adressen nedenfor: si hvilken side og hva som stoppet deg. Vi svarer innen én måned og gir deg om nødvendig informasjonen i en annen form. Du kan også melde fra til Tilsynet for universell utforming av IKT (uutilsynet.no)."
+				]
+			}
+		},
+		"fields": {
+			"contact": "Kontakt",
+			"date": "Dato for denne erklæringen"
+		},
+		"authorityLink": "Tilsynet for universell utforming av IKT (uutilsynet.no)"
+	},
+	"DataNo": {
+		"metaTitle": "Data og kilder (Norge) · Apercura",
+		"metaDescription": "Hvor Apercuras norske sider kommer fra (Enhetsregisteret og Kartverket), under hvilken lisens, og hvordan du retter eller fjerner en side.",
+		"title": "Data og kilder",
+		"lead": "Hver norsk side bygger på et offentlig register. Her står hvor opplysningene kommer fra, under hvilken lisens og kreditering, hva som beholdes og hvorfor, når de ble oppdatert, og hvordan du retter eller fjerner en side.",
+		"status": {
+			"heading": "Siste oppdatering",
+			"body": "Brønnøysundregistrene lager de fullstendige filene for registeret hver natt; katalogen leser dem hver uke, sammen med Kartverkets adresser. En side endres bare når opplysningene endres i registeret.",
+			"importedAt": "Siste import",
+			"checkedAt": "Kildene sist kontrollert",
+			"notImported": "Den norske katalogen er ikke importert til dette nettstedet ennå.",
+			"notImportedValue": "Ikke importert ennå"
+		},
+		"sources": {
+			"heading": "Kilder",
+			"body": "Brønnøysundregistrene publiserer Enhetsregisteret under Norsk lisens for offentlige data (NLOD 2.0), Kartverket matrikkelens adresser og de administrative inndelingene under Creative Commons Navngivelse 4.0 (CC BY 4.0). Hver kreditering nedenfor gjengis ordrett.",
+			"caption": "Datakildene til den norske katalogen",
+			"columns": {
+				"source": "Kilde",
+				"use": "Brukt til",
+				"licence": "Lisens og kreditering",
+				"frequency": "Oppdatert"
+			},
+			"items": {
+				"no-brreg": {
+					"use": "Virksomheter: navn, adresser, telefonnumre, organisasjonsnumre, næringskoder; eierens organisasjonsform og status, som leses for å utelate enkeltpersonforetak og enheter under avvikling",
+					"frequency": "Hver natt, av Brønnøysundregistrene"
+				},
+				"no-adresser": {
+					"use": "Punktet for hver adresse registeret oppgir, og midtpunktet for hvert postnummer",
+					"frequency": "Løpende, av Kartverket"
+				},
+				"no-kommuner": {
+					"use": "Fylker og kommuner, og et punkt i hver kommune",
+					"frequency": "Når inndelingen endres, av Kartverket"
+				},
+				"map": {
+					"name": "Kartdata",
+					"publisher": "OpenStreetMap-bidragsytere, kartfliser fra OpenFreeMap",
+					"use": "Kartene på sidene",
+					"frequency": "Løpende"
+				}
+			},
+			"nlod": "NLOD 2.0",
+			"ccBy": "CC BY 4.0",
+			"odbl": "ODbL"
+		},
+		"licence": {
+			"heading": "Lisensen for registerets data",
+			"body": [
+				"Enhetsregisteret brukes under Norsk lisens for offentlige data, versjon 2.0 (NLOD 2.0), som lar alle kopiere, bruke og dele informasjonen, endre den og sette den sammen med annen informasjon, til ethvert formål, med krediteringen lisensen krever."
+			],
+			"list": [
+				"Navngivelse (NLOD 2.0 punkt 5): hver side som bygger på registeret, navngir Brønnøysundregistrene og lisensen, lenker til begge og sier at Apercura har endret dataene.",
+				"Personopplysninger (NLOD 2.0 punkt 3): lisensen omfatter ikke personopplysninger uten lovlig behandlingsgrunnlag for den videre behandlingen. Katalogen viser virksomheter, aldri personer: den utelater enkeltpersonforetak, som bærer innehaverens navn, og virksomheter som er oppkalt etter en lege eller tannlege, og leser aldri registerets roller.",
+				"Forsvarlig bruk (NLOD 2.0 punkt 6): sidene viser registerets fakta uten å forvrenge dem, og bruker aldri Brønnøysundregistrenes navn til å anbefale Apercura.",
+				"Kartverkets adresser og inndelinger forblir under CC BY 4.0, med sin kreditering. Direktoratet for medisinske produkters liste over apotekbevillinger brukes ikke: den oppgir ingen lisens for videre bruk."
+			],
+			"changesHeading": "Hva som beholdes, og hvorfor",
+			"changes": "Registeret fører alle virksomheter, ikke bare steder der pasienter tas imot, og en næringskode er enhetens egen melding. Derfor leser katalogen underenhetene med en av hovednæringskodene nedenfor, og beholder en bare når den framstår som et behandlingssted: eieren er et offentlig organ (en kommune, en fylkeskommune, et helseforetak eller et statlig organ) eller en stiftelse, eller navnet sier hva den er (et legesenter, et legekontor, en legevakt, en klinikk, en tannklinikk, et sykehjem, et apotek …). Utelatt: underenheter av enkeltpersonforetak, virksomheter oppkalt etter en lege eller tannlege, holding-, investerings-, konsulent- og eiendomsselskaper, administrative enheter og støtteenheter i helseforetakene, nedlagte virksomheter, virksomheter med en eier som er konkurs eller under avvikling, virksomheter uten norsk adresse, og Svalbard. Hver adresse plasseres ved sitt punkt i matrikkelen, uten c/o-linjen, ellers ved midtpunktet for postnummeret; navn vises uten organisasjonsform (AS, DA, ANS …) og med vanlige store og små bokstaver.",
+			"licenceLink": "Norsk lisens for offentlige data (NLOD 2.0)",
+			"datasetLink": "Registerets åpne data (data.brreg.no)"
+		},
+		"coverage": {
+			"heading": "Virksomheter som er med",
+			"body": [
+				"Det lages sider for virksomhetene Enhetsregisteret fører under hovednæringskodene i Statistisk sentralbyrås standard for næringsgruppering (SN2025) for somatiske sykehustjenester (86.101), psykiatriske sykehustjenester og spesialisert rusbehandling (86.102, 86.103, 86.104), allmennlegetjenester (86.210, en legevakt kjent på navnet), spesialiserte legetjenester (86.221, 86.222), tannlegetjenester (86.230), sykehjemstjenester (87.102) og apotek (47.730), utvalgt som beskrevet ovenfor.",
+				"Ikke med: helsepersonell, fysioterapeuter, psykologer, kiropraktorer, jordmødre og hjemmesykepleie (som for det meste arbeider som enkeltpersonforetak), helsestasjoner og skolehelsetjeneste, ambulanser, laboratorier.",
+				"En virksomhet plasseres ved sitt adressepunkt i matrikkelen (Kartverket). En adresse matrikkelen ikke kjenner, plasseres ved midtpunktet for postnummeret: plasseringen på kartet og avstanden er da postnummerets, aldri adressens."
+			],
+			"kinds": {
+				"NO_HOSPITAL": "Sykehus",
+				"NO_MENTAL_HEALTH": "Psykisk helsevern og rusbehandling (distriktspsykiatriske sentre, barne- og ungdomspsykiatri)",
+				"NO_GP": "Legekontorer og legesentre",
+				"NO_EMERGENCY": "Legevakter",
+				"NO_SPECIALIST": "Legespesialister",
+				"NO_DENTAL": "Tannklinikker, den offentlige tannhelsetjenesten inkludert",
+				"NO_NURSING_HOME": "Sykehjem",
+				"NO_PHARMACY": "Apotek"
+			},
+			"kindsLabel": "Importert"
+		},
+		"identifiers": {
+			"heading": "Identifikatorer",
+			"body": [
+				"Adressen til hver side slutter med virksomhetens organisasjonsnummer, slik at siden kan finnes og kontrolleres i registeret:"
+			],
+			"list": [
+				"/no/virksomhet/eksempel-legesenter-910000039: en virksomhet (underenhet) og dens eget organisasjonsnummer i Enhetsregisteret, nummeret siden viser i grupper på tre (910 000 039).",
+				"En persons fødselsnummer brukes aldri: enkeltpersonforetak er ikke med."
+			]
+		},
+		"correct": {
+			"heading": "Rette en feil",
+			"body": [
+				"Sidene gjengir registeret: en varig rettelse gjøres ved kilden, og siden følger etter ved neste import.",
+				"For alt annet, bruk skjemaet: vi sjekker hver melding."
+			],
+			"list": [
+				"Virksomheten melder endring av navn, adresse, næringskode eller nedleggelse til Brønnøysundregistrene (via Altinn), og registeret fører endringen.",
+				"En adresse som matrikkelen plasserer feil, rettes hos kommunen, som fører adressene."
+			],
+			"formTitle": "Meld fra om en feil",
+			"formBody": "Oppgi sidens adresse og hva som er feil."
+		},
+		"remove": {
+			"heading": "Fjerne en side",
+			"body": [
+				"Den en side gjelder, kan når som helst protestere mot at den publiseres, uten å oppgi grunn (personvernforordningen artikkel 21). En side som ikke er overtatt, skjules så snart forespørselen kommer, og slettes etter en enkel kontroll; den kommer aldri tilbake med oppdateringene av registeret. En overtatt side fjernes av innehaveren, fra sitt område."
+			],
+			"formTitle": "Be om å fjerne en side",
+			"formBody": "Oppgi sidens adresse og en e-postadresse vi kan svare deg på."
+		}
+	}
+}

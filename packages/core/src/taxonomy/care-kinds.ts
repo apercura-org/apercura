@@ -15,7 +15,7 @@
  */
 
 /** The open markets (ISO 3166-1 alpha-2), as `SEARCH_ALIASES` keys them. */
-export type CareMarket = "FR" | "AT" | "GB" | "CZ" | "ES" | "IT" | "DE" | "CH" | "EE" | "PL";
+export type CareMarket = "FR" | "AT" | "GB" | "CZ" | "ES" | "IT" | "DE" | "CH" | "EE" | "PL" | "NO";
 
 export const CARE_KINDS = {
 	"general-practice": {
@@ -26,6 +26,7 @@ export const CARE_KINDS = {
 		ES: "centros-de-salud",
 		EE: "perearstikeskused",
 		PL: "przychodnie-poz",
+		NO: "legekontorer",
 	},
 	dentistry: {
 		FR: "chirurgien-dentiste",
@@ -35,6 +36,7 @@ export const CARE_KINDS = {
 		ES: "dentistas",
 		EE: "hambaravi",
 		PL: "stomatologia",
+		NO: "tannklinikker",
 	},
 	orthodontics: {
 		FR: "orthodontiste",
@@ -44,6 +46,7 @@ export const CARE_KINDS = {
 		ES: "dentistas",
 		EE: "hambaravi",
 		PL: "stomatologia",
+		NO: "tannklinikker",
 	},
 	pharmacy: {
 		FR: "pharmacien",
@@ -54,6 +57,7 @@ export const CARE_KINDS = {
 		DE: "apotheken",
 		CH: "apotheke",
 		EE: "apteegid",
+		NO: "apotek",
 	},
 	hospital: {
 		ES: "hospitales",
@@ -62,6 +66,7 @@ export const CARE_KINDS = {
 		CH: "spital",
 		EE: "haiglad",
 		PL: "szpitale",
+		NO: "sykehus",
 	},
 	paediatrics: {
 		FR: "pediatre",
@@ -232,6 +237,7 @@ export const CARE_KINDS = {
 		ES: "psiquiatras",
 		CH: "psychiatrische-klinik",
 		PL: "poradnie-zdrowia-psychicznego",
+		NO: "psykisk-helsevern",
 	},
 	"child-psychiatry": {
 		FR: "pedopsychiatre",
@@ -239,6 +245,7 @@ export const CARE_KINDS = {
 		CZ: "detsky-psychiatr",
 		ES: "psiquiatras",
 		PL: "poradnie-zdrowia-psychicznego",
+		NO: "psykisk-helsevern",
 	},
 	orthopaedics: {
 		FR: "chirurgien-orthopediste",
