@@ -6,6 +6,7 @@ import { E2E_BOOKING_ENV } from "./e2e/booking-env";
  *
  * - `production`: the built app (`next start`). Run `bun run test:e2e` from the
  *   repository root, which builds first.
+ * - `sitemap`: every URL of the sitemaps, on the same built app.
  * - `development`: `next dev`, only for the component gallery (`/fr/_ui`), which
  *   production builds answer with 404.
  *
@@ -47,9 +48,16 @@ export default defineConfig({
 		trace: "retain-on-failure",
 	},
 	projects: [
+		// First in the queue, so that the walk of every sitemap URL (e2e/sitemap.spec.ts), bound by
+		// the server, runs on one worker from the start beside the browser tests (#157).
+		{
+			name: "sitemap",
+			testMatch: /sitemap\.spec\.ts/,
+			use: { baseURL: PROD_URL },
+		},
 		{
 			name: "production",
-			testIgnore: /gallery\.spec\.ts/,
+			testIgnore: /gallery\.spec\.ts|sitemap\.spec\.ts/,
 			use: { baseURL: PROD_URL },
 		},
 		{

@@ -3,14 +3,15 @@ import { type APIRequestContext, expect, test } from "@playwright/test";
 import { E2E_BOOKING_ENV } from "./booking-env";
 import { BOOKING_PRACTITIONERS } from "./booking-seed";
 import { testDb } from "./pro";
+import { parse } from "./seo-html";
 
 /*
  * Technical SEO of every public page type, read from the SERVER HTML (what
  * crawlers get): one title and description of the right length, a self
  * canonical, the robots policy, one parseable JSON-LD @graph of linked
  * entities, one h1, hreflang on the homes, and between the three languages of a Swiss page
- * below them. Then status codes, the
- * redirects of the former scheme and hosts, and the sitemaps. Against the
+ * below them. Then status codes and the redirects of the former scheme and hosts (the
+ * sitemaps are sitemap.spec.ts's). Against the
  * SYNTHETIC fixtures (fictitious people, RPPS 1999999xxxx).
  */
 
@@ -381,45 +382,6 @@ const LOCAL_BUSINESSES = new Set([
 	"Hospital",
 	"Pharmacy",
 ]);
-
-const ENTITIES: Record<string, string> = {
-	"&amp;": "&",
-	"&#x27;": "'",
-	"&#39;": "'",
-	"&quot;": '"',
-};
-
-/** HTML entities decoded in a single pass (never twice: `&amp;#39;` stays `&#39;`). */
-const decode = (text: string) =>
-	text.replace(/&(?:amp|#x27|#39|quot);/g, (entity) => ENTITIES[entity] ?? entity);
-
-/** The SEO-relevant parts of a server-rendered page. */
-function parse(html: string) {
-	const attr = (tag: string, name: string) => {
-		// Attribute names are case-insensitive (React prints `hrefLang`).
-		const value = new RegExp(`\\b${name}="([^"]*)"`, "i").exec(tag)?.[1];
-		return value === undefined ? null : decode(value);
-	};
-	const tags = (pattern: RegExp) => [...html.matchAll(pattern)].map((match) => match[0]);
-	const meta = (key: string) =>
-		tags(/<meta\b[^>]*>/g)
-			.filter((tag) => attr(tag, "name") === key || attr(tag, "property") === key)
-			.map((tag) => attr(tag, "content"));
-	return {
-		lang: /<html[^>]*\blang="([^"]+)"/.exec(html)?.[1],
-		titles: [...html.matchAll(/<title>([^<]*)<\/title>/g)].map((match) => decode(match[1] ?? "")),
-		meta,
-		links: tags(/<link\b[^>]*>/g).map((tag) => ({
-			rel: attr(tag, "rel"),
-			href: attr(tag, "href"),
-			hreflang: attr(tag, "hreflang"),
-		})),
-		h1: tags(/<h1\b/g).length,
-		jsonLd: [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map(
-			(match) => match[1] ?? "",
-		),
-	};
-}
 
 type Node = Record<string, unknown> & { "@type"?: string; "@id"?: string };
 
@@ -929,189 +891,5 @@ test.describe("status codes and redirects", () => {
 		}
 		expect((await request.get("/fr/pro")).headers()["x-robots-tag"]).toBeUndefined();
 		expect((await request.get("/")).headers()["x-robots-tag"]).toBeUndefined();
-	});
-});
-
-/** Pages another spec unpublishes and publishes again during the run (owner.spec.ts). */
-const MUTATED_BY_OTHER_SPECS = ["/fr/praticien/benoit-essaial-19999991110"];
-
-/** Requests in flight at once when the sitemap test walks its chunks and their URLs. */
-const SITEMAP_CONCURRENCY = 10;
-
-/**
- * `fn` over every item with at most `limit` calls in flight, results in the items' order.
- * After a failure no new item starts, and the calls already running are awaited before the
- * first error is rethrown, so none outlives the test and its request context.
- */
-async function mapConcurrently<T, R>(
-	items: readonly T[],
-	limit: number,
-	fn: (item: T) => Promise<R>,
-): Promise<R[]> {
-	const results: R[] = new Array(items.length);
-	let next = 0;
-	let failed = false;
-	const worker = async () => {
-		while (!failed && next < items.length) {
-			const index = next++;
-			try {
-				results[index] = await fn(items[index] as T);
-			} catch (error) {
-				failed = true;
-				throw error;
-			}
-		}
-	};
-	const settled = await Promise.allSettled(
-		Array.from({ length: Math.min(limit, items.length) }, worker),
-	);
-	const rejected = settled.find((outcome) => outcome.status === "rejected");
-	if (rejected) throw rejected.reason;
-	return results;
-}
-
-test.describe("sitemaps", () => {
-	const LOC = /<loc>([^<]+)<\/loc>/g;
-	const LASTMOD = /<lastmod>([^<]+)<\/lastmod>/g;
-
-	test("the index and every chunk are valid sitemaps of indexable canonical 200 URLs", async ({
-		request,
-		baseURL,
-	}) => {
-		test.setTimeout(240_000);
-		const origin = new URL(baseURL ?? "").origin;
-		const index = await request.get("/sitemap.xml");
-		expect(index.headers()["content-type"]).toContain("xml");
-		const indexXml = await index.text();
-		expect(indexXml).toMatch(
-			/^<\?xml version="1\.0" encoding="UTF-8"\?>\n<sitemapindex xmlns="http:\/\/www\.sitemaps\.org\/schemas\/sitemap\/0\.9">/,
-		);
-		const chunks = [...indexXml.matchAll(LOC)].map((match) => match[1] ?? "");
-		expect(chunks.length).toBeGreaterThan(2);
-		// The international home, then each open market's files under its segment.
-		expect(chunks.slice(0, 2)).toEqual([
-			`${origin}/sitemaps/international.xml`,
-			`${origin}/sitemaps/fr/pages-0.xml`,
-		]);
-		expect(chunks).toContain(`${origin}/sitemaps/at/pages-0.xml`);
-		expect(chunks).toContain(`${origin}/sitemaps/gb/pages-0.xml`);
-		expect(chunks).toContain(`${origin}/sitemaps/gb/praticiens-0.xml`);
-		expect(chunks).toContain(`${origin}/sitemaps/cz/pages-0.xml`);
-		expect(chunks).toContain(`${origin}/sitemaps/cz/praticiens-0.xml`);
-		expect(chunks).toContain(`${origin}/sitemaps/es/praticiens-0.xml`);
-		expect(chunks).toContain(`${origin}/sitemaps/it/pages-0.xml`);
-		expect(chunks).toContain(`${origin}/sitemaps/it/praticiens-0.xml`);
-		expect(chunks).toContain(`${origin}/sitemaps/de/pages-0.xml`);
-		expect(chunks).toContain(`${origin}/sitemaps/de/praticiens-0.xml`);
-		// Switzerland's files under each of its languages.
-		for (const segment of ["ch", "ch-fr", "ch-it"]) {
-			expect(chunks).toContain(`${origin}/sitemaps/${segment}/pages-0.xml`);
-			expect(chunks).toContain(`${origin}/sitemaps/${segment}/praticiens-0.xml`);
-		}
-		for (const chunk of chunks.slice(1))
-			expect(/\/sitemaps\/(fr|at|gb|cz|es|it|de|ch|ch-fr|ch-it)\//.test(chunk), chunk).toBe(true);
-		for (const lastmod of indexXml.matchAll(LASTMOD)) {
-			expect(lastmod[1]).toMatch(/^\d{4}-\d{2}-\d{2}$/);
-		}
-
-		const started = Date.now();
-		const chunkLocs = await mapConcurrently(chunks, SITEMAP_CONCURRENCY, async (chunk) => {
-			expect(chunk.startsWith(`${origin}/sitemaps/`), chunk).toBe(true);
-			const response = await request.get(chunk);
-			expect(response.status(), chunk).toBe(200);
-			const xml = await response.text();
-			expect(xml, chunk).toMatch(
-				/<urlset xmlns="http:\/\/www\.sitemaps\.org\/schemas\/sitemap\/0\.9">/,
-			);
-			expect(xml, chunk).not.toMatch(/changefreq|priority/);
-			const locs = [...xml.matchAll(LOC)].map((match) => match[1] ?? "");
-			expect(locs.length, chunk).toBeGreaterThan(0);
-			expect(locs.length, chunk).toBeLessThanOrEqual(50_000);
-			for (const lastmod of xml.matchAll(LASTMOD)) {
-				expect(lastmod[1], chunk).toMatch(/^\d{4}-\d{2}-\d{2}$/);
-			}
-			return locs;
-		});
-		// In the index's order, whatever order the chunks answered in.
-		const urls = chunkLocs.flat();
-		expect(new Set(urls).size).toBe(urls.length);
-		expect(urls).toContain(`${origin}/`);
-		expect(urls).toContain(`${origin}/fr`);
-		expect(urls).toContain(`${origin}/at`);
-		expect(urls).toContain(`${origin}/gb`);
-		expect(urls).toContain(`${origin}/cz`);
-		expect(urls).toContain(`${origin}/es`);
-		expect(urls).toContain(`${origin}/it`);
-		expect(urls).toContain(`${origin}/de`);
-		// A kreisfreie Stadt's city page is its Kreis's: never a URL of its own.
-		expect(urls).not.toContain(`${origin}/de/krankenhaeuser/potsdam/potsdam`);
-		expect(urls).toContain(`${origin}/ch`);
-		expect(urls).toContain(`${origin}/ch-fr`);
-		expect(urls).toContain(`${origin}/ch-it`);
-
-		await mapConcurrently(urls, SITEMAP_CONCURRENCY, async (url) => {
-			// owner.spec.ts removes and restores this claimed page while the specs run in
-			// parallel (#119): the sitemap, cached up to five minutes, may still list it meanwhile.
-			if (MUTATED_BY_OTHER_SPECS.some((path) => url === `${origin}${path}`)) return;
-			// The international home and each market's own language: France in French, Austria in
-			// German, the UK in English, Czechia in Czech, Spain in Spanish, Italy in Italian, Germany
-			// in German,
-			// Switzerland in its three. Interface translations (/fr-de, /fr-es…) are never listed.
-			expect(
-				url === `${origin}/` ||
-					[
-						`${origin}/fr`,
-						`${origin}/at`,
-						`${origin}/gb`,
-						`${origin}/cz`,
-						`${origin}/es`,
-						`${origin}/it`,
-						`${origin}/de`,
-						`${origin}/ch`,
-						`${origin}/ch-fr`,
-						`${origin}/ch-it`,
-					].some((home) => url === home || url.startsWith(`${home}/`)),
-				url,
-			).toBe(true);
-			expect(url, url).not.toMatch(/\/recherche|\/pro\/|\/rdv/);
-			const response = await request.get(url, { maxRedirects: 0 });
-			expect(response.status(), url).toBe(200);
-			expect(response.headers()["x-robots-tag"], url).toBeUndefined();
-			const page = parse(await response.text());
-			expect(page.meta("robots"), url).toEqual(["index, follow"]);
-			const canonical = page.links.find((link) => link.rel === "canonical")?.href ?? "";
-			expect(canonical.replace(/\/$/, ""), url).toBe(url.replace(/\/$/, ""));
-		});
-		test.info().annotations.push({
-			type: "sitemap",
-			description: `${chunks.length} chunks and ${urls.length} URLs checked in ${Date.now() - started} ms (concurrency ${SITEMAP_CONCURRENCY})`,
-		});
-	});
-
-	test("robots.txt points to the index and never hides a noindex page linked publicly", async ({
-		request,
-	}) => {
-		const body = await (await request.get("/robots.txt")).text();
-		expect(body).toMatch(/^Sitemap: https?:\/\/[^\s]+\/sitemap\.xml$/m);
-		const disallowed = [...body.matchAll(/^Disallow: (.+)$/gm)].map((match) => match[1] ?? "");
-		for (const path of [
-			"/",
-			"/fr",
-			"/fr/pro",
-			"/fr/pro/connexion",
-			"/fr/pro/inscription",
-			"/fr/pro/revendiquer?rpps=19999990013",
-			"/fr/praticien/camille-exemple-19999990013/signaler",
-			"/fr-en/practitioner/camille-exemple-19999990013",
-			"/fr-de/behandler/camille-exemple-19999990013",
-			"/fr-es/profesional/camille-exemple-19999990013",
-			"/fr-it/professionista/camille-exemple-19999990013",
-			"/fr-it/professionista/camille-exemple-19999990013/segnalazione",
-		]) {
-			expect(
-				disallowed.some((prefix) => path.startsWith(prefix)),
-				path,
-			).toBe(false);
-		}
 	});
 });

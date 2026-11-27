@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+import { expect, type Locator, test } from "@playwright/test";
 import { axeViolations } from "./axe";
 
 /*
@@ -9,6 +9,20 @@ import { axeViolations } from "./axe";
 
 const FICTIF_RPPS = "19999990021";
 const FICTIF_PAGE = new RegExp(`/fr/praticien/jean-pierre-fictif-${FICTIF_RPPS}$`);
+
+/**
+ * Types `text` in a suggestion box until `option` is suggested. The box is printed before React
+ * hydrates it, and text typed before then never opens the suggestions: under a loaded CI runner
+ * the page's `load` can come first (#157, reproduced with the CPU slowed four times). A visitor
+ * would type again; so does the test.
+ */
+async function typeUntilSuggested(box: Locator, text: string, option: Locator) {
+	await expect(async () => {
+		await box.fill("");
+		await box.pressSequentially(text);
+		await expect(option).toBeVisible({ timeout: 2_000 });
+	}).toPass({ timeout: 15_000 });
+}
 
 test.describe("without JavaScript", () => {
 	test.use({ javaScriptEnabled: false });
@@ -96,18 +110,16 @@ test("an unknown RPPS number says honestly that there is no page", async ({ page
 
 test("“Qui ?” suggests practitioners and opens the chosen page", async ({ page }) => {
 	await page.goto("/fr/recherche");
-	await page.getByRole("combobox", { name: "Qui ?" }).pressSequentially("Fict");
 	const option = page.getByRole("option", { name: /Jean-Pierre Fictif/ });
-	await expect(option).toBeVisible();
+	await typeUntilSuggested(page.getByRole("combobox", { name: "Qui ?" }), "Fict", option);
 	await option.click();
 	await expect(page).toHaveURL(FICTIF_PAGE);
 });
 
 test("“Où ?” suggests places with their department", async ({ page }) => {
 	await page.goto("/fr-en/search");
-	await page.getByRole("combobox", { name: "Where?" }).pressSequentially("Paris 15");
 	const option = page.getByRole("option", { name: /Paris 15e Arrondissement/ });
-	await expect(option).toBeVisible();
+	await typeUntilSuggested(page.getByRole("combobox", { name: "Where?" }), "Paris 15", option);
 	await option.click();
 	await expect(page.getByRole("combobox", { name: "Where?" })).toHaveValue(
 		"Paris 15e Arrondissement (75)",
@@ -228,8 +240,11 @@ test.describe("the country searched", () => {
 		]);
 		await country.selectOption({ label: "Royaume-Uni" });
 		// The places suggested are the UK's.
-		await page.getByRole("combobox", { name: "Où ?" }).pressSequentially("Glasg");
-		await expect(page.getByRole("option", { name: /Glasgow/ }).first()).toBeVisible();
+		await typeUntilSuggested(
+			page.getByRole("combobox", { name: "Où ?" }),
+			"Glasg",
+			page.getByRole("option", { name: /Glasgow/ }).first(),
+		);
 		await page.getByRole("combobox", { name: "Où ?" }).fill("");
 		await page.getByRole("combobox", { name: "Qui ?" }).fill("dentiste");
 		await page.getByRole("button", { name: "Chercher", includeHidden: true }).click();
