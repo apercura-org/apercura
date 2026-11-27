@@ -5,6 +5,7 @@ import {
 	allDeListingSlugs,
 	allEeListingSlugs,
 	allEsListingSlugs,
+	allFiListingSlugs,
 	allGbListingSlugs,
 	allIeListingSlugs,
 	allItListingSlugs,
@@ -38,6 +39,7 @@ const MARKETS = [
 	"PL",
 	"NO",
 	"IE",
+	"FI",
 ] as const satisfies readonly MarketCountry[];
 
 /** The listings of each market (France: its imported professions only). */
@@ -57,6 +59,7 @@ const LISTED: Record<MarketCountry, (slug: string) => boolean> = {
 	PL: (slug) => allPlListingSlugs().has(slug),
 	NO: (slug) => allNoListingSlugs().has(slug),
 	IE: (slug) => allIeListingSlugs().has(slug),
+	FI: (slug) => allFiListingSlugs().has(slug),
 };
 
 /** Slugs a market maps but does not list yet: France's professions not imported. */
@@ -73,6 +76,7 @@ const MAPPED: Record<MarketCountry, (slug: string) => boolean> = {
 	PL: () => false,
 	NO: () => false,
 	IE: () => false,
+	FI: () => false,
 };
 
 const listing = (slug: string): SearchTerm => ({ kind: "listing", slug });
@@ -458,6 +462,34 @@ const EVERYDAY: Record<MarketCountry, [string, SearchTerm][]> = {
 		["Krankenhaus", listing("hospitals")],
 		["GP", UNLISTED],
 		["dentist", UNLISTED],
+	],
+	FI: [
+		["terveyskeskus", listing("terveysasemat")],
+		["Terveysasema", listing("terveysasemat")],
+		["lääkäri", listing("terveysasemat")],
+		["laakari", listing("terveysasemat")],
+		["sote-keskus", listing("terveysasemat")],
+		["hammaslääkäri", listing("hammashoitolat")],
+		["hammashoitola", listing("hammashoitolat")],
+		["neuvola", listing("neuvolat")],
+		["äitiysneuvola", listing("neuvolat")],
+		["päivystys", listing("paivystys")],
+		["ensiapu", listing("paivystys")],
+		["sairaala", listing("sairaalat")],
+		["keskussairaala", listing("sairaalat")],
+		["psykiatri", listing("mielenterveys-ja-paihdepalvelut")],
+		["A-klinikka", listing("mielenterveys-ja-paihdepalvelut")],
+		["fysioterapia", listing("kuntoutus")],
+		["laboratorio", listing("laboratoriot-ja-kuvantaminen")],
+		["röntgen", listing("laboratoriot-ja-kuvantaminen")],
+		// Visitors' languages.
+		["dentist", listing("hammashoitolat")],
+		["health centre", listing("terveysasemat")],
+		["dentiste", listing("hammashoitolat")],
+		// No pharmacy and no private clinic in the Finnish Service Catalogue.
+		["apteekki", UNLISTED],
+		["pharmacy", UNLISTED],
+		["lääkäriasema", UNLISTED],
 	],
 };
 

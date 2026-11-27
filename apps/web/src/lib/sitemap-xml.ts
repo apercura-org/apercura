@@ -139,4 +139,5 @@ export const MARKET_STATIC_PATHS: Record<SitemapMarket, readonly string[]> = {
 	pl: STATIC_PATHS.filter((path) => path !== "/pro"),
 	no: STATIC_PATHS.filter((path) => path !== "/pro"),
 	ie: STATIC_PATHS.filter((path) => path !== "/pro"),
+	fi: STATIC_PATHS.filter((path) => path !== "/pro"),
 };

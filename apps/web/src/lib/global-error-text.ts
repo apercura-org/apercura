@@ -90,4 +90,12 @@ export const GLOBAL_ERROR_TEXT: Record<CatalogLanguage, GlobalErrorText> = {
 		home: "Tilbake til forsiden",
 		reference: "Referanse for kundestøtte: {digest}",
 	},
+	fi: {
+		metaTitle: "Sivu ei ole saatavilla · Apercura",
+		title: "Tätä sivua ei voitu näyttää",
+		body: "Sivua valmistellessa jokin meni vikaan meidän päässämme. Yritä uudelleen; jos se ei auta, palaa muutaman minuutin kuluttua.",
+		retry: "Yritä uudelleen",
+		home: "Palaa etusivulle",
+		reference: "Viite tukipalvelua varten: {digest}",
+	},
 };

@@ -1,0 +1,2020 @@
+{
+	"Metadata": {
+		"title": "Apercura",
+		"description": "Suomen julkisten terveyspalvelujen avoin hakemisto: terveysasemat, sairaalat, päivystys, hammashoitolat ja neuvolat Suomi.fi-palvelutietovarannosta.",
+		"proTitle": "Palvelupaikkanne sivu on jo olemassa · Apercura",
+		"proDescription": "Apercura julkaisee sivun jokaisesta Suomi.fi-palvelutietovarannossa kuvatusta julkisesta terveyspalvelupaikasta. Löydä palvelupaikkasi sivu ja ota se maksutta haltuun.",
+		"searchTitle": "Haku · Apercura",
+		"galleryTitle": "Komponenttigalleria · Apercura",
+		"homeTitle": "Apercura · Terveysasemat, sairaalat ja neuvolat Suomessa"
+	},
+	"Site": {
+		"skipLink": "Siirry sisältöön",
+		"wordmark": "Apercura",
+		"homeLink": "Apercura, etusivu",
+		"runningHead": "Suomen julkisten terveyspalvelujen avoin hakemisto",
+		"navLabel": "Päävalikko",
+		"navPro": "Järjestäjille",
+		"navPatients": "Potilaille",
+		"folio": "Sivu {number}",
+		"externalLink": "avautuu toiselle sivustolle",
+		"footer": {
+			"free": "Maksuton järjestäjille ja potilaille.",
+			"license": "Lähdekoodi AGPL-3.0-lisenssillä",
+			"noAds": "Ei arvosanoja, ei mainoksia, ei maksettua järjestystä."
+		},
+		"folioRpps": "Tunniste {rpps}",
+		"home": "Etusivu",
+		"breadcrumbs": "Olet tässä",
+		"footerNav": {
+			"label": "Tietoa Apercurasta",
+			"directory": "Hakemisto",
+			"guides": "Oppaat",
+			"about": "Tietoa palvelusta",
+			"openSource": "Avoin lähdekoodi",
+			"data": "Tiedot ja lähteet",
+			"accessibility": "Saavutettavuus",
+			"privacy": "Tietosuoja",
+			"legal": "Oikeudelliset tiedot",
+			"terms": "Käyttöehdot",
+			"international": "Apercura muissa maissa"
+		},
+		"theme": {
+			"label": "Teema",
+			"light": "Vaalea",
+			"dark": "Tumma",
+			"system": "Järjestelmän mukaan"
+		}
+	},
+	"LocaleSwitcher": {
+		"label": "Kieli",
+		"locale": "{locale, select, fr {Français} en {English} de {Deutsch} es {Español} it {Italiano} other {Tuntematon kieli}}",
+		"current": "Kieli: <value>{language}</value>"
+	},
+	"CountrySwitcher": {
+		"label": "Maa",
+		"current": "Maa: <value>{country}</value>"
+	},
+	"ErrorPages": {
+		"notFound": {
+			"metaTitle": "Sivua ei löydy · Apercura",
+			"title": "Tätä sivua ei ole",
+			"body": "Osoitteessa voi olla kirjoitusvirhe, tai sivu on poistettu. Hae hakemistosta tai aloita uudelleen jostakin alla olevasta sivusta.",
+			"rootBody": "Osoitteessa voi olla kirjoitusvirhe, tai sivu on poistettu. Valitse maa, jonka hakemistosta haluat hakea.",
+			"code": "Virhe 404",
+			"stamp": "Tässä osoitteessa ei ole sivua",
+			"nextHeading": "Muualla Apercurassa",
+			"home": "Etusivu",
+			"directory": "Hakemisto paikkakunnittain",
+			"international": "Apercura maittain"
+		},
+		"error": {
+			"metaTitle": "Sivu ei ole saatavilla · Apercura",
+			"title": "Tätä sivua ei voitu näyttää",
+			"body": "Sivua valmistellessa jokin meni vikaan meidän päässämme. Yritä uudelleen; jos se ei auta, palaa muutaman minuutin kuluttua.",
+			"retry": "Yritä uudelleen",
+			"home": "Palaa etusivulle",
+			"reference": "Viite tukipalvelua varten: {digest}"
+		}
+	},
+	"Search": {
+		"label": "Löydä terveysasema, sairaala, hammashoitola tai neuvola",
+		"who": "Mitä?",
+		"whoHint": "Palvelupaikan nimi tai terveysasema, hammashoito, neuvola, päivystys",
+		"where": "Missä?",
+		"whereHint": "Kunta tai postinumero",
+		"submit": "Hae",
+		"market": "Maa",
+		"markets": {
+			"FR": "Ranska",
+			"AT": "Itävalta",
+			"GB": "Yhdistynyt kuningaskunta",
+			"CZ": "Tšekki",
+			"IT": "Italia",
+			"CH": "Sveitsi",
+			"ES": "Espanja",
+			"DE": "Saksa",
+			"EE": "Viro",
+			"PL": "Puola",
+			"FI": "Suomi"
+		}
+	},
+	"HomePage": {
+		"title": "Löydä terveysasema, sairaala, hammashoitola tai neuvola Suomessa",
+		"hook": "Jokaisella Suomi.fi-palvelutietovarannossa kuvatulla julkisella terveyspalvelupaikalla on jo sivu.",
+		"specimen": {
+			"heading": "Jokaisella palvelupaikalla on jo sivu",
+			"intro": "Tältä näyttää sivu, jonka valtakunnallinen tietovaranto on täyttänyt ennen kuin järjestäjä ottaa sen haltuun: tunnetut kentät on täytetty, ja muiden kohdalla sanotaan selvästi, ettei tietoa ole annettu."
+		},
+		"pillarsHeading": "Mihin Apercura sitoutuu",
+		"columns": {
+			"number": "Nro",
+			"commitment": "Sitoumus"
+		},
+		"pillars": {
+			"free": {
+				"title": "Maksuton",
+				"description": "Maksuton järjestäjille ja potilaille, ilman tilausta ja ilman välityspalkkiota."
+			},
+			"openSource": {
+				"title": "Avoin lähdekoodi",
+				"description": "Koko lähdekoodi on julkaistu AGPL-3.0-lisenssillä."
+			},
+			"hostedInFrance": {
+				"title": "Terveystiedot säilytetään Ranskassa",
+				"description": "Terveystietoja säilyttää Ranskassa HDS-sertifioitu palveluntarjoaja ({host}), ja ne salataan sovellustasolla."
+			},
+			"encrypted": {
+				"title": "Salatut tiedot",
+				"description": "Haltuunoton asiakirjat, virheilmoitukset ja, missä ajanvaraus verkossa on avoinna, varaukset salataan sovellustasolla."
+			},
+			"selfHostable": {
+				"title": "Ylläpidettävissä itse",
+				"description": "Koko alustan voi ajaa itse Dockerilla avoimen datan tuonteineen."
+			}
+		},
+		"registry": {
+			"heading": "Koottu Suomi.fi-palvelutietovarannosta",
+			"intro": "Jokainen sivu perustuu valtakunnalliseen Suomi.fi-palvelutietovarantoon (PTV), johon hyvinvointialueet, Helsingin kaupunki, Ahvenanmaa ja muut julkiset järjestäjät kuvaavat palvelunsa ja jonka Digi- ja väestötietovirasto julkaisee vapaasti käytettäväksi (CC0 1.0). Kunnat, hyvinvointialueet ja maakunnat tulevat Tilastokeskukselta. Sivu kuvaa palvelupaikkaa, ei siellä työskenteleviä ammattilaisia. Kukaan ei maksa hakemistoon pääsystä, eikä ketään jätetä pois.",
+			"doctors": "Lääkärit",
+			"dentists": "Hammaslääkärit",
+			"midwives": "Kätilöt",
+			"nurses": "Sairaanhoitajat",
+			"withAddress": "Julkisella käyntiosoitteella",
+			"count": "{count, number}",
+			"sourceLabel": "Lähde",
+			"sourceName": "Suomi.fi-palvelutietovaranto, Digi- ja väestötietovirasto",
+			"updatedLabel": "Tiedot ajalta"
+		},
+		"pro": {
+			"heading": "Vastaatteko terveysasemasta, sairaalasta, hammashoitolasta tai neuvolasta?",
+			"body": "Palvelupaikkanne sivu on jo olemassa. Sen ottaminen haltuun on maksutonta.",
+			"cta": "Löydä sivumme"
+		},
+		"tagline": "Suomen julkisten terveyspalvelujen avoin hakemisto Suomi.fi-palvelutietovarannosta.",
+		"status": "Työn alla.",
+		"market": {
+			"listingsHeading": "Palvelupaikan tyypin mukaan",
+			"placesHeading": "Hyvinvointialueittain"
+		}
+	},
+	"SearchPage": {
+		"title": "Haku",
+		"query": "Hait: ”{who}”",
+		"queryWhere": "Hait: ”{who}”, paikka ”{where}”",
+		"queryOnlyWhere": "Hait paikasta ”{where}”",
+		"emptyTitle": "Yksikään palvelupaikka ei vastaa hakua",
+		"emptyBody": "Tarkista kirjoitusasu, kokeile lähellä olevaa kuntaa tai yleisempää sanaa, kuten ”terveysasema” tai ”hammashoito”.",
+		"queryNear": "Hait: ”{who}” läheltäsi",
+		"queryOnlyNear": "Palvelupaikat lähelläsi",
+		"startTitle": "Mitä etsit?",
+		"startBody": "Kirjoita kenttään ”Mitä?” palvelupaikan nimi tai esimerkiksi terveysasema, hammashoito, neuvola tai päivystys ja kenttään ”Missä?” kunta tai postinumero. Hakemistoa voi selata myös hyvinvointialueittain ja kunnittain.",
+		"noMoreTitle": "Ei enempää tuloksia",
+		"browseDirectory": "Selaa hakemistoa",
+		"rppsTitle": "Tunnisteella {rpps} ei ole julkista sivua",
+		"rppsBody": "Tämä tunniste ei ole voimassa, tai palvelupaikalla ei ole julkista sivua: hakemistossa ovat vain terveyspalvelupaikat, joihin potilaat hakeutuvat (koulu- ja opiskeluterveydenhuollon pisteitä ei näytetä). Järjestäjä voi silti löytää palvelupaikkansa ja ottaa sen haltuun.",
+		"rppsPro": "Järjestäjät: löydä palvelupaikkasi",
+		"ambiguousTitle": "Nimellä ”{where}” on useita paikkoja",
+		"ambiguousBody": "Valitse tarkoittamasi:",
+		"unknownPlaceTitle": "Emme tunne paikkaa ”{where}”",
+		"unknownPlaceSuggest": "Tarkoititko jotakin näistä paikoista?",
+		"unknownPlaceBody": "Tarkista kirjoitusasu tai kirjoita kunnan nimi tai postinumero.",
+		"unlistedTitle": "”{who}” ei ole vielä hakemistossa",
+		"unlistedBody": "Suomessa hakemistossa ovat toistaiseksi julkiset terveyspalvelupaikat, eivät niissä työskentelevät ammattilaiset: sairaalat, päivystys, terveysasemat, hammashoitolat, neuvolat, mielenterveys- ja päihdepalvelut, kuntoutus sekä laboratoriot ja kuvantaminen. Apteekit ja yksityiset lääkäriasemat eivät ole mukana. Hae palvelupaikan nimellä tai selaa hakemistoa.",
+		"departmentPlace": "Hyvinvointialue",
+		"resultsHeading": "Tulokset",
+		"range": "Tulokset {from}–{to}",
+		"orderName": "Tulokset on järjestetty nimen vastaavuuden mukaan ja sitten aakkosjärjestykseen. Kukaan ei maksa korkeammasta sijasta.",
+		"orderNear": "Tulokset on järjestetty etäisyyden mukaan sinusta. Kukaan ei maksa korkeammasta sijasta.",
+		"bookingNotOpen": "Apercura ei tarjoa Suomessa ajanvarausta verkossa: ota yhteyttä palvelupaikkaan.",
+		"columns": {
+			"practitioner": "Palvelupaikka",
+			"place": "Osoite",
+			"appointments": "Yhteydenotto"
+		},
+		"action": {
+			"call": "Soita {phone}",
+			"establishment": "Organisaation kautta",
+			"locum": "Sijainen: ei suoraa ajanvarausta",
+			"page": "Katso sivu",
+			"noPhone": "Puhelinnumeroa ei ole julkaistu",
+			"nextFree": "Varaa: {slot}"
+		},
+		"distance": "{km} km:n päässä",
+		"pagination": "Tulossivut",
+		"previous": "Edelliset tulokset",
+		"next": "Lisää tuloksia",
+		"map": {
+			"show": "Näytä kartalla",
+			"hide": "Piilota kartta",
+			"region": "Tulosten kartta",
+			"fallback": "Karttaa ladataan. Yllä olevassa luettelossa ovat kaikki osoitteet."
+		},
+		"outsidePlace": "Paikan {where} ulkopuolella",
+		"bookingOpenSome": "Osa palvelupaikoista ottaa vastaan varauksia verkossa: näytämme niiden seuraavan vapaan ajan. Muihin ota yhteyttä puhelimitse.",
+		"notCoveredTitle": "Apercura ei vielä kata {country}",
+		"notCoveredBody": "Toistaiseksi Apercurassa ovat näiden maiden palvelut. Valitse maa, josta haluat hakea:"
+	},
+	"Practitioner": {
+		"rpps": "Tunniste",
+		"status": {
+			"unclaimed": "Haltuun ottamaton sivu",
+			"claimed": "Haltuun otettu sivu",
+			"verified": "Vahvistettu sivu"
+		},
+		"statusNote": {
+			"unclaimed": "Koottu valtakunnallisen tietovarannon avoimesta datasta. Järjestäjä ei ole vielä täydentänyt tätä sivua.",
+			"verified": "Täydentänyt järjestäjä, jonka haltuunottopyyntö on tarkistettu."
+		},
+		"notProvided": "Ei ilmoitettu",
+		"fields": {
+			"profession": "Palvelupaikan tyyppi",
+			"specialty": "Erikoisala",
+			"address": "Osoite",
+			"phone": "Puhelin",
+			"hours": "Aukioloajat",
+			"languages": "Palvelukielet",
+			"convention": "Kela-korvaus",
+			"booking": "Ajanvaraus verkossa",
+			"access": "Esteettömyys"
+		},
+		"sitesHeading": "Toimipisteet",
+		"directions": "Reittiohjeet",
+		"providers": {
+			"openStreetMap": "OpenStreetMap",
+			"appleMaps": "Apple Maps",
+			"googleMaps": "Google Maps"
+		},
+		"mapLabel": "Kartta: {place}",
+		"mapPin": "Sijainti: {place}",
+		"source": {
+			"label": "Lähde",
+			"name": "Suomi.fi-palvelutietovaranto, Digi- ja väestötietovirasto (CC0 1.0)",
+			"updated": "Päivitetty"
+		},
+		"action": {
+			"title": "Ajanvaraus",
+			"book": {
+				"statement": "Ajanvaraus verkossa on avoinna. Se on maksuton eikä vaadi käyttäjätiliä.",
+				"label": "Varaa aika"
+			},
+			"call": {
+				"statement": "Apercura ei tarjoa Suomessa ajanvarausta verkossa. Ota yhteyttä palvelupaikkaan saadaksesi ajan.",
+				"label": "Soita {phone}"
+			},
+			"establishment": {
+				"statement": "Ajat varataan organisaation {establishment} kautta.",
+				"label": "Varaa: {establishment}"
+			},
+			"locum": {
+				"statement": "Tämä lääkäri työskentelee sijaisena muiden lääkärien puolesta. Hänelle ei voi varata aikaa suoraan.",
+				"hint": "Varaa aika siitä toimipisteestä, jossa hän parhaillaan työskentelee."
+			}
+		},
+		"slots": {
+			"heading": "Valitse aika",
+			"label": "Vapaat ajat",
+			"now": "nyt",
+			"unavailable": "ei saatavilla",
+			"selected": "Valittu: {slot}",
+			"emptyDay": "Tänä päivänä ei ole vapaita aikoja",
+			"slotLabel": "{day}, {time}",
+			"past": "mennyt"
+		},
+		"professions": {
+			"gp": "Yleislääkäri",
+			"dentist": "Hammaslääkäri",
+			"midwife": "Kätilö",
+			"physio": "Fysioterapeutti"
+		},
+		"specimen": "Esimerkki, ei todellinen palvelupaikka"
+	},
+	"Map": {
+		"map": "Kartta",
+		"marker": "Karttamerkki",
+		"zoomIn": "Lähennä",
+		"zoomOut": "Loitonna",
+		"resetBearing": "Vedä kääntääksesi karttaa, napsauta palauttaaksesi pohjoisen ylös",
+		"toggleAttribution": "Näytä tai piilota kartan tekijätiedot",
+		"mapFeedback": "Palaute kartasta",
+		"logo": "MapLibre-logo",
+		"closePopup": "Sulje ponnahdusikkuna",
+		"scrollZoomWindows": "Lähennä karttaa painamalla Ctrl ja vierittämällä",
+		"scrollZoomMac": "Lähennä karttaa painamalla ⌘ ja vierittämällä",
+		"twoFingers": "Siirrä karttaa kahdella sormella"
+	},
+	"PractitionerPage": {
+		"metaTitle": "{name}, {occupation} · Apercura",
+		"metaTitlePlace": "{name}, {occupation}, {place} · Apercura",
+		"metaDescription": "{name}, {occupation}: {fees, select, sector {osoite, puhelin ja hinnat} other {osoite, puhelin, järjestäjä ja palvelut}}, Suomi.fi-palvelutietovarannosta.",
+		"metaDescriptionPlace": "{name}, {occupation}, {place}: {fees, select, sector {osoite, puhelin ja hinnat} other {osoite, puhelin, järjestäjä ja palvelut}}, Suomi.fi-palvelutietovarannosta.",
+		"unknownProfession": "Terveyspalvelupaikka",
+		"professionHeading": "Palvelupaikka",
+		"otherQualifications": "Muut tiedot",
+		"fieldsOfCare": "Erikoisalat",
+		"ownership": "Omistus",
+		"ownershipPublic": "Julkinen",
+		"ownershipPrivate": "Yksityinen",
+		"practiceType": "Toimipisteen tyyppi",
+		"switchboard": "{phone} (vaihde)",
+		"establishment": "Organisaatio",
+		"unnamedPlace": "Toimipiste",
+		"asideLabel": "Tietoa tästä sivusta",
+		"action": {
+			"callNotYetOpen": "Apercura ei tarjoa Suomessa ajanvarausta verkossa. Ota yhteyttä palvelupaikkaan saadaksesi ajan.",
+			"establishmentLink": "Ota yhteyttä organisaatioon",
+			"noPhone": "Tietovaranto ei julkaise tämän toimipisteen puhelinnumeroa.",
+			"noPhoneHint": "Yhteystiedot löydät <link>palvelupaikasta julkaistuista tiedoista</link> tai järjestäjän omilta sivuilta.",
+			"bookStatement": "Ajanvaraus verkossa on avoinna. Se on maksuton eikä vaadi käyttäjätiliä.",
+			"bookNoSlot": "Ajanvaraus verkossa on avoinna, mutta lähiviikoilla ei ole vapaita aikoja. Katso myöhemmin uudelleen tai soita.",
+			"nextSlot": "Seuraava vapaa aika",
+			"bookLabel": "Varaa aika",
+			"orCall": "Tai soita {phone}."
+		},
+		"fees": {
+			"heading": "Maksut ja korvaukset",
+			"sector": "Korvattavuus",
+			"agreement": "Kela-korvaus",
+			"optam": "Rajatut lisämaksut (OPTAM)",
+			"optamNo": "Ei mukana",
+			"carteVitale": "Kela-kortti",
+			"accepted": "Hyväksytään",
+			"notAccepted": "Ei hyväksytä",
+			"fromAmeli": "Nämä tiedot tulevat sairausvakuutuksen rekisteristä.",
+			"notMatched": "Palvelupaikkaa ei voitu yhdistää varmasti sairausvakuutuksen rekisteriin, joten näitä tietoja ei näytetä.",
+			"regulatoryNotice": "Korvattavuus määrää, miten palvelusta maksetaan ja miten se korvataan: tarkista hinnat ja korvaukset ennen käyntiä osoitteessa",
+			"regulatoryNoticeAgreement": "Korvaus määrää, miten palvelusta maksetaan ja miten se korvataan: tarkista hinnat ja korvaukset ennen käyntiä osoitteessa",
+			"ameliLink": "Kelan verkkosivut",
+			"source": "Kela",
+			"sourceOwner": "Järjestäjä"
+		},
+		"claim": {
+			"heading": "Onko tämä teidän palvelupaikkanne?",
+			"body": "Tämä sivu on koottu Suomi.fi-palvelutietovarannosta. Ottakaa se haltuun tarkistaaksenne ja täydentääksenne sitä:",
+			"link": "Ota tämä sivu haltuun",
+			"claimedHeading": "Sivua hallinnoi järjestäjä",
+			"claimedBody": "Järjestäjä on ottanut tämän sivun haltuun: sen pyyntö on tarkistettu, ja se täydentää sivua itse.",
+			"benefits": [
+				"maksuton, ilman tilausta ja sitoumuksia;",
+				"kuva, aukioloajat ja palvelukielet;",
+				"verkkosivunne ja esteettömyystiedot;",
+				"tilastot siitä, kuka sivuanne katsoo;",
+				"jakopaketti: linkki, QR-koodi ja juliste."
+			],
+			"contactLink": "Eikö asiakirjaa ole käsillä? Ota meihin yhteyttä",
+			"optOutLink": "Tämä on teidän sivunne, ettekä halua näkyä julkisesti? Aloita tästä"
+		},
+		"report": {
+			"heading": "Onko jokin väärin?",
+			"body": "Jos osoite, puhelinnumero tai nimi on väärin, kerro meille, miten se korjataan.",
+			"link": "Ilmoita virheestä"
+		},
+		"ring": {
+			"heading": "Muut palvelupaikat: {occupation}, {place}"
+		},
+		"photoAlt": "Kuva: {name}",
+		"metaTitleName": "{name} · Apercura",
+		"metaDescriptionBookable": "{name}, {occupation}: ajanvaraus verkossa, osoite, yhteystiedot ja {fees, select, sector {korvattavuus} other {Kela-korvaus}}.",
+		"metaDescriptionBookablePlace": "{name}, {occupation}, {place}: ajanvaraus verkossa, osoite, yhteystiedot ja {fees, select, sector {korvattavuus} other {Kela-korvaus}}.",
+		"finnishFacts": {
+			"organiser": "Järjestäjä",
+			"services": "Palvelut"
+		}
+	},
+	"Institutional": {
+		"toBeCompleted": "Täydennetään",
+		"legalDraftMark": "Luonnos: lakimies tarkistaa ennen julkaisua",
+		"auditMark": "Väliaikainen seloste: täydennetään käsin tehtävän auditoinnin jälkeen",
+		"comingMark": "Tulossa",
+		"placeholderNote": "Kaksinkertaisten aaltosulkeiden väliin suuraakkosin kirjoitetut arvot eivät ole vielä tiedossa: ne täytetään, kun oikeushenkilö ja sopimukset ovat olemassa."
+	},
+	"AboutPage": {
+		"metaTitle": "Tietoa palvelusta · Apercura",
+		"metaDescription": "Apercura julkaisee maksuttoman, asiallisen sivun jokaisesta Suomen julkisesta terveyspalvelupaikasta avoimen datan pohjalta.",
+		"title": "Tietoa Apercurasta",
+		"lead": "Suomen julkisten terveyspalvelujen avoin hakemisto: terveysasemat, sairaalat, päivystys, hammashoitolat, neuvolat ja muut paikat, joihin potilaat hakeutuvat.",
+		"sections": {
+			"what": {
+				"heading": "Mitä Apercura tekee",
+				"body": [
+					"Apercura julkaisee sivun jokaisesta julkisesta terveyspalvelupaikasta, jonka hyvinvointialue, Helsingin kaupunki, Ahvenanmaa tai muu julkinen järjestäjä kuvaa Suomi.fi-palvelutietovarannossa (terveysasemat, sairaalat, päivystys, hammashoitolat, neuvolat, mielenterveys- ja päihdepalvelut, kuntoutus, laboratoriot ja kuvantaminen).",
+					"Potilaat löytävät jokaisen palvelupaikan, eivät vain niitä, jotka maksavat alustalle. Järjestäjät voivat ottaa sivunsa maksutta haltuun, tarkistaa sen ja täydentää sitä. Suomessa Apercura ei tarjoa ajanvarausta verkossa."
+				]
+			},
+			"principles": {
+				"heading": "Periaatteet",
+				"list": [
+					"Jokainen palvelupaikka esitetään samalla tavalla riippumatta siitä, käyttääkö järjestäjä Apercuraa.",
+					"Vain asiallista tietoa: ei arvosanoja, arvioita, mainoksia eikä maksettua järjestystä.",
+					"Maksuton järjestäjille ja potilaille, ilman tilausta ja ilman välityspalkkiota.",
+					"Jokainen sivu kertoo, mistä sen tiedot tulevat ja milloin ne on viimeksi päivitetty.",
+					"Mahdollisimman vähän tietoja, kerätty ilmoitettuun tarkoitukseen ja poistettu aikataulun mukaan."
+				]
+			},
+			"how": {
+				"heading": "Mistä sivut tulevat",
+				"body": [
+					"Sivut kootaan joka viikko Suomi.fi-palvelutietovarannosta (Digi- ja väestötietovirasto, CC0 1.0); kunnat, hyvinvointialueet ja maakunnat tulevat Tilastokeskukselta (CC BY 4.0). Tiedot ja lähteet -sivulla on jokainen lähde lisensseineen ja päivämäärineen."
+				]
+			},
+			"who": {
+				"heading": "Kuka Apercuraa ylläpitää",
+				"body": [
+					"Apercura on yleishyödyllinen hanke. Se ei ole viranomaispalvelu eikä liity Digi- ja väestötietovirastoon, Tilastokeskukseen, hyvinvointialueisiin, Kelaan eikä Kanta-palveluihin."
+				]
+			}
+		},
+		"fields": {
+			"publisher": "Julkaisija",
+			"contact": "Yhteystiedot"
+		},
+		"links": {
+			"data": "Tiedot ja lähteet",
+			"openSource": "Lähdekoodi ja lisenssi"
+		}
+	},
+	"OpenSourcePage": {
+		"metaTitle": "Avoin lähdekoodi · Apercura",
+		"metaDescription": "Apercuran koko lähdekoodi on julkinen AGPL-3.0-lisenssillä. Lue sitä, auditoi sitä tai aja koko alustaa itse.",
+		"title": "Koodi on julkinen.",
+		"lead": "Apercuran jokainen rivi on julkaistu AGPL-3.0-lisenssillä: voit lukea ja auditoida sen ja ajaa koko alustaa itse.",
+		"sections": {
+			"licence": {
+				"heading": "AGPL-3.0-lisenssi",
+				"body": [
+					"AGPL-3.0 on vapaan ohjelmiston lisenssi. Kuka tahansa voi käyttää, tutkia, muuttaa ja jakaa koodia. Joka tarjoaa muokattua versiota verkkopalveluna, julkaisee muutoksensa samalla lisenssillä."
+				]
+			},
+			"can": {
+				"heading": "Mitä voit tehdä",
+				"list": [
+					"Lukea, miten jokainen sivu kootaan ja miten avoin data tuodaan.",
+					"Tarkistaa, miten potilaiden tiedot salataan ja kuinka kauan niitä säilytetään.",
+					"Ilmoittaa ongelmasta tai ehdottaa muutosta julkisessa repositoriossa.",
+					"Ajaa koko alustaa omalla infrastruktuurillasi Dockerilla avoimen datan tuonteineen."
+				]
+			},
+			"selfHost": {
+				"heading": "Oma ylläpito",
+				"body": [
+					"Pelkän hakemiston sisältävä asennus ei säilytä terveystietoja. Potilaiden varaukset ovat terveystietoja: jos tarjoat ajanvarausta muille, noudata maasi terveystietoja koskevia sääntöjä. Suomi.fi-palvelutietovarannon tiedot ovat vapaasti käytettävissä (CC0 1.0)."
+				]
+			}
+		},
+		"facts": {
+			"licence": "Lisenssi",
+			"licenceValue": "GNU Affero General Public License v3.0",
+			"repository": "Repositorio",
+			"data": "Hakemiston tiedot"
+		},
+		"dataValue": "Suomi.fi-palvelutietovaranto CC0 1.0, katso tiedot ja lähteet -sivu",
+		"cta": {
+			"heading": "Lue lähdekoodi",
+			"body": "Repositoriossa ovat koodi, dokumentaatio ja oman ylläpidon opas.",
+			"link": "Avaa repositorio"
+		}
+	},
+	"Listing": {
+		"count": "{count, plural, one {# palvelupaikka} other {# palvelupaikkaa}}",
+		"metaTitle": "{count, plural, one {{listing} – {place}: # palvelupaikka · Apercura} other {{listing} – {place}: # palvelupaikkaa · Apercura}}",
+		"metaTitlePage": "{listing} – {place}, sivu {page} · Apercura",
+		"metaDescription": "{count, plural, one {# palvelupaikka luokassa ”{occupation}”, {place}: {fees, select, sector {osoite, puhelin ja hinnat} other {osoite ja puhelin}}, Suomi.fi-palvelutietovarannosta.} other {# palvelupaikkaa luokassa ”{occupation}”, {place}: {fees, select, sector {osoitteet, puhelinnumerot ja hinnat} other {osoitteet ja puhelinnumerot}}, Suomi.fi-palvelutietovarannosta.}}",
+		"title": "{listing} – {place}",
+		"lead": "{count, plural, one {Valtakunnallisessa tietovarannossa on tässä luokassa # palvelupaikka, paikka {place}.} other {Valtakunnallisessa tietovarannossa on tässä luokassa # palvelupaikkaa, paikka {place}.}}",
+		"practitionersHeading": "{count, plural, one {Palvelupaikka} other {# palvelupaikkaa}}",
+		"practitionersIntro": "Aakkosjärjestyksessä. Kukaan ei maksa täällä olemisesta, eikä ketään nosteta ylemmäs.",
+		"rowFacts": "Korvattavuus: {sector} · Kela-kortti: {carteVitale}",
+		"rowFactsAgreement": "Kela-korvaus: {sector} · Kela-kortti: {carteVitale}",
+		"columns": {
+			"practitioner": "Palvelupaikka",
+			"sector": "Korvattavuus",
+			"agreement": "Kela-korvaus",
+			"carteVitale": "Kela-kortti"
+		},
+		"pagination": {
+			"label": "Luettelon sivut",
+			"previous": "Edellinen sivu",
+			"next": "Seuraava sivu",
+			"status": "Sivu {page}/{pages}",
+			"page": "<hidden>Sivu </hidden>{page}",
+			"jumps": "Siirry sivulle"
+		},
+		"facts": {
+			"heading": "Lukuina",
+			"intro": "Korvattavuustiedot tulevat sairausvakuutuksen rekisteristä niiden palvelupaikkojen osalta, jotka siitä löytyivät.",
+			"introAgreement": "Kela-korvaustiedot tulevat sairausvakuutuksen rekisteristä niiden palvelupaikkojen osalta, jotka siitä löytyivät.",
+			"sectorUnknown": "Korvattavuus ei tiedossa",
+			"agreementUnknown": "Kela-korvaus ei tiedossa",
+			"carteVitaleYes": "Hyväksyvät Kela-kortin",
+			"carteVitaleNo": "Eivät hyväksy Kela-korttia",
+			"bookingNotOpen": "Ei vielä avoinna",
+			"sources": "Suomi.fi-palvelutietovaranto (DVV), Tilastokeskus"
+		},
+		"communesHeading": "{listing} – kunnat: {place}",
+		"nearbyHeading": "{listing} – lähikunnat",
+		"establishmentsHeading": "Organisaatiot: {place}",
+		"establishmentsIntro": "Sairaalat, terveyskeskukset ja muut organisaatiot, joissa on luokan ”{occupation}” palvelupaikkoja.",
+		"allSpecialties": "Kaikki palvelupaikkatyypit: {place}",
+		"hubMetaTitle": "{count, plural, one {{listing} Suomessa: # palvelupaikka · Apercura} other {{listing} Suomessa: # palvelupaikkaa · Apercura}}",
+		"hubMetaDescription": "{count, plural, one {# palvelupaikka luokassa ”{occupation}” Suomessa hyvinvointialueittain: {fees, select, sector {osoite, puhelin ja hinnat} other {osoite ja puhelin}}, Suomi.fi-palvelutietovarannosta.} other {# palvelupaikkaa luokassa ”{occupation}” Suomessa hyvinvointialueittain: {fees, select, sector {osoitteet, puhelinnumerot ja hinnat} other {osoitteet ja puhelinnumerot}}, Suomi.fi-palvelutietovarannosta.}}",
+		"hubTitle": "{listing} Suomessa",
+		"hubLead": "{count, plural, one {Valtakunnallisessa tietovarannossa on tässä luokassa Suomessa # palvelupaikka.} other {Valtakunnallisessa tietovarannossa on tässä luokassa Suomessa # palvelupaikkaa.}}",
+		"departmentsHeading": "{listing} hyvinvointialueittain",
+		"departmentsIntro": "Valitse hyvinvointialue nähdäksesi sen kunnat ja palvelupaikat.",
+		"browseDirectory": "Selaa hakemistoa paikkakunnittain",
+		"metaTitleShort": "{listing} – {place} · Apercura",
+		"metaDescriptionPage": "{count, plural, one {Sivu {page}/{pages}: # palvelupaikka luokassa ”{occupation}”, {place}.} other {Sivu {page}/{pages}: # palvelupaikkaa luokassa ”{occupation}”, {place}.}}",
+		"metaDescriptionPageRange": "{count, plural, one {Sivu {page}/{pages}, {first}–{last}: # palvelupaikka luokassa ”{occupation}”, {place}.} other {Sivu {page}/{pages}, {first}–{last}: # palvelupaikkaa luokassa ”{occupation}”, {place}.}}",
+		"hubMetaTitleShort": "{listing} Suomessa · Apercura",
+		"authoritiesHeading": "{listing} – hyvinvointialueet: {place}"
+	},
+	"Directory": {
+		"metaTitle": "Terveyspalvelut paikkakunnittain · Apercura",
+		"metaDescription": "Suomen hyvinvointialueet ja kunnat julkisine terveyspalvelupaikkoineen Suomi.fi-palvelutietovarannosta: terveysasemat, sairaalat, hammashoitolat ja muut.",
+		"title": "Hakemisto paikkakunnittain",
+		"lead": "{count, plural, one {# palvelupaikka hyvinvointialueittain ja kunnittain.} other {# palvelupaikkaa hyvinvointialueittain ja kunnittain.}}",
+		"otherRegion": "Muut paikat",
+		"emptyTitle": "Hakemistoa ei ole vielä tuotu",
+		"emptyBody": "Suomi.fi-palvelutietovarannon tietoja ei ole vielä tuotu tälle palvelimelle. Palaa seuraavan tuonnin jälkeen.",
+		"placeMetaTitle": "Julkiset terveyspalvelut – {place} · Apercura",
+		"placeMetaDescription": "{count, plural, one {# julkinen terveyspalvelupaikka, {place}, tyypeittäin, Suomi.fi-palvelutietovarannosta.} other {# julkista terveyspalvelupaikkaa, {place}, tyypeittäin, Suomi.fi-palvelutietovarannosta.}}",
+		"placeTitle": "Terveyspalvelut – {place}",
+		"placeLead": "{count, plural, one {# palvelupaikka, paikka {place}.} other {# palvelupaikkaa, paikka {place}.}}",
+		"specialtiesHeading": "Palvelupaikan tyypin mukaan",
+		"communesHeading": "Kunnat: {place}",
+		"arrondissementsHeading": "Kaupunginosittain",
+		"establishmentsHeading": "Organisaatiot: {place}",
+		"placeMetaTitleShort": "Palvelupaikat – {place} · Apercura",
+		"authoritiesHeading": "Hyvinvointialueet: {place}",
+		"regionLink": "Kaikki: {place}"
+	},
+	"Establishment": {
+		"metaTitle": "{name} · Apercura",
+		"metaTitlePlace": "{name}, {place} · Apercura",
+		"metaDescription": "{count, plural, one {{name}: osoite, vaihde ja # siellä työskentelevä terveydenhuollon ammattilainen valtakunnallisesta rekisteristä.} other {{name}: osoite, vaihde ja # siellä työskentelevää terveydenhuollon ammattilaista valtakunnallisesta rekisteristä.}}",
+		"directory": "Hakemisto",
+		"folio": "FINESS {finess}",
+		"lead": "{count, plural, one {{kind}. Valtakunnallisen rekisterin mukaan täällä työskentelee # terveydenhuollon ammattilainen.} other {{kind}. Valtakunnallisen rekisterin mukaan täällä työskentelee # terveydenhuollon ammattilaista.}}",
+		"addressHeading": "Osoite",
+		"finess": "FINESS-numero",
+		"action": {
+			"call": "Ajat varataan organisaation kautta. Soita sen vaihteeseen ja kysy oikeaa yksikköä.",
+			"noPhone": "Tämän organisaation puhelinnumeroa ei ole julkaistu.",
+			"noPhoneHint": "Yhteystiedot löydät organisaation omilta verkkosivuilta."
+		},
+		"practitionersHeading": "{count, plural, one {Täällä työskentelevä ammattilainen} other {# täällä työskentelevää ammattilaista}}",
+		"practitionersIntro": "Erikoisaloittain, aakkosjärjestyksessä.",
+		"otherProfessions": "Muut ammatit",
+		"source": "Annuaire Santé (ANS) ja FINESS+"
+	},
+	"SearchForm": {
+		"specialties": "Palvelutyypit",
+		"practitioners": "Palvelupaikat",
+		"places": "Paikat",
+		"department": "Hyvinvointialue",
+		"nearMe": "Lähelläni",
+		"locating": "Sijaintiasi haetaan…",
+		"geoDenied": "Sijainnin jakaminen on estetty tältä sivustolta. Kirjoita sen sijaan paikan nimi.",
+		"geoUnavailable": "Sijaintiasi ei löytynyt. Kirjoita sen sijaan paikan nimi.",
+		"searching": "Haetaan…",
+		"noSuggestion": "Ei ehdotuksia. Näet kaikki tulokset painamalla ”Hae”."
+	},
+	"OgImage": {
+		"runningHead": "Julkisten terveyspalvelujen avoin hakemisto",
+		"titles": {
+			"medecin": "Jokaisella lääkärillä on jo sivu.",
+			"chirurgien-dentiste": "Jokaisella hammaslääkärillä on jo sivu.",
+			"sage-femme": "Jokaisella kätilöllä on jo sivu.",
+			"infirmier": "Jokaisella sairaanhoitajalla on jo sivu.",
+			"annuaire": "Terveyspalvelupaikat tyypin ja paikkakunnan mukaan."
+		},
+		"footer": "Maksuton · Avoin lähdekoodi · Ei arvosanoja eikä mainoksia",
+		"practitioner": {
+			"folio": "Tunniste {rpps}",
+			"alt": "{name}, {occupation}, {place}",
+			"altNoPlace": "{name}, {occupation}"
+		}
+	},
+	"taxonomy": {
+		"profession": {
+			"prakticky-lekar": "Yleislääkäri",
+			"detsky-lekar": "Lastenlääkäri",
+			"zubni-lekar": "Hammaslääkäri",
+			"gynekolog": "Gynekologi",
+			"lekar-specialista": "Erikoislääkäri",
+			"lekarna": "Apteekki",
+			"domaci-pece": "Kotisairaanhoito",
+			"fyzioterapeut": "Fysioterapeutti",
+			"psycholog": "Kliininen psykologi",
+			"logoped": "Puheterapeutti",
+			"porodni-asistentka": "Kätilö",
+			"ocni-lekar": "Silmälääkäri",
+			"detsky-psychiatr": "Lasten- ja nuorisopsykiatri",
+			"psychiatr": "Psykiatri",
+			"ortoped": "Ortopedi",
+			"plasticky-chirurg": "Plastiikkakirurgi",
+			"cevni-chirurg": "Verisuonikirurgi",
+			"neurochirurg": "Neurokirurgi",
+			"dermatolog": "Ihotautilääkäri",
+			"neurolog": "Neurologi",
+			"rehabilitacni-lekar": "Kuntoutuslääkäri",
+			"endokrinolog": "Endokrinologi ja diabetologi",
+			"usni-nosni-krcni": "Korva-, nenä- ja kurkkutautien lääkäri",
+			"kardiolog": "Kardiologi",
+			"urolog": "Urologi",
+			"alergolog": "Allergologi",
+			"ortodontista": "Oikomishoidon erikoishammaslääkäri",
+			"pneumolog": "Keuhkolääkäri",
+			"gastroenterolog": "Gastroenterologi",
+			"revmatolog": "Reumatologi",
+			"angiolog": "Angiologi",
+			"onkolog": "Onkologi",
+			"nefrolog": "Nefrologi",
+			"genetik": "Perinnöllisyyslääkäri",
+			"radiolog": "Radiologi",
+			"anesteziolog": "Anestesiologi",
+			"chirurg": "Kirurgi",
+			"internista": "Sisätautilääkäri",
+			"sairaalat": "Sairaala",
+			"sairaala": "Sairaala",
+			"paivystys": "Päivystyspiste",
+			"paivystyspiste": "Päivystyspiste",
+			"terveysasemat": "Terveysasema",
+			"terveysasema": "Terveysasema",
+			"hammashoitolat": "Hammashoitola",
+			"hammashoitola": "Hammashoitola",
+			"neuvolat": "Neuvola",
+			"neuvola": "Neuvola",
+			"mielenterveys-ja-paihdepalvelut": "Mielenterveys- ja päihdepalvelupiste",
+			"mielenterveys-ja-paihdepalvelupiste": "Mielenterveys- ja päihdepalvelupiste",
+			"kuntoutus": "Kuntoutusyksikkö",
+			"kuntoutusyksikko": "Kuntoutusyksikkö",
+			"laboratoriot-ja-kuvantaminen": "Laboratorio tai kuvantamisyksikkö",
+			"laboratorio-tai-kuvantamisyksikko": "Laboratorio tai kuvantamisyksikkö"
+		},
+		"listing": {
+			"prakticky-lekar": "Yleislääkärit",
+			"detsky-lekar": "Lastenlääkärit",
+			"zubni-lekar": "Hammaslääkärit",
+			"gynekolog": "Gynekologit",
+			"lekar-specialista": "Erikoislääkärit",
+			"lekarna": "Apteekit",
+			"domaci-pece": "Kotisairaanhoito",
+			"fyzioterapeut": "Fysioterapeutit",
+			"psycholog": "Kliiniset psykologit",
+			"logoped": "Puheterapeutit",
+			"porodni-asistentka": "Kätilöt",
+			"ocni-lekar": "Silmälääkärit",
+			"detsky-psychiatr": "Lasten- ja nuorisopsykiatrit",
+			"psychiatr": "Psykiatrit",
+			"ortoped": "Ortopedit",
+			"plasticky-chirurg": "Plastiikkakirurgit",
+			"cevni-chirurg": "Verisuonikirurgit",
+			"neurochirurg": "Neurokirurgit",
+			"dermatolog": "Ihotautilääkärit",
+			"neurolog": "Neurologit",
+			"rehabilitacni-lekar": "Kuntoutuslääkärit",
+			"endokrinolog": "Endokrinologit ja diabetologit",
+			"usni-nosni-krcni": "Korva-, nenä- ja kurkkutautien lääkärit",
+			"kardiolog": "Kardiologit",
+			"urolog": "Urologit",
+			"alergolog": "Allergologit",
+			"ortodontista": "Oikomishoidon erikoishammaslääkärit",
+			"pneumolog": "Keuhkolääkärit",
+			"gastroenterolog": "Gastroenterologit",
+			"revmatolog": "Reumatologit",
+			"angiolog": "Angiologit",
+			"onkolog": "Onkologit",
+			"nefrolog": "Nefrologit",
+			"genetik": "Perinnöllisyyslääkärit",
+			"radiolog": "Radiologit",
+			"anesteziolog": "Anestesiologit ja kipuklinikat",
+			"chirurg": "Kirurgit",
+			"internista": "Sisätautilääkärit",
+			"sairaalat": "Sairaalat",
+			"paivystys": "Päivystys",
+			"terveysasemat": "Terveysasemat",
+			"hammashoitolat": "Hammashoitolat",
+			"neuvolat": "Neuvolat",
+			"mielenterveys-ja-paihdepalvelut": "Mielenterveys- ja päihdepalvelut",
+			"kuntoutus": "Kuntoutus",
+			"laboratoriot-ja-kuvantaminen": "Laboratoriot ja kuvantaminen"
+		},
+		"practiceKind": {
+			"office": "Toimipiste"
+		}
+	},
+	"booking": {
+		"panel": {
+			"code": {
+				"sendsLeft": "{count, plural, one {Voit pyytää vielä # koodin.} other {Voit pyytää vielä # koodia.}}",
+				"invalid": "{count, plural, one {Koodi ei ole oikein. Yrityksiä on jäljellä #.} other {Koodi ei ole oikein. Yrityksiä on jäljellä #.}}"
+			}
+		},
+		"manage": {
+			"cutoffPassed": "{hours, plural, one {Verkossa voi tehdä muutoksia viimeistään # tunti ennen käyntiä. Peru tai siirrä aika nyt soittamalla palvelupaikkaan.} other {Verkossa voi tehdä muutoksia viimeistään # tuntia ennen käyntiä. Peru tai siirrä aika nyt soittamalla palvelupaikkaan.}}"
+		}
+	},
+	"auth": {
+		"runningHead": "Hallintatila",
+		"metadata": {
+			"signIn": "Kirjautuminen · Apercura",
+			"signUp": "Käyttäjätilin luominen · Apercura",
+			"verifyEmail": "Sähköpostiosoitteen vahvistaminen · Apercura",
+			"challenge": "Vahvista, että olet sinä · Apercura",
+			"security": "Tietoturva · Apercura",
+			"home": "Oma tila · Apercura"
+		},
+		"common": {
+			"email": "Sähköpostiosoite",
+			"password": "Salasana",
+			"pending": "Odota hetki",
+			"loading": "Ladataan",
+			"signOut": "Kirjaudu ulos",
+			"signingOut": "Kirjaudutaan ulos",
+			"totpCode": "Todennussovelluksen 6-numeroinen koodi"
+		},
+		"errors": {
+			"generic": "Jokin meni vikaan. Yritä hetken kuluttua uudelleen.",
+			"tooManyRequests": "Liian monta yritystä. Odota minuutti ja yritä sitten uudelleen.",
+			"invalidCredentials": "Sähköpostiosoite ja salasana eivät täsmää.",
+			"emailNotVerified": "Vahvista ensin sähköpostiosoitteesi: lähetimme sinulle juuri uuden linkin.",
+			"invalidCode": "Koodi ei kelpaa. Tarkista koodi ja yritä uudelleen.",
+			"locked": "Liian monta väärää koodia. Odota 15 minuuttia ja kirjaudu sitten uudelleen.",
+			"passwordTooShort": "Salasana on liian lyhyt: käytä vähintään 12 merkkiä.",
+			"passwordTooLong": "Salasana on liian pitkä: käytä enintään 128 merkkiä.",
+			"userExists": "Tällä sähköpostiosoitteella on jo käyttäjätili. Kirjaudu sen sijaan sisään.",
+			"invalidPassword": "Salasana ei ole oikein.",
+			"mfaRequired": "Vahvista ensin henkilöllisyytesi toisella tekijällä.",
+			"lastFactor": "Lisää toinen tekijä ennen tämän poistamista: käyttäjätilillä on aina oltava yksi.",
+			"passkeyFailed": "Pääsyavainta ei voitu käyttää. Yritä uudelleen tai käytä salasanaa ja koodia.",
+			"accountFrozen": "Tämä käyttäjätili on jäädytetty sivun riitauttamisen jälkeen. Ota meihin yhteyttä palauttaaksesi sen uudella tunnistautumisella."
+		},
+		"signIn": {
+			"title": "Kirjautuminen",
+			"lead": "Hallintatilasi: sivusi, kalenterisi, tiimisi.",
+			"asideFactor": "Jokainen käyttäjätili, jolla on pääsy varauksiin, tarvitsee toisen tekijän: todennussovelluksen koodin tai pääsyavaimen.",
+			"asidePasskey": "Pääsyavain säilyy puhelimessasi tai tietokoneessasi, ja se avataan sormenjäljellä, kasvoilla tai PIN-koodilla.",
+			"passwordHeading": "Salasanalla",
+			"submit": "Kirjaudu sisään",
+			"passkeyHeading": "Pääsyavaimella",
+			"passkeyHint": "Salasanaa ei tarvita: laitteesi vahvistaa, että olet sinä.",
+			"passkey": "Kirjaudu pääsyavaimella",
+			"noAccount": "Eikö sinulla ole vielä käyttäjätiliä?",
+			"signUpLink": "Luo käyttäjätili",
+			"totpHeading": "Anna koodi",
+			"backupHeading": "Anna varakoodi",
+			"totpLead": "Avaa todennussovellus ja anna Apercuralle näytetty 6-numeroinen koodi.",
+			"backupLead": "Jokainen varakoodi toimii kerran. Sait ne, kun otit todennussovelluksen käyttöön.",
+			"backupCode": "Varakoodi",
+			"verify": "Vahvista",
+			"useBackupCode": "Käytä sen sijaan varakoodia",
+			"useTotp": "Käytä sen sijaan todennussovellusta",
+			"pscHeading": "Pro Santé Connectilla",
+			"pscHint": "Jos liitit sen käyttäjätiliisi sivua haltuun ottaessasi, e-CPS-sovellus tai CPS-kortti kirjaa sinut sisään ilman lisäkoodia.",
+			"psc": "Kirjaudu Pro Santé Connectilla",
+			"pscFailed": "Kirjautuminen Pro Santé Connectilla ei onnistunut. Liitä se ensin käyttäjätiliisi sivun haltuunotossa tai kirjaudu salasanalla."
+		},
+		"signUp": {
+			"title": "Käyttäjätilin luominen",
+			"lead": "Maksuton palvelupaikkojen järjestäjille ja heidän tiimeilleen.",
+			"asideSteps": "Kolme vaihetta: luo käyttäjätili, vahvista sähköpostiosoitteesi ja ota käyttöön toinen tekijä.",
+			"asideFree": "Käyttäjätilin luominen ei muuta yhtään julkista sivua. Seuraava vaihe on sivusi ottaminen haltuun.",
+			"name": "Etu- ja sukunimi",
+			"emailHint": "Lähetämme tähän osoitteeseen vahvistuslinkin.",
+			"passwordHint": "Vähintään {min} merkkiä. Pitkä lause on helppo muistaa.",
+			"submit": "Luo käyttäjätili",
+			"haveAccount": "Onko sinulla jo käyttäjätili?",
+			"signInLink": "Kirjaudu sisään",
+			"sentHeading": "Katso sähköpostisi",
+			"sentTitle": "Lähetimme vahvistuslinkin osoitteeseen {email}.",
+			"sentBody": "Avaa viesti ja seuraa linkkiä tunnin kuluessa. Kirjaudu sitten sisään ja ota käyttöön toinen tekijä.",
+			"sentHint": "Eikö mitään tullut muutamassa minuutissa? Katso roskapostikansio tai kirjaudu sisään: lähetämme uuden linkin."
+		},
+		"verifyEmail": {
+			"title": "Sähköpostiosoitteen vahvistaminen",
+			"successTitle": "Sähköpostiosoitteesi on vahvistettu.",
+			"successBody": "Kirjaudu salasanallasi ja ota käyttöön toinen tekijä.",
+			"errorTitle": "Tämä linkki ei enää toimi.",
+			"errorBody": "Se on voinut vanhentua tai olla jo käytetty. Kirjaudu sisään: lähetämme sinulle uuden linkin.",
+			"signIn": "Kirjaudu sisään"
+		},
+		"challenge": {
+			"title": "Vahvista, että olet sinä",
+			"lead": "Käyttäjätililläsi on toinen tekijä: avaa tilasi sillä.",
+			"aside": "Pelkkä salasana ei riitä pääsyyn varauksiin.",
+			"passkeyHeading": "Pääsyavaimella",
+			"passkeyLead": "Laitteesi pyytää sormenjälkeä, kasvoja tai PIN-koodia.",
+			"passkey": "Käytä pääsyavaintani",
+			"totpHeading": "Todennussovelluksella",
+			"otherHeading": "Etkö ole sinä, tai eikö sinulla ole pääsyä tekijään?",
+			"otherLead": "Kirjaudu ulos. Käyttäjätilin palauttaminen tarkoittaa uutta tunnistautumista."
+		},
+		"security": {
+			"title": "Tietoturva",
+			"lead": "Miten kirjaudut sisään ja missä olet kirjautuneena.",
+			"enrolLead": "Yksi viimeinen vaihe ennen tilaasi: ota käyttöön toinen tekijä.",
+			"enrolTitle": "Valitse toinen tekijä jatkaaksesi",
+			"enrolBody": "Apercura edellyttää sitä jokaiselta käyttäjätililtä, jolla on pääsy varauksiin. Sekä todennussovellus että pääsyavain käyvät; voit lisätä toisen myöhemmin.",
+			"continue": "Jatka tilaasi",
+			"actions": "Toiminnot",
+			"totp": {
+				"heading": "Todennussovellus",
+				"lead": "Puhelimesi sovellus (esimerkiksi FreeOTP, Aegis tai Google Authenticator) näyttää uuden 6-numeroisen koodin 30 sekunnin välein.",
+				"enabledTitle": "Todennussovellus on käytössä.",
+				"enabledBody": "Koodia kysytään joka kerta, kun kirjaudut salasanalla.",
+				"scanHeading": "1. Skannaa QR-koodi",
+				"scanLead": "Lisää todennussovellukseen tili ja skannaa tämä koodi. Jos et voi skannata sitä, anna asetusavain.",
+				"qrLabel": "QR-koodi Apercuran lisäämiseksi todennussovellukseen",
+				"manualKey": "Asetusavain",
+				"codesHeading": "2. Säilytä varakoodisi",
+				"codesLead": "Jos kadotat puhelimesi, voit kirjautua kullakin koodilla kerran. Tulosta ne tai tallenna salasanojen hallintaan; ne näytetään vain nyt.",
+				"confirmHeading": "3. Anna sovelluksen näyttämä koodi",
+				"confirm": "Ota käyttöön",
+				"password": "Salasanasi",
+				"passwordHint": "Kysymme sen uudelleen ennen kuin muutamme kirjautumistapaasi.",
+				"start": "Ota sovellus käyttöön"
+			},
+			"passkeys": {
+				"heading": "Pääsyavaimet",
+				"lead": "Pääsyavain pysyy puhelimessasi, tietokoneessasi tai suojausavaimessasi, ja se avataan sormenjäljellä, kasvoilla tai PIN-koodilla. Mitään ei tarvitse kirjoittaa, eikä mitään voi varastaa.",
+				"addedTitle": "Pääsyavain on lisätty.",
+				"name": "Nimi",
+				"added": "Lisätty",
+				"unnamed": "Pääsyavain",
+				"removeNamed": "Poista {name}",
+				"remove": "Poista",
+				"none": "Pääsyavaimia ei vielä ole.",
+				"nameLabel": "Uuden pääsyavaimen nimi (valinnainen)",
+				"nameHint": "Esimerkiksi: vastaanoton tietokone.",
+				"add": "Lisää pääsyavain"
+			},
+			"sessions": {
+				"heading": "Missä olet kirjautuneena",
+				"lead": "Istunto päättyy 12 tunnin käyttämättömyyden jälkeen. Kirjaudu ulos jokaisesta istunnosta, jota et tunnista.",
+				"device": "Laite",
+				"lastActive": "Viimeksi aktiivinen",
+				"unknownDevice": "Tuntematon laite",
+				"current": "Tämä istunto",
+				"revoke": "Kirjaudu ulos",
+				"everywhereHint": "Kadotitko laitteen tai jaoitko salasanan? Kirjaudu ulos kaikista istunnoista, myös tästä.",
+				"everywhere": "Kirjaudu ulos kaikkialta"
+			},
+			"data": {
+				"heading": "Tietosi",
+				"lead": "Kopio kaikesta, mitä säilytämme käyttäjätilistäsi, ja sen poistaminen.",
+				"exportHeading": "Lataa tietosi",
+				"exportBody": "JSON-tiedosto käyttäjätilistäsi, kirjautumistavoistasi (ei koskaan niiden salaisuuksia), istunnoistasi, toimipisteistäsi, haltuunottopyynnöistäsi ja sivun sisällöstä.",
+				"export": "Lataa tietoni",
+				"deleteHeading": "Poista käyttäjätilisi",
+				"deleteBody": "Käyttäjätilisi, istuntosi, pyyntösi ja asiakirjasi poistetaan. Sivusi palaa tietovarannon tietoihin: haltuun ottamattomaksi, ilman sisältöäsi ja kuvaasi.",
+				"closeEffect": "Toimipisteen sulkeminen peruu sen tulevat varaukset (potilaille ilmoitetaan sähköpostilla), mitätöi sen kalenterilinkit ja poistaa vuorokauden kuluessa sen potilaiden tiedot. Pääsyloki säilytetään vuoden.",
+				"practiceChoice": "Mitä toimipisteelle {name} tapahtuu?",
+				"close": "Sulje toimipiste: sen jäsenet menettävät pääsynsä",
+				"transfer": "Siirrä se käyttäjälle {name} ({email})",
+				"practiceAlone": "Toimipiste {name} suljetaan käyttäjätilisi mukana (olet sen ainoa jäsen).",
+				"confirmEmail": "Vahvista kirjoittamalla sähköpostiosoitteesi",
+				"confirmEmailHint": "Poistoa ei voi perua.",
+				"mismatch": "Tämä ei ole käyttäjätilisi sähköpostiosoite.",
+				"hasTeam": "Valitse jokaisen tiimillisen toimipisteen osalta, mitä sille tapahtuu.",
+				"lastAdmin": "Olet alustan viimeinen ylläpitäjä: nimeä ensin joku toinen.",
+				"failed": "Käyttäjätiliä ei voitu poistaa. Yritä hetken kuluttua uudelleen.",
+				"delete": "Poista käyttäjätilini"
+			}
+		},
+		"app": {
+			"title": "Oma tila",
+			"lead": "Kirjautuneena: {email}.",
+			"homeLink": "Apercura, etusivu",
+			"nav": {
+				"label": "Hallintatila",
+				"home": "Oma tila",
+				"security": "Tietoturva",
+				"page": "Sivusi",
+				"adminClaims": "Haltuunottopyynnöt",
+				"adminReports": "Ilmoitukset",
+				"today": "Tänään",
+				"agenda": "Kalenteri",
+				"team": "Tiimi",
+				"menu": "Valikko",
+				"stats": "Tilastot",
+				"share": "Jakaminen",
+				"adminContacts": "Yhteydenottopyynnöt"
+			},
+			"practicesHeading": "Toimipisteesi",
+			"columns": {
+				"practice": "Toimipiste",
+				"role": "Roolisi",
+				"page": "Sivu",
+				"status": "Tila",
+				"next": "Seuraava vaihe"
+			},
+			"emptyTitle": "Toimipistettä ei vielä ole",
+			"emptyBody": "Toimipisteesi näkyy tässä, kun sivusi on otettu haltuun ja vahvistettu.",
+			"emptyAction": "Löydä sivuni",
+			"securityHeading": "Käyttäjätilin tietoturva",
+			"securityBody": "Käyttäjätiliäsi suojaa toinen tekijä. Hallitse todennussovellustasi, pääsyavaimiasi ja istuntojasi.",
+			"securityLink": "Tietoturva-asetukset",
+			"claimsHeading": "Sivusi ja haltuunottopyyntösi",
+			"editPage": "Muokkaa sivua",
+			"openClaim": "Avaa pyyntö",
+			"adminRunningHead": "Ylläpito",
+			"agendaHeading": "Kalenteri",
+			"agendaBody": "Päiväsi, viikkosi, vastausta odottavat pyynnöt ja ajanvarauksen asetukset.",
+			"agendaLink": "Avaa tämän päivän kalenteri",
+			"invitationsHeading": "Kutsut",
+			"invitationBody": "{practice} kutsuu sinut tiimiinsä.",
+			"invitationLink": "Vastaa kutsuun",
+			"pageHeading": "Sivusi",
+			"pageSummary": "{views, plural, =0 {Ei katselukertoja} one {# katselukerta} other {# katselukertaa}} viimeisten 30 päivän aikana; sivu on {score} % valmis.",
+			"statsLink": "Katso tilastot ja mitä puuttuu",
+			"shareLink": "Jaa sivu: linkki, QR-koodi, juliste"
+		},
+		"roles": {
+			"owner": "Omistaja",
+			"practitioner": "Ammattilainen",
+			"assistant": "Avustaja"
+		},
+		"email": {
+			"wordmark": "Apercura",
+			"runningHead": "Hallintatila",
+			"footer": "Apercura: julkisten terveyspalvelujen avoin hakemisto. Maksuton ja avointa lähdekoodia.",
+			"verify": {
+				"subject": "Vahvista sähköpostiosoitteesi",
+				"preview": "Vahvista sähköpostiosoitteesi viimeistelläksesi Apercura-käyttäjätilin luomisen.",
+				"title": "Vahvista sähköpostiosoitteesi",
+				"greeting": "Hei {name}!",
+				"body": "Loit juuri Apercura-käyttäjätilin. Jatka vahvistamalla, että tämä osoite on sinun.",
+				"action": "Vahvista osoitteeni",
+				"fallback": "Jos painike ei toimi, kopioi tämä linkki selaimeesi:",
+				"expiry": "Linkki on voimassa tunnin.",
+				"ignore": "Etkö luonut tätä käyttäjätiliä? Jätä tämä viesti huomiotta: mitään ei tapahdu."
+			}
+		}
+	},
+	"emails": {
+		"fallback": "Jos painike ei toimi, kopioi tämä linkki selaimeesi:",
+		"claimRegistryLink": {
+			"subject": "Vahvista palvelupaikan sivun haltuunotto",
+			"title": "Onko tämä {practitioner}?",
+			"body": [
+				"Joku on pyytänyt oikeutta hallinnoida Apercuran sivua: {practitioner}. Tämä viesti lähetettiin osoitteeseen, jonka valtakunnallinen tietovaranto julkaisee tästä palvelupaikasta.",
+				"Jos pyyntö tulee palvelupaikalta {practitioner}, avaa linkki ja vahvista se. Sivu on sen jälkeen vahvistettu."
+			],
+			"action": "Vahvista haltuunotto",
+			"notes": [
+				"Linkki on voimassa 24 tuntia.",
+				"Etkö odottanut tätä? Jätä viesti huomiotta: mikään ei muutu, ja sivu pysyy ennallaan."
+			]
+		},
+		"claimReceived": {
+			"subject": "Haltuunottopyyntösi on käsittelyssä",
+			"title": "Haltuunottopyyntösi on käsittelyssä",
+			"body": [
+				"Hei {name}!",
+				"Olemme saaneet haltuunottopyyntösi ja sen asiakirjat. Apercuran tiimin jäsen käy ne läpi ja kirjoittaa sinulle sähköpostilla.",
+				"Käsittelemme pyynnöt 48 tunnin kuluessa arkipäivinä."
+			]
+		},
+		"claimVerified": {
+			"subject": "Sivusi on vahvistettu",
+			"title": "Sivusi on vahvistettu",
+			"body": [
+				"Hei {name}!",
+				"Sivullasi on nyt vahvistetun sivun merkki. Tarkista tuodut tiedot, lisää hinnat ja maksutavat ja julkaise sivusi."
+			],
+			"action": "Täydennä sivuani"
+		},
+		"claimRejected": {
+			"subject": "Haltuunottopyyntöäsi ei hyväksytty",
+			"title": "Haltuunottopyyntöäsi ei hyväksytty",
+			"body": [
+				"Hei {name}!",
+				"Emme voineet vahvistaa pyyntöäsi. Käsittelijän ilmoittama syy: {reason}",
+				"Voit tehdä tilassasi uuden pyynnön ja liittää luettavan asiakirjan, joka osoittaa, että toimit palvelupaikan järjestäjän puolesta."
+			]
+		},
+		"claimSuperseded": {
+			"subject": "Pääsysi sivuun on poistettu",
+			"title": "Pääsysi sivuun on poistettu",
+			"body": [
+				"Hei {name}!",
+				"Toinen käyttäjätili osoitti kuuluvansa sen sivun järjestäjälle, jota käyttäjätilisi hallinnoi. Käyttäjätilisi on jäädytetty, ja sen pääsy toimipisteeseen on poistettu.",
+				"Jos järjestäjä olet sinä, ota meihin yhteyttä: käyttäjätilisi voidaan palauttaa vain uudella tunnistautumisella."
+			]
+		},
+		"removalReceived": {
+			"subject": "Poistopyyntösi on vastaanotettu",
+			"title": "Poistopyyntösi on vastaanotettu",
+			"body": [
+				"Sivu on nyt piilotettu: sitä ei enää näytetä, indeksoida eikä luetella.",
+				"Tarkistamme pyynnön ja vastaamme viimeistään kuukauden kuluessa. Kun se on vahvistettu, sivu poistetaan; poistettu sivu ei palaa tietovarannon seuraavassa tuonnissa."
+			]
+		},
+		"removalConfirmed": {
+			"subject": "Sivu on poistettu",
+			"title": "Sivu on poistettu",
+			"body": [
+				"Sivu, jonka poistamista pyysit, on poistettu Apercurasta. Se ei palaa tietovarannon seuraavassa tuonnissa."
+			]
+		},
+		"removalRejected": {
+			"subject": "Poistopyyntöäsi ei hyväksytty",
+			"title": "Poistopyyntöäsi ei hyväksytty",
+			"body": [
+				"Emme voineet vahvistaa poistopyyntöäsi, joten sivu näytetään taas. Syy: {reason}",
+				"Jos edustat sivulla mainitun palvelupaikan järjestäjää, voit myös ottaa sivun haltuun ja poistaa sen itse tilastasi."
+			]
+		},
+		"teamInvitation": {
+			"subject": "{inviter} kutsuu sinut mukaan: {practice}",
+			"title": "Liity tiimiin: {practice}",
+			"body": [
+				"Hei!",
+				"{inviter} kutsuu sinut Apercurassa tiimiin {practice} roolissa {role}.",
+				"Liity kirjautumalla sisään tai luomalla käyttäjätili tällä sähköpostiosoitteella ja ottamalla käyttöön toinen tekijä (todennussovellus tai pääsyavain): se suojaa potilaiden tietoja, joita näet."
+			],
+			"action": "Liity tiimiin",
+			"notes": [
+				"Tämä kutsu on voimassa 48 tuntia.",
+				"Etkö odottanut tätä? Jätä viesti huomiotta: ilman sinua mitään ei tapahdu."
+			]
+		},
+		"contactReceived": {
+			"subject": "Pyyntösi on vastaanotettu",
+			"title": "Pyyntösi on vastaanotettu",
+			"body": [
+				"Hei!",
+				"Olemme saaneet pyyntösi Apercuran hakemiston sivusta. Tiimin jäsen ottaa sinuun yhteyttä tarkistaakseen henkilöllisyytesi ja auttaakseen sinua ottamaan sivun haltuun.",
+				"Jos et lähettänyt tätä pyyntöä, jätä viesti huomiotta: yhtään sivua tai käyttäjätiliä ei ole muutettu."
+			]
+		},
+		"adminClaims": {
+			"subject": "{count, plural, one {# haltuunottopyyntö käsiteltävänä} other {# haltuunottopyyntöä käsiteltävänä}}",
+			"title": "{count, plural, one {Yksi haltuunottopyyntö odottaa päätöstä} other {# haltuunottopyyntöä odottaa päätöstä}}",
+			"body": [
+				"{count, plural, one {Yksi haltuunottopyyntö lähetettiin käsiteltäväksi} other {# haltuunottopyyntöä lähetettiin käsiteltäväksi}} edellisen ilmoituksen jälkeen.",
+				"Yksityiskohdat ovat hallintatilan jonossa toisen tekijäsi takana."
+			],
+			"action": "Avaa pyynnöt"
+		},
+		"adminContactRequests": {
+			"subject": "{count, plural, one {# ”Tämä on meidän sivumme” -pyyntö} other {# ”Tämä on meidän sivumme” -pyyntöä}}",
+			"title": "{count, plural, one {Yksi yhteydenottopyyntö odottaa vastausta} other {# yhteydenottopyyntöä odottaa vastausta}}",
+			"body": [
+				"{count, plural, one {Yksi järjestäjä, joka ei voi ottaa sivuaan haltuun, pyytää} other {# järjestäjää, jotka eivät voi ottaa sivuaan haltuun, pyytävät}} yhteydenottoa edellisen ilmoituksen jälkeen.",
+				"Niiden salatut tiedot voi lukea hallintatilan jonossa."
+			],
+			"action": "Avaa pyynnöt"
+		}
+	},
+	"Profile": {
+		"presentationHeading": "Esittely",
+		"practicalHeading": "Käytännön tiedot",
+		"fields": {
+			"languages": "Palvelukielet",
+			"accessibility": "Esteettömyys",
+			"website": "Verkkosivusto",
+			"fees": "Hinnat",
+			"paymentMethods": "Maksutavat"
+		},
+		"accessibility": {
+			"stepFree": "Esteetön kulku",
+			"lift": "Hissi",
+			"parking": "Pysäköinti lähellä"
+		},
+		"languages": {
+			"fr": "ranska",
+			"en": "englanti",
+			"es": "espanja",
+			"de": "saksa",
+			"it": "italia",
+			"pt": "portugali",
+			"ar": "arabia",
+			"zh": "kiina",
+			"ru": "venäjä",
+			"tr": "turkki",
+			"ro": "romania",
+			"pl": "puola",
+			"nl": "hollanti",
+			"vi": "vietnam",
+			"fa": "persia",
+			"he": "heprea",
+			"uk": "ukraina",
+			"lsf": "ranskalainen viittomakieli"
+		},
+		"paymentMethods": {
+			"card": "Pankkikortti",
+			"cash": "Käteinen",
+			"cheque": "Shekki",
+			"transfer": "Tilisiirto"
+		},
+		"fees": {
+			"range": "{min}–{max}",
+			"fromOwner": "Hinnat on ilmoittanut järjestäjä."
+		}
+	},
+	"Claim": {
+		"metadata": {
+			"start": "Sivun haltuunotto · Apercura",
+			"claim": "Haltuunottopyyntösi · Apercura",
+			"emailLink": "Haltuunottopyynnön vahvistaminen · Apercura"
+		},
+		"pending": "Odota hetki",
+		"errors": {
+			"generic": "Jokin meni vikaan. Yritä hetken kuluttua uudelleen.",
+			"TOO_MANY": "Tälle päivälle on liian monta pyyntöä. Yritä huomenna uudelleen.",
+			"ALREADY_OWNER": "Tämä sivu on jo sinun.",
+			"FROZEN": "Tämä käyttäjätili on jäädytetty, eikä sillä voi ottaa sivua haltuun.",
+			"NOT_FOUND": "Tällä tunnisteella ei ole sivua.",
+			"INVALID_RPPS": "Tunniste ei kelpaa: anna sivun osoitteen lopussa oleva tunniste (32 merkkiä), osoitteen loppu tai koko osoite.",
+			"NOT_OPEN": "Tämä pyyntö on suljettu: sitä ei voi enää muuttaa.",
+			"METHOD_UNAVAILABLE": "Tämä tapa ei ole käytettävissä tälle sivulle.",
+			"TOO_MANY_ATTEMPTS": "Tällä tavalla on yritetty liian monta kertaa. Käytä jotakin muuta.",
+			"NOT_SUBMITTABLE": "Lisää asiakirja ennen kuin lähetät pyynnön käsiteltäväksi.",
+			"BAD_DOCUMENT": "Tätä tiedostoa ei voi käyttää: lähetä PDF-, JPEG-, PNG- tai WebP-tiedosto, enintään 10 Mt.",
+			"PSC_MISSING": "Pro Santé Connect ei palauttanut henkilöllisyyttä. Yritä uudelleen."
+		},
+		"start": {
+			"title": "Ota sivusi haltuun",
+			"lead": "Haltuunotto koskee yhden palvelupaikan sivua, ei koskaan nimeä.",
+			"recordHeading": "Sivu, jonka otat haltuun",
+			"unknownProfession": "Terveyspalvelupaikka",
+			"viewPage": "Katso julkinen sivu",
+			"contestTitle": "Tällä sivulla on jo vahvistettu hallinnoija",
+			"contestBody": "Jos tämä on organisaatiosi sivu (esimerkiksi menetit pääsyn käyttäjätiliisi), voit silti ottaa sen haltuun: ylläpitäjä käy asiakirjasi läpi ja päättää. Käyttäjätilin palauttaminen vaatii aina uuden tarkistuksen.",
+			"confirm": "Tämä on meidän: aloita haltuunotto",
+			"goToPage": "Siirry sivulleni",
+			"findHeading": "Löydä palvelupaikkasi sivu",
+			"notFound": "Tällä tunnisteella ei vielä ole julkista sivua.",
+			"rppsLabel": "Sivun tunniste tai osoite",
+			"rppsHint": "Tunniste on sivun osoitteen lopussa, esimerkiksi b18aa7f87eca4b97a8e8b438d2e29427 osoitteessa apercura.org/fi/toimipiste/lapuan-sosiaali-ja-terveyskeskus-b18aa7f87eca4b97a8e8b438d2e29427. Voit liittää myös koko osoitteen.",
+			"find": "Löydä sivuni",
+			"searchHint": "Voit hakea sivuasi myös nimellä:",
+			"searchLink": "hae hakemistosta",
+			"howHeading": "Miten tarkistamme, että se olette te",
+			"factorNote": "Käyttäjätililläsi on jo toinen tekijä: se on pakollinen ennen jokaista haltuunottoa ja suojaa jatkossa sivuasi.",
+			"contactLink": "Eikö asiakirjaa ole käsillä? Ota meihin yhteyttä",
+			"optOutLink": "Tämä on teidän sivunne, ettekä halua näkyä julkisesti? Aloita tästä",
+			"identifierLabel": "Sivun tunniste"
+		},
+		"methods": {
+			"psc": {
+				"title": "Pro Santé Connect",
+				"short": "Pro Santé Connect",
+				"summary": "E-CPS-sovelluksella tai CPS-kortilla. Vahvistetaan heti, ja ajanvaraus verkossa voidaan avata saman tien.",
+				"lead": "Kirjaudu e-CPS-sovelluksella tai CPS-kortilla. Sivusi vahvistetaan heti, kun henkilöllisyys vastaa sivun RPPS-numeroa.",
+				"action": "Jatka Pro Santé Connectilla",
+				"hint": "Siirryt Apercurasta Pro Santé Connectin sivulle ja palaat sitten tänne.",
+				"done": "Pro Santé Connect vahvisti henkilöllisyytesi."
+			},
+			"registry_email": {
+				"title": "Palvelupaikan sähköposti",
+				"short": "Tietovarannon sähköposti",
+				"summary": "Linkki, joka lähetetään sähköpostiosoitteeseen, jonka tietovaranto julkaisee palvelupaikastasi. Vahvistetaan heti, kun avaat sen; ajanvaraus avautuu 7 päivän kuluttua.",
+				"lead": "Lähetämme linkin osoitteeseen {email}, joka on julkaistu tietovarannossa palvelupaikastasi. Avaa se ja vahvista.",
+				"action": "Lähetä linkki",
+				"resend": "Lähetä uudelleen",
+				"sent": "Linkki on lähetetty. Se on voimassa 24 tuntia.",
+				"done": "Palvelupaikan postilaatikko vahvisti pyynnön."
+			},
+			"document": {
+				"title": "Asiakirja ja puhelu",
+				"short": "Asiakirja",
+				"summary": "Asiakirja, joka osoittaa, että toimit palvelupaikan järjestäjän puolesta: valtakirja tai tehtävänkuvaus järjestäjän (esimerkiksi hyvinvointialueen) asiakirjapohjalla tai virallinen päätös, jossa sinut nimetään yksikön vastuuhenkilöksi. Tiimimme jäsen käy sen läpi, yleensä 48 tunnin kuluessa.",
+				"lead": "Lähetä asiakirja, joka osoittaa, että toimit palvelupaikan järjestäjän puolesta: valtakirja tai tehtävänkuvaus järjestäjän (esimerkiksi hyvinvointialueen) asiakirjapohjalla tai virallinen päätös, jossa sinut nimetään yksikön vastuuhenkilöksi. Se salataan ennen tallennusta ja poistetaan 30 päivän kuluttua päätöksestä."
+			},
+			"phone_callback": {
+				"title": "Takaisinsoitto",
+				"short": "Takaisinsoitto",
+				"lead": "Käsittelyn aikana tiimimme jäsen soittaa palvelupaikkaan numeroon {phone}, joka on tietovarannossa (ei koskaan antamaasi numeroon). Puheluun vastaava lukee tässä näkyvän koodin.",
+				"action": "Näytä koodini",
+				"newCode": "Näytä uusi koodi",
+				"hint": "Avaa se, kun olet palvelupaikassa, tai anna se sille, joka vastaa palvelupaikan puhelimeen. Uuden koodin pyytäminen mitätöi edellisen.",
+				"codeLabel": "Luettava koodi",
+				"codeHint": "Pidä se näytöllä tai kirjoita se muistiin: turvallisuussyistä näytämme sen vain nyt.",
+				"done": "Takaisinsoitto vahvisti pyynnön."
+			}
+		},
+		"check": {
+			"passed": "Valmis",
+			"failed": "Epäonnistui",
+			"pending": "Kesken",
+			"notStarted": "Aloittamatta",
+			"claim": {
+				"open": "Kesken",
+				"in_review": "Käsittelyssä",
+				"verified": "Vahvistettu",
+				"rejected": "Hylätty",
+				"withdrawn": "Peruttu",
+				"superseded": "Peruttu riitautuksen jälkeen"
+			}
+		},
+		"workspace": {
+			"title": "Sivun haltuunotto: {name}",
+			"lead": {
+				"open": "Osoita jollakin alla olevista tavoista, että toimit tämän palvelupaikan järjestäjän puolesta.",
+				"in_review": "Pyyntösi on käsittelyssä.",
+				"verified": "Seuraava vaihe: täydennä sivuasi.",
+				"rejected": "Tätä pyyntöä ei hyväksytty.",
+				"withdrawn": "Tämä pyyntö peruttiin.",
+				"superseded": "Tämä pyyntö peruttiin riitautuksen jälkeen."
+			}
+		},
+		"psc": {
+			"outcome": {
+				"verified": "Pro Santé Connect vahvisti henkilöllisyytesi: sivusi on vahvistettu.",
+				"passed": "Pro Santé Connect vahvisti henkilöllisyytesi. Ylläpitäjä käsittelee nyt pyynnön.",
+				"mismatch": "Pro Santé Connectin henkilöllisyys ei vastaa tämän sivun RPPS-numeroa.",
+				"error": "Pro Santé Connectiin ei saatu yhteyttä, tai kirjautuminen keskeytettiin. Yritä uudelleen.",
+				"linkedElsewhere": "Tämä Pro Santé Connect -henkilöllisyys on jo liitetty toiseen Apercura-käyttäjätiliin. Kirjaudu Pro Santé Connectilla käyttääksesi sitä."
+			}
+		},
+		"documents": {
+			"kind": {
+				"cps_card": "Valtakirja tai tehtävänkuvaus järjestäjän asiakirjapohjalla",
+				"ordre_attestation": "Virallinen päätös yksikön vastuuhenkilöstä"
+			},
+			"kindLabel": "Asiakirjan tyyppi",
+			"add": "Valitse tiedosto",
+			"hint": "PDF, JPEG, PNG tai WebP, enintään 10 Mt. Enintään 4 tiedostoa.",
+			"kilobytes": "kt"
+		},
+		"review": {
+			"title": "Lähetä käsiteltäväksi",
+			"lead": "Ylläpitäjä tarkistaa asiakirjasi ja soittaa palvelupaikkaan. Saat vastauksen sähköpostilla 48 tunnin kuluessa arkipäivinä.",
+			"submit": "Lähetä käsiteltäväksi",
+			"notYet": "Lisää ensin asiakirja."
+		},
+		"withdraw": "Peru tämä pyyntö",
+		"status": {
+			"verified": "Sivusi on vahvistettu",
+			"bookingDelay": "Ilman Pro Santé Connectia 7 päivän odotusaika ennen ajanvarausta verkossa päättyy {date}.",
+			"continue": "Täydennä sivuasi",
+			"in_review": "Pyyntösi on käsittelyssä",
+			"contestReview": "Tällä sivulla oli jo vahvistettu hallinnoija: ylläpitäjä päättää asiakirjasi perusteella.",
+			"reviewBody": "Tiimimme jäsen käy asiakirjasi läpi ja kirjoittaa sinulle sähköpostilla.",
+			"rejected": "Tätä pyyntöä ei hyväksytty",
+			"reason": "Syy: {reason}",
+			"withdrawn": "Tämä pyyntö peruttiin",
+			"superseded": "Tämä pyyntö peruttiin riitautuksen jälkeen",
+			"contestTitle": "Tällä sivulla on jo vahvistettu hallinnoija",
+			"contestBody": "Ylläpitäjä päättää asiakirjasi perusteella.",
+			"verifiedBadge": "Vahvistettu sivu"
+		},
+		"emailLink": {
+			"title": "Vahvista haltuunottopyyntö",
+			"lead": "Tämä linkki lähetettiin sähköpostiosoitteeseen, jonka valtakunnallinen tietovaranto julkaisee palvelupaikasta.",
+			"reading": "Linkkiä luetaan…",
+			"invalidTitle": "Tämä linkki ei enää toimi",
+			"invalidBody": "Se on vanhentunut (voimassa 24 tuntia) tai jo käytetty. Pyynnön tekijä voi lähettää pyynnöstään uuden linkin.",
+			"tooMany": "Liian monta yritystä. Odota tunti ja yritä sitten uudelleen.",
+			"doneTitle": "Pyyntö on vahvistettu",
+			"doneBody": "Pyynnön tekijä voi nyt kirjautua sisään ja täydentää sivua.",
+			"goToSpace": "Siirry hallintatilaan",
+			"body": "Jos tämän palvelupaikan järjestäjän edustaja pyysi oikeutta hallinnoida sen Apercura-sivua, vahvista pyyntö. Muussa tapauksessa sulje tämä sivu: mikään ei muutu.",
+			"confirm": "Vahvista pyyntö",
+			"pending": "Odota hetki"
+		},
+		"withdrawDialog": {
+			"title": "Perutaanko tämä pyyntö?",
+			"body": "Pyyntö suljetaan lopullisesti: sen todisteet eivät enää ole voimassa, ja asiakirjat poistetaan 30 päivän kuluttua. Voit myöhemmin tehdä uuden pyynnön aloittaen tarkistuksen alusta.",
+			"confirm": "Peru pyyntö",
+			"cancel": "Säilytä pyyntö"
+		},
+		"identifiers": {
+			"RPPS": "RPPS",
+			"AT-WIEN": "Wienin luettelo",
+			"AT-STMK": "Steiermarkin luettelo",
+			"AT-SBG": "Salzburgin luettelo",
+			"AT-SBGZ": "Salzburgin hammaslääkäriluettelo",
+			"GB-ODS-GP": "ODS-koodi",
+			"GB-ODS-DENT": "ODS-koodi",
+			"GB-ODS-PHARM": "ODS-koodi",
+			"GB-PHS-GP": "Public Health Scotlandin koodi",
+			"GB-PHS-DENT": "Public Health Scotlandin koodi",
+			"GB-PHS-PHARM": "Public Health Scotlandin koodi",
+			"GB-BSO-GP": "BSO:n vastaanoton numero",
+			"GB-BSO-DENT": "BSO:n hammashoitola",
+			"CZ-NRPZS": "NRPZS-numero",
+			"EE-TTL": "Toimilupa (Viro)",
+			"EE-APT": "Apteekin toimipaikka (Viro)",
+			"PL-RPWDL": "RPWDL-numero",
+			"FI-PTV": "Palvelupaikan tunniste"
+		}
+	},
+	"Onboarding": {
+		"metaTitle": "Sivun käyttöönotto · Apercura",
+		"title": "Ota sivusi käyttöön",
+		"lead": "Kolme vaihetta, jotta sivu {name} on valmis.",
+		"stepsLabel": "Vaiheet",
+		"stepNumber": "Vaihe {n}/{total}:",
+		"continue": "Jatka",
+		"pending": "Odota hetki",
+		"publishFailed": "Sivua ei voitu julkaista. Yritä hetken kuluttua uudelleen.",
+		"fields": {
+			"name": "Nimi",
+			"profession": "Palvelupaikan tyyppi"
+		},
+		"steps": {
+			"check": {
+				"label": "Tarkista tuodut tiedot",
+				"title": "Tarkista tuodut tiedot",
+				"lead": "Sivusi perustuu Suomi.fi-palvelutietovarantoon. Tarkista palvelupaikan nimi, tyyppi, palvelut ja toimipisteet.",
+				"sites": "Toimipisteet",
+				"unnamed": "Nimetön paikka",
+				"hidden": "Piilotettu",
+				"registryNote": "Onko jokin väärin? Pysyvän korjauksen tekee järjestäjä Suomi.fi-palvelutietovarannossa; sivu seuraa sitä seuraavassa viikoittaisessa tuonnissa. Sivueditorissa voit piilottaa toimipisteen tai lisätä sellaisen."
+			},
+			"booking": {
+				"label": "Aukioloajat ja ajanvaraus",
+				"title": "Aukioloajat ja ajanvaraus",
+				"lead": "Potilaat varaavat aikoja sivullasi, kun kalenterisi on avoinna. Ennen sen avaamista sivulla on oltava hinnat ja hyväksytyt maksutavat.",
+				"fees": "Hinnat",
+				"payments": "Maksutavat",
+				"done": "Ilmoitettu",
+				"todo": "Täydennettävä",
+				"deontology": "Verkossa toimintaansa esittelevä palvelun tarjoaja ilmoittaa hintansa ja hyväksytyt maksutavat.",
+				"editFees": "Täydennä hinnat ja maksutavat",
+				"settingsNote": "Toimipisteet, aukioloajat ja käyntityypit määritetään ajanvarauksen asetuksissa.",
+				"waitingPeriod": "Odotusaika vahvistuksen jälkeen",
+				"waitingEnds": "7 päivän odotusaika päättyy {date}",
+				"noWaiting": "Ei ole",
+				"settingsLink": "Määritä aukioloajat ja ajanvaraus"
+			},
+			"publish": {
+				"label": "Julkaisu",
+				"title": "Julkaise sivusi",
+				"lead": "Julkaistessa julkisella sivullasi näytetään esittely, palvelukielet, hinnat ja käytännön tiedot. Voit muuttaa tai piilottaa ne milloin tahansa.",
+				"already": "Sivusi on julkaistu. Jokainen tallennettu muutos näkyy heti verkossa.",
+				"edit": "Muokkaa sivuani",
+				"action": "Julkaise sivuni",
+				"shareLead": "Kerro sivustasi: linkki, QR-koodi ja odotustilan juliste ovat valmiina.",
+				"shareLink": "Avaa jakopaketti",
+				"statsLink": "Katso sivun tilastot"
+			}
+		}
+	},
+	"Editor": {
+		"metaTitle": "Sivusi · Apercura",
+		"title": "Sivusi",
+		"lead": "Täydennä julkista sivua: {name}. Vain pelkkää tekstiä; mitä piilotat, sitä ei koskaan näytetä.",
+		"empty": {
+			"title": "Muokattavaa sivua ei vielä ole",
+			"body": "Sivusi näkyy tässä, kun haltuunottopyyntösi on vahvistettu.",
+			"action": "Ota sivuni haltuun"
+		},
+		"pending": "Odota hetki",
+		"viewPublic": "Katso julkinen sivu",
+		"jumpToPreview": "Siirry esikatseluun",
+		"formLabel": "Sivun sisältö",
+		"removed": {
+			"title": "Sivusi on poistettu hakemistosta",
+			"body": "Kukaan ei näe sitä, ja sen sisältö on poistettu. Voit palauttaa sen tämän sivun alaosasta: se palaa tietovarannon seuraavassa viikoittaisessa päivityksessä."
+		},
+		"unpublished": {
+			"title": "Sisältöäsi ei ole vielä julkaistu",
+			"link": "Viimeistele sivusi käyttöönotto"
+		},
+		"photo": {
+			"title": "Kuva",
+			"lead": "Valinnainen. Tuore kuva palvelupaikasta tai sen sisäänkäynnistä.",
+			"current": "Nykyinen kuva",
+			"none": "Ei kuvaa.",
+			"add": "Lisää kuva",
+			"replace": "Vaihda kuva",
+			"remove": "Poista kuva",
+			"hint": "JPEG, PNG tai WebP, enintään 5 Mt. Rajaamme sen neliöksi ja poistamme sen metatiedot (sijainti, laite)."
+		},
+		"visibility": {
+			"label": "Näytä sivulla: {field}",
+			"shown": "Näytetään"
+		},
+		"presentation": {
+			"title": "Esittely",
+			"lead": "Vain asiallista tietoa: ei potilaiden palautetta eikä vertailuja muihin.",
+			"headline": "Alaotsikko",
+			"headlineHint": "Yksi rivi palvelupaikan tyypin alla, enintään {max} merkkiä.",
+			"bio": "Esittely",
+			"bioHint": "Pelkkää tekstiä, enintään {max} merkkiä. Jätä kappaleiden väliin tyhjä rivi."
+		},
+		"languages": {
+			"title": "Palvelukielet"
+		},
+		"fees": {
+			"title": "Maksut ja korvaukset",
+			"lead": "Pakollinen ennen ajanvarauksen avaamista verkossa: hinnat ja hyväksytyt maksutavat.",
+			"requiredBadge": "Pakollinen ajanvaraukselle",
+			"ameliPrefill": "Esitäytetty sairausvakuutuksen rekisteristä. Antamasi tiedot korvaavat sen sivullasi.",
+			"sector": "Korvattavuus",
+			"agreement": "Kela-korvaus",
+			"notStated": "Ei ilmoitettu",
+			"optam": "Rajatut lisämaksut (OPTAM)",
+			"optamNone": "Ei mukana",
+			"carteVitale": "Kela-kortti",
+			"carteVitaleYes": "Hyväksytään",
+			"carteVitaleNo": "Ei hyväksytä",
+			"itemsTitle": "Hinnat",
+			"noItem": "Hintoja ei vielä ole.",
+			"itemLabel": "Hinta {n}: mistä",
+			"itemPlaceholder": "Vastaanottokäynti",
+			"amount": "Summa (€)",
+			"maxAmount": "Enintään (€)",
+			"removeItem": "Poista hinta {n}",
+			"remove": "Poista",
+			"addItem": "Lisää hinta",
+			"note": "Huomautus hinnoista",
+			"noteHint": "Esimerkiksi mistä lisämaksut riippuvat.",
+			"payments": "Hyväksytyt maksutavat",
+			"requiredHint": "Ajanvaraus pysyy suljettuna, kunnes vähintään yksi hinta ja yksi maksutapa on ilmoitettu."
+		},
+		"access": {
+			"title": "Esteettömyys",
+			"notes": "Kulkuohjeet",
+			"notesHint": "Kerros, sisäänkäynti, joukkoliikenne."
+		},
+		"contact": {
+			"title": "Verkkosivusto ja puhelin",
+			"website": "Verkkosivusto",
+			"websiteHint": "Palvelupaikan tai järjestäjän verkkosivu, alkaa https://",
+			"showPhone": "Näytä palvelupaikan puhelinnumero",
+			"showPhoneHint": "Kun se on piilotettu, sivu ei enää tarjoa soittoa palvelupaikkaan."
+		},
+		"failure": {
+			"generic": "Jokin meni vikaan. Yritä hetken kuluttua uudelleen.",
+			"invalid": "Joitakin kenttiä on korjattava: katso niiden alla olevat ilmoitukset.",
+			"lastSite": "Vähintään yhden toimipisteen on oltava näkyvissä: sivua ilman toimipistettä ei voi julkaista.",
+			"unknownPlace": "Emme tunne tätä postinumeroa ja kuntaa. Tarkista ne.",
+			"badPhone": "Puhelinnumero ei kelpaa.",
+			"photoTooLarge": "Kuva on suurempi kuin 5 Mt.",
+			"photoUnsupported": "Tätä tiedostoa ei voi käyttää kuvana: lähetä JPEG-, PNG- tai WebP-tiedosto."
+		},
+		"saved": "Tallennettu. Julkinen sivusi on ajan tasalla.",
+		"savedDraft": "Tallennettu. Julkaise sivusi, jotta tämä näkyy.",
+		"save": "Tallenna sivu",
+		"lastSaved": "Tallennettu viimeksi {date}",
+		"sites": {
+			"title": "Toimipisteet",
+			"lead": "Valitse, mitkä toimipisteet sivullasi näytetään. Tietovarannosta tulevia toimipisteitä voi piilottaa, ei muuttaa.",
+			"unnamed": "Nimetön paikka",
+			"added": "Sinun lisäämäsi",
+			"shownNamed": "Näytä sivulla: {name}",
+			"remove": "Poista",
+			"registryNote": "Onko tietovarannosta tuleva toimipiste väärin? Korjaus tehdään Suomi.fi-palvelutietovarannossa; sivu seuraa sitä seuraavassa tuonnissa.",
+			"addTitle": "Lisää toimipiste",
+			"name": "Paikan nimi",
+			"address": "Katuosoite",
+			"postcode": "Postinumero",
+			"city": "Kunta",
+			"phone": "Puhelin (valinnainen)",
+			"phoneHint": "Palvelupaikan numero, joka näytetään sivulla.",
+			"add": "Lisää toimipiste"
+		},
+		"remove": {
+			"title": "Poista sivusi",
+			"lead": "Sivusi katoaa hakemistosta, hauista ja hakukoneista, eikä se palaa seuraavassa tuonnissa. Sen toimipisteet, esittely, kuva, hinnat ja tilastot poistetaan heti; käyttäjätilisi ja kalenterisi säilyvät. Voit palauttaa sen täällä: tietovarannon sivu palaa seuraavassa viikoittaisessa päivityksessä, ja täydennät sen uudelleen.",
+			"action": "Poista sivuni hakemistosta",
+			"restore": "Palauta sivuni",
+			"dialog": {
+				"title": "Poistetaanko sivusi hakemistosta?",
+				"intro": "Sivusi katoaa heti hakemistosta, hauista ja hakukoneista. Tämä sisältö poistetaan pysyvästi:",
+				"items": {
+					"places": "toimipisteesi",
+					"presentation": "esittelysi (alaotsikko, kuvaus, kielet, alat)",
+					"photo": "kuvasi",
+					"fees": "hintasi ja maksutapasi",
+					"statistics": "sivun tilastot"
+				},
+				"restore": "Käyttäjätilisi ja kalenterisi säilyvät. Jos palautat sivun, se palaa tietovarannosta seuraavassa viikoittaisessa tuonnissa, ja täytät sen uudelleen.",
+				"understood": "Ymmärrän, että tämä sisältö poistetaan",
+				"confirm": "Poista sivuni",
+				"cancel": "Peruuta"
+			},
+			"busy": "Hakemistoa päivitetään parhaillaan viikoittaisella tuonnilla: sivuasi ei muutettu. Yritä muutaman minuutin kuluttua uudelleen."
+		},
+		"preview": {
+			"title": "Esikatselu",
+			"note": "Ei vielä tallennettu",
+			"noSite": "Yhtään toimipistettä ei näytetä.",
+			"unnamedPlace": "Toimipiste"
+		},
+		"issues": {
+			"tooLong": "Teksti on liian pitkä.",
+			"markup": "Vain pelkkää tekstiä: ei HTML:ää eikä hakasulkeissa olevia linkkejä.",
+			"required": "Tämä kenttä on pakollinen.",
+			"range": "Ylärajan on oltava summaa suurempi.",
+			"website": "Osoite ei ole verkkosivun osoite (https://…).",
+			"postcode": "Suomalaisessa postinumerossa on 5 numeroa.",
+			"invalid": "Arvo ei kelpaa."
+		}
+	},
+	"Admin": {
+		"claims": {
+			"queueHeading": "{count, plural, one {# pyyntö odottaa} other {# pyyntöä odottaa}}"
+		}
+	},
+	"Gdpr": {
+		"about": "Sivusta",
+		"rpps": "Sivun tunniste",
+		"rppsHint": "Sivun osoitteen loppu, esimerkiksi b18aa7f87eca4b97a8e8b438d2e29427 osoitteessa apercura.org/fi/toimipiste/lapuan-sosiaali-ja-terveyskeskus-b18aa7f87eca4b97a8e8b438d2e29427, tai koko osoite.",
+		"pending": "Odota hetki",
+		"errors": {
+			"tooMany": "Tästä yhteydestä on tullut liian monta pyyntöä. Yritä tunnin kuluttua uudelleen.",
+			"notFound": "Tällä tunnisteella ei ole sivua.",
+			"claimed": "Tätä sivua hallinnoi järjestäjä: vain se voi poistaa sen omasta tilastaan.",
+			"invalid": "Tarkista lomake: jokin kenttä puuttuu tai on liian pitkä.",
+			"generic": "Jokin meni vikaan. Yritä hetken kuluttua uudelleen."
+		},
+		"report": {
+			"metaTitle": "Ilmoita virheestä · Apercura",
+			"title": "Ilmoita virheestä",
+			"lead": "Kerro meille, mikä tällä sivulla on väärin. Viestisi salataan, ja vain Apercuran tiimi lukee sen.",
+			"doneTitle": "Kiitos, ilmoituksesi on vastaanotettu",
+			"doneBody": "Tarkistamme sen. Tietovarannosta tulevat tiedot korjataan lähteessä: palvelupaikan järjestäjä korjaa kuvauksensa Suomi.fi-palvelutietovarannossa. Jos jätit osoitteen, kerromme sinulle.",
+			"kind": "Mikä on väärin?",
+			"kinds": {
+				"wrong_info": "Väärä tieto (osoite, puhelin, nimi)",
+				"retired": "Palvelupaikka on lopettanut toimintansa",
+				"deceased": "Palvelupaikka on suljettu pysyvästi",
+				"impersonation": "Joku käyttää tätä sivua järjestäjän nimissä"
+			},
+			"message": "Yksityiskohdat",
+			"messageHint": "Mikä on väärin ja, jos tiedät, mikä on oikein.",
+			"contact": "Sähköpostisi (valinnainen)",
+			"contactHint": "Vain sinulle vastaamista varten.",
+			"privacy": "Älä lisää terveystietoja.",
+			"submit": "Lähetä ilmoitus"
+		},
+		"removal": {
+			"metaTitle": "Sivun poistopyyntö · Apercura",
+			"title": "Pyydä tämän sivun poistamista",
+			"lead": "Yleisen tietosuoja-asetuksen 21 artiklan nojalla voit vastustaa sinua koskevan sivun julkaisemista. Sivu piilotetaan heti, kun pyyntö on vastaanotettu, ja poistetaan lyhyen tarkistuksen jälkeen.",
+			"doneTitle": "Sivu on piilotettu",
+			"doneBody": "Sitä ei enää näytetä, indeksoida eikä luetella. Tarkistamme pyynnön ja vastaamme sähköpostilla viimeistään kuukauden kuluessa. Kun pyyntö on vahvistettu, sivu poistetaan pysyvästi, eikä se palaa tietovarannon päivitysten mukana.",
+			"contact": "Sähköpostisi",
+			"contactHint": "Pyynnön vahvistamiseksi kanssasi. Se salataan, eikä sitä käytetä mihinkään muuhun.",
+			"message": "Viesti (valinnainen)",
+			"messageHint": "Kaikki, mikä auttaa meitä tarkistamaan pyynnön.",
+			"confirm": "Tämä sivu koskee minua tai edustamaani palvelupaikkaa",
+			"privacy": "Poistettu sivu ei palaa tietovarannon seuraavassa tuonnissa.",
+			"submit": "Piilota ja poista sivu",
+			"claimedTitle": "Tätä sivua hallinnoi järjestäjä",
+			"claimedBody": "Vain sen hallinnoija voi poistaa sen hallintatilan sivueditorista: sivu katoaa silloin heti eikä palaa tietovarannon päivitysten mukana.",
+			"claimedLink": "Poista sivuni hallintatilasta",
+			"alreadyTitle": "Poistopyyntöä tarkistetaan",
+			"alreadyBody": "Sivu on jo piilotettu."
+		},
+		"contact": {
+			"metaTitle": "Tämä on meidän sivumme · Apercura",
+			"title": "Edustan tämän palvelupaikan järjestäjää",
+			"lead": "Ettekö voi ottaa palvelupaikkanne sivua haltuun asiakirjalla? Jätä meille yhteystietosi: Apercuran tiimin jäsen ottaa sinuun yhteyttä tarkistaakseen, että toimit järjestäjän puolesta, ja auttaa sinua.",
+			"patientsTitle": "Tämä lomake on vain tämän sivun palvelupaikan järjestäjälle",
+			"patientsBody": "Sitä ei ole tarkoitettu ajan varaamiseen eikä yhteydenottoon palvelupaikkaan: käytä siihen sivulla olevia yhteystietoja.",
+			"claimFirst": "Asiakirjalla, joka osoittaa, että toimit järjestäjän puolesta, haltuunotto on nopeampaa:",
+			"claimFirstLink": "ota tämä sivu haltuun",
+			"rpps": "Sivun tunniste",
+			"rppsHint": "Sen sivun tunniste, jolta tulit. Sitä ei voi muuttaa.",
+			"name": "Etu- ja sukunimesi",
+			"email": "Työsähköpostisi",
+			"emailHint": "Sinulle vastaamista varten. Lähetämme sinulle myös vahvistuksen.",
+			"phone": "Puhelinnumerosi (valinnainen)",
+			"phoneHint": "Jos haluat, että sinulle soitetaan.",
+			"message": "Viestisi",
+			"messageHint": "Kerro, miksi haltuunotto verkossa ei sovi sinulle.",
+			"privacy": "Tietosi ja viestisi salataan, vain Apercuran tiimi lukee ne sinulle vastatakseen, ja ne poistetaan 12 kuukauden kuluttua viimeisestä yhteydenpidosta. Älä lisää terveystietoja.",
+			"submit": "Lähetä pyyntöni",
+			"doneTitle": "Pyyntösi on vastaanotettu",
+			"doneBody": [
+				"Apercuran tiimin jäsen ottaa sinuun yhteyttä sähköpostilla tai puhelimitse tarkistaakseen henkilöllisyytesi ja auttaa sinua sitten ottamaan sivun haltuun.",
+				"Antamaasi osoitteeseen lähetettiin juuri vahvistus."
+			],
+			"claimedTitle": "Tätä sivua hallinnoi jo järjestäjä",
+			"claimedBody": "Sen hallinnoija on vahvistettu. Jos tämä on teidän sivunne eikä sinulla enää ole pääsyä siihen, tee haltuunottopyyntö: tiimi käsittelee sen.",
+			"claimedLink": "Ota tämä sivu haltuun",
+			"withheldTitle": "Tämä sivu on piilotettu",
+			"withheldBody": "Sen poistopyyntöä tarkistetaan.",
+			"errors": {
+				"proof": "Robottitarkistus ei valmistunut. Yritä hetken kuluttua uudelleen.",
+				"claimed": "Tätä sivua hallinnoi jo järjestäjä: tee haltuunottopyyntö."
+			}
+		}
+	},
+	"Agenda": {
+		"settings": {
+			"types": {
+				"areaAdded": "{count, plural, =0 {Uusia kuntia ei lisätty.} one {Lisättiin # kunta.} other {Lisättiin # kuntaa.}}"
+			}
+		},
+		"log": {
+			"records": "{count, plural, one {# merkintä} other {# merkintää}}"
+		}
+	},
+	"Stats": {
+		"chartSummary": "{total, plural, one {# katselukerta} other {# katselukertaa}} 30 päivän aikana; eniten: {max}, {day}."
+	},
+	"LegalNoticeFi": {
+		"metaTitle": "Oikeudelliset tiedot · Apercura",
+		"metaDescription": "Apercuran Suomen sivujen oikeudelliset tiedot: palvelun tarjoaja, Y-tunnus, osoite ja yhteystiedot sähköpostiosoitteineen (laki 917/2014, 176 §).",
+		"title": "Oikeudelliset tiedot",
+		"lead": "Kuka tarjoaa Apercuran Suomen sivut (apercura.org/fi): tiedot, jotka sähköisen viestinnän palveluista annetun lain (917/2014) 176 § edellyttää palvelun tarjoajan pitävän helposti, suoraan ja jatkuvasti saatavilla.",
+		"sections": {
+			"provider": {
+				"heading": "Palvelun tarjoaja (laki 917/2014, 176 §)",
+				"body": [
+					"Apercuran Suomen sivut tarjoaa alla mainittu taho: sen nimi, osoite ja yhteystiedot sähköpostiosoite mukaan lukien, kaupparekisteri tai muu julkinen rekisteri, johon se on merkitty, rekisterinumero tai Y-tunnus sekä arvonlisäverotunniste, jos se on arvonlisäverovelvollinen. Se ylläpitää hakemistoa ja vastaa sen sisällöstä."
+				]
+			},
+			"service": {
+				"heading": "Palvelu",
+				"body": [
+					"Maksuton hakemisto Suomen julkisista terveyspalvelupaikoista (terveysasemat, sairaalat, päivystys, hammashoitolat, neuvolat, mielenterveys- ja päihdepalvelut, kuntoutus, laboratoriot ja kuvantaminen). Se on koottu valtakunnallisesta Suomi.fi-palvelutietovarannosta (PTV), johon hyvinvointialueet, Helsingin kaupunki, Ahvenanmaa ja muut julkiset järjestäjät kuvaavat palvelunsa. Hakemistossa ei ole mainontaa, ja järjestäjä voi täydentää omia sivujaan. Sivut kuvaavat palvelupaikkoja, eivät niissä työskenteleviä terveydenhuollon ammattilaisia. Apteekit ja yksityiset vastaanotot eivät ole mukana. Sivut ovat suomeksi; ruotsinkielinen versio on suunnitteilla."
+				]
+			},
+			"booking": {
+				"heading": "Ei ajanvarausta Suomessa",
+				"body": [
+					"Apercuran kautta ei Suomessa varata vastaanottoaikoja. Terveydenhuollon ajanvarausjärjestelmä käsittelee asiakastietoja sosiaali- ja terveydenhuollon asiakastietojen käsittelystä annetun lain (784/2021) mukaisesti: tällaiset järjestelmät rekisteröidään A- tai B-luokan järjestelmiksi ja liitetään valtakunnallisiin Kanta-palveluihin. Sitä, onko niiden rinnalla käytettävän ajanvaraustyökalun itse oltava rekisteröity ja Kantaan liitetty, ei ole ratkaistu. Siihen asti Apercura julkaisee vain hakemiston, joka ei käsittele asiakastietoja. Varaa aika suoraan palvelupaikasta tai sen järjestäjältä."
+				]
+			},
+			"editor": {
+				"heading": "Sisällöstä vastaava",
+				"body": [
+					"Alla mainittu henkilö vastaa siitä, mitä palvelun tarjoaja julkaisee. Järjestäjän omalle sivulleen lisäämät tiedot ovat järjestäjän vastuulla; käyttäjien antamien tietojen säilyttäjänä palvelun tarjoaja vastaa niistä vain digipalvelusäädöksen (asetus (EU) 2022/2065, 6 artikla) edellytysten mukaisesti."
+				]
+			},
+			"liability": {
+				"heading": "Sivujen sisältö",
+				"body": [
+					"Hakemisto on koottu Suomi.fi-palvelutietovarannosta, jonka sisällön kukin järjestäjä pitää ajan tasalla, ja sijoitettu Tilastokeskuksen kuntiin, hyvinvointialueille ja maakuntiin. Tiedot voivat olla puutteellisia tai vanhentuneita: tarkista aukioloajat ja hoitoon hakeutuminen palvelupaikasta tai sen järjestäjältä ennen käyntiä. Jokaisella sivulla kerrotaan, miten virheestä ilmoitetaan."
+				]
+			},
+			"advertising": {
+				"heading": "Asiallista tietoa, ei mainontaa",
+				"body": [
+					"Terveyspalvelujen markkinoinnin Suomessa on oltava asiallista, eikä se saa johtaa harhaan (kuluttajansuojalaki 38/1978, 2 luku; ammattikuntien ohjeet, kuten Lääkäriliiton ohjeet lääkäripalvelujen markkinoinnista, asettavat lisäksi omat sääntönsä). Yksityisestä terveydenhuollosta annetun lain (152/1990) markkinointia koskeva säännös kumottiin lain mukana sosiaali- ja terveydenhuollon valvonnasta annetulla lailla (741/2023) 1.1.2024 alkaen.",
+					"Kukaan ei maksa Apercuralle sivusta. Apercura julkaisee jokaisesta palvelupaikasta samat valtakunnallisen tietovarannon tiedot samassa muodossa: nimen, tyypin, järjestäjän, palvelut, osoitteen ja puhelinnumeron. Ei paremmuusjärjestystä, arvosanoja, arvioita, maksettua näkyvyyttä eikä mainoskieltä; luettelot ovat neutraalissa järjestyksessä. Sivunsa ottanut järjestäjä voi lisätä vain asiallista tietoa saman säännön mukaisesti."
+				]
+			},
+			"ip": {
+				"heading": "Koodi ja tiedot",
+				"body": [
+					"Apercuran lähdekoodi on julkaistu AGPL-3.0-lisenssillä. Suomi.fi-palvelutietovarannon tietoja käytetään CC0 1.0 -luovutuksen (vapaa käyttö) mukaisesti; Tilastokeskuksen kuntia, hyvinvointialueita ja maakuntia Creative Commons Nimeä 4.0 Kansainvälinen -lisenssillä (CC BY 4.0) lähdemaininnan kera. Tiedot ja lähteet -sivulla on jokainen lähde ja sen edellyttämä lähdemaininta."
+				]
+			},
+			"review": {
+				"heading": "Tämän tekstin tila",
+				"body": [
+					"Tämä teksti on luonnos, joka on kirjoitettu ennen oikeushenkilön perustamista. Suomessa toimiva lakimies tarkistaa sen ennen kuin Suomen sivuista tiedotetaan."
+				]
+			}
+		},
+		"fields": {
+			"name": "Nimi",
+			"legalForm": "Oikeudellinen muoto",
+			"registration": "Rekisteri ja Y-tunnus",
+			"address": "Osoite",
+			"phone": "Puhelin",
+			"email": "Sähköpostiosoite",
+			"vatId": "Arvonlisäverotunniste",
+			"editor": "Sisällöstä vastaava"
+		},
+		"dataLink": "Tiedot ja lähteet"
+	},
+	"PrivacyFi": {
+		"metaTitle": "Tietosuoja · Apercura",
+		"metaDescription": "Mitä tietoja Apercuran Suomen sivut käsittelevät, mistä, miksi ja kuinka kauan, sekä oikeutesi, vastustamisoikeus mukaan lukien (GDPR 13, 14 ja 21 art.).",
+		"title": "Tietosuoja",
+		"lead": "Mitä tietoja Apercuran Suomen sivut käsittelevät, mistä ne tulevat, miksi, kuinka kauan ja kuka niitä käsittelee, ja miten voit käyttää oikeuksiasi yleisen tietosuoja-asetuksen (GDPR) ja tietosuojalain (1050/2018) mukaan.",
+		"sections": {
+			"controller": {
+				"heading": "Rekisterinpitäjä",
+				"body": [
+					"Oikeudellisissa tiedoissa mainittu palvelun tarjoaja on hakemiston, järjestäjien käyttäjätilien, sivujen haltuunottojen ja sivuston kautta lähetettyjen pyyntöjen rekisterinpitäjä."
+				]
+			},
+			"directory": {
+				"heading": "Hakemisto: tiedot julkisista palvelupaikoista",
+				"body": [
+					"Tiedot: palvelupaikan nimi sellaisena kuin Suomi.fi-palvelutietovaranto sen julkaisee, sen tyyppi, tietovarannon siihen liittämät palvelut, sen kuvannut organisaatio (järjestäjä), katuosoite, postinumero, postitoimipaikka ja kunta, sijainti kartalla sekä ensimmäinen julkinen puhelinnumero, jonka tietovaranto sille antaa (usein järjestäjän ajanvaraus- tai neuvontanumero, joka on yhteinen useammalle sen palvelupaikalle). Sivunsa ottanut järjestäjä voi lisätä esittelyn, kielet, kuvan ja aukioloajat.",
+					"Ei koskaan tallenneta, vaikka tietovaranto ne julkaisee: sähköpostiosoitteita eikä tietovarannon vapaamuotoisia kuvauksia ja palveluaikoja.",
+					"Tunniste: sivun osoite päättyy palvelupaikan pysyvään tunnisteeseen tietovarannossa ilman väliviivoja (esimerkiksi b18aa7f87eca4b97a8e8b438d2e29427).",
+					"Tarkoitus: auttaa yleisöä löytämään julkinen terveyspalvelupaikka, sen palvelut, sijainti ja yhteystiedot. Oikeusperuste: oikeutettu etu (GDPR 6 artiklan 1 kohdan f alakohta), jota arvioidaan jäljempänä.",
+					"Säilytysaika: niin kauan kuin palvelupaikka on tietovarannossa. Sivu poistuu, kun tietovaranto ei enää sisällä sitä; vastustuksen perusteella poistettua sivua ei julkaista uudelleen.",
+					"Informointi: tiedot eivät tule järjestäjiltä itseltään (GDPR 14 artikla). Kirjeen lähettäminen jokaiselle vaatisi kohtuuttomia ponnistuksia (14 artiklan 5 kohdan b alakohta); tämä seloste, tiedot ja lähteet -sivu sekä jokaisen sivun huomautus tekevät tiedot julkisiksi."
+				]
+			},
+			"people": {
+				"heading": "Paikkoja, ei ihmisiä",
+				"body": [
+					"Suomen sivu kuvaa julkista palvelupaikkaa, ei koskaan henkilöä: tietovarannon palvelupaikkatiedoissa ei nimetä terveydenhuollon ammattilaisia, eikä ketään ammattilaista luetella. Jos palvelupaikan nimessä on henkilön nimi (esimerkiksi perustajansa mukaan nimetty yksikkö), sivu näyttää sen sellaisena kuin tietovaranto sen julkaisee, osana julkisen paikan nimeä; kyseessä ovat edellä luetellut tietoryhmät, lähteenä on Suomi.fi-palvelutietovaranto ja vastaanottajana yleisö.",
+					"Kenestäkään ei kerätä muuta: ei henkilötunnusta, kotiosoitetta, sähköpostia, arvosanoja eikä arvioita. Hakemisto ei käsittele potilaiden tietoja eikä terveystietoja.",
+					"Jokainen, jota sivu koskee, voi milloin tahansa vastustaa sen julkaisemista, ja sivu poistetaan."
+				]
+			},
+			"sources": {
+				"heading": "Lähteet",
+				"body": [
+					"Palvelupaikat tulevat Suomi.fi-palvelutietovarannosta, jota ylläpitää Digi- ja väestötietovirasto (DVV), jonka sisällön julkiset järjestäjät kuvaavat ja joka julkaistaan avoimen rajapinnan kautta CC0 1.0 -luovutuksella. Kunnat, hyvinvointialueet ja maakunnat tulevat Tilastokeskukselta (CC BY 4.0). Jokainen lähde mainitaan sen pyytämällä tavalla:"
+				]
+			},
+			"balancing": {
+				"heading": "Oikeutetun edun arviointi",
+				"body": [
+					"Tarkoitus: potilaiden on tiedettävä, missä julkisia terveyspalveluja on, mitä niissä tarjotaan ja miten niihin pääsee. Valtio vastaa jo tähän tarpeeseen julkaisemalla valtakunnallisen tietovarannon kaikkien uudelleenkäytettäväksi.",
+					"Välttämättömyys: sivuilla näytetään vain tietovarannon paikkoja koskevia tietoja, jotka tietovaranto julkaisee joka tapauksessa, ja niistäkin vain osa: ei sähköpostia eikä vapaamuotoisia kuvauksia; ei mitään yksityiselämästä, ei arvosanoja eikä arvioita.",
+					"Tasapaino: julkisen palvelun yhteys, asiallinen tieto, neutraali järjestys, ei mainontaa, tietovarannon kentistä vain välttämättömät, vastustus, joka piilottaa sivun heti eikä päästä sitä takaisin, korjaukset lähteessä ja sivut, jotka seuraavat jokaista tietovarannon päivitystä. Nämä seikat punniten potilaiden etu on painavampi, ja jokainen, jota sivu koskee, voi vastustaa ilman perusteluja."
+				]
+			},
+			"accounts": {
+				"heading": "Järjestäjien käyttäjätilit ja haltuunotot",
+				"body": [
+					"Tiedot: sähköpostiosoite, nimi, salasana (tallennetaan tiivisteenä), toinen tunnistautumistekijä, sivun haltuunottoa varten lähetetyt asiakirjat (todiste siitä, että hakija toimii palvelupaikan järjestäjän puolesta) ja tiimin jäsenet.",
+					"Tarkoitukset: käyttäjätilin hallinta ja sen varmistaminen, että sivun ottaa haltuunsa oikea järjestäjä. Oikeusperusteet: käyttöehtojen täyttäminen (6 artiklan 1 kohdan b alakohta) ja palvelun suojaamista koskeva oikeutettu etu (6 artiklan 1 kohdan f alakohta).",
+					"Säilytysaika: käyttäjätili säilytetään, kunnes se poistetaan; salatut liiteasiakirjat poistetaan 30 päivän kuluttua päätöksestä."
+				]
+			},
+			"requests": {
+				"heading": "Virheilmoitukset, vastustukset ja yhteydenottopyynnöt",
+				"body": [
+					"Tiedot: viesti, yhteydenottoa varten annettu sähköpostiosoite ja kyseinen sivu; ”Tämä on meidän sivumme” -pyynnössä myös nimi ja puhelinnumero. Vapaa teksti salataan.",
+					"Tarkoitukset: virheiden korjaaminen, vastustusten toteuttaminen ja avun antaminen järjestäjälle, joka ei voi ottaa sivuaan haltuun verkossa. Oikeusperusteet: oikeutettu etu (6 artiklan 1 kohdan f alakohta) ja vastustamisoikeus (21 artikla).",
+					"Säilytysaika: ilmoitus poistetaan 6 kuukauden kuluttua sen sulkemisesta, hylätty vastustus vuoden kuluttua päätöksestä ja yhteydenottopyyntö 12 kuukauden kuluttua viimeisestä yhteydenpidosta. Kun vastustus on vahvistettu tai haltuun otetun sivun haltija poistaa sen, sivu ja sitä koskevat tiedot poistetaan heti vastustus mukaan lukien; jäljelle jää vain merkintä poistosta (sivun tunniste, maa, syy, kirjaaja ja ajankohta), jotta sivua ei julkaista uudelleen."
+				]
+			},
+			"technical": {
+				"heading": "Tekniset tiedot ja evästeet",
+				"body": [
+					"Käytössä on vain palvelun kannalta välttämättömiä evästeitä: kirjautuneiden järjestäjien istunto ja valittu kieli. Ei mainos- tai kävijämittausevästeitä eikä seurantaa.",
+					"Väärinkäytösten rajoittamiseksi IP-osoitteet muunnetaan avaimella suojatulla funktiolla ennen laskentaa, eikä niitä koskaan tallenneta sellaisinaan; järjestäjien istunnoista tallennetaan lyhennetty IP-osoite. Haltuun otettujen sivujen katselukerrat lasketaan ilman evästettä tai tunnistetta, ja vain sivun haltija näkee ne."
+				]
+			},
+			"recipients": {
+				"heading": "Vastaanottajat ja käsittelijät",
+				"body": [
+					"Tietoja ei myydä eikä vuokrata, eikä niitä koskaan käytetä mainontaan. Niitä saavat vain palvelun tarjoajan tiimi ja alla mainitut käsittelijät, kukin oman osuutensa, GDPR:n 28 artiklan mukaisen sopimuksen perusteella. Tiedot säilytetään Euroopan talousalueella. Kartat ladataan karttatiilipalvelimelta, joka saa kävijän IP-osoitteen kuten mikä tahansa verkkosivusto."
+				]
+			},
+			"transfers": {
+				"heading": "Siirrot Euroopan unionin ulkopuolelle",
+				"body": [
+					"Tietoja siirretään Euroopan unionin ja Euroopan talousalueen ulkopuolelle vain GDPR:n V luvun suojatoimin (tietosuojan riittävyyttä koskeva päätös tai vakiosopimuslausekkeet). Käsittelijän vaihdoksesta ilmoitetaan täällä ennen kuin se tulee voimaan."
+				]
+			},
+			"automated": {
+				"heading": "Automaattiset päätökset",
+				"body": [
+					"Sinusta ei tehdä päätöksiä pelkästään automaattisesti. Haltuunotosta päättää ihminen, joka lukee sen asiakirjat."
+				]
+			},
+			"rights": {
+				"heading": "Oikeutesi",
+				"body": [
+					"Voit pyytää pääsyä tietoihisi, niiden oikaisemista tai poistamista, niiden käsittelyn rajoittamista, niiden saamista siirrettävässä muodossa sekä vastustaa niiden käsittelyä. Kirjoita alla olevaan osoitteeseen; saat vastauksen kuukauden kuluessa.",
+					"Voit myös tehdä valituksen Suomen valvontaviranomaiselle, tietosuojavaltuutetun toimistolle (GDPR 77 artikla; tietosuojalaki 8 §), tai sen maan valvontaviranomaiselle, jossa asut tai työskentelet."
+				]
+			},
+			"objection": {
+				"heading": "Sivun vastustaminen (GDPR 21 artikla)",
+				"body": [
+					"Jokainen, jota sivu koskee, voi milloin tahansa vastustaa sen julkaisemista perusteluja antamatta. Jos sivua ei ole otettu haltuun, lomake riittää: sivu piilotetaan heti pyynnön saavuttua, poistetaan kevyen tarkistuksen jälkeen, eikä tietovarannon päivitys julkaise sitä enää uudelleen. Jos sivu on otettu haltuun, sen haltija poistaa sen omasta tilastaan."
+				]
+			},
+			"changes": {
+				"heading": "Tämän selosteen päivitykset",
+				"body": [
+					"Tämä seloste on luonnos. Suomessa toimiva lakimies ja tietosuojavastaava tarkistavat sen; jokainen versio päivätään."
+				]
+			}
+		},
+		"fields": {
+			"controller": "Rekisterinpitäjä",
+			"address": "Osoite",
+			"email": "Yhteystieto pyyntöjä varten",
+			"dpo": "Tietosuojavastaava",
+			"effectiveDate": "Voimaantulopäivä",
+			"hostingProvider": "Palvelinpalvelun tarjoaja (käsittelijä)",
+			"smtp": "Sähköpostien toimitus (käsittelijä)",
+			"authority": "Valvontaviranomainen"
+		},
+		"objectLink": "Miten sivun julkaisemista vastustetaan",
+		"authorityLink": "Tietosuojavaltuutetun toimisto (tietosuoja.fi)",
+		"authorityAddress": "Tietosuojavaltuutetun toimisto, Lintulahdenkuja 4, 00530 Helsinki, tietosuoja@om.fi"
+	},
+	"TermsFi": {
+		"metaTitle": "Käyttöehdot · Apercura",
+		"metaDescription": "Apercuran Suomen sivujen käyttöehdot: maksuton, asiallinen hakemisto julkisista terveyspalvelupaikoista Suomi.fi-palvelutietovarannosta, ilman ajanvarausta.",
+		"title": "Käyttöehdot",
+		"lead": "Apercuran Suomen sivujen käyttöä koskevat säännöt yleisölle ja hakemiston palvelupaikkojen järjestäjille.",
+		"sections": {
+			"service": {
+				"heading": "Palvelu",
+				"body": [
+					"Apercura luettelee maksutta julkiset terveyspalvelupaikat, jotka hyvinvointialueet, Helsingin kaupunki, Ahvenanmaa ja muut julkiset järjestäjät kuvaavat Suomi.fi-palvelutietovarannossa. Se luettelee paikkoja, ei niissä työskenteleviä ammattilaisia, eikä siinä ole apteekkeja eikä yksityisiä vastaanottoja. Se on pelkkä hakemisto: Apercuran kautta ei Suomessa varata aikoja, koska sitä, onko ajanvaraustyökalun oltava rekisteröity ja Kanta-palveluihin liitetty järjestelmä (laki 784/2021), ei ole ratkaistu. Palvelua ylläpitää oikeudellisissa tiedoissa mainittu palvelun tarjoaja.",
+					"Hakemiston käyttö ei vaadi käyttäjätiliä. Sivuston käyttäjä hyväksyy nämä ehdot."
+				]
+			},
+			"content": {
+				"heading": "Mitä sivut sisältävät",
+				"body": [
+					"Sivuilla on asiallista tietoa Suomi.fi-palvelutietovarannosta sellaisena kuin se on julkaistu, neutraalissa järjestyksessä, ilman arvosanoja, arvioita, mainontaa tai maksettua näkyvyyttä.",
+					"Tiedot voivat olla puutteellisia tai vanhentuneita, ja palvelupaikka, jolla ei ole sijaintia tietovarannossa, näytetään kartalla kuntansa kohdalla eikä tarkassa osoitteessaan: tarkista aukioloajat ja hoitoon hakeutuminen palvelupaikasta tai sen järjestäjältä ennen käyntiä. Jokaisella sivulla kerrotaan, miten virheestä ilmoitetaan."
+				]
+			},
+			"health": {
+				"heading": "Ei lääketieteellistä neuvontaa",
+				"body": [
+					"Apercura ei anna lääketieteellisiä neuvoja eikä ole hätäpalvelu. Hätätilanteessa soita 112. Päivystysapu vastaa numerossa 116 117."
+				]
+			},
+			"providers": {
+				"heading": "Järjestäjille",
+				"body": [
+					"Sivun ottaminen haltuun on maksutonta. Se edellyttää asiakirjaa, joka osoittaa hakijan toimivan palvelupaikan järjestäjän puolesta; ihminen tarkistaa sen ennen kuin sivu luovutetaan.",
+					"Sivun haltija vastaa lisäämistään tiedoista. Niiden on pysyttävä asiallisina, paikkansapitävinä ja ajantasaisina: terveyspalvelujen markkinointi ei saa johtaa harhaan (kuluttajansuojalaki, 2 luku), ja julkaista saa vain tietoja kuten palvelupaikan nimen, aukioloajat, osoitteen, palvelut, kielet ja hinnat."
+				]
+			},
+			"removal": {
+				"heading": "Sivun poistaminen",
+				"body": [
+					"Jokainen, jota sivu koskee, voi milloin tahansa pyytää sen poistamista: tiedot ja lähteet -sivulla kerrotaan, miten. Haltuun otetun sivun voi poistaa vain sen haltija."
+				]
+			},
+			"liability": {
+				"heading": "Vastuu",
+				"body": [
+					"Palvelun tarjoaja pyrkii pitämään palvelun saatavilla ja tiedot oikeina, mutta ei voi taata sitä. Se ei vastaa tiedoista, joita järjestäjät lisäävät sivuilleen. Nämä rajat täsmennetään oikeudellisessa tarkistuksessa."
+				]
+			},
+			"ip": {
+				"heading": "Koodi ja tiedot",
+				"body": [
+					"Lähdekoodi on julkaistu AGPL-3.0-lisenssillä. Suomi.fi-palvelutietovarannon tiedot ovat vapaasti käytettävissä (CC0 1.0); Tilastokeskuksen alueet ovat CC BY 4.0 -lisenssin alaisia: kuka tahansa voi käyttää niitä näiltä sivuilta lähdemaininnalla ”Lähde: Tilastokeskus”."
+				]
+			},
+			"law": {
+				"heading": "Sovellettava laki ja riidat",
+				"body": [
+					"Näihin ehtoihin sovelletaan Suomen lakia; asuinmaan pakottavia kuluttajansuojasäännöksiä sovelletaan aina. Toimivaltainen tuomioistuin täsmennetään oikeudellisessa tarkistuksessa. Riitatilanteessa kirjoita ensin yhteysosoitteeseen sovinnollisen ratkaisun löytämiseksi; kuluttaja voi kääntyä myös kuluttajariitalautakunnan puoleen."
+				]
+			}
+		},
+		"fields": {
+			"publisher": "Palvelun tarjoaja",
+			"effectiveDate": "Voimaantulopäivä",
+			"contact": "Yhteystiedot"
+		}
+	},
+	"AccessibilityFi": {
+		"metaTitle": "Saavutettavuus · Apercura",
+		"metaDescription": "Apercuran Suomen sivujen saavutettavuus: tavoitteena WCAG 2.2 AA, mitä on tarkistettu, mitä on vielä tekemättä ja miten ongelmasta ilmoitetaan.",
+		"title": "Saavutettavuus",
+		"lead": "Apercura on suunniteltu kaikille, myös ikääntyneille ja heikkonäköisille. Tämä seloste kertoo, missä Suomen sivut ovat.",
+		"sections": {
+			"scope": {
+				"heading": "Soveltamisala",
+				"body": [
+					"Laki digitaalisten palvelujen tarjoamisesta (306/2019) velvoittaa viranomaisia ja siinä lueteltuja yksityisiä palveluja, ja laki eräiden tuotteiden ja palvelujen esteettömyysvaatimuksista (102/2023) koskee verkkokauppaa ja muita siinä lueteltuja palveluja, ei maksutonta hakemistoa: niiden valvonta ei koske näitä sivuja. Apercuran palvelun tarjoaja julkaisee silti tämän selosteen lain edellyttämässä muodossa ja tavoittelee jokaisella sivulla samaa tasoa: WCAG 2.2 -tasoa AA (EN 301 549).",
+					"Sivut ovat suomeksi. Ruotsinkielinen versio, Suomen toisella kansalliskielellä, on suunnitteilla."
+				]
+			},
+			"status": {
+				"heading": "Sivuston tilanne",
+				"body": [
+					"Suomen sivut käyttävät samaa koodia ja samoja testejä kuin muiden maiden sivut. Sivusto täyttää WCAG 2.2 AA -vaatimukset osittain: arvio perustuu itsearviointiin ja automaattisiin testeihin, ei vielä täydelliseen auditointiin, joka on käynnissä."
+				]
+			},
+			"tests": {
+				"heading": "Mitä on tarkistettu",
+				"list": [
+					"Automaattiset axe-core-tarkistukset (WCAG 2.0-, 2.1- ja 2.2-säännöt, tasot A ja AA) jokaiselle sivutyypille jokaisessa julkaisussa.",
+					"Pelkällä näppäimistöllä tehtävät polut näkyvällä kohdistuksella.",
+					"Leipäteksti vähintään 18 px, kohteet vähintään 44 px, ei mitään pelkän värin varassa, ei vaakavieritystä 390 px:n leveydellä."
+				]
+			},
+			"pending": {
+				"heading": "Mitä on vielä tarkistettava",
+				"list": [
+					"Käsin tehtävä läpikäynti VoiceOver- ja NVDA-ruudunlukijoilla suomeksi.",
+					"Täydellinen auditointi WCAG 2.2 AA -vaatimuksia vasten otokselle sivuja, suomenkieliset tekstit mukaan lukien."
+				]
+			},
+			"feedback": {
+				"heading": "Ilmoita ongelmasta",
+				"body": [
+					"Jos sivua tai toimintoa on vaikea käyttää, kirjoita alla olevaan osoitteeseen: kerro, mikä sivu ja mikä esti käytön. Vastaamme kahden viikon kuluessa ja annamme tarvittaessa tiedon toisessa muodossa."
+				]
+			}
+		},
+		"fields": {
+			"contact": "Yhteystiedot",
+			"date": "Selosteen päivämäärä"
+		}
+	},
+	"DataFi": {
+		"metaTitle": "Tiedot ja lähteet · Apercura",
+		"metaDescription": "Mistä Apercuran Suomen sivujen tiedot tulevat (Suomi.fi-palvelutietovaranto ja Tilastokeskus), millä lisenssillä ja miten sivu korjataan tai poistetaan.",
+		"title": "Tiedot ja lähteet",
+		"lead": "Jokainen Suomen sivu on koottu valtakunnallisesta Suomi.fi-palvelutietovarannosta. Tällä sivulla kerrotaan, mistä tiedot tulevat, millä lisenssillä ja lähdemaininnalla, milloin ne on päivitetty ja miten sivu korjataan tai poistetaan.",
+		"status": {
+			"heading": "Viimeisin päivitys",
+			"body": "Järjestäjät päivittävät kuvauksensa Suomi.fi-palvelutietovarantoon aina, kun ne muuttuvat, ja avoin rajapinta välittää ne heti; hakemisto lukee tietovarannon kerran viikossa. Sivu muuttuu vain, kun sen tiedot muuttuvat tietovarannossa.",
+			"importedAt": "Viimeisin tuonti",
+			"checkedAt": "Lähteet tarkistettu viimeksi",
+			"notImported": "Suomen hakemistoa ei ole vielä tuotu tälle sivustolle.",
+			"notImportedValue": "Ei vielä tuotu"
+		},
+		"sources": {
+			"heading": "Lähteet",
+			"body": "Digi- ja väestötietovirasto julkaisee Suomi.fi-palvelutietovarannon avoimen rajapinnan kautta CC0 1.0 -luovutuksella, joka ei edellytä lähdemainintaa: Apercura mainitsee sen silti. Tilastokeskus julkaisee tilastointialueensa ja luokituksensa CC BY 4.0 -lisenssillä lähdemaininnalla ”Lähde: Tilastokeskus”. Jokainen alla oleva lähdemaininta on kirjoitettu sanasta sanaan.",
+			"caption": "Suomen hakemiston tietolähteet",
+			"columns": {
+				"source": "Lähde",
+				"use": "Käyttö",
+				"licence": "Lisenssi ja lähdemaininta",
+				"frequency": "Päivitys"
+			},
+			"items": {
+				"fi-ptv": {
+					"use": "Julkiset terveyspalvelupaikat: nimet, järjestäjät, liitetyt palvelut, osoitteet, sijainnit, puhelinnumerot",
+					"frequency": "Jatkuvasti, kunkin järjestäjän toimesta; luetaan kerran viikossa"
+				},
+				"fi-tilastokeskus": {
+					"use": "Kunnat, hyvinvointialueet ja maakunnat sekä kunkin kunnan keskipiste, johon sijainniton palvelupaikka sijoitetaan",
+					"frequency": "Kerran vuodessa, Tilastokeskuksen toimesta"
+				},
+				"map": {
+					"name": "Karttatiedot",
+					"publisher": "OpenStreetMapin tekijät, karttatiilet OpenFreeMap",
+					"use": "Sivujen kartat",
+					"frequency": "Jatkuvasti"
+				}
+			},
+			"cc0": "CC0 1.0",
+			"ccBy": "CC BY 4.0",
+			"odbl": "ODbL"
+		},
+		"licence": {
+			"heading": "Suomen tietojen lisenssi",
+			"body": [
+				"Suomi.fi-palvelutietovarannon sisältö on vapaasti käytettävissä avoimen rajapinnan kautta Creative Commons CC0 1.0 -luovutuksen mukaisesti, kuten sen tietoaineiston kuvaus avoindata.fi-palvelussa kertoo. Apercura ei esitä näillä sivuilla uudelleen julkaistuun aineistoon mitään lisenssivaatimusta: AGPL-3.0-lisenssi koskee Apercuran lähdekoodia, ei näitä tietoja."
+			],
+			"list": [
+				"Tilastokeskuksen kuntia, hyvinvointialueita ja maakuntia käytetään CC BY 4.0 -lisenssillä, ja jokaisella sivulla, jonka ne sijoittavat, on lähdemaininta ”Lähde: Tilastokeskus” ja alueiden vuosi.",
+				"Tietovarannon versio 11 -rajapintaa, joka ei vaadi avainta, luetaan nyt; versio 12 edellyttää käyttäjäorganisaation rekisteröimää maksutonta avainta, jonka Apercura hankkii ennen kuin versio 11 suljetaan (ilmoitettu huhtikuulle 2027)."
+			],
+			"changesHeading": "Tietoihin tehdyt muutokset",
+			"changes": "Tietovaranto luetaan kerran viikossa, ja siitä säilytetään vain sivuilla tarvittava: palvelupaikat, joiden palvelut ovat terveydenhuoltoa (terveysasemat, sairaalat, päivystys, hammashoitolat, neuvolat, mielenterveys- ja päihdepalvelut, kuntoutus, laboratoriot ja kuvantaminen); koulut, kirjastot, sosiaalipalvelut ja toimistot jätetään pois, samoin koulu- ja opiskeluterveydenhuolto, sähköpostiosoitteet, vapaamuotoiset kuvaukset ja palveluajat. Kukin palvelupaikka sijoitetaan kuntaansa osoitteen kuntakoodin perusteella ja näytetään tietovarannon sijainnissa ETRS-TM35FIN-koordinaateista WGS 84 -järjestelmään muunnettuna, muuten kuntansa keskipisteessä; nimet näytetään suomeksi, muuten ruotsiksi, kuten tietovaranto ne kirjoittaa.",
+			"licenceLink": "CC0 1.0 -luovutus",
+			"datasetLink": "Suomi.fi-palvelutietovaranto avoindata.fi-palvelussa"
+		},
+		"coverage": {
+			"heading": "Mukana olevat paikat",
+			"body": [
+				"Sivu luodaan jokaiselle Suomi.fi-palvelutietovarannon palvelupaikalle, joka on liitetty terveydenhuollon palveluun ja jonka on kuvannut julkinen järjestäjä: 21 hyvinvointialuetta, Helsingin kaupunki, Ahvenanmaa, HUS ja muut julkiset toimijat, jotka kuvaavat palvelunsa tietovarantoon. Palvelupaikka luetellaan kerran, ensimmäisen sen palveluista ilmenevän tyypin alla: sairaala, päivystys, terveysasema, hammashoitola, neuvola, mielenterveys- tai päihdepalvelu, kuntoutusyksikkö ja lopuksi laboratorio tai kuvantamisyksikkö. Kaikki palvelut näytetään sivulla.",
+				"Ei mukana: apteekit (Lääkealan turvallisuus- ja kehittämiskeskus Fimea ei julkaise avoimesti lisensoitua apteekkiluetteloa; sen CC BY 4.0 -avoin data koskee vain lääkkeitä), yksityiset lääkäriasemat ja vastaanotot (yksityisten palveluntuottajien rekisterille ei ole ilmoitettu uudelleenkäytön lisenssiä), koulu- ja opiskeluterveydenhuolto sekä terveydenhuollon ammattilaiset, joita tietovaranto ei nimeä.",
+				"Palvelupaikka sijoitetaan tietovarannon sijaintiin. Sijainniton palvelupaikka sijoitetaan kuntansa keskipisteeseen: sen paikka kartalla ja etäisyys ovat silloin kunnan, eivät osoitteen."
+			],
+			"kinds": {
+				"FI_HOSPITAL": "Sairaalat (keskus-, yliopisto-, alue- ja kaupunginsairaalat ja niiden osastot)",
+				"FI_EMERGENCY": "Päivystys",
+				"FI_HEALTH_CENTRE": "Terveysasemat ja sote-keskukset",
+				"FI_DENTAL": "Hammashoitolat (julkinen suun terveydenhuolto)",
+				"FI_CHILD_HEALTH": "Äitiys- ja lastenneuvolat, perhesuunnitteluneuvolat",
+				"FI_MENTAL_HEALTH": "Mielenterveys- ja päihdepalvelut",
+				"FI_REHABILITATION": "Kuntoutus (fysioterapia, toimintaterapia, puheterapia, apuvälineet)",
+				"FI_LABORATORY": "Laboratoriot ja kuvantaminen"
+			},
+			"kindsLabel": "Tuodut"
+		},
+		"identifiers": {
+			"heading": "Tunnisteet",
+			"body": [
+				"Jokaisen sivun osoite päättyy palvelupaikan pysyvään tunnisteeseen Suomi.fi-palvelutietovarannossa, joten sivun voi löytää ja tarkistaa tietovarannosta:"
+			],
+			"list": [
+				"/fi/toimipiste/lapuan-sosiaali-ja-terveyskeskus-b18aa7f87eca4b97a8e8b438d2e29427: palvelupaikka ja sen tunniste tietovarannossa (b18aa7f8-7eca-4b97-a8e8-b438d2e29427) ilman väliviivoja. Y-tunnusta ei käytetä."
+			]
+		},
+		"correct": {
+			"heading": "Korjaa virhe",
+			"body": [
+				"Sivut toistavat tietovarannon tiedot: pysyvä korjaus tehdään lähteessä, ja sivu seuraa sitä seuraavassa tuonnissa.",
+				"Muissa asioissa käytä lomaketta: tarkistamme jokaisen ilmoituksen."
+			],
+			"list": [
+				"Palvelupaikat: järjestäjä (hyvinvointialue, Helsingin kaupunki, HUS…) korjaa kuvauksensa Suomi.fi-palvelutietovarannossa; myös palvelupaikan Suomi.fi-sivun palautelinkki tavoittaa sen.",
+				"Kunnat ja hyvinvointialueet: ne muuttuvat Tilastokeskuksen alueiden mukana kunkin vuoden tammikuussa."
+			],
+			"formTitle": "Ilmoita virheestä",
+			"formBody": "Kerro sivun osoite ja mikä on väärin."
+		},
+		"remove": {
+			"heading": "Poista sivu",
+			"body": [
+				"Jokainen, jota sivu koskee, voi milloin tahansa vastustaa sen julkaisemista perusteluja antamatta (GDPR 21 artikla). Haltuun ottamaton sivu piilotetaan heti pyynnön saavuttua ja poistetaan kevyen tarkistuksen jälkeen; se ei palaa tietovarannon päivitysten mukana. Haltuun otetun sivun poistaa sen haltija omasta tilastaan."
+			],
+			"formTitle": "Pyydä sivun poistamista",
+			"formBody": "Kerro sivun osoite ja sähköpostiosoite, johon voimme vastata."
+		}
+	}
+}

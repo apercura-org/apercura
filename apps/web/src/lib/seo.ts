@@ -62,7 +62,8 @@ export function ogImageOf(professionCode: string): OgImage {
 		professionCode.startsWith("EE_") ||
 		professionCode.startsWith("PL_") ||
 		professionCode.startsWith("NO_") ||
-		professionCode.startsWith("IE_")
+		professionCode.startsWith("IE_") ||
+		professionCode.startsWith("FI_")
 	)
 		return "annuaire";
 	if (professionCode === "40") return "chirurgien-dentiste";

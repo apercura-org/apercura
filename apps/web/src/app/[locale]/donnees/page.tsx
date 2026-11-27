@@ -15,6 +15,7 @@ import { DataCz } from "~/components/legal-cz";
 import { DataDe } from "~/components/legal-de";
 import { DataEe } from "~/components/legal-ee";
 import { DataEs } from "~/components/legal-es";
+import { DataFi } from "~/components/legal-fi";
 import { DataGb } from "~/components/legal-gb";
 import { DataIe } from "~/components/legal-ie";
 import { DataIt } from "~/components/legal-it";
@@ -90,6 +91,7 @@ export function generateMetadata({ params }: PageProps<"/[locale]/donnees">) {
 			PL: "DataPl",
 			NO: "DataNo",
 			IE: "DataIe",
+			FI: "DataFi",
 		},
 		HREF,
 	);
@@ -98,12 +100,13 @@ export function generateMetadata({ params }: PageProps<"/[locale]/donnees">) {
 export default async function DataPage({ params }: PageProps<"/[locale]/donnees">) {
 	const locale = await localeOf(params);
 	setRequestLocale(locale);
-	// Austria's, the UK's, Czechia's, Spain's, Italy's, Germany's, Switzerland's, Estonia's, Poland's and Norway's pages
+	// Austria's, the UK's, Czechia's, Spain's, Italy's, Germany's, Switzerland's, Estonia's, Poland's, Norway's and Finland's pages
 	// have texts of their own, written for their law.
 	if (marketOf(locale) === "AT") return <DataAt locale={locale} />;
 	if (marketOf(locale) === "GB") return <DataGb locale={locale} />;
 	if (marketOf(locale) === "CZ") return <DataCz locale={locale} />;
 	if (marketOf(locale) === "PL") return <DataPl locale={locale} />;
+	if (marketOf(locale) === "FI") return <DataFi locale={locale} />;
 	if (marketOf(locale) === "ES") return <DataEs locale={locale} />;
 	if (marketOf(locale) === "IT") return <DataIt locale={locale} />;
 	if (marketOf(locale) === "DE") return <DataDe locale={locale} />;

@@ -8,6 +8,7 @@ import {
 	normalizeEePostcode,
 	normalizeEircode,
 	normalizeEsPostcode,
+	normalizeFiPostcode,
 	normalizeGbPostcode,
 	normalizeNoPostcode,
 	normalizePlPostcode,
@@ -232,7 +233,8 @@ export async function setSiteHidden(
  * whose postcodes hold the postcode first; Switzerland, whose communes carry
  * swisstopo's postcodes, like France: the commune of the postcode, the one named first; Poland
  * by the gmina's name, a homonym in the page's own powiat first; Ireland, like the
- * UK, by the town's name (an Eircode is printed, never used to place).
+ * UK, by the town's name (an Eircode is printed, never used to place), and Finland by the municipality's
+ * name, the page's own wellbeing services county first.
  */
 export async function addOwnerSite(db: Database, practitionerId: number, input: OwnerSiteData) {
 	return db.transaction(async (tx) => {
@@ -263,7 +265,9 @@ export async function addOwnerSite(db: Database, practitionerId: number, input: 
 											? (normalizeNoPostcode(input.postcode) ?? input.postcode)
 											: country === "IE"
 												? (normalizeEircode(input.postcode) ?? input.postcode)
-												: input.postcode;
+												: country === "FI"
+													? (normalizeFiPostcode(input.postcode) ?? input.postcode)
+													: input.postcode;
 		if (!adapter.address.postcode.test(postcode)) throw new ProfileError("UNKNOWN_PLACE");
 		const district = country === "AT" ? /^1(\d{2})0$/.exec(postcode)?.[1] : undefined;
 		const [place] =
@@ -342,11 +346,12 @@ export async function addOwnerSite(db: Database, practitionerId: number, input: 
 						p.id
 					LIMIT 1
 				`)
-								: country === "PL"
-									? // Polish gminas carry no postcodes: the gmina by its name, the page's powiat first.
+								: country === "PL" || country === "FI"
+									? // Polish gminas and Finnish municipalities carry no postcodes: the commune by its
+										// name, the page's powiat or wellbeing services county first.
 										await tx.execute<{ id: number }>(sql`
 					SELECT p.id FROM directory.places p
-					WHERE p.country = 'PL' AND p.kind = 'commune' AND p.removed_at IS NULL
+					WHERE p.country = ${country} AND p.kind = 'commune' AND p.removed_at IS NULL
 						AND similarity(directory.text_norm(p.name), directory.text_norm(${input.city})) > 0.5
 					ORDER BY (directory.text_norm(p.name) = directory.text_norm(${input.city})) DESC,
 						(p.department_code = (

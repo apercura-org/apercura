@@ -11,6 +11,9 @@ import {
 	type EeIdScheme,
 	eeLicenceNumber,
 	eeUrlKey,
+	FI_ID_SCHEMES,
+	type FiIdScheme,
+	fiPtvChannelId,
 	GB_ID_SCHEMES,
 	type GbIdScheme,
 	gbUrlKey,
@@ -26,6 +29,7 @@ import {
 	parseDeFacilitySegment,
 	parseEeFacilitySegment,
 	parseEsCentreSegment,
+	parseFiFacilitySegment,
 	parseGbPracticeSegment,
 	parseIeFacilitySegment,
 	parseItPlaceSegment,
@@ -100,6 +104,10 @@ export function parsePractitionerKey(locale: Locale, segment: string): Practitio
 		const parsed = parseIeFacilitySegment(segment);
 		return parsed ? { country, ...parsed } : null;
 	}
+	if (country === "FI") {
+		const parsed = parseFiFacilitySegment(segment);
+		return parsed ? { country, ...parsed } : null;
+	}
 	if (country === "GB") {
 		const parsed = parseGbPracticeSegment(segment);
 		return parsed ? { country, ...parsed } : null;
@@ -171,6 +179,9 @@ export const NO_SEGMENT_MARKER = "no.";
  */
 export const IE_SEGMENT_MARKER = "ie.";
 
+/** The marker of a Finnish page's segment outside a locale (`fi.{slug}`): its key names no market by itself. */
+export const FI_SEGMENT_MARKER = "fi.";
+
 /** The marker of each market whose segments are marked outside a locale. */
 const SEGMENT_MARKERS: Readonly<Partial<Record<MarketCountry, string>>> = {
 	GB: GB_SEGMENT_MARKER,
@@ -183,6 +194,7 @@ const SEGMENT_MARKERS: Readonly<Partial<Record<MarketCountry, string>>> = {
 	PL: PL_SEGMENT_MARKER,
 	NO: NO_SEGMENT_MARKER,
 	IE: IE_SEGMENT_MARKER,
+	FI: FI_SEGMENT_MARKER,
 };
 
 /**
@@ -227,11 +239,13 @@ export function parseAnyPractitionerKey(segment: string): PractitionerKey | null
  * Estonia a provider's first activity licence number as the Health Board writes it (`L01909`)
  * and a pharmacy's key of the page URL (`ap457`); in Norway the establishment's organisation
  * number in groups of three, as Norway prints it (`910 000 039`); in Ireland the key of the page URL too (`p10000612`, `n738`,
- * `h123456789`), since a bare PSI or HIQA number names neither list.
+ * `h123456789`), since a bare PSI or HIQA number names neither list; in Finland the Finnish Service Catalogue's id
+ * of the service location, in its own form (`b18aa7f8-7eca-4b97-a8e8-b438d2e29427`).
  */
 export function displayId(key: Pick<PractitionerKey, "idScheme" | "nationalId">): string {
 	if (NO_ID_SCHEMES[key.idScheme as NoIdScheme]) return noOrgNumber(key.nationalId);
 	if (key.idScheme === "EE-TTL") return eeLicenceNumber(key.nationalId);
+	if (FI_ID_SCHEMES[key.idScheme as FiIdScheme]) return fiPtvChannelId(key.nationalId);
 	if (EE_ID_SCHEMES[key.idScheme as EeIdScheme]) {
 		return eeUrlKey(key.idScheme as EeIdScheme, key.nationalId);
 	}

@@ -97,7 +97,8 @@
 			"EE": "Estland",
 			"PL": "Polen",
 			"NO": "Norwegen",
-			"IE": "Irland"
+			"IE": "Irland",
+			"FI": "Finnland"
 		}
 	},
 	"HomePage": {
@@ -682,6 +683,10 @@
 			"inspections": "Inspections",
 			"hiqaLink": "Inspection reports on HIQA's website",
 			"atlasNote": "As recorded by the HSE's Health Atlas in {date}: the HSE has published no more recent open list of its hospitals and health centres. Check with the facility before you go."
+		},
+		"finnishFacts": {
+			"organiser": "Träger",
+			"services": "Leistungen"
 		}
 	},
 	"Institutional": {
@@ -1925,7 +1930,23 @@
 			"pharmacy": "Apotheke",
 			"nursing-homes": "Pflegeheim",
 			"hospitals": "Krankenhaus",
-			"health-centres": "Gesundheitszentrum"
+			"health-centres": "Gesundheitszentrum",
+			"sairaalat": "Krankenhaus",
+			"sairaala": "Krankenhaus",
+			"paivystys": "Notaufnahme",
+			"paivystyspiste": "Notaufnahme",
+			"terveysasemat": "Gesundheitszentrum",
+			"terveysasema": "Gesundheitszentrum",
+			"hammashoitolat": "Zahnklinik",
+			"hammashoitola": "Zahnklinik",
+			"neuvolat": "Mütter- und Kinderberatungsstelle",
+			"neuvola": "Mütter- und Kinderberatungsstelle",
+			"mielenterveys-ja-paihdepalvelut": "Dienst für psychische Gesundheit und Sucht",
+			"mielenterveys-ja-paihdepalvelupiste": "Dienst für psychische Gesundheit und Sucht",
+			"kuntoutus": "Rehabilitationseinrichtung",
+			"kuntoutusyksikko": "Rehabilitationseinrichtung",
+			"laboratoriot-ja-kuvantaminen": "Labor oder Bildgebungseinrichtung",
+			"laboratorio-tai-kuvantamisyksikko": "Labor oder Bildgebungseinrichtung"
 		},
 		"listing": {
 			"aerzte": "Ärztinnen und Ärzte ohne Fachangabe",
@@ -2231,7 +2252,15 @@
 			"pharmacy": "Apotheken",
 			"nursing-homes": "Pflegeheime",
 			"hospitals": "Krankenhäuser",
-			"health-centres": "Gesundheitszentren"
+			"health-centres": "Gesundheitszentren",
+			"sairaalat": "Krankenhäuser",
+			"paivystys": "Notaufnahmen",
+			"terveysasemat": "Gesundheitszentren",
+			"hammashoitolat": "Zahnkliniken",
+			"neuvolat": "Mütter- und Kinderberatungsstellen",
+			"mielenterveys-ja-paihdepalvelut": "Dienste für psychische Gesundheit und Sucht",
+			"kuntoutus": "Rehabilitation",
+			"laboratoriot-ja-kuvantaminen": "Labore und Bildgebung"
 		},
 		"practiceKind": {
 			"office": "Praxis",
@@ -3259,7 +3288,8 @@
 			"EE-TTL": "Tätigkeitslizenz",
 			"EE-APT": "Betriebsstätte der Apotheke",
 			"PL-RPWDL": "RPWDL-Einrichtungsnummer (ID ZOZ)",
-			"NO-ORGNR": "Organisationsnummer"
+			"NO-ORGNR": "Organisationsnummer",
+			"FI-PTV": "Kennung des Standorts"
 		}
 	},
 	"Onboarding": {
@@ -8534,6 +8564,411 @@
 			],
 			"formTitle": "Ask for a page to be removed",
 			"formBody": "Give the address of the page and an email address where we can answer you."
+		}
+	},
+	"LegalNoticeFi": {
+		"metaTitle": "Legal notice (Finland) · Apercura",
+		"metaDescription": "Legal notice of the Finnish pages of Apercura: the service provider, its business id, address and contact details, e-mail included (Act 917/2014, section 176).",
+		"title": "Legal notice",
+		"lead": "Who provides the Finnish pages of Apercura (apercura.org/fi): the information that section 176 of the Act on Electronic Communications Services (laki sähköisen viestinnän palveluista, 917/2014) asks a service provider to keep easily, directly and permanently available.",
+		"sections": {
+			"provider": {
+				"heading": "Service provider (Act 917/2014, section 176)",
+				"body": [
+					"The Finnish pages of Apercura are provided by the entity below: its name, its address, its contact details, e-mail included, the trade register or other public register that keeps it with its registration number or business id, and its VAT number when it is registered for VAT. It runs the directory and answers for its content."
+				]
+			},
+			"service": {
+				"heading": "The service",
+				"body": [
+					"A free directory of the public health service locations of Finland (health centres, hospitals, emergency clinics, dental clinics, maternity and child health clinics, mental health and substance abuse services, rehabilitation units, laboratories and imaging), built from the national Finnish Service Catalogue (Suomi.fi-palvelutietovaranto, PTV), where the wellbeing services counties, the City of Helsinki, Åland and the other public organisers describe them, without advertising, with a space where an organiser can complete its own pages. Pages are places, never the health workers who work there. Pharmacies and private clinics are not listed. The pages are in Finnish; Swedish, Finland’s other national language, is planned."
+				]
+			},
+			"booking": {
+				"heading": "No booking in Finland",
+				"body": [
+					"No appointment is booked through Apercura in Finland. An appointment system for health care processes client data under the Act on the Processing of Client Data in Healthcare and Social Welfare (784/2021): such systems are registered as class A or B and connected to the national Kanta services. Whether a booking tool used alongside them must itself be registered and connected to Kanta has not been settled; until it is, Apercura only publishes a directory, which processes no client data. To make an appointment, contact the service location or its organiser."
+				]
+			},
+			"editor": {
+				"heading": "Responsible for the content",
+				"body": [
+					"The person below is responsible for what the provider publishes. Information an organiser adds to its own page is its own responsibility; as a host of information provided by its users, the provider answers for it only under the conditions of the Digital Services Act (Regulation (EU) 2022/2065, article 6)."
+				]
+			},
+			"liability": {
+				"heading": "Content of the pages",
+				"body": [
+					"The directory is built from the Finnish Service Catalogue, whose content each organiser keeps up to date, and placed in Statistics Finland’s municipalities, wellbeing services counties and regions. It can be incomplete or out of date: check opening hours and how to get care with the service location or its organiser before you go. Every page says how to report an error."
+				]
+			},
+			"advertising": {
+				"heading": "Factual information, no advertising",
+				"body": [
+					"Marketing of health services in Finland must be factual and must not mislead (Consumer Protection Act 38/1978, chapter 2; the professional bodies’ guidelines, such as the Finnish Medical Association’s, add their own rules). The former marketing provision of the Private Health Care Act (152/1990) was repealed, with that act, by the Act on the Supervision of Social and Health Care (741/2023) from 1 January 2024.",
+					"Apercura is paid by no one for a page. It publishes the same facts, from the national catalogue, for every service location and in the same form: name, kind, organiser, services, address, telephone. No ranking, no rating, no review, no paid placement, no promotional wording; listings follow a neutral order. An organiser that claims its page may add factual information only, under the same rule."
+				]
+			},
+			"ip": {
+				"heading": "Code and data",
+				"body": [
+					"The source code of Apercura is published under the AGPL-3.0 licence. The Finnish Service Catalogue’s data is reused under CC0 1.0 (public domain dedication); Statistics Finland’s municipalities, wellbeing services counties and regions under the Creative Commons Attribution 4.0 International licence (CC BY 4.0), with its credit. The data page lists every source with the credit it requires."
+				]
+			},
+			"review": {
+				"heading": "Status of this text",
+				"body": [
+					"This text is a draft, written before the legal entity was set up. It will be reviewed by a lawyer admitted in Finland before the Finnish pages are announced."
+				]
+			}
+		},
+		"fields": {
+			"name": "Name",
+			"legalForm": "Legal form",
+			"registration": "Register and business id",
+			"address": "Address",
+			"phone": "Phone",
+			"email": "E-mail address",
+			"vatId": "VAT number",
+			"editor": "Responsible for the content"
+		},
+		"dataLink": "Data and sources"
+	},
+	"PrivacyFi": {
+		"metaTitle": "Privacy (Finland) · Apercura",
+		"metaDescription": "What data the Finnish pages of Apercura process, where from, why and for how long, and your rights, objection included (GDPR articles 13, 14, 21).",
+		"title": "Privacy",
+		"lead": "What data the Finnish pages of Apercura process, where it comes from, why, for how long and by whom, and how to exercise your rights under the General Data Protection Regulation (GDPR) and the Data Protection Act (tietosuojalaki, 1050/2018).",
+		"sections": {
+			"controller": {
+				"heading": "Who is responsible",
+				"body": [
+					"The provider named in the legal notice is the controller of the directory, of organiser accounts, of claims and of the requests sent through the site."
+				]
+			},
+			"directory": {
+				"heading": "Directory: data about public service locations",
+				"body": [
+					"Data: the name of the service location as the Finnish Service Catalogue publishes it, its kind, the services the catalogue links to it, the organisation that describes it (its organiser), its street address, postcode, post office and municipality, its point on the map and the first public telephone number the catalogue gives for it (often the organiser’s booking or advice line, shared by several of its locations). An organiser that claims its page can add a presentation, languages, a photo and opening hours.",
+					"Never stored, although the catalogue publishes them: e-mail addresses, the catalogue’s free-text descriptions and service hours.",
+					"Identifier: a page ends with the catalogue’s permanent id of the service location, without its dashes (for example b18aa7f87eca4b97a8e8b438d2e29427).",
+					"Purpose: letting the public find a public health service location, what it offers, where it is and how to reach it. Legal basis: legitimate interests (GDPR article 6(1)(f)), assessed below.",
+					"Retention: as long as the location appears in the catalogue. A page disappears when the catalogue no longer lists it; a page removed after an objection is never published again.",
+					"Information: the data does not come from the organisers themselves (GDPR article 14). Writing to each of them would involve a disproportionate effort (article 14(5)(b)); this notice, the data page and a notice on every page make the information public."
+				]
+			},
+			"people": {
+				"heading": "Places, not people",
+				"body": [
+					"A Finnish page is a public service location, never a person’s profile: the catalogue’s service location records name no health worker, and no health worker is listed. Should a location’s name contain a person’s name (a unit named after its founder, for example), the page shows it as the catalogue publishes it, as part of the name of a public place; the categories of data concerned are those listed above; their source is the Finnish Service Catalogue; their recipient is the public.",
+					"Nothing else about any person is collected: no personal identity code, no private address, no e-mail, no ratings and no reviews. No patient’s data, and no health data, is processed by the directory.",
+					"Anyone a page is about can object to it at any time, and the page is removed."
+				]
+			},
+			"sources": {
+				"heading": "Sources",
+				"body": [
+					"Service locations come from the Finnish Service Catalogue (Suomi.fi-palvelutietovaranto), run by the Digital and Population Data Services Agency (Digi- ja väestötietovirasto, DVV), whose content the public organisers describe and which is published through its open interface under CC0 1.0. Municipalities, wellbeing services counties and regions come from Statistics Finland (CC BY 4.0). Each source is credited as it asks:"
+				]
+			},
+			"balancing": {
+				"heading": "Legitimate interests assessment",
+				"body": [
+					"Purpose: patients need to know which public health services exist where, what they offer and how to reach them, a need the State already meets by publishing the national catalogue for everyone to reuse.",
+					"Necessity: only the catalogue’s data about places is shown, data the catalogue publishes anyway, and less of it: no e-mail, no free-text description; nothing about private life, no ratings, no reviews.",
+					"Balance: a public service context, factual information, a neutral order, no advertising, the minimum of the catalogue’s fields, an objection that hides a page at once and keeps it from coming back, corrections at the source, and pages that follow every update of the catalogue. Weighing these points, the interests of patients prevail, and anyone a page is about can object without giving a reason."
+				]
+			},
+			"accounts": {
+				"heading": "Organiser accounts and claims",
+				"body": [
+					"Data: e-mail address, name, password (stored hashed), second authentication factor, the documents sent to claim a page (proof that the claimant acts for the organiser of the service location) and team members.",
+					"Purposes: managing the account and checking that a page is claimed by the right organiser. Legal bases: performance of the terms of use (article 6(1)(b)) and the legitimate interests of securing the service (article 6(1)(f)).",
+					"Retention: the account is kept until it is deleted; supporting documents, encrypted, are erased 30 days after the decision."
+				]
+			},
+			"requests": {
+				"heading": "Error reports, objections and contact requests",
+				"body": [
+					"Data: the message, the contact e-mail address when one is given and the page concerned; for a “this is our page” request also the name and phone number. Free text is encrypted.",
+					"Purposes: correcting errors, applying objections and helping an organiser that cannot claim its page online. Legal bases: legitimate interests (article 6(1)(f)) and the right to object (article 21).",
+					"Retention: a report is deleted 6 months after it is closed, a rejected objection one year after its decision, a contact request 12 months after the last exchange. Once an objection is confirmed, or the holder of a claimed page removes it, the page and the data about it are deleted at once, the objection included; all that is kept is a record of the removal (the identifier of the page, the country, the reason, who recorded it and when), so that it is never published again."
+				]
+			},
+			"technical": {
+				"heading": "Technical data and cookies",
+				"body": [
+					"Only cookies strictly necessary to the service are set: the session of signed-in organisers and the chosen language. No advertising or audience measurement cookies, no trackers.",
+					"To limit abuse, IP addresses are transformed with a keyed function before being counted and never stored as such; organiser sessions record a truncated IP address. Views of claimed pages are counted without a cookie or identifier, and only the page’s holder sees them."
+				]
+			},
+			"recipients": {
+				"heading": "Recipients and processors",
+				"body": [
+					"Data is neither sold nor rented, and never used for advertising. Only the provider’s team and the processors below receive it, each for its own part, under a contract that meets GDPR article 28. The data is hosted in the European Economic Area. Maps are loaded from a tile server, which receives the visitor’s IP address like any website."
+				]
+			},
+			"transfers": {
+				"heading": "Transfers outside the European Union",
+				"body": [
+					"Data is transferred outside the European Union and the European Economic Area only under the safeguards of chapter V of the GDPR (an adequacy decision or standard contractual clauses). Any change of processor will be announced here before it takes effect."
+				]
+			},
+			"automated": {
+				"heading": "Automated decisions",
+				"body": [
+					"No decision about you is taken by automated means alone. A claim is decided by a person, who reads its documents."
+				]
+			},
+			"rights": {
+				"heading": "Your rights",
+				"body": [
+					"You can ask to access your data, to have it corrected or erased, to restrict its processing, to receive it in a portable format and to object to its processing. Write to the address below; you will get an answer within one month.",
+					"You can also lodge a complaint with the Office of the Data Protection Ombudsman (Tietosuojavaltuutetun toimisto), Finland’s supervisory authority (GDPR article 77; Data Protection Act, section 8), or with the supervisory authority of the country where you live or work."
+				]
+			},
+			"objection": {
+				"heading": "Objecting to a page (GDPR article 21)",
+				"body": [
+					"Anyone a page is about can object to its publication at any time, without giving a reason. If the page is unclaimed, a form is enough: the page is hidden as soon as the request arrives, deleted after a light check, and the updates of the catalogue never publish it again. If it is claimed, its holder removes it from their space."
+				]
+			},
+			"changes": {
+				"heading": "Updates to this notice",
+				"body": [
+					"This notice is a draft. It will be reviewed by a lawyer admitted in Finland and by the data protection officer; every version is dated."
+				]
+			}
+		},
+		"fields": {
+			"controller": "Controller",
+			"address": "Address",
+			"email": "Contact for requests",
+			"dpo": "Data protection officer",
+			"effectiveDate": "Effective date",
+			"hostingProvider": "Hosting provider (processor)",
+			"smtp": "E-mail delivery (processor)",
+			"authority": "Supervisory authority"
+		},
+		"objectLink": "How to object to a page",
+		"authorityLink": "The Office of the Data Protection Ombudsman (tietosuoja.fi)",
+		"authorityAddress": "Tietosuojavaltuutetun toimisto, Lintulahdenkuja 4, 00530 Helsinki, tietosuoja@om.fi"
+	},
+	"TermsFi": {
+		"metaTitle": "Terms of use (Finland) · Apercura",
+		"metaDescription": "Terms of use of the Finnish pages of Apercura: a free, factual directory of public health service locations from the Finnish Service Catalogue, without booking.",
+		"title": "Terms of use",
+		"lead": "The rules for using the Finnish pages of Apercura, for the public and for the organisers of the places listed alike.",
+		"sections": {
+			"service": {
+				"heading": "The service",
+				"body": [
+					"Apercura lists, free of charge, the public health service locations that the wellbeing services counties, the City of Helsinki, Åland and the other public organisers describe in the Finnish Service Catalogue. It lists places, not the health workers who work there, and neither pharmacies nor private clinics. It is a directory only: no appointment is booked through Apercura in Finland, because whether a booking tool must be a registered system connected to Kanta (Act 784/2021) has not been settled. It is run by the provider named in the legal notice.",
+					"Using the directory requires no account. Using the site means accepting these terms."
+				]
+			},
+			"content": {
+				"heading": "What the pages contain",
+				"body": [
+					"Pages show factual information from the Finnish Service Catalogue, as it publishes it, in a neutral order, without ratings, reviews, advertising or paid placement.",
+					"The information may be incomplete or out of date, and a location without a point in the catalogue is shown at its municipality, not at its exact address on a map: check opening hours and how to get care with the location or its organiser before you go. Every page says how to report an error."
+				]
+			},
+			"health": {
+				"heading": "Not medical advice",
+				"body": [
+					"Apercura gives no medical advice and is not an emergency service. In an emergency, call 112. The medical helpline (Päivystysapu) answers at 116 117."
+				]
+			},
+			"providers": {
+				"heading": "For organisers",
+				"body": [
+					"Claiming a page is free. It requires a document proving that the claimant acts for the organiser of the service location, checked by a person before the page is handed over.",
+					"The holder of a page is responsible for the information they add. It must stay factual, accurate and up to date: marketing of health services must not mislead (Consumer Protection Act, chapter 2), and only facts such as the location’s name, opening hours, address, services, languages and prices may be published."
+				]
+			},
+			"removal": {
+				"heading": "Removing a page",
+				"body": [
+					"Anyone a page is about can ask for it to be removed at any time: the data page explains how. A claimed page can only be removed by its holder."
+				]
+			},
+			"liability": {
+				"heading": "Liability",
+				"body": [
+					"The provider does its best to keep the service available and accurate, but cannot guarantee it. It is not responsible for the information organisers add to their pages. These limits will be specified during the legal review."
+				]
+			},
+			"ip": {
+				"heading": "Code and data",
+				"body": [
+					"The source code is published under the AGPL-3.0 licence. The Finnish Service Catalogue’s data is in the public domain (CC0 1.0); Statistics Finland’s places are under CC BY 4.0: anyone may reuse them from these pages with the credit “Lähde: Tilastokeskus”."
+				]
+			},
+			"law": {
+				"heading": "Governing law and disputes",
+				"body": [
+					"These terms are governed by Finnish law; the mandatory consumer protection rules of the country of residence always apply. The competent court will be specified during the legal review. In case of a dispute, first write to the contact address to look for an amicable solution; a consumer can also turn to the Consumer Disputes Board (kuluttajariitalautakunta)."
+				]
+			}
+		},
+		"fields": {
+			"publisher": "Provider",
+			"effectiveDate": "Effective date",
+			"contact": "Contact"
+		}
+	},
+	"AccessibilityFi": {
+		"metaTitle": "Accessibility (Finland) · Apercura",
+		"metaDescription": "Accessibility of the Finnish pages of Apercura: the WCAG 2.2 AA target, what was checked, what remains, and how to report a problem.",
+		"title": "Accessibility",
+		"lead": "Apercura is designed for everyone, including older and low-vision people. This statement says where the Finnish pages stand.",
+		"sections": {
+			"scope": {
+				"heading": "Scope",
+				"body": [
+					"The Act on the Provision of Digital Services (laki digitaalisten palvelujen tarjoamisesta, 306/2019) binds public bodies and the private services it lists, and the accessibility requirements act for products and services (102/2023) covers e-commerce and the other services it lists, not a free directory: their supervision does not apply to these pages. Apercura’s provider nevertheless publishes this statement in the form the act asks for and aims at the same standard on every page: WCAG 2.2 level AA (EN 301 549).",
+					"The pages are in Finnish. A Swedish version, in Finland’s other national language, is planned."
+				]
+			},
+			"status": {
+				"heading": "Where the site stands",
+				"body": [
+					"The Finnish pages share the code of the other markets’ pages and their tests. The site partially meets WCAG 2.2 AA: this rests on a self-assessment and automated tests, not yet on a full audit, which is in progress."
+				]
+			},
+			"tests": {
+				"heading": "What was checked",
+				"list": [
+					"Automated axe-core checks (WCAG 2.0, 2.1 and 2.2 rules, levels A and AA) on every page type, at every release.",
+					"Keyboard-only journeys with a visible focus.",
+					"Body text of at least 18 px, targets of at least 44 px, nothing that relies on colour alone, no horizontal scrolling at 390 px."
+				]
+			},
+			"pending": {
+				"heading": "What remains to be checked",
+				"list": [
+					"A manual pass with the VoiceOver and NVDA screen readers, in Finnish.",
+					"A full audit against WCAG 2.2 AA on a sample of pages, including the Finnish texts."
+				]
+			},
+			"feedback": {
+				"heading": "Report a problem",
+				"body": [
+					"If a page or a feature is hard to use, write to the address below: say which page and what blocked you. We answer within two weeks and, where needed, give you the information in another form."
+				]
+			}
+		},
+		"fields": {
+			"contact": "Contact",
+			"date": "Date of this statement"
+		}
+	},
+	"DataFi": {
+		"metaTitle": "Data and sources (Finland) · Apercura",
+		"metaDescription": "Where the Finnish pages of Apercura come from (the Finnish Service Catalogue and Statistics Finland), under which licence, and how to correct or remove a page.",
+		"title": "Data and sources",
+		"lead": "Every Finnish page is built from the national Finnish Service Catalogue. Here is where the data comes from, under which licence and credit, when it was updated, and how to correct or remove a page.",
+		"status": {
+			"heading": "Last update",
+			"body": "The organisers update their descriptions in the Finnish Service Catalogue whenever they change, and its open interface serves them at once; the directory reads the catalogue every week. A page changes only when its facts change in the catalogue.",
+			"importedAt": "Last import",
+			"checkedAt": "Sources last checked",
+			"notImported": "The Finnish directory has not been imported yet on this site.",
+			"notImportedValue": "Not imported yet"
+		},
+		"sources": {
+			"heading": "Sources",
+			"body": "The Digital and Population Data Services Agency publishes the Finnish Service Catalogue through its open interface under CC0 1.0, which asks for no credit: Apercura names it anyway. Statistics Finland publishes its statistical areas and classifications under CC BY 4.0, with the credit “Lähde: Tilastokeskus”. Each credit below is printed word for word.",
+			"caption": "Data sources of the Finnish directory",
+			"columns": {
+				"source": "Source",
+				"use": "Used for",
+				"licence": "Licence and credit",
+				"frequency": "Updated"
+			},
+			"items": {
+				"fi-ptv": {
+					"use": "Public health service locations: names, organisers, linked services, addresses, points, telephone numbers",
+					"frequency": "Continuously, by each organiser; read every week"
+				},
+				"fi-tilastokeskus": {
+					"use": "Municipalities, wellbeing services counties and regions, and the centre of each municipality, where a location without a point is placed",
+					"frequency": "Every year, by Statistics Finland"
+				},
+				"map": {
+					"name": "Map data",
+					"publisher": "OpenStreetMap contributors, tiles by OpenFreeMap",
+					"use": "Maps on the pages",
+					"frequency": "Continuously"
+				}
+			},
+			"cc0": "CC0 1.0",
+			"ccBy": "CC BY 4.0",
+			"odbl": "ODbL"
+		},
+		"licence": {
+			"heading": "The licence of the Finnish data",
+			"body": [
+				"The Finnish Service Catalogue’s content is free to use through its open interface, under the Creative Commons CC0 1.0 public domain dedication, as its dataset on avoindata.fi states. Apercura makes no licence claim on it as republished on these pages: the AGPL-3.0 licence covers Apercura’s source code, not this data."
+			],
+			"list": [
+				"Statistics Finland’s municipalities, wellbeing services counties and regions are reused under CC BY 4.0, with the credit “Lähde: Tilastokeskus” and the year of the areas, on every page they place.",
+				"The catalogue’s version 11 interface, which needs no key, is read today; its version 12 asks for a free key registered by the user organisation, which Apercura will request before version 11 is switched off (announced for April 2027)."
+			],
+			"changesHeading": "Changes made to the data",
+			"changes": "The catalogue is read every week and only what a page needs is kept: the service locations whose services are health care (health centres, hospitals, emergency clinics, dental clinics, maternity and child health clinics, mental health and substance abuse services, rehabilitation, laboratories and imaging); schools, libraries, social services and offices are left out, and so are school and student health care, e-mail addresses, free-text descriptions and service hours. Each location is placed in its municipality by the code its address gives and shown at the catalogue’s point, converted from ETRS-TM35FIN to WGS 84, else at its municipality’s centre; names are shown in Finnish, else in Swedish, as the catalogue writes them.",
+			"licenceLink": "The CC0 1.0 public domain dedication",
+			"datasetLink": "The Finnish Service Catalogue on avoindata.fi"
+		},
+		"coverage": {
+			"heading": "Places covered",
+			"body": [
+				"Pages are generated for every service location of the Finnish Service Catalogue linked to a health care service, described by a public organiser: the 21 wellbeing services counties, the City of Helsinki, Åland, HUS and the other public bodies that describe their services there. A location is listed once, under the first kind its services give: a hospital, an emergency clinic, a health centre, a dental clinic, a maternity and child health clinic, a mental health or substance abuse service, a rehabilitation unit, then a laboratory or imaging unit. Every service is shown on the page.",
+				"Not listed: pharmacies (the Finnish Medicines Agency, Fimea, publishes no open-licensed list of pharmacies; its CC BY 4.0 open data covers medicines only), private clinics and practices (the register of private providers states no reuse licence), school and student health care, and the health workers, whom the catalogue does not name.",
+				"A location is placed at the catalogue’s point. A location without a point is placed at the centre of its municipality: its map position and its distance are then those of the municipality, never of the address."
+			],
+			"kinds": {
+				"FI_HOSPITAL": "Hospitals (central, university, regional and city hospitals and their wards)",
+				"FI_EMERGENCY": "Emergency clinics (päivystys)",
+				"FI_HEALTH_CENTRE": "Health centres and health and social services centres",
+				"FI_DENTAL": "Dental clinics (public oral health care)",
+				"FI_CHILD_HEALTH": "Maternity and child health clinics, family planning clinics",
+				"FI_MENTAL_HEALTH": "Mental health and substance abuse services",
+				"FI_REHABILITATION": "Rehabilitation (physiotherapy, occupational therapy, speech therapy, aids)",
+				"FI_LABORATORY": "Laboratories and imaging"
+			},
+			"kindsLabel": "Imported"
+		},
+		"identifiers": {
+			"heading": "Identifiers",
+			"body": [
+				"The address of every page ends with the Finnish Service Catalogue’s permanent id of the service location, so a page can be found and checked against the catalogue:"
+			],
+			"list": [
+				"/fi/toimipiste/lapuan-sosiaali-ja-terveyskeskus-b18aa7f87eca4b97a8e8b438d2e29427: a service location and its id in the catalogue (b18aa7f8-7eca-4b97-a8e8-b438d2e29427), written without its dashes. No business id is used."
+			]
+		},
+		"correct": {
+			"heading": "Correct an error",
+			"body": [
+				"The pages repeat the catalogue: a lasting correction is made at the source, and the page follows at the next import.",
+				"For anything else, use the form: we check every report."
+			],
+			"list": [
+				"Service locations: the organiser (a wellbeing services county, the City of Helsinki, HUS…) corrects its description in the Finnish Service Catalogue; the feedback link on each place’s page on Suomi.fi reaches it too.",
+				"Municipalities and wellbeing services counties: they change with Statistics Finland’s areas each January."
+			],
+			"formTitle": "Report an error",
+			"formBody": "Give the address of the page and what is wrong."
+		},
+		"remove": {
+			"heading": "Remove a page",
+			"body": [
+				"Anyone a page is about can object to its publication at any time, without giving a reason (GDPR article 21). An unclaimed page is hidden as soon as the request arrives and deleted after a light check; it never comes back with the updates of the catalogue. A claimed page is removed by its holder, from their space."
+			],
+			"formTitle": "Ask for a page to be removed",
+			"formBody": "Give the address of the page and an e-mail address where we can answer you."
 		}
 	}
 }

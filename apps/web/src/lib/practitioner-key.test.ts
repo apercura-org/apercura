@@ -325,3 +325,29 @@ describe("Irish facility keys", () => {
 		expect(displayId({ idScheme: "IE-HSE-HC", nationalId: "123456789" })).toBe("c123456789");
 	});
 });
+
+describe("Finnish service location keys", () => {
+	const key = "b18aa7f87eca4b97a8e8b438d2e29427";
+
+	it("read a Finnish page segment in Finland only, and print the catalogue's id", () => {
+		expect(parsePractitionerKey("fi-FI", `lapuan-terveyskeskus-${key}`)).toEqual({
+			country: "FI",
+			idScheme: "FI-PTV",
+			nationalId: key,
+			namePart: "lapuan-terveyskeskus",
+		});
+		expect(parsePractitionerKey("fi-FI", "camille-exemple-19999990013")).toBeNull();
+		expect(parsePractitionerKey("fr", `lapuan-terveyskeskus-${key}`)).toBeNull();
+		expect(marketAdapter("fi-FI").features.booking).toBe(false);
+		expect(marketSegmentOf("FI", `lapuan-terveyskeskus-${key}`)).toBe(
+			`fi.lapuan-terveyskeskus-${key}`,
+		);
+		expect(parseAnyPractitionerKey(`fi.lapuan-terveyskeskus-${key}`)).toMatchObject({
+			country: "FI",
+			nationalId: key,
+		});
+		expect(displayId({ idScheme: "FI-PTV", nationalId: key })).toBe(
+			"b18aa7f8-7eca-4b97-a8e8-b438d2e29427",
+		);
+	});
+});

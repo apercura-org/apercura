@@ -5,8 +5,9 @@ import { type Locale, type MarketCountry, marketOf } from "~/i18n/locales";
  * opening. Each market shows what its directory lists, in its own language: practitioners in
  * France, Austria (its doctors) and Czechia (practices under a doctor's name, a pharmacy);
  * practices, facilities, pharmacies or hospitals in the UK, Spain, Italy, Germany, Switzerland,
- * Estonia and Ireland. The names and addresses say plainly that they are examples ("Exemple",
- * "Muster", "Example", "Ejemplo", "Esempio", "Příklad", "Näidis", "Przykład"), never a real person, practice or place
+ * Estonia, Poland, Ireland and Finland. The names and addresses say plainly that they are examples
+ * ("Exemple", "Muster", "Example", "Ejemplo", "Esempio", "Příklad", "Näidis", "Przykład",
+ * "Esimerkki"), never a real person, practice or place
  * of care; the identifiers are shaped like the market's but synthetic.
  *
  * One sample per state of a page, as the stamp prints it (DESIGN.md, "Stamp"): unclaimed
@@ -336,6 +337,34 @@ const SAMPLES: Readonly<Record<Exclude<MarketCountry, "CH">, HomeSamples>> = {
 			gender: "other",
 			address: "8 Example Avenue, Limerick",
 			identifier: "h900000025",
+			status: "claimed",
+		},
+	],
+	// Finland: public service locations of the Finnish Service Catalogue, a health centre, a dental
+	// clinic, a maternity and child health clinic. A page prints the catalogue's id of the location.
+	FI: [
+		{
+			name: "Esimerkkilän terveysasema",
+			listing: "terveysasemat",
+			gender: "other",
+			address: "Esimerkkitie 12, 33100 Tampere",
+			identifier: "e5e00000-0000-4000-8000-000000000001",
+			status: "unclaimed",
+		},
+		{
+			name: "Esimerkkilän hammashoitola",
+			listing: "hammashoitolat",
+			gender: "other",
+			address: "Esimerkkikatu 3, 20100 Turku",
+			identifier: "e5e00000-0000-4000-8000-000000000002",
+			status: "verified",
+		},
+		{
+			name: "Esimerkkilän neuvola",
+			listing: "neuvolat",
+			gender: "other",
+			address: "Esimerkkipolku 8, 90100 Oulu",
+			identifier: "e5e00000-0000-4000-8000-000000000003",
 			status: "claimed",
 		},
 	],

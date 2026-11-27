@@ -17,7 +17,7 @@
  * `de-CH` under `/ch` (German, the majority language), `fr-CH` under `/ch-fr` and `it-CH` under
  * `/ch-it`, all three market languages of their own, indexed, not interface translations; and
  * `et-EE` Estonia's, in Estonian, under `/ee`; `pl-PL` is
- * Poland's, in Polish, under `/pl`; and `nb-NO` Norway's, in Norwegian Bokmål, under `/no`; `en-IE` Ireland's, in English, under `/ie`
+ * Poland's, in Polish, under `/pl`; and `nb-NO` Norway's, in Norwegian Bokmål, under `/no`; `en-IE` Ireland's, in English, under `/ie`; `fi-FI` Finland's, in Finnish, under `/fi`
  * (docs/adr/0002-multi-country.md, section 2: once a second market opens, a
  * market's languages are locales of their own). Locale ids are BCP 47 tags, so next-intl formats dates, numbers
  * and plurals the market's way; the URL prefix is the segment.
@@ -41,6 +41,7 @@ export const LOCALES = [
 	"pl-PL",
 	"nb-NO",
 	"en-IE",
+	"fi-FI",
 ] as const;
 
 export type Locale = (typeof LOCALES)[number];
@@ -90,6 +91,9 @@ export const NORWAY_SEGMENT = "no";
 /** The path segment of the Irish market (`/ie/pharmacy/cork`). */
 export const IRELAND_SEGMENT = "ie";
 
+/** The path segment of the Finnish market (`/fi/terveysasemat/pirkanmaan-hyvinvointialue/tampere`). */
+export const FINLAND_SEGMENT = "fi";
+
 /**
  * The URL prefix of each interface locale: `/{market}` for the market's own
  * language, `/{market}-{language}` for an interface translation of its pages
@@ -115,11 +119,12 @@ export const LOCALE_PREFIXES = {
 	"pl-PL": `/${POLAND_SEGMENT}`,
 	"nb-NO": `/${NORWAY_SEGMENT}`,
 	"en-IE": `/${IRELAND_SEGMENT}`,
+	"fi-FI": `/${FINLAND_SEGMENT}`,
 } as const satisfies Record<Locale, `/${string}`>;
 
 /**
  * The market whose pages a locale shows (ISO 3166-1 alpha-2): France for `fr`
- * and its interface translations, Austria for `de-AT`, the UK for `en-GB`, Czechia for `cs-CZ`, Spain for `es-ES`, Italy for `it-IT`, Germany for `de-DE`, Switzerland for `de-CH`, `fr-CH` and `it-CH`, Estonia for `et-EE`, Poland for `pl-PL`, Norway for `nb-NO`, Ireland for `en-IE`. Every query of a public
+ * and its interface translations, Austria for `de-AT`, the UK for `en-GB`, Czechia for `cs-CZ`, Spain for `es-ES`, Italy for `it-IT`, Germany for `de-DE`, Switzerland for `de-CH`, `fr-CH` and `it-CH`, Estonia for `et-EE`, Poland for `pl-PL`, Norway for `nb-NO`, Ireland for `en-IE`, Finland for `fi-FI`. Every query of a public
  * page is scoped to it, so a market never lists another market's practitioners.
  */
 export const LOCALE_MARKETS = {
@@ -141,6 +146,7 @@ export const LOCALE_MARKETS = {
 	"pl-PL": "PL",
 	"nb-NO": "NO",
 	"en-IE": "IE",
+	"fi-FI": "FI",
 } as const satisfies Record<Locale, string>;
 
 export type MarketCountry = (typeof LOCALE_MARKETS)[Locale];
@@ -154,7 +160,7 @@ export function marketOf(locale: Locale): MarketCountry {
 
 /**
  * The locale of a market's own language (`FR` → `fr`, `AT` → `de-AT`, `GB` → `en-GB`,
- * `CZ` → `cs-CZ`, `ES` → `es-ES`, `IT` → `it-IT`, `DE` → `de-DE`, `PL` → `pl-PL`, `CH` → `de-CH`: German under `/ch`, the
+ * `CZ` → `cs-CZ`, `ES` → `es-ES`, `IT` → `it-IT`, `DE` → `de-DE`, `PL` → `pl-PL`, `FI` → `fi-FI`, `CH` → `de-CH`: German under `/ch`, the
  * search's `pays` value; a French or Italian reader lands on `/ch-fr` or `/ch-it` through
  * `marketLocaleFor`), `EE` → `et-EE`, `NO` → `nb-NO`, `IE` → `en-IE`.
  */
@@ -171,6 +177,7 @@ export const MARKET_LOCALES: Record<MarketCountry, Locale> = {
 	PL: "pl-PL",
 	NO: "nb-NO",
 	IE: "en-IE",
+	FI: "fi-FI",
 };
 
 /** The open markets, France first: the order a search looks a place up in after its own. */
@@ -219,7 +226,8 @@ export function marketLocaleFor(country: MarketCountry, visitor: Locale): Locale
  * Standard German does. `et-EE` reads the English catalog with the Estonian texts on top
  * (`messages/ee.json`), as Czechia does, and `nb-NO` the English catalog with the Norwegian
  * Bokmål texts on top (`messages/no.json`); `en-IE` reads the English catalog with Ireland's overrides
- * (`messages/en-IE.json`; `en-GB` is the UK's).
+ * (`messages/en-IE.json`; `en-GB` is the UK's), and `fi-FI` the English catalog with the Finnish texts on top
+ * (`messages/fi.json`).
  */
 export const CATALOG_LANGUAGES = {
 	fr: "fr",
@@ -240,6 +248,7 @@ export const CATALOG_LANGUAGES = {
 	"pl-PL": "pl",
 	"nb-NO": "nb",
 	"en-IE": "en",
+	"fi-FI": "fi",
 } as const satisfies Record<Locale, string>;
 
 /** The first path segment of each locale's pages (`fr`, `fr-en`…). */
@@ -277,6 +286,7 @@ export const INDEXABLE_LOCALES: readonly Locale[] = [
 	"pl-PL",
 	"nb-NO",
 	"en-IE",
+	"fi-FI",
 ];
 
 /**
@@ -307,6 +317,7 @@ export const HREFLANGS: Partial<Record<Locale, string>> = {
 	"pl-PL": "pl-PL",
 	"nb-NO": "nb-NO",
 	"en-IE": "en-IE",
+	"fi-FI": "fi-FI",
 };
 
 /** BCP 47 tag used to format dates and numbers, and as the content language (JSON-LD). */
@@ -329,6 +340,7 @@ export const LOCALE_TAGS: Record<Locale, string> = {
 	"pl-PL": "pl-PL",
 	"nb-NO": "nb-NO",
 	"en-IE": "en-IE",
+	"fi-FI": "fi-FI",
 };
 
 /** Open Graph locales (`og:locale`). */
@@ -351,6 +363,7 @@ export const OG_LOCALES: Record<Locale, string> = {
 	"pl-PL": "pl_PL",
 	"nb-NO": "nb_NO",
 	"en-IE": "en_IE",
+	"fi-FI": "fi_FI",
 };
 
 export function isLocale(value: unknown): value is Locale {

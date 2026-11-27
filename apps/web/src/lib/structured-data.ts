@@ -349,6 +349,17 @@ const MEDICAL_SPECIALTIES: Record<string, readonly MedicalSpecialty[]> = {
 	// Ireland's facilities (Irish listing slugs).
 	pharmacy: ["https://schema.org/PharmacySpecialty"],
 	"health-centres": ["https://schema.org/PrimaryCare"],
+	// Finland's public service locations (Finnish listing slugs).
+	paivystys: ["https://schema.org/Emergency"],
+	terveysasemat: ["https://schema.org/PrimaryCare"],
+	hammashoitolat: ["https://schema.org/Dentistry"],
+	neuvolat: ["https://schema.org/Obstetric", "https://schema.org/Pediatric"],
+	"mielenterveys-ja-paihdepalvelut": ["https://schema.org/Psychiatric"],
+	kuntoutus: ["https://schema.org/Physiotherapy"],
+	"laboratoriot-ja-kuvantaminen": [
+		"https://schema.org/LaboratoryScience",
+		"https://schema.org/Radiography",
+	],
 };
 
 /**
@@ -555,7 +566,9 @@ const DOCTOR_PROFESSIONS = new Set(["10", "ARZT"]);
  * `Pharmacy`, a nursing home a `MedicalOrganization` (an organisation that provides care, not a
  * place to visit as a patient: no `geo`, which only a place has). A Polish establishment is a
  * `MedicalClinic`, except a hospital or sanatorium (`Hospital`), a dental clinic (`Dentist`), a
- * care home or hospice (`MedicalOrganization`) and nurses and midwives (`MedicalBusiness`).
+ * care home or hospice (`MedicalOrganization`) and nurses and midwives (`MedicalBusiness`). A
+ * Finnish service location is a `MedicalClinic`, except a hospital (`Hospital`) and a dental clinic
+ * (`Dentist`).
  * Ireland's the same way: a pharmacy is a `Pharmacy`, a hospital a `Hospital`, an HSE health
  * centre a `MedicalClinic`, a nursing home a `MedicalOrganization` (schema.org has no type of its
  * own for one).
@@ -621,6 +634,8 @@ const PRACTICE_TYPES: Readonly<Record<string, PracticeType>> = {
 	IE_HOSPITAL: "Hospital",
 	IE_HEALTH_CENTRE: "MedicalClinic",
 	IE_NURSING_HOME: "MedicalOrganization",
+	FI_HOSPITAL: "Hospital",
+	FI_DENTAL: "Dentist",
 };
 
 /** The schema.org type of a market of practices' page subject (`PRACTICE_TYPES`), if any. */
@@ -629,7 +644,8 @@ function practiceTypeOf(professionCode: string): PracticeType | null {
 		PRACTICE_TYPES[professionCode] ??
 		(professionCode.startsWith("CZ_") ||
 		professionCode.startsWith("ES_") ||
-		professionCode.startsWith("PL_")
+		professionCode.startsWith("PL_") ||
+		professionCode.startsWith("FI_")
 			? "MedicalClinic"
 			: null)
 	);

@@ -12,6 +12,8 @@ import {
 	type EeIdScheme,
 	ES_ID_SCHEME,
 	eeUrlKey,
+	FI_ID_SCHEMES,
+	type FiIdScheme,
 	GB_ID_SCHEMES,
 	type GbIdScheme,
 	gbUrlKey,
@@ -32,6 +34,7 @@ import {
 	parseDeFacilitySegment,
 	parseEeFacilitySegment,
 	parseEsCentreSegment,
+	parseFiFacilitySegment,
 	parseGbPracticeSegment,
 	parseIeFacilitySegment,
 	parseItPlaceSegment,
@@ -142,6 +145,23 @@ function eeRef(segment: string): PractitionerRef | null {
 		: null;
 }
 
+/** The prefix of a Finnish reference (`fi:b18aa7f87eca4b97a8e8b438d2e29427`). */
+const FI_REF = "fi:";
+
+/**
+ * A Finnish service location from the end of a page address or slug, or from its key (32
+ * hexadecimal digits, or the catalogue's UUID with its dashes).
+ */
+function fiRef(segment: string): PractitionerRef | null {
+	const uuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/.test(segment)
+		? segment.replace(/-/g, "")
+		: segment;
+	const parsed = parseFiFacilitySegment(uuid);
+	return parsed
+		? { country: "FI", idScheme: parsed.idScheme, nationalId: parsed.nationalId }
+		: null;
+}
+
 /** The prefix of a Polish reference (`pl:290629`): a bare number names no market by itself. */
 const PL_REF = "pl:";
 
@@ -239,6 +259,9 @@ export function parsePractitionerRef(
 	if (trimmed.toLowerCase().startsWith(EE_REF)) {
 		return eeRef(trimmed.slice(EE_REF.length).replace(/\s+/g, "").toLowerCase());
 	}
+	if (trimmed.toLowerCase().startsWith(FI_REF)) {
+		return fiRef(trimmed.slice(FI_REF.length).replace(/\s+/g, "").toLowerCase());
+	}
 	if (trimmed.toLowerCase().startsWith(PL_REF)) {
 		return plRef(trimmed.slice(PL_REF.length).replace(/\s+/g, "").toLowerCase());
 	}
@@ -306,6 +329,11 @@ export function parsePractitionerRef(
 		const polish = plRef(compact);
 		if (polish) return polish;
 	}
+	// A page address of Finland (`/fi/toimipiste/…`), or a key typed on a Finnish page.
+	if ((path.length > 1 && path[0]?.toLowerCase() === "fi") || market === "FI") {
+		const finnish = fiRef(compact);
+		if (finnish) return finnish;
+	}
 	if (market === "ES" || /^\d{10}$/.test(compact)) {
 		const spanish = esRef(compact);
 		if (spanish) return spanish;
@@ -328,7 +356,7 @@ export function parsePractitionerRef(
 
 /**
  * The short reference of a practitioner (`19999990013`, `w7983`, `gb:a81001`, `cz:39781`,
- * `es:1328000001`, `it:f9000001`, `de:k0a1b2c3d4e`, `ch:h123456789`, `ee:l01909`, `pl:290629`, `ie:p10000612`), as
+ * `es:1328000001`, `it:f9000001`, `de:k0a1b2c3d4e`, `ch:h123456789`, `ee:l01909`, `pl:290629`, `ie:p10000612`, `fi:b18aa7f87eca4b97a8e8b438d2e29427`), as
  * `parsePractitionerRef` reads it.
  */
 export function practitionerRefOf(practitioner: { idScheme: string; nationalId: string }): string {
@@ -340,6 +368,8 @@ export function practitionerRefOf(practitioner: { idScheme: string; nationalId: 
 	}
 	if (practitioner.idScheme === CZ_ID_SCHEME) return `${CZ_REF}${practitioner.nationalId}`;
 	if (practitioner.idScheme === PL_ID_SCHEME) return `${PL_REF}${practitioner.nationalId}`;
+	if (FI_ID_SCHEMES[practitioner.idScheme as FiIdScheme])
+		return `${FI_REF}${practitioner.nationalId}`;
 	if (practitioner.idScheme === ES_ID_SCHEME) return `${ES_REF}${practitioner.nationalId}`;
 	if (IT_ID_SCHEMES[practitioner.idScheme as ItIdScheme]) {
 		return `${IT_REF}${itUrlKey(practitioner.idScheme as ItIdScheme, practitioner.nationalId)}`;

@@ -357,3 +357,26 @@ describe("Irish facility references", () => {
 		}
 	});
 });
+
+describe("Finnish service location references", () => {
+	const key = "b18aa7f87eca4b97a8e8b438d2e29427";
+	const location = { country: "FI", idScheme: "FI-PTV", nationalId: key };
+
+	it("read the `fi:` reference, a Finnish page address, the catalogue's id and a key", () => {
+		expect(parsePractitionerRef(`fi:${key}`)).toEqual(location);
+		expect(parsePractitionerRef(` FI: ${key.toUpperCase()} `)).toEqual(location);
+		expect(
+			parsePractitionerRef(`https://apercura.org/fi/toimipiste/lapuan-terveyskeskus-${key}`),
+		).toEqual(location);
+		// The id as a page prints it, typed on a Finnish page.
+		expect(parsePractitionerRef("b18aa7f8-7eca-4b97-a8e8-b438d2e29427", "FI")).toEqual(location);
+		expect(parsePractitionerRef(key, "FI")).toEqual(location);
+		expect(parsePractitionerRef(`fi:${key.slice(1)}`)).toBeNull();
+		expect(parsePractitionerRef("fi:")).toBeNull();
+	});
+
+	it("write the reference back with its market", () => {
+		expect(practitionerRefOf(location)).toBe(`fi:${key}`);
+		expect(parsePractitionerRef(practitionerRefOf(location))).toEqual(location);
+	});
+});

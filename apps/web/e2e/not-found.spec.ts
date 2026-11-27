@@ -28,6 +28,7 @@ const LOCALIZED = [
 	},
 	{ path: "/cz/neexistuje", title: "Tato stránka neexistuje", lang: "cs-CZ", search: "Hledat" },
 	{ path: "/pl/nie-istnieje", title: "Ta strona nie istnieje", lang: "pl-PL", search: "Szukaj" },
+	{ path: "/fi/ei-ole-olemassa", title: "Tätä sivua ei ole", lang: "fi-FI", search: "Hae" },
 	{ path: "/es/no-existe", title: "Esta página no existe", lang: "es-ES", search: "Buscar" },
 	{ path: "/it/inesistente", title: "Questa pagina non esiste", lang: "it-IT", search: "Ricerca" },
 	{

@@ -91,6 +91,10 @@ const PLACES: Record<MarketCountry, PlaceSuggestion[]> = {
 		place(61, "Cork", "cork", "cork"),
 		place(62, "An Spidéal", "an-spideal", "galway"),
 	],
+	FI: [
+		place(70, "Tampere", "tampere", "pirkanmaan-hyvinvointialue", "837"),
+		place(71, "Helsinki", "helsinki", "helsinki", "091"),
+	],
 };
 
 const LANDINGS = new Set([
@@ -130,6 +134,8 @@ const LANDINGS = new Set([
 	"pharmacy@Dublin",
 	"hospitals@Dublin",
 	"nursing-homes@Cork",
+	"hammashoitolat@Tampere",
+	"terveysasemat@Tampere",
 ]);
 
 const HUBS = new Set([
@@ -376,6 +382,13 @@ describe("a search for a place of another market", () => {
 		);
 		expect(await search("en-GB", { quoi: "dentysta", ou: "Skawina" })).toEqual(
 			listing("pl-PL", "stomatologia", "powiat-krakowski", "skawina"),
+		);
+		// Finland: a French or Finnish word, in a Finnish municipality of its wellbeing services county.
+		expect(await search("fr", { quoi: "dentiste", ou: "Tampere" })).toEqual(
+			listing("fi-FI", "hammashoitolat", "pirkanmaan-hyvinvointialue", "tampere"),
+		);
+		expect(await search("en-GB", { quoi: "terveyskeskus", ou: "Tampere" })).toEqual(
+			listing("fi-FI", "terveysasemat", "pirkanmaan-hyvinvointialue", "tampere"),
 		);
 	});
 

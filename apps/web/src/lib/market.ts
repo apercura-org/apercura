@@ -5,6 +5,7 @@ import {
 	DE_PHARMACY_STATES,
 	DE_STATES,
 	estonia,
+	finland,
 	germany,
 	ireland,
 	italy,
@@ -24,6 +25,7 @@ import {
 	DE_PROFESSIONS,
 	EE_PROFESSIONS,
 	ES_PROFESSIONS,
+	FI_PROFESSIONS,
 	GB_PROFESSIONS,
 	hasBillingSectors,
 	IE_PROFESSIONS,
@@ -88,6 +90,7 @@ export function professionSlugOf(code: string): string {
 		PL_PROFESSIONS[code]?.slug ??
 		NO_PROFESSIONS[code]?.slug ??
 		IE_PROFESSIONS[code]?.slug ??
+		FI_PROFESSIONS[code]?.slug ??
 		""
 	);
 }
@@ -321,6 +324,20 @@ export function norwegianSourcesOf(
 }
 
 /**
+ * The sources a Finnish page is built from, with their credit: the Finnish Service Catalogue
+ * (PTV, CC0 1.0: no attribution is required, Apercura names it anyway) and Statistics Finland's
+ * municipalities, wellbeing services counties and regions (CC BY 4.0, "Lähde: Tilastokeskus").
+ */
+export function finnishSourcesOf(
+	activitySources: readonly (string | undefined)[],
+): { name: string; attribution: string }[] {
+	if (!activitySources.some(Boolean)) return [];
+	return finland.registries
+		.filter((registry) => registry.attribution)
+		.map((registry) => ({ name: registry.name, attribution: registry.attribution ?? "" }));
+}
+
+/**
  * The places of Switzerland's pages: the Federal Statistical Office's communes, districts and
  * cantons and swisstopo's localities, credited on every Swiss page.
  */
@@ -483,6 +500,7 @@ export function openDataSourcesOf(
 	}
 	if (country === "DE") return germanSourcesOf(activities.map((activity) => activity.source));
 	if (country === "EE") return estonianSourcesOf(activities.map((activity) => activity.source));
+	if (country === "FI") return finnishSourcesOf(activities.map((activity) => activity.source));
 	if (country === "PL") {
 		// `sourceDate` is the import's day (the time of obtaining), `producedAt` the register's report's.
 		return activities.length > 0 ? polishSourcesOf(producedAt, sourceDate) : [];

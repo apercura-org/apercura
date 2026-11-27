@@ -12,6 +12,8 @@ import enIE from "../../messages/en-IE.json";
 import es from "../../messages/es.json";
 // Spain's overrides of the Spanish catalog: `es.json` is the language's, the one `/fr-es` reads.
 import esES from "../../messages/es-ES.json";
+// Finland's texts over the English catalog, as Czechia's (`fi.json`, named after the segment).
+import fi from "../../messages/fi.json";
 import fr from "../../messages/fr.json";
 import frCH from "../../messages/fr-CH.json";
 import gb from "../../messages/gb.json";
@@ -76,6 +78,7 @@ const CATALOGS: Record<
 		| "pl-PL"
 		| "nb-NO"
 		| "en-IE"
+		| "fi-FI"
 	>,
 	unknown
 > = {
@@ -137,7 +140,10 @@ export function messagesFor(locale: Locale): Messages {
 													: locale === "en-IE"
 														? // Ireland: the English catalog, with Ireland's overrides on top.
 															(mergeMessages(en, enIE as Tree) as Messages)
-														: (mergeMessages(en, CATALOGS[locale] as Tree) as Messages);
+														: locale === "fi-FI"
+															? // Finland: the English catalog, with the Finnish texts on top.
+																(mergeMessages(en, fi as Tree) as Messages)
+															: (mergeMessages(en, CATALOGS[locale] as Tree) as Messages);
 		merged.set(locale, found);
 	}
 	return found;
@@ -154,6 +160,9 @@ export const CZECH_OVERRIDES: unknown = cz;
 
 /** The Polish texts over the English catalog (`messages/pl.json`), for tests. */
 export const POLISH_OVERRIDES: unknown = pl;
+
+/** The Finnish texts over the English catalog (`messages/fi.json`), for tests. */
+export const FINNISH_OVERRIDES: unknown = fi;
 
 /** Spain's overrides of the Spanish catalog (`messages/es-ES.json`), for tests. */
 export const SPANISH_MARKET_OVERRIDES: unknown = esES;
