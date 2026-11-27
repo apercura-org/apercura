@@ -97,3 +97,11 @@
 # list that could not be fetched or read, or whose terms or licence changed (see
 # docs/data-import.md, "Ireland").
 30 20 * * 4 apercura etl:ie $ETL_IE_SCHEDULE_ARGS
+
+# Finland's public health service locations (the Finnish Service Catalogue's open API, PTV, CC0
+# 1.0), every Thursday at 05:30 UTC, when no other import runs (the same advisory lock: one
+# import at a time); the run takes the catalogue's health services and their locations page by
+# page (about 300 requests, four at a time, some 15 minutes). ETL_FI_SCHEDULE_ARGS adds flags. Exit codes: 1
+# failed (the catalogue could not be read), 2 blocked: the snapshot is kept for --approve (see
+# docs/data-import.md, "Finland").
+30 5 * * 4 apercura etl:fi $ETL_FI_SCHEDULE_ARGS

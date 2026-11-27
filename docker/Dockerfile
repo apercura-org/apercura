@@ -19,6 +19,7 @@
 #   docker run … apercura etl:pl [flags]     Polish RPWDL open data import
 #   docker run … apercura etl:no [flags]     Norwegian Enhetsregisteret establishments import
 #   docker run … apercura etl:ie [flags]     Irish PSI, HIQA and HSE open data import
+#   docker run … apercura etl:fi [flags]     Finnish Service Catalogue (PTV) open data import
 #   docker run … apercura scheduler          supercronic: jobs and cache warm-up every 5 minutes,
 #                                            weekly and monthly imports
 #
