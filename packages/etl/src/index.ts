@@ -15,6 +15,7 @@ export const COMMANDS = [
 	"etl:lt",
 	"etl:si",
 	"etl:cy",
+	"etl:lv",
 	"etl:places",
 	"etl:outbox",
 ] as const;
@@ -88,6 +89,11 @@ Commands:
                 Services; the pharmacist's name and house telephone are never read),
                 state hospitals and state health centres, placed in the municipalities
                 and communities, rebuild read models.
+  etl:lv        Import Latvian GP practices (the National Health Service's quarterly
+                list of GPs, at the Ministry of the Interior's addresses of medical
+                institutions), hospitals and pharmacies (the State Agency of
+                Medicines' register), all CC0 1.0 on data.gov.lv, placed in the
+                address register's towns and parishes (VZD), rebuild read models.
   etl:places    Import regions, departments, communes and arrondissements
                 (geo.api.gouv.fr), or with --country at the Austrian
                 Bundesländer and Gemeinden (Statistik Austria), or with --country gb
@@ -114,7 +120,9 @@ Commands:
                 areas and streets that locate the practices (GURS, Register prostorskih
                 enot, CC BY 4.0), or with --country cy the Cypriot districts,
                 municipalities and communities (CYSTAT's 2021 census, Cyprus Post's
-                postcodes). Run once, then yearly.
+                postcodes), or with --country lv the Latvian statistical regions, state
+                cities, municipalities, towns and parishes (VZD address register, CC BY
+                4.0). Run once, then yearly.
   etl:outbox    Send pending cache invalidations to the web app.
 
 Flags (etl:fr):
@@ -231,6 +239,12 @@ Flags (etl:si):
                           zzzs-zob.xlsx (and the places' si-*.json on a first run) instead
                           of the insurer's page.
 
+Flags (etl:lv):
+  --sources <ids>         Lists to import: gp (GP practices), hospitals, pharmacies (default
+                          ETL_LV_SOURCES, else all).
+  --dry-run, --approve=<run_id>, --force, --source-dir <path>, --offline, --work-dir <path>
+                          As for etl:at. Unchanged files end the run at once (exit code 0).
+
 Environment:
   DATABASE_URL_ETL (or DATABASE_URL), ETL_PROFESSIONS, ETL_ANS_URLS, ETL_AMELI_URL,
   ETL_FINESS_DATASET_URL, ETL_GEO_API_URL, ETL_GEOCODER_URL, ETL_SOURCE_DIR, ETL_WORK_DIR,
@@ -262,6 +276,8 @@ Environment:
   ETL_SI_SOURCES, ETL_SI_PAGE_URL, ETL_SI_PLACES_URL, ETL_SI_SOURCE_DIR,
   ETL_CY_SOURCES, ETL_CY_FARMAKEIA_URL, ETL_CY_NOSOKOMEIA_URL, ETL_CY_KENTRA_URL,
   ETL_CY_CENSUS_URL, ETL_CY_POSTCODES_URL, ETL_CY_SOURCE_DIR,
+  ETL_LV_SOURCES, ETL_LV_NVD_URL, ETL_LV_VKCP_URL, ETL_LV_ZVA_URL, ETL_LV_PORTAL_URL,
+  ETL_LV_SOURCE_DIR,
   APP_URL and REVALIDATE_SECRET (cache revalidation).`;
 
 export {
@@ -279,6 +295,7 @@ export {
 	buildIeOptions,
 	buildItOptions,
 	buildLtOptions,
+	buildLvOptions,
 	buildNoOptions,
 	buildPlOptions,
 	buildSiOptions,
@@ -294,6 +311,7 @@ export {
 	type IeOptions,
 	type ItOptions,
 	type LtOptions,
+	type LvOptions,
 	type NoOptions,
 	type PlOptions,
 	parseArgs,
@@ -312,6 +330,7 @@ export { type GbRunOutcome, runGb } from "./run-gb";
 export { type IeRunOutcome, runIe } from "./run-ie";
 export { type ItRunOutcome, runIt } from "./run-it";
 export { type LtRunOutcome, runLt } from "./run-lt";
+export { type LvRunOutcome, runLv } from "./run-lv";
 export { type NoRunOutcome, runNo } from "./run-no";
 export { type PlRunOutcome, runPl } from "./run-pl";
 export { runSi, type SiRunOutcome } from "./run-si";
