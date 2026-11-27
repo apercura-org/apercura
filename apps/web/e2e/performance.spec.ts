@@ -48,6 +48,10 @@ const BUDGETS_KB: Record<string, number> = {
 	// Sweden (synthetic fixtures): its home and a municipality's listing.
 	"/se": 60,
 	"/se/apoteken/stockholms-lan/stockholm": 60,
+	// Malta (synthetic fixtures): a pharmacy, a district's listing, the home.
+	"/mt/facility/example-valletta-pharmacy-dl901": 61,
+	"/mt/community-pharmacies/southern-harbour": 60,
+	"/mt": 60,
 };
 
 const manifest = JSON.parse(

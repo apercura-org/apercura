@@ -27,7 +27,7 @@ const FOREIGN = [
 	"UK GDPR",
 	"Electronic Commerce (EC Directive) Regulations 2002",
 	"S.I. No. 68 of 2003",
-	"Data Protection Commission",
+	"dataprotection.ie",
 	"Open Government Licence",
 	"NHS",
 	"HDS",

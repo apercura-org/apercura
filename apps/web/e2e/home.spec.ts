@@ -30,6 +30,7 @@ const HOMES = [
 	"/cy",
 	"/lv",
 	"/se",
+	"/mt",
 ];
 
 /** The opening's title, then the sections' headings in order. */

@@ -84,7 +84,7 @@ function expectFieldRow(log: readonly string[], label: string, value: string | R
 async function readPage(page: Page) {
 	const reader = await ScreenReader.start(page);
 	// Every open market adds three items to the country menu read before the main content: room
-	// for many more than the fourteen open today.
+	// for many more than the fifteen open today.
 	const log = await reader.readUntil(/^end of contentinfo$/, 1_000);
 	await reader.stop();
 	return log;

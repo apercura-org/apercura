@@ -43,7 +43,7 @@ const SITEMAP_MS_PER_URL = 100;
  * under its segment (France in French, Austria in German, the UK in English, Czechia in Czech,
  * Spain in Spanish, Italy in Italian, Germany in German, Switzerland in its three, Estonia in
  * Estonian, Poland in
- * Polish, Norway in Norwegian, Ireland in English, Finland in Finnish, Lithuania in Lithuanian, Slovenia in Slovenian, Cyprus in Greek, Latvia in Latvian, Sweden in Swedish). Interface
+ * Polish, Norway in Norwegian, Ireland in English, Finland in Finnish, Lithuania in Lithuanian, Slovenia in Slovenian, Cyprus in Greek, Latvia in Latvian, Sweden in Swedish, Malta in English). Interface
  * translations (/fr-de, /fr-es…) are never listed.
  */
 const SITEMAP_GROUPS = [
@@ -68,6 +68,7 @@ const SITEMAP_GROUPS = [
 	"cy",
 	"lv",
 	"se",
+	"mt",
 ] as const;
 type SitemapGroup = (typeof SITEMAP_GROUPS)[number];
 
