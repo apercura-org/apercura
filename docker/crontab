@@ -105,3 +105,11 @@
 # failed (the catalogue could not be read), 2 blocked: the snapshot is kept for --approve (see
 # docs/data-import.md, "Finland").
 30 5 * * 4 apercura etl:fi $ETL_FI_SCHEDULE_ARGS
+
+# Lithuania's licensed health-care institutions (VASPVT's licence register, daily on data.gov.lt,
+# CC BY 4.0), every Tuesday at 03:30 UTC, outside the Monday imports (the same advisory lock: one
+# import at a time). The portal answers 429 to hurried clients: the import asks for one file at
+# a time, at least ETL_LT_REQUEST_INTERVAL_MS (20 s) apart, so a run takes about four minutes;
+# unchanged files end it. ETL_LT_SCHEDULE_ARGS adds flags, e.g. `--force`. Exit codes: 1
+# failed, 2 blocked (see docs/data-import.md, "Lithuania").
+30 3 * * 2 apercura etl:lt $ETL_LT_SCHEDULE_ARGS
