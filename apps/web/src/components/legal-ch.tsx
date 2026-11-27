@@ -95,11 +95,12 @@ type LicenceKey = "termsBy" | "termsOpen" | "ccBy" | "sitg" | "swisstopo";
 
 /** The licence a source is reused under, by its licence's text. */
 function licenceKey(source: RegistrySource): LicenceKey {
-	const url = source.licenceUrl ?? "";
-	if (url.includes("creativecommons.org")) return "ccBy";
-	if (url.includes("sitg.ge.ch")) return "sitg";
-	if (url.includes("swisstopo")) return "swisstopo";
-	if (url.endsWith("#terms_by")) return "termsBy";
+	const url = source.licenceUrl ? new URL(source.licenceUrl) : null;
+	const host = url?.hostname ?? "";
+	if (host === "creativecommons.org") return "ccBy";
+	if (host === "sitg.ge.ch") return "sitg";
+	if (host === "www.swisstopo.admin.ch") return "swisstopo";
+	if (url?.hash === "#terms_by") return "termsBy";
 	return "termsOpen";
 }
 
