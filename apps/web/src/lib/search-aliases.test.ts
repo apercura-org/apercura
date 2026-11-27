@@ -12,6 +12,7 @@ import {
 	allLtListingSlugs,
 	allNoListingSlugs,
 	allPlListingSlugs,
+	allSiListingSlugs,
 	FR_PROFESSIONS,
 	professionOfListingSlug,
 	SEARCH_ALIASES,
@@ -42,6 +43,7 @@ const MARKETS = [
 	"IE",
 	"FI",
 	"LT",
+	"SI",
 ] as const satisfies readonly MarketCountry[];
 
 /** The listings of each market (France: its imported professions only). */
@@ -63,6 +65,7 @@ const LISTED: Record<MarketCountry, (slug: string) => boolean> = {
 	IE: (slug) => allIeListingSlugs().has(slug),
 	FI: (slug) => allFiListingSlugs().has(slug),
 	LT: (slug) => allLtListingSlugs().has(slug),
+	SI: (slug) => allSiListingSlugs().has(slug),
 };
 
 /** Slugs a market maps but does not list yet: France's professions not imported. */
@@ -81,6 +84,7 @@ const MAPPED: Record<MarketCountry, (slug: string) => boolean> = {
 	IE: () => false,
 	FI: () => false,
 	LT: () => false,
+	SI: () => false,
 };
 
 const listing = (slug: string): SearchTerm => ({ kind: "listing", slug });
@@ -518,6 +522,25 @@ const EVERYDAY: Record<MarketCountry, [string, SearchTerm][]> = {
 		["vaistinė", UNLISTED],
 		["pharmacy", UNLISTED],
 	],
+	SI: [
+		["zdravnik", listing("druzinski-zdravnik")],
+		["osebni zdravnik", listing("druzinski-zdravnik")],
+		["družinski zdravnik", listing("druzinski-zdravnik")],
+		["druzinska zdravnica", listing("druzinski-zdravnik")],
+		["splošna ambulanta", listing("druzinski-zdravnik")],
+		["GP", listing("druzinski-zdravnik")],
+		["pediater", listing("otroski-zdravnik")],
+		["šolski zdravnik", listing("otroski-zdravnik")],
+		["ginekologinja", listing("ginekolog")],
+		["Ginekologi", listing("ginekolog")],
+		["zobar", listing("zobozdravnik")],
+		["Zobozdravniki", listing("zobozdravnik")],
+		["dentist", listing("zobozdravnik")],
+		["mladinski zobozdravnik", listing("zobozdravnik")],
+		["lekarna", UNLISTED],
+		["bolnišnica", UNLISTED],
+		["urgenca", UNLISTED],
+	],
 };
 
 describe.each(MARKETS)("the everyday words of %s", (country) => {
@@ -543,6 +566,8 @@ describe("a name", () => {
 		["Kantonsspital Beispiel AG", "CH"],
 		["Muster", "CH"],
 		["Example Pharmacy Cork", "IE"],
+		["Ana Primer", "SI"],
+		["Kolar", "SI"],
 		["", "FR"],
 	] as const)("%j is a name search in %s", (word, country) => {
 		expect(resolveSearchTerm(word, country)).toBeNull();
@@ -559,6 +584,8 @@ describe("a name", () => {
 		expect(resolveListing("farmacia", "FR")).toBeNull();
 		expect(resolveListing("Spital", "AT")).toBeNull();
 		expect(resolveListing("zubař", "CH")).toBeNull();
+		expect(resolveListing("zubař", "SI")).toBeNull();
+		expect(resolveListing("zobar", "CZ")).toBeNull();
 	});
 });
 
@@ -577,6 +604,8 @@ describe("the suggestions of “Qui ?”", () => {
 		expect(slugs("Apothe", "de-CH")).toEqual(["apotheke"]);
 		expect(slugs("EMS", "fr-CH")).toEqual(["pflegeheim"]);
 		expect(slugs("casa per an", "it-CH")).toEqual(["pflegeheim"]);
+		expect(slugs("zoba", "sl-SI")).toEqual(["zobozdravnik"]);
+		expect(slugs("osebni zdr", "sl-SI")).toEqual(["druzinski-zdravnik"]);
 		expect(slugs("médecin trait", "fr")).toEqual(["medecin-generaliste"]);
 		expect(slugs("dentist", "en")).toContain("chirurgien-dentiste");
 	});

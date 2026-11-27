@@ -30,6 +30,7 @@ const CATALOGS = {
 	"en-IE": messagesFor("en-IE"),
 	"fi-FI": messagesFor("fi-FI"),
 	"lt-LT": messagesFor("lt-LT"),
+	"sl-SI": messagesFor("sl-SI"),
 } as const;
 
 /** A label of the catalog's taxonomy, rendered like `getTaxonomyLabels` does. */

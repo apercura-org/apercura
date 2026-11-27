@@ -13,6 +13,7 @@ import {
 	formatPhoneLt,
 	formatPhoneNo,
 	formatPhonePl,
+	formatPhoneSi,
 	formatStreetText,
 	publicActivities,
 } from "@apercura/core";
@@ -45,7 +46,7 @@ export function label(value: string | null | undefined): string | null {
 /**
  * A phone number of any market as written there (`04 72 00 00 00`, `01 7673315`,
  * `020 7946 0000`, `326 357 125`, `910 000 001`, `06 12345678`, `030 45050`, `044 268 31 11`, `22 12 34 56`, `01 846 2115`,
- * `+370 5 212 3456`).
+ * `+370 5 212 3456`, `01 307 73 00`).
  */
 export function formatPhone(e164: string): string {
 	if (e164.startsWith("+41")) return formatPhoneCh(e164);
@@ -61,6 +62,7 @@ export function formatPhone(e164: string): string {
 	if (e164.startsWith("+49")) return formatPhoneDe(e164);
 	if (e164.startsWith("+48")) return formatPhonePl(e164);
 	if (e164.startsWith("+358")) return formatPhoneFi(e164);
+	if (e164.startsWith("+386")) return formatPhoneSi(e164);
 	return formatPhoneFr(e164);
 }
 
@@ -112,7 +114,8 @@ export function localityOf(placeName: string | null, country = "FR"): string | n
  * elsewhere (`69001 Lyon`, `1090 Wien`).
  */
 export function addressLines(
-	site: Pick<SitePayload, "addressLine" | "addressComplement" | "postcode" | "placeName">,
+	site: Pick<SitePayload, "addressLine" | "addressComplement" | "postcode" | "placeName"> &
+		Pick<Partial<SitePayload>, "locality">,
 	country = "FR",
 ): string[] {
 	if (TOWN_FIRST.has(country)) {
@@ -123,7 +126,12 @@ export function addressLines(
 			site.postcode,
 		].filter((line): line is string => Boolean(line?.trim()));
 	}
-	const town = townLine(site.postcode, site.placeName, country);
+	// A Slovenian address's town line is its post office (`3211 Škofja vas`), not the municipality.
+	const town = townLine(
+		site.postcode,
+		country === "SI" ? (site.locality ?? site.placeName) : site.placeName,
+		country,
+	);
 	return [
 		marketLabel(site.addressLine, country),
 		marketLabel(site.addressComplement, country),

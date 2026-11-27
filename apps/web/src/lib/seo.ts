@@ -64,7 +64,9 @@ export function ogImageOf(professionCode: string): OgImage {
 		professionCode.startsWith("NO_") ||
 		professionCode.startsWith("IE_") ||
 		professionCode.startsWith("FI_") ||
-		professionCode.startsWith("LT_")
+		professionCode.startsWith("LT_") ||
+		// A Slovenian doctor too: the profession images speak of France's practitioners.
+		professionCode.startsWith("SI_")
 	)
 		return "annuaire";
 	if (professionCode === "40") return "chirurgien-dentiste";

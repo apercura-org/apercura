@@ -3,12 +3,13 @@ import { type Locale, type MarketCountry, marketOf } from "~/i18n/locales";
 /*
  * The fictitious pages a market's home shows: the specimen page and the sample stamps of the
  * opening. Each market shows what its directory lists, in its own language: practitioners in
- * France, Austria (its doctors) and Czechia (practices under a doctor's name, a pharmacy);
- * practices, facilities, pharmacies or hospitals in the UK, Spain, Italy, Germany, Switzerland,
- * Estonia, Poland, Ireland and Finland, licensed institutions in Lithuania. The names and addresses
- * say plainly that they are examples ("Exemple", "Muster", "Example", "Ejemplo", "Esempio",
- * "Příklad", "Näidis", "Przykład", "Esimerkki", "Pavyzdys"), never a real person, practice or place
- * of care; the identifiers are shaped like the market's but synthetic.
+ * France, Austria and Slovenia (their doctors) and Czechia (practices under a doctor's name, a
+ * pharmacy); practices, facilities, pharmacies or hospitals in the UK, Spain, Italy, Germany,
+ * Switzerland, Estonia, Poland, Ireland and Finland, licensed institutions in Lithuania. The names
+ * and addresses say plainly that they are examples ("Exemple", "Muster", "Example", "Ejemplo",
+ * "Esempio", "Příklad", "Näidis", "Przykład", "Esimerkki", "Pavyzdys", "Primer", "Zgled"), never a
+ * real person, practice or place of care; the identifiers are shaped like the market's but
+ * synthetic.
  *
  * One sample per state of a page, as the stamp prints it (DESIGN.md, "Stamp"): unclaimed
  * (outlined), verified (solid) and claimed, a claim being checked (dashed over a hatch). Every
@@ -146,6 +147,33 @@ const SAMPLES: Readonly<Record<Exclude<MarketCountry, "CH">, HomeSamples>> = {
 			gender: "other",
 			address: "Vzorná 8, 779 00 Olomouc",
 			identifier: "000025",
+			status: "claimed",
+		},
+	],
+	// Slovenia: the health insurer's personal doctors, each named as its list names them.
+	SI: [
+		{
+			name: "Ana Primer",
+			listing: "druzinski-zdravnik",
+			gender: "other",
+			address: "Primerna ulica 12, 1000 Ljubljana",
+			identifier: "99001",
+			status: "unclaimed",
+		},
+		{
+			name: "Marko Zgled",
+			listing: "zobozdravnik",
+			gender: "other",
+			address: "Vzorčna cesta 3, 2000 Maribor",
+			identifier: "99002",
+			status: "verified",
+		},
+		{
+			name: "Nina Primerna",
+			listing: "ginekolog",
+			gender: "other",
+			address: "Zgledna ulica 8, 3000 Celje",
+			identifier: "99003",
 			status: "claimed",
 		},
 	],

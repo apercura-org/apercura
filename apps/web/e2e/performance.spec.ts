@@ -36,6 +36,10 @@ const BUDGETS_KB: Record<string, number> = {
 	"/lt/istaiga/uab-pavyzdine-klinika-9000-90000001": 61,
 	"/lt/medicinos-centrai/vilniaus-miesto-savivaldybe": 60,
 	"/lt": 60,
+	// Slovenia (synthetic fixtures): a doctor, a municipality's listing, the home.
+	"/si/zdravnik/ana-primer-si90001": 61,
+	"/si/druzinski-zdravnik/osrednjeslovenska/ljubljana": 60,
+	"/si": 60,
 };
 
 const manifest = JSON.parse(

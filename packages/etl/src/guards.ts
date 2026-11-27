@@ -1557,3 +1557,83 @@ export function checkFiPlaces(placement: {
 		},
 	];
 }
+
+// ---------------------------------------------------------------------------
+// Slovenia (`etl:si`): the same verdicts, per list
+// ---------------------------------------------------------------------------
+
+/**
+ * Limits of the insurer's lists. They are published every day and change a little every day (a
+ * doctor who retires, a practice that opens), so a run a week apart is allowed the Austrian
+ * lists' room. The floors (about a third of each list in November 2026: 1,442 general
+ * practitioners and children's doctors, 329 gynaecologists, 1,110 dentists) stop an empty or
+ * truncated workbook.
+ */
+export const SI_LIMITS = {
+	fileSizeDelta: 0.15,
+	quarantineRatio: 0.01,
+	rowsDelta: 0.05,
+	/** Practices placed in their municipality. */
+	minPlacedRatio: 0.98,
+	minRows: { sa: 500, gin: 100, zob: 350 } as Record<string, number>,
+} as const;
+
+/**
+ * Checks of one list before the merge: quarantine within 1% (never approvable), its floor of rows
+ * (never approvable), and the change of doctors and bytes since the last successful run that read
+ * it (approvable).
+ */
+export function checkSiSource(
+	source: string,
+	current: AtSourceStats & { bytes: number },
+	previous: (AtSourceStats & { bytes?: number }) | null,
+): GuardCheck[] {
+	const ratio = current.lines === 0 ? 1 : current.quarantined / current.lines;
+	const floor = SI_LIMITS.minRows[source] ?? 1;
+	const checks: GuardCheck[] = [
+		{
+			name: `${source}.quarantine`,
+			ok: current.lines > 0 && ratio <= SI_LIMITS.quarantineRatio,
+			approvable: false,
+			detail: `${current.quarantined} of ${current.lines} lines quarantined (${percent(ratio)})`,
+		},
+		{
+			name: `${source}.rows`,
+			ok: current.rows >= floor,
+			approvable: false,
+			detail: `${current.rows} rows (at least ${floor} expected)`,
+		},
+	];
+	if (previous) {
+		const rows = delta(current.people, previous.people);
+		checks.push({
+			name: `${source}.people`,
+			ok: rows <= SI_LIMITS.rowsDelta,
+			approvable: true,
+			detail: `${current.people} doctors vs ${previous.people} last time (${percent(rows)})`,
+		});
+		if (previous.bytes !== undefined) {
+			const size = delta(current.bytes, previous.bytes);
+			checks.push({
+				name: `${source}.size`,
+				ok: size <= SI_LIMITS.fileSizeDelta,
+				approvable: true,
+				detail: `${current.bytes} bytes vs ${previous.bytes} last time (${percent(size)})`,
+			});
+		}
+	}
+	return checks;
+}
+
+/** After staging: nearly every practice must be placed in its municipality. */
+export function checkSiPlaces(staged: { sites: number; placed: number }): GuardCheck[] {
+	const ratio = staged.sites === 0 ? 1 : staged.placed / staged.sites;
+	return [
+		{
+			name: "si.places",
+			ok: ratio >= SI_LIMITS.minPlacedRatio,
+			approvable: true,
+			detail: `${staged.placed} of ${staged.sites} practices placed in their municipality (${percent(ratio)})`,
+		},
+	];
+}

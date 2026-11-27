@@ -16,6 +16,7 @@ type Pathnames = Record<
 				| "de-CH"
 				| "fr-CH"
 				| "it-CH"
+				| "sl-SI"
 				| "et-EE"
 				| "pl-PL"
 				| "nb-NO"
@@ -191,6 +192,33 @@ function lithuanianPath(path: string): string {
 }
 
 /**
+ * The Slovenian form of each English path segment (`/practitioner/[slug]/report` ->
+ * `/zdravnik/[slug]/prijava`): a doctor's page under `/zdravnik` (every page of the insurer's
+ * lists is a doctor's or a dentist's). The first segments are the Slovenian reserved segments of
+ * `@apercura/core/taxonomy` (`SI_RESERVED_SEGMENTS`, tested), which never name a listing.
+ */
+export const SLOVENIAN_SEGMENTS: Readonly<Record<string, string>> = {
+	search: "iskanje",
+	practitioner: "zdravnik",
+	report: "prijava",
+	removal: "odstranitev",
+	"this-is-me": "to-sem-jaz",
+	establishment: "organizacija",
+	directory: "imenik",
+	about: "o-projektu",
+	data: "podatki",
+	accessibility: "dostopnost",
+	privacy: "varstvo-osebnih-podatkov",
+	"legal-notice": "pravno-obvestilo",
+	terms: "pogoji-uporabe",
+};
+
+/** An English path with its segments in Slovenian; parameters and unknown segments stay. */
+function slovenianPath(path: string): string {
+	return path.replace(/[^/]+/g, (segment) => SLOVENIAN_SEGMENTS[segment] ?? segment);
+}
+
+/**
  * The Spanish market's form of a Spanish path: a centre's page under `/centro` (Spain lists
  * centres, never people), so an establishment's page moves from `/centro` to `/organizacion`.
  * Every first segment is a Spanish reserved segment of `@apercura/core/taxonomy`
@@ -254,6 +282,8 @@ function swissMarketPath(path: string, person: string, facility: string): string
  *   French ones under `/ch-fr` (`fr-CH`, under `/etablissement`), an establishment under
  *   `/organisation` in both (`swissMarketPath`), and Italy's Italian ones under `/ch-it`
  *   (`it-CH`);
+ * - Slovenia (`sl-SI`): the English paths with their segments in Slovenian
+ *   (`SLOVENIAN_SEGMENTS`), a doctor's page under `/zdravnik`.
  * - Estonia (`et-EE`): the English paths with their segments in Estonian (`ESTONIAN_SEGMENTS`),
  *   a provider's or pharmacy's page under `/asutus`;
  * - Poland (`pl-PL`): the English paths with their segments in Polish (`POLISH_SEGMENTS`), an
@@ -292,6 +322,7 @@ function withMarkets<T extends Pathnames>(pathnames: T) {
 						"en-IE": value.en.replace("/practitioner/", "/facility/"),
 						"fi-FI": finnishPath(value.en),
 						"lt-LT": lithuanianPath(value.en),
+						"sl-SI": slovenianPath(value.en),
 					},
 		]),
 	) as {
@@ -313,6 +344,7 @@ function withMarkets<T extends Pathnames>(pathnames: T) {
 					"en-IE": string;
 					"fi-FI": string;
 					"lt-LT": string;
+					"sl-SI": string;
 				};
 	};
 }

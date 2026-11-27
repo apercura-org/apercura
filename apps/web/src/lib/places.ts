@@ -117,6 +117,8 @@ export const AT_STATE_SLUGS: ReadonlySet<string> = new Set(
  * region (England's regions and the other nations list in the same slot), never only
  * digits. Czechia: the slug of a district (okres, `brno-mesto`, `praha`). Spain: the slug of a
  * province (`madrid`, `barcelona`). Italy: the slug of a province or of a region (`roma`,
+ * `lazio`). Germany: the slug of a Kreis (`landkreis-muenchen`, `berlin`). Switzerland: the slug of a district or of a canton (`bezirk-zuerich`, `zuerich`). Slovenia: the slug of a
+ * statistical region (`osrednjeslovenska`, `obalno-kraska`).
  * `lazio`). Germany: the slug of a Kreis (`landkreis-muenchen`, `berlin`). Switzerland: the slug of a district or of a canton (`bezirk-zuerich`, `zuerich`). Estonia: the slug of a municipality (`tallinn`,
  * `tartu-linn`, `rae-vald`). Poland: the slug of a powiat or of a voivodeship (`powiat-krakowski`, `krakow`, `malopolskie`). Norway: the slug of a county (`vestland`, `trondelag`). Ireland: the slug of a county (`cork`, `dublin`). Finland: the slug of a wellbeing services county (`pirkanmaan-hyvinvointialue`, `helsinki`).
  * Lithuania: the slug of a municipality or of a county (`vilniaus-miesto-savivaldybe`,
@@ -136,7 +138,8 @@ export function isDepartmentSlug(slug: string, country = "FR"): boolean {
 		country === "NO" ||
 		country === "IE" ||
 		country === "FI" ||
-		country === "LT"
+		country === "LT" ||
+		country === "SI"
 	) {
 		return isPlaceSlug(slug);
 	}

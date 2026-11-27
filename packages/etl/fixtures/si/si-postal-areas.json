@@ -1,0 +1,230 @@
+{
+	"type": "FeatureCollection",
+	"features": [
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Polygon",
+				"coordinates": [
+					[
+						[13.770000000000001, 45.62],
+						[13.83, 45.62],
+						[13.83, 45.68],
+						[13.770000000000001, 45.68],
+						[13.770000000000001, 45.62]
+					]
+				]
+			},
+			"properties": { "SIFRA": 9000, "NAZIV": "Murska Sobota", "NAZIV_DJ": null }
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Polygon",
+				"coordinates": [
+					[
+						[14.570000000000002, 45.62],
+						[14.63, 45.62],
+						[14.63, 45.68],
+						[14.570000000000002, 45.68],
+						[14.570000000000002, 45.62]
+					]
+				]
+			},
+			"properties": { "SIFRA": 2000, "NAZIV": "Maribor", "NAZIV_DJ": null }
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Polygon",
+				"coordinates": [
+					[
+						[15.37, 45.62],
+						[15.429999999999998, 45.62],
+						[15.429999999999998, 45.68],
+						[15.37, 45.68],
+						[15.37, 45.62]
+					]
+				]
+			},
+			"properties": { "SIFRA": 2390, "NAZIV": "Ravne na Koroškem", "NAZIV_DJ": null }
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Polygon",
+				"coordinates": [
+					[
+						[16.009999999999998, 45.519999999999996],
+						[16.07, 45.519999999999996],
+						[16.07, 45.58],
+						[16.009999999999998, 45.58],
+						[16.009999999999998, 45.519999999999996]
+					]
+				]
+			},
+			"properties": { "SIFRA": 3000, "NAZIV": "Celje", "NAZIV_DJ": null }
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Polygon",
+				"coordinates": [
+					[
+						[16.18, 45.449999999999996],
+						[16.380000000000003, 45.449999999999996],
+						[16.380000000000003, 45.65],
+						[16.18, 45.65],
+						[16.18, 45.449999999999996]
+					]
+				]
+			},
+			"properties": { "SIFRA": 3211, "NAZIV": "Škofja vas", "NAZIV_DJ": null }
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Polygon",
+				"coordinates": [
+					[
+						[16.17, 45.769999999999996],
+						[16.230000000000004, 45.769999999999996],
+						[16.230000000000004, 45.83],
+						[16.17, 45.83],
+						[16.17, 45.769999999999996]
+					]
+				]
+			},
+			"properties": { "SIFRA": 3212, "NAZIV": "Vojnik", "NAZIV_DJ": null }
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Polygon",
+				"coordinates": [
+					[
+						[13.770000000000001, 46.12],
+						[13.83, 46.12],
+						[13.83, 46.18],
+						[13.770000000000001, 46.18],
+						[13.770000000000001, 46.12]
+					]
+				]
+			},
+			"properties": { "SIFRA": 1420, "NAZIV": "Trbovlje", "NAZIV_DJ": null }
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Polygon",
+				"coordinates": [
+					[
+						[14.570000000000002, 46.12],
+						[14.63, 46.12],
+						[14.63, 46.18],
+						[14.570000000000002, 46.18],
+						[14.570000000000002, 46.12]
+					]
+				]
+			},
+			"properties": { "SIFRA": 8270, "NAZIV": "Krško", "NAZIV_DJ": null }
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Polygon",
+				"coordinates": [
+					[
+						[15.37, 46.12],
+						[15.429999999999998, 46.12],
+						[15.429999999999998, 46.18],
+						[15.37, 46.18],
+						[15.37, 46.12]
+					]
+				]
+			},
+			"properties": { "SIFRA": 8000, "NAZIV": "Novo mesto", "NAZIV_DJ": null }
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Polygon",
+				"coordinates": [
+					[
+						[16.17, 46.12],
+						[16.230000000000004, 46.12],
+						[16.230000000000004, 46.18],
+						[16.17, 46.18],
+						[16.17, 46.12]
+					]
+				]
+			},
+			"properties": { "SIFRA": 1000, "NAZIV": "Ljubljana", "NAZIV_DJ": null }
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Polygon",
+				"coordinates": [
+					[
+						[13.770000000000001, 46.62],
+						[13.83, 46.62],
+						[13.83, 46.68],
+						[13.770000000000001, 46.68],
+						[13.770000000000001, 46.62]
+					]
+				]
+			},
+			"properties": { "SIFRA": 4000, "NAZIV": "Kranj", "NAZIV_DJ": null }
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Polygon",
+				"coordinates": [
+					[
+						[14.570000000000002, 46.62],
+						[14.63, 46.62],
+						[14.63, 46.68],
+						[14.570000000000002, 46.68],
+						[14.570000000000002, 46.62]
+					]
+				]
+			},
+			"properties": { "SIFRA": 6230, "NAZIV": "Postojna", "NAZIV_DJ": null }
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Polygon",
+				"coordinates": [
+					[
+						[15.37, 46.62],
+						[15.429999999999998, 46.62],
+						[15.429999999999998, 46.68],
+						[15.37, 46.68],
+						[15.37, 46.62]
+					]
+				]
+			},
+			"properties": { "SIFRA": 5000, "NAZIV": "Nova Gorica", "NAZIV_DJ": null }
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Polygon",
+				"coordinates": [
+					[
+						[16.17, 46.62],
+						[16.230000000000004, 46.62],
+						[16.230000000000004, 46.68],
+						[16.17, 46.68],
+						[16.17, 46.62]
+					]
+				]
+			},
+			"properties": { "SIFRA": 6000, "NAZIV": "Koper", "NAZIV_DJ": "Capodistria" }
+		}
+	],
+	"numberMatched": 14
+}

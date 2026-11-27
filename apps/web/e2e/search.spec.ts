@@ -291,6 +291,7 @@ test.describe("the country searched", () => {
 			"Irlande",
 			"Finlande",
 			"Lituanie",
+			"Slovénie",
 		]);
 		await country.selectOption({ label: "Royaume-Uni" });
 		// The places suggested are the UK's.
@@ -315,6 +316,8 @@ test.describe("the country searched", () => {
 		await expect(page.getByRole("combobox", { name: "Land" })).toHaveValue("de");
 		await page.goto("/fr-de/suche");
 		await expect(page.getByRole("combobox", { name: "Land" })).toHaveValue("fr");
+		await page.goto("/si/iskanje");
+		await expect(page.getByRole("combobox", { name: "Država" })).toHaveValue("si");
 		// Switzerland, in each of its languages: one market, `ch`.
 		await page.goto("/ch/suche");
 		await expect(page.getByRole("combobox", { name: "Land" })).toHaveValue("ch");

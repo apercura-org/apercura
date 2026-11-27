@@ -12,6 +12,7 @@ import { italy } from "./it";
 import { lithuania } from "./lt";
 import { norway } from "./no";
 import { poland } from "./pl";
+import { slovenia } from "./si";
 import type { CountryAdapter, CountryCode } from "./types";
 
 export { AT_STATES, austria, VIENNA_CODE } from "./at";
@@ -55,11 +56,12 @@ export {
 	poland,
 	WARSAW_CODE,
 } from "./pl";
+export { SI_LIST_IDS, SI_REGIONS, type SiListId, slovenia } from "./si";
 export * from "./types";
 
 /**
  * Adapters of the markets the code supports: France, Austria, the United Kingdom, Czechia, Spain,
- * Italy, Germany, Switzerland, Poland, Estonia, Ireland, Norway, Finland and Lithuania.
+ * Italy, Germany, Switzerland, Poland, Estonia, Ireland, Norway, Finland, Lithuania and Slovenia.
  */
 export const COUNTRY_ADAPTERS: Readonly<Partial<Record<CountryCode, CountryAdapter>>> = {
 	FR: france,
@@ -76,6 +78,7 @@ export const COUNTRY_ADAPTERS: Readonly<Partial<Record<CountryCode, CountryAdapt
 	IE: ireland,
 	FI: finland,
 	LT: lithuania,
+	SI: slovenia,
 };
 
 /** The adapter of a market, or an error naming a country the code does not support yet. */
@@ -85,7 +88,7 @@ export function countryAdapter(code: string): CountryAdapter {
 	return adapter;
 }
 
-/** The adapter whose pages live under a path segment (`fr`, `at`, `gb`, `cz`, `es`, `it`, `de`, `ch`, `pl`, `ee`, `no`, `ie`, `lt`), or undefined. */
+/** The adapter whose pages live under a path segment (`fr`, `at`, `gb`, `cz`, `es`, `it`, `de`, `ch`, `pl`, `ee`, `no`, `ie`, `lt`, `si`), or undefined. */
 export function adapterOfSegment(segment: string): CountryAdapter | undefined {
 	return Object.values(COUNTRY_ADAPTERS).find((adapter) => adapter?.segment === segment);
 }

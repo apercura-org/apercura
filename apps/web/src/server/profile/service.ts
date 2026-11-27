@@ -13,6 +13,7 @@ import {
 	normalizeLtPostcode,
 	normalizeNoPostcode,
 	normalizePlPostcode,
+	normalizeSiPostcode,
 } from "@apercura/core";
 import { countryAdapter } from "@apercura/core/country";
 import type { Database } from "@apercura/db";
@@ -236,7 +237,8 @@ export async function setSiteHidden(
  * by the gmina's name, a homonym in the page's own powiat first; Ireland, like the
  * UK, by the town's name (an Eircode is printed, never used to place), and Finland by the municipality's
  * name, the page's own wellbeing services county first; Lithuania, whose settlements carry no
- * postcodes, by the settlement's name, in the page's municipality first.
+ * postcodes, by the settlement's name, in the page's municipality first; Slovenia,
+ * whose municipalities carry the postcodes of their settlements (GURS), like Switzerland.
  */
 export async function addOwnerSite(db: Database, practitionerId: number, input: OwnerSiteData) {
 	return db.transaction(async (tx) => {
@@ -272,7 +274,9 @@ export async function addOwnerSite(db: Database, practitionerId: number, input: 
 													? (normalizeFiPostcode(input.postcode) ?? input.postcode)
 													: country === "LT"
 														? (normalizeLtPostcode(input.postcode) ?? input.postcode)
-														: input.postcode;
+														: country === "SI"
+															? (normalizeSiPostcode(input.postcode) ?? input.postcode)
+															: input.postcode;
 		if (!adapter.address.postcode.test(postcode)) throw new ProfileError("UNKNOWN_PLACE");
 		const district = country === "AT" ? /^1(\d{2})0$/.exec(postcode)?.[1] : undefined;
 		const [place] =
@@ -423,7 +427,7 @@ export async function addOwnerSite(db: Database, practitionerId: number, input: 
 				`)
 													: await tx.execute<{ id: number }>(sql`
 					SELECT p.id FROM directory.places p
-					WHERE p.country = ${country === "CH" ? "CH" : "FR"}
+					WHERE p.country = ${country === "CH" || country === "SI" ? country : "FR"}
 						AND p.kind IN ('commune', 'arrondissement') AND p.removed_at IS NULL
 						AND ${postcode} = ANY (p.postcodes)
 					ORDER BY (directory.text_norm(p.name) = directory.text_norm(${input.city})) DESC,

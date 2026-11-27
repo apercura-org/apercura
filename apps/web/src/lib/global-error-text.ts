@@ -106,4 +106,12 @@ export const GLOBAL_ERROR_TEXT: Record<CatalogLanguage, GlobalErrorText> = {
 		home: "Grįžti į pradžios puslapį",
 		reference: "Kodas pagalbos tarnybai: {digest}",
 	},
+	sl: {
+		metaTitle: "Stran ni na voljo · Apercura",
+		title: "Te strani ni bilo mogoče prikazati",
+		body: "Med pripravo strani je pri nas prišlo do napake. Poskusite znova; če se napaka ponovi, se vrnite čez nekaj minut.",
+		retry: "Poskusi znova",
+		home: "Nazaj na domačo stran",
+		reference: "Oznaka za podporo: {digest}",
+	},
 };

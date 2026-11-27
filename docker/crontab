@@ -113,3 +113,11 @@
 # unchanged files end it. ETL_LT_SCHEDULE_ARGS adds flags, e.g. `--force`. Exit codes: 1
 # failed, 2 blocked (see docs/data-import.md, "Lithuania").
 30 3 * * 2 apercura etl:lt $ETL_LT_SCHEDULE_ARGS
+
+# Slovenia's personal doctors (the health insurer ZZZS's daily lists of the doctors who can be
+# chosen as a personal doctor, with whether each takes new patients), every Wednesday at 05:30 UTC,
+# a day no other import runs (the same advisory lock: one import at a time); the lists change
+# every day, so a run rarely finds them unchanged. ETL_SI_SCHEDULE_ARGS narrows it, e.g.
+# `--sources sa,zob`. Exit codes: 1 failed, 2 blocked, 3 imported without a list that could not
+# be fetched or read (see docs/data-import.md, "Slovenia").
+30 5 * * 3 apercura etl:si $ETL_SI_SCHEDULE_ARGS

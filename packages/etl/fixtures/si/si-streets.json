@@ -1,0 +1,108 @@
+{
+	"type": "FeatureCollection",
+	"features": [
+		{
+			"type": "Feature",
+			"bbox": [16.196, 46.146, 16.204000000000004, 46.153999999999996],
+			"properties": {
+				"NAZIV": "Primerna ulica",
+				"NAZIV_DJ": null,
+				"EID_NASELJE": "1103000000061001"
+			}
+		},
+		{
+			"type": "Feature",
+			"bbox": [16.196, 46.146, 16.204000000000004, 46.153999999999996],
+			"properties": {
+				"NAZIV": "Cesta zgledov",
+				"NAZIV_DJ": null,
+				"EID_NASELJE": "1103000000061001"
+			}
+		},
+		{
+			"type": "Feature",
+			"bbox": [14.596000000000002, 45.646, 14.604000000000001, 45.653999999999996],
+			"properties": {
+				"NAZIV": "Vzorčna cesta",
+				"NAZIV_DJ": null,
+				"EID_NASELJE": "1103000000070001"
+			}
+		},
+		{
+			"type": "Feature",
+			"bbox": [16.196, 46.646, 16.204000000000004, 46.653999999999996],
+			"properties": { "NAZIV": "Ulica Primer", "NAZIV_DJ": null, "EID_NASELJE": "1103000000050001" }
+		},
+		{
+			"type": "Feature",
+			"bbox": [16.035999999999998, 45.546, 16.044, 45.553999999999995],
+			"properties": {
+				"NAZIV": "Zgledna ulica",
+				"NAZIV_DJ": null,
+				"EID_NASELJE": "1103000000011001"
+			}
+		},
+		{
+			"type": "Feature",
+			"bbox": [16.196, 45.796, 16.204000000000004, 45.803999999999995],
+			"properties": {
+				"NAZIV": "Celjska cesta",
+				"NAZIV_DJ": null,
+				"EID_NASELJE": "1103000000133001"
+			}
+		},
+		{
+			"type": "Feature",
+			"bbox": [13.796000000000001, 45.646, 13.804, 45.653999999999996],
+			"properties": { "NAZIV": "Trg primerov", "NAZIV_DJ": null, "EID_NASELJE": "1103000000080001" }
+		},
+		{
+			"type": "Feature",
+			"bbox": [15.395999999999999, 45.646, 15.403999999999998, 45.653999999999996],
+			"properties": { "NAZIV": "Vzorčni trg", "NAZIV_DJ": null, "EID_NASELJE": "1103000000103001" }
+		},
+		{
+			"type": "Feature",
+			"bbox": [13.796000000000001, 46.146, 13.804, 46.153999999999996],
+			"properties": { "NAZIV": "Primerna pot", "NAZIV_DJ": null, "EID_NASELJE": "1103000000129001" }
+		},
+		{
+			"type": "Feature",
+			"bbox": [14.596000000000002, 46.146, 14.604000000000001, 46.153999999999996],
+			"properties": {
+				"NAZIV": "Ulica vzorcev",
+				"NAZIV_DJ": null,
+				"EID_NASELJE": "1103000000054001"
+			}
+		},
+		{
+			"type": "Feature",
+			"bbox": [15.395999999999999, 46.146, 15.403999999999998, 46.153999999999996],
+			"properties": { "NAZIV": "Zgledni trg", "NAZIV_DJ": null, "EID_NASELJE": "1103000000085001" }
+		},
+		{
+			"type": "Feature",
+			"bbox": [13.796000000000001, 46.646, 13.804, 46.653999999999996],
+			"properties": {
+				"NAZIV": "Cesta primerov",
+				"NAZIV_DJ": null,
+				"EID_NASELJE": "1103000000052001"
+			}
+		},
+		{
+			"type": "Feature",
+			"bbox": [14.596000000000002, 46.646, 14.604000000000001, 46.653999999999996],
+			"properties": { "NAZIV": "Vzorčna pot", "NAZIV_DJ": null, "EID_NASELJE": "1103000000094001" }
+		},
+		{
+			"type": "Feature",
+			"bbox": [15.395999999999999, 46.646, 15.403999999999998, 46.653999999999996],
+			"properties": {
+				"NAZIV": "Ulica zgledov",
+				"NAZIV_DJ": null,
+				"EID_NASELJE": "1103000000084001"
+			}
+		}
+	],
+	"numberMatched": 14
+}

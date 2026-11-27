@@ -31,6 +31,7 @@ export const MARKETS: readonly Market[] = [
 	{ country: "IE", status: "open", locale: MARKET_LOCALES.IE },
 	{ country: "FI", status: "open", locale: MARKET_LOCALES.FI },
 	{ country: "LT", status: "open", locale: MARKET_LOCALES.LT },
+	{ country: "SI", status: "open", locale: MARKET_LOCALES.SI },
 	{ country: "BE", status: "planned" },
 ];
 

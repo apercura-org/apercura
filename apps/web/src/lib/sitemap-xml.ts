@@ -122,7 +122,8 @@ export const STATIC_PATHS = [
  * accessibility statement of its own (none is required of a private site there), the UK has
  * one (`/gb/accessibility`), and so do Czechia (`/cz/pristupnost`), Poland (`/pl/dostepnosc`), Spain (`/es/accesibilidad`),
  * Italy (`/it/accessibilita`), Germany (`/de/barrierefreiheit`), Switzerland, Estonia
- * (`/ee/ligipaasetavus`) and Ireland (`/ie/accessibility`) and Lithuania (`/lt/prieinamumas`), voluntary statements.
+ * (`/ee/ligipaasetavus`), Ireland (`/ie/accessibility`), Lithuania (`/lt/prieinamumas`) and Slovenia
+ * (`/si/dostopnost`), voluntary statements.
  */
 export const MARKET_STATIC_PATHS: Record<SitemapMarket, readonly string[]> = {
 	fr: STATIC_PATHS,
@@ -141,4 +142,5 @@ export const MARKET_STATIC_PATHS: Record<SitemapMarket, readonly string[]> = {
 	ie: STATIC_PATHS.filter((path) => path !== "/pro"),
 	fi: STATIC_PATHS.filter((path) => path !== "/pro"),
 	lt: STATIC_PATHS.filter((path) => path !== "/pro"),
+	si: STATIC_PATHS.filter((path) => path !== "/pro"),
 };

@@ -346,7 +346,7 @@ is listed. Left:
 ### 10. Small open-data markets
 
 - Malta (doctors and dentists, CC BY 4.0): written confirmation from the Medical Council.
-- Slovenia (ZZZS personal doctors, CC BY 4.0) and Latvia (NVD GPs, CC0): partial directories.
+- Latvia (NVD GPs, CC0): a partial directory. Slovenia opened (section 15).
 
 ### 11. Germany (`/de`): open, facility pages; booking later
 
@@ -479,6 +479,33 @@ and no pharmacy is listed. Left:
   contracted places with addresses, VVKT's pharmacies, a kind and a postcode in VASPVT's register,
   current address points from Registrų centras.
 - Confirm with VASPVT what licence status `2` means (read as suspended, not imported).
+
+### 15. Slovenia (`/si`): open, directory of personal doctors
+
+Done in [#167](https://github.com/apercura-org/apercura/issues/167): `/si` in Slovenian, built
+weekly by `etl:si` from the health insurer's daily lists of the doctors who can be chosen as a
+personal doctor (ZZZS, "Poimenski seznami zdravnikov, ki so lahko osebni zdravniki", CC BY 4.0 on
+podatki.gov.si): one page per doctor (about 2,900 family doctors, children's and school doctors,
+gynaecologists and dentists), each practice with its ZZZS activities and whether the doctor still
+takes new patients, with the date of the list; placed in GURS's statistical regions and
+municipalities (Register of Spatial Units, CC BY 4.0) at their street's or settlement's point (city
+precision: the lists publish no coordinates), with the attributions on the data sources page, a
+legal notice (ZEPT art. 5), a GDPR privacy notice with the article 14 information, claims by
+documents, no booking ([data import](./docs/data-import.md#slovenia),
+[ADR 0002](./docs/adr/0002-multi-country.md#slovenia-si)). Left:
+
+- Have a Slovenian lawyer review the legal notice, privacy notice (the legitimate-interest
+  assessment for named doctors, the article 14 notice), terms and data page in Slovenian; ask
+  whether ZVOP-2 applies to a publisher established in France (its article 4) and whether a
+  representative is needed.
+- Have a native speaker proofread the Slovenian catalog (`messages/si.json`).
+- Send the requests of [`docs/data-requests/si.md`](./docs/data-requests/si.md) (founder): ZZZS
+  for a stable address of the files (the download links carry a `cHash` that its `robots.txt`
+  disallows), its acknowledgement of the weekly download and the attribution wording; the
+  Medical Chamber's permission to use its register, only if specialists are ever wanted.
+- Decide on pharmacies (the Ministry of Health's list, CC BY 4.0) as a follow-up: a facility in a
+  market of doctors' pages needs its own page handling.
+- Booking stays off.
 
 ### Later
 

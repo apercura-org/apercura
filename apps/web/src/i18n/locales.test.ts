@@ -23,8 +23,10 @@ import {
 	isLtListingSlug,
 	isNoListingSlug,
 	isReservedSegment,
+	isSiListingSlug,
 	LT_RESERVED_SEGMENTS,
 	NO_RESERVED_SEGMENTS,
+	SI_RESERVED_SEGMENTS,
 } from "@apercura/core/taxonomy";
 import { describe, expect, it } from "vitest";
 import { robotsFor } from "~/lib/robots";
@@ -60,6 +62,7 @@ import {
 	LITHUANIAN_SEGMENTS,
 	NORWEGIAN_SEGMENTS,
 	routing,
+	SLOVENIAN_SEGMENTS,
 } from "./routing";
 
 const PARAMS: Record<string, string> = {
@@ -87,6 +90,7 @@ const TRANSLATIONS = LOCALES.filter(
 		locale !== "en-IE" &&
 		locale !== "fi-FI" &&
 		locale !== "lt-LT" &&
+		locale !== "sl-SI" &&
 		marketOf(locale) !== "CH",
 );
 
@@ -123,6 +127,7 @@ describe("locale configuration", () => {
 			"en-IE",
 			"fi-FI",
 			"lt-LT",
+			"sl-SI",
 		]);
 		expect(routing.locales).toEqual(LOCALES);
 		expect(routing.defaultLocale).toBe("fr");
@@ -148,6 +153,7 @@ describe("locale configuration", () => {
 			"en-IE": "/ie",
 			"fi-FI": "/fi",
 			"lt-LT": "/lt",
+			"sl-SI": "/si",
 		});
 		expect(LOCALE_SEGMENTS).toEqual([
 			"fr",
@@ -170,6 +176,7 @@ describe("locale configuration", () => {
 			"ie",
 			"fi",
 			"lt",
+			"si",
 		]);
 		expect(LOCALE_MARKETS).toEqual({
 			fr: "FR",
@@ -192,6 +199,7 @@ describe("locale configuration", () => {
 			"en-IE": "IE",
 			"fi-FI": "FI",
 			"lt-LT": "LT",
+			"sl-SI": "SI",
 		});
 		expect(CATALOG_LANGUAGES["de-AT"]).toBe("de");
 		expect(CATALOG_LANGUAGES["en-GB"]).toBe("en");
@@ -208,6 +216,10 @@ describe("locale configuration", () => {
 		expect(CATALOG_LANGUAGES["et-EE"]).toBe("et");
 		// Norway: Norwegian Bokmål, read over the English catalog like Estonian.
 		expect(CATALOG_LANGUAGES["nb-NO"]).toBe("nb");
+		// Slovenia: the English catalog with the Slovenian texts on top, as Czechia's.
+		expect(CATALOG_LANGUAGES["sl-SI"]).toBe("sl");
+		expect(MARKET_LOCALES.SI).toBe("sl-SI");
+		expect(marketLanguages("SI")).toEqual(["sl-SI"]);
 		expect(MARKET_LOCALES.CH).toBe("de-CH");
 		expect(marketLanguages("CH")).toEqual(["de-CH", "fr-CH", "it-CH"]);
 		expect(marketLanguages("IT")).toEqual(["it-IT"]);
@@ -265,6 +277,7 @@ describe("locale configuration", () => {
 			"en-IE": "en-IE",
 			"fi-FI": "fi-FI",
 			"lt-LT": "lt-LT",
+			"sl-SI": "sl-SI",
 		});
 		expect(OG_LOCALES).toEqual({
 			fr: "fr_FR",
@@ -287,6 +300,7 @@ describe("locale configuration", () => {
 			"en-IE": "en_IE",
 			"fi-FI": "fi_FI",
 			"lt-LT": "lt_LT",
+			"sl-SI": "sl_SI",
 		});
 		for (const locale of LOCALES) {
 			expect(Intl.DateTimeFormat.supportedLocalesOf([LOCALE_TAGS[locale]])).toEqual([
@@ -320,6 +334,7 @@ describe("locale configuration", () => {
 			"en-IE",
 			"fi-FI",
 			"lt-LT",
+			"sl-SI",
 		]);
 		expect(HREFLANGS).toEqual({
 			fr: "fr-FR",
@@ -338,6 +353,7 @@ describe("locale configuration", () => {
 			"en-IE": "en-IE",
 			"fi-FI": "fi-FI",
 			"lt-LT": "lt-LT",
+			"sl-SI": "sl-SI",
 		});
 		expect(routing.alternateLinks).toBe(false);
 		expect(robotsFor("fr", true)).toEqual({ index: true, follow: true });
@@ -358,6 +374,7 @@ describe("locale configuration", () => {
 		expect(robotsFor("nb-NO", true)).toEqual({ index: true, follow: true });
 		expect(robotsFor("en-IE", true)).toEqual({ index: true, follow: true });
 		expect(robotsFor("lt-LT", true)).toEqual({ index: true, follow: true });
+		expect(robotsFor("sl-SI", true)).toEqual({ index: true, follow: true });
 		for (const locale of TRANSLATIONS) {
 			expect(robotsFor(locale, true)).toEqual({ index: false, follow: true });
 		}
@@ -710,6 +727,37 @@ describe("locale configuration", () => {
 		);
 	});
 
+	it("translates into Slovenian only segments reserved in Slovenia, a doctor under /zdravnik", () => {
+		for (const slovenian of Object.values(SLOVENIAN_SEGMENTS)) {
+			expect(isSiListingSlug(slovenian), slovenian).toBe(false);
+		}
+		const firsts = Object.values(routing.pathnames)
+			.filter((entry) => typeof entry !== "string")
+			.map((entry) => entry["sl-SI"].split("/")[1] ?? "")
+			.filter((first) => first && !first.startsWith("["));
+		for (const first of firsts) expect(SI_RESERVED_SEGMENTS as readonly string[]).toContain(first);
+		const doctor = { slug: "ana-primer-si99001" };
+		expect(localePath("sl-SI", "/praticien/[slug]", doctor)).toBe(
+			"/si/zdravnik/ana-primer-si99001",
+		);
+		expect(localePath("sl-SI", "/praticien/[slug]/retrait", doctor)).toBe(
+			"/si/zdravnik/ana-primer-si99001/odstranitev",
+		);
+		expect(localePath("sl-SI", "/praticien/[slug]/signaler", doctor)).toBe(
+			"/si/zdravnik/ana-primer-si99001/prijava",
+		);
+		expect(localePath("sl-SI", "/annuaire")).toBe("/si/imenik");
+		expect(localePath("sl-SI", "/recherche")).toBe("/si/iskanje");
+		expect(localePath("sl-SI", "/mentions-legales")).toBe("/si/pravno-obvestilo");
+		expect(localePath("sl-SI", "/confidentialite")).toBe("/si/varstvo-osebnih-podatkov");
+		expect(localePath("sl-SI", "/conditions")).toBe("/si/pogoji-uporabe");
+		expect(localePath("sl-SI", "/accessibilite")).toBe("/si/dostopnost");
+		expect(localePath("sl-SI", "/donnees")).toBe("/si/podatki");
+		expect(localePath("sl-SI", "/[specialite]", { specialite: "zobozdravnik" })).toBe(
+			"/si/zobozdravnik",
+		);
+	});
+
 	it("translates into Estonian only segments reserved in Estonia", () => {
 		for (const estonian of Object.values(ESTONIAN_SEGMENTS)) {
 			expect(isEeListingSlug(estonian), estonian).toBe(false);
@@ -814,6 +862,7 @@ describe("the markets a search can move to", () => {
 			"IE",
 			"FI",
 			"LT",
+			"SI",
 		]);
 		expect(MARKET_COUNTRIES.map(marketSegment)).toEqual([
 			"fr",
@@ -830,6 +879,7 @@ describe("the markets a search can move to", () => {
 			"ie",
 			"fi",
 			"lt",
+			"si",
 		]);
 		for (const country of MARKET_COUNTRIES) {
 			expect(marketOfSegment(marketSegment(country))).toBe(country);

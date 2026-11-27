@@ -27,6 +27,11 @@ export type ListedPractitioner = PractitionerLink & {
 	addressLine: string | null;
 	postcode: string | null;
 	placeName: string | null;
+	/**
+	 * Slovenia: whether the doctor takes new patients at one of their practices, as the insurer's
+	 * list says (`mode_code`); null elsewhere and when no list says.
+	 */
+	acceptsNewPatients?: boolean | null;
 };
 
 export type NearbyPlace = PlaceRef & {
@@ -92,7 +97,10 @@ export async function getLandingPage(scope: LandingScope): Promise<LandingPage |
 					SELECT DISTINCT ON (p.id) p.id, p.slug, p.title_code, p.civility_code, p.first_name,
 						p.last_name, p.listing_slug, p.billing_sector, p.optam, p.carte_vitale,
 						a.practice_kind, s.name AS site_name,
-						coalesce(s.geo_address_line, s.address_line) AS address_line, s.postcode, pl.name AS place_name
+						coalesce(s.geo_address_line, s.address_line) AS address_line, s.postcode,
+						-- A Slovenian address's town line is its post office, not its municipality.
+						CASE WHEN s.country_code = 'SI' THEN coalesce(s.commune_label, pl.name)
+							ELSE pl.name END AS place_name
 					FROM directory.practitioners p
 					JOIN directory.activities a ON a.practitioner_id = p.id AND a.removed_at IS NULL
 						AND NOT a.hidden AND a.practice_kind IN ('office', 'health_center', 'hospital')
@@ -111,7 +119,12 @@ export async function getLandingPage(scope: LandingScope): Promise<LandingPage |
 					first_name AS "firstName", last_name AS "lastName", listing_slug AS "listingSlug",
 					billing_sector AS "billingSector", optam, carte_vitale AS "carteVitale",
 					practice_kind AS "practiceKind", site_name AS "siteName", address_line AS "addressLine",
-					postcode, place_name AS "placeName"
+					postcode, place_name AS "placeName",
+					CASE WHEN ${country} = 'SI' THEN (
+						SELECT bool_or(x.mode_code = 'accepting') FROM directory.activities x
+						WHERE x.practitioner_id = members.id AND x.removed_at IS NULL AND NOT x.hidden
+							AND x.mode_code IN ('accepting', 'closed')
+					) END AS "acceptsNewPatients"
 				FROM members
 				ORDER BY directory.text_norm(last_name), directory.text_norm(first_name), id
 				LIMIT ${LISTING_PAGE_SIZE} OFFSET ${offset}

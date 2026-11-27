@@ -14,6 +14,7 @@ import {
 	PL_OBTAINED_AT,
 	PL_PRODUCED_AT,
 	poland,
+	slovenia,
 	spain,
 	switzerland,
 	unitedKingdom,
@@ -36,6 +37,7 @@ import {
 	NO_PROFESSIONS,
 	PL_PROFESSIONS,
 	professionFor,
+	SI_PROFESSIONS,
 } from "@apercura/core/taxonomy";
 import { type Locale, marketOf } from "~/i18n/locales";
 import { marketAdapter } from "./practitioner-key";
@@ -76,7 +78,7 @@ export function marketBooks(locale: Locale): boolean {
  * `GB_GP` → `gp-practices`, `CZ_GP` → `prakticky-lekar`, `ES_PHARMACY` → `farmacias`,
  * `IT_PHARMACY` → `farmacie`, `DE_PHARMACY` → `apotheken`, `CH_HOSPITAL` → `spital`,
  * `EE_PHARMACY` → `apteegid`, `NO_PHARMACY` → `apotek`,
- * `IE_PHARMACY` → `pharmacy`, `LT_DENTAL` → `odontologijos-klinikos`).
+ * `IE_PHARMACY` → `pharmacy`, `LT_DENTAL` → `odontologijos-klinikos`, `SI_DENTIST` → `zobozdravnik`).
  */
 export function professionSlugOf(code: string): string {
 	return (
@@ -94,6 +96,7 @@ export function professionSlugOf(code: string): string {
 		IE_PROFESSIONS[code]?.slug ??
 		FI_PROFESSIONS[code]?.slug ??
 		LT_PROFESSIONS[code]?.slug ??
+		SI_PROFESSIONS[code]?.slug ??
 		""
 	);
 }
@@ -454,6 +457,67 @@ export function polishSourcesOf(
 		}));
 }
 
+/** The Register of Spatial Units (GURS), whose regions, municipalities and settlements place Slovenia's doctors. */
+export const SI_PLACES_SOURCE_ID = "si-rpe";
+
+/** A date (`YYYY-MM-DD`) as Slovenia writes it (`26. 11. 2026`), whatever the interface. */
+export function slovenianDate(date: string): string {
+	return new Intl.DateTimeFormat("sl-SI", {
+		day: "numeric",
+		month: "numeric",
+		year: "numeric",
+		timeZone: "UTC",
+	}).format(new Date(`${date.slice(0, 10)}T00:00:00Z`));
+}
+
+/**
+ * The attribution of a Slovenian source, word for word, with the date of its data as its
+ * publisher asks (CC BY 4.0; GURS: "the date of the state of the data"): the date of the ZZZS
+ * list the last Slovenian import read, or of the places it located the doctors with, written in
+ * Slovenian ("…, stanje 26. 11. 2026"). Without a date the line is the source alone.
+ */
+export function slovenianAttribution(sourceId: string, date: string | null | undefined): string {
+	const attribution =
+		slovenia.registries.find((source) => source.id === sourceId)?.attribution ?? "";
+	return attribution && date ? `${attribution}, stanje ${slovenianDate(date)}` : attribution;
+}
+
+/**
+ * The sources a Slovenian doctor's page is built from, with the attribution each requires: the
+ * ZZZS list of each of its practices (`si-zzzs-sa`, `si-zzzs-gin`, `si-zzzs-zob`, one line for
+ * the three, dated by the newest list of the page) and the GURS register that places it. `dates`
+ * holds the date of each list's data (`directory.etl_runs.files`, by source id).
+ */
+export function slovenianSourcesOf(
+	activitySources: readonly (string | undefined)[],
+	dates: Readonly<Record<string, string>> = {},
+): { name: string; attribution: string }[] {
+	const lists = [...new Set(activitySources.filter((id): id is string => Boolean(id)))].filter(
+		(id) => id.startsWith("si-zzzs-"),
+	);
+	if (lists.length === 0) return [];
+	const newest = lists
+		.map((id) => dates[id])
+		.filter((date): date is string => Boolean(date))
+		.sort()
+		.at(-1);
+	const names = slovenia.registries
+		.filter((registry) => lists.includes(registry.id))
+		.map((registry) => registry.name);
+	const places = slovenia.registries.find((registry) => registry.id === SI_PLACES_SOURCE_ID);
+	return [
+		{ name: names.join("; "), attribution: slovenianAttribution(lists[0] ?? "", newest) },
+		...(places
+			? [
+					{
+						name: places.name,
+						attribution: slovenianAttribution(SI_PLACES_SOURCE_ID, dates[SI_PLACES_SOURCE_ID]),
+					},
+				]
+			: []),
+	];
+}
+
 /**
  * The places of Ireland's pages: Tailte Éireann's counties and the CSO's towns (Census Built Up
  * Areas), credited on every Irish page (CC BY 4.0).
@@ -486,6 +550,8 @@ export const IE_HSE_SOURCES: ReadonlySet<string> = new Set([
 /**
  * The open-data sources of a page in a market whose licences require their attribution
  * (Austria's and Czechia's CC BY 4.0, the UK's OGL, Spain's Ministry of Health and IGN, Italy's
+ * IODL 2.0 and CC BY 4.0, Germany's Destatis, CC BY 4.0 and dl-de/by-2-0 sources, Slovenia's
+ * CC BY 4.0 lists and places); empty for
  * IODL 2.0 and CC BY 4.0, Germany's Destatis, CC BY 4.0 and dl-de/by-2-0 sources, Switzerland's,
  * Estonia's CC BY-NC-SA 3.0, CC0 and Land Board sources, Ireland's re-use conditions and CC BY 4.0, Lithuania's CC BY 4.0); empty for
  * France, whose provenance line is the catalog's. `sourceDate` dates Spain's REGCESS line,
@@ -499,7 +565,14 @@ export function openDataSourcesOf(
 		language = "de",
 		sources = [],
 		producedAt = null,
-	}: { language?: string; sources?: readonly string[]; producedAt?: string | null } = {},
+		dates = {},
+	}: {
+		language?: string;
+		sources?: readonly string[];
+		producedAt?: string | null;
+		/** Slovenia: the date of each list's data, by source id. */
+		dates?: Readonly<Record<string, string>>;
+	} = {},
 ): { name: string; attribution: string }[] {
 	if (country === "AT") return austrianSourcesOf(activities.map((activity) => activity.source));
 	if (country === "GB") return ukSourcesOf(activities);
@@ -523,6 +596,12 @@ export function openDataSourcesOf(
 	}
 	if (country === "NO") return norwegianSourcesOf(activities.map((activity) => activity.source));
 	if (country === "IE") return irishSourcesOf(activities.map((activity) => activity.source));
+	if (country === "SI") {
+		return slovenianSourcesOf(
+			activities.map((activity) => activity.source),
+			dates,
+		);
+	}
 	if (country === "CH") {
 		return activities.length > 0
 			? swissSourcesOf(

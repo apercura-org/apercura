@@ -75,6 +75,7 @@ import {
 } from "~/lib/seo";
 import { absoluteUrl, siteOrigin } from "~/lib/site-url";
 import { slotParts, slotTime } from "~/lib/slot-format";
+import { type SlovenianActivity, slovenianActivitiesAt } from "~/lib/slovenian-practice";
 import { breadcrumbNode, graph, ids, practitionerNodes, webPageNode } from "~/lib/structured-data";
 import { swissFacilityFacts } from "~/lib/swiss-facility";
 import { databaseAvailable } from "~/server/db";
@@ -418,6 +419,10 @@ export default async function PractitionerPage({ params }: Props) {
 					timeZone: "UTC",
 				})
 			: null;
+	// Slovenia lists its personal doctors: at each practice, the insurer's activity and whether
+	// the doctor still takes new patients, dated by the list it comes from.
+	const slovenian = payload.country === "SI";
+	const slovenianDates = slovenian ? ((await getImportStatus("si"))?.files ?? {}) : {};
 	const identifier = displayId(payload);
 	// Open licences (CC BY 4.0, OGL) require each source's attribution, word for word; Spain's
 	// Ministry of Health asks for the date of its data: the last Spanish import's; Italy's is cited
@@ -436,6 +441,7 @@ export default async function PractitionerPage({ params }: Props) {
 		sources: swissFacts?.sources ?? [],
 		// RPWDL is cited with the time its report was produced and the time it was obtained.
 		producedAt: polishStatus?.files.rpwdl ?? null,
+		dates: slovenianDates,
 	});
 	/** A list of lowercase labels as a sentence-case value ("Acute care, psychiatry"). */
 	const listValue = (labels: string[]) => {
@@ -535,7 +541,9 @@ export default async function PractitionerPage({ params }: Props) {
 							addressLine: marketLabel(site.site.addressLine, payload.country),
 							addressComplement: marketLabel(site.site.addressComplement, payload.country),
 							postcode: site.site.postcode,
-							placeName: localityOf(site.site.placeName, payload.country),
+							placeName: slovenian
+								? (site.site.locality ?? site.site.placeName)
+								: localityOf(site.site.placeName, payload.country),
 							country: payload.country,
 							coordinates: site.coordinates,
 							phone: site.phone?.e164 ?? null,
@@ -942,7 +950,7 @@ export default async function PractitionerPage({ params }: Props) {
 											/>
 										) : null}
 									</>
-								) : czech ? (
+								) : slovenian ? null : czech ? (
 									<>
 										{payload.professionCode === CZ_SPECIALIST ? (
 											<FieldRow
@@ -997,6 +1005,11 @@ export default async function PractitionerPage({ params }: Props) {
 										kind: labels.practiceKind(site.practiceKind),
 										mode: labels.mode(site.modeCode),
 									}}
+									slovenian={
+										slovenian
+											? slovenianActivitiesAt(payload.activities, site.site.id, slovenianDates)
+											: undefined
+									}
 								/>
 							))}
 							{provenance}
@@ -1111,11 +1124,14 @@ async function SiteSection({
 	locale,
 	showMap,
 	labels,
+	slovenian,
 }: {
 	site: SiteView;
 	locale: Locale;
 	showMap: boolean;
 	labels: { kind: string | null; mode: string | null };
+	/** A Slovenian practice's activities, each with whether the doctor takes new patients there. */
+	slovenian?: SlovenianActivity[];
 }) {
 	const t = await getTranslations({ locale, namespace: "PractitionerPage" });
 	const tP = await getTranslations({ locale, namespace: "Practitioner" });
@@ -1138,8 +1154,9 @@ async function SiteSection({
 				externalLabel={tSite("externalLink")}
 			>
 				<FieldList>
+					{slovenian ? <SlovenianActivities activities={slovenian} locale={locale} /> : null}
 					{/* A UK practice's or Czech facility's addresses are its own premises: no type to tell apart. */}
-					{listsPractices(marketOf(locale)) ? null : (
+					{listsPractices(marketOf(locale)) || slovenian ? null : (
 						<FieldRow
 							label={t("practiceType")}
 							value={[labels.kind, labels.mode].filter(Boolean).join(" · ")}
@@ -1192,6 +1209,59 @@ async function SiteSection({
 				/>
 			) : null}
 		</div>
+	);
+}
+
+/**
+ * A Slovenian practice's activities, each with whether the doctor still takes new patients there,
+ * as the health insurer's list of that day says ("Takes new patients", "ZZZS list of 26 November
+ * 2026 · Source: ZZZS, CC BY 4.0"): the practice confirms it when a patient chooses the doctor.
+ */
+async function SlovenianActivities({
+	activities,
+	locale,
+}: {
+	activities: readonly SlovenianActivity[];
+	locale: Locale;
+}) {
+	const t = await getTranslations({ locale, namespace: "PractitionerPage" });
+	const format = await getFormatter({ locale });
+	return (
+		<>
+			{activities.map((activity, index) => (
+				<FieldRow
+					key={`${activity.kind}-${activity.acceptance}`}
+					label={t("slovenia.activity", { kind: activity.kind })}
+					value={
+						<>
+							<span className="font-semibold">
+								{t(
+									activity.acceptance === "accepting"
+										? "slovenia.accepts"
+										: activity.acceptance === "closed"
+											? "slovenia.closed"
+											: "slovenia.unknown",
+								)}
+							</span>
+							<span className="mt-1 block text-meta text-ink-muted">
+								{activity.asOf
+									? `${t("slovenia.asOf", {
+											date: format.dateTime(new Date(`${activity.asOf}T12:00:00Z`), {
+												dateStyle: "long",
+											}),
+										})} · ${t("slovenia.source")}`
+									: t("slovenia.source")}
+							</span>
+							{/* Once, under the last activity: a `<dl>` holds rows only. */}
+							{index === activities.length - 1 ? (
+								<span className="mt-2 block text-meta text-ink-muted">{t("slovenia.note")}</span>
+							) : null}
+						</>
+					}
+					emptyLabel={t("slovenia.unknown")}
+				/>
+			))}
+		</>
 	);
 }
 

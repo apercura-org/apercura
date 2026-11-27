@@ -28,6 +28,7 @@ export { formatPhoneIt, IT_POSTCODE, normalizeItPostcode, toE164It } from "./pho
 export { formatPhoneLt, LT_POSTCODE, normalizeLtPostcode, toE164Lt } from "./phone-lt";
 export { formatPhoneNo, NO_POSTCODE, normalizeNoPostcode, toE164No } from "./phone-no";
 export { formatPhonePl, normalizePlPostcode, PL_POSTCODE, toE164Pl } from "./phone-pl";
+export { formatPhoneSi, normalizeSiPostcode, SI_POSTCODE, toE164Si } from "./phone-si";
 export * from "./profile";
 export { isValidRpps } from "./rpps";
 export { slugify, slugifyDe, slugifyNo, slugifyPl } from "./slugify";
@@ -102,6 +103,7 @@ export {
 	isValidNoOrgNumber,
 	isValidNoSourceId,
 	isValidPlSourceId,
+	isValidSiSourceId,
 	itPlaceSlug,
 	itUrlKey,
 	LT_ID_SCHEME,
@@ -140,8 +142,13 @@ export {
 	parseNoKey,
 	parsePlFacilitySegment,
 	parsePractitionerSegment,
+	parseSiPractitionerSegment,
 	plFacilitySlug,
 	practitionerSlug,
 	regionSlug,
+	SI_ID_SCHEME,
+	type SiPractitionerSegment,
+	siPractitionerSlug,
+	slugifySl,
 } from "./slugs";
 export * from "./time";

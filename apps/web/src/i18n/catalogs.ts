@@ -24,6 +24,7 @@ import itIT from "../../messages/it-IT.json";
 import lt from "../../messages/lt.json";
 import no from "../../messages/no.json";
 import pl from "../../messages/pl.json"; // Norway's texts over the English catalog, as Estonia's (`no.json`, named after the segment).
+import si from "../../messages/si.json";
 import type { Locale } from "./locales";
 
 /** The shape of every catalog: the English source catalog's. */
@@ -75,6 +76,7 @@ const CATALOGS: Record<
 		| "de-CH"
 		| "fr-CH"
 		| "it-CH"
+		| "sl-SI"
 		| "et-EE"
 		| "pl-PL"
 		| "nb-NO"
@@ -148,7 +150,10 @@ export function messagesFor(locale: Locale): Messages {
 															: locale === "fi-FI"
 																? // Finland: the English catalog, with the Finnish texts on top.
 																	(mergeMessages(en, fi as Tree) as Messages)
-																: (mergeMessages(en, CATALOGS[locale] as Tree) as Messages);
+																: locale === "sl-SI"
+																	? // Slovenia: the English catalog, with the Slovenian texts on top.
+																		(mergeMessages(en, si as Tree) as Messages)
+																	: (mergeMessages(en, CATALOGS[locale] as Tree) as Messages);
 		merged.set(locale, found);
 	}
 	return found;
@@ -171,6 +176,9 @@ export const FINNISH_OVERRIDES: unknown = fi;
 
 /** The Lithuanian texts over the English catalog (`messages/lt.json`), for tests. */
 export const LITHUANIAN_OVERRIDES: unknown = lt;
+
+/** The Slovenian texts over the English catalog (`messages/si.json`), for tests. */
+export const SLOVENIAN_OVERRIDES: unknown = si;
 
 /** Spain's overrides of the Spanish catalog (`messages/es-ES.json`), for tests. */
 export const SPANISH_MARKET_OVERRIDES: unknown = esES;

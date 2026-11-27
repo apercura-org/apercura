@@ -65,6 +65,8 @@ const LOCALIZED = [
 		lang: "en-IE",
 		search: "Search",
 	},
+	// Slovenia, in Slovenian.
+	{ path: "/si/ne-obstaja", title: "Ta stran ne obstaja", lang: "sl-SI", search: "Išči" },
 ];
 
 for (const { path, title, lang, search } of LOCALIZED) {
@@ -103,5 +105,6 @@ test("an address outside every locale gets the root 404", async ({ page }) => {
 		"href",
 		"/ie",
 	);
+	await expect(page.getByRole("link", { name: "Slovenia" })).toHaveAttribute("href", "/si");
 	expect(await axeViolations(page)).toEqual([]);
 });

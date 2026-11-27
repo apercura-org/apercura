@@ -24,6 +24,11 @@ export type SitePayload = {
 	finessEt: string | null;
 	establishmentName: string | null;
 	establishmentSlug: string | null;
+	/**
+	 * Slovenia only (migration 0033): the post office of the address (`Škofja vas`), its town line,
+	 * which is often not the municipality the practice is listed in (`placeName`).
+	 */
+	locality?: string | null;
 };
 
 export type ActivityPayload = {

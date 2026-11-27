@@ -33,6 +33,9 @@ import { DEFAULT_NO_ENHETER_URL, DEFAULT_NO_UNDERENHETER_URL } from "./sources/n
 import { DEFAULT_NO_PLACES_URL } from "./sources/no/places";
 import { NO_SOURCE_IDS, type NoFileId, type NoSourceId } from "./sources/no/types";
 import { DEFAULT_PL_PRG_URL, DEFAULT_PL_TERC_URL } from "./sources/pl/places";
+import { GURS_WFS } from "./sources/si/places";
+import { SI_SOURCE_IDS, type SiSourceId } from "./sources/si/types";
+import { ZZZS_LISTS_PAGE } from "./sources/si/zzzs";
 
 /** Stable data.gouv.fr URLs (they redirect to the latest daily file). */
 export const DEFAULT_ANS_URLS = {
@@ -1281,6 +1284,80 @@ export function buildFiOptions(
 		concurrency,
 		placesUrls: fiPlacesUrls(env),
 		today: todayInHelsinki(now),
+		workDir: flagString(flags, "work-dir") ?? env.ETL_WORK_DIR ?? null,
+		appUrl: offline ? null : env.APP_URL || null,
+		revalidateSecret: env.REVALIDATE_SECRET || null,
+	};
+}
+
+// ---------------------------------------------------------------------------
+// Slovenia (`etl:si`)
+// ---------------------------------------------------------------------------
+
+/** File names expected in `--source-dir` for `etl:si` (fixtures, offline runs). */
+export const SI_SOURCE_FILES: Record<SiSourceId, string> = {
+	sa: "zzzs-sa.xlsx",
+	gin: "zzzs-gin.xlsx",
+	zob: "zzzs-zob.xlsx",
+};
+
+export type SiOptions = {
+	databaseUrl: string;
+	/** The lists to import (default: all three). */
+	sources: SiSourceId[];
+	dryRun: boolean;
+	approveRunId: number | null;
+	force: boolean;
+	sourceDir: string | null;
+	offline: boolean;
+	/** The insurer's page linking the day's workbooks (`ETL_SI_PAGE_URL`). */
+	pageUrl: string;
+	/** The register's web feature service, for a first run without places (`ETL_SI_PLACES_URL`). */
+	placesUrl: string;
+	today: string;
+	workDir: string | null;
+	appUrl: string | null;
+	revalidateSecret: string | null;
+};
+
+/** Parses a comma-separated list of the insurer's lists (`sa,zob`); throws on unknown ones. */
+export function parseSiSources(value: string | undefined | null): SiSourceId[] {
+	if (!value) return [...SI_SOURCE_IDS];
+	const sources = value
+		.split(",")
+		.map((source) => source.trim())
+		.filter(Boolean);
+	for (const source of sources) {
+		if (!(SI_SOURCE_IDS as readonly string[]).includes(source)) {
+			throw new Error(`Unknown Slovenian source: ${source} (known: ${SI_SOURCE_IDS.join(", ")})`);
+		}
+	}
+	if (sources.length === 0) throw new Error("At least one Slovenian source is required");
+	return [...new Set(sources)] as SiSourceId[];
+}
+
+/** Today in Ljubljana, `YYYY-MM-DD`. */
+export function todayInLjubljana(now: Date = new Date()): string {
+	return new Intl.DateTimeFormat("en-CA", { timeZone: "Europe/Ljubljana" }).format(now);
+}
+
+export function buildSiOptions(flags: ParsedArgs["flags"], env: NodeJS.ProcessEnv): SiOptions {
+	const approve = flagString(flags, "approve");
+	if (approve !== null && !/^\d+$/.test(approve)) {
+		throw new Error(`--approve needs a run id, got ${approve}`);
+	}
+	const offline = flags.has("offline");
+	return {
+		databaseUrl: resolveDatabaseUrl(env),
+		sources: parseSiSources(flagString(flags, "sources") ?? env.ETL_SI_SOURCES),
+		dryRun: flags.has("dry-run"),
+		approveRunId: approve === null ? null : Number(approve),
+		force: flags.has("force"),
+		sourceDir: flagString(flags, "source-dir") ?? env.ETL_SI_SOURCE_DIR ?? null,
+		offline,
+		pageUrl: env.ETL_SI_PAGE_URL || ZZZS_LISTS_PAGE,
+		placesUrl: env.ETL_SI_PLACES_URL || GURS_WFS,
+		today: todayInLjubljana(),
 		workDir: flagString(flags, "work-dir") ?? env.ETL_WORK_DIR ?? null,
 		appUrl: offline ? null : env.APP_URL || null,
 		revalidateSecret: env.REVALIDATE_SECRET || null,
