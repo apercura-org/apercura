@@ -126,6 +126,7 @@ vi.mock("./queries/search", () => ({
 		listingSlug === "odontologijos-klinikos" && target.id === 1000
 			? { listingSlug, deptSlug: target.departmentSlug }
 			: null,
+	departmentLandingTarget: async () => null,
 	listingHubExists: async () => false,
 	practitionerSlugByRpps: async () => null,
 }));

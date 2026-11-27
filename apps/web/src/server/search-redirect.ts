@@ -11,6 +11,7 @@ import type { Href } from "~/i18n/navigation";
 import { standoutPlace } from "~/lib/homonyms";
 import { listingLabel, translateSearchTerm } from "~/lib/listing-index";
 import {
+	departmentLandingTarget,
 	type LandingTarget,
 	landingTarget,
 	listingHubExists,
@@ -114,12 +115,39 @@ export async function placesOfQuery(
 	return { places: await placesIn(country, { ...query, where: named.city }), where: named.city };
 }
 
-/** A market whose places "Où ?" names, with the listing page of the care asked there, if any. */
+/**
+ * A market whose places "Où ?" names, with the listing page of the care asked there, if any:
+ * the place's own, else its department's (`around`) when the place lists none of that care.
+ */
 type PlaceMarket = {
 	country: MarketCountry;
 	found: { places: PlaceSuggestion[]; where: string };
 	target: LandingTarget | null;
+	around: boolean;
 };
+
+/**
+ * The listing page of a listing slug for a place of a market: the place's own when it lists
+ * someone, else its department's ("hôpital" in Limassol, whose hospital is in Kato Polemidia,
+ * lands on the Limassol district's hospitals), else null, and the search lists what it finds.
+ * The department's page is looked up only when the place's is empty.
+ */
+async function listingTargetOf(
+	listingSlug: string,
+	place: PlaceSuggestion,
+	country: MarketCountry,
+): Promise<{ target: LandingTarget; around: boolean } | null> {
+	const own = await landingTarget(listingSlug, place, country);
+	if (own) return { target: own, around: false };
+	const department = await departmentLandingTarget(listingSlug, place, country);
+	return department ? { target: department, around: true } : null;
+}
+
+/** How well a market's listing page answers: the place's own, its department's, none. */
+function targetRank(market: PlaceMarket): number {
+	if (!market.target) return 0;
+	return market.around ? 1 : 2;
+}
 
 /** The largest population among a market's places, or null when one of them has none. */
 function populationOf(found: { places: PlaceSuggestion[] }): number | null {
@@ -136,8 +164,8 @@ function populationOf(found: { places: PlaceSuggestion[] }): number | null {
  * that name ("Bergen": Norway's city and a German Gemeinde): the country whose city `named` is
  * (`@apercura/core/geo`, Europe's main cities: Bergen is Norway's), then `home`, then a market
  * with a listing page for the care asked there, then the largest place when every one carries
- * its population (most markets publish none), then the order of the markets. Null when no
- * market knows the place.
+ * its population (most markets publish none), then the order of the markets. A listing page
+ * of the place itself ranks above its department's. Null when no market knows the place.
  */
 async function marketOfPlace(
 	query: SearchQuery,
@@ -150,9 +178,9 @@ async function marketOfPlace(
 		if (found.places.length === 0) return null;
 		const term = query.who ? translateSearchTerm(query.who, here, country) : null;
 		const place = found.places.length === 1 ? found.places[0] : undefined;
-		const target =
-			term?.kind === "listing" && place ? await landingTarget(term.slug, place, country) : null;
-		return { country, found, target };
+		const listing =
+			term?.kind === "listing" && place ? await listingTargetOf(term.slug, place, country) : null;
+		return { country, found, target: listing?.target ?? null, around: listing?.around ?? false };
 	};
 	const markets = (
 		await Promise.all([home, ...MARKET_COUNTRIES.filter((other) => other !== home)].map(candidate))
@@ -166,7 +194,7 @@ async function marketOfPlace(
 			(a, b) =>
 				Number(b.market.country === city) - Number(a.market.country === city) ||
 				Number(b.market.country === home) - Number(a.market.country === home) ||
-				Number(b.market.target !== null) - Number(a.market.target !== null) ||
+				targetRank(b.market) - targetRank(a.market) ||
 				(byPopulation ? b.population - a.population : 0) ||
 				a.order - b.order,
 		);
@@ -184,8 +212,9 @@ async function marketOfPlace(
  * runs in the likeliest that knows it (`marketOfPlace`: that market first, but "Bergen" is
  * Norway's city, not a German Gemeinde), in the visitor's language when that market offers it
  * (`marketLocaleFor`): "Qui ?" is carried over by kind of care (`translateSearchTerm`), to the
- * listing page of the place when there is one,
- * else to that market's search with the place set (and the listing, or the name typed).
+ * listing page of the place when there is one, else to its department's when that one lists
+ * the care (`listingTargetOf`), else to that market's search with the place set (and the
+ * listing, or the name typed).
  *
  * A country typed in "Où ?" (`@apercura/core/geo`) moves the search to that market when it is
  * open ("Autriche": its hub for the care asked, its search for a name, else its home); a country

@@ -7,7 +7,8 @@ import { searchRedirect } from "./search-redirect";
 
 /*
  * A small directory: the places of each market a search may name, the listing pages that exist
- * there (`listing@place`) and the market-wide hubs. "Springfield" is in France and the UK.
+ * there (`listing@place`) and in their departments (`listing@department slug`), and the
+ * market-wide hubs. "Springfield" is in France and the UK, "Exampleton" too.
  */
 const place = (
 	id: number,
@@ -42,6 +43,8 @@ const PLACES: Record<MarketCountry, PlaceSuggestion[]> = {
 		populated(2_200_000, 1, "Paris", "paris", "75-paris"),
 		populated(2_000, 2, "Springfield", "springfield", "01-ain"),
 		populated(2_000, 3, "Bergheim", "bergheim", "68-haut-rhin"),
+		populated(900, 4, "Exampleton", "exampleton", "02-aisne"),
+		populated(700, 5, "Sampleville", "sampleville", "02-aisne"),
 	],
 	AT: [
 		place(10, "Wien", "wien", "wien"),
@@ -53,6 +56,7 @@ const PLACES: Record<MarketCountry, PlaceSuggestion[]> = {
 		place(21, "Springfield", "springfield", "essex"),
 		place(22, "Newport", "newport", "newport"),
 		place(23, "Newport", "newport-2", "isle-of-wight"),
+		place(24, "Exampleton", "exampleton", "kent"),
 	],
 	CZ: [place(30, "Brno", "brno", "brno-mesto"), place(31, "Praha", "praha", "praha")],
 	ES: [place(40, "Madrid", "madrid", "madrid"), place(41, "València", "valencia", "valencia")],
@@ -73,6 +77,7 @@ const PLACES: Record<MarketCountry, PlaceSuggestion[]> = {
 		place(52, "Basel", "basel", "kanton-basel-stadt"),
 		place(53, "Lugano", "lugano", "distretto-di-lugano"),
 		place(54, "Baden", "baden", "bezirk-baden"),
+		place(55, "Uster", "uster", "bezirk-uster"),
 	],
 	EE: [
 		place(60, "Tartu linn", "tartu-linn", "tartu-linn", "8151"),
@@ -121,6 +126,7 @@ const LANDINGS = new Set([
 	"chirurgien-dentiste@Springfield",
 	"dental-practices@Bristol",
 	"dental-practices@Springfield",
+	"dental-practices@Exampleton",
 	"gp-practices@Bristol",
 	"zahnaerzte@Salzburg",
 	"allgemeinmedizin@Wien",
@@ -162,7 +168,6 @@ const LANDINGS = new Set([
 	"druzinski-zdravnik@Ljubljana",
 	"druzinski-zdravnik@Maribor",
 	"farmakeia@Λεμεσός",
-	"nosokomeia@Λεμεσός",
 	"farmakeia@Στρόβολος",
 	"kentra-ygeias@Στρόβολος",
 	"farmakeia@Λευκωσία",
@@ -170,6 +175,17 @@ const LANDINGS = new Set([
 	"aptiekas@Rīga",
 	"gimenes-arstu-prakses@Rīga",
 	"slimnicas@Sigulda",
+]);
+
+/*
+ * Department pages, for the places with none of their own. Limassol's hospital is in Kato
+ * Polemidia, on the district's page only (#197).
+ */
+const DEPARTMENT_LANDINGS = new Set([
+	"nosokomeia@eparchia-lemesou",
+	"farmakeia@eparchia-lemesou",
+	"spital@bezirk-uster",
+	"chirurgien-dentiste@02-aisne",
 ]);
 
 const HUBS = new Set([
@@ -185,6 +201,10 @@ vi.mock("./queries/search", () => ({
 	landingTarget: async (listingSlug: string, target: PlaceSuggestion) =>
 		LANDINGS.has(`${listingSlug}@${target.name}`)
 			? { listingSlug, deptSlug: target.departmentSlug, communeSlug: target.slug }
+			: null,
+	departmentLandingTarget: async (listingSlug: string, target: PlaceSuggestion) =>
+		DEPARTMENT_LANDINGS.has(`${listingSlug}@${target.departmentSlug}`)
+			? { listingSlug, deptSlug: target.departmentSlug }
 			: null,
 	listingHubExists: async (listingSlug: string, country: string) =>
 		HUBS.has(`${listingSlug}:${country.toLowerCase()}`),
@@ -202,6 +222,15 @@ const listing = (locale: Locale, specialite: string, dept: string, commune: stri
 	href: {
 		pathname: "/[specialite]/[dept]/[[...rest]]",
 		params: { specialite, dept, rest: [commune] },
+	},
+	locale,
+});
+
+/** A department's listing page, for a place with none of its own. */
+const department = (locale: Locale, specialite: string, dept: string) => ({
+	href: {
+		pathname: "/[specialite]/[dept]/[[...rest]]",
+		params: { specialite, dept, rest: undefined },
 	},
 	locale,
 });
@@ -367,7 +396,7 @@ describe("a search for a place of another market", () => {
 			listing("el-CY", "farmakeia", "eparchia-lemesou", "lemesos"),
 		);
 		expect(await search("en-GB", { quoi: "hospital", ou: "Limassol" })).toEqual(
-			listing("el-CY", "nosokomeia", "eparchia-lemesou", "lemesos"),
+			department("el-CY", "nosokomeia", "eparchia-lemesou"),
 		);
 		expect(await search("el-CY", { quoi: "φαρμακείο", ou: "Στρόβολος" })).toEqual(
 			listing("el-CY", "farmakeia", "eparchia-lefkosias", "strovolos"),
@@ -580,6 +609,75 @@ describe("a search for a place of another market", () => {
 			href: { pathname: "/[specialite]", params: { specialite: "chirurgien-dentiste" } },
 			locale: "fr",
 		});
+	});
+});
+
+describe("a search for a place with none of the care asked (#197)", () => {
+	it("lands on its department's listing when that one lists the care", async () => {
+		// Limassol's hospital is in Kato Polemidia: the district's hospitals, from any market.
+		expect(await search("fr", { quoi: "hôpital", ou: "Limassol" })).toEqual(
+			department("el-CY", "nosokomeia", "eparchia-lemesou"),
+		);
+		expect(await search("el-CY", { quoi: "νοσοκομείο", ou: "Λεμεσός" })).toEqual(
+			department("el-CY", "nosokomeia", "eparchia-lemesou"),
+		);
+		expect(await search("en-GB", { quoi: "hospital", ou: "Λεμεσός" })).toEqual(
+			department("el-CY", "nosokomeia", "eparchia-lemesou"),
+		);
+		// France: the department's dentists, in the page's own market too.
+		expect(await search("fr", { quoi: "dentiste", ou: "Sampleville" })).toEqual(
+			department("fr", "chirurgien-dentiste", "02-aisne"),
+		);
+	});
+
+	it("lands on the department in the visitor's language of a multilingual market", async () => {
+		expect(await search("fr", { quoi: "hôpital", ou: "Uster" })).toEqual(
+			department("fr-CH", "spital", "bezirk-uster"),
+		);
+		expect(await search("it", { quoi: "ospedale", ou: "Uster" })).toEqual(
+			department("it-CH", "spital", "bezirk-uster"),
+		);
+		expect(await search("en-GB", { quoi: "hospital", ou: "Uster" })).toEqual(
+			department("de-CH", "spital", "bezirk-uster"),
+		);
+		expect(await search("de-CH", { quoi: "Spital", ou: "Uster" })).toEqual(
+			department("de-CH", "spital", "bezirk-uster"),
+		);
+	});
+
+	it("keeps the place's own listing when it has one", async () => {
+		// Limassol lists pharmacies of its own, and so does its district.
+		expect(await search("fr", { quoi: "pharmacie", ou: "Limassol" })).toEqual(
+			listing("el-CY", "farmakeia", "eparchia-lemesou", "lemesos"),
+		);
+		expect(await search("fr", { quoi: "dentiste", ou: "Springfield" })).toEqual(
+			listing("fr", "chirurgien-dentiste", "01-ain", "springfield"),
+		);
+	});
+
+	it("falls back to the search when the department lists none either", async () => {
+		// No hospital in Strovolos's district, no health centre in Larnaka's.
+		expect(await search("el-CY", { quoi: "νοσοκομείο", ou: "Στρόβολος" })).toBeNull();
+		expect(await search("el-CY", { quoi: "κέντρο υγείας", ou: "Λάρνακα" })).toBeNull();
+		expect(await search("fr", { quoi: "hôpital", ou: "Bâle" })).toEqual(
+			searchPage("fr-CH", { quoi: listingLabel("spital", "fr-CH") ?? "", ou: "Basel" }),
+		);
+		// Homonyms are still left to the visitor, a department page or not.
+		expect(await search("fr", { quoi: "dentiste", ou: "Newport" })).toEqual(
+			searchPage("en-GB", { quoi: "Dental practices", ou: "Newport" }),
+		);
+	});
+
+	it("prefers a market listing the place itself over one listing only its department", async () => {
+		// Exampleton: the UK lists its dentists, France only its department's.
+		expect(await search("de-DE", { quoi: "Zahnarzt", ou: "Exampleton" })).toEqual(
+			listing("en-GB", "dental-practices", "kent", "exampleton"),
+		);
+		// Without a page of the place, a department's page still beats the search, in France's
+		// German pages.
+		expect(await search("de-DE", { quoi: "Zahnarzt", ou: "Sampleville" })).toEqual(
+			department("de", "chirurgien-dentiste", "02-aisne"),
+		);
 	});
 });
 
