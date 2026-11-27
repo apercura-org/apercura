@@ -171,6 +171,36 @@ test("the privacy notice and the data page credit the sources word for word, in 
 	await expect(page.locator("#remove form")).toBeVisible();
 });
 
+test("the data page says which cantons each kind of facility covers, from the published lists", async ({
+	page,
+}) => {
+	// The fixtures publish every list, Geneva's included (issue #161).
+	const coverage = {
+		"de-CH": [
+			"Spitäler und Kliniken: alle Kantone, aus den Kennzahlen der Schweizer Spitäler 2023 des Bundesamts für Gesundheit (BAG) und den Spitallisten der Kantone Bern, Basel-Stadt, Genf und Jura.",
+			"Alters- und Pflegeheime: nur die Kantone Zürich, Bern, Basel-Stadt, Basel-Landschaft, Genf und Jura.",
+			"Apotheken: nur die Kantone Basel-Landschaft (alle Apotheken) und Genf (nur die Apotheken, die impfen).",
+		],
+		"fr-CH": [
+			"Hôpitaux et cliniques : tous les cantons, d’après les chiffres-clés des hôpitaux suisses 2023 de l’Office fédéral de la santé publique (OFSP) et les listes d’hôpitaux des cantons de Berne, de Bâle-Ville, de Genève et du Jura.",
+			"EMS : seulement les cantons de Zurich, de Berne, de Bâle-Ville, de Bâle-Campagne, de Genève et du Jura.",
+			"Pharmacies : seulement les cantons de Bâle-Campagne (toutes les pharmacies) et de Genève (seulement celles qui vaccinent).",
+		],
+		"it-CH": [
+			"Ospedali e cliniche: tutti i Cantoni, secondo le cifre chiave degli ospedali svizzeri 2023 dell’Ufficio federale della sanità pubblica (UFSP) e gli elenchi degli ospedali dei Cantoni Berna, Basilea Città, Ginevra e Giura.",
+			"Case per anziani: solo i Cantoni Zurigo, Berna, Basilea Città, Basilea Campagna, Ginevra e Giura.",
+			"Farmacie: solo i Cantoni Basilea Campagna (tutte le farmacie) e Ginevra (solo quelle che vaccinano).",
+		],
+	} as const;
+	for (const locale of LANGUAGES) {
+		await page.goto(PAGES.data[locale]);
+		const items = page.locator("#coverage li");
+		for (const [index, text] of coverage[locale].entries()) {
+			await expect(items.nth(index)).toHaveText(text);
+		}
+	}
+});
+
 test.describe("the Swiss objection form", () => {
 	const nationalId = `9${String(Math.floor(Math.random() * 90_000_000) + 10_000_000)}`;
 	const slug = `spital-widerspruch-h${nationalId}`;

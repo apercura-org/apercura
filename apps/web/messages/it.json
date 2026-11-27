@@ -1590,8 +1590,7 @@
 		"metaDescriptionPageRange": "{count, plural, one {Pagina {page} di {pages}, da {first} a {last}: # professionista registrato come {occupation} a {place} nel registro nazionale.} many {Pagina {page} di {pages}, da {first} a {last}: # di professionisti registrati come {occupation} a {place} nel registro nazionale.} other {Pagina {page} di {pages}, da {first} a {last}: # professionisti registrati come {occupation} a {place} nel registro nazionale.}}",
 		"hubMetaTitleShort": "{listing} in Francia · Apercura",
 		"authoritiesHeading": "{listing}: autorità locali di {place}",
-		"pharmacyCoverage": "Le farmacie sono elencate solo per {states}: gli altri Länder non pubblicano un elenco aggiornato delle loro farmacie come dati aperti.",
-		"swissCoverage": "{kind, select, pflegeheim {Le case per anziani sono elencate solo nei Cantoni Zurigo, Berna, Ginevra, Basilea Città, Basilea Campagna e Giura: gli altri Cantoni non ne pubblicano un elenco aperto.} apotheke {Le farmacie sono elencate solo a Basilea Campagna (tutte le farmacie) e a Ginevra (solo le farmacie che vaccinano): gli altri Cantoni non ne pubblicano un elenco aperto.} other {Gli ospedali e le cliniche sono elencati in tutti i Cantoni, secondo le cifre chiave 2023 degli ospedali dell’Ufficio federale della sanità pubblica e gli elenchi dei Cantoni Berna, Ginevra, Basilea Città e Giura.}}"
+		"pharmacyCoverage": "Le farmacie sono elencate solo per {states}: gli altri Länder non pubblicano un elenco aggiornato delle loro farmacie come dati aperti."
 	},
 	"Directory": {
 		"metaTitle": "Elenco dei professionisti sanitari per luogo · Apercura",
@@ -6545,12 +6544,7 @@
 			"body": [
 				"Una pagina è una struttura, mai una persona. Ciò che è elencato dipende da quanto ciascun Cantone pubblica come dati aperti:"
 			],
-			"cantons": [
-				"Sedi di ospedali e cliniche: in tutti i Cantoni, dalle cifre dell’UFSP, completate dagli elenchi degli ospedali dei Cantoni di Berna, Ginevra, Basilea Città e Giura.",
-				"Case per anziani: soltanto nei Cantoni di Zurigo, Berna, Ginevra, Basilea Città, Basilea Campagna e Giura.",
-				"Farmacie: nel Cantone di Basilea Campagna, e nel Cantone di Ginevra soltanto le farmacie che vaccinano.",
-				"Altrove non sono ancora elencate case per anziani né farmacie, e nessuno studio medico o dentistico è elencato da nessuna parte."
-			],
+			"elsewhere": "Altrove non sono ancora elencate case per anziani né farmacie, e nessuno studio medico o dentistico è elencato da nessuna parte.",
 			"kinds": {
 				"CH_HOSPITAL": "Ospedali per cure generali: ospedali universitari, presa a carico centralizzata e cure di base (tipi UST da K111 a K123)",
 				"CH_PSYCHIATRIC_CLINIC": "Cliniche psichiatriche (K211, K212)",
@@ -6629,5 +6623,46 @@
 			"formTitle": "Chiedere la rimozione di una pagina",
 			"formBody": "Indicate l’indirizzo della pagina e un indirizzo e-mail a cui possiamo rispondervi."
 		}
+	},
+	"SwissCoverage": {
+		"cantons": {
+			"ZH": "Zurigo",
+			"BE": "Berna",
+			"LU": "Lucerna",
+			"UR": "Uri",
+			"SZ": "Svitto",
+			"OW": "Obvaldo",
+			"NW": "Nidvaldo",
+			"GL": "Glarona",
+			"ZG": "Zugo",
+			"FR": "Friburgo",
+			"SO": "Soletta",
+			"BS": "Basilea Città",
+			"BL": "Basilea Campagna",
+			"SH": "Sciaffusa",
+			"AR": "Appenzello Esterno",
+			"AI": "Appenzello Interno",
+			"SG": "San Gallo",
+			"GR": "Grigioni",
+			"AG": "Argovia",
+			"TG": "Turgovia",
+			"TI": "Ticino",
+			"VD": "Vaud",
+			"VS": "Vallese",
+			"NE": "Neuchâtel",
+			"GE": "Ginevra",
+			"JU": "Giura"
+		},
+		"pharmacyCanton": "{canton, select, BL {{name} (tutte le farmacie)} GE {{name} (solo quelle che vaccinano)} other {{name}}}",
+		"homesOf": "{amount, select, one {le case per anziani del Cantone {cantons}} other {le case per anziani dei Cantoni {cantons}}}",
+		"pharmaciesOf": "{amount, select, one {le farmacie del Cantone {cantons}} other {le farmacie dei Cantoni {cantons}}}",
+		"hook": "Ogni ospedale e ogni clinica della Svizzera ha già la sua pagina.",
+		"hookWith": "Ogni ospedale e ogni clinica della Svizzera ha già la sua pagina, come {others}.",
+		"hospitals": "Ospedali e cliniche: tutti i Cantoni, secondo le cifre chiave degli ospedali svizzeri 2023 dell’Ufficio federale della sanità pubblica (UFSP){amount, select, none {} one { e l’elenco degli ospedali del Cantone {cantons}} other { e gli elenchi degli ospedali dei Cantoni {cantons}}}.",
+		"homes": "Case per anziani: {amount, select, none {nessuna ancora elencata.} one {solo il Cantone {cantons}.} other {solo i Cantoni {cantons}.}}",
+		"pharmacies": "Farmacie: {amount, select, none {nessuna ancora elencata.} one {solo il Cantone {cantons}.} other {solo i Cantoni {cantons}.}}",
+		"listing": "{kind, select, pflegeheim {{amount, select, none {Nessuna casa per anziani è ancora elencata: non è ancora stato importato l’elenco di alcun Cantone.} one {Le case per anziani sono elencate solo per il Cantone {cantons}: quelle degli altri Cantoni non lo sono ancora.} other {Le case per anziani sono elencate solo per i Cantoni {cantons}: quelle degli altri Cantoni non lo sono ancora.}}} apotheke {{amount, select, none {Nessuna farmacia è ancora elencata: non è ancora stato importato l’elenco di alcun Cantone.} one {Le farmacie sono elencate solo per il Cantone {cantons}: quelle degli altri Cantoni non lo sono ancora.} other {Le farmacie sono elencate solo per i Cantoni {cantons}: quelle degli altri Cantoni non lo sono ancora.}}} other {Gli ospedali e le cliniche sono elencati in tutti i Cantoni, secondo le cifre chiave 2023 degli ospedali dell’Ufficio federale della sanità pubblica{amount, select, none {.} one { e l’elenco degli ospedali del Cantone {cantons}.} other { e gli elenchi degli ospedali dei Cantoni {cantons}.}}}}",
+		"hospitalsEverywhere": "gli ospedali e le cliniche di tutti i Cantoni",
+		"unlisted": "In Svizzera l’elenco comprende per ora strutture, mai persone: {listed}. Medici, dentisti, psicologi e altri professionisti della salute non sono ancora elencati qui: nessun registro aperto li pubblica. Cerchi il nome di una struttura o consulti l’elenco."
 	}
 }

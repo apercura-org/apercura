@@ -30,7 +30,6 @@
 		"startTitle": "Que cherchez-vous ?",
 		"startBody": "Saisissez le nom d’un établissement, ou hôpital, clinique, EMS ou pharmacie, dans « Qui ? », et une commune, un district ou un canton dans « Où ? ». Vous pouvez aussi parcourir l’annuaire par canton et par district.",
 		"unknownPlaceBody": "Vérifiez l’orthographe ou saisissez une commune voisine.",
-		"unlistedBody": "En Suisse, l’annuaire recense pour l’instant des établissements, jamais des personnes : les hôpitaux et cliniques de tous les cantons (chiffres-clés des hôpitaux suisses 2023 de l’Office fédéral de la santé publique et listes des cantons de Berne, Genève, Bâle-Ville et du Jura), les EMS des seuls cantons de Zurich, Berne, Genève, Bâle-Ville, Bâle-Campagne et du Jura, et les pharmacies de Bâle-Campagne (toutes) et de Genève (seulement celles qui vaccinent). Les médecins, dentistes, psychologues et autres professionnels de santé ne sont pas encore listés ici : aucun registre ouvert ne les publie. Cherchez le nom d’un établissement ou parcourez l’annuaire.",
 		"departmentPlace": "District",
 		"bookingNotOpen": "Apercura ne propose pas la prise de rendez-vous en ligne en Suisse : contactez l’établissement.",
 		"columns": {
@@ -44,7 +43,6 @@
 	},
 	"HomePage": {
 		"title": "Trouvez un hôpital, une clinique, un EMS ou une pharmacie en Suisse",
-		"hook": "Chaque hôpital et chaque clinique de Suisse a déjà sa page, de même que les EMS des cantons de Zurich, Berne, Genève, Bâle-Ville, Bâle-Campagne et du Jura et les pharmacies de Bâle-Campagne et de Genève.",
 		"pillars": {
 			"free": {
 				"description": "Gratuit pour les établissements de santé et pour les patients, sans abonnement ni commission."
@@ -52,7 +50,7 @@
 		},
 		"registry": {
 			"heading": "Construit sur les données ouvertes de la Confédération et des cantons",
-			"intro": "Hôpitaux et cliniques : tous les cantons, d’après les chiffres-clés des hôpitaux suisses 2023 de l’Office fédéral de la santé publique (OFSP) et les listes des cantons de Berne, Genève, Bâle-Ville et du Jura. EMS : seulement les cantons de Zurich, Berne, Genève, Bâle-Ville, Bâle-Campagne et du Jura. Pharmacies : seulement Bâle-Campagne (toutes les pharmacies) et Genève (seulement celles qui vaccinent). Les autres cantons n’en publient pas de liste ouverte. Sont listés des établissements, jamais des professionnels. Personne ne paie pour y figurer et personne n’en est exclu.",
+			"intro": "Sont listés des établissements, jamais des professionnels. Personne ne paie pour y figurer et personne n’en est exclu.",
 			"sourceName": "OFSP et cantons, données ouvertes"
 		},
 		"pro": {

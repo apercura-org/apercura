@@ -45,6 +45,42 @@ and what follows it are dropped (7 names of the 2023 figures).
 | Stadt Zürich's lists of hospitals and private homes                                                                               | Departments of the city's hospitals, private homes         | Departments, not sites, and a contact e-mail per row; the canton's list already holds the homes                             | Nobody for now                                                                                                                                       |
 | Bern's day centres (`ILV_STOALTER_VW_7972`), Basel-Stadt's day centres, Jura's psychiatric outpatient centres and sheltered flats | Day care and outpatient psychiatry                         | Not a kind of facility the market lists                                                                                     | Nobody: a decision of the project                                                                                                                    |
 
+## Geneva's lists, blocked from the server
+
+Geneva's three lists (DAS_HOPITAUX_CLINIQUES, DAS_EMS, GEO_SANTE_VACCINATION_PHARM) are open data
+and imported when they can be fetched, but SITG's servers (`extract.sitg.ge.ch`,
+`vector.sitg.ge.ch`) answer HTTP 406 to requests from some datacenter addresses, the production
+server's among them: « Accès refusé… vous utilisez probablement un VPN ». From there they are left
+out of every run, so production publishes no Geneva nursing home or pharmacy, and Geneva's hospitals
+come from the FOPH's figures alone. The pages follow what is published and stop naming Geneva for
+those kinds on their own. The import does not work around the block; the operator turns the three
+lists off until it is lifted (`ETL_CH_SCHEDULE_ARGS=--sources -ge-hopitaux,-ge-ems,-ge-pharmacies`,
+[data import](../data-import.md#genevas-lists-from-the-production-server)).
+
+The fix is SITG's: ask it to allow the server. Write to SITG's team (the contact of sitg.ge.ch), and
+give the server's address and the user agent in the message itself, never in this repository:
+
+> Objet : Accès automatisé aux données ouvertes du SITG depuis un serveur
+>
+> Madame, Monsieur,
+>
+> Apercura (apercura.org) est un annuaire gratuit et open source des établissements de santé, sans
+> publicité ni avis. Pour Genève, il publie les hôpitaux et cliniques, les EMS et les pharmacies qui
+> vaccinent d'après les jeux DAS_HOPITAUX_CLINIQUES, DAS_EMS et GEO_SANTE_VACCINATION_PHARM, avec la
+> mention « Source : Portail des données SITG (État de Genève) » exigée par vos conditions
+> d'utilisation (niveau A).
+>
+> Notre import mensuel, une requête par jeu de données, reçoit depuis notre serveur la réponse 406
+> « Accès refusé… vous utilisez probablement un VPN » de extract.sitg.ge.ch et de vector.sitg.ge.ch.
+> Pourriez-vous autoriser l'adresse de ce serveur, indiquée ci-dessous, ou nous dire comment
+> télécharger ces jeux de données depuis un hébergeur ?
+>
+> Adresse du serveur : …
+>
+> Avec nos remerciements et nos meilleures salutations
+
+Once SITG allows it, drop the setting: the next run reads the three lists again.
+
 ## How to ask
 
 The FOPH is a federal office: the Federal Act on Data Protection and the Freedom of Information Act

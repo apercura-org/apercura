@@ -262,16 +262,40 @@ test("a wrong name part redirects to the canonical slug, in the page's language"
 	expect((await page.goto("/ch/einrichtung/nichts-367757611"))?.status()).toBe(404);
 });
 
+/*
+ * What the pages say they cover follows the published facilities (issue #161): the fixtures
+ * publish every list, Geneva's three included, so every canton with a list is named, in the
+ * Federal Constitution's order.
+ */
+const COVERAGE = {
+	homes: "Zürich, Bern, Basel-Stadt, Basel-Landschaft, Genf und Jura",
+	hospitalLists: "Bern, Basel-Stadt, Genf und Jura",
+	pharmaciesFr:
+		"de Bâle-Campagne (toutes les pharmacies) et de Genève (seulement celles qui vaccinent)",
+};
+
 test("Switzerland lists by canton, district and commune, and says which cantons it covers", async ({
 	page,
 }) => {
 	await page.goto("/ch/pflegeheim");
 	await expect(
-		page.getByText(/Zürich, Bern, Genf, Basel-Stadt, Basel-Landschaft und Jura/).first(),
+		page.getByText(
+			`Alters- und Pflegeheime sind nur für die Kantone ${COVERAGE.homes} aufgeführt: Die Heime der anderen Kantone sind noch nicht erfasst.`,
+		),
+	).toBeVisible();
+	await page.goto("/ch/spital/zuerich");
+	await expect(
+		page.getByText(`und den Spitallisten der Kantone ${COVERAGE.hospitalLists}.`, {
+			exact: false,
+		}),
 	).toBeVisible();
 	await page.goto("/ch-fr/apotheke");
-	await expect(page.getByText(/Bâle-Campagne/).first()).toBeVisible();
-	await expect(page.getByText(/vaccinent/).first()).toBeVisible();
+	await expect(
+		page.getByText(
+			`Les pharmacies ne sont listées que pour les cantons ${COVERAGE.pharmaciesFr} : celles des autres cantons ne le sont pas encore.`,
+			{ exact: false },
+		),
+	).toBeVisible();
 	await page.goto("/ch/spital/zuerich");
 	await expect(page.getByRole("link", { name: /^Bezirk Zürich/ }).first()).toBeVisible();
 	expect(await robotsOf(page)).toBe("index, follow");
@@ -325,6 +349,10 @@ test("a kind of facility in a place goes to its listing, a doctor is not listed 
 	await expect(page).toHaveURL(/\/ch-it\/pflegeheim\/bezirk-zuerich\/zuerich$/);
 	await page.goto("/ch/suche?quoi=Hausarzt");
 	await expect(page.getByText(/nicht aufgeführt|nicht erfasst|noch nicht/).first()).toBeVisible();
+	// It says what is listed instead, from the published lists.
+	await expect(
+		page.getByText(`die Alters- und Pflegeheime der Kantone ${COVERAGE.homes}`, { exact: false }),
+	).toBeVisible();
 	await expect(page.getByRole("link", { name: /Stadtspital Musterberg/ })).toHaveCount(0);
 });
 
@@ -348,7 +376,16 @@ test("the Swiss homes list kinds and cantons, say which cantons are covered, and
 	await page.goto("/ch");
 	await expect(page.getByRole("link", { name: /^Spitäler/ }).first()).toBeVisible();
 	await expect(page.getByRole("link", { name: /^Zürich/ }).first()).toBeVisible();
-	await expect(page.getByText(/nur die Kantone Zürich, Bern, Genf/).first()).toBeVisible();
+	// The opening line and the sources' block name the cantons of the published lists.
+	await expect(
+		page.getByText(
+			`Jedes Spital und jede Klinik der Schweiz hat schon eine Seite, ebenso die Alters- und Pflegeheime der Kantone ${COVERAGE.homes} und die Apotheken der Kantone Basel-Landschaft und Genf.`,
+		),
+	).toBeVisible();
+	await expect(
+		page.getByText(`Alters- und Pflegeheime: nur die Kantone ${COVERAGE.homes}.`, { exact: false }),
+	).toBeVisible();
+	await expect(page.getByText(/République et canton de Genève/).first()).toBeVisible();
 	const alternates = await alternatesOf(page);
 	expect(alternates["de-CH"]).toBe("/ch");
 	expect(alternates["fr-CH"]).toBe("/ch-fr");

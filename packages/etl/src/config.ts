@@ -751,20 +751,33 @@ export type ChOptions = {
 	revalidateSecret: string | null;
 };
 
-/** Parses a comma-separated list of Swiss lists (`bag,zh-heime`); throws on unknown ones. */
+/**
+ * Parses a comma-separated list of Swiss lists: the lists to import (`bag,zh-heime`), or every
+ * list but some, each prefixed with a minus (`-ge-hopitaux,-ge-ems,-ge-pharmacies`). The two
+ * forms never mix. Throws on unknown ones, and when no list is left.
+ */
 export function parseChSources(value: string | null | undefined): ChSourceId[] {
 	if (!value) return [...CH_SOURCE_IDS];
-	const sources = value
+	const entries = value
 		.split(",")
 		.map((source) => source.trim())
 		.filter(Boolean);
+	const excluded = entries.filter((entry) => entry.startsWith("-"));
+	if (excluded.length > 0 && excluded.length < entries.length) {
+		throw new Error(
+			`Swiss sources are either listed (bag,zh-heime) or all excluded with a minus (-ge-ems), never both: "${value}"`,
+		);
+	}
+	const sources = excluded.length > 0 ? excluded.map((entry) => entry.slice(1)) : entries;
 	for (const source of sources) {
 		if (!(CH_SOURCE_IDS as readonly string[]).includes(source)) {
 			throw new Error(`Unknown Swiss source "${source}" (one of ${CH_SOURCE_IDS.join(", ")})`);
 		}
 	}
-	if (sources.length === 0) throw new Error("At least one Swiss source is required");
-	return [...new Set(sources)] as ChSourceId[];
+	const selected =
+		excluded.length > 0 ? CH_SOURCE_IDS.filter((id) => !sources.includes(id)) : sources;
+	if (selected.length === 0) throw new Error("At least one Swiss source is required");
+	return [...new Set(selected)] as ChSourceId[];
 }
 
 /** Today in Zürich, `YYYY-MM-DD`. */

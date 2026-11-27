@@ -1590,8 +1590,7 @@
 		"metaDescriptionPageRange": "{count, plural, one {Página {page} de {pages}, de {first} a {last}: # profesional sanitario registrado como {occupation} en {place} en el registro nacional.} many {Página {page} de {pages}, de {first} a {last}: # de profesionales sanitarios registrados como {occupation} en {place} en el registro nacional.} other {Página {page} de {pages}, de {first} a {last}: # profesionales sanitarios registrados como {occupation} en {place} en el registro nacional.}}",
 		"hubMetaTitleShort": "{listing} en Francia · Apercura",
 		"authoritiesHeading": "{listing}: autoridades locales de {place}",
-		"pharmacyCoverage": "Las farmacias solo se incluyen para {states}: los demás Länder no publican una lista actualizada de sus farmacias en datos abiertos.",
-		"swissCoverage": "{kind, select, pflegeheim {Las residencias de mayores solo figuran en los cantones de Zúrich, Berna, Ginebra, Basilea-Ciudad, Basilea-Campiña y Jura: los demás cantones no publican una lista abierta de ellas.} apotheke {Las farmacias solo figuran en Basilea-Campiña (todas las farmacias) y Ginebra (solo las farmacias que vacunan): los demás cantones no publican una lista abierta de ellas.} other {Los hospitales y clínicas figuran en todos los cantones, según las cifras de hospitales de 2023 de la Oficina Federal de Salud Pública y las listas de los cantones de Berna, Ginebra, Basilea-Ciudad y Jura.}}"
+		"pharmacyCoverage": "Las farmacias solo se incluyen para {states}: los demás Länder no publican una lista actualizada de sus farmacias en datos abiertos."
 	},
 	"Directory": {
 		"metaTitle": "Directorio de profesionales sanitarios por lugar · Apercura",
@@ -6545,12 +6544,7 @@
 			"body": [
 				"A page is a facility, never a person. What is listed depends on what each canton publishes as open data:"
 			],
-			"cantons": [
-				"Hospital and clinic sites: in every canton, from the FOPH’s figures, completed by the hospital lists of the cantons of Bern, Geneva, Basel-Stadt and Jura.",
-				"Nursing homes: in the cantons of Zürich, Bern, Geneva, Basel-Stadt, Basel-Landschaft and Jura only.",
-				"Pharmacies: in the canton of Basel-Landschaft, and in the canton of Geneva only the pharmacies that vaccinate.",
-				"Elsewhere, no nursing home or pharmacy is listed yet, and no medical or dental practice is listed anywhere."
-			],
+			"elsewhere": "Elsewhere, no nursing home or pharmacy is listed yet, and no medical or dental practice is listed anywhere.",
 			"kinds": {
 				"CH_HOSPITAL": "General hospitals: university hospitals, centre care and basic care (FSO types K111 to K123)",
 				"CH_PSYCHIATRIC_CLINIC": "Psychiatric clinics (K211, K212)",
@@ -6627,5 +6621,46 @@
 			"formTitle": "Ask for a page to be removed",
 			"formBody": "Give the address of the page and an e-mail address where we can answer you."
 		}
+	},
+	"SwissCoverage": {
+		"cantons": {
+			"ZH": "Zúrich",
+			"BE": "Berna",
+			"LU": "Lucerna",
+			"UR": "Uri",
+			"SZ": "Schwyz",
+			"OW": "Obwalden",
+			"NW": "Nidwalden",
+			"GL": "Glaris",
+			"ZG": "Zug",
+			"FR": "Friburgo",
+			"SO": "Soleura",
+			"BS": "Basilea-Ciudad",
+			"BL": "Basilea-Campiña",
+			"SH": "Schaffhausen",
+			"AR": "Appenzell Rodas Exteriores",
+			"AI": "Appenzell Rodas Interiores",
+			"SG": "San Galo",
+			"GR": "Grisones",
+			"AG": "Argovia",
+			"TG": "Turgovia",
+			"TI": "Tesino",
+			"VD": "Vaud",
+			"VS": "Valais",
+			"NE": "Neuchâtel",
+			"GE": "Ginebra",
+			"JU": "Jura"
+		},
+		"pharmacyCanton": "{canton, select, BL {{name} (todas las farmacias)} GE {{name} (solo las farmacias que vacunan)} other {{name}}}",
+		"homesOf": "{amount, select, one {las residencias de mayores del cantón de {cantons}} other {las residencias de mayores de los cantones de {cantons}}}",
+		"pharmaciesOf": "{amount, select, one {las farmacias del cantón de {cantons}} other {las farmacias de los cantones de {cantons}}}",
+		"hook": "Cada hospital y cada clínica de Suiza ya tiene su página.",
+		"hookWith": "Cada hospital y cada clínica de Suiza ya tiene su página, al igual que {others}.",
+		"hospitals": "Hospitales y clínicas: todos los cantones, según las cifras de hospitales de 2023 de la Oficina Federal de Salud Pública (OFSP){amount, select, none {} one { y la lista de hospitales del cantón de {cantons}} other { y las listas de hospitales de los cantones de {cantons}}}.",
+		"homes": "Residencias de mayores: {amount, select, none {ninguna figura todavía.} one {solo el cantón de {cantons}.} other {solo los cantones de {cantons}.}}",
+		"pharmacies": "Farmacias: {amount, select, none {ninguna figura todavía.} one {solo el cantón de {cantons}.} other {solo los cantones de {cantons}.}}",
+		"listing": "{kind, select, pflegeheim {{amount, select, none {Todavía no figura ninguna residencia de mayores: no se ha importado la lista de ningún cantón.} one {Las residencias de mayores solo figuran para el cantón de {cantons}: las de los demás cantones todavía no.} other {Las residencias de mayores solo figuran para los cantones de {cantons}: las de los demás cantones todavía no.}}} apotheke {{amount, select, none {Todavía no figura ninguna farmacia: no se ha importado la lista de ningún cantón.} one {Las farmacias solo figuran para el cantón de {cantons}: las de los demás cantones todavía no.} other {Las farmacias solo figuran para los cantones de {cantons}: las de los demás cantones todavía no.}}} other {Los hospitales y clínicas figuran en todos los cantones, según las cifras de hospitales de 2023 de la Oficina Federal de Salud Pública{amount, select, none {.} one { y la lista de hospitales del cantón de {cantons}.} other { y las listas de hospitales de los cantones de {cantons}.}}}}",
+		"hospitalsEverywhere": "los hospitales y clínicas de todos los cantones",
+		"unlisted": "En Suiza, el directorio recoge por ahora centros, nunca personas: {listed}. Los médicos, dentistas, psicólogos y demás profesionales sanitarios todavía no figuran aquí: ningún registro abierto los publica. Busque el nombre de un centro o explore el directorio."
 	}
 }

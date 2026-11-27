@@ -37,6 +37,7 @@ import { breadcrumbNode, graph, ids, itemListNode, webPageNode } from "~/lib/str
 import { databaseAvailable } from "~/server/db";
 import { getLandingPage, sampleLandingParams } from "~/server/queries/landing";
 import { resolvePlace } from "~/server/queries/places";
+import { getSwissCoverageTexts } from "~/server/queries/swiss-coverage";
 
 export const ensureStatic = "navigation";
 /**
@@ -218,6 +219,9 @@ export default async function LandingPage({ params }: Props) {
 	const count = data.landing.practitionerCount;
 	// Germany's pharmacies: two Länder only, said under the title.
 	const coverage = pharmacyCoverageOf(locale, listingSlug);
+	// Switzerland's lists cover some cantons only: the ones its published facilities come from.
+	const swissCoverage =
+		country === "CH" ? (await getSwissCoverageTexts(locale)).listing(listingSlug) : null;
 	const isDepartment = place.kind === "department";
 	// A UK region (England's regions, the other nations) sits in the department's slot: its
 	// places are local authorities, and it has no hub of a commune.
@@ -282,11 +286,10 @@ export default async function LandingPage({ params }: Props) {
 					<ListingTitle
 						title={t("title", { listing, place: placeName })}
 						lead={
-							// Switzerland's lists cover some cantons only: the lead says which.
-							country === "CH" ? (
+							// The cantons Switzerland covers for this kind, after the count.
+							swissCoverage ? (
 								<>
-									{t("lead", { count, listing, place: placeName })}{" "}
-									{t("swissCoverage", { kind: listingSlug })}
+									{t("lead", { count, listing, place: placeName })} {swissCoverage}
 								</>
 							) : (
 								t("lead", { count, listing, place: placeName })

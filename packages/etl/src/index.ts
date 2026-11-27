@@ -110,7 +110,9 @@ Flags (etl:de):
 Flags (etl:ch):
   --sources <ids>         Lists to import: bag, be-spitaeler, be-heime, ge-hopitaux, ge-ems,
                           ge-pharmacies, bl-apotheken, bl-heime, bs-spitaeler, bs-heime,
-                          zh-heime, ju-institutions (default ETL_CH_SOURCES, else all).
+                          zh-heime, ju-institutions (default ETL_CH_SOURCES, else all), or
+                          every list but some: -ge-hopitaux,-ge-ems,-ge-pharmacies. A list
+                          turned off keeps its rows and is not an error (exit code 0).
   --dry-run, --approve=<run_id>, --force, --source-dir <path>, --offline, --work-dir <path>
                           As for etl:at. Without bag, the cantons' hospitals are not read.
 

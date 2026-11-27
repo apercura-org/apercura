@@ -35,6 +35,7 @@ import { homeAlternates, pageMetadata } from "~/lib/seo";
 import { apercuraSiteNodes } from "~/lib/site-entities";
 import { getDirectoryIndex, getMarketOverview } from "~/server/queries/hubs";
 import { getRegistryFigures } from "~/server/queries/registry";
+import { getSwissCoverage, getSwissCoverageTexts } from "~/server/queries/swiss-coverage";
 
 export async function generateMetadata({ params }: PageProps<"/[locale]">): Promise<Metadata> {
 	const { locale: requested } = await params;
@@ -69,6 +70,8 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
 		: getPillars(serverEnv.PUBLIC_HDS_HOST);
 	// Live from the directory; left out before the first import.
 	const figures = austrian ? null : await getRegistryFigures();
+	// Switzerland names the cantons whose lists it publishes, live from the directory too.
+	const hook = market === "CH" ? (await getSwissCoverageTexts(locale)).hook : t("hook");
 
 	return (
 		<>
@@ -90,7 +93,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
 						<div className={`flex flex-col gap-8 ${austrian ? "lg:col-span-10" : "lg:col-span-8"}`}>
 							<div className="flex flex-col gap-4">
 								<h1 className="type-display">{t("title")}</h1>
-								<p className="max-w-[46ch] text-lead text-ink-muted">{t("hook")}</p>
+								<p className="max-w-[46ch] text-lead text-ink-muted">{hook}</p>
 							</div>
 							<HomeSearch locale={locale} idPrefix="home-search" />
 						</div>
@@ -296,10 +299,17 @@ async function OpenDataRegistry({ locale }: { locale: Locale }) {
 			.filter((row) => codes.includes(row.professionCode))
 			.reduce((sum, row) => sum + row.practitionerCount, 0);
 	const adapter = country === "AT" ? austria : countryAdapter(country);
+	// Switzerland credits the lists its published facilities come from, and says which cantons
+	// they cover: a list that was never imported is neither credited nor claimed.
+	const swiss = country === "CH";
+	const [coverage, swissTexts] = swiss
+		? await Promise.all([getSwissCoverage(), getSwissCoverageTexts(locale)])
+		: [null, null];
 	const sources = [
 		...new Set(
 			adapter.registries
 				.filter((registry) => registry.provides.includes("practitioners"))
+				.filter((registry) => !coverage || coverage.registries.includes(registry.id))
 				// The UK's eight lists come from three publishers, Switzerland's twelve from eight:
 				// named by publisher.
 				.map((registry) =>
@@ -344,7 +354,11 @@ async function OpenDataRegistry({ locale }: { locale: Locale }) {
 				<h2 id="registry-heading" className="type-title text-ink">
 					{t("registry.heading")}
 				</h2>
-				<p className="max-w-[60ch] text-body text-ink">{t("registry.intro")}</p>
+				<p className="max-w-[60ch] text-body text-ink">
+					{swissTexts
+						? [...swissTexts.summary, t("registry.intro")].join(" ")
+						: t("registry.intro")}
+				</p>
 			</div>
 			<div className="flex flex-col gap-3">
 				<FieldList>

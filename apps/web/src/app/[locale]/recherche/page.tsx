@@ -26,6 +26,7 @@ import {
 	searchPractitioners,
 	suggestPlaces,
 } from "~/server/queries/search";
+import { getSwissCoverageTexts } from "~/server/queries/swiss-coverage";
 import {
 	isOpenMarket,
 	namedEuropeanPlace,
@@ -302,7 +303,12 @@ async function OutcomeView({
 				<div className="flex flex-col gap-6">
 					<EmptyState
 						title={t("unlistedTitle", { who: query.who })}
-						description={t("unlistedBody")}
+						description={
+							// Switzerland says which kinds and cantons it lists, live from the directory.
+							marketOf(locale) === "CH"
+								? (await getSwissCoverageTexts(locale)).unlisted
+								: t("unlistedBody")
+						}
 						action={browse}
 					/>
 					{outcome.results.length > 0 ? (

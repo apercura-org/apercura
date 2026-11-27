@@ -13,6 +13,7 @@ export {
 	CH_ATTRIBUTION_DATE,
 	CH_CANTONS,
 	CH_HOSPITAL_FIGURES_YEAR,
+	CH_LIST_CANTONS,
 	chCantonOfNumber,
 	switzerland,
 } from "./ch";

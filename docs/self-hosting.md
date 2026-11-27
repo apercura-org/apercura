@@ -270,8 +270,9 @@ The places are the BFS commune register's cantons, districts and communes and
 swisstopo's postcode directory (the first `etl:ch` imports them too); rerun
 `etl:places --country ch` each January. The scheduler reruns the import on the
 3rd of each month at 22:30 UTC (`ETL_CH_SCHEDULE_ARGS=--sources zh-heime` keeps
-it to some lists); exit code `3` as for Austria
-([data-import.md](./data-import.md#switzerland)).
+it to some lists, `ETL_CH_SCHEDULE_ARGS=--sources -ge-hopitaux,-ge-ems,-ge-pharmacies`
+runs every list but Geneva's, which keep their rows); exit code `3` as for Austria
+([data-import.md](./data-import.md#turning-a-list-off)).
 
 ## Scheduled jobs
 

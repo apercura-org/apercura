@@ -32,6 +32,26 @@ const TERMS_OPEN_URL = "https://opendata.swiss/en/terms-of-use#terms_open";
 export const CH_ATTRIBUTION_DATE = "{date}";
 
 /**
+ * The canton whose open list each cantonal source is, by registry id (the activities' sources
+ * and the `quelle` qualifications' codes): what the pages say a canton's coverage comes from.
+ * The FOPH's figures and the places' registers are federal and absent here. The import's lists
+ * (`CH_SOURCES` in @apercura/etl) give the same cantons, which its tests check.
+ */
+export const CH_LIST_CANTONS: Readonly<Record<string, string>> = {
+	"ch-be-spitaeler": "BE",
+	"ch-be-heime": "BE",
+	"ch-ge-hopitaux": "GE",
+	"ch-ge-ems": "GE",
+	"ch-ge-pharmacies": "GE",
+	"ch-bl-apotheken": "BL",
+	"ch-bl-heime": "BL",
+	"ch-bs-spitaeler": "BS",
+	"ch-bs-heime": "BS",
+	"ch-zh-heime": "ZH",
+	"ch-ju-institutions": "JU",
+};
+
+/**
  * Switzerland has one time zone. A region code is a canton abbreviation (`ZH`), a district or
  * commune number of the Federal Statistical Office (`101`, `261`); any other one is an error,
  * never a guess.

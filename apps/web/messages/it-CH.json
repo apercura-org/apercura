@@ -30,7 +30,6 @@
 		"startTitle": "Che cosa cerca?",
 		"startBody": "Scriva il nome di una struttura, o ospedale, clinica, casa per anziani o farmacia, in «Chi?», e un Comune, un distretto o un Cantone in «Dove?». Può anche consultare l’elenco per Cantone e distretto.",
 		"unknownPlaceBody": "Controlli l’ortografia o scriva un Comune vicino.",
-		"unlistedBody": "In Svizzera l’elenco comprende per ora strutture, mai persone: gli ospedali e le cliniche di tutti i Cantoni (cifre chiave degli ospedali svizzeri 2023 dell’Ufficio federale della sanità pubblica ed elenchi dei Cantoni Berna, Ginevra, Basilea Città e Giura), le case per anziani dei soli Cantoni Zurigo, Berna, Ginevra, Basilea Città, Basilea Campagna e Giura, e le farmacie di Basilea Campagna (tutte) e di Ginevra (solo quelle che vaccinano). Medici, dentisti, psicologi e altri professionisti della salute non sono ancora elencati qui: nessun registro aperto li pubblica. Cerchi il nome di una struttura o consulti l’elenco.",
 		"departmentPlace": "Distretto",
 		"bookingNotOpen": "Apercura non offre la prenotazione online in Svizzera: contatti la struttura.",
 		"columns": {
@@ -44,7 +43,6 @@
 	},
 	"HomePage": {
 		"title": "Trovi un ospedale, una clinica, una casa per anziani o una farmacia in Svizzera",
-		"hook": "Ogni ospedale e ogni clinica della Svizzera ha già la sua pagina, come le case per anziani dei Cantoni Zurigo, Berna, Ginevra, Basilea Città, Basilea Campagna e Giura e le farmacie di Basilea Campagna e di Ginevra.",
 		"pillars": {
 			"free": {
 				"description": "Gratuito per le strutture sanitarie e per i pazienti, senza abbonamento né commissioni."
@@ -52,7 +50,7 @@
 		},
 		"registry": {
 			"heading": "Costruito sui dati aperti della Confederazione e dei Cantoni",
-			"intro": "Ospedali e cliniche: tutti i Cantoni, secondo le cifre chiave degli ospedali svizzeri 2023 dell’Ufficio federale della sanità pubblica (UFSP) e gli elenchi dei Cantoni Berna, Ginevra, Basilea Città e Giura. Case per anziani: solo i Cantoni Zurigo, Berna, Ginevra, Basilea Città, Basilea Campagna e Giura. Farmacie: solo Basilea Campagna (tutte le farmacie) e Ginevra (solo quelle che vaccinano). Gli altri Cantoni non ne pubblicano un elenco aperto. Sono elencate strutture, mai singoli professionisti. Nessuno paga per comparire e nessuno è escluso.",
+			"intro": "Sono elencate strutture, mai singoli professionisti. Nessuno paga per comparire e nessuno è escluso.",
 			"sourceName": "UFSP e Cantoni, dati aperti"
 		},
 		"pro": {
