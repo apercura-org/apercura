@@ -54,7 +54,7 @@ describe("homeSamples", () => {
 		expect(specimenOf("it-CH").name).toBe("Ospedale dell’Esempio");
 		// Swiss Standard German writes no "ß".
 		expect(JSON.stringify(homeSamples("de-CH"))).not.toContain("ß");
-		expect(new Set(LOCALES.map((locale) => marketOf(locale))).size).toBe(18);
+		expect(new Set(LOCALES.map((locale) => marketOf(locale))).size).toBe(19);
 		// Ireland's samples are in English, without an Eircode.
 		expect(specimenOf("en-IE").name).toBe("Example Pharmacy");
 		expect(JSON.stringify(homeSamples("en-IE"))).not.toMatch(/[A-Z]\d{2} ?[A-Z0-9]{4}/);
@@ -67,5 +67,13 @@ describe("homeSamples", () => {
 			"vardcentraler",
 			"apoteken",
 		]);
+		// Malta's samples are community pharmacies, in English, without a postcode.
+		expect(specimenOf("en-MT").name).toBe("Example Pharmacy");
+		expect(homeSamples("en-MT").map((sample) => sample.listing)).toEqual([
+			"community-pharmacies",
+			"community-pharmacies",
+			"community-pharmacies",
+		]);
+		expect(JSON.stringify(homeSamples("en-MT"))).not.toMatch(/[A-Z]{3} ?\d{4}/);
 	});
 });

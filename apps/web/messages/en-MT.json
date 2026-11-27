@@ -1,0 +1,265 @@
+{
+	"Metadata": {
+		"description": "The open directory of Malta's and Gozo's community pharmacies, from the Medicines Authority's register of licensed pharmacies.",
+		"proDescription": "Apercura publishes a factual page for every licensed community pharmacy in Malta and Gozo. Find your pharmacy's page and claim it for free.",
+		"homeTitle": "Apercura · Community pharmacies in Malta and Gozo"
+	},
+	"Site": {
+		"runningHead": "Open directory of pharmacies in Malta",
+		"navPro": "For pharmacies",
+		"footer": {
+			"free": "Free for pharmacies and patients."
+		},
+		"folioRpps": "Licence {rpps}"
+	},
+	"Search": {
+		"label": "Find a pharmacy in Malta or Gozo",
+		"whoHint": "Pharmacy name, or pharmacy",
+		"whereHint": "Locality or district"
+	},
+	"SearchForm": {
+		"practitioners": "Pharmacies",
+		"department": "District",
+		"geoDenied": "Location is turned off for this site. Type a locality instead.",
+		"geoUnavailable": "Your location could not be found. Type a locality instead."
+	},
+	"SearchPage": {
+		"emptyTitle": "No pharmacy matches",
+		"emptyBody": "Check the spelling, try a nearby locality, or a broader term such as “pharmacy”.",
+		"queryOnlyNear": "Pharmacies near you (approximate distances)",
+		"startTitle": "What are you looking for?",
+		"startBody": "Type a pharmacy's name, or “pharmacy”, in “Who?”, and a locality or a district in “Where?”. You can also browse the directory by district and locality.",
+		"unknownPlaceBody": "Check the spelling, or type a nearby locality.",
+		"unlistedBody": "In Malta, the directory lists community pharmacies for now, not hospitals, health centres, doctors or dentists. Search for a pharmacy's name instead, or browse the directory.",
+		"departmentPlace": "District",
+		"bookingNotOpen": "Apercura does not offer online booking in Malta: contact the pharmacy.",
+		"columns": {
+			"practitioner": "Pharmacy",
+			"place": "Address",
+			"appointments": "Contact"
+		},
+		"outsidePlace": "Outside {where}",
+		"rppsBody": "This licence number is not valid, or the pharmacy has no public page: the directory lists community pharmacies only. Whoever runs a pharmacy can still find and claim its page.",
+		"distance": "About {km} km away"
+	},
+	"HomePage": {
+		"title": "Find a community pharmacy in Malta or Gozo",
+		"hook": "Every community pharmacy on the Medicines Authority's register already has a page.",
+		"pillars": {
+			"free": {
+				"description": "Free for pharmacies and patients, with no subscription and no commission."
+			}
+		},
+		"registry": {
+			"heading": "Built from Malta's register of licensed pharmacies",
+			"intro": "Each page starts from a public list: the Medicines Authority's register of licensed pharmacies in Malta and Gozo, published as open data. Pharmacies are listed, never individual pharmacists. Nobody pays to be listed, and nobody is left out.",
+			"sourceName": "Medicines Authority"
+		},
+		"pro": {
+			"heading": "Do you run a pharmacy in Malta or Gozo?",
+			"body": "Your pharmacy's page already exists. Claiming it is free."
+		},
+		"tagline": "The open directory of pharmacies in Malta and Gozo.",
+		"market": {
+			"listingsHeading": "By type of facility",
+			"placesHeading": "By district"
+		},
+		"specimen": {
+			"heading": "Every pharmacy already has a page",
+			"intro": "This is a page as the public register fills it, before the pharmacy claims it: known fields are filled, the others say plainly that they are not provided."
+		}
+	},
+	"Practitioner": {
+		"rpps": "Licence number",
+		"specimen": "Sample, not a real pharmacy",
+		"statusNote": {
+			"unclaimed": "Built from the Medicines Authority's register. The pharmacy has not completed this page yet.",
+			"verified": "Completed by the pharmacy, whose claim has been verified."
+		},
+		"fields": {
+			"profession": "Type of facility",
+			"address": "Address"
+		},
+		"source": {
+			"name": "Source: Medicines Authority"
+		},
+		"action": {
+			"call": {
+				"statement": "Apercura does not offer online booking in Malta. Contact the pharmacy."
+			}
+		},
+		"sitesHeading": "Address"
+	},
+	"PractitionerPage": {
+		"metaTitle": "{name}, {occupation} · Apercura",
+		"metaTitlePlace": "{name}, {occupation} in {place} · Apercura",
+		"metaDescription": "{name}, {occupation}: {fees, select, sector {address, phone and fees} other {address and phone}}, from the Medicines Authority's register of licensed pharmacies.",
+		"metaDescriptionPlace": "{name}, {occupation} in {place}: {fees, select, sector {address, phone and fees} other {address and phone}}, from the Medicines Authority's register of licensed pharmacies.",
+		"unknownProfession": "Pharmacy",
+		"professionHeading": "Pharmacy",
+		"unnamedPlace": "Pharmacy",
+		"asideLabel": "About this page",
+		"action": {
+			"callNotYetOpen": "Apercura does not offer online booking in Malta. For information, contact the pharmacy.",
+			"noPhone": "The register this page comes from gives no phone number for this pharmacy."
+		},
+		"claim": {
+			"heading": "Is this your pharmacy?",
+			"body": "This page is built from the Medicines Authority's register of licensed pharmacies. Claim it to check and complete it:",
+			"claimedHeading": "Page managed by the pharmacy",
+			"claimedBody": "The pharmacy has claimed this page: its claim was verified, and it completes the page.",
+			"contactLink": "No document to hand? Contact us",
+			"benefits": [
+				"free, with no subscription or commitment;",
+				"your photo, your opening hours and the languages spoken;",
+				"your website and accessibility details;",
+				"statistics on who views your page;",
+				"a share kit: link, QR code and poster."
+			]
+		},
+		"report": {
+			"body": "If an address, a phone number or a name is wrong, tell us how to correct it."
+		},
+		"ring": {
+			"heading": "Other pharmacies: {occupation} in {place}"
+		}
+	},
+	"Listing": {
+		"count": "{count, plural, one {# pharmacy} other {# pharmacies}}",
+		"metaTitle": "{count, plural, one {{listing} in {place}: # pharmacy · Apercura} other {{listing} in {place}: # pharmacies · Apercura}}",
+		"metaDescription": "{count, plural, one {# pharmacy listed as {occupation} in {place}: {fees, select, sector {addresses, phone numbers and fees} other {addresses and phone numbers}}, from the Medicines Authority's register.} other {# pharmacies listed as {occupation} in {place}: {fees, select, sector {addresses, phone numbers and fees} other {addresses and phone numbers}}, from the Medicines Authority's register.}}",
+		"lead": "{count, plural, one {The Medicines Authority's register lists # pharmacy of this kind in {place}.} other {The Medicines Authority's register lists # pharmacies of this kind in {place}.}}",
+		"practitionersHeading": "{count, plural, one {The pharmacy} other {The # pharmacies}}",
+		"columns": {
+			"practitioner": "Pharmacy"
+		},
+		"facts": {
+			"sources": "The Medicines Authority, the Planning Authority, the NSO and the Address Registrar"
+		},
+		"communesHeading": "{listing}: localities of {place}",
+		"nearbyHeading": "{listing}: nearby localities",
+		"hubMetaTitle": "{count, plural, one {{listing} in Malta: # pharmacy · Apercura} other {{listing} in Malta: # pharmacies · Apercura}}",
+		"hubMetaDescription": "{count, plural, one {# pharmacy listed as {occupation} in Malta and Gozo, by district: {fees, select, sector {addresses, phone numbers and fees} other {addresses and phone numbers}}, from the Medicines Authority's register.} other {# pharmacies listed as {occupation} in Malta and Gozo, by district: {fees, select, sector {addresses, phone numbers and fees} other {addresses and phone numbers}}, from the Medicines Authority's register.}}",
+		"hubTitle": "{listing} in Malta and Gozo",
+		"hubLead": "{count, plural, one {The Medicines Authority's register lists # pharmacy of this kind in Malta and Gozo.} other {The Medicines Authority's register lists # pharmacies of this kind in Malta and Gozo.}}",
+		"departmentsHeading": "{listing} by district",
+		"departmentsIntro": "Choose a district to see its localities and pharmacies.",
+		"metaDescriptionPage": "{count, plural, one {Page {page} of {pages}: # pharmacy listed as {occupation} in {place}.} other {Page {page} of {pages}: # pharmacies listed as {occupation} in {place}.}}",
+		"metaDescriptionPageRange": "{count, plural, one {Page {page} of {pages}, {first} to {last}: # pharmacy listed as {occupation} in {place}.} other {Page {page} of {pages}, {first} to {last}: # pharmacies listed as {occupation} in {place}.}}",
+		"hubMetaTitleShort": "{listing} in Malta · Apercura",
+		"allSpecialties": "Every type of facility in {place}"
+	},
+	"Directory": {
+		"metaTitle": "Directory of pharmacies by place · Apercura",
+		"metaDescription": "Every district and locality of Malta and Gozo with its community pharmacies, from the Medicines Authority's register.",
+		"lead": "{count, plural, one {# pharmacy, by island and district.} other {# pharmacies, by island and district.}}",
+		"otherRegion": "Other places",
+		"emptyBody": "Malta's register of licensed pharmacies has not been imported on this server yet. Come back after the next import.",
+		"placeMetaTitle": "Pharmacies in {place} · Apercura",
+		"placeMetaDescription": "{count, plural, one {# pharmacy in {place}, from the Medicines Authority's register.} other {# pharmacies in {place}, from the Medicines Authority's register.}}",
+		"placeTitle": "Pharmacies in {place}",
+		"placeLead": "{count, plural, one {# pharmacy in {place}.} other {# pharmacies in {place}.}}",
+		"specialtiesHeading": "By type of facility",
+		"communesHeading": "Localities of {place}",
+		"authoritiesHeading": "Districts of {place}",
+		"placeMetaTitleShort": "Pharmacies in {place} · Apercura"
+	},
+	"OgImage": {
+		"runningHead": "Open directory of pharmacies",
+		"practitioner": {
+			"folio": "Licence {rpps}"
+		}
+	},
+	"taxonomy": {
+		"practiceKind": {
+			"office": "Pharmacy"
+		}
+	},
+	"Claim": {
+		"errors": {
+			"NOT_FOUND": "No page has this licence number.",
+			"INVALID_RPPS": "This is not a pharmacy licence number: type it as the register writes it (for example DL 001), after mt: (mt:dl001), or paste the whole address of the page."
+		},
+		"start": {
+			"lead": "A claim targets one pharmacy's page, never a name.",
+			"contestBody": "If it is your pharmacy's (for instance you lost access to your account), you can still claim it: an administrator reviews your document and decides. Recovering an account always goes through a new verification.",
+			"findHeading": "Find your pharmacy's page",
+			"notFound": "No public page has this licence number yet.",
+			"rppsLabel": "Licence number or address of the page",
+			"rppsHint": "The pharmacy's licence number (DL 001), or the address of its page, for example apercura.org/mt/facility/example-pharmacy-dl001.",
+			"contactLink": "No document to hand? Contact us"
+		},
+		"methods": {
+			"document": {
+				"summary": "A document that shows you run the pharmacy or act for it: its pharmacy licence from the Medicines Authority, or a letter on its letterhead authorising you. A member of our team reviews it, usually within 48 hours.",
+				"lead": "Send a document that shows you run the pharmacy or act for it: its pharmacy licence from the Medicines Authority, or a letter on its letterhead authorising you. It is encrypted before it is stored, and deleted 30 days after the decision."
+			}
+		},
+		"documents": {
+			"kind": {
+				"cps_card": "Letter on the pharmacy's letterhead",
+				"ordre_attestation": "The pharmacy's licence (Medicines Authority)"
+			}
+		},
+		"status": {
+			"contestReview": "This page already had a verified owner: an administrator decides on your document.",
+			"reviewBody": "A member of our team reviews your document and writes to you by email.",
+			"contestBody": "An administrator will decide on your document."
+		}
+	},
+	"Gdpr": {
+		"rpps": "Licence number",
+		"rppsHint": "The pharmacy's licence number (for example DL 001), or the whole address of its page.",
+		"errors": {
+			"notFound": "No page has this licence number."
+		},
+		"report": {
+			"doneBody": "We check it. Facts from the register are corrected at the source, with the Medicines Authority, which publishes it; we tell you if you left an address."
+		},
+		"removal": {
+			"doneBody": "It is no longer shown, indexed or listed. We check the request and answer by email within one month at most. Once it is confirmed, the page is deleted for good and does not come back with the register's updates.",
+			"privacy": "A deleted page does not come back with the next import of the register.",
+			"claimedBody": "Only its holder can remove it, from the page editor of their space: the page then disappears at once and does not come back with the register's updates."
+		},
+		"contact": {
+			"lead": "You cannot claim your pharmacy's page with a document? Leave us your details: a member of the Apercura team gets back to you to check that you act for the pharmacy and help you.",
+			"claimFirst": "With a document that shows you act for the pharmacy, claiming is quicker:",
+			"rpps": "Licence number"
+		}
+	},
+	"emails": {
+		"claimReceived": {
+			"body": [
+				"Hello {name},",
+				"We have received your claim and its documents. A member of the Apercura team reviews them and writes to you by email.",
+				"We review claims within 48 hours on working days."
+			]
+		},
+		"claimRejected": {
+			"body": [
+				"Hello {name},",
+				"We could not verify your claim. Reason given by the reviewer: {reason}",
+				"You can open a new claim from your space, with a legible document that shows you act for the pharmacy."
+			]
+		},
+		"removalReceived": {
+			"body": [
+				"The page is hidden from now on: it is no longer shown, indexed or listed.",
+				"We check the request and answer within one month at most. Once it is confirmed, the page is deleted; a deleted page does not come back with the next import of the register."
+			]
+		},
+		"removalConfirmed": {
+			"body": [
+				"The page you asked us to remove has been deleted from Apercura. It will not come back with the next import of the register."
+			]
+		}
+	},
+	"Onboarding": {
+		"steps": {
+			"check": {
+				"lead": "Your page starts from the Medicines Authority's register. Check the pharmacy's name and address.",
+				"registryNote": "Something wrong? The lasting fix is made at the source, with the Medicines Authority, which publishes the register; the page follows at the next import. You can hide an address or add one in the page editor."
+			}
+		}
+	}
+}

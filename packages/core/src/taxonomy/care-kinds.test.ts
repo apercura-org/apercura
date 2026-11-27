@@ -21,6 +21,7 @@ import { allIeListingSlugs } from "./ie";
 import { allItListingSlugs } from "./it";
 import { allLtListingSlugs } from "./lt";
 import { allLvListingSlugs } from "./lv";
+import { allMtListingSlugs } from "./mt";
 import { allNoListingSlugs } from "./no";
 import { allPlListingSlugs } from "./pl";
 import { allSeListingSlugs } from "./se";
@@ -45,6 +46,7 @@ const LISTINGS: Record<CareMarket, Set<string>> = {
 	CY: allCyListingSlugs(),
 	LV: allLvListingSlugs(),
 	SE: allSeListingSlugs(),
+	MT: allMtListingSlugs(),
 };
 
 describe("the kinds of care shared by the markets", () => {

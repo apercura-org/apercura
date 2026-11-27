@@ -37,6 +37,11 @@ describe("a locale's own route table", () => {
 		);
 		expect(hasOwnStaticForm(pathnames, "sv-SE", "/organisation/x-1")).toBe(true);
 		expect(hasOwnStaticForm(pathnames, "sv-SE", "/apoteken/stockholms-lan")).toBe(false);
+		// Malta's pharmacy pages, under the same English segments.
+		expect(hasOwnStaticForm(pathnames, "en-MT", "/facility/example-pharmacy-dl001")).toBe(true);
+		expect(hasOwnStaticForm(pathnames, "en-MT", "/community-pharmacies/northern-harbour")).toBe(
+			false,
+		);
 		// Another language's words, or a listing: next-intl's shared table reads them.
 		expect(hasOwnStaticForm(pathnames, "fr", "/practitioner/x")).toBe(false);
 		expect(hasOwnStaticForm(pathnames, "fr", "/medecin-generaliste/75-paris")).toBe(false);

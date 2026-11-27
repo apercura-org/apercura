@@ -86,7 +86,8 @@ export async function getImportStatus(
 		| "si"
 		| "cy"
 		| "lv"
-		| "se",
+		| "se"
+		| "mt",
 ): Promise<ImportStatus | null> {
 	"use cache";
 	cacheTag("registry");

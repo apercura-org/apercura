@@ -1291,3 +1291,79 @@ export function parseSeFacilitySegment(segment: string): SeFacilitySegment | nul
 	if (!key) return null;
 	return { ...key, namePart: dash < 0 ? "" : segment.slice(0, dash) };
 }
+
+/**
+ * Maltese identifiers. The Medicines Authority licenses every pharmacy of Malta and Gozo and
+ * numbers its licence (`DL 001`, `DL 256`) in its register of licensed pharmacies: the licence's
+ * number is the key, stored as its digits as published (`001`, `256`). A page URL ends with it
+ * after the letters `dl` (`blossoms-pharmacy-dl001`), as the register writes it. No business
+ * registration number is read: the register's pharmacies are businesses, never a person.
+ */
+export const MT_ID_SCHEMES = {
+	/** A pharmacy of the Medicines Authority's register: the digits of its licence number. */
+	"MT-MA": { prefix: "dl", pattern: /^\d{3,4}$/ },
+} as const;
+
+export type MtIdScheme = keyof typeof MT_ID_SCHEMES;
+
+/** True when `value` is a key of the Maltese scheme (syntax only: the pharmacy may not exist). */
+export function isValidMtSourceId(scheme: string, value: string): boolean {
+	const entry = MT_ID_SCHEMES[scheme as MtIdScheme];
+	return entry ? entry.pattern.test(value) : false;
+}
+
+/**
+ * The key of a pharmacy's licence number as the register publishes it (`DL 001`, `DL001`,
+ * `dl 256`): its digits (`001`), or null when it is not a licence number.
+ */
+export function mtLicenceKey(licence: string | null | undefined): string | null {
+	const match = /^DL\s*(\d{3,4})$/i.exec((licence ?? "").trim());
+	return match?.[1] ?? null;
+}
+
+/** The licence number as the register writes it (`001` → `DL 001`). */
+export function mtLicenceNumber(key: string): string {
+	return `DL ${key}`;
+}
+
+/** The key of a Maltese page as its URL ends (`dl001`). */
+export function mtUrlKey(nationalId: string): string {
+	return `${MT_ID_SCHEMES["MT-MA"].prefix}${nationalId}`;
+}
+
+/**
+ * Canonical path segment of a Maltese pharmacy page: `{name}-{key}`
+ * (`blossoms-pharmacy-dl001`), the Maltese letters written without their marks
+ * (`ċ`, `ġ`, `ħ`, `ż` → `c`, `g`, `h`, `z`).
+ */
+export function mtFacilitySlug(name: string, nationalId: string): string {
+	const key = mtUrlKey(nationalId);
+	const base = slugify(name).slice(0, 80).replace(/-+$/, "");
+	return base ? `${base}-${key}` : key;
+}
+
+export type MtFacilityKey = { idScheme: MtIdScheme; nationalId: string };
+
+/** Reads a Maltese key as its page URL ends (`dl001`, `DL256`). Null for anything else. */
+export function parseMtKey(token: string): MtFacilityKey | null {
+	const match = /^dl(\d{3,4})$/.exec(token.toLowerCase());
+	if (!match?.[1]) return null;
+	return { idScheme: "MT-MA", nationalId: match[1] };
+}
+
+export type MtFacilitySegment = MtFacilityKey & {
+	/** Name part before the key, possibly empty. */
+	namePart: string;
+};
+
+/**
+ * Parses the last segment of a Maltese page URL (`{name}-{key}`). Returns null unless it ends
+ * with a valid key, so invalid URLs never reach the database.
+ */
+export function parseMtFacilitySegment(segment: string): MtFacilitySegment | null {
+	if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(segment)) return null;
+	const dash = segment.lastIndexOf("-");
+	const key = parseMtKey(dash < 0 ? segment : segment.slice(dash + 1));
+	if (!key) return null;
+	return { ...key, namePart: dash < 0 ? "" : segment.slice(0, dash) };
+}

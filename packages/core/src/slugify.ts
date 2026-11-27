@@ -4,6 +4,9 @@ const LIGATURES: Record<string, string> = {
 	æ: "ae",
 	Æ: "ae",
 	ß: "ss",
+	// The Maltese ħ has no decomposition (`Ħamrun` -> `hamrun`, `Mellieħa` -> `mellieha`).
+	ħ: "h",
+	Ħ: "h",
 };
 
 /**
@@ -11,13 +14,13 @@ const LIGATURES: Record<string, string> = {
  * lowercase ASCII letters and digits separated by single dashes.
  *
  * - French diacritics are stripped (`é` -> `e`, `ç` -> `c`).
- * - Ligatures are expanded (`œ` -> `oe`, `æ` -> `ae`).
+ * - Ligatures are expanded (`œ` -> `oe`, `æ` -> `ae`), the Maltese `ħ` written `h`.
  * - Apostrophes, spaces and any other separator become `-`.
  * - Repeated dashes are collapsed and leading/trailing dashes removed.
  */
 export function slugify(text: string): string {
 	return text
-		.replace(/[œŒæÆß]/g, (char) => LIGATURES[char] ?? char)
+		.replace(/[œŒæÆßħĦ]/g, (char) => LIGATURES[char] ?? char)
 		.normalize("NFKD")
 		.replace(/\p{Mark}/gu, "")
 		.toLowerCase()

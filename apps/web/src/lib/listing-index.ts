@@ -21,6 +21,7 @@ import {
 	allItListingSlugs,
 	allLtListingSlugs,
 	allLvListingSlugs,
+	allMtListingSlugs,
 	allNoListingSlugs,
 	allPlListingSlugs,
 	allSeListingSlugs,
@@ -60,10 +61,11 @@ const SI_LISTINGS: ReadonlySet<string> = allSiListingSlugs();
 const CY_LISTINGS: ReadonlySet<string> = allCyListingSlugs();
 const LV_LISTINGS: ReadonlySet<string> = allLvListingSlugs();
 const SE_LISTINGS: ReadonlySet<string> = allSeListingSlugs();
+const MT_LISTINGS: ReadonlySet<string> = allMtListingSlugs();
 
 /**
  * True when a listing slug belongs to the market of `locale` (France's, Austria's, the UK's,
- * Czechia's, Spain's, Italy's, Germany's, Switzerland's, Estonia's, Lithuania's, Poland's, Norway's, Ireland's, Slovenia's or Sweden's taxonomy).
+ * Czechia's, Spain's, Italy's, Germany's, Switzerland's, Estonia's, Lithuania's, Poland's, Norway's, Ireland's, Slovenia's, Sweden's or Malta's taxonomy).
  */
 function inMarket(slug: string, locale: Locale): boolean {
 	if (marketOf(locale) === "AT") return AT_LISTINGS.has(slug);
@@ -83,6 +85,7 @@ function inMarket(slug: string, locale: Locale): boolean {
 	if (marketOf(locale) === "CY") return CY_LISTINGS.has(slug);
 	if (marketOf(locale) === "LV") return LV_LISTINGS.has(slug);
 	if (marketOf(locale) === "SE") return SE_LISTINGS.has(slug);
+	if (marketOf(locale) === "MT") return MT_LISTINGS.has(slug);
 	const profession = professionOfListingSlug(slug);
 	return Boolean(profession && FR_PROFESSIONS[profession]?.enabled);
 }
@@ -130,10 +133,11 @@ function buildIndex(locale: Locale): ListingEntry[] {
 	const listing = taxonomy.listing as Record<string, string>;
 	const professions = taxonomy.profession as Record<string, string>;
 	// A Czech, Spanish, Italian, German, Swiss, Estonian, Polish, Norwegian, Irish, Finnish,
-	// Lithuanian, Slovenian, Cypriot, Latvian or Swedish listing is plural ("Kardiologové", "Farmacias",
-	// "Farmacie", "Apotheken", "Spitäler", "Apteegid", "Ligoninės", "Zobozdravniki", "Aptiekas", "Apoteken"),
+	// Lithuanian, Slovenian, Cypriot, Latvian, Swedish or Maltese listing is plural ("Kardiologové", "Farmacias",
+	// "Farmacie", "Apotheken", "Spitäler", "Apteegid", "Ligoninės", "Zobozdravniki", "Aptiekas", "Apoteken",
+	// "Community pharmacies"),
 	// its profession label singular or a field ("Kardiolog", "Farmacia", "Apotheke", "Spital",
-	// "Apteek", "Ligoninė", "Zobozdravstvo", "Aptieka", "Öppenvårdsapotek"): both match.
+	// "Apteek", "Ligoninė", "Zobozdravstvo", "Aptieka", "Öppenvårdsapotek", "Community pharmacy"): both match.
 	const singular = [
 		"CZ",
 		"ES",
@@ -150,6 +154,7 @@ function buildIndex(locale: Locale): ListingEntry[] {
 		"CY",
 		"LV",
 		"SE",
+		"MT",
 	].includes(marketOf(locale));
 	// The everyday words of the locale's language suggest their listing too ("Hausarzt" →
 	// Allgemeinmedizin).

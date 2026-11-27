@@ -60,6 +60,7 @@ const NEW_MARKET_LOCALES = [
 	"el-CY",
 	"lv-LV",
 	"sv-SE",
+	"en-MT",
 ] as const;
 
 /** The locales of the former scheme. */

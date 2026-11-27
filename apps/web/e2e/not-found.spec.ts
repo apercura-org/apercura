@@ -30,6 +30,12 @@ const LOCALIZED = [
 	{ path: "/pl/nie-istnieje", title: "Ta strona nie istnieje", lang: "pl-PL", search: "Szukaj" },
 	{ path: "/fi/ei-ole-olemassa", title: "Tätä sivua ei ole", lang: "fi-FI", search: "Hae" },
 	{ path: "/lt/nera-tokio", title: "Tokio puslapio nėra", lang: "lt-LT", search: "Ieškoti" },
+	{
+		path: "/mt/does-not-exist",
+		title: "This page does not exist",
+		lang: "en-MT",
+		search: "Search",
+	},
 	{ path: "/es/no-existe", title: "Esta página no existe", lang: "es-ES", search: "Buscar" },
 	{ path: "/it/inesistente", title: "Questa pagina non esiste", lang: "it-IT", search: "Ricerca" },
 	{

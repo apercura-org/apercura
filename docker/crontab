@@ -148,3 +148,11 @@
 # e.g. `--sources apotek`. Exit codes: 1 failed, 2 blocked, 3 imported without a list that could
 # not be fetched or read, or whose licence changed (see docs/data-import.md, "Sweden").
 30 5 * * 6 apercura etl:se $ETL_SE_SCHEDULE_ARGS
+# Malta's community pharmacies (the Medicines Authority's register of licensed pharmacies on
+# data.gov.mt, CC BY 4.0), every Friday at 05:30 UTC, when no other import runs (the same
+# advisory lock: one import at a time); one request for the register and one for its catalogue
+# record, a few seconds once data.gov.mt answers (it can take half a minute). An unchanged register is
+# skipped. ETL_MT_SCHEDULE_ARGS adds flags. Exit codes: 1 failed (the register could not be read,
+# or its publisher or licence changed), 2 blocked: the files are kept for --approve (see
+# docs/data-import.md, "Malta").
+30 5 * * 5 apercura etl:mt $ETL_MT_SCHEDULE_ARGS

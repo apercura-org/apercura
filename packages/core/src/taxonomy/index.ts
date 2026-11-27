@@ -13,6 +13,7 @@ export * from "./ie";
 export * from "./it";
 export * from "./lt";
 export * from "./lv";
+export * from "./mt";
 export * from "./no";
 export * from "./pl";
 export * from "./se";

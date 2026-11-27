@@ -136,7 +136,7 @@ export const AT_STATE_SLUGS: ReadonlySet<string> = new Set(
  * `tartu-linn`, `rae-vald`). Poland: the slug of a powiat or of a voivodeship (`powiat-krakowski`, `krakow`, `malopolskie`). Norway: the slug of a county (`vestland`, `trondelag`). Ireland: the slug of a county (`cork`, `dublin`). Finland: the slug of a wellbeing services county (`pirkanmaan-hyvinvointialue`, `helsinki`).
  * Lithuania: the slug of a municipality or of a county (`vilniaus-miesto-savivaldybe`,
  * `vilniaus-apskritis`). Cyprus: the slug of a district (`eparchia-lefkosias`). Sweden: the slug of a county
- * (`stockholms-lan`, `skane-lan`).
+ * (`stockholms-lan`, `skane-lan`). Malta: the slug of a district (`northern-harbour`, `gozo-and-comino`).
  */
 export function isDepartmentSlug(slug: string, country = "FR"): boolean {
 	if (country === "AT") return AT_STATE_SLUGS.has(slug);
@@ -156,7 +156,8 @@ export function isDepartmentSlug(slug: string, country = "FR"): boolean {
 		country === "SI" ||
 		country === "CY" ||
 		country === "LV" ||
-		country === "SE"
+		country === "SE" ||
+		country === "MT"
 	) {
 		return isPlaceSlug(slug);
 	}
@@ -177,7 +178,7 @@ export function isPlaceSlug(slug: string): boolean {
  * code, nor an Italian province or comune by its ISTAT code, nor a German Kreis or Gemeinde by
  * its AGS, nor an Estonian municipality or settlement by its EHAK code, nor a Norwegian county or
  * municipality by its number, nor an Irish county or town by its Tailte Éireann or CSO
- * code, nor a Cypriot district, municipality or community by its CYSTAT code, nor a Swedish county or municipality by its SCB code, and Vienna's and Prague's
+ * code, nor a Cypriot district, municipality or community by its CYSTAT code, nor a Swedish county or municipality by its SCB code, nor a Maltese district or locality by its NSO code, and Vienna's and Prague's
  * districts say their city
  * ("Wien-Alsergrund", "Praha 8").
  */

@@ -12,6 +12,7 @@ import {
 	allItListingSlugs,
 	allLtListingSlugs,
 	allLvListingSlugs,
+	allMtListingSlugs,
 	allNoListingSlugs,
 	allPlListingSlugs,
 	allSeListingSlugs,
@@ -50,6 +51,7 @@ const MARKETS = [
 	"CY",
 	"LV",
 	"SE",
+	"MT",
 ] as const satisfies readonly MarketCountry[];
 
 /** The listings of each market (France: its imported professions only). */
@@ -75,6 +77,7 @@ const LISTED: Record<MarketCountry, (slug: string) => boolean> = {
 	CY: (slug) => allCyListingSlugs().has(slug),
 	LV: (slug) => allLvListingSlugs().has(slug),
 	SE: (slug) => allSeListingSlugs().has(slug),
+	MT: (slug) => allMtListingSlugs().has(slug),
 };
 
 /** Slugs a market maps but does not list yet: France's professions not imported. */
@@ -97,6 +100,7 @@ const MAPPED: Record<MarketCountry, (slug: string) => boolean> = {
 	CY: () => false,
 	LV: () => false,
 	SE: () => false,
+	MT: () => false,
 };
 
 const listing = (slug: string): SearchTerm => ({ kind: "listing", slug });
@@ -611,6 +615,24 @@ const EVERYDAY: Record<MarketCountry, [string, SearchTerm][]> = {
 		["health centre", listing("vardcentraler")],
 		["médecin généraliste", listing("vardcentraler")],
 	],
+	MT: [
+		["pharmacy", listing("community-pharmacies")],
+		["Pharmacies", listing("community-pharmacies")],
+		["chemist", listing("community-pharmacies")],
+		["the chemist's", listing("community-pharmacies")],
+		["spiżerija", listing("community-pharmacies")],
+		["spizerija", listing("community-pharmacies")],
+		["Community pharmacy", listing("community-pharmacies")],
+		["pharmacie", listing("community-pharmacies")],
+		["Apotheke", listing("community-pharmacies")],
+		["farmacia", listing("community-pharmacies")],
+		// No hospital, health centre or practitioner is listed in Malta.
+		["hospital", UNLISTED],
+		["health centre", UNLISTED],
+		["GP", UNLISTED],
+		["dentist", UNLISTED],
+		["sptar", UNLISTED],
+	],
 };
 
 describe.each(MARKETS)("the everyday words of %s", (country) => {
@@ -639,6 +661,7 @@ describe("a name", () => {
 		["Ana Primer", "SI"],
 		["Kolar", "SI"],
 		["Exempel Storgatan", "SE"],
+		["Example Pharmacy Sliema", "MT"],
 		["", "FR"],
 	] as const)("%j is a name search in %s", (word, country) => {
 		expect(resolveSearchTerm(word, country)).toBeNull();

@@ -1956,3 +1956,120 @@ export function checkSePlaces(staged: { sites: number; placed: number }): GuardC
 		},
 	];
 }
+
+/**
+ * Limits of the Maltese source. Floors catch an empty or broken register on a first run (the
+ * Medicines Authority's register of 18 November 2026: 261 pharmacies, 241 community ones: see
+ * `docs/data-import.md`, "Malta"); afterwards the change since the last successful run blocks a
+ * truncated one (approvable). The catalogue's date never goes back (never approvable).
+ */
+export const MT_LIMITS = {
+	quarantineRatio: 0.02,
+	floors: {
+		pharmacies: { minLines: 100, minRows: 80, rowsDelta: 0.15, sizeDelta: 0.4 },
+	} as Readonly<
+		Record<string, { minLines: number; minRows: number; rowsDelta: number; sizeDelta: number }>
+	>,
+	/** Pharmacies placed in a locality (else left out). */
+	minPlacedRatio: 0.98,
+	/** Pharmacies at the register's point (else at their locality's centre). */
+	minPointRatio: 0.9,
+} as const;
+
+/**
+ * Checks of the Maltese source before the merge: quarantine within 2%, floors of rows (never
+ * approvable), a register never older than the last one imported (never approvable), and at most
+ * 15% more or fewer pharmacies or 40% more or fewer bytes than the last successful run
+ * (approvable).
+ */
+export function checkMtSource(
+	source: string,
+	current: AtSourceStats & { bytes: number; edition: number | null },
+	previous: (AtSourceStats & { bytes?: number; edition?: number | null }) | null,
+): GuardCheck[] {
+	const floors = MT_LIMITS.floors[source] ?? {
+		minLines: 1,
+		minRows: 1,
+		rowsDelta: 0.15,
+		sizeDelta: 0.4,
+	};
+	const ratio = current.lines === 0 ? 1 : current.quarantined / current.lines;
+	const checks: GuardCheck[] = [
+		{
+			name: `${source}.quarantine`,
+			ok: current.lines > 0 && ratio <= MT_LIMITS.quarantineRatio,
+			approvable: false,
+			detail: `${current.quarantined} of ${current.lines} rows quarantined (${percent(ratio)})`,
+		},
+		{
+			name: `${source}.lines`,
+			ok: current.lines >= floors.minLines,
+			approvable: false,
+			detail: `${current.lines} licensed pharmacies in the register (at least ${floors.minLines} expected)`,
+		},
+		{
+			name: `${source}.rows`,
+			ok: current.rows >= floors.minRows,
+			approvable: false,
+			detail: `${current.rows} community pharmacies read (at least ${floors.minRows} expected)`,
+		},
+	];
+	if (previous) {
+		if (current.edition !== null && typeof previous.edition === "number") {
+			checks.push({
+				name: `${source}.edition`,
+				ok: current.edition >= previous.edition,
+				approvable: false,
+				detail: `register of ${current.edition} vs ${previous.edition} last time`,
+			});
+		}
+		const rows = delta(current.people, previous.people);
+		checks.push({
+			name: `${source}.pharmacies`,
+			ok: rows <= floors.rowsDelta,
+			approvable: true,
+			detail: `${current.people} pharmacies vs ${previous.people} last time (${percent(rows)})`,
+		});
+		if (previous.bytes !== undefined) {
+			const size = delta(current.bytes, previous.bytes);
+			checks.push({
+				name: `${source}.size`,
+				ok: size <= floors.sizeDelta,
+				approvable: true,
+				detail: `${current.bytes} bytes vs ${previous.bytes} last time (${percent(size)})`,
+			});
+		}
+	}
+	return checks;
+}
+
+/**
+ * After placing: nearly every pharmacy must be found in a locality, and most at the register's
+ * own point, or the register or the places are not the expected ones.
+ */
+export function checkMtPlaces(placement: {
+	point: number;
+	nearby: number;
+	name: number;
+	unplaced: number;
+	atPoint: number;
+}): GuardCheck[] {
+	const placed = placement.point + placement.nearby + placement.name;
+	const all = placed + placement.unplaced;
+	const local = all === 0 ? 1 : placed / all;
+	const atPoint = placed === 0 ? 1 : placement.atPoint / placed;
+	return [
+		{
+			name: "mt.places",
+			ok: local >= MT_LIMITS.minPlacedRatio,
+			approvable: true,
+			detail: `${placed} of ${all} pharmacies placed in a locality (${percent(local)})`,
+		},
+		{
+			name: "mt.points",
+			ok: atPoint >= MT_LIMITS.minPointRatio,
+			approvable: true,
+			detail: `${placement.atPoint} of ${placed} pharmacies at the register's point (${percent(atPoint)})`,
+		},
+	];
+}

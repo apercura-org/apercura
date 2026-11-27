@@ -25,6 +25,7 @@
 #   docker run … apercura etl:cy [flags]     Cypriot Ministry of Health lists import
 #   docker run … apercura etl:lv [flags]     Latvian NVD, medical institutions and ZVA open data import
 #   docker run … apercura etl:se [flags]     Swedish pharmacies and Västra Götaland health centres import
+#   docker run … apercura etl:mt [flags]     Maltese Medicines Authority pharmacies open data import
 #   docker run … apercura scheduler          supercronic: jobs and cache warm-up every 5 minutes,
 #                                            weekly and monthly imports
 #

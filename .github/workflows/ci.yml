@@ -173,6 +173,10 @@ jobs:
         run: |
           bun run etl:places --country se --source-dir packages/etl/fixtures/se
           bun run etl:se --source-dir packages/etl/fixtures/se --offline
+      - name: Import the synthetic Maltese fixtures (places, then the register)
+        run: |
+          bun run etl:places --country mt --source-dir packages/etl/fixtures/mt
+          bun run etl:mt --source-dir packages/etl/fixtures/mt --offline
       - name: Install Chromium
         working-directory: apps/web
         run: bunx playwright install --with-deps chromium
@@ -413,6 +417,10 @@ jobs:
         run: |
           bun run etl:places --country se --source-dir packages/etl/fixtures/se
           bun run etl:se --source-dir packages/etl/fixtures/se --offline --dry-run
+      - name: Dry-run the Maltese import on the fixtures
+        run: |
+          bun run etl:places --country mt --source-dir packages/etl/fixtures/mt
+          bun run etl:mt --source-dir packages/etl/fixtures/mt --offline --dry-run
       - name: Integration test (import twice, guards, removals, suppressions)
         run: |
           psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -c "CREATE DATABASE apercura_test"

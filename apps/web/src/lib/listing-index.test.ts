@@ -249,3 +249,24 @@ describe("Ireland's listings", () => {
 		expect(listingLabel("pharmacy", "en-IE")).toBe("Pharmacies");
 	});
 });
+
+describe("Malta's listings", () => {
+	it("are suggested and resolved in Malta only, plural, singular or in Maltese", () => {
+		expect(suggestListings("pharm", "en-MT").map((entry) => entry.slug)[0]).toBe(
+			"community-pharmacies",
+		);
+		expect(suggestListings("spiz", "en-MT").map((entry) => entry.slug)[0]).toBe(
+			"community-pharmacies",
+		);
+		expect(resolveListing("Community pharmacies", "MT")).toBe("community-pharmacies");
+		expect(resolveListing("Community pharmacy", "MT")).toBe("community-pharmacies");
+		expect(suggestListings("community", "en-IE").map((entry) => entry.slug)).not.toContain(
+			"community-pharmacies",
+		);
+		expect(translateSearchTerm("pharmacy", "MT", "GB")).toEqual({
+			kind: "listing",
+			slug: "pharmacies",
+		});
+		expect(listingLabel("community-pharmacies", "en-MT")).toBe("Community pharmacies");
+	});
+});

@@ -13,6 +13,7 @@ import {
 	allListingSlugs,
 	allLtListingSlugs,
 	allLvListingSlugs,
+	allMtListingSlugs,
 	allNoTaxonomySlugs,
 	allPlListingSlugs,
 	allSeTaxonomySlugs,
@@ -51,6 +52,7 @@ const MARKET_SLUGS: Readonly<Record<MarketCountry, ReadonlySet<string>>> = {
 	LV: allLvListingSlugs(),
 	// Sweden names its kinds of facility by keys of their own too (`oppenvardsapotek`, `vardcentral`).
 	SE: allSeTaxonomySlugs(),
+	MT: allMtListingSlugs(),
 };
 
 /** The `taxonomy` groups keyed by listing or profession slug. */

@@ -5,7 +5,7 @@ import { type Locale, type MarketCountry, marketOf } from "~/i18n/locales";
  * opening. Each market shows what its directory lists, in its own language: practitioners in
  * France, Austria and Slovenia (their doctors) and Czechia (practices under a doctor's name, a
  * pharmacy); practices, facilities, pharmacies or hospitals in the UK, Spain, Italy, Germany,
- * Switzerland, Estonia, Poland, Ireland, Finland, Cyprus and Sweden, licensed institutions in Lithuania. The names
+ * Switzerland, Estonia, Poland, Ireland, Finland, Cyprus, Sweden and Malta, licensed institutions in Lithuania. The names
  * and addresses say plainly that they are examples ("Exemple", "Muster", "Example", "Ejemplo",
  * "Esempio", "Příklad", "Näidis", "Przykład", "Esimerkki", "Pavyzdys", "Primer", "Zgled", "Παράδειγμα", "Exempel"), never a
  * real person, practice or place of care; the identifiers are shaped like the market's but
@@ -505,6 +505,34 @@ const SAMPLES: Readonly<Record<Exclude<MarketCountry, "CH">, HomeSamples>> = {
 			gender: "other",
 			address: "Aptiekas parauga iela 8, Sigulda, Siguldas nov., LV-2150",
 			identifier: "a900025",
+			status: "claimed",
+		},
+	],
+	// Malta: community pharmacies of the Medicines Authority's register, keyed by their licence
+	// (synthetic numbers above the register's). No postcode: a real one could name a real street.
+	MT: [
+		{
+			name: "Example Pharmacy",
+			listing: "community-pharmacies",
+			gender: "other",
+			address: "12 Example Street, Sliema",
+			identifier: "DL 9001",
+			status: "unclaimed",
+		},
+		{
+			name: "Example Square Pharmacy",
+			listing: "community-pharmacies",
+			gender: "other",
+			address: "3 Sample Square, Rabat (Gozo)",
+			identifier: "DL 9017",
+			status: "verified",
+		},
+		{
+			name: "Example Chemists",
+			listing: "community-pharmacies",
+			gender: "other",
+			address: "8 Specimen Road, Birkirkara",
+			identifier: "DL 9025",
 			status: "claimed",
 		},
 	],

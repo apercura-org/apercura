@@ -469,6 +469,23 @@ imports them too). The scheduler reruns the import every Saturday at 05:30 UTC
 `3` when a list was left out, or its licence changed
 ([data-import.md](./data-import.md#sweden)).
 
+Malta (`/mt`) has its own import, from the Medicines Authority's register of
+licensed pharmacies on data.gov.mt (CC BY 4.0): about 240 community pharmacies.
+Import the places first, then dry-run it once:
+
+```sh
+apercura-compose run --rm --entrypoint "apercura etl:places" etl --country mt
+apercura-compose run --rm --entrypoint "apercura etl:mt" etl --dry-run
+apercura-compose run --rm --entrypoint "apercura etl:mt" etl
+```
+
+The places are the NSO's regions and districts and the 68 localities with the
+Planning Authority's boundaries (CC BY 4.0, one 4.6 MB file; the first `etl:mt`
+imports them too). The scheduler reruns the import every Friday at 05:30 UTC
+(`ETL_MT_SCHEDULE_ARGS` adds flags). One source: exit code `1` when the register
+cannot be read, or its publisher or licence changed, the pages staying as they are
+([data-import.md](./data-import.md#malta)).
+
 ## Scheduled jobs
 
 The `scheduler` service runs [`docker/crontab`](../docker/crontab) with

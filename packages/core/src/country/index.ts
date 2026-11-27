@@ -12,6 +12,7 @@ import { ireland } from "./ie";
 import { italy } from "./it";
 import { lithuania } from "./lt";
 import { latvia } from "./lv";
+import { malta } from "./mt";
 import { norway } from "./no";
 import { poland } from "./pl";
 import { sweden } from "./se";
@@ -60,6 +61,17 @@ export {
 	lvRegionOf,
 	RIGA_CODE,
 } from "./lv";
+export {
+	MT_DISTRICTS,
+	MT_LOCALITIES,
+	MT_REGIONS,
+	MT_SCHEME_IDS,
+	type MtLocality,
+	malta,
+	mtDistrictOf,
+	mtLocalityOfName,
+	mtRegionOf,
+} from "./mt";
 export { NO_COUNTIES, NO_SCHEME_IDS, norway, OSLO_MUNICIPALITY } from "./no";
 export {
 	PL_OBTAINED_AT,
@@ -83,7 +95,7 @@ export * from "./types";
 
 /**
  * Adapters of the markets the code supports: France, Austria, the United Kingdom, Czechia, Spain,
- * Italy, Germany, Switzerland, Poland, Estonia, Ireland, Norway, Finland, Lithuania, Slovenia, Latvia and Sweden.
+ * Italy, Germany, Switzerland, Poland, Estonia, Ireland, Norway, Finland, Lithuania, Slovenia, Latvia, Sweden and Malta.
  */
 export const COUNTRY_ADAPTERS: Readonly<Partial<Record<CountryCode, CountryAdapter>>> = {
 	FR: france,
@@ -104,6 +116,7 @@ export const COUNTRY_ADAPTERS: Readonly<Partial<Record<CountryCode, CountryAdapt
 	CY: cyprus,
 	LV: latvia,
 	SE: sweden,
+	MT: malta,
 };
 
 /** The adapter of a market, or an error naming a country the code does not support yet. */
@@ -113,7 +126,7 @@ export function countryAdapter(code: string): CountryAdapter {
 	return adapter;
 }
 
-/** The adapter whose pages live under a path segment (`fr`, `at`, `gb`, `cz`, `es`, `it`, `de`, `ch`, `pl`, `ee`, `no`, `ie`, `lt`, `si`, `cy`, `lv`, `se`), or undefined. */
+/** The adapter whose pages live under a path segment (`fr`, `at`, `gb`, `cz`, `es`, `it`, `de`, `ch`, `pl`, `ee`, `no`, `ie`, `lt`, `si`, `cy`, `lv`, `se`, `mt`), or undefined. */
 export function adapterOfSegment(segment: string): CountryAdapter | undefined {
 	return Object.values(COUNTRY_ADAPTERS).find((adapter) => adapter?.segment === segment);
 }

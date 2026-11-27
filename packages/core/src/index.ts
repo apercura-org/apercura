@@ -34,6 +34,7 @@ export { findEircode, formatPhoneIe, IE_EIRCODE, normalizeEircode, toE164Ie } fr
 export { formatPhoneIt, IT_POSTCODE, normalizeItPostcode, toE164It } from "./phone-it";
 export { formatPhoneLt, LT_POSTCODE, normalizeLtPostcode, toE164Lt } from "./phone-lt";
 export { formatPhoneLv, LV_POSTCODE, normalizeLvPostcode, toE164Lv } from "./phone-lv";
+export { formatPhoneMt, MT_POSTCODE, normalizeMtPostcode, toE164Mt } from "./phone-mt";
 export { formatPhoneNo, NO_POSTCODE, normalizeNoPostcode, toE164No } from "./phone-no";
 export { formatPhonePl, normalizePlPostcode, PL_POSTCODE, toE164Pl } from "./phone-pl";
 export { formatPhoneSe, normalizeSePostcode, SE_POSTCODE, toE164Se } from "./phone-se";
@@ -125,6 +126,7 @@ export {
 	isValidItSourceId,
 	isValidLtSourceId,
 	isValidLvSourceId,
+	isValidMtSourceId,
 	isValidNoOrgNumber,
 	isValidNoSourceId,
 	isValidPlSourceId,
@@ -142,6 +144,14 @@ export {
 	ltFacilitySlug,
 	lvFacilitySlug,
 	lvUrlKey,
+	MT_ID_SCHEMES,
+	type MtFacilityKey,
+	type MtFacilitySegment,
+	type MtIdScheme,
+	mtFacilitySlug,
+	mtLicenceKey,
+	mtLicenceNumber,
+	mtUrlKey,
 	NO_ID_SCHEMES,
 	type NoFacilityKey,
 	type NoFacilitySegment,
@@ -175,6 +185,8 @@ export {
 	parseLtFacilitySegment,
 	parseLvFacilitySegment,
 	parseLvKey,
+	parseMtFacilitySegment,
+	parseMtKey,
 	parseNoFacilitySegment,
 	parseNoKey,
 	parsePlFacilitySegment,

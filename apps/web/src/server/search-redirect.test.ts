@@ -124,6 +124,15 @@ const PLACES: Record<MarketCountry, PlaceSuggestion[]> = {
 		place(81, "Göteborg", "goteborg", "vastra-gotalands-lan", "1480"),
 		place(82, "Malmö", "malmo", "skane-lan", "1280"),
 	],
+	MT: [
+		place(80, "Valletta", "valletta", "southern-harbour", "01101"),
+		place(81, "Sliema", "sliema", "northern-harbour", "01259"),
+		place(82, "San Ġiljan", "san-giljan", "northern-harbour", "01252"),
+		{
+			...place(83, "Gozo and Comino District", "gozo-and-comino", "gozo-and-comino", "026"),
+			kind: "department",
+		},
+	],
 };
 
 const LANDINGS = new Set([
@@ -183,6 +192,8 @@ const LANDINGS = new Set([
 	"apoteken@Stockholm",
 	"apoteken@Malmö",
 	"vardcentraler@Göteborg",
+	"community-pharmacies@Valletta",
+	"community-pharmacies@Sliema",
 ]);
 
 /*
@@ -201,6 +212,7 @@ const HUBS = new Set([
 	"dental-practices:gb",
 	"krankenhaeuser:de",
 	"pharmacy:ie",
+	"community-pharmacies:mt",
 ]);
 
 vi.mock("./queries/search", () => ({
@@ -839,6 +851,39 @@ describe("a search for a European place outside the open markets", () => {
 		expect(await search("sl-SI", { quoi: "zobar", ou: "Celje" })).toBeNull();
 	});
 
+	it("never says Malta is not covered: its localities move the search to /mt, in English", async () => {
+		expect(await search("fr", { ou: "Valletta" })).toEqual(searchPage("en-MT", { ou: "Valletta" }));
+		expect(await search("en-GB", { quoi: "pharmacy", ou: "Sliema" })).toEqual(
+			listing("en-MT", "community-pharmacies", "northern-harbour", "sliema"),
+		);
+		expect(await search("fr", { quoi: "pharmacie", ou: "Valletta" })).toEqual(
+			listing("en-MT", "community-pharmacies", "southern-harbour", "valletta"),
+		);
+		expect(await search("en-IE", { quoi: "chemist", ou: "Sliema" })).toEqual(
+			listing("en-MT", "community-pharmacies", "northern-harbour", "sliema"),
+		);
+		// "Spiżerija" is Maltese for a pharmacy.
+		expect(await search("en-MT", { quoi: "spiżerija", ou: "Sliema" })).toEqual(
+			listing("en-MT", "community-pharmacies", "northern-harbour", "sliema"),
+		);
+		// St Julian's in English: Malta's search, under the name its places carry.
+		expect(await search("en-GB", { ou: "St Julian's" })).toEqual(
+			searchPage("en-MT", { ou: "San Ġiljan" }),
+		);
+		// A Maltese locality the places do not know: Malta's search says so, not this page.
+		expect(await search("fr", { quoi: "pharmacie", ou: "Mosta" })).toEqual(
+			searchPage("en-MT", {
+				quoi: listingLabel("community-pharmacies", "en-MT") ?? "",
+				ou: "Mosta",
+			}),
+		);
+		expect(await search("en-MT", { quoi: "pharmacy", ou: "Mosta" })).toBeNull();
+		// A GP is not listed in Malta: its search, without the care it does not list.
+		expect(await search("en-GB", { quoi: "GP", ou: "Sliema" })).toEqual(
+			searchPage("en-MT", { ou: "Sliema" }),
+		);
+	});
+
 	it("still lets a place of an open market win over a homonymous foreign city", async () => {
 		expect(await search("fr", { quoi: "dentiste", ou: "Wien" })).toEqual(
 			searchPage("de-AT", { quoi: listingLabel("zahnaerzte", "de-AT") ?? "", ou: "Wien" }),
@@ -895,6 +940,13 @@ describe("a search for an open country by name", () => {
 		expect(await search("fr", { quoi: "dentiste", ou: "Slovénie" })).toEqual(
 			searchPage("sl-SI", { quoi: listingLabel("zobozdravnik", "sl-SI") ?? "" }),
 		);
+		// Malta is open: "Malta", "Malte" lead to /mt, and pharmacies to its hub.
+		expect(await search("fr", { ou: "Malte" })).toEqual({ href: "/", locale: "en-MT" });
+		expect(await search("en-GB", { ou: "Malta" })).toEqual({ href: "/", locale: "en-MT" });
+		expect(await search("fr", { quoi: "pharmacie", ou: "Malte" })).toEqual({
+			href: { pathname: "/[specialite]", params: { specialite: "community-pharmacies" } },
+			locale: "en-MT",
+		});
 		// The page's own market: its home, in the visitor's language.
 		expect(await search("en", { ou: "France" })).toEqual({ href: "/", locale: "en" });
 	});

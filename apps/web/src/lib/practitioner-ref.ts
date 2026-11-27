@@ -31,6 +31,9 @@ import {
 	LV_ID_SCHEMES,
 	type LvIdScheme,
 	lvUrlKey,
+	MT_ID_SCHEMES,
+	type MtIdScheme,
+	mtUrlKey,
 	NO_ID_SCHEMES,
 	type NoIdScheme,
 	noUrlKey,
@@ -48,6 +51,7 @@ import {
 	parseItPlaceSegment,
 	parseLtFacilitySegment,
 	parseLvFacilitySegment,
+	parseMtFacilitySegment,
 	parseNoFacilitySegment,
 	parsePlFacilitySegment,
 	parseSeFacilitySegment,
@@ -211,6 +215,20 @@ function noRef(segment: string): PractitionerRef | null {
  * as a Swiss one.
  */
 const IE_REF = "ie:";
+
+/** The prefix of a Maltese reference (`mt:dl001`): a licence key names no market by itself. */
+const MT_REF = "mt:";
+
+/**
+ * A Maltese pharmacy from the end of a page address or slug, or from its licence number as the
+ * register writes it (`DL 001`, `dl001`; the caller drops spaces and case).
+ */
+function mtRef(segment: string): PractitionerRef | null {
+	const parsed = parseMtFacilitySegment(segment);
+	return parsed
+		? { country: "MT", idScheme: parsed.idScheme, nationalId: parsed.nationalId }
+		: null;
+}
 
 /** An Irish facility from the end of a page address or slug, or from its key (`p10000612`). */
 function ieRef(segment: string): PractitionerRef | null {
@@ -378,6 +396,9 @@ export function parsePractitionerRef(
 	if (trimmed.toLowerCase().startsWith(SE_REF)) {
 		return seRef(trimmed.slice(SE_REF.length).replace(/\s+/g, "").toLowerCase());
 	}
+	if (trimmed.toLowerCase().startsWith(MT_REF)) {
+		return mtRef(trimmed.slice(MT_REF.length).replace(/\s+/g, "").toLowerCase());
+	}
 	const parts = trimmed.split(/[?#]/)[0]?.split("/").filter(Boolean) ?? [];
 	const segment = trimmed.split(/[/?#]/).filter(Boolean).at(-1) ?? "";
 	const compact = segment.replace(/\s+/g, "").toLowerCase();
@@ -405,6 +426,11 @@ export function parsePractitionerRef(
 	if ((path.length > 1 && path[0]?.toLowerCase() === "ie") || market === "IE") {
 		const irish = ieRef(compact);
 		if (irish) return irish;
+	}
+	// A page address of Malta (`/mt/facility/…`), or a licence number typed on a Maltese page.
+	if ((path.length > 1 && path[0]?.toLowerCase() === "mt") || market === "MT") {
+		const maltese = mtRef(compact);
+		if (maltese) return maltese;
 	}
 	// A page address of Switzerland in any of its languages, or a key typed on a Swiss page.
 	if ((path.length > 1 && CH_PATH.test(path[0]?.toLowerCase() ?? "")) || market === "CH") {
@@ -489,7 +515,7 @@ export function parsePractitionerRef(
 /**
  * The short reference of a practitioner (`19999990013`, `w7983`, `gb:a81001`, `cz:39781`,
  * `es:1328000001`, `it:f9000001`, `de:k0a1b2c3d4e`, `ch:h123456789`, `ee:l01909`, `pl:290629`, `ie:p10000612`, `fi:b18aa7f87eca4b97a8e8b438d2e29427`,
- * `lt:5271-12679435`, `si7774`, `se:a7312446003969`), as `parsePractitionerRef` reads it.
+ * `lt:5271-12679435`, `si7774`, `se:a7312446003969`, `mt:dl001`), as `parsePractitionerRef` reads it.
  */
 export function practitionerRefOf(practitioner: { idScheme: string; nationalId: string }): string {
 	if (CH_ID_SCHEMES[practitioner.idScheme as ChIdScheme]) {
@@ -503,6 +529,9 @@ export function practitionerRefOf(practitioner: { idScheme: string; nationalId: 
 	}
 	if (SE_ID_SCHEMES[practitioner.idScheme as SeIdScheme]) {
 		return `${SE_REF}${seUrlKey(practitioner.idScheme as SeIdScheme, practitioner.nationalId)}`;
+	}
+	if (MT_ID_SCHEMES[practitioner.idScheme as MtIdScheme]) {
+		return `${MT_REF}${mtUrlKey(practitioner.nationalId)}`;
 	}
 	if (practitioner.idScheme === CZ_ID_SCHEME) return `${CZ_REF}${practitioner.nationalId}`;
 	if (practitioner.idScheme === PL_ID_SCHEME) return `${PL_REF}${practitioner.nationalId}`;
@@ -543,7 +572,7 @@ export function practitionerRefOf(practitioner: { idScheme: string; nationalId: 
  * `ee:l01909`, an organisation number typed on a Norwegian page (`910 000 039`) `no:910000039`, a key typed
  * on an Irish page (`P10000612`) `ie:p10000612`, a key typed on a Lithuanian page (`5271-12679435`)
  * `lt:5271-12679435`, a key typed on a Cypriot page (`F101`) `cy:f101`, a GLN typed on a Swedish page (`7312446003969`)
- * `se:a7312446003969`.
+ * `se:a7312446003969`, a licence number typed on a Maltese page (`DL 001`) `mt:dl001`.
  * A value that
  * names no page is kept as typed, so the service answers its own error.
  */

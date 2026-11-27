@@ -1,0 +1,24 @@
+{
+	"result": {
+		"id": "0dfe65b7-626f-49ef-ab09-6a6ab8a4db72",
+		"title": {
+			"en": "Licensed Pharmacies in Malta and Gozo"
+		},
+		"publisher": {
+			"type": "Agent",
+			"name": "Medicines Authority"
+		},
+		"modified": "2026-11-18T13:44:54",
+		"distributions": [
+			{
+				"format": {
+					"id": "API"
+				},
+				"license": {
+					"id": "https://creativecommons.org/licenses/by/4.0/"
+				},
+				"access_url": ["https://data.gov.mt/Pharmacy/V1/Pharmacy"]
+			}
+		]
+	}
+}

@@ -10,6 +10,7 @@ import {
 	allItListingSlugs,
 	allLtListingSlugs,
 	allLvListingSlugs,
+	allMtListingSlugs,
 	allNoTaxonomySlugs,
 	allPlListingSlugs,
 	allSeTaxonomySlugs,
@@ -19,6 +20,7 @@ import {
 	EE_DEFAULT_PROFESSIONS,
 	FI_DEFAULT_PROFESSIONS,
 	IE_DEFAULT_PROFESSIONS,
+	MT_DEFAULT_PROFESSIONS,
 	NO_DEFAULT_PROFESSIONS,
 	PL_DEFAULT_PROFESSIONS,
 	SE_DEFAULT_PROFESSIONS,
@@ -41,6 +43,7 @@ import deDE from "../../messages/de-DE.json";
 import ee from "../../messages/ee.json";
 import en from "../../messages/en.json";
 import enIE from "../../messages/en-IE.json";
+import enMT from "../../messages/en-MT.json";
 import es from "../../messages/es.json";
 import esES from "../../messages/es-ES.json";
 import fi from "../../messages/fi.json";
@@ -112,6 +115,7 @@ const CATALOGS: Record<Locale, unknown> = {
 	"el-CY": mergeMessages(en, cy as Record<string, unknown>),
 	"lv-LV": mergeMessages(en, lv as Record<string, unknown>),
 	"sv-SE": mergeMessages(en, se as Record<string, unknown>),
+	"en-MT": mergeMessages(en, enMT as Record<string, unknown>),
 };
 
 /** Every message of a catalog by its dotted key (array items are indexed). */
@@ -758,5 +762,48 @@ describe("Sweden's texts", () => {
 		const markets = [...english.keys()].filter((key) => key.startsWith("Search.markets."));
 		expect(markets.filter((key) => !swedish.has(key))).toEqual([]);
 		expect(swedish.get("Search.markets.LV")).toBe("Lettland");
+	});
+});
+
+describe("Malta's overrides", () => {
+	it("only override keys of the English catalog", () => {
+		const english = flatten(en);
+		expect([...flatten(enMT).keys()].filter((key) => !english.has(key))).toEqual([]);
+	});
+
+	it("name Malta's listing in every catalog", () => {
+		for (const catalog of [de, en, fr, it_, es]) {
+			const labels = flatten(catalog);
+			for (const slug of allMtListingSlugs()) {
+				expect(labels.get(`taxonomy.listing.${slug}`), slug).toBeTruthy();
+				expect(labels.get(`taxonomy.profession.${slug}`), slug).toBeTruthy();
+			}
+		}
+		expect(messagesFor("en-MT").taxonomy.listing["community-pharmacies"]).toBe(
+			"Community pharmacies",
+		);
+		expect(messagesFor("en").Search.markets.MT).toBe("Malta");
+		expect(messagesFor("fr").Search.markets.MT).toBe("Malte");
+	});
+
+	it("write Malta's pages for Malta, not the UK's or Ireland's, with every kind on the data page", () => {
+		const maltese = flatten(messagesFor("en-MT"));
+		expect(maltese.get("HomePage.title")).toMatch(/Malta/);
+		expect(JSON.stringify(enMT)).not.toMatch(
+			/\bNHS\b|United Kingdom|Ireland|Irish|\bPSI\b|HIQA|\bHSE\b|Eircode|\bcounty\b/i,
+		);
+		expect(maltese.get("LegalNoticeMt.title")).toBe("Legal notice");
+		expect(maltese.get("LegalNoticeMt.lead")).toContain("Cap. 426");
+		for (const code of MT_DEFAULT_PROFESSIONS) {
+			expect(maltese.get(`DataMt.coverage.kinds.${code}`), code).toBeTruthy();
+		}
+		// The privacy notice names the IDPC, never a host, and keeps the data in the EEA.
+		expect(maltese.get("PrivacyMt.sections.rights.body.1")).toContain(
+			"Information and Data Protection Commissioner",
+		);
+		expect(maltese.get("PrivacyMt.sections.transfers.body.0")).toContain("European Economic Area");
+		// The advertising rules the data page records.
+		expect(maltese.get("DataMt.sources.conditions.1")).toContain("S.L. 458.32");
+		expect(JSON.stringify(messagesFor("en-MT").DataMt)).not.toMatch(/certif/i);
 	});
 });

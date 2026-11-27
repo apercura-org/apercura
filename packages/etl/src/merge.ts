@@ -36,6 +36,8 @@ import {
 	LV_PROFESSIONS,
 	listingSlugFor,
 	lvListingSlugFor,
+	MT_PROFESSIONS,
+	mtListingSlugFor,
 	PL_PROFESSIONS,
 	PL_SPECIALTIES,
 	plListingSlugFor,
@@ -112,7 +114,7 @@ export async function analyzeTables(tx: TransactionSql, tables: readonly string[
  * market (profession codes never collide: `10`… in France, `ARZT` in Austria, `GB_GP` in the UK,
  * `CZ_GP` in Czechia, `ES_DENTAL` in Spain, `DE_PHARMACY` in Germany,
  * `IT_PHARMACY` in Italy, `CH_HOSPITAL` in Switzerland, `EE_PHARMACY` in Estonia, `PL_HOSPITAL` in Poland,
- * `IE_PHARMACY` in Ireland, `FI_HOSPITAL` in Finland, `SI_DENTIST` in Slovenia, `LV_PHARMACY` in Latvia),
+ * `IE_PHARMACY` in Ireland, `FI_HOSPITAL` in Finland, `SI_DENTIST` in Slovenia, `LV_PHARMACY` in Latvia, `MT_PHARMACY` in Malta),
  * so an import of one market keeps the other's rows.
  */
 export async function syncTaxonomy(tx: TransactionSql): Promise<void> {
@@ -133,6 +135,7 @@ export async function syncTaxonomy(tx: TransactionSql): Promise<void> {
 		{ professions: SI_PROFESSIONS, specialties: {}, slugFor: siListingSlugFor },
 		{ professions: LV_PROFESSIONS, specialties: {}, slugFor: lvListingSlugFor },
 		{ professions: SE_PROFESSIONS, specialties: {}, slugFor: seListingSlugFor },
+		{ professions: MT_PROFESSIONS, specialties: {}, slugFor: mtListingSlugFor },
 	];
 	for (const { professions, specialties, slugFor } of markets) {
 		for (const code of Object.keys(professions)) {
