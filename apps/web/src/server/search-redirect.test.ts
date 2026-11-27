@@ -27,9 +27,27 @@ const place = (
 	population: null,
 });
 
+/** A place with its population, as France's, Germany's, Spain's and Ireland's places carry. */
+const populated = (population: number, ...args: Parameters<typeof place>): PlaceSuggestion => ({
+	...place(...args),
+	population,
+});
+
+/*
+ * Homonyms across markets: Bergen (Norway's city, a German Gemeinde), Bergheim (a French commune
+ * of 2,000, a German town of 62,000), Baden (an Austrian and a Swiss town).
+ */
 const PLACES: Record<MarketCountry, PlaceSuggestion[]> = {
-	FR: [place(1, "Paris", "paris", "75-paris"), place(2, "Springfield", "springfield", "01-ain")],
-	AT: [place(10, "Wien", "wien", "wien"), place(11, "Salzburg", "salzburg", "salzburg")],
+	FR: [
+		populated(2_200_000, 1, "Paris", "paris", "75-paris"),
+		populated(2_000, 2, "Springfield", "springfield", "01-ain"),
+		populated(2_000, 3, "Bergheim", "bergheim", "68-haut-rhin"),
+	],
+	AT: [
+		place(10, "Wien", "wien", "wien"),
+		place(11, "Salzburg", "salzburg", "salzburg"),
+		place(12, "Baden", "baden", "baden"),
+	],
 	GB: [
 		place(20, "Bristol", "bristol", "bristol-city-of"),
 		place(21, "Springfield", "springfield", "essex"),
@@ -46,12 +64,15 @@ const PLACES: Record<MarketCountry, PlaceSuggestion[]> = {
 	DE: [
 		place(50, "Berlin", "berlin", "berlin", "11000000"),
 		place(51, "Unterhaching", "unterhaching", "landkreis-muenchen", "09184148"),
+		populated(13_000, 52, "Bergen", "bergen", "landkreis-celle", "03351004"),
+		populated(62_000, 53, "Bergheim", "bergheim", "rhein-erft-kreis", "05362008"),
 	],
 	CH: [
 		place(50, "Genève", "geneve", "canton-de-geneve"),
 		place(51, "Zürich", "zuerich", "bezirk-zuerich"),
 		place(52, "Basel", "basel", "kanton-basel-stadt"),
 		place(53, "Lugano", "lugano", "distretto-di-lugano"),
+		place(54, "Baden", "baden", "bezirk-baden"),
 	],
 	EE: [
 		place(60, "Tartu linn", "tartu-linn", "tartu-linn", "8151"),
@@ -84,6 +105,7 @@ const LANDINGS = new Set([
 	"zubni-lekar@Praha",
 	"dentistas@Madrid",
 	"centros-de-salud@Madrid",
+	"hospitales@Madrid",
 	"farmacias@Madrid",
 	"farmacie@Roma",
 	"ospedali@Roma",
@@ -102,6 +124,7 @@ const LANDINGS = new Set([
 	"stomatologia@Skawina",
 	"tannklinikker@Bergen",
 	"sykehus@Bergen",
+	"spital@Baden",
 	"apotek@Tromsø",
 	"pharmacy@Cork",
 	"pharmacy@Dublin",
@@ -320,6 +343,26 @@ describe("a search for a place of another market", () => {
 		expect(await search("de-CH", { quoi: "Apotheke", ou: "Zürich" })).toBeNull();
 	});
 
+	it("moves to a market's hospitals from a market that lists none, in its words", async () => {
+		// France lists no hospital: "hôpital" reaches Poland's and Spain's by kind of care.
+		expect(await search("fr", { quoi: "hôpital", ou: "Kraków" })).toEqual(
+			listing("pl-PL", "szpitale", "krakow", "krakow"),
+		);
+		expect(await search("fr", { quoi: "hôpital", ou: "Madrid" })).toEqual(
+			listing("es-ES", "hospitales", "madrid", "madrid"),
+		);
+		expect(await search("cs-CZ", { quoi: "nemocnice", ou: "Kraków" })).toEqual(
+			listing("pl-PL", "szpitale", "krakow", "krakow"),
+		);
+		// Austria lists no hospital either: its search, with the words typed, as before.
+		expect(await search("fr", { quoi: "hôpital", ou: "Wien" })).toEqual(
+			searchPage("de-AT", { quoi: "hôpital", ou: "Wien" }),
+		);
+		expect(await search("en-GB", { quoi: "hospital", ou: "Wien" })).toEqual(
+			searchPage("de-AT", { ou: "Wien" }),
+		);
+	});
+
 	it("reads the words of the market searched too", async () => {
 		expect(await search("fr", { quoi: "zubař", ou: "Brno" })).toEqual(
 			listing("cs-CZ", "zubni-lekar", "brno-mesto", "brno"),
@@ -349,6 +392,27 @@ describe("a search for a place of another market", () => {
 		expect(await search("cs-CZ", { quoi: "zubař", ou: "Paris" })).toEqual(
 			listing("fr", "chirurgien-dentiste", "75-paris", "paris"),
 		);
+	});
+
+	it("chooses the likeliest of the markets knowing a place of that name", async () => {
+		// Bergen is Norway's city, before a German Gemeinde, from any page.
+		expect(await search("fr", { quoi: "hôpital", ou: "Bergen" })).toEqual(
+			listing("nb-NO", "sykehus", "vestland", "bergen"),
+		);
+		expect(await search("fr", { ou: "Bergen" })).toEqual(searchPage("nb-NO", { ou: "Bergen" }));
+		expect(await search("de-DE", { ou: "Bergen" })).toEqual(searchPage("nb-NO", { ou: "Bergen" }));
+		// Baden: Switzerland's has a hospital page, Austria lists no hospitals.
+		expect(await search("fr", { quoi: "hôpital", ou: "Baden" })).toEqual(
+			listing("fr-CH", "spital", "bezirk-baden", "baden"),
+		);
+		// Nothing else tells them apart: the order of the markets.
+		expect(await search("fr", { ou: "Baden" })).toEqual(searchPage("de-AT", { ou: "Baden" }));
+		// Both carry their population: the largest, Germany's Bergheim from a British page.
+		expect(await search("en-GB", { ou: "Bergheim" })).toEqual(
+			searchPage("de-DE", { ou: "Bergheim" }),
+		);
+		// The page's own market still comes first.
+		expect(await search("fr", { ou: "Bergheim" })).toBeNull();
 	});
 
 	it("prefers the page's own market when both know the place", async () => {

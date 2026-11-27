@@ -4,6 +4,7 @@ import {
 	CARE_KINDS,
 	type CareMarket,
 	careKindOfListing,
+	careKindsOfListing,
 	equivalentListing,
 	listingOfCareKind,
 } from "./care-kinds";
@@ -54,6 +55,9 @@ describe("the kinds of care shared by the markets", () => {
 
 	it("read a listing back as the first kind leading to it", () => {
 		expect(careKindOfListing("dental-practices", "GB")).toBe("dentistry");
+		expect(careKindsOfListing("dental-practices", "GB")).toEqual(["dentistry", "orthodontics"]);
+		expect(careKindsOfListing("orthodontiste", "FR")).toEqual(["orthodontics"]);
+		expect(careKindsOfListing("aide-soignant", "FR")).toEqual([]);
 		expect(careKindOfListing("zahnaerzte", "AT")).toBe("dentistry");
 		expect(careKindOfListing("orthodontiste", "FR")).toBe("orthodontics");
 		expect(careKindOfListing("chirurgie", "AT")).toBe("general-surgery");
