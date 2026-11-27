@@ -12,16 +12,16 @@ Re-use of Public Sector Information Regulations 2015, or as a plain licence requ
 gives a right to re-use.
 
 Austria has its own request, prepared separately (`at.md`); the United Kingdom's, Czechia's,
-Spain's, Italy's, Germany's, Switzerland's, Estonia's, Poland's, Norway's, Finland's and Lithuania's candidates are in
+Spain's, Italy's, Germany's, Switzerland's, Estonia's, Poland's, Norway's, Finland's, Lithuania's and Slovenia's candidates are in
 `gb.md`,
-`cz.md`, `es.md`, `it.md`, `de.md`, `ch.md`, `ee.md`, `pl.md`, `no.md`, `fi.md` and `lt.md` (Spain opened from the register of centres,
+`cz.md`, `es.md`, `it.md`, `de.md`, `ch.md`, `ee.md`, `pl.md`, `no.md`, `fi.md`, `lt.md` and `si.md` (Spain opened from the register of centres,
 REGCESS, Italy from the Ministry of Health's lists of places, Germany from the statistical offices'
 directory of hospitals and the Länder's pharmacy lists, Switzerland from the FOPH's hospital
 figures and the cantons' lists, Estonia from the Health Board's register of providers and the State
 Agency of Medicines' pharmacies, Poland from RPWDL's healthcare entities, and Norway from the establishments of the Central
 Coordinating Register for Legal Entities, and Finland from the
-Finnish Service Catalogue's public health service locations, and Lithuania from VASPVT's licence
-register of institutions; the requests below
+Finnish Service Catalogue's public health service locations, Lithuania from VASPVT's licence
+register of institutions, and Slovenia from the health insurer's lists of personal doctors; the requests below
 for their registers of people still stand).
 
 ## Tracking
@@ -50,6 +50,8 @@ Update a row the day something happens. Status: `not sent`, `sent`, `extended`, 
 | Estonia (13)       | MEDRE open data: [ee-terviseamet.md](ee-terviseamet.md)                           | Terviseamet                                      | Email                                 | Public Information Act, § 3¹ (licence change or confirmation)        | not sent |           |        |         |
 | Estonia (13)       | CC BY-NC-SA 3.0 reading: [ee.md](ee.md#how-to-ask)                                | Terviseamet                                      | Email                                 | Public Information Act, § 3¹ (confirmation of the licence's terms)   | not sent |           |        |         |
 | Norway             | Licence of "Landets apotek": [no.md](no.md#how-to-ask)                            | Direktoratet for medisinske produkter (DMP)      | Email                                 | None stated: licence request (NLOD 2.0 asked)                        | not sent |           |        |         |
+| Slovenia (14)      | Stable file addresses: [si.md](si.md#how-to-ask)                                  | ZZZS, the dataset's contact on podatki.gov.si    | Email                                 | None (CC BY 4.0 dataset): stable addresses, acknowledgement          | not sent |           |        |         |
+| Slovenia (14)      | Register of doctors and dentists: [si.md](si.md#how-to-ask)                       | Zdravniška zbornica Slovenije                    | Email                                 | None (the Chamber's legal notice): permission request                | not sent |           |        |         |
 | Netherlands (16)   | BIG-register: [nl-big-register.md](nl-big-register.md)                            | CIBG, copy Ministry DPO                          | Email or contact form                 | None under the Who (art. 2(1)(h)): permission request                | not sent |           |        |         |
 | Portugal (17)      | Register of doctors: [pt-ordem-dos-medicos.md](pt-ordem-dos-medicos.md)           | Ordem dos Médicos, access-to-information officer | Email, subject `RAI \|`               | Lei 26/2016, arts. 19 and 21                                         | not sent |           |        |         |
 | Croatia (18)       | Contracted primary care: [hr-hzzo.md](hr-hzzo.md)                                 | HZZO, information officer                        | Email or HZZO form                    | ZPPI, arts. 27 and 29                                                | not sent |           |        |         |

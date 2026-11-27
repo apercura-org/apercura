@@ -145,6 +145,18 @@ under `/lt/istaiga/…`, an establishment's under `/lt/organizacija/…`, the di
 search `/lt/paieska`, `/lt/apie`, `/lt/duomenys`, `/lt/prieinamumas`, `/lt/privatumas`,
 `/lt/teisine-informacija` and `/lt/naudojimo-salygos`; its listing slugs are Lithuanian
 (`/lt/odontologijos-klinikos/kauno-miesto-savivaldybe`).
+Slovenia (#167) has one market language, indexed: Slovenian under `/si`
+(`sl-SI`, the English catalog with `messages/si.json` on top, as Czechia's
+`cs-CZ`; plurals `one`, `two`, `few` and `other`). Its route segments are
+Slovenian (`SLOVENIAN_SEGMENTS` in `routing.ts`): a doctor's page under
+`/si/zdravnik/{ime-priimek}-si{number}`, an establishment's under
+`/si/organizacija`, `/si/imenik`, `/si/iskanje`, `/si/o-projektu`,
+`/si/podatki`, `/si/dostopnost`, `/si/varstvo-osebnih-podatkov`,
+`/si/pravno-obvestilo` and `/si/pogoji-uporabe`; its listing slugs are
+Slovenian too (`/si/druzinski-zdravnik/osrednjeslovenska`). A doctor's page lists
+each practice with its ZZZS activities and, for each, whether the doctor takes
+new patients, with the date of the insurer's list it comes from.
+
 Each segment follows the locale's prefix: `/fr/annuaire`, `/fr-de/verzeichnis`.
 
 Only French pages are indexed in v1 (`INDEXABLE_LOCALES`): pages in the other

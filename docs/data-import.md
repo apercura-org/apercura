@@ -4,8 +4,8 @@
 first), Austria ([below](#austria)), the United Kingdom
 ([below](#united-kingdom)), Czechia ([below](#czechia)), Spain
 ([below](#spain)), Italy ([below](#italy)), Germany ([below](#germany)),
-Switzerland ([below](#switzerland)), Estonia ([below](#estonia)), Poland ([below](#poland)), Norway ([below](#norway)) and Lithuania
-([below](#lithuania)). It is a Bun CLI that runs as a
+Switzerland ([below](#switzerland)), Estonia ([below](#estonia)), Poland ([below](#poland)), Norway ([below](#norway)), Lithuania
+([below](#lithuania)) and Slovenia ([below](#slovenia)). It is a Bun CLI that runs as a
 scheduled task next to the app, with its own database role that cannot reach
 patient data. Each market's import writes the shared `directory` schema with
 its own `country` and never reads or writes another market's rows.
@@ -3202,3 +3202,196 @@ The fixtures (`packages/etl/fixtures/lt`) are synthetic: made-up institutions ("
 register's exact model formats, with invented legal entity codes and seat addresses the tests
 check are never stored, and a few counties, municipalities, elderships and settlements with
 simple boundaries. Never commit real rows.
+
+## Slovenia
+
+`etl:si` builds Slovenia's directory (`/si`, in Slovenian) from the health
+insurer's daily lists of the doctors who can be chosen as a personal doctor
+(issue #167, [ADR 0002](./adr/0002-multi-country.md#slovenia-si)). Everything
+above about roles, ownership, the outbox and `--approve` applies, and the
+per-list behaviour is Austria's; this section says what differs.
+
+```sh
+bun run etl:places --country si          # once (etl:si does it on its first run), then yearly
+bun run etl:si --dry-run                 # everything, then roll back
+bun run etl:si                           # weekly
+bun run etl:si --sources sa,zob          # some lists only
+bun run etl:si --approve=<run_id>        # accept what a blocked run reported
+```
+
+A Slovenian page is a **doctor**: a family doctor, a children's and school
+doctor, a gynaecologist or a dentist, named as the insurer publishes them, with
+each practice the lists give and whether the doctor still takes new patients
+there. No other specialist is listed: the Medical Chamber's register
+(Zdravniška zbornica Slovenije) forbids republication without permission and is
+never read ([`docs/data-requests/si.md`](./data-requests/si.md)).
+
+### Sources
+
+Verified on 27 November 2026 on podatki.gov.si and on the insurer's page. The
+dataset "Poimenski seznami zdravnikov, ki so lahko osebni zdravniki" of the
+Zavod za zdravstveno zavarovanje Slovenije (ZZZS) is published under
+"Priznanje avtorstva (CC BY 4.0)", with the conditions "Ni omejitev (navedba
+vira)" and free of charge. The portal names an HTML page, not a file: the old
+address (`zavarovanec.zzzs.si/wps/portal/portali/azos/ioz/ioz_izvajalci`)
+redirects to the insurer's page on choosing a personal doctor, whose lists are
+at `https://zavarovanec.zzzs.si/izbira-in-zamenjava-osebnega-zdravnika/seznami-zdravnikov/`.
+That page links four XLSX workbooks, published every day at addresses that
+change with each publication (download links with a `stdatoteke` id and a
+`cHash`). Three name doctors and are read; the fourth, the additional practices
+for adults without a personal doctor, names none and is not. Every credit is
+printed on the pages built from the lists and on the data sources page
+(`/si/podatki`), and kept in `slovenia.registries`
+(`packages/core/src/country/si.ts`).
+
+| List (`--sources`)      | Workbook                                                                                                                                           | Format, rows (27 November 2026)                                                                                             | Credit                                                                                                                                                  |
+| ----------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| General practice (`sa`) | Splošne ambulante, otroški in šolski dispanzerji                                                                                                   | XLSX, daily; 1,462 rows: family doctors (activities `302001`, `302068`, `302070`), children's and school doctors (`327009`) | `Vir: Zavod za zdravstveno zavarovanje Slovenije (ZZZS), Poimenski seznami zdravnikov, ki so lahko osebni zdravniki, CC BY 4.0`                         |
+| Gynaecologists (`gin`)  | Dispanzerji za ženske                                                                                                                              | XLSX, daily; 362 rows (`306007`)                                                                                            | as above                                                                                                                                                |
+| Dentists (`zob`)        | Zobozdravstvo za odrasle, mladino in študente                                                                                                      | XLSX, daily; 1,296 rows (`404101`, `404103`, `404105`)                                                                      | as above                                                                                                                                                |
+| Places                  | the Register of Spatial Units (Register prostorskih enot, GURS) through its web feature service, `https://ipi.eprostor.gov.si/wfs-si-gurs-rpe/wfs` | GeoJSON, WGS 84, about 25 MB once: region and postal-area outlines, the other layers without geometry                       | `Vir: Geodetska uprava Republike Slovenije, Register prostorskih enot, stanje {date}` (GURS's terms: its name, the kind of data, the date of its state) |
+
+Each sheet states the date of its data ("Stanje podatkov na dan: 26.11.2026",
+or "Datum in čas priprave datoteke: 27.11.2026 ob 07.00"): the run records it
+as the list's `lastModified`, and the pages print it with whether a doctor
+takes new patients. ZZZS states that the providers report the doctors' data and
+answer for its accuracy, and that the data are valid at the time the file was
+prepared; the data page says so. A list's columns are found by their headers
+(Šifra izvajalca, Naziv izvajalca, Ulica, Kraj, Šifra zdravnika, Priimek in ime
+zdravnika, Šifra ZZZS dejavnosti, Zdravnik še sprejema zavarovane osebe): a
+workbook without them is left out.
+
+`ETL_SI_PAGE_URL` overrides the insurer's page, `ETL_SI_PLACES_URL` the
+register's service. Every other candidate (the Medical Chamber's register, the
+insurer's monthly lists of active doctors, the Ministry of Health's list of
+pharmacies) and why it is not imported:
+[`docs/data-requests/si.md`](./data-requests/si.md).
+
+### Fetching
+
+A run reads the insurer's page once (one GET), then downloads the three
+workbooks one after the other with a pause of 2 seconds between them, with the
+ETL's user agent (`apercura-etl (open data import; https://github.com/apercura-org/apercura)`),
+once a week. The site's `robots.txt` has `Disallow: /*cHash`, a rule against
+non-speaking URLs for search engines, and the download links carry a `cHash`:
+the import fetches only the files the open data catalogue points to, through
+the page it names, once a week, and asks ZZZS for a stable address and its
+acknowledgement ([`docs/data-requests/si.md`](./data-requests/si.md#how-to-ask)).
+When the page cannot be read, or no longer links one of the three lists, or
+links one twice, nothing is guessed: the run fails (exit code 1) and every page
+stays as it was. A workbook that cannot be downloaded is left out on its own.
+
+### Identifiers and deduplication
+
+One scheme for the three lists, `SI-ZZZS`: the insurer's doctor number
+(`Šifra zdravnika`, 1 to 8 digits), printed in the URL after `si`
+(`/si/zdravnik/{ime-priimek}-si{number}`). Every row of one number, in any
+list, is one doctor: one site per practice (the provider at its address, keyed
+by the provider number `Šifra izvajalca`, which is never a page) and one
+activity per practice and ZZZS activity, carrying the list's `DA` or `NE`. A
+doctor is listed under the kind of most of their rows (`primarySiProfession`):
+`druzinski-zdravnik` (`SI_FAMILY_DOCTOR`), `otroski-zdravnik`
+(`SI_CHILDREN_DOCTOR`), `ginekolog` (`SI_GYNAECOLOGIST`) or `zobozdravnik`
+(`SI_DENTIST`); every activity is shown on the page. In the files of
+27 November 2026 no doctor number is in two lists.
+
+Absences are scoped per list: a doctor is counted missing only when no list the
+run read gives them and they have no practice from a list the run did not read;
+missing twice in a row, the page is removed, as in France.
+
+### Minimisation and what is left out
+
+Read and stored: the doctor number; the name, split into first and last names
+and capitalised (`KOLAR  MIRAN` → Miran Kolar: the lists join the family name
+and the given name with two spaces); each practice's provider name, written
+from the lists' capitals the Slovenian way (proper names capitalised as the
+register's place names and the lists' doctors spell them, `d.o.o.` in small
+letters, acronyms such as `ZD` or `UKC` kept), its street (the register's
+spelling when the street is matched), postcode and post office; the ZZZS activity; whether the doctor still takes new patients, with
+the list's date. Never read or stored: the ZZZS regional unit (Območna enota
+izvajalca), the employment share (Obseg zaposlitve), the number of registered
+patients and the capitation figures, the trainee flag (Specializant), the
+general practice list's obligation to accept newborns. The lists have no
+e-mail, phone, private address or gender, and none is derived.
+
+Rows skipped on purpose (`stats.sources.{list}.skipped`): totals lines, and
+rows whose activity is none of the eight above.
+
+### Places and precision
+
+Places (`directory.places`, `country = 'SI'`) come from GURS's register: the 12
+statistical regions are departments (`/si/druzinski-zdravnik/osrednjeslovenska`),
+with no listing above them; the 212 municipalities are communes of their
+region. The register does not name a municipality's region: a municipality is
+placed in the region holding most of its settlements, which gives the
+Statistical Office's counts (27, 41, 12, 31, 4, 6, 21, 25, 18, 6, 13 and 8
+municipalities, regions 1 to 12). Settlements (6,035), postal areas (466) and
+streets (about 10,500) are no pages: they are one document, the locator, stored
+in `directory.meta` (`si:locator`, about 2 MB) and written by
+`etl:places --country si`.
+
+The lists give no coordinates and no geocoder is called. A practice is placed
+by the locator, best first: a register street of a settlement of its postal
+area, a village named in its address (`ZADOBROVA 49 B`), the settlement of its
+post office (`3212 VOJNIK`), else the settlement nearest its postal area's
+centre. It is located at its street's or settlement's point (`city` precision,
+`geo_source = 'centroid'`: no map pin, distances said to be approximate).
+
+An address's town line is its post office (`3211 Škofja vas`), not the
+municipality the practice is listed in (Celje). Migration `0033_si_market`
+adds the post office (`sites.commune_label`) as `locality` to the site payload
+of Slovenian pages only; no other market's payload, or its hash, changes.
+
+### Guards
+
+Per list (`SI_LIMITS` in `src/guards.ts`): the workbook between 2 KB and 20 MB
+with its header row, at most 1% of its lines quarantined and a floor of rows
+(general practice 500, gynaecologists 100, dentists 350), never approvable: a
+broken file, not an unusual one. Then at most 5% more or fewer doctors and 15%
+more or fewer bytes than the last successful run that read the list
+(approvable). After staging, 98% of the practices placed in their municipality
+(`si.places`, approvable), and the circuit breakers on Slovenia's own pages as
+everywhere. A list left out keeps its rows (its doctors are neither updated nor
+counted missing) and the command exits with code **3**.
+
+### Schedule and monitoring
+
+The scheduler runs `etl:si $ETL_SI_SCHEDULE_ARGS` every Wednesday at 05:30 UTC
+(`docker/crontab`), a day no other import runs (one advisory lock for all);
+exit codes as for Austria. The lists change every day, so a weekly run rarely
+finds them unchanged; unchanged workbooks (same checksums) end the run.
+`--force` reruns anyway, `--offline` sends no cache tags to the app, `--work-dir` keeps
+the downloads, `--source-dir` (or `ETL_SI_SOURCE_DIR`) reads the three
+workbooks (`zzzs-sa.xlsx`, `zzzs-gin.xlsx`, `zzzs-zob.xlsx`) and the
+register's layers from a directory; `ETL_SI_SOURCES` sets the default lists.
+Rerun `etl:places --country si` once a year for the register's changes.
+
+### Measured run (files of 26–27 November 2026)
+
+A dry run, then a run, over the real files of 27 November 2026, places imported
+first:
+
+|               |                                                                                                                                        |
+| ------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| Doctors       | 2,881: 1,113 family doctors, 329 children's and school doctors, 329 gynaecologists, 1,110 dentists                                     |
+| Rows          | 3,120; 1,113 say the doctor still takes new patients (general practice 177 of 1,462, gynaecologists 170 of 362, dentists 766 of 1,296) |
+| Practices     | 792, all placed: 681 by a register street in the postal area, 109 by a village named in the address, 2 by the post office              |
+| Listing pages | 280 indexable                                                                                                                          |
+| Quarantined   | 0                                                                                                                                      |
+
+### Local development
+
+```sh
+bun run --cwd packages/etl fixtures:si                       # regenerate the synthetic fixtures
+bun run etl:places --country si --source-dir packages/etl/fixtures/si
+bun run etl:si --source-dir packages/etl/fixtures/si --offline
+ETL_TEST_DATABASE_URL=… bun run --cwd packages/etl test     # includes test/si-integration.test.ts
+```
+
+The fixtures (`packages/etl/fixtures/si`, generated by
+`packages/etl/fixtures/generate-si.ts`) are synthetic: the three workbooks in
+the insurer's exact layout and the register's layers as its service returns
+them, with made-up doctors (doctor numbers from 90000, far above the real
+lists'), providers and streets; the regions, municipalities and post offices
+are the register's real names and codes, with made-up outlines. Never commit
+real rows.

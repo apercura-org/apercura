@@ -399,6 +399,25 @@ code `1`, keeping the pages, when the register cannot be read or its page no lon
 4.0, and exit code `2` means a guard blocked it (`--approve`)
 ([data-import.md](./data-import.md#lithuania)).
 
+Slovenia (`/si`) has its own import, from the health insurer's daily lists of
+the doctors who can be chosen as a personal doctor (ZZZS, CC BY 4.0, about
+2,900 family doctors, children's and school doctors, gynaecologists and
+dentists). Import the places first, then dry-run it once:
+
+```sh
+apercura-compose run --rm --entrypoint "apercura etl:places" etl --country si
+apercura-compose run --rm --entrypoint "apercura etl:si" etl --dry-run
+apercura-compose run --rm --entrypoint "apercura etl:si" etl
+```
+
+The places are GURS's Register of Spatial Units (CC BY 4.0, about 25 MB
+downloaded once; the first `etl:si` imports them too): the statistical regions
+and municipalities, and a locator of settlements, postal areas and streets kept
+in the database; rerun `etl:places --country si` once a year. The scheduler
+reruns the import every Wednesday at 05:30 UTC (`ETL_SI_SCHEDULE_ARGS=--sources sa,zob`
+keeps it to some lists); exit code `3` as for Austria
+([data-import.md](./data-import.md#slovenia)).
+
 ## Scheduled jobs
 
 The `scheduler` service runs [`docker/crontab`](../docker/crontab) with
