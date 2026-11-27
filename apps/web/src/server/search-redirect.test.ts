@@ -192,6 +192,8 @@ const LANDINGS = new Set([
 	"apoteken@Stockholm",
 	"apoteken@Malmö",
 	"vardcentraler@Göteborg",
+	"community-pharmacies@Valletta",
+	"community-pharmacies@Sliema",
 ]);
 
 /*
@@ -203,8 +205,6 @@ const DEPARTMENT_LANDINGS = new Set([
 	"farmakeia@eparchia-lemesou",
 	"spital@bezirk-uster",
 	"chirurgien-dentiste@02-aisne",
-	"community-pharmacies@Valletta",
-	"community-pharmacies@Sliema",
 ]);
 
 const HUBS = new Set([

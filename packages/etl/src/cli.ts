@@ -450,7 +450,6 @@ async function main(): Promise<number> {
 											? await readCyPlaceSources(sourceDir)
 											: await fetchCyPlacesOnce(),
 										runId,
-										log,
 									)
 								: country === "si"
 									? await importSiPlaces(

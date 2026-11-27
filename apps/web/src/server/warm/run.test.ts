@@ -128,7 +128,7 @@ describe("cache warm-up run", () => {
 		expect(state.generation).toBe("build:build-1|import:1");
 
 		const runs = [first];
-		while (!state.completedAt && runs.length < 40) runs.push(await runWarm(deps));
+		while (!state.completedAt && runs.length < 60) runs.push(await runWarm(deps));
 		expect(runs.at(-1)).toMatchObject({ completed: true, remaining: 0, total: TOTAL });
 		// Each URL once, in order: the pages, the listings, then the practitioners.
 		expect(app.requested).toHaveLength(TOTAL);

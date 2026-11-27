@@ -189,7 +189,6 @@ Norway's (`/se/apoteken/stockholms-lan/stockholm`,
 `/se/vardcentraler/vastra-gotalands-lan/goteborg`); Gotland's municipality has
 its county's page only.
 
-
 Malta (#176) is the locale `en-MT` under `/mt` (the English catalog with Malta's
 overrides, `messages/en-MT.json`), with Ireland's English paths: a pharmacy's page
 under `/mt/facility/…` (its URL ending with its licence number, `…-dl001`), an

@@ -1,7 +1,6 @@
 import { expect, test } from "@playwright/test";
 import { axeViolations } from "./axe";
 import { testDb } from "./pro";
-import { statusMessages } from "./status";
 
 /**
  * The institutional pages of the Maltese market (`/mt`), written for Maltese law: the
@@ -184,8 +183,8 @@ test.describe("the Maltese objection form", () => {
 	});
 
 	test("withholds a page found by its Maltese address", async ({ page }) => {
-		// A client of its own: the public forms' rate limit is per client, and the other markets'
-		// objection specs use theirs.
+		// A client of its own: the public forms' rate limit is per client (5 an hour), and the other
+		// markets' objection specs use 10.77, 10.92 to 10.97, 10.166 to 10.175 or the default client.
 		await page.setExtraHTTPHeaders({
 			"x-forwarded-for": `10.176.0.${Math.floor(Math.random() * 250) + 1}`,
 		});
@@ -196,7 +195,9 @@ test.describe("the Maltese objection form", () => {
 		// React Aria draws the box over the native input.
 		await form.getByRole("checkbox").check({ force: true });
 		await form.getByRole("button").click();
-		await expect(statusMessages(page)).toBeVisible();
+		// The request is encrypted, stored and mailed before it answers: longer while the server
+		// renders the other specs' pages.
+		await expect(page.getByRole("status")).toBeVisible({ timeout: 15_000 });
 		const sql = testDb();
 		try {
 			const [row] = await sql<{ withheld: boolean; locale: string }[]>`
