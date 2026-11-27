@@ -352,7 +352,36 @@ is listed. Left:
 ### 10. Small open-data markets
 
 - Malta (doctors and dentists, CC BY 4.0): written confirmation from the Medical Council.
-- Latvia (NVD GPs, CC0): a partial directory. Slovenia opened (section 15).
+- Slovenia opened (section 15).
+- Latvia (`/lv`): open, see below.
+
+#### Latvia (`/lv`): open, GP practices, hospitals and pharmacies
+
+Done in [#166](https://github.com/apercura-org/apercura/issues/166): `/lv` in Latvian, built weekly
+by `etl:lv` from three CC0 1.0 lists of data.gov.lv: the National Health Service's quarterly list
+of GPs and their practices, joined by institution code to the Ministry of the Interior's addresses
+of medical institutions (293 GP practices naming their 304 GPs; the others have no published
+address), the hospitals of that list (66) and the State Agency of Medicines' pharmacies and
+branches (814), placed in the State Land Service's towns and parishes (CC BY 4.0) at their
+published point, with every source credited on each page, a legal notice, a privacy notice with
+the article 14 notice for the GPs, a written legitimate-interest assessment
+([`docs/legal/lia-latvia-gps.md`](./docs/legal/lia-latvia-gps.md)), terms, an accessibility
+statement, claims by documents, no booking ([data import](./docs/data-import.md#latvia),
+[ADR 0002](./docs/adr/0002-multi-country.md#latvia-lv)). Left:
+
+- **Native and lawyer review:** have a native speaker review the Latvian interface and market
+  texts (`apps/web/messages/lv.json`), and a lawyer qualified in Latvia the legal notice
+  (Informācijas sabiedrības pakalpojumu likums, s. 4), privacy notice, terms and accessibility
+  statement, and the legitimate-interest assessment for naming GPs (article 14(5)(b), the
+  advertising rules of the Medical Treatment Law, s. 11).
+- Send the request of [`docs/data-requests/lv.md`](./docs/data-requests/lv.md) (founder): the
+  NVD's practices' addresses and phones as open data, which would list the other three quarters
+  of the GP practices; ask the Ministry of the Interior's Information Centre to refresh its 2024
+  list.
+- Decide whether to inform the family doctors' associations when the pages open (assessment,
+  "Article 14 information").
+- An objection on a multi-GP practice removes the whole page: a per-GP objection (drop one name,
+  keep the practice) is a follow-up.
 
 ### 11. Germany (`/de`): open, facility pages; booking later
 

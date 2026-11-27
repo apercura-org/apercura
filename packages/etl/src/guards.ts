@@ -1746,10 +1746,11 @@ export function checkCyPlaces(placement: {
 /**
  * Limits of the Latvian lists. Their floors catch an empty or broken file on a first run (the
  * NVD's list of March 2026: 1,183 registered GPs at 1,098 institutions, of which the Ministry of
- * the Interior's list gives 294 an address; that list's 69 other lines, of which 66 are hospitals;
- * the State Agency of Medicines' register of November 2026: 826 pharmacies and branches, 815 of
- * them with a licence in force); afterwards the change since the last successful run that read
- * the list blocks a truncated one (approvable). The NVD's quarters are never read backwards.
+ * the Interior's list gives 293 an address; that list's 69 other lines, of which 66 are hospitals
+ * open to patients; the State Agency of Medicines' register of November 2026: 826 pharmacies and
+ * branches, 814 of them with a licence in force); afterwards the change since the last successful
+ * run that read the list blocks a truncated one (approvable). The NVD's quarters are never read
+ * backwards.
  */
 export const LV_LIMITS = {
 	quarantineRatio: 0.01,

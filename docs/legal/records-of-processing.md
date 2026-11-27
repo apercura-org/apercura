@@ -64,6 +64,16 @@ Common facts used below:
 | Rights            | Objection (art. 21) at `/donnees#retrait`: unclaimed page withheld at once, suppressed after a light check; claimed page removed by its owner; then only the suppression is kept (and the bare row above while something holds it) and the import drops the practitioner's lines before staging (`apps/web/src/server/gdpr/`, `packages/etl/src/suppressions.ts`). Rectification at the source or by the owner                                                                                                                                                                                                                                               |
 | Security measures | CSM; the import role cannot write practitioner-owned columns nor reach accounts, claims or `care` (`0004_database_roles.sql`); plain-text rendering of all owner and registry text, escaped JSON-LD; photos re-encoded without metadata under random keys; HMAC-signed cache revalidation with replay protection (`apps/web/src/server/revalidation-replay.ts`)                                                                                                                                                                                                                                                                                              |
 
+**Latvia (`/lv`, #166).** The same processing for the Latvian directory, whose pages are places
+of care (GP practices, hospitals, pharmacies): a GP practice's page names the GPs the National
+Health Service publishes for it (first and last names only; the GPs' identifiers and patient
+counts are never stored). Legal basis: legitimate interest, art. 6(1)(f), assessed in
+[`lia-latvia-gps.md`](lia-latvia-gps.md); art. 14 information by public measures (`/lv/privatums`,
+`/lv/dati`, a notice on every page), art. 14(5)(b); sources: the NVD's, the Ministry of the
+Interior's Information Centre's and the State Agency of Medicines' lists (CC0 1.0) and the State
+Land Service's address register (CC BY 4.0); supervisory authority for Latvian data subjects:
+Datu valsts inspekcija ([data import](../data-import.md#latvia)).
+
 ### C-2. Practitioner and team accounts
 
 | Field             | Content                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |

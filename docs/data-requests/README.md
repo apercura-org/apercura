@@ -12,14 +12,15 @@ Re-use of Public Sector Information Regulations 2015, or as a plain licence requ
 gives a right to re-use.
 
 Austria has its own request, prepared separately (`at.md`); the United Kingdom's, Czechia's,
-Spain's, Italy's, Germany's, Switzerland's, Estonia's, Poland's, Norway's, Finland's, Lithuania's, Slovenia's and Cyprus's candidates are in
+Spain's, Italy's, Germany's, Switzerland's, Estonia's, Poland's, Norway's, Finland's, Lithuania's, Slovenia's, Cyprus's and Latvia's candidates are in
 `gb.md`,
-`cz.md`, `es.md`, `it.md`, `de.md`, `ch.md`, `ee.md`, `pl.md`, `no.md`, `fi.md`, `lt.md`, `si.md` and `cy.md` (Spain opened from the register of centres,
+`cz.md`, `es.md`, `it.md`, `de.md`, `ch.md`, `ee.md`, `pl.md`, `no.md`, `fi.md`, `lt.md`, `si.md`, `cy.md` and `lv.md` (Spain opened from the register of centres,
 REGCESS, Italy from the Ministry of Health's lists of places, Germany from the statistical offices'
 directory of hospitals and the Länder's pharmacy lists, Switzerland from the FOPH's hospital
 figures and the cantons' lists, Estonia from the Health Board's register of providers and the State
-Agency of Medicines' pharmacies, Poland from RPWDL's healthcare entities, and Norway from the establishments of the Central
-Coordinating Register for Legal Entities, Finland from the
+Agency of Medicines' pharmacies, Poland from RPWDL's healthcare entities, Norway from the establishments of the Central
+Coordinating Register for Legal Entities, and Latvia from the National Health Service's GPs, the
+Ministry of the Interior's addresses and the State Agency of Medicines' pharmacies, Finland from the
 Finnish Service Catalogue's public health service locations, Lithuania from VASPVT's licence
 register of institutions, Slovenia from the health insurer's lists of personal doctors, and Cyprus from the Ministry of
 Health's lists of pharmacies, state hospitals and health centres; the requests below
@@ -55,6 +56,7 @@ Update a row the day something happens. Status: `not sent`, `sent`, `extended`, 
 | Slovenia (14)      | Register of doctors and dentists: [si.md](si.md#how-to-ask)                       | Zdravniška zbornica Slovenije                    | Email                                 | None (the Chamber's legal notice): permission request                | not sent |           |        |         |
 | Cyprus             | Updated state lists with addresses: [cy.md](cy.md#how-to-ask)                     | Ministry of Health and ΟΚΥπΥ                     | Email or data.gov.cy feedback form    | None needed (CC BY 4.0): update request                              | not sent |           |        |         |
 | Cyprus             | Pharmacy registration number and name: [cy.md](cy.md#how-to-ask)                  | Pharmaceutical Services, Ministry of Health      | Email or data.gov.cy feedback form    | None needed (CC BY 4.0): confirmation and update request             | not sent |           |        |         |
+| Latvia (15)        | GP practices' addresses: [lv.md](lv.md#how-to-ask)                                | Nacionālais veselības dienests                   | E-address (latvija.gov.lv) or email   | Informācijas atklātības likums (re-use and open data)                | not sent |           |        |         |
 | Netherlands (16)   | BIG-register: [nl-big-register.md](nl-big-register.md)                            | CIBG, copy Ministry DPO                          | Email or contact form                 | None under the Who (art. 2(1)(h)): permission request                | not sent |           |        |         |
 | Portugal (17)      | Register of doctors: [pt-ordem-dos-medicos.md](pt-ordem-dos-medicos.md)           | Ordem dos Médicos, access-to-information officer | Email, subject `RAI \|`               | Lei 26/2016, arts. 19 and 21                                         | not sent |           |        |         |
 | Croatia (18)       | Contracted primary care: [hr-hzzo.md](hr-hzzo.md)                                 | HZZO, information officer                        | Email or HZZO form                    | ZPPI, arts. 27 and 29                                                | not sent |           |        |         |

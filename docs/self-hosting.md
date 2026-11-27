@@ -436,6 +436,23 @@ reruns the import every Wednesday at 05:30 UTC (`ETL_SI_SCHEDULE_ARGS=--sources 
 keeps it to some lists); exit code `3` as for Austria
 ([data-import.md](./data-import.md#slovenia)).
 
+Latvia (`/lv`) has its own import, from three CC0 lists of data.gov.lv: the
+National Health Service's GP practices (with the Ministry of the Interior's
+addresses), the hospitals of that list and the State Agency of Medicines'
+pharmacies (about 1,200 pages). Import the places first, then dry-run it once:
+
+```sh
+apercura-compose run --rm --entrypoint "apercura etl:places" etl --country lv
+apercura-compose run --rm --entrypoint "apercura etl:lv" etl --dry-run
+apercura-compose run --rm --entrypoint "apercura etl:lv" etl
+```
+
+The places are the State Land Service's address register (the first `etl:lv`
+imports them too); rerun `etl:places --country lv` each January, or after a
+territorial reform. The scheduler reruns the import every Saturday at 04:30 UTC
+(`ETL_LV_SCHEDULE_ARGS=--sources pharmacies` keeps it to some lists); exit code
+`3` when a list was left out ([data-import.md](./data-import.md#latvia)).
+
 ## Scheduled jobs
 
 The `scheduler` service runs [`docker/crontab`](../docker/crontab) with

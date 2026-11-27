@@ -4,8 +4,8 @@
 first), Austria ([below](#austria)), the United Kingdom
 ([below](#united-kingdom)), Czechia ([below](#czechia)), Spain
 ([below](#spain)), Italy ([below](#italy)), Germany ([below](#germany)),
-Switzerland ([below](#switzerland)), Estonia ([below](#estonia)), Poland ([below](#poland)), Norway ([below](#norway)), Lithuania
-([below](#lithuania)) Slovenia ([below](#slovenia)) and Cyprus ([below](#cyprus)). It is a Bun CLI that runs as a
+Switzerland ([below](#switzerland)), Estonia ([below](#estonia)), Poland ([below](#poland)), Norway ([below](#norway)), Ireland ([below](#ireland)), Lithuania
+([below](#lithuania)), Slovenia ([below](#slovenia)), Cyprus ([below](#cyprus)) and Latvia ([below](#latvia)). It is a Bun CLI that runs as a
 scheduled task next to the app, with its own database role that cannot reach
 patient data. Each market's import writes the shared `directory` schema with
 its own `country` and never reads or writes another market's rows.
@@ -3634,3 +3634,205 @@ place, with filler rows above the floors. Never commit real rows.
 untouched both ways, naming by address and nothing of the pharmacist stored,
 placement and precision, district and municipality listings, idempotence, a dry
 run, an unreadable list left out, absences after two runs, objections.
+
+## Latvia
+
+`etl:lv` builds Latvia's directory (`/lv`, in Latvian) from three lists the national open data
+portal publishes under CC0 1.0: the National Health Service's quarterly list of GPs and their
+practices, the Ministry of the Interior's Information Centre's addresses of medical institutions
+and the State Agency of Medicines' register of pharmacies, placed in the State Land Service's
+address register (issue #166, [ADR 0002](./adr/0002-multi-country.md#latvia-lv)). Everything above
+about roles, ownership, the outbox and `--approve` applies; this section says what differs.
+
+```sh
+bun run etl:places --country lv   # once (etl:lv does it on its first run), then yearly
+bun run etl:lv                    # weekly (the GP list is quarterly, the pharmacies' register daily)
+bun run etl:lv --sources pharmacies
+bun run etl:lv --dry-run          # everything, then roll back
+bun run etl:lv --approve=<run_id> # accept what a blocked run reported
+```
+
+A Latvian page is a **place of care**: a GP practice (a medical institution of the National
+Health Service's list, naming its GPs), a hospital, a pharmacy or pharmacy branch. The GPs are
+named because the NVD publishes them so that patients can choose a family doctor: the written
+legitimate-interest assessment is [`legal/lia-latvia-gps.md`](./legal/lia-latvia-gps.md), the
+article 14 notice is on `/lv/privatums`, and every page links the objection form. No other
+person is listed: the Health Inspectorate's registers of practitioners and institutions are
+lookups, all rights reserved.
+
+### Sources
+
+Verified on 27 November 2026 on data.gov.lv (CKAN `package_show`: licence `CC0-1.0`, or
+`CC-BY-4.0` for the address register) and on each publisher's site.
+
+| List (`--sources`)                          | Dataset and file                                                                                                                                                                                                                                                                          | Format, update                                                                                                                                | Credit                                                                                                                        |
+| ------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| GP practices (`gp`)                         | NVD, [`gimenes-arsta-prakse-registreto-pacientu-skaits`](https://data.gov.lv/dati/lv/dataset/gimenes-arsta-prakse-registreto-pacientu-skaits): the newest quarter's resource (`2026_03 Ģimenes ārsta praksē reģistrēto pacientu skaits`, published 22 May 2026), with the addresses below | XLSX, 3 MB (one sheet `ĢĀ`, 1,188 lines); a resource per quarter, about two months after it ends                                              | `Avots: Nacionālais veselības dienests, data.gov.lv (CC0 1.0)`                                                                |
+| Addresses and hospitals (`gp`, `hospitals`) | Iekšlietu ministrijas Informācijas centrs, [`vkcp-igis-arstniecibas-iestazu-adreses`](https://data.gov.lv/dati/lv/dataset/vkcp-igis-arstniecibas-iestazu-adreses) (`medicinasiestades.csv`, the single emergency contact centre's GIS, kept by the State Fire and Rescue Service)         | CSV, 126 KB, 473 lines with WGS 84 points and the address register's territories; one resource, of 7 March 2024 ("annual", not updated since) | `Avots: Iekšlietu ministrijas Informācijas centrs, data.gov.lv (CC0 1.0)`                                                     |
+| Pharmacies (`pharmacies`)                   | Zāļu valsts aģentūra, [`farmaceitiskas-darbibas-uznemumu-registrs`](https://data.gov.lv/dati/lv/dataset/farmaceitiskas-darbibas-uznemumu-registrs) (`https://dati.zva.gov.lv/fdu-registrs/export/fdu_register.csv`)                                                                       | CSV, 790 KB, 1,034 licensed places with WGS 84 points; exported daily                                                                         | `Avots: Zāļu valsts aģentūra, data.gov.lv (CC0 1.0)`                                                                          |
+| Places                                      | Valsts zemes dienests, [`varis-atvertie-dati`](https://data.gov.lv/dati/lv/dataset/varis-atvertie-dati): `aw_novads.csv`, `aw_pilseta.csv`, `aw_pagasts.csv`, `aw_vietu_centroidi.csv`                                                                                                    | CSV, 1 MB in all; daily; places import only                                                                                                   | `Izmantoti Valsts adrešu reģistra informācijas sistēmas dati (Valsts zemes dienests, CC BY 4.0), apvienoti ar citiem avotiem` |
+
+Each run reads every list's current file from its dataset and refuses a dataset no longer under
+CC0 1.0, so a changed licence stops the list before anything is imported
+(`src/sources/lv/portal.ts`). `ETL_LV_NVD_URL`, `ETL_LV_VKCP_URL` and `ETL_LV_ZVA_URL` read one
+file from a fixed address instead (no licence check: check it by hand), `ETL_LV_PORTAL_URL`
+changes the portal.
+
+**Licences and credits** (`latvia.registries`, printed on every page and on `/lv/dati`): CC0 1.0
+asks for no credit, and the three lists are credited anyway. The address register is CC BY 4.0
+under [VZD's terms](https://www.vzd.gov.lv/lv/par-datu-izmantosanas-noteikumiem): name the
+source ("Izmantoti Valsts adrešu reģistra informācijas sistēmas dati" is VZD's own example), link
+the licence, and say what was changed; the credit says the data were combined with other
+sources, and the data page says how (the places matched to the register's territories).
+
+**Not used**: the NVD's lists of GPs by territory and of contracted institutions on vmnvd.gov.lv
+(all rights reserved), the Health Inspectorate's registers (lookups), the NVD's statistics by
+institution (no addresses): [`data-requests/lv.md`](./data-requests/lv.md).
+
+### Identifiers
+
+One scheme per list, so a list left out keeps its rows (`LV_ID_SCHEMES`,
+`packages/core/src/slugs.ts`), whose letter names it in the URL:
+
+| Scheme    | Key                                                                                                                         | URL                                                          |
+| --------- | --------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------ |
+| `LV-GP`   | the medical institution's code in the Register of Medical Institutions (nine digits, leading zeros kept)                    | `/lv/iestade/ilzes-paraugas-gimenes-arsta-prakse-g010000006` |
+| `LV-SLIM` | the Ministry of the Interior's id of the hospital's line (a branch is a line of its own; 18 lines have no institution code) | `/lv/iestade/paraugu-regionala-slimnica-s9004`               |
+| `LV-APT`  | the State Agency of Medicines' number of the place (`object_initial_id`, kept through licence renewals)                     | `/lv/iestade/paraugu-aptieka-1-a900001`                      |
+
+An institution whose GPs work at a hospital is a GP practice (`LV-GP`) and a hospital (`LV-SLIM`):
+two lists, two pages. A GP practice has one site per distinct address of its institution in the
+Ministry's list (35 practices have several in March 2026), source `lv-nvd-gp`, keyed by the
+Ministry's line id, an activity `{code}@{line}` each; a hospital's and a pharmacy's site is its
+own line (`lv-vkcp`, `lv-zva`).
+
+### Minimisation and what is left out
+
+- **GP practices**: read from the NVD's workbook are the institution's code and name, the GP's
+  family name and first name, and the status. **Never read into a row, so never stored**: the
+  GP's identifier and the patient counts by age group (`src/sources/lv/nvd.ts`). Only registered
+  GPs count (`Reģistrēts`); the `Pasīvi reģistrēts` lines are totals of the patients whose GP
+  left (5), three GPs are registered without an institution (between practices). A practice is
+  listed only when the Ministry's list gives an address for its code (`skipped.noAddress`: 804
+  practices with 876 GPs in March 2026, said on the GP listings and on `/lv/dati`); its GPs are
+  `gimenes_arsts` qualifications (label: first and last name, sorted), shown under "Ģimenes
+  ārsti". A GP who leaves a practice leaves its page at the next quarter.
+- **Names**: the legal form is dropped at either end (`, SIA`, `Sabiedrība ar ierobežotu
+  atbildību …`, `IK`, `PSIA`…), and so is a sole trader's legal name after a comma (`Rīgas
+  pilsētas … individuālais uzņēmums`), which names a person; a name in capitals is cased the
+  Latvian way, words of three letters kept (`src/sources/lv/names.ts`). A pharmacy's name drops
+  its owner, written first in the register (`SIA "Paraugu aptiekas" Paraugu aptieka 12`), even in
+  the genitive or as a sole trader's legal name; a branch named only after its owner keeps the
+  owner's brand (`Paraugs aptiekas filiāle "Ance"`).
+- **Hospitals**: every line of the Ministry's list that is not a GP practice (hospitals, their
+  branches, and the 18 lines without a kind: children's and psychiatric hospitals, the maternity
+  home); left out as not open to patients: the prison hospital, the forensic medicine and the
+  pathology centres (`skipped.notOpenToPatients`, 3).
+- **Pharmacies**: general pharmacies (`object_type` 5) and branches (6) whose licence is in force
+  (`lic_status` 4, not suspended); closed-type pharmacies of hospitals (31), wholesalers,
+  manufacturers and brokers (177) and suspended licences (12) are left out. Read: number, name,
+  owner (to drop it), type, licence status, address, postcode, phone and point. Never read: the
+  manager, the responsible person, the e-mail and web addresses, the owner's company number and
+  address, the conditions. A phone is stored only when at most three pharmacies publish it
+  (`MAX_PLACES_PER_PHONE`); `aptieka` qualifications say pharmacy or branch.
+- **GDPR objections**: the rows of a suppressed key are dropped while parsing
+  (`stats.suppressedLines`), and the purge of #116/#118 runs in the merge. An objection on a GP
+  practice removes the practice's page (all its GPs).
+
+### Places and precision
+
+Places (`directory.places`, `country = 'LV'`, coded by ATVK), from the address register,
+imported once:
+
+- **regions**: the five statistical regions (NUTS 3 since 2024: `LV00A` Rīgas reģions, `LV00B`
+  Kurzeme, `LV00C` Vidzeme, `LV009` Zemgale, `LV005` Latgale), grouping only, no listing;
+  each territory's region is `LV_DEPARTMENT_REGIONS` (`packages/core/src/country/lv.ts`), from
+  the Central Statistical Bureau's classification; a territory missing from it stops the places
+  import;
+- **departments**: the seven state cities (`0001000` Rīga) and the 35 municipalities
+  (`0054000` Valmieras novads) of the 2021 reform, as the register gives them on the day;
+- **communes**: their 75 towns and 511 parishes (`0054010` Valmiera, `0048450` Mores pagasts),
+  and each state city as a commune of its own department under the same code: like Paris, its
+  city page is its department's. Villages (ciemi) are not places: a site in one is placed in its
+  parish, the village kept in its address.
+
+A site is placed (`placeSite`, `src/sources/lv/places.ts`) by its locality, the part of its address
+after the street (`Ance, Ances pag., Ventspils nov.`, `Sigulda, Siguldas nov.`, `Rīga`): the
+commune whose standard name (the register's `STD`) is the locality's longest ending; else the
+commune whose centroid is nearest its point within 15 km (a 2024 address that names a
+municipality of before a later merger: `Varakļāni, Varakļānu nov.`, `Kalnciems, Jelgavas nov.`);
+else the municipality the locality names. Every site of the lists has a WGS 84 point: stored at
+address precision (`geo_source = 'source'`); three pharmacies without one are at their commune's
+centroid (`'city'`). No geocoder is called. The street and the locality are kept as the sources
+write them (`address_line`, `address_complement`) and printed the Latvian way, street first and
+postcode last.
+
+### Guards
+
+Per list (`checkLvSource`): quarantine within 1%; floors of lines and places (`gp` 300 and 60,
+`hospitals` 20 and 15, `pharmacies` 200 and 150; never approvable); the NVD's quarter never older
+than the last imported (never approvable); at most 10% more or fewer places and 30% more or fewer
+bytes than the last successful run that read it (approvable). A list whose file cannot be
+fetched, read or pass its floors is left out and keeps its places (not counted missing); the GP
+practices need the addresses too, so an unreadable address file leaves out both `gp` and
+`hospitals`; the run imports the others and exits `3`. After staging (`checkLvPlaces`): 98% of
+the sites in a town, parish or state city and 98% located (approvable). Then the breakers on
+Latvia's own pages, as everywhere.
+
+**Absences** (`LV_MISSING_RUNS`): a place missing from its list in two runs in a row is removed;
+a claimed page is kept and counted for review. An unchanged set of files skips the run, so a GP
+practice goes at the second new quarter that leaves it out, a pharmacy within two weeks.
+
+### Schedule and monitoring
+
+The scheduler runs `etl:lv $ETL_LV_SCHEDULE_ARGS` every Saturday at 04:30 UTC (`docker/crontab`),
+when no other import runs. Weekly, though the GP list is quarterly: the pharmacies' register
+changes every day and a run on unchanged files ends after its download (4 MB). Alert on exit codes
+1, 2 and 3, on a GP quarter more than six months old (`stats.sources.gp.edition`), and on the
+Ministry's addresses, which have not changed since March 2024 (`files.vkcp.lastModified`): a new
+resource there would list more practices.
+
+```sql
+-- Latvia's last runs: status, quarter, per-list counters, placement and totals.
+SELECT id, status, finished_at, stats -> 'sourceErrors' AS errors,
+	stats -> 'sources' -> 'gp' -> 'edition' AS quarter, stats -> 'staged' AS staged,
+	stats -> 'totals' AS totals
+FROM directory.etl_runs WHERE source = 'lv' ORDER BY id DESC LIMIT 5;
+```
+
+### Measured run (files of 27 November 2026)
+
+Laptop, local PostGIS, fresh database, the real files downloaded by the run (`--dry-run`):
+
+|           |                                                                                                                                                                                                                    |
+| --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Duration  | 7 s: places 2.3 s (download included), files 3.8 s, read models 0.2 s                                                                                                                                              |
+| Lines     | gp 1,183 registered GPs at 1,098 institutions (293 with an address, 304 GPs named; 3 GPs without an institution), hospitals 69 (66 imported, 3 not open to patients), pharmacies 826 (814 with a licence in force) |
+| Kinds     | GP practices 293 · hospitals 66 · pharmacies and branches 814 (1,173)                                                                                                                                              |
+| Phones    | 802 sites with a number (pharmacies; the NVD's and the Ministry's lists give none); 11 pharmacies' numbers unreadable                                                                                              |
+| Sites     | 1,216, all in a commune (1,214 by name, 2 by point); 1,213 at their address, 3 at their commune's centroid                                                                                                         |
+| Indexable | 1,173 pages; 143 indexable listing pages of 512                                                                                                                                                                    |
+| Places    | 5 regions, 42 state cities and municipalities, 593 communes (75 towns, 511 parishes, 7 state cities)                                                                                                               |
+
+### Local development
+
+```sh
+bun run etl:places --country lv --source-dir packages/etl/fixtures/lv   # synthetic places
+bun run etl:lv --source-dir packages/etl/fixtures/lv --offline          # synthetic data
+bun run --cwd packages/etl fixtures:lv                                  # regenerate the fixtures
+```
+
+`packages/etl/fixtures/lv` holds **synthetic** files in the lists' exact formats
+(`gimenes-arsti.xlsx` with its `ĢĀ` sheet and its totals lines, `medicinasiestades.csv`,
+`fdu_register.csv` with its forty columns) and a subset of the address register's real
+territories and centroids, generated deterministically by `packages/etl/fixtures/generate-lv.ts`:
+made-up practices, GPs (Paraugs, Piemērs, Fiktīvs, Izdomāts…) and pharmacies, a practice with
+three GPs at two addresses, GPs working at a hospital, a practice without an address, a practice
+the NVD no longer lists, a sole trader's legal name, a municipality of before the reform, a prison
+hospital, a pharmacy branch in a village, a chain's shared number, a closed pharmacy, a
+wholesaler, a suspended licence, made-up GP identifiers, patient counts, managers and e-mails (to
+check they are never stored), and filler rows above the floors. Never commit real rows.
+`test/lv-integration.test.ts` imports them next to the French fixtures: France untouched both
+ways, names, GPs, nothing unneeded stored, placement (standard names, a village's parish, a point),
+read models without region listings, idempotence, a dry run, an unreadable address file leaving
+out the GP practices and hospitals, absences, objections, the breaker and `--approve`.
