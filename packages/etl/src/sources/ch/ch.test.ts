@@ -4,7 +4,7 @@ import { join } from "node:path";
 import { beforeAll, describe, expect, it } from "vitest";
 import { generateChFixtures } from "../../../fixtures/generate-ch";
 import { checkChSource } from "../../guards";
-import { parseBag } from "./bag";
+import { pageName, parseBag } from "./bag";
 import { parseCantonalSource, splitAddress } from "./cantons";
 import { combineChLists, matchScore, sameStreet, similarNames } from "./combine";
 import { inSwitzerland, swissGridToWgs84 } from "./lv95";
@@ -168,6 +168,15 @@ describe("the FOPH's hospital figures", () => {
 			result.rows.find((row) => row.name === "Ambulatorium Beispielhof Basel")?.cantonCode,
 		).toBe("BS");
 		expect(JSON.stringify(result.rows)).not.toMatch(/Fittizio|Fiduciaria/);
+	});
+
+	it("print a site named by its town with its hospital's name", () => {
+		expect(pageName("Payerne", "Hôpital Intercantonal de la Broye (HIB)")).toBe(
+			"Hôpital Intercantonal de la Broye (HIB) – Payerne",
+		);
+		expect(pageName("LUKS Sursee", "LUKS Spitalbetriebe AG")).toBe("LUKS Sursee");
+		expect(pageName("Spital Riggisberg", "Insel Gruppe AG")).toBe("Spital Riggisberg");
+		expect(pageName("Rehaklinik Fiktiv", "Rehaklinik Fiktiv")).toBe("Rehaklinik Fiktiv");
 	});
 
 	it("refuse a workbook without the year's sheets", async () => {

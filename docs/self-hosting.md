@@ -259,9 +259,13 @@ Switzerland (`/ch`, `/ch-fr`, `/ch-it`) has its own import, from the FOPH's
 hospital figures and the cantons' open lists (about 1,400 hospitals and clinic
 sites, nursing homes and pharmacies). Import the places first, then dry-run it
 once:
+
+```sh
 apercura-compose run --rm --entrypoint "apercura etl:places" etl --country ch
 apercura-compose run --rm --entrypoint "apercura etl:ch" etl --dry-run
 apercura-compose run --rm --entrypoint "apercura etl:ch" etl
+```
+
 The places are the BFS commune register's cantons, districts and communes and
 swisstopo's postcode directory (the first `etl:ch` imports them too); rerun
 `etl:places --country ch` each January. The scheduler reruns the import on the

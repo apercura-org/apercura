@@ -96,6 +96,36 @@ export const BAG_LEGAL_FORMS: Readonly<Record<string, string>> = {
 	R4: "Öffentliches Unternehmen",
 };
 
+/**
+ * A site that is a hospital's administration, not a place patients go to ("Brig - Verwaltung
+ * SZO", "Direzione Generale EOC", "Zentrale Bereiche"): not a page.
+ */
+const ADMINISTRATIVE =
+	/\b(?:verwaltung\w*|admin\.?\w*|direzione generale|zentrale bereiche|centrale servizi|si[eè]ge administratif)/i;
+
+/** Words that make a site's name a facility's name on its own (`Spital`, `Clinique`, `Ambulatorium`…). */
+const FACILITY_WORD =
+	/spital|klinik|clini|h[oô]pital|ospedal|ambulator|zentrum|center|centre|centro|haus|maison|casa|praxis|permanence|station|unit[eé]|home|reha|psychiat|geburts|naissance|institut|cabinet|tagesk|therap|wohn|poli|sanatori|pflege|residen|r[eé]sidence|sant[eé]|gesundheit|medic|chirurg|dialys/i;
+
+/**
+ * The name a site's page prints: the site's own when it names a facility or shares a word with
+ * its hospital's ("LUKS Sursee" of "LUKS Spitalbetriebe AG"), else the hospital's and the site's
+ * ("Réseau hospitalier neuchâtelois RHNe – Le Locle" for a site the figures call "Le Locle").
+ */
+export function pageName(site: string, operator: string): string {
+	if (!operator || site === operator || FACILITY_WORD.test(site)) return site;
+	const words = (value: string) =>
+		new Set(
+			value
+				.toLowerCase()
+				.split(/[^\p{L}\p{N}]+/u)
+				.filter((word) => word.length > 2),
+		);
+	const own = words(operator);
+	if ([...words(site)].some((word) => own.has(word))) return site;
+	return `${operator} – ${site}`;
+}
+
 type Hospital = {
 	canton: string;
 	name: string;
@@ -240,6 +270,11 @@ export async function parseBag(archive: Buffer, year: number): Promise<ParseResu
 		}
 		const siteName = facilityNameCh(cell("Standort") || hospital.name);
 		const operator = facilityNameCh(hospital.name);
+		if (ADMINISTRATIVE.test(siteName.name)) {
+			skip(result, "administrative site");
+			continue;
+		}
+		// The key is the site's as the figures write it, whatever name the page prints.
 		const key = derivedKeyCh([canton, operator.name, siteName.name, place.postcode]);
 		if (seen.has(key)) {
 			skip(result, "repeated site");
@@ -247,6 +282,7 @@ export async function parseBag(archive: Buffer, year: number): Promise<ParseResu
 		}
 		seen.add(key);
 		if (siteName.shortened || operator.shortened) result.counters.namesShortened++;
+		const name = pageName(siteName.name, operator.name);
 
 		const qualifications: ChQualification[] = [];
 		const type = CH_HOSPITAL_TYPES[hospital.type];
@@ -271,7 +307,7 @@ export async function parseBag(archive: Buffer, year: number): Promise<ParseResu
 				label: legalForm,
 			});
 		}
-		if (operator.name && operator.name !== siteName.name) {
+		if (operator.name && operator.name !== name && !name.startsWith(`${operator.name} – `)) {
 			qualifications.push({ source: CH_OPERATOR_SOURCE, code: "", label: operator.name });
 		}
 
@@ -281,7 +317,7 @@ export async function parseBag(archive: Buffer, year: number): Promise<ParseResu
 			idScheme: "CH-BAG",
 			nationalId: key,
 			professionCode,
-			name: siteName.name,
+			name,
 			qualifications,
 			street: streetCh(cell("Adr_Standort")),
 			postcode: place.postcode,
@@ -292,7 +328,7 @@ export async function parseBag(archive: Buffer, year: number): Promise<ParseResu
 			longitude: null,
 			phone: null,
 			website: null,
-			matchKeys: [nameMatchKeyCh(siteName.name)],
+			matchKeys: [nameMatchKeyCh(siteName.name), nameMatchKeyCh(name)],
 		};
 		result.rows.push(row);
 	}

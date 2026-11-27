@@ -390,13 +390,13 @@ specialties mapped to the market's own terms, with catalog labels under
   their bulk data needs an agreement with the FOPH; but the FOPH's "Kennzahlen der Schweizer
   Spitäler" name every hospital and its sites under "Open use. Must provide the source.", and six
   cantons publish hospitals, nursing homes or pharmacies under opendata.swiss's open terms: twelve
-  lists, twelve identifier schemes, left out one at a time (exit code 3), 1,423 pages.
+  lists, twelve identifier schemes, left out one at a time (exit code 3), 1,414 pages.
 - **Read the terms of each edition.** The 2024 figures ask for permission before any commercial
   use, the 2023 ones do not: the edition read is fixed (`CH_HOSPITAL_FIGURES_YEAR`), and the
   request for the later ones is in [`docs/data-requests/ch.md`](../data-requests/ch.md).
 - **Lists overlap: one facility, one page.** A canton's hospital that is a FOPH site (same commune
   or postcode, same name or street) adds its point, phone and emergency department to the site's
-  page and is credited there (87 of the cantons' 113 hospitals); without the FOPH's figures in a
+  page and is credited there (88 of the cantons' 113 hospitals); without the FOPH's figures in a
   run the cantons' hospitals are not read, so a failed download never doubles a page.
 - **A list without numbers keys its rows.** The figures number nothing and four cantons renumber
   their exports: the key is derived from canton, name, street and postcode, as Salzburg's names
@@ -1330,7 +1330,7 @@ English or French interface comes first. Finland's Swedish pages go under `/fi-s
 | #   | Market         | Path                         | Fast path                                               | Why                                                                                                                                                                                                                        |
 | --- | -------------- | ---------------------------- | ------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | 1   | Austria        | `/at`                        | Open: directory (Vienna, Styria, Salzburg)              | Opened 2026-11-25 (#107): CC BY 4.0 lists of Vienna, Styria and Salzburg (10,377 doctors and dentists); German interface; no hosting certification; booking off                                                            |
-| 2   | Switzerland    | `/ch`, `/ch-fr`, `/ch-it`    | Open: facilities (hospitals, homes, pharmacies)         | Opened 2026-11-27 (#154): the FOPH's hospital figures 2023 and six cantons' open lists (1,423 facilities), BFS places, German, French and Italian pages; no practitioner (MedReg bulk needs a FOPH agreement); booking off |
+| 2   | Switzerland    | `/ch`, `/ch-fr`, `/ch-it`    | Open: facilities (hospitals, homes, pharmacies)         | Opened 2026-11-27 (#154): the FOPH's hospital figures 2023 and six cantons' open lists (1,414 facilities), BFS places, German, French and Italian pages; no practitioner (MedReg bulk needs a FOPH agreement); booking off |
 | 3   | Czechia        | `/cz`                        | Open: directory (places of care)                        | Opened 2026-11-26 (#131): NRPZS places of care under CC BY 4.0 (33,173 facilities), RÚIAN places; Czech interface; booking off                                                                                             |
 | 4   | United Kingdom | `/gb`                        | Open: practice pages (four nations)                     | Opened 2026-11-25 (#125): NHS ODS, PHS and BSO practice lists under the OGL (about 31,000 practices), located by postcode; no clinician (GMC licence); booking off                                                         |
 | 5   | Poland         | `/pl`                        | Directory (registered practices), opt-out               | RPWDL under CC BY 4.0, daily; large market; listing without consent litigated (III OSK 1052/21); Docplanner's home; needs Polish                                                                                           |
