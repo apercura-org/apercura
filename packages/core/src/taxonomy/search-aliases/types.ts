@@ -25,7 +25,8 @@ export type SearchAliasLanguage =
 	| "lt"
 	| "sl"
 	| "el"
-	| "lv";
+	| "lv"
+	| "sv";
 
 export type SearchAliases = {
 	/**

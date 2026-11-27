@@ -15,6 +15,7 @@ import { LV_SEARCH_ALIASES } from "./lv";
 import { NO_SEARCH_ALIASES } from "./no";
 import { PL_SEARCH_ALIASES } from "./pl";
 import { SI_SEARCH_ALIASES } from "./si";
+import { SE_SEARCH_ALIASES } from "./se";
 import type { SearchAliasTable } from "./types";
 
 export * from "./types";
@@ -36,6 +37,7 @@ export {
 	NO_SEARCH_ALIASES,
 	PL_SEARCH_ALIASES,
 	SI_SEARCH_ALIASES,
+	SE_SEARCH_ALIASES,
 };
 
 /** The search aliases of each open market. */
@@ -57,7 +59,8 @@ export const SEARCH_ALIASES: Readonly<
 		| "LT"
 		| "SI"
 		| "CY"
-		| "LV",
+		| "LV"
+		| "SE",
 		SearchAliasTable
 	>
 > = {
@@ -78,4 +81,5 @@ export const SEARCH_ALIASES: Readonly<
 	SI: SI_SEARCH_ALIASES,
 	CY: CY_SEARCH_ALIASES,
 	LV: LV_SEARCH_ALIASES,
+	SE: SE_SEARCH_ALIASES,
 };

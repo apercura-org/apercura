@@ -1173,3 +1173,121 @@ export function parseLvFacilitySegment(segment: string): LvFacilitySegment | nul
 	if (!key) return null;
 	return { ...key, namePart: dash < 0 ? "" : segment.slice(0, dash) };
 }
+
+/**
+ * Swedish identifiers. A page is a facility of one of the Swedish lists, never a person:
+ * - a pharmacy of the Swedish Medical Products Agency's register of licensed pharmacies
+ *   (Läkemedelsverket, "Apotek med tillstånd"), keyed by its GLN (Global Location Number, GS1:
+ *   thirteen digits, the last a modulus 10 check digit, `7312446003969`), which the register
+ *   gives every licensed pharmacy;
+ * - a health centre of a region's open list (Västra Götalandsregionen's "Vårdcentraler i Vårdval
+ *   vårdcentral"), keyed by its HSA-id, the national directory's id of the care unit: `SE`, the
+ *   ten-digit organisation number of the body that registered it, a dash and the unit's own part
+ *   (`SE2321000131-E000000007600`).
+ * A page URL ends with the key, a letter naming its list and the id without punctuation
+ * (`apotek-hjartat-ica-maxi-olofstrom-a7312446000272`, `alepraktiken-v2321000131e000000007600`).
+ */
+export const SE_ID_SCHEMES = {
+	/** A licensed pharmacy of Läkemedelsverket's register: its GLN. */
+	"SE-GLN": { prefix: "a", pattern: /^\d{13}$/ },
+	/** A care unit of the HSA directory listed by a region: its HSA-id. */
+	"SE-HSA": { prefix: "v", pattern: /^SE\d{10}-[0-9A-Z]{1,24}$/ },
+} as const;
+
+export type SeIdScheme = keyof typeof SE_ID_SCHEMES;
+
+/** True when `value` is a GLN: thirteen digits whose GS1 check digit matches (syntax only). */
+export function isValidGln(value: string): boolean {
+	if (!SE_ID_SCHEMES["SE-GLN"].pattern.test(value)) return false;
+	let sum = 0;
+	for (let index = 0; index < 12; index++) {
+		sum += Number(value[index]) * (index % 2 === 0 ? 1 : 3);
+	}
+	return (10 - (sum % 10)) % 10 === Number(value[12]);
+}
+
+/**
+ * True when `value` is a Swedish organisation number (ten digits, `2321000131`) of a legal
+ * person: a Luhn check digit and a third digit of 2 or more, which no personal identity number
+ * has (its third and fourth digits are a month). A sole trader's number is the trader's personal
+ * identity number and is refused.
+ */
+export function isValidSeLegalPersonNumber(value: string): boolean {
+	if (!/^\d{10}$/.test(value) || Number(value[2]) < 2) return false;
+	let sum = 0;
+	for (let index = 0; index < 10; index++) {
+		let digit = Number(value[index]) * (index % 2 === 0 ? 2 : 1);
+		if (digit > 9) digit -= 9;
+		sum += digit;
+	}
+	return sum % 10 === 0;
+}
+
+/** True when `value` is a key of the Swedish schemes (syntax and check digits only). */
+export function isValidSeSourceId(scheme: string, value: string): boolean {
+	if (scheme === "SE-GLN") return isValidGln(value);
+	if (scheme === "SE-HSA") {
+		return SE_ID_SCHEMES["SE-HSA"].pattern.test(value) && /^SE\d{10}/.test(value);
+	}
+	return false;
+}
+
+/** The key of a Swedish page as its URL ends (`a7312446003969`, `v2321000131e000000007600`). */
+export function seUrlKey(scheme: SeIdScheme, nationalId: string): string {
+	const { prefix } = SE_ID_SCHEMES[scheme];
+	return scheme === "SE-HSA"
+		? `${prefix}${nationalId.slice(2).replace("-", "").toLowerCase()}`
+		: `${prefix}${nationalId}`;
+}
+
+/**
+ * Canonical path segment of a Swedish facility page: `{name}-{key}`
+ * (`apoteket-hjartat-a7312446003969`), `å`, `ä` written `a` and `ö` `o`, as Swedish URLs write
+ * them.
+ */
+export function seFacilitySlug(name: string, scheme: SeIdScheme, nationalId: string): string {
+	const key = seUrlKey(scheme, nationalId);
+	const base = slugify(name).slice(0, 80).replace(/-+$/, "");
+	return base ? `${base}-${key}` : key;
+}
+
+export type SeFacilityKey = { idScheme: SeIdScheme; nationalId: string };
+
+/**
+ * Reads a Swedish key as its page URL ends (`a7312446003969`, `V2321000131E000000007600`), or a
+ * GLN or an HSA-id as typed (`7312446003969`, `SE2321000131-E000000007600`). Null for anything
+ * else, a wrong GLN check digit included.
+ */
+export function parseSeKey(token: string): SeFacilityKey | null {
+	const compact = token.replace(/\s+/g, "");
+	const hsa = /^SE(\d{10})-([0-9A-Z]{1,24})$/i.exec(compact);
+	if (hsa) return { idScheme: "SE-HSA", nationalId: `SE${hsa[1]}-${(hsa[2] ?? "").toUpperCase()}` };
+	if (isValidGln(compact)) return { idScheme: "SE-GLN", nationalId: compact };
+	const lower = compact.toLowerCase();
+	const gln = /^a(\d{13})$/.exec(lower);
+	if (gln) return gln[1] && isValidGln(gln[1]) ? { idScheme: "SE-GLN", nationalId: gln[1] } : null;
+	const unit = /^v(\d{10})([0-9a-z]{1,24})$/.exec(lower);
+	if (unit) {
+		return { idScheme: "SE-HSA", nationalId: `SE${unit[1]}-${(unit[2] ?? "").toUpperCase()}` };
+	}
+	return null;
+}
+
+export type SeFacilitySegment = SeFacilityKey & {
+	/** Name part before the key, possibly empty. */
+	namePart: string;
+};
+
+/**
+ * Parses the last segment of a Swedish page URL (`{name}-{key}`). Returns null unless it ends
+ * with a valid key, so invalid URLs never reach the database.
+ */
+export function parseSeFacilitySegment(segment: string): SeFacilitySegment | null {
+	if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(segment)) return null;
+	const dash = segment.lastIndexOf("-");
+	const token = dash < 0 ? segment : segment.slice(dash + 1);
+	if (!/^[av]/.test(token)) return null;
+	const key = parseSeKey(token);
+	if (!key) return null;
+	return { ...key, namePart: dash < 0 ? "" : segment.slice(0, dash) };
+}
