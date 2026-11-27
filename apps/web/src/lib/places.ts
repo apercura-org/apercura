@@ -1,5 +1,11 @@
 import { slugifyDe } from "@apercura/core";
-import { AT_STATES, HELSINKI_CODE, OSLO_MUNICIPALITY, PRAGUE_CODE } from "@apercura/core/country";
+import {
+	AT_STATES,
+	HELSINKI_CODE,
+	LT_CITY_MUNICIPALITIES,
+	OSLO_MUNICIPALITY,
+	PRAGUE_CODE,
+} from "@apercura/core/country";
 import type { PlaceRef } from "~/server/queries/types";
 
 /**
@@ -53,21 +59,28 @@ export const EE_TOWN_CODES = [...EE_TOWN_MUNICIPALITIES].map((code) => `'${code}
 const PL_CITY_POWIAT = /^\d{2}[6-9]\d{4}$/;
 
 /**
+ * Lithuania's cities that are a municipality of their own (Vilnius, Kaunas, Klaipėda…), by their
+ * Address Register settlement code: the city's page is its municipality's, like Paris's.
+ */
+const LT_CITY_CODES: readonly string[] = Object.keys(LT_CITY_MUNICIPALITIES);
+
+/**
  * True for the city that is its own department page (Paris, Wien, Praha, a kreisfreie Stadt, an
  * Estonian town that is a municipality, a
- * Polish city with powiat rights).
+ * Polish city with powiat rights, a Lithuanian city municipality's city).
  */
 export function isDepartmentCity(country: string, code: string): boolean {
 	if (country === "DE") return DE_KREISFREIE_STADT.test(code);
 	if (country === "EE") return EE_TOWN_MUNICIPALITIES.has(code);
 	if (country === "PL") return PL_CITY_POWIAT.test(code);
+	if (country === "LT") return LT_CITY_CODES.includes(code);
 	return CITY_IS_DEPARTMENT[country] === code;
 }
 
 /**
  * SQL condition excluding the department cities of every market for the place alias `p`
  * (a plain string, no parameters: the codes are constants): Paris, Wien, Praha, Germany's
- * kreisfreie Städte and Estonia's towns that are a municipality and Poland's cities with powiat rights.
+ * kreisfreie Städte and Estonia's towns that are a municipality and Poland's cities with powiat rights, and Lithuania's city municipalities' cities.
  */
 export const NOT_DEPARTMENT_CITY = (alias: string) =>
 	[
@@ -78,17 +91,19 @@ export const NOT_DEPARTMENT_CITY = (alias: string) =>
 		// The town and its municipality share a code: only the town (a commune) is left out.
 		`NOT (${alias}.country = 'EE' AND ${alias}.kind = 'commune' AND ${alias}.code IN (${EE_TOWN_CODES}))`,
 		`NOT (${alias}.country = 'PL' AND ${alias}.kind = 'commune' AND substr(${alias}.code, 3, 1) IN ('6', '7', '8', '9'))`,
+		`NOT (${alias}.country = 'LT' AND ${alias}.code IN (${LT_CITY_CODES.map((code) => `'${code}'`).join(", ")}))`,
 	].join(" AND ");
 
 /**
  * Markets whose regions have listing and hub pages of their own: the United Kingdom (migration
  * 0026), Italy (0028), whose health service is run by its regions, and Switzerland, whose
- * cantons run theirs (`/ch/spital/zuerich`, above the districts' and the communes' pages), and
+ * cantons run theirs (`/ch/spital/zuerich`, above the districts' and the communes' pages),
  * Poland, whose sixteen voivodeships each have their branch of the National Health Fund
- * (`/pl/szpitale/malopolskie`, migration 0030).
+ * (`/pl/szpitale/malopolskie`, migration 0030), and Lithuania, whose ten counties are how people
+ * group its municipalities (`/lt/ligonines/vilniaus-apskritis`).
  * France's regions group its departments on the directory page only.
  */
-export const REGION_LISTING_MARKETS: ReadonlySet<string> = new Set(["GB", "IT", "CH", "PL"]);
+export const REGION_LISTING_MARKETS: ReadonlySet<string> = new Set(["GB", "IT", "CH", "PL", "LT"]);
 
 /** Slugs of the Austrian Bundesländer (`wien`, `steiermark`, `niederoesterreich`…). */
 export const AT_STATE_SLUGS: ReadonlySet<string> = new Set(
@@ -104,6 +119,8 @@ export const AT_STATE_SLUGS: ReadonlySet<string> = new Set(
  * province (`madrid`, `barcelona`). Italy: the slug of a province or of a region (`roma`,
  * `lazio`). Germany: the slug of a Kreis (`landkreis-muenchen`, `berlin`). Switzerland: the slug of a district or of a canton (`bezirk-zuerich`, `zuerich`). Estonia: the slug of a municipality (`tallinn`,
  * `tartu-linn`, `rae-vald`). Poland: the slug of a powiat or of a voivodeship (`powiat-krakowski`, `krakow`, `malopolskie`). Norway: the slug of a county (`vestland`, `trondelag`). Ireland: the slug of a county (`cork`, `dublin`). Finland: the slug of a wellbeing services county (`pirkanmaan-hyvinvointialue`, `helsinki`).
+ * Lithuania: the slug of a municipality or of a county (`vilniaus-miesto-savivaldybe`,
+ * `vilniaus-apskritis`).
  */
 export function isDepartmentSlug(slug: string, country = "FR"): boolean {
 	if (country === "AT") return AT_STATE_SLUGS.has(slug);
@@ -118,7 +135,8 @@ export function isDepartmentSlug(slug: string, country = "FR"): boolean {
 		country === "PL" ||
 		country === "NO" ||
 		country === "IE" ||
-		country === "FI"
+		country === "FI" ||
+		country === "LT"
 	) {
 		return isPlaceSlug(slug);
 	}

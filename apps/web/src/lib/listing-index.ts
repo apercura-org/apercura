@@ -17,6 +17,7 @@ import {
 	allGbListingSlugs,
 	allIeListingSlugs,
 	allItListingSlugs,
+	allLtListingSlugs,
 	allNoListingSlugs,
 	allPlListingSlugs,
 	type CareKind,
@@ -49,10 +50,11 @@ const PL_LISTINGS: ReadonlySet<string> = allPlListingSlugs();
 const NO_LISTINGS: ReadonlySet<string> = allNoListingSlugs();
 const IE_LISTINGS: ReadonlySet<string> = allIeListingSlugs();
 const FI_LISTINGS: ReadonlySet<string> = allFiListingSlugs();
+const LT_LISTINGS: ReadonlySet<string> = allLtListingSlugs();
 
 /**
  * True when a listing slug belongs to the market of `locale` (France's, Austria's, the UK's,
- * Czechia's, Spain's, Italy's, Germany's, Switzerland's, Estonia's, Poland's or Ireland's taxonomy).
+ * Czechia's, Spain's, Italy's, Germany's, Switzerland's, Estonia's, Lithuania's, Poland's or Ireland's taxonomy).
  */
 function inMarket(slug: string, locale: Locale): boolean {
 	if (marketOf(locale) === "AT") return AT_LISTINGS.has(slug);
@@ -67,6 +69,7 @@ function inMarket(slug: string, locale: Locale): boolean {
 	if (marketOf(locale) === "NO") return NO_LISTINGS.has(slug);
 	if (marketOf(locale) === "IE") return IE_LISTINGS.has(slug);
 	if (marketOf(locale) === "FI") return FI_LISTINGS.has(slug);
+	if (marketOf(locale) === "LT") return LT_LISTINGS.has(slug);
 	const profession = professionOfListingSlug(slug);
 	return Boolean(profession && FR_PROFESSIONS[profession]?.enabled);
 }
@@ -109,10 +112,11 @@ function buildIndex(locale: Locale): ListingEntry[] {
 	const { taxonomy } = messagesFor(locale);
 	const listing = taxonomy.listing as Record<string, string>;
 	const professions = taxonomy.profession as Record<string, string>;
-	// A Czech, Spanish, Italian, German, Swiss or Estonian listing is plural ("Kardiologové",
-	// "Farmacias", "Farmacie", "Apotheken", "Spitäler", "Apteegid"), its profession label singular
-	// ("Kardiolog", "Farmacia", "Apotheke", "Spital", "Apteek"): both match.
-	const singular = ["CZ", "ES", "IT", "DE", "CH", "EE", "PL", "NO", "IE", "FI"].includes(
+	// A Czech, Spanish, Italian, German, Swiss, Estonian, Polish, Norwegian, Irish, Finnish or
+	// Lithuanian listing is plural ("Kardiologové", "Farmacias", "Farmacie", "Apotheken", "Spitäler",
+	// "Apteegid", "Ligoninės"), its profession label singular ("Kardiolog", "Farmacia", "Apotheke",
+	// "Spital", "Apteek", "Ligoninė"): both match.
+	const singular = ["CZ", "ES", "IT", "DE", "CH", "EE", "PL", "NO", "IE", "FI", "LT"].includes(
 		marketOf(locale),
 	);
 	// The everyday words of the locale's language suggest their listing too ("Hausarzt" →

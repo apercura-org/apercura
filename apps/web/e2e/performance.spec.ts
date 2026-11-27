@@ -32,6 +32,10 @@ const BUDGETS_KB: Record<string, number> = {
 	// the other markets' islands and theirs out of Ireland's.
 	"/ie": 60,
 	"/ie/pharmacy/cork": 60,
+	// Lithuania (synthetic fixtures): an institution, a municipality's listing, the home.
+	"/lt/istaiga/uab-pavyzdine-klinika-9000-90000001": 61,
+	"/lt/medicinos-centrai/vilniaus-miesto-savivaldybe": 60,
+	"/lt": 60,
 };
 
 const manifest = JSON.parse(

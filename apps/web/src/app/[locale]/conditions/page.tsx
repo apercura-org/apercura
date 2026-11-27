@@ -17,6 +17,7 @@ import { TermsFi } from "~/components/legal-fi";
 import { TermsGb } from "~/components/legal-gb";
 import { TermsIe } from "~/components/legal-ie";
 import { TermsIt } from "~/components/legal-it";
+import { TermsLt } from "~/components/legal-lt";
 import { TermsNo } from "~/components/legal-no";
 import { TermsPl } from "~/components/legal-pl";
 import { PageGraph } from "~/components/page-graph";
@@ -53,6 +54,7 @@ export function generateMetadata({ params }: PageProps<"/[locale]/conditions">) 
 			NO: "TermsNo",
 			IE: "TermsIe",
 			FI: "TermsFi",
+			LT: "TermsLt",
 		},
 		HREF,
 	);
@@ -66,7 +68,7 @@ export function generateMetadata({ params }: PageProps<"/[locale]/conditions">) 
 export default async function TermsPage({ params }: PageProps<"/[locale]/conditions">) {
 	const locale = await localeOf(params);
 	setRequestLocale(locale);
-	// Austria's, the UK's, Czechia's, Spain's, Italy's, Germany's, Switzerland's, Estonia's, Poland's, Norway's and Finland's pages
+	// Austria's, the UK's, Czechia's, Spain's, Italy's, Germany's, Switzerland's, Estonia's, Poland's, Norway's, Finland's and Lithuania's pages
 	// have texts of their own, written for their law.
 	if (marketOf(locale) === "AT") return <TermsAt locale={locale} />;
 	if (marketOf(locale) === "GB") return <TermsGb locale={locale} />;
@@ -80,6 +82,7 @@ export default async function TermsPage({ params }: PageProps<"/[locale]/conditi
 	if (marketOf(locale) === "EE") return <TermsEe locale={locale} />;
 	if (marketOf(locale) === "NO") return <TermsNo locale={locale} />;
 	if (marketOf(locale) === "IE") return <TermsIe locale={locale} />;
+	if (marketOf(locale) === "LT") return <TermsLt locale={locale} />;
 	const t = await getTranslations({ locale, namespace: "TermsPage" });
 	const tI = await getTranslations({ locale, namespace: "Institutional" });
 	const format = await getFormatter({ locale });

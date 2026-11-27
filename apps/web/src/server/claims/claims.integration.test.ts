@@ -1331,6 +1331,93 @@ describe.skipIf(!url)("claims, ownership and objections (database)", async () =>
 		expect(suppression).toEqual({ country: "IE", id_scheme: "IE-PSI" });
 	});
 
+	/** A Lithuanian institution's activity address, in a fictitious settlement of its own. */
+	async function lithuanianInstitution() {
+		const sql = db.$client;
+		const institution = 900_000 + Math.floor(Math.random() * 99_999);
+		const address = 10_000_000 + Math.floor(Math.random() * 89_999_999);
+		const nationalId = `${institution}-${address}`;
+		const [place] = await sql<{ id: number }[]>`
+			INSERT INTO directory.places (country, kind, code, name, slug, department_code, centroid)
+			VALUES ('LT', 'commune', ${`T${run}${created.places.length}`}, 'Pavyzdžiai',
+				${`pavyzdziai-${run}-${created.places.length}`}, '13', 'SRID=4326;POINT(25.28 54.69)')
+			RETURNING id
+		`;
+		const [clinic] = await sql<{ id: number }[]>`
+			INSERT INTO directory.practitioners (country, id_scheme, national_id, first_name, last_name,
+				first_name_source, last_name_source, profession_code, listing_slug, slug, primary_place_id,
+				indexable)
+			VALUES ('LT', 'LT-VASPVT', ${nationalId}, '', 'UAB „Pavyzdinė klinika“', '',
+				'UAB „Pavyzdinė klinika“', 'LT_SPECIALIST', 'medicinos-centrai',
+				${`uab-pavyzdine-klinika-${nationalId}`}, ${place?.id ?? null}, true)
+			RETURNING id
+		`;
+		const [site] = await sql<{ id: number }[]>`
+			INSERT INTO directory.sites (source, source_key, kind, address_line, place_id, location,
+				geo_precision)
+			VALUES ('lt-vaspvt', ${`test-${nationalId}`}, 'office', 'Pavyzdžio g. 12', ${place?.id ?? null},
+				'SRID=4326;POINT(25.28 54.69)', 'city')
+			RETURNING id
+		`;
+		await sql`
+			INSERT INTO directory.activities (practitioner_id, site_id, source, source_key, practice_kind, is_primary)
+			VALUES (${clinic?.id ?? 0}, ${site?.id ?? 0}, 'lt-vaspvt', ${`test-${nationalId}`}, 'office', true)
+		`;
+		created.practitioners.push(clinic?.id ?? 0);
+		created.places.push(place?.id ?? 0);
+		created.sites.push(site?.id ?? 0);
+		return { id: clinic?.id ?? 0, nationalId, ref: `lt:${nationalId}` };
+	}
+
+	it("claims a Lithuanian institution with a document reviewed by an administrator, found by its Lithuanian reference", async () => {
+		const target = await lithuanianInstitution();
+		const options = { pscEnabled: true, documentsEnabled: true };
+		const preview = await caller(users.alice).claims.preview({ ref: target.ref });
+		expect(preview).toMatchObject({ id: target.id, country: "LT", idScheme: "LT-VASPVT" });
+		const claim = await caller(users.alice).claims.start({ ref: target.ref });
+		const view = await service.claimForClaimant(db, claim.id, users.alice, options);
+		expect(view.methods).toEqual(["document"]);
+		expect(await codeOf(service.recordPscResult(db, claim.id, users.alice))).toBe(
+			"METHOD_UNAVAILABLE",
+		);
+		await service.addClaimDocument(db, storage, {
+			claimId: claim.id,
+			userId: users.alice,
+			kind: "ordre_attestation",
+			bytes: Buffer.from("%PDF-1.4\n% synthetic licence extract\n%%EOF\n"),
+		});
+		await service.submitClaim(db, claim.id, users.alice);
+		expect(await service.evaluateClaim(db, claim.id)).toBeNull();
+		const approval = await service.approveClaim(db, claim.id, users.admin, null);
+		expect(approval.via).toBe("review");
+	});
+
+	it("withholds a Lithuanian institution on objection, found by its page address", async () => {
+		const target = await lithuanianInstitution();
+		const request = await gdpr.requestRemoval(db, {
+			ref: `https://apercura.org/lt/istaiga/uab-pavyzdine-klinika-${target.nationalId}`,
+			contact: "priestaravimas@example.test",
+			message: null,
+			locale: "lt-LT",
+		});
+		const [row] = await db
+			.select({ withheldAt: practitioners.withheldAt, indexable: practitioners.indexable })
+			.from(practitioners)
+			.where(eq(practitioners.id, target.id));
+		expect(row?.withheldAt).not.toBeNull();
+		expect(row?.indexable).toBe(false);
+		await gdpr.decideRemoval(db, {
+			id: request.id,
+			adminId: users.admin,
+			confirm: true,
+			reason: null,
+		});
+		const [suppression] = await db.$client<{ country: string; id_scheme: string }[]>`
+			SELECT country, id_scheme FROM directory.suppressions WHERE national_id = ${target.nationalId}
+		`;
+		expect(suppression).toEqual({ country: "LT", id_scheme: "LT-VASPVT" });
+	});
+
 	it("withholds an Austrian page on objection, found by its list key", async () => {
 		const target = await austrianPractitioner();
 		expect(

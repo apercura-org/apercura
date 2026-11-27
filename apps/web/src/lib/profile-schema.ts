@@ -87,14 +87,15 @@ export const ownerSiteSchema = z.object({
 	}),
 	// Five digits in France, Spain, Italy and Germany, four in Austria and Switzerland, a UK postcode
 	// (`TS18 1HU`), five digits in Czechia written `110 00` or `11000`, five in Poland written
-	// `00-950` or `00950`, an Irish Eircode (`D02 X285`, `D6W 1234`): the service checks the
+	// `00-950` or `00950`, an Irish Eircode (`D02 X285`, `D6W 1234`), five digits in Lithuania after
+	// an optional `LT-` (`LT-01100`): the service checks the
 	// practitioner's
 	// market.
 	postcode: z
 		.string()
 		.trim()
 		.regex(
-			/^(?:\d{4,5}|\d{3} \d{2}|\d{2}-\d{3}|[A-Za-z]{1,2}\d[A-Za-z\d]? ?\d[A-Za-z]{2}|[A-Za-z]\d[\dWw] ?[A-Za-z\d]{4})$/,
+			/^(?:\d{4,5}|\d{3} \d{2}|\d{2}-\d{3}|LT-?\d{5}|[A-Za-z]{1,2}\d[A-Za-z\d]? ?\d[A-Za-z]{2}|[A-Za-z]\d[\dWw] ?[A-Za-z\d]{4})$/,
 			{
 				message: "postcode",
 			},

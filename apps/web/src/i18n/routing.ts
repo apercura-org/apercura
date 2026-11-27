@@ -21,6 +21,7 @@ type Pathnames = Record<
 				| "nb-NO"
 				| "en-IE"
 				| "fi-FI"
+				| "lt-LT"
 			>,
 			string
 	  >
@@ -163,6 +164,33 @@ function finnishPath(path: string): string {
 }
 
 /**
+ * The Lithuanian form of each English path segment (`/practitioner/[slug]/report` ->
+ * `/istaiga/[slug]/pranesti`): Lithuania lists institutions, never people, so a page lives under
+ * `/istaiga`. The first segments are the Lithuanian reserved segments of `@apercura/core/taxonomy`
+ * (`LT_RESERVED_SEGMENTS`, tested), which never name a listing.
+ */
+export const LITHUANIAN_SEGMENTS: Readonly<Record<string, string>> = {
+	search: "paieska",
+	practitioner: "istaiga",
+	report: "pranesti",
+	removal: "pasalinimas",
+	"this-is-me": "tai-as",
+	establishment: "organizacija",
+	directory: "katalogas",
+	about: "apie",
+	data: "duomenys",
+	accessibility: "prieinamumas",
+	privacy: "privatumas",
+	"legal-notice": "teisine-informacija",
+	terms: "naudojimo-salygos",
+};
+
+/** An English path with its segments in Lithuanian; parameters and unknown segments stay. */
+function lithuanianPath(path: string): string {
+	return path.replace(/[^/]+/g, (segment) => LITHUANIAN_SEGMENTS[segment] ?? segment);
+}
+
+/**
  * The Spanish market's form of a Spanish path: a centre's page under `/centro` (Spain lists
  * centres, never people), so an establishment's page moves from `/centro` to `/organizacion`.
  * Every first segment is a Spanish reserved segment of `@apercura/core/taxonomy`
@@ -237,7 +265,9 @@ function swissMarketPath(path: string, person: string, facility: string): string
  *   establishment keeps `/establishment`. Every first segment is an Irish reserved segment of
  *   `@apercura/core/taxonomy` (`IE_RESERVED_SEGMENTS`, tested);
  * - Finland (`fi-FI`): the English paths with their segments in Finnish (`FINNISH_SEGMENTS`), a
- *   service location's page under `/toimipiste`.
+ *   service location's page under `/toimipiste`;
+ * - Lithuania (`lt-LT`): the English paths with their segments in Lithuanian
+ *   (`LITHUANIAN_SEGMENTS`), an institution's page under `/istaiga`.
  */
 function withMarkets<T extends Pathnames>(pathnames: T) {
 	return Object.fromEntries(
@@ -261,6 +291,7 @@ function withMarkets<T extends Pathnames>(pathnames: T) {
 						"nb-NO": norwegianPath(value.en),
 						"en-IE": value.en.replace("/practitioner/", "/facility/"),
 						"fi-FI": finnishPath(value.en),
+						"lt-LT": lithuanianPath(value.en),
 					},
 		]),
 	) as {
@@ -281,6 +312,7 @@ function withMarkets<T extends Pathnames>(pathnames: T) {
 					"nb-NO": string;
 					"en-IE": string;
 					"fi-FI": string;
+					"lt-LT": string;
 				};
 	};
 }

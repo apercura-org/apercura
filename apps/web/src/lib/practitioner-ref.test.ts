@@ -106,6 +106,31 @@ describe("Czech facility references", () => {
 	});
 });
 
+describe("Lithuanian institution references", () => {
+	const address = { country: "LT", idScheme: "LT-VASPVT", nationalId: "9000-90000009" };
+
+	it("read the `lt:` reference, a Lithuanian page address, and a key typed on a Lithuanian page", () => {
+		expect(parsePractitionerRef("lt:9000-90000009")).toEqual(address);
+		expect(parsePractitionerRef(" LT: 9000-90000009 ")).toEqual(address);
+		expect(
+			parsePractitionerRef("https://apercura.org/lt/istaiga/uab-pavyzdine-klinika-9000-90000009"),
+		).toEqual(address);
+		expect(parsePractitionerRef("/lt/istaiga/uab-pavyzdine-klinika-9000-90000009/")).toEqual(
+			address,
+		);
+		expect(parsePractitionerRef("9000-90000009", "LT")).toEqual(address);
+		expect(parsePractitionerRef("lt:9000-v0014102")).toBeNull();
+		expect(parsePractitionerRef("lt:")).toBeNull();
+	});
+
+	it("write the reference back with its market", () => {
+		expect(practitionerRefOf(address)).toBe("lt:9000-90000009");
+		expect(marketRef("9000-90000009", "LT")).toBe("lt:9000-90000009");
+		expect(parsePractitionerRef(practitionerRefOf(address))).toEqual(address);
+		expect(parsePractitionerRef("19999990013", "LT")?.country).toBe("FR");
+	});
+});
+
 describe("Spanish centre references", () => {
 	const centre = { country: "ES", idScheme: "ES-REGCESS", nationalId: "1328000001" };
 

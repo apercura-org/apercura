@@ -33,6 +33,7 @@ import {
 	parseGbPracticeSegment,
 	parseIeFacilitySegment,
 	parseItPlaceSegment,
+	parseLtFacilitySegment,
 	parseNoFacilitySegment,
 	parsePlFacilitySegment,
 	parsePractitionerSegment,
@@ -63,7 +64,9 @@ export type PractitionerKey = {
  * in Estonia (`perearstikeskus-naide-l01909`, `naidisapteek-ap457`), `{name}-{number}` in
  * Poland (`przychodnia-przykladowa-290629`, the RPWDL establishment number), `{name}-{orgnr}` in Norway
  * (`eksempel-legesenter-910000039`, the establishment's organisation number), `{name}-{list}{key}` in Ireland (`example-pharmacy-p10000612`,
- * `example-hospital-h123456789`). Null for anything else,
+ * `example-hospital-h123456789`), `{name}-{number}-{address}` in Lithuania
+ * (`uab-pavyzdine-klinika-5271-12679435`, VASPVT's institution number and the Address Register's
+ * code). Null for anything else,
  * so malformed or other-market URLs never reach the database.
  */
 export function parsePractitionerKey(locale: Locale, segment: string): PractitionerKey | null {
@@ -106,6 +109,10 @@ export function parsePractitionerKey(locale: Locale, segment: string): Practitio
 	}
 	if (country === "FI") {
 		const parsed = parseFiFacilitySegment(segment);
+		return parsed ? { country, ...parsed } : null;
+	}
+	if (country === "LT") {
+		const parsed = parseLtFacilitySegment(segment);
 		return parsed ? { country, ...parsed } : null;
 	}
 	if (country === "GB") {
@@ -182,6 +189,12 @@ export const IE_SEGMENT_MARKER = "ie.";
 /** The marker of a Finnish page's segment outside a locale (`fi.{slug}`): its key names no market by itself. */
 export const FI_SEGMENT_MARKER = "fi.";
 
+/**
+ * The marker of a Lithuanian page's segment outside a locale (`lt.{slug}`): a page key
+ * (`5271-12679435`) reads as no other market's, but a marked segment never has to be guessed.
+ */
+export const LT_SEGMENT_MARKER = "lt.";
+
 /** The marker of each market whose segments are marked outside a locale. */
 const SEGMENT_MARKERS: Readonly<Partial<Record<MarketCountry, string>>> = {
 	GB: GB_SEGMENT_MARKER,
@@ -195,6 +208,7 @@ const SEGMENT_MARKERS: Readonly<Partial<Record<MarketCountry, string>>> = {
 	NO: NO_SEGMENT_MARKER,
 	IE: IE_SEGMENT_MARKER,
 	FI: FI_SEGMENT_MARKER,
+	LT: LT_SEGMENT_MARKER,
 };
 
 /**
@@ -211,7 +225,7 @@ export function marketSegmentOf(country: string, slug: string): string {
 
 /**
  * Parses the segment of a practitioner URL of any market, for routes outside a locale (the
- * Open Graph image): a marked segment is British, Czech, Spanish, Italian, German, Swiss or Irish (`marketSegmentOf`), an RPPS slug
+ * Open Graph image): a marked segment is British, Czech, Spanish, Italian, German, Swiss, Irish or Lithuanian (`marketSegmentOf`), an RPPS slug
  * French, a regional list key Austrian.
  */
 export function parseAnyPractitionerKey(segment: string): PractitionerKey | null {
@@ -240,7 +254,8 @@ export function parseAnyPractitionerKey(segment: string): PractitionerKey | null
  * and a pharmacy's key of the page URL (`ap457`); in Norway the establishment's organisation
  * number in groups of three, as Norway prints it (`910 000 039`); in Ireland the key of the page URL too (`p10000612`, `n738`,
  * `h123456789`), since a bare PSI or HIQA number names neither list; in Finland the Finnish Service Catalogue's id
- * of the service location, in its own form (`b18aa7f8-7eca-4b97-a8e8-b438d2e29427`).
+ * of the service location, in its own form (`b18aa7f8-7eca-4b97-a8e8-b438d2e29427`); in Lithuania
+ * the page key (`5271-12679435`).
  */
 export function displayId(key: Pick<PractitionerKey, "idScheme" | "nationalId">): string {
 	if (NO_ID_SCHEMES[key.idScheme as NoIdScheme]) return noOrgNumber(key.nationalId);

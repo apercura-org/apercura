@@ -7,6 +7,7 @@ import {
 	allFiTaxonomySlugs,
 	allIeListingSlugs,
 	allItListingSlugs,
+	allLtListingSlugs,
 	allNoTaxonomySlugs,
 	allPlListingSlugs,
 	DE_DEFAULT_PROFESSIONS,
@@ -42,6 +43,7 @@ import gb from "../../messages/gb.json";
 import it_ from "../../messages/it.json";
 import itCH from "../../messages/it-CH.json";
 import itIT from "../../messages/it-IT.json";
+import lt from "../../messages/lt.json";
 import no from "../../messages/no.json";
 import pl from "../../messages/pl.json";
 import { mergeMessages, messagesFor, withoutEszett } from "./catalogs";
@@ -53,7 +55,7 @@ import { CATALOG_LANGUAGES, LOCALES, type Locale } from "./locales";
  * Spanish one with Spain's overrides; Italy's the Italian one with Italy's overrides; Germany's the
  * German one with Germany's overrides;
  * Switzerland's the German, French and Italian ones with the Swiss texts on top, German without
- * "ß"; Estonia's the English one with the Estonian texts on top; Poland's the English one with the Polish texts on top, Norway's with the Norwegian ones.
+ * "ß"; Estonia's the English one with the Estonian texts on top; Poland's the English one with the Polish texts on top, Norway's with the Norwegian ones; Lithuania's the English one with the Lithuanian texts on top.
  */
 const CATALOGS: Record<Locale, unknown> = {
 	fr,
@@ -64,6 +66,7 @@ const CATALOGS: Record<Locale, unknown> = {
 	"de-AT": mergeMessages(de, at as Record<string, unknown>),
 	"en-GB": mergeMessages(en, gb as Record<string, unknown>),
 	"cs-CZ": mergeMessages(en, cz as Record<string, unknown>),
+	"lt-LT": mergeMessages(en, lt as Record<string, unknown>),
 	"es-ES": mergeMessages(
 		mergeMessages(en, es as Record<string, unknown>),
 		esES as Record<string, unknown>,
@@ -288,6 +291,44 @@ describe("the Finnish texts", () => {
 			expect(finnish.get(`DataFi.coverage.kinds.${code}`), code).toBeTruthy();
 		}
 		expect(finnish.get("HomePage.title")).not.toBe(english.get("HomePage.title"));
+	});
+});
+
+describe("the Lithuanian texts", () => {
+	it("only override keys of the English catalog", () => {
+		const english = flatten(en);
+		expect([...flatten(lt).keys()].filter((key) => !english.has(key))).toEqual([]);
+	});
+
+	it("name every Lithuanian listing and kind of institution, in Lithuanian and in every catalog", () => {
+		const lithuanian = flatten(lt);
+		for (const slug of allLtListingSlugs()) {
+			expect(lithuanian.get(`taxonomy.listing.${slug}`), slug).toBeTruthy();
+			expect(lithuanian.get(`taxonomy.profession.${slug}`), slug).toBeTruthy();
+			for (const catalog of [en, fr, de, es, it_]) {
+				expect(flatten(catalog).get(`taxonomy.listing.${slug}`), slug).toBeTruthy();
+			}
+		}
+		expect(lithuanian.get("taxonomy.listing.ligonines")).toBe("Ligoninės");
+		expect(lithuanian.get("taxonomy.profession.odontologijos-klinikos")).toBe(
+			"Odontologijos klinika",
+		);
+	});
+
+	it("write Lithuania's legal pages in Lithuanian", () => {
+		const lithuanian = flatten(messagesFor("lt-LT"));
+		for (const namespace of [
+			"LegalNoticeLt",
+			"PrivacyLt",
+			"TermsLt",
+			"AccessibilityLt",
+			"DataLt",
+		]) {
+			const title = lithuanian.get(`${namespace}.title`);
+			expect(title, namespace).toBeTruthy();
+			expect(title, namespace).not.toBe(flatten(en).get(`${namespace}.title`));
+		}
+		expect([...lithuanian.values()].join(" ")).toContain("Valstybinė duomenų apsaugos inspekcija");
 	});
 });
 

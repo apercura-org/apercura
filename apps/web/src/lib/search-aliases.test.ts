@@ -9,6 +9,7 @@ import {
 	allGbListingSlugs,
 	allIeListingSlugs,
 	allItListingSlugs,
+	allLtListingSlugs,
 	allNoListingSlugs,
 	allPlListingSlugs,
 	FR_PROFESSIONS,
@@ -40,6 +41,7 @@ const MARKETS = [
 	"NO",
 	"IE",
 	"FI",
+	"LT",
 ] as const satisfies readonly MarketCountry[];
 
 /** The listings of each market (France: its imported professions only). */
@@ -60,6 +62,7 @@ const LISTED: Record<MarketCountry, (slug: string) => boolean> = {
 	NO: (slug) => allNoListingSlugs().has(slug),
 	IE: (slug) => allIeListingSlugs().has(slug),
 	FI: (slug) => allFiListingSlugs().has(slug),
+	LT: (slug) => allLtListingSlugs().has(slug),
 };
 
 /** Slugs a market maps but does not list yet: France's professions not imported. */
@@ -77,6 +80,7 @@ const MAPPED: Record<MarketCountry, (slug: string) => boolean> = {
 	NO: () => false,
 	IE: () => false,
 	FI: () => false,
+	LT: () => false,
 };
 
 const listing = (slug: string): SearchTerm => ({ kind: "listing", slug });
@@ -490,6 +494,29 @@ const EVERYDAY: Record<MarketCountry, [string, SearchTerm][]> = {
 		["apteekki", UNLISTED],
 		["pharmacy", UNLISTED],
 		["lääkäriasema", UNLISTED],
+	],
+	LT: [
+		["ligoninė", listing("ligonines")],
+		["Ligoninės", listing("ligonines")],
+		["ligonine", listing("ligonines")],
+		["šeimos gydytojas", listing("seimos-medicina")],
+		["seimos gydytojas", listing("seimos-medicina")],
+		["poliklinika", listing("seimos-medicina")],
+		["PSPC", listing("seimos-medicina")],
+		["odontologas", listing("odontologijos-klinikos")],
+		["dantų gydytojas", listing("odontologijos-klinikos")],
+		["stomatologas", listing("odontologijos-klinikos")],
+		["kardiologas", listing("medicinos-centrai")],
+		["klinika", listing("medicinos-centrai")],
+		["psichologas", listing("psichikos-sveikatos-centrai")],
+		["kineziterapeutas", listing("reabilitacija")],
+		["slauga namuose", listing("slauga")],
+		["laboratorija", listing("laboratorijos")],
+		["dentist", listing("odontologijos-klinikos")],
+		["hôpital", listing("ligonines")],
+		["Zahnarzt", listing("odontologijos-klinikos")],
+		["vaistinė", UNLISTED],
+		["pharmacy", UNLISTED],
 	],
 };
 

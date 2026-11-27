@@ -360,6 +360,14 @@ const MEDICAL_SPECIALTIES: Record<string, readonly MedicalSpecialty[]> = {
 		"https://schema.org/LaboratoryScience",
 		"https://schema.org/Radiography",
 	],
+	// Lithuania's institutions (Lithuanian listing slugs).
+	"seimos-medicina": ["https://schema.org/PrimaryCare"],
+	"odontologijos-klinikos": ["https://schema.org/Dentistry"],
+	"psichikos-sveikatos-centrai": ["https://schema.org/Psychiatric"],
+	reabilitacija: ["https://schema.org/Physiotherapy"],
+	slauga: ["https://schema.org/Nursing"],
+	laboratorijos: ["https://schema.org/LaboratoryScience"],
+	"optometrijos-kabinetai": ["https://schema.org/Optometric"],
 };
 
 /**
@@ -568,7 +576,9 @@ const DOCTOR_PROFESSIONS = new Set(["10", "ARZT"]);
  * `MedicalClinic`, except a hospital or sanatorium (`Hospital`), a dental clinic (`Dentist`), a
  * care home or hospice (`MedicalOrganization`) and nurses and midwives (`MedicalBusiness`). A
  * Finnish service location is a `MedicalClinic`, except a hospital (`Hospital`) and a dental clinic
- * (`Dentist`).
+ * (`Dentist`). A Lithuanian institution is a `MedicalClinic` unless it is a hospital (`Hospital`),
+ * a dental clinic (`Dentist`), an optometrist's practice (`MedicalBusiness`) or a nursing service
+ * (`MedicalOrganization`: its care is mostly given at the patient's home).
  * Ireland's the same way: a pharmacy is a `Pharmacy`, a hospital a `Hospital`, an HSE health
  * centre a `MedicalClinic`, a nursing home a `MedicalOrganization` (schema.org has no type of its
  * own for one).
@@ -636,6 +646,10 @@ const PRACTICE_TYPES: Readonly<Record<string, PracticeType>> = {
 	IE_NURSING_HOME: "MedicalOrganization",
 	FI_HOSPITAL: "Hospital",
 	FI_DENTAL: "Dentist",
+	LT_HOSPITAL: "Hospital",
+	LT_DENTAL: "Dentist",
+	LT_OPTOMETRY: "MedicalBusiness",
+	LT_NURSING: "MedicalOrganization",
 };
 
 /** The schema.org type of a market of practices' page subject (`PRACTICE_TYPES`), if any. */
@@ -645,7 +659,8 @@ function practiceTypeOf(professionCode: string): PracticeType | null {
 		(professionCode.startsWith("CZ_") ||
 		professionCode.startsWith("ES_") ||
 		professionCode.startsWith("PL_") ||
-		professionCode.startsWith("FI_")
+		professionCode.startsWith("FI_") ||
+		professionCode.startsWith("LT_")
 			? "MedicalClinic"
 			: null)
 	);

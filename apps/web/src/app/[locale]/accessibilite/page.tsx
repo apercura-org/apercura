@@ -17,6 +17,7 @@ import { AccessibilityFi } from "~/components/legal-fi";
 import { AccessibilityGb } from "~/components/legal-gb";
 import { AccessibilityIe } from "~/components/legal-ie";
 import { AccessibilityIt } from "~/components/legal-it";
+import { AccessibilityLt } from "~/components/legal-lt";
 import { AccessibilityNo } from "~/components/legal-no";
 import { AccessibilityPl } from "~/components/legal-pl";
 import { PageGraph } from "~/components/page-graph";
@@ -49,6 +50,7 @@ export function generateMetadata({ params }: PageProps<"/[locale]/accessibilite"
 			NO: "AccessibilityNo",
 			IE: "AccessibilityIe",
 			FI: "AccessibilityFi",
+			LT: "AccessibilityLt",
 		},
 		HREF,
 	);
@@ -62,7 +64,7 @@ export function generateMetadata({ params }: PageProps<"/[locale]/accessibilite"
 export default async function AccessibilityPage({ params }: PageProps<"/[locale]/accessibilite">) {
 	const locale = await localeOf(params);
 	setRequestLocale(locale);
-	// Austria's, the UK's, Czechia's, Spain's, Italy's, Germany's, Switzerland's, Estonia's, Poland's, Norway's and Finland's pages
+	// Austria's, the UK's, Czechia's, Spain's, Italy's, Germany's, Switzerland's, Estonia's, Poland's, Norway's, Finland's and Lithuania's pages
 	// have texts of their own, written for their law.
 	if (marketOf(locale) === "AT") return <AccessibilityAt locale={locale} />;
 	if (marketOf(locale) === "GB") return <AccessibilityGb locale={locale} />;
@@ -76,6 +78,7 @@ export default async function AccessibilityPage({ params }: PageProps<"/[locale]
 	if (marketOf(locale) === "EE") return <AccessibilityEe locale={locale} />;
 	if (marketOf(locale) === "NO") return <AccessibilityNo locale={locale} />;
 	if (marketOf(locale) === "IE") return <AccessibilityIe locale={locale} />;
+	if (marketOf(locale) === "LT") return <AccessibilityLt locale={locale} />;
 	const t = await getTranslations({ locale, namespace: "AccessibilityPage" });
 	const tSite = await getTranslations({ locale, namespace: "Site" });
 	const tI = await getTranslations({ locale, namespace: "Institutional" });

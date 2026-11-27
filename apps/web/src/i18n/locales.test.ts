@@ -20,8 +20,10 @@ import {
 	isIeListingSlug,
 	isItListingSlug,
 	isListingSlug,
+	isLtListingSlug,
 	isNoListingSlug,
 	isReservedSegment,
+	LT_RESERVED_SEGMENTS,
 	NO_RESERVED_SEGMENTS,
 } from "@apercura/core/taxonomy";
 import { describe, expect, it } from "vitest";
@@ -55,6 +57,7 @@ import {
 	CZECH_SEGMENTS,
 	ESTONIAN_SEGMENTS,
 	FINNISH_SEGMENTS,
+	LITHUANIAN_SEGMENTS,
 	NORWEGIAN_SEGMENTS,
 	routing,
 } from "./routing";
@@ -83,6 +86,7 @@ const TRANSLATIONS = LOCALES.filter(
 		locale !== "nb-NO" &&
 		locale !== "en-IE" &&
 		locale !== "fi-FI" &&
+		locale !== "lt-LT" &&
 		marketOf(locale) !== "CH",
 );
 
@@ -97,7 +101,7 @@ function hrefOf(pathname: AppPathname) {
 }
 
 describe("locale configuration", () => {
-	it("serves France under /fr and /fr-{language}, Austria under /at, the UK under /gb, Czechia under /cz, Spain under /es, Italy under /it, Germany under /de, Switzerland under /ch, /ch-fr and /ch-it Estonia under /ee, Poland under /pl and Finland under /fi", () => {
+	it("serves France under /fr and /fr-{language}, Austria under /at, the UK under /gb, Czechia under /cz, Spain under /es, Italy under /it, Germany under /de, Switzerland under /ch, /ch-fr and /ch-it Estonia under /ee, Poland under /pl, Finland under /fi and Lithuania under /lt", () => {
 		expect(LOCALES).toEqual([
 			"fr",
 			"en",
@@ -118,6 +122,7 @@ describe("locale configuration", () => {
 			"nb-NO",
 			"en-IE",
 			"fi-FI",
+			"lt-LT",
 		]);
 		expect(routing.locales).toEqual(LOCALES);
 		expect(routing.defaultLocale).toBe("fr");
@@ -142,6 +147,7 @@ describe("locale configuration", () => {
 			"nb-NO": "/no",
 			"en-IE": "/ie",
 			"fi-FI": "/fi",
+			"lt-LT": "/lt",
 		});
 		expect(LOCALE_SEGMENTS).toEqual([
 			"fr",
@@ -163,6 +169,7 @@ describe("locale configuration", () => {
 			"no",
 			"ie",
 			"fi",
+			"lt",
 		]);
 		expect(LOCALE_MARKETS).toEqual({
 			fr: "FR",
@@ -184,6 +191,7 @@ describe("locale configuration", () => {
 			"nb-NO": "NO",
 			"en-IE": "IE",
 			"fi-FI": "FI",
+			"lt-LT": "LT",
 		});
 		expect(CATALOG_LANGUAGES["de-AT"]).toBe("de");
 		expect(CATALOG_LANGUAGES["en-GB"]).toBe("en");
@@ -191,6 +199,7 @@ describe("locale configuration", () => {
 		expect(CATALOG_LANGUAGES["es-ES"]).toBe("es");
 		expect(CATALOG_LANGUAGES["it-IT"]).toBe("it");
 		expect(CATALOG_LANGUAGES["de-DE"]).toBe("de");
+		expect(CATALOG_LANGUAGES["lt-LT"]).toBe("lt");
 		// Switzerland: German at the market's own segment, French and Italian beside it.
 		expect(CATALOG_LANGUAGES["de-CH"]).toBe("de");
 		expect(CATALOG_LANGUAGES["fr-CH"]).toBe("fr");
@@ -255,6 +264,7 @@ describe("locale configuration", () => {
 			"nb-NO": "nb-NO",
 			"en-IE": "en-IE",
 			"fi-FI": "fi-FI",
+			"lt-LT": "lt-LT",
 		});
 		expect(OG_LOCALES).toEqual({
 			fr: "fr_FR",
@@ -276,6 +286,7 @@ describe("locale configuration", () => {
 			"nb-NO": "nb_NO",
 			"en-IE": "en_IE",
 			"fi-FI": "fi_FI",
+			"lt-LT": "lt_LT",
 		});
 		for (const locale of LOCALES) {
 			expect(Intl.DateTimeFormat.supportedLocalesOf([LOCALE_TAGS[locale]])).toEqual([
@@ -308,6 +319,7 @@ describe("locale configuration", () => {
 			"nb-NO",
 			"en-IE",
 			"fi-FI",
+			"lt-LT",
 		]);
 		expect(HREFLANGS).toEqual({
 			fr: "fr-FR",
@@ -325,6 +337,7 @@ describe("locale configuration", () => {
 			"nb-NO": "nb-NO",
 			"en-IE": "en-IE",
 			"fi-FI": "fi-FI",
+			"lt-LT": "lt-LT",
 		});
 		expect(routing.alternateLinks).toBe(false);
 		expect(robotsFor("fr", true)).toEqual({ index: true, follow: true });
@@ -344,6 +357,7 @@ describe("locale configuration", () => {
 		expect(robotsFor("et-EE", true)).toEqual({ index: true, follow: true });
 		expect(robotsFor("nb-NO", true)).toEqual({ index: true, follow: true });
 		expect(robotsFor("en-IE", true)).toEqual({ index: true, follow: true });
+		expect(robotsFor("lt-LT", true)).toEqual({ index: true, follow: true });
 		for (const locale of TRANSLATIONS) {
 			expect(robotsFor(locale, true)).toEqual({ index: false, follow: true });
 		}
@@ -437,6 +451,35 @@ describe("locale configuration", () => {
 		expect(localePath("cs-CZ", "/annuaire")).toBe("/cz/adresar");
 		expect(localePath("cs-CZ", "/confidentialite")).toBe("/cz/ochrana-osobnich-udaju");
 		expect(localePath("cs-CZ", "/mentions-legales")).toBe("/cz/pravni-informace");
+		// Lithuania: every Lithuanian first segment is reserved and never a Lithuanian listing slug.
+		for (const pathname of simple.filter((pathname) => !pathname.startsWith("/["))) {
+			const [first] = getPathname({ href: hrefOf(pathname) as never, locale: "lt-LT" })
+				.split("/")
+				.filter(Boolean)
+				.slice(1);
+			if (!first) continue;
+			expect(LT_RESERVED_SEGMENTS as readonly string[], pathname).toContain(first);
+			expect(isLtListingSlug(first), pathname).toBe(false);
+		}
+		expect(
+			localePath("lt-LT", "/praticien/[slug]", { slug: "uab-pavyzdine-klinika-9000-90000009" }),
+		).toBe("/lt/istaiga/uab-pavyzdine-klinika-9000-90000009");
+		expect(
+			localePath("lt-LT", "/praticien/[slug]/retrait", {
+				slug: "uab-pavyzdine-klinika-9000-90000009",
+			}),
+		).toBe("/lt/istaiga/uab-pavyzdine-klinika-9000-90000009/pasalinimas");
+		expect(localePath("lt-LT", "/etablissement/[slug]", { slug: "x-1" })).toBe(
+			"/lt/organizacija/x-1",
+		);
+		expect(localePath("lt-LT", "/annuaire")).toBe("/lt/katalogas");
+		expect(localePath("lt-LT", "/recherche")).toBe("/lt/paieska");
+		expect(localePath("lt-LT", "/confidentialite")).toBe("/lt/privatumas");
+		expect(localePath("lt-LT", "/mentions-legales")).toBe("/lt/teisine-informacija");
+		expect(localePath("lt-LT", "/conditions")).toBe("/lt/naudojimo-salygos");
+		expect(localePath("lt-LT", "/accessibilite")).toBe("/lt/prieinamumas");
+		expect(localePath("lt-LT", "/donnees")).toBe("/lt/duomenys");
+		expect(localePath("lt-LT", "/a-propos")).toBe("/lt/apie");
 		// Spain: every Spanish first segment is reserved and never a Spanish listing slug.
 		for (const pathname of simple.filter((pathname) => !pathname.startsWith("/["))) {
 			const [first] = getPathname({ href: hrefOf(pathname) as never, locale: "es-ES" })
@@ -724,6 +767,17 @@ describe("locale configuration", () => {
 		for (const first of firsts) expect(CZ_RESERVED_SEGMENTS as readonly string[]).toContain(first);
 	});
 
+	it("translates into Lithuanian only segments reserved in Lithuania", () => {
+		for (const lithuanian of Object.values(LITHUANIAN_SEGMENTS)) {
+			expect(isLtListingSlug(lithuanian), lithuanian).toBe(false);
+		}
+		const firsts = Object.values(routing.pathnames)
+			.filter((entry) => typeof entry !== "string")
+			.map((entry) => entry["lt-LT"].split("/")[1] ?? "")
+			.filter((first) => first && !first.startsWith("["));
+		for (const first of firsts) expect(LT_RESERVED_SEGMENTS as readonly string[]).toContain(first);
+	});
+
 	it("builds email links like the router does", () => {
 		for (const locale of LOCALES) {
 			for (const pathname of simple) {
@@ -759,6 +813,7 @@ describe("the markets a search can move to", () => {
 			"NO",
 			"IE",
 			"FI",
+			"LT",
 		]);
 		expect(MARKET_COUNTRIES.map(marketSegment)).toEqual([
 			"fr",
@@ -774,6 +829,7 @@ describe("the markets a search can move to", () => {
 			"no",
 			"ie",
 			"fi",
+			"lt",
 		]);
 		for (const country of MARKET_COUNTRIES) {
 			expect(marketOfSegment(marketSegment(country))).toBe(country);
@@ -792,6 +848,7 @@ describe("the markets a search can move to", () => {
 		expect(marketOfSegment("no")).toBe("NO");
 		expect(marketOfSegment("ch-fr")).toBeNull();
 		expect(marketOfSegment("ie")).toBe("IE");
+		expect(marketOfSegment("lt")).toBe("LT");
 		expect(marketOfSegment(null)).toBeNull();
 	});
 
@@ -840,6 +897,10 @@ describe("the markets a search can move to", () => {
 		expect(marketLocaleFor("FR", "fr-CH")).toBe("fr");
 		expect(marketLocaleFor("IT", "it-CH")).toBe("it-IT");
 		expect(marketLocaleFor("AT", "de-CH")).toBe("de-AT");
+		// Lithuania speaks Lithuanian only: every reader lands on its Lithuanian pages.
+		expect(marketLocaleFor("LT", "fr")).toBe("lt-LT");
+		expect(marketLocaleFor("LT", "en-GB")).toBe("lt-LT");
+		expect(marketLocaleFor("FR", "lt-LT")).toBe("fr");
 		// A visitor already in the market keeps the locale.
 		expect(marketLocaleFor("FR", "it")).toBe("it");
 		expect(marketLocaleFor("CH", "it-CH")).toBe("it-CH");

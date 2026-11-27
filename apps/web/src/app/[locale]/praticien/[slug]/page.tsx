@@ -377,6 +377,14 @@ export default async function PractitionerPage({ params }: Props) {
 	// FOPH's figures give them, its ownership and operator, and its category as its canton's list
 	// names it (in that list's language).
 	const swiss = payload.country === "CH";
+	// Lithuania lists licensed institutions: every service VASPVT licenses at the address, in the
+	// register's words.
+	const lithuanian = payload.country === "LT";
+	const lithuanianServices = lithuanian
+		? payload.qualifications
+				.filter((item) => item.source === "paslauga" && item.label)
+				.map((item) => item.label as string)
+		: [];
 	const language = CATALOG_LANGUAGES[locale];
 	const swissFacts = swiss ? swissFacilityFacts(payload.qualifications, language) : null;
 	// Poland lists establishments: their kind of activity, the kinds of their cells (clinics,
@@ -585,7 +593,17 @@ export default async function PractitionerPage({ params }: Props) {
 									value={professionLabel}
 									emptyLabel={empty}
 								/>
-								{practice ? null : norwegian ? (
+								{practice ? null : lithuanian ? (
+									<FieldRow
+										label={t("licensedServices")}
+										value={
+											lithuanianServices.length > 0 ? (
+												<span lang="lt">{lithuanianServices.join(", ")}</span>
+											) : null
+										}
+										emptyLabel={empty}
+									/>
+								) : norwegian ? (
 									<>
 										<FieldRow
 											label={t("norwegianFacts.orgNumber")}

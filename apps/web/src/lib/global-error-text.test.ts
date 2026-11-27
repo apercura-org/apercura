@@ -40,6 +40,11 @@ describe("globalErrorDocument", () => {
 			home: "/fr-it",
 		});
 		expect(globalErrorDocument("/cz")).toEqual({ lang: "cs-CZ", language: "cs", home: "/cz" });
+		expect(globalErrorDocument("/lt/istaiga/x")).toEqual({
+			lang: "lt-LT",
+			language: "lt",
+			home: "/lt",
+		});
 	});
 
 	it("falls back to English and the international home", () => {

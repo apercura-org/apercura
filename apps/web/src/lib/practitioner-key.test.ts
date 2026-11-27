@@ -96,6 +96,26 @@ describe("Czech facility keys", () => {
 	});
 });
 
+describe("Lithuanian institution keys", () => {
+	it("read an institution page segment in Lithuania only, and mark it outside a locale", () => {
+		expect(parsePractitionerKey("lt-LT", "uab-pavyzdine-klinika-9000-90000009")).toEqual({
+			country: "LT",
+			idScheme: "LT-VASPVT",
+			nationalId: "9000-90000009",
+			namePart: "uab-pavyzdine-klinika",
+		});
+		expect(parsePractitionerKey("lt-LT", "camille-exemple-19999990013")).toBeNull();
+		expect(parsePractitionerKey("fr", "uab-pavyzdine-klinika-9000-90000009")).toBeNull();
+		expect(marketSegmentOf("LT", "uab-x-9000-v0a1b2c3d")).toBe("lt.uab-x-9000-v0a1b2c3d");
+		expect(parseAnyPractitionerKey("lt.uab-x-9000-v0a1b2c3d")).toMatchObject({
+			country: "LT",
+			nationalId: "9000-v0a1b2c3d",
+		});
+		expect(displayId({ idScheme: "LT-VASPVT", nationalId: "9000-90000009" })).toBe("9000-90000009");
+		expect(marketAdapter("lt-LT").features.booking).toBe(false);
+	});
+});
+
 describe("Spanish centre keys", () => {
 	it("read a centre page segment in Spain only", () => {
 		expect(parsePractitionerKey("es-ES", "clinica-dental-ejemplo-centro-1328000001")).toEqual({

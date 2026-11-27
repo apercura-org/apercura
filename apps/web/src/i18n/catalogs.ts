@@ -21,6 +21,7 @@ import it from "../../messages/it.json";
 import itCH from "../../messages/it-CH.json";
 // Italy's overrides of the Italian catalog: `it.json` is the language's, the one `/fr-it` reads.
 import itIT from "../../messages/it-IT.json";
+import lt from "../../messages/lt.json";
 import no from "../../messages/no.json";
 import pl from "../../messages/pl.json"; // Norway's texts over the English catalog, as Estonia's (`no.json`, named after the segment).
 import type { Locale } from "./locales";
@@ -79,6 +80,7 @@ const CATALOGS: Record<
 		| "nb-NO"
 		| "en-IE"
 		| "fi-FI"
+		| "lt-LT"
 	>,
 	unknown
 > = {
@@ -116,34 +118,37 @@ export function messagesFor(locale: Locale): Messages {
 					: locale === "cs-CZ"
 						? // Czechia: the English catalog, with the Czech texts on top.
 							(mergeMessages(en, cz as Tree) as Messages)
-						: locale === "es-ES"
-							? // Spain: the Spanish catalog, with Spain's overrides on top.
-								(mergeMessages(messagesFor("es") as Tree, esES as Tree) as Messages)
-							: locale === "it-IT"
-								? // Italy: the Italian catalog, with Italy's overrides on top.
-									(mergeMessages(messagesFor("it") as Tree, itIT as Tree) as Messages)
-								: locale === "de-DE"
-									? // Germany: the German catalog, with Germany's overrides on top.
-										(mergeMessages(messagesFor("de") as Tree, deDE as Tree) as Messages)
-									: locale === "de-CH" || locale === "fr-CH" || locale === "it-CH"
-										? // Switzerland: its language's catalog, with the Swiss texts on top.
-											SWISS[locale]()
-										: locale === "et-EE"
-											? // Estonia: the English catalog, with the Estonian texts on top.
-												(mergeMessages(en, ee as Tree) as Messages)
-											: locale === "pl-PL"
-												? // Poland: the English catalog, with the Polish texts on top.
-													(mergeMessages(en, pl as Tree) as Messages)
-												: locale === "nb-NO"
-													? // Norway: the English catalog, with the Norwegian texts on top.
-														(mergeMessages(en, no as Tree) as Messages)
-													: locale === "en-IE"
-														? // Ireland: the English catalog, with Ireland's overrides on top.
-															(mergeMessages(en, enIE as Tree) as Messages)
-														: locale === "fi-FI"
-															? // Finland: the English catalog, with the Finnish texts on top.
-																(mergeMessages(en, fi as Tree) as Messages)
-															: (mergeMessages(en, CATALOGS[locale] as Tree) as Messages);
+						: locale === "lt-LT"
+							? // Lithuania: the English catalog, with the Lithuanian texts on top.
+								(mergeMessages(en, lt as Tree) as Messages)
+							: locale === "es-ES"
+								? // Spain: the Spanish catalog, with Spain's overrides on top.
+									(mergeMessages(messagesFor("es") as Tree, esES as Tree) as Messages)
+								: locale === "it-IT"
+									? // Italy: the Italian catalog, with Italy's overrides on top.
+										(mergeMessages(messagesFor("it") as Tree, itIT as Tree) as Messages)
+									: locale === "de-DE"
+										? // Germany: the German catalog, with Germany's overrides on top.
+											(mergeMessages(messagesFor("de") as Tree, deDE as Tree) as Messages)
+										: locale === "de-CH" || locale === "fr-CH" || locale === "it-CH"
+											? // Switzerland: its language's catalog, with the Swiss texts on top.
+												SWISS[locale]()
+											: locale === "et-EE"
+												? // Estonia: the English catalog, with the Estonian texts on top.
+													(mergeMessages(en, ee as Tree) as Messages)
+												: locale === "pl-PL"
+													? // Poland: the English catalog, with the Polish texts on top.
+														(mergeMessages(en, pl as Tree) as Messages)
+													: locale === "nb-NO"
+														? // Norway: the English catalog, with the Norwegian texts on top.
+															(mergeMessages(en, no as Tree) as Messages)
+														: locale === "en-IE"
+															? // Ireland: the English catalog, with Ireland's overrides on top.
+																(mergeMessages(en, enIE as Tree) as Messages)
+															: locale === "fi-FI"
+																? // Finland: the English catalog, with the Finnish texts on top.
+																	(mergeMessages(en, fi as Tree) as Messages)
+																: (mergeMessages(en, CATALOGS[locale] as Tree) as Messages);
 		merged.set(locale, found);
 	}
 	return found;
@@ -163,6 +168,9 @@ export const POLISH_OVERRIDES: unknown = pl;
 
 /** The Finnish texts over the English catalog (`messages/fi.json`), for tests. */
 export const FINNISH_OVERRIDES: unknown = fi;
+
+/** The Lithuanian texts over the English catalog (`messages/lt.json`), for tests. */
+export const LITHUANIAN_OVERRIDES: unknown = lt;
 
 /** Spain's overrides of the Spanish catalog (`messages/es-ES.json`), for tests. */
 export const SPANISH_MARKET_OVERRIDES: unknown = esES;
