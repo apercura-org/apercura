@@ -9790,5 +9790,163 @@
 			"formTitle": "Ask for a page to be removed",
 			"formBody": "Give the address of the page and an e-mail address where we can answer you."
 		}
+	},
+	"Astryx": {
+		"button": {
+			"loading": "Loading"
+		},
+		"calendar": {
+			"dayInRange": "{date}, in range",
+			"dayRangeEnd": "{date}, range end",
+			"dayRangeStart": "{date}, range start",
+			"dayRangeStartAndEnd": "{date}, range start and range end",
+			"daySelected": "{date}, selected",
+			"nextMonth": "Next month",
+			"previousMonth": "Previous month",
+			"rangeClearedAnnounce": "Cleared start date {date}. Select a start date.",
+			"rangeCompleteAnnounce": "Selected range: {start} to {end}.",
+			"rangeStartAnnounce": "Start date {date}. Select an end date."
+		},
+		"contextMenu": {
+			"label": "Context menu"
+		},
+		"dateInput": {
+			"calendarDescription": "Dates use the {calendar}",
+			"chooseMonthYear": "{monthYear}, Choose month and year",
+			"clear": "Clear {label}",
+			"closeCalendar": "Close calendar",
+			"dialogLabel": "Choose date",
+			"doneChoosingMonth": "Done",
+			"formatHint": "e.g., {example}",
+			"invalidDate": "Invalid date",
+			"monthWheel": "Month",
+			"nonexistentDate": "{named, select, yes {Enter a real date ({calendar})} other {Enter a real date}}",
+			"openCalendar": "Open calendar",
+			"outOfRangeDate": "{bounds, select, both {Enter a date from {min} to {max}} min {Enter a date on or after {min}} max {Enter a date on or before {max}} other {Enter an available date}}",
+			"placeholder": "Select a date",
+			"resetPicking": "Reset",
+			"savePicking": "Save",
+			"toggleCalendarClose": "Close calendar",
+			"yearWheel": "Year"
+		},
+		"dateTimeInput": {
+			"hourWheel": "Hour",
+			"meridiemAM": "AM",
+			"meridiemPM": "PM",
+			"meridiemWheel": "AM/PM",
+			"minuteWheel": "Minute",
+			"secondWheel": "Second",
+			"timeHint12h": "e.g., 2:30 PM",
+			"timeHint24h": "e.g., 14:30"
+		},
+		"dropdownMenu": {
+			"back": "Back",
+			"backTo": "Back to {parent}",
+			"label": "Menu"
+		},
+		"field": {
+			"errorFallback": "Invalid value",
+			"labelTooltip": "About {label}",
+			"optional": "Optional",
+			"required": "Required"
+		},
+		"infoTip": {
+			"label": "More information"
+		},
+		"input": {
+			"readOnly": "Read only",
+			"statusButton": {
+				"error": "Error details",
+				"success": "Success details",
+				"warning": "Warning details"
+			}
+		},
+		"inputClearButton": {
+			"tooltip": "Clear"
+		},
+		"kbd": {
+			"key": {
+				"alt": "Alt",
+				"altShort": "Alt",
+				"backspace": "Backspace",
+				"command": "Command",
+				"control": "Control",
+				"controlShort": "Ctrl",
+				"down": "Down arrow",
+				"enter": "Enter",
+				"escape": "Escape",
+				"escapeShort": "Esc",
+				"left": "Left arrow",
+				"plus": "Plus",
+				"right": "Right arrow",
+				"shift": "Shift",
+				"shiftShort": "Shift",
+				"tab": "Tab",
+				"up": "Up arrow",
+				"windowsShort": "Win"
+			},
+			"shortcut": "{shortcut} + {key}"
+		},
+		"keyboardHint": {
+			"toNavigate": "to navigate"
+		},
+		"link": {
+			"newTab": "(opens in new tab)"
+		},
+		"popover": {
+			"close": "Close popover"
+		},
+		"selector": {
+			"clearLabel": "Clear {label}",
+			"empty": "No options",
+			"emptySearchResults": "No results found",
+			"placeholder": "Select…",
+			"resultCount": "{count, number} {count, plural, one {result} other {results}}",
+			"searchOptions": "Search options",
+			"searchPlaceholder": "Search…"
+		},
+		"spinner": {
+			"loading": "Loading"
+		},
+		"switch": {
+			"loading": "Loading"
+		},
+		"table": {
+			"label": "Table",
+			"noData": "No data"
+		},
+		"tabList": {
+			"label": "Tabs"
+		},
+		"textArea": {
+			"charactersOverLimit": "{count, number} {count, plural, one {character} other {characters}} over the limit",
+			"charactersRemaining": "{count, number} {count, plural, one {character} other {characters}} remaining",
+			"counter": "{count, number}/{limit, number}"
+		},
+		"textInput": {
+			"clearLabel": "Clear {label}"
+		},
+		"timeInput": {
+			"clearLabel": "Clear {label}",
+			"invalidTime": "Invalid time",
+			"openPicker": "Open {label}",
+			"placeholder": "Select a time"
+		},
+		"toast": {
+			"dismiss": "Dismiss notification",
+			"viewport": "Notifications"
+		},
+		"token": {
+			"remove": "Remove {label}"
+		},
+		"typeahead": {
+			"clearSelection": "Clear selection",
+			"emptySearchResults": "No results found",
+			"loading": "Loading",
+			"resultCount": "{count, number} {count, plural, one {result} other {results}}",
+			"searchPlaceholder": "Search…",
+			"searchResults": "Search results",
+			"selectionCleared": "Cleared {label}"
+		}
 	}
 }

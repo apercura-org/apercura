@@ -1904,5 +1904,163 @@
 			"formTitle": "Prašyti pašalinti puslapį",
 			"formBody": "Nurodykite puslapio adresą ir el. pašto adresą, kuriuo galėtume jums atsakyti."
 		}
+	},
+	"Astryx": {
+		"button": {
+			"loading": "Įkeliama"
+		},
+		"calendar": {
+			"dayInRange": "{date}, intervale",
+			"dayRangeEnd": "{date}, intervalo pabaiga",
+			"dayRangeStart": "{date}, intervalo pradžia",
+			"dayRangeStartAndEnd": "{date}, intervalo pradžia ir pabaiga",
+			"daySelected": "{date}, pasirinkta",
+			"nextMonth": "Kitas mėnuo",
+			"previousMonth": "Ankstesnis mėnuo",
+			"rangeClearedAnnounce": "Pradžios data {date} išvalyta. Pasirinkite pradžios datą.",
+			"rangeCompleteAnnounce": "Pasirinktas intervalas: nuo {start} iki {end}.",
+			"rangeStartAnnounce": "Pradžios data {date}. Pasirinkite pabaigos datą."
+		},
+		"contextMenu": {
+			"label": "Kontekstinis meniu"
+		},
+		"dateInput": {
+			"calendarDescription": "Datos pagal {calendar}",
+			"chooseMonthYear": "{monthYear}, pasirinkite mėnesį ir metus",
+			"clear": "Išvalyti: {label}",
+			"closeCalendar": "Uždaryti kalendorių",
+			"dialogLabel": "Pasirinkite datą",
+			"doneChoosingMonth": "Atlikta",
+			"formatHint": "pvz., {example}",
+			"invalidDate": "Neteisinga data",
+			"monthWheel": "Mėnuo",
+			"nonexistentDate": "{named, select, yes {Įveskite egzistuojančią datą ({calendar})} other {Įveskite egzistuojančią datą}}",
+			"openCalendar": "Atidaryti kalendorių",
+			"outOfRangeDate": "{bounds, select, both {Įveskite datą nuo {min} iki {max}} min {Įveskite datą nuo {min}} max {Įveskite datą iki {max}} other {Įveskite galimą datą}}",
+			"placeholder": "Pasirinkite datą",
+			"resetPicking": "Atstatyti",
+			"savePicking": "Išsaugoti",
+			"toggleCalendarClose": "Uždaryti kalendorių",
+			"yearWheel": "Metai"
+		},
+		"dateTimeInput": {
+			"hourWheel": "Valanda",
+			"meridiemAM": "AM",
+			"meridiemPM": "PM",
+			"meridiemWheel": "AM/PM",
+			"minuteWheel": "Minutė",
+			"secondWheel": "Sekundė",
+			"timeHint12h": "pvz., 2:30 PM",
+			"timeHint24h": "pvz., 14:30"
+		},
+		"dropdownMenu": {
+			"back": "Atgal",
+			"backTo": "Atgal į {parent}",
+			"label": "Meniu"
+		},
+		"field": {
+			"errorFallback": "Neteisinga reikšmė",
+			"labelTooltip": "Apie {label}",
+			"optional": "Neprivaloma",
+			"required": "Privaloma"
+		},
+		"infoTip": {
+			"label": "Daugiau informacijos"
+		},
+		"input": {
+			"readOnly": "Tik skaityti",
+			"statusButton": {
+				"error": "Klaidos informacija",
+				"success": "Sėkmės informacija",
+				"warning": "Įspėjimo informacija"
+			}
+		},
+		"inputClearButton": {
+			"tooltip": "Išvalyti"
+		},
+		"kbd": {
+			"key": {
+				"alt": "Alt",
+				"altShort": "Alt",
+				"backspace": "Grįžties klavišas",
+				"command": "Command",
+				"control": "Control",
+				"controlShort": "Ctrl",
+				"down": "Rodyklė žemyn",
+				"enter": "Enter",
+				"escape": "Escape",
+				"escapeShort": "Esc",
+				"left": "Rodyklė kairėn",
+				"plus": "Pliusas",
+				"right": "Rodyklė dešinėn",
+				"shift": "Shift",
+				"shiftShort": "Shift",
+				"tab": "Tab",
+				"up": "Rodyklė aukštyn",
+				"windowsShort": "Win"
+			},
+			"shortcut": "{shortcut} + {key}"
+		},
+		"keyboardHint": {
+			"toNavigate": "naršyti"
+		},
+		"link": {
+			"newTab": "(atsidaro naujame skirtuke)"
+		},
+		"popover": {
+			"close": "Uždaryti iškylantįjį langą"
+		},
+		"selector": {
+			"clearLabel": "Išvalyti: {label}",
+			"empty": "Parinkčių nėra",
+			"emptySearchResults": "Rezultatų nerasta",
+			"placeholder": "Pasirinkite…",
+			"resultCount": "{count, number} {count, plural, one {rezultatas} few {rezultatai} many {rezultato} other {rezultatų}}",
+			"searchOptions": "Ieškoti parinkčių",
+			"searchPlaceholder": "Ieškoti…"
+		},
+		"spinner": {
+			"loading": "Įkeliama"
+		},
+		"switch": {
+			"loading": "Įkeliama"
+		},
+		"table": {
+			"label": "Lentelė",
+			"noData": "Duomenų nėra"
+		},
+		"tabList": {
+			"label": "Skirtukai"
+		},
+		"textArea": {
+			"charactersOverLimit": "{count, number} {count, plural, one {simbolis} few {simboliai} many {simbolio} other {simbolių}} viršija ribą",
+			"charactersRemaining": "Liko {count, number} {count, plural, one {simbolis} few {simboliai} many {simbolio} other {simbolių}}",
+			"counter": "{count, number}/{limit, number}"
+		},
+		"textInput": {
+			"clearLabel": "Išvalyti: {label}"
+		},
+		"timeInput": {
+			"clearLabel": "Išvalyti: {label}",
+			"invalidTime": "Neteisingas laikas",
+			"openPicker": "Atidaryti: {label}",
+			"placeholder": "Pasirinkite laiką"
+		},
+		"toast": {
+			"dismiss": "Uždaryti pranešimą",
+			"viewport": "Pranešimai"
+		},
+		"token": {
+			"remove": "Pašalinti: {label}"
+		},
+		"typeahead": {
+			"clearSelection": "Išvalyti pasirinkimą",
+			"emptySearchResults": "Rezultatų nerasta",
+			"loading": "Įkeliama",
+			"resultCount": "{count, number} {count, plural, one {rezultatas} few {rezultatai} many {rezultato} other {rezultatų}}",
+			"searchPlaceholder": "Ieškoti…",
+			"searchResults": "Paieškos rezultatai",
+			"selectionCleared": "Išvalyta: {label}"
+		}
 	}
 }

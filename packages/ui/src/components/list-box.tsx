@@ -1,42 +1,69 @@
-"use client";
+import { Children, isValidElement, type Key, type ReactElement, type ReactNode } from "react";
 
-import {
-	composeRenderProps,
-	ListBox as RACListBox,
-	ListBoxItem as RACListBoxItem,
-	type ListBoxItemProps as RACListBoxItemProps,
-	type ListBoxProps as RACListBoxProps,
-} from "react-aria-components";
-import { CheckIcon } from "../icons";
-import { cn, listBoxItemStyles } from "../recipes";
+export type { Key };
 
-export function ListBox<T extends object>({ className, ...props }: RACListBoxProps<T>) {
-	return (
-		<RACListBox
-			{...props}
-			className={cn(
-				"max-h-80 overflow-auto outline-none",
-				typeof className === "string" ? className : undefined,
-			)}
-		/>
-	);
+export interface ListBoxItemProps {
+	/** The option's key, given back on selection. */
+	id: Key;
+	/** Its text: what a screen reader reads, what a combo box writes. Defaults to `children` text. */
+	textValue?: string;
+	children: ReactNode;
+	isDisabled?: boolean;
+	className?: string;
 }
 
-/** Option row: ink check plus weight marks the selected option, not colour. */
-export function ListBoxItem({ className, children, ...props }: RACListBoxItemProps) {
-	const textValue = props.textValue ?? (typeof children === "string" ? children : undefined);
-	return (
-		<RACListBoxItem
-			{...props}
-			textValue={textValue}
-			className={composeRenderProps(className, (cls) => listBoxItemStyles({ className: cls }))}
-		>
-			{composeRenderProps(children, (content, { isSelected }) => (
-				<>
-					<span className="flex-1">{content}</span>
-					{isSelected ? <CheckIcon className="size-5 shrink-0" /> : null}
-				</>
-			))}
-		</RACListBoxItem>
-	);
+/**
+ * One option of a `Select` or a `ComboBox`: a description the field renders (on Astryx's
+ * selector, or the suggestion list), as React Aria's `ListBoxItem` was used.
+ */
+export function ListBoxItem(_props: ListBoxItemProps): null {
+	return null;
+}
+
+/** A list of `ListBoxItem`s, for the fields that take one. */
+export function ListBox({ children }: { children: ReactNode }) {
+	return <>{children}</>;
+}
+
+export interface CollectedItem {
+	id: string;
+	key: Key;
+	textValue: string;
+	/** The row's own text (what it shows and is read as). */
+	text: string;
+	label: ReactNode;
+	isDisabled: boolean;
+}
+
+function plainText(node: ReactNode): string {
+	if (node == null || typeof node === "boolean") return "";
+	if (typeof node === "string" || typeof node === "number") return String(node);
+	if (Array.isArray(node)) return node.map(plainText).join("");
+	if (isValidElement<{ children?: ReactNode }>(node)) return plainText(node.props.children);
+	return "";
+}
+
+/** The options of a field, from `ListBoxItem` children or a function of `items`. */
+export function collectItems<T>(
+	children: ReactNode | ((item: T) => ReactNode),
+	items?: Iterable<T>,
+): CollectedItem[] {
+	const nodes =
+		typeof children === "function"
+			? [...(items ?? [])].map((item) => (children as (item: T) => ReactNode)(item))
+			: Children.toArray(children);
+	const out: CollectedItem[] = [];
+	for (const node of nodes) {
+		if (!isValidElement(node) || node.type !== ListBoxItem) continue;
+		const props = (node as ReactElement<ListBoxItemProps>).props;
+		out.push({
+			id: String(props.id),
+			key: props.id,
+			textValue: props.textValue ?? plainText(props.children),
+			text: plainText(props.children) || props.textValue || "",
+			label: props.children,
+			isDisabled: props.isDisabled === true,
+		});
+	}
+	return out;
 }

@@ -24,6 +24,14 @@ const overlayShadow =
 const family =
 	'var(--font-allo, "Allo"), var(--font-allo-ext, "Allo"), "Allo Fallback", ui-sans-serif, system-ui, sans-serif';
 
+// Astryx's own roles, as the component overrides below write them.
+const ink = "var(--color-text-primary)";
+const inkMuted = "var(--color-text-secondary)";
+const inkDisabled = "var(--color-text-disabled)";
+const paper = "var(--color-background-surface)";
+const rule = "var(--color-border)";
+const body = "1.125rem";
+
 export const colorModes = ["light", "dark"] as const;
 
 export const apercuraTheme = defineTheme({
@@ -100,5 +108,88 @@ export const apercuraTheme = defineTheme({
 		"--focus-outline-width": "3px",
 		"--focus-outline-offset": "2px",
 		"--focus-outline-color": "var(--focus-ring, var(--color-accent))",
+	},
+	// The booklet's controls. Ink, not the accent, marks a choice that is not a booking: a ticked
+	// box, a chosen radio, a switch that is on, the selected tab.
+	components: {
+		"checkbox-input": { base: { gap: "12px", minHeight: "44px", alignItems: "center" } },
+		"checkbox-indicator": {
+			base: {
+				width: "24px",
+				height: "24px",
+				borderWidth: "2px",
+				borderStyle: "solid",
+				borderColor: ink,
+				borderRadius: `${radii.mark}px`,
+				backgroundColor: paper,
+				color: paper,
+			},
+			checked: { backgroundColor: ink, borderColor: ink, color: paper },
+			disabled: { borderColor: inkDisabled },
+		},
+		"checkbox-label": { base: { fontSize: body, fontWeight: "400", color: ink } },
+		"radio-list": { base: { gap: "0px" } },
+		"radio-list-item": { base: { minHeight: "44px", gap: "12px" } },
+		"radio-indicator": {
+			base: {
+				width: "24px",
+				height: "24px",
+				borderWidth: "2px",
+				borderStyle: "solid",
+				borderColor: ink,
+				backgroundColor: paper,
+			},
+			checked: { borderColor: ink, backgroundColor: paper },
+			disabled: { borderColor: inkDisabled },
+		},
+		"radio-indicator-dot": { base: { width: "12px", height: "12px", backgroundColor: ink } },
+		switch: {
+			base: {
+				width: "48px",
+				height: "28px",
+				borderWidth: "2px",
+				borderStyle: "solid",
+				borderColor: ink,
+				backgroundColor: paper,
+			},
+			checked: { backgroundColor: ink, borderColor: ink },
+			disabled: { borderColor: inkDisabled },
+		},
+		"switch-thumb": {
+			base: { width: "20px", height: "20px", backgroundColor: ink },
+			checked: { backgroundColor: paper },
+		},
+		"switch-field": { base: { minHeight: "44px", gap: "12px", alignItems: "center" } },
+		"switch-label": { base: { fontSize: body, fontWeight: "400", color: ink } },
+		tab: {
+			base: {
+				minHeight: "44px",
+				paddingInline: "16px",
+				fontSize: "1rem",
+				fontWeight: "500",
+				color: inkMuted,
+			},
+			selected: { color: ink, fontWeight: "600" },
+		},
+		"tab-indicator": { base: { height: "2px", backgroundColor: ink } },
+		tooltip: {
+			base: {
+				backgroundColor: ink,
+				color: paper,
+				borderRadius: `${radii.field}px`,
+				paddingBlock: "6px",
+				paddingInline: "12px",
+				fontSize: "1rem",
+			},
+		},
+		popover: {
+			base: {
+				borderRadius: `${radii.panel}px`,
+				borderWidth: "1px",
+				borderStyle: "solid",
+				borderColor: rule,
+				backgroundColor: paper,
+			},
+		},
 	},
 });

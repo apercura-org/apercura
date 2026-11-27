@@ -9792,5 +9792,163 @@
 			"formTitle": "Ask for a page to be removed",
 			"formBody": "Give the address of the page and an e-mail address where we can answer you."
 		}
+	},
+	"Astryx": {
+		"button": {
+			"loading": "Chargement"
+		},
+		"calendar": {
+			"dayInRange": "{date}, dans la plage",
+			"dayRangeEnd": "{date}, fin de la plage",
+			"dayRangeStart": "{date}, début de la plage",
+			"dayRangeStartAndEnd": "{date}, début et fin de la plage",
+			"daySelected": "{date}, sélectionné",
+			"nextMonth": "Mois suivant",
+			"previousMonth": "Mois précédent",
+			"rangeClearedAnnounce": "Date de début {date} effacée. Sélectionnez une date de début.",
+			"rangeCompleteAnnounce": "Plage sélectionnée : {start} à {end}.",
+			"rangeStartAnnounce": "Date de début {date}. Sélectionnez une date de fin."
+		},
+		"contextMenu": {
+			"label": "Menu contextuel"
+		},
+		"dateInput": {
+			"calendarDescription": "Les dates suivent le {calendar}",
+			"chooseMonthYear": "{monthYear}, choisir le mois et l’année",
+			"clear": "Effacer {label}",
+			"closeCalendar": "Fermer le calendrier",
+			"dialogLabel": "Choisir une date",
+			"doneChoosingMonth": "Terminé",
+			"formatHint": "ex. : {example}",
+			"invalidDate": "Date non valide",
+			"monthWheel": "Mois",
+			"nonexistentDate": "{named, select, yes {Saisissez une date qui existe ({calendar})} other {Saisissez une date qui existe}}",
+			"openCalendar": "Ouvrir le calendrier",
+			"outOfRangeDate": "{bounds, select, both {Saisissez une date du {min} au {max}} min {Saisissez une date à partir du {min}} max {Saisissez une date jusqu’au {max}} other {Saisissez une date disponible}}",
+			"placeholder": "Sélectionner une date",
+			"resetPicking": "Réinitialiser",
+			"savePicking": "Enregistrer",
+			"toggleCalendarClose": "Fermer le calendrier",
+			"yearWheel": "Année"
+		},
+		"dateTimeInput": {
+			"hourWheel": "Heure",
+			"meridiemAM": "AM",
+			"meridiemPM": "PM",
+			"meridiemWheel": "AM/PM",
+			"minuteWheel": "Minute",
+			"secondWheel": "Seconde",
+			"timeHint12h": "ex. : 2:30 PM",
+			"timeHint24h": "ex. : 14:30"
+		},
+		"dropdownMenu": {
+			"back": "Retour",
+			"backTo": "Retour à {parent}",
+			"label": "Menu"
+		},
+		"field": {
+			"errorFallback": "Valeur non valide",
+			"labelTooltip": "À propos de {label}",
+			"optional": "Facultatif",
+			"required": "Obligatoire"
+		},
+		"infoTip": {
+			"label": "Plus d’informations"
+		},
+		"input": {
+			"readOnly": "Lecture seule",
+			"statusButton": {
+				"error": "Détails de l’erreur",
+				"success": "Détails de la réussite",
+				"warning": "Détails de l’avertissement"
+			}
+		},
+		"inputClearButton": {
+			"tooltip": "Effacer"
+		},
+		"kbd": {
+			"key": {
+				"alt": "Alt",
+				"altShort": "Alt",
+				"backspace": "Retour arrière",
+				"command": "Commande",
+				"control": "Contrôle",
+				"controlShort": "Ctrl",
+				"down": "Flèche bas",
+				"enter": "Entrée",
+				"escape": "Échap",
+				"escapeShort": "Échap",
+				"left": "Flèche gauche",
+				"plus": "Plus",
+				"right": "Flèche droite",
+				"shift": "Maj",
+				"shiftShort": "Maj",
+				"tab": "Tab",
+				"up": "Flèche haut",
+				"windowsShort": "Win"
+			},
+			"shortcut": "{shortcut} + {key}"
+		},
+		"keyboardHint": {
+			"toNavigate": "pour naviguer"
+		},
+		"link": {
+			"newTab": "(ouvre un nouvel onglet)"
+		},
+		"popover": {
+			"close": "Fermer le popover"
+		},
+		"selector": {
+			"clearLabel": "Effacer {label}",
+			"empty": "Aucune option",
+			"emptySearchResults": "Aucun résultat trouvé",
+			"placeholder": "Sélectionner…",
+			"resultCount": "{count, number} {count, plural, one {résultat} many {résultats} other {résultats}}",
+			"searchOptions": "Options de recherche",
+			"searchPlaceholder": "Rechercher…"
+		},
+		"spinner": {
+			"loading": "Chargement"
+		},
+		"switch": {
+			"loading": "Chargement"
+		},
+		"table": {
+			"label": "Tableau",
+			"noData": "Aucune donnée"
+		},
+		"tabList": {
+			"label": "Onglets"
+		},
+		"textArea": {
+			"charactersOverLimit": "{count, number} {count, plural, one {caractère au-dessus de la limite} many {caractères au-dessus de la limite} other {caractères au-dessus de la limite}}",
+			"charactersRemaining": "{count, number} {count, plural, one {caractère restant} many {caractères restants} other {caractères restants}}",
+			"counter": "{count, number}/{limit, number}"
+		},
+		"textInput": {
+			"clearLabel": "Effacer {label}"
+		},
+		"timeInput": {
+			"clearLabel": "Effacer {label}",
+			"invalidTime": "Heure non valide",
+			"openPicker": "Ouvrir {label}",
+			"placeholder": "Sélectionner une heure"
+		},
+		"toast": {
+			"dismiss": "Ignorer la notification",
+			"viewport": "Notifications"
+		},
+		"token": {
+			"remove": "Supprimer {label}"
+		},
+		"typeahead": {
+			"clearSelection": "Effacer la sélection",
+			"emptySearchResults": "Aucun résultat trouvé",
+			"loading": "Chargement",
+			"resultCount": "{count, number} {count, plural, one {résultat} many {résultats} other {résultats}}",
+			"searchPlaceholder": "Rechercher…",
+			"searchResults": "Résultats de recherche",
+			"selectionCleared": "{label} effacé"
+		}
 	}
 }

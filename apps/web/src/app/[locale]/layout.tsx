@@ -1,3 +1,4 @@
+import { AstryxStringsProvider } from "@apercura/ui/astryx-strings";
 import type { Metadata, Viewport } from "next";
 import { notFound } from "next/navigation";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
@@ -60,11 +61,8 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
 	// page get their own messages from a <ClientIsland>, so a page's HTML never
 	// carries the whole catalogue. `ErrorPages.error` is for ./error.tsx, which has no other
 	// way to get its text once a page has failed.
-	const messages = pickMessages(await getMessages({ locale }), [
-		"Site",
-		"LocaleSwitcher",
-		"ErrorPages.error",
-	]);
+	const catalog = await getMessages({ locale });
+	const messages = pickMessages(catalog, ["Site", "LocaleSwitcher", "ErrorPages.error"]);
 
 	return (
 		// /theme.js sets `data-theme` and `data-js` on <html> before React hydrates it.
@@ -80,7 +78,10 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
 			</head>
 			<body className="flex min-h-dvh flex-col">
 				<SkipLink label={t("skipLink")} />
-				<NextIntlClientProvider messages={messages}>{children}</NextIntlClientProvider>
+				{/* The words Astryx's components say themselves, in the page's language. */}
+				<AstryxStringsProvider locale={htmlLang(locale)} messages={catalog.Astryx}>
+					<NextIntlClientProvider messages={messages}>{children}</NextIntlClientProvider>
+				</AstryxStringsProvider>
 			</body>
 		</html>
 	);

@@ -13,14 +13,13 @@ import {
 	useCallback,
 	useContext,
 	useId,
-	useRef,
 	useState,
 } from "react";
-import { UNSAFE_PortalProvider } from "react-aria";
 import { textOf } from "../astryx/text";
 import { CloseIcon } from "../icons";
 import { cn } from "../recipes";
 import { Button } from "./button";
+import { Popover, PopoverDialog, type PopoverDialogProps } from "./popover";
 
 interface OverlayState {
 	isOpen: boolean;
@@ -57,6 +56,24 @@ export function DialogTrigger({
 		},
 		[onOpenChange],
 	);
+	// A popover's content: the trigger opens Astryx's popover instead of a dialog.
+	const parts = Children.toArray(children);
+	const popover = parts.find(
+		(child): child is ReactElement<PopoverDialogProps> =>
+			isValidElement(child) && child.type === PopoverDialog,
+	);
+	if (popover) {
+		return (
+			<Popover
+				content={popover.props.children}
+				label={popover.props["aria-label"]}
+				isOpen={isOpenProp}
+				onOpenChange={onOpenChange}
+			>
+				{parts.filter((child) => child !== popover)}
+			</Popover>
+		);
+	}
 	let triggered = false;
 	const content = Children.map(children, (child) => {
 		if (triggered || !isValidElement(child) || child.type === Dialog || child.type === Sheet) {
@@ -109,21 +126,6 @@ function useOverlayState({ isOpen, onOpenChange, defaultOpen }: DialogFrameProps
 		[fromTrigger, onOpenChange],
 	);
 	return { open, setOpen, close: useCallback(() => setOpen(false), [setOpen]) };
-}
-
-/**
- * A modal `<dialog>` sits in the top layer and makes the rest of the page inert: the React Aria
- * overlays opened from inside it (a select's list, a date picker) are portalled into it, at its
- * end, so they show above it and can be used.
- */
-function OverlayLayer({ children }: { children: ReactNode }) {
-	const layer = useRef<HTMLDivElement>(null);
-	return (
-		<UNSAFE_PortalProvider getContainer={() => layer.current}>
-			{children}
-			<div ref={layer} data-overlay-layer="" />
-		</UNSAFE_PortalProvider>
-	);
 }
 
 function Header({
@@ -191,11 +193,9 @@ export function Dialog(props: DialogFrameProps) {
 				close={close}
 				showClose={!isAlert}
 			/>
-			<OverlayLayer>
-				<div className="overflow-auto p-5 text-body">
-					{typeof children === "function" ? children({ close }) : children}
-				</div>
-			</OverlayLayer>
+			<div className="overflow-auto p-5 text-body">
+				{typeof children === "function" ? children({ close }) : children}
+			</div>
 		</AstryxDialog>
 	);
 }
@@ -230,14 +230,12 @@ export function Sheet(props: SheetProps) {
 				"border-0 border-rule-soft bg-paper text-ink shadow-overlay sm:border-s forced-colors:border-[CanvasText]",
 			)}
 		>
-			<OverlayLayer>
-				<div className="flex h-full flex-col">
-					<Header id={titleId} title={title} closeLabel={closeLabel} close={close} showClose />
-					<div data-sheet-body="" className="flex-1 overflow-auto p-5 text-body">
-						{typeof children === "function" ? children({ close }) : children}
-					</div>
+			<div className="flex h-full flex-col">
+				<Header id={titleId} title={title} closeLabel={closeLabel} close={close} showClose />
+				<div data-sheet-body="" className="flex-1 overflow-auto p-5 text-body">
+					{typeof children === "function" ? children({ close }) : children}
 				</div>
-			</OverlayLayer>
+			</div>
 		</AstryxDrawer>
 	);
 }

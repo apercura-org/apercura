@@ -2016,5 +2016,163 @@
 			"formTitle": "Pyydä sivun poistamista",
 			"formBody": "Kerro sivun osoite ja sähköpostiosoite, johon voimme vastata."
 		}
+	},
+	"Astryx": {
+		"button": {
+			"loading": "Ladataan"
+		},
+		"calendar": {
+			"dayInRange": "{date}, välillä",
+			"dayRangeEnd": "{date}, välin loppu",
+			"dayRangeStart": "{date}, välin alku",
+			"dayRangeStartAndEnd": "{date}, välin alku ja loppu",
+			"daySelected": "{date}, valittu",
+			"nextMonth": "Seuraava kuukausi",
+			"previousMonth": "Edellinen kuukausi",
+			"rangeClearedAnnounce": "Alkamispäivä {date} tyhjennetty. Valitse alkamispäivä.",
+			"rangeCompleteAnnounce": "Valittu väli: {start}–{end}.",
+			"rangeStartAnnounce": "Alkamispäivä {date}. Valitse päättymispäivä."
+		},
+		"contextMenu": {
+			"label": "Pikavalikko"
+		},
+		"dateInput": {
+			"calendarDescription": "Päivämäärät ovat kalenterissa {calendar}",
+			"chooseMonthYear": "{monthYear}, valitse kuukausi ja vuosi",
+			"clear": "Tyhjennä {label}",
+			"closeCalendar": "Sulje kalenteri",
+			"dialogLabel": "Valitse päivämäärä",
+			"doneChoosingMonth": "Valmis",
+			"formatHint": "esim. {example}",
+			"invalidDate": "Virheellinen päivämäärä",
+			"monthWheel": "Kuukausi",
+			"nonexistentDate": "{named, select, yes {Anna olemassa oleva päivämäärä ({calendar})} other {Anna olemassa oleva päivämäärä}}",
+			"openCalendar": "Avaa kalenteri",
+			"outOfRangeDate": "{bounds, select, both {Anna päivämäärä väliltä {min}–{max}} min {Anna päivämäärä {min} tai myöhemmin} max {Anna päivämäärä {max} tai aiemmin} other {Anna saatavilla oleva päivämäärä}}",
+			"placeholder": "Valitse päivämäärä",
+			"resetPicking": "Palauta",
+			"savePicking": "Tallenna",
+			"toggleCalendarClose": "Sulje kalenteri",
+			"yearWheel": "Vuosi"
+		},
+		"dateTimeInput": {
+			"hourWheel": "Tunti",
+			"meridiemAM": "ap.",
+			"meridiemPM": "ip.",
+			"meridiemWheel": "ap./ip.",
+			"minuteWheel": "Minuutti",
+			"secondWheel": "Sekunti",
+			"timeHint12h": "esim. 2:30 ip.",
+			"timeHint24h": "esim. 14:30"
+		},
+		"dropdownMenu": {
+			"back": "Takaisin",
+			"backTo": "Takaisin: {parent}",
+			"label": "Valikko"
+		},
+		"field": {
+			"errorFallback": "Virheellinen arvo",
+			"labelTooltip": "Tietoa: {label}",
+			"optional": "Valinnainen",
+			"required": "Pakollinen"
+		},
+		"infoTip": {
+			"label": "Lisätietoja"
+		},
+		"input": {
+			"readOnly": "Vain luku",
+			"statusButton": {
+				"error": "Virheen tiedot",
+				"success": "Onnistumisen tiedot",
+				"warning": "Varoituksen tiedot"
+			}
+		},
+		"inputClearButton": {
+			"tooltip": "Tyhjennä"
+		},
+		"kbd": {
+			"key": {
+				"alt": "Alt",
+				"altShort": "Alt",
+				"backspace": "Askelpalautin",
+				"command": "Command",
+				"control": "Control",
+				"controlShort": "Ctrl",
+				"down": "Nuoli alas",
+				"enter": "Enter",
+				"escape": "Escape",
+				"escapeShort": "Esc",
+				"left": "Nuoli vasemmalle",
+				"plus": "Plus",
+				"right": "Nuoli oikealle",
+				"shift": "Vaihto",
+				"shiftShort": "Vaihto",
+				"tab": "Sarkain",
+				"up": "Nuoli ylös",
+				"windowsShort": "Win"
+			},
+			"shortcut": "{shortcut} + {key}"
+		},
+		"keyboardHint": {
+			"toNavigate": "navigoidaksesi"
+		},
+		"link": {
+			"newTab": "(avautuu uuteen välilehteen)"
+		},
+		"popover": {
+			"close": "Sulje ponnahdusikkuna"
+		},
+		"selector": {
+			"clearLabel": "Tyhjennä {label}",
+			"empty": "Ei vaihtoehtoja",
+			"emptySearchResults": "Tuloksia ei löytynyt",
+			"placeholder": "Valitse…",
+			"resultCount": "{count, number} {count, plural, one {tulos} other {tulosta}}",
+			"searchOptions": "Hakuvaihtoehdot",
+			"searchPlaceholder": "Hae…"
+		},
+		"spinner": {
+			"loading": "Ladataan"
+		},
+		"switch": {
+			"loading": "Ladataan"
+		},
+		"table": {
+			"label": "Taulukko",
+			"noData": "Ei tietoja"
+		},
+		"tabList": {
+			"label": "Välilehdet"
+		},
+		"textArea": {
+			"charactersOverLimit": "{count, number} {count, plural, one {merkki} other {merkkiä}} yli rajan",
+			"charactersRemaining": "{count, number} {count, plural, one {merkki} other {merkkiä}} jäljellä",
+			"counter": "{count, number}/{limit, number}"
+		},
+		"textInput": {
+			"clearLabel": "Tyhjennä {label}"
+		},
+		"timeInput": {
+			"clearLabel": "Tyhjennä {label}",
+			"invalidTime": "Virheellinen aika",
+			"openPicker": "Avaa {label}",
+			"placeholder": "Valitse aika"
+		},
+		"toast": {
+			"dismiss": "Hylkää ilmoitus",
+			"viewport": "Ilmoitukset"
+		},
+		"token": {
+			"remove": "Poista {label}"
+		},
+		"typeahead": {
+			"clearSelection": "Tyhjennä valinta",
+			"emptySearchResults": "Tuloksia ei löytynyt",
+			"loading": "Ladataan",
+			"resultCount": "{count, number} {count, plural, one {tulos} other {tulosta}}",
+			"searchPlaceholder": "Hae…",
+			"searchResults": "Hakutulokset",
+			"selectionCleared": "{label} tyhjennetty"
+		}
 	}
 }

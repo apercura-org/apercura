@@ -1,73 +1,140 @@
 "use client";
 
-import type { ReactNode } from "react";
+import "../astryx/styles";
+import { RadioList, RadioListItem } from "@astryxdesign/core/RadioList";
 import {
-	composeRenderProps,
-	Radio as RACRadio,
-	RadioGroup as RACRadioGroup,
-	type RadioGroupProps as RACRadioGroupProps,
-	type RadioProps as RACRadioProps,
-} from "react-aria-components";
-import { tv } from "../recipes/tv";
-import { FieldDescription, FieldError, Label } from "./field";
+	Children,
+	isValidElement,
+	type ReactElement,
+	type ReactNode,
+	useId,
+	useLayoutEffect,
+	useMemo,
+	useRef,
+	useState,
+} from "react";
+import { useControlDescription } from "../astryx/aria";
+import { fieldLook } from "../astryx/field-look";
+import { AstryxIntl } from "../astryx/intl";
+import { markRequired } from "../astryx/native";
+import { textOf } from "../astryx/text";
+import { FieldError } from "./field-parts";
+import { useFieldValidation } from "./form";
 
-const radio = tv({
-	slots: {
-		group: "flex flex-col gap-1.5",
-		root: "group flex min-h-11 cursor-pointer items-center gap-3 text-body text-ink data-disabled:cursor-not-allowed data-disabled:text-ink-disabled",
-		ring: [
-			"flex size-6 shrink-0 items-center justify-center rounded-full border-2 border-ink bg-paper",
-			"group-data-invalid:border-error group-data-disabled:border-ink-disabled",
-			"group-data-focus-visible:outline-3 group-data-focus-visible:outline-solid group-data-focus-visible:outline-offset-2 group-data-focus-visible:outline-(--focus-ring)",
-		],
-		dot: "block size-3 scale-0 rounded-full bg-ink transition-transform duration-150 ease-out group-data-selected:scale-100 forced-colors:bg-[CanvasText]",
-	},
-});
-
-export interface RadioGroupProps extends Omit<RACRadioGroupProps, "children"> {
+export interface RadioGroupProps {
 	label: ReactNode;
 	description?: ReactNode;
 	errorMessage?: string;
+	/** `Radio`s. */
 	children: ReactNode;
+	value?: string | null;
+	defaultValue?: string;
+	onChange?: (value: string) => void;
+	isRequired?: boolean;
+	isDisabled?: boolean;
+	isInvalid?: boolean;
+	name?: string;
+	orientation?: "vertical" | "horizontal";
+	className?: string;
 }
 
+export interface RadioProps {
+	value: string;
+	/** The option's label, read whole as the radio's name (a title and its detail). */
+	children: ReactNode;
+	isDisabled?: boolean;
+}
+
+/** One choice of a `RadioGroup`: only a description of the option, rendered by the group. */
+export function Radio(_props: RadioProps): null {
+	return null;
+}
+
+/**
+ * A group of radios, built on Astryx's radio list: the label names the group, each radio a ring
+ * with an ink dot (the Apercura theme). Arrow keys move and choose, as native radios do.
+ */
 export function RadioGroup({
 	label,
 	description,
 	errorMessage,
 	children,
+	value: valueProp,
+	defaultValue,
+	onChange,
+	isRequired,
+	isDisabled,
+	isInvalid,
+	name,
+	orientation = "vertical",
 	className,
-	...props
 }: RadioGroupProps) {
-	const styles = radio();
-	return (
-		<RACRadioGroup
-			{...props}
-			className={composeRenderProps(className, (cls) => styles.group({ className: cls }))}
-		>
-			<Label>{label}</Label>
-			{description ? <FieldDescription>{description}</FieldDescription> : null}
-			<div className="flex flex-col">{children}</div>
-			<FieldError>{errorMessage}</FieldError>
-		</RACRadioGroup>
+	const [own, setOwn] = useState(defaultValue ?? "");
+	const value = valueProp === undefined ? own : (valueProp ?? "");
+	const group = useRef<HTMLDivElement>(null);
+	const errorId = useId();
+	// The browser checks a required group through its radios; the focus goes to the chosen or
+	// the first one.
+	const radio = useMemo(
+		() => ({
+			get current() {
+				return (
+					group.current?.querySelector<HTMLInputElement>("input[type=radio]:checked") ??
+					group.current?.querySelector<HTMLInputElement>("input[type=radio]") ??
+					null
+				);
+			},
+		}),
+		[],
 	);
-}
-
-export interface RadioProps extends Omit<RACRadioProps, "children"> {
-	children: ReactNode;
-}
-
-export function Radio({ className, children, ...props }: RadioProps) {
-	const styles = radio();
+	const { error } = useFieldValidation({
+		element: radio,
+		name,
+		value,
+		isInvalid,
+		errorMessage,
+	});
+	useControlDescription(group, error !== null);
+	// Required: the group and its radios say so, and the browser checks it.
+	useLayoutEffect(() => {
+		markRequired(
+			group.current?.parentElement ?? null,
+			'[role="radiogroup"], input[type=radio]',
+			isRequired === true,
+		);
+	});
+	const radios = Children.toArray(children).filter(
+		(child): child is ReactElement<RadioProps> => isValidElement(child) && child.type === Radio,
+	);
 	return (
-		<RACRadio
-			{...props}
-			className={composeRenderProps(className, (cls) => styles.root({ className: cls }))}
-		>
-			<span className={styles.ring()}>
-				<span className={styles.dot()} />
-			</span>
-			<span>{children}</span>
-		</RACRadio>
+		<div className={fieldLook.root(className)} data-invalid={error !== null ? "" : undefined}>
+			<AstryxIntl>
+				<RadioList
+					ref={group}
+					label={textOf(label)}
+					description={description != null ? textOf(description) : undefined}
+					value={value}
+					onChange={(next) => {
+						setOwn(next);
+						onChange?.(next);
+					}}
+					htmlName={name}
+					aria-describedby={error ? errorId : undefined}
+					isDisabled={isDisabled}
+					orientation={orientation}
+					containerClassName={fieldLook.container}
+				>
+					{radios.map(({ key, props }) => (
+						<RadioListItem
+							key={key ?? props.value}
+							value={props.value}
+							label={props.children}
+							isDisabled={props.isDisabled}
+						/>
+					))}
+				</RadioList>
+			</AstryxIntl>
+			<FieldError id={errorId}>{error}</FieldError>
+		</div>
 	);
 }

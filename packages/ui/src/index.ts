@@ -5,9 +5,10 @@
  *   Skeleton, EmptyState, Seal and
  *   the static domain components (FieldRow, PractitionerHeader, ActionBlock,
  *   SiteCard, ProvenanceNote, BookletSearch).
- * - Client ("use client"): the primitives built on Astryx with the Apercura theme (Button,
- *   LinkButton, Link, Tooltip, Dialog, Sheet, FileTrigger; their stylesheets load with them),
- *   every React Aria primitive, SlotPicker, WeekGrid and MapView.
+ * - Server-safe too: the plain parts of a field (Label, Input, FieldDescription, FieldError).
+ * - Client ("use client"): every interactive primitive, built on Astryx with the Apercura
+ *   theme (their stylesheets load with them), the form layer (Form, useFieldValidation),
+ *   SlotPicker, WeekGrid and MapView.
  */
 
 export {
@@ -33,17 +34,20 @@ export { DatePicker, type DatePickerProps } from "./components/date-picker";
 export { Dialog, DialogTrigger, Sheet, type SheetProps, SheetTrigger } from "./components/dialog";
 export { EmptyState, type EmptyStateProps } from "./components/empty-state";
 export {
-	FieldDescription,
-	FieldError,
-	Form,
-	Input,
-	Label,
 	TextAreaField,
 	type TextAreaFieldProps,
 	TextField,
 	type TextFieldProps,
 } from "./components/field";
+export { FieldDescription, FieldError, Input, Label } from "./components/field-parts";
 export { FileTrigger, type FileTriggerProps } from "./components/file-trigger";
+export {
+	Form,
+	type FormProps,
+	useFieldValidation,
+	type ValidationBehavior,
+	type ValidationResult,
+} from "./components/form";
 export { Link, type LinkProps } from "./components/link";
 export { ListBox, ListBoxItem } from "./components/list-box";
 export { Menu, MenuItem, type MenuProps, MenuTrigger } from "./components/menu";

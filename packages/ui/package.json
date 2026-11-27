@@ -13,7 +13,8 @@
 		"./theme.css": "./src/styles/theme.css",
 		"./tokens": "./src/tokens/index.ts",
 		"./brand": "./src/brand/geometry.ts",
-		"./map-style": "./src/map/map-style.ts"
+		"./map-style": "./src/map/map-style.ts",
+		"./astryx-strings": "./src/astryx/strings.tsx"
 	},
 	"scripts": {
 		"typecheck": "tsc --noEmit",
@@ -26,8 +27,6 @@
 		"@internationalized/date": "3.12.4",
 		"@stylexjs/stylex": "0.19.1",
 		"maplibre-gl": "6.19.0",
-		"react-aria": "3.53.1",
-		"react-aria-components": "1.22.1",
 		"tailwind-variants": "4.0.2"
 	},
 	"peerDependencies": {

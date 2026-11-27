@@ -1927,5 +1927,163 @@
 			"formTitle": "Zahtevajte odstranitev strani",
 			"formBody": "Navedite naslov strani in e-poštni naslov, na katerega vam lahko odgovorimo."
 		}
+	},
+	"Astryx": {
+		"button": {
+			"loading": "Nalaganje"
+		},
+		"calendar": {
+			"dayInRange": "{date}, v obdobju",
+			"dayRangeEnd": "{date}, konec obdobja",
+			"dayRangeStart": "{date}, začetek obdobja",
+			"dayRangeStartAndEnd": "{date}, začetek in konec obdobja",
+			"daySelected": "{date}, izbrano",
+			"nextMonth": "Naslednji mesec",
+			"previousMonth": "Prejšnji mesec",
+			"rangeClearedAnnounce": "Začetni datum {date} je počiščen. Izberite začetni datum.",
+			"rangeCompleteAnnounce": "Izbrano obdobje: od {start} do {end}.",
+			"rangeStartAnnounce": "Začetni datum {date}. Izberite končni datum."
+		},
+		"contextMenu": {
+			"label": "Kontekstni meni"
+		},
+		"dateInput": {
+			"calendarDescription": "Datumi so v koledarju {calendar}",
+			"chooseMonthYear": "{monthYear}, izberite mesec in leto",
+			"clear": "Počisti: {label}",
+			"closeCalendar": "Zapri koledar",
+			"dialogLabel": "Izberite datum",
+			"doneChoosingMonth": "Končano",
+			"formatHint": "npr. {example}",
+			"invalidDate": "Neveljaven datum",
+			"monthWheel": "Mesec",
+			"nonexistentDate": "{named, select, yes {Vnesite obstoječ datum ({calendar})} other {Vnesite obstoječ datum}}",
+			"openCalendar": "Odpri koledar",
+			"outOfRangeDate": "{bounds, select, both {Vnesite datum od {min} do {max}} min {Vnesite datum od {min} naprej} max {Vnesite datum do {max}} other {Vnesite razpoložljiv datum}}",
+			"placeholder": "Izberite datum",
+			"resetPicking": "Ponastavi",
+			"savePicking": "Shrani",
+			"toggleCalendarClose": "Zapri koledar",
+			"yearWheel": "Leto"
+		},
+		"dateTimeInput": {
+			"hourWheel": "Ura",
+			"meridiemAM": "AM",
+			"meridiemPM": "PM",
+			"meridiemWheel": "AM/PM",
+			"minuteWheel": "Minuta",
+			"secondWheel": "Sekunda",
+			"timeHint12h": "npr. 2:30 PM",
+			"timeHint24h": "npr. 14:30"
+		},
+		"dropdownMenu": {
+			"back": "Nazaj",
+			"backTo": "Nazaj na {parent}",
+			"label": "Meni"
+		},
+		"field": {
+			"errorFallback": "Neveljavna vrednost",
+			"labelTooltip": "O polju {label}",
+			"optional": "Neobvezno",
+			"required": "Obvezno"
+		},
+		"infoTip": {
+			"label": "Več informacij"
+		},
+		"input": {
+			"readOnly": "Samo za branje",
+			"statusButton": {
+				"error": "Podrobnosti napake",
+				"success": "Podrobnosti uspeha",
+				"warning": "Podrobnosti opozorila"
+			}
+		},
+		"inputClearButton": {
+			"tooltip": "Počisti"
+		},
+		"kbd": {
+			"key": {
+				"alt": "Alt",
+				"altShort": "Alt",
+				"backspace": "Vračalka",
+				"command": "Command",
+				"control": "Control",
+				"controlShort": "Ctrl",
+				"down": "Puščica dol",
+				"enter": "Enter",
+				"escape": "Escape",
+				"escapeShort": "Esc",
+				"left": "Puščica levo",
+				"plus": "Plus",
+				"right": "Puščica desno",
+				"shift": "Shift",
+				"shiftShort": "Shift",
+				"tab": "Tab",
+				"up": "Puščica gor",
+				"windowsShort": "Win"
+			},
+			"shortcut": "{shortcut} + {key}"
+		},
+		"keyboardHint": {
+			"toNavigate": "za premikanje"
+		},
+		"link": {
+			"newTab": "(odpre se v novem zavihku)"
+		},
+		"popover": {
+			"close": "Zapri pojavno okno"
+		},
+		"selector": {
+			"clearLabel": "Počisti: {label}",
+			"empty": "Ni možnosti",
+			"emptySearchResults": "Ni rezultatov",
+			"placeholder": "Izberite …",
+			"resultCount": "{count, number} {count, plural, one {rezultat} two {rezultata} few {rezultati} other {rezultatov}}",
+			"searchOptions": "Iskanje med možnostmi",
+			"searchPlaceholder": "Iskanje …"
+		},
+		"spinner": {
+			"loading": "Nalaganje"
+		},
+		"switch": {
+			"loading": "Nalaganje"
+		},
+		"table": {
+			"label": "Tabela",
+			"noData": "Ni podatkov"
+		},
+		"tabList": {
+			"label": "Zavihki"
+		},
+		"textArea": {
+			"charactersOverLimit": "{count, number} {count, plural, one {znak} two {znaka} few {znaki} other {znakov}} čez omejitev",
+			"charactersRemaining": "Preostalo: {count, number} {count, plural, one {znak} two {znaka} few {znaki} other {znakov}}",
+			"counter": "{count, number}/{limit, number}"
+		},
+		"textInput": {
+			"clearLabel": "Počisti: {label}"
+		},
+		"timeInput": {
+			"clearLabel": "Počisti: {label}",
+			"invalidTime": "Neveljaven čas",
+			"openPicker": "Odpri: {label}",
+			"placeholder": "Izberite čas"
+		},
+		"toast": {
+			"dismiss": "Zapri obvestilo",
+			"viewport": "Obvestila"
+		},
+		"token": {
+			"remove": "Odstrani: {label}"
+		},
+		"typeahead": {
+			"clearSelection": "Počisti izbiro",
+			"emptySearchResults": "Ni rezultatov",
+			"loading": "Nalaganje",
+			"resultCount": "{count, number} {count, plural, one {rezultat} two {rezultata} few {rezultati} other {rezultatov}}",
+			"searchPlaceholder": "Iskanje …",
+			"searchResults": "Rezultati iskanja",
+			"selectionCleared": "Počiščeno: {label}"
+		}
 	}
 }

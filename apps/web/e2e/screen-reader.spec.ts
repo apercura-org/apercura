@@ -16,7 +16,6 @@ import {
 import { BOOKING_PRACTITIONERS } from "./booking-seed";
 import { createProAccount, expectAgendaLoaded, testDb } from "./pro";
 import { expectPhrasesInOrder, ScreenReader } from "./screen-reader";
-import { statusMessages } from "./status";
 
 /*
  * Screen-reader flows (RGAA 4.1 / WCAG 2.2, the automatable part of issue #32): what a screen
@@ -430,7 +429,7 @@ test.describe("booking, the appointment page and the practice's agenda", () => {
 			await page.clock.setFixedTime(practiceTime(day, 7));
 			await page.goto("/fr/pro/aujourdhui");
 			await expect(page.getByRole("region", { name: "Les rendez-vous du jour" })).toBeVisible();
-			await expect(statusMessages(page)).toHaveCount(0);
+			await expect(page.locator('[role="status"]')).toHaveCount(0);
 			return readPage(page);
 		};
 		const today = await openToday(bookedDay);

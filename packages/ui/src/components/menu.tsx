@@ -1,62 +1,91 @@
 "use client";
 
-import { Children, type DOMAttributes, isValidElement, type ReactElement } from "react";
+import "../astryx/styles";
+import { DropdownMenu, DropdownMenuItem } from "@astryxdesign/core/DropdownMenu";
 import {
-	composeRenderProps,
-	type MenuTriggerProps,
-	type PopoverProps,
-	Pressable,
-	Menu as RACMenu,
-	MenuItem as RACMenuItem,
-	type MenuItemProps as RACMenuItemProps,
-	type MenuProps as RACMenuProps,
-	MenuTrigger as RACMenuTrigger,
-} from "react-aria-components";
-import { listBoxItemStyles } from "../recipes";
-import { Popover } from "./popover";
+	Children,
+	cloneElement,
+	isValidElement,
+	type Key,
+	type ReactElement,
+	type ReactNode,
+} from "react";
+import { AstryxIntl } from "../astryx/intl";
+
+export interface MenuTriggerProps {
+	/** The trigger (a `Button`), then the `Menu` it opens. */
+	children: ReactNode;
+	isOpen?: boolean;
+	onOpenChange?: (isOpen: boolean) => void;
+}
+
+export interface MenuProps {
+	/** `MenuItem`s. */
+	children: ReactNode;
+	onAction?: (key: Key) => void;
+	"aria-label"?: string;
+	placement?: "above" | "below" | "start" | "end";
+}
+
+export interface MenuItemProps {
+	id: Key;
+	children: ReactNode;
+	href?: string;
+	isDisabled?: boolean;
+	onAction?: () => void;
+}
+
+/** A `MenuTrigger`'s list: a description the trigger renders. */
+export function Menu(_props: MenuProps): null {
+	return null;
+}
+
+/** One row of a `Menu`. */
+export function MenuItem(_props: MenuItemProps): null {
+	return null;
+}
 
 /**
- * Opens the menu among its children from the other child, a `Button`. The menu is React Aria's;
- * the button (Astryx's) takes its press through `Pressable`.
+ * A menu of actions, built on Astryx's dropdown menu (arrow keys, type-ahead, Escape gives the
+ * focus back to the trigger): the trigger is the caller's `Button`, the rows the booklet's.
  */
-export function MenuTrigger({ children, ...props }: MenuTriggerProps) {
-	const [trigger, ...rest] = Children.toArray(children);
-	return (
-		<RACMenuTrigger {...props}>
-			{isValidElement(trigger) ? (
-				<Pressable>{trigger as ReactElement<DOMAttributes<HTMLButtonElement>, string>}</Pressable>
-			) : (
-				trigger
-			)}
-			{rest}
-		</RACMenuTrigger>
+export function MenuTrigger({ children, isOpen, onOpenChange }: MenuTriggerProps) {
+	const parts = Children.toArray(children);
+	const menu = parts.find(
+		(child): child is ReactElement<MenuProps> => isValidElement(child) && child.type === Menu,
 	);
-}
-
-export interface MenuProps<T extends object> extends RACMenuProps<T> {
-	placement?: PopoverProps["placement"];
-}
-
-export function Menu<T extends object>({
-	placement = "bottom start",
-	className,
-	...props
-}: MenuProps<T>) {
-	return (
-		<Popover placement={placement} className="min-w-56">
-			<RACMenu {...props} className="max-h-80 overflow-auto outline-none" />
-		</Popover>
+	const trigger = parts.find((child) => child !== menu);
+	if (!menu || !isValidElement(trigger)) return <>{children}</>;
+	const items = Children.toArray(menu.props.children).filter(
+		(child): child is ReactElement<MenuItemProps> =>
+			isValidElement(child) && child.type === MenuItem,
 	);
-}
-
-export function MenuItem({ className, ...props }: RACMenuItemProps) {
-	const textValue =
-		props.textValue ?? (typeof props.children === "string" ? props.children : undefined);
 	return (
-		<RACMenuItem
-			{...props}
-			textValue={textValue}
-			className={composeRenderProps(className, (cls) => listBoxItemStyles({ className: cls }))}
-		/>
+		<AstryxIntl>
+			<DropdownMenu
+				isMenuOpen={isOpen}
+				onOpenChange={onOpenChange}
+				placement={menu.props.placement ?? "below"}
+				renderTrigger={(props) =>
+					cloneElement(
+						trigger as ReactElement<Record<string, unknown>>,
+						props as unknown as Record<string, unknown>,
+					)
+				}
+			>
+				{items.map(({ props }) => (
+					<DropdownMenuItem
+						key={String(props.id)}
+						label={props.children}
+						href={props.href}
+						isDisabled={props.isDisabled}
+						onClick={() => {
+							props.onAction?.();
+							menu.props.onAction?.(props.id);
+						}}
+					/>
+				))}
+			</DropdownMenu>
+		</AstryxIntl>
 	);
 }
