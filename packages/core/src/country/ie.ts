@@ -76,13 +76,12 @@ export const IE_COUNTIES: Readonly<
 
 /** The county code of a county as the lists write it (`Co. Cork`, `CORK`, `Dublin 15`), or null. */
 export function ieCountyOfName(raw: string | null | undefined): string | null {
-	const value = (raw ?? "")
-		.trim()
-		.replace(/^(?:county|co\.?)\s+/i, "")
-		.replace(/^co\.(?=\S)/i, "")
-		.replace(/\s+(?:city|county)$/i, "")
-		.trim()
-		.toLowerCase();
+	// Word by word, so no pattern backtracks over a run of spaces (`Co.Cork` is `Co.` `Cork`).
+	const words = (raw ?? "").toLowerCase().replace(/^co\./, "co. ").split(/\s/).filter(Boolean);
+	if (words[0] === "county" || words[0] === "co" || words[0] === "co.") words.shift();
+	const last = words.at(-1);
+	if (words.length > 1 && (last === "city" || last === "county")) words.pop();
+	const value = words.join(" ");
 	if (!value) return null;
 	// Dublin's postal districts (`Dublin 15`, `Dublin 6W`) are in County Dublin.
 	const name = /^dublin\s*\d{1,2}w?$/.test(value) ? "dublin" : value;
