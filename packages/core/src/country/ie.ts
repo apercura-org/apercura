@@ -250,14 +250,14 @@ export const ireland: CountryAdapter = {
 			id: "privacy",
 			pathname: "/confidentialite",
 			basis:
-				"GDPR articles 13, 14 and 21; Data Protection Act 2018; the Data Protection Commission is the supervisory authority",
+				"GDPR articles 13, 14, 21 and 77; Data Protection Act 2018 (the Data Protection Commission, section 11, for a complaint from Ireland)",
 		},
 		{ id: "terms", pathname: "/conditions", basis: "Terms of use of the service" },
 		{
 			id: "accessibility",
 			pathname: "/accessibilite",
 			basis:
-				"Voluntary statement: S.I. No. 358 of 2020 binds public sector bodies; the European Accessibility Act (S.I. No. 636 of 2023) binds the services it lists",
+				"Voluntary statement: S.I. No. 358 of 2020 binds public sector bodies; the European Accessibility Act regulations (S.I. No. 636 of 2023) bind e-commerce services, which a free directory is not",
 		},
 	],
 	healthDataHosting: {
