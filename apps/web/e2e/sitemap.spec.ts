@@ -5,11 +5,12 @@ import { parse } from "./seo-html";
  * The sitemaps, read as crawlers get them: the index, every chunk, and every URL they list, each
  * an indexable 200 page whose canonical is itself. Against the SYNTHETIC fixtures.
  *
- * A file of its own, without `beforeAll`: Playwright splits a file with one into a block of tests
- * per worker, which put every sitemap test of seo.spec.ts on the same worker, one after the other,
- * at the end of the run. Here each test is scheduled on its own, so the parts below share the
- * workers (#157).
+ * Its own project in playwright.config.ts, first in the queue, and its tests one after the other
+ * on one worker: the walk is bound by the server, which renders every page on one core, so it
+ * runs from the start beside the browser tests on the other worker instead of holding both
+ * workers at the end of the run (#157). A failed part is retried alone; the next parts still run.
  */
+test.describe.configure({ mode: "default" });
 
 /** Pages another spec unpublishes and publishes again during the run (owner.spec.ts). */
 const MUTATED_BY_OTHER_SPECS = ["/fr/praticien/benoit-essaial-19999991110"];
@@ -17,8 +18,7 @@ const MUTATED_BY_OTHER_SPECS = ["/fr/praticien/benoit-essaial-19999991110"];
 /**
  * Requests in flight at once when a test walks the chunks or its URLs. The server renders on one
  * core: the walk of every URL took 107 s one at a time, 62 s four at a time and 57–59 s from six
- * to twenty locally, so more only queues. Two parts may run at once on the two CI workers, which
- * keeps about ten requests in flight, as one walk of ten did (#157).
+ * to twenty locally, so more only queues and slows the browser tests sharing the server (#157).
  */
 const SITEMAP_CONCURRENCY = 5;
 
