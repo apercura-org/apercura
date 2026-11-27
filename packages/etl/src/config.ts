@@ -8,6 +8,10 @@ import { CH_SOURCE_IDS, type ChSourceId, chSourceUrlVariable } from "./sources/c
 import { defaultCzPlacesUrls } from "./sources/cz/places";
 import { DEFAULT_DE_PLACES_URL } from "./sources/de/places";
 import { DE_SOURCE_IDS, type DeFileId, type DeSourceId } from "./sources/de/types";
+import { DEFAULT_EE_ADS_URL } from "./sources/ee/ads";
+import { DEFAULT_EE_PHARMACIES_URL } from "./sources/ee/pharmacies";
+import { DEFAULT_EE_PLACES_URL } from "./sources/ee/places";
+import { EE_SOURCE_IDS, type EeFileId, type EeSourceId } from "./sources/ee/types";
 import { DEFAULT_ES_PLACES_BASE } from "./sources/es/places";
 import { ES_SOURCE_IDS, ES_SOURCES, type EsSourceId } from "./sources/es/types";
 import {
@@ -808,6 +812,91 @@ export function buildChOptions(flags: ParsedArgs["flags"], env: NodeJS.ProcessEn
 		postcodesUrl: env.ETL_CH_POSTCODES_URL || null,
 		communesUrl: env.ETL_CH_COMMUNES_URL || null,
 		today: todayInZurich(),
+		workDir: flagString(flags, "work-dir") ?? env.ETL_WORK_DIR ?? null,
+		appUrl: offline ? null : env.APP_URL || null,
+		revalidateSecret: env.REVALIDATE_SECRET || null,
+	};
+}
+
+// ---------------------------------------------------------------------------
+// Estonia (`etl:ee`)
+// ---------------------------------------------------------------------------
+
+/** The Health Board's register of providers and licences (`ETL_EE_MEDRE_URL`), rebuilt daily. */
+export const DEFAULT_EE_MEDRE_URL = "https://medre.tehik.ee/api-common/public/companies/open-data";
+
+export type EeOptions = {
+	databaseUrl: string;
+	dryRun: boolean;
+	approveRunId: number | null;
+	force: boolean;
+	sourceDir: string | null;
+	offline: boolean;
+	sources: EeSourceId[];
+	/**
+	 * Each file's address: the register's open data, the pharmacies' search page (whose export
+	 * button is submitted), the address data system's file.
+	 */
+	urls: Record<EeFileId, string>;
+	/** The settlements' shapefile for the places (`ETL_EE_PLACES_URL`). */
+	placesUrl: string;
+	/** The day of the run in Tallinn (`YYYY-MM-DD`): the licences in force on it are read. */
+	today: string;
+	workDir: string | null;
+	appUrl: string | null;
+	revalidateSecret: string | null;
+};
+
+/** Parses a comma-separated list of Estonian sources (`medre,apteegid`); throws on unknown ones. */
+export function parseEeSources(value: string | null | undefined): EeSourceId[] {
+	if (!value) return [...EE_SOURCE_IDS];
+	const sources = value
+		.split(",")
+		.map((source) => source.trim())
+		.filter(Boolean);
+	for (const source of sources) {
+		if (!(EE_SOURCE_IDS as readonly string[]).includes(source)) {
+			throw new Error(`Unknown Estonian source "${source}" (one of ${EE_SOURCE_IDS.join(", ")})`);
+		}
+	}
+	if (sources.length === 0) throw new Error("At least one Estonian source is required");
+	return [...new Set(sources)] as EeSourceId[];
+}
+
+/** Today in Tallinn, `YYYY-MM-DD`. */
+export function todayInTallinn(now: Date = new Date()): string {
+	return new Intl.DateTimeFormat("en-CA", { timeZone: "Europe/Tallinn" }).format(now);
+}
+
+export function buildEeOptions(
+	flags: ParsedArgs["flags"],
+	env: NodeJS.ProcessEnv,
+	now: Date = new Date(),
+): EeOptions {
+	const approve = flagString(flags, "approve");
+	if (approve !== null && !/^\d+$/.test(approve)) {
+		throw new Error(`--approve needs a run id, got ${approve}`);
+	}
+	const asOf = flagString(flags, "as-of");
+	if (asOf !== null && !/^\d{4}-\d{2}-\d{2}$/.test(asOf)) {
+		throw new Error(`--as-of needs a date (YYYY-MM-DD), got ${asOf}`);
+	}
+	const offline = flags.has("offline");
+	return {
+		databaseUrl: resolveDatabaseUrl(env),
+		dryRun: flags.has("dry-run"),
+		approveRunId: approve === null ? null : Number(approve),
+		force: flags.has("force"),
+		sourceDir: flagString(flags, "source-dir") ?? env.ETL_EE_SOURCE_DIR ?? null,
+		offline,
+		sources: parseEeSources(flagString(flags, "sources") ?? env.ETL_EE_SOURCES),
+		urls: {
+			medre: env.ETL_EE_MEDRE_URL || DEFAULT_EE_MEDRE_URL,
+			apteegid: env.ETL_EE_APTEEGID_URL || DEFAULT_EE_PHARMACIES_URL,
+			ads: env.ETL_EE_ADS_URL || DEFAULT_EE_ADS_URL,
+		},
+		placesUrl: env.ETL_EE_PLACES_URL || DEFAULT_EE_PLACES_URL,
+		today: asOf ?? todayInTallinn(now),
 		workDir: flagString(flags, "work-dir") ?? env.ETL_WORK_DIR ?? null,
 		appUrl: offline ? null : env.APP_URL || null,
 		revalidateSecret: env.REVALIDATE_SECRET || null,
