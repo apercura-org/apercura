@@ -13,6 +13,7 @@ export const COMMANDS = [
 	"etl:ie",
 	"etl:fi",
 	"etl:lt",
+	"etl:si",
 	"etl:places",
 	"etl:outbox",
 ] as const;
@@ -76,6 +77,11 @@ Commands:
                 nursing, laboratories, optometrists) from VASPVT's licence register
                 (data.gov.lt, CC BY 4.0), placed in the Address Register's settlements
                 by their address, rebuild read models.
+  etl:si        Import Slovenian personal doctors (family doctors, children's and
+                school doctors, gynaecologists, dentists) from the health insurer's
+                daily lists (ZZZS; CC BY 4.0), with whether each takes new patients,
+                placed on the register's streets and settlements (GURS), rebuild
+                read models.
   etl:places    Import regions, departments, communes and arrondissements
                 (geo.api.gouv.fr), or with --country at the Austrian
                 Bundesländer and Gemeinden (Statistik Austria), or with --country gb
@@ -97,7 +103,10 @@ Commands:
                 names, or with --country fi the Finnish regions, wellbeing services counties and
                 municipalities (Statistics Finland, CC BY 4.0), or with --country lt the
                 Lithuanian counties, municipalities and settlements (Address Register, VĮ
-                Registrų centras, CC BY 4.0). Run once, then yearly.
+                Registrų centras, CC BY 4.0), or with --country si the Slovenian
+                statistical regions and municipalities, and the settlements, postal
+                areas and streets that locate the practices (GURS, Register prostorskih
+                enot, CC BY 4.0). Run once, then yearly.
   etl:outbox    Send pending cache invalidations to the web app.
 
 Flags (etl:fr):
@@ -199,6 +208,15 @@ Flags (etl:lt):
                           run fails (exit code 1). Downloads go one at a time, at least
                           ETL_LT_REQUEST_INTERVAL_MS apart (20 s), with backoff on 429.
 
+Flags (etl:si):
+  --sources <ids>         Lists to import: sa (general practices, children's and school
+                          dispensaries), gin (women's clinics), zob (dentists) (default
+                          ETL_SI_SOURCES, else all three).
+  --dry-run, --approve=<run_id>, --force, --source-dir <path>, --offline, --work-dir <path>
+                          As for etl:at. --source-dir reads zzzs-sa.xlsx, zzzs-gin.xlsx and
+                          zzzs-zob.xlsx (and the places' si-*.json on a first run) instead
+                          of the insurer's page.
+
 Environment:
   DATABASE_URL_ETL (or DATABASE_URL), ETL_PROFESSIONS, ETL_ANS_URLS, ETL_AMELI_URL,
   ETL_FINESS_DATASET_URL, ETL_GEO_API_URL, ETL_GEOCODER_URL, ETL_SOURCE_DIR, ETL_WORK_DIR,
@@ -227,6 +245,7 @@ Environment:
   ETL_FI_PLACES_COUNTIES_URL, ETL_FI_PLACES_REGIONS_URL, ETL_FI_SOURCE_DIR,
   ETL_LT_VASPVT_URL, ETL_LT_ADDRESS_URL, ETL_LT_DATASET_PAGE, ETL_LT_REQUEST_INTERVAL_MS,
   ETL_LT_REQUEST_ATTEMPTS, ETL_LT_SOURCE_DIR,
+  ETL_SI_SOURCES, ETL_SI_PAGE_URL, ETL_SI_PLACES_URL, ETL_SI_SOURCE_DIR,
   APP_URL and REVALIDATE_SECRET (cache revalidation).`;
 
 export {
@@ -245,6 +264,7 @@ export {
 	buildLtOptions,
 	buildNoOptions,
 	buildPlOptions,
+	buildSiOptions,
 	type ChOptions,
 	type CzOptions,
 	type DeOptions,
@@ -259,6 +279,7 @@ export {
 	type NoOptions,
 	type PlOptions,
 	parseArgs,
+	type SiOptions,
 } from "./config";
 export { type AtRunOutcome, runAt } from "./run-at";
 export { type ChRunOutcome, runCh } from "./run-ch";
@@ -274,3 +295,4 @@ export { type ItRunOutcome, runIt } from "./run-it";
 export { type LtRunOutcome, runLt } from "./run-lt";
 export { type NoRunOutcome, runNo } from "./run-no";
 export { type PlRunOutcome, runPl } from "./run-pl";
+export { runSi, type SiRunOutcome } from "./run-si";

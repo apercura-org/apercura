@@ -1,0 +1,150 @@
+{
+	"type": "FeatureCollection",
+	"features": [
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Polygon",
+				"coordinates": [[[13.4, 45.4], [14.2, 45.4], [14.2, 45.9], [13.4, 45.9], [13.4, 45.4]]]
+			},
+			"properties": { "SIFRA": 1, "NAZIV": "Pomurska", "NAZIV_DJ": null }
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Polygon",
+				"coordinates": [
+					[
+						[14.200000000000001, 45.4],
+						[15, 45.4],
+						[15, 45.9],
+						[14.200000000000001, 45.9],
+						[14.200000000000001, 45.4]
+					]
+				]
+			},
+			"properties": { "SIFRA": 2, "NAZIV": "Podravska", "NAZIV_DJ": null }
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Polygon",
+				"coordinates": [
+					[
+						[15, 45.4],
+						[15.799999999999999, 45.4],
+						[15.799999999999999, 45.9],
+						[15, 45.9],
+						[15, 45.4]
+					]
+				]
+			},
+			"properties": { "SIFRA": 3, "NAZIV": "Koroška", "NAZIV_DJ": null }
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Polygon",
+				"coordinates": [[[15.8, 45.4], [16.6, 45.4], [16.6, 45.9], [15.8, 45.9], [15.8, 45.4]]]
+			},
+			"properties": { "SIFRA": 4, "NAZIV": "Savinjska", "NAZIV_DJ": null }
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Polygon",
+				"coordinates": [[[13.4, 45.9], [14.2, 45.9], [14.2, 46.4], [13.4, 46.4], [13.4, 45.9]]]
+			},
+			"properties": { "SIFRA": 5, "NAZIV": "Zasavska", "NAZIV_DJ": null }
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Polygon",
+				"coordinates": [
+					[
+						[14.200000000000001, 45.9],
+						[15, 45.9],
+						[15, 46.4],
+						[14.200000000000001, 46.4],
+						[14.200000000000001, 45.9]
+					]
+				]
+			},
+			"properties": { "SIFRA": 6, "NAZIV": "Posavska", "NAZIV_DJ": null }
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Polygon",
+				"coordinates": [
+					[
+						[15, 45.9],
+						[15.799999999999999, 45.9],
+						[15.799999999999999, 46.4],
+						[15, 46.4],
+						[15, 45.9]
+					]
+				]
+			},
+			"properties": { "SIFRA": 7, "NAZIV": "Jugovzhodna Slovenija", "NAZIV_DJ": null }
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Polygon",
+				"coordinates": [[[15.8, 45.9], [16.6, 45.9], [16.6, 46.4], [15.8, 46.4], [15.8, 45.9]]]
+			},
+			"properties": { "SIFRA": 8, "NAZIV": "Osrednjeslovenska", "NAZIV_DJ": null }
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Polygon",
+				"coordinates": [[[13.4, 46.4], [14.2, 46.4], [14.2, 46.9], [13.4, 46.9], [13.4, 46.4]]]
+			},
+			"properties": { "SIFRA": 9, "NAZIV": "Gorenjska", "NAZIV_DJ": null }
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Polygon",
+				"coordinates": [
+					[
+						[14.200000000000001, 46.4],
+						[15, 46.4],
+						[15, 46.9],
+						[14.200000000000001, 46.9],
+						[14.200000000000001, 46.4]
+					]
+				]
+			},
+			"properties": { "SIFRA": 10, "NAZIV": "Primorsko-notranjska", "NAZIV_DJ": null }
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Polygon",
+				"coordinates": [
+					[
+						[15, 46.4],
+						[15.799999999999999, 46.4],
+						[15.799999999999999, 46.9],
+						[15, 46.9],
+						[15, 46.4]
+					]
+				]
+			},
+			"properties": { "SIFRA": 11, "NAZIV": "Goriška", "NAZIV_DJ": null }
+		},
+		{
+			"type": "Feature",
+			"geometry": {
+				"type": "Polygon",
+				"coordinates": [[[15.8, 46.4], [16.6, 46.4], [16.6, 46.9], [15.8, 46.9], [15.8, 46.4]]]
+			},
+			"properties": { "SIFRA": 12, "NAZIV": "Obalno-kraška", "NAZIV_DJ": null }
+		}
+	],
+	"numberMatched": 12
+}

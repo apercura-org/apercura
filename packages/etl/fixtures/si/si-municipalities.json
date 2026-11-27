@@ -1,0 +1,136 @@
+{
+	"type": "FeatureCollection",
+	"features": [
+		{
+			"type": "Feature",
+			"bbox": [13.4, 45.4, 14.2, 45.9],
+			"properties": {
+				"SIFRA": 80,
+				"NAZIV": "Murska Sobota",
+				"NAZIV_DJ": null,
+				"EID_OBCINA": "1102000000000080"
+			}
+		},
+		{
+			"type": "Feature",
+			"bbox": [14.200000000000001, 45.4, 15, 45.9],
+			"properties": {
+				"SIFRA": 70,
+				"NAZIV": "Maribor",
+				"NAZIV_DJ": null,
+				"EID_OBCINA": "1102000000000070"
+			}
+		},
+		{
+			"type": "Feature",
+			"bbox": [15, 45.4, 15.799999999999999, 45.9],
+			"properties": {
+				"SIFRA": 103,
+				"NAZIV": "Ravne na Koroškem",
+				"NAZIV_DJ": null,
+				"EID_OBCINA": "1102000000000103"
+			}
+		},
+		{
+			"type": "Feature",
+			"bbox": [15.8, 45.4, 16.6, 45.9],
+			"properties": {
+				"SIFRA": 11,
+				"NAZIV": "Celje",
+				"NAZIV_DJ": null,
+				"EID_OBCINA": "1102000000000011"
+			}
+		},
+		{
+			"type": "Feature",
+			"bbox": [15.8, 45.4, 16.6, 45.9],
+			"properties": {
+				"SIFRA": 133,
+				"NAZIV": "Vojnik",
+				"NAZIV_DJ": null,
+				"EID_OBCINA": "1102000000000133"
+			}
+		},
+		{
+			"type": "Feature",
+			"bbox": [13.4, 45.9, 14.2, 46.4],
+			"properties": {
+				"SIFRA": 129,
+				"NAZIV": "Trbovlje",
+				"NAZIV_DJ": null,
+				"EID_OBCINA": "1102000000000129"
+			}
+		},
+		{
+			"type": "Feature",
+			"bbox": [14.200000000000001, 45.9, 15, 46.4],
+			"properties": {
+				"SIFRA": 54,
+				"NAZIV": "Krško",
+				"NAZIV_DJ": null,
+				"EID_OBCINA": "1102000000000054"
+			}
+		},
+		{
+			"type": "Feature",
+			"bbox": [15, 45.9, 15.799999999999999, 46.4],
+			"properties": {
+				"SIFRA": 85,
+				"NAZIV": "Novo mesto",
+				"NAZIV_DJ": null,
+				"EID_OBCINA": "1102000000000085"
+			}
+		},
+		{
+			"type": "Feature",
+			"bbox": [15.8, 45.9, 16.6, 46.4],
+			"properties": {
+				"SIFRA": 61,
+				"NAZIV": "Ljubljana",
+				"NAZIV_DJ": null,
+				"EID_OBCINA": "1102000000000061"
+			}
+		},
+		{
+			"type": "Feature",
+			"bbox": [13.4, 46.4, 14.2, 46.9],
+			"properties": {
+				"SIFRA": 52,
+				"NAZIV": "Kranj",
+				"NAZIV_DJ": null,
+				"EID_OBCINA": "1102000000000052"
+			}
+		},
+		{
+			"type": "Feature",
+			"bbox": [14.200000000000001, 46.4, 15, 46.9],
+			"properties": {
+				"SIFRA": 94,
+				"NAZIV": "Postojna",
+				"NAZIV_DJ": null,
+				"EID_OBCINA": "1102000000000094"
+			}
+		},
+		{
+			"type": "Feature",
+			"bbox": [15, 46.4, 15.799999999999999, 46.9],
+			"properties": {
+				"SIFRA": 84,
+				"NAZIV": "Nova Gorica",
+				"NAZIV_DJ": null,
+				"EID_OBCINA": "1102000000000084"
+			}
+		},
+		{
+			"type": "Feature",
+			"bbox": [15.8, 46.4, 16.6, 46.9],
+			"properties": {
+				"SIFRA": 50,
+				"NAZIV": "Koper",
+				"NAZIV_DJ": "Capodistria",
+				"EID_OBCINA": "1102000000000050"
+			}
+		}
+	],
+	"numberMatched": 13
+}

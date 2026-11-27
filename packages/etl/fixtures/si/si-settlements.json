@@ -1,0 +1,186 @@
+{
+	"type": "FeatureCollection",
+	"features": [
+		{
+			"type": "Feature",
+			"bbox": [13.790000000000001, 45.64, 13.81, 45.66],
+			"properties": {
+				"SIFRA": 1,
+				"NAZIV": "Murska Sobota",
+				"NAZIV_DJ": null,
+				"EID_NASELJE": "1103000000080001",
+				"EID_OBCINA": "1102000000000080",
+				"SESTAVLJENA_SIFRA": 80001
+			}
+		},
+		{
+			"type": "Feature",
+			"bbox": [14.590000000000002, 45.64, 14.610000000000001, 45.66],
+			"properties": {
+				"SIFRA": 1,
+				"NAZIV": "Maribor",
+				"NAZIV_DJ": null,
+				"EID_NASELJE": "1103000000070001",
+				"EID_OBCINA": "1102000000000070",
+				"SESTAVLJENA_SIFRA": 70001
+			}
+		},
+		{
+			"type": "Feature",
+			"bbox": [15.389999999999999, 45.64, 15.409999999999998, 45.66],
+			"properties": {
+				"SIFRA": 1,
+				"NAZIV": "Ravne na Koroškem",
+				"NAZIV_DJ": null,
+				"EID_NASELJE": "1103000000103001",
+				"EID_OBCINA": "1102000000000103",
+				"SESTAVLJENA_SIFRA": 103001
+			}
+		},
+		{
+			"type": "Feature",
+			"bbox": [16.029999999999998, 45.54, 16.05, 45.559999999999995],
+			"properties": {
+				"SIFRA": 1,
+				"NAZIV": "Celje",
+				"NAZIV_DJ": null,
+				"EID_NASELJE": "1103000000011001",
+				"EID_OBCINA": "1102000000000011",
+				"SESTAVLJENA_SIFRA": 11001
+			}
+		},
+		{
+			"type": "Feature",
+			"bbox": [16.27, 45.54, 16.290000000000003, 45.559999999999995],
+			"properties": {
+				"SIFRA": 40,
+				"NAZIV": "Škofja vas",
+				"NAZIV_DJ": null,
+				"EID_NASELJE": "1103000000011040",
+				"EID_OBCINA": "1102000000000011",
+				"SESTAVLJENA_SIFRA": 11040
+			}
+		},
+		{
+			"type": "Feature",
+			"bbox": [16.349999999999998, 45.565, 16.37, 45.584999999999994],
+			"properties": {
+				"SIFRA": 55,
+				"NAZIV": "Zadobrova",
+				"NAZIV_DJ": null,
+				"EID_NASELJE": "1103000000011055",
+				"EID_OBCINA": "1102000000000011",
+				"SESTAVLJENA_SIFRA": 11055
+			}
+		},
+		{
+			"type": "Feature",
+			"bbox": [16.19, 45.79, 16.210000000000004, 45.809999999999995],
+			"properties": {
+				"SIFRA": 1,
+				"NAZIV": "Vojnik",
+				"NAZIV_DJ": null,
+				"EID_NASELJE": "1103000000133001",
+				"EID_OBCINA": "1102000000000133",
+				"SESTAVLJENA_SIFRA": 133001
+			}
+		},
+		{
+			"type": "Feature",
+			"bbox": [13.790000000000001, 46.14, 13.81, 46.16],
+			"properties": {
+				"SIFRA": 1,
+				"NAZIV": "Trbovlje",
+				"NAZIV_DJ": null,
+				"EID_NASELJE": "1103000000129001",
+				"EID_OBCINA": "1102000000000129",
+				"SESTAVLJENA_SIFRA": 129001
+			}
+		},
+		{
+			"type": "Feature",
+			"bbox": [14.590000000000002, 46.14, 14.610000000000001, 46.16],
+			"properties": {
+				"SIFRA": 1,
+				"NAZIV": "Krško",
+				"NAZIV_DJ": null,
+				"EID_NASELJE": "1103000000054001",
+				"EID_OBCINA": "1102000000000054",
+				"SESTAVLJENA_SIFRA": 54001
+			}
+		},
+		{
+			"type": "Feature",
+			"bbox": [15.389999999999999, 46.14, 15.409999999999998, 46.16],
+			"properties": {
+				"SIFRA": 1,
+				"NAZIV": "Novo mesto",
+				"NAZIV_DJ": null,
+				"EID_NASELJE": "1103000000085001",
+				"EID_OBCINA": "1102000000000085",
+				"SESTAVLJENA_SIFRA": 85001
+			}
+		},
+		{
+			"type": "Feature",
+			"bbox": [16.19, 46.14, 16.210000000000004, 46.16],
+			"properties": {
+				"SIFRA": 1,
+				"NAZIV": "Ljubljana",
+				"NAZIV_DJ": null,
+				"EID_NASELJE": "1103000000061001",
+				"EID_OBCINA": "1102000000000061",
+				"SESTAVLJENA_SIFRA": 61001
+			}
+		},
+		{
+			"type": "Feature",
+			"bbox": [13.790000000000001, 46.64, 13.81, 46.66],
+			"properties": {
+				"SIFRA": 1,
+				"NAZIV": "Kranj",
+				"NAZIV_DJ": null,
+				"EID_NASELJE": "1103000000052001",
+				"EID_OBCINA": "1102000000000052",
+				"SESTAVLJENA_SIFRA": 52001
+			}
+		},
+		{
+			"type": "Feature",
+			"bbox": [14.590000000000002, 46.64, 14.610000000000001, 46.66],
+			"properties": {
+				"SIFRA": 1,
+				"NAZIV": "Postojna",
+				"NAZIV_DJ": null,
+				"EID_NASELJE": "1103000000094001",
+				"EID_OBCINA": "1102000000000094",
+				"SESTAVLJENA_SIFRA": 94001
+			}
+		},
+		{
+			"type": "Feature",
+			"bbox": [15.389999999999999, 46.64, 15.409999999999998, 46.66],
+			"properties": {
+				"SIFRA": 1,
+				"NAZIV": "Nova Gorica",
+				"NAZIV_DJ": null,
+				"EID_NASELJE": "1103000000084001",
+				"EID_OBCINA": "1102000000000084",
+				"SESTAVLJENA_SIFRA": 84001
+			}
+		},
+		{
+			"type": "Feature",
+			"bbox": [16.19, 46.64, 16.210000000000004, 46.66],
+			"properties": {
+				"SIFRA": 1,
+				"NAZIV": "Koper",
+				"NAZIV_DJ": "Capodistria",
+				"EID_NASELJE": "1103000000050001",
+				"EID_OBCINA": "1102000000000050",
+				"SESTAVLJENA_SIFRA": 50001
+			}
+		}
+	],
+	"numberMatched": 15
+}
