@@ -2798,3 +2798,216 @@ each list's exact format (the PSI's two sheets, HIQA's CSV with invented people
 the tests check are never stored, the HSE's GeoJSON with its swapped fields),
 with the real counties' and census towns' codes and names but made-up
 rectangular boundaries, and invented Eircodes of the right form.
+
+## Finland
+
+`etl:fi` builds Finland's directory (`/fi`) from the national Finnish Service
+Catalogue, Suomi.fi-palvelutietovaranto (PTV), run by the Digital and Population
+Data Services Agency (Digi- ja väestötietovirasto, DVV) (issue #173,
+[ADR 0002](./adr/0002-multi-country.md#finland-fi)). Everything above about roles,
+ownership, the outbox and `--approve` applies; this section says what differs.
+
+```sh
+bun run etl:places --country fi   # once (etl:fi does it on its first run), then each January
+bun run etl:fi                    # weekly: a snapshot of the catalogue's health care, then the merge
+bun run etl:fi --dry-run          # everything, then roll back
+bun run etl:fi --approve=<run_id> --source-dir <dir>   # accept a blocked run, on the snapshot it kept
+```
+
+A Finnish page is a **public health service location** (palvelupaikka) of the
+catalogue: a place where a wellbeing services county (hyvinvointialue), the City
+of Helsinki, Åland, HUS or another public organiser gives health care, as it
+describes it in PTV. The catalogue describes every public service of Finland
+(schools, libraries, parks, offices…): the import takes its health care only. It
+names no person on a service location, has **no community pharmacies** and almost
+**no private clinics** (a private provider describes itself there rarely, and the
+few that do are left out). No booking: see the ADR on Kanta and Act 784/2021,
+which concerns booking only.
+
+### Sources
+
+Verified on 27 November 2026 on avoindata.suomi.fi (through its CKAN API), on the
+catalogue's developer pages (kehittajille.suomi.fi) and on stat.fi. Their credits
+are printed on every page and on the data sources page (`/fi/aineisto`) and kept in
+`finland.registries` (`packages/core/src/country/fi.ts`).
+
+| Source                                                                      | Distribution                                                                                                                                                                                                                                                                            | Licence, format, update                                                                                                                                                                                                                                                                                                                                                                                   |
+| --------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Suomi.fi-palvelutietovaranto (DVV; avoindata dataset `palvelutietovaranto`) | the open API, version 11, without a key: `https://api.palvelutietovaranto.suomi.fi/api/v11` (`Service/serviceClass`, `Service/list`, `ServiceChannel/list`, `Organization/list`)                                                                                                        | **CC0 1.0** (the dataset's `license_id` `cc-zero-1.0`, "All PTV content is free to use via PTV Open API"; "Tietoja voi hakea PTV:n OUT-rajapinnan kautta ilman erillistä tunnistautumista tai käyttölupaa"); JSON, live (changes are in the API as soon as an organiser publishes them); no credit required, printed anyway: `Lähde: Suomi.fi-palvelutietovaranto, Digi- ja väestötietovirasto (CC0 1.0)` |
+| Kuntapohjaiset tilastointialueet (Statistics Finland)                       | the geoserver's WFS layer `tilastointialueet:kunta4500k_{year}` as GeoJSON in EPSG:4326, and the classification server's correspondence tables `kunta_1_{year}0101#hyvinvointialue_1_{year}0101` and `kunta_1_{year}0101#maakunta_1_{year}0101` (`data.stat.fi/api/classifications/v2`) | **CC BY 4.0** (avoindata dataset `kuntapohjaiset-tilastointialueet`; Statistics Finland's terms of use: "give at least Statistics Finland as the source"); credit `Lähde: Tilastokeskus, kuntapohjaiset tilastointialueet 2026`; yearly, municipalities merge on 1 January; places import only                                                                                                            |
+
+`ETL_FI_PTV_URL` overrides the API, `ETL_FI_PTV_CONCURRENCY` (1 to 8, default 4)
+the requests at a time; `ETL_FI_PLACES_YEAR` picks the year of Statistics
+Finland's files and `ETL_FI_PLACES_MUNICIPALITIES_URL`, `ETL_FI_PLACES_COUNTIES_URL`
+and `ETL_FI_PLACES_REGIONS_URL` override each. Raise `FI_PLACES_YEAR`
+(`packages/core/src/country/fi.ts`) with the places import each January: the run
+prints the year it read.
+
+**Version 12.** The catalogue's version 12 search API (OUT) is final in production
+since November 2026 and needs an API key, which the user organisation orders free
+of charge (its contact details required); versions 11 OUT and IN are switched off
+in April 2027. The import reads version 11 until then: ordering a key and moving
+the fetch to version 12 is a founder action (ROADMAP.md).
+
+### The snapshot
+
+The API has no bulk file. Each run takes a **snapshot** of the catalogue's health
+care (`fetchPtvSnapshot`, `src/sources/fi/ptv.ts`) and writes it to `ptv.json` in
+its work directory, the file the rest of the run reads, checksums and records, as
+the other markets read a downloaded file:
+
+1. the services of the health care class of the catalogue's service classification
+   (`ptvserclass2`): the class query answers for one class at a time, so the run
+   asks `P5` and each of `P5.1` to `P5.20` (`P5.21`, food safety, is not care), all
+   their pages, and keeps the union of the ids;
+2. those services' details, 100 a request (`Service/list`), keeping the ones that
+   carry a health class, with their classes and linked channels;
+3. the linked channels, 100 a request (`ServiceChannel/list`), keeping the service
+   locations (`ServiceLocation`);
+4. the organisations that describe those locations (`Organization/list`), for
+   their names and types.
+
+Four requests at a time, each retried five times (the API documents 503 answers
+under load). The snapshot (format `apercura-ptv-snapshot/1`) is **trimmed** when
+written: a location keeps its id, organisation, names, addresses, phone numbers,
+linked services and publishing status; never its e-mail addresses, descriptions or
+service hours. `--source-dir` reads a `ptv.json` instead (fixtures, a kept
+snapshot).
+
+### Identifiers
+
+One scheme, `FI-PTV`: the location's service channel id, the catalogue's
+permanent UUID, stored as 32 lower-case hexadecimal digits without its dashes. The
+page URL ends with it
+(`/fi/toimipiste/lapuan-sosiaali-ja-terveyskeskus-b18aa7f87eca4b97a8e8b438d2e29427`;
+the reference `fi:b18aa7f8…`), and the page prints it in the catalogue's own form
+(`b18aa7f8-7eca-4b97-a8e8-b438d2e29427`). One site per location, keyed by the same
+id; no business id is read.
+
+### Kinds and fields
+
+`parsePtv` keeps a location when it is published, in Finland, has a name, and
+belongs to a **public organiser**: organisation types `Region`, `Municipality`,
+`RegionalOrganization` (the wellbeing services counties, HUS), `State` and
+`SotePublic`; never `Company`, `Organization` (associations) or `SotePrivate`,
+whose few locations may be named after their owner. Its kind comes from
+`fiLocationKind` (`packages/core/src/taxonomy/fi.ts`), with at least one linked
+health service:
+
+1. none when one of its names (Finnish or Swedish) says it is no place of care the
+   market lists: schools, pupil and student welfare and student health care, day
+   care, home care and home hospital teams, group homes and housing services,
+   social services, offices and customer service points, Kela's points, transport,
+   occupational health, supplies distribution;
+2. else from its name, the most specific first: an emergency clinic (`paivystys`),
+   a dental clinic (`hammashoitolat`), a maternity and child health clinic or
+   family centre (`neuvolat`), mental health and substance abuse services
+   (`mielenterveys-ja-paihdepalvelut`), a laboratory or imaging unit
+   (`laboratoriot-ja-kuvantaminen`), rehabilitation (`kuntoutus`), a hospital, its
+   wards and outpatient clinics as the catalogue describes them one by one
+   (`sairaalat`), a health centre or sote centre (`terveysasemat`);
+3. else from the classes of its health services: `P5.5` emergency, `P5.10` dental,
+   `P5.2` child health, `P5.4` examinations, `P5.6` specialised care, `P5.7` mental
+   health, `P5.13` rehabilitation; never primary care (`P5.1`) alone, which the
+   organisers also give home care, social services and supplies distribution.
+
+Left out, counted in `stats.sources.ptv.skipped`: other organisation types, no
+kind, no address, abroad, unpublished. The health services given at a location
+are its qualifications (`source = 'palvelu'`, the catalogue's words), its
+organiser too (`jarjestaja`). The phone is the first number the catalogue
+publishes: often a county's booking or advice line shared by its health centres,
+a public service number, kept. Names are the Finnish ones, else the Swedish; a
+post office in capitals is re-cased (`LAPUA` → `Lapua`).
+
+### Places and precision
+
+Places (`directory.places`, `country = 'FI'`), from Statistics Finland, imported
+once:
+
+- **regions**: the 19 regions (maakunnat), Åland included (`06` Pirkanmaa), with
+  no listing of their own (no migration);
+- **departments**: the 21 wellbeing services counties, which organise public
+  health care, the City of Helsinki (`90`, named `Helsinki`) and Åland (`91`), with
+  listings (`/fi/terveysasemat/pirkanmaan-hyvinvointialue`);
+- **communes**: the 308 municipalities (`837` Tampere), each at an interior point
+  of its largest ring. Helsinki (`091`) is the only municipality of its
+  department: like Paris, its city page is the department's
+  (`/fi/terveysasemat/helsinki`).
+
+A location is placed (`buildFiBatch` in `src/merge-fi.ts`) in the municipality
+whose Statistics Finland code its address carries, and located at the catalogue's
+own point (ETRS-TM35FIN, converted to WGS 84 in code with Krüger's series,
+`src/sources/fi/tm35fin.ts`; address precision), else at its municipality's centre
+(city precision, no map pin). A location whose municipality is unknown is left
+out.
+
+### Guards
+
+Before the merge (`FI_LIMITS` in `src/guards.ts`):
+
+- the snapshot is between 2 KB and 400 MB and is one (`apercura-ptv-snapshot/1`);
+  otherwise the run **fails** (one source: the pages stay);
+- at most 1% of the locations quarantined, at least 100 locations in the snapshot
+  and 100 listed, a snapshot never older than the last one imported (never
+  approvable);
+- at most 15% more or fewer locations and 40% more or fewer bytes than the last
+  successful run: otherwise **blocked** (approvable).
+
+After placing: less than 98% of the locations placed in a municipality
+(`fi.places`) or less than 80% at the catalogue's point (`fi.points`) blocks the
+run (approvable). After the merge, the circuit breakers and the orphan check apply
+to Finland's own pages only. An unchanged snapshot ends the run (`skipped`).
+
+**Approval.** The catalogue is live: a second run would take another snapshot. A
+blocked run therefore keeps its work directory and logs where: approve it on that
+same file, `etl:fi --approve=<run_id> --source-dir <dir>`.
+
+### Schedule and monitoring
+
+The scheduler runs `etl:fi $ETL_FI_SCHEDULE_ARGS` every Thursday at 05:30 UTC, when
+no other import runs (`docker/crontab`; one advisory lock for every import). Exit
+codes: 1 failed (the catalogue could not be read), 2 blocked. Alert on both and on
+the import age above 10 days.
+
+```sql
+-- Finland's last runs: status, the fetch, placement and totals.
+SELECT id, status, finished_at, stats -> 'fetch' AS fetch, stats -> 'batch' AS batch,
+	stats -> 'sources' -> 'ptv' -> 'skipped' AS skipped, stats -> 'totals' AS totals
+FROM directory.etl_runs WHERE source = 'fi' ORDER BY id DESC LIMIT 5;
+```
+
+### Measured run (catalogue of 27 November 2026)
+
+Laptop, local PostGIS, the places imported live, then a dry run on the snapshot
+taken that day (the run quoted in the pull request):
+
+|           |                                                                                                                                                                                                            |
+| --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Fetch     | 305 requests, about 13 minutes at four at a time: 4,636 health services, 20,335 linked channels, 10,037 service locations, 591 organisations; a 24 MB snapshot                                             |
+| Lines     | 10,037 locations: 3,753 listed, 0 quarantined; left out 2,033 of associations, 144 of companies, 4,102 without a kind (schools, home care, social services, offices…), 5 without an address                |
+| Locations | sairaalat 916 · kuntoutus 569 · mielenterveys-ja-paihdepalvelut 563 · neuvolat 557 · terveysasemat 460 · hammashoitolat 350 · laboratoriot-ja-kuvantaminen 218 · paivystys 119                             |
+| Sites     | 3,752 placed (1 in an unknown municipality): 3,703 at the catalogue's point (98.7%), 49 at their municipality's centre; 1,955 with a phone                                                                 |
+| Indexable | 3,752 location pages; 496 indexable listing pages of 1,307                                                                                                                                                 |
+| Places    | 19 regions (Åland included), 23 wellbeing services counties, Helsinki and Åland, 308 municipalities, every one located                                                                                     |
+| Known gap | of the 2,104 locations whose name says health centre, hospital, dental clinic or neuvola among the catalogue's 38,182, 127 link no health-class service and are not read (some wards of Tyks, for example) |
+
+### Local development
+
+```sh
+bun run etl:fi --source-dir packages/etl/fixtures/fi --offline   # synthetic data
+bun run --cwd packages/etl fixtures:fi                           # regenerate the fixtures
+```
+
+`packages/etl/fixtures/fi` holds a **synthetic** snapshot in the format `etl:fi`
+writes (`ptv.json`) and Statistics Finland's three files in their exact formats
+(`kunnat.geojson`, `kunta_hyvinvointialue.json`, `kunta_maakunta.json`: eight real
+municipalities with their real codes, counties and regions, drawn as small squares
+around their centres), generated by `packages/etl/fixtures/generate-fi.ts`:
+made-up locations and organisations (ids from `e5e0…`), an e-mail address (to
+check it is never stored), a booking line shared by 40 dental clinics, a location
+without a point, a school, a library, a company's clinic, a location abroad, an
+unpublished one, one in an unknown municipality and one without a name. Never
+commit real rows. The anchors the end-to-end tests use: Esimerkkilän keskussairaala
+(Tampere, `…0001`), Esimerkkilän yhteispäivystys (`…0002`), Esimerkkilän
+terveysasema 1 (Tampere, `…0100`), Esimerkkilän hammashoitola 1 (Turku, `…0200`),
+Esimerkkipolun neuvola 1 (Oulu, `…0300`).

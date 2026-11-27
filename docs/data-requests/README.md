@@ -12,13 +12,15 @@ Re-use of Public Sector Information Regulations 2015, or as a plain licence requ
 gives a right to re-use.
 
 Austria has its own request, prepared separately (`at.md`); the United Kingdom's, Czechia's,
-Spain's, Italy's, Germany's, Switzerland's, Estonia's, Poland's and Norway's candidates are in
-`gb.md`, `cz.md`, `es.md`, `it.md`, `de.md`, `ch.md`, `ee.md`, `pl.md` and `no.md` (Spain opened from the register of centres,
+Spain's, Italy's, Germany's, Switzerland's, Estonia's, Poland's, Norway's and Finland's candidates are in
+`gb.md`,
+`cz.md`, `es.md`, `it.md`, `de.md`, `ch.md`, `ee.md`, `pl.md`, `no.md` and `fi.md` (Spain opened from the register of centres,
 REGCESS, Italy from the Ministry of Health's lists of places, Germany from the statistical offices'
 directory of hospitals and the Länder's pharmacy lists, Switzerland from the FOPH's hospital
 figures and the cantons' lists, Estonia from the Health Board's register of providers and the State
 Agency of Medicines' pharmacies, Poland from RPWDL's healthcare entities, and Norway from the establishments of the Central
-Coordinating Register for Legal Entities; the requests below
+Coordinating Register for Legal Entities, and Finland from the
+Finnish Service Catalogue's public health service locations; the requests below
 for their registers of people still stand).
 
 ## Tracking
@@ -51,6 +53,7 @@ Update a row the day something happens. Status: `not sent`, `sent`, `extended`, 
 | Portugal (17)      | Register of doctors: [pt-ordem-dos-medicos.md](pt-ordem-dos-medicos.md)           | Ordem dos Médicos, access-to-information officer | Email, subject `RAI \|`               | Lei 26/2016, arts. 19 and 21                                         | not sent |           |        |         |
 | Croatia (18)       | Contracted primary care: [hr-hzzo.md](hr-hzzo.md)                                 | HZZO, information officer                        | Email or HZZO form                    | ZPPI, arts. 27 and 29                                                | not sent |           |        |         |
 | Romania (20)       | Registrul unic al medicilor: [ro-cmr.md](ro-cmr.md)                               | CMR, copy DPO                                    | Email                                 | Legea 179/2022, art. 4 (CMR probably not covered)                    | not sent |           |        |         |
+| Finland (30)       | SOTE organisation register: [fi.md](fi.md#how-to-ask)                             | THL (Terveyden ja hyvinvoinnin laitos)           | Email                                 | Directive (EU) 2019/1024: licence request                            | not sent |           |        |         |
 
 ## How to send
 

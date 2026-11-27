@@ -57,6 +57,11 @@ signature, an account, a contract, a paid service or a manual test. This list re
   [`docs/data-requests/no.md`](./docs/data-requests/no.md) asking for a licence for its list of
   pharmacies ("Landets apotek", none stated); the market opened from the register of legal
   entities without it.
+- Finland: order a key for version 12 of the Finnish Service Catalogue's API (PTV self-service,
+  free, the organisation's contact details) and have `etl:fi` moved to it before version 11 is
+  switched off in April 2027 ([`docs/data-requests/fi.md`](./docs/data-requests/fi.md#ptv-version-12)).
+- Finland: send THL the letter of [`docs/data-requests/fi.md`](./docs/data-requests/fi.md#how-to-ask)
+  asking for a licence for the SOTE organisation register (private providers).
 
 ### Accessibility ([#32](https://github.com/apercura-org/apercura/issues/32))
 
@@ -421,13 +426,41 @@ Datatilsynet, claims by documents, no booking ([data import](./docs/data-import.
 - Named practitioners: only from HPR under an agreement with Helsedirektoratet, after a
   legitimate-interest assessment.
 
+### 13. Finland (`/fi`): open, directory of public health service locations
+
+Done in [#173](https://github.com/apercura-org/apercura/issues/173): `/fi` in Finnish, built
+weekly by `etl:fi` from the Finnish Service Catalogue (Suomi.fi-palvelutietovaranto, PTV, DVV,
+CC0 1.0, read through its open API): 3,752 public health service locations of the wellbeing
+services counties, the City of Helsinki, Åland, HUS and other public organisers (hospitals and
+their units, emergency clinics, health centres, dental clinics, maternity and child health
+clinics, mental health and substance abuse services, rehabilitation, laboratories and imaging),
+placed in Statistics Finland's municipalities, wellbeing services counties and regions (CC BY
+4.0) and located at the catalogue's own points, with a legal notice (Act 917/2014), a privacy
+notice with the article 14 information, claims by documents, no booking
+([data import](./docs/data-import.md#finland),
+[ADR 0002](./docs/adr/0002-multi-country.md#finland-fi)). Places, not people. Left:
+
+- Order the version 12 API key and move the fetch before April 2027 (founder, above).
+- Have a native speaker review the Finnish interface and legal texts, and a lawyer admitted in
+  Finland the legal notice (confirm § 176 of Act 917/2014), privacy notice and terms.
+- Booking: only once it is settled whether a booking tool must be a registered class A or B
+  system connected to Kanta (Act 784/2021); ask THL or Kanta's services. The directory does not
+  depend on it.
+- Swedish: Finland's other national language; an `sv-FI` interface under `/fi-sv` (its catalog,
+  its legal texts, route segments and search words, the catalogue's Swedish names), like `/ch-fr`.
+- Pharmacies (no open list: ask Fimea) and private providers (THL's SOTE organisation register,
+  once licensed, after a legitimate-interest assessment for the sole traders named after
+  themselves) ([`docs/data-requests/fi.md`](./docs/data-requests/fi.md)).
+- The 127 named health locations whose services carry no health class (some Tyks wards): classify
+  every location by its name alone; service hours on the pages.
+
 ### Later
 
 The Netherlands, Portugal, Croatia, Cyprus, Romania, Denmark, Sweden, Lithuania, Slovakia,
 Hungary, Bulgaria, Iceland and Liechtenstein open with claimed pages when there is demand.
 Croatia (HZZO) and Cyprus (Medical Council) become directories if their publisher confirms an open
-licence. Finland waits for a ruling on whether a booking site is a registered system connected to
-Kanta, and Greece for a legal opinion on Law 3418/2005 art. 17.
+licence. Booking in Finland waits for a ruling on whether a booking site is a registered system
+connected to Kanta, and Greece for a legal opinion on Law 3418/2005 art. 17.
 
 ## Practitioner tools
 

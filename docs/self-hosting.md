@@ -359,6 +359,28 @@ every Thursday at 20:30 UTC (`ETL_IE_SCHEDULE_ARGS=--sources psi,hiqa` keeps it
 to some lists); exit code `3` when a list was left out, or its terms or licence
 changed ([data-import.md](./data-import.md#ireland)).
 
+Finland (`/fi`) has its own import, from the Finnish Service Catalogue
+(Suomi.fi-palvelutietovaranto, DVV, CC0 1.0): about 3,750 public health service
+locations of the wellbeing services counties, Helsinki, Åland and the other public
+organisers. It reads the catalogue's open API (about 300 requests, four at a time,
+about 13 minutes) into a snapshot. Import the places first, then dry-run it once:
+
+```sh
+apercura-compose run --rm --entrypoint "apercura etl:places" etl --country fi
+apercura-compose run --rm --entrypoint "apercura etl:fi" etl --dry-run
+apercura-compose run --rm --entrypoint "apercura etl:fi" etl
+```
+
+The places are Statistics Finland's regions, wellbeing services counties and
+municipalities (CC BY 4.0, three small files; the first `etl:fi` imports them
+too); rerun `etl:places --country fi` each January. The scheduler reruns the
+import every Thursday at 05:30 UTC (`ETL_FI_SCHEDULE_ARGS` adds flags). One
+source: exit code `1` when the catalogue cannot be read, the pages staying as they
+are. A blocked run keeps its snapshot: approve it with `--approve=<id>
+--source-dir <dir>`, the directory the run names
+([data-import.md](./data-import.md#finland)). The catalogue's API version 11, the
+one read without a key, is switched off in April 2027.
+
 ## Scheduled jobs
 
 The `scheduler` service runs [`docker/crontab`](../docker/crontab) with
