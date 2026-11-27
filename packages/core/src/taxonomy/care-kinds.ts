@@ -374,6 +374,14 @@ export function careKindOfListing(slug: string, market: CareMarket): CareKind | 
 	return KINDS.find(([, listings]) => listings[market] === slug)?.[0] ?? null;
 }
 
+/**
+ * Every kind of care a listing of a market lists, in the table's order (`dental-practices` in GB
+ * → `dentistry`, `orthodontics`), or none.
+ */
+export function careKindsOfListing(slug: string, market: CareMarket): CareKind[] {
+	return KINDS.filter(([, listings]) => listings[market] === slug).map(([kind]) => kind);
+}
+
 /** The listing of a market that lists a kind of care, or null when the market has none. */
 export function listingOfCareKind(kind: CareKind, market: CareMarket): string | null {
 	return (CARE_KINDS[kind] as Partial<Record<CareMarket, string>>)[market] ?? null;

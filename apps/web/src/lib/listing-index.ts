@@ -18,8 +18,11 @@ import {
 	allItListingSlugs,
 	allNoListingSlugs,
 	allPlListingSlugs,
+	type CareKind,
+	careKindsOfListing,
 	equivalentListing,
 	FR_PROFESSIONS,
+	listingOfCareKind,
 	professionOfListingSlug,
 	SEARCH_ALIASES,
 	type SearchAliasLanguage,
@@ -310,15 +313,47 @@ function namedIn(forms: string[], country: MarketCountry): AliasTarget | null {
 		const target = aliases.get(form);
 		if (target !== undefined) return target;
 	}
-	const candidates = new Set(forms);
+	const labels = labelIndexFor(country);
+	let first: LabelMatch | undefined;
+	for (const form of forms) {
+		const match = labels.get(form);
+		if (match && (!first || match.rank < first.rank)) first = match;
+	}
+	return first?.slug ?? null;
+}
+
+/** A listing a label key names, and the rank of its entry among the market's locales' entries. */
+type LabelMatch = { slug: string; rank: number };
+
+/**
+ * Every label key of a market's locales (each key and its singular), with the first entry it
+ * names, in locale order then label order: the entry `namedIn` reads a query as.
+ */
+function buildLabelIndex(country: MarketCountry): Map<string, LabelMatch> {
+	const index = new Map<string, LabelMatch>();
+	let rank = 0;
 	for (const locale of marketLocales(country)) {
 		for (const entry of indexFor(locale)) {
-			if (entry.keys.some((key) => candidates.has(key) || candidates.has(singularOf(key)))) {
-				return entry.slug;
+			for (const key of entry.keys) {
+				for (const form of [key, singularOf(key)]) {
+					if (!index.has(form)) index.set(form, { slug: entry.slug, rank });
+				}
 			}
+			rank++;
 		}
 	}
-	return null;
+	return index;
+}
+
+const labelIndexes = new Map<MarketCountry, Map<string, LabelMatch>>();
+
+function labelIndexFor(country: MarketCountry): Map<string, LabelMatch> {
+	let index = labelIndexes.get(country);
+	if (!index) {
+		index = buildLabelIndex(country);
+		labelIndexes.set(country, index);
+	}
+	return index;
 }
 
 /**
@@ -345,10 +380,96 @@ export function resolveListing(query: string, country: MarketCountry = "FR"): st
 }
 
 /**
+ * The kinds of care each word of a language names, in every market: its search aliases in that
+ * language and the labels of its locales in it, one entry per listing the word names. A market
+ * that does not list a kind still has a word for it ("hôpital" in France, "nemocnice" in
+ * Czechia), which another market's words name ("hôpital" → Germany's `krankenhaeuser`).
+ */
+function buildKindIndex(language: SearchAliasLanguage): Map<string, CareKind[][]> {
+	const index = new Map<string, CareKind[][]>();
+	const add = (key: string, kinds: CareKind[]) => {
+		if (kinds.length === 0) return;
+		for (const form of new Set([key, singularOf(key)])) {
+			if (form) index.set(form, [...(index.get(form) ?? []), kinds]);
+		}
+	};
+	for (const country of Object.keys(SEARCH_ALIASES) as MarketCountry[]) {
+		const listings = SEARCH_ALIASES[country][language]?.listings ?? {};
+		for (const [slug, words] of Object.entries(listings)) {
+			const kinds = careKindsOfListing(slug, country);
+			for (const word of words) {
+				for (const spelling of spellings(word)) add(foldText(spelling), kinds);
+			}
+		}
+	}
+	for (const locale of LOCALES) {
+		if (CATALOG_LANGUAGES[locale] !== language) continue;
+		for (const entry of indexFor(locale)) {
+			const kinds = careKindsOfListing(entry.slug, marketOf(locale));
+			for (const key of entry.keys) add(key, kinds);
+		}
+	}
+	return index;
+}
+
+const kindIndexes = new Map<SearchAliasLanguage, Map<string, CareKind[][]>>();
+
+function kindIndexFor(language: SearchAliasLanguage): Map<string, CareKind[][]> {
+	let index = kindIndexes.get(language);
+	if (!index) {
+		index = buildKindIndex(language);
+		kindIndexes.set(language, index);
+	}
+	return index;
+}
+
+/** Words naming kinds of care, none of which a market lists. */
+const NONE_LISTED = Symbol("none-listed");
+
+/**
+ * The listing of `to` for the kind of care a query names in the languages of `from`'s pages,
+ * in any market's words, or null; `within`, the kinds it may be. The kind every listing naming
+ * the word shares wins ("orthodontiste": orthodontics, where the UK's dental practices list
+ * dentistry too); with none shared, any of them. `NONE_LISTED` when `to` lists none of them,
+ * null when it lists several, or no market's words name the query.
+ */
+function kindListingIn(
+	forms: string[],
+	from: MarketCountry,
+	to: MarketCountry,
+	within?: readonly CareKind[],
+): string | typeof NONE_LISTED | null {
+	const languages = new Set(
+		marketLocales(from).map((locale) => CATALOG_LANGUAGES[locale] as SearchAliasLanguage),
+	);
+	for (const form of forms) {
+		const named = [...languages].flatMap((language) => kindIndexFor(language).get(form) ?? []);
+		const [first, ...others] = named;
+		if (!first) continue;
+		const inScope = (kind: CareKind) => !within || within.includes(kind);
+		const shared = first.filter(
+			(kind) => inScope(kind) && others.every((kinds) => kinds.includes(kind)),
+		);
+		const kinds = shared.length > 0 ? shared : [...new Set(named.flat())].filter(inScope);
+		if (kinds.length === 0) return null;
+		const slugs = new Set(
+			kinds
+				.map((kind) => listingOfCareKind(kind, to))
+				.filter((slug): slug is string => slug !== null && listedIn(slug, to)),
+		);
+		if (slugs.size === 0) return NONE_LISTED;
+		return slugs.size === 1 ? ([...slugs][0] ?? null) : null;
+	}
+	return null;
+}
+
+/**
  * What a "Qui ?" typed on the pages of market `from` names in market `to` (the place searched
  * is there): read in `from`'s words first and carried over by kind of care ("dentiste" in
  * France → the UK's `dental-practices`), else read in `to`'s own words ("zubař" typed on a
- * French page, for Brno). Care that `to` does not list is `unlisted`; null is a name.
+ * French page, for Brno), else by the kind of care other markets' words in `from`'s languages
+ * name ("hôpital" typed on a French page, for Warszawa: France lists no hospital, Germany's
+ * French words do). Care that `to` does not list is `unlisted`; null is a name.
  */
 export function translateSearchTerm(
 	query: string,
@@ -360,10 +481,20 @@ export function translateSearchTerm(
 	if (forms.length === 0) return null;
 	const named = namedIn(forms, from);
 	if (typeof named === "string") {
-		const slug = equivalentListing(named, from, to);
-		if (slug && listedIn(slug, to)) return { kind: "listing", slug };
+		// A listing of several kinds (Austria's `zahnaerzte`: dentistry and orthodontics) leads
+		// to the kind its words name ("Kieferorthopäde": France's `orthodontiste`), and to none
+		// where `to` does not list it ("Hämatologe": not Czechia's oncologists).
+		const kinds = careKindsOfListing(named, from);
+		const narrowed = kinds.length > 1 ? kindListingIn(forms, from, to, kinds) : null;
+		const slug = narrowed === null ? equivalentListing(named, from, to) : narrowed;
+		if (typeof slug === "string" && listedIn(slug, to)) return { kind: "listing", slug };
 	}
-	return resolveSearchTerm(query, to) ?? (named === null ? null : { kind: "unlisted" });
+	const own = resolveSearchTerm(query, to);
+	if (own?.kind === "listing") return own;
+	// Care `from` does not list, which other markets' words in its languages name ("hôpital").
+	const slug = kindListingIn(forms, from, to);
+	if (typeof slug === "string") return { kind: "listing", slug };
+	return own ?? (named === null ? null : { kind: "unlisted" });
 }
 
 /** The label of a listing in a locale (`dental-practices` → "Dental practices"), or null. */

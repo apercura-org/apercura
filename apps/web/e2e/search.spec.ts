@@ -189,6 +189,18 @@ test.describe("a place of another market", () => {
 			"/de/suche?quoi=Krankenhaus&ou=Unterhaching",
 			"/de/krankenhaeuser/landkreis-muenchen/unterhaching",
 		],
+		// France and Czechia list no hospitals: their words still reach Poland's and Spain's.
+		[`/fr/recherche?quoi=${encodeURIComponent("hôpital")}&ou=Warszawa`, "/pl/szpitale/warszawa"],
+		[
+			`/fr/recherche?quoi=${encodeURIComponent("hôpital")}&ou=Madrid`,
+			"/es/hospitales/madrid/madrid",
+		],
+		["/cz/hledat?quoi=nemocnice&ou=Warszawa", "/pl/szpitale/warszawa"],
+		// Austria lists none either: its search, with the words typed.
+		[
+			`/fr/recherche?quoi=${encodeURIComponent("hôpital")}&ou=Wien`,
+			`/at/suche?quoi=${encodeURIComponent("hôpital")}&ou=Wien`,
+		],
 		// Germany lists no dentists: its search, with the place set; Germany by name: its home.
 		["/fr/recherche?quoi=dentiste&ou=Berlin", "/de/suche?ou=Berlin"],
 		["/fr/recherche?ou=Allemagne", "/de"],

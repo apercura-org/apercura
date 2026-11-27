@@ -84,6 +84,7 @@ const LANDINGS = new Set([
 	"zubni-lekar@Praha",
 	"dentistas@Madrid",
 	"centros-de-salud@Madrid",
+	"hospitales@Madrid",
 	"farmacias@Madrid",
 	"farmacie@Roma",
 	"ospedali@Roma",
@@ -318,6 +319,26 @@ describe("a search for a place of another market", () => {
 		expect(await search("en-GB", { ou: "Bern" })).toEqual(searchPage("de-CH", { ou: "Bern" }));
 		expect(await search("fr-CH", { quoi: "pharmacie", ou: "Lausanne" })).toBeNull();
 		expect(await search("de-CH", { quoi: "Apotheke", ou: "Zürich" })).toBeNull();
+	});
+
+	it("moves to a market's hospitals from a market that lists none, in its words", async () => {
+		// France lists no hospital: "hôpital" reaches Poland's and Spain's by kind of care.
+		expect(await search("fr", { quoi: "hôpital", ou: "Kraków" })).toEqual(
+			listing("pl-PL", "szpitale", "krakow", "krakow"),
+		);
+		expect(await search("fr", { quoi: "hôpital", ou: "Madrid" })).toEqual(
+			listing("es-ES", "hospitales", "madrid", "madrid"),
+		);
+		expect(await search("cs-CZ", { quoi: "nemocnice", ou: "Kraków" })).toEqual(
+			listing("pl-PL", "szpitale", "krakow", "krakow"),
+		);
+		// Austria lists no hospital either: its search, with the words typed, as before.
+		expect(await search("fr", { quoi: "hôpital", ou: "Wien" })).toEqual(
+			searchPage("de-AT", { quoi: "hôpital", ou: "Wien" }),
+		);
+		expect(await search("en-GB", { quoi: "hospital", ou: "Wien" })).toEqual(
+			searchPage("de-AT", { ou: "Wien" }),
+		);
 	});
 
 	it("reads the words of the market searched too", async () => {
