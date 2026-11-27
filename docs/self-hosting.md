@@ -453,6 +453,22 @@ territorial reform. The scheduler reruns the import every Saturday at 04:30 UTC
 (`ETL_LV_SCHEDULE_ARGS=--sources pharmacies` keeps it to some lists); exit code
 `3` when a list was left out ([data-import.md](./data-import.md#latvia)).
 
+Sweden (`/se`) has its own import, from Läkemedelsverket's register of licensed
+pharmacies and Västra Götalandsregionen's health centres (about 1,650
+facilities). Import the places first, then dry-run it once:
+
+```sh
+apercura-compose run --rm --entrypoint "apercura etl:places" etl --country se
+apercura-compose run --rm --entrypoint "apercura etl:se" etl --dry-run
+apercura-compose run --rm --entrypoint "apercura etl:se" etl
+```
+
+The places are SCB's 21 counties and 290 municipalities (the first `etl:se`
+imports them too). The scheduler reruns the import every Saturday at 04:30 UTC
+(`ETL_SE_SCHEDULE_ARGS=--sources apotek` keeps it to the pharmacies); exit code
+`3` when a list was left out, or its licence changed
+([data-import.md](./data-import.md#sweden)).
+
 ## Scheduled jobs
 
 The `scheduler` service runs [`docker/crontab`](../docker/crontab) with

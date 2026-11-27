@@ -3836,3 +3836,136 @@ check they are never stored), and filler rows above the floors. Never commit rea
 ways, names, GPs, nothing unneeded stored, placement (standard names, a village's parish, a point),
 read models without region listings, idempotence, a dry run, an unreadable address file leaving
 out the GP practices and hospitals, absences, objections, the breaker and `--approve`.
+
+## Sweden
+
+`etl:se` builds Sweden's directory (`/se`, in Swedish) from the Swedish Medical
+Products Agency's register of licensed pharmacies and Västra Götalandsregionen's
+list of health centres (issue #175,
+[ADR 0002](./adr/0002-multi-country.md#sweden-se)). Everything above about
+roles, ownership, the outbox and `--approve` applies, and the per-list behaviour
+is Ireland's; this section says what differs.
+
+```sh
+bun run etl:places --country se          # once (etl:se does it on its first run), then when SCB redraws a border
+bun run etl:se                           # weekly
+bun run etl:se --sources apotek          # one list only (`--sources -vardcentraler` leaves one out)
+bun run etl:se --dry-run                 # everything, then roll back
+bun run etl:se --approve=<run_id>        # accept what a blocked run reported
+```
+
+A Swedish page is a **facility, never a person**: a licensed community pharmacy
+(öppenvårdsapotek) or a health centre (vårdcentral). Sweden has no open list of
+hospitals, clinics or health professionals: HOSP, IVO's register of care
+providers and the HSA directory behind 1177 are closed
+([`docs/data-requests/se.md`](./data-requests/se.md)). Pharmacies are listed in
+all 21 counties; **health centres only in Västra Götaland**, the one region found
+to publish them under an open licence. The home and the data page say so.
+
+### Sources
+
+Verified on 27 November 2026 in each publisher's own DCAT catalogue
+(harvested by dataportal.se) and on SCB's page. Every credit is printed on the
+pages built from the list and on the data sources page (`/se/data`), and kept in
+`sweden.registries` (`packages/core/src/country/se.ts`).
+
+| List (`--sources`) | Distribution                                                                                                                                                                  | Licence and credit                                                                                                                                            | Format, rows (27 November 2026)               |
+| ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------- |
+| `apotek`           | Läkemedelsverket, [Apotek med tillstånd](https://www.lakemedelsverket.se/sv/handel-med-lakemedel/apotek/sok-apotek-som-har-tillstand): the search page's export, no filter   | CC BY 4.0 ([distribution 37](https://catalog.lakemedelsverket.se/store/1/resource/37)). `Apotek med tillstånd: © Läkemedelsverket, CC BY 4.0; bearbetat av Apercura` | XLSX, updated daily, 1,451 rows               |
+| `vardcentraler`    | Västra Götalandsregionen, [Vårdcentraler i Vårdval vårdcentral](https://vgregion.entryscape.net/store/7/resource/46) (`resource/47`, CSV)                                     | CC0 1.0 ([distribution 48](https://vgregion.entryscape.net/store/7/resource/48)). `Vårdcentraler: Västra Götalandsregionen, CC0 1.0`                          | CSV, SWEREF 99 TM points, irregular, 215 rows |
+
+Places come from SCB's [Digitala gränser](https://www.scb.se/hitta-statistik/regional-statistik-och-kartor/regionala-indelningar/digitala-granser/)
+(CC0 1.0, credit `Län och kommuner: Källa: SCB, CC0 1.0`): the shape archive the
+page links (`shape_svenska_*.zip`, read from the page each time, else the last
+known address), with nested archives of the 290 municipalities and 21 counties.
+
+Each run reads both lists' licences again from their DCAT records (asked as
+JSON: EntryScape answers RDF/XML otherwise): a list whose `dct:license` is no
+longer CC BY 4.0 (the pharmacies) or CC0 1.0 (the health centres) is left out
+of the run (exit code 3), its pages kept, and says why in `stats.sourceErrors`.
+The pharmacy export carries a second sheet, `Filter`: unless it says "Inget
+filter aktivt", the file is a selection, not the register, and is left out too.
+The export has no date of its own: the data page prints the run's day.
+
+### Minimisation and what is left out
+
+- Pharmacies: name, visiting address, postcode, post town, municipality,
+  licence case number and date, GLN, holder. The holder (a company) and its
+  organisation number are printed only when the number is a legal person's
+  (`isValidSeLegalPersonNumber`: third digit 2 or more, Luhn digit): a sole
+  trader's organisation number is the trader's personal identity number. None
+  was dropped in November 2026 (every holder is a company).
+- Pharmacies whose name says "(stängt för allmänheten)", licensed but closed to
+  the public (dose dispensing, care homes), are not listed and are counted (4).
+- A GLN cell listing several numbers (6, one truncated) keys the page by the
+  first valid one (GS1 check digit); the others are not stored.
+- Health centres: name, HSA-id, operator (`foretag`: a company or Närhälsan, the
+  region's own primary care), visiting address and point. Nothing about people
+  is in either file; no phone, e-mail or website is published, so none is shown.
+
+### Identifiers
+
+One scheme per list (`SE_ID_SCHEMES`, `packages/core/src/slugs.ts`): `SE-GLN`
+the pharmacy's GLN (`…-a7312446003969`), `SE-HSA` the health centre's HSA-id
+(`SE2321000131-E000000007600`, written `…-v2321000131e000000007600` in the URL).
+A pharmacy inside a health centre is two pages, one per list.
+
+### Places and precision
+
+`etl:places --country se` (or the first `etl:se`) imports the 21 counties as
+departments (`SE_COUNTIES`, slugs keep "län": `stockholms-lan`) and the 290
+municipalities as communes, each with its interior point computed from SCB's
+simplified borders, and stores each municipality's boundary in
+`directory.place_lookup` (migration `0031`). Gotland (`0980`), a county with one
+municipality, has the county's page only, like Paris.
+
+- A pharmacy is placed in the municipality its row names (`Kommun`, compared
+  without case or spaces; the `Län` column's spellings vary, so the county comes
+  from the municipality's code) and located at the municipality's point (`city`
+  precision: no map pin, distances approximate). Lantmäteriet's address points
+  (Belägenhetsadress, CC BY 4.0) are ordered through Geotorget under extra terms:
+  a follow-up ([`docs/data-requests/se.md`](./data-requests/se.md)).
+- A health centre is located at its own point (`address` precision, map pin;
+  `x` is the northing, `y` the easting, EPSG:3006) and placed in the Västra
+  Götaland municipality whose boundary holds it, else the one its post town
+  names, else the nearest within 10 km (Styrsö lies 7 km outside Göteborg's
+  simplified border).
+
+### Guards
+
+Per list: quarantine within 1% or two lines (never approvable), a floor of lines
+and facilities (1,000 pharmacies, 150 health centres; never approvable; the
+fixtures read with `--source-dir` are exempt), and the change since the last
+successful run that read it: at most 10% or 10 facilities, 25% of bytes
+(approvable). Then the circuit breakers on Sweden's own pages as everywhere.
+
+### Schedule and monitoring
+
+The scheduler runs `etl:se` every Saturday at 04:30 UTC (`docker/crontab`),
+when no other import runs; `ETL_SE_SCHEDULE_ARGS` narrows it. Exit codes as for
+Ireland (3: imported without a list that could not be fetched or read, or whose
+licence changed). Unchanged lists are skipped. Environment: `ETL_SE_SOURCES`
+(the lists by default), `ETL_SE_APOTEK_URL`, `ETL_SE_VARDCENTRALER_URL`,
+`ETL_SE_PLACES_URL`, `ETL_SE_PLACES_PAGE_URL`, `ETL_SE_SOURCE_DIR`
+([configuration](./configuration.md)).
+
+### Measured run (files of 27 November 2026)
+
+A dry run on the real files: 21 counties and 290 municipalities, every one with
+a point (311 boundaries stored). Pharmacies: 1,451 lines, 4 closed to the public
+skipped, 1,447 listed, all placed by their municipality, none quarantined (one
+postcode `999 999` not printed, one pharmacy without a street). Health centres:
+215 lines, 215 listed: 200 placed by boundary, 8 by post town, 7 by the nearest
+boundary. 1,662 facilities in all, 363 listing pages, 181 of them indexable.
+
+### Local development
+
+```sh
+bun run --cwd packages/etl fixtures:se                                   # regenerate the synthetic fixtures
+bun run etl:places --country se --source-dir packages/etl/fixtures/se    # synthetic places
+bun run etl:se --source-dir packages/etl/fixtures/se --offline           # synthetic lists
+ETL_TEST_DATABASE_URL=postgres://… bun run --cwd packages/etl test       # includes se-integration.test.ts
+```
+
+The fixtures are generated and fictional ("Exempelapoteket …", "Exempel
+Vårdcentral …"), never real register data.
