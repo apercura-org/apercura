@@ -2732,6 +2732,23 @@ export function europeanPlaceOf(text: string): EuropeanPlace | null {
 	return null;
 }
 
+/**
+ * True when `text` is, as a whole, one of the listed cities of the country `code` under any of
+ * its names ("Vilnius", "Wilno" for `LT`; "Bergen" for `NO`), whichever country a bare name
+ * means first: a city's market ranks it over its smaller homonyms (a village "Vilnius").
+ */
+export function isEuropeanCityOf(text: string, code: string): boolean {
+	const key = placeKey(text);
+	const country = code.toUpperCase();
+	return (
+		key !== "" &&
+		(index()
+			.cities.get(key)
+			?.some((entry) => entry.country.code === country) ??
+			false)
+	);
+}
+
 /** The country of an ISO 3166-1 alpha-2 code ("DE", "de"; "XK" for Kosovo), or undefined. */
 export function europeanCountry(code: string): EuropeanCountry | undefined {
 	return index().byCode.get(code.toUpperCase());

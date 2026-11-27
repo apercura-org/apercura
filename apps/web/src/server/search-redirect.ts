@@ -1,5 +1,5 @@
 import { isValidRpps, type SearchQuery } from "@apercura/core";
-import { type EuropeanPlace, europeanPlaceOf } from "@apercura/core/geo";
+import { type EuropeanPlace, europeanPlaceOf, isEuropeanCityOf } from "@apercura/core/geo";
 import {
 	type Locale,
 	MARKET_COUNTRIES,
@@ -8,6 +8,7 @@ import {
 	marketOf,
 } from "~/i18n/locales";
 import type { Href } from "~/i18n/navigation";
+import { standoutPlace } from "~/lib/homonyms";
 import { listingLabel, translateSearchTerm } from "~/lib/listing-index";
 import {
 	type LandingTarget,
@@ -15,6 +16,7 @@ import {
 	listingHubExists,
 	matchPlaces,
 	type PlaceSuggestion,
+	placeSiteCounts,
 	practitionerSlugByRpps,
 } from "./queries/search";
 
@@ -52,19 +54,49 @@ function listingHref(target: LandingTarget): Href {
 	};
 }
 
-function placesIn(country: MarketCountry, query: SearchQuery): Promise<PlaceSuggestion[]> {
-	return matchPlaces({
+/**
+ * The place a name means among the homonyms of a market, alone, when one stands out
+ * (`standoutPlace`: Vilnius the capital, not the village Vilnius in Kupiškis), counting the
+ * places of care only for a main city its places' level and population do not settle; else
+ * every homonym, for the search to ask which. The communes of a postcode are all kept.
+ */
+async function likeliestPlaces(
+	country: MarketCountry,
+	places: PlaceSuggestion[],
+	query: SearchQuery,
+): Promise<PlaceSuggestion[]> {
+	if (places.length < 2 || query.postcode) return places;
+	const found =
+		standoutPlace(places, country, query.where) ??
+		(isEuropeanCityOf(query.where, country)
+			? standoutPlace(
+					places,
+					country,
+					query.where,
+					await placeSiteCounts(
+						country,
+						places.map((place) => place.id),
+					),
+				)
+			: null);
+	return found ? [found] : places;
+}
+
+async function placesIn(country: MarketCountry, query: SearchQuery): Promise<PlaceSuggestion[]> {
+	const places = await matchPlaces({
 		country,
 		where: query.where,
 		...(query.postcode ? { postcode: query.postcode } : {}),
 		...(query.departmentHint ? { departmentHint: query.departmentHint } : {}),
 	});
+	return likeliestPlaces(country, places, query);
 }
 
 /**
  * The places of `country` "Où ?" names, and the name they were found by: the name as typed, else,
  * for a city of that country typed in another language ("Rome", "Milan", "Prague"), its own name
- * ("Roma", "Milano", "Praha"), which the market's places carry.
+ * ("Roma", "Milano", "Praha"), which the market's places carry. Of homonyms, only the one that
+ * stands out when one does (`likeliestPlaces`): several places mean the search asks which.
  */
 export async function placesOfQuery(
 	country: MarketCountry,

@@ -188,7 +188,13 @@ describe("the Address Register's places", () => {
 		expect(of("commune", "90002")?.slug).toBe("pavyzdziai-bandymu-sen");
 		// A settlement the register closed is not a place.
 		expect(of("commune", "90009")).toBeUndefined();
-		expect(sources.points.size).toBe(11);
+		// A village of another municipality keeps the capital's name: the search tells them apart.
+		expect(of("commune", "90010")).toMatchObject({
+			name: "Vilnius",
+			slug: "vilnius",
+			department_code: "52",
+		});
+		expect(sources.points.size).toBe(12);
 	});
 });
 

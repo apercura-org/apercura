@@ -5,6 +5,7 @@ import {
 	europeanCountry,
 	europeanPlaceOf,
 	type GeoLanguage,
+	isEuropeanCityOf,
 	placeKeysOf,
 } from "./europe";
 
@@ -283,5 +284,34 @@ describe("europeanPlaceOf", () => {
 		"DE",
 	])("finds nothing in %j", (text) => {
 		expect(europeanPlaceOf(text)).toBeNull();
+	});
+});
+
+describe("isEuropeanCityOf", () => {
+	it.each([
+		["Vilnius", "LT"],
+		["Wilno", "LT"],
+		["kaunas", "lt"],
+		["Riga", "LV"],
+		["Rīga", "LV"],
+		["Λευκωσία", "CY"],
+		["Nicosia", "CY"],
+		["Stockholm", "SE"],
+		["Valletta", "MT"],
+		["Bergen", "NO"],
+		["Warszawa", "PL"],
+		["Ljubljana", "SI"],
+	])("knows %j as a city of %s", (text, code) => {
+		expect(isEuropeanCityOf(text, code)).toBe(true);
+	});
+
+	it.each([
+		["Vilnius", "LV"],
+		["Bergen", "DE"],
+		["Vilnius Senamiestis", "LT"],
+		["", "LT"],
+		["Saint-Denis", "FR"],
+	])("does not know %j as a city of %s", (text, code) => {
+		expect(isEuropeanCityOf(text, code)).toBe(false);
 	});
 });
