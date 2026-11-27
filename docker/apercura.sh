@@ -37,6 +37,8 @@ Usage: apercura <command> [arguments]
   etl:cy [flags]         Import the Cypriot pharmacies, state hospitals and health centres
                          (the Ministry of Health's lists on data.gov.cy, CC BY 4.0)
   etl:lv [flags]         Import the Latvian GP practices (NVD), hospitals and pharmacies (ZVA)
+  etl:se [flags]         Import the Swedish licensed pharmacies (Läkemedelsverket) and
+                         Västra Götaland's health centres
   etl:places [flags]     Import the communes, departments and regions (--country at: the
                          Austrian Bundesländer and Gemeinden; --country gb: the UK regions,
                          local authorities and towns; --country cz: the Czech regions,
@@ -54,7 +56,8 @@ Usage: apercura <command> [arguments]
                          Slovenian statistical regions and municipalities, with the
                          settlements, postal areas and streets that locate the practices; --country cy: the Cypriot
                          districts, municipalities and communities; --country lv: the Latvian
-                         regions, municipalities, towns and parishes)
+                         regions, municipalities, towns and parishes; --country se: the Swedish
+                         counties and municipalities)
   etl:outbox             Send the pending cache tags to the app
   scheduler              Run jobs:tick and the cache warm-up every 5 minutes and the open data
                          imports (supercronic)
@@ -113,7 +116,7 @@ jobs | jobs:tick)
 	jobs_database_url
 	exec bun /app/cli/jobs.js "$@"
 	;;
-etl:fr | etl:at | etl:gb | etl:cz | etl:es | etl:it | etl:de | etl:ch | etl:ee | etl:lt | etl:lv | etl:no | etl:cy | etl:pl | etl:ie | etl:fi | etl:si | etl:places | etl:outbox)
+etl:fr | etl:at | etl:gb | etl:cz | etl:es | etl:it | etl:de | etl:ch | etl:ee | etl:lt | etl:lv | etl:no | etl:cy | etl:pl | etl:ie | etl:fi | etl:si | etl:se | etl:places | etl:outbox)
 	# The import only uses APP_URL to send cache tags to the app: inside a private network it
 	# can reach it directly (INTERNAL_APP_URL, e.g. http://app:3000) instead of the public URL.
 	if [ -n "${INTERNAL_APP_URL:-}" ]; then
