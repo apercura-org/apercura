@@ -130,6 +130,11 @@ test.describe("the German objection form", () => {
 	});
 
 	test("withholds a page found by its address, answering in German", async ({ page }) => {
+		// A client of its own: the public forms' rate limit is per client (5 an hour), and the other
+		// markets' objection specs share the default one.
+		await page.setExtraHTTPHeaders({
+			"x-forwarded-for": `10.94.${Math.floor(Math.random() * 250)}.${Math.floor(Math.random() * 250)}`,
+		});
 		await page.goto("/de/daten#remove");
 		const form = page.locator("#remove form");
 		await form.getByRole("textbox").first().fill(`https://apercura.org/de/einrichtung/${slug}`);
