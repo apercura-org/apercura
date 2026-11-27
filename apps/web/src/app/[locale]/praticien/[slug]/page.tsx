@@ -7,6 +7,7 @@ import {
 	ES_OTHER_PRACTICE,
 	eeKindSlugOf,
 	esKindSlugOf,
+	fiKindSlugOf,
 	noKindSlugOf,
 	PL_SPECIALIST,
 } from "@apercura/core/taxonomy";
@@ -224,6 +225,7 @@ export default async function PractitionerPage({ params }: Props) {
 				deKindSlugOf(payload.professionCode) ??
 				eeKindSlugOf(payload.professionCode) ??
 				noKindSlugOf(payload.professionCode) ??
+				fiKindSlugOf(payload.professionCode) ??
 				professionSlugOf(payload.professionCode),
 			gender,
 		) ?? t("unknownProfession");
@@ -358,6 +360,19 @@ export default async function PractitionerPage({ params }: Props) {
 	const norwegianOwners = norwegianOf("eier")
 		.map((item) => item.label)
 		.filter((label): label is string => Boolean(label));
+	// Finland lists the public service locations of the Finnish Service Catalogue: the services
+	// given there and the organisation that describes them (a wellbeing services county, HUS), in
+	// the catalogue's words.
+	const finnish = payload.country === "FI";
+	const finnishOf = (source: string) =>
+		finnish
+			? payload.qualifications
+					.filter((item) => item.source === source)
+					.map((item) => item.label)
+					.filter((label): label is string => Boolean(label))
+			: [];
+	const finnishServices = finnishOf("palvelu");
+	const finnishOrganisers = finnishOf("jarjestaja");
 	// Switzerland lists facilities: a hospital's type, activities, services and offer as the
 	// FOPH's figures give them, its ownership and operator, and its category as its canton's list
 	// names it (in that list's language).
@@ -668,6 +683,25 @@ export default async function PractitionerPage({ params }: Props) {
 												emptyLabel={empty}
 											/>
 										) : null}
+									</>
+								) : finnish ? (
+									<>
+										{finnishOrganisers.length > 0 ? (
+											<FieldRow
+												label={t("finnishFacts.organiser")}
+												value={<span lang="fi">{finnishOrganisers.join(", ")}</span>}
+												emptyLabel={empty}
+											/>
+										) : null}
+										<FieldRow
+											label={t("finnishFacts.services")}
+											value={
+												finnishServices.length > 0 ? (
+													<span lang="fi">{listValue(finnishServices)}</span>
+												) : null
+											}
+											emptyLabel={empty}
+										/>
 									</>
 								) : german ? (
 									germanFacts.map((fact) => (

@@ -20,6 +20,7 @@ type Pathnames = Record<
 				| "pl-PL"
 				| "nb-NO"
 				| "en-IE"
+				| "fi-FI"
 			>,
 			string
 	  >
@@ -134,6 +135,34 @@ function norwegianPath(path: string): string {
 }
 
 /**
+ * The Finnish form of each English path segment (`/practitioner/[slug]/report` ->
+ * `/toimipiste/[slug]/ilmoita`): a page is a service location ("toimipiste"), never a person, so
+ * an establishment's page is an organisation's. The first segments are the Finnish reserved
+ * segments of `@apercura/core/taxonomy` (`FI_RESERVED_SEGMENTS`, tested), which never name a
+ * listing.
+ */
+export const FINNISH_SEGMENTS: Readonly<Record<string, string>> = {
+	search: "haku",
+	practitioner: "toimipiste",
+	report: "ilmoita",
+	removal: "poisto",
+	"this-is-me": "tama-on-meidan",
+	establishment: "organisaatio",
+	directory: "hakemisto",
+	about: "tietoa",
+	data: "aineisto",
+	accessibility: "saavutettavuus",
+	privacy: "tietosuoja",
+	"legal-notice": "oikeudelliset-tiedot",
+	terms: "kayttoehdot",
+};
+
+/** An English path with its segments in Finnish; parameters and unknown segments stay. */
+function finnishPath(path: string): string {
+	return path.replace(/[^/]+/g, (segment) => FINNISH_SEGMENTS[segment] ?? segment);
+}
+
+/**
  * The Spanish market's form of a Spanish path: a centre's page under `/centro` (Spain lists
  * centres, never people), so an establishment's page moves from `/centro` to `/organizacion`.
  * Every first segment is a Spanish reserved segment of `@apercura/core/taxonomy`
@@ -206,7 +235,9 @@ function swissMarketPath(path: string, person: string, facility: string): string
  * - Ireland (`en-IE`): the English paths, with a facility's page under `/facility` (Ireland
  *   lists pharmacies, nursing homes, hospitals and health centres, never people); an
  *   establishment keeps `/establishment`. Every first segment is an Irish reserved segment of
- *   `@apercura/core/taxonomy` (`IE_RESERVED_SEGMENTS`, tested).
+ *   `@apercura/core/taxonomy` (`IE_RESERVED_SEGMENTS`, tested);
+ * - Finland (`fi-FI`): the English paths with their segments in Finnish (`FINNISH_SEGMENTS`), a
+ *   service location's page under `/toimipiste`.
  */
 function withMarkets<T extends Pathnames>(pathnames: T) {
 	return Object.fromEntries(
@@ -229,6 +260,7 @@ function withMarkets<T extends Pathnames>(pathnames: T) {
 						"pl-PL": polishPath(value.en),
 						"nb-NO": norwegianPath(value.en),
 						"en-IE": value.en.replace("/practitioner/", "/facility/"),
+						"fi-FI": finnishPath(value.en),
 					},
 		]),
 	) as {
@@ -248,6 +280,7 @@ function withMarkets<T extends Pathnames>(pathnames: T) {
 					"pl-PL": string;
 					"nb-NO": string;
 					"en-IE": string;
+					"fi-FI": string;
 				};
 	};
 }

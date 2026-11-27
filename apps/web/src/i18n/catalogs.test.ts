@@ -4,12 +4,14 @@ import {
 	allDeTaxonomySlugs,
 	allEeTaxonomySlugs,
 	allEsTaxonomySlugs,
+	allFiTaxonomySlugs,
 	allIeListingSlugs,
 	allItListingSlugs,
 	allNoTaxonomySlugs,
 	allPlListingSlugs,
 	DE_DEFAULT_PROFESSIONS,
 	EE_DEFAULT_PROFESSIONS,
+	FI_DEFAULT_PROFESSIONS,
 	IE_DEFAULT_PROFESSIONS,
 	NO_DEFAULT_PROFESSIONS,
 	PL_DEFAULT_PROFESSIONS,
@@ -33,6 +35,7 @@ import en from "../../messages/en.json";
 import enIE from "../../messages/en-IE.json";
 import es from "../../messages/es.json";
 import esES from "../../messages/es-ES.json";
+import fi from "../../messages/fi.json";
 import fr from "../../messages/fr.json";
 import frCH from "../../messages/fr-CH.json";
 import gb from "../../messages/gb.json";
@@ -91,6 +94,7 @@ const CATALOGS: Record<Locale, unknown> = {
 	"pl-PL": mergeMessages(en, pl as Record<string, unknown>),
 	"nb-NO": mergeMessages(en, no as Record<string, unknown>),
 	"en-IE": mergeMessages(en, enIE as Record<string, unknown>),
+	"fi-FI": mergeMessages(en, fi as Record<string, unknown>),
 };
 
 /** Every message of a catalog by its dotted key (array items are indexed). */
@@ -246,6 +250,44 @@ describe("the Polish texts", () => {
 		}
 		// The supervisory authority's current address, not its former one.
 		expect(polish.get("PrivacyPl.sections.rights.body.1")).toContain("Moniuszki 1A");
+	});
+});
+
+describe("the Finnish texts", () => {
+	it("only override keys of the English catalog", () => {
+		const english = flatten(en);
+		expect([...flatten(fi).keys()].filter((key) => !english.has(key))).toEqual([]);
+	});
+
+	it("name every Finnish listing and kind of location, in Finnish and in every catalog", () => {
+		for (const catalog of [fi, en, fr, de, es, it_]) {
+			const labels = flatten(catalog);
+			for (const slug of allFiTaxonomySlugs()) {
+				expect(labels.get(`taxonomy.profession.${slug}`), slug).toBeTruthy();
+			}
+		}
+		const finnish = flatten(fi);
+		expect(finnish.get("taxonomy.listing.terveysasemat")).toBe("Terveysasemat");
+		expect(finnish.get("taxonomy.profession.terveysasema")).toBe("Terveysasema");
+	});
+
+	it("write Finland's legal pages in Finnish and list every kind of location", () => {
+		const finnish = flatten(messagesFor("fi-FI"));
+		const english = flatten(en);
+		for (const key of [
+			"LegalNoticeFi.title",
+			"PrivacyFi.title",
+			"TermsFi.title",
+			"AccessibilityFi.title",
+			"DataFi.title",
+		]) {
+			expect(finnish.get(key), key).toBeTruthy();
+			expect(finnish.get(key), key).not.toBe(english.get(key));
+		}
+		for (const code of FI_DEFAULT_PROFESSIONS) {
+			expect(finnish.get(`DataFi.coverage.kinds.${code}`), code).toBeTruthy();
+		}
+		expect(finnish.get("HomePage.title")).not.toBe(english.get("HomePage.title"));
 	});
 });
 

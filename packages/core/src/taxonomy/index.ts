@@ -5,6 +5,7 @@ export * from "./cz";
 export * from "./de";
 export * from "./ee";
 export * from "./es";
+export * from "./fi";
 export * from "./fr";
 export * from "./gb";
 export * from "./ie";

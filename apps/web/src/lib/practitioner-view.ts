@@ -5,6 +5,7 @@ import {
 	formatPhoneDe,
 	formatPhoneEe,
 	formatPhoneEs,
+	formatPhoneFi,
 	formatPhoneFr,
 	formatPhoneGb,
 	formatPhoneIe,
@@ -56,6 +57,7 @@ export function formatPhone(e164: string): string {
 	if (e164.startsWith("+39")) return formatPhoneIt(e164);
 	if (e164.startsWith("+49")) return formatPhoneDe(e164);
 	if (e164.startsWith("+48")) return formatPhonePl(e164);
+	if (e164.startsWith("+358")) return formatPhoneFi(e164);
 	return formatPhoneFr(e164);
 }
 

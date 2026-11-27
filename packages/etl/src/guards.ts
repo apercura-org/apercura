@@ -1339,3 +1339,118 @@ export function checkIePlaces(staged: {
 		},
 	];
 }
+
+/**
+ * Limits of the Finnish source. Floors catch an empty or broken snapshot on a first run (the
+ * Finnish Service Catalogue of 27 November 2026: see `docs/data-import.md`, "Finland");
+ * afterwards the change since the last successful run blocks a truncated one (approvable). The
+ * snapshot's day never goes back (never approvable).
+ */
+export const FI_LIMITS = {
+	quarantineRatio: 0.01,
+	floors: {
+		ptv: { minLines: 100, minRows: 100, rowsDelta: 0.15, sizeDelta: 0.4 },
+	} as Readonly<
+		Record<string, { minLines: number; minRows: number; rowsDelta: number; sizeDelta: number }>
+	>,
+	/** Locations placed in their municipality (else left out). */
+	minPlacedRatio: 0.98,
+	/** Locations at the catalogue's own point (else at their municipality's centre). */
+	minPointRatio: 0.8,
+} as const;
+
+/**
+ * Checks of the Finnish source before the merge: quarantine within 1%, floors of locations
+ * (never approvable), a snapshot never older than the last one imported (never approvable), and
+ * at most 15% more or fewer locations or 40% more or fewer bytes than the last successful run
+ * (approvable).
+ */
+export function checkFiSource(
+	source: string,
+	current: AtSourceStats & { bytes: number; edition: number | null },
+	previous: (AtSourceStats & { bytes?: number; edition?: number | null }) | null,
+): GuardCheck[] {
+	const floors = FI_LIMITS.floors[source] ?? {
+		minLines: 1,
+		minRows: 1,
+		rowsDelta: 0.15,
+		sizeDelta: 0.4,
+	};
+	const ratio = current.lines === 0 ? 1 : current.quarantined / current.lines;
+	const checks: GuardCheck[] = [
+		{
+			name: `${source}.quarantine`,
+			ok: current.lines > 0 && ratio <= FI_LIMITS.quarantineRatio,
+			approvable: false,
+			detail: `${current.quarantined} of ${current.lines} locations quarantined (${percent(ratio)})`,
+		},
+		{
+			name: `${source}.lines`,
+			ok: current.lines >= floors.minLines,
+			approvable: false,
+			detail: `${current.lines} service locations in the snapshot (at least ${floors.minLines} expected)`,
+		},
+		{
+			name: `${source}.rows`,
+			ok: current.rows >= floors.minRows,
+			approvable: false,
+			detail: `${current.rows} health service locations read (at least ${floors.minRows} expected)`,
+		},
+	];
+	if (previous) {
+		if (current.edition !== null && typeof previous.edition === "number") {
+			checks.push({
+				name: `${source}.edition`,
+				ok: current.edition >= previous.edition,
+				approvable: false,
+				detail: `snapshot of ${current.edition} vs ${previous.edition} last time`,
+			});
+		}
+		const rows = delta(current.people, previous.people);
+		checks.push({
+			name: `${source}.locations`,
+			ok: rows <= floors.rowsDelta,
+			approvable: true,
+			detail: `${current.people} locations vs ${previous.people} last time (${percent(rows)})`,
+		});
+		if (previous.bytes !== undefined) {
+			const size = delta(current.bytes, previous.bytes);
+			checks.push({
+				name: `${source}.size`,
+				ok: size <= floors.sizeDelta,
+				approvable: true,
+				detail: `${current.bytes} bytes vs ${previous.bytes} last time (${percent(size)})`,
+			});
+		}
+	}
+	return checks;
+}
+
+/**
+ * After placing: nearly every location must be found in its municipality, and most at the
+ * catalogue's own point, or the snapshot or the places are not the expected ones.
+ */
+export function checkFiPlaces(placement: {
+	point: number;
+	municipality: number;
+	unplaced: number;
+}): GuardCheck[] {
+	const placed = placement.point + placement.municipality;
+	const all = placed + placement.unplaced;
+	const local = all === 0 ? 1 : placed / all;
+	const atPoint = placed === 0 ? 1 : placement.point / placed;
+	return [
+		{
+			name: "fi.places",
+			ok: local >= FI_LIMITS.minPlacedRatio,
+			approvable: true,
+			detail: `${placed} of ${all} locations placed in their municipality (${percent(local)})`,
+		},
+		{
+			name: "fi.points",
+			ok: atPoint >= FI_LIMITS.minPointRatio,
+			approvable: true,
+			detail: `${placement.point} of ${placed} locations at the catalogue's point (${percent(atPoint)})`,
+		},
+	];
+}

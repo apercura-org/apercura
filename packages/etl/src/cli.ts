@@ -9,6 +9,7 @@ import {
 	buildDeOptions,
 	buildEeOptions,
 	buildEsOptions,
+	buildFiOptions,
 	buildFrOptions,
 	buildGbOptions,
 	buildIeOptions,
@@ -17,6 +18,7 @@ import {
 	buildPlOptions,
 	czPlacesUrls,
 	esPlacesBase,
+	fiPlacesUrls,
 	gbPlacesUrls,
 	iePlacesUrls,
 	itPlacesUrl,
@@ -34,6 +36,7 @@ import { runCz } from "./run-cz";
 import { runDe } from "./run-de";
 import { runEe } from "./run-ee";
 import { runEs } from "./run-es";
+import { runFi } from "./run-fi";
 import { runFr } from "./run-fr";
 import { runGb } from "./run-gb";
 import { runIe } from "./run-ie";
@@ -61,6 +64,7 @@ import {
 	readEePlaceSources,
 } from "./sources/ee/places";
 import { fetchEsPlaceSources, importEsPlaces, readEsPlaceSources } from "./sources/es/places";
+import { fetchFiPlaceSources, importFiPlaces, readFiPlaceSources } from "./sources/fi/places";
 import { fetchPlaceSources, importPlaces, readPlaceSources } from "./sources/fr/places";
 import { fetchGbPlaceSources, importGbPlaces, readGbPlaceSources } from "./sources/gb/places";
 import { fetchIePlaceSources, importIePlaces, readIePlaceSources } from "./sources/ie/places";
@@ -169,6 +173,16 @@ async function fetchPlPlacesOnce() {
 	}
 }
 
+/** Downloads Statistics Finland's municipalities and correspondence tables to a temporary directory, removed once they are read. */
+async function fetchFiPlacesOnce() {
+	const dir = await mkdtemp(join(tmpdir(), "apercura-etl-fi-places-"));
+	try {
+		return await fetchFiPlaceSources(fiPlacesUrls(process.env), dir);
+	} finally {
+		await rm(dir, { recursive: true, force: true });
+	}
+}
+
 const log = (message: string) => console.log(`[${new Date().toISOString()}] ${message}`);
 
 async function main(): Promise<number> {
@@ -209,7 +223,8 @@ async function main(): Promise<number> {
 		command === "etl:ee" ||
 		command === "etl:pl" ||
 		command === "etl:no" ||
-		command === "etl:ie"
+		command === "etl:ie" ||
+		command === "etl:fi"
 	) {
 		const outcome =
 			command === "etl:at"
@@ -232,7 +247,9 @@ async function main(): Promise<number> {
 												? await runPl(buildPlOptions(flags, process.env), log)
 												: command === "etl:no"
 													? await runNo(buildNoOptions(flags, process.env), log)
-													: await runIe(buildIeOptions(flags, process.env), log);
+													: command === "etl:ie"
+														? await runIe(buildIeOptions(flags, process.env), log)
+														: await runFi(buildFiOptions(flags, process.env), log);
 		log(`Run ${outcome.runId} ${outcome.status}`);
 		console.log(
 			JSON.stringify(
@@ -258,7 +275,9 @@ async function main(): Promise<number> {
 		if (command === "etl:places") {
 			const country = String(flags.get("country") ?? "fr").toLowerCase();
 			if (
-				!["fr", "at", "gb", "cz", "es", "it", "de", "ch", "ee", "pl", "no", "ie"].includes(country)
+				!["fr", "at", "gb", "cz", "es", "it", "de", "ch", "ee", "pl", "no", "ie", "fi"].includes(
+					country,
+				)
 			)
 				throw new Error(`Unknown --country ${country}`);
 			const sourceDir = flags.get("source-dir");
@@ -268,106 +287,115 @@ async function main(): Promise<number> {
 			`;
 			const runId = run?.id ?? 0;
 			const stats =
-				country === "no"
-					? await importNoPlaces(
+				country === "fi"
+					? await importFiPlaces(
 							sql,
 							typeof sourceDir === "string"
-								? await readNoPlaceSources(sourceDir)
-								: await fetchNoPlacesOnce(),
+								? await readFiPlaceSources(sourceDir)
+								: await fetchFiPlacesOnce(),
 							runId,
+							log,
 						)
-					: country === "pl"
-						? await importPlPlaces(
+					: country === "no"
+						? await importNoPlaces(
 								sql,
 								typeof sourceDir === "string"
-									? await readPlPlaceSources(sourceDir)
-									: await fetchPlPlacesOnce(),
+									? await readNoPlaceSources(sourceDir)
+									: await fetchNoPlacesOnce(),
 								runId,
 							)
-						: country === "ee"
-							? await importEePlaces(
+						: country === "pl"
+							? await importPlPlaces(
 									sql,
 									typeof sourceDir === "string"
-										? await readEePlaceSources(sourceDir)
-										: await fetchEePlacesOnce(),
+										? await readPlPlaceSources(sourceDir)
+										: await fetchPlPlacesOnce(),
 									runId,
-									log,
 								)
-							: country === "ie"
-								? await importIePlaces(
+							: country === "ee"
+								? await importEePlaces(
 										sql,
 										typeof sourceDir === "string"
-											? await readIePlaceSources(sourceDir)
-											: await fetchIePlacesOnce(),
+											? await readEePlaceSources(sourceDir)
+											: await fetchEePlacesOnce(),
 										runId,
+										log,
 									)
-								: country === "ch"
-									? await importChPlaces(
+								: country === "ie"
+									? await importIePlaces(
 											sql,
 											typeof sourceDir === "string"
-												? await readChPlaceSources(sourceDir)
-												: await fetchChPlacesOnce(),
+												? await readIePlaceSources(sourceDir)
+												: await fetchIePlacesOnce(),
 											runId,
 										)
-									: country === "de"
-										? await importDePlaces(
+									: country === "ch"
+										? await importChPlaces(
 												sql,
 												typeof sourceDir === "string"
-													? await readDePlaceSources(sourceDir)
-													: await fetchDePlacesOnce(),
+													? await readChPlaceSources(sourceDir)
+													: await fetchChPlacesOnce(),
 												runId,
 											)
-										: country === "it"
-											? await importItPlaces(
+										: country === "de"
+											? await importDePlaces(
 													sql,
 													typeof sourceDir === "string"
-														? await readItPlaceSources(sourceDir)
-														: await fetchItPlacesOnce(),
+														? await readDePlaceSources(sourceDir)
+														: await fetchDePlacesOnce(),
 													runId,
 												)
-											: country === "es"
-												? await importEsPlaces(
+											: country === "it"
+												? await importItPlaces(
 														sql,
 														typeof sourceDir === "string"
-															? await readEsPlaceSources(sourceDir)
-															: await fetchEsPlaceSources(esPlacesBase(process.env)),
+															? await readItPlaceSources(sourceDir)
+															: await fetchItPlacesOnce(),
 														runId,
 													)
-												: country === "cz"
-													? await importCzPlaces(
+												: country === "es"
+													? await importEsPlaces(
 															sql,
 															typeof sourceDir === "string"
-																? await readCzPlaceSources(sourceDir)
-																: await fetchCzPlacesOnce(),
+																? await readEsPlaceSources(sourceDir)
+																: await fetchEsPlaceSources(esPlacesBase(process.env)),
 															runId,
 														)
-													: country === "gb"
-														? await importGbPlaces(
+													: country === "cz"
+														? await importCzPlaces(
 																sql,
 																typeof sourceDir === "string"
-																	? await readGbPlaceSources(sourceDir)
-																	: await fetchGbPlacesOnce(),
+																	? await readCzPlaceSources(sourceDir)
+																	: await fetchCzPlacesOnce(),
 																runId,
 															)
-														: country === "at"
-															? await importAtPlaces(
+														: country === "gb"
+															? await importGbPlaces(
 																	sql,
 																	typeof sourceDir === "string"
-																		? await readGemeinden(sourceDir)
-																		: await fetchGemeinden(
-																				process.env.ETL_AT_PLACES_URL || DEFAULT_AT_PLACES_URL,
-																			),
+																		? await readGbPlaceSources(sourceDir)
+																		: await fetchGbPlacesOnce(),
 																	runId,
 																)
-															: await importPlaces(
-																	sql,
-																	typeof sourceDir === "string"
-																		? await readPlaceSources(sourceDir)
-																		: await fetchPlaceSources(
-																				process.env.ETL_GEO_API_URL || "https://geo.api.gouv.fr",
-																			),
-																	runId,
-																);
+															: country === "at"
+																? await importAtPlaces(
+																		sql,
+																		typeof sourceDir === "string"
+																			? await readGemeinden(sourceDir)
+																			: await fetchGemeinden(
+																					process.env.ETL_AT_PLACES_URL || DEFAULT_AT_PLACES_URL,
+																				),
+																		runId,
+																	)
+																: await importPlaces(
+																		sql,
+																		typeof sourceDir === "string"
+																			? await readPlaceSources(sourceDir)
+																			: await fetchPlaceSources(
+																					process.env.ETL_GEO_API_URL || "https://geo.api.gouv.fr",
+																				),
+																		runId,
+																	);
 			await sql`
 				UPDATE directory.etl_runs
 				SET status = 'succeeded', stats = ${JSON.stringify(stats)}::text::jsonb, finished_at = now()

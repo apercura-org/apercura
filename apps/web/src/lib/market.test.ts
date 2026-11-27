@@ -75,7 +75,16 @@ describe("places of a market", () => {
 		expect(isDepartmentCity("AT", "90001")).toBe(true);
 		expect(isDepartmentCity("AT", "75056")).toBe(false);
 		expect(isDepartmentCity("CZ", "554782")).toBe(true);
-		expect(CITY_IS_DEPARTMENT).toEqual({ FR: "75056", AT: "90001", CZ: "554782", NO: "0301" });
+		expect(CITY_IS_DEPARTMENT).toEqual({
+			FR: "75056",
+			AT: "90001",
+			CZ: "554782",
+			NO: "0301",
+			FI: "091",
+		});
+		// Helsinki, which organises its own health care, is the only municipality of its department.
+		expect(isDepartmentCity("FI", "091")).toBe(true);
+		expect(isDepartmentCity("FI", "837")).toBe(false);
 		// A kreisfreie Stadt is the Gemeinde `000` of its Kreis: München, Berlin, Hamburg.
 		expect(isDepartmentCity("DE", "09162000")).toBe(true);
 		expect(isDepartmentCity("DE", "11000000")).toBe(true);
@@ -83,7 +92,7 @@ describe("places of a market", () => {
 		expect(isDepartmentCity("DE", "09162")).toBe(false);
 		expect(isDepartmentCity("FR", "09162000")).toBe(false);
 		expect(NOT_DEPARTMENT_CITY("p")).toBe(
-			"NOT (p.country = 'FR' AND p.code = '75056') AND NOT (p.country = 'AT' AND p.code = '90001') AND NOT (p.country = 'CZ' AND p.code = '554782') AND NOT (p.country = 'NO' AND p.code = '0301') AND NOT (p.country = 'DE' AND p.code LIKE '_____000') AND NOT (p.country = 'EE' AND p.kind = 'commune' AND p.code IN ('0296', '0424', '0446', '0511', '0663', '0736', '0897', '0919')) AND NOT (p.country = 'PL' AND p.kind = 'commune' AND substr(p.code, 3, 1) IN ('6', '7', '8', '9'))",
+			"NOT (p.country = 'FR' AND p.code = '75056') AND NOT (p.country = 'AT' AND p.code = '90001') AND NOT (p.country = 'CZ' AND p.code = '554782') AND NOT (p.country = 'NO' AND p.code = '0301') AND NOT (p.country = 'FI' AND p.code = '091') AND NOT (p.country = 'DE' AND p.code LIKE '_____000') AND NOT (p.country = 'EE' AND p.kind = 'commune' AND p.code IN ('0296', '0424', '0446', '0511', '0663', '0736', '0897', '0919')) AND NOT (p.country = 'PL' AND p.kind = 'commune' AND substr(p.code, 3, 1) IN ('6', '7', '8', '9'))",
 		);
 		// Narva is the municipality of Narva's only settlement, which shares its code; Tartu's holds
 		// villages too.

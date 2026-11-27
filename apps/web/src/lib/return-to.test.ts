@@ -182,3 +182,15 @@ describe("returning to a Norwegian claim", () => {
 		expect(parseReturnTo("/pro/revendiquer?rpps=no:")).toBeNull();
 	});
 });
+
+describe("returning to a Finnish claim", () => {
+	it("accepts an `fi:` service location key, never anything that looks like a path", () => {
+		const key = "b18aa7f87eca4b97a8e8b438d2e29427";
+		expect(parseReturnTo(`/pro/revendiquer?rpps=fi:${key}`)).toEqual({
+			pathname: "/pro/revendiquer",
+			query: { rpps: `fi:${key}` },
+		});
+		expect(parseReturnTo(`/pro/revendiquer?rpps=fi:${key}/..`)).toBeNull();
+		expect(parseReturnTo(`/pro/revendiquer?rpps=fi:${key.slice(2)}`)).toBeNull();
+	});
+});

@@ -281,6 +281,7 @@ test.describe("the country searched", () => {
 			"Pologne",
 			"Norvège",
 			"Irlande",
+			"Finlande",
 		]);
 		await country.selectOption({ label: "Royaume-Uni" });
 		// The places suggested are the UK's.
@@ -344,6 +345,7 @@ test.describe("a place in a country Apercura does not cover yet", () => {
 		["Pologne", "/pl"],
 		["Norvège", "/no"],
 		["Irlande", "/ie"],
+		["Finlande", "/fi"],
 	] as const;
 
 	test("“dentiste” in Budapest says so, lists the open countries, and passes axe", async ({

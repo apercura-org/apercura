@@ -80,7 +80,9 @@ function expectFieldRow(log: readonly string[], label: string, value: string | R
 /** Reads the whole page, from the top to the end of the footer. */
 async function readPage(page: Page) {
 	const reader = await ScreenReader.start(page);
-	const log = await reader.readUntil(/^end of contentinfo$/);
+	// Every open market adds three items to the country menu read before the main content: room
+	// for many more than the thirteen open today.
+	const log = await reader.readUntil(/^end of contentinfo$/, 1_000);
 	await reader.stop();
 	return log;
 }

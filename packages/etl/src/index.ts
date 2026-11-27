@@ -11,6 +11,7 @@ export const COMMANDS = [
 	"etl:pl",
 	"etl:no",
 	"etl:ie",
+	"etl:fi",
 	"etl:places",
 	"etl:outbox",
 ] as const;
@@ -64,6 +65,11 @@ Commands:
                 register of designated centres for older people), and the HSE's
                 hospitals and health centres (Health Atlas, March 2020; CC BY 4.0),
                 placed by town in the CSO's census towns, rebuild read models.
+  etl:fi        Import Finnish public health service locations (health centres,
+                hospitals, emergency clinics, dental clinics, maternity and child health
+                clinics, mental health, rehabilitation, laboratories) from the Finnish
+                Service Catalogue's open API (PTV, DVV; CC0 1.0), placed in Statistics
+                Finland's municipalities, rebuild read models.
   etl:places    Import regions, departments, communes and arrondissements
                 (geo.api.gouv.fr), or with --country at the Austrian
                 Bundesländer and Gemeinden (Statistik Austria), or with --country gb
@@ -82,7 +88,8 @@ Commands:
                 (EHAK units, Maa- ja Ruumiamet), or with --country no the Norwegian
                 counties and municipalities (Kartverket), or with --country ie the Irish provinces, counties (Tailte
                 Éireann) and census towns (CSO Built Up Areas) with the gazetteer's other
-                names. Run once, then yearly.
+                names, or with --country fi the Finnish regions, wellbeing services counties and
+                municipalities (Statistics Finland, CC BY 4.0). Run once, then yearly.
   etl:outbox    Send pending cache invalidations to the web app.
 
 Flags (etl:fr):
@@ -172,6 +179,12 @@ Flags (etl:ie):
                           As for etl:at. A list whose terms or licence changed is left out
                           (exit code 3). Without hiqa, the HSE's community hospitals are not read.
 
+Flags (etl:fi):
+  --dry-run, --approve=<run_id>, --force, --source-dir <path>, --offline, --work-dir <path>
+                          As for etl:fr. One source: when the catalogue cannot be read the
+                          run fails (exit code 1). Without --source-dir, the catalogue's
+                          health service locations are fetched from its API into ptv.json.
+
 Environment:
   DATABASE_URL_ETL (or DATABASE_URL), ETL_PROFESSIONS, ETL_ANS_URLS, ETL_AMELI_URL,
   ETL_FINESS_DATASET_URL, ETL_GEO_API_URL, ETL_GEOCODER_URL, ETL_SOURCE_DIR, ETL_WORK_DIR,
@@ -196,6 +209,8 @@ Environment:
   ETL_NO_PLACES_URL, ETL_NO_SOURCE_DIR,
   ETL_IE_SOURCES, ETL_IE_{SOURCE}_URL (ETL_IE_PSI_URL, ETL_IE_HSE_HOSPITALS_URL…),
   ETL_IE_COUNTIES_URL, ETL_IE_TOWNS_URL, ETL_IE_PLACENAMES_URL, ETL_IE_SOURCE_DIR,
+  ETL_FI_PTV_URL, ETL_FI_PTV_CONCURRENCY, ETL_FI_PLACES_YEAR, ETL_FI_PLACES_MUNICIPALITIES_URL,
+  ETL_FI_PLACES_COUNTIES_URL, ETL_FI_PLACES_REGIONS_URL, ETL_FI_SOURCE_DIR,
   APP_URL and REVALIDATE_SECRET (cache revalidation).`;
 
 export {
@@ -206,6 +221,7 @@ export {
 	buildDeOptions,
 	buildEeOptions,
 	buildEsOptions,
+	buildFiOptions,
 	buildFrOptions,
 	buildGbOptions,
 	buildIeOptions,
@@ -217,6 +233,7 @@ export {
 	type DeOptions,
 	type EeOptions,
 	type EsOptions,
+	type FiOptions,
 	type FrOptions,
 	type GbOptions,
 	type IeOptions,
@@ -231,6 +248,7 @@ export { type CzRunOutcome, runCz } from "./run-cz";
 export { type DeRunOutcome, runDe } from "./run-de";
 export { type EeRunOutcome, runEe } from "./run-ee";
 export { type EsRunOutcome, runEs } from "./run-es";
+export { type FiRunOutcome, runFi } from "./run-fi";
 export { type RunOutcome, runFr } from "./run-fr";
 export { type GbRunOutcome, runGb } from "./run-gb";
 export { type IeRunOutcome, runIe } from "./run-ie";

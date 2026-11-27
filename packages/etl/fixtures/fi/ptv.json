@@ -1,0 +1,8708 @@
+{
+	"format": "apercura-ptv-snapshot/1",
+	"api": "https://api.palvelutietovaranto.suomi.fi/api/v11",
+	"takenOn": "2026-11-27",
+	"services": [
+		{
+			"id": "e5e00001-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Lääkärin vastaanotto",
+					"type": "Name"
+				}
+			],
+			"classes": ["P5", "P5.1"],
+			"generalDescriptionId": null,
+			"channelIds": [
+				"e5e00003-0000-4000-8000-000000000006",
+				"e5e00003-0000-4000-8000-000000000100",
+				"e5e00003-0000-4000-8000-000000000101",
+				"e5e00003-0000-4000-8000-000000000102",
+				"e5e00003-0000-4000-8000-000000000103",
+				"e5e00003-0000-4000-8000-000000000104",
+				"e5e00003-0000-4000-8000-000000000105",
+				"e5e00003-0000-4000-8000-000000000106",
+				"e5e00003-0000-4000-8000-000000000107",
+				"e5e00003-0000-4000-8000-000000000108",
+				"e5e00003-0000-4000-8000-000000000109",
+				"e5e00003-0000-4000-8000-000000000110",
+				"e5e00003-0000-4000-8000-000000000111",
+				"e5e00003-0000-4000-8000-000000000112",
+				"e5e00003-0000-4000-8000-000000000113",
+				"e5e00003-0000-4000-8000-000000000114",
+				"e5e00003-0000-4000-8000-000000000115",
+				"e5e00003-0000-4000-8000-000000000116",
+				"e5e00003-0000-4000-8000-000000000117",
+				"e5e00003-0000-4000-8000-000000000118",
+				"e5e00003-0000-4000-8000-000000000119",
+				"e5e00003-0000-4000-8000-000000000120",
+				"e5e00003-0000-4000-8000-000000000121",
+				"e5e00003-0000-4000-8000-000000000122",
+				"e5e00003-0000-4000-8000-000000000123",
+				"e5e00003-0000-4000-8000-000000000124",
+				"e5e00003-0000-4000-8000-000000000125",
+				"e5e00003-0000-4000-8000-000000000126",
+				"e5e00003-0000-4000-8000-000000000127",
+				"e5e00003-0000-4000-8000-000000000128",
+				"e5e00003-0000-4000-8000-000000000129",
+				"e5e00003-0000-4000-8000-000000000130",
+				"e5e00003-0000-4000-8000-000000000131",
+				"e5e00003-0000-4000-8000-000000000132",
+				"e5e00003-0000-4000-8000-000000000133",
+				"e5e00003-0000-4000-8000-000000000134",
+				"e5e00003-0000-4000-8000-000000000135",
+				"e5e00003-0000-4000-8000-000000000136",
+				"e5e00003-0000-4000-8000-000000000137",
+				"e5e00003-0000-4000-8000-000000000138",
+				"e5e00003-0000-4000-8000-000000000139",
+				"e5e00003-0000-4000-8000-000000000140",
+				"e5e00003-0000-4000-8000-000000000141",
+				"e5e00003-0000-4000-8000-000000000142",
+				"e5e00003-0000-4000-8000-000000000143",
+				"e5e00003-0000-4000-8000-000000000144",
+				"e5e00003-0000-4000-8000-000000000145",
+				"e5e00003-0000-4000-8000-000000000146",
+				"e5e00003-0000-4000-8000-000000000147",
+				"e5e00003-0000-4000-8000-000000000148",
+				"e5e00003-0000-4000-8000-000000000149",
+				"e5e00003-0000-4000-8000-000000000150",
+				"e5e00003-0000-4000-8000-000000000151",
+				"e5e00003-0000-4000-8000-000000000152",
+				"e5e00003-0000-4000-8000-000000000153",
+				"e5e00003-0000-4000-8000-000000000154",
+				"e5e00003-0000-4000-8000-000000000155",
+				"e5e00003-0000-4000-8000-000000000156",
+				"e5e00003-0000-4000-8000-000000000157",
+				"e5e00003-0000-4000-8000-000000000158",
+				"e5e00003-0000-4000-8000-000000000159",
+				"e5e00003-0000-4000-8000-000000000902",
+				"e5e00003-0000-4000-8000-000000000903",
+				"e5e00003-0000-4000-8000-000000000904",
+				"e5e00003-0000-4000-8000-000000000905",
+				"e5e00003-0000-4000-8000-000000000906"
+			]
+		},
+		{
+			"id": "e5e00001-0000-4000-8000-000000000002",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Hoitajan vastaanotto",
+					"type": "Name"
+				}
+			],
+			"classes": ["P5.1"],
+			"generalDescriptionId": null,
+			"channelIds": [
+				"e5e00003-0000-4000-8000-000000000100",
+				"e5e00003-0000-4000-8000-000000000101",
+				"e5e00003-0000-4000-8000-000000000102",
+				"e5e00003-0000-4000-8000-000000000103",
+				"e5e00003-0000-4000-8000-000000000104",
+				"e5e00003-0000-4000-8000-000000000105",
+				"e5e00003-0000-4000-8000-000000000106",
+				"e5e00003-0000-4000-8000-000000000107",
+				"e5e00003-0000-4000-8000-000000000108",
+				"e5e00003-0000-4000-8000-000000000109",
+				"e5e00003-0000-4000-8000-000000000110",
+				"e5e00003-0000-4000-8000-000000000111",
+				"e5e00003-0000-4000-8000-000000000112",
+				"e5e00003-0000-4000-8000-000000000113",
+				"e5e00003-0000-4000-8000-000000000114",
+				"e5e00003-0000-4000-8000-000000000115",
+				"e5e00003-0000-4000-8000-000000000116",
+				"e5e00003-0000-4000-8000-000000000117",
+				"e5e00003-0000-4000-8000-000000000118",
+				"e5e00003-0000-4000-8000-000000000119",
+				"e5e00003-0000-4000-8000-000000000120",
+				"e5e00003-0000-4000-8000-000000000121",
+				"e5e00003-0000-4000-8000-000000000122",
+				"e5e00003-0000-4000-8000-000000000123",
+				"e5e00003-0000-4000-8000-000000000124",
+				"e5e00003-0000-4000-8000-000000000125",
+				"e5e00003-0000-4000-8000-000000000126",
+				"e5e00003-0000-4000-8000-000000000127",
+				"e5e00003-0000-4000-8000-000000000128",
+				"e5e00003-0000-4000-8000-000000000129",
+				"e5e00003-0000-4000-8000-000000000130",
+				"e5e00003-0000-4000-8000-000000000131",
+				"e5e00003-0000-4000-8000-000000000132",
+				"e5e00003-0000-4000-8000-000000000133",
+				"e5e00003-0000-4000-8000-000000000134",
+				"e5e00003-0000-4000-8000-000000000135",
+				"e5e00003-0000-4000-8000-000000000136",
+				"e5e00003-0000-4000-8000-000000000137",
+				"e5e00003-0000-4000-8000-000000000138",
+				"e5e00003-0000-4000-8000-000000000139",
+				"e5e00003-0000-4000-8000-000000000140",
+				"e5e00003-0000-4000-8000-000000000141",
+				"e5e00003-0000-4000-8000-000000000142",
+				"e5e00003-0000-4000-8000-000000000143",
+				"e5e00003-0000-4000-8000-000000000144",
+				"e5e00003-0000-4000-8000-000000000145",
+				"e5e00003-0000-4000-8000-000000000146",
+				"e5e00003-0000-4000-8000-000000000147",
+				"e5e00003-0000-4000-8000-000000000148",
+				"e5e00003-0000-4000-8000-000000000149",
+				"e5e00003-0000-4000-8000-000000000150",
+				"e5e00003-0000-4000-8000-000000000151",
+				"e5e00003-0000-4000-8000-000000000152",
+				"e5e00003-0000-4000-8000-000000000153",
+				"e5e00003-0000-4000-8000-000000000154",
+				"e5e00003-0000-4000-8000-000000000155",
+				"e5e00003-0000-4000-8000-000000000156",
+				"e5e00003-0000-4000-8000-000000000157",
+				"e5e00003-0000-4000-8000-000000000158",
+				"e5e00003-0000-4000-8000-000000000159"
+			]
+		},
+		{
+			"id": "e5e00001-0000-4000-8000-000000000003",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Rokotukset",
+					"type": "Name"
+				}
+			],
+			"classes": ["P5.3"],
+			"generalDescriptionId": null,
+			"channelIds": [
+				"e5e00003-0000-4000-8000-000000000100",
+				"e5e00003-0000-4000-8000-000000000101",
+				"e5e00003-0000-4000-8000-000000000102",
+				"e5e00003-0000-4000-8000-000000000103",
+				"e5e00003-0000-4000-8000-000000000104",
+				"e5e00003-0000-4000-8000-000000000105",
+				"e5e00003-0000-4000-8000-000000000106",
+				"e5e00003-0000-4000-8000-000000000107",
+				"e5e00003-0000-4000-8000-000000000108",
+				"e5e00003-0000-4000-8000-000000000109",
+				"e5e00003-0000-4000-8000-000000000110",
+				"e5e00003-0000-4000-8000-000000000111",
+				"e5e00003-0000-4000-8000-000000000112",
+				"e5e00003-0000-4000-8000-000000000113",
+				"e5e00003-0000-4000-8000-000000000114",
+				"e5e00003-0000-4000-8000-000000000115",
+				"e5e00003-0000-4000-8000-000000000116",
+				"e5e00003-0000-4000-8000-000000000117",
+				"e5e00003-0000-4000-8000-000000000118",
+				"e5e00003-0000-4000-8000-000000000119",
+				"e5e00003-0000-4000-8000-000000000120",
+				"e5e00003-0000-4000-8000-000000000121",
+				"e5e00003-0000-4000-8000-000000000122",
+				"e5e00003-0000-4000-8000-000000000123",
+				"e5e00003-0000-4000-8000-000000000124",
+				"e5e00003-0000-4000-8000-000000000125",
+				"e5e00003-0000-4000-8000-000000000126",
+				"e5e00003-0000-4000-8000-000000000127",
+				"e5e00003-0000-4000-8000-000000000128",
+				"e5e00003-0000-4000-8000-000000000129",
+				"e5e00003-0000-4000-8000-000000000130",
+				"e5e00003-0000-4000-8000-000000000131",
+				"e5e00003-0000-4000-8000-000000000132",
+				"e5e00003-0000-4000-8000-000000000133",
+				"e5e00003-0000-4000-8000-000000000134",
+				"e5e00003-0000-4000-8000-000000000135",
+				"e5e00003-0000-4000-8000-000000000136",
+				"e5e00003-0000-4000-8000-000000000137",
+				"e5e00003-0000-4000-8000-000000000138",
+				"e5e00003-0000-4000-8000-000000000139",
+				"e5e00003-0000-4000-8000-000000000140",
+				"e5e00003-0000-4000-8000-000000000141",
+				"e5e00003-0000-4000-8000-000000000142",
+				"e5e00003-0000-4000-8000-000000000143",
+				"e5e00003-0000-4000-8000-000000000144",
+				"e5e00003-0000-4000-8000-000000000145",
+				"e5e00003-0000-4000-8000-000000000146",
+				"e5e00003-0000-4000-8000-000000000147",
+				"e5e00003-0000-4000-8000-000000000148",
+				"e5e00003-0000-4000-8000-000000000149",
+				"e5e00003-0000-4000-8000-000000000150",
+				"e5e00003-0000-4000-8000-000000000151",
+				"e5e00003-0000-4000-8000-000000000152",
+				"e5e00003-0000-4000-8000-000000000153",
+				"e5e00003-0000-4000-8000-000000000154",
+				"e5e00003-0000-4000-8000-000000000155",
+				"e5e00003-0000-4000-8000-000000000156",
+				"e5e00003-0000-4000-8000-000000000157",
+				"e5e00003-0000-4000-8000-000000000158",
+				"e5e00003-0000-4000-8000-000000000159"
+			]
+		},
+		{
+			"id": "e5e00001-0000-4000-8000-000000000004",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Suun terveydenhuolto",
+					"type": "Name"
+				}
+			],
+			"classes": ["P5.10"],
+			"generalDescriptionId": null,
+			"channelIds": [
+				"e5e00003-0000-4000-8000-000000000200",
+				"e5e00003-0000-4000-8000-000000000201",
+				"e5e00003-0000-4000-8000-000000000202",
+				"e5e00003-0000-4000-8000-000000000203",
+				"e5e00003-0000-4000-8000-000000000204",
+				"e5e00003-0000-4000-8000-000000000205",
+				"e5e00003-0000-4000-8000-000000000206",
+				"e5e00003-0000-4000-8000-000000000207",
+				"e5e00003-0000-4000-8000-000000000208",
+				"e5e00003-0000-4000-8000-000000000209",
+				"e5e00003-0000-4000-8000-000000000210",
+				"e5e00003-0000-4000-8000-000000000211",
+				"e5e00003-0000-4000-8000-000000000212",
+				"e5e00003-0000-4000-8000-000000000213",
+				"e5e00003-0000-4000-8000-000000000214",
+				"e5e00003-0000-4000-8000-000000000215",
+				"e5e00003-0000-4000-8000-000000000216",
+				"e5e00003-0000-4000-8000-000000000217",
+				"e5e00003-0000-4000-8000-000000000218",
+				"e5e00003-0000-4000-8000-000000000219",
+				"e5e00003-0000-4000-8000-000000000220",
+				"e5e00003-0000-4000-8000-000000000221",
+				"e5e00003-0000-4000-8000-000000000222",
+				"e5e00003-0000-4000-8000-000000000223",
+				"e5e00003-0000-4000-8000-000000000224",
+				"e5e00003-0000-4000-8000-000000000225",
+				"e5e00003-0000-4000-8000-000000000226",
+				"e5e00003-0000-4000-8000-000000000227",
+				"e5e00003-0000-4000-8000-000000000228",
+				"e5e00003-0000-4000-8000-000000000229",
+				"e5e00003-0000-4000-8000-000000000230",
+				"e5e00003-0000-4000-8000-000000000231",
+				"e5e00003-0000-4000-8000-000000000232",
+				"e5e00003-0000-4000-8000-000000000233",
+				"e5e00003-0000-4000-8000-000000000234",
+				"e5e00003-0000-4000-8000-000000000235",
+				"e5e00003-0000-4000-8000-000000000236",
+				"e5e00003-0000-4000-8000-000000000237",
+				"e5e00003-0000-4000-8000-000000000238",
+				"e5e00003-0000-4000-8000-000000000239"
+			]
+		},
+		{
+			"id": "e5e00001-0000-4000-8000-000000000005",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Äitiysneuvola",
+					"type": "Name"
+				}
+			],
+			"classes": ["P5.2"],
+			"generalDescriptionId": null,
+			"channelIds": [
+				"e5e00003-0000-4000-8000-000000000300",
+				"e5e00003-0000-4000-8000-000000000301",
+				"e5e00003-0000-4000-8000-000000000302",
+				"e5e00003-0000-4000-8000-000000000303",
+				"e5e00003-0000-4000-8000-000000000304",
+				"e5e00003-0000-4000-8000-000000000305",
+				"e5e00003-0000-4000-8000-000000000306",
+				"e5e00003-0000-4000-8000-000000000307",
+				"e5e00003-0000-4000-8000-000000000308",
+				"e5e00003-0000-4000-8000-000000000309",
+				"e5e00003-0000-4000-8000-000000000310",
+				"e5e00003-0000-4000-8000-000000000311",
+				"e5e00003-0000-4000-8000-000000000312",
+				"e5e00003-0000-4000-8000-000000000313",
+				"e5e00003-0000-4000-8000-000000000314",
+				"e5e00003-0000-4000-8000-000000000315",
+				"e5e00003-0000-4000-8000-000000000316",
+				"e5e00003-0000-4000-8000-000000000317",
+				"e5e00003-0000-4000-8000-000000000318",
+				"e5e00003-0000-4000-8000-000000000319"
+			]
+		},
+		{
+			"id": "e5e00001-0000-4000-8000-000000000006",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Lastenneuvola",
+					"type": "Name"
+				}
+			],
+			"classes": ["P5.2"],
+			"generalDescriptionId": null,
+			"channelIds": [
+				"e5e00003-0000-4000-8000-000000000300",
+				"e5e00003-0000-4000-8000-000000000301",
+				"e5e00003-0000-4000-8000-000000000302",
+				"e5e00003-0000-4000-8000-000000000303",
+				"e5e00003-0000-4000-8000-000000000304",
+				"e5e00003-0000-4000-8000-000000000305",
+				"e5e00003-0000-4000-8000-000000000306",
+				"e5e00003-0000-4000-8000-000000000307",
+				"e5e00003-0000-4000-8000-000000000308",
+				"e5e00003-0000-4000-8000-000000000309",
+				"e5e00003-0000-4000-8000-000000000310",
+				"e5e00003-0000-4000-8000-000000000311",
+				"e5e00003-0000-4000-8000-000000000312",
+				"e5e00003-0000-4000-8000-000000000313",
+				"e5e00003-0000-4000-8000-000000000314",
+				"e5e00003-0000-4000-8000-000000000315",
+				"e5e00003-0000-4000-8000-000000000316",
+				"e5e00003-0000-4000-8000-000000000317",
+				"e5e00003-0000-4000-8000-000000000318",
+				"e5e00003-0000-4000-8000-000000000319"
+			]
+		},
+		{
+			"id": "e5e00001-0000-4000-8000-000000000007",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Yhteispäivystys",
+					"type": "Name"
+				}
+			],
+			"classes": ["P5.5"],
+			"generalDescriptionId": null,
+			"channelIds": ["e5e00003-0000-4000-8000-000000000002"]
+		},
+		{
+			"id": "e5e00001-0000-4000-8000-000000000008",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Erikoissairaanhoidon poliklinikka",
+					"type": "Name"
+				}
+			],
+			"classes": ["P5.6"],
+			"generalDescriptionId": null,
+			"channelIds": [
+				"e5e00003-0000-4000-8000-000000000001",
+				"e5e00003-0000-4000-8000-000000000002",
+				"e5e00003-0000-4000-8000-000000000007"
+			]
+		},
+		{
+			"id": "e5e00001-0000-4000-8000-000000000009",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Mielenterveyspalvelut",
+					"type": "Name"
+				}
+			],
+			"classes": ["P5.7"],
+			"generalDescriptionId": null,
+			"channelIds": ["e5e00003-0000-4000-8000-000000000003"]
+		},
+		{
+			"id": "e5e00001-0000-4000-8000-000000000010",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Fysioterapia",
+					"type": "Name"
+				}
+			],
+			"classes": ["P5.13"],
+			"generalDescriptionId": null,
+			"channelIds": ["e5e00003-0000-4000-8000-000000000004"]
+		},
+		{
+			"id": "e5e00001-0000-4000-8000-000000000011",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Laboratoriopalvelut",
+					"type": "Name"
+				}
+			],
+			"classes": ["P5.4"],
+			"generalDescriptionId": null,
+			"channelIds": ["e5e00003-0000-4000-8000-000000000001", "e5e00003-0000-4000-8000-000000000005"]
+		},
+		{
+			"id": "e5e00001-0000-4000-8000-000000000012",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Kouluterveydenhuolto",
+					"type": "Name"
+				}
+			],
+			"classes": ["P5.9"],
+			"generalDescriptionId": null,
+			"channelIds": ["e5e00003-0000-4000-8000-000000000900"]
+		},
+		{
+			"id": "e5e00001-0000-4000-8000-000000000013",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Kirjastopalvelut",
+					"type": "Name"
+				}
+			],
+			"classes": ["P20"],
+			"generalDescriptionId": null,
+			"channelIds": ["e5e00003-0000-4000-8000-000000000007", "e5e00003-0000-4000-8000-000000000901"]
+		}
+	],
+	"organizations": [
+		{
+			"id": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän hyvinvointialue",
+					"type": "Name"
+				}
+			],
+			"type": "Region",
+			"parentId": null
+		},
+		{
+			"id": "e5e00002-0000-4000-8000-000000000002",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkikaupunki",
+					"type": "Name"
+				}
+			],
+			"type": "Municipality",
+			"parentId": null
+		},
+		{
+			"id": "e5e00002-0000-4000-8000-000000000003",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän sairaanhoitopiiri",
+					"type": "Name"
+				}
+			],
+			"type": "RegionalOrganization",
+			"parentId": null
+		},
+		{
+			"id": "e5e00002-0000-4000-8000-000000000004",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkki Lääkärit Oy",
+					"type": "Name"
+				}
+			],
+			"type": "Company",
+			"parentId": null
+		}
+	],
+	"channels": [
+		{
+			"id": "e5e00003-0000-4000-8000-000000000001",
+			"organizationId": "e5e00002-0000-4000-8000-000000000003",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän keskussairaala",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkisairaalantie"
+							}
+						],
+						"streetNumber": "1",
+						"postalCode": "33520",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "TAMPERE"
+							}
+						],
+						"municipality": {
+							"code": "837",
+							"name": []
+						},
+						"latitude": "6823606.869",
+						"longitude": "328201.255",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "+358 3 990 0001",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [
+				{
+					"value": "kirjaamo@example.test",
+					"language": "fi"
+				}
+			],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000008",
+					"name": "Erikoissairaanhoidon poliklinikka"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000011",
+					"name": "Laboratoriopalvelut"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000002",
+			"organizationId": "e5e00002-0000-4000-8000-000000000003",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän yhteispäivystys",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkisairaalantie"
+							}
+						],
+						"streetNumber": "1",
+						"postalCode": "33520",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "TAMPERE"
+							}
+						],
+						"municipality": {
+							"code": "837",
+							"name": []
+						},
+						"latitude": "6823604.233",
+						"longitude": "328254.429",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "116117",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000007",
+					"name": "Yhteispäivystys"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000008",
+					"name": "Erikoissairaanhoidon poliklinikka"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000003",
+			"organizationId": "e5e00002-0000-4000-8000-000000000002",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän mielenterveyskeskus",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkikuja"
+							}
+						],
+						"streetNumber": "5 B",
+						"postalCode": "00530",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "HELSINKI"
+							}
+						],
+						"municipality": {
+							"code": "091",
+							"name": []
+						},
+						"latitude": "6672335.856",
+						"longitude": "385784.680",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "09 990 3000",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000009",
+					"name": "Mielenterveyspalvelut"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000004",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän kuntoutusyksikkö",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkiraitti"
+							}
+						],
+						"streetNumber": "3",
+						"postalCode": "62100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "LAPUA"
+							}
+						],
+						"municipality": {
+							"code": "408",
+							"name": []
+						},
+						"latitude": "0",
+						"longitude": "0",
+						"coordinateState": "NotReceived"
+					}
+				}
+			],
+			"phoneNumbers": [],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000010",
+					"name": "Fysioterapia"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000005",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän laboratorio",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkiväylä"
+							}
+						],
+						"streetNumber": "7",
+						"postalCode": "99800",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "IVALO"
+							}
+						],
+						"municipality": {
+							"code": "148",
+							"name": []
+						},
+						"latitude": "7643925.667",
+						"longitude": "501196.894",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000011",
+					"name": "Laboratoriopalvelut"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000006",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Exempelby hälsocentral",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Exempelgatan"
+							}
+						],
+						"streetNumber": "2",
+						"postalCode": "22100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "MARIEHAMN"
+							}
+						],
+						"municipality": {
+							"code": "478",
+							"name": []
+						},
+						"latitude": "6683366.160",
+						"longitude": "107646.900",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000001",
+					"name": "Lääkärin vastaanotto"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000007",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän haavakeskus",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkiaukio"
+							}
+						],
+						"streetNumber": "1",
+						"postalCode": "90100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "OULU"
+							}
+						],
+						"municipality": {
+							"code": "564",
+							"name": []
+						},
+						"latitude": "7210902.025",
+						"longitude": "427757.202",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000008",
+					"name": "Erikoissairaanhoidon poliklinikka"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000013",
+					"name": "Kirjastopalvelut"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000100",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän terveysasema 1",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkitie"
+							}
+						],
+						"streetNumber": "1",
+						"postalCode": "33100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "TAMPERE"
+							}
+						],
+						"municipality": {
+							"code": "837",
+							"name": []
+						},
+						"latitude": "6822520.317",
+						"longitude": "327614.161",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "03 990 1000",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000001",
+					"name": "Lääkärin vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000002",
+					"name": "Hoitajan vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000003",
+					"name": "Rokotukset"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000101",
+			"organizationId": "e5e00002-0000-4000-8000-000000000002",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän terveysasema 2",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkitie"
+							}
+						],
+						"streetNumber": "2",
+						"postalCode": "00100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "HELSINKI"
+							}
+						],
+						"municipality": {
+							"code": "091",
+							"name": []
+						},
+						"latitude": "6672227.983",
+						"longitude": "385670.265",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "03 990 1001",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000001",
+					"name": "Lääkärin vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000002",
+					"name": "Hoitajan vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000003",
+					"name": "Rokotukset"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000102",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän terveysasema 3",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkitie"
+							}
+						],
+						"streetNumber": "3",
+						"postalCode": "33100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "TAMPERE"
+							}
+						],
+						"municipality": {
+							"code": "837",
+							"name": []
+						},
+						"latitude": "6822737.620",
+						"longitude": "327731.607",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "03 990 1002",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000001",
+					"name": "Lääkärin vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000002",
+					"name": "Hoitajan vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000003",
+					"name": "Rokotukset"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000103",
+			"organizationId": "e5e00002-0000-4000-8000-000000000002",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän terveysasema 4",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkitie"
+							}
+						],
+						"streetNumber": "4",
+						"postalCode": "00100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "HELSINKI"
+							}
+						],
+						"municipality": {
+							"code": "091",
+							"name": []
+						},
+						"latitude": "6672447.190",
+						"longitude": "385788.152",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "03 990 1003",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000001",
+					"name": "Lääkärin vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000002",
+					"name": "Hoitajan vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000003",
+					"name": "Rokotukset"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000104",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän terveysasema 5",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkitie"
+							}
+						],
+						"streetNumber": "5",
+						"postalCode": "33100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "TAMPERE"
+							}
+						],
+						"municipality": {
+							"code": "837",
+							"name": []
+						},
+						"latitude": "6822954.926",
+						"longitude": "327849.039",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "03 990 1004",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000001",
+					"name": "Lääkärin vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000002",
+					"name": "Hoitajan vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000003",
+					"name": "Rokotukset"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000105",
+			"organizationId": "e5e00002-0000-4000-8000-000000000002",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän terveysasema 6",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkitie"
+							}
+						],
+						"streetNumber": "6",
+						"postalCode": "00100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "HELSINKI"
+							}
+						],
+						"municipality": {
+							"code": "091",
+							"name": []
+						},
+						"latitude": "6672666.401",
+						"longitude": "385906.025",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "03 990 1005",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000001",
+					"name": "Lääkärin vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000002",
+					"name": "Hoitajan vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000003",
+					"name": "Rokotukset"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000106",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän terveysasema 7",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkitie"
+							}
+						],
+						"streetNumber": "7",
+						"postalCode": "33100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "TAMPERE"
+							}
+						],
+						"municipality": {
+							"code": "837",
+							"name": []
+						},
+						"latitude": "6823172.237",
+						"longitude": "327966.458",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "03 990 1006",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000001",
+					"name": "Lääkärin vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000002",
+					"name": "Hoitajan vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000003",
+					"name": "Rokotukset"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000107",
+			"organizationId": "e5e00002-0000-4000-8000-000000000002",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän terveysasema 8",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkitie"
+							}
+						],
+						"streetNumber": "8",
+						"postalCode": "00100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "HELSINKI"
+							}
+						],
+						"municipality": {
+							"code": "091",
+							"name": []
+						},
+						"latitude": "6672885.616",
+						"longitude": "386023.885",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "03 990 1007",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000001",
+					"name": "Lääkärin vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000002",
+					"name": "Hoitajan vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000003",
+					"name": "Rokotukset"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000108",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän terveysasema 9",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkitie"
+							}
+						],
+						"streetNumber": "9",
+						"postalCode": "33100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "TAMPERE"
+							}
+						],
+						"municipality": {
+							"code": "837",
+							"name": []
+						},
+						"latitude": "6823389.551",
+						"longitude": "328083.863",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "03 990 1008",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000001",
+					"name": "Lääkärin vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000002",
+					"name": "Hoitajan vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000003",
+					"name": "Rokotukset"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000109",
+			"organizationId": "e5e00002-0000-4000-8000-000000000002",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän terveysasema 10",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkitie"
+							}
+						],
+						"streetNumber": "10",
+						"postalCode": "00100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "HELSINKI"
+							}
+						],
+						"municipality": {
+							"code": "091",
+							"name": []
+						},
+						"latitude": "6673104.835",
+						"longitude": "386141.732",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "03 990 1009",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000001",
+					"name": "Lääkärin vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000002",
+					"name": "Hoitajan vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000003",
+					"name": "Rokotukset"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000110",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän terveysasema 11",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkitie"
+							}
+						],
+						"streetNumber": "11",
+						"postalCode": "33100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "TAMPERE"
+							}
+						],
+						"municipality": {
+							"code": "837",
+							"name": []
+						},
+						"latitude": "6823606.869",
+						"longitude": "328201.255",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "03 990 1010",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000001",
+					"name": "Lääkärin vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000002",
+					"name": "Hoitajan vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000003",
+					"name": "Rokotukset"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000111",
+			"organizationId": "e5e00002-0000-4000-8000-000000000002",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän terveysasema 12",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkitie"
+							}
+						],
+						"streetNumber": "12",
+						"postalCode": "00100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "HELSINKI"
+							}
+						],
+						"municipality": {
+							"code": "091",
+							"name": []
+						},
+						"latitude": "6673324.057",
+						"longitude": "386259.566",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "03 990 1011",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000001",
+					"name": "Lääkärin vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000002",
+					"name": "Hoitajan vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000003",
+					"name": "Rokotukset"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000112",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän terveysasema 13",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkitie"
+							}
+						],
+						"streetNumber": "13",
+						"postalCode": "33100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "TAMPERE"
+							}
+						],
+						"municipality": {
+							"code": "837",
+							"name": []
+						},
+						"latitude": "6823824.191",
+						"longitude": "328318.634",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "03 990 1012",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000001",
+					"name": "Lääkärin vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000002",
+					"name": "Hoitajan vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000003",
+					"name": "Rokotukset"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000113",
+			"organizationId": "e5e00002-0000-4000-8000-000000000002",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän terveysasema 14",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkitie"
+							}
+						],
+						"streetNumber": "14",
+						"postalCode": "00100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "HELSINKI"
+							}
+						],
+						"municipality": {
+							"code": "091",
+							"name": []
+						},
+						"latitude": "6673543.283",
+						"longitude": "386377.386",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "03 990 1013",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000001",
+					"name": "Lääkärin vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000002",
+					"name": "Hoitajan vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000003",
+					"name": "Rokotukset"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000114",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän terveysasema 15",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkitie"
+							}
+						],
+						"streetNumber": "15",
+						"postalCode": "33100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "TAMPERE"
+							}
+						],
+						"municipality": {
+							"code": "837",
+							"name": []
+						},
+						"latitude": "6824041.517",
+						"longitude": "328435.999",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "03 990 1014",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000001",
+					"name": "Lääkärin vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000002",
+					"name": "Hoitajan vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000003",
+					"name": "Rokotukset"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000115",
+			"organizationId": "e5e00002-0000-4000-8000-000000000002",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän terveysasema 16",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkitie"
+							}
+						],
+						"streetNumber": "16",
+						"postalCode": "00100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "HELSINKI"
+							}
+						],
+						"municipality": {
+							"code": "091",
+							"name": []
+						},
+						"latitude": "6673762.513",
+						"longitude": "386495.193",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "03 990 1015",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000001",
+					"name": "Lääkärin vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000002",
+					"name": "Hoitajan vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000003",
+					"name": "Rokotukset"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000116",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän terveysasema 17",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkitie"
+							}
+						],
+						"streetNumber": "17",
+						"postalCode": "33100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "TAMPERE"
+							}
+						],
+						"municipality": {
+							"code": "837",
+							"name": []
+						},
+						"latitude": "6824258.846",
+						"longitude": "328553.351",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "03 990 1016",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000001",
+					"name": "Lääkärin vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000002",
+					"name": "Hoitajan vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000003",
+					"name": "Rokotukset"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000117",
+			"organizationId": "e5e00002-0000-4000-8000-000000000002",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän terveysasema 18",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkitie"
+							}
+						],
+						"streetNumber": "18",
+						"postalCode": "00100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "HELSINKI"
+							}
+						],
+						"municipality": {
+							"code": "091",
+							"name": []
+						},
+						"latitude": "6673981.746",
+						"longitude": "386612.987",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "03 990 1017",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000001",
+					"name": "Lääkärin vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000002",
+					"name": "Hoitajan vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000003",
+					"name": "Rokotukset"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000118",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän terveysasema 19",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkitie"
+							}
+						],
+						"streetNumber": "19",
+						"postalCode": "33100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "TAMPERE"
+							}
+						],
+						"municipality": {
+							"code": "837",
+							"name": []
+						},
+						"latitude": "6824476.179",
+						"longitude": "328670.690",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "03 990 1018",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000001",
+					"name": "Lääkärin vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000002",
+					"name": "Hoitajan vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000003",
+					"name": "Rokotukset"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000119",
+			"organizationId": "e5e00002-0000-4000-8000-000000000002",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän terveysasema 20",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkitie"
+							}
+						],
+						"streetNumber": "20",
+						"postalCode": "00100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "HELSINKI"
+							}
+						],
+						"municipality": {
+							"code": "091",
+							"name": []
+						},
+						"latitude": "6674200.983",
+						"longitude": "386730.768",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "03 990 1019",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000001",
+					"name": "Lääkärin vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000002",
+					"name": "Hoitajan vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000003",
+					"name": "Rokotukset"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000120",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän terveysasema 21",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkitie"
+							}
+						],
+						"streetNumber": "21",
+						"postalCode": "33100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "TAMPERE"
+							}
+						],
+						"municipality": {
+							"code": "837",
+							"name": []
+						},
+						"latitude": "6824693.516",
+						"longitude": "328788.015",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "03 990 1020",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000001",
+					"name": "Lääkärin vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000002",
+					"name": "Hoitajan vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000003",
+					"name": "Rokotukset"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000121",
+			"organizationId": "e5e00002-0000-4000-8000-000000000002",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän terveysasema 22",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkitie"
+							}
+						],
+						"streetNumber": "22",
+						"postalCode": "00100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "HELSINKI"
+							}
+						],
+						"municipality": {
+							"code": "091",
+							"name": []
+						},
+						"latitude": "6674420.224",
+						"longitude": "386848.535",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "03 990 1021",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000001",
+					"name": "Lääkärin vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000002",
+					"name": "Hoitajan vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000003",
+					"name": "Rokotukset"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000122",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän terveysasema 23",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkitie"
+							}
+						],
+						"streetNumber": "23",
+						"postalCode": "33100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "TAMPERE"
+							}
+						],
+						"municipality": {
+							"code": "837",
+							"name": []
+						},
+						"latitude": "6824910.857",
+						"longitude": "328905.327",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "03 990 1022",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000001",
+					"name": "Lääkärin vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000002",
+					"name": "Hoitajan vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000003",
+					"name": "Rokotukset"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000123",
+			"organizationId": "e5e00002-0000-4000-8000-000000000002",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän terveysasema 24",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkitie"
+							}
+						],
+						"streetNumber": "24",
+						"postalCode": "00100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "HELSINKI"
+							}
+						],
+						"municipality": {
+							"code": "091",
+							"name": []
+						},
+						"latitude": "6674639.468",
+						"longitude": "386966.289",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "03 990 1023",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000001",
+					"name": "Lääkärin vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000002",
+					"name": "Hoitajan vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000003",
+					"name": "Rokotukset"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000124",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän terveysasema 25",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkitie"
+							}
+						],
+						"streetNumber": "25",
+						"postalCode": "33100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "TAMPERE"
+							}
+						],
+						"municipality": {
+							"code": "837",
+							"name": []
+						},
+						"latitude": "6825128.201",
+						"longitude": "329022.625",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "03 990 1024",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000001",
+					"name": "Lääkärin vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000002",
+					"name": "Hoitajan vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000003",
+					"name": "Rokotukset"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000125",
+			"organizationId": "e5e00002-0000-4000-8000-000000000002",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän terveysasema 26",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkitie"
+							}
+						],
+						"streetNumber": "26",
+						"postalCode": "00100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "HELSINKI"
+							}
+						],
+						"municipality": {
+							"code": "091",
+							"name": []
+						},
+						"latitude": "6674858.717",
+						"longitude": "387084.029",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "03 990 1025",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000001",
+					"name": "Lääkärin vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000002",
+					"name": "Hoitajan vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000003",
+					"name": "Rokotukset"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000126",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän terveysasema 27",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkitie"
+							}
+						],
+						"streetNumber": "27",
+						"postalCode": "33100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "TAMPERE"
+							}
+						],
+						"municipality": {
+							"code": "837",
+							"name": []
+						},
+						"latitude": "6825345.550",
+						"longitude": "329139.911",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "03 990 1026",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000001",
+					"name": "Lääkärin vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000002",
+					"name": "Hoitajan vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000003",
+					"name": "Rokotukset"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000127",
+			"organizationId": "e5e00002-0000-4000-8000-000000000002",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän terveysasema 28",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkitie"
+							}
+						],
+						"streetNumber": "28",
+						"postalCode": "00100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "HELSINKI"
+							}
+						],
+						"municipality": {
+							"code": "091",
+							"name": []
+						},
+						"latitude": "6675077.969",
+						"longitude": "387201.757",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "03 990 1027",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000001",
+					"name": "Lääkärin vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000002",
+					"name": "Hoitajan vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000003",
+					"name": "Rokotukset"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000128",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän terveysasema 29",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkitie"
+							}
+						],
+						"streetNumber": "29",
+						"postalCode": "33100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "TAMPERE"
+							}
+						],
+						"municipality": {
+							"code": "837",
+							"name": []
+						},
+						"latitude": "6825562.902",
+						"longitude": "329257.182",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "03 990 1028",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000001",
+					"name": "Lääkärin vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000002",
+					"name": "Hoitajan vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000003",
+					"name": "Rokotukset"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000129",
+			"organizationId": "e5e00002-0000-4000-8000-000000000002",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän terveysasema 30",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkitie"
+							}
+						],
+						"streetNumber": "30",
+						"postalCode": "00100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "HELSINKI"
+							}
+						],
+						"municipality": {
+							"code": "091",
+							"name": []
+						},
+						"latitude": "6675297.224",
+						"longitude": "387319.471",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "03 990 1029",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000001",
+					"name": "Lääkärin vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000002",
+					"name": "Hoitajan vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000003",
+					"name": "Rokotukset"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000130",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän terveysasema 31",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkitie"
+							}
+						],
+						"streetNumber": "31",
+						"postalCode": "33100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "TAMPERE"
+							}
+						],
+						"municipality": {
+							"code": "837",
+							"name": []
+						},
+						"latitude": "6825780.258",
+						"longitude": "329374.441",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "03 990 1030",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000001",
+					"name": "Lääkärin vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000002",
+					"name": "Hoitajan vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000003",
+					"name": "Rokotukset"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000131",
+			"organizationId": "e5e00002-0000-4000-8000-000000000002",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän terveysasema 32",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkitie"
+							}
+						],
+						"streetNumber": "32",
+						"postalCode": "00100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "HELSINKI"
+							}
+						],
+						"municipality": {
+							"code": "091",
+							"name": []
+						},
+						"latitude": "6675516.483",
+						"longitude": "387437.171",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "03 990 1031",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000001",
+					"name": "Lääkärin vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000002",
+					"name": "Hoitajan vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000003",
+					"name": "Rokotukset"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000132",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän terveysasema 33",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkitie"
+							}
+						],
+						"streetNumber": "33",
+						"postalCode": "33100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "TAMPERE"
+							}
+						],
+						"municipality": {
+							"code": "837",
+							"name": []
+						},
+						"latitude": "6825997.617",
+						"longitude": "329491.686",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "03 990 1032",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000001",
+					"name": "Lääkärin vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000002",
+					"name": "Hoitajan vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000003",
+					"name": "Rokotukset"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000133",
+			"organizationId": "e5e00002-0000-4000-8000-000000000002",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän terveysasema 34",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkitie"
+							}
+						],
+						"streetNumber": "34",
+						"postalCode": "00100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "HELSINKI"
+							}
+						],
+						"municipality": {
+							"code": "091",
+							"name": []
+						},
+						"latitude": "6675735.746",
+						"longitude": "387554.859",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "03 990 1033",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000001",
+					"name": "Lääkärin vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000002",
+					"name": "Hoitajan vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000003",
+					"name": "Rokotukset"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000134",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän terveysasema 35",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkitie"
+							}
+						],
+						"streetNumber": "35",
+						"postalCode": "33100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "TAMPERE"
+							}
+						],
+						"municipality": {
+							"code": "837",
+							"name": []
+						},
+						"latitude": "6826214.981",
+						"longitude": "329608.918",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "03 990 1034",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000001",
+					"name": "Lääkärin vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000002",
+					"name": "Hoitajan vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000003",
+					"name": "Rokotukset"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000135",
+			"organizationId": "e5e00002-0000-4000-8000-000000000002",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän terveysasema 36",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkitie"
+							}
+						],
+						"streetNumber": "36",
+						"postalCode": "00100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "HELSINKI"
+							}
+						],
+						"municipality": {
+							"code": "091",
+							"name": []
+						},
+						"latitude": "6675955.013",
+						"longitude": "387672.533",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "03 990 1035",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000001",
+					"name": "Lääkärin vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000002",
+					"name": "Hoitajan vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000003",
+					"name": "Rokotukset"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000136",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän terveysasema 37",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkitie"
+							}
+						],
+						"streetNumber": "37",
+						"postalCode": "33100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "TAMPERE"
+							}
+						],
+						"municipality": {
+							"code": "837",
+							"name": []
+						},
+						"latitude": "6826432.348",
+						"longitude": "329726.136",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "03 990 1036",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000001",
+					"name": "Lääkärin vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000002",
+					"name": "Hoitajan vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000003",
+					"name": "Rokotukset"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000137",
+			"organizationId": "e5e00002-0000-4000-8000-000000000002",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän terveysasema 38",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkitie"
+							}
+						],
+						"streetNumber": "38",
+						"postalCode": "00100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "HELSINKI"
+							}
+						],
+						"municipality": {
+							"code": "091",
+							"name": []
+						},
+						"latitude": "6676174.283",
+						"longitude": "387790.194",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "03 990 1037",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000001",
+					"name": "Lääkärin vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000002",
+					"name": "Hoitajan vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000003",
+					"name": "Rokotukset"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000138",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän terveysasema 39",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkitie"
+							}
+						],
+						"streetNumber": "39",
+						"postalCode": "33100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "TAMPERE"
+							}
+						],
+						"municipality": {
+							"code": "837",
+							"name": []
+						},
+						"latitude": "6826649.719",
+						"longitude": "329843.341",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "03 990 1038",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000001",
+					"name": "Lääkärin vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000002",
+					"name": "Hoitajan vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000003",
+					"name": "Rokotukset"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000139",
+			"organizationId": "e5e00002-0000-4000-8000-000000000002",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän terveysasema 40",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkitie"
+							}
+						],
+						"streetNumber": "40",
+						"postalCode": "00100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "HELSINKI"
+							}
+						],
+						"municipality": {
+							"code": "091",
+							"name": []
+						},
+						"latitude": "6676393.558",
+						"longitude": "387907.841",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "03 990 1039",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000001",
+					"name": "Lääkärin vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000002",
+					"name": "Hoitajan vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000003",
+					"name": "Rokotukset"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000140",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän terveysasema 41",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkitie"
+							}
+						],
+						"streetNumber": "41",
+						"postalCode": "33100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "TAMPERE"
+							}
+						],
+						"municipality": {
+							"code": "837",
+							"name": []
+						},
+						"latitude": "6826867.094",
+						"longitude": "329960.533",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "03 990 1040",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000001",
+					"name": "Lääkärin vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000002",
+					"name": "Hoitajan vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000003",
+					"name": "Rokotukset"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000141",
+			"organizationId": "e5e00002-0000-4000-8000-000000000002",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän terveysasema 42",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkitie"
+							}
+						],
+						"streetNumber": "42",
+						"postalCode": "00100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "HELSINKI"
+							}
+						],
+						"municipality": {
+							"code": "091",
+							"name": []
+						},
+						"latitude": "6676612.835",
+						"longitude": "388025.476",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "03 990 1041",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000001",
+					"name": "Lääkärin vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000002",
+					"name": "Hoitajan vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000003",
+					"name": "Rokotukset"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000142",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän terveysasema 43",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkitie"
+							}
+						],
+						"streetNumber": "43",
+						"postalCode": "33100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "TAMPERE"
+							}
+						],
+						"municipality": {
+							"code": "837",
+							"name": []
+						},
+						"latitude": "6827084.472",
+						"longitude": "330077.711",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "03 990 1042",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000001",
+					"name": "Lääkärin vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000002",
+					"name": "Hoitajan vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000003",
+					"name": "Rokotukset"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000143",
+			"organizationId": "e5e00002-0000-4000-8000-000000000002",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän terveysasema 44",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkitie"
+							}
+						],
+						"streetNumber": "44",
+						"postalCode": "00100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "HELSINKI"
+							}
+						],
+						"municipality": {
+							"code": "091",
+							"name": []
+						},
+						"latitude": "6676832.117",
+						"longitude": "388143.097",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "03 990 1043",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000001",
+					"name": "Lääkärin vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000002",
+					"name": "Hoitajan vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000003",
+					"name": "Rokotukset"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000144",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän terveysasema 45",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkitie"
+							}
+						],
+						"streetNumber": "45",
+						"postalCode": "33100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "TAMPERE"
+							}
+						],
+						"municipality": {
+							"code": "837",
+							"name": []
+						},
+						"latitude": "6827301.855",
+						"longitude": "330194.876",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "03 990 1044",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000001",
+					"name": "Lääkärin vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000002",
+					"name": "Hoitajan vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000003",
+					"name": "Rokotukset"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000145",
+			"organizationId": "e5e00002-0000-4000-8000-000000000002",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän terveysasema 46",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkitie"
+							}
+						],
+						"streetNumber": "46",
+						"postalCode": "00100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "HELSINKI"
+							}
+						],
+						"municipality": {
+							"code": "091",
+							"name": []
+						},
+						"latitude": "6677051.402",
+						"longitude": "388260.704",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "03 990 1045",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000001",
+					"name": "Lääkärin vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000002",
+					"name": "Hoitajan vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000003",
+					"name": "Rokotukset"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000146",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän terveysasema 47",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkitie"
+							}
+						],
+						"streetNumber": "47",
+						"postalCode": "33100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "TAMPERE"
+							}
+						],
+						"municipality": {
+							"code": "837",
+							"name": []
+						},
+						"latitude": "6827519.241",
+						"longitude": "330312.028",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "03 990 1046",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000001",
+					"name": "Lääkärin vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000002",
+					"name": "Hoitajan vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000003",
+					"name": "Rokotukset"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000147",
+			"organizationId": "e5e00002-0000-4000-8000-000000000002",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän terveysasema 48",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkitie"
+							}
+						],
+						"streetNumber": "48",
+						"postalCode": "00100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "HELSINKI"
+							}
+						],
+						"municipality": {
+							"code": "091",
+							"name": []
+						},
+						"latitude": "6677270.691",
+						"longitude": "388378.299",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "03 990 1047",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000001",
+					"name": "Lääkärin vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000002",
+					"name": "Hoitajan vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000003",
+					"name": "Rokotukset"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000148",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän terveysasema 49",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkitie"
+							}
+						],
+						"streetNumber": "49",
+						"postalCode": "33100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "TAMPERE"
+							}
+						],
+						"municipality": {
+							"code": "837",
+							"name": []
+						},
+						"latitude": "6827736.631",
+						"longitude": "330429.166",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "03 990 1048",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000001",
+					"name": "Lääkärin vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000002",
+					"name": "Hoitajan vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000003",
+					"name": "Rokotukset"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000149",
+			"organizationId": "e5e00002-0000-4000-8000-000000000002",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän terveysasema 50",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkitie"
+							}
+						],
+						"streetNumber": "50",
+						"postalCode": "00100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "HELSINKI"
+							}
+						],
+						"municipality": {
+							"code": "091",
+							"name": []
+						},
+						"latitude": "6677489.983",
+						"longitude": "388495.880",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "03 990 1049",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000001",
+					"name": "Lääkärin vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000002",
+					"name": "Hoitajan vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000003",
+					"name": "Rokotukset"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000150",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän terveysasema 51",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkitie"
+							}
+						],
+						"streetNumber": "51",
+						"postalCode": "33100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "TAMPERE"
+							}
+						],
+						"municipality": {
+							"code": "837",
+							"name": []
+						},
+						"latitude": "6827954.025",
+						"longitude": "330546.291",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "03 990 1050",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000001",
+					"name": "Lääkärin vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000002",
+					"name": "Hoitajan vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000003",
+					"name": "Rokotukset"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000151",
+			"organizationId": "e5e00002-0000-4000-8000-000000000002",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän terveysasema 52",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkitie"
+							}
+						],
+						"streetNumber": "52",
+						"postalCode": "00100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "HELSINKI"
+							}
+						],
+						"municipality": {
+							"code": "091",
+							"name": []
+						},
+						"latitude": "6677709.280",
+						"longitude": "388613.448",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "03 990 1051",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000001",
+					"name": "Lääkärin vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000002",
+					"name": "Hoitajan vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000003",
+					"name": "Rokotukset"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000152",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän terveysasema 53",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkitie"
+							}
+						],
+						"streetNumber": "53",
+						"postalCode": "33100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "TAMPERE"
+							}
+						],
+						"municipality": {
+							"code": "837",
+							"name": []
+						},
+						"latitude": "6828171.422",
+						"longitude": "330663.403",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "03 990 1052",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000001",
+					"name": "Lääkärin vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000002",
+					"name": "Hoitajan vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000003",
+					"name": "Rokotukset"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000153",
+			"organizationId": "e5e00002-0000-4000-8000-000000000002",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän terveysasema 54",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkitie"
+							}
+						],
+						"streetNumber": "54",
+						"postalCode": "00100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "HELSINKI"
+							}
+						],
+						"municipality": {
+							"code": "091",
+							"name": []
+						},
+						"latitude": "6677928.580",
+						"longitude": "388731.002",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "03 990 1053",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000001",
+					"name": "Lääkärin vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000002",
+					"name": "Hoitajan vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000003",
+					"name": "Rokotukset"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000154",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän terveysasema 55",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkitie"
+							}
+						],
+						"streetNumber": "55",
+						"postalCode": "33100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "TAMPERE"
+							}
+						],
+						"municipality": {
+							"code": "837",
+							"name": []
+						},
+						"latitude": "6828388.824",
+						"longitude": "330780.501",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "03 990 1054",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000001",
+					"name": "Lääkärin vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000002",
+					"name": "Hoitajan vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000003",
+					"name": "Rokotukset"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000155",
+			"organizationId": "e5e00002-0000-4000-8000-000000000002",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän terveysasema 56",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkitie"
+							}
+						],
+						"streetNumber": "56",
+						"postalCode": "00100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "HELSINKI"
+							}
+						],
+						"municipality": {
+							"code": "091",
+							"name": []
+						},
+						"latitude": "6678147.883",
+						"longitude": "388848.543",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "03 990 1055",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000001",
+					"name": "Lääkärin vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000002",
+					"name": "Hoitajan vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000003",
+					"name": "Rokotukset"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000156",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän terveysasema 57",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkitie"
+							}
+						],
+						"streetNumber": "57",
+						"postalCode": "33100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "TAMPERE"
+							}
+						],
+						"municipality": {
+							"code": "837",
+							"name": []
+						},
+						"latitude": "6828606.229",
+						"longitude": "330897.586",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "03 990 1056",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000001",
+					"name": "Lääkärin vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000002",
+					"name": "Hoitajan vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000003",
+					"name": "Rokotukset"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000157",
+			"organizationId": "e5e00002-0000-4000-8000-000000000002",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän terveysasema 58",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkitie"
+							}
+						],
+						"streetNumber": "58",
+						"postalCode": "00100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "HELSINKI"
+							}
+						],
+						"municipality": {
+							"code": "091",
+							"name": []
+						},
+						"latitude": "6678367.191",
+						"longitude": "388966.071",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "03 990 1057",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000001",
+					"name": "Lääkärin vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000002",
+					"name": "Hoitajan vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000003",
+					"name": "Rokotukset"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000158",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän terveysasema 59",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkitie"
+							}
+						],
+						"streetNumber": "59",
+						"postalCode": "33100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "TAMPERE"
+							}
+						],
+						"municipality": {
+							"code": "837",
+							"name": []
+						},
+						"latitude": "6828823.638",
+						"longitude": "331014.657",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "03 990 1058",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000001",
+					"name": "Lääkärin vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000002",
+					"name": "Hoitajan vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000003",
+					"name": "Rokotukset"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000159",
+			"organizationId": "e5e00002-0000-4000-8000-000000000002",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän terveysasema 60",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkitie"
+							}
+						],
+						"streetNumber": "60",
+						"postalCode": "00100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "HELSINKI"
+							}
+						],
+						"municipality": {
+							"code": "091",
+							"name": []
+						},
+						"latitude": "6678586.502",
+						"longitude": "389083.586",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "03 990 1059",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000001",
+					"name": "Lääkärin vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000002",
+					"name": "Hoitajan vastaanotto"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000003",
+					"name": "Rokotukset"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000200",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän hammashoitola 1",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkikatu"
+							}
+						],
+						"streetNumber": "1",
+						"postalCode": "20100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "TURKU"
+							}
+						],
+						"municipality": {
+							"code": "853",
+							"name": []
+						},
+						"latitude": "6711088.987",
+						"longitude": "239742.338",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "02 990 2000",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000004",
+					"name": "Suun terveydenhuolto"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000201",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän hammashoitola 2",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkikatu"
+							}
+						],
+						"streetNumber": "2",
+						"postalCode": "02100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "ESPOO"
+							}
+						],
+						"municipality": {
+							"code": "049",
+							"name": []
+						},
+						"latitude": "6676715.745",
+						"longitude": "370085.561",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "02 990 2000",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000004",
+					"name": "Suun terveydenhuolto"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000202",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän hammashoitola 3",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkikatu"
+							}
+						],
+						"streetNumber": "3",
+						"postalCode": "20100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "TURKU"
+							}
+						],
+						"municipality": {
+							"code": "853",
+							"name": []
+						},
+						"latitude": "6711311.346",
+						"longitude": "239758.355",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "02 990 2000",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000004",
+					"name": "Suun terveydenhuolto"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000203",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän hammashoitola 4",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkikatu"
+							}
+						],
+						"streetNumber": "4",
+						"postalCode": "02100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "ESPOO"
+							}
+						],
+						"municipality": {
+							"code": "049",
+							"name": []
+						},
+						"latitude": "6676938.393",
+						"longitude": "370093.471",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "02 990 2000",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000004",
+					"name": "Suun terveydenhuolto"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000204",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän hammashoitola 5",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkikatu"
+							}
+						],
+						"streetNumber": "5",
+						"postalCode": "20100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "TURKU"
+							}
+						],
+						"municipality": {
+							"code": "853",
+							"name": []
+						},
+						"latitude": "6711533.706",
+						"longitude": "239774.373",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "02 990 2000",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000004",
+					"name": "Suun terveydenhuolto"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000205",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän hammashoitola 6",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkikatu"
+							}
+						],
+						"streetNumber": "6",
+						"postalCode": "02100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "ESPOO"
+							}
+						],
+						"municipality": {
+							"code": "049",
+							"name": []
+						},
+						"latitude": "6677161.042",
+						"longitude": "370101.380",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "02 990 2000",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000004",
+					"name": "Suun terveydenhuolto"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000206",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän hammashoitola 7",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkikatu"
+							}
+						],
+						"streetNumber": "7",
+						"postalCode": "20100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "TURKU"
+							}
+						],
+						"municipality": {
+							"code": "853",
+							"name": []
+						},
+						"latitude": "6711756.065",
+						"longitude": "239790.391",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "02 990 2000",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000004",
+					"name": "Suun terveydenhuolto"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000207",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän hammashoitola 8",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkikatu"
+							}
+						],
+						"streetNumber": "8",
+						"postalCode": "02100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "ESPOO"
+							}
+						],
+						"municipality": {
+							"code": "049",
+							"name": []
+						},
+						"latitude": "6677383.690",
+						"longitude": "370109.290",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "02 990 2000",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000004",
+					"name": "Suun terveydenhuolto"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000208",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän hammashoitola 9",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkikatu"
+							}
+						],
+						"streetNumber": "9",
+						"postalCode": "20100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "TURKU"
+							}
+						],
+						"municipality": {
+							"code": "853",
+							"name": []
+						},
+						"latitude": "6711978.425",
+						"longitude": "239806.410",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "02 990 2000",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000004",
+					"name": "Suun terveydenhuolto"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000209",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän hammashoitola 10",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkikatu"
+							}
+						],
+						"streetNumber": "10",
+						"postalCode": "02100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "ESPOO"
+							}
+						],
+						"municipality": {
+							"code": "049",
+							"name": []
+						},
+						"latitude": "6677606.338",
+						"longitude": "370117.200",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "02 990 2000",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000004",
+					"name": "Suun terveydenhuolto"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000210",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän hammashoitola 11",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkikatu"
+							}
+						],
+						"streetNumber": "11",
+						"postalCode": "20100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "TURKU"
+							}
+						],
+						"municipality": {
+							"code": "853",
+							"name": []
+						},
+						"latitude": "6712200.785",
+						"longitude": "239822.428",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "02 990 2000",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000004",
+					"name": "Suun terveydenhuolto"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000211",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän hammashoitola 12",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkikatu"
+							}
+						],
+						"streetNumber": "12",
+						"postalCode": "02100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "ESPOO"
+							}
+						],
+						"municipality": {
+							"code": "049",
+							"name": []
+						},
+						"latitude": "6677828.987",
+						"longitude": "370125.110",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "02 990 2000",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000004",
+					"name": "Suun terveydenhuolto"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000212",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän hammashoitola 13",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkikatu"
+							}
+						],
+						"streetNumber": "13",
+						"postalCode": "20100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "TURKU"
+							}
+						],
+						"municipality": {
+							"code": "853",
+							"name": []
+						},
+						"latitude": "6712423.144",
+						"longitude": "239838.447",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "02 990 2000",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000004",
+					"name": "Suun terveydenhuolto"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000213",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän hammashoitola 14",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkikatu"
+							}
+						],
+						"streetNumber": "14",
+						"postalCode": "02100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "ESPOO"
+							}
+						],
+						"municipality": {
+							"code": "049",
+							"name": []
+						},
+						"latitude": "6678051.635",
+						"longitude": "370133.021",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "02 990 2000",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000004",
+					"name": "Suun terveydenhuolto"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000214",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän hammashoitola 15",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkikatu"
+							}
+						],
+						"streetNumber": "15",
+						"postalCode": "20100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "TURKU"
+							}
+						],
+						"municipality": {
+							"code": "853",
+							"name": []
+						},
+						"latitude": "6712645.504",
+						"longitude": "239854.466",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "02 990 2000",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000004",
+					"name": "Suun terveydenhuolto"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000215",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän hammashoitola 16",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkikatu"
+							}
+						],
+						"streetNumber": "16",
+						"postalCode": "02100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "ESPOO"
+							}
+						],
+						"municipality": {
+							"code": "049",
+							"name": []
+						},
+						"latitude": "6678274.283",
+						"longitude": "370140.931",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "02 990 2000",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000004",
+					"name": "Suun terveydenhuolto"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000216",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän hammashoitola 17",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkikatu"
+							}
+						],
+						"streetNumber": "17",
+						"postalCode": "20100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "TURKU"
+							}
+						],
+						"municipality": {
+							"code": "853",
+							"name": []
+						},
+						"latitude": "6712867.864",
+						"longitude": "239870.486",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "02 990 2000",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000004",
+					"name": "Suun terveydenhuolto"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000217",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän hammashoitola 18",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkikatu"
+							}
+						],
+						"streetNumber": "18",
+						"postalCode": "02100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "ESPOO"
+							}
+						],
+						"municipality": {
+							"code": "049",
+							"name": []
+						},
+						"latitude": "6678496.932",
+						"longitude": "370148.842",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "02 990 2000",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000004",
+					"name": "Suun terveydenhuolto"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000218",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän hammashoitola 19",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkikatu"
+							}
+						],
+						"streetNumber": "19",
+						"postalCode": "20100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "TURKU"
+							}
+						],
+						"municipality": {
+							"code": "853",
+							"name": []
+						},
+						"latitude": "6713090.224",
+						"longitude": "239886.506",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "02 990 2000",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000004",
+					"name": "Suun terveydenhuolto"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000219",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän hammashoitola 20",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkikatu"
+							}
+						],
+						"streetNumber": "20",
+						"postalCode": "02100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "ESPOO"
+							}
+						],
+						"municipality": {
+							"code": "049",
+							"name": []
+						},
+						"latitude": "6678719.580",
+						"longitude": "370156.752",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "02 990 2000",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000004",
+					"name": "Suun terveydenhuolto"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000220",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän hammashoitola 21",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkikatu"
+							}
+						],
+						"streetNumber": "21",
+						"postalCode": "20100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "TURKU"
+							}
+						],
+						"municipality": {
+							"code": "853",
+							"name": []
+						},
+						"latitude": "6713312.583",
+						"longitude": "239902.526",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "02 990 2000",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000004",
+					"name": "Suun terveydenhuolto"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000221",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän hammashoitola 22",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkikatu"
+							}
+						],
+						"streetNumber": "22",
+						"postalCode": "02100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "ESPOO"
+							}
+						],
+						"municipality": {
+							"code": "049",
+							"name": []
+						},
+						"latitude": "6678942.229",
+						"longitude": "370164.663",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "02 990 2000",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000004",
+					"name": "Suun terveydenhuolto"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000222",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän hammashoitola 23",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkikatu"
+							}
+						],
+						"streetNumber": "23",
+						"postalCode": "20100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "TURKU"
+							}
+						],
+						"municipality": {
+							"code": "853",
+							"name": []
+						},
+						"latitude": "6713534.943",
+						"longitude": "239918.547",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "02 990 2000",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000004",
+					"name": "Suun terveydenhuolto"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000223",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän hammashoitola 24",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkikatu"
+							}
+						],
+						"streetNumber": "24",
+						"postalCode": "02100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "ESPOO"
+							}
+						],
+						"municipality": {
+							"code": "049",
+							"name": []
+						},
+						"latitude": "6679164.878",
+						"longitude": "370172.575",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "02 990 2000",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000004",
+					"name": "Suun terveydenhuolto"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000224",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän hammashoitola 25",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkikatu"
+							}
+						],
+						"streetNumber": "25",
+						"postalCode": "20100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "TURKU"
+							}
+						],
+						"municipality": {
+							"code": "853",
+							"name": []
+						},
+						"latitude": "6713757.303",
+						"longitude": "239934.568",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "02 990 2000",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000004",
+					"name": "Suun terveydenhuolto"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000225",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän hammashoitola 26",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkikatu"
+							}
+						],
+						"streetNumber": "26",
+						"postalCode": "02100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "ESPOO"
+							}
+						],
+						"municipality": {
+							"code": "049",
+							"name": []
+						},
+						"latitude": "6679387.527",
+						"longitude": "370180.486",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "02 990 2000",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000004",
+					"name": "Suun terveydenhuolto"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000226",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän hammashoitola 27",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkikatu"
+							}
+						],
+						"streetNumber": "27",
+						"postalCode": "20100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "TURKU"
+							}
+						],
+						"municipality": {
+							"code": "853",
+							"name": []
+						},
+						"latitude": "6713979.663",
+						"longitude": "239950.589",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "02 990 2000",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000004",
+					"name": "Suun terveydenhuolto"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000227",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän hammashoitola 28",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkikatu"
+							}
+						],
+						"streetNumber": "28",
+						"postalCode": "02100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "ESPOO"
+							}
+						],
+						"municipality": {
+							"code": "049",
+							"name": []
+						},
+						"latitude": "6679610.175",
+						"longitude": "370188.397",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "02 990 2000",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000004",
+					"name": "Suun terveydenhuolto"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000228",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän hammashoitola 29",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkikatu"
+							}
+						],
+						"streetNumber": "29",
+						"postalCode": "20100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "TURKU"
+							}
+						],
+						"municipality": {
+							"code": "853",
+							"name": []
+						},
+						"latitude": "6714202.023",
+						"longitude": "239966.610",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "02 990 2000",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000004",
+					"name": "Suun terveydenhuolto"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000229",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän hammashoitola 30",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkikatu"
+							}
+						],
+						"streetNumber": "30",
+						"postalCode": "02100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "ESPOO"
+							}
+						],
+						"municipality": {
+							"code": "049",
+							"name": []
+						},
+						"latitude": "6679832.824",
+						"longitude": "370196.309",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "02 990 2000",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000004",
+					"name": "Suun terveydenhuolto"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000230",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän hammashoitola 31",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkikatu"
+							}
+						],
+						"streetNumber": "31",
+						"postalCode": "20100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "TURKU"
+							}
+						],
+						"municipality": {
+							"code": "853",
+							"name": []
+						},
+						"latitude": "6714424.383",
+						"longitude": "239982.632",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "02 990 2000",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000004",
+					"name": "Suun terveydenhuolto"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000231",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän hammashoitola 32",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkikatu"
+							}
+						],
+						"streetNumber": "32",
+						"postalCode": "02100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "ESPOO"
+							}
+						],
+						"municipality": {
+							"code": "049",
+							"name": []
+						},
+						"latitude": "6680055.473",
+						"longitude": "370204.221",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "02 990 2000",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000004",
+					"name": "Suun terveydenhuolto"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000232",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän hammashoitola 33",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkikatu"
+							}
+						],
+						"streetNumber": "33",
+						"postalCode": "20100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "TURKU"
+							}
+						],
+						"municipality": {
+							"code": "853",
+							"name": []
+						},
+						"latitude": "6714646.742",
+						"longitude": "239998.654",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "02 990 2000",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000004",
+					"name": "Suun terveydenhuolto"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000233",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän hammashoitola 34",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkikatu"
+							}
+						],
+						"streetNumber": "34",
+						"postalCode": "02100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "ESPOO"
+							}
+						],
+						"municipality": {
+							"code": "049",
+							"name": []
+						},
+						"latitude": "6680278.122",
+						"longitude": "370212.133",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "02 990 2000",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000004",
+					"name": "Suun terveydenhuolto"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000234",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän hammashoitola 35",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkikatu"
+							}
+						],
+						"streetNumber": "35",
+						"postalCode": "20100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "TURKU"
+							}
+						],
+						"municipality": {
+							"code": "853",
+							"name": []
+						},
+						"latitude": "6714869.102",
+						"longitude": "240014.677",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "02 990 2000",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000004",
+					"name": "Suun terveydenhuolto"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000235",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän hammashoitola 36",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkikatu"
+							}
+						],
+						"streetNumber": "36",
+						"postalCode": "02100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "ESPOO"
+							}
+						],
+						"municipality": {
+							"code": "049",
+							"name": []
+						},
+						"latitude": "6680500.771",
+						"longitude": "370220.045",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "02 990 2000",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000004",
+					"name": "Suun terveydenhuolto"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000236",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän hammashoitola 37",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkikatu"
+							}
+						],
+						"streetNumber": "37",
+						"postalCode": "20100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "TURKU"
+							}
+						],
+						"municipality": {
+							"code": "853",
+							"name": []
+						},
+						"latitude": "6715091.462",
+						"longitude": "240030.700",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "02 990 2000",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000004",
+					"name": "Suun terveydenhuolto"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000237",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän hammashoitola 38",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkikatu"
+							}
+						],
+						"streetNumber": "38",
+						"postalCode": "02100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "ESPOO"
+							}
+						],
+						"municipality": {
+							"code": "049",
+							"name": []
+						},
+						"latitude": "6680723.420",
+						"longitude": "370227.957",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "02 990 2000",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000004",
+					"name": "Suun terveydenhuolto"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000238",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän hammashoitola 39",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkikatu"
+							}
+						],
+						"streetNumber": "39",
+						"postalCode": "20100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "TURKU"
+							}
+						],
+						"municipality": {
+							"code": "853",
+							"name": []
+						},
+						"latitude": "6715313.822",
+						"longitude": "240046.723",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "02 990 2000",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000004",
+					"name": "Suun terveydenhuolto"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000239",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän hammashoitola 40",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkikatu"
+							}
+						],
+						"streetNumber": "40",
+						"postalCode": "02100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "ESPOO"
+							}
+						],
+						"municipality": {
+							"code": "049",
+							"name": []
+						},
+						"latitude": "6680946.069",
+						"longitude": "370235.869",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [
+				{
+					"type": "Phone",
+					"prefixNumber": null,
+					"number": "02 990 2000",
+					"isFinnishServiceNumber": false,
+					"serviceChargeType": "Chargeable",
+					"language": "fi"
+				}
+			],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000004",
+					"name": "Suun terveydenhuolto"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000300",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkipolun neuvola 1",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkipolku"
+							}
+						],
+						"streetNumber": "1",
+						"postalCode": "90100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "OULU"
+							}
+						],
+						"municipality": {
+							"code": "564",
+							"name": []
+						},
+						"latitude": "7210681.467",
+						"longitude": "427657.548",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000005",
+					"name": "Äitiysneuvola"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000006",
+					"name": "Lastenneuvola"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000301",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkipolun neuvola 2",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkipolku"
+							}
+						],
+						"streetNumber": "2",
+						"postalCode": "90100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "OULU"
+							}
+						],
+						"municipality": {
+							"code": "564",
+							"name": []
+						},
+						"latitude": "7210680.323",
+						"longitude": "427704.672",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000005",
+					"name": "Äitiysneuvola"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000006",
+					"name": "Lastenneuvola"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000302",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkipolun neuvola 3",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkipolku"
+							}
+						],
+						"streetNumber": "3",
+						"postalCode": "90100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "OULU"
+							}
+						],
+						"municipality": {
+							"code": "564",
+							"name": []
+						},
+						"latitude": "7210679.180",
+						"longitude": "427751.797",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000005",
+					"name": "Äitiysneuvola"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000006",
+					"name": "Lastenneuvola"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000303",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkipolun neuvola 4",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkipolku"
+							}
+						],
+						"streetNumber": "4",
+						"postalCode": "90100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "OULU"
+							}
+						],
+						"municipality": {
+							"code": "564",
+							"name": []
+						},
+						"latitude": "7210678.037",
+						"longitude": "427798.921",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000005",
+					"name": "Äitiysneuvola"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000006",
+					"name": "Lastenneuvola"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000304",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkipolun neuvola 5",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkipolku"
+							}
+						],
+						"streetNumber": "5",
+						"postalCode": "90100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "OULU"
+							}
+						],
+						"municipality": {
+							"code": "564",
+							"name": []
+						},
+						"latitude": "7210676.895",
+						"longitude": "427846.046",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000005",
+					"name": "Äitiysneuvola"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000006",
+					"name": "Lastenneuvola"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000305",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkipolun neuvola 6",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkipolku"
+							}
+						],
+						"streetNumber": "6",
+						"postalCode": "90100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "OULU"
+							}
+						],
+						"municipality": {
+							"code": "564",
+							"name": []
+						},
+						"latitude": "7210675.754",
+						"longitude": "427893.170",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000005",
+					"name": "Äitiysneuvola"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000006",
+					"name": "Lastenneuvola"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000306",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkipolun neuvola 7",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkipolku"
+							}
+						],
+						"streetNumber": "7",
+						"postalCode": "90100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "OULU"
+							}
+						],
+						"municipality": {
+							"code": "564",
+							"name": []
+						},
+						"latitude": "7210674.614",
+						"longitude": "427940.295",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000005",
+					"name": "Äitiysneuvola"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000006",
+					"name": "Lastenneuvola"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000307",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkipolun neuvola 8",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkipolku"
+							}
+						],
+						"streetNumber": "8",
+						"postalCode": "90100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "OULU"
+							}
+						],
+						"municipality": {
+							"code": "564",
+							"name": []
+						},
+						"latitude": "7210673.474",
+						"longitude": "427987.419",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000005",
+					"name": "Äitiysneuvola"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000006",
+					"name": "Lastenneuvola"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000308",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkipolun neuvola 9",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkipolku"
+							}
+						],
+						"streetNumber": "9",
+						"postalCode": "90100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "OULU"
+							}
+						],
+						"municipality": {
+							"code": "564",
+							"name": []
+						},
+						"latitude": "7210672.335",
+						"longitude": "428034.544",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000005",
+					"name": "Äitiysneuvola"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000006",
+					"name": "Lastenneuvola"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000309",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkipolun neuvola 10",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkipolku"
+							}
+						],
+						"streetNumber": "10",
+						"postalCode": "90100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "OULU"
+							}
+						],
+						"municipality": {
+							"code": "564",
+							"name": []
+						},
+						"latitude": "7210671.197",
+						"longitude": "428081.668",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000005",
+					"name": "Äitiysneuvola"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000006",
+					"name": "Lastenneuvola"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000310",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkipolun neuvola 11",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkipolku"
+							}
+						],
+						"streetNumber": "11",
+						"postalCode": "90100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "OULU"
+							}
+						],
+						"municipality": {
+							"code": "564",
+							"name": []
+						},
+						"latitude": "7210670.059",
+						"longitude": "428128.793",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000005",
+					"name": "Äitiysneuvola"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000006",
+					"name": "Lastenneuvola"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000311",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkipolun neuvola 12",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkipolku"
+							}
+						],
+						"streetNumber": "12",
+						"postalCode": "90100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "OULU"
+							}
+						],
+						"municipality": {
+							"code": "564",
+							"name": []
+						},
+						"latitude": "7210668.923",
+						"longitude": "428175.918",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000005",
+					"name": "Äitiysneuvola"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000006",
+					"name": "Lastenneuvola"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000312",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkipolun neuvola 13",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkipolku"
+							}
+						],
+						"streetNumber": "13",
+						"postalCode": "90100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "OULU"
+							}
+						],
+						"municipality": {
+							"code": "564",
+							"name": []
+						},
+						"latitude": "7210667.787",
+						"longitude": "428223.042",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000005",
+					"name": "Äitiysneuvola"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000006",
+					"name": "Lastenneuvola"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000313",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkipolun neuvola 14",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkipolku"
+							}
+						],
+						"streetNumber": "14",
+						"postalCode": "90100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "OULU"
+							}
+						],
+						"municipality": {
+							"code": "564",
+							"name": []
+						},
+						"latitude": "7210666.652",
+						"longitude": "428270.167",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000005",
+					"name": "Äitiysneuvola"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000006",
+					"name": "Lastenneuvola"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000314",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkipolun neuvola 15",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkipolku"
+							}
+						],
+						"streetNumber": "15",
+						"postalCode": "90100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "OULU"
+							}
+						],
+						"municipality": {
+							"code": "564",
+							"name": []
+						},
+						"latitude": "7210665.517",
+						"longitude": "428317.291",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000005",
+					"name": "Äitiysneuvola"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000006",
+					"name": "Lastenneuvola"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000315",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkipolun neuvola 16",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkipolku"
+							}
+						],
+						"streetNumber": "16",
+						"postalCode": "90100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "OULU"
+							}
+						],
+						"municipality": {
+							"code": "564",
+							"name": []
+						},
+						"latitude": "7210664.383",
+						"longitude": "428364.416",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000005",
+					"name": "Äitiysneuvola"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000006",
+					"name": "Lastenneuvola"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000316",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkipolun neuvola 17",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkipolku"
+							}
+						],
+						"streetNumber": "17",
+						"postalCode": "90100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "OULU"
+							}
+						],
+						"municipality": {
+							"code": "564",
+							"name": []
+						},
+						"latitude": "7210663.250",
+						"longitude": "428411.541",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000005",
+					"name": "Äitiysneuvola"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000006",
+					"name": "Lastenneuvola"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000317",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkipolun neuvola 18",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkipolku"
+							}
+						],
+						"streetNumber": "18",
+						"postalCode": "90100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "OULU"
+							}
+						],
+						"municipality": {
+							"code": "564",
+							"name": []
+						},
+						"latitude": "7210662.118",
+						"longitude": "428458.665",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000005",
+					"name": "Äitiysneuvola"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000006",
+					"name": "Lastenneuvola"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000318",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkipolun neuvola 19",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkipolku"
+							}
+						],
+						"streetNumber": "19",
+						"postalCode": "90100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "OULU"
+							}
+						],
+						"municipality": {
+							"code": "564",
+							"name": []
+						},
+						"latitude": "7210660.987",
+						"longitude": "428505.790",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000005",
+					"name": "Äitiysneuvola"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000006",
+					"name": "Lastenneuvola"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000319",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkipolun neuvola 20",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkipolku"
+							}
+						],
+						"streetNumber": "20",
+						"postalCode": "90100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "OULU"
+							}
+						],
+						"municipality": {
+							"code": "564",
+							"name": []
+						},
+						"latitude": "7210659.856",
+						"longitude": "428552.915",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000005",
+					"name": "Äitiysneuvola"
+				},
+				{
+					"id": "e5e00001-0000-4000-8000-000000000006",
+					"name": "Lastenneuvola"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000900",
+			"organizationId": "e5e00002-0000-4000-8000-000000000002",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän koulu",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Koulutie"
+							}
+						],
+						"streetNumber": "1",
+						"postalCode": "00100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "HELSINKI"
+							}
+						],
+						"municipality": {
+							"code": "091",
+							"name": []
+						},
+						"latitude": "6672118.380",
+						"longitude": "385611.317",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000012",
+					"name": "Kouluterveydenhuolto"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000901",
+			"organizationId": "e5e00002-0000-4000-8000-000000000002",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän kirjasto",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Kirjastotie"
+							}
+						],
+						"streetNumber": "1",
+						"postalCode": "00100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "HELSINKI"
+							}
+						],
+						"municipality": {
+							"code": "091",
+							"name": []
+						},
+						"latitude": "6672118.380",
+						"longitude": "385611.317",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000013",
+					"name": "Kirjastopalvelut"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000902",
+			"organizationId": "e5e00002-0000-4000-8000-000000000004",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Lääkäriasema Esimerkki",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Yksityistie"
+							}
+						],
+						"streetNumber": "9",
+						"postalCode": "00100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "HELSINKI"
+							}
+						],
+						"municipality": {
+							"code": "091",
+							"name": []
+						},
+						"latitude": "6672118.380",
+						"longitude": "385611.317",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000001",
+					"name": "Lääkärin vastaanotto"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000903",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän terveysasema Tallinnassa",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "EE",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Näidise tn"
+							}
+						],
+						"streetNumber": "1",
+						"postalCode": "10117",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "TALLINN"
+							}
+						],
+						"municipality": {
+							"code": "091",
+							"name": []
+						},
+						"latitude": "6672118.380",
+						"longitude": "385611.317",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000001",
+					"name": "Lääkärin vastaanotto"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000904",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän vanha terveysasema",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkitie"
+							}
+						],
+						"streetNumber": "99",
+						"postalCode": "33100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "TAMPERE"
+							}
+						],
+						"municipality": {
+							"code": "837",
+							"name": []
+						},
+						"latitude": "6822520.317",
+						"longitude": "327614.161",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000001",
+					"name": "Lääkärin vastaanotto"
+				}
+			],
+			"publishingStatus": "Deleted"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000905",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "Esimerkkilän kaukainen terveysasema",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkitie"
+							}
+						],
+						"streetNumber": "1",
+						"postalCode": "99999",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "EI OLE"
+							}
+						],
+						"municipality": {
+							"code": "999",
+							"name": []
+						},
+						"latitude": "0",
+						"longitude": "0",
+						"coordinateState": "NotReceived"
+					}
+				}
+			],
+			"phoneNumbers": [],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000001",
+					"name": "Lääkärin vastaanotto"
+				}
+			],
+			"publishingStatus": "Published"
+		},
+		{
+			"id": "e5e00003-0000-4000-8000-000000000906",
+			"organizationId": "e5e00002-0000-4000-8000-000000000001",
+			"names": [
+				{
+					"language": "fi",
+					"value": "",
+					"type": "Name"
+				}
+			],
+			"addresses": [
+				{
+					"type": "Location",
+					"subType": "Single",
+					"country": "FI",
+					"streetAddress": {
+						"street": [
+							{
+								"language": "fi",
+								"value": "Esimerkkitie"
+							}
+						],
+						"streetNumber": "100",
+						"postalCode": "33100",
+						"postOffice": [
+							{
+								"language": "fi",
+								"value": "TAMPERE"
+							}
+						],
+						"municipality": {
+							"code": "837",
+							"name": []
+						},
+						"latitude": "6822520.317",
+						"longitude": "327614.161",
+						"coordinateState": "Ok"
+					}
+				}
+			],
+			"phoneNumbers": [],
+			"emails": [],
+			"services": [
+				{
+					"id": "e5e00001-0000-4000-8000-000000000001",
+					"name": "Lääkärin vastaanotto"
+				}
+			],
+			"publishingStatus": "Published"
+		}
+	]
+}

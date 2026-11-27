@@ -57,7 +57,7 @@ export async function getDirectoryIndex(country = "FR"): Promise<DirectoryIndex>
 		-- rights (TERYT codes are no order either); Irish counties by name (nor are Tailte Éireann's).
 		ORDER BY r.name,
 			CASE WHEN d.country = 'PL' THEN regexp_replace(d.name, '^powiat ', '')
-				WHEN d.country IN ('GB', 'CZ', 'ES', 'IT', 'DE', 'CH', 'EE', 'NO', 'IE') THEN d.name ELSE d.code END
+				WHEN d.country IN ('GB', 'CZ', 'ES', 'IT', 'DE', 'CH', 'EE', 'NO', 'IE', 'FI') THEN d.name ELSE d.code END
 	`;
 	const regions: RegionGroup[] = [];
 	for (const { regionCode, regionName, regionSlug, ...department } of rows) {

@@ -41,7 +41,8 @@ type Expected = {
 		| "et-EE"
 		| "pl-PL"
 		| "nb-NO"
-		| "en-IE";
+		| "en-IE"
+		| "fi-FI";
 	/** The homes (`/fr` and the international `/`) print hreflang `fr-FR` and `x-default`. */
 	hreflang?: true;
 	/**
@@ -168,6 +169,26 @@ const PAGES: Expected[] = [
 		robots: "index, follow",
 		types: ["WebPage", "BreadcrumbList", "Hospital"],
 		lang: "pl-PL",
+	},
+	// Finland, indexed in Finnish under its own segment.
+	{
+		path: "/fi",
+		robots: "index, follow",
+		types: ["WebPage", "WebSite", "Organization"],
+		lang: "fi-FI",
+		hreflang: true,
+	},
+	{
+		path: "/fi/terveysasemat/pirkanmaan-hyvinvointialue/tampere",
+		robots: "index, follow",
+		types: ["CollectionPage", "BreadcrumbList", "ItemList"],
+		lang: "fi-FI",
+	},
+	{
+		path: "/fi/toimipiste/esimerkkilan-keskussairaala-e5e00003000040008000000000000001",
+		robots: "index, follow",
+		types: ["WebPage", "BreadcrumbList", "Hospital"],
+		lang: "fi-FI",
 	},
 	// Spain, indexed in Spanish under its own segment (`es` alone stays France in Spanish, `/fr-es`).
 	{
@@ -428,6 +449,7 @@ const OG_LOCALES = {
 	"pl-PL": "pl_PL",
 	"nb-NO": "nb_NO",
 	"en-IE": "en_IE",
+	"fi-FI": "fi_FI",
 } as const;
 
 const FORBIDDEN_KEYS = ["aggregateRating", "review", "reviews", "ratingValue"];
@@ -516,7 +538,7 @@ for (const expected of PAGES) {
 		// facility's, an Italian place's) place would not fit with it.
 		if (!/ · Apercura$|^Apercura · /.test(title)) {
 			expect(expected.path).toMatch(
-				/^\/(?:fr(?:-[a-z]{2})?\/[a-z]+\/[a-z0-9-]+-\d{11}|at\/arzt\/[a-z0-9-]+-[a-z]{1,2}\d{1,9}|gb\/practice\/[a-z0-9-]+-[a-z0-9]{2,12}|cz\/zarizeni\/[a-z0-9-]+-\d{1,9}|es\/centro\/[a-z0-9-]+-\d{10}|it\/struttura\/[a-z0-9-]+-[fps]\d{1,8}|de\/einrichtung\/[a-z0-9-]+-(?:k|r|bb)[0-9a-f]{10}|de\/einrichtung\/[a-z0-9-]+-th\d{1,7}|ch(?:-fr|-it)?\/(?:einrichtung|etablissement|struttura)\/[a-z0-9-]+-[a-z]{1,3}\d{1,14}|pl\/placowka\/[a-z0-9-]+-\d{1,10})$/,
+				/^\/(?:fr(?:-[a-z]{2})?\/[a-z]+\/[a-z0-9-]+-\d{11}|at\/arzt\/[a-z0-9-]+-[a-z]{1,2}\d{1,9}|gb\/practice\/[a-z0-9-]+-[a-z0-9]{2,12}|cz\/zarizeni\/[a-z0-9-]+-\d{1,9}|es\/centro\/[a-z0-9-]+-\d{10}|it\/struttura\/[a-z0-9-]+-[fps]\d{1,8}|de\/einrichtung\/[a-z0-9-]+-(?:k|r|bb)[0-9a-f]{10}|de\/einrichtung\/[a-z0-9-]+-th\d{1,7}|ch(?:-fr|-it)?\/(?:einrichtung|etablissement|struttura)\/[a-z0-9-]+-[a-z]{1,3}\d{1,14}|pl\/placowka\/[a-z0-9-]+-\d{1,10}|fi\/toimipiste\/[a-z0-9-]+-[0-9a-f]{32})$/,
 			);
 			expect(`${title} · Apercura`.length).toBeGreaterThan(60);
 		}
@@ -542,7 +564,7 @@ for (const expected of PAGES) {
 			}));
 		if (expected.hreflang) {
 			// The homes of the open markets (Switzerland's three) and the international one.
-			expect(alternates).toHaveLength(15);
+			expect(alternates).toHaveLength(16);
 			expect(alternates).toEqual(
 				expect.arrayContaining([
 					{ rel: "alternate", hreflang: "fr-FR", href: `${origin}/fr` },
@@ -559,6 +581,7 @@ for (const expected of PAGES) {
 					{ rel: "alternate", hreflang: "pl-PL", href: `${origin}/pl` },
 					{ rel: "alternate", hreflang: "nb-NO", href: `${origin}/no` },
 					{ rel: "alternate", hreflang: "en-IE", href: `${origin}/ie` },
+					{ rel: "alternate", hreflang: "fi-FI", href: `${origin}/fi` },
 					{ rel: "alternate", hreflang: "x-default", href: origin },
 				]),
 			);
@@ -597,7 +620,7 @@ for (const expected of PAGES) {
 		// for an Italian place, `de.{slug}` for a German facility), others a generic image.
 		expect(page.meta("og:image")[0]).toMatch(
 			new RegExp(
-				`^${origin}/og/(?:praticien/(?:gb\\.|cz\\.|es\\.|it\\.|de\\.|ch\\.|pl\\.)?[a-z0-9-]+|[a-z-]+)\\.png$`,
+				`^${origin}/og/(?:praticien/(?:gb\\.|cz\\.|es\\.|it\\.|de\\.|ch\\.|pl\\.|fi\\.)?[a-z0-9-]+|[a-z-]+)\\.png$`,
 			),
 		);
 		expect(page.meta("twitter:card")).toEqual(["summary_large_image"]);
@@ -655,7 +678,9 @@ for (const expected of PAGES) {
 													? "PL"
 													: expected.path.startsWith("/no")
 														? "NO"
-														: "FR",
+														: expected.path.startsWith("/fi")
+															? "FI"
+															: "FR",
 			);
 			expect(address?.addressLocality ?? address?.postalCode, node["@id"]).toBeTruthy();
 		}
@@ -691,7 +716,9 @@ for (const expected of PAGES) {
 																	? `${origin}/no`
 																	: lang === "en-IE"
 																		? `${origin}/ie`
-																		: `${origin}/fr-${lang}`;
+																		: lang === "fi-FI"
+																			? `${origin}/fi`
+																			: `${origin}/fr-${lang}`;
 			expect(items[0]?.item).toBe(home);
 			items.forEach((item, index) => {
 				expect(item.position).toBe(index + 1);

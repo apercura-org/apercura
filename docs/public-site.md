@@ -126,6 +126,19 @@ facility's page under `/ie/facility/…`, an establishment's under
 `/ie/establishment/…`; its listing slugs are English and never the UK's
 (`/ie/pharmacy/cork`, `/ie/nursing-homes/cork/cork`). No Irish interface yet.
 
+Finland (#173) is the locale `fi-FI` under `/fi` (the English catalog with the
+Finnish texts on top, `messages/fi.json`): the English paths with their segments
+in Finnish (`FINNISH_SEGMENTS` in `routing.ts`), a service location's page under
+`/fi/toimipiste/…` (`…/ilmoita`, `…/poisto`, `…/tama-on-meidan`), an
+establishment's under `/fi/organisaatio/…`, the directory under `/fi/hakemisto`,
+the search under `/fi/haku`, and `/fi/tietoa`, `/fi/aineisto`,
+`/fi/saavutettavuus`, `/fi/tietosuoja`, `/fi/oikeudelliset-tiedot`,
+`/fi/kayttoehdot`; its listing slugs are Finnish, without diacritics
+(`/fi/terveysasemat/pirkanmaan-hyvinvointialue/tampere`, `/fi/neuvolat`), a
+wellbeing services county is a department and Helsinki, its own, has the
+department's page only (`/fi/terveysasemat/helsinki`), and a reference reads
+`fi:` and the location's 32-digit key. Swedish (`/fi-sv`) is a follow-up.
+
 Each segment follows the locale's prefix: `/fr/annuaire`, `/fr-de/verzeichnis`.
 
 Only French pages are indexed in v1 (`INDEXABLE_LOCALES`): pages in the other

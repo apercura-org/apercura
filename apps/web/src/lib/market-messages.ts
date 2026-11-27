@@ -5,6 +5,7 @@ import {
 	allDeTaxonomySlugs,
 	allEeTaxonomySlugs,
 	allEsTaxonomySlugs,
+	allFiTaxonomySlugs,
 	allGbListingSlugs,
 	allIeListingSlugs,
 	allItListingSlugs,
@@ -36,6 +37,8 @@ const MARKET_SLUGS: Readonly<Record<MarketCountry, ReadonlySet<string>>> = {
 	PL: allPlListingSlugs(), // Norway names its kinds of establishment by keys of their own (`legekontor`, `apoteket`).
 	NO: allNoTaxonomySlugs(),
 	IE: allIeListingSlugs(),
+	// Finland names its kinds of location in the singular (`terveysasema`, `neuvola`).
+	FI: allFiTaxonomySlugs(),
 };
 
 /** The `taxonomy` groups keyed by listing or profession slug. */

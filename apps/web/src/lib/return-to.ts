@@ -6,7 +6,7 @@
  * into a typed route (never echoed back as a raw string), so the parameter
  * can never become an open redirect: the claim of one page (an RPPS in France, a list key such
  * as `w7983` in Austria, `gb:a81001` in the UK, `cz:39781` in Czechia, `es:1328000001` in Spain,
- * `it:f9000001` in Italy, `de:k0a1b2c3d4e` in Germany, `ch:h123456789` in Switzerland, `pl:290629` in Poland, `ie:p10000612` in Ireland, see ~/lib/practitioner-ref),
+ * `it:f9000001` in Italy, `de:k0a1b2c3d4e` in Germany, `ch:h123456789` in Switzerland, `pl:290629` in Poland, `ie:p10000612` in Ireland, `fi:b18aa7f8…` in Finland, see ~/lib/practitioner-ref),
  * or one team
  * invitation (an invited person creates their account first).
  */
@@ -27,10 +27,11 @@ const PRO_ROUTE =
  * (`es:1328000001`), an Italian place key (`it:f9000001`, `it:p002112`, `it:s010030`), a German
  * facility key (`de:k0a1b2c3d4e`, `de:th420`), a Swiss one (`ch:h123456789`) or an Estonian
  * provider or pharmacy key (`ee:l01909`, `ee:ap457`), a Polish establishment number
- * (`pl:290629`) or an Irish facility key (`ie:p10000612`, `ie:n738`).
+ * (`pl:290629`) or an Irish facility key (`ie:p10000612`, `ie:n738`) or a Finnish service location's key
+ * (`fi:b18aa7f87eca4b97a8e8b438d2e29427`).
  */
 const RPPS =
-	/^(?:\d{11}|[a-z]{1,2}[1-9]\d{0,8}|gb:[a-z0-9]{2,12}|cz:[1-9]\d{0,8}|es:(?:0[1-9]|1\d)\d{8}|it:(?:f\d{1,8}|[ps]\d{6})|de:(?:k|r|bb)[0-9a-f]{10}|de:th[1-9]\d{0,6}|ch:[a-z]{1,3}[1-9]\d{0,13}|ee:(?:l\d{5}|ap[1-9]\d{0,6})|pl:[1-9]\d{0,9}|no:[89]\d{8}|ie:[pnhc][1-9]\d{0,9})$/;
+	/^(?:\d{11}|[a-z]{1,2}[1-9]\d{0,8}|gb:[a-z0-9]{2,12}|cz:[1-9]\d{0,8}|es:(?:0[1-9]|1\d)\d{8}|it:(?:f\d{1,8}|[ps]\d{6})|de:(?:k|r|bb)[0-9a-f]{10}|de:th[1-9]\d{0,6}|ch:[a-z]{1,3}[1-9]\d{0,13}|ee:(?:l\d{5}|ap[1-9]\d{0,6})|pl:[1-9]\d{0,9}|no:[89]\d{8}|ie:[pnhc][1-9]\d{0,9}|fi:[0-9a-f]{32})$/;
 const BASE = "http://internal.invalid";
 
 /** The allowlisted route a `?suite=` value designates, or null for anything else. */

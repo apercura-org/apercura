@@ -34,6 +34,8 @@
 		"fixtures:ch": "bun fixtures/generate-ch.ts",
 		"etl:ee": "bun src/cli.ts etl:ee",
 		"fixtures:ee": "bun fixtures/generate-ee.ts",
+		"etl:fi": "bun src/cli.ts etl:fi",
+		"fixtures:fi": "bun fixtures/generate-fi.ts",
 		"fixtures:pl": "bun fixtures/generate-pl.ts",
 		"etl:no": "bun src/cli.ts etl:no",
 		"fixtures:no": "bun fixtures/generate-no.ts",

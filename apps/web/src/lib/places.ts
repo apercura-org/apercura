@@ -1,11 +1,12 @@
 import { slugifyDe } from "@apercura/core";
-import { AT_STATES, OSLO_MUNICIPALITY, PRAGUE_CODE } from "@apercura/core/country";
+import { AT_STATES, HELSINKI_CODE, OSLO_MUNICIPALITY, PRAGUE_CODE } from "@apercura/core/country";
 import type { PlaceRef } from "~/server/queries/types";
 
 /**
  * Cities whose page is their department's, by market: Paris (INSEE 75056, department 75),
- * Wien (Statistik Austria 90001, Bundesland 9), Praha (RÚIAN 554782, district CZ0100) and Oslo
- * (municipality 0301, county 03, the only municipality of its county). Their districts list under
+ * Wien (Statistik Austria 90001, Bundesland 9), Praha (RÚIAN 554782, district CZ0100), Oslo
+ * (municipality 0301, county 03, the only municipality of its county) and Helsinki (Statistics
+ * Finland 091, which organises its own health care: department 90). Their districts list under
  * the department page, and the city itself has no listing or hub page.
  */
 export const CITY_IS_DEPARTMENT: Readonly<Record<string, string>> = {
@@ -13,6 +14,7 @@ export const CITY_IS_DEPARTMENT: Readonly<Record<string, string>> = {
 	AT: "90001",
 	CZ: PRAGUE_CODE,
 	NO: OSLO_MUNICIPALITY,
+	FI: HELSINKI_CODE,
 };
 
 /**
@@ -101,7 +103,7 @@ export const AT_STATE_SLUGS: ReadonlySet<string> = new Set(
  * digits. Czechia: the slug of a district (okres, `brno-mesto`, `praha`). Spain: the slug of a
  * province (`madrid`, `barcelona`). Italy: the slug of a province or of a region (`roma`,
  * `lazio`). Germany: the slug of a Kreis (`landkreis-muenchen`, `berlin`). Switzerland: the slug of a district or of a canton (`bezirk-zuerich`, `zuerich`). Estonia: the slug of a municipality (`tallinn`,
- * `tartu-linn`, `rae-vald`). Poland: the slug of a powiat or of a voivodeship (`powiat-krakowski`, `krakow`, `malopolskie`). Norway: the slug of a county (`vestland`, `trondelag`). Ireland: the slug of a county (`cork`, `dublin`).
+ * `tartu-linn`, `rae-vald`). Poland: the slug of a powiat or of a voivodeship (`powiat-krakowski`, `krakow`, `malopolskie`). Norway: the slug of a county (`vestland`, `trondelag`). Ireland: the slug of a county (`cork`, `dublin`). Finland: the slug of a wellbeing services county (`pirkanmaan-hyvinvointialue`, `helsinki`).
  */
 export function isDepartmentSlug(slug: string, country = "FR"): boolean {
 	if (country === "AT") return AT_STATE_SLUGS.has(slug);
@@ -115,7 +117,8 @@ export function isDepartmentSlug(slug: string, country = "FR"): boolean {
 		country === "EE" ||
 		country === "PL" ||
 		country === "NO" ||
-		country === "IE"
+		country === "IE" ||
+		country === "FI"
 	) {
 		return isPlaceSlug(slug);
 	}

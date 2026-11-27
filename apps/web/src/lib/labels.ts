@@ -5,11 +5,14 @@ import {
 	eeKindSlugOf,
 	eeProfessionOfListingSlug,
 	esKindSlugOf,
+	fiKindSlugOf,
+	fiProfessionOfListingSlug,
 	isChListingSlug,
 	isCzListingSlug,
 	isDeListingSlug,
 	isEeListingSlug,
 	isEsListingSlug,
+	isFiListingSlug,
 	isGbListingSlug,
 	isIeListingSlug,
 	isItListingSlug,
@@ -52,8 +55,8 @@ export async function getTaxonomyLabels(locale: Locale) {
 		 * "Consulta de cardiología", "Farmacia", "Spital"), their listing being plural ("GP
 		 * practices", "Kardiologové", "Cardiólogos", "Farmacie", "Spitäler"). With its profession code, a Spanish centre listed under its kind's listing
 		 * reads as its own kind (a local surgery listed with the health centres reads "Consultorio
-		 * local"). A German facility, an Estonian provider or a Norwegian establishment reads as its kind
-		 * ("Krankenhaus", "Apotheke", "Perearstikeskus", "Legekontor"), its listing being plural.
+		 * local"). A German facility, an Estonian provider, a Norwegian establishment or a Finnish service
+		 * location reads as its kind ("Krankenhaus", "Apotheke", "Perearstikeskus", "Legekontor", "Terveysasema"), its listing being plural.
 		 */
 		occupation: (
 			slug: string | null | undefined,
@@ -61,12 +64,19 @@ export async function getTaxonomyLabels(locale: Locale) {
 			professionCode?: string | null,
 		) => {
 			if (!slug) return null;
-			if (isDeListingSlug(slug) || isEeListingSlug(slug) || isNoListingSlug(slug)) {
+			if (
+				isDeListingSlug(slug) ||
+				isEeListingSlug(slug) ||
+				isNoListingSlug(slug) ||
+				isFiListingSlug(slug)
+			) {
 				const kind = isDeListingSlug(slug)
 					? deKindSlugOf(professionCode ?? deProfessionOfListingSlug(slug))
 					: isEeListingSlug(slug)
 						? eeKindSlugOf(professionCode ?? eeProfessionOfListingSlug(slug))
-						: noKindSlugOf(professionCode ?? noProfessionOfListingSlug(slug));
+						: isNoListingSlug(slug)
+							? noKindSlugOf(professionCode ?? noProfessionOfListingSlug(slug))
+							: fiKindSlugOf(professionCode ?? fiProfessionOfListingSlug(slug));
 				return (
 					(kind ? lookup(`profession.${kind}`) : null) ??
 					lookup(`profession.${slug}`) ??

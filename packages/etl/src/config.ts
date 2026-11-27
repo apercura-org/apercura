@@ -14,6 +14,8 @@ import { DEFAULT_EE_PLACES_URL } from "./sources/ee/places";
 import { EE_SOURCE_IDS, type EeFileId, type EeSourceId } from "./sources/ee/types";
 import { DEFAULT_ES_PLACES_BASE } from "./sources/es/places";
 import { ES_SOURCE_IDS, ES_SOURCES, type EsSourceId } from "./sources/es/types";
+import { defaultFiPlacesUrls, type FiPlacesFileId } from "./sources/fi/places";
+import { DEFAULT_PTV_API, PTV_CONCURRENCY } from "./sources/fi/ptv";
 import {
 	DEFAULT_GB_LAD_BOUNDARIES_URL,
 	DEFAULT_GB_LAD_LOOKUP_URL,
@@ -1128,6 +1130,86 @@ export function buildIeOptions(flags: ParsedArgs["flags"], env: NodeJS.ProcessEn
 		urls,
 		placesUrls: iePlacesUrls(env),
 		today: todayInDublin(),
+		workDir: flagString(flags, "work-dir") ?? env.ETL_WORK_DIR ?? null,
+		appUrl: offline ? null : env.APP_URL || null,
+		revalidateSecret: env.REVALIDATE_SECRET || null,
+	};
+}
+
+// ---------------------------------------------------------------------------
+// Finland (`etl:fi`)
+// ---------------------------------------------------------------------------
+
+export type FiOptions = {
+	databaseUrl: string;
+	dryRun: boolean;
+	approveRunId: number | null;
+	force: boolean;
+	sourceDir: string | null;
+	offline: boolean;
+	/** The Finnish Service Catalogue's open API (`ETL_FI_PTV_URL`), version 11, without a key. */
+	ptvUrl: string;
+	/** Requests to the catalogue at a time (`ETL_FI_PTV_CONCURRENCY`, 1 to 8). */
+	concurrency: number;
+	/** Statistics Finland's municipalities and correspondence tables (`ETL_FI_PLACES_*_URL`). */
+	placesUrls: Record<FiPlacesFileId, string>;
+	/** The day of the run in Helsinki (`YYYY-MM-DD`), the snapshot's edition. */
+	today: string;
+	workDir: string | null;
+	appUrl: string | null;
+	revalidateSecret: string | null;
+};
+
+/** Today in Helsinki, `YYYY-MM-DD`. */
+export function todayInHelsinki(now: Date = new Date()): string {
+	return new Intl.DateTimeFormat("en-CA", { timeZone: "Europe/Helsinki" }).format(now);
+}
+
+/**
+ * Statistics Finland's files for the places: the year's (`ETL_FI_PLACES_YEAR`, else
+ * `FI_PLACES_YEAR`), each overridable (`ETL_FI_PLACES_MUNICIPALITIES_URL`,
+ * `ETL_FI_PLACES_COUNTIES_URL`, `ETL_FI_PLACES_REGIONS_URL`).
+ */
+export function fiPlacesUrls(env: NodeJS.ProcessEnv): Record<FiPlacesFileId, string> {
+	const year = env.ETL_FI_PLACES_YEAR ? Number(env.ETL_FI_PLACES_YEAR) : undefined;
+	if (year !== undefined && !(Number.isInteger(year) && year >= 2023 && year <= 2100)) {
+		throw new Error(`ETL_FI_PLACES_YEAR needs a year, got ${env.ETL_FI_PLACES_YEAR}`);
+	}
+	const defaults = defaultFiPlacesUrls(year);
+	return {
+		municipalities: env.ETL_FI_PLACES_MUNICIPALITIES_URL || defaults.municipalities,
+		counties: env.ETL_FI_PLACES_COUNTIES_URL || defaults.counties,
+		regions: env.ETL_FI_PLACES_REGIONS_URL || defaults.regions,
+	};
+}
+
+export function buildFiOptions(
+	flags: ParsedArgs["flags"],
+	env: NodeJS.ProcessEnv,
+	now: Date = new Date(),
+): FiOptions {
+	const approve = flagString(flags, "approve");
+	if (approve !== null && !/^\d+$/.test(approve)) {
+		throw new Error(`--approve needs a run id, got ${approve}`);
+	}
+	const concurrency = env.ETL_FI_PTV_CONCURRENCY
+		? Number(env.ETL_FI_PTV_CONCURRENCY)
+		: PTV_CONCURRENCY;
+	if (!Number.isInteger(concurrency) || concurrency < 1 || concurrency > 8) {
+		throw new Error(`ETL_FI_PTV_CONCURRENCY needs 1 to 8, got ${env.ETL_FI_PTV_CONCURRENCY}`);
+	}
+	const offline = flags.has("offline");
+	return {
+		databaseUrl: resolveDatabaseUrl(env),
+		dryRun: flags.has("dry-run"),
+		approveRunId: approve === null ? null : Number(approve),
+		force: flags.has("force"),
+		sourceDir: flagString(flags, "source-dir") ?? env.ETL_FI_SOURCE_DIR ?? null,
+		offline,
+		ptvUrl: env.ETL_FI_PTV_URL || DEFAULT_PTV_API,
+		concurrency,
+		placesUrls: fiPlacesUrls(env),
+		today: todayInHelsinki(now),
 		workDir: flagString(flags, "work-dir") ?? env.ETL_WORK_DIR ?? null,
 		appUrl: offline ? null : env.APP_URL || null,
 		revalidateSecret: env.REVALIDATE_SECRET || null,
