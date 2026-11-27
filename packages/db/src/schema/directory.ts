@@ -28,7 +28,7 @@ import {
 	uniqueIndex,
 } from "drizzle-orm/pg-core";
 import { directory } from "./schemas";
-import { geographyPoint } from "./types";
+import { geographyPoint, geometryMultiPolygon } from "./types";
 
 const createdAt = () => timestamp({ withTimezone: true }).notNull().defaultNow();
 const updatedAt = () => timestamp({ withTimezone: true }).notNull().defaultNow();
@@ -114,6 +114,34 @@ export const placeSlugAliases = directory.table(
 		unique("place_slug_aliases_uq")
 			.on(table.country, table.departmentCode, table.slug)
 			.nullsNotDistinct(),
+	],
+);
+
+/**
+ * What an import matches facilities to places with when its lists name towns rather than codes
+ * (Ireland): the place's boundary (a county's, a census town's), for the facilities a list
+ * locates by a point, and the other names a place goes by (the gazetteer's localities inside a
+ * town, their Irish names, a few documented by hand), for those a list names by town. Written
+ * by `etl:places`, read by the market's import, never shown on a page.
+ */
+export const placeLookup = directory.table(
+	"place_lookup",
+	{
+		placeId: integer()
+			.primaryKey()
+			.references(() => places.id, { onDelete: "cascade" }),
+		/** Market of the place. */
+		country: text().notNull(),
+		/** The place's boundary, WGS 84, or null when its source gives none. */
+		area: geometryMultiPolygon(),
+		/** Other names of the place, as their source writes them (`Tallaght`, `An Spidéal`). */
+		aliases: text().array().notNull().default(sql`'{}'::text[]`),
+		sourceHash: text(),
+		updatedAt: updatedAt(),
+	},
+	(table) => [
+		index("place_lookup_country_idx").on(table.country),
+		index("place_lookup_area_idx").using("gist", table.area),
 	],
 );
 

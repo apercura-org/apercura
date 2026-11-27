@@ -22,6 +22,7 @@ import {
 } from "./sources/gb/places";
 import { DEFAULT_GB_POSTCODES_URL } from "./sources/gb/postcodes";
 import { GB_SOURCE_IDS, type GbSourceId } from "./sources/gb/types";
+import { IE_SOURCE_IDS, type IeSourceId, ieSourceUrlVariable } from "./sources/ie/types";
 import { defaultItPlacesUrl } from "./sources/it/places";
 import { IT_SOURCE_IDS, type ItSourceId } from "./sources/it/types";
 import { DEFAULT_NO_ADRESSER_URL } from "./sources/no/addresses";
@@ -1037,6 +1038,96 @@ export function buildNoOptions(flags: ParsedArgs["flags"], env: NodeJS.ProcessEn
 			adresser: env.ETL_NO_ADRESSER_URL || DEFAULT_NO_ADRESSER_URL,
 		},
 		placesUrl: env.ETL_NO_PLACES_URL || DEFAULT_NO_PLACES_URL,
+		workDir: flagString(flags, "work-dir") ?? env.ETL_WORK_DIR ?? null,
+		appUrl: offline ? null : env.APP_URL || null,
+		revalidateSecret: env.REVALIDATE_SECRET || null,
+	};
+}
+
+export type IeOptions = {
+	databaseUrl: string;
+	dryRun: boolean;
+	approveRunId: number | null;
+	force: boolean;
+	sourceDir: string | null;
+	offline: boolean;
+	sources: IeSourceId[];
+	/** A list's address when overridden (`ETL_IE_<ID>_URL`, `ETL_IE_HSE_HOSPITALS_URL`); else its own. */
+	urls: Partial<Record<IeSourceId, string>>;
+	/** The places' sources (`ETL_IE_COUNTIES_URL`, `ETL_IE_TOWNS_URL`, `ETL_IE_PLACENAMES_URL`), for their first import. */
+	placesUrls: { counties?: string; towns?: string; placenames?: string };
+	/** The day of the run in Dublin (`YYYY-MM-DD`). */
+	today: string;
+	workDir: string | null;
+	appUrl: string | null;
+	revalidateSecret: string | null;
+};
+
+/**
+ * Parses a comma-separated list of Irish lists: the lists to import (`psi,hiqa`), or every list
+ * but some, each prefixed with a minus (`-hse-health-centres`). The two forms never mix. Throws
+ * on unknown ones, and when no list is left.
+ */
+export function parseIeSources(value: string | null | undefined): IeSourceId[] {
+	if (!value) return [...IE_SOURCE_IDS];
+	const entries = value
+		.split(",")
+		.map((source) => source.trim())
+		.filter(Boolean);
+	const excluded = entries.filter((entry) => entry.startsWith("-"));
+	if (excluded.length > 0 && excluded.length < entries.length) {
+		throw new Error(
+			`Irish sources are either listed (psi,hiqa) or all excluded with a minus (-hiqa), never both: "${value}"`,
+		);
+	}
+	const sources = excluded.length > 0 ? excluded.map((entry) => entry.slice(1)) : entries;
+	for (const source of sources) {
+		if (!(IE_SOURCE_IDS as readonly string[]).includes(source)) {
+			throw new Error(`Unknown Irish source "${source}" (one of ${IE_SOURCE_IDS.join(", ")})`);
+		}
+	}
+	const selected =
+		excluded.length > 0 ? IE_SOURCE_IDS.filter((id) => !sources.includes(id)) : sources;
+	if (selected.length === 0) throw new Error("At least one Irish source is required");
+	return [...new Set(selected)] as IeSourceId[];
+}
+
+/** Today in Dublin, `YYYY-MM-DD`. */
+export function todayInDublin(now: Date = new Date()): string {
+	return new Intl.DateTimeFormat("en-CA", { timeZone: "Europe/Dublin" }).format(now);
+}
+
+/** The places' sources of `etl:places --country ie`, when overridden. */
+export function iePlacesUrls(env: NodeJS.ProcessEnv): IeOptions["placesUrls"] {
+	return {
+		counties: env.ETL_IE_COUNTIES_URL || undefined,
+		towns: env.ETL_IE_TOWNS_URL || undefined,
+		placenames: env.ETL_IE_PLACENAMES_URL || undefined,
+	};
+}
+
+export function buildIeOptions(flags: ParsedArgs["flags"], env: NodeJS.ProcessEnv): IeOptions {
+	const approve = flagString(flags, "approve");
+	if (approve !== null && !/^\d+$/.test(approve)) {
+		throw new Error(`--approve needs a run id, got ${approve}`);
+	}
+	const offline = flags.has("offline");
+	const urls: Partial<Record<IeSourceId, string>> = {};
+	for (const id of IE_SOURCE_IDS) {
+		const url = env[ieSourceUrlVariable(id)];
+		if (url) urls[id] = url;
+	}
+	return {
+		databaseUrl: resolveDatabaseUrl(env),
+		dryRun: flags.has("dry-run"),
+		approveRunId: approve === null ? null : Number(approve),
+		force: flags.has("force"),
+		sourceDir: flagString(flags, "source-dir") ?? env.ETL_IE_SOURCE_DIR ?? null,
+		offline,
+		sources: parseIeSources(flagString(flags, "sources") ?? env.ETL_IE_SOURCES),
+		urls,
+		placesUrls: iePlacesUrls(env),
+		today: todayInDublin(),
 		workDir: flagString(flags, "work-dir") ?? env.ETL_WORK_DIR ?? null,
 		appUrl: offline ? null : env.APP_URL || null,
 		revalidateSecret: env.REVALIDATE_SECRET || null,

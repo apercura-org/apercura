@@ -1,0 +1,467 @@
+{
+ "type": "FeatureCollection",
+ "crs": {
+  "type": "name",
+  "properties": {
+   "name": "EPSG:4326"
+  }
+ },
+ "features": [
+  {
+   "type": "Feature",
+   "id": 1,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -10.08,
+     51.81
+    ]
+   },
+   "properties": {
+    "OBJECTID": 1,
+    "category": "Hospital",
+    "subcategory": "Community",
+    "name": "Exampleton",
+    "address1": "Example Road",
+    "address2": "Killarney",
+    "address3": "Co. Kerry",
+    "address4": null,
+    "Eircode": "V93 X921",
+    "POINT_X": -10.08,
+    "POINT_Y": 51.81
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 2,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -10.08,
+     52.09
+    ]
+   },
+   "properties": {
+    "OBJECTID": 2,
+    "category": "Hospital",
+    "subcategory": "Community",
+    "name": "Sampleford",
+    "address1": "Saint Example's Hospital",
+    "address2": "Example Street",
+    "address3": "Tralee",
+    "address4": "Co. Kerry",
+    "Eircode": "V92 X922",
+    "POINT_X": -10.08,
+    "POINT_Y": 52.09
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 3,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -8.58,
+     53.1925
+    ]
+   },
+   "properties": {
+    "OBJECTID": 3,
+    "category": "Hospital",
+    "subcategory": "Community",
+    "name": "Sample Community Hospital",
+    "address1": "Exampleton Road",
+    "address2": "Abbeyleix",
+    "address3": "Co. Laois",
+    "address4": null,
+    "Eircode": "R32 X999",
+    "POINT_X": -8.58,
+    "POINT_Y": 53.1925
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 4,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -5.952,
+     54.092
+    ]
+   },
+   "properties": {
+    "OBJECTID": 4,
+    "category": "Hospital",
+    "subcategory": "General/Acute",
+    "name": "Example University Hospital",
+    "address1": "Example Road",
+    "address2": "Dublin 9",
+    "address3": null,
+    "address4": null,
+    "Eircode": "D09 X924",
+    "POINT_X": -5.952,
+    "POINT_Y": 54.092
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 5,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -9.2,
+     51.95
+    ]
+   },
+   "properties": {
+    "OBJECTID": 5,
+    "category": "Hospital",
+    "subcategory": "Private General",
+    "name": "Example Private Clinic",
+    "address1": "Example Court",
+    "address2": "Cork",
+    "address3": null,
+    "address4": null,
+    "Eircode": "T12 X925",
+    "POINT_X": -9.2,
+    "POINT_Y": 51.95
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 6,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -6.048,
+     54.008
+    ]
+   },
+   "properties": {
+    "OBJECTID": 6,
+    "category": "Hospital",
+    "subcategory": "Maternity",
+    "name": "Sample Maternity Hospital",
+    "address1": "Example Street",
+    "address2": "Dublin 2",
+    "address3": null,
+    "address4": null,
+    "Eircode": "D02 X926",
+    "POINT_X": -6.048,
+    "POINT_Y": 54.008
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 7,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -9.63,
+     54.37
+    ]
+   },
+   "properties": {
+    "OBJECTID": 7,
+    "category": "Hospital",
+    "subcategory": "Community",
+    "name": "Example District Hospital,  ",
+    "address1": "Example Lane",
+    "address2": "Co. Mayo",
+    "address3": null,
+    "address4": null,
+    "Eircode": null,
+    "POINT_X": -9.63,
+    "POINT_Y": 54.37
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 10,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -6.096,
+     53.966
+    ]
+   },
+   "properties": {
+    "OBJECTID": 10,
+    "category": "Hospital",
+    "subcategory": "General/Acute",
+    "name": "Example General Hospital No. 1",
+    "address1": "1 Example Road",
+    "address2": "Dublin",
+    "address3": null,
+    "address4": null,
+    "Eircode": null,
+    "POINT_X": -6.096,
+    "POINT_Y": 53.966
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 11,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -9.28,
+     51.88
+    ]
+   },
+   "properties": {
+    "OBJECTID": 11,
+    "category": "Hospital",
+    "subcategory": "General/Acute",
+    "name": "Example General Hospital No. 2",
+    "address1": "2 Example Road",
+    "address2": "Cork",
+    "address3": null,
+    "address4": null,
+    "Eircode": null,
+    "POINT_X": -9.28,
+    "POINT_Y": 51.88
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 12,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -9.88,
+     53.385
+    ]
+   },
+   "properties": {
+    "OBJECTID": 12,
+    "category": "Hospital",
+    "subcategory": "General/Acute",
+    "name": "Example General Hospital No. 3",
+    "address1": "3 Example Road",
+    "address2": "Galway",
+    "address3": null,
+    "address4": null,
+    "Eircode": null,
+    "POINT_X": -9.88,
+    "POINT_Y": 53.385
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 13,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -10.248,
+     53.343
+    ]
+   },
+   "properties": {
+    "OBJECTID": 13,
+    "category": "Hospital",
+    "subcategory": "General/Acute",
+    "name": "Example General Hospital No. 4",
+    "address1": "4 Example Road",
+    "address2": "An Spidéal",
+    "address3": null,
+    "address4": null,
+    "Eircode": null,
+    "POINT_X": -10.248,
+    "POINT_Y": 53.343
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 14,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -6.864,
+     52.594
+    ]
+   },
+   "properties": {
+    "OBJECTID": 14,
+    "category": "Hospital",
+    "subcategory": "General/Acute",
+    "name": "Example General Hospital No. 5",
+    "address1": "5 Example Road",
+    "address2": "Limerick",
+    "address3": null,
+    "address4": null,
+    "Eircode": null,
+    "POINT_X": -6.864,
+    "POINT_Y": 52.594
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 15,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -6.032,
+     52.622
+    ]
+   },
+   "properties": {
+    "OBJECTID": 15,
+    "category": "Hospital",
+    "subcategory": "General/Acute",
+    "name": "Example General Hospital No. 6",
+    "address1": "6 Example Road",
+    "address2": "Waterford",
+    "address3": null,
+    "address4": null,
+    "Eircode": null,
+    "POINT_X": -6.032,
+    "POINT_Y": 52.622
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 16,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -9.38,
+     54.2425
+    ]
+   },
+   "properties": {
+    "OBJECTID": 16,
+    "category": "Hospital",
+    "subcategory": "General/Acute",
+    "name": "Example General Hospital No. 7",
+    "address1": "7 Example Road",
+    "address2": "Boyle",
+    "address3": null,
+    "address4": null,
+    "Eircode": null,
+    "POINT_X": -9.38,
+    "POINT_Y": 54.2425
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 17,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -8.304,
+     54.134
+    ]
+   },
+   "properties": {
+    "OBJECTID": 17,
+    "category": "Hospital",
+    "subcategory": "General/Acute",
+    "name": "Example General Hospital No. 8",
+    "address1": "8 Example Road",
+    "address2": "Mullingar",
+    "address3": null,
+    "address4": null,
+    "Eircode": null,
+    "POINT_X": -8.304,
+    "POINT_Y": 54.134
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 18,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -10.204,
+     54.5715
+    ]
+   },
+   "properties": {
+    "OBJECTID": 18,
+    "category": "Hospital",
+    "subcategory": "General/Acute",
+    "name": "Example General Hospital No. 9",
+    "address1": "9 Example Road",
+    "address2": "Ballybofey-Stranorlar",
+    "address3": null,
+    "address4": null,
+    "Eircode": null,
+    "POINT_X": -10.204,
+    "POINT_Y": 54.5715
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 19,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -9.856,
+     54.876
+    ]
+   },
+   "properties": {
+    "OBJECTID": 19,
+    "category": "Hospital",
+    "subcategory": "General/Acute",
+    "name": "Example General Hospital No. 10",
+    "address1": "10 Example Road",
+    "address2": "Letterkenny",
+    "address3": null,
+    "address4": null,
+    "Eircode": null,
+    "POINT_X": -9.856,
+    "POINT_Y": 54.876
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 20,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -6.08,
+     53.49
+    ]
+   },
+   "properties": {
+    "OBJECTID": 20,
+    "category": "Hospital",
+    "subcategory": "General/Acute",
+    "name": "Example General Hospital No. 11",
+    "address1": "11 Example Road",
+    "address2": "Carlow",
+    "address3": null,
+    "address4": null,
+    "Eircode": null,
+    "POINT_X": -6.08,
+    "POINT_Y": 53.49
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 21,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -6.088,
+     53.133
+    ]
+   },
+   "properties": {
+    "OBJECTID": 21,
+    "category": "Hospital",
+    "subcategory": "General/Acute",
+    "name": "Example General Hospital No. 12",
+    "address1": "12 Example Road",
+    "address2": "Muinebeag (Bagenalstown)",
+    "address3": null,
+    "address4": null,
+    "Eircode": null,
+    "POINT_X": -6.088,
+    "POINT_Y": 53.133
+   }
+  }
+ ]
+}

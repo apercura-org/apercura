@@ -15,3 +15,13 @@ export const geographyPoint = customType<{ data: GeoPoint; driverData: string }>
 		return `SRID=4326;POINT(${value.longitude} ${value.latitude})`;
 	},
 });
+
+/**
+ * PostGIS `geometry(MultiPolygon, 4326)`: a place's boundary, written and read in SQL only
+ * (`ST_GeomFromGeoJSON`, `ST_Contains`); the app never reads it.
+ */
+export const geometryMultiPolygon = customType<{ data: string; driverData: string }>({
+	dataType() {
+		return "geometry(MultiPolygon, 4326)";
+	},
+});
