@@ -12,6 +12,7 @@ export const COMMANDS = [
 	"etl:no",
 	"etl:ie",
 	"etl:fi",
+	"etl:lt",
 	"etl:places",
 	"etl:outbox",
 ] as const;
@@ -70,6 +71,11 @@ Commands:
                 clinics, mental health, rehabilitation, laboratories) from the Finnish
                 Service Catalogue's open API (PTV, DVV; CC0 1.0), placed in Statistics
                 Finland's municipalities, rebuild read models.
+  etl:lt        Import Lithuanian licensed health-care institutions (hospitals, primary
+                care, medical and dental clinics, mental health, rehabilitation,
+                nursing, laboratories, optometrists) from VASPVT's licence register
+                (data.gov.lt, CC BY 4.0), placed in the Address Register's settlements
+                by their address, rebuild read models.
   etl:places    Import regions, departments, communes and arrondissements
                 (geo.api.gouv.fr), or with --country at the Austrian
                 Bundesländer and Gemeinden (Statistik Austria), or with --country gb
@@ -81,15 +87,17 @@ Commands:
                 provinces and municipalities (ISTAT boundaries, CC BY 4.0), or with
                 --country de the German Länder, Kreise and Gemeinden (GV-ISys,
                 Destatis), or with --country ch the Swiss cantons, districts and
-                communes (BFS commune register, swisstopo's postcode directory), or
-                with --country pl the Polish voivodeships, powiats and gminas (TERYT
-                TERC, GUS; the gminas' points from PRG's boundaries, GUGiK), or with
+                communes (BFS commune register, swisstopo's postcode directory), with
+                --country pl the Polish voivodeships, powiats and gminas (TERYT
+                TERC, GUS; the gminas' points from PRG's boundaries, GUGiK), with
                 --country ee the Estonian counties, municipalities and settlements
                 (EHAK units, Maa- ja Ruumiamet), or with --country no the Norwegian
                 counties and municipalities (Kartverket), or with --country ie the Irish provinces, counties (Tailte
                 Éireann) and census towns (CSO Built Up Areas) with the gazetteer's other
                 names, or with --country fi the Finnish regions, wellbeing services counties and
-                municipalities (Statistics Finland, CC BY 4.0). Run once, then yearly.
+                municipalities (Statistics Finland, CC BY 4.0), or with --country lt the
+                Lithuanian counties, municipalities and settlements (Address Register, VĮ
+                Registrų centras, CC BY 4.0). Run once, then yearly.
   etl:outbox    Send pending cache invalidations to the web app.
 
 Flags (etl:fr):
@@ -185,6 +193,12 @@ Flags (etl:fi):
                           run fails (exit code 1). Without --source-dir, the catalogue's
                           health service locations are fetched from its API into ptv.json.
 
+Flags (etl:lt):
+  --dry-run, --approve=<run_id>, --force, --source-dir <path>, --offline, --work-dir <path>
+                          As for etl:fr. One register: when it cannot be fetched or read the
+                          run fails (exit code 1). Downloads go one at a time, at least
+                          ETL_LT_REQUEST_INTERVAL_MS apart (20 s), with backoff on 429.
+
 Environment:
   DATABASE_URL_ETL (or DATABASE_URL), ETL_PROFESSIONS, ETL_ANS_URLS, ETL_AMELI_URL,
   ETL_FINESS_DATASET_URL, ETL_GEO_API_URL, ETL_GEOCODER_URL, ETL_SOURCE_DIR, ETL_WORK_DIR,
@@ -211,6 +225,8 @@ Environment:
   ETL_IE_COUNTIES_URL, ETL_IE_TOWNS_URL, ETL_IE_PLACENAMES_URL, ETL_IE_SOURCE_DIR,
   ETL_FI_PTV_URL, ETL_FI_PTV_CONCURRENCY, ETL_FI_PLACES_YEAR, ETL_FI_PLACES_MUNICIPALITIES_URL,
   ETL_FI_PLACES_COUNTIES_URL, ETL_FI_PLACES_REGIONS_URL, ETL_FI_SOURCE_DIR,
+  ETL_LT_VASPVT_URL, ETL_LT_ADDRESS_URL, ETL_LT_DATASET_PAGE, ETL_LT_REQUEST_INTERVAL_MS,
+  ETL_LT_REQUEST_ATTEMPTS, ETL_LT_SOURCE_DIR,
   APP_URL and REVALIDATE_SECRET (cache revalidation).`;
 
 export {
@@ -226,6 +242,7 @@ export {
 	buildGbOptions,
 	buildIeOptions,
 	buildItOptions,
+	buildLtOptions,
 	buildNoOptions,
 	buildPlOptions,
 	type ChOptions,
@@ -238,6 +255,7 @@ export {
 	type GbOptions,
 	type IeOptions,
 	type ItOptions,
+	type LtOptions,
 	type NoOptions,
 	type PlOptions,
 	parseArgs,
@@ -253,5 +271,6 @@ export { type RunOutcome, runFr } from "./run-fr";
 export { type GbRunOutcome, runGb } from "./run-gb";
 export { type IeRunOutcome, runIe } from "./run-ie";
 export { type ItRunOutcome, runIt } from "./run-it";
+export { type LtRunOutcome, runLt } from "./run-lt";
 export { type NoRunOutcome, runNo } from "./run-no";
 export { type PlRunOutcome, runPl } from "./run-pl";

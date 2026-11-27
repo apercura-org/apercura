@@ -27,6 +27,7 @@ import { GB_SOURCE_IDS, type GbSourceId } from "./sources/gb/types";
 import { IE_SOURCE_IDS, type IeSourceId, ieSourceUrlVariable } from "./sources/ie/types";
 import { defaultItPlacesUrl } from "./sources/it/places";
 import { IT_SOURCE_IDS, type ItSourceId } from "./sources/it/types";
+import { DEFAULT_LT_ADDRESS_BASE } from "./sources/lt/places";
 import { DEFAULT_NO_ADRESSER_URL } from "./sources/no/addresses";
 import { DEFAULT_NO_ENHETER_URL, DEFAULT_NO_UNDERENHETER_URL } from "./sources/no/brreg";
 import { DEFAULT_NO_PLACES_URL } from "./sources/no/places";
@@ -447,6 +448,76 @@ export function buildCzOptions(flags: ParsedArgs["flags"], env: NodeJS.ProcessEn
 		offline,
 		url: env.ETL_CZ_URL || DEFAULT_CZ_URL,
 		placesUrls: czPlacesUrls(env),
+		workDir: flagString(flags, "work-dir") ?? env.ETL_WORK_DIR ?? null,
+		appUrl: offline ? null : env.APP_URL || null,
+		revalidateSecret: env.REVALIDATE_SECRET || null,
+	};
+}
+
+// ---------------------------------------------------------------------------
+// Lithuania (`etl:lt`)
+// ---------------------------------------------------------------------------
+
+/** VASPVT's licence register in the open data store (data.gov.lt dataset 1623, CC BY 4.0, daily). */
+export const DEFAULT_LT_VASPVT_BASE = "https://get.data.gov.lt/datasets/gov/vaspvt/licencijos";
+
+/** The least time between two requests to data.gov.lt or its store (it answers 429 to more). */
+export const DEFAULT_LT_REQUEST_INTERVAL_MS = 20_000;
+
+/** Attempts of one request on a 429 or a server error before the run gives up. */
+export const DEFAULT_LT_REQUEST_ATTEMPTS = 6;
+
+export type LtOptions = {
+	databaseUrl: string;
+	dryRun: boolean;
+	approveRunId: number | null;
+	force: boolean;
+	sourceDir: string | null;
+	offline: boolean;
+	/** The store's namespace of VASPVT's models (`ETL_LT_VASPVT_URL`). */
+	vaspvtBase: string;
+	/** The store's namespace of the Address Register (`ETL_LT_ADDRESS_URL`). */
+	addressBase: string;
+	/** The dataset page whose licence is checked before downloading (`ETL_LT_DATASET_PAGE`). */
+	datasetPage: string;
+	/** Least gap between two requests (`ETL_LT_REQUEST_INTERVAL_MS`, at least 1 s). */
+	requestIntervalMs: number;
+	/** Attempts of a request answered 429 or 5xx (`ETL_LT_REQUEST_ATTEMPTS`). */
+	requestAttempts: number;
+	workDir: string | null;
+	appUrl: string | null;
+	revalidateSecret: string | null;
+};
+
+/** A positive whole number from the environment, else `fallback`. */
+function positiveInteger(value: string | undefined, fallback: number, min = 1): number {
+	if (!value) return fallback;
+	if (!/^\d+$/.test(value.trim())) throw new Error(`Not a whole number: ${value}`);
+	return Math.max(min, Number(value));
+}
+
+export function buildLtOptions(flags: ParsedArgs["flags"], env: NodeJS.ProcessEnv): LtOptions {
+	const approve = flagString(flags, "approve");
+	if (approve !== null && !/^\d+$/.test(approve)) {
+		throw new Error(`--approve needs a run id, got ${approve}`);
+	}
+	const offline = flags.has("offline");
+	return {
+		databaseUrl: resolveDatabaseUrl(env),
+		dryRun: flags.has("dry-run"),
+		approveRunId: approve === null ? null : Number(approve),
+		force: flags.has("force"),
+		sourceDir: flagString(flags, "source-dir") ?? env.ETL_LT_SOURCE_DIR ?? null,
+		offline,
+		vaspvtBase: env.ETL_LT_VASPVT_URL || DEFAULT_LT_VASPVT_BASE,
+		addressBase: env.ETL_LT_ADDRESS_URL || DEFAULT_LT_ADDRESS_BASE,
+		datasetPage: env.ETL_LT_DATASET_PAGE || "https://data.gov.lt/datasets/1623/",
+		requestIntervalMs: positiveInteger(
+			env.ETL_LT_REQUEST_INTERVAL_MS,
+			DEFAULT_LT_REQUEST_INTERVAL_MS,
+			1_000,
+		),
+		requestAttempts: positiveInteger(env.ETL_LT_REQUEST_ATTEMPTS, DEFAULT_LT_REQUEST_ATTEMPTS),
 		workDir: flagString(flags, "work-dir") ?? env.ETL_WORK_DIR ?? null,
 		appUrl: offline ? null : env.APP_URL || null,
 		revalidateSecret: env.REVALIDATE_SECRET || null,

@@ -495,6 +495,109 @@ export function checkCzPlaces(staged: {
 }
 
 // ---------------------------------------------------------------------------
+// Lithuania (`etl:lt`): the same verdicts, on the one register
+// ---------------------------------------------------------------------------
+
+/**
+ * Limits of VASPVT's licence register. It is published daily, so a change since the last
+ * success is allowed the Czech register's room. Two floors catch an empty or broken file on a
+ * first run: its activity addresses (every one, current or not: 9,731 in November 2026, at least
+ * 1,000) and the pages imported from them (about 6,400, at least 300); afterwards the change
+ * since the last successful run (5%, approvable) blocks a truncated one. An address whose
+ * municipality cannot be told is quarantined (29 of 9,731, foreign ones among them): at most 2%.
+ */
+export const LT_LIMITS = {
+	fileSizeDelta: 0.15,
+	quarantineRatio: 0.02,
+	rowsDelta: 0.05,
+	minLines: 1_000,
+	minRows: 300,
+	/** Sites placed in their settlement (else only in their municipality). */
+	minPlacedRatio: 0.97,
+	/** Sites located at their place's point. */
+	minLocatedRatio: 0.97,
+} as const;
+
+/**
+ * Checks of the register before the merge: quarantine within 2%, floors of addresses and pages
+ * (never approvable), and at most 5% more or fewer pages or 15% more or fewer bytes than the
+ * last successful run (approvable).
+ */
+export function checkLtSource(
+	source: string,
+	current: AtSourceStats & { bytes: number },
+	previous: (AtSourceStats & { bytes?: number }) | null,
+): GuardCheck[] {
+	const ratio = current.lines === 0 ? 1 : current.quarantined / current.lines;
+	const checks: GuardCheck[] = [
+		{
+			name: `${source}.quarantine`,
+			ok: current.lines > 0 && ratio <= LT_LIMITS.quarantineRatio,
+			approvable: false,
+			detail: `${current.quarantined} of ${current.lines} addresses quarantined (${percent(ratio)})`,
+		},
+		{
+			name: `${source}.lines`,
+			ok: current.lines >= LT_LIMITS.minLines,
+			approvable: false,
+			detail: `${current.lines} activity addresses (at least ${LT_LIMITS.minLines} expected)`,
+		},
+		{
+			name: `${source}.rows`,
+			ok: current.rows >= LT_LIMITS.minRows,
+			approvable: false,
+			detail: `${current.rows} pages imported (at least ${LT_LIMITS.minRows} expected)`,
+		},
+	];
+	if (previous) {
+		const rows = delta(current.people, previous.people);
+		checks.push({
+			name: `${source}.pages`,
+			ok: rows <= LT_LIMITS.rowsDelta,
+			approvable: true,
+			detail: `${current.people} pages vs ${previous.people} last time (${percent(rows)})`,
+		});
+		if (previous.bytes !== undefined) {
+			const size = delta(current.bytes, previous.bytes);
+			checks.push({
+				name: `${source}.size`,
+				ok: size <= LT_LIMITS.fileSizeDelta,
+				approvable: true,
+				detail: `${current.bytes} bytes vs ${previous.bytes} last time (${percent(size)})`,
+			});
+		}
+	}
+	return checks;
+}
+
+/**
+ * After staging: nearly every site must be placed in its settlement and located at its place's
+ * point, or the listings would lose it.
+ */
+export function checkLtPlaces(staged: {
+	sites: number;
+	located: number;
+	inSettlement: number;
+}): GuardCheck[] {
+	const local = staged.sites === 0 ? 1 : staged.inSettlement / staged.sites;
+	const located = staged.sites === 0 ? 1 : staged.located / staged.sites;
+	return [
+		{
+			name: "lt.places",
+			ok: local >= LT_LIMITS.minPlacedRatio,
+			approvable: true,
+			detail: `${staged.inSettlement} of ${staged.sites} sites placed in their settlement (${percent(local)})`,
+		},
+		{
+			name: "lt.points",
+			ok: located >= LT_LIMITS.minLocatedRatio,
+			approvable: true,
+			detail: `${staged.located} of ${staged.sites} sites located at their place's point (${percent(located)})`,
+		},
+	];
+}
+
+// ---------------------------------------------------------------------------
 // Spain (`etl:es`): the same verdicts, per extract of the register
 // ---------------------------------------------------------------------------
 
