@@ -244,3 +244,23 @@ describe("Sweden's sitemap paths", () => {
 		expect(sitemapCountryOf("se")).toBe("SE");
 	});
 });
+
+describe("Malta's sitemap paths", () => {
+	it("gives Malta its English route segments under /mt, a pharmacy under /facility", () => {
+		expect(marketPagePath("mt", "/")).toBe("/mt");
+		expect(marketPagePath("mt", "/praticien/example-pharmacy-dl001")).toBe(
+			"/mt/facility/example-pharmacy-dl001",
+		);
+		expect(marketPagePath("mt", "/annuaire/northern-harbour/sliema")).toBe(
+			"/mt/directory/northern-harbour/sliema",
+		);
+		expect(marketPagePath("mt", "/community-pharmacies/northern-harbour/sliema")).toBe(
+			"/mt/community-pharmacies/northern-harbour/sliema",
+		);
+		expect(marketPagePath("mt", "/confidentialite")).toBe("/mt/privacy");
+		expect(marketPagePath("mt", "/donnees")).toBe("/mt/data");
+		expect(MARKET_STATIC_PATHS.mt).not.toContain("/pro");
+		expect(MARKET_STATIC_PATHS.mt).toContain("/accessibilite");
+		expect(sitemapCountryOf("mt")).toBe("MT");
+	});
+});

@@ -26,6 +26,7 @@ type Pathnames = Record<
 				| "el-CY"
 				| "lv-LV"
 				| "sv-SE"
+				| "en-MT"
 			>,
 			string
 	  >
@@ -389,7 +390,10 @@ function swissMarketPath(path: string, person: string, facility: string): string
  * - Latvia (`lv-LV`): the English paths with their segments in Latvian (`LATVIAN_SEGMENTS`), an
  *   institution's page under `/iestade`;
  * - Sweden (`sv-SE`): the English paths with their segments in Swedish (`SWEDISH_SEGMENTS`), a
- *   pharmacy's or health centre's page under `/verksamhet`.
+ *   pharmacy's or health centre's page under `/verksamhet`;
+ * - Malta (`en-MT`): Ireland's English paths, a pharmacy's page under `/facility`. Every first
+ *   segment is a Maltese reserved segment of `@apercura/core/taxonomy` (`MT_RESERVED_SEGMENTS`,
+ *   tested).
  */
 function withMarkets<T extends Pathnames>(pathnames: T) {
 	return Object.fromEntries(
@@ -418,6 +422,7 @@ function withMarkets<T extends Pathnames>(pathnames: T) {
 						"el-CY": cypriotPath(value.en),
 						"lv-LV": latvianPath(value.en),
 						"sv-SE": swedishPath(value.en),
+						"en-MT": value.en.replace("/practitioner/", "/facility/"),
 					},
 		]),
 	) as {
@@ -443,6 +448,7 @@ function withMarkets<T extends Pathnames>(pathnames: T) {
 					"el-CY": string;
 					"lv-LV": string;
 					"sv-SE": string;
+					"en-MT": string;
 				};
 	};
 }

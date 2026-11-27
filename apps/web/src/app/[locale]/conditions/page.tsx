@@ -20,6 +20,7 @@ import { TermsIe } from "~/components/legal-ie";
 import { TermsIt } from "~/components/legal-it";
 import { TermsLt } from "~/components/legal-lt";
 import { TermsLv } from "~/components/legal-lv";
+import { TermsMt } from "~/components/legal-mt";
 import { TermsNo } from "~/components/legal-no";
 import { TermsPl } from "~/components/legal-pl";
 import { TermsSe } from "~/components/legal-se";
@@ -63,6 +64,7 @@ export function generateMetadata({ params }: PageProps<"/[locale]/conditions">) 
 			CY: "TermsCy",
 			LV: "TermsLv",
 			SE: "TermsSe",
+			MT: "TermsMt",
 		},
 		HREF,
 	);
@@ -95,6 +97,7 @@ export default async function TermsPage({ params }: PageProps<"/[locale]/conditi
 	if (marketOf(locale) === "CY") return <TermsCy locale={locale} />;
 	if (marketOf(locale) === "LV") return <TermsLv locale={locale} />;
 	if (marketOf(locale) === "SE") return <TermsSe locale={locale} />;
+	if (marketOf(locale) === "MT") return <TermsMt locale={locale} />;
 	const t = await getTranslations({ locale, namespace: "TermsPage" });
 	const tI = await getTranslations({ locale, namespace: "Institutional" });
 	const format = await getFormatter({ locale });

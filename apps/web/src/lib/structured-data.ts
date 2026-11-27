@@ -360,6 +360,8 @@ const MEDICAL_SPECIALTIES: Record<string, readonly MedicalSpecialty[]> = {
 	terveysasemat: ["https://schema.org/PrimaryCare"],
 	hammashoitolat: ["https://schema.org/Dentistry"],
 	neuvolat: ["https://schema.org/Obstetric", "https://schema.org/Pediatric"],
+	// Malta's community pharmacies (Maltese listing slug).
+	"community-pharmacies": ["https://schema.org/PharmacySpecialty"],
 	"mielenterveys-ja-paihdepalvelut": ["https://schema.org/Psychiatric"],
 	kuntoutus: ["https://schema.org/Physiotherapy"],
 	"laboratoriot-ja-kuvantaminen": [
@@ -672,6 +674,7 @@ const PRACTICE_TYPES: Readonly<Record<string, PracticeType>> = {
 	LV_PHARMACY: "Pharmacy",
 	SE_PHARMACY: "Pharmacy",
 	SE_HEALTH_CENTRE: "MedicalClinic",
+	MT_PHARMACY: "Pharmacy",
 };
 
 /** The schema.org type of a market of practices' page subject (`PRACTICE_TYPES`), if any. */

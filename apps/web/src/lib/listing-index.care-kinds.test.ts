@@ -182,6 +182,21 @@ describe("a kind of care searched from another market", () => {
 		expect(translateSearchTerm("hammaslääkäri", "FI", "GB")).toEqual(listing("dental-practices"));
 	});
 
+	it("reaches Malta's community pharmacies from other markets' words, and theirs from Malta's", () => {
+		const listing = (slug: string) => ({ kind: "listing", slug });
+		expect(translateSearchTerm("pharmacie", "FR", "MT")).toEqual(listing("community-pharmacies"));
+		expect(translateSearchTerm("pharmacy", "GB", "MT")).toEqual(listing("community-pharmacies"));
+		expect(translateSearchTerm("chemist", "IE", "MT")).toEqual(listing("community-pharmacies"));
+		expect(translateSearchTerm("Apotheke", "DE", "MT")).toEqual(listing("community-pharmacies"));
+		expect(translateSearchTerm("spiżerija", "MT", "IT")).toEqual(listing("farmacie"));
+		expect(translateSearchTerm("community pharmacy", "MT", "IE")).toEqual(listing("pharmacy"));
+		// Malta lists no hospital and no dentist: the French word stays as typed, the English one
+		// reads as care Malta does not list.
+		expect(translateSearchTerm("hôpital", "FR", "MT")).toBeNull();
+		expect(translateSearchTerm("hospital", "GB", "MT")).toEqual({ kind: "unlisted" });
+		expect(translateSearchTerm("dentist", "GB", "MT")).toEqual({ kind: "unlisted" });
+	});
+
 	it("falls back as before in a market without the kind", () => {
 		// Austria lists no hospital: "hôpital" stays the words typed, "hospital" and
 		// "Krankenhaus" read as care Austria does not list.

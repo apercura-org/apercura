@@ -103,7 +103,8 @@
 			"IE": "Irland",
 			"FI": "Finnland",
 			"CY": "Zypern",
-			"SE": "Schweden"
+			"SE": "Schweden",
+			"MT": "Malta"
 		}
 	},
 	"HomePage": {
@@ -2016,7 +2017,8 @@
 			"apoteken": "Apotheke",
 			"oppenvardsapotek": "Öffentliche Apotheke",
 			"vardcentraler": "Gesundheitszentrum",
-			"vardcentral": "Gesundheitszentrum"
+			"vardcentral": "Gesundheitszentrum",
+			"community-pharmacies": "Öffentliche Apotheke"
 		},
 		"listing": {
 			"aerzte": "Ärztinnen und Ärzte ohne Fachangabe",
@@ -2342,6 +2344,7 @@
 			"sairaalat": "Krankenhäuser",
 			"paivystys": "Notaufnahmen",
 			"terveysasemat": "Gesundheitszentren",
+			"community-pharmacies": "Öffentliche Apotheken",
 			"hammashoitolat": "Zahnkliniken",
 			"neuvolat": "Mütter- und Kinderberatungsstellen",
 			"mielenterveys-ja-paihdepalvelut": "Dienste für psychische Gesundheit und Sucht",
@@ -3385,7 +3388,8 @@
 			"CY-FARM": "Registernummer der Apotheke (ΑΜ)",
 			"CY-MOH": "Apercura-Schlüssel einer staatlichen Einrichtung",
 			"SE-GLN": "GLN",
-			"SE-HSA": "HSA-id"
+			"SE-HSA": "HSA-id",
+			"MT-MA": "Apothekenlizenz"
 		}
 	},
 	"Onboarding": {
@@ -11213,6 +11217,422 @@
 			],
 			"formTitle": "Ask for a page to be removed",
 			"formBody": "Give the address of the page and an e-mail address where we can answer you."
+		}
+	},
+	"LegalNoticeMt": {
+		"metaTitle": "Legal notice (Malta) · Apercura",
+		"metaDescription": "Legal notice of the Maltese pages of Apercura: the service provider, its contact details and registration, the person responsible for the content and the host (Electronic Commerce Act, Cap. 426, article 8C).",
+		"title": "Legal notice",
+		"lead": "The information article 8C of the Electronic Commerce Act (Cap. 426 of the Laws of Malta) asks for about the provider of the Maltese pages of Apercura (apercura.org/mt).",
+		"sections": {
+			"provider": {
+				"heading": "Service provider",
+				"body": [
+					"The Maltese pages of Apercura are provided by the entity below. It runs the directory and answers for its content."
+				]
+			},
+			"origin": {
+				"heading": "Country of establishment and governing law",
+				"body": [
+					"The provider is established in France. Under the country-of-origin principle of the Directive on electronic commerce (Directive 2000/31/EC, article 3; Electronic Commerce Act, Cap. 426, article 8A), French law governs the service; this page gives the information article 8C of the Act asks a provider to make available.",
+					"The service is subject to no authorisation scheme, and its provider exercises no regulated profession through it: article 8C(1)(e) and (f) do not apply."
+				]
+			},
+			"service": {
+				"heading": "The service",
+				"body": [
+					"A free directory of the community pharmacies licensed by the Medicines Authority in Malta and Gozo, built from the Authority's register published as open data, without advertising, with a space where a pharmacy can complete its own page. Pages are pharmacies, never individual pharmacists. No appointment is booked and nothing is sold through Apercura in Malta."
+				]
+			},
+			"editor": {
+				"heading": "Person responsible for the content",
+				"body": [
+					"The person below is responsible for what the provider publishes. Information a pharmacy adds to its own page is its own responsibility; as a service that stores information provided by its users, the provider answers for it only under the conditions of article 6 of the Digital Services Act (Regulation (EU) 2022/2065), which replaced the hosting rules of the Electronic Commerce Act in 2024."
+				]
+			},
+			"hosting": {
+				"heading": "Hosting provider",
+				"body": ["The site, its database and its files are hosted by the company below."]
+			},
+			"liability": {
+				"heading": "Content of the pages",
+				"body": [
+					"The directory is built from the Medicines Authority's register of licensed pharmacies in Malta and Gozo. It can be incomplete or out of date: check the information with the pharmacy before you go, and check which pharmacies are open on Sundays and public holidays on the official roster. Every page says how to report an error."
+				]
+			},
+			"ip": {
+				"heading": "Code and data",
+				"body": [
+					"The source code of Apercura is published under the AGPL-3.0 licence. The Medicines Authority's register and the places of the Planning Authority, the National Statistics Office and the Office of the Address Registrar are re-used under the Creative Commons Attribution 4.0 International licence (CC BY 4.0): the data page lists every source with the attribution it asks for."
+				]
+			},
+			"review": {
+				"heading": "Status of this text",
+				"body": [
+					"This text is a draft, written before the legal entity was set up. It will be reviewed by a lawyer qualified in Malta before the Maltese pages are announced."
+				]
+			}
+		},
+		"fields": {
+			"name": "Name",
+			"legalForm": "Legal form",
+			"address": "Geographic address",
+			"phone": "Phone",
+			"email": "Email address",
+			"registration": "Register and registration number",
+			"vatId": "VAT identification number",
+			"editor": "Responsible for the content",
+			"hostName": "Hosting provider",
+			"hostAddress": "Address of the hosting provider",
+			"hostPhone": "Phone of the hosting provider"
+		},
+		"dataLink": "Data and sources"
+	},
+	"PrivacyMt": {
+		"metaTitle": "Privacy notice (Malta) · Apercura",
+		"metaDescription": "Data processed by the Maltese pages of Apercura: sources, purposes, legal bases, retention, recipients and your rights, including objection (GDPR articles 13, 14 and 21, Data Protection Act, Cap. 586).",
+		"title": "Privacy notice",
+		"lead": "What data the Maltese pages of Apercura process, where it comes from, why, for how long and by whom, and how to exercise your rights under the GDPR and the Data Protection Act (Cap. 586).",
+		"sections": {
+			"controller": {
+				"heading": "Who is responsible",
+				"body": [
+					"The service provider named in the legal notice is the controller of the directory, of pharmacy accounts, of claims and of the requests sent through the site."
+				]
+			},
+			"directory": {
+				"heading": "Directory: data about pharmacies",
+				"body": [
+					"Data: the pharmacy's name as the Medicines Authority's register publishes it, its licence number, its address, locality and postcode, its telephone number where the register gives one, and the point the register gives it on the map. A pharmacy that claims its page can add a presentation, languages, a photo and opening hours.",
+					"Identifier: the number of the pharmacy's licence (DL 001, for example), at the end of the page's address.",
+					"Purpose: letting the public find a community pharmacy, where it is and how to reach it. Legal basis: legitimate interests (GDPR article 6(1)(f)), assessed below.",
+					"Retention: as long as the pharmacy is on the register. A page disappears after the pharmacy has left the register at two imports in a row; a page removed after an objection is never published again.",
+					"Information: the data does not come from the pharmacies themselves (GDPR article 14). This notice gives the information article 14 asks for, on the site where the pages are: the categories of data, their source, the purposes and legal basis, the retention, the recipients and your rights, including the right to object. Every page links to it, and the data page names the source."
+				]
+			},
+			"people": {
+				"heading": "Pharmacies, and the people they may name",
+				"body": [
+					"A Maltese page is a pharmacy, never a person's profile. The register names no pharmacist, and no register of doctors, dentists, pharmacists or other health professionals is imported.",
+					"A pharmacy's details can still be about a person in two cases. Its trading name may contain a person's first or family name (“Example's Pharmacy”): it is shown as the register publishes it, since another name would mislead. Its phone is the pharmacy's line, but one that reaches a sole trader directly can be personal data.",
+					"Nothing else is read: no name of a licence holder or pharmacist, no email address, no rating and no review."
+				]
+			},
+			"sources": {
+				"heading": "Sources",
+				"body": [
+					"Every page is built from the Medicines Authority's register of licensed pharmacies in Malta and Gozo, which the Authority publishes on the national open data portal (data.gov.mt) under the Creative Commons Attribution 4.0 International licence, and from open data on places, each re-used with the attribution its publisher asks for:"
+				]
+			},
+			"balancing": {
+				"heading": "Legitimate interests assessment",
+				"body": [
+					"Purpose: people need to know where the licensed community pharmacies are and how to reach them, which is why the Medicines Authority publishes its register as open data, for “healthcare professionals, regulatory authorities, and the general public”.",
+					"Necessity: only what identifies and reaches a pharmacy is shown, as the register publishes it: its name, licence number, address and phone. A pharmacy trading under a person's name cannot be listed under another without misleading; no other data about a person is read.",
+					"Balance: the same facts are on the public register and on the pharmacy's shop front, so a licensed pharmacy expects to be found in a directory repeating them. No special category of data, no rating, no review, no comparison, no paid placement; a neutral order; an objection that hides a page at once and keeps it from coming back; corrections at the source; pages that follow every import of the register. Weighing these points, the interests of the public prevail, and anyone a page is about can object without giving a reason."
+				]
+			},
+			"accounts": {
+				"heading": "Pharmacy accounts and claims",
+				"body": [
+					"Data: email address, name, password (stored hashed), second authentication factor, the documents sent to claim a page (proof that the claimant runs the pharmacy or acts for it) and team members.",
+					"Purposes: managing the account and checking that a page is claimed by the right pharmacy. Legal bases: performance of the terms of use (article 6(1)(b)) and the legitimate interests of securing the service (article 6(1)(f)).",
+					"Retention: the account is kept until it is deleted; supporting documents, encrypted, are erased 30 days after the decision."
+				]
+			},
+			"requests": {
+				"heading": "Error reports, objections and contact requests",
+				"body": [
+					"Data: the message, the contact email address when one is given and the page concerned; for an “I run this pharmacy” request also the name and phone number. Free text is encrypted.",
+					"Purposes: correcting errors, applying objections and helping a pharmacy that cannot claim its page online. Legal bases: legitimate interests (article 6(1)(f)) and the right to object (article 21).",
+					"Retention: a report is deleted 6 months after it is closed, a rejected objection one year after its decision, a contact request 12 months after the last exchange. Once an objection is confirmed, or the holder of a claimed page removes it, the page and the data about it are deleted at once, the objection included; all that is kept is a record of the removal (the identifier of the page, the country, the reason, who recorded it and when), so that it is never published again. A holder who removes their page keeps, in their account only and never published, the name, kind and identifier shown in their space, their claim and the places their agenda uses, until the account is deleted."
+				]
+			},
+			"technical": {
+				"heading": "Technical data and cookies",
+				"body": [
+					"Only cookies strictly necessary to the service are set: the session of signed-in pharmacies and the chosen language. No advertising or audience measurement cookies, no trackers.",
+					"To limit abuse, IP addresses are transformed with a keyed function before being counted and never stored as such; pharmacy sessions record a truncated IP address. Views of claimed pages are counted without a cookie or identifier, and only the page's holder sees them."
+				]
+			},
+			"recipients": {
+				"heading": "Recipients and processors",
+				"body": [
+					"The directory's pages are public. Data is neither sold nor rented, and never used for advertising. Only the provider's team and the processors below receive the other data, each for its own part. Maps are loaded from a tile server, which receives the visitor's IP address like any website."
+				]
+			},
+			"transfers": {
+				"heading": "Transfers outside the European Economic Area",
+				"body": [
+					"The data is hosted and processed in the European Economic Area. Nothing is transferred outside it; any change of processor will be announced here before it takes effect."
+				]
+			},
+			"automated": {
+				"heading": "Automated decisions",
+				"body": [
+					"No decision about you is taken by automated means alone. A claim is decided by a person, who reads its documents."
+				]
+			},
+			"rights": {
+				"heading": "Your rights",
+				"body": [
+					"You can ask to access your data, to have it corrected or erased, to restrict its processing, to receive it in a portable format and to object to its processing. Write to the address below; you will get an answer within one month.",
+					"You can also lodge a complaint with the Information and Data Protection Commissioner (IDPC), Malta's supervisory authority (GDPR article 77; Data Protection Act, Cap. 586): www.idpc.org.mt. The provider is established in France, so its lead supervisory authority is the Commission nationale de l'informatique et des libertés (CNIL), with which you can lodge a complaint too: www.cnil.fr."
+				]
+			},
+			"objection": {
+				"heading": "Objecting to a page (GDPR article 21)",
+				"body": [
+					"Anyone a page is about can object to its publication at any time, without giving a reason. If the page is unclaimed, a form is enough: the page is hidden as soon as the request arrives, deleted after a light check, and the imports of the register never publish it again. If it is claimed, its holder removes it from their space."
+				]
+			},
+			"changes": {
+				"heading": "Updates to this notice",
+				"body": [
+					"This notice is a draft. It will be reviewed by a lawyer qualified in Malta and by the data protection officer; every version is dated."
+				]
+			}
+		},
+		"fields": {
+			"controller": "Controller",
+			"address": "Address",
+			"email": "Contact for requests",
+			"dpo": "Data protection officer",
+			"effectiveDate": "Effective date",
+			"hostingProvider": "Hosting provider (processor)",
+			"smtp": "Email delivery (processor)"
+		},
+		"objectLink": "How to object to a page",
+		"idpcLink": "Lodge a complaint with the IDPC",
+		"cnilLink": "Lodge a complaint with the CNIL"
+	},
+	"TermsMt": {
+		"metaTitle": "Terms of use (Malta) · Apercura",
+		"metaDescription": "Terms of use of the Maltese pages of Apercura: a free, factual directory of community pharmacies in Malta and Gozo, without online booking.",
+		"title": "Terms of use",
+		"lead": "The rules for using the Maltese pages of Apercura, for the public and for pharmacies alike.",
+		"sections": {
+			"service": {
+				"heading": "The service",
+				"body": [
+					"Apercura lists, free of charge, the community pharmacies on the Medicines Authority's register of licensed pharmacies in Malta and Gozo. It is a directory only: no appointment is booked and no medicine is sold through Apercura in Malta. It is run by the service provider named in the legal notice.",
+					"Using the directory requires no account. Using the site means accepting these terms."
+				]
+			},
+			"content": {
+				"heading": "What the pages contain",
+				"body": [
+					"Pages show factual information from the register, as it publishes it, in a neutral order, without ratings, reviews, advertising or paid placement. No pharmacy pays to be listed or to be shown first, and none is endorsed. They list pharmacies, never individual pharmacists, and name no medicine.",
+					"The information is as current as the register's last edition and may be incomplete or out of date: check it with the pharmacy before you go. Pages do not say which pharmacy is open on a Sunday or a public holiday: the official roster does. Every page says how to report an error."
+				]
+			},
+			"health": {
+				"heading": "Not medical advice",
+				"body": [
+					"Apercura gives no medical advice and is not an emergency service. In an emergency, call 112. A pharmacist can advise on minor illnesses; for anything else, see your doctor or a health centre."
+				]
+			},
+			"facilities": {
+				"heading": "For pharmacies",
+				"body": [
+					"Claiming a page is free. It requires a document proving that the claimant runs the pharmacy or acts for it, checked by a person before the page is handed over.",
+					"The holder of a page is responsible for the information they add. It must stay factual, accurate and up to date, must not advertise a medicine, a product or a service, and must respect the rules that bind pharmacists, among them the Pharmacy Council's Code of Ethics and the Medicinal Products (Advertising) Regulations (S.L. 458.32)."
+				]
+			},
+			"removal": {
+				"heading": "Correcting or removing a page",
+				"body": [
+					"A fact taken from the register is corrected with the Medicines Authority, and the page follows at the next import; anything else can be reported with the form on the data page. Anyone a page is about can ask for it to be removed at any time: the data page explains how. A claimed page can only be removed by its holder."
+				]
+			},
+			"liability": {
+				"heading": "Liability",
+				"body": [
+					"The provider does its best to keep the service available and accurate, but cannot guarantee it. It is not responsible for the information pharmacies add to their pages. Nothing in these terms limits a liability that the law does not allow to be limited, such as liability for death or personal injury caused by negligence. These terms will be specified during the legal review."
+				]
+			},
+			"ip": {
+				"heading": "Code and data",
+				"body": [
+					"The source code is published under the AGPL-3.0 licence. Directory data is re-used under CC BY 4.0: the data page lists every source."
+				]
+			},
+			"law": {
+				"heading": "Governing law and disputes",
+				"body": [
+					"These terms are governed by French law, the law of the provider's establishment. If you use the site as a consumer living in Malta, you keep the protection of the mandatory rules of Maltese law and can bring a claim before the Maltese courts. In case of a dispute, first write to the contact address to look for an amicable solution."
+				]
+			}
+		},
+		"fields": {
+			"publisher": "Service provider",
+			"effectiveDate": "Effective date",
+			"contact": "Contact"
+		}
+	},
+	"AccessibilityMt": {
+		"metaTitle": "Accessibility (Malta) · Apercura",
+		"metaDescription": "Accessibility of the Maltese pages of Apercura: the WCAG 2.2 AA target, what was checked, what remains, and how to report a problem.",
+		"title": "Accessibility",
+		"lead": "Apercura is designed for everyone, including older and low-vision people. This statement says where the Maltese pages stand.",
+		"sections": {
+			"scope": {
+				"heading": "Scope",
+				"body": [
+					"This statement is voluntary. The Accessibility of the Websites and Mobile Applications of Public Sector Bodies Regulations (S.L. 418.03) bind public sector bodies, which Apercura is not, and the Accessibility Measures (European Accessibility Act) Regulations (S.L. 627.03) bind the products and services they list, which a free directory is not. Its provider nevertheless aims at the same standard on every page: WCAG 2.2 level AA."
+				]
+			},
+			"status": {
+				"heading": "Where the site stands",
+				"body": [
+					"The Maltese pages share the code of the other markets' pages and their tests. The site partially meets WCAG 2.2 AA: this rests on a self-assessment and automated tests, not yet on a full audit, which is in progress. The pages are in English only for now; a Maltese version is planned."
+				]
+			},
+			"tests": {
+				"heading": "What was checked",
+				"list": [
+					"Automated axe-core checks (WCAG 2.0, 2.1 and 2.2 rules, levels A and AA) on every page type, at every release.",
+					"Keyboard-only journeys with a visible focus.",
+					"Body text of at least 18 px, targets of at least 44 px, nothing that relies on colour alone, no horizontal scrolling at 390 px."
+				]
+			},
+			"pending": {
+				"heading": "What remains to be checked",
+				"list": [
+					"A manual pass with the VoiceOver and NVDA screen readers.",
+					"A full audit against WCAG 2.2 AA on a sample of pages."
+				]
+			},
+			"feedback": {
+				"heading": "Report a problem",
+				"body": [
+					"If a page or a feature is hard to use, write to the address below: say which page and what blocked you. We answer within one month and, where needed, give you the information in another form."
+				]
+			}
+		},
+		"fields": {
+			"contact": "Contact",
+			"date": "Date of this statement"
+		}
+	},
+	"DataMt": {
+		"metaTitle": "Data and sources (Malta) · Apercura",
+		"metaDescription": "Where the Maltese pages of Apercura come from: the Medicines Authority's register of licensed pharmacies and the places of the Planning Authority, the NSO and the Address Registrar, with their licence, what is not imported, and how to correct or remove a page.",
+		"title": "Data and sources",
+		"lead": "Every Maltese page is built from the Medicines Authority's register of licensed pharmacies, published as open data. Here is where it comes from, under which licence and attribution, what is left out and why, and how to correct or remove a page.",
+		"status": {
+			"heading": "Last update",
+			"body": "The Medicines Authority updates its register on the national open data portal when a licence is granted, moved or revoked. The directory reads it every week and imports it when it has changed; a page changes only when its facts change in the register.",
+			"importedAt": "Last import",
+			"checkedAt": "Sources last checked",
+			"notImported": "The Maltese directory has not been imported yet on this site.",
+			"notImportedValue": "Not imported yet"
+		},
+		"sources": {
+			"heading": "Sources",
+			"body": "Every source is published under the Creative Commons Attribution 4.0 International licence (CC BY 4.0), which asks for the source to be credited. Each attribution below is printed word for word, and every Maltese page prints those of its sources.",
+			"caption": "Data sources of the Maltese directory",
+			"columns": {
+				"source": "Source",
+				"use": "Used for",
+				"licence": "Licence and attribution",
+				"frequency": "Updated"
+			},
+			"items": {
+				"mt-pharmacies": {
+					"use": "Community pharmacies: names as licensed, licence numbers, addresses, localities, postcodes, phone numbers and points",
+					"frequency": "When a licence changes, by the Medicines Authority"
+				},
+				"mt-local-councils": {
+					"use": "The boundaries of the 68 localities (local councils), in which every pharmacy is placed, and the point of each locality",
+					"frequency": "When the boundaries change"
+				},
+				"mt-localities": {
+					"use": "The six districts and two regions the localities belong to, and the localities' names in English and Maltese",
+					"frequency": "When the classification changes"
+				},
+				"map": {
+					"name": "Map data",
+					"publisher": "OpenStreetMap contributors, tiles by OpenFreeMap",
+					"use": "The base map of the pages",
+					"frequency": "Continuously"
+				}
+			},
+			"licences": {
+				"ccBy": "CC BY 4.0",
+				"odbl": "ODbL"
+			},
+			"conditionsHeading": "Licence and advertising rules",
+			"conditions": [
+				"The Medicines Authority publishes its register of licensed pharmacies on data.gov.mt under CC BY 4.0, which allows re-use, commercial or not, provided the source is credited and changes are indicated. Apercura reads that dataset, not the Authority's website, whose terms forbid the commercial reproduction of the website's own content.",
+				"The rules on advertising bind those who advertise: the Medicinal Products (Advertising) Regulations (S.L. 458.32) govern the advertising of medicines, and the Pharmacy Council's Code of Ethics limits pharmacists' self-advertising. Apercura names no medicine, and lists every licensed community pharmacy the same way, free, in a neutral order, without ranking or paid placement: a pharmacy that claims its page must keep what it adds factual and within those rules."
+			],
+			"termsText": "The dataset on the European data portal"
+		},
+		"coverage": {
+			"heading": "Pharmacies covered",
+			"body": ["A page is a pharmacy, never a person. Malta's pages list:"],
+			"kindsLabel": "Kinds of facility",
+			"kinds": {
+				"MT_PHARMACY": "Community pharmacies: every pharmacy of the Medicines Authority's register that serves the public, in Malta and Gozo"
+			}
+		},
+		"excluded": {
+			"heading": "What is not imported, and why",
+			"body": [
+				"Some data would complete the directory but is not open, serves no member of the public, or names people:"
+			],
+			"list": [
+				"The register's other pharmacies: the in-patient pharmacies of hospitals, the pharmacies of government entities (health centres, the Armed Forces, Sedqa), medical-oxygen dispensaries and a parenteral-nutrition dispensary. None serves the public at a counter.",
+				"Hospitals and health centres: no open list of Malta's state hospitals and health centres was found.",
+				"Doctors and dentists: the Medical Council lists its registers on the national catalogue, but publishes them as a search and in documents, and their republication waits for its written confirmation. No person is listed.",
+				"OpenStreetMap: used for the base map only, never as a source of pharmacies or of their positions, since its Open Database Licence (ODbL) is share-alike.",
+				"Data about individuals, never: no register of people, no ratings, no reviews."
+			]
+		},
+		"unread": {
+			"heading": "Fields never read",
+			"body": [
+				"The register publishes only what a pharmacy's page needs: its type, licence number, name, address, locality, postcode, phone and point. It names no licence holder or pharmacist, and the import reads nothing else."
+			],
+			"list": ["The register's internal row number, which identifies nothing outside it."]
+		},
+		"locations": {
+			"heading": "Locations",
+			"body": [
+				"Every pharmacy is shown at the point the register gives it, and placed in the locality whose boundary, from the Planning Authority, holds that point. A pharmacy without a point is placed in the locality its address names, at the locality's point: no pin marks it on a map, and its distance is approximate.",
+				"Localities are grouped in the six districts and two regions (Malta, and Gozo and Comino) of the National Statistics Office; their Maltese names are those of the Office of the Address Registrar's list of local councils."
+			]
+		},
+		"identifiers": {
+			"heading": "Identifiers",
+			"body": [
+				"The address of every page ends with the number of the pharmacy's licence, so that a page can be found and checked against the register:"
+			],
+			"list": [
+				"/mt/facility/example-pharmacy-dl001: the pharmacy whose licence is DL 001, after dl."
+			]
+		},
+		"correct": {
+			"heading": "Correct an error",
+			"body": [
+				"The pages repeat the register: a lasting correction is made at the source, and the page follows at the next import after the corrected register is published.",
+				"For anything else, use the form: we check every report."
+			],
+			"list": [
+				"A pharmacy's name, address or phone: the licence holder tells the Medicines Authority, which keeps the register.",
+				"Website and opening hours: the register gives none; a pharmacy adds them by claiming its page."
+			],
+			"formTitle": "Report an error",
+			"formBody": "Give the address of the page and what is wrong."
+		},
+		"remove": {
+			"heading": "Remove a page",
+			"body": [
+				"Anyone a page is about can object to its publication at any time, without giving a reason (GDPR article 21). An unclaimed page is hidden as soon as the request arrives and deleted after a light check; it never comes back with the imports of the register. A claimed page is removed by its holder, from their space. Every page also has its own removal form."
+			],
+			"formTitle": "Ask for a page to be removed",
+			"formBody": "Give the address of the page and an email address where we can answer you."
 		}
 	}
 }

@@ -12,6 +12,7 @@ import {
 	italy,
 	latvia,
 	lithuania,
+	malta,
 	norway,
 	PL_OBTAINED_AT,
 	PL_PRODUCED_AT,
@@ -42,6 +43,7 @@ import {
 	LV_GP_PRACTICE,
 	LV_PROFESSIONS,
 	listingHasBillingSectors,
+	MT_PROFESSIONS,
 	NO_PROFESSIONS,
 	PL_PROFESSIONS,
 	professionFor,
@@ -88,7 +90,8 @@ export function marketBooks(locale: Locale): boolean {
  * `GB_GP` → `gp-practices`, `CZ_GP` → `prakticky-lekar`, `ES_PHARMACY` → `farmacias`,
  * `IT_PHARMACY` → `farmacie`, `DE_PHARMACY` → `apotheken`, `CH_HOSPITAL` → `spital`,
  * `EE_PHARMACY` → `apteegid`, `NO_PHARMACY` → `apotek`,
- * `IE_PHARMACY` → `pharmacy`, `LT_DENTAL` → `odontologijos-klinikos`, `SI_DENTIST` → `zobozdravnik`, `CY_PHARMACY` → `farmakeia`, `SE_PHARMACY` → `apoteken`).
+ * `IE_PHARMACY` → `pharmacy`, `LT_DENTAL` → `odontologijos-klinikos`, `SI_DENTIST` → `zobozdravnik`, `CY_PHARMACY` → `farmakeia`, `SE_PHARMACY` → `apoteken`,
+ * `MT_PHARMACY` → `community-pharmacies`).
  */
 export function professionSlugOf(code: string): string {
 	return (
@@ -110,6 +113,7 @@ export function professionSlugOf(code: string): string {
 		CY_PROFESSIONS[code]?.slug ??
 		LV_PROFESSIONS[code]?.slug ??
 		SE_PROFESSIONS[code]?.slug ??
+		MT_PROFESSIONS[code]?.slug ??
 		""
 	);
 }
@@ -625,6 +629,21 @@ export function swedishSourcesOf(
 		.map((registry) => ({ name: registry.name, attribution: registry.attribution ?? "" }));
 }
 
+/**
+ * The sources a Maltese pharmacy's page is built from, with the CC BY 4.0 attribution each
+ * publisher asks for word for word: the Medicines Authority's register of licensed pharmacies,
+ * and the places of the Planning Authority (the localities' boundaries), the NSO and the Address
+ * Registrar (the districts and the localities' names). Every page carries all three.
+ */
+export function malteseSourcesOf(
+	activitySources: readonly (string | undefined)[],
+): { name: string; attribution: string }[] {
+	if (!activitySources.some(Boolean)) return [];
+	return malta.registries
+		.filter((registry) => registry.attribution)
+		.map((registry) => ({ name: registry.name, attribution: registry.attribution ?? "" }));
+}
+
 /** The sources of the HSE's Health Atlas, a March 2020 snapshot (`IE_HSE_ATLAS_DATE`). */
 export const IE_HSE_SOURCES: ReadonlySet<string> = new Set([
 	"ie-hse-hospitals",
@@ -638,7 +657,7 @@ export const IE_HSE_SOURCES: ReadonlySet<string> = new Set([
  * CC BY 4.0 lists and places); empty for
  * IODL 2.0 and CC BY 4.0, Germany's Destatis, CC BY 4.0 and dl-de/by-2-0 sources, Switzerland's,
  * Estonia's CC BY-NC-SA 3.0, CC0 and Land Board sources, Ireland's re-use conditions and CC BY 4.0, Lithuania's CC BY 4.0,
- * Sweden's CC BY 4.0 and CC0 lists); empty for
+ * Sweden's CC BY 4.0 and CC0 lists, Malta's CC BY 4.0); empty for
  * France, whose provenance line is the catalog's. `sourceDate` dates Spain's REGCESS line,
  * Italy's list and the obtaining of Poland's register, `producedAt` the production of Poland's.
  */
@@ -690,6 +709,7 @@ export function openDataSourcesOf(
 	if (country === "CY") return cypriotSourcesOf(activities.map((activity) => activity.source));
 	if (country === "LV") return latvianSourcesOf(activities.map((activity) => activity.source));
 	if (country === "SE") return swedishSourcesOf(activities.map((activity) => activity.source));
+	if (country === "MT") return malteseSourcesOf(activities.map((activity) => activity.source));
 	if (country === "CH") {
 		return activities.length > 0
 			? swissSourcesOf(

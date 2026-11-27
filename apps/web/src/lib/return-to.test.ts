@@ -153,6 +153,16 @@ describe("returning to a Swiss claim", () => {
 		expect(parseReturnTo("/pro/revendiquer?rpps=ie:p0123")).toBeNull();
 		expect(parseReturnTo("/pro/revendiquer?rpps=ie:")).toBeNull();
 	});
+
+	it("accepts an `mt:` pharmacy licence key, never anything that looks like a path", () => {
+		expect(parseReturnTo("/pro/revendiquer?rpps=mt:dl001")).toEqual({
+			pathname: "/pro/revendiquer",
+			query: { rpps: "mt:dl001" },
+		});
+		expect(parseReturnTo("/pro/revendiquer?rpps=mt:dl001/..")).toBeNull();
+		expect(parseReturnTo("/pro/revendiquer?rpps=mt:dl12")).toBeNull();
+		expect(parseReturnTo("/pro/revendiquer?rpps=mt:")).toBeNull();
+	});
 });
 
 describe("returning to an Estonian claim", () => {

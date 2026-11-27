@@ -34,6 +34,7 @@ const CATALOGS = {
 	"el-CY": messagesFor("el-CY"),
 	"lv-LV": messagesFor("lv-LV"),
 	"sv-SE": messagesFor("sv-SE"),
+	"en-MT": messagesFor("en-MT"),
 } as const;
 
 /** A label of the catalog's taxonomy, rendered like `getTaxonomyLabels` does. */
@@ -287,5 +288,20 @@ describe("Sweden's labels", () => {
 		expect(t("profession.vardcentral" as never)).toBe("Vårdcentral");
 		// Swedish writes a common noun in lower case inside a sentence.
 		expect(inSentence(t("profession.oppenvardsapotek" as never), "sv-SE")).toBe("öppenvårdsapotek");
+	});
+});
+
+describe("Malta's labels", () => {
+	it("name the listing in the plural and a pharmacy's kind in the singular", () => {
+		const t = createTranslator({
+			locale: "en-MT",
+			messages: CATALOGS["en-MT"],
+			namespace: "taxonomy",
+		});
+		expect(t("listing.community-pharmacies" as never)).toBe("Community pharmacies");
+		expect(t("profession.community-pharmacies" as never)).toBe("Community pharmacy");
+		expect(inSentence(t("profession.community-pharmacies" as never), "en-MT")).toBe(
+			"community pharmacy",
+		);
 	});
 });

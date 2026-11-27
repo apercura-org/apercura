@@ -13,6 +13,7 @@ import {
 	formatPhoneIt,
 	formatPhoneLt,
 	formatPhoneLv,
+	formatPhoneMt,
 	formatPhoneNo,
 	formatPhonePl,
 	formatPhoneSe,
@@ -62,6 +63,7 @@ export function formatPhone(e164: string): string {
 	if (e164.startsWith("+353")) return formatPhoneIe(e164);
 	if (e164.startsWith("+420")) return formatPhoneCz(e164);
 	if (e164.startsWith("+370")) return formatPhoneLt(e164);
+	if (e164.startsWith("+356")) return formatPhoneMt(e164);
 	if (e164.startsWith("+34")) return formatPhoneEs(e164);
 	if (e164.startsWith("+39")) return formatPhoneIt(e164);
 	if (e164.startsWith("+49")) return formatPhoneDe(e164);
@@ -93,10 +95,13 @@ function townLine(postcode: string | null, placeName: string | null, country: st
 /** Markets whose addresses write the town before the postcode: the UK and Ireland (Eircode). */
 const TOWN_FIRST: ReadonlySet<string> = new Set(["GB", "IE"]);
 
+/** Markets whose town line writes the locality before the postcode, on one line: Malta (MaltaPost). */
+const LOCALITY_FIRST: ReadonlySet<string> = new Set(["MT"]);
+
 /**
  * The town part of a one-line address on a card: `69001 Lyon`, `1090 Wien`, `120 00 Praha 2`,
- * and in the UK and Ireland the
- * town before its postcode (`Stockton-on-Tees TS18 1ZA`, `Cork T12 X70A`), and in Latvia too,
+ * and in the UK, Ireland and Malta the
+ * town before its postcode (`Stockton-on-Tees TS18 1ZA`, `Cork T12 X70A`, `Birżebbuġa BBG 2412`), and in Latvia too,
  * after a comma (`Sigulda, LV-2150`).
  */
 export function cardTownLine(
@@ -107,7 +112,11 @@ export function cardTownLine(
 	const locality = localityOf(placeName, country);
 	// Latvia writes the postcode after the locality, a comma between (`Sigulda, LV-2150`).
 	if (country === "LV") return [locality, postcode].filter(Boolean).join(", ");
-	return (TOWN_FIRST.has(country) ? [locality, postcode] : [postcode, locality])
+	return (
+		TOWN_FIRST.has(country) || LOCALITY_FIRST.has(country)
+			? [locality, postcode]
+			: [postcode, locality]
+	)
 		.filter(Boolean)
 		.join(" ");
 }
@@ -120,7 +129,7 @@ export function localityOf(placeName: string | null, country = "FR"): string | n
 /**
  * Address lines of a site, street first, in the market's form: the town and the postcode on
  * lines of their own in the UK (Royal Mail) and Ireland (An Post: the Eircode last), together
- * elsewhere (`69001 Lyon`, `1090 Wien`).
+ * elsewhere (`69001 Lyon`, `1090 Wien`), the locality first in Malta (`Birżebbuġa BBG 2412`).
  */
 export function addressLines(
 	site: Pick<SitePayload, "addressLine" | "addressComplement" | "postcode" | "placeName"> &
@@ -144,11 +153,13 @@ export function addressLines(
 		].filter((line): line is string => Boolean(line?.trim()));
 	}
 	// A Slovenian address's town line is its post office (`3211 Škofja vas`), not the municipality.
-	const town = townLine(
-		site.postcode,
-		country === "SI" ? (site.locality ?? site.placeName) : site.placeName,
-		country,
-	);
+	const town = LOCALITY_FIRST.has(country)
+		? cardTownLine(site.postcode, site.placeName, country)
+		: townLine(
+				site.postcode,
+				country === "SI" ? (site.locality ?? site.placeName) : site.placeName,
+				country,
+			);
 	return [
 		marketLabel(site.addressLine, country),
 		marketLabel(site.addressComplement, country),

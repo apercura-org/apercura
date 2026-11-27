@@ -19,6 +19,7 @@ import {
 	isGbListingSlug,
 	isIeListingSlug,
 	isItListingSlug,
+	isMtListingSlug,
 	isNoListingSlug,
 	isSeListingSlug,
 	isSiListingSlug,
@@ -115,7 +116,8 @@ export async function getTaxonomyLabels(locale: Locale) {
 				isItListingSlug(slug) ||
 				isChListingSlug(slug) ||
 				isIeListingSlug(slug) ||
-				isSiListingSlug(slug)
+				isSiListingSlug(slug) ||
+				isMtListingSlug(slug)
 					? lookup(`profession.${slug}`)
 					: null) ?? lookup(`listing.${slug}`, { gender })
 			);

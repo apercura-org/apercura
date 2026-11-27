@@ -123,7 +123,7 @@ export const STATIC_PATHS = [
  * one (`/gb/accessibility`), and so do Czechia (`/cz/pristupnost`), Poland (`/pl/dostepnosc`), Spain (`/es/accesibilidad`),
  * Italy (`/it/accessibilita`), Germany (`/de/barrierefreiheit`), Switzerland, Estonia
  * (`/ee/ligipaasetavus`), Ireland (`/ie/accessibility`), Lithuania (`/lt/prieinamumas`), Slovenia
- * (`/si/dostopnost`) and Latvia (`/lv/pieklustamiba`), voluntary statements.
+ * (`/si/dostopnost`), Latvia (`/lv/pieklustamiba`) and Malta (`/mt/accessibility`), voluntary statements.
  */
 export const MARKET_STATIC_PATHS: Record<SitemapMarket, readonly string[]> = {
 	fr: STATIC_PATHS,
@@ -146,4 +146,5 @@ export const MARKET_STATIC_PATHS: Record<SitemapMarket, readonly string[]> = {
 	cy: STATIC_PATHS.filter((path) => path !== "/pro"),
 	lv: STATIC_PATHS.filter((path) => path !== "/pro"),
 	se: STATIC_PATHS.filter((path) => path !== "/pro"),
+	mt: STATIC_PATHS.filter((path) => path !== "/pro"),
 };

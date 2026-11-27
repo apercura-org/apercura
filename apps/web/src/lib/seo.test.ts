@@ -35,6 +35,7 @@ describe("Open Graph images", () => {
 		expect(ogImageOf("CH_NURSING_HOME")).toBe("annuaire");
 		expect(ogImageOf("IE_PHARMACY")).toBe("annuaire");
 		expect(ogImageOf("IE_HEALTH_CENTRE")).toBe("annuaire");
+		expect(ogImageOf("MT_PHARMACY")).toBe("annuaire");
 	});
 });
 
@@ -134,6 +135,7 @@ describe("hreflang of the homes", () => {
 			"el-CY": "https://apercura.org/cy",
 			"lv-LV": "https://apercura.org/lv",
 			"sv-SE": "https://apercura.org/se",
+			"en-MT": "https://apercura.org/mt",
 			"x-default": "https://apercura.org/",
 		});
 	});
@@ -185,6 +187,7 @@ describe("hreflang below the homes", () => {
 		expect(marketAlternates("/annuaire", "it-IT")).toBeUndefined();
 		expect(marketAlternates("/annuaire", "en-IE")).toBeUndefined();
 		expect(marketAlternates("/annuaire", "sv-SE")).toBeUndefined();
+		expect(marketAlternates("/annuaire", "en-MT")).toBeUndefined();
 		expect(marketAlternates("/annuaire", "fr")).toBeUndefined();
 		expect(marketAlternates("/annuaire", "en")).toBeUndefined();
 	});

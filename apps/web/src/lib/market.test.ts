@@ -862,3 +862,55 @@ describe("Sweden's pages", () => {
 		expect(listingCoverageOf("nb-NO", "legekontorer")).toBeNull();
 	});
 });
+
+describe("Malta's pages", () => {
+	it("serve Malta's listing, without booking or French insurance facts", () => {
+		expect(isMarketListingSlug("en-MT", "community-pharmacies")).toBe(true);
+		expect(isMarketListingSlug("en-MT", "pharmacy")).toBe(false);
+		expect(isMarketListingSlug("en-MT", "pharmacies")).toBe(false);
+		expect(isMarketListingSlug("en-MT", "facility")).toBe(false);
+		expect(isMarketListingSlug("en-IE", "community-pharmacies")).toBe(false);
+		expect(isMarketListingSlug("en-GB", "community-pharmacies")).toBe(false);
+		expect(showsBillingFacts("en-MT")).toBe(false);
+		expect(marketBooks("en-MT")).toBe(false);
+		expect(professionSlugOf("MT_PHARMACY")).toBe("community-pharmacies");
+	});
+
+	it("check district slugs and label places by name", () => {
+		expect(isDepartmentSlug("northern-harbour", "MT")).toBe(true);
+		expect(isDepartmentSlug("012", "MT")).toBe(false);
+		expect(
+			placeLabel(
+				{ kind: "commune", code: "01252", name: "San Ġiljan", departmentCode: "012" },
+				"MT",
+			),
+		).toBe("San Ġiljan");
+		expect(isDepartmentCity("MT", "01101")).toBe(false);
+	});
+
+	it("write Maltese addresses street, then locality and postcode, and Maltese numbers", () => {
+		const site = {
+			addressLine: "12 Triq l-Eżempju",
+			addressComplement: null,
+			postcode: "SLM 1000",
+			placeName: "Tas-Sliema",
+		};
+		expect(addressLines(site, "MT")).toEqual(["12 Triq l-Eżempju", "Tas-Sliema SLM 1000"]);
+		expect(addressLines({ ...site, postcode: null }, "MT")).toEqual([
+			"12 Triq l-Eżempju",
+			"Tas-Sliema",
+		]);
+		expect(formatPhone("+35621234567")).toBe("2123 4567");
+		expect(formatPhone("+35679123456")).toBe("7912 3456");
+	});
+
+	it("credit the Medicines Authority and the places' publishers on every page", () => {
+		const sources = openDataSourcesOf("MT", [{ source: "mt-ma", site: null }]);
+		expect(sources.map((source) => source.attribution)).toEqual([
+			"Source: Medicines Authority, Licensed Pharmacies in Malta and Gozo (data.gov.mt), CC BY 4.0.",
+			"Source: Planning Authority, Local Councils Units and Boundaries, CC BY 4.0 (localities' points computed by Apercura).",
+			"Source: National Statistics Office, districts and localities; Office of the Address Registrar, Local Councils of Malta; CC BY 4.0.",
+		]);
+		expect(openDataSourcesOf("MT", [])).toEqual([]);
+	});
+});

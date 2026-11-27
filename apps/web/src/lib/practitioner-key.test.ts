@@ -479,3 +479,30 @@ describe("Swedish facility keys", () => {
 		);
 	});
 });
+
+describe("Maltese pharmacy keys", () => {
+	it("read a pharmacy page segment by its licence, in Malta only", () => {
+		expect(parsePractitionerKey("en-MT", "example-pharmacy-dl001")).toEqual({
+			country: "MT",
+			idScheme: "MT-MA",
+			nationalId: "001",
+			namePart: "example-pharmacy",
+		});
+		expect(parsePractitionerKey("en-MT", "dl256")?.nationalId).toBe("256");
+		expect(parsePractitionerKey("en-MT", "example-pharmacy-p1234")).toBeNull();
+		expect(parsePractitionerKey("en-MT", "camille-exemple-19999990013")).toBeNull();
+		// Ireland never reads a Maltese key as its own.
+		expect(parsePractitionerKey("en-IE", "example-pharmacy-dl001")).toBeNull();
+		expect(marketAdapter("en-MT").features.booking).toBe(false);
+	});
+
+	it("mark a Maltese segment outside a locale, and print the licence number", () => {
+		expect(marketSegmentOf("MT", "example-pharmacy-dl001")).toBe("mt.example-pharmacy-dl001");
+		expect(parseAnyPractitionerKey("mt.example-pharmacy-dl001")).toMatchObject({
+			country: "MT",
+			idScheme: "MT-MA",
+			nationalId: "001",
+		});
+		expect(displayId({ idScheme: "MT-MA", nationalId: "001" })).toBe("DL 001");
+	});
+});

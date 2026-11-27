@@ -76,4 +76,13 @@ describe("the messages of a market's client islands", () => {
 		expect(british.listing.pharmacy).toBeUndefined();
 		expect(british.listing["nursing-homes"]).toBeUndefined();
 	});
+
+	it("give Malta's islands its label only, and no other English market Malta's", () => {
+		const maltese = taxonomyOf(forMarket(pickMessages(messagesFor("en-MT"), ["taxonomy"]), "MT"));
+		expect(maltese.listing["community-pharmacies"]).toBe("Community pharmacies");
+		expect(maltese.listing.pharmacy).toBeUndefined();
+		expect(maltese.listing.pharmacies).toBeUndefined();
+		const irish = taxonomyOf(forMarket(pickMessages(messagesFor("en-IE"), ["taxonomy"]), "IE"));
+		expect(irish.listing["community-pharmacies"]).toBeUndefined();
+	});
 });

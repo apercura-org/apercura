@@ -24,12 +24,14 @@ import {
 	isListingSlug,
 	isLtListingSlug,
 	isLvListingSlug,
+	isMtListingSlug,
 	isNoListingSlug,
 	isReservedSegment,
 	isSeListingSlug,
 	isSiListingSlug,
 	LT_RESERVED_SEGMENTS,
 	LV_RESERVED_SEGMENTS,
+	MT_RESERVED_SEGMENTS,
 	NO_RESERVED_SEGMENTS,
 	SE_RESERVED_SEGMENTS,
 	SI_RESERVED_SEGMENTS,
@@ -103,6 +105,7 @@ const TRANSLATIONS = LOCALES.filter(
 		locale !== "el-CY" &&
 		locale !== "lv-LV" &&
 		locale !== "sv-SE" &&
+		locale !== "en-MT" &&
 		marketOf(locale) !== "CH",
 );
 
@@ -117,7 +120,7 @@ function hrefOf(pathname: AppPathname) {
 }
 
 describe("locale configuration", () => {
-	it("serves France under /fr and /fr-{language}, Austria under /at, the UK under /gb, Czechia under /cz, Spain under /es, Italy under /it, Germany under /de, Switzerland under /ch, /ch-fr and /ch-it Estonia under /ee, Poland under /pl, Finland under /fi and Lithuania under /lt", () => {
+	it("serves France under /fr and /fr-{language}, Austria under /at, the UK under /gb, Czechia under /cz, Spain under /es, Italy under /it, Germany under /de, Switzerland under /ch, /ch-fr and /ch-it Estonia under /ee, Poland under /pl, Finland under /fi, Lithuania under /lt and Malta under /mt", () => {
 		expect(LOCALES).toEqual([
 			"fr",
 			"en",
@@ -143,6 +146,7 @@ describe("locale configuration", () => {
 			"el-CY",
 			"lv-LV",
 			"sv-SE",
+			"en-MT",
 		]);
 		expect(routing.locales).toEqual(LOCALES);
 		expect(routing.defaultLocale).toBe("fr");
@@ -172,6 +176,7 @@ describe("locale configuration", () => {
 			"el-CY": "/cy",
 			"lv-LV": "/lv",
 			"sv-SE": "/se",
+			"en-MT": "/mt",
 		});
 		expect(LOCALE_SEGMENTS).toEqual([
 			"fr",
@@ -198,6 +203,7 @@ describe("locale configuration", () => {
 			"cy",
 			"lv",
 			"se",
+			"mt",
 		]);
 		expect(LOCALE_MARKETS).toEqual({
 			fr: "FR",
@@ -224,6 +230,7 @@ describe("locale configuration", () => {
 			"el-CY": "CY",
 			"lv-LV": "LV",
 			"sv-SE": "SE",
+			"en-MT": "MT",
 		});
 		expect(CATALOG_LANGUAGES["de-AT"]).toBe("de");
 		expect(CATALOG_LANGUAGES["lv-LV"]).toBe("lv");
@@ -260,6 +267,10 @@ describe("locale configuration", () => {
 		expect(CATALOG_LANGUAGES["sv-SE"]).toBe("sv");
 		expect(MARKET_LOCALES.SE).toBe("sv-SE");
 		expect(marketLanguages("SE")).toEqual(["sv-SE"]);
+		// Malta: English, the English catalog with Malta's overrides, its own locale.
+		expect(CATALOG_LANGUAGES["en-MT"]).toBe("en");
+		expect(MARKET_LOCALES.MT).toBe("en-MT");
+		expect(marketLanguages("MT")).toEqual(["en-MT"]);
 		for (const locale of LOCALES) {
 			expect(marketOf(locale), locale).toBe(LOCALE_MARKETS[locale]);
 			expect(locale.split("-")[0], locale).toBe(CATALOG_LANGUAGES[locale]);
@@ -313,6 +324,7 @@ describe("locale configuration", () => {
 			"el-CY": "el-CY",
 			"lv-LV": "lv-LV",
 			"sv-SE": "sv-SE",
+			"en-MT": "en-MT",
 		});
 		expect(OG_LOCALES).toEqual({
 			fr: "fr_FR",
@@ -339,6 +351,7 @@ describe("locale configuration", () => {
 			"el-CY": "el_CY",
 			"lv-LV": "lv_LV",
 			"sv-SE": "sv_SE",
+			"en-MT": "en_MT",
 		});
 		for (const locale of LOCALES) {
 			expect(Intl.DateTimeFormat.supportedLocalesOf([LOCALE_TAGS[locale]])).toEqual([
@@ -379,6 +392,7 @@ describe("locale configuration", () => {
 			"el-CY",
 			"lv-LV",
 			"sv-SE",
+			"en-MT",
 		]);
 		expect(HREFLANGS).toEqual({
 			fr: "fr-FR",
@@ -401,6 +415,7 @@ describe("locale configuration", () => {
 			"el-CY": "el-CY",
 			"lv-LV": "lv-LV",
 			"sv-SE": "sv-SE",
+			"en-MT": "en-MT",
 		});
 		expect(routing.alternateLinks).toBe(false);
 		expect(robotsFor("fr", true)).toEqual({ index: true, follow: true });
@@ -425,6 +440,7 @@ describe("locale configuration", () => {
 		expect(robotsFor("el-CY", true)).toEqual({ index: true, follow: true });
 		expect(robotsFor("lv-LV", true)).toEqual({ index: true, follow: true });
 		expect(robotsFor("sv-SE", true)).toEqual({ index: true, follow: true });
+		expect(robotsFor("en-MT", true)).toEqual({ index: true, follow: true });
 		for (const locale of TRANSLATIONS) {
 			expect(robotsFor(locale, true)).toEqual({ index: false, follow: true });
 		}
@@ -713,6 +729,27 @@ describe("locale configuration", () => {
 		expect(localePath("en-IE", "/accessibilite")).toBe("/ie/accessibility");
 		expect(localePath("en-IE", "/donnees")).toBe("/ie/data");
 		expect(localePath("en-IE", "/[specialite]", { specialite: "pharmacy" })).toBe("/ie/pharmacy");
+		// Malta: the English first segments, reserved, never a Maltese listing slug; a pharmacy's
+		// page under /facility.
+		for (const pathname of simple.filter((pathname) => !pathname.startsWith("/["))) {
+			const [first] = getPathname({ href: hrefOf(pathname) as never, locale: "en-MT" })
+				.split("/")
+				.filter(Boolean)
+				.slice(1);
+			if (!first) continue;
+			expect(MT_RESERVED_SEGMENTS as readonly string[], pathname).toContain(first);
+			expect(isMtListingSlug(first), pathname).toBe(false);
+		}
+		expect(localePath("en-MT", "/praticien/[slug]", { slug: "example-pharmacy-dl001" })).toBe(
+			"/mt/facility/example-pharmacy-dl001",
+		);
+		expect(localePath("en-MT", "/annuaire")).toBe("/mt/directory");
+		expect(localePath("en-MT", "/recherche")).toBe("/mt/search");
+		expect(localePath("en-MT", "/mentions-legales")).toBe("/mt/legal-notice");
+		expect(localePath("en-MT", "/donnees")).toBe("/mt/data");
+		expect(localePath("en-MT", "/[specialite]", { specialite: "community-pharmacies" })).toBe(
+			"/mt/community-pharmacies",
+		);
 		// The UK keeps its practice pages.
 		expect(localePath("en-GB", "/praticien/[slug]", { slug: "x-a81001" })).toBe(
 			"/gb/practice/x-a81001",
@@ -1034,6 +1071,7 @@ describe("the markets a search can move to", () => {
 			"CY",
 			"LV",
 			"SE",
+			"MT",
 		]);
 		expect(MARKET_COUNTRIES.map(marketSegment)).toEqual([
 			"fr",
@@ -1054,6 +1092,7 @@ describe("the markets a search can move to", () => {
 			"cy",
 			"lv",
 			"se",
+			"mt",
 		]);
 		for (const country of MARKET_COUNTRIES) {
 			expect(marketOfSegment(marketSegment(country))).toBe(country);
@@ -1086,6 +1125,11 @@ describe("the markets a search can move to", () => {
 		expect(marketLocaleFor("GB", "en-IE")).toBe("en-GB");
 		expect(marketLocaleFor("FR", "en-IE")).toBe("en");
 		expect(marketLocaleFor("IE", "en-IE")).toBe("en-IE");
+		// Malta reads English too, under its own locale.
+		expect(marketLocaleFor("MT", "fr")).toBe("en-MT");
+		expect(marketLocaleFor("MT", "en-IE")).toBe("en-MT");
+		expect(marketLocaleFor("IE", "en-MT")).toBe("en-IE");
+		expect(marketLocaleFor("FR", "en-MT")).toBe("en");
 	});
 
 	it("open in the visitor's language when the market offers it", () => {

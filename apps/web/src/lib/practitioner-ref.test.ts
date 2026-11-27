@@ -500,3 +500,34 @@ describe("Swedish facility references", () => {
 		expect(parsePractitionerRef(practitionerRefOf(centre))).toEqual(centre);
 	});
 });
+
+describe("Maltese pharmacy references", () => {
+	const pharmacy = { country: "MT", idScheme: "MT-MA", nationalId: "001" };
+
+	it("read the `mt:` reference, a Maltese page address, and a licence typed on a Maltese page", () => {
+		expect(parsePractitionerRef("mt:dl001")).toEqual(pharmacy);
+		expect(parsePractitionerRef(" MT: DL 001 ")).toEqual(pharmacy);
+		for (const path of [
+			"https://apercura.org/mt/facility/example-pharmacy-dl001",
+			"/mt/facility/example-pharmacy-dl001/",
+		]) {
+			expect(parsePractitionerRef(path), path).toEqual(pharmacy);
+		}
+		expect(parsePractitionerRef("DL 001", "MT")).toEqual(pharmacy);
+		expect(parsePractitionerRef("dl001", "MT")).toEqual(pharmacy);
+		expect(parsePractitionerRef("mt:001")).toBeNull();
+		expect(parsePractitionerRef("mt:")).toBeNull();
+		expect(parsePractitionerRef("mt:dl12")).toBeNull();
+	});
+
+	it("still read other markets' references on a Maltese page", () => {
+		expect(parsePractitionerRef("19999990013", "MT")?.country).toBe("FR");
+		expect(parsePractitionerRef("ie:p1234", "MT")?.country).toBe("IE");
+	});
+
+	it("write the reference back with its market", () => {
+		expect(practitionerRefOf(pharmacy)).toBe("mt:dl001");
+		expect(marketRef("DL 001", "MT")).toBe("mt:dl001");
+		expect(parsePractitionerRef(practitionerRefOf(pharmacy))).toEqual(pharmacy);
+	});
+});

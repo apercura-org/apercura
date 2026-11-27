@@ -20,6 +20,7 @@ import { AccessibilityIe } from "~/components/legal-ie";
 import { AccessibilityIt } from "~/components/legal-it";
 import { AccessibilityLt } from "~/components/legal-lt";
 import { AccessibilityLv } from "~/components/legal-lv";
+import { AccessibilityMt } from "~/components/legal-mt";
 import { AccessibilityNo } from "~/components/legal-no";
 import { AccessibilityPl } from "~/components/legal-pl";
 import { AccessibilitySe } from "~/components/legal-se";
@@ -59,6 +60,7 @@ export function generateMetadata({ params }: PageProps<"/[locale]/accessibilite"
 			CY: "AccessibilityCy",
 			LV: "AccessibilityLv",
 			SE: "AccessibilitySe",
+			MT: "AccessibilityMt",
 		},
 		HREF,
 	);
@@ -91,6 +93,7 @@ export default async function AccessibilityPage({ params }: PageProps<"/[locale]
 	if (marketOf(locale) === "CY") return <AccessibilityCy locale={locale} />;
 	if (marketOf(locale) === "LV") return <AccessibilityLv locale={locale} />;
 	if (marketOf(locale) === "SE") return <AccessibilitySe locale={locale} />;
+	if (marketOf(locale) === "MT") return <AccessibilityMt locale={locale} />;
 	const t = await getTranslations({ locale, namespace: "AccessibilityPage" });
 	const tSite = await getTranslations({ locale, namespace: "Site" });
 	const tI = await getTranslations({ locale, namespace: "Institutional" });

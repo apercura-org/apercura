@@ -1129,3 +1129,47 @@ describe("practitionerNodes for Sweden", () => {
 		expect(node.medicalSpecialty).toBe("https://schema.org/PrimaryCare");
 	});
 });
+describe("practitionerNodes for Malta", () => {
+	const site: PracticePlaceInput = {
+		siteId: 1,
+		practiceKind: "office",
+		name: "Example Pharmacy",
+		addressLine: "12 Example Street",
+		addressComplement: null,
+		postcode: null,
+		placeName: "Sliema",
+		coordinates: { lat: 35.91, lon: 14.5 },
+		phone: "+35621234567",
+		establishmentUrl: null,
+	};
+	const pharmacy: PractitionerInput = {
+		...doctor,
+		url: `${ORIGIN}/mt/facility/example-pharmacy-dl001`,
+		professionCode: "MT_PHARMACY",
+		rpps: "001",
+		idScheme: "MT-MA",
+		country: "MT",
+		name: "Example Pharmacy",
+		givenName: "",
+		familyName: "Example Pharmacy",
+		honorificPrefix: null,
+		occupation: "Community pharmacy",
+		listingSlug: "community-pharmacies",
+		places: [site],
+	};
+
+	it("publishes a pharmacy as a Pharmacy with its licence, never a person", () => {
+		const nodes = practitionerNodes(pharmacy);
+		const node = nodeOf(nodes, "Pharmacy");
+		expect(node.identifier).toEqual({
+			"@type": "PropertyValue",
+			propertyID: "MT-MA",
+			value: "001",
+		});
+		expect(node.address).toMatchObject({ addressCountry: "MT", addressLocality: "Sliema" });
+		expect(node.medicalSpecialty).toBe("https://schema.org/PharmacySpecialty");
+		expect(JSON.stringify(nodes)).not.toMatch(
+			/Person|IndividualPhysician|Physician"|givenName|familyName/,
+		);
+	});
+});

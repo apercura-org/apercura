@@ -26,6 +26,9 @@ import {
 	LV_ID_SCHEMES,
 	type LvIdScheme,
 	lvUrlKey,
+	MT_ID_SCHEMES,
+	type MtIdScheme,
+	mtLicenceNumber,
 	NO_ID_SCHEMES,
 	type NoIdScheme,
 	noOrgNumber,
@@ -42,6 +45,7 @@ import {
 	parseItPlaceSegment,
 	parseLtFacilitySegment,
 	parseLvFacilitySegment,
+	parseMtFacilitySegment,
 	parseNoFacilitySegment,
 	parsePlFacilitySegment,
 	parsePractitionerSegment,
@@ -79,7 +83,8 @@ export type PractitionerKey = {
  * `example-hospital-h123456789`), `{name}-{number}-{address}` in Lithuania
  * (`uab-pavyzdine-klinika-5271-12679435`, VASPVT's institution number and the Address Register's
  * code), `{name}-{list}{key}` in Sweden (`exempelapoteket-a7312446003969`, the pharmacy's GLN,
- * `exempel-vardcentral-v2321000131e000000007600`, the unit's HSA-id). Null for anything else,
+ * `exempel-vardcentral-v2321000131e000000007600`, the unit's HSA-id), `{name}-dl{licence}` in Malta
+ * (`example-pharmacy-dl001`). Null for anything else,
  * so malformed or other-market URLs never reach the database.
  */
 export function parsePractitionerKey(locale: Locale, segment: string): PractitionerKey | null {
@@ -142,6 +147,10 @@ export function parsePractitionerKey(locale: Locale, segment: string): Practitio
 	}
 	if (country === "SE") {
 		const parsed = parseSeFacilitySegment(segment);
+		return parsed ? { country, ...parsed } : null;
+	}
+	if (country === "MT") {
+		const parsed = parseMtFacilitySegment(segment);
 		return parsed ? { country, ...parsed } : null;
 	}
 	if (country === "GB") {
@@ -241,6 +250,9 @@ export const LV_SEGMENT_MARKER = "lv.";
  */
 export const SE_SEGMENT_MARKER = "se.";
 
+/** The marker of a Maltese page's segment outside a locale (`mt.{slug}`): its key names no market by itself. */
+export const MT_SEGMENT_MARKER = "mt.";
+
 /** The marker of each market whose segments are marked outside a locale. */
 const SEGMENT_MARKERS: Readonly<Partial<Record<MarketCountry, string>>> = {
 	GB: GB_SEGMENT_MARKER,
@@ -258,6 +270,7 @@ const SEGMENT_MARKERS: Readonly<Partial<Record<MarketCountry, string>>> = {
 	CY: CY_SEGMENT_MARKER,
 	LV: LV_SEGMENT_MARKER,
 	SE: SE_SEGMENT_MARKER,
+	MT: MT_SEGMENT_MARKER,
 };
 
 /**
@@ -313,7 +326,8 @@ export function parseAnyPractitionerKey(segment: string): PractitionerKey | null
  * the page key (`5271-12679435`); in Cyprus the key of the page URL (`f101`, `m3fa9c01b2e`),
  * since only the pharmacies' list numbers its rows; in Sweden the GLN of a pharmacy
  * (`7312446003969`) and the HSA-id of a health centre (`SE2321000131-E000000007600`), as their
- * registers print them.
+ * registers print them; in Malta the pharmacy's licence number as the Medicines Authority writes
+ * it (`DL 001`).
  */
 export function displayId(key: Pick<PractitionerKey, "idScheme" | "nationalId">): string {
 	if (NO_ID_SCHEMES[key.idScheme as NoIdScheme]) return noOrgNumber(key.nationalId);
@@ -322,6 +336,7 @@ export function displayId(key: Pick<PractitionerKey, "idScheme" | "nationalId">)
 	}
 	if (key.idScheme === "EE-TTL") return eeLicenceNumber(key.nationalId);
 	if (FI_ID_SCHEMES[key.idScheme as FiIdScheme]) return fiPtvChannelId(key.nationalId);
+	if (MT_ID_SCHEMES[key.idScheme as MtIdScheme]) return mtLicenceNumber(key.nationalId);
 	if (EE_ID_SCHEMES[key.idScheme as EeIdScheme]) {
 		return eeUrlKey(key.idScheme as EeIdScheme, key.nationalId);
 	}
