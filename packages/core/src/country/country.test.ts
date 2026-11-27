@@ -6,7 +6,7 @@ import { timeZoneForDepartment } from "../time/departments";
 import { COUNTRY_ADAPTERS, COUNTRY_CODES, countryAdapter, france } from "./index";
 
 describe("country adapters", () => {
-	it("serves France, Austria, the United Kingdom, Czechia, Spain, Italy, Germany, Switzerland, Poland, Norway, Estonia, Ireland, Finland, Lithuania and Latvia, and refuses markets that are not open", () => {
+	it("serves France, Austria, the United Kingdom, Czechia, Spain, Italy, Germany, Switzerland, Poland, Norway, Estonia, Ireland, Finland, Lithuania, Latvia and Malta, and refuses markets that are not open", () => {
 		expect(countryAdapter("FR")).toBe(france);
 		expect(() => countryAdapter("XX")).toThrow(RangeError);
 		expect(Object.keys(COUNTRY_ADAPTERS)).toEqual([
@@ -28,6 +28,7 @@ describe("country adapters", () => {
 			"CY",
 			"LV",
 			"SE",
+			"MT",
 		]);
 		expect(COUNTRY_CODES).toEqual([
 			"FR",
@@ -48,6 +49,7 @@ describe("country adapters", () => {
 			"CY",
 			"LV",
 			"SE",
+			"MT",
 		]);
 	});
 

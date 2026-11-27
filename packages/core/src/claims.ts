@@ -147,7 +147,7 @@ const FRANCE_POLICY: ClaimPolicy = {
 
 /**
  * A market without an e-identity open to Apercura nor registry contacts to
- * check against (Austria, the United Kingdom, Czechia, Spain, Germany, Estonia, Poland, Norway, Finland, Cyprus, Latvia, Sweden, and any market not listed): a document reviewed by
+ * check against (Austria, the United Kingdom, Czechia, Spain, Germany, Estonia, Poland, Norway, Finland, Cyprus, Latvia, Sweden, Malta, and any market not listed): a document reviewed by
  * an administrator, who decides alone.
  */
 const DOCUMENT_REVIEW_POLICY: ClaimPolicy = {
@@ -169,6 +169,7 @@ export const CLAIM_POLICIES: Readonly<Record<string, ClaimPolicy>> = {
 	CY: DOCUMENT_REVIEW_POLICY,
 	LV: DOCUMENT_REVIEW_POLICY,
 	SE: DOCUMENT_REVIEW_POLICY,
+	MT: DOCUMENT_REVIEW_POLICY,
 };
 
 /** The claim policy of a market: France when none is given, document review for an unknown one. */

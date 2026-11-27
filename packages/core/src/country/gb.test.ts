@@ -146,6 +146,7 @@ describe("the United Kingdom adapter", () => {
 			"CY",
 			"LV",
 			"SE",
+			"MT",
 		]);
 	});
 });

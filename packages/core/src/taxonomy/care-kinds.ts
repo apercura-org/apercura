@@ -34,7 +34,8 @@ export type CareMarket =
 	| "SI"
 	| "CY"
 	| "LV"
-	| "SE";
+	| "SE"
+	| "MT";
 
 export const CARE_KINDS = {
 	"general-practice": {
@@ -93,6 +94,7 @@ export const CARE_KINDS = {
 		CY: "farmakeia",
 		LV: "aptiekas",
 		SE: "apoteken",
+		MT: "community-pharmacies",
 	},
 	hospital: {
 		ES: "hospitales",
