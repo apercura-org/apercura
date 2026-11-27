@@ -1,5 +1,6 @@
 import {
 	allChListingSlugs,
+	allCyTaxonomySlugs,
 	allCzListingSlugs,
 	allDeTaxonomySlugs,
 	allEeTaxonomySlugs,
@@ -11,6 +12,7 @@ import {
 	allNoTaxonomySlugs,
 	allPlListingSlugs,
 	allSiListingSlugs,
+	CY_DEFAULT_PROFESSIONS,
 	DE_DEFAULT_PROFESSIONS,
 	EE_DEFAULT_PROFESSIONS,
 	FI_DEFAULT_PROFESSIONS,
@@ -28,6 +30,7 @@ import {
 } from "@formatjs/icu-messageformat-parser";
 import { describe, expect, it } from "vitest";
 import at from "../../messages/at.json";
+import cy from "../../messages/cy.json";
 import cz from "../../messages/cz.json";
 import de from "../../messages/de.json";
 import deCH from "../../messages/de-CH.json";
@@ -57,7 +60,7 @@ import { CATALOG_LANGUAGES, LOCALES, type Locale } from "./locales";
  * Spanish one with Spain's overrides; Italy's the Italian one with Italy's overrides; Germany's the
  * German one with Germany's overrides;
  * Switzerland's the German, French and Italian ones with the Swiss texts on top, German without
- * "ß"; Estonia's the English one with the Estonian texts on top; Poland's the English one with the Polish texts on top, Norway's with the Norwegian ones; Lithuania's the English one with the Lithuanian texts on top.
+ * "ß"; Estonia's the English one with the Estonian texts on top; Poland's the English one with the Polish texts on top, Norway's with the Norwegian ones; Lithuania's the English one with the Lithuanian texts on top, Cyprus's with the Greek ones.
  */
 const CATALOGS: Record<Locale, unknown> = {
 	fr,
@@ -101,6 +104,7 @@ const CATALOGS: Record<Locale, unknown> = {
 	"en-IE": mergeMessages(en, enIE as Record<string, unknown>),
 	"fi-FI": mergeMessages(en, fi as Record<string, unknown>),
 	"sl-SI": mergeMessages(en, si as Record<string, unknown>),
+	"el-CY": mergeMessages(en, cy as Record<string, unknown>),
 };
 
 /** Every message of a catalog by its dotted key (array items are indexed). */
@@ -577,5 +581,64 @@ describe("the Slovenian texts", () => {
 		expect(page.accepts).not.toBe(messagesFor("en").PractitionerPage.slovenia.accepts);
 		expect(page.asOf).toContain("{date}");
 		expect(JSON.stringify(si)).not.toMatch(/ÚZIS|ČÚZK|Ministerstvo zdravotnictví|Národní registr/);
+	});
+});
+
+describe("the Greek texts", () => {
+	it("only override keys of the English catalog", () => {
+		const english = flatten(en);
+		expect([...flatten(cy).keys()].filter((key) => !english.has(key))).toEqual([]);
+	});
+
+	it("name every Cypriot listing and kind of facility, in every catalog and in Greek", () => {
+		for (const catalog of [en, fr, de, es, it_, cy]) {
+			const labels = flatten(catalog);
+			for (const slug of allCyTaxonomySlugs()) {
+				expect(labels.get(`taxonomy.profession.${slug}`), slug).toBeTruthy();
+			}
+		}
+		const greek = flatten(cy);
+		expect(greek.get("taxonomy.listing.farmakeia")).toBe("Φαρμακεία");
+		expect(greek.get("taxonomy.listing.kentra-ygeias")).toBe("Κέντρα Υγείας");
+		expect(greek.get("taxonomy.profession.nosokomeio")).toBe("Νοσοκομείο");
+		expect(greek.get("ErrorPages.notFound.title")).toBe("Η σελίδα δεν υπάρχει");
+		expect(greek.get("Search.submit")).toBe("Αναζήτηση");
+	});
+
+	it("write Cyprus's legal pages in Greek and list every kind of facility", () => {
+		const greek = flatten(messagesFor("el-CY"));
+		const english = flatten(en);
+		for (const key of [
+			"LegalNoticeCy.title",
+			"PrivacyCy.title",
+			"DataCy.title",
+			"TermsCy.title",
+			"AccessibilityCy.title",
+		]) {
+			expect(greek.get(key), key).toBeTruthy();
+			expect(greek.get(key), key).not.toBe(english.get(key));
+		}
+		for (const code of CY_DEFAULT_PROFESSIONS) {
+			expect(greek.get(`DataCy.coverage.kinds.${code}`), code).toBeTruthy();
+			expect(english.get(`DataCy.coverage.kinds.${code}`), code).toBeTruthy();
+		}
+		expect(greek.get("HomePage.title")).not.toBe(english.get("HomePage.title"));
+		// The lists' credit names their licence, as CC BY 4.0 asks.
+		expect(greek.get("DataCy.licence.licenceLink")).toMatch(/CC BY 4\.0/);
+		// The privacy notice names the Cypriot supervisory authority and law.
+		expect(greek.get("PrivacyCy.authorityAddress")).toMatch(/Ιάσονος 1, 1082 Λευκωσία/);
+		expect(english.get("PrivacyCy.lead")).toMatch(/125\(I\)\/2018/);
+	});
+
+	it("say the north is not covered and claim no hosting certification", () => {
+		const greek = flatten(messagesFor("el-CY"));
+		expect(greek.get("DataCy.coverage.body.1")).toMatch(/δεν ασκεί πραγματικό έλεγχο/);
+		expect(flatten(en).get("DataCy.coverage.body.1")).toMatch(
+			/does not exercise effective control/,
+		);
+		// No hosting certification claimed, no hosting place named.
+		for (const [key, value] of flatten(cy)) {
+			if (key.startsWith("HomePage.pillars")) expect(value, key).not.toMatch(/HDS/);
+		}
 	});
 });

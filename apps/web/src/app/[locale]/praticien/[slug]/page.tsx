@@ -2,6 +2,7 @@ import { practitionerRoute } from "@apercura/core";
 import { IE_HSE_ATLAS_DATE } from "@apercura/core/country";
 import {
 	CZ_SPECIALIST,
+	cyKindSlugOf,
 	deKindSlugOf,
 	ES_MEDICAL_PRACTICE,
 	ES_OTHER_PRACTICE,
@@ -217,9 +218,9 @@ export default async function PractitionerPage({ params }: Props) {
 	const name = labels.personName(payload);
 	const content = ownerContentOf(payload, photoUrl);
 	const professionSlug = payload.listingSlug ?? "";
-	// A Spanish centre's, German facility's, Estonian provider's or Norwegian establishment's kind
-	// has a singular label of its own ("Consultorio local", "Reha-Klinik", "Perearstikeskus",
-	// "Legekontor").
+	// A Spanish centre's, German facility's, Estonian provider's, Norwegian establishment's or
+	// Cypriot facility's kind has a singular label of its own ("Consultorio local", "Reha-Klinik",
+	// "Perearstikeskus", "Legekontor", "Φαρμακείο").
 	const professionLabel =
 		labels.profession(
 			esKindSlugOf(payload.professionCode) ??
@@ -227,6 +228,7 @@ export default async function PractitionerPage({ params }: Props) {
 				eeKindSlugOf(payload.professionCode) ??
 				noKindSlugOf(payload.professionCode) ??
 				fiKindSlugOf(payload.professionCode) ??
+				cyKindSlugOf(payload.professionCode) ??
 				professionSlugOf(payload.professionCode),
 			gender,
 		) ?? t("unknownProfession");
@@ -374,6 +376,10 @@ export default async function PractitionerPage({ params }: Props) {
 			: [];
 	const finnishServices = finnishOf("palvelu");
 	const finnishOrganisers = finnishOf("jarjestaja");
+	// Cyprus lists the facilities of the Ministry of Health's lists: a private pharmacy with its
+	// registration number in the Pharmaceutical Services' list, a state hospital or health centre
+	// as the state's.
+	const cypriot = payload.country === "CY";
 	// Switzerland lists facilities: a hospital's type, activities, services and offer as the
 	// FOPH's figures give them, its ownership and operator, and its category as its canton's list
 	// names it (in that list's language).
@@ -611,6 +617,27 @@ export default async function PractitionerPage({ params }: Props) {
 										}
 										emptyLabel={empty}
 									/>
+								) : cypriot ? (
+									payload.idScheme === "CY-FARM" ? (
+										<FieldRow
+											label={t("cypriotFacts.registration")}
+											value={
+												<>
+													<span className="tabular-nums">{payload.nationalId}</span>
+													<span className="mt-1 block text-meta text-ink-muted">
+														{t("cypriotFacts.registrationNote")}
+													</span>
+												</>
+											}
+											emptyLabel={empty}
+										/>
+									) : (
+										<FieldRow
+											label={t("cypriotFacts.operator")}
+											value={t("cypriotFacts.stateFacility")}
+											emptyLabel={empty}
+										/>
+									)
 								) : norwegian ? (
 									<>
 										<FieldRow

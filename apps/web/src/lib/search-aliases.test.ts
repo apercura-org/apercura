@@ -1,6 +1,7 @@
 import {
 	allAtListingSlugs,
 	allChListingSlugs,
+	allCyListingSlugs,
 	allCzListingSlugs,
 	allDeListingSlugs,
 	allEeListingSlugs,
@@ -44,6 +45,7 @@ const MARKETS = [
 	"FI",
 	"LT",
 	"SI",
+	"CY",
 ] as const satisfies readonly MarketCountry[];
 
 /** The listings of each market (France: its imported professions only). */
@@ -66,6 +68,7 @@ const LISTED: Record<MarketCountry, (slug: string) => boolean> = {
 	FI: (slug) => allFiListingSlugs().has(slug),
 	LT: (slug) => allLtListingSlugs().has(slug),
 	SI: (slug) => allSiListingSlugs().has(slug),
+	CY: (slug) => allCyListingSlugs().has(slug),
 };
 
 /** Slugs a market maps but does not list yet: France's professions not imported. */
@@ -85,6 +88,7 @@ const MAPPED: Record<MarketCountry, (slug: string) => boolean> = {
 	FI: () => false,
 	LT: () => false,
 	SI: () => false,
+	CY: () => false,
 };
 
 const listing = (slug: string): SearchTerm => ({ kind: "listing", slug });
@@ -118,7 +122,8 @@ describe.each(MARKETS)("the %s search aliases", (country) => {
 		// Upper case, without accents, plural.
 		const plain = word.normalize("NFKD").replace(/\p{Mark}/gu, "");
 		expect(resolveSearchTerm(plain.toUpperCase(), country)).toEqual(expected);
-		if (!word.endsWith("s")) expect(resolveSearchTerm(`  ${word}s `, country)).toEqual(expected);
+		// A word ending in "s" (or a Greek final sigma, written "s") has no plural in "s".
+		if (!/[sς]$/.test(word)) expect(resolveSearchTerm(`  ${word}s `, country)).toEqual(expected);
 	});
 
 	it("never hide an official label of the market", () => {
@@ -541,6 +546,28 @@ const EVERYDAY: Record<MarketCountry, [string, SearchTerm][]> = {
 		["bolnišnica", UNLISTED],
 		["urgenca", UNLISTED],
 	],
+	CY: [
+		["φαρμακείο", listing("farmakeia")],
+		["Φαρμακείο", listing("farmakeia")],
+		["φαρμακειο", listing("farmakeia")],
+		["φαρμακοποιός", listing("farmakeia")],
+		["εφημερεύον φαρμακείο", listing("farmakeia")],
+		["νοσοκομείο", listing("nosokomeia")],
+		["ΤΑΕΠ", listing("nosokomeia")],
+		["κέντρο υγείας", listing("kentra-ygeias")],
+		["προσωπικός ιατρός", listing("kentra-ygeias")],
+		["γιατρός", listing("kentra-ygeias")],
+		["οδοντίατρος", UNLISTED],
+		["φυσιοθεραπευτής", UNLISTED],
+		// Greek typed in Latin letters, as many keyboards do.
+		["farmakeio", listing("farmakeia")],
+		// Visitors' languages.
+		["pharmacy", listing("farmakeia")],
+		["hospital", listing("nosokomeia")],
+		["health centre", listing("kentra-ygeias")],
+		["dentist", UNLISTED],
+		["pharmacie", listing("farmakeia")],
+	],
 };
 
 describe.each(MARKETS)("the everyday words of %s", (country) => {
@@ -608,6 +635,9 @@ describe("the suggestions of “Qui ?”", () => {
 		expect(slugs("osebni zdr", "sl-SI")).toEqual(["druzinski-zdravnik"]);
 		expect(slugs("médecin trait", "fr")).toEqual(["medecin-generaliste"]);
 		expect(slugs("dentist", "en")).toContain("chirurgien-dentiste");
+		expect(slugs("φαρμακ", "el-CY")).toEqual(["farmakeia"]);
+		expect(slugs("Κέντρο Υγ", "el-CY")).toEqual(["kentra-ygeias"]);
+		expect(slugs("νοσοκ", "el-CY")).toEqual(["nosokomeia"]);
 	});
 
 	it("never offer care the market does not list", () => {
@@ -619,5 +649,6 @@ describe("the suggestions of “Qui ?”", () => {
 		expect(slugs("dentista", "it-IT")).toEqual([]);
 		expect(slugs("Zahnarzt", "de-CH")).toEqual([]);
 		expect(slugs("Apotheke", "it-IT")).toEqual([]);
+		expect(slugs("οδοντίατρος", "el-CY")).toEqual([]);
 	});
 });

@@ -114,4 +114,12 @@ export const GLOBAL_ERROR_TEXT: Record<CatalogLanguage, GlobalErrorText> = {
 		home: "Nazaj na domačo stran",
 		reference: "Oznaka za podporo: {digest}",
 	},
+	el: {
+		metaTitle: "Η σελίδα δεν είναι διαθέσιμη · Apercura",
+		title: "Δεν ήταν δυνατό να εμφανιστεί αυτή η σελίδα",
+		body: "Κάτι πήγε στραβά από την πλευρά μας κατά την προετοιμασία της. Δοκιμάστε ξανά· αν το πρόβλημα παραμένει, επιστρέψτε σε λίγα λεπτά.",
+		retry: "Δοκιμάστε ξανά",
+		home: "Επιστροφή στην αρχική σελίδα",
+		reference: "Κωδικός αναφοράς για την υποστήριξη: {digest}",
+	},
 };

@@ -100,7 +100,8 @@
 			"PL": "Pologne",
 			"NO": "Norvège",
 			"IE": "Irlande",
-			"FI": "Finlande"
+			"FI": "Finlande",
+			"CY": "Chypre"
 		}
 	},
 	"HomePage": {
@@ -164,7 +165,7 @@
 	},
 	"International": {
 		"metaTitle": "Apercura · Annuaires ouverts des professionnels de santé",
-		"metaDescription": "Une page gratuite et factuelle par soignant : France, Autriche, Royaume-Uni, Tchéquie, Espagne, Italie, Allemagne, Suisse, Estonie, Norvège.",
+		"metaDescription": "Une page gratuite et factuelle par soignant : France, Autriche, Royaume-Uni, Tchéquie, Espagne, Italie, Allemagne, Suisse, Estonie, Norvège, Chypre.",
 		"runningHead": "Annuaires ouverts des professionnels de santé",
 		"title": "Chaque professionnel de santé, une page ouverte",
 		"lead": "Apercura publie une page gratuite et factuelle pour chaque professionnel de santé inscrit, à partir des registres publics de chaque pays. Ni note, ni publicité, ni classement payant, et un code source ouvert.",
@@ -703,6 +704,12 @@
 		"finnishFacts": {
 			"organiser": "Organisateur",
 			"services": "Services"
+		},
+		"cypriotFacts": {
+			"registration": "Numéro d’enregistrement (ΑΜ)",
+			"registrationNote": "Le numéro de la pharmacie dans la liste des pharmacies privées des Services pharmaceutiques.",
+			"operator": "Exploitant",
+			"stateFacility": "L’État (listes des hôpitaux et des centres de santé publics du ministère de la Santé)"
 		}
 	},
 	"Institutional": {
@@ -1973,7 +1980,13 @@
 			"kuntoutus": "Unité de rééducation",
 			"kuntoutusyksikko": "Unité de rééducation",
 			"laboratoriot-ja-kuvantaminen": "Laboratoire ou service d’imagerie",
-			"laboratorio-tai-kuvantamisyksikko": "Laboratoire ou service d’imagerie"
+			"laboratorio-tai-kuvantamisyksikko": "Laboratoire ou service d’imagerie",
+			"nosokomeia": "Hôpital",
+			"nosokomeio": "Hôpital",
+			"kentra-ygeias": "Centre de santé",
+			"kentro-ygeias": "Centre de santé",
+			"farmakeia": "Pharmacie",
+			"farmakeio": "Pharmacie"
 		},
 		"listing": {
 			"aerzte": "Médecins sans spécialité indiquée",
@@ -2300,7 +2313,10 @@
 			"neuvolat": "Consultations maternelles et infantiles",
 			"mielenterveys-ja-paihdepalvelut": "Santé mentale et addictologie",
 			"kuntoutus": "Rééducation",
-			"laboratoriot-ja-kuvantaminen": "Laboratoires et imagerie"
+			"laboratoriot-ja-kuvantaminen": "Laboratoires et imagerie",
+			"nosokomeia": "Hôpitaux",
+			"kentra-ygeias": "Centres de santé",
+			"farmakeia": "Pharmacies"
 		},
 		"practiceKind": {
 			"office": "Cabinet",
@@ -3330,7 +3346,9 @@
 			"EE-APT": "Lieu d’activité de la pharmacie",
 			"PL-RPWDL": "Numéro d’établissement RPWDL (ID ZOZ)",
 			"NO-ORGNR": "Numéro d’organisation",
-			"FI-PTV": "Identifiant du lieu de service"
+			"FI-PTV": "Identifiant du lieu de service",
+			"CY-FARM": "Numéro d’enregistrement de la pharmacie (ΑΜ)",
+			"CY-MOH": "Clé Apercura d’un établissement public"
 		}
 	},
 	"Onboarding": {
@@ -9949,6 +9967,415 @@
 			"searchPlaceholder": "Rechercher…",
 			"searchResults": "Résultats de recherche",
 			"selectionCleared": "{label} effacé"
+		}
+	},
+	"LegalNoticeCy": {
+		"metaTitle": "Legal notice (Cyprus) · Apercura",
+		"metaDescription": "Legal notice of the Cypriot pages of Apercura: the service provider, its register and number, address and contact details, e-mail included (Law 156(I)/2004, section 8).",
+		"title": "Legal notice",
+		"lead": "Who provides the Cypriot pages of Apercura (apercura.org/cy): the information that section 8 of Law 156(I)/2004 on information society services and electronic commerce asks a service provider to give at all times.",
+		"sections": {
+			"provider": {
+				"heading": "Service provider (Law 156(I)/2004, section 8)",
+				"body": [
+					"The Cypriot pages of Apercura are provided by the entity below: its name, its address, its e-mail address and the other details that let you reach it directly and rapidly, the register that keeps it and its registration number, and its VAT number where it has one. It runs the directory and answers for its content.",
+					"The provider is established in another Member State of the European Economic Area: within the coordinated field, its service follows the rules of that state, as the E-Commerce Directive (2000/31/EC) and Law 156(I)/2004 provide, and this notice gives the information Cypriot law asks for as well."
+				]
+			},
+			"service": {
+				"heading": "The service",
+				"body": [
+					"A free directory of the state hospitals, the state health centres and the private pharmacies of Cyprus, built from the lists the Ministry of Health and its Pharmaceutical Services publish on the national open data portal (data.gov.cy), without advertising, with a space where a facility can complete its own page. Pages are facilities, never the people who work in them. No appointment is booked through Apercura in Cyprus."
+				]
+			},
+			"marketing": {
+				"heading": "Uniform, factual pages",
+				"body": [
+					"Article 45 of the Cyprus Medical Association’s Code of Medical Ethics asks that the listings of a directory be uniform for all, with no paid prominence. Every page of Apercura is: the same facts from public lists (name, address, telephone number, the pharmacy list’s registration number) in the same layout, in a neutral order, without ratings, reviews, advertising or paid placement. Nobody pays to be listed or to be listed higher. A facility that completes its page is bound by the same rule, and by the rules on the advertising of medicines and of pharmacies."
+				]
+			},
+			"editor": {
+				"heading": "Responsible for the content",
+				"body": [
+					"The person below is responsible for what the provider publishes. Information a facility adds to its own page is its own responsibility; as a host of information provided by its users, the provider answers for it only under the conditions of the Digital Services Act (Regulation (EU) 2022/2065, article 6)."
+				]
+			},
+			"liability": {
+				"heading": "Content of the pages",
+				"body": [
+					"The directory is built from public lists and placed with the Statistical Service’s municipalities and communities and Cyprus Post’s postcodes. The lists of state hospitals and health centres were last published in 2018 and the list of private pharmacies is updated once a year: the directory can be incomplete, out of date or list a facility that has closed or moved. Check the information with the facility before you go. Every page says how to report an error."
+				]
+			},
+			"ip": {
+				"heading": "Code and data",
+				"body": [
+					"The source code of Apercura is published under the AGPL-3.0 licence. The lists of the Ministry of Health, of the Pharmaceutical Services, of the Department of Postal Services and of the Statistical Service are reused under Creative Commons Attribution 4.0 International (CC BY 4.0). The data page lists every source with the credit it requires."
+				]
+			},
+			"review": {
+				"heading": "Status of this text",
+				"body": [
+					"This text is a draft, written before the legal entity was set up. It will be reviewed by a lawyer admitted in Cyprus before the Cypriot pages are announced."
+				]
+			}
+		},
+		"fields": {
+			"name": "Name",
+			"legalForm": "Legal form",
+			"registration": "Register and registration number",
+			"address": "Address",
+			"phone": "Phone",
+			"email": "E-mail address",
+			"vatId": "VAT number",
+			"editor": "Responsible for the content"
+		},
+		"dataLink": "Data and sources"
+	},
+	"PrivacyCy": {
+		"metaTitle": "Privacy (Cyprus) · Apercura",
+		"metaDescription": "What data the Cypriot pages of Apercura process, where from, why and for how long, and your rights, objection included (GDPR articles 13, 14, 21).",
+		"title": "Privacy",
+		"lead": "What data the Cypriot pages of Apercura process, where it comes from, why, for how long and by whom, and how to exercise your rights under the General Data Protection Regulation (GDPR) and Law 125(I)/2018, which gives it effect in Cyprus.",
+		"sections": {
+			"controller": {
+				"heading": "Who is responsible",
+				"body": [
+					"The provider named in the legal notice is the controller of the directory, of facility accounts, of claims and of the requests sent through the site."
+				]
+			},
+			"directory": {
+				"heading": "Directory: data about facilities",
+				"body": [
+					"Data: the facility’s name, the address where it is, its business telephone number and, for a private pharmacy, its registration number in the Pharmaceutical Services’ list, as the Ministry of Health’s lists publish them. A pharmacy is named after its address (“Φαρμακείο, Ερμού 51Γ, Λάρνακα”). A facility that claims its page can add a presentation, languages, a photo and opening hours.",
+					"Never read or stored, although the list of private pharmacies publishes them: the surname and first name of the pharmacist each pharmacy is listed under, and their home telephone number. Nor the additional address information (landmarks, which may name a shop or a person) or the websites of the state lists. A mobile telephone number, more often a person’s than a facility’s, is not shown.",
+					"Identifier: a pharmacy’s page ends with the list’s registration number after the letter f (for example f1197); a state hospital’s or health centre’s, which the lists number none, with a key derived from its kind and name. Never a person’s identity card number.",
+					"Purpose: letting the public find a hospital, a health centre or a pharmacy, where it is and how to reach it. Legal basis: legitimate interests (GDPR article 6(1)(f)), assessed below.",
+					"Retention: as long as the lists name the facility. A page disappears when the list no longer names it; a page removed after an objection is never published again.",
+					"Information: the data does not come from the facilities themselves (GDPR article 14). Writing to each of them would involve a disproportionate effort (article 14(5)(b)); this notice, the data page and a notice on every page make the information public."
+				]
+			},
+			"people": {
+				"heading": "Facilities, not people",
+				"body": [
+					"A Cypriot page is a facility, never a person’s profile: the doctors, nurses and pharmacists who work in it are not listed. The list of private pharmacies identifies each pharmacy by the pharmacist it is licensed to; that is why the directory never reads the pharmacist’s name or home telephone number, and names a pharmacy after its address instead. The open licence of the lists does not make personal data free to reuse: the GDPR still applies to it, and the directory leaves it out.",
+					"Nothing else about any person is collected: no identity card number, no private address, no e-mail, no ratings and no reviews. No patient’s data, and no health data, is processed by the directory."
+				]
+			},
+			"sources": {
+				"heading": "Sources",
+				"body": [
+					"Pharmacies come from the Pharmaceutical Services’ list of private pharmacies, hospitals and health centres from the Ministry of Health’s lists of state hospitals and state health centres; municipalities and communities from the Statistical Service’s 2021 census, and their postcodes and centres from the Department of Postal Services’ table of postcodes by municipality and community. All are published on the national open data portal (data.gov.cy) under Creative Commons Attribution 4.0 (CC BY 4.0). Each source is credited as it asks:"
+				]
+			},
+			"balancing": {
+				"heading": "Legitimate interests assessment",
+				"body": [
+					"Purpose: patients need to know which hospitals, health centres and pharmacies exist where and how to reach them, a need the State already meets by publishing these lists for public reuse.",
+					"Necessity: only the facility’s data is shown, data the lists publish anyway, and less of it: no person is named, no home telephone number, no mobile number, no landmark; nothing about private life, no ratings, no reviews.",
+					"Balance: a professional context, factual and uniform pages as article 45 of the Code of Medical Ethics asks of a directory, a neutral order, no advertising, the minimum of the lists’ fields, an objection that hides a page at once and keeps it from coming back, corrections at the source, and pages that follow every update of the lists. A pharmacy or a state facility listed in an official open list expects to be found in a directory repeating that information. Weighing these points, the interests of patients prevail, and anyone a page concerns can object without giving a reason."
+				]
+			},
+			"accounts": {
+				"heading": "Facility accounts and claims",
+				"body": [
+					"Data: e-mail address, name, password (stored hashed), second authentication factor, the documents sent to claim a page (proof that the claimant runs the facility or acts for it) and team members.",
+					"Purposes: managing the account and checking that a page is claimed by the right facility. Legal bases: performance of the terms of use (article 6(1)(b)) and the legitimate interests of securing the service (article 6(1)(f)).",
+					"Retention: the account is kept until it is deleted; supporting documents, encrypted, are erased 30 days after the decision."
+				]
+			},
+			"requests": {
+				"heading": "Error reports, objections and contact requests",
+				"body": [
+					"Data: the message, the contact e-mail address when one is given and the page concerned; for a “this is our facility” request also the name and phone number. Free text is encrypted.",
+					"Purposes: correcting errors, applying objections and helping a facility that cannot claim its page online. Legal bases: legitimate interests (article 6(1)(f)) and the right to object (article 21).",
+					"Retention: a report is deleted 6 months after it is closed, a rejected objection one year after its decision, a contact request 12 months after the last exchange. Once an objection is confirmed, or the holder of a claimed page removes it, the page and the data about it are deleted at once, the objection included; all that is kept is a record of the removal (the identifier of the page, the country, the reason, who recorded it and when), so that it is never published again."
+				]
+			},
+			"technical": {
+				"heading": "Technical data and cookies",
+				"body": [
+					"Only cookies strictly necessary to the service are set: the session of signed-in facilities and the chosen language. No advertising or audience measurement cookies, no trackers.",
+					"To limit abuse, IP addresses are transformed with a keyed function before being counted and never stored as such; facility sessions record a truncated IP address. Views of claimed pages are counted without a cookie or identifier, and only the page’s holder sees them."
+				]
+			},
+			"recipients": {
+				"heading": "Recipients and processors",
+				"body": [
+					"Data is neither sold nor rented, and never used for advertising. Only the provider’s team and the processors below receive it, each for its own part, under a contract that meets GDPR article 28. Data is hosted in the European Economic Area. Maps are loaded from a tile server, which receives the visitor’s IP address like any website."
+				]
+			},
+			"transfers": {
+				"heading": "Transfers outside the European Economic Area",
+				"body": [
+					"Data is transferred outside the European Economic Area only under the safeguards of chapter V of the GDPR (an adequacy decision or standard contractual clauses). Any change of processor will be announced here before it takes effect."
+				]
+			},
+			"automated": {
+				"heading": "Automated decisions",
+				"body": [
+					"No decision about you is taken by automated means alone. A claim is decided by a person, who reads its documents."
+				]
+			},
+			"rights": {
+				"heading": "Your rights",
+				"body": [
+					"You can ask to access your data, to have it corrected or erased, to restrict its processing, to receive it in a portable format and to object to its processing. Write to the address below; you will get an answer within one month.",
+					"You can also lodge a complaint with the Commissioner for Personal Data Protection, Cyprus’s supervisory authority (GDPR article 77, Law 125(I)/2018), or with the supervisory authority of the country where you live or work."
+				]
+			},
+			"objection": {
+				"heading": "Objecting to a page (GDPR article 21)",
+				"body": [
+					"Anyone a page concerns can object to its publication at any time, without giving a reason. If the page is unclaimed, a form is enough: the page is hidden as soon as the request arrives, deleted after a light check, and the updates of the lists never publish it again. If it is claimed, its holder removes it from their space."
+				]
+			},
+			"changes": {
+				"heading": "Updates to this notice",
+				"body": [
+					"This notice is a draft. It will be reviewed by a lawyer admitted in Cyprus and by the data protection officer; every version is dated."
+				]
+			}
+		},
+		"fields": {
+			"controller": "Controller",
+			"address": "Address",
+			"email": "Contact for requests",
+			"dpo": "Data protection officer",
+			"effectiveDate": "Effective date",
+			"hostingProvider": "Hosting provider (processor)",
+			"smtp": "E-mail delivery (processor)",
+			"authority": "Supervisory authority"
+		},
+		"objectLink": "How to object to a page",
+		"authorityLink": "The Commissioner for Personal Data Protection (dataprotection.gov.cy)",
+		"authorityAddress": "Γραφείο Επιτρόπου Προστασίας Δεδομένων Προσωπικού Χαρακτήρα, Ιάσονος 1, 1082 Λευκωσία, +357 22818456"
+	},
+	"TermsCy": {
+		"metaTitle": "Terms of use (Cyprus) · Apercura",
+		"metaDescription": "Terms of use of the Cypriot pages of Apercura: a free, factual directory of state hospitals, health centres and private pharmacies from public lists, without booking.",
+		"title": "Terms of use",
+		"lead": "The rules for using the Cypriot pages of Apercura, for the public and for facilities alike.",
+		"sections": {
+			"service": {
+				"heading": "The service",
+				"body": [
+					"Apercura lists, free of charge, the state hospitals and state health centres of the Ministry of Health’s lists and the private pharmacies of the Pharmaceutical Services’ list. It lists facilities, not the people who work in them. It is a directory only: no appointment is booked through Apercura in Cyprus. It is run by the provider named in the legal notice.",
+					"Using the directory requires no account. Using the site means accepting these terms."
+				]
+			},
+			"content": {
+				"heading": "What the pages contain",
+				"body": [
+					"Pages show factual information from public lists, as they publish it, uniform for all and in a neutral order, without ratings, reviews, advertising or paid placement.",
+					"The lists may be incomplete or out of date (the state lists date from 2018), and a pharmacy or a health centre is shown at the centre of its municipality or community, not at its exact address on a map: check the information with the facility before you go. Every page says how to report an error."
+				]
+			},
+			"health": {
+				"heading": "Not medical advice",
+				"body": [
+					"Apercura gives no medical advice and is not an emergency service. In an emergency, call 112 or 199."
+				]
+			},
+			"providers": {
+				"heading": "For facilities",
+				"body": [
+					"Claiming a page is free. It requires a document proving that the claimant runs the facility or acts for it, checked by a person before the page is handed over.",
+					"The holder of a page is responsible for the information they add. It must stay factual, accurate and up to date, and respect the rules on the advertising of health services, of medicines and of pharmacies; it must not name health professionals who have not agreed to it."
+				]
+			},
+			"removal": {
+				"heading": "Removing a page",
+				"body": [
+					"Anyone a page concerns can ask for it to be removed at any time: the data page explains how. A claimed page can only be removed by its holder."
+				]
+			},
+			"liability": {
+				"heading": "Liability",
+				"body": [
+					"The provider does its best to keep the service available and accurate, but cannot guarantee it. It is not responsible for the information facilities add to their pages. These limits will be specified during the legal review."
+				]
+			},
+			"ip": {
+				"heading": "Code and data",
+				"body": [
+					"The source code is published under the AGPL-3.0 licence. The lists are reused under Creative Commons Attribution 4.0 (CC BY 4.0): anyone may reuse them, from data.gov.cy or from these pages, under that licence and with its credit."
+				]
+			},
+			"law": {
+				"heading": "Governing law and disputes",
+				"body": [
+					"The governing law will be specified during the legal review; the mandatory consumer protection rules of the country of residence always apply. In case of a dispute, first write to the contact address to look for an amicable solution."
+				]
+			}
+		},
+		"fields": {
+			"publisher": "Provider",
+			"effectiveDate": "Effective date",
+			"contact": "Contact"
+		}
+	},
+	"AccessibilityCy": {
+		"metaTitle": "Accessibility (Cyprus) · Apercura",
+		"metaDescription": "Accessibility of the Cypriot pages of Apercura: the WCAG 2.2 AA target, what was checked, what remains, and how to report a problem.",
+		"title": "Accessibility",
+		"lead": "Apercura is designed for everyone, including older and low-vision people. This statement says where the Cypriot pages stand.",
+		"sections": {
+			"scope": {
+				"heading": "Scope",
+				"body": [
+					"Law 50(I)/2019 on the accessibility of the websites and mobile applications of public sector bodies binds public bodies, and the accessibility requirements for products and services (Directive (EU) 2019/882) cover e-commerce and the other services they list, not a free directory: this statement is voluntary. Apercura’s provider aims for WCAG 2.2 level AA (EN 301 549) on every page."
+				]
+			},
+			"status": {
+				"heading": "Where the site stands",
+				"body": [
+					"The Cypriot pages share the code of the other markets’ pages and their tests. The site partially meets WCAG 2.2 AA: this rests on a self-assessment and automated tests, not yet on a full audit, which is in progress."
+				]
+			},
+			"tests": {
+				"heading": "What was checked",
+				"list": [
+					"Automated axe-core checks (WCAG 2.0, 2.1 and 2.2 rules, levels A and AA) on every page type, at every release.",
+					"Keyboard-only journeys with a visible focus.",
+					"Body text of at least 18 px, targets of at least 44 px, nothing that relies on colour alone, no horizontal scrolling at 390 px."
+				]
+			},
+			"pending": {
+				"heading": "What remains to be checked",
+				"list": [
+					"A manual pass with the VoiceOver and NVDA screen readers, in Greek.",
+					"A full audit against WCAG 2.2 AA on a sample of pages, including the Greek texts."
+				]
+			},
+			"feedback": {
+				"heading": "Report a problem",
+				"body": [
+					"If a page or a feature is hard to use, write to the address below: say which page and what blocked you. We answer within one month and, where needed, give you the information in another form. If you are not satisfied with the answer, you can also turn to the Commissioner for Administration and the Protection of Human Rights (Ombudsman), Cyprus’s equality body."
+				]
+			}
+		},
+		"fields": {
+			"contact": "Contact",
+			"date": "Date of this statement"
+		},
+		"authorityLink": "The Commissioner for Administration and the Protection of Human Rights (ombudsman.gov.cy)"
+	},
+	"DataCy": {
+		"metaTitle": "Data and sources (Cyprus) · Apercura",
+		"metaDescription": "Where the Cypriot pages of Apercura come from (the Ministry of Health’s open lists on data.gov.cy), under which licence, and how to correct or remove a page.",
+		"title": "Data and sources",
+		"lead": "Every Cypriot page is built from public lists. Here is where the data comes from, under which licence and credit, what is kept and why, when it was updated, and how to correct or remove a page.",
+		"status": {
+			"heading": "Last update",
+			"body": "The Pharmaceutical Services update their list of private pharmacies once a year; the lists of state hospitals and state health centres were last published in 2018 and may be out of date. The directory reads every list once a month: a page changes only when its facts change in the list.",
+			"importedAt": "Last import",
+			"checkedAt": "Sources last checked",
+			"notImported": "The Cypriot directory has not been imported yet on this site.",
+			"notImportedValue": "Not imported yet"
+		},
+		"sources": {
+			"heading": "Sources",
+			"body": "Every list is published on the national open data portal (data.gov.cy) under Creative Commons Attribution 4.0 International (CC BY 4.0). Each credit below is printed word for word.",
+			"caption": "Data sources of the Cypriot directory",
+			"columns": {
+				"source": "Source",
+				"use": "Used for",
+				"licence": "Licence and credit",
+				"frequency": "Updated"
+			},
+			"items": {
+				"cy-farmakeia": {
+					"use": "Private pharmacies: the address, the town or community, the postcode, the pharmacy’s telephone number and the list’s registration number (ΑΜ). The pharmacist’s name and home telephone number are never read.",
+					"frequency": "Once a year, by the Pharmaceutical Services"
+				},
+				"cy-nosokomeia": {
+					"use": "State hospitals: the name, the address, the telephone number and the point of each hospital",
+					"frequency": "Irregularly, by the Ministry of Health (list of 2018)"
+				},
+				"cy-kentra-ygeias": {
+					"use": "State health centres: the name and the telephone number (the list gives no address)",
+					"frequency": "Irregularly, by the Ministry of Health (list of 2018)"
+				},
+				"cy-tk": {
+					"use": "The postcodes of every municipality and community, the official Latin form of their names and their centre",
+					"frequency": "Once a year, by the Department of Postal Services"
+				},
+				"cy-apografi": {
+					"use": "The municipalities and communities of the areas the census counted, and their population",
+					"frequency": "With each census, by the Statistical Service"
+				},
+				"map": {
+					"name": "Map data",
+					"publisher": "OpenStreetMap contributors, tiles from OpenFreeMap",
+					"use": "The maps of the pages",
+					"frequency": "Continuously"
+				}
+			},
+			"ccBy": "CC BY 4.0",
+			"odbl": "ODbL"
+		},
+		"licence": {
+			"heading": "The licence of the lists",
+			"body": [
+				"The lists are reused under Creative Commons Attribution 4.0 International (CC BY 4.0), which lets anyone copy, share and adapt them, for any purpose, with the credit the licence requires."
+			],
+			"list": [
+				"Attribution (CC BY 4.0, section 3): every page built from a list names its publisher and the licence, links to both and says that Apercura changed the data.",
+				"No endorsement (section 2(a)(6)): the pages never present Apercura as approved by the Ministry of Health, the Pharmaceutical Services or any other publisher, and Apercura has no tie with them.",
+				"Personal data: the licence does not make personal data free to reuse. The directory never reads the pharmacist’s name or home telephone number the list of private pharmacies gives, and names a pharmacy after its address.",
+				"The lists are provided as they are, without warranty (section 5): the facts of a page are the list’s."
+			],
+			"changesHeading": "What is kept, and why",
+			"changes": "A private pharmacy is named after its address (“Φαρμακείο, Ερμού 51Γ, Λάρνακα”), the town repeated at the end of an address dropped; two pharmacies at the same address and postcode are one page. Its telephone number is shown when it is a fixed or business line, not a mobile number. It is placed in the municipality or community of its postcode, else of its town as the list writes it, and shown at that place’s centre (no map pin). A state hospital is placed by the postcode or the place its address names and located at the point the Ministry’s list gives; its web address, from before the state hospitals moved to the State Health Services Organisation, is not shown. A state health centre is placed by the place its name gives (“Κέντρο Υγείας Κοφίνου”) in the district its telephone area code names, and shown at that place’s centre; a centre that names no known place is left out. Names are shown as the lists write them.",
+			"licenceLink": "Creative Commons Attribution 4.0 International (CC BY 4.0)",
+			"datasetLink": "The national open data portal (data.gov.cy)"
+		},
+		"coverage": {
+			"heading": "Facilities listed",
+			"body": [
+				"Pages are made for the private pharmacies of the Pharmaceutical Services’ list and for the state hospitals and health centres of the Ministry of Health’s lists, in the five districts of Nicosia, Limassol, Larnaca, Paphos and Famagusta, by municipality and community.",
+				"The areas of the Republic of Cyprus in which the Government of the Republic of Cyprus does not exercise effective control are not covered: no open source publishes the facilities there.",
+				"Not listed either, because no open list of them is published: private clinics and hospitals, doctors, dentists and the other health professionals, laboratories, and the personal doctors of the General Healthcare System (GHS).",
+				"A pharmacy or a health centre is shown at the centre of its municipality or community: its map position and its distance are then those of the place, never of the address. A hospital is shown at the point the Ministry’s list gives."
+			],
+			"kinds": {
+				"CY_HOSPITAL": "State hospitals",
+				"CY_HEALTH_CENTRE": "State health centres",
+				"CY_PHARMACY": "Private pharmacies"
+			},
+			"kindsLabel": "Imported"
+		},
+		"identifiers": {
+			"heading": "Identifiers",
+			"body": [
+				"The address of every page ends with a key, so that the page can be found and checked:"
+			],
+			"list": [
+				"/cy/monada/farmakeio-ermou-51g-larnaka-f1197: a private pharmacy, and after the letter f its registration number (ΑΜ) in the Pharmaceutical Services’ list.",
+				"/cy/monada/geniko-nosokomeio-lefkosias-m3fa9c01b2e: a state hospital or health centre. The Ministry’s lists number none, so the key after the letter m is derived from the facility’s kind and name: a renamed facility gets a new page.",
+				"No person’s identity card number is ever used."
+			]
+		},
+		"correct": {
+			"heading": "Correct an error",
+			"body": [
+				"The pages repeat the lists: a lasting correction is made at the source, and the page follows at the next import.",
+				"For anything else, use the form: we check every report."
+			],
+			"list": [
+				"A pharmacy reports a change of address or telephone number to the Pharmaceutical Services of the Ministry of Health, which keep the list of private pharmacies.",
+				"A state hospital or health centre reports its change to the Ministry of Health, which publishes the lists on data.gov.cy."
+			],
+			"formTitle": "Report an error",
+			"formBody": "Give the address of the page and what is wrong."
+		},
+		"remove": {
+			"heading": "Remove a page",
+			"body": [
+				"Anyone a page concerns can object to its publication at any time, without giving a reason (GDPR article 21). An unclaimed page is hidden as soon as the request arrives and deleted after a light check; it never comes back with the updates of the lists. A claimed page is removed by its holder, from their space."
+			],
+			"formTitle": "Ask for a page to be removed",
+			"formBody": "Give the address of the page and an e-mail address where we can answer you."
 		}
 	}
 }

@@ -23,6 +23,7 @@ type Pathnames = Record<
 				| "en-IE"
 				| "fi-FI"
 				| "lt-LT"
+				| "el-CY"
 			>,
 			string
 	  >
@@ -219,6 +220,34 @@ function slovenianPath(path: string): string {
 }
 
 /**
+ * The Cypriot form of each English path segment, Greek in Latin letters as ELOT 743 writes it
+ * (`/practitioner/[slug]/report` -> `/monada/[slug]/anafora`): a page is a facility of the
+ * Ministry of Health's lists ("μονάδα υγείας"), never a person, so an establishment's page is a
+ * body's ("φορέας"). The first segments are the Cypriot reserved segments of
+ * `@apercura/core/taxonomy` (`CY_RESERVED_SEGMENTS`, tested), which never name a listing.
+ */
+export const CYPRIOT_SEGMENTS: Readonly<Record<string, string>> = {
+	search: "anazitisi",
+	practitioner: "monada",
+	report: "anafora",
+	removal: "afairesi",
+	"this-is-me": "einai-i-selida-mou",
+	establishment: "foreas",
+	directory: "katalogos",
+	about: "schetika",
+	data: "dedomena",
+	accessibility: "prosvasimotita",
+	privacy: "aporrito",
+	"legal-notice": "nomiki-dilosi",
+	terms: "oroi-chrisis",
+};
+
+/** An English path with its segments in Greek; parameters and unknown segments stay. */
+function cypriotPath(path: string): string {
+	return path.replace(/[^/]+/g, (segment) => CYPRIOT_SEGMENTS[segment] ?? segment);
+}
+
+/**
  * The Spanish market's form of a Spanish path: a centre's page under `/centro` (Spain lists
  * centres, never people), so an establishment's page moves from `/centro` to `/organizacion`.
  * Every first segment is a Spanish reserved segment of `@apercura/core/taxonomy`
@@ -297,7 +326,9 @@ function swissMarketPath(path: string, person: string, facility: string): string
  * - Finland (`fi-FI`): the English paths with their segments in Finnish (`FINNISH_SEGMENTS`), a
  *   service location's page under `/toimipiste`;
  * - Lithuania (`lt-LT`): the English paths with their segments in Lithuanian
- *   (`LITHUANIAN_SEGMENTS`), an institution's page under `/istaiga`.
+ *   (`LITHUANIAN_SEGMENTS`), an institution's page under `/istaiga`;
+ * - Cyprus (`el-CY`): the English paths with their segments in Greek (`CYPRIOT_SEGMENTS`), a
+ *   facility's page under `/monada`.
  */
 function withMarkets<T extends Pathnames>(pathnames: T) {
 	return Object.fromEntries(
@@ -323,6 +354,7 @@ function withMarkets<T extends Pathnames>(pathnames: T) {
 						"fi-FI": finnishPath(value.en),
 						"lt-LT": lithuanianPath(value.en),
 						"sl-SI": slovenianPath(value.en),
+						"el-CY": cypriotPath(value.en),
 					},
 		]),
 	) as {
@@ -345,6 +377,7 @@ function withMarkets<T extends Pathnames>(pathnames: T) {
 					"fi-FI": string;
 					"lt-LT": string;
 					"sl-SI": string;
+					"el-CY": string;
 				};
 	};
 }

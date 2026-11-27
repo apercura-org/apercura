@@ -114,6 +114,7 @@ test("the country menu, beside the language menu, moves to another market's home
 		"Finnland",
 		"Litauen",
 		"Slowenien",
+		"Zypern",
 	]);
 	await expect(countries.getByRole("link", { name: "Frankreich" })).toHaveAttribute(
 		"aria-current",
@@ -147,6 +148,8 @@ test("the country menu, beside the language menu, moves to another market's home
 	await expect(countries.getByRole("link", { name: "Litauen" })).toHaveAttribute("href", "/lt");
 	// Slovenia in Slovenian, its only language.
 	await expect(countries.getByRole("link", { name: "Slowenien" })).toHaveAttribute("href", "/si");
+	// Cyprus in Greek, its only language here.
+	await expect(countries.getByRole("link", { name: "Zypern" })).toHaveAttribute("href", "/cy");
 	await countries.getByRole("link", { name: "Österreich" }).click();
 	await expect(page).toHaveURL(/\/at$/);
 	await expect(page.locator("html")).toHaveAttribute("lang", "de-AT");

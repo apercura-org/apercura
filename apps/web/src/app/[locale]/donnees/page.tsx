@@ -11,6 +11,7 @@ import {
 } from "~/components/institutional";
 import { DataAt } from "~/components/legal-at";
 import { DataCh } from "~/components/legal-ch";
+import { DataCy } from "~/components/legal-cy";
 import { DataCz } from "~/components/legal-cz";
 import { DataDe } from "~/components/legal-de";
 import { DataEe } from "~/components/legal-ee";
@@ -96,6 +97,7 @@ export function generateMetadata({ params }: PageProps<"/[locale]/donnees">) {
 			FI: "DataFi",
 			LT: "DataLt",
 			SI: "DataSi",
+			CY: "DataCy",
 		},
 		HREF,
 	);
@@ -104,7 +106,7 @@ export function generateMetadata({ params }: PageProps<"/[locale]/donnees">) {
 export default async function DataPage({ params }: PageProps<"/[locale]/donnees">) {
 	const locale = await localeOf(params);
 	setRequestLocale(locale);
-	// Austria's, the UK's, Czechia's, Spain's, Italy's, Germany's, Switzerland's, Estonia's, Poland's, Norway's, Finland's and Lithuania's pages
+	// Austria's, the UK's, Czechia's, Spain's, Italy's, Germany's, Switzerland's, Estonia's, Poland's, Norway's, Finland's, Lithuania's and Cyprus's pages
 	// have texts of their own, written for their law.
 	if (marketOf(locale) === "AT") return <DataAt locale={locale} />;
 	if (marketOf(locale) === "GB") return <DataGb locale={locale} />;
@@ -120,6 +122,7 @@ export default async function DataPage({ params }: PageProps<"/[locale]/donnees"
 	if (marketOf(locale) === "IE") return <DataIe locale={locale} />;
 	if (marketOf(locale) === "LT") return <DataLt locale={locale} />;
 	if (marketOf(locale) === "SI") return <DataSi locale={locale} />;
+	if (marketOf(locale) === "CY") return <DataCy locale={locale} />;
 	const t = await getTranslations({ locale, namespace: "DataPage" });
 	const tSite = await getTranslations({ locale, namespace: "Site" });
 	const registry = await getRegistryStatus();

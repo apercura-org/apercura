@@ -9,6 +9,7 @@ import {
 } from "~/components/institutional";
 import { TermsAt } from "~/components/legal-at";
 import { TermsCh } from "~/components/legal-ch";
+import { TermsCy } from "~/components/legal-cy";
 import { TermsCz } from "~/components/legal-cz";
 import { TermsDe } from "~/components/legal-de";
 import { TermsEe } from "~/components/legal-ee";
@@ -57,6 +58,7 @@ export function generateMetadata({ params }: PageProps<"/[locale]/conditions">) 
 			FI: "TermsFi",
 			LT: "TermsLt",
 			SI: "TermsSi",
+			CY: "TermsCy",
 		},
 		HREF,
 	);
@@ -70,7 +72,7 @@ export function generateMetadata({ params }: PageProps<"/[locale]/conditions">) 
 export default async function TermsPage({ params }: PageProps<"/[locale]/conditions">) {
 	const locale = await localeOf(params);
 	setRequestLocale(locale);
-	// Austria's, the UK's, Czechia's, Spain's, Italy's, Germany's, Switzerland's, Estonia's, Poland's, Norway's, Finland's and Lithuania's pages
+	// Austria's, the UK's, Czechia's, Spain's, Italy's, Germany's, Switzerland's, Estonia's, Poland's, Norway's, Finland's, Lithuania's and Cyprus's pages
 	// have texts of their own, written for their law.
 	if (marketOf(locale) === "AT") return <TermsAt locale={locale} />;
 	if (marketOf(locale) === "GB") return <TermsGb locale={locale} />;
@@ -86,6 +88,7 @@ export default async function TermsPage({ params }: PageProps<"/[locale]/conditi
 	if (marketOf(locale) === "IE") return <TermsIe locale={locale} />;
 	if (marketOf(locale) === "LT") return <TermsLt locale={locale} />;
 	if (marketOf(locale) === "SI") return <TermsSi locale={locale} />;
+	if (marketOf(locale) === "CY") return <TermsCy locale={locale} />;
 	const t = await getTranslations({ locale, namespace: "TermsPage" });
 	const tI = await getTranslations({ locale, namespace: "Institutional" });
 	const format = await getFormatter({ locale });

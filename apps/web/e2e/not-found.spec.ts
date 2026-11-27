@@ -67,6 +67,7 @@ const LOCALIZED = [
 	},
 	// Slovenia, in Slovenian.
 	{ path: "/si/ne-obstaja", title: "Ta stran ne obstaja", lang: "sl-SI", search: "Išči" },
+	{ path: "/cy/den-yparchei", title: "Η σελίδα δεν υπάρχει", lang: "el-CY", search: "Αναζήτηση" },
 ];
 
 for (const { path, title, lang, search } of LOCALIZED) {

@@ -405,3 +405,36 @@ describe("Finnish service location references", () => {
 		expect(parsePractitionerRef(practitionerRefOf(location))).toEqual(location);
 	});
 });
+
+describe("Cypriot facility references", () => {
+	const pharmacy = { country: "CY", idScheme: "CY-FARM", nationalId: "101" };
+	const hospital = { country: "CY", idScheme: "CY-MOH", nationalId: "00000000b2" };
+
+	it("read the `cy:` reference, a Cypriot page address, and a key typed on a Cypriot page", () => {
+		expect(parsePractitionerRef("cy:f101")).toEqual(pharmacy);
+		expect(parsePractitionerRef(" CY: F101 ")).toEqual(pharmacy);
+		expect(parsePractitionerRef("cy:m00000000b2")).toEqual(hospital);
+		expect(
+			parsePractitionerRef(
+				"https://apercura.org/cy/monada/farmakeio-odos-paradeigmatos-12-lefkosia-f101",
+			),
+		).toEqual(pharmacy);
+		expect(parsePractitionerRef("/cy/monada/geniko-nosokomeio-paradeigmatos-m00000000b2/")).toEqual(
+			hospital,
+		);
+		expect(parsePractitionerRef("F101", "CY")).toEqual(pharmacy);
+		expect(parsePractitionerRef("cy:101")).toBeNull();
+		expect(parsePractitionerRef("cy:")).toBeNull();
+	});
+
+	it("still read RPPS numbers as French", () => {
+		expect(parsePractitionerRef("19999990013", "CY")?.country).toBe("FR");
+	});
+
+	it("write the reference back with its market", () => {
+		expect(practitionerRefOf(pharmacy)).toBe("cy:f101");
+		expect(practitionerRefOf(hospital)).toBe("cy:m00000000b2");
+		expect(marketRef("F101", "CY")).toBe("cy:f101");
+		expect(parsePractitionerRef(practitionerRefOf(hospital))).toEqual(hospital);
+	});
+});

@@ -113,6 +113,10 @@ describe("places of a market", () => {
 		// Oslo is a county and its only municipality: the municipality's page is the county's.
 		expect(isDepartmentCity("NO", "0301")).toBe(true);
 		expect(isDepartmentCity("NO", "4601")).toBe(false);
+		// Cyprus: a district is never a town, and Λευκωσία (1000) has pages of its own.
+		expect(isDepartmentCity("CY", "1000")).toBe(false);
+		expect(isDepartmentSlug("eparchia-lefkosias", "CY")).toBe(true);
+		expect(isDepartmentSlug("1", "CY")).toBe(false);
 		expect(isDepartmentSlug("vestland", "NO")).toBe(true);
 		expect(isDepartmentSlug("46", "NO")).toBe(false);
 	});
@@ -377,6 +381,38 @@ describe("Spain's pages", () => {
 		expect(isMarketListingSlug("et-EE", "perearstikeskused")).toBe(true);
 		expect(isMarketListingSlug("et-EE", "krankenhaeuser")).toBe(false);
 		expect(marketBooks("et-EE")).toBe(false);
+	});
+});
+
+describe("Cyprus's pages", () => {
+	it("write Cypriot addresses street, then postcode and place, and Cypriot numbers", () => {
+		const site = {
+			addressLine: "Οδός Παραδείγματος 12",
+			addressComplement: null,
+			postcode: "1010",
+			placeName: "Λευκωσία",
+		};
+		expect(addressLines(site, "CY")).toEqual(["Οδός Παραδείγματος 12", "1010 Λευκωσία"]);
+		expect(formatPhone("+35722000101")).toBe("22 000101");
+		expect(formatPhone("+35799123456")).toBe("99 123456");
+	});
+
+	it("credit the list a page is built from, then Cyprus Post's postcodes and the census", () => {
+		const page = openDataSourcesOf("CY", [{ source: "cy-farmakeia", site: null }]);
+		expect(page.map((source) => source.attribution)).toEqual([
+			"Κατάλογος Ιδιωτικών Φαρμακείων: Φαρμακευτικές Υπηρεσίες, Υπουργείο Υγείας, CC BY 4.0· με αλλαγές της Apercura",
+			"Ταχυδρομικοί κώδικες ανά δήμο και κοινότητα: Τμήμα Ταχυδρομικών Υπηρεσιών, CC BY 4.0",
+			"Δήμοι και κοινότητες: Στατιστική Υπηρεσία Κύπρου, Απογραφή 2021, CC BY 4.0",
+		]);
+		expect(
+			openDataSourcesOf("CY", [{ source: "cy-nosokomeia", site: null }])[0]?.attribution,
+		).toMatch(/^Κατάλογος Κρατικών Νοσοκομείων Κύπρου/);
+		expect(openDataSourcesOf("CY", [])).toEqual([]);
+		expect(professionSlugOf("CY_PHARMACY")).toBe("farmakeia");
+		expect(professionSlugOf("CY_HEALTH_CENTRE")).toBe("kentra-ygeias");
+		expect(isMarketListingSlug("el-CY", "nosokomeia")).toBe(true);
+		expect(isMarketListingSlug("el-CY", "apotek")).toBe(false);
+		expect(marketBooks("el-CY")).toBe(false);
 	});
 });
 

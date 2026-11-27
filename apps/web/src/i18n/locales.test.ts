@@ -1,6 +1,7 @@
 import {
 	AT_RESERVED_SEGMENTS,
 	CH_RESERVED_SEGMENTS,
+	CY_RESERVED_SEGMENTS,
 	CZ_RESERVED_SEGMENTS,
 	DE_RESERVED_SEGMENTS,
 	EE_RESERVED_SEGMENTS,
@@ -11,6 +12,7 @@ import {
 	IT_RESERVED_SEGMENTS,
 	isAtListingSlug,
 	isChListingSlug,
+	isCyListingSlug,
 	isCzListingSlug,
 	isDeListingSlug,
 	isEeListingSlug,
@@ -56,6 +58,7 @@ import { getPathname } from "./navigation";
 import { localePath } from "./paths";
 import {
 	type AppPathname,
+	CYPRIOT_SEGMENTS,
 	CZECH_SEGMENTS,
 	ESTONIAN_SEGMENTS,
 	FINNISH_SEGMENTS,
@@ -91,6 +94,7 @@ const TRANSLATIONS = LOCALES.filter(
 		locale !== "fi-FI" &&
 		locale !== "lt-LT" &&
 		locale !== "sl-SI" &&
+		locale !== "el-CY" &&
 		marketOf(locale) !== "CH",
 );
 
@@ -128,6 +132,7 @@ describe("locale configuration", () => {
 			"fi-FI",
 			"lt-LT",
 			"sl-SI",
+			"el-CY",
 		]);
 		expect(routing.locales).toEqual(LOCALES);
 		expect(routing.defaultLocale).toBe("fr");
@@ -154,6 +159,7 @@ describe("locale configuration", () => {
 			"fi-FI": "/fi",
 			"lt-LT": "/lt",
 			"sl-SI": "/si",
+			"el-CY": "/cy",
 		});
 		expect(LOCALE_SEGMENTS).toEqual([
 			"fr",
@@ -177,6 +183,7 @@ describe("locale configuration", () => {
 			"fi",
 			"lt",
 			"si",
+			"cy",
 		]);
 		expect(LOCALE_MARKETS).toEqual({
 			fr: "FR",
@@ -200,6 +207,7 @@ describe("locale configuration", () => {
 			"fi-FI": "FI",
 			"lt-LT": "LT",
 			"sl-SI": "SI",
+			"el-CY": "CY",
 		});
 		expect(CATALOG_LANGUAGES["de-AT"]).toBe("de");
 		expect(CATALOG_LANGUAGES["en-GB"]).toBe("en");
@@ -220,6 +228,8 @@ describe("locale configuration", () => {
 		expect(CATALOG_LANGUAGES["sl-SI"]).toBe("sl");
 		expect(MARKET_LOCALES.SI).toBe("sl-SI");
 		expect(marketLanguages("SI")).toEqual(["sl-SI"]);
+		// Cyprus: Greek, read over the English catalog like Norwegian.
+		expect(CATALOG_LANGUAGES["el-CY"]).toBe("el");
 		expect(MARKET_LOCALES.CH).toBe("de-CH");
 		expect(marketLanguages("CH")).toEqual(["de-CH", "fr-CH", "it-CH"]);
 		expect(marketLanguages("IT")).toEqual(["it-IT"]);
@@ -278,6 +288,7 @@ describe("locale configuration", () => {
 			"fi-FI": "fi-FI",
 			"lt-LT": "lt-LT",
 			"sl-SI": "sl-SI",
+			"el-CY": "el-CY",
 		});
 		expect(OG_LOCALES).toEqual({
 			fr: "fr_FR",
@@ -301,16 +312,20 @@ describe("locale configuration", () => {
 			"fi-FI": "fi_FI",
 			"lt-LT": "lt_LT",
 			"sl-SI": "sl_SI",
+			"el-CY": "el_CY",
 		});
 		for (const locale of LOCALES) {
 			expect(Intl.DateTimeFormat.supportedLocalesOf([LOCALE_TAGS[locale]])).toEqual([
 				LOCALE_TAGS[locale],
 			]);
-			// A 24-hour clock everywhere: appointment times read the same in every email.
+			// A 24-hour clock everywhere: appointment times read the same in every email. Greek
+			// defaults to a 12-hour clock ("02:30 μ.μ."): the appointment formats pin `h23` anyway
+			// (`slot-format.ts`, the agenda), and Cyprus has no booking.
 			const time = new Intl.DateTimeFormat(LOCALE_TAGS[locale], {
 				hour: "2-digit",
 				minute: "2-digit",
 				timeZone: "UTC",
+				...(CATALOG_LANGUAGES[locale] === "el" ? { hourCycle: "h23" as const } : {}),
 			}).format(Date.UTC(2026, 10, 24, 14, 30));
 			expect(time, locale).toMatch(/14[:.]30/);
 		}
@@ -335,6 +350,7 @@ describe("locale configuration", () => {
 			"fi-FI",
 			"lt-LT",
 			"sl-SI",
+			"el-CY",
 		]);
 		expect(HREFLANGS).toEqual({
 			fr: "fr-FR",
@@ -354,6 +370,7 @@ describe("locale configuration", () => {
 			"fi-FI": "fi-FI",
 			"lt-LT": "lt-LT",
 			"sl-SI": "sl-SI",
+			"el-CY": "el-CY",
 		});
 		expect(routing.alternateLinks).toBe(false);
 		expect(robotsFor("fr", true)).toEqual({ index: true, follow: true });
@@ -375,6 +392,7 @@ describe("locale configuration", () => {
 		expect(robotsFor("en-IE", true)).toEqual({ index: true, follow: true });
 		expect(robotsFor("lt-LT", true)).toEqual({ index: true, follow: true });
 		expect(robotsFor("sl-SI", true)).toEqual({ index: true, follow: true });
+		expect(robotsFor("el-CY", true)).toEqual({ index: true, follow: true });
 		for (const locale of TRANSLATIONS) {
 			expect(robotsFor(locale, true)).toEqual({ index: false, follow: true });
 		}
@@ -725,6 +743,33 @@ describe("locale configuration", () => {
 		expect(localePath("nb-NO", "/[specialite]", { specialite: "legekontorer" })).toBe(
 			"/no/legekontorer",
 		);
+		// Cyprus: every first segment is reserved and never a Cypriot listing slug.
+		for (const pathname of simple.filter((pathname) => !pathname.startsWith("/["))) {
+			const [first] = getPathname({ href: hrefOf(pathname) as never, locale: "el-CY" })
+				.split("/")
+				.filter(Boolean)
+				.slice(1);
+			if (!first) continue;
+			expect(CY_RESERVED_SEGMENTS as readonly string[], pathname).toContain(first);
+			expect(isCyListingSlug(first), pathname).toBe(false);
+		}
+		expect(
+			localePath("el-CY", "/praticien/[slug]", { slug: "farmakeio-odos-paradeigmatos-12-f101" }),
+		).toBe("/cy/monada/farmakeio-odos-paradeigmatos-12-f101");
+		expect(
+			localePath("el-CY", "/praticien/[slug]/retrait", {
+				slug: "farmakeio-odos-paradeigmatos-12-f101",
+			}),
+		).toBe("/cy/monada/farmakeio-odos-paradeigmatos-12-f101/afairesi");
+		expect(localePath("el-CY", "/etablissement/[slug]", { slug: "x-1" })).toBe("/cy/foreas/x-1");
+		expect(localePath("el-CY", "/annuaire")).toBe("/cy/katalogos");
+		expect(localePath("el-CY", "/recherche")).toBe("/cy/anazitisi");
+		expect(localePath("el-CY", "/mentions-legales")).toBe("/cy/nomiki-dilosi");
+		expect(localePath("el-CY", "/confidentialite")).toBe("/cy/aporrito");
+		expect(localePath("el-CY", "/conditions")).toBe("/cy/oroi-chrisis");
+		expect(localePath("el-CY", "/accessibilite")).toBe("/cy/prosvasimotita");
+		expect(localePath("el-CY", "/donnees")).toBe("/cy/dedomena");
+		expect(localePath("el-CY", "/[specialite]", { specialite: "farmakeia" })).toBe("/cy/farmakeia");
 	});
 
 	it("translates into Slovenian only segments reserved in Slovenia, a doctor under /zdravnik", () => {
@@ -804,6 +849,17 @@ describe("locale configuration", () => {
 		expect(localePath("fi-FI", "/[specialite]", { specialite: "neuvolat" })).toBe("/fi/neuvolat");
 	});
 
+	it("translates into Greek only segments reserved in Cyprus", () => {
+		for (const greek of Object.values(CYPRIOT_SEGMENTS)) {
+			expect(isCyListingSlug(greek), greek).toBe(false);
+		}
+		const firsts = Object.values(routing.pathnames)
+			.filter((entry) => typeof entry !== "string")
+			.map((entry) => entry["el-CY"].split("/")[1] ?? "")
+			.filter((first) => first && !first.startsWith("["));
+		for (const first of firsts) expect(CY_RESERVED_SEGMENTS as readonly string[]).toContain(first);
+	});
+
 	it("translates into Czech only segments reserved in Czechia", () => {
 		for (const czech of Object.values(CZECH_SEGMENTS)) {
 			expect(isCzListingSlug(czech), czech).toBe(false);
@@ -863,6 +919,7 @@ describe("the markets a search can move to", () => {
 			"FI",
 			"LT",
 			"SI",
+			"CY",
 		]);
 		expect(MARKET_COUNTRIES.map(marketSegment)).toEqual([
 			"fr",
@@ -880,6 +937,7 @@ describe("the markets a search can move to", () => {
 			"fi",
 			"lt",
 			"si",
+			"cy",
 		]);
 		for (const country of MARKET_COUNTRIES) {
 			expect(marketOfSegment(marketSegment(country))).toBe(country);
@@ -896,6 +954,7 @@ describe("the markets a search can move to", () => {
 		expect(marketOfSegment("ch")).toBe("CH");
 		expect(marketOfSegment("ee")).toBe("EE");
 		expect(marketOfSegment("no")).toBe("NO");
+		expect(marketOfSegment("cy")).toBe("CY");
 		expect(marketOfSegment("ch-fr")).toBeNull();
 		expect(marketOfSegment("ie")).toBe("IE");
 		expect(marketOfSegment("lt")).toBe("LT");
@@ -967,5 +1026,9 @@ describe("the markets a search can move to", () => {
 		expect(marketLocaleFor("FI", "fr")).toBe("fi-FI");
 		expect(marketLocaleFor("FI", "en-GB")).toBe("fi-FI");
 		expect(marketLocaleFor("FI", "fi-FI")).toBe("fi-FI");
+		// Cyprus has one language here: every visitor lands on its Greek pages.
+		expect(marketLocaleFor("CY", "fr")).toBe("el-CY");
+		expect(marketLocaleFor("CY", "en-GB")).toBe("el-CY");
+		expect(marketLocaleFor("CY", "el-CY")).toBe("el-CY");
 	});
 });

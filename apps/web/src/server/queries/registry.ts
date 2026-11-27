@@ -63,7 +63,7 @@ export async function getRegistryStatus(): Promise<RegistryStatus | null> {
 export type ImportStatus = Omit<RegistryStatus, "files"> & { files: Record<string, string> };
 
 /**
- * The status of one market's import (`directory.etl_runs.source`: `fr`, `at`, `gb`, `cz`, `es`, `it`, `de`, `ch`, `ee`, `pl`, `no`, `fi`, `lt`): when it last
+ * The status of one market's import (`directory.etl_runs.source`: `fr`, `at`, `gb`, `cz`, `es`, `it`, `de`, `ch`, `ee`, `pl`, `no`, `fi`, `lt`, `cy`): when it last
  * imported, when it last checked the sources, and the publication date of every file of its last
  * import (`Last-Modified`), whatever their keys. Null before the first import.
  */
@@ -83,7 +83,8 @@ export async function getImportStatus(
 		| "ie"
 		| "fi"
 		| "lt"
-		| "si",
+		| "si"
+		| "cy",
 ): Promise<ImportStatus | null> {
 	"use cache";
 	cacheTag("registry");

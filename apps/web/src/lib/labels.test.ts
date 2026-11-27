@@ -31,6 +31,7 @@ const CATALOGS = {
 	"fi-FI": messagesFor("fi-FI"),
 	"lt-LT": messagesFor("lt-LT"),
 	"sl-SI": messagesFor("sl-SI"),
+	"el-CY": messagesFor("el-CY"),
 } as const;
 
 /** A label of the catalog's taxonomy, rendered like `getTaxonomyLabels` does. */
@@ -254,5 +255,20 @@ describe("Ireland's labels", () => {
 		expect(t("listing.nursing-homes" as never)).toBe("Nursing homes");
 		expect(t("profession.health-centres" as never)).toBe("Health centre");
 		expect(inSentence(t("profession.hospitals" as never), "en-IE")).toBe("hospital");
+	});
+});
+
+describe("Cyprus's labels", () => {
+	it("name a listing in the plural and a facility's kind in the singular", () => {
+		const t = createTranslator({
+			locale: "el-CY",
+			messages: CATALOGS["el-CY"],
+			namespace: "taxonomy",
+		});
+		expect(t("listing.farmakeia" as never)).toBe("Φαρμακεία");
+		expect(t("listing.kentra-ygeias" as never)).toBe("Κέντρα Υγείας");
+		expect(t("profession.farmakeio" as never)).toBe("Φαρμακείο");
+		// Greek writes a common noun in lower case inside a sentence.
+		expect(inSentence(t("profession.nosokomeio" as never), "el-CY")).toBe("νοσοκομείο");
 	});
 });
