@@ -45,6 +45,9 @@ const BUDGETS_KB: Record<string, number> = {
 	"/lv/iestade/paraugu-aptieka-1-a900001": 61,
 	"/lv/aptiekas/siguldas-novads/mores-pagasts": 60,
 	"/lv": 60,
+	// Sweden (synthetic fixtures): its home and a municipality's listing.
+	"/se": 60,
+	"/se/apoteken/stockholms-lan/stockholm": 60,
 };
 
 const manifest = JSON.parse(

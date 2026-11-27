@@ -12,6 +12,7 @@ import {
 	allLvListingSlugs,
 	allNoTaxonomySlugs,
 	allPlListingSlugs,
+	allSeTaxonomySlugs,
 	allSiListingSlugs,
 	CY_DEFAULT_PROFESSIONS,
 	DE_DEFAULT_PROFESSIONS,
@@ -20,6 +21,7 @@ import {
 	IE_DEFAULT_PROFESSIONS,
 	NO_DEFAULT_PROFESSIONS,
 	PL_DEFAULT_PROFESSIONS,
+	SE_DEFAULT_PROFESSIONS,
 } from "@apercura/core/taxonomy";
 import {
 	isPluralElement,
@@ -52,6 +54,7 @@ import lt from "../../messages/lt.json";
 import lv from "../../messages/lv.json";
 import no from "../../messages/no.json";
 import pl from "../../messages/pl.json";
+import se from "../../messages/se.json";
 import si from "../../messages/si.json";
 import { mergeMessages, messagesFor, withoutEszett } from "./catalogs";
 import { CATALOG_LANGUAGES, LOCALES, type Locale } from "./locales";
@@ -108,6 +111,7 @@ const CATALOGS: Record<Locale, unknown> = {
 	"sl-SI": mergeMessages(en, si as Record<string, unknown>),
 	"el-CY": mergeMessages(en, cy as Record<string, unknown>),
 	"lv-LV": mergeMessages(en, lv as Record<string, unknown>),
+	"sv-SE": mergeMessages(en, se as Record<string, unknown>),
 };
 
 /** Every message of a catalog by its dotted key (array items are indexed). */
@@ -690,5 +694,69 @@ describe("the Greek texts", () => {
 		for (const [key, value] of flatten(cy)) {
 			if (key.startsWith("HomePage.pillars")) expect(value, key).not.toMatch(/HDS/);
 		}
+	});
+});
+
+describe("Sweden's texts", () => {
+	it("only override keys of the English catalog", () => {
+		const english = flatten(en);
+		expect([...flatten(se).keys()].filter((key) => !english.has(key))).toEqual([]);
+	});
+
+	it("name every Swedish listing and kind of facility, in every catalog and in Swedish", () => {
+		for (const catalog of [en, fr, de, es, it_, se]) {
+			const labels = flatten(catalog);
+			for (const slug of allSeTaxonomySlugs()) {
+				expect(labels.get(`taxonomy.profession.${slug}`), slug).toBeTruthy();
+			}
+			expect(labels.get("taxonomy.listing.apoteken")).toBeTruthy();
+			expect(labels.get("taxonomy.listing.vardcentraler")).toBeTruthy();
+		}
+		const swedish = flatten(se);
+		expect(swedish.get("taxonomy.listing.apoteken")).toBe("Apotek");
+		expect(swedish.get("taxonomy.listing.vardcentraler")).toBe("Vårdcentraler");
+		expect(swedish.get("taxonomy.profession.oppenvardsapotek")).toBe("Öppenvårdsapotek");
+	});
+
+	it("write Sweden's legal pages in Swedish, list every kind and say where health centres are listed", () => {
+		const swedish = flatten(messagesFor("sv-SE"));
+		const english = flatten(en);
+		for (const key of [
+			"LegalNoticeSe.title",
+			"PrivacySe.title",
+			"TermsSe.title",
+			"AccessibilitySe.title",
+			"DataSe.title",
+		]) {
+			expect(swedish.get(key), key).toBeTruthy();
+			expect(swedish.get(key), key).not.toBe(english.get(key));
+		}
+		for (const code of SE_DEFAULT_PROFESSIONS) {
+			expect(swedish.get(`DataSe.coverage.kinds.${code}`), code).toBeTruthy();
+			expect(english.get(`DataSe.coverage.kinds.${code}`), code).toBeTruthy();
+		}
+		expect(swedish.get("HomePage.title")).not.toBe(english.get("HomePage.title"));
+		// Pharmacies everywhere, health centres in Västra Götaland only: said on the home and the data page.
+		expect(swedish.get("HomePage.registry.intro")).toMatch(/Västra Götaland/);
+		expect(swedish.get("DataSe.coverage.body.0")).toMatch(/Västra Götaland/);
+		// The pharmacies' credit names the licence, as CC BY 4.0 asks; IMY is the authority.
+		expect(swedish.get("DataSe.licence.licenceLink")).toMatch(/CC BY 4\.0/);
+		expect(swedish.get("PrivacySe.authorityLink")).toMatch(/IMY/);
+		// The privacy notice never names a host, and keeps the data in the EEA.
+		expect(swedish.get("PrivacySe.sections.recipients.body.0")).toContain(
+			"Europeiska ekonomiska samarbetsområdet",
+		);
+	});
+
+	it("give Astryx its words in Swedish and name every market in Swedish", () => {
+		const english = flatten(en);
+		const swedish = flatten(se);
+		const astryx = [...english.keys()].filter((key) => key.startsWith("Astryx."));
+		expect(astryx.length).toBeGreaterThan(0);
+		expect(astryx.filter((key) => !swedish.has(key))).toEqual([]);
+		expect(swedish.get("Astryx.selector.resultCount")).toContain("one {träff} other {träffar}");
+		const markets = [...english.keys()].filter((key) => key.startsWith("Search.markets."));
+		expect(markets.filter((key) => !swedish.has(key))).toEqual([]);
+		expect(swedish.get("Search.markets.LV")).toBe("Lettland");
 	});
 });

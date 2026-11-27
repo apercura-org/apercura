@@ -1860,3 +1860,99 @@ export function checkLvPlaces(staged: {
 		},
 	];
 }
+
+/**
+ * Limits of the Swedish import. Läkemedelsverket's register held 1,451 pharmacies and Västra
+ * Götaland's list 215 health centres on 27 November 2026: the floors stop an error page, a
+ * filtered export or a truncated file (never approvable; the synthetic fixtures, read with
+ * `--source-dir`, are exempt), the change checks allow 10% or 10 facilities, whichever is more,
+ * and a list may quarantine two lines or 1% of its lines.
+ */
+export const SE_LIMITS = {
+	fileSizeDelta: 0.25,
+	quarantineRatio: 0.01,
+	quarantineLines: 2,
+	rowsDelta: 0.1,
+	rowsSlack: 10,
+	floors: {
+		apotek: { minLines: 1_000, minRows: 1_000 },
+		vardcentraler: { minLines: 150, minRows: 150 },
+	} as Readonly<Record<string, { minLines: number; minRows: number }>>,
+} as const;
+
+/**
+ * Checks of one Swedish list before the merge: quarantine within its limit (the lines that
+ * cannot be read or placed), floors of lines and facilities (never approvable; not checked on the
+ * fixtures), and the change of facilities and bytes since the last successful run that read it
+ * (approvable).
+ */
+export function checkSeSource(
+	source: string,
+	current: AtSourceStats & { bytes: number },
+	previous: (AtSourceStats & { bytes?: number }) | null,
+	{ fixtures = false }: { fixtures?: boolean } = {},
+): GuardCheck[] {
+	const floors = fixtures
+		? { minLines: 1, minRows: 1 }
+		: (SE_LIMITS.floors[source] ?? { minLines: 1, minRows: 1 });
+	const ratio = current.lines === 0 ? 1 : current.quarantined / current.lines;
+	const checks: GuardCheck[] = [
+		{
+			name: `${source}.quarantine`,
+			ok:
+				current.lines > 0 &&
+				(ratio <= SE_LIMITS.quarantineRatio || current.quarantined <= SE_LIMITS.quarantineLines),
+			approvable: false,
+			detail: `${current.quarantined} of ${current.lines} lines quarantined (${percent(ratio)})`,
+		},
+		{
+			name: `${source}.lines`,
+			ok: current.lines >= floors.minLines,
+			approvable: false,
+			detail: `${current.lines} data lines (at least ${floors.minLines} expected)`,
+		},
+		{
+			name: `${source}.rows`,
+			ok: current.rows >= floors.minRows,
+			approvable: false,
+			detail: `${current.rows} facilities read (at least ${floors.minRows} expected)`,
+		},
+	];
+	if (previous) {
+		const rows = delta(current.people, previous.people);
+		checks.push({
+			name: `${source}.facilities`,
+			ok:
+				rows <= SE_LIMITS.rowsDelta ||
+				Math.abs(current.people - previous.people) <= SE_LIMITS.rowsSlack,
+			approvable: true,
+			detail: `${current.people} facilities vs ${previous.people} last time (${percent(rows)})`,
+		});
+		if (previous.bytes !== undefined) {
+			const size = delta(current.bytes, previous.bytes);
+			checks.push({
+				name: `${source}.size`,
+				ok: size <= SE_LIMITS.fileSizeDelta,
+				approvable: true,
+				detail: `${current.bytes} bytes vs ${previous.bytes} last time (${percent(size)})`,
+			});
+		}
+	}
+	return checks;
+}
+
+/**
+ * After staging: every site must be placed in a municipality, or the places are broken (a run of
+ * `etl:places --country se` that went wrong).
+ */
+export function checkSePlaces(staged: { sites: number; placed: number }): GuardCheck[] {
+	const placed = staged.sites === 0 ? 1 : staged.placed / staged.sites;
+	return [
+		{
+			name: "se.places",
+			ok: placed >= 0.99,
+			approvable: true,
+			detail: `${staged.placed} of ${staged.sites} sites placed in their municipality (${percent(placed)})`,
+		},
+	];
+}

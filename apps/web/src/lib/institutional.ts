@@ -94,7 +94,12 @@ export type InstitutionalNamespace =
 	| "PrivacyLv"
 	| "TermsLv"
 	| "AccessibilityLv"
-	| "DataLv";
+	| "DataLv"
+	| "LegalNoticeSe"
+	| "PrivacySe"
+	| "TermsSe"
+	| "AccessibilitySe"
+	| "DataSe";
 
 /**
  * The namespace of a page in the locale's market: Austria's pages (`/at/impressum`…), the

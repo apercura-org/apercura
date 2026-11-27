@@ -242,3 +242,19 @@ describe("returning to a Latvian claim", () => {
 		expect(parseReturnTo("/pro/revendiquer?rpps=lv:")).toBeNull();
 	});
 });
+
+describe("returning to a Swedish claim", () => {
+	it("accepts a `se:` pharmacy or health centre key, never anything that looks like a path", () => {
+		expect(parseReturnTo("/pro/revendiquer?rpps=se:a7359999000014")).toEqual({
+			pathname: "/pro/revendiquer",
+			query: { rpps: "se:a7359999000014" },
+		});
+		expect(parseReturnTo("/pro/revendiquer?rpps=se:v5560000000ex0001")).toEqual({
+			pathname: "/pro/revendiquer",
+			query: { rpps: "se:v5560000000ex0001" },
+		});
+		expect(parseReturnTo("/pro/revendiquer?rpps=se:a7359999000014/..")).toBeNull();
+		expect(parseReturnTo("/pro/revendiquer?rpps=se:a735999900001")).toBeNull();
+		expect(parseReturnTo("/pro/revendiquer?rpps=se:")).toBeNull();
+	});
+});

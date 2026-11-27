@@ -27,6 +27,8 @@ import lt from "../../messages/lt.json";
 import lv from "../../messages/lv.json";
 import no from "../../messages/no.json";
 import pl from "../../messages/pl.json"; // Norway's texts over the English catalog, as Estonia's (`no.json`, named after the segment).
+// Sweden's texts over the English catalog, as Norway's (`se.json`, named after the segment).
+import se from "../../messages/se.json";
 import si from "../../messages/si.json";
 import type { Locale } from "./locales";
 
@@ -88,6 +90,7 @@ const CATALOGS: Record<
 		| "lt-LT"
 		| "el-CY"
 		| "lv-LV"
+		| "sv-SE"
 	>,
 	unknown
 > = {
@@ -164,7 +167,10 @@ export function messagesFor(locale: Locale): Messages {
 																		: locale === "lv-LV"
 																			? // Latvia: the English catalog, with the Latvian texts on top.
 																				(mergeMessages(en, lv as Tree) as Messages)
-																			: (mergeMessages(en, CATALOGS[locale] as Tree) as Messages);
+																			: locale === "sv-SE"
+																				? // Sweden: the English catalog, with the Swedish texts on top.
+																					(mergeMessages(en, se as Tree) as Messages)
+																				: (mergeMessages(en, CATALOGS[locale] as Tree) as Messages);
 		merged.set(locale, found);
 	}
 	return found;
@@ -208,6 +214,8 @@ export const ESTONIAN_OVERRIDES: unknown = ee;
 export const NORWEGIAN_OVERRIDES: unknown = no;
 /** The Greek texts of Cyprus over the English catalog (`messages/cy.json`), for tests. */
 export const CYPRIOT_OVERRIDES: unknown = cy;
+/** The Swedish texts over the English catalog (`messages/se.json`), for tests. */
+export const SWEDISH_OVERRIDES: unknown = se;
 
 /** Switzerland's texts over the German, French and Italian catalogs, for tests. */
 export const SWISS_MARKET_OVERRIDES: Readonly<Record<"de-CH" | "fr-CH" | "it-CH", unknown>> = {

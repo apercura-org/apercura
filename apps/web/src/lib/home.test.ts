@@ -1,4 +1,4 @@
-import { austria, ireland, switzerland, unitedKingdom } from "@apercura/core/country";
+import { austria, ireland, sweden, switzerland, unitedKingdom } from "@apercura/core/country";
 import { describe, expect, it } from "vitest";
 import type { PlaceRef } from "~/server/queries/types";
 import { HOME_PLACES_LIMIT, homePlaces, listingRows, sourceLine } from "./home";
@@ -97,6 +97,10 @@ describe("sourceLine", () => {
 		);
 		expect(sourceLine("CH", switzerland.registries, [first?.id ?? ""])).toBe(first?.publisher);
 		expect(sourceLine("CH", switzerland.registries, [])).toBe("");
+	});
+
+	it("credits Sweden's lists by publisher, never Statistics Sweden's places", () => {
+		expect(sourceLine("SE", sweden.registries)).toBe("Läkemedelsverket; Västra Götalandsregionen");
 	});
 
 	it("credits Ireland's lists by publisher, the HSE's two layers once, never the places", () => {

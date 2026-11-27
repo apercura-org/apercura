@@ -15,6 +15,7 @@ import {
 	formatPhoneLv,
 	formatPhoneNo,
 	formatPhonePl,
+	formatPhoneSe,
 	formatPhoneSi,
 	formatStreetText,
 	publicActivities,
@@ -55,6 +56,7 @@ export function formatPhone(e164: string): string {
 	if (e164.startsWith("+372")) return formatPhoneEe(e164);
 	if (e164.startsWith("+47")) return formatPhoneNo(e164);
 	if (e164.startsWith("+357")) return formatPhoneCy(e164);
+	if (e164.startsWith("+46")) return formatPhoneSe(e164);
 	if (e164.startsWith("+43")) return formatPhoneAt(e164);
 	if (e164.startsWith("+44")) return formatPhoneGb(e164);
 	if (e164.startsWith("+353")) return formatPhoneIe(e164);

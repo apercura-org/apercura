@@ -80,3 +80,35 @@ describe("the XLSX reader", () => {
 		await expect(collect(archive, "DSB_KHV_2024")).rejects.toThrow(/DSB_KHV_2024/);
 	});
 });
+
+describe("a workbook whose elements carry a namespace prefix", () => {
+	it("reads its sheets and rows as an unprefixed one", async () => {
+		const ns = 'xmlns:x="http://schemas.openxmlformats.org/spreadsheetml/2006/main"';
+		const archive = writeStoredZip([
+			{
+				name: "xl/workbook.xml",
+				data: Buffer.from(
+					`<?xml version="1.0"?><x:workbook ${ns}><x:sheets><x:sheet name="2026-11-27" sheetId="1" r:id="R1" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" /></x:sheets></x:workbook>`,
+				),
+			},
+			{
+				name: "xl/_rels/workbook.xml.rels",
+				data: Buffer.from(
+					'\uFEFF<?xml version="1.0"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Type="worksheet" Target="/xl/worksheets/sheet1.xml" Id="R1" /></Relationships>',
+				),
+			},
+			{
+				name: "xl/worksheets/sheet1.xml",
+				data: Buffer.from(
+					`<?xml version="1.0"?><x:worksheet ${ns}><x:sheetData><x:row r="1"><x:c r="A1" t="str"><x:v>Län</x:v></x:c><x:c r="C1" t="str"><x:v>GLN-kod</x:v></x:c></x:row><x:row r="2" /><x:row r="3"><x:c r="A3" t="str"><x:v>Blekinge &amp; Skåne</x:v></x:c><x:c r="B3" s="6"><x:v>42248</x:v></x:c></x:row></x:sheetData></x:worksheet>`,
+				),
+			},
+		]);
+		expect(xlsxSheets(archive)).toEqual([{ name: "2026-11-27", path: "xl/worksheets/sheet1.xml" }]);
+		expect(await collect(archive)).toEqual([
+			{ rowNo: 1, cells: ["Län", "", "GLN-kod"] },
+			{ rowNo: 2, cells: [] },
+			{ rowNo: 3, cells: ["Blekinge & Skåne", "42248"] },
+		]);
+	});
+});

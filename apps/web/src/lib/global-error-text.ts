@@ -130,4 +130,12 @@ export const GLOBAL_ERROR_TEXT: Record<CatalogLanguage, GlobalErrorText> = {
 		home: "Atpakaļ uz sākumlapu",
 		reference: "Kods atbalsta dienestam: {digest}",
 	},
+	sv: {
+		metaTitle: "Sidan är inte tillgänglig · Apercura",
+		title: "Vi kunde inte visa den här sidan",
+		body: "Något gick fel hos oss när sidan skulle skapas. Försök igen; om det fortfarande inte fungerar kan du komma tillbaka om några minuter.",
+		retry: "Försök igen",
+		home: "Tillbaka till startsidan",
+		reference: "Referens för support: {digest}",
+	},
 };

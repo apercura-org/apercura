@@ -1,0 +1,20 @@
+﻿id,hsaid,namn,foretag,adress,postnummer,postort,x,y
+1,SE2321000131-FX0001,Exempel Vårdcentral Centrum,Exempel Vård AB,Exempelgatan 1,41103,Göteborg,6400000,320000
+2,SE2321000131-FX0002,Närhälsan Exempel vårdcentral,Närhälsan,Exempelgatan 2,41104,Göteborg,6402000,322000
+3,SE2321000131-FX0003,Exempel Läkarhus,Exempel Läkarhus AB,Exempelvägen 3,46130,Trollhättan,6470000,338000
+4,SE2321000131-FX0004,Exempelö Vårdcentral,Exempel Vård AB,Exempelvägen 4,43090,Exempelö,6395000,307000
+5,SE2321000131-FX0005,Exempel Vårdcentral Stockholm,Exempel Vård AB,Exempelgatan 5,11122,Stockholm,6580000,670000
+6,XX-1,Exempel Fel,Exempel Vård AB,Exempelgatan 6,41105,Göteborg,6400500,320500
+7,SE2321000131-FX0001,Exempel Vårdcentral Centrum,Exempel Vård AB,Exempelgatan 1,41103,Göteborg,6400000,320000
+11,SE2321000131-FX0011,Exempel Vårdcentral Göteborg 1,Närhälsan,Exempelvägen 11,41131,Göteborg,6405100,315100
+12,SE2321000131-FX0012,Exempel Vårdcentral Göteborg 2,Exempel Primärvård AB,Exempelvägen 12,41132,Göteborg,6405200,315200
+13,SE2321000131-FX0013,Exempel Vårdcentral Göteborg 3,Exempel Primärvård AB,Exempelvägen 13,41133,Göteborg,6405300,315300
+14,SE2321000131-FX0014,Exempel Vårdcentral Borås 1,Närhälsan,Exempelvägen 14,50331,Borås,6400100,380100
+15,SE2321000131-FX0015,Exempel Vårdcentral Borås 2,Exempel Primärvård AB,Exempelvägen 15,50332,Borås,6400200,380200
+16,SE2321000131-FX0016,Exempel Vårdcentral Borås 3,Exempel Primärvård AB,Exempelvägen 16,50333,Borås,6400300,380300
+17,SE2321000131-FX0017,Exempel Vårdcentral Ale 1,Närhälsan,Exempelvägen 17,44931,Ale,6415100,325100
+18,SE2321000131-FX0018,Exempel Vårdcentral Ale 2,Exempel Primärvård AB,Exempelvägen 18,44932,Ale,6415200,325200
+19,SE2321000131-FX0019,Exempel Vårdcentral Ale 3,Exempel Primärvård AB,Exempelvägen 19,44933,Ale,6415300,325300
+20,SE2321000131-FX0020,Exempel Vårdcentral Trollhättan 1,Närhälsan,Exempelvägen 20,46131,Trollhättan,6455100,337100
+21,SE2321000131-FX0021,Exempel Vårdcentral Trollhättan 2,Exempel Primärvård AB,Exempelvägen 21,46132,Trollhättan,6455200,337200
+22,SE2321000131-FX0022,Exempel Vårdcentral Trollhättan 3,Exempel Primärvård AB,Exempelvägen 22,46133,Trollhättan,6455300,337300

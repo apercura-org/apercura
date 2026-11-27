@@ -272,6 +272,12 @@ test.describe("a place of another market", () => {
 		["/it/cerca?quoi=farmacia&ou=Daugavpils", "/lv/aptiekas/daugavpils"],
 		// Latvia lists no dentists: its search, with the place set.
 		["/fr/recherche?quoi=dentiste&ou=Riga", "/lv/meklet?ou=Riga"],
+		// Sweden by name, or a city of it: its pages, in Swedish; "pharmacie" carried over from France.
+		["/fr/recherche?ou=Su%C3%A8de", "/se"],
+		["/gb/search?ou=Sweden", "/se"],
+		["/no/sok?ou=Sverige", "/se"],
+		["/fr/recherche?quoi=pharmacie&ou=Stockholm", "/se/apoteken/stockholms-lan/stockholm"],
+		["/gb/search?ou=Stockholm", "/se/sok?ou=Stockholm"],
 		// In the visitor's language when that market offers it: France in English.
 		["/gb/search?quoi=dentist&ou=Paris", "/fr-en/chirurgien-dentiste/75-paris"],
 		// The UK lists no cardiologists: its search, with the place set.
@@ -317,6 +323,7 @@ test.describe("the country searched", () => {
 			"Slovénie",
 			"Chypre",
 			"Lettonie",
+			"Suède",
 		]);
 		await country.selectOption({ label: "Royaume-Uni" });
 		// The places suggested are the UK's.
@@ -355,6 +362,9 @@ test.describe("the country searched", () => {
 		await expect(page.getByRole("combobox", { name: "Country" })).toHaveValue("ie");
 		await page.goto("/lv/meklet");
 		await expect(page.getByRole("combobox", { name: "Valsts" })).toHaveValue("lv");
+		// Sweden: `se`.
+		await page.goto("/se/sok");
+		await expect(page.getByRole("combobox", { name: "Land" })).toHaveValue("se");
 	});
 
 	test.describe("without JavaScript", () => {
@@ -388,6 +398,7 @@ test.describe("a place in a country Apercura does not cover yet", () => {
 		["Lituanie", "/lt"],
 		["Chypre", "/cy"],
 		["Lettonie", "/lv"],
+		["Suède", "/se"],
 	] as const;
 
 	test("“dentiste” in Budapest says so, lists the open countries, and passes axe", async ({

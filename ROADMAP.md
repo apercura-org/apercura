@@ -70,6 +70,11 @@ signature, an account, a contract, a paid service or a manual test. This list re
   2018), and to the Pharmaceutical Services, asking them to confirm that the list's ΑΜ is the
   pharmacy's registration number and to add a pharmacy name. The market opened without the
   answers.
+- Sweden: send the twenty regions other than Västra Götaland the letter of
+  [`docs/data-requests/se.md`](./docs/data-requests/se.md) asking them to publish their health
+  centres as open data; and open a Geotorget account to order Lantmäteriet's address points
+  (Belägenhetsadress, CC BY 4.0 under Lantmäteriet's terms for address data), after reading the
+  terms, so that pharmacies can be located at their address rather than their municipality.
 
 ### Accessibility ([#32](https://github.com/apercura-org/apercura/issues/32))
 
@@ -569,9 +574,35 @@ Left:
 - Private clinics, doctors and dentists, when an open source exists (the Medical Council's
   register states no licence).
 
+### 14. Sweden (`/se`): open, directory of pharmacies and Västra Götaland's health centres
+
+Done in [#175](https://github.com/apercura-org/apercura/issues/175): `/se` in Swedish (locale
+`sv-SE`), built weekly by `etl:se` from the Swedish Medical Products Agency's register of licensed
+pharmacies (Läkemedelsverket, "Apotek med tillstånd", CC BY 4.0, every pharmacy open to the public
+in all 21 counties) and Västra Götalandsregionen's health centres (CC0 1.0, the only region found
+to publish them openly), placed in SCB's counties and municipalities (CC0 1.0): pharmacies at their
+municipality's point (city precision, no map pin), health centres at their own point. Every page
+prints its source's credit; a legal notice under e-handelslagen 8 §, a privacy notice under the
+GDPR and dataskyddslagen with the article 14 information and IMY, a voluntary accessibility
+statement, claims by documents, no booking ([data import](./docs/data-import.md#sweden),
+[ADR 0002](./docs/adr/0002-multi-country.md#sweden-se)). Facilities only: no health professional
+is listed. Left:
+
+- Have a native speaker review the Swedish interface and legal texts, and a lawyer admitted in
+  Sweden the legal notice, privacy notice, terms and accessibility statement (e-handelslagen,
+  dataskyddslagen, lag 2018:1937), and confirm the reading of marknadsföringslagen and
+  läkemedelslagen ch. 12 (factual pages, no medicine named).
+- Send the regions' letter and order Lantmäteriet's address points (founder, above); add each
+  region's health centres as its list opens.
+- Hospitals, dental care, specialist clinics and care homes: no open national list (IVO's register
+  of care providers is released only as public documents, case by case).
+- Finnish, Meänkieli and Sámi interfaces (national minority languages), and an English interface
+  of the Swedish pages.
+- Named practitioners: only from HOSP, which has no public search or open extract.
+
 ### Later
 
-The Netherlands, Portugal, Croatia, Romania, Denmark, Sweden, Slovakia,
+The Netherlands, Portugal, Croatia, Romania, Denmark, Slovakia,
 Hungary, Bulgaria, Iceland and Liechtenstein open with claimed pages when there is demand.
 Croatia (HZZO) becomes a directory if its publisher confirms an open licence, and Cyprus adds
 its doctors if the Medical Council's register is published under one. Booking in Finland waits for a ruling on whether a booking site is a registered system

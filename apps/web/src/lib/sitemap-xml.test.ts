@@ -220,3 +220,27 @@ describe("Latvia's sitemap paths", () => {
 		expect(sitemapCountryOf("lv")).toBe("LV");
 	});
 });
+
+describe("Sweden's sitemap paths", () => {
+	it("gives Sweden its Swedish route segments under /se, a facility under /verksamhet", () => {
+		expect(marketPagePath("se", "/")).toBe("/se");
+		expect(marketPagePath("se", "/praticien/exempelapoteket-a7359999000014")).toBe(
+			"/se/verksamhet/exempelapoteket-a7359999000014",
+		);
+		expect(marketPagePath("se", "/etablissement/x-1")).toBe("/se/organisation/x-1");
+		expect(marketPagePath("se", "/annuaire/stockholms-lan/stockholm")).toBe(
+			"/se/katalog/stockholms-lan/stockholm",
+		);
+		expect(marketPagePath("se", "/apoteken/stockholms-lan/stockholm")).toBe(
+			"/se/apoteken/stockholms-lan/stockholm",
+		);
+		expect(marketPagePath("se", "/confidentialite")).toBe("/se/integritet");
+		expect(marketPagePath("se", "/mentions-legales")).toBe("/se/juridisk-information");
+		expect(marketPagePath("se", "/donnees")).toBe("/se/data");
+		expect(MARKET_STATIC_PATHS.se).not.toContain("/pro");
+		expect(MARKET_STATIC_PATHS.se).toContain("/accessibilite");
+		const chunk = { market: "se", kind: "praticiens", chunk: 0, lastmod: "2026-11-27", urls: 3 };
+		expect(inEveryLanguage([chunk as never]).map((item) => item.market)).toEqual(["se"]);
+		expect(sitemapCountryOf("se")).toBe("SE");
+	});
+});

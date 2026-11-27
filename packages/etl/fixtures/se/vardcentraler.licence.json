@@ -1,0 +1,23 @@
+{
+	"https://vgregion.entryscape.net/store/7/resource/48": {
+		"http://purl.org/dc/terms/license": [
+			{
+				"type": "uri",
+				"value": "http://creativecommons.org/publicdomain/zero/1.0/"
+			}
+		],
+		"http://purl.org/dc/terms/title": [
+			{
+				"type": "literal",
+				"value": "Fixture",
+				"lang": "sv"
+			}
+		],
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+			{
+				"type": "uri",
+				"value": "http://www.w3.org/ns/dcat#Distribution"
+			}
+		]
+	}
+}

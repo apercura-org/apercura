@@ -17,6 +17,7 @@ import { LegalNoticeLt } from "~/components/legal-lt";
 import { LegalNoticeLv } from "~/components/legal-lv";
 import { LegalNoticeNo } from "~/components/legal-no";
 import { LegalNoticePl } from "~/components/legal-pl";
+import { LegalNoticeSe } from "~/components/legal-se";
 import { LegalNoticeSi } from "~/components/legal-si";
 import { PageGraph } from "~/components/page-graph";
 import { PublicPage } from "~/components/public-page";
@@ -52,6 +53,7 @@ export function generateMetadata({ params }: PageProps<"/[locale]/mentions-legal
 			SI: "LegalNoticeSi",
 			CY: "LegalNoticeCy",
 			LV: "LegalNoticeLv",
+			SE: "LegalNoticeSe",
 		},
 		HREF,
 	);
@@ -83,6 +85,7 @@ export default async function LegalPage({ params }: PageProps<"/[locale]/mention
 	if (marketOf(locale) === "SI") return <LegalNoticeSi locale={locale} />;
 	if (marketOf(locale) === "CY") return <LegalNoticeCy locale={locale} />;
 	if (marketOf(locale) === "LV") return <LegalNoticeLv locale={locale} />;
+	if (marketOf(locale) === "SE") return <LegalNoticeSe locale={locale} />;
 	const t = await getTranslations({ locale, namespace: "LegalPage" });
 	const tI = await getTranslations({ locale, namespace: "Institutional" });
 	const section = await proseSections(locale, "LegalPage");

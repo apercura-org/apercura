@@ -119,6 +119,11 @@ const PLACES: Record<MarketCountry, PlaceSuggestion[]> = {
 		place(60, "Rīga", "riga", "riga", "0001000"),
 		place(61, "Sigulda", "sigulda", "siguldas-novads", "0048200"),
 	],
+	SE: [
+		place(80, "Stockholm", "stockholm", "stockholms-lan", "0180"),
+		place(81, "Göteborg", "goteborg", "vastra-gotalands-lan", "1480"),
+		place(82, "Malmö", "malmo", "skane-lan", "1280"),
+	],
 };
 
 const LANDINGS = new Set([
@@ -175,6 +180,9 @@ const LANDINGS = new Set([
 	"aptiekas@Rīga",
 	"gimenes-arstu-prakses@Rīga",
 	"slimnicas@Sigulda",
+	"apoteken@Stockholm",
+	"apoteken@Malmö",
+	"vardcentraler@Göteborg",
 ]);
 
 /*
@@ -756,6 +764,32 @@ describe("a search for a European place outside the open markets", () => {
 			searchPage("de-DE", { quoi: listingLabel("krankenhaeuser", "de-DE") ?? "", ou: "München" }),
 		);
 		expect(await search("de-DE", { quoi: "Krankenhaus", ou: "München" })).toBeNull();
+	});
+
+	it("never says Sweden is not covered: its cities move the search to /se, in Swedish", async () => {
+		expect(await search("fr", { ou: "Stockholm" })).toEqual(
+			searchPage("sv-SE", { ou: "Stockholm" }),
+		);
+		expect(await search("fr", { quoi: "pharmacie", ou: "Stockholm" })).toEqual(
+			listing("sv-SE", "apoteken", "stockholms-lan", "stockholm"),
+		);
+		expect(await search("en-GB", { quoi: "pharmacy", ou: "Malmö" })).toEqual(
+			listing("sv-SE", "apoteken", "skane-lan", "malmo"),
+		);
+		// A city typed without its Swedish letters is looked up under its own name.
+		expect(await search("en-GB", { quoi: "pharmacy", ou: "Malmo" })).toEqual(
+			listing("sv-SE", "apoteken", "skane-lan", "malmo"),
+		);
+		expect(await search("sv-SE", { quoi: "vårdcentral", ou: "Göteborg" })).toEqual(
+			listing("sv-SE", "vardcentraler", "vastra-gotalands-lan", "goteborg"),
+		);
+		expect(await search("en-GB", { quoi: "GP", ou: "Gothenburg" })).toEqual(
+			listing("sv-SE", "vardcentraler", "vastra-gotalands-lan", "goteborg"),
+		);
+		// "Suède", "Sweden" and "Sverige" move to Sweden's home.
+		expect(await search("fr", { ou: "Suède" })).toEqual({ href: "/", locale: "sv-SE" });
+		expect(await search("en-GB", { ou: "Sweden" })).toEqual({ href: "/", locale: "sv-SE" });
+		expect(await search("nb-NO", { ou: "Sverige" })).toEqual({ href: "/", locale: "sv-SE" });
 	});
 
 	it("never says Ireland is not covered: its towns move the search to /ie, in English", async () => {

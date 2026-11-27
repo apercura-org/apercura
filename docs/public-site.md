@@ -177,6 +177,18 @@ an error, `/dzesana` to ask for removal), `/lv/katalogs`, `/lv/meklet`,
 `/lv/lietosanas-noteikumi`, `/lv/pieklustamiba`; its listing slugs are Latvian
 (`/lv/aptiekas/riga`, `/lv/gimenes-arstu-prakses/siguldas-novads/sigulda`).
 
+Sweden (#175) is `/se`, in Swedish (`sv-SE`, the English catalog with the
+Swedish texts on top, `messages/se.json`). Its route segments are the English
+ones in Swedish (`SWEDISH_SEGMENTS` in `src/i18n/routing.ts`): a facility's page
+under `/se/verksamhet/…` (a pharmacy or a health centre, never a person), an
+organisation's under `/se/organisation/…`, the directory under `/se/katalog`,
+the search under `/se/sok`, and the legal pages under
+`/se/juridisk-information`, `/se/integritet`, `/se/villkor`,
+`/se/tillganglighet` and `/se/data`. Its listing slugs are Swedish and never
+Norway's (`/se/apoteken/stockholms-lan/stockholm`,
+`/se/vardcentraler/vastra-gotalands-lan/goteborg`); Gotland's municipality has
+its county's page only.
+
 Each segment follows the locale's prefix: `/fr/annuaire`, `/fr-de/verzeichnis`.
 
 Only French pages are indexed in v1 (`INDEXABLE_LOCALES`): pages in the other

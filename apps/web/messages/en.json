@@ -102,7 +102,8 @@
 			"NO": "Norway",
 			"IE": "Ireland",
 			"FI": "Finland",
-			"CY": "Cyprus"
+			"CY": "Cyprus",
+			"SE": "Sweden"
 		}
 	},
 	"HomePage": {
@@ -717,6 +718,17 @@
 			"registrationNote": "The pharmacy’s number in the Pharmaceutical Services’ list of private pharmacies.",
 			"operator": "Run by",
 			"stateFacility": "The state (the Ministry of Health’s lists of state hospitals and health centres)"
+		},
+		"swedishFacts": {
+			"gln": "GLN",
+			"glnNote": "The pharmacy’s Global Location Number, as the Swedish Medical Products Agency’s register gives it.",
+			"hsaId": "HSA-id",
+			"hsaIdNote": "The care unit’s id in HSA, Sweden’s national directory of health care.",
+			"licence": "Licence",
+			"licenceFrom": "Valid from {date}",
+			"holder": "Licence holder",
+			"holderNumber": "Organisation number {number}",
+			"operator": "Care provider"
 		}
 	},
 	"Institutional": {
@@ -1659,7 +1671,8 @@
 		"hubMetaTitleShort": "{listing} in France · Apercura",
 		"authoritiesHeading": "{listing}: local authorities of {place}",
 		"pharmacyCoverage": "Pharmacies are listed for {states} only: the other Länder publish no current list of their pharmacies as open data.",
-		"gpCoverage": "GP practices are listed where the Ministry of the Interior’s list of medical institutions gives their address: about a quarter of the practices the National Health Service contracts. The others will be listed once their address is published as open data."
+		"gpCoverage": "GP practices are listed where the Ministry of the Interior’s list of medical institutions gives their address: about a quarter of the practices the National Health Service contracts. The others will be listed once their address is published as open data.",
+		"healthCentreCoverage": "Health centres are listed for {regions} only: the other regions publish no list of their health centres under an open licence."
 	},
 	"Directory": {
 		"metaTitle": "Directory of health practitioners by place · Apercura",
@@ -1997,7 +2010,11 @@
 			"kentra-ygeias": "Health centre",
 			"kentro-ygeias": "Health centre",
 			"farmakeia": "Pharmacy",
-			"farmakeio": "Pharmacy"
+			"farmakeio": "Pharmacy",
+			"apoteken": "Pharmacy",
+			"oppenvardsapotek": "Community pharmacy",
+			"vardcentraler": "Health centre",
+			"vardcentral": "Health centre"
 		},
 		"listing": {
 			"aerzte": "Doctors without a stated specialty",
@@ -2330,7 +2347,9 @@
 			"laboratoriot-ja-kuvantaminen": "Laboratories and imaging",
 			"nosokomeia": "Hospitals",
 			"kentra-ygeias": "Health centres",
-			"farmakeia": "Pharmacies"
+			"farmakeia": "Pharmacies",
+			"apoteken": "Pharmacies",
+			"vardcentraler": "Health centres"
 		},
 		"practiceKind": {
 			"office": "Practice",
@@ -3362,7 +3381,9 @@
 			"NO-ORGNR": "Organisation number",
 			"FI-PTV": "Service location id",
 			"CY-FARM": "Pharmacy registration number (ΑΜ)",
-			"CY-MOH": "Apercura key of a state facility"
+			"CY-MOH": "Apercura key of a state facility",
+			"SE-GLN": "GLN",
+			"SE-HSA": "HSA-id"
 		}
 	},
 	"Onboarding": {
@@ -10777,6 +10798,406 @@
 			"list": [
 				"A pharmacy reports a change of address or telephone number to the Pharmaceutical Services of the Ministry of Health, which keep the list of private pharmacies.",
 				"A state hospital or health centre reports its change to the Ministry of Health, which publishes the lists on data.gov.cy."
+			],
+			"formTitle": "Report an error",
+			"formBody": "Give the address of the page and what is wrong."
+		},
+		"remove": {
+			"heading": "Remove a page",
+			"body": [
+				"Anyone a page concerns can object to its publication at any time, without giving a reason (GDPR article 21). An unclaimed page is hidden as soon as the request arrives and deleted after a light check; it never comes back with the updates of the lists. A claimed page is removed by its holder, from their space."
+			],
+			"formTitle": "Ask for a page to be removed",
+			"formBody": "Give the address of the page and an e-mail address where we can answer you."
+		}
+	},
+	"LegalNoticeSe": {
+		"metaTitle": "Legal notice (Sweden) · Apercura",
+		"metaDescription": "Legal notice of the Swedish pages of Apercura: the service provider, its address, e-mail and registration and VAT numbers (Swedish E-Commerce Act, section 8).",
+		"title": "Legal notice",
+		"lead": "Who provides the Swedish pages of Apercura (apercura.org/se): the information that section 8 of the Swedish E-Commerce Act (lag 2002:562 om elektronisk handel och andra informationssamhällets tjänster) asks a service provider to give.",
+		"sections": {
+			"provider": {
+				"heading": "Service provider (e-handelslagen, section 8)",
+				"body": [
+					"The Swedish pages of Apercura are provided by the entity below: its name, its address in the state where it is established, its e-mail address and, where they apply, its registration number and VAT number. It runs the directory and answers for its content.",
+					"The provider is established in another state of the European Economic Area: its service follows the rules of that state within the coordinated field of the E-Commerce Directive, and this notice gives the information Swedish law asks for as well. No licence is required to run a directory, so no licensing authority is named."
+				]
+			},
+			"service": {
+				"heading": "The service",
+				"body": [
+					"A free directory of Sweden’s pharmacies licensed by the Swedish Medical Products Agency (Läkemedelsverket), and of the health centres (vårdcentraler) of the regions that publish them under an open licence, Västra Götaland so far, without advertising, with a space where a pharmacy or a health centre can complete its own page. Pages are facilities, never the health professionals who work in them. No appointment is booked and no medicine is sold through Apercura."
+				]
+			},
+			"marketing": {
+				"heading": "Factual pages",
+				"body": [
+					"The pages are not advertising: they show facts from public registers (name, address, licence, licence holder or care provider, identifiers) in a neutral order, without ratings, reviews, advertising or paid placement, in keeping with the Marketing Act (marknadsföringslagen, 2008:486), which asks marketing to be in accordance with good marketing practice and never misleading. No medicine is named or promoted, so the Medicinal Products Act’s rules on the marketing of medicines (läkemedelslagen, 2015:315, chapter 12) are never engaged. A facility that completes its page is bound by the same rules."
+				]
+			},
+			"editor": {
+				"heading": "Responsible for the content",
+				"body": [
+					"The person below is responsible for what the provider publishes. Information a facility adds to its own page is its own responsibility; as a host of information provided by its users, the provider answers for it only under the conditions of the Digital Services Act (Regulation (EU) 2022/2065, article 6)."
+				]
+			},
+			"liability": {
+				"heading": "Content of the pages",
+				"body": [
+					"The directory is built from public lists (the Swedish Medical Products Agency’s register of licensed pharmacies, Västra Götalandsregionen’s list of health centres) and placed in Statistics Sweden’s counties and municipalities. It can be incomplete or out of date: check the information with the pharmacy or the health centre before you go. Every page says how to report an error."
+				]
+			},
+			"ip": {
+				"heading": "Code and data",
+				"body": [
+					"The source code of Apercura is published under the AGPL-3.0 licence. The Swedish Medical Products Agency’s register is reused under Creative Commons Attribution 4.0 (CC BY 4.0), Västra Götalandsregionen’s list of health centres and Statistics Sweden’s boundaries under Creative Commons Zero (CC0 1.0). The data page lists every source with its credit."
+				]
+			},
+			"review": {
+				"heading": "Status of this text",
+				"body": [
+					"This text is a draft, written before the legal entity was set up. It will be reviewed by a lawyer admitted in Sweden before the Swedish pages are announced."
+				]
+			}
+		},
+		"fields": {
+			"name": "Name",
+			"legalForm": "Legal form",
+			"registration": "Register and registration number",
+			"address": "Address",
+			"phone": "Phone",
+			"email": "E-mail address",
+			"vatId": "VAT number",
+			"editor": "Responsible for the content"
+		},
+		"dataLink": "Data and sources"
+	},
+	"PrivacySe": {
+		"metaTitle": "Privacy (Sweden) · Apercura",
+		"metaDescription": "What data the Swedish pages of Apercura process, where from, why and for how long, and your rights, objection included (GDPR articles 13, 14, 21).",
+		"title": "Privacy",
+		"lead": "What data the Swedish pages of Apercura process, where it comes from, why, for how long and by whom, and how to exercise your rights under the General Data Protection Regulation (GDPR) and the Swedish Data Protection Act (lag 2018:218).",
+		"sections": {
+			"controller": {
+				"heading": "Who is responsible",
+				"body": [
+					"The provider named in the legal notice is the controller of the directory, of facility accounts, of claims and of the requests sent through the site."
+				]
+			},
+			"directory": {
+				"heading": "Directory: data about facilities",
+				"body": [
+					"Data: for a pharmacy, its name, its visiting address, its GLN, its licence (the Swedish Medical Products Agency’s case number and the day it took effect) and the company that holds it, with its organisation number, as the register publishes them; for a health centre, its name, its address, its HSA-id and the care provider that runs it, as Västra Götalandsregionen publishes them. A facility that claims its page can add a presentation, languages, a photo and opening hours.",
+					"Never stored: a licence holder whose organisation number is a personal identity number (personnummer), that is a sole trader, whose name is then left out; the pharmacies the register says are closed to the public. Neither list publishes telephone numbers, e-mail addresses or the names of pharmacists or doctors.",
+					"Identifier: a page ends with the pharmacy’s GLN or the health centre’s HSA-id, never a person’s identity number.",
+					"Purpose: letting the public find a pharmacy or a health centre, where it is and who runs it. Legal basis: legitimate interests (GDPR article 6(1)(f)), assessed below.",
+					"Retention: as long as the source lists the facility. A page disappears when the source no longer lists it; a page removed after an objection is never published again.",
+					"Information: the data does not come from the facilities themselves (GDPR article 14). Writing to each of them would involve a disproportionate effort (article 14(5)(b)); this notice, the data page and a notice on every page make the information public."
+				]
+			},
+			"people": {
+				"heading": "Facilities, not people",
+				"body": [
+					"A Swedish page is a pharmacy or a health centre, never a person’s profile: the pharmacists, doctors and nurses who work there are not listed. The licence holders are companies; a company’s name may still contain a person’s name (“Exempel Farmaci AB”), and that name is then personal data of that person. Anyone it concerns can object, and the page is removed.",
+					"Nothing else about any person is collected: no personal identity number, no private address, no e-mail, no ratings and no reviews. No patient’s data, and no health data, is processed by the directory."
+				]
+			},
+			"sources": {
+				"heading": "Sources",
+				"body": [
+					"Pharmacies come from the Swedish Medical Products Agency’s register of licensed pharmacies (Läkemedelsverket, “Apotek med tillstånd”), published under Creative Commons Attribution 4.0 (CC BY 4.0); health centres from Västra Götalandsregionen’s list of the health centres of its primary care choice scheme (“Vårdcentraler i Vårdval vårdcentral”), and counties and municipalities from Statistics Sweden’s digital boundaries, both under Creative Commons Zero (CC0 1.0). Each source is credited:"
+				]
+			},
+			"balancing": {
+				"heading": "Legitimate interests assessment",
+				"body": [
+					"Purpose: patients need to know which pharmacies and health centres exist where and who runs them, a need the State and the regions already meet by publishing these lists for public reuse.",
+					"Necessity: only the facility’s data from the lists is shown, data the publishers make public anyway, and less of it: no person is listed, no sole trader’s name or identity number, nothing about private life, no ratings, no reviews.",
+					"Balance: a professional context, factual information, a neutral order, no advertising, the minimum of the lists’ fields, an objection that hides a page at once and keeps it from coming back, corrections at the source, and pages that follow every update of the lists. A company licensed to run a pharmacy, or a care provider in a region’s primary care scheme, expects to be found in a directory repeating that information. Weighing these points, the interests of patients prevail, and anyone a page concerns can object without giving a reason."
+				]
+			},
+			"accounts": {
+				"heading": "Facility accounts and claims",
+				"body": [
+					"Data: e-mail address, name, password (stored hashed), second authentication factor, the documents sent to claim a page (proof that the claimant runs the facility or acts for it) and team members.",
+					"Purposes: managing the account and checking that a page is claimed by the right facility. Legal bases: performance of the terms of use (article 6(1)(b)) and the legitimate interests of securing the service (article 6(1)(f)).",
+					"Retention: the account is kept until it is deleted; supporting documents, encrypted, are erased 30 days after the decision."
+				]
+			},
+			"requests": {
+				"heading": "Error reports, objections and contact requests",
+				"body": [
+					"Data: the message, the contact e-mail address when one is given and the page concerned; for a “this is my page” request also the name and phone number. Free text is encrypted.",
+					"Purposes: correcting errors, applying objections and helping a facility that cannot claim its page online. Legal bases: legitimate interests (article 6(1)(f)) and the right to object (article 21).",
+					"Retention: a report is deleted 6 months after it is closed, a rejected objection one year after its decision, a contact request 12 months after the last exchange. Once an objection is confirmed, or the holder of a claimed page removes it, the page and the data about it are deleted at once, the objection included; all that is kept is a record of the removal (the identifier of the page, the country, the reason, who recorded it and when), so that it is never published again."
+				]
+			},
+			"technical": {
+				"heading": "Technical data and cookies",
+				"body": [
+					"Only cookies strictly necessary to the service are set: the session of signed-in facilities and the chosen language. No advertising or audience measurement cookies, no trackers and no third-party pixels.",
+					"To limit abuse, IP addresses are transformed with a keyed function before being counted and never stored as such; facility sessions record a truncated IP address. Views of claimed pages are counted without a cookie or identifier, and only the page’s holder sees them."
+				]
+			},
+			"recipients": {
+				"heading": "Recipients and processors",
+				"body": [
+					"Data is neither sold nor rented, and never used for advertising. Only the provider’s team and the processors below receive it, each for its own part, under a contract that meets GDPR article 28. Data is hosted in the European Economic Area. Maps are loaded from a tile server, which receives the visitor’s IP address like any website."
+				]
+			},
+			"transfers": {
+				"heading": "Transfers outside the European Economic Area",
+				"body": [
+					"Data is transferred outside the European Economic Area only under the safeguards of chapter V of the GDPR (an adequacy decision or standard contractual clauses). Any change of processor will be announced here before it takes effect."
+				]
+			},
+			"automated": {
+				"heading": "Automated decisions",
+				"body": [
+					"No decision about you is taken by automated means alone. A claim is decided by a person, who reads its documents."
+				]
+			},
+			"rights": {
+				"heading": "Your rights",
+				"body": [
+					"You can ask to access your data, to have it corrected or erased, to restrict its processing, to receive it in a portable format and to object to its processing. Write to the address below; you will get an answer within one month.",
+					"You can also lodge a complaint with the Swedish Authority for Privacy Protection (Integritetsskyddsmyndigheten, IMY), Sweden’s supervisory authority (GDPR article 77), or with the supervisory authority of the country where you live or work. A decision of IMY can be appealed to an administrative court (förvaltningsrätt)."
+				]
+			},
+			"objection": {
+				"heading": "Objecting to a page (GDPR article 21)",
+				"body": [
+					"Anyone a page concerns can object to its publication at any time, without giving a reason. If the page is unclaimed, a form is enough: the page is hidden as soon as the request arrives, deleted after a light check, and the updates of the lists never publish it again. If it is claimed, its holder removes it from their space."
+				]
+			},
+			"changes": {
+				"heading": "Updates to this notice",
+				"body": [
+					"This notice is a draft. It will be reviewed by a lawyer admitted in Sweden and by the data protection officer; every version is dated."
+				]
+			}
+		},
+		"fields": {
+			"controller": "Controller",
+			"address": "Address",
+			"email": "Contact for requests",
+			"dpo": "Data protection officer",
+			"effectiveDate": "Effective date",
+			"hostingProvider": "Hosting provider (processor)",
+			"smtp": "E-mail delivery (processor)",
+			"authority": "Supervisory authority"
+		},
+		"objectLink": "How to object to a page",
+		"authorityLink": "The Swedish Authority for Privacy Protection (IMY)",
+		"authorityAddress": "Integritetsskyddsmyndigheten, Box 8114, 104 20 Stockholm, 08-657 61 00"
+	},
+	"TermsSe": {
+		"metaTitle": "Terms of use (Sweden) · Apercura",
+		"metaDescription": "Terms of use of the Swedish pages of Apercura: a free, factual directory of licensed pharmacies and health centres from public lists, without booking.",
+		"title": "Terms of use",
+		"lead": "The rules for using the Swedish pages of Apercura, for the public and for facilities alike.",
+		"sections": {
+			"service": {
+				"heading": "The service",
+				"body": [
+					"Apercura lists, free of charge, the pharmacies licensed by the Swedish Medical Products Agency and the health centres of the regions that publish them under an open licence (Västra Götaland so far). It lists facilities, not the health professionals who work in them. It is a directory only: no appointment is booked and no medicine is sold through Apercura. It is run by the provider named in the legal notice.",
+					"Using the directory requires no account. Using the site means accepting these terms."
+				]
+			},
+			"content": {
+				"heading": "What the pages contain",
+				"body": [
+					"Pages show factual information from public lists, as they publish it, in a neutral order, without ratings, reviews, advertising or paid placement, and name no medicine.",
+					"The information may be incomplete or out of date, and a pharmacy is shown at its municipality, not at its exact address on a map: check the information with the pharmacy or the health centre before you go. Every page says how to report an error."
+				]
+			},
+			"health": {
+				"heading": "Not medical advice",
+				"body": [
+					"Apercura gives no medical advice and is not an emergency service. In an emergency, call 112. For health advice, call 1177 or visit 1177.se."
+				]
+			},
+			"providers": {
+				"heading": "For facilities",
+				"body": [
+					"Claiming a page is free. It requires a document proving that the claimant runs the facility or acts for it, checked by a person before the page is handed over.",
+					"The holder of a page is responsible for the information they add. It must stay factual, accurate and up to date, in accordance with good marketing practice; it must not promote a medicine, nor name health professionals who have not agreed to it."
+				]
+			},
+			"removal": {
+				"heading": "Removing a page",
+				"body": [
+					"Anyone a page concerns can ask for it to be removed at any time: the data page explains how. A claimed page can only be removed by its holder."
+				]
+			},
+			"liability": {
+				"heading": "Liability",
+				"body": [
+					"The provider does its best to keep the service available and accurate, but cannot guarantee it. It is not responsible for the information facilities add to their pages. These limits will be specified during the legal review."
+				]
+			},
+			"ip": {
+				"heading": "Code and data",
+				"body": [
+					"The source code is published under the AGPL-3.0 licence. The Swedish Medical Products Agency’s register is reused under CC BY 4.0: anyone may reuse it, from the register or from these pages, with its credit and a note of the changes. Västra Götalandsregionen’s list and Statistics Sweden’s boundaries are under CC0 1.0."
+				]
+			},
+			"law": {
+				"heading": "Governing law and disputes",
+				"body": [
+					"The governing law will be specified during the legal review; the mandatory consumer protection rules of the country of residence always apply. In case of a dispute, first write to the contact address to look for an amicable solution."
+				]
+			}
+		},
+		"fields": {
+			"publisher": "Provider",
+			"effectiveDate": "Effective date",
+			"contact": "Contact"
+		}
+	},
+	"AccessibilitySe": {
+		"metaTitle": "Accessibility (Sweden) · Apercura",
+		"metaDescription": "Accessibility of the Swedish pages of Apercura: the WCAG 2.2 AA target, what was checked, what remains, and how to report a problem.",
+		"title": "Accessibility",
+		"lead": "Apercura is designed for everyone, including older and low-vision people. This statement says where the Swedish pages stand.",
+		"sections": {
+			"scope": {
+				"heading": "Scope",
+				"body": [
+					"The Act on accessibility to digital public services (lag 2018:1937 om tillgänglighet till digital offentlig service) asks public bodies, and private ones running publicly financed schools, health care and social services, for accessible services and an accessibility statement (sections 4 and 13). Apercura is a private directory without public funding, so this statement is voluntary. Apercura’s provider aims for the same level on every page: WCAG 2.1 level AA (EN 301 549), and WCAG 2.2 AA beyond it. The Agency for Digital Government (Myndigheten för digital förvaltning, DIGG) supervises that Act for the bodies it binds."
+				]
+			},
+			"status": {
+				"heading": "Where the site stands",
+				"body": [
+					"The Swedish pages share the code of the other markets’ pages and their tests. The site partially meets WCAG 2.2 AA: this rests on a self-assessment and automated tests, not yet on a full audit, which is in progress."
+				]
+			},
+			"tests": {
+				"heading": "What was checked",
+				"list": [
+					"Automated axe-core checks (WCAG 2.0, 2.1 and 2.2 rules, levels A and AA) on every page type, at every release.",
+					"Keyboard-only journeys with a visible focus.",
+					"Body text of at least 18 px, targets of at least 44 px, nothing that relies on colour alone, no horizontal scrolling at 390 px."
+				]
+			},
+			"pending": {
+				"heading": "What remains to be checked",
+				"list": [
+					"A manual pass with the VoiceOver and NVDA screen readers, in Swedish.",
+					"A full audit against WCAG 2.2 AA on a sample of pages, including the Swedish texts."
+				]
+			},
+			"feedback": {
+				"heading": "Report a problem",
+				"body": [
+					"If a page or a feature is hard to use, write to the address below: say which page and what blocked you. We answer within one month and, where needed, give you the information in another form. DIGG (digg.se) explains the accessibility rules that apply in Sweden."
+				]
+			}
+		},
+		"fields": {
+			"contact": "Contact",
+			"date": "Date of this statement"
+		},
+		"authorityLink": "The Agency for Digital Government (digg.se)"
+	},
+	"DataSe": {
+		"metaTitle": "Data and sources (Sweden) · Apercura",
+		"metaDescription": "Where the Swedish pages of Apercura come from (the Swedish Medical Products Agency, Västra Götalandsregionen, Statistics Sweden), under which licence, and how to correct or remove a page.",
+		"title": "Data and sources",
+		"lead": "Every Swedish page is built from a public list. Here is where the data comes from, under which licence and credit, what is kept and why, when it was updated, and how to correct or remove a page.",
+		"status": {
+			"heading": "Last update",
+			"body": "The Swedish Medical Products Agency updates its register of licensed pharmacies every day, Västra Götalandsregionen its list of health centres when it changes; the directory reads both every week. A page changes only when its facts change at the source.",
+			"importedAt": "Last import",
+			"checkedAt": "Sources last checked",
+			"notImported": "The Swedish directory has not been imported yet on this site.",
+			"notImportedValue": "Not imported yet"
+		},
+		"sources": {
+			"heading": "Sources",
+			"body": "The Swedish Medical Products Agency publishes its register of licensed pharmacies under Creative Commons Attribution 4.0 (CC BY 4.0); Västra Götalandsregionen its list of health centres and Statistics Sweden its digital boundaries of counties and municipalities under Creative Commons Zero (CC0 1.0). Each credit below is printed word for word.",
+			"caption": "Data sources of the Swedish directory",
+			"columns": {
+				"source": "Source",
+				"use": "Used for",
+				"licence": "Licence and credit",
+				"frequency": "Updated"
+			},
+			"items": {
+				"se-apotek": {
+					"use": "Pharmacies: names, visiting addresses, municipalities, GLNs, licences (case number, valid from) and licence holders",
+					"frequency": "Every day, by the Swedish Medical Products Agency"
+				},
+				"se-vgr-vardcentraler": {
+					"use": "Health centres of Västra Götaland: names, addresses, HSA-ids, care providers and their points on the map",
+					"frequency": "When the list changes, by Västra Götalandsregionen"
+				},
+				"se-scb-granser": {
+					"use": "Counties and municipalities, a point in each municipality, and the municipality a health centre’s point lies in",
+					"frequency": "When the divisions change, by Statistics Sweden"
+				},
+				"map": {
+					"name": "Map data",
+					"publisher": "OpenStreetMap contributors, tiles by OpenFreeMap",
+					"use": "Maps on the pages",
+					"frequency": "Continuously"
+				}
+			},
+			"ccBy": "CC BY 4.0",
+			"cc0": "CC0 1.0",
+			"odbl": "ODbL"
+		},
+		"licence": {
+			"heading": "The licences of the lists",
+			"body": [
+				"The Swedish Medical Products Agency’s register of licensed pharmacies is reused under Creative Commons Attribution 4.0 International (CC BY 4.0), the licence its own data catalogue gives the list, which lets anyone copy, share and adapt it, for any purpose, with its credit."
+			],
+			"list": [
+				"Credit (CC BY 4.0, section 3(a)): every page built from the register names the Swedish Medical Products Agency and the licence, links to both, and says that Apercura changed the data (“bearbetat av Apercura”).",
+				"Västra Götalandsregionen’s list of health centres and Statistics Sweden’s boundaries are dedicated to the public domain (CC0 1.0): they need no credit, and are credited all the same (“Källa: SCB”, as Statistics Sweden suggests).",
+				"Personal data: no licence is a legal basis for processing personal data. The directory lists facilities, never people, and never stores a licence holder whose organisation number is a person’s identity number.",
+				"The pages show the lists’ facts without distorting them, and never use a publisher’s name to recommend Apercura."
+			],
+			"changesHeading": "What is kept, and why",
+			"changes": "The register lists every pharmacy licensed to sell medicines to consumers. The directory keeps each one with its name, visiting address, municipality, GLN (the first valid one when several are given), licence and holder, and leaves out the pharmacies the register says are closed to the public (“stängt för allmänheten”), which no patient can visit, and the holder of a licence whose organisation number is a personal identity number. A pharmacy is placed in its municipality and shown at the municipality’s point, not at its address: the register publishes no coordinates. A health centre of Västra Götaland is shown at the point the region publishes and placed in the municipality that point lies in.",
+			"licenceLink": "Creative Commons Attribution 4.0 (CC BY 4.0)",
+			"datasetLink": "The register of licensed pharmacies (lakemedelsverket.se)"
+		},
+		"coverage": {
+			"heading": "Facilities covered",
+			"body": [
+				"Pages are generated for every pharmacy licensed by the Swedish Medical Products Agency, in all of Sweden, and for the health centres of the regions that publish them under an open licence: Västra Götaland only so far. No other region publishes its health centres under an open licence; they will be added as they do.",
+				"Not listed: hospitals, dental care, physiotherapy, psychologists, midwives, care homes and health professionals. Sweden has no open national list of them: the Health and Social Care Inspectorate’s register of care providers, the HSA directory and the National Board of Health and Welfare’s register of licensed health professionals are not open data.",
+				"A pharmacy is placed at its municipality’s point: its map position and its distance are those of the municipality, never of the address. A health centre is placed at its own point."
+			],
+			"kinds": {
+				"SE_HEALTH_CENTRE": "Health centres (vårdcentraler) of Västra Götaland’s primary care choice scheme",
+				"SE_PHARMACY": "Pharmacies licensed by the Swedish Medical Products Agency (öppenvårdsapotek)"
+			},
+			"kindsLabel": "Imported"
+		},
+		"identifiers": {
+			"heading": "Identifiers",
+			"body": [
+				"The address of every page ends with a key built from the facility’s own identifier, so a page can be found and checked at its source:"
+			],
+			"list": [
+				"/se/verksamhet/exempelapoteket-a7359999000014: a pharmacy and its GLN (Global Location Number) in the Swedish Medical Products Agency’s register, the number its page prints (7359999000014).",
+				"/se/verksamhet/exempel-vardcentral-v5560000000ex0001: a health centre and its HSA-id, the national directory’s id of the care unit (SE5560000000-EX0001).",
+				"A person’s identity number is never used."
+			]
+		},
+		"correct": {
+			"heading": "Correct an error",
+			"body": [
+				"The pages repeat the lists: a lasting correction is made at the source, and the page follows at the next import.",
+				"For anything else, use the form: we check every report."
+			],
+			"list": [
+				"A pharmacy’s licence holder reports a change of name, address or ownership to the Swedish Medical Products Agency, which updates its register.",
+				"A health centre reports a change to Västra Götalandsregionen (Vårdval Vårdcentral), which updates its list."
 			],
 			"formTitle": "Report an error",
 			"formBody": "Give the address of the page and what is wrong."

@@ -7,6 +7,7 @@ import {
 	italianAttribution,
 	italianSourceDate,
 	latvianSourcesOf,
+	listingCoverageOf,
 	listingFees,
 	marketBooks,
 	openDataSourcesOf,
@@ -83,6 +84,7 @@ describe("places of a market", () => {
 			CZ: "554782",
 			NO: "0301",
 			FI: "091",
+			SE: "0980",
 		});
 		// Helsinki, which organises its own health care, is the only municipality of its department.
 		expect(isDepartmentCity("FI", "091")).toBe(true);
@@ -104,7 +106,7 @@ describe("places of a market", () => {
 		expect(isDepartmentCity("LV", "0048200")).toBe(false);
 		expect(isDepartmentCity("DE", "0001000")).toBe(false);
 		expect(NOT_DEPARTMENT_CITY("p")).toBe(
-			"NOT (p.country = 'FR' AND p.code = '75056') AND NOT (p.country = 'AT' AND p.code = '90001') AND NOT (p.country = 'CZ' AND p.code = '554782') AND NOT (p.country = 'NO' AND p.code = '0301') AND NOT (p.country = 'FI' AND p.code = '091') AND NOT (p.country = 'DE' AND p.code LIKE '_____000') AND NOT (p.country = 'EE' AND p.kind = 'commune' AND p.code IN ('0296', '0424', '0446', '0511', '0663', '0736', '0897', '0919')) AND NOT (p.country = 'PL' AND p.kind = 'commune' AND substr(p.code, 3, 1) IN ('6', '7', '8', '9')) AND NOT (p.country = 'LT' AND p.code IN ('10278', '17507', '18067', '21988', '23195', '23485', '28338', '31003')) AND NOT (p.country = 'LV' AND p.kind = 'commune' AND p.code IN ('0001000', '0002000', '0003000', '0004000', '0005000', '0006000', '0007000'))",
+			"NOT (p.country = 'FR' AND p.code = '75056') AND NOT (p.country = 'AT' AND p.code = '90001') AND NOT (p.country = 'CZ' AND p.code = '554782') AND NOT (p.country = 'NO' AND p.code = '0301') AND NOT (p.country = 'FI' AND p.code = '091') AND NOT (p.country = 'SE' AND p.code = '0980') AND NOT (p.country = 'DE' AND p.code LIKE '_____000') AND NOT (p.country = 'EE' AND p.kind = 'commune' AND p.code IN ('0296', '0424', '0446', '0511', '0663', '0736', '0897', '0919')) AND NOT (p.country = 'PL' AND p.kind = 'commune' AND substr(p.code, 3, 1) IN ('6', '7', '8', '9')) AND NOT (p.country = 'LT' AND p.code IN ('10278', '17507', '18067', '21988', '23195', '23485', '28338', '31003')) AND NOT (p.country = 'LV' AND p.kind = 'commune' AND p.code IN ('0001000', '0002000', '0003000', '0004000', '0005000', '0006000', '0007000'))",
 		);
 		// Narva is the municipality of Narva's only settlement, which shares its code; Tartu's holds
 		// villages too.
@@ -126,6 +128,11 @@ describe("places of a market", () => {
 		expect(isDepartmentSlug("1", "CY")).toBe(false);
 		expect(isDepartmentSlug("vestland", "NO")).toBe(true);
 		expect(isDepartmentSlug("46", "NO")).toBe(false);
+		// Gotland is a county and its only municipality: the municipality's page is the county's.
+		expect(isDepartmentCity("SE", "0980")).toBe(true);
+		expect(isDepartmentCity("SE", "0180")).toBe(false);
+		expect(isDepartmentSlug("stockholms-lan", "SE")).toBe(true);
+		expect(isDepartmentSlug("01", "SE")).toBe(false);
 	});
 
 	it("labels Austrian places without codes", () => {
@@ -802,5 +809,56 @@ describe("Latvian pages", () => {
 		expect(isMarketListingSlug("lv-LV", "slimnicas")).toBe(true);
 		expect(isMarketListingSlug("lv-LV", "apotheken")).toBe(false);
 		expect(marketBooks("lv-LV")).toBe(false);
+	});
+});
+
+describe("Sweden's pages", () => {
+	it("write Swedish addresses street, then postcode and post town, and Swedish numbers", () => {
+		const site = {
+			addressLine: "Exempelgatan 1",
+			addressComplement: null,
+			postcode: "111 22",
+			placeName: "Stockholm",
+		};
+		expect(addressLines(site, "SE")).toEqual(["Exempelgatan 1", "111 22 Stockholm"]);
+		expect(formatPhone("+46812345678")).toBe("08-123 456 78");
+		expect(formatPhone("+46701234567")).toBe("070-123 45 67");
+		// Norway's +47 is not Sweden's +46.
+		expect(formatPhone("+4722123456")).toBe("22 12 34 56");
+	});
+
+	it("credit the list a page is built from, and Statistics Sweden's places", () => {
+		expect(
+			openDataSourcesOf("SE", [{ source: "se-apotek", site: null }]).map(
+				(source) => source.attribution,
+			),
+		).toEqual([
+			"Apotek med tillstånd: © Läkemedelsverket, CC BY 4.0; bearbetat av Apercura",
+			"Län och kommuner: Källa: SCB, CC0 1.0",
+		]);
+		expect(
+			openDataSourcesOf("SE", [{ source: "se-vgr-vardcentraler", site: null }]).map(
+				(source) => source.attribution,
+			),
+		).toEqual([
+			"Vårdcentraler: Västra Götalandsregionen, CC0 1.0",
+			"Län och kommuner: Källa: SCB, CC0 1.0",
+		]);
+		expect(openDataSourcesOf("SE", [])).toEqual([]);
+		expect(professionSlugOf("SE_PHARMACY")).toBe("apoteken");
+		expect(professionSlugOf("SE_HEALTH_CENTRE")).toBe("vardcentraler");
+		expect(isMarketListingSlug("sv-SE", "apoteken")).toBe(true);
+		expect(isMarketListingSlug("sv-SE", "apotek")).toBe(false);
+		expect(marketBooks("sv-SE")).toBe(false);
+	});
+
+	it("say that health centres are listed for Västra Götaland only, and pharmacies everywhere", () => {
+		expect(listingCoverageOf("sv-SE", "vardcentraler")).toEqual({
+			key: "healthCentreCoverage",
+			places: "Västra Götalands län",
+		});
+		expect(listingCoverageOf("sv-SE", "apoteken")).toBeNull();
+		expect(listingCoverageOf("de-DE", "apotheken")?.key).toBe("pharmacyCoverage");
+		expect(listingCoverageOf("nb-NO", "legekontorer")).toBeNull();
 	});
 });

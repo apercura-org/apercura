@@ -11,6 +11,7 @@ import {
 	fiKindSlugOf,
 	noKindSlugOf,
 	PL_SPECIALIST,
+	seKindSlugOf,
 } from "@apercura/core/taxonomy";
 import {
 	ActionBlock,
@@ -218,9 +219,9 @@ export default async function PractitionerPage({ params }: Props) {
 	const name = labels.personName(payload);
 	const content = ownerContentOf(payload, photoUrl);
 	const professionSlug = payload.listingSlug ?? "";
-	// A Spanish centre's, German facility's, Estonian provider's, Norwegian establishment's or
-	// Cypriot facility's kind has a singular label of its own ("Consultorio local", "Reha-Klinik",
-	// "Perearstikeskus", "Legekontor", "Φαρμακείο").
+	// A Spanish centre's, German facility's, Estonian provider's, Norwegian establishment's,
+	// Cypriot or Swedish facility's kind has a singular label of its own ("Consultorio local",
+	// "Reha-Klinik", "Perearstikeskus", "Legekontor", "Φαρμακείο", "Öppenvårdsapotek").
 	const professionLabel =
 		labels.profession(
 			esKindSlugOf(payload.professionCode) ??
@@ -229,6 +230,7 @@ export default async function PractitionerPage({ params }: Props) {
 				noKindSlugOf(payload.professionCode) ??
 				fiKindSlugOf(payload.professionCode) ??
 				cyKindSlugOf(payload.professionCode) ??
+				seKindSlugOf(payload.professionCode) ??
 				professionSlugOf(payload.professionCode),
 			gender,
 		) ?? t("unknownProfession");
@@ -380,6 +382,24 @@ export default async function PractitionerPage({ params }: Props) {
 	// registration number in the Pharmaceutical Services' list, a state hospital or health centre
 	// as the state's.
 	const cypriot = payload.country === "CY";
+	// Sweden lists facilities: a pharmacy's GLN, its licence (Läkemedelsverket's case number and
+	// the day it took effect) and the company that holds it; a health centre's HSA-id and the care
+	// provider that runs it. A holder that is a person is never stored.
+	const swedish = payload.country === "SE";
+	const swedishOf = (source: string) =>
+		swedish ? payload.qualifications.filter((item) => item.source === source) : [];
+	const swedishLicence = swedishOf("tillstand")[0] ?? null;
+	const swedishLicenceFrom =
+		swedishLicence?.label && /^\d{4}-\d{2}-\d{2}$/.test(swedishLicence.label)
+			? (await getFormatter({ locale })).dateTime(new Date(`${swedishLicence.label}T12:00:00Z`), {
+					dateStyle: "long",
+					timeZone: "UTC",
+				})
+			: null;
+	const swedishHolder = swedishOf("tillstandshavare")[0] ?? null;
+	const swedishOperators = swedishOf("vardgivare")
+		.map((item) => item.label)
+		.filter((label): label is string => Boolean(label));
 	// Switzerland lists facilities: a hospital's type, activities, services and offer as the
 	// FOPH's figures give them, its ownership and operator, and its category as its canton's list
 	// names it (in that list's language).
@@ -618,7 +638,67 @@ export default async function PractitionerPage({ params }: Props) {
 									value={professionLabel}
 									emptyLabel={empty}
 								/>
-								{practice ? null : lithuanian ? (
+								{practice ? null : swedish ? (
+									<>
+										<FieldRow
+											label={
+												payload.idScheme === "SE-HSA"
+													? t("swedishFacts.hsaId")
+													: t("swedishFacts.gln")
+											}
+											value={
+												<>
+													<span className="tabular-nums">{identifier}</span>
+													<span className="mt-1 block text-meta text-ink-muted">
+														{payload.idScheme === "SE-HSA"
+															? t("swedishFacts.hsaIdNote")
+															: t("swedishFacts.glnNote")}
+													</span>
+												</>
+											}
+											emptyLabel={empty}
+										/>
+										{swedishLicence ? (
+											<FieldRow
+												label={t("swedishFacts.licence")}
+												value={
+													<>
+														<span className="tabular-nums">{swedishLicence.code}</span>
+														{swedishLicenceFrom ? (
+															<span className="mt-1 block text-meta text-ink-muted">
+																{t("swedishFacts.licenceFrom", { date: swedishLicenceFrom })}
+															</span>
+														) : null}
+													</>
+												}
+												emptyLabel={empty}
+											/>
+										) : null}
+										{swedishHolder?.label ? (
+											<FieldRow
+												label={t("swedishFacts.holder")}
+												value={
+													<>
+														<span lang="sv">{swedishHolder.label}</span>
+														{swedishHolder.code ? (
+															<span className="mt-1 block text-meta text-ink-muted tabular-nums">
+																{t("swedishFacts.holderNumber", { number: swedishHolder.code })}
+															</span>
+														) : null}
+													</>
+												}
+												emptyLabel={empty}
+											/>
+										) : null}
+										{swedishOperators.length > 0 ? (
+											<FieldRow
+												label={t("swedishFacts.operator")}
+												value={<span lang="sv">{swedishOperators.join(", ")}</span>}
+												emptyLabel={empty}
+											/>
+										) : null}
+									</>
+								) : lithuanian ? (
 									<FieldRow
 										label={t("licensedServices")}
 										value={

@@ -20,9 +20,12 @@ import {
 	isIeListingSlug,
 	isItListingSlug,
 	isNoListingSlug,
+	isSeListingSlug,
 	isSiListingSlug,
 	noKindSlugOf,
 	noProfessionOfListingSlug,
+	seKindSlugOf,
+	seProfessionOfListingSlug,
 } from "@apercura/core/taxonomy";
 import { getTranslations } from "next-intl/server";
 import { capitalisesNouns } from "~/i18n/locales";
@@ -59,8 +62,8 @@ export async function getTaxonomyLabels(locale: Locale) {
 		 * "Consulta de cardiología", "Farmacia", "Spital"), their listing being plural ("GP
 		 * practices", "Kardiologové", "Cardiólogos", "Farmacie", "Spitäler"). With its profession code, a Spanish centre listed under its kind's listing
 		 * reads as its own kind (a local surgery listed with the health centres reads "Consultorio
-		 * local"). A German facility, an Estonian provider, a Norwegian establishment , a Finnish service
-		 * location or a Cypriot facility reads as its kind ("Krankenhaus", "Apotheke", "Perearstikeskus", "Legekontor", "Terveysasema", "Φαρμακείο"), its listing being plural.
+		 * local"). A German facility, an Estonian provider, a Norwegian establishment, a Finnish service
+		 * location, a Cypriot or a Swedish facility reads as its kind ("Krankenhaus", "Apotheke", "Perearstikeskus", "Legekontor", "Terveysasema", "Φαρμακείο", "Öppenvårdsapotek"), its listing being plural.
 		 * A Slovenian doctor reads as their field ("Družinska medicina"): the list gives no gender
 		 * to choose between "družinski zdravnik" and "družinska zdravnica".
 		 */
@@ -75,7 +78,8 @@ export async function getTaxonomyLabels(locale: Locale) {
 				isEeListingSlug(slug) ||
 				isNoListingSlug(slug) ||
 				isFiListingSlug(slug) ||
-				isCyListingSlug(slug)
+				isCyListingSlug(slug) ||
+				isSeListingSlug(slug)
 			) {
 				const kind = isDeListingSlug(slug)
 					? deKindSlugOf(professionCode ?? deProfessionOfListingSlug(slug))
@@ -85,7 +89,9 @@ export async function getTaxonomyLabels(locale: Locale) {
 							? noKindSlugOf(professionCode ?? noProfessionOfListingSlug(slug))
 							: isFiListingSlug(slug)
 								? fiKindSlugOf(professionCode ?? fiProfessionOfListingSlug(slug))
-								: cyKindSlugOf(professionCode ?? cyProfessionOfListingSlug(slug));
+								: isCyListingSlug(slug)
+									? cyKindSlugOf(professionCode ?? cyProfessionOfListingSlug(slug))
+									: seKindSlugOf(professionCode ?? seProfessionOfListingSlug(slug));
 				return (
 					(kind ? lookup(`profession.${kind}`) : null) ??
 					lookup(`profession.${slug}`) ??

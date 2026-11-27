@@ -442,3 +442,40 @@ describe("Latvian place keys", () => {
 		expect(displayId({ idScheme: "LV-APT", nationalId: "324" })).toBe("a324");
 	});
 });
+
+describe("Swedish facility keys", () => {
+	it("read a Swedish page segment in Sweden only, a GLN's check digit verified", () => {
+		expect(parsePractitionerKey("sv-SE", "exempelapoteket-storgatan-a7359999000014")).toEqual({
+			country: "SE",
+			idScheme: "SE-GLN",
+			nationalId: "7359999000014",
+			namePart: "exempelapoteket-storgatan",
+		});
+		expect(parsePractitionerKey("sv-SE", "exempel-vardcentral-v5560000000ex0001")).toEqual({
+			country: "SE",
+			idScheme: "SE-HSA",
+			nationalId: "SE5560000000-EX0001",
+			namePart: "exempel-vardcentral",
+		});
+		expect(parsePractitionerKey("sv-SE", "exempelapoteket-a7359999000015")).toBeNull();
+		expect(parsePractitionerKey("sv-SE", "eksempel-legesenter-910000039")).toBeNull();
+		expect(parsePractitionerKey("sv-SE", "camille-exemple-19999990013")).toBeNull();
+		expect(parsePractitionerKey("nb-NO", "exempelapoteket-a7359999000014")).toBeNull();
+		expect(marketAdapter("sv-SE").features.booking).toBe(false);
+	});
+
+	it("mark a Swedish segment outside a locale, and print the GLN or the HSA-id", () => {
+		expect(marketSegmentOf("SE", "apotek-exempel-malmo-a7359999000021")).toBe(
+			"se.apotek-exempel-malmo-a7359999000021",
+		);
+		expect(parseAnyPractitionerKey("se.apotek-exempel-malmo-a7359999000021")).toMatchObject({
+			country: "SE",
+			idScheme: "SE-GLN",
+			nationalId: "7359999000021",
+		});
+		expect(displayId({ idScheme: "SE-GLN", nationalId: "7359999000014" })).toBe("7359999000014");
+		expect(displayId({ idScheme: "SE-HSA", nationalId: "SE5560000000-EX0001" })).toBe(
+			"SE5560000000-EX0001",
+		);
+	});
+});

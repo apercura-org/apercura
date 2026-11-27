@@ -18,8 +18,8 @@ import { getTaxonomyLabels, inSentence } from "~/lib/labels";
 import {
 	gpCoverageNoteOf,
 	isMarketListingSlug,
+	listingCoverageOf,
 	listingFees,
-	pharmacyCoverageOf,
 } from "~/lib/market";
 import { placeLabel } from "~/lib/places";
 import { CONTENT_LANGUAGES, DESCRIPTION_MAX, fitText, pageMetadata, pickTitle } from "~/lib/seo";
@@ -100,8 +100,8 @@ export default async function SpecialtyHub({ params }: Props) {
 	const listing = labels.listing(listingSlug) ?? listingSlug;
 	const count = data.landing.practitionerCount;
 	const title = t("hubTitle", { listing });
-	// Germany's pharmacies: two Länder only, said under the title.
-	const coverage = pharmacyCoverageOf(locale, listingSlug);
+	// Germany's pharmacies (two Länder) and Sweden's health centres (one region): said under the title.
+	const coverage = listingCoverageOf(locale, listingSlug);
 	// Latvia's GP practices: those with a published address only, said under the title.
 	const gpCoverage = gpCoverageNoteOf(locale, listingSlug);
 	// Switzerland's lists cover some cantons only: the ones its published facilities come from.
@@ -157,7 +157,9 @@ export default async function SpecialtyHub({ params }: Props) {
 						}
 						note={
 							coverage
-								? t("pharmacyCoverage", { states: coverage })
+								? coverage.key === "pharmacyCoverage"
+									? t("pharmacyCoverage", { states: coverage.places })
+									: t("healthCentreCoverage", { regions: coverage.places })
 								: gpCoverage
 									? t("gpCoverage")
 									: null

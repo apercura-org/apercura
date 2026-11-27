@@ -6,7 +6,7 @@ import { isMarketListingSlug } from "./market";
 
 /** A word that says the sample is one, in the market's language. */
 const FICTITIOUS =
-	/Exemple|Example|Sample|Specimen|Muster|Beispiel|Příklad|Vzor|Ejemplo|Muestra|Esempio|Modello|Näidis|Przykład|Wzorc|Eksempel|Esimerkki|Pavyzd|Primer|Zgled|Παράδειγμα|Παραδείγματος|Υπόδειγμα|Υποδείγματος|Parau|parau|Piemēr/;
+	/Exemple|Example|Sample|Specimen|Muster|Beispiel|Příklad|Vzor|Ejemplo|Muestra|Esempio|Modello|Näidis|Przykład|Wzorc|Eksempel|Esimerkki|Pavyzd|Primer|Zgled|Παράδειγμα|Παραδείγματος|Υπόδειγμα|Υποδείγματος|Parau|parau|Piemēr|Exempel/;
 
 describe("homeSamples", () => {
 	it("gives every locale one sample per state of a page, the specimen unclaimed first", () => {
@@ -54,11 +54,18 @@ describe("homeSamples", () => {
 		expect(specimenOf("it-CH").name).toBe("Ospedale dell’Esempio");
 		// Swiss Standard German writes no "ß".
 		expect(JSON.stringify(homeSamples("de-CH"))).not.toContain("ß");
-		expect(new Set(LOCALES.map((locale) => marketOf(locale))).size).toBe(17);
+		expect(new Set(LOCALES.map((locale) => marketOf(locale))).size).toBe(18);
 		// Ireland's samples are in English, without an Eircode.
 		expect(specimenOf("en-IE").name).toBe("Example Pharmacy");
 		expect(JSON.stringify(homeSamples("en-IE"))).not.toMatch(/[A-Z]\d{2} ?[A-Z0-9]{4}/);
 		// Latvia: a GP practice, a hospital and a pharmacy, in Latvian.
 		expect(specimenOf("lv-LV").listing).toBe("gimenes-arstu-prakses");
+		// Sweden's samples are in Swedish, a pharmacy first.
+		expect(specimenOf("sv-SE").name).toBe("Exempelapoteket Storgatan");
+		expect(homeSamples("sv-SE").map((sample) => sample.listing)).toEqual([
+			"apoteken",
+			"vardcentraler",
+			"apoteken",
+		]);
 	});
 });

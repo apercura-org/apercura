@@ -52,6 +52,18 @@ describe("the messages of a market's client islands", () => {
 		}
 	});
 
+	it("give Sweden's islands its labels only, and no other market Sweden's", () => {
+		const swedish = taxonomyOf(forMarket(pickMessages(messagesFor("sv-SE"), ["taxonomy"]), "SE"));
+		expect(swedish.listing.apoteken).toBe("Apotek");
+		expect(swedish.profession.oppenvardsapotek).toBe("Öppenvårdsapotek");
+		// Norway's pharmacies are Norway's: never in a Swedish island, and Sweden's never in a Norwegian one.
+		expect(swedish.listing.apotek).toBeUndefined();
+		const norwegian = taxonomyOf(forMarket(pickMessages(messagesFor("nb-NO"), ["taxonomy"]), "NO"));
+		expect(norwegian.listing.apotek).toBeTruthy();
+		expect(norwegian.listing.apoteken).toBeUndefined();
+		expect(norwegian.listing.vardcentraler).toBeUndefined();
+	});
+
 	it("give Ireland's islands its labels only, and no other market Ireland's", () => {
 		const irish = taxonomyOf(forMarket(pickMessages(messagesFor("en-IE"), ["taxonomy"]), "IE"));
 		expect(irish.listing.pharmacy).toBe("Pharmacies");

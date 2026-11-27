@@ -169,6 +169,10 @@ jobs:
         run: bun run etl:cy --source-dir packages/etl/fixtures/cy --offline
       - name: Import the synthetic Latvian fixtures
         run: bun run etl:lv --source-dir packages/etl/fixtures/lv --offline
+      - name: Import the synthetic Swedish fixtures (places, then the lists)
+        run: |
+          bun run etl:places --country se --source-dir packages/etl/fixtures/se
+          bun run etl:se --source-dir packages/etl/fixtures/se --offline
       - name: Install Chromium
         working-directory: apps/web
         run: bunx playwright install --with-deps chromium
@@ -405,6 +409,10 @@ jobs:
         run: bun run etl:cy --source-dir packages/etl/fixtures/cy --offline --dry-run
       - name: Dry-run the Latvian import on the fixtures
         run: bun run etl:lv --source-dir packages/etl/fixtures/lv --offline --dry-run
+      - name: Dry-run the Swedish import on the fixtures
+        run: |
+          bun run etl:places --country se --source-dir packages/etl/fixtures/se
+          bun run etl:se --source-dir packages/etl/fixtures/se --offline --dry-run
       - name: Integration test (import twice, guards, removals, suppressions)
         run: |
           psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -c "CREATE DATABASE apercura_test"

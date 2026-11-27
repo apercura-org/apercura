@@ -37,6 +37,7 @@ import { DEFAULT_NO_ENHETER_URL, DEFAULT_NO_UNDERENHETER_URL } from "./sources/n
 import { DEFAULT_NO_PLACES_URL } from "./sources/no/places";
 import { NO_SOURCE_IDS, type NoFileId, type NoSourceId } from "./sources/no/types";
 import { DEFAULT_PL_PRG_URL, DEFAULT_PL_TERC_URL } from "./sources/pl/places";
+import { SE_SOURCE_IDS, type SeSourceId, seSourceUrlVariable } from "./sources/se/types";
 import { GURS_WFS } from "./sources/si/places";
 import { SI_SOURCE_IDS, type SiSourceId } from "./sources/si/types";
 import { ZZZS_LISTS_PAGE } from "./sources/si/zzzs";
@@ -1501,6 +1502,87 @@ export function buildLvOptions(flags: ParsedArgs["flags"], env: NodeJS.ProcessEn
 		sources: parseLvSources(flagString(flags, "sources") ?? env.ETL_LV_SOURCES),
 		urls,
 		portalUrl: env.ETL_LV_PORTAL_URL || DEFAULT_LV_PORTAL_URL,
+		workDir: flagString(flags, "work-dir") ?? env.ETL_WORK_DIR ?? null,
+		appUrl: offline ? null : env.APP_URL || null,
+		revalidateSecret: env.REVALIDATE_SECRET || null,
+	};
+}
+
+export type SeOptions = {
+	databaseUrl: string;
+	dryRun: boolean;
+	approveRunId: number | null;
+	force: boolean;
+	sourceDir: string | null;
+	offline: boolean;
+	sources: SeSourceId[];
+	/** A list's address when overridden (`ETL_SE_APOTEK_URL`, `ETL_SE_VARDCENTRALER_URL`); else its own. */
+	urls: Partial<Record<SeSourceId, string>>;
+	/** The boundaries' archive (`ETL_SE_PLACES_URL`) or SCB's page linking it (`ETL_SE_PLACES_PAGE_URL`), for their first import. */
+	placesUrls: { url?: string; pageUrl?: string };
+	workDir: string | null;
+	appUrl: string | null;
+	revalidateSecret: string | null;
+};
+
+/**
+ * Parses a comma-separated list of Swedish lists: the lists to import (`apotek`), or every list
+ * but some, each prefixed with a minus (`-vardcentraler`). The two forms never mix. Throws on
+ * unknown ones, and when no list is left.
+ */
+export function parseSeSources(value: string | null | undefined): SeSourceId[] {
+	if (!value) return [...SE_SOURCE_IDS];
+	const entries = value
+		.split(",")
+		.map((source) => source.trim())
+		.filter(Boolean);
+	const excluded = entries.filter((entry) => entry.startsWith("-"));
+	if (excluded.length > 0 && excluded.length < entries.length) {
+		throw new Error(
+			`Swedish sources are either listed (apotek,vardcentraler) or all excluded with a minus (-vardcentraler), never both: "${value}"`,
+		);
+	}
+	const sources = excluded.length > 0 ? excluded.map((entry) => entry.slice(1)) : entries;
+	for (const source of sources) {
+		if (!(SE_SOURCE_IDS as readonly string[]).includes(source)) {
+			throw new Error(`Unknown Swedish source "${source}" (one of ${SE_SOURCE_IDS.join(", ")})`);
+		}
+	}
+	const selected =
+		excluded.length > 0 ? SE_SOURCE_IDS.filter((id) => !sources.includes(id)) : sources;
+	if (selected.length === 0) throw new Error("At least one Swedish source is required");
+	return [...new Set(selected)] as SeSourceId[];
+}
+
+/** The boundaries' sources of `etl:places --country se`, when overridden. */
+export function sePlacesUrls(env: NodeJS.ProcessEnv): SeOptions["placesUrls"] {
+	return {
+		url: env.ETL_SE_PLACES_URL || undefined,
+		pageUrl: env.ETL_SE_PLACES_PAGE_URL || undefined,
+	};
+}
+
+export function buildSeOptions(flags: ParsedArgs["flags"], env: NodeJS.ProcessEnv): SeOptions {
+	const approve = flagString(flags, "approve");
+	if (approve !== null && !/^\d+$/.test(approve)) {
+		throw new Error(`--approve needs a run id, got ${approve}`);
+	}
+	const offline = flags.has("offline");
+	const urls: Partial<Record<SeSourceId, string>> = {};
+	for (const id of SE_SOURCE_IDS) {
+		const url = env[seSourceUrlVariable(id)];
+		if (url) urls[id] = url;
+	}
+	return {
+		databaseUrl: resolveDatabaseUrl(env),
+		dryRun: flags.has("dry-run"),
+		approveRunId: approve === null ? null : Number(approve),
+		force: flags.has("force"),
+		sourceDir: flagString(flags, "source-dir") ?? env.ETL_SE_SOURCE_DIR ?? null,
+		offline,
+		sources: parseSeSources(flagString(flags, "sources") ?? env.ETL_SE_SOURCES),
+		urls,
+		placesUrls: sePlacesUrls(env),
 		workDir: flagString(flags, "work-dir") ?? env.ETL_WORK_DIR ?? null,
 		appUrl: offline ? null : env.APP_URL || null,
 		revalidateSecret: env.REVALIDATE_SECRET || null,

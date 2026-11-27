@@ -15,6 +15,7 @@ export * from "./lt";
 export * from "./lv";
 export * from "./no";
 export * from "./pl";
+export * from "./se";
 export * from "./search-aliases";
 export * from "./si";
 export * from "./types";

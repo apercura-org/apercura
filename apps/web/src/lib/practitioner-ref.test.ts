@@ -466,3 +466,37 @@ describe("Latvian place references", () => {
 		expect(parsePractitionerRef("19999990013", "LV")?.country).toBe("FR");
 	});
 });
+
+describe("Swedish facility references", () => {
+	const pharmacy = { country: "SE", idScheme: "SE-GLN", nationalId: "7359999000014" };
+	const centre = { country: "SE", idScheme: "SE-HSA", nationalId: "SE5560000000-EX0001" };
+
+	it("read the `se:` reference, a Swedish page address, and a GLN or HSA-id typed on a Swedish page", () => {
+		expect(parsePractitionerRef("se:a7359999000014")).toEqual(pharmacy);
+		expect(parsePractitionerRef(" SE: a7359999000014 ")).toEqual(pharmacy);
+		expect(parsePractitionerRef("se:v5560000000ex0001")).toEqual(centre);
+		expect(
+			parsePractitionerRef("https://apercura.org/se/verksamhet/exempelapoteket-a7359999000014"),
+		).toEqual(pharmacy);
+		expect(parsePractitionerRef("/se/verksamhet/exempel-vardcentral-v5560000000ex0001/")).toEqual(
+			centre,
+		);
+		// The identifiers as a Swedish page prints them.
+		expect(parsePractitionerRef("7359999000014", "SE")).toEqual(pharmacy);
+		expect(parsePractitionerRef("SE5560000000-EX0001", "SE")).toEqual(centre);
+		expect(parsePractitionerRef("se:a7359999000015")).toBeNull();
+		expect(parsePractitionerRef("se:")).toBeNull();
+	});
+
+	it("still read RPPS numbers as French", () => {
+		expect(parsePractitionerRef("19999990013", "SE")?.country).toBe("FR");
+	});
+
+	it("write the reference back with its market", () => {
+		expect(practitionerRefOf(pharmacy)).toBe("se:a7359999000014");
+		expect(practitionerRefOf(centre)).toBe("se:v5560000000ex0001");
+		expect(marketRef("7359999000014", "SE")).toBe("se:a7359999000014");
+		expect(parsePractitionerRef(practitionerRefOf(pharmacy))).toEqual(pharmacy);
+		expect(parsePractitionerRef(practitionerRefOf(centre))).toEqual(centre);
+	});
+});
