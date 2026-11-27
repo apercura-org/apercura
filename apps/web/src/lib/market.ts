@@ -9,6 +9,7 @@ import {
 	germany,
 	ireland,
 	italy,
+	lithuania,
 	norway,
 	PL_OBTAINED_AT,
 	PL_PRODUCED_AT,
@@ -30,6 +31,7 @@ import {
 	hasBillingSectors,
 	IE_PROFESSIONS,
 	IT_PROFESSIONS,
+	LT_PROFESSIONS,
 	listingHasBillingSectors,
 	NO_PROFESSIONS,
 	PL_PROFESSIONS,
@@ -74,7 +76,7 @@ export function marketBooks(locale: Locale): boolean {
  * `GB_GP` → `gp-practices`, `CZ_GP` → `prakticky-lekar`, `ES_PHARMACY` → `farmacias`,
  * `IT_PHARMACY` → `farmacie`, `DE_PHARMACY` → `apotheken`, `CH_HOSPITAL` → `spital`,
  * `EE_PHARMACY` → `apteegid`, `NO_PHARMACY` → `apotek`,
- * `IE_PHARMACY` → `pharmacy`).
+ * `IE_PHARMACY` → `pharmacy`, `LT_DENTAL` → `odontologijos-klinikos`).
  */
 export function professionSlugOf(code: string): string {
 	return (
@@ -91,6 +93,7 @@ export function professionSlugOf(code: string): string {
 		NO_PROFESSIONS[code]?.slug ??
 		IE_PROFESSIONS[code]?.slug ??
 		FI_PROFESSIONS[code]?.slug ??
+		LT_PROFESSIONS[code]?.slug ??
 		""
 	);
 }
@@ -146,6 +149,18 @@ export function ukSourcesOf(
  */
 export function czechSourcesOf(): { name: string; attribution: string }[] {
 	return czechia.registries
+		.filter((registry) => registry.attribution)
+		.map((registry) => ({ name: registry.name, attribution: registry.attribution ?? "" }));
+}
+
+/**
+ * The sources a Lithuanian institution's page is built from, with their CC BY 4.0 attribution
+ * word for word: VASPVT's licence register (its name, address and licensed services) and the
+ * Address Register (VĮ Registrų centras), whose counties, municipalities and settlements place and
+ * locate it.
+ */
+export function lithuanianSourcesOf(): { name: string; attribution: string }[] {
+	return lithuania.registries
 		.filter((registry) => registry.attribution)
 		.map((registry) => ({ name: registry.name, attribution: registry.attribution ?? "" }));
 }
@@ -472,7 +487,7 @@ export const IE_HSE_SOURCES: ReadonlySet<string> = new Set([
  * The open-data sources of a page in a market whose licences require their attribution
  * (Austria's and Czechia's CC BY 4.0, the UK's OGL, Spain's Ministry of Health and IGN, Italy's
  * IODL 2.0 and CC BY 4.0, Germany's Destatis, CC BY 4.0 and dl-de/by-2-0 sources, Switzerland's,
- * Estonia's CC BY-NC-SA 3.0, CC0 and Land Board sources, Ireland's re-use conditions and CC BY 4.0); empty for
+ * Estonia's CC BY-NC-SA 3.0, CC0 and Land Board sources, Ireland's re-use conditions and CC BY 4.0, Lithuania's CC BY 4.0); empty for
  * France, whose provenance line is the catalog's. `sourceDate` dates Spain's REGCESS line,
  * Italy's list and the obtaining of Poland's register, `producedAt` the production of Poland's.
  */
@@ -489,6 +504,7 @@ export function openDataSourcesOf(
 	if (country === "AT") return austrianSourcesOf(activities.map((activity) => activity.source));
 	if (country === "GB") return ukSourcesOf(activities);
 	if (country === "CZ") return activities.length > 0 ? czechSourcesOf() : [];
+	if (country === "LT") return activities.length > 0 ? lithuanianSourcesOf() : [];
 	if (country === "ES") return activities.length > 0 ? spanishSourcesOf(sourceDate) : [];
 	if (country === "IT") {
 		return activities.length > 0

@@ -72,6 +72,11 @@ describe("titles and descriptions", () => {
 	it("shortens arrondissements in titles", () => {
 		expect(shortPlaceName("Paris 13e Arrondissement")).toBe("Paris 13e");
 		expect(shortPlaceName("Saint-Denis")).toBe("Saint-Denis");
+		expect(shortPlaceName("Vilniaus miesto savivaldybė")).toBe("Vilniaus m. sav.");
+		expect(shortPlaceName("Kauno rajono savivaldybė")).toBe("Kauno r. sav.");
+		expect(shortPlaceName("Birštono savivaldybė")).toBe("Birštono sav.");
+		expect(shortPlaceName("Vilniaus apskritis")).toBe("Vilniaus apskr.");
+		expect(shortPlaceName("Pavyzdžiai (Bandymų sen.)")).toBe("Pavyzdžiai (Bandymų sen.)");
 	});
 });
 
@@ -123,6 +128,7 @@ describe("hreflang of the homes", () => {
 			"nb-NO": "https://apercura.org/no",
 			"en-IE": "https://apercura.org/ie",
 			"fi-FI": "https://apercura.org/fi",
+			"lt-LT": "https://apercura.org/lt",
 			"x-default": "https://apercura.org/",
 		});
 	});

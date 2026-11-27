@@ -176,6 +176,14 @@ test.describe("a place of another market", () => {
 		["/gb/search?quoi=GP&ou=Madrid", "/es/centros-de-salud/madrid/madrid"],
 		["/fr-es/buscar?quoi=farmacia&ou=Madrid", "/es/farmacias/madrid/madrid"],
 		["/fr/recherche?quoi=dentiste&ou=Barcelona", "/es/dentistas/barcelona/barcelona"],
+		// Lithuania: "dentiste" on /fr and "hospital" on /gb for Vilnius, a city municipality's city
+		// whose page is its municipality's; Lithuania by name, its home.
+		[
+			"/fr/recherche?quoi=dentiste&ou=Vilnius",
+			"/lt/odontologijos-klinikos/vilniaus-miesto-savivaldybe",
+		],
+		["/gb/search?quoi=hospital&ou=Klaip%C4%97da", "/lt/ligonines/klaipedos-miesto-savivaldybe"],
+		["/fr/recherche?ou=Lituanie", "/lt"],
 		// Spain by name: its home, never "not covered yet".
 		["/fr/recherche?ou=Espagne", "/es"],
 		["/es/buscar?quoi=dentista&ou=Paris", "/fr-es/chirurgien-dentiste/75-paris"],
@@ -282,6 +290,7 @@ test.describe("the country searched", () => {
 			"Norvège",
 			"Irlande",
 			"Finlande",
+			"Lituanie",
 		]);
 		await country.selectOption({ label: "Royaume-Uni" });
 		// The places suggested are the UK's.
@@ -346,6 +355,7 @@ test.describe("a place in a country Apercura does not cover yet", () => {
 		["Norvège", "/no"],
 		["Irlande", "/ie"],
 		["Finlande", "/fi"],
+		["Lituanie", "/lt"],
 	] as const;
 
 	test("“dentiste” in Budapest says so, lists the open countries, and passes axe", async ({

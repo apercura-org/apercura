@@ -5,9 +5,9 @@ import { type Locale, type MarketCountry, marketOf } from "~/i18n/locales";
  * opening. Each market shows what its directory lists, in its own language: practitioners in
  * France, Austria (its doctors) and Czechia (practices under a doctor's name, a pharmacy);
  * practices, facilities, pharmacies or hospitals in the UK, Spain, Italy, Germany, Switzerland,
- * Estonia, Poland, Ireland and Finland. The names and addresses say plainly that they are examples
- * ("Exemple", "Muster", "Example", "Ejemplo", "Esempio", "Příklad", "Näidis", "Przykład",
- * "Esimerkki"), never a real person, practice or place
+ * Estonia, Poland, Ireland and Finland, licensed institutions in Lithuania. The names and addresses
+ * say plainly that they are examples ("Exemple", "Muster", "Example", "Ejemplo", "Esempio",
+ * "Příklad", "Näidis", "Przykład", "Esimerkki", "Pavyzdys"), never a real person, practice or place
  * of care; the identifiers are shaped like the market's but synthetic.
  *
  * One sample per state of a page, as the stamp prints it (DESIGN.md, "Stamp"): unclaimed
@@ -365,6 +365,34 @@ const SAMPLES: Readonly<Record<Exclude<MarketCountry, "CH">, HomeSamples>> = {
 			gender: "other",
 			address: "Esimerkkipolku 8, 90100 Oulu",
 			identifier: "e5e00000-0000-4000-8000-000000000003",
+			status: "claimed",
+		},
+	],
+	// Lithuania: VASPVT's licensed institutions (a medical centre, a primary care clinic, a dental
+	// clinic), under their legal form as the register writes them.
+	LT: [
+		{
+			name: "UAB „Pavyzdinė klinika“",
+			listing: "medicinos-centrai",
+			gender: "other",
+			address: "Pavyzdžio g. 12, Vilnius",
+			identifier: "9000-90000009",
+			status: "unclaimed",
+		},
+		{
+			name: "VšĮ Pavyzdžio šeimos klinika",
+			listing: "seimos-medicina",
+			gender: "other",
+			address: "Pavyzdinė g. 3, Kaunas",
+			identifier: "9001-90000017",
+			status: "verified",
+		},
+		{
+			name: "MB „Pavyzdžio odontologija“",
+			listing: "odontologijos-klinikos",
+			gender: "other",
+			address: "Pavyzdžių a. 8, Klaipėda",
+			identifier: "9002-90000025",
 			status: "claimed",
 		},
 	],

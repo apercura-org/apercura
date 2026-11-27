@@ -194,3 +194,19 @@ describe("returning to a Finnish claim", () => {
 		expect(parseReturnTo(`/pro/revendiquer?rpps=fi:${key.slice(2)}`)).toBeNull();
 	});
 });
+
+describe("returning to a Lithuanian claim", () => {
+	it("accepts an `lt:` page key, never anything that looks like a path", () => {
+		expect(parseReturnTo("/pro/revendiquer?rpps=lt:9000-90000001")).toEqual({
+			pathname: "/pro/revendiquer",
+			query: { rpps: "lt:9000-90000001" },
+		});
+		expect(parseReturnTo("/pro/revendiquer?rpps=lt:9000-v0a1b2c3d")).toEqual({
+			pathname: "/pro/revendiquer",
+			query: { rpps: "lt:9000-v0a1b2c3d" },
+		});
+		expect(parseReturnTo("/pro/revendiquer?rpps=lt:9000-90000001/..")).toBeNull();
+		expect(parseReturnTo("/pro/revendiquer?rpps=lt:9000")).toBeNull();
+		expect(parseReturnTo("/pro/revendiquer?rpps=lt:")).toBeNull();
+	});
+});

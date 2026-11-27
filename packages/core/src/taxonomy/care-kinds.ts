@@ -28,7 +28,8 @@ export type CareMarket =
 	| "PL"
 	| "NO"
 	| "IE"
-	| "FI";
+	| "FI"
+	| "LT";
 
 export const CARE_KINDS = {
 	"general-practice": {
@@ -41,6 +42,7 @@ export const CARE_KINDS = {
 		PL: "przychodnie-poz",
 		NO: "legekontorer",
 		FI: "terveysasemat",
+		LT: "seimos-medicina",
 	},
 	dentistry: {
 		FR: "chirurgien-dentiste",
@@ -52,6 +54,7 @@ export const CARE_KINDS = {
 		PL: "stomatologia",
 		NO: "tannklinikker",
 		FI: "hammashoitolat",
+		LT: "odontologijos-klinikos",
 	},
 	orthodontics: {
 		FR: "orthodontiste",
@@ -63,6 +66,7 @@ export const CARE_KINDS = {
 		PL: "stomatologia",
 		NO: "tannklinikker",
 		FI: "hammashoitolat",
+		LT: "odontologijos-klinikos",
 	},
 	pharmacy: {
 		FR: "pharmacien",
@@ -86,14 +90,19 @@ export const CARE_KINDS = {
 		NO: "sykehus",
 		IE: "hospitals",
 		FI: "sairaalat",
+		LT: "ligonines",
 	},
 	"nursing-home": { CH: "pflegeheim", IE: "nursing-homes" },
+	// Outpatient specialist care where a market lists it as one kind (Lithuania's medical centres,
+	// Czechia's specialists whose field has no listing of its own).
+	"specialist-care": { CZ: "lekar-specialista", LT: "medicinos-centrai" },
 	paediatrics: {
 		FR: "pediatre",
 		AT: "kinderheilkunde",
 		CZ: "detsky-lekar",
 		ES: "pediatras",
 		PL: "poradnie-pediatryczne",
+		LT: "medicinos-centrai",
 	},
 	gynaecology: {
 		FR: "gynecologue",
@@ -102,6 +111,7 @@ export const CARE_KINDS = {
 		ES: "ginecologos",
 		PL: "poradnie-ginekologiczne",
 		FI: "sairaalat",
+		LT: "medicinos-centrai",
 	},
 	obstetrics: {
 		FR: "gynecologue-obstetricien",
@@ -110,6 +120,7 @@ export const CARE_KINDS = {
 		ES: "ginecologos",
 		PL: "poradnie-ginekologiczne",
 		FI: "neuvolat",
+		LT: "medicinos-centrai",
 	},
 	midwifery: {
 		FR: "sage-femme",
@@ -126,6 +137,7 @@ export const CARE_KINDS = {
 		ES: "enfermeria",
 		EE: "oendusabi",
 		PL: "pielegniarki-i-polozne",
+		LT: "slauga",
 	},
 	physiotherapy: {
 		FR: "masseur-kinesitherapeute",
@@ -134,6 +146,7 @@ export const CARE_KINDS = {
 		EE: "fusioteraapia",
 		PL: "rehabilitacja",
 		FI: "kuntoutus",
+		LT: "reabilitacija",
 	},
 	psychology: {
 		FR: "psychologue",
@@ -142,6 +155,7 @@ export const CARE_KINDS = {
 		EE: "psuhholoogiline-ravi",
 		PL: "poradnie-psychologiczne",
 		FI: "mielenterveys-ja-paihdepalvelut",
+		LT: "psichikos-sveikatos-centrai",
 	},
 	"speech-therapy": {
 		FR: "orthophoniste",
@@ -158,6 +172,7 @@ export const CARE_KINDS = {
 		ES: "oftalmologos",
 		PL: "poradnie-okulistyczne",
 		FI: "sairaalat",
+		LT: "medicinos-centrai",
 	},
 	"ear-nose-throat": {
 		FR: "orl",
@@ -166,6 +181,7 @@ export const CARE_KINDS = {
 		ES: "otorrinos",
 		PL: "poradnie-laryngologiczne",
 		FI: "sairaalat",
+		LT: "medicinos-centrai",
 	},
 	dermatology: {
 		FR: "dermatologue",
@@ -173,6 +189,7 @@ export const CARE_KINDS = {
 		CZ: "dermatolog",
 		ES: "dermatologos",
 		PL: "poradnie-dermatologiczne",
+		LT: "medicinos-centrai",
 	},
 	cardiology: {
 		FR: "cardiologue",
@@ -181,6 +198,7 @@ export const CARE_KINDS = {
 		ES: "cardiologos",
 		PL: "poradnie-kardiologiczne",
 		FI: "sairaalat",
+		LT: "medicinos-centrai",
 	},
 	pneumology: {
 		FR: "pneumologue",
@@ -188,6 +206,7 @@ export const CARE_KINDS = {
 		CZ: "pneumolog",
 		ES: "neumologos",
 		PL: "poradnie-chorob-pluc",
+		LT: "medicinos-centrai",
 	},
 	gastroenterology: {
 		FR: "gastro-enterologue",
@@ -195,6 +214,7 @@ export const CARE_KINDS = {
 		CZ: "gastroenterolog",
 		ES: "digestologos",
 		PL: "poradnie-gastroenterologiczne",
+		LT: "medicinos-centrai",
 	},
 	endocrinology: {
 		FR: "endocrinologue",
@@ -202,6 +222,7 @@ export const CARE_KINDS = {
 		CZ: "endokrinolog",
 		ES: "endocrinos",
 		PL: "poradnie-endokrynologiczne",
+		LT: "medicinos-centrai",
 	},
 	oncology: {
 		FR: "oncologue",
@@ -209,6 +230,7 @@ export const CARE_KINDS = {
 		CZ: "onkolog",
 		ES: "oncologos",
 		PL: "poradnie-onkologiczne",
+		LT: "medicinos-centrai",
 	},
 	haematology: { FR: "hematologue", AT: "haematologie-und-onkologie", ES: "hematologos" },
 	rheumatology: {
@@ -217,6 +239,7 @@ export const CARE_KINDS = {
 		CZ: "revmatolog",
 		ES: "reumatologos",
 		PL: "poradnie-reumatologiczne",
+		LT: "medicinos-centrai",
 	},
 	nephrology: {
 		FR: "nephrologue",
@@ -224,6 +247,7 @@ export const CARE_KINDS = {
 		CZ: "nefrolog",
 		ES: "nefrologos",
 		PL: "poradnie-nefrologiczne",
+		LT: "medicinos-centrai",
 	},
 	angiology: {
 		FR: "medecin-vasculaire",
@@ -238,12 +262,14 @@ export const CARE_KINDS = {
 		CZ: "internista",
 		ES: "internistas",
 		PL: "poradnie-chorob-wewnetrznych",
+		LT: "medicinos-centrai",
 	},
 	allergology: {
 		FR: "allergologue",
 		CZ: "alergolog",
 		ES: "alergologos",
 		PL: "poradnie-alergologiczne",
+		LT: "medicinos-centrai",
 	},
 	urology: {
 		FR: "urologue",
@@ -251,6 +277,7 @@ export const CARE_KINDS = {
 		CZ: "urolog",
 		ES: "urologos",
 		PL: "poradnie-urologiczne",
+		LT: "medicinos-centrai",
 	},
 	neurology: {
 		FR: "neurologue",
@@ -259,6 +286,7 @@ export const CARE_KINDS = {
 		ES: "neurologos",
 		PL: "poradnie-neurologiczne",
 		FI: "sairaalat",
+		LT: "medicinos-centrai",
 	},
 	psychiatry: {
 		FR: "psychiatre",
@@ -269,6 +297,7 @@ export const CARE_KINDS = {
 		PL: "poradnie-zdrowia-psychicznego",
 		NO: "psykisk-helsevern",
 		FI: "mielenterveys-ja-paihdepalvelut",
+		LT: "psichikos-sveikatos-centrai",
 	},
 	"child-psychiatry": {
 		FR: "pedopsychiatre",
@@ -278,6 +307,7 @@ export const CARE_KINDS = {
 		PL: "poradnie-zdrowia-psychicznego",
 		NO: "psykisk-helsevern",
 		FI: "mielenterveys-ja-paihdepalvelut",
+		LT: "psichikos-sveikatos-centrai",
 	},
 	orthopaedics: {
 		FR: "chirurgien-orthopediste",
@@ -286,6 +316,7 @@ export const CARE_KINDS = {
 		ES: "traumatologos",
 		PL: "poradnie-ortopedyczne",
 		FI: "sairaalat",
+		LT: "medicinos-centrai",
 	},
 	"trauma-surgery": {
 		FR: "chirurgien-orthopediste",
@@ -299,6 +330,7 @@ export const CARE_KINDS = {
 		CZ: "chirurg",
 		ES: "cirujanos",
 		PL: "poradnie-chirurgiczne",
+		LT: "medicinos-centrai",
 	},
 	"visceral-surgery": {
 		FR: "chirurgien-visceral",
@@ -313,6 +345,7 @@ export const CARE_KINDS = {
 		CZ: "plasticky-chirurg",
 		ES: "cirujanos-plasticos",
 		PL: "poradnie-chirurgiczne",
+		LT: "medicinos-centrai",
 	},
 	"vascular-surgery": {
 		FR: "chirurgien-vasculaire",
@@ -357,6 +390,7 @@ export const CARE_KINDS = {
 		ES: "radiologos",
 		PL: "diagnostyka",
 		FI: "laboratoriot-ja-kuvantaminen",
+		LT: "medicinos-centrai",
 	},
 	"nuclear-medicine": { FR: "medecin-nucleaire", AT: "nuklearmedizin" },
 	radiotherapy: { FR: "radiotherapeute", AT: "strahlentherapie" },
@@ -366,6 +400,7 @@ export const CARE_KINDS = {
 		AT: "labordiagnostik",
 		PL: "diagnostyka",
 		FI: "laboratoriot-ja-kuvantaminen",
+		LT: "laboratorijos",
 	},
 	genetics: { FR: "geneticien", AT: "medizinische-genetik", CZ: "genetik", ES: "geneticistas" },
 	rehabilitation: {
@@ -375,6 +410,7 @@ export const CARE_KINDS = {
 		ES: "medicos-rehabilitadores",
 		PL: "rehabilitacja",
 		FI: "kuntoutus",
+		LT: "reabilitacija",
 	},
 	"occupational-medicine": {
 		FR: "medecin-du-travail",
@@ -386,7 +422,12 @@ export const CARE_KINDS = {
 	geriatrics: { FR: "geriatre", ES: "geriatras", PL: "poradnie-chorob-wewnetrznych" },
 	podiatry: { FR: "pedicure-podologue", ES: "podologos" },
 	dietetics: { FR: "dieteticien", ES: "nutricionistas" },
-	"occupational-therapy": { FR: "ergotherapeute", ES: "terapeutas-ocupacionales", FI: "kuntoutus" },
+	"occupational-therapy": {
+		FR: "ergotherapeute",
+		ES: "terapeutas-ocupacionales",
+		FI: "kuntoutus",
+		LT: "reabilitacija",
+	},
 } as const satisfies Readonly<Record<string, Readonly<Partial<Record<CareMarket, string>>>>>;
 
 /** A kind of care shared by the markets (`general-practice`, `dentistry`…). */

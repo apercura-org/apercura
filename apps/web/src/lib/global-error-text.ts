@@ -98,4 +98,12 @@ export const GLOBAL_ERROR_TEXT: Record<CatalogLanguage, GlobalErrorText> = {
 		home: "Palaa etusivulle",
 		reference: "Viite tukipalvelua varten: {digest}",
 	},
+	lt: {
+		metaTitle: "Puslapis nepasiekiamas · Apercura",
+		title: "Šio puslapio nepavyko parodyti",
+		body: "Ruošiant puslapį mūsų pusėje įvyko klaida. Bandykite dar kartą; jei klaida kartosis, sugrįžkite po kelių minučių.",
+		retry: "Bandyti dar kartą",
+		home: "Grįžti į pradžios puslapį",
+		reference: "Kodas pagalbos tarnybai: {digest}",
+	},
 };

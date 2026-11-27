@@ -381,6 +381,24 @@ are. A blocked run keeps its snapshot: approve it with `--approve=<id>
 ([data-import.md](./data-import.md#finland)). The catalogue's API version 11, the
 one read without a key, is switched off in April 2027.
 
+Lithuania (`/lt`) has its own import, from VASPVT's licence register of health-care institutions
+(about 6,200 activity addresses of hospitals, clinics, dental clinics and other institutions).
+data.gov.lt limits the request rate, so the import waits at least 20 seconds between requests
+(`ETL_LT_REQUEST_INTERVAL_MS`) and a run takes about four minutes. Import the places first (about
+120 MB of settlement boundaries from the Address Register), then dry-run it once:
+
+```sh
+apercura-compose run --rm --entrypoint "apercura etl:places" etl --country lt
+apercura-compose run --rm --entrypoint "apercura etl:lt" etl --dry-run
+apercura-compose run --rm --entrypoint "apercura etl:lt" etl
+```
+
+Rerun `etl:places --country lt` each January. The scheduler reruns the import every Tuesday at
+03:30 UTC, an hour before Poland's (`ETL_LT_SCHEDULE_ARGS` passes it flags); it fails with exit
+code `1`, keeping the pages, when the register cannot be read or its page no longer names CC BY
+4.0, and exit code `2` means a guard blocked it (`--approve`)
+([data-import.md](./data-import.md#lithuania)).
+
 ## Scheduled jobs
 
 The `scheduler` service runs [`docker/crontab`](../docker/crontab) with

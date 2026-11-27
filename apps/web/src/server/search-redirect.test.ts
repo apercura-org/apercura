@@ -95,6 +95,11 @@ const PLACES: Record<MarketCountry, PlaceSuggestion[]> = {
 		place(70, "Tampere", "tampere", "pirkanmaan-hyvinvointialue", "837"),
 		place(71, "Helsinki", "helsinki", "helsinki", "091"),
 	],
+	LT: [
+		place(60, "Vilnius", "vilnius", "vilniaus-miesto-savivaldybe", "31003"),
+		place(61, "Kaunas", "kaunas", "kauno-miesto-savivaldybe", "17507"),
+		place(62, "Klaipėda", "klaipeda", "klaipedos-miesto-savivaldybe", "18067"),
+	],
 };
 
 const LANDINGS = new Set([
@@ -136,6 +141,9 @@ const LANDINGS = new Set([
 	"nursing-homes@Cork",
 	"hammashoitolat@Tampere",
 	"terveysasemat@Tampere",
+	"odontologijos-klinikos@Vilnius",
+	"ligonines@Vilnius",
+	"seimos-medicina@Kaunas",
 ]);
 
 const HUBS = new Set([
@@ -367,6 +375,32 @@ describe("a search for a place of another market", () => {
 		expect(await search("en-GB", { quoi: "hospital", ou: "Wien" })).toEqual(
 			searchPage("de-AT", { ou: "Wien" }),
 		);
+	});
+
+	it("moves to Lithuania's listing, in Lithuanian, for the care it lists", async () => {
+		expect(await search("fr", { quoi: "dentiste", ou: "Vilnius" })).toEqual(
+			listing("lt-LT", "odontologijos-klinikos", "vilniaus-miesto-savivaldybe", "vilnius"),
+		);
+		expect(await search("en-GB", { quoi: "hospital", ou: "Vilnius" })).toEqual(
+			listing("lt-LT", "ligonines", "vilniaus-miesto-savivaldybe", "vilnius"),
+		);
+		expect(await search("de-DE", { quoi: "Hausarzt", ou: "Kaunas" })).toEqual(
+			listing("lt-LT", "seimos-medicina", "kauno-miesto-savivaldybe", "kaunas"),
+		);
+		expect(await search("lt-LT", { quoi: "odontologas", ou: "Vilnius" })).toEqual(
+			listing("lt-LT", "odontologijos-klinikos", "vilniaus-miesto-savivaldybe", "vilnius"),
+		);
+		// From Lithuania, France stays France in French.
+		expect(await search("lt-LT", { quoi: "odontologas", ou: "Paris" })).toEqual(
+			listing("fr", "chirurgien-dentiste", "75-paris", "paris"),
+		);
+		// Lithuania lists no pharmacy: its search, without the care it does not list.
+		expect(await search("fr", { quoi: "pharmacie", ou: "Klaipėda" })).toEqual(
+			searchPage("lt-LT", { ou: "Klaipėda" }),
+		);
+		// A Lithuanian city the places do not know: Lithuania's search says so, never "not covered".
+		expect(await search("fr", { ou: "Šiauliai" })).toEqual(searchPage("lt-LT", { ou: "Šiauliai" }));
+		expect(await search("lt-LT", { quoi: "odontologas", ou: "Kaunas" })).toBeNull();
 	});
 
 	it("reads the words of the market searched too", async () => {

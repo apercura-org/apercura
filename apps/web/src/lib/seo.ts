@@ -51,7 +51,7 @@ export type OgImage = "medecin" | "chirurgien-dentiste" | "sage-femme" | "infirm
 export function ogImageOf(professionCode: string): OgImage {
 	// A UK practice: the directory's image (the profession images speak of France's practitioners).
 	// A Czech facility, a Spanish centre, an Italian place, a German, Swiss, Polish or Irish facility, an
-	// Estonian provider or a Norwegian establishment too.
+	// Estonian provider, a Norwegian establishment or a Lithuanian institution too.
 	if (
 		professionCode.startsWith("GB_") ||
 		professionCode.startsWith("CZ_") ||
@@ -63,7 +63,8 @@ export function ogImageOf(professionCode: string): OgImage {
 		professionCode.startsWith("PL_") ||
 		professionCode.startsWith("NO_") ||
 		professionCode.startsWith("IE_") ||
-		professionCode.startsWith("FI_")
+		professionCode.startsWith("FI_") ||
+		professionCode.startsWith("LT_")
 	)
 		return "annuaire";
 	if (professionCode === "40") return "chirurgien-dentiste";
@@ -115,10 +116,17 @@ export function fitText(candidates: readonly string[], max: number): string {
 
 /**
  * The short name of a place in a title: "Paris 13e" for "Paris 13e
- * Arrondissement". Communes and departments keep their name.
+ * Arrondissement"; a Lithuanian municipality or county under the abbreviations Lithuanian
+ * addresses use ("Vilniaus m. sav." for "Vilniaus miesto savivaldybė", "Kauno r. sav.",
+ * "Birštono sav.", "Vilniaus apskr."). Other communes and departments keep their name.
  */
 export function shortPlaceName(name: string): string {
-	return name.replace(/\s+arrondissement$/i, "");
+	return name
+		.replace(/\s+arrondissement$/i, "")
+		.replace(/ miesto savivaldybė$/, " m. sav.")
+		.replace(/ rajono savivaldybė$/, " r. sav.")
+		.replace(/ savivaldybė$/, " sav.")
+		.replace(/ apskritis$/, " apskr.");
 }
 
 export type PageMetadataInput = {

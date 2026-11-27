@@ -94,6 +94,7 @@
 			"CH": "Suiza",
 			"ES": "España",
 			"DE": "Alemania",
+			"LT": "Lituania",
 			"EE": "Estonia",
 			"PL": "Polonia",
 			"NO": "Noruega",
@@ -655,6 +656,7 @@
 			"pharmacyType": "Farmacia principal o sucursal",
 			"accessibility": "Accesibilidad"
 		},
+		"licensedServices": "Servicios autorizados",
 		"estonianFacts": {
 			"licences": "Licencias de actividad",
 			"licenceNote": "Los números de licencia de actividad de la Junta de Salud (Terviseamet), que toda página sobre un proveedor indica (Ley de Publicidad estonia, § 22(3)).",
@@ -1851,6 +1853,15 @@
 			"krankenhaus": "Hospital",
 			"kinderklinik": "Hospital infantil",
 			"reha-klinik": "Clínica de rehabilitación",
+			"ligonines": "Hospital",
+			"seimos-medicina": "Centro de medicina familiar",
+			"medicinos-centrai": "Centro médico",
+			"odontologijos-klinikos": "Clínica dental",
+			"psichikos-sveikatos-centrai": "Centro de salud mental",
+			"reabilitacija": "Centro de rehabilitación",
+			"slauga": "Servicio de enfermería",
+			"laboratorijos": "Laboratorio",
+			"optometrijos-kabinetai": "Gabinete de optometría",
 			"haiglad": "Hospital",
 			"haigla": "Hospital",
 			"perearstikeskused": "Centro de medicina de familia",
@@ -2191,6 +2202,15 @@
 			"kinderkliniken": "Hospitales infantiles",
 			"reha-kliniken": "Clínicas de rehabilitación",
 			"apotheken": "Farmacias",
+			"ligonines": "Hospitales",
+			"seimos-medicina": "Medicina familiar",
+			"medicinos-centrai": "Centros médicos y clínicas",
+			"odontologijos-klinikos": "Clínicas dentales",
+			"psichikos-sveikatos-centrai": "Centros de salud mental",
+			"reabilitacija": "Rehabilitación y fisioterapia",
+			"slauga": "Servicios de enfermería",
+			"laboratorijos": "Laboratorios",
+			"optometrijos-kabinetai": "Gabinetes de optometría",
 			"haiglad": "Hospitales",
 			"perearstikeskused": "Centros de medicina de familia",
 			"hambaravi": "Clínicas dentales",
@@ -6867,6 +6887,385 @@
 		"listing": "{kind, select, pflegeheim {{amount, select, none {Todavía no figura ninguna residencia de mayores: no se ha importado la lista de ningún cantón.} one {Las residencias de mayores solo figuran para el cantón de {cantons}: las de los demás cantones todavía no.} other {Las residencias de mayores solo figuran para los cantones de {cantons}: las de los demás cantones todavía no.}}} apotheke {{amount, select, none {Todavía no figura ninguna farmacia: no se ha importado la lista de ningún cantón.} one {Las farmacias solo figuran para el cantón de {cantons}: las de los demás cantones todavía no.} other {Las farmacias solo figuran para los cantones de {cantons}: las de los demás cantones todavía no.}}} other {Los hospitales y clínicas figuran en todos los cantones, según las cifras de hospitales de 2023 de la Oficina Federal de Salud Pública{amount, select, none {.} one { y la lista de hospitales del cantón de {cantons}.} other { y las listas de hospitales de los cantones de {cantons}.}}}}",
 		"hospitalsEverywhere": "los hospitales y clínicas de todos los cantones",
 		"unlisted": "En Suiza, el directorio recoge por ahora centros, nunca personas: {listed}. Los médicos, dentistas, psicólogos y demás profesionales sanitarios todavía no figuran aquí: ningún registro abierto los publica. Busque el nombre de un centro o explore el directorio."
+	},
+	"LegalNoticeLt": {
+		"metaTitle": "Legal information (Lithuania) · Apercura",
+		"metaDescription": "Legal information of the Lithuanian pages of Apercura: the operator, its contact details and registration, and the person responsible for the content (Law on Information Society Services, article 6).",
+		"title": "Legal information",
+		"lead": "Who operates the Lithuanian pages of Apercura (apercura.org/lt), as article 6 of the Law on Information Society Services (Informacinės visuomenės paslaugų įstatymas, No. X-614) asks of a provider of information society services.",
+		"sections": {
+			"provider": {
+				"heading": "Operator",
+				"body": [
+					"The Lithuanian pages of Apercura are operated by the entity below. It runs the directory and answers for its content."
+				]
+			},
+			"service": {
+				"heading": "The service",
+				"body": [
+					"A free directory of licensed health-care institutions in Lithuania (hospitals, primary care centres, medical centres and clinics, dental clinics, mental health centres, rehabilitation and nursing services, laboratories and optometrists' practices), built from the licence data that the State Accreditation Service for Health Care Activities (VASPVT) publishes as open data, without advertising, with a space where an institution can complete its own page. No individual health worker and no pharmacy is listed, and no appointment is booked through Apercura in Lithuania."
+				]
+			},
+			"editor": {
+				"heading": "Person responsible for the content",
+				"body": [
+					"The person below is responsible for what the operator publishes. Information an institution adds to its own page is its own responsibility; as a service that stores information provided by its users, the operator answers for it only under the conditions of the Law on Information Society Services."
+				]
+			},
+			"liability": {
+				"heading": "Content of the pages",
+				"body": [
+					"The directory is built from the dataset “Sveikatos priežiūros įstaigų licencijų duomenys”, which VASPVT publishes on data.gov.lt under CC BY 4.0, and from the Address Register of the Republic of Lithuania (VĮ Registrų centras, CC BY 4.0). It can be incomplete or out of date: check the information with the institution before you go. Every page says how to report an error."
+				]
+			},
+			"ip": {
+				"heading": "Code and data",
+				"body": [
+					"The source code of Apercura is published under the AGPL-3.0 licence. The directory data is reused under the Creative Commons Attribution 4.0 International licence (CC BY 4.0): the data page lists every source with the attribution it requires."
+				]
+			},
+			"review": {
+				"heading": "Status of this text",
+				"body": [
+					"This text is a draft, written before the legal entity was set up. It will be reviewed by a lawyer qualified in Lithuania before the Lithuanian pages are announced."
+				]
+			}
+		},
+		"fields": {
+			"name": "Name",
+			"legalForm": "Legal form",
+			"address": "Registered office",
+			"phone": "Phone",
+			"email": "Email address",
+			"registration": "Register and registration number",
+			"vatId": "VAT identification number",
+			"editor": "Responsible for the content"
+		},
+		"dataLink": "Data and sources"
+	},
+	"PrivacyLt": {
+		"metaTitle": "Privacy policy (Lithuania) · Apercura",
+		"metaDescription": "Data processed by the Lithuanian pages of Apercura: sources, purposes, legal bases, retention, recipients and your rights, including objection (GDPR articles 13, 14 and 21).",
+		"title": "Privacy policy",
+		"lead": "What data the Lithuanian pages of Apercura process, where it comes from, why, for how long and by whom, and how to exercise your rights under the General Data Protection Regulation (GDPR) and the Law on Legal Protection of Personal Data (Asmens duomenų teisinės apsaugos įstatymas).",
+		"sections": {
+			"controller": {
+				"heading": "Who is responsible",
+				"body": [
+					"The operator named in the legal information is the controller of the directory, of institution accounts, of claims and of the requests sent through the site."
+				]
+			},
+			"directory": {
+				"heading": "Directory: data about health-care institutions",
+				"body": [
+					"Data: the name of the institution as it is registered (its legal form abbreviated), its kind, the services it is licensed to provide at the address, and the activity address itself, as the State Accreditation Service for Health Care Activities (VASPVT) publishes them in its licence data. The address is placed in its settlement and municipality with the Address Register; the page is located at its settlement's point, not at the building. An institution that claims its page can add a presentation, languages, a photo and opening hours.",
+					"Never stored, although the licence data publishes them: the legal entity code, the registered office (seat) address, the licence numbers, dates and orders. For an individual enterprise, the premises (flat) number of the activity address is left out.",
+					"Identifier: the number VASPVT gives the institution and the Address Register's code of the activity address, at the end of the page's address.",
+					"Purpose: letting the public find a licensed health-care institution, where it is and what care it is licensed to provide. Legal basis: legitimate interests (GDPR article 6(1)(f)), assessed below.",
+					"Retention: as long as the activity address is licensed in VASPVT's data. A page disappears when the address is no longer licensed; a page removed after an objection is never published again.",
+					"Information: the data does not come from the institutions or the people they name (GDPR article 14). Writing to each of them would involve a disproportionate effort (article 14(5)(b)); this notice, the data page and a notice on every page make the information public."
+				]
+			},
+			"people": {
+				"heading": "Institutions, and the people their names may name",
+				"body": [
+					"A Lithuanian page is an activity address of a licensed institution, never a person's profile. The name of an individual enterprise (individuali įmonė) or of a small partnership (mažoji bendrija) often contains its owner's name (for example “Pavyzdžio Vardenio IĮ”): such a page names that person and is about them.",
+					"Only the institution's registered name is shown, as VASPVT publishes it. Nothing else about the person is collected: no personal code, no date of birth, no home address, no legal entity code, no ratings and no reviews.",
+					"Anyone a page is about can object to it at any time, and the page is removed."
+				]
+			},
+			"sources": {
+				"heading": "Sources",
+				"body": [
+					"Every page is built from the dataset “Sveikatos priežiūros įstaigų licencijų duomenys”, which VASPVT publishes on the open data portal data.gov.lt under CC BY 4.0 and updates daily. Counties, municipalities, elderships and settlements, with their boundaries, come from the Address Register of the Republic of Lithuania (VĮ Registrų centras, CC BY 4.0). Each source is reused with its attribution:"
+				]
+			},
+			"balancing": {
+				"heading": "Legitimate interests assessment",
+				"body": [
+					"Purpose: patients need to know which licensed health-care institutions are where and what care they may provide, a need the State already meets by publishing the licence data as open data.",
+					"Necessity: only the institution's registered name, kind, licensed services and activity address are shown, data the licensing authority publishes anyway; nothing about private life, no ratings, no reviews, no individual health worker.",
+					"Balance: a neutral order, no advertising, the minimum of the licence data's fields, the premises number of an individual enterprise left out, an objection that hides a page at once and keeps it from coming back, corrections at the source, and pages that follow every update of the licence data. An owner whose business carries their name and holds a public licence expects to be found in a directory repeating that information. Weighing these points, the interests of patients prevail, and anyone a page is about can object without giving a reason."
+				]
+			},
+			"accounts": {
+				"heading": "Institution accounts and claims",
+				"body": [
+					"Data: email address, name, password (stored hashed), second authentication factor, the documents sent to claim a page (proof that the claimant runs the institution or acts for it) and team members.",
+					"Purposes: managing the account and checking that a page is claimed by the right institution. Legal bases: performance of the terms of use (article 6(1)(b)) and the legitimate interests of securing the service (article 6(1)(f)).",
+					"Retention: the account is kept until it is deleted; supporting documents, encrypted, are erased 30 days after the decision."
+				]
+			},
+			"requests": {
+				"heading": "Error reports, objections and contact requests",
+				"body": [
+					"Data: the message, the contact email address when one is given and the page concerned; for a “this is my institution” request also the name and phone number. Free text is encrypted.",
+					"Purposes: correcting errors, applying objections and helping an institution that cannot claim its page online. Legal bases: legitimate interests (article 6(1)(f)) and the right to object (article 21).",
+					"Retention: a report is deleted 6 months after it is closed, a rejected objection one year after its decision, a contact request 12 months after the last exchange. Once an objection is confirmed, or the holder of a claimed page removes it, the page and the data about it are deleted at once, the objection included; all that is kept is a record of the removal (the identifier of the page, the country, the reason, who recorded it and when), so that it is never published again. A holder who removes their page keeps, in their account only and never published, the name, kind and identifier shown in their space and their claim, until the account is deleted."
+				]
+			},
+			"technical": {
+				"heading": "Technical data and cookies",
+				"body": [
+					"Only cookies strictly necessary to the service are set: the session of signed-in institutions and the chosen language. No advertising or audience measurement cookies, no trackers.",
+					"To limit abuse, IP addresses are transformed with a keyed function before being counted and never stored as such; institution sessions record a truncated IP address. Views of claimed pages are counted without a cookie or identifier, and only the page's holder sees them."
+				]
+			},
+			"recipients": {
+				"heading": "Recipients and processors",
+				"body": [
+					"Data is neither sold nor rented, and never used for advertising. Only the operator's team and the processors below receive it, each for its own part, under a contract that meets GDPR article 28. Maps are loaded from a tile server, which receives the visitor's IP address like any website."
+				]
+			},
+			"transfers": {
+				"heading": "Transfers outside the European Union",
+				"body": [
+					"Data is transferred outside the European Union and the European Economic Area only under the safeguards of chapter V of the GDPR (an adequacy decision or standard contractual clauses). Any change of processor will be announced here before it takes effect."
+				]
+			},
+			"automated": {
+				"heading": "Automated decisions",
+				"body": [
+					"No decision about you is taken by automated means alone. A claim is decided by a person, who reads its documents."
+				]
+			},
+			"rights": {
+				"heading": "Your rights",
+				"body": [
+					"You can ask to access your data, to have it corrected or erased, to restrict its processing, to receive it in a portable format and to object to its processing. Write to the address below; you will get an answer within one month.",
+					"You can also lodge a complaint with the Lithuanian supervisory authority, the State Data Protection Inspectorate (Valstybinė duomenų apsaugos inspekcija, VDAI): L. Sapiegos g. 17, 10312 Vilnius, ada@ada.lt, vdai.lrv.lt."
+				]
+			},
+			"objection": {
+				"heading": "Objecting to a page (GDPR article 21)",
+				"body": [
+					"Anyone a page is about, such as the owner named in an institution's name, can object to its publication at any time, without giving a reason. If the page is unclaimed, a form is enough: the page is hidden as soon as the request arrives, deleted after a light check, and the updates of the licence data never publish it again. If it is claimed, its holder removes it from their space."
+				]
+			},
+			"changes": {
+				"heading": "Updates to this notice",
+				"body": [
+					"This notice is a draft. It will be reviewed by a lawyer qualified in Lithuania and by the data protection officer; every version is dated."
+				]
+			}
+		},
+		"fields": {
+			"controller": "Controller",
+			"address": "Address",
+			"email": "Contact for requests",
+			"dpo": "Data protection officer",
+			"effectiveDate": "Effective date",
+			"hostingProvider": "Hosting provider (processor)",
+			"smtp": "Email delivery (processor)"
+		},
+		"objectLink": "How to object to a page",
+		"authorityLink": "Lodge a complaint with the State Data Protection Inspectorate"
+	},
+	"TermsLt": {
+		"metaTitle": "Terms of use (Lithuania) · Apercura",
+		"metaDescription": "Terms of use of the Lithuanian pages of Apercura: a free, factual directory of licensed health-care institutions from VASPVT's licence data, without online booking.",
+		"title": "Terms of use",
+		"lead": "The rules for using the Lithuanian pages of Apercura, for the public and for health-care institutions alike.",
+		"sections": {
+			"service": {
+				"heading": "The service",
+				"body": [
+					"Apercura lists, free of charge, the activity addresses of the health-care institutions licensed by the State Accreditation Service for Health Care Activities (VASPVT) that patients visit: hospitals, primary care centres, medical centres and clinics, dental clinics, mental health centres, rehabilitation and nursing services, laboratories and optometrists' practices. It is a directory only: no appointment is booked through Apercura in Lithuania. It is run by the operator named in the legal information.",
+					"Using the directory requires no account. Using the site means accepting these terms."
+				]
+			},
+			"content": {
+				"heading": "What the pages contain",
+				"body": [
+					"Pages show factual information from public licence data, in a neutral order, without ratings, reviews, patient testimonials, recommendations, advertising or paid placement.",
+					"The information may be incomplete or out of date: check it with the institution before you go. Every page says how to report an error."
+				]
+			},
+			"health": {
+				"heading": "Not medical advice",
+				"body": [
+					"Apercura gives no medical advice and is not an emergency service. In an emergency, call 112, the single emergency number. Outside working hours, the emergency departments of hospitals can help."
+				]
+			},
+			"practices": {
+				"heading": "For health-care institutions",
+				"body": [
+					"Claiming a page is free. It requires a document proving that the claimant runs the institution or acts for it, checked by a person before the page is handed over.",
+					"The holder of a page is responsible for the information they add. It must stay factual, accurate and up to date, and respect article 15 of the Law on Advertising (Reklamos įstatymas): no patient's name, surname or image, and no recommendations of health-care institutions, specialists or their professional organisations."
+				]
+			},
+			"removal": {
+				"heading": "Removing a page",
+				"body": [
+					"Anyone a page is about can ask for it to be removed at any time: the data page explains how. A claimed page can only be removed by its holder."
+				]
+			},
+			"liability": {
+				"heading": "Liability",
+				"body": [
+					"The operator does its best to keep the service available and accurate, but cannot guarantee it. It is not responsible for the information institutions add to their pages. These limits will be specified during the legal review."
+				]
+			},
+			"ip": {
+				"heading": "Code and data",
+				"body": [
+					"The source code is published under the AGPL-3.0 licence. Directory data is reused under the Creative Commons Attribution 4.0 International licence (CC BY 4.0)."
+				]
+			},
+			"law": {
+				"heading": "Governing law and disputes",
+				"body": [
+					"The governing law and the competent courts will be specified during the legal review; the mandatory consumer protection rules of the country of residence always apply. In case of a dispute, first write to the contact address to look for an amicable solution."
+				]
+			}
+		},
+		"fields": {
+			"publisher": "Operator",
+			"effectiveDate": "Effective date",
+			"contact": "Contact"
+		}
+	},
+	"AccessibilityLt": {
+		"metaTitle": "Accessibility (Lithuania) · Apercura",
+		"metaDescription": "Accessibility of the Lithuanian pages of Apercura: the WCAG 2.2 AA target, what was checked, what remains, and how to report a problem.",
+		"title": "Accessibility",
+		"lead": "Apercura is designed for everyone, including older and low-vision people. This statement says where the Lithuanian pages stand.",
+		"sections": {
+			"scope": {
+				"heading": "Scope",
+				"body": [
+					"The rules implementing Directive (EU) 2016/2102 on the accessibility of the websites and mobile applications of public sector bodies bind those bodies, which Apercura is not. This statement is voluntary: its operator nevertheless aims at the same standard on every page, WCAG 2.2 level AA."
+				]
+			},
+			"status": {
+				"heading": "Where the site stands",
+				"body": [
+					"The Lithuanian pages share the code of the French pages and their tests. The site partially meets WCAG 2.2 AA: this rests on a self-assessment and automated tests, not yet on a full audit, which is in progress."
+				]
+			},
+			"tests": {
+				"heading": "What was checked",
+				"list": [
+					"Automated axe-core checks (WCAG 2.0, 2.1 and 2.2 rules, levels A and AA) on every page type, at every release.",
+					"Keyboard-only journeys with a visible focus.",
+					"Body text of at least 18 px, targets of at least 44 px, nothing that relies on colour alone, no horizontal scrolling at 390 px."
+				]
+			},
+			"pending": {
+				"heading": "What remains to be checked",
+				"list": [
+					"A manual pass with the VoiceOver and NVDA screen readers, in Lithuanian.",
+					"A full audit against WCAG 2.2 AA on a sample of pages."
+				]
+			},
+			"feedback": {
+				"heading": "Report a problem",
+				"body": [
+					"If a page or a feature is hard to use, write to the address below: say which page and what blocked you. We answer within one month and, where needed, give you the information in another form."
+				]
+			}
+		},
+		"fields": {
+			"contact": "Contact",
+			"date": "Date of this statement"
+		}
+	},
+	"DataLt": {
+		"metaTitle": "Data and sources (Lithuania) · Apercura",
+		"metaDescription": "Where the Lithuanian pages of Apercura come from: VASPVT's licence data and the Address Register (VĮ Registrų centras) under CC BY 4.0, update dates, and how to correct or remove a page.",
+		"title": "Data and sources",
+		"lead": "Every Lithuanian page is built from the open data of public registers. Here is where it comes from, under which licence and attribution, when it was updated, and how to correct or remove a page.",
+		"status": {
+			"heading": "Last update",
+			"body": "VASPVT updates its licence data every day; the directory imports it every week, politely, and only when it has changed. A page changes only when its facts change in the licence data.",
+			"importedAt": "Last import",
+			"checkedAt": "Sources last checked",
+			"notImported": "The Lithuanian directory has not been imported yet on this site.",
+			"notImportedValue": "Not imported yet"
+		},
+		"sources": {
+			"heading": "Sources",
+			"body": "Both sources are published on data.gov.lt under the Creative Commons Attribution 4.0 International licence (CC BY 4.0), which allows reuse, including commercial reuse, provided the source is credited. Each attribution below is printed word for word.",
+			"caption": "Data sources of the Lithuanian directory",
+			"columns": {
+				"source": "Source",
+				"use": "Used for",
+				"licence": "Licence and attribution",
+				"frequency": "Updated"
+			},
+			"items": {
+				"lt-vaspvt": {
+					"use": "Licensed health-care institutions and their activity addresses: names, licensed services (from which the kind of institution is read), addresses",
+					"frequency": "Every day, by VASPVT"
+				},
+				"lt-adresu-registras": {
+					"use": "Counties, municipalities, elderships and settlements, with the settlements' boundaries, from which each settlement's point is computed",
+					"frequency": "Every month (settlements) and every year (boundaries), by VĮ Registrų centras"
+				},
+				"map": {
+					"name": "Map data",
+					"publisher": "OpenStreetMap contributors, tiles by OpenFreeMap",
+					"use": "Maps on the pages",
+					"frequency": "Continuously"
+				}
+			},
+			"ccBy": "CC BY 4.0",
+			"odbl": "ODbL",
+			"citationHeading": "How to credit the licence data",
+			"citation": "Šaltinis: Valstybinė akreditavimo sveikatos priežiūros veiklai tarnyba prie SAM, „Sveikatos priežiūros įstaigų licencijų duomenys“ (data.gov.lt), CC BY 4.0",
+			"licenceTerms": "The text of the CC BY 4.0 licence"
+		},
+		"coverage": {
+			"heading": "Institutions covered",
+			"body": [
+				"A page is an activity address of an institution whose licence is neither revoked nor suspended. VASPVT names no kind of institution: the kind is read from the services licensed at the address, the most specific first (inpatient services make a hospital, family medicine a primary care centre, outpatient specialist services a medical centre, and so on). Every licensed service is shown on the page. Each page is placed in its settlement and municipality from the address as VASPVT writes it, and located at its settlement's point (city precision, no map pin): VASPVT gives no coordinates and no postcode.",
+				"Left out: addresses licensed only for public health services (hygiene training, pest control), ambulance services, tissue banks and biobanks, and a pharmacist's extended practice. Pharmacies are not listed: they are licensed by the State Medicines Control Agency, whose list of pharmacies with their addresses is not published as open data. The yearly list of institutions of the National Health Insurance Fund (Valstybinė ligonių kasa, CC BY 4.0) is not used: it gives no addresses, and its contract dates cannot tell reliably which places hold a contract. Individual doctors, dentists and nurses are not listed.",
+				"Pages carry no advertising, ratings, reviews, patient testimonials or recommendations. Article 15 of the Law on Advertising (Reklamos įstatymas) forbids, in the advertising of health-care services, the use of a patient's name, surname or image and reliance on the recommendations of health-care institutions, specialists or their professional organisations; a factual directory of licensed institutions in a neutral order is not such advertising, and institutions completing their pages must respect the same rule."
+			],
+			"kinds": {
+				"LT_HOSPITAL": "Hospitals: inpatient services",
+				"LT_PRIMARY_CARE": "Family medicine: primary care centres and polyclinics",
+				"LT_SPECIALIST": "Medical centres and clinics: outpatient specialist services, imaging, day surgery",
+				"LT_DENTAL": "Dental clinics: dental and oral care",
+				"LT_MENTAL_HEALTH": "Mental health centres: psychiatry, psychotherapy, medical psychology",
+				"LT_REHABILITATION": "Rehabilitation: physiotherapy, occupational therapy, therapeutic massage",
+				"LT_NURSING": "Nursing services: nursing, home nursing and midwifery practices",
+				"LT_LABORATORY": "Laboratories: laboratory diagnostics",
+				"LT_OPTOMETRY": "Optometrists' practices"
+			},
+			"kindsLabel": "Imported (read from the licensed services)"
+		},
+		"identifiers": {
+			"heading": "Identifiers",
+			"body": [
+				"The address of every page ends with the number VASPVT gives the institution and the Address Register's code of the activity address, so a page can be found and checked against the licence data:"
+			],
+			"list": [
+				"/lt/istaiga/uab-pavyzdine-klinika-9000-90000009: the institution number 9000 and the address code 90000009 (or, for an address without a code, “v” and the start of the address's identifier in the licence data).",
+				"The legal entity code is not used: for an individual enterprise, it belongs to a business run by one person."
+			]
+		},
+		"correct": {
+			"heading": "Correct an error",
+			"body": [
+				"The pages repeat the licence data: a lasting correction is made at the source, and the page follows at the next weekly import.",
+				"For anything else, use the form: we check every report."
+			],
+			"list": [
+				"Name, activity address and licensed services: the institution asks VASPVT to amend its licence, which then updates the licence data.",
+				"Settlement and municipality names: they come from the Address Register, kept by VĮ Registrų centras."
+			],
+			"formTitle": "Report an error",
+			"formBody": "Give the address of the page and what is wrong."
+		},
+		"remove": {
+			"heading": "Remove a page",
+			"body": [
+				"Anyone a page is about, such as the owner named in an individual enterprise's name, can object to its publication at any time, without giving a reason (GDPR article 21). An unclaimed page is hidden as soon as the request arrives and deleted after a light check; it never comes back with the updates of the licence data. A claimed page is removed by its holder, from their space."
+			],
+			"formTitle": "Ask for a page to be removed",
+			"formBody": "Give the address of the page and an email address where we can answer you."
+		}
 	},
 	"LegalNoticeEe": {
 		"metaTitle": "Legal notice (Estonia) · Apercura",

@@ -10,6 +10,7 @@ export * from "./fr";
 export * from "./gb";
 export * from "./ie";
 export * from "./it";
+export * from "./lt";
 export * from "./no";
 export * from "./pl";
 export * from "./search-aliases";

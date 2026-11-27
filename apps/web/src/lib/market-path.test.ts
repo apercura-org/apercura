@@ -55,6 +55,7 @@ const NEW_MARKET_LOCALES = [
 	"nb-NO",
 	"en-IE",
 	"fi-FI",
+	"lt-LT",
 ] as const;
 
 /** The locales of the former scheme. */
@@ -63,7 +64,7 @@ const FORMER_LOCALES = LOCALES.filter(
 );
 
 describe("marketPath: every page of the former scheme has a new address", () => {
-	it("leaves Austria's, the UK's, Czechia's, Spain's, Italy's, Germany's, Switzerland's and Poland's pages where they are", () => {
+	it("leaves Austria's, the UK's, Czechia's, Spain's, Italy's, Germany's, Switzerland's, Poland's and Lithuania's pages where they are", () => {
 		for (const locale of NEW_MARKET_LOCALES) {
 			for (const pathname of pathnames) {
 				const path = currentPath(locale, pathname);

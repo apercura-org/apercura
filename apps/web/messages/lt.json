@@ -1,0 +1,1908 @@
+{
+	"Metadata": {
+		"title": "Apercura",
+		"description": "Atviras Lietuvos licencijuotų sveikatos priežiūros įstaigų katalogas: ligoninės, šeimos medicina, odontologijos ir medicinos centrai pagal VASPVT duomenis.",
+		"proTitle": "Jūsų įstaigos puslapis jau yra · Apercura",
+		"proDescription": "Apercura skelbia faktinį kiekvienos licencijuotos sveikatos priežiūros įstaigos veiklos vietos puslapį pagal VASPVT licencijų duomenis. Raskite savo įstaigos puslapį ir nemokamai jį perimkite.",
+		"searchTitle": "Paieška · Apercura",
+		"galleryTitle": "Komponentų galerija · Apercura",
+		"homeTitle": "Apercura · Sveikatos priežiūros įstaigos Lietuvoje"
+	},
+	"Site": {
+		"skipLink": "Pereiti prie turinio",
+		"wordmark": "Apercura",
+		"homeLink": "Apercura, pradžia",
+		"runningHead": "Atviras Lietuvos sveikatos priežiūros įstaigų katalogas",
+		"navLabel": "Pagrindinė navigacija",
+		"navPro": "Įstaigoms",
+		"navPatients": "Pacientams",
+		"folio": "{number} psl.",
+		"externalLink": "atveriama kita svetainė",
+		"footer": {
+			"free": "Nemokama įstaigoms ir pacientams.",
+			"license": "Pirminis kodas skelbiamas pagal AGPL-3.0 licenciją",
+			"noAds": "Jokių vertinimų, jokios reklamos, jokių mokamų pozicijų."
+		},
+		"folioRpps": "Nr. {rpps}",
+		"home": "Pradžia",
+		"breadcrumbs": "Jūs esate čia",
+		"footerNav": {
+			"label": "Apie Apercura",
+			"directory": "Katalogas",
+			"guides": "Gidai",
+			"about": "Apie projektą",
+			"openSource": "Atvirasis kodas",
+			"data": "Duomenys ir šaltiniai",
+			"accessibility": "Prieinamumas",
+			"privacy": "Privatumo politika",
+			"legal": "Teisinė informacija",
+			"terms": "Naudojimo sąlygos",
+			"international": "Apercura kitose šalyse"
+		},
+		"theme": {
+			"label": "Išvaizda",
+			"light": "Šviesi",
+			"dark": "Tamsi",
+			"system": "Pagal sistemą"
+		}
+	},
+	"LocaleSwitcher": {
+		"label": "Kalba",
+		"locale": "{locale, select, fr {Français} en {English} de {Deutsch} es {Español} it {Italiano} other {Nežinoma kalba}}",
+		"current": "Kalba: <value>{language}</value>"
+	},
+	"CountrySwitcher": {
+		"label": "Šalis",
+		"current": "Šalis: <value>{country}</value>"
+	},
+	"ErrorPages": {
+		"notFound": {
+			"metaTitle": "Puslapis nerastas · Apercura",
+			"title": "Tokio puslapio nėra",
+			"body": "Galbūt adresas įvestas su klaida arba puslapis pašalintas. Ieškokite kataloge arba pradėkite nuo vieno iš toliau nurodytų puslapių.",
+			"rootBody": "Galbūt adresas įvestas su klaida arba puslapis pašalintas. Pasirinkite šalį ir ieškokite jos kataloge.",
+			"code": "Klaida 404",
+			"stamp": "Šiuo adresu puslapio nėra",
+			"nextHeading": "Kitur Apercura svetainėje",
+			"home": "Pradžios puslapis",
+			"directory": "Katalogas pagal vietovę",
+			"international": "Apercura kiekvienoje šalyje"
+		},
+		"error": {
+			"metaTitle": "Puslapis nepasiekiamas · Apercura",
+			"title": "Šio puslapio nepavyko parodyti",
+			"body": "Ruošiant puslapį mūsų pusėje įvyko klaida. Bandykite dar kartą; jei klaida kartosis, sugrįžkite po kelių minučių.",
+			"retry": "Bandyti dar kartą",
+			"home": "Grįžti į pradžios puslapį",
+			"reference": "Kodas pagalbos tarnybai: {digest}"
+		}
+	},
+	"Search": {
+		"label": "Rasti sveikatos priežiūros įstaigą",
+		"who": "Kas?",
+		"whoHint": "Įstaigos pavadinimas arba paslauga: šeimos gydytojas, odontologas, ligoninė, kineziterapija",
+		"where": "Kur?",
+		"whereHint": "Miestas, gyvenvietė arba savivaldybė",
+		"submit": "Ieškoti",
+		"market": "Šalis",
+		"markets": {
+			"FR": "Prancūzija",
+			"AT": "Austrija",
+			"GB": "Jungtinė Karalystė",
+			"CZ": "Čekija",
+			"IT": "Italija",
+			"CH": "Šveicarija",
+			"ES": "Ispanija",
+			"DE": "Vokietija",
+			"LT": "Lietuva",
+			"EE": "Estija",
+			"PL": "Lenkija",
+			"NO": "Norvegija",
+			"IE": "Airija",
+			"FI": "Suomija"
+		}
+	},
+	"HomePage": {
+		"title": "Raskite sveikatos priežiūros įstaigą Lietuvoje",
+		"hook": "Kiekviena licencijuota ligoninė, poliklinika, klinika ir odontologijos kabinetas jau turi savo puslapį.",
+		"specimen": {
+			"heading": "Kiekviena įstaiga jau turi puslapį",
+			"intro": "Taip atrodo puslapis, užpildytas pagal licencijų registrą, kol įstaiga jo dar neperėmė: žinomi laukai užpildyti, o apie kitus aiškiai parašyta, kad duomenų nėra."
+		},
+		"pillarsHeading": "Ką Apercura įsipareigoja",
+		"columns": {
+			"number": "Nr.",
+			"commitment": "Įsipareigojimas"
+		},
+		"pillars": {
+			"free": {
+				"title": "Nemokamai",
+				"description": "Nemokama įstaigoms ir pacientams: jokių prenumeratų ir jokių komisinių."
+			},
+			"openSource": {
+				"title": "Atvirasis kodas",
+				"description": "Visas pirminis kodas skelbiamas pagal AGPL-3.0 licenciją."
+			},
+			"hostedInFrance": {
+				"title": "Sveikatos duomenys laikomi Prancūzijoje",
+				"description": "Sveikatos duomenys laikomi Prancūzijoje pas HDS sertifikuotą prieglobos paslaugų teikėją ({host}) ir šifruojami programos lygmeniu."
+			},
+			"encrypted": {
+				"title": "Šifruojami duomenys",
+				"description": "Perėmimo dokumentai, pranešimai apie klaidas ir, kur įjungta registracija internetu, vizitai šifruojami programos lygmeniu."
+			},
+			"selfHostable": {
+				"title": "Galima diegti savarankiškai",
+				"description": "Visą platformą galite paleisti patys su Docker, įskaitant atvirųjų duomenų importą."
+			}
+		},
+		"registry": {
+			"heading": "Pagal VASPVT atviruosius duomenis",
+			"intro": "Kiekvienas puslapis sukurtas pagal sveikatos priežiūros įstaigų licencijų duomenis, kuriuos Valstybinė akreditavimo sveikatos priežiūros veiklai tarnyba (VASPVT) kasdien skelbia kaip atviruosius duomenis pagal CC BY 4.0 licenciją. Apskritys, savivaldybės ir gyvenamosios vietovės paimtos iš Adresų registro (VĮ Registrų centras). Puslapis aprašo įstaigos veiklos vietą, o ne atskirus sveikatos priežiūros specialistus. Už įrašą niekas nemoka ir niekas nepraleidžiamas.",
+			"doctors": "Gydytojai",
+			"dentists": "Odontologai",
+			"midwives": "Akušeriai",
+			"nurses": "Slaugos paslaugos",
+			"withAddress": "Su viešu veiklos adresu",
+			"count": "{count, number}",
+			"sourceLabel": "Šaltinis",
+			"sourceName": "Sveikatos priežiūros įstaigų licencijų duomenys, VASPVT",
+			"updatedLabel": "Duomenys"
+		},
+		"pro": {
+			"heading": "Vadovaujate poliklinikai, klinikai ar kitai sveikatos priežiūros įstaigai?",
+			"body": "Jūsų įstaigos puslapis jau yra. Perimti jį nemokama.",
+			"cta": "Rasti savo puslapį"
+		},
+		"tagline": "Atviras Lietuvos sveikatos priežiūros įstaigų katalogas pagal VASPVT atviruosius duomenis.",
+		"status": "Kuriama.",
+		"market": {
+			"listingsHeading": "Pagal įstaigos rūšį",
+			"placesHeading": "Pagal apskritį"
+		}
+	},
+	"SearchPage": {
+		"title": "Paieška",
+		"query": "Ieškojote „{who}“",
+		"queryWhere": "Ieškojote „{who}“ vietovėje „{where}“",
+		"queryOnlyWhere": "Ieškojote vietovėje „{where}“",
+		"emptyTitle": "Atitinkančių įstaigų nėra",
+		"emptyBody": "Patikrinkite rašybą, pabandykite kaimyninę vietovę arba platesnį žodį, pavyzdžiui, „šeimos gydytojas“ ar „odontologas“.",
+		"queryNear": "Ieškojote „{who}“ netoli jūsų",
+		"queryOnlyNear": "Įstaigos netoli jūsų",
+		"startTitle": "Ko ieškote?",
+		"startBody": "Lauke „Kas?“ įrašykite įstaigos pavadinimą arba paslaugą, pavyzdžiui, šeimos gydytojas, odontologas ar kineziterapija, o lauke „Kur?“ – miestą, gyvenvietę arba savivaldybę. Katalogą galite naršyti ir pagal apskritis bei savivaldybes.",
+		"noMoreTitle": "Daugiau rezultatų nėra",
+		"browseDirectory": "Naršyti katalogą",
+		"rppsTitle": "Įstaiga {rpps} neturi viešo puslapio",
+		"rppsBody": "Šis numeris negalioja arba įstaiga neturi viešo puslapio: skelbiame tik tas veiklos vietas, į kurias pacientai kreipiasi dėl priežiūros. Įstaiga vis tiek gali rasti ir perimti savo įrašą.",
+		"rppsPro": "Įstaigoms: raskite savo įrašą",
+		"ambiguousTitle": "Pavadinimą „{where}“ turi kelios vietovės",
+		"ambiguousBody": "Pasirinkite, kurią turite omenyje:",
+		"unknownPlaceTitle": "Vietovės „{where}“ nežinome",
+		"unknownPlaceSuggest": "Galbūt turėjote omenyje vieną iš šių vietovių?",
+		"unknownPlaceBody": "Patikrinkite rašybą arba įrašykite kaimyninę vietovę ar savivaldybę.",
+		"unlistedTitle": "„{who}“ kataloge kol kas nėra",
+		"unlistedBody": "Lietuvoje kataloge kol kas skelbiamos licencijuotos sveikatos priežiūros įstaigos: ligoninės, šeimos medicinos ir medicinos centrai, odontologijos klinikos, psichikos sveikatos centrai, reabilitacijos ir slaugos įstaigos, laboratorijos ir optometrijos kabinetai. Vaistinių ir atskirų gydytojų sąraše nėra. Geriau ieškokite įstaigos pavadinimo arba naršykite katalogą.",
+		"departmentPlace": "Savivaldybė",
+		"resultsHeading": "Rezultatai",
+		"range": "Rezultatai nuo {from} iki {to}",
+		"orderName": "Rezultatai rikiuojami pagal tai, kiek pavadinimas atitinka paiešką, paskui abėcėlės tvarka. Niekas nemoka už aukštesnę vietą.",
+		"orderNear": "Rezultatai rikiuojami pagal atstumą nuo jūsų. Niekas nemoka už aukštesnę vietą.",
+		"bookingNotOpen": "Apercura Lietuvoje registracijos internetu nesiūlo: kreipkitės tiesiai į įstaigą.",
+		"columns": {
+			"practitioner": "Įstaiga",
+			"place": "Adresas",
+			"appointments": "Kontaktai"
+		},
+		"action": {
+			"call": "Skambinti {phone}",
+			"establishment": "Per įstaigą",
+			"locum": "Pavaduojantis gydytojas: tiesiogiai registruotis negalima",
+			"page": "Žiūrėti puslapį",
+			"noPhone": "Telefonas neskelbiamas",
+			"nextFree": "Registruotis: {slot}"
+		},
+		"distance": "už {km} km",
+		"pagination": "Rezultatų puslapiai",
+		"previous": "Ankstesni rezultatai",
+		"next": "Daugiau rezultatų",
+		"map": {
+			"show": "Rodyti žemėlapyje",
+			"hide": "Slėpti žemėlapį",
+			"region": "Rezultatų žemėlapis",
+			"fallback": "Žemėlapis įkeliamas. Sąraše viršuje yra visi adresai."
+		},
+		"outsidePlace": "Už vietovės {where} ribų",
+		"bookingOpenSome": "Kai kurios įstaigos priima registraciją internetu: rodome artimiausią laisvą laiką. Į kitas skambinkite.",
+		"notCoveredTitle": "Apercura kol kas neapima {country}",
+		"notCoveredBody": "Kol kas Apercura skelbia šių šalių sveikatos priežiūros įstaigas ir specialistus. Pasirinkite šalį ir ieškokite joje:"
+	},
+	"Practitioner": {
+		"rpps": "Įstaigos ir adreso kodas",
+		"status": {
+			"unclaimed": "Neperimtas puslapis",
+			"claimed": "Perimtas puslapis",
+			"verified": "Patvirtintas puslapis"
+		},
+		"statusNote": {
+			"unclaimed": "Sukurta pagal VASPVT licencijų duomenis. Įstaiga šio puslapio dar nepapildė.",
+			"verified": "Papildė pati įstaiga; jos teisė perimti puslapį patikrinta."
+		},
+		"notProvided": "Nenurodyta",
+		"fields": {
+			"profession": "Įstaigos rūšis",
+			"specialty": "Licencijuotos paslaugos",
+			"address": "Veiklos adresas",
+			"phone": "Telefonas",
+			"hours": "Darbo laikas",
+			"languages": "Kalbos",
+			"convention": "Sutartis su ligonių kasa",
+			"booking": "Registracija internetu",
+			"access": "Patekimas"
+		},
+		"sitesHeading": "Adresas",
+		"directions": "Maršrutas",
+		"providers": {
+			"openStreetMap": "OpenStreetMap",
+			"appleMaps": "Apple Žemėlapiai",
+			"googleMaps": "Google Žemėlapiai"
+		},
+		"mapLabel": "Žemėlapis: {place}",
+		"mapPin": "{place} vieta",
+		"source": {
+			"label": "Šaltinis",
+			"name": "Sveikatos priežiūros įstaigų licencijų duomenys (VASPVT), CC BY 4.0",
+			"updated": "Atnaujinta"
+		},
+		"action": {
+			"title": "Registracija",
+			"book": {
+				"statement": "Registracija internetu atvira. Ji nemokama ir nereikalauja paskyros.",
+				"label": "Užsiregistruoti"
+			},
+			"call": {
+				"statement": "Apercura Lietuvoje registracijos internetu nesiūlo. Norėdami užsiregistruoti, skambinkite į įstaigą.",
+				"label": "Skambinti {phone}"
+			},
+			"establishment": {
+				"statement": "Pas šį gydytoją registruojamasi per įstaigą {establishment}.",
+				"label": "Registruotis įstaigoje {establishment}"
+			},
+			"locum": {
+				"statement": "Šis gydytojas dirba pavaduodamas kitus gydytojus. Tiesiogiai pas jį užsiregistruoti negalima.",
+				"hint": "Registruokitės toje įstaigoje, kurioje jis šiuo metu pavaduoja."
+			}
+		},
+		"slots": {
+			"heading": "Pasirinkite laiką",
+			"label": "Laisvi laikai",
+			"now": "dabar",
+			"unavailable": "neprieinama",
+			"selected": "Pasirinkta: {slot}",
+			"emptyDay": "Šią dieną laisvų laikų nėra",
+			"slotLabel": "{day}, {time}",
+			"past": "praėjo"
+		},
+		"professions": {
+			"gp": "Šeimos gydytojas",
+			"dentist": "Odontologas",
+			"midwife": "Akušeris",
+			"physio": "Kineziterapeutas"
+		},
+		"specimen": "Pavyzdys, ne tikra įstaiga"
+	},
+	"Map": {
+		"map": "Žemėlapis",
+		"marker": "Žemėlapio žymeklis",
+		"zoomIn": "Priartinti",
+		"zoomOut": "Nutolinti",
+		"resetBearing": "Vilkite, kad pasuktumėte žemėlapį; spustelėkite, kad grąžintumėte šiaurę",
+		"toggleAttribution": "Rodyti arba slėpti žemėlapio šaltinius",
+		"mapFeedback": "Atsiliepimas apie žemėlapį",
+		"logo": "MapLibre logotipas",
+		"closePopup": "Uždaryti iššokantį langą",
+		"scrollZoomWindows": "Žemėlapį priartinkite laikydami Ctrl ir sukdami pelės ratuką",
+		"scrollZoomMac": "Žemėlapį priartinkite laikydami ⌘ ir sukdami pelės ratuką",
+		"twoFingers": "Žemėlapį stumdykite dviem pirštais"
+	},
+	"PractitionerPage": {
+		"metaTitle": "{name}, {occupation} · Apercura",
+		"metaTitlePlace": "{name}, {occupation}, {place} · Apercura",
+		"metaDescription": "{name}, {occupation}: {fees, select, sector {adresas, kontaktai ir kainos} other {adresas ir licencijuotos paslaugos}}, pagal VASPVT sveikatos priežiūros įstaigų licencijų duomenis.",
+		"metaDescriptionPlace": "{name}, {occupation}, {place}: {fees, select, sector {adresas, kontaktai ir kainos} other {adresas ir licencijuotos paslaugos}}, pagal VASPVT sveikatos priežiūros įstaigų licencijų duomenis.",
+		"unknownProfession": "Sveikatos priežiūros įstaiga",
+		"professionHeading": "Įstaiga",
+		"otherQualifications": "Kitos paslaugos",
+		"fieldsOfCare": "Licencijuotos paslaugos",
+		"ownership": "Nuosavybės forma",
+		"ownershipPublic": "Vieša",
+		"ownershipPrivate": "Privati",
+		"practiceType": "Veiklos vietos rūšis",
+		"switchboard": "{phone} (registratūra)",
+		"establishment": "Ligoninė",
+		"unnamedPlace": "Veiklos vieta",
+		"asideLabel": "Apie šį puslapį",
+		"action": {
+			"callNotYetOpen": "Apercura Lietuvoje registracijos internetu nesiūlo. Norėdami užsiregistruoti, kreipkitės į įstaigą.",
+			"establishmentLink": "Susisiekti su įstaiga",
+			"noPhone": "Šios veiklos vietos telefono numeris neskelbiamas.",
+			"noPhoneHint": "Kontaktus galite rasti <link>įstaigos svetainėje</link> arba kreiptis tiesiai į įstaigą.",
+			"bookStatement": "Registracija internetu atvira. Ji nemokama ir nereikalauja paskyros.",
+			"bookNoSlot": "Registracija internetu atvira, bet artimiausiomis savaitėmis laisvo laiko nėra. Pažiūrėkite vėliau arba paskambinkite.",
+			"nextSlot": "Artimiausias laisvas laikas",
+			"bookLabel": "Užsiregistruoti",
+			"orCall": "Arba skambinkite {phone}."
+		},
+		"fees": {
+			"heading": "Kainos ir sveikatos draudimas",
+			"sector": "Sutartis su ligonių kasa",
+			"agreement": "Sutartis su ligonių kasa",
+			"optam": "Riboti priemokos dydžiai (OPTAM)",
+			"optamNo": "Nedalyvauja",
+			"carteVitale": "Draudimo kortelė",
+			"accepted": "Priimama",
+			"notAccepted": "Nepriimama",
+			"fromAmeli": "Šie duomenys paimti iš draudimo įstaigos katalogo.",
+			"notMatched": "Įstaigos nepavyko vienareikšmiškai rasti draudimo įstaigos kataloge, todėl šių duomenų nerodome.",
+			"regulatoryNotice": "Sutartis su ligonių kasa lemia, kaip paslaugos apmokamos: kainas ir kompensavimą prieš vizitą pasitikrinkite",
+			"regulatoryNoticeAgreement": "Sutartis su ligonių kasa lemia, kaip paslaugos apmokamos: kainas ir kompensavimą prieš vizitą pasitikrinkite",
+			"ameliLink": "Valstybinės ligonių kasos svetainėje",
+			"source": "Valstybinė ligonių kasa",
+			"sourceOwner": "Įstaiga"
+		},
+		"claim": {
+			"heading": "Tai jūsų įstaiga?",
+			"body": "Šis puslapis sukurtas pagal VASPVT licencijų duomenis. Perimkite jį, kad galėtumėte patikrinti ir papildyti:",
+			"link": "Perimti šį puslapį",
+			"claimedHeading": "Puslapį tvarko įstaiga",
+			"claimedBody": "Įstaiga perėmė šį puslapį: jos teisė tai daryti patikrinta, ir ji pati papildo puslapį.",
+			"benefits": [
+				"nemokamai, be prenumeratos ir be įsipareigojimų;",
+				"nuotrauka, kainos ir kalbos, kuriomis bendraujate;",
+				"registracija internetu, kai ji bus įjungta;",
+				"statistika apie tai, kas lankosi jūsų puslapyje;",
+				"dalijimosi rinkinys: nuoroda, QR kodas ir plakatas."
+			],
+			"contactLink": "Turite klausimų dėl perėmimo? Susisiekite su mumis",
+			"optOutLink": "Pavadinime minimas jūsų vardas ir nenorite, kad puslapis būtų viešas? Pradėkite čia"
+		},
+		"report": {
+			"heading": "Pastebėjote klaidą?",
+			"body": "Jei neteisingas adresas, telefono numeris ar pavadinimas, praneškite, kaip jį pataisyti.",
+			"link": "Pranešti apie klaidą"
+		},
+		"ring": {
+			"heading": "Kitos įstaigos: {occupation}, {place}"
+		},
+		"photoAlt": "{name} nuotrauka",
+		"metaTitleName": "{name} · Apercura",
+		"metaDescriptionBookable": "{name}, {occupation}: registracija internetu, adresas, kontaktai ir {fees, select, sector {kainos} other {licencijuotos paslaugos}}.",
+		"metaDescriptionBookablePlace": "{name}, {occupation}, {place}: registracija internetu, adresas, kontaktai ir {fees, select, sector {kainos} other {licencijuotos paslaugos}}.",
+		"licensedServices": "Licencijuotos paslaugos"
+	},
+	"Institutional": {
+		"toBeCompleted": "Bus papildyta",
+		"legalDraftMark": "Projektas: prieš paleidimą turi peržiūrėti teisininkas",
+		"auditMark": "Laikinoji deklaracija: bus papildyta po rankinio audito",
+		"comingMark": "Netrukus",
+		"placeholderNote": "Didžiosiomis raidėmis tarp dvigubų riestinių skliaustų parašytos reikšmės dar nežinomos: jos bus įrašytos, kai bus įsteigtas juridinis asmuo ir sudarytos sutartys."
+	},
+	"AboutPage": {
+		"metaTitle": "Apie projektą · Apercura",
+		"metaDescription": "Apercura skelbia nemokamą faktinį kiekvienos licencijuotos Lietuvos sveikatos priežiūros įstaigos veiklos vietos puslapį pagal viešus atviruosius duomenis.",
+		"title": "Apie Apercura",
+		"lead": "Atviras sveikatos priežiūros įstaigų katalogas ir nemokama registracijos priemonė tiems, kam jos reikia.",
+		"sections": {
+			"what": {
+				"heading": "Ką daro Apercura",
+				"body": [
+					"Lietuvoje Apercura skelbia kiekvienos licencijuotos sveikatos priežiūros įstaigos veiklos vietos puslapį: ligoninių, šeimos medicinos ir medicinos centrų, odontologijos klinikų, psichikos sveikatos centrų, reabilitacijos ir slaugos įstaigų, laboratorijų ir optometrijos kabinetų. Puslapiai sukurti pagal licencijų duomenis, kuriuos Valstybinė akreditavimo sveikatos priežiūros veiklai tarnyba skelbia kaip atviruosius duomenis.",
+					"Pacientai randa bet kurią įstaigą, ne tik tas, kurios moka platformai. Įstaiga gali nemokamai perimti savo puslapį, jį patikrinti ir papildyti. Atskiri gydytojai ir vaistinės neskelbiami."
+				]
+			},
+			"principles": {
+				"heading": "Principai",
+				"list": [
+					"Kiekviena įstaiga skelbiama vienodai, nesvarbu, ar ji naudojasi Apercura.",
+					"Tik faktinė informacija: jokių vertinimų, atsiliepimų, reklamos ir mokamų pozicijų.",
+					"Nemokama įstaigoms ir pacientams: jokių prenumeratų ir jokių komisinių.",
+					"Kiekviename puslapyje nurodyta, iš kur paimti duomenys ir kada jie paskutinį kartą atnaujinti.",
+					"Tik būtini duomenys, renkami nurodytu tikslu ir ištrinami nustatytu laiku."
+				]
+			},
+			"how": {
+				"heading": "Iš kur paimti puslapiai",
+				"body": [
+					"Puslapiai kas savaitę atnaujinami pagal VASPVT sveikatos priežiūros įstaigų licencijų duomenis, o apskritys, savivaldybės ir gyvenamosios vietovės paimtos iš Lietuvos Respublikos adresų registro (VĮ Registrų centras). Duomenų puslapyje nurodytas kiekvienas šaltinis, jo licencija ir data."
+				]
+			},
+			"who": {
+				"heading": "Kas valdo Apercura",
+				"body": [
+					"Apercura yra visuomenei naudingas projektas. Tai nėra valstybės paslauga, ir projektas nėra susijęs su VASPVT, Valstybine ligonių kasa ar Sveikatos apsaugos ministerija."
+				]
+			}
+		},
+		"fields": {
+			"publisher": "Leidėjas",
+			"contact": "Kontaktai"
+		},
+		"links": {
+			"data": "Duomenys ir šaltiniai",
+			"openSource": "Pirminis kodas ir licencija"
+		}
+	},
+	"OpenSourcePage": {
+		"metaTitle": "Atvirasis kodas · Apercura",
+		"metaDescription": "Visas Apercura pirminis kodas viešas pagal AGPL-3.0 licenciją. Skaitykite jį, tikrinkite arba paleiskite visą platformą patys.",
+		"title": "Kodas yra viešas.",
+		"lead": "Kiekviena Apercura kodo eilutė skelbiama pagal AGPL-3.0 licenciją: galite ją skaityti, tikrinti ir patys paleisti visą platformą.",
+		"sections": {
+			"licence": {
+				"heading": "AGPL-3.0 licencija",
+				"body": [
+					"AGPL-3.0 yra laisvosios programinės įrangos licencija. Kiekvienas gali kodą naudoti, nagrinėti, keisti ir platinti. Kas pakeistą versiją siūlo kaip internetinę paslaugą, privalo savo pakeitimus paskelbti pagal tą pačią licenciją."
+				]
+			},
+			"can": {
+				"heading": "Ką galite daryti",
+				"list": [
+					"Skaityti, kaip kuriamas kiekvienas puslapis ir kaip importuojami atvirieji duomenys.",
+					"Patikrinti, kaip bus šifruojami pacientų duomenys ir kiek laiko jie saugomi.",
+					"Pranešti apie problemą arba pasiūlyti pakeitimą viešoje saugykloje.",
+					"Paleisti visą platformą savo infrastruktūroje su Docker, įskaitant atvirųjų duomenų importą."
+				]
+			},
+			"selfHost": {
+				"heading": "Savarankiškas diegimas",
+				"body": [
+					"Diegimas, kuriame veikia tik katalogas, sveikatos duomenų nelaiko ir gali veikti pas bet kurį prieglobos paslaugų teikėją. Registracijos duomenys yra sveikatos duomenys: jei registraciją teikiate kitiems žmonėms, šiuos duomenis tvarkykite laikydamiesi BDAR ir savo šalies sveikatos duomenų taisyklių."
+				]
+			}
+		},
+		"facts": {
+			"licence": "Licencija",
+			"licenceValue": "GNU Affero General Public License v3.0",
+			"repository": "Saugykla",
+			"data": "Katalogo duomenys"
+		},
+		"dataValue": "CC BY 4.0, žr. duomenų puslapį",
+		"cta": {
+			"heading": "Skaityti pirminį kodą",
+			"body": "Saugykloje yra kodas, dokumentacija ir savarankiško diegimo vadovas.",
+			"link": "Atverti saugyklą"
+		}
+	},
+	"Listing": {
+		"count": "{count, plural, one {# įstaiga} few {# įstaigos} many {# įstaigos} other {# įstaigų}}",
+		"metaTitle": "{count, plural, one {{listing} – {place}: # įstaiga · Apercura} few {{listing} – {place}: # įstaigos · Apercura} many {{listing} – {place}: # įstaigos · Apercura} other {{listing} – {place}: # įstaigų · Apercura}}",
+		"metaTitlePage": "{listing} – {place}, {page} psl. · Apercura",
+		"metaDescription": "{count, plural, one {# įstaiga kategorijoje „{occupation}“, {place}: {fees, select, sector {adresas, kontaktai ir kainos} other {adresas ir licencijuotos paslaugos}}, pagal VASPVT licencijų duomenis.} few {# įstaigos kategorijoje „{occupation}“, {place}: {fees, select, sector {adresai, kontaktai ir kainos} other {adresai ir licencijuotos paslaugos}}, pagal VASPVT licencijų duomenis.} many {# įstaigos kategorijoje „{occupation}“, {place}: {fees, select, sector {adresai, kontaktai ir kainos} other {adresai ir licencijuotos paslaugos}}, pagal VASPVT licencijų duomenis.} other {# įstaigų kategorijoje „{occupation}“, {place}: {fees, select, sector {adresai, kontaktai ir kainos} other {adresai ir licencijuotos paslaugos}}, pagal VASPVT licencijų duomenis.}}",
+		"title": "{listing} – {place}",
+		"lead": "{count, plural, one {VASPVT licencijų duomenimis, šioje kategorijoje vietovėje {place} yra # įstaigos veiklos vieta.} few {VASPVT licencijų duomenimis, šioje kategorijoje vietovėje {place} yra # įstaigų veiklos vietos.} many {VASPVT licencijų duomenimis, šioje kategorijoje vietovėje {place} yra # įstaigų veiklos vietos.} other {VASPVT licencijų duomenimis, šioje kategorijoje vietovėje {place} yra # įstaigų veiklos vietų.}}",
+		"practitionersHeading": "{count, plural, one {Įstaiga} few {# įstaigos} many {# įstaigos} other {# įstaigų}}",
+		"practitionersIntro": "Abėcėlės tvarka. Niekas nemoka už tai, kad būtų čia paminėtas, ir niekas nerikiuojamas aukščiau.",
+		"rowFacts": "Sutartis: {sector} · Draudimo kortelė: {carteVitale}",
+		"rowFactsAgreement": "Sutartis su ligonių kasa: {sector} · Draudimo kortelė: {carteVitale}",
+		"columns": {
+			"practitioner": "Įstaiga",
+			"sector": "Sutartis",
+			"agreement": "Sutartis su ligonių kasa",
+			"carteVitale": "Draudimo kortelė"
+		},
+		"pagination": {
+			"label": "Sąrašo puslapiai",
+			"previous": "Ankstesnis puslapis",
+			"next": "Kitas puslapis",
+			"status": "{page} psl. iš {pages}",
+			"page": "{page}<hidden> psl.</hidden>",
+			"jumps": "Pereiti į puslapį"
+		},
+		"facts": {
+			"heading": "Skaičiais",
+			"intro": "Sutarčių duomenys paimti iš draudimo įstaigos katalogo tų įstaigų, kurias jame pavyko rasti.",
+			"introAgreement": "Sutarčių su ligonių kasa duomenys paimti iš draudimo įstaigos katalogo tų įstaigų, kurias jame pavyko rasti.",
+			"sectorUnknown": "Sutartis nežinoma",
+			"agreementUnknown": "Sutartis su ligonių kasa nežinoma",
+			"carteVitaleYes": "Priima draudimo kortelę",
+			"carteVitaleNo": "Nepriima draudimo kortelės",
+			"bookingNotOpen": "Dar neįjungta",
+			"sources": "Sveikatos priežiūros įstaigų licencijų duomenys (VASPVT)"
+		},
+		"communesHeading": "{listing}: {place} gyvenamosios vietovės",
+		"nearbyHeading": "{listing}: netoliese esančios vietovės",
+		"establishmentsHeading": "Ligoninės vietovėje {place}",
+		"establishmentsIntro": "Ligoninės ir klinikos, kuriose veikia kategorijos „{occupation}“ įstaigos.",
+		"allSpecialties": "Visos įstaigų rūšys vietovėje {place}",
+		"hubMetaTitle": "{count, plural, one {{listing} Lietuvoje: # įstaiga · Apercura} few {{listing} Lietuvoje: # įstaigos · Apercura} many {{listing} Lietuvoje: # įstaigos · Apercura} other {{listing} Lietuvoje: # įstaigų · Apercura}}",
+		"hubMetaDescription": "{count, plural, one {# įstaiga kategorijoje „{occupation}“ Lietuvoje, pagal savivaldybes: {fees, select, sector {adresas, kontaktai ir kainos} other {adresas ir licencijuotos paslaugos}}, pagal VASPVT licencijų duomenis.} few {# įstaigos kategorijoje „{occupation}“ Lietuvoje, pagal savivaldybes: {fees, select, sector {adresai, kontaktai ir kainos} other {adresai ir licencijuotos paslaugos}}, pagal VASPVT licencijų duomenis.} many {# įstaigos kategorijoje „{occupation}“ Lietuvoje, pagal savivaldybes: {fees, select, sector {adresai, kontaktai ir kainos} other {adresai ir licencijuotos paslaugos}}, pagal VASPVT licencijų duomenis.} other {# įstaigų kategorijoje „{occupation}“ Lietuvoje, pagal savivaldybes: {fees, select, sector {adresai, kontaktai ir kainos} other {adresai ir licencijuotos paslaugos}}, pagal VASPVT licencijų duomenis.}}",
+		"hubTitle": "{listing} Lietuvoje",
+		"hubLead": "{count, plural, one {VASPVT licencijų duomenimis, šioje kategorijoje Lietuvoje yra # įstaigos veiklos vieta.} few {VASPVT licencijų duomenimis, šioje kategorijoje Lietuvoje yra # įstaigų veiklos vietos.} many {VASPVT licencijų duomenimis, šioje kategorijoje Lietuvoje yra # įstaigų veiklos vietos.} other {VASPVT licencijų duomenimis, šioje kategorijoje Lietuvoje yra # įstaigų veiklos vietų.}}",
+		"departmentsHeading": "{listing} pagal savivaldybes",
+		"departmentsIntro": "Pasirinkite savivaldybę ir pamatysite jos gyvenamąsias vietoves ir įstaigas.",
+		"browseDirectory": "Naršyti katalogą pagal vietovę",
+		"metaTitleShort": "{listing} – {place} · Apercura",
+		"metaDescriptionPage": "{count, plural, one {{page} psl. iš {pages}: # įstaiga kategorijoje „{occupation}“, {place}, pagal VASPVT licencijų duomenis.} few {{page} psl. iš {pages}: # įstaigos kategorijoje „{occupation}“, {place}, pagal VASPVT licencijų duomenis.} many {{page} psl. iš {pages}: # įstaigos kategorijoje „{occupation}“, {place}, pagal VASPVT licencijų duomenis.} other {{page} psl. iš {pages}: # įstaigų kategorijoje „{occupation}“, {place}, pagal VASPVT licencijų duomenis.}}",
+		"metaDescriptionPageRange": "{count, plural, one {{page} psl. iš {pages}, nuo {first} iki {last}: # įstaiga kategorijoje „{occupation}“, {place}, pagal VASPVT licencijų duomenis.} few {{page} psl. iš {pages}, nuo {first} iki {last}: # įstaigos kategorijoje „{occupation}“, {place}, pagal VASPVT licencijų duomenis.} many {{page} psl. iš {pages}, nuo {first} iki {last}: # įstaigos kategorijoje „{occupation}“, {place}, pagal VASPVT licencijų duomenis.} other {{page} psl. iš {pages}, nuo {first} iki {last}: # įstaigų kategorijoje „{occupation}“, {place}, pagal VASPVT licencijų duomenis.}}",
+		"hubMetaTitleShort": "{listing} Lietuvoje · Apercura",
+		"authoritiesHeading": "{listing}: {place} savivaldos institucijos"
+	},
+	"Directory": {
+		"metaTitle": "Sveikatos priežiūros įstaigų katalogas pagal vietovę · Apercura",
+		"metaDescription": "Visos Lietuvos apskritys ir savivaldybės su jose veikiančiomis licencijuotomis sveikatos priežiūros įstaigomis pagal VASPVT licencijų duomenis.",
+		"title": "Katalogas pagal vietovę",
+		"lead": "{count, plural, one {# įstaigos veiklos vieta, pagal apskritis ir savivaldybes.} few {# įstaigų veiklos vietos, pagal apskritis ir savivaldybes.} many {# įstaigų veiklos vietos, pagal apskritis ir savivaldybes.} other {# įstaigų veiklos vietų, pagal apskritis ir savivaldybes.}}",
+		"otherRegion": "Kitos vietovės",
+		"emptyTitle": "Katalogas dar neimportuotas",
+		"emptyBody": "VASPVT licencijų duomenys į šį serverį dar neimportuoti. Užsukite po kito importo.",
+		"placeMetaTitle": "Sveikatos priežiūros įstaigos: {place} · Apercura",
+		"placeMetaDescription": "{count, plural, one {# įstaiga, {place}, pagal įstaigos rūšį, pagal VASPVT licencijų duomenis.} few {# įstaigos, {place}, pagal įstaigos rūšį, pagal VASPVT licencijų duomenis.} many {# įstaigos, {place}, pagal įstaigos rūšį, pagal VASPVT licencijų duomenis.} other {# įstaigų, {place}, pagal įstaigos rūšį, pagal VASPVT licencijų duomenis.}}",
+		"placeTitle": "Sveikatos priežiūros įstaigos: {place}",
+		"placeLead": "{count, plural, one {# įstaigos veiklos vieta, {place}.} few {# įstaigų veiklos vietos, {place}.} many {# įstaigų veiklos vietos, {place}.} other {# įstaigų veiklos vietų, {place}.}}",
+		"specialtiesHeading": "Pagal įstaigos rūšį",
+		"communesHeading": "{place}: gyvenamosios vietovės",
+		"arrondissementsHeading": "Pagal seniūniją",
+		"establishmentsHeading": "Ligoninės: {place}",
+		"placeMetaTitleShort": "Įstaigos: {place} · Apercura",
+		"authoritiesHeading": "{place}: savivaldybės",
+		"regionLink": "Viskas: {place}"
+	},
+	"Establishment": {
+		"metaTitle": "{name} · Apercura",
+		"metaTitlePlace": "{name}, {place} · Apercura",
+		"metaDescription": "{count, plural, one {{name}: adresas, registratūra ir # čia veikianti įstaiga.} few {{name}: adresas, registratūra ir # čia veikiančios įstaigos.} many {{name}: adresas, registratūra ir # čia veikiančios įstaigos.} other {{name}: adresas, registratūra ir # čia veikiančių įstaigų.}}",
+		"directory": "Katalogas",
+		"folio": "Nr. {finess}",
+		"lead": "{count, plural, one {{kind}. Čia veikia # įstaiga.} few {{kind}. Čia veikia # įstaigos.} many {{kind}. Čia veikia # įstaigos.} other {{kind}. Čia veikia # įstaigų.}}",
+		"addressHeading": "Adresas",
+		"finess": "Numeris",
+		"action": {
+			"call": "Registruojamasi per įstaigą. Skambinkite į registratūrą ir nurodykite reikiamą skyrių.",
+			"noPhone": "Šios įstaigos telefono numeris neskelbiamas.",
+			"noPhoneHint": "Kontaktus raskite įstaigos svetainėje."
+		},
+		"practitionersHeading": "{count, plural, one {Čia veikianti įstaiga} few {# čia veikiančios įstaigos} many {# čia veikiančios įstaigos} other {# čia veikiančių įstaigų}}",
+		"practitionersIntro": "Pagal rūšį, abėcėlės tvarka.",
+		"otherProfessions": "Kitos rūšys",
+		"source": "Sveikatos priežiūros įstaigų licencijų duomenys (VASPVT)"
+	},
+	"SearchForm": {
+		"specialties": "Įstaigų rūšys",
+		"practitioners": "Įstaigos",
+		"places": "Vietovės",
+		"department": "Savivaldybė",
+		"nearMe": "Netoli manęs",
+		"locating": "Nustatoma jūsų vieta…",
+		"geoDenied": "Šioje svetainėje vietos nustatymas išjungtas. Geriau įrašykite miestą arba gyvenvietę.",
+		"geoUnavailable": "Jūsų vietos nustatyti nepavyko. Geriau įrašykite miestą arba gyvenvietę.",
+		"searching": "Ieškoma…",
+		"noSuggestion": "Pasiūlymų nėra. Spauskite „Ieškoti“ ir pamatysite visus rezultatus."
+	},
+	"OgImage": {
+		"runningHead": "Atviras sveikatos priežiūros įstaigų katalogas",
+		"titles": {
+			"medecin": "Kiekviena licencijuota sveikatos priežiūros įstaiga Lietuvoje jau turi puslapį.",
+			"chirurgien-dentiste": "Kiekviena odontologijos klinika Lietuvoje jau turi puslapį.",
+			"sage-femme": "Kiekviena slaugos įstaiga Lietuvoje jau turi puslapį.",
+			"infirmier": "Kiekviena slaugos įstaiga Lietuvoje jau turi puslapį.",
+			"annuaire": "Sveikatos priežiūros įstaigos pagal rūšį ir vietovę."
+		},
+		"footer": "Nemokamai · Atvirasis kodas · Jokių vertinimų, jokios reklamos",
+		"practitioner": {
+			"folio": "Nr. {rpps}",
+			"alt": "{name}, {occupation}, {place}",
+			"altNoPlace": "{name}, {occupation}"
+		}
+	},
+	"taxonomy": {
+		"profession": {
+			"ligonines": "Ligoninė",
+			"seimos-medicina": "Šeimos medicinos įstaiga",
+			"medicinos-centrai": "Medicinos centras",
+			"odontologijos-klinikos": "Odontologijos klinika",
+			"psichikos-sveikatos-centrai": "Psichikos sveikatos centras",
+			"reabilitacija": "Reabilitacijos įstaiga",
+			"slauga": "Slaugos įstaiga",
+			"laboratorijos": "Laboratorija",
+			"optometrijos-kabinetai": "Optometrijos kabinetas"
+		},
+		"listing": {
+			"ligonines": "Ligoninės",
+			"seimos-medicina": "Šeimos medicina",
+			"medicinos-centrai": "Medicinos centrai ir klinikos",
+			"odontologijos-klinikos": "Odontologijos klinikos",
+			"psichikos-sveikatos-centrai": "Psichikos sveikatos centrai",
+			"reabilitacija": "Reabilitacija ir kineziterapija",
+			"slauga": "Slaugos paslaugos",
+			"laboratorijos": "Laboratorijos",
+			"optometrijos-kabinetai": "Optometrijos kabinetai"
+		},
+		"practiceKind": {
+			"office": "Įstaiga"
+		}
+	},
+	"booking": {
+		"panel": {
+			"code": {
+				"sendsLeft": "{count, plural, one {Dar galite paprašyti kodų: #.} few {Dar galite paprašyti kodų: #.} many {Dar galite paprašyti kodų: #.} other {Dar galite paprašyti kodų: #.}}",
+				"invalid": "{count, plural, one {Kodas neteisingas. Liko # bandymas.} few {Kodas neteisingas. Liko # bandymai.} many {Kodas neteisingas. Liko # bandymo.} other {Kodas neteisingas. Liko # bandymų.}}"
+			}
+		},
+		"manage": {
+			"cutoffPassed": "{hours, plural, one {Internetu vizitą pakeisti galima ne vėliau kaip likus # valandai iki jo. Norėdami jį atšaukti ar perkelti dabar, skambinkite į įstaigą.} few {Internetu vizitą pakeisti galima ne vėliau kaip likus # valandoms iki jo. Norėdami jį atšaukti ar perkelti dabar, skambinkite į įstaigą.} many {Internetu vizitą pakeisti galima ne vėliau kaip likus # valandos iki jo. Norėdami jį atšaukti ar perkelti dabar, skambinkite į įstaigą.} other {Internetu vizitą pakeisti galima ne vėliau kaip likus # valandų iki jo. Norėdami jį atšaukti ar perkelti dabar, skambinkite į įstaigą.}}"
+		}
+	},
+	"auth": {
+		"runningHead": "Įstaigos paskyra",
+		"metadata": {
+			"signIn": "Prisijungimas · Apercura",
+			"signUp": "Paskyros kūrimas · Apercura",
+			"verifyEmail": "El. pašto patvirtinimas · Apercura",
+			"challenge": "Patvirtinkite, kad tai jūs · Apercura",
+			"security": "Saugumas · Apercura",
+			"home": "Jūsų paskyra · Apercura"
+		},
+		"common": {
+			"email": "El. pašto adresas",
+			"password": "Slaptažodis",
+			"pending": "Palaukite",
+			"loading": "Įkeliama",
+			"signOut": "Atsijungti",
+			"signingOut": "Atsijungiama",
+			"totpCode": "6 skaitmenų kodas iš autentifikavimo programėlės"
+		},
+		"errors": {
+			"generic": "Įvyko klaida. Netrukus bandykite dar kartą.",
+			"tooManyRequests": "Per daug bandymų. Palaukite minutę ir bandykite dar kartą.",
+			"invalidCredentials": "El. pašto adresas ir slaptažodis nesutampa.",
+			"emailNotVerified": "Pirmiausia patvirtinkite el. pašto adresą: ką tik išsiuntėme jums naują nuorodą.",
+			"invalidCode": "Kodas negalioja. Patikrinkite jį ir bandykite dar kartą.",
+			"locked": "Per daug neteisingų kodų. Palaukite 15 minučių ir vėl prisijunkite.",
+			"passwordTooShort": "Slaptažodis per trumpas: naudokite bent 12 simbolių.",
+			"passwordTooLong": "Slaptažodis per ilgas: naudokite ne daugiau kaip 128 simbolius.",
+			"userExists": "Šis el. pašto adresas jau naudojamas kitoje paskyroje. Geriau prisijunkite.",
+			"invalidPassword": "Slaptažodis neteisingas.",
+			"mfaRequired": "Pirmiausia patvirtinkite tapatybę antruoju veiksniu.",
+			"lastFactor": "Prieš pašalindami šį antrąjį veiksnį, pridėkite kitą: paskyroje visada turi likti bent vienas.",
+			"passkeyFailed": "Prieigos rakto panaudoti nepavyko. Bandykite dar kartą arba naudokite slaptažodį ir kodą.",
+			"accountFrozen": "Ši paskyra įšaldyta, nes buvo užginčytas puslapio perėmimas. Susisiekite su mumis, kad ją atkurtumėte iš naujo patvirtinę tapatybę."
+		},
+		"signIn": {
+			"title": "Prisijungti",
+			"lead": "Jūsų įstaigos paskyra: puslapis, kalendorius, komanda.",
+			"asideFactor": "Kiekvienai paskyrai, kuri gali matyti vizitus, reikia antrojo veiksnio: autentifikavimo programėlės kodo arba prieigos rakto.",
+			"asidePasskey": "Prieigos raktas laikomas jūsų telefone ar kompiuteryje ir atrakinamas piršto atspaudu, veidu arba PIN kodu.",
+			"passwordHeading": "Su slaptažodžiu",
+			"submit": "Prisijungti",
+			"passkeyHeading": "Su prieigos raktu",
+			"passkeyHint": "Slaptažodžio nereikia: jūsų įrenginys patvirtina, kad tai jūs.",
+			"passkey": "Prisijungti su prieigos raktu",
+			"noAccount": "Dar neturite paskyros?",
+			"signUpLink": "Sukurti paskyrą",
+			"totpHeading": "Įveskite kodą",
+			"backupHeading": "Įveskite atsarginį kodą",
+			"totpLead": "Atverkite autentifikavimo programėlę ir įveskite Apercura rodomą 6 skaitmenų kodą.",
+			"backupLead": "Kiekvienas atsarginis kodas veikia vieną kartą. Juos gavote, kai nustatėte autentifikavimo programėlę.",
+			"backupCode": "Atsarginis kodas",
+			"verify": "Patvirtinti",
+			"useBackupCode": "Naudoti atsarginį kodą",
+			"useTotp": "Naudoti autentifikavimo programėlę",
+			"pscHeading": "Su Pro Santé Connect",
+			"pscHint": "Kai paslauga susieta su jūsų paskyra per perėmimą, e-CPS programėlė arba CPS kortelė prijungia jus be papildomo kodo.",
+			"psc": "Prisijungti su Pro Santé Connect",
+			"pscFailed": "Prisijungti su Pro Santé Connect nepavyko. Pirmiausia susiekite paslaugą su paskyra per perėmimą arba prisijunkite slaptažodžiu."
+		},
+		"signUp": {
+			"title": "Sukurti paskyrą",
+			"lead": "Nemokama įstaigoms ir jų darbuotojams.",
+			"asideSteps": "Trys žingsniai: sukurkite paskyrą, patvirtinkite el. pašto adresą ir nustatykite antrąjį veiksnį.",
+			"asideFree": "Sukūrus paskyrą joks viešas puslapis nepasikeičia. Puslapio perėmimas – kitas žingsnis.",
+			"name": "Vardas ir pavardė",
+			"emailHint": "Šiuo adresu išsiųsime patvirtinimo nuorodą.",
+			"passwordHint": "Bent {min} simbolių. Ilgą sakinį lengva įsiminti.",
+			"submit": "Sukurti paskyrą",
+			"haveAccount": "Jau turite paskyrą?",
+			"signInLink": "Prisijungti",
+			"sentHeading": "Patikrinkite pašto dėžutę",
+			"sentTitle": "Patvirtinimo nuorodą išsiuntėme adresu {email}.",
+			"sentBody": "Atverkite laišką ir per valandą paspauskite nuorodą. Tada prisijunkite ir nustatykite antrąjį veiksnį.",
+			"sentHint": "Po kelių minučių laiško vis dar nėra? Patikrinkite brukalo aplanką arba prisijunkite: išsiųsime naują nuorodą."
+		},
+		"verifyEmail": {
+			"title": "El. pašto patvirtinimas",
+			"successTitle": "Jūsų el. pašto adresas patvirtintas.",
+			"successBody": "Prisijunkite slaptažodžiu ir nustatykite antrąjį veiksnį.",
+			"errorTitle": "Ši nuoroda nebeveikia.",
+			"errorBody": "Galbūt jos galiojimas baigėsi arba ji jau panaudota. Prisijunkite: išsiųsime naują nuorodą.",
+			"signIn": "Prisijungti"
+		},
+		"challenge": {
+			"title": "Patvirtinkite, kad tai jūs",
+			"lead": "Jūsų paskyroje nustatytas antrasis veiksnys: juo atverkite savo paskyrą.",
+			"aside": "Vien slaptažodžio nepakanka, kad pamatytumėte vizitus.",
+			"passkeyHeading": "Su prieigos raktu",
+			"passkeyLead": "Įrenginys paprašys piršto atspaudo, veido arba PIN kodo.",
+			"passkey": "Naudoti prieigos raktą",
+			"totpHeading": "Su autentifikavimo programėle",
+			"otherHeading": "Tai ne jūs arba neturite prieigos prie antrojo veiksnio?",
+			"otherLead": "Atsijunkite. Norint atkurti paskyrą, tapatybę reikia patvirtinti iš naujo."
+		},
+		"security": {
+			"title": "Saugumas",
+			"lead": "Kaip prisijungiate ir kur esate prisijungę.",
+			"enrolLead": "Paskutinis žingsnis prieš atveriant paskyrą: nustatykite antrąjį veiksnį.",
+			"enrolTitle": "Norėdami tęsti, pasirinkite antrąjį veiksnį",
+			"enrolBody": "Apercura jo reikalauja iš kiekvienos paskyros, kuri gali matyti vizitus. Tinka autentifikavimo programėlė arba prieigos raktas; kitą galėsite pridėti vėliau.",
+			"continue": "Tęsti į paskyrą",
+			"actions": "Veiksmai",
+			"totp": {
+				"heading": "Autentifikavimo programėlė",
+				"lead": "Programėlė telefone (pavyzdžiui, FreeOTP, Aegis ar Google Authenticator) kas 30 sekundžių rodo naują 6 skaitmenų kodą.",
+				"enabledTitle": "Autentifikavimo programėlė nustatyta.",
+				"enabledBody": "Kodo bus prašoma kiekvieną kartą, kai prisijungsite slaptažodžiu.",
+				"scanHeading": "1. Nuskaitykite QR kodą",
+				"scanLead": "Autentifikavimo programėlėje pridėkite paskyrą ir nuskaitykite šį kodą. Jei nuskaityti negalite, įveskite sąrankos raktą.",
+				"qrLabel": "QR kodas, skirtas Apercura pridėti prie autentifikavimo programėlės",
+				"manualKey": "Sąrankos raktas",
+				"codesHeading": "2. Išsaugokite atsarginius kodus",
+				"codesLead": "Jei pamestumėte telefoną, kiekvienu iš šių kodų galėsite prisijungti vieną kartą. Atsispausdinkite juos arba laikykite slaptažodžių tvarkyklėje; jie rodomi tik dabar.",
+				"confirmHeading": "3. Įveskite programėlės rodomą kodą",
+				"confirm": "Įjungti",
+				"password": "Jūsų slaptažodis",
+				"passwordHint": "Prieš keičiant prisijungimo būdą jo paprašysime dar kartą.",
+				"start": "Nustatyti programėlę"
+			},
+			"passkeys": {
+				"heading": "Prieigos raktai",
+				"lead": "Prieigos raktas lieka jūsų telefone, kompiuteryje ar saugos rakte ir atrakinamas piršto atspaudu, veidu arba PIN kodu. Nieko nereikia įvesti, nėra ko pavogti.",
+				"addedTitle": "Prieigos raktas pridėtas.",
+				"name": "Pavadinimas",
+				"added": "Pridėta",
+				"unnamed": "Prieigos raktas",
+				"removeNamed": "Pašalinti {name}",
+				"remove": "Pašalinti",
+				"none": "Prieigos raktų dar nėra.",
+				"nameLabel": "Naujo prieigos rakto pavadinimas (neprivaloma)",
+				"nameHint": "Pavyzdžiui: registratūros kompiuteris.",
+				"add": "Pridėti prieigos raktą"
+			},
+			"sessions": {
+				"heading": "Kur esate prisijungę",
+				"lead": "Seansas baigiasi po 12 valandų neveiklumo. Atjunkite kiekvieną seansą, kurio neatpažįstate.",
+				"device": "Įrenginys",
+				"lastActive": "Paskutinį kartą aktyvus",
+				"unknownDevice": "Nežinomas įrenginys",
+				"current": "Šis seansas",
+				"revoke": "Atjungti",
+				"everywhereHint": "Pametėte įrenginį ar kam nors atskleidėte slaptažodį? Atsijunkite visuose seansuose, įskaitant šį.",
+				"everywhere": "Atsijungti visur"
+			},
+			"data": {
+				"heading": "Jūsų duomenys",
+				"lead": "Visų apie jūsų paskyrą saugomų duomenų kopija ir jų ištrynimas.",
+				"exportHeading": "Atsisiųsti savo duomenis",
+				"exportBody": "JSON failas su jūsų paskyra, prisijungimo būdais (niekada ne jų paslaptimis), seansais, įstaigomis, perėmimais ir puslapio turiniu.",
+				"export": "Atsisiųsti mano duomenis",
+				"deleteHeading": "Ištrinti paskyrą",
+				"deleteBody": "Ištrinama jūsų paskyra, seansai, perėmimai ir dokumentai. Puslapis grįžta prie registro duomenų: neperimtas, be jūsų turinio ir nuotraukos.",
+				"closeEffect": "Uždarius įstaigą atšaukiami jos būsimi vizitai (pacientams pranešama el. paštu), panaikinamos jos kalendoriaus nuorodos ir per parą ištrinami jos pacientų duomenys. Prieigos žurnalas saugomas vienus metus.",
+				"practiceChoice": "Kas bus su {name}?",
+				"close": "Uždaryti įstaigą: jos nariai praras prieigą",
+				"transfer": "Perduoti {name} ({email})",
+				"practiceAlone": "{name} uždaroma kartu su jūsų paskyra (esate vienintelis jos narys).",
+				"confirmEmail": "Patvirtindami įrašykite savo el. pašto adresą",
+				"confirmEmailHint": "Ištrynimo atšaukti negalima.",
+				"mismatch": "Tai ne jūsų paskyros el. pašto adresas.",
+				"hasTeam": "Pasirinkite, kas bus su kiekviena įstaiga, kurioje yra komanda.",
+				"lastAdmin": "Esate paskutinis platformos administratorius: pirmiausia paskirkite kitą.",
+				"failed": "Paskyros ištrinti nepavyko. Netrukus bandykite dar kartą.",
+				"delete": "Ištrinti mano paskyrą"
+			}
+		},
+		"app": {
+			"title": "Jūsų paskyra",
+			"lead": "Prisijungta kaip {email}.",
+			"homeLink": "Apercura, pradžia",
+			"nav": {
+				"label": "Įstaigos paskyra",
+				"home": "Jūsų paskyra",
+				"security": "Saugumas",
+				"page": "Jūsų puslapis",
+				"adminClaims": "Perėmimai",
+				"adminReports": "Pranešimai",
+				"today": "Šiandien",
+				"agenda": "Kalendorius",
+				"team": "Komanda",
+				"menu": "Meniu",
+				"stats": "Statistika",
+				"share": "Dalintis",
+				"adminContacts": "Susisiekimo užklausos"
+			},
+			"practicesHeading": "Jūsų įstaigos",
+			"columns": {
+				"practice": "Įstaiga",
+				"role": "Jūsų vaidmuo",
+				"page": "Puslapis",
+				"status": "Būsena",
+				"next": "Kitas žingsnis"
+			},
+			"emptyTitle": "Įstaigų dar nėra",
+			"emptyBody": "Įstaiga čia atsiras, kai jos puslapis bus perimtas ir patvirtintas.",
+			"emptyAction": "Rasti savo puslapį",
+			"securityHeading": "Paskyros saugumas",
+			"securityBody": "Jūsų paskyra apsaugota antruoju veiksniu. Tvarkykite autentifikavimo programėlę, prieigos raktus ir seansus.",
+			"securityLink": "Saugumo nustatymai",
+			"claimsHeading": "Jūsų puslapis ir perėmimai",
+			"editPage": "Redaguoti puslapį",
+			"openClaim": "Atverti perėmimą",
+			"adminRunningHead": "Administravimas",
+			"agendaHeading": "Kalendorius",
+			"agendaBody": "Jūsų diena, savaitė, užklausos, į kurias reikia atsakyti, ir registracijos nustatymai.",
+			"agendaLink": "Atverti šiandienos kalendorių",
+			"invitationsHeading": "Kvietimai",
+			"invitationBody": "{practice} kviečia jus prisijungti prie komandos.",
+			"invitationLink": "Atsakyti į kvietimą",
+			"pageHeading": "Jūsų puslapis",
+			"pageSummary": "{views, plural, =0 {Peržiūrų nėra} one {# peržiūra} few {# peržiūros} many {# peržiūros} other {# peržiūrų}} per pastarąsias 30 dienų; puslapis užpildytas {score} %.",
+			"statsLink": "Žiūrėti statistiką ir tai, ko trūksta",
+			"shareLink": "Dalintis puslapiu: nuoroda, QR kodas, plakatas"
+		},
+		"roles": {
+			"owner": "Savininkas",
+			"practitioner": "Specialistas",
+			"assistant": "Administratorius"
+		},
+		"email": {
+			"wordmark": "Apercura",
+			"runningHead": "Įstaigos paskyra",
+			"footer": "Apercura: atviras Lietuvos sveikatos priežiūros įstaigų katalogas. Nemokamas ir atvirojo kodo.",
+			"verify": {
+				"subject": "Patvirtinkite el. pašto adresą",
+				"preview": "Patvirtinkite el. pašto adresą ir užbaikite kurti Apercura paskyrą.",
+				"title": "Patvirtinkite el. pašto adresą",
+				"greeting": "Sveiki, {name},",
+				"body": "Ką tik sukūrėte Apercura paskyrą. Norėdami tęsti, patvirtinkite, kad šis adresas priklauso jums.",
+				"action": "Patvirtinti adresą",
+				"fallback": "Jei mygtukas neveikia, nukopijuokite šią nuorodą į naršyklę:",
+				"expiry": "Nuoroda galioja vieną valandą.",
+				"ignore": "Šios paskyros nekūrėte? Nekreipkite dėmesio į šį laišką: nieko neatsitiks."
+			}
+		}
+	},
+	"emails": {
+		"fallback": "Jei mygtukas neveikia, nukopijuokite šią nuorodą į naršyklę:",
+		"claimRegistryLink": {
+			"subject": "Patvirtinkite įstaigos puslapio perėmimą",
+			"title": "Ar tai įstaiga {practitioner}?",
+			"body": [
+				"Kažkas paprašė leisti tvarkyti įstaigos {practitioner} puslapį Apercura svetainėje. Šį laišką išsiuntėme adresu, kurį šiai įstaigai nurodo registras.",
+				"Jei prašymas gautas iš įstaigos {practitioner}, atverkite nuorodą ir jį patvirtinkite. Tada puslapis bus patvirtintas."
+			],
+			"action": "Patvirtinti perėmimą",
+			"notes": [
+				"Nuoroda galioja 24 valandas.",
+				"Nieko panašaus nesitikėjote? Nekreipkite dėmesio į šį laišką: niekas nepasikeis, puslapis liks toks, koks yra."
+			]
+		},
+		"claimReceived": {
+			"subject": "Jūsų perėmimo prašymas nagrinėjamas",
+			"title": "Jūsų perėmimo prašymas nagrinėjamas",
+			"body": [
+				"Sveiki, {name},",
+				"gavome jūsų perėmimo prašymą ir dokumentus. Apercura komandos narys juos išnagrinės ir parašys jums el. laišką.",
+				"Prašymus nagrinėjame per 48 valandas darbo dienomis."
+			]
+		},
+		"claimVerified": {
+			"subject": "Jūsų puslapis patvirtintas",
+			"title": "Jūsų puslapis patvirtintas",
+			"body": [
+				"Sveiki, {name},",
+				"jūsų puslapis dabar pažymėtas patvirtinimo ženklu. Patikrinkite importuotą informaciją, papildykite kainas ir atsiskaitymo būdus, tada paskelbkite puslapį."
+			],
+			"action": "Papildyti puslapį"
+		},
+		"claimRejected": {
+			"subject": "Jūsų perėmimo prašymas nepriimtas",
+			"title": "Jūsų perėmimo prašymas nepriimtas",
+			"body": [
+				"Sveiki, {name},",
+				"jūsų perėmimo prašymo patvirtinti nepavyko. Nagrinėjusio asmens nurodyta priežastis: {reason}",
+				"Savo paskyroje galite pateikti naują prašymą su aiškiu dokumentu, įrodančiu, kad atstovaujate įstaigai."
+			]
+		},
+		"claimSuperseded": {
+			"subject": "Jūsų prieiga prie puslapio panaikinta",
+			"title": "Jūsų prieiga prie puslapio panaikinta",
+			"body": [
+				"Sveiki, {name},",
+				"kita paskyra įrodė, kad ji atstovauja įstaigai, kurios puslapį tvarkė jūsų paskyra. Jūsų paskyra įšaldyta, o jos prieiga prie įstaigos panaikinta.",
+				"Jei atstovaujate šiai įstaigai, susisiekite su mumis: paskyrą galima atkurti tik iš naujo patvirtinus tapatybę."
+			]
+		},
+		"removalReceived": {
+			"subject": "Jūsų prašymas pašalinti puslapį gautas",
+			"title": "Jūsų prašymas pašalinti puslapį gautas",
+			"body": [
+				"Nuo šiol puslapis paslėptas: jis nebėra rodomas, indeksuojamas ar įtraukiamas į sąrašus.",
+				"Prašymą patikrinsime ir atsakysime ne vėliau kaip per vieną mėnesį. Jį patvirtinus, puslapis ištrinamas; ištrintas puslapis per kitą registro importą nebegrįžta."
+			]
+		},
+		"removalConfirmed": {
+			"subject": "Puslapis ištrintas",
+			"title": "Puslapis ištrintas",
+			"body": [
+				"Puslapis, kurį prašėte pašalinti, iš Apercura ištrintas. Per kitą registro importą jis nebegrįš."
+			]
+		},
+		"removalRejected": {
+			"subject": "Jūsų prašymas pašalinti puslapį nepriimtas",
+			"title": "Jūsų prašymas pašalinti puslapį nepriimtas",
+			"body": [
+				"Jūsų prašymo pašalinti puslapį patvirtinti nepavyko, todėl puslapis vėl rodomas. Priežastis: {reason}",
+				"Jei atstovaujate įstaigai, taip pat galite perimti puslapį ir patys jį pašalinti savo paskyroje."
+			]
+		},
+		"teamInvitation": {
+			"subject": "{inviter} kviečia jus prisijungti prie {practice}",
+			"title": "Prisijunkite prie {practice} komandos",
+			"body": [
+				"Sveiki,",
+				"{inviter} kviečia jus prisijungti prie {practice} Apercura svetainėje, vaidmuo: {role}.",
+				"Norėdami prisijungti, prisijunkite arba susikurkite paskyrą šiuo el. pašto adresu, tada nustatykite antrąjį veiksnį (autentifikavimo programėlę arba prieigos raktą): jis apsaugo pacientų duomenis, kuriuos matysite."
+			],
+			"action": "Prisijungti prie komandos",
+			"notes": [
+				"Kvietimas galioja 48 valandas.",
+				"Kvietimo nesitikėjote? Nekreipkite dėmesio į šį laišką: be jūsų niekas nevyks."
+			]
+		},
+		"contactReceived": {
+			"subject": "Jūsų užklausa gauta",
+			"title": "Jūsų užklausa gauta",
+			"body": [
+				"Sveiki,",
+				"gavome jūsų užklausą dėl Apercura katalogo puslapio. Komandos narys su jumis susisieks, patikrins jūsų tapatybę ir padės perimti puslapį.",
+				"Jei šios užklausos nesiuntėte, nekreipkite dėmesio į šį laišką: nei puslapis, nei paskyra nebuvo pakeisti."
+			]
+		},
+		"adminClaims": {
+			"subject": "{count, plural, one {# perėmimas laukia peržiūros} few {# perėmimai laukia peržiūros} many {# perėmimo laukia peržiūros} other {# perėmimų laukia peržiūros}}",
+			"title": "{count, plural, one {Perėmimas laukia sprendimo} few {# perėmimai laukia sprendimo} many {# perėmimo laukia sprendimo} other {# perėmimų laukia sprendimo}}",
+			"body": [
+				"{count, plural, one {Nuo paskutinio pranešimo peržiūrai pateiktas # perėmimas} few {Nuo paskutinio pranešimo peržiūrai pateikti # perėmimai} many {Nuo paskutinio pranešimo peržiūrai pateikta # perėmimo} other {Nuo paskutinio pranešimo peržiūrai pateikta # perėmimų}}.",
+				"Išsami informacija – paskyros eilėje, už antrojo veiksnio."
+			],
+			"action": "Atverti perėmimus"
+		},
+		"adminContactRequests": {
+			"subject": "{count, plural, one {# užklausa „Tai mano įstaiga“} few {# užklausos „Tai mano įstaiga“} many {# užklausos „Tai mano įstaiga“} other {# užklausų „Tai mano įstaiga“}}",
+			"title": "{count, plural, one {Susisiekimo užklausa laukia atsakymo} few {# susisiekimo užklausos laukia atsakymo} many {# susisiekimo užklausos laukia atsakymo} other {# susisiekimo užklausų laukia atsakymo}}",
+			"body": [
+				"{count, plural, one {Nuo paskutinio pranešimo # įstaiga, negalinti perimti savo puslapio, prašo su ja susisiekti} few {Nuo paskutinio pranešimo # įstaigos, negalinčios perimti savo puslapio, prašo su jomis susisiekti} many {Nuo paskutinio pranešimo # įstaigos, negalinčios perimti savo puslapio, prašo su jomis susisiekti} other {Nuo paskutinio pranešimo # įstaigų, negalinčių perimti savo puslapio, prašo su jomis susisiekti}}.",
+				"Jų duomenis, užšifruotus, galima perskaityti paskyros eilėje."
+			],
+			"action": "Atverti užklausas"
+		}
+	},
+	"Profile": {
+		"presentationHeading": "Apie įstaigą",
+		"practicalHeading": "Praktinė informacija",
+		"fields": {
+			"languages": "Kalbos",
+			"accessibility": "Patekimas",
+			"website": "Svetainė",
+			"fees": "Kainos",
+			"paymentMethods": "Atsiskaitymo būdai"
+		},
+		"accessibility": {
+			"stepFree": "Patekimas be laiptų",
+			"lift": "Liftas",
+			"parking": "Automobilių stovėjimo aikštelė netoliese"
+		},
+		"languages": {
+			"fr": "prancūzų",
+			"en": "anglų",
+			"es": "ispanų",
+			"de": "vokiečių",
+			"it": "italų",
+			"pt": "portugalų",
+			"ar": "arabų",
+			"zh": "kinų",
+			"ru": "rusų",
+			"tr": "turkų",
+			"ro": "rumunų",
+			"pl": "lenkų",
+			"nl": "nyderlandų",
+			"vi": "vietnamiečių",
+			"fa": "persų",
+			"he": "hebrajų",
+			"uk": "ukrainiečių",
+			"lsf": "prancūzų gestų kalba"
+		},
+		"paymentMethods": {
+			"card": "Banko kortelė",
+			"cash": "Grynieji pinigai",
+			"cheque": "Čekis",
+			"transfer": "Banko pavedimas"
+		},
+		"fees": {
+			"range": "nuo {min} iki {max}",
+			"fromOwner": "Sutartį su ligonių kasa ir kainas nurodo pati įstaiga."
+		}
+	},
+	"Claim": {
+		"metadata": {
+			"start": "Puslapio perėmimas · Apercura",
+			"claim": "Jūsų perėmimo prašymas · Apercura",
+			"emailLink": "Perėmimo patvirtinimas · Apercura"
+		},
+		"pending": "Palaukite",
+		"errors": {
+			"generic": "Įvyko klaida. Netrukus bandykite dar kartą.",
+			"TOO_MANY": "Šiandien pateikta per daug prašymų. Bandykite rytoj.",
+			"ALREADY_OWNER": "Šis puslapis jau jūsų.",
+			"FROZEN": "Ši paskyra įšaldyta ir negali perimti puslapio.",
+			"NOT_FOUND": "Nė vienas puslapis neturi šio kodo.",
+			"INVALID_RPPS": "Šis kodas negalioja: įrašykite įstaigos kodą iš jos puslapio adreso pabaigos (pavyzdžiui, 9000-90000009), puslapio adreso pabaigą arba visą adresą.",
+			"NOT_OPEN": "Šis prašymas uždarytas: jo nebegalima keisti.",
+			"METHOD_UNAVAILABLE": "Šiam puslapiui toks patvirtinimo būdas negalimas.",
+			"TOO_MANY_ATTEMPTS": "Per daug bandymų šiuo būdu. Pasirinkite kitą.",
+			"NOT_SUBMITTABLE": "Prieš siųsdami prašymą peržiūrai, pridėkite dokumentą.",
+			"BAD_DOCUMENT": "Šio failo naudoti negalima: siųskite PDF, JPEG, PNG arba WebP failą, ne didesnį kaip 10 MB.",
+			"PSC_MISSING": "Pro Santé Connect negrąžino tapatybės duomenų. Bandykite dar kartą."
+		},
+		"start": {
+			"title": "Perimkite savo įstaigos puslapį",
+			"lead": "Perimamas vienos įstaigos veiklos vietos puslapis, niekada ne vardas.",
+			"recordHeading": "Puslapis, kurį perimate",
+			"unknownProfession": "Sveikatos priežiūros įstaiga",
+			"viewPage": "Žiūrėti viešą puslapį",
+			"contestTitle": "Šis puslapis jau turi patvirtintą valdytoją",
+			"contestBody": "Jei tai jūsų įstaiga (pavyzdžiui, praradote prieigą prie savo paskyros), vis tiek galite jį perimti: jūsų dokumentą išnagrinės ir sprendimą priims administratorius. Paskyra visada atkuriama tik iš naujo patvirtinus tapatybę.",
+			"confirm": "Tai mano įstaiga: pradėti perėmimą",
+			"goToPage": "Eiti į mano puslapį",
+			"findHeading": "Raskite savo įstaigos puslapį",
+			"notFound": "Nė vienas viešas puslapis kol kas neturi šio kodo.",
+			"rppsLabel": "Puslapio kodas arba adresas",
+			"rppsHint": "Įstaigos kodas jos puslapio adreso pabaigoje (pavyzdžiui, 9000-90000009) arba visas adresas, pavyzdžiui, apercura.org/lt/istaiga/uab-pavyzdine-klinika-9000-90000009.",
+			"find": "Rasti mano puslapį",
+			"searchHint": "Puslapį taip pat galite rasti pagal pavadinimą:",
+			"searchLink": "ieškoti kataloge",
+			"howHeading": "Kaip tikriname, kad tai jūs",
+			"factorNote": "Jūsų paskyra jau turi antrąjį veiksnį: jis privalomas prieš kiekvieną perėmimą ir nuo tada saugo jūsų puslapį.",
+			"contactLink": "Neturite reikiamo dokumento? Parašykite mums",
+			"optOutLink": "Šio puslapio pavadinime minimas jūsų vardas ir nenorite būti skelbiami viešai? Pradėkite čia",
+			"identifierLabel": "Įstaigos kodas"
+		},
+		"methods": {
+			"psc": {
+				"title": "Pro Santé Connect",
+				"short": "Pro Santé Connect",
+				"summary": "Su e-CPS programėle arba CPS kortele. Patvirtinama iš karto, o registraciją internetu galima įjungti nedelsiant.",
+				"lead": "Prisijunkite su e-CPS programėle arba CPS kortele. Puslapis patvirtinamas, kai tik tapatybė atitinka jo RPPS numerį.",
+				"action": "Tęsti su Pro Santé Connect",
+				"hint": "Iš Apercura pateksite į Pro Santé Connect puslapį, paskui grįšite čia.",
+				"done": "Pro Santé Connect patvirtino jūsų tapatybę."
+			},
+			"registry_email": {
+				"title": "Įstaigos el. paštas",
+				"short": "El. paštas iš registro",
+				"summary": "Nuoroda, išsiunčiama el. pašto adresu, kurį registras nurodo jūsų įstaigai. Patvirtinama, kai tik ją atveriate; registracija internetu įjungiama po 7 dienų.",
+				"lead": "Nuorodą išsiųsime adresu {email}, kuris registre nurodytas jūsų įstaigai. Atverkite ją ir patvirtinkite.",
+				"action": "Siųsti nuorodą",
+				"resend": "Siųsti dar kartą",
+				"sent": "Nuoroda išsiųsta. Ji galioja 24 valandas.",
+				"done": "Įstaigos pašto dėžutė patvirtino prašymą."
+			},
+			"document": {
+				"title": "Dokumentas ir skambutis",
+				"short": "Dokumentas",
+				"summary": "Dokumentas, įrodantis, kad atstovaujate įstaigai: VASPVT išduotos licencijos kopija arba Juridinių asmenų registro išrašas su įgaliojimu įstaigos blanke. Mūsų komandos narys paprastai jį patikrina per 48 valandas.",
+				"lead": "Atsiųskite dokumentą, įrodantį, kad atstovaujate įstaigai: VASPVT išduotos licencijos kopiją arba Juridinių asmenų registro išrašą su įgaliojimu įstaigos blanke. Prieš išsaugant jis užšifruojamas ir ištrinamas praėjus 30 dienų po sprendimo."
+			},
+			"phone_callback": {
+				"title": "Patvirtinamasis skambutis",
+				"short": "Skambutis",
+				"lead": "Nagrinėdamas prašymą, mūsų komandos narys paskambins į įstaigą registre nurodytu numeriu {phone} (niekada ne jūsų nurodytu numeriu). Atsiliepęs asmuo perskaitys čia rodomą kodą.",
+				"action": "Rodyti mano kodą",
+				"newCode": "Rodyti naują kodą",
+				"hint": "Pasirodykite jį būdami įstaigoje arba perduokite tam, kas atsiliepia telefonu. Paprašius naujo kodo, ankstesnis panaikinamas.",
+				"codeLabel": "Kodas, kurį reikia perskaityti",
+				"codeHint": "Palikite jį ekrane arba užsirašykite: saugumo sumetimais rodome jį tik dabar.",
+				"done": "Patvirtinamasis skambutis patvirtino prašymą."
+			}
+		},
+		"check": {
+			"passed": "Atlikta",
+			"failed": "Nepavyko",
+			"pending": "Vykdoma",
+			"notStarted": "Nepradėta",
+			"claim": {
+				"open": "Vykdoma",
+				"in_review": "Nagrinėjama",
+				"verified": "Patvirtinta",
+				"rejected": "Atmesta",
+				"withdrawn": "Atsiimta",
+				"superseded": "Atsiimta po ginčo"
+			}
+		},
+		"workspace": {
+			"title": "Puslapio „{name}“ perėmimas",
+			"lead": {
+				"open": "Vienu iš toliau nurodytų būdų įrodykite, kad atstovaujate šiai įstaigai.",
+				"in_review": "Jūsų prašymas nagrinėjamas.",
+				"verified": "Kitas žingsnis: papildykite puslapį.",
+				"rejected": "Šis prašymas nepriimtas.",
+				"withdrawn": "Šis prašymas atsiimtas.",
+				"superseded": "Šis prašymas atsiimtas po ginčo."
+			}
+		},
+		"psc": {
+			"outcome": {
+				"verified": "Pro Santé Connect patvirtino jūsų tapatybę: jūsų puslapis patvirtintas.",
+				"passed": "Pro Santé Connect patvirtino jūsų tapatybę. Dabar prašymą nagrinės administratorius.",
+				"mismatch": "Pro Santé Connect tapatybė neatitinka šio puslapio RPPS numerio.",
+				"error": "Nepavyko pasiekti Pro Santé Connect arba prisijungimas atšauktas. Bandykite dar kartą.",
+				"linkedElsewhere": "Ši Pro Santé Connect tapatybė jau susieta su kita Apercura paskyra. Norėdami ja naudotis, prisijunkite su Pro Santé Connect."
+			}
+		},
+		"documents": {
+			"kind": {
+				"cps_card": "Juridinių asmenų registro išrašas su įgaliojimu įstaigos blanke",
+				"ordre_attestation": "VASPVT išduotos licencijos kopija"
+			},
+			"kindLabel": "Dokumento rūšis",
+			"add": "Pasirinkti failą",
+			"hint": "PDF, JPEG, PNG arba WebP, ne didesnis kaip 10 MB. Iki 4 failų.",
+			"kilobytes": "KB"
+		},
+		"review": {
+			"title": "Siųsti peržiūrai",
+			"lead": "Administratorius patikrins jūsų dokumentą ir paskambins į įstaigą. Atsakymą gausite el. paštu per 48 valandas darbo dienomis.",
+			"submit": "Siųsti peržiūrai",
+			"notYet": "Pirmiausia pridėkite dokumentą."
+		},
+		"withdraw": "Atsiimti šį prašymą",
+		"status": {
+			"verified": "Jūsų puslapis patvirtintas",
+			"bookingDelay": "Be Pro Santé Connect 7 dienų laukimo laikotarpis iki registracijos internetu baigiasi {date}.",
+			"continue": "Papildyti puslapį",
+			"in_review": "Jūsų prašymas nagrinėjamas",
+			"contestReview": "Šis puslapis jau turėjo patvirtintą valdytoją: dėl jūsų dokumento spręs administratorius.",
+			"reviewBody": "Mūsų komandos narys išnagrinės jūsų dokumentą ir parašys jums el. laišką.",
+			"rejected": "Šis prašymas nepriimtas",
+			"reason": "Priežastis: {reason}",
+			"withdrawn": "Šis prašymas atsiimtas",
+			"superseded": "Šis prašymas atsiimtas po ginčo",
+			"contestTitle": "Šis puslapis jau turi patvirtintą valdytoją",
+			"contestBody": "Dėl jūsų dokumento spręs administratorius.",
+			"verifiedBadge": "Patvirtintas puslapis"
+		},
+		"emailLink": {
+			"title": "Patvirtinkite perėmimą",
+			"lead": "Ši nuoroda išsiųsta el. pašto adresu, kurį registras nurodo įstaigai.",
+			"reading": "Nuoroda skaitoma…",
+			"invalidTitle": "Ši nuoroda nebeveikia",
+			"invalidBody": "Jos galiojimas baigėsi (ji galioja 24 valandas) arba ji jau panaudota. Įstaiga gali išsiųsti naują iš savo prašymo.",
+			"tooMany": "Per daug bandymų. Palaukite valandą ir bandykite dar kartą.",
+			"doneTitle": "Perėmimas patvirtintas",
+			"doneBody": "Dabar įstaiga gali prisijungti ir papildyti puslapį.",
+			"goToSpace": "Eiti į įstaigos paskyrą",
+			"body": "Jei šios įstaigos atstovas paprašė leisti tvarkyti jos Apercura puslapį, patvirtinkite. Kitu atveju uždarykite šį puslapį: niekas nepasikeis.",
+			"confirm": "Patvirtinti perėmimą",
+			"pending": "Palaukite"
+		},
+		"withdrawDialog": {
+			"title": "Atsiimti šį prašymą?",
+			"body": "Prašymas uždaromas galutinai: jo įrodymai nebeskaičiuojami, o dokumentai ištrinami po 30 dienų. Vėliau galite pateikti naują prašymą ir vėl pradėti nuo patvirtinimo.",
+			"confirm": "Atsiimti prašymą",
+			"cancel": "Palikti prašymą"
+		},
+		"identifiers": {
+			"RPPS": "RPPS",
+			"AT-WIEN": "Vienos sąrašas",
+			"AT-STMK": "Štirijos sąrašas",
+			"AT-SBG": "Zalcburgo sąrašas",
+			"AT-SBGZ": "Zalcburgo odontologų sąrašas",
+			"GB-ODS-GP": "ODS kodas",
+			"GB-ODS-DENT": "ODS kodas",
+			"GB-ODS-PHARM": "ODS kodas",
+			"GB-PHS-GP": "Public Health Scotland kodas",
+			"GB-PHS-DENT": "Public Health Scotland kodas",
+			"GB-PHS-PHARM": "Public Health Scotland kodas",
+			"GB-BSO-GP": "BSO praktikos numeris",
+			"GB-BSO-DENT": "BSO odontologijos kabinetas",
+			"CZ-NRPZS": "NRPZS įstaigos numeris"
+		}
+	},
+	"Onboarding": {
+		"metaTitle": "Puslapio nustatymas · Apercura",
+		"title": "Nustatykite puslapį",
+		"lead": "Trys žingsniai iki užbaigto puslapio „{name}“.",
+		"stepsLabel": "Žingsniai",
+		"stepNumber": "{n} žingsnis iš {total}:",
+		"continue": "Tęsti",
+		"pending": "Palaukite",
+		"publishFailed": "Puslapio paskelbti nepavyko. Netrukus bandykite dar kartą.",
+		"fields": {
+			"name": "Pavadinimas",
+			"profession": "Įstaigos rūšis"
+		},
+		"steps": {
+			"check": {
+				"label": "Patikrinkite importuotą informaciją",
+				"title": "Patikrinkite importuotą informaciją",
+				"lead": "Jūsų puslapis sukurtas pagal VASPVT sveikatos priežiūros įstaigų licencijų duomenis. Patikrinkite įstaigos pavadinimą, rūšį ir veiklos adresą.",
+				"sites": "Veiklos vietos",
+				"unnamed": "Vieta be pavadinimo",
+				"hidden": "Paslėpta",
+				"registryNote": "Kažkas neteisinga? Ilgalaikį pataisymą atlieka VASPVT, kuri tvarko licencijų duomenis; puslapis pasikeis po kito savaitinio importo. Puslapio redaktoriuje veiklos vietą galite paslėpti arba pridėti naują."
+			},
+			"booking": {
+				"label": "Darbo laikas ir registracija",
+				"title": "Darbo laikas ir registracija",
+				"lead": "Pacientai registruojasi jūsų puslapyje, kai atveriate kalendorių. Prieš jį atveriant, puslapyje turi būti nurodytos kainos ir priimami atsiskaitymo būdai.",
+				"fees": "Kainos",
+				"payments": "Atsiskaitymo būdai",
+				"done": "Nurodyta",
+				"todo": "Reikia papildyti",
+				"deontology": "Sveikatos priežiūros įstaiga, pristatanti savo veiklą internete, nurodo paslaugų kainas ir priimamus atsiskaitymo būdus.",
+				"editFees": "Papildyti kainas ir atsiskaitymo būdus",
+				"settingsNote": "Veiklos vietas, darbo laiką ir vizitų rūšis nustatysite registracijos nustatymuose.",
+				"waitingPeriod": "Laukimo laikotarpis po patvirtinimo",
+				"waitingEnds": "7 dienų laukimo laikotarpis baigiasi {date}",
+				"noWaiting": "Nėra",
+				"settingsLink": "Nustatyti darbo laiką ir registraciją"
+			},
+			"publish": {
+				"label": "Paskelbti",
+				"title": "Paskelbkite puslapį",
+				"lead": "Paskelbus, jūsų prisistatymas, kalbos, kainos ir praktinė informacija rodomi viešame puslapyje. Bet kada galite juos pakeisti arba paslėpti.",
+				"already": "Jūsų puslapis paskelbtas. Kiekvienas išsaugotas pakeitimas iš karto matomas internete.",
+				"edit": "Redaguoti mano puslapį",
+				"action": "Paskelbti mano puslapį",
+				"shareLead": "Praneškite apie savo puslapį: paruošta nuoroda, QR kodas ir plakatas laukiamajam.",
+				"shareLink": "Atverti dalijimosi rinkinį",
+				"statsLink": "Žiūrėti puslapio statistiką"
+			}
+		}
+	},
+	"Editor": {
+		"metaTitle": "Jūsų puslapis · Apercura",
+		"title": "Jūsų puslapis",
+		"lead": "Papildykite viešą puslapį „{name}“. Tik paprastas tekstas; tai, ką paslepiate, niekada nerodoma.",
+		"empty": {
+			"title": "Redaguojamo puslapio dar nėra",
+			"body": "Jūsų puslapis čia atsiras, kai perėmimo prašymas bus patvirtintas.",
+			"action": "Perimti mano puslapį"
+		},
+		"pending": "Palaukite",
+		"viewPublic": "Žiūrėti viešą puslapį",
+		"jumpToPreview": "Eiti į peržiūrą",
+		"formLabel": "Puslapio turinys",
+		"removed": {
+			"title": "Jūsų puslapis pašalintas iš katalogo",
+			"body": "Niekas jo nemato, o jo turinys ištrintas. Puslapį galite atkurti šio puslapio apačioje: jis sugrįš po kito savaitinio registro atnaujinimo."
+		},
+		"unpublished": {
+			"title": "Jūsų turinys dar nepaskelbtas",
+			"link": "Užbaikite puslapio nustatymą"
+		},
+		"photo": {
+			"title": "Nuotrauka",
+			"lead": "Neprivaloma. Nauja įstaigos ar jos pastato nuotrauka.",
+			"current": "Dabartinė nuotrauka",
+			"none": "Nuotraukos nėra.",
+			"add": "Pridėti nuotrauką",
+			"replace": "Pakeisti nuotrauką",
+			"remove": "Pašalinti nuotrauką",
+			"hint": "JPEG, PNG arba WebP, ne didesnė kaip 5 MB. Nuotrauką apkarpome į kvadratą ir pašaliname jos metaduomenis (vietą, įrenginį)."
+		},
+		"visibility": {
+			"label": "Rodyti puslapyje: {field}",
+			"shown": "Rodoma"
+		},
+		"presentation": {
+			"title": "Prisistatymas",
+			"lead": "Tik faktinė informacija: jokių pacientų vardų, atvaizdų ar atsiliepimų ir jokių rekomendacijų (Reklamos įstatymo 15 straipsnis).",
+			"headline": "Paantraštė",
+			"headlineHint": "Viena eilutė po įstaigos rūšimi, ne daugiau kaip {max} simbolių.",
+			"bio": "Prisistatymas",
+			"bioHint": "Paprastas tekstas, ne daugiau kaip {max} simbolių. Pastraipas atskirkite tuščia eilute."
+		},
+		"languages": {
+			"title": "Kalbos"
+		},
+		"fees": {
+			"title": "Kainos ir sveikatos draudimas",
+			"lead": "Privaloma prieš įjungiant registraciją internetu: jūsų kainos ir priimami atsiskaitymo būdai.",
+			"requiredBadge": "Privaloma registracijai",
+			"ameliPrefill": "Iš anksto užpildyta pagal draudimo įstaigos katalogą. Jūsų nurodyti duomenys puslapyje jį pakeičia.",
+			"sector": "Sutartis su ligonių kasa",
+			"agreement": "Sutartis su ligonių kasa",
+			"notStated": "Nenurodyta",
+			"optam": "Riboti priemokos dydžiai (OPTAM)",
+			"optamNone": "Nedalyvauja",
+			"carteVitale": "Draudimo kortelė",
+			"carteVitaleYes": "Priimama",
+			"carteVitaleNo": "Nepriimama",
+			"itemsTitle": "Kainos",
+			"noItem": "Kainų dar nėra.",
+			"itemLabel": "{n} kaina: už ką",
+			"itemPlaceholder": "Konsultacija",
+			"amount": "Suma (€)",
+			"maxAmount": "Iki (€)",
+			"removeItem": "Pašalinti {n} kainą",
+			"remove": "Pašalinti",
+			"addItem": "Pridėti kainą",
+			"note": "Pastaba dėl kainų",
+			"noteHint": "Pavyzdžiui, nuo ko priklauso papildomos išlaidos.",
+			"payments": "Priimami atsiskaitymo būdai",
+			"requiredHint": "Registracija lieka išjungta, kol nenurodyta bent viena kaina ir vienas atsiskaitymo būdas."
+		},
+		"access": {
+			"title": "Patekimas",
+			"notes": "Kaip patekti",
+			"notesHint": "Aukštas, įėjimas, viešasis transportas."
+		},
+		"contact": {
+			"title": "Svetainė ir telefonas",
+			"website": "Svetainė",
+			"websiteHint": "Jūsų įstaigos svetainė, prasidedanti https://",
+			"showPhone": "Rodyti įstaigos telefono numerį",
+			"showPhoneHint": "Jį paslėpus, puslapyje nebesiūloma skambinti į įstaigą."
+		},
+		"failure": {
+			"generic": "Įvyko klaida. Netrukus bandykite dar kartą.",
+			"invalid": "Kai kuriuos laukus reikia pataisyti: žr. pranešimus po jais.",
+			"lastSite": "Bent viena veiklos vieta turi likti rodoma: puslapio be veiklos vietos paskelbti negalima.",
+			"unknownPlace": "Tokio pašto kodo ir vietovės nežinome. Patikrinkite juos.",
+			"badPhone": "Šis telefono numeris negalioja.",
+			"photoTooLarge": "Ši nuotrauka didesnė nei 5 MB.",
+			"photoUnsupported": "Šio failo negalima naudoti kaip nuotraukos: siųskite JPEG, PNG arba WebP."
+		},
+		"saved": "Išsaugota. Jūsų viešas puslapis atnaujintas.",
+		"savedDraft": "Išsaugota. Paskelbkite puslapį, kad jis būtų rodomas.",
+		"save": "Išsaugoti puslapį",
+		"lastSaved": "Paskutinį kartą išsaugota {date}",
+		"sites": {
+			"title": "Veiklos vietos",
+			"lead": "Pasirinkite, kurias veiklos vietas rodys jūsų puslapis. Registro vietas galima paslėpti, bet ne redaguoti.",
+			"unnamed": "Vieta be pavadinimo",
+			"added": "Pridėjote jūs",
+			"shownNamed": "Rodyti puslapyje: {name}",
+			"remove": "Pašalinti",
+			"registryNote": "Registro vieta neteisinga? Licencijos duomenis pataiso VASPVT; puslapis pasikeis po vieno iš kitų importų.",
+			"addTitle": "Pridėti veiklos vietą",
+			"name": "Vietos pavadinimas",
+			"address": "Gatvė ir namo numeris",
+			"postcode": "Pašto kodas",
+			"city": "Gyvenamoji vietovė",
+			"phone": "Telefonas (neprivaloma)",
+			"phoneHint": "Įstaigos telefono numeris, rodomas puslapyje.",
+			"add": "Pridėti vietą"
+		},
+		"remove": {
+			"title": "Pašalinti puslapį",
+			"lead": "Jūsų puslapis dingsta iš katalogo, paieškos ir paieškos sistemų ir po kito importo nebegrįžta. Jo veiklos vietos, prisistatymas, nuotrauka, kainos ir statistika iš karto ištrinami; jūsų paskyra ir kalendorius lieka. Puslapį galite atkurti čia: registro puslapis sugrįš po kito savaitinio atnaujinimo, ir jūs jį vėl papildysite.",
+			"action": "Pašalinti mano puslapį iš katalogo",
+			"restore": "Atkurti mano puslapį",
+			"dialog": {
+				"title": "Pašalinti jūsų puslapį iš katalogo?",
+				"intro": "Jūsų puslapis iš karto dingsta iš katalogo, paieškos ir paieškos sistemų. Šis turinys ištrinamas visam laikui:",
+				"items": {
+					"places": "jūsų veiklos vietos",
+					"presentation": "jūsų prisistatymas (paantraštė, aprašymas, kalbos, sritys)",
+					"photo": "jūsų nuotrauka",
+					"fees": "jūsų kainos ir atsiskaitymo būdai",
+					"statistics": "puslapio statistika"
+				},
+				"restore": "Jūsų paskyra ir kalendorius lieka. Jei puslapį atkursite, jis sugrįš iš registro po kito savaitinio importo, ir jūs jį vėl užpildysite.",
+				"understood": "Suprantu, kad šis turinys ištrinamas",
+				"confirm": "Pašalinti mano puslapį",
+				"cancel": "Atšaukti"
+			},
+			"busy": "Katalogas šiuo metu atnaujinamas savaitiniu importu: jūsų puslapis nepakeistas. Bandykite dar kartą po kelių minučių."
+		},
+		"preview": {
+			"title": "Peržiūra",
+			"note": "Dar neišsaugota",
+			"noSite": "Nerodoma nė viena veiklos vieta.",
+			"unnamedPlace": "Veiklos vieta"
+		},
+		"issues": {
+			"tooLong": "Šis tekstas per ilgas.",
+			"markup": "Tik paprastas tekstas: jokio HTML ir jokių nuorodų skliaustuose.",
+			"required": "Šis laukas privalomas.",
+			"range": "Didesnioji suma turi būti didesnė už sumą.",
+			"website": "Šis adresas nėra svetainės adresas (https://…).",
+			"postcode": "Lietuvos pašto kodas – LT ir 5 skaitmenys (LT-01100).",
+			"invalid": "Ši reikšmė negalioja."
+		}
+	},
+	"Admin": {
+		"claims": {
+			"queueHeading": "{count, plural, one {# laukiantis prašymas} few {# laukiantys prašymai} many {# laukiančio prašymo} other {# laukiančių prašymų}}"
+		}
+	},
+	"Gdpr": {
+		"about": "Dėl puslapio",
+		"rpps": "Puslapio kodas",
+		"rppsHint": "Įstaigos kodas jos puslapio adreso pabaigoje (pavyzdžiui, lt:9000-90000009) arba visas puslapio adresas.",
+		"pending": "Palaukite",
+		"errors": {
+			"tooMany": "Iš šio ryšio gauta per daug užklausų. Bandykite dar kartą po valandos.",
+			"notFound": "Nė vienas puslapis neturi šio kodo.",
+			"claimed": "Šį puslapį tvarko pati įstaiga: pašalinti jį gali tik ji, savo paskyroje.",
+			"invalid": "Patikrinkite formą: trūksta lauko arba jis per ilgas.",
+			"generic": "Įvyko klaida. Netrukus bandykite dar kartą."
+		},
+		"report": {
+			"metaTitle": "Pranešti apie klaidą · Apercura",
+			"title": "Pranešti apie klaidą",
+			"lead": "Parašykite, kas šiame puslapyje neteisinga. Jūsų pranešimas šifruojamas, jį skaito tik Apercura komanda.",
+			"doneTitle": "Ačiū, jūsų pranešimą gavome",
+			"doneBody": "Jį patikrinsime. Registro duomenis šaltinyje taiso VASPVT, tvarkanti licencijų duomenis; jei palikote adresą, jums pranešime.",
+			"kind": "Kas neteisinga?",
+			"kinds": {
+				"wrong_info": "Neteisinga informacija (adresas, telefonas, pavadinimas)",
+				"retired": "Įstaiga šiuo adresu nebeveikia",
+				"deceased": "Įstaigos savininkas mirė",
+				"impersonation": "Kažkas naudojasi šiuo puslapiu įstaigos vardu"
+			},
+			"message": "Išsamiau",
+			"messageHint": "Kas neteisinga ir, jei žinote, kaip yra iš tikrųjų.",
+			"contact": "Jūsų el. paštas (neprivaloma)",
+			"contactHint": "Tik tam, kad galėtume jums atsakyti.",
+			"privacy": "Nenurodykite jokios informacijos apie sveikatą.",
+			"submit": "Siųsti pranešimą"
+		},
+		"removal": {
+			"metaTitle": "Prašymas pašalinti puslapį · Apercura",
+			"title": "Prašyti pašalinti šį puslapį",
+			"lead": "Pagal BDAR 21 straipsnį galite nesutikti, kad puslapis būtų skelbiamas, pavyzdžiui, jei įstaigos pavadinime minimas jūsų vardas ir pavardė. Puslapis paslepiamas vos gavus prašymą, o po trumpo patikrinimo ištrinamas.",
+			"doneTitle": "Puslapis paslėptas",
+			"doneBody": "Jis nebėra rodomas, indeksuojamas ar įtraukiamas į sąrašus. Prašymą patikrinsime ir atsakysime el. paštu ne vėliau kaip per vieną mėnesį. Jį patvirtinus, puslapis ištrinamas visam laikui ir po registro atnaujinimų nebegrįžta.",
+			"contact": "Jūsų el. paštas",
+			"contactHint": "Kad galėtume su jumis patvirtinti prašymą. Jis šifruojamas ir niekam kitam nenaudojamas.",
+			"message": "Žinutė (neprivaloma)",
+			"messageHint": "Bet kas, kas padėtų patikrinti prašymą.",
+			"confirm": "Esu šioje įstaigoje minimas asmuo arba jai atstovauju",
+			"privacy": "Ištrintas puslapis per kitą VASPVT duomenų importą nebegrįžta.",
+			"submit": "Paslėpti ir pašalinti puslapį",
+			"claimedTitle": "Šį puslapį tvarko pati įstaiga",
+			"claimedBody": "Pašalinti jį gali tik jo valdytojas, puslapio redaktoriuje savo paskyroje: tada puslapis iš karto dingsta ir po registro atnaujinimų nebegrįžta.",
+			"claimedLink": "Pašalinti savo puslapį įstaigos paskyroje",
+			"alreadyTitle": "Prašymas pašalinti puslapį tikrinamas",
+			"alreadyBody": "Puslapis jau paslėptas."
+		},
+		"contact": {
+			"metaTitle": "Tai mano įstaiga · Apercura",
+			"title": "Tai mano įstaiga",
+			"lead": "Negalite perimti savo įstaigos puslapio su dokumentu? Palikite kontaktus: Apercura komandos narys su jumis susisieks, patikrins, kad atstovaujate įstaigai, ir padės.",
+			"patientsTitle": "Ši forma skirta tik šiai įstaigai atstovaujančiam asmeniui",
+			"patientsBody": "Ji neskirta registruotis vizitui ar susisiekti su įstaiga: tam naudokite puslapyje nurodytus kontaktus.",
+			"claimFirst": "Turint dokumentą, įrodantį, kad atstovaujate įstaigai, perimti puslapį greičiau:",
+			"claimFirstLink": "perimti šį puslapį",
+			"rpps": "Puslapio kodas",
+			"rppsHint": "Puslapio, iš kurio atėjote, kodas. Jo pakeisti negalima.",
+			"name": "Jūsų vardas ir pavardė",
+			"email": "Jūsų darbo el. paštas",
+			"emailHint": "Kad galėtume jums atsakyti. Taip pat išsiųsime patvirtinimą, kad užklausą gavome.",
+			"phone": "Jūsų telefono numeris (neprivaloma)",
+			"phoneHint": "Jei norite, kad jums paskambintume.",
+			"message": "Jūsų žinutė",
+			"messageHint": "Parašykite, kodėl perimti internetu jums nepavyksta.",
+			"privacy": "Jūsų duomenys ir žinutė šifruojami, juos skaito tik Apercura komanda, kad galėtų jums atsakyti, ir jie ištrinami praėjus 12 mėnesių po paskutinio susirašinėjimo. Nenurodykite jokios informacijos apie sveikatą.",
+			"submit": "Siųsti užklausą",
+			"doneTitle": "Jūsų užklausa gauta",
+			"doneBody": [
+				"Apercura komandos narys su jumis susisieks el. paštu arba telefonu, patikrins, kad atstovaujate įstaigai, ir padės perimti puslapį.",
+				"Ką tik jūsų nurodytu adresu išsiuntėme patvirtinimą, kad užklausą gavome."
+			],
+			"claimedTitle": "Šį puslapį jau tvarko pati įstaiga",
+			"claimedBody": "Jo valdytojas patikrintas. Jei tai jūsų įstaigos puslapis ir nebeturite prie jo prieigos, pateikite perėmimo prašymą: komanda jį išnagrinės.",
+			"claimedLink": "Perimti šį puslapį",
+			"withheldTitle": "Šis puslapis paslėptas",
+			"withheldBody": "Tikrinamas prašymas jį pašalinti.",
+			"errors": {
+				"proof": "Apsaugos nuo robotų patikra nebaigta. Netrukus bandykite dar kartą.",
+				"claimed": "Šį puslapį jau tvarko pati įstaiga: pateikite perėmimo prašymą."
+			}
+		}
+	},
+	"Agenda": {
+		"settings": {
+			"types": {
+				"areaAdded": "{count, plural, =0 {Naujų vietovių nepridėta.} one {Pridėta # vietovė.} few {Pridėtos # vietovės.} many {Pridėta # vietovės.} other {Pridėta # vietovių.}}"
+			}
+		},
+		"log": {
+			"records": "{count, plural, one {# įrašas} few {# įrašai} many {# įrašo} other {# įrašų}}"
+		}
+	},
+	"Stats": {
+		"chartSummary": "{total, plural, one {# peržiūra} few {# peržiūros} many {# peržiūros} other {# peržiūrų}} per 30 dienų; daugiausia – {max}, {day}."
+	},
+	"LegalNoticeLt": {
+		"metaTitle": "Teisinė informacija · Apercura",
+		"metaDescription": "Apercura Lietuvos puslapių teisinė informacija: paslaugos teikėjas, jo kontaktai ir registracijos duomenys, už turinį atsakingas asmuo (Informacinės visuomenės paslaugų įstatymo 6 straipsnis).",
+		"title": "Teisinė informacija",
+		"lead": "Kas teikia Apercura Lietuvos puslapių (apercura.org/lt) paslaugą – informacija, kurią informacinės visuomenės paslaugų teikėjas privalo pateikti pagal Lietuvos Respublikos informacinės visuomenės paslaugų įstatymo (Nr. X-614) 6 straipsnį.",
+		"sections": {
+			"provider": {
+				"heading": "Paslaugos teikėjas",
+				"body": [
+					"Apercura Lietuvos puslapius valdo toliau nurodytas subjektas. Jis tvarko katalogą ir atsako už jo turinį."
+				]
+			},
+			"service": {
+				"heading": "Paslauga",
+				"body": [
+					"Nemokamas licencijuotų Lietuvos sveikatos priežiūros įstaigų katalogas (ligoninės, pirminės sveikatos priežiūros centrai, medicinos centrai ir klinikos, odontologijos klinikos, psichikos sveikatos centrai, reabilitacijos ir slaugos įstaigos, laboratorijos ir optometrijos kabinetai), sudarytas pagal licencijų duomenis, kuriuos Valstybinė akreditavimo sveikatos priežiūros veiklai tarnyba prie Sveikatos apsaugos ministerijos (VASPVT) skelbia kaip atviruosius duomenis, be reklamos, su galimybe įstaigai papildyti savo puslapį. Atskiri sveikatos priežiūros specialistai ir vaistinės neskelbiami, o per Apercura Lietuvoje registruotis vizitams negalima."
+				]
+			},
+			"editor": {
+				"heading": "Už turinį atsakingas asmuo",
+				"body": [
+					"Toliau nurodytas asmuo atsako už tai, ką skelbia paslaugos teikėjas. Už informaciją, kurią įstaiga pati prideda savo puslapyje, atsako ji pati; kaip paslaugos gavėjų pateiktą informaciją saugančios paslaugos teikėjas už ją atsako tik Informacinės visuomenės paslaugų įstatyme nustatytomis sąlygomis."
+				]
+			},
+			"liability": {
+				"heading": "Puslapių turinys",
+				"body": [
+					"Katalogas sudarytas pagal duomenų rinkinį „Sveikatos priežiūros įstaigų licencijų duomenys“, kurį VASPVT skelbia portale data.gov.lt pagal CC BY 4.0 licenciją, ir pagal Lietuvos Respublikos adresų registrą (VĮ Registrų centras, CC BY 4.0). Duomenys gali būti neišsamūs ar pasenę: prieš vykdami pasitikrinkite informaciją įstaigoje. Kiekviename puslapyje nurodyta, kaip pranešti apie klaidą."
+				]
+			},
+			"ip": {
+				"heading": "Kodas ir duomenys",
+				"body": [
+					"Apercura pirminis kodas skelbiamas pagal AGPL-3.0 licenciją. Katalogo duomenys pakartotinai naudojami pagal Creative Commons Priskyrimas 4.0 tarptautinę licenciją (CC BY 4.0): duomenų puslapyje nurodytas kiekvienas šaltinis ir reikalaujamas jo nurodymas."
+				]
+			},
+			"review": {
+				"heading": "Šio teksto statusas",
+				"body": [
+					"Šis tekstas yra projektas, parengtas prieš įsteigiant juridinį asmenį. Prieš paskelbiant apie Lietuvos puslapius, jį peržiūrės Lietuvoje praktikuojantis teisininkas."
+				]
+			}
+		},
+		"fields": {
+			"name": "Pavadinimas",
+			"legalForm": "Teisinė forma",
+			"address": "Buveinė",
+			"phone": "Telefonas",
+			"email": "El. pašto adresas",
+			"registration": "Registras ir kodas",
+			"vatId": "PVM mokėtojo kodas",
+			"editor": "Atsakingas už turinį"
+		},
+		"dataLink": "Duomenys ir šaltiniai"
+	},
+	"PrivacyLt": {
+		"metaTitle": "Privatumo politika · Apercura",
+		"metaDescription": "Kokius duomenis tvarko Apercura Lietuvos puslapiai: šaltiniai, tikslai, teisiniai pagrindai, saugojimo terminai, gavėjai ir jūsų teisės, įskaitant teisę nesutikti (BDAR 13, 14 ir 21 straipsniai).",
+		"title": "Privatumo politika",
+		"lead": "Kokius duomenis tvarko Apercura Lietuvos puslapiai, iš kur jie gaunami, kokiu tikslu, kiek laiko ir kas juos tvarko, ir kaip įgyvendinti savo teises pagal Bendrąjį duomenų apsaugos reglamentą (BDAR) ir Lietuvos Respublikos asmens duomenų teisinės apsaugos įstatymą.",
+		"sections": {
+			"controller": {
+				"heading": "Duomenų valdytojas",
+				"body": [
+					"Teisinėje informacijoje nurodytas paslaugos teikėjas yra katalogo, įstaigų paskyrų, perėmimo prašymų ir per svetainę siunčiamų užklausų duomenų valdytojas."
+				]
+			},
+			"directory": {
+				"heading": "Katalogas: duomenys apie sveikatos priežiūros įstaigas",
+				"body": [
+					"Duomenys: įstaigos pavadinimas, kaip jis įregistruotas (teisinė forma sutrumpinta), įstaigos rūšis, paslaugos, kurias ji licencijuota teikti nurodytu adresu, ir pats veiklos adresas – taip, kaip juos licencijų duomenyse skelbia Valstybinė akreditavimo sveikatos priežiūros veiklai tarnyba (VASPVT). Adresas pagal Adresų registrą priskiriamas gyvenamajai vietovei ir savivaldybei; puslapis žemėlapyje susiejamas su gyvenamosios vietovės tašku, ne su pastatu. Puslapį perėmusi įstaiga gali pridėti prisistatymą, kalbas, nuotrauką ir darbo laiką.",
+					"Niekada nesaugoma, nors licencijų duomenyse skelbiama: juridinio asmens kodas, buveinės adresas, licencijų numeriai, datos ir įsakymai. Individualios įmonės veiklos adreso patalpos (buto) numeris nenurodomas.",
+					"Identifikatorius: VASPVT suteiktas įstaigos numeris ir Adresų registro veiklos adreso kodas, nurodyti puslapio adreso pabaigoje.",
+					"Tikslas: sudaryti galimybę visuomenei rasti licencijuotą sveikatos priežiūros įstaigą, sužinoti, kur ji yra ir kokias paslaugas ji licencijuota teikti. Teisinis pagrindas: teisėtas interesas (BDAR 6 straipsnio 1 dalies f punktas), įvertintas toliau.",
+					"Saugojimo terminas: kol veiklos adresas licencijuotas VASPVT duomenyse. Puslapis išnyksta, kai adresas nebėra licencijuotas; po prieštaravimo pašalintas puslapis daugiau niekada neskelbiamas.",
+					"Informavimas: duomenys gaunami ne iš pačių įstaigų ar jų pavadinimuose minimų asmenų (BDAR 14 straipsnis). Rašyti kiekvienam iš jų reikalautų neproporcingų pastangų (14 straipsnio 5 dalies b punktas); ši informacija viešai pateikiama šioje politikoje, duomenų puslapyje ir kiekviename puslapyje."
+				]
+			},
+			"people": {
+				"heading": "Įstaigos ir jų pavadinimuose minimi asmenys",
+				"body": [
+					"Lietuvos puslapis yra licencijuotos įstaigos veiklos vieta, niekada ne asmens profilis. Individualios įmonės ar mažosios bendrijos pavadinime dažnai yra jos savininko vardas ar pavardė (pavyzdžiui, „Pavyzdžio Vardenio IĮ“): toks puslapis įvardija šį asmenį ir yra apie jį.",
+					"Rodomas tik įregistruotas įstaigos pavadinimas, kaip jį skelbia VASPVT. Jokie kiti duomenys apie asmenį nerenkami: nei asmens kodas, nei gimimo data, nei gyvenamosios vietos adresas, nei juridinio asmens kodas, nei vertinimai ar atsiliepimai.",
+					"Kiekvienas asmuo, apie kurį yra puslapis, bet kada gali nesutikti, kad jis būtų skelbiamas, ir puslapis pašalinamas."
+				]
+			},
+			"sources": {
+				"heading": "Šaltiniai",
+				"body": [
+					"Kiekvienas puslapis sukurtas pagal duomenų rinkinį „Sveikatos priežiūros įstaigų licencijų duomenys“, kurį VASPVT skelbia atvirųjų duomenų portale data.gov.lt pagal CC BY 4.0 licenciją ir atnaujina kasdien. Apskritys, savivaldybės, seniūnijos ir gyvenamosios vietovės su jų ribomis paimtos iš Lietuvos Respublikos adresų registro (VĮ Registrų centras, CC BY 4.0). Kiekvienas šaltinis naudojamas jį nurodant:"
+				]
+			},
+			"balancing": {
+				"heading": "Teisėto intereso vertinimas",
+				"body": [
+					"Tikslas: pacientams reikia žinoti, kur yra licencijuotos sveikatos priežiūros įstaigos ir kokias paslaugas jos gali teikti; valstybė šį poreikį jau tenkina skelbdama licencijų duomenis kaip atviruosius duomenis.",
+					"Būtinumas: rodomas tik įregistruotas įstaigos pavadinimas, rūšis, licencijuotos paslaugos ir veiklos adresas – duomenys, kuriuos licencijuojanti institucija ir taip skelbia; nieko apie privatų gyvenimą, jokių vertinimų, atsiliepimų ir atskirų sveikatos priežiūros specialistų.",
+					"Pusiausvyra: neutrali tvarka, jokios reklamos, mažiausias būtinas licencijų duomenų laukų kiekis, nenurodomas individualios įmonės patalpos numeris, prieštaravimas, kuris iš karto paslepia puslapį ir neleidžia jam sugrįžti, klaidų taisymas šaltinyje ir puslapiai, atnaujinami kartu su licencijų duomenimis. Savininkas, kurio verslas vadinasi jo vardu ir turi viešą licenciją, gali pagrįstai tikėtis, kad bus randamas kataloge, kuriame ši informacija pakartojama. Įvertinus šias aplinkybes, pacientų interesai yra viršesni, o kiekvienas asmuo, apie kurį yra puslapis, gali nesutikti nenurodydamas priežasties."
+				]
+			},
+			"accounts": {
+				"heading": "Įstaigų paskyros ir perėmimai",
+				"body": [
+					"Duomenys: el. pašto adresas, vardas ir pavardė, slaptažodis (saugomas maišos pavidalu), antrasis autentifikavimo veiksnys, puslapiui perimti pateikti dokumentai (įrodymas, kad prašantis asmuo vadovauja įstaigai ar jai atstovauja) ir komandos nariai.",
+					"Tikslai: paskyros tvarkymas ir patikrinimas, kad puslapį perima tinkama įstaiga. Teisiniai pagrindai: naudojimo sąlygų vykdymas (6 straipsnio 1 dalies b punktas) ir teisėtas interesas užtikrinti paslaugos saugumą (6 straipsnio 1 dalies f punktas).",
+					"Saugojimo terminas: paskyra saugoma, kol ji ištrinama; patvirtinamieji dokumentai, užšifruoti, ištrinami praėjus 30 dienų po sprendimo."
+				]
+			},
+			"requests": {
+				"heading": "Pranešimai apie klaidas, prieštaravimai ir susisiekimo užklausos",
+				"body": [
+					"Duomenys: žinutė, nurodytas kontaktinis el. pašto adresas ir susijęs puslapis; užklausos „Tai mano įstaiga“ atveju taip pat vardas, pavardė ir telefono numeris. Laisvas tekstas šifruojamas.",
+					"Tikslai: klaidų taisymas, prieštaravimų vykdymas ir pagalba įstaigai, kuri negali perimti savo puslapio internetu. Teisiniai pagrindai: teisėtas interesas (6 straipsnio 1 dalies f punktas) ir teisė nesutikti (21 straipsnis).",
+					"Saugojimo terminai: pranešimas ištrinamas praėjus 6 mėnesiams po jo užbaigimo, atmestas prieštaravimas – praėjus vieniems metams po sprendimo, susisiekimo užklausa – praėjus 12 mėnesių po paskutinio susirašinėjimo. Patvirtinus prieštaravimą arba perimto puslapio valdytojui jį pašalinus, puslapis ir su juo susiję duomenys, įskaitant prieštaravimą, iš karto ištrinami; išsaugomas tik pašalinimo įrašas (puslapio identifikatorius, šalis, priežastis, kas ir kada jį įrašė), kad puslapis daugiau niekada nebūtų paskelbtas. Savo puslapį pašalinęs valdytojas tik savo paskyroje, niekada viešai, išsaugo savo paskyroje ir perėmimo prašyme rodytą pavadinimą, rūšį ir identifikatorių, kol paskyra ištrinama."
+				]
+			},
+			"technical": {
+				"heading": "Techniniai duomenys ir slapukai",
+				"body": [
+					"Naudojami tik paslaugai būtini slapukai: prisijungusių įstaigų seansas ir pasirinkta kalba. Jokių reklamos ar lankomumo matavimo slapukų, jokių sekiklių.",
+					"Siekiant riboti piktnaudžiavimą, IP adresai prieš juos skaičiuojant paverčiami raktu apsaugota funkcija ir niekada nesaugomi tokie, kokie yra; įstaigų seansuose įrašomas sutrumpintas IP adresas. Perimtų puslapių peržiūros skaičiuojamos be slapukų ir identifikatorių, jas mato tik puslapio valdytojas."
+				]
+			},
+			"recipients": {
+				"heading": "Gavėjai ir duomenų tvarkytojai",
+				"body": [
+					"Duomenys neparduodami, nenuomojami ir niekada nenaudojami reklamai. Juos gauna tik paslaugos teikėjo komanda ir toliau nurodyti duomenų tvarkytojai, kiekvienas tik savo daliai, pagal BDAR 28 straipsnio reikalavimus atitinkančią sutartį. Žemėlapiai įkeliami iš žemėlapių plytelių serverio, kuris, kaip ir bet kuri svetainė, gauna lankytojo IP adresą."
+				]
+			},
+			"transfers": {
+				"heading": "Perdavimas už Europos Sąjungos ribų",
+				"body": [
+					"Už Europos Sąjungos ir Europos ekonominės erdvės ribų duomenys perduodami tik taikant BDAR V skyriuje numatytas apsaugos priemones (sprendimą dėl tinkamumo arba standartines sutarčių sąlygas). Apie bet kokį duomenų tvarkytojo pasikeitimą bus pranešta čia prieš jam įsigaliojant."
+				]
+			},
+			"automated": {
+				"heading": "Automatizuoti sprendimai",
+				"body": [
+					"Joks sprendimas dėl jūsų nepriimamas vien automatizuotomis priemonėmis. Dėl perėmimo sprendžia žmogus, perskaitęs pateiktus dokumentus."
+				]
+			},
+			"rights": {
+				"heading": "Jūsų teisės",
+				"body": [
+					"Galite prašyti susipažinti su savo duomenimis, juos ištaisyti ar ištrinti, apriboti jų tvarkymą, gauti juos perkeliamu formatu ir nesutikti, kad jie būtų tvarkomi. Rašykite toliau nurodytu adresu; atsakymą gausite per vieną mėnesį.",
+					"Lietuvos priežiūros institucija yra Valstybinė duomenų apsaugos inspekcija (VDAI), L. Sapiegos g. 17, 10312 Vilnius, ada@ada.lt, vdai.lrv.lt: jai taip pat galite pateikti skundą."
+				]
+			},
+			"objection": {
+				"heading": "Prieštaravimas dėl puslapio (BDAR 21 straipsnis)",
+				"body": [
+					"Kiekvienas asmuo, apie kurį yra puslapis, pavyzdžiui, įstaigos pavadinime minimas savininkas, bet kada gali nesutikti, kad puslapis būtų skelbiamas, nenurodydamas priežasties. Jei puslapis neperimtas, pakanka užpildyti formą: puslapis paslepiamas vos gavus prašymą, po trumpo patikrinimo ištrinamas, o licencijų duomenų atnaujinimai jo daugiau niekada nebepaskelbia. Jei puslapis perimtas, jį pašalina jo valdytojas savo paskyroje."
+				]
+			},
+			"changes": {
+				"heading": "Šios politikos pakeitimai",
+				"body": [
+					"Ši politika yra projektas. Ją peržiūrės Lietuvoje praktikuojantis teisininkas ir duomenų apsaugos pareigūnas; kiekviena redakcija pažymima data."
+				]
+			}
+		},
+		"fields": {
+			"controller": "Duomenų valdytojas",
+			"address": "Adresas",
+			"email": "Kontaktai užklausoms",
+			"dpo": "Duomenų apsaugos pareigūnas",
+			"effectiveDate": "Įsigaliojimo data",
+			"hostingProvider": "Prieglobos paslaugų teikėjas (duomenų tvarkytojas)",
+			"smtp": "El. laiškų siuntimas (duomenų tvarkytojas)"
+		},
+		"objectLink": "Kaip pateikti prieštaravimą dėl puslapio",
+		"authorityLink": "Pateikti skundą Valstybinei duomenų apsaugos inspekcijai"
+	},
+	"TermsLt": {
+		"metaTitle": "Naudojimo sąlygos · Apercura",
+		"metaDescription": "Apercura Lietuvos puslapių naudojimo sąlygos: nemokamas faktinis licencijuotų sveikatos priežiūros įstaigų katalogas pagal VASPVT licencijų duomenis, be registracijos internetu.",
+		"title": "Naudojimo sąlygos",
+		"lead": "Apercura Lietuvos puslapių naudojimo taisyklės – visuomenei ir sveikatos priežiūros įstaigoms.",
+		"sections": {
+			"service": {
+				"heading": "Paslauga",
+				"body": [
+					"Apercura nemokamai skelbia Valstybinės akreditavimo sveikatos priežiūros veiklai tarnybos (VASPVT) licencijuotų sveikatos priežiūros įstaigų veiklos vietas, į kurias kreipiasi pacientai: ligonines, pirminės sveikatos priežiūros centrus, medicinos centrus ir klinikas, odontologijos klinikas, psichikos sveikatos centrus, reabilitacijos ir slaugos įstaigas, laboratorijas ir optometrijos kabinetus. Tai tik katalogas: per Apercura Lietuvoje registruotis vizitams negalima. Paslaugą teikia teisinėje informacijoje nurodytas paslaugos teikėjas.",
+					"Katalogu naudotis paskyros nereikia. Naudodamiesi svetaine sutinkate su šiomis sąlygomis."
+				]
+			},
+			"content": {
+				"heading": "Kas skelbiama puslapiuose",
+				"body": [
+					"Puslapiuose pateikiama faktinė informacija iš viešų licencijų duomenų, neutralia tvarka, be vertinimų, atsiliepimų, pacientų liudijimų, rekomendacijų, reklamos ir mokamų pozicijų.",
+					"Informacija gali būti neišsami ar pasenusi: prieš vykdami pasitikrinkite ją įstaigoje. Kiekviename puslapyje nurodyta, kaip pranešti apie klaidą."
+				]
+			},
+			"health": {
+				"heading": "Tai ne medicininė konsultacija",
+				"body": [
+					"Apercura neteikia medicininių konsultacijų ir nėra skubiosios pagalbos tarnyba. Skubiu atveju skambinkite bendruoju pagalbos telefono numeriu 112. Ne darbo valandomis padės ligoninių skubiosios pagalbos skyriai."
+				]
+			},
+			"practices": {
+				"heading": "Sveikatos priežiūros įstaigoms",
+				"body": [
+					"Perimti puslapį nemokama. Tam reikia dokumento, įrodančio, kad prašantis asmuo vadovauja įstaigai ar jai atstovauja; prieš perduodant puslapį jį patikrina žmogus.",
+					"Puslapio valdytojas atsako už savo pridedamą informaciją. Ji turi likti faktinė, tiksli ir atnaujinta bei atitikti Lietuvos Respublikos reklamos įstatymo 15 straipsnį: jokių pacientų vardų, pavardžių ar atvaizdų ir jokių sveikatos priežiūros įstaigų, specialistų ar jų profesinių organizacijų rekomendacijų."
+				]
+			},
+			"removal": {
+				"heading": "Puslapio pašalinimas",
+				"body": [
+					"Kiekvienas asmuo, apie kurį yra puslapis, bet kada gali prašyti jį pašalinti: kaip tai padaryti, paaiškinta duomenų puslapyje. Perimtą puslapį gali pašalinti tik jo valdytojas."
+				]
+			},
+			"liability": {
+				"heading": "Atsakomybė",
+				"body": [
+					"Paslaugos teikėjas deda visas pastangas, kad paslauga būtų pasiekiama ir tiksli, tačiau to garantuoti negali. Jis neatsako už informaciją, kurią įstaigos prideda savo puslapiuose. Šios ribos bus patikslintos teisinės peržiūros metu."
+				]
+			},
+			"ip": {
+				"heading": "Kodas ir duomenys",
+				"body": [
+					"Pirminis kodas skelbiamas pagal AGPL-3.0 licenciją. Katalogo duomenys pakartotinai naudojami pagal Creative Commons Priskyrimas 4.0 tarptautinę licenciją (CC BY 4.0)."
+				]
+			},
+			"law": {
+				"heading": "Taikoma teisė ir ginčai",
+				"body": [
+					"Taikoma teisė ir kompetentingi teismai bus nurodyti teisinės peržiūros metu; visada taikomos privalomosios gyvenamosios šalies vartotojų apsaugos taisyklės. Kilus ginčui, pirmiausia parašykite kontaktiniu adresu, kad būtų ieškoma taikaus sprendimo."
+				]
+			}
+		},
+		"fields": {
+			"publisher": "Paslaugos teikėjas",
+			"effectiveDate": "Įsigaliojimo data",
+			"contact": "Kontaktai"
+		}
+	},
+	"AccessibilityLt": {
+		"metaTitle": "Prieinamumo deklaracija · Apercura",
+		"metaDescription": "Apercura Lietuvos puslapių prieinamumas: siekiamas WCAG 2.2 AA lygis, kas patikrinta, kas liko ir kaip pranešti apie problemą.",
+		"title": "Prieinamumo deklaracija",
+		"lead": "Apercura kuriama visiems, taip pat vyresnio amžiaus ir silpnaregiams žmonėms. Šioje deklaracijoje nurodyta, kokio lygio prieinamumą pasiekę Lietuvos puslapiai.",
+		"sections": {
+			"scope": {
+				"heading": "Taikymo sritis",
+				"body": [
+					"Taisyklės, kuriomis įgyvendinama Direktyva (ES) 2016/2102 dėl viešojo sektoriaus institucijų interneto svetainių ir mobiliųjų programų prieinamumo, privalomos toms institucijoms, o Apercura tokia institucija nėra. Ši deklaracija yra savanoriška: paslaugos teikėjas vis tiek siekia to paties lygio kiekviename puslapyje – WCAG 2.2 AA."
+				]
+			},
+			"status": {
+				"heading": "Dabartinė būklė",
+				"body": [
+					"Lietuvos puslapiai naudoja tą patį kodą ir tuos pačius testus kaip Prancūzijos puslapiai. Svetainė iš dalies atitinka WCAG 2.2 AA: tai grindžiama savęs vertinimu ir automatiniais testais, dar ne visu auditu, kuris vyksta."
+				]
+			},
+			"tests": {
+				"heading": "Kas patikrinta",
+				"list": [
+					"Automatiniai axe-core patikrinimai (WCAG 2.0, 2.1 ir 2.2 taisyklės, A ir AA lygiai) kiekvieno tipo puslapyje, kiekvieno leidimo metu.",
+					"Naršymas vien klaviatūra su matomu fokusu.",
+					"Pagrindinis tekstas ne mažesnis kaip 18 px, valdymo elementai ne mažesni kaip 44 px, niekas neperteikiama vien spalva, nėra horizontalaus slinkimo esant 390 px pločiui."
+				]
+			},
+			"pending": {
+				"heading": "Ką dar reikia patikrinti",
+				"list": [
+					"Rankinis patikrinimas su ekrano skaitytuvais VoiceOver ir NVDA lietuvių kalba.",
+					"Visas puslapių imties auditas pagal WCAG 2.2 AA."
+				]
+			},
+			"feedback": {
+				"heading": "Pranešti apie problemą",
+				"body": [
+					"Jei puslapiu ar funkcija naudotis sunku, parašykite toliau nurodytu adresu: nurodykite puslapį ir kas jums trukdė. Atsakome per vieną mėnesį ir, jei reikia, pateikiame informaciją kita forma."
+				]
+			}
+		},
+		"fields": {
+			"contact": "Kontaktai",
+			"date": "Deklaracijos data"
+		}
+	},
+	"DataLt": {
+		"metaTitle": "Duomenys ir šaltiniai · Apercura",
+		"metaDescription": "Iš kur paimti Apercura Lietuvos puslapiai: VASPVT licencijų duomenys ir Adresų registras (VĮ Registrų centras) pagal CC BY 4.0, atnaujinimo datos ir kaip pataisyti ar pašalinti puslapį.",
+		"title": "Duomenys ir šaltiniai",
+		"lead": "Kiekvienas Lietuvos puslapis sukurtas pagal viešųjų registrų atviruosius duomenis. Čia nurodyta, iš kur jie paimti, pagal kokią licenciją ir su kokiu šaltinio nurodymu, kada atnaujinti ir kaip pataisyti ar pašalinti puslapį.",
+		"status": {
+			"heading": "Paskutinis atnaujinimas",
+			"body": "VASPVT licencijų duomenis atnaujina kasdien; katalogas juos importuoja kartą per savaitę, nesiųsdamas perteklinių užklausų, ir tik tada, kai jie pasikeitė. Puslapis keičiasi tik tada, kai pasikeičia jo duomenys licencijų duomenyse.",
+			"importedAt": "Paskutinis importas",
+			"checkedAt": "Šaltiniai paskutinį kartą patikrinti",
+			"notImported": "Lietuvos katalogas šioje svetainėje dar neimportuotas.",
+			"notImportedValue": "Dar neimportuota"
+		},
+		"sources": {
+			"heading": "Šaltiniai",
+			"body": "Abu šaltiniai skelbiami portale data.gov.lt pagal Creative Commons Priskyrimas 4.0 tarptautinę licenciją (CC BY 4.0), kuri leidžia pakartotinai naudoti duomenis, taip pat komerciniais tikslais, jei nurodomas šaltinis. Kiekvienas toliau pateiktas šaltinio nurodymas spausdinamas pažodžiui.",
+			"caption": "Lietuvos katalogo duomenų šaltiniai",
+			"columns": {
+				"source": "Šaltinis",
+				"use": "Kam naudojama",
+				"licence": "Licencija ir šaltinio nurodymas",
+				"frequency": "Atnaujinama"
+			},
+			"items": {
+				"lt-vaspvt": {
+					"use": "Licencijuotos sveikatos priežiūros įstaigos ir jų veiklos adresai: pavadinimai, licencijuotos paslaugos (pagal jas nustatoma įstaigos rūšis), adresai",
+					"frequency": "Kasdien, VASPVT"
+				},
+				"lt-adresu-registras": {
+					"use": "Apskritys, savivaldybės, seniūnijos ir gyvenamosios vietovės su gyvenamųjų vietovių ribomis, pagal kurias apskaičiuojamas kiekvienos gyvenamosios vietovės taškas",
+					"frequency": "Kas mėnesį (gyvenamosios vietovės) ir kasmet (ribos), VĮ Registrų centras"
+				},
+				"map": {
+					"name": "Žemėlapio duomenys",
+					"publisher": "OpenStreetMap bendraautoriai, plytelės – OpenFreeMap",
+					"use": "Žemėlapiai puslapiuose",
+					"frequency": "Nuolat"
+				}
+			},
+			"ccBy": "CC BY 4.0",
+			"odbl": "ODbL",
+			"citationHeading": "Kaip nurodyti licencijų duomenų šaltinį",
+			"citation": "Šaltinis: Valstybinė akreditavimo sveikatos priežiūros veiklai tarnyba prie SAM, „Sveikatos priežiūros įstaigų licencijų duomenys“ (data.gov.lt), CC BY 4.0",
+			"licenceTerms": "CC BY 4.0 licencijos tekstas"
+		},
+		"coverage": {
+			"heading": "Kokios įstaigos skelbiamos",
+			"body": [
+				"Puslapis yra įstaigos, kurios licencija nei panaikinta, nei sustabdyta, veiklos adresas. VASPVT įstaigų rūšių nenurodo: rūšis nustatoma pagal tuo adresu licencijuotas paslaugas, pradedant konkrečiausia (stacionarinės paslaugos – ligoninė, šeimos medicina – pirminės sveikatos priežiūros centras, ambulatorinės specializuotos paslaugos – medicinos centras ir t. t.). Kiekviena licencijuota paslauga nurodoma puslapyje. Kiekvienas puslapis priskiriamas gyvenamajai vietovei ir savivaldybei pagal adresą, kaip jį užrašo VASPVT, ir žemėlapyje susiejamas su gyvenamosios vietovės tašku (gyvenvietės tikslumu, be žymeklio): VASPVT nepateikia nei koordinačių, nei pašto kodų.",
+				"Neįtraukiama: adresai, licencijuoti tik visuomenės sveikatos priežiūros paslaugoms (higienos įgūdžių mokymui, kenkėjų kontrolei), greitosios medicinos pagalbos tarnybos, audinių bankai ir biobankai, išplėstinė vaistininko praktika. Vaistinės neskelbiamos: jas licencijuoja Valstybinė vaistų kontrolės tarnyba, kurios vaistinių su adresais sąrašas kaip atvirieji duomenys neskelbiamas. Valstybinės ligonių kasos metinis įstaigų sąrašas (CC BY 4.0) nenaudojamas: jame nėra adresų, o sutarčių datos neleidžia patikimai nustatyti, kurios vietos turi sutartį. Atskiri gydytojai, odontologai ir slaugytojai neskelbiami.",
+				"Puslapiuose nėra reklamos, vertinimų, atsiliepimų, pacientų liudijimų ar rekomendacijų. Lietuvos Respublikos reklamos įstatymo 15 straipsnis sveikatos priežiūros paslaugų reklamoje draudžia naudoti paciento vardą, pavardę, įvaizdį ir remtis sveikatos priežiūros įstaigų, sveikatos priežiūros specialistų ar jų profesinių organizacijų rekomendacijomis; faktinis licencijuotų įstaigų katalogas neutralia tvarka tokia reklama nėra, o savo puslapius papildančios įstaigos turi laikytis tos pačios taisyklės."
+			],
+			"kinds": {
+				"LT_HOSPITAL": "Ligoninės: stacionarinės paslaugos",
+				"LT_PRIMARY_CARE": "Šeimos medicina: pirminės sveikatos priežiūros centrai ir poliklinikos",
+				"LT_SPECIALIST": "Medicinos centrai ir klinikos: ambulatorinės specializuotos paslaugos, radiologija, dienos chirurgija",
+				"LT_DENTAL": "Odontologijos klinikos: odontologinė ir burnos priežiūra",
+				"LT_MENTAL_HEALTH": "Psichikos sveikatos centrai: psichiatrija, psichoterapija, medicinos psichologija",
+				"LT_REHABILITATION": "Reabilitacija: kineziterapija, ergoterapija, gydomasis masažas",
+				"LT_NURSING": "Slaugos paslaugos: slauga, ambulatorinė slauga namuose ir akušerio praktika",
+				"LT_LABORATORY": "Laboratorijos: laboratorinė diagnostika",
+				"LT_OPTOMETRY": "Optometrijos kabinetai"
+			},
+			"kindsLabel": "Importuojama (nustatoma pagal licencijuotas paslaugas)"
+		},
+		"identifiers": {
+			"heading": "Identifikatoriai",
+			"body": [
+				"Kiekvieno puslapio adresas baigiasi VASPVT suteiktu įstaigos numeriu ir Adresų registro veiklos adreso kodu, todėl puslapį galima rasti ir sutikrinti su licencijų duomenimis:"
+			],
+			"list": [
+				"/lt/istaiga/uab-pavyzdine-klinika-9000-90000009: įstaigos numeris 9000 ir adreso kodas 90000009 (adresui be kodo – raidė „v“ ir licencijų duomenyse nurodyto adreso identifikatoriaus pradžia).",
+				"Juridinio asmens kodas nenaudojamas: individualios įmonės atveju jis priklauso vieno asmens valdomam verslui."
+			]
+		},
+		"correct": {
+			"heading": "Klaidos taisymas",
+			"body": [
+				"Puslapiai pakartoja licencijų duomenis: ilgalaikis pataisymas atliekamas šaltinyje, o puslapis pasikeičia po kito savaitinio importo.",
+				"Dėl visų kitų dalykų naudokitės forma: tikriname kiekvieną pranešimą."
+			],
+			"list": [
+				"Pavadinimas, veiklos adresas ir licencijuotos paslaugos: įstaiga kreipiasi į VASPVT dėl licencijos duomenų pakeitimo, ir tada atnaujinami licencijų duomenys.",
+				"Gyvenamųjų vietovių ir savivaldybių pavadinimai: jie paimti iš Adresų registro, kurį tvarko VĮ Registrų centras."
+			],
+			"formTitle": "Pranešti apie klaidą",
+			"formBody": "Nurodykite puslapio adresą ir kas neteisinga."
+		},
+		"remove": {
+			"heading": "Puslapio pašalinimas",
+			"body": [
+				"Kiekvienas asmuo, apie kurį yra puslapis, pavyzdžiui, individualios įmonės pavadinime minimas savininkas, bet kada gali nesutikti, kad puslapis būtų skelbiamas, nenurodydamas priežasties (BDAR 21 straipsnis). Neperimtas puslapis paslepiamas vos gavus prašymą ir po trumpo patikrinimo ištrinamas; po licencijų duomenų atnaujinimų jis nebegrįžta. Perimtą puslapį pašalina jo valdytojas savo paskyroje."
+			],
+			"formTitle": "Prašyti pašalinti puslapį",
+			"formBody": "Nurodykite puslapio adresą ir el. pašto adresą, kuriuo galėtume jums atsakyti."
+		}
+	}
+}

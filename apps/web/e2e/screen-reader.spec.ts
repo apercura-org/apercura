@@ -77,11 +77,15 @@ function expectFieldRow(log: readonly string[], label: string, value: string | R
 	expect(found, `No field row "${label}" → "${value}" in:\n${log.join("\n")}`).toBe(true);
 }
 
-/** Reads the whole page, from the top to the end of the footer. */
+/**
+ * Reads the whole page, from the top to the end of the footer. The country menu names every open
+ * market, so a page reads longer with each market opened: the bound is the whole page's, not the
+ * default 400 items.
+ */
 async function readPage(page: Page) {
 	const reader = await ScreenReader.start(page);
 	// Every open market adds three items to the country menu read before the main content: room
-	// for many more than the thirteen open today.
+	// for many more than the fourteen open today.
 	const log = await reader.readUntil(/^end of contentinfo$/, 1_000);
 	await reader.stop();
 	return log;

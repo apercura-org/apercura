@@ -990,3 +990,82 @@ describe("practitionerNodes for Ireland", () => {
 		expect(JSON.stringify(home)).not.toMatch(/Person|Physician"/);
 	});
 });
+
+describe("practitionerNodes for Lithuania", () => {
+	const site: PracticePlaceInput = {
+		siteId: 1,
+		practiceKind: "office",
+		name: "UAB „Pavyzdinė klinika“",
+		addressLine: "Pavyzdžio g. 12",
+		addressComplement: null,
+		postcode: null,
+		placeName: "Vilnius",
+		coordinates: null,
+		phone: null,
+		establishmentUrl: null,
+	};
+	const clinic: PractitionerInput = {
+		...doctor,
+		url: `${ORIGIN}/lt/istaiga/uab-pavyzdine-klinika-9000-90000009`,
+		professionCode: "LT_SPECIALIST",
+		rpps: "9000-90000009",
+		idScheme: "LT-VASPVT",
+		country: "LT",
+		name: "UAB „Pavyzdinė klinika“",
+		givenName: "",
+		familyName: "UAB „Pavyzdinė klinika“",
+		honorificPrefix: null,
+		occupation: "Medicinos centras",
+		listingSlug: "medicinos-centrai",
+		places: [site],
+	};
+
+	it("publishes an institution as a MedicalClinic with its page key, never a person", () => {
+		const nodes = practitionerNodes(clinic);
+		const node = nodeOf(nodes, "MedicalClinic");
+		expect(node.identifier).toEqual({
+			"@type": "PropertyValue",
+			propertyID: "LT-VASPVT",
+			value: "9000-90000009",
+		});
+		expect(node.address).toMatchObject({ addressCountry: "LT", addressLocality: "Vilnius" });
+		expect(JSON.stringify(nodes)).not.toMatch(
+			/Person|IndividualPhysician|Physician"|givenName|familyName/,
+		);
+	});
+
+	it("publishes a hospital, a dental clinic, a nursing service and a primary care centre by kind", () => {
+		expect(
+			nodeOf(
+				practitionerNodes({ ...clinic, professionCode: "LT_HOSPITAL", listingSlug: "ligonines" }),
+				"Hospital",
+			).address,
+		).toMatchObject({ addressCountry: "LT" });
+		expect(
+			nodeOf(
+				practitionerNodes({
+					...clinic,
+					professionCode: "LT_DENTAL",
+					listingSlug: "odontologijos-klinikos",
+				}),
+				"Dentist",
+			).medicalSpecialty,
+		).toBe("https://schema.org/Dentistry");
+		expect(
+			nodeOf(
+				practitionerNodes({ ...clinic, professionCode: "LT_NURSING", listingSlug: "slauga" }),
+				"MedicalOrganization",
+			).medicalSpecialty,
+		).toBe("https://schema.org/Nursing");
+		expect(
+			nodeOf(
+				practitionerNodes({
+					...clinic,
+					professionCode: "LT_PRIMARY_CARE",
+					listingSlug: "seimos-medicina",
+				}),
+				"MedicalClinic",
+			).medicalSpecialty,
+		).toBe("https://schema.org/PrimaryCare");
+	});
+});

@@ -79,6 +79,25 @@ describe("market page paths of the sitemaps", () => {
 		expect(MARKET_STATIC_PATHS.de).toContain("/accessibilite");
 	});
 
+	it("gives Lithuania its Lithuanian route segments under /lt", () => {
+		expect(marketPagePath("lt", "/")).toBe("/lt");
+		expect(marketPagePath("lt", "/praticien/uab-pavyzdine-klinika-9000-90000009")).toBe(
+			"/lt/istaiga/uab-pavyzdine-klinika-9000-90000009",
+		);
+		expect(marketPagePath("lt", "/etablissement/x-1")).toBe("/lt/organizacija/x-1");
+		expect(marketPagePath("lt", "/annuaire/kauno-rajono-savivaldybe/garliava")).toBe(
+			"/lt/katalogas/kauno-rajono-savivaldybe/garliava",
+		);
+		expect(marketPagePath("lt", "/ligonines/vilniaus-apskritis")).toBe(
+			"/lt/ligonines/vilniaus-apskritis",
+		);
+		expect(marketPagePath("lt", "/donnees")).toBe("/lt/duomenys");
+		expect(marketPagePath("lt", "/accessibilite")).toBe("/lt/prieinamumas");
+		expect(marketPagePath("lt", "/confidentialite")).toBe("/lt/privatumas");
+		expect(MARKET_STATIC_PATHS.lt).not.toContain("/pro");
+		expect(MARKET_STATIC_PATHS.lt).toContain("/accessibilite");
+	});
+
 	it("gives Spain its Spanish route segments under /es", () => {
 		expect(marketPagePath("es", "/")).toBe("/es");
 		expect(marketPagePath("es", "/praticien/clinica-dental-ejemplo-centro-1328000001")).toBe(

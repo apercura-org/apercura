@@ -91,8 +91,13 @@ describe("places of a market", () => {
 		expect(isDepartmentCity("DE", "09184148")).toBe(false);
 		expect(isDepartmentCity("DE", "09162")).toBe(false);
 		expect(isDepartmentCity("FR", "09162000")).toBe(false);
+		// Lithuania's city municipalities' cities (Vilnius, Kaunas, Klaipėda…), by settlement code.
+		expect(isDepartmentCity("LT", "31003")).toBe(true);
+		expect(isDepartmentCity("LT", "17507")).toBe(true);
+		expect(isDepartmentCity("LT", "15345")).toBe(false);
+		expect(isDepartmentCity("FR", "31003")).toBe(false);
 		expect(NOT_DEPARTMENT_CITY("p")).toBe(
-			"NOT (p.country = 'FR' AND p.code = '75056') AND NOT (p.country = 'AT' AND p.code = '90001') AND NOT (p.country = 'CZ' AND p.code = '554782') AND NOT (p.country = 'NO' AND p.code = '0301') AND NOT (p.country = 'FI' AND p.code = '091') AND NOT (p.country = 'DE' AND p.code LIKE '_____000') AND NOT (p.country = 'EE' AND p.kind = 'commune' AND p.code IN ('0296', '0424', '0446', '0511', '0663', '0736', '0897', '0919')) AND NOT (p.country = 'PL' AND p.kind = 'commune' AND substr(p.code, 3, 1) IN ('6', '7', '8', '9'))",
+			"NOT (p.country = 'FR' AND p.code = '75056') AND NOT (p.country = 'AT' AND p.code = '90001') AND NOT (p.country = 'CZ' AND p.code = '554782') AND NOT (p.country = 'NO' AND p.code = '0301') AND NOT (p.country = 'FI' AND p.code = '091') AND NOT (p.country = 'DE' AND p.code LIKE '_____000') AND NOT (p.country = 'EE' AND p.kind = 'commune' AND p.code IN ('0296', '0424', '0446', '0511', '0663', '0736', '0897', '0919')) AND NOT (p.country = 'PL' AND p.kind = 'commune' AND substr(p.code, 3, 1) IN ('6', '7', '8', '9')) AND NOT (p.country = 'LT' AND p.code IN ('10278', '17507', '18067', '21988', '23195', '23485', '28338', '31003'))",
 		);
 		// Narva is the municipality of Narva's only settlement, which shares its code; Tartu's holds
 		// villages too.
@@ -213,6 +218,12 @@ describe("Czechia's pages", () => {
 		expect(marketBooks("cs-CZ")).toBe(false);
 		expect(professionSlugOf("CZ_PHARMACY")).toBe("lekarna");
 		expect(professionSlugOf("CZ_SPECIALIST")).toBe("lekar-specialista");
+		expect(professionSlugOf("LT_DENTAL")).toBe("odontologijos-klinikos");
+		expect(isMarketListingSlug("lt-LT", "ligonines")).toBe(true);
+		expect(isMarketListingSlug("lt-LT", "istaiga")).toBe(false);
+		expect(isMarketListingSlug("lt-LT", "zubni-lekar")).toBe(false);
+		expect(showsBillingFacts("lt-LT")).toBe(false);
+		expect(marketBooks("lt-LT")).toBe(false);
 	});
 
 	it("check district slugs and label places by name, Prague's city being its district", () => {
@@ -220,6 +231,9 @@ describe("Czechia's pages", () => {
 		expect(isDepartmentSlug("praha", "CZ")).toBe(true);
 		expect(isDepartmentSlug("69-rhone", "CZ")).toBe(true);
 		expect(isDepartmentSlug("12", "CZ")).toBe(false);
+		expect(isDepartmentSlug("vilniaus-miesto-savivaldybe", "LT")).toBe(true);
+		expect(isDepartmentSlug("vilniaus-apskritis", "LT")).toBe(true);
+		expect(isDepartmentSlug("13", "LT")).toBe(false);
 		expect(
 			placeLabel(
 				{ kind: "department", code: "CZ0642", name: "Brno-město", departmentCode: "CZ0642" },

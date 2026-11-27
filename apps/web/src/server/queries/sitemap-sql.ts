@@ -1,4 +1,4 @@
-import { OSLO_MUNICIPALITY } from "@apercura/core/country";
+import { LT_CITY_MUNICIPALITIES, OSLO_MUNICIPALITY } from "@apercura/core/country";
 import type { Sql } from "@apercura/db";
 import { EE_TOWN_CODES } from "~/lib/places";
 
@@ -40,6 +40,7 @@ export const SITEMAP_MARKETS = [
 	"no",
 	"ie",
 	"fi",
+	"lt",
 ] as const;
 export type SitemapMarket = (typeof SITEMAP_MARKETS)[number];
 
@@ -70,14 +71,19 @@ export type SitemapChunk = {
 /** A path (internal French form, no locale prefix) and its last change (ISO date). */
 export type SitemapEntry = { path: string; lastmod: string };
 
+/** Lithuania's city municipalities' cities, as an SQL list of settlement codes. */
+const LT_CITY_CODES = Object.keys(LT_CITY_MUNICIPALITIES)
+	.map((code) => `'${code}'`)
+	.join(", ");
+
 /**
  * The cities whose page is their department's (Paris, Wien, Germany's kreisfreie Städte, whose
  * Gemeinde code is their Kreis's and `000`, Estonia's towns that are a municipality, whose
  * settlement code is the municipality's, Poland's cities with powiat rights, whose powiat is
- * numbered from 61) never get a URL of their own.
+ * numbered from 61, Lithuania's city municipalities' cities) never get a URL of their own.
  */
 const NOT_CITY = (alias: string) =>
-	`NOT (${alias}.country = 'FR' AND ${alias}.code = '75056') AND NOT (${alias}.country = 'AT' AND ${alias}.code = '90001') AND NOT (${alias}.country = 'DE' AND ${alias}.kind = 'commune' AND ${alias}.code LIKE '_____000') AND NOT (${alias}.country = 'EE' AND ${alias}.kind = 'commune' AND ${alias}.code IN (${EE_TOWN_CODES})) AND NOT (${alias}.country = 'PL' AND ${alias}.kind = 'commune' AND substr(${alias}.code, 3, 1) IN ('6', '7', '8', '9')) AND NOT (${alias}.country = 'NO' AND ${alias}.kind = 'commune' AND ${alias}.code = '${OSLO_MUNICIPALITY}') AND NOT (${alias}.country = 'FI' AND ${alias}.kind = 'commune' AND ${alias}.code = '091')`;
+	`NOT (${alias}.country = 'FR' AND ${alias}.code = '75056') AND NOT (${alias}.country = 'AT' AND ${alias}.code = '90001') AND NOT (${alias}.country = 'DE' AND ${alias}.kind = 'commune' AND ${alias}.code LIKE '_____000') AND NOT (${alias}.country = 'EE' AND ${alias}.kind = 'commune' AND ${alias}.code IN (${EE_TOWN_CODES})) AND NOT (${alias}.country = 'PL' AND ${alias}.kind = 'commune' AND substr(${alias}.code, 3, 1) IN ('6', '7', '8', '9')) AND NOT (${alias}.country = 'NO' AND ${alias}.kind = 'commune' AND ${alias}.code = '${OSLO_MUNICIPALITY}') AND NOT (${alias}.country = 'FI' AND ${alias}.kind = 'commune' AND ${alias}.code = '091') AND NOT (${alias}.country = 'LT' AND ${alias}.kind = 'commune' AND ${alias}.code IN (${LT_CITY_CODES}))`;
 
 /**
  * Non-empty chunks of every kind and market, with the latest change in each, once per language of

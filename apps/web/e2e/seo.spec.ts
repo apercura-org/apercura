@@ -42,7 +42,8 @@ type Expected = {
 		| "pl-PL"
 		| "nb-NO"
 		| "en-IE"
-		| "fi-FI";
+		| "fi-FI"
+		| "lt-LT";
 	/** The homes (`/fr` and the international `/`) print hreflang `fr-FR` and `x-default`. */
 	hreflang?: true;
 	/**
@@ -189,6 +190,26 @@ const PAGES: Expected[] = [
 		robots: "index, follow",
 		types: ["WebPage", "BreadcrumbList", "Hospital"],
 		lang: "fi-FI",
+	},
+	// Lithuania, indexed in Lithuanian under its own segment.
+	{
+		path: "/lt",
+		robots: "index, follow",
+		types: ["WebPage", "WebSite", "Organization"],
+		lang: "lt-LT",
+		hreflang: true,
+	},
+	{
+		path: "/lt/medicinos-centrai/vilniaus-miesto-savivaldybe",
+		robots: "index, follow",
+		types: ["CollectionPage", "BreadcrumbList", "ItemList"],
+		lang: "lt-LT",
+	},
+	{
+		path: "/lt/istaiga/uab-pavyzdine-klinika-9000-90000001",
+		robots: "index, follow",
+		types: ["WebPage", "BreadcrumbList", "MedicalClinic"],
+		lang: "lt-LT",
 	},
 	// Spain, indexed in Spanish under its own segment (`es` alone stays France in Spanish, `/fr-es`).
 	{
@@ -450,6 +471,7 @@ const OG_LOCALES = {
 	"nb-NO": "nb_NO",
 	"en-IE": "en_IE",
 	"fi-FI": "fi_FI",
+	"lt-LT": "lt_LT",
 } as const;
 
 const FORBIDDEN_KEYS = ["aggregateRating", "review", "reviews", "ratingValue"];
@@ -564,7 +586,7 @@ for (const expected of PAGES) {
 			}));
 		if (expected.hreflang) {
 			// The homes of the open markets (Switzerland's three) and the international one.
-			expect(alternates).toHaveLength(16);
+			expect(alternates).toHaveLength(17);
 			expect(alternates).toEqual(
 				expect.arrayContaining([
 					{ rel: "alternate", hreflang: "fr-FR", href: `${origin}/fr` },
@@ -582,6 +604,7 @@ for (const expected of PAGES) {
 					{ rel: "alternate", hreflang: "nb-NO", href: `${origin}/no` },
 					{ rel: "alternate", hreflang: "en-IE", href: `${origin}/ie` },
 					{ rel: "alternate", hreflang: "fi-FI", href: `${origin}/fi` },
+					{ rel: "alternate", hreflang: "lt-LT", href: `${origin}/lt` },
 					{ rel: "alternate", hreflang: "x-default", href: origin },
 				]),
 			);
@@ -620,7 +643,7 @@ for (const expected of PAGES) {
 		// for an Italian place, `de.{slug}` for a German facility), others a generic image.
 		expect(page.meta("og:image")[0]).toMatch(
 			new RegExp(
-				`^${origin}/og/(?:praticien/(?:gb\\.|cz\\.|es\\.|it\\.|de\\.|ch\\.|pl\\.|fi\\.)?[a-z0-9-]+|[a-z-]+)\\.png$`,
+				`^${origin}/og/(?:praticien/(?:gb\\.|cz\\.|es\\.|it\\.|de\\.|ch\\.|pl\\.|fi\\.|lt\\.)?[a-z0-9-]+|[a-z-]+)\\.png$`,
 			),
 		);
 		expect(page.meta("twitter:card")).toEqual(["summary_large_image"]);
@@ -680,7 +703,9 @@ for (const expected of PAGES) {
 														? "NO"
 														: expected.path.startsWith("/fi")
 															? "FI"
-															: "FR",
+															: expected.path.startsWith("/lt")
+																? "LT"
+																: "FR",
 			);
 			expect(address?.addressLocality ?? address?.postalCode, node["@id"]).toBeTruthy();
 		}
@@ -718,7 +743,9 @@ for (const expected of PAGES) {
 																		? `${origin}/ie`
 																		: lang === "fi-FI"
 																			? `${origin}/fi`
-																			: `${origin}/fr-${lang}`;
+																			: lang === "lt-LT"
+																				? `${origin}/lt`
+																				: `${origin}/fr-${lang}`;
 			expect(items[0]?.item).toBe(home);
 			items.forEach((item, index) => {
 				expect(item.position).toBe(index + 1);

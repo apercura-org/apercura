@@ -141,6 +141,7 @@ describe("the United Kingdom adapter", () => {
 			"NO",
 			"IE",
 			"FI",
+			"LT",
 		]);
 	});
 });

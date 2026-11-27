@@ -24,6 +24,7 @@ import {
 	ieUrlKey,
 	isValidRpps,
 	itUrlKey,
+	LT_ID_SCHEME,
 	NO_ID_SCHEMES,
 	type NoIdScheme,
 	noUrlKey,
@@ -38,6 +39,7 @@ import {
 	parseGbPracticeSegment,
 	parseIeFacilitySegment,
 	parseItPlaceSegment,
+	parseLtFacilitySegment,
 	parseNoFacilitySegment,
 	parsePlFacilitySegment,
 } from "@apercura/core";
@@ -203,6 +205,20 @@ function ieRef(segment: string): PractitionerRef | null {
 		: null;
 }
 
+/**
+ * The prefix of a Lithuanian reference (`lt:5271-12679435`): the key reads as no other market's,
+ * but a prefixed reference never has to be guessed.
+ */
+const LT_REF = "lt:";
+
+/** A Lithuanian institution's address from the end of a page address or slug, or its key alone. */
+function ltRef(segment: string): PractitionerRef | null {
+	const parsed = parseLtFacilitySegment(segment);
+	return parsed
+		? { country: "LT", idScheme: parsed.idScheme, nationalId: parsed.nationalId }
+		: null;
+}
+
 /** The first path segments of Switzerland's pages, in its three languages (`ch`, `ch-fr`, `ch-it`). */
 const CH_PATH = /^ch(?:-[a-z]{2})?$/;
 
@@ -218,18 +234,18 @@ const CH_PATH = /^ch(?:-[a-z]{2})?$/;
  * the source letters and key in Estonia (`ee:l01909`, `ee:ap457`), `pl:` and the RPWDL
  * establishment number in Poland (`pl:290629`), `no:` and the organisation
  * number in Norway (`no:910000039`), `ie:` and the list letter and key in Ireland
- * (`ie:p10000612`, `ie:n738`). A page
+ * (`ie:p10000612`, `ie:n738`), `lt:` and the page key in Lithuania (`lt:5271-12679435`). A page
  * address is read from its last segment, in the market its first path segment names
  * (`/gb/practice/…`, `/cz/zarizeni/…`, `/es/centro/…`, `/it/struttura/…`,
  * `/de/einrichtung/…`, `/ch/einrichtung/…`,
- * `/ch-fr/etablissement/…`, `/ch-it/struttura/…`, `/ee/asutus/…`, `/pl/placowka/…`, `/no/virksomhet/…`, `/ie/facility/…`).
+ * `/ch-fr/etablissement/…`, `/ch-it/struttura/…`, `/ee/asutus/…`, `/pl/placowka/…`, `/no/virksomhet/…`, `/ie/facility/…`, `/lt/istaiga/…`).
  * Whitespace and case are forgiven. `market` is the market the reference was typed in: on a UK
  * page a bare key (`A81001`, `W91234`) is the UK's, on a Czech page a bare number (`39781`) is
  * Czechia's, on a Spanish page a ten-digit code is Spain's (as is any ten-digit code: no other
  * market has one), on an Italian page a list key (`f9000001`) is Italy's, on a German page a key
  * (`th9001`) is Germany's, on a Swiss page a list
  * key (`h123456789`) Switzerland's, on a Polish page a bare number (`290629`) Poland's, on a Norwegian page an organisation number (`910 000 039`)
- * Norway's, on an Irish page a list key (`p10000612`, `h123456789`) Ireland's.
+ * Norway's, on an Irish page a list key (`p10000612`, `h123456789`) Ireland's, on a Lithuanian page a key (`5271-12679435`) Lithuania's.
  * Null for anything else.
  */
 export function parsePractitionerRef(
@@ -271,6 +287,9 @@ export function parsePractitionerRef(
 	if (trimmed.toLowerCase().startsWith(IE_REF)) {
 		return ieRef(trimmed.slice(IE_REF.length).replace(/\s+/g, "").toLowerCase());
 	}
+	if (trimmed.toLowerCase().startsWith(LT_REF)) {
+		return ltRef(trimmed.slice(LT_REF.length).replace(/\s+/g, "").toLowerCase());
+	}
 	const parts = trimmed.split(/[?#]/)[0]?.split("/").filter(Boolean) ?? [];
 	const segment = trimmed.split(/[/?#]/).filter(Boolean).at(-1) ?? "";
 	const compact = segment.replace(/\s+/g, "").toLowerCase();
@@ -281,6 +300,12 @@ export function parsePractitionerRef(
 	if (path.length > 1 && path[0]?.toLowerCase() === "cz") return czRef(compact);
 	// A page address of Poland (`/pl/placowka/…`).
 	if (path.length > 1 && path[0]?.toLowerCase() === "pl") return plRef(compact);
+	// A page address of Lithuania (`/lt/istaiga/…`), or a key typed on a Lithuanian page.
+	if ((path.length > 1 && path[0]?.toLowerCase() === "lt") || market === "LT") {
+		const lithuanian = ltRef(compact);
+		if (lithuanian) return lithuanian;
+		if (path.length > 1) return null;
+	}
 	// A page address of Spain (`/es/centro/…`; `/es/` was France in Spanish before, whose RPPS
 	// addresses still read below), or a code typed on a Spanish page.
 	if (path.length > 1 && path[0]?.toLowerCase() === "es") {
@@ -356,8 +381,8 @@ export function parsePractitionerRef(
 
 /**
  * The short reference of a practitioner (`19999990013`, `w7983`, `gb:a81001`, `cz:39781`,
- * `es:1328000001`, `it:f9000001`, `de:k0a1b2c3d4e`, `ch:h123456789`, `ee:l01909`, `pl:290629`, `ie:p10000612`, `fi:b18aa7f87eca4b97a8e8b438d2e29427`), as
- * `parsePractitionerRef` reads it.
+ * `es:1328000001`, `it:f9000001`, `de:k0a1b2c3d4e`, `ch:h123456789`, `ee:l01909`, `pl:290629`, `ie:p10000612`, `fi:b18aa7f87eca4b97a8e8b438d2e29427`,
+ * `lt:5271-12679435`), as `parsePractitionerRef` reads it.
  */
 export function practitionerRefOf(practitioner: { idScheme: string; nationalId: string }): string {
 	if (CH_ID_SCHEMES[practitioner.idScheme as ChIdScheme]) {
@@ -370,6 +395,7 @@ export function practitionerRefOf(practitioner: { idScheme: string; nationalId: 
 	if (practitioner.idScheme === PL_ID_SCHEME) return `${PL_REF}${practitioner.nationalId}`;
 	if (FI_ID_SCHEMES[practitioner.idScheme as FiIdScheme])
 		return `${FI_REF}${practitioner.nationalId}`;
+	if (practitioner.idScheme === LT_ID_SCHEME) return `${LT_REF}${practitioner.nationalId}`;
 	if (practitioner.idScheme === ES_ID_SCHEME) return `${ES_REF}${practitioner.nationalId}`;
 	if (IT_ID_SCHEMES[practitioner.idScheme as ItIdScheme]) {
 		return `${IT_REF}${itUrlKey(practitioner.idScheme as ItIdScheme, practitioner.nationalId)}`;
@@ -398,7 +424,8 @@ export function practitionerRefOf(practitioner: { idScheme: string; nationalId: 
  * German page (`th9001`) `de:th9001`, a key typed on a
  * Swiss page (`H123456789`) `ch:h123456789`, a licence number typed on an Estonian page (`L01909`)
  * `ee:l01909`, an organisation number typed on a Norwegian page (`910 000 039`) `no:910000039`, a key typed
- * on an Irish page (`P10000612`) `ie:p10000612`.
+ * on an Irish page (`P10000612`) `ie:p10000612`, a key typed on a Lithuanian page (`5271-12679435`)
+ * `lt:5271-12679435`.
  * A value that
  * names no page is kept as typed, so the service answers its own error.
  */
