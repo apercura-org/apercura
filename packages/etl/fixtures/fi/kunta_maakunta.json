@@ -1,0 +1,74 @@
+[
+	{
+		"sourceLocalId": "kunta_1_20260101/091",
+		"targetLocalId": "maakunta_1_20260101/01",
+		"sourceItem": {
+			"code": "091",
+			"classificationItemNames": [{ "lang": "fi", "name": "Helsinki" }]
+		},
+		"targetItem": { "code": "01", "classificationItemNames": [{ "lang": "fi", "name": "Uusimaa" }] }
+	},
+	{
+		"sourceLocalId": "kunta_1_20260101/049",
+		"targetLocalId": "maakunta_1_20260101/01",
+		"sourceItem": { "code": "049", "classificationItemNames": [{ "lang": "fi", "name": "Espoo" }] },
+		"targetItem": { "code": "01", "classificationItemNames": [{ "lang": "fi", "name": "Uusimaa" }] }
+	},
+	{
+		"sourceLocalId": "kunta_1_20260101/837",
+		"targetLocalId": "maakunta_1_20260101/06",
+		"sourceItem": {
+			"code": "837",
+			"classificationItemNames": [{ "lang": "fi", "name": "Tampere" }]
+		},
+		"targetItem": {
+			"code": "06",
+			"classificationItemNames": [{ "lang": "fi", "name": "Pirkanmaa" }]
+		}
+	},
+	{
+		"sourceLocalId": "kunta_1_20260101/853",
+		"targetLocalId": "maakunta_1_20260101/02",
+		"sourceItem": { "code": "853", "classificationItemNames": [{ "lang": "fi", "name": "Turku" }] },
+		"targetItem": {
+			"code": "02",
+			"classificationItemNames": [{ "lang": "fi", "name": "Varsinais-Suomi" }]
+		}
+	},
+	{
+		"sourceLocalId": "kunta_1_20260101/564",
+		"targetLocalId": "maakunta_1_20260101/17",
+		"sourceItem": { "code": "564", "classificationItemNames": [{ "lang": "fi", "name": "Oulu" }] },
+		"targetItem": {
+			"code": "17",
+			"classificationItemNames": [{ "lang": "fi", "name": "Pohjois-Pohjanmaa" }]
+		}
+	},
+	{
+		"sourceLocalId": "kunta_1_20260101/408",
+		"targetLocalId": "maakunta_1_20260101/14",
+		"sourceItem": { "code": "408", "classificationItemNames": [{ "lang": "fi", "name": "Lapua" }] },
+		"targetItem": {
+			"code": "14",
+			"classificationItemNames": [{ "lang": "fi", "name": "Etelä-Pohjanmaa" }]
+		}
+	},
+	{
+		"sourceLocalId": "kunta_1_20260101/148",
+		"targetLocalId": "maakunta_1_20260101/19",
+		"sourceItem": { "code": "148", "classificationItemNames": [{ "lang": "fi", "name": "Inari" }] },
+		"targetItem": { "code": "19", "classificationItemNames": [{ "lang": "fi", "name": "Lappi" }] }
+	},
+	{
+		"sourceLocalId": "kunta_1_20260101/478",
+		"targetLocalId": "maakunta_1_20260101/21",
+		"sourceItem": {
+			"code": "478",
+			"classificationItemNames": [{ "lang": "fi", "name": "Maarianhamina" }]
+		},
+		"targetItem": {
+			"code": "21",
+			"classificationItemNames": [{ "lang": "fi", "name": "Ahvenanmaa" }]
+		}
+	}
+]

@@ -1,0 +1,83 @@
+[
+	{
+		"sourceLocalId": "kunta_1_20260101/091",
+		"targetLocalId": "hyvinvointialue_1_20260101/90",
+		"sourceItem": {
+			"code": "091",
+			"classificationItemNames": [{ "lang": "fi", "name": "Helsinki" }]
+		},
+		"targetItem": {
+			"code": "90",
+			"classificationItemNames": [{ "lang": "fi", "name": "Helsingin kaupunki" }]
+		}
+	},
+	{
+		"sourceLocalId": "kunta_1_20260101/049",
+		"targetLocalId": "hyvinvointialue_1_20260101/03",
+		"sourceItem": { "code": "049", "classificationItemNames": [{ "lang": "fi", "name": "Espoo" }] },
+		"targetItem": {
+			"code": "03",
+			"classificationItemNames": [{ "lang": "fi", "name": "Länsi-Uudenmaan hyvinvointialue" }]
+		}
+	},
+	{
+		"sourceLocalId": "kunta_1_20260101/837",
+		"targetLocalId": "hyvinvointialue_1_20260101/08",
+		"sourceItem": {
+			"code": "837",
+			"classificationItemNames": [{ "lang": "fi", "name": "Tampere" }]
+		},
+		"targetItem": {
+			"code": "08",
+			"classificationItemNames": [{ "lang": "fi", "name": "Pirkanmaan hyvinvointialue" }]
+		}
+	},
+	{
+		"sourceLocalId": "kunta_1_20260101/853",
+		"targetLocalId": "hyvinvointialue_1_20260101/05",
+		"sourceItem": { "code": "853", "classificationItemNames": [{ "lang": "fi", "name": "Turku" }] },
+		"targetItem": {
+			"code": "05",
+			"classificationItemNames": [{ "lang": "fi", "name": "Varsinais-Suomen hyvinvointialue" }]
+		}
+	},
+	{
+		"sourceLocalId": "kunta_1_20260101/564",
+		"targetLocalId": "hyvinvointialue_1_20260101/19",
+		"sourceItem": { "code": "564", "classificationItemNames": [{ "lang": "fi", "name": "Oulu" }] },
+		"targetItem": {
+			"code": "19",
+			"classificationItemNames": [{ "lang": "fi", "name": "Pohjois-Pohjanmaan hyvinvointialue" }]
+		}
+	},
+	{
+		"sourceLocalId": "kunta_1_20260101/408",
+		"targetLocalId": "hyvinvointialue_1_20260101/16",
+		"sourceItem": { "code": "408", "classificationItemNames": [{ "lang": "fi", "name": "Lapua" }] },
+		"targetItem": {
+			"code": "16",
+			"classificationItemNames": [{ "lang": "fi", "name": "Etelä-Pohjanmaan hyvinvointialue" }]
+		}
+	},
+	{
+		"sourceLocalId": "kunta_1_20260101/148",
+		"targetLocalId": "hyvinvointialue_1_20260101/21",
+		"sourceItem": { "code": "148", "classificationItemNames": [{ "lang": "fi", "name": "Inari" }] },
+		"targetItem": {
+			"code": "21",
+			"classificationItemNames": [{ "lang": "fi", "name": "Lapin hyvinvointialue" }]
+		}
+	},
+	{
+		"sourceLocalId": "kunta_1_20260101/478",
+		"targetLocalId": "hyvinvointialue_1_20260101/91",
+		"sourceItem": {
+			"code": "478",
+			"classificationItemNames": [{ "lang": "fi", "name": "Maarianhamina" }]
+		},
+		"targetItem": {
+			"code": "91",
+			"classificationItemNames": [{ "lang": "fi", "name": "Ahvenanmaa" }]
+		}
+	}
+]
