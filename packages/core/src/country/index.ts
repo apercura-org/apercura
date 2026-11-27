@@ -2,6 +2,7 @@ import { austria } from "./at";
 import { switzerland } from "./ch";
 import { czechia } from "./cz";
 import { germany } from "./de";
+import { estonia } from "./ee";
 import { spain } from "./es";
 import { france } from "./fr";
 import { unitedKingdom } from "./gb";
@@ -19,6 +20,7 @@ export {
 } from "./ch";
 export { CZ_REGIONS, czechia, PRAGUE_CODE, PRAGUE_DISTRICT_CODE } from "./cz";
 export { DE_PHARMACY_STATES, DE_SCHEME_IDS, DE_STATES, DESTATIS_YEAR, germany } from "./de";
+export { EE_COUNTIES, EE_PLACES_DATE, EE_SCHEME_IDS, estonia } from "./ee";
 export { ES_COMMUNITIES, ES_PROVINCE_COMMUNITIES, spain } from "./es";
 export { france } from "./fr";
 export { GB_NATIONS, GB_REGIONS, gbNationOf, unitedKingdom } from "./gb";
@@ -44,6 +46,7 @@ export const COUNTRY_ADAPTERS: Readonly<Partial<Record<CountryCode, CountryAdapt
 	IT: italy,
 	DE: germany,
 	CH: switzerland,
+	EE: estonia,
 };
 
 /** The adapter of a market, or an error naming a country the code does not support yet. */

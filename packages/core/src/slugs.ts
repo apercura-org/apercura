@@ -560,3 +560,88 @@ export function parseChFacilitySegment(segment: string): ChFacilitySegment | nul
 	if (!key) return null;
 	return { ...key, namePart: dash < 0 ? "" : segment.slice(0, dash) };
 }
+
+/**
+ * Estonian identifiers: one scheme per source, so a source that fails to import keeps its rows.
+ * A healthcare provider of the Health Board's register (MEDRE, "Tervishoiuteenuse osutajate ning
+ * tegevuslubade andmestik") is keyed by its first activity licence still in force, the
+ * register's immutable licence designation (`L01909`: the letter L and five digits), which the
+ * Advertising Act (§ 22(3)) has every page about a provider print anyway; the provider's
+ * Business Register code is never used (a sole trader's names the person). A pharmacy of the
+ * State Agency of Medicines' register is keyed by its place of business code (`Tegutsemiskoha
+ * kood`, a number). A page URL ends with the key after letters naming the source
+ * (`perearstikeskus-naide-l01909`, `naidise-apteek-ap457`), so the two kinds never meet.
+ */
+export const EE_ID_SCHEMES = {
+	/** A healthcare provider: the digits of its first activity licence in force (`L01909`). */
+	"EE-TTL": { prefix: "l", pattern: /^\d{5}$/ },
+	/** A pharmacy: the State Agency of Medicines' place of business code (`457`). */
+	"EE-APT": { prefix: "ap", pattern: /^[1-9]\d{0,6}$/ },
+} as const;
+
+export type EeIdScheme = keyof typeof EE_ID_SCHEMES;
+
+/** Schemes by prefix, the longest prefix first (`ap` before any one-letter prefix). */
+const EE_SCHEMES = (Object.keys(EE_ID_SCHEMES) as EeIdScheme[]).sort(
+	(a, b) => EE_ID_SCHEMES[b].prefix.length - EE_ID_SCHEMES[a].prefix.length,
+);
+
+/** True when `value` is a key of the Estonian scheme (syntax only: the place may not exist). */
+export function isValidEeSourceId(scheme: string, value: string): boolean {
+	const entry = EE_ID_SCHEMES[scheme as EeIdScheme];
+	return entry ? entry.pattern.test(value) : false;
+}
+
+/** The key of an Estonian page as its URL ends (`l01909`, `ap457`). */
+export function eeUrlKey(scheme: EeIdScheme, nationalId: string): string {
+	return `${EE_ID_SCHEMES[scheme].prefix}${nationalId}`;
+}
+
+/**
+ * The activity licence number as the register writes it and a page prints it (`01909` →
+ * `L01909`).
+ */
+export function eeLicenceNumber(nationalId: string): string {
+	return `L${nationalId}`;
+}
+
+/**
+ * Canonical path segment of an Estonian page: `{name}-{key}` (`perearstikeskus-naide-l01909`,
+ * `naidise-apteek-ap457`), diacritics dropped (`õ`, `ä`, `ö`, `ü` → `o`, `a`, `o`, `u`).
+ */
+export function eeFacilitySlug(name: string, scheme: EeIdScheme, nationalId: string): string {
+	const key = eeUrlKey(scheme, nationalId);
+	const base = slugify(name).slice(0, 80).replace(/-+$/, "");
+	return base ? `${base}-${key}` : key;
+}
+
+export type EeFacilityKey = { idScheme: EeIdScheme; nationalId: string };
+
+/** Reads an Estonian key as its page URL ends (`l01909`, `ap457`). Null for anything else. */
+export function parseEeKey(token: string): EeFacilityKey | null {
+	const lower = token.toLowerCase();
+	for (const idScheme of EE_SCHEMES) {
+		const { prefix, pattern } = EE_ID_SCHEMES[idScheme];
+		if (!lower.startsWith(prefix)) continue;
+		const nationalId = lower.slice(prefix.length);
+		if (pattern.test(nationalId)) return { idScheme, nationalId };
+	}
+	return null;
+}
+
+export type EeFacilitySegment = EeFacilityKey & {
+	/** Name part before the key, possibly empty. */
+	namePart: string;
+};
+
+/**
+ * Parses the last segment of an Estonian page URL (`{name}-{key}`). Returns null unless it ends
+ * with a valid key, so invalid URLs never reach the database.
+ */
+export function parseEeFacilitySegment(segment: string): EeFacilitySegment | null {
+	if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(segment)) return null;
+	const dash = segment.lastIndexOf("-");
+	const key = parseEeKey(dash < 0 ? segment : segment.slice(dash + 1));
+	if (!key) return null;
+	return { ...key, namePart: dash < 0 ? "" : segment.slice(0, dash) };
+}

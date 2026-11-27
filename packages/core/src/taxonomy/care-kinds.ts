@@ -15,7 +15,7 @@
  */
 
 /** The open markets (ISO 3166-1 alpha-2), as `SEARCH_ALIASES` keys them. */
-export type CareMarket = "FR" | "AT" | "GB" | "CZ" | "ES" | "IT" | "DE" | "CH";
+export type CareMarket = "FR" | "AT" | "GB" | "CZ" | "ES" | "IT" | "DE" | "CH" | "EE";
 
 export const CARE_KINDS = {
 	"general-practice": {
@@ -24,6 +24,7 @@ export const CARE_KINDS = {
 		GB: "gp-practices",
 		CZ: "prakticky-lekar",
 		ES: "centros-de-salud",
+		EE: "perearstikeskused",
 	},
 	dentistry: {
 		FR: "chirurgien-dentiste",
@@ -31,6 +32,7 @@ export const CARE_KINDS = {
 		GB: "dental-practices",
 		CZ: "zubni-lekar",
 		ES: "dentistas",
+		EE: "hambaravi",
 	},
 	orthodontics: {
 		FR: "orthodontiste",
@@ -38,6 +40,7 @@ export const CARE_KINDS = {
 		GB: "dental-practices",
 		CZ: "ortodontista",
 		ES: "dentistas",
+		EE: "hambaravi",
 	},
 	pharmacy: {
 		FR: "pharmacien",
@@ -47,8 +50,9 @@ export const CARE_KINDS = {
 		IT: "farmacie",
 		DE: "apotheken",
 		CH: "apotheke",
+		EE: "apteegid",
 	},
-	hospital: { ES: "hospitales", IT: "ospedali", DE: "krankenhaeuser", CH: "spital" },
+	hospital: { ES: "hospitales", IT: "ospedali", DE: "krankenhaeuser", CH: "spital", EE: "haiglad" },
 	paediatrics: { FR: "pediatre", AT: "kinderheilkunde", CZ: "detsky-lekar", ES: "pediatras" },
 	gynaecology: { FR: "gynecologue", AT: "frauenheilkunde", CZ: "gynekolog", ES: "ginecologos" },
 	obstetrics: {
@@ -57,11 +61,22 @@ export const CARE_KINDS = {
 		CZ: "gynekolog",
 		ES: "ginecologos",
 	},
-	midwifery: { FR: "sage-femme", CZ: "porodni-asistentka", ES: "matronas", CH: "geburtshaus" },
-	"home-nursing": { FR: "infirmier", CZ: "domaci-pece", ES: "enfermeria" },
-	physiotherapy: { FR: "masseur-kinesitherapeute", CZ: "fyzioterapeut", ES: "fisioterapeutas" },
-	psychology: { FR: "psychologue", CZ: "psycholog", ES: "psicologos" },
-	"speech-therapy": { FR: "orthophoniste", CZ: "logoped", ES: "logopedas" },
+	midwifery: {
+		FR: "sage-femme",
+		CZ: "porodni-asistentka",
+		ES: "matronas",
+		CH: "geburtshaus",
+		EE: "ammaemandusabi",
+	},
+	"home-nursing": { FR: "infirmier", CZ: "domaci-pece", ES: "enfermeria", EE: "oendusabi" },
+	physiotherapy: {
+		FR: "masseur-kinesitherapeute",
+		CZ: "fyzioterapeut",
+		ES: "fisioterapeutas",
+		EE: "fusioteraapia",
+	},
+	psychology: { FR: "psychologue", CZ: "psycholog", ES: "psicologos", EE: "psuhholoogiline-ravi" },
+	"speech-therapy": { FR: "orthophoniste", CZ: "logoped", ES: "logopedas", EE: "logopeedia" },
 	ophthalmology: {
 		FR: "ophtalmologue",
 		AT: "augenheilkunde",
