@@ -5,7 +5,7 @@ first), Austria ([below](#austria)), the United Kingdom
 ([below](#united-kingdom)), Czechia ([below](#czechia)), Spain
 ([below](#spain)), Italy ([below](#italy)), Germany ([below](#germany)),
 Switzerland ([below](#switzerland)), Estonia ([below](#estonia)), Poland ([below](#poland)), Norway ([below](#norway)), Lithuania
-([below](#lithuania)) and Slovenia ([below](#slovenia)). It is a Bun CLI that runs as a
+([below](#lithuania)) Slovenia ([below](#slovenia)) and Cyprus ([below](#cyprus)). It is a Bun CLI that runs as a
 scheduled task next to the app, with its own database role that cannot reach
 patient data. Each market's import writes the shared `directory` schema with
 its own `country` and never reads or writes another market's rows.
@@ -3395,3 +3395,242 @@ them, with made-up doctors (doctor numbers from 90000, far above the real
 lists'), providers and streets; the regions, municipalities and post offices
 are the register's real names and codes, with made-up outlines. Never commit
 real rows.
+
+## Cyprus
+
+`etl:cy` builds Cyprus's directory (`/cy`) from the Ministry of Health's open
+lists on the national open data portal (data.gov.cy): the Pharmaceutical
+Services' private pharmacies, the state hospitals and the state health centres
+(issue #174, [ADR 0002](./adr/0002-multi-country.md#cyprus-cy)). Everything
+above about roles, ownership, the outbox and `--approve` applies; this section
+says what differs.
+
+```sh
+bun run etl:places --country cy   # once (etl:cy does it on its first run), then when the tables change
+bun run etl:cy                    # monthly (the pharmacies' list is published yearly)
+bun run etl:cy --dry-run          # everything, then roll back
+bun run etl:cy --approve=<run_id> # accept what a blocked run reported
+bun run etl:cy --sources farmakeia # one list only (farmakeia, nosokomeia, kentra)
+```
+
+A Cypriot page is a **facility**: a private pharmacy, a state hospital or a
+state health centre. People are **never listed**: the pharmacies' list
+identifies each pharmacy by its pharmacist, and those columns are never read.
+The list a facility comes from is its kind; no field is read to tell one kind
+from another.
+
+### Sources
+
+Verified on 27 November 2026 on each dataset page of data.gov.cy (its "Άδεια
+Χρήσης" field) and on the files themselves.
+
+| Source (`--sources` id)                                                                           | Distribution                                                                                                                                                                                                                                                                                                                            | Licence, format, update                                                                                                                                                                  |
+| ------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Κατάλογος Ιδιωτικών Φαρμακείων (Pharmaceutical Services, Ministry of Health) (`farmakeia`)        | `https://www.data.gov.cy/el/dataset/katalogos-idiotikon-farmakeion`, its CSV "Κατάλογος Ιδιωτικών Φαρμακείων 2024-2025.csv"                                                                                                                                                                                                             | **CC BY 4.0**; UTF-8 CSV with a byte order mark, 126 kB, 660 rows; edition "2024–2025", modified 25/10/2024, frequency yearly ("Ετήσια")                                                 |
+| Κατάλογος Κρατικών Νοσοκομείων Κύπρου (Ministry of Health) (`nosokomeia`)                         | `https://www.data.gov.cy/el/dataset/katalogos-kratikon-nosokomeion-kyproy`, its CSV "Κατάλογος Νοσοκομείων Κύπρου_1.csv"                                                                                                                                                                                                                | **CC BY 4.0**; CSV, 1.7 kB, 8 hospitals with their points; released 13/03/2018, modified 01/07/2024, frequency irregular ("Ακανόνιστα")                                                  |
+| Κατάλογος Κρατικών Κέντρων Υγείας Κύπρου (Ministry of Health) (`kentra`)                          | `https://www.data.gov.cy/el/dataset/katalogos-kratikon-kentron-ygeias-kyproy`, its CSV "Κέντρα Υγείας Κύπρου.csv"                                                                                                                                                                                                                       | **CC BY 4.0**; CSV, 2.3 kB, 35 health centres: name, telephone, fax, no address; released 13/03/2018, modified 01/07/2024, frequency irregular                                           |
+| Ταχυδρομικοί Κώδικες ανά Δήμο, Κοινότητα και Επαρχία (Department of Postal Services, Cyprus Post) | `https://www.data.gov.cy/el/dataset/tahydromikoi-kodikes-ana-dimo-koinotita-kai-eparhia`, its workbook "ΤΚ_Δήμοι και Κοινότητες Vs LAU Codes - Αντιστοίχηση 2021.xlsx", sheet "Postal Codes Vs LAU2 Codes"                                                                                                                              | **CC BY 4.0**; XLSX, 240 kB, 1,117 postcodes, each with its municipality's or community's LAU code (CYSTAT's code), Greek and official Latin names and centre (2021); places import only |
+| Απογραφή 2021: πληθυσμός κατά επαρχία, δήμο/κοινότητα και ενορία (Statistical Service, CYSTAT)    | `https://www.data.gov.cy/el/dataset/katoikies-noikokyria-idrymata-kai-plithysmos-poy-katagrafikan-kata-eparhia-dimokoinotita`, table 1891164G of CYSTAT's PxWeb database, read through its API (a POST asking for the total population, `"format": "json-stat2"`: `https://cystatdb.cystat.gov.cy/api/v1/el/8.CYSTAT-DB/…/1891164G.px`) | **CC BY 4.0**; JSON-stat 2.0, 28 kB, every municipality and community the 2021 census counted, with its population; updated 16/04/2025; places import only                               |
+
+`ETL_CY_FARMAKEIA_URL`, `ETL_CY_NOSOKOMEIA_URL`, `ETL_CY_KENTRA_URL`,
+`ETL_CY_CENSUS_URL` and `ETL_CY_POSTCODES_URL` override them. The files are
+plain downloads: no login, CAPTCHA or rate limit stands in the way.
+
+**Licences and attributions** (`cyprus.registries`, printed on the data sources
+page and on the pages built from them): every source is **CC BY 4.0**, which
+asks for the creator, the licence and a note of any change. The lists a page is
+built from are credited "Κατάλογος Ιδιωτικών Φαρμακείων: Φαρμακευτικές
+Υπηρεσίες, Υπουργείο Υγείας, CC BY 4.0· με αλλαγές της Apercura" (and likewise
+for the two state lists), the places "Ταχυδρομικοί κώδικες ανά δήμο και
+κοινότητα: Τμήμα Ταχυδρομικών Υπηρεσιών, CC BY 4.0" and "Δήμοι και κοινότητες:
+Στατιστική Υπηρεσία Κύπρου, Απογραφή 2021, CC BY 4.0".
+
+**Not used**: the Cyprus Medical Council's register of doctors (one HTML table
+online, no licence stated); GESY's provider search (no open list); private
+clinics, dentists, physiotherapists (no open list); the Department of Lands and
+Surveys' address points (INSPIRE, CC BY 4.0, but covering about 4% of the
+island). See [`data-requests/cy.md`](./data-requests/cy.md).
+
+### Identifiers
+
+One scheme per publisher (`CY_ID_SCHEMES`, `packages/core/src/slugs.ts`):
+
+| Scheme    | URL key       | Key                                                                                                                                                     |
+| --------- | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `CY-FARM` | `f1197`       | a private pharmacy: the list's registration number (ΑΜ, column `S/N`)                                                                                   |
+| `CY-MOH`  | `m3fa9c01b2e` | a state hospital or health centre: ten hexadecimal digits of a SHA-256 of its kind and its name's key (`stateKey`); neither list numbers its facilities |
+
+The page URL ends with the key (`/cy/monada/farmakeio-ermou-51g-larnaka-f1197`,
+the name transliterated as ELOT 743 writes it), the reference is `cy:f1197`.
+A state facility the Ministry renames gets a new key, hence a new page; the old
+one is removed after two runs without it (below).
+
+### What is kept, and why
+
+Columns are mapped by header name (English or Greek), and only the ones read
+are mapped:
+
+- **Pharmacies**: registration number, district, address, town or community,
+  postcode, pharmacy telephone. **Never read**: the pharmacist's surname and
+  first name and their house telephone number (personal data: their columns are
+  not even mapped), nor the additional address line, which names nearby shops
+  and, at times, people.
+- **Hospitals**: name, address, telephone, latitude and longitude. Not read: the
+  `Info_URL` web pages (the Ministry's former pages).
+- **Health centres**: name and telephone (the first of a list such as
+  `22347780; 22347188`). Not read: the fax.
+
+The pharmacies' list names no pharmacy but by its pharmacist, so a pharmacy's
+page is **named after its address**: "Φαρμακείο, {street}, {town}"
+(`pharmacyName`), the street without a trailing part that repeats the town
+(`Αχυρώνα 2, Αυγόρου` in Αυγόρου → `Αχυρώνα 2`). Minimisation:
+
+- Two rows at one street and postcode (two pharmacists of one pharmacy) are one
+  page, under the lower registration number (`skipped["same pharmacy"]`).
+- A mobile number (`+3579…`), more often a person's than a pharmacy's, is not
+  stored (`counters.mobilePhones`); nor a number shared by more than three
+  pharmacies (`counters.sharedPhones`), nor one that is no Cypriot subscriber
+  number (`counters.invalidPhones`).
+- A row without a registration number, an address or a town is quarantined; its
+  sample keeps the key only, never a name.
+- No qualifications are stored. A state facility's page says it is the state's
+  (the Ministry's lists); a pharmacy's prints its registration number.
+- GDPR objections: the rows of a suppressed key are dropped while parsing
+  (`stats.suppressedLines`), and the purge of #116/#118 runs in the merge, as in
+  the other markets.
+
+### Places and precision
+
+Places (`directory.places`, `country = 'CY'`, `src/sources/cy/places.ts`),
+imported once from the two tables:
+
+- **departments**: the five districts of the areas the Government of the
+  Republic controls, by CYSTAT's code (`1` Λευκωσία, `3` Αμμόχωστος, `4`
+  Λάρνακα, `5` Λεμεσός, `6` Πάφος; `CY_DISTRICTS`), named "Επαρχία Λευκωσίας"
+  and slugged `eparchia-lefkosias`;
+- **communes**: every municipality and community the 2021 census counted, by
+  its four-digit code (`1012` Στρόβολος), in the district its first digit names,
+  with its census population, Cyprus Post's postcodes and centre, and its
+  official Latin name as slug (`strovolos`, `agia-napa`; `-{code}` on a
+  collision). A name keeps its first form (`Λατσιά ή Λακκιά` → `Λατσιά`).
+- The census was taken in the areas the Government of the Republic of Cyprus
+  controls: the municipalities and communities of the areas where it does not
+  exercise effective control (all of Kyrenia's district, part of Nicosia's and
+  most of Famagusta's) are not in it, so they have no place, and their
+  postcodes are left out (`postcodesLeftOut`). No open source lists a facility
+  there; the data page says so.
+- No regions and no listing level for the twenty municipalities of the 2024
+  local-government reform (ROADMAP.md).
+
+A facility is **placed** (`placeFacility`) in its municipality or community:
+
+1. by its **postcode** in Cyprus Post's table, which wins over the district a
+   list names (a pharmacy of Mosfiloti, in Larnaca's district, is listed under
+   Nicosia's);
+2. else by an **alias** (`PLACE_ALIASES`) for the names a health centre gives
+   that are not the census's: a quarter (Καϊμακλίου, Λινόπετρας), an ancient name
+   (Ιδαλίου for Δάλι), a short name (Έγκωμης), a former hospital, a village of two
+   parts (Πλατρών, Λευκάρων, Παναγιάς), a shared name (Κάμπου), Πύργου Τυλληρίας;
+3. else by the **place its town or name names** in its district (the district
+   the list writes, or the one its number's area code dials: `22` Nicosia, `23`
+   Famagusta, `24` Larnaca, `25` Limassol, `26` Paphos), word stems compared
+   without accents, inflection or spelling variants (`Κοφίνου` meets `Κόφινου`,
+   `Ορμήδειας` meets `Ορμίδεια`, `Αγίας Νάπας` meets `Αγία Νάπα`), the longest
+   name first, then the one named first (`Κάτω Πολεμίδια Λεμεσός` is in Κάτω
+   Πολεμίδια, `Στρόβολος Λευκωσία` in Στρόβολος); a name that fits two places
+   alike is left out rather than guessed;
+4. else, for a hospital, at the unit of its district whose centre is nearest its
+   point (within about 15 km).
+
+A facility that cannot be placed is left out (`placement.unplaced`). It is
+**located** at the point its list gives (the state hospitals: `geo_precision =
+'address'`, `geo_source = 'source'`, a map pin), else at its municipality's or
+community's centre (`'city'`, `'centroid'`, no pin): there is no open address
+file for the island. The address prints the street, then the postcode and the
+town as the list writes it for a pharmacy (`6023 Λάρνακα`, `8000 Κάτω Πάφος`),
+the place's name for a state facility. No geocoder is called.
+
+**Greek in the search** (migration `0034_cy_market.sql`): the search's
+normalisers `directory.text_norm()` and `directory.name_norm()` kept Latin
+letters and digits only, so every Greek name normalised to nothing. They now
+write Greek in Latin letters first (`directory.greek_latin()`, as ELOT 743
+transcribes it: `Λεμεσός` → `lemesos`), so a place or a facility is found
+whether it is typed in Greek or in Latin letters; text without a Greek letter
+normalises exactly as before, and the places' trigram index is rebuilt. The web
+app's listing index does the same (`transliterateGreek`).
+
+### Guards
+
+On each list (`checkCySource`, `CY_LIMITS`): a file of 200 bytes to 20 MB;
+quarantine within 2% of the lines; floors of lines and facilities read (60 and
+50 pharmacies, 3 and 3 hospitals, 10 and 10 health centres; never approvable);
+at most 20% more or fewer pharmacies and 40% more or fewer bytes than the last
+successful run (50% and 50% for the hospitals, 30% and 50% for the health
+centres; approvable: a new yearly edition of the pharmacies' list shows here
+first). A list that cannot be fetched, read or fails a floor is left out of the
+run and keeps its pages (exit code 3); the other lists are imported. After
+placing (`checkCyPlaces`): 95% of the facilities in their municipality or
+community (approvable). Then the breakers on Cyprus's own pages, as everywhere.
+
+**Absences** (`CY_MISSING_RUNS`): a facility missing from its list twice in a
+row is removed. The two state lists share a scheme, so absences are counted per
+list (scheme and kind): a list left out never counts another's facilities
+missing. A claimed page is kept and counted for review.
+
+### Schedule and monitoring
+
+The scheduler runs `etl:cy $ETL_CY_SCHEDULE_ARGS` on the 5th of every month at
+22:30 UTC (`docker/crontab`), when no other import runs. The pharmacies' list is
+published once a year and the state lists rarely change: an unchanged set of
+files ends the run after its download (about 130 kB, `skipped`). Alert on exit
+codes 1, 2 and 3, and on a new edition of the pharmacies' list (its URL names
+the years: a new edition may come under a new file name, to set in
+`ETL_CY_FARMAKEIA_URL` until the default follows).
+
+```sql
+-- Cyprus's last runs: status, lists left out, counters, placement and totals.
+SELECT id, status, finished_at, stats -> 'sourceErrors' AS errors,
+	stats -> 'sources' AS sources, stats -> 'batch' -> 'placement' AS placement,
+	stats -> 'totals' AS totals
+FROM directory.etl_runs WHERE source = 'cy' ORDER BY id DESC LIMIT 5;
+```
+
+### Measured run (files of 27 November 2026)
+
+Laptop, local PostGIS 17, fresh database, the real files downloaded by the run:
+
+|            |                                                                                                                                                                                                         |
+| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Duration   | dry run about 3 s, downloads included                                                                                                                                                                   |
+| Pharmacies | 660 lines, 658 listed (2 second rows of one pharmacy merged); none quarantined; no mobile, shared or unreadable number                                                                                  |
+| Hospitals  | 8 lines, 8 listed, each at the list's point                                                                                                                                                             |
+| Centres    | 35 lines, 33 placed: the centres of "Δευτεράς/ Ανθούπολης" and "Παλαιοχωρίου" name no single place and are left out                                                                                     |
+| Kinds      | pharmacies 658 · hospitals 8 · health centres 33 (699)                                                                                                                                                  |
+| Placement  | 650 placed by postcode, 49 by name, none by point; 8 at the list's point, 691 at their place's centre; all 699 with a phone                                                                             |
+| Indexable  | 699 facility pages; 50 indexable listing pages of 150                                                                                                                                                   |
+| Places     | 5 districts, 404 municipalities and communities counted by the census (403 with a centre: 1022 Συνοικισμός Ανθούπολης has no Cyprus Post row); 234 postcodes of units the census did not count left out |
+
+### Local development
+
+```sh
+bun run etl:places --country cy --source-dir packages/etl/fixtures/cy   # synthetic places
+bun run etl:cy --source-dir packages/etl/fixtures/cy --offline          # synthetic data
+bun run --cwd packages/etl fixtures:cy                                  # regenerate the fixtures
+```
+
+`packages/etl/fixtures/cy` holds **synthetic** files in the sources' exact
+formats (`farmakeia.csv` with the list's real header, a byte order mark and a
+made-up pharmacist, house telephone and landmark on every row;
+`nosokomeia.csv` with an address on two lines; `kentra-ygeias.csv`;
+`apografi-2021.json`, the census table as the PxWeb API answers it;
+`tk-lau.xlsx`, Cyprus Post's workbook) for seven real municipalities and
+communities of the five districts and two units the census did not count,
+generated deterministically by `packages/etl/fixtures/generate-cy.ts`: made-up
+pharmacies, hospitals and health centres, a pharmacy listed twice, one with an
+unknown postcode, one with a mobile number, a switchboard number shared by four,
+one nowhere known, a row without a registration number and a centre naming no
+place, with filler rows above the floors. Never commit real rows.
+`test/cy-integration.test.ts` imports them next to the French fixtures: France
+untouched both ways, naming by address and nothing of the pharmacist stored,
+placement and precision, district and municipality listings, idempotence, a dry
+run, an unreadable list left out, absences after two runs, objections.
