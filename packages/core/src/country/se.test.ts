@@ -18,6 +18,7 @@ import {
 	adapterOfSegment,
 	GOTLAND_MUNICIPALITY,
 	SE_COUNTIES,
+	SE_HEALTH_CENTRE_COUNTIES,
 	SE_SCHEME_IDS,
 	SE_VGR_COUNTY,
 	seCountyOfName,
@@ -55,6 +56,7 @@ describe("the Swedish adapter", () => {
 		expect(SE_COUNTIES["01"]).toBe("Stockholms län");
 		expect(SE_COUNTIES[SE_VGR_COUNTY]).toBe("Västra Götalands län");
 		expect(GOTLAND_MUNICIPALITY.slice(0, 2)).toBe("09");
+		expect(SE_HEALTH_CENTRE_COUNTIES).toEqual(["14"]);
 	});
 
 	it("reads a county as the register writes it", () => {

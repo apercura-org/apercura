@@ -73,6 +73,7 @@ export { SI_LIST_IDS, SI_REGIONS, type SiListId, slovenia } from "./si";
 export {
 	GOTLAND_MUNICIPALITY,
 	SE_COUNTIES,
+	SE_HEALTH_CENTRE_COUNTIES,
 	SE_SCHEME_IDS,
 	SE_VGR_COUNTY,
 	seCountyOfName,

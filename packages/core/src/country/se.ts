@@ -49,6 +49,12 @@ export const GOTLAND_MUNICIPALITY = "0980";
 export const SE_VGR_COUNTY = "14";
 
 /**
+ * The counties whose region publishes its health centres under an open licence, and so whose
+ * health centres the market lists: Västra Götaland (CC0 1.0). Pharmacies are listed in all 21.
+ */
+export const SE_HEALTH_CENTRE_COUNTIES: readonly string[] = [SE_VGR_COUNTY];
+
+/**
  * The county a name of the register's `Län` column names (`Stockholm`, `Västra götaland`,
  * `Skåne län`), without case or the word `län`, or null.
  */
