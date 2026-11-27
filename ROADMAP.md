@@ -457,9 +457,32 @@ notice with the article 14 information, claims by documents, no booking
 - The 127 named health locations whose services carry no health class (some Tyks wards): classify
   every location by its name alone; service hours on the pages.
 
+### 14. Lithuania (`/lt`): open, directory of licensed institutions
+
+Done in [#170](https://github.com/apercura-org/apercura/issues/170): `/lt` in Lithuanian, built
+weekly by `etl:lt` from the licence register of health-care institutions of the State
+Accreditation Service for Health Care Activities (VASPVT, CC BY 4.0, daily): every activity address
+of a licensed institution, its kind read from the services licensed there (hospitals, primary
+care, medical centres, dental clinics, mental health, rehabilitation, nursing, laboratories,
+optometrists), about 6,200 pages, placed in the Address Register's counties,
+municipalities and settlements by VASPVT's address text, at the settlement's point (city
+precision), listed per county too, with the Lithuanian credits on the data sources page, a legal
+notice, a privacy notice with the article 14 information for the owners an institution's name may
+name, claims by documents, no booking ([data import](./docs/data-import.md#lithuania),
+[ADR 0002](./docs/adr/0002-multi-country.md#lithuania-lt)). Institutions only: no health worker
+and no pharmacy is listed. Left:
+
+- Have a native speaker review the Lithuanian interface and market texts, and a Lithuanian lawyer
+  the legal notice, privacy notice and terms (Law on Information Society Services, GDPR and the
+  Law on Legal Protection of Personal Data, the Law on Advertising, art. 15).
+- Send the requests of [`docs/data-requests/lt.md`](./docs/data-requests/lt.md) (founder): VLK's
+  contracted places with addresses, VVKT's pharmacies, a kind and a postcode in VASPVT's register,
+  current address points from Registrų centras.
+- Confirm with VASPVT what licence status `2` means (read as suspended, not imported).
+
 ### Later
 
-The Netherlands, Portugal, Croatia, Cyprus, Romania, Denmark, Sweden, Lithuania, Slovakia,
+The Netherlands, Portugal, Croatia, Cyprus, Romania, Denmark, Sweden, Slovakia,
 Hungary, Bulgaria, Iceland and Liechtenstein open with claimed pages when there is demand.
 Croatia (HZZO) and Cyprus (Medical Council) become directories if their publisher confirms an open
 licence. Booking in Finland waits for a ruling on whether a booking site is a registered system

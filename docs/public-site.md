@@ -139,6 +139,12 @@ wellbeing services county is a department and Helsinki, its own, has the
 department's page only (`/fi/terveysasemat/helsinki`), and a reference reads
 `fi:` and the location's 32-digit key. Swedish (`/fi-sv`) is a follow-up.
 
+Lithuania (#170) is indexed in Lithuanian under `/lt` (`lt-LT`, the English catalog with the
+Lithuanian texts on top, as Czechia's). Its route segments are Lithuanian: an institution's page
+under `/lt/istaiga/…`, an establishment's under `/lt/organizacija/…`, the directory `/lt/katalogas`,
+search `/lt/paieska`, `/lt/apie`, `/lt/duomenys`, `/lt/prieinamumas`, `/lt/privatumas`,
+`/lt/teisine-informacija` and `/lt/naudojimo-salygos`; its listing slugs are Lithuanian
+(`/lt/odontologijos-klinikos/kauno-miesto-savivaldybe`).
 Each segment follows the locale's prefix: `/fr/annuaire`, `/fr-de/verzeichnis`.
 
 Only French pages are indexed in v1 (`INDEXABLE_LOCALES`): pages in the other

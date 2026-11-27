@@ -4,8 +4,8 @@
 first), Austria ([below](#austria)), the United Kingdom
 ([below](#united-kingdom)), Czechia ([below](#czechia)), Spain
 ([below](#spain)), Italy ([below](#italy)), Germany ([below](#germany)),
-Switzerland ([below](#switzerland)), Estonia ([below](#estonia)), Poland ([below](#poland)) and Norway ([below](#norway)). It is a
-Bun CLI that runs as a
+Switzerland ([below](#switzerland)), Estonia ([below](#estonia)), Poland ([below](#poland)), Norway ([below](#norway)) and Lithuania
+([below](#lithuania)). It is a Bun CLI that runs as a
 scheduled task next to the app, with its own database role that cannot reach
 patient data. Each market's import writes the shared `directory` schema with
 its own `country` and never reads or writes another market's rows.
@@ -3011,3 +3011,194 @@ commit real rows. The anchors the end-to-end tests use: Esimerkkilän keskussair
 (Tampere, `…0001`), Esimerkkilän yhteispäivystys (`…0002`), Esimerkkilän
 terveysasema 1 (Tampere, `…0100`), Esimerkkilän hammashoitola 1 (Turku, `…0200`),
 Esimerkkipolun neuvola 1 (Oulu, `…0300`).
+
+## Lithuania
+
+`etl:lt` builds Lithuania's directory (`/lt`) from the licence register of health-care
+institutions of the State Accreditation Service for Health Care Activities (issue #170,
+[ADR 0002](./adr/0002-multi-country.md#lithuania-lt)). Everything above about roles, ownership,
+the outbox and `--approve` applies; this section says what differs.
+
+```sh
+bun run etl:places --country lt   # once (about 120 MB of settlement boundaries), then yearly
+bun run etl:lt                    # weekly (the register publishes daily)
+bun run etl:lt --dry-run          # everything, then roll back
+bun run etl:lt --approve=<run_id> # accept what a blocked run reported
+```
+
+A Lithuanian page is an **activity address** (veiklos adresas) of a licensed institution: a
+hospital, a primary care centre, a medical centre, a dental clinic, a nursing service. Its name
+is the institution's legal name as registered, its legal form abbreviated (`UAB`, `VšĮ`, `MB`,
+`AB`, `BĮ`, `IĮ`); an institution with several addresses has a page per address. No health
+worker and no pharmacy is listed.
+
+### Sources
+
+Verified on 27 November 2026 on each dataset's page on data.gov.lt. Both are under
+**CC BY 4.0**; their attribution is printed on the data sources page (`/lt/duomenys`) and kept in
+`lithuania.registries` (`packages/core/src/country/lt.ts`).
+
+| Source                                                                                                         | Models read                                                                                                               | Format, update                                                                                                                                                             |
+| -------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| VASPVT, "Sveikatos priežiūros įstaigų licencijų duomenys" (data.gov.lt dataset 1623)                           | `Istaiga`, `IstaigosVeiklosAdresas`, `Licencija`, `IstaigosPaslauga`, `PaslauguNustatymas`, `Paslauga`                    | CSV per model from the data store (`get.data.gov.lt/datasets/gov/vaspvt/licencijos/…`); "Atnaujinama: Kasdien" (daily); `IstaigosPaslauga` is 677,000 rows, 148 MB in full |
+| VĮ Registrų centras, Address Register (datasets 1287 settlements, monthly; 1347 settlement boundaries, yearly) | every run: `Savivaldybe`, `Seniunija`, `GyvenamojiVietove`; the places import adds `Apskritis` and `GraGyvenamojiVietove` | CSV from the data store (`get.data.gov.lt/datasets/gov/rc/ar/…`)                                                                                                           |
+
+`ETL_LT_VASPVT_URL` and `ETL_LT_ADDRESS_URL` override the two namespaces, `ETL_LT_DATASET_PAGE`
+the page whose licence is checked; `--source-dir` (or `ETL_LT_SOURCE_DIR`) reads the files from a
+directory instead (`vaspvt_<Model>.csv`, `ar_<Model>.csv`). Legal forms are read from
+`Istaiga.teisine_forma` codes (and the name), so `TeisineForma` is not downloaded.
+
+Every run first reads the dataset page (`https://data.gov.lt/datasets/1623/`) and refuses to
+import unless it still names "Creative Commons Attribution 4.0". The health insurance fund's list
+(VLK, dataset 1386) is not imported: [`docs/data-requests/lt.md`](./data-requests/lt.md) says why.
+
+**Politeness.** data.gov.lt and its data store answer HTTP 429 to quick successive requests. The
+import makes one request at a time, at least `ETL_LT_REQUEST_INTERVAL_MS` apart (20,000 by
+default, never under 1,000), so a run spends about four minutes waiting. It retries only 429 and
+5xx answers, honouring `Retry-After` and doubling its wait up to ten minutes, for at most
+`ETL_LT_REQUEST_ATTEMPTS` attempts (6); any other error, a 404 among them, fails the run at
+once and the pages stay. It names itself in its `User-Agent` and asks the data store for the
+columns it reads only (`?select(…)`). Nothing tries to get around the limit.
+
+### Joins and kinds
+
+- A licence is **live** when it has no revocation date (`panaikinimo_data`) and its status
+  (`busena`) is not `2`. The codes are read as `3` issued, `4` revoked and `2` suspended: the data
+  store's model lists "Sustabdyta, Išduota, Panaikinta" without saying which code is which, so
+  this mapping is an assumption, checked against the revocation dates (every `4` but three has
+  one).
+- The services of an address are the rows of `IstaigosPaslauga` of a live licence
+  (`licenzija`) at that address (`veiklos_adresas`), each with its setting in
+  `PaslauguNustatymas` (mode, group, level, type) and its name in `Paslauga`.
+- The kind is `ltKindOfServices` (`packages/core/src/taxonomy/lt.ts`), the most specific first:
+  inpatient services (mode `2`) make a hospital (`ligonines`); family medicine a primary care
+  centre (`seimos-medicina`); outpatient medical services at the secondary or tertiary level a
+  medical centre (`medicinos-centrai`); dental or oral care a dental clinic
+  (`odontologijos-klinikos`); then mental health (`psichikos-sveikatos-centrai`), other medical
+  services (medical centre), laboratories (`laboratorijos`), nursing and midwifery (`slauga`),
+  rehabilitation, physiotherapy and massage (`reabilitacija`) and optometrists
+  (`optometrijos-kabinetai`). An address with no current licence, only a suspended one, or only
+  services patients do not visit for care (public health services, ambulance services, a
+  pharmacist's extended practice, tissue banks, biobanks), is left out and counted by reason in
+  `stats.sources.vaspvt.skipped`.
+- Every licensed service of the address is stored as a qualification (`source = 'paslauga'`, the
+  label as published), shown on the page.
+- The name is the institution's (`Istaiga.ja_pavadinimas`), else, for an institution missing from
+  `Istaiga` (722 pages in November 2026), its newest current licence's
+  (`counters.namesFromLicence`); the legal form is abbreviated (`counters.namesAbbreviated`).
+
+### Identifiers
+
+One scheme, `LT-VASPVT`: the institution's number (`spi_id`) and the Address Register's permanent
+code of the activity address (`adreso_id`), `5271-12679435`; an address without a code takes `v`
+and the first eight hexadecimal digits of its GUID (`5271-v00141024`). The page URL ends with it
+(`/lt/istaiga/uab-pavyzdine-klinika-5271-12679435`). Two rows of one institution at one address
+code are one page, with the services of both (`counters.mergedDuplicates`).
+
+### Minimisation and what is left out
+
+- **Never read into a row, so never stored**: the legal entity code (`ja_kodas`), the seat
+  addresses (`Istaiga.adresas`, `Licencija.ja_buveines_adresas`, a sole trader's home), the
+  licence and order numbers and dates, the personal or public health flag.
+- An individual enterprise (legal forms 810 to 812, or a name ending "individuali įmonė" or "IĮ")
+  is often named after its owner, and so is a small partnership (MB): the page prints the name as
+  registered (the institution's official name), the privacy notice gives the article 14
+  information and an objection removes the page. An individual enterprise's premises number is
+  left out of its street (`Pavyzdžio g. 5-207` → `Pavyzdžio g. 5`; `counters.individualEnterprises`,
+  `counters.premisesDropped`).
+- Quarantined lines keep the institution's number only, never a name.
+- GDPR objections: the lines of a suppressed key are dropped while parsing, and the purge of
+  #116/#118 runs in the merge, as in the other markets.
+
+### Places and precision
+
+Places (`directory.places`, `country = 'LT'`), from the Address Register, imported once:
+
+- **regions**: the 10 counties (apskritys, code `adm_kodas`, `vilniaus-apskritis`), with listings
+  of their own (migration `0032_lt_market`, as Italy's regions and Switzerland's cantons);
+- **departments**: the 60 municipalities (savivaldybės, code `sav_kodas`, "Vilniaus miesto
+  savivaldybė", `vilniaus-miesto-savivaldybe`);
+- **communes**: the 20,880 current settlements (gyvenamosios vietovės, code `gyv_kodas`, the name
+  in the nominative); a homonym inside one municipality carries its eldership
+  ("Pavyzdžiai (Pavyzdžio sen.)", `pavyzdziai-pavyzdzio-sen`, then `-{code}` if the slug is still
+  taken), unless it is the one town of that name. The eight cities that are a municipality of
+  their own (Vilnius, Kaunas, Klaipėda, Šiauliai, Panevėžys, Alytus, Palanga, Neringa;
+  `LT_CITY_MUNICIPALITIES`) are settlements like the others, but their page is the
+  municipality's: migration `0032_lt_market` keeps their own listings answering and noindex.
+
+A settlement's point is an interior point of the largest ring of its boundary (its centroid when
+inside; `GraGyvenamojiVietove`, WKT in LKS-94, EPSG:3346, written northing first, so the axes are
+flipped before PostGIS transforms it to WGS 84); 20 settlements have no boundary row and no
+point. Municipalities and counties take the centre of their settlements.
+
+VASPVT writes each activity address as free text, in two styles
+("Klaipėdos apskr. Klaipėdos miesto sav. Klaipėdos m. Pavyzdžio g. 5" and
+"Kauno m.sav., Kauno m., Pavyzdžio g. 5"). The import reads the municipality, the eldership and
+the settlement (genitive with its type, `m.`, `mstl.`, `k.`, `vs.`, or a nominative name) and
+places the page in that settlement (`counters.inSettlement`); a city filed under the wrong
+municipality, or none, is found among the whole country's cities. A settlement that cannot be
+told stays in the street text and the page is placed in its municipality
+(`counters.inMunicipality`); one whose municipality cannot be told is quarantined. Every page is at its
+settlement's point (`geo_source = 'centroid'`, `geo_precision = 'city'`, no map pin), or its
+municipality's. VASPVT gives no postcode and no phone. The open address points of the register
+(dataset 1351) are a 2021 snapshot: not used ([`docs/data-requests/lt.md`](./data-requests/lt.md)).
+
+### Guards
+
+Before the merge (`LT_LIMITS` in `src/guards.ts`):
+
+- at most 2% of the activity addresses quarantined (`vaspvt.quarantine`), at least 1,000
+  addresses read (`vaspvt.lines`) and 300 pages (`vaspvt.rows`), never approvable;
+- at most 5% more or fewer pages (`vaspvt.pages`) and 15% more or fewer bytes (`vaspvt.size`)
+  than the last successful run: otherwise **blocked** (exit code 2, approvable).
+
+After staging: less than 97% of the pages placed in their settlement (`lt.places`) or located
+at their place's point (`lt.points`) blocks the run (approvable).
+
+One list: when the register cannot be fetched or read, or its page no longer names the licence,
+the run **fails** (exit code 1) and the pages stay as they are. After the merge, the circuit
+breakers and the orphan check apply to Lithuania's own pages only.
+
+### Schedule and monitoring
+
+The scheduler runs `etl:lt $ETL_LT_SCHEDULE_ARGS` every Tuesday at 03:30 UTC, an hour before
+Poland's import (04:30 UTC),
+(`30 3 * * 2 apercura etl:lt $ETL_LT_SCHEDULE_ARGS` in `docker/crontab`), outside the Monday
+imports (one advisory lock for every import). The register changes daily, so most weeks import;
+an unchanged set of files is skipped. Alert on exit codes 1 and 2 and on the import age (the
+market query of [Austria's monitoring](#schedule-and-monitoring) covers `lt`); alert above 15
+days.
+
+```sql
+-- Lithuania's last runs: status, kinds left out, placement and totals.
+SELECT id, status, finished_at, stats -> 'sources' -> 'vaspvt' -> 'skipped' AS skipped,
+	stats -> 'staged' AS staged, stats -> 'totals' AS totals
+FROM directory.etl_runs WHERE source = 'lt' ORDER BY id DESC LIMIT 5;
+```
+
+### Measured run (files of 27 November 2026)
+
+A dry run over the real files (`--source-dir`, places imported first, fresh database):
+about 29 seconds, peak RSS 354 MB.
+
+|               |                                                                                                                                                                                        |
+| ------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Addresses     | 9,731 read: 6,208 pages, 3,193 without a current licence, 52 with a suspended licence only, 262 not a place of care, 15 merged into another page, 1 quarantined (unknown municipality) |
+| Pages         | dental clinics 2,247 · medical centres 1,622 · nursing 776 · primary care 741 · rehabilitation 298 · hospitals 236 · mental health 151 · optometrists 99 · laboratories 38             |
+| Names         | 1,412 legal forms abbreviated; 722 named from the newest current licence; 508 individual enterprises, 231 premises numbers left out                                                    |
+| Sites         | 6,184 in their settlement, 24 in their municipality only; all at their place's point (city precision)                                                                                  |
+| Listing pages | 1,807, 533 indexable (9 country, 85 county, 277 municipality, 162 settlement)                                                                                                          |
+| Places        | 10 counties, 60 municipalities, 20,880 settlements (20 without a boundary, so without a point)                                                                                         |
+
+### Local development
+
+```sh
+bun run --cwd packages/etl fixtures:lt                       # regenerate the synthetic fixtures
+bun run etl:lt --source-dir packages/etl/fixtures/lt --offline
+ETL_TEST_DATABASE_URL=… bun run --cwd packages/etl test     # includes test/lt-integration.test.ts
+```
+
+The fixtures (`packages/etl/fixtures/lt`) are synthetic: made-up institutions ("Pavyzdys") in the
+register's exact model formats, with invented legal entity codes and seat addresses the tests
+check are never stored, and a few counties, municipalities, elderships and settlements with
+simple boundaries. Never commit real rows.
