@@ -10,6 +10,7 @@ import {
 	allLtListingSlugs,
 	allNoTaxonomySlugs,
 	allPlListingSlugs,
+	allSiListingSlugs,
 	DE_DEFAULT_PROFESSIONS,
 	EE_DEFAULT_PROFESSIONS,
 	FI_DEFAULT_PROFESSIONS,
@@ -46,6 +47,7 @@ import itIT from "../../messages/it-IT.json";
 import lt from "../../messages/lt.json";
 import no from "../../messages/no.json";
 import pl from "../../messages/pl.json";
+import si from "../../messages/si.json";
 import { mergeMessages, messagesFor, withoutEszett } from "./catalogs";
 import { CATALOG_LANGUAGES, LOCALES, type Locale } from "./locales";
 
@@ -98,6 +100,7 @@ const CATALOGS: Record<Locale, unknown> = {
 	"nb-NO": mergeMessages(en, no as Record<string, unknown>),
 	"en-IE": mergeMessages(en, enIE as Record<string, unknown>),
 	"fi-FI": mergeMessages(en, fi as Record<string, unknown>),
+	"sl-SI": mergeMessages(en, si as Record<string, unknown>),
 };
 
 /** Every message of a catalog by its dotted key (array items are indexed). */
@@ -548,5 +551,31 @@ describe("Ireland's overrides", () => {
 		);
 		// The privacy notice never names a host, and keeps the data in the EEA.
 		expect(irish.get("PrivacyIe.sections.transfers.body.0")).toContain("European Economic Area");
+	});
+});
+
+describe("the Slovenian texts", () => {
+	it("only override keys of the English catalog", () => {
+		const english = flatten(en);
+		expect([...flatten(si).keys()].filter((key) => !english.has(key))).toEqual([]);
+	});
+
+	it("name every Slovenian listing and kind of doctor in Slovenian, and in every catalog", () => {
+		const slovenian = flatten(si);
+		for (const slug of allSiListingSlugs()) {
+			expect(slovenian.get(`taxonomy.listing.${slug}`), slug).toBeTruthy();
+			expect(slovenian.get(`taxonomy.profession.${slug}`), slug).toBeTruthy();
+			for (const catalog of [en, fr, de, es, it_]) {
+				expect(flatten(catalog).get(`taxonomy.listing.${slug}`), slug).toBeTruthy();
+			}
+		}
+		expect(messagesFor("sl-SI").taxonomy.listing.zobozdravnik).toBe("Zobozdravniki");
+	});
+
+	it("say in Slovenian whether a doctor takes new patients, as the insurer's list does", () => {
+		const page = messagesFor("sl-SI").PractitionerPage.slovenia;
+		expect(page.accepts).not.toBe(messagesFor("en").PractitionerPage.slovenia.accepts);
+		expect(page.asOf).toContain("{date}");
+		expect(JSON.stringify(si)).not.toMatch(/ÚZIS|ČÚZK|Ministerstvo zdravotnictví|Národní registr/);
 	});
 });

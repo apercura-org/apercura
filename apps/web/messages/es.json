@@ -92,6 +92,7 @@
 			"CZ": "Chequia",
 			"IT": "Italia",
 			"CH": "Suiza",
+			"SI": "Eslovenia",
 			"ES": "España",
 			"DE": "Alemania",
 			"LT": "Lituania",
@@ -657,6 +658,19 @@
 			"accessibility": "Accesibilidad"
 		},
 		"licensedServices": "Servicios autorizados",
+		"slovenia": {
+			"activity": "{kind, select, general {Medicina general} trainee {Consulta de un residente de medicina de familia} generalPlus {Medicina general con una enfermera adicional} children {Dispensario infantil y escolar} women {Dispensario de la mujer} dentalAdults {Odontología para adultos} dentalYouth {Odontología para niños y jóvenes} dentalStudents {Odontología para estudiantes} other {Consulta}}",
+			"provider": "Consulta",
+			"newPatients": "Nuevos pacientes",
+			"accepts": "Acepta nuevos pacientes",
+			"closed": "No acepta nuevos pacientes",
+			"unknown": "No indicado",
+			"asOf": "Lista de la ZZZS del {date}",
+			"note": "Cada día, el seguro de salud (ZZZS) publica si cada médico sigue aceptando asegurados que lo eligen como médico personal. La consulta lo confirma cuando elige a su médico.",
+			"source": "Fuente: ZZZS, CC BY 4.0",
+			"listingAccepts": "Acepta nuevos pacientes",
+			"listingClosed": "Sin nuevos pacientes"
+		},
 		"estonianFacts": {
 			"licences": "Licencias de actividad",
 			"licenceNote": "Los números de licencia de actividad de la Junta de Salud (Terviseamet), que toda página sobre un proveedor indica (Ley de Publicidad estonia, § 22(3)).",
@@ -1862,6 +1876,10 @@
 			"slauga": "Servicio de enfermería",
 			"laboratorijos": "Laboratorio",
 			"optometrijos-kabinetai": "Gabinete de optometría",
+			"druzinski-zdravnik": "Medicina de familia",
+			"otroski-zdravnik": "Pediatría y medicina escolar",
+			"ginekolog": "Ginecología",
+			"zobozdravnik": "Odontología",
 			"haiglad": "Hospital",
 			"haigla": "Hospital",
 			"perearstikeskused": "Centro de medicina de familia",
@@ -2211,6 +2229,10 @@
 			"slauga": "Servicios de enfermería",
 			"laboratorijos": "Laboratorios",
 			"optometrijos-kabinetai": "Gabinetes de optometría",
+			"druzinski-zdravnik": "Médicos de familia",
+			"otroski-zdravnik": "Pediatras y médicos escolares",
+			"ginekolog": "Ginecólogos",
+			"zobozdravnik": "Dentistas",
 			"haiglad": "Hospitales",
 			"perearstikeskused": "Centros de medicina de familia",
 			"hambaravi": "Clínicas dentales",
@@ -3303,6 +3325,7 @@
 			"GB-BSO-GP": "Número de consulta del BSO",
 			"GB-BSO-DENT": "Clínica dental del BSO",
 			"CZ-NRPZS": "Número de centro NRPZS",
+			"SI-ZZZS": "Número de médico de la ZZZS",
 			"EE-TTL": "Licencia de actividad",
 			"EE-APT": "Establecimiento de farmacia",
 			"PL-RPWDL": "Número de centro RPWDL (ID ZOZ)",
@@ -6845,6 +6868,408 @@
 			],
 			"formTitle": "Ask for a page to be removed",
 			"formBody": "Give the address of the page and an e-mail address where we can answer you."
+		}
+	},
+	"LegalNoticeSi": {
+		"metaTitle": "Legal notice (Slovenia) · Apercura",
+		"metaDescription": "Legal notice of the Slovenian pages of Apercura: the service provider, its contact details and registration, and the person responsible for the content (article 5 of the Electronic Commerce Market Act, ZEPT).",
+		"title": "Legal notice",
+		"lead": "Who operates the Slovenian pages of Apercura (apercura.org/si), with the general information article 5 of the Electronic Commerce Market Act (Zakon o elektronskem poslovanju na trgu, ZEPT) asks a provider of information society services to make easily and permanently available.",
+		"sections": {
+			"provider": {
+				"heading": "Service provider",
+				"body": [
+					"The Slovenian pages of Apercura are operated by the entity below. It runs the directory and answers for its content."
+				]
+			},
+			"service": {
+				"heading": "The service",
+				"body": [
+					"A free directory of the doctors who can be chosen as a personal doctor in Slovenia (family doctors, children’s and school doctors, gynaecologists and dentists), built from the open data of the Health Insurance Institute of Slovenia (ZZZS), without advertising, with a space where a doctor can complete their own page. No appointment is booked through Apercura in Slovenia."
+				]
+			},
+			"editor": {
+				"heading": "Person responsible for the content",
+				"body": [
+					"The person below is responsible for what the operator publishes. Information a doctor adds to their own page is their own responsibility; as a service that stores information provided by its users, the operator answers for it only under the conditions of the ZEPT and of article 6 of the Digital Services Act (Regulation (EU) 2022/2065)."
+				]
+			},
+			"liability": {
+				"heading": "Content of the pages",
+				"body": [
+					"The directory is built from the lists of the doctors who can be personal doctors, which the Health Insurance Institute of Slovenia (ZZZS) publishes every day as open data under CC BY 4.0. The providers report their doctors’ data to ZZZS and answer for its accuracy; it can be incomplete or out of date: check with the practice before you go. Every page says how to report an error."
+				]
+			},
+			"ip": {
+				"heading": "Code and data",
+				"body": [
+					"The source code of Apercura is published under the AGPL-3.0 licence. The directory data is reused under the Creative Commons Attribution 4.0 International licence (CC BY 4.0): the data page lists every source with the attribution it requires."
+				]
+			},
+			"review": {
+				"heading": "Status of this text",
+				"body": [
+					"This text is a draft, written before the legal entity was set up. It will be reviewed by a lawyer qualified in Slovenia before the Slovenian pages are announced."
+				]
+			}
+		},
+		"fields": {
+			"name": "Name",
+			"legalForm": "Legal form",
+			"address": "Registered office",
+			"phone": "Phone",
+			"email": "Email address",
+			"registration": "Register and registration number",
+			"vatId": "VAT identification number",
+			"editor": "Responsible for the content"
+		},
+		"dataLink": "Data and sources"
+	},
+	"PrivacySi": {
+		"metaTitle": "Personal data protection (Slovenia) · Apercura",
+		"metaDescription": "Data processed by the Slovenian pages of Apercura: sources, purposes, legal bases, the legitimate interests assessment, retention, recipients and your rights, including objection (GDPR articles 13, 14 and 21).",
+		"title": "Personal data protection",
+		"lead": "What data the Slovenian pages of Apercura process, where it comes from, why, for how long and by whom, and how to exercise your rights under the General Data Protection Regulation (GDPR) and, where its article 4 makes it apply, the Personal Data Protection Act (Zakon o varstvu osebnih podatkov, ZVOP-2, Uradni list RS, No. 163/22).",
+		"sections": {
+			"controller": {
+				"heading": "Who is responsible",
+				"body": [
+					"The operator named in the legal notice is the controller of the directory, of doctors’ accounts, of claims and of the requests sent through the site."
+				]
+			},
+			"directory": {
+				"heading": "Directory: data about doctors",
+				"body": [
+					"Data: the doctor’s first and last name as the ZZZS lists publish it (only the capitals adjusted), their ZZZS doctor number (šifra zdravnika), the kind of doctor (family doctor, children’s and school doctor, gynaecologist, dentist) and, for each practice the lists name, the provider’s name, its address (street, postcode and post office), the ZZZS activity and whether the doctor still takes new patients, with the date of the list. A page is placed at the settlement of the address, not at the building. A doctor who claims their page can add a presentation, languages, a photo and opening hours.",
+					"Never stored or shown, although the lists publish them: the doctor’s share of working time, the number of insured persons who have chosen them, the capitation figures, whether the doctor is a trainee, the column on newborns and the ZZZS regional unit. The lists give no telephone number, e-mail or home address, and nothing is recorded about the doctor’s gender.",
+					"Identifier: the number ZZZS gives each doctor (šifra zdravnika), at the end of the page’s address.",
+					"Purpose: letting the public find a doctor they can choose as their personal doctor, where that doctor works and whether they still take new patients. Legal basis: legitimate interests (GDPR article 6(1)(f)), assessed below.",
+					"Retention: as long as the doctor appears in the ZZZS lists. A page disappears after two weekly updates in which the doctor is no longer listed; a page removed after an objection is never published again.",
+					"Information: the data does not come from the doctors themselves (GDPR article 14). Writing to each of them would involve a disproportionate effort (article 14(5)(b)); this notice, the data page and a notice on every page make the information public."
+				]
+			},
+			"sources": {
+				"heading": "Sources",
+				"body": [
+					"Every page is built from the lists of the doctors who can be personal doctors (Poimenski seznami zdravnikov, ki so lahko osebni zdravniki), which ZZZS publishes every day on the national open data portal (podatki.gov.si) under CC BY 4.0. ZZZS states that the doctors’ data are reported by the providers, who are responsible for their accuracy. Places come from the Register of Spatial Units of the Surveying and Mapping Authority (GURS), also under CC BY 4.0. Each source is reused with its attribution:"
+				]
+			},
+			"balancing": {
+				"heading": "Legitimate interests assessment",
+				"body": [
+					"Interest: every insured person in Slovenia chooses a personal doctor, a gynaecologist and a dentist, and needs to know which doctors can be chosen, where, and who still takes new patients: a need ZZZS already meets by publishing these lists every day as open data.",
+					"Necessity: only the professional data of the lists is shown, the data a practice makes public anyway; nothing about private life, no ratings, no reviews. The fields a page does not need, such as the number of patients or the share of working time, are left out.",
+					"Safeguards: a neutral order, no advertising, a place at the settlement rather than a map pin, an objection that hides a page at once and keeps it from coming back, corrections at the source, and pages that follow every update of the lists. The register of the Medical Chamber of Slovenia, whose terms forbid republication, is never used.",
+					"Expectations: a doctor who can be chosen as a personal doctor is already named, with their practice and whether they take new patients, on the insurer’s public lists; a directory repeating that information is to be expected. The Information Commissioner (Informacijski pooblaščenec) has found that the names, specialisations and places of work of doctors are public data whose republication is in principle not a problem (opinion 07121-1/2021/526 of 17 March 2021), and that publishing doctors employed in the private sector needs a documented balancing of interests (opinion 07121-1/2022/1036 of 3 October 2022): this assessment is that balancing, and does not rely on those opinions, given as context only. Weighing these points, the interest of the public prevails, and any doctor can object without giving a reason."
+				]
+			},
+			"accounts": {
+				"heading": "Doctors’ accounts and claims",
+				"body": [
+					"Data: email address, name, password (stored hashed), second authentication factor, the documents sent to claim a page (for example the licence of the Medical Chamber of Slovenia or a confirmation from the provider) and team members.",
+					"Purposes: managing the account and checking that a page is claimed by the right doctor; the documents are checked by an administrator. Legal bases: performance of the terms of use (article 6(1)(b)) and the legitimate interests of securing the service (article 6(1)(f)).",
+					"Retention: the account is kept until it is deleted; supporting documents, encrypted, are erased 30 days after the decision."
+				]
+			},
+			"requests": {
+				"heading": "Error reports, objections and contact requests",
+				"body": [
+					"Data: the message, the contact email address when one is given and the page concerned; for a “this is me” request also the name and phone number. Free text is encrypted.",
+					"Purposes: correcting errors, applying objections and helping a doctor who cannot claim their page online. Legal bases: legitimate interests (article 6(1)(f)) and the right to object (article 21).",
+					"Retention: a report is deleted 6 months after it is closed, a rejected objection one year after its decision, a contact request 12 months after the last exchange. Once an objection is confirmed, or the holder of a claimed page removes it, the page and the data about the person are deleted at once, the objection included; all that is kept is a record of the removal (the identifier of the page, the country, the reason, who recorded it and when), so that it is never published again. A holder who removes their page keeps, in their account only and never published, the name, profession and identifier shown in their space and their claim, until the account is deleted."
+				]
+			},
+			"technical": {
+				"heading": "Technical data and cookies",
+				"body": [
+					"Only cookies strictly necessary to the service are set: the session of signed-in doctors and the chosen language. No advertising or audience measurement cookies, no trackers.",
+					"To limit abuse, IP addresses are transformed with a keyed function before being counted and never stored as such; doctors’ sessions record a truncated IP address. Views of claimed pages are counted without a cookie or identifier, and only the page’s holder sees them."
+				]
+			},
+			"recipients": {
+				"heading": "Recipients and processors",
+				"body": [
+					"Data is neither sold nor rented, and never used for advertising. Only the operator’s team and the processors below receive it, each for its own part, under a contract that meets GDPR article 28. Maps are loaded from a tile server, which receives the visitor’s IP address like any website."
+				]
+			},
+			"transfers": {
+				"heading": "Transfers outside the European Union",
+				"body": [
+					"The directory is hosted in the European Economic Area. Data is transferred outside the European Union and the European Economic Area only under the safeguards of chapter V of the GDPR (an adequacy decision or standard contractual clauses). Any change of processor will be announced here before it takes effect."
+				]
+			},
+			"automated": {
+				"heading": "Automated decisions",
+				"body": [
+					"No decision about you is taken by automated means alone. A claim is decided by a person, who reads its documents."
+				]
+			},
+			"rights": {
+				"heading": "Your rights",
+				"body": [
+					"You can ask to access your data, to have it corrected or erased, to restrict its processing, to receive it in a portable format and to object to its processing. Write to the address below; you will get an answer within one month.",
+					"You can also lodge a complaint with the Slovenian supervisory authority, the Information Commissioner (Informacijski pooblaščenec): Dunajska cesta 22, 1000 Ljubljana, +386 1 230 97 30, gp.ip@ip-rs.si, www.ip-rs.si, or with the authority of the country of the European Union where you live or work."
+				]
+			},
+			"objection": {
+				"heading": "Objecting to a page (GDPR article 21)",
+				"body": [
+					"A doctor can object to the publication of their page at any time, without giving a reason. If the page is unclaimed, a form is enough: the page is hidden as soon as the request arrives, deleted after a light check, and the updates of the lists never publish it again. If it is claimed, its holder removes it from their space."
+				]
+			},
+			"changes": {
+				"heading": "Updates to this notice",
+				"body": [
+					"This notice is a draft. It will be reviewed by a lawyer qualified in Slovenia and by the data protection officer; every version is dated."
+				]
+			}
+		},
+		"fields": {
+			"controller": "Controller",
+			"address": "Address",
+			"email": "Contact for requests",
+			"dpo": "Data protection officer",
+			"effectiveDate": "Effective date",
+			"hostingProvider": "Hosting provider (processor)",
+			"smtp": "Email delivery (processor)"
+		},
+		"stateOf": "Data as of {date}",
+		"objectLink": "How to object to a page",
+		"authorityLink": "Lodge a complaint with the Information Commissioner"
+	},
+	"TermsSi": {
+		"metaTitle": "Terms of use (Slovenia) · Apercura",
+		"metaDescription": "Terms of use of the Slovenian pages of Apercura: a free, factual directory of the doctors who can be chosen as a personal doctor, from the open lists of ZZZS, without online booking.",
+		"title": "Terms of use",
+		"lead": "The rules for using the Slovenian pages of Apercura, for the public and for doctors alike.",
+		"sections": {
+			"service": {
+				"heading": "The service",
+				"body": [
+					"Apercura lists, free of charge, the doctors the Health Insurance Institute of Slovenia (ZZZS) names as doctors who can be chosen as a personal doctor: family doctors, children’s and school doctors, gynaecologists and dentists. It is a directory only: no appointment is booked through Apercura in Slovenia, and choosing a personal doctor is done with the practice. It is run by the operator named in the legal notice.",
+					"Using the directory requires no account. Using the site means accepting these terms."
+				]
+			},
+			"content": {
+				"heading": "What the pages contain",
+				"body": [
+					"Pages show factual information from the public lists of ZZZS, in a neutral order, without ratings, reviews, advertising or paid placement.",
+					"The information may be incomplete or out of date, and whether a doctor takes new patients can change from one day to the next: check it with the practice. Every page says how to report an error."
+				]
+			},
+			"health": {
+				"heading": "Not medical advice",
+				"body": [
+					"Apercura gives no medical advice and is not an emergency service. In an emergency, call 112. Outside surgery hours, the on-call service (dežurna služba) of your health centre or the nearest emergency centre (urgentni center) can help."
+				]
+			},
+			"practitioners": {
+				"heading": "For doctors",
+				"body": [
+					"Claiming a page is free. It requires a document proving that the claimant is the doctor of the page, checked by an administrator before the page is handed over.",
+					"The holder of a page is responsible for the information they add. It must stay factual, accurate and up to date, and respect article 75.a of the Health Services Act (Zakon o zdravstveni dejavnosti, ZZDej) and the Code of Medical Ethics (Kodeks zdravniške etike, articles 60 to 63): professionally correct information only, no promise of results, no comparison with other doctors, no testimonials or public thanks, no prices and no promotion of medicines or products."
+				]
+			},
+			"removal": {
+				"heading": "Removing a page",
+				"body": [
+					"A doctor can ask for their page to be removed at any time: the data page explains how. A claimed page can only be removed by its holder."
+				]
+			},
+			"liability": {
+				"heading": "Liability",
+				"body": [
+					"The operator does its best to keep the service available and accurate, but cannot guarantee it. It is not responsible for the information doctors add to their pages. These limits will be specified during the legal review."
+				]
+			},
+			"ip": {
+				"heading": "Code and data",
+				"body": [
+					"The source code is published under the AGPL-3.0 licence. Directory data is reused under the Creative Commons Attribution 4.0 International licence (CC BY 4.0)."
+				]
+			},
+			"law": {
+				"heading": "Governing law and disputes",
+				"body": [
+					"The governing law and the competent courts will be specified during the legal review; the mandatory consumer protection rules of the country of residence always apply. In case of a dispute, first write to the contact address to look for an amicable solution."
+				]
+			}
+		},
+		"fields": {
+			"publisher": "Operator",
+			"effectiveDate": "Effective date",
+			"contact": "Contact"
+		}
+	},
+	"AccessibilitySi": {
+		"metaTitle": "Accessibility (Slovenia) · Apercura",
+		"metaDescription": "Accessibility of the Slovenian pages of Apercura: the WCAG 2.2 AA target, what was checked, what remains, and how to report a problem.",
+		"title": "Accessibility",
+		"lead": "Apercura is designed for everyone, including older and low-vision people. This statement says where the Slovenian pages stand.",
+		"sections": {
+			"scope": {
+				"heading": "Scope",
+				"body": [
+					"The Accessibility of Websites and Mobile Applications Act (Zakon o dostopnosti spletišč in mobilnih aplikacij, ZDSMA) binds public sector bodies, which Apercura is not. The Act on the Accessibility of Products and Services for Persons with Disabilities (Zakon o dostopnosti do proizvodov in storitev za invalide, ZDPSI), which transposes the European Accessibility Act, covers the services it lists when they are an economic activity, such as e-commerce aimed at concluding consumer contracts, consumer banking and passenger transport (articles 3 and 5): not a free information directory that sells nothing and books nothing. This statement is therefore voluntary, and its operator aims at the same standard on every page: WCAG 2.2 level AA."
+				]
+			},
+			"status": {
+				"heading": "Where the site stands",
+				"body": [
+					"The Slovenian pages share the code of the French pages and their tests. The site partially meets WCAG 2.2 AA: this rests on a self-assessment and automated tests, not yet on a full audit, which is in progress."
+				]
+			},
+			"tests": {
+				"heading": "What was checked",
+				"list": [
+					"Automated axe-core checks (WCAG 2.0, 2.1 and 2.2 rules, levels A and AA) on every page type, at every release.",
+					"Keyboard-only journeys with a visible focus.",
+					"Body text of at least 18 px, targets of at least 44 px, nothing that relies on colour alone, no horizontal scrolling at 390 px."
+				]
+			},
+			"pending": {
+				"heading": "What remains to be checked",
+				"list": [
+					"A manual pass with the VoiceOver and NVDA screen readers, in Slovenian.",
+					"A full audit against WCAG 2.2 AA on a sample of pages."
+				]
+			},
+			"feedback": {
+				"heading": "Report a problem",
+				"body": [
+					"If a page or a feature is hard to use, write to the address below: say which page and what blocked you. We answer within one month and, where needed, give you the information in another form."
+				]
+			}
+		},
+		"fields": {
+			"contact": "Contact",
+			"date": "Date of this statement"
+		}
+	},
+	"DataSi": {
+		"metaTitle": "Data and sources (Slovenia) · Apercura",
+		"metaDescription": "Where the Slovenian pages of Apercura come from: the ZZZS lists of the doctors who can be personal doctors and the GURS Register of Spatial Units under CC BY 4.0, update dates, what a page shows, and how to correct or remove a page.",
+		"title": "Data and sources",
+		"lead": "Every Slovenian page is built from public open data. Here is where it comes from, under which licence and attribution, when it was updated, what a page shows and never keeps, and how to correct or remove a page.",
+		"status": {
+			"heading": "Last update",
+			"body": "ZZZS publishes its lists every day; the directory imports them every week. A page changes only when its facts change in the lists.",
+			"importedAt": "Last import",
+			"checkedAt": "Sources last checked",
+			"listDate": "Data of the ZZZS lists",
+			"notImported": "The Slovenian directory has not been imported yet on this site.",
+			"notImportedValue": "Not imported yet"
+		},
+		"sources": {
+			"heading": "Sources",
+			"body": "Both publishers release these data under the Creative Commons Attribution 4.0 International licence (CC BY 4.0), which allows reuse, including commercial reuse, provided the source is credited. Each attribution below is printed word for word.",
+			"caption": "Data sources of the Slovenian directory",
+			"columns": {
+				"source": "Source",
+				"use": "Used for",
+				"licence": "Licence and attribution",
+				"frequency": "Updated"
+			},
+			"items": {
+				"si-zzzs-sa": {
+					"use": "Family doctors and children’s and school doctors: names, ZZZS doctor numbers, practices, their addresses and activities, whether new patients are taken",
+					"frequency": "Every day, by ZZZS"
+				},
+				"si-zzzs-gin": {
+					"use": "Gynaecologists of the women’s clinics: names, ZZZS doctor numbers, practices, their addresses, whether new patients are taken",
+					"frequency": "Every day, by ZZZS"
+				},
+				"si-zzzs-zob": {
+					"use": "Dentists for adults, young people and students: names, ZZZS doctor numbers, practices, their addresses and activities, whether new patients are taken",
+					"frequency": "Every day, by ZZZS"
+				},
+				"si-rpe": {
+					"use": "Statistical regions, municipalities, settlements, postal areas and streets, with their centres",
+					"frequency": "Continuously, by GURS"
+				},
+				"map": {
+					"name": "Map data",
+					"publisher": "OpenStreetMap contributors, tiles by OpenFreeMap",
+					"use": "Maps on the pages",
+					"frequency": "Continuously"
+				}
+			},
+			"ccBy": "CC BY 4.0",
+			"odbl": "ODbL",
+			"stateOf": "Data as of {date}",
+			"gursTerms": "GURS’s terms for its open data"
+		},
+		"coverage": {
+			"heading": "Doctors listed",
+			"body": [
+				"A page is generated for every doctor named in the three ZZZS lists of the doctors who can be chosen as a personal doctor, under the kind of their main activity.",
+				"Not listed: specialists outside these lists, hospitals, pharmacies, nurses and the other health professions. The fourth file of the ZZZS page, the additional practices for adults without a personal doctor, names no doctor and is not read. A doctor who is not listed can still ask for a page of their own."
+			],
+			"kindsLabel": "Listed (ZZZS activity code)",
+			"kinds": {
+				"SI_FAMILY_DOCTOR": "Family doctors of the general practices (302001, 302068, 302070)",
+				"SI_CHILDREN_DOCTOR": "Doctors of the children’s and school dispensaries (327009)",
+				"SI_GYNAECOLOGIST": "Gynaecologists of the women’s clinics (306007)",
+				"SI_DENTIST": "Dentists for adults, young people and students (404101, 404103, 404105)"
+			}
+		},
+		"pages": {
+			"heading": "What a page shows",
+			"body": [
+				"A page is a doctor, named as ZZZS publishes them (only the capitals adjusted), with their ZZZS doctor number and their kind. For each practice the lists name, it shows the provider’s name, its address (street, postcode and post office), the ZZZS activity and whether the doctor still takes new patients, labelled as from ZZZS and dated. A page is placed at the settlement of its address, from the GURS register: it carries no map pin, and distances are approximate.",
+				"Never read into the directory or stored, although the lists publish them:"
+			],
+			"list": [
+				"the doctor’s share of working time (obseg zaposlitve);",
+				"the number of insured persons who have chosen the doctor, and the capitation figures;",
+				"whether the doctor is a trainee (specializant), and the column on newborns;",
+				"the ZZZS regional unit;",
+				"e-mail addresses, private addresses and gender. The lists give no telephone number."
+			]
+		},
+		"acceptance": {
+			"heading": "Whether a doctor takes new patients",
+			"body": [
+				"Every day, ZZZS publishes for each doctor and practice whether the doctor still accepts insured persons who choose them as their personal doctor (“Zdravnik še sprejema zavarovane osebe”: yes or no). The page shows this answer as ZZZS gives it, with the date of the list it comes from.",
+				"ZZZS takes the answer from the providers’ reports, valid at the date and time its list was prepared. A doctor may stop taking new patients once their list reaches the limits set by the rules of compulsory health insurance. It is information, not a commitment: the practice confirms it when you choose your doctor, with the form for choosing a personal doctor."
+			]
+		},
+		"chamber": {
+			"heading": "The Medical Chamber’s register is not used",
+			"body": [
+				"The Medical Chamber of Slovenia (Zdravniška zbornica Slovenije) keeps the register of doctors and dentists, but the legal notice of its website forbids copying, reproducing or republishing its content without the prior official permission of its owner. It is never read, copied or used to complete a page."
+			]
+		},
+		"identifiers": {
+			"heading": "Identifiers",
+			"body": [
+				"The address of every page ends with the number ZZZS gives the doctor (šifra zdravnika), after the letters si, so a page can be found and checked against the lists:"
+			],
+			"list": [
+				"/si/zdravnik/ana-novak-si12345: the ZZZS doctor number 12345.",
+				"The providers’ numbers (šifra izvajalca) identify their practices on the page, never the page itself."
+			]
+		},
+		"correct": {
+			"heading": "Correct an error",
+			"body": [
+				"The pages repeat the ZZZS lists, whose data the providers report: a lasting correction is made at the source, and the page follows at the next weekly import.",
+				"For anything else, use the form: we check every report."
+			],
+			"list": [
+				"Name, practice, address, activity, whether new patients are taken: the provider (the health centre, the concessionaire or the practice) reports the change to ZZZS, which updates its lists.",
+				"Presentation, languages, photo, opening hours: the doctor adds them by claiming their page."
+			],
+			"formTitle": "Report an error",
+			"formBody": "Give the address of the page and what is wrong."
+		},
+		"remove": {
+			"heading": "Remove a page",
+			"body": [
+				"A doctor can object to the publication of their page at any time, without giving a reason (GDPR article 21). An unclaimed page is hidden as soon as the request arrives and deleted after a light check; it never comes back with the updates of the lists. A claimed page is removed by its holder, from their space."
+			],
+			"formTitle": "Ask for a page to be removed",
+			"formBody": "Give the address of the page and an email address where we can answer you."
 		}
 	},
 	"SwissCoverage": {

@@ -237,6 +237,10 @@ export async function PractitionerTable({
 									{row.practiceKind && !listsPractices(marketOf(locale))
 										? ` · ${labels.practiceKind(row.practiceKind) ?? ""}`
 										: ""}
+									{/* Slovenia: whether the doctor takes new patients, as the insurer's list says. */}
+									{row.acceptsNewPatients === true || row.acceptsNewPatients === false
+										? ` · ${tFees(row.acceptsNewPatients ? "slovenia.listingAccepts" : "slovenia.listingClosed")}`
+										: ""}
 								</p>
 								{address ? <p className="text-meta text-ink-muted">{address}</p> : null}
 								{billing ? (

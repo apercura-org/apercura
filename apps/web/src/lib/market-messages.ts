@@ -13,6 +13,7 @@ import {
 	allLtListingSlugs,
 	allNoTaxonomySlugs,
 	allPlListingSlugs,
+	allSiListingSlugs,
 } from "@apercura/core/taxonomy";
 import type { MarketCountry } from "~/i18n/locales";
 
@@ -41,6 +42,7 @@ const MARKET_SLUGS: Readonly<Record<MarketCountry, ReadonlySet<string>>> = {
 	// Finland names its kinds of location in the singular (`terveysasema`, `neuvola`).
 	FI: allFiTaxonomySlugs(),
 	LT: allLtListingSlugs(),
+	SI: allSiListingSlugs(),
 };
 
 /** The `taxonomy` groups keyed by listing or profession slug. */

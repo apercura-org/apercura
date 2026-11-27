@@ -37,6 +37,7 @@ import {
 	parseNoFacilitySegment,
 	parsePlFacilitySegment,
 	parsePractitionerSegment,
+	parseSiPractitionerSegment,
 } from "@apercura/core";
 import { type CountryAdapter, countryAdapter } from "@apercura/core/country";
 import { type Locale, MARKET_LOCALES, type MarketCountry, marketOf } from "~/i18n/locales";
@@ -60,6 +61,8 @@ export type PractitionerKey = {
  * (`clinica-dental-ejemplo-1328000001`, the REGCESS code), `{name}-{list}{code}` in Italy
  * (`farmacia-esempio-f9000001`, the ministry's code), `{facility-name}-{source}{key}` in Germany
  * (`klinikum-beispiel-k0a1b2c3d4e`, `beispiel-apotheke-th9001`), `{name}-{list}{key}` in Switzerland
+ * (`kantonsspital-beispiel-h123456789`, in each of its three languages), `{ime-priimek}-si{number}`
+ * in Slovenia (`miran-kolar-si7774`, the insurer's number). Null for anything else,
  * (`kantonsspital-beispiel-h123456789`, in each of its three languages), `{name}-{source}{key}`
  * in Estonia (`perearstikeskus-naide-l01909`, `naidisapteek-ap457`), `{name}-{number}` in
  * Poland (`przychodnia-przykladowa-290629`, the RPWDL establishment number), `{name}-{orgnr}` in Norway
@@ -113,6 +116,10 @@ export function parsePractitionerKey(locale: Locale, segment: string): Practitio
 	}
 	if (country === "LT") {
 		const parsed = parseLtFacilitySegment(segment);
+		return parsed ? { country, ...parsed } : null;
+	}
+	if (country === "SI") {
+		const parsed = parseSiPractitionerSegment(segment);
 		return parsed ? { country, ...parsed } : null;
 	}
 	if (country === "GB") {
@@ -226,7 +233,8 @@ export function marketSegmentOf(country: string, slug: string): string {
 /**
  * Parses the segment of a practitioner URL of any market, for routes outside a locale (the
  * Open Graph image): a marked segment is British, Czech, Spanish, Italian, German, Swiss, Irish or Lithuanian (`marketSegmentOf`), an RPPS slug
- * French, a regional list key Austrian.
+ * French, a key ending in `si` and a number Slovenian (`miran-kolar-si7774`), a regional list
+ * key Austrian.
  */
 export function parseAnyPractitionerKey(segment: string): PractitionerKey | null {
 	for (const [country, marker] of Object.entries(SEGMENT_MARKERS)) {
@@ -237,7 +245,11 @@ export function parseAnyPractitionerKey(segment: string): PractitionerKey | null
 			);
 		}
 	}
-	return parsePractitionerKey("fr", segment) ?? parsePractitionerKey(MARKET_LOCALES.AT, segment);
+	return (
+		parsePractitionerKey("fr", segment) ??
+		parsePractitionerKey(MARKET_LOCALES.SI, segment) ??
+		parsePractitionerKey(MARKET_LOCALES.AT, segment)
+	);
 }
 
 /**
@@ -250,6 +262,7 @@ export function parseAnyPractitionerKey(segment: string): PractitionerKey | null
  * source publishes a national number; in
  * Switzerland the key of the page URL (`h123456789`, `blp7601001796874`), what its `ch:`
  * reference reads, since most lists number no facility and a derived key alone means nothing; in
+ * Slovenia the insurer's doctor number (`7774`).
  * Estonia a provider's first activity licence number as the Health Board writes it (`L01909`)
  * and a pharmacy's key of the page URL (`ap457`); in Norway the establishment's organisation
  * number in groups of three, as Norway prints it (`910 000 039`); in Ireland the key of the page URL too (`p10000612`, `n738`,

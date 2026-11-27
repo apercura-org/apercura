@@ -82,7 +82,8 @@ export async function getImportStatus(
 		| "no"
 		| "ie"
 		| "fi"
-		| "lt",
+		| "lt"
+		| "si",
 ): Promise<ImportStatus | null> {
 	"use cache";
 	cacheTag("registry");

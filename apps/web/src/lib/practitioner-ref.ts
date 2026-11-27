@@ -42,6 +42,8 @@ import {
 	parseLtFacilitySegment,
 	parseNoFacilitySegment,
 	parsePlFacilitySegment,
+	parseSiPractitionerSegment,
+	SI_ID_SCHEME,
 } from "@apercura/core";
 import type { MarketCountry } from "~/i18n/locales";
 
@@ -219,6 +221,17 @@ function ltRef(segment: string): PractitionerRef | null {
 		: null;
 }
 
+/**
+ * A Slovenian doctor from the end of a page address or slug, or from its key alone (`si7774`):
+ * the key names its market by its `si` letters, so it needs no prefix.
+ */
+function siRef(segment: string): PractitionerRef | null {
+	const parsed = parseSiPractitionerSegment(segment);
+	return parsed
+		? { country: "SI", idScheme: parsed.idScheme, nationalId: parsed.nationalId }
+		: null;
+}
+
 /** The first path segments of Switzerland's pages, in its three languages (`ch`, `ch-fr`, `ch-it`). */
 const CH_PATH = /^ch(?:-[a-z]{2})?$/;
 
@@ -230,6 +243,8 @@ const CH_PATH = /^ch(?:-[a-z]{2})?$/;
  * `gb:sg10002`), `cz:` and the NRPZS number in Czechia (`cz:39781`), `es:` and the REGCESS
  * centre code in Spain (`es:1328000001`), `it:` and the list letter and ministry code in Italy
  * (`it:f9000001`), `de:` and the source letters and key in Germany (`de:k0a1b2c3d4e`,
+ * `de:th9001`), `ch:` and the list letters and key in Switzerland (`ch:h123456789`), `si` and the
+ * insurer's number in Slovenia (`si7774`, the end of a Slovenian page address). A page
  * `de:th9001`), `ch:` and the list letters and key in Switzerland (`ch:h123456789`), `ee:` and
  * the source letters and key in Estonia (`ee:l01909`, `ee:ap457`), `pl:` and the RPWDL
  * establishment number in Poland (`pl:290629`), `no:` and the organisation
@@ -346,6 +361,10 @@ export function parsePractitionerRef(
 		const norwegian = noRef(compact);
 		if (norwegian) return norwegian;
 	}
+	// A Slovenian doctor's key (`si7774`), alone or at the end of a page address: no other
+	// market's key starts with `si` and a digit.
+	const slovenian = siRef(compact);
+	if (slovenian) return slovenian;
 	if (market === "CZ") {
 		const czech = czRef(compact);
 		if (czech) return czech;
@@ -382,7 +401,7 @@ export function parsePractitionerRef(
 /**
  * The short reference of a practitioner (`19999990013`, `w7983`, `gb:a81001`, `cz:39781`,
  * `es:1328000001`, `it:f9000001`, `de:k0a1b2c3d4e`, `ch:h123456789`, `ee:l01909`, `pl:290629`, `ie:p10000612`, `fi:b18aa7f87eca4b97a8e8b438d2e29427`,
- * `lt:5271-12679435`), as `parsePractitionerRef` reads it.
+ * `lt:5271-12679435`, `si7774`), as `parsePractitionerRef` reads it.
  */
 export function practitionerRefOf(practitioner: { idScheme: string; nationalId: string }): string {
 	if (CH_ID_SCHEMES[practitioner.idScheme as ChIdScheme]) {
@@ -396,6 +415,7 @@ export function practitionerRefOf(practitioner: { idScheme: string; nationalId: 
 	if (FI_ID_SCHEMES[practitioner.idScheme as FiIdScheme])
 		return `${FI_REF}${practitioner.nationalId}`;
 	if (practitioner.idScheme === LT_ID_SCHEME) return `${LT_REF}${practitioner.nationalId}`;
+	if (practitioner.idScheme === SI_ID_SCHEME) return `si${practitioner.nationalId}`;
 	if (practitioner.idScheme === ES_ID_SCHEME) return `${ES_REF}${practitioner.nationalId}`;
 	if (IT_ID_SCHEMES[practitioner.idScheme as ItIdScheme]) {
 		return `${IT_REF}${itUrlKey(practitioner.idScheme as ItIdScheme, practitioner.nationalId)}`;

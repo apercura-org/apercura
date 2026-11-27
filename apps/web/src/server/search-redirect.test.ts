@@ -100,6 +100,10 @@ const PLACES: Record<MarketCountry, PlaceSuggestion[]> = {
 		place(61, "Kaunas", "kaunas", "kauno-miesto-savivaldybe", "17507"),
 		place(62, "Klaipėda", "klaipeda", "klaipedos-miesto-savivaldybe", "18067"),
 	],
+	SI: [
+		place(60, "Ljubljana", "ljubljana", "osrednjeslovenska"),
+		place(61, "Maribor", "maribor", "podravska"),
+	],
 };
 
 const LANDINGS = new Set([
@@ -144,6 +148,9 @@ const LANDINGS = new Set([
 	"odontologijos-klinikos@Vilnius",
 	"ligonines@Vilnius",
 	"seimos-medicina@Kaunas",
+	"zobozdravnik@Ljubljana",
+	"druzinski-zdravnik@Ljubljana",
+	"druzinski-zdravnik@Maribor",
 ]);
 
 const HUBS = new Set([
@@ -613,6 +620,23 @@ describe("a search for a European place outside the open markets", () => {
 		);
 	});
 
+	it("never says Slovenia is not covered: its places move the search to /si, the care carried over", async () => {
+		expect(await search("fr", { quoi: "dentiste", ou: "Ljubljana" })).toEqual(
+			listing("sl-SI", "zobozdravnik", "osrednjeslovenska", "ljubljana"),
+		);
+		expect(await search("en-GB", { quoi: "GP", ou: "Maribor" })).toEqual(
+			listing("sl-SI", "druzinski-zdravnik", "podravska", "maribor"),
+		);
+		expect(await search("de-AT", { quoi: "Zahnarzt", ou: "Ljubljana" })).toEqual(
+			listing("sl-SI", "zobozdravnik", "osrednjeslovenska", "ljubljana"),
+		);
+		// A Slovenian city the places do not know: Slovenia's search says so, not this page.
+		expect(await search("fr", { quoi: "dentiste", ou: "Celje" })).toEqual(
+			searchPage("sl-SI", { quoi: listingLabel("zobozdravnik", "sl-SI") ?? "", ou: "Celje" }),
+		);
+		expect(await search("sl-SI", { quoi: "zobar", ou: "Celje" })).toBeNull();
+	});
+
 	it("still lets a place of an open market win over a homonymous foreign city", async () => {
 		expect(await search("fr", { quoi: "dentiste", ou: "Wien" })).toEqual(
 			searchPage("de-AT", { quoi: listingLabel("zahnaerzte", "de-AT") ?? "", ou: "Wien" }),
@@ -661,6 +685,13 @@ describe("a search for an open country by name", () => {
 		// Dublin's Irish name: Ireland's search, under the name its places carry.
 		expect(await search("fr", { ou: "Baile Átha Cliath" })).toEqual(
 			searchPage("en-IE", { ou: "Dublin" }),
+		);
+		// Slovenia is open since #167: "Slovénie", "Slovenija" lead to /si.
+		expect(await search("fr", { ou: "Slovénie" })).toEqual({ href: "/", locale: "sl-SI" });
+		expect(await search("de-AT", { ou: "Slowenien" })).toEqual({ href: "/", locale: "sl-SI" });
+		expect(await search("en-GB", { ou: "Slovenija" })).toEqual({ href: "/", locale: "sl-SI" });
+		expect(await search("fr", { quoi: "dentiste", ou: "Slovénie" })).toEqual(
+			searchPage("sl-SI", { quoi: listingLabel("zobozdravnik", "sl-SI") ?? "" }),
 		);
 		// The page's own market: its home, in the visitor's language.
 		expect(await search("en", { ou: "France" })).toEqual({ href: "/", locale: "en" });

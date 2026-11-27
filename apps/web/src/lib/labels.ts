@@ -17,6 +17,7 @@ import {
 	isIeListingSlug,
 	isItListingSlug,
 	isNoListingSlug,
+	isSiListingSlug,
 	noKindSlugOf,
 	noProfessionOfListingSlug,
 } from "@apercura/core/taxonomy";
@@ -57,6 +58,8 @@ export async function getTaxonomyLabels(locale: Locale) {
 		 * reads as its own kind (a local surgery listed with the health centres reads "Consultorio
 		 * local"). A German facility, an Estonian provider, a Norwegian establishment or a Finnish service
 		 * location reads as its kind ("Krankenhaus", "Apotheke", "Perearstikeskus", "Legekontor", "Terveysasema"), its listing being plural.
+		 * A Slovenian doctor reads as their field ("Družinska medicina"): the list gives no gender
+		 * to choose between "družinski zdravnik" and "družinska zdravnica".
 		 */
 		occupation: (
 			slug: string | null | undefined,
@@ -99,7 +102,8 @@ export async function getTaxonomyLabels(locale: Locale) {
 				isCzListingSlug(slug) ||
 				isItListingSlug(slug) ||
 				isChListingSlug(slug) ||
-				isIeListingSlug(slug)
+				isIeListingSlug(slug) ||
+				isSiListingSlug(slug)
 					? lookup(`profession.${slug}`)
 					: null) ?? lookup(`listing.${slug}`, { gender })
 			);

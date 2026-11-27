@@ -1,0 +1,1931 @@
+{
+	"Metadata": {
+		"title": "Apercura",
+		"description": "Odprti imenik osebnih zdravnikov v Sloveniji iz odprtih podatkov ZZZS: družinski, otroški in šolski zdravniki, ginekologi in zobozdravniki.",
+		"proTitle": "Vaša stran že obstaja · Apercura",
+		"proDescription": "Apercura objavi stvarno stran za vsakega zdravnika s seznamov osebnih zdravnikov ZZZS. Poiščite svojo in jo brezplačno prevzemite.",
+		"searchTitle": "Iskanje · Apercura",
+		"galleryTitle": "Galerija komponent · Apercura",
+		"homeTitle": "Apercura · Odprti imenik osebnih zdravnikov v Sloveniji"
+	},
+	"Site": {
+		"skipLink": "Preskoči na vsebino",
+		"wordmark": "Apercura",
+		"homeLink": "Apercura, domača stran",
+		"runningHead": "Odprti imenik osebnih zdravnikov v Sloveniji",
+		"navLabel": "Glavna navigacija",
+		"navPro": "Za zdravnike",
+		"navPatients": "Za paciente",
+		"folio": "Stran {number}",
+		"externalLink": "odpre drugo spletno mesto",
+		"footer": {
+			"free": "Brezplačno za zdravnike in paciente.",
+			"license": "Izvorna koda pod licenco AGPL-3.0",
+			"noAds": "Brez ocen, brez oglasov, brez plačanih uvrstitev."
+		},
+		"folioRpps": "Šifra {rpps}",
+		"home": "Domov",
+		"breadcrumbs": "Nahajate se tukaj",
+		"footerNav": {
+			"label": "O Apercuri",
+			"directory": "Imenik",
+			"guides": "Vodniki",
+			"about": "O projektu",
+			"openSource": "Odprta koda",
+			"data": "Podatki in viri",
+			"accessibility": "Dostopnost",
+			"privacy": "Varstvo osebnih podatkov",
+			"legal": "Pravno obvestilo",
+			"terms": "Pogoji uporabe",
+			"international": "Apercura v drugih državah"
+		},
+		"theme": {
+			"label": "Videz",
+			"light": "Svetel",
+			"dark": "Temen",
+			"system": "Po sistemu"
+		}
+	},
+	"LocaleSwitcher": {
+		"label": "Jezik",
+		"locale": "{locale, select, fr {Français} en {English} de {Deutsch} es {Español} it {Italiano} other {Neznan jezik}}",
+		"current": "Jezik: <value>{language}</value>"
+	},
+	"CountrySwitcher": {
+		"label": "Država",
+		"current": "Država: <value>{country}</value>"
+	},
+	"ErrorPages": {
+		"notFound": {
+			"metaTitle": "Strani ni mogoče najti · Apercura",
+			"title": "Ta stran ne obstaja",
+			"body": "Naslov je morda napačno zapisan ali pa je bila stran odstranjena. Poiščite v imeniku ali začnite znova na eni od spodnjih strani.",
+			"rootBody": "Naslov je morda napačno zapisan ali pa je bila stran odstranjena. Izberite državo in poiščite v njenem imeniku.",
+			"code": "Napaka 404",
+			"stamp": "Na tem naslovu ni strani",
+			"nextHeading": "Drugje na Apercuri",
+			"home": "Domača stran",
+			"directory": "Imenik po krajih",
+			"international": "Apercura po državah"
+		},
+		"error": {
+			"metaTitle": "Stran ni na voljo · Apercura",
+			"title": "Te strani ni bilo mogoče prikazati",
+			"body": "Med pripravo strani je pri nas prišlo do napake. Poskusite znova; če se napaka ponovi, se vrnite čez nekaj minut.",
+			"retry": "Poskusi znova",
+			"home": "Nazaj na domačo stran",
+			"reference": "Oznaka za podporo: {digest}"
+		}
+	},
+	"Search": {
+		"label": "Poiščite zdravnika",
+		"who": "Kdo?",
+		"whoHint": "Ime ali vrsta zdravnika: družinski zdravnik, ginekolog, zobozdravnik",
+		"where": "Kje?",
+		"whereHint": "Kraj ali občina",
+		"submit": "Išči",
+		"market": "Država",
+		"markets": {
+			"FR": "Francija",
+			"AT": "Avstrija",
+			"GB": "Združeno kraljestvo",
+			"CZ": "Češka",
+			"IT": "Italija",
+			"CH": "Švica",
+			"SI": "Slovenija",
+			"ES": "Španija",
+			"DE": "Nemčija",
+			"EE": "Estonija",
+			"PL": "Poljska"
+		}
+	},
+	"HomePage": {
+		"title": "Poiščite osebnega zdravnika v Sloveniji",
+		"hook": "Vsak družinski, otroški in šolski zdravnik, ginekolog in zobozdravnik s seznamov ZZZS že ima svojo stran.",
+		"specimen": {
+			"heading": "Vsak zdravnik že ima svojo stran",
+			"intro": "Tako je videti stran, kot jo izpolnijo seznami ZZZS, preden jo zdravnik prevzame: znana polja so izpolnjena, pri drugih je jasno zapisano, da niso navedena."
+		},
+		"pillarsHeading": "K čemu se zavezuje Apercura",
+		"columns": {
+			"number": "Št.",
+			"commitment": "Zaveza"
+		},
+		"pillars": {
+			"free": {
+				"title": "Brezplačno",
+				"description": "Brezplačno za zdravnike in paciente, brez naročnine in brez provizij."
+			},
+			"openSource": {
+				"title": "Odprta koda",
+				"description": "Celotna izvorna koda je objavljena pod licenco AGPL-3.0."
+			},
+			"selfHostable": {
+				"title": "Lastno gostovanje",
+				"description": "Celotno platformo lahko poganjate sami z Dockerjem, skupaj z uvozom odprtih podatkov."
+			},
+			"encrypted": {
+				"title": "Šifrirani podatki",
+				"description": "Dokazila za prevzem, sporočila o napakah in, kjer je odprto spletno naročanje, tudi termini so šifrirani na ravni aplikacije."
+			},
+			"hostedInFrance": {
+				"title": "Zdravstveni podatki, gostovani v Franciji",
+				"description": "Zdravstvene podatke v Franciji gosti ponudnik s certifikatom HDS ({host}), šifrirani pa so na ravni aplikacije."
+			}
+		},
+		"registry": {
+			"heading": "Iz odprtih seznamov ZZZS",
+			"intro": "Vsaka stran temelji na seznamih zdravnikov, ki jih lahko izberete za osebnega zdravnika: Zavod za zdravstveno zavarovanje Slovenije (ZZZS) jih vsak dan objavlja kot odprte podatke (CC BY 4.0). Za vpis nihče ne plača in nihče ni izpuščen.",
+			"doctors": "Zdravniki",
+			"dentists": "Zobozdravniki",
+			"midwives": "Babice",
+			"nurses": "Samostojne medicinske sestre",
+			"withAddress": "Z javnim naslovom ambulante",
+			"count": "{count, number}",
+			"sourceLabel": "Vir",
+			"sourceName": "Poimenski seznami zdravnikov, ki so lahko osebni zdravniki, ZZZS",
+			"updatedLabel": "Podatki na dan"
+		},
+		"pro": {
+			"heading": "Ste zdravnik?",
+			"body": "Vaša stran že obstaja. Prevzem je brezplačen.",
+			"cta": "Poišči svojo stran"
+		},
+		"tagline": "Odprti imenik osebnih zdravnikov v Sloveniji.",
+		"status": "V pripravi.",
+		"market": {
+			"listingsHeading": "Po vrsti zdravnika",
+			"placesHeading": "Po statističnih regijah"
+		}
+	},
+	"SearchPage": {
+		"title": "Iskanje",
+		"query": "Iskali ste „{who}“",
+		"queryWhere": "Iskali ste „{who}“ v kraju „{where}“",
+		"queryOnlyWhere": "Iskali ste v kraju „{where}“",
+		"emptyTitle": "Noben zdravnik ne ustreza iskanju",
+		"emptyBody": "Preverite črkovanje, poskusite bližnji kraj ali splošnejši izraz, na primer „zdravnik“ namesto vrste zdravnika.",
+		"queryNear": "Iskali ste „{who}“ v vaši bližini",
+		"queryOnlyNear": "Zdravniki v vaši bližini",
+		"startTitle": "Koga iščete?",
+		"startBody": "V polje „Kdo?“ vpišite ime ali vrsto zdravnika, na primer družinski zdravnik, ginekolog ali zobozdravnik, v polje „Kje?“ pa kraj ali občino. Imenik lahko brskate tudi po statističnih regijah.",
+		"noMoreTitle": "Ni več rezultatov",
+		"browseDirectory": "Brskajte po imeniku",
+		"rppsTitle": "Za šifro {rpps} ni javne strani",
+		"rppsBody": "Ta številka ni veljavna ali pa zdravnik nima javne strani: navajamo le zdravnike s seznamov osebnih zdravnikov ZZZS. Zdravnik lahko svoj zapis kljub temu poišče in prevzame.",
+		"rppsPro": "Zdravniki: poiščite svoj zapis",
+		"ambiguousTitle": "Ime „{where}“ ima več krajev",
+		"ambiguousBody": "Izberite tistega, ki ga imate v mislih:",
+		"unknownPlaceTitle": "Kraja „{where}“ ne poznamo",
+		"unknownPlaceSuggest": "Ste mislili katerega od teh krajev?",
+		"unknownPlaceBody": "Preverite črkovanje ali vpišite drug kraj.",
+		"unlistedTitle": "„{who}“ v imeniku še ni",
+		"unlistedBody": "V Sloveniji imenik zaenkrat navaja družinske zdravnike, otroške in šolske zdravnike, ginekologe in zobozdravnike, ki so lahko osebni zdravniki. Poiščite raje ime ali brskajte po imeniku.",
+		"departmentPlace": "Statistična regija",
+		"resultsHeading": "Rezultati",
+		"range": "Rezultati od {from} do {to}",
+		"orderName": "Rezultati so razvrščeni po ujemanju z imenom, nato po abecedi. Za višje mesto nihče ne plača.",
+		"orderNear": "Rezultati so razvrščeni po oddaljenosti od vas. Za višje mesto nihče ne plača.",
+		"bookingNotOpen": "Apercura v Sloveniji ne omogoča spletnega naročanja: pokličite ambulanto.",
+		"columns": {
+			"practitioner": "Zdravnik",
+			"place": "Ambulanta",
+			"appointments": "Kontakt"
+		},
+		"action": {
+			"call": "Pokliči {phone}",
+			"establishment": "Prek ustanove",
+			"locum": "Nadomeščanje: brez neposrednega naročanja",
+			"page": "Odpri stran",
+			"noPhone": "Telefonska številka ni objavljena",
+			"nextFree": "Naročite se: {slot}"
+		},
+		"distance": "{km} km od vas",
+		"pagination": "Strani z rezultati",
+		"previous": "Prejšnji rezultati",
+		"next": "Več rezultatov",
+		"map": {
+			"show": "Prikaži na zemljevidu",
+			"hide": "Skrij zemljevid",
+			"region": "Zemljevid rezultatov",
+			"fallback": "Zemljevid se nalaga. Zgornji seznam vsebuje vse naslove."
+		},
+		"outsidePlace": "Zunaj kraja {where}",
+		"bookingOpenSome": "Nekateri zdravniki omogočajo spletno naročanje: prikazan je njihov prvi prosti termin. Pri drugih pokličite ambulanto ali ustanovo.",
+		"notCoveredTitle": "Apercura še ne pokriva {country}",
+		"notCoveredBody": "Apercura zaenkrat navaja zdravnike v teh državah. Izberite eno in iščite tam:"
+	},
+	"Practitioner": {
+		"rpps": "Šifra zdravnika",
+		"status": {
+			"unclaimed": "Neprevzeta stran",
+			"claimed": "Prevzeta stran",
+			"verified": "Preverjena stran"
+		},
+		"statusNote": {
+			"unclaimed": "Pripravljeno iz odprtih podatkov ZZZS. Zdravnik strani še ni dopolnil.",
+			"verified": "Dopolnil jo je zdravnik, katerega istovetnost je bila preverjena."
+		},
+		"notProvided": "Ni navedeno",
+		"fields": {
+			"profession": "Poklic",
+			"specialty": "Specialnost",
+			"address": "Naslov ambulante",
+			"phone": "Telefon",
+			"hours": "Ordinacijski čas",
+			"languages": "Jeziki",
+			"convention": "Pogodba z zavarovalnico",
+			"booking": "Naročanje prek spleta",
+			"access": "Dostop"
+		},
+		"sitesHeading": "Ambulante",
+		"directions": "Pot do ambulante",
+		"providers": {
+			"openStreetMap": "OpenStreetMap",
+			"appleMaps": "Apple Zemljevidi",
+			"googleMaps": "Google Zemljevidi"
+		},
+		"mapLabel": "Zemljevid: {place}",
+		"mapPin": "Lokacija: {place}",
+		"source": {
+			"label": "Vir",
+			"name": "Zavod za zdravstveno zavarovanje Slovenije (ZZZS), CC BY 4.0",
+			"updated": "Posodobljeno"
+		},
+		"action": {
+			"title": "Naročanje",
+			"book": {
+				"statement": "Naročanje prek spleta je odprto. Je brezplačno in ne zahteva računa.",
+				"label": "Naročite se"
+			},
+			"call": {
+				"statement": "Apercura v Sloveniji ne omogoča naročanja prek spleta. Za termin pokličite ambulanto.",
+				"label": "Pokličite {phone}"
+			},
+			"establishment": {
+				"statement": "K temu zdravniku se naročite prek ustanove {establishment}.",
+				"label": "Naročite se pri ustanovi {establishment}"
+			},
+			"locum": {
+				"statement": "Ta zdravnik dela kot nadomestni zdravnik in nadomešča druge zdravnike. Neposredno se k njemu ni mogoče naročiti.",
+				"hint": "Naročite se v ambulanti, v kateri trenutno nadomešča."
+			}
+		},
+		"slots": {
+			"heading": "Izberite termin",
+			"label": "Prosti termini",
+			"now": "zdaj",
+			"unavailable": "ni na voljo",
+			"selected": "Izbrano: {slot}",
+			"emptyDay": "Ta dan ni prostih terminov",
+			"slotLabel": "{day}, {time}",
+			"past": "minilo"
+		},
+		"professions": {
+			"gp": "Družinski zdravnik",
+			"dentist": "Zobozdravnik",
+			"midwife": "Babica",
+			"physio": "Fizioterapevt"
+		},
+		"specimen": "Primer, ne gre za resničnega zdravnika"
+	},
+	"Map": {
+		"map": "Zemljevid",
+		"marker": "Oznaka na zemljevidu",
+		"zoomIn": "Povečaj",
+		"zoomOut": "Pomanjšaj",
+		"resetBearing": "Povlecite, da zavrtite zemljevid, kliknite, da ga znova obrnete proti severu",
+		"toggleAttribution": "Pokaži ali skrij avtorje zemljevida",
+		"mapFeedback": "Povratne informacije o zemljevidu",
+		"logo": "Logotip MapLibre",
+		"closePopup": "Zapri okno",
+		"scrollZoomWindows": "Zemljevid povečate s kolescem miške ob pritisnjeni tipki Ctrl",
+		"scrollZoomMac": "Zemljevid povečate s kolescem miške ob pritisnjeni tipki ⌘",
+		"twoFingers": "Zemljevid premikajte z dvema prstoma"
+	},
+	"PractitionerPage": {
+		"metaTitle": "{name}, {occupation} · Apercura",
+		"metaTitlePlace": "{name}, {occupation}, {place} · Apercura",
+		"metaDescription": "{name}, {occupation}: ambulante, naslovi in sprejemanje novih pacientov, iz odprtih podatkov ZZZS.{fees, select, sector {} other {}}",
+		"metaDescriptionPlace": "{name}, {occupation}, {place}: ambulante, naslovi in sprejemanje novih pacientov, iz odprtih podatkov ZZZS.{fees, select, sector {} other {}}",
+		"unknownProfession": "Zdravnik",
+		"professionHeading": "Poklic in usposobljenost",
+		"otherQualifications": "Druga usposobljenost",
+		"practiceType": "Vrsta ambulante",
+		"switchboard": "{phone} (centrala ustanove)",
+		"establishment": "Ustanova",
+		"unnamedPlace": "Ambulanta",
+		"asideLabel": "O tej strani",
+		"action": {
+			"callNotYetOpen": "Apercura v Sloveniji ne omogoča naročanja prek spleta. Za termin pokličite ambulanto.",
+			"establishmentLink": "Obrnite se na ustanovo",
+			"noPhone": "Za to ambulanto ni objavljena nobena telefonska številka.",
+			"noPhoneHint": "Podatke o zdravniku preverite na <link>spletni strani ZZZS</link> ali se obrnite neposredno na ambulanto.",
+			"bookStatement": "Naročanje prek spleta je odprto. Je brezplačno in ne zahteva računa.",
+			"bookNoSlot": "Naročanje prek spleta je odprto, a v prihodnjih tednih ni prostega termina. Poskusite znova pozneje ali pokličite ambulanto.",
+			"nextSlot": "Prvi prosti termin",
+			"bookLabel": "Naročite se",
+			"orCall": "Ali pokličite {phone}."
+		},
+		"fees": {
+			"heading": "Cene in zdravstveno zavarovanje",
+			"sector": "Pogodbeni status",
+			"agreement": "Pogodba z zavarovalnico",
+			"optam": "Omejena doplačila (OPTAM)",
+			"optamNo": "Ni vključen",
+			"carteVitale": "Kartica zdravstvenega zavarovanja",
+			"accepted": "Sprejema",
+			"notAccepted": "Ne sprejema",
+			"fromAmeli": "Ti podatki so iz seznamov ZZZS.",
+			"notMatched": "Zdravnika v seznamih ZZZS ni bilo mogoče zanesljivo najti, zato teh podatkov ne prikazujemo.",
+			"regulatoryNotice": "Pogodbeni status določa, kako se storitve plačajo in krijejo iz zavarovanja: cene in kritje preverite pred obiskom na",
+			"regulatoryNoticeAgreement": "Pogodba z zavarovalnico določa, kako se storitve plačajo in krijejo iz zavarovanja: cene in kritje preverite pred obiskom na",
+			"ameliLink": "spletni strani ZZZS",
+			"source": "Zavod za zdravstveno zavarovanje Slovenije (ZZZS)",
+			"sourceOwner": "Zdravnik"
+		},
+		"claim": {
+			"heading": "Ste to vi?",
+			"body": "Ta stran temelji na odprtih podatkih ZZZS. Prevzemite jo, da jo boste lahko preverili in dopolnili:",
+			"link": "Prevzemite to stran",
+			"claimedHeading": "Stran upravlja zdravnik",
+			"claimedBody": "Zdravnik je to stran prevzel: njegova istovetnost je bila preverjena, stran pa dopolnjuje sam.",
+			"benefits": [
+				"brezplačno, brez naročnine in brez obveznosti;",
+				"vaša fotografija in jeziki, ki jih govorite;",
+				"vaš ordinacijski čas in besedilo o vaši ambulanti;",
+				"statistika ogledov vaše strani;",
+				"paket za deljenje: povezava, koda QR in plakat."
+			],
+			"contactLink": "Imate vprašanja o prevzemu? Pišite nam",
+			"optOutLink": "To je vaša stran in ne želite biti javno navedeni? Začnite tukaj"
+		},
+		"report": {
+			"heading": "Je kaj narobe?",
+			"body": "Če sta naslov ali ime napačna, nam sporočite, kako ju popraviti.",
+			"link": "Sporočite napako"
+		},
+		"ring": {
+			"heading": "Drugi zdravniki: {occupation}, {place}"
+		},
+		"photoAlt": "Fotografija: {name}",
+		"metaTitleName": "{name} · Apercura",
+		"metaDescriptionBookable": "{name}, {occupation}: naročanje prek spleta, naslov, kontakt in {fees, select, sector {pogodbeni status} other {pogodba z zavarovalnico}}.",
+		"metaDescriptionBookablePlace": "{name}, {occupation}, {place}: naročanje prek spleta, naslov, kontakt in {fees, select, sector {pogodbeni status} other {pogodba z zavarovalnico}}.",
+		"fieldsOfCare": "Področja dela",
+		"ownership": "Ustanovitelj",
+		"ownershipPublic": "Javni",
+		"ownershipPrivate": "Zasebni",
+		"slovenia": {
+			"activity": "{kind, select, general {Splošna ambulanta} trainee {Ambulanta specializanta družinske medicine} generalPlus {Splošna ambulanta z dodatno medicinsko sestro} children {Otroški in šolski dispanzer} women {Dispanzer za ženske} dentalAdults {Zobozdravstvo za odrasle} dentalYouth {Zobozdravstvo za otroke in mladino} dentalStudents {Zobozdravstvo za študente} other {Ambulanta}}",
+			"provider": "Izvajalec",
+			"newPatients": "Novi pacienti",
+			"accepts": "Sprejema nove paciente",
+			"closed": "Ne sprejema novih pacientov",
+			"unknown": "Ni navedeno",
+			"asOf": "Seznam ZZZS na dan {date}",
+			"note": "ZZZS vsak dan objavi, ali posamezni zdravnik še sprejema zavarovane osebe, ki ga izberejo za osebnega zdravnika. Ambulanta to potrdi, ko zdravnika izberete.",
+			"source": "Vir: ZZZS, CC BY 4.0",
+			"listingAccepts": "Sprejema nove paciente",
+			"listingClosed": "Ne sprejema novih"
+		}
+	},
+	"Institutional": {
+		"toBeCompleted": "Še ni določeno",
+		"legalDraftMark": "Osnutek: pred zagonom ga mora pregledati pravnik",
+		"auditMark": "Začasna izjava: dopolnjena bo po ročnem pregledu",
+		"comingMark": "Kmalu",
+		"placeholderNote": "Vrednosti, zapisane z velikimi črkami med dvojnimi zavitimi oklepaji, še niso znane: dopolnili jih bomo, ko bo ustanovljena pravna oseba in bodo sklenjene pogodbe."
+	},
+	"AboutPage": {
+		"metaTitle": "O projektu · Apercura",
+		"metaDescription": "Apercura brezplačno objavi stvarno stran za vsakega zdravnika s seznamov osebnih zdravnikov ZZZS, iz javnih odprtih podatkov.",
+		"title": "O projektu Apercura",
+		"lead": "Odprti imenik zdravnikov, ki jih v Sloveniji lahko izberete za osebnega zdravnika: družinskih, otroških in šolskih zdravnikov, ginekologov in zobozdravnikov.",
+		"sections": {
+			"what": {
+				"heading": "Kaj dela Apercura",
+				"body": [
+					"Apercura objavi stran za vsakega zdravnika s poimenskih seznamov zdravnikov, ki so lahko osebni zdravniki, ki jih vsak dan objavlja Zavod za zdravstveno zavarovanje Slovenije (ZZZS). Stran navaja ambulante, v katerih zdravnik dela, in ali še sprejema nove paciente.",
+					"Pacienti najdejo vsakega zdravnika, ne le tistih, ki plačujejo kakšni platformi. Zdravniki lahko svojo stran brezplačno prevzamejo, preverijo in dopolnijo. V Sloveniji Apercura ne omogoča spletnega naročanja."
+				]
+			},
+			"principles": {
+				"heading": "Načela",
+				"list": [
+					"Vsak zdravnik je naveden enako, ne glede na to, ali uporablja Apercuro.",
+					"Samo stvarni podatki: brez ocen, mnenj, oglasov in plačanih uvrstitev.",
+					"Brezplačno za zdravnike in paciente, brez naročnine in brez provizij.",
+					"Vsaka stran navaja, od kod so njeni podatki in kdaj so bili nazadnje posodobljeni.",
+					"Le nujni podatki, zbrani za navedeni namen in izbrisani v določenih rokih."
+				]
+			},
+			"how": {
+				"heading": "Od kod so strani",
+				"body": [
+					"Strani se vsak teden ustvarijo iz poimenskih seznamov zdravnikov, ki jih objavlja ZZZS; statistične regije, občine in naselja so iz Registra prostorskih enot Geodetske uprave Republike Slovenije. Stran s podatki navaja vsak vir, njegovo licenco in datum."
+				]
+			},
+			"who": {
+				"heading": "Kdo upravlja Apercuro",
+				"body": [
+					"Apercura je projekt v javnem interesu. Ni državna storitev in ni povezana z Ministrstvom za zdravje, ZZZS, Zdravniško zbornico Slovenije ali drugimi zbornicami."
+				]
+			}
+		},
+		"fields": {
+			"publisher": "Upravljavec",
+			"contact": "Kontakt"
+		},
+		"links": {
+			"data": "Podatki in viri",
+			"openSource": "Izvorna koda in licenca"
+		}
+	},
+	"OpenSourcePage": {
+		"metaTitle": "Odprta koda · Apercura",
+		"metaDescription": "Celotna izvorna koda Apercure je javna pod licenco AGPL-3.0. Lahko jo berete, preverite ali celotno platformo poganjate sami.",
+		"title": "Koda je javna.",
+		"lead": "Vsaka vrstica Apercure je objavljena pod licenco AGPL-3.0: lahko jo berete, preverite in celotno platformo poganjate sami.",
+		"sections": {
+			"licence": {
+				"heading": "Licenca AGPL-3.0",
+				"body": [
+					"AGPL-3.0 je licenca za prosto programje. Kodo lahko vsakdo uporablja, preučuje, spreminja in deli. Kdor spremenjeno različico ponuja kot spletno storitev, mora svoje spremembe objaviti pod isto licenco."
+				]
+			},
+			"can": {
+				"heading": "Kaj lahko storite",
+				"list": [
+					"Preberete, kako nastane vsaka stran in kako se uvažajo odprti podatki.",
+					"Preverite, kako bodo šifrirani podatki pacientov in kako dolgo se hranijo.",
+					"V javnem repozitoriju sporočite težavo ali predlagate spremembo.",
+					"Celotno platformo poganjate na lastni infrastrukturi z Dockerjem, skupaj z uvozom odprtih podatkov."
+				]
+			},
+			"selfHost": {
+				"heading": "Lastno gostovanje",
+				"body": [
+					"Namestitev, ki vsebuje le imenik, ne hrani nobenih zdravstvenih podatkov. Naročila pacientov so zdravstveni podatki: če naročanje upravljate za druge, morate upoštevati pravila, ki za zdravstvene podatke veljajo v vaši državi."
+				]
+			}
+		},
+		"facts": {
+			"licence": "Licenca",
+			"licenceValue": "GNU Affero General Public License v3.0",
+			"repository": "Repozitorij",
+			"data": "Podatki imenika"
+		},
+		"dataValue": "CC BY 4.0, glejte stran s podatki",
+		"cta": {
+			"heading": "Preberite izvorno kodo",
+			"body": "Repozitorij vsebuje kodo, dokumentacijo in navodila za lastno gostovanje.",
+			"link": "Odpri repozitorij"
+		}
+	},
+	"Listing": {
+		"count": "{count, plural, one {# zdravnik} two {# zdravnika} few {# zdravniki} other {# zdravnikov}}",
+		"metaTitle": "{count, plural, one {{listing} – {place}: # zdravnik · Apercura} two {{listing} – {place}: # zdravnika · Apercura} few {{listing} – {place}: # zdravniki · Apercura} other {{listing} – {place}: # zdravnikov · Apercura}}",
+		"metaTitlePage": "{listing} – {place}, stran {page} · Apercura",
+		"metaDescription": "{count, plural, one {# zdravnik v kategoriji „{occupation}“, {place}, iz odprtih podatkov ZZZS: ambulanta, naslov in sprejemanje novih pacientov{fees, select, sector {} other {}}.} two {# zdravnika v kategoriji „{occupation}“, {place}, iz odprtih podatkov ZZZS: ambulante, naslovi in sprejemanje novih pacientov{fees, select, sector {} other {}}.} few {# zdravniki v kategoriji „{occupation}“, {place}, iz odprtih podatkov ZZZS: ambulante, naslovi in sprejemanje novih pacientov{fees, select, sector {} other {}}.} other {# zdravnikov v kategoriji „{occupation}“, {place}, iz odprtih podatkov ZZZS: ambulante, naslovi in sprejemanje novih pacientov{fees, select, sector {} other {}}.}}",
+		"title": "{listing} – {place}",
+		"lead": "{count, plural, one {Seznami ZZZS v tej kategoriji navajajo # zdravnika z ambulanto v kraju {place}.} two {Seznami ZZZS v tej kategoriji navajajo # zdravnika z ambulanto v kraju {place}.} few {Seznami ZZZS v tej kategoriji navajajo # zdravnike z ambulanto v kraju {place}.} other {Seznami ZZZS v tej kategoriji navajajo # zdravnikov z ambulanto v kraju {place}.}}",
+		"practitionersHeading": "{count, plural, one {Zdravnik} two {# zdravnika} few {# zdravniki} other {# zdravnikov}}",
+		"practitionersIntro": "Po abecednem vrstnem redu. Nihče ne plača, da je naveden, in nihče ni razvrščen višje.",
+		"rowFacts": "Pogodbeni status: {sector} · Kartica zdravstvenega zavarovanja: {carteVitale}",
+		"rowFactsAgreement": "Pogodba z zavarovalnico: {sector} · Kartica zdravstvenega zavarovanja: {carteVitale}",
+		"columns": {
+			"practitioner": "Zdravnik",
+			"sector": "Pogodbeni status",
+			"agreement": "Pogodba z zavarovalnico",
+			"carteVitale": "Kartica zdravstvenega zavarovanja"
+		},
+		"pagination": {
+			"label": "Strani seznama",
+			"previous": "Prejšnja stran",
+			"next": "Naslednja stran",
+			"status": "Stran {page} od {pages}",
+			"page": "<hidden>Stran </hidden>{page}",
+			"jumps": "Pojdi na stran"
+		},
+		"facts": {
+			"heading": "V številkah",
+			"intro": "Pogodbeni status je iz seznamov ZZZS, za zdravnike, ki jih je bilo v njih mogoče najti.",
+			"introAgreement": "Pogodbe z zavarovalnico so iz seznamov ZZZS, za zdravnike, ki jih je bilo v njih mogoče najti.",
+			"sectorUnknown": "Pogodbeni status ni znan",
+			"agreementUnknown": "Pogodba z zavarovalnico ni znana",
+			"carteVitaleYes": "Sprejemajo kartico zdravstvenega zavarovanja",
+			"carteVitaleNo": "Ne sprejemajo kartice zdravstvenega zavarovanja",
+			"bookingNotOpen": "Še ni na voljo",
+			"sources": "ZZZS, Poimenski seznami zdravnikov, ki so lahko osebni zdravniki (CC BY 4.0); GURS, Register prostorskih enot"
+		},
+		"communesHeading": "{listing}: občine – {place}",
+		"nearbyHeading": "{listing}: bližnje občine",
+		"establishmentsHeading": "Ustanove – {place}",
+		"establishmentsIntro": "Bolnišnice, klinike in zdravstveni domovi, v katerih delajo zdravniki v kategoriji „{occupation}“.",
+		"allSpecialties": "Vse vrste zdravnikov – {place}",
+		"hubMetaTitle": "{count, plural, one {{listing} v Sloveniji: # zdravnik · Apercura} two {{listing} v Sloveniji: # zdravnika · Apercura} few {{listing} v Sloveniji: # zdravniki · Apercura} other {{listing} v Sloveniji: # zdravnikov · Apercura}}",
+		"hubMetaDescription": "{count, plural, one {# zdravnik v kategoriji „{occupation}“ v Sloveniji, po statističnih regijah, iz odprtih podatkov ZZZS: ambulanta, naslov in sprejemanje novih pacientov{fees, select, sector {} other {}}.} two {# zdravnika v kategoriji „{occupation}“ v Sloveniji, po statističnih regijah, iz odprtih podatkov ZZZS: ambulante, naslovi in sprejemanje novih pacientov{fees, select, sector {} other {}}.} few {# zdravniki v kategoriji „{occupation}“ v Sloveniji, po statističnih regijah, iz odprtih podatkov ZZZS: ambulante, naslovi in sprejemanje novih pacientov{fees, select, sector {} other {}}.} other {# zdravnikov v kategoriji „{occupation}“ v Sloveniji, po statističnih regijah, iz odprtih podatkov ZZZS: ambulante, naslovi in sprejemanje novih pacientov{fees, select, sector {} other {}}.}}",
+		"hubTitle": "{listing} v Sloveniji",
+		"hubLead": "{count, plural, one {Seznami ZZZS v tej kategoriji navajajo # zdravnika z ambulanto v Sloveniji.} two {Seznami ZZZS v tej kategoriji navajajo # zdravnika z ambulanto v Sloveniji.} few {Seznami ZZZS v tej kategoriji navajajo # zdravnike z ambulanto v Sloveniji.} other {Seznami ZZZS v tej kategoriji navajajo # zdravnikov z ambulanto v Sloveniji.}}",
+		"departmentsHeading": "{listing} po statističnih regijah",
+		"departmentsIntro": "Izberite statistično regijo, da vidite njene zdravnike in občine.",
+		"browseDirectory": "Brskajte po imeniku po krajih",
+		"metaTitleShort": "{listing} – {place} · Apercura",
+		"metaDescriptionPage": "{count, plural, one {Stran {page} od {pages}: # zdravnik v kategoriji „{occupation}“, {place}, iz odprtih podatkov ZZZS.} two {Stran {page} od {pages}: # zdravnika v kategoriji „{occupation}“, {place}, iz odprtih podatkov ZZZS.} few {Stran {page} od {pages}: # zdravniki v kategoriji „{occupation}“, {place}, iz odprtih podatkov ZZZS.} other {Stran {page} od {pages}: # zdravnikov v kategoriji „{occupation}“, {place}, iz odprtih podatkov ZZZS.}}",
+		"metaDescriptionPageRange": "{count, plural, one {Stran {page} od {pages}, od {first} do {last}: # zdravnik v kategoriji „{occupation}“, {place}, iz odprtih podatkov ZZZS.} two {Stran {page} od {pages}, od {first} do {last}: # zdravnika v kategoriji „{occupation}“, {place}, iz odprtih podatkov ZZZS.} few {Stran {page} od {pages}, od {first} do {last}: # zdravniki v kategoriji „{occupation}“, {place}, iz odprtih podatkov ZZZS.} other {Stran {page} od {pages}, od {first} do {last}: # zdravnikov v kategoriji „{occupation}“, {place}, iz odprtih podatkov ZZZS.}}",
+		"hubMetaTitleShort": "{listing} v Sloveniji · Apercura",
+		"authoritiesHeading": "{listing}: občine – {place}"
+	},
+	"Directory": {
+		"metaTitle": "Imenik zdravnikov po krajih · Apercura",
+		"metaDescription": "Vse statistične regije in občine Slovenije z družinskimi, otroškimi in šolskimi zdravniki, ginekologi in zobozdravniki, iz odprtih podatkov ZZZS.",
+		"title": "Imenik po krajih",
+		"lead": "{count, plural, one {# zdravnik z ambulanto, po statističnih regijah.} two {# zdravnika z ambulanto, po statističnih regijah.} few {# zdravniki z ambulanto, po statističnih regijah.} other {# zdravnikov z ambulanto, po statističnih regijah.}}",
+		"otherRegion": "Drugi kraji",
+		"emptyTitle": "Imenik še ni uvožen",
+		"emptyBody": "Seznami ZZZS na ta strežnik še niso bili uvoženi. Vrnite se po naslednjem uvozu.",
+		"placeMetaTitle": "Zdravniki – {place} · Apercura",
+		"placeMetaDescription": "{count, plural, one {# zdravnik, {place}, po vrsti zdravnika, iz odprtih podatkov ZZZS.} two {# zdravnika, {place}, po vrsti zdravnika, iz odprtih podatkov ZZZS.} few {# zdravniki, {place}, po vrsti zdravnika, iz odprtih podatkov ZZZS.} other {# zdravnikov, {place}, po vrsti zdravnika, iz odprtih podatkov ZZZS.}}",
+		"placeTitle": "Zdravniki – {place}",
+		"placeLead": "{count, plural, one {# zdravnik z ambulanto v kraju {place}.} two {# zdravnika z ambulanto v kraju {place}.} few {# zdravniki z ambulanto v kraju {place}.} other {# zdravnikov z ambulanto v kraju {place}.}}",
+		"specialtiesHeading": "Po vrsti zdravnika",
+		"communesHeading": "Občine – {place}",
+		"arrondissementsHeading": "Po mestnih četrtih",
+		"establishmentsHeading": "Ustanove – {place}",
+		"placeMetaTitleShort": "Zdravniki – {place} · Apercura",
+		"authoritiesHeading": "Občine – {place}",
+		"regionLink": "Vse v regiji {place}"
+	},
+	"Establishment": {
+		"metaTitle": "{name} · Apercura",
+		"metaTitlePlace": "{name}, {place} · Apercura",
+		"metaDescription": "{count, plural, one {{name}: naslov, centrala in # zdravnik, ki dela tukaj.} two {{name}: naslov, centrala in # zdravnika, ki delata tukaj.} few {{name}: naslov, centrala in # zdravniki, ki delajo tukaj.} other {{name}: naslov, centrala in # zdravnikov, ki delajo tukaj.}}",
+		"directory": "Imenik",
+		"folio": "FINESS {finess}",
+		"lead": "{count, plural, one {{kind}. Tukaj dela # zdravnik.} two {{kind}. Tukaj delata # zdravnika.} few {{kind}. Tukaj delajo # zdravniki.} other {{kind}. Tukaj dela # zdravnikov.}}",
+		"addressHeading": "Naslov",
+		"finess": "Številka FINESS",
+		"action": {
+			"call": "K pregledu se naročite prek ustanove. Pokličite centralo in vprašajte za oddelek, ki ga potrebujete.",
+			"noPhone": "Za to ustanovo ni objavljena nobena telefonska številka.",
+			"noPhoneHint": "Kontaktne podatke poiščite na njeni spletni strani."
+		},
+		"practitionersHeading": "{count, plural, one {Zdravnik, ki dela tukaj} two {# zdravnika, ki delata tukaj} few {# zdravniki, ki delajo tukaj} other {# zdravnikov, ki delajo tukaj}}",
+		"practitionersIntro": "Po specialnosti, po abecednem vrstnem redu.",
+		"otherProfessions": "Drugi poklici",
+		"source": "Annuaire Santé (ANS) in FINESS+"
+	},
+	"SearchForm": {
+		"specialties": "Vrste zdravnikov",
+		"practitioners": "Zdravniki",
+		"places": "Kraji",
+		"department": "Statistična regija",
+		"nearMe": "V moji bližini",
+		"locating": "Iščemo vašo lokacijo…",
+		"geoDenied": "Določanje lokacije je za to spletno mesto izklopljeno. Vpišite raje kraj.",
+		"geoUnavailable": "Vaše lokacije ni bilo mogoče določiti. Vpišite raje kraj.",
+		"searching": "Iščemo…",
+		"noSuggestion": "Ni predlogov. Pritisnite Išči, da vidite vse rezultate."
+	},
+	"OgImage": {
+		"runningHead": "Odprti imenik osebnih zdravnikov",
+		"titles": {
+			"medecin": "Vsak zdravnik že ima svojo stran.",
+			"chirurgien-dentiste": "Vsak zobozdravnik že ima svojo stran.",
+			"sage-femme": "Vsaka babica že ima svojo stran.",
+			"infirmier": "Vsaka samostojna medicinska sestra že ima svojo stran.",
+			"annuaire": "Zdravniki po vrsti in po kraju."
+		},
+		"footer": "Brezplačno · Odprta koda · Brez ocen in oglasov",
+		"practitioner": {
+			"folio": "Šifra {rpps}",
+			"alt": "{name}, {occupation}, {place}",
+			"altNoPlace": "{name}, {occupation}"
+		}
+	},
+	"taxonomy": {
+		"practiceKind": {
+			"office": "Ambulanta"
+		},
+		"listing": {
+			"druzinski-zdravnik": "Družinski zdravniki",
+			"otroski-zdravnik": "Otroški in šolski zdravniki",
+			"ginekolog": "Ginekologi",
+			"zobozdravnik": "Zobozdravniki"
+		},
+		"profession": {
+			"druzinski-zdravnik": "Družinska medicina",
+			"otroski-zdravnik": "Pediatrija in šolska medicina",
+			"ginekolog": "Ginekologija",
+			"zobozdravnik": "Zobozdravstvo"
+		}
+	},
+	"booking": {
+		"panel": {
+			"code": {
+				"sendsLeft": "{count, plural, one {Zahtevate lahko še # kodo.} two {Zahtevate lahko še # kodi.} few {Zahtevate lahko še # kode.} other {Zahtevate lahko še # kod.}}",
+				"invalid": "{count, plural, one {Koda ni pravilna. Ostal vam je še # poskus.} two {Koda ni pravilna. Ostala sta vam še # poskusa.} few {Koda ni pravilna. Ostali so vam še # poskusi.} other {Koda ni pravilna. Ostalo vam je še # poskusov.}}"
+			}
+		},
+		"manage": {
+			"cutoffPassed": "{hours, plural, one {Spletne spremembe so mogoče do # ure pred terminom. Če ga želite zdaj odpovedati ali prestaviti, pokličite ambulanto.} two {Spletne spremembe so mogoče do # ur pred terminom. Če ga želite zdaj odpovedati ali prestaviti, pokličite ambulanto.} few {Spletne spremembe so mogoče do # ur pred terminom. Če ga želite zdaj odpovedati ali prestaviti, pokličite ambulanto.} other {Spletne spremembe so mogoče do # ur pred terminom. Če ga želite zdaj odpovedati ali prestaviti, pokličite ambulanto.}}"
+		}
+	},
+	"auth": {
+		"runningHead": "Prostor za zdravnike",
+		"metadata": {
+			"signIn": "Prijava · Apercura",
+			"signUp": "Ustvarite račun · Apercura",
+			"verifyEmail": "Potrditev e-poštnega naslova · Apercura",
+			"challenge": "Potrdite, da ste to vi · Apercura",
+			"security": "Varnost · Apercura",
+			"home": "Vaš prostor · Apercura"
+		},
+		"common": {
+			"email": "E-poštni naslov",
+			"password": "Geslo",
+			"pending": "Počakajte",
+			"loading": "Nalaganje",
+			"signOut": "Odjava",
+			"signingOut": "Odjavljanje",
+			"totpCode": "6-mestna koda iz aplikacije za preverjanje pristnosti"
+		},
+		"errors": {
+			"generic": "Prišlo je do napake. Poskusite znova čez trenutek.",
+			"tooManyRequests": "Preveč poskusov. Počakajte minuto in poskusite znova.",
+			"invalidCredentials": "E-poštni naslov in geslo se ne ujemata.",
+			"emailNotVerified": "Najprej potrdite svoj e-poštni naslov: pravkar smo vam poslali novo povezavo.",
+			"invalidCode": "Koda ni veljavna. Preverite jo in poskusite znova.",
+			"locked": "Preveč napačnih kod. Počakajte 15 minut in se znova prijavite.",
+			"passwordTooShort": "Geslo je prekratko: uporabite vsaj 12 znakov.",
+			"passwordTooLong": "Geslo je predolgo: uporabite največ 128 znakov.",
+			"userExists": "Ta e-poštni naslov že uporablja drug račun. Raje se prijavite.",
+			"invalidPassword": "Geslo ni pravilno.",
+			"mfaRequired": "Najprej potrdite, da ste to vi, z drugim faktorjem.",
+			"lastFactor": "Preden odstranite ta drugi faktor, dodajte drugega: vaš račun mora vedno imeti vsaj enega.",
+			"passkeyFailed": "Ključa za dostop ni bilo mogoče uporabiti. Poskusite znova ali uporabite geslo in kodo.",
+			"accountFrozen": "Ta račun je zamrznjen zaradi izpodbijanja strani. Pišite nam, da ga obnovite z novim preverjanjem identitete."
+		},
+		"signIn": {
+			"title": "Prijava",
+			"lead": "Vaš prostor za zdravnike: vaša stran, vaš razpored, vaša ekipa.",
+			"asideFactor": "Vsak račun z dostopom do terminov potrebuje drugi faktor: kodo iz aplikacije za preverjanje pristnosti ali ključ za dostop.",
+			"asidePasskey": "Ključ za dostop je shranjen v vašem telefonu ali računalniku in ga odklenete s prstnim odtisom, obrazom ali kodo PIN.",
+			"passwordHeading": "Z geslom",
+			"submit": "Prijava",
+			"passkeyHeading": "S ključem za dostop",
+			"passkeyHint": "Gesla ne potrebujete: vaša naprava potrdi, da ste to vi.",
+			"passkey": "Prijava s ključem za dostop",
+			"noAccount": "Še nimate računa?",
+			"signUpLink": "Ustvarite račun",
+			"totpHeading": "Vnesite kodo",
+			"backupHeading": "Vnesite rezervno kodo",
+			"totpLead": "Odprite aplikacijo za preverjanje pristnosti in vnesite 6-mestno kodo, ki jo prikazuje za Apercuro.",
+			"backupLead": "Vsaka rezervna koda deluje samo enkrat. Prejeli ste jih, ko ste nastavili aplikacijo za preverjanje pristnosti.",
+			"backupCode": "Rezervna koda",
+			"verify": "Potrdi",
+			"useBackupCode": "Raje uporabite rezervno kodo",
+			"useTotp": "Raje uporabite aplikacijo za preverjanje pristnosti",
+			"pscHeading": "S storitvijo Pro Santé Connect",
+			"pscHint": "Ko jo pri prevzemu strani povežete s svojim računom, vas aplikacija e-CPS ali kartica CPS prijavi brez dodatne kode.",
+			"psc": "Prijava s storitvijo Pro Santé Connect",
+			"pscFailed": "Prijava s storitvijo Pro Santé Connect ni uspela. Najprej jo pri prevzemu strani povežite s svojim računom ali pa se prijavite z geslom."
+		},
+		"signUp": {
+			"title": "Ustvarite račun",
+			"lead": "Brezplačno za zdravnike in njihove sodelavce.",
+			"asideSteps": "Trije koraki: ustvarite račun, potrdite e-poštni naslov in nastavite drugi faktor.",
+			"asideFree": "Ustvarjanje računa ne spremeni nobene javne strani. Prevzem vaše strani sledi pozneje.",
+			"name": "Ime in priimek",
+			"emailHint": "Na ta naslov vam pošljemo povezavo za potrditev.",
+			"passwordHint": "Vsaj {min} znakov. Dolgo poved si je lahko zapomniti.",
+			"submit": "Ustvari račun",
+			"haveAccount": "Že imate račun?",
+			"signInLink": "Prijava",
+			"sentHeading": "Preverite svoj e-poštni predal",
+			"sentTitle": "Na naslov {email} smo poslali povezavo za potrditev.",
+			"sentBody": "Odprite sporočilo in v eni uri sledite povezavi. Nato se prijavite in nastavite drugi faktor.",
+			"sentHint": "Po nekaj minutah še nič? Preverite mapo z neželeno pošto ali se prijavite: poslali vam bomo novo povezavo."
+		},
+		"verifyEmail": {
+			"title": "Potrditev e-poštnega naslova",
+			"successTitle": "Vaš e-poštni naslov je potrjen.",
+			"successBody": "Prijavite se z geslom in nastavite drugi faktor.",
+			"errorTitle": "Ta povezava ne deluje več.",
+			"errorBody": "Morda je potekla ali je bila že uporabljena. Prijavite se: poslali vam bomo novo povezavo.",
+			"signIn": "Prijava"
+		},
+		"challenge": {
+			"title": "Potrdite, da ste to vi",
+			"lead": "Vaš račun ima drugi faktor: z njim odprite svoj prostor.",
+			"aside": "Samo geslo ne zadošča za dostop do terminov.",
+			"passkeyHeading": "S ključem za dostop",
+			"passkeyLead": "Naprava vas bo prosila za prstni odtis, obraz ali kodo PIN.",
+			"passkey": "Uporabi moj ključ za dostop",
+			"totpHeading": "Z aplikacijo za preverjanje pristnosti",
+			"otherHeading": "Niste vi ali nimate dostopa do svojega faktorja?",
+			"otherLead": "Odjavite se. Za obnovo računa je treba znova preveriti vašo identiteto."
+		},
+		"security": {
+			"title": "Varnost",
+			"lead": "Kako se prijavljate in kje ste prijavljeni.",
+			"enrolLead": "Še zadnji korak pred vašim prostorom: nastavite drugi faktor.",
+			"enrolTitle": "Za nadaljevanje izberite drugi faktor",
+			"enrolBody": "Apercura ga zahteva za vsak račun z dostopom do terminov. Deluje aplikacija za preverjanje pristnosti ali ključ za dostop; drugo možnost lahko dodate pozneje.",
+			"continue": "Nadaljuj v svoj prostor",
+			"actions": "Dejanja",
+			"totp": {
+				"heading": "Aplikacija za preverjanje pristnosti",
+				"lead": "Aplikacija v telefonu (na primer FreeOTP, Aegis ali Google Authenticator) vsakih 30 sekund prikaže novo 6-mestno kodo.",
+				"enabledTitle": "Aplikacija za preverjanje pristnosti je nastavljena.",
+				"enabledBody": "Ob vsaki prijavi z geslom boste vnesli tudi kodo.",
+				"scanHeading": "1. Skenirajte kodo QR",
+				"scanLead": "V aplikaciji za preverjanje pristnosti dodajte račun in skenirajte to kodo. Če je ne morete skenirati, vnesite ključ za nastavitev.",
+				"qrLabel": "Koda QR za dodajanje Apercure v aplikacijo za preverjanje pristnosti",
+				"manualKey": "Ključ za nastavitev",
+				"codesHeading": "2. Shranite rezervne kode",
+				"codesLead": "Če izgubite telefon, se lahko z vsako od teh kod prijavite enkrat. Natisnite jih ali jih shranite v upravitelj gesel; prikazane so samo zdaj.",
+				"confirmHeading": "3. Vnesite kodo, ki jo prikazuje aplikacija",
+				"confirm": "Vklopi",
+				"password": "Vaše geslo",
+				"passwordHint": "Pred spremembo načina prijave ga zahtevamo znova.",
+				"start": "Nastavi aplikacijo"
+			},
+			"passkeys": {
+				"heading": "Ključi za dostop",
+				"lead": "Ključ za dostop ostane v vašem telefonu, računalniku ali varnostnem ključu in ga odklenete s prstnim odtisom, obrazom ali kodo PIN. Ničesar ni treba tipkati, ničesar ni mogoče ukrasti.",
+				"addedTitle": "Ključ za dostop je dodan.",
+				"name": "Ime",
+				"added": "Dodano",
+				"unnamed": "Ključ za dostop",
+				"removeNamed": "Odstrani {name}",
+				"remove": "Odstrani",
+				"none": "Ključa za dostop še nimate.",
+				"nameLabel": "Ime novega ključa za dostop (neobvezno)",
+				"nameHint": "Na primer: računalnik v ambulanti.",
+				"add": "Dodaj ključ za dostop"
+			},
+			"sessions": {
+				"heading": "Kje ste prijavljeni",
+				"lead": "Seja se konča po 12 urah neuporabe. Odjavite vsako sejo, ki je ne prepoznate.",
+				"device": "Naprava",
+				"lastActive": "Nazadnje dejavna",
+				"unknownDevice": "Neznana naprava",
+				"current": "Ta seja",
+				"revoke": "Odjavi",
+				"everywhereHint": "Ste izgubili napravo ali komu zaupali geslo? Odjavite se iz vseh sej, tudi iz te.",
+				"everywhere": "Odjava povsod"
+			},
+			"data": {
+				"heading": "Vaši podatki",
+				"lead": "Kopija vsega, kar hranimo o vašem računu, in njegov izbris.",
+				"exportHeading": "Prenesite svoje podatke",
+				"exportBody": "Datoteka JSON z vašim računom, načini prijave (nikoli z njihovimi skrivnostmi), sejami, ambulantami, prevzemi in vsebino strani.",
+				"export": "Prenesi moje podatke",
+				"deleteHeading": "Izbrišite svoj račun",
+				"deleteBody": "Vaš račun, seje, prevzemi in dokumenti se izbrišejo. Vaša stran se vrne na podatke iz uradnega seznama: neprevzeta, brez vaše vsebine in fotografije.",
+				"closeEffect": "Zaprtje ambulante odpove njene prihodnje termine (paciente o tem obvestimo po e-pošti), prekliče povezave do njenih koledarjev in v enem dnevu izbriše podatke njenih pacientov. Dnevnik dostopov se hrani eno leto.",
+				"practiceChoice": "Kaj se zgodi z {name}?",
+				"close": "Zapri ambulanto: njeni člani izgubijo dostop",
+				"transfer": "Predaj jo osebi {name} ({email})",
+				"practiceAlone": "{name} se zapre skupaj z vašim računom (ste njen edini član).",
+				"confirmEmail": "Za potrditev vnesite svoj e-poštni naslov",
+				"confirmEmailHint": "Izbrisa ni mogoče razveljaviti.",
+				"mismatch": "To ni e-poštni naslov vašega računa.",
+				"hasTeam": "Izberite, kaj se zgodi z vsako ambulanto, ki ima ekipo.",
+				"lastAdmin": "Ste zadnji skrbnik platforme: najprej določite drugega.",
+				"failed": "Računa ni bilo mogoče izbrisati. Poskusite znova čez trenutek.",
+				"delete": "Izbriši moj račun"
+			}
+		},
+		"app": {
+			"title": "Vaš prostor",
+			"lead": "Prijavljeni ste kot {email}.",
+			"homeLink": "Apercura, domača stran",
+			"nav": {
+				"label": "Prostor za zdravnike",
+				"home": "Vaš prostor",
+				"security": "Varnost",
+				"page": "Vaša stran",
+				"adminClaims": "Prevzemi",
+				"adminReports": "Prijave napak",
+				"today": "Danes",
+				"agenda": "Razpored",
+				"team": "Ekipa",
+				"menu": "Meni",
+				"stats": "Statistika",
+				"share": "Deli",
+				"adminContacts": "Prošnje za stik"
+			},
+			"practicesHeading": "Vaše ambulante",
+			"columns": {
+				"practice": "Ambulanta",
+				"role": "Vaša vloga",
+				"page": "Stran",
+				"status": "Stanje",
+				"next": "Naslednji korak"
+			},
+			"emptyTitle": "Še nobene ambulante",
+			"emptyBody": "Vaša ambulanta se prikaže tukaj, ko je vaša stran prevzeta in preverjena.",
+			"emptyAction": "Poišči mojo stran",
+			"securityHeading": "Varnost računa",
+			"securityBody": "Vaš račun ščiti drugi faktor. Upravljajte aplikacijo za preverjanje pristnosti, ključe za dostop in seje.",
+			"securityLink": "Varnostne nastavitve",
+			"claimsHeading": "Vaša stran in prevzemi",
+			"editPage": "Uredi stran",
+			"openClaim": "Odpri prevzem",
+			"adminRunningHead": "Upravljanje",
+			"agendaHeading": "Razpored",
+			"agendaBody": "Vaš dan, vaš teden, prošnje, na katere morate odgovoriti, in nastavitve naročanja.",
+			"agendaLink": "Odpri današnji razpored",
+			"invitationsHeading": "Povabila",
+			"invitationBody": "{practice} vas vabi, da se pridružite njeni ekipi.",
+			"invitationLink": "Odgovori na povabilo",
+			"pageHeading": "Vaša stran",
+			"pageSummary": "{views, plural, =0 {Brez ogledov} one {# ogled} two {# ogleda} few {# ogledi} other {# ogledov}} v zadnjih 30 dneh; stran je izpolnjena {score} %.",
+			"statsLink": "Oglejte si statistiko in kaj manjka",
+			"shareLink": "Delite stran: povezava, koda QR, plakat"
+		},
+		"roles": {
+			"owner": "Lastnik",
+			"practitioner": "Zdravnik",
+			"assistant": "Asistent"
+		},
+		"email": {
+			"wordmark": "Apercura",
+			"runningHead": "Prostor za zdravnike",
+			"footer": "Apercura: odprti imenik zdravnikov v Sloveniji. Brezplačen in odprtokoden.",
+			"verify": {
+				"subject": "Potrdite svoj e-poštni naslov",
+				"preview": "Potrdite svoj e-poštni naslov in dokončajte ustvarjanje računa Apercura.",
+				"title": "Potrdite svoj e-poštni naslov",
+				"greeting": "Pozdravljeni, {name},",
+				"body": "Pravkar ste ustvarili račun Apercura. Za nadaljevanje potrdite, da je ta naslov vaš.",
+				"action": "Potrdi moj naslov",
+				"fallback": "Če gumb ne deluje, kopirajte to povezavo v brskalnik:",
+				"expiry": "Povezava velja eno uro.",
+				"ignore": "Tega računa niste ustvarili vi? Prezrite to sporočilo: nič se ne bo zgodilo."
+			}
+		}
+	},
+	"emails": {
+		"fallback": "Če gumb ne deluje, kopirajte to povezavo v brskalnik:",
+		"claimRegistryLink": {
+			"subject": "Potrdite prevzem strani zdravnika",
+			"title": "Je to ambulanta, ki jo vodi {practitioner}?",
+			"body": [
+				"Nekdo je zaprosil za upravljanje strani v Apercuri: {practitioner}. To sporočilo smo poslali na e-poštni naslov, ki ga za to ambulanto objavlja javni register.",
+				"Če zahteva prihaja od osebe {practitioner}, odprite povezavo in jo potrdite. Stran bo s tem preverjena."
+			],
+			"action": "Potrdi prevzem",
+			"notes": [
+				"Povezava velja 24 ur.",
+				"Tega niste pričakovali? Prezrite to sporočilo: nič se ne spremeni in stran ostane taka, kot je."
+			]
+		},
+		"claimReceived": {
+			"subject": "Vaš zahtevek za prevzem je v pregledu",
+			"title": "Vaš zahtevek za prevzem je v pregledu",
+			"body": [
+				"Pozdravljeni, {name},",
+				"prejeli smo vaš zahtevek za prevzem in dokazila. Član ekipe Apercura jih bo pregledal in vam pisal po e-pošti.",
+				"Zahtevke pregledamo v 48 urah ob delavnikih."
+			]
+		},
+		"claimVerified": {
+			"subject": "Vaša stran je preverjena",
+			"title": "Vaša stran je preverjena",
+			"body": [
+				"Pozdravljeni, {name},",
+				"vaša stran ima zdaj oznako preverjene strani. Preverite uvožene podatke, dopolnite cene in načine plačila, nato stran objavite."
+			],
+			"action": "Dopolni mojo stran"
+		},
+		"claimRejected": {
+			"subject": "Vaš zahtevek za prevzem ni bil sprejet",
+			"title": "Vaš zahtevek za prevzem ni bil sprejet",
+			"body": [
+				"Pozdravljeni, {name},",
+				"vašega zahtevka nismo mogli preveriti. Razlog, ki ga je navedel pregledovalec: {reason}",
+				"V svojem prostoru lahko odprete nov zahtevek za prevzem, z dobro berljivim dokazilom, da ste zdravnik s te strani."
+			]
+		},
+		"claimSuperseded": {
+			"subject": "Vaš dostop do strani je bil odvzet",
+			"title": "Vaš dostop do strani je bil odvzet",
+			"body": [
+				"Pozdravljeni, {name},",
+				"drug račun je dokazal, da pripada zdravniku s strani, ki jo je upravljal vaš račun. Vaš račun je zamrznjen, njegov dostop do ambulante pa odvzet.",
+				"Če ste zdravnik s te strani vi, nam pišite: račun je mogoče obnoviti le z novim preverjanjem identitete."
+			]
+		},
+		"removalReceived": {
+			"subject": "Vašo zahtevo za odstranitev smo prejeli",
+			"title": "Vašo zahtevo za odstranitev smo prejeli",
+			"body": [
+				"Stran je od zdaj skrita: ni več prikazana, indeksirana ali navedena v seznamih.",
+				"Zahtevo preverimo in odgovorimo najpozneje v enem mesecu. Ko je potrjena, stran izbrišemo; izbrisana stran se z naslednjim uvozom seznamov ZZZS ne vrne."
+			]
+		},
+		"removalConfirmed": {
+			"subject": "Stran je izbrisana",
+			"title": "Stran je izbrisana",
+			"body": [
+				"Stran, za katere odstranitev ste zaprosili, je izbrisana iz Apercure. Z naslednjim uvozom seznamov ZZZS se ne vrne."
+			]
+		},
+		"removalRejected": {
+			"subject": "Vaša zahteva za odstranitev ni bila sprejeta",
+			"title": "Vaša zahteva za odstranitev ni bila sprejeta",
+			"body": [
+				"Vaše zahteve za odstranitev nismo mogli potrditi, zato je stran znova prikazana. Razlog: {reason}",
+				"Če ste zdravnik s te strani, jo lahko tudi prevzamete in sami odstranite v svojem prostoru."
+			]
+		},
+		"teamInvitation": {
+			"subject": "{inviter} vas vabi v ekipo {practice}",
+			"title": "Pridružite se ekipi {practice}",
+			"body": [
+				"Pozdravljeni,",
+				"{inviter} vas vabi, da se v Apercuri pridružite ekipi {practice} v vlogi: {role}.",
+				"Da se pridružite, se prijavite ali ustvarite račun s tem e-poštnim naslovom, nato nastavite drugi faktor (aplikacijo za preverjanje pristnosti ali ključ za dostop): ščiti podatke pacientov, ki jih boste videli."
+			],
+			"action": "Pridruži se ekipi",
+			"notes": [
+				"Vabilo velja 48 ur.",
+				"Ga niste pričakovali? Prezrite to sporočilo: brez vas se ne zgodi nič."
+			]
+		},
+		"contactReceived": {
+			"subject": "Vašo zahtevo smo prejeli",
+			"title": "Vašo zahtevo smo prejeli",
+			"body": [
+				"Pozdravljeni,",
+				"prejeli smo vašo zahtevo v zvezi s stranjo v imeniku Apercura. Član ekipe se vam bo oglasil, preveril vašo identiteto in vam pomagal prevzeti stran.",
+				"Če te zahteve niste poslali vi, prezrite to sporočilo: nobena stran in noben račun se nista spremenila."
+			]
+		},
+		"adminClaims": {
+			"subject": "{count, plural, one {Za pregled: # zahtevek za prevzem} two {Za pregled: # zahtevka za prevzem} few {Za pregled: # zahtevki za prevzem} other {Za pregled: # zahtevkov za prevzem}}",
+			"title": "{count, plural, one {Zahtevek za prevzem čaka na odločitev} two {# zahtevka za prevzem čakata na odločitev} few {# zahtevki za prevzem čakajo na odločitev} other {# zahtevkov za prevzem čaka na odločitev}}",
+			"body": [
+				"{count, plural, one {En zahtevek je bil poslan v pregled} two {# zahtevka sta bila poslana v pregled} few {# zahtevki so bili poslani v pregled} other {# zahtevkov je bilo poslanih v pregled}} od zadnjega obvestila.",
+				"Podrobnosti so v čakalni vrsti prostora za zdravnike, za vašim drugim faktorjem."
+			],
+			"action": "Odpri zahtevke"
+		},
+		"adminContactRequests": {
+			"subject": "{count, plural, one {# zahteva „To sem jaz“} two {# zahtevi „To sem jaz“} few {# zahteve „To sem jaz“} other {# zahtev „To sem jaz“}}",
+			"title": "{count, plural, one {Zahteva za stik čaka na odgovor} two {# zahtevi za stik čakata na odgovor} few {# zahteve za stik čakajo na odgovor} other {# zahtev za stik čaka na odgovor}}",
+			"body": [
+				"{count, plural, one {Zdravnik, ki svoje strani ne more prevzeti, prosi} two {# zdravnika, ki svoje strani ne moreta prevzeti, prosita} few {# zdravniki, ki svoje strani ne morejo prevzeti, prosijo} other {# zdravnikov, ki svoje strani ne morejo prevzeti, prosi}} za stik od zadnjega obvestila.",
+				"Njihovi šifrirani podatki so berljivi v čakalni vrsti prostora za zdravnike."
+			],
+			"action": "Odpri zahteve"
+		}
+	},
+	"Profile": {
+		"presentationHeading": "Predstavitev",
+		"practicalHeading": "Praktični podatki",
+		"fields": {
+			"languages": "Jeziki",
+			"accessibility": "Dostop",
+			"website": "Spletna stran",
+			"fees": "Cene",
+			"paymentMethods": "Načini plačila"
+		},
+		"accessibility": {
+			"stepFree": "Dostop brez stopnic",
+			"lift": "Dvigalo",
+			"parking": "Parkirišče v bližini"
+		},
+		"languages": {
+			"fr": "francoščina",
+			"en": "angleščina",
+			"es": "španščina",
+			"de": "nemščina",
+			"it": "italijanščina",
+			"pt": "portugalščina",
+			"ar": "arabščina",
+			"zh": "kitajščina",
+			"ru": "ruščina",
+			"tr": "turščina",
+			"ro": "romunščina",
+			"pl": "poljščina",
+			"nl": "nizozemščina",
+			"vi": "vietnamščina",
+			"fa": "perzijščina",
+			"he": "hebrejščina",
+			"uk": "ukrajinščina",
+			"lsf": "francoski znakovni jezik"
+		},
+		"paymentMethods": {
+			"card": "Bančna kartica",
+			"cash": "Gotovina",
+			"cheque": "Ček",
+			"transfer": "Bančno nakazilo"
+		},
+		"fees": {
+			"range": "od {min} do {max}",
+			"fromOwner": "Cene navaja zdravnik sam."
+		}
+	},
+	"Claim": {
+		"metadata": {
+			"start": "Prevzem strani · Apercura",
+			"claim": "Vaš prevzem strani · Apercura",
+			"emailLink": "Potrditev prevzema · Apercura"
+		},
+		"pending": "Počakajte",
+		"errors": {
+			"generic": "Prišlo je do napake. Poskusite znova čez nekaj trenutkov.",
+			"TOO_MANY": "Danes je bilo zahtev za prevzem preveč. Poskusite znova jutri.",
+			"ALREADY_OWNER": "Ta stran je že vaša.",
+			"FROZEN": "Ta račun je zamrznjen in ne more prevzeti strani.",
+			"NOT_FOUND": "Nobena stran nima te številke.",
+			"INVALID_RPPS": "Ta številka ni veljavna: vnesite številko s konca naslova vaše strani (na primer si12345), konec naslova ali celoten naslov.",
+			"NOT_OPEN": "Ta prevzem je zaključen: ni ga več mogoče spreminjati.",
+			"METHOD_UNAVAILABLE": "Ta način za to stran ni na voljo.",
+			"TOO_MANY_ATTEMPTS": "S tem načinom je bilo preveč poskusov. Izberite drugega.",
+			"NOT_SUBMITTABLE": "Preden prevzem pošljete v pregled, dodajte dokument.",
+			"BAD_DOCUMENT": "Te datoteke ni mogoče uporabiti: pošljite PDF, JPEG, PNG ali WebP velikosti največ 10 MB.",
+			"PSC_MISSING": "Pro Santé Connect ni vrnil identitete. Poskusite znova."
+		},
+		"start": {
+			"title": "Prevzemite svojo stran",
+			"lead": "Prevzem velja za eno stran, nikoli za ime: osebe z enakim imenom si strani ne morejo prevzeti.",
+			"recordHeading": "Stran, ki jo prevzemate",
+			"unknownProfession": "Zdravstveni delavec",
+			"viewPage": "Ogled javne strani",
+			"contestTitle": "Ta stran že ima preverjenega imetnika",
+			"contestBody": "Če je stran vaša (na primer ker ste izgubili dostop do računa), jo lahko vseeno prevzamete: vaš dokument pregleda skrbnik in odloči. Obnova računa vedno zahteva novo preverjanje istovetnosti.",
+			"confirm": "To sem jaz: začni prevzem",
+			"goToPage": "Na mojo stran",
+			"findHeading": "Poiščite svojo stran po njeni številki",
+			"notFound": "Nobena javna stran še nima te številke.",
+			"rppsLabel": "Številka ali naslov vaše strani",
+			"rppsHint": "Številka je na koncu naslova vaše strani, na primer si12345 v apercura.org/si/zdravnik/ana-novak-si12345. Prilepite lahko tudi celoten naslov.",
+			"find": "Poišči mojo stran",
+			"searchHint": "Stran lahko poiščete tudi po imenu:",
+			"searchLink": "iskanje po imeniku",
+			"howHeading": "Kako preverimo, da ste to vi",
+			"factorNote": "Vaš račun že ima drugi dejavnik: obvezen je pred vsakim prevzemom in od takrat ščiti vašo stran.",
+			"contactLink": "Nimate dokumenta pri roki? Pišite nam",
+			"optOutLink": "To je vaša stran in ne želite biti javno navedeni? Začnite tukaj",
+			"identifierLabel": "Številka strani"
+		},
+		"methods": {
+			"psc": {
+				"title": "Pro Santé Connect",
+				"short": "Pro Santé Connect",
+				"summary": "Z aplikacijo e-CPS ali kartico CPS. Preverjanje je takojšnje in spletno naročanje se lahko odpre takoj.",
+				"lead": "Prijavite se z aplikacijo e-CPS ali kartico CPS. Stran je preverjena, takoj ko se identiteta ujema z njeno številko.",
+				"action": "Nadaljuj s Pro Santé Connect",
+				"hint": "Apercuro zapustite za stran Pro Santé Connect in se nato vrnete sem.",
+				"done": "Pro Santé Connect je potrdil vašo istovetnost."
+			},
+			"registry_email": {
+				"title": "E-pošta ambulante",
+				"short": "E-pošta iz registra",
+				"summary": "Povezava, poslana na e-poštni naslov, ki ga register objavlja za vašo ambulanto ali zdravstveni dom. Preverjeno, ko jo odprete; naročanje se odpre 7 dni pozneje.",
+				"lead": "Povezavo pošljemo na {email}, naslov, ki ga register objavlja za vašo ambulanto. Odprite jo in potrdite.",
+				"action": "Pošlji povezavo",
+				"resend": "Pošlji znova",
+				"sent": "Povezava je poslana. Velja 24 ur.",
+				"done": "E-poštni predal ambulante je potrdil prevzem."
+			},
+			"document": {
+				"title": "Dokument in telefonski klic",
+				"short": "Dokument",
+				"summary": "Fotografija ali sken vaše licence Zdravniške zbornice Slovenije ali potrdila izvajalca, da delate v ambulanti. Član naše ekipe ga pregleda, običajno v 48 urah.",
+				"lead": "Pošljite fotografijo ali sken licence Zdravniške zbornice Slovenije ali potrdila izvajalca, da delate v ambulanti. Pred shranjevanjem se šifrira in se izbriše 30 dni po odločitvi."
+			},
+			"phone_callback": {
+				"title": "Povratni klic",
+				"short": "Povratni klic",
+				"lead": "Med pregledom član naše ekipe pokliče ambulanto na {phone}, številko iz registra (nikoli na številko, ki nam jo daste vi). Kdor se oglasi, prebere kodo, ki je prikazana tukaj.",
+				"action": "Prikaži mojo kodo",
+				"newCode": "Prikaži novo kodo",
+				"hint": "Prikažite jo, ko ste v ambulanti, ali jo dajte tistemu, ki se oglaša na njen telefon. Z novo kodo prejšnja preneha veljati.",
+				"codeLabel": "Koda za branje",
+				"codeHint": "Pustite jo na zaslonu ali si jo zapišite: zaradi vaše varnosti jo prikažemo samo zdaj.",
+				"done": "Povratni klic je potrdil prevzem."
+			}
+		},
+		"check": {
+			"passed": "Opravljeno",
+			"failed": "Neuspešno",
+			"pending": "V teku",
+			"notStarted": "Ni začeto",
+			"claim": {
+				"open": "V teku",
+				"in_review": "V pregledu",
+				"verified": "Preverjeno",
+				"rejected": "Zavrnjeno",
+				"withdrawn": "Umaknjeno",
+				"superseded": "Umaknjeno po sporu"
+			}
+		},
+		"workspace": {
+			"title": "Prevzem strani: {name}",
+			"lead": {
+				"open": "Z enim od spodnjih načinov dokažite, da ste ta zdravnik.",
+				"in_review": "Vaš prevzem je v pregledu.",
+				"verified": "Naslednji korak: dopolnite svojo stran.",
+				"rejected": "Ta prevzem ni bil sprejet.",
+				"withdrawn": "Ta prevzem je bil umaknjen.",
+				"superseded": "Ta prevzem je bil umaknjen po sporu."
+			}
+		},
+		"psc": {
+			"outcome": {
+				"verified": "Pro Santé Connect je potrdil vašo istovetnost: vaša stran je preverjena.",
+				"passed": "Pro Santé Connect je potrdil vašo istovetnost. Prevzem zdaj pregleda skrbnik.",
+				"mismatch": "Identiteta iz Pro Santé Connect se ne ujema s številko te strani.",
+				"error": "Pro Santé Connect ni dosegljiv ali pa je bila prijava preklicana. Poskusite znova.",
+				"linkedElsewhere": "Ta identiteta Pro Santé Connect je že povezana z drugim računom Apercura. Za uporabo tega računa se prijavite s Pro Santé Connect."
+			}
+		},
+		"documents": {
+			"kind": {
+				"cps_card": "Licenca Zdravniške zbornice Slovenije",
+				"ordre_attestation": "Potrdilo izvajalca, da delate v ambulanti"
+			},
+			"kindLabel": "Vrsta dokumenta",
+			"add": "Izberite datoteko",
+			"hint": "PDF, JPEG, PNG ali WebP, največ 10 MB. Največ 4 datoteke.",
+			"kilobytes": "kB"
+		},
+		"review": {
+			"title": "Pošlji v pregled",
+			"lead": "Skrbnik pregleda vaš dokument in pokliče ambulanto. Odgovor prejmete po e-pošti, v 48 urah ob delavnikih.",
+			"submit": "Pošlji v pregled",
+			"notYet": "Najprej dodajte dokument."
+		},
+		"withdraw": "Umakni ta prevzem",
+		"status": {
+			"verified": "Vaša stran je preverjena",
+			"bookingDelay": "Sedemdnevna čakalna doba pred spletnim naročanjem se izteče {date}.",
+			"continue": "Dopolnite svojo stran",
+			"in_review": "Vaš prevzem je v pregledu",
+			"contestReview": "Ta stran je že imela preverjenega imetnika: o vašem dokumentu odloči skrbnik.",
+			"reviewBody": "Član naše ekipe pregleda vaš dokument in vam piše po e-pošti.",
+			"rejected": "Ta prevzem ni bil sprejet",
+			"reason": "Razlog: {reason}",
+			"withdrawn": "Ta prevzem je bil umaknjen",
+			"superseded": "Ta prevzem je bil umaknjen po sporu",
+			"contestTitle": "Ta stran že ima preverjenega imetnika",
+			"contestBody": "O vašem dokumentu bo odločil skrbnik.",
+			"verifiedBadge": "Preverjena stran"
+		},
+		"emailLink": {
+			"title": "Potrdite prevzem",
+			"lead": "Ta povezava je bila poslana na e-poštni naslov, ki ga nacionalni register objavlja za ambulanto.",
+			"reading": "Branje povezave …",
+			"invalidTitle": "Ta povezava ne deluje več",
+			"invalidBody": "Potekla je (velja 24 ur) ali pa je bila že uporabljena. Zdravnik lahko iz svojega prevzema pošlje novo.",
+			"tooMany": "Preveč poskusov. Počakajte eno uro in poskusite znova.",
+			"doneTitle": "Prevzem je potrjen",
+			"doneBody": "Zdravnik se lahko zdaj prijavi in dopolni stran.",
+			"goToSpace": "V prostor za zdravnike",
+			"body": "Če je zdravnik te ambulante zaprosil za upravljanje svoje strani v Apercuri, to potrdite. Sicer to stran zaprite: nič se ne spremeni.",
+			"confirm": "Potrdi prevzem",
+			"pending": "Počakajte"
+		},
+		"withdrawDialog": {
+			"title": "Umaknem ta prevzem?",
+			"body": "Prevzem se dokončno zaključi: njegovi dokazi ne veljajo več, dokumenti pa se izbrišejo čez 30 dni. Pozneje lahko začnete nov prevzem, spet s preverjanjem.",
+			"confirm": "Umakni prevzem",
+			"cancel": "Obdrži prevzem"
+		},
+		"identifiers": {
+			"RPPS": "Francoski register zdravstvenih delavcev",
+			"AT-WIEN": "Seznam Dunaja",
+			"AT-STMK": "Seznam Štajerske",
+			"AT-SBG": "Seznam Salzburga",
+			"AT-SBGZ": "Seznam zobozdravnikov Salzburga",
+			"GB-ODS-GP": "Koda ODS",
+			"GB-ODS-DENT": "Koda ODS",
+			"GB-ODS-PHARM": "Koda ODS",
+			"GB-PHS-GP": "Koda Public Health Scotland",
+			"GB-PHS-DENT": "Koda Public Health Scotland",
+			"GB-PHS-PHARM": "Koda Public Health Scotland",
+			"GB-BSO-GP": "Številka ambulante BSO",
+			"GB-BSO-DENT": "Zobna ambulanta BSO",
+			"CZ-NRPZS": "Številka češke zdravstvene ustanove",
+			"SI-ZZZS": "Šifra zdravnika ZZZS"
+		}
+	},
+	"Onboarding": {
+		"metaTitle": "Nastavitev strani · Apercura",
+		"title": "Nastavite svojo stran",
+		"lead": "{name}: trije koraki do popolne strani.",
+		"stepsLabel": "Koraki",
+		"stepNumber": "Korak {n} od {total}:",
+		"continue": "Nadaljuj",
+		"pending": "Počakajte",
+		"publishFailed": "Strani ni bilo mogoče objaviti. Poskusite znova čez nekaj trenutkov.",
+		"fields": {
+			"name": "Ime",
+			"profession": "Poklic"
+		},
+		"steps": {
+			"check": {
+				"label": "Preverite prevzete podatke",
+				"title": "Preverite prevzete podatke",
+				"lead": "Vaša stran temelji na seznamih zdravnikov, ki jih objavlja ZZZS. Preverite svoje ime, vrsto dejavnosti in ambulante.",
+				"sites": "Ambulante",
+				"unnamed": "Kraj brez imena",
+				"hidden": "Skrito",
+				"registryNote": "Je kaj narobe? Trajni popravek opravi izvajalec, ki podatke sporoča ZZZS; stran se posodobi ob naslednjem tedenskem uvozu. V urejevalniku strani lahko ambulanto skrijete ali dodate."
+			},
+			"booking": {
+				"label": "Ordinacijski čas in naročanje",
+				"title": "Ordinacijski čas in naročanje",
+				"lead": "Pacienti se naročijo na vaši strani, ko odprete svoj urnik. Preden ga lahko odprete, mora vaša stran navajati cene in načine plačila, ki jih sprejemate.",
+				"fees": "Cene",
+				"payments": "Načini plačila",
+				"done": "Navedeno",
+				"todo": "Za dopolnitev",
+				"deontology": "Zdravstveni delavec, ki svojo dejavnost predstavlja na spletu, navede cene in sprejete načine plačila.",
+				"editFees": "Dopolnite cene in načine plačila",
+				"settingsNote": "Kraje, ordinacijski čas in vrste obiskov nastavite v nastavitvah naročanja.",
+				"waitingPeriod": "Čakalna doba po preverjanju",
+				"waitingEnds": "Sedemdnevna čakalna doba se izteče {date}",
+				"noWaiting": "Brez",
+				"settingsLink": "Nastavite ordinacijski čas in naročanje"
+			},
+			"publish": {
+				"label": "Objava",
+				"title": "Objavite svojo stran",
+				"lead": "Z objavo se na vaši javni strani prikažejo predstavitev, jeziki, cene in praktični podatki. Kadar koli jih lahko spremenite ali skrijete.",
+				"already": "Vaša stran je objavljena. Vsaka shranjena sprememba je takoj na spletu.",
+				"edit": "Uredi mojo stran",
+				"action": "Objavi mojo stran",
+				"shareLead": "Povejte za svojo stran: pripravljeni so povezava, koda QR in plakat za čakalnico.",
+				"shareLink": "Odpri gradivo za deljenje",
+				"statsLink": "Ogled statistike strani"
+			}
+		}
+	},
+	"Editor": {
+		"metaTitle": "Vaša stran · Apercura",
+		"title": "Vaša stran",
+		"lead": "Dopolnite javno stran: {name}. Le navadno besedilo; kar skrijete, se nikoli ne prikaže.",
+		"empty": {
+			"title": "Še nimate strani za urejanje",
+			"body": "Vaša stran se prikaže tukaj, ko je vaš prevzem preverjen.",
+			"action": "Prevzemi mojo stran"
+		},
+		"pending": "Počakajte",
+		"viewPublic": "Ogled javne strani",
+		"jumpToPreview": "Na predogled",
+		"formLabel": "Vsebina strani",
+		"removed": {
+			"title": "Vaša stran je odstranjena iz imenika",
+			"body": "Nihče je ne vidi, njena vsebina pa je izbrisana. Obnovite jo lahko na dnu te strani: vrne se z naslednjo tedensko posodobitvijo seznamov."
+		},
+		"unpublished": {
+			"title": "Vaša vsebina še ni objavljena",
+			"link": "Dokončajte nastavitev strani"
+		},
+		"photo": {
+			"title": "Fotografija",
+			"lead": "Neobvezno. Novejši portret, kot fotografija za osebni dokument.",
+			"current": "Trenutna fotografija",
+			"none": "Brez fotografije.",
+			"add": "Dodaj fotografijo",
+			"replace": "Zamenjaj fotografijo",
+			"remove": "Odstrani fotografijo",
+			"hint": "JPEG, PNG ali WebP, največ 5 MB. Obrežemo jo na kvadrat in odstranimo metapodatke (lokacijo, napravo)."
+		},
+		"visibility": {
+			"label": "Prikaži na strani: {field}",
+			"shown": "Prikazano"
+		},
+		"presentation": {
+			"title": "Predstavitev",
+			"lead": "Le stvarni podatki: brez pričevanj pacientov in brez primerjav z drugimi.",
+			"headline": "Podnaslov",
+			"headlineHint": "Ena vrstica pod vašim poklicem, največ {max} znakov.",
+			"bio": "Predstavitev",
+			"bioHint": "Navadno besedilo, največ {max} znakov. Odstavke ločite s prazno vrstico."
+		},
+		"languages": {
+			"title": "Jeziki"
+		},
+		"fees": {
+			"title": "Cene in zdravstveno zavarovanje",
+			"lead": "Obvezno, preden se lahko odpre spletno naročanje: vaše cene in načini plačila, ki jih sprejemate.",
+			"requiredBadge": "Obvezno za naročanje",
+			"ameliPrefill": "Vnaprej izpolnjeno iz imenika zdravstvene zavarovalnice. Na strani ga nadomesti vaš podatek.",
+			"sector": "Pogodbeni status",
+			"agreement": "Pogodba z zavarovalnico",
+			"notStated": "Ni navedeno",
+			"optam": "Omejena doplačila (OPTAM)",
+			"optamNone": "Ni član",
+			"carteVitale": "Kartica zdravstvenega zavarovanja",
+			"carteVitaleYes": "Sprejema",
+			"carteVitaleNo": "Ne sprejema",
+			"itemsTitle": "Cene",
+			"noItem": "Še ni cene.",
+			"itemLabel": "Cena {n}: za kaj",
+			"itemPlaceholder": "Pregled",
+			"amount": "Znesek (€)",
+			"maxAmount": "Do (€)",
+			"removeItem": "Odstrani ceno {n}",
+			"remove": "Odstrani",
+			"addItem": "Dodaj ceno",
+			"note": "Opomba k cenam",
+			"noteHint": "Na primer, od česa so odvisna doplačila.",
+			"payments": "Sprejeti načini plačila",
+			"requiredHint": "Naročanje ostane zaprto, dokler ne navedete vsaj ene cene in enega načina plačila."
+		},
+		"access": {
+			"title": "Dostop",
+			"notes": "Podrobnosti o dostopu",
+			"notesHint": "Nadstropje, vhod, javni prevoz."
+		},
+		"contact": {
+			"title": "Spletna stran in telefon",
+			"website": "Spletna stran",
+			"websiteHint": "Spletna stran vaše ambulante, ki se začne s https://",
+			"showPhone": "Prikaži telefonsko številko ambulante",
+			"showPhoneHint": "Če je skrita, stran ne ponuja več klica v ambulanto."
+		},
+		"failure": {
+			"generic": "Prišlo je do napake. Poskusite znova čez nekaj trenutkov.",
+			"invalid": "Nekatera polja je treba popraviti: glejte sporočila pod njimi.",
+			"lastSite": "Vsaj en kraj mora ostati prikazan: strani brez kraja ni mogoče objaviti.",
+			"unknownPlace": "Te poštne številke in kraja ne poznamo. Preverite ju.",
+			"badPhone": "Ta telefonska številka ni veljavna.",
+			"photoTooLarge": "Ta fotografija je večja od 5 MB.",
+			"photoUnsupported": "Te datoteke ni mogoče uporabiti kot fotografijo: pošljite JPEG, PNG ali WebP."
+		},
+		"saved": "Shranjeno. Vaša javna stran je posodobljena.",
+		"savedDraft": "Shranjeno. Objavite stran, da se spremembe prikažejo.",
+		"save": "Shrani stran",
+		"lastSaved": "Nazadnje shranjeno {date}",
+		"sites": {
+			"title": "Ambulante",
+			"lead": "Izberite, katere kraje prikazuje vaša stran. Kraje s seznamov ZZZS lahko skrijete, ne morete pa jih urejati.",
+			"unnamed": "Kraj brez imena",
+			"added": "Dodali ste vi",
+			"shownNamed": "Prikaži na strani: {name}",
+			"remove": "Odstrani",
+			"registryNote": "Je ambulanta s seznama ZZZS napačna? Izvajalec jo popravi pri ZZZS; stran se posodobi ob naslednjem uvozu.",
+			"addTitle": "Dodaj kraj",
+			"name": "Ime kraja",
+			"address": "Ulica in hišna številka",
+			"postcode": "Poštna številka",
+			"city": "Kraj",
+			"phone": "Telefon (neobvezno)",
+			"phoneHint": "Številka ambulante, prikazana na strani.",
+			"add": "Dodaj kraj"
+		},
+		"remove": {
+			"title": "Odstranite svojo stran",
+			"lead": "Vaša stran izgine iz imenika, iskanja in spletnih iskalnikov ter se z naslednjim uvozom ne vrne. Njeni kraji, predstavitev, fotografija, cene in statistika se takoj izbrišejo; vaš račun in urnik ostaneta. Stran lahko obnovite tukaj: stran s seznama se vrne z naslednjo tedensko posodobitvijo, vi pa jo znova dopolnite.",
+			"action": "Odstrani mojo stran iz imenika",
+			"restore": "Obnovi mojo stran",
+			"dialog": {
+				"title": "Odstranim vašo stran iz imenika?",
+				"intro": "Vaša stran takoj izgine iz imenika, iskanja in spletnih iskalnikov. Ta vsebina se dokončno izbriše:",
+				"items": {
+					"places": "vaše ambulante",
+					"presentation": "vaša predstavitev (podnaslov, opis, jeziki, področja dela)",
+					"photo": "vaša fotografija",
+					"fees": "vaše cene in načini plačila",
+					"statistics": "statistika strani"
+				},
+				"restore": "Vaš račun in urnik ostaneta. Če stran obnovite, se z naslednjim tedenskim uvozom vrne s seznama, vi pa jo znova izpolnite.",
+				"understood": "Razumem, da se ta vsebina izbriše",
+				"confirm": "Odstrani mojo stran",
+				"cancel": "Prekliči"
+			},
+			"busy": "Imenik se prav zdaj posodablja s tedenskim uvozom: vaša stran se ni spremenila. Poskusite znova čez nekaj minut."
+		},
+		"preview": {
+			"title": "Predogled",
+			"note": "Še ni shranjeno",
+			"noSite": "Noben kraj ni prikazan.",
+			"unnamedPlace": "Ambulanta"
+		},
+		"issues": {
+			"tooLong": "To besedilo je predolgo.",
+			"markup": "Le navadno besedilo: brez HTML in brez povezav v oklepajih.",
+			"required": "To polje je obvezno.",
+			"range": "Zgornji znesek mora biti večji od zneska.",
+			"website": "Ta naslov ni spletna stran (https://…).",
+			"postcode": "Slovenska poštna številka ima 4 števke.",
+			"invalid": "Ta vrednost ni veljavna."
+		}
+	},
+	"Admin": {
+		"claims": {
+			"queueHeading": "{count, plural, one {# prevzem čaka} two {# prevzema čakata} few {# prevzemi čakajo} other {# prevzemov čaka}}"
+		}
+	},
+	"Gdpr": {
+		"about": "Glede strani",
+		"rpps": "Oznaka strani",
+		"rppsHint": "Konec naslova strani, na primer si12345 v apercura.org/si/zdravnik/ana-primer-si12345, ali celoten naslov.",
+		"pending": "Počakajte",
+		"errors": {
+			"tooMany": "Iz te povezave je prišlo preveč zahtev. Poskusite znova čez eno uro.",
+			"notFound": "Nobena stran nima te oznake.",
+			"claimed": "To stran upravlja zdravnik sam: odstrani jo lahko le on, v svojem prostoru.",
+			"invalid": "Preverite obrazec: eno od polj manjka ali je predolgo.",
+			"generic": "Prišlo je do napake. Poskusite znova čez trenutek."
+		},
+		"report": {
+			"metaTitle": "Sporočite napako · Apercura",
+			"title": "Sporočite napako",
+			"lead": "Napišite nam, kaj je na tej strani narobe. Vaše sporočilo je šifrirano in ga bere le ekipa Apercura.",
+			"doneTitle": "Hvala, vaše sporočilo smo prejeli",
+			"doneBody": "Preverimo ga. Podatke s seznamov ZZZS je treba popraviti pri viru: izvajalec jih sporoči ZZZS. Če ste pustili naslov, vas obvestimo.",
+			"kind": "Kaj je narobe?",
+			"kinds": {
+				"wrong_info": "Napačen podatek (naslov, telefon, ime)",
+				"retired": "Zdravnik se je upokojil",
+				"deceased": "Zdravnik je umrl",
+				"impersonation": "Nekdo uporablja to stran v imenu zdravnika"
+			},
+			"message": "Podrobnosti",
+			"messageHint": "Kaj je narobe in, če veste, kako je prav.",
+			"contact": "Vaš e-poštni naslov (neobvezno)",
+			"contactHint": "Samo zato, da vam lahko odgovorimo.",
+			"privacy": "Ne navajajte nobenih podatkov o zdravju.",
+			"submit": "Pošlji sporočilo"
+		},
+		"removal": {
+			"metaTitle": "Zahteva za odstranitev strani · Apercura",
+			"title": "Zahtevajte odstranitev te strani",
+			"lead": "Po členu 21 Splošne uredbe o varstvu podatkov (GDPR) lahko ugovarjate objavi svoje strani. Skrijemo jo takoj, ko prejmemo zahtevo, po kratkem preverjanju pa jo izbrišemo.",
+			"doneTitle": "Stran je skrita",
+			"doneBody": "Ni več prikazana, indeksirana ali navedena v seznamih. Zahtevo preverimo in odgovorimo po e-pošti najpozneje v enem mesecu. Ko je potrjena, stran dokončno izbrišemo in se s posodobitvami seznamov ZZZS ne vrne.",
+			"contact": "Vaš e-poštni naslov",
+			"contactHint": "Da lahko zahtevo potrdimo z vami. Je šifriran in ga ne uporabimo za nič drugega.",
+			"message": "Sporočilo (neobvezno)",
+			"messageHint": "Karkoli, kar nam pomaga preveriti zahtevo.",
+			"confirm": "Sem zdravnik s te strani",
+			"privacy": "Izbrisana stran se z naslednjim uvozom seznamov ZZZS ne vrne.",
+			"submit": "Skrij in odstrani stran",
+			"claimedTitle": "To stran upravlja zdravnik sam",
+			"claimedBody": "Odstrani jo lahko le njen imetnik, v urejevalniku strani v svojem prostoru: stran tedaj takoj izgine in se s posodobitvami seznamov ZZZS ne vrne.",
+			"claimedLink": "Odstrani mojo stran v prostoru za zdravnike",
+			"alreadyTitle": "Zahteva za odstranitev je v preverjanju",
+			"alreadyBody": "Stran je že skrita."
+		},
+		"contact": {
+			"metaTitle": "To sem jaz · Apercura",
+			"title": "To sem jaz",
+			"lead": "Svoje strani ne morete prevzeti z dokazilom? Pustite nam svoje podatke: član ekipe Apercura se vam oglasi, preveri vašo identiteto in vam pomaga.",
+			"patientsTitle": "Ta obrazec je namenjen le zdravniku s te strani",
+			"patientsBody": "Ni namenjen naročanju na pregled ali stiku z ambulanto: za to uporabite kontaktne podatke na strani.",
+			"claimFirst": "Z dokazilom, da ste zdravnik s te strani, je prevzem hitrejši:",
+			"claimFirstLink": "prevzemite to stran",
+			"rpps": "Oznaka strani",
+			"rppsHint": "Oznaka strani, s katere prihajate. Ni je mogoče spremeniti.",
+			"name": "Vaše ime in priimek",
+			"email": "Vaš službeni e-poštni naslov",
+			"emailHint": "Da vam lahko odgovorimo. Poslali vam bomo tudi potrdilo o prejemu.",
+			"phone": "Vaša telefonska številka (neobvezno)",
+			"phoneHint": "Če želite, da vas pokličemo.",
+			"message": "Vaše sporočilo",
+			"messageHint": "Napišite nam, zakaj vam prevzem po spletu ne ustreza.",
+			"privacy": "Vaši podatki in sporočilo so šifrirani, bere jih le ekipa Apercura, da vam odgovori, izbrišemo pa jih 12 mesecev po zadnji izmenjavi. Ne navajajte nobenih podatkov o zdravju.",
+			"submit": "Pošlji zahtevo",
+			"doneTitle": "Vašo zahtevo smo prejeli",
+			"doneBody": [
+				"Član ekipe Apercura se vam oglasi po e-pošti ali telefonu, preveri vašo identiteto in vam nato pomaga prevzeti stran.",
+				"Na naslov, ki ste ga navedli, smo vam pravkar poslali potrdilo o prejemu."
+			],
+			"claimedTitle": "To stran že upravlja zdravnik sam",
+			"claimedBody": "Njen imetnik je bil preverjen. Če je to vaša stran in do nje nimate več dostopa, odprite zahtevek za prevzem: ekipa ga pregleda.",
+			"claimedLink": "Prevzemite to stran",
+			"withheldTitle": "Ta stran je skrita",
+			"withheldBody": "Zahteva za njeno odstranitev je v preverjanju.",
+			"errors": {
+				"proof": "Zaščita pred roboti se ni dokončala. Poskusite znova čez trenutek.",
+				"claimed": "To stran že upravlja zdravnik sam: odprite zahtevek za prevzem."
+			}
+		}
+	},
+	"Agenda": {
+		"settings": {
+			"types": {
+				"areaAdded": "{count, plural, =0 {Nobena nova občina.} one {Dodana # občina.} two {Dodani # občini.} few {Dodane # občine.} other {Dodanih # občin.}}"
+			}
+		},
+		"log": {
+			"records": "{count, plural, one {# zapis} two {# zapisa} few {# zapisi} other {# zapisov}}"
+		}
+	},
+	"Stats": {
+		"chartSummary": "{total, plural, one {# ogled} two {# ogleda} few {# ogledi} other {# ogledov}} v 30 dneh; največ: {max} dne {day}."
+	},
+	"LegalNoticeSi": {
+		"metaTitle": "Pravno obvestilo · Apercura",
+		"metaDescription": "Pravno obvestilo slovenskih strani Apercure: ponudnik storitve, njegovi kontaktni podatki in vpis v register ter odgovorna oseba za vsebino (5. člen Zakona o elektronskem poslovanju na trgu, ZEPT).",
+		"title": "Pravno obvestilo",
+		"lead": "Kdo upravlja slovenske strani Apercure (apercura.org/si), s splošnimi informacijami, ki jih mora ponudnik storitev informacijske družbe po 5. členu Zakona o elektronskem poslovanju na trgu (ZEPT) zagotoviti lahko in stalno dostopne.",
+		"sections": {
+			"provider": {
+				"heading": "Ponudnik storitve",
+				"body": [
+					"Slovenske strani Apercure upravlja spodaj navedeni subjekt. Vodi imenik in odgovarja za njegovo vsebino."
+				]
+			},
+			"service": {
+				"heading": "Storitev",
+				"body": [
+					"Brezplačen imenik zdravnikov, ki jih lahko v Sloveniji izberete za osebnega zdravnika (družinski zdravniki, otroški in šolski zdravniki, ginekologi in zobozdravniki), pripravljen iz odprtih podatkov Zavoda za zdravstveno zavarovanje Slovenije (ZZZS), brez oglasov, s prostorom, v katerem zdravnik lahko dopolni svojo stran. V Sloveniji se prek Apercure ne naročate na pregled."
+				]
+			},
+			"editor": {
+				"heading": "Odgovorna oseba za vsebino",
+				"body": [
+					"Spodaj navedena oseba odgovarja za to, kar objavi upravljavec. Za podatke, ki jih zdravnik doda na svojo stran, odgovarja sam; kot storitev, ki hrani podatke uporabnikov, upravljavec zanje odgovarja le pod pogoji ZEPT in 6. člena Akta o digitalnih storitvah (Uredba (EU) 2022/2065)."
+				]
+			},
+			"liability": {
+				"heading": "Vsebina strani",
+				"body": [
+					"Imenik je pripravljen iz poimenskih seznamov zdravnikov, ki so lahko osebni zdravniki, ki jih Zavod za zdravstveno zavarovanje Slovenije (ZZZS) vsak dan objavlja kot odprte podatke pod licenco CC BY 4.0. Podatke o zdravnikih ZZZS sporočajo izvajalci, ki odgovarjajo za njihovo točnost; lahko so nepopolni ali zastareli, zato jih pred obiskom preverite v ambulanti. Vsaka stran pove, kako sporočite napako."
+				]
+			},
+			"ip": {
+				"heading": "Koda in podatki",
+				"body": [
+					"Izvorna koda Apercure je objavljena pod licenco AGPL-3.0. Podatki imenika so ponovno uporabljeni pod licenco Creative Commons Priznanje avtorstva 4.0 Mednarodna (CC BY 4.0): stran o podatkih navaja vse vire in navedbo, ki jo vsak zahteva."
+				]
+			},
+			"review": {
+				"heading": "Status besedila",
+				"body": [
+					"To besedilo je osnutek, napisan, preden je bil ustanovljen pravni subjekt. Pred napovedjo slovenskih strani ga bo pregledal odvetnik, usposobljen za slovensko pravo."
+				]
+			}
+		},
+		"fields": {
+			"name": "Ime",
+			"legalForm": "Pravnoorganizacijska oblika",
+			"address": "Sedež",
+			"phone": "Telefon",
+			"email": "E-poštni naslov",
+			"registration": "Register in matična številka",
+			"vatId": "Identifikacijska številka za DDV",
+			"editor": "Odgovorna oseba za vsebino"
+		},
+		"dataLink": "Podatki in viri"
+	},
+	"PrivacySi": {
+		"metaTitle": "Varstvo osebnih podatkov · Apercura",
+		"metaDescription": "Podatki, ki jih obdelujejo slovenske strani Apercure: viri, nameni, pravne podlage, ocena zakonitega interesa, hramba, uporabniki in vaše pravice, tudi pravica do ugovora (členi 13, 14 in 21 GDPR).",
+		"title": "Varstvo osebnih podatkov",
+		"lead": "Katere podatke obdelujejo slovenske strani Apercure, od kod izvirajo, zakaj, kako dolgo in kdo jih obdeluje ter kako uveljavljate svoje pravice po Splošni uredbi o varstvu podatkov (GDPR) in, kadar se po svojem 4. členu uporablja, po Zakonu o varstvu osebnih podatkov (ZVOP-2, Uradni list RS, št. 163/22).",
+		"sections": {
+			"controller": {
+				"heading": "Kdo je odgovoren",
+				"body": [
+					"Upravljavec, naveden v pravnem obvestilu, je upravljavec osebnih podatkov imenika, računov zdravnikov, prevzemov strani in zahtev, poslanih prek spletnega mesta."
+				]
+			},
+			"directory": {
+				"heading": "Imenik: podatki o zdravnikih",
+				"body": [
+					"Podatki: ime in priimek zdravnika, kot ju objavljajo seznami ZZZS (prilagojene so le velike in male črke), njegova šifra zdravnika pri ZZZS, vrsta zdravnika (družinski zdravnik, otroški in šolski zdravnik, ginekolog, zobozdravnik) ter za vsakega izvajalca, ki ga seznami navajajo, ime izvajalca, njegov naslov (ulica, poštna številka in pošta), dejavnost ZZZS in ali zdravnik še sprejema nove paciente, z datumom seznama. Stran je umeščena v naselje naslova, ne na stavbo. Zdravnik, ki prevzame svojo stran, lahko doda predstavitev, jezike, fotografijo in ordinacijski čas.",
+					"Nikoli ne shranjujemo in ne prikazujemo, čeprav jih seznami objavljajo: obsega zaposlitve zdravnika, števila zavarovanih oseb, ki so ga izbrale, podatkov o glavarini, podatka, ali je zdravnik specializant, stolpca o novorojencih in območne enote ZZZS. Seznami ne vsebujejo telefonskih številk, e-poštnih ali domačih naslovov, o spolu zdravnika pa ne beležimo ničesar.",
+					"Identifikator: šifra, ki jo ZZZS dodeli vsakemu zdravniku, na koncu naslova strani.",
+					"Namen: javnosti omogočiti, da najde zdravnika, ki ga lahko izbere za osebnega zdravnika, izve, kje dela, in ali še sprejema nove paciente. Pravna podlaga: zakoniti interes (točka (f) člena 6(1) GDPR), ocenjen spodaj.",
+					"Hramba: dokler je zdravnik na seznamih ZZZS. Stran izgine po dveh tedenskih posodobitvah, v katerih zdravnika ni več na seznamih; stran, odstranjena po ugovoru, ni nikoli več objavljena.",
+					"Obveščanje: podatki niso pridobljeni od zdravnikov samih (člen 14 GDPR). Pisanje vsakemu od njih bi zahtevalo nesorazmeren napor (točka (b) člena 14(5)); to obvestilo, stran o podatkih in obvestilo na vsaki strani informacije javno objavljajo."
+				]
+			},
+			"sources": {
+				"heading": "Viri",
+				"body": [
+					"Vsaka stran je pripravljena iz poimenskih seznamov zdravnikov, ki so lahko osebni zdravniki, ki jih ZZZS vsak dan objavlja na nacionalnem portalu odprtih podatkov (podatki.gov.si) pod licenco CC BY 4.0. ZZZS navaja, da podatke o zdravnikih sporočajo izvajalci, ki odgovarjajo za njihovo točnost. Kraji so iz Registra prostorskih enot Geodetske uprave Republike Slovenije (GURS), prav tako pod licenco CC BY 4.0. Vsak vir je ponovno uporabljen z navedbo, ki jo zahteva:"
+				]
+			},
+			"balancing": {
+				"heading": "Ocena zakonitega interesa",
+				"body": [
+					"Interes: vsaka zavarovana oseba v Sloveniji izbere osebnega zdravnika, ginekologa in zobozdravnika ter mora vedeti, katere zdravnike lahko izbere, kje delajo in kdo še sprejema nove paciente. To potrebo ZZZS že izpolnjuje, ko te sezname vsak dan objavlja kot odprte podatke.",
+					"Nujnost: prikazani so le poklicni podatki s seznamov, ki jih ambulanta tako ali tako objavlja; nič o zasebnem življenju, brez ocen in mnenj. Polja, ki jih stran ne potrebuje, na primer število pacientov ali obseg zaposlitve, so izpuščena.",
+					"Zaščitni ukrepi: nevtralen vrstni red, brez oglasov, umestitev v naselje namesto oznake na zemljevidu, ugovor, ki stran takoj skrije in prepreči njeno vrnitev, popravki pri viru in strani, ki sledijo vsaki posodobitvi seznamov. Registra Zdravniške zbornice Slovenije, katerega pogoji prepovedujejo ponovno objavo, ne uporabljamo.",
+					"Pričakovanja: zdravnik, ki ga je mogoče izbrati za osebnega zdravnika, je s svojo ambulanto in podatkom, ali sprejema nove paciente, že poimensko naveden na javnih seznamih zavarovalnice; imenik, ki te podatke ponavlja, je pričakovan. Informacijski pooblaščenec je ugotovil, da so imena, specializacije in kraj dela zdravnikov javni podatki, katerih ponovna objava načeloma ni problematična (mnenje 07121-1/2021/526 z dne 17. marca 2021), in da objava podatkov o zdravnikih, zaposlenih v zasebnem sektorju, zahteva dokumentirano tehtanje interesov (mnenje 07121-1/2022/1036 z dne 3. oktobra 2022): ta ocena je to tehtanje in se na mnenji ne opira, navajamo ju le kot okvir. Ob pretehtanju teh okoliščin prevlada interes javnosti, vsak zdravnik pa lahko ugovarja brez navedbe razlogov."
+				]
+			},
+			"accounts": {
+				"heading": "Računi zdravnikov in prevzem strani",
+				"body": [
+					"Podatki: e-poštni naslov, ime, geslo (shranjeno v zgoščeni obliki), drugi dejavnik preverjanja pristnosti, dokumenti, poslani za prevzem strani (na primer licenca Zdravniške zbornice Slovenije ali potrdilo izvajalca), in člani ekipe.",
+					"Namena: upravljanje računa in preverjanje, ali stran prevzema pravi zdravnik; dokumente preveri skrbnik. Pravni podlagi: izpolnjevanje pogojev uporabe (točka (b) člena 6(1)) in zakoniti interes zavarovanja storitve (točka (f) člena 6(1)).",
+					"Hramba: račun hranimo, dokler ni izbrisan; dokazila, šifrirana, izbrišemo 30 dni po odločitvi."
+				]
+			},
+			"requests": {
+				"heading": "Prijave napak, ugovori in prošnje za stik",
+				"body": [
+					"Podatki: sporočilo, kontaktni e-poštni naslov, če je naveden, in zadevna stran; pri zahtevi „To sem jaz“ tudi ime in telefonska številka. Prosto besedilo je šifrirano.",
+					"Nameni: popravljanje napak, uveljavljanje ugovorov in pomoč zdravniku, ki svoje strani ne more prevzeti po spletu. Pravni podlagi: zakoniti interes (točka (f) člena 6(1)) in pravica do ugovora (člen 21).",
+					"Hramba: prijavo izbrišemo 6 mesecev po zaključku, zavrnjen ugovor eno leto po odločitvi, prošnjo za stik 12 mesecev po zadnji izmenjavi. Ko je ugovor potrjen ali ko imetnik prevzete strani to stran odstrani, takoj izbrišemo stran in podatke o osebi, skupaj z ugovorom; ohranimo le zapis o odstranitvi (identifikator strani, državo, razlog, kdo jo je zabeležil in kdaj), da stran ni nikoli več objavljena. Imetnik, ki odstrani svojo stran, v svojem računu, nikoli objavljeno, obdrži ime, poklic in identifikator, prikazane v njegovem prostoru, ter svoj prevzem, dokler račun ni izbrisan."
+				]
+			},
+			"technical": {
+				"heading": "Tehnični podatki in piškotki",
+				"body": [
+					"Nastavimo le piškotke, nujno potrebne za delovanje storitve: sejo prijavljenih zdravnikov in izbrani jezik. Brez oglasnih piškotkov in piškotkov za merjenje obiska, brez sledilnikov.",
+					"Da omejimo zlorabe, naslove IP pred štetjem preoblikujemo s funkcijo s ključem in jih nikoli ne shranimo v izvirni obliki; seje zdravnikov beležijo okrnjen naslov IP. Ogledi prevzetih strani se štejejo brez piškotka ali identifikatorja, vidi pa jih le imetnik strani."
+				]
+			},
+			"recipients": {
+				"heading": "Uporabniki in obdelovalci",
+				"body": [
+					"Podatkov ne prodajamo in ne oddajamo ter jih nikoli ne uporabljamo za oglaševanje. Prejmejo jih le ekipa upravljavca in spodaj navedeni obdelovalci, vsak za svoj del, na podlagi pogodbe, ki ustreza členu 28 GDPR. Zemljevidi se naložijo s strežnika ploščic, ki kot vsako spletno mesto prejme naslov IP obiskovalca."
+				]
+			},
+			"transfers": {
+				"heading": "Prenosi zunaj Evropske unije",
+				"body": [
+					"Imenik gostuje v Evropskem gospodarskem prostoru. Podatki se zunaj Evropske unije in Evropskega gospodarskega prostora prenašajo le z zaščitnimi ukrepi iz poglavja V GDPR (sklep o ustreznosti ali standardna pogodbena določila). Vsako zamenjavo obdelovalca bomo tu napovedali, preden začne veljati."
+				]
+			},
+			"automated": {
+				"heading": "Avtomatizirano odločanje",
+				"body": [
+					"Nobena odločitev o vas ni sprejeta zgolj z avtomatizirano obdelavo. O prevzemu strani odloči človek, ki prebere dokumente."
+				]
+			},
+			"rights": {
+				"heading": "Vaše pravice",
+				"body": [
+					"Zahtevate lahko dostop do svojih podatkov, njihov popravek ali izbris, omejitev obdelave, prejem v prenosljivi obliki in ugovarjate njihovi obdelavi. Pišite na spodnji naslov; odgovor prejmete v enem mesecu.",
+					"Pritožbo lahko vložite tudi pri slovenskem nadzornem organu, Informacijskem pooblaščencu: Dunajska cesta 22, 1000 Ljubljana, 01 230 97 30, gp.ip@ip-rs.si, www.ip-rs.si, ali pri nadzornem organu države Evropske unije, v kateri prebivate ali delate."
+				]
+			},
+			"objection": {
+				"heading": "Ugovor objavi strani (člen 21 GDPR)",
+				"body": [
+					"Zdravnik lahko kadar koli in brez navedbe razlogov ugovarja objavi svoje strani. Če stran ni prevzeta, zadošča obrazec: stran skrijemo takoj, ko prejmemo zahtevo, jo po kratkem preverjanju izbrišemo, posodobitve seznamov pa je nikoli več ne objavijo. Če je prevzeta, jo imetnik odstrani v svojem prostoru."
+				]
+			},
+			"changes": {
+				"heading": "Spremembe tega obvestila",
+				"body": [
+					"To obvestilo je osnutek. Pregledala ga bosta odvetnik, usposobljen za slovensko pravo, in pooblaščena oseba za varstvo podatkov; vsaka različica je datirana."
+				]
+			}
+		},
+		"fields": {
+			"controller": "Upravljavec",
+			"address": "Naslov",
+			"email": "Kontakt za zahteve",
+			"dpo": "Pooblaščena oseba za varstvo podatkov",
+			"effectiveDate": "Začetek veljavnosti",
+			"hostingProvider": "Ponudnik gostovanja (obdelovalec)",
+			"smtp": "Pošiljanje e-pošte (obdelovalec)"
+		},
+		"stateOf": "Stanje podatkov: {date}",
+		"objectLink": "Kako ugovarjate objavi strani",
+		"authorityLink": "Vložite prijavo pri Informacijskem pooblaščencu"
+	},
+	"TermsSi": {
+		"metaTitle": "Pogoji uporabe · Apercura",
+		"metaDescription": "Pogoji uporabe slovenskih strani Apercure: brezplačen, stvaren imenik zdravnikov, ki jih lahko izberete za osebnega zdravnika, iz odprtih seznamov ZZZS, brez spletnega naročanja.",
+		"title": "Pogoji uporabe",
+		"lead": "Pravila uporabe slovenskih strani Apercure, enaka za javnost in za zdravnike.",
+		"sections": {
+			"service": {
+				"heading": "Storitev",
+				"body": [
+					"Apercura brezplačno navaja zdravnike, ki jih Zavod za zdravstveno zavarovanje Slovenije (ZZZS) navaja kot zdravnike, ki jih je mogoče izbrati za osebnega zdravnika: družinske zdravnike, otroške in šolske zdravnike, ginekologe in zobozdravnike. Je le imenik: v Sloveniji se prek Apercure ne naročate na pregled, osebnega zdravnika pa izberete v ambulanti. Upravlja jo upravljavec, naveden v pravnem obvestilu.",
+					"Za uporabo imenika ne potrebujete računa. Z uporabo spletnega mesta sprejemate te pogoje."
+				]
+			},
+			"content": {
+				"heading": "Kaj vsebujejo strani",
+				"body": [
+					"Strani prikazujejo stvarne podatke z javnih seznamov ZZZS, v nevtralnem vrstnem redu, brez ocen, mnenj, oglasov ali plačanih umestitev.",
+					"Podatki so lahko nepopolni ali zastareli, ali zdravnik sprejema nove paciente, pa se lahko spremeni iz dneva v dan: preverite v ambulanti. Vsaka stran pove, kako sporočite napako."
+				]
+			},
+			"health": {
+				"heading": "Ni zdravniški nasvet",
+				"body": [
+					"Apercura ne daje zdravniških nasvetov in ni služba za nujne primere. V nujnem primeru pokličite 112. Zunaj ordinacijskega časa vam pomaga dežurna služba vašega zdravstvenega doma ali najbližji urgentni center."
+				]
+			},
+			"practitioners": {
+				"heading": "Za zdravnike",
+				"body": [
+					"Prevzem strani je brezplačen. Zahteva dokument, ki dokazuje, da je vlagatelj zdravnik s te strani; preveri ga skrbnik, preden stran preda.",
+					"Imetnik strani odgovarja za podatke, ki jih doda. Ti morajo ostati stvarni, točni in posodobljeni ter spoštovati 75.a člen Zakona o zdravstveni dejavnosti (ZZDej) in Kodeks zdravniške etike (členi 60 do 63): le strokovno korektne informacije, brez obljub o izidu zdravljenja, brez primerjav z drugimi zdravniki, brez pričevanj in javnih zahval, brez cen in brez promocije zdravil ali izdelkov."
+				]
+			},
+			"removal": {
+				"heading": "Odstranitev strani",
+				"body": [
+					"Zdravnik lahko kadar koli zahteva odstranitev svoje strani: stran o podatkih pojasni, kako. Prevzeto stran lahko odstrani le njen imetnik."
+				]
+			},
+			"liability": {
+				"heading": "Odgovornost",
+				"body": [
+					"Upravljavec si prizadeva, da je storitev dostopna in točna, a tega ne more zagotoviti. Ne odgovarja za podatke, ki jih zdravniki dodajo na svoje strani. Te omejitve bodo opredeljene ob pravnem pregledu."
+				]
+			},
+			"ip": {
+				"heading": "Koda in podatki",
+				"body": [
+					"Izvorna koda je objavljena pod licenco AGPL-3.0. Podatki imenika so ponovno uporabljeni pod licenco Creative Commons Priznanje avtorstva 4.0 Mednarodna (CC BY 4.0)."
+				]
+			},
+			"law": {
+				"heading": "Pravo in spori",
+				"body": [
+					"Uporabljeno pravo in pristojna sodišča bodo opredeljeni ob pravnem pregledu; vedno veljajo obvezna pravila o varstvu potrošnikov države prebivališča. Ob sporu najprej pišite na kontaktni naslov, da poiščemo sporazumno rešitev."
+				]
+			}
+		},
+		"fields": {
+			"publisher": "Upravljavec",
+			"effectiveDate": "Začetek veljavnosti",
+			"contact": "Kontakt"
+		}
+	},
+	"AccessibilitySi": {
+		"metaTitle": "Dostopnost · Apercura",
+		"metaDescription": "Dostopnost slovenskih strani Apercure: cilj WCAG 2.2 AA, kaj je bilo preverjeno, kaj še ostaja in kako sporočite težavo.",
+		"title": "Dostopnost",
+		"lead": "Apercura je zasnovana za vse, tudi za starejše in slabovidne. Ta izjava pove, kje so slovenske strani.",
+		"sections": {
+			"scope": {
+				"heading": "Področje uporabe",
+				"body": [
+					"Zakon o dostopnosti spletišč in mobilnih aplikacij (ZDSMA) zavezuje organe javnega sektorja, med katere Apercura ne spada. Zakon o dostopnosti do proizvodov in storitev za invalide (ZDPSI), ki prenaša evropski akt o dostopnosti, zajema naštete storitve, kadar so gospodarska dejavnost, na primer storitve e-trgovine, namenjene sklenitvi potrošniške pogodbe, potrošniško bančništvo in potniški promet (3. in 5. člen), ne pa brezplačnega informativnega imenika, ki ničesar ne prodaja in ne naroča. Ta izjava je zato prostovoljna, upravljavec pa si na vseh straneh prizadeva za enako raven: WCAG 2.2, raven AA."
+				]
+			},
+			"status": {
+				"heading": "Stanje spletnega mesta",
+				"body": [
+					"Slovenske strani si delijo kodo in teste s francoskimi stranmi. Spletno mesto delno izpolnjuje WCAG 2.2 AA: ocena temelji na samooceni in samodejnih testih, še ne na celoviti presoji, ki poteka."
+				]
+			},
+			"tests": {
+				"heading": "Kaj je bilo preverjeno",
+				"list": [
+					"Samodejni pregledi axe-core (pravila WCAG 2.0, 2.1 in 2.2, ravni A in AA) na vseh vrstah strani, ob vsaki izdaji.",
+					"Poti samo s tipkovnico, z vidnim fokusom.",
+					"Besedilo velikosti najmanj 18 px, cilji najmanj 44 px, nič, kar bi temeljilo le na barvi, brez vodoravnega drsenja pri 390 px."
+				]
+			},
+			"pending": {
+				"heading": "Kaj je še treba preveriti",
+				"list": [
+					"Ročni pregled z bralnikoma zaslona VoiceOver in NVDA v slovenščini.",
+					"Celovita presoja skladnosti z WCAG 2.2 AA na vzorcu strani."
+				]
+			},
+			"feedback": {
+				"heading": "Sporočite težavo",
+				"body": [
+					"Če je stran ali funkcija težko uporabna, pišite na spodnji naslov: navedite stran in kaj vas je oviralo. Odgovorimo v enem mesecu in vam po potrebi podatke posredujemo v drugi obliki."
+				]
+			}
+		},
+		"fields": {
+			"contact": "Kontakt",
+			"date": "Datum te izjave"
+		}
+	},
+	"DataSi": {
+		"metaTitle": "Podatki in viri · Apercura",
+		"metaDescription": "Od kod so slovenske strani Apercure: poimenski seznami zdravnikov ZZZS, ki so lahko osebni zdravniki, in Register prostorskih enot GURS pod licenco CC BY 4.0, datumi posodobitev, kaj stran prikazuje ter kako stran popravite ali odstranite.",
+		"title": "Podatki in viri",
+		"lead": "Vsaka slovenska stran je pripravljena iz javnih odprtih podatkov. Tu je, od kod so, pod katero licenco in navedbo, kdaj so bili posodobljeni, kaj stran prikazuje in česa nikoli ne hrani ter kako stran popravite ali odstranite.",
+		"status": {
+			"heading": "Zadnja posodobitev",
+			"body": "ZZZS sezname objavlja vsak dan; imenik jih uvozi vsak teden. Stran se spremeni le, ko se njeni podatki spremenijo na seznamih.",
+			"importedAt": "Zadnji uvoz",
+			"checkedAt": "Zadnje preverjanje virov",
+			"listDate": "Podatki seznamov ZZZS",
+			"notImported": "Slovenski imenik na tem spletnem mestu še ni bil uvožen.",
+			"notImportedValue": "Še ni uvoženo"
+		},
+		"sources": {
+			"heading": "Viri",
+			"body": "Oba izdajatelja ti podatki objavljata pod licenco Creative Commons Priznanje avtorstva 4.0 Mednarodna (CC BY 4.0), ki dovoljuje ponovno uporabo, tudi komercialno, če je vir naveden. Vsaka spodnja navedba je natisnjena dobesedno.",
+			"caption": "Viri podatkov slovenskega imenika",
+			"columns": {
+				"source": "Vir",
+				"use": "Uporaba",
+				"licence": "Licenca in navedba",
+				"frequency": "Posodabljanje"
+			},
+			"items": {
+				"si-zzzs-sa": {
+					"use": "Družinski zdravniki ter otroški in šolski zdravniki: imena, šifre zdravnikov ZZZS, izvajalci, njihovi naslovi in dejavnosti, ali sprejemajo nove paciente",
+					"frequency": "Vsak dan, ZZZS"
+				},
+				"si-zzzs-gin": {
+					"use": "Ginekologi dispanzerjev za ženske: imena, šifre zdravnikov ZZZS, izvajalci, njihovi naslovi, ali sprejemajo nove paciente",
+					"frequency": "Vsak dan, ZZZS"
+				},
+				"si-zzzs-zob": {
+					"use": "Zobozdravniki za odrasle, mladino in študente: imena, šifre zdravnikov ZZZS, izvajalci, njihovi naslovi in dejavnosti, ali sprejemajo nove paciente",
+					"frequency": "Vsak dan, ZZZS"
+				},
+				"si-rpe": {
+					"use": "Statistične regije, občine, naselja, poštni okoliši in ulice z njihovimi središči",
+					"frequency": "Sproti, GURS"
+				},
+				"map": {
+					"name": "Podatki zemljevida",
+					"publisher": "Sodelavci OpenStreetMap, ploščice OpenFreeMap",
+					"use": "Zemljevidi na straneh",
+					"frequency": "Sproti"
+				}
+			},
+			"ccBy": "CC BY 4.0",
+			"odbl": "ODbL",
+			"stateOf": "Stanje podatkov: {date}",
+			"gursTerms": "Pogoji GURS za njegove odprte podatke"
+		},
+		"coverage": {
+			"heading": "Navedeni zdravniki",
+			"body": [
+				"Stran nastane za vsakega zdravnika, ki je naveden na treh seznamih ZZZS zdravnikov, ki jih je mogoče izbrati za osebnega zdravnika, in sicer pod vrsto njegove glavne dejavnosti.",
+				"Niso navedeni: specialisti zunaj teh seznamov, bolnišnice, lekarne, medicinske sestre in drugi zdravstveni poklici. Četrta datoteka na strani ZZZS, dodatne ambulante za odrasle brez osebnega zdravnika, ne navaja nobenega zdravnika in je ne beremo. Zdravnik, ki ni naveden, lahko vseeno zaprosi za svojo stran."
+			],
+			"kindsLabel": "Navedeni (šifra dejavnosti ZZZS)",
+			"kinds": {
+				"SI_FAMILY_DOCTOR": "Družinski zdravniki splošnih ambulant (302001, 302068, 302070)",
+				"SI_CHILDREN_DOCTOR": "Zdravniki otroških in šolskih dispanzerjev (327009)",
+				"SI_GYNAECOLOGIST": "Ginekologi dispanzerjev za ženske (306007)",
+				"SI_DENTIST": "Zobozdravniki za odrasle, mladino in študente (404101, 404103, 404105)"
+			}
+		},
+		"pages": {
+			"heading": "Kaj prikazuje stran",
+			"body": [
+				"Stran je zdravnik, poimenovan tako, kot ga objavlja ZZZS (prilagojene so le velike in male črke), z njegovo šifro zdravnika pri ZZZS in vrsto. Za vsakega izvajalca, ki ga seznami navajajo, prikazuje ime izvajalca, njegov naslov (ulica, poštna številka in pošta), dejavnost ZZZS in ali zdravnik še sprejema nove paciente, z oznako, da podatek izvira od ZZZS, in datumom. Stran je umeščena v naselje svojega naslova iz registra GURS: nima oznake na zemljevidu, razdalje pa so približne.",
+				"Nikoli jih ne beremo v imenik in ne shranjujemo, čeprav jih seznami objavljajo:"
+			],
+			"list": [
+				"obseg zaposlitve zdravnika;",
+				"število zavarovanih oseb, ki so zdravnika izbrale, in podatki o glavarini;",
+				"ali je zdravnik specializant, in stolpec o novorojencih;",
+				"območna enota ZZZS;",
+				"e-poštni naslovi, zasebni naslovi in spol. Seznami ne vsebujejo telefonskih številk."
+			]
+		},
+		"acceptance": {
+			"heading": "Ali zdravnik sprejema nove paciente",
+			"body": [
+				"ZZZS vsak dan za vsakega zdravnika in izvajalca objavi, ali zdravnik še sprejema zavarovane osebe, ki ga izberejo za osebnega zdravnika („Zdravnik še sprejema zavarovane osebe“: DA ali NE). Stran ta odgovor prikaže tako, kot ga navaja ZZZS, z datumom seznama, iz katerega izvira.",
+				"ZZZS odgovor povzame po sporočilih izvajalcev in velja na datum in uro priprave seznama. Zdravnik lahko neha sprejemati nove paciente, ko njegov seznam doseže meje, ki jih določajo pravila obveznega zdravstvenega zavarovanja. Gre za informacijo, ne za zavezo: ambulanta jo potrdi, ko zdravnika izberete z obrazcem za izbiro osebnega zdravnika."
+			]
+		},
+		"chamber": {
+			"heading": "Registra Zdravniške zbornice ne uporabljamo",
+			"body": [
+				"Zdravniška zbornica Slovenije vodi register zdravnikov in zobozdravnikov, vendar pravno obvestilo njenega spletnega mesta prepoveduje kopiranje, reproduciranje ali ponovno objavo vsebine brez predhodnega uradnega dovoljenja lastnika. Nikoli ga ne beremo, ne kopiramo in z njim ne dopolnjujemo strani."
+			]
+		},
+		"identifiers": {
+			"heading": "Identifikatorji",
+			"body": [
+				"Naslov vsake strani se konča s šifro, ki jo ZZZS dodeli zdravniku, za črkama si, da je stran mogoče najti in preveriti na seznamih:"
+			],
+			"list": [
+				"/si/zdravnik/ana-novak-si12345: šifra zdravnika ZZZS 12345.",
+				"Šifre izvajalcev označujejo njihove ambulante na strani, nikoli pa same strani."
+			]
+		},
+		"correct": {
+			"heading": "Popravek napake",
+			"body": [
+				"Strani ponavljajo sezname ZZZS, katerih podatke sporočajo izvajalci: trajni popravek se opravi pri viru, stran pa mu sledi ob naslednjem tedenskem uvozu.",
+				"Za vse drugo uporabite obrazec: vsako prijavo preverimo."
+			],
+			"list": [
+				"Ime, izvajalec, naslov, dejavnost, ali zdravnik sprejema nove paciente: izvajalec (zdravstveni dom, koncesionar ali ambulanta) spremembo sporoči ZZZS, ki posodobi svoje sezname.",
+				"Predstavitev, jeziki, fotografija, ordinacijski čas: zdravnik jih doda, ko prevzame svojo stran."
+			],
+			"formTitle": "Sporočite napako",
+			"formBody": "Navedite naslov strani in kaj je narobe."
+		},
+		"remove": {
+			"heading": "Odstranitev strani",
+			"body": [
+				"Zdravnik lahko kadar koli in brez navedbe razlogov ugovarja objavi svoje strani (člen 21 GDPR). Neprevzeto stran skrijemo takoj, ko prejmemo zahtevo, in jo po kratkem preverjanju izbrišemo; s posodobitvami seznamov se nikoli ne vrne. Prevzeto stran odstrani njen imetnik v svojem prostoru."
+			],
+			"formTitle": "Zahtevajte odstranitev strani",
+			"formBody": "Navedite naslov strani in e-poštni naslov, na katerega vam lahko odgovorimo."
+		}
+	}
+}

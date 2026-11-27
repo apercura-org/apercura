@@ -1,3 +1,9 @@
+import {
+	SI_CHILDREN_DOCTOR,
+	SI_DENTIST,
+	SI_FAMILY_DOCTOR,
+	SI_GYNAECOLOGIST,
+} from "@apercura/core/taxonomy";
 import type {
 	BreadcrumbList,
 	CategoryCode,
@@ -368,6 +374,11 @@ const MEDICAL_SPECIALTIES: Record<string, readonly MedicalSpecialty[]> = {
 	slauga: ["https://schema.org/Nursing"],
 	laboratorijos: ["https://schema.org/LaboratoryScience"],
 	"optometrijos-kabinetai": ["https://schema.org/Optometric"],
+	// Slovenia's personal doctors (Slovenian listing slugs).
+	"druzinski-zdravnik": ["https://schema.org/PrimaryCare"],
+	"otroski-zdravnik": ["https://schema.org/Pediatric"],
+	ginekolog: ["https://schema.org/Gynecologic"],
+	zobozdravnik: ["https://schema.org/Dentistry"],
 };
 
 /**
@@ -789,8 +800,15 @@ export function practitionerNodes(input: PractitionerInput): Thing[] {
 			...places.slice(1),
 		].map(compact);
 	}
-	// Physicians: French profession 10, Austrian ARZT. Dentists: 40, ZAHNARZT.
-	if (input.professionCode === "10" || input.professionCode === "ARZT") {
+	// Physicians: French profession 10, Austrian ARZT, Slovenia's family, children's and school
+	// doctors and gynaecologists. Dentists: 40, ZAHNARZT, SI_DENTIST.
+	if (
+		input.professionCode === "10" ||
+		input.professionCode === "ARZT" ||
+		input.professionCode === SI_FAMILY_DOCTOR ||
+		input.professionCode === SI_CHILDREN_DOCTOR ||
+		input.professionCode === SI_GYNAECOLOGIST
+	) {
 		person = {
 			"@type": "IndividualPhysician",
 			...common,
@@ -798,7 +816,11 @@ export function practitionerNodes(input: PractitionerInput): Thing[] {
 			medicalSpecialty: specialty,
 			practicesAt: one(placeRefs),
 		} as IndividualPhysician;
-	} else if (input.professionCode === "40" || input.professionCode === "ZAHNARZT") {
+	} else if (
+		input.professionCode === "40" ||
+		input.professionCode === "ZAHNARZT" ||
+		input.professionCode === SI_DENTIST
+	) {
 		person = {
 			"@type": "Dentist",
 			...common,

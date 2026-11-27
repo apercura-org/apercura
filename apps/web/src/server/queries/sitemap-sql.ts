@@ -41,6 +41,7 @@ export const SITEMAP_MARKETS = [
 	"ie",
 	"fi",
 	"lt",
+	"si",
 ] as const;
 export type SitemapMarket = (typeof SITEMAP_MARKETS)[number];
 
