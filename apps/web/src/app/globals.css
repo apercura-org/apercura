@@ -1,3 +1,10 @@
+/*
+ * Cascade layers, lowest first: Astryx's reset, Tailwind's theme and preflight, Astryx's
+ * component styles and the Apercura theme, then Tailwind's components and utilities, so a
+ * utility class always wins over an Astryx default. Declared before anything fills them.
+ */
+@layer reset, theme, base, astryx-base, astryx-theme, components, utilities;
+
 @import "tailwindcss";
 @import "@apercura/ui/theme.css";
 @import "./fonts.css";

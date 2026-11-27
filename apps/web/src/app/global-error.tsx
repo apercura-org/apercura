@@ -51,7 +51,12 @@ export default function GlobalError({ error, retry }: { error: unknown; retry: (
 	useStoredTheme();
 
 	return (
-		<html lang={lang} className={fontVariables} suppressHydrationWarning>
+		<html
+			lang={lang}
+			className={fontVariables}
+			data-astryx-theme="apercura"
+			suppressHydrationWarning
+		>
 			<head>
 				<meta name="robots" content="noindex" />
 			</head>

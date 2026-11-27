@@ -1,6 +1,7 @@
 import { expect, test } from "@playwright/test";
 import { axeViolations } from "./axe";
 import { testDb } from "./pro";
+import { statusMessages } from "./status";
 
 /**
  * The institutional pages of the Italian market (`/it`), written for Italian law, and its
@@ -135,7 +136,7 @@ test.describe("the Italian objection form", () => {
 		// React Aria draws the box over the native input.
 		await form.getByRole("checkbox").check({ force: true });
 		await form.getByRole("button").click();
-		await expect(page.getByRole("status")).toBeVisible();
+		await expect(statusMessages(page)).toBeVisible();
 		const sql = testDb();
 		try {
 			const [row] = await sql<{ withheld: boolean; locale: string }[]>`

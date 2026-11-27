@@ -5,7 +5,9 @@
  *   Skeleton, EmptyState, Seal and
  *   the static domain components (FieldRow, PractitionerHeader, ActionBlock,
  *   SiteCard, ProvenanceNote, BookletSearch).
- * - Client ("use client"): every React Aria primitive, SlotPicker, WeekGrid and MapView.
+ * - Client ("use client"): the primitives built on Astryx with the Apercura theme (Button,
+ *   LinkButton, Link, Tooltip, Dialog, Sheet, FileTrigger; their stylesheets load with them),
+ *   every React Aria primitive, SlotPicker, WeekGrid and MapView.
  */
 
 export {
@@ -76,7 +78,12 @@ export {
 	type ToastRegionProps,
 	toastQueue,
 } from "./components/toast";
-export { Tooltip, TooltipTrigger } from "./components/tooltip";
+export {
+	Tooltip,
+	type TooltipProps,
+	TooltipTrigger,
+	type TooltipTriggerProps,
+} from "./components/tooltip";
 export {
 	ActionBlock,
 	type ActionBlockProps,
