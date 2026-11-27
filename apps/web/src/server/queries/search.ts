@@ -209,12 +209,37 @@ export async function landingTarget(
 		placeId = department.id;
 	}
 	const [row] = await sql<{ key: string }[]>`
-		SELECT key FROM directory.landing_pages WHERE key = ${`${listingSlug}:${placeId}`}
+		SELECT key FROM directory.landing_pages
+		WHERE key = ${`${listingSlug}:${placeId}`} AND practitioner_count > 0
 	`;
 	if (!row) return null;
 	return isParis || place.kind === "department"
 		? { listingSlug, deptSlug: place.departmentSlug }
 		: { listingSlug, deptSlug: place.departmentSlug, communeSlug: place.slug };
+}
+
+/**
+ * The listing page of a listing slug in the department of a place of a market, when it lists
+ * someone: where a search for a place with no listing of its own goes (Limassol's hospital is
+ * in Kato Polemidia, on the Limassol district's page). Null for a department, a department city
+ * (Paris, Wien: their page is the department's, `landingTarget` already looked) and a place
+ * without a department. One lookup of the read model's key, as `landingTarget`'s.
+ */
+export async function departmentLandingTarget(
+	listingSlug: string,
+	place: PlaceSuggestion,
+	country = "FR",
+): Promise<LandingTarget | null> {
+	if (!place.departmentSlug || !place.departmentCode || place.kind === "department") return null;
+	if (place.kind === "commune" && isDepartmentCity(country, place.code)) return null;
+	const [row] = await getSql()<{ key: string }[]>`
+		SELECT lp.key FROM directory.places d
+		JOIN directory.landing_pages lp ON lp.key = ${`${listingSlug}:`} || d.id::text
+		WHERE d.country = ${country} AND d.kind = 'department' AND d.code = ${place.departmentCode}
+			AND lp.practitioner_count > 0
+		LIMIT 1
+	`;
+	return row ? { listingSlug, deptSlug: place.departmentSlug } : null;
 }
 
 /** True when the market-wide hub of a listing slug exists. */

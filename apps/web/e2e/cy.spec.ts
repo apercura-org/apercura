@@ -209,6 +209,28 @@ test("a search for a Cypriot place and kind lands on its listing", async ({ requ
 	}
 });
 
+test("a search for a town with none of the kind lands on its district's listing (#197)", async ({
+	request,
+}) => {
+	for (const [from, to] of [
+		// Nicosia lists no hospital of its own; its district's is in Strovolos.
+		[
+			`/cy/anazitisi?quoi=${encodeURIComponent("νοσοκομείο")}&ou=${encodeURIComponent("Λευκωσία")}`,
+			"/cy/nosokomeia/eparchia-lefkosias",
+		],
+		["/fr/recherche?quoi=h%C3%B4pital&ou=Nicosie", "/cy/nosokomeia/eparchia-lefkosias"],
+	] as const) {
+		const response = await request.get(from, { maxRedirects: 0 });
+		expect(response.status(), from).toBe(307);
+		const location = new URL(response.headers().location ?? "", "http://localhost");
+		expect(decodeURIComponent(location.pathname + location.search), from).toBe(to);
+		expect((await request.get(to)).status(), to).toBe(200);
+	}
+	// Neither Larnaka nor its district lists a hospital: the search, as before.
+	const larnaka = `/cy/anazitisi?quoi=${encodeURIComponent("νοσοκομείο")}&ou=${encodeURIComponent("Λάρνακα")}`;
+	expect((await request.get(larnaka, { maxRedirects: 0 })).status(), larnaka).toBe(200);
+});
+
 test("the sitemaps list Cyprus's pages under /sitemaps/cy", async ({ request }) => {
 	const index = await (await request.get("/sitemap.xml")).text();
 	expect(index).toContain("/sitemaps/cy/");
