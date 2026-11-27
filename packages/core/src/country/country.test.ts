@@ -25,6 +25,7 @@ describe("country adapters", () => {
 			"FI",
 			"LT",
 			"SI",
+			"CY",
 		]);
 		expect(COUNTRY_CODES).toEqual([
 			"FR",
@@ -42,6 +43,7 @@ describe("country adapters", () => {
 			"FI",
 			"LT",
 			"SI",
+			"CY",
 		]);
 	});
 

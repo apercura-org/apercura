@@ -10,7 +10,7 @@
  * - Establishment: `{name}-{finess}`.
  */
 import { isValidRpps } from "./rpps";
-import { slugify, slugifyDe, slugifyNo, slugifyPl } from "./slugify";
+import { slugify, slugifyDe, slugifyEl, slugifyNo, slugifyPl } from "./slugify";
 
 /** Builds the canonical path segment of a practitioner page. */
 export function practitionerSlug(firstName: string, lastName: string, rpps: string): string {
@@ -1021,4 +1021,78 @@ export function parseSiPractitionerSegment(segment: string): SiPractitionerSegme
 	const match = /^(?:([a-z0-9]+(?:-[a-z0-9]+)*)-)?si([1-9]\d{0,7})$/.exec(segment);
 	if (!match) return null;
 	return { idScheme: SI_ID_SCHEME, nationalId: match[2] ?? "", namePart: match[1] ?? "" };
+}
+
+/**
+ * Cypriot identifiers: one scheme per publisher, so a list that fails to import keeps its rows.
+ * A private pharmacy of the Pharmaceutical Services' list is keyed by the list's registration
+ * number (ΑΜ, `1197`); the list's other identifying columns, the pharmacist's name and home
+ * telephone number, are never read. A state hospital or health centre of the Ministry of
+ * Health's lists, which number none, is keyed by ten hexadecimal digits the import derives from
+ * its kind and its name as the list writes it (`3fa9c01b2e`): a renamed facility gets a new page.
+ * A page URL ends with the key after a letter naming the publisher
+ * (`farmakeio-ermou-51g-larnaka-f1197`, `geniko-nosokomeio-lefkosias-m3fa9c01b2e`), so the two
+ * kinds never meet.
+ */
+export const CY_ID_SCHEMES = {
+	/** A private pharmacy: its registration number in the Pharmaceutical Services' list (`1197`). */
+	"CY-FARM": { prefix: "f", pattern: /^[1-9]\d{0,5}$/ },
+	/** A state hospital or health centre: a key derived from its kind and name (`3fa9c01b2e`). */
+	"CY-MOH": { prefix: "m", pattern: /^[0-9a-f]{10}$/ },
+} as const;
+
+export type CyIdScheme = keyof typeof CY_ID_SCHEMES;
+
+const CY_SCHEMES = Object.keys(CY_ID_SCHEMES) as CyIdScheme[];
+
+/** True when `value` is a key of the Cypriot scheme (syntax only: the facility may not exist). */
+export function isValidCySourceId(scheme: string, value: string): boolean {
+	const entry = CY_ID_SCHEMES[scheme as CyIdScheme];
+	return entry ? entry.pattern.test(value) : false;
+}
+
+/** The key of a Cypriot page as its URL ends (`f1197`, `m3fa9c01b2e`). */
+export function cyUrlKey(scheme: CyIdScheme, nationalId: string): string {
+	return `${CY_ID_SCHEMES[scheme].prefix}${nationalId}`;
+}
+
+/**
+ * Canonical path segment of a Cypriot page: `{name}-{key}`, the Greek name transliterated as
+ * ELOT 743 writes it (`farmakeio-ermou-51g-larnaka-f1197`).
+ */
+export function cyFacilitySlug(name: string, scheme: CyIdScheme, nationalId: string): string {
+	const key = cyUrlKey(scheme, nationalId);
+	const base = slugifyEl(name).slice(0, 80).replace(/-+$/, "");
+	return base ? `${base}-${key}` : key;
+}
+
+export type CyFacilityKey = { idScheme: CyIdScheme; nationalId: string };
+
+/** Reads a Cypriot key as its page URL ends (`f1197`, `m3fa9c01b2e`). Null for anything else. */
+export function parseCyKey(token: string): CyFacilityKey | null {
+	const lower = token.toLowerCase();
+	for (const idScheme of CY_SCHEMES) {
+		const { prefix, pattern } = CY_ID_SCHEMES[idScheme];
+		if (!lower.startsWith(prefix)) continue;
+		const nationalId = lower.slice(prefix.length);
+		if (pattern.test(nationalId)) return { idScheme, nationalId };
+	}
+	return null;
+}
+
+export type CyFacilitySegment = CyFacilityKey & {
+	/** Name part before the key, possibly empty. */
+	namePart: string;
+};
+
+/**
+ * Parses the last segment of a Cypriot page URL (`{name}-{key}`). Returns null unless it ends
+ * with a valid key, so invalid URLs never reach the database.
+ */
+export function parseCyFacilitySegment(segment: string): CyFacilitySegment | null {
+	if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(segment)) return null;
+	const dash = segment.lastIndexOf("-");
+	const key = parseCyKey(dash < 0 ? segment : segment.slice(dash + 1));
+	if (!key) return null;
+	return { ...key, namePart: dash < 0 ? "" : segment.slice(0, dash) };
 }

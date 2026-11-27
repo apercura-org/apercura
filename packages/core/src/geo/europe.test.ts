@@ -21,6 +21,7 @@ const LANGUAGES: readonly GeoLanguage[] = [
 	"nb",
 	"fi",
 	"lt",
+	"el",
 ];
 
 /** Countries of 5 million people or more, which list at least 10 cities. */

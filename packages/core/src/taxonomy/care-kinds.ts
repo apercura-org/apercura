@@ -30,7 +30,8 @@ export type CareMarket =
 	| "IE"
 	| "FI"
 	| "LT"
-	| "SI";
+	| "SI"
+	| "CY";
 
 export const CARE_KINDS = {
 	"general-practice": {
@@ -45,6 +46,7 @@ export const CARE_KINDS = {
 		FI: "terveysasemat",
 		LT: "seimos-medicina",
 		SI: "druzinski-zdravnik",
+		CY: "kentra-ygeias",
 	},
 	dentistry: {
 		FR: "chirurgien-dentiste",
@@ -83,6 +85,7 @@ export const CARE_KINDS = {
 		EE: "apteegid",
 		NO: "apotek",
 		IE: "pharmacy",
+		CY: "farmakeia",
 	},
 	hospital: {
 		ES: "hospitales",
@@ -95,6 +98,7 @@ export const CARE_KINDS = {
 		IE: "hospitals",
 		FI: "sairaalat",
 		LT: "ligonines",
+		CY: "nosokomeia",
 	},
 	"nursing-home": { CH: "pflegeheim", IE: "nursing-homes" },
 	// Outpatient specialist care where a market lists it as one kind (Lithuania's medical centres,
