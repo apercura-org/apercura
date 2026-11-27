@@ -629,7 +629,12 @@
 
   .astryx-checkbox-label {
     font-size: 1.125rem;
+    font-weight: 400;
     color: var(--color-text-primary);
+  }
+
+  .astryx-radio-list {
+    gap: 0px;
   }
 
   .astryx-radio-list-item {
@@ -671,8 +676,15 @@
     background-color: var(--color-background-surface);
   }
 
+  .astryx-switch-field {
+    min-height: 44px;
+    align-items: center;
+    --_switch-field-gap: 12px;
+  }
+
   .astryx-switch-label {
     font-size: 1.125rem;
+    font-weight: 400;
     color: var(--color-text-primary);
   }
 

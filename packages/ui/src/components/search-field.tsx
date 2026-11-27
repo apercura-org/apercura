@@ -3,6 +3,7 @@
 import "../astryx/styles";
 import { TextInput as AstryxTextInput } from "@astryxdesign/core/TextInput";
 import { type ReactNode, useId, useMemo, useRef, useState } from "react";
+import { useControlDescription } from "../astryx/aria";
 import { describedBy, fieldLook } from "../astryx/field-look";
 import { AstryxIntl } from "../astryx/intl";
 import { nativeConstraints } from "../astryx/native";
@@ -54,7 +55,9 @@ export function SearchField({
 	const value = valueProp ?? own;
 	const input = useRef<HTMLInputElement>(null);
 	const hintId = useId();
+	const errorId = useId();
 	const { error } = useFieldValidation({ element: input, name, value, isInvalid, errorMessage });
+	useControlDescription(input, error !== null);
 	const extra = useMemo(() => ({ "@astryx.textInput.clearLabel": clearLabel }), [clearLabel]);
 	return (
 		<div className={fieldLook.root(className)} data-invalid={error !== null ? "" : undefined}>
@@ -77,14 +80,13 @@ export function SearchField({
 					{...nativeConstraints({ required: isRequired })}
 					isDisabled={isDisabled}
 					placeholder={placeholder}
-					status={error !== null ? { type: "error", message: error || undefined } : undefined}
-					aria-describedby={describedBy(description != null && hintId)}
+					aria-describedby={describedBy(description != null && hintId, error && errorId)}
 					containerClassName={fieldLook.container}
 					controlClassName={cn(fieldLook.control, "[&_input]:ps-2.5")}
 				/>
 			</AstryxIntl>
 			{description != null ? <FieldDescription id={hintId}>{description}</FieldDescription> : null}
-			<FieldError aria-hidden>{error}</FieldError>
+			<FieldError id={errorId}>{error}</FieldError>
 		</div>
 	);
 }

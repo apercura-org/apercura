@@ -7,11 +7,13 @@ import {
 	isValidElement,
 	type ReactElement,
 	type ReactNode,
+	useId,
 	useLayoutEffect,
 	useMemo,
 	useRef,
 	useState,
 } from "react";
+import { useControlDescription } from "../astryx/aria";
 import { fieldLook } from "../astryx/field-look";
 import { AstryxIntl } from "../astryx/intl";
 import { markRequired } from "../astryx/native";
@@ -70,6 +72,7 @@ export function RadioGroup({
 	const [own, setOwn] = useState(defaultValue ?? "");
 	const value = valueProp === undefined ? own : (valueProp ?? "");
 	const group = useRef<HTMLDivElement>(null);
+	const errorId = useId();
 	// The browser checks a required group through its radios; the focus goes to the chosen or
 	// the first one.
 	const radio = useMemo(
@@ -91,6 +94,7 @@ export function RadioGroup({
 		isInvalid,
 		errorMessage,
 	});
+	useControlDescription(group, error !== null);
 	// Required: the group and its radios say so, and the browser checks it.
 	useLayoutEffect(() => {
 		markRequired(
@@ -115,9 +119,9 @@ export function RadioGroup({
 						onChange?.(next);
 					}}
 					htmlName={name}
+					aria-describedby={error ? errorId : undefined}
 					isDisabled={isDisabled}
 					orientation={orientation}
-					status={error !== null ? { type: "error", message: error || undefined } : undefined}
 					containerClassName={fieldLook.container}
 				>
 					{radios.map(({ key, props }) => (
@@ -130,7 +134,7 @@ export function RadioGroup({
 					))}
 				</RadioList>
 			</AstryxIntl>
-			<FieldError aria-hidden>{error}</FieldError>
+			<FieldError id={errorId}>{error}</FieldError>
 		</div>
 	);
 }

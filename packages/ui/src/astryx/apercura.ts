@@ -127,7 +127,8 @@ export const apercuraTheme = defineTheme({
 			checked: { backgroundColor: ink, borderColor: ink, color: paper },
 			disabled: { borderColor: inkDisabled },
 		},
-		"checkbox-label": { base: { fontSize: body, color: ink } },
+		"checkbox-label": { base: { fontSize: body, fontWeight: "400", color: ink } },
+		"radio-list": { base: { gap: "0px" } },
 		"radio-list-item": { base: { minHeight: "44px", gap: "12px" } },
 		"radio-indicator": {
 			base: {
@@ -158,7 +159,8 @@ export const apercuraTheme = defineTheme({
 			base: { width: "20px", height: "20px", backgroundColor: ink },
 			checked: { backgroundColor: paper },
 		},
-		"switch-label": { base: { fontSize: body, color: ink } },
+		"switch-field": { base: { minHeight: "44px", gap: "12px", alignItems: "center" } },
+		"switch-label": { base: { fontSize: body, fontWeight: "400", color: ink } },
 		tab: {
 			base: {
 				minHeight: "44px",

@@ -100,8 +100,8 @@ export function Form({
 			for (const element of event.currentTarget.elements) {
 				if (
 					element instanceof HTMLElement &&
-					"checkValidity" in element &&
-					!(element as HTMLInputElement).checkValidity()
+					"validity" in element &&
+					!(element as HTMLInputElement).validity.valid
 				) {
 					invalid.push(element);
 				}
@@ -154,7 +154,9 @@ function nativeCheck(element: HTMLElement | null): {
 	if (!element || !("checkValidity" in element)) return { message: null, validity: null };
 	const control = element as HTMLInputElement;
 	control.setCustomValidity("");
-	return control.checkValidity()
+	// `validity`, not `checkValidity()`: no `invalid` event, so no control shows a message of its
+	// own; the field prints the one error.
+	return control.validity.valid
 		? { message: null, validity: control.validity }
 		: { message: control.validationMessage, validity: control.validity };
 }
@@ -194,15 +196,15 @@ export function useFieldValidation<V>({
 	const check = useCallback((): string | null => {
 		const control = element.current;
 		const { message: native, validity } = nativeCheck(control);
-		const errors: string[] = [];
-		if (native) errors.push(native);
-		if (!native && checkRequired) {
+		// The field's own check speaks first, as with React Aria: its words say what is wrong
+		// better than the browser's ("Saisissez votre nom." rather than "Fill out this field.").
+		const own = validate?.(value);
+		const errors = typeof own === "string" ? [own] : Array.isArray(own) ? [...own] : [];
+		if (errors.length === 0 && native) errors.push(native);
+		if (errors.length === 0 && checkRequired) {
 			const missing = checkRequired();
 			if (missing) errors.push(missing);
 		}
-		const own = validate?.(value);
-		if (typeof own === "string") errors.push(own);
-		else if (Array.isArray(own)) errors.push(...own);
 		if (errors.length === 0) return null;
 		return message(errors, validity);
 	}, [element, checkRequired, validate, value, message]);

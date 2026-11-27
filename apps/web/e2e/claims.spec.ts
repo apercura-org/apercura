@@ -457,7 +457,7 @@ test("reporting an error stores the message encrypted", async ({ page }) => {
 	await page.goto(`/fr/praticien/${REPORTED_PRACTITIONER.slug}/signaler`);
 	await expect(page.getByRole("heading", { level: 1, name: "Signaler une erreur" })).toBeVisible();
 	await expectNoAxeViolations(page);
-	await page.locator("label").filter({ hasText: "Le praticien est à la retraite" }).click();
+	await page.getByRole("radio", { name: "Le praticien est à la retraite" }).check();
 	await page
 		.getByLabel("Précisions")
 		.fill("Cabinet fermé depuis le mois dernier (exemple de test).");

@@ -5,6 +5,7 @@ import { Switch as AstryxSwitch } from "@astryxdesign/core/Switch";
 import { type ReactNode, useState } from "react";
 import { AstryxIntl } from "../astryx/intl";
 import { textOf } from "../astryx/text";
+import { cn } from "../recipes";
 
 export interface SwitchProps {
 	children: ReactNode;
@@ -41,7 +42,7 @@ export function Switch({
 				}}
 				htmlName={name}
 				isDisabled={isDisabled}
-				className={className}
+				className={cn("flex min-h-11 items-center", className)}
 			/>
 		</AstryxIntl>
 	);

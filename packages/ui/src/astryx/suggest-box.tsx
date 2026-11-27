@@ -3,6 +3,7 @@
 import "./styles";
 import { useLayer } from "@astryxdesign/core/Layer";
 import {
+	type CSSProperties,
 	type KeyboardEvent,
 	type ReactNode,
 	type RefObject,
@@ -291,11 +292,19 @@ export function SuggestBox({
 				layer.ref,
 			)}
 			{layer.render(list, {
-				placement: "below",
-				alignment: "start",
-				offset,
+				// Under the box, as wide as it, flipped above it only when it has no room below.
+				positioning: "custom",
 				className: popoverStyles({ className: cn("p-0 animate-none", listClassName) }),
-				style: { minWidth: "anchor-size(width)" },
+				style: {
+					position: "fixed",
+					inset: "auto",
+					top: "anchor(bottom)",
+					left: "anchor(left)",
+					width: "anchor-size(width)",
+					margin: 0,
+					marginTop: offset,
+					positionTryFallbacks: "flip-block",
+				} as CSSProperties,
 			})}
 		</>
 	);

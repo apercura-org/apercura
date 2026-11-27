@@ -4,6 +4,7 @@ import "../astryx/styles";
 import { TextArea as AstryxTextArea } from "@astryxdesign/core/TextArea";
 import { TextInput as AstryxTextInput } from "@astryxdesign/core/TextInput";
 import { type FocusEvent, type ReactNode, useId, useLayoutEffect, useRef, useState } from "react";
+import { useControlDescription } from "../astryx/aria";
 import { describedBy, fieldLook } from "../astryx/field-look";
 import { AstryxIntl } from "../astryx/intl";
 import { nativeConstraints } from "../astryx/native";
@@ -11,9 +12,6 @@ import { textOf } from "../astryx/text";
 import { useMergedRef } from "../astryx/use-merged-ref";
 import { FieldDescription, FieldError } from "./field-parts";
 import { useFieldValidation, type ValidationResult } from "./form";
-
-export { FieldDescription, FieldError, Input, Label } from "./field-parts";
-export { Form, type FormProps, type ValidationResult } from "./form";
 
 /** What every text-like field takes, as React Aria's `TextField` did. */
 interface TextLikeProps {
@@ -90,6 +88,7 @@ export function TextField({
 	const [value, setValue] = useTextValue(valueProp, defaultValue);
 	const input = useRef<HTMLInputElement>(null);
 	const hintId = useId();
+	const errorId = useId();
 	// Astryx styles its input itself: classes of the caller's (tabular figures) are added to it.
 	useLayoutEffect(() => {
 		if (inputClassName)
@@ -103,6 +102,7 @@ export function TextField({
 		errorMessage,
 		validate,
 	});
+	useControlDescription(input, error !== null);
 	return (
 		<div className={fieldLook.root(className)} data-invalid={error !== null ? "" : undefined}>
 			<AstryxIntl>
@@ -124,15 +124,17 @@ export function TextField({
 					isReadOnly={isReadOnly}
 					hasAutoFocus={autoFocus}
 					placeholder={placeholder}
-					status={error !== null ? { type: "error", message: error || undefined } : undefined}
-					aria-describedby={describedBy(ariaDescribedBy, description != null && hintId)}
+					aria-describedby={describedBy(
+						ariaDescribedBy,
+						description != null && hintId,
+						error && errorId,
+					)}
 					containerClassName={fieldLook.container}
 					controlClassName={fieldLook.control}
 				/>
 			</AstryxIntl>
 			{description != null ? <FieldDescription id={hintId}>{description}</FieldDescription> : null}
-			{/* Read by screen readers through the field's description; printed here. */}
-			<FieldError aria-hidden>{error}</FieldError>
+			<FieldError id={errorId}>{error}</FieldError>
 		</div>
 	);
 }
@@ -174,6 +176,7 @@ export function TextAreaField({
 	const [value, setValue] = useTextValue(valueProp, defaultValue);
 	const area = useRef<HTMLTextAreaElement>(null);
 	const hintId = useId();
+	const errorId = useId();
 	const { error } = useFieldValidation({
 		element: area,
 		name,
@@ -182,6 +185,7 @@ export function TextAreaField({
 		errorMessage,
 		validate,
 	});
+	useControlDescription(area, error !== null);
 	return (
 		<div className={fieldLook.root(className)} data-invalid={error !== null ? "" : undefined}>
 			<AstryxIntl>
@@ -203,14 +207,17 @@ export function TextAreaField({
 					isReadOnly={isReadOnly}
 					hasAutoFocus={autoFocus}
 					placeholder={placeholder}
-					status={error !== null ? { type: "error", message: error || undefined } : undefined}
-					aria-describedby={describedBy(ariaDescribedBy, description != null && hintId)}
+					aria-describedby={describedBy(
+						ariaDescribedBy,
+						description != null && hintId,
+						error && errorId,
+					)}
 					containerClassName={fieldLook.container}
 					controlClassName={fieldLook.control}
 				/>
 			</AstryxIntl>
 			{description != null ? <FieldDescription id={hintId}>{description}</FieldDescription> : null}
-			<FieldError aria-hidden>{error}</FieldError>
+			<FieldError id={errorId}>{error}</FieldError>
 		</div>
 	);
 }

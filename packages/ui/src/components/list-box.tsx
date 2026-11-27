@@ -29,6 +29,8 @@ export interface CollectedItem {
 	id: string;
 	key: Key;
 	textValue: string;
+	/** The row's own text (what it shows and is read as). */
+	text: string;
 	label: ReactNode;
 	isDisabled: boolean;
 }
@@ -58,6 +60,7 @@ export function collectItems<T>(
 			id: String(props.id),
 			key: props.id,
 			textValue: props.textValue ?? plainText(props.children),
+			text: plainText(props.children) || props.textValue || "",
 			label: props.children,
 			isDisabled: props.isDisabled === true,
 		});

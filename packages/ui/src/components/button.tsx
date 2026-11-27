@@ -126,11 +126,11 @@ export function Button({
 }
 
 /**
- * Astryx keeps a polite live region inside every button, for the word it says while the button
- * is pending. An empty one in each of a page's buttons is noise (one more "status" per button
- * to a screen reader's region list, and inside a button, whose content is presentational):
- * it is a live region only while the button is pending, which is the only time it speaks.
- * Astryx writes the word a render after the button turns pending, once the region is in place.
+ * Astryx keeps a polite live region (`role="status"`) inside every button, for the word it says
+ * while the button is pending. An empty one in each of a page's buttons is noise: one more
+ * status to a screen reader's list of regions, inside a button, whose content is
+ * presentational. Here it is a plain polite live region, and only while the button is pending,
+ * the only time it speaks; Astryx writes the word a render after, once the region is in place.
  */
 function usePendingRegion(button: { current: HTMLButtonElement | null }, isPending: boolean) {
 	useLayoutEffect(() => {
@@ -139,13 +139,9 @@ function usePendingRegion(button: { current: HTMLButtonElement | null }, isPendi
 		);
 		if (!region) return;
 		region.setAttribute("data-pending-region", "");
-		if (isPending) {
-			region.setAttribute("role", "status");
-			region.setAttribute("aria-live", "polite");
-		} else {
-			region.removeAttribute("role");
-			region.removeAttribute("aria-live");
-		}
+		region.removeAttribute("role");
+		if (isPending) region.setAttribute("aria-live", "polite");
+		else region.removeAttribute("aria-live");
 	}, [button, isPending]);
 }
 

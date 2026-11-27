@@ -8,7 +8,7 @@ web
 
 ## Stack
 
-Decided by the founder: Next.js (App Router) + tRPC + PostgreSQL (Drizzle), Bun monorepo with an in-house component library (Astryx with the Apercura theme, React Aria Components and Tailwind CSS v4). The production target is an HDS-certified host; until then production runs on an interim host in the European Economic Area, with booking data encrypted at the application level. Everything is self-hostable with Docker. Maps from OpenStreetMap data without API keys. Details in docs/architecture.md.
+Decided by the founder: Next.js (App Router) + tRPC + PostgreSQL (Drizzle), Bun monorepo with an in-house component library (Astryx with the Apercura theme, and Tailwind CSS v4). The production target is an HDS-certified host; until then production runs on an interim host in the European Economic Area, with booking data encrypted at the application level. Everything is self-hostable with Docker. Maps from OpenStreetMap data without API keys. Details in docs/architecture.md.
 
 ## Users
 

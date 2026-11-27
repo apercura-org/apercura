@@ -12,6 +12,7 @@ import {
 	useRef,
 	useState,
 } from "react";
+import { useControlDescription } from "../astryx/aria";
 import { describedBy, fieldLook } from "../astryx/field-look";
 import { AstryxIntl } from "../astryx/intl";
 import { markRequired } from "../astryx/native";
@@ -88,6 +89,7 @@ export function Select<T>({
 		[],
 	);
 	const hintId = useId();
+	const errorId = useId();
 	useLayoutEffect(() => markRequired(field.current, '[role="combobox"]', isRequired === true));
 	const checkRequired = useCallback(
 		() =>
@@ -104,6 +106,11 @@ export function Select<T>({
 		errorMessage,
 		checkRequired,
 	});
+	useControlDescription(
+		trigger,
+		error !== null,
+		describedBy(description != null && hintId, error !== null && errorId) ?? null,
+	);
 	const choose = (next: string | null) => {
 		const key = next === null ? null : (options.find((item) => item.id === next)?.key ?? next);
 		setOwn(key);
@@ -111,7 +118,7 @@ export function Select<T>({
 	};
 	const selectorOptions = options.map((item) => ({
 		value: item.id,
-		label: item.textValue,
+		label: item.text,
 		disabled: item.isDisabled,
 	}));
 	return (
@@ -131,10 +138,14 @@ export function Select<T>({
 					placement="below"
 					htmlName={autoComplete ? undefined : name}
 					isDisabled={isDisabled}
-					status={error !== null ? { type: "error", message: error || undefined } : undefined}
-					aria-describedby={describedBy(description != null && hintId)}
 					containerClassName={fieldLook.container}
-					controlClassName={cn(fieldLook.control, "cursor-pointer")}
+					controlClassName={cn(
+						fieldLook.control,
+						"cursor-pointer",
+						"[&_[role=combobox]]:flex-1 [&_[role=combobox]]:px-3.5 [&_[role=combobox]]:py-2.5 [&_[role=combobox]]:text-start [&_[role=combobox]]:text-body [&_[role=combobox]]:text-ink [&_[role=combobox]]:outline-none",
+						"has-[[role=combobox]:focus-visible]:outline-3 has-[[role=combobox]:focus-visible]:outline-solid has-[[role=combobox]:focus-visible]:-outline-offset-1 has-[[role=combobox]:focus-visible]:outline-(--focus-ring)",
+						"[&_.astryx-selector-indicator-icon]:me-3.5 [&_.astryx-selector-indicator-icon]:text-[1.25rem] [&_.astryx-selector-indicator-icon]:text-ink",
+					)}
 				/>
 			</AstryxIntl>
 			{autoComplete ? (
@@ -157,7 +168,7 @@ export function Select<T>({
 				</select>
 			) : null}
 			{description != null ? <FieldDescription id={hintId}>{description}</FieldDescription> : null}
-			<FieldError aria-hidden>{error}</FieldError>
+			<FieldError id={errorId}>{error}</FieldError>
 		</div>
 	);
 }

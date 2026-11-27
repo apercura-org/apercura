@@ -2,7 +2,8 @@
 
 import "../astryx/styles";
 import { CheckboxInput } from "@astryxdesign/core/CheckboxInput";
-import { type ReactNode, useRef, useState } from "react";
+import { type ReactNode, useId, useRef, useState } from "react";
+import { useControlDescription } from "../astryx/aria";
 import { fieldLook } from "../astryx/field-look";
 import { AstryxIntl } from "../astryx/intl";
 import { nativeConstraints } from "../astryx/native";
@@ -48,6 +49,7 @@ export function Checkbox({
 	const [own, setOwn] = useState(defaultSelected);
 	const checked = isSelected ?? own;
 	const input = useRef<HTMLInputElement>(null);
+	const errorId = useId();
 	const { error } = useFieldValidation({
 		element: input,
 		name,
@@ -55,6 +57,7 @@ export function Checkbox({
 		isInvalid,
 		errorMessage,
 	});
+	useControlDescription(input, error !== null);
 	return (
 		<div
 			className={cn("group/field flex flex-col gap-1.5", className)}
@@ -71,14 +74,14 @@ export function Checkbox({
 						onChange?.(next);
 					}}
 					htmlName={name}
+					aria-describedby={error ? errorId : undefined}
 					{...nativeConstraints({ required: isRequired })}
 					isDisabled={isDisabled}
 					isReadOnly={isReadOnly}
-					status={error !== null ? { type: "error", message: error || " " } : undefined}
 					className={fieldLook.container}
 				/>
 			</AstryxIntl>
-			<FieldError aria-hidden>{error}</FieldError>
+			<FieldError id={errorId}>{error}</FieldError>
 		</div>
 	);
 }

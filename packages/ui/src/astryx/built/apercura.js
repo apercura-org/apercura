@@ -518,7 +518,13 @@ export const apercuraTheme = {
     "checkbox-label": {
       "base": {
         "fontSize": "1.125rem",
+        "fontWeight": "400",
         "color": "var(--color-text-primary)"
+      }
+    },
+    "radio-list": {
+      "base": {
+        "gap": "0px"
       }
     },
     "radio-list-item": {
@@ -561,9 +567,17 @@ export const apercuraTheme = {
         "backgroundColor": "var(--color-background-surface)"
       }
     },
+    "switch-field": {
+      "base": {
+        "minHeight": "44px",
+        "gap": "12px",
+        "alignItems": "center"
+      }
+    },
     "switch-label": {
       "base": {
         "fontSize": "1.125rem",
+        "fontWeight": "400",
         "color": "var(--color-text-primary)"
       }
     },

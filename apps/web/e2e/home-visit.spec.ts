@@ -48,12 +48,12 @@ test("a patient books a home visit in a commune the nurse visits", async ({ page
 	await dialog.getByRole("button", { name: "Continuer" }).click();
 	await expect(dialog.getByText("Choisissez votre commune.")).toBeVisible();
 	// The focus moves to the list, which reads its error.
-	await expect(dialog.getByRole("button", { name: /Votre commune/ })).toBeFocused();
+	await expect(dialog.getByRole("combobox", { name: /Votre commune/ })).toBeFocused();
 	expect(await axeViolations(page)).toEqual([]);
 
 	// The hidden select carries the autofill hint of the commune.
 	await expect(dialog.locator('select[autocomplete="address-level2"]')).toBeAttached();
-	await dialog.getByRole("button", { name: /Votre commune/ }).click();
+	await dialog.getByRole("combobox", { name: /Votre commune/ }).click();
 	await page.getByRole("option", { name: "Paris 15e Arrondissement (75015)" }).click();
 	await dialog.getByRole("button", { name: "Continuer" }).click();
 	await expect(dialog.getByRole("heading", { name: "Choisissez un horaire" })).toBeFocused();

@@ -4,6 +4,7 @@ import "../astryx/styles";
 import { DateInput } from "@astryxdesign/core/DateInput";
 import { type CalendarDate, parseDate } from "@internationalized/date";
 import { type ReactNode, useId, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { useControlDescription } from "../astryx/aria";
 import { localDay } from "../astryx/dates";
 import { describedBy, fieldLook } from "../astryx/field-look";
 import { AstryxIntl } from "../astryx/intl";
@@ -72,6 +73,7 @@ export function DatePicker({
 		[],
 	);
 	const hintId = useId();
+	const errorId = useId();
 	useLayoutEffect(() => markRequired(field.current, "input", isRequired === true));
 	const { error } = useFieldValidation({
 		element: input,
@@ -81,6 +83,11 @@ export function DatePicker({
 		errorMessage,
 		checkRequired: () => (isRequired && !value ? requiredMessage() : null),
 	});
+	useControlDescription(
+		input,
+		error !== null,
+		describedBy(description != null && hintId, error !== null && errorId) ?? null,
+	);
 	const constraints = useMemo(
 		() =>
 			isDateUnavailable
@@ -110,15 +117,13 @@ export function DatePicker({
 					format="date"
 					presentation="adaptive-native"
 					isDisabled={isDisabled}
-					status={error !== null ? { type: "error", message: error || undefined } : undefined}
-					aria-describedby={describedBy(description != null && hintId)}
 					containerClassName={fieldLook.container}
 					controlClassName={fieldLook.control}
 				/>
 			</AstryxIntl>
 			{name ? <input type="hidden" name={name} value={iso(value) ?? ""} /> : null}
 			{description != null ? <FieldDescription id={hintId}>{description}</FieldDescription> : null}
-			<FieldError aria-hidden>{error}</FieldError>
+			<FieldError id={errorId}>{error}</FieldError>
 		</div>
 	);
 }
