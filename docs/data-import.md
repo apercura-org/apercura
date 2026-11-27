@@ -2617,3 +2617,184 @@ owners and nothing unneeded stored, placement and precision, county and
 municipality listings, idempotence, a dry run, an unreadable file failing the
 run, a missing address file failing it too, absences after two runs, objections,
 the breaker and `--approve`.
+
+## Ireland
+
+`etl:ie` builds Ireland's directory (`/ie`, in English) from the Pharmaceutical
+Society of Ireland's register of pharmacies, HIQA's register of designated
+centres for older people and the HSE's Health Atlas layers on GeoHive (issue
+#171, [ADR 0002](./adr/0002-multi-country.md#ireland-ie)). Everything above
+about roles, ownership, the outbox and `--approve` applies, and the per-list
+behaviour is Switzerland's; this section says what differs.
+
+```sh
+bun run etl:places --country ie          # once (etl:ie does it on its first run), then after a census
+bun run etl:ie                           # weekly
+bun run etl:ie --sources psi,hiqa        # some lists only (`--sources -hse-health-centres` leaves one out)
+bun run etl:ie --dry-run                 # everything, then roll back
+bun run etl:ie --approve=<run_id>        # accept what a blocked run reported
+```
+
+An Irish page is a **facility, never a person**: a retail pharmacy business, a
+nursing home, a hospital or a health centre. No health professional is listed:
+the registers of doctors, nurses, pharmacists and dentists cannot be downloaded
+or republished ([`docs/data-requests/ie.md`](./data-requests/ie.md)), and what
+the lists say of people is never read into a row (below). The written
+legitimate-interest assessment is
+[`docs/legal/legitimate-interest-ie.md`](./legal/legitimate-interest-ie.md).
+
+### Sources
+
+Verified on 27 November 2026 on each publisher's own terms: the PSI workbook's
+"Terms & Conditions of Use" sheet and its [Terms of Use](https://www.psi.ie/terms-use),
+HIQA's [disclaimer](https://www.hiqa.ie/disclaimer), each GeoHive item's
+`licenseInfo`. Every credit is printed on the pages built from the list and on
+the data sources page (`/ie/data`), and kept in `ireland.registries`
+(`packages/core/src/country/ie.ts`).
+
+| List (`--sources`)   | Distribution                                                                                                                                   | Terms and credit                                                                                                                                                                                                                                                                                                         | Format, rows (27 November 2026)                      |
+| -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------- |
+| `psi`                | [Register of Pharmacies](https://www.psi.ie/information-and-resources/information-about-our-public-registers) (`Extract_of_Pharmacies_0.xlsx`) | PSI re-use conditions: free of charge in any format, source and copyright acknowledged, accurate, not misleading, not "for the principal purpose of advertising or promoting a particular product or service". `Source: Pharmaceutical Society of Ireland, Register of Pharmacies. © Pharmaceutical Society of Ireland.` | XLSX, monthly ("correct at: 02.11.2026"), 2,003 rows |
+| `hiqa`               | [Register of designated centres for older people](https://www.hiqa.ie/areas-we-work/older-peoples-services) (`older_persons_register.csv`)     | HIQA's re-use terms, "subject to the latest PSI licence". `Source: Health Information and Quality Authority, register of designated centres for older people. © HIQA.`                                                                                                                                                   | CSV, live export, 548 rows                           |
+| `hse-hospitals`      | [Hospitals – HSE Ireland](https://www.arcgis.com/home/item.html?id=feb34881088341bbbf80d86af6a4f333) (feature service, GeoJSON)                | CC BY 4.0. `Source: Health Service Executive, Health Atlas Ireland, Hospitals – HSE Ireland (March 2020), via GeoHive, CC BY 4.0.`                                                                                                                                                                                       | GeoJSON, a March 2020 snapshot, 132 features         |
+| `hse-health-centres` | [Health Centres – HSE Ireland](https://www.arcgis.com/home/item.html?id=c2e825ef881b4e7daca59b0faa232b72)                                      | CC BY 4.0. `Source: Health Service Executive, Health Atlas Ireland, Health Centres – HSE Ireland (March 2020), via GeoHive, CC BY 4.0.`                                                                                                                                                                                  | GeoJSON, a March 2020 snapshot, 921 features         |
+
+Each run reads the terms again: a PSI workbook whose terms sheet no longer
+contains its re-use and advertising conditions, or a GeoHive item whose
+`licenseInfo` no longer names CC BY 4.0, is left out of the run (exit code 3),
+its pages kept, and says why in `stats.sourceErrors`. The PSI's "correct at"
+date is the date the data page prints (`files.psi.lastModified`); HIQA's is its
+export's `Last-Modified`; the HSE's layers say "March 2020" on every page they
+build, because no later open list of the HSE's facilities was found.
+
+**The PSI's advertising condition.** The register may not be used "for the
+principal purpose of advertising or promoting a particular product or service".
+Apercura is free, carries no advertising and sells no placement or ranking: it
+lists every registered pharmacy the same way. A sponsored result, a paid
+upgrade or an affiliate link on Irish pharmacy pages would breach the condition
+([`docs/data-requests/ie.md`](./data-requests/ie.md#the-psis-and-hiqas-re-use-conditions)).
+
+### Minimisation and what is left out
+
+- PSI: `RPB Owner` (the company owning the pharmacy, at times a sole trader's
+  name) is never read; the superintendent pharmacist is not in the extract. A
+  trading name is shown as published (one in capitals is cased: 15 in November
+  2026); it may carry a person's name, under the article 14 notice and the
+  objection form.
+- HIQA: never read are `Person_in_Charge` and its phone, `Management_Contacts`,
+  the provider's address and phone, the registration conditions and dates; the
+  Chief Inspector's notes are counted, not stored. The provider is shown ("Run
+  by …") only when it is the HSE (112) or a company with a CRO number whose name
+  names no member (399); 37 providers (individuals, partners "trading as",
+  bodies "with A, B as members") are not stored. The CRO number decides and is
+  not stored. Kept: the centre's phone, its maximum occupancy and the slug of its
+  HIQA page (inspection reports).
+- HSE: name, kind (`subcategory`), address and point only. The GP layer (names
+  doctors) and the 2020 pharmacies layer (the PSI's register is current) are not
+  read. Three health-centre rows that are not places of care (stores, civil
+  registration, a Department of Social Protection office) and three repeats are
+  left out.
+- Eircodes are printed with the address and **never** used to place or locate a
+  facility: the Eircode database is licensed, not open data. Comparing two
+  lists' Eircodes to tell they are one facility is the only use.
+
+### Identifiers and deduplication
+
+One scheme per list (`IE_ID_SCHEMES`, `packages/core/src/slugs.ts`): `IE-PSI`
+the PSI's registration number (`…-p10000612`), `IE-HIQA` HIQA's `Centre_ID`
+(`…-n738`), `IE-HSE-HOSP` and `IE-HSE-HC` a nine-digit key derived from county,
+normalised name and first address line (`…-h123456789`, `…-c123456789`): the
+layers number their rows only.
+
+An HSE hospital of kind Community, Continuing Care Service or Psycho-Geriatric
+that is a HIQA centre (same Eircode, or same county and normalised name) is that
+centre's page, credited to HIQA, and is not imported (41 in November 2026, all
+by Eircode: 91 hospital pages remain). Without HIQA in a run, those hospitals
+are not read and keep their pages, so a failed download never doubles a page.
+
+Names: an HSE community hospital the layer names by its town only becomes "X
+Community Hospital" (27), or takes its first address line when that line is the
+hospital's name, never a street (9); a health centre named by a street or town
+becomes "X Health Centre" (171); 47 health-centre names the layer double-encoded
+("Ionad SlÃƒÂ¡inte") are repaired.
+
+### Places and precision
+
+`etl:places --country ie` (or the first `etl:ie`) imports:
+
+- the four provinces as regions (grouping only, no listing);
+- the 26 counties as departments (Tailte Éireann, Counties – National Statutory
+  Boundaries – 2019 – Generalised 20m, CC BY 4.0; code `CO_ID`, name "County
+  Cork", slug `cork`);
+- the CSO's Census 2022 Built Up Areas as communes (867 towns, CC BY 4.0, code
+  `BUA_CODE`, population; "Dublin city and suburbs" is named Dublin), each
+  town's point computed in PostGIS (`ST_PointOnSurface`: a centroid falls outside
+  about a hundred concave or coastal towns) and its county by the largest
+  overlap;
+- into `directory.place_lookup` (migration `0031_ie_market`), each county's and
+  town's boundary and a town's other names: the localities of Tailte Éireann's
+  Centres of Population gazetteer whose point lies inside it, with their Irish
+  names (Tallaght → Dublin, Dungloe → An Clochán Liath), and about 24 documented
+  by hand in `IE_MANUAL_ALIASES` (`packages/etl/src/sources/ie/places.ts`) for
+  suburbs and spellings the gazetteer lacks.
+
+Facilities are placed by what their list writes, never by Eircode:
+
+- PSI and HIQA rows by their county (`Co. Cork`, `Dublin 15`) and town (the PSI's
+  `Town`, else a street line; HIQA's address parts from the end), compared
+  without accents, apostrophes or spaces, `saint` as `st`, a trailing "City",
+  "Town", "West"… dropped as a second try. Else a town of that name in another
+  county, when it is the only one in Ireland and reaches into the county the list
+  names (Athlone, Limerick). Else the county itself: the site is placed in the
+  county, unlocated, and shows in the county's listing. Located at the town's
+  point (`city` precision: no map pin, distances approximate).
+- HSE rows at their layer's point (`address` precision, map pin), placed in the
+  town whose boundary holds it, else in the town their address names within the
+  county that holds the point, else in that county.
+
+### Guards
+
+Per list: quarantine within 1% or two lines (never approvable), a floor of lines
+and facilities at about a tenth of the real list (never approvable), and the
+change since the last successful run that read it: at most 10% or 5 facilities,
+25% of bytes (approvable). Then 99% of the sites placed, 85% of them in a census
+town rather than only in their county (approvable; 93.9% in November 2026), and
+the circuit breakers on Ireland's own pages as everywhere.
+
+### Schedule and monitoring
+
+The scheduler runs `etl:ie` every Thursday at 20:30 UTC (`docker/crontab`),
+when no other import runs; `ETL_IE_SCHEDULE_ARGS` narrows it. Exit codes as for
+Switzerland (3: imported without a list that could not be fetched or read, or
+whose terms or licence changed). Unchanged lists are skipped, so the HSE's
+layers are read once and then only checked. Environment: `ETL_IE_SOURCES` (the
+lists by default), `ETL_IE_<ID>_URL` (`ETL_IE_PSI_URL`, `ETL_IE_HSE_HOSPITALS_URL`…),
+`ETL_IE_COUNTIES_URL`, `ETL_IE_TOWNS_URL`, `ETL_IE_PLACENAMES_URL` (the places'
+sources), `ETL_IE_SOURCE_DIR` (like `--source-dir`).
+
+### Measured run (files of 27 November 2026)
+
+A dry run over the real files (`--source-dir`, places imported first): 3,556
+facilities, 2,003 pharmacies, 548 nursing homes, 91 hospitals and 914 health
+centres; 1,005 at the HSE's point, 2,449 at their town's, 102 unlocated in their
+county. Pharmacies placed in a town: 1,967 of 2,003 (401 by another name of the
+town, 4 in another county, 36 in their county only); nursing homes 482 of 548
+(112 by another name, 3 in another county, 66 in their county only: city
+addresses naming no town); health centres 798 of 914 in a town, 116 in their
+county at their own point. 1,274 listing pages, 318 indexable. A second run
+skips; a forced one changes nothing.
+
+### Local development
+
+```sh
+bun run --cwd packages/etl fixtures:ie                       # regenerate the synthetic fixtures
+bun run etl:places --country ie --source-dir packages/etl/fixtures/ie
+bun run etl:ie --source-dir packages/etl/fixtures/ie --offline
+ETL_TEST_DATABASE_URL=… bun run --cwd packages/etl test     # includes test/ie-integration.test.ts
+```
+
+The fixtures (`packages/etl/fixtures/ie`) are synthetic: made-up facilities in
+each list's exact format (the PSI's two sheets, HIQA's CSV with invented people
+the tests check are never stored, the HSE's GeoJSON with its swapped fields),
+with the real counties' and census towns' codes and names but made-up
+rectangular boundaries, and invented Eircodes of the right form.
