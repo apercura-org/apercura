@@ -189,6 +189,15 @@ Norway's (`/se/apoteken/stockholms-lan/stockholm`,
 `/se/vardcentraler/vastra-gotalands-lan/goteborg`); Gotland's municipality has
 its county's page only.
 
+
+Malta (#176) is the locale `en-MT` under `/mt` (the English catalog with Malta's
+overrides, `messages/en-MT.json`), with Ireland's English paths: a pharmacy's page
+under `/mt/facility/…` (its URL ending with its licence number, `…-dl001`), an
+establishment's under `/mt/establishment/…`; its one listing slug is English and
+never the UK's or Ireland's (`/mt/community-pharmacies/northern-harbour/sliema`):
+the NSO's districts are departments, the 68 localities communes. A Maltese
+interface (`/mt-mt`) is a follow-up.
+
 Each segment follows the locale's prefix: `/fr/annuaire`, `/fr-de/verzeichnis`.
 
 Only French pages are indexed in v1 (`INDEXABLE_LOCALES`): pages in the other

@@ -75,6 +75,14 @@ signature, an account, a contract, a paid service or a manual test. This list re
   centres as open data; and open a Geotorget account to order Lantmäteriet's address points
   (Belägenhetsadress, CC BY 4.0 under Lantmäteriet's terms for address data), after reading the
   terms, so that pharmacies can be located at their address rather than their municipality.
+- Malta: send the Medical Council the letter of
+  [`docs/data-requests/mt-medical-council.md`](./docs/data-requests/mt-medical-council.md) asking
+  it to confirm in writing that the CC BY 4.0 of its registers covers republishing doctors' and
+  dentists' entries, with a machine-readable copy; no doctor or dentist is listed until it answers.
+  Then send the Ministry for Health and the Medicines Authority the letters of
+  [`docs/data-requests/mt.md`](./docs/data-requests/mt.md#how-to-ask) (hospitals and health centres
+  as open data; the pharmacies' licence and Sunday roster). The market opened with community
+  pharmacies without waiting for them.
 
 ### Accessibility ([#32](https://github.com/apercura-org/apercura/issues/32))
 
@@ -354,9 +362,34 @@ is listed. Left:
 - An Irish-language interface (`/ie-ga`, locale `ga-IE`): Irish is an official language; the
   Official Languages Act 2003 binds public bodies only, so it is a choice, not a duty.
 
-### 10. Small open-data markets
+### 10. Malta (`/mt`): open, directory of community pharmacies
 
-- Malta (doctors and dentists, CC BY 4.0): written confirmation from the Medical Council.
+Done in [#176](https://github.com/apercura-org/apercura/issues/176): `/mt` in English (locale
+`en-MT`), built weekly by `etl:mt` from the Medicines Authority's register of licensed pharmacies
+in Malta and Gozo (data.gov.mt, CC BY 4.0, its licence read again on every run): 241
+community pharmacies at the register's own points, placed in the 68 localities by the Planning
+Authority's local council boundaries and grouped in the NSO's six districts (CC BY 4.0); a legal
+notice under the Electronic Commerce Act (Cap. 426, art. 8C), a privacy notice under the GDPR and
+the Data Protection Act (Cap. 586) with the article 14 information and the IDPC, claims by
+documents, no booking ([data import](./docs/data-import.md#malta),
+[ADR 0002](./docs/adr/0002-multi-country.md#malta-mt)). Pharmacies only: no health professional,
+hospital or health centre is listed. Left:
+
+- Have a lawyer admitted in Malta review the legal notice, privacy notice, terms and
+  accessibility statement (Cap. 426, Cap. 586, S.L. 418.03 and 627.03), and a native speaker the
+  Maltese-English copy and the localities' names.
+- A Maltese interface (`/mt-mt`, locale `mt-MT`): Maltese is the national language and official
+  with English; its catalog, legal texts, route segments and search words (the register and the
+  localities already carry Maltese names).
+- Doctors and dentists, once the Medical Council confirms the CC BY 4.0 in writing, after a
+  legitimate-interest assessment for named practitioners; hospitals and health centres, once the
+  Ministry for Health publishes them (founder letters, above).
+- The register's other pharmacies (in-patient, government entities, medical oxygen, parenteral
+  nutrition) on the page of their hospital, once hospitals are listed; the Sunday roster, if the
+  Medicines Authority publishes it as open data.
+
+### 10b. Other small open-data markets
+
 - Slovenia opened (section 15).
 - Latvia (`/lv`): open, see below.
 

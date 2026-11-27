@@ -3969,3 +3969,149 @@ ETL_TEST_DATABASE_URL=postgres://… bun run --cwd packages/etl test       # inc
 
 The fixtures are generated and fictional ("Exempelapoteket …", "Exempel
 Vårdcentral …"), never real register data.
+
+## Malta
+
+`etl:mt` builds Malta's directory (`/mt`, in English) from the Medicines
+Authority's register of licensed pharmacies in Malta and Gozo, which the
+Authority publishes on the national open data portal, data.gov.mt (issue #176,
+[ADR 0002](./adr/0002-multi-country.md#malta-mt)). Everything above about roles,
+ownership, the outbox and `--approve` applies, and the run is Finland's: one
+source, so a register that cannot be read fails the run; this section says what
+differs.
+
+```sh
+bun run etl:places --country mt          # once (etl:mt does it on its first run), then if the localities change
+bun run etl:mt                           # weekly
+bun run etl:mt --dry-run                 # everything, then roll back
+bun run etl:mt --approve=<run_id> --source-dir <dir>   # accept a blocked run, on the files it kept
+```
+
+A Maltese page is a **community pharmacy, never a person**: the register names no
+pharmacist, and no register of doctors, dentists or pharmacists is read
+([`docs/data-requests/mt.md`](./data-requests/mt.md)). The written
+legitimate-interest assessment is
+[`docs/legal/legitimate-interest-mt.md`](./legal/legitimate-interest-mt.md).
+
+### Sources
+
+Verified on 27 November 2026 on the national catalogue's records as the European
+data portal harvests them from data.gov.mt (portal.data.gov.mt and most gov.mt
+sites refused automated reads, behind a Cloudflare block that was not bypassed;
+the API itself answers), and on the Planning Authority's WFS metadata. Every
+credit is printed on every Maltese page and on the data sources page
+(`/mt/data`), and kept in `malta.registries`
+(`packages/core/src/country/mt.ts`).
+
+| File                        | Distribution                                                                                                                                                                       | Terms and credit                                                                                                                                                                        | Format, rows (27 November 2026)                 |
+| --------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------- |
+| `pharmacies.json`           | [Licensed Pharmacies in Malta and Gozo](https://data.europa.eu/data/datasets/0dfe65b7-626f-49ef-ab09-6a6ab8a4db72) (`https://data.gov.mt/Pharmacy/V1/Pharmacy`)                     | CC BY 4.0 (the distribution's licence). `Source: Medicines Authority, Licensed Pharmacies in Malta and Gozo (data.gov.mt), CC BY 4.0.`                                                  | JSON (`{"value": [...]}`), 261 rows, 72,898 bytes |
+| `catalogue.json`            | The dataset's record on [data.europa.eu](https://data.europa.eu/api/hub/search/datasets/0dfe65b7-626f-49ef-ab09-6a6ab8a4db72)                                                      | Read for its publisher, licence and `modified` date only                                                                                                                                | JSON, modified 2026-11-18                       |
+| `mt-local-councils.geojson` | [Local Councils Units and Boundaries](https://data.europa.eu/data/datasets/f47bf292-c4d4-4a39-b2ff-86bc3f9d7e31) (Planning Authority, INSPIRE WFS `au:AdministrativeUnit`, GeoJSON) | CC BY 4.0; the service: "no conditions to access and use". `Source: Planning Authority, Local Councils Units and Boundaries, CC BY 4.0 (localities' points computed by Apercura).`     | GeoJSON, 68 multipolygons, 4.6 MB               |
+
+The NSO's districts and localities and the Address Registrar's council names
+(both CC BY 4.0, credited `Source: National Statistics Office, districts and
+localities; Office of the Address Registrar, Local Councils of Malta; CC BY 4.0.`)
+were read once into `MT_LOCALITIES`; nothing of theirs is fetched by a run. The
+NSO's own LAU 2 boundary service is not used: its metadata says CC BY-NC-ND 4.0.
+
+Each run reads the catalogue record again: a register whose publisher is no
+longer the Medicines Authority, or whose distribution no longer carries CC BY 4.0,
+fails the run (exit code 1), its pages kept, and says why in `stats.sourceErrors`.
+The record's `modified` date is the register's edition, which the data page
+prints and which never goes back. The Authority's website terms forbid
+"reproduction or use for commercial or marketing purposes" of the website; the
+import reads the dataset, whose licence is CC BY 4.0, and Apercura is free and
+without advertising either way
+([`docs/data-requests/mt.md`](./data-requests/mt.md#the-medicines-authoritys-website-terms)).
+
+### Kinds and fields
+
+- Listed: the register's types "Community Pharmacies" and "Community and Medical
+  Oxygen Pharmacy" (`MT_COMMUNITY_TYPES`), as community pharmacies
+  (`community-pharmacies`, a slug neither the UK nor Ireland uses).
+- Left out, counted in `skipped`: 11 in-patient pharmacies, 6 of government
+  entities, 2 medical-oxygen dispensaries and 1 parenteral-nutrition dispensary:
+  none serves the public at a counter.
+- Read: licence number (the key), type, name (line breaks and runs of spaces
+  collapsed), address (a trailing comma dropped), locality, postcode
+  (MaltaPost's `ABC 1234`, its Maltese letters written without marks), phone (the
+  first of a list, `+356`) and point. Never read: the register's `ID` (a row
+  number). The register names no pharmacist and no owner; a pharmacy's name may
+  carry a person's name, under the article 14 notice and the objection form.
+
+### Identifiers
+
+One scheme, `MT-MA`: the digits of the licence number as the register writes it
+(`DL 001` → `001`), printed `DL 001` on the page; a page URL ends with
+`-dl001`. A row whose licence number cannot be read, or repeats another's, is
+quarantined (its sample keeps the licence number only).
+
+### Places and precision
+
+`etl:places --country mt` (or the first `etl:mt`) imports:
+
+- the NSO's two regions (Malta; Gozo and Comino) as regions, grouping only;
+- its six districts as departments (`011` Southern Harbour District, slug
+  `southern-harbour`; `026` Gozo and Comino District);
+- the 68 localities (local councils) as communes, by their NSO code (`01101`
+  Valletta), named as the NSO writes them in English with their Maltese letters
+  (`Żebbuġ (Malta)`, `Rabat (Gozo)`), each one's point computed in PostGIS on its
+  Planning Authority boundary (`ST_PointOnSurface`);
+- into `directory.place_lookup` (no new migration), each locality's boundary and
+  its other names: its Maltese council name and the parts of it people write
+  (`Buġibba`, `Paceville`, `Victoria`).
+
+A pharmacy is placed in the locality whose boundary holds its point, else in one
+within 200 m of it (a point on the shore), else by the locality its register row
+writes (`mtLocalityOfName`: `Ħal Luqa`, `Ir-Rabat, Għawdex`, `St. Paul’s Bay`),
+else it is left out. It is located at the register's point (`address`
+precision, map pin), else at its locality's point (`city` precision). Where the
+point and the row's locality disagree (a pharmacy on a border, a postal locality
+such as Swatar), the point wins; the run counts them.
+
+### Guards
+
+Quarantine within 2% (never approvable), at least 100 rows and 80 community
+pharmacies (never approvable), a catalogue date never older than the last one
+imported (never approvable), and at most 15% more or fewer pharmacies or 40%
+more or fewer bytes than the last successful run (approvable). Then 98% of the
+pharmacies placed and 90% at the register's own point (approvable), and the
+circuit breakers on Malta's own pages as everywhere.
+
+### Schedule and monitoring
+
+The scheduler runs `etl:mt` every Friday at 05:30 UTC (`docker/crontab`), when no
+other import runs; `ETL_MT_SCHEDULE_ARGS` adds flags. data.gov.mt can take half a
+minute to answer its first request: the download waits and retries. Exit codes as
+for Finland (1: the register or its record could not be read, or its publisher or
+licence changed; 2: blocked, the files kept for `--approve` with `--source-dir`).
+An unchanged register is skipped. Environment: `ETL_MT_PHARMACIES_URL`,
+`ETL_MT_CATALOGUE_URL`, `ETL_MT_PLACES_URL` and `ETL_MT_SOURCE_DIR` (like
+`--source-dir`).
+
+### Measured run (register of 27 November 2026)
+
+A dry run over the live API (places imported first): 261 rows, 241 community
+pharmacies listed, 20 left out by type, none quarantined; 240 placed by their
+point in a locality's boundary and 1 within 200 m of one (on the shore), none by
+name and none left out; 5 whose point lies in another locality than the one
+their row writes. All 241 at the register's point, all with a phone; one
+postcode the register writes wrongly is dropped. 71 listing pages, 39 indexable.
+The register took 28 seconds to answer. A second run skips; a forced one changes
+nothing.
+
+### Local development
+
+```sh
+bun run --cwd packages/etl fixtures:mt                       # regenerate the synthetic fixtures
+bun run etl:places --country mt --source-dir packages/etl/fixtures/mt
+bun run etl:mt --source-dir packages/etl/fixtures/mt --offline
+ETL_TEST_DATABASE_URL=… bun run --cwd packages/etl test     # includes test/mt-integration.test.ts
+```
+
+The fixtures (`packages/etl/fixtures/mt`) are synthetic: made-up pharmacies in
+the register's exact JSON form (`Example Valletta Pharmacy`, licences from
+`DL 901`, invented phones), with the rows the import must skip or quarantine, a
+catalogue record, and the real localities' codes with made-up rectangular
+boundaries.

@@ -12,9 +12,9 @@ Re-use of Public Sector Information Regulations 2015, or as a plain licence requ
 gives a right to re-use.
 
 Austria has its own request, prepared separately (`at.md`); the United Kingdom's, Czechia's,
-Spain's, Italy's, Germany's, Switzerland's, Estonia's, Poland's, Norway's, Finland's, Lithuania's, Slovenia's, Cyprus's, Latvia's and Sweden's candidates are in
+Spain's, Italy's, Germany's, Switzerland's, Estonia's, Poland's, Norway's, Finland's, Lithuania's, Slovenia's, Cyprus's, Latvia's, Sweden's and Malta's candidates are in
 `gb.md`,
-`cz.md`, `es.md`, `it.md`, `de.md`, `ch.md`, `ee.md`, `pl.md`, `no.md`, `fi.md`, `lt.md`, `si.md`, `cy.md`, `lv.md` and `se.md` (Spain opened from the register of centres,
+`cz.md`, `es.md`, `it.md`, `de.md`, `ch.md`, `ee.md`, `pl.md`, `no.md`, `fi.md`, `lt.md`, `si.md`, `cy.md`, `lv.md`, `se.md` and `mt.md` (Spain opened from the register of centres,
 REGCESS, Italy from the Ministry of Health's lists of places, Germany from the statistical offices'
 directory of hospitals and the Länder's pharmacy lists, Switzerland from the FOPH's hospital
 figures and the cantons' lists, Estonia from the Health Board's register of providers and the State
@@ -23,8 +23,8 @@ Coordinating Register for Legal Entities, and Latvia from the National Health Se
 Ministry of the Interior's addresses and the State Agency of Medicines' pharmacies, Finland from the
 Finnish Service Catalogue's public health service locations, Lithuania from VASPVT's licence
 register of institutions, Slovenia from the health insurer's lists of personal doctors, and Cyprus from the Ministry of
-Health's lists of pharmacies, state hospitals and health centres, and Sweden from Läkemedelsverket's licensed pharmacies and
-Västra Götaland's health centres; the requests below
+Health's lists of pharmacies, state hospitals and health centres, Sweden from Läkemedelsverket's licensed pharmacies and
+Västra Götaland's health centres, and Malta from the Medicines Authority's licensed pharmacies; the requests below
 for their registers of people still stand).
 
 ## Tracking
@@ -48,6 +48,8 @@ Update a row the day something happens. Status: `not sent`, `sent`, `extended`, 
 | Italy (9)          | Coordinates of the pharmacy lists: [it.md](it.md#how-to-ask)                      | Ministry of Health, the datasets' expert contact | Email                                 | D.lgs. 36/2006, art. 5 (re-use request)                              | not sent |           |        |         |
 | Ireland (10)       | Register of Medical Practitioners: [ie-medical-council.md](ie-medical-council.md) | Medical Council, DPO                             | Email                                 | S.I. 376/2021, reg. 6                                                | not sent |           |        |         |
 | Malta (11)         | Registers of doctors and dentists: [mt-medical-council.md](mt-medical-council.md) | Medical Council, Registrar                       | Email                                 | Cap. 546, arts. 9, 10 and 13; CC BY 4.0 confirmation                 | not sent |           |        |         |
+| Malta (11)         | Hospitals and health centres: [mt.md](mt.md#ministry-for-health-hospitals-and-health-centres) | Ministry for Health                              | Email                                 | Cap. 546, arts. 9, 10 and 13: publication request                    | not sent |           |        |         |
+| Malta (11)         | Pharmacies' licence and roster: [mt.md](mt.md#medicines-authority-the-licence-and-the-roster) | Medicines Authority                              | Email                                 | None needed (CC BY 4.0): confirmation and publication request        | not sent |           |        |         |
 | Germany (12)       | 116117 Arztsuche: [de-kbv.md](de-kbv.md)                                          | KBV, copy DPO                                    | Email                                 | None (DNG, § 1(2)): licence request                                  | not sent |           |        |         |
 | Germany (12)       | Chamber doctor searches: [de-aerztekammern.md](de-aerztekammern.md)               | Each of the 17 Landesärztekammern                | Email, one per chamber                | None: licence request                                                | not sent |           |        |         |
 | Estonia (13)       | MEDRE open data: [ee-terviseamet.md](ee-terviseamet.md)                           | Terviseamet                                      | Email                                 | Public Information Act, § 3¹ (licence change or confirmation)        | not sent |           |        |         |
