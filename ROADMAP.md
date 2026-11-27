@@ -11,10 +11,11 @@ is ready.
 
 ## Launch status
 
-Production is live on [apercura.fr](https://apercura.fr), with TLS, backups, monitoring and
-alerts, deployed in [#34](https://github.com/apercura-org/apercura/issues/34). Online booking is on.
-It moves to [apercura.org/fr](https://apercura.org/fr), every market on one domain, apercura.fr
-redirecting ([#81](https://github.com/apercura-org/apercura/issues/81),
+Production is live on [apercura.org](https://apercura.org), every market on one domain, France
+under [/fr](https://apercura.org/fr), with TLS, backups, monitoring and alerts, deployed in
+[#34](https://github.com/apercura-org/apercura/issues/34). Online booking is on. The former
+domain apercura.fr only redirects: every old URL answers a 301 to its new page on apercura.org
+([#81](https://github.com/apercura-org/apercura/issues/81),
 [the switch](./docs/deploy-vps.md#moving-production-to-apercuraorg)).
 
 To keep costs down at launch, it runs on an interim host in the European Economic Area that is
