@@ -36,8 +36,8 @@ export { formatPhoneLt, LT_POSTCODE, normalizeLtPostcode, toE164Lt } from "./pho
 export { formatPhoneLv, LV_POSTCODE, normalizeLvPostcode, toE164Lv } from "./phone-lv";
 export { formatPhoneNo, NO_POSTCODE, normalizeNoPostcode, toE164No } from "./phone-no";
 export { formatPhonePl, normalizePlPostcode, PL_POSTCODE, toE164Pl } from "./phone-pl";
-export { formatPhoneSi, normalizeSiPostcode, SI_POSTCODE, toE164Si } from "./phone-si";
 export { formatPhoneSe, normalizeSePostcode, SE_POSTCODE, toE164Se } from "./phone-se";
+export { formatPhoneSi, normalizeSiPostcode, SI_POSTCODE, toE164Si } from "./phone-si";
 export * from "./profile";
 export { isValidRpps } from "./rpps";
 export {
@@ -128,9 +128,9 @@ export {
 	isValidNoOrgNumber,
 	isValidNoSourceId,
 	isValidPlSourceId,
-	isValidSiSourceId,
 	isValidSeLegalPersonNumber,
 	isValidSeSourceId,
+	isValidSiSourceId,
 	itPlaceSlug,
 	itUrlKey,
 	LT_ID_SCHEME,
@@ -179,21 +179,21 @@ export {
 	parseNoKey,
 	parsePlFacilitySegment,
 	parsePractitionerSegment,
-	parseSiPractitionerSegment,
 	parseSeFacilitySegment,
 	parseSeKey,
+	parseSiPractitionerSegment,
 	plFacilitySlug,
 	practitionerSlug,
 	regionSlug,
-	SI_ID_SCHEME,
-	type SiPractitionerSegment,
-	siPractitionerSlug,
-	slugifySl,
 	SE_ID_SCHEMES,
 	type SeFacilityKey,
 	type SeFacilitySegment,
 	type SeIdScheme,
+	SI_ID_SCHEME,
+	type SiPractitionerSegment,
 	seFacilitySlug,
 	seUrlKey,
+	siPractitionerSlug,
+	slugifySl,
 } from "./slugs";
 export * from "./time";

@@ -50,12 +50,12 @@ import {
 	parseLvFacilitySegment,
 	parseNoFacilitySegment,
 	parsePlFacilitySegment,
-	parseSiPractitionerSegment,
-	SI_ID_SCHEME,
 	parseSeFacilitySegment,
 	parseSeKey,
+	parseSiPractitionerSegment,
 	SE_ID_SCHEMES,
 	type SeIdScheme,
+	SI_ID_SCHEME,
 	seUrlKey,
 } from "@apercura/core";
 import type { MarketCountry } from "~/i18n/locales";

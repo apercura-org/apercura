@@ -313,8 +313,8 @@ export {
 	buildLvOptions,
 	buildNoOptions,
 	buildPlOptions,
-	buildSiOptions,
 	buildSeOptions,
+	buildSiOptions,
 	type ChOptions,
 	type CyOptions,
 	type CzOptions,
@@ -331,8 +331,8 @@ export {
 	type NoOptions,
 	type PlOptions,
 	parseArgs,
-	type SiOptions,
 	type SeOptions,
+	type SiOptions,
 } from "./config";
 export { type AtRunOutcome, runAt } from "./run-at";
 export { type ChRunOutcome, runCh } from "./run-ch";
@@ -350,5 +350,5 @@ export { type LtRunOutcome, runLt } from "./run-lt";
 export { type LvRunOutcome, runLv } from "./run-lv";
 export { type NoRunOutcome, runNo } from "./run-no";
 export { type PlRunOutcome, runPl } from "./run-pl";
-export { runSi, type SiRunOutcome } from "./run-si";
 export { runSe, type SeRunOutcome } from "./run-se";
+export { runSi, type SiRunOutcome } from "./run-si";

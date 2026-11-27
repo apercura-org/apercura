@@ -45,8 +45,8 @@ import {
 	parseNoFacilitySegment,
 	parsePlFacilitySegment,
 	parsePractitionerSegment,
-	parseSiPractitionerSegment,
 	parseSeFacilitySegment,
+	parseSiPractitionerSegment,
 } from "@apercura/core";
 import { type CountryAdapter, countryAdapter } from "@apercura/core/country";
 import { type Locale, MARKET_LOCALES, type MarketCountry, marketOf } from "~/i18n/locales";

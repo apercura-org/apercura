@@ -191,7 +191,34 @@ test("the home is Sweden's, in Swedish, with Swedish samples and its coverage", 
 	).toBeVisible();
 	// One language: no language menu, the country menu stays.
 	await expect(page.getByRole("navigation", { name: "Språk" })).toHaveCount(0);
-	await expect(page.getByRole("navigation", { name: "Land" })).toBeVisible();
+	const countries = page.getByRole("navigation", { name: "Land" });
+	await expect(countries).toBeVisible();
+	// Every open market, named in Swedish.
+	await countries.locator("summary").click();
+	await expect(countries.getByRole("link")).toHaveText([
+		"Frankrike",
+		"Österrike",
+		"Storbritannien",
+		"Tjeckien",
+		"Spanien",
+		"Italien",
+		"Tyskland",
+		"Schweiz",
+		"Estland",
+		"Polen",
+		"Norge",
+		"Irland",
+		"Finland",
+		"Litauen",
+		"Slovenien",
+		"Cypern",
+		"Lettland",
+		"Sverige",
+	]);
+	await expect(countries.getByRole("link", { name: "Sverige" })).toHaveAttribute(
+		"aria-current",
+		"true",
+	);
 });
 
 test("a search for a Swedish place and kind lands on its listing", async ({ request }) => {

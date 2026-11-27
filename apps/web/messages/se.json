@@ -92,12 +92,17 @@
 			"CZ": "Tjeckien",
 			"IT": "Italien",
 			"CH": "Schweiz",
+			"SI": "Slovenien",
 			"ES": "Spanien",
 			"DE": "Tyskland",
+			"LV": "Lettland",
+			"LT": "Litauen",
 			"EE": "Estland",
 			"PL": "Polen",
 			"NO": "Norge",
 			"IE": "Irland",
+			"FI": "Finland",
+			"CY": "Cypern",
 			"SE": "Sverige"
 		}
 	},
@@ -1329,6 +1334,164 @@
 			],
 			"formTitle": "Begär att en sida tas bort",
 			"formBody": "Ange sidans adress och en e-postadress där vi kan svara dig."
+		}
+	},
+	"Astryx": {
+		"button": {
+			"loading": "Läser in"
+		},
+		"calendar": {
+			"dayInRange": "{date}, i intervallet",
+			"dayRangeEnd": "{date}, intervallets slut",
+			"dayRangeStart": "{date}, intervallets början",
+			"dayRangeStartAndEnd": "{date}, intervallets början och slut",
+			"daySelected": "{date}, vald",
+			"nextMonth": "Nästa månad",
+			"previousMonth": "Föregående månad",
+			"rangeClearedAnnounce": "Startdatumet {date} har rensats. Välj ett startdatum.",
+			"rangeCompleteAnnounce": "Valt intervall: {start} till {end}.",
+			"rangeStartAnnounce": "Startdatum {date}. Välj ett slutdatum."
+		},
+		"contextMenu": {
+			"label": "Snabbmeny"
+		},
+		"dateInput": {
+			"calendarDescription": "Datumen följer {calendar}",
+			"chooseMonthYear": "{monthYear}, välj månad och år",
+			"clear": "Rensa {label}",
+			"closeCalendar": "Stäng kalendern",
+			"dialogLabel": "Välj datum",
+			"doneChoosingMonth": "Klar",
+			"formatHint": "t.ex. {example}",
+			"invalidDate": "Ogiltigt datum",
+			"monthWheel": "Månad",
+			"nonexistentDate": "{named, select, yes {Ange ett datum som finns ({calendar})} other {Ange ett datum som finns}}",
+			"openCalendar": "Öppna kalendern",
+			"outOfRangeDate": "{bounds, select, both {Ange ett datum från {min} till {max}} min {Ange ett datum från och med {min}} max {Ange ett datum till och med {max}} other {Ange ett tillgängligt datum}}",
+			"placeholder": "Välj ett datum",
+			"resetPicking": "Återställ",
+			"savePicking": "Spara",
+			"toggleCalendarClose": "Stäng kalendern",
+			"yearWheel": "År"
+		},
+		"dateTimeInput": {
+			"hourWheel": "Timme",
+			"meridiemAM": "fm",
+			"meridiemPM": "em",
+			"meridiemWheel": "fm/em",
+			"minuteWheel": "Minut",
+			"secondWheel": "Sekund",
+			"timeHint12h": "t.ex. 2:30 em",
+			"timeHint24h": "t.ex. 14:30"
+		},
+		"dropdownMenu": {
+			"back": "Tillbaka",
+			"backTo": "Tillbaka till {parent}",
+			"label": "Meny"
+		},
+		"field": {
+			"errorFallback": "Ogiltigt värde",
+			"labelTooltip": "Om {label}",
+			"optional": "Valfritt",
+			"required": "Obligatoriskt"
+		},
+		"infoTip": {
+			"label": "Mer information"
+		},
+		"input": {
+			"readOnly": "Skrivskyddad",
+			"statusButton": {
+				"error": "Om felet",
+				"success": "Om bekräftelsen",
+				"warning": "Om varningen"
+			}
+		},
+		"inputClearButton": {
+			"tooltip": "Rensa"
+		},
+		"kbd": {
+			"key": {
+				"alt": "Alt",
+				"altShort": "Alt",
+				"backspace": "Backsteg",
+				"command": "Command",
+				"control": "Control",
+				"controlShort": "Ctrl",
+				"down": "Nedåtpil",
+				"enter": "Retur",
+				"escape": "Escape",
+				"escapeShort": "Esc",
+				"left": "Vänsterpil",
+				"plus": "Plus",
+				"right": "Högerpil",
+				"shift": "Skift",
+				"shiftShort": "Skift",
+				"tab": "Tabb",
+				"up": "Uppåtpil",
+				"windowsShort": "Win"
+			},
+			"shortcut": "{shortcut} + {key}"
+		},
+		"keyboardHint": {
+			"toNavigate": "för att navigera"
+		},
+		"link": {
+			"newTab": "(öppnas i en ny flik)"
+		},
+		"popover": {
+			"close": "Stäng rutan"
+		},
+		"selector": {
+			"clearLabel": "Rensa {label}",
+			"empty": "Inga alternativ",
+			"emptySearchResults": "Inga träffar",
+			"placeholder": "Välj…",
+			"resultCount": "{count, number} {count, plural, one {träff} other {träffar}}",
+			"searchOptions": "Sök bland alternativen",
+			"searchPlaceholder": "Sök…"
+		},
+		"spinner": {
+			"loading": "Läser in"
+		},
+		"switch": {
+			"loading": "Läser in"
+		},
+		"table": {
+			"label": "Tabell",
+			"noData": "Inga uppgifter"
+		},
+		"tabList": {
+			"label": "Flikar"
+		},
+		"textArea": {
+			"charactersOverLimit": "{count, number} {count, plural, one {tecken} other {tecken}} över gränsen",
+			"charactersRemaining": "{count, number} {count, plural, one {tecken} other {tecken}} kvar",
+			"counter": "{count, number}/{limit, number}"
+		},
+		"textInput": {
+			"clearLabel": "Rensa {label}"
+		},
+		"timeInput": {
+			"clearLabel": "Rensa {label}",
+			"invalidTime": "Ogiltig tid",
+			"openPicker": "Öppna {label}",
+			"placeholder": "Välj en tid"
+		},
+		"toast": {
+			"dismiss": "Stäng aviseringen",
+			"viewport": "Aviseringar"
+		},
+		"token": {
+			"remove": "Ta bort {label}"
+		},
+		"typeahead": {
+			"clearSelection": "Rensa valet",
+			"emptySearchResults": "Inga träffar",
+			"loading": "Läser in",
+			"resultCount": "{count, number} {count, plural, one {träff} other {träffar}}",
+			"searchPlaceholder": "Sök…",
+			"searchResults": "Sökresultat",
+			"selectionCleared": "{label} har rensats"
 		}
 	}
 }

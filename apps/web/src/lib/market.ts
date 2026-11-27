@@ -16,9 +16,9 @@ import {
 	PL_OBTAINED_AT,
 	PL_PRODUCED_AT,
 	poland,
-	slovenia,
 	SE_COUNTIES,
 	SE_HEALTH_CENTRE_COUNTIES,
+	slovenia,
 	spain,
 	sweden,
 	switzerland,
@@ -45,9 +45,9 @@ import {
 	NO_PROFESSIONS,
 	PL_PROFESSIONS,
 	professionFor,
-	SI_PROFESSIONS,
 	SE_HEALTH_CENTRE,
 	SE_PROFESSIONS,
+	SI_PROFESSIONS,
 } from "@apercura/core/taxonomy";
 import { type Locale, marketOf } from "~/i18n/locales";
 import { marketAdapter } from "./practitioner-key";

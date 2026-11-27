@@ -27,9 +27,9 @@ import lt from "../../messages/lt.json";
 import lv from "../../messages/lv.json";
 import no from "../../messages/no.json";
 import pl from "../../messages/pl.json"; // Norway's texts over the English catalog, as Estonia's (`no.json`, named after the segment).
-import si from "../../messages/si.json";
 // Sweden's texts over the English catalog, as Norway's (`se.json`, named after the segment).
 import se from "../../messages/se.json";
+import si from "../../messages/si.json";
 import type { Locale } from "./locales";
 
 /** The shape of every catalog: the English source catalog's. */

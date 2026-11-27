@@ -23,8 +23,8 @@ import { allLtListingSlugs } from "./lt";
 import { allLvListingSlugs } from "./lv";
 import { allNoListingSlugs } from "./no";
 import { allPlListingSlugs } from "./pl";
-import { allSiListingSlugs } from "./si";
 import { allSeListingSlugs } from "./se";
+import { allSiListingSlugs } from "./si";
 
 const LISTINGS: Record<CareMarket, Set<string>> = {
 	FR: allListingSlugs(),

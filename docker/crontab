@@ -142,10 +142,9 @@
 30 4 * * 6 apercura etl:lv $ETL_LV_SCHEDULE_ARGS
 
 # Sweden's facilities (Läkemedelsverket's register of licensed pharmacies, CC BY 4.0, updated
-# daily; Västra Götalandsregionen's health centres, CC0 1.0), every Saturday at 05:30 UTC, an hour after
-# Latvia's, when no
-# other import runs (the same advisory lock: one import at a time); unchanged lists are skipped
-# (under 1 MB in all). ETL_SE_SCHEDULE_ARGS narrows it, e.g. `--sources apotek`. Exit codes: 1
-# failed, 2 blocked, 3 imported without a list that could not be fetched or read, or whose
-# licence changed (see docs/data-import.md, "Sweden").
+# daily; Västra Götalandsregionen's health centres, CC0 1.0), every Saturday at 05:30 UTC, an
+# hour after Latvia's, when no other import runs (the same advisory lock: one import at a
+# time); unchanged lists are skipped (under 1 MB in all). ETL_SE_SCHEDULE_ARGS narrows it,
+# e.g. `--sources apotek`. Exit codes: 1 failed, 2 blocked, 3 imported without a list that could
+# not be fetched or read, or whose licence changed (see docs/data-import.md, "Sweden").
 30 5 * * 6 apercura etl:se $ETL_SE_SCHEDULE_ARGS

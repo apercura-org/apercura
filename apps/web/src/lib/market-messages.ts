@@ -15,8 +15,8 @@ import {
 	allLvListingSlugs,
 	allNoTaxonomySlugs,
 	allPlListingSlugs,
-	allSiListingSlugs,
 	allSeTaxonomySlugs,
+	allSiListingSlugs,
 } from "@apercura/core/taxonomy";
 import type { MarketCountry } from "~/i18n/locales";
 

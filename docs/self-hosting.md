@@ -464,7 +464,7 @@ apercura-compose run --rm --entrypoint "apercura etl:se" etl
 ```
 
 The places are SCB's 21 counties and 290 municipalities (the first `etl:se`
-imports them too). The scheduler reruns the import every Saturday at 04:30 UTC
+imports them too). The scheduler reruns the import every Saturday at 05:30 UTC
 (`ETL_SE_SCHEDULE_ARGS=--sources apotek` keeps it to the pharmacies); exit code
 `3` when a list was left out, or its licence changed
 ([data-import.md](./data-import.md#sweden)).

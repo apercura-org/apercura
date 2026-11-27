@@ -15,8 +15,8 @@ import {
 	normalizeLvPostcode,
 	normalizeNoPostcode,
 	normalizePlPostcode,
-	normalizeSiPostcode,
 	normalizeSePostcode,
+	normalizeSiPostcode,
 } from "@apercura/core";
 import { countryAdapter } from "@apercura/core/country";
 import type { Database } from "@apercura/db";

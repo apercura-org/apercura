@@ -26,13 +26,13 @@ import {
 	isLvListingSlug,
 	isNoListingSlug,
 	isReservedSegment,
+	isSeListingSlug,
 	isSiListingSlug,
 	LT_RESERVED_SEGMENTS,
 	LV_RESERVED_SEGMENTS,
-	isSeListingSlug,
 	NO_RESERVED_SEGMENTS,
-	SI_RESERVED_SEGMENTS,
 	SE_RESERVED_SEGMENTS,
+	SI_RESERVED_SEGMENTS,
 } from "@apercura/core/taxonomy";
 import { describe, expect, it } from "vitest";
 import { robotsFor } from "~/lib/robots";

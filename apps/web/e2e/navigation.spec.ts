@@ -221,6 +221,7 @@ test("Latvia's pages offer the country menu in Latvian, and no language menu", a
 		"Slovēnija",
 		"Kipra",
 		"Latvija",
+		"Zviedrija",
 	]);
 	await expect(countries.getByRole("link", { name: "Latvija" })).toHaveAttribute(
 		"aria-current",

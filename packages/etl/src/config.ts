@@ -37,10 +37,10 @@ import { DEFAULT_NO_ENHETER_URL, DEFAULT_NO_UNDERENHETER_URL } from "./sources/n
 import { DEFAULT_NO_PLACES_URL } from "./sources/no/places";
 import { NO_SOURCE_IDS, type NoFileId, type NoSourceId } from "./sources/no/types";
 import { DEFAULT_PL_PRG_URL, DEFAULT_PL_TERC_URL } from "./sources/pl/places";
+import { SE_SOURCE_IDS, type SeSourceId, seSourceUrlVariable } from "./sources/se/types";
 import { GURS_WFS } from "./sources/si/places";
 import { SI_SOURCE_IDS, type SiSourceId } from "./sources/si/types";
 import { ZZZS_LISTS_PAGE } from "./sources/si/zzzs";
-import { SE_SOURCE_IDS, type SeSourceId, seSourceUrlVariable } from "./sources/se/types";
 
 /** Stable data.gouv.fr URLs (they redirect to the latest daily file). */
 export const DEFAULT_ANS_URLS = {

@@ -39,10 +39,10 @@ import {
 	PL_PROFESSIONS,
 	PL_SPECIALTIES,
 	plListingSlugFor,
-	SI_PROFESSIONS,
-	siListingSlugFor,
 	SE_PROFESSIONS,
+	SI_PROFESSIONS,
 	seListingSlugFor,
+	siListingSlugFor,
 } from "@apercura/core/taxonomy";
 import type { TransactionSql } from "./lib/db";
 

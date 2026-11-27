@@ -12,9 +12,9 @@ import {
 	allLvListingSlugs,
 	allNoTaxonomySlugs,
 	allPlListingSlugs,
+	allSeTaxonomySlugs,
 	allSiListingSlugs,
 	CY_DEFAULT_PROFESSIONS,
-	allSeTaxonomySlugs,
 	DE_DEFAULT_PROFESSIONS,
 	EE_DEFAULT_PROFESSIONS,
 	FI_DEFAULT_PROFESSIONS,
@@ -54,8 +54,8 @@ import lt from "../../messages/lt.json";
 import lv from "../../messages/lv.json";
 import no from "../../messages/no.json";
 import pl from "../../messages/pl.json";
-import si from "../../messages/si.json";
 import se from "../../messages/se.json";
+import si from "../../messages/si.json";
 import { mergeMessages, messagesFor, withoutEszett } from "./catalogs";
 import { CATALOG_LANGUAGES, LOCALES, type Locale } from "./locales";
 
@@ -746,5 +746,17 @@ describe("Sweden's texts", () => {
 		expect(swedish.get("PrivacySe.sections.recipients.body.0")).toContain(
 			"Europeiska ekonomiska samarbetsområdet",
 		);
+	});
+
+	it("give Astryx its words in Swedish and name every market in Swedish", () => {
+		const english = flatten(en);
+		const swedish = flatten(se);
+		const astryx = [...english.keys()].filter((key) => key.startsWith("Astryx."));
+		expect(astryx.length).toBeGreaterThan(0);
+		expect(astryx.filter((key) => !swedish.has(key))).toEqual([]);
+		expect(swedish.get("Astryx.selector.resultCount")).toContain("one {träff} other {träffar}");
+		const markets = [...english.keys()].filter((key) => key.startsWith("Search.markets."));
+		expect(markets.filter((key) => !swedish.has(key))).toEqual([]);
+		expect(swedish.get("Search.markets.LV")).toBe("Lettland");
 	});
 });

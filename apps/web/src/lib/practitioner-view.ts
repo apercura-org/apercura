@@ -15,8 +15,8 @@ import {
 	formatPhoneLv,
 	formatPhoneNo,
 	formatPhonePl,
-	formatPhoneSi,
 	formatPhoneSe,
+	formatPhoneSi,
 	formatStreetText,
 	publicActivities,
 } from "@apercura/core";

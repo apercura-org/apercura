@@ -14,8 +14,8 @@ import { lithuania } from "./lt";
 import { latvia } from "./lv";
 import { norway } from "./no";
 import { poland } from "./pl";
-import { slovenia } from "./si";
 import { sweden } from "./se";
+import { slovenia } from "./si";
 import type { CountryAdapter, CountryCode } from "./types";
 
 export { AT_STATES, austria, VIENNA_CODE } from "./at";
@@ -69,7 +69,6 @@ export {
 	poland,
 	WARSAW_CODE,
 } from "./pl";
-export { SI_LIST_IDS, SI_REGIONS, type SiListId, slovenia } from "./si";
 export {
 	GOTLAND_MUNICIPALITY,
 	SE_COUNTIES,
@@ -79,6 +78,7 @@ export {
 	seCountyOfName,
 	sweden,
 } from "./se";
+export { SI_LIST_IDS, SI_REGIONS, type SiListId, slovenia } from "./si";
 export * from "./types";
 
 /**

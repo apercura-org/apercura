@@ -3941,8 +3941,8 @@ successful run that read it: at most 10% or 10 facilities, 25% of bytes
 
 ### Schedule and monitoring
 
-The scheduler runs `etl:se` every Saturday at 04:30 UTC (`docker/crontab`),
-when no other import runs; `ETL_SE_SCHEDULE_ARGS` narrows it. Exit codes as for
+The scheduler runs `etl:se` every Saturday at 05:30 UTC (`docker/crontab`), an
+hour after Latvia's, when no other import runs; `ETL_SE_SCHEDULE_ARGS` narrows it. Exit codes as for
 Ireland (3: imported without a list that could not be fetched or read, or whose
 licence changed). Unchanged lists are skipped. Environment: `ETL_SE_SOURCES`
 (the lists by default), `ETL_SE_APOTEK_URL`, `ETL_SE_VARDCENTRALER_URL`,
