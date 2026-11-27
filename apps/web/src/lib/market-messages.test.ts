@@ -51,4 +51,17 @@ describe("the messages of a market's client islands", () => {
 			expect(other.profession.apotheke, locale).toBeUndefined();
 		}
 	});
+
+	it("give Ireland's islands its labels only, and no other market Ireland's", () => {
+		const irish = taxonomyOf(forMarket(pickMessages(messagesFor("en-IE"), ["taxonomy"]), "IE"));
+		expect(irish.listing.pharmacy).toBe("Pharmacies");
+		expect(irish.profession["health-centres"]).toBe("Health centre");
+		// The UK's pharmacies are the UK's: never in an Irish island, and Ireland's never in a UK one.
+		expect(irish.listing.pharmacies).toBeUndefined();
+		expect(irish.listing.spital).toBeUndefined();
+		const british = taxonomyOf(forMarket(pickMessages(messagesFor("en-GB"), ["taxonomy"]), "GB"));
+		expect(british.listing.pharmacies).toBeTruthy();
+		expect(british.listing.pharmacy).toBeUndefined();
+		expect(british.listing["nursing-homes"]).toBeUndefined();
+	});
 });

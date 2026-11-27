@@ -342,6 +342,23 @@ directory (`ETL_WORK_DIR`) the room. The scheduler reruns the import every Frida
 at 03:30 UTC; a file that cannot be fetched or read fails the run (exit code
 `1`) and leaves the pages as they are ([data-import.md](./data-import.md#norway)).
 
+Ireland (`/ie`) has its own import, from the PSI's register of pharmacies,
+HIQA's register of nursing homes and the HSE's hospitals and health centres
+(about 3,600 facilities). Import the places first, then dry-run it once:
+
+```sh
+apercura-compose run --rm --entrypoint "apercura etl:places" etl --country ie
+apercura-compose run --rm --entrypoint "apercura etl:ie" etl --dry-run
+apercura-compose run --rm --entrypoint "apercura etl:ie" etl
+```
+
+The places are Tailte Éireann's counties and the CSO's Census 2022 towns, with
+the gazetteer's other names of each town (the first `etl:ie` imports them too);
+rerun `etl:places --country ie` after a census. The scheduler reruns the import
+every Thursday at 20:30 UTC (`ETL_IE_SCHEDULE_ARGS=--sources psi,hiqa` keeps it
+to some lists); exit code `3` when a list was left out, or its terms or licence
+changed ([data-import.md](./data-import.md#ireland)).
+
 ## Scheduled jobs
 
 The `scheduler` service runs [`docker/crontab`](../docker/crontab) with

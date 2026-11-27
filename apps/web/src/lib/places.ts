@@ -101,7 +101,7 @@ export const AT_STATE_SLUGS: ReadonlySet<string> = new Set(
  * digits. Czechia: the slug of a district (okres, `brno-mesto`, `praha`). Spain: the slug of a
  * province (`madrid`, `barcelona`). Italy: the slug of a province or of a region (`roma`,
  * `lazio`). Germany: the slug of a Kreis (`landkreis-muenchen`, `berlin`). Switzerland: the slug of a district or of a canton (`bezirk-zuerich`, `zuerich`). Estonia: the slug of a municipality (`tallinn`,
- * `tartu-linn`, `rae-vald`). Poland: the slug of a powiat or of a voivodeship (`powiat-krakowski`, `krakow`, `malopolskie`). Norway: the slug of a county (`vestland`, `trondelag`).
+ * `tartu-linn`, `rae-vald`). Poland: the slug of a powiat or of a voivodeship (`powiat-krakowski`, `krakow`, `malopolskie`). Norway: the slug of a county (`vestland`, `trondelag`). Ireland: the slug of a county (`cork`, `dublin`).
  */
 export function isDepartmentSlug(slug: string, country = "FR"): boolean {
 	if (country === "AT") return AT_STATE_SLUGS.has(slug);
@@ -114,7 +114,8 @@ export function isDepartmentSlug(slug: string, country = "FR"): boolean {
 		country === "CH" ||
 		country === "EE" ||
 		country === "PL" ||
-		country === "NO"
+		country === "NO" ||
+		country === "IE"
 	) {
 		return isPlaceSlug(slug);
 	}
@@ -134,7 +135,8 @@ export function isPlaceSlug(slug: string): boolean {
  * municipality by its NUTS or RÚIAN code, nor a Spanish province or municipality by its INE
  * code, nor an Italian province or comune by its ISTAT code, nor a German Kreis or Gemeinde by
  * its AGS, nor an Estonian municipality or settlement by its EHAK code, nor a Norwegian county or
- * municipality by its number, and Vienna's and Prague's
+ * municipality by its number, nor an Irish county or town by its Tailte Éireann or CSO
+ * code, and Vienna's and Prague's
  * districts say their city
  * ("Wien-Alsergrund", "Praha 8").
  */

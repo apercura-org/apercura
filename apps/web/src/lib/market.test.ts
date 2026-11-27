@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { irishFacilityFacts } from "./irish-facility";
 import {
 	austrianSourcesOf,
 	isMarketListingSlug,
@@ -569,5 +570,117 @@ describe("Switzerland's pages", () => {
 			activities: [],
 		});
 		expect(swissFacilityFacts([q("rechtsform", "R9")], "de").ownership).toBeNull();
+	});
+});
+
+describe("Ireland's pages", () => {
+	it("serve Ireland's listings, without booking or French insurance facts", () => {
+		for (const slug of ["pharmacy", "nursing-homes", "hospitals", "health-centres"]) {
+			expect(isMarketListingSlug("en-IE", slug), slug).toBe(true);
+		}
+		expect(isMarketListingSlug("en-IE", "pharmacies")).toBe(false);
+		expect(isMarketListingSlug("en-IE", "facility")).toBe(false);
+		expect(isMarketListingSlug("en-GB", "pharmacy")).toBe(false);
+		expect(isMarketListingSlug("en", "hospitals")).toBe(false);
+		expect(showsBillingFacts("en-IE")).toBe(false);
+		expect(marketBooks("en-IE")).toBe(false);
+		expect(professionSlugOf("IE_PHARMACY")).toBe("pharmacy");
+		expect(professionSlugOf("IE_NURSING_HOME")).toBe("nursing-homes");
+	});
+
+	it("check county slugs and label places by name", () => {
+		expect(isDepartmentSlug("cork", "IE")).toBe(true);
+		expect(isDepartmentSlug("40000", "IE")).toBe(false);
+		expect(
+			placeLabel(
+				{ kind: "department", code: "40000", name: "County Cork", departmentCode: "40000" },
+				"IE",
+			),
+		).toBe("County Cork");
+		expect(
+			placeLabel(
+				{ kind: "commune", code: "13200", name: "An Spidéal", departmentCode: "60000" },
+				"IE",
+			),
+		).toBe("An Spidéal");
+		expect(isDepartmentCity("IE", "40000")).toBe(false);
+	});
+
+	it("write Irish addresses street, town, then the Eircode on its own line, and Irish numbers", () => {
+		const site = {
+			addressLine: "1 Sample Street",
+			addressComplement: null,
+			postcode: "T12 AB34",
+			placeName: "Cork",
+		};
+		expect(addressLines(site, "IE")).toEqual(["1 Sample Street", "Cork", "T12 AB34"]);
+		expect(addressLines({ ...site, postcode: null }, "IE")).toEqual(["1 Sample Street", "Cork"]);
+		expect(formatPhone("+35318462115")).toBe("01 846 2115");
+		expect(formatPhone("+353719670111")).toBe("071 967 0111");
+	});
+
+	it("credit the facility's list and the places of Tailte Éireann and the CSO", () => {
+		const pharmacy = openDataSourcesOf("IE", [{ source: "ie-psi", site: null }]);
+		expect(pharmacy.map((source) => source.attribution)).toEqual([
+			"Source: Pharmaceutical Society of Ireland, Register of Pharmacies. © Pharmaceutical Society of Ireland.",
+			"© Tailte Éireann, Counties – National Statutory Boundaries, CC BY 4.0.",
+			"Source: CSO and Tailte Éireann, Census 2022 Built Up Areas, CC BY 4.0 (towns' points computed by Apercura).",
+		]);
+		expect(openDataSourcesOf("IE", [{ source: "ie-hiqa", site: null }])[0]?.attribution).toMatch(
+			/^Source: Health Information and Quality Authority/,
+		);
+		expect(
+			openDataSourcesOf("IE", [{ source: "ie-hse-hospitals", site: null }])[0]?.attribution,
+		).toMatch(/Hospitals – HSE Ireland \(March 2020\), via GeoHive, CC BY 4.0\.$/);
+		expect(
+			openDataSourcesOf("IE", [{ source: "ie-hse-health-centres", site: null }])[0]?.name,
+		).toMatch(/^Health Centres/);
+		expect(openDataSourcesOf("IE", [])).toEqual([]);
+	});
+
+	it("read a facility's kind, places, operator and HIQA page, never a person", () => {
+		const q = (source: string, code: string, label: string | null = null) => ({
+			source,
+			typeCode: "",
+			code,
+			label,
+		});
+		expect(
+			irishFacilityFacts([
+				q("ie-hospital-kind", "General/Acute", "General and acute hospital"),
+				q("ie-operator", "hse", "Health Service Executive"),
+			]),
+		).toEqual({
+			hospitalKind: "General and acute hospital",
+			privateHospital: false,
+			capacity: null,
+			operator: { kind: "hse" },
+			hiqaUrl: null,
+		});
+		expect(irishFacilityFacts([q("ie-hospital-kind", "Private General")])).toMatchObject({
+			hospitalKind: "Private hospital",
+			privateHospital: true,
+		});
+		// A kind the layer adds later is shown as it is written.
+		expect(irishFacilityFacts([q("ie-hospital-kind", "Hospice", "Hospice")]).hospitalKind).toBe(
+			"Hospice",
+		);
+		expect(
+			irishFacilityFacts([
+				q("ie-capacity", "54"),
+				q("ie-operator", "company", "Example Care Limited"),
+				q("ie-hiqa-page", "example-nursing-home"),
+			]),
+		).toEqual({
+			hospitalKind: null,
+			privateHospital: false,
+			capacity: 54,
+			operator: { kind: "company", name: "Example Care Limited" },
+			hiqaUrl: "https://www.hiqa.ie/areas-we-work/find-a-centre/example-nursing-home",
+		});
+		expect(
+			irishFacilityFacts([q("ie-capacity", "0"), q("ie-operator", "company", " ")]),
+		).toMatchObject({ capacity: null, operator: null });
+		expect(irishFacilityFacts([q("ie-hiqa-page", "../x")]).hiqaUrl).toBeNull();
 	});
 });

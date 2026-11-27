@@ -144,6 +144,10 @@ jobs:
         run: bun run etl:pl --source-dir packages/etl/fixtures/pl --offline --as-of 2026-11-27
       - name: Import the synthetic Norwegian fixtures
         run: bun run etl:no --source-dir packages/etl/fixtures/no --offline
+      - name: Import the synthetic Irish fixtures (places, then the lists)
+        run: |
+          bun run etl:places --country ie --source-dir packages/etl/fixtures/ie
+          bun run etl:ie --source-dir packages/etl/fixtures/ie --offline
       - name: Install Chromium
         working-directory: apps/web
         run: bunx playwright install --with-deps chromium
@@ -302,6 +306,10 @@ jobs:
         run: bun run etl:pl --source-dir packages/etl/fixtures/pl --offline --dry-run --as-of 2026-11-27
       - name: Dry-run the Norwegian import on the fixtures
         run: bun run etl:no --source-dir packages/etl/fixtures/no --offline --dry-run
+      - name: Dry-run the Irish import on the fixtures
+        run: |
+          bun run etl:places --country ie --source-dir packages/etl/fixtures/ie
+          bun run etl:ie --source-dir packages/etl/fixtures/ie --offline --dry-run
       - name: Integration test (import twice, guards, removals, suppressions)
         run: |
           psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -c "CREATE DATABASE apercura_test"

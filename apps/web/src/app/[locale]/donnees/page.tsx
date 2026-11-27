@@ -16,6 +16,7 @@ import { DataDe } from "~/components/legal-de";
 import { DataEe } from "~/components/legal-ee";
 import { DataEs } from "~/components/legal-es";
 import { DataGb } from "~/components/legal-gb";
+import { DataIe } from "~/components/legal-ie";
 import { DataIt } from "~/components/legal-it";
 import { DataNo } from "~/components/legal-no";
 import { DataPl } from "~/components/legal-pl";
@@ -88,6 +89,7 @@ export function generateMetadata({ params }: PageProps<"/[locale]/donnees">) {
 			EE: "DataEe",
 			PL: "DataPl",
 			NO: "DataNo",
+			IE: "DataIe",
 		},
 		HREF,
 	);
@@ -108,6 +110,7 @@ export default async function DataPage({ params }: PageProps<"/[locale]/donnees"
 	if (marketOf(locale) === "CH") return <DataCh locale={locale} />;
 	if (marketOf(locale) === "EE") return <DataEe locale={locale} />;
 	if (marketOf(locale) === "NO") return <DataNo locale={locale} />;
+	if (marketOf(locale) === "IE") return <DataIe locale={locale} />;
 	const t = await getTranslations({ locale, namespace: "DataPage" });
 	const tSite = await getTranslations({ locale, namespace: "Site" });
 	const registry = await getRegistryStatus();

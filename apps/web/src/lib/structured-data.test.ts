@@ -910,3 +910,83 @@ describe("practitionerNodes for Switzerland", () => {
 		expect(JSON.stringify(home)).not.toMatch(/Person|Physician"/);
 	});
 });
+
+describe("practitionerNodes for Ireland", () => {
+	const site: PracticePlaceInput = {
+		siteId: 1,
+		practiceKind: "office",
+		name: "Example Pharmacy",
+		addressLine: "1 Sample Street",
+		addressComplement: null,
+		postcode: null,
+		placeName: "Cork",
+		coordinates: { lat: 51.9, lon: -8.47 },
+		phone: "+35321000000",
+		establishmentUrl: null,
+	};
+	const pharmacy: PractitionerInput = {
+		...doctor,
+		url: `${ORIGIN}/ie/facility/example-pharmacy-p1234`,
+		professionCode: "IE_PHARMACY",
+		rpps: "1234",
+		idScheme: "IE-PSI",
+		country: "IE",
+		name: "Example Pharmacy",
+		givenName: "",
+		familyName: "Example Pharmacy",
+		honorificPrefix: null,
+		occupation: "Pharmacy",
+		listingSlug: "pharmacy",
+		places: [site],
+	};
+
+	it("publishes a pharmacy as a Pharmacy with its PSI key, never a person", () => {
+		const nodes = practitionerNodes(pharmacy);
+		const node = nodeOf(nodes, "Pharmacy");
+		expect(node.identifier).toEqual({
+			"@type": "PropertyValue",
+			propertyID: "IE-PSI",
+			value: "1234",
+		});
+		expect(node.address).toMatchObject({ addressCountry: "IE", addressLocality: "Cork" });
+		expect(node.medicalSpecialty).toBe("https://schema.org/PharmacySpecialty");
+		expect(JSON.stringify(nodes)).not.toMatch(
+			/Person|IndividualPhysician|Physician"|givenName|familyName/,
+		);
+	});
+
+	it("publishes a hospital as a Hospital, a health centre as a MedicalClinic, a nursing home as a MedicalOrganization", () => {
+		expect(
+			nodeOf(
+				practitionerNodes({
+					...pharmacy,
+					professionCode: "IE_HOSPITAL",
+					idScheme: "IE-HSE-HOSP",
+					listingSlug: "hospitals",
+				}),
+				"Hospital",
+			).identifier,
+		).toMatchObject({ propertyID: "IE-HSE-HOSP" });
+		expect(
+			nodeOf(
+				practitionerNodes({
+					...pharmacy,
+					professionCode: "IE_HEALTH_CENTRE",
+					idScheme: "IE-HSE-HC",
+					listingSlug: "health-centres",
+				}),
+				"MedicalClinic",
+			).medicalSpecialty,
+		).toBe("https://schema.org/PrimaryCare");
+		const home = practitionerNodes({
+			...pharmacy,
+			professionCode: "IE_NURSING_HOME",
+			idScheme: "IE-HIQA",
+			listingSlug: "nursing-homes",
+		});
+		const node = nodeOf(home, "MedicalOrganization");
+		expect(node.address).toMatchObject({ addressCountry: "IE" });
+		expect(node.geo).toBeUndefined();
+		expect(JSON.stringify(home)).not.toMatch(/Person|Physician"/);
+	});
+});

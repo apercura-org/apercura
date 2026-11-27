@@ -28,6 +28,10 @@ const BUDGETS_KB: Record<string, number> = {
 	"/ch/einrichtung/universitaetsspital-muster-basel-h225608997": 61,
 	"/ch-fr/apotheke/geneve": 60,
 	"/ch-fr": 60,
+	// Ireland (synthetic fixtures): its home and a county's listing; Irish labels stay out of
+	// the other markets' islands and theirs out of Ireland's.
+	"/ie": 60,
+	"/ie/pharmacy/cork": 60,
 };
 
 const manifest = JSON.parse(

@@ -1,0 +1,816 @@
+{
+ "type": "FeatureCollection",
+ "crs": {
+  "type": "name",
+  "properties": {
+   "name": "EPSG:4326"
+  }
+ },
+ "features": [
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -6.24,
+       53.84
+      ],
+      [
+       -5.76,
+       53.84
+      ],
+      [
+       -5.76,
+       54.26
+      ],
+      [
+       -6.24,
+       54.26
+      ],
+      [
+       -6.24,
+       53.84
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "BUA_CODE": "02341",
+    "BUA_NAME": "Dublin city and suburbs",
+    "T1_1AGETT_Norm": 20000
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -9.44,
+       51.74
+      ],
+      [
+       -9.04,
+       51.74
+      ],
+      [
+       -9.04,
+       52.09
+      ],
+      [
+       -9.44,
+       52.09
+      ],
+      [
+       -9.44,
+       51.74
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "BUA_CODE": "17364",
+    "BUA_NAME": "Cork city and suburbs",
+    "T1_1AGETT_Norm": 19500
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -10,
+       53.28
+      ],
+      [
+       -9.76,
+       53.28
+      ],
+      [
+       -9.76,
+       53.49
+      ],
+      [
+       -10,
+       53.49
+      ],
+      [
+       -10,
+       53.28
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "BUA_CODE": "26305",
+    "BUA_NAME": "Galway city and suburbs",
+    "T1_1AGETT_Norm": 19000
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -10.32,
+       53.28
+      ],
+      [
+       -10.2,
+       53.28
+      ],
+      [
+       -10.2,
+       53.385
+      ],
+      [
+       -10.32,
+       53.385
+      ],
+      [
+       -10.32,
+       53.28
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "BUA_CODE": "27299",
+    "BUA_NAME": "An Spidéal",
+    "T1_1AGETT_Norm": 18500
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -6.96,
+       52.51
+      ],
+      [
+       -6.64,
+       52.51
+      ],
+      [
+       -6.64,
+       52.79
+      ],
+      [
+       -6.96,
+       52.79
+      ],
+      [
+       -6.96,
+       52.51
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "BUA_CODE": "20497",
+    "BUA_NAME": "Limerick city and suburbs",
+    "T1_1AGETT_Norm": 18000
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -6.16,
+       52.51
+      ],
+      [
+       -5.84,
+       52.51
+      ],
+      [
+       -5.84,
+       52.79
+      ],
+      [
+       -6.16,
+       52.79
+      ],
+      [
+       -6.16,
+       52.51
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "BUA_CODE": "24643",
+    "BUA_NAME": "Waterford city and suburbs",
+    "T1_1AGETT_Norm": 17500
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -9.44,
+       54.19
+      ],
+      [
+       -9.32,
+       54.19
+      ],
+      [
+       -9.32,
+       54.295
+      ],
+      [
+       -9.44,
+       54.295
+      ],
+      [
+       -9.44,
+       54.19
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "BUA_CODE": "30252",
+    "BUA_NAME": "Boyle",
+    "T1_1AGETT_Norm": 17000
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -8.4,
+       54.05
+      ],
+      [
+       -8.24,
+       54.05
+      ],
+      [
+       -8.24,
+       54.19
+      ],
+      [
+       -8.4,
+       54.19
+      ],
+      [
+       -8.4,
+       54.05
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "BUA_CODE": "13188",
+    "BUA_NAME": "Mullingar",
+    "T1_1AGETT_Norm": 16500
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -10.24,
+       54.54
+      ],
+      [
+       -10.12,
+       54.54
+      ],
+      [
+       -10.12,
+       54.645
+      ],
+      [
+       -10.24,
+       54.645
+      ],
+      [
+       -10.24,
+       54.54
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "BUA_CODE": "33094",
+    "BUA_NAME": "Ballybofey-Stranorlar",
+    "T1_1AGETT_Norm": 16000
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -9.92,
+       54.82
+      ],
+      [
+       -9.76,
+       54.82
+      ],
+      [
+       -9.76,
+       54.96
+      ],
+      [
+       -9.92,
+       54.96
+      ],
+      [
+       -9.92,
+       54.82
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "BUA_CODE": "33091",
+    "BUA_NAME": "Letterkenny",
+    "T1_1AGETT_Norm": 15500
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -6.16,
+       53.42
+      ],
+      [
+       -6,
+       53.42
+      ],
+      [
+       -6,
+       53.56
+      ],
+      [
+       -6.16,
+       53.56
+      ],
+      [
+       -6.16,
+       53.42
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "BUA_CODE": "01639",
+    "BUA_NAME": "Carlow",
+    "T1_1AGETT_Norm": 15000
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -6.16,
+       53.07
+      ],
+      [
+       -6.04,
+       53.07
+      ],
+      [
+       -6.04,
+       53.175
+      ],
+      [
+       -6.16,
+       53.175
+      ],
+      [
+       -6.16,
+       53.07
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "BUA_CODE": "01640",
+    "BUA_NAME": "Muinebeag (Bagenalstown)",
+    "T1_1AGETT_Norm": 14500
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -8.64,
+       53.14
+      ],
+      [
+       -8.52,
+       53.14
+      ],
+      [
+       -8.52,
+       53.245
+      ],
+      [
+       -8.64,
+       53.245
+      ],
+      [
+       -8.64,
+       53.14
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "BUA_CODE": "08171",
+    "BUA_NAME": "Abbeyleix",
+    "T1_1AGETT_Norm": 14000
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -8.32,
+       53.42
+      ],
+      [
+       -8.16,
+       53.42
+      ],
+      [
+       -8.16,
+       53.56
+      ],
+      [
+       -8.32,
+       53.56
+      ],
+      [
+       -8.32,
+       53.42
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "BUA_CODE": "08167",
+    "BUA_NAME": "Portlaoise",
+    "T1_1AGETT_Norm": 13500
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -10.16,
+       51.74
+      ],
+      [
+       -10,
+       51.74
+      ],
+      [
+       -10,
+       51.88
+      ],
+      [
+       -10.16,
+       51.88
+      ],
+      [
+       -10.16,
+       51.74
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "BUA_CODE": "19840",
+    "BUA_NAME": "Killarney",
+    "T1_1AGETT_Norm": 13000
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -10.16,
+       52.02
+      ],
+      [
+       -10,
+       52.02
+      ],
+      [
+       -10,
+       52.16
+      ],
+      [
+       -10.16,
+       52.16
+      ],
+      [
+       -10.16,
+       52.02
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "BUA_CODE": "19849",
+    "BUA_NAME": "Tralee",
+    "T1_1AGETT_Norm": 12500
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -9.28,
+       54.68
+      ],
+      [
+       -9.12,
+       54.68
+      ],
+      [
+       -9.12,
+       54.82
+      ],
+      [
+       -9.28,
+       54.82
+      ],
+      [
+       -9.28,
+       54.68
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "BUA_CODE": "31143",
+    "BUA_NAME": "Sligo",
+    "T1_1AGETT_Norm": 12000
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -10.08,
+       52.58
+      ],
+      [
+       -9.92,
+       52.58
+      ],
+      [
+       -9.92,
+       52.72
+      ],
+      [
+       -10.08,
+       52.72
+      ],
+      [
+       -10.08,
+       52.58
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "BUA_CODE": "16562",
+    "BUA_NAME": "Ennis",
+    "T1_1AGETT_Norm": 11500
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -7.68,
+       52.51
+      ],
+      [
+       -7.52,
+       52.51
+      ],
+      [
+       -7.52,
+       52.65
+      ],
+      [
+       -7.68,
+       52.65
+      ],
+      [
+       -7.68,
+       52.51
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "BUA_CODE": "14596",
+    "BUA_NAME": "Wexford",
+    "T1_1AGETT_Norm": 11000
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -10.08,
+       54.12
+      ],
+      [
+       -9.92,
+       54.12
+      ],
+      [
+       -9.92,
+       54.26
+      ],
+      [
+       -10.08,
+       54.26
+      ],
+      [
+       -10.08,
+       54.12
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "BUA_CODE": "29321",
+    "BUA_NAME": "Ballina",
+    "T1_1AGETT_Norm": 10500
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -9.52,
+       52.37
+      ],
+      [
+       -9.4,
+       52.37
+      ],
+      [
+       -9.4,
+       52.475
+      ],
+      [
+       -9.52,
+       52.475
+      ],
+      [
+       -9.52,
+       52.37
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "BUA_CODE": "22496",
+    "BUA_NAME": "Ballina",
+    "T1_1AGETT_Norm": 10000
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -6.88,
+       53.98
+      ],
+      [
+       -6.72,
+       53.98
+      ],
+      [
+       -6.72,
+       54.12
+      ],
+      [
+       -6.88,
+       54.12
+      ],
+      [
+       -6.88,
+       53.98
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "BUA_CODE": "11416",
+    "BUA_NAME": "Navan",
+    "T1_1AGETT_Norm": 9500
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -8.85,
+       54
+      ],
+      [
+       -8.65,
+       54
+      ],
+      [
+       -8.65,
+       54.15
+      ],
+      [
+       -8.85,
+       54.15
+      ],
+      [
+       -8.85,
+       54
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "BUA_CODE": "13200",
+    "BUA_NAME": "Athlone",
+    "T1_1AGETT_Norm": 9000
+   }
+  }
+ ]
+}

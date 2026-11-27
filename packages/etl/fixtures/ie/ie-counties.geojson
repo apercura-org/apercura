@@ -1,0 +1,973 @@
+{
+ "type": "FeatureCollection",
+ "crs": {
+  "type": "name",
+  "properties": {
+   "name": "EPSG:4326"
+  }
+ },
+ "features": [
+  {
+   "type": "Feature",
+   "id": 1,
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -10.4,
+       54.4
+      ],
+      [
+       -9.6,
+       54.4
+      ],
+      [
+       -9.6,
+       55.1
+      ],
+      [
+       -10.4,
+       55.1
+      ],
+      [
+       -10.4,
+       54.4
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "CO_ID": "50000",
+    "ENGLISH": "DONEGAL",
+    "GAEILGE": "Dún na nGall",
+    "PROVINCE": "Ulster"
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 2,
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -9.6,
+       54.4
+      ],
+      [
+       -8.8,
+       54.4
+      ],
+      [
+       -8.8,
+       55.1
+      ],
+      [
+       -9.6,
+       55.1
+      ],
+      [
+       -9.6,
+       54.4
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "CO_ID": "200000",
+    "ENGLISH": "SLIGO",
+    "GAEILGE": "Sligeach",
+    "PROVINCE": "Connacht"
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 3,
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -8.8,
+       54.4
+      ],
+      [
+       -8,
+       54.4
+      ],
+      [
+       -8,
+       55.1
+      ],
+      [
+       -8.8,
+       55.1
+      ],
+      [
+       -8.8,
+       54.4
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "CO_ID": "110000",
+    "ENGLISH": "LEITRIM",
+    "GAEILGE": "Liatroim",
+    "PROVINCE": "Connacht"
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 4,
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -8,
+       54.4
+      ],
+      [
+       -7.2,
+       54.4
+      ],
+      [
+       -7.2,
+       55.1
+      ],
+      [
+       -8,
+       55.1
+      ],
+      [
+       -8,
+       54.4
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "CO_ID": "20000",
+    "ENGLISH": "CAVAN",
+    "GAEILGE": "An Cabhán",
+    "PROVINCE": "Ulster"
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 5,
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -7.2,
+       54.4
+      ],
+      [
+       -6.4,
+       54.4
+      ],
+      [
+       -6.4,
+       55.1
+      ],
+      [
+       -7.2,
+       55.1
+      ],
+      [
+       -7.2,
+       54.4
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "CO_ID": "170000",
+    "ENGLISH": "MONAGHAN",
+    "GAEILGE": "Muineachán",
+    "PROVINCE": "Ulster"
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 6,
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -6.4,
+       54.4
+      ],
+      [
+       -5.6,
+       54.4
+      ],
+      [
+       -5.6,
+       55.1
+      ],
+      [
+       -6.4,
+       55.1
+      ],
+      [
+       -6.4,
+       54.4
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "CO_ID": "140000",
+    "ENGLISH": "LOUTH",
+    "GAEILGE": "Lú",
+    "PROVINCE": "Leinster"
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 7,
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -10.4,
+       53.7
+      ],
+      [
+       -9.6,
+       53.7
+      ],
+      [
+       -9.6,
+       54.4
+      ],
+      [
+       -10.4,
+       54.4
+      ],
+      [
+       -10.4,
+       53.7
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "CO_ID": "150000",
+    "ENGLISH": "MAYO",
+    "GAEILGE": "Maigh Eo",
+    "PROVINCE": "Connacht"
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 8,
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -9.6,
+       53.7
+      ],
+      [
+       -8.8,
+       53.7
+      ],
+      [
+       -8.8,
+       54.4
+      ],
+      [
+       -9.6,
+       54.4
+      ],
+      [
+       -9.6,
+       53.7
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "CO_ID": "190000",
+    "ENGLISH": "ROSCOMMON",
+    "GAEILGE": "Ros Comáin",
+    "PROVINCE": "Connacht"
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 9,
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -8.8,
+       53.7
+      ],
+      [
+       -8,
+       53.7
+      ],
+      [
+       -8,
+       54.4
+      ],
+      [
+       -8.8,
+       54.4
+      ],
+      [
+       -8.8,
+       53.7
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "CO_ID": "230000",
+    "ENGLISH": "WESTMEATH",
+    "GAEILGE": "An Iarmhí",
+    "PROVINCE": "Leinster"
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 10,
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -8,
+       53.7
+      ],
+      [
+       -7.2,
+       53.7
+      ],
+      [
+       -7.2,
+       54.4
+      ],
+      [
+       -8,
+       54.4
+      ],
+      [
+       -8,
+       53.7
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "CO_ID": "130000",
+    "ENGLISH": "LONGFORD",
+    "GAEILGE": "An Longfort",
+    "PROVINCE": "Leinster"
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 11,
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -7.2,
+       53.7
+      ],
+      [
+       -6.4,
+       53.7
+      ],
+      [
+       -6.4,
+       54.4
+      ],
+      [
+       -7.2,
+       54.4
+      ],
+      [
+       -7.2,
+       53.7
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "CO_ID": "160000",
+    "ENGLISH": "MEATH",
+    "GAEILGE": "An Mhí",
+    "PROVINCE": "Leinster"
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 12,
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -6.4,
+       53.7
+      ],
+      [
+       -5.6,
+       53.7
+      ],
+      [
+       -5.6,
+       54.4
+      ],
+      [
+       -6.4,
+       54.4
+      ],
+      [
+       -6.4,
+       53.7
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "CO_ID": "260000",
+    "ENGLISH": "DUBLIN",
+    "GAEILGE": "Baile Átha Cliath",
+    "PROVINCE": "Leinster"
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 13,
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -10.4,
+       53
+      ],
+      [
+       -9.6,
+       53
+      ],
+      [
+       -9.6,
+       53.7
+      ],
+      [
+       -10.4,
+       53.7
+      ],
+      [
+       -10.4,
+       53
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "CO_ID": "60000",
+    "ENGLISH": "GALWAY",
+    "GAEILGE": "Gaillimh",
+    "PROVINCE": "Connacht"
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 14,
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -9.6,
+       53
+      ],
+      [
+       -8.8,
+       53
+      ],
+      [
+       -8.8,
+       53.7
+      ],
+      [
+       -9.6,
+       53.7
+      ],
+      [
+       -9.6,
+       53
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "CO_ID": "180000",
+    "ENGLISH": "OFFALY",
+    "GAEILGE": "Uíbh Fhailí",
+    "PROVINCE": "Leinster"
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 15,
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -8.8,
+       53
+      ],
+      [
+       -8,
+       53
+      ],
+      [
+       -8,
+       53.7
+      ],
+      [
+       -8.8,
+       53.7
+      ],
+      [
+       -8.8,
+       53
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "CO_ID": "100000",
+    "ENGLISH": "LAOIS",
+    "GAEILGE": "Laois",
+    "PROVINCE": "Leinster"
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 16,
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -8,
+       53
+      ],
+      [
+       -7.2,
+       53
+      ],
+      [
+       -7.2,
+       53.7
+      ],
+      [
+       -8,
+       53.7
+      ],
+      [
+       -8,
+       53
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "CO_ID": "80000",
+    "ENGLISH": "KILDARE",
+    "GAEILGE": "Cill Dara",
+    "PROVINCE": "Leinster"
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 17,
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -7.2,
+       53
+      ],
+      [
+       -6.4,
+       53
+      ],
+      [
+       -6.4,
+       53.7
+      ],
+      [
+       -7.2,
+       53.7
+      ],
+      [
+       -7.2,
+       53
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "CO_ID": "250000",
+    "ENGLISH": "WICKLOW",
+    "GAEILGE": "Cill Mhantáin",
+    "PROVINCE": "Leinster"
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 18,
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -6.4,
+       53
+      ],
+      [
+       -5.6,
+       53
+      ],
+      [
+       -5.6,
+       53.7
+      ],
+      [
+       -6.4,
+       53.7
+      ],
+      [
+       -6.4,
+       53
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "CO_ID": "10000",
+    "ENGLISH": "CARLOW",
+    "GAEILGE": "Ceatharlach",
+    "PROVINCE": "Leinster"
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 19,
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -10.4,
+       52.3
+      ],
+      [
+       -9.6,
+       52.3
+      ],
+      [
+       -9.6,
+       53
+      ],
+      [
+       -10.4,
+       53
+      ],
+      [
+       -10.4,
+       52.3
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "CO_ID": "30000",
+    "ENGLISH": "CLARE",
+    "GAEILGE": "An Clár",
+    "PROVINCE": "Munster"
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 20,
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -9.6,
+       52.3
+      ],
+      [
+       -8.8,
+       52.3
+      ],
+      [
+       -8.8,
+       53
+      ],
+      [
+       -9.6,
+       53
+      ],
+      [
+       -9.6,
+       52.3
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "CO_ID": "210000",
+    "ENGLISH": "TIPPERARY",
+    "GAEILGE": "Tiobraid Árann",
+    "PROVINCE": "Munster"
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 21,
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -8.8,
+       52.3
+      ],
+      [
+       -8,
+       52.3
+      ],
+      [
+       -8,
+       53
+      ],
+      [
+       -8.8,
+       53
+      ],
+      [
+       -8.8,
+       52.3
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "CO_ID": "90000",
+    "ENGLISH": "KILKENNY",
+    "GAEILGE": "Cill Chainnigh",
+    "PROVINCE": "Leinster"
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 22,
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -8,
+       52.3
+      ],
+      [
+       -7.2,
+       52.3
+      ],
+      [
+       -7.2,
+       53
+      ],
+      [
+       -8,
+       53
+      ],
+      [
+       -8,
+       52.3
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "CO_ID": "240000",
+    "ENGLISH": "WEXFORD",
+    "GAEILGE": "Loch Garman",
+    "PROVINCE": "Leinster"
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 23,
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -7.2,
+       52.3
+      ],
+      [
+       -6.4,
+       52.3
+      ],
+      [
+       -6.4,
+       53
+      ],
+      [
+       -7.2,
+       53
+      ],
+      [
+       -7.2,
+       52.3
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "CO_ID": "120000",
+    "ENGLISH": "LIMERICK",
+    "GAEILGE": "Luimneach",
+    "PROVINCE": "Munster"
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 24,
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -6.4,
+       52.3
+      ],
+      [
+       -5.6,
+       52.3
+      ],
+      [
+       -5.6,
+       53
+      ],
+      [
+       -6.4,
+       53
+      ],
+      [
+       -6.4,
+       52.3
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "CO_ID": "220000",
+    "ENGLISH": "WATERFORD",
+    "GAEILGE": "Port Láirge",
+    "PROVINCE": "Munster"
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 25,
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -10.4,
+       51.6
+      ],
+      [
+       -9.6,
+       51.6
+      ],
+      [
+       -9.6,
+       52.3
+      ],
+      [
+       -10.4,
+       52.3
+      ],
+      [
+       -10.4,
+       51.6
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "CO_ID": "70000",
+    "ENGLISH": "KERRY",
+    "GAEILGE": "Ciarraí",
+    "PROVINCE": "Munster"
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 26,
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -9.6,
+       51.6
+      ],
+      [
+       -8.8,
+       51.6
+      ],
+      [
+       -8.8,
+       52.3
+      ],
+      [
+       -9.6,
+       52.3
+      ],
+      [
+       -9.6,
+       51.6
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "CO_ID": "40000",
+    "ENGLISH": "CORK",
+    "GAEILGE": "Corcaigh",
+    "PROVINCE": "Munster"
+   }
+  }
+ ]
+}

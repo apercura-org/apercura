@@ -1233,3 +1233,109 @@ export function checkNoPlaces(placement: {
 		},
 	];
 }
+
+/**
+ * Limits of the Irish import. The lists are small to middling (132 to 2,003 facilities): the
+ * change checks allow 10% or 5 facilities, whichever is more (HIQA's live register moves by a few
+ * centres a month), and a list may quarantine two lines or 1% of its lines.
+ */
+export const IE_LIMITS = {
+	fileSizeDelta: 0.25,
+	quarantineRatio: 0.01,
+	quarantineLines: 2,
+	rowsDelta: 0.1,
+	rowsSlack: 5,
+	floors: {
+		psi: { minLines: 200, minRows: 200 },
+		hiqa: { minLines: 50, minRows: 50 },
+		"hse-hospitals": { minLines: 13, minRows: 13 },
+		"hse-health-centres": { minLines: 90, minRows: 90 },
+	} as Readonly<Record<string, { minLines: number; minRows: number }>>,
+	/** Sites placed in a census town rather than only in their county. */
+	minInTownRatio: 0.85,
+} as const;
+
+/**
+ * Checks of one Irish list before the merge: quarantine within its limit (the lines that cannot
+ * be read or placed), floors of lines and facilities (never approvable: about a tenth of each
+ * list's size in November 2026, they stop an error page or a truncated file), and the change
+ * of facilities and bytes since the last successful run that read it (approvable).
+ */
+export function checkIeSource(
+	source: string,
+	current: AtSourceStats & { bytes: number },
+	previous: (AtSourceStats & { bytes?: number }) | null,
+): GuardCheck[] {
+	const floors = IE_LIMITS.floors[source] ?? { minLines: 1, minRows: 1 };
+	const ratio = current.lines === 0 ? 1 : current.quarantined / current.lines;
+	const checks: GuardCheck[] = [
+		{
+			name: `${source}.quarantine`,
+			ok:
+				current.lines > 0 &&
+				(ratio <= IE_LIMITS.quarantineRatio || current.quarantined <= IE_LIMITS.quarantineLines),
+			approvable: false,
+			detail: `${current.quarantined} of ${current.lines} lines quarantined (${percent(ratio)})`,
+		},
+		{
+			name: `${source}.lines`,
+			ok: current.lines >= floors.minLines,
+			approvable: false,
+			detail: `${current.lines} data lines (at least ${floors.minLines} expected)`,
+		},
+		{
+			name: `${source}.rows`,
+			ok: current.rows >= floors.minRows,
+			approvable: false,
+			detail: `${current.rows} facilities read (at least ${floors.minRows} expected)`,
+		},
+	];
+	if (previous) {
+		const rows = delta(current.people, previous.people);
+		checks.push({
+			name: `${source}.facilities`,
+			ok:
+				rows <= IE_LIMITS.rowsDelta ||
+				Math.abs(current.people - previous.people) <= IE_LIMITS.rowsSlack,
+			approvable: true,
+			detail: `${current.people} facilities vs ${previous.people} last time (${percent(rows)})`,
+		});
+		if (previous.bytes !== undefined) {
+			const size = delta(current.bytes, previous.bytes);
+			checks.push({
+				name: `${source}.size`,
+				ok: size <= IE_LIMITS.fileSizeDelta,
+				approvable: true,
+				detail: `${current.bytes} bytes vs ${previous.bytes} last time (${percent(size)})`,
+			});
+		}
+	}
+	return checks;
+}
+
+/**
+ * After staging: every site must be placed, and most in a census town, or the places' other
+ * names or boundaries are broken (a run of `etl:places --country ie` that went wrong).
+ */
+export function checkIePlaces(staged: {
+	sites: number;
+	placed: number;
+	inTown: number;
+}): GuardCheck[] {
+	const placed = staged.sites === 0 ? 1 : staged.placed / staged.sites;
+	const inTown = staged.sites === 0 ? 1 : staged.inTown / staged.sites;
+	return [
+		{
+			name: "ie.places",
+			ok: placed >= 0.99,
+			approvable: true,
+			detail: `${staged.placed} of ${staged.sites} sites placed (${percent(placed)})`,
+		},
+		{
+			name: "ie.towns",
+			ok: inTown >= IE_LIMITS.minInTownRatio,
+			approvable: true,
+			detail: `${staged.inTown} of ${staged.sites} sites placed in a census town (${percent(inTown)})`,
+		},
+	];
+}

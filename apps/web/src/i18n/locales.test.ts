@@ -6,6 +6,7 @@ import {
 	EE_RESERVED_SEGMENTS,
 	ES_RESERVED_SEGMENTS,
 	GB_RESERVED_SEGMENTS,
+	IE_RESERVED_SEGMENTS,
 	IT_RESERVED_SEGMENTS,
 	isAtListingSlug,
 	isChListingSlug,
@@ -14,6 +15,7 @@ import {
 	isEeListingSlug,
 	isEsListingSlug,
 	isGbListingSlug,
+	isIeListingSlug,
 	isItListingSlug,
 	isListingSlug,
 	isNoListingSlug,
@@ -76,6 +78,7 @@ const TRANSLATIONS = LOCALES.filter(
 		locale !== "et-EE" &&
 		locale !== "pl-PL" &&
 		locale !== "nb-NO" &&
+		locale !== "en-IE" &&
 		marketOf(locale) !== "CH",
 );
 
@@ -109,6 +112,7 @@ describe("locale configuration", () => {
 			"et-EE",
 			"pl-PL",
 			"nb-NO",
+			"en-IE",
 		]);
 		expect(routing.locales).toEqual(LOCALES);
 		expect(routing.defaultLocale).toBe("fr");
@@ -131,6 +135,7 @@ describe("locale configuration", () => {
 			"et-EE": "/ee",
 			"pl-PL": "/pl",
 			"nb-NO": "/no",
+			"en-IE": "/ie",
 		});
 		expect(LOCALE_SEGMENTS).toEqual([
 			"fr",
@@ -150,6 +155,7 @@ describe("locale configuration", () => {
 			"ee",
 			"pl",
 			"no",
+			"ie",
 		]);
 		expect(LOCALE_MARKETS).toEqual({
 			fr: "FR",
@@ -169,6 +175,7 @@ describe("locale configuration", () => {
 			"et-EE": "EE",
 			"pl-PL": "PL",
 			"nb-NO": "NO",
+			"en-IE": "IE",
 		});
 		expect(CATALOG_LANGUAGES["de-AT"]).toBe("de");
 		expect(CATALOG_LANGUAGES["en-GB"]).toBe("en");
@@ -188,6 +195,10 @@ describe("locale configuration", () => {
 		expect(marketLanguages("CH")).toEqual(["de-CH", "fr-CH", "it-CH"]);
 		expect(marketLanguages("IT")).toEqual(["it-IT"]);
 		expect(marketLanguages("FR")).toEqual(["fr"]);
+		// Ireland: English, the English catalog with Ireland's overrides, its own locale.
+		expect(CATALOG_LANGUAGES["en-IE"]).toBe("en");
+		expect(MARKET_LOCALES.IE).toBe("en-IE");
+		expect(marketLanguages("IE")).toEqual(["en-IE"]);
 		for (const locale of LOCALES) {
 			expect(marketOf(locale), locale).toBe(LOCALE_MARKETS[locale]);
 			expect(locale.split("-")[0], locale).toBe(CATALOG_LANGUAGES[locale]);
@@ -234,6 +245,7 @@ describe("locale configuration", () => {
 			"et-EE": "et-EE",
 			"pl-PL": "pl-PL",
 			"nb-NO": "nb-NO",
+			"en-IE": "en-IE",
 		});
 		expect(OG_LOCALES).toEqual({
 			fr: "fr_FR",
@@ -253,6 +265,7 @@ describe("locale configuration", () => {
 			"et-EE": "et_EE",
 			"pl-PL": "pl_PL",
 			"nb-NO": "nb_NO",
+			"en-IE": "en_IE",
 		});
 		for (const locale of LOCALES) {
 			expect(Intl.DateTimeFormat.supportedLocalesOf([LOCALE_TAGS[locale]])).toEqual([
@@ -283,6 +296,7 @@ describe("locale configuration", () => {
 			"et-EE",
 			"pl-PL",
 			"nb-NO",
+			"en-IE",
 		]);
 		expect(HREFLANGS).toEqual({
 			fr: "fr-FR",
@@ -298,6 +312,7 @@ describe("locale configuration", () => {
 			"et-EE": "et-EE",
 			"pl-PL": "pl-PL",
 			"nb-NO": "nb-NO",
+			"en-IE": "en-IE",
 		});
 		expect(routing.alternateLinks).toBe(false);
 		expect(robotsFor("fr", true)).toEqual({ index: true, follow: true });
@@ -316,6 +331,7 @@ describe("locale configuration", () => {
 		expect(robotsFor("it-CH", true)).toEqual({ index: true, follow: true });
 		expect(robotsFor("et-EE", true)).toEqual({ index: true, follow: true });
 		expect(robotsFor("nb-NO", true)).toEqual({ index: true, follow: true });
+		expect(robotsFor("en-IE", true)).toEqual({ index: true, follow: true });
 		for (const locale of TRANSLATIONS) {
 			expect(robotsFor(locale, true)).toEqual({ index: false, follow: true });
 		}
@@ -547,6 +563,38 @@ describe("locale configuration", () => {
 		expect(localePath("fr-CH", "/mentions-legales")).toBe("/ch-fr/mentions-legales");
 		expect(localePath("it-CH", "/mentions-legales")).toBe("/ch-it/note-legali");
 		expect(localePath("it-CH", "/confidentialite")).toBe("/ch-it/privacy");
+		// Ireland: every English first segment is reserved and never an Irish listing slug; a
+		// facility's page under /facility, an establishment's under /establishment.
+		for (const pathname of simple.filter((pathname) => !pathname.startsWith("/["))) {
+			const [first] = getPathname({ href: hrefOf(pathname) as never, locale: "en-IE" })
+				.split("/")
+				.filter(Boolean)
+				.slice(1);
+			if (!first) continue;
+			expect(IE_RESERVED_SEGMENTS as readonly string[], pathname).toContain(first);
+			expect(isIeListingSlug(first), pathname).toBe(false);
+		}
+		expect(localePath("en-IE", "/praticien/[slug]", { slug: "example-pharmacy-p1234" })).toBe(
+			"/ie/facility/example-pharmacy-p1234",
+		);
+		expect(
+			localePath("en-IE", "/praticien/[slug]/retrait", { slug: "example-pharmacy-p1234" }),
+		).toBe("/ie/facility/example-pharmacy-p1234/removal");
+		expect(localePath("en-IE", "/etablissement/[slug]", { slug: "x-1" })).toBe(
+			"/ie/establishment/x-1",
+		);
+		expect(localePath("en-IE", "/annuaire")).toBe("/ie/directory");
+		expect(localePath("en-IE", "/recherche")).toBe("/ie/search");
+		expect(localePath("en-IE", "/confidentialite")).toBe("/ie/privacy");
+		expect(localePath("en-IE", "/mentions-legales")).toBe("/ie/legal-notice");
+		expect(localePath("en-IE", "/conditions")).toBe("/ie/terms");
+		expect(localePath("en-IE", "/accessibilite")).toBe("/ie/accessibility");
+		expect(localePath("en-IE", "/donnees")).toBe("/ie/data");
+		expect(localePath("en-IE", "/[specialite]", { specialite: "pharmacy" })).toBe("/ie/pharmacy");
+		// The UK keeps its practice pages.
+		expect(localePath("en-GB", "/praticien/[slug]", { slug: "x-a81001" })).toBe(
+			"/gb/practice/x-a81001",
+		);
 		// Listing slugs are the same in every language of the market.
 		expect(localePath("fr-CH", "/[specialite]", { specialite: "spital" })).toBe("/ch-fr/spital");
 		// Estonia: every first segment is reserved and never an Estonian listing slug.
@@ -673,6 +721,7 @@ describe("the markets a search can move to", () => {
 			"EE",
 			"PL",
 			"NO",
+			"IE",
 		]);
 		expect(MARKET_COUNTRIES.map(marketSegment)).toEqual([
 			"fr",
@@ -686,6 +735,7 @@ describe("the markets a search can move to", () => {
 			"ee",
 			"pl",
 			"no",
+			"ie",
 		]);
 		for (const country of MARKET_COUNTRIES) {
 			expect(marketOfSegment(marketSegment(country))).toBe(country);
@@ -703,7 +753,17 @@ describe("the markets a search can move to", () => {
 		expect(marketOfSegment("ee")).toBe("EE");
 		expect(marketOfSegment("no")).toBe("NO");
 		expect(marketOfSegment("ch-fr")).toBeNull();
+		expect(marketOfSegment("ie")).toBe("IE");
 		expect(marketOfSegment(null)).toBeNull();
+	});
+
+	it("open Ireland in English, the UK in British English and France in English for an Irish reader", () => {
+		expect(marketLocaleFor("IE", "fr")).toBe("en-IE");
+		expect(marketLocaleFor("IE", "en-GB")).toBe("en-IE");
+		expect(marketLocaleFor("IE", "en")).toBe("en-IE");
+		expect(marketLocaleFor("GB", "en-IE")).toBe("en-GB");
+		expect(marketLocaleFor("FR", "en-IE")).toBe("en");
+		expect(marketLocaleFor("IE", "en-IE")).toBe("en-IE");
 	});
 
 	it("open in the visitor's language when the market offers it", () => {

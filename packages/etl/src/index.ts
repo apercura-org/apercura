@@ -10,6 +10,7 @@ export const COMMANDS = [
 	"etl:ee",
 	"etl:pl",
 	"etl:no",
+	"etl:ie",
 	"etl:places",
 	"etl:outbox",
 ] as const;
@@ -59,6 +60,10 @@ Commands:
                 industry codes, NLOD 2.0; no sole proprietorships), located with
                 Kartverket's addresses (Matrikkelen – Adresse, CC BY 4.0), placed in its
                 municipalities, rebuild read models.
+  etl:ie        Import Irish pharmacies (the PSI's register), nursing homes (HIQA's
+                register of designated centres for older people), and the HSE's
+                hospitals and health centres (Health Atlas, March 2020; CC BY 4.0),
+                placed by town in the CSO's census towns, rebuild read models.
   etl:places    Import regions, departments, communes and arrondissements
                 (geo.api.gouv.fr), or with --country at the Austrian
                 Bundesländer and Gemeinden (Statistik Austria), or with --country gb
@@ -75,7 +80,9 @@ Commands:
                 TERC, GUS; the gminas' points from PRG's boundaries, GUGiK), or with
                 --country ee the Estonian counties, municipalities and settlements
                 (EHAK units, Maa- ja Ruumiamet), or with --country no the Norwegian
-                counties and municipalities (Kartverket). Run once, then yearly.
+                counties and municipalities (Kartverket), or with --country ie the Irish provinces, counties (Tailte
+                Éireann) and census towns (CSO Built Up Areas) with the gazetteer's other
+                names. Run once, then yearly.
   etl:outbox    Send pending cache invalidations to the web app.
 
 Flags (etl:fr):
@@ -157,6 +164,14 @@ Flags (etl:no):
                           As for etl:at. The address file locates every establishment:
                           without it the run fails (exit code 1).
 
+Flags (etl:ie):
+  --sources <ids>         Lists to import: psi, hiqa, hse-hospitals, hse-health-centres
+                          (default ETL_IE_SOURCES, else all), or every list but some:
+                          -hse-health-centres. A list turned off keeps its rows (exit code 0).
+  --dry-run, --approve=<run_id>, --force, --source-dir <path>, --offline, --work-dir <path>
+                          As for etl:at. A list whose terms or licence changed is left out
+                          (exit code 3). Without hiqa, the HSE's community hospitals are not read.
+
 Environment:
   DATABASE_URL_ETL (or DATABASE_URL), ETL_PROFESSIONS, ETL_ANS_URLS, ETL_AMELI_URL,
   ETL_FINESS_DATASET_URL, ETL_GEO_API_URL, ETL_GEOCODER_URL, ETL_SOURCE_DIR, ETL_WORK_DIR,
@@ -179,6 +194,8 @@ Environment:
   ETL_PL_URL, ETL_PL_TERC_URL, ETL_PL_PRG_URL, ETL_PL_SOURCE_DIR,
   ETL_NO_SOURCES, ETL_NO_UNDERENHETER_URL, ETL_NO_ENHETER_URL, ETL_NO_ADRESSER_URL,
   ETL_NO_PLACES_URL, ETL_NO_SOURCE_DIR,
+  ETL_IE_SOURCES, ETL_IE_{SOURCE}_URL (ETL_IE_PSI_URL, ETL_IE_HSE_HOSPITALS_URL…),
+  ETL_IE_COUNTIES_URL, ETL_IE_TOWNS_URL, ETL_IE_PLACENAMES_URL, ETL_IE_SOURCE_DIR,
   APP_URL and REVALIDATE_SECRET (cache revalidation).`;
 
 export {
@@ -191,6 +208,7 @@ export {
 	buildEsOptions,
 	buildFrOptions,
 	buildGbOptions,
+	buildIeOptions,
 	buildItOptions,
 	buildNoOptions,
 	buildPlOptions,
@@ -201,6 +219,7 @@ export {
 	type EsOptions,
 	type FrOptions,
 	type GbOptions,
+	type IeOptions,
 	type ItOptions,
 	type NoOptions,
 	type PlOptions,
@@ -214,6 +233,7 @@ export { type EeRunOutcome, runEe } from "./run-ee";
 export { type EsRunOutcome, runEs } from "./run-es";
 export { type RunOutcome, runFr } from "./run-fr";
 export { type GbRunOutcome, runGb } from "./run-gb";
+export { type IeRunOutcome, runIe } from "./run-ie";
 export { type ItRunOutcome, runIt } from "./run-it";
 export { type NoRunOutcome, runNo } from "./run-no";
 export { type PlRunOutcome, runPl } from "./run-pl";

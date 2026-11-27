@@ -1,4 +1,5 @@
 import { practitionerRoute } from "@apercura/core";
+import { IE_HSE_ATLAS_DATE } from "@apercura/core/country";
 import {
 	CZ_SPECIALIST,
 	deKindSlugOf,
@@ -23,11 +24,12 @@ import {
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { hasLocale } from "next-intl";
-import { getTranslations, setRequestLocale } from "next-intl/server";
+import { getFormatter, getTranslations, setRequestLocale } from "next-intl/server";
 import { BookingLauncher } from "~/components/booking/booking-launcher";
 import { BookletPage } from "~/components/booklet-page";
 import { BOOKING_PANEL_MESSAGES, ClientIsland } from "~/components/client-island";
 import { RelatedGuides } from "~/components/guides";
+import { ExternalLink } from "~/components/institutional";
 import { JsonLd } from "~/components/json-ld";
 import { OwnerBlock } from "~/components/owner-block";
 import { FeesSection, PracticalSection, PresentationSection } from "~/components/owner-sections";
@@ -38,9 +40,11 @@ import { CATALOG_LANGUAGES, marketOf } from "~/i18n/locales";
 import { getPathname, Link, permanentRedirect } from "~/i18n/navigation";
 import { type Locale, routing } from "~/i18n/routing";
 import { relatedGuides } from "~/lib/guides/catalog";
+import { irishFacilityFacts } from "~/lib/irish-facility";
 import { genderOf, getTaxonomyLabels, inSentence } from "~/lib/labels";
 import { getMapStrings } from "~/lib/map-strings";
 import {
+	IE_HSE_SOURCES,
 	italianSourceDate,
 	openDataSourcesOf,
 	professionFees,
@@ -378,6 +382,19 @@ export default async function PractitionerPage({ params }: Props) {
 			}
 		: null;
 	const polishStatus = polish ? await getImportStatus("pl") : null;
+	// Ireland lists facilities: a hospital's kind as the HSE's Health Atlas names it, a nursing
+	// home's places for residents and its inspection reports on HIQA's website, who runs it. The
+	// HSE's hospitals and health centres are a March 2020 snapshot, which their page says.
+	const irish = payload.country === "IE";
+	const irishFacts = irish ? irishFacilityFacts(payload.qualifications) : null;
+	const atlasDate =
+		irish && payload.activities.some((activity) => IE_HSE_SOURCES.has(activity.source ?? ""))
+			? (await getFormatter({ locale })).dateTime(new Date(`${IE_HSE_ATLAS_DATE}-01T12:00:00Z`), {
+					month: "long",
+					year: "numeric",
+					timeZone: "UTC",
+				})
+			: null;
 	const identifier = displayId(payload);
 	// Open licences (CC BY 4.0, OGL) require each source's attribution, word for word; Spain's
 	// Ministry of Health asks for the date of its data: the last Spanish import's; Italy's is cited
@@ -831,6 +848,48 @@ export default async function PractitionerPage({ params }: Props) {
 											/>
 										) : null}
 									</>
+								) : irishFacts ? (
+									<>
+										{irishFacts.hospitalKind ? (
+											<FieldRow
+												label={t("irish.hospitalKind")}
+												value={irishFacts.hospitalKind}
+												emptyLabel={empty}
+											/>
+										) : null}
+										{irishFacts.capacity ? (
+											<FieldRow
+												label={t("irish.capacity")}
+												value={t("irish.capacityValue", { count: irishFacts.capacity })}
+												emptyLabel={empty}
+											/>
+										) : null}
+										{irishFacts.operator ? (
+											<FieldRow
+												label={t("irish.operator")}
+												value={
+													irishFacts.operator.kind === "hse"
+														? t("irish.operatorHse")
+														: irishFacts.operator.name
+												}
+												emptyLabel={empty}
+											/>
+										) : null}
+										{irishFacts.hiqaUrl ? (
+											<FieldRow
+												label={t("irish.inspections")}
+												value={
+													<ExternalLink
+														href={irishFacts.hiqaUrl}
+														externalLabel={tSite("externalLink")}
+													>
+														{t("irish.hiqaLink")}
+													</ExternalLink>
+												}
+												emptyLabel={empty}
+											/>
+										) : null}
+									</>
 								) : czech ? (
 									<>
 										{payload.professionCode === CZ_SPECIALIST ? (
@@ -864,6 +923,11 @@ export default async function PractitionerPage({ params }: Props) {
 								)}
 								<FieldRow label={tP("fields.hours")} emptyLabel={empty} />
 							</FieldList>
+							{atlasDate ? (
+								<p data-atlas-note className="max-w-[65ch] text-body text-ink-muted">
+									{t("irish.atlasNote", { date: atlasDate })}
+								</p>
+							) : null}
 							{provenance}
 						</section>
 

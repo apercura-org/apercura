@@ -309,9 +309,32 @@ Left:
 - Booking only with an explicit consent step (Garante, 2024 compendium) and the DPIA; regional GP
   open data (Milan, Campania) only after a GDPR assessment.
 
-### 9. Ireland (`/ie-en`): claimed pages
+### 9. Ireland (`/ie`): open, directory of facilities
 
-- File a re-use request to the Medical Council under the Open Data and PSI Regulations 2021.
+Done in [#171](https://github.com/apercura-org/apercura/issues/171): `/ie` in English (locale
+`en-IE`), built weekly by `etl:ie` from the Pharmaceutical Society of Ireland's register of retail
+pharmacy businesses and HIQA's register of designated centres for older people (re-use under the
+publishers' PSI conditions, credited with their copyright) and the HSE's Health Atlas hospitals and
+health centres on GeoHive (CC BY 4.0, a March 2020 snapshot, said so on every page and the data
+page): about 3,600 pages, placed in Tailte Éireann's 26 counties and the CSO's Census 2022 towns by
+the town their list writes, never by Eircode, at the town's point (city precision) or the HSE's
+point; a legal notice under S.I. No. 68 of 2003, a privacy notice under the GDPR and the Data
+Protection Act 2018 with the article 14 information, claims by documents, no booking
+([data import](./docs/data-import.md#ireland),
+[ADR 0002](./docs/adr/0002-multi-country.md#ireland-ie)). Facilities only: no health professional
+is listed. Left:
+
+- Have a lawyer qualified in Ireland review the legal notice, privacy notice, terms and
+  accessibility statement (S.I. No. 68 of 2003, Data Protection Act 2018, Consumer Rights Act
+  2022), and a native speaker the Irish-English copy.
+- Keep the PSI's condition met: never use the register "for the principal purpose of advertising or
+  promoting a particular product or service" (no sponsored result, paid upgrade or affiliate link on
+  Irish pharmacy pages; [`docs/data-requests/ie.md`](./docs/data-requests/ie.md)).
+- Ask the HSE for current hospital and health centre layers, and file the re-use request to the
+  Medical Council under the Open Data and PSI Regulations 2021
+  ([`ie-medical-council.md`](./docs/data-requests/ie-medical-council.md)) (founder).
+- An Irish-language interface (`/ie-ga`, locale `ga-IE`): Irish is an official language; the
+  Official Languages Act 2003 binds public bodies only, so it is a choice, not a duty.
 
 ### 10. Small open-data markets
 

@@ -71,6 +71,7 @@ describe.skipIf(!url)("owner-added places by market (database)", async () => {
 	let comune = 0;
 	let homonym = 0;
 	let gemeindeCh = 0;
+	let townIe = 0;
 
 	beforeAll(async () => {
 		db = createDb({ url: url as string, max: 2 });
@@ -117,6 +118,15 @@ describe.skipIf(!url)("owner-added places by market (database)", async () => {
 			slug: `beispielwil-${run}`,
 			departmentCode: "112",
 			postcodes: ["8999"],
+		});
+		// An Irish town no census has, in County Cork (40000): towns carry no Eircodes.
+		townIe = await place({
+			country: "IE",
+			kind: "commune",
+			code: `i${run}`,
+			name: `Sampletown ${run}`,
+			slug: `sampletown-${run}`,
+			departmentCode: "40000",
 		});
 	});
 
@@ -225,6 +235,33 @@ describe.skipIf(!url)("owner-added places by market (database)", async () => {
 			"UNKNOWN_PLACE",
 		);
 		await expect(addOwnerSite(db, id, { ...input, postcode: "89990" })).rejects.toThrow(
+			"UNKNOWN_PLACE",
+		);
+	});
+
+	it("places an Irish facility in its town by name, its Eircode printed only, with an Irish phone", async () => {
+		const id = await practitioner("IE", "IE-PSI");
+		const input = {
+			name: "Example Pharmacy",
+			addressLine: "1 Sample Street",
+			postcode: "t12x70a",
+			city: `Sampletown ${run}`,
+			phone: "021 123 4567",
+		};
+		const { siteId } = await addOwnerSite(db, id, input);
+		expect(await siteOf(siteId)).toEqual({
+			place_id: townIe,
+			country_code: "IE",
+			phone: "+353211234567",
+		});
+		const [row] = await db.execute<{ postcode: string }>(
+			sql`SELECT postcode FROM directory.sites WHERE id = ${siteId}`,
+		);
+		expect(row?.postcode).toBe("T12 X70A");
+		await expect(addOwnerSite(db, id, { ...input, postcode: "8999" })).rejects.toThrow(
+			"UNKNOWN_PLACE",
+		);
+		await expect(addOwnerSite(db, id, { ...input, city: "Nowhere Fictional" })).rejects.toThrow(
 			"UNKNOWN_PLACE",
 		);
 	});

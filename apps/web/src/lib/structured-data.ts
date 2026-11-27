@@ -346,6 +346,9 @@ const MEDICAL_SPECIALTIES: Record<string, readonly MedicalSpecialty[]> = {
 	"poradnie-neurologiczne": ["https://schema.org/Neurologic"],
 	"poradnie-chirurgiczne": ["https://schema.org/Surgical"],
 	"poradnie-pediatryczne": ["https://schema.org/Pediatric"],
+	// Ireland's facilities (Irish listing slugs).
+	pharmacy: ["https://schema.org/PharmacySpecialty"],
+	"health-centres": ["https://schema.org/PrimaryCare"],
 };
 
 /**
@@ -553,6 +556,9 @@ const DOCTOR_PROFESSIONS = new Set(["10", "ARZT"]);
  * place to visit as a patient: no `geo`, which only a place has). A Polish establishment is a
  * `MedicalClinic`, except a hospital or sanatorium (`Hospital`), a dental clinic (`Dentist`), a
  * care home or hospice (`MedicalOrganization`) and nurses and midwives (`MedicalBusiness`).
+ * Ireland's the same way: a pharmacy is a `Pharmacy`, a hospital a `Hospital`, an HSE health
+ * centre a `MedicalClinic`, a nursing home a `MedicalOrganization` (schema.org has no type of its
+ * own for one).
  */
 type PracticeType =
 	| "MedicalClinic"
@@ -611,6 +617,10 @@ const PRACTICE_TYPES: Readonly<Record<string, PracticeType>> = {
 	NO_DENTAL: "Dentist",
 	NO_NURSING_HOME: "MedicalOrganization",
 	NO_PHARMACY: "Pharmacy",
+	IE_PHARMACY: "Pharmacy",
+	IE_HOSPITAL: "Hospital",
+	IE_HEALTH_CENTRE: "MedicalClinic",
+	IE_NURSING_HOME: "MedicalOrganization",
 };
 
 /** The schema.org type of a market of practices' page subject (`PRACTICE_TYPES`), if any. */
@@ -732,7 +742,7 @@ export function practitionerNodes(input: PractitionerInput): Thing[] {
 			"@type": practiceType,
 			...common,
 			...localBusiness,
-			// An organisation that is not a place (a Swiss nursing home) has no coordinates.
+			// An organisation that is not a place (a Swiss or Irish nursing home) has no coordinates.
 			geo: practiceType === "MedicalOrganization" ? undefined : localBusiness.geo,
 			medicalSpecialty: specialty,
 			location: one(placeRefs.slice(1)),

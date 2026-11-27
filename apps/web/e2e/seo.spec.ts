@@ -40,7 +40,8 @@ type Expected = {
 		| "it-CH"
 		| "et-EE"
 		| "pl-PL"
-		| "nb-NO";
+		| "nb-NO"
+		| "en-IE";
 	/** The homes (`/fr` and the international `/`) print hreflang `fr-FR` and `x-default`. */
 	hreflang?: true;
 	/**
@@ -309,6 +310,20 @@ const PAGES: Expected[] = [
 		lang: "nb-NO",
 		hreflang: true,
 	},
+	// Ireland, indexed in English: its home in the homes' cluster, its directory without alternates.
+	{
+		path: "/ie",
+		robots: "index, follow",
+		types: ["WebPage", "WebSite", "Organization"],
+		lang: "en-IE",
+		hreflang: true,
+	},
+	{
+		path: "/ie/directory",
+		robots: "index, follow",
+		types: ["CollectionPage", "ItemList"],
+		lang: "en-IE",
+	},
 	// A canton without districts: its stand-in district's listing is never indexed.
 	{
 		path: "/ch/apotheke/canton-de-geneve",
@@ -412,6 +427,7 @@ const OG_LOCALES = {
 	"et-EE": "et_EE",
 	"pl-PL": "pl_PL",
 	"nb-NO": "nb_NO",
+	"en-IE": "en_IE",
 } as const;
 
 const FORBIDDEN_KEYS = ["aggregateRating", "review", "reviews", "ratingValue"];
@@ -526,7 +542,7 @@ for (const expected of PAGES) {
 			}));
 		if (expected.hreflang) {
 			// The homes of the open markets (Switzerland's three) and the international one.
-			expect(alternates).toHaveLength(14);
+			expect(alternates).toHaveLength(15);
 			expect(alternates).toEqual(
 				expect.arrayContaining([
 					{ rel: "alternate", hreflang: "fr-FR", href: `${origin}/fr` },
@@ -542,6 +558,7 @@ for (const expected of PAGES) {
 					{ rel: "alternate", hreflang: "et-EE", href: `${origin}/ee` },
 					{ rel: "alternate", hreflang: "pl-PL", href: `${origin}/pl` },
 					{ rel: "alternate", hreflang: "nb-NO", href: `${origin}/no` },
+					{ rel: "alternate", hreflang: "en-IE", href: `${origin}/ie` },
 					{ rel: "alternate", hreflang: "x-default", href: origin },
 				]),
 			);
@@ -672,7 +689,9 @@ for (const expected of PAGES) {
 																? `${origin}/pl`
 																: lang === "nb-NO"
 																	? `${origin}/no`
-																	: `${origin}/fr-${lang}`;
+																	: lang === "en-IE"
+																		? `${origin}/ie`
+																		: `${origin}/fr-${lang}`;
 			expect(items[0]?.item).toBe(home);
 			items.forEach((item, index) => {
 				expect(item.position).toBe(index + 1);

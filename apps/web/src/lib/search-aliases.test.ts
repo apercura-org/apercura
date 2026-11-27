@@ -6,6 +6,7 @@ import {
 	allEeListingSlugs,
 	allEsListingSlugs,
 	allGbListingSlugs,
+	allIeListingSlugs,
 	allItListingSlugs,
 	allNoListingSlugs,
 	allPlListingSlugs,
@@ -36,6 +37,7 @@ const MARKETS = [
 	"EE",
 	"PL",
 	"NO",
+	"IE",
 ] as const satisfies readonly MarketCountry[];
 
 /** The listings of each market (France: its imported professions only). */
@@ -54,6 +56,7 @@ const LISTED: Record<MarketCountry, (slug: string) => boolean> = {
 	EE: (slug) => allEeListingSlugs().has(slug),
 	PL: (slug) => allPlListingSlugs().has(slug),
 	NO: (slug) => allNoListingSlugs().has(slug),
+	IE: (slug) => allIeListingSlugs().has(slug),
 };
 
 /** Slugs a market maps but does not list yet: France's professions not imported. */
@@ -69,6 +72,7 @@ const MAPPED: Record<MarketCountry, (slug: string) => boolean> = {
 	EE: () => false,
 	PL: () => false,
 	NO: () => false,
+	IE: () => false,
 };
 
 const listing = (slug: string): SearchTerm => ({ kind: "listing", slug });
@@ -440,6 +444,21 @@ const EVERYDAY: Record<MarketCountry, [string, SearchTerm][]> = {
 		["hôpital", listing("sykehus")],
 		["pharmacie", listing("apotek")],
 	],
+	IE: [
+		["pharmacy", listing("pharmacy")],
+		["chemist", listing("pharmacy")],
+		["the chemist's", listing("pharmacy")],
+		["nursing home", listing("nursing-homes")],
+		["care home", listing("nursing-homes")],
+		["hospital", listing("hospitals")],
+		["A&E", listing("hospitals")],
+		["health centre", listing("health-centres")],
+		["primary care centre", listing("health-centres")],
+		["pharmacie", listing("pharmacy")],
+		["Krankenhaus", listing("hospitals")],
+		["GP", UNLISTED],
+		["dentist", UNLISTED],
+	],
 };
 
 describe.each(MARKETS)("the everyday words of %s", (country) => {
@@ -464,6 +483,7 @@ describe("a name", () => {
 		["Farmacia Esempio", "IT"],
 		["Kantonsspital Beispiel AG", "CH"],
 		["Muster", "CH"],
+		["Example Pharmacy Cork", "IE"],
 		["", "FR"],
 	] as const)("%j is a name search in %s", (word, country) => {
 		expect(resolveSearchTerm(word, country)).toBeNull();

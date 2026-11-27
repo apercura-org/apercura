@@ -31,7 +31,8 @@
 		"etl:ch": "bun packages/etl/src/cli.ts etl:ch",
 		"etl:ee": "bun packages/etl/src/cli.ts etl:ee",
 		"etl:pl": "bun packages/etl/src/cli.ts etl:pl",
-		"etl:no": "bun packages/etl/src/cli.ts etl:no"
+		"etl:no": "bun packages/etl/src/cli.ts etl:no",
+		"etl:ie": "bun packages/etl/src/cli.ts etl:ie"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "2.6.9",

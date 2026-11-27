@@ -772,3 +772,79 @@ export function parseNoFacilitySegment(segment: string): NoFacilitySegment | nul
 	if (!key) return null;
 	return { ...key, namePart: dash < 0 ? "" : segment.slice(0, dash) };
 }
+
+/**
+ * Irish identifiers: one scheme per list (a list that fails to import keeps its rows). The
+ * Pharmaceutical Society of Ireland numbers every retail pharmacy business it registers and HIQA
+ * every designated centre for older people: those numbers are the keys. The HSE's Health Atlas
+ * layers of hospitals and health centres (a March 2020 snapshot) number their rows only, so a
+ * hospital's or health centre's key is derived from what identifies it in its layer (its county,
+ * name and address: docs/data-import.md, "Ireland"), nine digits. A page URL ends with the key
+ * after a letter naming the list (`example-pharmacy-p10000612`, `example-nursing-home-n738`), so
+ * two lists' numbers never meet.
+ */
+export const IE_ID_SCHEMES = {
+	/** Retail pharmacy businesses of the PSI's register: the registration number. */
+	"IE-PSI": { prefix: "p", pattern: /^[1-9]\d{3,9}$/ },
+	/** Designated centres for older people of HIQA's register: the centre's id (`Centre_ID`). */
+	"IE-HIQA": { prefix: "n", pattern: /^[1-9]\d{0,7}$/ },
+	/** Hospitals of the HSE's Health Atlas layer: derived (nine digits). */
+	"IE-HSE-HOSP": { prefix: "h", pattern: /^[1-9]\d{8}$/ },
+	/** Health centres of the HSE's Health Atlas layer: derived (nine digits). */
+	"IE-HSE-HC": { prefix: "c", pattern: /^[1-9]\d{8}$/ },
+} as const;
+
+export type IeIdScheme = keyof typeof IE_ID_SCHEMES;
+
+const IE_SCHEMES = Object.keys(IE_ID_SCHEMES) as IeIdScheme[];
+
+/** True when `value` is a key of the Irish scheme (syntax only: the facility may not exist). */
+export function isValidIeSourceId(scheme: string, value: string): boolean {
+	const entry = IE_ID_SCHEMES[scheme as IeIdScheme];
+	return entry ? entry.pattern.test(value) : false;
+}
+
+/** The key of an Irish page as its URL ends (`p10000612`, `n738`, `h123456789`). */
+export function ieUrlKey(scheme: IeIdScheme, nationalId: string): string {
+	return `${IE_ID_SCHEMES[scheme].prefix}${nationalId}`;
+}
+
+/**
+ * Canonical path segment of an Irish facility page: `{name}-{key}`
+ * (`example-pharmacy-p10000612`), the síneadh fada dropped (`dun-laoghaire`), as Irish URLs
+ * write it.
+ */
+export function ieFacilitySlug(name: string, scheme: IeIdScheme, nationalId: string): string {
+	const key = ieUrlKey(scheme, nationalId);
+	const base = slugify(name).slice(0, 80).replace(/-+$/, "");
+	return base ? `${base}-${key}` : key;
+}
+
+export type IeFacilityKey = { idScheme: IeIdScheme; nationalId: string };
+
+/** Reads an Irish key as its page URL ends (`p10000612`, `N738`): the scheme and the key. */
+export function parseIeKey(token: string): IeFacilityKey | null {
+	const match = /^([a-z])(\d{1,10})$/.exec(token.toLowerCase());
+	if (!match) return null;
+	const [, prefix = "", nationalId = ""] = match;
+	const idScheme = IE_SCHEMES.find((scheme) => IE_ID_SCHEMES[scheme].prefix === prefix);
+	if (!idScheme || !IE_ID_SCHEMES[idScheme].pattern.test(nationalId)) return null;
+	return { idScheme, nationalId };
+}
+
+export type IeFacilitySegment = IeFacilityKey & {
+	/** Name part before the key, possibly empty. */
+	namePart: string;
+};
+
+/**
+ * Parses the last segment of an Irish page URL (`{name}-{key}`). Returns null unless it ends
+ * with a valid key, so invalid URLs never reach the database.
+ */
+export function parseIeFacilitySegment(segment: string): IeFacilitySegment | null {
+	if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(segment)) return null;
+	const dash = segment.lastIndexOf("-");
+	const key = parseIeKey(dash < 0 ? segment : segment.slice(dash + 1));
+	if (!key) return null;
+	return { ...key, namePart: dash < 0 ? "" : segment.slice(0, dash) };
+}

@@ -159,3 +159,23 @@ describe("Switzerland's sitemap paths", () => {
 		expect(sitemapCountryOf("fr")).toBe("FR");
 	});
 });
+
+describe("Ireland's sitemap paths", () => {
+	it("gives Ireland its English route segments under /ie, a facility under /facility", () => {
+		expect(marketPagePath("ie", "/")).toBe("/ie");
+		expect(marketPagePath("ie", "/praticien/example-pharmacy-p1234")).toBe(
+			"/ie/facility/example-pharmacy-p1234",
+		);
+		expect(marketPagePath("ie", "/etablissement/x-1")).toBe("/ie/establishment/x-1");
+		expect(marketPagePath("ie", "/annuaire/cork/cork")).toBe("/ie/directory/cork/cork");
+		expect(marketPagePath("ie", "/pharmacy/cork/cork")).toBe("/ie/pharmacy/cork/cork");
+		expect(marketPagePath("ie", "/confidentialite")).toBe("/ie/privacy");
+		expect(marketPagePath("ie", "/mentions-legales")).toBe("/ie/legal-notice");
+		expect(marketPagePath("ie", "/donnees")).toBe("/ie/data");
+		expect(MARKET_STATIC_PATHS.ie).not.toContain("/pro");
+		expect(MARKET_STATIC_PATHS.ie).toContain("/accessibilite");
+		const chunk = { market: "ie", kind: "praticiens", chunk: 0, lastmod: "2026-11-27", urls: 3 };
+		expect(inEveryLanguage([chunk as never]).map((item) => item.market)).toEqual(["ie"]);
+		expect(sitemapCountryOf("ie")).toBe("IE");
+	});
+});

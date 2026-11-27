@@ -308,3 +308,52 @@ describe("Norwegian establishment references", () => {
 		expect(parsePractitionerRef(practitionerRefOf(establishment))).toEqual(establishment);
 	});
 });
+
+describe("Irish facility references", () => {
+	const pharmacy = { country: "IE", idScheme: "IE-PSI", nationalId: "1234" };
+	const nursingHome = { country: "IE", idScheme: "IE-HIQA", nationalId: "738" };
+	const hospital = { country: "IE", idScheme: "IE-HSE-HOSP", nationalId: "123456789" };
+	const healthCentre = { country: "IE", idScheme: "IE-HSE-HC", nationalId: "223456789" };
+
+	it("read the `ie:` reference, an Irish page address, and a key typed on an Irish page", () => {
+		expect(parsePractitionerRef("ie:p1234")).toEqual(pharmacy);
+		expect(parsePractitionerRef(" IE: N738 ")).toEqual(nursingHome);
+		expect(parsePractitionerRef("ie:h123456789")).toEqual(hospital);
+		expect(parsePractitionerRef("ie:c223456789")).toEqual(healthCentre);
+		for (const path of [
+			"https://apercura.org/ie/facility/example-pharmacy-p1234",
+			"/ie/facility/example-pharmacy-p1234/",
+		]) {
+			expect(parsePractitionerRef(path), path).toEqual(pharmacy);
+		}
+		expect(parsePractitionerRef("p1234", "IE")).toEqual(pharmacy);
+		expect(parsePractitionerRef("example-nursing-home-n738", "IE")).toEqual(nursingHome);
+		// A hospital key reads as Ireland's on an Irish page, as Switzerland's on a Swiss one.
+		expect(parsePractitionerRef("h123456789", "IE")).toEqual(hospital);
+		expect(parsePractitionerRef("h123456789", "CH")?.country).toBe("CH");
+		expect(
+			parsePractitionerRef("https://apercura.org/ie/facility/example-hospital-h123456789"),
+		).toEqual(hospital);
+		expect(parsePractitionerRef("ie:123456789")).toBeNull();
+		expect(parsePractitionerRef("ie:")).toBeNull();
+		expect(parsePractitionerRef("ie:f9000001")).toBeNull();
+		expect(parsePractitionerRef("ie:h12345")).toBeNull();
+	});
+
+	it("still read other markets' references on an Irish page", () => {
+		expect(parsePractitionerRef("19999990013", "IE")?.country).toBe("FR");
+		expect(parsePractitionerRef("ch:h123456789", "IE")?.country).toBe("CH");
+		expect(parsePractitionerRef("gb:a81001", "IE")?.country).toBe("GB");
+	});
+
+	it("write the reference back with its market", () => {
+		expect(practitionerRefOf(pharmacy)).toBe("ie:p1234");
+		expect(practitionerRefOf(hospital)).toBe("ie:h123456789");
+		expect(practitionerRefOf(healthCentre)).toBe("ie:c223456789");
+		expect(marketRef("P1234", "IE")).toBe("ie:p1234");
+		expect(marketRef("H123456789", "IE")).toBe("ie:h123456789");
+		for (const ref of [pharmacy, nursingHome, hospital, healthCentre]) {
+			expect(parsePractitionerRef(practitionerRefOf(ref))).toEqual(ref);
+		}
+	});
+});

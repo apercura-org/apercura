@@ -1,0 +1,2735 @@
+{
+ "type": "FeatureCollection",
+ "crs": {
+  "type": "name",
+  "properties": {
+   "name": "EPSG:4326"
+  }
+ },
+ "features": [
+  {
+   "type": "Feature",
+   "id": 1,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -10,
+     52.65
+    ]
+   },
+   "properties": {
+    "OBJECTID": 1,
+    "name": " Sample Health Centre, ",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": null,
+    "address1": "Example Lane",
+    "address2": "Ennis",
+    "address3": "Co. Clare",
+    "address4": null,
+    "address5": "V95 X931",
+    "lat": -10,
+    "lon": 52.65,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 2,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -10.26,
+     53.3325
+    ]
+   },
+   "properties": {
+    "OBJECTID": 2,
+    "name": "Ionad SlÃƒÂ¡inte Sampla",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": "NULL",
+    "address1": "Example Road",
+    "address2": "An Spidéal",
+    "address3": "Co. Galway",
+    "address4": "H91 X932",
+    "address5": null,
+    "lat": -10.26,
+    "lon": 53.3325,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 3,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -9.84,
+     54.89
+    ]
+   },
+   "properties": {
+    "OBJECTID": 3,
+    "name": "Example Road",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": null,
+    "address1": "Example Road",
+    "address2": "Letterkenny",
+    "address3": "Co. Donegal.",
+    "address4": null,
+    "address5": null,
+    "lat": -9.84,
+    "lon": 54.89,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 4,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -8.83,
+     55.07
+    ]
+   },
+   "properties": {
+    "OBJECTID": 4,
+    "name": "Example Rural Health Centre",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": "NULL",
+    "address1": "Example Townland",
+    "address2": "Co. Sligo",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -8.83,
+    "lon": 55.07,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 5,
+   "geometry": null,
+   "properties": {
+    "OBJECTID": 5,
+    "name": "Example Pointless Health Centre",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": null,
+    "address1": "Example Street",
+    "address2": "Cork",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": null,
+    "lon": null,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 10,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -6.144,
+     53.966
+    ]
+   },
+   "properties": {
+    "OBJECTID": 10,
+    "name": "Example Health Centre No. 1",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": "NULL",
+    "address1": "1 Example Street",
+    "address2": "Dublin",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -6.144,
+    "lon": 53.966,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 11,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -9.32,
+     51.88
+    ]
+   },
+   "properties": {
+    "OBJECTID": 11,
+    "name": "Example Health Centre No. 2",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": null,
+    "address1": "2 Example Street",
+    "address2": "Cork",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -9.32,
+    "lon": 51.88,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 12,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -9.904,
+     53.385
+    ]
+   },
+   "properties": {
+    "OBJECTID": 12,
+    "name": "Example Health Centre No. 3",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": "NULL",
+    "address1": "3 Example Street",
+    "address2": "Galway",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -9.904,
+    "lon": 53.385,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 13,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -10.26,
+     53.343
+    ]
+   },
+   "properties": {
+    "OBJECTID": 13,
+    "name": "Example Health Centre No. 4",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": null,
+    "address1": "4 Example Street",
+    "address2": "An Spidéal",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -10.26,
+    "lon": 53.343,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 14,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -6.768,
+     52.706
+    ]
+   },
+   "properties": {
+    "OBJECTID": 14,
+    "name": "Example Health Centre No. 5",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": "NULL",
+    "address1": "5 Example Street",
+    "address2": "Limerick",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -6.768,
+    "lon": 52.706,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 15,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -5.936,
+     52.594
+    ]
+   },
+   "properties": {
+    "OBJECTID": 15,
+    "name": "Example Health Centre No. 6",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": null,
+    "address1": "6 Example Street",
+    "address2": "Waterford",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -5.936,
+    "lon": 52.594,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 16,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -9.344,
+     54.232
+    ]
+   },
+   "properties": {
+    "OBJECTID": 16,
+    "name": "Example Health Centre No. 7",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": "NULL",
+    "address1": "7 Example Street",
+    "address2": "Boyle",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -9.344,
+    "lon": 54.232,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 17,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -8.368,
+     54.12
+    ]
+   },
+   "properties": {
+    "OBJECTID": 17,
+    "name": "Example Health Centre No. 8",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": null,
+    "address1": "8 Example Street",
+    "address2": "Mullingar",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -8.368,
+    "lon": 54.12,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 18,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -10.204,
+     54.603
+    ]
+   },
+   "properties": {
+    "OBJECTID": 18,
+    "name": "Example Health Centre No. 9",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": "NULL",
+    "address1": "9 Example Street",
+    "address2": "Ballybofey-Stranorlar",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -10.204,
+    "lon": 54.603,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 19,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -9.856,
+     54.918
+    ]
+   },
+   "properties": {
+    "OBJECTID": 19,
+    "name": "Example Health Centre No. 10",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": null,
+    "address1": "10 Example Street",
+    "address2": "Letterkenny",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -9.856,
+    "lon": 54.918,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 20,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -6.08,
+     53.462
+    ]
+   },
+   "properties": {
+    "OBJECTID": 20,
+    "name": "Example Health Centre No. 11",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": "NULL",
+    "address1": "11 Example Street",
+    "address2": "Carlow",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -6.08,
+    "lon": 53.462,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 21,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -6.088,
+     53.112
+    ]
+   },
+   "properties": {
+    "OBJECTID": 21,
+    "name": "Example Health Centre No. 12",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": null,
+    "address1": "12 Example Street",
+    "address2": "Muinebeag (Bagenalstown)",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -6.088,
+    "lon": 53.112,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 22,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -8.556,
+     53.1925
+    ]
+   },
+   "properties": {
+    "OBJECTID": 22,
+    "name": "Example Health Centre No. 13",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": "NULL",
+    "address1": "13 Example Street",
+    "address2": "Abbeyleix",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -8.556,
+    "lon": 53.1925,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 23,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -8.192,
+     53.504
+    ]
+   },
+   "properties": {
+    "OBJECTID": 23,
+    "name": "Example Health Centre No. 14",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": null,
+    "address1": "14 Example Street",
+    "address2": "Portlaoise",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -8.192,
+    "lon": 53.504,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 24,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -10.128,
+     51.838
+    ]
+   },
+   "properties": {
+    "OBJECTID": 24,
+    "name": "Example Health Centre No. 15",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": "NULL",
+    "address1": "15 Example Street",
+    "address2": "Killarney",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -10.128,
+    "lon": 51.838,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 25,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -10.112,
+     52.062
+    ]
+   },
+   "properties": {
+    "OBJECTID": 25,
+    "name": "Example Health Centre No. 16",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": null,
+    "address1": "16 Example Street",
+    "address2": "Tralee",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -10.112,
+    "lon": 52.062,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 26,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -9.216,
+     54.736
+    ]
+   },
+   "properties": {
+    "OBJECTID": 26,
+    "name": "Example Health Centre No. 17",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": "NULL",
+    "address1": "17 Example Street",
+    "address2": "Sligo",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -9.216,
+    "lon": 54.736,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 27,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -10,
+     52.65
+    ]
+   },
+   "properties": {
+    "OBJECTID": 27,
+    "name": "Example Health Centre No. 18",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": null,
+    "address1": "18 Example Street",
+    "address2": "Ennis",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -10,
+    "lon": 52.65,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 28,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -7.584,
+     52.594
+    ]
+   },
+   "properties": {
+    "OBJECTID": 28,
+    "name": "Example Health Centre No. 19",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": "NULL",
+    "address1": "19 Example Street",
+    "address2": "Wexford",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -7.584,
+    "lon": 52.594,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 29,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -9.968,
+     54.218
+    ]
+   },
+   "properties": {
+    "OBJECTID": 29,
+    "name": "Example Health Centre No. 20",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": null,
+    "address1": "20 Example Street",
+    "address2": "Ballina",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -9.968,
+    "lon": 54.218,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 30,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -9.424,
+     52.4015
+    ]
+   },
+   "properties": {
+    "OBJECTID": 30,
+    "name": "Example Health Centre No. 21",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": "NULL",
+    "address1": "21 Example Street",
+    "address2": "Ballina",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -9.424,
+    "lon": 52.4015,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 31,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -6.848,
+     54.036
+    ]
+   },
+   "properties": {
+    "OBJECTID": 31,
+    "name": "Example Health Centre No. 22",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": null,
+    "address1": "22 Example Street",
+    "address2": "Navan",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -6.848,
+    "lon": 54.036,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 32,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -6.096,
+     54.05
+    ]
+   },
+   "properties": {
+    "OBJECTID": 32,
+    "name": "Example Health Centre No. 23",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": "NULL",
+    "address1": "23 Example Street",
+    "address2": "Dublin",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -6.096,
+    "lon": 54.05,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 33,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -9.28,
+     51.95
+    ]
+   },
+   "properties": {
+    "OBJECTID": 33,
+    "name": "Example Health Centre No. 24",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": null,
+    "address1": "24 Example Street",
+    "address2": "Cork",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -9.28,
+    "lon": 51.95,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 34,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -9.88,
+     53.427
+    ]
+   },
+   "properties": {
+    "OBJECTID": 34,
+    "name": "Example Health Centre No. 25",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": "NULL",
+    "address1": "25 Example Street",
+    "address2": "Galway",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -9.88,
+    "lon": 53.427,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 35,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -10.248,
+     53.3115
+    ]
+   },
+   "properties": {
+    "OBJECTID": 35,
+    "name": "Example Health Centre No. 26",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": null,
+    "address1": "26 Example Street",
+    "address2": "An Spidéal",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -10.248,
+    "lon": 53.3115,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 36,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -6.736,
+     52.622
+    ]
+   },
+   "properties": {
+    "OBJECTID": 36,
+    "name": "Example Health Centre No. 27",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": "NULL",
+    "address1": "27 Example Street",
+    "address2": "Limerick",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -6.736,
+    "lon": 52.622,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 37,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -5.904,
+     52.65
+    ]
+   },
+   "properties": {
+    "OBJECTID": 37,
+    "name": "Example Health Centre No. 28",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": null,
+    "address1": "28 Example Street",
+    "address2": "Waterford",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -5.904,
+    "lon": 52.65,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 38,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -9.416,
+     54.253
+    ]
+   },
+   "properties": {
+    "OBJECTID": 38,
+    "name": "Example Health Centre No. 29",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": "NULL",
+    "address1": "29 Example Street",
+    "address2": "Boyle",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -9.416,
+    "lon": 54.253,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 39,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -8.352,
+     54.148
+    ]
+   },
+   "properties": {
+    "OBJECTID": 39,
+    "name": "Example Health Centre No. 30",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": null,
+    "address1": "30 Example Street",
+    "address2": "Mullingar",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -8.352,
+    "lon": 54.148,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 40,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -10.192,
+     54.5715
+    ]
+   },
+   "properties": {
+    "OBJECTID": 40,
+    "name": "Example Health Centre No. 31",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": "NULL",
+    "address1": "31 Example Street",
+    "address2": "Ballybofey-Stranorlar",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -10.192,
+    "lon": 54.5715,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 41,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -9.84,
+     54.876
+    ]
+   },
+   "properties": {
+    "OBJECTID": 41,
+    "name": "Example Health Centre No. 32",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": null,
+    "address1": "32 Example Street",
+    "address2": "Letterkenny",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -9.84,
+    "lon": 54.876,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 42,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -6.064,
+     53.49
+    ]
+   },
+   "properties": {
+    "OBJECTID": 42,
+    "name": "Example Health Centre No. 33",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": "NULL",
+    "address1": "33 Example Street",
+    "address2": "Carlow",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -6.064,
+    "lon": 53.49,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 43,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -6.076,
+     53.133
+    ]
+   },
+   "properties": {
+    "OBJECTID": 43,
+    "name": "Example Health Centre No. 34",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": null,
+    "address1": "34 Example Street",
+    "address2": "Muinebeag (Bagenalstown)",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -6.076,
+    "lon": 53.133,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 44,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -8.544,
+     53.2135
+    ]
+   },
+   "properties": {
+    "OBJECTID": 44,
+    "name": "Example Health Centre No. 35",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": "NULL",
+    "address1": "35 Example Street",
+    "address2": "Abbeyleix",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -8.544,
+    "lon": 53.2135,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 45,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -8.288,
+     53.462
+    ]
+   },
+   "properties": {
+    "OBJECTID": 45,
+    "name": "Example Health Centre No. 36",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": null,
+    "address1": "36 Example Street",
+    "address2": "Portlaoise",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -8.288,
+    "lon": 53.462,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 46,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -10.112,
+     51.796
+    ]
+   },
+   "properties": {
+    "OBJECTID": 46,
+    "name": "Example Health Centre No. 37",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": "NULL",
+    "address1": "37 Example Street",
+    "address2": "Killarney",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -10.112,
+    "lon": 51.796,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 47,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -10.096,
+     52.09
+    ]
+   },
+   "properties": {
+    "OBJECTID": 47,
+    "name": "Example Health Centre No. 38",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": null,
+    "address1": "38 Example Street",
+    "address2": "Tralee",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -10.096,
+    "lon": 52.09,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 48,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -9.2,
+     54.764
+    ]
+   },
+   "properties": {
+    "OBJECTID": 48,
+    "name": "Example Health Centre No. 39",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": "NULL",
+    "address1": "39 Example Street",
+    "address2": "Sligo",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -9.2,
+    "lon": 54.764,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 49,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -9.984,
+     52.678
+    ]
+   },
+   "properties": {
+    "OBJECTID": 49,
+    "name": "Example Health Centre No. 40",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": null,
+    "address1": "40 Example Street",
+    "address2": "Ennis",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -9.984,
+    "lon": 52.678,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 50,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -7.568,
+     52.552
+    ]
+   },
+   "properties": {
+    "OBJECTID": 50,
+    "name": "Example Health Centre No. 41",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": "NULL",
+    "address1": "41 Example Street",
+    "address2": "Wexford",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -7.568,
+    "lon": 52.552,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 51,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -9.952,
+     54.176
+    ]
+   },
+   "properties": {
+    "OBJECTID": 51,
+    "name": "Example Health Centre No. 42",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": null,
+    "address1": "42 Example Street",
+    "address2": "Ballina",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -9.952,
+    "lon": 54.176,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 52,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -9.496,
+     52.4225
+    ]
+   },
+   "properties": {
+    "OBJECTID": 52,
+    "name": "Example Health Centre No. 43",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": "NULL",
+    "address1": "43 Example Street",
+    "address2": "Ballina",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -9.496,
+    "lon": 52.4225,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 53,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -6.832,
+     54.064
+    ]
+   },
+   "properties": {
+    "OBJECTID": 53,
+    "name": "Example Health Centre No. 44",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": null,
+    "address1": "44 Example Street",
+    "address2": "Navan",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -6.832,
+    "lon": 54.064,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 54,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -6.048,
+     54.134
+    ]
+   },
+   "properties": {
+    "OBJECTID": 54,
+    "name": "Example Health Centre No. 45",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": "NULL",
+    "address1": "45 Example Street",
+    "address2": "Dublin",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -6.048,
+    "lon": 54.134,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 55,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -9.24,
+     51.845
+    ]
+   },
+   "properties": {
+    "OBJECTID": 55,
+    "name": "Example Health Centre No. 46",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": null,
+    "address1": "46 Example Street",
+    "address2": "Cork",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -9.24,
+    "lon": 51.845,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 56,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -9.856,
+     53.364
+    ]
+   },
+   "properties": {
+    "OBJECTID": 56,
+    "name": "Example Health Centre No. 47",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": "NULL",
+    "address1": "47 Example Street",
+    "address2": "Galway",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -9.856,
+    "lon": 53.364,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 57,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -10.236,
+     53.3325
+    ]
+   },
+   "properties": {
+    "OBJECTID": 57,
+    "name": "Example Health Centre No. 48",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": null,
+    "address1": "48 Example Street",
+    "address2": "An Spidéal",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -10.236,
+    "lon": 53.3325,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 58,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -6.704,
+     52.678
+    ]
+   },
+   "properties": {
+    "OBJECTID": 58,
+    "name": "Example Health Centre No. 49",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": "NULL",
+    "address1": "49 Example Street",
+    "address2": "Limerick",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -6.704,
+    "lon": 52.678,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 59,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -6.096,
+     52.706
+    ]
+   },
+   "properties": {
+    "OBJECTID": 59,
+    "name": "Example Health Centre No. 50",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": null,
+    "address1": "50 Example Street",
+    "address2": "Waterford",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -6.096,
+    "lon": 52.706,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 60,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -9.404,
+     54.2215
+    ]
+   },
+   "properties": {
+    "OBJECTID": 60,
+    "name": "Example Health Centre No. 51",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": "NULL",
+    "address1": "51 Example Street",
+    "address2": "Boyle",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -9.404,
+    "lon": 54.2215,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 61,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -8.336,
+     54.106
+    ]
+   },
+   "properties": {
+    "OBJECTID": 61,
+    "name": "Example Health Centre No. 52",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": null,
+    "address1": "52 Example Street",
+    "address2": "Mullingar",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -8.336,
+    "lon": 54.106,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 62,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -10.18,
+     54.5925
+    ]
+   },
+   "properties": {
+    "OBJECTID": 62,
+    "name": "Example Health Centre No. 53",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": "NULL",
+    "address1": "53 Example Street",
+    "address2": "Ballybofey-Stranorlar",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -10.18,
+    "lon": 54.5925,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 63,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -9.824,
+     54.904
+    ]
+   },
+   "properties": {
+    "OBJECTID": 63,
+    "name": "Example Health Centre No. 54",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": null,
+    "address1": "54 Example Street",
+    "address2": "Letterkenny",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -9.824,
+    "lon": 54.904,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 64,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -6.048,
+     53.518
+    ]
+   },
+   "properties": {
+    "OBJECTID": 64,
+    "name": "Example Health Centre No. 55",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": "NULL",
+    "address1": "55 Example Street",
+    "address2": "Carlow",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -6.048,
+    "lon": 53.518,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 65,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -6.064,
+     53.1015
+    ]
+   },
+   "properties": {
+    "OBJECTID": 65,
+    "name": "Example Health Centre No. 56",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": null,
+    "address1": "56 Example Street",
+    "address2": "Muinebeag (Bagenalstown)",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -6.064,
+    "lon": 53.1015,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 66,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -8.616,
+     53.182
+    ]
+   },
+   "properties": {
+    "OBJECTID": 66,
+    "name": "Example Health Centre No. 57",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": "NULL",
+    "address1": "57 Example Street",
+    "address2": "Abbeyleix",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -8.616,
+    "lon": 53.182,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 67,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -8.272,
+     53.49
+    ]
+   },
+   "properties": {
+    "OBJECTID": 67,
+    "name": "Example Health Centre No. 58",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": null,
+    "address1": "58 Example Street",
+    "address2": "Portlaoise",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -8.272,
+    "lon": 53.49,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 68,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -10.096,
+     51.824
+    ]
+   },
+   "properties": {
+    "OBJECTID": 68,
+    "name": "Example Health Centre No. 59",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": "NULL",
+    "address1": "59 Example Street",
+    "address2": "Killarney",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -10.096,
+    "lon": 51.824,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 69,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -10.08,
+     52.118
+    ]
+   },
+   "properties": {
+    "OBJECTID": 69,
+    "name": "Example Health Centre No. 60",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": null,
+    "address1": "60 Example Street",
+    "address2": "Tralee",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -10.08,
+    "lon": 52.118,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 70,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -9.184,
+     54.722
+    ]
+   },
+   "properties": {
+    "OBJECTID": 70,
+    "name": "Example Health Centre No. 61",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": "NULL",
+    "address1": "61 Example Street",
+    "address2": "Sligo",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -9.184,
+    "lon": 54.722,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 71,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -9.968,
+     52.636
+    ]
+   },
+   "properties": {
+    "OBJECTID": 71,
+    "name": "Example Health Centre No. 62",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": null,
+    "address1": "62 Example Street",
+    "address2": "Ennis",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -9.968,
+    "lon": 52.636,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 72,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -7.552,
+     52.58
+    ]
+   },
+   "properties": {
+    "OBJECTID": 72,
+    "name": "Example Health Centre No. 63",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": "NULL",
+    "address1": "63 Example Street",
+    "address2": "Wexford",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -7.552,
+    "lon": 52.58,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 73,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -10.048,
+     54.204
+    ]
+   },
+   "properties": {
+    "OBJECTID": 73,
+    "name": "Example Health Centre No. 64",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": null,
+    "address1": "64 Example Street",
+    "address2": "Ballina",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -10.048,
+    "lon": 54.204,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 74,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -9.484,
+     52.4435
+    ]
+   },
+   "properties": {
+    "OBJECTID": 74,
+    "name": "Example Health Centre No. 65",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": "NULL",
+    "address1": "65 Example Street",
+    "address2": "Ballina",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -9.484,
+    "lon": 52.4435,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 75,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -6.816,
+     54.022
+    ]
+   },
+   "properties": {
+    "OBJECTID": 75,
+    "name": "Example Health Centre No. 66",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": null,
+    "address1": "66 Example Street",
+    "address2": "Navan",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -6.816,
+    "lon": 54.022,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 76,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -6,
+     54.008
+    ]
+   },
+   "properties": {
+    "OBJECTID": 76,
+    "name": "Example Health Centre No. 67",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": "NULL",
+    "address1": "67 Example Street",
+    "address2": "Dublin",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -6,
+    "lon": 54.008,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 77,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -9.2,
+     51.915
+    ]
+   },
+   "properties": {
+    "OBJECTID": 77,
+    "name": "Example Health Centre No. 68",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": null,
+    "address1": "68 Example Street",
+    "address2": "Cork",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -9.2,
+    "lon": 51.915,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 78,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -9.832,
+     53.406
+    ]
+   },
+   "properties": {
+    "OBJECTID": 78,
+    "name": "Example Health Centre No. 69",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": "NULL",
+    "address1": "69 Example Street",
+    "address2": "Galway",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -9.832,
+    "lon": 53.406,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 79,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -10.224,
+     53.3535
+    ]
+   },
+   "properties": {
+    "OBJECTID": 79,
+    "name": "Example Health Centre No. 70",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": null,
+    "address1": "70 Example Street",
+    "address2": "An Spidéal",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -10.224,
+    "lon": 53.3535,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 80,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -6.896,
+     52.594
+    ]
+   },
+   "properties": {
+    "OBJECTID": 80,
+    "name": "Example Health Centre No. 71",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": "NULL",
+    "address1": "71 Example Street",
+    "address2": "Limerick",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -6.896,
+    "lon": 52.594,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 81,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -6.064,
+     52.622
+    ]
+   },
+   "properties": {
+    "OBJECTID": 81,
+    "name": "Example Health Centre No. 72",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": null,
+    "address1": "72 Example Street",
+    "address2": "Waterford",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -6.064,
+    "lon": 52.622,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 82,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -9.392,
+     54.2425
+    ]
+   },
+   "properties": {
+    "OBJECTID": 82,
+    "name": "Example Health Centre No. 73",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": "NULL",
+    "address1": "73 Example Street",
+    "address2": "Boyle",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -9.392,
+    "lon": 54.2425,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 83,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -8.32,
+     54.134
+    ]
+   },
+   "properties": {
+    "OBJECTID": 83,
+    "name": "Example Health Centre No. 74",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": null,
+    "address1": "74 Example Street",
+    "address2": "Mullingar",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -8.32,
+    "lon": 54.134,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 84,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -10.168,
+     54.6135
+    ]
+   },
+   "properties": {
+    "OBJECTID": 84,
+    "name": "Example Health Centre No. 75",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": "NULL",
+    "address1": "75 Example Street",
+    "address2": "Ballybofey-Stranorlar",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -10.168,
+    "lon": 54.6135,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 85,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -9.808,
+     54.862
+    ]
+   },
+   "properties": {
+    "OBJECTID": 85,
+    "name": "Example Health Centre No. 76",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": null,
+    "address1": "76 Example Street",
+    "address2": "Letterkenny",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -9.808,
+    "lon": 54.862,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 86,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -6.032,
+     53.476
+    ]
+   },
+   "properties": {
+    "OBJECTID": 86,
+    "name": "Example Health Centre No. 77",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": "NULL",
+    "address1": "77 Example Street",
+    "address2": "Carlow",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -6.032,
+    "lon": 53.476,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 87,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -6.136,
+     53.1225
+    ]
+   },
+   "properties": {
+    "OBJECTID": 87,
+    "name": "Example Health Centre No. 78",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": null,
+    "address1": "78 Example Street",
+    "address2": "Muinebeag (Bagenalstown)",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -6.136,
+    "lon": 53.1225,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 88,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -8.604,
+     53.203
+    ]
+   },
+   "properties": {
+    "OBJECTID": 88,
+    "name": "Example Health Centre No. 79",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": "NULL",
+    "address1": "79 Example Street",
+    "address2": "Abbeyleix",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -8.604,
+    "lon": 53.203,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 89,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -8.256,
+     53.518
+    ]
+   },
+   "properties": {
+    "OBJECTID": 89,
+    "name": "Example Health Centre No. 80",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": null,
+    "address1": "80 Example Street",
+    "address2": "Portlaoise",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -8.256,
+    "lon": 53.518,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 90,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -10.08,
+     51.782
+    ]
+   },
+   "properties": {
+    "OBJECTID": 90,
+    "name": "Example Health Centre No. 81",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": "NULL",
+    "address1": "81 Example Street",
+    "address2": "Killarney",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -10.08,
+    "lon": 51.782,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 91,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -10.064,
+     52.076
+    ]
+   },
+   "properties": {
+    "OBJECTID": 91,
+    "name": "Example Health Centre No. 82",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": null,
+    "address1": "82 Example Street",
+    "address2": "Tralee",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -10.064,
+    "lon": 52.076,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 92,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -9.168,
+     54.75
+    ]
+   },
+   "properties": {
+    "OBJECTID": 92,
+    "name": "Example Health Centre No. 83",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": "NULL",
+    "address1": "83 Example Street",
+    "address2": "Sligo",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -9.168,
+    "lon": 54.75,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 93,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -9.952,
+     52.664
+    ]
+   },
+   "properties": {
+    "OBJECTID": 93,
+    "name": "Example Health Centre No. 84",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": null,
+    "address1": "84 Example Street",
+    "address2": "Ennis",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -9.952,
+    "lon": 52.664,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 94,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -7.648,
+     52.608
+    ]
+   },
+   "properties": {
+    "OBJECTID": 94,
+    "name": "Example Health Centre No. 85",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": "NULL",
+    "address1": "85 Example Street",
+    "address2": "Wexford",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -7.648,
+    "lon": 52.608,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 95,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -10.032,
+     54.162
+    ]
+   },
+   "properties": {
+    "OBJECTID": 95,
+    "name": "Example Health Centre No. 86",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": null,
+    "address1": "86 Example Street",
+    "address2": "Ballina",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -10.032,
+    "lon": 54.162,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 96,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -9.472,
+     52.412
+    ]
+   },
+   "properties": {
+    "OBJECTID": 96,
+    "name": "Example Health Centre No. 87",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": "NULL",
+    "address1": "87 Example Street",
+    "address2": "Ballina",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -9.472,
+    "lon": 52.412,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 97,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -6.8,
+     54.05
+    ]
+   },
+   "properties": {
+    "OBJECTID": 97,
+    "name": "Example Health Centre No. 88",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": null,
+    "address1": "88 Example Street",
+    "address2": "Navan",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -6.8,
+    "lon": 54.05,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 98,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -5.952,
+     54.092
+    ]
+   },
+   "properties": {
+    "OBJECTID": 98,
+    "name": "Example Health Centre No. 89",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": "NULL",
+    "address1": "89 Example Street",
+    "address2": "Dublin",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -5.952,
+    "lon": 54.092,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 99,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -9.16,
+     51.985
+    ]
+   },
+   "properties": {
+    "OBJECTID": 99,
+    "name": "Example Health Centre No. 90",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": null,
+    "address1": "90 Example Street",
+    "address2": "Cork",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -9.16,
+    "lon": 51.985,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 100,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -9.808,
+     53.343
+    ]
+   },
+   "properties": {
+    "OBJECTID": 100,
+    "name": "Example Health Centre No. 91",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": "NULL",
+    "address1": "91 Example Street",
+    "address2": "Galway",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -9.808,
+    "lon": 53.343,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 101,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -10.296,
+     53.322
+    ]
+   },
+   "properties": {
+    "OBJECTID": 101,
+    "name": "Example Health Centre No. 92",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": null,
+    "address1": "92 Example Street",
+    "address2": "An Spidéal",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -10.296,
+    "lon": 53.322,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 102,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -6.864,
+     52.65
+    ]
+   },
+   "properties": {
+    "OBJECTID": 102,
+    "name": "Example Health Centre No. 93",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": "NULL",
+    "address1": "93 Example Street",
+    "address2": "Limerick",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -6.864,
+    "lon": 52.65,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 103,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -6.032,
+     52.678
+    ]
+   },
+   "properties": {
+    "OBJECTID": 103,
+    "name": "Example Health Centre No. 94",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": null,
+    "address1": "94 Example Street",
+    "address2": "Waterford",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -6.032,
+    "lon": 52.678,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 104,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -9.38,
+     54.2635
+    ]
+   },
+   "properties": {
+    "OBJECTID": 104,
+    "name": "Example Health Centre No. 95",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": "NULL",
+    "address1": "95 Example Street",
+    "address2": "Boyle",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -9.38,
+    "lon": 54.2635,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 105,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -8.304,
+     54.092
+    ]
+   },
+   "properties": {
+    "OBJECTID": 105,
+    "name": "Example Health Centre No. 96",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": null,
+    "address1": "96 Example Street",
+    "address2": "Mullingar",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -8.304,
+    "lon": 54.092,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 106,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -10.156,
+     54.582
+    ]
+   },
+   "properties": {
+    "OBJECTID": 106,
+    "name": "Example Health Centre No. 97",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": "NULL",
+    "address1": "97 Example Street",
+    "address2": "Ballybofey-Stranorlar",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -10.156,
+    "lon": 54.582,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 107,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -9.792,
+     54.89
+    ]
+   },
+   "properties": {
+    "OBJECTID": 107,
+    "name": "Example Health Centre No. 98",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": null,
+    "address1": "98 Example Street",
+    "address2": "Letterkenny",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -9.792,
+    "lon": 54.89,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 108,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -6.128,
+     53.504
+    ]
+   },
+   "properties": {
+    "OBJECTID": 108,
+    "name": "Example Health Centre No. 99",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": "NULL",
+    "address1": "99 Example Street",
+    "address2": "Carlow",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -6.128,
+    "lon": 53.504,
+    "POINT_Z": null
+   }
+  },
+  {
+   "type": "Feature",
+   "id": 109,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -6.124,
+     53.1435
+    ]
+   },
+   "properties": {
+    "OBJECTID": 109,
+    "name": "Example Health Centre No. 100",
+    "alternate_name": null,
+    "category": "Health Centre",
+    "subcategory": null,
+    "address1": "100 Example Street",
+    "address2": "Muinebeag (Bagenalstown)",
+    "address3": null,
+    "address4": null,
+    "address5": null,
+    "lat": -6.124,
+    "lon": 53.1435,
+    "POINT_Z": null
+   }
+  }
+ ]
+}

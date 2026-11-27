@@ -1242,6 +1242,95 @@ describe.skipIf(!url)("claims, ownership and objections (database)", async () =>
 		expect(suppression).toEqual({ country: "CH", id_scheme: "CH-BAG" });
 	});
 
+	/**
+	 * A synthetic Irish pharmacy (the PSI's register): its key carries the list's letter (`p…`),
+	 * and the Irish references carry it too (`ie:`, a `/ie/facility/` address).
+	 */
+	async function irishPharmacy() {
+		const sql = db.$client;
+		const nationalId = `9${String(Math.floor(Math.random() * 100_000_000)).padStart(8, "0")}`;
+		const [place] = await sql<{ id: number }[]>`
+			INSERT INTO directory.places (country, kind, code, name, slug, department_code, centroid)
+			VALUES ('IE', 'commune', ${`I${run}${created.places.length}`}, 'Sampletown',
+				${`sampletown-${run}-${created.places.length}`}, '40000', 'SRID=4326;POINT(-8.47 51.9)')
+			RETURNING id
+		`;
+		const [pharmacy] = await sql<{ id: number }[]>`
+			INSERT INTO directory.practitioners (country, id_scheme, national_id, first_name, last_name,
+				first_name_source, last_name_source, profession_code, listing_slug, slug, primary_place_id,
+				indexable)
+			VALUES ('IE', 'IE-PSI', ${nationalId}, '', 'Example Pharmacy', '', 'Example Pharmacy',
+				'IE_PHARMACY', 'pharmacy', ${`example-pharmacy-p${nationalId}`}, ${place?.id ?? null}, true)
+			RETURNING id
+		`;
+		const [site] = await sql<{ id: number }[]>`
+			INSERT INTO directory.sites (source, source_key, kind, address_line, postcode, place_id,
+				location, geo_precision)
+			VALUES ('ie-psi', ${`test-${nationalId}`}, 'office', '1 Sample Street', null,
+				${place?.id ?? null}, 'SRID=4326;POINT(-8.47 51.9)', 'city')
+			RETURNING id
+		`;
+		await sql`
+			INSERT INTO directory.activities (practitioner_id, site_id, source, source_key, practice_kind, is_primary)
+			VALUES (${pharmacy?.id ?? 0}, ${site?.id ?? 0}, 'ie-psi', ${`test-${nationalId}`}, 'office', true)
+		`;
+		created.practitioners.push(pharmacy?.id ?? 0);
+		created.places.push(place?.id ?? 0);
+		created.sites.push(site?.id ?? 0);
+		return { id: pharmacy?.id ?? 0, nationalId, ref: `ie:p${nationalId}` };
+	}
+
+	it("claims an Irish pharmacy with a document reviewed by an administrator, found by its Irish reference", async () => {
+		const target = await irishPharmacy();
+		const options = { pscEnabled: true, documentsEnabled: true };
+		const preview = await caller(users.alice).claims.preview({ ref: target.ref });
+		expect(preview).toMatchObject({ id: target.id, country: "IE", idScheme: "IE-PSI" });
+		const claim = await caller(users.alice).claims.start({
+			ref: `https://apercura.org/ie/facility/example-pharmacy-p${target.nationalId}`,
+		});
+		const view = await service.claimForClaimant(db, claim.id, users.alice, options);
+		expect(view.methods).toEqual(["document"]);
+		expect(await codeOf(service.recordPscResult(db, claim.id, users.alice))).toBe(
+			"METHOD_UNAVAILABLE",
+		);
+		await service.addClaimDocument(db, storage, {
+			claimId: claim.id,
+			userId: users.alice,
+			kind: "ordre_attestation",
+			bytes: Buffer.from("%PDF-1.4\n% synthetic certificate of registration\n%%EOF\n"),
+		});
+		await service.submitClaim(db, claim.id, users.alice);
+		expect(await service.evaluateClaim(db, claim.id)).toBeNull();
+		const approval = await service.approveClaim(db, claim.id, users.admin, null);
+		expect(approval.via).toBe("review");
+	});
+
+	it("withholds an Irish pharmacy on objection, found by its page address", async () => {
+		const target = await irishPharmacy();
+		const request = await gdpr.requestRemoval(db, {
+			ref: `/ie/facility/example-pharmacy-p${target.nationalId}`,
+			contact: "objection@example.test",
+			message: null,
+			locale: "en-IE",
+		});
+		const [row] = await db
+			.select({ withheldAt: practitioners.withheldAt, indexable: practitioners.indexable })
+			.from(practitioners)
+			.where(eq(practitioners.id, target.id));
+		expect(row?.withheldAt).not.toBeNull();
+		expect(row?.indexable).toBe(false);
+		await gdpr.decideRemoval(db, {
+			id: request.id,
+			adminId: users.admin,
+			confirm: true,
+			reason: null,
+		});
+		const [suppression] = await db.$client<{ country: string; id_scheme: string }[]>`
+			SELECT country, id_scheme FROM directory.suppressions WHERE national_id = ${target.nationalId}
+		`;
+		expect(suppression).toEqual({ country: "IE", id_scheme: "IE-PSI" });
+	});
+
 	it("withholds an Austrian page on objection, found by its list key", async () => {
 		const target = await austrianPractitioner();
 		expect(

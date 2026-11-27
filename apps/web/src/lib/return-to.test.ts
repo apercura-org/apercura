@@ -140,6 +140,19 @@ describe("returning to a Swiss claim", () => {
 		expect(parseReturnTo("/pro/revendiquer?rpps=ch:h0123")).toBeNull();
 		expect(parseReturnTo("/pro/revendiquer?rpps=ch:")).toBeNull();
 	});
+
+	it("accepts an `ie:` facility key of each Irish list, never anything that looks like a path", () => {
+		for (const ref of ["ie:p10000612", "ie:n738", "ie:h123456789", "ie:c123456789"]) {
+			expect(parseReturnTo(`/pro/revendiquer?rpps=${ref}`)).toEqual({
+				pathname: "/pro/revendiquer",
+				query: { rpps: ref },
+			});
+		}
+		expect(parseReturnTo("/pro/revendiquer?rpps=ie:p1234/..")).toBeNull();
+		expect(parseReturnTo("/pro/revendiquer?rpps=ie:x1234")).toBeNull();
+		expect(parseReturnTo("/pro/revendiquer?rpps=ie:p0123")).toBeNull();
+		expect(parseReturnTo("/pro/revendiquer?rpps=ie:")).toBeNull();
+	});
 });
 
 describe("returning to an Estonian claim", () => {

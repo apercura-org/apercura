@@ -14,6 +14,7 @@ import {
 	allEeListingSlugs,
 	allEsListingSlugs,
 	allGbListingSlugs,
+	allIeListingSlugs,
 	allItListingSlugs,
 	allNoListingSlugs,
 	allPlListingSlugs,
@@ -42,10 +43,11 @@ const CH_LISTINGS: ReadonlySet<string> = allChListingSlugs();
 const EE_LISTINGS: ReadonlySet<string> = allEeListingSlugs();
 const PL_LISTINGS: ReadonlySet<string> = allPlListingSlugs();
 const NO_LISTINGS: ReadonlySet<string> = allNoListingSlugs();
+const IE_LISTINGS: ReadonlySet<string> = allIeListingSlugs();
 
 /**
  * True when a listing slug belongs to the market of `locale` (France's, Austria's, the UK's,
- * Czechia's, Spain's, Italy's, Germany's, Switzerland's or Estonia's, Switzerland's or Poland's taxonomy).
+ * Czechia's, Spain's, Italy's, Germany's, Switzerland's, Estonia's, Poland's or Ireland's taxonomy).
  */
 function inMarket(slug: string, locale: Locale): boolean {
 	if (marketOf(locale) === "AT") return AT_LISTINGS.has(slug);
@@ -58,6 +60,7 @@ function inMarket(slug: string, locale: Locale): boolean {
 	if (marketOf(locale) === "EE") return EE_LISTINGS.has(slug);
 	if (marketOf(locale) === "PL") return PL_LISTINGS.has(slug);
 	if (marketOf(locale) === "NO") return NO_LISTINGS.has(slug);
+	if (marketOf(locale) === "IE") return IE_LISTINGS.has(slug);
 	const profession = professionOfListingSlug(slug);
 	return Boolean(profession && FR_PROFESSIONS[profession]?.enabled);
 }
@@ -103,7 +106,9 @@ function buildIndex(locale: Locale): ListingEntry[] {
 	// A Czech, Spanish, Italian, German, Swiss or Estonian listing is plural ("Kardiologové",
 	// "Farmacias", "Farmacie", "Apotheken", "Spitäler", "Apteegid"), its profession label singular
 	// ("Kardiolog", "Farmacia", "Apotheke", "Spital", "Apteek"): both match.
-	const singular = ["CZ", "ES", "IT", "DE", "CH", "EE", "PL", "NO"].includes(marketOf(locale));
+	const singular = ["CZ", "ES", "IT", "DE", "CH", "EE", "PL", "NO", "IE"].includes(
+		marketOf(locale),
+	);
 	// The everyday words of the locale's language suggest their listing too ("Hausarzt" →
 	// Allgemeinmedizin).
 	const aliases =

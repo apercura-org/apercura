@@ -96,7 +96,8 @@
 			"DE": "Allemagne",
 			"EE": "Estonie",
 			"PL": "Pologne",
-			"NO": "Norvège"
+			"NO": "Norvège",
+			"IE": "Irlande"
 		}
 	},
 	"HomePage": {
@@ -671,6 +672,16 @@
 			"orgNumberNote": "Le numéro propre de l’établissement au registre central des entités juridiques (Enhetsregisteret).",
 			"industry": "Activité déclarée",
 			"owner": "Géré par"
+		},
+		"irish": {
+			"hospitalKind": "Kind of hospital",
+			"capacity": "Places for residents",
+			"capacityValue": "{count, number}",
+			"operator": "Run by",
+			"operatorHse": "Health Service Executive (HSE)",
+			"inspections": "Inspections",
+			"hiqaLink": "Inspection reports on HIQA's website",
+			"atlasNote": "As recorded by the HSE's Health Atlas in {date}: the HSE has published no more recent open list of its hospitals and health centres. Check with the facility before you go."
 		}
 	},
 	"Institutional": {
@@ -1908,7 +1919,11 @@
 			"sykehjem": "Maison de soins",
 			"sykehjemmet": "Maison de soins",
 			"apotek": "Pharmacie",
-			"apoteket": "Pharmacie"
+			"apoteket": "Pharmacie",
+			"pharmacy": "Pharmacie",
+			"nursing-homes": "Maison de retraite",
+			"hospitals": "Hôpital",
+			"health-centres": "Centre de santé"
 		},
 		"listing": {
 			"aerzte": "Médecins sans spécialité indiquée",
@@ -2210,7 +2225,11 @@
 			"legespesialister": "Cabinets de spécialistes",
 			"tannklinikker": "Cabinets dentaires",
 			"sykehjem": "Maisons de soins",
-			"apotek": "Pharmacies"
+			"apotek": "Pharmacies",
+			"pharmacy": "Pharmacies",
+			"nursing-homes": "Maisons de retraite",
+			"hospitals": "Hôpitaux",
+			"health-centres": "Centres de santé"
 		},
 		"practiceKind": {
 			"office": "Cabinet",
@@ -8058,6 +8077,461 @@
 			],
 			"formTitle": "Ask for a page to be removed",
 			"formBody": "Give the address of the page and an e-mail address where we can answer you."
+		}
+	},
+	"LegalNoticeIe": {
+		"metaTitle": "Legal notice (Ireland) · Apercura",
+		"metaDescription": "Legal notice of the Irish pages of Apercura: the service provider, its contact details and registration, the person responsible for the content and the host (European Communities (Directive 2000/31/EC) Regulations 2003, regulation 7).",
+		"title": "Legal notice",
+		"lead": "The information regulation 7 of the European Communities (Directive 2000/31/EC) Regulations 2003 (S.I. No. 68 of 2003) asks for about the provider of the Irish pages of Apercura (apercura.org/ie).",
+		"sections": {
+			"provider": {
+				"heading": "Service provider",
+				"body": [
+					"The Irish pages of Apercura are provided by the entity below. It runs the directory and answers for its content."
+				]
+			},
+			"origin": {
+				"heading": "Country of establishment and governing law",
+				"body": [
+					"The provider is established in France. Under the country-of-origin principle of the Directive on electronic commerce (Directive 2000/31/EC, article 3; S.I. No. 68 of 2003, regulation 4), French law governs the service; this page gives the information Irish law asks a provider to make available.",
+					"The service is subject to no authorisation scheme, and its provider exercises no regulated profession through it: regulation 7(1)(f) and (g) do not apply."
+				]
+			},
+			"service": {
+				"heading": "The service",
+				"body": [
+					"A free directory of Ireland's registered pharmacies and nursing homes and of the HSE's hospitals and health centres, built from public registers and open government data, without advertising, with a space where a facility can complete its own page. Pages are facilities, never individual clinicians. No appointment is booked through Apercura in Ireland."
+				]
+			},
+			"editor": {
+				"heading": "Person responsible for the content",
+				"body": [
+					"The person below is responsible for what the provider publishes. Information a facility adds to its own page is its own responsibility; as a service that stores information provided by its users, the provider answers for it only under the conditions of regulation 18 of S.I. No. 68 of 2003."
+				]
+			},
+			"hosting": {
+				"heading": "Hosting provider",
+				"body": ["The site, its database and its files are hosted by the company below."]
+			},
+			"liability": {
+				"heading": "Content of the pages",
+				"body": [
+					"The directory is built from the Pharmaceutical Society of Ireland's register of pharmacies, HIQA's register of designated centres for older people and the HSE's Health Atlas layers of hospitals and health centres, a March 2020 snapshot. It can be incomplete or out of date: check the information with the facility before you go. Every page says how to report an error."
+				]
+			},
+			"ip": {
+				"heading": "Code and data",
+				"body": [
+					"The source code of Apercura is published under the AGPL-3.0 licence. The PSI's and HIQA's registers are re-used under their publishers' re-use conditions, the HSE's layers and the places of Tailte Éireann and the CSO under the Creative Commons Attribution 4.0 International licence (CC BY 4.0): the data page lists every source with the attribution it asks for."
+				]
+			},
+			"review": {
+				"heading": "Status of this text",
+				"body": [
+					"This text is a draft, written before the legal entity was set up. It will be reviewed by a lawyer qualified in Ireland before the Irish pages are announced."
+				]
+			}
+		},
+		"fields": {
+			"name": "Name",
+			"legalForm": "Legal form",
+			"address": "Geographic address",
+			"phone": "Phone",
+			"email": "Email address",
+			"registration": "Register and registration number",
+			"vatId": "VAT identification number",
+			"editor": "Responsible for the content",
+			"hostName": "Hosting provider",
+			"hostAddress": "Address of the hosting provider",
+			"hostPhone": "Phone of the hosting provider"
+		},
+		"dataLink": "Data and sources"
+	},
+	"PrivacyIe": {
+		"metaTitle": "Privacy notice (Ireland) · Apercura",
+		"metaDescription": "Data processed by the Irish pages of Apercura: sources, purposes, legal bases, retention, recipients and your rights, including objection (GDPR articles 13, 14 and 21, Data Protection Act 2018).",
+		"title": "Privacy notice",
+		"lead": "What data the Irish pages of Apercura process, where it comes from, why, for how long and by whom, and how to exercise your rights under the GDPR and the Data Protection Act 2018.",
+		"sections": {
+			"controller": {
+				"heading": "Who is responsible",
+				"body": [
+					"The service provider named in the legal notice is the controller of the directory, of facility accounts, of claims and of the requests sent through the site."
+				]
+			},
+			"directory": {
+				"heading": "Directory: data about facilities",
+				"body": [
+					"Data: the facility's name as its register publishes it, its kind (pharmacy, nursing home, hospital, health centre), its address and Eircode, its town and county, its telephone number where the list gives one, for a hospital its kind as the HSE names it, for a nursing home its number of places for residents and the link to its page on HIQA's website, and who runs it when that is the HSE or a company. A facility that claims its page can add a presentation, languages, a photo and opening hours.",
+					"Identifier: the PSI's registration number of the pharmacy, HIQA's centre number of the nursing home, or a key derived from a hospital's or health centre's county, name and address, at the end of the page's address.",
+					"Purpose: letting the public find a pharmacy, a nursing home, a hospital or a health centre, where it is and how to reach it. Legal basis: legitimate interests (GDPR article 6(1)(f)), assessed below.",
+					"Retention: as long as the facility is on its register or list. A page disappears at the import after the facility has left it (a pharmacy struck off the register, for example); a page removed after an objection is never published again.",
+					"Information: the data does not come from the facilities themselves (GDPR article 14). This notice gives the information article 14 asks for, on the site where the pages are: the categories of data, their sources, the purposes and legal basis, the retention, the recipients and your rights, including the right to object. Every page links to it, and the data page lists the sources."
+				]
+			},
+			"people": {
+				"heading": "Facilities, and the people they may name",
+				"body": [
+					"An Irish page is a facility, never a person's profile. No register of individual doctors, nurses, pharmacists or other clinicians is imported, and the HSE's layer of GP practices, which names doctors, is not read.",
+					"A facility's details can still be about a person in three cases. A pharmacy's trading name may be a person's name (“Example's Pharmacy”): it is shown as the PSI's register publishes it, since another name would mislead. A nursing home's operator is shown only when it is the HSE or a company registered with the Companies Registration Office whose name names no person; an individual provider or a partnership is never stored. A facility's phone is its own line, but one that reaches a sole trader directly can be personal data.",
+					"Never read or stored, although the lists publish them: the owner of a pharmacy business, its superintendent and supervising pharmacists, a nursing home's person in charge and their phone, management contacts, the provider's own address and phone, and every email address. No rating and no review is collected."
+				]
+			},
+			"sources": {
+				"heading": "Sources",
+				"body": [
+					"Every page is built from a public register or open government data, re-used with the attribution each publisher asks for. The PSI must publish its registers on the Internet, free of charge (Pharmacy Act 2007, section 13); HIQA's registers of designated centres are open to inspection by the public and made available on the Internet (Health Act 2007, section 49(3)):"
+				]
+			},
+			"balancing": {
+				"heading": "Legitimate interests assessment",
+				"body": [
+					"Purpose: people need to know where the registered pharmacies, nursing homes, hospitals and health centres are and how to reach them, the need for which the law has the PSI and HIQA publish their registers on the Internet.",
+					"Necessity: only what identifies and reaches a facility is shown, as its register publishes it: its name, kind, address and phone. A pharmacy registered under a person's name cannot be listed under another without misleading; everything else that names a person is left out.",
+					"Balance: the same facts are on the public register and, for a pharmacy, on its shop front, so a facility listed by its regulator expects to be found in a directory repeating them. No special category of data, no rating, no review, no comparison, no paid placement; a neutral order; an objection that hides a page at once and keeps it from coming back; corrections at the source; pages that follow every import of the registers. Weighing these points, the interests of the public prevail, and anyone a page is about can object without giving a reason."
+				]
+			},
+			"accounts": {
+				"heading": "Facility accounts and claims",
+				"body": [
+					"Data: email address, name, password (stored hashed), second authentication factor, the documents sent to claim a page (proof that the claimant runs the facility or acts for it) and team members.",
+					"Purposes: managing the account and checking that a page is claimed by the right facility. Legal bases: performance of the terms of use (article 6(1)(b)) and the legitimate interests of securing the service (article 6(1)(f)).",
+					"Retention: the account is kept until it is deleted; supporting documents, encrypted, are erased 30 days after the decision."
+				]
+			},
+			"requests": {
+				"heading": "Error reports, objections and contact requests",
+				"body": [
+					"Data: the message, the contact email address when one is given and the page concerned; for an “I run this facility” request also the name and phone number. Free text is encrypted.",
+					"Purposes: correcting errors, applying objections and helping a facility that cannot claim its page online. Legal bases: legitimate interests (article 6(1)(f)) and the right to object (article 21).",
+					"Retention: a report is deleted 6 months after it is closed, a rejected objection one year after its decision, a contact request 12 months after the last exchange. Once an objection is confirmed, or the holder of a claimed page removes it, the page and the data about it are deleted at once, the objection included; all that is kept is a record of the removal (the identifier of the page, the country, the reason, who recorded it and when), so that it is never published again. A holder who removes their page keeps, in their account only and never published, the name, kind and identifier shown in their space, their claim and the places their agenda uses, until the account is deleted."
+				]
+			},
+			"technical": {
+				"heading": "Technical data and cookies",
+				"body": [
+					"Only cookies strictly necessary to the service are set: the session of signed-in facilities and the chosen language. No advertising or audience measurement cookies, no trackers.",
+					"To limit abuse, IP addresses are transformed with a keyed function before being counted and never stored as such; facility sessions record a truncated IP address. Views of claimed pages are counted without a cookie or identifier, and only the page's holder sees them."
+				]
+			},
+			"recipients": {
+				"heading": "Recipients and processors",
+				"body": [
+					"The directory's pages are public. Data is neither sold nor rented, and never used for advertising. Only the provider's team and the processors below receive the other data, each for its own part. Maps are loaded from a tile server, which receives the visitor's IP address like any website."
+				]
+			},
+			"transfers": {
+				"heading": "Transfers outside the European Economic Area",
+				"body": [
+					"The data is hosted and processed in the European Economic Area. Nothing is transferred outside it; any change of processor will be announced here before it takes effect."
+				]
+			},
+			"automated": {
+				"heading": "Automated decisions",
+				"body": [
+					"No decision about you is taken by automated means alone. A claim is decided by a person, who reads its documents."
+				]
+			},
+			"rights": {
+				"heading": "Your rights",
+				"body": [
+					"You can ask to access your data, to have it corrected or erased, to restrict its processing, to receive it in a portable format and to object to its processing. Write to the address below; you will get an answer within one month.",
+					"You can also lodge a complaint with the Data Protection Commission, Ireland's supervisory authority (GDPR article 77; Data Protection Act 2018, section 11): 6 Pembroke Row, Dublin 2, D02 X963, www.dataprotection.ie. The provider is established in France, so its lead supervisory authority is the Commission nationale de l'informatique et des libertés (CNIL), with which you can lodge a complaint too: www.cnil.fr."
+				]
+			},
+			"objection": {
+				"heading": "Objecting to a page (GDPR article 21)",
+				"body": [
+					"Anyone a page is about can object to its publication at any time, without giving a reason. If the page is unclaimed, a form is enough: the page is hidden as soon as the request arrives, deleted after a light check, and the imports of the registers never publish it again. If it is claimed, its holder removes it from their space."
+				]
+			},
+			"changes": {
+				"heading": "Updates to this notice",
+				"body": [
+					"This notice is a draft. It will be reviewed by a lawyer qualified in Ireland and by the data protection officer; every version is dated."
+				]
+			}
+		},
+		"fields": {
+			"controller": "Controller",
+			"address": "Address",
+			"email": "Contact for requests",
+			"dpo": "Data protection officer",
+			"effectiveDate": "Effective date",
+			"hostingProvider": "Hosting provider (processor)",
+			"smtp": "Email delivery (processor)"
+		},
+		"objectLink": "How to object to a page",
+		"dpcLink": "Raise a concern with the Data Protection Commission",
+		"cnilLink": "Lodge a complaint with the CNIL"
+	},
+	"TermsIe": {
+		"metaTitle": "Terms of use (Ireland) · Apercura",
+		"metaDescription": "Terms of use of the Irish pages of Apercura: a free, factual directory of pharmacies, nursing homes, hospitals and health centres, without online booking.",
+		"title": "Terms of use",
+		"lead": "The rules for using the Irish pages of Apercura, for the public and for facilities alike.",
+		"sections": {
+			"service": {
+				"heading": "The service",
+				"body": [
+					"Apercura lists, free of charge, the pharmacies on the Pharmaceutical Society of Ireland's register, the nursing homes on HIQA's register of designated centres for older people, and the hospitals and health centres of the HSE's Health Atlas. It is a directory only: no appointment is booked through Apercura in Ireland. It is run by the service provider named in the legal notice.",
+					"Using the directory requires no account. Using the site means accepting these terms."
+				]
+			},
+			"content": {
+				"heading": "What the pages contain",
+				"body": [
+					"Pages show factual information from public registers and lists, as they publish it, in a neutral order, without ratings, reviews, advertising or paid placement. No facility pays to be listed or to be shown first, and none is endorsed. They list facilities, never individual clinicians.",
+					"Each list has its own date: the PSI's register as of the date it gives, HIQA's register as of the last import, the HSE's hospitals and health centres as recorded in March 2020. The information may be incomplete or out of date: check it with the facility before you go. Every page says how to report an error."
+				]
+			},
+			"health": {
+				"heading": "Not medical advice",
+				"body": [
+					"Apercura gives no medical advice and is not an emergency service. In an emergency, call 112 or 999. Outside your GP's hours, contact the GP out-of-hours service for your area; a pharmacist can advise on minor illnesses."
+				]
+			},
+			"facilities": {
+				"heading": "For facilities",
+				"body": [
+					"Claiming a page is free. It requires a document proving that the claimant runs the facility or acts for it, checked by a person before the page is handed over.",
+					"The holder of a page is responsible for the information they add. It must stay factual, accurate and up to date, and must not advertise a product or service."
+				]
+			},
+			"removal": {
+				"heading": "Correcting or removing a page",
+				"body": [
+					"A fact taken from a register is corrected with the body that publishes it, and the page follows at the next import; anything else can be reported with the form on the data page. Anyone a page is about can ask for it to be removed at any time: the data page explains how. A claimed page can only be removed by its holder."
+				]
+			},
+			"liability": {
+				"heading": "Liability",
+				"body": [
+					"The provider does its best to keep the service available and accurate, but cannot guarantee it. It is not responsible for the information facilities add to their pages. Nothing in these terms limits a liability that the law does not allow to be limited, such as liability for death or personal injury caused by negligence. These terms will be specified during the legal review."
+				]
+			},
+			"ip": {
+				"heading": "Code and data",
+				"body": [
+					"The source code is published under the AGPL-3.0 licence. Directory data is re-used under the re-use conditions of the PSI and HIQA and under CC BY 4.0: the data page lists every source."
+				]
+			},
+			"law": {
+				"heading": "Governing law and disputes",
+				"body": [
+					"These terms are governed by French law, the law of the provider's establishment. If you use the site as a consumer living in Ireland, you keep the protection of the mandatory rules of Irish law and can bring a claim before the Irish courts. In case of a dispute, first write to the contact address to look for an amicable solution."
+				]
+			}
+		},
+		"fields": {
+			"publisher": "Service provider",
+			"effectiveDate": "Effective date",
+			"contact": "Contact"
+		}
+	},
+	"AccessibilityIe": {
+		"metaTitle": "Accessibility (Ireland) · Apercura",
+		"metaDescription": "Accessibility of the Irish pages of Apercura: the WCAG 2.2 AA target, what was checked, what remains, and how to report a problem.",
+		"title": "Accessibility",
+		"lead": "Apercura is designed for everyone, including older and low-vision people. This statement says where the Irish pages stand.",
+		"sections": {
+			"scope": {
+				"heading": "Scope",
+				"body": [
+					"This statement is voluntary. The European Union (Accessibility of Websites and Mobile Applications of Public Sector Bodies) Regulations 2020 (S.I. No. 358 of 2020) bind public sector bodies, which Apercura is not, and the European Union (Accessibility Requirements of Products and Services) Regulations 2023 (S.I. No. 636 of 2023) bind the services they list, among them e-commerce services, which a free directory is not. Its provider nevertheless aims at the same standard on every page: WCAG 2.2 level AA."
+				]
+			},
+			"status": {
+				"heading": "Where the site stands",
+				"body": [
+					"The Irish pages share the code of the other markets' pages and their tests. The site partially meets WCAG 2.2 AA: this rests on a self-assessment and automated tests, not yet on a full audit, which is in progress. The pages are in English only for now."
+				]
+			},
+			"tests": {
+				"heading": "What was checked",
+				"list": [
+					"Automated axe-core checks (WCAG 2.0, 2.1 and 2.2 rules, levels A and AA) on every page type, at every release.",
+					"Keyboard-only journeys with a visible focus.",
+					"Body text of at least 18 px, targets of at least 44 px, nothing that relies on colour alone, no horizontal scrolling at 390 px."
+				]
+			},
+			"pending": {
+				"heading": "What remains to be checked",
+				"list": [
+					"A manual pass with the VoiceOver and NVDA screen readers.",
+					"A full audit against WCAG 2.2 AA on a sample of pages."
+				]
+			},
+			"feedback": {
+				"heading": "Report a problem",
+				"body": [
+					"If a page or a feature is hard to use, write to the address below: say which page and what blocked you. We answer within one month and, where needed, give you the information in another form."
+				]
+			}
+		},
+		"fields": {
+			"contact": "Contact",
+			"date": "Date of this statement"
+		}
+	},
+	"DataIe": {
+		"metaTitle": "Data and sources (Ireland) · Apercura",
+		"metaDescription": "Where the Irish pages of Apercura come from: the PSI's register of pharmacies, HIQA's register of nursing homes, the HSE's Health Atlas layers and the places of Tailte Éireann and the CSO, with their terms, dates, what is not imported, and how to correct or remove a page.",
+		"title": "Data and sources",
+		"lead": "Every Irish page is built from a public register or open government data. Here is where it comes from, under which terms and attribution, how old each list is, what is left out and why, and how to correct or remove a page.",
+		"status": {
+			"heading": "Last update",
+			"body": "The PSI publishes its register of pharmacies every month, and HIQA's register of nursing homes is exported as it stands on the day of each import. The directory imports a list when it has changed; a page changes only when its facts change in its list.",
+			"importedAt": "Last import",
+			"checkedAt": "Sources last checked",
+			"notImported": "The Irish directory has not been imported yet on this site.",
+			"notImportedValue": "Not imported yet"
+		},
+		"dates": {
+			"heading": "How old each list is",
+			"body": [
+				"Each list is as old as its publisher's last edition, and the HSE's is old: its Health Atlas gave its layers of hospitals and health centres to GeoHive in March 2020, and no more recent open list of the HSE's facilities was found. The HSE's 2017 list on data.ehealthireland.ie is older still and can no longer be downloaded; the CSO's 2026 “Distance to Services” layers give distances to services, not a list of facilities. A hospital or health centre opened, renamed or closed since March 2020 is therefore missing or out of date here: its page says so."
+			],
+			"psi": "PSI register of pharmacies",
+			"hiqa": "HIQA register of nursing homes",
+			"hse": "HSE hospitals and health centres",
+			"psiValue": "Correct at {date}",
+			"hiqaValue": "Exported on {date}",
+			"hseValue": "As recorded in {date}"
+		},
+		"sources": {
+			"heading": "Sources",
+			"body": "The PSI's and HIQA's registers are re-used under their publishers' re-use conditions; the HSE's layers and the places of Tailte Éireann and the CSO are published under the Creative Commons Attribution 4.0 International licence (CC BY 4.0), which asks for the source to be credited. Each attribution below is printed word for word, and every Irish page prints those of its own sources.",
+			"caption": "Data sources of the Irish directory",
+			"columns": {
+				"source": "Source",
+				"use": "Used for",
+				"licence": "Terms and attribution",
+				"frequency": "Updated"
+			},
+			"items": {
+				"ie-psi": {
+					"use": "Retail pharmacy businesses: names as registered, addresses, Eircodes, towns and counties, registration numbers",
+					"frequency": "Every month, by the PSI"
+				},
+				"ie-hiqa": {
+					"use": "Designated centres for older people (nursing homes): names, addresses, Eircodes, counties, phone numbers, places for residents, the operator when it is the HSE or a company, the link to the centre's inspection reports",
+					"frequency": "Exported from HIQA's register at each import"
+				},
+				"ie-hse-hospitals": {
+					"use": "Public, voluntary and private hospitals: names, addresses, kinds of hospital, points",
+					"frequency": "Not updated since March 2020"
+				},
+				"ie-hse-health-centres": {
+					"use": "The HSE's health centres: names, addresses, points",
+					"frequency": "Not updated since March 2020"
+				},
+				"ie-counties": {
+					"use": "The 26 counties, in which every facility is placed",
+					"frequency": "The 2019 boundaries"
+				},
+				"ie-towns": {
+					"use": "The towns of the 2022 census (Built Up Areas), in which facilities are placed, and the point of each town",
+					"frequency": "With each census"
+				},
+				"ie-placenames": {
+					"use": "The names of towns and villages, to match the town a list writes with the census's",
+					"frequency": "Regularly, by Tailte Éireann"
+				},
+				"map": {
+					"name": "Map data",
+					"publisher": "OpenStreetMap contributors, tiles by OpenFreeMap",
+					"use": "The base map of the pages",
+					"frequency": "Continuously"
+				}
+			},
+			"licences": {
+				"psi": "PSI terms of use",
+				"hiqa": "HIQA re-use conditions",
+				"ccBy": "CC BY 4.0",
+				"odbl": "ODbL"
+			},
+			"conditionsHeading": "Conditions of re-use",
+			"conditions": [
+				"The PSI's terms of use allow free re-use of its registers in any format, provided the source and its copyright are acknowledged, the information is reproduced accurately and not used in a misleading way, and the user agrees to “Not use the information for the principal purpose of advertising or promoting a particular product or service”. They refer to the latest PSI licence on data.gov.ie, today the Open Data Licence of data.gov.ie (CC BY 4.0), which does not cover personal data. HIQA's re-use conditions point to the same PSI licence.",
+				"Apercura's use fits these conditions: it is a free directory without advertising, which lists every registered pharmacy and nursing home the same way, in a neutral order, sells no placement or ranking, promotes no product or service, and links each page to the register it comes from. The rules on advertising that bind pharmacists (the PSI's guidance and code of conduct) and on advertising medicinal products (S.I. No. 541 of 2007) concern what a pharmacy or a supplier publishes: Apercura names no medicine, and no listing is paid for or endorsed."
+			],
+			"termsText": "The PSI's terms of use"
+		},
+		"coverage": {
+			"heading": "Facilities covered",
+			"body": ["A page is a facility, never a person. Ireland's pages list:"],
+			"kindsLabel": "Kinds of facility",
+			"kinds": {
+				"IE_PHARMACY": "Pharmacies: every retail pharmacy business on the PSI's register",
+				"IE_NURSING_HOME": "Nursing homes: every designated centre for older people on HIQA's register",
+				"IE_HOSPITAL": "Hospitals: the public, voluntary and private hospitals of the HSE's Health Atlas, March 2020",
+				"IE_HEALTH_CENTRE": "Health centres: the HSE's health centres of the Health Atlas, March 2020"
+			}
+		},
+		"excluded": {
+			"heading": "What is not imported, and why",
+			"body": ["Some data would complete the directory but cannot be re-used, or is not needed:"],
+			"list": [
+				"GP practices: the HSE's layer of GP practices names the doctors, so it is not read. No GP, dentist or other clinic is listed.",
+				"Health professionals: the registers of doctors (Medical Council), nurses and midwives (NMBI), dentists (Dental Council) and pharmacists (PSI) can be searched one entry at a time, but are not published for re-use. No person is listed.",
+				"HIQA's register of designated centres for people with disabilities: it gives no address of its centres.",
+				"OpenStreetMap: used for the base map only, never as a source of facilities or of their positions, since its Open Database Licence (ODbL) is share-alike.",
+				"Data about individuals, never: no register of people, no ratings, no reviews."
+			]
+		},
+		"unread": {
+			"heading": "Fields never read",
+			"body": [
+				"The lists hold some fields a page does not need, some of which name or reach a person. They are never read or stored:"
+			],
+			"list": [
+				"The owner of a pharmacy business and its superintendent and supervising pharmacists, in the PSI's register.",
+				"A nursing home's person in charge and their phone, its management contacts, and the provider's own address and phone, in HIQA's register; the provider's name only when it is the HSE or a company whose name names no person.",
+				"Email addresses, in every list."
+			]
+		},
+		"locations": {
+			"heading": "Locations",
+			"body": [
+				"Every facility is placed in its county, from Tailte Éireann's boundaries, and in its town, from the CSO's Built Up Areas of the 2022 census, by the town and county its list writes. A facility whose town is not one of the census's is placed in its county only: it appears in its county's listing.",
+				"Eircodes are printed as part of an address, as the lists publish them, but never used to locate a facility: the Eircode database is not open data. A pharmacy or a nursing home is shown at the point of its town: no pin marks it on a map, and its distance is approximate. A hospital or health centre is shown at the point the HSE's layer gives it, as recorded in March 2020."
+			]
+		},
+		"identifiers": {
+			"heading": "Identifiers",
+			"body": [
+				"The address of every page ends with a key, after a letter naming its list, so that a page can be found and checked against its source:"
+			],
+			"list": [
+				"/ie/facility/example-pharmacy-p1234: the PSI's registration number of a pharmacy, after p.",
+				"/ie/facility/example-nursing-home-n738: HIQA's centre number of a nursing home, after n.",
+				"/ie/facility/example-hospital-h123456789: the HSE's layer numbers no hospital, so its key is derived from its county, name and address, after h; a health centre's follows c."
+			]
+		},
+		"correct": {
+			"heading": "Correct an error",
+			"body": [
+				"The pages repeat the public registers: a lasting correction is made at the source, and the page follows at the next import after the corrected list is published.",
+				"For anything else, use the form: we check every report."
+			],
+			"list": [
+				"A pharmacy: the pharmacy business tells the Pharmaceutical Society of Ireland, which keeps its register.",
+				"A nursing home: the registered provider tells HIQA, which keeps the register of designated centres.",
+				"A hospital or health centre: the HSE's March 2020 layers are not published again; report the error with the form below.",
+				"Phone, website and opening hours: where the list gives none, a facility adds them by claiming its page."
+			],
+			"formTitle": "Report an error",
+			"formBody": "Give the address of the page and what is wrong."
+		},
+		"remove": {
+			"heading": "Remove a page",
+			"body": [
+				"Anyone a page is about can object to its publication at any time, without giving a reason (GDPR article 21). An unclaimed page is hidden as soon as the request arrives and deleted after a light check; it never comes back with the imports of the registers. A claimed page is removed by its holder, from their space. Every page also has its own removal form."
+			],
+			"formTitle": "Ask for a page to be removed",
+			"formBody": "Give the address of the page and an email address where we can answer you."
 		}
 	}
 }

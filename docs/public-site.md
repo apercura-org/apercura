@@ -120,6 +120,12 @@ person), an organisation's under `/no/organisasjon/…`, the directory under
 (`/no/legekontorer/vestland/bergen`, `/no/apotek`); a county is a listing of its
 own, and Oslo, a county and a municipality, has the county's page only.
 
+Ireland (#171) is one market in English under `/ie` (`en-IE`: the English
+catalog with `messages/en-IE.json`), with the English route segments: a
+facility's page under `/ie/facility/…`, an establishment's under
+`/ie/establishment/…`; its listing slugs are English and never the UK's
+(`/ie/pharmacy/cork`, `/ie/nursing-homes/cork/cork`). No Irish interface yet.
+
 Each segment follows the locale's prefix: `/fr/annuaire`, `/fr-de/verzeichnis`.
 
 Only French pages are indexed in v1 (`INDEXABLE_LOCALES`): pages in the other

@@ -7,6 +7,7 @@ import {
 	formatPhoneEs,
 	formatPhoneFr,
 	formatPhoneGb,
+	formatPhoneIe,
 	formatPhoneIt,
 	formatPhoneNo,
 	formatPhonePl,
@@ -41,7 +42,7 @@ export function label(value: string | null | undefined): string | null {
 
 /**
  * A phone number of any market as written there (`04 72 00 00 00`, `01 7673315`,
- * `020 7946 0000`, `326 357 125`, `910 000 001`, `06 12345678`, `030 45050`, `044 268 31 11`, `22 12 34 56`).
+ * `020 7946 0000`, `326 357 125`, `910 000 001`, `06 12345678`, `030 45050`, `044 268 31 11`, `22 12 34 56`, `01 846 2115`).
  */
 export function formatPhone(e164: string): string {
 	if (e164.startsWith("+41")) return formatPhoneCh(e164);
@@ -49,6 +50,7 @@ export function formatPhone(e164: string): string {
 	if (e164.startsWith("+47")) return formatPhoneNo(e164);
 	if (e164.startsWith("+43")) return formatPhoneAt(e164);
 	if (e164.startsWith("+44")) return formatPhoneGb(e164);
+	if (e164.startsWith("+353")) return formatPhoneIe(e164);
 	if (e164.startsWith("+420")) return formatPhoneCz(e164);
 	if (e164.startsWith("+34")) return formatPhoneEs(e164);
 	if (e164.startsWith("+39")) return formatPhoneIt(e164);
@@ -75,10 +77,13 @@ function townLine(postcode: string | null, placeName: string | null, country: st
 	return [postcode, localityOf(placeName, country)].filter(Boolean).join(" ");
 }
 
+/** Markets whose addresses write the town before the postcode: the UK and Ireland (Eircode). */
+const TOWN_FIRST: ReadonlySet<string> = new Set(["GB", "IE"]);
+
 /**
  * The town part of a one-line address on a card: `69001 Lyon`, `1090 Wien`, `120 00 Praha 2`,
- * and in the UK the
- * town before its postcode (`Stockton-on-Tees TS18 1ZA`).
+ * and in the UK and Ireland the
+ * town before its postcode (`Stockton-on-Tees TS18 1ZA`, `Cork T12 X70A`).
  */
 export function cardTownLine(
 	postcode: string | null,
@@ -86,7 +91,9 @@ export function cardTownLine(
 	country = "FR",
 ): string {
 	const locality = localityOf(placeName, country);
-	return (country === "GB" ? [locality, postcode] : [postcode, locality]).filter(Boolean).join(" ");
+	return (TOWN_FIRST.has(country) ? [locality, postcode] : [postcode, locality])
+		.filter(Boolean)
+		.join(" ");
 }
 
 /** The locality of an address as written in its market: a Vienna district is `Wien`. */
@@ -96,13 +103,14 @@ export function localityOf(placeName: string | null, country = "FR"): string | n
 
 /**
  * Address lines of a site, street first, in the market's form: the town and the postcode on
- * lines of their own in the UK (Royal Mail), together elsewhere (`69001 Lyon`, `1090 Wien`).
+ * lines of their own in the UK (Royal Mail) and Ireland (An Post: the Eircode last), together
+ * elsewhere (`69001 Lyon`, `1090 Wien`).
  */
 export function addressLines(
 	site: Pick<SitePayload, "addressLine" | "addressComplement" | "postcode" | "placeName">,
 	country = "FR",
 ): string[] {
-	if (country === "GB") {
+	if (TOWN_FIRST.has(country)) {
 		return [
 			marketLabel(site.addressLine, country),
 			marketLabel(site.addressComplement, country),

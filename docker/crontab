@@ -88,3 +88,12 @@
 # that could not be fetched or read: the pages stay as they are), 2 blocked (see
 # docs/data-import.md, "Norway").
 30 3 * * 5 apercura etl:no $ETL_NO_SCHEDULE_ARGS
+
+# Ireland's facilities (the PSI's register of pharmacies, monthly; HIQA's register of designated
+# centres for older people, a live export; the HSE's Health Atlas layers of hospitals and health
+# centres, a March 2020 snapshot), every Thursday at 20:30 UTC, when no other import runs (the
+# same advisory lock: one import at a time); unchanged lists are skipped. ETL_IE_SCHEDULE_ARGS
+# narrows it, e.g. `--sources psi,hiqa`. Exit codes: 1 failed, 2 blocked, 3 imported without a
+# list that could not be fetched or read, or whose terms or licence changed (see
+# docs/data-import.md, "Ireland").
+30 20 * * 4 apercura etl:ie $ETL_IE_SCHEDULE_ARGS

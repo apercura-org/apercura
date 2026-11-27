@@ -1,0 +1,101 @@
+{
+ "type": "FeatureCollection",
+ "crs": {
+  "type": "name",
+  "properties": {
+   "name": "EPSG:4326"
+  }
+ },
+ "features": [
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -6.096,
+     53.924
+    ]
+   },
+   "properties": {
+    "English_Na": "Tallaght",
+    "Irish_Name": "Tamhlacht",
+    "County": "DUBLIN"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -6.144,
+     54.176
+    ]
+   },
+   "properties": {
+    "English_Na": "Blanchardstown",
+    "Irish_Name": "Baile Bhlainséir",
+    "County": "DUBLIN"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -9.4,
+     51.915
+    ]
+   },
+   "properties": {
+    "English_Na": "Ballincollig",
+    "Irish_Name": "Baile an Chollaigh",
+    "County": "CORK"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -10.26,
+     53.3325
+    ]
+   },
+   "properties": {
+    "English_Na": "Spiddle",
+    "Irish_Name": "An Spidéal",
+    "County": "GALWAY"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -8.83,
+     54.07
+    ]
+   },
+   "properties": {
+    "English_Na": "Monksland",
+    "Irish_Name": "Cluain Uí Bhrain",
+    "County": "ROSCOMMON"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -9.63,
+     52.27
+    ]
+   },
+   "properties": {
+    "English_Na": "Kilsample",
+    "Irish_Name": "Cill Sampla",
+    "County": "KERRY"
+   }
+  }
+ ]
+}

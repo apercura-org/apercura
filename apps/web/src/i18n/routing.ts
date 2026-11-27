@@ -19,6 +19,7 @@ type Pathnames = Record<
 				| "et-EE"
 				| "pl-PL"
 				| "nb-NO"
+				| "en-IE"
 			>,
 			string
 	  >
@@ -201,7 +202,11 @@ function swissMarketPath(path: string, person: string, facility: string): string
  * - Poland (`pl-PL`): the English paths with their segments in Polish (`POLISH_SEGMENTS`), an
  *   establishment's page under `/placowka`;
  * - Norway (`nb-NO`): the English paths with their segments in Norwegian (`NORWEGIAN_SEGMENTS`),
- *   an establishment's page under `/virksomhet`.
+ *   an establishment's page under `/virksomhet`;
+ * - Ireland (`en-IE`): the English paths, with a facility's page under `/facility` (Ireland
+ *   lists pharmacies, nursing homes, hospitals and health centres, never people); an
+ *   establishment keeps `/establishment`. Every first segment is an Irish reserved segment of
+ *   `@apercura/core/taxonomy` (`IE_RESERVED_SEGMENTS`, tested).
  */
 function withMarkets<T extends Pathnames>(pathnames: T) {
 	return Object.fromEntries(
@@ -223,6 +228,7 @@ function withMarkets<T extends Pathnames>(pathnames: T) {
 						"et-EE": estonianPath(value.en),
 						"pl-PL": polishPath(value.en),
 						"nb-NO": norwegianPath(value.en),
+						"en-IE": value.en.replace("/practitioner/", "/facility/"),
 					},
 		]),
 	) as {
@@ -241,6 +247,7 @@ function withMarkets<T extends Pathnames>(pathnames: T) {
 					"et-EE": string;
 					"pl-PL": string;
 					"nb-NO": string;
+					"en-IE": string;
 				};
 	};
 }

@@ -54,6 +54,9 @@ describe("homeSamples", () => {
 		expect(specimenOf("it-CH").name).toBe("Ospedale dell’Esempio");
 		// Swiss Standard German writes no "ß".
 		expect(JSON.stringify(homeSamples("de-CH"))).not.toContain("ß");
-		expect(new Set(LOCALES.map((locale) => marketOf(locale))).size).toBe(11);
+		expect(new Set(LOCALES.map((locale) => marketOf(locale))).size).toBe(12);
+		// Ireland's samples are in English, without an Eircode.
+		expect(specimenOf("en-IE").name).toBe("Example Pharmacy");
+		expect(JSON.stringify(homeSamples("en-IE"))).not.toMatch(/[A-Z]\d{2} ?[A-Z0-9]{4}/);
 	});
 });
