@@ -63,7 +63,8 @@
 			"placesHeading": "Par canton"
 		},
 		"specimen": {
-			"heading": "Chaque établissement de santé a déjà sa page"
+			"heading": "Chaque établissement de santé a déjà sa page",
+			"intro": "Voici une page telle que les données ouvertes de la Confédération et des cantons la remplissent, avant que l’établissement la revendique : les champs connus sont remplis, les autres disent qu’ils ne sont pas renseignés."
 		}
 	},
 	"Practitioner": {
@@ -74,7 +75,8 @@
 			"verified": "Complétée par l’établissement, dont la revendication a été vérifiée."
 		},
 		"fields": {
-			"profession": "Type d’établissement"
+			"profession": "Type d’établissement",
+			"address": "Adresse"
 		},
 		"source": {
 			"name": "Source : OFSP et cantons"

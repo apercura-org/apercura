@@ -123,7 +123,7 @@
 			},
 			"encrypted": {
 				"title": "Données chiffrées",
-				"description": "Les données des patients sont chiffrées au niveau applicatif. Hébergez-les chez vous ou chez un hébergeur certifié HDS."
+				"description": "Les justificatifs, les signalements d’erreur et, là où la réservation en ligne est ouverte, les rendez-vous sont chiffrés au niveau applicatif."
 			},
 			"selfHostable": {
 				"title": "Auto-hébergeable",
@@ -152,7 +152,7 @@
 		"status": "Projet en cours de construction.",
 		"market": {
 			"listingsHeading": "Par spécialité",
-			"placesHeading": "Par Land"
+			"placesHeading": "Les départements qui comptent le plus de professionnels"
 		}
 	},
 	"International": {

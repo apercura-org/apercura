@@ -65,7 +65,8 @@
 			"placesHeading": "Kreise und kreisfreie Städte mit den meisten Einrichtungen"
 		},
 		"specimen": {
-			"heading": "Jede Einrichtung hat bereits ihre Seite"
+			"heading": "Jede Einrichtung hat bereits ihre Seite",
+			"intro": "So sieht eine Seite aus, wie die amtlichen Verzeichnisse sie befüllen, bevor die Einrichtung sie beansprucht: Bekannte Felder sind ausgefüllt, bei den anderen steht klar, dass sie nicht angegeben sind."
 		}
 	},
 	"Practitioner": {
@@ -76,7 +77,8 @@
 			"verified": "Von der Einrichtung vervollständigt; ihre Beanspruchung wurde geprüft."
 		},
 		"fields": {
-			"profession": "Art der Einrichtung"
+			"profession": "Art der Einrichtung",
+			"address": "Adresse"
 		},
 		"source": {
 			"name": "Statistisches Bundesamt (Destatis), Verzeichnis der Krankenhäuser und Vorsorge- oder Rehabilitationseinrichtungen"

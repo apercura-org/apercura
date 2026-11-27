@@ -123,7 +123,7 @@
 			},
 			"encrypted": {
 				"title": "Datos cifrados",
-				"description": "Los datos de los pacientes se cifran a nivel de aplicación. Alójelos usted mismo o con un proveedor de alojamiento con certificación HDS."
+				"description": "Los justificantes, los avisos de error y, donde la reserva en línea está abierta, las citas se cifran a nivel de aplicación."
 			},
 			"selfHostable": {
 				"title": "Autoalojable",
@@ -152,7 +152,7 @@
 		"status": "Trabajo en curso.",
 		"market": {
 			"listingsHeading": "Por especialidad",
-			"placesHeading": "Por estado federado"
+			"placesHeading": "Los departamentos con más profesionales sanitarios"
 		}
 	},
 	"International": {

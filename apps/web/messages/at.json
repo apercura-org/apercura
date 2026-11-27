@@ -53,7 +53,14 @@
 		"pro": {
 			"heading": "Sind Sie Ärztin oder Arzt?"
 		},
-		"tagline": "Das offene Verzeichnis der Ärztinnen und Ärzte in Österreich."
+		"tagline": "Das offene Verzeichnis der Ärztinnen und Ärzte in Österreich.",
+		"market": {
+			"placesHeading": "Nach Bundesland"
+		},
+		"specimen": {
+			"heading": "Jede Ärztin und jeder Arzt hat bereits eine Seite",
+			"intro": "So sieht eine Seite aus, wie die offenen Ärztelisten der Länder sie befüllen, bevor die Ärztin oder der Arzt sie beansprucht: Bekannte Felder sind ausgefüllt, bei den anderen steht klar, dass sie nicht angegeben sind."
+		}
 	},
 	"Practitioner": {
 		"rpps": "Kennung",
@@ -69,7 +76,8 @@
 				"statement": "Über Apercura ist in Österreich keine Online-Terminbuchung möglich. Rufen Sie die Ordination an, um einen Termin zu vereinbaren."
 			}
 		},
-		"sitesHeading": "Ordinationen"
+		"sitesHeading": "Ordinationen",
+		"specimen": "Beispiel, keine echte Ärztin und kein echter Arzt"
 	},
 	"PractitionerPage": {
 		"metaDescription": "{name}, {occupation}: Ordination und Kontaktdaten aus den offenen Ärztelisten der Länder.{fees, select, sector {} other {}}",

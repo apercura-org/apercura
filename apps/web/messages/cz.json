@@ -120,6 +120,14 @@
 			"selfHostable": {
 				"title": "Vlastní provoz",
 				"description": "Celou platformu si můžete provozovat sami pomocí Dockeru, včetně importu otevřených dat."
+			},
+			"encrypted": {
+				"title": "Šifrovaná data",
+				"description": "Doklady, hlášení chyb a tam, kde je otevřené objednávání online, i rezervace termínů jsou šifrovány na úrovni aplikace."
+			},
+			"hostedInFrance": {
+				"title": "Zdravotní data uložená ve Francii",
+				"description": "Zdravotní data ukládá ve Francii poskytovatel hostingu s certifikací HDS ({host}) a jsou šifrována na úrovni aplikace."
 			}
 		},
 		"registry": {

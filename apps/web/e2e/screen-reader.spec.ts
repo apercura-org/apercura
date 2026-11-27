@@ -102,6 +102,8 @@ test("home search, results and an unclaimed practitioner page read in order", as
 		// The specimen card is labelled as fictitious before anything else is read.
 		"article, Dr Exemple Martin, Exemple fictif",
 		"Page non réclamée",
+		"heading, Par spécialité, level 2",
+		"heading, Les départements qui comptent le plus de professionnels, level 2",
 		"heading, Ce à quoi Apercura s’engage, level 2",
 		"heading, Gratuit, level 3",
 		"heading, Construit à partir du registre national, level 2",

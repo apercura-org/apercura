@@ -63,7 +63,8 @@
 			"placesHeading": "Per Cantone"
 		},
 		"specimen": {
-			"heading": "Ogni struttura sanitaria ha già la sua pagina"
+			"heading": "Ogni struttura sanitaria ha già la sua pagina",
+			"intro": "Questa è una pagina così come la compilano i dati aperti della Confederazione e dei Cantoni, prima che la struttura la rivendichi: i campi noti sono compilati, gli altri indicano chiaramente che non sono forniti."
 		}
 	},
 	"Practitioner": {
@@ -74,7 +75,8 @@
 			"verified": "Completata dalla struttura, la cui rivendicazione è stata verificata."
 		},
 		"fields": {
-			"profession": "Tipo di struttura"
+			"profession": "Tipo di struttura",
+			"address": "Indirizzo"
 		},
 		"source": {
 			"name": "Fonte: UFSP e Cantoni"

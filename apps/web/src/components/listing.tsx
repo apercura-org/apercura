@@ -375,7 +375,8 @@ export async function CountLinks({
 					<Link href={item.href} className={`${linkStyles()} text-body`}>
 						{item.label}
 					</Link>
-					<span className="shrink-0 text-meta tabular text-ink-muted">
+					{/* A long count ("175 Ärztinnen und Ärzte") wraps in its cell, never into the next column. */}
+					<span className="text-end text-meta tabular text-ink-muted">
 						{t("count", { count: item.count })}
 					</span>
 				</li>

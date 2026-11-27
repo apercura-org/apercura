@@ -123,7 +123,7 @@
 			},
 			"encrypted": {
 				"title": "Verschlüsselte Daten",
-				"description": "Patientendaten werden auf Anwendungsebene verschlüsselt. Hosten Sie sie selbst oder bei einem HDS-zertifizierten Hosting-Anbieter."
+				"description": "Nachweise, Fehlermeldungen und, wo die Online-Buchung offen ist, Termine werden auf Anwendungsebene verschlüsselt."
 			},
 			"selfHostable": {
 				"title": "Selbst hostbar",
@@ -152,7 +152,7 @@
 		"status": "In Arbeit.",
 		"market": {
 			"listingsHeading": "Nach Fachgebiet",
-			"placesHeading": "Nach Bundesland"
+			"placesHeading": "Die Départements mit den meisten Gesundheitsfachkräften"
 		}
 	},
 	"International": {

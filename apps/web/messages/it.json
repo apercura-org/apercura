@@ -123,7 +123,7 @@
 			},
 			"encrypted": {
 				"title": "Dati cifrati",
-				"description": "I dati dei pazienti sono cifrati a livello applicativo. Può ospitarli in proprio o presso un fornitore di hosting certificato HDS."
+				"description": "I documenti, le segnalazioni di errore e, dove la prenotazione online è aperta, gli appuntamenti sono cifrati a livello applicativo."
 			},
 			"selfHostable": {
 				"title": "Installabile in proprio",
@@ -152,7 +152,7 @@
 		"status": "Lavori in corso.",
 		"market": {
 			"listingsHeading": "Per specialità",
-			"placesHeading": "Per Land"
+			"placesHeading": "I dipartimenti con più professionisti sanitari"
 		}
 	},
 	"International": {
