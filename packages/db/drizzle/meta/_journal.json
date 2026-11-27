@@ -232,6 +232,13 @@
       "when": 1795900090000,
       "tag": "0032_lt_market",
       "breakpoints": true
+    },
+    {
+      "idx": 33,
+      "version": "7",
+      "when": 1795986490000,
+      "tag": "0033_si_market",
+      "breakpoints": true
     }
   ]
 }
