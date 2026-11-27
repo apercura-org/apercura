@@ -37,23 +37,34 @@ test.describe("the international home", () => {
 		const germany = countries.getByRole("link", { name: "Apercura Germany" });
 		await expect(germany).toHaveAttribute("href", "/de");
 		await expect(germany).toHaveAttribute("hreflang", "de-DE");
+		// Switzerland, open in German at /ch, and in French and Italian beside it.
+		const switzerland = countries.getByRole("link", { name: "Apercura Switzerland" });
+		await expect(switzerland).toHaveAttribute("href", "/ch");
+		await expect(switzerland).toHaveAttribute("hreflang", "de-CH");
 		for (const [name, href] of [
 			["English", "/fr-en"],
 			["Deutsch", "/fr-de"],
 			["Español", "/fr-es"],
-			["Italiano", "/fr-it"],
 		] as const) {
 			await expect(countries.getByRole("link", { name, exact: true })).toHaveAttribute(
 				"href",
 				href,
 			);
 		}
+		// France in Italian and Switzerland in Italian both read "Italiano"; Switzerland in French
+		// "Français".
+		await expect(countries.getByRole("link", { name: "Italiano", exact: true })).toHaveCount(2);
+		await expect(countries.locator('a[href="/fr-it"]').filter({ hasText: "Italiano" })).toHaveCount(
+			1,
+		);
+		await expect(countries.locator('a[href="/ch-it"]')).toHaveText("Italiano");
+		await expect(countries.locator('a[href="/ch-fr"]')).toHaveText("Français");
 		// Planned countries are text: no page exists for them, so none can be thin.
-		for (const country of ["Belgium", "Switzerland"]) {
+		for (const country of ["Belgium"]) {
 			await expect(countries.getByText(country, { exact: true })).toBeVisible();
 			await expect(countries.getByRole("link", { name: country })).toHaveCount(0);
 		}
-		await expect(countries.getByText("Coming soon")).toHaveCount(2);
+		await expect(countries.getByText("Coming soon")).toHaveCount(1);
 
 		// The pages about Apercura, in English.
 		const more = page.getByRole("region", { name: "Learn more" });

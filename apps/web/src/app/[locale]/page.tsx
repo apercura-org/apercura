@@ -2,6 +2,7 @@ import { austria, countryAdapter } from "@apercura/core/country";
 import {
 	AT_DENTIST,
 	AT_DOCTOR,
+	CH_DEFAULT_PROFESSIONS,
 	CZ_DEFAULT_PROFESSIONS,
 	DE_DEFAULT_PROFESSIONS,
 	ES_DEFAULT_PROFESSIONS,
@@ -207,7 +208,8 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
  * read models. Austria lists its Bundesländer; the UK its regions and nations, each a hub;
  * Czechia its districts (okresy); Spain its provinces; Italy its twenty regions, each a hub;
  * Germany its Kreise with the most facilities (four hundred would bury the page: the directory
- * lists them all).
+ * lists them all);
+ * Switzerland its cantons, each a hub.
  */
 /** How many Kreise Germany's home lists. */
 const GERMAN_HOME_PLACES = 30;
@@ -298,10 +300,13 @@ async function OpenDataRegistry({ locale }: { locale: Locale }) {
 		...new Set(
 			adapter.registries
 				.filter((registry) => registry.provides.includes("practitioners"))
-				// The UK's eight lists come from three publishers: named by publisher.
-				.map((registry) => (country === "GB" ? registry.publisher : registry.name)),
+				// The UK's eight lists come from three publishers, Switzerland's twelve from eight:
+				// named by publisher.
+				.map((registry) =>
+					country === "GB" || country === "CH" ? registry.publisher : registry.name,
+				),
 		),
-	].join(country === "GB" ? "; " : ", ");
+	].join(country === "GB" || country === "CH" ? "; " : ", ");
 	// One row per listing of a kind: Spain's health centres and local surgeries share one.
 	const byListing = (codes: readonly string[]) => {
 		const rows = new Map<string, { code: string; codes: string[]; label: string }>();
@@ -324,10 +329,12 @@ async function OpenDataRegistry({ locale }: { locale: Locale }) {
 						? byListing(IT_DEFAULT_PROFESSIONS)
 						: country === "DE"
 							? byListing(DE_DEFAULT_PROFESSIONS)
-							: [
-									{ code: AT_DOCTOR, codes: [AT_DOCTOR], label: t("registry.doctors") },
-									{ code: AT_DENTIST, codes: [AT_DENTIST], label: t("registry.dentists") },
-								];
+							: country === "CH"
+								? byListing(CH_DEFAULT_PROFESSIONS)
+								: [
+										{ code: AT_DOCTOR, codes: [AT_DOCTOR], label: t("registry.doctors") },
+										{ code: AT_DENTIST, codes: [AT_DENTIST], label: t("registry.dentists") },
+									];
 	return (
 		<section
 			aria-labelledby="registry-heading"

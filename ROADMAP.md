@@ -144,15 +144,30 @@ Left:
 - Booking in Austria once the Gesundheitstelematikgesetz question is answered.
 - Enrich the practices with the primary care units of Vienna and Upper Austria (CC BY 4.0).
 
-### 2. Switzerland (`/ch-fr`, `/ch-de`, `/ch-it`): claimed pages, French first
+### 2. Switzerland (`/ch`, `/ch-fr`, `/ch-it`): open, directory of facilities
 
-- Open `/ch-fr` first, then `/ch-de` and `/ch-it`.
+Done in [#154](https://github.com/apercura-org/apercura/issues/154): `/ch` in German, `/ch-fr` in
+French and `/ch-it` in Italian, each indexed with the others as hreflang alternates, built monthly
+by `etl:ch` from the FOPH's "Kennzahlen der Schweizer Spitäler 2023" (every hospital and clinic
+site) and the cantons' open lists: hospitals (Bern, Geneva, Basel-Stadt, Jura), nursing homes
+(Zürich, Bern, Geneva, Basel-Stadt, Basel-Landschaft, Jura) and pharmacies (Basel-Landschaft, and
+Geneva's that vaccinate), about 1,400 pages, placed in the BFS cantons, districts and communes by
+swisstopo's postcode directory, listed per canton too, each list credited in its publisher's
+words, an Impressum and a privacy notice under the revised FADP, claims by documents, no booking
+([data import](./docs/data-import.md#switzerland),
+[ADR 0002](./docs/adr/0002-multi-country.md#switzerland-ch)). Facilities only: no health
+professional is listed. Left:
+
+- Ask the FOPH for the 2024 figures and later editions under the 2023 terms
+  ([`docs/data-requests/ch.md`](./docs/data-requests/ch.md)); ask the other cantons to publish
+  their pharmacies and nursing homes as open data.
 - Write to the FOPH (MedReg standard interface, Registerverordnung MedBG art. 11) to ask whether a
   free public-interest directory may use and republish the register.
-- Appoint a Swiss representative (nFADP art. 14) and write the DPIA (art. 22).
+- Decide on a Swiss representative (nFADP art. 14) and write the DPIA (art. 22); have a Swiss
+  lawyer review the Impressum, Datenschutzerklärung and terms in their three languages.
 - Verify claims through MedReg and GesReg lookups and the GLN; contract with practitioners for
   professional secrecy (StGB art. 321).
-- Check FMH annex 2 point 3.7 and the cantonal rules on advertising.
+- Check FMH annex 2 point 3.7 and the cantonal rules on advertising before practitioners' pages.
 
 ### 3. Czechia (`/cz`): open, directory of places of care
 

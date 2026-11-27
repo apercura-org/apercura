@@ -41,10 +41,11 @@ export const NOT_DEPARTMENT_CITY = (alias: string) =>
 
 /**
  * Markets whose regions have listing and hub pages of their own: the United Kingdom (migration
- * 0026) and Italy (0028), whose health service is run by its regions. France's regions group its
- * departments on the directory page only.
+ * 0026), Italy (0028), whose health service is run by its regions, and Switzerland, whose
+ * cantons run theirs (`/ch/spital/zuerich`, above the districts' and the communes' pages).
+ * France's regions group its departments on the directory page only.
  */
-export const REGION_LISTING_MARKETS: ReadonlySet<string> = new Set(["GB", "IT"]);
+export const REGION_LISTING_MARKETS: ReadonlySet<string> = new Set(["GB", "IT", "CH"]);
 
 /** Slugs of the Austrian Bundesländer (`wien`, `steiermark`, `niederoesterreich`…). */
 export const AT_STATE_SLUGS: ReadonlySet<string> = new Set(
@@ -58,7 +59,7 @@ export const AT_STATE_SLUGS: ReadonlySet<string> = new Set(
  * region (England's regions and the other nations list in the same slot), never only
  * digits. Czechia: the slug of a district (okres, `brno-mesto`, `praha`). Spain: the slug of a
  * province (`madrid`, `barcelona`). Italy: the slug of a province or of a region (`roma`,
- * `lazio`). Germany: the slug of a Kreis (`landkreis-muenchen`, `berlin`).
+ * `lazio`). Germany: the slug of a Kreis (`landkreis-muenchen`, `berlin`). Switzerland: the slug of a district or of a canton (`bezirk-zuerich`, `zuerich`).
  */
 export function isDepartmentSlug(slug: string, country = "FR"): boolean {
 	if (country === "AT") return AT_STATE_SLUGS.has(slug);
@@ -67,7 +68,8 @@ export function isDepartmentSlug(slug: string, country = "FR"): boolean {
 		country === "CZ" ||
 		country === "ES" ||
 		country === "IT" ||
-		country === "DE"
+		country === "DE" ||
+		country === "CH"
 	) {
 		return isPlaceSlug(slug);
 	}

@@ -8,6 +8,7 @@ import {
 	ProseSection,
 } from "~/components/institutional";
 import { TermsAt } from "~/components/legal-at";
+import { TermsCh } from "~/components/legal-ch";
 import { TermsCz } from "~/components/legal-cz";
 import { TermsDe } from "~/components/legal-de";
 import { TermsEs } from "~/components/legal-es";
@@ -41,6 +42,7 @@ export function generateMetadata({ params }: PageProps<"/[locale]/conditions">) 
 			ES: "TermsEs",
 			IT: "TermsIt",
 			DE: "TermsDe",
+			CH: "TermsCh",
 		},
 		HREF,
 	);
@@ -62,6 +64,7 @@ export default async function TermsPage({ params }: PageProps<"/[locale]/conditi
 	if (marketOf(locale) === "ES") return <TermsEs locale={locale} />;
 	if (marketOf(locale) === "IT") return <TermsIt locale={locale} />;
 	if (marketOf(locale) === "DE") return <TermsDe locale={locale} />;
+	if (marketOf(locale) === "CH") return <TermsCh locale={locale} />;
 	const t = await getTranslations({ locale, namespace: "TermsPage" });
 	const tI = await getTranslations({ locale, namespace: "Institutional" });
 	const format = await getFormatter({ locale });

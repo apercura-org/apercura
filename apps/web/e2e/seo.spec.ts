@@ -8,7 +8,8 @@ import { testDb } from "./pro";
  * Technical SEO of every public page type, read from the SERVER HTML (what
  * crawlers get): one title and description of the right length, a self
  * canonical, the robots policy, one parseable JSON-LD @graph of linked
- * entities, one h1, hreflang on the two homes only. Then status codes, the
+ * entities, one h1, hreflang on the homes, and between the three languages of a Swiss page
+ * below them. Then status codes, the
  * redirects of the former scheme and hosts, and the sitemaps. Against the
  * SYNTHETIC fixtures (fictitious people, RPPS 1999999xxxx).
  */
@@ -32,10 +33,30 @@ type Expected = {
 		| "cs-CZ"
 		| "es-ES"
 		| "it-IT"
-		| "de-DE";
+		| "de-DE"
+		| "de-CH"
+		| "fr-CH"
+		| "it-CH";
 	/** The homes (`/fr` and the international `/`) print hreflang `fr-FR` and `x-default`. */
 	hreflang?: true;
+	/**
+	 * A Swiss page below the homes: the same page in the market's three languages (paths by
+	 * hreflang), and no other alternate.
+	 */
+	swiss?: { "de-CH": string; "fr-CH": string; "it-CH": string };
 };
+
+/** Switzerland's three languages of one page, as `Expected` entries. */
+const swissPages = (
+	paths: { "de-CH": string; "fr-CH": string; "it-CH": string },
+	expected: Omit<Expected, "path" | "lang" | "swiss">,
+): Expected[] =>
+	(["de-CH", "fr-CH", "it-CH"] as const).map((lang) => ({
+		...expected,
+		path: paths[lang],
+		lang,
+		swiss: paths,
+	}));
 
 const PAGES: Expected[] = [
 	// The international home: in English, indexed, outside the locales.
@@ -201,6 +222,60 @@ const PAGES: Expected[] = [
 		types: ["WebPage", "BreadcrumbList", "Pharmacy"],
 		lang: "de-DE",
 	},
+	// Switzerland, indexed in German, French and Italian: each home in the homes' cluster, every
+	// other page with its two other languages.
+	...(["/ch", "/ch-fr", "/ch-it"] as const).map(
+		(path, index): Expected => ({
+			path,
+			robots: "index, follow",
+			types: ["WebPage", "WebSite", "Organization"],
+			lang: (["de-CH", "fr-CH", "it-CH"] as const)[index],
+			hreflang: true,
+		}),
+	),
+	...swissPages(
+		{ "de-CH": "/ch/verzeichnis", "fr-CH": "/ch-fr/annuaire", "it-CH": "/ch-it/elenco" },
+		{ robots: "index, follow", types: ["CollectionPage", "ItemList"] },
+	),
+	...swissPages(
+		{
+			"de-CH": "/ch/einrichtung/stadtspital-musterberg-nord-h367757611",
+			"fr-CH": "/ch-fr/etablissement/stadtspital-musterberg-nord-h367757611",
+			"it-CH": "/ch-it/struttura/stadtspital-musterberg-nord-h367757611",
+		},
+		{ robots: "index, follow", types: ["WebPage", "BreadcrumbList", "Hospital"] },
+	),
+	...swissPages(
+		{
+			"de-CH": "/ch/einrichtung/pharmacie-de-l-exemple-gep876101869",
+			"fr-CH": "/ch-fr/etablissement/pharmacie-de-l-exemple-gep876101869",
+			"it-CH": "/ch-it/struttura/pharmacie-de-l-exemple-gep876101869",
+		},
+		{ robots: "index, follow", types: ["WebPage", "BreadcrumbList", "Pharmacy"] },
+	),
+	...swissPages(
+		{
+			"de-CH": "/ch/spital/zuerich",
+			"fr-CH": "/ch-fr/spital/zuerich",
+			"it-CH": "/ch-it/spital/zuerich",
+		},
+		{ robots: "index, follow", types: ["CollectionPage", "BreadcrumbList", "ItemList"] },
+	),
+	...swissPages(
+		{
+			"de-CH": "/ch/spital/bezirk-zuerich/zuerich",
+			"fr-CH": "/ch-fr/spital/bezirk-zuerich/zuerich",
+			"it-CH": "/ch-it/spital/bezirk-zuerich/zuerich",
+		},
+		{ robots: "index, follow", types: ["CollectionPage", "BreadcrumbList", "ItemList"] },
+	),
+	// A canton without districts: its stand-in district's listing is never indexed.
+	{
+		path: "/ch/apotheke/canton-de-geneve",
+		robots: "noindex, follow",
+		types: ["CollectionPage", "BreadcrumbList"],
+		lang: "de-CH",
+	},
 	{
 		path: "/fr/medecin-generaliste/75-paris",
 		robots: "index, follow",
@@ -291,6 +366,9 @@ const OG_LOCALES = {
 	"es-ES": "es_ES",
 	"it-IT": "it_IT",
 	"de-DE": "de_DE",
+	"de-CH": "de_CH",
+	"fr-CH": "fr_CH",
+	"it-CH": "it_CH",
 } as const;
 
 const FORBIDDEN_KEYS = ["aggregateRating", "review", "reviews", "ratingValue"];
@@ -418,7 +496,7 @@ for (const expected of PAGES) {
 		// facility's, an Italian place's) place would not fit with it.
 		if (!/ · Apercura$|^Apercura · /.test(title)) {
 			expect(expected.path).toMatch(
-				/^\/(?:fr(?:-[a-z]{2})?\/[a-z]+\/[a-z0-9-]+-\d{11}|at\/arzt\/[a-z0-9-]+-[a-z]{1,2}\d{1,9}|gb\/practice\/[a-z0-9-]+-[a-z0-9]{2,12}|cz\/zarizeni\/[a-z0-9-]+-\d{1,9}|es\/centro\/[a-z0-9-]+-\d{10}|it\/struttura\/[a-z0-9-]+-[fps]\d{1,8}|de\/einrichtung\/[a-z0-9-]+-(?:k|r|bb)[0-9a-f]{10}|de\/einrichtung\/[a-z0-9-]+-th\d{1,7})$/,
+				/^\/(?:fr(?:-[a-z]{2})?\/[a-z]+\/[a-z0-9-]+-\d{11}|at\/arzt\/[a-z0-9-]+-[a-z]{1,2}\d{1,9}|gb\/practice\/[a-z0-9-]+-[a-z0-9]{2,12}|cz\/zarizeni\/[a-z0-9-]+-\d{1,9}|es\/centro\/[a-z0-9-]+-\d{10}|it\/struttura\/[a-z0-9-]+-[fps]\d{1,8}|de\/einrichtung\/[a-z0-9-]+-(?:k|r|bb)[0-9a-f]{10}|de\/einrichtung\/[a-z0-9-]+-th\d{1,7}|ch(?:-fr|-it)?\/(?:einrichtung|etablissement|struttura)\/[a-z0-9-]+-[a-z]{1,3}\d{1,14})$/,
 			);
 			expect(`${title} · Apercura`.length).toBeGreaterThan(60);
 		}
@@ -443,8 +521,8 @@ for (const expected of PAGES) {
 				href: link.href?.replace(/\/$/, ""),
 			}));
 		if (expected.hreflang) {
-			// The homes of the open markets and the international one.
-			expect(alternates).toHaveLength(8);
+			// The homes of the open markets (Switzerland's three) and the international one.
+			expect(alternates).toHaveLength(11);
 			expect(alternates).toEqual(
 				expect.arrayContaining([
 					{ rel: "alternate", hreflang: "fr-FR", href: `${origin}/fr` },
@@ -454,14 +532,34 @@ for (const expected of PAGES) {
 					{ rel: "alternate", hreflang: "es-ES", href: `${origin}/es` },
 					{ rel: "alternate", hreflang: "it-IT", href: `${origin}/it` },
 					{ rel: "alternate", hreflang: "de-DE", href: `${origin}/de` },
+					{ rel: "alternate", hreflang: "de-CH", href: `${origin}/ch` },
+					{ rel: "alternate", hreflang: "fr-CH", href: `${origin}/ch-fr` },
+					{ rel: "alternate", hreflang: "it-CH", href: `${origin}/ch-it` },
 					{ rel: "alternate", hreflang: "x-default", href: origin },
 				]),
+			);
+		} else if (expected.swiss && expected.robots === "index, follow") {
+			// The same Swiss page in its three languages, and nothing towards another market.
+			expect(alternates).toHaveLength(3);
+			expect(alternates).toEqual(
+				expect.arrayContaining(
+					(["de-CH", "fr-CH", "it-CH"] as const).map((hreflang) => ({
+						rel: "alternate",
+						hreflang,
+						href: `${origin}${expected.swiss?.[hreflang] ?? ""}`,
+					})),
+				),
 			);
 		} else {
 			expect(alternates).toEqual([]);
 		}
 		expect(response.headers().link ?? "").not.toContain("hreflang");
-		if (expected.robots === "noindex, follow" && (expected.lang ?? "fr") !== "fr") {
+		// An interface translation (`/fr-en`…) is noindex by its locale, in a header too; a market
+		// language's page (Switzerland's stand-in districts) only by its data, in the page.
+		if (
+			expected.robots === "noindex, follow" &&
+			["en", "de", "es", "it"].includes(expected.lang ?? "fr")
+		) {
 			expect(response.headers()["x-robots-tag"]).toContain("noindex");
 		} else if (expected.robots === "index, follow") {
 			expect(response.headers()["x-robots-tag"]).toBeUndefined();
@@ -475,7 +573,7 @@ for (const expected of PAGES) {
 		// for an Italian place, `de.{slug}` for a German facility), others a generic image.
 		expect(page.meta("og:image")[0]).toMatch(
 			new RegExp(
-				`^${origin}/og/(?:praticien/(?:gb\\.|cz\\.|es\\.|it\\.|de\\.)?[a-z0-9-]+|[a-z-]+)\\.png$`,
+				`^${origin}/og/(?:praticien/(?:gb\\.|cz\\.|es\\.|it\\.|de\\.|ch\\.)?[a-z0-9-]+|[a-z-]+)\\.png$`,
 			),
 		);
 		expect(page.meta("twitter:card")).toEqual(["summary_large_image"]);
@@ -525,7 +623,9 @@ for (const expected of PAGES) {
 									? "IT"
 									: expected.path.startsWith("/de")
 										? "DE"
-										: "FR",
+										: expected.path.startsWith("/ch")
+											? "CH"
+											: "FR",
 			);
 			expect(address?.addressLocality ?? address?.postalCode, node["@id"]).toBeTruthy();
 		}
@@ -547,7 +647,13 @@ for (const expected of PAGES) {
 										? `${origin}/it`
 										: lang === "de-DE"
 											? `${origin}/de`
-											: `${origin}/fr-${lang}`;
+											: lang === "de-CH"
+												? `${origin}/ch`
+												: lang === "fr-CH"
+													? `${origin}/ch-fr`
+													: lang === "it-CH"
+														? `${origin}/ch-it`
+														: `${origin}/fr-${lang}`;
 			expect(items[0]?.item).toBe(home);
 			items.forEach((item, index) => {
 				expect(item.position).toBe(index + 1);
@@ -772,6 +878,9 @@ test.describe("status codes and redirects", () => {
 		["/en", "/fr-en", 307],
 		["/en/legal-notice", "/fr-en/legal-notice", 307],
 		["/sitemaps/pages-0.xml", "/sitemaps/fr/pages-0.xml", 301],
+		// `/ch-de` names Switzerland's German pages, which live at `/ch`: for good.
+		["/ch-de", "/ch", 301],
+		["/ch-de/impressum", "/ch/impressum", 301],
 	] as const) {
 		test(`${from} (former scheme) answers ${status} to ${to}`, async ({ request }) => {
 			const response = await request.get(from, { maxRedirects: 0 });
@@ -894,8 +1003,13 @@ test.describe("sitemaps", () => {
 		expect(chunks).toContain(`${origin}/sitemaps/it/praticiens-0.xml`);
 		expect(chunks).toContain(`${origin}/sitemaps/de/pages-0.xml`);
 		expect(chunks).toContain(`${origin}/sitemaps/de/praticiens-0.xml`);
+		// Switzerland's files under each of its languages.
+		for (const segment of ["ch", "ch-fr", "ch-it"]) {
+			expect(chunks).toContain(`${origin}/sitemaps/${segment}/pages-0.xml`);
+			expect(chunks).toContain(`${origin}/sitemaps/${segment}/praticiens-0.xml`);
+		}
 		for (const chunk of chunks.slice(1))
-			expect(/\/sitemaps\/(fr|at|gb|cz|es|it|de)\//.test(chunk), chunk).toBe(true);
+			expect(/\/sitemaps\/(fr|at|gb|cz|es|it|de|ch|ch-fr|ch-it)\//.test(chunk), chunk).toBe(true);
 		for (const lastmod of indexXml.matchAll(LASTMOD)) {
 			expect(lastmod[1]).toMatch(/^\d{4}-\d{2}-\d{2}$/);
 		}
@@ -931,6 +1045,9 @@ test.describe("sitemaps", () => {
 		expect(urls).toContain(`${origin}/de`);
 		// A kreisfreie Stadt's city page is its Kreis's: never a URL of its own.
 		expect(urls).not.toContain(`${origin}/de/krankenhaeuser/potsdam/potsdam`);
+		expect(urls).toContain(`${origin}/ch`);
+		expect(urls).toContain(`${origin}/ch-fr`);
+		expect(urls).toContain(`${origin}/ch-it`);
 
 		await mapConcurrently(urls, SITEMAP_CONCURRENCY, async (url) => {
 			// owner.spec.ts removes and restores this claimed page while the specs run in
@@ -938,8 +1055,8 @@ test.describe("sitemaps", () => {
 			if (MUTATED_BY_OTHER_SPECS.some((path) => url === `${origin}${path}`)) return;
 			// The international home and each market's own language: France in French, Austria in
 			// German, the UK in English, Czechia in Czech, Spain in Spanish, Italy in Italian, Germany
-			// in German.
-			// Interface translations (/fr-de, /fr-es…) are never listed.
+			// in German,
+			// Switzerland in its three. Interface translations (/fr-de, /fr-es…) are never listed.
 			expect(
 				url === `${origin}/` ||
 					[
@@ -950,6 +1067,9 @@ test.describe("sitemaps", () => {
 						`${origin}/es`,
 						`${origin}/it`,
 						`${origin}/de`,
+						`${origin}/ch`,
+						`${origin}/ch-fr`,
+						`${origin}/ch-it`,
 					].some((home) => url === home || url.startsWith(`${home}/`)),
 				url,
 			).toBe(true);

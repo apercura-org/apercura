@@ -7,12 +7,15 @@ import { JsonLd } from "~/components/json-ld";
 import { type LanguageOffer, LanguageSuggestion } from "~/components/language-suggestion";
 import { ThemeSwitch } from "~/components/theme-switch";
 import { serverEnv } from "~/env";
-import { LOCALE_TAGS, LOCALES, marketOf, OG_LOCALES } from "~/i18n/locales";
+import { CATALOG_LANGUAGES, LOCALE_TAGS, LOCALES, marketOf, OG_LOCALES } from "~/i18n/locales";
 import { getPathname, type Href } from "~/i18n/navigation";
 import { LINKS } from "~/lib/links";
 import { INTERNATIONAL_LOCALE, MARKETS, type Market } from "~/lib/markets";
 
-/** The other languages a market's pages are read in (France: en, de, es, it; Austria: none). */
+/**
+ * The other languages a market's pages are read in (France: en, de, es, it; Switzerland: French
+ * and Italian beside its German; Austria: none).
+ */
 function languagesOf(market: Extract<Market, { status: "open" }>) {
 	return LOCALES.filter(
 		(locale) => locale !== market.locale && marketOf(locale) === market.country,
@@ -162,7 +165,8 @@ export default async function InternationalHome() {
 														hrefLang={locale}
 														className={footerLink}
 													>
-														{tLocale("locale", { locale })}
+														{/* A language's name, whatever the market (`fr-CH` reads "Français"). */}
+														{tLocale("locale", { locale: CATALOG_LANGUAGES[locale] })}
 													</a>
 												</span>
 											))}

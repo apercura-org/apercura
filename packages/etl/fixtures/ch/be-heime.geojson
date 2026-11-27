@@ -1,0 +1,875 @@
+{
+ "type": "FeatureCollection",
+ "crs": {
+  "type": "name",
+  "properties": {
+   "name": "EPSG:4326"
+  }
+ },
+ "features": [
+  {
+   "type": "Feature",
+   "properties": {
+    "GmlID": "ILV_STOALTER_VW_20214.1",
+    "Object-Id": 1,
+    "INAME": "Alterszentrum Beispiel",
+    "ADRESSE": "Mustermattweg 1",
+    "PLZ": 3008,
+    "ORTSCHAFT": "Bern",
+    "TRNAME": "Stiftung Altersheime Muster",
+    "TELEFON": "+41 31 999 10 00",
+    "URL": "www.example.ch",
+    "EMAIL": "erika.fiktiva@example.ch",
+    "E_KOORD": 2600000,
+    "N_KOORD": 1200000,
+    "ALTERSHEIM": 1,
+    "TAGESTBETA": 0,
+    "WOHNMITDL": 0
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     7.429,
+     46.948
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "GmlID": "ILV_STOALTER_VW_20214.2",
+    "Object-Id": 2,
+    "INAME": "Pflegeheim Muster 2",
+    "ADRESSE": "Mustermattweg 2",
+    "PLZ": 3010,
+    "ORTSCHAFT": "Bern",
+    "TRNAME": "Stiftung Altersheime Muster",
+    "TELEFON": "+41 31 999 11 00",
+    "URL": "www.example.ch",
+    "EMAIL": "erika.fiktiva@example.ch",
+    "E_KOORD": 2600001,
+    "N_KOORD": 1200001,
+    "ALTERSHEIM": 1,
+    "TAGESTBETA": 0,
+    "WOHNMITDL": 0
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     7.426,
+     46.9537
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "GmlID": "ILV_STOALTER_VW_20214.3",
+    "Object-Id": 3,
+    "INAME": "Pflegeheim Muster 3",
+    "ADRESSE": "Mustermattweg 3",
+    "PLZ": 3074,
+    "ORTSCHAFT": "Muri b. Bern",
+    "TRNAME": "Stiftung Altersheime Muster",
+    "TELEFON": "+41 31 999 12 00",
+    "URL": "www.example.ch",
+    "EMAIL": "erika.fiktiva@example.ch",
+    "E_KOORD": 2600002,
+    "N_KOORD": 1200002,
+    "ALTERSHEIM": 1,
+    "TAGESTBETA": 0,
+    "WOHNMITDL": 0
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     7.489,
+     46.9324
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "GmlID": "ILV_STOALTER_VW_20214.4",
+    "Object-Id": 4,
+    "INAME": "Pflegeheim Muster 4",
+    "ADRESSE": "Mustermattweg 4",
+    "PLZ": 2502,
+    "ORTSCHAFT": "Biel/Bienne",
+    "TRNAME": "Stiftung Altersheime Muster",
+    "TELEFON": "+41 31 999 13 00",
+    "URL": "www.example.ch",
+    "EMAIL": "erika.fiktiva@example.ch",
+    "E_KOORD": 2600003,
+    "N_KOORD": 1200003,
+    "ALTERSHEIM": 1,
+    "TAGESTBETA": 0,
+    "WOHNMITDL": 0
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     7.25,
+     47.1391
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "GmlID": "ILV_STOALTER_VW_20214.5",
+    "Object-Id": 5,
+    "INAME": "Pflegeheim Muster 5",
+    "ADRESSE": "Mustermattweg 5",
+    "PLZ": 3008,
+    "ORTSCHAFT": "Bern",
+    "TRNAME": "Stiftung Altersheime Muster",
+    "TELEFON": "+41 31 999 14 00",
+    "URL": "www.example.ch",
+    "EMAIL": "erika.fiktiva@example.ch",
+    "E_KOORD": 2600004,
+    "N_KOORD": 1200004,
+    "ALTERSHEIM": 1,
+    "TAGESTBETA": 0,
+    "WOHNMITDL": 0
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     7.433,
+     46.9508
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "GmlID": "ILV_STOALTER_VW_20214.6",
+    "Object-Id": 6,
+    "INAME": "Pflegeheim Muster 6",
+    "ADRESSE": "Mustermattweg 6",
+    "PLZ": 3010,
+    "ORTSCHAFT": "Bern",
+    "TRNAME": "Stiftung Altersheime Muster",
+    "TELEFON": "+41 31 999 15 00",
+    "URL": "www.example.ch",
+    "EMAIL": "erika.fiktiva@example.ch",
+    "E_KOORD": 2600005,
+    "N_KOORD": 1200005,
+    "ALTERSHEIM": 1,
+    "TAGESTBETA": 0,
+    "WOHNMITDL": 0
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     7.43,
+     46.953
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "GmlID": "ILV_STOALTER_VW_20214.7",
+    "Object-Id": 7,
+    "INAME": "Pflegeheim Muster 7",
+    "ADRESSE": "Mustermattweg 7",
+    "PLZ": 3074,
+    "ORTSCHAFT": "Muri b. Bern",
+    "TRNAME": "Stiftung Altersheime Muster",
+    "TELEFON": "+41 31 999 16 00",
+    "URL": "www.example.ch",
+    "EMAIL": "erika.fiktiva@example.ch",
+    "E_KOORD": 2600006,
+    "N_KOORD": 1200006,
+    "ALTERSHEIM": 1,
+    "TAGESTBETA": 0,
+    "WOHNMITDL": 0
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     7.493,
+     46.9317
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "GmlID": "ILV_STOALTER_VW_20214.8",
+    "Object-Id": 8,
+    "INAME": "Pflegeheim Muster 8",
+    "ADRESSE": "Mustermattweg 8",
+    "PLZ": 2502,
+    "ORTSCHAFT": "Biel/Bienne",
+    "TRNAME": "Stiftung Altersheime Muster",
+    "TELEFON": "+41 31 999 17 00",
+    "URL": "www.example.ch",
+    "EMAIL": "erika.fiktiva@example.ch",
+    "E_KOORD": 2600007,
+    "N_KOORD": 1200007,
+    "ALTERSHEIM": 1,
+    "TAGESTBETA": 0,
+    "WOHNMITDL": 0
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     7.247,
+     47.1384
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "GmlID": "ILV_STOALTER_VW_20214.9",
+    "Object-Id": 9,
+    "INAME": "Pflegeheim Muster 9",
+    "ADRESSE": "Mustermattweg 9",
+    "PLZ": 3008,
+    "ORTSCHAFT": "Bern",
+    "TRNAME": "Stiftung Altersheime Muster",
+    "TELEFON": "+41 31 999 18 00",
+    "URL": "www.example.ch",
+    "EMAIL": "erika.fiktiva@example.ch",
+    "E_KOORD": 2600008,
+    "N_KOORD": 1200008,
+    "ALTERSHEIM": 1,
+    "TAGESTBETA": 0,
+    "WOHNMITDL": 0
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     7.43,
+     46.9501
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "GmlID": "ILV_STOALTER_VW_20214.10",
+    "Object-Id": 10,
+    "INAME": "Pflegeheim Muster 10",
+    "ADRESSE": "Mustermattweg 10",
+    "PLZ": 3010,
+    "ORTSCHAFT": "Bern",
+    "TRNAME": "Stiftung Altersheime Muster",
+    "TELEFON": "+41 31 999 19 00",
+    "URL": "www.example.ch",
+    "EMAIL": "erika.fiktiva@example.ch",
+    "E_KOORD": 2600009,
+    "N_KOORD": 1200009,
+    "ALTERSHEIM": 1,
+    "TAGESTBETA": 0,
+    "WOHNMITDL": 0
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     7.427,
+     46.9558
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "GmlID": "ILV_STOALTER_VW_20214.11",
+    "Object-Id": 11,
+    "INAME": "Pflegeheim Muster 11",
+    "ADRESSE": "Mustermattweg 11",
+    "PLZ": 3074,
+    "ORTSCHAFT": "Muri b. Bern",
+    "TRNAME": "Stiftung Altersheime Muster",
+    "TELEFON": "+41 31 999 20 00",
+    "URL": "www.example.ch",
+    "EMAIL": "erika.fiktiva@example.ch",
+    "E_KOORD": 2600010,
+    "N_KOORD": 1200010,
+    "ALTERSHEIM": 1,
+    "TAGESTBETA": 0,
+    "WOHNMITDL": 0
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     7.49,
+     46.931
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "GmlID": "ILV_STOALTER_VW_20214.12",
+    "Object-Id": 12,
+    "INAME": "Pflegeheim Muster 12",
+    "ADRESSE": "Mustermattweg 12",
+    "PLZ": 2502,
+    "ORTSCHAFT": "Biel/Bienne",
+    "TRNAME": "Stiftung Altersheime Muster",
+    "TELEFON": "+41 31 999 21 00",
+    "URL": "www.example.ch",
+    "EMAIL": "erika.fiktiva@example.ch",
+    "E_KOORD": 2600011,
+    "N_KOORD": 1200011,
+    "ALTERSHEIM": 1,
+    "TAGESTBETA": 0,
+    "WOHNMITDL": 0
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     7.251,
+     47.1377
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "GmlID": "ILV_STOALTER_VW_20214.13",
+    "Object-Id": 13,
+    "INAME": "Pflegeheim Muster 13",
+    "ADRESSE": "Mustermattweg 13",
+    "PLZ": 3008,
+    "ORTSCHAFT": "Bern",
+    "TRNAME": "Stiftung Altersheime Muster",
+    "TELEFON": "+41 31 999 22 00",
+    "URL": "www.example.ch",
+    "EMAIL": "erika.fiktiva@example.ch",
+    "E_KOORD": 2600012,
+    "N_KOORD": 1200012,
+    "ALTERSHEIM": 1,
+    "TAGESTBETA": 0,
+    "WOHNMITDL": 0
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     7.434,
+     46.9494
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "GmlID": "ILV_STOALTER_VW_20214.14",
+    "Object-Id": 14,
+    "INAME": "Pflegeheim Muster 14",
+    "ADRESSE": "Mustermattweg 14",
+    "PLZ": 3010,
+    "ORTSCHAFT": "Bern",
+    "TRNAME": "Stiftung Altersheime Muster",
+    "TELEFON": "+41 31 999 23 00",
+    "URL": "www.example.ch",
+    "EMAIL": "erika.fiktiva@example.ch",
+    "E_KOORD": 2600013,
+    "N_KOORD": 1200013,
+    "ALTERSHEIM": 1,
+    "TAGESTBETA": 0,
+    "WOHNMITDL": 0
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     7.431,
+     46.9551
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "GmlID": "ILV_STOALTER_VW_20214.15",
+    "Object-Id": 15,
+    "INAME": "Pflegeheim Muster 15",
+    "ADRESSE": "Mustermattweg 15",
+    "PLZ": 3074,
+    "ORTSCHAFT": "Muri b. Bern",
+    "TRNAME": "Stiftung Altersheime Muster",
+    "TELEFON": "+41 31 999 24 00",
+    "URL": "www.example.ch",
+    "EMAIL": "erika.fiktiva@example.ch",
+    "E_KOORD": 2600014,
+    "N_KOORD": 1200014,
+    "ALTERSHEIM": 1,
+    "TAGESTBETA": 0,
+    "WOHNMITDL": 0
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     7.487,
+     46.9338
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "GmlID": "ILV_STOALTER_VW_20214.16",
+    "Object-Id": 16,
+    "INAME": "Pflegeheim Muster 16",
+    "ADRESSE": "Mustermattweg 16",
+    "PLZ": 2502,
+    "ORTSCHAFT": "Biel/Bienne",
+    "TRNAME": "Stiftung Altersheime Muster",
+    "TELEFON": "+41 31 999 25 00",
+    "URL": "www.example.ch",
+    "EMAIL": "erika.fiktiva@example.ch",
+    "E_KOORD": 2600015,
+    "N_KOORD": 1200015,
+    "ALTERSHEIM": 1,
+    "TAGESTBETA": 0,
+    "WOHNMITDL": 0
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     7.248,
+     47.137
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "GmlID": "ILV_STOALTER_VW_20214.17",
+    "Object-Id": 17,
+    "INAME": "Pflegeheim Muster 17",
+    "ADRESSE": "Mustermattweg 17",
+    "PLZ": 3008,
+    "ORTSCHAFT": "Bern",
+    "TRNAME": "Stiftung Altersheime Muster",
+    "TELEFON": "+41 31 999 26 00",
+    "URL": "www.example.ch",
+    "EMAIL": "erika.fiktiva@example.ch",
+    "E_KOORD": 2600016,
+    "N_KOORD": 1200016,
+    "ALTERSHEIM": 1,
+    "TAGESTBETA": 0,
+    "WOHNMITDL": 0
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     7.431,
+     46.9487
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "GmlID": "ILV_STOALTER_VW_20214.18",
+    "Object-Id": 18,
+    "INAME": "Pflegeheim Muster 18",
+    "ADRESSE": "Mustermattweg 18",
+    "PLZ": 3010,
+    "ORTSCHAFT": "Bern",
+    "TRNAME": "Stiftung Altersheime Muster",
+    "TELEFON": "+41 31 999 27 00",
+    "URL": "www.example.ch",
+    "EMAIL": "erika.fiktiva@example.ch",
+    "E_KOORD": 2600017,
+    "N_KOORD": 1200017,
+    "ALTERSHEIM": 1,
+    "TAGESTBETA": 0,
+    "WOHNMITDL": 0
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     7.428,
+     46.9544
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "GmlID": "ILV_STOALTER_VW_20214.19",
+    "Object-Id": 19,
+    "INAME": "Pflegeheim Muster 19",
+    "ADRESSE": "Mustermattweg 19",
+    "PLZ": 3074,
+    "ORTSCHAFT": "Muri b. Bern",
+    "TRNAME": "Stiftung Altersheime Muster",
+    "TELEFON": "+41 31 999 28 00",
+    "URL": "www.example.ch",
+    "EMAIL": "erika.fiktiva@example.ch",
+    "E_KOORD": 2600018,
+    "N_KOORD": 1200018,
+    "ALTERSHEIM": 1,
+    "TAGESTBETA": 0,
+    "WOHNMITDL": 0
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     7.491,
+     46.9331
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "GmlID": "ILV_STOALTER_VW_20214.20",
+    "Object-Id": 20,
+    "INAME": "Pflegeheim Muster 20",
+    "ADRESSE": "Mustermattweg 20",
+    "PLZ": 2502,
+    "ORTSCHAFT": "Biel/Bienne",
+    "TRNAME": "Stiftung Altersheime Muster",
+    "TELEFON": "+41 31 999 29 00",
+    "URL": "www.example.ch",
+    "EMAIL": "erika.fiktiva@example.ch",
+    "E_KOORD": 2600019,
+    "N_KOORD": 1200019,
+    "ALTERSHEIM": 1,
+    "TAGESTBETA": 0,
+    "WOHNMITDL": 0
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     7.252,
+     47.1398
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "GmlID": "ILV_STOALTER_VW_20214.21",
+    "Object-Id": 21,
+    "INAME": "Pflegeheim Muster 21",
+    "ADRESSE": "Mustermattweg 21",
+    "PLZ": 3008,
+    "ORTSCHAFT": "Bern",
+    "TRNAME": "Stiftung Altersheime Muster",
+    "TELEFON": "+41 31 999 30 00",
+    "URL": "www.example.ch",
+    "EMAIL": "erika.fiktiva@example.ch",
+    "E_KOORD": 2600020,
+    "N_KOORD": 1200020,
+    "ALTERSHEIM": 1,
+    "TAGESTBETA": 0,
+    "WOHNMITDL": 0
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     7.435,
+     46.948
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "GmlID": "ILV_STOALTER_VW_20214.22",
+    "Object-Id": 22,
+    "INAME": "Pflegeheim Muster 22",
+    "ADRESSE": "Mustermattweg 22",
+    "PLZ": 3010,
+    "ORTSCHAFT": "Bern",
+    "TRNAME": "Stiftung Altersheime Muster",
+    "TELEFON": "+41 31 999 31 00",
+    "URL": "www.example.ch",
+    "EMAIL": "erika.fiktiva@example.ch",
+    "E_KOORD": 2600021,
+    "N_KOORD": 1200021,
+    "ALTERSHEIM": 1,
+    "TAGESTBETA": 0,
+    "WOHNMITDL": 0
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     7.425,
+     46.9537
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "GmlID": "ILV_STOALTER_VW_20214.23",
+    "Object-Id": 23,
+    "INAME": "Pflegeheim Muster 23",
+    "ADRESSE": "Mustermattweg 23",
+    "PLZ": 3074,
+    "ORTSCHAFT": "Muri b. Bern",
+    "TRNAME": "Stiftung Altersheime Muster",
+    "TELEFON": "+41 31 999 32 00",
+    "URL": "www.example.ch",
+    "EMAIL": "erika.fiktiva@example.ch",
+    "E_KOORD": 2600022,
+    "N_KOORD": 1200022,
+    "ALTERSHEIM": 1,
+    "TAGESTBETA": 0,
+    "WOHNMITDL": 0
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     7.488,
+     46.9324
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "GmlID": "ILV_STOALTER_VW_20214.24",
+    "Object-Id": 24,
+    "INAME": "Pflegeheim Muster 24",
+    "ADRESSE": "Mustermattweg 24",
+    "PLZ": 2502,
+    "ORTSCHAFT": "Biel/Bienne",
+    "TRNAME": "Stiftung Altersheime Muster",
+    "TELEFON": "+41 31 999 33 00",
+    "URL": "www.example.ch",
+    "EMAIL": "erika.fiktiva@example.ch",
+    "E_KOORD": 2600023,
+    "N_KOORD": 1200023,
+    "ALTERSHEIM": 1,
+    "TAGESTBETA": 0,
+    "WOHNMITDL": 0
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     7.249,
+     47.1391
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "GmlID": "ILV_STOALTER_VW_20214.25",
+    "Object-Id": 25,
+    "INAME": "Pflegeheim Muster 25",
+    "ADRESSE": "Mustermattweg 25",
+    "PLZ": 3008,
+    "ORTSCHAFT": "Bern",
+    "TRNAME": "Stiftung Altersheime Muster",
+    "TELEFON": "+41 31 999 34 00",
+    "URL": "www.example.ch",
+    "EMAIL": "erika.fiktiva@example.ch",
+    "E_KOORD": 2600024,
+    "N_KOORD": 1200024,
+    "ALTERSHEIM": 1,
+    "TAGESTBETA": 0,
+    "WOHNMITDL": 0
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     7.432,
+     46.9508
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "GmlID": "ILV_STOALTER_VW_20214.26",
+    "Object-Id": 26,
+    "INAME": "Pflegeheim Muster 26",
+    "ADRESSE": "Mustermattweg 26",
+    "PLZ": 3010,
+    "ORTSCHAFT": "Bern",
+    "TRNAME": "Stiftung Altersheime Muster",
+    "TELEFON": "+41 31 999 35 00",
+    "URL": "www.example.ch",
+    "EMAIL": "erika.fiktiva@example.ch",
+    "E_KOORD": 2600025,
+    "N_KOORD": 1200025,
+    "ALTERSHEIM": 1,
+    "TAGESTBETA": 0,
+    "WOHNMITDL": 0
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     7.429,
+     46.953
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "GmlID": "ILV_STOALTER_VW_20214.27",
+    "Object-Id": 27,
+    "INAME": "Pflegeheim Muster 27",
+    "ADRESSE": "Mustermattweg 27",
+    "PLZ": 3074,
+    "ORTSCHAFT": "Muri b. Bern",
+    "TRNAME": "Stiftung Altersheime Muster",
+    "TELEFON": "+41 31 999 36 00",
+    "URL": "www.example.ch",
+    "EMAIL": "erika.fiktiva@example.ch",
+    "E_KOORD": 2600026,
+    "N_KOORD": 1200026,
+    "ALTERSHEIM": 1,
+    "TAGESTBETA": 0,
+    "WOHNMITDL": 0
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     7.492,
+     46.9317
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "GmlID": "ILV_STOALTER_VW_20214.28",
+    "Object-Id": 28,
+    "INAME": "Pflegeheim Muster 28",
+    "ADRESSE": "Mustermattweg 28",
+    "PLZ": 2502,
+    "ORTSCHAFT": "Biel/Bienne",
+    "TRNAME": "Stiftung Altersheime Muster",
+    "TELEFON": "+41 31 999 37 00",
+    "URL": "www.example.ch",
+    "EMAIL": "erika.fiktiva@example.ch",
+    "E_KOORD": 2600027,
+    "N_KOORD": 1200027,
+    "ALTERSHEIM": 1,
+    "TAGESTBETA": 0,
+    "WOHNMITDL": 0
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     7.253,
+     47.1384
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "GmlID": "ILV_STOALTER_VW_20214.29",
+    "Object-Id": 29,
+    "INAME": "Pflegeheim Muster 29",
+    "ADRESSE": "Mustermattweg 29",
+    "PLZ": 3008,
+    "ORTSCHAFT": "Bern",
+    "TRNAME": "Stiftung Altersheime Muster",
+    "TELEFON": "+41 31 999 38 00",
+    "URL": "www.example.ch",
+    "EMAIL": "erika.fiktiva@example.ch",
+    "E_KOORD": 2600028,
+    "N_KOORD": 1200028,
+    "ALTERSHEIM": 1,
+    "TAGESTBETA": 0,
+    "WOHNMITDL": 0
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     7.429,
+     46.9501
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "GmlID": "ILV_STOALTER_VW_20214.30",
+    "Object-Id": 30,
+    "INAME": "Pflegeheim Muster 30",
+    "ADRESSE": "Mustermattweg 30",
+    "PLZ": 3010,
+    "ORTSCHAFT": "Bern",
+    "TRNAME": "Stiftung Altersheime Muster",
+    "TELEFON": "+41 31 999 39 00",
+    "URL": "www.example.ch",
+    "EMAIL": "erika.fiktiva@example.ch",
+    "E_KOORD": 2600029,
+    "N_KOORD": 1200029,
+    "ALTERSHEIM": 1,
+    "TAGESTBETA": 0,
+    "WOHNMITDL": 0
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     7.426,
+     46.9558
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "GmlID": "ILV_STOALTER_VW_20214.31",
+    "Object-Id": 31,
+    "INAME": "Pflegeheim Muster 31",
+    "ADRESSE": "Mustermattweg 31",
+    "PLZ": 3074,
+    "ORTSCHAFT": "Muri b. Bern",
+    "TRNAME": "Stiftung Altersheime Muster",
+    "TELEFON": "+41 31 999 40 00",
+    "URL": "www.example.ch",
+    "EMAIL": "erika.fiktiva@example.ch",
+    "E_KOORD": 2600030,
+    "N_KOORD": 1200030,
+    "ALTERSHEIM": 1,
+    "TAGESTBETA": 0,
+    "WOHNMITDL": 0
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     7.489,
+     46.931
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "GmlID": "ILV_STOALTER_VW_20214.32",
+    "Object-Id": 32,
+    "INAME": "Pflegeheim Muster 32",
+    "ADRESSE": "Mustermattweg 32",
+    "PLZ": 2502,
+    "ORTSCHAFT": "Biel/Bienne",
+    "TRNAME": "Stiftung Altersheime Muster",
+    "TELEFON": "+41 31 999 41 00",
+    "URL": "www.example.ch",
+    "EMAIL": "erika.fiktiva@example.ch",
+    "E_KOORD": 2600031,
+    "N_KOORD": 1200031,
+    "ALTERSHEIM": 1,
+    "TAGESTBETA": 0,
+    "WOHNMITDL": 0
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     7.25,
+     47.1377
+    ]
+   }
+  }
+ ]
+}

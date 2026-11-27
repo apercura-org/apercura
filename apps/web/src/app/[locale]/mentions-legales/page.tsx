@@ -3,6 +3,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { BookletPage } from "~/components/booklet-page";
 import { InstitutionalCover, LegalFactRow, ProseSection } from "~/components/institutional";
 import { ImpressumAt } from "~/components/legal-at";
+import { LegalNoticeCh } from "~/components/legal-ch";
 import { LegalNoticeCz } from "~/components/legal-cz";
 import { ImpressumDe } from "~/components/legal-de";
 import { LegalNoticeEs } from "~/components/legal-es";
@@ -32,6 +33,7 @@ export function generateMetadata({ params }: PageProps<"/[locale]/mentions-legal
 			ES: "LegalNoticeEs",
 			IT: "LegalNoticeIt",
 			DE: "ImpressumDe",
+			CH: "LegalNoticeCh",
 		},
 		HREF,
 	);
@@ -53,6 +55,7 @@ export default async function LegalPage({ params }: PageProps<"/[locale]/mention
 	if (marketOf(locale) === "ES") return <LegalNoticeEs locale={locale} />;
 	if (marketOf(locale) === "IT") return <LegalNoticeIt locale={locale} />;
 	if (marketOf(locale) === "DE") return <ImpressumDe locale={locale} />;
+	if (marketOf(locale) === "CH") return <LegalNoticeCh locale={locale} />;
 	const t = await getTranslations({ locale, namespace: "LegalPage" });
 	const tI = await getTranslations({ locale, namespace: "Institutional" });
 	const section = await proseSections(locale, "LegalPage");

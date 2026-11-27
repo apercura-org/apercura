@@ -255,6 +255,24 @@ every month at 22:30 UTC; unchanged files end the run after their download
 (`ETL_DE_SCHEDULE_ARGS` narrows it, e.g. `--sources khv,rhv`); exit code `3`
 when a source was left out ([data-import.md](./data-import.md#germany)).
 
+Switzerland (`/ch`, `/ch-fr`, `/ch-it`) has its own import, from the FOPH's
+hospital figures and the cantons' open lists (about 1,400 hospitals and clinic
+sites, nursing homes and pharmacies). Import the places first, then dry-run it
+once:
+
+```sh
+apercura-compose run --rm --entrypoint "apercura etl:places" etl --country ch
+apercura-compose run --rm --entrypoint "apercura etl:ch" etl --dry-run
+apercura-compose run --rm --entrypoint "apercura etl:ch" etl
+```
+
+The places are the BFS commune register's cantons, districts and communes and
+swisstopo's postcode directory (the first `etl:ch` imports them too); rerun
+`etl:places --country ch` each January. The scheduler reruns the import on the
+3rd of each month at 22:30 UTC (`ETL_CH_SCHEDULE_ARGS=--sources zh-heime` keeps
+it to some lists); exit code `3` as for Austria
+([data-import.md](./data-import.md#switzerland)).
+
 ## Scheduled jobs
 
 The `scheduler` service runs [`docker/crontab`](../docker/crontab) with

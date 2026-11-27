@@ -1,0 +1,277 @@
+{
+ "type": "FeatureCollection",
+ "features": [
+  {
+   "type": "Feature",
+   "properties": {
+    "OBJECTID": 100,
+    "NOM_SITE": "Pharmacie de l'Exemple",
+    "ADRESSE": "Rue de la Pharmacie-Modèle 1 (dans le Centre Exemple), 1205 Genève",
+    "VACCINATION": "VACCINATION",
+    "CONTACT": "Tel : 022 999 30 00"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     6.143,
+     46.196
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "OBJECTID": 101,
+    "NOM_SITE": "Pharmacie Modèle 2",
+    "ADRESSE": "Rue de la Pharmacie-Modèle 2 (dans le Centre Exemple), 1206 Genève",
+    "VACCINATION": "VACCINATION",
+    "CONTACT": "Tel : 022 999 31 00"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     6.155,
+     46.1927
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "OBJECTID": 102,
+    "NOM_SITE": "Pharmacie Modèle 3",
+    "ADRESSE": "Rue de la Pharmacie-Modèle 3 (dans le Centre Exemple), 1227 Carouge",
+    "VACCINATION": "VACCINATION",
+    "CONTACT": "Tel : 022 999 32 00"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     6.141,
+     46.1824
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "OBJECTID": 103,
+    "NOM_SITE": "Pharmacie Modèle 4",
+    "ADRESSE": "Rue de la Pharmacie-Modèle 4 (dans le Centre Exemple), 1205 Genève",
+    "VACCINATION": "VACCINATION",
+    "CONTACT": "Tel : 022 999 33 00"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     6.146,
+     46.1981
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "OBJECTID": 104,
+    "NOM_SITE": "Pharmacie Modèle 5",
+    "ADRESSE": "Rue de la Pharmacie-Modèle 5 (dans le Centre Exemple), 1206 Genève",
+    "VACCINATION": "VACCINATION",
+    "CONTACT": "Tel : 022 999 34 00"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     6.158,
+     46.1948
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "OBJECTID": 105,
+    "NOM_SITE": "Pharmacie Modèle 6",
+    "ADRESSE": "Rue de la Pharmacie-Modèle 6 (dans le Centre Exemple), 1227 Carouge",
+    "VACCINATION": "VACCINATION",
+    "CONTACT": "Tel : 022 999 35 00"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     6.144,
+     46.181
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "OBJECTID": 106,
+    "NOM_SITE": "Pharmacie Modèle 7",
+    "ADRESSE": "Rue de la Pharmacie-Modèle 7 (dans le Centre Exemple), 1205 Genève",
+    "VACCINATION": "VACCINATION",
+    "CONTACT": "Tel : 022 999 36 00"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     6.149,
+     46.1967
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "OBJECTID": 107,
+    "NOM_SITE": "Pharmacie Modèle 8",
+    "ADRESSE": "Rue de la Pharmacie-Modèle 8 (dans le Centre Exemple), 1206 Genève",
+    "VACCINATION": "VACCINATION",
+    "CONTACT": "Tel : 022 999 37 00"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     6.154,
+     46.1934
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "OBJECTID": 108,
+    "NOM_SITE": "Pharmacie Modèle 9",
+    "ADRESSE": "Rue de la Pharmacie-Modèle 9 (dans le Centre Exemple), 1227 Carouge",
+    "VACCINATION": "VACCINATION",
+    "CONTACT": "Tel : 022 999 38 00"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     6.14,
+     46.1831
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "OBJECTID": 109,
+    "NOM_SITE": "Pharmacie Modèle 10",
+    "ADRESSE": "Rue de la Pharmacie-Modèle 10 (dans le Centre Exemple), 1205 Genève",
+    "VACCINATION": "VACCINATION",
+    "CONTACT": "Tel : 022 999 39 00"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     6.145,
+     46.1988
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "OBJECTID": 110,
+    "NOM_SITE": "Pharmacie Modèle 11",
+    "ADRESSE": "Rue de la Pharmacie-Modèle 11 (dans le Centre Exemple), 1206 Genève",
+    "VACCINATION": "VACCINATION",
+    "CONTACT": "Tel : 022 999 40 00"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     6.157,
+     46.192
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "OBJECTID": 111,
+    "NOM_SITE": "Pharmacie Modèle 12",
+    "ADRESSE": "Rue de la Pharmacie-Modèle 12 (dans le Centre Exemple), 1227 Carouge",
+    "VACCINATION": "VACCINATION",
+    "CONTACT": "Tel : 022 999 41 00"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     6.143,
+     46.1817
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "OBJECTID": 112,
+    "NOM_SITE": "Pharmacie Modèle 13",
+    "ADRESSE": "Rue de la Pharmacie-Modèle 13 (dans le Centre Exemple), 1205 Genève",
+    "VACCINATION": "VACCINATION",
+    "CONTACT": "Tel : 022 999 42 00"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     6.148,
+     46.1974
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "OBJECTID": 113,
+    "NOM_SITE": "Pharmacie Modèle 14",
+    "ADRESSE": "Rue de la Pharmacie-Modèle 14 (dans le Centre Exemple), 1206 Genève",
+    "VACCINATION": "VACCINATION",
+    "CONTACT": "Tel : 022 999 43 00"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     6.16,
+     46.1941
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "OBJECTID": 114,
+    "NOM_SITE": "Pharmacie Modèle 15",
+    "ADRESSE": "Rue de la Pharmacie-Modèle 15 (dans le Centre Exemple), 1227 Carouge",
+    "VACCINATION": "VACCINATION",
+    "CONTACT": "Tel : 022 999 44 00"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     6.139,
+     46.1838
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "OBJECTID": 115,
+    "NOM_SITE": "Pharmacie Modèle 16",
+    "ADRESSE": "Rue de la Pharmacie-Modèle 16 (dans le Centre Exemple), 1205 Genève",
+    "VACCINATION": "VACCINATION",
+    "CONTACT": "Tel : 022 999 45 00"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     6.144,
+     46.196
+    ]
+   }
+  }
+ ]
+}

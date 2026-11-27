@@ -20,13 +20,15 @@ Usage: apercura <command> [arguments]
   etl:it [flags]         Import the Italian Ministry of Health's pharmacies and hospitals
   etl:de [flags]         Import the German directory of hospitals and clinics (Destatis)
                          and the Thuringian and Brandenburg pharmacy lists
+  etl:ch [flags]         Import the Swiss hospitals (FOPH) and the cantons' open lists
   etl:places [flags]     Import the communes, departments and regions (--country at: the
                          Austrian Bundesländer and Gemeinden; --country gb: the UK regions,
                          local authorities and towns; --country cz: the Czech regions,
                          districts and municipalities; --country es: the Spanish
                          communities, provinces and municipalities; --country it: the
                          Italian regions, provinces and municipalities; --country de: the
-                         German Länder, Kreise and Gemeinden)
+                         German Länder, Kreise and Gemeinden; --country ch: the Swiss
+                         cantons, districts and communes)
   etl:outbox             Send the pending cache tags to the app
   scheduler              Run jobs:tick and the cache warm-up every 5 minutes and the open data
                          imports (supercronic)
@@ -85,7 +87,7 @@ jobs | jobs:tick)
 	jobs_database_url
 	exec bun /app/cli/jobs.js "$@"
 	;;
-etl:fr | etl:at | etl:gb | etl:cz | etl:es | etl:it | etl:de | etl:places | etl:outbox)
+etl:fr | etl:at | etl:gb | etl:cz | etl:es | etl:it | etl:de | etl:ch | etl:places | etl:outbox)
 	# The import only uses APP_URL to send cache tags to the app: inside a private network it
 	# can reach it directly (INTERNAL_APP_URL, e.g. http://app:3000) instead of the public URL.
 	if [ -n "${INTERNAL_APP_URL:-}" ]; then

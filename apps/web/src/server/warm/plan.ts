@@ -49,7 +49,8 @@ export const chunkFile = (kind: SitemapKind, chunk: number, market: SitemapMarke
 
 /**
  * The unit key of a chunk: `{kind}-{chunk}` for France (the keys of the walks before Austria
- * opened, so a stored cursor still resumes), `{market}-{kind}-{chunk}` for another market.
+ * opened, so a stored cursor still resumes), `{market}-{kind}-{chunk}` for another market or
+ * language (`at-listes-0`, `ch-fr-listes-0`).
  */
 export const unitKey = (market: SitemapMarket, kind: SitemapKind, chunk: number) =>
 	market === "fr" ? `${kind}-${chunk}` : `${market}-${kind}-${chunk}`;
@@ -104,7 +105,8 @@ export function warmUnits(chunks: readonly SitemapChunk[]): WarmUnit[] {
 /** The rank of a unit key, or null for a key this version does not know. */
 export function rankOf(key: string): UnitRank | null {
 	if (key === PAGES_UNIT) return [0, 0];
-	const match = /^(?:([a-z]{2})-)?([a-z]+)-(\d+)$/.exec(key);
+	// `listes-3` (France), `at-listes-3`, `ch-fr-listes-3` (a market's other language).
+	const match = /^(?:([a-z]{2}(?:-[a-z]{2})?)-)?([a-z]+)-(\d+)$/.exec(key);
 	const market = (match?.[1] ?? "fr") as SitemapMarket;
 	const kind = match?.[2] as SitemapKind | undefined;
 	if (!match || !kind || !WARM_KIND_ORDER.includes(kind)) return null;

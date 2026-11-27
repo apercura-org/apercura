@@ -2,6 +2,7 @@ import "server-only";
 import { randomUUID } from "node:crypto";
 import {
 	type Fees,
+	normalizeChPostcode,
 	normalizeCzPostcode,
 	normalizeDePostcode,
 	normalizeEsPostcode,
@@ -224,7 +225,8 @@ export async function setSiteHidden(
  * town's name (a Prague district by its own, `Praha 8`); Spain by the municipality's name within
  * the province its postcode names (`28014` → Madrid's province, `28`); Italy by the comune's name,
  * a homonym in the province of the page's own place first; Germany by the Gemeinde's name, the one
- * whose postcodes hold the postcode first.
+ * whose postcodes hold the postcode first; Switzerland, whose communes carry
+ * swisstopo's postcodes, like France: the commune of the postcode, the one named first.
  */
 export async function addOwnerSite(db: Database, practitionerId: number, input: OwnerSiteData) {
 	return db.transaction(async (tx) => {
@@ -245,7 +247,9 @@ export async function addOwnerSite(db: Database, practitionerId: number, input: 
 						? (normalizeEsPostcode(input.postcode) ?? input.postcode)
 						: country === "DE"
 							? (normalizeDePostcode(input.postcode) ?? input.postcode)
-							: input.postcode;
+							: country === "CH"
+								? (normalizeChPostcode(input.postcode) ?? input.postcode)
+								: input.postcode;
 		if (!adapter.address.postcode.test(postcode)) throw new ProfileError("UNKNOWN_PLACE");
 		const district = country === "AT" ? /^1(\d{2})0$/.exec(postcode)?.[1] : undefined;
 		const [place] =
@@ -327,7 +331,8 @@ export async function addOwnerSite(db: Database, practitionerId: number, input: 
 				`)
 									: await tx.execute<{ id: number }>(sql`
 					SELECT p.id FROM directory.places p
-					WHERE p.country = 'FR' AND p.kind IN ('commune', 'arrondissement') AND p.removed_at IS NULL
+					WHERE p.country = ${country === "CH" ? "CH" : "FR"}
+						AND p.kind IN ('commune', 'arrondissement') AND p.removed_at IS NULL
 						AND ${postcode} = ANY (p.postcodes)
 					ORDER BY (directory.text_norm(p.name) = directory.text_norm(${input.city})) DESC,
 						similarity(directory.text_norm(p.name), directory.text_norm(${input.city})) DESC,

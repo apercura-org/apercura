@@ -313,6 +313,10 @@ const MEDICAL_SPECIALTIES: Record<string, readonly MedicalSpecialty[]> = {
 	kinderkliniken: ["https://schema.org/Pediatric"],
 	"reha-kliniken": ["https://schema.org/Physiotherapy"],
 	apotheken: ["https://schema.org/PharmacySpecialty"],
+	// Switzerland's facilities (Swiss listing slugs).
+	apotheke: ["https://schema.org/PharmacySpecialty"],
+	"psychiatrische-klinik": ["https://schema.org/Psychiatric"],
+	geburtshaus: ["https://schema.org/Obstetric"],
 };
 
 /**
@@ -514,9 +518,18 @@ const DOCTOR_PROFESSIONS = new Set(["10", "ARZT"]);
  * pharmacy or (in Spain) a hospital. An Italian hospital or accredited private clinic (both have
  * inpatient beds) is a `Hospital`, a pharmacy a `Pharmacy`, a parapharmacy (a shop allowed to sell
  * non-prescription medicines) a `MedicalBusiness`. A German hospital of any kind is a `Hospital`,
- * a rehabilitation clinic a `MedicalClinic`, a pharmacy a `Pharmacy`.
+ * a rehabilitation clinic a `MedicalClinic`, a pharmacy a `Pharmacy`. A Swiss hospital or clinic (general, psychiatric,
+ * rehabilitation, specialised) is a `Hospital`, a birth centre a `MedicalClinic`, a pharmacy a
+ * `Pharmacy`, a nursing home a `MedicalOrganization` (an organisation that provides care, not a
+ * place to visit as a patient: no `geo`, which only a place has).
  */
-type PracticeType = "MedicalClinic" | "Dentist" | "Pharmacy" | "Hospital" | "MedicalBusiness";
+type PracticeType =
+	| "MedicalClinic"
+	| "Dentist"
+	| "Pharmacy"
+	| "Hospital"
+	| "MedicalBusiness"
+	| "MedicalOrganization";
 
 const PRACTICE_TYPES: Readonly<Record<string, PracticeType>> = {
 	GB_GP: "MedicalClinic",
@@ -536,6 +549,13 @@ const PRACTICE_TYPES: Readonly<Record<string, PracticeType>> = {
 	DE_CHILDRENS_HOSPITAL: "Hospital",
 	DE_REHAB_CLINIC: "MedicalClinic",
 	DE_PHARMACY: "Pharmacy",
+	CH_HOSPITAL: "Hospital",
+	CH_PSYCHIATRIC_CLINIC: "Hospital",
+	CH_REHAB_CLINIC: "Hospital",
+	CH_SPECIALTY_CLINIC: "Hospital",
+	CH_BIRTH_CENTRE: "MedicalClinic",
+	CH_PHARMACY: "Pharmacy",
+	CH_NURSING_HOME: "MedicalOrganization",
 };
 
 /** The schema.org type of a market of practices' page subject (`PRACTICE_TYPES`), if any. */
@@ -653,11 +673,19 @@ export function practitionerNodes(input: PractitionerInput): Thing[] {
 			"@type": practiceType,
 			...common,
 			...localBusiness,
+			// An organisation that is not a place (a Swiss nursing home) has no coordinates.
+			geo: practiceType === "MedicalOrganization" ? undefined : localBusiness.geo,
 			medicalSpecialty: specialty,
 			location: one(placeRefs.slice(1)),
 		};
 		return [
-			practice as MedicalClinic | Dentist | Pharmacy | Hospital | MedicalBusiness,
+			practice as
+				| MedicalClinic
+				| Dentist
+				| Pharmacy
+				| Hospital
+				| MedicalBusiness
+				| MedicalOrganization,
 			...places.slice(1),
 		].map(compact);
 	}

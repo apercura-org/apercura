@@ -10,6 +10,7 @@ import {
 	ProseSection,
 } from "~/components/institutional";
 import { DataAt } from "~/components/legal-at";
+import { DataCh } from "~/components/legal-ch";
 import { DataCz } from "~/components/legal-cz";
 import { DataDe } from "~/components/legal-de";
 import { DataEs } from "~/components/legal-es";
@@ -80,6 +81,7 @@ export function generateMetadata({ params }: PageProps<"/[locale]/donnees">) {
 			ES: "DataEs",
 			IT: "DataIt",
 			DE: "DataDe",
+			CH: "DataCh",
 		},
 		HREF,
 	);
@@ -96,6 +98,7 @@ export default async function DataPage({ params }: PageProps<"/[locale]/donnees"
 	if (marketOf(locale) === "ES") return <DataEs locale={locale} />;
 	if (marketOf(locale) === "IT") return <DataIt locale={locale} />;
 	if (marketOf(locale) === "DE") return <DataDe locale={locale} />;
+	if (marketOf(locale) === "CH") return <DataCh locale={locale} />;
 	const t = await getTranslations({ locale, namespace: "DataPage" });
 	const tSite = await getTranslations({ locale, namespace: "Site" });
 	const registry = await getRegistryStatus();

@@ -4,6 +4,7 @@
 import { parseProfessionList } from "@apercura/core/taxonomy";
 import { DEFAULT_AT_PLACES_URL } from "./sources/at/places";
 import { AT_SOURCE_IDS, type AtSourceId } from "./sources/at/types";
+import { CH_SOURCE_IDS, type ChSourceId, chSourceUrlVariable } from "./sources/ch/sources";
 import { defaultCzPlacesUrls } from "./sources/cz/places";
 import { DEFAULT_DE_PLACES_URL } from "./sources/de/places";
 import { DE_SOURCE_IDS, type DeFileId, type DeSourceId } from "./sources/de/types";
@@ -723,6 +724,77 @@ export function buildDeOptions(
 		},
 		khvIndexUrl: env.ETL_DE_KHV_URL ? null : env.ETL_DE_KHV_INDEX_URL || DEFAULT_DE_KHV_INDEX_URL,
 		placesUrl: env.ETL_DE_PLACES_URL || DEFAULT_DE_PLACES_URL,
+		workDir: flagString(flags, "work-dir") ?? env.ETL_WORK_DIR ?? null,
+		appUrl: offline ? null : env.APP_URL || null,
+		revalidateSecret: env.REVALIDATE_SECRET || null,
+	};
+}
+
+export type ChOptions = {
+	databaseUrl: string;
+	dryRun: boolean;
+	approveRunId: number | null;
+	force: boolean;
+	sourceDir: string | null;
+	offline: boolean;
+	sources: ChSourceId[];
+	/** A list's address when overridden (`ETL_CH_<ID>_URL`, `ETL_CH_ZH_HEIME_URL`); else its own. */
+	urls: Partial<Record<ChSourceId, string>>;
+	/** swisstopo's postcode directory (`ETL_CH_POSTCODES_URL`), read by every run to locate facilities. */
+	postcodesUrl: string | null;
+	/** The BFS commune register (`ETL_CH_COMMUNES_URL`), for the places' first import. */
+	communesUrl: string | null;
+	/** The day of the run in Zürich (`YYYY-MM-DD`): the commune register is read on it. */
+	today: string;
+	workDir: string | null;
+	appUrl: string | null;
+	revalidateSecret: string | null;
+};
+
+/** Parses a comma-separated list of Swiss lists (`bag,zh-heime`); throws on unknown ones. */
+export function parseChSources(value: string | null | undefined): ChSourceId[] {
+	if (!value) return [...CH_SOURCE_IDS];
+	const sources = value
+		.split(",")
+		.map((source) => source.trim())
+		.filter(Boolean);
+	for (const source of sources) {
+		if (!(CH_SOURCE_IDS as readonly string[]).includes(source)) {
+			throw new Error(`Unknown Swiss source "${source}" (one of ${CH_SOURCE_IDS.join(", ")})`);
+		}
+	}
+	if (sources.length === 0) throw new Error("At least one Swiss source is required");
+	return [...new Set(sources)] as ChSourceId[];
+}
+
+/** Today in Zürich, `YYYY-MM-DD`. */
+export function todayInZurich(now: Date = new Date()): string {
+	return new Intl.DateTimeFormat("en-CA", { timeZone: "Europe/Zurich" }).format(now);
+}
+
+export function buildChOptions(flags: ParsedArgs["flags"], env: NodeJS.ProcessEnv): ChOptions {
+	const approve = flagString(flags, "approve");
+	if (approve !== null && !/^\d+$/.test(approve)) {
+		throw new Error(`--approve needs a run id, got ${approve}`);
+	}
+	const offline = flags.has("offline");
+	const urls: Partial<Record<ChSourceId, string>> = {};
+	for (const id of CH_SOURCE_IDS) {
+		const url = env[chSourceUrlVariable(id)];
+		if (url) urls[id] = url;
+	}
+	return {
+		databaseUrl: resolveDatabaseUrl(env),
+		dryRun: flags.has("dry-run"),
+		approveRunId: approve === null ? null : Number(approve),
+		force: flags.has("force"),
+		sourceDir: flagString(flags, "source-dir") ?? env.ETL_CH_SOURCE_DIR ?? null,
+		offline,
+		sources: parseChSources(flagString(flags, "sources") ?? env.ETL_CH_SOURCES),
+		urls,
+		postcodesUrl: env.ETL_CH_POSTCODES_URL || null,
+		communesUrl: env.ETL_CH_COMMUNES_URL || null,
+		today: todayInZurich(),
 		workDir: flagString(flags, "work-dir") ?? env.ETL_WORK_DIR ?? null,
 		appUrl: offline ? null : env.APP_URL || null,
 		revalidateSecret: env.REVALIDATE_SECRET || null,

@@ -154,7 +154,7 @@ test("Austria's sitemaps list its pages at their German paths, and robots.txt co
 	expect(places).toContain("/at/verzeichnis/wien</loc>");
 	const french = await (await request.get("/sitemaps/fr/praticiens-0.xml")).text();
 	expect(french).not.toContain("/at/");
-	expect((await request.get("/sitemaps/ch/pages-0.xml")).status()).toBe(404);
+	expect((await request.get("/sitemaps/be/pages-0.xml")).status()).toBe(404);
 	const robots = await (await request.get("/robots.txt")).text();
 	expect(robots).toContain("Disallow: /at/suche");
 });

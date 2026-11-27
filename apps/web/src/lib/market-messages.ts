@@ -1,5 +1,6 @@
 import {
 	allAtListingSlugs,
+	allChListingSlugs,
 	allCzListingSlugs,
 	allDeTaxonomySlugs,
 	allEsTaxonomySlugs,
@@ -25,6 +26,7 @@ const MARKET_SLUGS: Readonly<Record<MarketCountry, ReadonlySet<string>>> = {
 	IT: allItListingSlugs(),
 	// Germany names its kinds of facility in the singular too (`krankenhaus`, `apotheke`).
 	DE: allDeTaxonomySlugs(),
+	CH: allChListingSlugs(),
 };
 
 /** The `taxonomy` groups keyed by listing or profession slug. */

@@ -1,0 +1,264 @@
+{
+	"Metadata": {
+		"description": "L’elenco aperto degli ospedali, delle cliniche, delle case per anziani e delle farmacie della Svizzera, dai dati aperti della Confederazione e dei Cantoni.",
+		"proDescription": "Apercura pubblica una pagina oggettiva per ogni ospedale, clinica, casa per anziani e farmacia degli elenchi aperti della Svizzera. Trovi quella della sua struttura e la rivendichi gratuitamente.",
+		"homeTitle": "Apercura · Ospedali, case per anziani e farmacie in Svizzera"
+	},
+	"Site": {
+		"runningHead": "Elenco aperto delle strutture sanitarie in Svizzera",
+		"navPro": "Per le strutture sanitarie",
+		"footer": {
+			"free": "Gratuito per le strutture sanitarie e per i pazienti."
+		},
+		"folioRpps": "Chiave {rpps}"
+	},
+	"Search": {
+		"label": "Trovare un ospedale, una clinica, una casa per anziani o una farmacia",
+		"whoHint": "Nome della struttura, o ospedale, casa per anziani, farmacia",
+		"whereHint": "Comune, distretto o Cantone"
+	},
+	"SearchForm": {
+		"practitioners": "Strutture",
+		"department": "Distretto",
+		"geoDenied": "La posizione è disattivata per questo sito. Scriva un Comune.",
+		"geoUnavailable": "Non è stato possibile trovare la sua posizione. Scriva un Comune."
+	},
+	"SearchPage": {
+		"emptyTitle": "Nessuna struttura corrisponde",
+		"emptyBody": "Controlli l’ortografia, provi con un Comune vicino o con un termine più ampio, come «ospedale».",
+		"queryOnlyNear": "Strutture vicino a lei (distanze approssimative)",
+		"startTitle": "Che cosa cerca?",
+		"startBody": "Scriva il nome di una struttura, o ospedale, clinica, casa per anziani o farmacia, in «Chi?», e un Comune, un distretto o un Cantone in «Dove?». Può anche consultare l’elenco per Cantone e distretto.",
+		"unknownPlaceBody": "Controlli l’ortografia o scriva un Comune vicino.",
+		"unlistedBody": "In Svizzera l’elenco comprende per ora strutture, mai persone: gli ospedali e le cliniche di tutti i Cantoni (cifre chiave degli ospedali svizzeri 2023 dell’Ufficio federale della sanità pubblica ed elenchi dei Cantoni Berna, Ginevra, Basilea Città e Giura), le case per anziani dei soli Cantoni Zurigo, Berna, Ginevra, Basilea Città, Basilea Campagna e Giura, e le farmacie di Basilea Campagna (tutte) e di Ginevra (solo quelle che vaccinano). Medici, dentisti, psicologi e altri professionisti della salute non sono ancora elencati qui: nessun registro aperto li pubblica. Cerchi il nome di una struttura o consulti l’elenco.",
+		"departmentPlace": "Distretto",
+		"bookingNotOpen": "Apercura non offre la prenotazione online in Svizzera: contatti la struttura.",
+		"columns": {
+			"practitioner": "Struttura",
+			"place": "Indirizzo",
+			"appointments": "Contatto"
+		},
+		"outsidePlace": "Fuori da {where}",
+		"rppsBody": "Questa chiave non è valida o la struttura non ha una pagina pubblica: l’elenco comprende solo ospedali, cliniche, case per anziani e farmacie. Chi dirige una struttura può comunque trovare e rivendicare la sua pagina.",
+		"distance": "A circa {km} km"
+	},
+	"HomePage": {
+		"title": "Trovi un ospedale, una clinica, una casa per anziani o una farmacia in Svizzera",
+		"hook": "Ogni ospedale e ogni clinica della Svizzera ha già la sua pagina, come le case per anziani dei Cantoni Zurigo, Berna, Ginevra, Basilea Città, Basilea Campagna e Giura e le farmacie di Basilea Campagna e di Ginevra.",
+		"pillars": {
+			"free": {
+				"description": "Gratuito per le strutture sanitarie e per i pazienti, senza abbonamento né commissioni."
+			}
+		},
+		"registry": {
+			"heading": "Costruito sui dati aperti della Confederazione e dei Cantoni",
+			"intro": "Ospedali e cliniche: tutti i Cantoni, secondo le cifre chiave degli ospedali svizzeri 2023 dell’Ufficio federale della sanità pubblica (UFSP) e gli elenchi dei Cantoni Berna, Ginevra, Basilea Città e Giura. Case per anziani: solo i Cantoni Zurigo, Berna, Ginevra, Basilea Città, Basilea Campagna e Giura. Farmacie: solo Basilea Campagna (tutte le farmacie) e Ginevra (solo quelle che vaccinano). Gli altri Cantoni non ne pubblicano un elenco aperto. Sono elencate strutture, mai singoli professionisti. Nessuno paga per comparire e nessuno è escluso.",
+			"sourceName": "UFSP e Cantoni, dati aperti"
+		},
+		"pro": {
+			"heading": "Dirige un ospedale, una clinica, una casa per anziani o una farmacia?",
+			"body": "La pagina della sua struttura esiste già. Rivendicarla è gratuito."
+		},
+		"tagline": "L’elenco aperto delle strutture sanitarie della Svizzera.",
+		"market": {
+			"listingsHeading": "Per tipo di struttura",
+			"placesHeading": "Per Cantone"
+		},
+		"specimen": {
+			"heading": "Ogni struttura sanitaria ha già la sua pagina"
+		}
+	},
+	"Practitioner": {
+		"rpps": "Chiave della pagina",
+		"specimen": "Esempio, non è una struttura reale",
+		"statusNote": {
+			"unclaimed": "Creata a partire dai dati aperti della Confederazione e dei Cantoni. La struttura non ha ancora completato questa pagina.",
+			"verified": "Completata dalla struttura, la cui rivendicazione è stata verificata."
+		},
+		"fields": {
+			"profession": "Tipo di struttura"
+		},
+		"source": {
+			"name": "Fonte: UFSP e Cantoni"
+		},
+		"action": {
+			"call": {
+				"statement": "Apercura non offre la prenotazione online in Svizzera. Contatti la struttura."
+			}
+		},
+		"sitesHeading": "Indirizzo"
+	},
+	"PractitionerPage": {
+		"metaTitle": "{name}, {occupation} · Apercura",
+		"metaTitlePlace": "{name}, {occupation} a {place} · Apercura",
+		"metaDescription": "{name}, {occupation}: {fees, select, sector {indirizzo, telefono e tariffe} other {indirizzo e tipo di struttura}}, secondo i dati aperti della Confederazione e dei Cantoni.",
+		"metaDescriptionPlace": "{name}, {occupation} a {place}: {fees, select, sector {indirizzo, telefono e tariffe} other {indirizzo e tipo di struttura}}, secondo i dati aperti della Confederazione e dei Cantoni.",
+		"unknownProfession": "Struttura sanitaria",
+		"professionHeading": "Struttura",
+		"unnamedPlace": "Struttura",
+		"asideLabel": "Su questa pagina",
+		"action": {
+			"callNotYetOpen": "Apercura non offre la prenotazione online in Svizzera. Per informazioni, contatti la struttura.",
+			"noPhone": "L’elenco da cui proviene questa pagina non riporta un numero di telefono per questa struttura."
+		},
+		"claim": {
+			"heading": "È la sua struttura?",
+			"body": "Questa pagina è stata creata dai dati aperti della Confederazione e dei Cantoni. La rivendichi per verificarla e completarla:",
+			"claimedHeading": "Pagina gestita dalla struttura",
+			"claimedBody": "La struttura ha rivendicato questa pagina: la sua rivendicazione è stata verificata ed è lei a completarla.",
+			"contactLink": "Non ha un documento a portata di mano? Ci contatti",
+			"benefits": [
+				"gratis, senza abbonamento né impegno;",
+				"la sua foto, gli orari e le lingue parlate;",
+				"il suo sito web e le informazioni sull’accessibilità;",
+				"le statistiche delle visite alla sua pagina;",
+				"un kit da condividere: link, codice QR e locandina."
+			]
+		},
+		"report": {
+			"body": "Se un indirizzo o un nome è sbagliato, ci dica come correggerlo."
+		},
+		"ring": {
+			"heading": "Altre strutture: {occupation} a {place}"
+		}
+	},
+	"Listing": {
+		"count": "{count, plural, one {# struttura} many {# di strutture} other {# strutture}}",
+		"metaTitle": "{count, plural, one {{listing} a {place}: # struttura · Apercura} many {{listing} a {place}: # di strutture · Apercura} other {{listing} a {place}: # strutture · Apercura}}",
+		"metaDescription": "{count, plural, one {# struttura registrata come {occupation} a {place}: {fees, select, sector {indirizzi, telefoni e tariffe} other {indirizzi e tipi di struttura}}, secondo i dati aperti della Confederazione e dei Cantoni.} many {# di strutture registrate come {occupation} a {place}: {fees, select, sector {indirizzi, telefoni e tariffe} other {indirizzi e tipi di struttura}}, secondo i dati aperti della Confederazione e dei Cantoni.} other {# strutture registrate come {occupation} a {place}: {fees, select, sector {indirizzi, telefoni e tariffe} other {indirizzi e tipi di struttura}}, secondo i dati aperti della Confederazione e dei Cantoni.}}",
+		"lead": "{count, plural, one {Gli elenchi aperti contano # struttura di questo tipo a {place}.} many {Gli elenchi aperti contano # di strutture di questo tipo a {place}.} other {Gli elenchi aperti contano # strutture di questo tipo a {place}.}}",
+		"practitionersHeading": "{count, plural, one {La struttura} many {Le # di strutture} other {Le # strutture}}",
+		"columns": {
+			"practitioner": "Struttura"
+		},
+		"facts": {
+			"sources": "UFSP, Cantoni, UST e swisstopo"
+		},
+		"communesHeading": "{listing}: Comuni di {place}",
+		"nearbyHeading": "{listing}: Comuni vicini",
+		"authoritiesHeading": "{listing}: distretti di {place}",
+		"hubMetaTitle": "{count, plural, one {{listing} in Svizzera: # struttura · Apercura} many {{listing} in Svizzera: # di strutture · Apercura} other {{listing} in Svizzera: # strutture · Apercura}}",
+		"hubMetaDescription": "{count, plural, one {# struttura registrata come {occupation} in Svizzera, per Cantone: {fees, select, sector {indirizzi, telefoni e tariffe} other {indirizzi e tipi di struttura}}, secondo i dati aperti della Confederazione e dei Cantoni.} many {# di strutture registrate come {occupation} in Svizzera, per Cantone: {fees, select, sector {indirizzi, telefoni e tariffe} other {indirizzi e tipi di struttura}}, secondo i dati aperti della Confederazione e dei Cantoni.} other {# strutture registrate come {occupation} in Svizzera, per Cantone: {fees, select, sector {indirizzi, telefoni e tariffe} other {indirizzi e tipi di struttura}}, secondo i dati aperti della Confederazione e dei Cantoni.}}",
+		"hubTitle": "{listing} in Svizzera",
+		"hubLead": "{count, plural, one {Gli elenchi aperti contano # struttura di questo tipo in Svizzera.} many {Gli elenchi aperti contano # di strutture di questo tipo in Svizzera.} other {Gli elenchi aperti contano # strutture di questo tipo in Svizzera.}}",
+		"departmentsHeading": "{listing} per Cantone",
+		"departmentsIntro": "Scelga un Cantone o un distretto per vederne i Comuni e le strutture.",
+		"metaDescriptionPage": "{count, plural, one {Pagina {page} di {pages}: # struttura registrata come {occupation} a {place}.} many {Pagina {page} di {pages}: # di strutture registrate come {occupation} a {place}.} other {Pagina {page} di {pages}: # strutture registrate come {occupation} a {place}.}}",
+		"metaDescriptionPageRange": "{count, plural, one {Pagina {page} di {pages}, da {first} a {last}: # struttura registrata come {occupation} a {place}.} many {Pagina {page} di {pages}, da {first} a {last}: # di strutture registrate come {occupation} a {place}.} other {Pagina {page} di {pages}, da {first} a {last}: # strutture registrate come {occupation} a {place}.}}",
+		"hubMetaTitleShort": "{listing} in Svizzera · Apercura",
+		"allSpecialties": "Tutti i tipi di struttura a {place}"
+	},
+	"Directory": {
+		"metaTitle": "Elenco delle strutture sanitarie per luogo · Apercura",
+		"metaDescription": "Cantoni e distretti della Svizzera con i loro ospedali, cliniche, case per anziani e farmacie, secondo i dati aperti della Confederazione e dei Cantoni.",
+		"lead": "{count, plural, one {# struttura, per Cantone e distretto.} many {# di strutture, per Cantone e distretto.} other {# strutture, per Cantone e distretto.}}",
+		"otherRegion": "Altri luoghi",
+		"emptyBody": "I dati aperti della Svizzera non sono ancora stati importati qui. Torni dopo la prossima importazione.",
+		"placeMetaTitle": "Ospedali, case per anziani e farmacie a {place} · Apercura",
+		"placeMetaDescription": "{count, plural, one {# struttura sanitaria a {place}, per tipo, secondo i dati aperti della Confederazione e dei Cantoni.} many {# di strutture sanitarie a {place}, per tipo, secondo i dati aperti della Confederazione e dei Cantoni.} other {# strutture sanitarie a {place}, per tipo, secondo i dati aperti della Confederazione e dei Cantoni.}}",
+		"placeTitle": "Strutture sanitarie a {place}",
+		"placeLead": "{count, plural, one {# struttura a {place}.} many {# di strutture a {place}.} other {# strutture a {place}.}}",
+		"specialtiesHeading": "Per tipo di struttura",
+		"communesHeading": "Comuni di {place}",
+		"authoritiesHeading": "Distretti di {place}",
+		"placeMetaTitleShort": "Strutture sanitarie a {place} · Apercura"
+	},
+	"OgImage": {
+		"runningHead": "Elenco aperto delle strutture sanitarie",
+		"practitioner": {
+			"folio": "Chiave {rpps}"
+		}
+	},
+	"taxonomy": {
+		"practiceKind": {
+			"office": "Struttura"
+		}
+	},
+	"Claim": {
+		"errors": {
+			"NOT_FOUND": "Nessuna pagina ha questa chiave.",
+			"INVALID_RPPS": "Questa chiave non è valida: è la fine dell’indirizzo della pagina della sua struttura (lettere e cifre, per esempio h123456789), preceduta da ch:, oppure l’indirizzo completo."
+		},
+		"start": {
+			"lead": "Una rivendicazione riguarda la pagina di una struttura, mai un nome.",
+			"contestBody": "Se è quella della sua struttura (per esempio ha perso l’accesso al suo account), può comunque rivendicarla: un amministratore esamina il suo documento e decide. Recuperare un account richiede sempre una nuova verifica.",
+			"findHeading": "Trovi la pagina della sua struttura",
+			"notFound": "Nessuna pagina pubblica ha ancora questa chiave.",
+			"rppsLabel": "Chiave o indirizzo della pagina",
+			"rppsHint": "L’indirizzo della pagina della sua struttura, per esempio apercura.org/ch-it/struttura/ospedale-esempio-h123456789, o la sua fine preceduta da ch: (ch:h123456789).",
+			"contactLink": "Non ha un documento a portata di mano? Ci contatti"
+		},
+		"methods": {
+			"document": {
+				"summary": "Un documento che dimostri che dirige la struttura o agisce per suo conto: l’autorizzazione d’esercizio della struttura, oppure una lettera su carta intestata della struttura che la autorizza. Un membro del nostro team lo esamina, di solito entro 48 ore.",
+				"lead": "Invii un documento che dimostri che dirige la struttura o agisce per suo conto: l’autorizzazione d’esercizio della struttura, oppure una lettera su carta intestata della struttura che la autorizza. Viene cifrato prima di essere conservato ed eliminato 30 giorni dopo la decisione."
+			}
+		},
+		"documents": {
+			"kind": {
+				"cps_card": "Lettera su carta intestata della struttura",
+				"ordre_attestation": "Autorizzazione d’esercizio della struttura"
+			}
+		},
+		"status": {
+			"contestReview": "Questa pagina aveva già un titolare verificato: un amministratore decide sul suo documento.",
+			"reviewBody": "Un membro del nostro team esamina il suo documento e le scrive via e-mail.",
+			"contestBody": "Un amministratore deciderà sul suo documento."
+		}
+	},
+	"Gdpr": {
+		"rpps": "Chiave della pagina",
+		"rppsHint": "La fine dell’indirizzo della pagina (per esempio ospedale-esempio-h123456789) o l’indirizzo completo.",
+		"errors": {
+			"notFound": "Nessuna pagina ha questa chiave."
+		},
+		"report": {
+			"doneBody": "La verifichiamo. I dati si correggono alla fonte, presso l’Ufficio federale della sanità pubblica o il Cantone che pubblica l’elenco; la avvisiamo se ci ha lasciato un indirizzo."
+		},
+		"removal": {
+			"doneBody": "Non è più mostrata, indicizzata né elencata. Verifichiamo la richiesta e le rispondiamo via e-mail entro un mese al massimo. Se viene confermata, la pagina è eliminata definitivamente e non ricompare con gli aggiornamenti degli elenchi aperti.",
+			"privacy": "Una pagina eliminata non ricompare con la successiva importazione degli elenchi aperti.",
+			"claimedBody": "Solo il suo titolare può rimuoverla, dall’editor della pagina nel proprio spazio: la pagina scompare allora subito e non ricompare con gli aggiornamenti degli elenchi aperti."
+		},
+		"contact": {
+			"lead": "Non può rivendicare la pagina della sua struttura con un documento? Ci lasci i suoi recapiti: un membro del team Apercura la contatterà per verificare che agisce per conto della struttura e aiutarla.",
+			"claimFirst": "Con un documento che dimostri che agisce per conto della struttura, la rivendicazione è più rapida:",
+			"rpps": "Chiave della pagina"
+		}
+	},
+	"emails": {
+		"claimReceived": {
+			"body": [
+				"Gentile {name},",
+				"Abbiamo ricevuto la sua rivendicazione e i relativi documenti. Un membro del team di Apercura li esamina e le scrive via e-mail.",
+				"Esaminiamo le rivendicazioni entro 48 ore nei giorni lavorativi."
+			]
+		},
+		"claimRejected": {
+			"body": [
+				"Gentile {name},",
+				"Non abbiamo potuto verificare la sua rivendicazione. Motivo indicato dal revisore: {reason}",
+				"Può aprire una nuova rivendicazione dal suo spazio, con un documento leggibile che dimostri che agisce per conto della struttura."
+			]
+		},
+		"removalReceived": {
+			"body": [
+				"La pagina è nascosta da ora: non è più mostrata, indicizzata né elencata.",
+				"Verifichiamo la richiesta e le rispondiamo entro un mese al massimo. Se viene confermata, la pagina è eliminata; una pagina eliminata non ricompare con la successiva importazione degli elenchi aperti."
+			]
+		},
+		"removalConfirmed": {
+			"body": [
+				"La pagina di cui ci ha chiesto la rimozione è stata eliminata da Apercura. Non ricomparirà con la prossima importazione degli elenchi aperti."
+			]
+		}
+	},
+	"Onboarding": {
+		"steps": {
+			"check": {
+				"lead": "La sua pagina parte dai dati aperti della Confederazione e dei Cantoni. Verifichi il nome della struttura, il suo tipo e il suo indirizzo.",
+				"registryNote": "Qualcosa non va? La correzione duratura si fa alla fonte, presso l’Ufficio federale della sanità pubblica o il Cantone che pubblica l’elenco; la pagina si aggiorna alla successiva importazione. Può nascondere un indirizzo o aggiungerne uno nell’editor della pagina."
+			}
+		}
+	}
+}

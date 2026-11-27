@@ -85,8 +85,9 @@ export const ownerSiteSchema = z.object({
 	addressLine: plainText(LIMITS.addressLine).refine((value) => value.length > 0, {
 		message: "required",
 	}),
-	// Five digits in France, Spain, Italy and Germany, four in Austria, a UK postcode (`TS18 1HU`),
-	// five digits in Czechia written `110 00` or `11000`: the service checks the practitioner's
+	// Five digits in France, Spain, Italy and Germany, four in Austria and Switzerland, a UK postcode
+	// (`TS18 1HU`), five digits in Czechia written `110 00` or `11000`: the service checks the
+	// practitioner's
 	// market.
 	postcode: z
 		.string()

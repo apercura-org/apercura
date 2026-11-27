@@ -1666,3 +1666,158 @@ and nothing unneeded stored, placement (key, Berlin's districts, town name,
 district names), read models without Land listings, idempotence, a dry run, an
 older edition refused, an unreadable list left out, absences (at once for the
 directory, after two runs for a list), objections, the breaker and `--approve`.
+
+## Switzerland
+
+`etl:ch` builds Switzerland's directory (`/ch` in German, `/ch-fr` in French,
+`/ch-it` in Italian) from the Federal Office of Public Health's hospital
+figures and the cantons' open lists (issue #154,
+[ADR 0002](./adr/0002-multi-country.md#switzerland-ch)). Everything above about
+roles, ownership, the outbox and `--approve` applies, and the per-list
+behaviour is Austria's and Italy's; this section says what differs.
+
+```sh
+bun run etl:places --country ch          # once (etl:ch does it on its first run), then each January
+bun run etl:ch                           # monthly
+bun run etl:ch --sources zh-heime,ge-ems # some lists only
+bun run etl:ch --dry-run                 # everything, then roll back
+bun run etl:ch --approve=<run_id>        # accept what a blocked run reported
+```
+
+A Swiss page is a **facility, never a person**: a hospital or clinic site, a
+nursing home, a pharmacy. No health professional is listed: MedReg, PsyReg and
+GesReg may be consulted one by one but their bulk data needs an agreement with
+the FOPH, Refdata's GLN partner data is not open, and no list naming people is
+read ([`docs/data-requests/ch.md`](./data-requests/ch.md)). What a list says of
+a person (Basel-Landschaft's responsible pharmacist, an e-mail address that
+names its owner, a care-of person in a hospital's name) is never read into a
+row.
+
+What each canton has, plainly (the listings and the home say it too):
+
+| Kind of facility                  | Where                                                                                                                                                                |
+| --------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Hospitals, clinics, birth centres | Every canton (the FOPH's figures, every hospital and clinic and their sites); Bern, Geneva, Basel-Stadt and Jura add their own lists' points, phones and a few units |
+| Nursing homes                     | Zürich, Bern, Geneva, Basel-Stadt, Basel-Landschaft and Jura (a few homes just across their borders, on their lists, too)                                            |
+| Pharmacies                        | Basel-Landschaft (every pharmacy with an operating licence) and Geneva (only the pharmacies that vaccinate: no open list of all of them)                             |
+
+### Sources
+
+Verified on 27 November 2026 on opendata.swiss (`rights` of each distribution)
+and on each publisher's own terms. Only "Open use" (`terms_open`) and "Open
+use. Must provide the source." (`terms_by`) lists are read; a list whose terms
+ask for permission before commercial use is not (the FOPH's 2024 figures). Every
+credit is printed on the pages built from the list and on the data sources page
+(`/ch/daten`, `/ch-fr/donnees`, `/ch-it/dati`), in the publisher's own words and
+languages, and kept in `switzerland.registries`
+(`packages/core/src/country/ch.ts`).
+
+| List (`--sources`)                           | Distribution                                                                                                                                                                                                                                   | Terms and credit                                                                                                                        | Format, rows (27 November 2026)                                                                                                                                                                   |
+| -------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| FOPH hospital figures 2023 (`bag`)           | `kzp23_data.xlsx` of [Kennzahlen der Schweizer Spitäler 2023](https://opendata.swiss/de/dataset/kennzahlen-der-schweizer-spitaler-2023), from `spitalstatistik-ld.bagapps.ch` (the distribution's `opendata.bagnet.ch` answered 503 for a day) | `terms_by`; the workbook: "Auszugsweiser Abdruck unter Quellenangabe gestattet"; "Quelle: © Bundesamt für Gesundheit (BAG), …"          | XLSX, sheets `KZ2023_KZP23` (275 hospitals) and `Standorte_KZ2023_KZP23` (596 sites, 8 of them a hospital's administration, not read); yearly, the edition is fixed in `CH_HOSPITAL_FIGURES_YEAR` |
+| Bern hospitals (`be-spitaeler`)              | the canton's web feature service, layer `SPITAL_SPITKLIN_VW_8200`, GeoJSON                                                                                                                                                                     | `terms_open`; the canton's terms: "Freie Nutzung. Quellenangabe ist Pflicht"; "Spitäler und Kliniken © Gesundheitsamt des Kantons Bern" | 72 sites, WGS 84 points, four flags (acute, psychiatry, rehabilitation, birth)                                                                                                                    |
+| Bern homes (`be-heime`)                      | the same service, layer `ILV_STOALTER_VW_20214`                                                                                                                                                                                                | `terms_open`, the same terms; "… © Amt für Integration und Soziales des Kantons Bern"                                                   | 269 homes, phone, operator (e-mail not read)                                                                                                                                                      |
+| Geneva hospitals (`ge-hopitaux`)             | SITG `DAS_HOPITAUX_CLINIQUES-geojson.zip`                                                                                                                                                                                                      | `terms_open`; SITG's conditions, level A (free access): « Source : Portail des données SITG (État de Genève), téléchargé en date du … » | 40 entries, 23 read (hospitals and clinics; the HUG's outpatient consultations are departments)                                                                                                   |
+| Geneva nursing homes (`ge-ems`)              | SITG `DAS_EMS-geojson.zip`                                                                                                                                                                                                                     | as above                                                                                                                                | 54 EMS, keyed by the cantonal address id `IDPADR`                                                                                                                                                 |
+| Geneva pharmacies (`ge-pharmacies`)          | SITG's service `GEO_SANTE_VACCINATION_PHARM`, GeoJSON                                                                                                                                                                                          | as above                                                                                                                                | 132 pharmacies that vaccinate                                                                                                                                                                     |
+| Basel-Landschaft pharmacies (`bl-apotheken`) | data.bl.ch dataset 10320, GeoJSON export                                                                                                                                                                                                       | `terms_by`; "Quelle: Kanton Basel-Landschaft, Amt für Gesundheit (data.bl.ch)"                                                          | 48 pharmacies, keyed by the business's GLN; the responsible pharmacist's names are not read                                                                                                       |
+| Basel-Landschaft homes (`bl-heime`)          | data.bl.ch dataset 10310                                                                                                                                                                                                                       | as above                                                                                                                                | 33 homes with their commune number (some in Basel-Stadt)                                                                                                                                          |
+| Basel-Stadt hospitals (`bs-spitaeler`)       | `api.geo.bs.ch/stac/v1/download/SPTL/latest/geojson` (a ZIP)                                                                                                                                                                                   | `terms_by` (CC BY 4.0); "Quelle: Kanton Basel-Stadt (geo.bs.ch), CC BY 4.0"                                                             | 13 hospitals with category and emergency department                                                                                                                                               |
+| Basel-Stadt homes (`bs-heime`)               | `…/APFH/latest/geojson`                                                                                                                                                                                                                        | as above                                                                                                                                | 50 entries, 43 read (day centres left out)                                                                                                                                                        |
+| Zürich homes (`zh-heime`)                    | `KTZH_00003102_00006486.csv` of [Alters- und Pflegeheime Kanton Zürich](https://opendata.swiss/de/dataset/alters-und-pflegeheime-kanton-zurich)                                                                                                | `terms_open`; "Quelle: Kanton Zürich, Gesundheitsdirektion, …"                                                                          | yearly figures in long format (32,781 lines, 2019–2025): the homes of the latest year (212), keyed by their id                                                                                    |
+| Jura institutions (`ju-institutions`)        | `SSA_19_04_Institutions_de_soins_et_de_sante.zip` (geo.jura.ch)                                                                                                                                                                                | `terms_by`, level A; « © Géodonnées de la République et Canton du Jura »                                                                | a shapefile (Windows-1252, LV95 multipoints), 35 entries, 18 read (hospitals, EMS, medicalised homes, birth centre)                                                                               |
+| Places                                       | the BFS commune register's API (`agvchapp.bfs.admin.ch/api/communes/snapshot?date=…`) and swisstopo's postcode directory (`ortschaftenverzeichnis_plz_4326.csv.zip`)                                                                           | `terms_open`; "Quelle: BFS – Amtliches Gemeindeverzeichnis der Schweiz", "© swisstopo"                                                  | 26 cantons, 144 districts (9 stand-ins), 2,110 communes; 5,717 locality parts                                                                                                                     |
+
+`ETL_CH_<ID>_URL` (`ETL_CH_BAG_URL`, `ETL_CH_ZH_HEIME_URL`…) overrides a list's
+address, `ETL_CH_POSTCODES_URL` and `ETL_CH_COMMUNES_URL` the places'. Bern's
+layer names are numbered by its server and may change: a list that cannot be
+fetched is left out, and the run says so.
+
+### Identifiers and deduplication
+
+One scheme per list (`CH-BAG`, `CH-BE-SPITAL`, `CH-BE-PH`, `CH-GE-HOP`,
+`CH-GE-EMS`, `CH-GE-PHARM`, `CH-BL-PHARM`, `CH-BL-PH`, `CH-BS-SPITAL`,
+`CH-BS-PH`, `CH-ZH-PH`, `CH-JU`), and the URL names it
+(`/ch/einrichtung/stadtspital-musterberg-nord-h367757611`). The FOPH's figures
+number nothing, and Bern's, Geneva's hospitals', Basel-Stadt's and Jura's ids
+look renumbered at each export (1 to n): their key is derived from the canton, the name, the
+street and the postcode (FNV-1a, nine digits, as Salzburg's in Austria), so a
+renamed or moved facility gets a new page and the old one goes after two
+runs. Stable numbers are used where a list has them: a Basel-Landschaft
+pharmacy's GLN, a Geneva home's `IDPADR`, a Zürich home's id.
+
+A site the figures name by its town alone ("Payerne", "Standort Wil") is printed
+with its hospital's name ("Hôpital Intercantonal de la Broye (HIB) – Payerne");
+its key stays the figures' site name.
+
+Lists overlap. A canton's hospital that is a site of the FOPH's figures is that
+site's page (same commune or postcode, and the same name and street, the same
+name, or the same street and kind; two different streets are two facilities):
+the canton adds its point, phone and emergency department and is credited on
+the page (`quelle`). On the real lists: 64 of Bern's 72 entries, 9 of Geneva's
+23, 10 of Basel-Stadt's 13, 5 of Jura's hospitals. Without the FOPH's figures
+in a run, the cantons' hospitals are not read and keep their pages, so none
+doubles a FOPH site. A home two cantons list (Basel-Landschaft lists some of
+Basel-Stadt's) is one page, its own canton's (3 homes).
+
+### Places and precision
+
+A canton is a region (`ZH`), a district a department (its BFS number), a
+commune a commune (its BFS number); names are the BFS's official ones in every
+language of the market ("Genève", "Bern / Berne"; a canton's slug is its first
+name: `bern`, `valais`). Listings exist per canton too (migration
+`0029_ch_market`); the nine stand-in districts of the cantons without districts
+("Kanton Zug", "Canton de Genève") have listings that answer but are never
+indexed, since they repeat the canton's.
+
+A facility is placed with swisstopo's postcode directory: by the commune
+number its list gives (Basel-Landschaft's homes), else its postcode and
+locality, else the locality in its canton (a post-office box's postcode,
+`3000 Bern 60`), else its point (Geneva's hospitals give no postcode), else a
+neighbouring postcode (`8058 Zürich-Flughafen`). It is located at its list's
+coordinates (`address` precision, a map pin: Bern, Geneva, Basel-Landschaft,
+Basel-Stadt, Zürich and Jura give them, Jura in the Swiss grid, transformed
+with swisstopo's approximate formulas) or at its locality's point (`city`
+precision: every FOPH site the cantons' lists do not locate).
+
+### Guards
+
+Per list: quarantine within 2% or one line (never approvable), a floor of lines
+and facilities at about a tenth of the real list (never approvable: an error
+page or a truncated file), and the change since the last successful run that
+read it: at most 10% or 3 facilities, 25% of bytes (approvable). Then 99% of
+the sites placed in their commune, and the circuit breakers on Switzerland's
+own pages as everywhere.
+
+### Schedule and monitoring
+
+The scheduler runs `etl:ch` on the 3rd of each month at 22:30 UTC
+(`docker/crontab`), `ETL_CH_SCHEDULE_ARGS` narrows it; exit codes as for
+Austria (3: imported without a list). The FOPH's 2023 figures do not change: a
+later edition is read only once its terms allow commercial use, by changing
+`CH_HOSPITAL_FIGURES_YEAR` (its sites' keys change with their names: review
+the blocked run).
+
+### Measured run (files of 26–27 November 2026)
+
+A dry run over the real files (`--source-dir`, places imported first): 1,414
+facilities, 234 hospitals, 218 psychiatric clinic sites (many of them
+outpatient), 71 rehabilitation and 74 specialised clinics, 16 birth centres,
+621 nursing homes and 180 pharmacies; 911 at their list's point, 503 at their
+locality's; every site placed in its commune; 1,112 listing pages, 268
+indexable. Per canton, nursing homes: Zürich 211, Bern 267, Geneva 54,
+Basel-Stadt 40, Basel-Landschaft 34, Jura 13 (and 2 in Solothurn on Bern's
+list); pharmacies: Geneva 131, Basel-Landschaft 48 (and 1 in Vaud on Geneva's
+list). The whole run takes about a second.
+
+### Local development
+
+```sh
+bun run --cwd packages/etl fixtures:ch                       # regenerate the synthetic fixtures
+bun run etl:ch --source-dir packages/etl/fixtures/ch --offline
+ETL_TEST_DATABASE_URL=… bun run --cwd packages/etl test     # includes test/ch-integration.test.ts
+```
+
+The fixtures (`packages/etl/fixtures/ch`) are synthetic: made-up facilities in
+each list's exact format, with invented people and e-mail addresses the tests
+check are never stored; the cantons, districts and communes are the real ones.

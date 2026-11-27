@@ -3,6 +3,7 @@ import {
 	deProfessionOfListingSlug,
 	ES_PROFESSIONS,
 	esKindSlugOf,
+	isChListingSlug,
 	isCzListingSlug,
 	isDeListingSlug,
 	isEsListingSlug,
@@ -39,10 +40,10 @@ export async function getTaxonomyLabels(locale: Locale) {
 			slug ? lookup(`listing.${slug}`, { gender }) : null,
 		/**
 		 * What one practitioner is, from their listing: the listing's label ("Cardiologist"), but a
-		 * UK practice's kind, a Czech facility's field, a Spanish centre's kind or specialty or an
-		 * Italian place's kind in the singular ("GP practice", "Kardiolog", "Consulta de cardiología",
-		 * "Farmacia"), their listing being plural ("GP practices", "Kardiologové", "Cardiólogos",
-		 * "Farmacie"). With its profession code, a Spanish centre listed under its kind's listing
+		 * UK practice's kind, a Czech facility's field, a Spanish centre's kind or specialty, an
+		 * Italian place's or a Swiss facility's kind in the singular ("GP practice", "Kardiolog",
+		 * "Consulta de cardiología", "Farmacia", "Spital"), their listing being plural ("GP
+		 * practices", "Kardiologové", "Cardiólogos", "Farmacie", "Spitäler"). With its profession code, a Spanish centre listed under its kind's listing
 		 * reads as its own kind (a local surgery listed with the health centres reads "Consultorio
 		 * local"). A German facility reads as its kind ("Krankenhaus", "Apotheke"), its listing being
 		 * plural.
@@ -73,7 +74,10 @@ export async function getTaxonomyLabels(locale: Locale) {
 				);
 			}
 			return (
-				(isGbListingSlug(slug) || isCzListingSlug(slug) || isItListingSlug(slug)
+				(isGbListingSlug(slug) ||
+				isCzListingSlug(slug) ||
+				isItListingSlug(slug) ||
+				isChListingSlug(slug)
 					? lookup(`profession.${slug}`)
 					: null) ?? lookup(`listing.${slug}`, { gender })
 			);

@@ -21,6 +21,9 @@ const CATALOGS = {
 	"es-ES": messagesFor("es-ES"),
 	"it-IT": messagesFor("it-IT"),
 	"de-DE": messagesFor("de-DE"),
+	"de-CH": messagesFor("de-CH"),
+	"fr-CH": messagesFor("fr-CH"),
+	"it-CH": messagesFor("it-CH"),
 } as const;
 
 /** A label of the catalog's taxonomy, rendered like `getTaxonomyLabels` does. */
@@ -187,5 +190,18 @@ describe("Germany's labels", () => {
 		expect(t("profession.apotheke" as never)).toBe("Apotheke");
 		// German keeps the capital of a noun inside a sentence.
 		expect(inSentence(t("profession.krankenhaus" as never), "de-DE")).toBe("Krankenhaus");
+	});
+});
+describe("Switzerland's labels", () => {
+	it("name a listing in the plural and a facility's kind in the singular, in each language", () => {
+		const t = (locale: "de-CH" | "fr-CH" | "it-CH") =>
+			createTranslator({ locale, messages: CATALOGS[locale], namespace: "taxonomy" });
+		expect(t("de-CH")("listing.spital" as never)).toBe("Spitäler");
+		expect(t("de-CH")("profession.pflegeheim" as never)).toBe("Alters- und Pflegeheim");
+		expect(inSentence(t("de-CH")("profession.spital" as never), "de-CH")).toBe("Spital");
+		expect(t("fr-CH")("listing.apotheke" as never)).toBe("Pharmacies");
+		expect(inSentence(t("fr-CH")("profession.spital" as never), "fr-CH")).toBe("hôpital");
+		expect(t("it-CH")("listing.spital" as never)).toBe("Ospedali");
+		expect(inSentence(t("it-CH")("profession.apotheke" as never), "it-CH")).toBe("farmacia");
 	});
 });

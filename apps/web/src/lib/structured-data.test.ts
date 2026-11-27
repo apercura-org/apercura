@@ -826,3 +826,87 @@ describe("practitionerNodes for Germany", () => {
 		).toBe("https://schema.org/PharmacySpecialty");
 	});
 });
+describe("practitionerNodes for Switzerland", () => {
+	const site: PracticePlaceInput = {
+		siteId: 1,
+		practiceKind: "hospital",
+		name: "Kantonsspital Beispiel",
+		addressLine: "Spitalstrasse 1",
+		addressComplement: null,
+		postcode: "8001",
+		placeName: "Zürich",
+		coordinates: { lat: 47.37, lon: 8.54 },
+		phone: "+41442683111",
+		establishmentUrl: null,
+	};
+	const hospital: PractitionerInput = {
+		...doctor,
+		url: `${ORIGIN}/ch/einrichtung/kantonsspital-beispiel-h123456789`,
+		professionCode: "CH_HOSPITAL",
+		rpps: "123456789",
+		idScheme: "CH-BAG",
+		country: "CH",
+		name: "Kantonsspital Beispiel",
+		givenName: "",
+		familyName: "Kantonsspital Beispiel",
+		honorificPrefix: null,
+		occupation: "Spital",
+		listingSlug: "spital",
+		places: [site],
+	};
+
+	it("publishes a hospital or clinic as a Hospital with its list key, never a person", () => {
+		for (const professionCode of [
+			"CH_HOSPITAL",
+			"CH_PSYCHIATRIC_CLINIC",
+			"CH_REHAB_CLINIC",
+			"CH_SPECIALTY_CLINIC",
+		]) {
+			const nodes = practitionerNodes({ ...hospital, professionCode });
+			const node = nodeOf(nodes, "Hospital");
+			expect(node.identifier).toEqual({
+				"@type": "PropertyValue",
+				propertyID: "CH-BAG",
+				value: "123456789",
+			});
+			expect(node.address).toMatchObject({
+				addressCountry: "CH",
+				postalCode: "8001",
+				addressLocality: "Zürich",
+			});
+			expect(node.telephone).toBe("+41442683111");
+			expect(JSON.stringify(nodes)).not.toMatch(
+				/Person|IndividualPhysician|Physician"|givenName|familyName/,
+			);
+		}
+	});
+
+	it("publishes a birth centre as a MedicalClinic, a pharmacy as a Pharmacy, a nursing home as a MedicalOrganization", () => {
+		expect(
+			nodeOf(
+				practitionerNodes({
+					...hospital,
+					professionCode: "CH_BIRTH_CENTRE",
+					listingSlug: "geburtshaus",
+				}),
+				"MedicalClinic",
+			).medicalSpecialty,
+		).toBe("https://schema.org/Obstetric");
+		expect(
+			nodeOf(
+				practitionerNodes({ ...hospital, professionCode: "CH_PHARMACY", listingSlug: "apotheke" }),
+				"Pharmacy",
+			).medicalSpecialty,
+		).toBe("https://schema.org/PharmacySpecialty");
+		const home = practitionerNodes({
+			...hospital,
+			professionCode: "CH_NURSING_HOME",
+			listingSlug: "pflegeheim",
+		});
+		const node = nodeOf(home, "MedicalOrganization");
+		expect(node.address).toMatchObject({ addressCountry: "CH" });
+		// An organisation is no place: no coordinates on it.
+		expect(node.geo).toBeUndefined();
+		expect(JSON.stringify(home)).not.toMatch(/Person|Physician"/);
+	});
+});

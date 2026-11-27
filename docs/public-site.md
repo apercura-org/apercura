@@ -80,6 +80,17 @@ data):
 | `/mentions-legales` | `/legal-notice`  | `/impressum`           | `/aviso-legal`   | `/note-legali`    |
 | `/conditions`       | `/terms`         | `/nutzungsbedingungen` | `/condiciones`   | `/condizioni`     |
 
+Switzerland (#154) has three market languages, each indexed: German under `/ch`
+(`de-CH`), French under `/ch-fr` (`fr-CH`), Italian under `/ch-it` (`it-CH`);
+`/ch-de/…` answers 301 to `/ch/…`. Each takes its language's route segments,
+with a facility's page under `/ch/einrichtung/…`, `/ch-fr/etablissement/…` and
+`/ch-it/struttura/…` and an establishment's under `/organisation`
+(`/organizzazione` in Italian); its listing slugs are German in all three
+(`/ch-fr/apotheke/geneve`), and every Swiss page names its two other languages
+as hreflang alternates. A path is read with its own locale's route table first
+(`src/lib/own-pathname.ts`): `/fr/etablissement/…` is France's establishment
+page, never the Swiss French form of a facility's page.
+
 Each segment follows the locale's prefix: `/fr/annuaire`, `/fr-de/verzeichnis`.
 
 Only French pages are indexed in v1 (`INDEXABLE_LOCALES`): pages in the other

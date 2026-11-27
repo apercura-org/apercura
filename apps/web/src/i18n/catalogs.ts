@@ -1,6 +1,7 @@
 import at from "../../messages/at.json";
 import cz from "../../messages/cz.json";
 import de from "../../messages/de.json";
+import deCH from "../../messages/de-CH.json";
 // Germany's overrides of the German catalog: `de.json` is the language's, the one `/fr-de` reads.
 import deDE from "../../messages/de-DE.json";
 import en from "../../messages/en.json";
@@ -8,8 +9,10 @@ import es from "../../messages/es.json";
 // Spain's overrides of the Spanish catalog: `es.json` is the language's, the one `/fr-es` reads.
 import esES from "../../messages/es-ES.json";
 import fr from "../../messages/fr.json";
+import frCH from "../../messages/fr-CH.json";
 import gb from "../../messages/gb.json";
 import it from "../../messages/it.json";
+import itCH from "../../messages/it-CH.json";
 // Italy's overrides of the Italian catalog: `it.json` is the language's, the one `/fr-it` reads.
 import itIT from "../../messages/it-IT.json";
 import type { Locale } from "./locales";
@@ -22,6 +25,25 @@ type Tree = Record<string, unknown>;
 const isTree = (value: unknown): value is Tree =>
 	typeof value === "object" && value !== null && !Array.isArray(value);
 
+/**
+ * A catalog in Swiss Standard German, which never writes "ß": every one becomes "ss"
+ * ("Strasse", "schliessen"), in the German texts and in the Swiss ones alike.
+ */
+export function withoutEszett(tree: Tree): Tree {
+	const result: Tree = {};
+	for (const [key, value] of Object.entries(tree)) {
+		result[key] =
+			typeof value === "string"
+				? value.replaceAll("ß", "ss")
+				: Array.isArray(value)
+					? value.map((item) => (typeof item === "string" ? item.replaceAll("ß", "ss") : item))
+					: isTree(value)
+						? withoutEszett(value)
+						: value;
+	}
+	return result;
+}
+
 /** Recursively overlays `override` on `base`, so missing keys fall back to `base`. */
 export function mergeMessages(base: Tree, override: Tree): Tree {
 	const result: Tree = { ...base };
@@ -33,7 +55,10 @@ export function mergeMessages(base: Tree, override: Tree): Tree {
 }
 
 const CATALOGS: Record<
-	Exclude<Locale, "de-AT" | "en-GB" | "cs-CZ" | "es-ES" | "it-IT" | "de-DE">,
+	Exclude<
+		Locale,
+		"de-AT" | "en-GB" | "cs-CZ" | "es-ES" | "it-IT" | "de-DE" | "de-CH" | "fr-CH" | "it-CH"
+	>,
 	unknown
 > = {
 	fr,
@@ -44,6 +69,13 @@ const CATALOGS: Record<
 };
 
 const merged = new Map<Locale, Messages>();
+
+/** Switzerland's catalogs: the language's, with the Swiss texts on top; German without "ß". */
+const SWISS: Readonly<Record<"de-CH" | "fr-CH" | "it-CH", () => Messages>> = {
+	"de-CH": () => withoutEszett(mergeMessages(messagesFor("de") as Tree, deCH as Tree)) as Messages,
+	"fr-CH": () => mergeMessages(messagesFor("fr") as Tree, frCH as Tree) as Messages,
+	"it-CH": () => mergeMessages(messagesFor("it") as Tree, itCH as Tree) as Messages,
+};
 
 /**
  * The messages of a locale for server-side rendering and emails. English is the
@@ -72,7 +104,10 @@ export function messagesFor(locale: Locale): Messages {
 								: locale === "de-DE"
 									? // Germany: the German catalog, with Germany's overrides on top.
 										(mergeMessages(messagesFor("de") as Tree, deDE as Tree) as Messages)
-									: (mergeMessages(en, CATALOGS[locale] as Tree) as Messages);
+									: locale === "de-CH" || locale === "fr-CH" || locale === "it-CH"
+										? // Switzerland: its language's catalog, with the Swiss texts on top.
+											SWISS[locale]()
+										: (mergeMessages(en, CATALOGS[locale] as Tree) as Messages);
 		merged.set(locale, found);
 	}
 	return found;
@@ -95,3 +130,9 @@ export const ITALIAN_MARKET_OVERRIDES: unknown = itIT;
 
 /** Germany's overrides of the German catalog (`messages/de-DE.json`), for tests. */
 export const GERMAN_MARKET_OVERRIDES: unknown = deDE;
+/** Switzerland's texts over the German, French and Italian catalogs, for tests. */
+export const SWISS_MARKET_OVERRIDES: Readonly<Record<"de-CH" | "fr-CH" | "it-CH", unknown>> = {
+	"de-CH": deCH,
+	"fr-CH": frCH,
+	"it-CH": itCH,
+};

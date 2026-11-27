@@ -1,4 +1,4 @@
-import { LOCALE_PREFIXES, type Locale, MARKET_LOCALES, type MarketCountry } from "~/i18n/locales";
+import { LOCALE_PREFIXES, LOCALES, type Locale } from "~/i18n/locales";
 import { routing } from "~/i18n/routing";
 import type { SitemapMarket } from "~/server/queries/sitemap-sql";
 
@@ -80,13 +80,21 @@ const FIRST_SEGMENTS: ReadonlyMap<string, Record<Locale, string>> = (() => {
 	return map;
 })();
 
+/** The locale of a sitemap segment: the one whose pages live under it (`ch-fr` → `fr-CH`). */
+function localeOfSegment(market: SitemapMarket): Locale {
+	const locale = LOCALES.find((candidate) => LOCALE_PREFIXES[candidate] === `/${market}`);
+	if (!locale) throw new RangeError(`No locale lives under /${market}`);
+	return locale;
+}
+
 /**
- * An internal (French) path of a market's directory under the market's segment,
- * with the market's route segments: `marketPagePath("at", "/praticien/x")` is
- * `/at/arzt/x`, `marketPagePath("fr", "/annuaire")` is `/fr/annuaire`.
+ * An internal (French) path of a market's directory under the segment of one of its languages,
+ * with that language's route segments: `marketPagePath("at", "/praticien/x")` is `/at/arzt/x`,
+ * `marketPagePath("fr", "/annuaire")` is `/fr/annuaire`, `marketPagePath("ch-fr", "/annuaire")`
+ * is `/ch-fr/annuaire`.
  */
 export function marketPagePath(market: SitemapMarket, path: string): string {
-	const locale = MARKET_LOCALES[market.toUpperCase() as MarketCountry];
+	const locale = localeOfSegment(market);
 	const prefix = LOCALE_PREFIXES[locale];
 	if (path === "/") return prefix;
 	const [, first = "", ...rest] = path.split("/");
@@ -123,4 +131,7 @@ export const MARKET_STATIC_PATHS: Record<SitemapMarket, readonly string[]> = {
 	es: STATIC_PATHS.filter((path) => path !== "/pro"),
 	it: STATIC_PATHS.filter((path) => path !== "/pro"),
 	de: STATIC_PATHS.filter((path) => path !== "/pro"),
+	ch: STATIC_PATHS.filter((path) => path !== "/pro"),
+	"ch-fr": STATIC_PATHS.filter((path) => path !== "/pro"),
+	"ch-it": STATIC_PATHS.filter((path) => path !== "/pro"),
 };

@@ -1,4 +1,9 @@
-import { FRANCE_SEGMENT, LEGACY_LOCALE_SEGMENTS, LOCALE_SEGMENTS } from "~/i18n/locales";
+import {
+	FRANCE_SEGMENT,
+	LEGACY_LOCALE_SEGMENTS,
+	LOCALE_SEGMENTS,
+	SWITZERLAND_SEGMENT,
+} from "~/i18n/locales";
 
 /**
  * Old URLs, new URLs. Until November 2026 the French directory lived on its own
@@ -23,7 +28,12 @@ export type MarketMove =
 	 */
 	| "locale"
 	/** A sitemap file of the former flat layout (`/sitemaps/praticien-0.xml`). */
-	| "sitemap";
+	| "sitemap"
+	/**
+	 * A prefix people type for a market's main language, which lives at the market's own segment:
+	 * `/ch-de/…` is `/ch/…` (Switzerland's German pages), for good.
+	 */
+	| "alias";
 
 export type MarketRedirect = { path: string; move: MarketMove };
 
@@ -34,6 +44,14 @@ const NOT_A_PAGE =
 const OLD_SITEMAP = /^\/sitemaps\/([a-z]+-\d{1,6}\.xml)$/;
 
 const CURRENT_PREFIXES = new Set(LOCALE_SEGMENTS);
+
+/**
+ * Prefixes that name a market's main language by its code, and the segment that language lives
+ * at (`/ch-de` → `/ch`, as `/{market}` is the main language in the ADR's scheme).
+ */
+export const MARKET_LANGUAGE_ALIASES: Readonly<Record<string, string>> = {
+	[`${SWITZERLAND_SEGMENT}-de`]: SWITZERLAND_SEGMENT,
+};
 const LEGACY_PREFIXES = new Set<string>(LEGACY_LOCALE_SEGMENTS);
 
 /** True for a path that names a page (not a file, an API route or a metadata route). */
@@ -52,6 +70,8 @@ export function isPagePath(pathname: string): boolean {
  *   host of the French site (`legacyRoot`), where `/es/…`, `/it/…` and `/de/…` were the Spanish,
  *   Italian and German interfaces of France's pages.
  * - `/fr/…`, `/fr-en/…`, `/es/…`, `/it/…`, `/de/…`… are current paths: unchanged.
+ * - `/ch-de/…` moves to `/ch/…` for good: Switzerland's German pages live at its own segment
+ *   (`MARKET_LANGUAGE_ALIASES`).
  * - Any other page (`/praticien/…`, `/annuaire`, `/cardiologue/75-paris`,
  *   `/pro/connexion`, `/mentions-legales`…) moves under `/fr`.
  *
@@ -70,6 +90,8 @@ export function marketPath(
 	const first = (slash === -1 ? pathname.slice(1) : pathname.slice(1, slash)).toLowerCase();
 	const rest = slash === -1 ? "" : pathname.slice(slash);
 	if (CURRENT_PREFIXES.has(first) && !(legacyRoot && LEGACY_PREFIXES.has(first))) return null;
+	const alias = MARKET_LANGUAGE_ALIASES[first];
+	if (alias) return { path: `/${alias}${rest === "/" ? "" : rest}`, move: "alias" };
 	if (LEGACY_PREFIXES.has(first)) {
 		return { path: `/${FRANCE_SEGMENT}-${first}${rest === "/" ? "" : rest}`, move: "locale" };
 	}

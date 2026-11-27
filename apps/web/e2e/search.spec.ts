@@ -138,7 +138,8 @@ test.describe("a place of another market", () => {
 	/*
 	 * The synthetic places of the other markets: Glasgow (UK dental and GP practices), Salzburg
 	 * (Austrian dentists), Brno and Praha (Czech dentists), Paris (French dentists), Roma and
-	 * Milano (Italian pharmacies and hospitals).
+	 * Milano (Italian pharmacies and hospitals), Genève, Zürich and Lugano (Swiss pharmacies,
+	 * hospitals and nursing homes).
 	 */
 	for (const [from, to] of [
 		["/fr/recherche?quoi=dentiste&ou=Glasgow", "/gb/dental-practices/glasgow-city/glasgow"],
@@ -175,6 +176,19 @@ test.describe("a place of another market", () => {
 		["/gb/search?quoi=pharmacy&ou=Milan", "/it/farmacie/milano/milano"],
 		["/fr-it/cerca?quoi=farmacia&ou=Roma", "/it/farmacie/roma/roma"],
 		["/fr/recherche?ou=Rome", "/it/cerca?ou=Roma"],
+		// Switzerland by name: its home in the visitor's language (French, Italian, else German).
+		["/fr/recherche?ou=Suisse", "/ch-fr"],
+		["/gb/search?ou=Switzerland", "/ch"],
+		["/it/cerca?ou=Svizzera", "/ch-it"],
+		["/at/suche?ou=Schweiz", "/ch"],
+		// A doctor is not listed in Switzerland: its search, without the care it does not list.
+		["/fr/recherche?quoi=m%C3%A9decin&ou=Suisse", "/ch-fr"],
+		// A Swiss city in any language: Switzerland's listing, in the visitor's language.
+		["/fr/recherche?quoi=pharmacie&ou=Gen%C3%A8ve", "/ch-fr/apotheke/canton-de-geneve/geneve"],
+		["/fr/recherche?quoi=pharmacie&ou=Genf", "/ch-fr/apotheke/canton-de-geneve/geneve"],
+		["/gb/search?quoi=hospital&ou=Zurich", "/ch/spital/bezirk-zuerich/zuerich"],
+		["/it/cerca?quoi=ospedale&ou=Lugano", "/ch-it/spital/distretto-di-lugano/lugano"],
+		["/at/suche?quoi=Pflegeheim&ou=Z%C3%BCrich", "/ch/pflegeheim/bezirk-zuerich/zuerich"],
 		// In the visitor's language when that market offers it: France in English.
 		["/gb/search?quoi=dentist&ou=Paris", "/fr-en/chirurgien-dentiste/75-paris"],
 		// The UK lists no cardiologists: its search, with the place set.
@@ -210,6 +224,7 @@ test.describe("the country searched", () => {
 			"Espagne",
 			"Italie",
 			"Allemagne",
+			"Suisse",
 		]);
 		await country.selectOption({ label: "Royaume-Uni" });
 		// The places suggested are the UK's.
@@ -234,6 +249,13 @@ test.describe("the country searched", () => {
 		await expect(page.getByRole("combobox", { name: "Land" })).toHaveValue("de");
 		await page.goto("/fr-de/suche");
 		await expect(page.getByRole("combobox", { name: "Land" })).toHaveValue("fr");
+		// Switzerland, in each of its languages: one market, `ch`.
+		await page.goto("/ch/suche");
+		await expect(page.getByRole("combobox", { name: "Land" })).toHaveValue("ch");
+		await page.goto("/ch-fr/recherche");
+		await expect(page.getByRole("combobox", { name: "Pays" })).toHaveValue("ch");
+		await page.goto("/ch-it/cerca");
+		await expect(page.getByRole("combobox", { name: "Paese" })).toHaveValue("ch");
 	});
 
 	test.describe("without JavaScript", () => {
@@ -258,6 +280,7 @@ test.describe("a place in a country Apercura does not cover yet", () => {
 		["Espagne", "/es"],
 		["Italie", "/it"],
 		["Allemagne", "/de"],
+		["Suisse", "/ch-fr"],
 	] as const;
 
 	test("“dentiste” in Warszawa says so, lists the open countries, and passes axe", async ({

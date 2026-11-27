@@ -1,6 +1,6 @@
 import { BrandLogo } from "@apercura/ui";
 import { getTranslations } from "next-intl/server";
-import { marketOf } from "~/i18n/locales";
+import { CATALOG_LANGUAGES, marketOf } from "~/i18n/locales";
 import { type Href, Link } from "~/i18n/navigation";
 import { type Locale, routing } from "~/i18n/routing";
 import { CountryPicker } from "./country-picker";
@@ -26,9 +26,10 @@ export async function SiteHeader({ locale, href }: SiteHeaderProps) {
 	const tLocale = await getTranslations({ locale, namespace: "LocaleSwitcher" });
 	const languages = routing.locales.filter((other) => marketOf(other) === marketOf(locale));
 	const isPro = typeof href === "string" && (href === "/pro" || href.startsWith("/pro/"));
-	// The picker offers the languages it is given names for: this market's only.
+	// The picker offers the languages it is given names for: this market's only (France's five,
+	// Switzerland's Deutsch, Français and Italiano), each named by its language.
 	const names = Object.fromEntries(
-		languages.map((other) => [other, tLocale("locale", { locale: other })]),
+		languages.map((other) => [other, tLocale("locale", { locale: CATALOG_LANGUAGES[other] })]),
 	) as Record<Locale, string>;
 
 	return (

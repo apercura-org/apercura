@@ -818,3 +818,104 @@ export function checkDePlaces(staged: {
 		},
 	];
 }
+
+/**
+ * Limits of the Swiss import. The lists are small (13 to 600 facilities): a change of a few rows
+ * is ordinary, so the change checks allow 10% or 3 facilities, whichever is more, and a list may
+ * quarantine one line or 2% of its lines.
+ */
+export const CH_LIMITS = {
+	fileSizeDelta: 0.25,
+	quarantineRatio: 0.02,
+	quarantineLines: 1,
+	rowsDelta: 0.1,
+	rowsSlack: 3,
+	floors: {
+		bag: { minLines: 60, minRows: 60 },
+		"be-spitaeler": { minLines: 10, minRows: 10 },
+		"be-heime": { minLines: 30, minRows: 30 },
+		"ge-hopitaux": { minLines: 5, minRows: 3 },
+		"ge-ems": { minLines: 10, minRows: 10 },
+		"ge-pharmacies": { minLines: 15, minRows: 15 },
+		"bl-apotheken": { minLines: 10, minRows: 10 },
+		"bl-heime": { minLines: 5, minRows: 5 },
+		"bs-spitaeler": { minLines: 3, minRows: 3 },
+		"bs-heime": { minLines: 8, minRows: 8 },
+		"zh-heime": { minLines: 30, minRows: 30 },
+		"ju-institutions": { minLines: 8, minRows: 4 },
+	} as Readonly<Record<string, { minLines: number; minRows: number }>>,
+	/** Sites placed in their commune. */
+	minPlacedRatio: 0.99,
+} as const;
+
+/**
+ * Checks of one Swiss list before the merge: quarantine within its limit, floors of lines and
+ * facilities (never approvable), and the change of facilities and bytes since the last
+ * successful run that read it (approvable). The floors are about a tenth of each list's size in
+ * November 2026: they stop a broken distribution (an error page, a truncated file); the change
+ * checks stop a list that shrank.
+ */
+export function checkChSource(
+	source: string,
+	current: AtSourceStats & { bytes: number },
+	previous: (AtSourceStats & { bytes?: number }) | null,
+): GuardCheck[] {
+	const floors = CH_LIMITS.floors[source] ?? { minLines: 1, minRows: 1 };
+	const ratio = current.lines === 0 ? 1 : current.quarantined / current.lines;
+	const checks: GuardCheck[] = [
+		{
+			name: `${source}.quarantine`,
+			ok:
+				current.lines > 0 &&
+				(ratio <= CH_LIMITS.quarantineRatio || current.quarantined <= CH_LIMITS.quarantineLines),
+			approvable: false,
+			detail: `${current.quarantined} of ${current.lines} lines quarantined (${percent(ratio)})`,
+		},
+		{
+			name: `${source}.lines`,
+			ok: current.lines >= floors.minLines,
+			approvable: false,
+			detail: `${current.lines} data lines (at least ${floors.minLines} expected)`,
+		},
+		{
+			name: `${source}.rows`,
+			ok: current.rows >= floors.minRows,
+			approvable: false,
+			detail: `${current.rows} facilities read (at least ${floors.minRows} expected)`,
+		},
+	];
+	if (previous) {
+		const rows = delta(current.people, previous.people);
+		checks.push({
+			name: `${source}.facilities`,
+			ok:
+				rows <= CH_LIMITS.rowsDelta ||
+				Math.abs(current.people - previous.people) <= CH_LIMITS.rowsSlack,
+			approvable: true,
+			detail: `${current.people} facilities vs ${previous.people} last time (${percent(rows)})`,
+		});
+		if (previous.bytes !== undefined) {
+			const size = delta(current.bytes, previous.bytes);
+			checks.push({
+				name: `${source}.size`,
+				ok: size <= CH_LIMITS.fileSizeDelta,
+				approvable: true,
+				detail: `${current.bytes} bytes vs ${previous.bytes} last time (${percent(size)})`,
+			});
+		}
+	}
+	return checks;
+}
+
+/** After staging: nearly every site must be placed in its commune, or the listings would lose it. */
+export function checkChPlaces(staged: { sites: number; placed: number }): GuardCheck[] {
+	const placed = staged.sites === 0 ? 1 : staged.placed / staged.sites;
+	return [
+		{
+			name: "ch.places",
+			ok: placed >= CH_LIMITS.minPlacedRatio,
+			approvable: true,
+			detail: `${staged.placed} of ${staged.sites} sites placed in their commune (${percent(placed)})`,
+		},
+	];
+}

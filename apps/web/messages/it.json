@@ -91,6 +91,7 @@
 			"GB": "Regno Unito",
 			"CZ": "Cechia",
 			"IT": "Italia",
+			"CH": "Svizzera",
 			"ES": "Spagna",
 			"DE": "Germania"
 		}
@@ -156,7 +157,7 @@
 	},
 	"International": {
 		"metaTitle": "Apercura · Elenchi aperti dei professionisti sanitari",
-		"metaDescription": "Una pagina gratuita e oggettiva per ogni professionista sanitario, dai registri pubblici. Aperto in Francia, Austria, UK, Cechia, Spagna, Italia, Germania.",
+		"metaDescription": "Una pagina gratuita e oggettiva per ogni professionista sanitario. Aperto in Francia, Austria, UK, Cechia, Spagna, Italia, Germania, Svizzera.",
 		"runningHead": "Elenchi aperti dei professionisti sanitari",
 		"title": "Ogni professionista sanitario, una pagina aperta",
 		"lead": "Apercura pubblica una pagina gratuita e oggettiva per ogni professionista sanitario iscritto, a partire dai registri pubblici di ogni paese. Nessuna valutazione, nessuna pubblicità, nessun posizionamento a pagamento, e il codice è aperto.",
@@ -565,6 +566,18 @@
 		"fieldsOfCare": "Ambiti di cura",
 		"facilityType": "Tipologia",
 		"beds": "Posti letto",
+		"swiss": {
+			"hospitalType": "Tipo di ospedale",
+			"activities": "Attività",
+			"activity": "{code, select, A {cure somatiche acute} P {psichiatria} R {riabilitazione} B {casa per partorienti} other {altro}}",
+			"offer": "Prestazioni",
+			"offerKind": "{code, select, AMB {ambulatoriali} STAT {stazionarie} other {altre}}",
+			"services": "Servizi dell’ospedale",
+			"service": "{code, select, NF {L’ospedale dispone di un pronto soccorso.} IPS {L’ospedale dispone di un reparto di cure intense.} other {}}",
+			"servicesNote": "Servizi dell’ospedale di cui fa parte questa sede; alcuni possono essere offerti in un’altra delle sue sedi.",
+			"operator": "Gestito da",
+			"category": "Categoria nell’elenco cantonale"
+		},
 		"ownership": "Titolarità",
 		"ownershipPublic": "Pubblica",
 		"ownershipPrivate": "Privata",
@@ -1577,7 +1590,8 @@
 		"metaDescriptionPageRange": "{count, plural, one {Pagina {page} di {pages}, da {first} a {last}: # professionista registrato come {occupation} a {place} nel registro nazionale.} many {Pagina {page} di {pages}, da {first} a {last}: # di professionisti registrati come {occupation} a {place} nel registro nazionale.} other {Pagina {page} di {pages}, da {first} a {last}: # professionisti registrati come {occupation} a {place} nel registro nazionale.}}",
 		"hubMetaTitleShort": "{listing} in Francia · Apercura",
 		"authoritiesHeading": "{listing}: autorità locali di {place}",
-		"pharmacyCoverage": "Le farmacie sono elencate solo per {states}: gli altri Länder non pubblicano un elenco aggiornato delle loro farmacie come dati aperti."
+		"pharmacyCoverage": "Le farmacie sono elencate solo per {states}: gli altri Länder non pubblicano un elenco aggiornato delle loro farmacie come dati aperti.",
+		"swissCoverage": "{kind, select, pflegeheim {Le case per anziani sono elencate solo nei Cantoni Zurigo, Berna, Ginevra, Basilea Città, Basilea Campagna e Giura: gli altri Cantoni non ne pubblicano un elenco aperto.} apotheke {Le farmacie sono elencate solo a Basilea Campagna (tutte le farmacie) e a Ginevra (solo le farmacie che vaccinano): gli altri Cantoni non ne pubblicano un elenco aperto.} other {Gli ospedali e le cliniche sono elencati in tutti i Cantoni, secondo le cifre chiave 2023 degli ospedali dell’Ufficio federale della sanità pubblica e gli elenchi dei Cantoni Berna, Ginevra, Basilea Città e Giura.}}"
 	},
 	"Directory": {
 		"metaTitle": "Elenco dei professionisti sanitari per luogo · Apercura",
@@ -1729,6 +1743,13 @@
 			"parafarmacie": "Parafarmacia",
 			"ospedali": "Ospedale",
 			"case-di-cura": "Casa di cura accreditata",
+			"spital": "Ospedale",
+			"psychiatrische-klinik": "Ospedale psichiatrico",
+			"rehaklinik": "Clinica di riabilitazione",
+			"spezialklinik": "Clinica specializzata",
+			"geburtshaus": "Casa per partorienti",
+			"pflegeheim": "Casa per anziani",
+			"apotheke": "Farmacia",
 			"hospitales": "Ospedale",
 			"centros-de-salud": "Centro di salute",
 			"consultas-medicas": "Studio medico",
@@ -1791,10 +1812,8 @@
 			"reha-kliniken": "Clinica di riabilitazione",
 			"apotheken": "Farmacia",
 			"krankenhaus": "Ospedale",
-			"psychiatrische-klinik": "Ospedale psichiatrico",
 			"kinderklinik": "Ospedale pediatrico",
-			"reha-klinik": "Clinica di riabilitazione",
-			"apotheke": "Farmacia"
+			"reha-klinik": "Clinica di riabilitazione"
 		},
 		"listing": {
 			"aerzte": "Medici senza specialità indicata",
@@ -1981,6 +2000,13 @@
 			"parafarmacie": "Parafarmacie",
 			"ospedali": "Ospedali",
 			"case-di-cura": "Case di cura accreditate",
+			"spital": "Ospedali",
+			"psychiatrische-klinik": "Cliniche psichiatriche",
+			"rehaklinik": "Cliniche di riabilitazione",
+			"spezialklinik": "Cliniche specializzate",
+			"geburtshaus": "Case per partorienti",
+			"pflegeheim": "Case per anziani",
+			"apotheke": "Farmacie",
 			"hospitales": "Ospedali",
 			"centros-de-salud": "Centri di salute e ambulatori locali",
 			"consultas-medicas": "Studi medici",
@@ -6113,6 +6139,495 @@
 			],
 			"formTitle": "Ask for a page to be removed",
 			"formBody": "Give the address of the page and an email address where we can answer you."
+		}
+	},
+	"LegalNoticeCh": {
+		"metaTitle": "Impressum (Svizzera) · Apercura",
+		"metaDescription": "Impressum delle pagine svizzere di Apercura: il fornitore, il suo indirizzo di contatto compreso quello elettronico, l’iscrizione a registro e il numero IVA, e la persona responsabile dei contenuti (art. 3 cpv. 1 lett. s LCSl).",
+		"title": "Impressum",
+		"lead": "Chi fornisce le pagine svizzere di Apercura (apercura.org/ch, /ch-fr e /ch-it): l’identità e l’indirizzo di contatto, posta elettronica compresa, che l’art. 3 cpv. 1 lett. s della legge federale contro la concorrenza sleale (LCSl) chiede a chi offre prestazioni online, come la prassi svizzera li riporta in un impressum.",
+		"sections": {
+			"provider": {
+				"heading": "Fornitore",
+				"body": [
+					"Le pagine svizzere di Apercura sono fornite dall’ente indicato qui sotto, che gestisce l’elenco e ne risponde dei contenuti."
+				]
+			},
+			"service": {
+				"heading": "Il servizio",
+				"body": [
+					"Un elenco gratuito degli ospedali e delle cliniche, delle case per anziani e delle farmacie della Svizzera, costruito dai dati aperti dell’Ufficio federale della sanità pubblica e dei Cantoni, senza pubblicità, con uno spazio in cui una struttura può completare la propria pagina. Ogni pagina è una struttura, mai un singolo professionista della salute. In Svizzera non si prenota alcun appuntamento tramite Apercura."
+				]
+			},
+			"editor": {
+				"heading": "Responsabile dei contenuti",
+				"body": [
+					"La persona indicata qui sotto è responsabile di ciò che il fornitore pubblica. Delle informazioni che una struttura aggiunge alla propria pagina risponde la struttura stessa."
+				]
+			},
+			"liability": {
+				"heading": "Contenuto delle pagine",
+				"body": [
+					"L’elenco si basa sulle cifre chiave 2023 degli ospedali svizzeri dell’Ufficio federale della sanità pubblica e sugli elenchi di ospedali, case per anziani e farmacie che alcuni Cantoni pubblicano come dati aperti; le strutture sono localizzate con l’elenco dei Comuni dell’Ufficio federale di statistica e l’elenco delle località di swisstopo. Può essere incompleto o non aggiornato: verificate le informazioni presso la struttura prima di recarvi. Ogni pagina indica come segnalare un errore."
+				]
+			},
+			"ip": {
+				"heading": "Codice e dati",
+				"body": [
+					"Il codice sorgente di Apercura è pubblicato con licenza AGPL-3.0. I dati sono riutilizzati secondo le condizioni d’uso di opendata.swiss e di ciascun editore, con l’indicazione della fonte che ognuno chiede: la pagina «Dati e fonti» elenca ogni fonte."
+				]
+			},
+			"review": {
+				"heading": "Stato di questo testo",
+				"body": [
+					"Questo testo è una bozza, scritta prima della costituzione della persona giuridica. Sarà rivisto da un’avvocata o un avvocato abilitati in Svizzera prima che le pagine svizzere siano annunciate."
+				]
+			}
+		},
+		"fields": {
+			"name": "Nome o ragione sociale",
+			"legalForm": "Forma giuridica",
+			"address": "Indirizzo",
+			"phone": "Telefono",
+			"email": "Indirizzo e-mail",
+			"registration": "Registro e numero d’iscrizione",
+			"vatId": "Numero IVA",
+			"editor": "Responsabile dei contenuti"
+		},
+		"dataLink": "Dati e fonti"
+	},
+	"PrivacyCh": {
+		"metaTitle": "Protezione dei dati (Svizzera) · Apercura",
+		"metaDescription": "Dati trattati dalle pagine svizzere di Apercura: fonti, scopi, principi e motivi giustificativi, comunicazione all’estero, conservazione, destinatari e i vostri diritti, compresa l’opposizione (nuova legge federale sulla protezione dei dati, nLPD, e GDPR).",
+		"title": "Protezione dei dati",
+		"lead": "Quali dati trattano le pagine svizzere di Apercura, da dove provengono, perché, per quanto tempo e da parte di chi, e come esercitare i vostri diritti secondo la nuova legge federale sulla protezione dei dati (nLPD), in vigore dal 1° settembre 2023, e la sua ordinanza (OPDa).",
+		"sections": {
+			"controller": {
+				"heading": "Titolare del trattamento",
+				"body": [
+					"Il fornitore indicato nell’impressum è titolare del trattamento dell’elenco, degli account delle strutture, delle rivendicazioni delle pagine e delle richieste inviate tramite il sito. Per qualsiasi domanda sui vostri dati, scrivete all’indirizzo qui sotto."
+				]
+			},
+			"law": {
+				"heading": "Diritto applicabile",
+				"body": [
+					"I trattamenti delle pagine svizzere sono soggetti alla legge federale sulla protezione dei dati (LPD, RS 235.1) e all’ordinanza sulla protezione dei dati (OPDa, RS 235.11). Poiché il fornitore è stabilito nell’Unione europea, ai suoi trattamenti si applica anche il regolamento generale sulla protezione dei dati (GDPR): una sezione più in basso dice che cosa aggiunge."
+				]
+			},
+			"directory": {
+				"heading": "Elenco: dati sulle strutture",
+				"body": [
+					"Dati: il nome della struttura come lo pubblica il suo elenco; il suo genere (sede di ospedale o di clinica, casa per anziani, farmacia); per un ospedale o una clinica, il tipo secondo la tipologia dell’Ufficio federale di statistica, i tipi di attività, il pronto soccorso e le cure intense, l’offerta ambulatoriale e stazionaria, il gruppo di forma giuridica dell’ospedale e il gestore; la categoria che le attribuisce l’elenco del suo Cantone; indirizzo, numero postale d’avviamento, località, Comune e Cantone; numero di telefono se il suo elenco lo indica, e la sua posizione se il suo elenco ne dà le coordinate. Una struttura che rivendica la propria pagina può aggiungere una presentazione, le lingue, una foto e gli orari.",
+					"Sono dati su organizzazioni. La nLPD protegge soltanto i dati delle persone fisiche: i dati di una struttura sono dati personali quando il suo nome designa una persona, come spiega la sezione seguente.",
+					"Scopo: permettere al pubblico di trovare un ospedale, una clinica, una casa per anziani o una farmacia, sapere dove si trova e che cosa è.",
+					"Conservazione: finché la struttura figura nel suo elenco. Una pagina scompare dopo due importazioni in cui la struttura non vi figura più; una pagina rimossa dopo un’opposizione non viene mai più pubblicata."
+				]
+			},
+			"people": {
+				"heading": "Le strutture, e le persone che nominano",
+				"body": [
+					"Una pagina svizzera è una struttura, mai il profilo di una persona. Nessun professionista della salute è elencato: non si importa alcun registro di singoli medici, farmacisti o altri professionisti.",
+					"Il nome di una struttura può designare una persona, ad esempio una farmacia che porta il nome del suo farmacista («Farmacia Dott. Rossi»): quel nome è allora un dato personale, tratto da un elenco che la Confederazione o un Cantone pubblica. Una pagina mostra il nome come lo pubblica il suo elenco, senza un’indicazione «c/o» e quanto la segue, che può nominare un’altra persona. Nient’altro viene raccolto su una persona: i nomi dei farmacisti responsabili, gli indirizzi e-mail e i nomi utente di chi redige gli elenchi non vengono mai letti, e non ci sono né data di nascita, né indirizzo privato, né valutazioni, né recensioni.",
+					"Chiunque sia interessato da una pagina può opporsi in qualsiasi momento, e la pagina viene rimossa."
+				]
+			},
+			"sources": {
+				"heading": "Fonti",
+				"body": [
+					"Ogni pagina si basa su dati pubblici aperti: le «Kennzahlen der Schweizer Spitäler 2023» (cifre chiave degli ospedali svizzeri) dell’Ufficio federale della sanità pubblica (UFSP), gli elenchi di ospedali, case per anziani e farmacie che i Cantoni di Zurigo, Berna, Ginevra, Basilea Città, Basilea Campagna e Giura pubblicano su opendata.swiss, l’elenco ufficiale dei Comuni dell’Ufficio federale di statistica e l’elenco ufficiale delle località con i loro numeri postali d’avviamento di swisstopo. Ogni fonte è riutilizzata con l’indicazione che chiede:"
+				]
+			},
+			"grounds": {
+				"heading": "Principi e motivi giustificativi",
+				"body": [
+					"Secondo la nLPD, un privato può trattare dati personali senza consenso finché il trattamento rispetta i principi degli art. 6 e 8 (liceità, buona fede, proporzionalità, uno scopo riconoscibile e limitato, esattezza, sicurezza dei dati) e la persona interessata non vi si è opposta espressamente (art. 30 cpv. 2). Il consenso non è il fondamento generale del trattamento, e l’elenco non ne chiede alcuno.",
+					"Quando una pagina nomina una persona, il fornitore si fonda su un interesse preponderante (art. 31 cpv. 1): il pubblico ha bisogno di sapere quali ospedali, cliniche, case per anziani e farmacie si trovano dove, un bisogno a cui la Confederazione e i Cantoni rispondono già pubblicando questi elenchi come dati aperti. Si mostrano solo i dati propri della struttura, in un ordine neutro, senza pubblicità, valutazioni né recensioni; un’opposizione nasconde subito una pagina e le impedisce di tornare.",
+					"Gli account e le rivendicazioni si fondano sulle condizioni d’uso, un contratto con il titolare dell’account (art. 31 cpv. 2 lett. a), e sull’interesse del fornitore a mettere in sicurezza il servizio."
+				]
+			},
+			"information": {
+				"heading": "Come siete informati",
+				"body": [
+					"I dati delle strutture non provengono dalle strutture stesse. Se i dati non sono raccolti presso la persona interessata, l’art. 19 nLPD chiede al titolare di comunicare anche le categorie di dati trattati (cpv. 3), al più tardi un mese dopo averli ottenuti (cpv. 5).",
+					"La presente informativa fornisce queste informazioni: il titolare e i suoi recapiti, gli scopi, le categorie di dati, le fonti, i destinatari, la comunicazione all’estero e i vostri diritti. È collegata da ogni pagina, e la pagina «Dati e fonti» elenca ogni fonte. Le persone che il nome di una struttura può designare non sono note una per una al fornitore: informarle ciascuna individualmente richiederebbe un onere sproporzionato (art. 20 cpv. 2 lett. b)."
+				]
+			},
+			"objection": {
+				"heading": "Opporsi a una pagina",
+				"body": [
+					"Chiunque sia interessato da una pagina può opporsi alla sua pubblicazione in qualsiasi momento, senza indicarne il motivo (art. 30 cpv. 2 lett. b e art. 32 cpv. 2 nLPD; art. 21 GDPR). Se la pagina non è rivendicata basta un modulo, sulla pagina «Dati e fonti» o sulla pagina stessa: la pagina viene nascosta non appena arriva la richiesta, eliminata dopo una breve verifica, e gli aggiornamenti degli elenchi non la ripubblicano mai. Se è rivendicata, il suo titolare la rimuove dal proprio spazio."
+				]
+			},
+			"accounts": {
+				"heading": "Account delle strutture e rivendicazioni",
+				"body": [
+					"Dati: indirizzo e-mail, nome, password (conservata in forma di hash), secondo fattore di autenticazione, i documenti inviati per rivendicare una pagina (prova che il richiedente dirige la struttura o agisce per suo conto) e i membri del team.",
+					"Scopi: gestire l’account e verificare che una pagina sia rivendicata dalla struttura giusta. Motivi: le condizioni d’uso (art. 31 cpv. 2 lett. a nLPD; art. 6 par. 1 lett. b GDPR) e l’interesse a mettere in sicurezza il servizio (art. 6 par. 1 lett. f GDPR).",
+					"Conservazione: l’account è conservato fino alla sua eliminazione; i documenti giustificativi, cifrati, sono cancellati 30 giorni dopo la decisione."
+				]
+			},
+			"requests": {
+				"heading": "Segnalazioni di errori, opposizioni e richieste di contatto",
+				"body": [
+					"Dati: il messaggio, l’indirizzo e-mail di contatto se indicato e la pagina interessata; per una richiesta «Questa è la mia pagina» anche il nome e il numero di telefono. Il testo libero è cifrato.",
+					"Scopi: correggere gli errori, applicare le opposizioni e aiutare una struttura che non può rivendicare la propria pagina online. Motivi: l’interesse a un elenco esatto e il diritto di opposizione (art. 31 cpv. 1 e art. 32 cpv. 2 nLPD; art. 6 par. 1 lett. f e art. 21 GDPR).",
+					"Conservazione: una segnalazione è eliminata 6 mesi dopo la sua chiusura, un’opposizione respinta un anno dopo la decisione, una richiesta di contatto 12 mesi dopo l’ultimo scambio. Non appena un’opposizione è confermata, o il titolare di una pagina rivendicata la rimuove, la pagina e i dati che la riguardano sono eliminati subito, opposizione compresa; si conserva solo una traccia della rimozione (l’identificativo della pagina, il Paese, il motivo, chi l’ha registrata e quando), perché non sia mai più pubblicata. Il titolare che rimuove la propria pagina conserva, solo nel proprio account e mai pubblicati, il nome, il genere e l’identificativo mostrati nel suo spazio e nella sua rivendicazione, fino all’eliminazione dell’account."
+				]
+			},
+			"technical": {
+				"heading": "Dati tecnici, cookie e memoria locale",
+				"body": [
+					"Nel vostro browser si salva solo ciò di cui il servizio ha tecnicamente bisogno: il cookie di sessione delle strutture che hanno effettuato l’accesso e, nella memoria locale del browser, la visualizzazione chiara o scura che avete scelto, che non viene mai inviata al server. Nessun cookie pubblicitario o di misurazione dell’audience, nessun tracciatore.",
+					"L’art. 45c della legge sulle telecomunicazioni (LTC) chiede che sappiate che cosa viene salvato sul vostro apparecchio e perché, e che possiate rifiutarlo: potete bloccare o cancellare questi elementi nelle impostazioni del browser; l’accesso allora non funziona più.",
+					"Per limitare gli abusi, gli indirizzi IP sono trasformati con una funzione a chiave prima di essere contati e mai conservati come tali; le sessioni delle strutture registrano un indirizzo IP troncato. Le visite delle pagine rivendicate sono contate senza cookie né identificativo, e solo il titolare della pagina le vede."
+				]
+			},
+			"recipients": {
+				"heading": "Destinatari e responsabili del trattamento",
+				"body": [
+					"I dati non sono né venduti né affittati, e mai usati per la pubblicità. Li ricevono solo il team del fornitore e i responsabili del trattamento indicati qui sotto, ciascuno per la propria parte, vincolati per contratto a trattarli solo secondo le istruzioni del fornitore e a proteggerli (art. 9 nLPD; art. 28 GDPR). Le mappe sono caricate da un server di tessere, che riceve l’indirizzo IP del visitatore come qualsiasi sito web."
+				]
+			},
+			"abroad": {
+				"heading": "Comunicazione all’estero",
+				"body": [
+					"I dati possono essere trattati in Stati dello Spazio economico europeo, la cui legislazione secondo il Consiglio federale garantisce una protezione adeguata (art. 16 cpv. 1 nLPD e allegato 1 OPDa): non occorre alcun’altra garanzia. Nulla viene comunicato altrove; ogni cambio di responsabile del trattamento sarà annunciato qui prima di avere effetto."
+				]
+			},
+			"automated": {
+				"heading": "Decisioni individuali automatizzate",
+				"body": [
+					"Nessuna decisione che vi riguarda si basa esclusivamente su un trattamento automatizzato (art. 21 nLPD). Una rivendicazione è decisa da una persona, che ne legge i documenti."
+				]
+			},
+			"rights": {
+				"heading": "I vostri diritti",
+				"body": [
+					"Potete chiedere se vengono trattati dati che vi riguardano e ottenerli (diritto d’accesso, art. 25 nLPD), ricevere i dati che avete comunicato in un formato elettronico usuale o farli trasmettere a un altro titolare (art. 28), far rettificare dati inesatti, e far cancellare dati o farne cessare il trattamento o la comunicazione (art. 32). Scrivete all’indirizzo qui sotto; l’accesso è gratuito e fornito entro 30 giorni.",
+					"Potete anche segnalare un trattamento che ritenete contrario alle norme sulla protezione dei dati all’Incaricato federale della protezione dei dati e della trasparenza (IFPDT), Feldeggweg 1, 3003 Berna, www.edoeb.admin.ch, che può aprire un’inchiesta (art. 49)."
+				]
+			},
+			"gdpr": {
+				"heading": "Visitatori nell’Unione europea e nel SEE",
+				"body": [
+					"Ai trattamenti del fornitore si applica anche il GDPR, in particolare per i visitatori nell’Unione europea e nello Spazio economico europeo. La presente informativa fornisce le informazioni che ne chiedono gli articoli 13 e 14; i dati delle strutture sono trattati sulla base del legittimo interesse (art. 6 par. 1 lett. f), ponderato come sopra. Potete opporvi in qualsiasi momento al trattamento dei dati che vi riguardano (art. 21), chiederne la limitazione (art. 18) e proporre reclamo all’autorità di controllo dello Stato in cui risiedete o lavorate (art. 77). Le richieste vanno allo stesso indirizzo e ricevono risposta entro un mese."
+				]
+			},
+			"changes": {
+				"heading": "Aggiornamenti di questa informativa",
+				"body": [
+					"Questa informativa è una bozza. Sarà rivista da un’avvocata o un avvocato abilitati in Svizzera e dal responsabile della protezione dei dati; ogni versione è datata."
+				]
+			}
+		},
+		"fields": {
+			"controller": "Titolare del trattamento",
+			"address": "Indirizzo",
+			"email": "Contatto per le richieste",
+			"dpo": "Responsabile della protezione dei dati",
+			"effectiveDate": "Data di entrata in vigore",
+			"hostingProvider": "Fornitore di hosting (responsabile del trattamento)",
+			"smtp": "Invio delle e-mail (responsabile del trattamento)"
+		},
+		"objectLink": "Come opporsi a una pagina",
+		"authorityLink": "L’Incaricato federale della protezione dei dati e della trasparenza (IFPDT)"
+	},
+	"TermsCh": {
+		"metaTitle": "Condizioni d’uso (Svizzera) · Apercura",
+		"metaDescription": "Condizioni d’uso delle pagine svizzere di Apercura: un elenco gratuito e fattuale di ospedali e cliniche, case per anziani e farmacie dai dati aperti dell’Ufficio federale della sanità pubblica e dei Cantoni, senza prenotazione online.",
+		"title": "Condizioni d’uso",
+		"lead": "Le regole per l’uso delle pagine svizzere di Apercura, per il pubblico come per le strutture.",
+		"sections": {
+			"service": {
+				"heading": "Il servizio",
+				"body": [
+					"Apercura elenca gratuitamente le sedi di ospedali e cliniche, le case per anziani e le farmacie degli elenchi aperti che l’Ufficio federale della sanità pubblica e i Cantoni pubblicano. È soltanto un elenco: in Svizzera non si prenota alcun appuntamento tramite Apercura. È gestito dal fornitore indicato nell’impressum.",
+					"Consultare l’elenco non richiede alcun account. Usare il sito significa accettare queste condizioni."
+				]
+			},
+			"content": {
+				"heading": "Che cosa contengono le pagine",
+				"body": [
+					"Le pagine mostrano informazioni fattuali tratte dagli elenchi pubblici, in un ordine neutro, senza valutazioni, recensioni, pubblicità né posizionamenti a pagamento.",
+					"Le informazioni possono essere incomplete o non aggiornate: verificatele presso la struttura prima di recarvi. Ogni pagina indica come segnalare un errore."
+				]
+			},
+			"health": {
+				"heading": "Non è un consiglio medico",
+				"body": [
+					"Apercura non dà consigli medici e non è un servizio di emergenza. In caso di emergenza chiamate il 144 (ambulanza) o il 112. In caso di avvelenamento risponde Tox Info Suisse al 145. Fuori orario possono aiutarvi il servizio medico di picchetto del vostro Cantone e le farmacie di turno."
+				]
+			},
+			"practices": {
+				"heading": "Per le strutture",
+				"body": [
+					"Rivendicare una pagina è gratuito. Occorre un documento che provi che il richiedente dirige la struttura o agisce per suo conto, verificato da un amministratore prima che la pagina venga affidata.",
+					"Il titolare di una pagina è responsabile delle informazioni che aggiunge, che devono restare fattuali, esatte e aggiornate."
+				]
+			},
+			"removal": {
+				"heading": "Rimuovere una pagina",
+				"body": [
+					"Chiunque sia interessato da una pagina può opporsi e chiederne la rimozione in qualsiasi momento: la pagina «Dati e fonti» spiega come. Una pagina rivendicata può essere rimossa solo dal suo titolare. Gli errori nei dati si correggono alla fonte, presso il Cantone o l’ufficio federale che pubblica l’elenco, oppure si segnalano con il modulo della pagina «Dati e fonti»."
+				]
+			},
+			"liability": {
+				"heading": "Responsabilità",
+				"body": [
+					"Il fornitore fa del suo meglio perché il servizio sia disponibile ed esatto, ma non può garantirlo. Non è responsabile delle informazioni che le strutture aggiungono alle loro pagine. Questi limiti saranno precisati durante la revisione legale."
+				]
+			},
+			"ip": {
+				"heading": "Codice e dati",
+				"body": [
+					"Il codice sorgente è pubblicato con licenza AGPL-3.0. I dati sono riutilizzati secondo le condizioni d’uso di opendata.swiss e di ciascun editore (gli elenchi di Basilea Città con licenza Creative Commons Attribuzione 4.0 Internazionale, CC BY 4.0), con l’indicazione della fonte che ognuno chiede."
+				]
+			},
+			"law": {
+				"heading": "Diritto applicabile e controversie",
+				"body": [
+					"Il diritto applicabile e il foro competente saranno precisati durante la revisione legale; si applicano sempre le norme imperative a tutela dei consumatori del Paese di residenza. In caso di controversia, scrivete prima all’indirizzo di contatto per cercare una soluzione amichevole."
+				]
+			}
+		},
+		"fields": {
+			"publisher": "Fornitore",
+			"effectiveDate": "Data di entrata in vigore",
+			"contact": "Contatto"
+		}
+	},
+	"AccessibilityCh": {
+		"metaTitle": "Accessibilità (Svizzera) · Apercura",
+		"metaDescription": "Accessibilità delle pagine svizzere di Apercura: una dichiarazione volontaria, l’obiettivo eCH-0059 e WCAG 2.2 AA, che cosa è stato verificato, che cosa resta e come segnalare un problema.",
+		"title": "Accessibilità",
+		"lead": "Apercura è pensato per tutti, comprese le persone anziane e ipovedenti. Questa dichiarazione dice a che punto sono le pagine svizzere.",
+		"sections": {
+			"scope": {
+				"heading": "Campo d’applicazione",
+				"body": [
+					"La legge sui disabili (LDis, RS 151.3) obbliga la Confederazione a rendere accessibili le proprie prestazioni online; non prevede un tale obbligo per i siti privati, e questa dichiarazione è volontaria. Il suo fornitore mira comunque allo standard che la Confederazione applica ai propri siti, eCH-0059, basato sulle Web Content Accessibility Guidelines, e al livello AA delle WCAG 2.2 su ogni pagina."
+				]
+			},
+			"status": {
+				"heading": "A che punto è il sito",
+				"body": [
+					"Le pagine svizzere condividono il codice delle pagine francesi e i loro test. Il sito è parzialmente conforme alle WCAG 2.2 AA: ciò si basa su un’autovalutazione e su test automatici, non ancora su un audit completo, che è in corso."
+				]
+			},
+			"tests": {
+				"heading": "Che cosa è stato verificato",
+				"list": [
+					"Controlli automatici axe-core (regole delle WCAG 2.0, 2.1 e 2.2, livelli A e AA) su ogni tipo di pagina, a ogni rilascio.",
+					"Percorsi con la sola tastiera, con un focus visibile.",
+					"Testo corrente di almeno 18 px, aree cliccabili di almeno 44 px, nulla che si affidi al solo colore, nessuno scorrimento orizzontale a 390 px."
+				]
+			},
+			"pending": {
+				"heading": "Che cosa resta da verificare",
+				"list": [
+					"Un passaggio manuale con i lettori di schermo VoiceOver e NVDA, in tedesco, francese e italiano.",
+					"Un audit completo secondo le WCAG 2.2 AA su un campione di pagine."
+				]
+			},
+			"feedback": {
+				"heading": "Segnalare un problema",
+				"body": [
+					"Se una pagina o una funzione è difficile da usare, scrivete all’indirizzo qui sotto: indicate quale pagina e che cosa vi ha bloccato. Rispondiamo entro un mese e, se necessario, vi forniamo l’informazione in un’altra forma."
+				]
+			}
+		},
+		"fields": {
+			"contact": "Contatto",
+			"date": "Data di questa dichiarazione"
+		}
+	},
+	"DataCh": {
+		"metaTitle": "Dati e fonti (Svizzera) · Apercura",
+		"metaDescription": "Da dove vengono le pagine svizzere di Apercura: le cifre chiave degli ospedali dell’UFSP, gli elenchi aperti dei Cantoni, l’elenco dei Comuni dell’UST e le località di swisstopo, con le loro condizioni, le date di aggiornamento, che cosa non viene importato e come correggere o rimuovere una pagina.",
+		"title": "Dati e fonti",
+		"lead": "Ogni pagina svizzera si basa su dati pubblici aperti. Ecco da dove vengono, a quali condizioni e con quale indicazione della fonte, quando sono stati aggiornati, che cosa resta escluso e perché, e come correggere o rimuovere una pagina.",
+		"status": {
+			"heading": "Ultimo aggiornamento",
+			"body": "Le cifre chiave degli ospedali dell’UFSP escono in edizioni annuali, e l’elenco legge quella del 2023; i Cantoni aggiornano i loro elenchi con ritmi propri. L’elenco controlla gli elenchi ogni mese e importa un elenco quando è cambiato. Una pagina cambia solo se i suoi dati cambiano nel suo elenco.",
+			"importedAt": "Ultima importazione",
+			"checkedAt": "Ultimo controllo delle fonti",
+			"notImported": "L’elenco svizzero non è ancora stato importato su questo sito.",
+			"notImportedValue": "Non ancora importato"
+		},
+		"sources": {
+			"heading": "Fonti",
+			"body": "Gli elenchi sono pubblicati su opendata.swiss, secondo le sue condizioni d’uso e quelle di ciascun editore; tutte permettono il riutilizzo, anche commerciale, e la maggior parte chiede di indicare la fonte. Ogni indicazione qui sotto è riportata parola per parola, nella lingua di questa pagina quando l’editore la formula in questa lingua; l’indicazione degli elenchi ginevrini riporta il giorno del loro scaricamento, quello dell’ultima importazione svizzera.",
+			"caption": "Fonti dei dati dell’elenco svizzero",
+			"columns": {
+				"source": "Fonte",
+				"use": "Usata per",
+				"licence": "Condizioni e indicazione della fonte",
+				"frequency": "Aggiornamento"
+			},
+			"items": {
+				"ch-bag-kzp": {
+					"use": "Sedi di ospedali e cliniche in tutti i Cantoni: nomi, indirizzi, tipo di ospedale dell’UST, tipi di attività, pronto soccorso e cure intense, offerta ambulatoriale e stazionaria, gruppo di forma giuridica, gestore",
+					"frequency": "Edizione annuale; si leggono le cifre 2023"
+				},
+				"ch-be-spitaeler": {
+					"use": "Ospedali e cliniche del Cantone di Berna, compresi quelli che mancano nelle cifre dell’UFSP: nomi, indirizzi",
+					"frequency": "Quando il Cantone aggiorna il suo elenco"
+				},
+				"ch-be-heime": {
+					"use": "Case per anziani del Cantone di Berna: nomi, indirizzi",
+					"frequency": "Quando il Cantone aggiorna il suo elenco"
+				},
+				"ch-ge-hopitaux": {
+					"use": "Ospedali e cliniche del Cantone di Ginevra, compresi quelli che mancano nelle cifre dell’UFSP: nomi, indirizzi",
+					"frequency": "Quando il Cantone aggiorna il suo elenco"
+				},
+				"ch-ge-ems": {
+					"use": "Case per anziani (EMS) del Cantone di Ginevra: nomi, indirizzi",
+					"frequency": "Quando il Cantone aggiorna il suo elenco"
+				},
+				"ch-ge-pharmacies": {
+					"use": "Le farmacie del Cantone di Ginevra che vaccinano, le sole farmacie ginevrine elencate: nomi, indirizzi",
+					"frequency": "Quando il Cantone aggiorna il suo elenco"
+				},
+				"ch-bl-apotheken": {
+					"use": "Farmacie del Cantone di Basilea Campagna: nomi, indirizzi",
+					"frequency": "Quando il Cantone aggiorna il suo elenco"
+				},
+				"ch-bl-heime": {
+					"use": "Case per anziani del Cantone di Basilea Campagna: nomi, indirizzi",
+					"frequency": "Quando il Cantone aggiorna il suo elenco"
+				},
+				"ch-bs-spitaeler": {
+					"use": "Ospedali e cliniche del Cantone di Basilea Città, compresi quelli che mancano nelle cifre dell’UFSP: nomi, indirizzi",
+					"frequency": "Quando il Cantone aggiorna il suo elenco"
+				},
+				"ch-bs-heime": {
+					"use": "Case per anziani del Cantone di Basilea Città: nomi, indirizzi",
+					"frequency": "Quando il Cantone aggiorna il suo elenco"
+				},
+				"ch-zh-heime": {
+					"use": "Case per anziani del Cantone di Zurigo: nomi, indirizzi",
+					"frequency": "Quando il Cantone aggiorna il suo elenco"
+				},
+				"ch-ju-institutions": {
+					"use": "Ospedali e case per anziani del Cantone del Giura: nomi, indirizzi",
+					"frequency": "Quando il Cantone aggiorna il suo elenco"
+				},
+				"ch-bfs-gemeinden": {
+					"use": "Cantoni, distretti e Comuni, con i loro numeri, in cui sono collocate le strutture",
+					"frequency": "A ogni mutazione dei Comuni, a cura dell’UST"
+				},
+				"ch-swisstopo-plz": {
+					"use": "Numeri postali d’avviamento e località, e il punto di ogni località in cui è mostrata una struttura senza coordinate",
+					"frequency": "Regolarmente, a cura di swisstopo"
+				},
+				"map": {
+					"name": "Dati cartografici",
+					"publisher": "Contributori di OpenStreetMap, tessere di OpenFreeMap",
+					"use": "La mappa di base delle pagine",
+					"frequency": "In continuo"
+				}
+			},
+			"licences": {
+				"termsBy": "Libero utilizzo. Obbligo di indicazione della fonte.",
+				"termsOpen": "Libero utilizzo.",
+				"ccBy": "CC BY 4.0",
+				"sitg": "Condizioni generali d’uso del SITG, livello A (accesso libero)",
+				"swisstopo": "Dati aperti di swisstopo, libero utilizzo con indicazione della fonte",
+				"odbl": "ODbL"
+			},
+			"conditionsHeading": "Condizioni di riutilizzo",
+			"conditions": "Gli elenchi sono mostrati come pubblicati, senza alterarne il senso: il nome di una struttura come lo scrive il suo elenco, senza un’indicazione «c/o» e quanto la segue, e i soli dati propri della struttura. Ogni pagina svizzera cita gli elenchi da cui è costruita, con le loro indicazioni della fonte.",
+			"termsText": "Le condizioni d’uso di opendata.swiss"
+		},
+		"coverage": {
+			"heading": "Strutture coperte",
+			"body": [
+				"Una pagina è una struttura, mai una persona. Ciò che è elencato dipende da quanto ciascun Cantone pubblica come dati aperti:"
+			],
+			"cantons": [
+				"Sedi di ospedali e cliniche: in tutti i Cantoni, dalle cifre dell’UFSP, completate dagli elenchi degli ospedali dei Cantoni di Berna, Ginevra, Basilea Città e Giura.",
+				"Case per anziani: soltanto nei Cantoni di Zurigo, Berna, Ginevra, Basilea Città, Basilea Campagna e Giura.",
+				"Farmacie: nel Cantone di Basilea Campagna, e nel Cantone di Ginevra soltanto le farmacie che vaccinano.",
+				"Altrove non sono ancora elencate case per anziani né farmacie, e nessuno studio medico o dentistico è elencato da nessuna parte."
+			],
+			"kinds": {
+				"CH_HOSPITAL": "Ospedali per cure generali: ospedali universitari, presa a carico centralizzata e cure di base (tipi UST da K111 a K123)",
+				"CH_PSYCHIATRIC_CLINIC": "Cliniche psichiatriche (K211, K212)",
+				"CH_REHAB_CLINIC": "Cliniche di riabilitazione (K221)",
+				"CH_SPECIALTY_CLINIC": "Cliniche specializzate: chirurgia, ginecologia e neonatologia, pediatria, geriatria e altre (da K231 a K235)",
+				"CH_BIRTH_CENTRE": "Case per partorienti",
+				"CH_NURSING_HOME": "Case per anziani, dove un Cantone le elenca",
+				"CH_PHARMACY": "Farmacie, dove un Cantone le elenca"
+			},
+			"kindsLabel": "Generi di struttura"
+		},
+		"excluded": {
+			"heading": "Che cosa non viene importato, e perché",
+			"body": [
+				"Alcuni dati completerebbero l’elenco ma non possono essere riutilizzati, o non servono:"
+			],
+			"list": [
+				"I professionisti della salute: i registri federali delle professioni mediche universitarie (MedReg), delle professioni psicologiche (PsyReg) e delle professioni sanitarie (GesReg) si consultano una voce alla volta; i loro dati in blocco richiedono un accordo con l’UFSP, che l’elenco non ha. Nessuna persona è elencata.",
+				"I dati dei partner di Refdata (GLN di professionisti e aziende): non sono dati aperti; ripubblicarli richiede il consenso scritto di Refdata.",
+				"OpenStreetMap: usato solo per la mappa di base, mai come fonte di strutture o della loro posizione, perché la sua licenza Open Database Licence (ODbL) impone la condivisione alle stesse condizioni.",
+				"Le cifre chiave 2024 degli ospedali dell’UFSP: le loro condizioni chiedono un’autorizzazione prima di qualsiasi uso commerciale; si legge quindi l’edizione 2023, libera con indicazione della fonte.",
+				"I dati su singole persone, mai: nessun registro di persone, nessuna valutazione, nessuna recensione."
+			]
+		},
+		"unread": {
+			"heading": "Campi mai letti",
+			"body": [
+				"Gli elenchi contengono campi di cui una pagina non ha bisogno, alcuni dei quali nominano o permettono di raggiungere una persona. Non vengono mai letti né conservati:"
+			],
+			"list": [
+				"Il nome del farmacista responsabile nell’elenco delle farmacie del Cantone di Basilea Campagna.",
+				"Gli indirizzi e-mail, in tutti gli elenchi.",
+				"Il nome utente di chi ha redatto un record nel file del Cantone del Giura.",
+				"Le cifre della cartella di lavoro dell’UFSP (costi, personale, casi): una pagina non ne ha bisogno.",
+				"Un’indicazione «c/o» o «all’attenzione di» nel nome di una struttura, e quanto la segue."
+			]
+		},
+		"locations": {
+			"heading": "Posizione",
+			"body": [
+				"Ogni struttura è collocata nel suo Cantone, distretto e Comune secondo l’elenco ufficiale dei Comuni dell’Ufficio federale di statistica: tramite il numero del Comune se il suo elenco lo indica, altrimenti tramite il numero postale d’avviamento e la località, secondo l’elenco ufficiale delle località di swisstopo.",
+				"Il suo punto è quello che indica il suo elenco, convertito se necessario dalle coordinate nazionali svizzere. Le cifre dell’UFSP e alcuni elenchi non danno coordinate: una tale struttura è mostrata nel punto della sua località nell’elenco di swisstopo. Nessun segnaposto la indica su una mappa, e la sua distanza è approssimativa."
+			]
+		},
+		"identifiers": {
+			"heading": "Identificativi",
+			"body": [
+				"La Svizzera non pubblica un numero nazionale aperto delle strutture sanitarie: l’indirizzo di ogni pagina termina con la chiave del suo elenco, dopo alcune lettere che designano quell’elenco, perché una pagina possa essere ritrovata e confrontata con la sua fonte:"
+			],
+			"list": [
+				"/ch-it/struttura/ospedale-esempio-h123456789: una sede delle cifre dell’UFSP, che non le danno alcun numero; la sua chiave è derivata da Cantone, ospedale, nome e numero postale d’avviamento, dopo h.",
+				"/ch-it/struttura/farmacia-esempio-blp7601000000000: il Global Location Number (GLN) di una farmacia dell’elenco del Cantone di Basilea Campagna, dopo blp.",
+				"/ch-it/struttura/casa-anziani-esempio-gee123456: l’identificativo cantonale d’indirizzo (IDPADR) di una casa per anziani dell’elenco ginevrino, dopo gee; l’identificativo di una casa dell’elenco del Cantone di Zurigo segue zhe.",
+				"Gli altri elenchi non numerano le strutture: la loro chiave è derivata dal nome e dall’indirizzo della struttura, dopo alcune lettere che designano il Cantone e l’elenco (beh, bee, geh, gep, ble, bsh, bse, ju)."
+			]
+		},
+		"correct": {
+			"heading": "Correggere un errore",
+			"body": [
+				"Le pagine riprendono gli elenchi pubblici: una correzione duratura si fa alla fonte, e la pagina la segue alla prima importazione dopo la pubblicazione dell’elenco corretto.",
+				"Per tutto il resto, usate il modulo: verifichiamo ogni segnalazione."
+			],
+			"list": [
+				"Una struttura dell’elenco di un Cantone: chiedete la correzione al servizio cantonale che pubblica l’elenco, indicato nelle fonti qui sopra.",
+				"Una sede di ospedale o di clinica delle cifre dell’UFSP: le cifre 2023 non vengono ripubblicate; segnalate l’errore con il modulo qui sotto.",
+				"Telefono, sito web e orari: se l’elenco non li indica, una struttura li aggiunge rivendicando la propria pagina."
+			],
+			"formTitle": "Segnalare un errore",
+			"formBody": "Indicate l’indirizzo della pagina e che cosa è sbagliato."
+		},
+		"remove": {
+			"heading": "Rimuovere una pagina",
+			"body": [
+				"Chiunque sia interessato da una pagina può opporsi alla sua pubblicazione in qualsiasi momento, senza indicarne il motivo (art. 30 cpv. 2 lett. b e art. 32 cpv. 2 nLPD; art. 21 GDPR). Una pagina non rivendicata viene nascosta non appena arriva la richiesta ed eliminata dopo una breve verifica; non torna mai con gli aggiornamenti degli elenchi. Una pagina rivendicata è rimossa dal suo titolare, dal proprio spazio. Ogni pagina ha anche un proprio modulo di rimozione."
+			],
+			"formTitle": "Chiedere la rimozione di una pagina",
+			"formBody": "Indicate l’indirizzo della pagina e un indirizzo e-mail a cui possiamo rispondervi."
 		}
 	}
 }

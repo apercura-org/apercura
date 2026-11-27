@@ -8,6 +8,7 @@
  */
 import {
 	allAtListingSlugs,
+	allChListingSlugs,
 	allCzListingSlugs,
 	allDeListingSlugs,
 	allEsListingSlugs,
@@ -34,6 +35,7 @@ const CZ_LISTINGS: ReadonlySet<string> = allCzListingSlugs();
 const ES_LISTINGS: ReadonlySet<string> = allEsListingSlugs();
 const IT_LISTINGS: ReadonlySet<string> = allItListingSlugs();
 const DE_LISTINGS: ReadonlySet<string> = allDeListingSlugs();
+const CH_LISTINGS: ReadonlySet<string> = allChListingSlugs();
 
 /**
  * True when a listing slug belongs to the market of `locale` (France's, Austria's, the UK's,
@@ -46,6 +48,7 @@ function inMarket(slug: string, locale: Locale): boolean {
 	if (marketOf(locale) === "ES") return ES_LISTINGS.has(slug);
 	if (marketOf(locale) === "IT") return IT_LISTINGS.has(slug);
 	if (marketOf(locale) === "DE") return DE_LISTINGS.has(slug);
+	if (marketOf(locale) === "CH") return CH_LISTINGS.has(slug);
 	const profession = professionOfListingSlug(slug);
 	return Boolean(profession && FR_PROFESSIONS[profession]?.enabled);
 }
@@ -88,9 +91,10 @@ function buildIndex(locale: Locale): ListingEntry[] {
 	const { taxonomy } = messagesFor(locale);
 	const listing = taxonomy.listing as Record<string, string>;
 	const professions = taxonomy.profession as Record<string, string>;
-	// A Czech, Spanish, Italian or German listing is plural ("Kardiologové", "Farmacias", "Farmacie",
-	// "Apotheken"), its profession label singular ("Kardiolog", "Farmacia", "Apotheke"): both match.
-	const singular = ["CZ", "ES", "IT", "DE"].includes(marketOf(locale));
+	// A Czech, Spanish, Italian, German or Swiss listing is plural ("Kardiologové", "Farmacias",
+	// "Farmacie", "Apotheken", "Spitäler"), its profession label singular ("Kardiolog", "Farmacia",
+	// "Apotheke", "Spital"): both match.
+	const singular = ["CZ", "ES", "IT", "DE", "CH"].includes(marketOf(locale));
 	// The everyday words of the locale's language suggest their listing too ("Hausarzt" →
 	// Allgemeinmedizin).
 	const aliases =

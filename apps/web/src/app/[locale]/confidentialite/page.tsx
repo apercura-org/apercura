@@ -8,6 +8,7 @@ import {
 	ProseSection,
 } from "~/components/institutional";
 import { PrivacyAt } from "~/components/legal-at";
+import { PrivacyCh } from "~/components/legal-ch";
 import { PrivacyCz } from "~/components/legal-cz";
 import { PrivacyDe } from "~/components/legal-de";
 import { PrivacyEs } from "~/components/legal-es";
@@ -38,6 +39,7 @@ export function generateMetadata({ params }: PageProps<"/[locale]/confidentialit
 			ES: "PrivacyEs",
 			IT: "PrivacyIt",
 			DE: "PrivacyDe",
+			CH: "PrivacyCh",
 		},
 		HREF,
 	);
@@ -59,6 +61,7 @@ export default async function PrivacyPage({ params }: PageProps<"/[locale]/confi
 	if (marketOf(locale) === "ES") return <PrivacyEs locale={locale} />;
 	if (marketOf(locale) === "IT") return <PrivacyIt locale={locale} />;
 	if (marketOf(locale) === "DE") return <PrivacyDe locale={locale} />;
+	if (marketOf(locale) === "CH") return <PrivacyCh locale={locale} />;
 	const t = await getTranslations({ locale, namespace: "PrivacyPage" });
 	const tSite = await getTranslations({ locale, namespace: "Site" });
 	const tI = await getTranslations({ locale, namespace: "Institutional" });

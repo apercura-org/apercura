@@ -24,6 +24,10 @@ const BUDGETS_KB: Record<string, number> = {
 	"/fr": 60,
 	// The international home: one small island (the language suggestion).
 	"/": 60,
+	// Switzerland (synthetic fixtures): a facility, a canton's listing, the French home.
+	"/ch/einrichtung/universitaetsspital-muster-basel-h225608997": 61,
+	"/ch-fr/apotheke/geneve": 60,
+	"/ch-fr": 60,
 };
 
 const manifest = JSON.parse(

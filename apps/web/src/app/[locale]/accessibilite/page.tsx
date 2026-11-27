@@ -8,6 +8,7 @@ import {
 	ProseSection,
 } from "~/components/institutional";
 import { AccessibilityAt } from "~/components/legal-at";
+import { AccessibilityCh } from "~/components/legal-ch";
 import { AccessibilityCz } from "~/components/legal-cz";
 import { AccessibilityDe } from "~/components/legal-de";
 import { AccessibilityEs } from "~/components/legal-es";
@@ -37,6 +38,7 @@ export function generateMetadata({ params }: PageProps<"/[locale]/accessibilite"
 			ES: "AccessibilityEs",
 			IT: "AccessibilityIt",
 			DE: "AccessibilityDe",
+			CH: "AccessibilityCh",
 		},
 		HREF,
 	);
@@ -58,6 +60,7 @@ export default async function AccessibilityPage({ params }: PageProps<"/[locale]
 	if (marketOf(locale) === "ES") return <AccessibilityEs locale={locale} />;
 	if (marketOf(locale) === "IT") return <AccessibilityIt locale={locale} />;
 	if (marketOf(locale) === "DE") return <AccessibilityDe locale={locale} />;
+	if (marketOf(locale) === "CH") return <AccessibilityCh locale={locale} />;
 	const t = await getTranslations({ locale, namespace: "AccessibilityPage" });
 	const tSite = await getTranslations({ locale, namespace: "Site" });
 	const tI = await getTranslations({ locale, namespace: "Institutional" });
