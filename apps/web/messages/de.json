@@ -91,7 +91,8 @@
 			"GB": "Vereinigtes Königreich",
 			"CZ": "Tschechien",
 			"IT": "Italien",
-			"ES": "Spanien"
+			"ES": "Spanien",
+			"DE": "Deutschland"
 		}
 	},
 	"HomePage": {
@@ -155,7 +156,7 @@
 	},
 	"International": {
 		"metaTitle": "Apercura · Offene Verzeichnisse der Gesundheitsfachkräfte",
-		"metaDescription": "Eine kostenlose, sachliche Seite je Gesundheitsfachkraft, aus öffentlichen Registern. Offen in Frankreich, Österreich, UK, Tschechien, Spanien, Italien.",
+		"metaDescription": "Eine kostenlose, sachliche Seite je Gesundheitsfachkraft. Offen in Frankreich, Österreich, UK, Tschechien, Spanien, Italien und Deutschland.",
 		"runningHead": "Offene Verzeichnisse der Gesundheitsfachkräfte",
 		"title": "Jede Gesundheitsfachkraft, eine offene Seite",
 		"lead": "Apercura veröffentlicht eine kostenlose, sachliche Seite für jede registrierte Gesundheitsfachkraft, aus den öffentlichen Registern jedes Landes. Keine Bewertungen, keine Werbung, kein bezahltes Ranking, und der Quellcode ist offen.",
@@ -627,7 +628,15 @@
 		"photoAlt": "Foto von {name}",
 		"metaTitleName": "{name} · Apercura",
 		"metaDescriptionBookable": "{name}, {occupation}: Online-Terminbuchung, Adresse, Kontaktdaten und {fees, select, sector {Tarifsektor} other {Kassenvertrag}}.",
-		"metaDescriptionBookablePlace": "{name}, {occupation} in {place}: Online-Terminbuchung, Adresse, Kontaktdaten und {fees, select, sector {Tarifsektor} other {Kassenvertrag}}."
+		"metaDescriptionBookablePlace": "{name}, {occupation} in {place}: Online-Terminbuchung, Adresse, Kontaktdaten und {fees, select, sector {Tarifsektor} other {Kassenvertrag}}.",
+		"germanFacts": {
+			"departments": "Fachabteilungen",
+			"emergencyCare": "Notfallversorgung",
+			"facilityType": "Zulassung",
+			"operator": "Träger",
+			"pharmacyType": "Haupt- oder Filialapotheke",
+			"accessibility": "Barrierefreiheit"
+		}
 	},
 	"Institutional": {
 		"toBeCompleted": "Noch zu ergänzen",
@@ -1569,7 +1578,8 @@
 		"metaDescriptionPage": "{count, plural, one {Seite {page} von {pages}: # als {occupation} in {place} im nationalen Register geführte Gesundheitsfachkraft.} other {Seite {page} von {pages}: # als {occupation} in {place} im nationalen Register geführte Gesundheitsfachkräfte.}}",
 		"metaDescriptionPageRange": "{count, plural, one {Seite {page} von {pages}, {first} bis {last}: # als {occupation} in {place} im nationalen Register geführte Gesundheitsfachkraft.} other {Seite {page} von {pages}, {first} bis {last}: # als {occupation} in {place} im nationalen Register geführte Gesundheitsfachkräfte.}}",
 		"hubMetaTitleShort": "{listing} in Frankreich · Apercura",
-		"authoritiesHeading": "{listing}: Gebietskörperschaften von {place}"
+		"authoritiesHeading": "{listing}: Gebietskörperschaften von {place}",
+		"pharmacyCoverage": "Apotheken werden nur für {states} aufgeführt: Die übrigen Länder veröffentlichen keine aktuelle Liste ihrer Apotheken als offene Daten."
 	},
 	"Directory": {
 		"metaTitle": "Verzeichnis der Gesundheitsfachkräfte nach Ort · Apercura",
@@ -1776,7 +1786,17 @@
 			"consulta-sanitaria": "Gesundheitspraxis",
 			"policlinica": "Poliklinik",
 			"clinica-dental": "Zahnarztpraxis",
-			"farmacia": "Apotheke"
+			"farmacia": "Apotheke",
+			"krankenhaeuser": "Krankenhaus",
+			"psychiatrische-kliniken": "Psychiatrische Klinik",
+			"kinderkliniken": "Kinderklinik",
+			"reha-kliniken": "Reha-Klinik",
+			"apotheken": "Apotheke",
+			"krankenhaus": "Krankenhaus",
+			"psychiatrische-klinik": "Psychiatrische Klinik",
+			"kinderklinik": "Kinderklinik",
+			"reha-klinik": "Reha-Klinik",
+			"apotheke": "Apotheke"
 		},
 		"listing": {
 			"aerzte": "Ärztinnen und Ärzte ohne Fachangabe",
@@ -2010,7 +2030,12 @@
 			"podologos": "Podologie",
 			"nutricionistas": "Ernährungsberatung",
 			"fisioterapeutas": "Physiotherapie",
-			"enfermeria": "Pflege"
+			"enfermeria": "Pflege",
+			"krankenhaeuser": "Krankenhäuser",
+			"psychiatrische-kliniken": "Psychiatrische Kliniken",
+			"kinderkliniken": "Kinderkliniken",
+			"reha-kliniken": "Reha-Kliniken",
+			"apotheken": "Apotheken"
 		},
 		"practiceKind": {
 			"office": "Praxis",
@@ -5317,6 +5342,399 @@
 			],
 			"formTitle": "Ask for a page to be removed",
 			"formBody": "Give the address of the page and an email address where we can answer you."
+		}
+	},
+	"ImpressumDe": {
+		"metaTitle": "Impressum (Deutschland) · Apercura",
+		"metaDescription": "Impressum der deutschen Seiten von Apercura: Anbieter, Kontakt, Registereintrag und Verantwortlicher für den Inhalt (§ 5 DDG, § 18 Abs. 2 MStV).",
+		"title": "Impressum",
+		"lead": "Wer die deutschen Seiten von Apercura (apercura.org/de) anbietet, wie es § 5 des Digitale-Dienste-Gesetzes (DDG) und § 18 Abs. 2 des Medienstaatsvertrags (MStV) von einer Website verlangen.",
+		"sections": {
+			"provider": {
+				"heading": "Anbieter (§ 5 DDG)",
+				"body": [
+					"Die deutschen Seiten von Apercura werden von der unten genannten Stelle angeboten. Sie betreibt das Verzeichnis und ist für seinen Inhalt verantwortlich."
+				]
+			},
+			"service": {
+				"heading": "Der Dienst",
+				"body": [
+					"Ein kostenloses Verzeichnis der Einrichtungen in Deutschland, die Patientinnen und Patienten aufsuchen (Krankenhäuser, psychiatrische Kliniken, Kinderkliniken, Vorsorge- und Rehabilitationskliniken sowie die Apotheken in Thüringen und Brandenburg), erstellt aus dem Verzeichnis der Krankenhäuser und Vorsorge- oder Rehabilitationseinrichtungen, das die Statistischen Ämter des Bundes und der Länder jedes Jahr veröffentlichen, und aus den Apothekenlisten, die Thüringen und Brandenburg als offene Daten veröffentlichen, ohne Werbung und mit einem Bereich, in dem eine Einrichtung ihre Seite selbst vervollständigen kann. Ärztinnen und Ärzte, Zahnärztinnen und Zahnärzte und die übrigen Gesundheitsberufe sind nicht aufgeführt. Über Apercura werden in Deutschland keine Termine gebucht."
+				]
+			},
+			"editor": {
+				"heading": "Verantwortlich für den Inhalt (§ 18 Abs. 2 MStV)",
+				"body": [
+					"Die unten genannte Person ist für die redaktionellen Inhalte verantwortlich, die der Anbieter veröffentlicht. Für Angaben, die eine Einrichtung ihrer eigenen Seite hinzufügt, ist sie selbst verantwortlich; als Hosting-Diensteanbieter haftet der Anbieter dafür nur nach Maßgabe von Art. 6 des Gesetzes über digitale Dienste (Verordnung (EU) 2022/2065)."
+				]
+			},
+			"liability": {
+				"heading": "Inhalt der Seiten",
+				"body": [
+					"Das Verzeichnis beruht auf öffentlichen Verzeichnissen (dem Krankenhausverzeichnis der Statistischen Ämter, den Apothekenlisten Thüringens und Brandenburgs, dem Gemeindeverzeichnis von Destatis). Es kann unvollständig oder veraltet sein: Prüfen Sie die Angaben vor einem Besuch bei der Einrichtung. Jede Seite erklärt, wie Sie einen Fehler melden."
+				]
+			},
+			"ip": {
+				"heading": "Code und Daten",
+				"body": [
+					"Der Quellcode von Apercura ist unter der Lizenz AGPL-3.0 veröffentlicht. Die Daten der Statistischen Ämter werden, wie deren Bedingungen es erlauben, mit Quellenangabe wiedergegeben; die Apothekenliste Thüringens unter der Lizenz CC BY 4.0, die Brandenburgs unter der Datenlizenz Deutschland – Namensnennung – Version 2.0. Die Seite „Daten und Quellen“ nennt jede Quelle mit der verlangten Namensnennung."
+				]
+			},
+			"dispute": {
+				"heading": "Verbraucherstreitbeilegung",
+				"body": [
+					"Der Anbieter ist nicht bereit und nicht verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen (§ 36 VSBG). Der Dienst ist kostenlos."
+				]
+			},
+			"review": {
+				"heading": "Stand dieses Textes",
+				"body": [
+					"Dieser Text ist ein Entwurf, verfasst vor der Gründung der juristischen Person. Er wird vor der Ankündigung der deutschen Seiten von einer in Deutschland zugelassenen Rechtsanwältin oder einem Rechtsanwalt geprüft."
+				]
+			}
+		},
+		"fields": {
+			"name": "Name",
+			"legalForm": "Rechtsform",
+			"address": "Sitz",
+			"phone": "Telefon",
+			"email": "E-Mail-Adresse",
+			"registration": "Registergericht und Registernummer",
+			"vatId": "Umsatzsteuer-Identifikationsnummer (§ 27a UStG)",
+			"editor": "Verantwortlich für den Inhalt"
+		},
+		"dataLink": "Daten und Quellen"
+	},
+	"PrivacyDe": {
+		"metaTitle": "Datenschutzerklärung (Deutschland) · Apercura",
+		"metaDescription": "Welche Daten die deutschen Seiten von Apercura verarbeiten, woher, wozu und wie lange, und Ihre Rechte, auch der Widerspruch (Art. 13, 14, 21 DSGVO).",
+		"title": "Datenschutzerklärung",
+		"lead": "Welche Daten die deutschen Seiten von Apercura verarbeiten, woher sie stammen, wozu, wie lange und durch wen, und wie Sie Ihre Rechte nach der Datenschutz-Grundverordnung (DSGVO) und dem Bundesdatenschutzgesetz (BDSG) ausüben.",
+		"sections": {
+			"controller": {
+				"heading": "Verantwortlicher",
+				"body": [
+					"Der im Impressum genannte Anbieter ist Verantwortlicher für das Verzeichnis, die Konten der Einrichtungen, die Beanspruchungen und die über die Website gesendeten Anfragen."
+				]
+			},
+			"directory": {
+				"heading": "Verzeichnis: Daten über Einrichtungen",
+				"body": [
+					"Daten: der Name des Krankenhauses, der Klinik oder der Apotheke, wie das Verzeichnis ihn veröffentlicht, ihre Art, ihre Fachabteilungen, ob und auf welcher Stufe sie an der Notfallversorgung teilnimmt, die Art ihres Trägers (öffentlich, freigemeinnützig oder privat) und der Einrichtung, ihre Adresse und ihre Telefonnummer, wenn es die eigene Nummer der Einrichtung ist; bei einer Apotheke in Thüringen außerdem, ob sie Hauptapotheke oder Filiale ist und wie barrierefrei sie ist. Eine Einrichtung, die ihre Seite beansprucht, kann eine Vorstellung, Sprachen, ein Foto und Öffnungszeiten hinzufügen.",
+					"Nie gespeichert, obwohl die Quellen sie veröffentlichen: E-Mail- und Internetadressen, der Name des Trägers, die Zahl der Betten und die pseudonyme Kennung, die das Krankenhausverzeichnis jedes Jahr neu vergibt. Eine Telefonnummer, die eine Quelle für mehr als drei Einrichtungen angibt, gehört zu einer Zentrale und wird nicht angezeigt. Das Krankenhausverzeichnis veröffentlicht keine Koordinaten: Ein Krankenhaus oder eine Klinik wird am geografischen Mittelpunkt ihrer Gemeinde verortet, nie an ihrer Adresse; eine Apotheke an dem Punkt, den ihr Land veröffentlicht.",
+					"Kennung: ein Schlüssel, der die Quelle und die Einrichtung bezeichnet (zum Beispiel k0a1b2c3d4e), am Ende der Adresse der Seite. Die Quellen veröffentlichen keine bundesweite Nummer: Bei einem Krankenhaus oder einer Klinik wird der Schlüssel aus Gemeinde, Adresse und Namen abgeleitet; bei einer Apotheke in Thüringen ist es die Nummer ihrer Akte bei der Aufsichtsbehörde.",
+					"Zweck: der Öffentlichkeit zu ermöglichen, ein Krankenhaus, eine Klinik oder eine Apotheke zu finden, ihren Standort und ihre Erreichbarkeit. Rechtsgrundlage: berechtigte Interessen (Art. 6 Abs. 1 lit. f DSGVO), unten abgewogen.",
+					"Speicherdauer: solange die Einrichtung in ihrer Quelle erscheint. Eine Seite verschwindet, wenn eine Ausgabe ihrer Quelle die Einrichtung nicht mehr führt; eine nach einem Widerspruch entfernte Seite wird nie wieder veröffentlicht.",
+					"Information: Die Daten stammen nicht von den Einrichtungen selbst (Art. 14 DSGVO). Jede von ihnen anzuschreiben, wäre mit einem unverhältnismäßigen Aufwand verbunden (Art. 14 Abs. 5 lit. b); diese Erklärung, die Seite „Daten und Quellen“ und ein Hinweis auf jeder Seite machen die Information öffentlich zugänglich."
+				]
+			},
+			"people": {
+				"heading": "Einrichtungen und die Personen, die sie nennen",
+				"body": [
+					"Eine deutsche Seite ist eine Einrichtung, nie das Profil einer Person: Die Register der Ärztinnen und Ärzte und der Zahnärztinnen und Zahnärzte sind in Deutschland nicht offen, und keine Person wird aufgeführt. Eine Apotheke gehört einer Apothekerin oder einem Apotheker; enthält ihr Name, wie das Land ihn veröffentlicht, den Namen der Inhaberin oder des Inhabers, zeigt die Seite ihn als berufliche Angabe.",
+					"Darüber hinaus wird über keine Person etwas erhoben: kein Geburtsdatum, keine Ausweis- oder Steuernummer, keine private Adresse, keine Bewertungen und keine Rezensionen. Das Verzeichnis verarbeitet keine Daten von Patientinnen und Patienten und keine Gesundheitsdaten.",
+					"Jede Person, die eine Seite betrifft, kann ihr jederzeit widersprechen, und die Seite wird entfernt."
+				]
+			},
+			"sources": {
+				"heading": "Quellen",
+				"body": [
+					"Krankenhäuser und Kliniken stammen aus dem Verzeichnis der Krankenhäuser und Vorsorge- oder Rehabilitationseinrichtungen, das das Statistische Bundesamt jedes Jahr im Auftrag der Statistischen Ämter des Bundes und der Länder veröffentlicht; seine Bedingungen erlauben die Vervielfältigung und Verbreitung, auch auszugsweise, mit Quellenangabe. Apotheken stammen aus den Listen der Aufsichtsbehörden Thüringens (CC BY 4.0) und Brandenburgs (Datenlizenz Deutschland – Namensnennung – Version 2.0); die übrigen Länder veröffentlichen keine aktuelle Liste als offene Daten, daher sind ihre Apotheken nicht aufgeführt. Die Orte stammen aus dem Gemeindeverzeichnis von Destatis. Jede Quelle wird mit ihrer Namensnennung weiterverwendet:"
+				]
+			},
+			"balancing": {
+				"heading": "Abwägung der berechtigten Interessen",
+				"body": [
+					"Zweck: Patientinnen und Patienten müssen wissen, welche Krankenhäuser, Kliniken und Apotheken es wo gibt, welche Versorgung sie anbieten und wie sie erreichbar sind – ein Bedürfnis, dem der Staat mit der Veröffentlichung dieser Verzeichnisse bereits entspricht.",
+					"Erforderlichkeit: Gezeigt werden nur die Angaben der Verzeichnisse über die Einrichtung, die diese ohnehin veröffentlichen, und weniger davon; nichts aus dem Privatleben, keine Bewertungen, keine Rezensionen.",
+					"Abwägung: eine neutrale Reihenfolge, keine Werbung, das Minimum der Felder der Verzeichnisse, ein Widerspruch, der eine Seite sofort ausblendet und ihre Rückkehr verhindert, Berichtigungen an der Quelle und Seiten, die jeder Ausgabe der Verzeichnisse folgen. Eine Einrichtung, die in einem öffentlichen Verzeichnis steht, erwartet, in einem Verzeichnis gefunden zu werden, das diese Angaben wiedergibt. Nach Abwägung dieser Punkte überwiegen die Interessen der Patientinnen und Patienten, und jede betroffene Person kann ohne Angabe von Gründen widersprechen."
+				]
+			},
+			"accounts": {
+				"heading": "Konten der Einrichtungen und Beanspruchungen",
+				"body": [
+					"Daten: E-Mail-Adresse, Name, Passwort (als Hash gespeichert), zweiter Authentifizierungsfaktor, die zur Beanspruchung einer Seite gesendeten Dokumente (Nachweis, dass die antragstellende Person die Einrichtung leitet oder in ihrem Namen handelt) und Teammitglieder.",
+					"Zwecke: Verwaltung des Kontos und Prüfung, dass eine Seite von der richtigen Einrichtung beansprucht wird. Rechtsgrundlagen: Erfüllung der Nutzungsbedingungen (Art. 6 Abs. 1 lit. b) und die berechtigten Interessen an der Sicherheit des Dienstes (Art. 6 Abs. 1 lit. f).",
+					"Speicherdauer: Das Konto bleibt bis zu seiner Löschung bestehen; die verschlüsselten Nachweise werden 30 Tage nach der Entscheidung gelöscht."
+				]
+			},
+			"requests": {
+				"heading": "Fehlermeldungen, Widersprüche und Kontaktanfragen",
+				"body": [
+					"Daten: die Nachricht, die Kontakt-E-Mail-Adresse, wenn eine angegeben wird, und die betroffene Seite; bei einer Anfrage „Das ist meine Seite“ außerdem Name und Telefonnummer. Freitext wird verschlüsselt.",
+					"Zwecke: Fehler berichtigen, Widersprüche umsetzen und einer Einrichtung helfen, die ihre Seite nicht online beanspruchen kann. Rechtsgrundlagen: berechtigte Interessen (Art. 6 Abs. 1 lit. f) und das Widerspruchsrecht (Art. 21).",
+					"Speicherdauer: Eine Meldung wird 6 Monate nach ihrem Abschluss gelöscht, ein abgelehnter Widerspruch ein Jahr nach der Entscheidung, eine Kontaktanfrage 12 Monate nach dem letzten Austausch. Sobald ein Widerspruch bestätigt ist oder die Inhaberin oder der Inhaber einer beanspruchten Seite sie entfernt, werden die Seite und die Daten darüber sofort gelöscht, der Widerspruch eingeschlossen; aufbewahrt wird nur ein Vermerk über die Entfernung (Kennung der Seite, Land, Grund, wer sie wann vermerkt hat), damit sie nie wieder veröffentlicht wird."
+				]
+			},
+			"technical": {
+				"heading": "Technische Daten und Cookies",
+				"body": [
+					"Es werden nur Cookies gesetzt, die für den Dienst unbedingt erforderlich sind (§ 25 Abs. 2 TDDDG): die Sitzung angemeldeter Einrichtungen und die gewählte Sprache. Keine Werbe- oder Reichweitenmessungs-Cookies, keine Tracker.",
+					"Um Missbrauch zu begrenzen, werden IP-Adressen vor dem Zählen mit einer geheimen Schlüsselfunktion umgewandelt und nie als solche gespeichert; Sitzungen von Einrichtungen speichern eine gekürzte IP-Adresse. Aufrufe beanspruchter Seiten werden ohne Cookie und ohne Kennung gezählt, und nur die Inhaberin oder der Inhaber der Seite sieht sie."
+				]
+			},
+			"recipients": {
+				"heading": "Empfänger und Auftragsverarbeiter",
+				"body": [
+					"Daten werden weder verkauft noch vermietet und nie für Werbung verwendet. Nur das Team des Anbieters und die unten genannten Auftragsverarbeiter erhalten sie, jeweils für ihren Teil, auf Grundlage eines Vertrags nach Art. 28 DSGVO. Karten werden von einem Kachelserver geladen, der wie jede Website die IP-Adresse der Besucherin oder des Besuchers erhält."
+				]
+			},
+			"transfers": {
+				"heading": "Übermittlungen außerhalb der Europäischen Union",
+				"body": [
+					"Daten werden nur unter den Garantien von Kapitel V DSGVO (Angemessenheitsbeschluss oder Standardvertragsklauseln) außerhalb der Europäischen Union und des Europäischen Wirtschaftsraums übermittelt. Jeder Wechsel eines Auftragsverarbeiters wird hier angekündigt, bevor er wirksam wird."
+				]
+			},
+			"automated": {
+				"heading": "Automatisierte Entscheidungen",
+				"body": [
+					"Keine Entscheidung über Sie wird ausschließlich automatisiert getroffen. Über eine Beanspruchung entscheidet ein Mensch, der ihre Dokumente liest."
+				]
+			},
+			"rights": {
+				"heading": "Ihre Rechte",
+				"body": [
+					"Sie können Auskunft über Ihre Daten verlangen, ihre Berichtigung oder Löschung, die Einschränkung ihrer Verarbeitung, ihre Übertragung in einem gängigen Format, und Sie können ihrer Verarbeitung widersprechen. Schreiben Sie an die unten genannte Adresse; Sie erhalten innerhalb eines Monats eine Antwort.",
+					"Sie können sich außerdem bei einer Datenschutz-Aufsichtsbehörde beschweren (Art. 77 DSGVO), insbesondere bei der Ihres Bundeslandes. Die Datenschutzkonferenz führt die Aufsichtsbehörden des Bundes und der Länder auf."
+				]
+			},
+			"objection": {
+				"heading": "Widerspruch gegen eine Seite (Art. 21 DSGVO)",
+				"body": [
+					"Jede Person, die eine Seite betrifft, kann ihrer Veröffentlichung jederzeit ohne Angabe von Gründen widersprechen. Ist die Seite nicht beansprucht, genügt ein Formular: Die Seite wird ausgeblendet, sobald der Antrag eingeht, nach einer kurzen Prüfung gelöscht, und die Aktualisierungen der Verzeichnisse veröffentlichen sie nie wieder. Ist sie beansprucht, entfernt ihre Inhaberin oder ihr Inhaber sie im eigenen Bereich."
+				]
+			},
+			"changes": {
+				"heading": "Änderungen dieser Erklärung",
+				"body": [
+					"Diese Erklärung ist ein Entwurf. Sie wird von einer in Deutschland zugelassenen Rechtsanwältin oder einem Rechtsanwalt und von der oder dem Datenschutzbeauftragten geprüft; jede Fassung ist datiert."
+				]
+			}
+		},
+		"fields": {
+			"controller": "Verantwortlicher",
+			"address": "Anschrift",
+			"email": "Kontakt für Anfragen",
+			"dpo": "Datenschutzbeauftragte(r)",
+			"effectiveDate": "Gültig ab",
+			"hostingProvider": "Hosting-Anbieter (Auftragsverarbeiter)",
+			"smtp": "E-Mail-Versand (Auftragsverarbeiter)"
+		},
+		"objectLink": "So widersprechen Sie einer Seite",
+		"authorityLink": "Die Datenschutz-Aufsichtsbehörden des Bundes und der Länder"
+	},
+	"TermsDe": {
+		"metaTitle": "Nutzungsbedingungen (Deutschland) · Apercura",
+		"metaDescription": "Nutzungsbedingungen der deutschen Seiten von Apercura: ein kostenloses, sachliches Verzeichnis von Krankenhäusern, Kliniken und Apotheken, ohne Buchung.",
+		"title": "Nutzungsbedingungen",
+		"lead": "Die Regeln für die Nutzung der deutschen Seiten von Apercura, für die Öffentlichkeit wie für die Einrichtungen.",
+		"sections": {
+			"service": {
+				"heading": "Der Dienst",
+				"body": [
+					"Apercura führt kostenlos die Krankenhäuser, psychiatrischen Kliniken, Kinderkliniken und Vorsorge- und Rehabilitationskliniken des Verzeichnisses der Statistischen Ämter sowie die Apotheken in Thüringen und Brandenburg auf. Es führt Einrichtungen auf, keine Ärztinnen und Ärzte. Es ist ausschließlich ein Verzeichnis: Über Apercura werden in Deutschland keine Termine gebucht. Betrieben wird es von dem im Impressum genannten Anbieter.",
+					"Für die Nutzung des Verzeichnisses ist kein Konto nötig. Wer die Website nutzt, akzeptiert diese Bedingungen."
+				]
+			},
+			"content": {
+				"heading": "Was die Seiten enthalten",
+				"body": [
+					"Die Seiten zeigen sachliche Angaben aus öffentlichen Verzeichnissen, in neutraler Reihenfolge, ohne Bewertungen, Rezensionen, Werbung oder bezahlte Platzierung.",
+					"Die Angaben können unvollständig oder veraltet sein (das Krankenhausverzeichnis erscheint einmal im Jahr), und ein Krankenhaus oder eine Klinik wird auf der Karte in ihrer Gemeinde gezeigt, nicht an ihrer genauen Adresse: Prüfen Sie die Angaben vor einem Besuch bei der Einrichtung. Jede Seite erklärt, wie Sie einen Fehler melden."
+				]
+			},
+			"health": {
+				"heading": "Keine medizinische Beratung",
+				"body": [
+					"Apercura gibt keine medizinische Beratung und ist kein Notdienst. Rufen Sie im Notfall die 112 an. Außerhalb der Sprechzeiten erreichen Sie den ärztlichen Bereitschaftsdienst unter 116 117."
+				]
+			},
+			"practices": {
+				"heading": "Für Einrichtungen",
+				"body": [
+					"Die Beanspruchung einer Seite ist kostenlos. Sie erfordert einen Nachweis, dass die antragstellende Person die Einrichtung leitet oder in ihrem Namen handelt, den ein Mensch prüft, bevor die Seite übergeben wird.",
+					"Die Inhaberin oder der Inhaber einer Seite ist für die hinzugefügten Angaben verantwortlich. Sie müssen sachlich, richtig und aktuell bleiben, wie es das Heilmittelwerbegesetz und die Berufsordnungen verlangen."
+				]
+			},
+			"removal": {
+				"heading": "Entfernung einer Seite",
+				"body": [
+					"Jede Person, die eine Seite betrifft, kann jederzeit ihre Entfernung verlangen: Die Seite „Daten und Quellen“ erklärt, wie. Eine beanspruchte Seite kann nur ihre Inhaberin oder ihr Inhaber entfernen."
+				]
+			},
+			"liability": {
+				"heading": "Haftung",
+				"body": [
+					"Der Anbieter bemüht sich, den Dienst verfügbar und richtig zu halten, kann dies aber nicht garantieren. Er ist nicht verantwortlich für die Angaben, die Einrichtungen ihren Seiten hinzufügen. Diese Grenzen werden bei der juristischen Prüfung präzisiert."
+				]
+			},
+			"ip": {
+				"heading": "Code und Daten",
+				"body": [
+					"Der Quellcode ist unter der Lizenz AGPL-3.0 veröffentlicht. Die Daten der Statistischen Ämter werden mit Quellenangabe wiedergegeben, die Apothekenliste Thüringens unter CC BY 4.0, die Brandenburgs unter der Datenlizenz Deutschland – Namensnennung – Version 2.0."
+				]
+			},
+			"law": {
+				"heading": "Anwendbares Recht und Streitigkeiten",
+				"body": [
+					"Das anwendbare Recht und die zuständigen Gerichte werden bei der juristischen Prüfung präzisiert; die zwingenden Verbraucherschutzvorschriften des Wohnsitzstaates gelten in jedem Fall. Schreiben Sie bei einer Streitigkeit zuerst an die Kontaktadresse, um eine gütliche Lösung zu suchen."
+				]
+			}
+		},
+		"fields": {
+			"publisher": "Anbieter",
+			"effectiveDate": "Gültig ab",
+			"contact": "Kontakt"
+		}
+	},
+	"AccessibilityDe": {
+		"metaTitle": "Erklärung zur Barrierefreiheit (Deutschland) · Apercura",
+		"metaDescription": "Barrierefreiheit der deutschen Seiten von Apercura: Ziel WCAG 2.2 AA, was geprüft wurde, was aussteht und wie Sie ein Problem melden.",
+		"title": "Erklärung zur Barrierefreiheit",
+		"lead": "Apercura ist für alle gestaltet, auch für ältere und sehbehinderte Menschen. Diese Erklärung sagt, wo die deutschen Seiten stehen.",
+		"sections": {
+			"scope": {
+				"heading": "Geltungsbereich",
+				"body": [
+					"Die Barrierefreie-Informationstechnik-Verordnung (BITV 2.0) gilt für öffentliche Stellen, und das Barrierefreiheitsstärkungsgesetz (BFSG) erfasst Dienstleistungen, zu denen ein kostenloses Verzeichnis nicht gehört. Der Anbieter von Apercura strebt trotzdem auf jeder Seite denselben Standard an: WCAG 2.2, Konformitätsstufe AA (EN 301 549). Diese Erklärung ist freiwillig."
+				]
+			},
+			"status": {
+				"heading": "Stand der Vereinbarkeit",
+				"body": [
+					"Die deutschen Seiten teilen den Code der französischen Seiten und deren Tests. Die Website erfüllt WCAG 2.2 AA teilweise: Dies beruht auf einer Selbstbewertung und automatisierten Tests, noch nicht auf einem vollständigen Audit, das in Arbeit ist."
+				]
+			},
+			"tests": {
+				"heading": "Was geprüft wurde",
+				"list": [
+					"Automatisierte Prüfungen mit axe-core (Regeln von WCAG 2.0, 2.1 und 2.2, Stufen A und AA) auf jedem Seitentyp, bei jeder Veröffentlichung.",
+					"Bedienung ausschließlich mit der Tastatur, mit sichtbarem Fokus.",
+					"Fließtext von mindestens 18 px, Bedienelemente von mindestens 44 px, nichts, was sich allein auf Farbe stützt, kein waagerechtes Scrollen bei 390 px."
+				]
+			},
+			"pending": {
+				"heading": "Was noch zu prüfen ist",
+				"list": [
+					"Ein manueller Durchgang mit den Screenreadern VoiceOver und NVDA, auf Deutsch.",
+					"Ein vollständiges Audit nach WCAG 2.2 AA an einer Auswahl von Seiten."
+				]
+			},
+			"feedback": {
+				"heading": "Ein Problem melden",
+				"body": [
+					"Wenn eine Seite oder eine Funktion schwer zu nutzen ist, schreiben Sie an die unten genannte Adresse: Nennen Sie die Seite und was Sie behindert hat. Wir antworten innerhalb eines Monats und stellen Ihnen die Information bei Bedarf in anderer Form bereit."
+				]
+			}
+		},
+		"fields": {
+			"contact": "Kontakt",
+			"date": "Datum dieser Erklärung"
+		}
+	},
+	"DataDe": {
+		"metaTitle": "Daten und Quellen (Deutschland) · Apercura",
+		"metaDescription": "Woher die deutschen Seiten von Apercura stammen (Destatis, Apothekenlisten Thüringens und Brandenburgs) und wie Sie eine Seite berichtigen oder entfernen.",
+		"title": "Daten und Quellen",
+		"lead": "Jede deutsche Seite beruht auf öffentlichen Daten. Hier steht, woher sie stammen, unter welchen Bedingungen und mit welcher Namensnennung, wann sie aktualisiert wurden und wie Sie eine Seite berichtigen oder entfernen lassen.",
+		"status": {
+			"heading": "Letzte Aktualisierung",
+			"body": "Die Statistischen Ämter veröffentlichen das Krankenhausverzeichnis einmal im Jahr, die Länder ihre Apothekenlisten, wenn sie sich ändern; das Verzeichnis prüft sie jeden Monat und importiert eine Quelle, wenn sie sich geändert hat. Eine Seite ändert sich nur, wenn sich ihre Angaben in der Quelle ändern.",
+			"importedAt": "Letzter Import",
+			"checkedAt": "Quellen zuletzt geprüft",
+			"notImported": "Das deutsche Verzeichnis wurde auf dieser Website noch nicht importiert.",
+			"notImportedValue": "Noch nicht importiert"
+		},
+		"sources": {
+			"heading": "Quellen",
+			"body": "Die Statistischen Ämter gestatten die Vervielfältigung und Verbreitung ihrer Veröffentlichungen, auch auszugsweise, mit Quellenangabe; Thüringen veröffentlicht seine Apotheken unter der Lizenz Creative Commons Namensnennung 4.0 International (CC BY 4.0), Brandenburg unter der Datenlizenz Deutschland – Namensnennung – Version 2.0 (dl-de/by-2-0). Jede Namensnennung unten ist wörtlich wiedergegeben.",
+			"caption": "Datenquellen des deutschen Verzeichnisses",
+			"columns": {
+				"source": "Quelle",
+				"use": "Verwendet für",
+				"licence": "Lizenz und Namensnennung",
+				"frequency": "Aktualisierung"
+			},
+			"items": {
+				"de-destatis-khv": {
+					"use": "Krankenhäuser sowie Vorsorge- und Rehabilitationskliniken: Namen, Arten, Fachabteilungen, Notfallversorgung, Art des Trägers, Adressen, Telefonnummern",
+					"frequency": "Jährlich, durch die Statistischen Ämter"
+				},
+				"de-destatis-gv": {
+					"use": "Länder, Kreise und Gemeinden sowie der geografische Mittelpunkt jeder Gemeinde, an dem ihre Krankenhäuser und Kliniken verortet werden",
+					"frequency": "Vierteljährlich, durch das Statistische Bundesamt"
+				},
+				"de-apo-th": {
+					"use": "Apotheken in Thüringen: Namen, Haupt- oder Filialapotheke, Barrierefreiheit, Adressen und Standorte",
+					"frequency": "Bei Änderungen, durch das Thüringer Landesamt für Verbraucherschutz"
+				},
+				"de-apo-bb": {
+					"use": "Apotheken in Brandenburg: Namen, Adressen, Telefonnummern und Standorte",
+					"frequency": "Vierteljährlich, durch das Landesamt für Arbeitsschutz, Verbraucherschutz und Gesundheit"
+				},
+				"map": {
+					"name": "Kartendaten",
+					"publisher": "OpenStreetMap-Mitwirkende, Kacheln von OpenFreeMap",
+					"use": "Karten auf den Seiten",
+					"frequency": "Laufend"
+				}
+			},
+			"destatis": "Vervielfältigung mit Quellenangabe gestattet",
+			"ccBy": "CC BY 4.0",
+			"dlDeBy": "dl-de/by-2-0",
+			"odbl": "ODbL",
+			"conditionsHeading": "Bedingungen der Quellen",
+			"conditions": "Die Ausgaben der Statistischen Ämter tragen den Vermerk: „Vervielfältigung und Verbreitung, auch auszugsweise, mit Quellenangabe gestattet.“ Die Daten werden wie veröffentlicht gezeigt und nie in ihrer Bedeutung verändert.",
+			"changes": "Änderungen an den Daten (dl-de/by-2-0): Die Krankenhausapotheken der Brandenburger Liste sind ausgelassen (sie versorgen nicht die Öffentlichkeit); Namen und Straßen werden wie veröffentlicht gezeigt; jede Einrichtung wird über ihren amtlichen Gemeindeschlüssel oder den Namen ihres Ortes ihrer Gemeinde zugeordnet; eine Telefonnummer, die mehr als drei Einrichtungen teilen, wird ausgelassen.",
+			"licenceLink": "Die Datenlizenz Deutschland – Namensnennung – Version 2.0",
+			"datasetLink": "Der Datensatz der Brandenburger Apotheken"
+		},
+		"coverage": {
+			"heading": "Aufgeführte Einrichtungen",
+			"body": [
+				"Seiten werden für jeden Krankenhausstandort und jede Vorsorge- oder Rehabilitationseinrichtung des Verzeichnisses der Statistischen Ämter erstellt sowie für die öffentlichen Apotheken in Thüringen und Brandenburg. Ein Krankenhaus, dessen Fachabteilungen alle psychiatrisch oder psychosomatisch sind, steht bei den psychiatrischen Kliniken, eines, dessen Fachabteilungen alle Kinderabteilungen sind, bei den Kinderkliniken; ein Standort ohne Fachabteilungen (eine Tagesklinik oder Ambulanz) wird nach seinem Namen eingeordnet. Jede Fachabteilung steht auf der Seite.",
+				"Nicht aufgeführt: Ärztinnen und Ärzte, Zahnärztinnen und Zahnärzte, Psychotherapeutinnen und Psychotherapeuten und die übrigen Gesundheitsberufe, deren Register nicht offen sind; Medizinische Versorgungszentren (MVZ), Pflegeheime und Hospize; die Apotheken der übrigen Länder, deren Listen keine offenen oder keine aktuellen Daten sind (die offene Liste des Saarlands stammt vom März 2021).",
+				"Das Krankenhausverzeichnis veröffentlicht keine Koordinaten: Ein Krankenhaus oder eine Klinik wird am geografischen Mittelpunkt ihrer Gemeinde verortet (Destatis). Ihre Lage auf der Karte und ihre Entfernung sind die der Gemeinde, nie die ihrer Adresse. Apotheken werden an dem Punkt verortet, den ihr Land veröffentlicht."
+			],
+			"kinds": {
+				"DE_HOSPITAL": "Krankenhäuser (Hochschulkliniken, Plankrankenhäuser, Krankenhäuser mit oder ohne Versorgungsvertrag, Bundeswehrkrankenhäuser)",
+				"DE_PSYCHIATRIC_HOSPITAL": "Psychiatrische und psychosomatische Kliniken, ihre Tageskliniken und Ambulanzen",
+				"DE_CHILDRENS_HOSPITAL": "Kinderkliniken",
+				"DE_REHAB_CLINIC": "Vorsorge- und Rehabilitationskliniken",
+				"DE_PHARMACY": "Apotheken in Thüringen und Brandenburg"
+			},
+			"kindsLabel": "Importiert"
+		},
+		"identifiers": {
+			"heading": "Kennungen",
+			"body": [
+				"Keine Quelle veröffentlicht eine bundesweite Nummer: Die Adresse jeder Seite endet mit einem Schlüssel, der ihre Quelle nennt, sodass eine Seite gefunden und mit ihr abgeglichen werden kann:"
+			],
+			"list": [
+				"/de/einrichtung/klinikum-beispiel-k0a1b2c3d4e: ein Krankenhausstandort (k) oder eine Klinik (r) des Verzeichnisses der Statistischen Ämter, mit einem aus Gemeinde, Adresse und Namen abgeleiteten Schlüssel. Die eigene Kennung des Verzeichnisses ist ein Pseudonym, das jedes Jahr neu vergeben wird, und wird nicht verwendet.",
+				"/de/einrichtung/beispiel-apotheke-th420: eine Apotheke in Thüringen (th) und die Nummer ihrer Akte bei der Aufsichtsbehörde; bb: eine Apotheke in Brandenburg, mit einem aus Name und Adresse abgeleiteten Schlüssel."
+			]
+		},
+		"correct": {
+			"heading": "Einen Fehler berichtigen",
+			"body": [
+				"Die Seiten geben die Verzeichnisse wieder: Eine dauerhafte Berichtigung erfolgt an der Quelle, und die Seite übernimmt sie beim nächsten Import.",
+				"Für alles andere nutzen Sie das Formular: Wir prüfen jede Meldung."
+			],
+			"list": [
+				"Krankenhäuser und Kliniken: Die Einrichtung meldet die Änderung dem Statistischen Landesamt ihres Landes, das die Krankenhausstatistik erhebt; die nächste Ausgabe des Verzeichnisses übernimmt sie.",
+				"Apotheken: Die Inhaberin oder der Inhaber meldet die Änderung der Aufsichtsbehörde des Landes (in Thüringen dem Landesamt für Verbraucherschutz, in Brandenburg dem Landesamt für Arbeitsschutz, Verbraucherschutz und Gesundheit)."
+			],
+			"formTitle": "Einen Fehler melden",
+			"formBody": "Geben Sie die Adresse der Seite an und was falsch ist."
+		},
+		"remove": {
+			"heading": "Eine Seite entfernen lassen",
+			"body": [
+				"Jede Person, die eine Seite betrifft, kann ihrer Veröffentlichung jederzeit ohne Angabe von Gründen widersprechen (Art. 21 DSGVO). Eine nicht beanspruchte Seite wird ausgeblendet, sobald der Antrag eingeht, und nach einer kurzen Prüfung gelöscht; mit den Aktualisierungen der Verzeichnisse kehrt sie nie zurück. Eine beanspruchte Seite entfernt ihre Inhaberin oder ihr Inhaber im eigenen Bereich."
+			],
+			"formTitle": "Entfernung einer Seite beantragen",
+			"formBody": "Geben Sie die Adresse der Seite und eine E-Mail-Adresse an, unter der wir Ihnen antworten können."
 		}
 	},
 	"LegalNoticeEs": {

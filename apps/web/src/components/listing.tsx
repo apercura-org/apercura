@@ -23,12 +23,22 @@ export const sectionHeading = "type-title text-ink";
 const table = tableStyles();
 
 /** The page title block: a headline and a factual lead, closed by a hairline. */
-export function ListingTitle({ title, lead }: { title: string; lead: ReactNode }) {
+export function ListingTitle({
+	title,
+	lead,
+	note,
+}: {
+	title: string;
+	lead: ReactNode;
+	/** What the listing covers when its source is partial (Germany's pharmacies: two Länder). */
+	note?: ReactNode;
+}) {
 	return (
 		<div className="rule-b pb-6">
 			<div className="flex max-w-[65ch] flex-col gap-3">
 				<h1 className="type-headline text-ink">{title}</h1>
 				<p className="text-lead text-ink">{lead}</p>
+				{note ? <p className="text-body text-ink-muted">{note}</p> : null}
 			</div>
 		</div>
 	);

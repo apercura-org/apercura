@@ -63,16 +63,24 @@ describe("places of a market", () => {
 		expect(isDepartmentSlug("wien", "AT")).toBe(true);
 		expect(isDepartmentSlug("niederoesterreich", "AT")).toBe(true);
 		expect(isDepartmentSlug("69-rhone", "AT")).toBe(false);
+		expect(isDepartmentSlug("landkreis-muenchen", "DE")).toBe(true);
+		expect(isDepartmentSlug("09162", "DE")).toBe(false);
 	});
 
-	it("treats Paris, Wien and Praha as their department's page", () => {
+	it("treats Paris, Wien, Praha and Germany's kreisfreie Städte as their department's page", () => {
 		expect(isDepartmentCity("FR", "75056")).toBe(true);
 		expect(isDepartmentCity("AT", "90001")).toBe(true);
 		expect(isDepartmentCity("AT", "75056")).toBe(false);
 		expect(isDepartmentCity("CZ", "554782")).toBe(true);
 		expect(CITY_IS_DEPARTMENT).toEqual({ FR: "75056", AT: "90001", CZ: "554782" });
+		// A kreisfreie Stadt is the Gemeinde `000` of its Kreis: München, Berlin, Hamburg.
+		expect(isDepartmentCity("DE", "09162000")).toBe(true);
+		expect(isDepartmentCity("DE", "11000000")).toBe(true);
+		expect(isDepartmentCity("DE", "09184148")).toBe(false);
+		expect(isDepartmentCity("DE", "09162")).toBe(false);
+		expect(isDepartmentCity("FR", "09162000")).toBe(false);
 		expect(NOT_DEPARTMENT_CITY("p")).toBe(
-			"NOT (p.country = 'FR' AND p.code = '75056') AND NOT (p.country = 'AT' AND p.code = '90001') AND NOT (p.country = 'CZ' AND p.code = '554782')",
+			"NOT (p.country = 'FR' AND p.code = '75056') AND NOT (p.country = 'AT' AND p.code = '90001') AND NOT (p.country = 'CZ' AND p.code = '554782') AND NOT (p.country = 'DE' AND p.code LIKE '_____000')",
 		);
 	});
 
@@ -268,6 +276,36 @@ describe("Spain's pages", () => {
 			"Fuente: Ministerio de Sanidad, REGCESS",
 		);
 		expect(openDataSourcesOf("ES", [])).toEqual([]);
+	});
+
+	it("write German addresses street, then postcode and town, and German numbers", () => {
+		const site = {
+			addressLine: "Musterstraße 1",
+			addressComplement: null,
+			postcode: "10117",
+			placeName: "Berlin",
+		};
+		expect(addressLines(site, "DE")).toEqual(["Musterstraße 1", "10117 Berlin"]);
+		expect(formatPhone("+493099990000")).toBe("030 99990000");
+		expect(formatPhone("+494618120")).toBe("0461 8120");
+	});
+
+	it("credit each German source a page is built from, and the municipalities that place it", () => {
+		const hospital = openDataSourcesOf("DE", [{ source: "de-destatis-khv", site: null }]);
+		expect(hospital.map((source) => source.attribution)).toEqual([
+			"© Statistisches Bundesamt (Destatis), 2026",
+			"© Statistisches Bundesamt (Destatis), 2026",
+		]);
+		// A rehabilitation clinic comes from the same directory as the hospitals.
+		expect(openDataSourcesOf("DE", [{ source: "de-destatis-rhv", site: null }])).toEqual(hospital);
+		const thuringia = openDataSourcesOf("DE", [{ source: "de-apo-th", site: null }]);
+		expect(thuringia.map((source) => source.attribution)).toEqual([
+			"© Statistisches Bundesamt (Destatis), 2026",
+			"© GDI-Th",
+		]);
+		const brandenburg = openDataSourcesOf("DE", [{ source: "de-apo-bb", site: null }]);
+		expect(brandenburg.at(-1)?.attribution).toMatch(/dl-de\/by-2-0 \(Daten geändert\)$/);
+		expect(openDataSourcesOf("DE", [])).toEqual([]);
 	});
 });
 

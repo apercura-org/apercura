@@ -5,14 +5,16 @@ import {
 	parseRowCells,
 	parseSharedStrings,
 	writeXlsx,
+	writeXlsxSheets,
 	type XlsxRow,
 	xlsxRows,
+	xlsxSheets,
 } from "./xlsx";
 import { writeStoredZip } from "./zip";
 
-const collect = async (archive: Buffer) => {
+const collect = async (archive: Buffer, sheet?: string | ((name: string) => boolean)) => {
 	const rows: XlsxRow[] = [];
-	for await (const row of xlsxRows(archive)) rows.push(row);
+	for await (const row of xlsxRows(archive, sheet)) rows.push(row);
 	return rows;
 };
 
@@ -59,5 +61,22 @@ describe("the XLSX reader", () => {
 	it("refuses a ZIP without a worksheet", async () => {
 		const archive = writeStoredZip([{ name: "x.txt", data: Buffer.from("x") }]);
 		await expect(collect(archive)).rejects.toThrow(/no worksheet/);
+	});
+
+	it("reads a worksheet by its name, stray spaces and all", async () => {
+		const archive = writeXlsxSheets([
+			{ name: "Titelblatt", rows: [["Verzeichnis"]] },
+			{ name: " KHV_2024", rows: [["KH_Name"], ["Klinikum Beispiel"]] },
+			{ name: "RHV_2024", rows: [["RH_Name"]] },
+		]);
+		expect(xlsxSheets(archive).map((sheet) => sheet.name)).toEqual([
+			"Titelblatt",
+			" KHV_2024",
+			"RHV_2024",
+		]);
+		expect(await collect(archive)).toEqual([{ rowNo: 1, cells: ["Verzeichnis"] }]);
+		expect((await collect(archive, (name) => /^KHV_\d{4}$/.test(name.trim()))).length).toBe(2);
+		expect(await collect(archive, "RHV_2024")).toEqual([{ rowNo: 1, cells: ["RH_Name"] }]);
+		await expect(collect(archive, "DSB_KHV_2024")).rejects.toThrow(/DSB_KHV_2024/);
 	});
 });

@@ -1,7 +1,18 @@
-import { austria, czechia, italy, spain, unitedKingdom } from "@apercura/core/country";
+import {
+	austria,
+	czechia,
+	DE_PHARMACY_STATES,
+	DE_STATES,
+	germany,
+	italy,
+	spain,
+	unitedKingdom,
+} from "@apercura/core/country";
 import {
 	AT_PROFESSIONS,
 	CZ_PROFESSIONS,
+	DE_PHARMACY,
+	DE_PROFESSIONS,
 	ES_PROFESSIONS,
 	GB_PROFESSIONS,
 	hasBillingSectors,
@@ -46,7 +57,7 @@ export function marketBooks(locale: Locale): boolean {
 /**
  * The profession slug of any market's profession code (`10` → `medecin`, `ARZT` → `aerzte`,
  * `GB_GP` → `gp-practices`, `CZ_GP` → `prakticky-lekar`, `ES_PHARMACY` → `farmacias`,
- * `IT_PHARMACY` → `farmacie`).
+ * `IT_PHARMACY` → `farmacie`, `DE_PHARMACY` → `apotheken`).
  */
 export function professionSlugOf(code: string): string {
 	return (
@@ -56,6 +67,7 @@ export function professionSlugOf(code: string): string {
 		CZ_PROFESSIONS[code]?.slug ??
 		ES_PROFESSIONS[code]?.slug ??
 		IT_PROFESSIONS[code]?.slug ??
+		DE_PROFESSIONS[code]?.slug ??
 		""
 	);
 }
@@ -215,10 +227,41 @@ export function italianSourcesOf(
 }
 
 /**
+ * The German registry of a site source: a prevention or rehabilitation clinic comes from the
+ * same directory as the hospitals (Destatis publishes both in one workbook).
+ */
+const DE_REGISTRY_OF_SOURCE: Readonly<Record<string, string>> = {
+	"de-destatis-rhv": "de-destatis-khv",
+};
+
+/** The Destatis municipalities' directory, which places every German facility. */
+const DE_PLACES_REGISTRY = "de-destatis-gv";
+
+/**
+ * The sources a German facility's page is built from, with the attribution each requires word
+ * for word: the facility's list (the Destatis directory, Thuringia's or Brandenburg's pharmacies)
+ * and Destatis's municipalities' directory, which places it.
+ */
+export function germanSourcesOf(
+	activitySources: readonly (string | undefined)[],
+): { name: string; attribution: string }[] {
+	const ids = new Set<string>();
+	for (const source of activitySources) {
+		if (source) ids.add(DE_REGISTRY_OF_SOURCE[source] ?? source);
+	}
+	if (ids.size === 0) return [];
+	ids.add(DE_PLACES_REGISTRY);
+	return germany.registries
+		.filter((registry) => ids.has(registry.id) && registry.attribution)
+		.map((registry) => ({ name: registry.name, attribution: registry.attribution ?? "" }));
+}
+
+/**
  * The open-data sources of a page in a market whose licences require their attribution
  * (Austria's and Czechia's CC BY 4.0, the UK's OGL, Spain's Ministry of Health and IGN, Italy's
- * IODL 2.0 and CC BY 4.0); empty for France, whose provenance line is the catalog's. `sourceDate`
- * dates Spain's REGCESS line and Italy's list.
+ * IODL 2.0 and CC BY 4.0, Germany's Destatis, CC BY 4.0 and dl-de/by-2-0 sources); empty for
+ * France, whose provenance line is the catalog's. `sourceDate` dates Spain's REGCESS line and
+ * Italy's list.
  */
 export function openDataSourcesOf(
 	country: string,
@@ -237,5 +280,18 @@ export function openDataSourcesOf(
 				)
 			: [];
 	}
+	if (country === "DE") return germanSourcesOf(activities.map((activity) => activity.source));
 	return [];
+}
+
+/**
+ * The Länder whose pharmacies a German listing covers, in the locale's words ("Thüringen und
+ * Brandenburg"), when the listing is Germany's pharmacies: no other Land publishes a current
+ * list of its pharmacies as open data. Null for any other listing.
+ */
+export function pharmacyCoverageOf(locale: Locale, listingSlug: string): string | null {
+	if (marketOf(locale) !== "DE" || listingSlug !== DE_PROFESSIONS[DE_PHARMACY]?.slug) return null;
+	return new Intl.ListFormat(locale, { type: "conjunction" }).format(
+		DE_PHARMACY_STATES.map((code) => DE_STATES[code] ?? code),
+	);
 }

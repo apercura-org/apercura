@@ -17,10 +17,9 @@ export type MarketMove =
 	/** A French page of the former unprefixed scheme. */
 	| "french"
 	/**
-	 * A page under a former locale prefix (`/en`, `/de`, `/es`, `/it`). `de` is also the segment
-	 * of a future market: on the canonical host the redirect stays temporary. `es` and `it` are
-	 * Spain's and Italy's segments since those markets opened (#148, #150): they move only on a
-	 * former host.
+	 * A page under a former locale prefix (`/en`, `/de`, `/es`, `/it`). `es`, `it` and `de` are
+	 * Spain's, Italy's and Germany's segments since those markets opened (#148, #150, #152): they
+	 * move only on a former host.
 	 */
 	| "locale"
 	/** A sitemap file of the former flat layout (`/sitemaps/praticien-0.xml`). */
@@ -49,10 +48,10 @@ export function isPagePath(pathname: string): boolean {
  * - `/` moves to `/fr` only on a former host of the French site
  *   (`legacyRoot`); on the canonical host it is the international home.
  * - `/en/…`, `/de/…`, `/es/…`, `/it/…` move to `/fr-en/…`, `/fr-de/…`…, except a prefix that
- *   is a market's own now (`/es`, Spain; `/it`, Italy): it moves only on a former host of the
- *   French site (`legacyRoot`), where `/es/…` and `/it/…` were the Spanish and Italian interfaces
- *   of France's pages.
- * - `/fr/…`, `/fr-en/…`, `/es/…`, `/it/…`… are current paths: unchanged.
+ *   is a market's own now (`/es`, Spain; `/it`, Italy; `/de`, Germany): it moves only on a former
+ *   host of the French site (`legacyRoot`), where `/es/…`, `/it/…` and `/de/…` were the Spanish,
+ *   Italian and German interfaces of France's pages.
+ * - `/fr/…`, `/fr-en/…`, `/es/…`, `/it/…`, `/de/…`… are current paths: unchanged.
  * - Any other page (`/praticien/…`, `/annuaire`, `/cardiologue/75-paris`,
  *   `/pro/connexion`, `/mentions-legales`…) moves under `/fr`.
  *

@@ -132,8 +132,8 @@ function offHostRedirect(request: NextRequest, canonical: URL, host: string): Ne
 /**
  * The redirect of a path of the former scheme on the canonical host itself (`/annuaire` →
  * `/fr/annuaire`, `/en/about` → `/fr-en/about`). Former locale prefixes answer a temporary
- * 307: `/de` is the segment of a market still to open (`/es` is Spain's since #148 and `/it`
- * Italy's since #150, and they move only on the former hosts).
+ * 307: no former locale prefix is a market still to open any more (`/es` is Spain's since #148,
+ * `/it` Italy's since #150 and `/de` Germany's since #152: they move only on the former hosts).
  */
 function marketRedirect(request: NextRequest): NextResponse | null {
 	const moved = marketPath(request.nextUrl.pathname, { legacyRoot: false });

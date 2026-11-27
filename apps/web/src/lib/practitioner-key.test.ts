@@ -155,3 +155,38 @@ describe("Italian place keys", () => {
 		expect(displayId({ idScheme: "IT-PFARM", nationalId: "002112" })).toBe("002112");
 	});
 });
+
+describe("German facility keys", () => {
+	it("read a facility page segment in Germany only", () => {
+		expect(parsePractitionerKey("de-DE", "klinikum-beispiel-k0a1b2c3d4e")).toEqual({
+			country: "DE",
+			idScheme: "DE-KHV",
+			nationalId: "0a1b2c3d4e",
+			namePart: "klinikum-beispiel",
+		});
+		expect(parsePractitionerKey("de-DE", "beispiel-apotheke-th9001")).toMatchObject({
+			idScheme: "DE-APO-TH",
+			nationalId: "9001",
+		});
+		expect(parsePractitionerKey("de-DE", "camille-exemple-19999990013")).toBeNull();
+		expect(parsePractitionerKey("de-DE", "anna-muster-w7983")).toBeNull();
+		// France in German and Austria keep their own keys.
+		expect(parsePractitionerKey("de", "camille-exemple-19999990013")?.country).toBe("FR");
+		expect(parsePractitionerKey("de", "klinikum-beispiel-k0a1b2c3d4e")).toBeNull();
+		expect(parsePractitionerKey("de-AT", "anna-muster-w7983")?.country).toBe("AT");
+		expect(parsePractitionerKey("de-AT", "beispiel-apotheke-th9001")).toBeNull();
+		expect(marketAdapter("de-DE").features.booking).toBe(false);
+	});
+
+	it("mark a German segment outside a locale, and print the source letters and key", () => {
+		expect(marketSegmentOf("DE", "apotheke-th9001")).toBe("de.apotheke-th9001");
+		expect(parseAnyPractitionerKey("de.apotheke-th9001")).toMatchObject({
+			country: "DE",
+			idScheme: "DE-APO-TH",
+			nationalId: "9001",
+		});
+		expect(parseAnyPractitionerKey("apotheke-th9001")).toBeNull();
+		expect(displayId({ idScheme: "DE-KHV", nationalId: "0a1b2c3d4e" })).toBe("k0a1b2c3d4e");
+		expect(displayId({ idScheme: "DE-APO-BB", nationalId: "ef2771a4ae" })).toBe("bbef2771a4ae");
+	});
+});

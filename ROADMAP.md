@@ -264,8 +264,27 @@ Left:
   show the activity licence number on every provider page.
 - Slovenia (ZZZS personal doctors, CC BY 4.0) and Latvia (NVD GPs, CC0): partial directories.
 
-### 11. Germany (`/de`): claimed pages, booking later
+### 11. Germany (`/de`): open, facility pages; booking later
 
+Done in [#152](https://github.com/apercura-org/apercura/issues/152): `/de` in German, built
+monthly by `etl:de` from the statistical offices' yearly directory of hospitals and of prevention
+and rehabilitation clinics (Destatis, reproduction with the source: about 3,800 hospital sites and
+clinics, hospitals listed apart from psychiatric and children's hospitals by their departments)
+and the pharmacy lists of Thuringia (CC BY 4.0) and Brandenburg (dl-de/by-2-0, about 1,000),
+placed in Destatis's Kreise and Gemeinden (GV-ISys) at their Gemeinde's centre (city precision:
+the directory publishes no coordinates; pharmacies at their address), with the attributions on the
+data sources page, an Impressum (DDG § 5), a privacy notice with the article 14 information,
+claims by documents, no booking ([data import](./docs/data-import.md#germany),
+[ADR 0002](./docs/adr/0002-multi-country.md#germany-de)). Left:
+
+- Have a native speaker review the German market texts, and a German lawyer the Impressum,
+  Datenschutzerklärung and terms (DDG, MStV, DSGVO, BDSG).
+- Pharmacies of the other Länder: send the requests of
+  [`docs/data-requests/de.md`](./docs/data-requests/de.md) (Saarland's open list dates from 2021);
+  Land listings ("Krankenhäuser in Bayern") would need a migration like Italy's region listings.
+- Practitioners: the requests of [`de-kbv.md`](./docs/data-requests/de-kbv.md) and
+  [`de-aerztekammern.md`](./docs/data-requests/de-aerztekammern.md) (founder); claimed pages
+  until then.
 - Booking only with a host holding a BSI C5 Type 2 attestation, after a legal opinion on §393
   SGB V (processor or controller, establishment in Germany) and once the GeDIG rules for private
   booking platforms are known.

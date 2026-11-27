@@ -22,7 +22,7 @@ import { getPathname, type Href, Link, permanentRedirect } from "~/i18n/navigati
 import { type Locale, routing } from "~/i18n/routing";
 import { guidesForListing } from "~/lib/guides/catalog";
 import { getTaxonomyLabels, inSentence } from "~/lib/labels";
-import { isMarketListingSlug, listingFees } from "~/lib/market";
+import { isMarketListingSlug, listingFees, pharmacyCoverageOf } from "~/lib/market";
 import { isDepartmentSlug, isPlaceSlug, placeLabel } from "~/lib/places";
 import {
 	CONTENT_LANGUAGES,
@@ -216,6 +216,8 @@ export default async function LandingPage({ params }: Props) {
 	const listing = labels.listing(listingSlug) ?? listingSlug;
 	const placeName = placeLabel(place, country);
 	const count = data.landing.practitionerCount;
+	// Germany's pharmacies: two Länder only, said under the title.
+	const coverage = pharmacyCoverageOf(locale, listingSlug);
 	const isDepartment = place.kind === "department";
 	// A UK region (England's regions, the other nations) sits in the department's slot: its
 	// places are local authorities, and it has no hub of a commune.
@@ -280,6 +282,7 @@ export default async function LandingPage({ params }: Props) {
 					<ListingTitle
 						title={t("title", { listing, place: placeName })}
 						lead={t("lead", { count, listing, place: placeName })}
+						note={coverage ? t("pharmacyCoverage", { states: coverage }) : null}
 					/>
 				</div>
 

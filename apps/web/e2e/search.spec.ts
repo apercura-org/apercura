@@ -154,6 +154,20 @@ test.describe("a place of another market", () => {
 		// Spain by name: its home, never "not covered yet".
 		["/fr/recherche?ou=Espagne", "/es"],
 		["/es/buscar?quoi=dentista&ou=Paris", "/fr-es/chirurgien-dentiste/75-paris"],
+		// Germany: "hôpital" on /fr, "hospital" on /es, "Klinik" on /fr-de, for Berlin, a kreisfreie
+		// Stadt whose page is its Kreis's; "pharmacie" for Erfurt.
+		[`/fr/recherche?quoi=${encodeURIComponent("hôpital")}&ou=Berlin`, "/de/krankenhaeuser/berlin"],
+		["/es/buscar?quoi=hospital&ou=Berlin", "/de/krankenhaeuser/berlin"],
+		["/fr-de/suche?quoi=Klinik&ou=Berlin", "/de/krankenhaeuser/berlin"],
+		["/fr/recherche?quoi=pharmacie&ou=Erfurt", "/de/apotheken/erfurt"],
+		[
+			"/de/suche?quoi=Krankenhaus&ou=Unterhaching",
+			"/de/krankenhaeuser/landkreis-muenchen/unterhaching",
+		],
+		// Germany lists no dentists: its search, with the place set; Germany by name: its home.
+		["/fr/recherche?quoi=dentiste&ou=Berlin", "/de/suche?ou=Berlin"],
+		["/fr/recherche?ou=Allemagne", "/de"],
+		["/de/suche?quoi=Zahnarzt&ou=Paris", "/fr-de/chirurgien-dentiste/75-paris"],
 		["/fr-en/search?quoi=GP&ou=Glasgow", "/gb/gp-practices/glasgow-city/glasgow"],
 		// Italy, the city typed in French or English: its Italian name.
 		["/fr/recherche?quoi=pharmacie&ou=Rome", "/it/farmacie/roma/roma"],
@@ -195,6 +209,7 @@ test.describe("the country searched", () => {
 			"Tchéquie",
 			"Espagne",
 			"Italie",
+			"Allemagne",
 		]);
 		await country.selectOption({ label: "Royaume-Uni" });
 		// The places suggested are the UK's.
@@ -215,6 +230,10 @@ test.describe("the country searched", () => {
 		await expect(page.getByRole("combobox", { name: "País" })).toHaveValue("es");
 		await page.goto("/fr-es/buscar");
 		await expect(page.getByRole("combobox", { name: "País" })).toHaveValue("fr");
+		await page.goto("/de/suche");
+		await expect(page.getByRole("combobox", { name: "Land" })).toHaveValue("de");
+		await page.goto("/fr-de/suche");
+		await expect(page.getByRole("combobox", { name: "Land" })).toHaveValue("fr");
 	});
 
 	test.describe("without JavaScript", () => {
@@ -238,17 +257,18 @@ test.describe("a place in a country Apercura does not cover yet", () => {
 		["Tchéquie", "/cz"],
 		["Espagne", "/es"],
 		["Italie", "/it"],
+		["Allemagne", "/de"],
 	] as const;
 
-	test("“dentiste” in Berlin says so, lists the open countries, and passes axe", async ({
+	test("“dentiste” in Warszawa says so, lists the open countries, and passes axe", async ({
 		page,
 	}) => {
-		const response = await page.goto("/fr/recherche?quoi=dentiste&ou=Berlin");
+		const response = await page.goto("/fr/recherche?quoi=dentiste&ou=Warszawa");
 		// Rendered on the search page itself, not sent to another market.
 		expect(response?.status()).toBe(200);
-		await expect(page).toHaveURL(/\/fr\/recherche\?quoi=dentiste&ou=Berlin$/);
+		await expect(page).toHaveURL(/\/fr\/recherche\?quoi=dentiste&ou=Warszawa$/);
 		await expect(
-			page.getByRole("heading", { name: "Apercura ne couvre pas encore l’Allemagne" }),
+			page.getByRole("heading", { name: "Apercura ne couvre pas encore la Pologne" }),
 		).toBeVisible();
 		const main = page.getByRole("main");
 		for (const [name, href] of OPEN_COUNTRIES) {
@@ -260,9 +280,9 @@ test.describe("a place in a country Apercura does not cover yet", () => {
 	});
 
 	test("a country typed in “Où ?” is named, in the visitor's language", async ({ page }) => {
-		await page.goto("/fr-en/search?quoi=dentist&ou=Allemagne");
+		await page.goto("/fr-en/search?quoi=dentist&ou=Pologne");
 		await expect(
-			page.getByRole("heading", { name: "Apercura does not cover Germany yet" }),
+			page.getByRole("heading", { name: "Apercura does not cover Poland yet" }),
 		).toBeVisible();
 		await expect(page.getByRole("main").getByRole("link", { name: "France" })).toHaveAttribute(
 			"href",

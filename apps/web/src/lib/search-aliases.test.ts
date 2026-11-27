@@ -1,6 +1,7 @@
 import {
 	allAtListingSlugs,
 	allCzListingSlugs,
+	allDeListingSlugs,
 	allEsListingSlugs,
 	allGbListingSlugs,
 	allItListingSlugs,
@@ -19,7 +20,15 @@ import {
 	suggestListings,
 } from "./listing-index";
 
-const MARKETS = ["FR", "AT", "GB", "CZ", "ES", "IT"] as const satisfies readonly MarketCountry[];
+const MARKETS = [
+	"FR",
+	"AT",
+	"GB",
+	"CZ",
+	"ES",
+	"IT",
+	"DE",
+] as const satisfies readonly MarketCountry[];
 
 /** The listings of each market (France: its imported professions only). */
 const LISTED: Record<MarketCountry, (slug: string) => boolean> = {
@@ -32,6 +41,7 @@ const LISTED: Record<MarketCountry, (slug: string) => boolean> = {
 	CZ: (slug) => allCzListingSlugs().has(slug),
 	ES: (slug) => allEsListingSlugs().has(slug),
 	IT: (slug) => allItListingSlugs().has(slug),
+	DE: (slug) => allDeListingSlugs().has(slug),
 };
 
 /** Slugs a market maps but does not list yet: France's professions not imported. */
@@ -42,6 +52,7 @@ const MAPPED: Record<MarketCountry, (slug: string) => boolean> = {
 	CZ: () => false,
 	ES: () => false,
 	IT: () => false,
+	DE: () => false,
 };
 
 const listing = (slug: string): SearchTerm => ({ kind: "listing", slug });
@@ -270,6 +281,42 @@ const EVERYDAY: Record<MarketCountry, [string, SearchTerm][]> = {
 		["dentista", UNLISTED],
 		["pediatra", UNLISTED],
 		["guardia medica", UNLISTED],
+	],
+	DE: [
+		["Krankenhaus", listing("krankenhaeuser")],
+		["Krankenhäuser", listing("krankenhaeuser")],
+		["ein Krankenhaus", listing("krankenhaeuser")],
+		["das Krankenhaus", listing("krankenhaeuser")],
+		["Klinik", listing("krankenhaeuser")],
+		["Klinikum", listing("krankenhaeuser")],
+		["Notaufnahme", listing("krankenhaeuser")],
+		["Geburtsklinik", listing("krankenhaeuser")],
+		["Kreißsaal", listing("krankenhaeuser")],
+		["Kreisssaal", listing("krankenhaeuser")],
+		["Uniklinik", listing("krankenhaeuser")],
+		["Kinderklinik", listing("kinderkliniken")],
+		["Kinderkrankenhaus", listing("kinderkliniken")],
+		["Psychiatrie", listing("psychiatrische-kliniken")],
+		["Psychosomatik", listing("psychiatrische-kliniken")],
+		["Reha", listing("reha-kliniken")],
+		["Rehaklinik", listing("reha-kliniken")],
+		["Kurklinik", listing("reha-kliniken")],
+		["Apotheke", listing("apotheken")],
+		["Apotheken", listing("apotheken")],
+		["Apotheker", listing("apotheken")],
+		// Visitors' languages.
+		["hospital", listing("krankenhaeuser")],
+		["hôpital", listing("krankenhaeuser")],
+		["urgences", listing("krankenhaeuser")],
+		["pharmacie", listing("apotheken")],
+		["pharmacy", listing("apotheken")],
+		// Germany lists facilities, not practitioners.
+		["Hausarzt", UNLISTED],
+		["Zahnarzt", UNLISTED],
+		["Kinderarzt", UNLISTED],
+		["Physiotherapie", UNLISTED],
+		["médecin", UNLISTED],
+		["dentist", UNLISTED],
 	],
 };
 

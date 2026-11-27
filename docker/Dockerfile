@@ -13,8 +13,9 @@
 #   docker run … apercura etl:cz [flags]     Czech NRPZS open data import
 #   docker run … apercura etl:es [flags]     Spanish REGCESS open data import
 #   docker run … apercura etl:it [flags]     Italian Ministry of Health open data import
+#   docker run … apercura etl:de [flags]     German Destatis and Länder pharmacy open data import
 #   docker run … apercura scheduler          supercronic: jobs and cache warm-up every 5 minutes,
-#                                            weekly import
+#                                            weekly and monthly imports
 #
 # APP_URL, PUBLIC_HDS_HOST, NEXT_PUBLIC_MAP_STYLE_URL, the LEGAL_* facts of the legal pages,
 # the search engine verification tokens and HSTS_PRELOAD are read at build time: static pages

@@ -48,3 +48,10 @@
 # it, e.g. `--sources farmacie`. Exit codes: 1 failed, 2 blocked, 3 imported without a list that
 # could not be fetched or read (see docs/data-import.md, "Italy").
 30 9 * * 1 apercura etl:it $ETL_IT_SCHEDULE_ARGS
+# Germany's open data (the statistical offices' yearly directory of hospitals and of prevention
+# and rehabilitation clinics, Thuringia's and Brandenburg's pharmacy lists), on the 2nd of every
+# month at 22:30 UTC, when no other import runs (the same advisory lock: one import at a time).
+# Unchanged files end the run after their download (a few MB). ETL_DE_SCHEDULE_ARGS narrows it,
+# e.g. `--sources khv,rhv`. Exit codes: 1 failed, 2 blocked, 3 imported without a source that
+# could not be fetched or read (see docs/data-import.md, "Germany").
+30 22 2 * * apercura etl:de $ETL_DE_SCHEDULE_ARGS

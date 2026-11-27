@@ -61,6 +61,23 @@ describe("market page paths of the sitemaps", () => {
 		expect(MARKET_STATIC_PATHS.cz).toContain("/accessibilite");
 	});
 
+	it("gives Germany its German route segments under /de", () => {
+		expect(marketPagePath("de", "/")).toBe("/de");
+		expect(marketPagePath("de", "/praticien/klinikum-beispiel-k0a1b2c3d4e")).toBe(
+			"/de/einrichtung/klinikum-beispiel-k0a1b2c3d4e",
+		);
+		expect(marketPagePath("de", "/etablissement/x-1")).toBe("/de/organisation/x-1");
+		expect(marketPagePath("de", "/annuaire/landkreis-muenchen/unterhaching")).toBe(
+			"/de/verzeichnis/landkreis-muenchen/unterhaching",
+		);
+		expect(marketPagePath("de", "/krankenhaeuser/berlin")).toBe("/de/krankenhaeuser/berlin");
+		expect(marketPagePath("de", "/donnees")).toBe("/de/daten");
+		expect(marketPagePath("de", "/accessibilite")).toBe("/de/barrierefreiheit");
+		expect(marketPagePath("de", "/mentions-legales")).toBe("/de/impressum");
+		expect(MARKET_STATIC_PATHS.de).not.toContain("/pro");
+		expect(MARKET_STATIC_PATHS.de).toContain("/accessibilite");
+	});
+
 	it("gives Spain its Spanish route segments under /es", () => {
 		expect(marketPagePath("es", "/")).toBe("/es");
 		expect(marketPagePath("es", "/praticien/clinica-dental-ejemplo-centro-1328000001")).toBe(

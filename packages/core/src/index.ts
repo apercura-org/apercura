@@ -17,6 +17,7 @@ export {
 export * from "./pagination";
 export { formatPhoneAt, toE164At } from "./phone-at";
 export { CZ_POSTCODE, formatPhoneCz, normalizeCzPostcode, toE164Cz } from "./phone-cz";
+export { DE_POSTCODE, formatPhoneDe, normalizeDePostcode, toE164De } from "./phone-de";
 export { ES_POSTCODE, formatPhoneEs, normalizeEsPostcode, toE164Es } from "./phone-es";
 export { formatPhoneGb, GB_POSTCODE, normalizeGbPostcode, toE164Gb } from "./phone-gb";
 export { formatPhoneIt, IT_POSTCODE, normalizeItPostcode, toE164It } from "./phone-it";
@@ -32,7 +33,13 @@ export {
 	type CzFacilitySegment,
 	communeSlug,
 	czFacilitySlug,
+	DE_ID_SCHEMES,
+	type DeFacilityKey,
+	type DeFacilitySegment,
+	type DeIdScheme,
+	deFacilitySlug,
 	departmentSlug,
+	deUrlKey,
 	ES_ID_SCHEME,
 	type EsCentreSegment,
 	type EstablishmentSegment,
@@ -50,6 +57,7 @@ export {
 	type ItPlaceSegment,
 	isValidAtSourceId,
 	isValidCzSourceId,
+	isValidDeSourceId,
 	isValidEsSourceId,
 	isValidGbSourceId,
 	isValidItSourceId,
@@ -58,6 +66,8 @@ export {
 	type PractitionerSegment,
 	parseAtPractitionerSegment,
 	parseCzFacilitySegment,
+	parseDeFacilitySegment,
+	parseDeKey,
 	parseEsCentreSegment,
 	parseEstablishmentSegment,
 	parseGbKey,

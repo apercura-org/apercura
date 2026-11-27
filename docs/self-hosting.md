@@ -240,6 +240,21 @@ each January. The scheduler reruns the import every Monday at 09:30 UTC
 `ETL_IT_REGISTER_COORDINATES=1` keeps the lists' own coordinates, some of which
 come from OpenStreetMap ([data-import.md](./data-import.md#italy)).
 
+Germany (`/de`) has its own import, from the statistical offices' yearly
+directory of hospitals and of prevention and rehabilitation clinics (Destatis,
+about 3,800 facilities) and the pharmacy lists of Thuringia and Brandenburg
+(about 1,000):
+
+```sh
+apercura-compose run --rm --entrypoint "apercura etl:de" etl
+```
+
+Its first run imports the German Länder, Kreise and Gemeinden (Destatis's
+GV-ISys, a 2 MB workbook, a few seconds). The scheduler reruns it on the 2nd of
+every month at 22:30 UTC; unchanged files end the run after their download
+(`ETL_DE_SCHEDULE_ARGS` narrows it, e.g. `--sources khv,rhv`); exit code `3`
+when a source was left out ([data-import.md](./data-import.md#germany)).
+
 ## Scheduled jobs
 
 The `scheduler` service runs [`docker/crontab`](../docker/crontab) with

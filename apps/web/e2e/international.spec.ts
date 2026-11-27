@@ -34,6 +34,9 @@ test.describe("the international home", () => {
 		const italy = countries.getByRole("link", { name: "Apercura Italy" });
 		await expect(italy).toHaveAttribute("href", "/it");
 		await expect(italy).toHaveAttribute("hreflang", "it-IT");
+		const germany = countries.getByRole("link", { name: "Apercura Germany" });
+		await expect(germany).toHaveAttribute("href", "/de");
+		await expect(germany).toHaveAttribute("hreflang", "de-DE");
 		for (const [name, href] of [
 			["English", "/fr-en"],
 			["Deutsch", "/fr-de"],
@@ -46,11 +49,11 @@ test.describe("the international home", () => {
 			);
 		}
 		// Planned countries are text: no page exists for them, so none can be thin.
-		for (const country of ["Belgium", "Germany", "Switzerland"]) {
+		for (const country of ["Belgium", "Switzerland"]) {
 			await expect(countries.getByText(country, { exact: true })).toBeVisible();
 			await expect(countries.getByRole("link", { name: country })).toHaveCount(0);
 		}
-		await expect(countries.getByText("Coming soon")).toHaveCount(3);
+		await expect(countries.getByText("Coming soon")).toHaveCount(2);
 
 		// The pages about Apercura, in English.
 		const more = page.getByRole("region", { name: "Learn more" });

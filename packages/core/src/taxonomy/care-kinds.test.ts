@@ -8,6 +8,7 @@ import {
 	listingOfCareKind,
 } from "./care-kinds";
 import { allCzListingSlugs } from "./cz";
+import { allDeListingSlugs } from "./de";
 import { allEsListingSlugs } from "./es";
 import { allListingSlugs } from "./fr";
 import { allGbListingSlugs } from "./gb";
@@ -20,6 +21,7 @@ const LISTINGS: Record<CareMarket, Set<string>> = {
 	CZ: allCzListingSlugs(),
 	ES: allEsListingSlugs(),
 	IT: allItListingSlugs(),
+	DE: allDeListingSlugs(),
 };
 
 describe("the kinds of care shared by the markets", () => {
@@ -60,6 +62,10 @@ describe("the kinds of care shared by the markets", () => {
 		expect(equivalentListing("orthodontiste", "FR", "GB")).toBe("dental-practices");
 		expect(equivalentListing("kardiolog", "CZ", "FR")).toBe("cardiologue");
 		expect(equivalentListing("cardiologue", "FR", "GB")).toBeNull();
+		expect(equivalentListing("hospitales", "ES", "DE")).toBe("krankenhaeuser");
+		expect(equivalentListing("ospedali", "IT", "DE")).toBe("krankenhaeuser");
+		expect(equivalentListing("pharmacien", "FR", "DE")).toBe("apotheken");
+		expect(equivalentListing("cardiologue", "FR", "DE")).toBeNull();
 		expect(equivalentListing("pharmacien", "FR", "AT")).toBeNull();
 		expect(equivalentListing("cardiologue", "FR", "FR")).toBe("cardiologue");
 		expect(equivalentListing("chirurgien-dentiste", "FR", "ES")).toBe("dentistas");

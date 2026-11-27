@@ -1,6 +1,7 @@
 import {
 	allAtListingSlugs,
 	allCzListingSlugs,
+	allDeTaxonomySlugs,
 	allEsTaxonomySlugs,
 	allGbListingSlugs,
 	allItListingSlugs,
@@ -22,6 +23,8 @@ const MARKET_SLUGS: Readonly<Record<MarketCountry, ReadonlySet<string>>> = {
 	// Spain also names its kinds of centre in the singular (`consultorio-local`).
 	ES: allEsTaxonomySlugs(),
 	IT: allItListingSlugs(),
+	// Germany names its kinds of facility in the singular too (`krankenhaus`, `apotheke`).
+	DE: allDeTaxonomySlugs(),
 };
 
 /** The `taxonomy` groups keyed by listing or profession slug. */
