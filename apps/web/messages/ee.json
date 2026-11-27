@@ -2029,5 +2029,163 @@
 			"formTitle": "Paluge lehe eemaldamist",
 			"formBody": "Märkige lehe aadress ja e-posti aadress, kuhu saame teile vastata."
 		}
+	},
+	"Astryx": {
+		"button": {
+			"loading": "Laadimine"
+		},
+		"calendar": {
+			"dayInRange": "{date}, vahemikus",
+			"dayRangeEnd": "{date}, vahemiku lõpp",
+			"dayRangeStart": "{date}, vahemiku algus",
+			"dayRangeStartAndEnd": "{date}, vahemiku algus ja lõpp",
+			"daySelected": "{date}, valitud",
+			"nextMonth": "Järgmine kuu",
+			"previousMonth": "Eelmine kuu",
+			"rangeClearedAnnounce": "Alguskuupäev {date} tühistati. Valige alguskuupäev.",
+			"rangeCompleteAnnounce": "Valitud vahemik: {start} kuni {end}.",
+			"rangeStartAnnounce": "Alguskuupäev {date}. Valige lõppkuupäev."
+		},
+		"contextMenu": {
+			"label": "Kontekstimenüü"
+		},
+		"dateInput": {
+			"calendarDescription": "Kuupäevad on kalendris {calendar}",
+			"chooseMonthYear": "{monthYear}, valige kuu ja aasta",
+			"clear": "Tühjenda {label}",
+			"closeCalendar": "Sulge kalender",
+			"dialogLabel": "Valige kuupäev",
+			"doneChoosingMonth": "Valmis",
+			"formatHint": "nt {example}",
+			"invalidDate": "Vigane kuupäev",
+			"monthWheel": "Kuu",
+			"nonexistentDate": "{named, select, yes {Sisestage olemasolev kuupäev ({calendar})} other {Sisestage olemasolev kuupäev}}",
+			"openCalendar": "Ava kalender",
+			"outOfRangeDate": "{bounds, select, both {Sisestage kuupäev vahemikus {min} kuni {max}} min {Sisestage kuupäev alates {min}} max {Sisestage kuupäev kuni {max}} other {Sisestage saadaolev kuupäev}}",
+			"placeholder": "Valige kuupäev",
+			"resetPicking": "Lähtesta",
+			"savePicking": "Salvesta",
+			"toggleCalendarClose": "Sulge kalender",
+			"yearWheel": "Aasta"
+		},
+		"dateTimeInput": {
+			"hourWheel": "Tund",
+			"meridiemAM": "AM",
+			"meridiemPM": "PM",
+			"meridiemWheel": "AM/PM",
+			"minuteWheel": "Minut",
+			"secondWheel": "Sekund",
+			"timeHint12h": "nt 2:30 PM",
+			"timeHint24h": "nt 14:30"
+		},
+		"dropdownMenu": {
+			"back": "Tagasi",
+			"backTo": "Tagasi: {parent}",
+			"label": "Menüü"
+		},
+		"field": {
+			"errorFallback": "Vigane väärtus",
+			"labelTooltip": "Lisateave: {label}",
+			"optional": "Valikuline",
+			"required": "Kohustuslik"
+		},
+		"infoTip": {
+			"label": "Lisateave"
+		},
+		"input": {
+			"readOnly": "Ainult lugemiseks",
+			"statusButton": {
+				"error": "Vea üksikasjad",
+				"success": "Õnnestumise üksikasjad",
+				"warning": "Hoiatuse üksikasjad"
+			}
+		},
+		"inputClearButton": {
+			"tooltip": "Tühjenda"
+		},
+		"kbd": {
+			"key": {
+				"alt": "Alt",
+				"altShort": "Alt",
+				"backspace": "Tagasilüke",
+				"command": "Command",
+				"control": "Control",
+				"controlShort": "Ctrl",
+				"down": "Allanool",
+				"enter": "Enter",
+				"escape": "Escape",
+				"escapeShort": "Esc",
+				"left": "Vasaknool",
+				"plus": "Pluss",
+				"right": "Paremnool",
+				"shift": "Shift",
+				"shiftShort": "Shift",
+				"tab": "Tab",
+				"up": "Ülesnool",
+				"windowsShort": "Win"
+			},
+			"shortcut": "{shortcut} + {key}"
+		},
+		"keyboardHint": {
+			"toNavigate": "liikumiseks"
+		},
+		"link": {
+			"newTab": "(avaneb uuel vahekaardil)"
+		},
+		"popover": {
+			"close": "Sulge hüpikaken"
+		},
+		"selector": {
+			"clearLabel": "Tühjenda {label}",
+			"empty": "Valikuid pole",
+			"emptySearchResults": "Tulemusi ei leitud",
+			"placeholder": "Valige…",
+			"resultCount": "{count, number} {count, plural, one {tulemus} other {tulemust}}",
+			"searchOptions": "Otsi valikuid",
+			"searchPlaceholder": "Otsi…"
+		},
+		"spinner": {
+			"loading": "Laadimine"
+		},
+		"switch": {
+			"loading": "Laadimine"
+		},
+		"table": {
+			"label": "Tabel",
+			"noData": "Andmed puuduvad"
+		},
+		"tabList": {
+			"label": "Vahekaardid"
+		},
+		"textArea": {
+			"charactersOverLimit": "{count, number} {count, plural, one {märk} other {märki}} üle piiri",
+			"charactersRemaining": "{count, number} {count, plural, one {märk} other {märki}} jäänud",
+			"counter": "{count, number}/{limit, number}"
+		},
+		"textInput": {
+			"clearLabel": "Tühjenda {label}"
+		},
+		"timeInput": {
+			"clearLabel": "Tühjenda {label}",
+			"invalidTime": "Vigane kellaaeg",
+			"openPicker": "Ava {label}",
+			"placeholder": "Valige kellaaeg"
+		},
+		"toast": {
+			"dismiss": "Sulge teade",
+			"viewport": "Teated"
+		},
+		"token": {
+			"remove": "Eemalda {label}"
+		},
+		"typeahead": {
+			"clearSelection": "Tühjenda valik",
+			"emptySearchResults": "Tulemusi ei leitud",
+			"loading": "Laadimine",
+			"resultCount": "{count, number} {count, plural, one {tulemus} other {tulemust}}",
+			"searchPlaceholder": "Otsi…",
+			"searchResults": "Otsingutulemused",
+			"selectionCleared": "{label} tühjendati"
+		}
 	}
 }

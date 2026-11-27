@@ -1,60 +1,64 @@
 "use client";
 
-import {
-	Breadcrumb as RACBreadcrumb,
-	type BreadcrumbProps as RACBreadcrumbProps,
-	Breadcrumbs as RACBreadcrumbs,
-	type BreadcrumbsProps as RACBreadcrumbsProps,
-	Link as RACLink,
-} from "react-aria-components";
+import "../astryx/styles";
+import { Breadcrumbs as AstryxBreadcrumbs, BreadcrumbItem } from "@astryxdesign/core/Breadcrumbs";
+import { Children, isValidElement, type ReactElement, type ReactNode } from "react";
+import { AstryxIntl } from "../astryx/intl";
 import { ChevronRightIcon } from "../icons";
 import { cn, linkStyles } from "../recipes";
 
-export interface BreadcrumbsProps<T extends object> extends RACBreadcrumbsProps<T> {
+export interface BreadcrumbsProps {
 	/** Accessible name of the navigation landmark. */
 	label: string;
+	/** `Breadcrumb`s; the last one is the current page. */
+	children: ReactNode;
+	className?: string;
 }
 
-/** Wayfinding trail. Reads like a running head: small, ruled, current page unlinked. */
-export function Breadcrumbs<T extends object>({ label, className, ...props }: BreadcrumbsProps<T>) {
-	return (
-		<nav aria-label={label}>
-			<RACBreadcrumbs
-				{...props}
-				className={cn(
-					"flex flex-wrap items-center gap-x-1 gap-y-1 text-meta",
-					typeof className === "string" ? className : undefined,
-				)}
-			/>
-		</nav>
-	);
-}
-
-export interface BreadcrumbProps extends Omit<RACBreadcrumbProps, "children"> {
+export interface BreadcrumbProps {
 	href?: string;
-	children: React.ReactNode;
+	children: ReactNode;
 }
 
-export function Breadcrumb({ href, children, className, ...props }: BreadcrumbProps) {
+/** One step of the trail: a description `Breadcrumbs` renders. */
+export function Breadcrumb(_props: BreadcrumbProps): null {
+	return null;
+}
+
+/**
+ * Wayfinding trail, built on Astryx's breadcrumbs: small, ruled, current page unlinked
+ * (`aria-current="page"`). Public pages print their own trail on the server.
+ */
+export function Breadcrumbs({ label, children, className }: BreadcrumbsProps) {
+	const steps = Children.toArray(children).filter(
+		(child): child is ReactElement<BreadcrumbProps> =>
+			isValidElement(child) && child.type === Breadcrumb,
+	);
 	return (
-		<RACBreadcrumb
-			{...props}
-			className={cn(
-				"group flex items-center gap-1",
-				typeof className === "string" ? className : undefined,
-			)}
-		>
-			<RACLink
-				href={href}
-				className={cn(
-					linkStyles({ tone: "muted" }),
-					"inline-flex min-h-11 items-center",
-					"data-current:cursor-default data-current:font-semibold data-current:text-ink data-current:no-underline",
-				)}
+		<AstryxIntl>
+			<AstryxBreadcrumbs
+				label={label}
+				separator={<ChevronRightIcon className="size-4 text-ink-muted" />}
+				className={cn("text-meta", className)}
 			>
-				{children}
-			</RACLink>
-			<ChevronRightIcon className="size-4 text-ink-muted group-last:hidden" />
-		</RACBreadcrumb>
+				{steps.map(({ props }, index) => {
+					const current = index === steps.length - 1;
+					return (
+						<BreadcrumbItem
+							// biome-ignore lint/suspicious/noArrayIndexKey: a trail's steps are its order.
+							key={index}
+							href={current ? undefined : props.href}
+							isCurrent={current}
+							className={cn(
+								current ? "font-semibold text-ink" : linkStyles({ tone: "muted" }),
+								"inline-flex min-h-11 items-center",
+							)}
+						>
+							{props.children}
+						</BreadcrumbItem>
+					);
+				})}
+			</AstryxBreadcrumbs>
+		</AstryxIntl>
 	);
 }

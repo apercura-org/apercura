@@ -1,60 +1,90 @@
 "use client";
 
-import type { ReactNode } from "react";
-import {
-	Button as RACButton,
-	SearchField as RACSearchField,
-	type SearchFieldProps as RACSearchFieldProps,
-} from "react-aria-components";
-import { CloseIcon, SearchIcon } from "../icons";
-import { fieldStyles, focusRing } from "../recipes";
-import { FieldDescription, FieldError, Input, Label } from "./field";
+import "../astryx/styles";
+import { TextInput as AstryxTextInput } from "@astryxdesign/core/TextInput";
+import { type ReactNode, useId, useMemo, useRef, useState } from "react";
+import { describedBy, fieldLook } from "../astryx/field-look";
+import { AstryxIntl } from "../astryx/intl";
+import { nativeConstraints } from "../astryx/native";
+import { textOf } from "../astryx/text";
+import { SearchIcon } from "../icons";
+import { cn } from "../recipes";
+import { FieldDescription, FieldError } from "./field-parts";
+import { useFieldValidation } from "./form";
 
-const styles = fieldStyles();
-
-export interface SearchFieldProps extends Omit<RACSearchFieldProps, "children"> {
+export interface SearchFieldProps {
 	label: ReactNode;
 	description?: ReactNode;
 	errorMessage?: string;
 	placeholder?: string;
 	/** Accessible label of the clear button. */
 	clearLabel: string;
+	name?: string;
+	value?: string;
+	defaultValue?: string;
+	onChange?: (value: string) => void;
+	/** Enter in the field. */
+	onSubmit?: (value: string) => void;
+	isRequired?: boolean;
+	isInvalid?: boolean;
+	isDisabled?: boolean;
+	className?: string;
+	id?: string;
 }
 
-/** Search input with a leading search mark and a clear button once filled. */
+/** Search input, built on Astryx's, with a leading search mark and a clear button once filled. */
 export function SearchField({
 	label,
 	description,
 	errorMessage,
 	placeholder,
 	clearLabel,
+	name,
+	value: valueProp,
+	defaultValue,
+	onChange,
+	onSubmit,
+	isRequired,
+	isInvalid,
+	isDisabled,
 	className,
-	...props
+	id,
 }: SearchFieldProps) {
+	const [own, setOwn] = useState(defaultValue ?? "");
+	const value = valueProp ?? own;
+	const input = useRef<HTMLInputElement>(null);
+	const hintId = useId();
+	const { error } = useFieldValidation({ element: input, name, value, isInvalid, errorMessage });
+	const extra = useMemo(() => ({ "@astryx.textInput.clearLabel": clearLabel }), [clearLabel]);
 	return (
-		<RACSearchField
-			{...props}
-			className={styles.root({ className: typeof className === "string" ? className : undefined })}
-		>
-			{({ isEmpty }) => (
-				<>
-					<Label>{label}</Label>
-					<div className={styles.box()}>
-						<SearchIcon className="ms-3.5 size-5 shrink-0 text-ink-muted" />
-						<Input placeholder={placeholder} className="ps-2.5" />
-						{isEmpty ? null : (
-							<RACButton
-								aria-label={clearLabel}
-								className={`me-0.5 flex size-11 shrink-0 cursor-pointer items-center justify-center text-ink hover:bg-paper-shade ${focusRing}`}
-							>
-								<CloseIcon className="size-5" />
-							</RACButton>
-						)}
-					</div>
-					{description ? <FieldDescription>{description}</FieldDescription> : null}
-					<FieldError>{errorMessage}</FieldError>
-				</>
-			)}
-		</RACSearchField>
+		<div className={fieldLook.root(className)} data-invalid={error !== null ? "" : undefined}>
+			<AstryxIntl extra={extra}>
+				<AstryxTextInput
+					ref={input}
+					id={id}
+					type="search"
+					enterKeyHint="search"
+					label={textOf(label)}
+					value={value}
+					onChange={(next) => {
+						setOwn(next);
+						onChange?.(next);
+					}}
+					onEnter={onSubmit ? () => onSubmit(value) : undefined}
+					hasClear
+					startIcon={<SearchIcon className="ms-3.5 size-5 shrink-0 text-ink-muted" />}
+					htmlName={name}
+					{...nativeConstraints({ required: isRequired })}
+					isDisabled={isDisabled}
+					placeholder={placeholder}
+					status={error !== null ? { type: "error", message: error || undefined } : undefined}
+					aria-describedby={describedBy(description != null && hintId)}
+					containerClassName={fieldLook.container}
+					controlClassName={cn(fieldLook.control, "[&_input]:ps-2.5")}
+				/>
+			</AstryxIntl>
+			{description != null ? <FieldDescription id={hintId}>{description}</FieldDescription> : null}
+			<FieldError aria-hidden>{error}</FieldError>
+		</div>
 	);
 }

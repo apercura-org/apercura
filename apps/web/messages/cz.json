@@ -1959,5 +1959,163 @@
 			"formTitle": "Požádat o odstranění stránky",
 			"formBody": "Uveďte adresu stránky a e-mailovou adresu, na kterou vám můžeme odpovědět."
 		}
+	},
+	"Astryx": {
+		"button": {
+			"loading": "Načítání"
+		},
+		"calendar": {
+			"dayInRange": "{date}, v rozsahu",
+			"dayRangeEnd": "{date}, konec rozsahu",
+			"dayRangeStart": "{date}, začátek rozsahu",
+			"dayRangeStartAndEnd": "{date}, začátek a konec rozsahu",
+			"daySelected": "{date}, vybráno",
+			"nextMonth": "Další měsíc",
+			"previousMonth": "Předchozí měsíc",
+			"rangeClearedAnnounce": "Počáteční datum {date} vymazáno. Vyberte počáteční datum.",
+			"rangeCompleteAnnounce": "Vybraný rozsah: {start} až {end}.",
+			"rangeStartAnnounce": "Počáteční datum {date}. Vyberte koncové datum."
+		},
+		"contextMenu": {
+			"label": "Kontextová nabídka"
+		},
+		"dateInput": {
+			"calendarDescription": "Data jsou v kalendáři {calendar}",
+			"chooseMonthYear": "{monthYear}, zvolit měsíc a rok",
+			"clear": "Vymazat {label}",
+			"closeCalendar": "Zavřít kalendář",
+			"dialogLabel": "Zvolit datum",
+			"doneChoosingMonth": "Hotovo",
+			"formatHint": "např. {example}",
+			"invalidDate": "Neplatné datum",
+			"monthWheel": "Měsíc",
+			"nonexistentDate": "{named, select, yes {Zadejte existující datum ({calendar})} other {Zadejte existující datum}}",
+			"openCalendar": "Otevřít kalendář",
+			"outOfRangeDate": "{bounds, select, both {Zadejte datum od {min} do {max}} min {Zadejte datum od {min}} max {Zadejte datum do {max}} other {Zadejte dostupné datum}}",
+			"placeholder": "Vyberte datum",
+			"resetPicking": "Obnovit",
+			"savePicking": "Uložit",
+			"toggleCalendarClose": "Zavřít kalendář",
+			"yearWheel": "Rok"
+		},
+		"dateTimeInput": {
+			"hourWheel": "Hodina",
+			"meridiemAM": "dop.",
+			"meridiemPM": "odp.",
+			"meridiemWheel": "dop./odp.",
+			"minuteWheel": "Minuta",
+			"secondWheel": "Sekunda",
+			"timeHint12h": "např. 2:30 odp.",
+			"timeHint24h": "např. 14:30"
+		},
+		"dropdownMenu": {
+			"back": "Zpět",
+			"backTo": "Zpět na {parent}",
+			"label": "Nabídka"
+		},
+		"field": {
+			"errorFallback": "Neplatná hodnota",
+			"labelTooltip": "O poli {label}",
+			"optional": "Volitelné",
+			"required": "Povinné"
+		},
+		"infoTip": {
+			"label": "Další informace"
+		},
+		"input": {
+			"readOnly": "Jen pro čtení",
+			"statusButton": {
+				"error": "Podrobnosti chyby",
+				"success": "Podrobnosti úspěchu",
+				"warning": "Podrobnosti varování"
+			}
+		},
+		"inputClearButton": {
+			"tooltip": "Vymazat"
+		},
+		"kbd": {
+			"key": {
+				"alt": "Alt",
+				"altShort": "Alt",
+				"backspace": "Backspace",
+				"command": "Command",
+				"control": "Control",
+				"controlShort": "Ctrl",
+				"down": "Šipka dolů",
+				"enter": "Enter",
+				"escape": "Escape",
+				"escapeShort": "Esc",
+				"left": "Šipka vlevo",
+				"plus": "Plus",
+				"right": "Šipka vpravo",
+				"shift": "Shift",
+				"shiftShort": "Shift",
+				"tab": "Tab",
+				"up": "Šipka nahoru",
+				"windowsShort": "Win"
+			},
+			"shortcut": "{shortcut} + {key}"
+		},
+		"keyboardHint": {
+			"toNavigate": "pro navigaci"
+		},
+		"link": {
+			"newTab": "(otevře se na nové kartě)"
+		},
+		"popover": {
+			"close": "Zavřít vyskakovací okno"
+		},
+		"selector": {
+			"clearLabel": "Vymazat {label}",
+			"empty": "Žádné možnosti",
+			"emptySearchResults": "Nebyly nalezeny žádné výsledky",
+			"placeholder": "Vybrat…",
+			"resultCount": "{count, number} {count, plural, one {výsledek} few {výsledky} many {výsledku} other {výsledků}}",
+			"searchOptions": "Hledat možnosti",
+			"searchPlaceholder": "Hledat…"
+		},
+		"spinner": {
+			"loading": "Načítání"
+		},
+		"switch": {
+			"loading": "Načítání"
+		},
+		"table": {
+			"label": "Tabulka",
+			"noData": "Žádná data"
+		},
+		"tabList": {
+			"label": "Karty"
+		},
+		"textArea": {
+			"charactersOverLimit": "{count, number} {count, plural, one {znak} few {znaky} many {znaku} other {znaků}} nad limit",
+			"charactersRemaining": "Zbývá {count, number} {count, plural, one {znak} few {znaky} many {znaku} other {znaků}}",
+			"counter": "{count, number}/{limit, number}"
+		},
+		"textInput": {
+			"clearLabel": "Vymazat {label}"
+		},
+		"timeInput": {
+			"clearLabel": "Vymazat {label}",
+			"invalidTime": "Neplatný čas",
+			"openPicker": "Otevřít {label}",
+			"placeholder": "Vyberte čas"
+		},
+		"toast": {
+			"dismiss": "Zavřít oznámení",
+			"viewport": "Oznámení"
+		},
+		"token": {
+			"remove": "Odebrat {label}"
+		},
+		"typeahead": {
+			"clearSelection": "Vymazat výběr",
+			"emptySearchResults": "Nebyly nalezeny žádné výsledky",
+			"loading": "Načítání",
+			"resultCount": "{count, number} {count, plural, one {výsledek} few {výsledky} many {výsledku} other {výsledků}}",
+			"searchPlaceholder": "Hledat…",
+			"searchResults": "Výsledky hledání",
+			"selectionCleared": "{label} vymazáno"
+		}
 	}
 }

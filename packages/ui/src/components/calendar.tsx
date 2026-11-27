@@ -1,86 +1,73 @@
 "use client";
 
-import {
-	CalendarCell,
-	CalendarGrid,
-	CalendarGridBody,
-	CalendarGridHeader,
-	CalendarHeaderCell,
-	type DateValue,
-	Heading,
-	Button as RACButton,
-	Calendar as RACCalendar,
-	type CalendarProps as RACCalendarProps,
-	Text,
-} from "react-aria-components";
-import { ChevronLeftIcon, ChevronRightIcon } from "../icons";
-import { cn, focusRing } from "../recipes";
+import "../astryx/styles";
+import { Calendar as AstryxCalendar } from "@astryxdesign/core/Calendar";
+import { type CalendarDate, parseDate } from "@internationalized/date";
+import { useMemo } from "react";
+import { localDay } from "../astryx/dates";
+import { AstryxIntl } from "../astryx/intl";
+import { cn } from "../recipes";
 
-export interface CalendarProps<T extends DateValue> extends Omit<RACCalendarProps<T>, "children"> {
+export interface CalendarProps {
+	value?: CalendarDate | null;
+	defaultValue?: CalendarDate;
+	onChange?: (value: CalendarDate) => void;
+	minValue?: CalendarDate;
+	maxValue?: CalendarDate;
+	isDateUnavailable?: (date: CalendarDate) => boolean;
 	/** Error text shown under the grid when the calendar is invalid. */
 	errorMessage?: string;
+	"aria-label"?: string;
+	className?: string;
 }
 
-const navButton = cn(
-	"flex size-11 cursor-pointer items-center justify-center rounded-field border border-field-edge text-ink hover:bg-paper-shade data-disabled:cursor-not-allowed data-disabled:border-ink-disabled data-disabled:text-ink-disabled",
-	focusRing,
-);
-
 /**
- * Month grid set like a ruled form: caps weekday headers, hairline cells.
- * Selection is ink (it is a choice, not yet a booking); today is underlined.
+ * Month grid, built on Astryx's calendar (a grid of days, arrow keys by day and week, Page Up
+ * and Down by month). Weeks start on Monday. Selection is ink: it is a choice, not a booking.
  */
-export function Calendar<T extends DateValue>({
+export function Calendar({
+	value,
+	defaultValue,
+	onChange,
+	minValue,
+	maxValue,
+	isDateUnavailable,
 	errorMessage,
+	"aria-label": ariaLabel,
 	className,
-	...props
-}: CalendarProps<T>) {
+}: CalendarProps) {
+	const constraints = useMemo(
+		() =>
+			isDateUnavailable
+				? [(date: Date) => isDateUnavailable(parseDate(localDay(date)))]
+				: undefined,
+		[isDateUnavailable],
+	);
 	return (
-		<RACCalendar
-			{...props}
-			className={cn(
-				"w-fit max-w-full text-ink",
-				typeof className === "string" ? className : undefined,
-			)}
-		>
-			<header className="mb-3 flex items-center justify-between gap-2">
-				<RACButton slot="previous" className={navButton}>
-					<ChevronLeftIcon className="size-5" />
-				</RACButton>
-				<Heading className="font-display text-body font-semibold capitalize" />
-				<RACButton slot="next" className={navButton}>
-					<ChevronRightIcon className="size-5" />
-				</RACButton>
-			</header>
-			<CalendarGrid className="border-collapse border-y border-rule-soft" weekdayStyle="short">
-				<CalendarGridHeader className="border-b border-rule-soft">
-					{(day) => (
-						<CalendarHeaderCell className="type-caption h-9 text-center">{day}</CalendarHeaderCell>
-					)}
-				</CalendarGridHeader>
-				<CalendarGridBody>
-					{(date) => (
-						<CalendarCell
-							date={date}
-							className={cn(
-								"m-px flex size-11 cursor-pointer items-center justify-center rounded-field text-body tabular outline-none",
-								"hover:bg-paper-shade data-outside-month:hidden",
-								"data-today:font-bold data-today:underline data-today:decoration-2 data-today:underline-offset-4",
-								"data-selected:bg-ink data-selected:text-paper",
-								"data-unavailable:cursor-not-allowed data-unavailable:text-ink-disabled data-unavailable:line-through",
-								"data-disabled:cursor-not-allowed data-disabled:text-ink-disabled",
-								"data-invalid:data-selected:bg-error",
-								"data-focus-visible:outline-3 data-focus-visible:outline-solid data-focus-visible:outline-offset-1 data-focus-visible:outline-(--focus-ring)",
-							)}
-						/>
-					)}
-				</CalendarGridBody>
-			</CalendarGrid>
-			{errorMessage ? (
-				<Text slot="errorMessage" className="mt-2 block text-meta font-semibold text-error">
-					{errorMessage}
-				</Text>
-			) : null}
-		</RACCalendar>
+		<AstryxIntl>
+			{/* biome-ignore lint/a11y/useSemanticElements: names the month grid, not a part of a form. */}
+			<div
+				className={cn("w-fit max-w-full text-ink", className)}
+				aria-label={ariaLabel}
+				role="group"
+			>
+				<AstryxCalendar
+					value={
+						value === undefined ? undefined : value === null ? null : (value.toString() as never)
+					}
+					defaultValue={defaultValue ? (defaultValue.toString() as never) : undefined}
+					onChange={(next: unknown) => {
+						if (typeof next === "string") onChange?.(parseDate(next));
+					}}
+					min={minValue ? (minValue.toString() as never) : undefined}
+					max={maxValue ? (maxValue.toString() as never) : undefined}
+					dateConstraints={constraints}
+					weekStartsOn="mon"
+				/>
+				{errorMessage ? (
+					<p className="mt-2 block text-meta font-semibold text-error">{errorMessage}</p>
+				) : null}
+			</div>
+		</AstryxIntl>
 	);
 }

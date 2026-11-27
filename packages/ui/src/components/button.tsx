@@ -2,10 +2,20 @@
 
 import "../astryx/styles";
 import { Button as AstryxButton } from "@astryxdesign/core/Button";
-import { InternationalizationProvider } from "@astryxdesign/core/i18n";
-import type { ButtonHTMLAttributes, CSSProperties, MouseEvent, ReactNode, Ref } from "react";
+import {
+	type ButtonHTMLAttributes,
+	type CSSProperties,
+	type MouseEvent,
+	type ReactNode,
+	type Ref,
+	useLayoutEffect,
+	useMemo,
+	useRef,
+} from "react";
 import type { VariantProps } from "tailwind-variants";
+import { AstryxIntl } from "../astryx/intl";
 import { textOf } from "../astryx/text";
+import { useMergedRef } from "../astryx/use-merged-ref";
 import { buttonStyles, cn } from "../recipes";
 
 type ButtonVariants = VariantProps<typeof buttonStyles>;
@@ -81,39 +91,62 @@ export function Button({
 	isDisabled,
 	isPending,
 	"aria-label": ariaLabel,
+	ref,
 	...props
 }: ButtonProps) {
-	const button = (
-		<AstryxButton
-			{...props}
-			label={ariaLabel ?? textOf(children)}
-			variant={VARIANT[intent]}
-			isDisabled={isDisabled}
-			isLoading={isPending}
-			onClick={
-				onPress || onClick
-					? (event: MouseEvent<HTMLButtonElement>) => {
-							onClick?.(event);
-							onPress?.();
-						}
-					: undefined
-			}
-			className={cn(buttonStyles({ intent, size }), astryxReset, className)}
-		>
-			{children}
-		</AstryxButton>
+	const element = useRef<HTMLButtonElement>(null);
+	usePendingRegion(element, isPending === true);
+	const extra = useMemo(
+		() => (pendingLabel ? { "@astryx.button.loading": pendingLabel } : undefined),
+		[pendingLabel],
 	);
-	// Astryx announces a pending button with its own word for "loading"; say ours instead.
-	return pendingLabel ? (
-		<InternationalizationProvider
-			locale="en"
-			overrides={{ en: { "@astryx.button.loading": pendingLabel } }}
-		>
-			{button}
-		</InternationalizationProvider>
-	) : (
-		button
+	return (
+		<AstryxIntl extra={extra}>
+			<AstryxButton
+				{...props}
+				ref={useMergedRef(ref, element)}
+				label={ariaLabel ?? textOf(children)}
+				variant={VARIANT[intent]}
+				isDisabled={isDisabled}
+				isLoading={isPending}
+				onClick={
+					onPress || onClick
+						? (event: MouseEvent<HTMLButtonElement>) => {
+								onClick?.(event);
+								onPress?.();
+							}
+						: undefined
+				}
+				className={cn(buttonStyles({ intent, size }), astryxReset, className)}
+			>
+				{children}
+			</AstryxButton>
+		</AstryxIntl>
 	);
+}
+
+/**
+ * Astryx keeps a polite live region inside every button, for the word it says while the button
+ * is pending. An empty one in each of a page's buttons is noise (one more "status" per button
+ * to a screen reader's region list, and inside a button, whose content is presentational):
+ * it is a live region only while the button is pending, which is the only time it speaks.
+ * Astryx writes the word a render after the button turns pending, once the region is in place.
+ */
+function usePendingRegion(button: { current: HTMLButtonElement | null }, isPending: boolean) {
+	useLayoutEffect(() => {
+		const region = button.current?.querySelector<HTMLElement>(
+			':scope > [role="status"], :scope > [data-pending-region]',
+		);
+		if (!region) return;
+		region.setAttribute("data-pending-region", "");
+		if (isPending) {
+			region.setAttribute("role", "status");
+			region.setAttribute("aria-live", "polite");
+		} else {
+			region.removeAttribute("role");
+			region.removeAttribute("aria-live");
+		}
+	}, [button, isPending]);
 }
 
 export interface LinkButtonProps extends SharedProps {

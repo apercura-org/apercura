@@ -1,16 +1,11 @@
 "use client";
 
-import {
-	Button as RACButton,
-	UNSTABLE_Toast as RACToast,
-	UNSTABLE_ToastContent as RACToastContent,
-	UNSTABLE_ToastQueue as RACToastQueue,
-	UNSTABLE_ToastRegion as RACToastRegion,
-	Text,
-} from "react-aria-components";
-import { AlertIcon, CheckIcon, CloseIcon, InfoIcon } from "../icons";
-import { cn, focusRing } from "../recipes";
-import { tv } from "../recipes/tv";
+import "../astryx/styles";
+import { Toast } from "@astryxdesign/core/Toast";
+import { useSyncExternalStore } from "react";
+import { AstryxIntl } from "../astryx/intl";
+import { AlertIcon, CheckIcon, InfoIcon } from "../icons";
+import { cn } from "../recipes";
 
 export interface ToastContent {
 	title: string;
@@ -19,20 +14,48 @@ export interface ToastContent {
 	tone?: "info" | "booked" | "error";
 }
 
-/** App-wide toast queue. Call `toastQueue.add({ title }, { timeout: 6000 })`. */
-export const toastQueue = new RACToastQueue<ToastContent>({ maxVisibleToasts: 3 });
+interface QueuedToast {
+	key: string;
+	content: ToastContent;
+	timeout?: number;
+}
 
-const toast = tv({
-	base: "flex w-full items-start gap-3 rounded-panel border bg-paper p-4 text-ink shadow-overlay outline-none data-focus-visible:outline-3 data-focus-visible:outline-solid data-focus-visible:outline-offset-2 data-focus-visible:outline-(--focus-ring) forced-colors:border-[CanvasText]",
-	variants: {
-		tone: {
-			info: "border-field-edge",
-			booked: "border-stamp",
-			error: "border-error",
-		},
-	},
-	defaultVariants: { tone: "info" },
-});
+/** A small store of the toasts on screen, at most three. */
+class ToastQueue {
+	private toasts: QueuedToast[] = [];
+	private listeners = new Set<() => void>();
+	private next = 0;
+
+	add(content: ToastContent, options: { timeout?: number } = {}) {
+		const key = `toast-${++this.next}`;
+		this.toasts = [...this.toasts, { key, content, timeout: options.timeout }].slice(-3);
+		this.emit();
+		return key;
+	}
+
+	close(key: string) {
+		this.toasts = this.toasts.filter((toast) => toast.key !== key);
+		this.emit();
+	}
+
+	subscribe = (listener: () => void) => {
+		this.listeners.add(listener);
+		return () => {
+			this.listeners.delete(listener);
+		};
+	};
+
+	snapshot = () => this.toasts;
+
+	private emit() {
+		for (const listener of this.listeners) listener();
+	}
+}
+
+/** App-wide toast queue. Call `toastQueue.add({ title }, { timeout: 6000 })`. */
+export const toastQueue = new ToastQueue();
+
+const EMPTY: QueuedToast[] = [];
 
 const toneIcon = {
 	info: <InfoIcon className="mt-0.5 size-6 shrink-0" />,
@@ -40,50 +63,58 @@ const toneIcon = {
 	error: <AlertIcon className="mt-0.5 size-6 shrink-0 text-error" />,
 };
 
+const toneEdge = { info: "border-field-edge", booked: "border-stamp", error: "border-error" };
+
 export interface ToastRegionProps {
 	/** Accessible label of each toast's close button. */
 	closeLabel: string;
 	/** Accessible label of the notifications landmark. */
 	label: string;
-	queue?: RACToastQueue<ToastContent>;
+	queue?: ToastQueue;
 }
 
-/** Renders queued toasts at the bottom end of the viewport, as a labelled landmark. */
+/**
+ * Renders queued toasts at the bottom end of the viewport, as a labelled landmark, on Astryx's
+ * toast (its own dismiss control and timing; an error stays until dismissed).
+ */
 export function ToastRegion({ closeLabel, label, queue = toastQueue }: ToastRegionProps) {
+	const toasts = useSyncExternalStore(queue.subscribe, queue.snapshot, () => EMPTY);
 	return (
-		<RACToastRegion
-			queue={queue}
-			aria-label={label}
-			className="fixed end-4 bottom-4 z-[60] flex w-[min(26rem,calc(100vw-2rem))] flex-col-reverse gap-2 outline-none"
-		>
-			{({ toast: item }) => {
-				const tone = item.content.tone ?? "info";
-				return (
-					<RACToast toast={item} className={toast({ tone })}>
-						{toneIcon[tone]}
-						<RACToastContent className="flex min-w-0 flex-1 flex-col gap-0.5">
-							<Text slot="title" className="font-display text-body font-semibold">
-								{item.content.title}
-							</Text>
-							{item.content.description ? (
-								<Text slot="description" className="text-meta text-ink-muted">
-									{item.content.description}
-								</Text>
-							) : null}
-						</RACToastContent>
-						<RACButton
-							slot="close"
-							aria-label={closeLabel}
-							className={cn(
-								"-me-2 -mt-2 flex size-11 shrink-0 cursor-pointer items-center justify-center text-ink hover:bg-paper-shade",
-								focusRing,
+		<AstryxIntl extra={{ "@astryx.toast.dismiss": closeLabel }}>
+			<section
+				aria-label={label}
+				className="fixed end-4 bottom-4 z-[60] flex w-[min(26rem,calc(100vw-2rem))] flex-col-reverse gap-2"
+			>
+				{toasts.map(({ key, content, timeout }) => {
+					const tone = content.tone ?? "info";
+					return (
+						<Toast
+							key={key}
+							type={tone === "error" ? "error" : "info"}
+							isAutoHide={tone === "error" ? false : timeout !== undefined}
+							autoHideDuration={timeout ?? 5000}
+							onDismiss={() => queue.close(key)}
+							body={content.title}
+							renderContent={() => (
+								<div
+									className={cn(
+										"flex w-full items-start gap-3 rounded-panel border bg-paper p-4 text-ink",
+										toneEdge[tone],
+									)}
+								>
+									{toneIcon[tone]}
+									<div className="flex min-w-0 flex-1 flex-col gap-0.5">
+										<p className="font-display text-body font-semibold">{content.title}</p>
+										{content.description ? (
+											<p className="text-meta text-ink-muted">{content.description}</p>
+										) : null}
+									</div>
+								</div>
 							)}
-						>
-							<CloseIcon className="size-5" />
-						</RACButton>
-					</RACToast>
-				);
-			}}
-		</RACToastRegion>
+						/>
+					);
+				})}
+			</section>
+		</AstryxIntl>
 	);
 }

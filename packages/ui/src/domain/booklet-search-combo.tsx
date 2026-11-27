@@ -1,29 +1,9 @@
 "use client";
 
-import {
-	type FormEvent,
-	type ReactNode,
-	type RefObject,
-	useContext,
-	useEffect,
-	useRef,
-	useState,
-} from "react";
-import {
-	Collection,
-	ComboBoxStateContext,
-	Header,
-	Input,
-	type Key,
-	Label,
-	ListBox,
-	ListBoxItem,
-	ListBoxSection,
-	Popover,
-	ComboBox as RACComboBox,
-} from "react-aria-components";
+import { type FormEvent, type ReactNode, useMemo, useState } from "react";
+import { SuggestBox } from "../astryx/suggest-box";
 import { SearchIcon } from "../icons";
-import { buttonStyles, cn, listBoxItemStyles, popoverStyles, searchStyles } from "../recipes";
+import { buttonStyles, cn, searchStyles } from "../recipes";
 
 export interface BookletComboOption {
 	id: string;
@@ -70,26 +50,12 @@ export interface BookletComboFieldProps {
 const search = searchStyles();
 
 /**
- * What the visitor did before React hydrated the box (#159): the input keeps its focus and
- * text, the state knows neither, so no suggestion opens until the next keystroke, or at all
- * if the box was focused then. On mount both are taken as if just done.
- */
-function TypedBeforeHydration({ input }: { input: RefObject<HTMLInputElement | null> }) {
-	const state = useContext(ComboBoxStateContext);
-	// biome-ignore lint/correctness/useExhaustiveDependencies: once, on hydration.
-	useEffect(() => {
-		const field = input.current;
-		if (!state || !field) return;
-		if (field === document.activeElement) state.setFocused(true);
-		if (field.value !== state.inputValue) state.setInputValue(field.value);
-	}, []);
-	return null;
-}
-
-/**
- * One printed search cell with suggestions: a React Aria combo box whose text
- * is submitted with the surrounding GET form, so the form works the same with
- * or without JavaScript. Suggestions open on a paper slip with hairline rows.
+ * One printed search cell with suggestions: its text is submitted with the surrounding GET
+ * form, so the form works the same with or without JavaScript. Suggestions open on a paper
+ * slip with hairline rows, grouped under printed captions (`SuggestBox`, on Astryx's layer).
+ *
+ * What the visitor did before React hydrated the box (#159), its text and its focus, is taken
+ * on hydration as if just done: the suggestions open without another keystroke.
  */
 export function BookletComboField({
 	name,
@@ -104,85 +70,71 @@ export function BookletComboField({
 	emptyStatus,
 }: BookletComboFieldProps) {
 	const [value, setValue] = useState(defaultValue);
-	const input = useRef<HTMLInputElement>(null);
-	const visible = sections.filter((section) => section.options.length > 0);
-
-	const choose = (key: Key | null) => {
-		if (key === null) return;
-		for (const section of visible) {
-			const option = section.options.find((item) => item.id === key);
-			if (option) {
-				setValue(option.textValue);
-				onChoose?.(option, section.id);
-				return;
-			}
-		}
+	const rows = useMemo(
+		() =>
+			sections.map((section) => ({
+				id: section.id,
+				title: section.title,
+				options: section.options.map((option) => ({
+					id: option.id,
+					textValue: option.textValue,
+					label: (
+						<>
+							<span>{option.label}</span>
+							{option.detail ? (
+								<span className="text-meta text-ink-muted">{option.detail}</span>
+							) : null}
+						</>
+					),
+				})),
+			})),
+		[sections],
+	);
+	const change = (next: string) => {
+		setValue(next);
+		onInputChange?.(next);
 	};
-
 	return (
-		<RACComboBox
-			id={id}
-			name={name}
-			allowsCustomValue
-			formValue="text"
-			menuTrigger="input"
-			inputValue={value}
-			onInputChange={(next) => {
-				setValue(next);
-				onInputChange?.(next);
-			}}
-			onSelectionChange={choose}
-			items={visible}
-			allowsEmptyCollection={emptyStatus !== undefined}
-			className={search.cell()}
-		>
-			<Label className={search.label()}>{label}</Label>
-			<TypedBeforeHydration input={input} />
-			<Input
-				ref={input}
-				type="search"
-				placeholder={hint}
-				autoComplete={autoComplete}
-				enterKeyHint="search"
-				className={search.input()}
-			/>
-			<Popover
-				placement="bottom start"
+		<div className={search.cell()}>
+			<label htmlFor={id} className={search.label()}>
+				{label}
+			</label>
+			<SuggestBox
+				value={value}
+				onValueChange={change}
+				sections={rows}
+				onChoose={(option, sectionId) => {
+					const section = sections.find((item) => item.id === sectionId);
+					const chosen = section?.options.find((item) => item.id === option.id);
+					if (chosen) onChoose?.(chosen, sectionId);
+				}}
+				emptyStatus={emptyStatus}
+				listLabel={label}
+				listClassName="min-w-72 max-w-[calc(100vw-2.5rem)]"
 				offset={8}
-				className={popoverStyles({
-					className: "w-(--trigger-width) min-w-72 max-w-[calc(100vw-2.5rem)]",
-				})}
+				adoptsTypedText
 			>
-				<ListBox<BookletComboSection>
-					className="max-h-96 overflow-auto outline-none"
-					renderEmptyState={() => (
-						<p className="px-3.5 py-3 text-meta text-ink-muted">{emptyStatus}</p>
-					)}
-				>
-					{(section) => (
-						<ListBoxSection id={section.id} className="border-b border-rule-soft last:border-b-0">
-							<Header className="type-caption border-b border-rule-soft bg-paper-shade px-3.5 py-1.5 text-ink-muted">
-								{section.title}
-							</Header>
-							<Collection items={section.options}>
-								{(option) => (
-									<ListBoxItem
-										id={option.id}
-										textValue={option.textValue}
-										className={listBoxItemStyles({ className: "flex-wrap gap-x-2 gap-y-0" })}
-									>
-										<span>{option.label}</span>
-										{option.detail ? (
-											<span className="text-meta text-ink-muted">{option.detail}</span>
-										) : null}
-									</ListBoxItem>
-								)}
-							</Collection>
-						</ListBoxSection>
-					)}
-				</ListBox>
-			</Popover>
-		</RACComboBox>
+				{(input, anchor) => (
+					<div ref={anchor} className="w-full">
+						<input
+							{...input}
+							id={id}
+							name={name}
+							type="search"
+							value={value}
+							onChange={(event) => {
+								input.onInput();
+								change(event.target.value);
+							}}
+							placeholder={hint}
+							autoComplete={autoComplete}
+							enterKeyHint="search"
+							className={search.input()}
+						/>
+					</div>
+				)}
+			</SuggestBox>
+		</div>
 	);
 }
 

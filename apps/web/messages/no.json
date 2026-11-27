@@ -1343,5 +1343,163 @@
 			"formTitle": "Be om å fjerne en side",
 			"formBody": "Oppgi sidens adresse og en e-postadresse vi kan svare deg på."
 		}
+	},
+	"Astryx": {
+		"button": {
+			"loading": "Laster"
+		},
+		"calendar": {
+			"dayInRange": "{date}, i intervall",
+			"dayRangeEnd": "{date}, intervallslutt",
+			"dayRangeStart": "{date}, intervallstart",
+			"dayRangeStartAndEnd": "{date}, intervallstart og intervallslutt",
+			"daySelected": "{date}, valgt",
+			"nextMonth": "Neste måned",
+			"previousMonth": "Forrige måned",
+			"rangeClearedAnnounce": "Startdato {date} fjernet. Velg en startdato.",
+			"rangeCompleteAnnounce": "Valgt intervall: {start} til {end}.",
+			"rangeStartAnnounce": "Startdato {date}. Velg en sluttdato."
+		},
+		"contextMenu": {
+			"label": "Hurtigmeny"
+		},
+		"dateInput": {
+			"calendarDescription": "Datoer følger {calendar}",
+			"chooseMonthYear": "{monthYear}, velg måned og år",
+			"clear": "Fjern {label}",
+			"closeCalendar": "Lukk kalender",
+			"dialogLabel": "Velg dato",
+			"doneChoosingMonth": "Ferdig",
+			"formatHint": "f.eks. {example}",
+			"invalidDate": "Ugyldig dato",
+			"monthWheel": "Måned",
+			"nonexistentDate": "{named, select, yes {Skriv inn en dato som finnes ({calendar})} other {Skriv inn en dato som finnes}}",
+			"openCalendar": "Åpne kalender",
+			"outOfRangeDate": "{bounds, select, both {Skriv inn en dato fra {min} til {max}} min {Skriv inn en dato fra og med {min}} max {Skriv inn en dato til og med {max}} other {Skriv inn en tilgjengelig dato}}",
+			"placeholder": "Velg en dato",
+			"resetPicking": "Tilbakestill",
+			"savePicking": "Lagre",
+			"toggleCalendarClose": "Lukk kalender",
+			"yearWheel": "År"
+		},
+		"dateTimeInput": {
+			"hourWheel": "Time",
+			"meridiemAM": "a.m.",
+			"meridiemPM": "p.m.",
+			"meridiemWheel": "a.m./p.m.",
+			"minuteWheel": "Minutt",
+			"secondWheel": "Sekund",
+			"timeHint12h": "f.eks. 2:30 p.m.",
+			"timeHint24h": "f.eks. 14:30"
+		},
+		"dropdownMenu": {
+			"back": "Tilbake",
+			"backTo": "Tilbake til {parent}",
+			"label": "Meny"
+		},
+		"field": {
+			"errorFallback": "Ugyldig verdi",
+			"labelTooltip": "Om {label}",
+			"optional": "Valgfritt",
+			"required": "Påkrevd"
+		},
+		"infoTip": {
+			"label": "Mer informasjon"
+		},
+		"input": {
+			"readOnly": "Skrivebeskyttet",
+			"statusButton": {
+				"error": "Feildetaljer",
+				"success": "Detaljer om suksess",
+				"warning": "Advarseldetaljer"
+			}
+		},
+		"inputClearButton": {
+			"tooltip": "Tøm"
+		},
+		"kbd": {
+			"key": {
+				"alt": "Alt",
+				"altShort": "Alt",
+				"backspace": "Tilbaketast",
+				"command": "Command",
+				"control": "Control",
+				"controlShort": "Ctrl",
+				"down": "Pil ned",
+				"enter": "Enter",
+				"escape": "Escape",
+				"escapeShort": "Esc",
+				"left": "Pil venstre",
+				"plus": "Pluss",
+				"right": "Pil høyre",
+				"shift": "Shift",
+				"shiftShort": "Shift",
+				"tab": "Tab",
+				"up": "Pil opp",
+				"windowsShort": "Win"
+			},
+			"shortcut": "{shortcut} + {key}"
+		},
+		"keyboardHint": {
+			"toNavigate": "for å navigere"
+		},
+		"link": {
+			"newTab": "(åpnes i ny fane)"
+		},
+		"popover": {
+			"close": "Lukk popover"
+		},
+		"selector": {
+			"clearLabel": "Fjern {label}",
+			"empty": "Ingen alternativer",
+			"emptySearchResults": "Ingen resultater funnet",
+			"placeholder": "Velg…",
+			"resultCount": "{count, number} {count, plural, one {resultat} other {resultater}}",
+			"searchOptions": "Søkealternativer",
+			"searchPlaceholder": "Søk…"
+		},
+		"spinner": {
+			"loading": "Laster"
+		},
+		"switch": {
+			"loading": "Laster inn"
+		},
+		"table": {
+			"label": "Tabell",
+			"noData": "Ingen data"
+		},
+		"tabList": {
+			"label": "Faner"
+		},
+		"textArea": {
+			"charactersOverLimit": "{count, number} {count, plural, one {tegn} other {tegn}} over grensen",
+			"charactersRemaining": "{count, number} {count, plural, one {tegn} other {tegn}} igjen",
+			"counter": "{count, number}/{limit, number}"
+		},
+		"textInput": {
+			"clearLabel": "Fjern {label}"
+		},
+		"timeInput": {
+			"clearLabel": "Fjern {label}",
+			"invalidTime": "Ugyldig tidspunkt",
+			"openPicker": "Åpne {label}",
+			"placeholder": "Velg et tidspunkt"
+		},
+		"toast": {
+			"dismiss": "Lukk varsel",
+			"viewport": "Varsler"
+		},
+		"token": {
+			"remove": "Fjern {label}"
+		},
+		"typeahead": {
+			"clearSelection": "Fjern valg",
+			"emptySearchResults": "Ingen resultater funnet",
+			"loading": "Laster",
+			"resultCount": "{count, number} {count, plural, one {resultat} other {resultater}}",
+			"searchPlaceholder": "Søk…",
+			"searchResults": "Søkeresultater",
+			"selectionCleared": "{label} tømt"
+		}
 	}
 }

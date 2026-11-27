@@ -527,6 +527,21 @@
 
   .astryx-switch {
     --color-background-gray: var(--color-border-emphasized);
+    width: 48px;
+    height: 28px;
+    border-width: 2px;
+    border-style: solid;
+    border-color: var(--color-text-primary);
+    background-color: var(--color-background-surface);
+  }
+
+  .astryx-switch[data-checked="checked"] {
+    background-color: var(--color-text-primary);
+    border-color: var(--color-text-primary);
+  }
+
+  .astryx-switch[data-disabled="disabled"] {
+    border-color: var(--color-text-disabled);
   }
 
   .astryx-progress-bar {
@@ -583,6 +598,118 @@
 
   .astryx-section {
     --astryx-section-padding: var(--spacing-3);
+  }
+
+  .astryx-checkbox-input {
+    min-height: 44px;
+    align-items: center;
+    --_checkbox-input-gap: 12px;
+  }
+
+  .astryx-checkbox-indicator {
+    width: 24px;
+    height: 24px;
+    border-width: 2px;
+    border-style: solid;
+    border-color: var(--color-text-primary);
+    border-radius: 6px;
+    background-color: var(--color-background-surface);
+    color: var(--color-background-surface);
+  }
+
+  .astryx-checkbox-indicator[data-checked="checked"] {
+    background-color: var(--color-text-primary);
+    border-color: var(--color-text-primary);
+    color: var(--color-background-surface);
+  }
+
+  .astryx-checkbox-indicator[data-disabled="disabled"] {
+    border-color: var(--color-text-disabled);
+  }
+
+  .astryx-checkbox-label {
+    font-size: 1.125rem;
+    color: var(--color-text-primary);
+  }
+
+  .astryx-radio-list-item {
+    min-height: 44px;
+    gap: 12px;
+  }
+
+  .astryx-radio-indicator {
+    width: 24px;
+    height: 24px;
+    border-width: 2px;
+    border-style: solid;
+    border-color: var(--color-text-primary);
+    background-color: var(--color-background-surface);
+  }
+
+  .astryx-radio-indicator[data-checked="checked"] {
+    border-color: var(--color-text-primary);
+    background-color: var(--color-background-surface);
+  }
+
+  .astryx-radio-indicator[data-disabled="disabled"] {
+    border-color: var(--color-text-disabled);
+  }
+
+  .astryx-radio-indicator-dot {
+    width: 12px;
+    height: 12px;
+    background-color: var(--color-text-primary);
+  }
+
+  .astryx-switch-thumb {
+    background-color: var(--color-text-primary);
+    --_switch-thumb-width: 20px;
+    --_switch-thumb-height: 20px;
+  }
+
+  .astryx-switch-thumb[data-checked="checked"] {
+    background-color: var(--color-background-surface);
+  }
+
+  .astryx-switch-label {
+    font-size: 1.125rem;
+    color: var(--color-text-primary);
+  }
+
+  .astryx-tab {
+    min-height: 44px;
+    padding-inline: 16px;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+  }
+
+  .astryx-tab[data-selected="selected"] {
+    color: var(--color-text-primary);
+    font-weight: 600;
+  }
+
+  .astryx-tab-indicator {
+    height: 2px;
+    background-color: var(--color-text-primary);
+  }
+
+  .astryx-tooltip {
+    background-color: var(--color-text-primary);
+    color: var(--color-background-surface);
+    border-radius: 10px;
+    padding-block: 6px;
+    padding-inline: 12px;
+    font-size: 1rem;
+  }
+
+  .astryx-popover {
+    border-radius: 14px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: var(--color-border);
+    background-color: var(--color-background-surface);
+    --_popover-radius: 14px;
   }
 
   .astryx-text[data-color="primary"] { color: var(--color-text-primary); }

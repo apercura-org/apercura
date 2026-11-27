@@ -18,7 +18,6 @@ import {
 	resetPractitioner,
 	testDb,
 } from "./pro";
-import { statusMessages } from "./status";
 
 /*
  * The owner experience (issue #92) on the synthetic fixtures: the "Is this you?" block, the
@@ -376,7 +375,7 @@ test("the share kit gives the link, the QR code files, the poster and a tracking
 	await expect(page.getByLabel("Adresse de la page")).toHaveValue(url);
 	const linkSection = page.getByRole("region", { name: "Le lien de la page" });
 	await linkSection.getByRole("button", { name: "Copier" }).click();
-	await expect(statusMessages(linkSection)).toHaveText("Copié dans le presse-papiers.");
+	await expect(linkSection.getByRole("status")).toHaveText("Copié dans le presse-papiers.");
 	expect(await page.evaluate(() => navigator.clipboard.readText())).toBe(url);
 
 	await expect(page.getByRole("img", { name: `QR code vers ${url}` })).toBeVisible();

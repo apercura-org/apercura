@@ -1,35 +1,61 @@
 "use client";
 
-import {
-	composeRenderProps,
-	Dialog as RACDialog,
-	Popover as RACPopover,
-	type PopoverProps as RACPopoverProps,
-} from "react-aria-components";
-import { popoverStyles } from "../recipes";
+import "../astryx/styles";
+import { Popover as AstryxPopover } from "@astryxdesign/core/Popover";
+import type { ReactNode } from "react";
+import { AstryxIntl } from "../astryx/intl";
 
-export function Popover({ className, offset = 6, ...props }: RACPopoverProps) {
+export interface PopoverProps {
+	/** The trigger: a `Button`. */
+	children: ReactNode;
+	/** What the popover holds. */
+	content: ReactNode;
+	/** Accessible name of the popover (a non-modal dialog). */
+	label?: string;
+	placement?: "above" | "below" | "start" | "end";
+	isOpen?: boolean;
+	onOpenChange?: (isOpen: boolean) => void;
+}
+
+/**
+ * A popover holding free content (help text, a small form), built on Astryx's: a non-modal
+ * dialog in the top layer, with the booklet's panel (the Apercura theme).
+ */
+export function Popover({
+	children,
+	content,
+	label,
+	placement = "below",
+	isOpen,
+	onOpenChange,
+}: PopoverProps) {
 	return (
-		<RACPopover
-			offset={offset}
-			{...props}
-			className={composeRenderProps(className, (cls) => popoverStyles({ className: cls }))}
-		/>
+		<AstryxIntl>
+			<AstryxPopover
+				content={<div className="max-w-sm text-body">{content}</div>}
+				label={label}
+				placement={placement}
+				isOpen={isOpen}
+				onOpenChange={onOpenChange}
+				isModal={false}
+				padding={4}
+			>
+				{children}
+			</AstryxPopover>
+		</AstryxIntl>
 	);
 }
 
-export interface PopoverDialogProps extends RACPopoverProps {
+export interface PopoverDialogProps {
 	/** Accessible name of the dialog inside the popover. */
 	"aria-label"?: string;
+	children: ReactNode;
 }
 
-/** A popover holding free content (help text, a small form), as a non-modal dialog. */
-export function PopoverDialog({ children, "aria-label": ariaLabel, ...props }: PopoverDialogProps) {
-	return (
-		<Popover {...props} className="max-w-sm">
-			<RACDialog aria-label={ariaLabel} className="p-4 text-body outline-none">
-				{children as React.ReactNode}
-			</RACDialog>
-		</Popover>
-	);
+/**
+ * The content of a popover opened by a `DialogTrigger`: a description the trigger renders
+ * with `Popover`.
+ */
+export function PopoverDialog(_props: PopoverDialogProps): null {
+	return null;
 }

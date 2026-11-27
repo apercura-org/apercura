@@ -1,51 +1,84 @@
 "use client";
 
-import type { ReactNode } from "react";
-import {
-	composeRenderProps,
-	Checkbox as RACCheckbox,
-	type CheckboxProps as RACCheckboxProps,
-} from "react-aria-components";
-import { CheckIcon, MinusIcon } from "../icons";
-import { tv } from "../recipes/tv";
+import "../astryx/styles";
+import { CheckboxInput } from "@astryxdesign/core/CheckboxInput";
+import { type ReactNode, useRef, useState } from "react";
+import { fieldLook } from "../astryx/field-look";
+import { AstryxIntl } from "../astryx/intl";
+import { nativeConstraints } from "../astryx/native";
+import { textOf } from "../astryx/text";
+import { cn } from "../recipes";
+import { FieldError } from "./field-parts";
+import { useFieldValidation } from "./form";
 
-const checkbox = tv({
-	slots: {
-		root: "group flex min-h-11 cursor-pointer items-center gap-3 text-body text-ink data-disabled:cursor-not-allowed data-disabled:text-ink-disabled",
-		box: [
-			"flex size-6 shrink-0 items-center justify-center rounded-mark border-2 border-ink bg-paper text-paper transition-colors duration-100",
-			"group-data-selected:bg-ink group-data-indeterminate:bg-ink",
-			"group-data-invalid:border-error group-data-disabled:border-ink-disabled",
-			"group-data-focus-visible:outline-3 group-data-focus-visible:outline-solid group-data-focus-visible:outline-offset-2 group-data-focus-visible:outline-(--focus-ring)",
-			"forced-colors:group-data-selected:bg-[Highlight]",
-		],
-	},
-});
-
-export interface CheckboxProps extends Omit<RACCheckboxProps, "children"> {
+export interface CheckboxProps {
+	/** The label, read as the box's name. */
 	children: ReactNode;
+	isSelected?: boolean;
+	defaultSelected?: boolean;
+	onChange?: (isSelected: boolean) => void;
+	isIndeterminate?: boolean;
+	isRequired?: boolean;
+	isDisabled?: boolean;
+	isReadOnly?: boolean;
+	isInvalid?: boolean;
+	errorMessage?: string;
+	/** Submitted as `name=on` when ticked. */
+	name?: string;
+	className?: string;
+	id?: string;
 }
 
-/** Checkbox: a printed square ticked in ink. */
-export function Checkbox({ className, children, ...props }: CheckboxProps) {
-	const styles = checkbox();
+/** Checkbox, built on Astryx's: a printed square ticked in ink (the Apercura theme). */
+export function Checkbox({
+	children,
+	isSelected,
+	defaultSelected = false,
+	onChange,
+	isIndeterminate,
+	isRequired,
+	isDisabled,
+	isReadOnly,
+	isInvalid,
+	errorMessage,
+	name,
+	className,
+	id,
+}: CheckboxProps) {
+	const [own, setOwn] = useState(defaultSelected);
+	const checked = isSelected ?? own;
+	const input = useRef<HTMLInputElement>(null);
+	const { error } = useFieldValidation({
+		element: input,
+		name,
+		value: checked,
+		isInvalid,
+		errorMessage,
+	});
 	return (
-		<RACCheckbox
-			{...props}
-			className={composeRenderProps(className, (cls) => styles.root({ className: cls }))}
+		<div
+			className={cn("group/field flex flex-col gap-1.5", className)}
+			data-invalid={error !== null ? "" : undefined}
 		>
-			{({ isSelected, isIndeterminate }) => (
-				<>
-					<span className={styles.box()}>
-						{isIndeterminate ? (
-							<MinusIcon className="size-4" strokeWidth={2.5} />
-						) : isSelected ? (
-							<CheckIcon className="size-4" strokeWidth={2.5} />
-						) : null}
-					</span>
-					<span>{children}</span>
-				</>
-			)}
-		</RACCheckbox>
+			<AstryxIntl>
+				<CheckboxInput
+					ref={input}
+					id={id}
+					label={textOf(children)}
+					value={isIndeterminate ? "indeterminate" : checked}
+					onChange={(next) => {
+						setOwn(next);
+						onChange?.(next);
+					}}
+					htmlName={name}
+					{...nativeConstraints({ required: isRequired })}
+					isDisabled={isDisabled}
+					isReadOnly={isReadOnly}
+					status={error !== null ? { type: "error", message: error || " " } : undefined}
+					className={fieldLook.container}
+				/>
+			</AstryxIntl>
+			<FieldError aria-hidden>{error}</FieldError>
+		</div>
 	);
 }
