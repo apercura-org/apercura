@@ -17,6 +17,7 @@ export const COMMANDS = [
 	"etl:cy",
 	"etl:lv",
 	"etl:se",
+	"etl:mt",
 	"etl:places",
 	"etl:outbox",
 ] as const;
@@ -98,6 +99,9 @@ Commands:
   etl:se        Import Swedish licensed pharmacies (Läkemedelsverket, "Apotek med
                 tillstånd", CC BY 4.0) and Västra Götaland's health centres (Vårdval
                 vårdcentral, CC0 1.0), placed in SCB's municipalities, rebuild read models.
+  etl:mt        Import Maltese community pharmacies from the Medicines Authority's
+                register of licensed pharmacies (data.gov.mt; CC BY 4.0), placed by
+                their point in the Planning Authority's localities, rebuild read models.
   etl:places    Import regions, departments, communes and arrondissements
                 (geo.api.gouv.fr), or with --country at the Austrian
                 Bundesländer and Gemeinden (Statistik Austria), or with --country gb
@@ -127,7 +131,9 @@ Commands:
                 postcodes), or with --country lv the Latvian statistical regions, state
                 cities, municipalities, towns and parishes (VZD address register, CC BY
                 4.0), or with --country se the Swedish counties and municipalities (SCB's
-                digital boundaries, CC0 1.0). Run once, then yearly.
+                digital boundaries, CC0 1.0), or with --country mt the Maltese regions,
+                districts (NSO) and localities (the Planning Authority's local council
+                boundaries, CC BY 4.0). Run once, then yearly.
   etl:outbox    Send pending cache invalidations to the web app.
 
 Flags (etl:fr):
@@ -258,6 +264,14 @@ Flags (etl:se):
                           As for etl:at. A list that cannot be read, whose licence changed or
                           whose export is filtered is left out (exit code 3).
 
+Flags (etl:mt):
+  --dry-run, --approve=<run_id>, --force, --source-dir <path>, --offline, --work-dir <path>
+                          As for etl:fr. One source: when the register or its catalogue
+                          record cannot be read, or its publisher or licence changed, the run
+                          fails (exit code 1). --source-dir reads pharmacies.json and
+                          catalogue.json (and mt-local-councils.geojson when Malta has no
+                          places yet).
+
 Environment:
   DATABASE_URL_ETL (or DATABASE_URL), ETL_PROFESSIONS, ETL_ANS_URLS, ETL_AMELI_URL,
   ETL_FINESS_DATASET_URL, ETL_GEO_API_URL, ETL_GEOCODER_URL, ETL_SOURCE_DIR, ETL_WORK_DIR,
@@ -293,6 +307,7 @@ Environment:
   ETL_LV_SOURCE_DIR,
   ETL_SE_SOURCES, ETL_SE_APOTEK_URL, ETL_SE_VARDCENTRALER_URL, ETL_SE_PLACES_URL,
   ETL_SE_PLACES_PAGE_URL, ETL_SE_SOURCE_DIR,
+  ETL_MT_PHARMACIES_URL, ETL_MT_CATALOGUE_URL, ETL_MT_PLACES_URL, ETL_MT_SOURCE_DIR,
   APP_URL and REVALIDATE_SECRET (cache revalidation).`;
 
 export {
@@ -311,6 +326,7 @@ export {
 	buildItOptions,
 	buildLtOptions,
 	buildLvOptions,
+	buildMtOptions,
 	buildNoOptions,
 	buildPlOptions,
 	buildSeOptions,
@@ -328,6 +344,7 @@ export {
 	type ItOptions,
 	type LtOptions,
 	type LvOptions,
+	type MtOptions,
 	type NoOptions,
 	type PlOptions,
 	parseArgs,
@@ -348,6 +365,7 @@ export { type IeRunOutcome, runIe } from "./run-ie";
 export { type ItRunOutcome, runIt } from "./run-it";
 export { type LtRunOutcome, runLt } from "./run-lt";
 export { type LvRunOutcome, runLv } from "./run-lv";
+export { type MtRunOutcome, runMt } from "./run-mt";
 export { type NoRunOutcome, runNo } from "./run-no";
 export { type PlRunOutcome, runPl } from "./run-pl";
 export { runSe, type SeRunOutcome } from "./run-se";

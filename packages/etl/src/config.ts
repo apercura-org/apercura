@@ -32,6 +32,8 @@ import { IT_SOURCE_IDS, type ItSourceId } from "./sources/it/types";
 import { DEFAULT_LT_ADDRESS_BASE } from "./sources/lt/places";
 import { DEFAULT_LV_PORTAL_URL } from "./sources/lv/portal";
 import { LV_SOURCE_IDS, type LvFileId, type LvSourceId } from "./sources/lv/types";
+import { DEFAULT_MT_CATALOGUE_URL, DEFAULT_MT_PHARMACIES_URL } from "./sources/mt/pharmacies";
+import { DEFAULT_MT_PLACES_URL } from "./sources/mt/places";
 import { DEFAULT_NO_ADRESSER_URL } from "./sources/no/addresses";
 import { DEFAULT_NO_ENHETER_URL, DEFAULT_NO_UNDERENHETER_URL } from "./sources/no/brreg";
 import { DEFAULT_NO_PLACES_URL } from "./sources/no/places";
@@ -1583,6 +1585,67 @@ export function buildSeOptions(flags: ParsedArgs["flags"], env: NodeJS.ProcessEn
 		sources: parseSeSources(flagString(flags, "sources") ?? env.ETL_SE_SOURCES),
 		urls,
 		placesUrls: sePlacesUrls(env),
+		workDir: flagString(flags, "work-dir") ?? env.ETL_WORK_DIR ?? null,
+		appUrl: offline ? null : env.APP_URL || null,
+		revalidateSecret: env.REVALIDATE_SECRET || null,
+	};
+}
+
+// ---------------------------------------------------------------------------
+// Malta (`etl:mt`)
+// ---------------------------------------------------------------------------
+
+export type MtOptions = {
+	databaseUrl: string;
+	dryRun: boolean;
+	approveRunId: number | null;
+	force: boolean;
+	sourceDir: string | null;
+	offline: boolean;
+	/** The Medicines Authority's register on data.gov.mt (`ETL_MT_PHARMACIES_URL`). */
+	pharmaciesUrl: string;
+	/** The register's record in the European data portal: publisher, licence, date (`ETL_MT_CATALOGUE_URL`). */
+	catalogueUrl: string;
+	/** The Planning Authority's local councils, read when Malta has no places yet (`ETL_MT_PLACES_URL`). */
+	placesUrl: string;
+	/** The day of the run in Malta (`YYYY-MM-DD`). */
+	today: string;
+	workDir: string | null;
+	appUrl: string | null;
+	revalidateSecret: string | null;
+};
+
+/** Today in Malta, `YYYY-MM-DD`. */
+export function todayInMalta(now: Date = new Date()): string {
+	return new Intl.DateTimeFormat("en-CA", { timeZone: "Europe/Malta" }).format(now);
+}
+
+/** The Planning Authority's local councils (`ETL_MT_PLACES_URL`, else the WFS's GeoJSON). */
+export function mtPlacesUrl(env: NodeJS.ProcessEnv): string {
+	return env.ETL_MT_PLACES_URL || DEFAULT_MT_PLACES_URL;
+}
+
+export function buildMtOptions(
+	flags: ParsedArgs["flags"],
+	env: NodeJS.ProcessEnv,
+	now: Date = new Date(),
+): MtOptions {
+	const approve = flagString(flags, "approve");
+	if (approve !== null && !/^\d+$/.test(approve)) {
+		throw new Error(`--approve needs a run id, got ${approve}`);
+	}
+	const offline = flags.has("offline");
+	return {
+		databaseUrl: resolveDatabaseUrl(env),
+		dryRun: flags.has("dry-run"),
+		approveRunId: approve === null ? null : Number(approve),
+		force: flags.has("force"),
+		sourceDir: flagString(flags, "source-dir") ?? env.ETL_MT_SOURCE_DIR ?? null,
+		offline,
+		pharmaciesUrl: env.ETL_MT_PHARMACIES_URL || DEFAULT_MT_PHARMACIES_URL,
+		catalogueUrl: env.ETL_MT_CATALOGUE_URL || DEFAULT_MT_CATALOGUE_URL,
+		placesUrl: mtPlacesUrl(env),
+		today: todayInMalta(now),
 		workDir: flagString(flags, "work-dir") ?? env.ETL_WORK_DIR ?? null,
 		appUrl: offline ? null : env.APP_URL || null,
 		revalidateSecret: env.REVALIDATE_SECRET || null,
