@@ -1637,3 +1637,108 @@ export function checkSiPlaces(staged: { sites: number; placed: number }): GuardC
 		},
 	];
 }
+
+// ---------------------------------------------------------------------------
+// Cyprus (`etl:cy`): the same verdicts, on each of the three lists
+// ---------------------------------------------------------------------------
+
+/**
+ * Limits of the Cypriot lists. Floors catch an empty or broken file on a first run (the lists of
+ * November 2026: 660 private pharmacies, 8 state hospitals, 35 state health centres);
+ * afterwards the change since the last successful run blocks a truncated file (approvable). The
+ * pharmacies' list is rebuilt once a year, so a new edition may move more than a weekly
+ * register: 20%.
+ */
+export const CY_LIMITS = {
+	quarantineRatio: 0.02,
+	floors: {
+		farmakeia: { minLines: 60, minRows: 50, rowsDelta: 0.2, sizeDelta: 0.4 },
+		nosokomeia: { minLines: 3, minRows: 3, rowsDelta: 0.5, sizeDelta: 0.5 },
+		kentra: { minLines: 10, minRows: 10, rowsDelta: 0.3, sizeDelta: 0.5 },
+	} as Readonly<
+		Record<string, { minLines: number; minRows: number; rowsDelta: number; sizeDelta: number }>
+	>,
+	/** Facilities placed in their municipality or community (else left out). */
+	minPlacedRatio: 0.95,
+} as const;
+
+/**
+ * Checks of one Cypriot list before the merge: quarantine within 2%, floors of lines and rows
+ * (never approvable), and at most the list's share more or fewer rows or bytes than the last
+ * successful run that read it (approvable).
+ */
+export function checkCySource(
+	source: string,
+	current: AtSourceStats & { bytes: number },
+	previous: (AtSourceStats & { bytes?: number }) | null,
+): GuardCheck[] {
+	const floors = CY_LIMITS.floors[source] ?? {
+		minLines: 1,
+		minRows: 1,
+		rowsDelta: 0.2,
+		sizeDelta: 0.4,
+	};
+	const ratio = current.lines === 0 ? 1 : current.quarantined / current.lines;
+	const checks: GuardCheck[] = [
+		{
+			name: `${source}.quarantine`,
+			ok: current.lines > 0 && ratio <= CY_LIMITS.quarantineRatio,
+			approvable: false,
+			detail: `${current.quarantined} of ${current.lines} lines quarantined (${percent(ratio)})`,
+		},
+		{
+			name: `${source}.lines`,
+			ok: current.lines >= floors.minLines,
+			approvable: false,
+			detail: `${current.lines} data lines (at least ${floors.minLines} expected)`,
+		},
+		{
+			name: `${source}.rows`,
+			ok: current.rows >= floors.minRows,
+			approvable: false,
+			detail: `${current.rows} facilities read (at least ${floors.minRows} expected)`,
+		},
+	];
+	if (previous) {
+		const rows = delta(current.rows, previous.rows);
+		checks.push({
+			name: `${source}.facilities`,
+			ok: rows <= floors.rowsDelta,
+			approvable: true,
+			detail: `${current.rows} facilities vs ${previous.rows} last time (${percent(rows)})`,
+		});
+		if (previous.bytes !== undefined) {
+			const size = delta(current.bytes, previous.bytes);
+			checks.push({
+				name: `${source}.size`,
+				ok: size <= floors.sizeDelta,
+				approvable: true,
+				detail: `${current.bytes} bytes vs ${previous.bytes} last time (${percent(size)})`,
+			});
+		}
+	}
+	return checks;
+}
+
+/**
+ * After placing: nearly every facility must be placed in its municipality or community, or the
+ * places are not the expected ones (a places import missing, a changed postcode table).
+ */
+export function checkCyPlaces(placement: {
+	byPostcode: number;
+	byName: number;
+	byPoint: number;
+	unplaced: number;
+}): GuardCheck[] {
+	const placed = placement.byPostcode + placement.byName + placement.byPoint;
+	const all = placed + placement.unplaced;
+	const ratio = all === 0 ? 1 : placed / all;
+	return [
+		{
+			name: "cy.places",
+			ok: ratio >= CY_LIMITS.minPlacedRatio,
+			approvable: true,
+			detail: `${placed} of ${all} facilities placed in their municipality or community (${percent(ratio)})`,
+		},
+	];
+}

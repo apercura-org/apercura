@@ -1,0 +1,6 @@
+﻿Hospital,Address,Tel,Info_URL,latitude,longitude
+Γενικό Νοσοκομείο Παραδείγματος,"Οδός Παραδείγματος 215, 2029 Στρόβολος Λευκωσία",22000201,https://example.invalid/nosokomeio,35.1275,33.3775
+Νοσοκομείο Παραδείγματος Λεμεσού,"Οδός Υποδείγματος, Λεμεσός",25000202,https://example.invalid/nosokomeio,34.7064,32.9844
+Αγροτικό Νοσοκομείο Παραδείγματος,Αγία Νάπα,23000203,https://example.invalid/nosokomeio,,
+Νοσοκομείο Υποδείγματος Πάφου,"Οδός Υποδείγματος 4, 8020
+Πάφος",26000204,https://example.invalid/nosokomeio,34.7889,32.446
