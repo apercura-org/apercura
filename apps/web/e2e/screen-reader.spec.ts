@@ -16,6 +16,7 @@ import {
 import { BOOKING_PRACTITIONERS } from "./booking-seed";
 import { createProAccount, expectAgendaLoaded, testDb } from "./pro";
 import { expectPhrasesInOrder, ScreenReader } from "./screen-reader";
+import { statusMessages } from "./status";
 
 /*
  * Screen-reader flows (RGAA 4.1 / WCAG 2.2, the automatable part of issue #32): what a screen
@@ -229,19 +230,19 @@ test.describe("booking, the appointment page and the practice's agenda", () => {
 		]);
 
 		// Step 1, reason: the dialog takes the focus and reads its title, the practitioner, the
-		// step count and a required radio group.
+		// step count and a required radio group. The sheet is a native modal <dialog> (Astryx), read as such.
 		await reader.clear();
 		await openLink.focus();
 		await page.keyboard.press("Enter");
 		const dialog = panel(page);
 		await expect(dialog).toBeVisible();
 		await expect(async () => {
-			expect(await reader.log()).toContain("dialog, Prendre rendez-vous");
+			expect(await reader.log()).toContain("dialog, Prendre rendez-vous, modal");
 		}).toPass({ timeout: 10_000 });
 		// The reasons arrive with the agenda: read the step once it is there, not its loading line.
 		await expect(dialog.getByRole("radiogroup", { name: "Motif du rendez-vous" })).toBeVisible();
 		expectPhrasesInOrder(await reader.readUntil(/^button, Continuer$/), [
-			"dialog, Prendre rendez-vous",
+			"dialog, Prendre rendez-vous, modal",
 			"heading, Prendre rendez-vous, level 2",
 			"button, Fermer",
 			"Avec Dr Elsa Essaiae",
@@ -423,7 +424,7 @@ test.describe("booking, the appointment page and the practice's agenda", () => {
 			await page.clock.setFixedTime(practiceTime(day, 7));
 			await page.goto("/fr/pro/aujourdhui");
 			await expect(page.getByRole("region", { name: "Les rendez-vous du jour" })).toBeVisible();
-			await expect(page.locator('[role="status"]')).toHaveCount(0);
+			await expect(statusMessages(page)).toHaveCount(0);
 			return readPage(page);
 		};
 		const today = await openToday(bookedDay);

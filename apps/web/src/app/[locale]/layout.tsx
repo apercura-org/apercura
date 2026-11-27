@@ -68,7 +68,12 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
 
 	return (
 		// /theme.js sets `data-theme` and `data-js` on <html> before React hydrates it.
-		<html lang={htmlLang(locale)} className={fontVariables} suppressHydrationWarning>
+		<html
+			lang={htmlLang(locale)}
+			className={fontVariables}
+			data-astryx-theme="apercura"
+			suppressHydrationWarning
+		>
 			<head>
 				{/* Applies the stored colour theme before the first paint (~/lib/theme). */}
 				<script src="/theme.js" />

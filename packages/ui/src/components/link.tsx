@@ -1,15 +1,18 @@
 "use client";
 
-import {
-	composeRenderProps,
-	Link as RACLink,
-	type LinkProps as RACLinkProps,
-} from "react-aria-components";
+import "../astryx/styles";
+import { Link as AstryxLink, type LinkProps as AstryxLinkProps } from "@astryxdesign/core/Link";
 import type { VariantProps } from "tailwind-variants";
 import { ArrowOutIcon } from "../icons";
-import { linkStyles } from "../recipes";
+import { cn, linkStyles } from "../recipes";
 
-export interface LinkProps extends RACLinkProps, VariantProps<typeof linkStyles> {
+export interface LinkProps
+	extends Pick<
+			AstryxLinkProps,
+			"href" | "target" | "rel" | "download" | "onClick" | "ref" | "children" | "id"
+		>,
+		VariantProps<typeof linkStyles> {
+	className?: string;
 	/**
 	 * Marks a link that leaves Apercura. Shows an arrow and, when given, appends
 	 * this text for screen readers (for example "opens another site").
@@ -17,24 +20,23 @@ export interface LinkProps extends RACLinkProps, VariantProps<typeof linkStyles>
 	externalLabel?: string;
 }
 
-/** Inline text link, always underlined so it never relies on colour. */
+/** Inline text link, built on Astryx's, always underlined so it never relies on colour. */
 export function Link({ tone, className, externalLabel, children, ...props }: LinkProps) {
 	return (
-		<RACLink
+		<AstryxLink
 			{...props}
-			className={composeRenderProps(className, (cls) => linkStyles({ tone, className: cls }))}
+			type="inherit"
+			color="inherit"
+			hasUnderline
+			className={cn(linkStyles({ tone }), className)}
 		>
-			{composeRenderProps(children, (content) => (
+			{children}
+			{externalLabel ? (
 				<>
-					{content}
-					{externalLabel ? (
-						<>
-							<ArrowOutIcon className="ms-1 inline size-[0.85em] align-[-0.05em]" />
-							<span className="sr-only"> ({externalLabel})</span>
-						</>
-					) : null}
+					<ArrowOutIcon className="ms-1 inline size-[0.85em] align-[-0.05em]" />
+					<span className="sr-only"> ({externalLabel})</span>
 				</>
-			))}
-		</RACLink>
+			) : null}
+		</AstryxLink>
 	);
 }

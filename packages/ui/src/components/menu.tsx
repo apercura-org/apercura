@@ -1,9 +1,11 @@
 "use client";
 
+import { Children, type DOMAttributes, isValidElement, type ReactElement } from "react";
 import {
 	composeRenderProps,
 	type MenuTriggerProps,
 	type PopoverProps,
+	Pressable,
 	Menu as RACMenu,
 	MenuItem as RACMenuItem,
 	type MenuItemProps as RACMenuItemProps,
@@ -13,8 +15,22 @@ import {
 import { listBoxItemStyles } from "../recipes";
 import { Popover } from "./popover";
 
-export function MenuTrigger(props: MenuTriggerProps) {
-	return <RACMenuTrigger {...props} />;
+/**
+ * Opens the menu among its children from the other child, a `Button`. The menu is React Aria's;
+ * the button (Astryx's) takes its press through `Pressable`.
+ */
+export function MenuTrigger({ children, ...props }: MenuTriggerProps) {
+	const [trigger, ...rest] = Children.toArray(children);
+	return (
+		<RACMenuTrigger {...props}>
+			{isValidElement(trigger) ? (
+				<Pressable>{trigger as ReactElement<DOMAttributes<HTMLButtonElement>, string>}</Pressable>
+			) : (
+				trigger
+			)}
+			{rest}
+		</RACMenuTrigger>
+	);
 }
 
 export interface MenuProps<T extends object> extends RACMenuProps<T> {

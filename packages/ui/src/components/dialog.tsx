@@ -1,99 +1,202 @@
 "use client";
 
-import type { ReactNode } from "react";
+import "../astryx/styles";
+import { Dialog as AstryxDialog } from "@astryxdesign/core/Dialog";
+import { Drawer as AstryxDrawer } from "@astryxdesign/core/Drawer";
 import {
-	type DialogTriggerProps,
-	Heading,
-	Modal,
-	ModalOverlay,
-	type ModalOverlayProps,
-	Button as RACButton,
-	Dialog as RACDialog,
-	DialogTrigger as RACDialogTrigger,
-} from "react-aria-components";
+	Children,
+	cloneElement,
+	createContext,
+	isValidElement,
+	type ReactElement,
+	type ReactNode,
+	useCallback,
+	useContext,
+	useId,
+	useRef,
+	useState,
+} from "react";
+import { UNSAFE_PortalProvider } from "react-aria";
+import { textOf } from "../astryx/text";
 import { CloseIcon } from "../icons";
-import { cn, focusRing } from "../recipes";
+import { cn } from "../recipes";
+import { Button } from "./button";
 
-export function DialogTrigger(props: DialogTriggerProps) {
-	return <RACDialogTrigger {...props} />;
+interface OverlayState {
+	isOpen: boolean;
+	setOpen: (open: boolean) => void;
+}
+
+/** The open state a `DialogTrigger` hands to the dialog it holds. */
+const OverlayContext = createContext<OverlayState | null>(null);
+
+export interface DialogTriggerProps {
+	/** The trigger (a `Button`), then the `Dialog` or `Sheet` it opens. */
+	children: ReactNode;
+	defaultOpen?: boolean;
+	isOpen?: boolean;
+	onOpenChange?: (open: boolean) => void;
+}
+
+/**
+ * Opens the dialog among its children from the other child, a `Button`: a press opens it, and
+ * the button says it opens a dialog and whether it is open. Closing gives the focus back to it.
+ */
+export function DialogTrigger({
+	children,
+	defaultOpen = false,
+	isOpen: isOpenProp,
+	onOpenChange,
+}: DialogTriggerProps) {
+	const [isOpenState, setOpenState] = useState(defaultOpen);
+	const isOpen = isOpenProp ?? isOpenState;
+	const setOpen = useCallback(
+		(open: boolean) => {
+			setOpenState(open);
+			onOpenChange?.(open);
+		},
+		[onOpenChange],
+	);
+	let triggered = false;
+	const content = Children.map(children, (child) => {
+		if (triggered || !isValidElement(child) || child.type === Dialog || child.type === Sheet) {
+			return child;
+		}
+		triggered = true;
+		const trigger = child as ReactElement<{ onPress?: () => void }>;
+		return cloneElement(trigger, {
+			onPress: () => {
+				trigger.props.onPress?.();
+				setOpen(true);
+			},
+			"aria-haspopup": "dialog",
+			"aria-expanded": isOpen,
+		} as Record<string, unknown>);
+	});
+	return <OverlayContext value={{ isOpen, setOpen }}>{content}</OverlayContext>;
 }
 
 /** The sheet opens from the same trigger as a dialog. */
 export const SheetTrigger = DialogTrigger;
 
-interface DialogFrameProps extends Omit<ModalOverlayProps, "children" | "className"> {
+interface DialogFrameProps {
 	/** Visible title, also the dialog's accessible name. */
 	title: ReactNode;
 	/** Accessible label of the close button. */
 	closeLabel: string;
 	children: ReactNode | ((opts: { close: () => void }) => ReactNode);
-	/** Dialogs that must be answered (confirmations) hide the close button and ignore outside clicks. */
+	/**
+	 * Dialogs that must be answered (confirmations) hide the close button and ignore presses
+	 * outside them; Escape still cancels.
+	 */
 	role?: "dialog" | "alertdialog";
+	/** Controlled open state; inside a `DialogTrigger`, the trigger holds it. */
+	isOpen?: boolean;
+	onOpenChange?: (open: boolean) => void;
+	defaultOpen?: boolean;
 }
 
-const overlay =
-	"fixed inset-0 z-50 flex bg-[oklch(0.2_0.02_260/0.45)] data-entering:animate-[fade-in_160ms_ease-out] data-exiting:animate-[fade-in_120ms_ease-in_reverse]";
+function useOverlayState({ isOpen, onOpenChange, defaultOpen }: DialogFrameProps) {
+	const fromTrigger = useContext(OverlayContext);
+	const [isOpenState, setOpenState] = useState(defaultOpen ?? false);
+	const open = isOpen ?? fromTrigger?.isOpen ?? isOpenState;
+	const setOpen = useCallback(
+		(next: boolean) => {
+			setOpenState(next);
+			fromTrigger?.setOpen(next);
+			onOpenChange?.(next);
+		},
+		[fromTrigger, onOpenChange],
+	);
+	return { open, setOpen, close: useCallback(() => setOpen(false), [setOpen]) };
+}
+
+/**
+ * A modal `<dialog>` sits in the top layer and makes the rest of the page inert: the React Aria
+ * overlays opened from inside it (a select's list, a date picker) are portalled into it, at its
+ * end, so they show above it and can be used.
+ */
+function OverlayLayer({ children }: { children: ReactNode }) {
+	const layer = useRef<HTMLDivElement>(null);
+	return (
+		<UNSAFE_PortalProvider getContainer={() => layer.current}>
+			{children}
+			<div ref={layer} data-overlay-layer="" />
+		</UNSAFE_PortalProvider>
+	);
+}
 
 function Header({
+	id,
 	title,
 	closeLabel,
 	close,
 	showClose,
 }: {
+	id: string;
 	title: ReactNode;
 	closeLabel: string;
 	close: () => void;
 	showClose: boolean;
 }) {
 	return (
-		<header className="surface-shade flex min-h-14 items-center justify-between gap-4 border-b border-rule-soft ps-5 pe-1.5">
-			<Heading slot="title" className="type-subtitle py-3">
+		<header className="surface-shade flex min-h-14 shrink-0 items-center justify-between gap-4 border-b border-rule-soft ps-5 pe-1.5">
+			{/* The title takes the focus when the dialog opens (Astryx's `data-autofocus`), so a
+			    screen reader reads it first; it is not in the Tab order. */}
+			<h2
+				id={id}
+				tabIndex={-1}
+				data-autofocus="dialog-title"
+				className="type-subtitle py-3 outline-none"
+			>
 				{title}
-			</Heading>
+			</h2>
 			{showClose ? (
-				<RACButton
+				<Button
+					intent="quiet"
+					size="icon"
 					onPress={close}
 					aria-label={closeLabel}
-					className={cn(
-						"flex size-11 shrink-0 cursor-pointer items-center justify-center rounded-field text-ink hover:bg-rule-soft",
-						focusRing,
-					)}
+					className="shrink-0 rounded-field px-0 text-ink no-underline hover:bg-rule-soft"
 				>
 					<CloseIcon className="size-6" />
-				</RACButton>
+				</Button>
 			) : null}
 		</header>
 	);
 }
 
-/** Modal dialog: a panel with its title strip on the quiet shade. */
-export function Dialog({
-	title,
-	closeLabel,
-	children,
-	role = "dialog",
-	...props
-}: DialogFrameProps) {
+/** Modal dialog, built on Astryx's (a native `<dialog>`): a panel with its title strip on the quiet shade. */
+export function Dialog(props: DialogFrameProps) {
+	const { title, closeLabel, children, role = "dialog" } = props;
+	const { open, setOpen, close } = useOverlayState(props);
+	const titleId = useId();
 	const isAlert = role === "alertdialog";
 	return (
-		<ModalOverlay
-			{...props}
-			isDismissable={!isAlert}
-			className={cn(overlay, "items-center justify-center p-4")}
+		<AstryxDialog
+			isOpen={open}
+			onOpenChange={setOpen}
+			purpose={isAlert ? "form" : "info"}
+			width="min(32rem, calc(100vw - 2rem))"
+			maxHeight="calc(100dvh - 2rem)"
+			padding={0}
+			aria-labelledby={titleId}
+			role={role}
+			className="overflow-hidden rounded-panel border border-rule-soft bg-paper text-ink shadow-overlay forced-colors:border-[CanvasText]"
 		>
-			<Modal className="w-full max-w-lg overflow-hidden rounded-panel border border-rule-soft bg-paper shadow-overlay data-entering:animate-slip-in forced-colors:border-[CanvasText]">
-				<RACDialog role={role} className="flex max-h-[calc(100dvh-2rem)] flex-col outline-none">
-					{({ close }) => (
-						<>
-							<Header title={title} closeLabel={closeLabel} close={close} showClose={!isAlert} />
-							<div className="overflow-auto p-5 text-body">
-								{typeof children === "function" ? children({ close }) : children}
-							</div>
-						</>
-					)}
-				</RACDialog>
-			</Modal>
-		</ModalOverlay>
+			<Header
+				id={titleId}
+				title={title}
+				closeLabel={closeLabel}
+				close={close}
+				showClose={!isAlert}
+			/>
+			<OverlayLayer>
+				<div className="overflow-auto p-5 text-body">
+					{typeof children === "function" ? children({ close }) : children}
+				</div>
+			</OverlayLayer>
+		</AstryxDialog>
 	);
 }
 
@@ -106,30 +209,35 @@ export interface SheetProps extends Omit<DialogFrameProps, "role"> {
 }
 
 /**
- * Side sheet (end edge), full height: filters, a practitioner's other sites, agenda details, the
- * booking panel. On a phone it is a full-screen page. Escape and the close button dismiss it;
- * focus is trapped inside and returns to the trigger.
+ * Side sheet (end edge), full height, built on Astryx's drawer: filters, a practitioner's other
+ * sites, agenda details, the booking panel. On a phone it is a full-screen page. Escape and the
+ * close button dismiss it; focus is trapped inside and returns to where it was.
  */
-export function Sheet({ title, closeLabel, children, size = "md", ...props }: SheetProps) {
+export function Sheet(props: SheetProps) {
+	const { title, closeLabel, children, size = "md" } = props;
+	const { open, setOpen, close } = useOverlayState(props);
+	const titleId = useId();
 	return (
-		<ModalOverlay {...props} isDismissable className={cn(overlay, "justify-end")}>
-			<Modal
-				className={cn(
-					"h-dvh w-full border-rule-soft bg-paper shadow-overlay data-entering:animate-sheet-in sm:border-s forced-colors:border-[CanvasText]",
-					size === "lg" ? "max-w-176" : "max-w-md",
-				)}
-			>
-				<RACDialog className="flex h-full flex-col outline-none">
-					{({ close }) => (
-						<>
-							<Header title={title} closeLabel={closeLabel} close={close} showClose />
-							<div data-sheet-body="" className="flex-1 overflow-auto p-5 text-body">
-								{typeof children === "function" ? children({ close }) : children}
-							</div>
-						</>
-					)}
-				</RACDialog>
-			</Modal>
-		</ModalOverlay>
+		<AstryxDrawer
+			isOpen={open}
+			onOpenChange={setOpen}
+			label={textOf(title)}
+			side="end"
+			width={size === "lg" ? "44rem" : "28rem"}
+			padding={0}
+			experimental={{ isFullWidthOnMobile: true }}
+			className={cn(
+				"border-0 border-rule-soft bg-paper text-ink shadow-overlay sm:border-s forced-colors:border-[CanvasText]",
+			)}
+		>
+			<OverlayLayer>
+				<div className="flex h-full flex-col">
+					<Header id={titleId} title={title} closeLabel={closeLabel} close={close} showClose />
+					<div data-sheet-body="" className="flex-1 overflow-auto p-5 text-body">
+						{typeof children === "function" ? children({ close }) : children}
+					</div>
+				</div>
+			</OverlayLayer>
+		</AstryxDrawer>
 	);
 }

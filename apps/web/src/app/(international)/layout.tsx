@@ -18,7 +18,12 @@ export default async function InternationalLayout({ children }: { children: Reac
 	const t = await getTranslations({ locale: INTERNATIONAL_LOCALE, namespace: "Site" });
 	return (
 		// /theme.js sets `data-theme` and `data-js` on <html> before React hydrates it.
-		<html lang={INTERNATIONAL_LOCALE} className={fontVariables} suppressHydrationWarning>
+		<html
+			lang={INTERNATIONAL_LOCALE}
+			className={fontVariables}
+			data-astryx-theme="apercura"
+			suppressHydrationWarning
+		>
 			<head>
 				{/* Applies the stored colour theme before the first paint (~/lib/theme). */}
 				<script src="/theme.js" />

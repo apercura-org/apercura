@@ -371,6 +371,28 @@
 		text-wrap: pretty;
 	}
 
+	/*
+	 * The Apercura theme for Astryx (`src/astryx/apercura.css`, loaded with the islands built on
+	 * Astryx) also gives bare headings, paragraphs and small print a type of their own, in the
+	 * lower `reset` layer. The booklet sets its type with its own roles: these elements inherit,
+	 * as they do on a page without an Astryx component.
+	 */
+	:where(h1, h2, h3, h4, h5, h6, p, small) {
+		font-family: inherit;
+		color: inherit;
+	}
+
+	:where(p) {
+		font-size: inherit;
+		font-weight: inherit;
+		line-height: inherit;
+	}
+
+	:where(small) {
+		font-size: 80%;
+		line-height: inherit;
+	}
+
 	::selection {
 		background-color: var(--color-stamp-tint);
 		color: var(--color-ink);

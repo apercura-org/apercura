@@ -5,7 +5,8 @@
 	"license": "AGPL-3.0-only",
 	"type": "module",
 	"sideEffects": [
-		"*.css"
+		"*.css",
+		"./src/astryx/styles.ts"
 	],
 	"exports": {
 		".": "./src/index.ts",
@@ -16,11 +17,16 @@
 	},
 	"scripts": {
 		"typecheck": "tsc --noEmit",
-		"test": "vitest run"
+		"test": "bun run theme:check && vitest run",
+		"theme:build": "astryx theme build src/astryx/apercura.ts --out src/astryx/built/apercura.css",
+		"theme:check": "astryx theme build src/astryx/apercura.ts --out src/astryx/built/apercura.css --check"
 	},
 	"dependencies": {
+		"@astryxdesign/core": "0.7.17",
 		"@internationalized/date": "3.12.4",
+		"@stylexjs/stylex": "0.19.1",
 		"maplibre-gl": "6.19.0",
+		"react-aria": "3.53.1",
 		"react-aria-components": "1.22.1",
 		"tailwind-variants": "4.0.2"
 	},
@@ -29,6 +35,8 @@
 		"react-dom": "^19.3.0"
 	},
 	"devDependencies": {
+		"@astryxdesign/cli": "0.7.17",
+		"@astryxdesign/theme-neutral": "0.7.17",
 		"@types/node": "26.6.10",
 		"@types/react": "^19.3.3",
 		"@types/react-dom": "^19.3.0",
