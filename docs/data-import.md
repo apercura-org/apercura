@@ -3,7 +3,8 @@
 `packages/etl` builds the public directory from open data: France (this page,
 first), Austria ([below](#austria)), the United Kingdom
 ([below](#united-kingdom)), Czechia ([below](#czechia)), Spain
-([below](#spain)), Italy ([below](#italy)) and Germany ([below](#germany)). It is a Bun CLI that runs as a
+([below](#spain)), Italy ([below](#italy)), Germany ([below](#germany)),
+Switzerland ([below](#switzerland)) and Estonia ([below](#estonia)). It is a Bun CLI that runs as a
 scheduled task next to the app, with its own database role that cannot reach
 patient data. Each market's import writes the shared `directory` schema with
 its own `country` and never reads or writes another market's rows.
@@ -1888,3 +1889,262 @@ ETL_TEST_DATABASE_URL=… bun run --cwd packages/etl test     # includes test/ch
 The fixtures (`packages/etl/fixtures/ch`) are synthetic: made-up facilities in
 each list's exact format, with invented people and e-mail addresses the tests
 check are never stored; the cantons, districts and communes are the real ones.
+
+## Estonia
+
+`etl:ee` builds Estonia's directory (`/ee`) from the Health Board's register of
+healthcare providers and their activity licences and from the State Agency of
+Medicines' register of pharmacies (issue #165,
+[ADR 0002](./adr/0002-multi-country.md#estonia-ee)). Everything above about
+roles, ownership, the outbox and `--approve` applies; this section says what
+differs.
+
+```sh
+bun run etl:places --country ee   # once (etl:ee does it on its first run), then when the division changes
+bun run etl:ee                    # weekly (the register is rebuilt daily)
+bun run etl:ee --dry-run          # everything, then roll back
+bun run etl:ee --approve=<run_id> # accept what a blocked run reported
+```
+
+An Estonian page is a **provider**: an institution holding at least one activity
+licence (tegevusluba) of the Health Board, with every place where it provides
+care, or a general pharmacy. The register also names the health workers
+registered with each provider (28,337 rows in November 2026): they are **never
+read** (ADR 0002, "Estonia": providers only, for now). Some 60 providers are sole
+traders registered under their own name ("Mari Näidis"): their page prints the
+name as published, under the privacy notice's article 14 information and the
+objection form, as in Czechia.
+
+### Sources
+
+Verified on 27 November 2026 on andmed.eesti.ee (the dataset records and their
+`license` field), the publishers' pages and the metadata catalogue.
+
+| Source                                                                                                                        | Distribution                                                                                                                                                                                                                               | Licence, format, update                                                                                                                                                                                                                                   |
+| ----------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Tervishoiuteenuse osutajate ning tegevuslubade andmestik (Terviseamet; the healthcare information system MEDRE, run by TEHIK) | `https://medre.tehik.ee/api-common/public/companies/open-data` (`od_asutused.xml`, the "Asutused" file of `https://medre.tehik.ee/open-data`); dataset `andmed.eesti.ee/datasets/tervishoiuteenuse-osutajate-ning-tegevuslubade-andmestik` | **CC BY-NC-SA 3.0** (unported, the portal's `CC_BY_NC_SA_3.0`); XML, 14.5 MB, 1,570 providers, 3,029 licences; rebuilt daily (`hetk`); field description: "Terviseameti registrite avaandmed" (updated 11.10.2023)                                        |
+| Ravimiameti tegevuslubade register: apteekide koondandmed (Ravimiamet)                                                        | the export button "Apteekide koondandmed" of `https://rkav.tehik.ee/rkav/faces/pages/tegevuslubaForm/tegevuslubaOtsing.xhtml`; dataset `andmed.eesti.ee/datasets/ravimiameti-tegevuslubade-register`                                       | **CC0 1.0**; CSV (`;`, quoted, UTF-8 with a BOM), 100 KB, 495 pharmacies and branches; current on every request                                                                                                                                           |
+| Aadressiandmete süsteem (ADS): aadressid ja posti sihtnumbrid (Maa- ja Ruumiamet)                                             | `https://geoportaal.maaruum.ee/docs/aadress/sihtnumbrid.zip`; metadata record `b0bd266e-b4c6-45db-b7ea-f47486b6258b`                                                                                                                       | **CC0 1.0** (the metadata record's constraint); CSV in a ZIP, 30 MB (148 MB inflated), 1,369,879 addresses in force with their postcode and point in L-EST97; rebuilt on the 5th of every month                                                           |
+| Haldus- ja asustusjaotus: asustusüksused (Maa- ja Ruumiamet; the units of Statistics Estonia's EHAK classification)           | `https://s3.pilw.io/rp-kemit-kataster/EHAK/asustusyksus_shp.zip`, linked from `https://geoportaal.maaruum.ee/est/ruumiandmed/haldus-ja-asustusjaotus-p119.html`                                                                            | **open data, credited** "Haldus- ja asustusjaotus: Maa- ja Ruumiamet {date}" (the page's licence note; the Board's open data licence, `https://geoportaal.maaruum.ee/opendata-licence`); shapefile, 17 MB, 4,715 settlements; monthly; places import only |
+
+`ETL_EE_MEDRE_URL`, `ETL_EE_APTEEGID_URL`, `ETL_EE_ADS_URL` and
+`ETL_EE_PLACES_URL` override them. MEDRE's former `mveeb.sm.ee/od/*.xml` files
+are gone.
+
+**The pharmacies' export** is the register's own public search page: `etl:ee`
+opens it (keeping its session cookie), reads the form that holds the button
+labelled "Apteekide koondandmed" with its hidden fields and default choices, and
+submits it as a browser does; the answer must be a CSV attachment. No CAPTCHA,
+login or rate limit stands in the way, and nothing is guessed: a changed page
+fails the source, which keeps its pharmacies (exit 3).
+
+**Licences and attributions** (`estonia.registries`, printed on the data sources
+page and the pages built from them):
+
+- The Health Board's register: **CC BY-NC-SA 3.0**, credited "Terviseamet,
+  tervishoiuteenuse osutajate ning tegevuslubade andmestik (MEDRE), CC BY-NC-SA
+  3.0; Apercura on andmeid muutnud", with the licence's URL. **Non-commercial**:
+  Apercura's instance is free, with no ads, no paid ranking and no paid feature,
+  so its republication is not "primarily intended for or directed toward
+  commercial advantage" (§ 4(c) of the licence); an operator with a commercial
+  purpose must not import it ([self-hosting.md](./self-hosting.md#estonia-non-commercial-data)).
+  **Share-alike**: the Estonian data as republished (pages, listings, sitemaps) is
+  under CC BY-NC-SA 3.0, which the data page says; no other licence is claimed on
+  it. A letter asks the Health Board to confirm this reading
+  ([`data-requests/ee.md`](./data-requests/ee.md)).
+- The State Agency of Medicines' register and the address data: CC0 1.0, no
+  attribution required; credited anyway ("Ravimiamet, tegevuslubade register";
+  "Aadressiandmed: Maa- ja Ruumiamet").
+- The administrative and settlement division: credited "Haldus- ja
+  asustusjaotus: Maa- ja Ruumiamet 01.11.2026" (`EE_PLACES_DATE` in
+  `packages/core/src/country/ee.ts`, the `EKSPORT` date of the file the places
+  came from; `etl:places --country ee` prints a warning when the file's date
+  differs, and the constant is raised with the places).
+
+**Not used**: the register's health workers (`tootajad`) and its family doctors'
+lists (`od_nimistud`, which name the doctor and nurses of each list), the
+pharmacists' file (`od_apteekrid`), TEHIK's MEDRE person datasets, the Health
+Insurance Fund's contract partner lists and OpenStreetMap; see
+[`data-requests/ee.md`](./data-requests/ee.md).
+
+### Identifiers
+
+The register publishes each provider's Business Register code; a page never
+uses it (a sole trader's code names the person, and the page does not need it).
+A provider is keyed by its **lowest-numbered activity licence in force**, the
+register's immutable licence designation (`L01909`), which the Advertising Act
+(§ 22(3)) has every page about a provider print anyway; licence numbers only
+grow, so the key holds while that licence does. A provider whose first licence
+ends is listed again under its next one, and the old page is removed after two
+runs. A pharmacy is keyed by the register's place of business code
+(`Tegutsemiskoha kood`). One scheme per source (`EE_ID_SCHEMES`,
+`packages/core/src/slugs.ts`), whose letters name it in the URL:
+
+| Scheme   | Key                                                      | URL                                         |
+| -------- | -------------------------------------------------------- | ------------------------------------------- |
+| `EE-TTL` | the five digits of the provider's first licence in force | `/ee/asutus/naidise-perearstikeskus-l00021` |
+| `EE-APT` | the State Agency of Medicines' place of business code    | `/ee/asutus/naidise-apteek-ap9001`          |
+
+Each place of activity of a provider is a site of its own (`source` `ee-medre`,
+key `{licence digits}-{ten hex digits of the SHA-256 of its address}`), linked by
+one activity `{licence digits}@{site key}`; a pharmacy has one (`ee-ravimiamet`).
+A place a provider no longer lists loses its activity in the run that no longer
+reads it.
+
+### Minimisation and what is left out
+
+- Read from the register: the provider's name and, per licence, its number,
+  validity, kind of licence and of hospital, and its places of activity with
+  their address and services. **Never read into a row, so never stored**: the
+  Business Register code, the legal (seat) address and every health worker (the
+  `tootajad` element is cut out of each record before anything else is read).
+- Read from the pharmacies' export: name, address, address id, kind, licence
+  number, place of business code and phone. **Never read**: the responsible
+  pharmacist (`Pädev isik`), fax, e-mail and licence holder. A number shared by
+  more than three pharmacies is a chain's and is dropped (`MAX_PHONE_OWNERS`).
+  The register publishes no phone for providers.
+- Names: the legal form at the start or end is dropped (`OÜ`, `AS`, `SA`, `MTÜ`,
+  `TÜ`, `UÜ`, `FIE`, written out or not: "Sihtasutus Ida-Viru Keskhaigla" →
+  "Ida-Viru Keskhaigla"), as Germany drops `GmbH`; a name the register writes in
+  capitals only is re-cased word by word ("SIHTASUTUS AHTME HAIGLA" → "Ahtme
+  Haigla"), abbreviations such as `HIV` kept; mixed case is printed as published
+  ("Erapolikliinik PRAXIS").
+- Kinds (`eeProviderKind`, `packages/core/src/taxonomy/ee.ts`), the first that
+  applies: a hospital (a specialist care licence of a regional, central, general,
+  local, special or rehabilitation hospital), a family practice (a general
+  practice licence), a dental clinic (specialist care whose every service is
+  dental), another specialist provider, then nursing care (nursing hospitals
+  included), midwifery, physiotherapy, psychological treatment and speech
+  therapy. A provider whose only licences are ambulance services is not listed
+  (`skipped["ambulance only"]`).
+- Places of activity left out: those whose only services are school health
+  (`T0001`, a school nurse's office for its pupils) or ambulance (`T0014`), and
+  those without a county and municipality (mobile units: "Eesti Vabariik
+  (mobiilne …)"). A provider left with none is not listed (`skipped["no place a
+patient visits"]`). Of several addresses written as one ("Aia tn 7 // Uus tn
+  12"), the first is kept.
+- Licences not in force on the run's day (`--as-of`, default today in Tallinn)
+  are not read; the register holds none today.
+- Pharmacies: general pharmacies (üldapteek) only; hospital pharmacies serve their
+  wards and veterinary ones animals (`skipped`).
+- Qualifications (`source`): `tegevusluba` (each licence's number and kind),
+  `haiglaliik` (the kind of hospital), `teenus` (each service of the kept places,
+  as the register names it), and for a pharmacy `apteegi-tegevusluba` (the State
+  Agency of Medicines' licence number).
+- GDPR objections: the rows of a suppressed key are dropped while parsing
+  (`stats.suppressedLines`), and the purge of #116/#118 runs in the merge, as in
+  the other markets.
+
+### Places and precision
+
+Places (`directory.places`, `country = 'EE'`), from the Land Board's settlements'
+shapefile (`asustusyksus_shp.zip`, the table in Windows-1257, the polygons in
+L-EST97), imported once:
+
+- **regions**: the 15 counties (`0037` Harju maakond); no listing pages;
+- **departments**: the 78 municipalities (`0784` Tallinn, `0793` Tartu linn,
+  `0653` Rae vald), named and slugged as EHAK names them (`tartu-linn`,
+  `rae-vald`);
+- **communes**: the 4,715 settlements (towns, small towns, boroughs, villages)
+  and the districts of Tallinn and Kohtla-Järve (`Kesklinna linnaosa`), slugged
+  unique within their municipality. A municipality that is one town (Keila,
+  Loksa, Maardu, Narva, Rakvere, Sillamäe, Viljandi, Võru) has that town as its
+  only settlement, under the municipality's own code: like Paris, its city page
+  is its municipality's.
+
+A settlement's point is an interior point of its largest ring
+(`interiorPoint`), converted from L-EST97 in code (`src/sources/ee/lest97.ts`,
+the Lambert conformal conic formulas, equal to PostGIS's `ST_Transform` from
+EPSG:3301 to the millimetre); municipalities and counties take the centre of
+their settlements.
+
+A place of activity is placed (`placeAddress`, `src/sources/ee/places.ts`) by
+the names of its address, which the register writes as the address data system
+normalizes them (`Tartu maakond, Tartu linn, Tartu linn, Ülase tn 16`): the
+settlement it names within its municipality, else the municipality's town of the
+same name (`Harju maakond, Keila linn, Pargi tn 2b`). It is **located** at the
+address data system's point of that full address (a pharmacy first by its
+address id): `geo_precision = 'address'`, `geo_source = 'source'`, a map pin and
+the ADS postcode. An address the file does not have (a village named alone, a
+building's own name) is located at its settlement's centre (`'city'`,
+`'centroid'`, no pin, no postcode). A place whose settlement cannot be told is
+left out. The address prints the street and number, then the postcode and the
+place as a postal address names it: a town without the word "linn" (`Tartu`,
+`Kuressaare`), a city district by its city (`Tallinn`, `Kohtla-Järve`), a small
+town or village as named (`Haabneeme alevik`). No geocoder is called.
+
+### Guards
+
+Per source (`checkEeSource`): quarantine within 1%; floors of lines and rows
+(`medre` 150 and 100, `apteegid` 60 and 50; never approvable); the register's
+extract date (`hetk`) never older than the last imported (never approvable); at
+most 10% more or fewer providers and 30% more or fewer bytes than the last
+successful run that read it (approvable). A source that cannot be fetched, read
+or pass its floors is left out and keeps its rows (they are not counted
+missing); the run imports the other and exits `3`. The address file locates
+both: when it cannot be fetched or read (or holds fewer than 500,000 lines) the
+run fails and the pages stay as they are. After placing (`checkEePlaces`): 95%
+of the places in their settlement and 80% at their address (approvable). Then
+the breakers on Estonia's own pages, as everywhere.
+
+**Absences** (`EE_MISSING_RUNS`): a provider or pharmacy missing from its
+source twice in a row is removed. A claimed page is kept and counted for review.
+
+### Schedule and monitoring
+
+The scheduler runs `etl:ee $ETL_EE_SCHEDULE_ARGS` every Thursday at 03:30 UTC
+(`docker/crontab`), when no other import runs. The register is rebuilt every day
+(its file never repeats itself), so a weekly run always imports; the run takes a
+few seconds after its downloads (45 MB). Alert on exit codes 1, 2 and 3, and
+when the extract read (`stats.sources.medre.edition`) is more than a week old.
+
+```sql
+-- Estonia's last runs: status, extract, per-source counters, placement and totals.
+SELECT id, status, finished_at, stats -> 'sourceErrors' AS errors,
+	stats -> 'sources' -> 'medre' -> 'edition' AS extract, stats -> 'batch' -> 'placement' AS placement,
+	stats -> 'totals' AS totals
+FROM directory.etl_runs WHERE source = 'ee' ORDER BY id DESC LIMIT 5;
+```
+
+### Measured run (files of 27 November 2026)
+
+Laptop, local PostGIS 17, fresh database, the real files (downloaded once into a
+scratch directory), offline:
+
+|            |                                                                                                                                                                                                                                  |
+| ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Duration   | places 0.9 s; dry run 5.5 s (reading the address file 3.4 s, read models 0.7 s), peak RSS 0.29 GB                                                                                                                                |
+| Register   | 1,570 providers read, 1,518 listed: 7 ambulance services only, 45 with no place a patient visits (school health, ambulance, mobile units); 507 school-health or ambulance places and 55 mobile places left out; none quarantined |
+| Pharmacies | 495 rows, 469 general pharmacies listed (25 hospital and 1 veterinary pharmacy left out); 468 with a phone, none shared by more than three, 1 unreadable                                                                         |
+| Kinds      | hospitals 33 · family practices 391 · dental clinics 436 · specialist care 449 · nursing care 92 · midwifery 3 · physiotherapy 84 · psychological treatment 16 · speech therapy 13 · pharmacies 469 (1,986)                      |
+| Places     | 2,755 sites (341 providers have several), all in their settlement: 2,722 at their address, 33 at their settlement's centre; 1 place left out (unknown settlement), so 1 provider unlisted                                        |
+| Indexable  | 1,986 provider pages; 373 indexable listing pages of 1,138                                                                                                                                                                       |
+| Places     | 15 counties, 78 municipalities, 4,715 settlements (EHAK, 1 November 2026)                                                                                                                                                        |
+
+### Local development
+
+```sh
+bun run etl:places --country ee --source-dir packages/etl/fixtures/ee   # synthetic places
+bun run etl:ee --source-dir packages/etl/fixtures/ee --offline          # synthetic data
+bun run --cwd packages/etl fixtures:ee                                  # regenerate the fixtures
+```
+
+`packages/etl/fixtures/ee` holds **synthetic** files in the sources' exact
+formats (`od_asutused.xml`, `apteekide_koondandmed.csv` with its BOM and quoting,
+`sihtnumbrid.zip` with points in L-EST97, `asustusyksus_shp.zip` with its table in
+Windows-1257) for eleven real settlements of six counties drawn as small squares
+around their real centres, generated deterministically by
+`packages/etl/fixtures/generate-ee.ts`: made-up providers of every kind, a
+hospital with a nursing licence, a village named alone, a school nurse's office
+and a mobile unit, an ambulance service, an ended licence, a broken licence
+number, an unknown municipality, a single-town municipality's address without a
+settlement, a hospital and a veterinary pharmacy, a pharmacy whose address id is
+gone, a chain's shared number, and made-up health workers, registry codes, legal
+addresses, pharmacists, e-mails and holders (to check they are never stored),
+with filler rows above the floors. Never commit real rows.
+`test/ee-integration.test.ts` imports them next to the French fixtures: France
+untouched both ways, names, kinds, licences, services and nothing unneeded
+stored, placement and precision, read models without county listings,
+idempotence, a dry run, an older extract refused, an unreadable source left out,
+a missing address file failing the run, absences after two runs, objections, the
+breaker and `--approve`.

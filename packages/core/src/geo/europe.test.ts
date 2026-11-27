@@ -8,7 +8,7 @@ import {
 	placeKeysOf,
 } from "./europe";
 
-const LANGUAGES: readonly GeoLanguage[] = ["en", "fr", "de", "es", "it", "cs"];
+const LANGUAGES: readonly GeoLanguage[] = ["en", "fr", "de", "es", "it", "cs", "et"];
 
 /** Countries of 5 million people or more, which list at least 10 cities. */
 const LARGE_COUNTRIES = [

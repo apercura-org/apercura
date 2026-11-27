@@ -15,6 +15,7 @@
 #   docker run … apercura etl:it [flags]     Italian Ministry of Health open data import
 #   docker run … apercura etl:de [flags]     German Destatis and Länder pharmacy open data import
 #   docker run … apercura etl:ch [flags]     Swiss FOPH and cantonal open data import
+#   docker run … apercura etl:ee [flags]     Estonian Health Board and State Agency of Medicines import
 #   docker run … apercura scheduler          supercronic: jobs and cache warm-up every 5 minutes,
 #                                            weekly and monthly imports
 #

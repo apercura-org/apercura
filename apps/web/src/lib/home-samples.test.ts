@@ -6,7 +6,7 @@ import { isMarketListingSlug } from "./market";
 
 /** A word that says the sample is one, in the market's language. */
 const FICTITIOUS =
-	/Exemple|Example|Sample|Specimen|Muster|Beispiel|Příklad|Vzor|Ejemplo|Muestra|Esempio|Modello/;
+	/Exemple|Example|Sample|Specimen|Muster|Beispiel|Příklad|Vzor|Ejemplo|Muestra|Esempio|Modello|Näidis/;
 
 describe("homeSamples", () => {
 	it("gives every locale one sample per state of a page, the specimen unclaimed first", () => {
@@ -54,6 +54,6 @@ describe("homeSamples", () => {
 		expect(specimenOf("it-CH").name).toBe("Ospedale dell’Esempio");
 		// Swiss Standard German writes no "ß".
 		expect(JSON.stringify(homeSamples("de-CH"))).not.toContain("ß");
-		expect(new Set(LOCALES.map((locale) => marketOf(locale))).size).toBe(8);
+		expect(new Set(LOCALES.map((locale) => marketOf(locale))).size).toBe(9);
 	});
 });

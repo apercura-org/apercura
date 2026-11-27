@@ -63,3 +63,12 @@
 # 2 blocked, 3 imported without a list that could not be fetched or read (see
 # docs/data-import.md, "Switzerland").
 30 22 3 * * apercura etl:ch $ETL_CH_SCHEDULE_ARGS
+
+# Estonia's providers (the Health Board's register of activity licences, MEDRE open data, rebuilt
+# daily) and pharmacies (the State Agency of Medicines' register), every Thursday at 03:30 UTC,
+# when no other import runs (the same advisory lock: one import at a time); unchanged files end
+# the run after their download (about 45 MB, the Land Board's addresses included).
+# ETL_EE_SCHEDULE_ARGS narrows it, e.g. `--sources medre`. Exit codes: 1 failed, 2 blocked, 3
+# imported without a source that could not be fetched or read (see docs/data-import.md,
+# "Estonia"). The Health Board's data is CC BY-NC-SA 3.0: non-commercial use only.
+30 3 * * 4 apercura etl:ee $ETL_EE_SCHEDULE_ARGS

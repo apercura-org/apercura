@@ -30,7 +30,9 @@
 		"etl:de": "bun src/cli.ts etl:de",
 		"fixtures:de": "bun fixtures/generate-de.ts",
 		"etl:ch": "bun src/cli.ts etl:ch",
-		"fixtures:ch": "bun fixtures/generate-ch.ts"
+		"fixtures:ch": "bun fixtures/generate-ch.ts",
+		"etl:ee": "bun src/cli.ts etl:ee",
+		"fixtures:ee": "bun fixtures/generate-ee.ts"
 	},
 	"dependencies": {
 		"@apercura/core": "workspace:*",

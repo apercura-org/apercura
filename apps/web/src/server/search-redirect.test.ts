@@ -53,6 +53,10 @@ const PLACES: Record<MarketCountry, PlaceSuggestion[]> = {
 		place(52, "Basel", "basel", "kanton-basel-stadt"),
 		place(53, "Lugano", "lugano", "distretto-di-lugano"),
 	],
+	EE: [
+		place(60, "Tartu linn", "tartu-linn", "tartu-linn", "8151"),
+		place(61, "Tallinn", "tallinn", "tallinn", "0784"),
+	],
 };
 
 const LANDINGS = new Set([
@@ -78,6 +82,9 @@ const LANDINGS = new Set([
 	"spital@Genève",
 	"spital@Zürich",
 	"spital@Lugano",
+	"perearstikeskused@Tartu linn",
+	"apteegid@Tartu linn",
+	"haiglad@Tallinn",
 ]);
 
 const HUBS = new Set(["chirurgien-dentiste:fr", "dental-practices:gb", "krankenhaeuser:de"]);
@@ -209,6 +216,23 @@ describe("a search for a place of another market", () => {
 			searchPage("de-DE", { ou: "Berlin" }),
 		);
 		expect(await search("de-DE", { quoi: "Hausarzt", ou: "Berlin" })).toBeNull();
+	});
+	it("moves to Estonia's listing, in Estonian, for the care it lists", async () => {
+		expect(await search("fr", { quoi: "pharmacie", ou: "Tartu linn" })).toEqual(
+			listing("et-EE", "apteegid", "tartu-linn", "tartu-linn"),
+		);
+		expect(await search("en-GB", { quoi: "family doctor", ou: "Tartu linn" })).toEqual(
+			listing("et-EE", "perearstikeskused", "tartu-linn", "tartu-linn"),
+		);
+		// A city typed in another language is looked up under its own name ("Tallin" → Tallinn).
+		expect(await search("fr", { quoi: "hôpital", ou: "Tallin" })).toEqual(
+			listing("et-EE", "haiglad", "tallinn", "tallinn"),
+		);
+		expect(await search("et-EE", { quoi: "haigla", ou: "Tallinn" })).toEqual(
+			listing("et-EE", "haiglad", "tallinn", "tallinn"),
+		);
+		// "Estonie" moves to Estonia's home.
+		expect(await search("fr", { ou: "Estonie" })).toEqual({ href: "/", locale: "et-EE" });
 	});
 	it("moves to Switzerland's listing in the visitor's language, the city under its own name", async () => {
 		// A French reader lands on Switzerland in French, an Italian one in Italian, the others

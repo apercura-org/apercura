@@ -17,7 +17,7 @@ export type DbfTable = { fields: DbfField[]; records: Record<string, string>[] }
  */
 export function readDbf(
 	data: Buffer,
-	{ encoding = "utf-8" }: { encoding?: "utf-8" | "windows-1252" } = {},
+	{ encoding = "utf-8" }: { encoding?: "utf-8" | "windows-1252" | "windows-1257" } = {},
 ): DbfTable {
 	if (data.length < 33) throw new Error("DBF file too short");
 	const count = data.readUInt32LE(4);

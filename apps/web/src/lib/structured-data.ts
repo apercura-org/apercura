@@ -556,6 +556,16 @@ const PRACTICE_TYPES: Readonly<Record<string, PracticeType>> = {
 	CH_BIRTH_CENTRE: "MedicalClinic",
 	CH_PHARMACY: "Pharmacy",
 	CH_NURSING_HOME: "MedicalOrganization",
+	EE_HOSPITAL: "Hospital",
+	EE_FAMILY_PRACTICE: "MedicalClinic",
+	EE_DENTAL: "Dentist",
+	EE_SPECIALIST: "MedicalClinic",
+	EE_NURSING: "MedicalOrganization",
+	EE_MIDWIFERY: "MedicalClinic",
+	EE_PHYSIOTHERAPY: "MedicalClinic",
+	EE_PSYCHOLOGY: "MedicalClinic",
+	EE_SPEECH_THERAPY: "MedicalClinic",
+	EE_PHARMACY: "Pharmacy",
 };
 
 /** The schema.org type of a market of practices' page subject (`PRACTICE_TYPES`), if any. */

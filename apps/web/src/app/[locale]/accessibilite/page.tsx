@@ -11,6 +11,7 @@ import { AccessibilityAt } from "~/components/legal-at";
 import { AccessibilityCh } from "~/components/legal-ch";
 import { AccessibilityCz } from "~/components/legal-cz";
 import { AccessibilityDe } from "~/components/legal-de";
+import { AccessibilityEe } from "~/components/legal-ee";
 import { AccessibilityEs } from "~/components/legal-es";
 import { AccessibilityGb } from "~/components/legal-gb";
 import { AccessibilityIt } from "~/components/legal-it";
@@ -39,6 +40,7 @@ export function generateMetadata({ params }: PageProps<"/[locale]/accessibilite"
 			IT: "AccessibilityIt",
 			DE: "AccessibilityDe",
 			CH: "AccessibilityCh",
+			EE: "AccessibilityEe",
 		},
 		HREF,
 	);
@@ -52,8 +54,8 @@ export function generateMetadata({ params }: PageProps<"/[locale]/accessibilite"
 export default async function AccessibilityPage({ params }: PageProps<"/[locale]/accessibilite">) {
 	const locale = await localeOf(params);
 	setRequestLocale(locale);
-	// Austria's, the UK's, Czechia's, Spain's, Italy's and Germany's pages have texts of their own,
-	// written for their law.
+	// Austria's, the UK's, Czechia's, Spain's, Italy's, Germany's, Switzerland's and Estonia's pages
+	// have texts of their own, written for their law.
 	if (marketOf(locale) === "AT") return <AccessibilityAt locale={locale} />;
 	if (marketOf(locale) === "GB") return <AccessibilityGb locale={locale} />;
 	if (marketOf(locale) === "CZ") return <AccessibilityCz locale={locale} />;
@@ -61,6 +63,7 @@ export default async function AccessibilityPage({ params }: PageProps<"/[locale]
 	if (marketOf(locale) === "IT") return <AccessibilityIt locale={locale} />;
 	if (marketOf(locale) === "DE") return <AccessibilityDe locale={locale} />;
 	if (marketOf(locale) === "CH") return <AccessibilityCh locale={locale} />;
+	if (marketOf(locale) === "EE") return <AccessibilityEe locale={locale} />;
 	const t = await getTranslations({ locale, namespace: "AccessibilityPage" });
 	const tSite = await getTranslations({ locale, namespace: "Site" });
 	const tI = await getTranslations({ locale, namespace: "Institutional" });

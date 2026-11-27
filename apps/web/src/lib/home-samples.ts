@@ -4,9 +4,9 @@ import { type Locale, type MarketCountry, marketOf } from "~/i18n/locales";
  * The fictitious pages a market's home shows: the specimen page and the sample stamps of the
  * opening. Each market shows what its directory lists, in its own language: practitioners in
  * France, Austria (its doctors) and Czechia (practices under a doctor's name, a pharmacy);
- * practices, facilities, pharmacies or hospitals in the UK, Spain, Italy, Germany and
- * Switzerland. The names and addresses say plainly that they are examples ("Exemple",
- * "Muster", "Example", "Ejemplo", "Esempio", "Příklad"), never a real person, practice or place
+ * practices, facilities, pharmacies or hospitals in the UK, Spain, Italy, Germany, Switzerland
+ * and Estonia. The names and addresses say plainly that they are examples ("Exemple",
+ * "Muster", "Example", "Ejemplo", "Esempio", "Příklad", "Näidis"), never a real person, practice or place
  * of care; the identifiers are shaped like the market's but synthetic.
  *
  * One sample per state of a page, as the stamp prints it (DESIGN.md, "Stamp"): unclaimed
@@ -226,6 +226,34 @@ const SAMPLES: Readonly<Record<Exclude<MarketCountry, "CH">, HomeSamples>> = {
 			gender: "other",
 			address: "Musterplatz 8, 99084 Erfurt",
 			identifier: "th9",
+			status: "claimed",
+		},
+	],
+	// Estonia: providers of the Health Board's register, a pharmacy of the State Agency of
+	// Medicines'. A provider's page prints its first activity licence number.
+	EE: [
+		{
+			name: "Näidise Perearstikeskus",
+			listing: "perearstikeskused",
+			gender: "other",
+			address: "Näidise tn 12, 10117 Tallinn",
+			identifier: "L00009",
+			status: "unclaimed",
+		},
+		{
+			name: "Näidise Hambakliinik",
+			listing: "hambaravi",
+			gender: "other",
+			address: "Näidise pst 3, 51004 Tartu",
+			identifier: "L00017",
+			status: "verified",
+		},
+		{
+			name: "Näidisapteek",
+			listing: "apteegid",
+			gender: "other",
+			address: "Näidise väljak 8, 80010 Pärnu",
+			identifier: "ap25",
 			status: "claimed",
 		},
 	],

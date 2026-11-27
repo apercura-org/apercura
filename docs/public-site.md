@@ -91,6 +91,16 @@ as hreflang alternates. A path is read with its own locale's route table first
 (`src/lib/own-pathname.ts`): `/fr/etablissement/…` is France's establishment
 page, never the Swiss French form of a facility's page.
 
+Estonia (#165) is `/ee`, in Estonian (`et-EE`, the English catalog with the
+Estonian texts on top, `messages/ee.json`). Its route segments are the English
+ones in Estonian (`ESTONIAN_SEGMENTS` in `src/i18n/routing.ts`): a provider's or
+pharmacy's page under `/ee/asutus/…` (an institution, never a person), an
+establishment's under `/ee/organisatsioon/…`, the directory under
+`/ee/kataloog`, the search under `/ee/otsing`, and the legal pages under
+`/ee/oigusteave`, `/ee/privaatsus`, `/ee/kasutustingimused`,
+`/ee/ligipaasetavus` and `/ee/andmed`. Its listing slugs are Estonian, without
+diacritics (`/ee/perearstikeskused/tartu-linn/tartu-linn`, `/ee/apteegid`).
+
 Each segment follows the locale's prefix: `/fr/annuaire`, `/fr-de/verzeichnis`.
 
 Only French pages are indexed in v1 (`INDEXABLE_LOCALES`): pages in the other

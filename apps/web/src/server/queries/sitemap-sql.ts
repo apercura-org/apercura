@@ -1,4 +1,5 @@
 import type { Sql } from "@apercura/db";
+import { EE_TOWN_CODES } from "~/lib/places";
 
 /*
  * The sitemaps' queries, without the cache: the sitemap routes run them through the cached
@@ -33,6 +34,7 @@ export const SITEMAP_MARKETS = [
 	"ch",
 	"ch-fr",
 	"ch-it",
+	"ee",
 ] as const;
 export type SitemapMarket = (typeof SITEMAP_MARKETS)[number];
 
@@ -65,10 +67,11 @@ export type SitemapEntry = { path: string; lastmod: string };
 
 /**
  * The cities whose page is their department's (Paris, Wien, Germany's kreisfreie Städte, whose
- * Gemeinde code is their Kreis's and `000`) never get a URL of their own.
+ * Gemeinde code is their Kreis's and `000`, Estonia's towns that are a municipality, whose
+ * settlement code is the municipality's) never get a URL of their own.
  */
 const NOT_CITY = (alias: string) =>
-	`NOT (${alias}.country = 'FR' AND ${alias}.code = '75056') AND NOT (${alias}.country = 'AT' AND ${alias}.code = '90001') AND NOT (${alias}.country = 'DE' AND ${alias}.kind = 'commune' AND ${alias}.code LIKE '_____000')`;
+	`NOT (${alias}.country = 'FR' AND ${alias}.code = '75056') AND NOT (${alias}.country = 'AT' AND ${alias}.code = '90001') AND NOT (${alias}.country = 'DE' AND ${alias}.kind = 'commune' AND ${alias}.code LIKE '_____000') AND NOT (${alias}.country = 'EE' AND ${alias}.kind = 'commune' AND ${alias}.code IN (${EE_TOWN_CODES}))`;
 
 /**
  * Non-empty chunks of every kind and market, with the latest change in each, once per language of

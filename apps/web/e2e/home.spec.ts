@@ -20,6 +20,7 @@ const HOMES = [
 	"/ch",
 	"/ch-fr",
 	"/ch-it",
+	"/ee",
 ];
 
 /** The opening's title, then the sections' headings in order. */

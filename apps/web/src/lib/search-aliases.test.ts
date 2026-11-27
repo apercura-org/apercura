@@ -3,6 +3,7 @@ import {
 	allChListingSlugs,
 	allCzListingSlugs,
 	allDeListingSlugs,
+	allEeListingSlugs,
 	allEsListingSlugs,
 	allGbListingSlugs,
 	allItListingSlugs,
@@ -30,6 +31,7 @@ const MARKETS = [
 	"IT",
 	"DE",
 	"CH",
+	"EE",
 ] as const satisfies readonly MarketCountry[];
 
 /** The listings of each market (France: its imported professions only). */
@@ -45,6 +47,7 @@ const LISTED: Record<MarketCountry, (slug: string) => boolean> = {
 	IT: (slug) => allItListingSlugs().has(slug),
 	DE: (slug) => allDeListingSlugs().has(slug),
 	CH: (slug) => allChListingSlugs().has(slug),
+	EE: (slug) => allEeListingSlugs().has(slug),
 };
 
 /** Slugs a market maps but does not list yet: France's professions not imported. */
@@ -57,6 +60,7 @@ const MAPPED: Record<MarketCountry, (slug: string) => boolean> = {
 	IT: () => false,
 	DE: () => false,
 	CH: () => false,
+	EE: () => false,
 };
 
 const listing = (slug: string): SearchTerm => ({ kind: "listing", slug });
@@ -351,6 +355,36 @@ const EVERYDAY: Record<MarketCountry, [string, SearchTerm][]> = {
 		["Zahnarzt", UNLISTED],
 		["médecin", UNLISTED],
 		["medico", UNLISTED],
+	],
+	EE: [
+		["perearst", listing("perearstikeskused")],
+		["Perearst", listing("perearstikeskused")],
+		["perearsti", listing("perearstikeskused")],
+		["perearstikeskus", listing("perearstikeskused")],
+		["haigla", listing("haiglad")],
+		["EMO", listing("haiglad")],
+		["kliinikum", listing("haiglad")],
+		["hambaarst", listing("hambaravi")],
+		["hambaravi", listing("hambaravi")],
+		["ortodont", listing("hambaravi")],
+		["silmaarst", listing("eriarstiabi")],
+		["kardioloog", listing("eriarstiabi")],
+		["günekoloog", listing("eriarstiabi")],
+		["koduõde", listing("oendusabi")],
+		["õendusabi", listing("oendusabi")],
+		["ämmaemand", listing("ammaemandusabi")],
+		["füsioterapeut", listing("fusioteraapia")],
+		["psühholoog", listing("psuhholoogiline-ravi")],
+		["logopeed", listing("logopeedia")],
+		["apteek", listing("apteegid")],
+		["apteegid", listing("apteegid")],
+		["Apteek", listing("apteegid")],
+		// Visitors' languages.
+		["pharmacy", listing("apteegid")],
+		["dentist", listing("hambaravi")],
+		["family doctor", listing("perearstikeskused")],
+		["hôpital", listing("haiglad")],
+		["pharmacie", listing("apteegid")],
 	],
 };
 

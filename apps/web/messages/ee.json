@@ -1,0 +1,2031 @@
+{
+	"Metadata": {
+		"title": "Apercura",
+		"description": "Eesti tervishoiuteenuse osutajate avatud kataloog: haiglad, perearstikeskused, hambaravi, eriarstiabi ja apteegid Terviseameti ja Ravimiameti andmetest.",
+		"proTitle": "Teie leht on juba olemas · Apercura",
+		"proDescription": "Apercura avaldab lehe igale Terviseameti tegevusloaga tervishoiuteenuse osutajale ja igale üldapteegile. Leidke oma asutuse leht ja võtke see tasuta üle.",
+		"searchTitle": "Otsing · Apercura",
+		"galleryTitle": "Komponentide galerii · Apercura",
+		"homeTitle": "Apercura · Haiglad, perearstid, hambaravi ja apteegid Eestis"
+	},
+	"Site": {
+		"skipLink": "Liigu sisu juurde",
+		"wordmark": "Apercura",
+		"homeLink": "Apercura, avaleht",
+		"runningHead": "Eesti tervishoiuteenuse osutajate avatud kataloog",
+		"navLabel": "Peamenüü",
+		"navPro": "Teenuseosutajatele",
+		"navPatients": "Patsientidele",
+		"folio": "Lehekülg {number}",
+		"externalLink": "avab teise veebilehe",
+		"footer": {
+			"free": "Teenuseosutajatele ja patsientidele tasuta.",
+			"license": "Lähtekood AGPL-3.0 litsentsi all",
+			"noAds": "Ei mingeid hinnanguid, reklaame ega tasulist järjestust."
+		},
+		"folioRpps": "Tähis {rpps}",
+		"home": "Avaleht",
+		"breadcrumbs": "Te olete siin",
+		"footerNav": {
+			"label": "Apercurast",
+			"directory": "Kataloog",
+			"guides": "Juhendid",
+			"about": "Projektist",
+			"openSource": "Avatud lähtekood",
+			"data": "Andmed ja allikad",
+			"accessibility": "Ligipääsetavus",
+			"privacy": "Privaatsus",
+			"legal": "Õigusteave",
+			"terms": "Kasutustingimused",
+			"international": "Apercura teistes riikides"
+		},
+		"theme": {
+			"label": "Kujundus",
+			"light": "Hele",
+			"dark": "Tume",
+			"system": "Süsteemi järgi"
+		}
+	},
+	"LocaleSwitcher": {
+		"label": "Keel",
+		"locale": "{locale, select, fr {Français} en {English} de {Deutsch} es {Español} it {Italiano} other {Tundmatu keel}}",
+		"current": "Keel: <value>{language}</value>"
+	},
+	"CountrySwitcher": {
+		"label": "Riik",
+		"current": "Riik: <value>{country}</value>"
+	},
+	"ErrorPages": {
+		"notFound": {
+			"metaTitle": "Lehte ei leitud · Apercura",
+			"title": "Sellist lehte ei ole",
+			"body": "Aadressis võib olla viga või on leht eemaldatud. Otsige kataloogist või alustage uuesti mõnelt allolevalt lehelt.",
+			"rootBody": "Aadressis võib olla viga või on leht eemaldatud. Valige riik, et otsida selle kataloogist.",
+			"code": "Viga 404",
+			"stamp": "Sellel aadressil lehte ei ole",
+			"nextHeading": "Mujal Apercuras",
+			"home": "Avaleht",
+			"directory": "Kataloog asukoha järgi",
+			"international": "Apercura riikide kaupa"
+		},
+		"error": {
+			"metaTitle": "Leht ei ole kättesaadav · Apercura",
+			"title": "Seda lehte ei õnnestunud kuvada",
+			"body": "Lehe ettevalmistamisel läks meie poolel midagi valesti. Proovige uuesti; kui see ikka ei õnnestu, tulge mõne minuti pärast tagasi.",
+			"retry": "Proovi uuesti",
+			"home": "Tagasi avalehele",
+			"reference": "Viide kasutajatoe jaoks: {digest}"
+		}
+	},
+	"Search": {
+		"label": "Leidke haigla, perearst, hambaarst või apteek",
+		"who": "Kes?",
+		"whoHint": "Asutuse nimi või perearst, hambaarst, haigla, apteek",
+		"where": "Kus?",
+		"whereHint": "Linn, vald, küla või postiindeks",
+		"submit": "Otsi",
+		"market": "Riik",
+		"markets": {
+			"FR": "Prantsusmaa",
+			"AT": "Austria",
+			"GB": "Ühendkuningriik",
+			"CZ": "Tšehhi",
+			"IT": "Itaalia",
+			"CH": "Šveits",
+			"ES": "Hispaania",
+			"DE": "Saksamaa",
+			"EE": "Eesti"
+		}
+	},
+	"HomePage": {
+		"title": "Leidke Eestis haigla, perearst, hambaarst või apteek",
+		"hook": "Igal Terviseameti tegevusloaga tervishoiuteenuse osutajal ja igal üldapteegil on juba leht.",
+		"specimen": {
+			"heading": "Igal teenuseosutajal on juba leht",
+			"intro": "Nii näeb välja leht, mille riiklikud registrid on täitnud enne, kui teenuseosutaja selle üle võtab: teadaolevad väljad on täidetud, ülejäänute juures on selgelt öeldud, et andmed puuduvad."
+		},
+		"pillarsHeading": "Mida Apercura lubab",
+		"columns": {
+			"number": "Nr",
+			"commitment": "Lubadus"
+		},
+		"pillars": {
+			"free": {
+				"title": "Tasuta",
+				"description": "Teenuseosutajatele ja patsientidele tasuta, ilma tellimuse ja vahendustasuta."
+			},
+			"openSource": {
+				"title": "Avatud lähtekood",
+				"description": "Kogu lähtekood on avaldatud AGPL-3.0 litsentsi all."
+			},
+			"hostedInFrance": {
+				"title": "Terviseandmed majutatud Prantsusmaal",
+				"description": "Terviseandmeid majutab Prantsusmaal HDS-sertifikaadiga majutaja ({host}) ja need krüpteeritakse rakenduse tasemel."
+			},
+			"encrypted": {
+				"title": "Krüpteeritud andmed",
+				"description": "Lehe ülevõtmise dokumendid, veateated ja seal, kus veebibroneerimine on avatud, ka broneeringud krüpteeritakse rakenduse tasemel."
+			},
+			"selfHostable": {
+				"title": "Ise majutatav",
+				"description": "Kogu platvormi saab ise käitada Dockeriga, koos avaandmete impordiga."
+			}
+		},
+		"registry": {
+			"heading": "Koostatud Terviseameti ja Ravimiameti avaandmetest",
+			"intro": "Iga teenuseosutaja leht põhineb Terviseameti tervishoiuteenuse osutajate ja tegevuslubade andmestikul (MEDRE), mis on avaldatud avaandmetena litsentsiga CC BY-NC-SA 3.0; apteegid pärinevad Ravimiameti tegevuslubade registrist. Maakonnad, vallad, linnad ja külad pärinevad Maa- ja Ruumiameti haldus- ja asustusjaotusest. Leht kirjeldab teenuseosutajat, mitte selle juures töötavaid tervishoiutöötajaid. Kataloogi pääsemise eest ei maksa keegi ja kedagi ei jäeta välja.",
+			"doctors": "Arstid",
+			"dentists": "Hambaarstid",
+			"midwives": "Ämmaemandad",
+			"nurses": "Õendusabi",
+			"withAddress": "Avaliku tegevuskoha aadressiga",
+			"count": "{count, number}",
+			"sourceLabel": "Allikas",
+			"sourceName": "Terviseamet (MEDRE), Ravimiamet",
+			"updatedLabel": "Andmed seisuga"
+		},
+		"pro": {
+			"heading": "Kas juhite haiglat, perearstikeskust, hambakliinikut või apteeki?",
+			"body": "Teie asutuse leht on juba olemas. Selle ülevõtmine on tasuta.",
+			"cta": "Leia minu leht"
+		},
+		"tagline": "Eesti tervishoiuteenuse osutajate ja apteekide avatud kataloog Terviseameti ja Ravimiameti avaandmetest.",
+		"status": "Töös.",
+		"market": {
+			"listingsHeading": "Teenuseosutaja liigi järgi",
+			"placesHeading": "Omavalitsuste järgi"
+		}
+	},
+	"SearchPage": {
+		"title": "Otsing",
+		"query": "Te otsisite: „{who}”",
+		"queryWhere": "Te otsisite: „{who}”, asukoht „{where}”",
+		"queryOnlyWhere": "Te otsisite asukohast „{where}”",
+		"emptyTitle": "Ükski teenuseosutaja ei sobi",
+		"emptyBody": "Kontrollige õigekirja, proovige lähedal asuvat kohta või üldisemat sõna, näiteks „perearst” või „hambaarst”.",
+		"queryNear": "Te otsisite: „{who}” teie lähedal",
+		"queryOnlyNear": "Teenuseosutajad teie lähedal",
+		"startTitle": "Mida te otsite?",
+		"startBody": "Kirjutage lahtrisse „Kes?” asutuse nimi või näiteks perearst, hambaarst, haigla või apteek ning lahtrisse „Kus?” linn, vald, küla või postiindeks. Kataloogi saab sirvida ka maakondade ja omavalitsuste kaupa.",
+		"noMoreTitle": "Rohkem tulemusi ei ole",
+		"browseDirectory": "Sirvi kataloogi",
+		"rppsTitle": "Tähisega {rpps} avalikku lehte ei ole",
+		"rppsBody": "See tähis ei kehti või teenuseosutajal ei ole avalikku lehte: kataloogis on ainult asutused, mida patsiendid külastavad (kiirabi ja koolitervishoiu tegevuskohti ei näidata). Teenuseosutaja saab oma kirje siiski üles leida ja üle võtta.",
+		"rppsPro": "Teenuseosutajad: leidke oma kirje",
+		"ambiguousTitle": "Nimi „{where}” sobib mitmele kohale",
+		"ambiguousBody": "Valige see, mida mõtlete:",
+		"unknownPlaceTitle": "Kohta „{where}” me ei tea",
+		"unknownPlaceSuggest": "Kas mõtlesite mõnda neist kohtadest?",
+		"unknownPlaceBody": "Kontrollige õigekirja või kirjutage lähedal asuva koha nimi.",
+		"unlistedTitle": "„{who}” ei ole veel kataloogis",
+		"unlistedBody": "Eestis on kataloogis praegu tervishoiuteenuse osutajad, mitte nende juures töötavad tervishoiutöötajad: haiglad, perearstikeskused, hambaravi, eriarstiabi, õendusabi, ämmaemandusabi, füsioteraapia, psühholoogiline ravi, logopeedia ja apteegid. Otsige asutuse nime järgi või sirvige kataloogi.",
+		"departmentPlace": "Omavalitsus",
+		"resultsHeading": "Tulemused",
+		"range": "Tulemused {from}–{to}",
+		"orderName": "Tulemused on järjestatud nime sobivuse järgi, seejärel tähestikuliselt. Keegi ei maksa kõrgema koha eest.",
+		"orderNear": "Tulemused on järjestatud kauguse järgi teist. Keegi ei maksa kõrgema koha eest.",
+		"bookingNotOpen": "Apercura ei paku Eestis veebibroneerimist: helistage teenuseosutajale.",
+		"columns": {
+			"practitioner": "Teenuseosutaja",
+			"place": "Aadress",
+			"appointments": "Kontakt"
+		},
+		"action": {
+			"call": "Helista {phone}",
+			"establishment": "Asutuse kaudu",
+			"locum": "Asendusarst: otse ei broneerita",
+			"page": "Vaata lehte",
+			"noPhone": "Telefoninumbrit ei ole avaldatud",
+			"nextFree": "Broneeri: {slot}"
+		},
+		"distance": "{km} km kaugusel",
+		"pagination": "Tulemuste leheküljed",
+		"previous": "Eelmised tulemused",
+		"next": "Rohkem tulemusi",
+		"map": {
+			"show": "Näita kaardil",
+			"hide": "Peida kaart",
+			"region": "Tulemuste kaart",
+			"fallback": "Kaart laadib. Ülal olevas loendis on kõik aadressid."
+		},
+		"outsidePlace": "Väljaspool kohta {where}",
+		"bookingOpenSome": "Mõned teenuseosutajad võtavad vastu veebibroneeringuid: näitame nende lähimat vaba aega. Teistele helistage.",
+		"notCoveredTitle": "Apercura ei hõlma veel {country}",
+		"notCoveredBody": "Praegu on Apercuras nende riikide teenuseosutajad. Valige riik, kust otsida:"
+	},
+	"Practitioner": {
+		"rpps": "Tähis",
+		"status": {
+			"unclaimed": "Üle võtmata leht",
+			"claimed": "Üle võetud leht",
+			"verified": "Kinnitatud leht"
+		},
+		"statusNote": {
+			"unclaimed": "Koostatud riiklike registrite avaandmetest. Teenuseosutaja ei ole seda lehte veel täiendanud.",
+			"verified": "Täiendatud teenuseosutaja poolt, kelle ülevõtmistaotlus on kontrollitud."
+		},
+		"notProvided": "Ei ole esitatud",
+		"fields": {
+			"profession": "Teenuseosutaja liik",
+			"specialty": "Eriala",
+			"address": "Aadress",
+			"phone": "Telefon",
+			"hours": "Lahtiolekuajad",
+			"languages": "Suhtluskeeled",
+			"convention": "Leping Tervisekassaga",
+			"booking": "Veebibroneerimine",
+			"access": "Ligipääs"
+		},
+		"sitesHeading": "Tegevuskohad",
+		"directions": "Teejuhised",
+		"providers": {
+			"openStreetMap": "OpenStreetMap",
+			"appleMaps": "Apple Maps",
+			"googleMaps": "Google Maps"
+		},
+		"mapLabel": "Kaart: {place}",
+		"mapPin": "Asukoht: {place}",
+		"source": {
+			"label": "Allikas",
+			"name": "Terviseamet, tervishoiuteenuse osutajate ning tegevuslubade andmestik (MEDRE), CC BY-NC-SA 3.0",
+			"updated": "Uuendatud"
+		},
+		"action": {
+			"title": "Vastuvõtule registreerimine",
+			"book": {
+				"statement": "Veebibroneerimine on avatud. See on tasuta ega vaja kontot.",
+				"label": "Broneeri aeg"
+			},
+			"call": {
+				"statement": "Apercura ei paku Eestis veebibroneerimist. Vastuvõtuaja saamiseks helistage teenuseosutajale.",
+				"label": "Helista {phone}"
+			},
+			"establishment": {
+				"statement": "Vastuvõtule registreeritakse asutuse {establishment} kaudu.",
+				"label": "Broneeri: {establishment}"
+			},
+			"locum": {
+				"statement": "See arst töötab asendusarstina teiste arstide asemel. Tema juurde ei saa otse aega broneerida.",
+				"hint": "Tema vastuvõtule pääsemiseks broneerige aeg praksises, kus ta parasjagu töötab."
+			}
+		},
+		"slots": {
+			"heading": "Valige aeg",
+			"label": "Vabad ajad",
+			"now": "praegu",
+			"unavailable": "ei ole saadaval",
+			"selected": "Valitud: {slot}",
+			"emptyDay": "Sel päeval vabu aegu ei ole",
+			"slotLabel": "{day}, {time}",
+			"past": "möödas"
+		},
+		"professions": {
+			"gp": "Perearst",
+			"dentist": "Hambaarst",
+			"midwife": "Ämmaemand",
+			"physio": "Füsioterapeut"
+		},
+		"specimen": "Näidis, mitte päris teenuseosutaja"
+	},
+	"Map": {
+		"map": "Kaart",
+		"marker": "Kaardimärk",
+		"zoomIn": "Suurenda",
+		"zoomOut": "Vähenda",
+		"resetBearing": "Lohistage kaardi pööramiseks, klõpsake põhjasuuna taastamiseks",
+		"toggleAttribution": "Näita või peida kaardi autorid",
+		"mapFeedback": "Tagasiside kaardi kohta",
+		"logo": "MapLibre logo",
+		"closePopup": "Sulge hüpikaken",
+		"scrollZoomWindows": "Kaardi suurendamiseks kasutage Ctrl + kerimist",
+		"scrollZoomMac": "Kaardi suurendamiseks kasutage ⌘ + kerimist",
+		"twoFingers": "Kaardi liigutamiseks kasutage kahte sõrme"
+	},
+	"PractitionerPage": {
+		"metaTitle": "{name}, {occupation} · Apercura",
+		"metaTitlePlace": "{name}, {occupation}, {place} · Apercura",
+		"metaDescription": "{name}, {occupation}: {fees, select, sector {aadress, telefon ja hinnad} other {aadress, telefon, tegevusload ja teenused}}, Terviseameti ja Ravimiameti avaandmetest.",
+		"metaDescriptionPlace": "{name}, {occupation}, {place}: {fees, select, sector {aadress, telefon ja hinnad} other {aadress, telefon, tegevusload ja teenused}}, Terviseameti ja Ravimiameti avaandmetest.",
+		"unknownProfession": "Tervishoiuteenuse osutaja",
+		"professionHeading": "Teenuseosutaja",
+		"otherQualifications": "Muud andmed",
+		"fieldsOfCare": "Erialad",
+		"ownership": "Omandivorm",
+		"ownershipPublic": "Avalik",
+		"ownershipPrivate": "Eraõiguslik",
+		"practiceType": "Tegevuskoha liik",
+		"switchboard": "{phone} (keskus)",
+		"establishment": "Asutus",
+		"unnamedPlace": "Tegevuskoht",
+		"asideLabel": "Selle lehe kohta",
+		"action": {
+			"callNotYetOpen": "Apercura ei paku Eestis veebibroneerimist. Vastuvõtuaja saamiseks helistage teenuseosutajale.",
+			"establishmentLink": "Võtke asutusega ühendust",
+			"noPhone": "Register ei avalda selle tegevuskoha telefoninumbrit.",
+			"noPhoneHint": "Kontaktandmed leiate <link>teenuseosutaja kohta avaldatud teabest</link> või pöörduge otse tegevuskohta.",
+			"bookStatement": "Veebibroneerimine on avatud. See on tasuta ega vaja kontot.",
+			"bookNoSlot": "Veebibroneerimine on avatud, kuid lähinädalatel vabu aegu ei ole. Vaadake hiljem uuesti või helistage.",
+			"nextSlot": "Lähim vaba aeg",
+			"bookLabel": "Broneeri aeg",
+			"orCall": "Või helistage {phone}."
+		},
+		"fees": {
+			"heading": "Hinnad ja ravikindlustus",
+			"sector": "Lepinguline suhe",
+			"agreement": "Leping Tervisekassaga",
+			"optam": "Piiratud lisatasud (OPTAM)",
+			"optamNo": "Ei osale",
+			"carteVitale": "Ravikindlustuskaart",
+			"accepted": "Aktsepteeritakse",
+			"notAccepted": "Ei aktsepteerita",
+			"fromAmeli": "Need andmed pärinevad ravikindlustuse registrist.",
+			"notMatched": "Teenuseosutajat ei õnnestunud ravikindlustuse registrist kindlalt leida, seetõttu neid andmeid ei näidata.",
+			"regulatoryNotice": "Lepinguline suhe määrab, kuidas teenuse eest tasutakse ja seda hüvitatakse: kontrollige hindu ja hüvitamist enne vastuvõttu siin:",
+			"regulatoryNoticeAgreement": "Leping määrab, kuidas teenuse eest tasutakse ja seda hüvitatakse: kontrollige hindu ja hüvitamist enne vastuvõttu siin:",
+			"ameliLink": "Tervisekassa veebileht",
+			"source": "Tervisekassa",
+			"sourceOwner": "Teenuseosutaja"
+		},
+		"claim": {
+			"heading": "Kas see on teie asutus?",
+			"body": "See leht on koostatud Terviseameti ja Ravimiameti avaandmetest. Võtke see üle, et seda kontrollida ja täiendada:",
+			"link": "Võta see leht üle",
+			"claimedHeading": "Lehte haldab teenuseosutaja",
+			"claimedBody": "Teenuseosutaja on selle lehe üle võtnud: tema taotlus on kontrollitud ja ta täiendab lehte ise.",
+			"benefits": [
+				"tasuta, ilma tellimuse ja kohustusteta;",
+				"teie foto, lahtiolekuajad ja suhtluskeeled;",
+				"teie veebileht ja teave ligipääsetavuse kohta;",
+				"statistika selle kohta, kes teie lehte vaatavad;",
+				"jagamise komplekt: link, QR-kood ja plakat."
+			],
+			"contactLink": "Dokumenti ei ole käepärast? Võtke meiega ühendust",
+			"optOutLink": "See on teie leht ja te ei soovi avalikult nähtav olla? Alustage siit"
+		},
+		"report": {
+			"heading": "Kas midagi on valesti?",
+			"body": "Kui aadress, telefoninumber või nimi on vale, andke meile teada, kuidas seda parandada.",
+			"link": "Teata veast"
+		},
+		"ring": {
+			"heading": "Teised teenuseosutajad: {occupation}, {place}"
+		},
+		"photoAlt": "Foto: {name}",
+		"metaTitleName": "{name} · Apercura",
+		"metaDescriptionBookable": "{name}, {occupation}: veebibroneerimine, aadress, kontaktandmed ja {fees, select, sector {lepinguline suhe} other {leping Tervisekassaga}}.",
+		"metaDescriptionBookablePlace": "{name}, {occupation}, {place}: veebibroneerimine, aadress, kontaktandmed ja {fees, select, sector {lepinguline suhe} other {leping Tervisekassaga}}.",
+		"estonianFacts": {
+			"licences": "Tegevusload",
+			"licenceNote": "Terviseameti antud tegevuslubade numbrid, mis peavad sisalduma igas teenuseosutaja kohta avaldatavas teabes (reklaamiseadus, § 22 lg 3).",
+			"hospitalKind": "Haigla liik",
+			"services": "Teenused",
+			"pharmacyLicence": "Apteegi tegevusluba"
+		}
+	},
+	"Institutional": {
+		"toBeCompleted": "Täpsustamisel",
+		"legalDraftMark": "Mustand: jurist vaatab selle enne avaldamist üle",
+		"auditMark": "Ajutine teatis: täiendatakse pärast käsitsi auditit",
+		"comingMark": "Tulekul",
+		"placeholderNote": "Kahekordsete looksulgude vahel suurtähtedega kirjutatud väärtused ei ole veel teada: need täidetakse, kui juriidiline isik ja lepingud on olemas."
+	},
+	"AboutPage": {
+		"metaTitle": "Projektist · Apercura",
+		"metaDescription": "Apercura avaldab tasuta asjaliku lehe igale Eesti tervishoiuteenuse osutajale ja apteegile, avalike avaandmete põhjal.",
+		"title": "Apercurast",
+		"lead": "Eesti tervishoiuteenuse osutajate avatud kataloog: haiglad, perearstikeskused, hambaravi, eriarstiabi, õendusabi, apteegid ja muud kohad, kuhu patsiendid pöörduvad.",
+		"sections": {
+			"what": {
+				"heading": "Mida Apercura teeb",
+				"body": [
+					"Apercura avaldab lehe igale tervishoiuteenuse osutajale, kellel on Terviseameti tegevusluba (haiglad, perearstikeskused, hambaravi, eriarstiabi, õendusabi, ämmaemandusabi, füsioteraapia, psühholoogiline ravi ja logopeedia), ning igale Ravimiameti registris olevale üldapteegile.",
+					"Patsiendid leiavad iga teenuseosutaja, mitte ainult neid, kes platvormile maksavad. Teenuseosutajad saavad oma lehe tasuta üle võtta, seda kontrollida ja täiendada. Eestis Apercura veebibroneerimist ei paku."
+				]
+			},
+			"principles": {
+				"heading": "Põhimõtted",
+				"list": [
+					"Iga teenuseosutaja on esitatud ühtmoodi, olenemata sellest, kas ta Apercurat kasutab või mitte.",
+					"Ainult faktiline teave: ei hinnanguid, arvustusi, reklaame ega tasulist järjestust.",
+					"Teenuseosutajatele ja patsientidele tasuta, ilma tellimuse ja vahendustasuta.",
+					"Iga leht näitab, kust selle andmed pärinevad ja millal neid viimati uuendati.",
+					"Minimaalselt andmeid, kogutud kindlaks eesmärgiks ja kustutatud ettenähtud aja järel."
+				]
+			},
+			"how": {
+				"heading": "Kust lehed pärinevad",
+				"body": [
+					"Lehed koostatakse iga nädal Terviseameti tervishoiuteenuse osutajate ja tegevuslubade avaandmetest (MEDRE, litsents CC BY-NC-SA 3.0) ja Ravimiameti tegevuslubade registrist; maakonnad, omavalitsused ja asulad pärinevad Maa- ja Ruumiameti haldus- ja asustusjaotusest ning aadressipunktid aadressiandmete süsteemist (ADS). Andmete lehel on iga allikas koos litsentsi ja kuupäevaga."
+				]
+			},
+			"who": {
+				"heading": "Kes Apercurat haldab",
+				"body": [
+					"Apercura on avalikes huvides tegutsev projekt. See ei ole riigiteenus ega ole seotud Terviseameti, Ravimiameti, Tervisekassa ega TEHIKuga."
+				]
+			}
+		},
+		"fields": {
+			"publisher": "Väljaandja",
+			"contact": "Kontakt"
+		},
+		"links": {
+			"data": "Andmed ja allikad",
+			"openSource": "Lähtekood ja litsents"
+		}
+	},
+	"OpenSourcePage": {
+		"metaTitle": "Avatud lähtekood · Apercura",
+		"metaDescription": "Apercura kogu lähtekood on avalik AGPL-3.0 litsentsi all. Lugege seda, auditeerige seda või käitage kogu platvormi ise.",
+		"title": "Kood on avalik.",
+		"lead": "Apercura iga rida on avaldatud AGPL-3.0 litsentsi all: saate seda lugeda, auditeerida ja kogu platvormi ise käitada.",
+		"sections": {
+			"licence": {
+				"heading": "AGPL-3.0 litsents",
+				"body": [
+					"AGPL-3.0 on vaba tarkvara litsents. Igaüks võib koodi kasutada, uurida, muuta ja jagada. Kes pakub muudetud versiooni võrguteenusena, peab oma muudatused avaldama sama litsentsi all."
+				]
+			},
+			"can": {
+				"heading": "Mida saate teha",
+				"list": [
+					"Lugeda, kuidas iga leht koostatakse ja kuidas avaandmed imporditakse.",
+					"Kontrollida, kuidas patsientide andmeid krüpteeritakse ja kui kaua neid säilitatakse.",
+					"Teatada probleemist või pakkuda muudatust avalikus repositooriumis.",
+					"Käitada kogu platvormi oma taristul Dockeriga, koos avaandmete impordiga."
+				]
+			},
+			"selfHost": {
+				"heading": "Ise käitamine",
+				"body": [
+					"Ainult kataloogi sisaldav paigaldus ei hoia terviseandmeid. Patsientide broneeringud on terviseandmed: kui käitate broneerimist teiste jaoks, peate järgima terviseandmete reegleid, mis teie riigis kehtivad. Terviseameti andmed on litsentsi CC BY-NC-SA 3.0 all: neid ei tohi kasutada ärilisel eesmärgil."
+				]
+			}
+		},
+		"facts": {
+			"licence": "Litsents",
+			"licenceValue": "GNU Affero General Public License v3.0",
+			"repository": "Repositoorium",
+			"data": "Kataloogi andmed"
+		},
+		"dataValue": "Terviseameti andmed CC BY-NC-SA 3.0, vt andmete lehte",
+		"cta": {
+			"heading": "Lugege lähtekoodi",
+			"body": "Repositooriumis on kood, dokumentatsioon ja ise käitamise juhend.",
+			"link": "Ava repositoorium"
+		}
+	},
+	"Listing": {
+		"count": "{count, plural, one {# teenuseosutaja} other {# teenuseosutajat}}",
+		"metaTitle": "{count, plural, one {{listing} – {place}: # teenuseosutaja · Apercura} other {{listing} – {place}: # teenuseosutajat · Apercura}}",
+		"metaTitlePage": "{listing} – {place}, lehekülg {page} · Apercura",
+		"metaDescription": "{count, plural, one {# teenuseosutaja rubriigis „{occupation}”, {place}: {fees, select, sector {aadress, telefon ja hinnad} other {aadress ja telefon}}, Terviseameti ja Ravimiameti avaandmetest.} other {# teenuseosutajat rubriigis „{occupation}”, {place}: {fees, select, sector {aadressid, telefonid ja hinnad} other {aadressid ja telefonid}}, Terviseameti ja Ravimiameti avaandmetest.}}",
+		"title": "{listing} – {place}",
+		"lead": "{count, plural, one {Riiklikes registrites on selle rubriigi all # teenuseosutaja, asukoht {place}.} other {Riiklikes registrites on selle rubriigi all # teenuseosutajat, asukoht {place}.}}",
+		"practitionersHeading": "{count, plural, one {Teenuseosutaja} other {# teenuseosutajat}}",
+		"practitionersIntro": "Tähestikulises järjekorras. Keegi ei maksa siin olemise eest ja kedagi ei paigutata kõrgemale.",
+		"rowFacts": "Lepinguline suhe: {sector} · Ravikindlustuskaart: {carteVitale}",
+		"rowFactsAgreement": "Leping Tervisekassaga: {sector} · Ravikindlustuskaart: {carteVitale}",
+		"columns": {
+			"practitioner": "Teenuseosutaja",
+			"sector": "Lepinguline suhe",
+			"agreement": "Leping Tervisekassaga",
+			"carteVitale": "Ravikindlustuskaart"
+		},
+		"pagination": {
+			"label": "Loendi leheküljed",
+			"previous": "Eelmine lehekülg",
+			"next": "Järgmine lehekülg",
+			"status": "Lehekülg {page}/{pages}",
+			"page": "<hidden>Lehekülg </hidden>{page}",
+			"jumps": "Mine leheküljele"
+		},
+		"facts": {
+			"heading": "Arvudes",
+			"intro": "Lepingulised suhted pärinevad ravikindlustuse registrist nende teenuseosutajate kohta, keda seal õnnestus leida.",
+			"introAgreement": "Lepingud Tervisekassaga pärinevad ravikindlustuse registrist nende teenuseosutajate kohta, keda seal õnnestus leida.",
+			"sectorUnknown": "Lepinguline suhe teadmata",
+			"agreementUnknown": "Leping Tervisekassaga teadmata",
+			"carteVitaleYes": "Aktsepteerivad ravikindlustuskaarti",
+			"carteVitaleNo": "Ei aktsepteeri ravikindlustuskaarti",
+			"bookingNotOpen": "Veel ei ole avatud",
+			"sources": "Terviseamet (MEDRE), Ravimiamet, Maa- ja Ruumiamet"
+		},
+		"communesHeading": "{listing} – asulad: {place}",
+		"nearbyHeading": "{listing} – lähedal asuvad asulad",
+		"establishmentsHeading": "Asutused: {place}",
+		"establishmentsIntro": "Haiglad, kliinikud ja tervisekeskused, kus töötavad rubriigi „{occupation}” teenuseosutajad.",
+		"allSpecialties": "Kõik teenuseosutajate liigid: {place}",
+		"hubMetaTitle": "{count, plural, one {{listing} Eestis: # teenuseosutaja · Apercura} other {{listing} Eestis: # teenuseosutajat · Apercura}}",
+		"hubMetaDescription": "{count, plural, one {# teenuseosutaja rubriigis „{occupation}” Eestis, omavalitsuste kaupa: {fees, select, sector {aadress, telefon ja hinnad} other {aadress ja telefon}}, Terviseameti ja Ravimiameti avaandmetest.} other {# teenuseosutajat rubriigis „{occupation}” Eestis, omavalitsuste kaupa: {fees, select, sector {aadressid, telefonid ja hinnad} other {aadressid ja telefonid}}, Terviseameti ja Ravimiameti avaandmetest.}}",
+		"hubTitle": "{listing} Eestis",
+		"hubLead": "{count, plural, one {Riiklikes registrites on selle rubriigi all Eestis # teenuseosutaja.} other {Riiklikes registrites on selle rubriigi all Eestis # teenuseosutajat.}}",
+		"departmentsHeading": "{listing} omavalitsuste kaupa",
+		"departmentsIntro": "Valige omavalitsus, et näha selle asulaid ja teenuseosutajaid.",
+		"browseDirectory": "Sirvi kataloogi asukoha järgi",
+		"metaTitleShort": "{listing} – {place} · Apercura",
+		"metaDescriptionPage": "{count, plural, one {Lehekülg {page}/{pages}: # teenuseosutaja rubriigis „{occupation}”, {place}.} other {Lehekülg {page}/{pages}: # teenuseosutajat rubriigis „{occupation}”, {place}.}}",
+		"metaDescriptionPageRange": "{count, plural, one {Lehekülg {page}/{pages}, {first}–{last}: # teenuseosutaja rubriigis „{occupation}”, {place}.} other {Lehekülg {page}/{pages}, {first}–{last}: # teenuseosutajat rubriigis „{occupation}”, {place}.}}",
+		"hubMetaTitleShort": "{listing} Eestis · Apercura",
+		"authoritiesHeading": "{listing} – omavalitsused: {place}"
+	},
+	"Directory": {
+		"metaTitle": "Tervishoiuteenuse osutajad asukoha järgi · Apercura",
+		"metaDescription": "Eesti maakonnad ja omavalitsused koos tervishoiuteenuse osutajate ja apteekidega Terviseameti ja Ravimiameti avaandmetest: haiglad, perearstid ja muud.",
+		"title": "Kataloog asukoha järgi",
+		"lead": "{count, plural, one {# teenuseosutaja maakondade ja omavalitsuste kaupa.} other {# teenuseosutajat maakondade ja omavalitsuste kaupa.}}",
+		"otherRegion": "Muud kohad",
+		"emptyTitle": "Kataloogi ei ole veel imporditud",
+		"emptyBody": "Terviseameti ja Ravimiameti andmeid ei ole sellesse serverisse veel imporditud. Tulge tagasi pärast järgmist importi.",
+		"placeMetaTitle": "Haiglad, perearstid, hambaravi ja apteegid – {place} · Apercura",
+		"placeMetaDescription": "{count, plural, one {# tervishoiuteenuse osutaja, {place}, liigi järgi, Terviseameti ja Ravimiameti avaandmetest.} other {# tervishoiuteenuse osutajat, {place}, liigi järgi, Terviseameti ja Ravimiameti avaandmetest.}}",
+		"placeTitle": "Tervishoiuteenuse osutajad – {place}",
+		"placeLead": "{count, plural, one {# teenuseosutaja, asukoht {place}.} other {# teenuseosutajat, asukoht {place}.}}",
+		"specialtiesHeading": "Teenuseosutaja liigi järgi",
+		"communesHeading": "Asulad: {place}",
+		"arrondissementsHeading": "Linnaosade kaupa",
+		"establishmentsHeading": "Asutused: {place}",
+		"placeMetaTitleShort": "Teenuseosutajad – {place} · Apercura",
+		"authoritiesHeading": "Omavalitsused: {place}",
+		"regionLink": "Kõik: {place}"
+	},
+	"Establishment": {
+		"metaTitle": "{name} · Apercura",
+		"metaTitlePlace": "{name}, {place} · Apercura",
+		"metaDescription": "{count, plural, one {{name}: aadress, keskus ja # seal töötav tervishoiutöötaja riiklikust registrist.} other {{name}: aadress, keskus ja # seal töötavat tervishoiutöötajat riiklikust registrist.}}",
+		"directory": "Kataloog",
+		"folio": "FINESS {finess}",
+		"lead": "{count, plural, one {{kind}. Riiklik register näitab siin töötavat # tervishoiutöötajat.} other {{kind}. Riiklik register näitab siin töötavat # tervishoiutöötajat.}}",
+		"addressHeading": "Aadress",
+		"finess": "FINESS-number",
+		"action": {
+			"call": "Vastuvõtule registreeritakse asutuse kaudu. Helistage selle keskusesse ja küsige vajalikku osakonda.",
+			"noPhone": "Selle asutuse telefoninumbrit ei ole avaldatud.",
+			"noPhoneHint": "Kontaktandmed leiate asutuse enda veebilehelt."
+		},
+		"practitionersHeading": "{count, plural, one {Siin töötav tervishoiutöötaja} other {# siin töötavat tervishoiutöötajat}}",
+		"practitionersIntro": "Eriala järgi, tähestikulises järjekorras.",
+		"otherProfessions": "Muud kutsealad",
+		"source": "Annuaire Santé (ANS) ja FINESS+"
+	},
+	"SearchForm": {
+		"specialties": "Erialad",
+		"practitioners": "Teenuseosutajad",
+		"places": "Kohad",
+		"department": "Omavalitsus",
+		"nearMe": "Minu lähedal",
+		"locating": "Teie asukohta otsitakse…",
+		"geoDenied": "Asukoha jagamine on selle veebilehe jaoks välja lülitatud. Kirjutage selle asemel koha nimi.",
+		"geoUnavailable": "Teie asukohta ei õnnestunud leida. Kirjutage selle asemel koha nimi.",
+		"searching": "Otsitakse…",
+		"noSuggestion": "Soovitusi ei ole. Kõigi tulemuste nägemiseks vajutage „Otsi”."
+	},
+	"OgImage": {
+		"runningHead": "Tervishoiuteenuse osutajate avatud kataloog",
+		"titles": {
+			"medecin": "Igal arstil on juba leht.",
+			"chirurgien-dentiste": "Igal hambaarstil on juba leht.",
+			"sage-femme": "Igal ämmaemandal on juba leht.",
+			"infirmier": "Igal õendusabi osutajal on juba leht.",
+			"annuaire": "Tervishoiuteenuse osutajad liigi ja asukoha järgi."
+		},
+		"footer": "Tasuta · Avatud lähtekood · Ilma hinnangute ja reklaamideta",
+		"practitioner": {
+			"folio": "Tähis {rpps}",
+			"alt": "{name}, {occupation}, {place}",
+			"altNoPlace": "{name}, {occupation}"
+		}
+	},
+	"taxonomy": {
+		"profession": {
+			"prakticky-lekar": "Üldarst",
+			"detsky-lekar": "Lastearst",
+			"zubni-lekar": "Hambaarst",
+			"gynekolog": "Günekoloog",
+			"lekar-specialista": "Eriarst",
+			"lekarna": "Apteek",
+			"domaci-pece": "Koduõenduse osutaja",
+			"fyzioterapeut": "Füsioterapeut",
+			"psycholog": "Kliiniline psühholoog",
+			"logoped": "Logopeed",
+			"porodni-asistentka": "Ämmaemand",
+			"ocni-lekar": "Silmaarst",
+			"detsky-psychiatr": "Laste- ja noorukite psühhiaater",
+			"psychiatr": "Psühhiaater",
+			"ortoped": "Ortopeed",
+			"plasticky-chirurg": "Plastikakirurg",
+			"cevni-chirurg": "Veresoontekirurg",
+			"neurochirurg": "Neurokirurg",
+			"dermatolog": "Nahaarst",
+			"neurolog": "Neuroloog",
+			"rehabilitacni-lekar": "Taastusraviarst",
+			"endokrinolog": "Endokrinoloog ja diabetoloog",
+			"usni-nosni-krcni": "Kõrva-nina-kurguarst",
+			"kardiolog": "Kardioloog",
+			"urolog": "Uroloog",
+			"alergolog": "Allergoloog",
+			"ortodontista": "Ortodont",
+			"pneumolog": "Pulmonoloog",
+			"gastroenterolog": "Gastroenteroloog",
+			"revmatolog": "Reumatoloog",
+			"angiolog": "Angioloog",
+			"onkolog": "Onkoloog",
+			"nefrolog": "Nefroloog",
+			"genetik": "Meditsiinigeneetik",
+			"radiolog": "Radioloog",
+			"anesteziolog": "Anestesioloog",
+			"chirurg": "Kirurg",
+			"internista": "Sisearst",
+			"haiglad": "Haigla",
+			"haigla": "Haigla",
+			"perearstikeskused": "Perearstikeskus",
+			"perearstikeskus": "Perearstikeskus",
+			"hambaravi": "Hambakliinik",
+			"hambakliinik": "Hambakliinik",
+			"eriarstiabi": "Eriarstiabi osutaja",
+			"eriarstiabi-osutaja": "Eriarstiabi osutaja",
+			"oendusabi": "Õendusabi osutaja",
+			"oendusabi-osutaja": "Õendusabi osutaja",
+			"ammaemandusabi": "Ämmaemandusabi osutaja",
+			"ammaemandusabi-osutaja": "Ämmaemandusabi osutaja",
+			"fusioteraapia": "Füsioteraapia osutaja",
+			"fusioteraapia-osutaja": "Füsioteraapia osutaja",
+			"psuhholoogiline-ravi": "Psühholoogilise ravi osutaja",
+			"psuhholoogilise-ravi-osutaja": "Psühholoogilise ravi osutaja",
+			"logopeedia": "Logopeedia osutaja",
+			"logopeedia-osutaja": "Logopeedia osutaja",
+			"apteegid": "Apteek",
+			"apteek": "Apteek"
+		},
+		"listing": {
+			"prakticky-lekar": "Üldarstid",
+			"detsky-lekar": "Lastearstid",
+			"zubni-lekar": "Hambaarstid",
+			"gynekolog": "Günekoloogid",
+			"lekar-specialista": "Eriarstid",
+			"lekarna": "Apteegid",
+			"domaci-pece": "Koduõendus",
+			"fyzioterapeut": "Füsioterapeudid",
+			"psycholog": "Kliinilised psühholoogid",
+			"logoped": "Logopeedid",
+			"porodni-asistentka": "Ämmaemandad",
+			"ocni-lekar": "Silmaarstid",
+			"detsky-psychiatr": "Laste- ja noorukite psühhiaatrid",
+			"psychiatr": "Psühhiaatrid",
+			"ortoped": "Ortopeedid",
+			"plasticky-chirurg": "Plastikakirurgid",
+			"cevni-chirurg": "Veresoontekirurgid",
+			"neurochirurg": "Neurokirurgid",
+			"dermatolog": "Nahaarstid",
+			"neurolog": "Neuroloogid",
+			"rehabilitacni-lekar": "Taastusraviarstid",
+			"endokrinolog": "Endokrinoloogid ja diabetoloogid",
+			"usni-nosni-krcni": "Kõrva-nina-kurguarstid",
+			"kardiolog": "Kardioloogid",
+			"urolog": "Uroloogid",
+			"alergolog": "Allergoloogid",
+			"ortodontista": "Ortodondid",
+			"pneumolog": "Pulmonoloogid",
+			"gastroenterolog": "Gastroenteroloogid",
+			"revmatolog": "Reumatoloogid",
+			"angiolog": "Angioloogid",
+			"onkolog": "Onkoloogid",
+			"nefrolog": "Nefroloogid",
+			"genetik": "Meditsiinigeneetikud",
+			"radiolog": "Radioloogid",
+			"anesteziolog": "Anestesioloogid ja valukliinikud",
+			"chirurg": "Kirurgid",
+			"internista": "Sisearstid",
+			"haiglad": "Haiglad",
+			"perearstikeskused": "Perearstikeskused",
+			"hambaravi": "Hambaravi",
+			"eriarstiabi": "Eriarstiabi",
+			"oendusabi": "Õendusabi",
+			"ammaemandusabi": "Ämmaemandusabi",
+			"fusioteraapia": "Füsioteraapia",
+			"psuhholoogiline-ravi": "Psühholoogiline ravi",
+			"logopeedia": "Logopeedia",
+			"apteegid": "Apteegid"
+		},
+		"practiceKind": {
+			"office": "Tegevuskoht"
+		}
+	},
+	"booking": {
+		"panel": {
+			"code": {
+				"sendsLeft": "{count, plural, one {Saate küsida veel # koodi.} other {Saate küsida veel # koodi.}}",
+				"invalid": "{count, plural, one {See kood ei ole õige. Jäänud on # katse.} other {See kood ei ole õige. Jäänud on # katset.}}"
+			}
+		},
+		"manage": {
+			"cutoffPassed": "{hours, plural, one {Veebis saab muudatusi teha kuni # tund enne vastuvõttu. Selle tühistamiseks või edasilükkamiseks helistage nüüd teenuseosutajale.} other {Veebis saab muudatusi teha kuni # tundi enne vastuvõttu. Selle tühistamiseks või edasilükkamiseks helistage nüüd teenuseosutajale.}}"
+		}
+	},
+	"auth": {
+		"runningHead": "Teenuseosutaja keskkond",
+		"metadata": {
+			"signIn": "Sisselogimine · Apercura",
+			"signUp": "Konto loomine · Apercura",
+			"verifyEmail": "E-posti aadressi kinnitamine · Apercura",
+			"challenge": "Kinnitage, et see olete teie · Apercura",
+			"security": "Turvalisus · Apercura",
+			"home": "Teie keskkond · Apercura"
+		},
+		"common": {
+			"email": "E-posti aadress",
+			"password": "Parool",
+			"pending": "Palun oodake",
+			"loading": "Laadimine",
+			"signOut": "Logi välja",
+			"signingOut": "Väljalogimine",
+			"totpCode": "Autentimisrakenduse 6-kohaline kood"
+		},
+		"errors": {
+			"generic": "Midagi läks valesti. Proovige hetke pärast uuesti.",
+			"tooManyRequests": "Liiga palju katseid. Oodake minut ja proovige siis uuesti.",
+			"invalidCredentials": "See e-posti aadress ja parool ei sobi kokku.",
+			"emailNotVerified": "Kinnitage esmalt oma e-posti aadress: saatsime teile just uue lingi.",
+			"invalidCode": "See kood ei kehti. Kontrollige koodi ja proovige uuesti.",
+			"locked": "Liiga palju valesid koode. Oodake 15 minutit ja logige siis uuesti sisse.",
+			"passwordTooShort": "Parool on liiga lühike: kasutage vähemalt 12 tähemärki.",
+			"passwordTooLong": "Parool on liiga pikk: kasutage kuni 128 tähemärki.",
+			"userExists": "Selle e-posti aadressiga konto on juba olemas. Logige hoopis sisse.",
+			"invalidPassword": "See parool ei ole õige.",
+			"mfaRequired": "Kinnitage esmalt oma isik teise teguriga.",
+			"lastFactor": "Lisage enne selle eemaldamist teine tegur: teie kontol peab alati üks olema.",
+			"passkeyFailed": "Pääsuvõtit ei õnnestunud kasutada. Proovige uuesti või kasutage parooli ja koodi.",
+			"accountFrozen": "See konto on pärast lehe vaidlustamist külmutatud. Võtke meiega ühendust, et see uue isikutuvastusega taastada."
+		},
+		"signIn": {
+			"title": "Sisselogimine",
+			"lead": "Teie teenuseosutaja keskkond: teie leht, teie kalender, teie meeskond.",
+			"asideFactor": "Iga konto, millel on ligipääs broneeringutele, vajab teist tegurit: autentimisrakenduse koodi või pääsuvõtit.",
+			"asidePasskey": "Pääsuvõti hoitakse teie telefonis või arvutis ja see avatakse sõrmejälje, näo või PIN-koodiga.",
+			"passwordHeading": "Parooliga",
+			"submit": "Logi sisse",
+			"passkeyHeading": "Pääsuvõtmega",
+			"passkeyHint": "Parooli pole vaja: teie seade kinnitab, et see olete teie.",
+			"passkey": "Logi sisse pääsuvõtmega",
+			"noAccount": "Kas teil pole veel kontot?",
+			"signUpLink": "Loo konto",
+			"totpHeading": "Sisestage kood",
+			"backupHeading": "Sisestage varukood",
+			"totpLead": "Avage autentimisrakendus ja sisestage Apercura jaoks näidatud 6-kohaline kood.",
+			"backupLead": "Iga varukood toimib ühe korra. Saite need autentimisrakenduse seadistamisel.",
+			"backupCode": "Varukood",
+			"verify": "Kinnita",
+			"useBackupCode": "Kasuta hoopis varukoodi",
+			"useTotp": "Kasuta hoopis autentimisrakendust",
+			"pscHeading": "Pro Santé Connectiga",
+			"pscHint": "Kui olete selle lehe ülevõtmisel oma kontoga sidunud, logib e-CPS rakendus või CPS-kaart teid sisse ilma täiendava koodita.",
+			"psc": "Logi sisse Pro Santé Connectiga",
+			"pscFailed": "Pro Santé Connectiga sisselogimine ei õnnestunud. Siduge see esmalt lehe ülevõtmisel oma kontoga või logige sisse parooliga."
+		},
+		"signUp": {
+			"title": "Konto loomine",
+			"lead": "Teenuseosutajatele ja nende abilistele tasuta.",
+			"asideSteps": "Kolm sammu: looge konto, kinnitage oma e-posti aadress ja seadistage teine tegur.",
+			"asideFree": "Konto loomine ei muuda ühtegi avalikku lehte. Järgmine samm on oma lehe ülevõtmine.",
+			"name": "Ees- ja perekonnanimi",
+			"emailHint": "Saadame sellele aadressile kinnituslingi.",
+			"passwordHint": "Vähemalt {min} tähemärki. Pikka lauset on lihtne meeles pidada.",
+			"submit": "Loo konto",
+			"haveAccount": "Kas teil on juba konto?",
+			"signInLink": "Logi sisse",
+			"sentHeading": "Vaadake oma postkasti",
+			"sentTitle": "Saatsime kinnituslingi aadressile {email}.",
+			"sentBody": "Avage kiri ja järgige linki tunni aja jooksul. Seejärel logige sisse, et seadistada teine tegur.",
+			"sentHint": "Mõne minuti pärast ikka midagi ei tulnud? Vaadake rämpsposti kausta või logige sisse: saadame uue lingi."
+		},
+		"verifyEmail": {
+			"title": "E-posti aadressi kinnitamine",
+			"successTitle": "Teie e-posti aadress on kinnitatud.",
+			"successBody": "Logige sisse oma parooliga, et seadistada teine tegur.",
+			"errorTitle": "See link enam ei toimi.",
+			"errorBody": "See võib olla aegunud või juba kasutatud. Logige sisse: saadame teile uue lingi.",
+			"signIn": "Logi sisse"
+		},
+		"challenge": {
+			"title": "Kinnitage, et see olete teie",
+			"lead": "Teie kontol on teine tegur: kasutage seda oma keskkonna avamiseks.",
+			"aside": "Ainult paroolist broneeringutele ligipääsuks ei piisa.",
+			"passkeyHeading": "Pääsuvõtmega",
+			"passkeyLead": "Teie seade küsib sõrmejälge, nägu või PIN-koodi.",
+			"passkey": "Kasuta minu pääsuvõtit",
+			"totpHeading": "Autentimisrakendusega",
+			"otherHeading": "Ei ole teie või puudub ligipääs tegurile?",
+			"otherLead": "Logige välja. Konto taastamine tähendab uut isikutuvastust."
+		},
+		"security": {
+			"title": "Turvalisus",
+			"lead": "Kuidas te sisse logite ja kus olete sisse logitud.",
+			"enrolLead": "Üks viimane samm enne teie keskkonda: seadistage teine tegur.",
+			"enrolTitle": "Jätkamiseks valige teine tegur",
+			"enrolBody": "Apercura nõuab seda igalt kontolt, millel on ligipääs broneeringutele. Sobib nii autentimisrakendus kui ka pääsuvõti; teise saate lisada hiljem.",
+			"continue": "Jätka oma keskkonda",
+			"actions": "Toimingud",
+			"totp": {
+				"heading": "Autentimisrakendus",
+				"lead": "Teie telefonis olev rakendus (näiteks FreeOTP, Aegis või Google Authenticator) näitab iga 30 sekundi järel uut 6-kohalist koodi.",
+				"enabledTitle": "Autentimisrakendus on seadistatud.",
+				"enabledBody": "Iga kord, kui logite sisse parooliga, küsitakse teilt koodi.",
+				"scanHeading": "1. Skannige QR-kood",
+				"scanLead": "Lisage autentimisrakenduses konto ja skannige see kood. Kui te ei saa seda skannida, sisestage seadistusvõti.",
+				"qrLabel": "QR-kood Apercura lisamiseks autentimisrakendusse",
+				"manualKey": "Seadistusvõti",
+				"codesHeading": "2. Hoidke oma varukoodid alles",
+				"codesLead": "Kui kaotate telefoni, saate iga koodiga ühe korra sisse logida. Printige need välja või salvestage paroolihaldurisse; neid näidatakse ainult praegu.",
+				"confirmHeading": "3. Sisestage rakenduse näidatud kood",
+				"confirm": "Lülita sisse",
+				"password": "Teie parool",
+				"passwordHint": "Küsime seda uuesti enne, kui muudame teie sisselogimisviisi.",
+				"start": "Seadista rakendus"
+			},
+			"passkeys": {
+				"heading": "Pääsuvõtmed",
+				"lead": "Pääsuvõti jääb teie telefoni, arvutisse või turvavõtmesse ja see avatakse sõrmejälje, näo või PIN-koodiga. Midagi ei pea sisestama, midagi ei saa varastada.",
+				"addedTitle": "Pääsuvõti on lisatud.",
+				"name": "Nimi",
+				"added": "Lisatud",
+				"unnamed": "Pääsuvõti",
+				"removeNamed": "Eemalda {name}",
+				"remove": "Eemalda",
+				"none": "Pääsuvõtit veel ei ole.",
+				"nameLabel": "Uue pääsuvõtme nimi (valikuline)",
+				"nameHint": "Näiteks: vastuvõtu arvuti.",
+				"add": "Lisa pääsuvõti"
+			},
+			"sessions": {
+				"heading": "Kus olete sisse logitud",
+				"lead": "Seanss lõpeb pärast 12 tundi kasutamata olekut. Logige välja igast seansist, mida te ei tunne.",
+				"device": "Seade",
+				"lastActive": "Viimati aktiivne",
+				"unknownDevice": "Tundmatu seade",
+				"current": "See seanss",
+				"revoke": "Logi välja",
+				"everywhereHint": "Kaotasite seadme või jagasite parooli? Logige välja kõigist seanssidest, ka sellest.",
+				"everywhere": "Logi välja kõikjal"
+			},
+			"data": {
+				"heading": "Teie andmed",
+				"lead": "Koopia kõigest, mida teie konto kohta hoiame, ja selle kustutamine.",
+				"exportHeading": "Laadige oma andmed alla",
+				"exportBody": "JSON-fail teie konto, sisselogimisviiside (mitte kunagi nende saladuste), seansside, praksiste, ülevõtmistaotluste ja lehe sisuga.",
+				"export": "Laadi minu andmed alla",
+				"deleteHeading": "Kustutage oma konto",
+				"deleteBody": "Teie konto, seansid, taotlused ja dokumendid kustutatakse. Teie leht naaseb registri andmete juurde: üle võtmata, ilma teie sisu ja fotota.",
+				"closeEffect": "Praksise sulgemine tühistab selle eelseisvad broneeringud (patsientidele teatatakse e-postiga), tühistab selle kalendrilingid ja kustutab ööpäeva jooksul selle patsientide andmed. Juurdepääsulogi säilitatakse ühe aasta.",
+				"practiceChoice": "Mis saab praksisest {name}?",
+				"close": "Sulge praksis: selle liikmed kaotavad ligipääsu",
+				"transfer": "Anna see üle kasutajale {name} ({email})",
+				"practiceAlone": "Praksis {name} suletakse koos teie kontoga (olete selle ainus liige).",
+				"confirmEmail": "Kinnitamiseks kirjutage oma e-posti aadress",
+				"confirmEmailHint": "Kustutamist ei saa tagasi võtta.",
+				"mismatch": "See ei ole teie konto e-posti aadress.",
+				"hasTeam": "Valige iga meeskonnaga praksise kohta, mis sellest saab.",
+				"lastAdmin": "Olete platvormi viimane administraator: määrake esmalt keegi teine.",
+				"failed": "Kontot ei õnnestunud kustutada. Proovige hetke pärast uuesti.",
+				"delete": "Kustuta minu konto"
+			}
+		},
+		"app": {
+			"title": "Teie keskkond",
+			"lead": "Sisse logitud kui {email}.",
+			"homeLink": "Apercura, avaleht",
+			"nav": {
+				"label": "Teenuseosutaja keskkond",
+				"home": "Teie keskkond",
+				"security": "Turvalisus",
+				"page": "Teie leht",
+				"adminClaims": "Ülevõtmistaotlused",
+				"adminReports": "Teated",
+				"today": "Täna",
+				"agenda": "Kalender",
+				"team": "Meeskond",
+				"menu": "Menüü",
+				"stats": "Statistika",
+				"share": "Jagamine",
+				"adminContacts": "Kontaktisoovid"
+			},
+			"practicesHeading": "Teie praksised",
+			"columns": {
+				"practice": "Praksis",
+				"role": "Teie roll",
+				"page": "Leht",
+				"status": "Olek",
+				"next": "Järgmine samm"
+			},
+			"emptyTitle": "Praksist veel ei ole",
+			"emptyBody": "Teie praksis ilmub siia, kui teie leht on üle võetud ja kinnitatud.",
+			"emptyAction": "Leia minu leht",
+			"securityHeading": "Konto turvalisus",
+			"securityBody": "Teie kontot kaitseb teine tegur. Hallake oma autentimisrakendust, pääsuvõtmeid ja seansse.",
+			"securityLink": "Turvaseaded",
+			"claimsHeading": "Teie leht ja ülevõtmistaotlused",
+			"editPage": "Muuda lehte",
+			"openClaim": "Ava taotlus",
+			"adminRunningHead": "Haldus",
+			"agendaHeading": "Kalender",
+			"agendaBody": "Teie päev, teie nädal, vastamist ootavad soovid ja broneerimise seaded.",
+			"agendaLink": "Ava tänane kalender",
+			"invitationsHeading": "Kutsed",
+			"invitationBody": "{practice} kutsub teid oma meeskonnaga liituma.",
+			"invitationLink": "Vasta kutsele",
+			"pageHeading": "Teie leht",
+			"pageSummary": "{views, plural, =0 {Vaatamisi ei olnud} one {# vaatamine} other {# vaatamist}} viimase 30 päeva jooksul; leht on {score}% ulatuses täidetud.",
+			"statsLink": "Vaata statistikat ja seda, mis on puudu",
+			"shareLink": "Jaga lehte: link, QR-kood, plakat"
+		},
+		"roles": {
+			"owner": "Omanik",
+			"practitioner": "Tervishoiutöötaja",
+			"assistant": "Abiline"
+		},
+		"email": {
+			"wordmark": "Apercura",
+			"runningHead": "Teenuseosutaja keskkond",
+			"footer": "Apercura: tervishoiuteenuse osutajate avatud kataloog. Tasuta ja avatud lähtekoodiga.",
+			"verify": {
+				"subject": "Kinnitage oma e-posti aadress",
+				"preview": "Kinnitage oma e-posti aadress, et Apercura konto loomine lõpule viia.",
+				"title": "Kinnitage oma e-posti aadress",
+				"greeting": "Tere, {name}!",
+				"body": "Lõite just Apercura konto. Jätkamiseks kinnitage, et see aadress kuulub teile.",
+				"action": "Kinnita minu aadress",
+				"fallback": "Kui nupp ei tööta, kopeerige see link oma brauserisse:",
+				"expiry": "Link kehtib ühe tunni.",
+				"ignore": "Te ei loonud seda kontot? Jätke see kiri tähelepanuta: midagi ei juhtu."
+			}
+		}
+	},
+	"emails": {
+		"fallback": "Kui nupp ei tööta, kopeerige see link oma brauserisse:",
+		"claimRegistryLink": {
+			"subject": "Kinnitage teenuseosutaja lehe ülevõtmine",
+			"title": "Kas see on teenuseosutaja {practitioner}?",
+			"body": [
+				"Keegi on palunud õigust hallata Apercura lehte: {practitioner}. See kiri saadeti aadressile, mille riiklik register selle teenuseosutaja kohta avaldab.",
+				"Kui taotlus pärineb teenuseosutajalt {practitioner}, avage link ja kinnitage see. Seejärel on leht kinnitatud."
+			],
+			"action": "Kinnita ülevõtmine",
+			"notes": [
+				"Link kehtib 24 tundi.",
+				"Ei oodanud seda? Jätke see kiri tähelepanuta: midagi ei muutu ja leht jääb samaks."
+			]
+		},
+		"claimReceived": {
+			"subject": "Teie ülevõtmistaotlus on läbivaatamisel",
+			"title": "Teie ülevõtmistaotlus on läbivaatamisel",
+			"body": [
+				"Tere, {name}!",
+				"Oleme saanud teie ülevõtmistaotluse ja selle dokumendid. Apercura meeskonna liige vaatab need läbi ja kirjutab teile e-postiga.",
+				"Vaatame taotlused läbi 48 tunni jooksul tööpäevadel."
+			]
+		},
+		"claimVerified": {
+			"subject": "Teie leht on kinnitatud",
+			"title": "Teie leht on kinnitatud",
+			"body": [
+				"Tere, {name}!",
+				"Teie lehel on nüüd kinnitatud lehe märk. Kontrollige imporditud teavet, lisage hinnad ja makseviisid ning avaldage oma leht."
+			],
+			"action": "Täienda minu lehte"
+		},
+		"claimRejected": {
+			"subject": "Teie ülevõtmistaotlust ei rahuldatud",
+			"title": "Teie ülevõtmistaotlust ei rahuldatud",
+			"body": [
+				"Tere, {name}!",
+				"Me ei saanud teie taotlust kinnitada. Läbivaataja märgitud põhjus: {reason}",
+				"Saate oma keskkonnas esitada uue taotluse koos loetava dokumendiga, mis näitab, et tegutsete teenuseosutaja nimel."
+			]
+		},
+		"claimSuperseded": {
+			"subject": "Teie ligipääs lehele võeti ära",
+			"title": "Teie ligipääs lehele võeti ära",
+			"body": [
+				"Tere, {name}!",
+				"Teine konto tõendas, et ta kuulub lehe teenuseosutajale, mida teie konto haldas. Teie konto on külmutatud ja selle ligipääs praksisele eemaldati.",
+				"Kui teenuseosutaja olete teie, võtke meiega ühendust: teie konto saab taastada ainult uue isikutuvastusega."
+			]
+		},
+		"removalReceived": {
+			"subject": "Teie eemaldamistaotlus on kätte saadud",
+			"title": "Teie eemaldamistaotlus on kätte saadud",
+			"body": [
+				"Leht on nüüdsest peidetud: seda ei näidata, indekseerita ega loetleta enam.",
+				"Kontrollime taotlust ja vastame hiljemalt ühe kuu jooksul. Kui see on kinnitatud, leht kustutatakse; kustutatud leht ei tule registri järgmise impordiga tagasi."
+			]
+		},
+		"removalConfirmed": {
+			"subject": "Leht kustutati",
+			"title": "Leht kustutati",
+			"body": [
+				"Leht, mille eemaldamist palusite, on Apercurast kustutatud. See ei tule registri järgmise impordiga tagasi."
+			]
+		},
+		"removalRejected": {
+			"subject": "Teie eemaldamistaotlust ei rahuldatud",
+			"title": "Teie eemaldamistaotlust ei rahuldatud",
+			"body": [
+				"Me ei saanud teie eemaldamistaotlust kinnitada, seetõttu näidatakse lehte uuesti. Põhjus: {reason}",
+				"Kui olete lehel nimetatud teenuseosutaja, võite lehe ka üle võtta ja selle ise oma keskkonnas eemaldada."
+			]
+		},
+		"teamInvitation": {
+			"subject": "{inviter} kutsub teid liituma: {practice}",
+			"title": "Liituge meeskonnaga: {practice}",
+			"body": [
+				"Tere!",
+				"{inviter} kutsub teid Apercuras liituma meeskonnaga {practice}, rollis {role}.",
+				"Liitumiseks logige sisse või looge konto selle e-posti aadressiga ning seadistage teine tegur (autentimisrakendus või pääsuvõti): see kaitseb patsientide andmeid, mida näete."
+			],
+			"action": "Liitu meeskonnaga",
+			"notes": [
+				"See kutse kehtib 48 tundi.",
+				"Te ei oodanud seda? Jätke see kiri tähelepanuta: ilma teieta ei juhtu midagi."
+			]
+		},
+		"contactReceived": {
+			"subject": "Teie soov on kätte saadud",
+			"title": "Teie soov on kätte saadud",
+			"body": [
+				"Tere!",
+				"Oleme saanud teie soovi Apercura kataloogi lehe kohta. Meeskonna liige võtab teiega ühendust, et kontrollida teie isikut ja aidata teil leht üle võtta.",
+				"Kui te seda soovi ei saatnud, jätke see kiri tähelepanuta: ühtegi lehte ega kontot ei muudetud."
+			]
+		},
+		"adminClaims": {
+			"subject": "{count, plural, one {# ülevõtmistaotlus läbivaatamiseks} other {# ülevõtmistaotlust läbivaatamiseks}}",
+			"title": "{count, plural, one {Üks ülevõtmistaotlus ootab otsust} other {# ülevõtmistaotlust ootab otsust}}",
+			"body": [
+				"{count, plural, one {Üks ülevõtmistaotlus saadeti läbivaatamiseks} other {# ülevõtmistaotlust saadeti läbivaatamiseks}} pärast viimast teavitust.",
+				"Üksikasjad on teenuseosutaja keskkonna järjekorras, teie teise teguri taga."
+			],
+			"action": "Ava taotlused"
+		},
+		"adminContactRequests": {
+			"subject": "{count, plural, one {# soov „See olen mina”} other {# soovi „See olen mina”}}",
+			"title": "{count, plural, one {Üks kontaktisoov ootab vastust} other {# kontaktisoovi ootab vastust}}",
+			"body": [
+				"{count, plural, one {Üks teenuseosutaja, kes ei saa oma lehte üle võtta, palub} other {# teenuseosutajat, kes ei saa oma lehte üle võtta, paluvad}}, et temaga võetaks ühendust, pärast viimast teavitust.",
+				"Nende krüpteeritud andmeid saab lugeda teenuseosutaja keskkonna järjekorras."
+			],
+			"action": "Ava soovid"
+		}
+	},
+	"Profile": {
+		"presentationHeading": "Tutvustus",
+		"practicalHeading": "Praktiline teave",
+		"fields": {
+			"languages": "Suhtluskeeled",
+			"accessibility": "Ligipääs",
+			"website": "Veebileht",
+			"fees": "Hinnad",
+			"paymentMethods": "Makseviisid"
+		},
+		"accessibility": {
+			"stepFree": "Astmeteta ligipääs",
+			"lift": "Lift",
+			"parking": "Parkla lähedal"
+		},
+		"languages": {
+			"fr": "prantsuse keel",
+			"en": "inglise keel",
+			"es": "hispaania keel",
+			"de": "saksa keel",
+			"it": "itaalia keel",
+			"pt": "portugali keel",
+			"ar": "araabia keel",
+			"zh": "hiina keel",
+			"ru": "vene keel",
+			"tr": "türgi keel",
+			"ro": "rumeenia keel",
+			"pl": "poola keel",
+			"nl": "hollandi keel",
+			"vi": "vietnami keel",
+			"fa": "pärsia keel",
+			"he": "heebrea keel",
+			"uk": "ukraina keel",
+			"lsf": "prantsuse viipekeel"
+		},
+		"paymentMethods": {
+			"card": "Pangakaart",
+			"cash": "Sularaha",
+			"cheque": "Tšekk",
+			"transfer": "Pangaülekanne"
+		},
+		"fees": {
+			"range": "{min}–{max}",
+			"fromOwner": "Hinnad esitab teenuseosutaja."
+		}
+	},
+	"Claim": {
+		"metadata": {
+			"start": "Lehe ülevõtmine · Apercura",
+			"claim": "Teie ülevõtmistaotlus · Apercura",
+			"emailLink": "Ülevõtmistaotluse kinnitamine · Apercura"
+		},
+		"pending": "Palun oodake",
+		"errors": {
+			"generic": "Midagi läks valesti. Proovige hetke pärast uuesti.",
+			"TOO_MANY": "Tänaseks on liiga palju taotlusi. Proovige homme uuesti.",
+			"ALREADY_OWNER": "See leht on juba teie oma.",
+			"FROZEN": "See konto on külmutatud ega saa lehte üle võtta.",
+			"NOT_FOUND": "Selle tähisega lehte ei ole.",
+			"INVALID_RPPS": "See tähis ei kehti: sisestage lehe aadressi lõpus olev tähis (näiteks l01909), aadressi lõpp või kogu aadress.",
+			"NOT_OPEN": "See taotlus on suletud: seda ei saa enam muuta.",
+			"METHOD_UNAVAILABLE": "See viis ei ole selle lehe puhul saadaval.",
+			"TOO_MANY_ATTEMPTS": "Selle viisiga on tehtud liiga palju katseid. Kasutage mõnda teist.",
+			"NOT_SUBMITTABLE": "Lisage enne taotluse läbivaatamisele saatmist dokument.",
+			"BAD_DOCUMENT": "Seda faili ei saa kasutada: saatke PDF-, JPEG-, PNG- või WebP-fail suurusega kuni 10 MB.",
+			"PSC_MISSING": "Pro Santé Connect ei tagastanud isikut. Proovige uuesti."
+		},
+		"start": {
+			"title": "Võtke oma leht üle",
+			"lead": "Ülevõtmine puudutab ühe teenuseosutaja lehte, mitte kunagi nime.",
+			"recordHeading": "Leht, mida üle võtate",
+			"unknownProfession": "Tervishoiuteenuse osutaja",
+			"viewPage": "Vaata avalikku lehte",
+			"contestTitle": "Sellel lehel on juba kinnitatud haldaja",
+			"contestBody": "Kui see on teie asutuse leht (näiteks kaotasite ligipääsu oma kontole), võite selle siiski üle võtta: administraator vaatab teie dokumendi läbi ja otsustab. Konto taastamine nõuab alati uut kontrolli.",
+			"confirm": "See olen mina: alusta ülevõtmist",
+			"goToPage": "Mine minu lehele",
+			"findHeading": "Leidke oma asutuse leht",
+			"notFound": "Selle tähisega avalikku lehte veel ei ole.",
+			"rppsLabel": "Lehe tähis või aadress",
+			"rppsHint": "Tähis on lehe aadressi lõpus, näiteks l01909 aadressis apercura.org/ee/asutus/perearstikeskus-naide-l01909. Võite kleepida ka kogu aadressi.",
+			"find": "Leia minu leht",
+			"searchHint": "Oma lehe saate otsida ka nime järgi:",
+			"searchLink": "otsi kataloogist",
+			"howHeading": "Kuidas kontrollime, et see olete teie",
+			"factorNote": "Teie kontol on juba teine tegur: see on enne iga ülevõtmist kohustuslik ja kaitseb edaspidi teie lehte.",
+			"contactLink": "Dokumenti ei ole käepärast? Võtke meiega ühendust",
+			"optOutLink": "See on teie leht ja te ei soovi avalikult nähtav olla? Alustage siit",
+			"identifierLabel": "Lehe tähis"
+		},
+		"methods": {
+			"psc": {
+				"title": "Pro Santé Connect",
+				"short": "Pro Santé Connect",
+				"summary": "E-CPS rakenduse või CPS-kaardiga. Kinnitatakse kohe ja veebibroneerimise saab avada otsekohe.",
+				"lead": "Logige sisse e-CPS rakenduse või CPS-kaardiga. Teie leht kinnitatakse kohe, kui isik vastab lehe RPPS-numbrile.",
+				"action": "Jätka Pro Santé Connectiga",
+				"hint": "Lahkute Apercurast Pro Santé Connecti lehele ja tulete siis siia tagasi.",
+				"done": "Pro Santé Connect kinnitas teie isiku."
+			},
+			"registry_email": {
+				"title": "Teenuseosutaja e-post",
+				"short": "Registri e-post",
+				"summary": "Link, mis saadetakse e-posti aadressile, mille register teie asutuse kohta avaldab. Kinnitatakse kohe, kui selle avate; broneerimine avaneb 7 päeva hiljem.",
+				"lead": "Saadame lingi aadressile {email}, mis on registris teie asutuse kohta avaldatud. Avage see ja kinnitage.",
+				"action": "Saada link",
+				"resend": "Saada uuesti",
+				"sent": "Link on saadetud. See kehtib 24 tundi.",
+				"done": "Asutuse postkast kinnitas taotluse."
+			},
+			"document": {
+				"title": "Dokument ja telefonikõne",
+				"short": "Dokument",
+				"summary": "Dokument, mis näitab, et tegutsete teenuseosutaja nimel: Terviseameti või Ravimiameti tegevusluba, või äriregistri väljavõte koos volikirjaga asutuse kirjaplangil. Meie meeskonna liige vaatab selle läbi, tavaliselt 48 tunni jooksul.",
+				"lead": "Saatke dokument, mis näitab, et tegutsete teenuseosutaja nimel: Terviseameti või Ravimiameti tegevusluba, või äriregistri väljavõte koos volikirjaga asutuse kirjaplangil. See krüpteeritakse enne salvestamist ja kustutatakse 30 päeva pärast otsust."
+			},
+			"phone_callback": {
+				"title": "Tagasihelistamine",
+				"short": "Tagasihelistamine",
+				"lead": "Läbivaatamise ajal helistab meie meeskonna liige teenuseosutajale numbril {phone}, mis on registris (mitte kunagi teie antud numbril). Kõnele vastaja loeb ette siin näidatud koodi.",
+				"action": "Näita minu koodi",
+				"newCode": "Näita uut koodi",
+				"hint": "Avage see, kui olete asutuses, või andke see sellele, kes vastab asutuse telefonile. Uue koodi küsimine tühistab eelmise.",
+				"codeLabel": "Ettelugemiseks mõeldud kood",
+				"codeHint": "Hoidke see ekraanil või kirjutage üles: teie turvalisuse huvides näitame seda ainult praegu.",
+				"done": "Tagasihelistamine kinnitas taotluse."
+			}
+		},
+		"check": {
+			"passed": "Tehtud",
+			"failed": "Ebaõnnestus",
+			"pending": "Pooleli",
+			"notStarted": "Alustamata",
+			"claim": {
+				"open": "Pooleli",
+				"in_review": "Läbivaatamisel",
+				"verified": "Kinnitatud",
+				"rejected": "Tagasi lükatud",
+				"withdrawn": "Tagasi võetud",
+				"superseded": "Tagasi võetud pärast vaidlustamist"
+			}
+		},
+		"workspace": {
+			"title": "Lehe ülevõtmine: {name}",
+			"lead": {
+				"open": "Tõendage ühel allolevatest viisidest, et tegutsete selle teenuseosutaja nimel.",
+				"in_review": "Teie taotlus on läbivaatamisel.",
+				"verified": "Järgmine samm: täiendage oma lehte.",
+				"rejected": "Seda taotlust ei rahuldatud.",
+				"withdrawn": "See taotlus võeti tagasi.",
+				"superseded": "See taotlus võeti pärast vaidlustamist tagasi."
+			}
+		},
+		"psc": {
+			"outcome": {
+				"verified": "Pro Santé Connect kinnitas teie isiku: teie leht on kinnitatud.",
+				"passed": "Pro Santé Connect kinnitas teie isiku. Nüüd vaatab taotluse läbi administraator.",
+				"mismatch": "Pro Santé Connecti isik ei vasta selle lehe RPPS-numbrile.",
+				"error": "Pro Santé Connectiga ei saadud ühendust või sisselogimine katkestati. Proovige uuesti.",
+				"linkedElsewhere": "See Pro Santé Connecti isik on juba seotud teise Apercura kontoga. Selle konto kasutamiseks logige sisse Pro Santé Connectiga."
+			}
+		},
+		"documents": {
+			"kind": {
+				"cps_card": "Äriregistri väljavõte koos volikirjaga asutuse kirjaplangil",
+				"ordre_attestation": "Terviseameti või Ravimiameti tegevusluba"
+			},
+			"kindLabel": "Dokumendi liik",
+			"add": "Vali fail",
+			"hint": "PDF, JPEG, PNG või WebP, kuni 10 MB. Kuni 4 faili.",
+			"kilobytes": "kB"
+		},
+		"review": {
+			"title": "Saada läbivaatamiseks",
+			"lead": "Administraator kontrollib teie dokumenti ja helistab teenuseosutajale. Vastuse saate e-postiga 48 tunni jooksul tööpäevadel.",
+			"submit": "Saada läbivaatamiseks",
+			"notYet": "Lisage esmalt dokument."
+		},
+		"withdraw": "Võta see taotlus tagasi",
+		"status": {
+			"verified": "Teie leht on kinnitatud",
+			"bookingDelay": "Ilma Pro Santé Connectita lõpeb 7-päevane ooteaeg enne veebibroneerimist {date}.",
+			"continue": "Täienda oma lehte",
+			"in_review": "Teie taotlus on läbivaatamisel",
+			"contestReview": "Sellel lehel oli juba kinnitatud haldaja: administraator otsustab teie dokumendi põhjal.",
+			"reviewBody": "Meie meeskonna liige vaatab teie dokumendi läbi ja kirjutab teile e-postiga.",
+			"rejected": "Seda taotlust ei rahuldatud",
+			"reason": "Põhjus: {reason}",
+			"withdrawn": "See taotlus võeti tagasi",
+			"superseded": "See taotlus võeti pärast vaidlustamist tagasi",
+			"contestTitle": "Sellel lehel on juba kinnitatud haldaja",
+			"contestBody": "Administraator otsustab teie dokumendi põhjal.",
+			"verifiedBadge": "Kinnitatud leht"
+		},
+		"emailLink": {
+			"title": "Kinnitage ülevõtmistaotlus",
+			"lead": "See link saadeti e-posti aadressile, mille riiklik register teenuseosutaja kohta avaldab.",
+			"reading": "Lingi lugemine…",
+			"invalidTitle": "See link enam ei toimi",
+			"invalidBody": "See on aegunud (kehtib 24 tundi) või juba kasutatud. Teenuseosutaja saab oma taotlusest uue saata.",
+			"tooMany": "Liiga palju katseid. Oodake tund aega ja proovige siis uuesti.",
+			"doneTitle": "Taotlus on kinnitatud",
+			"doneBody": "Teenuseosutaja saab nüüd sisse logida ja lehte täiendada.",
+			"goToSpace": "Mine teenuseosutaja keskkonda",
+			"body": "Kui selle asutuse teenuseosutaja palus õigust hallata oma Apercura lehte, kinnitage see. Muul juhul sulgege see leht: midagi ei muutu.",
+			"confirm": "Kinnita taotlus",
+			"pending": "Palun oodake"
+		},
+		"withdrawDialog": {
+			"title": "Kas võtta see taotlus tagasi?",
+			"body": "Taotlus suletakse lõplikult: selle tõendid ei kehti enam ja dokumendid kustutatakse 30 päeva pärast. Hiljem saate esitada uue taotluse, alustades taas kontrollist.",
+			"confirm": "Võta taotlus tagasi",
+			"cancel": "Jäta taotlus alles"
+		},
+		"identifiers": {
+			"RPPS": "RPPS",
+			"AT-WIEN": "Viini loend",
+			"AT-STMK": "Steiermargi loend",
+			"AT-SBG": "Salzburgi loend",
+			"AT-SBGZ": "Salzburgi hambaarstide loend",
+			"GB-ODS-GP": "ODS-kood",
+			"GB-ODS-DENT": "ODS-kood",
+			"GB-ODS-PHARM": "ODS-kood",
+			"GB-PHS-GP": "Public Health Scotlandi kood",
+			"GB-PHS-DENT": "Public Health Scotlandi kood",
+			"GB-PHS-PHARM": "Public Health Scotlandi kood",
+			"GB-BSO-GP": "BSO praksise number",
+			"GB-BSO-DENT": "BSO hambaravikabinet",
+			"CZ-NRPZS": "NRPZS asutuse number",
+			"EE-TTL": "Tegevusluba",
+			"EE-APT": "Apteegi tegevuskoht"
+		}
+	},
+	"Onboarding": {
+		"metaTitle": "Lehe seadistamine · Apercura",
+		"title": "Seadistage oma leht",
+		"lead": "Kolm sammu, et leht {name} oleks täielik.",
+		"stepsLabel": "Sammud",
+		"stepNumber": "Samm {n}/{total}:",
+		"continue": "Jätka",
+		"pending": "Palun oodake",
+		"publishFailed": "Lehte ei õnnestunud avaldada. Proovige hetke pärast uuesti.",
+		"fields": {
+			"name": "Nimi",
+			"profession": "Teenuseosutaja liik"
+		},
+		"steps": {
+			"check": {
+				"label": "Kontrollige imporditud teavet",
+				"title": "Kontrollige imporditud teavet",
+				"lead": "Teie leht põhineb Terviseameti või Ravimiameti registril. Kontrollige asutuse nime, liiki, tegevuslubasid ja tegevuskohti.",
+				"sites": "Tegevuskohad",
+				"unnamed": "Nimeta koht",
+				"hidden": "Peidetud",
+				"registryNote": "Midagi on valesti? Püsiva paranduse teeb register (Terviseamet tegevuslubade, Ravimiamet apteekide puhul); leht järgib seda järgmise iganädalase impordiga. Lehe redaktoris saate tegevuskoha peita või lisada."
+			},
+			"booking": {
+				"label": "Lahtiolekuajad ja broneerimine",
+				"title": "Lahtiolekuajad ja broneerimine",
+				"lead": "Patsiendid broneerivad teie lehel, kui teie kalender on avatud. Enne selle avamist peavad teie lehel olema hinnad ja aktsepteeritavad makseviisid.",
+				"fees": "Hinnad",
+				"payments": "Makseviisid",
+				"done": "Esitatud",
+				"todo": "Täiendamisel",
+				"deontology": "Tervishoiutöötaja, kes tutvustab oma tegevust veebis, esitab hinnad ja aktsepteeritavad makseviisid.",
+				"editFees": "Täienda hindu ja makseviise",
+				"settingsNote": "Tegevuskohad, lahtiolekuajad ja vastuvõtu liigid määratakse broneerimise seadetes.",
+				"waitingPeriod": "Ooteaeg pärast kinnitamist",
+				"waitingEnds": "7-päevane ooteaeg lõpeb {date}",
+				"noWaiting": "Puudub",
+				"settingsLink": "Seadista lahtiolekuajad ja broneerimine"
+			},
+			"publish": {
+				"label": "Avaldamine",
+				"title": "Avaldage oma leht",
+				"lead": "Avaldamisel näidatakse teie avalikul lehel tutvustust, suhtluskeeli, hindu ja praktilist teavet. Saate neid igal ajal muuta või peita.",
+				"already": "Teie leht on avaldatud. Iga salvestatud muudatus on kohe veebis.",
+				"edit": "Muuda minu lehte",
+				"action": "Avalda minu leht",
+				"shareLead": "Andke oma lehest teada: link, QR-kood ja ooteruumi plakat on valmis.",
+				"shareLink": "Ava jagamise komplekt",
+				"statsLink": "Vaata lehe statistikat"
+			}
+		}
+	},
+	"Editor": {
+		"metaTitle": "Teie leht · Apercura",
+		"title": "Teie leht",
+		"lead": "Täiendage avalikku lehte: {name}. Ainult lihttekst; mida peidate, seda ei näidata kunagi.",
+		"empty": {
+			"title": "Muudetavat lehte veel ei ole",
+			"body": "Teie leht ilmub siia, kui teie ülevõtmistaotlus on kinnitatud.",
+			"action": "Võta minu leht üle"
+		},
+		"pending": "Palun oodake",
+		"viewPublic": "Vaata avalikku lehte",
+		"jumpToPreview": "Mine eelvaatesse",
+		"formLabel": "Lehe sisu",
+		"removed": {
+			"title": "Teie leht on kataloogist eemaldatud",
+			"body": "Keegi ei näe seda ja selle sisu on kustutatud. Saate selle taastada selle lehe allosas: see tuleb tagasi registri järgmise iganädalase uuendusega."
+		},
+		"unpublished": {
+			"title": "Teie sisu ei ole veel avaldatud",
+			"link": "Lõpetage oma lehe seadistamine"
+		},
+		"photo": {
+			"title": "Foto",
+			"lead": "Valikuline. Hiljutine portree, nagu dokumendifoto, või foto asutusest.",
+			"current": "Praegune foto",
+			"none": "Fotot ei ole.",
+			"add": "Lisa foto",
+			"replace": "Asenda foto",
+			"remove": "Eemalda foto",
+			"hint": "JPEG, PNG või WebP, kuni 5 MB. Lõikame selle ruudukujuliseks ja eemaldame selle metaandmed (asukoht, seade)."
+		},
+		"visibility": {
+			"label": "Näita lehel: {field}",
+			"shown": "Näidatud"
+		},
+		"presentation": {
+			"title": "Tutvustus",
+			"lead": "Ainult faktiline teave: ei patsientide tagasisidet ega võrdlusi teistega.",
+			"headline": "Alapealkiri",
+			"headlineHint": "Üks rida teenuseosutaja liigi all, kuni {max} tähemärki.",
+			"bio": "Tutvustus",
+			"bioHint": "Lihttekst, kuni {max} tähemärki. Jätke lõikude vahele tühi rida."
+		},
+		"languages": {
+			"title": "Suhtluskeeled"
+		},
+		"fees": {
+			"title": "Hinnad ja ravikindlustus",
+			"lead": "Nõutav enne veebibroneerimise avamist: teie hinnad ja aktsepteeritavad makseviisid.",
+			"requiredBadge": "Broneerimiseks nõutav",
+			"ameliPrefill": "Eeltäidetud ravikindlustuse registrist. Teie esitatud andmed asendavad selle teie lehel.",
+			"sector": "Lepinguline suhe",
+			"agreement": "Leping Tervisekassaga",
+			"notStated": "Ei ole esitatud",
+			"optam": "Piiratud lisatasud (OPTAM)",
+			"optamNone": "Ei osale",
+			"carteVitale": "Ravikindlustuskaart",
+			"carteVitaleYes": "Aktsepteeritakse",
+			"carteVitaleNo": "Ei aktsepteerita",
+			"itemsTitle": "Hinnad",
+			"noItem": "Hindu veel ei ole.",
+			"itemLabel": "Hind {n}: mille eest",
+			"itemPlaceholder": "Vastuvõtt",
+			"amount": "Summa (€)",
+			"maxAmount": "Kuni (€)",
+			"removeItem": "Eemalda hind {n}",
+			"remove": "Eemalda",
+			"addItem": "Lisa hind",
+			"note": "Märkus hindade kohta",
+			"noteHint": "Näiteks millest lisatasud sõltuvad.",
+			"payments": "Aktsepteeritavad makseviisid",
+			"requiredHint": "Broneerimine jääb suletuks, kuni on esitatud vähemalt üks hind ja üks makseviis."
+		},
+		"access": {
+			"title": "Ligipääs",
+			"notes": "Juurdepääsu üksikasjad",
+			"notesHint": "Korrus, sissepääs, ühistransport."
+		},
+		"contact": {
+			"title": "Veebileht ja telefon",
+			"website": "Veebileht",
+			"websiteHint": "Teie asutuse veebileht, algab https://",
+			"showPhone": "Näita asutuse telefoninumbrit",
+			"showPhoneHint": "Kui see on peidetud, ei paku leht enam asutusele helistamist."
+		},
+		"failure": {
+			"generic": "Midagi läks valesti. Proovige hetke pärast uuesti.",
+			"invalid": "Mõned väljad vajavad parandamist: vaadake nende all olevaid teateid.",
+			"lastSite": "Vähemalt üks tegevuskoht peab jääma nähtavaks: tegevuskohata lehte ei saa avaldada.",
+			"unknownPlace": "Me ei tunne seda postiindeksit ja kohta. Kontrollige neid.",
+			"badPhone": "See telefoninumber ei kehti.",
+			"photoTooLarge": "See foto on suurem kui 5 MB.",
+			"photoUnsupported": "Seda faili ei saa fotona kasutada: saatke JPEG-, PNG- või WebP-fail."
+		},
+		"saved": "Salvestatud. Teie avalik leht on ajakohane.",
+		"savedDraft": "Salvestatud. Selle näitamiseks avaldage oma leht.",
+		"save": "Salvesta leht",
+		"lastSaved": "Viimati salvestatud {date}",
+		"sites": {
+			"title": "Tegevuskohad",
+			"lead": "Valige, milliseid tegevuskohti teie leht näitab. Registrist pärit kohti saab peita, mitte muuta.",
+			"unnamed": "Nimeta koht",
+			"added": "Teie lisatud",
+			"shownNamed": "Näita lehel: {name}",
+			"remove": "Eemalda",
+			"registryNote": "Registrist pärit tegevuskoht on vale? Parandus tehakse registris (Terviseamet tegevuslubade, Ravimiamet apteekide puhul); leht järgib seda järgmise impordiga.",
+			"addTitle": "Lisa tegevuskoht",
+			"name": "Koha nimi",
+			"address": "Tänav ja maja",
+			"postcode": "Postiindeks",
+			"city": "Asula",
+			"phone": "Telefon (valikuline)",
+			"phoneHint": "Asutuse number, mida näidatakse lehel.",
+			"add": "Lisa tegevuskoht"
+		},
+		"remove": {
+			"title": "Eemaldage oma leht",
+			"lead": "Teie leht kaob kataloogist, otsingutest ja otsingumootoritest ega tule järgmise impordiga tagasi. Selle tegevuskohad, tutvustus, foto, hinnad ja statistika kustutatakse kohe; teie konto ja kalender jäävad alles. Saate selle siin taastada: registri leht tuleb tagasi järgmise iganädalase uuendusega ja te täiendate seda uuesti.",
+			"action": "Eemalda minu leht kataloogist",
+			"restore": "Taasta minu leht",
+			"dialog": {
+				"title": "Kas eemaldada teie leht kataloogist?",
+				"intro": "Teie leht kaob kohe kataloogist, otsingutest ja otsingumootoritest. See sisu kustutatakse jäädavalt:",
+				"items": {
+					"places": "teie tegevuskohad",
+					"presentation": "teie tutvustus (alapealkiri, kirjeldus, keeled, valdkonnad)",
+					"photo": "teie foto",
+					"fees": "teie hinnad ja makseviisid",
+					"statistics": "lehe statistika"
+				},
+				"restore": "Teie konto ja kalender jäävad alles. Kui taastate lehe, tuleb see registrist tagasi järgmise iganädalase impordiga ja te täidate selle uuesti.",
+				"understood": "Saan aru, et see sisu kustutatakse",
+				"confirm": "Eemalda minu leht",
+				"cancel": "Tühista"
+			},
+			"busy": "Kataloogi uuendatakse parasjagu iganädalase impordiga: teie lehte ei muudetud. Proovige mõne minuti pärast uuesti."
+		},
+		"preview": {
+			"title": "Eelvaade",
+			"note": "Veel salvestamata",
+			"noSite": "Ühtegi tegevuskohta ei näidata.",
+			"unnamedPlace": "Tegevuskoht"
+		},
+		"issues": {
+			"tooLong": "See tekst on liiga pikk.",
+			"markup": "Ainult lihttekst: ei HTML-i ega nurksulgudes linke.",
+			"required": "See väli on kohustuslik.",
+			"range": "Ülemine summa peab olema summast suurem.",
+			"website": "See aadress ei ole veebileht (https://…).",
+			"postcode": "Eesti postiindeksis on 5 numbrit.",
+			"invalid": "See väärtus ei kehti."
+		}
+	},
+	"Admin": {
+		"claims": {
+			"queueHeading": "{count, plural, one {# taotlus ootab} other {# taotlust ootab}}"
+		}
+	},
+	"Gdpr": {
+		"about": "Lehe kohta",
+		"rpps": "Lehe tähis",
+		"rppsHint": "Lehe aadressi lõpp, näiteks l01909 aadressis apercura.org/ee/asutus/perearstikeskus-naide-l01909, või kogu aadress.",
+		"pending": "Palun oodake",
+		"errors": {
+			"tooMany": "Sellelt ühenduselt on tulnud liiga palju taotlusi. Proovige tunni aja pärast uuesti.",
+			"notFound": "Selle tähisega lehte ei ole.",
+			"claimed": "Seda lehte haldab teenuseosutaja: ainult tema saab selle oma keskkonnast eemaldada.",
+			"invalid": "Kontrollige vormi: mõni väli on puudu või liiga pikk.",
+			"generic": "Midagi läks valesti. Proovige hetke pärast uuesti."
+		},
+		"report": {
+			"metaTitle": "Teata veast · Apercura",
+			"title": "Teata veast",
+			"lead": "Andke meile teada, mis sellel lehel on valesti. Teie sõnum krüpteeritakse ja seda loeb ainult Apercura meeskond.",
+			"doneTitle": "Aitäh, teie teade on kätte saadud",
+			"doneBody": "Kontrollime seda. Registrist pärit andmed parandatakse allikas: tervishoiuteenuse osutajate andmed Terviseametis, apteekide andmed Ravimiametis. Kui jätsite aadressi, anname teile teada.",
+			"kind": "Mis on valesti?",
+			"kinds": {
+				"wrong_info": "Vale teave (aadress, telefon, nimi)",
+				"retired": "Teenuseosutaja on tegevuse lõpetanud",
+				"deceased": "Teenuseosutaja on surnud",
+				"impersonation": "Keegi kasutab seda lehte teenuseosutaja nimel"
+			},
+			"message": "Üksikasjad",
+			"messageHint": "Mis on valesti ja, kui teate, mis on õige.",
+			"contact": "Teie e-post (valikuline)",
+			"contactHint": "Ainult teile vastamiseks.",
+			"privacy": "Ärge lisage terviseandmeid.",
+			"submit": "Saada teade"
+		},
+		"removal": {
+			"metaTitle": "Lehe eemaldamise taotlus · Apercura",
+			"title": "Taotlege selle lehe eemaldamist",
+			"lead": "Isikuandmete kaitse üldmääruse artikli 21 alusel võite esitada vastuväite oma lehe avaldamisele. Leht peidetakse kohe, kui taotlus on kätte saadud, ja kustutatakse pärast lühikest kontrolli.",
+			"doneTitle": "Leht on peidetud",
+			"doneBody": "Seda ei näidata, indekseerita ega loetleta enam. Kontrollime taotlust ja vastame e-postiga hiljemalt ühe kuu jooksul. Kui see on kinnitatud, kustutatakse leht jäädavalt ja see ei tule registri uuendustega tagasi.",
+			"contact": "Teie e-post",
+			"contactHint": "Taotluse kinnitamiseks teiega. See krüpteeritakse ja seda ei kasutata millekski muuks.",
+			"message": "Sõnum (valikuline)",
+			"messageHint": "Kõik, mis aitab meil taotlust kontrollida.",
+			"confirm": "Olen sellel lehel nimetatud teenuseosutaja",
+			"privacy": "Kustutatud leht ei tule registri järgmise impordiga tagasi.",
+			"submit": "Peida ja eemalda leht",
+			"claimedTitle": "Seda lehte haldab teenuseosutaja",
+			"claimedBody": "Ainult selle haldaja saab selle eemaldada, oma keskkonna lehe redaktorist: leht kaob siis kohe ega tule registri uuendustega tagasi.",
+			"claimedLink": "Eemalda minu leht teenuseosutaja keskkonnast",
+			"alreadyTitle": "Eemaldamistaotlust kontrollitakse",
+			"alreadyBody": "Leht on juba peidetud."
+		},
+		"contact": {
+			"metaTitle": "See olen mina · Apercura",
+			"title": "Olen selle asutuse teenuseosutaja",
+			"lead": "Te ei saa oma asutuse lehte dokumendiga üle võtta? Jätke meile oma kontaktandmed: Apercura meeskonna liige võtab teiega ühendust, et kontrollida, kas tegutsete teenuseosutaja nimel, ja teid aidata.",
+			"patientsTitle": "See vorm on mõeldud ainult selle lehe teenuseosutajale",
+			"patientsBody": "See ei ole mõeldud vastuvõtuaja broneerimiseks ega asutusega ühenduse võtmiseks: selleks kasutage lehel olevaid kontaktandmeid.",
+			"claimFirst": "Dokumendiga, mis näitab, et tegutsete teenuseosutaja nimel, on ülevõtmine kiirem:",
+			"claimFirstLink": "võta see leht üle",
+			"rpps": "Lehe tähis",
+			"rppsHint": "Lehe tähis, kust te tulite. Seda ei saa muuta.",
+			"name": "Teie ees- ja perekonnanimi",
+			"email": "Teie tööalane e-post",
+			"emailHint": "Teile vastamiseks. Saadame teile ka kinnituse.",
+			"phone": "Teie telefoninumber (valikuline)",
+			"phoneHint": "Kui eelistate, et teile helistataks.",
+			"message": "Teie sõnum",
+			"messageHint": "Kirjutage, miks veebis ülevõtmine teile ei sobi.",
+			"privacy": "Teie andmed ja sõnum krüpteeritakse, neid loeb ainult Apercura meeskond teile vastamiseks ja need kustutatakse 12 kuud pärast viimast suhtlust. Ärge lisage terviseandmeid.",
+			"submit": "Saada minu soov",
+			"doneTitle": "Teie soov on kätte saadud",
+			"doneBody": [
+				"Apercura meeskonna liige võtab teiega e-posti või telefoni teel ühendust, et kontrollida teie isikut, ja aitab teil seejärel lehe üle võtta.",
+				"Teie antud aadressile saadeti just kinnitus."
+			],
+			"claimedTitle": "Seda lehte haldab juba teenuseosutaja",
+			"claimedBody": "Selle haldaja on kinnitatud. Kui see on teie leht ja teil pole sellele enam ligipääsu, esitage ülevõtmistaotlus: meeskond vaatab selle läbi.",
+			"claimedLink": "Võta see leht üle",
+			"withheldTitle": "See leht on peidetud",
+			"withheldBody": "Selle eemaldamistaotlust kontrollitakse.",
+			"errors": {
+				"proof": "Robotitõrje kontroll ei lõppenud. Proovige hetke pärast uuesti.",
+				"claimed": "Seda lehte haldab juba teenuseosutaja: esitage ülevõtmistaotlus."
+			}
+		}
+	},
+	"Agenda": {
+		"settings": {
+			"types": {
+				"areaAdded": "{count, plural, =0 {Uusi asulaid ei lisatud.} one {Lisati # asula.} other {Lisati # asulat.}}"
+			}
+		},
+		"log": {
+			"records": "{count, plural, one {# kirje} other {# kirjet}}"
+		}
+	},
+	"Stats": {
+		"chartSummary": "{total, plural, one {# vaatamine} other {# vaatamist}} 30 päeva jooksul; kõige rohkem: {max}, {day}."
+	},
+	"LegalNoticeEe": {
+		"metaTitle": "Õigusteave · Apercura",
+		"metaDescription": "Apercura Eesti lehtede õigusteave: teenuse osutaja, registrikood, aadress ja kontaktandmed koos e-posti aadressiga (infoühiskonna teenuse seadus, § 4).",
+		"title": "Õigusteave",
+		"lead": "Kes osutab Apercura Eesti lehtede (apercura.org/ee) teenust: teave, mille infoühiskonna teenuse seaduse (InfoTS) § 4 lõige 1 nõuab teenuse osutajalt vahetult ja püsivalt kättesaadavaks teha.",
+		"sections": {
+			"provider": {
+				"heading": "Teenuse osutaja (InfoTS § 4 lg 1)",
+				"body": [
+					"Apercura Eesti lehti pakub allpool nimetatud isik: selle nimi, registrikood ja registri nimi, aadress ja kontaktandmed, sealhulgas e-posti aadress, ning käibemaksukohustuslasena registreerimise number, kui see on olemas. Ta haldab kataloogi ja vastutab selle sisu eest."
+				]
+			},
+			"service": {
+				"heading": "Teenus",
+				"body": [
+					"Tasuta kataloog Eesti tegevusloaga tervishoiuteenuse osutajatest (haiglad, perearstikeskused, hambakliinikud, eriarstiabi, õendusabi, ämmaemandusabi, füsioteraapia, psühholoogilise ravi ja logopeedia osutajad) ja üldapteekidest, mis on koostatud Terviseameti registri (MEDRE avaandmed) ja Ravimiameti registri põhjal, ilma reklaamita ning võimalusega, et teenuse osutaja saab oma lehte ise täiendada. Lehed on teenuse osutajate kohta, mitte nende juures töötavate tervishoiutöötajate kohta. Apercura kaudu ei saa Eestis vastuvõtuaegu broneerida."
+				]
+			},
+			"licences": {
+				"heading": "Tegevuslubade numbrid",
+				"body": [
+					"Iga tervishoiuteenuse osutaja lehel on selle tegevuslubade numbrid, sest reklaamiseaduse § 22 lõike 3 järgi peab tervishoiuteenuse osutaja kohta avaldatavas teabes sisalduma tema tegevusloa number. Sama paragrahvi lõike 4 punkti 1 järgi ei ole tervishoiuteenuse reklaam teave teenuse osutaja nime, tööaja, tegevuskoha ja eriala kohta ega osutatavate teenuste loetelu avalikustamine: lehtedel on need faktid ja mitte midagi muud."
+				]
+			},
+			"editor": {
+				"heading": "Sisu eest vastutaja",
+				"body": [
+					"Allpool nimetatud isik vastutab teenuse osutaja avaldatava sisu eest. Teabe eest, mille tervishoiuteenuse osutaja oma lehele lisab, vastutab ta ise; kasutajate esitatud teabe majutajana vastutab teenuse osutaja selle eest üksnes digiteenuste määruse (määrus (EL) 2022/2065, artikkel 6) tingimustel."
+				]
+			},
+			"liability": {
+				"heading": "Lehtede sisu",
+				"body": [
+					"Kataloog on koostatud avalike registrite põhjal (Terviseameti tervishoiuteenuse osutajate ja tegevuslubade register, Ravimiameti apteekide register) ning paigutatud Maa- ja Ruumiameti haldus- ja asustusüksuste ning aadressiandmete abil. Teave võib olla puudulik või aegunud: enne kohale minekut kontrollige seda teenuse osutajalt. Igal lehel on kirjas, kuidas veast teatada."
+				]
+			},
+			"ip": {
+				"heading": "Lähtekood ja andmed",
+				"body": [
+					"Apercura lähtekood on avaldatud litsentsi AGPL-3.0 alusel. Terviseameti andmeid taaskasutatakse ja avaldatakse nendel lehtedel litsentsi Creative Commons Autorile viitamine-Mitteäriline eesmärk-Jagamine samadel tingimustel 3.0 Jurisdiktsiooniga sidumata (CC BY-NC-SA 3.0) alusel; Ravimiameti andmeid ja aadressiandmeid litsentsi CC0 1.0 alusel; haldusüksuste andmeid Maa- ja Ruumiameti avaandmete litsentsi alusel. Andmete lehel on iga allikas koos nõutud viitega."
+				]
+			},
+			"review": {
+				"heading": "Teksti seis",
+				"body": [
+					"See tekst on mustand, mis on kirjutatud enne juriidilise isiku asutamist. Enne Eesti lehtede väljakuulutamist vaatab selle üle Eestis tegutsev jurist."
+				]
+			}
+		},
+		"fields": {
+			"name": "Nimi",
+			"legalForm": "Õiguslik vorm",
+			"registration": "Register ja registrikood",
+			"address": "Aadress",
+			"phone": "Telefon",
+			"email": "E-posti aadress",
+			"vatId": "Käibemaksukohustuslase number",
+			"editor": "Sisu eest vastutaja"
+		},
+		"dataLink": "Andmed ja allikad"
+	},
+	"PrivacyEe": {
+		"metaTitle": "Privaatsus · Apercura",
+		"metaDescription": "Milliseid andmeid Apercura Eesti lehed töötlevad, kust need pärinevad, miks ja kui kaua, ning teie õigused, sh vastuväide (IKÜM artiklid 13, 14, 21).",
+		"title": "Privaatsus",
+		"lead": "Milliseid andmeid Apercura Eesti lehed töötlevad, kust need pärinevad, miks, kui kaua ja kes neid töötleb ning kuidas kasutada oma õigusi isikuandmete kaitse üldmääruse (IKÜM) ja isikuandmete kaitse seaduse (IKS) alusel.",
+		"sections": {
+			"controller": {
+				"heading": "Kes vastutab",
+				"body": [
+					"Õigusteabes nimetatud teenuse osutaja on vastutav töötleja kataloogi, teenuse osutajate kontode, lehtede omandamise taotluste ja saidi kaudu saadetud pöördumiste puhul."
+				]
+			},
+			"directory": {
+				"heading": "Kataloog: andmed tervishoiuteenuse osutajate kohta",
+				"body": [
+					"Andmed: teenuse osutaja nimi Terviseameti registris avaldatud kujul, tema tegevuslubade numbrid ja liigid, haigla liik, kui ta on haigla, tegevuslubadega lubatud teenused ja tegevuskohtade aadressid; apteegi puhul selle nimi, Ravimiameti tegevusloa number, aadress ja telefoninumber. Teenuse osutaja, kes oma lehe enda nimele võtab, saab lisada tutvustuse, keeled, foto ja lahtiolekuajad.",
+					"Ei salvestata kunagi, kuigi allikad neid avaldavad: iga teenuse osutaja juures registris nimetatud tervishoiutöötajaid (nende koode, nimesid, kutseid ja erialasid), teenuse osutaja äriregistri koodi ja juriidilist aadressi ning apteegi puhul pädeva isiku nime, e-posti aadressi, faksinumbrit ja tegevusloa omaja nime. Telefoninumbrit, mille apteekide register annab rohkem kui kolmele apteegile, ei näidata, sest see kuulub ketile.",
+					"Tunnus: teenuse osutaja lehe aadress lõpeb tema esimese kehtiva tegevusloa numbriga (näiteks l01909 tegevusloa L01909 puhul), apteegi lehe aadress tema tegutsemiskoha koodiga Ravimiametis (näiteks ap457).",
+					"Eesmärk: võimaldada avalikkusel leida tervishoiuteenuse osutaja või apteek, teada, milleks tal on luba, kus ta asub ja kuidas temaga ühendust võtta. Õiguslik alus: õigustatud huvi (IKÜM artikli 6 lõike 1 punkt f), mida on hinnatud allpool.",
+					"Säilitamine: seni, kuni teenuse osutaja või apteek on oma registris. Leht kaob, kui register teda enam ei sisalda; vastuväite tõttu eemaldatud lehte ei avaldata enam kunagi.",
+					"Teavitamine: andmed ei pärine teenuse osutajatelt endilt (IKÜM artikkel 14). Igaühe teavitamine eraldi nõuaks ebaproportsionaalseid jõupingutusi (artikli 14 lõike 5 punkt b); see teade, andmete leht ja teade igal lehel teevad teabe avalikuks."
+				]
+			},
+			"people": {
+				"heading": "Teenuse osutajad ja inimesed, keda nad nimetavad",
+				"body": [
+					"Eesti leht käsitleb tervishoiuteenuse osutajat või apteeki, mitte kunagi inimese profiili: iga teenuse osutaja juures registreeritud tervishoiutöötajaid ei avaldata. Mõned teenuse osutajad on füüsilisest isikust ettevõtjad (FIE), kelle ärinimi on nende enda nimi; leht näitab seda nime registris avaldatud kujul ametialase andmena koos teenuse osutaja tegevuslubade, tegevuskohtade ja teenustega. Asjaomased andmeliigid on eespool loetletud; nende allikas on Terviseameti register (MEDRE avaandmed); nende saaja on avalikkus.",
+					"Ühegi inimese kohta ei koguta muud: ei isikukoodi, äriregistri koodi, kodust aadressi ega e-posti aadressi, ei hinnanguid ega arvustusi. Kataloog ei töötle patsientide andmeid ega terviseandmeid.",
+					"Igaüks, kelle kohta leht on, võib igal ajal selle vastu vastuväite esitada ja leht eemaldatakse."
+				]
+			},
+			"sources": {
+				"heading": "Allikad",
+				"body": [
+					"Tervishoiuteenuse osutajad pärinevad Terviseameti tervishoiuteenuse osutajate ning tegevuslubade andmestikust, mida peetakse Tervise ja Heaolu Infosüsteemide Keskuse (TEHIK) hallatavas infosüsteemis MEDRE ja mis on avaldatud litsentsi CC BY-NC-SA 3.0 alusel. Apteegid pärinevad Ravimiameti tegevuslubade registrist (CC0 1.0). Kohad pärinevad Maa- ja Ruumiameti haldus- ja asustusjaotusest ning aadressid tema aadressiandmete süsteemist (CC0 1.0). Igale allikale viidatakse nii, nagu see nõuab:"
+				]
+			},
+			"balancing": {
+				"heading": "Õigustatud huvi hinnang",
+				"body": [
+					"Eesmärk: patsiendid peavad teadma, millised tervishoiuteenuse osutajad ja apteegid kus tegutsevad, milleks neil on luba ja kuidas nendega ühendust võtta; seda vajadust täidab riik juba praegu, avaldades need registrid avalikuks kasutamiseks.",
+					"Vajalikkus: näidatakse ainult teenuse osutaja andmeid registritest, mida registrid niikuinii avaldavad, ja neist vähem: ühtegi tervishoiutöötajat, e-posti aadressi ega äriregistri koodi ei näidata; midagi eraelust, ei hinnanguid ega arvustusi.",
+					"Kaalumine: ametialane kontekst, faktiline teave, neutraalne järjestus, reklaami puudumine, registrite väljade miinimum, vastuväide, mis peidab lehe kohe ega lase sellel tagasi tulla, parandused allikas ja lehed, mis järgivad registrite iga uuendust. Tegevusloaga füüsilisest isikust ettevõtja, kes on avalikus registris nimeliselt kirjas, eeldab, et teda võib leida ka kataloogist, mis seda teavet kordab. Neid asjaolusid kaaludes kaaluvad patsientide huvid üles ja igaüks, kelle kohta leht on, võib esitada vastuväite põhjust nimetamata."
+				]
+			},
+			"accounts": {
+				"heading": "Teenuse osutajate kontod ja lehtede omandamine",
+				"body": [
+					"Andmed: e-posti aadress, nimi, parool (räsituna), teine autentimistegur, lehe omandamiseks saadetud dokumendid (tõend, et taotleja juhib teenuse osutajat või tegutseb tema nimel) ja meeskonnaliikmed.",
+					"Eesmärgid: konto haldamine ja kontrollimine, et lehe omandab õige teenuse osutaja. Õiguslikud alused: kasutustingimuste täitmine (artikli 6 lõike 1 punkt b) ja teenuse turvamise õigustatud huvi (artikli 6 lõike 1 punkt f).",
+					"Säilitamine: konto säilitatakse kuni selle kustutamiseni; tõendavad dokumendid, krüpteeritult, kustutatakse 30 päeva pärast otsust."
+				]
+			},
+			"requests": {
+				"heading": "Veateated, vastuväited ja kontaktipäringud",
+				"body": [
+					"Andmed: sõnum, kontakt-e-posti aadress, kui see on antud, ja asjaomane leht; päringu „See on minu leht“ puhul ka nimi ja telefoninumber. Vaba tekst krüpteeritakse.",
+					"Eesmärgid: vigade parandamine, vastuväidete rakendamine ja abi teenuse osutajale, kes ei saa oma lehte veebis omandada. Õiguslikud alused: õigustatud huvi (artikli 6 lõike 1 punkt f) ja vastuväite esitamise õigus (artikkel 21).",
+					"Säilitamine: veateade kustutatakse 6 kuud pärast selle sulgemist, tagasi lükatud vastuväide aasta pärast otsust, kontaktipäring 12 kuud pärast viimast suhtlust. Kui vastuväide on kinnitatud või omandatud lehe omanik selle eemaldab, kustutatakse leht ja seda puudutavad andmed kohe, vastuväide kaasa arvatud; alles jääb ainult eemaldamise märge (lehe tunnus, riik, põhjus, kes selle registreeris ja millal), et lehte enam kunagi ei avaldataks."
+				]
+			},
+			"technical": {
+				"heading": "Tehnilised andmed ja küpsised",
+				"body": [
+					"Kasutatakse ainult teenuse jaoks hädavajalikke küpsiseid: sisse loginud teenuse osutajate seanss ja valitud keel. Reklaami- ega külastusmõõtmise küpsiseid ega jälgijaid ei kasutata.",
+					"Kuritarvituste piiramiseks teisendatakse IP-aadressid enne loendamist võtmega funktsiooniga ja neid ei salvestata kunagi algsel kujul; teenuse osutajate seansid salvestavad kärbitud IP-aadressi. Omandatud lehtede vaatamisi loetakse ilma küpsise ja tunnuseta ning neid näeb ainult lehe omanik."
+				]
+			},
+			"recipients": {
+				"heading": "Andmete saajad ja volitatud töötlejad",
+				"body": [
+					"Andmeid ei müüda ega rendita ning neid ei kasutata kunagi reklaamiks. Neid saavad ainult teenuse osutaja meeskond ja allpool nimetatud volitatud töötlejad, igaüks oma osas, IKÜM artikli 28 nõuetele vastava lepingu alusel. Kaardid laaditakse kaardiplaatide serverist, mis saab külastaja IP-aadressi nagu iga veebisait."
+				]
+			},
+			"transfers": {
+				"heading": "Edastamine väljapoole Euroopa Liitu",
+				"body": [
+					"Andmeid edastatakse väljapoole Euroopa Liitu ja Euroopa Majanduspiirkonda ainult IKÜM V peatüki kaitsemeetmetega (kaitse piisavuse otsus või lepingutingimuste standardklauslid). Volitatud töötleja vahetusest teatatakse siin enne selle jõustumist."
+				]
+			},
+			"automated": {
+				"heading": "Automatiseeritud otsused",
+				"body": [
+					"Teie kohta ei tehta ühtegi otsust üksnes automatiseeritult. Lehe omandamise taotluse otsustab inimene, kes loeb läbi selle dokumendid."
+				]
+			},
+			"rights": {
+				"heading": "Teie õigused",
+				"body": [
+					"Teil on õigus tutvuda oma andmetega, nõuda nende parandamist või kustutamist, piirata nende töötlemist, saada need ülekantaval kujul ja esitada vastuväide nende töötlemise vastu. Kirjutage allolevale aadressile; vastame ühe kuu jooksul.",
+					"Samuti võite esitada kaebuse Andmekaitse Inspektsioonile, mis on Eesti järelevalveasutus (IKÜM artikkel 77), või selle riigi järelevalveasutusele, kus te elate või töötate."
+				]
+			},
+			"objection": {
+				"heading": "Vastuväide lehe vastu (IKÜM artikkel 21)",
+				"body": [
+					"Igaüks, kelle kohta leht on, võib igal ajal selle avaldamise vastu vastuväite esitada põhjust nimetamata. Kui leht ei ole omandatud, piisab vormist: leht peidetakse kohe, kui taotlus saabub, kustutatakse pärast lühikest kontrolli ja registrite uuendused ei avalda seda enam kunagi. Kui leht on omandatud, eemaldab selle omanik oma töölaualt."
+				]
+			},
+			"changes": {
+				"heading": "Selle teate muudatused",
+				"body": [
+					"See teade on mustand. Selle vaatavad üle Eestis tegutsev jurist ja andmekaitsespetsialist; igal versioonil on kuupäev."
+				]
+			}
+		},
+		"fields": {
+			"controller": "Vastutav töötleja",
+			"address": "Aadress",
+			"email": "Kontakt pöördumisteks",
+			"dpo": "Andmekaitsespetsialist",
+			"effectiveDate": "Kehtib alates",
+			"hostingProvider": "Majutusteenuse osutaja (volitatud töötleja)",
+			"smtp": "E-kirjade saatmine (volitatud töötleja)",
+			"authority": "Järelevalveasutus"
+		},
+		"objectLink": "Kuidas esitada vastuväide lehe vastu",
+		"authorityLink": "Andmekaitse Inspektsioon",
+		"authorityAddress": "Andmekaitse Inspektsioon, Tatari 39, 10134 Tallinn, info@aki.ee"
+	},
+	"TermsEe": {
+		"metaTitle": "Kasutustingimused · Apercura",
+		"metaDescription": "Apercura Eesti lehtede kasutustingimused: tasuta faktiline kataloog tegevusloaga tervishoiuteenuse osutajatest ja apteekidest, ilma broneerimiseta.",
+		"title": "Kasutustingimused",
+		"lead": "Apercura Eesti lehtede kasutamise reeglid nii avalikkusele kui ka tervishoiuteenuse osutajatele.",
+		"sections": {
+			"service": {
+				"heading": "Teenus",
+				"body": [
+					"Apercura avaldab tasuta Terviseameti registris tegevusloaga tervishoiuteenuse osutajad ja Ravimiameti registri üldapteegid. Ta avaldab teenuse osutajaid, mitte nende juures töötavaid tervishoiutöötajaid. See on ainult kataloog: Apercura kaudu ei saa Eestis vastuvõtuaegu broneerida. Teenust osutab õigusteabes nimetatud isik.",
+					"Kataloogi kasutamiseks ei ole kontot vaja. Saiti kasutades nõustute nende tingimustega."
+				]
+			},
+			"content": {
+				"heading": "Mida lehed sisaldavad",
+				"body": [
+					"Lehtedel on avalike registrite faktiline teave nii, nagu registrid selle avaldavad, neutraalses järjestuses, ilma hinnangute, arvustuste, reklaami ja tasulise paigutuseta. Teenuse osutaja lehel on tema tegevuslubade numbrid, nagu reklaamiseadus nõuab.",
+					"Teave võib olla puudulik või aegunud ning tegevuskoht, mille aadressi aadressiandmete süsteem ei tunne, on kaardil näidatud oma asustusüksuses, mitte täpsel aadressil: enne kohale minekut kontrollige teavet teenuse osutajalt. Igal lehel on kirjas, kuidas veast teatada."
+				]
+			},
+			"health": {
+				"heading": "See ei ole meditsiiniline nõuanne",
+				"body": [
+					"Apercura ei anna meditsiinilist nõu ega ole hädaabiteenus. Hädaolukorras helistage numbril 112. Perearsti nõuandeliin vastab numbril 1220."
+				]
+			},
+			"providers": {
+				"heading": "Tervishoiuteenuse osutajatele",
+				"body": [
+					"Lehe omandamine on tasuta. Selleks on vaja dokumenti, mis tõendab, et taotleja juhib teenuse osutajat või tegutseb tema nimel; inimene kontrollib seda enne, kui leht üle antakse.",
+					"Lehe omanik vastutab enda lisatud teabe eest. See peab jääma faktiliseks, täpseks ja ajakohaseks: reklaamiseaduse § 22 keelab tervishoiuteenuse reklaami ning avaldada võib ainult selliseid fakte nagu teenuse osutaja nimi, tööaeg, tegevuskoht, eriala, teenused ja hinnakiri."
+				]
+			},
+			"removal": {
+				"heading": "Lehe eemaldamine",
+				"body": [
+					"Igaüks, kelle kohta leht on, võib igal ajal paluda selle eemaldamist: andmete lehel on selgitatud, kuidas. Omandatud lehte saab eemaldada ainult selle omanik."
+				]
+			},
+			"liability": {
+				"heading": "Vastutus",
+				"body": [
+					"Teenuse osutaja teeb kõik endast oleneva, et teenus oleks kättesaadav ja täpne, kuid ei saa seda tagada. Ta ei vastuta teabe eest, mille tervishoiuteenuse osutajad oma lehtedele lisavad. Need piirid täpsustatakse õigusliku ülevaatuse käigus."
+				]
+			},
+			"ip": {
+				"heading": "Lähtekood ja andmed",
+				"body": [
+					"Lähtekood on avaldatud litsentsi AGPL-3.0 alusel. Terviseameti andmed on taasavaldatud litsentsi CC BY-NC-SA 3.0 alusel: igaüks võib neid nendelt lehtedelt selle litsentsi alusel taaskasutada mitteärilisel eesmärgil, viitega allikale ja samadel tingimustel. Ravimiameti andmed ja aadressiandmed on litsentsi CC0 1.0 all, haldusüksuste andmed Maa- ja Ruumiameti avaandmete litsentsi all."
+				]
+			},
+			"law": {
+				"heading": "Kohaldatav õigus ja vaidlused",
+				"body": [
+					"Nendele tingimustele kohaldatakse Eesti õigust; elukohariigi kohustuslikud tarbijakaitsenormid kehtivad alati. Pädev kohus täpsustatakse õigusliku ülevaatuse käigus. Vaidluse korral kirjutage esmalt kontaktaadressile, et leida kokkuleppeline lahendus."
+				]
+			}
+		},
+		"fields": {
+			"publisher": "Teenuse osutaja",
+			"effectiveDate": "Kehtib alates",
+			"contact": "Kontakt"
+		}
+	},
+	"AccessibilityEe": {
+		"metaTitle": "Ligipääsetavus · Apercura",
+		"metaDescription": "Apercura Eesti lehtede ligipääsetavus: eesmärk WCAG 2.2 AA, mida on kontrollitud, mis on veel teha ja kuidas probleemist teatada.",
+		"title": "Ligipääsetavus",
+		"lead": "Apercura on loodud kõigile, sealhulgas eakatele ja vaegnägijatele. See teatis kirjeldab Eesti lehtede seisu.",
+		"sections": {
+			"scope": {
+				"heading": "Kohaldamisala",
+				"body": [
+					"Toodete ja teenuste ligipääsetavuse seadus (LPS) hõlmab e-kaubandust ja muid seaduses loetletud teenuseid, mitte tasuta kataloogi, ning avaliku teabe seaduse veebiligipääsetavuse nõuded kehtivad avaliku sektori asutustele. Apercura teenuse osutaja seab siiski igal lehel sama eesmärgi: WCAG 2.2 tase AA (EN 301 549)."
+				]
+			},
+			"status": {
+				"heading": "Saidi seis",
+				"body": [
+					"Eesti lehtedel on teiste riikide lehtedega sama lähtekood ja samad testid. Sait vastab WCAG 2.2 AA nõuetele osaliselt: see põhineb enesehindamisel ja automaattestidel, mitte veel täielikul auditil, mis on pooleli."
+				]
+			},
+			"tests": {
+				"heading": "Mida on kontrollitud",
+				"list": [
+					"Automaatsed axe-core kontrollid (WCAG 2.0, 2.1 ja 2.2 reeglid, tasemed A ja AA) igal lehetüübil iga väljalaske korral.",
+					"Ainult klaviatuuriga läbitavad teekonnad nähtava fookusega.",
+					"Põhiteksti suurus vähemalt 18 px, puutealad vähemalt 44 px, miski ei sõltu ainult värvist, 390 px laiusel ei ole vaja horisontaalselt kerida."
+				]
+			},
+			"pending": {
+				"heading": "Mida on veel vaja kontrollida",
+				"list": [
+					"Käsitsi läbimine ekraanilugejatega VoiceOver ja NVDA eesti keeles.",
+					"Täielik audit WCAG 2.2 AA nõuete järgi lehtede valimil, sealhulgas eestikeelsetel tekstidel."
+				]
+			},
+			"feedback": {
+				"heading": "Teatage probleemist",
+				"body": [
+					"Kui mõnda lehte või funktsiooni on raske kasutada, kirjutage allolevale aadressile: märkige, milline leht ja mis teid takistas. Vastame ühe kuu jooksul ja vajaduse korral anname teabe teisel kujul."
+				]
+			}
+		},
+		"fields": {
+			"contact": "Kontakt",
+			"date": "Teatise kuupäev"
+		}
+	},
+	"DataEe": {
+		"metaTitle": "Andmed ja allikad · Apercura",
+		"metaDescription": "Kust Apercura Eesti lehtede andmed pärinevad (Terviseameti ja Ravimiameti registrid), millise litsentsi alusel ning kuidas lehte parandada või eemaldada.",
+		"title": "Andmed ja allikad",
+		"lead": "Iga Eesti leht on koostatud avalike registrite põhjal. Siin on kirjas, kust andmed pärinevad, millise litsentsi ja viitega, millise litsentsi alusel need on taasavaldatud, millal neid uuendati ning kuidas lehte parandada või eemaldada.",
+		"status": {
+			"heading": "Viimane uuendus",
+			"body": "Terviseamet avaldab oma registri iga päev ja Ravimiamet hoiab oma registri ajakohasena; kataloog loeb neid kord nädalas ja impordib registri, kui see on muutunud. Leht muutub ainult siis, kui selle faktid registris muutuvad.",
+			"importedAt": "Viimane import",
+			"checkedAt": "Allikaid viimati kontrollitud",
+			"notImported": "Eesti kataloogi ei ole sellel saidil veel imporditud.",
+			"notImportedValue": "Veel imporditud ei ole"
+		},
+		"sources": {
+			"heading": "Allikad",
+			"body": "Terviseamet avaldab tervishoiuteenuse osutajate registri litsentsi Creative Commons Autorile viitamine-Mitteäriline eesmärk-Jagamine samadel tingimustel 3.0 Jurisdiktsiooniga sidumata (CC BY-NC-SA 3.0) alusel, Ravimiamet oma tegevuslubade registri ja Maa- ja Ruumiamet oma aadressiandmed litsentsi CC0 1.0 alusel ning Maa- ja Ruumiamet haldus- ja asustusüksused avaandmetena, millele tuleb viidata koos andmete seisu kuupäevaga. Kõik allolevad viited on esitatud sõna-sõnalt.",
+			"caption": "Eesti kataloogi andmeallikad",
+			"columns": {
+				"source": "Allikas",
+				"use": "Kasutus",
+				"licence": "Litsents ja viide",
+				"frequency": "Uuendamine"
+			},
+			"items": {
+				"ee-medre": {
+					"use": "Tervishoiuteenuse osutajad: nimed, tegevusload (numbrid ja liigid), haiglate liigid, lubatud teenused, tegevuskohtade aadressid",
+					"frequency": "Iga päev, Terviseamet"
+				},
+				"ee-ravimiamet": {
+					"use": "Üldapteegid: nimed, tegevuslubade numbrid, aadressid, telefoninumbrid",
+					"frequency": "Muudatuste korral, Ravimiamet"
+				},
+				"ee-ads": {
+					"use": "Registrites antud aadresside asukohapunkt ja postiindeks",
+					"frequency": "Iga kuu, Maa- ja Ruumiamet"
+				},
+				"ee-ehak": {
+					"use": "Maakonnad, omavalitsused ja asustusüksused ning iga asustusüksuse keskpunkt, kuhu paigutatakse punktita aadress",
+					"frequency": "Iga kuu, Maa- ja Ruumiamet"
+				},
+				"map": {
+					"name": "Kaardiandmed",
+					"publisher": "OpenStreetMapi kaastöötajad, kaardiplaadid OpenFreeMap",
+					"use": "Lehtede kaardid",
+					"frequency": "Pidevalt"
+				}
+			},
+			"ccByNcSa": "CC BY-NC-SA 3.0",
+			"cc0": "CC0 1.0",
+			"maru": "Maa- ja Ruumiameti avaandmete litsents",
+			"odbl": "ODbL"
+		},
+		"licence": {
+			"heading": "Eesti andmete litsents",
+			"body": [
+				"Terviseameti andmeid taaskasutatakse litsentsi CC BY-NC-SA 3.0 Jurisdiktsiooniga sidumata alusel ja nendel lehtedel taasavaldatud Eesti andmed (teenuse osutajate lehed, nende loendid ja saidikaardid) on kättesaadavad sama litsentsi, CC BY-NC-SA 3.0, alusel: igaüks võib neid siit taaskasutada viitega allikale, mitteärilisel eesmärgil ja samadel tingimustel. Ükski muu saidi litsentsiväide neid andmeid ei hõlma: litsents AGPL-3.0 kehtib Apercura lähtekoodile, mitte nendele andmetele."
+			],
+			"list": [
+				"Mitteäriline eesmärk (litsentsi punkt 4(c)): Apercura on patsientidele ja teenuse osutajatele tasuta, seda peetakse kasumit taotlemata, selle lähtekood on avatud (AGPL-3.0), sellel ei ole reklaami, tasulist järjestamist ega paigutust ning andmeid ei müüda ega rendita. Registri kasutamine ei ole peamiselt suunatud ärilise eelise ega isikliku rahalise tasu saamisele.",
+				"Jagamine samadel tingimustel (litsentsi punkt 4(b)): see, mida Apercura registrile lisab (Maa- ja Ruumiameti kohad ja punktid, apteegid), ei muuda Terviseameti andmete litsentsi, mis jääb kõikjal, kus neid näidatakse, CC BY-NC-SA 3.0-ks. Ravimiameti andmed ja aadressiandmed jäävad litsentsi CC0 1.0 alla, haldusüksused Maa- ja Ruumiameti avaandmete litsentsi alla, koos oma viitega.",
+				"Viide allikale (litsentsi punkt 4(d)): iga registri põhjal koostatud leht nimetab Terviseameti, andmestiku ja litsentsi ning märgib, et andmeid on muudetud.",
+				"Terviseametilt on palutud seda tõlgendust kinnitada; seni lehed avaldatakse ja need järgivad tema vastust."
+			],
+			"changesHeading": "Andmetes tehtud muudatused",
+			"changes": "Registrit loetakse kord nädalas ja alles jäetakse ainult see, mida leht vajab: välja jäetakse teenuse osutajad, kelle ainsad tegevusload on kiirabi, tegevuskohad, kus osutatakse ainult koolitervishoiu- või kiirabiteenust, ning aadressita mobiilsed tegevuskohad; tervishoiutöötajaid, äriregistri koode ja juriidilisi aadresse ei loeta kunagi. Iga tegevuskoht paigutatakse aadressiandmete süsteemi aadressipunktile, selle puudumisel asustusüksuse keskpunkti; nimed näidatakse nii, nagu register need kirjutab, ilma õigusliku vormita (OÜ, AS, SA…) ja tavalises kirjas, kui register kirjutab need suurtähtedega.",
+			"licenceLink": "Litsents CC BY-NC-SA 3.0 Jurisdiktsiooniga sidumata",
+			"datasetLink": "Terviseameti andmestik portaalis andmed.eesti.ee"
+		},
+		"coverage": {
+			"heading": "Hõlmatud teenuse osutajad",
+			"body": [
+				"Lehed luuakse iga tervishoiuteenuse osutaja kohta, kellel on Terviseameti registris tegevusluba ja patsientidele avatud tegevuskoht, ning Ravimiameti registri üldapteekide kohta, sealhulgas haruapteegid. Teenuse osutaja on loendis üks kord, esimese liigi all, mille tema tegevusload annavad: haigla, perearstikeskus, hambakliinik, muu eriarstiabi osutaja, seejärel õendusabi (sealhulgas õendushaiglad), ämmaemandusabi, füsioteraapia, psühholoogiline ravi ja logopeedia. Lehel on näidatud iga tegevusluba koos numbriga ja iga teenus.",
+				"Ei ole loendis: iga teenuse osutaja juures registreeritud tervishoiutöötajad ja perearstide nimistud, mis nimetavad inimesi; teenuse osutajad, kelle ainsad tegevusload on kiirabi; koolitervishoiuteenuse tegevuskohad; haigla- ja veterinaarapteegid, mis ei teeninda avalikkust.",
+				"Tegevuskoht paigutatakse tema aadressipunktile aadressiandmete süsteemis (Maa- ja Ruumiamet). Aadress, mida süsteem ei tunne, paigutatakse tema asustusüksuse keskpunkti: siis on asukoht kaardil ja kaugus asustusüksuse, mitte aadressi omad."
+			],
+			"kinds": {
+				"EE_HOSPITAL": "Haiglad (piirkondlikud, kesk-, üld-, kohalikud, eri- ja taastusravihaiglad)",
+				"EE_FAMILY_PRACTICE": "Perearstikeskused",
+				"EE_DENTAL": "Hambakliinikud",
+				"EE_SPECIALIST": "Muud eriarstiabi osutajad",
+				"EE_NURSING": "Õendusabi (koduõendus, õe vastuvõtt, õendushaiglad)",
+				"EE_MIDWIFERY": "Ämmaemandusabi",
+				"EE_PHYSIOTHERAPY": "Füsioteraapia",
+				"EE_PSYCHOLOGY": "Psühholoogiline ravi",
+				"EE_SPEECH_THERAPY": "Logopeedia",
+				"EE_PHARMACY": "Üldapteegid ja nende haruapteegid"
+			},
+			"kindsLabel": "Imporditud"
+		},
+		"identifiers": {
+			"heading": "Tunnused",
+			"body": [
+				"Iga lehe aadress lõpeb tema registri võtmega, mille ees on registrit nimetavad tähed, nii et lehte saab leida ja allikaga võrrelda:"
+			],
+			"list": [
+				"/ee/asutus/perearstikeskus-naide-l01909: tervishoiuteenuse osutaja (l) ja tema esimese kehtiva tegevusloa number (L01909) Terviseameti registris kirjutatud kujul. Teenuse osutaja äriregistri koodi ei kasutata.",
+				"/ee/asutus/naidisapteek-ap457: apteek (ap) ja tema tegutsemiskoha kood Ravimiametis."
+			]
+		},
+		"correct": {
+			"heading": "Parandage viga",
+			"body": [
+				"Lehed kordavad registreid: püsiv parandus tehakse allikas ja leht järgib seda järgmisel impordil.",
+				"Muu puhul kasutage vormi: kontrollime iga teadet."
+			],
+			"list": [
+				"Tervishoiuteenuse osutajad: teenuse osutaja taotleb Terviseametilt tegevusloa muutmist (uus tegevuskoht, uus teenus) ja register kajastab muudatust.",
+				"Apteegid: tegevusloa omaja teatab muudatusest Ravimiametile."
+			],
+			"formTitle": "Teatage veast",
+			"formBody": "Märkige lehe aadress ja mis on valesti."
+		},
+		"remove": {
+			"heading": "Eemaldage leht",
+			"body": [
+				"Igaüks, kelle kohta leht on, võib igal ajal selle avaldamise vastu vastuväite esitada põhjust nimetamata (IKÜM artikkel 21). Omandamata leht peidetakse kohe, kui taotlus saabub, ja kustutatakse pärast lühikest kontrolli; registrite uuendused ei too seda enam kunagi tagasi. Omandatud lehe eemaldab selle omanik oma töölaualt."
+			],
+			"formTitle": "Paluge lehe eemaldamist",
+			"formBody": "Märkige lehe aadress ja e-posti aadress, kuhu saame teile vastata."
+		}
+	}
+}

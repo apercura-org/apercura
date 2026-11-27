@@ -10,9 +10,10 @@ import { placeLabel, REGION_LISTING_MARKETS } from "./places";
 
 /**
  * Markets whose places run to the hundreds (France's hundred-odd départements, Germany's four
- * hundred Kreise): their home lists the largest ones only, the directory page lists them all.
+ * hundred Kreise) or near it (Estonia's 78 municipalities): their home lists the largest ones
+ * only, the directory page lists them all.
  */
-export const TOP_PLACES_MARKETS: ReadonlySet<string> = new Set(["FR", "DE"]);
+export const TOP_PLACES_MARKETS: ReadonlySet<string> = new Set(["FR", "DE", "EE"]);
 
 /** How many places the home of a {@link TOP_PLACES_MARKETS} market lists. */
 export const HOME_PLACES_LIMIT = 30;
@@ -27,7 +28,7 @@ export type HomePlace = { key: string; label: string; slug: string; count: numbe
  * The places a market's home lists, each a hub of the directory: the regions where they have
  * pages of their own (the UK's regions and nations, Italy's regions, Switzerland's cantons);
  * else the departments (Austria's Bundesländer, Czechia's districts, Spain's provinces), the
- * largest {@link HOME_PLACES_LIMIT} only in France and Germany. Directory order, or the largest
+ * largest {@link HOME_PLACES_LIMIT} only in France, Germany and Estonia. Directory order, or the largest
  * first when cut. Places without anyone listed are left out.
  */
 export function homePlaces(country: string, regions: readonly RegionLike[]): HomePlace[] {

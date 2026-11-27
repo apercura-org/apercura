@@ -11,7 +11,7 @@
  */
 
 /** Languages a market's aliases are written in: its interface languages (catalog languages). */
-export type SearchAliasLanguage = "fr" | "en" | "de" | "es" | "it" | "cs";
+export type SearchAliasLanguage = "fr" | "en" | "de" | "es" | "it" | "cs" | "et";
 
 export type SearchAliases = {
 	/**

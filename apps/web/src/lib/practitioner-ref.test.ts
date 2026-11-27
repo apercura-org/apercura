@@ -248,3 +248,34 @@ describe("Swiss facility references", () => {
 		);
 	});
 });
+
+describe("Estonian provider and pharmacy references", () => {
+	const provider = { country: "EE", idScheme: "EE-TTL", nationalId: "01909" };
+	const pharmacy = { country: "EE", idScheme: "EE-APT", nationalId: "457" };
+
+	it("read the `ee:` reference, an Estonian page address, and a key typed on an Estonian page", () => {
+		expect(parsePractitionerRef("ee:l01909")).toEqual(provider);
+		expect(parsePractitionerRef(" EE: L01909 ")).toEqual(provider);
+		expect(
+			parsePractitionerRef("https://apercura.org/ee/asutus/perearstikeskus-naide-l01909"),
+		).toEqual(provider);
+		expect(parsePractitionerRef("/ee/asutus/naidisapteek-ap457/")).toEqual(pharmacy);
+		// The licence number as a provider's page prints it.
+		expect(parsePractitionerRef("L01909", "EE")).toEqual(provider);
+		expect(parsePractitionerRef("ap457", "EE")).toEqual(pharmacy);
+		expect(parsePractitionerRef("ee:l1909")).toBeNull();
+		expect(parsePractitionerRef("ee:")).toBeNull();
+	});
+
+	it("still read RPPS numbers as French", () => {
+		expect(parsePractitionerRef("19999990013", "EE")?.country).toBe("FR");
+		expect(parsePractitionerRef("ap457")).toBeNull();
+	});
+
+	it("write the reference back with its market", () => {
+		expect(practitionerRefOf(provider)).toBe("ee:l01909");
+		expect(practitionerRefOf(pharmacy)).toBe("ee:ap457");
+		expect(marketRef("L01909", "EE")).toBe("ee:l01909");
+		expect(parsePractitionerRef(practitionerRefOf(pharmacy))).toEqual(pharmacy);
+	});
+});

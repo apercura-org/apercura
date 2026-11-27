@@ -12,11 +12,12 @@ Re-use of Public Sector Information Regulations 2015, or as a plain licence requ
 gives a right to re-use.
 
 Austria has its own request, prepared separately (`at.md`); the United Kingdom's, Czechia's,
-Spain's, Italy's, Germany's and Switzerland's candidates are in `gb.md`, `cz.md`, `es.md`, `it.md`,
-`de.md` and `ch.md` (Spain opened from the register of centres, REGCESS, Italy from the Ministry of
-Health's lists of places, Germany from the statistical offices' directory of hospitals and the
-Länder's pharmacy lists, and Switzerland from the FOPH's hospital figures and the cantons' lists;
-the requests below for their registers of people still stand).
+Spain's, Italy's, Germany's, Switzerland's and Estonia's candidates are in `gb.md`, `cz.md`, `es.md`,
+`it.md`, `de.md`, `ch.md` and `ee.md` (Spain opened from the register of centres, REGCESS, Italy from
+the Ministry of Health's lists of places, Germany from the statistical offices' directory of
+hospitals and the Länder's pharmacy lists, Switzerland from the FOPH's hospital figures and the
+cantons' lists, and Estonia from the Health Board's register of providers and the State Agency of
+Medicines' pharmacies; the requests below for their registers of people still stand).
 
 ## Tracking
 
@@ -42,6 +43,7 @@ Update a row the day something happens. Status: `not sent`, `sent`, `extended`, 
 | Germany (12)       | 116117 Arztsuche: [de-kbv.md](de-kbv.md)                                          | KBV, copy DPO                                    | Email                                 | None (DNG, § 1(2)): licence request                                  | not sent |           |        |         |
 | Germany (12)       | Chamber doctor searches: [de-aerztekammern.md](de-aerztekammern.md)               | Each of the 17 Landesärztekammern                | Email, one per chamber                | None: licence request                                                | not sent |           |        |         |
 | Estonia (13)       | MEDRE open data: [ee-terviseamet.md](ee-terviseamet.md)                           | Terviseamet                                      | Email                                 | Public Information Act, § 3¹ (licence change or confirmation)        | not sent |           |        |         |
+| Estonia (13)       | CC BY-NC-SA 3.0 reading: [ee.md](ee.md#how-to-ask)                                | Terviseamet                                      | Email                                 | Public Information Act, § 3¹ (confirmation of the licence's terms)   | not sent |           |        |         |
 | Netherlands (16)   | BIG-register: [nl-big-register.md](nl-big-register.md)                            | CIBG, copy Ministry DPO                          | Email or contact form                 | None under the Who (art. 2(1)(h)): permission request                | not sent |           |        |         |
 | Portugal (17)      | Register of doctors: [pt-ordem-dos-medicos.md](pt-ordem-dos-medicos.md)           | Ordem dos Médicos, access-to-information officer | Email, subject `RAI \|`               | Lei 26/2016, arts. 19 and 21                                         | not sent |           |        |         |
 | Croatia (18)       | Contracted primary care: [hr-hzzo.md](hr-hzzo.md)                                 | HZZO, information officer                        | Email or HZZO form                    | ZPPI, arts. 27 and 29                                                | not sent |           |        |         |

@@ -3,6 +3,7 @@ import {
 	allChListingSlugs,
 	allCzListingSlugs,
 	allDeTaxonomySlugs,
+	allEeTaxonomySlugs,
 	allEsTaxonomySlugs,
 	allGbListingSlugs,
 	allItListingSlugs,
@@ -27,6 +28,8 @@ const MARKET_SLUGS: Readonly<Record<MarketCountry, ReadonlySet<string>>> = {
 	// Germany names its kinds of facility in the singular too (`krankenhaus`, `apotheke`).
 	DE: allDeTaxonomySlugs(),
 	CH: allChListingSlugs(),
+	// Estonia names its kinds of provider in the singular (`perearstikeskus`, `apteek`).
+	EE: allEeTaxonomySlugs(),
 };
 
 /** The `taxonomy` groups keyed by listing or profession slug. */

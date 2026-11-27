@@ -3,6 +3,7 @@ export * from "./care-kinds";
 export * from "./ch";
 export * from "./cz";
 export * from "./de";
+export * from "./ee";
 export * from "./es";
 export * from "./fr";
 export * from "./gb";

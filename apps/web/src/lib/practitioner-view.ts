@@ -3,6 +3,7 @@ import {
 	formatPhoneCh,
 	formatPhoneCz,
 	formatPhoneDe,
+	formatPhoneEe,
 	formatPhoneEs,
 	formatPhoneFr,
 	formatPhoneGb,
@@ -42,6 +43,7 @@ export function label(value: string | null | undefined): string | null {
  */
 export function formatPhone(e164: string): string {
 	if (e164.startsWith("+41")) return formatPhoneCh(e164);
+	if (e164.startsWith("+372")) return formatPhoneEe(e164);
 	if (e164.startsWith("+43")) return formatPhoneAt(e164);
 	if (e164.startsWith("+44")) return formatPhoneGb(e164);
 	if (e164.startsWith("+420")) return formatPhoneCz(e164);

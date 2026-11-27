@@ -1,0 +1,132 @@
+import type { SearchAliasTable } from "./types";
+
+/**
+ * Estonia: everyday words for the kinds of provider the market lists ("perearst", "EMO",
+ * "hambaarst", "kodune õendus", "apteek"), in their usual forms and declined as people type
+ * them ("perearsti", "haigla"). Estonia lists providers, not the health workers registered
+ * with them: a search for a person reads as the provider's kind (a family doctor's practice for
+ * "perearst"). A specialist's field ("kardioloog", "silmaarst") leads to the providers of
+ * specialist care, which the pages list with their services. English and French lists help
+ * visitors who search in those languages. Russian, widely spoken in Estonia, comes with the
+ * Russian interface (ROADMAP.md).
+ */
+export const EE_SEARCH_ALIASES = {
+	et: {
+		listings: {
+			haiglad: [
+				"haigla",
+				"haiglad",
+				"haiglas",
+				"EMO",
+				"erakorralise meditsiini osakond",
+				"erakorraline meditsiin",
+				"traumapunkt",
+				"kliinikum",
+				"regionaalhaigla",
+				"keskhaigla",
+				"üldhaigla",
+				"sünnitusmaja",
+				"sünnitusosakond",
+				"taastusravihaigla",
+			],
+			perearstikeskused: [
+				"perearst",
+				"perearstid",
+				"perearsti",
+				"perearstikeskus",
+				"perearstikeskused",
+				"perearstipraksis",
+				"pereõde",
+				"tervisekeskus",
+				"üldarst",
+				"üldarstiabi",
+				"arst",
+			],
+			hambaravi: [
+				"hambaarst",
+				"hambaarstid",
+				"hambaarsti",
+				"hambaravi",
+				"hambakliinik",
+				"hambaravikabinet",
+				"ortodont",
+				"ortodontia",
+				"suuhügienist",
+			],
+			eriarstiabi: [
+				"eriarst",
+				"eriarstid",
+				"eriarstiabi",
+				"kardioloog",
+				"silmaarst",
+				"silmakliinik",
+				"oftalmoloog",
+				"nahaarst",
+				"dermatoloog",
+				"günekoloog",
+				"naistearst",
+				"kõrva-nina-kurguarst",
+				"lastearst",
+				"psühhiaater",
+				"neuroloog",
+				"ortopeed",
+				"uroloog",
+				"kirurg",
+				"endokrinoloog",
+				"radioloog",
+				"töötervishoid",
+				"töötervishoiuarst",
+			],
+			oendusabi: [
+				"õde",
+				"õed",
+				"õendusabi",
+				"koduõde",
+				"koduõendus",
+				"kodune õendus",
+				"õendushaigla",
+				"hooldusravi",
+				"õe vastuvõtt",
+			],
+			ammaemandusabi: ["ämmaemand", "ämmaemandad", "ämmaemandusabi", "kodusünnitus"],
+			fusioteraapia: ["füsioterapeut", "füsioterapeudid", "füsioteraapia", "taastusravi"],
+			"psuhholoogiline-ravi": [
+				"psühholoog",
+				"kliiniline psühholoog",
+				"psühholoogid",
+				"psühhoteraapia",
+				"psühhoterapeut",
+			],
+			logopeedia: ["logopeed", "logopeedid", "logopeediline ravi", "kõneravi"],
+			apteegid: ["apteek", "apteegid", "apteeki", "apteeker", "proviisor", "rohud"],
+		},
+	},
+	en: {
+		listings: {
+			haiglad: ["hospital", "A&E", "emergency", "emergency room", "maternity hospital"],
+			perearstikeskused: ["GP", "family doctor", "general practitioner", "doctor"],
+			hambaravi: ["dentist", "dental clinic", "orthodontist"],
+			eriarstiabi: ["specialist", "cardiologist", "ophthalmologist", "dermatologist"],
+			oendusabi: ["nurse", "home nursing"],
+			ammaemandusabi: ["midwife"],
+			fusioteraapia: ["physiotherapist", "physiotherapy"],
+			"psuhholoogiline-ravi": ["psychologist", "clinical psychologist"],
+			logopeedia: ["speech therapist", "speech and language therapist"],
+			apteegid: ["pharmacy", "pharmacist", "chemist"],
+		},
+	},
+	fr: {
+		listings: {
+			haiglad: ["hôpital", "urgences", "clinique", "maternité"],
+			perearstikeskused: ["médecin généraliste", "généraliste", "médecin traitant"],
+			hambaravi: ["dentiste", "chirurgien-dentiste", "orthodontiste"],
+			eriarstiabi: ["spécialiste", "cardiologue", "ophtalmologue", "dermatologue"],
+			oendusabi: ["infirmier", "infirmière"],
+			ammaemandusabi: ["sage-femme"],
+			fusioteraapia: ["kiné", "kinésithérapeute"],
+			"psuhholoogiline-ravi": ["psychologue"],
+			logopeedia: ["orthophoniste"],
+			apteegid: ["pharmacie", "pharmacien"],
+		},
+	},
+} as const satisfies SearchAliasTable;

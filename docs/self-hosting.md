@@ -274,6 +274,36 @@ it to some lists, `ETL_CH_SCHEDULE_ARGS=--sources -ge-hopitaux,-ge-ems,-ge-pharm
 runs every list but Geneva's, which keep their rows); exit code `3` as for Austria
 ([data-import.md](./data-import.md#turning-a-list-off)).
 
+Estonia (`/ee`) has its own import, from the Health Board's register of
+healthcare providers and their activity licences (about 1,500 providers and
+2,300 places of activity) and the State Agency of Medicines' register of
+pharmacies (about 470):
+
+```sh
+apercura-compose run --rm --entrypoint "apercura etl:places" etl --country ee
+apercura-compose run --rm --entrypoint "apercura etl:ee" etl --dry-run
+apercura-compose run --rm --entrypoint "apercura etl:ee" etl
+```
+
+The places are the Land and Spatial Development Board's counties, municipalities
+and settlements (a 17 MB shapefile; the first `etl:ee` imports them too); each run
+also reads the Board's address file (30 MB) to locate the places. The scheduler
+reruns the import every Thursday at 03:30 UTC (`ETL_EE_SCHEDULE_ARGS=--sources
+apteegid` keeps it to the pharmacies); exit code `3` when a source was left out
+([data-import.md](./data-import.md#estonia)).
+
+### Estonia: non-commercial data
+
+The Health Board publishes its register under **CC BY-NC-SA 3.0**: it may be
+republished with its attribution, under the same licence, and **not for a
+commercial purpose**. Apercura's own instance is free, without ads, paid ranking
+or paid features, which is why it republishes it. An operator whose instance has
+a commercial purpose (a paid service, advertising, a business's lead generation)
+must not import the Health Board's data: leave `etl:ee` out of the schedule, or
+run it with `ETL_EE_SOURCES=apteegid` (the State Agency of Medicines' pharmacies
+are CC0 1.0). Whoever imports it republishes it under CC BY-NC-SA 3.0 and keeps
+the attribution the pages print.
+
 ## Scheduled jobs
 
 The `scheduler` service runs [`docker/crontab`](../docker/crontab) with

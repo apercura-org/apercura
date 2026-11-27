@@ -93,7 +93,8 @@
 			"IT": "Italie",
 			"CH": "Suisse",
 			"ES": "Espagne",
-			"DE": "Allemagne"
+			"DE": "Allemagne",
+			"EE": "Estonie"
 		}
 	},
 	"HomePage": {
@@ -157,7 +158,7 @@
 	},
 	"International": {
 		"metaTitle": "Apercura · Annuaires ouverts des professionnels de santé",
-		"metaDescription": "Une page gratuite et factuelle par soignant, des registres publics. En France, Autriche, Royaume-Uni, Tchéquie, Espagne, Italie, Allemagne et Suisse.",
+		"metaDescription": "Une page gratuite et factuelle par soignant, des registres publics. France, Autriche, Royaume-Uni, Tchéquie, Espagne, Italie, Allemagne, Suisse, Estonie.",
 		"runningHead": "Annuaires ouverts des professionnels de santé",
 		"title": "Chaque professionnel de santé, une page ouverte",
 		"lead": "Apercura publie une page gratuite et factuelle pour chaque professionnel de santé inscrit, à partir des registres publics de chaque pays. Ni note, ni publicité, ni classement payant, et un code source ouvert.",
@@ -649,6 +650,13 @@
 			"operator": "Gestionnaire",
 			"pharmacyType": "Officine principale ou succursale",
 			"accessibility": "Accessibilité"
+		},
+		"estonianFacts": {
+			"licences": "Autorisations d’activité",
+			"licenceNote": "Les numéros d’autorisation d’activité du Health Board, que toute page sur un prestataire indique (loi estonienne sur la publicité, § 22(3)).",
+			"hospitalKind": "Type d’hôpital",
+			"services": "Services",
+			"pharmacyLicence": "Autorisation d’activité de la pharmacie"
 		}
 	},
 	"Institutional": {
@@ -1812,7 +1820,27 @@
 			"apotheken": "Pharmacie",
 			"krankenhaus": "Hôpital",
 			"kinderklinik": "Hôpital pour enfants",
-			"reha-klinik": "Centre de rééducation"
+			"reha-klinik": "Centre de rééducation",
+			"haiglad": "Hôpital",
+			"haigla": "Hôpital",
+			"perearstikeskused": "Cabinet de médecine générale",
+			"perearstikeskus": "Cabinet de médecine générale",
+			"hambaravi": "Cabinet dentaire",
+			"hambakliinik": "Cabinet dentaire",
+			"eriarstiabi": "Centre de soins spécialisés",
+			"eriarstiabi-osutaja": "Centre de soins spécialisés",
+			"oendusabi": "Service de soins infirmiers",
+			"oendusabi-osutaja": "Service de soins infirmiers",
+			"ammaemandusabi": "Cabinet de sage-femme",
+			"ammaemandusabi-osutaja": "Cabinet de sage-femme",
+			"fusioteraapia": "Cabinet de kinésithérapie",
+			"fusioteraapia-osutaja": "Cabinet de kinésithérapie",
+			"psuhholoogiline-ravi": "Cabinet de psychologie clinique",
+			"psuhholoogilise-ravi-osutaja": "Cabinet de psychologie clinique",
+			"logopeedia": "Cabinet d’orthophonie",
+			"logopeedia-osutaja": "Cabinet d’orthophonie",
+			"apteegid": "Pharmacie",
+			"apteek": "Pharmacie"
 		},
 		"listing": {
 			"aerzte": "Médecins sans spécialité indiquée",
@@ -2058,7 +2086,17 @@
 			"psychiatrische-kliniken": "Hôpitaux psychiatriques",
 			"kinderkliniken": "Hôpitaux pour enfants",
 			"reha-kliniken": "Centres de rééducation",
-			"apotheken": "Pharmacies"
+			"apotheken": "Pharmacies",
+			"haiglad": "Hôpitaux",
+			"perearstikeskused": "Cabinets de médecine générale",
+			"hambaravi": "Cabinets dentaires",
+			"eriarstiabi": "Soins spécialisés",
+			"oendusabi": "Soins infirmiers",
+			"ammaemandusabi": "Sages-femmes",
+			"fusioteraapia": "Kinésithérapie",
+			"psuhholoogiline-ravi": "Psychologie clinique",
+			"logopeedia": "Orthophonie",
+			"apteegid": "Pharmacies"
 		},
 		"practiceKind": {
 			"office": "Cabinet",
@@ -3082,7 +3120,9 @@
 			"GB-PHS-PHARM": "Code de Public Health Scotland",
 			"GB-BSO-GP": "Numéro de cabinet du BSO",
 			"GB-BSO-DENT": "Cabinet dentaire du BSO",
-			"CZ-NRPZS": "Numéro d’établissement NRPZS"
+			"CZ-NRPZS": "Numéro d’établissement NRPZS",
+			"EE-TTL": "Autorisation d’activité",
+			"EE-APT": "Lieu d’activité de la pharmacie"
 		}
 	},
 	"Onboarding": {
@@ -6664,5 +6704,416 @@
 		"listing": "{kind, select, pflegeheim {{amount, select, none {Aucun EMS n’est encore listé : aucune liste cantonale n’a encore été importée.} one {Les EMS ne sont listés que pour le canton {cantons} : ceux des autres cantons ne le sont pas encore.} other {Les EMS ne sont listés que pour les cantons {cantons} : ceux des autres cantons ne le sont pas encore.}}} apotheke {{amount, select, none {Aucune pharmacie n’est encore listée : aucune liste cantonale n’a encore été importée.} one {Les pharmacies ne sont listées que pour le canton {cantons} : celles des autres cantons ne le sont pas encore.} other {Les pharmacies ne sont listées que pour les cantons {cantons} : celles des autres cantons ne le sont pas encore.}}} other {Les hôpitaux et cliniques sont listés dans tous les cantons, d’après les chiffres-clés 2023 des hôpitaux de l’Office fédéral de la santé publique{amount, select, none {.} one { et la liste d’hôpitaux du canton {cantons}.} other { et les listes d’hôpitaux des cantons {cantons}.}}}}",
 		"hospitalsEverywhere": "les hôpitaux et cliniques de tous les cantons",
 		"unlisted": "En Suisse, l’annuaire recense pour l’instant des établissements, jamais des personnes : {listed}. Les médecins, dentistes, psychologues et autres professionnels de santé ne sont pas encore listés ici : aucun registre ouvert ne les publie. Cherchez le nom d’un établissement ou parcourez l’annuaire."
+	},
+	"LegalNoticeEe": {
+		"metaTitle": "Legal notice (Estonia) · Apercura",
+		"metaDescription": "Legal notice of the Estonian pages of Apercura: the service provider, its registry code, address and contact details, e-mail included (Information Society Services Act, § 4).",
+		"title": "Legal notice",
+		"lead": "Who provides the Estonian pages of Apercura (apercura.org/ee): the information that section 4(1) of the Information Society Services Act (infoühiskonna teenuse seadus, InfoTS) asks a service provider to make directly and permanently available.",
+		"sections": {
+			"provider": {
+				"heading": "Service provider (InfoTS § 4(1))",
+				"body": [
+					"The Estonian pages of Apercura are provided by the entity below: its name, its registry code and the register that keeps it, its address and its contact details, e-mail included, and its VAT number when it is registered for VAT. It runs the directory and answers for its content."
+				]
+			},
+			"service": {
+				"heading": "The service",
+				"body": [
+					"A free directory of Estonia’s healthcare providers that hold an activity licence (hospitals, family practices, dental clinics, providers of specialist care, nursing care, midwifery, physiotherapy, clinical psychology and speech therapy) and of its general pharmacies, built from the Health Board’s register (Terviseamet, MEDRE open data) and the State Agency of Medicines’ register (Ravimiamet), without advertising, with a space where a provider can complete its own page. Pages are providers, never the health workers who work for them. No appointment is booked through Apercura in Estonia."
+				]
+			},
+			"licences": {
+				"heading": "Activity licence numbers",
+				"body": [
+					"Every page about a healthcare provider prints the numbers of its activity licences, because section 22(3) of the Advertising Act (reklaamiseadus) requires information published about a healthcare provider to include its activity licence number. Under section 22(4)(1), publishing a provider’s name, opening hours, place of activity and specialty, and the list of its services, is not advertising of health services: the pages show those facts and nothing else."
+				]
+			},
+			"editor": {
+				"heading": "Responsible for the content",
+				"body": [
+					"The person below is responsible for what the provider publishes. Information a healthcare provider adds to its own page is its own responsibility; as a host of information provided by its users, the provider answers for it only under the conditions of the Digital Services Act (Regulation (EU) 2022/2065, article 6)."
+				]
+			},
+			"liability": {
+				"heading": "Content of the pages",
+				"body": [
+					"The directory is built from public registers (the Health Board’s register of healthcare providers and their activity licences, the State Agency of Medicines’ register of pharmacies) and placed with the Land and Spatial Development Board’s administrative units and address data. It can be incomplete or out of date: check the information with the provider before you go. Every page says how to report an error."
+				]
+			},
+			"ip": {
+				"heading": "Code and data",
+				"body": [
+					"The source code of Apercura is published under the AGPL-3.0 licence. The Health Board’s data is reused, and republished on these pages, under the Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported licence (CC BY-NC-SA 3.0); the State Agency of Medicines’ and the address data under CC0 1.0; the administrative units under the Land and Spatial Development Board’s open data licence. The data page lists every source with the credit it requires."
+				]
+			},
+			"review": {
+				"heading": "Status of this text",
+				"body": [
+					"This text is a draft, written before the legal entity was set up. It will be reviewed by a lawyer admitted in Estonia before the Estonian pages are announced."
+				]
+			}
+		},
+		"fields": {
+			"name": "Name",
+			"legalForm": "Legal form",
+			"registration": "Register and registry code",
+			"address": "Address",
+			"phone": "Phone",
+			"email": "E-mail address",
+			"vatId": "VAT number",
+			"editor": "Responsible for the content"
+		},
+		"dataLink": "Data and sources"
+	},
+	"PrivacyEe": {
+		"metaTitle": "Privacy (Estonia) · Apercura",
+		"metaDescription": "What data the Estonian pages of Apercura process, where from, why and for how long, and your rights, objection included (GDPR articles 13, 14, 21).",
+		"title": "Privacy",
+		"lead": "What data the Estonian pages of Apercura process, where it comes from, why, for how long and by whom, and how to exercise your rights under the General Data Protection Regulation (GDPR) and the Personal Data Protection Act (isikuandmete kaitse seadus, IKS).",
+		"sections": {
+			"controller": {
+				"heading": "Who is responsible",
+				"body": [
+					"The provider named in the legal notice is the controller of the directory, of provider accounts, of claims and of the requests sent through the site."
+				]
+			},
+			"directory": {
+				"heading": "Directory: data about healthcare providers",
+				"body": [
+					"Data: the provider’s name as the Health Board’s register publishes it, the numbers and kinds of its activity licences, the kind of hospital where it is one, the services it is licensed for, and the addresses of its places of activity; for a pharmacy, its name, its State Agency of Medicines licence number, its address and its telephone number. A provider that claims its page can add a presentation, languages, a photo and opening hours.",
+					"Never stored, although the sources publish them: the health workers the register names with each provider (their codes, names, professions and specialties), the provider’s Business Register code and legal address, and, for a pharmacy, the name of its responsible pharmacist, its e-mail address, its fax number and the name of its licence holder. A telephone number that the pharmacies’ register gives for more than three pharmacies is a chain’s and is not shown.",
+					"Identifier: a provider’s page ends with the number of its first activity licence in force (for example l01909 for licence L01909), a pharmacy’s with its place of business code at the State Agency of Medicines (for example ap457).",
+					"Purpose: letting the public find a healthcare provider or a pharmacy, what it is licensed for, where it is and how to reach it. Legal basis: legitimate interests (GDPR article 6(1)(f)), assessed below.",
+					"Retention: as long as the provider or pharmacy appears in its register. A page disappears when the register no longer lists it; a page removed after an objection is never published again.",
+					"Information: the data does not come from the providers themselves (GDPR article 14). Writing to each of them would involve a disproportionate effort (article 14(5)(b)); this notice, the data page and a notice on every page make the information public."
+				]
+			},
+			"people": {
+				"heading": "Providers, and the people they name",
+				"body": [
+					"An Estonian page is a healthcare provider or a pharmacy, never a person’s profile: the health workers registered with each provider are not listed. Some providers are sole traders (füüsilisest isikust ettevõtja, FIE) whose business name is their own name; the page shows that name as the register publishes it, as a professional detail, with the provider’s activity licences, places of activity and services. The categories of data concerned are those listed above; their source is the Health Board’s register (MEDRE open data); their recipient is the public.",
+					"Nothing else about any person is collected: no personal identification code, no Business Register code, no private address, no e-mail, no ratings and no reviews. No patient’s data, and no health data, is processed by the directory.",
+					"Anyone a page is about can object to it at any time, and the page is removed."
+				]
+			},
+			"sources": {
+				"heading": "Sources",
+				"body": [
+					"Healthcare providers come from the Health Board’s open data on providers and their activity licences (Tervishoiuteenuse osutajate ning tegevuslubade andmestik), kept in the MEDRE information system run by the Health and Welfare Information Systems Centre (TEHIK) and published under CC BY-NC-SA 3.0. Pharmacies come from the State Agency of Medicines’ register of activity licences (CC0 1.0). Places come from the Land and Spatial Development Board’s administrative and settlement units, and addresses from its address data system (CC0 1.0). Each source is credited as it asks:"
+				]
+			},
+			"balancing": {
+				"heading": "Legitimate interests assessment",
+				"body": [
+					"Purpose: patients need to know which healthcare providers and pharmacies are licensed where, what they are licensed for and how to reach them, a need the State already meets by publishing these registers for public use.",
+					"Necessity: only the provider’s data from the registers is shown, data the registers publish anyway, and less of it: no health worker is listed, no e-mail, no Business Register code; nothing about private life, no ratings, no reviews.",
+					"Balance: a professional context, factual information, a neutral order, no advertising, the minimum of the registers’ fields, an objection that hides a page at once and keeps it from coming back, corrections at the source, and pages that follow every update of the registers. A sole trader holding an activity licence, listed by name in a public register, expects to be found in a directory repeating that information. Weighing these points, the interests of patients prevail, and anyone a page is about can object without giving a reason."
+				]
+			},
+			"accounts": {
+				"heading": "Provider accounts and claims",
+				"body": [
+					"Data: e-mail address, name, password (stored hashed), second authentication factor, the documents sent to claim a page (proof that the claimant runs the provider or acts for it) and team members.",
+					"Purposes: managing the account and checking that a page is claimed by the right provider. Legal bases: performance of the terms of use (article 6(1)(b)) and the legitimate interests of securing the service (article 6(1)(f)).",
+					"Retention: the account is kept until it is deleted; supporting documents, encrypted, are erased 30 days after the decision."
+				]
+			},
+			"requests": {
+				"heading": "Error reports, objections and contact requests",
+				"body": [
+					"Data: the message, the contact e-mail address when one is given and the page concerned; for a “this is my page” request also the name and phone number. Free text is encrypted.",
+					"Purposes: correcting errors, applying objections and helping a provider that cannot claim its page online. Legal bases: legitimate interests (article 6(1)(f)) and the right to object (article 21).",
+					"Retention: a report is deleted 6 months after it is closed, a rejected objection one year after its decision, a contact request 12 months after the last exchange. Once an objection is confirmed, or the holder of a claimed page removes it, the page and the data about it are deleted at once, the objection included; all that is kept is a record of the removal (the identifier of the page, the country, the reason, who recorded it and when), so that it is never published again."
+				]
+			},
+			"technical": {
+				"heading": "Technical data and cookies",
+				"body": [
+					"Only cookies strictly necessary to the service are set: the session of signed-in providers and the chosen language. No advertising or audience measurement cookies, no trackers.",
+					"To limit abuse, IP addresses are transformed with a keyed function before being counted and never stored as such; provider sessions record a truncated IP address. Views of claimed pages are counted without a cookie or identifier, and only the page’s holder sees them."
+				]
+			},
+			"recipients": {
+				"heading": "Recipients and processors",
+				"body": [
+					"Data is neither sold nor rented, and never used for advertising. Only the provider’s team and the processors below receive it, each for its own part, under a contract that meets GDPR article 28. Maps are loaded from a tile server, which receives the visitor’s IP address like any website."
+				]
+			},
+			"transfers": {
+				"heading": "Transfers outside the European Union",
+				"body": [
+					"Data is transferred outside the European Union and the European Economic Area only under the safeguards of chapter V of the GDPR (an adequacy decision or standard contractual clauses). Any change of processor will be announced here before it takes effect."
+				]
+			},
+			"automated": {
+				"heading": "Automated decisions",
+				"body": [
+					"No decision about you is taken by automated means alone. A claim is decided by a person, who reads its documents."
+				]
+			},
+			"rights": {
+				"heading": "Your rights",
+				"body": [
+					"You can ask to access your data, to have it corrected or erased, to restrict its processing, to receive it in a portable format and to object to its processing. Write to the address below; you will get an answer within one month.",
+					"You can also lodge a complaint with the Data Protection Inspectorate (Andmekaitse Inspektsioon), Estonia’s supervisory authority (GDPR article 77), or with the supervisory authority of the country where you live or work."
+				]
+			},
+			"objection": {
+				"heading": "Objecting to a page (GDPR article 21)",
+				"body": [
+					"Anyone a page is about can object to its publication at any time, without giving a reason. If the page is unclaimed, a form is enough: the page is hidden as soon as the request arrives, deleted after a light check, and the updates of the registers never publish it again. If it is claimed, its holder removes it from their space."
+				]
+			},
+			"changes": {
+				"heading": "Updates to this notice",
+				"body": [
+					"This notice is a draft. It will be reviewed by a lawyer admitted in Estonia and by the data protection officer; every version is dated."
+				]
+			}
+		},
+		"fields": {
+			"controller": "Controller",
+			"address": "Address",
+			"email": "Contact for requests",
+			"dpo": "Data protection officer",
+			"effectiveDate": "Effective date",
+			"hostingProvider": "Hosting provider (processor)",
+			"smtp": "E-mail delivery (processor)",
+			"authority": "Supervisory authority"
+		},
+		"objectLink": "How to object to a page",
+		"authorityLink": "The Data Protection Inspectorate (Andmekaitse Inspektsioon)",
+		"authorityAddress": "Andmekaitse Inspektsioon, Tatari 39, 10134 Tallinn, info@aki.ee"
+	},
+	"TermsEe": {
+		"metaTitle": "Terms of use (Estonia) · Apercura",
+		"metaDescription": "Terms of use of the Estonian pages of Apercura: a free, factual directory of licensed healthcare providers and pharmacies from public registers, without booking.",
+		"title": "Terms of use",
+		"lead": "The rules for using the Estonian pages of Apercura, for the public and for healthcare providers alike.",
+		"sections": {
+			"service": {
+				"heading": "The service",
+				"body": [
+					"Apercura lists, free of charge, the healthcare providers that hold an activity licence in the Health Board’s register and the general pharmacies of the State Agency of Medicines’ register. It lists providers, not the health workers who work for them. It is a directory only: no appointment is booked through Apercura in Estonia. It is run by the provider named in the legal notice.",
+					"Using the directory requires no account. Using the site means accepting these terms."
+				]
+			},
+			"content": {
+				"heading": "What the pages contain",
+				"body": [
+					"Pages show factual information from public registers, as they publish it, in a neutral order, without ratings, reviews, advertising or paid placement. A provider’s page prints its activity licence numbers, as the Advertising Act requires.",
+					"The information may be incomplete or out of date, and a place of activity whose address the address data system does not know is shown at its settlement, not at its exact address on a map: check the information with the provider before you go. Every page says how to report an error."
+				]
+			},
+			"health": {
+				"heading": "Not medical advice",
+				"body": [
+					"Apercura gives no medical advice and is not an emergency service. In an emergency, call 112. The family doctors’ advice line answers at 1220."
+				]
+			},
+			"providers": {
+				"heading": "For healthcare providers",
+				"body": [
+					"Claiming a page is free. It requires a document proving that the claimant runs the provider or acts for it, checked by a person before the page is handed over.",
+					"The holder of a page is responsible for the information they add. It must stay factual, accurate and up to date: the Advertising Act (§ 22) prohibits advertising of health services, and only facts such as the provider’s name, opening hours, place of activity, specialty, services and prices may be published."
+				]
+			},
+			"removal": {
+				"heading": "Removing a page",
+				"body": [
+					"Anyone a page is about can ask for it to be removed at any time: the data page explains how. A claimed page can only be removed by its holder."
+				]
+			},
+			"liability": {
+				"heading": "Liability",
+				"body": [
+					"The provider does its best to keep the service available and accurate, but cannot guarantee it. It is not responsible for the information providers add to their pages. These limits will be specified during the legal review."
+				]
+			},
+			"ip": {
+				"heading": "Code and data",
+				"body": [
+					"The source code is published under the AGPL-3.0 licence. The Health Board’s data is republished under CC BY-NC-SA 3.0: anyone may reuse it from these pages under that licence, non-commercially, with the credit and under the same licence. The State Agency of Medicines’ and the address data are under CC0 1.0, the administrative units under the Land and Spatial Development Board’s open data licence."
+				]
+			},
+			"law": {
+				"heading": "Governing law and disputes",
+				"body": [
+					"These terms are governed by Estonian law; the mandatory consumer protection rules of the country of residence always apply. The competent court will be specified during the legal review. In case of a dispute, first write to the contact address to look for an amicable solution."
+				]
+			}
+		},
+		"fields": {
+			"publisher": "Provider",
+			"effectiveDate": "Effective date",
+			"contact": "Contact"
+		}
+	},
+	"AccessibilityEe": {
+		"metaTitle": "Accessibility (Estonia) · Apercura",
+		"metaDescription": "Accessibility of the Estonian pages of Apercura: the WCAG 2.2 AA target, what was checked, what remains, and how to report a problem.",
+		"title": "Accessibility",
+		"lead": "Apercura is designed for everyone, including older and low-vision people. This statement says where the Estonian pages stand.",
+		"sections": {
+			"scope": {
+				"heading": "Scope",
+				"body": [
+					"The Products and Services Accessibility Act (toodete ja teenuste ligipääsetavuse seadus, LPS) covers e-commerce and the other services it lists, not a free directory, and the web accessibility rules of the Public Information Act bind public bodies. Apercura’s provider nevertheless aims at the same standard on every page: WCAG 2.2 level AA (EN 301 549)."
+				]
+			},
+			"status": {
+				"heading": "Where the site stands",
+				"body": [
+					"The Estonian pages share the code of the other markets’ pages and their tests. The site partially meets WCAG 2.2 AA: this rests on a self-assessment and automated tests, not yet on a full audit, which is in progress."
+				]
+			},
+			"tests": {
+				"heading": "What was checked",
+				"list": [
+					"Automated axe-core checks (WCAG 2.0, 2.1 and 2.2 rules, levels A and AA) on every page type, at every release.",
+					"Keyboard-only journeys with a visible focus.",
+					"Body text of at least 18 px, targets of at least 44 px, nothing that relies on colour alone, no horizontal scrolling at 390 px."
+				]
+			},
+			"pending": {
+				"heading": "What remains to be checked",
+				"list": [
+					"A manual pass with the VoiceOver and NVDA screen readers, in Estonian.",
+					"A full audit against WCAG 2.2 AA on a sample of pages, including the Estonian texts."
+				]
+			},
+			"feedback": {
+				"heading": "Report a problem",
+				"body": [
+					"If a page or a feature is hard to use, write to the address below: say which page and what blocked you. We answer within one month and, where needed, give you the information in another form."
+				]
+			}
+		},
+		"fields": {
+			"contact": "Contact",
+			"date": "Date of this statement"
+		}
+	},
+	"DataEe": {
+		"metaTitle": "Data and sources (Estonia) · Apercura",
+		"metaDescription": "Where the Estonian pages of Apercura come from (the Health Board’s and the State Agency of Medicines’ registers), under which licence, and how to correct or remove a page.",
+		"title": "Data and sources",
+		"lead": "Every Estonian page is built from public registers. Here is where the data comes from, under which licence and credit, under which licence it is republished, when it was updated, and how to correct or remove a page.",
+		"status": {
+			"heading": "Last update",
+			"body": "The Health Board publishes its register every day and the State Agency of Medicines keeps its register up to date; the directory reads them every week and imports a register when it has changed. A page changes only when its facts change in its register.",
+			"importedAt": "Last import",
+			"checkedAt": "Sources last checked",
+			"notImported": "The Estonian directory has not been imported yet on this site.",
+			"notImportedValue": "Not imported yet"
+		},
+		"sources": {
+			"heading": "Sources",
+			"body": "The Health Board publishes its register of healthcare providers under the Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported licence (CC BY-NC-SA 3.0), the State Agency of Medicines its register of activity licences and the Land and Spatial Development Board its address data under CC0 1.0, and the Board its administrative and settlement units as open data to be credited with their date. Each credit below is printed word for word.",
+			"caption": "Data sources of the Estonian directory",
+			"columns": {
+				"source": "Source",
+				"use": "Used for",
+				"licence": "Licence and credit",
+				"frequency": "Updated"
+			},
+			"items": {
+				"ee-medre": {
+					"use": "Healthcare providers: names, activity licences (numbers and kinds), kinds of hospital, licensed services, addresses of the places of activity",
+					"frequency": "Every day, by the Health Board"
+				},
+				"ee-ravimiamet": {
+					"use": "General pharmacies: names, licence numbers, addresses, telephone numbers",
+					"frequency": "When it changes, by the State Agency of Medicines"
+				},
+				"ee-ads": {
+					"use": "The point and postcode of every address the registers give",
+					"frequency": "Every month, by the Land and Spatial Development Board"
+				},
+				"ee-ehak": {
+					"use": "Counties, municipalities and settlements, and the centre of each settlement, where an address without a point is placed",
+					"frequency": "Every month, by the Land and Spatial Development Board"
+				},
+				"map": {
+					"name": "Map data",
+					"publisher": "OpenStreetMap contributors, tiles by OpenFreeMap",
+					"use": "Maps on the pages",
+					"frequency": "Continuously"
+				}
+			},
+			"ccByNcSa": "CC BY-NC-SA 3.0",
+			"cc0": "CC0 1.0",
+			"maru": "Land and Spatial Development Board’s open data licence",
+			"odbl": "ODbL"
+		},
+		"licence": {
+			"heading": "The licence of the Estonian data",
+			"body": [
+				"The Health Board’s data is reused under CC BY-NC-SA 3.0 Unported, and the Estonian data as republished on these pages (the providers’ pages, their listings and their sitemaps) is available under the same licence, CC BY-NC-SA 3.0: anyone may reuse it from here, with the credit, for a non-commercial purpose and under the same licence. No other licence claim of the site covers it: the AGPL-3.0 licence covers Apercura’s source code, not this data."
+			],
+			"list": [
+				"Non-commercial (licence § 4(c)): Apercura is free for patients and for providers, run without profit, open source (AGPL-3.0), with no advertising, no paid ranking or placement and no sale or rental of data. Its use of the register is not primarily intended for or directed toward commercial advantage or private monetary compensation.",
+				"Share-alike (licence § 4(b)): what Apercura adds to the register (the places and points of the Land and Spatial Development Board, the pharmacies) does not change the licence of the Health Board’s data, which stays CC BY-NC-SA 3.0 wherever it is shown. The State Agency of Medicines’ and the address data stay under CC0 1.0, the administrative units under the Land and Spatial Development Board’s open data licence, with their credit.",
+				"Credit (licence § 4(d)): every page built from the register names the Health Board, the dataset and the licence, and says that the data was changed.",
+				"The Health Board has been asked to confirm this reading; the pages are published meanwhile, and will follow its answer."
+			],
+			"changesHeading": "Changes made to the data",
+			"changes": "The register is read every week and only what a page needs is kept: providers whose only licences are ambulance services, places of activity that serve only school health or ambulances, and mobile places without an address are left out; the health workers, the Business Register codes and legal addresses are never read. Each place of activity is placed at its address point in the address data system, else at its settlement’s centre; names are shown as the register writes them, without their legal form (OÜ, AS, SA…) and in ordinary case when the register writes them in capitals.",
+			"licenceLink": "The CC BY-NC-SA 3.0 Unported licence",
+			"datasetLink": "The Health Board’s dataset on andmed.eesti.ee"
+		},
+		"coverage": {
+			"heading": "Providers covered",
+			"body": [
+				"Pages are generated for every healthcare provider that holds an activity licence in the Health Board’s register and has a place of activity open to patients, and for the general pharmacies of the State Agency of Medicines’ register, branches included. A provider is listed once, under the first kind its licences give: a hospital, a family practice, a dental clinic, another provider of specialist care, then nursing care (nursing hospitals included), midwifery, physiotherapy, clinical psychology and speech therapy. Every licence, with its number, and every service is shown on the page.",
+				"Not listed: the health workers registered with each provider and the family doctors’ lists, which name people; providers whose only licences are ambulance services; the places of school health services; hospital and veterinary pharmacies, which do not serve the public.",
+				"A place of activity is placed at its address point in the address data system (Maa- ja Ruumiamet). An address the system does not know is placed at the centre of its settlement: its map position and its distance are then those of the settlement, never of the address."
+			],
+			"kinds": {
+				"EE_HOSPITAL": "Hospitals (regional, central, general, local, special and rehabilitation hospitals)",
+				"EE_FAMILY_PRACTICE": "Family practices",
+				"EE_DENTAL": "Dental clinics",
+				"EE_SPECIALIST": "Other providers of specialist care",
+				"EE_NURSING": "Nursing care (home nursing, nurses’ practices, nursing hospitals)",
+				"EE_MIDWIFERY": "Midwifery care",
+				"EE_PHYSIOTHERAPY": "Physiotherapy",
+				"EE_PSYCHOLOGY": "Clinical psychology",
+				"EE_SPEECH_THERAPY": "Speech therapy",
+				"EE_PHARMACY": "General pharmacies and their branches"
+			},
+			"kindsLabel": "Imported"
+		},
+		"identifiers": {
+			"heading": "Identifiers",
+			"body": [
+				"The address of every page ends with a key from its register, after letters naming that register, so a page can be found and checked against it:"
+			],
+			"list": [
+				"/ee/asutus/perearstikeskus-naide-l01909: a healthcare provider (l) and the number of its first activity licence in force (L01909), as the Health Board’s register writes it. The provider’s Business Register code is not used.",
+				"/ee/asutus/naidisapteek-ap457: a pharmacy (ap) and its place of business code at the State Agency of Medicines."
+			]
+		},
+		"correct": {
+			"heading": "Correct an error",
+			"body": [
+				"The pages repeat the registers: a lasting correction is made at the source, and the page follows at the next import.",
+				"For anything else, use the form: we check every report."
+			],
+			"list": [
+				"Healthcare providers: the provider applies to the Health Board to amend its activity licence (a new place of activity, a new service), and the register carries the change.",
+				"Pharmacies: the licence holder reports the change to the State Agency of Medicines."
+			],
+			"formTitle": "Report an error",
+			"formBody": "Give the address of the page and what is wrong."
+		},
+		"remove": {
+			"heading": "Remove a page",
+			"body": [
+				"Anyone a page is about can object to its publication at any time, without giving a reason (GDPR article 21). An unclaimed page is hidden as soon as the request arrives and deleted after a light check; it never comes back with the updates of the registers. A claimed page is removed by its holder, from their space."
+			],
+			"formTitle": "Ask for a page to be removed",
+			"formBody": "Give the address of the page and an e-mail address where we can answer you."
+		}
 	}
 }

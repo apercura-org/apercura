@@ -2,10 +2,13 @@ import {
 	deKindSlugOf,
 	deProfessionOfListingSlug,
 	ES_PROFESSIONS,
+	eeKindSlugOf,
+	eeProfessionOfListingSlug,
 	esKindSlugOf,
 	isChListingSlug,
 	isCzListingSlug,
 	isDeListingSlug,
+	isEeListingSlug,
 	isEsListingSlug,
 	isGbListingSlug,
 	isItListingSlug,
@@ -45,8 +48,8 @@ export async function getTaxonomyLabels(locale: Locale) {
 		 * "Consulta de cardiología", "Farmacia", "Spital"), their listing being plural ("GP
 		 * practices", "Kardiologové", "Cardiólogos", "Farmacie", "Spitäler"). With its profession code, a Spanish centre listed under its kind's listing
 		 * reads as its own kind (a local surgery listed with the health centres reads "Consultorio
-		 * local"). A German facility reads as its kind ("Krankenhaus", "Apotheke"), its listing being
-		 * plural.
+		 * local"). A German facility or an Estonian provider reads as its kind ("Krankenhaus",
+		 * "Apotheke", "Perearstikeskus"), its listing being plural.
 		 */
 		occupation: (
 			slug: string | null | undefined,
@@ -54,8 +57,10 @@ export async function getTaxonomyLabels(locale: Locale) {
 			professionCode?: string | null,
 		) => {
 			if (!slug) return null;
-			if (isDeListingSlug(slug)) {
-				const kind = deKindSlugOf(professionCode ?? deProfessionOfListingSlug(slug));
+			if (isDeListingSlug(slug) || isEeListingSlug(slug)) {
+				const kind = isDeListingSlug(slug)
+					? deKindSlugOf(professionCode ?? deProfessionOfListingSlug(slug))
+					: eeKindSlugOf(professionCode ?? eeProfessionOfListingSlug(slug));
 				return (
 					(kind ? lookup(`profession.${kind}`) : null) ??
 					lookup(`profession.${slug}`) ??

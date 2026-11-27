@@ -4,6 +4,7 @@ import {
 	deKindSlugOf,
 	ES_MEDICAL_PRACTICE,
 	ES_OTHER_PRACTICE,
+	eeKindSlugOf,
 	esKindSlugOf,
 } from "@apercura/core/taxonomy";
 import {
@@ -208,12 +209,13 @@ export default async function PractitionerPage({ params }: Props) {
 	const name = labels.personName(payload);
 	const content = ownerContentOf(payload, photoUrl);
 	const professionSlug = payload.listingSlug ?? "";
-	// A Spanish centre's or German facility's kind has a singular label of its own
-	// ("Consultorio local", "Reha-Klinik").
+	// A Spanish centre's, German facility's or Estonian provider's kind has a singular label of its
+	// own ("Consultorio local", "Reha-Klinik", "Perearstikeskus").
 	const professionLabel =
 		labels.profession(
 			esKindSlugOf(payload.professionCode) ??
 				deKindSlugOf(payload.professionCode) ??
+				eeKindSlugOf(payload.professionCode) ??
 				professionSlugOf(payload.professionCode),
 			gender,
 		) ?? t("unknownProfession");
@@ -323,6 +325,21 @@ export default async function PractitionerPage({ params }: Props) {
 						!payload.idScheme.startsWith("DE-APO")),
 			)
 		: [];
+	// Estonia lists providers and pharmacies: a provider's activity licences, each with its number
+	// and kind (every page about a provider prints its licence numbers, Advertising Act § 22(3)),
+	// the kind of hospital and the services of its places of activity, in the register's words;
+	// a pharmacy's licence number at the State Agency of Medicines.
+	const estonian = payload.country === "EE";
+	const estonianOf = (source: string) =>
+		estonian ? payload.qualifications.filter((item) => item.source === source) : [];
+	const estonianLicences = estonianOf("tegevusluba");
+	const estonianHospitalKinds = estonianOf("haiglaliik")
+		.map((item) => item.label)
+		.filter((label): label is string => Boolean(label));
+	const estonianServices = estonianOf("teenus")
+		.map((item) => item.label)
+		.filter((label): label is string => Boolean(label));
+	const estonianPharmacyLicences = estonianOf("apteegi-tegevusluba");
 	// Switzerland lists facilities: a hospital's type, activities, services and offer as the
 	// FOPH's figures give them, its ownership and operator, and its category as its canton's list
 	// names it (in that list's language).
@@ -500,7 +517,63 @@ export default async function PractitionerPage({ params }: Props) {
 									value={professionLabel}
 									emptyLabel={empty}
 								/>
-								{practice ? null : german ? (
+								{practice ? null : estonian ? (
+									<>
+										{payload.idScheme === "EE-TTL" ? (
+											<FieldRow
+												label={t("estonianFacts.licences")}
+												value={
+													estonianLicences.length > 0 ? (
+														<>
+															<ul className="flex flex-col gap-1">
+																{estonianLicences.map((licence) => (
+																	<li key={licence.code}>
+																		<span className="tabular-nums">{licence.code}</span>
+																		{licence.label ? (
+																			<>
+																				{" · "}
+																				<span lang="et">{licence.label}</span>
+																			</>
+																		) : null}
+																	</li>
+																))}
+															</ul>
+															<span className="mt-1 block text-meta text-ink-muted">
+																{t("estonianFacts.licenceNote")}
+															</span>
+														</>
+													) : null
+												}
+												emptyLabel={empty}
+											/>
+										) : null}
+										{estonianHospitalKinds.length > 0 ? (
+											<FieldRow
+												label={t("estonianFacts.hospitalKind")}
+												value={<span lang="et">{estonianHospitalKinds.join(", ")}</span>}
+												emptyLabel={empty}
+											/>
+										) : null}
+										{estonianServices.length > 0 ? (
+											<FieldRow
+												label={t("estonianFacts.services")}
+												value={<span lang="et">{listValue(estonianServices)}</span>}
+												emptyLabel={empty}
+											/>
+										) : null}
+										{estonianPharmacyLicences.length > 0 ? (
+											<FieldRow
+												label={t("estonianFacts.pharmacyLicence")}
+												value={
+													<span className="tabular-nums">
+														{estonianPharmacyLicences.map((licence) => licence.code).join(", ")}
+													</span>
+												}
+												emptyLabel={empty}
+											/>
+										) : null}
+									</>
+								) : german ? (
 									germanFacts.map((fact) => (
 										<FieldRow
 											key={fact.key}

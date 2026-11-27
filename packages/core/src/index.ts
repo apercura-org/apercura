@@ -19,6 +19,7 @@ export { formatPhoneAt, toE164At } from "./phone-at";
 export { CH_POSTCODE, formatPhoneCh, normalizeChPostcode, toE164Ch } from "./phone-ch";
 export { CZ_POSTCODE, formatPhoneCz, normalizeCzPostcode, toE164Cz } from "./phone-cz";
 export { DE_POSTCODE, formatPhoneDe, normalizeDePostcode, toE164De } from "./phone-de";
+export { EE_POSTCODE, formatPhoneEe, normalizeEePostcode, toE164Ee } from "./phone-ee";
 export { ES_POSTCODE, formatPhoneEs, normalizeEsPostcode, toE164Es } from "./phone-es";
 export { formatPhoneGb, GB_POSTCODE, normalizeGbPostcode, toE164Gb } from "./phone-gb";
 export { formatPhoneIt, IT_POSTCODE, normalizeItPostcode, toE164It } from "./phone-it";
@@ -47,9 +48,16 @@ export {
 	deFacilitySlug,
 	departmentSlug,
 	deUrlKey,
+	EE_ID_SCHEMES,
+	type EeFacilityKey,
+	type EeFacilitySegment,
+	type EeIdScheme,
 	ES_ID_SCHEME,
 	type EsCentreSegment,
 	type EstablishmentSegment,
+	eeFacilitySlug,
+	eeLicenceNumber,
+	eeUrlKey,
 	esCentreSlug,
 	establishmentSlug,
 	GB_ID_SCHEMES,
@@ -66,6 +74,7 @@ export {
 	isValidChSourceId,
 	isValidCzSourceId,
 	isValidDeSourceId,
+	isValidEeSourceId,
 	isValidEsSourceId,
 	isValidGbSourceId,
 	isValidItSourceId,
@@ -78,6 +87,8 @@ export {
 	parseCzFacilitySegment,
 	parseDeFacilitySegment,
 	parseDeKey,
+	parseEeFacilitySegment,
+	parseEeKey,
 	parseEsCentreSegment,
 	parseEstablishmentSegment,
 	parseGbKey,

@@ -101,6 +101,12 @@ export async function suggestPlaces(
 }
 
 /**
+ * The words an Estonian place's name ends with, after its own name: its kind in the
+ * administrative and settlement division (EHAK), or none.
+ */
+const EE_PLACE_KINDS = ["", " linn", " vald", " alev", " alevik", " küla", " linnaosa"] as const;
+
+/**
  * Places a "Où ?" text names exactly: a postcode, or a name (optionally
  * narrowed by a department code). Several rows mean homonyms.
  */
@@ -130,6 +136,9 @@ export async function matchPlaces(input: {
 			LIMIT 10
 		`;
 	}
+	// Estonia's places carry their kind in their name ("Tartu linn", "Haabneeme alevik", "Rae
+	// vald", "Pirita linnaosa"), which nobody types: the name alone names them too.
+	const kinds: string[] = country === "EE" ? [...EE_PLACE_KINDS] : [""];
 	const rows = await sql<PlaceSuggestion[]>`
 		SELECT ${sql.unsafe(placeColumns("p"))}
 		FROM directory.places p
@@ -137,7 +146,8 @@ export async function matchPlaces(input: {
 			AND d.code = p.department_code
 		WHERE p.country = ${country} AND p.kind IN ('commune', 'arrondissement', 'department')
 			AND p.removed_at IS NULL
-			AND directory.text_norm(p.name) = directory.text_norm(${input.where})
+			AND directory.text_norm(p.name) = ANY (
+				SELECT directory.text_norm(${input.where} || kind) FROM unnest(${kinds}::text[]) AS kind)
 			AND (${hint}::text IS NULL OR p.department_code = ${hint}::text OR p.code = ${hint}::text)
 		ORDER BY p.population DESC NULLS LAST, p.id
 		LIMIT 10

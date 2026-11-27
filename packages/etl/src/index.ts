@@ -7,6 +7,7 @@ export const COMMANDS = [
 	"etl:it",
 	"etl:de",
 	"etl:ch",
+	"etl:ee",
 	"etl:places",
 	"etl:outbox",
 ] as const;
@@ -42,6 +43,11 @@ Commands:
                 Spitäler 2023) and the cantons' open lists of hospitals, nursing homes
                 and pharmacies (Bern, Geneva, Basel-Landschaft, Basel-Stadt, Zürich,
                 Jura), placed by postcode in the BFS communes, rebuild read models.
+  etl:ee        Import Estonian healthcare providers and their activity licences (the
+                Health Board's register, MEDRE open data; CC BY-NC-SA 3.0: non-commercial
+                use only) and general pharmacies (the State Agency of Medicines' register,
+                CC0 1.0), located with the Land Board's addresses (ADS, CC0 1.0), placed in
+                EHAK's settlements, rebuild read models.
   etl:places    Import regions, departments, communes and arrondissements
                 (geo.api.gouv.fr), or with --country at the Austrian
                 Bundesländer and Gemeinden (Statistik Austria), or with --country gb
@@ -53,8 +59,9 @@ Commands:
                 provinces and municipalities (ISTAT boundaries, CC BY 4.0), or with
                 --country de the German Länder, Kreise and Gemeinden (GV-ISys,
                 Destatis), or with --country ch the Swiss cantons, districts and
-                communes (BFS commune register, swisstopo's postcode directory). Run
-                once, then yearly.
+                communes (BFS commune register, swisstopo's postcode directory), or with
+                --country ee the Estonian counties, municipalities and settlements
+                (EHAK units, Maa- ja Ruumiamet). Run once, then yearly.
   etl:outbox    Send pending cache invalidations to the web app.
 
 Flags (etl:fr):
@@ -116,6 +123,14 @@ Flags (etl:ch):
   --dry-run, --approve=<run_id>, --force, --source-dir <path>, --offline, --work-dir <path>
                           As for etl:at. Without bag, the cantons' hospitals are not read.
 
+Flags (etl:ee):
+  --sources <ids>         Sources to import: medre (the Health Board's providers), apteegid
+                          (pharmacies) (default ETL_EE_SOURCES, else both).
+  --as-of <YYYY-MM-DD>    The day the licences are read for (default: today in Tallinn).
+  --dry-run, --approve=<run_id>, --force, --source-dir <path>, --offline, --work-dir <path>
+                          As for etl:at. The ADS address file locates both: without it the
+                          run fails (exit code 1).
+
 Environment:
   DATABASE_URL_ETL (or DATABASE_URL), ETL_PROFESSIONS, ETL_ANS_URLS, ETL_AMELI_URL,
   ETL_FINESS_DATASET_URL, ETL_GEO_API_URL, ETL_GEOCODER_URL, ETL_SOURCE_DIR, ETL_WORK_DIR,
@@ -133,6 +148,8 @@ Environment:
   ETL_DE_APO_TH_URL, ETL_DE_APO_BB_URL, ETL_DE_PLACES_URL, ETL_DE_SOURCE_DIR,
   ETL_CH_SOURCES, ETL_CH_{SOURCE}_URL (ETL_CH_BAG_URL, ETL_CH_ZH_HEIME_URL…),
   ETL_CH_POSTCODES_URL, ETL_CH_COMMUNES_URL, ETL_CH_SOURCE_DIR,
+  ETL_EE_SOURCES, ETL_EE_MEDRE_URL, ETL_EE_APTEEGID_URL, ETL_EE_ADS_URL, ETL_EE_PLACES_URL,
+  ETL_EE_SOURCE_DIR,
   APP_URL and REVALIDATE_SECRET (cache revalidation).`;
 
 export {
@@ -141,6 +158,7 @@ export {
 	buildChOptions,
 	buildCzOptions,
 	buildDeOptions,
+	buildEeOptions,
 	buildEsOptions,
 	buildFrOptions,
 	buildGbOptions,
@@ -148,6 +166,7 @@ export {
 	type ChOptions,
 	type CzOptions,
 	type DeOptions,
+	type EeOptions,
 	type EsOptions,
 	type FrOptions,
 	type GbOptions,
@@ -158,6 +177,7 @@ export { type AtRunOutcome, runAt } from "./run-at";
 export { type ChRunOutcome, runCh } from "./run-ch";
 export { type CzRunOutcome, runCz } from "./run-cz";
 export { type DeRunOutcome, runDe } from "./run-de";
+export { type EeRunOutcome, runEe } from "./run-ee";
 export { type EsRunOutcome, runEs } from "./run-es";
 export { type RunOutcome, runFr } from "./run-fr";
 export { type GbRunOutcome, runGb } from "./run-gb";

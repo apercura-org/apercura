@@ -33,7 +33,7 @@ An open, public-interest alternative to commercial booking platforms: every prac
 ## Capabilities and Constraints
 
 - v1: directory and landing pages, search, claim and verification, page editor, online booking without patient accounts (email code), home visits for self-employed nurses (a service area of communes, a fixed travel time), agenda, team access, data export, page removal on request.
-- France first; then other European markets one at a time, through a multi-country data model, in the order of the [ADR 0002 launch order](./docs/adr/0002-multi-country.md#launch-order): Austria (`/at`), Switzerland (`/ch`, `/ch-fr`, `/ch-it`, open since #154, facilities), Czechia (`/cz`), the United Kingdom (`/gb`), Spain (`/es`, open since #148), Germany (`/de`, open since #152, facilities) and Poland (`/pl`) first.
+- France first; then other European markets one at a time, through a multi-country data model, in the order of the [ADR 0002 launch order](./docs/adr/0002-multi-country.md#launch-order): Austria (`/at`), Switzerland (`/ch`, `/ch-fr`, `/ch-it`, open since #154, facilities), Czechia (`/cz`), the United Kingdom (`/gb`), Spain (`/es`, open since #148), Germany (`/de`, open since #152, facilities), Estonia (`/ee`, open since #165, healthcare providers and pharmacies) and Poland (`/pl`) first.
 - GDPR applies. Booking data is health data: the target is an HDS-certified host (decided). Until then production runs on an interim host in the European Economic Area, which is not HDS-certified, with booking data encrypted at the application level.
 - French medical deontology: factual information only, no ratings, no promotional claims.
 - Legal entity and funding model: open decisions.

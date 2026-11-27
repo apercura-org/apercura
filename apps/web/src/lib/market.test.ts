@@ -82,8 +82,13 @@ describe("places of a market", () => {
 		expect(isDepartmentCity("DE", "09162")).toBe(false);
 		expect(isDepartmentCity("FR", "09162000")).toBe(false);
 		expect(NOT_DEPARTMENT_CITY("p")).toBe(
-			"NOT (p.country = 'FR' AND p.code = '75056') AND NOT (p.country = 'AT' AND p.code = '90001') AND NOT (p.country = 'CZ' AND p.code = '554782') AND NOT (p.country = 'DE' AND p.code LIKE '_____000')",
+			"NOT (p.country = 'FR' AND p.code = '75056') AND NOT (p.country = 'AT' AND p.code = '90001') AND NOT (p.country = 'CZ' AND p.code = '554782') AND NOT (p.country = 'DE' AND p.code LIKE '_____000') AND NOT (p.country = 'EE' AND p.kind = 'commune' AND p.code IN ('0296', '0424', '0446', '0511', '0663', '0736', '0897', '0919'))",
 		);
+		// Narva is the municipality of Narva's only settlement, which shares its code; Tartu's holds
+		// villages too.
+		expect(isDepartmentCity("EE", "0511")).toBe(true);
+		expect(isDepartmentCity("EE", "8151")).toBe(false);
+		expect(isDepartmentCity("FR", "0511")).toBe(false);
 	});
 
 	it("labels Austrian places without codes", () => {
@@ -308,6 +313,35 @@ describe("Spain's pages", () => {
 		const brandenburg = openDataSourcesOf("DE", [{ source: "de-apo-bb", site: null }]);
 		expect(brandenburg.at(-1)?.attribution).toMatch(/dl-de\/by-2-0 \(Daten geändert\)$/);
 		expect(openDataSourcesOf("DE", [])).toEqual([]);
+	});
+
+	it("write Estonian addresses street, then postcode and place, and Estonian numbers", () => {
+		const site = {
+			addressLine: "Ülase tn 16",
+			addressComplement: null,
+			postcode: "50412",
+			placeName: "Tartu linn",
+		};
+		expect(addressLines(site, "EE")).toEqual(["Ülase tn 16", "50412 Tartu linn"]);
+		expect(formatPhone("+3726109490")).toBe("610 9490");
+		expect(formatPhone("+37251234567")).toBe("5123 4567");
+	});
+
+	it("credit the Estonian register a page is built from, and the Land Board's places and addresses", () => {
+		const provider = openDataSourcesOf("EE", [{ source: "ee-medre", site: null }]);
+		expect(provider.map((source) => source.attribution)).toEqual([
+			"Terviseamet, tervishoiuteenuse osutajate ning tegevuslubade andmestik (MEDRE), CC BY-NC-SA 3.0; Apercura on andmeid muutnud",
+			"Aadressiandmed: Maa- ja Ruumiamet",
+			expect.stringMatching(/^Haldus- ja asustusjaotus: Maa- ja Ruumiamet \d{2}\.\d{2}\.\d{4}$/),
+		]);
+		const pharmacy = openDataSourcesOf("EE", [{ source: "ee-ravimiamet", site: null }]);
+		expect(pharmacy[0]?.attribution).toBe("Ravimiamet, tegevuslubade register");
+		expect(pharmacy.some((source) => source.attribution.startsWith("Terviseamet"))).toBe(false);
+		expect(openDataSourcesOf("EE", [])).toEqual([]);
+		expect(professionSlugOf("EE_PHARMACY")).toBe("apteegid");
+		expect(isMarketListingSlug("et-EE", "perearstikeskused")).toBe(true);
+		expect(isMarketListingSlug("et-EE", "krankenhaeuser")).toBe(false);
+		expect(marketBooks("et-EE")).toBe(false);
 	});
 });
 

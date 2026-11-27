@@ -49,6 +49,10 @@ signature, an account, a contract, a paid service or a manual test. This list re
   `{{CONVENTIONNEMENT_WORDING}}`).
 - Sign the HDS hosting contract, with written confirmation of the HDS scope of each service.
 - Search and file the "Apercura" trademark (INPI, EUIPO).
+- Estonia: send the Health Board the letter of
+  [`docs/data-requests/ee.md`](./docs/data-requests/ee.md) asking it to confirm that Apercura's
+  reuse of the MEDRE open data fits CC BY-NC-SA 3.0 (non-commercial, share-alike, the credit,
+  self-hosted instances). The market opened without waiting for the answer; follow it.
 
 ### Accessibility ([#32](https://github.com/apercura-org/apercura/issues/32))
 
@@ -275,8 +279,6 @@ Left:
 ### 10. Small open-data markets
 
 - Malta (doctors and dentists, CC BY 4.0): written confirmation from the Medical Council.
-- Estonia (MEDRE, CC BY-NC-SA 3.0): confirmation that the NonCommercial and ShareAlike terms fit;
-  show the activity licence number on every provider page.
 - Slovenia (ZZZS personal doctors, CC BY 4.0) and Latvia (NVD GPs, CC0): partial directories.
 
 ### 11. Germany (`/de`): open, facility pages; booking later
@@ -303,6 +305,34 @@ claims by documents, no booking ([data import](./docs/data-import.md#germany),
 - Booking only with a host holding a BSI C5 Type 2 attestation, after a legal opinion on §393
   SGB V (processor or controller, establishment in Germany) and once the GeDIG rules for private
   booking platforms are known.
+
+### 12. Estonia (`/ee`): open, directory of providers and pharmacies
+
+Done in [#165](https://github.com/apercura-org/apercura/issues/165): `/ee` in Estonian, built
+weekly by `etl:ee` from the Health Board's register of healthcare providers and their activity
+licences (Terviseamet, MEDRE open data, CC BY-NC-SA 3.0, republished under the same licence:
+1,518 providers) and the State Agency of Medicines' general pharmacies (Ravimiamet,
+CC0 1.0: 469), placed in the Land and Spatial Development Board's counties,
+municipalities and settlements (EHAK) and located at their address points (ADS, CC0 1.0), every
+provider page printing its activity licence numbers as the Advertising Act (§ 22(3)) requires,
+with a legal notice (InfoTS § 4), a privacy notice with the article 14 information, claims by
+documents, no booking ([data import](./docs/data-import.md#estonia),
+[ADR 0002](./docs/adr/0002-multi-country.md#estonia-ee)). Providers only: the health workers
+the register names with each provider are not listed. Left:
+
+- Send the letter to the Health Board (founder, above) and follow its answer on the NC and SA
+  terms.
+- Have a native speaker review the Estonian interface and legal texts, and a lawyer admitted in
+  Estonia the legal notice, privacy notice (legitimate-interest assessment for the sole traders
+  listed under their own names) and terms.
+- Russian: widely spoken in Estonia; an `ru-EE` interface under `/ee-ru` (its catalog, its route
+  segments, search words) is a follow-up of its own.
+- Named health workers (the register's `tootajad`) and the family doctors' lists (`nimistud`):
+  only after a legitimate-interest assessment, the article 14 notice, opt-out handling and a
+  reading of how the NC and SA terms apply to personal data
+  ([`docs/data-requests/ee.md`](./docs/data-requests/ee.md)).
+- Listings by specialist field (a cardiology listing rather than "specialist care") and by
+  county (`/ee/haiglad/harju-maakond` would need a migration like Italy's region listings).
 
 ### Later
 

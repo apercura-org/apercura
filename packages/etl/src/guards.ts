@@ -919,3 +919,120 @@ export function checkChPlaces(staged: { sites: number; placed: number }): GuardC
 		},
 	];
 }
+
+/**
+ * Limits of the Estonian sources. Floors catch an empty or broken file on a first run (the
+ * Health Board's register of 27 November 2026: 1,570 providers; the State Agency of Medicines'
+ * export: 495 pharmacies, 469 of them general pharmacies); afterwards the change since the last
+ * successful run that read the source blocks a truncated one (approvable). The register's
+ * extract date never goes back (never approvable: the pages would go back in time).
+ */
+export const EE_LIMITS = {
+	quarantineRatio: 0.01,
+	floors: {
+		medre: { minLines: 150, minRows: 100, rowsDelta: 0.1, sizeDelta: 0.3 },
+		apteegid: { minLines: 60, minRows: 50, rowsDelta: 0.1, sizeDelta: 0.3 },
+	} as Readonly<
+		Record<string, { minLines: number; minRows: number; rowsDelta: number; sizeDelta: number }>
+	>,
+	/** Places placed in their settlement (else left out). */
+	minPlacedRatio: 0.95,
+	/** Places located at their address (else at their settlement's centre). */
+	minAddressRatio: 0.8,
+} as const;
+
+/**
+ * Checks of one Estonian source before the merge: quarantine within 1%, floors of lines and
+ * rows (never approvable), an extract never older than the last one imported (never
+ * approvable), and at most 10% more or fewer rows or 30% more or fewer bytes than the last
+ * successful run that read it (approvable).
+ */
+export function checkEeSource(
+	source: string,
+	current: AtSourceStats & { bytes: number; edition: number | null },
+	previous: (AtSourceStats & { bytes?: number; edition?: number | null }) | null,
+): GuardCheck[] {
+	const floors = EE_LIMITS.floors[source] ?? {
+		minLines: 1,
+		minRows: 1,
+		rowsDelta: 0.1,
+		sizeDelta: 0.3,
+	};
+	const ratio = current.lines === 0 ? 1 : current.quarantined / current.lines;
+	const checks: GuardCheck[] = [
+		{
+			name: `${source}.quarantine`,
+			ok: current.lines > 0 && ratio <= EE_LIMITS.quarantineRatio,
+			approvable: false,
+			detail: `${current.quarantined} of ${current.lines} lines quarantined (${percent(ratio)})`,
+		},
+		{
+			name: `${source}.lines`,
+			ok: current.lines >= floors.minLines,
+			approvable: false,
+			detail: `${current.lines} data lines (at least ${floors.minLines} expected)`,
+		},
+		{
+			name: `${source}.rows`,
+			ok: current.rows >= floors.minRows,
+			approvable: false,
+			detail: `${current.rows} providers read (at least ${floors.minRows} expected)`,
+		},
+	];
+	if (previous) {
+		if (current.edition !== null && typeof previous.edition === "number") {
+			checks.push({
+				name: `${source}.edition`,
+				ok: current.edition >= previous.edition,
+				approvable: false,
+				detail: `extract of ${current.edition} vs ${previous.edition} last time`,
+			});
+		}
+		const rows = delta(current.people, previous.people);
+		checks.push({
+			name: `${source}.providers`,
+			ok: rows <= floors.rowsDelta,
+			approvable: true,
+			detail: `${current.people} providers vs ${previous.people} last time (${percent(rows)})`,
+		});
+		if (previous.bytes !== undefined) {
+			const size = delta(current.bytes, previous.bytes);
+			checks.push({
+				name: `${source}.size`,
+				ok: size <= floors.sizeDelta,
+				approvable: true,
+				detail: `${current.bytes} bytes vs ${previous.bytes} last time (${percent(size)})`,
+			});
+		}
+	}
+	return checks;
+}
+
+/**
+ * After placing: nearly every place of activity must be found in its settlement, and most at
+ * their address, or the address data system's file or the places are not the expected ones.
+ */
+export function checkEePlaces(placement: {
+	address: number;
+	settlement: number;
+	unplaced: number;
+}): GuardCheck[] {
+	const placed = placement.address + placement.settlement;
+	const all = placed + placement.unplaced;
+	const local = all === 0 ? 1 : placed / all;
+	const atAddress = placed === 0 ? 1 : placement.address / placed;
+	return [
+		{
+			name: "ee.places",
+			ok: local >= EE_LIMITS.minPlacedRatio,
+			approvable: true,
+			detail: `${placed} of ${all} places placed in their settlement (${percent(local)})`,
+		},
+		{
+			name: "ee.points",
+			ok: atAddress >= EE_LIMITS.minAddressRatio,
+			approvable: true,
+			detail: `${placement.address} of ${placed} places located at their address (${percent(atAddress)})`,
+		},
+	];
+}
