@@ -169,6 +169,7 @@ vi.mock("./queries/search", () => ({
 			: null,
 	listingHubExists: async (listingSlug: string, country: string) =>
 		HUBS.has(`${listingSlug}:${country.toLowerCase()}`),
+	placeSiteCounts: async () => new Map(),
 	practitionerSlugByRpps: async () => null,
 }));
 

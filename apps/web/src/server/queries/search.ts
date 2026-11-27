@@ -158,6 +158,33 @@ export async function matchPlaces(input: {
 	return communes.length > 0 ? communes : rows;
 }
 
+/**
+ * The places of care (current sites) in each of some places of a market, their arrondissements
+ * included, by place id: what tells the homonyms of a main city apart when its places carry no
+ * population (Vilnius the capital, the village Vilnius).
+ */
+export async function placeSiteCounts(
+	country: string,
+	placeIds: readonly number[],
+): Promise<Map<number, number>> {
+	if (placeIds.length === 0) return new Map();
+	const ids = [...placeIds];
+	const rows = await getSql()<{ id: number; sites: number }[]>`
+		WITH targets AS (
+			SELECT p.id, p.id AS target FROM directory.places p
+			WHERE p.country = ${country} AND p.id = ANY (${ids}::integer[])
+			UNION ALL
+			SELECT p.id, p.parent_id AS target FROM directory.places p
+			WHERE p.country = ${country} AND p.parent_id = ANY (${ids}::integer[])
+		)
+		SELECT t.target AS id, count(s.id)::integer AS sites
+		FROM targets t
+		JOIN directory.sites s ON s.place_id = t.id AND s.removed_at IS NULL
+		GROUP BY t.target
+	`;
+	return new Map(rows.map((row) => [Number(row.id), Number(row.sites)]));
+}
+
 export type LandingTarget = { listingSlug: string; deptSlug: string; communeSlug?: string };
 
 /**

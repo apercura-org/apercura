@@ -225,6 +225,18 @@ export const LT_SETTLEMENT_ROWS: LtSettlementRow[] = [
 		northing: 6_090_000,
 		closed: true,
 	},
+	// A village of another municipality named as the capital (the real register has one in
+	// Kupiškis): a search for "Vilnius" still means the capital (#195).
+	{
+		code: "90010",
+		type: "k.",
+		genitive: "Vilniaus",
+		name: "Vilnius",
+		municipality: "52",
+		eldership: "9103",
+		easting: 503_000,
+		northing: 6_082_000,
+	},
 ];
 
 /** A square of 1 km around a point, written as the store writes LKS-94: northing first. */

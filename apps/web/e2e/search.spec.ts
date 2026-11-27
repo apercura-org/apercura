@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { LOCALE_PREFIXES, LOCALES, marketOf } from "../src/i18n/locales";
 import { axeViolations } from "./axe";
 
 /*
@@ -400,6 +401,81 @@ test.describe("a place in a country Apercura does not cover yet", () => {
 		const response = await request.get("/fr/recherche?ou=Autriche", { maxRedirects: 0 });
 		expect(response.status()).toBe(307);
 		expect(new URL(response.headers().location ?? "", "http://localhost").pathname).toBe("/at");
+	});
+});
+
+test.describe("a capital or main city beside smaller places of the same name (#195)", () => {
+	/*
+	 * The synthetic places of each open market's main cities. Vilnius has a village of its name in
+	 * Kauno rajono beside it, as the real one in Kupiškis: the capital is still the one meant.
+	 */
+	const CITIES = {
+		LT: ["Vilnius", "Kaunas"],
+		EE: ["Tallinn", "Tartu"],
+		SI: ["Ljubljana", "Maribor"],
+		PL: ["Warszawa", "Kraków"],
+		FI: ["Helsinki"],
+		NO: ["Oslo", "Bergen"],
+		IE: ["Dublin", "Cork"],
+		CZ: ["Praha"],
+		AT: ["Wien"],
+		CH: ["Bern", "Zürich"],
+		ES: ["Madrid"],
+		IT: ["Roma"],
+		DE: ["Berlin"],
+		FR: ["Paris"],
+	} as const;
+	const CHOICE = 'aria-labelledby="places-heading"';
+
+	for (const locale of LOCALES) {
+		test(`from ${LOCALE_PREFIXES[locale]}, each one is searched without asking which`, async ({
+			request,
+		}) => {
+			for (const [country, cities] of Object.entries(CITIES)) {
+				for (const city of cities) {
+					const response = await request.get(
+						`${LOCALE_PREFIXES[locale]}/recherche?ou=${encodeURIComponent(city)}`,
+					);
+					expect(response.status(), city).toBe(200);
+					const path = new URL(response.url()).pathname;
+					const landed = LOCALES.filter(
+						(other) =>
+							path === LOCALE_PREFIXES[other] || path.startsWith(`${LOCALE_PREFIXES[other]}/`),
+					).sort((a, b) => LOCALE_PREFIXES[b].length - LOCALE_PREFIXES[a].length)[0];
+					expect(landed && marketOf(landed), `${city} from ${locale}`).toBe(country);
+					expect(await response.text(), `${city} from ${locale}`).not.toContain(CHOICE);
+				}
+			}
+		});
+	}
+
+	test("Vilnius and its care go to the capital's pages directly", async ({ request }) => {
+		const response = await request.get("/lt/paieska?quoi=odontologas&ou=Vilnius", {
+			maxRedirects: 0,
+		});
+		expect(response.status()).toBe(307);
+		expect(new URL(response.headers().location ?? "", "http://localhost").pathname).toBe(
+			"/lt/odontologijos-klinikos/vilniaus-miesto-savivaldybe",
+		);
+	});
+
+	test("the village is still found by its municipality", async ({ page }) => {
+		await page.goto(`/lt/paieska?ou=${encodeURIComponent("Vilnius (52)")}`);
+		await expect(page.locator(`[${CHOICE}]`)).toHaveCount(0);
+	});
+
+	test("two places nothing tells apart still ask which", async ({ page }) => {
+		// Ballina: two Irish towns of about 10,000 people; Birštonas: a town and a village.
+		await page.goto("/ie/search?ou=Ballina");
+		await expect(
+			page.getByRole("heading", { name: "Several places are called “Ballina”" }),
+		).toBeVisible();
+		await expect(page.locator(`[${CHOICE}] li`)).toHaveCount(2);
+		await page.goto(`/lt/paieska?ou=${encodeURIComponent("Birštonas")}`);
+		await expect(
+			page.getByRole("heading", { name: "Pavadinimą „Birštonas“ turi kelios vietovės" }),
+		).toBeVisible();
+		expect(await axeViolations(page)).toEqual([]);
 	});
 });
 

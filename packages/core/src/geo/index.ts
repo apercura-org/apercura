@@ -5,4 +5,5 @@ export {
 	europeanCountry,
 	europeanPlaceOf,
 	type GeoLanguage,
+	isEuropeanCityOf,
 } from "./europe";

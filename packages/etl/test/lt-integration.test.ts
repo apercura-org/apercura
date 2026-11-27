@@ -155,7 +155,7 @@ describe.skipIf(!url)("etl:lt on synthetic fixtures, next to Czechia", () => {
 			count(`directory.places WHERE country = 'LT' AND kind = '${kind}'`);
 		expect(await places("region")).toBe(10);
 		expect(await places("department")).toBe(6);
-		expect(await places("commune")).toBe(11);
+		expect(await places("commune")).toBe(12);
 		// Czechia's run keeps Lithuania as it is.
 		const lithuania = await snapshot("LT");
 		expect((await runCzechia(czDir(), { force: true })).status).toBe("succeeded");
