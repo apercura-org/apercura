@@ -20,6 +20,7 @@ import { allGbListingSlugs } from "./gb";
 import { allIeListingSlugs } from "./ie";
 import { allItListingSlugs } from "./it";
 import { allLtListingSlugs } from "./lt";
+import { allLvListingSlugs } from "./lv";
 import { allNoListingSlugs } from "./no";
 import { allPlListingSlugs } from "./pl";
 import { allSiListingSlugs } from "./si";
@@ -41,6 +42,7 @@ const LISTINGS: Record<CareMarket, Set<string>> = {
 	LT: allLtListingSlugs(),
 	SI: allSiListingSlugs(),
 	CY: allCyListingSlugs(),
+	LV: allLvListingSlugs(),
 };
 
 describe("the kinds of care shared by the markets", () => {
@@ -73,6 +75,10 @@ describe("the kinds of care shared by the markets", () => {
 		expect(careKindOfListing("aide-soignant", "FR")).toBeNull();
 		expect(listingOfCareKind("pharmacy", "AT")).toBeNull();
 		expect(listingOfCareKind("general-practice", "CZ")).toBe("prakticky-lekar");
+		expect(listingOfCareKind("general-practice", "LV")).toBe("gimenes-arstu-prakses");
+		expect(equivalentListing("pharmacien", "FR", "LV")).toBe("aptiekas");
+		expect(equivalentListing("aptiekas", "LV", "DE")).toBe("apotheken");
+		expect(equivalentListing("slimnicas", "LV", "IT")).toBe("ospedali");
 	});
 
 	it("map a listing of one market to the same care in another", () => {

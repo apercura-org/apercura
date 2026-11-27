@@ -2,7 +2,8 @@
  * Kinds of care shared by the markets: the listing that lists one kind in each market, so a
  * search typed on one market's pages ("dentiste" on `/fr`) leads to the same kind of care in
  * another market's ("dental-practices" in Bristol, "zubni-lekar" in Brno, "dentistas" in Madrid,
- * "farmacie" for "pharmacie" in Roma, "apotheke" for "pharmacy" in Basel).
+ * "farmacie" for "pharmacie" in Roma, "apotheke" for "pharmacy" in Basel, "aptiekas" for
+ * "Apotheke" in Rīga).
  *
  * Each market names its listings in its own slugs and its own cut of the field: the UK lists
  * practices (one listing for every kind of dentistry), Austria one listing for dentists,
@@ -31,7 +32,8 @@ export type CareMarket =
 	| "FI"
 	| "LT"
 	| "SI"
-	| "CY";
+	| "CY"
+	| "LV";
 
 export const CARE_KINDS = {
 	"general-practice": {
@@ -47,6 +49,7 @@ export const CARE_KINDS = {
 		LT: "seimos-medicina",
 		SI: "druzinski-zdravnik",
 		CY: "kentra-ygeias",
+		LV: "gimenes-arstu-prakses",
 	},
 	dentistry: {
 		FR: "chirurgien-dentiste",
@@ -86,6 +89,7 @@ export const CARE_KINDS = {
 		NO: "apotek",
 		IE: "pharmacy",
 		CY: "farmakeia",
+		LV: "aptiekas",
 	},
 	hospital: {
 		ES: "hospitales",
@@ -99,6 +103,7 @@ export const CARE_KINDS = {
 		FI: "sairaalat",
 		LT: "ligonines",
 		CY: "nosokomeia",
+		LV: "slimnicas",
 	},
 	"nursing-home": { CH: "pflegeheim", IE: "nursing-homes" },
 	// Outpatient specialist care where a market lists it as one kind (Lithuania's medical centres,

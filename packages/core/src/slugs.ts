@@ -1096,3 +1096,80 @@ export function parseCyFacilitySegment(segment: string): CyFacilitySegment | nul
 	if (!key) return null;
 	return { ...key, namePart: dash < 0 ? "" : segment.slice(0, dash) };
 }
+
+/**
+ * Latvian identifiers: one scheme per list, so a list that fails to import keeps its rows. A GP
+ * practice is keyed by the medical institution's code in the Register of Medical Institutions
+ * (ārstniecības iestādes kods, nine digits, as the National Health Service's list of GPs prints
+ * it, leading zeros kept); a hospital by the Ministry of the Interior's id of its line in the list
+ * of medical institutions' addresses (a hospital's sites and branches are lines of their own, and
+ * some lines carry no institution code); a pharmacy by the State Agency of Medicines' number of
+ * the place (`object_initial_id`), which its licence renewals keep. One institution can be a GP
+ * practice and a hospital at once (a hospital whose GPs see patients there): two lists, two
+ * schemes, two pages. The letter before the key names the list in a page URL
+ * (`ilzes-paraugas-gimenes-arsta-prakse-g010000006`), so two lists' numbers never meet
+ * (docs/data-import.md, "Latvia").
+ */
+export const LV_ID_SCHEMES = {
+	/** A GP practice of the National Health Service's list: the institution's code. */
+	"LV-GP": { prefix: "g", pattern: /^\d{9}$/ },
+	/** A hospital of the Ministry of the Interior's list of institutions' addresses: its line's id. */
+	"LV-SLIM": { prefix: "s", pattern: /^[1-9]\d{0,8}$/ },
+	/** A pharmacy or pharmacy branch of the State Agency of Medicines' register: its number. */
+	"LV-APT": { prefix: "a", pattern: /^[1-9]\d{0,8}$/ },
+} as const;
+
+export type LvIdScheme = keyof typeof LV_ID_SCHEMES;
+
+const LV_SCHEMES = Object.keys(LV_ID_SCHEMES) as LvIdScheme[];
+
+/** True when `value` is a key of the Latvian scheme (syntax only: the place may not exist). */
+export function isValidLvSourceId(scheme: string, value: string): boolean {
+	const entry = LV_ID_SCHEMES[scheme as LvIdScheme];
+	return entry ? entry.pattern.test(value) : false;
+}
+
+/** The key of a Latvian page as its URL ends (`g010000006`, `a324`). */
+export function lvUrlKey(scheme: LvIdScheme, nationalId: string): string {
+	return `${LV_ID_SCHEMES[scheme].prefix}${nationalId}`;
+}
+
+/**
+ * Canonical path segment of a Latvian page: `{name}-{key}`
+ * (`ilzes-paraugas-gimenes-arsta-prakse-g010000006`, `paraugu-aptieka-a324`), Latvian
+ * diacritics dropped (`ģ` → `g`, `ā` → `a`), as Latvian URLs write them.
+ */
+export function lvFacilitySlug(name: string, scheme: LvIdScheme, nationalId: string): string {
+	const key = lvUrlKey(scheme, nationalId);
+	const base = slugify(name).slice(0, 80).replace(/-+$/, "");
+	return base ? `${base}-${key}` : key;
+}
+
+export type LvFacilityKey = { idScheme: LvIdScheme; nationalId: string };
+
+/** Reads a Latvian key as its page URL ends (`g010000006`, `s8958`, `a324`). */
+export function parseLvKey(token: string): LvFacilityKey | null {
+	const match = /^([a-z])(\d{1,9})$/.exec(token.toLowerCase());
+	if (!match) return null;
+	const [, prefix = "", nationalId = ""] = match;
+	const idScheme = LV_SCHEMES.find((scheme) => LV_ID_SCHEMES[scheme].prefix === prefix);
+	if (!idScheme || !LV_ID_SCHEMES[idScheme].pattern.test(nationalId)) return null;
+	return { idScheme, nationalId };
+}
+
+export type LvFacilitySegment = LvFacilityKey & {
+	/** Name part before the key, possibly empty. */
+	namePart: string;
+};
+
+/**
+ * Parses the last segment of a Latvian page URL (`{name}-{key}`). Returns null unless it ends
+ * with a valid key, so invalid URLs never reach the database.
+ */
+export function parseLvFacilitySegment(segment: string): LvFacilitySegment | null {
+	if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(segment)) return null;
+	const dash = segment.lastIndexOf("-");
+	const key = parseLvKey(dash < 0 ? segment : segment.slice(dash + 1));
+	if (!key) return null;
+	return { ...key, namePart: dash < 0 ? "" : segment.slice(0, dash) };
+}

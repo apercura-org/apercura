@@ -11,6 +11,7 @@ import { GB_SEARCH_ALIASES } from "./gb";
 import { IE_SEARCH_ALIASES } from "./ie";
 import { IT_SEARCH_ALIASES } from "./it";
 import { LT_SEARCH_ALIASES } from "./lt";
+import { LV_SEARCH_ALIASES } from "./lv";
 import { NO_SEARCH_ALIASES } from "./no";
 import { PL_SEARCH_ALIASES } from "./pl";
 import { SI_SEARCH_ALIASES } from "./si";
@@ -31,6 +32,7 @@ export {
 	IE_SEARCH_ALIASES,
 	IT_SEARCH_ALIASES,
 	LT_SEARCH_ALIASES,
+	LV_SEARCH_ALIASES,
 	NO_SEARCH_ALIASES,
 	PL_SEARCH_ALIASES,
 	SI_SEARCH_ALIASES,
@@ -54,7 +56,8 @@ export const SEARCH_ALIASES: Readonly<
 		| "FI"
 		| "LT"
 		| "SI"
-		| "CY",
+		| "CY"
+		| "LV",
 		SearchAliasTable
 	>
 > = {
@@ -74,4 +77,5 @@ export const SEARCH_ALIASES: Readonly<
 	LT: LT_SEARCH_ALIASES,
 	SI: SI_SEARCH_ALIASES,
 	CY: CY_SEARCH_ALIASES,
+	LV: LV_SEARCH_ALIASES,
 };
