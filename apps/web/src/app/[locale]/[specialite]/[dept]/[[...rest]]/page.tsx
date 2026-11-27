@@ -285,14 +285,14 @@ export default async function LandingPage({ params }: Props) {
 							// Switzerland's lists cover some cantons only: the lead says which.
 							country === "CH" ? (
 								<>
-									{t("lead", { count, listing, place: placeName })}
-									note={coverage ? t("pharmacyCoverage", { states: coverage }) : null}{" "}
+									{t("lead", { count, listing, place: placeName })}{" "}
 									{t("swissCoverage", { kind: listingSlug })}
 								</>
 							) : (
 								t("lead", { count, listing, place: placeName })
 							)
 						}
+						note={coverage ? t("pharmacyCoverage", { states: coverage }) : null}
 					/>
 				</div>
 

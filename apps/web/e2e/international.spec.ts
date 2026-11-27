@@ -64,7 +64,7 @@ test.describe("the international home", () => {
 			await expect(countries.getByText(country, { exact: true })).toBeVisible();
 			await expect(countries.getByRole("link", { name: country })).toHaveCount(0);
 		}
-		await expect(countries.getByText("Coming soon")).toHaveCount(2);
+		await expect(countries.getByText("Coming soon")).toHaveCount(1);
 
 		// The pages about Apercura, in English.
 		const more = page.getByRole("region", { name: "Learn more" });
