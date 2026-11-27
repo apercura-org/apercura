@@ -67,6 +67,9 @@ test.describe("the international home", () => {
 		const cyprus = countries.getByRole("link", { name: "Apercura Cyprus" });
 		await expect(cyprus).toHaveAttribute("href", "/cy");
 		await expect(cyprus).toHaveAttribute("hreflang", "el-CY");
+		const latvia = countries.getByRole("link", { name: "Apercura Latvia" });
+		await expect(latvia).toHaveAttribute("href", "/lv");
+		await expect(latvia).toHaveAttribute("hreflang", "lv-LV");
 		for (const [name, href] of [
 			["English", "/fr-en"],
 			["Deutsch", "/fr-de"],

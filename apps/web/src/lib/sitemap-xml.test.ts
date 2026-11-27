@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { inEveryLanguage, sitemapCountryOf } from "~/server/queries/sitemap-sql";
+import { inEveryLanguage, SITEMAP_MARKETS, sitemapCountryOf } from "~/server/queries/sitemap-sql";
 import { MARKET_STATIC_PATHS, marketPagePath } from "./sitemap-xml";
 
 describe("market page paths of the sitemaps", () => {
@@ -196,5 +196,27 @@ describe("Ireland's sitemap paths", () => {
 		const chunk = { market: "ie", kind: "praticiens", chunk: 0, lastmod: "2026-11-27", urls: 3 };
 		expect(inEveryLanguage([chunk as never]).map((item) => item.market)).toEqual(["ie"]);
 		expect(sitemapCountryOf("ie")).toBe("IE");
+	});
+});
+
+describe("Latvia's sitemap paths", () => {
+	it("gives Latvia its Latvian route segments under /lv, and a sitemap of its own", () => {
+		expect(SITEMAP_MARKETS).toContain("lv");
+		expect(marketPagePath("lv", "/")).toBe("/lv");
+		expect(marketPagePath("lv", "/praticien/paraugu-aptieka-1-a900001")).toBe(
+			"/lv/iestade/paraugu-aptieka-1-a900001",
+		);
+		expect(marketPagePath("lv", "/annuaire/siguldas-novads/sigulda")).toBe(
+			"/lv/katalogs/siguldas-novads/sigulda",
+		);
+		expect(marketPagePath("lv", "/aptiekas/riga")).toBe("/lv/aptiekas/riga");
+		expect(marketPagePath("lv", "/donnees")).toBe("/lv/dati");
+		expect(marketPagePath("lv", "/accessibilite")).toBe("/lv/pieklustamiba");
+		expect(marketPagePath("lv", "/mentions-legales")).toBe("/lv/juridiska-informacija");
+		expect(MARKET_STATIC_PATHS.lv).not.toContain("/pro");
+		expect(MARKET_STATIC_PATHS.lv).toContain("/accessibilite");
+		const chunk = { market: "lv", kind: "listes", chunk: 0, lastmod: "2026-11-27", urls: 3 };
+		expect(inEveryLanguage([chunk as never]).map((item) => item.market)).toEqual(["lv"]);
+		expect(sitemapCountryOf("lv")).toBe("LV");
 	});
 });

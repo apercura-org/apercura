@@ -40,6 +40,11 @@ const BUDGETS_KB: Record<string, number> = {
 	"/si/zdravnik/ana-primer-si90001": 61,
 	"/si/druzinski-zdravnik/osrednjeslovenska/ljubljana": 60,
 	"/si": 60,
+	// Latvia (synthetic fixtures): a pharmacy (its phone, its map), a parish's listing, the home.
+	// About 35.1, 30.6 and 31.9 KB, as Switzerland's.
+	"/lv/iestade/paraugu-aptieka-1-a900001": 61,
+	"/lv/aptiekas/siguldas-novads/mores-pagasts": 60,
+	"/lv": 60,
 };
 
 const manifest = JSON.parse(

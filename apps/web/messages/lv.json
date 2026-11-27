@@ -1,7 +1,7 @@
 {
 	"Metadata": {
 		"title": "Apercura",
-		"description": "Atvērts katalogs: ģimenes ārstu prakses, slimnīcas un aptiekas Latvijā, no Nacionālā veselības dienesta, Iekšlietu ministrijas Informācijas centra un Zāļu valsts aģentūras atvērtajiem datiem.",
+		"description": "Atvērts katalogs: ģimenes ārstu prakses, slimnīcas un aptiekas Latvijā, no valsts iestāžu atvērtajiem datiem portālā data.gov.lv.",
 		"proTitle": "Jūsu lapa jau ir izveidota · Apercura",
 		"proDescription": "Apercura publicē faktu lapu par ģimenes ārstu praksēm, slimnīcām un aptiekām no valsts atvērtajiem datiem. Atrodiet savas iestādes lapu un pārņemiet to bez maksas.",
 		"searchTitle": "Meklēšana · Apercura",
@@ -539,7 +539,7 @@
 	},
 	"Directory": {
 		"metaTitle": "Veselības aprūpes iestāžu katalogs pa vietām · Apercura",
-		"metaDescription": "Visi Latvijas reģioni un pašvaldības ar ģimenes ārstu praksēm, slimnīcām un aptiekām no Nacionālā veselības dienesta, Iekšlietu ministrijas Informācijas centra un Zāļu valsts aģentūras atvērtajiem datiem.",
+		"metaDescription": "Visi Latvijas reģioni un pašvaldības ar ģimenes ārstu praksēm, slimnīcām un aptiekām no valsts iestāžu atvērtajiem datiem portālā data.gov.lv.",
 		"title": "Katalogs pa vietām",
 		"lead": "{count, plural, zero {# iestāžu pa reģioniem un pašvaldībām.} one {# iestāde pa reģioniem un pašvaldībām.} other {# iestādes pa reģioniem un pašvaldībām.}}",
 		"otherRegion": "Citas vietas",

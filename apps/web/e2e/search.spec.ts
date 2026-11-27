@@ -164,7 +164,8 @@ test.describe("a place of another market", () => {
 	 * The synthetic places of the other markets: Glasgow (UK dental and GP practices), Salzburg
 	 * (Austrian dentists), Brno and Praha (Czech dentists), Paris (French dentists), Roma and
 	 * Milano (Italian pharmacies and hospitals), Genève, Zürich and Lugano (Swiss pharmacies,
-	 * hospitals and nursing homes).
+	 * hospitals and nursing homes), Rīga, Sigulda, Valmiera and Daugavpils (Latvian GP practices,
+	 * hospitals and pharmacies).
 	 */
 	for (const [from, to] of [
 		["/fr/recherche?quoi=dentiste&ou=Glasgow", "/gb/dental-practices/glasgow-city/glasgow"],
@@ -254,6 +255,23 @@ test.describe("a place of another market", () => {
 		["/fr/recherche?ou=Chypre", "/cy"],
 		["/gb/search?ou=Cyprus", "/cy"],
 		["/de/suche?ou=Zypern", "/cy"],
+		// Latvia by name: its home, in Latvian, never "not covered yet".
+		["/fr/recherche?ou=Lettonie", "/lv"],
+		["/gb/search?ou=Latvia", "/lv"],
+		["/de/suche?ou=Lettland", "/lv"],
+		// A Latvian place from any market, with or without its diacritics: Latvia's listing. Rīga
+		// and Daugavpils are state cities, whose town page is their own.
+		["/fr/recherche?quoi=pharmacie&ou=Riga", "/lv/aptiekas/riga"],
+		["/gb/search?quoi=GP&ou=R%C4%ABga", "/lv/gimenes-arstu-prakses/riga"],
+		["/gb/search?quoi=hospital&ou=Riga", "/lv/slimnicas/riga"],
+		[
+			"/fr/recherche?quoi=m%C3%A9decin%20g%C3%A9n%C3%A9raliste&ou=Sigulda",
+			"/lv/gimenes-arstu-prakses/siguldas-novads/sigulda",
+		],
+		["/de/suche?quoi=Krankenhaus&ou=Valmiera", "/lv/slimnicas/valmieras-novads/valmiera"],
+		["/it/cerca?quoi=farmacia&ou=Daugavpils", "/lv/aptiekas/daugavpils"],
+		// Latvia lists no dentists: its search, with the place set.
+		["/fr/recherche?quoi=dentiste&ou=Riga", "/lv/meklet?ou=Riga"],
 		// In the visitor's language when that market offers it: France in English.
 		["/gb/search?quoi=dentist&ou=Paris", "/fr-en/chirurgien-dentiste/75-paris"],
 		// The UK lists no cardiologists: its search, with the place set.
@@ -298,6 +316,7 @@ test.describe("the country searched", () => {
 			"Lituanie",
 			"Slovénie",
 			"Chypre",
+			"Lettonie",
 		]);
 		await country.selectOption({ label: "Royaume-Uni" });
 		// The places suggested are the UK's.
@@ -334,6 +353,8 @@ test.describe("the country searched", () => {
 		// Ireland: `ie`.
 		await page.goto("/ie/search");
 		await expect(page.getByRole("combobox", { name: "Country" })).toHaveValue("ie");
+		await page.goto("/lv/meklet");
+		await expect(page.getByRole("combobox", { name: "Valsts" })).toHaveValue("lv");
 	});
 
 	test.describe("without JavaScript", () => {
@@ -366,6 +387,7 @@ test.describe("a place in a country Apercura does not cover yet", () => {
 		["Finlande", "/fi"],
 		["Lituanie", "/lt"],
 		["Chypre", "/cy"],
+		["Lettonie", "/lv"],
 	] as const;
 
 	test("“dentiste” in Budapest says so, lists the open countries, and passes axe", async ({

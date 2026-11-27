@@ -22,7 +22,8 @@ export type SitemapKind = (typeof SITEMAP_KINDS)[number];
 
 /**
  * The markets with sitemaps, by the path segment of each indexed language: one per market, and
- * Switzerland's three (`ch`, `ch-fr`, `ch-it`), each the same pages at its own paths.
+ * Switzerland's three (`ch`, `ch-fr`, `ch-it`), each the same pages at its own paths. A market
+ * missing here has no sitemap at all: its chunks are dropped (`inEveryLanguage`).
  */
 export const SITEMAP_MARKETS = [
 	"fr",
@@ -43,6 +44,7 @@ export const SITEMAP_MARKETS = [
 	"lt",
 	"si",
 	"cy",
+	"lv",
 ] as const;
 export type SitemapMarket = (typeof SITEMAP_MARKETS)[number];
 
