@@ -1,6 +1,7 @@
-import { expect, type Page, test } from "@playwright/test";
+import { expect, test } from "@playwright/test";
 import { axeViolations } from "./axe";
 import { testDb } from "./pro";
+import { statusMessages } from "./status";
 
 /**
  * The institutional pages of the Swedish market (`/se`), written for Swedish law, and its
@@ -18,12 +19,6 @@ const PAGES = [
 const REGISTER = "Apotek med tillstånd: © Läkemedelsverket, CC BY 4.0; bearbetat av Apercura";
 const HEALTH_CENTRES = "Vårdcentraler: Västra Götalandsregionen, CC0 1.0";
 const PLACES = "Län och kommuner: Källa: SCB, CC0 1.0";
-
-/**
- * The live messages of a page (`role="status"`), never the empty status region every Astryx
- * button carries (`e2e/status.ts` once the Astryx migration lands).
- */
-const statusMessages = (page: Page) => page.locator('[role="status"]:not(button [role="status"])');
 
 for (const path of PAGES) {
 	test(`${path} answers 200 in Swedish with no axe violations, without another market's law`, async ({

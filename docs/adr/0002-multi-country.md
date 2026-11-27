@@ -79,7 +79,7 @@ first domain, only redirects.
 | `/si/…`                                        | Slovenia, in Slovenian (open since #167)                        | yes               |
 | `/cy/…`                                        | Cyprus, in Greek (open since #174)                              | yes               |
 | `/lv/…`                                        | Latvia, in Latvian (open since #166)                            | yes               |
-| `/se/…`                                        | Sweden, in Swedish (open since #175)                           | yes               |
+| `/se/…`                                        | Sweden, in Swedish (open since #175)                            | yes               |
 | `/be-fr/…`, `/be-nl/…`                         | Later: a market in each of its official languages               | once open         |
 
 The rule is `/{market}` for a market's main language and
