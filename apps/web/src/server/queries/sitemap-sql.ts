@@ -1,4 +1,4 @@
-import { LT_CITY_MUNICIPALITIES, OSLO_MUNICIPALITY } from "@apercura/core/country";
+import { LT_CITY_MUNICIPALITIES, LV_STATE_CITIES, OSLO_MUNICIPALITY } from "@apercura/core/country";
 import type { Sql } from "@apercura/db";
 import { EE_TOWN_CODES } from "~/lib/places";
 
@@ -85,7 +85,7 @@ const LT_CITY_CODES = Object.keys(LT_CITY_MUNICIPALITIES)
  * numbered from 61, Lithuania's city municipalities' cities) never get a URL of their own.
  */
 const NOT_CITY = (alias: string) =>
-	`NOT (${alias}.country = 'FR' AND ${alias}.code = '75056') AND NOT (${alias}.country = 'AT' AND ${alias}.code = '90001') AND NOT (${alias}.country = 'DE' AND ${alias}.kind = 'commune' AND ${alias}.code LIKE '_____000') AND NOT (${alias}.country = 'EE' AND ${alias}.kind = 'commune' AND ${alias}.code IN (${EE_TOWN_CODES})) AND NOT (${alias}.country = 'PL' AND ${alias}.kind = 'commune' AND substr(${alias}.code, 3, 1) IN ('6', '7', '8', '9')) AND NOT (${alias}.country = 'NO' AND ${alias}.kind = 'commune' AND ${alias}.code = '${OSLO_MUNICIPALITY}') AND NOT (${alias}.country = 'FI' AND ${alias}.kind = 'commune' AND ${alias}.code = '091') AND NOT (${alias}.country = 'LT' AND ${alias}.kind = 'commune' AND ${alias}.code IN (${LT_CITY_CODES}))`;
+	`NOT (${alias}.country = 'FR' AND ${alias}.code = '75056') AND NOT (${alias}.country = 'AT' AND ${alias}.code = '90001') AND NOT (${alias}.country = 'DE' AND ${alias}.kind = 'commune' AND ${alias}.code LIKE '_____000') AND NOT (${alias}.country = 'EE' AND ${alias}.kind = 'commune' AND ${alias}.code IN (${EE_TOWN_CODES})) AND NOT (${alias}.country = 'PL' AND ${alias}.kind = 'commune' AND substr(${alias}.code, 3, 1) IN ('6', '7', '8', '9')) AND NOT (${alias}.country = 'NO' AND ${alias}.kind = 'commune' AND ${alias}.code = '${OSLO_MUNICIPALITY}') AND NOT (${alias}.country = 'FI' AND ${alias}.kind = 'commune' AND ${alias}.code = '091') AND NOT (${alias}.country = 'LT' AND ${alias}.kind = 'commune' AND ${alias}.code IN (${LT_CITY_CODES})) AND NOT (${alias}.country = 'LV' AND ${alias}.kind = 'commune' AND ${alias}.code IN (${LV_STATE_CITIES.map((code) => `'${code}'`).join(", ")}))`;
 
 /**
  * Non-empty chunks of every kind and market, with the latest change in each, once per language of

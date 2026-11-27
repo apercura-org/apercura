@@ -11,6 +11,7 @@ import {
 	allIeListingSlugs,
 	allItListingSlugs,
 	allLtListingSlugs,
+	allLvListingSlugs,
 	allNoListingSlugs,
 	allPlListingSlugs,
 	allSiListingSlugs,
@@ -46,6 +47,7 @@ const MARKETS = [
 	"LT",
 	"SI",
 	"CY",
+	"LV",
 ] as const satisfies readonly MarketCountry[];
 
 /** The listings of each market (France: its imported professions only). */
@@ -69,6 +71,7 @@ const LISTED: Record<MarketCountry, (slug: string) => boolean> = {
 	LT: (slug) => allLtListingSlugs().has(slug),
 	SI: (slug) => allSiListingSlugs().has(slug),
 	CY: (slug) => allCyListingSlugs().has(slug),
+	LV: (slug) => allLvListingSlugs().has(slug),
 };
 
 /** Slugs a market maps but does not list yet: France's professions not imported. */
@@ -89,6 +92,7 @@ const MAPPED: Record<MarketCountry, (slug: string) => boolean> = {
 	LT: () => false,
 	SI: () => false,
 	CY: () => false,
+	LV: () => false,
 };
 
 const listing = (slug: string): SearchTerm => ({ kind: "listing", slug });
@@ -567,6 +571,23 @@ const EVERYDAY: Record<MarketCountry, [string, SearchTerm][]> = {
 		["health centre", listing("kentra-ygeias")],
 		["dentist", UNLISTED],
 		["pharmacie", listing("farmakeia")],
+	],
+	LV: [
+		["ģimenes ārsts", listing("gimenes-arstu-prakses")],
+		["gimenes arsts", listing("gimenes-arstu-prakses")],
+		["ģimenes ārste", listing("gimenes-arstu-prakses")],
+		["ģimenes ārsta prakse", listing("gimenes-arstu-prakses")],
+		["GP", listing("gimenes-arstu-prakses")],
+		["médecin généraliste", listing("gimenes-arstu-prakses")],
+		["slimnīca", listing("slimnicas")],
+		["traumpunkts", listing("slimnicas")],
+		["hospital", listing("slimnicas")],
+		["aptieka", listing("aptiekas")],
+		["aptiekas filiāle", listing("aptiekas")],
+		["pharmacie", listing("aptiekas")],
+		["zobārsts", UNLISTED],
+		["ginekologs", UNLISTED],
+		["dentist", UNLISTED],
 	],
 };
 

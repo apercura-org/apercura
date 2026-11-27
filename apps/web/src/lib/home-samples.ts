@@ -452,6 +452,33 @@ const SAMPLES: Readonly<Record<Exclude<MarketCountry, "CH">, HomeSamples>> = {
 			status: "claimed",
 		},
 	],
+	// Latvia: GP practices of the National Health Service's list, hospitals, pharmacies.
+	LV: [
+		{
+			name: "Parauga ģimenes ārsta prakse",
+			listing: "gimenes-arstu-prakses",
+			gender: "other",
+			address: "Parauga iela 12, Rīga, LV-1050",
+			identifier: "g900000009",
+			status: "unclaimed",
+		},
+		{
+			name: "Paraugu slimnīca",
+			listing: "slimnicas",
+			gender: "other",
+			address: "Slimnīcas parauga iela 3, Valmiera, Valmieras nov., LV-4201",
+			identifier: "s900017",
+			status: "verified",
+		},
+		{
+			name: "Paraugu aptieka",
+			listing: "aptiekas",
+			gender: "other",
+			address: "Aptiekas parauga iela 8, Sigulda, Siguldas nov., LV-2150",
+			identifier: "a900025",
+			status: "claimed",
+		},
+	],
 };
 
 /**

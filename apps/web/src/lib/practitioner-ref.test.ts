@@ -438,3 +438,31 @@ describe("Cypriot facility references", () => {
 		expect(parsePractitionerRef(practitionerRefOf(hospital))).toEqual(hospital);
 	});
 });
+
+describe("Latvian place references", () => {
+	const practice = { country: "LV", idScheme: "LV-GP", nationalId: "010000006" };
+	const pharmacy = { country: "LV", idScheme: "LV-APT", nationalId: "324" };
+
+	it("read the `lv:` reference, a Latvian page address, and a key typed on a Latvian page", () => {
+		expect(parsePractitionerRef("lv:g010000006")).toEqual(practice);
+		expect(parsePractitionerRef(" LV: A324 ")).toEqual(pharmacy);
+		expect(
+			parsePractitionerRef(
+				"https://apercura.org/lv/iestade/ilzes-paraugas-gimenes-arsta-prakse-g010000006",
+			),
+		).toEqual(practice);
+		expect(parsePractitionerRef("/lv/iestade/paraugu-aptieka-a324/")).toEqual(pharmacy);
+		expect(parsePractitionerRef("a324", "LV")).toEqual(pharmacy);
+		expect(parsePractitionerRef("lv:g10000006")).toBeNull();
+		expect(parsePractitionerRef("lv:")).toBeNull();
+	});
+
+	it("write the reference back with its market", () => {
+		expect(practitionerRefOf(practice)).toBe("lv:g010000006");
+		expect(practitionerRefOf(pharmacy)).toBe("lv:a324");
+		expect(marketRef("A324", "LV")).toBe("lv:a324");
+		expect(parsePractitionerRef(practitionerRefOf(practice))).toEqual(practice);
+		// An RPPS typed on a Latvian page is still France's.
+		expect(parsePractitionerRef("19999990013", "LV")?.country).toBe("FR");
+	});
+});

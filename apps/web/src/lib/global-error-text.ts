@@ -122,4 +122,12 @@ export const GLOBAL_ERROR_TEXT: Record<CatalogLanguage, GlobalErrorText> = {
 		home: "Επιστροφή στην αρχική σελίδα",
 		reference: "Κωδικός αναφοράς για την υποστήριξη: {digest}",
 	},
+	lv: {
+		metaTitle: "Lapa nav pieejama · Apercura",
+		title: "Šo lapu neizdevās parādīt",
+		body: "To sagatavojot, mūsu pusē radās kļūda. Mēģiniet vēlreiz; ja kļūda atkārtojas, atgriezieties pēc dažām minūtēm.",
+		retry: "Mēģināt vēlreiz",
+		home: "Atpakaļ uz sākumlapu",
+		reference: "Kods atbalsta dienestam: {digest}",
+	},
 };

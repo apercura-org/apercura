@@ -9,6 +9,7 @@ import {
 	allIeListingSlugs,
 	allItListingSlugs,
 	allLtListingSlugs,
+	allLvListingSlugs,
 	allNoTaxonomySlugs,
 	allPlListingSlugs,
 	allSiListingSlugs,
@@ -48,6 +49,7 @@ import it_ from "../../messages/it.json";
 import itCH from "../../messages/it-CH.json";
 import itIT from "../../messages/it-IT.json";
 import lt from "../../messages/lt.json";
+import lv from "../../messages/lv.json";
 import no from "../../messages/no.json";
 import pl from "../../messages/pl.json";
 import si from "../../messages/si.json";
@@ -60,7 +62,7 @@ import { CATALOG_LANGUAGES, LOCALES, type Locale } from "./locales";
  * Spanish one with Spain's overrides; Italy's the Italian one with Italy's overrides; Germany's the
  * German one with Germany's overrides;
  * Switzerland's the German, French and Italian ones with the Swiss texts on top, German without
- * "ß"; Estonia's the English one with the Estonian texts on top; Poland's the English one with the Polish texts on top, Norway's with the Norwegian ones; Lithuania's the English one with the Lithuanian texts on top, Cyprus's with the Greek ones.
+ * "ß"; Estonia's the English one with the Estonian texts on top; Poland's the English one with the Polish texts on top, Norway's with the Norwegian ones; Lithuania's the English one with the Lithuanian texts on top, Cyprus's with the Greek ones; Latvia's the English one with the Latvian texts on top.
  */
 const CATALOGS: Record<Locale, unknown> = {
 	fr,
@@ -105,6 +107,7 @@ const CATALOGS: Record<Locale, unknown> = {
 	"fi-FI": mergeMessages(en, fi as Record<string, unknown>),
 	"sl-SI": mergeMessages(en, si as Record<string, unknown>),
 	"el-CY": mergeMessages(en, cy as Record<string, unknown>),
+	"lv-LV": mergeMessages(en, lv as Record<string, unknown>),
 };
 
 /** Every message of a catalog by its dotted key (array items are indexed). */
@@ -336,6 +339,53 @@ describe("the Lithuanian texts", () => {
 			expect(title, namespace).not.toBe(flatten(en).get(`${namespace}.title`));
 		}
 		expect([...lithuanian.values()].join(" ")).toContain("Valstybinė duomenų apsaugos inspekcija");
+	});
+});
+
+describe("the Latvian texts", () => {
+	it("only override keys of the English catalog", () => {
+		const english = flatten(en);
+		expect([...flatten(lv).keys()].filter((key) => !english.has(key))).toEqual([]);
+	});
+
+	it("name every Latvian listing and kind of place in Latvian, and in every catalog", () => {
+		const latvian = flatten(lv);
+		for (const slug of allLvListingSlugs()) {
+			expect(latvian.get(`taxonomy.listing.${slug}`), slug).toBeTruthy();
+			expect(latvian.get(`taxonomy.profession.${slug}`), slug).toBeTruthy();
+			for (const catalog of [en, fr, de, es, it_]) {
+				expect(flatten(catalog).get(`taxonomy.listing.${slug}`), slug).toBeTruthy();
+			}
+		}
+	});
+
+	it("write Latvia's legal pages, and what a Latvian page prints, in Latvian", () => {
+		const latvian = flatten(lv);
+		for (const namespace of [
+			"LegalNoticeLv",
+			"PrivacyLv",
+			"TermsLv",
+			"AccessibilityLv",
+			"DataLv",
+		]) {
+			const english = [...source.keys()].filter((key) => key.startsWith(`${namespace}.`));
+			expect(english.length, namespace).toBeGreaterThan(0);
+			expect(english.filter((key) => !latvian.has(key))).toEqual([]);
+		}
+		for (const key of [
+			"PractitionerPage.latvianFacts.gps",
+			"PractitionerPage.latvianFacts.pharmacyType",
+			"PractitionerPage.professionHeading",
+			"PractitionerPage.action.callNotYetOpen",
+			"Listing.gpCoverage",
+			"Listing.title",
+			"HomePage.title",
+			"SearchPage.notCoveredTitle",
+			"Search.markets.LV",
+			"Gdpr.removal.title",
+		]) {
+			if (source.has(key)) expect(latvian.get(key), key).toBeTruthy();
+		}
 	});
 });
 

@@ -95,6 +95,7 @@
 			"SI": "Slowenien",
 			"ES": "Spanien",
 			"DE": "Deutschland",
+			"LV": "Lettland",
 			"LT": "Litauen",
 			"EE": "Estland",
 			"PL": "Polen",
@@ -657,6 +658,12 @@
 			"operator": "Träger",
 			"pharmacyType": "Haupt- oder Filialapotheke",
 			"accessibility": "Barrierefreiheit"
+		},
+		"latvianFacts": {
+			"gps": "Hausärztinnen und Hausärzte",
+			"pharmacyType": "Apotheke oder Filiale",
+			"pharmacyMain": "Apotheke",
+			"pharmacyBranch": "Filialapotheke"
 		},
 		"licensedServices": "Zugelassene Leistungen",
 		"slovenia": {
@@ -1653,7 +1660,8 @@
 		"metaDescriptionPageRange": "{count, plural, one {Seite {page} von {pages}, {first} bis {last}: # als {occupation} in {place} im nationalen Register geführte Gesundheitsfachkraft.} other {Seite {page} von {pages}, {first} bis {last}: # als {occupation} in {place} im nationalen Register geführte Gesundheitsfachkräfte.}}",
 		"hubMetaTitleShort": "{listing} in Frankreich · Apercura",
 		"authoritiesHeading": "{listing}: Gebietskörperschaften von {place}",
-		"pharmacyCoverage": "Apotheken werden nur für {states} aufgeführt: Die übrigen Länder veröffentlichen keine aktuelle Liste ihrer Apotheken als offene Daten."
+		"pharmacyCoverage": "Apotheken werden nur für {states} aufgeführt: Die übrigen Länder veröffentlichen keine aktuelle Liste ihrer Apotheken als offene Daten.",
+		"gpCoverage": "Hausarztpraxen werden aufgeführt, wenn die Liste der medizinischen Einrichtungen des Innenministeriums ihre Adresse nennt: etwa ein Viertel der Praxen, mit denen der Nationale Gesundheitsdienst Verträge hat. Die übrigen folgen, sobald ihre Adresse als offene Daten veröffentlicht wird."
 	},
 	"Directory": {
 		"metaTitle": "Verzeichnis der Gesundheitsfachkräfte nach Ort · Apercura",
@@ -1876,6 +1884,9 @@
 			"krankenhaus": "Krankenhaus",
 			"kinderklinik": "Kinderklinik",
 			"reha-klinik": "Reha-Klinik",
+			"gimenes-arstu-prakses": "Hausarztpraxis",
+			"slimnicas": "Krankenhaus",
+			"aptiekas": "Apotheke",
 			"ligonines": "Krankenhaus",
 			"seimos-medicina": "Hausarztzentrum",
 			"medicinos-centrai": "Medizinisches Zentrum",
@@ -2235,6 +2246,9 @@
 			"kinderkliniken": "Kinderkliniken",
 			"reha-kliniken": "Reha-Kliniken",
 			"apotheken": "Apotheken",
+			"gimenes-arstu-prakses": "Hausarztpraxen",
+			"slimnicas": "Krankenhäuser",
+			"aptiekas": "Apotheken",
 			"ligonines": "Krankenhäuser",
 			"seimos-medicina": "Hausarztmedizin",
 			"medicinos-centrai": "Medizinische Zentren und Kliniken",
@@ -6890,6 +6904,406 @@
 			],
 			"formTitle": "Die Entfernung einer Seite verlangen",
 			"formBody": "Geben Sie die Adresse der Seite an und eine E-Mail-Adresse, unter der wir Ihnen antworten können."
+		}
+	},
+	"LegalNoticeLv": {
+		"metaTitle": "Legal information (Latvia) · Apercura",
+		"metaDescription": "Legal information of the Latvian pages of Apercura: the service provider, its contact details and registration, and the person responsible for the content (section 4 of the Law on Information Society Services).",
+		"title": "Legal information",
+		"lead": "Who provides the Latvian pages of Apercura (apercura.org/lv), as section 4 of the Law on Information Society Services (Informācijas sabiedrības pakalpojumu likums) asks of a service provider.",
+		"sections": {
+			"provider": {
+				"heading": "Service provider",
+				"body": [
+					"The Latvian pages of Apercura are provided by the entity below. It runs the directory and answers for its content. Section 4 of the Law on Information Society Services asks for its name, address and e-mail address and, where they exist, its registration number and VAT number: they are given below."
+				]
+			},
+			"service": {
+				"heading": "The service",
+				"body": [
+					"A free directory of places of care in Latvia (GP practices, hospitals and pharmacies), built from the open data of the National Health Service, the Ministry of the Interior’s Information Centre and the State Agency of Medicines, without advertising, with a space where a place can complete its own page. No appointment is booked through Apercura in Latvia."
+				]
+			},
+			"editor": {
+				"heading": "Person responsible for the content",
+				"body": [
+					"The person below is responsible for what the provider publishes. Information a place adds to its own page is its own responsibility; as a service that stores information provided by its users, the provider answers for it only under the conditions of article 6 of the Digital Services Act (Regulation (EU) 2022/2065) and of the Law on Information Society Services."
+				]
+			},
+			"liability": {
+				"heading": "Content of the pages",
+				"body": [
+					"The directory is built from open data that Latvian public authorities publish on the national open data portal (data.gov.lv): the National Health Service’s list of GP practices, the Ministry of the Interior’s Information Centre’s list of the addresses of medical institutions, the State Agency of Medicines’ register of pharmacies and the State Land Service’s address register. It can be incomplete or out of date: check the information with the place before you go. Every page says how to report an error."
+				]
+			},
+			"ip": {
+				"heading": "Code and data",
+				"body": [
+					"The source code of Apercura is published under the AGPL-3.0 licence. The directory data is reused under the licences of its sources: CC0 1.0 for the lists of GP practices, medical institutions and pharmacies, and the Creative Commons Attribution 4.0 International licence (CC BY 4.0) for the address register. The data page lists every source with its licence and attribution."
+				]
+			},
+			"review": {
+				"heading": "Status of this text",
+				"body": [
+					"This text is a draft, written before the legal entity was set up. It will be reviewed by a lawyer qualified in Latvia before the Latvian pages are announced."
+				]
+			}
+		},
+		"fields": {
+			"name": "Name",
+			"legalForm": "Legal form",
+			"address": "Registered office",
+			"phone": "Phone",
+			"email": "Email address",
+			"registration": "Register and registration number",
+			"vatId": "VAT identification number",
+			"editor": "Responsible for the content"
+		},
+		"dataLink": "Data and sources"
+	},
+	"PrivacyLv": {
+		"metaTitle": "Privacy notice (Latvia) · Apercura",
+		"metaDescription": "Data processed by the Latvian pages of Apercura, including the names of the GPs shown on GP practice pages: sources, purposes, legal bases, retention, recipients and your rights, including objection (GDPR articles 13, 14 and 21).",
+		"title": "Privacy notice",
+		"lead": "What data the Latvian pages of Apercura process, where it comes from, why, for how long and by whom, and how to exercise your rights under the General Data Protection Regulation (GDPR) and the Personal Data Processing Law (Fizisko personu datu apstrādes likums).",
+		"sections": {
+			"controller": {
+				"heading": "Who is responsible",
+				"body": [
+					"The provider named in the legal information is the controller of the directory, of the accounts of places, of claims and of the requests sent through the site."
+				]
+			},
+			"directory": {
+				"heading": "Directory: data about places of care",
+				"body": [
+					"Data: the name of the place as its source publishes it, its kind (GP practice, hospital or pharmacy), its address and its location on the map, and its telephone number when a source gives one for that place; for a pharmacy, whether it is a pharmacy or a pharmacy branch; for a GP practice, the GPs who work there (see below). A place that claims its page can add a presentation, languages, a photo and opening hours.",
+					"Never stored, although the sources publish them: the GPs’ identifiers and the numbers of patients registered with each practice (National Health Service), and the names and e-mail addresses of the pharmacies’ managers (State Agency of Medicines). No e-mail address is stored.",
+					"Identifier: the code of the medical institution (for a GP practice or a hospital) or the number of the pharmacy in the State Agency of Medicines’ register, at the end of the page’s address.",
+					"Purpose: helping patients find and choose a GP practice, a pharmacy or a hospital, where it is and how to reach it. Legal basis: legitimate interests (GDPR article 6(1)(f)), assessed below.",
+					"Retention: as long as the place appears in its source. A page disappears when a new file of its source no longer lists the place; a page removed after an objection is never published again.",
+					"Information: the data does not come from the places themselves (GDPR article 14). Writing to each of them would involve a disproportionate effort (article 14(5)(b)); this notice, the data page and a notice on every page make the information public."
+				]
+			},
+			"gps": {
+				"heading": "GPs named on GP practice pages (GDPR article 14)",
+				"body": [
+					"The page of a GP practice names the GPs who work there, by first and last name, as the National Health Service (Nacionālais veselības dienests) publishes them in its quarterly open dataset “Ģimenes ārsta praksē reģistrēto pacientu skaits” (CC0 1.0, data.gov.lv), so that patients can choose a family doctor. This section gives those GPs the information GDPR article 14 requires.",
+					"Controller and contact: the provider named in the legal information; it and its data protection officer can be reached at the address above.",
+					"Categories of data kept: the GP’s first and last name; the name of the practice, which often contains the GP’s name; and the practice’s address, from the Ministry of the Interior’s Information Centre’s dataset of the addresses of medical institutions. Not kept: the GP’s identifier, the numbers of registered patients, and any private address, e-mail address or telephone number of a person.",
+					"Purpose: helping patients find and choose a GP practice, a pharmacy or a hospital. Legal basis: legitimate interests (GDPR article 6(1)(f)), balanced in a written assessment summarised below: the data is already published, by a public authority, for this very purpose; it concerns the GPs in their professional capacity only; the fields kept are the minimum; there is no ranking, no paid placement and no reviews; and an objection is honoured at any time.",
+					"Recipients: the public, as the pages are public and may be indexed by search engines; the hosting provider, in the European Economic Area, as a processor.",
+					"Source: the National Health Service’s dataset named above, a publicly accessible source (GDPR article 14(2)(f)).",
+					"Retention: as long as the GP appears in the National Health Service’s list. A GP’s name leaves the practice’s page with the first import of a new file of that list that no longer gives it; a practice the list no longer gives is removed after two such imports in a row. After an objection the page is deleted; all that is kept is the practice’s key and the reason, so that it is not published again.",
+					"Rights: access, rectification, erasure, restriction of processing and objection (GDPR article 21), through the removal form linked from every page or by e-mail to the address below, and a complaint to the Data State Inspectorate (Datu valsts inspekcija).",
+					"Why the GPs are not informed individually: the National Health Service publishes no contact details of the GPs, and collecting them would mean processing more data about them than the directory needs (GDPR article 14(5)(b)). The information is made public instead: on this page, on the data page, and in a notice with the objection link on every GP practice page."
+				]
+			},
+			"people": {
+				"heading": "Pharmacies, hospitals, and the people they name",
+				"body": [
+					"A pharmacy or hospital page is about a place, never a person’s profile. A pharmacy owned by a sole trader (individuālais komersants) may carry that person’s name, as the State Agency of Medicines’ register gives it: such a page names the person, and the same rights apply.",
+					"Nothing else about any person is collected: no personal identity number, no date of birth, no private address, no ratings and no reviews. The names and e-mail addresses of the pharmacies’ managers in the State Agency of Medicines’ register are never read. No patient’s data, and no health data, is processed by the directory.",
+					"Anyone a page is about can object to it at any time, and the page is removed."
+				]
+			},
+			"sources": {
+				"heading": "Sources",
+				"body": [
+					"Every page is built from open data that Latvian public authorities publish on the national open data portal (data.gov.lv): three lists under CC0 1.0 (the National Health Service’s list of GP practices and their GPs, the Ministry of the Interior’s Information Centre’s list of the addresses of medical institutions and the State Agency of Medicines’ register of pharmacies) and the State Land Service’s address register under CC BY 4.0. CC0 asks for no credit; each source is credited anyway:"
+				]
+			},
+			"balancing": {
+				"heading": "Legitimate interests assessment",
+				"body": [
+					"Purpose: patients need to know which GP practices, hospitals and pharmacies are where and how to reach them, and patients choose their family doctor themselves; the National Health Service publishes its list of practices and their GPs as open data precisely so that they can.",
+					"Necessity: only the fields that serve this purpose are kept: the names of the place and of its GPs, its kind and its address. The GPs’ identifiers, patient counts, the pharmacies’ managers and e-mail addresses are left out.",
+					"Balance: the data is already public, published by a public authority for this purpose; it concerns GPs in their professional capacity only; pages are in a neutral order, without ranking, paid placement, advertising or reviews; an objection hides a page at once and keeps it from coming back; and pages follow every update of their sources. A GP who contracts with the National Health Service can expect patients to find them under their name. Weighing these points, which a written assessment records, the interests of patients prevail, and anyone a page is about can object without giving a reason."
+				]
+			},
+			"accounts": {
+				"heading": "Accounts of places and claims",
+				"body": [
+					"Data: email address, name, password (stored hashed), second authentication factor, the documents sent to claim a page (proof that the claimant runs the place or acts for it) and team members.",
+					"Purposes: managing the account and checking that a page is claimed by the right place. Legal bases: performance of the terms of use (article 6(1)(b)) and the legitimate interests of securing the service (article 6(1)(f)).",
+					"Retention: the account is kept until it is deleted; supporting documents, encrypted, are erased 30 days after the decision."
+				]
+			},
+			"requests": {
+				"heading": "Error reports, objections and contact requests",
+				"body": [
+					"Data: the message, the contact email address when one is given and the page concerned; for a “this is my page” request also the name and phone number. Free text is encrypted.",
+					"Purposes: correcting errors, applying objections and helping a place that cannot claim its page online. Legal bases: legitimate interests (article 6(1)(f)) and the right to object (article 21).",
+					"Retention: a report is deleted 6 months after it is closed, a rejected objection one year after its decision, a contact request 12 months after the last exchange. Once an objection is confirmed, or the holder of a claimed page removes it, the page and the data about it are deleted at once, the objection included; all that is kept is a record of the removal (the identifier of the page, the country, the reason, who recorded it and when), so that it is never published again. A holder who removes their page keeps, in their account only and never published, the name, profession and identifier shown in their space and their claim, until the account is deleted."
+				]
+			},
+			"technical": {
+				"heading": "Technical data and cookies",
+				"body": [
+					"Only cookies strictly necessary to the service are set: the session of signed-in places and the chosen language. No advertising or audience measurement cookies, no trackers.",
+					"To limit abuse, IP addresses are transformed with a keyed function before being counted and never stored as such; the sessions of places record a truncated IP address. Views of claimed pages are counted without a cookie or identifier, and only the page’s holder sees them."
+				]
+			},
+			"recipients": {
+				"heading": "Recipients and processors",
+				"body": [
+					"Data is neither sold nor rented, and never used for advertising. The directory’s pages are public and may be indexed by search engines. Otherwise only the provider’s team and the processors below receive data, each for its own part, under a contract that meets GDPR article 28; the hosting provider is in the European Economic Area. Maps are loaded from a tile server, which receives the visitor’s IP address like any website."
+				]
+			},
+			"transfers": {
+				"heading": "Transfers outside the European Union",
+				"body": [
+					"Data is transferred outside the European Union and the European Economic Area only under the safeguards of chapter V of the GDPR (an adequacy decision or standard contractual clauses). Any change of processor will be announced here before it takes effect."
+				]
+			},
+			"automated": {
+				"heading": "Automated decisions",
+				"body": [
+					"No decision about you is taken by automated means alone. A claim is decided by a person, who reads its documents."
+				]
+			},
+			"rights": {
+				"heading": "Your rights",
+				"body": [
+					"You can ask to access your data, to have it corrected or erased, to restrict its processing, to receive it in a portable format and to object to its processing. Write to the address below; you will get an answer within one month.",
+					"You can also lodge a complaint with the Latvian supervisory authority, the Data State Inspectorate (Datu valsts inspekcija): Elijas iela 17, Rīga, LV-1050, pasts@dvi.gov.lv, www.dvi.gov.lv."
+				]
+			},
+			"objection": {
+				"heading": "Objecting to a page (GDPR article 21)",
+				"body": [
+					"Anyone a page is about can object to its publication at any time, without giving a reason. If the page is unclaimed, a form is enough: the page is hidden as soon as the request arrives, deleted after a light check, and the imports of its sources never publish it again. If it is claimed, its holder removes it from their space."
+				]
+			},
+			"changes": {
+				"heading": "Updates to this notice",
+				"body": [
+					"This notice is a draft. It will be reviewed by a lawyer qualified in Latvia and by the data protection officer; every version is dated."
+				]
+			}
+		},
+		"fields": {
+			"controller": "Controller",
+			"address": "Address",
+			"email": "Contact for requests",
+			"dpo": "Data protection officer",
+			"effectiveDate": "Effective date",
+			"hostingProvider": "Hosting provider (processor)",
+			"smtp": "Email delivery (processor)"
+		},
+		"objectLink": "How to object to a page",
+		"authorityLink": "Lodge a complaint with the Data State Inspectorate"
+	},
+	"TermsLv": {
+		"metaTitle": "Terms of use (Latvia) · Apercura",
+		"metaDescription": "Terms of use of the Latvian pages of Apercura: a free, factual directory of GP practices, hospitals and pharmacies from the open data of Latvian public authorities, without online booking.",
+		"title": "Terms of use",
+		"lead": "The rules for using the Latvian pages of Apercura, for the public and for places of care alike.",
+		"sections": {
+			"service": {
+				"heading": "The service",
+				"body": [
+					"Apercura lists, free of charge, the GP practices, hospitals and pharmacies of Latvia that the open data of Latvian public authorities lists. It is a directory only: no appointment is booked through Apercura in Latvia. It is run by the provider named in the legal information.",
+					"Using the directory requires no account. Using the site means accepting these terms."
+				]
+			},
+			"content": {
+				"heading": "What the pages contain",
+				"body": [
+					"Pages show factual information from public sources, in a neutral order, without ratings, reviews, advertising or paid placement.",
+					"Open data may be incomplete or out of date: check the information with the place before you go. Every page says how to report an error."
+				]
+			},
+			"health": {
+				"heading": "Not medical advice",
+				"body": [
+					"Apercura gives no medical advice and is not an emergency service. In an emergency, call 113 (emergency medical service) or 112. Outside your GP’s working hours, the GPs’ advice line (ģimenes ārstu konsultatīvais tālrunis) 66016001 can help."
+				]
+			},
+			"practices": {
+				"heading": "For places of care",
+				"body": [
+					"Claiming a page is free. It requires a document proving that the claimant runs the place or acts for it, reviewed by an administrator before the page is handed over.",
+					"The holder of a page is responsible for the information they add. It must stay factual, accurate and up to date."
+				]
+			},
+			"removal": {
+				"heading": "Removing a page",
+				"body": [
+					"Anyone a page is about can ask for it to be removed at any time: the data page explains how. A claimed page can only be removed by its holder."
+				]
+			},
+			"liability": {
+				"heading": "Liability",
+				"body": [
+					"The provider does its best to keep the service available and accurate, but cannot guarantee it. It is not responsible for the information places add to their pages. These limits will be specified during the legal review."
+				]
+			},
+			"ip": {
+				"heading": "Code and data",
+				"body": [
+					"The source code is published under the AGPL-3.0 licence. Directory data is reused under the licences of its sources (CC0 1.0 and CC BY 4.0), which the data page lists."
+				]
+			},
+			"law": {
+				"heading": "Governing law and disputes",
+				"body": [
+					"The governing law and the competent courts will be specified during the legal review; the mandatory consumer protection rules of the country of residence always apply. In case of a dispute, first write to the contact address to look for an amicable solution."
+				]
+			}
+		},
+		"fields": {
+			"publisher": "Provider",
+			"effectiveDate": "Effective date",
+			"contact": "Contact"
+		}
+	},
+	"AccessibilityLv": {
+		"metaTitle": "Accessibility (Latvia) · Apercura",
+		"metaDescription": "Accessibility of the Latvian pages of Apercura: the WCAG 2.2 AA target, what was checked, what remains, and how to report a problem.",
+		"title": "Accessibility",
+		"lead": "Apercura is designed for everyone, including older and low-vision people. This statement says where the Latvian pages stand.",
+		"sections": {
+			"scope": {
+				"heading": "Scope",
+				"body": [
+					"Cabinet Regulation No. 445 of 14 July 2020 on the procedure by which institutions place information on the internet (“Kārtība, kādā iestādes ievieto informāciju internetā”) sets accessibility requirements for the websites of public bodies, which Apercura is not: a free private directory is not covered, and this statement is voluntary. Its provider nevertheless aims at the same standard on every page: WCAG 2.2 level AA."
+				]
+			},
+			"status": {
+				"heading": "Where the site stands",
+				"body": [
+					"The Latvian pages share the code of the French pages and their tests. The site partially meets WCAG 2.2 AA: this rests on a self-assessment and automated tests, not yet on a full audit, which is in progress."
+				]
+			},
+			"tests": {
+				"heading": "What was checked",
+				"list": [
+					"Automated axe-core checks (WCAG 2.0, 2.1 and 2.2 rules, levels A and AA) on every page type, at every release.",
+					"Keyboard-only journeys with a visible focus.",
+					"Body text of at least 18 px, targets of at least 44 px, nothing that relies on colour alone, no horizontal scrolling at 390 px."
+				]
+			},
+			"pending": {
+				"heading": "What remains to be checked",
+				"list": [
+					"A manual pass with the VoiceOver and NVDA screen readers, in Latvian.",
+					"A full audit against WCAG 2.2 AA on a sample of pages."
+				]
+			},
+			"feedback": {
+				"heading": "Report a problem",
+				"body": [
+					"If a page or a feature is hard to use, write to the address below: say which page and what blocked you. We answer within one month and, where needed, give you the information in another form."
+				]
+			}
+		},
+		"fields": {
+			"contact": "Contact",
+			"date": "Date of this statement"
+		}
+	},
+	"DataLv": {
+		"metaTitle": "Data and sources (Latvia) · Apercura",
+		"metaDescription": "Where the Latvian pages of Apercura come from: the National Health Service, the Ministry of the Interior’s Information Centre and the State Agency of Medicines (CC0 1.0) and the State Land Service’s address register (CC BY 4.0), update dates, and how to correct or remove a page.",
+		"title": "Data and sources",
+		"lead": "Every Latvian page is built from open data published by Latvian public authorities. Here is where it comes from, under which licence and attribution, when it was updated, what is listed and what is not, and how to correct or remove a page.",
+		"status": {
+			"heading": "Last update",
+			"body": "The National Health Service publishes its list of GP practices every quarter; the directory checks its sources regularly and imports a new file when one is published. A page changes only when its facts change in its source.",
+			"importedAt": "Last import",
+			"checkedAt": "Sources last checked",
+			"notImported": "The Latvian directory has not been imported yet on this site.",
+			"notImportedValue": "Not imported yet"
+		},
+		"sources": {
+			"heading": "Sources",
+			"body": "Three sources are dedicated to the public domain under CC0 1.0, which asks for no credit; the address register is published under the Creative Commons Attribution 4.0 International licence (CC BY 4.0), which allows reuse, including commercial reuse, provided the source is credited and changes are indicated. Every source is credited below, each attribution word for word.",
+			"caption": "Data sources of the Latvian directory",
+			"columns": {
+				"source": "Source",
+				"use": "Used for",
+				"licence": "Licence and attribution",
+				"frequency": "Updated"
+			},
+			"items": {
+				"lv-nvd-gp": {
+					"use": "GP practices and the first and last names of the GPs who work there (never the GPs’ identifiers or patient counts)",
+					"frequency": "Every quarter, by the National Health Service"
+				},
+				"lv-vkcp": {
+					"use": "Names and addresses of GP practices and hospitals, from the geographic information system of the single emergency contact centre (VKCP IĢIS)",
+					"frequency": "Irregularly, by the Ministry of the Interior’s Information Centre (last updated in 2024)"
+				},
+				"lv-zva": {
+					"use": "General pharmacies and pharmacy branches with an active licence: names, kinds and addresses (never their managers or e-mail addresses)",
+					"frequency": "As the register changes, by the State Agency of Medicines"
+				},
+				"lv-var": {
+					"use": "State cities, municipalities, towns and parishes, with their centres",
+					"frequency": "Regularly, by the State Land Service"
+				},
+				"map": {
+					"name": "Map data",
+					"publisher": "OpenStreetMap contributors, tiles by OpenFreeMap",
+					"use": "Maps on the pages",
+					"frequency": "Continuously"
+				}
+			},
+			"cc0": "CC0 1.0",
+			"ccBy": "CC BY 4.0",
+			"odbl": "ODbL",
+			"creditHeading": "Credit required by the State Land Service",
+			"changes": "The address register’s data has been combined with data from other sources: the directory’s places are matched to its state cities, municipalities, towns and parishes.",
+			"cc0Credit": "CC0 1.0 asks for no credit; the National Health Service, the Ministry of the Interior’s Information Centre and the State Agency of Medicines are credited anyway, as the table shows."
+		},
+		"coverage": {
+			"heading": "Places covered",
+			"body": [
+				"Pages are generated for three kinds of place.",
+				"GP practices are listed only where the Ministry of the Interior’s list of medical institutions gives their address: about a quarter of the practices the National Health Service contracts. That addresses dataset was last updated in 2024; the other practices will be listed once their address is published as open data.",
+				"Hospitals are those of the same list. Pharmacies are general pharmacies and pharmacy branches with an active licence; closed-type pharmacies (hospital pharmacies), wholesalers and manufacturers are left out.",
+				"Never stored: the GPs’ identifiers, the numbers of patients registered with each practice, the pharmacies’ managers and any e-mail address."
+			],
+			"kinds": {
+				"LV_GP_PRACTICE": "GP practices (National Health Service)",
+				"LV_HOSPITAL": "Hospitals (Ministry of the Interior’s Information Centre’s list of medical institutions)",
+				"LV_PHARMACY": "General pharmacies and pharmacy branches (State Agency of Medicines)"
+			},
+			"kindsLabel": "Imported (source)"
+		},
+		"identifiers": {
+			"heading": "Identifiers",
+			"body": [
+				"The address of every page ends with a key that names its list and the place’s number in it, so a page can be found and checked against its source:"
+			],
+			"list": [
+				"/lv/iestade/ilzes-paraugas-gimenes-arsta-prakse-g010000006: g for a GP practice, followed by its medical institution code 010000006.",
+				"/lv/iestade/paraugu-slimnica-s8958: s for a hospital, followed by the number of its line in the Ministry of the Interior’s Information Centre’s list of medical institutions (a hospital’s branches have lines of their own).",
+				"/lv/iestade/paraugu-aptieka-a324: a for a pharmacy, followed by its number in the State Agency of Medicines’ register.",
+				"The GPs’ own identifiers are neither used nor stored."
+			]
+		},
+		"correct": {
+			"heading": "Correct an error",
+			"body": [
+				"The pages repeat their sources: a lasting correction is made at the source, and the page follows at the next import of a new file.",
+				"For anything else, use the form: we check every report."
+			],
+			"list": [
+				"A GP practice and its GPs: the practice tells the National Health Service, with which it has its contract.",
+				"The address of a GP practice or a hospital: the medical institution updates its details in the register of medical institutions kept by the Health Inspectorate (Veselības inspekcija); if the Ministry of the Interior’s list still differs, report it with the form.",
+				"A pharmacy: the licence holder notifies the State Agency of Medicines (Zāļu valsts aģentūra), which updates its register."
+			],
+			"formTitle": "Report an error",
+			"formBody": "Give the address of the page and what is wrong."
+		},
+		"remove": {
+			"heading": "Remove a page",
+			"body": [
+				"Anyone a page is about can object to its publication at any time, without giving a reason (GDPR article 21). An unclaimed page is hidden as soon as the request arrives and deleted after a light check; it never comes back with the imports of its sources. A claimed page is removed by its holder, from their space."
+			],
+			"formTitle": "Ask for a page to be removed",
+			"formBody": "Give the address of the page and an email address where we can answer you."
 		}
 	},
 	"LegalNoticeSi": {

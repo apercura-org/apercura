@@ -19,6 +19,7 @@ import { PrivacyGb } from "~/components/legal-gb";
 import { PrivacyIe } from "~/components/legal-ie";
 import { PrivacyIt } from "~/components/legal-it";
 import { PrivacyLt } from "~/components/legal-lt";
+import { PrivacyLv } from "~/components/legal-lv";
 import { PrivacyNo } from "~/components/legal-no";
 import { PrivacyPl } from "~/components/legal-pl";
 import { PrivacySi } from "~/components/legal-si";
@@ -56,6 +57,7 @@ export function generateMetadata({ params }: PageProps<"/[locale]/confidentialit
 			LT: "PrivacyLt",
 			SI: "PrivacySi",
 			CY: "PrivacyCy",
+			LV: "PrivacyLv",
 		},
 		HREF,
 	);
@@ -86,6 +88,7 @@ export default async function PrivacyPage({ params }: PageProps<"/[locale]/confi
 	if (marketOf(locale) === "LT") return <PrivacyLt locale={locale} />;
 	if (marketOf(locale) === "SI") return <PrivacySi locale={locale} />;
 	if (marketOf(locale) === "CY") return <PrivacyCy locale={locale} />;
+	if (marketOf(locale) === "LV") return <PrivacyLv locale={locale} />;
 	const t = await getTranslations({ locale, namespace: "PrivacyPage" });
 	const tSite = await getTranslations({ locale, namespace: "Site" });
 	const tI = await getTranslations({ locale, namespace: "Institutional" });

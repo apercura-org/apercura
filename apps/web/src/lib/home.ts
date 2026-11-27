@@ -82,9 +82,11 @@ export function listingRows(
 
 /**
  * Markets whose lists are credited by publisher: the UK's eight lists come from three, Ireland's
- * two HSE layers from one, Slovenia's three from the insurer alone.
+ * two HSE layers from one, Slovenia's three from the insurer alone, and Latvia's are better known
+ * by who publishes them (the National Health Service, the State Agency of Medicines) than by their
+ * datasets' titles.
  */
-const BY_PUBLISHER: ReadonlySet<string> = new Set(["GB", "CH", "IE", "SI"]);
+const BY_PUBLISHER: ReadonlySet<string> = new Set(["GB", "CH", "IE", "SI", "LV"]);
 
 /**
  * The sources a market's figures and specimen credit: the registries that provide its

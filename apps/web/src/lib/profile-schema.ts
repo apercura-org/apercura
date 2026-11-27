@@ -95,7 +95,7 @@ export const ownerSiteSchema = z.object({
 		.string()
 		.trim()
 		.regex(
-			/^(?:\d{4,5}|\d{3} \d{2}|\d{2}-\d{3}|LT-?\d{5}|[A-Za-z]{1,2}\d[A-Za-z\d]? ?\d[A-Za-z]{2}|[A-Za-z]\d[\dWw] ?[A-Za-z\d]{4})$/,
+			/^(?:\d{4,5}|\d{3} \d{2}|\d{2}-\d{3}|LT-?\d{5}|[A-Za-z]{1,2}\d[A-Za-z\d]? ?\d[A-Za-z]{2}|[A-Za-z]\d[\dWw] ?[A-Za-z\d]{4}|LV-\d{4})$/,
 			{
 				message: "postcode",
 			},

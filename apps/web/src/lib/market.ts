@@ -10,6 +10,7 @@ import {
 	germany,
 	ireland,
 	italy,
+	latvia,
 	lithuania,
 	norway,
 	PL_OBTAINED_AT,
@@ -35,6 +36,8 @@ import {
 	IE_PROFESSIONS,
 	IT_PROFESSIONS,
 	LT_PROFESSIONS,
+	LV_GP_PRACTICE,
+	LV_PROFESSIONS,
 	listingHasBillingSectors,
 	NO_PROFESSIONS,
 	PL_PROFESSIONS,
@@ -100,6 +103,7 @@ export function professionSlugOf(code: string): string {
 		LT_PROFESSIONS[code]?.slug ??
 		SI_PROFESSIONS[code]?.slug ??
 		CY_PROFESSIONS[code]?.slug ??
+		LV_PROFESSIONS[code]?.slug ??
 		""
 	);
 }
@@ -545,6 +549,33 @@ export function slovenianSourcesOf(
 	];
 }
 
+/** The State Land Service's address register, which places every Latvian page. */
+const LV_PLACES_REGISTRY = "lv-var";
+
+/**
+ * The sources a Latvian page is built from, with their credit word for word: the list of its
+ * activity (the National Health Service's GPs with the Ministry of the Interior's addresses for a
+ * GP practice, the Ministry's list for a hospital, the State Agency of Medicines' register for a
+ * pharmacy) and the State Land Service's address register (CC BY 4.0), which places it. The CC0
+ * lists ask for no credit; they are credited anyway.
+ */
+export function latvianSourcesOf(
+	activitySources: readonly (string | undefined)[],
+): { name: string; attribution: string }[] {
+	const ids = new Set<string>();
+	for (const source of activitySources) {
+		if (!source) continue;
+		ids.add(source);
+		// A GP practice's address is the Ministry of the Interior's.
+		if (source === "lv-nvd-gp") ids.add("lv-vkcp");
+	}
+	if (ids.size === 0) return [];
+	ids.add(LV_PLACES_REGISTRY);
+	return latvia.registries
+		.filter((registry) => ids.has(registry.id) && registry.attribution)
+		.map((registry) => ({ name: registry.name, attribution: registry.attribution ?? "" }));
+}
+
 /**
  * The places of Ireland's pages: Tailte Éireann's counties and the CSO's towns (Census Built Up
  * Areas), credited on every Irish page (CC BY 4.0).
@@ -630,6 +661,7 @@ export function openDataSourcesOf(
 		);
 	}
 	if (country === "CY") return cypriotSourcesOf(activities.map((activity) => activity.source));
+	if (country === "LV") return latvianSourcesOf(activities.map((activity) => activity.source));
 	if (country === "CH") {
 		return activities.length > 0
 			? swissSourcesOf(
@@ -640,6 +672,15 @@ export function openDataSourcesOf(
 			: [];
 	}
 	return [];
+}
+
+/**
+ * True when a listing is Latvia's GP practices: only the practices whose address the Ministry of
+ * the Interior's list gives are listed (about a quarter of the National Health Service's), which
+ * its pages say under the title.
+ */
+export function gpCoverageNoteOf(locale: Locale, listingSlug: string): boolean {
+	return marketOf(locale) === "LV" && listingSlug === LV_PROFESSIONS[LV_GP_PRACTICE]?.slug;
 }
 
 /**

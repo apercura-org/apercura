@@ -429,6 +429,17 @@ export default async function PractitionerPage({ params }: Props) {
 	// the doctor still takes new patients, dated by the list it comes from.
 	const slovenian = payload.country === "SI";
 	const slovenianDates = slovenian ? ((await getImportStatus("si"))?.files ?? {}) : {};
+	// Latvia lists places: a GP practice names its GPs as the National Health Service publishes
+	// them; a pharmacy says whether it is a pharmacy or a branch.
+	const latvian = payload.country === "LV";
+	const latvianGps = latvian
+		? payload.qualifications
+				.filter((item) => item.source === "gimenes_arsts" && item.label)
+				.map((item) => item.label as string)
+		: [];
+	const latvianPharmacy = latvian
+		? (payload.qualifications.find((item) => item.source === "aptieka")?.code ?? null)
+		: null;
 	const identifier = displayId(payload);
 	// Open licences (CC BY 4.0, OGL) require each source's attribution, word for word; Spain's
 	// Ministry of Health asks for the date of its data: the last Spanish import's; Italy's is cited
@@ -677,6 +688,27 @@ export default async function PractitionerPage({ params }: Props) {
 											<FieldRow
 												label={t("norwegianFacts.owner")}
 												value={<span lang="nb">{norwegianOwners.join(", ")}</span>}
+												emptyLabel={empty}
+											/>
+										) : null}
+									</>
+								) : latvian ? (
+									<>
+										{payload.idScheme === "LV-GP" ? (
+											<FieldRow
+												label={t("latvianFacts.gps")}
+												value={latvianGps.length > 0 ? latvianGps.join(", ") : null}
+												emptyLabel={empty}
+											/>
+										) : null}
+										{latvianPharmacy ? (
+											<FieldRow
+												label={t("latvianFacts.pharmacyType")}
+												value={
+													latvianPharmacy === "branch"
+														? t("latvianFacts.pharmacyBranch")
+														: t("latvianFacts.pharmacyMain")
+												}
 												emptyLabel={empty}
 											/>
 										) : null}

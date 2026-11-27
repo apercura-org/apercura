@@ -2,9 +2,11 @@ import { describe, expect, it } from "vitest";
 import { irishFacilityFacts } from "./irish-facility";
 import {
 	austrianSourcesOf,
+	gpCoverageNoteOf,
 	isMarketListingSlug,
 	italianAttribution,
 	italianSourceDate,
+	latvianSourcesOf,
 	listingFees,
 	marketBooks,
 	openDataSourcesOf,
@@ -20,7 +22,7 @@ import {
 	NOT_DEPARTMENT_CITY,
 	placeLabel,
 } from "./places";
-import { addressLines, formatPhone, localityOf } from "./practitioner-view";
+import { addressLines, cardTownLine, formatPhone, localityOf } from "./practitioner-view";
 import { swissFacilityFacts } from "./swiss-facility";
 
 describe("what a market's pages show", () => {
@@ -96,8 +98,13 @@ describe("places of a market", () => {
 		expect(isDepartmentCity("LT", "17507")).toBe(true);
 		expect(isDepartmentCity("LT", "15345")).toBe(false);
 		expect(isDepartmentCity("FR", "31003")).toBe(false);
+		// Latvia's state cities: a department and a commune under one code; only the commune goes.
+		expect(isDepartmentCity("LV", "0001000")).toBe(true);
+		expect(isDepartmentCity("LV", "0002000")).toBe(true);
+		expect(isDepartmentCity("LV", "0048200")).toBe(false);
+		expect(isDepartmentCity("DE", "0001000")).toBe(false);
 		expect(NOT_DEPARTMENT_CITY("p")).toBe(
-			"NOT (p.country = 'FR' AND p.code = '75056') AND NOT (p.country = 'AT' AND p.code = '90001') AND NOT (p.country = 'CZ' AND p.code = '554782') AND NOT (p.country = 'NO' AND p.code = '0301') AND NOT (p.country = 'FI' AND p.code = '091') AND NOT (p.country = 'DE' AND p.code LIKE '_____000') AND NOT (p.country = 'EE' AND p.kind = 'commune' AND p.code IN ('0296', '0424', '0446', '0511', '0663', '0736', '0897', '0919')) AND NOT (p.country = 'PL' AND p.kind = 'commune' AND substr(p.code, 3, 1) IN ('6', '7', '8', '9')) AND NOT (p.country = 'LT' AND p.code IN ('10278', '17507', '18067', '21988', '23195', '23485', '28338', '31003'))",
+			"NOT (p.country = 'FR' AND p.code = '75056') AND NOT (p.country = 'AT' AND p.code = '90001') AND NOT (p.country = 'CZ' AND p.code = '554782') AND NOT (p.country = 'NO' AND p.code = '0301') AND NOT (p.country = 'FI' AND p.code = '091') AND NOT (p.country = 'DE' AND p.code LIKE '_____000') AND NOT (p.country = 'EE' AND p.kind = 'commune' AND p.code IN ('0296', '0424', '0446', '0511', '0663', '0736', '0897', '0919')) AND NOT (p.country = 'PL' AND p.kind = 'commune' AND substr(p.code, 3, 1) IN ('6', '7', '8', '9')) AND NOT (p.country = 'LT' AND p.code IN ('10278', '17507', '18067', '21988', '23195', '23485', '28338', '31003')) AND NOT (p.country = 'LV' AND p.kind = 'commune' AND p.code IN ('0001000', '0002000', '0003000', '0004000', '0005000', '0006000', '0007000'))",
 		);
 		// Narva is the municipality of Narva's only settlement, which shares its code; Tartu's holds
 		// villages too.
@@ -741,5 +748,59 @@ describe("Ireland's pages", () => {
 			irishFacilityFacts([q("ie-capacity", "0"), q("ie-operator", "company", " ")]),
 		).toMatchObject({ capacity: null, operator: null });
 		expect(irishFacilityFacts([q("ie-hiqa-page", "../x")]).hiqaUrl).toBeNull();
+	});
+});
+
+describe("Latvian pages", () => {
+	it("write a Latvian address street first, the locality as written, the postcode last", () => {
+		expect(
+			addressLines(
+				{
+					addressLine: '"Paraugi"-2',
+					addressComplement: "Ance, Ances pag., Ventspils nov.",
+					postcode: "LV-3612",
+					placeName: "Ances pagasts",
+				},
+				"LV",
+			),
+		).toEqual(['"Paraugi"-2', "Ance, Ances pag., Ventspils nov., LV-3612"]);
+		expect(
+			addressLines(
+				{
+					addressLine: "Parauga iela 1",
+					addressComplement: null,
+					postcode: null,
+					placeName: "Rīga",
+				},
+				"LV",
+			),
+		).toEqual(["Parauga iela 1", "Rīga"]);
+		expect(cardTownLine("LV-2150", "Sigulda", "LV")).toBe("Sigulda, LV-2150");
+		expect(formatPhone("+37167123456")).toBe("67 123 456");
+	});
+
+	it("credit each Latvian list a page is built from, and the address register that places it", () => {
+		const practice = latvianSourcesOf(["lv-nvd-gp"]);
+		expect(practice.map((source) => source.attribution)).toEqual([
+			"Avots: Nacionālais veselības dienests, data.gov.lv (CC0 1.0)",
+			"Avots: Iekšlietu ministrijas Informācijas centrs, data.gov.lv (CC0 1.0)",
+			"Izmantoti Valsts adrešu reģistra informācijas sistēmas dati (Valsts zemes dienests, CC BY 4.0), apvienoti ar citiem avotiem",
+		]);
+		const pharmacy = openDataSourcesOf("LV", [{ source: "lv-zva", site: null }]);
+		expect(pharmacy.map((source) => source.name)).toEqual([
+			"Farmaceitiskās darbības uzņēmumu reģistrs",
+			"Valsts adrešu reģistra atvērtie dati",
+		]);
+		expect(openDataSourcesOf("LV", [])).toEqual([]);
+	});
+
+	it("say under the GP practices' listings that only some are listed", () => {
+		expect(gpCoverageNoteOf("lv-LV", "gimenes-arstu-prakses")).toBe(true);
+		expect(gpCoverageNoteOf("lv-LV", "aptiekas")).toBe(false);
+		expect(gpCoverageNoteOf("fr", "gimenes-arstu-prakses")).toBe(false);
+		expect(isDepartmentSlug("siguldas-novads", "LV")).toBe(true);
+		expect(isMarketListingSlug("lv-LV", "slimnicas")).toBe(true);
+		expect(isMarketListingSlug("lv-LV", "apotheken")).toBe(false);
+		expect(marketBooks("lv-LV")).toBe(false);
 	});
 });
