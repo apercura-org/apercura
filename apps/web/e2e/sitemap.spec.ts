@@ -42,7 +42,8 @@ const SITEMAP_MS_PER_URL = 100;
  * The index's groups of files: the international home's own file, then each open market's files
  * under its segment (France in French, Austria in German, the UK in English, Czechia in Czech,
  * Spain in Spanish, Italy in Italian, Germany in German, Switzerland in its three, Estonia in
- * Estonian). Interface
+ * Estonian, Poland in
+ * Polish). Interface
  * translations (/fr-de, /fr-es…) are never listed.
  */
 const SITEMAP_GROUPS = [
@@ -58,6 +59,7 @@ const SITEMAP_GROUPS = [
 	"ch-fr",
 	"ch-it",
 	"ee",
+	"pl",
 ] as const;
 type SitemapGroup = (typeof SITEMAP_GROUPS)[number];
 
@@ -174,6 +176,8 @@ test("the index lists valid chunks of unique URLs, each under its market's segme
 	expect(chunks).toContain(`${origin}/sitemaps/it/praticiens-0.xml`);
 	expect(chunks).toContain(`${origin}/sitemaps/de/pages-0.xml`);
 	expect(chunks).toContain(`${origin}/sitemaps/de/praticiens-0.xml`);
+	expect(chunks).toContain(`${origin}/sitemaps/pl/pages-0.xml`);
+	expect(chunks).toContain(`${origin}/sitemaps/pl/praticiens-0.xml`);
 	// Switzerland's files under each of its languages.
 	for (const segment of ["ch", "ch-fr", "ch-it"]) {
 		expect(chunks).toContain(`${origin}/sitemaps/${segment}/pages-0.xml`);
@@ -198,6 +202,9 @@ test("the index lists valid chunks of unique URLs, each under its market's segme
 	expect(urls).toContain(`${origin}/es`);
 	expect(urls).toContain(`${origin}/it`);
 	expect(urls).toContain(`${origin}/de`);
+	expect(urls).toContain(`${origin}/pl`);
+	// A city with powiat rights is its powiat's page: never a URL of its own.
+	expect(urls).not.toContain(`${origin}/pl/stomatologia/legnica/legnica`);
 	// A kreisfreie Stadt's city page is its Kreis's: never a URL of its own.
 	expect(urls).not.toContain(`${origin}/de/krankenhaeuser/potsdam/potsdam`);
 	expect(urls).toContain(`${origin}/ch`);

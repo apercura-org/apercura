@@ -22,6 +22,7 @@ import {
 	parseEsCentreSegment,
 	parseGbPracticeSegment,
 	parseItPlaceSegment,
+	parsePlFacilitySegment,
 	parsePractitionerSegment,
 } from "@apercura/core";
 import { type CountryAdapter, countryAdapter } from "@apercura/core/country";
@@ -47,7 +48,8 @@ export type PractitionerKey = {
  * (`farmacia-esempio-f9000001`, the ministry's code), `{facility-name}-{source}{key}` in Germany
  * (`klinikum-beispiel-k0a1b2c3d4e`, `beispiel-apotheke-th9001`), `{name}-{list}{key}` in Switzerland
  * (`kantonsspital-beispiel-h123456789`, in each of its three languages), `{name}-{source}{key}`
- * in Estonia (`perearstikeskus-naide-l01909`, `naidisapteek-ap457`). Null for anything else,
+ * in Estonia (`perearstikeskus-naide-l01909`, `naidisapteek-ap457`), `{name}-{number}` in
+ * Poland (`przychodnia-przykladowa-290629`, the RPWDL establishment number). Null for anything else,
  * so malformed or other-market URLs never reach the database.
  */
 export function parsePractitionerKey(locale: Locale, segment: string): PractitionerKey | null {
@@ -74,6 +76,10 @@ export function parsePractitionerKey(locale: Locale, segment: string): Practitio
 	}
 	if (country === "EE") {
 		const parsed = parseEeFacilitySegment(segment);
+		return parsed ? { country, ...parsed } : null;
+	}
+	if (country === "PL") {
+		const parsed = parsePlFacilitySegment(segment);
 		return parsed ? { country, ...parsed } : null;
 	}
 	if (country === "GB") {
@@ -133,6 +139,9 @@ export const CH_SEGMENT_MARKER = "ch.";
  */
 export const EE_SEGMENT_MARKER = "ee.";
 
+/** The marker of a Polish page's segment outside a locale (`pl.{slug}`): a bare RPWDL number reads as Czechia's. */
+export const PL_SEGMENT_MARKER = "pl.";
+
 /** The marker of each market whose segments are marked outside a locale. */
 const SEGMENT_MARKERS: Readonly<Partial<Record<MarketCountry, string>>> = {
 	GB: GB_SEGMENT_MARKER,
@@ -142,6 +151,7 @@ const SEGMENT_MARKERS: Readonly<Partial<Record<MarketCountry, string>>> = {
 	DE: DE_SEGMENT_MARKER,
 	CH: CH_SEGMENT_MARKER,
 	EE: EE_SEGMENT_MARKER,
+	PL: PL_SEGMENT_MARKER,
 };
 
 /**

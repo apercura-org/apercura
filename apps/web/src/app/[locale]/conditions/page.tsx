@@ -15,6 +15,7 @@ import { TermsEe } from "~/components/legal-ee";
 import { TermsEs } from "~/components/legal-es";
 import { TermsGb } from "~/components/legal-gb";
 import { TermsIt } from "~/components/legal-it";
+import { TermsPl } from "~/components/legal-pl";
 import { PageGraph } from "~/components/page-graph";
 import { PublicPage } from "~/components/public-page";
 import { Trail } from "~/components/trail";
@@ -45,6 +46,7 @@ export function generateMetadata({ params }: PageProps<"/[locale]/conditions">) 
 			DE: "TermsDe",
 			CH: "TermsCh",
 			EE: "TermsEe",
+			PL: "TermsPl",
 		},
 		HREF,
 	);
@@ -58,11 +60,12 @@ export function generateMetadata({ params }: PageProps<"/[locale]/conditions">) 
 export default async function TermsPage({ params }: PageProps<"/[locale]/conditions">) {
 	const locale = await localeOf(params);
 	setRequestLocale(locale);
-	// Austria's, the UK's, Czechia's, Spain's, Italy's, Germany's, Switzerland's and Estonia's pages
+	// Austria's, the UK's, Czechia's, Spain's, Italy's, Germany's, Switzerland's and Poland's, Switzerland's and Estonia's pages
 	// have texts of their own, written for their law.
 	if (marketOf(locale) === "AT") return <TermsAt locale={locale} />;
 	if (marketOf(locale) === "GB") return <TermsGb locale={locale} />;
 	if (marketOf(locale) === "CZ") return <TermsCz locale={locale} />;
+	if (marketOf(locale) === "PL") return <TermsPl locale={locale} />;
 	if (marketOf(locale) === "ES") return <TermsEs locale={locale} />;
 	if (marketOf(locale) === "IT") return <TermsIt locale={locale} />;
 	if (marketOf(locale) === "DE") return <TermsDe locale={locale} />;

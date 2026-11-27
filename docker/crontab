@@ -72,3 +72,10 @@
 # imported without a source that could not be fetched or read (see docs/data-import.md,
 # "Estonia"). The Health Board's data is CC BY-NC-SA 3.0: non-commercial use only.
 30 3 * * 4 apercura etl:ee $ETL_EE_SCHEDULE_ARGS
+
+# Poland's register of healthcare entities (RPWDL, Centrum e-Zdrowia, published daily as of
+# midnight), every Tuesday at 04:30 UTC, when no other import runs (the same advisory lock: one
+# import at a time); an unchanged export is skipped. ETL_PL_SCHEDULE_ARGS adds flags. Exit codes:
+# 1 failed (the export could not be fetched or read), 2 blocked (see docs/data-import.md,
+# "Poland").
+30 4 * * 2 apercura etl:pl $ETL_PL_SCHEDULE_ARGS

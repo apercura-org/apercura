@@ -37,6 +37,9 @@ test.describe("the international home", () => {
 		const germany = countries.getByRole("link", { name: "Apercura Germany" });
 		await expect(germany).toHaveAttribute("href", "/de");
 		await expect(germany).toHaveAttribute("hreflang", "de-DE");
+		const poland = countries.getByRole("link", { name: "Apercura Poland" });
+		await expect(poland).toHaveAttribute("href", "/pl");
+		await expect(poland).toHaveAttribute("hreflang", "pl-PL");
 		// Switzerland, open in German at /ch, and in French and Italian beside it.
 		const switzerland = countries.getByRole("link", { name: "Apercura Switzerland" });
 		await expect(switzerland).toHaveAttribute("href", "/ch");

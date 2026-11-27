@@ -24,6 +24,7 @@ import { DEFAULT_GB_POSTCODES_URL } from "./sources/gb/postcodes";
 import { GB_SOURCE_IDS, type GbSourceId } from "./sources/gb/types";
 import { defaultItPlacesUrl } from "./sources/it/places";
 import { IT_SOURCE_IDS, type ItSourceId } from "./sources/it/types";
+import { DEFAULT_PL_PRG_URL, DEFAULT_PL_TERC_URL } from "./sources/pl/places";
 
 /** Stable data.gouv.fr URLs (they redirect to the latest daily file). */
 export const DEFAULT_ANS_URLS = {
@@ -122,6 +123,7 @@ const VALUE_FLAGS = new Set([
 	"work-dir",
 	"sources",
 	"country",
+	"as-of",
 ]);
 
 const flagString = (flags: ParsedArgs["flags"], name: string): string | null => {
@@ -897,6 +899,75 @@ export function buildEeOptions(
 		},
 		placesUrl: env.ETL_EE_PLACES_URL || DEFAULT_EE_PLACES_URL,
 		today: asOf ?? todayInTallinn(now),
+		workDir: flagString(flags, "work-dir") ?? env.ETL_WORK_DIR ?? null,
+		appUrl: offline ? null : env.APP_URL || null,
+		revalidateSecret: env.REVALIDATE_SECRET || null,
+	};
+}
+
+// ---------------------------------------------------------------------------
+// Poland (`etl:pl`)
+// ---------------------------------------------------------------------------
+
+/**
+ * RPWDL's healthcare entities (Centrum e-Zdrowia, daily, CC BY 4.0), dane.gov.pl's copy of the
+ * current export (resource 70070 of dataset 728, a stable link refreshed every night),
+ * overridable with `ETL_PL_URL`. Centrum e-Zdrowia serves the same ZIP at
+ * https://rpwdl2.ezdrowie.gov.pl/api/rpwdl-public-resource/ledgers-zip/initial?fileTypeInsideZip=CSV&activityType=HEALTHCARE_PROVIDER&activeLedgers=true
+ */
+export const DEFAULT_PL_URL = "https://api.dane.gov.pl/resources/70070/file";
+
+/** File name expected in `--source-dir` for `etl:pl` (fixtures, offline runs). */
+export const PL_SOURCE_FILE = "rpwdl.zip";
+
+export type PlOptions = {
+	databaseUrl: string;
+	dryRun: boolean;
+	approveRunId: number | null;
+	force: boolean;
+	sourceDir: string | null;
+	offline: boolean;
+	url: string;
+	/** TERC (eTERYT's download page, `ETL_PL_TERC_URL`) and PRG's administrative units (`ETL_PL_PRG_URL`). */
+	placesUrls: { terc: string; prg: string };
+	/** The day the register is read for (`--as-of`, else today in Warsaw), `YYYY-MM-DD`. */
+	asOf: string;
+	workDir: string | null;
+	appUrl: string | null;
+	revalidateSecret: string | null;
+};
+
+/** Today in Warsaw, `YYYY-MM-DD`. */
+export function todayInWarsaw(now: Date = new Date()): string {
+	return new Intl.DateTimeFormat("en-CA", { timeZone: "Europe/Warsaw" }).format(now);
+}
+
+/** TERC's page and PRG's archive for the places: `ETL_PL_TERC_URL`, `ETL_PL_PRG_URL`, else the publishers'. */
+export function plPlacesUrls(env: NodeJS.ProcessEnv): { terc: string; prg: string } {
+	return {
+		terc: env.ETL_PL_TERC_URL || DEFAULT_PL_TERC_URL,
+		prg: env.ETL_PL_PRG_URL || DEFAULT_PL_PRG_URL,
+	};
+}
+
+export function buildPlOptions(flags: ParsedArgs["flags"], env: NodeJS.ProcessEnv): PlOptions {
+	const approve = flagString(flags, "approve");
+	if (approve !== null && !/^\d+$/.test(approve)) {
+		throw new Error(`--approve needs a run id, got ${approve}`);
+	}
+	const asOf = flagString(flags, "as-of") ?? todayInWarsaw();
+	if (!/^\d{4}-\d{2}-\d{2}$/.test(asOf)) throw new Error(`--as-of needs a date, got ${asOf}`);
+	const offline = flags.has("offline");
+	return {
+		databaseUrl: resolveDatabaseUrl(env),
+		dryRun: flags.has("dry-run"),
+		approveRunId: approve === null ? null : Number(approve),
+		force: flags.has("force"),
+		sourceDir: flagString(flags, "source-dir") ?? env.ETL_PL_SOURCE_DIR ?? null,
+		offline,
+		url: env.ETL_PL_URL || DEFAULT_PL_URL,
+		placesUrls: plPlacesUrls(env),
+		asOf,
 		workDir: flagString(flags, "work-dir") ?? env.ETL_WORK_DIR ?? null,
 		appUrl: offline ? null : env.APP_URL || null,
 		revalidateSecret: env.REVALIDATE_SECRET || null,

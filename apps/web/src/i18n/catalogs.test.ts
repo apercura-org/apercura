@@ -5,8 +5,10 @@ import {
 	allEeTaxonomySlugs,
 	allEsTaxonomySlugs,
 	allItListingSlugs,
+	allPlListingSlugs,
 	DE_DEFAULT_PROFESSIONS,
 	EE_DEFAULT_PROFESSIONS,
+	PL_DEFAULT_PROFESSIONS,
 } from "@apercura/core/taxonomy";
 import {
 	isPluralElement,
@@ -32,6 +34,7 @@ import gb from "../../messages/gb.json";
 import it_ from "../../messages/it.json";
 import itCH from "../../messages/it-CH.json";
 import itIT from "../../messages/it-IT.json";
+import pl from "../../messages/pl.json";
 import { mergeMessages, messagesFor, withoutEszett } from "./catalogs";
 import { CATALOG_LANGUAGES, LOCALES, type Locale } from "./locales";
 
@@ -41,7 +44,7 @@ import { CATALOG_LANGUAGES, LOCALES, type Locale } from "./locales";
  * Spanish one with Spain's overrides; Italy's the Italian one with Italy's overrides; Germany's the
  * German one with Germany's overrides;
  * Switzerland's the German, French and Italian ones with the Swiss texts on top, German without
- * "ß"; Estonia's the English one with the Estonian texts on top.
+ * "ß"; Estonia's the English one with the Estonian texts on top; Poland's the English one with the Polish texts on top.
  */
 const CATALOGS: Record<Locale, unknown> = {
 	fr,
@@ -79,6 +82,7 @@ const CATALOGS: Record<Locale, unknown> = {
 		itCH as Record<string, unknown>,
 	),
 	"et-EE": mergeMessages(en, ee as Record<string, unknown>),
+	"pl-PL": mergeMessages(en, pl as Record<string, unknown>),
 };
 
 /** Every message of a catalog by its dotted key (array items are indexed). */
@@ -198,6 +202,42 @@ describe("the Czech texts", () => {
 			expect(czech.get(`taxonomy.listing.${slug}`), slug).toBeTruthy();
 			expect(czech.get(`taxonomy.profession.${slug}`), slug).toBeTruthy();
 		}
+	});
+});
+
+describe("the Polish texts", () => {
+	it("only override keys of the English catalog", () => {
+		const english = flatten(en);
+		expect([...flatten(pl).keys()].filter((key) => !english.has(key))).toEqual([]);
+	});
+
+	it("name every Polish listing and kind of establishment, in Polish and in every catalog", () => {
+		for (const catalog of [pl, en, fr, de, es, it_]) {
+			const labels = flatten(catalog);
+			for (const slug of allPlListingSlugs()) {
+				expect(labels.get(`taxonomy.listing.${slug}`), slug).toBeTruthy();
+				expect(labels.get(`taxonomy.profession.${slug}`), slug).toBeTruthy();
+			}
+		}
+		const polish = flatten(pl);
+		expect(polish.get("taxonomy.listing.szpitale")).toBe("Szpitale");
+		expect(polish.get("taxonomy.profession.poradnie-kardiologiczne")).toBe(
+			"Poradnia kardiologiczna",
+		);
+	});
+
+	it("write Poland's legal pages in Polish and list every kind of establishment", () => {
+		const polish = flatten(messagesFor("pl-PL"));
+		expect(polish.get("LegalNoticePl.title")).toBe("Nota prawna");
+		expect(polish.get("PrivacyPl.title")).toBe("Polityka prywatności");
+		expect(polish.get("TermsPl.title")).toBe("Regulamin");
+		expect(polish.get("AccessibilityPl.title")).toBe("Deklaracja dostępności");
+		expect(polish.get("DataPl.title")).toBe("Dane i źródła");
+		for (const code of PL_DEFAULT_PROFESSIONS) {
+			expect(polish.get(`DataPl.coverage.kinds.${code}`), code).toBeTruthy();
+		}
+		// The supervisory authority's current address, not its former one.
+		expect(polish.get("PrivacyPl.sections.rights.body.1")).toContain("Moniuszki 1A");
 	});
 });
 

@@ -53,9 +53,11 @@ export async function getDirectoryIndex(country = "FR"): Promise<DirectoryIndex>
 		GROUP BY d.id, r.code, r.name, r.slug
 		-- UK authorities, Czech districts, Spanish and Italian provinces, German Kreise, Swiss
 		-- districts and Estonian municipalities by name (their ONS, NUTS, INE, ISTAT, AGS, BFS and EHAK
-		-- codes are no order a reader knows).
+		-- codes are no order a reader knows); Polish powiats by name, the word "powiat" set aside, among the cities with powiat
+		-- rights (TERYT codes are no order either).
 		ORDER BY r.name,
-			CASE WHEN d.country IN ('GB', 'CZ', 'ES', 'IT', 'DE', 'CH', 'EE') THEN d.name ELSE d.code END
+			CASE WHEN d.country = 'PL' THEN regexp_replace(d.name, '^powiat ', '')
+				WHEN d.country IN ('GB', 'CZ', 'ES', 'IT', 'DE', 'CH', 'EE') THEN d.name ELSE d.code END
 	`;
 	const regions: RegionGroup[] = [];
 	for (const { regionCode, regionName, regionSlug, ...department } of rows) {

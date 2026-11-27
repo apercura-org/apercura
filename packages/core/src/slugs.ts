@@ -10,7 +10,7 @@
  * - Establishment: `{name}-{finess}`.
  */
 import { isValidRpps } from "./rpps";
-import { slugify, slugifyDe } from "./slugify";
+import { slugify, slugifyDe, slugifyPl } from "./slugify";
 
 /** Builds the canonical path segment of a practitioner page. */
 export function practitionerSlug(firstName: string, lastName: string, rpps: string): string {
@@ -273,6 +273,45 @@ export function parseCzFacilitySegment(segment: string): CzFacilitySegment | nul
 	const match = /^(?:([a-z0-9]+(?:-[a-z0-9]+)*)-)?([1-9]\d{0,8})$/.exec(segment);
 	if (!match) return null;
 	return { idScheme: CZ_ID_SCHEME, nationalId: match[2] ?? "", namePart: match[1] ?? "" };
+}
+
+/**
+ * Polish identifiers: RPWDL, the register of entities performing medical activity (Centrum
+ * e-Zdrowia), gives every healthcare establishment (zakład leczniczy) a number (`ID ZOZ`), the
+ * page's key. The operating entity's tax and statistical numbers (NIP, REGON), which for a sole
+ * trader identify a person, are never used.
+ */
+export const PL_ID_SCHEME = "PL-RPWDL";
+
+/** True for an RPWDL establishment number: 1 to 10 digits, no leading 0 (syntax only). */
+export function isValidPlSourceId(value: string): boolean {
+	return /^[1-9]\d{0,9}$/.test(value);
+}
+
+/**
+ * Canonical path segment of a Polish establishment page: `{name}-{number}`
+ * (`przychodnia-przykladowa-290629`), diacritics dropped (`ł` as `l`).
+ */
+export function plFacilitySlug(name: string, nationalId: string): string {
+	const base = slugifyPl(name).slice(0, 80).replace(/-+$/, "");
+	return base ? `${base}-${nationalId}` : nationalId;
+}
+
+export type PlFacilitySegment = {
+	idScheme: typeof PL_ID_SCHEME;
+	nationalId: string;
+	/** Name part before the number, possibly empty. */
+	namePart: string;
+};
+
+/**
+ * Parses the last segment of a Polish establishment URL (`{name}-{number}`). Returns null
+ * unless it ends with a valid RPWDL number, so invalid URLs never reach the database.
+ */
+export function parsePlFacilitySegment(segment: string): PlFacilitySegment | null {
+	const match = /^(?:([a-z0-9]+(?:-[a-z0-9]+)*)-)?([1-9]\d{0,9})$/.exec(segment);
+	if (!match) return null;
+	return { idScheme: PL_ID_SCHEME, nationalId: match[2] ?? "", namePart: match[1] ?? "" };
 }
 
 /**

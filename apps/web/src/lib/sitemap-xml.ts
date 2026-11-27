@@ -120,7 +120,7 @@ export const STATIC_PATHS = [
  * The static pages of each market's sitemap. Austria and the UK list no practitioner space
  * (their claims go through documents, the space's entry pages are France's); Austria has no
  * accessibility statement of its own (none is required of a private site there), the UK has
- * one (`/gb/accessibility`), and so do Czechia (`/cz/pristupnost`), Spain (`/es/accesibilidad`),
+ * one (`/gb/accessibility`), and so do Czechia (`/cz/pristupnost`), Poland (`/pl/dostepnosc`), Spain (`/es/accesibilidad`),
  * Italy (`/it/accessibilita`), Germany (`/de/barrierefreiheit`), Switzerland and Estonia
  * (`/ee/ligipaasetavus`), voluntary statements.
  */
@@ -136,4 +136,5 @@ export const MARKET_STATIC_PATHS: Record<SitemapMarket, readonly string[]> = {
 	"ch-fr": STATIC_PATHS.filter((path) => path !== "/pro"),
 	"ch-it": STATIC_PATHS.filter((path) => path !== "/pro"),
 	ee: STATIC_PATHS.filter((path) => path !== "/pro"),
+	pl: STATIC_PATHS.filter((path) => path !== "/pro"),
 };

@@ -211,6 +211,13 @@
       "when": 1795812400000,
       "tag": "0029_ch_market",
       "breakpoints": true
+    },
+    {
+      "idx": 30,
+      "version": "7",
+      "when": 1795899000000,
+      "tag": "0030_pl_market",
+      "breakpoints": true
     }
   ]
 }

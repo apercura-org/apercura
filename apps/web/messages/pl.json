@@ -1,0 +1,2012 @@
+{
+	"Metadata": {
+		"title": "Apercura",
+		"description": "Otwarty katalog placówek medycznych w Polsce: szpitale, przychodnie, poradnie, hospicja, sanatoria i laboratoria, na podstawie otwartych danych RPWDL.",
+		"proTitle": "Strona Twojej placówki już istnieje · Apercura",
+		"proDescription": "Apercura publikuje rzeczową stronę każdego zakładu leczniczego wpisanego do Rejestru Podmiotów Wykonujących Działalność Leczniczą. Znajdź stronę swojej placówki i przejmij ją bezpłatnie.",
+		"searchTitle": "Wyszukiwanie · Apercura",
+		"galleryTitle": "Galeria komponentów · Apercura",
+		"homeTitle": "Apercura · Szpitale, przychodnie i poradnie w Polsce"
+	},
+	"Site": {
+		"skipLink": "Przejdź do treści",
+		"wordmark": "Apercura",
+		"homeLink": "Apercura, strona główna",
+		"runningHead": "Otwarty katalog placówek medycznych w Polsce",
+		"navLabel": "Nawigacja główna",
+		"navPro": "Dla placówek",
+		"navPatients": "Dla pacjentów",
+		"folio": "Strona {number}",
+		"externalLink": "otwiera inną witrynę",
+		"footer": {
+			"free": "Bezpłatnie dla placówek i pacjentów.",
+			"license": "Kod źródłowy na licencji AGPL-3.0",
+			"noAds": "Bez ocen, bez reklam, bez płatnych pozycji."
+		},
+		"folioRpps": "Nr {rpps}",
+		"home": "Strona główna",
+		"breadcrumbs": "Jesteś tutaj",
+		"footerNav": {
+			"label": "O Apercura",
+			"directory": "Katalog",
+			"guides": "Poradniki",
+			"about": "O projekcie",
+			"openSource": "Otwarty kod",
+			"data": "Dane i źródła",
+			"accessibility": "Dostępność",
+			"privacy": "Prywatność",
+			"legal": "Nota prawna",
+			"terms": "Regulamin",
+			"international": "Apercura w innych krajach"
+		},
+		"theme": {
+			"label": "Motyw",
+			"light": "Jasny",
+			"dark": "Ciemny",
+			"system": "Systemowy"
+		}
+	},
+	"LocaleSwitcher": {
+		"label": "Język",
+		"locale": "{locale, select, fr {Français} en {English} de {Deutsch} es {Español} it {Italiano} other {Nieznany język}}",
+		"current": "Język: <value>{language}</value>"
+	},
+	"CountrySwitcher": {
+		"label": "Kraj",
+		"current": "Kraj: <value>{country}</value>"
+	},
+	"ErrorPages": {
+		"notFound": {
+			"metaTitle": "Nie znaleziono strony · Apercura",
+			"title": "Ta strona nie istnieje",
+			"body": "Adres może zawierać literówkę albo strona została usunięta. Przeszukaj katalog lub zacznij od jednej ze stron poniżej.",
+			"rootBody": "Adres może zawierać literówkę albo strona została usunięta. Wybierz kraj, aby przeszukać jego katalog.",
+			"code": "Błąd 404",
+			"stamp": "Brak strony pod tym adresem",
+			"nextHeading": "Gdzie indziej w Apercura",
+			"home": "Strona główna",
+			"directory": "Katalog według miejscowości",
+			"international": "Apercura w poszczególnych krajach"
+		},
+		"error": {
+			"metaTitle": "Strona niedostępna · Apercura",
+			"title": "Nie udało się wyświetlić tej strony",
+			"body": "Podczas jej przygotowywania coś poszło nie tak po naszej stronie. Spróbuj ponownie; jeśli to nie pomoże, wróć za kilka minut.",
+			"retry": "Spróbuj ponownie",
+			"home": "Wróć na stronę główną",
+			"reference": "Numer dla pomocy technicznej: {digest}"
+		}
+	},
+	"Search": {
+		"label": "Znajdź szpital, przychodnię lub poradnię",
+		"who": "Co?",
+		"whoHint": "Nazwa placówki albo rodzaj: przychodnia POZ, stomatolog, kardiologia, szpital",
+		"where": "Gdzie?",
+		"whereHint": "Miejscowość, gmina, powiat lub województwo",
+		"submit": "Szukaj",
+		"market": "Kraj",
+		"markets": {
+			"FR": "Francja",
+			"AT": "Austria",
+			"GB": "Wielka Brytania",
+			"CZ": "Czechy",
+			"PL": "Polska",
+			"IT": "Włochy",
+			"CH": "Szwajcaria",
+			"ES": "Hiszpania",
+			"DE": "Niemcy"
+		}
+	},
+	"HomePage": {
+		"title": "Znajdź szpital, przychodnię lub poradnię w Polsce",
+		"hook": "Każdy szpital, każda przychodnia i każdy inny zakład leczniczy z Rejestru Podmiotów Wykonujących Działalność Leczniczą ma już swoją stronę.",
+		"specimen": {
+			"heading": "Każda placówka ma już swoją stronę",
+			"intro": "Tak wygląda strona wypełniona danymi z rejestru, zanim placówka ją przejmie: znane informacje są uzupełnione, a przy pozostałych jasno napisano, że ich brak."
+		},
+		"pillarsHeading": "Do czego zobowiązuje się Apercura",
+		"columns": {
+			"number": "Nr",
+			"commitment": "Zobowiązanie"
+		},
+		"pillars": {
+			"free": {
+				"title": "Bezpłatnie",
+				"description": "Bezpłatnie dla placówek i pacjentów, bez abonamentu i bez prowizji."
+			},
+			"openSource": {
+				"title": "Otwarty kod",
+				"description": "Cały kod źródłowy jest opublikowany na licencji AGPL-3.0."
+			},
+			"selfHostable": {
+				"title": "Własna instalacja",
+				"description": "Całą platformę można uruchomić samodzielnie za pomocą Dockera, łącznie z importem otwartych danych."
+			},
+			"encrypted": {
+				"title": "Szyfrowane dane",
+				"description": "Dokumenty, zgłoszenia błędów oraz – tam, gdzie działa rezerwacja online – wizyty są szyfrowane na poziomie aplikacji."
+			},
+			"hostedInFrance": {
+				"title": "Dane zdrowotne przechowywane we Francji",
+				"description": "Dane zdrowotne przechowuje we Francji dostawca hostingu z certyfikatem HDS ({host}) i są one szyfrowane na poziomie aplikacji."
+			}
+		},
+		"registry": {
+			"heading": "Z otwartych danych RPWDL",
+			"intro": "Każda strona powstaje na podstawie Rejestru Podmiotów Wykonujących Działalność Leczniczą (RPWDL), który Centrum e-Zdrowia udostępnia jako otwarte dane w serwisie dane.gov.pl na licencji CC BY 4.0. Województwa, powiaty i gminy pochodzą z rejestru TERYT (GUS). Strona opisuje placówkę, a nie poszczególnych pracowników medycznych. Nikt nie płaci za wpis i nikt nie jest pomijany.",
+			"doctors": "Lekarze",
+			"dentists": "Stomatolodzy",
+			"midwives": "Położne",
+			"nurses": "Opieka pielęgniarska",
+			"withAddress": "Z publicznym adresem miejsca udzielania świadczeń",
+			"count": "{count, number}",
+			"sourceLabel": "Źródło",
+			"sourceName": "Rejestr Podmiotów Wykonujących Działalność Leczniczą, Centrum e-Zdrowia",
+			"updatedLabel": "Dane na dzień"
+		},
+		"pro": {
+			"heading": "Prowadzisz szpital, przychodnię lub inny zakład leczniczy?",
+			"body": "Strona Twojej placówki już istnieje. Jej przejęcie jest bezpłatne.",
+			"cta": "Znajdź swoją stronę"
+		},
+		"tagline": "Otwarty katalog placówek medycznych w Polsce na podstawie otwartych danych RPWDL.",
+		"status": "W budowie.",
+		"market": {
+			"listingsHeading": "Według rodzaju",
+			"placesHeading": "Według województwa"
+		}
+	},
+	"SearchPage": {
+		"title": "Wyszukiwanie",
+		"query": "Szukano: „{who}”",
+		"queryWhere": "Szukano: „{who}” w miejscu „{where}”",
+		"queryOnlyWhere": "Szukano w miejscu „{where}”",
+		"emptyTitle": "Brak pasujących placówek",
+		"emptyBody": "Sprawdź pisownię, spróbuj sąsiedniej miejscowości albo ogólniejszego słowa, na przykład „przychodnia”.",
+		"queryNear": "Szukano: „{who}” w Twojej okolicy",
+		"queryOnlyNear": "Placówki w Twojej okolicy",
+		"startTitle": "Czego szukasz?",
+		"startBody": "W polu „Co?” wpisz nazwę placówki albo jej rodzaj, na przykład przychodnia POZ, stomatolog lub szpital, a w polu „Gdzie?” miejscowość, gminę lub powiat. Katalog można też przeglądać według województw i powiatów.",
+		"noMoreTitle": "Nie ma więcej wyników",
+		"browseDirectory": "Przeglądaj katalog",
+		"rppsTitle": "Placówka nr {rpps} nie ma publicznej strony",
+		"rppsBody": "Ten numer jest nieprawidłowy albo placówka nie ma publicznej strony: pokazujemy tylko te rodzaje placówek, do których przychodzą pacjenci. Placówka może jednak odnaleźć swój wpis i go przejąć.",
+		"rppsPro": "Placówki: znajdź swój wpis",
+		"ambiguousTitle": "Nazwie „{where}” odpowiada kilka miejsc",
+		"ambiguousBody": "Wybierz to, o które chodzi:",
+		"unknownPlaceTitle": "Nie znamy miejsca „{where}”",
+		"unknownPlaceSuggest": "Czy chodziło o jedno z tych miejsc?",
+		"unknownPlaceBody": "Sprawdź pisownię albo wpisz sąsiednią miejscowość.",
+		"unlistedTitle": "„{who}” nie ma jeszcze w katalogu",
+		"unlistedBody": "W Polsce katalog obejmuje zakłady lecznicze podmiotów leczniczych: szpitale, przychodnie i poradnie, gabinety stomatologiczne, rehabilitację, laboratoria, hospicja, zakłady opiekuńcze i sanatoria. Nie obejmuje indywidualnych ani grupowych praktyk lekarzy, lekarzy dentystów, pielęgniarek i położnych. Spróbuj wpisać nazwę placówki albo przeglądaj katalog.",
+		"departmentPlace": "Powiat",
+		"resultsHeading": "Wyniki",
+		"range": "Wyniki od {from} do {to}",
+		"orderName": "Wyniki są uporządkowane według zgodności z nazwą, a potem alfabetycznie. Nikt nie płaci za wyższą pozycję.",
+		"orderNear": "Wyniki są uporządkowane według odległości od Ciebie. Nikt nie płaci za wyższą pozycję.",
+		"bookingNotOpen": "Apercura w Polsce nie oferuje rejestracji online: zadzwoń bezpośrednio do placówki.",
+		"columns": {
+			"practitioner": "Placówka",
+			"place": "Adres",
+			"appointments": "Kontakt"
+		},
+		"action": {
+			"call": "Zadzwoń: {phone}",
+			"establishment": "Przez szpital",
+			"locum": "Zastępstwo: bezpośrednia rejestracja niemożliwa",
+			"page": "Zobacz stronę",
+			"noPhone": "Telefon nie został podany",
+			"nextFree": "Zarezerwuj: {slot}"
+		},
+		"distance": "odległość {km} km",
+		"pagination": "Strony wyników",
+		"previous": "Poprzednie wyniki",
+		"next": "Następne wyniki",
+		"map": {
+			"show": "Pokaż na mapie",
+			"hide": "Ukryj mapę",
+			"region": "Mapa wyników",
+			"fallback": "Mapa się wczytuje. Lista powyżej zawiera wszystkie adresy."
+		},
+		"outsidePlace": "Poza miejscem „{where}”",
+		"bookingOpenSome": "Niektóre placówki przyjmują rezerwacje online: pokazujemy ich najbliższy wolny termin. Do pozostałych zadzwoń.",
+		"notCoveredTitle": "Apercura nie obejmuje jeszcze kraju: {country}",
+		"notCoveredBody": "Apercura obejmuje na razie te kraje. Wybierz jeden z nich i wyszukaj w nim:"
+	},
+	"Practitioner": {
+		"rpps": "Numer w RPWDL",
+		"status": {
+			"unclaimed": "Strona nieprzejęta",
+			"claimed": "Strona przejęta",
+			"verified": "Strona zweryfikowana"
+		},
+		"statusNote": {
+			"unclaimed": "Utworzona na podstawie otwartych danych RPWDL. Placówka nie uzupełniła jeszcze tej strony.",
+			"verified": "Uzupełniona przez placówkę, której przejęcie strony zostało zweryfikowane."
+		},
+		"notProvided": "Nie podano",
+		"fields": {
+			"profession": "Rodzaj placówki",
+			"specialty": "Specjalność",
+			"address": "Adres miejsca udzielania świadczeń",
+			"phone": "Telefon",
+			"hours": "Godziny otwarcia",
+			"languages": "Języki",
+			"convention": "Umowa z NFZ",
+			"booking": "Rejestracja online",
+			"access": "Dostępność"
+		},
+		"sitesHeading": "Adres",
+		"directions": "Wskazówki dojazdu",
+		"providers": {
+			"openStreetMap": "OpenStreetMap",
+			"appleMaps": "Mapy Apple",
+			"googleMaps": "Mapy Google"
+		},
+		"mapLabel": "Mapa: {place}",
+		"mapPin": "Położenie: {place}",
+		"source": {
+			"label": "Źródło",
+			"name": "Rejestr Podmiotów Wykonujących Działalność Leczniczą (Centrum e-Zdrowia), CC BY 4.0",
+			"updated": "Zaktualizowano"
+		},
+		"action": {
+			"title": "Rejestracja",
+			"book": {
+				"statement": "Rejestracja online jest otwarta. Jest bezpłatna i nie wymaga konta.",
+				"label": "Umów wizytę"
+			},
+			"call": {
+				"statement": "Apercura w Polsce nie oferuje rejestracji online. Aby umówić wizytę, zadzwoń do placówki.",
+				"label": "Zadzwoń: {phone}"
+			},
+			"establishment": {
+				"statement": "Wizytę u tego lekarza umawia się przez placówkę {establishment}.",
+				"label": "Umów wizytę w placówce {establishment}"
+			},
+			"locum": {
+				"statement": "Ten lekarz pracuje na zastępstwach. Nie można umówić się do niego bezpośrednio.",
+				"hint": "Umów wizytę w gabinecie, w którym obecnie przyjmuje."
+			}
+		},
+		"slots": {
+			"heading": "Wybierz termin",
+			"label": "Wolne terminy",
+			"now": "teraz",
+			"unavailable": "niedostępny",
+			"selected": "Wybrano: {slot}",
+			"emptyDay": "Brak wolnych terminów w tym dniu",
+			"slotLabel": "{day}, {time}",
+			"past": "minął"
+		},
+		"professions": {
+			"gp": "Przychodnia POZ",
+			"dentist": "Gabinet stomatologiczny",
+			"midwife": "Położna",
+			"physio": "Rehabilitacja"
+		},
+		"specimen": "Przykład, nie jest to prawdziwa placówka"
+	},
+	"Map": {
+		"map": "Mapa",
+		"marker": "Znacznik na mapie",
+		"zoomIn": "Przybliż",
+		"zoomOut": "Oddal",
+		"resetBearing": "Przeciągnij, aby obrócić mapę, kliknij, aby ustawić ją z powrotem na północ",
+		"toggleAttribution": "Pokaż lub ukryj autorów mapy",
+		"mapFeedback": "Uwagi do mapy",
+		"logo": "Logo MapLibre",
+		"closePopup": "Zamknij okienko",
+		"scrollZoomWindows": "Aby przybliżyć mapę, przewijaj kółkiem myszy z wciśniętym klawiszem Ctrl",
+		"scrollZoomMac": "Aby przybliżyć mapę, przewijaj kółkiem myszy z wciśniętym klawiszem ⌘",
+		"twoFingers": "Przesuwaj mapę dwoma palcami"
+	},
+	"PractitionerPage": {
+		"metaTitle": "{name}, {occupation} · Apercura",
+		"metaTitlePlace": "{name}, {occupation}, {place} · Apercura",
+		"metaDescription": "{name}, {occupation}: {fees, select, sector {adres, telefon i ceny} other {adres, telefon, poradnie i oddziały}}, na podstawie otwartych danych Rejestru Podmiotów Wykonujących Działalność Leczniczą.",
+		"metaDescriptionPlace": "{name}, {occupation}, {place}: {fees, select, sector {adres, telefon i ceny} other {adres, telefon, poradnie i oddziały}}, na podstawie otwartych danych Rejestru Podmiotów Wykonujących Działalność Leczniczą.",
+		"unknownProfession": "Placówka medyczna",
+		"professionHeading": "Placówka",
+		"otherQualifications": "Inne kwalifikacje",
+		"practiceType": "Rodzaj miejsca",
+		"switchboard": "{phone} (centrala)",
+		"establishment": "Szpital",
+		"unnamedPlace": "Miejsce udzielania świadczeń",
+		"asideLabel": "O tej stronie",
+		"action": {
+			"callNotYetOpen": "Apercura w Polsce nie oferuje rejestracji online. Aby umówić wizytę, zadzwoń do placówki.",
+			"establishmentLink": "Skontaktuj się z placówką",
+			"noPhone": "Rejestr nie podaje numeru telefonu tej placówki.",
+			"noPhoneHint": "Sprawdź dane kontaktowe w <link>wyszukiwarce placówek NFZ</link> albo skontaktuj się bezpośrednio z placówką.",
+			"bookStatement": "Rejestracja online jest otwarta. Jest bezpłatna i nie wymaga konta.",
+			"bookNoSlot": "Rejestracja online jest otwarta, ale w najbliższych tygodniach nie ma wolnych terminów. Sprawdź ponownie później albo zadzwoń.",
+			"nextSlot": "Najbliższy wolny termin",
+			"bookLabel": "Umów wizytę",
+			"orCall": "Albo zadzwoń: {phone}."
+		},
+		"fees": {
+			"heading": "Ceny i ubezpieczenie zdrowotne",
+			"sector": "Umowa z NFZ",
+			"agreement": "Umowa z NFZ",
+			"optam": "Ograniczone dopłaty (OPTAM)",
+			"optamNo": "Nie dotyczy",
+			"carteVitale": "Karta ubezpieczenia",
+			"accepted": "Przyjmowana",
+			"notAccepted": "Nieprzyjmowana",
+			"fromAmeli": "Te informacje pochodzą z katalogu płatnika.",
+			"notMatched": "Nie udało się jednoznacznie odnaleźć tej placówki w katalogu płatnika, dlatego tych informacji nie pokazujemy.",
+			"regulatoryNotice": "Umowa określa, jak świadczenia są finansowane: przed wizytą sprawdź ceny i refundację na",
+			"regulatoryNoticeAgreement": "Umowa z NFZ określa, jak świadczenia są finansowane: przed wizytą sprawdź ceny i refundację na",
+			"ameliLink": "stronie Narodowego Funduszu Zdrowia",
+			"source": "Narodowy Fundusz Zdrowia",
+			"sourceOwner": "Placówka"
+		},
+		"claim": {
+			"heading": "To Twoja placówka?",
+			"body": "Ta strona powstała na podstawie otwartych danych RPWDL. Przejmij ją, aby ją sprawdzić i uzupełnić:",
+			"link": "Przejmij tę stronę",
+			"claimedHeading": "Stronę prowadzi placówka",
+			"claimedBody": "Placówka przejęła tę stronę: jej wniosek został zweryfikowany i to ona uzupełnia stronę.",
+			"benefits": [
+				"bezpłatnie, bez abonamentu i bez zobowiązań;",
+				"zdjęcie, godziny otwarcia i języki, w których przyjmujecie pacjentów;",
+				"strona internetowa i informacje o dostępności;",
+				"statystyki odwiedzin strony;",
+				"materiały do udostępniania: link, kod QR i plakat."
+			],
+			"contactLink": "Nie masz pod ręką dokumentu? Napisz do nas",
+			"optOutLink": "Ta strona dotyczy Ciebie i nie chcesz być wymieniony publicznie? Zacznij tutaj"
+		},
+		"report": {
+			"heading": "Coś się nie zgadza?",
+			"body": "Jeśli adres, telefon lub nazwa są nieprawidłowe, napisz nam, jak je poprawić.",
+			"link": "Zgłoś błąd"
+		},
+		"ring": {
+			"heading": "Inne placówki: {occupation}, {place}"
+		},
+		"photoAlt": "Zdjęcie: {name}",
+		"metaTitleName": "{name} · Apercura",
+		"metaDescriptionBookable": "{name}, {occupation}: rejestracja online, adres, kontakt i {fees, select, sector {umowa z NFZ} other {umowa z NFZ}}.",
+		"metaDescriptionBookablePlace": "{name}, {occupation}, {place}: rejestracja online, adres, kontakt i {fees, select, sector {umowa z NFZ} other {umowa z NFZ}}.",
+		"fieldsOfCare": "Poradnie, oddziały i pracownie",
+		"ownership": "Forma własności",
+		"ownershipPublic": "Publiczna",
+		"ownershipPrivate": "Niepubliczna",
+		"polish": {
+			"activityKind": "Rodzaj działalności leczniczej",
+			"activity": "{code, select, 1 {Stacjonarne i całodobowe świadczenia zdrowotne – szpitalne} 2 {Stacjonarne i całodobowe świadczenia zdrowotne inne niż szpitalne} other {Ambulatoryjne świadczenia zdrowotne}}",
+			"cells": "Poradnie, oddziały i pracownie",
+			"operator": "Podmiot leczniczy"
+		},
+		"beds": "Łóżka"
+	},
+	"Institutional": {
+		"toBeCompleted": "Do uzupełnienia",
+		"legalDraftMark": "Projekt: przed uruchomieniem wymaga oceny prawnika",
+		"auditMark": "Wstępna deklaracja: zostanie uzupełniona po ręcznym audycie",
+		"comingMark": "W przygotowaniu",
+		"placeholderNote": "Dane zapisane wielkimi literami w podwójnych nawiasach klamrowych nie są jeszcze znane: zostaną uzupełnione, gdy powstanie osoba prawna i zostaną zawarte umowy."
+	},
+	"AboutPage": {
+		"metaTitle": "O projekcie · Apercura",
+		"metaDescription": "Apercura bezpłatnie publikuje rzeczową stronę każdej placówki medycznej w Polsce, opartą na publicznych otwartych danych.",
+		"title": "O projekcie Apercura",
+		"lead": "Otwarty katalog placówek medycznych w Polsce: szpitali, przychodni, poradni i innych miejsc, do których przychodzą pacjenci.",
+		"sections": {
+			"what": {
+				"heading": "Co robi Apercura",
+				"body": [
+					"Apercura publikuje stronę każdego zakładu leczniczego, do którego przychodzą pacjenci – szpitali, przychodni POZ, poradni specjalistycznych, gabinetów stomatologicznych, rehabilitacji, laboratoriów, hospicjów, zakładów opiekuńczych i sanatoriów – na podstawie Rejestru Podmiotów Wykonujących Działalność Leczniczą. Indywidualne i grupowe praktyki lekarzy, lekarzy dentystów, pielęgniarek i położnych nie są wymieniane.",
+					"Pacjenci znajdą każdą placówkę, a nie tylko tę, która płaci jakiejś platformie. Placówki mogą bezpłatnie przejąć swoją stronę, sprawdzić ją i uzupełnić. W Polsce Apercura nie oferuje rejestracji online."
+				]
+			},
+			"principles": {
+				"heading": "Zasady",
+				"list": [
+					"Każda placówka jest przedstawiona tak samo, niezależnie od tego, czy korzysta z Apercura.",
+					"Wyłącznie informacje rzeczowe: bez ocen, opinii, reklam i płatnych pozycji.",
+					"Bezpłatnie dla placówek i pacjentów, bez abonamentu i bez prowizji.",
+					"Każda strona podaje, skąd pochodzą jej dane i kiedy je ostatnio zaktualizowano.",
+					"Tylko niezbędne dane, zbierane w określonym celu i usuwane w ustalonych terminach."
+				]
+			},
+			"how": {
+				"heading": "Skąd pochodzą strony",
+				"body": [
+					"Strony są co tydzień sprawdzane z Rejestrem Podmiotów Wykonujących Działalność Leczniczą, który Centrum e-Zdrowia udostępnia jako otwarte dane w serwisie dane.gov.pl, a gminy, powiaty i województwa pochodzą z rejestru TERYT (GUS). Strona o danych podaje każde źródło, jego licencję i datę."
+				]
+			},
+			"who": {
+				"heading": "Kto prowadzi Apercura",
+				"body": [
+					"Apercura to projekt w interesie publicznym. Nie jest usługą państwową i nie ma żadnego związku z Ministerstwem Zdrowia, Centrum e-Zdrowia, Narodowym Funduszem Zdrowia ani samorządami zawodowymi."
+				]
+			}
+		},
+		"fields": {
+			"publisher": "Wydawca",
+			"contact": "Kontakt"
+		},
+		"links": {
+			"data": "Dane i źródła",
+			"openSource": "Kod źródłowy i licencja"
+		}
+	},
+	"OpenSourcePage": {
+		"metaTitle": "Otwarty kod · Apercura",
+		"metaDescription": "Cały kod źródłowy Apercura jest publiczny na licencji AGPL-3.0. Można go czytać, sprawdzać i samodzielnie uruchomić całą platformę.",
+		"title": "Kod jest publiczny.",
+		"lead": "Każda linia kodu Apercura jest opublikowana na licencji AGPL-3.0: można ją czytać, sprawdzać i samodzielnie uruchomić całą platformę.",
+		"sections": {
+			"licence": {
+				"heading": "Licencja AGPL-3.0",
+				"body": [
+					"AGPL-3.0 to licencja wolnego oprogramowania. Każdy może kod używać, analizować, zmieniać i udostępniać. Kto oferuje zmienioną wersję jako usługę online, musi opublikować swoje zmiany na tej samej licencji."
+				]
+			},
+			"can": {
+				"heading": "Co można zrobić",
+				"list": [
+					"Zobaczyć, jak powstaje każda strona i jak importowane są otwarte dane.",
+					"Sprawdzić, jak szyfrowane są dane pacjentów i jak długo są przechowywane.",
+					"Zgłosić problem lub zaproponować zmianę w publicznym repozytorium.",
+					"Uruchomić całą platformę na własnej infrastrukturze za pomocą Dockera, łącznie z importem otwartych danych."
+				]
+			},
+			"selfHost": {
+				"heading": "Własna instalacja",
+				"body": [
+					"Instalacja z samym katalogiem nie zawiera żadnych danych o zdrowiu. Rezerwacje pacjentów są danymi o zdrowiu: jeśli prowadzisz rejestrację dla innych, musisz spełnić zasady, które w Twoim kraju obowiązują dla danych o zdrowiu."
+				]
+			}
+		},
+		"facts": {
+			"licence": "Licencja",
+			"licenceValue": "GNU Affero General Public License v3.0",
+			"repository": "Repozytorium",
+			"data": "Dane katalogu"
+		},
+		"dataValue": "CC BY 4.0, zob. stronę o danych",
+		"cta": {
+			"heading": "Przeczytaj kod źródłowy",
+			"body": "Repozytorium zawiera kod, dokumentację i instrukcję samodzielnej instalacji.",
+			"link": "Otwórz repozytorium"
+		}
+	},
+	"Listing": {
+		"count": "{count, plural, one {# placówka} few {# placówki} many {# placówek} other {# placówki}}",
+		"metaTitle": "{count, plural, one {{listing} – {place}: # placówka · Apercura} few {{listing} – {place}: # placówki · Apercura} many {{listing} – {place}: # placówek · Apercura} other {{listing} – {place}: # placówki · Apercura}}",
+		"metaTitlePage": "{listing} – {place}, strona {page} · Apercura",
+		"metaDescription": "{count, plural, one {# placówka w kategorii „{occupation}”, {place}: {fees, select, sector {adres, telefon i ceny} other {adres i telefon}}, na podstawie Rejestru Podmiotów Wykonujących Działalność Leczniczą.} few {# placówki w kategorii „{occupation}”, {place}: {fees, select, sector {adresy, telefony i ceny} other {adresy i telefony}}, na podstawie Rejestru Podmiotów Wykonujących Działalność Leczniczą.} many {# placówek w kategorii „{occupation}”, {place}: {fees, select, sector {adresy, telefony i ceny} other {adresy i telefony}}, na podstawie Rejestru Podmiotów Wykonujących Działalność Leczniczą.} other {# placówki w kategorii „{occupation}”, {place}: {fees, select, sector {adresy, telefony i ceny} other {adresy i telefony}}, na podstawie Rejestru Podmiotów Wykonujących Działalność Leczniczą.}}",
+		"title": "{listing} – {place}",
+		"lead": "{count, plural, one {Rejestr Podmiotów Wykonujących Działalność Leczniczą wymienia w tej kategorii # placówkę (miejsce: {place}).} few {Rejestr Podmiotów Wykonujących Działalność Leczniczą wymienia w tej kategorii # placówki (miejsce: {place}).} many {Rejestr Podmiotów Wykonujących Działalność Leczniczą wymienia w tej kategorii # placówek (miejsce: {place}).} other {Rejestr Podmiotów Wykonujących Działalność Leczniczą wymienia w tej kategorii # placówki (miejsce: {place}).}}",
+		"practitionersHeading": "{count, plural, one {Placówka} few {# placówki} many {# placówek} other {# placówki}}",
+		"practitionersIntro": "W kolejności alfabetycznej. Nikt nie płaci za to, żeby się tu znaleźć, i nikt nie jest wyżej w kolejności.",
+		"rowFacts": "Umowa z NFZ: {sector} · Karta ubezpieczenia: {carteVitale}",
+		"rowFactsAgreement": "Umowa z NFZ: {sector} · Karta ubezpieczenia: {carteVitale}",
+		"columns": {
+			"practitioner": "Placówka",
+			"sector": "Umowa z NFZ",
+			"agreement": "Umowa z NFZ",
+			"carteVitale": "Karta ubezpieczenia"
+		},
+		"pagination": {
+			"label": "Strony listy",
+			"previous": "Poprzednia strona",
+			"next": "Następna strona",
+			"status": "Strona {page} z {pages}",
+			"page": "<hidden>Strona </hidden>{page}",
+			"jumps": "Przejdź do strony"
+		},
+		"facts": {
+			"heading": "W liczbach",
+			"intro": "Informacje o umowach pochodzą z katalogu płatnika, dla placówek, które udało się w nim odnaleźć.",
+			"introAgreement": "Informacje o umowach z NFZ pochodzą z katalogu płatnika, dla placówek, które udało się w nim odnaleźć.",
+			"sectorUnknown": "Umowa nieznana",
+			"agreementUnknown": "Umowa z NFZ nieznana",
+			"carteVitaleYes": "Przyjmują kartę ubezpieczenia",
+			"carteVitaleNo": "Nie przyjmują karty ubezpieczenia",
+			"bookingNotOpen": "Jeszcze niedostępna",
+			"sources": "RPWDL (Centrum e-Zdrowia), TERYT (GUS)"
+		},
+		"communesHeading": "{listing} – gminy: {place}",
+		"nearbyHeading": "{listing} – okoliczne gminy",
+		"establishmentsHeading": "Szpitale – {place}",
+		"establishmentsIntro": "Szpitale, kliniki i centra medyczne, w których działają placówki z kategorii „{occupation}”.",
+		"allSpecialties": "Wszystkie rodzaje placówek – {place}",
+		"hubMetaTitle": "{count, plural, one {{listing} w Polsce: # placówka · Apercura} few {{listing} w Polsce: # placówki · Apercura} many {{listing} w Polsce: # placówek · Apercura} other {{listing} w Polsce: # placówki · Apercura}}",
+		"hubMetaDescription": "{count, plural, one {# placówka w kategorii „{occupation}” w Polsce, według województw i powiatów: {fees, select, sector {adres, telefon i ceny} other {adres i telefon}}, na podstawie Rejestru Podmiotów Wykonujących Działalność Leczniczą.} few {# placówki w kategorii „{occupation}” w Polsce, według województw i powiatów: {fees, select, sector {adresy, telefony i ceny} other {adresy i telefony}}, na podstawie Rejestru Podmiotów Wykonujących Działalność Leczniczą.} many {# placówek w kategorii „{occupation}” w Polsce, według województw i powiatów: {fees, select, sector {adresy, telefony i ceny} other {adresy i telefony}}, na podstawie Rejestru Podmiotów Wykonujących Działalność Leczniczą.} other {# placówki w kategorii „{occupation}” w Polsce, według województw i powiatów: {fees, select, sector {adresy, telefony i ceny} other {adresy i telefony}}, na podstawie Rejestru Podmiotów Wykonujących Działalność Leczniczą.}}",
+		"hubTitle": "{listing} w Polsce",
+		"hubLead": "{count, plural, one {Rejestr Podmiotów Wykonujących Działalność Leczniczą wymienia w tej kategorii w Polsce # placówkę.} few {Rejestr Podmiotów Wykonujących Działalność Leczniczą wymienia w tej kategorii w Polsce # placówki.} many {Rejestr Podmiotów Wykonujących Działalność Leczniczą wymienia w tej kategorii w Polsce # placówek.} other {Rejestr Podmiotów Wykonujących Działalność Leczniczą wymienia w tej kategorii w Polsce # placówki.}}",
+		"departmentsHeading": "{listing} według powiatów",
+		"departmentsIntro": "Wybierz powiat, aby zobaczyć jego gminy i placówki.",
+		"browseDirectory": "Przeglądaj katalog według miejsca",
+		"metaTitleShort": "{listing} – {place} · Apercura",
+		"metaDescriptionPage": "{count, plural, one {Strona {page} z {pages}: # placówka w kategorii „{occupation}”, {place}.} few {Strona {page} z {pages}: # placówki w kategorii „{occupation}”, {place}.} many {Strona {page} z {pages}: # placówek w kategorii „{occupation}”, {place}.} other {Strona {page} z {pages}: # placówki w kategorii „{occupation}”, {place}.}}",
+		"metaDescriptionPageRange": "{count, plural, one {Strona {page} z {pages}, od {first} do {last}: # placówka w kategorii „{occupation}”, {place}.} few {Strona {page} z {pages}, od {first} do {last}: # placówki w kategorii „{occupation}”, {place}.} many {Strona {page} z {pages}, od {first} do {last}: # placówek w kategorii „{occupation}”, {place}.} other {Strona {page} z {pages}, od {first} do {last}: # placówki w kategorii „{occupation}”, {place}.}}",
+		"hubMetaTitleShort": "{listing} w Polsce · Apercura",
+		"authoritiesHeading": "{listing}: powiaty – {place}"
+	},
+	"Directory": {
+		"metaTitle": "Katalog placówek medycznych według miejsca · Apercura",
+		"metaDescription": "Wszystkie województwa i powiaty Polski z placówkami medycznymi z Rejestru Podmiotów Wykonujących Działalność Leczniczą: szpitale, przychodnie, poradnie, gabinety stomatologiczne i inne.",
+		"title": "Katalog według miejsca",
+		"lead": "{count, plural, one {# placówka według województwa i powiatu.} few {# placówki według województwa i powiatu.} many {# placówek według województwa i powiatu.} other {# placówki według województwa i powiatu.}}",
+		"otherRegion": "Inne",
+		"emptyTitle": "Katalog nie został jeszcze zaimportowany",
+		"emptyBody": "Rejestr RPWDL nie został jeszcze wczytany na tym serwerze. Wróć po następnym imporcie.",
+		"placeMetaTitle": "Szpitale, przychodnie i poradnie – {place} · Apercura",
+		"placeMetaDescription": "{count, plural, one {# placówka medyczna, {place}, według rodzaju, na podstawie Rejestru Podmiotów Wykonujących Działalność Leczniczą.} few {# placówki medyczne, {place}, według rodzaju, na podstawie Rejestru Podmiotów Wykonujących Działalność Leczniczą.} many {# placówek medycznych, {place}, według rodzaju, na podstawie Rejestru Podmiotów Wykonujących Działalność Leczniczą.} other {# placówki medycznej, {place}, według rodzaju, na podstawie Rejestru Podmiotów Wykonujących Działalność Leczniczą.}}",
+		"placeTitle": "Placówki medyczne – {place}",
+		"placeLead": "{count, plural, one {# placówka (miejsce: {place}).} few {# placówki (miejsce: {place}).} many {# placówek (miejsce: {place}).} other {# placówki (miejsce: {place}).}}",
+		"specialtiesHeading": "Według rodzaju placówki",
+		"communesHeading": "Gminy: {place}",
+		"arrondissementsHeading": "Według dzielnicy",
+		"establishmentsHeading": "Szpitale – {place}",
+		"placeMetaTitleShort": "Placówki – {place} · Apercura",
+		"authoritiesHeading": "Powiaty – {place}",
+		"regionLink": "Wszystko – {place}"
+	},
+	"Establishment": {
+		"metaTitle": "{name} · Apercura",
+		"metaTitlePlace": "{name}, {place} · Apercura",
+		"metaDescription": "{count, plural, one {{name}: adres, centrala i # lekarz, który tu pracuje, według krajowego rejestru.} few {{name}: adres, centrala i # lekarze, którzy tu pracują, według krajowego rejestru.} many {{name}: adres, centrala i # lekarzy, którzy tu pracują, według krajowego rejestru.} other {{name}: adres, centrala i # lekarza, którzy tu pracują, według krajowego rejestru.}}",
+		"directory": "Katalog",
+		"folio": "FINESS {finess}",
+		"lead": "{count, plural, one {{kind}. Krajowy rejestr wymienia # lekarza, który tu pracuje.} few {{kind}. Krajowy rejestr wymienia # lekarzy, którzy tu pracują.} many {{kind}. Krajowy rejestr wymienia # lekarzy, którzy tu pracują.} other {{kind}. Krajowy rejestr wymienia # lekarza, którzy tu pracują.}}",
+		"addressHeading": "Adres",
+		"finess": "Numer FINESS",
+		"action": {
+			"call": "Wizytę umawia się przez placówkę. Zadzwoń do centrali i poproś o potrzebny oddział lub poradnię.",
+			"noPhone": "Nie podano telefonu tej placówki.",
+			"noPhoneHint": "Dane kontaktowe znajdziesz na jej własnej stronie internetowej."
+		},
+		"practitionersHeading": "{count, plural, one {Lekarz, który tu pracuje} few {# lekarzy, którzy tu pracują} many {# lekarzy, którzy tu pracują} other {# lekarza, którzy tu pracują}}",
+		"practitionersIntro": "Według specjalności, w kolejności alfabetycznej.",
+		"otherProfessions": "Inne zawody",
+		"source": "Annuaire Santé (ANS) i FINESS+"
+	},
+	"SearchForm": {
+		"specialties": "Rodzaje placówek",
+		"practitioners": "Placówki",
+		"places": "Miejsca",
+		"department": "Powiat",
+		"nearMe": "W mojej okolicy",
+		"locating": "Ustalamy Twoje położenie…",
+		"geoDenied": "Ustalanie położenia jest wyłączone dla tej witryny. Wpisz nazwę miejscowości.",
+		"geoUnavailable": "Nie udało się ustalić Twojego położenia. Wpisz nazwę miejscowości.",
+		"searching": "Szukamy…",
+		"noSuggestion": "Brak podpowiedzi. Wszystkie wyniki zobaczysz po kliknięciu „Szukaj”."
+	},
+	"OgImage": {
+		"runningHead": "Otwarty katalog placówek medycznych",
+		"titles": {
+			"medecin": "Każda przychodnia ma już swoją stronę.",
+			"chirurgien-dentiste": "Każdy gabinet stomatologiczny ma już swoją stronę.",
+			"sage-femme": "Każde hospicjum ma już swoją stronę.",
+			"infirmier": "Każdy szpital ma już swoją stronę.",
+			"annuaire": "Placówki medyczne według rodzaju i miejsca."
+		},
+		"footer": "Bezpłatnie · Otwarty kod · Bez ocen i reklam",
+		"practitioner": {
+			"folio": "Nr {rpps}",
+			"alt": "{name}, {occupation}, {place}",
+			"altNoPlace": "{name}, {occupation}"
+		}
+	},
+	"booking": {
+		"panel": {
+			"code": {
+				"sendsLeft": "{count, plural, one {Możesz poprosić jeszcze o # kod.} few {Możesz poprosić jeszcze o # kody.} many {Możesz poprosić jeszcze o # kodów.} other {Możesz poprosić jeszcze o # kodu.}}",
+				"invalid": "{count, plural, one {Ten kod jest nieprawidłowy. Została # próba.} few {Ten kod jest nieprawidłowy. Zostały # próby.} many {Ten kod jest nieprawidłowy. Zostało # prób.} other {Ten kod jest nieprawidłowy. Zostało # próby.}}"
+			}
+		},
+		"manage": {
+			"cutoffPassed": "{hours, plural, one {Zmiany online są możliwe najpóźniej # godzinę przed wizytą. Aby ją teraz odwołać lub przełożyć, zadzwoń do placówki.} few {Zmiany online są możliwe najpóźniej # godziny przed wizytą. Aby ją teraz odwołać lub przełożyć, zadzwoń do placówki.} many {Zmiany online są możliwe najpóźniej # godzin przed wizytą. Aby ją teraz odwołać lub przełożyć, zadzwoń do placówki.} other {Zmiany online są możliwe najpóźniej # godziny przed wizytą. Aby ją teraz odwołać lub przełożyć, zadzwoń do placówki.}}"
+		}
+	},
+	"auth": {
+		"runningHead": "Strefa dla placówek",
+		"metadata": {
+			"signIn": "Logowanie · Apercura",
+			"signUp": "Zakładanie konta · Apercura",
+			"verifyEmail": "Potwierdzenie adresu e-mail · Apercura",
+			"challenge": "Potwierdź, że to Ty · Apercura",
+			"security": "Bezpieczeństwo · Apercura",
+			"home": "Twoja strefa · Apercura"
+		},
+		"common": {
+			"email": "Adres e-mail",
+			"password": "Hasło",
+			"pending": "Proszę czekać",
+			"loading": "Wczytywanie",
+			"signOut": "Wyloguj się",
+			"signingOut": "Wylogowywanie",
+			"totpCode": "Sześciocyfrowy kod z aplikacji uwierzytelniającej"
+		},
+		"errors": {
+			"generic": "Coś poszło nie tak. Spróbuj ponownie za chwilę.",
+			"tooManyRequests": "Zbyt wiele prób. Odczekaj minutę i spróbuj ponownie.",
+			"invalidCredentials": "Adres e-mail i hasło do siebie nie pasują.",
+			"emailNotVerified": "Najpierw potwierdź swój adres e-mail: właśnie wysłaliśmy nowy link.",
+			"invalidCode": "Ten kod jest nieprawidłowy. Sprawdź go i spróbuj ponownie.",
+			"locked": "Zbyt wiele błędnych kodów. Odczekaj 15 minut i zaloguj się ponownie.",
+			"passwordTooShort": "Hasło jest za krótkie: użyj co najmniej 12 znaków.",
+			"passwordTooLong": "Hasło jest za długie: użyj najwyżej 128 znaków.",
+			"userExists": "Ten adres e-mail jest już używany przez inne konto. Zaloguj się.",
+			"invalidPassword": "Hasło jest nieprawidłowe.",
+			"mfaRequired": "Najpierw potwierdź swoją tożsamość drugim składnikiem.",
+			"lastFactor": "Zanim usuniesz ten drugi składnik, dodaj inny: konto musi zawsze mieć co najmniej jeden.",
+			"passkeyFailed": "Nie udało się użyć klucza dostępu. Spróbuj ponownie albo użyj hasła i kodu.",
+			"accountFrozen": "To konto zostało zablokowane po sprzeciwie dotyczącym strony. Napisz do nas, a przywrócimy je po ponownej weryfikacji tożsamości."
+		},
+		"signIn": {
+			"title": "Logowanie",
+			"lead": "Twoja strefa dla placówek: strona, terminarz, zespół.",
+			"asideFactor": "Każde konto z dostępem do rezerwacji potrzebuje drugiego składnika: kodu z aplikacji uwierzytelniającej albo klucza dostępu.",
+			"asidePasskey": "Klucz dostępu jest zapisany w telefonie lub komputerze i odblokowuje się odciskiem palca, twarzą albo kodem PIN.",
+			"passwordHeading": "Hasłem",
+			"submit": "Zaloguj się",
+			"passkeyHeading": "Kluczem dostępu",
+			"passkeyHint": "Bez hasła: Twoje urządzenie potwierdzi, że to Ty.",
+			"passkey": "Zaloguj się kluczem dostępu",
+			"noAccount": "Nie masz jeszcze konta?",
+			"signUpLink": "Załóż konto",
+			"totpHeading": "Wpisz kod",
+			"backupHeading": "Wpisz kod zapasowy",
+			"totpLead": "Otwórz aplikację uwierzytelniającą i wpisz sześciocyfrowy kod wyświetlany dla Apercura.",
+			"backupLead": "Każdego kodu zapasowego można użyć tylko raz. Otrzymano je podczas konfiguracji aplikacji uwierzytelniającej.",
+			"backupCode": "Kod zapasowy",
+			"verify": "Potwierdź",
+			"useBackupCode": "Użyj kodu zapasowego",
+			"useTotp": "Użyj aplikacji uwierzytelniającej",
+			"pscHeading": "Przez Pro Santé Connect",
+			"pscHint": "Gdy połączysz go ze swoim kontem podczas przejmowania strony, aplikacja e-CPS lub karta CPS zaloguje Cię bez dodatkowego kodu.",
+			"psc": "Zaloguj się przez Pro Santé Connect",
+			"pscFailed": "Logowanie przez Pro Santé Connect nie powiodło się. Najpierw połącz je ze swoim kontem podczas przejmowania strony albo zaloguj się hasłem."
+		},
+		"signUp": {
+			"title": "Zakładanie konta",
+			"lead": "Bezpłatnie dla placówek i ich pracowników.",
+			"asideSteps": "Trzy kroki: załóż konto, potwierdź adres e-mail i skonfiguruj drugi składnik.",
+			"asideFree": "Założenie konta nie zmienia żadnej publicznej strony. Przejęcie strony następuje później.",
+			"name": "Imię i nazwisko",
+			"emailHint": "Na ten adres wyślemy link potwierdzający.",
+			"passwordHint": "Co najmniej {min} znaków. Długie zdanie łatwo zapamiętać.",
+			"submit": "Załóż konto",
+			"haveAccount": "Masz już konto?",
+			"signInLink": "Zaloguj się",
+			"sentHeading": "Sprawdź skrzynkę",
+			"sentTitle": "Wysłaliśmy link potwierdzający na adres {email}.",
+			"sentBody": "Otwórz wiadomość i w ciągu godziny kliknij link. Potem zaloguj się i skonfiguruj drugi składnik.",
+			"sentHint": "Po kilku minutach nadal nic? Zajrzyj do folderu spam albo zaloguj się: wyślemy nowy link."
+		},
+		"verifyEmail": {
+			"title": "Potwierdzenie adresu e-mail",
+			"successTitle": "Twój adres e-mail został potwierdzony.",
+			"successBody": "Zaloguj się hasłem i skonfiguruj drugi składnik.",
+			"errorTitle": "Ten link już nie działa.",
+			"errorBody": "Mógł wygasnąć albo został już użyty. Zaloguj się: wyślemy nowy link.",
+			"signIn": "Zaloguj się"
+		},
+		"challenge": {
+			"title": "Potwierdź, że to Ty",
+			"lead": "Twoje konto ma drugi składnik: użyj go, aby otworzyć swoją strefę.",
+			"aside": "Samo hasło nie wystarcza, by uzyskać dostęp do rezerwacji.",
+			"passkeyHeading": "Kluczem dostępu",
+			"passkeyLead": "Urządzenie poprosi o odcisk palca, twarz lub kod PIN.",
+			"passkey": "Użyj klucza dostępu",
+			"totpHeading": "Aplikacją uwierzytelniającą",
+			"otherHeading": "To nie Ty albo nie masz dostępu do swojego składnika?",
+			"otherLead": "Wyloguj się. Odzyskanie konta wymaga ponownej weryfikacji tożsamości."
+		},
+		"security": {
+			"title": "Bezpieczeństwo",
+			"lead": "Jak się logujesz i gdzie jesteś zalogowany.",
+			"enrolLead": "Ostatni krok przed wejściem do strefy: skonfiguruj drugi składnik.",
+			"enrolTitle": "Wybierz drugi składnik, aby kontynuować",
+			"enrolBody": "Apercura wymaga go od każdego konta z dostępem do rezerwacji. Działa zarówno aplikacja uwierzytelniająca, jak i klucz dostępu; drugą możliwość można dodać później.",
+			"continue": "Przejdź do strefy",
+			"actions": "Działania",
+			"totp": {
+				"heading": "Aplikacja uwierzytelniająca",
+				"lead": "Aplikacja w telefonie (na przykład FreeOTP, Aegis lub Google Authenticator) co 30 sekund wyświetla nowy sześciocyfrowy kod.",
+				"enabledTitle": "Aplikacja uwierzytelniająca jest skonfigurowana.",
+				"enabledBody": "Przy każdym logowaniu hasłem poprosimy o kod.",
+				"scanHeading": "1. Zeskanuj kod QR",
+				"scanLead": "W aplikacji uwierzytelniającej dodaj konto i zeskanuj ten kod. Jeśli nie możesz go zeskanować, wpisz klucz ręcznie.",
+				"qrLabel": "Kod QR do dodania Apercura w aplikacji uwierzytelniającej",
+				"manualKey": "Klucz konfiguracyjny",
+				"codesHeading": "2. Zachowaj kody zapasowe",
+				"codesLead": "Jeśli zgubisz telefon, każdy z tych kodów pozwoli zalogować się jeden raz. Wydrukuj je lub zapisz w menedżerze haseł; są wyświetlane tylko teraz.",
+				"confirmHeading": "3. Wpisz kod wyświetlony w aplikacji",
+				"confirm": "Włącz",
+				"password": "Twoje hasło",
+				"passwordHint": "Przed zmianą sposobu logowania poprosimy o nie ponownie.",
+				"start": "Skonfiguruj aplikację"
+			},
+			"passkeys": {
+				"heading": "Klucze dostępu",
+				"lead": "Klucz dostępu pozostaje w telefonie, komputerze lub kluczu bezpieczeństwa i odblokowuje się odciskiem palca, twarzą lub kodem PIN. Nic się nie wpisuje, nie ma czego ukraść.",
+				"addedTitle": "Klucz dostępu został dodany.",
+				"name": "Nazwa",
+				"added": "Dodano",
+				"unnamed": "Klucz dostępu",
+				"removeNamed": "Usuń {name}",
+				"remove": "Usuń",
+				"none": "Nie ma jeszcze klucza dostępu.",
+				"nameLabel": "Nazwa nowego klucza dostępu (opcjonalnie)",
+				"nameHint": "Na przykład: komputer w rejestracji.",
+				"add": "Dodaj klucz dostępu"
+			},
+			"sessions": {
+				"heading": "Gdzie jesteś zalogowany",
+				"lead": "Sesja kończy się po 12 godzinach bezczynności. Wyloguj każdą sesję, której nie rozpoznajesz.",
+				"device": "Urządzenie",
+				"lastActive": "Ostatnia aktywność",
+				"unknownDevice": "Nieznane urządzenie",
+				"current": "Ta sesja",
+				"revoke": "Wyloguj",
+				"everywhereHint": "Zgubiono urządzenie albo komuś udostępniono hasło? Wyloguj wszystkie sesje, łącznie z tą.",
+				"everywhere": "Wyloguj się wszędzie"
+			},
+			"data": {
+				"heading": "Twoje dane",
+				"lead": "Kopia wszystkiego, co przechowujemy o Twoim koncie, i jego usunięcie.",
+				"exportHeading": "Pobierz swoje dane",
+				"exportBody": "Plik JSON z Twoim kontem, sposobami logowania (nigdy ich tajnymi kluczami), sesjami, miejscami pracy, wnioskami o przejęcie i treścią strony.",
+				"export": "Pobierz moje dane",
+				"deleteHeading": "Usuń konto",
+				"deleteBody": "Twoje konto, sesje, wnioski i dokumenty zostaną usunięte. Strona wróci do danych z rejestru: nieprzejęta, bez Twoich treści i zdjęcia.",
+				"closeEffect": "Zamknięcie miejsca pracy odwołuje jego nadchodzące wizyty (pacjenci dostaną e-mail), unieważnia linki do jego kalendarza, a dane jego pacjentów są usuwane w ciągu jednego dnia. Dziennik dostępu jest przechowywany przez rok.",
+				"practiceChoice": "Co ma się stać z miejscem pracy {name}?",
+				"close": "Zamknąć miejsce pracy: jego członkowie stracą dostęp",
+				"transfer": "Przekazać je użytkownikowi {name} ({email})",
+				"practiceAlone": "Miejsce pracy {name} zostanie zamknięte razem z Twoim kontem (jesteś jego jedynym członkiem).",
+				"confirmEmail": "Aby potwierdzić, wpisz swój adres e-mail",
+				"confirmEmailHint": "Usunięcia nie można cofnąć.",
+				"mismatch": "To nie jest adres e-mail Twojego konta.",
+				"hasTeam": "Dla każdego miejsca pracy z zespołem wybierz, co ma się z nim stać.",
+				"lastAdmin": "Jesteś ostatnim administratorem platformy: najpierw wyznacz innego.",
+				"failed": "Nie udało się usunąć konta. Spróbuj ponownie za chwilę.",
+				"delete": "Usuń moje konto"
+			}
+		},
+		"app": {
+			"title": "Twoja strefa",
+			"lead": "Zalogowano jako {email}.",
+			"homeLink": "Apercura, strona główna",
+			"nav": {
+				"label": "Strefa dla placówek",
+				"home": "Twoja strefa",
+				"security": "Bezpieczeństwo",
+				"page": "Twoja strona",
+				"adminClaims": "Wnioski o przejęcie",
+				"adminReports": "Zgłoszenia",
+				"today": "Dzisiaj",
+				"agenda": "Terminarz",
+				"team": "Zespół",
+				"menu": "Menu",
+				"stats": "Statystyki",
+				"share": "Udostępnianie",
+				"adminContacts": "Prośby o kontakt"
+			},
+			"practicesHeading": "Twoje miejsca pracy",
+			"columns": {
+				"practice": "Miejsce pracy",
+				"role": "Twoja rola",
+				"page": "Strona",
+				"status": "Stan",
+				"next": "Następny krok"
+			},
+			"emptyTitle": "Nie ma jeszcze miejsca pracy",
+			"emptyBody": "Twoje miejsce pracy pojawi się tutaj, gdy przejmiesz swoją stronę, a przejęcie zostanie zweryfikowane.",
+			"emptyAction": "Znajdź moją stronę",
+			"securityHeading": "Bezpieczeństwo konta",
+			"securityBody": "Twoje konto chroni drugi składnik. Zarządzaj aplikacją uwierzytelniającą, kluczami dostępu i sesjami.",
+			"securityLink": "Ustawienia bezpieczeństwa",
+			"claimsHeading": "Twoja strona i wnioski o przejęcie",
+			"editPage": "Edytuj stronę",
+			"openClaim": "Otwórz wniosek",
+			"adminRunningHead": "Administracja",
+			"agendaHeading": "Terminarz",
+			"agendaBody": "Twój dzień, tydzień, prośby do rozpatrzenia i ustawienia rezerwacji.",
+			"agendaLink": "Otwórz dzisiejszy terminarz",
+			"invitationsHeading": "Zaproszenia",
+			"invitationBody": "Miejsce pracy {practice} zaprasza Cię do swojego zespołu.",
+			"invitationLink": "Odpowiedz na zaproszenie",
+			"pageHeading": "Twoja strona",
+			"pageSummary": "{views, plural, =0 {Brak wyświetleń} one {# wyświetlenie} few {# wyświetlenia} many {# wyświetleń} other {# wyświetlenia}} w ciągu ostatnich 30 dni; strona jest wypełniona w {score}%.",
+			"statsLink": "Zobacz statystyki i czego brakuje",
+			"shareLink": "Udostępnij stronę: link, kod QR, plakat"
+		},
+		"roles": {
+			"owner": "Właściciel",
+			"practitioner": "Pracownik medyczny",
+			"assistant": "Asystent"
+		},
+		"email": {
+			"wordmark": "Apercura",
+			"runningHead": "Strefa dla placówek",
+			"footer": "Apercura: otwarty katalog placówek medycznych. Bezpłatny i z otwartym kodem.",
+			"verify": {
+				"subject": "Potwierdź swój adres e-mail",
+				"preview": "Potwierdź swój adres e-mail, aby dokończyć zakładanie konta w Apercura.",
+				"title": "Potwierdź swój adres e-mail",
+				"greeting": "Dzień dobry, {name},",
+				"body": "właśnie założono konto w Apercura. Aby kontynuować, potwierdź, że ten adres należy do Ciebie.",
+				"action": "Potwierdź adres",
+				"fallback": "Jeśli przycisk nie działa, skopiuj ten link do przeglądarki:",
+				"expiry": "Link jest ważny przez godzinę.",
+				"ignore": "To nie Ty zakładałeś to konto? Zignoruj tę wiadomość: nic się nie stanie."
+			}
+		}
+	},
+	"emails": {
+		"fallback": "Jeśli przycisk nie działa, skopiuj ten link do przeglądarki:",
+		"claimRegistryLink": {
+			"subject": "Potwierdź przejęcie strony placówki",
+			"title": "Czy to placówka: {practitioner}?",
+			"body": [
+				"Ktoś poprosił o zarządzanie stroną w Apercura: {practitioner}. Tę wiadomość wysłaliśmy na adres, który krajowy rejestr podaje dla tej placówki.",
+				"Jeśli prośba pochodzi od placówki ({practitioner}), otwórz link i ją potwierdź. Strona zostanie wtedy zweryfikowana."
+			],
+			"action": "Potwierdź przejęcie",
+			"notes": [
+				"Link jest ważny przez 24 godziny.",
+				"Nie spodziewasz się tej wiadomości? Zignoruj ją: nic się nie zmieni, a strona pozostanie bez zmian."
+			]
+		},
+		"claimReceived": {
+			"subject": "Twój wniosek o przejęcie jest rozpatrywany",
+			"title": "Twój wniosek o przejęcie jest rozpatrywany",
+			"body": [
+				"Dzień dobry, {name},",
+				"otrzymaliśmy Twój wniosek i dokumenty. Członek zespołu Apercura je sprawdzi i odpisze e-mailem.",
+				"Wnioski rozpatrujemy w ciągu 48 godzin w dni robocze."
+			]
+		},
+		"claimVerified": {
+			"subject": "Twoja strona jest zweryfikowana",
+			"title": "Twoja strona jest zweryfikowana",
+			"body": [
+				"Dzień dobry, {name},",
+				"Twoja strona ma teraz oznaczenie strony zweryfikowanej. Sprawdź przejęte informacje, uzupełnij ceny i formy płatności, a następnie opublikuj stronę."
+			],
+			"action": "Uzupełnij stronę"
+		},
+		"claimRejected": {
+			"subject": "Twój wniosek o przejęcie nie został przyjęty",
+			"title": "Twój wniosek o przejęcie nie został przyjęty",
+			"body": [
+				"Dzień dobry, {name},",
+				"nie udało się zweryfikować Twojego wniosku. Powód podany przez osobę sprawdzającą: {reason}",
+				"W swojej strefie możesz złożyć nowy wniosek z czytelnym dokumentem potwierdzającym, że działasz w imieniu placówki."
+			]
+		},
+		"claimSuperseded": {
+			"subject": "Twój dostęp do strony został cofnięty",
+			"title": "Twój dostęp do strony został cofnięty",
+			"body": [
+				"Dzień dobry, {name},",
+				"inne konto wykazało, że należy do placówki, której stroną zarządzało Twoje konto. Twoje konto zostało zablokowane, a jego dostęp do placówki cofnięty.",
+				"Jeśli to Ty reprezentujesz placówkę, napisz do nas: konto można odzyskać tylko po ponownej weryfikacji tożsamości."
+			]
+		},
+		"removalReceived": {
+			"subject": "Otrzymaliśmy Twoje żądanie usunięcia",
+			"title": "Otrzymaliśmy Twoje żądanie usunięcia",
+			"body": [
+				"Od tej chwili strona jest ukryta: nie jest wyświetlana, indeksowana ani wymieniana na listach.",
+				"Sprawdzimy żądanie i odpowiemy najpóźniej w ciągu miesiąca. Po jego potwierdzeniu stronę usuniemy; usunięta strona nie wróci przy kolejnym imporcie rejestru."
+			]
+		},
+		"removalConfirmed": {
+			"subject": "Strona została usunięta",
+			"title": "Strona została usunięta",
+			"body": [
+				"Strona, której usunięcia zażądano, została usunięta z Apercura. Nie wróci przy kolejnym imporcie rejestru."
+			]
+		},
+		"removalRejected": {
+			"subject": "Twoje żądanie usunięcia nie zostało przyjęte",
+			"title": "Twoje żądanie usunięcia nie zostało przyjęte",
+			"body": [
+				"Nie udało się potwierdzić Twojego żądania usunięcia, dlatego strona jest znowu wyświetlana. Powód: {reason}",
+				"Jeśli reprezentujesz placówkę opisaną na stronie, możesz też przejąć stronę i usunąć ją samodzielnie w swojej strefie."
+			]
+		},
+		"teamInvitation": {
+			"subject": "{inviter} zaprasza Cię do zespołu: {practice}",
+			"title": "Dołącz do zespołu: {practice}",
+			"body": [
+				"Dzień dobry,",
+				"{inviter} zaprasza Cię do zespołu {practice} w Apercura, w roli: {role}.",
+				"Aby dołączyć, zaloguj się lub załóż konto z tym adresem e-mail i skonfiguruj drugi składnik (aplikację uwierzytelniającą lub klucz dostępu): chroni on dane pacjentów, które zobaczysz."
+			],
+			"action": "Dołącz do zespołu",
+			"notes": [
+				"Zaproszenie jest ważne przez 48 godzin.",
+				"Nie spodziewasz się go? Zignoruj tę wiadomość: bez Ciebie nic się nie stanie."
+			]
+		},
+		"contactReceived": {
+			"subject": "Otrzymaliśmy Twoją prośbę",
+			"title": "Otrzymaliśmy Twoją prośbę",
+			"body": [
+				"Dzień dobry,",
+				"otrzymaliśmy Twoją prośbę dotyczącą strony w katalogu Apercura. Członek zespołu skontaktuje się z Tobą, sprawdzi Twoją tożsamość i pomoże przejąć stronę.",
+				"Jeśli to nie Ty wysłałeś tę prośbę, zignoruj tę wiadomość: żadna strona ani żadne konto nie zostały zmienione."
+			]
+		},
+		"adminClaims": {
+			"subject": "{count, plural, one {# wniosek o przejęcie do sprawdzenia} few {# wnioski o przejęcie do sprawdzenia} many {# wniosków o przejęcie do sprawdzenia} other {# wniosku o przejęcie do sprawdzenia}}",
+			"title": "{count, plural, one {Jeden wniosek o przejęcie czeka na decyzję} few {# wnioski o przejęcie czekają na decyzję} many {# wniosków o przejęcie czeka na decyzję} other {# wniosku o przejęcie czeka na decyzję}}",
+			"body": [
+				"{count, plural, one {Od ostatniego powiadomienia do sprawdzenia przesłano jeden wniosek} few {Od ostatniego powiadomienia do sprawdzenia przesłano # wnioski} many {Od ostatniego powiadomienia do sprawdzenia przesłano # wniosków} other {Od ostatniego powiadomienia do sprawdzenia przesłano # wniosku}}.",
+				"Szczegóły znajdziesz w kolejce strefy dla placówek, za drugim składnikiem."
+			],
+			"action": "Otwórz wnioski"
+		},
+		"adminContactRequests": {
+			"subject": "{count, plural, one {# prośba „Reprezentuję tę placówkę”} few {# prośby „Reprezentuję tę placówkę”} many {# próśb „Reprezentuję tę placówkę”} other {# prośby „Reprezentuję tę placówkę”}}",
+			"title": "{count, plural, one {Jedna prośba o kontakt czeka na odpowiedź} few {# prośby o kontakt czekają na odpowiedź} many {# próśb o kontakt czeka na odpowiedź} other {# prośby o kontakt czeka na odpowiedź}}",
+			"body": [
+				"{count, plural, one {Od ostatniego powiadomienia o kontakt prosi jedna placówka, która nie może przejąć swojej strony} few {Od ostatniego powiadomienia o kontakt proszą # placówki, które nie mogą przejąć swojej strony} many {Od ostatniego powiadomienia o kontakt prosi # placówek, które nie mogą przejąć swojej strony} other {Od ostatniego powiadomienia o kontakt prosi # placówki, które nie mogą przejąć swojej strony}}.",
+				"Ich zaszyfrowane dane odczytasz w kolejce strefy dla placówek."
+			],
+			"action": "Otwórz prośby"
+		}
+	},
+	"Profile": {
+		"presentationHeading": "Prezentacja",
+		"practicalHeading": "Informacje praktyczne",
+		"fields": {
+			"languages": "Języki",
+			"accessibility": "Dostępność",
+			"website": "Strona internetowa",
+			"fees": "Ceny",
+			"paymentMethods": "Formy płatności"
+		},
+		"accessibility": {
+			"stepFree": "Wejście bez barier",
+			"lift": "Winda",
+			"parking": "Parking w pobliżu"
+		},
+		"languages": {
+			"fr": "francuski",
+			"en": "angielski",
+			"es": "hiszpański",
+			"de": "niemiecki",
+			"it": "włoski",
+			"pt": "portugalski",
+			"ar": "arabski",
+			"zh": "chiński",
+			"ru": "rosyjski",
+			"tr": "turecki",
+			"ro": "rumuński",
+			"pl": "polski",
+			"nl": "niderlandzki",
+			"vi": "wietnamski",
+			"fa": "perski",
+			"he": "hebrajski",
+			"uk": "ukraiński",
+			"lsf": "francuski język migowy"
+		},
+		"paymentMethods": {
+			"card": "Karta płatnicza",
+			"cash": "Gotówka",
+			"cheque": "Czek",
+			"transfer": "Przelew bankowy"
+		},
+		"fees": {
+			"range": "od {min} do {max}",
+			"fromOwner": "Ceny podaje placówka."
+		}
+	},
+	"Claim": {
+		"metadata": {
+			"start": "Przejęcie strony · Apercura",
+			"claim": "Twój wniosek o przejęcie · Apercura",
+			"emailLink": "Potwierdzenie wniosku o przejęcie · Apercura"
+		},
+		"pending": "Proszę czekać",
+		"errors": {
+			"generic": "Coś poszło nie tak. Spróbuj ponownie za chwilę.",
+			"TOO_MANY": "Na dziś jest zbyt wiele wniosków. Spróbuj jutro.",
+			"ALREADY_OWNER": "Ta strona już należy do Ciebie.",
+			"FROZEN": "To konto jest zablokowane i nie może przejąć strony.",
+			"NOT_FOUND": "Żadna strona nie ma tego numeru.",
+			"INVALID_RPPS": "Ten numer jest nieprawidłowy: wpisz numer placówki z adresu jej strony (na przykład pl:900001), końcówkę adresu strony albo cały adres.",
+			"NOT_OPEN": "Ten wniosek jest zamknięty: nie można go już zmieniać.",
+			"METHOD_UNAVAILABLE": "Ten sposób weryfikacji nie jest dostępny dla tej strony.",
+			"TOO_MANY_ATTEMPTS": "Zbyt wiele prób tym sposobem. Wybierz inny.",
+			"NOT_SUBMITTABLE": "Zanim wyślesz wniosek do sprawdzenia, dodaj dokument.",
+			"BAD_DOCUMENT": "Nie można użyć tego pliku: wyślij plik PDF, JPEG, PNG lub WebP o rozmiarze najwyżej 10 MB.",
+			"PSC_MISSING": "Pro Santé Connect nie zwrócił żadnej tożsamości. Spróbuj ponownie."
+		},
+		"start": {
+			"title": "Przejmij swoją stronę",
+			"lead": "Przejęcie dotyczy strony jednej placówki, nigdy imienia i nazwiska.",
+			"recordHeading": "Przejmowana strona",
+			"unknownProfession": "Placówka medyczna",
+			"viewPage": "Zobacz stronę publiczną",
+			"contestTitle": "Ta strona ma już zweryfikowanego zarządcę",
+			"contestBody": "Jeśli to Twoja placówka (na przykład utracono dostęp do konta), możesz ją mimo to przejąć: administrator oceni Twój dokument i podejmie decyzję. Odzyskanie konta zawsze wymaga ponownej weryfikacji.",
+			"confirm": "To ja: rozpocznij przejęcie",
+			"goToPage": "Przejdź do mojej strony",
+			"findHeading": "Znajdź stronę swojej placówki",
+			"notFound": "Żadna strona publiczna nie ma jeszcze tego numeru.",
+			"rppsLabel": "Numer lub adres strony",
+			"rppsHint": "Numer placówki na końcu adresu jej strony (na przykład 900001) albo cały adres, na przykład apercura.org/pl/placowka/przychodnia-przykladowa-900001.",
+			"find": "Znajdź moją stronę",
+			"searchHint": "Stronę możesz też wyszukać po nazwie:",
+			"searchLink": "szukaj w katalogu",
+			"howHeading": "Jak sprawdzamy, że to Ty",
+			"factorNote": "Twoje konto ma już drugi składnik: jest wymagany przed każdym przejęciem i od tej chwili chroni Twoją stronę.",
+			"contactLink": "Nie masz pod ręką dokumentu? Napisz do nas",
+			"optOutLink": "Ta strona dotyczy Ciebie i nie chcesz być wymieniony publicznie? Zacznij tutaj",
+			"identifierLabel": "Numer placówki"
+		},
+		"methods": {
+			"psc": {
+				"title": "Pro Santé Connect",
+				"short": "Pro Santé Connect",
+				"summary": "Za pomocą aplikacji e-CPS lub karty CPS. Weryfikacja jest natychmiastowa, a rejestrację online można od razu otworzyć.",
+				"lead": "Zaloguj się aplikacją e-CPS lub kartą CPS. Strona jest zweryfikowana, gdy tożsamość odpowiada jej numerowi RPPS.",
+				"action": "Kontynuuj przez Pro Santé Connect",
+				"hint": "Opuścisz Apercura i przejdziesz na stronę Pro Santé Connect, a potem tu wrócisz.",
+				"done": "Pro Santé Connect potwierdził Twoją tożsamość."
+			},
+			"registry_email": {
+				"title": "E-mail placówki",
+				"short": "E-mail z rejestru",
+				"summary": "Link wysłany na adres e-mail, który rejestr podaje dla Twojej placówki. Weryfikacja następuje po otwarciu linku; rejestracja online otwiera się 7 dni później.",
+				"lead": "Wyślemy link na adres {email}, podany w rejestrze dla Twojej placówki. Otwórz go i potwierdź.",
+				"action": "Wyślij link",
+				"resend": "Wyślij ponownie",
+				"sent": "Link został wysłany. Jest ważny przez 24 godziny.",
+				"done": "Skrzynka placówki potwierdziła wniosek."
+			},
+			"document": {
+				"title": "Dokument i rozmowa telefoniczna",
+				"short": "Dokument",
+				"summary": "Dokument potwierdzający, że działasz w imieniu placówki: zaświadczenie o wpisie do Rejestru Podmiotów Wykonujących Działalność Leczniczą albo odpis z KRS lub wydruk z CEIDG wraz z pełnomocnictwem na papierze firmowym podmiotu leczniczego. Członek naszego zespołu zwykle sprawdza go w ciągu 48 godzin.",
+				"lead": "Wyślij dokument potwierdzający, że działasz w imieniu placówki: zaświadczenie o wpisie do Rejestru Podmiotów Wykonujących Działalność Leczniczą albo odpis z KRS lub wydruk z CEIDG wraz z pełnomocnictwem na papierze firmowym podmiotu leczniczego. Przed zapisaniem jest szyfrowany, a 30 dni po decyzji usuwany."
+			},
+			"phone_callback": {
+				"title": "Rozmowa weryfikacyjna",
+				"short": "Telefon",
+				"lead": "Podczas sprawdzania członek naszego zespołu zadzwoni do placówki pod numer {phone} podany w rejestrze (nigdy pod numer, który nam podasz). Osoba, która odbierze, odczyta kod wyświetlony tutaj.",
+				"action": "Pokaż mój kod",
+				"newCode": "Pokaż nowy kod",
+				"hint": "Wyświetl go, gdy będziesz w placówce, albo przekaż osobie odbierającej telefon. Poproszenie o nowy kod unieważnia poprzedni.",
+				"codeLabel": "Kod do odczytania",
+				"codeHint": "Zostaw go na ekranie lub zanotuj: ze względów bezpieczeństwa pokazujemy go tylko teraz.",
+				"done": "Rozmowa weryfikacyjna potwierdziła wniosek."
+			}
+		},
+		"check": {
+			"passed": "Gotowe",
+			"failed": "Nieudane",
+			"pending": "W toku",
+			"notStarted": "Nierozpoczęte",
+			"claim": {
+				"open": "W toku",
+				"in_review": "W trakcie sprawdzania",
+				"verified": "Zweryfikowany",
+				"rejected": "Odrzucony",
+				"withdrawn": "Wycofany",
+				"superseded": "Wycofany po sprzeciwie"
+			}
+		},
+		"workspace": {
+			"title": "Przejęcie strony: {name}",
+			"lead": {
+				"open": "Wykaż jednym z poniższych sposobów, że działasz w imieniu tej placówki.",
+				"in_review": "Twój wniosek jest rozpatrywany.",
+				"verified": "Następny krok: uzupełnij swoją stronę.",
+				"rejected": "Ten wniosek nie został przyjęty.",
+				"withdrawn": "Ten wniosek został wycofany.",
+				"superseded": "Ten wniosek został wycofany po sprzeciwie."
+			}
+		},
+		"psc": {
+			"outcome": {
+				"verified": "Pro Santé Connect potwierdził Twoją tożsamość: Twoja strona jest zweryfikowana.",
+				"passed": "Pro Santé Connect potwierdził Twoją tożsamość. Wniosek oceni teraz administrator.",
+				"mismatch": "Tożsamość z Pro Santé Connect nie odpowiada numerowi RPPS tej strony.",
+				"error": "Pro Santé Connect jest niedostępny albo logowanie zostało anulowane. Spróbuj ponownie.",
+				"linkedElsewhere": "Ta tożsamość Pro Santé Connect jest już połączona z innym kontem Apercura. Aby z niego skorzystać, zaloguj się przez Pro Santé Connect."
+			}
+		},
+		"documents": {
+			"kind": {
+				"cps_card": "Odpis z KRS lub wydruk z CEIDG wraz z pełnomocnictwem na papierze firmowym podmiotu leczniczego",
+				"ordre_attestation": "Zaświadczenie o wpisie do Rejestru Podmiotów Wykonujących Działalność Leczniczą"
+			},
+			"kindLabel": "Rodzaj dokumentu",
+			"add": "Wybierz plik",
+			"hint": "PDF, JPEG, PNG lub WebP, najwyżej 10 MB. Najwyżej 4 pliki.",
+			"kilobytes": "kB"
+		},
+		"review": {
+			"title": "Wyślij do sprawdzenia",
+			"lead": "Administrator sprawdzi Twój dokument i zadzwoni do placówki. Odpowiedź dostaniesz e-mailem w ciągu 48 godzin w dni robocze.",
+			"submit": "Wyślij do sprawdzenia",
+			"notYet": "Najpierw dodaj dokument."
+		},
+		"withdraw": "Wycofaj ten wniosek",
+		"status": {
+			"verified": "Twoja strona jest zweryfikowana",
+			"bookingDelay": "Bez Pro Santé Connect siedmiodniowy okres oczekiwania przed rejestracją online kończy się {date}.",
+			"continue": "Uzupełnij stronę",
+			"in_review": "Twój wniosek jest rozpatrywany",
+			"contestReview": "Ta strona miała już zweryfikowanego zarządcę: o Twoim dokumencie zdecyduje administrator.",
+			"reviewBody": "Członek naszego zespołu oceni Twój dokument i odpisze e-mailem.",
+			"rejected": "Ten wniosek nie został przyjęty",
+			"reason": "Powód: {reason}",
+			"withdrawn": "Ten wniosek został wycofany",
+			"superseded": "Ten wniosek został wycofany po sprzeciwie",
+			"contestTitle": "Ta strona ma już zweryfikowanego zarządcę",
+			"contestBody": "O Twoim dokumencie zdecyduje administrator.",
+			"verifiedBadge": "Strona zweryfikowana"
+		},
+		"emailLink": {
+			"title": "Potwierdź wniosek o przejęcie",
+			"lead": "Ten link został wysłany na adres e-mail, który krajowy rejestr podaje dla placówki.",
+			"reading": "Wczytujemy link…",
+			"invalidTitle": "Ten link już nie działa",
+			"invalidBody": "Wygasł (jest ważny 24 godziny) albo został już użyty. Placówka może wysłać nowy ze swojego wniosku.",
+			"tooMany": "Zbyt wiele prób. Odczekaj godzinę i spróbuj ponownie.",
+			"doneTitle": "Wniosek jest potwierdzony",
+			"doneBody": "Placówka może się teraz zalogować i uzupełnić stronę.",
+			"goToSpace": "Przejdź do strefy dla placówek",
+			"body": "Jeśli ta placówka poprosiła o zarządzanie swoją stroną w Apercura, potwierdź to. W przeciwnym razie zamknij tę stronę: nic się nie zmieni.",
+			"confirm": "Potwierdź wniosek",
+			"pending": "Proszę czekać"
+		},
+		"withdrawDialog": {
+			"title": "Wycofać ten wniosek?",
+			"body": "Wniosek zostanie ostatecznie zamknięty: jego dowody przestaną obowiązywać, a dokumenty zostaną usunięte po 30 dniach. Później możesz złożyć nowy wniosek, znowu od weryfikacji.",
+			"confirm": "Wycofaj wniosek",
+			"cancel": "Zachowaj wniosek"
+		},
+		"identifiers": {
+			"RPPS": "RPPS",
+			"AT-WIEN": "Lista Wiednia",
+			"AT-STMK": "Lista Styrii",
+			"AT-SBG": "Lista Salzburga",
+			"AT-SBGZ": "Lista stomatologów Salzburga",
+			"GB-ODS-GP": "Kod ODS",
+			"GB-ODS-DENT": "Kod ODS",
+			"GB-ODS-PHARM": "Kod ODS",
+			"GB-PHS-GP": "Kod Public Health Scotland",
+			"GB-PHS-DENT": "Kod Public Health Scotland",
+			"GB-PHS-PHARM": "Kod Public Health Scotland",
+			"GB-BSO-GP": "Numer praktyki BSO",
+			"GB-BSO-DENT": "Gabinet stomatologiczny BSO",
+			"CZ-NRPZS": "Numer placówki w NRPZS",
+			"PL-RPWDL": "Numer zakładu leczniczego w RPWDL (ID ZOZ)"
+		}
+	},
+	"Onboarding": {
+		"metaTitle": "Konfiguracja strony · Apercura",
+		"title": "Skonfiguruj swoją stronę",
+		"lead": "Trzy kroki do pełnej strony placówki: {name}.",
+		"stepsLabel": "Kroki",
+		"stepNumber": "Krok {n} z {total}:",
+		"continue": "Dalej",
+		"pending": "Proszę czekać",
+		"publishFailed": "Nie udało się opublikować strony. Spróbuj ponownie za chwilę.",
+		"fields": {
+			"name": "Nazwa",
+			"profession": "Rodzaj placówki"
+		},
+		"steps": {
+			"check": {
+				"label": "Sprawdź przejęte dane",
+				"title": "Sprawdź przejęte dane",
+				"lead": "Twoja strona powstała na podstawie otwartych danych RPWDL. Sprawdź nazwę, rodzaj i adres placówki.",
+				"sites": "Miejsca udzielania świadczeń",
+				"unnamed": "Miejsce bez nazwy",
+				"hidden": "Ukryte",
+				"registryNote": "Coś się nie zgadza? Trwałą zmianę wprowadza organ prowadzący rejestr (wojewoda) na wniosek podmiotu leczniczego; strona zmieni się przy następnym cotygodniowym imporcie. W edytorze strony możesz ukryć lub dodać adres."
+			},
+			"booking": {
+				"label": "Godziny otwarcia i rejestracja",
+				"title": "Godziny otwarcia i rejestracja",
+				"lead": "Pacjenci rezerwują wizyty na Twojej stronie, gdy tylko otworzysz terminarz. Zanim go otworzysz, strona musi podawać ceny i przyjmowane formy płatności.",
+				"fees": "Ceny",
+				"payments": "Formy płatności",
+				"done": "Podano",
+				"todo": "Do uzupełnienia",
+				"deontology": "Placówka, która przedstawia swoją działalność w internecie, podaje ceny i przyjmowane formy płatności.",
+				"editFees": "Uzupełnij ceny i formy płatności",
+				"settingsNote": "Miejsca, godziny przyjęć i rodzaje wizyt ustawisz w ustawieniach rejestracji.",
+				"waitingPeriod": "Okres oczekiwania po weryfikacji",
+				"waitingEnds": "Siedmiodniowy okres oczekiwania kończy się {date}",
+				"noWaiting": "Brak",
+				"settingsLink": "Ustaw godziny przyjęć i rejestrację"
+			},
+			"publish": {
+				"label": "Publikacja",
+				"title": "Opublikuj swoją stronę",
+				"lead": "Po publikacji na stronie publicznej pojawią się prezentacja, języki, ceny i informacje praktyczne. W każdej chwili możesz je zmienić lub ukryć.",
+				"already": "Twoja strona jest opublikowana. Każda zapisana zmiana jest od razu widoczna.",
+				"edit": "Edytuj stronę",
+				"action": "Opublikuj stronę",
+				"shareLead": "Daj znać o swojej stronie: przygotowaliśmy link, kod QR i plakat do poczekalni.",
+				"shareLink": "Otwórz materiały do udostępniania",
+				"statsLink": "Zobacz statystyki strony"
+			}
+		}
+	},
+	"Editor": {
+		"metaTitle": "Twoja strona · Apercura",
+		"title": "Twoja strona",
+		"lead": "Uzupełnij publiczną stronę placówki: {name}. Tylko zwykły tekst; to, co ukryjesz, nigdy nie zostanie wyświetlone.",
+		"empty": {
+			"title": "Nie masz jeszcze strony do edycji",
+			"body": "Strona pojawi się tutaj, gdy Twój wniosek o przejęcie zostanie zweryfikowany.",
+			"action": "Przejmij moją stronę"
+		},
+		"pending": "Proszę czekać",
+		"viewPublic": "Zobacz stronę publiczną",
+		"jumpToPreview": "Przejdź do podglądu",
+		"formLabel": "Treść strony",
+		"removed": {
+			"title": "Twoja strona została usunięta z katalogu",
+			"body": "Nikt jej nie widzi, a jej treść została usunięta. Możesz ją przywrócić na dole tej strony: wróci przy następnej cotygodniowej aktualizacji rejestru."
+		},
+		"unpublished": {
+			"title": "Twoja treść nie jest jeszcze opublikowana",
+			"link": "Dokończ konfigurację strony"
+		},
+		"photo": {
+			"title": "Zdjęcie",
+			"lead": "Opcjonalnie. Aktualne zdjęcie, na przykład budynku lub wnętrza placówki.",
+			"current": "Obecne zdjęcie",
+			"none": "Bez zdjęcia.",
+			"add": "Dodaj zdjęcie",
+			"replace": "Zamień zdjęcie",
+			"remove": "Usuń zdjęcie",
+			"hint": "JPEG, PNG lub WebP, najwyżej 5 MB. Przytniemy je do kwadratu i usuniemy z niego metadane (położenie, urządzenie)."
+		},
+		"visibility": {
+			"label": "Pokaż na stronie: {field}",
+			"shown": "Widoczne"
+		},
+		"presentation": {
+			"title": "Prezentacja",
+			"lead": "Wyłącznie informacje rzeczowe: bez opinii pacjentów i bez porównań z innymi placówkami.",
+			"headline": "Podtytuł",
+			"headlineHint": "Jedna linia pod rodzajem placówki, najwyżej {max} znaków.",
+			"bio": "Prezentacja",
+			"bioHint": "Zwykły tekst, najwyżej {max} znaków. Akapity oddziel pustą linią."
+		},
+		"languages": {
+			"title": "Języki"
+		},
+		"fees": {
+			"title": "Ceny i ubezpieczenie zdrowotne",
+			"lead": "Wymagane przed otwarciem rejestracji online: Twoje ceny i przyjmowane formy płatności.",
+			"requiredBadge": "Wymagane do rejestracji",
+			"ameliPrefill": "Wstępnie wypełnione z katalogu płatnika. Na stronie zastąpi je Twoja informacja.",
+			"sector": "Umowa z NFZ",
+			"agreement": "Umowa z NFZ",
+			"notStated": "Nie podano",
+			"optam": "Ograniczone dopłaty (OPTAM)",
+			"optamNone": "Nie dotyczy",
+			"carteVitale": "Karta ubezpieczenia",
+			"carteVitaleYes": "Przyjmowana",
+			"carteVitaleNo": "Nieprzyjmowana",
+			"itemsTitle": "Ceny",
+			"noItem": "Nie ma jeszcze żadnej ceny.",
+			"itemLabel": "Cena {n}: za co",
+			"itemPlaceholder": "Konsultacja",
+			"amount": "Kwota (€)",
+			"maxAmount": "Do (€)",
+			"removeItem": "Usuń cenę {n}",
+			"remove": "Usuń",
+			"addItem": "Dodaj cenę",
+			"note": "Uwaga do cen",
+			"noteHint": "Na przykład od czego zależą dopłaty.",
+			"payments": "Przyjmowane formy płatności",
+			"requiredHint": "Rejestracja pozostanie zamknięta, dopóki nie podasz co najmniej jednej ceny i jednej formy płatności."
+		},
+		"access": {
+			"title": "Dojazd i dostępność",
+			"notes": "Jak do nas dotrzeć",
+			"notesHint": "Piętro, wejście, komunikacja miejska."
+		},
+		"contact": {
+			"title": "Strona internetowa i telefon",
+			"website": "Strona internetowa",
+			"websiteHint": "Strona internetowa Twojej placówki, zaczynająca się od https://",
+			"showPhone": "Pokaż telefon placówki",
+			"showPhoneHint": "Gdy jest ukryty, strona nie proponuje już telefonu do placówki."
+		},
+		"failure": {
+			"generic": "Coś poszło nie tak. Spróbuj ponownie za chwilę.",
+			"invalid": "Niektóre pola trzeba poprawić: zobacz komunikaty pod nimi.",
+			"lastSite": "Co najmniej jedno miejsce musi pozostać widoczne: nie można opublikować strony bez miejsca.",
+			"unknownPlace": "Nie znamy tego kodu pocztowego i tej miejscowości. Sprawdź je.",
+			"badPhone": "Ten numer telefonu jest nieprawidłowy.",
+			"photoTooLarge": "Zdjęcie jest większe niż 5 MB.",
+			"photoUnsupported": "Tego pliku nie można użyć jako zdjęcia: wyślij JPEG, PNG lub WebP."
+		},
+		"saved": "Zapisano. Twoja strona publiczna jest aktualna.",
+		"savedDraft": "Zapisano. Aby zmiany były widoczne, opublikuj stronę.",
+		"save": "Zapisz stronę",
+		"lastSaved": "Ostatni zapis: {date}",
+		"sites": {
+			"title": "Miejsca udzielania świadczeń",
+			"lead": "Wybierz, które miejsca pokaże Twoja strona. Miejsca z rejestru można ukryć, ale nie edytować.",
+			"unnamed": "Miejsce bez nazwy",
+			"added": "Dodane przez Ciebie",
+			"shownNamed": "Pokaż na stronie: {name}",
+			"remove": "Usuń",
+			"registryNote": "Miejsce z rejestru jest błędne? Zmianę wpisu zgłasza się do organu prowadzącego rejestr (wojewody); strona zaktualizuje się przy jednym z kolejnych importów.",
+			"addTitle": "Dodaj miejsce",
+			"name": "Nazwa miejsca",
+			"address": "Ulica i numer",
+			"postcode": "Kod pocztowy",
+			"city": "Miejscowość",
+			"phone": "Telefon (opcjonalnie)",
+			"phoneHint": "Telefon placówki, będzie widoczny na stronie.",
+			"add": "Dodaj miejsce"
+		},
+		"remove": {
+			"title": "Usuń stronę",
+			"lead": "Twoja strona zniknie z katalogu, wyszukiwarki Apercura i wyszukiwarek internetowych i nie wróci przy kolejnym imporcie. Jej miejsca, prezentacja, zdjęcie, ceny i statystyki zostaną natychmiast usunięte; Twoje konto i terminarz pozostaną. Stronę możesz tutaj przywrócić: strona z rejestru wróci przy następnej cotygodniowej aktualizacji, a Ty uzupełnisz ją ponownie.",
+			"action": "Usuń stronę z katalogu",
+			"restore": "Przywróć stronę",
+			"dialog": {
+				"title": "Usunąć stronę z katalogu?",
+				"intro": "Twoja strona natychmiast zniknie z katalogu, wyszukiwarki Apercura i wyszukiwarek internetowych. Ta treść zostanie trwale usunięta:",
+				"items": {
+					"places": "Twoje miejsca udzielania świadczeń",
+					"presentation": "Twoja prezentacja (podtytuł, opis, języki, zakres)",
+					"photo": "Twoje zdjęcie",
+					"fees": "Twoje ceny i formy płatności",
+					"statistics": "statystyki strony"
+				},
+				"restore": "Twoje konto i terminarz pozostaną. Jeśli przywrócisz stronę, wróci ona z rejestru przy następnym cotygodniowym imporcie, a Ty wypełnisz ją ponownie.",
+				"understood": "Rozumiem, że ta treść zostanie usunięta",
+				"confirm": "Usuń stronę",
+				"cancel": "Anuluj"
+			},
+			"busy": "Katalog jest właśnie aktualizowany cotygodniowym importem: Twoja strona się nie zmieniła. Spróbuj ponownie za kilka minut."
+		},
+		"preview": {
+			"title": "Podgląd",
+			"note": "Jeszcze niezapisane",
+			"noSite": "Brak widocznego miejsca.",
+			"unnamedPlace": "Miejsce udzielania świadczeń"
+		},
+		"issues": {
+			"tooLong": "Ten tekst jest za długi.",
+			"markup": "Tylko zwykły tekst: bez HTML i bez linków w nawiasach.",
+			"required": "To pole jest wymagane.",
+			"range": "Górna kwota musi być wyższa niż kwota.",
+			"website": "Ten adres nie jest stroną internetową (https://…).",
+			"postcode": "Kod pocztowy ma postać 00-000.",
+			"invalid": "Ta wartość jest nieprawidłowa."
+		}
+	},
+	"Admin": {
+		"claims": {
+			"queueHeading": "{count, plural, one {# wniosek czeka} few {# wnioski czekają} many {# wniosków czeka} other {# wniosku czeka}}"
+		}
+	},
+	"Gdpr": {
+		"about": "Dotyczy strony",
+		"rpps": "Numer strony",
+		"rppsHint": "Numer placówki na końcu adresu strony (na przykład pl:900001) albo cały adres strony.",
+		"pending": "Proszę czekać",
+		"errors": {
+			"tooMany": "Z tego połączenia wysłano zbyt wiele próśb. Spróbuj ponownie za godzinę.",
+			"notFound": "Żadna strona nie ma tego numeru.",
+			"claimed": "Tą stroną zarządza placówka: tylko ona może ją usunąć, w swojej strefie.",
+			"invalid": "Sprawdź formularz: brakuje jakiegoś pola albo jest ono za długie.",
+			"generic": "Coś poszło nie tak. Spróbuj ponownie za chwilę."
+		},
+		"report": {
+			"metaTitle": "Zgłoś błąd · Apercura",
+			"title": "Zgłoś błąd",
+			"lead": "Napisz nam, co jest nie tak na tej stronie. Twoja wiadomość jest szyfrowana i czyta ją tylko zespół Apercura.",
+			"doneTitle": "Dziękujemy, otrzymaliśmy zgłoszenie",
+			"doneBody": "Sprawdzimy to. Dane z rejestru RPWDL zmienia u źródła organ prowadzący rejestr (wojewoda) na wniosek podmiotu leczniczego; jeśli zostawiono adres e-mail, damy znać.",
+			"kind": "Co jest nie tak?",
+			"kinds": {
+				"wrong_info": "Błędna informacja (adres, telefon, nazwa)",
+				"retired": "Placówka zakończyła działalność",
+				"deceased": "Osoba prowadząca placówkę zmarła",
+				"impersonation": "Ktoś używa tej strony w imieniu placówki"
+			},
+			"message": "Szczegóły",
+			"messageHint": "Co jest nie tak i, jeśli wiesz, jak powinno być.",
+			"contact": "Twój e-mail (opcjonalnie)",
+			"contactHint": "Tylko po to, żeby móc odpowiedzieć.",
+			"privacy": "Nie podawaj żadnych informacji o stanie zdrowia.",
+			"submit": "Wyślij zgłoszenie"
+		},
+		"removal": {
+			"metaTitle": "Żądanie usunięcia strony · Apercura",
+			"title": "Zażądaj usunięcia tej strony",
+			"lead": "Na podstawie art. 21 RODO możesz wnieść sprzeciw wobec publikacji strony, która Cię dotyczy. Ukryjemy ją od razu po otrzymaniu żądania i usuniemy po krótkiej weryfikacji.",
+			"doneTitle": "Strona jest ukryta",
+			"doneBody": "Nie jest już wyświetlana, indeksowana ani wymieniana na listach. Sprawdzimy żądanie i odpowiemy e-mailem najpóźniej w ciągu miesiąca. Po jego potwierdzeniu trwale usuniemy stronę i nie wróci ona przy aktualizacjach rejestru.",
+			"contact": "Twój e-mail",
+			"contactHint": "Abyśmy mogli potwierdzić z Tobą żądanie. Jest szyfrowany i nie zostanie użyty do niczego innego.",
+			"message": "Wiadomość (opcjonalnie)",
+			"messageHint": "Wszystko, co pomoże nam zweryfikować żądanie.",
+			"confirm": "Jestem osobą, której dotyczy ta strona (na przykład osobą wymienioną w nazwie placówki)",
+			"privacy": "Usunięta strona nie wróci przy kolejnym imporcie rejestru RPWDL.",
+			"submit": "Ukryj i usuń stronę",
+			"claimedTitle": "Tą stroną zarządza placówka",
+			"claimedBody": "Usunąć ją może tylko jej zarządca, w edytorze strony w swojej strefie: strona znika wtedy natychmiast i nie wraca przy aktualizacjach rejestru.",
+			"claimedLink": "Usuń swoją stronę w strefie dla placówek",
+			"alreadyTitle": "Żądanie usunięcia jest sprawdzane",
+			"alreadyBody": "Strona jest już ukryta."
+		},
+		"contact": {
+			"metaTitle": "Reprezentuję tę placówkę · Apercura",
+			"title": "Reprezentuję tę placówkę",
+			"lead": "Nie możesz przejąć strony swojej placówki za pomocą dokumentu? Zostaw nam kontakt: członek zespołu Apercura odezwie się, sprawdzi, że działasz w imieniu placówki, i pomoże.",
+			"patientsTitle": "Ten formularz jest przeznaczony wyłącznie dla placówki opisanej na tej stronie",
+			"patientsBody": "Nie służy do umawiania wizyt ani do kontaktu z placówką: w tym celu użyj danych kontaktowych na stronie.",
+			"claimFirst": "Z dokumentem potwierdzającym, że działasz w imieniu placówki, przejęcie jest szybsze:",
+			"claimFirstLink": "przejmij tę stronę",
+			"rpps": "Numer strony",
+			"rppsHint": "Numer strony, z której przychodzisz. Nie można go zmienić.",
+			"name": "Imię i nazwisko",
+			"email": "Służbowy adres e-mail",
+			"emailHint": "Abyśmy mogli odpowiedzieć. Wyślemy też potwierdzenie.",
+			"phone": "Telefon (opcjonalnie)",
+			"phoneHint": "Jeśli chcesz, żebyśmy zadzwonili.",
+			"message": "Twoja wiadomość",
+			"messageHint": "Napisz nam, dlaczego przejęcie online Ci nie odpowiada.",
+			"privacy": "Twoje dane i wiadomość są szyfrowane, czyta je tylko zespół Apercura, aby odpowiedzieć, i są usuwane 12 miesięcy po ostatnim kontakcie. Nie podawaj żadnych informacji o stanie zdrowia.",
+			"submit": "Wyślij prośbę",
+			"doneTitle": "Otrzymaliśmy Twoją prośbę",
+			"doneBody": [
+				"Członek zespołu Apercura skontaktuje się z Tobą e-mailem lub telefonicznie, sprawdzi Twoją tożsamość i pomoże przejąć stronę.",
+				"Na podany adres wysłaliśmy właśnie potwierdzenie."
+			],
+			"claimedTitle": "Tą stroną zarządza już placówka",
+			"claimedBody": "Jej zarządca został zweryfikowany. Jeśli to Twoja strona i nie masz już do niej dostępu, złóż wniosek o przejęcie: zespół go oceni.",
+			"claimedLink": "Przejmij tę stronę",
+			"withheldTitle": "Ta strona jest ukryta",
+			"withheldBody": "Trwa sprawdzanie żądania jej usunięcia.",
+			"errors": {
+				"proof": "Ochrona przed botami nie została ukończona. Spróbuj ponownie za chwilę.",
+				"claimed": "Tą stroną zarządza już placówka: złóż wniosek o przejęcie."
+			}
+		}
+	},
+	"Agenda": {
+		"settings": {
+			"types": {
+				"areaAdded": "{count, plural, =0 {Brak nowej gminy.} one {Dodano # gminę.} few {Dodano # gminy.} many {Dodano # gmin.} other {Dodano # gminy.}}"
+			}
+		},
+		"log": {
+			"records": "{count, plural, one {# wpis} few {# wpisy} many {# wpisów} other {# wpisu}}"
+		}
+	},
+	"Stats": {
+		"chartSummary": "{total, plural, one {# wyświetlenie} few {# wyświetlenia} many {# wyświetleń} other {# wyświetlenia}} w ciągu 30 dni; najwięcej: {max} dnia {day}."
+	},
+	"taxonomy": {
+		"practiceKind": {
+			"office": "Placówka"
+		},
+		"listing": {
+			"szpitale": "Szpitale",
+			"hospicja": "Hospicja",
+			"zaklady-opiekuncze": "Zakłady opiekuńczo-lecznicze i pielęgnacyjno-opiekuńcze",
+			"sanatoria": "Sanatoria i szpitale uzdrowiskowe",
+			"leczenie-uzaleznien": "Ośrodki leczenia uzależnień",
+			"opieka-stacjonarna": "Inna opieka stacjonarna",
+			"przychodnie-poz": "Przychodnie POZ (lekarz rodzinny)",
+			"nocna-pomoc-lekarska": "Nocna i świąteczna opieka zdrowotna",
+			"przychodnie-specjalistyczne": "Przychodnie specjalistyczne",
+			"stomatologia": "Gabinety stomatologiczne",
+			"rehabilitacja": "Rehabilitacja i fizjoterapia",
+			"pielegniarki-i-polozne": "Pielęgniarki i położne",
+			"diagnostyka": "Laboratoria i pracownie diagnostyczne",
+			"inne-placowki": "Inne placówki ambulatoryjne",
+			"poradnie-ginekologiczne": "Poradnie ginekologiczne",
+			"poradnie-okulistyczne": "Poradnie okulistyczne",
+			"poradnie-leczenia-uzaleznien": "Poradnie leczenia uzależnień",
+			"poradnie-zdrowia-psychicznego": "Poradnie zdrowia psychicznego",
+			"poradnie-psychologiczne": "Poradnie psychologiczne",
+			"poradnie-logopedyczne": "Poradnie logopedyczne",
+			"poradnie-ortopedyczne": "Poradnie ortopedyczne",
+			"poradnie-dermatologiczne": "Poradnie dermatologiczne",
+			"poradnie-laryngologiczne": "Poradnie laryngologiczne",
+			"poradnie-kardiologiczne": "Poradnie kardiologiczne",
+			"poradnie-urologiczne": "Poradnie urologiczne",
+			"poradnie-diabetologiczne": "Poradnie diabetologiczne",
+			"poradnie-endokrynologiczne": "Poradnie endokrynologiczne",
+			"poradnie-alergologiczne": "Poradnie alergologiczne",
+			"poradnie-gastroenterologiczne": "Poradnie gastroenterologiczne",
+			"poradnie-chorob-pluc": "Poradnie chorób płuc",
+			"poradnie-reumatologiczne": "Poradnie reumatologiczne",
+			"poradnie-onkologiczne": "Poradnie onkologiczne",
+			"poradnie-nefrologiczne": "Poradnie nefrologiczne",
+			"poradnie-neurologiczne": "Poradnie neurologiczne",
+			"poradnie-medycyny-pracy": "Poradnie medycyny pracy",
+			"poradnie-chirurgiczne": "Poradnie chirurgiczne",
+			"poradnie-pediatryczne": "Poradnie pediatryczne",
+			"poradnie-chorob-wewnetrznych": "Poradnie chorób wewnętrznych"
+		},
+		"profession": {
+			"szpitale": "Szpital",
+			"hospicja": "Hospicjum",
+			"zaklady-opiekuncze": "Zakład opiekuńczy",
+			"sanatoria": "Sanatorium",
+			"leczenie-uzaleznien": "Ośrodek leczenia uzależnień",
+			"opieka-stacjonarna": "Zakład opieki stacjonarnej",
+			"przychodnie-poz": "Przychodnia POZ",
+			"nocna-pomoc-lekarska": "Nocna i świąteczna opieka zdrowotna",
+			"przychodnie-specjalistyczne": "Przychodnia specjalistyczna",
+			"stomatologia": "Gabinet stomatologiczny",
+			"rehabilitacja": "Rehabilitacja i fizjoterapia",
+			"pielegniarki-i-polozne": "Gabinet pielęgniarki lub położnej",
+			"diagnostyka": "Laboratorium lub pracownia diagnostyczna",
+			"inne-placowki": "Placówka ambulatoryjna",
+			"poradnie-ginekologiczne": "Poradnia ginekologiczna",
+			"poradnie-okulistyczne": "Poradnia okulistyczna",
+			"poradnie-leczenia-uzaleznien": "Poradnia leczenia uzależnień",
+			"poradnie-zdrowia-psychicznego": "Poradnia zdrowia psychicznego",
+			"poradnie-psychologiczne": "Poradnia psychologiczna",
+			"poradnie-logopedyczne": "Poradnia logopedyczna",
+			"poradnie-ortopedyczne": "Poradnia ortopedyczna",
+			"poradnie-dermatologiczne": "Poradnia dermatologiczna",
+			"poradnie-laryngologiczne": "Poradnia laryngologiczna",
+			"poradnie-kardiologiczne": "Poradnia kardiologiczna",
+			"poradnie-urologiczne": "Poradnia urologiczna",
+			"poradnie-diabetologiczne": "Poradnia diabetologiczna",
+			"poradnie-endokrynologiczne": "Poradnia endokrynologiczna",
+			"poradnie-alergologiczne": "Poradnia alergologiczna",
+			"poradnie-gastroenterologiczne": "Poradnia gastroenterologiczna",
+			"poradnie-chorob-pluc": "Poradnia chorób płuc",
+			"poradnie-reumatologiczne": "Poradnia reumatologiczna",
+			"poradnie-onkologiczne": "Poradnia onkologiczna",
+			"poradnie-nefrologiczne": "Poradnia nefrologiczna",
+			"poradnie-neurologiczne": "Poradnia neurologiczna",
+			"poradnie-medycyny-pracy": "Poradnia medycyny pracy",
+			"poradnie-chirurgiczne": "Poradnia chirurgiczna",
+			"poradnie-pediatryczne": "Poradnia pediatryczna",
+			"poradnie-chorob-wewnetrznych": "Poradnia chorób wewnętrznych"
+		}
+	},
+	"LegalNoticePl": {
+		"metaTitle": "Nota prawna · Apercura",
+		"metaDescription": "Nota prawna polskich stron Apercura: usługodawca, dane kontaktowe i rejestrowe, osoba odpowiedzialna za treść oraz dlaczego strony nie są reklamą (art. 5 ustawy o świadczeniu usług drogą elektroniczną).",
+		"title": "Nota prawna",
+		"lead": "Kto świadczy usługę polskich stron Apercura (apercura.org/pl) – informacje, których art. 5 ustawy z dnia 18 lipca 2002 r. o świadczeniu usług drogą elektroniczną wymaga od usługodawcy.",
+		"sections": {
+			"provider": {
+				"heading": "Usługodawca",
+				"body": [
+					"Polskie strony Apercura prowadzi podmiot wskazany poniżej. Prowadzi on katalog i odpowiada za jego treść."
+				]
+			},
+			"service": {
+				"heading": "Usługa",
+				"body": [
+					"Bezpłatny katalog zakładów leczniczych w Polsce (szpitali, przychodni, poradni specjalistycznych, gabinetów stomatologicznych, hospicjów, zakładów opiekuńczo-leczniczych, sanatoriów, ośrodków rehabilitacji, laboratoriów), tworzony z otwartych danych Rejestru Podmiotów Wykonujących Działalność Leczniczą (RPWDL), bez reklam, z panelem, w którym placówka może uzupełnić własną stronę. Za pośrednictwem Apercura nie można w Polsce umówić wizyty. Indywidualne i grupowe praktyki lekarzy, lekarzy dentystów, pielęgniarek i położnych nie są prezentowane."
+				]
+			},
+			"editor": {
+				"heading": "Osoba odpowiedzialna za treść",
+				"body": [
+					"Za treści publikowane przez usługodawcę odpowiada osoba wskazana poniżej. Za informacje, które placówka dodaje na swojej stronie, odpowiada ta placówka; jako usługa przechowująca dane dostarczone przez użytkowników usługodawca odpowiada za nie wyłącznie na zasadach art. 14 ustawy z dnia 18 lipca 2002 r. o świadczeniu usług drogą elektroniczną."
+				]
+			},
+			"liability": {
+				"heading": "Treść stron",
+				"body": [
+					"Katalog powstaje na podstawie Rejestru Podmiotów Wykonujących Działalność Leczniczą (RPWDL), który Centrum e-Zdrowia udostępnia w serwisie dane.gov.pl na licencji CC BY 4.0. Rejestr jest jawny z mocy ustawy (art. 106 ust. 1a ustawy z dnia 15 kwietnia 2011 r. o działalności leczniczej: „Rejestr jest jawny.”). Dane mogą być niepełne lub nieaktualne – przed wizytą warto potwierdzić je w placówce. Każda strona wyjaśnia, jak zgłosić błąd."
+				]
+			},
+			"advertising": {
+				"heading": "Informacja, nie reklama",
+				"body": [
+					"Art. 14 ust. 1 ustawy z dnia 15 kwietnia 2011 r. o działalności leczniczej zobowiązuje podmiot wykonujący działalność leczniczą do podawania do wiadomości publicznej informacji o zakresie i rodzajach udzielanych świadczeń zdrowotnych i stanowi, że treść i forma tych informacji nie mogą mieć cech reklamy. Obowiązek ten dotyczy samych podmiotów i ich własnych informacji.",
+					"Apercura nie wykonuje działalności leczniczej i nikt nie płaci za stronę w katalogu. Dla każdej placówki publikuje te same fakty z jawnego rejestru, w tej samej formie: nazwę, rodzaj, komórki, adres, telefon. Bez rankingów, ocen, opinii, płatnego wyróżniania i sformułowań promocyjnych; listy są uporządkowane neutralnie. Placówka, która przejmie swoją stronę, może dodać wyłącznie informacje rzeczowe (opis, języki, godziny przyjęć), na tej samej zasadzie."
+				]
+			},
+			"ip": {
+				"heading": "Kod i dane",
+				"body": [
+					"Kod źródłowy Apercura jest udostępniony na licencji AGPL-3.0. Dane katalogu są wykorzystywane ponownie na licencji Creative Commons Uznanie autorstwa 4.0 Międzynarodowe (CC BY 4.0): strona danych wymienia każde źródło z wymaganym oznaczeniem oraz czas wytworzenia i pozyskania danych rejestru."
+				]
+			},
+			"review": {
+				"heading": "Status tego tekstu",
+				"body": [
+					"Ten tekst jest projektem, przygotowanym przed utworzeniem podmiotu prawnego. Przed ogłoszeniem polskich stron sprawdzi go prawnik uprawniony w Polsce, a jego polską wersję – rodzimy użytkownik języka."
+				]
+			}
+		},
+		"fields": {
+			"name": "Nazwa",
+			"legalForm": "Forma prawna",
+			"address": "Siedziba",
+			"phone": "Telefon",
+			"email": "Adres e-mail",
+			"registration": "Rejestr i numer wpisu",
+			"vatId": "Numer identyfikacyjny VAT",
+			"editor": "Odpowiedzialny za treść"
+		},
+		"dataLink": "Dane i źródła"
+	},
+	"PrivacyPl": {
+		"metaTitle": "Polityka prywatności · Apercura",
+		"metaDescription": "Dane przetwarzane przez polskie strony Apercura: źródła, cele, podstawy prawne, okres przechowywania, odbiorcy i Twoje prawa, w tym prawo sprzeciwu (art. 13, 14 i 21 RODO).",
+		"title": "Polityka prywatności",
+		"lead": "Jakie dane przetwarzają polskie strony Apercura, skąd pochodzą, w jakim celu, jak długo i przez kogo, oraz jak skorzystać z praw przysługujących na podstawie ogólnego rozporządzenia o ochronie danych (RODO) i ustawy z dnia 10 maja 2018 r. o ochronie danych osobowych.",
+		"sections": {
+			"controller": {
+				"heading": "Administrator danych",
+				"body": [
+					"Usługodawca wskazany w nocie prawnej jest administratorem danych katalogu, kont placówek, wniosków o przejęcie stron oraz zgłoszeń wysyłanych przez serwis."
+				]
+			},
+			"directory": {
+				"heading": "Katalog: dane o zakładach leczniczych",
+				"body": [
+					"Dane: nazwa zakładu leczniczego w brzmieniu z rejestru (bez imienia i nazwiska osoby fizycznej, która go prowadzi, jeśli rejestr je podaje – zob. niżej), jego rodzaj (szpital, przychodnia, gabinet stomatologiczny…), rodzaje jego komórek organizacyjnych (poradnie, oddziały, pracownie), liczba łóżek, informacja, czy podmiot jest publiczny czy prywatny, nazwa podmiotu leczniczego, gdy jest on spółką lub podmiotem publicznym, oraz adres i numer telefonu każdego miejsca udzielania świadczeń – tak, jak publikuje je Rejestr Podmiotów Wykonujących Działalność Leczniczą (RPWDL). Placówka, która przejmie swoją stronę, może dodać opis, języki, zdjęcie i godziny przyjęć.",
+					"Nigdy nie są zapisywane, choć rejestr je publikuje: numery NIP i REGON podmiotu, numer księgi rejestrowej, siedziba podmiotu, adresy e-mail i strony internetowe, a także nazwa podmiotu będącego osobą fizyczną lub spółką osób fizycznych. Numer telefonu, który rejestr podaje dla więcej niż trzech zakładów, należy do sieci placówek i nie jest pokazywany.",
+					"Identyfikator: numer, który rejestr nadaje każdemu zakładowi leczniczemu (ID ZOZ), na końcu adresu strony.",
+					"Cel: umożliwienie znalezienia zakładu leczniczego, jego lokalizacji i sposobu kontaktu. Podstawa prawna: prawnie uzasadniony interes (art. 6 ust. 1 lit. f RODO), oceniony poniżej.",
+					"Okres przechowywania: tak długo, jak zakład figuruje w rejestrze. Strona znika po dwóch cotygodniowych aktualizacjach, w których zakładu nie ma już w rejestrze; strona usunięta po sprzeciwie nigdy nie zostanie opublikowana ponownie.",
+					"Informacja: dane nie pochodzą od samych placówek (art. 14 RODO). Informowanie każdej z nich wymagałoby niewspółmiernie dużego wysiłku (art. 14 ust. 5 lit. b); niniejsza polityka, strona danych i notka na każdej stronie podają te informacje do publicznej wiadomości."
+				]
+			},
+			"people": {
+				"heading": "Zakłady lecznicze i osoby, które mogą być w nich wymienione",
+				"body": [
+					"Polska strona to zakład leczniczy – jednostka rejestru – a nie profil osoby. Indywidualne i grupowe praktyki lekarzy, lekarzy dentystów, pielęgniarek i położnych (praktyki zawodowe), czyli druga część rejestru, nie są prezentowane.",
+					"Niektóre zakłady prowadzi osoba fizyczna wykonująca działalność gospodarczą, której firmą jest jej imię i nazwisko, albo spółka osób fizycznych. Nazwa takiego podmiotu nigdy nie jest pokazywana. Gdy nazwa zakładu powtarza imię i nazwisko osoby, która go prowadzi, są one usuwane wszędzie tam, gdzie rejestr pozwala je rozpoznać; niektóre nazwy mogą nadal zawierać imię lub nazwisko w brzmieniu z rejestru. Numer telefonu miejsca udzielania świadczeń może być numerem osoby.",
+					"Żadne inne dane o tej osobie nie są zbierane: ani data urodzenia, ani numer PESEL, ani adres zamieszkania, ani NIP, ani oceny czy opinie.",
+					"Każdy, kogo strona wymienia lub dotyczy, może w każdej chwili wnieść sprzeciw – strona zostanie wtedy usunięta."
+				]
+			},
+			"sources": {
+				"heading": "Źródła",
+				"body": [
+					"Każda strona powstaje z otwartych danych RPWDL, które Centrum e-Zdrowia udostępnia w serwisie dane.gov.pl na licencji CC BY 4.0, z warunkiem podania czasu wytworzenia i pozyskania informacji. Rejestr jest jawny z mocy ustawy (art. 106 ust. 1a ustawy z dnia 15 kwietnia 2011 r. o działalności leczniczej). Miejscowości pochodzą z rejestru TERYT (Główny Urząd Statystyczny) i Państwowego Rejestru Granic (Główny Urząd Geodezji i Kartografii). Każde źródło jest wykorzystywane z wymaganym oznaczeniem:"
+				]
+			},
+			"balancing": {
+				"heading": "Ocena prawnie uzasadnionego interesu",
+				"body": [
+					"Cel: pacjenci muszą wiedzieć, gdzie są zakłady lecznicze, jakie świadczenia udzielają i jak się z nimi skontaktować – tę potrzebę państwo zaspokaja już, czyniąc rejestr jawnym i publikując go jako otwarte dane.",
+					"Niezbędność: pokazywane są wyłącznie dane rejestru o zakładzie i miejscach udzielania świadczeń, czyli dane, które ustawa i tak czyni jawnymi, a imię i nazwisko osoby prowadzącej zakład są usuwane tam, gdzie to możliwe; nic o życiu prywatnym, żadnych ocen ani opinii.",
+					"Wyważenie: neutralna kolejność, brak reklam, minimum pól rejestru, sprzeciw, który od razu ukrywa stronę i nie pozwala jej wrócić, korekty u źródła oraz strony aktualizowane wraz z rejestrem. Podmiot wpisany do jawnego rejestru może się spodziewać, że znajdzie się w katalogu powtarzającym te informacje. Orzecznictwo dotyczące prezentowania imiennie lekarzy bez ich zgody nie jest ugruntowane (Naczelny Sąd Administracyjny, III OSK 1052/21): dlatego praktyki zawodowe nie są w ogóle prezentowane. Po rozważeniu tych okoliczności przeważa interes pacjentów, a każdy, kogo strona wymienia, może wnieść sprzeciw bez podawania przyczyny."
+				]
+			},
+			"accounts": {
+				"heading": "Konta placówek i przejmowanie stron",
+				"body": [
+					"Dane: adres e-mail, imię i nazwisko, hasło (przechowywane w postaci skrótu), drugi składnik uwierzytelniania, dokumenty przesłane w celu przejęcia strony (dowód, że wnioskodawca prowadzi zakład lub działa w jego imieniu) oraz członkowie zespołu.",
+					"Cele: prowadzenie konta i sprawdzenie, czy stronę przejmuje właściwa placówka. Podstawy prawne: wykonanie regulaminu (art. 6 ust. 1 lit. b RODO) oraz prawnie uzasadniony interes w zabezpieczeniu usługi (art. 6 ust. 1 lit. f).",
+					"Okres przechowywania: konto do jego usunięcia; zaszyfrowane dokumenty są usuwane 30 dni po decyzji."
+				]
+			},
+			"requests": {
+				"heading": "Zgłoszenia błędów, sprzeciwy i prośby o kontakt",
+				"body": [
+					"Dane: treść wiadomości, adres e-mail do kontaktu, jeśli został podany, oraz strona, której dotyczy zgłoszenie; przy prośbie „to moja strona” także imię i nazwisko oraz numer telefonu. Swobodny tekst jest szyfrowany.",
+					"Cele: poprawianie błędów, uwzględnianie sprzeciwów i pomoc placówce, która nie może przejąć strony online. Podstawy prawne: prawnie uzasadniony interes (art. 6 ust. 1 lit. f) oraz prawo sprzeciwu (art. 21).",
+					"Okres przechowywania: zgłoszenie jest usuwane 6 miesięcy po zamknięciu, odrzucony sprzeciw – rok po decyzji, prośba o kontakt – 12 miesięcy po ostatniej wymianie wiadomości. Po potwierdzeniu sprzeciwu albo po usunięciu przejętej strony przez jej posiadacza strona i dotyczące jej dane są od razu usuwane, łącznie ze sprzeciwem; zostaje tylko zapis o usunięciu (identyfikator strony, kraj, przyczyna, kto i kiedy go dokonał), aby strona nigdy nie została opublikowana ponownie."
+				]
+			},
+			"technical": {
+				"heading": "Dane techniczne i pliki cookie",
+				"body": [
+					"Używane są wyłącznie pliki cookie niezbędne do działania usługi: sesja zalogowanych placówek i wybrany język. Żadnych plików cookie reklamowych ani statystycznych, żadnych narzędzi śledzących.",
+					"Aby ograniczyć nadużycia, adresy IP są przekształcane funkcją z kluczem przed zliczeniem i nigdy nie są zapisywane w postaci jawnej; sesje placówek zapisują skrócony adres IP. Wyświetlenia przejętych stron są liczone bez plików cookie i identyfikatorów, a widzi je tylko posiadacz strony."
+				]
+			},
+			"recipients": {
+				"heading": "Odbiorcy i podmioty przetwarzające",
+				"body": [
+					"Dane nie są sprzedawane ani wynajmowane i nigdy nie służą reklamie. Otrzymują je wyłącznie zespół usługodawcy i wskazane niżej podmioty przetwarzające, każdy w swoim zakresie, na podstawie umowy spełniającej wymogi art. 28 RODO. Mapy są pobierane z serwera kafelków, który – jak każda strona internetowa – otrzymuje adres IP odwiedzającego."
+				]
+			},
+			"transfers": {
+				"heading": "Przekazywanie danych poza Europejski Obszar Gospodarczy",
+				"body": [
+					"Dane są przechowywane w Europejskim Obszarze Gospodarczym. Poza niego są przekazywane wyłącznie z zabezpieczeniami przewidzianymi w rozdziale V RODO (decyzja stwierdzająca odpowiedni stopień ochrony lub standardowe klauzule umowne). Każda zmiana podmiotu przetwarzającego zostanie tu ogłoszona przed jej wejściem w życie."
+				]
+			},
+			"automated": {
+				"heading": "Zautomatyzowane decyzje",
+				"body": [
+					"Żadna decyzja dotycząca Ciebie nie jest podejmowana wyłącznie w sposób zautomatyzowany. O przejęciu strony decyduje człowiek, który czyta przesłane dokumenty."
+				]
+			},
+			"rights": {
+				"heading": "Twoje prawa",
+				"body": [
+					"Możesz żądać dostępu do swoich danych, ich sprostowania lub usunięcia, ograniczenia przetwarzania, otrzymania ich w formacie przenośnym oraz wnieść sprzeciw wobec ich przetwarzania. Napisz na adres poniżej – odpowiemy w ciągu miesiąca.",
+					"Możesz też wnieść skargę do polskiego organu nadzorczego, Prezesa Urzędu Ochrony Danych Osobowych (UODO): ul. Stanisława Moniuszki 1A, 00-014 Warszawa, uodo.gov.pl."
+				]
+			},
+			"objection": {
+				"heading": "Sprzeciw wobec strony (art. 21 RODO)",
+				"body": [
+					"Każdy, kogo strona wymienia lub dotyczy, może w każdej chwili, bez podawania przyczyny, sprzeciwić się jej publikacji. Jeśli strona nie została przejęta, wystarczy formularz: strona jest ukrywana zaraz po otrzymaniu wniosku, usuwana po krótkiej weryfikacji, a aktualizacje rejestru nigdy jej ponownie nie opublikują. Jeśli strona została przejęta, usuwa ją jej posiadacz w swoim panelu."
+				]
+			},
+			"changes": {
+				"heading": "Zmiany polityki",
+				"body": [
+					"Ta polityka jest projektem. Sprawdzi ją prawnik uprawniony w Polsce i inspektor ochrony danych, a jej polską wersję – rodzimy użytkownik języka; każda wersja jest datowana."
+				]
+			}
+		},
+		"fields": {
+			"controller": "Administrator",
+			"address": "Adres",
+			"email": "Kontakt w sprawie wniosków",
+			"dpo": "Inspektor ochrony danych",
+			"effectiveDate": "Data wejścia w życie",
+			"hostingProvider": "Dostawca hostingu (podmiot przetwarzający)",
+			"smtp": "Wysyłka e-maili (podmiot przetwarzający)"
+		},
+		"objectLink": "Jak sprzeciwić się stronie",
+		"authorityLink": "Kontakt z Urzędem Ochrony Danych Osobowych (UODO)"
+	},
+	"TermsPl": {
+		"metaTitle": "Regulamin · Apercura",
+		"metaDescription": "Regulamin polskich stron Apercura (art. 8 ustawy o świadczeniu usług drogą elektroniczną): bezpłatny, rzeczowy katalog zakładów leczniczych z RPWDL, bez rezerwacji online.",
+		"title": "Regulamin",
+		"lead": "Zasady usługi świadczonej drogą elektroniczną przez polskie strony Apercura (art. 8 ustawy z dnia 18 lipca 2002 r. o świadczeniu usług drogą elektroniczną) – dla odwiedzających i dla zakładów leczniczych.",
+		"sections": {
+			"service": {
+				"heading": "Usługa",
+				"body": [
+					"Apercura bezpłatnie prezentuje zakłady lecznicze z Rejestru Podmiotów Wykonujących Działalność Leczniczą (RPWDL), do których zgłaszają się pacjenci: szpitale, przychodnie i poradnie specjalistyczne, gabinety stomatologiczne, rehabilitację, pielęgniarki i położne, laboratoria, hospicja, zakłady opiekuńczo-lecznicze, sanatoria i ośrodki leczenia uzależnień. To wyłącznie katalog: za pośrednictwem Apercura nie można w Polsce umówić wizyty. Usługę świadczy usługodawca wskazany w nocie prawnej.",
+					"Usługi świadczone drogą elektroniczną to: przeglądanie i wyszukiwanie w katalogu, zgłoszenie błędu, sprzeciw wobec strony, prośba o kontakt oraz – dla placówki – konto, w którym przejmuje i uzupełnia swoją stronę. Przeglądanie nie wymaga konta. Korzystanie z serwisu oznacza akceptację regulaminu."
+				]
+			},
+			"content": {
+				"heading": "Co zawierają strony",
+				"body": [
+					"Strony przedstawiają rzeczowe informacje z jawnego rejestru, w neutralnej kolejności, bez ocen, opinii, reklam i płatnego wyróżniania.",
+					"Informacje mogą być niepełne lub nieaktualne – przed wizytą warto potwierdzić je w placówce. Każda strona wyjaśnia, jak zgłosić błąd."
+				]
+			},
+			"health": {
+				"heading": "To nie jest porada medyczna",
+				"body": [
+					"Apercura nie udziela porad medycznych i nie jest służbą ratunkową. W nagłym przypadku zadzwoń pod numer 112 lub 999. Poza godzinami pracy przychodni pomoc zapewnia nocna i świąteczna opieka zdrowotna; infolinia Narodowego Funduszu Zdrowia: 800 190 590."
+				]
+			},
+			"practices": {
+				"heading": "Dla zakładów leczniczych",
+				"body": [
+					"Przejęcie strony jest bezpłatne. Wymaga dokumentu potwierdzającego, że wnioskodawca prowadzi zakład lub działa w jego imieniu; dokument sprawdza człowiek, zanim strona zostanie przekazana.",
+					"Posiadacz strony odpowiada za dodane przez siebie informacje. Muszą one być rzeczowe, prawdziwe i aktualne oraz nie mogą mieć cech reklamy (art. 14 ustawy z dnia 15 kwietnia 2011 r. o działalności leczniczej)."
+				]
+			},
+			"removal": {
+				"heading": "Usunięcie strony",
+				"body": [
+					"Każdy, kogo strona wymienia lub dotyczy, może w każdej chwili poprosić o jej usunięcie – strona danych wyjaśnia, jak to zrobić. Przejętą stronę może usunąć tylko jej posiadacz."
+				]
+			},
+			"technical": {
+				"heading": "Wymagania techniczne",
+				"body": [
+					"Wystarczy urządzenie z dostępem do internetu i aktualna przeglądarka; JavaScript jest potrzebny tylko do formularzy i panelu placówki. Konto placówki wymaga adresu e-mail. Jak każda usługa świadczona przez internet, serwis wiąże się ze zwykłymi zagrożeniami sieci; usługodawca chroni go szyfrowanymi połączeniami i szyfruje przesyłane dokumenty oraz swobodny tekst."
+				]
+			},
+			"unlawful": {
+				"heading": "Zakaz treści bezprawnych",
+				"body": [
+					"Użytkownikom nie wolno dostarczać treści o charakterze bezprawnym: nieprawdziwych informacji, treści naruszających prawa innych osób, reklamy działalności leczniczej ani złośliwego kodu. Takie treści są usuwane, a konto użyte do ich zamieszczenia może zostać zamknięte."
+				]
+			},
+			"complaints": {
+				"heading": "Reklamacje",
+				"body": [
+					"Reklamację dotyczącą usługi można wysłać na adres poniżej, opisując problem i podając dane do kontaktu. Usługodawca odpowiada w ciągu 14 dni."
+				]
+			},
+			"liability": {
+				"heading": "Odpowiedzialność",
+				"body": [
+					"Usługodawca dokłada starań, aby usługa była dostępna i rzetelna, ale nie może tego zagwarantować. Nie odpowiada za informacje, które placówki dodają na swoich stronach. Te granice zostaną doprecyzowane podczas weryfikacji prawnej."
+				]
+			},
+			"ip": {
+				"heading": "Kod i dane",
+				"body": [
+					"Kod źródłowy jest udostępniony na licencji AGPL-3.0. Dane katalogu są wykorzystywane ponownie na licencji Creative Commons Uznanie autorstwa 4.0 Międzynarodowe (CC BY 4.0)."
+				]
+			},
+			"law": {
+				"heading": "Prawo właściwe i spory",
+				"body": [
+					"Prawo właściwe i sądy właściwe zostaną wskazane podczas weryfikacji prawnej; bezwzględnie obowiązujące przepisy o ochronie konsumentów kraju zamieszkania mają zawsze zastosowanie. W razie sporu najpierw napisz na adres kontaktowy, aby poszukać polubownego rozwiązania."
+				]
+			}
+		},
+		"fields": {
+			"publisher": "Usługodawca",
+			"effectiveDate": "Data wejścia w życie",
+			"contact": "Kontakt"
+		}
+	},
+	"AccessibilityPl": {
+		"metaTitle": "Deklaracja dostępności · Apercura",
+		"metaDescription": "Dostępność polskich stron Apercura: cel WCAG 2.2 AA, co sprawdzono, co pozostaje do sprawdzenia i jak zgłosić problem.",
+		"title": "Deklaracja dostępności",
+		"lead": "Apercura powstaje z myślą o wszystkich, także o osobach starszych i słabowidzących. Ta deklaracja opisuje stan polskich stron.",
+		"sections": {
+			"scope": {
+				"heading": "Zakres",
+				"body": [
+					"Ustawa z dnia 4 kwietnia 2019 r. o dostępności cyfrowej stron internetowych i aplikacji mobilnych podmiotów publicznych obowiązuje podmioty publiczne (art. 2), a Apercura do nich nie należy. Usługodawca dąży jednak na każdej stronie do tego samego standardu, WCAG 2.2 na poziomie AA, i stosuje strukturę deklaracji, której wymaga art. 10 tej ustawy."
+				]
+			},
+			"status": {
+				"heading": "Stan dostępności",
+				"body": [
+					"Polskie strony korzystają z tego samego kodu i tych samych testów co strony pozostałych rynków. Serwis jest częściowo zgodny z WCAG 2.2 AA: opiera się to na samoocenie i testach automatycznych, a nie jeszcze na pełnym audycie, który trwa."
+				]
+			},
+			"tests": {
+				"heading": "Sposób oceny",
+				"list": [
+					"Automatyczne testy axe-core (reguły WCAG 2.0, 2.1 i 2.2, poziomy A i AA) każdego rodzaju strony przy każdym wydaniu.",
+					"Obsługa wyłącznie z klawiatury z widocznym fokusem.",
+					"Tekst o wielkości co najmniej 18 px, elementy klikalne co najmniej 44 px, nic, co opiera się wyłącznie na kolorze, brak przewijania w poziomie przy szerokości 390 px."
+				]
+			},
+			"pending": {
+				"heading": "Co pozostaje do sprawdzenia",
+				"list": [
+					"Ręczna weryfikacja z czytnikami ekranu VoiceOver i NVDA, w języku polskim.",
+					"Pełny audyt zgodności z WCAG 2.2 AA na próbie stron."
+				]
+			},
+			"other": {
+				"heading": "Siedziba, język migowy i aplikacja mobilna",
+				"body": [
+					"Apercura nie ma siedziby obsługującej interesantów ani aplikacji mobilnej. Nie zapewnia tłumacza polskiego języka migowego; napisz na adres poniżej, a otrzymasz informacje w innej formie."
+				]
+			},
+			"feedback": {
+				"heading": "Zgłoś brak dostępności",
+				"body": [
+					"Jeśli strona lub funkcja jest trudna w użyciu, napisz na adres poniżej: wskaż stronę i to, co sprawiło trudność. Odpowiemy w ciągu miesiąca i w razie potrzeby przekażemy informacje w innej formie."
+				]
+			}
+		},
+		"fields": {
+			"contact": "Kontakt",
+			"date": "Data sporządzenia deklaracji"
+		}
+	},
+	"DataPl": {
+		"metaTitle": "Dane i źródła · Apercura",
+		"metaDescription": "Skąd pochodzą polskie strony Apercura: Rejestr Podmiotów Wykonujących Działalność Leczniczą (Centrum e-Zdrowia), TERYT (GUS) i Państwowy Rejestr Granic (GUGiK) na licencji CC BY 4.0, czas wytworzenia i pozyskania danych oraz jak poprawić lub usunąć stronę.",
+		"title": "Dane i źródła",
+		"lead": "Każda polska strona powstaje z otwartych danych publicznych rejestrów. Oto skąd pochodzą, na jakiej licencji i z jakim oznaczeniem, kiedy zostały wytworzone i pozyskane oraz jak poprawić lub usunąć stronę.",
+		"status": {
+			"heading": "Ostatnia aktualizacja",
+			"body": "Centrum e-Zdrowia publikuje rejestr codziennie, według stanu na północ; katalog sprawdza go co tydzień i importuje, gdy się zmienił. Strona zmienia się tylko wtedy, gdy zmieniają się jej dane w rejestrze.",
+			"importedAt": "Pozyskanie (ostatni import)",
+			"producedAt": "Wytworzenie (data raportu z rejestru)",
+			"checkedAt": "Ostatnie sprawdzenie źródeł",
+			"notImported": "Polski katalog nie został jeszcze zaimportowany w tym serwisie.",
+			"notImportedValue": "Jeszcze nie zaimportowano"
+		},
+		"sources": {
+			"heading": "Źródła",
+			"body": "Wszystkie trzy źródła są udostępnione na licencji Creative Commons Uznanie autorstwa 4.0 Międzynarodowe (CC BY 4.0), która pozwala na ponowne wykorzystanie, także komercyjne, pod warunkiem wskazania źródła. Każde oznaczenie poniżej jest przytoczone dosłownie.",
+			"caption": "Źródła danych polskiego katalogu",
+			"columns": {
+				"source": "Źródło",
+				"use": "Zastosowanie",
+				"licence": "Licencja i oznaczenie",
+				"frequency": "Aktualizacja"
+			},
+			"items": {
+				"pl-rpwdl": {
+					"use": "Zakłady lecznicze podmiotów leczniczych: nazwy, rodzaje działalności, komórki, łóżka, adresy, numery telefonów",
+					"frequency": "Codziennie, Centrum e-Zdrowia; import co tydzień"
+				},
+				"pl-teryt": {
+					"use": "Województwa, powiaty i gminy z urzędowymi kodami i nazwami",
+					"frequency": "Co roku, Główny Urząd Statystyczny"
+				},
+				"pl-prg": {
+					"use": "Granice gmin, na podstawie których wyznaczany jest punkt każdej gminy",
+					"frequency": "Co tydzień, Główny Urząd Geodezji i Kartografii"
+				},
+				"map": {
+					"name": "Dane map",
+					"publisher": "Współtwórcy OpenStreetMap, kafelki OpenFreeMap",
+					"use": "Mapy na stronach",
+					"frequency": "Na bieżąco"
+				}
+			},
+			"ccBy": "CC BY 4.0",
+			"odbl": "ODbL",
+			"conditionsHeading": "Warunki ponownego wykorzystywania rejestru",
+			"conditions": "RPWDL jest udostępniany w serwisie dane.gov.pl (zbiór 728) z warunkiem, określonym na podstawie art. 15 ust. 1 pkt 1 ustawy z dnia 11 sierpnia 2021 r. o otwartych danych i ponownym wykorzystywaniu informacji sektora publicznego, poinformowania o źródle, czasie wytworzenia i pozyskania informacji. Każda polska strona zawiera ten wiersz z datami importu, z którego powstała:",
+			"prgStatement": "Punkty gmin wyznaczono na podstawie Państwowego Rejestru Granic, materiału państwowego zasobu geodezyjnego i kartograficznego, którego źródło prawo geodezyjne nakazuje wskazywać w każdym opracowaniu.",
+			"openDataAct": "Ustawa o otwartych danych i ponownym wykorzystywaniu informacji sektora publicznego"
+		},
+		"coverage": {
+			"heading": "Zakres katalogu",
+			"body": [
+				"Strony powstają dla zakładów leczniczych podmiotów leczniczych aktywnych w dniu importu, na podstawie rodzaju działalności każdego zakładu (szpitalna, inna stacjonarna, ambulatoryjna) i rodzajów jego aktywnych komórek organizacyjnych (część VIII kodu resortowego). Poradnia specjalistyczna jednej lub dwóch dziedzin jest prezentowana w bardziej szczegółowej z nich, a placówka trzech dziedzin lub więcej – jako przychodnia specjalistyczna.",
+				"Pominięte: zakłady, których komórki to wyłącznie gabinety medycyny szkolnej, zespoły ratownictwa medycznego, transport sanitarny lub banki krwi, a także zakłady, jednostki i komórki zamknięte lub zawieszone. W ogóle nie są prezentowane: indywidualne i grupowe praktyki lekarzy, lekarzy dentystów, pielęgniarek i położnych (praktyki zawodowe) – do czasu uzyskania opinii prawnej o prezentowaniu imiennie przedstawicieli zawodów medycznych (sprawa Naczelnego Sądu Administracyjnego III OSK 1052/21) – oraz apteki: Rejestr Aptek jest otwarty na licencji CC BY 4.0, ale jest publikowany wyłącznie w starszym formacie arkusza i zawiera imiona i nazwiska właścicieli oraz kierowników, dlatego jest planowany na później.",
+				"Zakład prowadzony przez osobę fizyczną jest pokazywany pod nazwą zakładu, z której usuwa się imię i nazwisko tej osoby wszędzie tam, gdzie rejestr pozwala je rozpoznać; nazwa samego podmiotu, czyli imię i nazwisko osoby, nigdy nie jest pokazywana.",
+				"Każde miejsce jest umieszczane w punkcie swojej gminy: rejestr publikuje adresy, a nie współrzędne, dlatego odległości są przybliżone, a strony nie pokazują pinezki na mapie."
+			],
+			"kinds": {
+				"PL_HOSPITAL": "Szpitale (rodzaj działalności 1)",
+				"PL_HOSPICE": "Hospicja stacjonarne i domowe",
+				"PL_LONG_TERM_CARE": "Zakłady opiekuńczo-lecznicze i pielęgnacyjno-opiekuńcze",
+				"PL_SPA": "Sanatoria i szpitale uzdrowiskowe",
+				"PL_ADDICTION": "Stacjonarne ośrodki leczenia uzależnień",
+				"PL_RESIDENTIAL": "Inna opieka stacjonarna poza szpitalami (rodzaj działalności 2)",
+				"PL_PRIMARY_CARE": "Przychodnie podstawowej opieki zdrowotnej z lekarzem (POZ)",
+				"PL_OUT_OF_HOURS": "Nocna i świąteczna opieka zdrowotna",
+				"PL_SPECIALIST": "Poradnie specjalistyczne, według dziedziny",
+				"PL_DENTAL": "Gabinety stomatologiczne",
+				"PL_REHABILITATION": "Rehabilitacja i fizjoterapia",
+				"PL_NURSING": "Pielęgniarki i położne POZ, długoterminowa opieka domowa",
+				"PL_DIAGNOSTICS": "Laboratoria, punkty pobrań i diagnostyka obrazowa",
+				"PL_OTHER": "Inne placówki ambulatoryjne"
+			},
+			"kindsLabel": "Importowane"
+		},
+		"identifiers": {
+			"heading": "Identyfikatory",
+			"body": [
+				"Adres każdej strony kończy się numerem, który rejestr nadaje zakładowi leczniczemu (ID ZOZ), dzięki czemu stronę można odnaleźć i porównać z rejestrem:"
+			],
+			"list": [
+				"/pl/placowka/przychodnia-przykladowa-900001: zakład numer 900001.",
+				"Numery NIP i REGON podmiotu nie są wykorzystywane: w przypadku osoby fizycznej identyfikują osobę."
+			]
+		},
+		"correct": {
+			"heading": "Popraw błąd",
+			"body": [
+				"Strony powtarzają rejestr: trwałej korekty dokonuje się u źródła, a strona zmienia się przy najbliższym cotygodniowym imporcie.",
+				"W pozostałych sprawach skorzystaj z formularza – sprawdzamy każde zgłoszenie."
+			],
+			"list": [
+				"Nazwa, adres, rodzaj działalności, komórki, telefon: podmiot składa wniosek o zmianę wpisu do wojewody, który prowadzi jego księgę rejestrową, za pośrednictwem systemu RPWDL.",
+				"Błąd w odczycie Apercura (rodzaj lub miejsce, które wydają się niewłaściwe): formularz poniżej."
+			],
+			"formTitle": "Zgłoś błąd",
+			"formBody": "Podaj adres strony i opisz, co jest niepoprawne."
+		},
+		"remove": {
+			"heading": "Usuń stronę",
+			"body": [
+				"Każdy, kogo strona wymienia lub dotyczy, może w każdej chwili, bez podawania przyczyny, sprzeciwić się jej publikacji (art. 21 RODO). Nieprzejęta strona jest ukrywana zaraz po otrzymaniu wniosku i usuwana po krótkiej weryfikacji; nigdy nie wraca z aktualizacjami rejestru. Przejętą stronę usuwa jej posiadacz w swoim panelu."
+			],
+			"formTitle": "Poproś o usunięcie strony",
+			"formBody": "Podaj adres strony i adres e-mail, na który możemy odpowiedzieć."
+		}
+	}
+}

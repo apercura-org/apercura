@@ -74,4 +74,12 @@ export const GLOBAL_ERROR_TEXT: Record<CatalogLanguage, GlobalErrorText> = {
 		home: "Tagasi avalehele",
 		reference: "Viide kasutajatoe jaoks: {digest}",
 	},
+	pl: {
+		metaTitle: "Strona niedostępna · Apercura",
+		title: "Nie udało się wyświetlić tej strony",
+		body: "Podczas jej przygotowywania coś poszło nie tak po naszej stronie. Spróbuj ponownie; jeśli to nie pomoże, wróć za kilka minut.",
+		retry: "Spróbuj ponownie",
+		home: "Wróć na stronę główną",
+		reference: "Numer dla pomocy technicznej: {digest}",
+	},
 };

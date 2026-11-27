@@ -213,11 +213,44 @@ Practices only: no clinician is listed. Left:
 - Confirm with the CQC (and the devolved regulators) that a pure booking site is out of scope
   before booking opens in the UK.
 
-### 5. Poland (`/pl`): directory of registered practices
+### 5. Poland (`/pl`): open, directory of healthcare establishments
 
-- Import RPWDL (dane.gov.pl, CC BY 4.0, with the dates of production and download shown).
-- A legal opinion on listing without consent after NSA III OSK 1052/21, and a one-click opt-out.
-- Polish interface (`pl`); Act on medical activity art. 14 (no advertising features).
+Done in [#164](https://github.com/apercura-org/apercura/issues/164): `/pl` in Polish, built weekly
+by `etl:pl` from RPWDL, the register of entities performing medical activity (Centrum e-Zdrowia,
+dane.gov.pl, CC BY 4.0, daily): one page per healthcare establishment (zakład leczniczy) of the
+healthcare entities (podmioty lecznicze), about 34,000 hospitals, primary care and specialist
+clinics, dental clinics, hospices, care homes, sanatoria, laboratories and rehabilitation
+centres at about 61,000 places of care, placed in TERYT's voivodeships, powiats and gminas (GUS)
+at their gmina's interior point (computed from GUGiK's State Register of Boundaries; city
+precision, no map pin), listed per voivodeship too, with RPWDL's attribution stating the time the
+data was produced and obtained, a legal notice and terms under the 2002 e-services act, a privacy
+notice with the article 14 information (UODO), claims by documents, no booking
+([data import](./docs/data-import.md#poland),
+[ADR 0002](./docs/adr/0002-multi-country.md#poland-pl)).
+
+**Decision (2026-11-27): establishments only, no practitioner.** The register's other part, the
+individual and group practices of doctors, dentists, nurses, midwives and physiotherapists
+(praktyki zawodowe), is not imported. Listing named practitioners without their consent is the
+question of the Supreme Administrative Court's case III OSK 1052/21 (ZnanyLekarz), sent back to the
+lower court in 2022 and still open: practices wait for a Polish legal opinion. A sole trader who
+runs an establishment is never named from the entity's name, and the establishment's name drops
+theirs where the register gives it. Left:
+
+- Have a native speaker review the Polish interface, and a Polish lawyer the legal notice, privacy
+  notice, terms (the 14-day complaint deadline, the NFZ helpline number quoted), accessibility
+  statement and data page, and the reasoning that the factual pages have no "features of
+  advertising" (Act on medical activity art. 14 ust. 1).
+- Write the legitimate-interest assessment for the establishments named after a sole trader or
+  partners, and check the name minimisation on a sample of the real file.
+- A Polish legal opinion on III OSK 1052/21 (listing without consent, the balancing it asks for)
+  before any page of a praktyka zawodowa; claimed pages only until then.
+- Pharmacies: the Rejestr Aptek (dane.gov.pl, CC BY 4.0; location and opening hours are not
+  advertising under art. 94a Prawo farmaceutyczne) is published only as a legacy binary XLS, and
+  names owners and managers: a reader for it, the owners' and managers' minimisation, and the
+  request of [`docs/data-requests/pl.md`](./docs/data-requests/pl.md) for a CSV again.
+- Set the `LEGAL_*` operator facts of the Polish legal notice.
+- Warsaw's districts as places, once the register codes most units by district (two thirds carry
+  the city's code only today).
 
 ### 6. Belgium (`/be-fr`, `/be-nl`, `/be-de`) and Luxembourg (`/lu-fr`, `/lu-de`): claimed pages
 

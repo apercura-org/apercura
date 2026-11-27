@@ -1036,3 +1036,93 @@ export function checkEePlaces(placement: {
 		},
 	];
 }
+
+// ---------------------------------------------------------------------------
+// Poland (`etl:pl`): the same verdicts, on the one register
+// ---------------------------------------------------------------------------
+
+/**
+ * Limits of the RPWDL export. It is published every day and imported every week, so a change
+ * since the last success is allowed Czechia's room. Two floors catch an empty or broken file on a
+ * first run: the establishments' lines (about 37,900 in November 2026, at least 1,000) and the
+ * establishments imported from them (about 34,000, at least 300); afterwards the change since
+ * the last successful run (5%, approvable) blocks a truncated one.
+ */
+export const PL_LIMITS = {
+	fileSizeDelta: 0.15,
+	quarantineRatio: 0.01,
+	rowsDelta: 0.05,
+	minLines: 1_000,
+	minRows: 300,
+	/** Sites placed in their gmina (else only in their powiat, or nowhere). */
+	minPlacedRatio: 0.98,
+} as const;
+
+/**
+ * Checks of the register before the merge: quarantine within 1%, floors of lines and
+ * establishments (never approvable), and at most 5% more or fewer establishments or 15% more or
+ * fewer bytes than the last successful run (approvable).
+ */
+export function checkPlSource(
+	source: string,
+	current: AtSourceStats & { bytes: number },
+	previous: (AtSourceStats & { bytes?: number }) | null,
+): GuardCheck[] {
+	const ratio = current.lines === 0 ? 1 : current.quarantined / current.lines;
+	const checks: GuardCheck[] = [
+		{
+			name: `${source}.quarantine`,
+			ok: current.lines > 0 && ratio <= PL_LIMITS.quarantineRatio,
+			approvable: false,
+			detail: `${current.quarantined} of ${current.lines} lines quarantined (${percent(ratio)})`,
+		},
+		{
+			name: `${source}.lines`,
+			ok: current.lines >= PL_LIMITS.minLines,
+			approvable: false,
+			detail: `${current.lines} establishment lines (at least ${PL_LIMITS.minLines} expected)`,
+		},
+		{
+			name: `${source}.rows`,
+			ok: current.rows >= PL_LIMITS.minRows,
+			approvable: false,
+			detail: `${current.rows} establishments imported (at least ${PL_LIMITS.minRows} expected)`,
+		},
+	];
+	if (previous) {
+		const rows = delta(current.people, previous.people);
+		checks.push({
+			name: `${source}.establishments`,
+			ok: rows <= PL_LIMITS.rowsDelta,
+			approvable: true,
+			detail: `${current.people} establishments vs ${previous.people} last time (${percent(rows)})`,
+		});
+		if (previous.bytes !== undefined) {
+			const size = delta(current.bytes, previous.bytes);
+			checks.push({
+				name: `${source}.size`,
+				ok: size <= PL_LIMITS.fileSizeDelta,
+				approvable: true,
+				detail: `${current.bytes} bytes vs ${previous.bytes} last time (${percent(size)})`,
+			});
+		}
+	}
+	return checks;
+}
+
+/** After staging: nearly every site must be placed in its gmina, or the listings would lose it. */
+export function checkPlPlaces(staged: {
+	sites: number;
+	placed: number;
+	inDistrict: number;
+}): GuardCheck[] {
+	const local = staged.sites === 0 ? 1 : (staged.placed - staged.inDistrict) / staged.sites;
+	return [
+		{
+			name: "pl.places",
+			ok: local >= PL_LIMITS.minPlacedRatio,
+			approvable: true,
+			detail: `${staged.placed - staged.inDistrict} of ${staged.sites} sites placed in a gmina (${percent(local)})`,
+		},
+	];
+}

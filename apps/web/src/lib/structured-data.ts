@@ -317,6 +317,35 @@ const MEDICAL_SPECIALTIES: Record<string, readonly MedicalSpecialty[]> = {
 	apotheke: ["https://schema.org/PharmacySpecialty"],
 	"psychiatrische-klinik": ["https://schema.org/Psychiatric"],
 	geburtshaus: ["https://schema.org/Obstetric"],
+	// Poland's establishments (Polish listing slugs).
+	"przychodnie-poz": ["https://schema.org/PrimaryCare"],
+	"nocna-pomoc-lekarska": ["https://schema.org/PrimaryCare"],
+	stomatologia: ["https://schema.org/Dentistry"],
+	rehabilitacja: ["https://schema.org/Physiotherapy"],
+	"pielegniarki-i-polozne": ["https://schema.org/Nursing", "https://schema.org/Midwifery"],
+	"zaklady-opiekuncze": ["https://schema.org/Nursing"],
+	"leczenie-uzaleznien": ["https://schema.org/Psychiatric"],
+	"poradnie-ginekologiczne": ["https://schema.org/Gynecologic", "https://schema.org/Obstetric"],
+	"poradnie-okulistyczne": ["https://schema.org/Ophthalmology"],
+	"poradnie-leczenia-uzaleznien": ["https://schema.org/Psychiatric"],
+	"poradnie-zdrowia-psychicznego": ["https://schema.org/Psychiatric"],
+	"poradnie-psychologiczne": ["https://schema.org/Psychiatric"],
+	"poradnie-logopedyczne": ["https://schema.org/SpeechPathology"],
+	"poradnie-ortopedyczne": ["https://schema.org/Musculoskeletal"],
+	"poradnie-dermatologiczne": ["https://schema.org/Dermatology"],
+	"poradnie-laryngologiczne": ["https://schema.org/Otolaryngologic"],
+	"poradnie-kardiologiczne": ["https://schema.org/Cardiovascular"],
+	"poradnie-urologiczne": ["https://schema.org/Urologic"],
+	"poradnie-diabetologiczne": ["https://schema.org/Endocrine"],
+	"poradnie-endokrynologiczne": ["https://schema.org/Endocrine"],
+	"poradnie-gastroenterologiczne": ["https://schema.org/Gastroenterologic"],
+	"poradnie-chorob-pluc": ["https://schema.org/Pulmonary"],
+	"poradnie-reumatologiczne": ["https://schema.org/Rheumatologic"],
+	"poradnie-onkologiczne": ["https://schema.org/Oncologic"],
+	"poradnie-nefrologiczne": ["https://schema.org/Renal"],
+	"poradnie-neurologiczne": ["https://schema.org/Neurologic"],
+	"poradnie-chirurgiczne": ["https://schema.org/Surgical"],
+	"poradnie-pediatryczne": ["https://schema.org/Pediatric"],
 };
 
 /**
@@ -521,7 +550,9 @@ const DOCTOR_PROFESSIONS = new Set(["10", "ARZT"]);
  * a rehabilitation clinic a `MedicalClinic`, a pharmacy a `Pharmacy`. A Swiss hospital or clinic (general, psychiatric,
  * rehabilitation, specialised) is a `Hospital`, a birth centre a `MedicalClinic`, a pharmacy a
  * `Pharmacy`, a nursing home a `MedicalOrganization` (an organisation that provides care, not a
- * place to visit as a patient: no `geo`, which only a place has).
+ * place to visit as a patient: no `geo`, which only a place has). A Polish establishment is a
+ * `MedicalClinic`, except a hospital or sanatorium (`Hospital`), a dental clinic (`Dentist`), a
+ * care home or hospice (`MedicalOrganization`) and nurses and midwives (`MedicalBusiness`).
  */
 type PracticeType =
 	| "MedicalClinic"
@@ -566,13 +597,23 @@ const PRACTICE_TYPES: Readonly<Record<string, PracticeType>> = {
 	EE_PSYCHOLOGY: "MedicalClinic",
 	EE_SPEECH_THERAPY: "MedicalClinic",
 	EE_PHARMACY: "Pharmacy",
+	PL_HOSPITAL: "Hospital",
+	PL_SPA: "Hospital",
+	PL_DENTAL: "Dentist",
+	PL_LONG_TERM_CARE: "MedicalOrganization",
+	PL_HOSPICE: "MedicalOrganization",
+	PL_NURSING: "MedicalBusiness",
 };
 
 /** The schema.org type of a market of practices' page subject (`PRACTICE_TYPES`), if any. */
 function practiceTypeOf(professionCode: string): PracticeType | null {
 	return (
 		PRACTICE_TYPES[professionCode] ??
-		(professionCode.startsWith("CZ_") || professionCode.startsWith("ES_") ? "MedicalClinic" : null)
+		(professionCode.startsWith("CZ_") ||
+		professionCode.startsWith("ES_") ||
+		professionCode.startsWith("PL_")
+			? "MedicalClinic"
+			: null)
 	);
 }
 

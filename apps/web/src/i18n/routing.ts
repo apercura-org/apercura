@@ -17,6 +17,7 @@ type Pathnames = Record<
 				| "fr-CH"
 				| "it-CH"
 				| "et-EE"
+				| "pl-PL"
 			>,
 			string
 	  >
@@ -73,6 +74,33 @@ export const ESTONIAN_SEGMENTS: Readonly<Record<string, string>> = {
 /** An English path with its segments in Estonian; parameters and unknown segments stay. */
 function estonianPath(path: string): string {
 	return path.replace(/[^/]+/g, (segment) => ESTONIAN_SEGMENTS[segment] ?? segment);
+}
+
+/**
+ * The Polish form of each English path segment (`/practitioner/[slug]/report` ->
+ * `/placowka/[slug]/zgloszenie`): Poland lists establishments, never people, so a page is a
+ * "placówka". The first segments are the Polish reserved segments of `@apercura/core/taxonomy`
+ * (`PL_RESERVED_SEGMENTS`, tested), which never name a listing.
+ */
+export const POLISH_SEGMENTS: Readonly<Record<string, string>> = {
+	search: "szukaj",
+	practitioner: "placowka",
+	report: "zgloszenie",
+	removal: "usuniecie",
+	"this-is-me": "to-ja",
+	establishment: "organizacja",
+	directory: "katalog",
+	about: "o-projekcie",
+	data: "dane",
+	accessibility: "dostepnosc",
+	privacy: "prywatnosc",
+	"legal-notice": "nota-prawna",
+	terms: "regulamin",
+};
+
+/** An English path with its segments in Polish; parameters and unknown segments stay. */
+function polishPath(path: string): string {
+	return path.replace(/[^/]+/g, (segment) => POLISH_SEGMENTS[segment] ?? segment);
 }
 
 /**
@@ -140,7 +168,9 @@ function swissMarketPath(path: string, person: string, facility: string): string
  *   `/organisation` in both (`swissMarketPath`), and Italy's Italian ones under `/ch-it`
  *   (`it-CH`);
  * - Estonia (`et-EE`): the English paths with their segments in Estonian (`ESTONIAN_SEGMENTS`),
- *   a provider's or pharmacy's page under `/asutus`.
+ *   a provider's or pharmacy's page under `/asutus`;
+ * - Poland (`pl-PL`): the English paths with their segments in Polish (`POLISH_SEGMENTS`), an
+ *   establishment's page under `/placowka`.
  */
 function withMarkets<T extends Pathnames>(pathnames: T) {
 	return Object.fromEntries(
@@ -160,6 +190,7 @@ function withMarkets<T extends Pathnames>(pathnames: T) {
 						"fr-CH": swissMarketPath(value.fr, "praticien", "etablissement"),
 						"it-CH": italianMarketPath(value.it),
 						"et-EE": estonianPath(value.en),
+						"pl-PL": polishPath(value.en),
 					},
 		]),
 	) as {
@@ -176,6 +207,7 @@ function withMarkets<T extends Pathnames>(pathnames: T) {
 					"fr-CH": string;
 					"it-CH": string;
 					"et-EE": string;
+					"pl-PL": string;
 				};
 	};
 }

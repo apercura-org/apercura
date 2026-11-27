@@ -15,6 +15,7 @@ import { AccessibilityEe } from "~/components/legal-ee";
 import { AccessibilityEs } from "~/components/legal-es";
 import { AccessibilityGb } from "~/components/legal-gb";
 import { AccessibilityIt } from "~/components/legal-it";
+import { AccessibilityPl } from "~/components/legal-pl";
 import { PageGraph } from "~/components/page-graph";
 import { PublicPage } from "~/components/public-page";
 import { Trail } from "~/components/trail";
@@ -41,6 +42,7 @@ export function generateMetadata({ params }: PageProps<"/[locale]/accessibilite"
 			DE: "AccessibilityDe",
 			CH: "AccessibilityCh",
 			EE: "AccessibilityEe",
+			PL: "AccessibilityPl",
 		},
 		HREF,
 	);
@@ -54,11 +56,12 @@ export function generateMetadata({ params }: PageProps<"/[locale]/accessibilite"
 export default async function AccessibilityPage({ params }: PageProps<"/[locale]/accessibilite">) {
 	const locale = await localeOf(params);
 	setRequestLocale(locale);
-	// Austria's, the UK's, Czechia's, Spain's, Italy's, Germany's, Switzerland's and Estonia's pages
+	// Austria's, the UK's, Czechia's, Spain's, Italy's, Germany's, Switzerland's and Poland's, Switzerland's and Estonia's pages
 	// have texts of their own, written for their law.
 	if (marketOf(locale) === "AT") return <AccessibilityAt locale={locale} />;
 	if (marketOf(locale) === "GB") return <AccessibilityGb locale={locale} />;
 	if (marketOf(locale) === "CZ") return <AccessibilityCz locale={locale} />;
+	if (marketOf(locale) === "PL") return <AccessibilityPl locale={locale} />;
 	if (marketOf(locale) === "ES") return <AccessibilityEs locale={locale} />;
 	if (marketOf(locale) === "IT") return <AccessibilityIt locale={locale} />;
 	if (marketOf(locale) === "DE") return <AccessibilityDe locale={locale} />;

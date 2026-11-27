@@ -66,6 +66,7 @@ const TRANSLATIONS = LOCALES.filter(
 		locale !== "it-IT" &&
 		locale !== "de-DE" &&
 		locale !== "et-EE" &&
+		locale !== "pl-PL" &&
 		marketOf(locale) !== "CH",
 );
 
@@ -80,7 +81,7 @@ function hrefOf(pathname: AppPathname) {
 }
 
 describe("locale configuration", () => {
-	it("serves France under /fr and /fr-{language}, Austria under /at, the UK under /gb, Czechia under /cz, Spain under /es, Italy under /it, Germany under /de, Switzerland under /ch, /ch-fr and /ch-it and Estonia under /ee", () => {
+	it("serves France under /fr and /fr-{language}, Austria under /at, the UK under /gb, Czechia under /cz, Spain under /es, Italy under /it, Germany under /de, Switzerland under /ch, /ch-fr and /ch-it and Estonia under /ee, and Poland under /pl", () => {
 		expect(LOCALES).toEqual([
 			"fr",
 			"en",
@@ -97,6 +98,7 @@ describe("locale configuration", () => {
 			"fr-CH",
 			"it-CH",
 			"et-EE",
+			"pl-PL",
 		]);
 		expect(routing.locales).toEqual(LOCALES);
 		expect(routing.defaultLocale).toBe("fr");
@@ -117,6 +119,7 @@ describe("locale configuration", () => {
 			"fr-CH": "/ch-fr",
 			"it-CH": "/ch-it",
 			"et-EE": "/ee",
+			"pl-PL": "/pl",
 		});
 		expect(LOCALE_SEGMENTS).toEqual([
 			"fr",
@@ -134,6 +137,7 @@ describe("locale configuration", () => {
 			"ch-fr",
 			"ch-it",
 			"ee",
+			"pl",
 		]);
 		expect(LOCALE_MARKETS).toEqual({
 			fr: "FR",
@@ -151,6 +155,7 @@ describe("locale configuration", () => {
 			"fr-CH": "CH",
 			"it-CH": "CH",
 			"et-EE": "EE",
+			"pl-PL": "PL",
 		});
 		expect(CATALOG_LANGUAGES["de-AT"]).toBe("de");
 		expect(CATALOG_LANGUAGES["en-GB"]).toBe("en");
@@ -212,6 +217,7 @@ describe("locale configuration", () => {
 			"fr-CH": "fr-CH",
 			"it-CH": "it-CH",
 			"et-EE": "et-EE",
+			"pl-PL": "pl-PL",
 		});
 		expect(OG_LOCALES).toEqual({
 			fr: "fr_FR",
@@ -229,6 +235,7 @@ describe("locale configuration", () => {
 			"fr-CH": "fr_CH",
 			"it-CH": "it_CH",
 			"et-EE": "et_EE",
+			"pl-PL": "pl_PL",
 		});
 		for (const locale of LOCALES) {
 			expect(Intl.DateTimeFormat.supportedLocalesOf([LOCALE_TAGS[locale]])).toEqual([
@@ -257,6 +264,7 @@ describe("locale configuration", () => {
 			"fr-CH",
 			"it-CH",
 			"et-EE",
+			"pl-PL",
 		]);
 		expect(HREFLANGS).toEqual({
 			fr: "fr-FR",
@@ -270,6 +278,7 @@ describe("locale configuration", () => {
 			"fr-CH": "fr-CH",
 			"it-CH": "it-CH",
 			"et-EE": "et-EE",
+			"pl-PL": "pl-PL",
 		});
 		expect(routing.alternateLinks).toBe(false);
 		expect(robotsFor("fr", true)).toEqual({ index: true, follow: true });
@@ -592,7 +601,7 @@ describe("locale configuration", () => {
 
 describe("the markets a search can move to", () => {
 	it("are the open markets, France first, each at its own segment", () => {
-		expect(MARKET_COUNTRIES).toEqual(["FR", "AT", "GB", "CZ", "ES", "IT", "DE", "CH", "EE"]);
+		expect(MARKET_COUNTRIES).toEqual(["FR", "AT", "GB", "CZ", "ES", "IT", "DE", "CH", "EE", "PL"]);
 		expect(MARKET_COUNTRIES.map(marketSegment)).toEqual([
 			"fr",
 			"at",
@@ -603,6 +612,7 @@ describe("the markets a search can move to", () => {
 			"de",
 			"ch",
 			"ee",
+			"pl",
 		]);
 		for (const country of MARKET_COUNTRIES) {
 			expect(marketOfSegment(marketSegment(country))).toBe(country);

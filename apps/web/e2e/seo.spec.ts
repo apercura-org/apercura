@@ -38,7 +38,8 @@ type Expected = {
 		| "de-CH"
 		| "fr-CH"
 		| "it-CH"
-		| "et-EE";
+		| "et-EE"
+		| "pl-PL";
 	/** The homes (`/fr` and the international `/`) print hreflang `fr-FR` and `x-default`. */
 	hreflang?: true;
 	/**
@@ -145,6 +146,26 @@ const PAGES: Expected[] = [
 		robots: "index, follow",
 		types: ["WebPage", "BreadcrumbList", "MedicalClinic"],
 		lang: "cs-CZ",
+	},
+	// Poland, indexed in Polish under its own segment.
+	{
+		path: "/pl",
+		robots: "index, follow",
+		types: ["WebPage", "WebSite", "Organization"],
+		lang: "pl-PL",
+		hreflang: true,
+	},
+	{
+		path: "/pl/stomatologia/legnica",
+		robots: "index, follow",
+		types: ["CollectionPage", "BreadcrumbList", "ItemList"],
+		lang: "pl-PL",
+	},
+	{
+		path: "/pl/placowka/szpital-przykladowy-900001",
+		robots: "index, follow",
+		types: ["WebPage", "BreadcrumbList", "Hospital"],
+		lang: "pl-PL",
 	},
 	// Spain, indexed in Spanish under its own segment (`es` alone stays France in Spanish, `/fr-es`).
 	{
@@ -380,6 +401,7 @@ const OG_LOCALES = {
 	"fr-CH": "fr_CH",
 	"it-CH": "it_CH",
 	"et-EE": "et_EE",
+	"pl-PL": "pl_PL",
 } as const;
 
 const FORBIDDEN_KEYS = ["aggregateRating", "review", "reviews", "ratingValue"];
@@ -468,7 +490,7 @@ for (const expected of PAGES) {
 		// facility's, an Italian place's) place would not fit with it.
 		if (!/ · Apercura$|^Apercura · /.test(title)) {
 			expect(expected.path).toMatch(
-				/^\/(?:fr(?:-[a-z]{2})?\/[a-z]+\/[a-z0-9-]+-\d{11}|at\/arzt\/[a-z0-9-]+-[a-z]{1,2}\d{1,9}|gb\/practice\/[a-z0-9-]+-[a-z0-9]{2,12}|cz\/zarizeni\/[a-z0-9-]+-\d{1,9}|es\/centro\/[a-z0-9-]+-\d{10}|it\/struttura\/[a-z0-9-]+-[fps]\d{1,8}|de\/einrichtung\/[a-z0-9-]+-(?:k|r|bb)[0-9a-f]{10}|de\/einrichtung\/[a-z0-9-]+-th\d{1,7}|ch(?:-fr|-it)?\/(?:einrichtung|etablissement|struttura)\/[a-z0-9-]+-[a-z]{1,3}\d{1,14})$/,
+				/^\/(?:fr(?:-[a-z]{2})?\/[a-z]+\/[a-z0-9-]+-\d{11}|at\/arzt\/[a-z0-9-]+-[a-z]{1,2}\d{1,9}|gb\/practice\/[a-z0-9-]+-[a-z0-9]{2,12}|cz\/zarizeni\/[a-z0-9-]+-\d{1,9}|es\/centro\/[a-z0-9-]+-\d{10}|it\/struttura\/[a-z0-9-]+-[fps]\d{1,8}|de\/einrichtung\/[a-z0-9-]+-(?:k|r|bb)[0-9a-f]{10}|de\/einrichtung\/[a-z0-9-]+-th\d{1,7}|ch(?:-fr|-it)?\/(?:einrichtung|etablissement|struttura)\/[a-z0-9-]+-[a-z]{1,3}\d{1,14}|pl\/placowka\/[a-z0-9-]+-\d{1,10})$/,
 			);
 			expect(`${title} · Apercura`.length).toBeGreaterThan(60);
 		}
@@ -494,7 +516,7 @@ for (const expected of PAGES) {
 			}));
 		if (expected.hreflang) {
 			// The homes of the open markets (Switzerland's three) and the international one.
-			expect(alternates).toHaveLength(12);
+			expect(alternates).toHaveLength(13);
 			expect(alternates).toEqual(
 				expect.arrayContaining([
 					{ rel: "alternate", hreflang: "fr-FR", href: `${origin}/fr` },
@@ -508,6 +530,7 @@ for (const expected of PAGES) {
 					{ rel: "alternate", hreflang: "fr-CH", href: `${origin}/ch-fr` },
 					{ rel: "alternate", hreflang: "it-CH", href: `${origin}/ch-it` },
 					{ rel: "alternate", hreflang: "et-EE", href: `${origin}/ee` },
+					{ rel: "alternate", hreflang: "pl-PL", href: `${origin}/pl` },
 					{ rel: "alternate", hreflang: "x-default", href: origin },
 				]),
 			);
@@ -546,7 +569,7 @@ for (const expected of PAGES) {
 		// for an Italian place, `de.{slug}` for a German facility), others a generic image.
 		expect(page.meta("og:image")[0]).toMatch(
 			new RegExp(
-				`^${origin}/og/(?:praticien/(?:gb\\.|cz\\.|es\\.|it\\.|de\\.|ch\\.)?[a-z0-9-]+|[a-z-]+)\\.png$`,
+				`^${origin}/og/(?:praticien/(?:gb\\.|cz\\.|es\\.|it\\.|de\\.|ch\\.|pl\\.)?[a-z0-9-]+|[a-z-]+)\\.png$`,
 			),
 		);
 		expect(page.meta("twitter:card")).toEqual(["summary_large_image"]);
@@ -600,7 +623,9 @@ for (const expected of PAGES) {
 											? "CH"
 											: expected.path.startsWith("/ee")
 												? "EE"
-												: "FR",
+												: expected.path.startsWith("/pl")
+													? "PL"
+													: "FR",
 			);
 			expect(address?.addressLocality ?? address?.postalCode, node["@id"]).toBeTruthy();
 		}
@@ -630,7 +655,9 @@ for (const expected of PAGES) {
 														? `${origin}/ch-it`
 														: lang === "et-EE"
 															? `${origin}/ee`
-															: `${origin}/fr-${lang}`;
+															: lang === "pl-PL"
+																? `${origin}/pl`
+																: `${origin}/fr-${lang}`;
 			expect(items[0]?.item).toBe(home);
 			items.forEach((item, index) => {
 				expect(item.position).toBe(index + 1);
