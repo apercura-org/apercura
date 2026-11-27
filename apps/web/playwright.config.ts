@@ -21,6 +21,8 @@ import { E2E_BOOKING_ENV } from "./e2e/booking-env";
  * (`bun run etl:fr --source-dir packages/etl/fixtures/fr --offline`): the global
  * setup opens agendas for four fictitious practitioners (`e2e/booking-seed.ts`).
  * E2E_PORT moves both servers (production on it, development on the next one).
+ * `--shard=i/N` runs a share of the tests, the sitemap's parts dealt across the shards
+ * (e2e/shard-reporter.ts): CI runs the shards in parallel, each with its own database (#191).
  */
 const PROD_PORT = Number(process.env.E2E_PORT ?? 3100);
 const DEV_PORT = PROD_PORT + 1;
@@ -39,7 +41,12 @@ export default defineConfig({
 	fullyParallel: true,
 	forbidOnly: isCI,
 	retries: isCI ? 1 : 0,
-	reporter: isCI ? [["github"], ["list"]] : "list",
+	reporter: [
+		// Splits `--shard=i/N` runs, dealing the sitemap's parts across the shards (#191).
+		["./e2e/shard-reporter.ts", { spread: ["sitemap"] }],
+		// On CI, also a blob report per shard, merged into one HTML report by the workflow.
+		...(isCI ? ([["github"], ["list"], ["blob"]] as const) : ([["list"]] as const)),
+	],
 	timeout: 60_000,
 	use: {
 		...devices["Desktop Chrome"],

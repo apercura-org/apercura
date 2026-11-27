@@ -52,10 +52,21 @@ jobs:
         env:
           SKIP_ENV_VALIDATION: "1"
 
-  e2e:
-    name: End-to-end and accessibility (Playwright + axe)
+  # The Playwright suite in parallel shards (`--shard=i/N`, e2e/shard-reporter.ts deals the
+  # sitemap's parts across them), and Lighthouse CI on a runner of its own (#191). Each one sets
+  # up its own database with every market's fixtures (the sitemap lists every market), builds
+  # the app and starts its own server: on one runner the suite outgrew its 25 minutes. To add a
+  # shard, add "i/N" below and renumber the others. The check to require is the
+  # "End-to-end and accessibility (Playwright + axe)" job after this one.
+  e2e-shards:
+    name: "End-to-end and accessibility (${{ matrix.run == 'lighthouse' && 'Lighthouse CI' || format('shard {0}', matrix.run) }})"
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    # A shard takes about 9 minutes, Lighthouse CI about 7.
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        run: ["1/4", "2/4", "3/4", "4/4", lighthouse]
     # The public pages read the directory: a throwaway PostGIS seeded with the
     # SYNTHETIC fixtures (never real registry data, never production).
     services:
@@ -153,17 +164,26 @@ jobs:
       - name: Install Chromium
         working-directory: apps/web
         run: bunx playwright install --with-deps chromium
-      - run: bun run test:e2e
+      # The app the tests (or Lighthouse CI) run against, built after the imports as before.
+      - name: Build the web app
+        run: bunx turbo run build --filter=@apercura/web
+      - name: Playwright (shard ${{ matrix.run }})
+        if: matrix.run != 'lighthouse'
+        working-directory: apps/web
+        run: bun run test:e2e --shard="$SHARD"
+        env:
+          SHARD: ${{ matrix.run }}
       # Core Web Vitals (mobile emulation), SEO and accessibility scores and JavaScript caps of
-      # the home, a practitioner and a listing page, on the build the e2e tests just used (same
-      # origin as APP_URL, so canonical URLs match).
+      # the home, a practitioner and a listing page, on the same build and fixtures (same origin
+      # as APP_URL, so canonical URLs match).
       - name: Lighthouse CI
+        if: matrix.run == 'lighthouse'
         working-directory: apps/web
         run: bun run lhci
         env:
           LHCI_PORT: "3100"
       - name: Upload Lighthouse reports
-        if: always()
+        if: always() && matrix.run == 'lighthouse'
         uses: actions/upload-artifact@v7
         with:
           name: lighthouse
@@ -171,13 +191,68 @@ jobs:
           # A dot directory: upload-artifact skips hidden files unless told otherwise.
           include-hidden-files: true
           retention-days: 7
-      - name: Upload Playwright traces
-        if: failure()
+      # Merged into one HTML report by the job below.
+      - name: Upload the Playwright blob report
+        if: ${{ !cancelled() && matrix.run != 'lighthouse' }}
         uses: actions/upload-artifact@v7
         with:
-          name: playwright-traces
+          name: blob-report-${{ strategy.job-index }}
+          path: apps/web/blob-report
+          retention-days: 7
+      - name: Upload Playwright traces
+        if: failure() && matrix.run != 'lighthouse'
+        uses: actions/upload-artifact@v7
+        with:
+          name: playwright-traces-${{ strategy.job-index }}
           path: apps/web/test-results
           retention-days: 7
+
+  # The one check to require: passes only when every shard and Lighthouse CI passed (a failed,
+  # cancelled or timed-out one fails it), and merges the shards' reports into one.
+  e2e:
+    name: End-to-end and accessibility (Playwright + axe)
+    needs: e2e-shards
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .node-version
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version-file: package.json
+      - run: bun install --frozen-lockfile
+      # Best effort: the verdict below comes from the shards' results, not from the report.
+      - name: Download the shards' blob reports
+        continue-on-error: true
+        uses: actions/download-artifact@v8
+        with:
+          pattern: blob-report-*
+          path: all-blob-reports
+          merge-multiple: true
+      - name: Merge them into one HTML report
+        id: merge
+        if: hashFiles('all-blob-reports/*.zip') != ''
+        continue-on-error: true
+        working-directory: apps/web
+        run: bunx playwright merge-reports --reporter html ../../all-blob-reports
+      - name: Upload the Playwright HTML report
+        if: steps.merge.outcome == 'success'
+        uses: actions/upload-artifact@v7
+        with:
+          name: playwright-report
+          path: apps/web/playwright-report
+          retention-days: 7
+      - name: Every shard and Lighthouse CI passed
+        env:
+          RESULT: ${{ needs.e2e-shards.result }}
+        run: |
+          if [ "$RESULT" != "success" ]; then
+            echo "::error::End-to-end shards or Lighthouse CI: $RESULT (see their jobs, and the playwright-report artifact)"
+            exit 1
+          fi
 
   migrations:
     name: Database migrations
