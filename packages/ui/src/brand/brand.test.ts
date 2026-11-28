@@ -1,6 +1,6 @@
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
-import { paletteDarkHex, paletteHex } from "../tokens";
+import { brandInks, paletteHex } from "../tokens";
 import {
 	BRAND_COLORS,
 	BRAND_LOCKUP_WIDTH,
@@ -31,17 +31,18 @@ describe("the logo files", () => {
 		expect(read("apps/web/src/app/icon.svg")).toBe(brandFaviconSvg());
 	});
 
-	it("print only the design tokens' ink and accent", () => {
-		expect(BRAND_COLORS.light).toEqual({ ink: paletteHex.ink, accent: paletteHex.stamp });
-		expect(BRAND_COLORS.dark).toEqual({ ink: paletteDarkHex.ink, accent: paletteDarkHex.stamp });
+	it("print only the logo's two inks, the light accent being the theme's", () => {
+		expect(BRAND_COLORS.light).toEqual(brandInks.light);
+		expect(BRAND_COLORS.dark).toEqual(brandInks.dark);
+		expect(brandInks.light.accent).toBe(paletteHex.stamp);
 		expect(brandSymbolSvg("mono")).not.toMatch(/#[0-9a-f]{3,6}/i);
 		const favicon = brandFaviconSvg();
 		expect(favicon).toContain("prefers-color-scheme:dark");
 		for (const color of [
-			paletteHex.ink,
-			paletteHex.stamp,
-			paletteDarkHex.ink,
-			paletteDarkHex.stamp,
+			brandInks.light.ink,
+			brandInks.light.accent,
+			brandInks.dark.ink,
+			brandInks.dark.accent,
 		]) {
 			expect(favicon).toContain(color);
 		}

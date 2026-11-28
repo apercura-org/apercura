@@ -1,8 +1,9 @@
 /**
- * Minimal OKLCH colour maths: conversion to sRGB and WCAG 2.x contrast.
+ * Minimal colour maths: OKLCH and hex parsing, conversion to sRGB, alpha compositing and
+ * WCAG 2.x contrast.
  *
- * Tokens are authored in OKLCH. Consumers that cannot parse OKLCH (MapLibre
- * styles, Open Graph images) use the hex values derived here, and the unit
+ * Astryx's built theme writes hex; the map tints are authored in OKLCH. Consumers that cannot
+ * parse OKLCH (MapLibre styles, Open Graph images) use the hex values derived here, and the unit
  * tests use the contrast helpers to verify every token pair the UI relies on.
  */
 
@@ -81,25 +82,87 @@ function encodeSrgb(linear: number): number {
 	return value <= 0.0031308 ? 12.92 * value : 1.055 * value ** (1 / 2.4) - 0.055;
 }
 
-/** Converts an OKLCH string to a `#rrggbb` hex string (gamut-clipped, alpha ignored). */
-export function oklchToHex(value: string): string {
-	const linear = oklchToLinearSrgb(parseOklch(value));
-	return `#${linear
+/** An sRGB colour, each gamma-encoded channel and the alpha in 0–1. */
+export interface Srgba {
+	r: number;
+	g: number;
+	b: number;
+	alpha: number;
+}
+
+const HEX_PATTERN = /^#(?:[0-9a-f]{3,4}|[0-9a-f]{6}|[0-9a-f]{8})$/i;
+
+/** Parses `#rgb`, `#rgba`, `#rrggbb` or `#rrggbbaa`, the form Astryx's built theme writes. */
+export function parseHex(value: string): Srgba {
+	const trimmed = value.trim();
+	if (!HEX_PATTERN.test(trimmed)) {
+		throw new Error(`Not a hex colour: ${value}`);
+	}
+	const digits = trimmed.slice(1);
+	const full = digits.length <= 4 ? [...digits].map((digit) => digit + digit).join("") : digits;
+	const channel = (index: number) =>
+		Number.parseInt(full.slice(index * 2, index * 2 + 2), 16) / 255;
+	return { r: channel(0), g: channel(1), b: channel(2), alpha: full.length === 8 ? channel(3) : 1 };
+}
+
+/** Parses a hex or an `oklch()` colour into gamma-encoded sRGB (gamut-clipped). */
+export function parseColor(value: string): Srgba {
+	if (value.trim().startsWith("#")) return parseHex(value);
+	const oklch = parseOklch(value);
+	const [r, g, b] = oklchToLinearSrgb(oklch).map(encodeSrgb) as [number, number, number];
+	return { r, g, b, alpha: oklch.alpha ?? 1 };
+}
+
+/** Formats an sRGB colour as `#rrggbb` (alpha dropped). */
+export function toHex({ r, g, b }: Srgba): string {
+	return `#${[r, g, b]
 		.map((channel) =>
-			Math.round(encodeSrgb(channel) * 255)
+			Math.round(clamp01(channel) * 255)
 				.toString(16)
 				.padStart(2, "0"),
 		)
 		.join("")}`;
 }
 
-/** WCAG 2.x relative luminance of an OKLCH colour. */
-export function relativeLuminance(value: string): number {
-	const [r, g, b] = oklchToLinearSrgb(parseOklch(value)).map(clamp01) as [number, number, number];
-	return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+/** Converts an OKLCH string to a `#rrggbb` hex string (gamut-clipped, alpha ignored). */
+export function oklchToHex(value: string): string {
+	return toHex(parseColor(value));
 }
 
-/** WCAG 2.x contrast ratio between two opaque OKLCH colours (1 to 21). */
+/**
+ * `color-mix(in srgb, first, second <weight>)`: `weight` of the second colour, the rest of the
+ * first, both opaque.
+ */
+export function mixSrgb(first: string, second: string, weight: number): string {
+	const a = parseColor(first);
+	const b = parseColor(second);
+	const mix = (x: number, y: number) => x * (1 - weight) + y * weight;
+	return toHex({ r: mix(a.r, b.r), g: mix(a.g, b.g), b: mix(a.b, b.b), alpha: 1 });
+}
+
+/** A translucent colour painted over an opaque ground, as the eye sees it (`#rrggbb`). */
+export function composite(color: string, ground: string): string {
+	const top = parseColor(color);
+	const base = parseColor(ground);
+	const over = (x: number, y: number) => x * top.alpha + y * (1 - top.alpha);
+	return toHex({
+		r: over(top.r, base.r),
+		g: over(top.g, base.g),
+		b: over(top.b, base.b),
+		alpha: 1,
+	});
+}
+
+const linearize = (channel: number) =>
+	channel <= 0.04045 ? channel / 12.92 : ((channel + 0.055) / 1.055) ** 2.4;
+
+/** WCAG 2.x relative luminance of an opaque hex or OKLCH colour. */
+export function relativeLuminance(value: string): number {
+	const { r, g, b } = parseColor(value);
+	return 0.2126 * linearize(r) + 0.7152 * linearize(g) + 0.0722 * linearize(b);
+}
+
+/** WCAG 2.x contrast ratio between two opaque hex or OKLCH colours (1 to 21). */
 export function contrastRatio(foreground: string, background: string): number {
 	const first = relativeLuminance(foreground);
 	const second = relativeLuminance(background);
