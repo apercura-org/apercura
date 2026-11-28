@@ -157,7 +157,7 @@ export const badgeStyles = tv({
 			/** Neutral mark: unclaimed, not provided, informational. */
 			ink: "border-field-edge bg-paper-shade text-ink",
 			/** Accent mark: verified page, booked slot. */
-			stamp: "border-stamp bg-stamp-tint text-stamp",
+			stamp: "border-stamp bg-stamp-tint text-stamp-ink",
 			/** Error mark. */
 			error: "border-error bg-error-tint text-error",
 		},

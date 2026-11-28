@@ -1,4 +1,4 @@
-import { paletteDarkHex, paletteHex } from "../tokens";
+import { brandInks, paletteHex } from "../tokens";
 
 /*
  * Apercura's logo, direction "Pin a": a round tile with one sharp corner (a map pin tipped onto
@@ -35,8 +35,8 @@ export const BRAND_WORDMARK_PATH =
 export type BrandVariant = "light" | "dark" | "mono";
 
 export const BRAND_COLORS: Record<BrandVariant, { ink: string; accent: string }> = {
-	light: { ink: paletteHex.ink, accent: paletteHex.stamp },
-	dark: { ink: paletteDarkHex.ink, accent: paletteDarkHex.stamp },
+	light: brandInks.light,
+	dark: brandInks.dark,
 	mono: { ink: "currentColor", accent: "currentColor" },
 };
 

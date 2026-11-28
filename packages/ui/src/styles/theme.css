@@ -1,84 +1,77 @@
 /*
- * Apercura design tokens for Tailwind CSS v4.
+ * Apercura's Tailwind CSS v4 names for the Astryx theme.
  *
- * Import after `tailwindcss`. Tailwind's default palette, type scale, radii and
- * shadows are removed on purpose: only Apercura's own tokens exist, so the
- * palette laws (the accent = action/verified/booked, red = errors) cannot drift.
+ * Import after `tailwindcss`. The colours, corners, shadows, fonts and durations are defined once,
+ * in the Astryx theme (`src/astryx/apercura.ts`, built to `src/astryx/built/apercura.css`, loaded
+ * here so every page has its variables, with or without an Astryx component). The utilities the
+ * app writes (`bg-paper`, `text-ink`, `border-field-edge`, `rounded-panel`…) are aliases of those
+ * variables, inlined into each utility so a part of the page that re-colours an Astryx role
+ * re-colours the utilities inside it too. Tailwind's default palette, radii and shadows are
+ * removed on purpose: only these names exist, so the palette laws (the accent = action, verified,
+ * booked; red = errors) cannot drift. A unit test checks that every alias names a variable the
+ * built theme defines.
  *
- * Two themes share one set of names. The raw values live once, as `--light-*`
- * and `--dark-*`; the `--color-*` tokens every utility reads point at the light
- * ones, and are pointed at the dark ones when the visitor chose dark
- * (`<html data-theme="dark">`, set before first paint by /theme.js) or chose
- * nothing and the system is dark. Without JavaScript the system decides.
- * Keep the values in sync with `src/tokens/index.ts` (checked by a unit test).
+ * Every Astryx colour is a `light-dark()` pair: the `color-scheme` of the page (set below from
+ * the visitor's choice, `<html data-theme>`, written before first paint by /theme.js, or from the
+ * system when nothing is chosen) picks the side. Without JavaScript the system decides.
  */
+@import "../astryx/built/apercura.css";
 
-:root {
-	--light-paper: oklch(1 0 0);
-	--light-paper-shade: oklch(0.977 0.003 260);
-	--light-ink: oklch(0.23 0.014 260);
-	--light-ink-muted: oklch(0.47 0.014 260);
-	--light-ink-disabled: oklch(0.6 0.01 260);
-	--light-rule-soft: oklch(0.885 0.007 260);
-	--light-field-edge: oklch(0.6 0.012 260);
-	--light-stamp: oklch(0.47 0.13 285);
-	--light-stamp-strong: oklch(0.4 0.12 285);
-	--light-stamp-tint: oklch(0.965 0.016 285);
-	--light-error: oklch(0.52 0.16 25);
-	--light-error-tint: oklch(0.97 0.013 25);
-	--light-overlay-shadow: oklch(0.23 0.03 260 / 0.16);
-
-	--dark-paper: oklch(0.2 0.01 260);
-	--dark-paper-shade: oklch(0.235 0.011 260);
-	--dark-ink: oklch(0.95 0.005 260);
-	--dark-ink-muted: oklch(0.77 0.012 260);
-	--dark-ink-disabled: oklch(0.59 0.01 260);
-	--dark-rule-soft: oklch(0.34 0.013 262);
-	--dark-field-edge: oklch(0.6 0.012 260);
-	--dark-stamp: oklch(0.78 0.1 285);
-	--dark-stamp-strong: oklch(0.85 0.075 285);
-	--dark-stamp-tint: oklch(0.28 0.04 285);
-	--dark-error: oklch(0.74 0.14 25);
-	--dark-error-tint: oklch(0.27 0.045 25);
-	--dark-overlay-shadow: oklch(0 0 0 / 0.5);
-}
-
-@theme {
+@theme inline {
 	--color-*: initial;
-	--color-paper: var(--light-paper);
-	--color-paper-shade: var(--light-paper-shade);
-	--color-ink: var(--light-ink);
-	--color-ink-muted: var(--light-ink-muted);
-	--color-ink-disabled: var(--light-ink-disabled);
-	--color-rule-soft: var(--light-rule-soft);
-	--color-field-edge: var(--light-field-edge);
-	--color-stamp: var(--light-stamp);
-	--color-stamp-strong: var(--light-stamp-strong);
-	--color-stamp-tint: var(--light-stamp-tint);
-	--color-error: var(--light-error);
-	--color-error-tint: var(--light-error-tint);
+	/* Grounds: the white (in dark, graphite) surface, and the quiet muted shade. */
+	--color-paper: var(--color-background-surface);
+	--color-paper-shade: var(--color-background-muted);
+	/* Type. */
+	--color-ink: var(--color-text-primary);
+	--color-ink-muted: var(--color-text-secondary);
+	--color-ink-disabled: var(--color-text-disabled);
+	/* Rules: hairlines between rows (decorative), and the 3:1 edge of fields and controls. */
+	--color-rule-soft: var(--color-border);
+	--color-field-edge: var(--color-border-emphasized);
+	/* The one accent: fills, rules and focus; `stamp-ink` is the accent set as text on its wash. */
+	--color-stamp: var(--color-accent);
+	--color-stamp-strong: color-mix(in srgb, var(--color-accent), var(--color-text-primary) 15%);
+	--color-stamp-ink: var(--color-text-accent);
+	--color-stamp-tint: var(--color-accent-muted);
+	/* Red is for errors only: the text-safe error ink, and its wash. */
+	--color-error: var(--color-text-error);
+	--color-error-tint: var(--color-error-muted);
 
 	/*
 	 * One family, Allo. The app loads it and names its faces in `--font-allo` and
-	 * `--font-allo-ext` (apps/web/src/app/fonts.ts). Body copy turns on the tailed l and the
-	 * serifed I (cv03, cv04), so Il1 never read alike; headings and labels keep the plain forms.
+	 * `--font-allo-ext` (apps/web/src/app/fonts.ts); the theme lists them with their fallbacks.
+	 * Body copy turns on the tailed l and the serifed I (cv03, cv04), so Il1 never read alike;
+	 * headings and labels keep the plain forms.
 	 */
 	--font-*: initial;
-	--font-display:
-		var(--font-allo, "Allo"), var(--font-allo-ext, "Allo"), "Allo Fallback", ui-sans-serif,
-		system-ui, sans-serif;
+	--font-display: var(--font-family-heading);
 	--font-display--font-feature-settings: normal;
-	--font-body:
-		var(--font-allo, "Allo"), var(--font-allo-ext, "Allo"), "Allo Fallback", ui-sans-serif,
-		system-ui, sans-serif;
+	--font-body: var(--font-family-body);
 	--font-body--font-feature-settings: "cv03", "cv04";
 
+	/* Astryx's corners: marks (badges, menu rows, checkboxes), controls, panels. */
+	--radius-*: initial;
+	--radius-mark: var(--radius-inner);
+	--radius-field: var(--radius-element);
+	--radius-panel: var(--radius-container);
+	--radius-full: 9999px;
+
+	/* What floats over the page (popovers, menus, dialogs) takes Astryx's highest elevation. */
+	--shadow-*: initial;
+	--shadow-overlay: var(--shadow-high);
+	--inset-shadow-*: initial;
+	--drop-shadow-*: initial;
+}
+
+@theme {
+	/* The app's type roles. Body copy is the theme's 18 px body size, the floor on patient surfaces. */
 	--text-*: initial;
 	--text-folio: 0.875rem;
 	--text-folio--line-height: 1.35;
 	--text-meta: 1rem;
 	--text-meta--line-height: 1.5;
-	--text-body: 1.125rem;
+	--text-body: var(--text-body-size);
 	--text-body--line-height: 1.6;
 	--text-lead: 1.25rem;
 	--text-lead--line-height: 1.5;
@@ -89,26 +82,10 @@
 	--text-display: clamp(2.625rem, 1.55rem + 3.8vw, 4.75rem);
 	--text-display--line-height: 1.02;
 
-	--radius-*: initial;
-	/*
-	 * One scale of soft corners (`radii` in `src/tokens/index.ts`): marks (badges, menu rows,
-	 * agenda tiles, checkboxes) 6 px; controls (fields, buttons, the select) 10 px; panels (the
-	 * stamps, dialogs, notices, menus, the map) 14 px; full round for pills, knobs and seals.
-	 */
-	--radius-mark: 0.375rem;
-	--radius-field: 0.625rem;
-	--radius-panel: 0.875rem;
-	--radius-full: 9999px;
-
-	/* One elevation, for what floats over the page (popovers, menus, dialogs). Nothing else casts a shadow. */
-	--shadow-*: initial;
-	--shadow-overlay: 0 12px 32px -12px var(--overlay-shadow), 0 2px 6px -2px var(--overlay-shadow);
-	--inset-shadow-*: initial;
-	--drop-shadow-*: initial;
-
+	/* The theme's calm durations: 180 ms for what slips in, 240 ms for a sheet. */
 	--animate-stamp: stamp 200ms cubic-bezier(0.25, 1, 0.5, 1);
-	--animate-slip-in: slip-in 180ms cubic-bezier(0.16, 1, 0.3, 1);
-	--animate-sheet-in: sheet-in 240ms cubic-bezier(0.16, 1, 0.3, 1);
+	--animate-slip-in: slip-in var(--duration-medium) cubic-bezier(0.16, 1, 0.3, 1);
+	--animate-sheet-in: sheet-in var(--duration-slow) cubic-bezier(0.16, 1, 0.3, 1);
 	--animate-pulse-soft: pulse-soft 1.6s ease-in-out infinite;
 
 	/* A booked slot settles in: a short, quiet scale from 96 %. */
@@ -146,12 +123,11 @@
 }
 
 /*
- * The dark theme: chosen, or followed from the system when nothing is chosen. The two blocks
- * hold the same declarations (a media query and an attribute cannot share one selector).
+ * The colour scheme: the system's when nothing is chosen, else the stored choice. Astryx's
+ * `light-dark()` colours follow it, the utilities with them.
  */
 @layer base {
 	:root {
-		--overlay-shadow: var(--light-overlay-shadow);
 		color-scheme: light dark;
 	}
 
@@ -159,39 +135,7 @@
 		color-scheme: light;
 	}
 
-	@media (prefers-color-scheme: dark) {
-		:root:not([data-theme="light"]) {
-			--color-paper: var(--dark-paper);
-			--color-paper-shade: var(--dark-paper-shade);
-			--color-ink: var(--dark-ink);
-			--color-ink-muted: var(--dark-ink-muted);
-			--color-ink-disabled: var(--dark-ink-disabled);
-			--color-rule-soft: var(--dark-rule-soft);
-			--color-field-edge: var(--dark-field-edge);
-			--color-stamp: var(--dark-stamp);
-			--color-stamp-strong: var(--dark-stamp-strong);
-			--color-stamp-tint: var(--dark-stamp-tint);
-			--color-error: var(--dark-error);
-			--color-error-tint: var(--dark-error-tint);
-			--overlay-shadow: var(--dark-overlay-shadow);
-			color-scheme: dark;
-		}
-	}
-
 	:root[data-theme="dark"] {
-		--color-paper: var(--dark-paper);
-		--color-paper-shade: var(--dark-paper-shade);
-		--color-ink: var(--dark-ink);
-		--color-ink-muted: var(--dark-ink-muted);
-		--color-ink-disabled: var(--dark-ink-disabled);
-		--color-rule-soft: var(--dark-rule-soft);
-		--color-field-edge: var(--dark-field-edge);
-		--color-stamp: var(--dark-stamp);
-		--color-stamp-strong: var(--dark-stamp-strong);
-		--color-stamp-tint: var(--dark-stamp-tint);
-		--color-error: var(--dark-error);
-		--color-error-tint: var(--dark-error-tint);
-		--overlay-shadow: var(--dark-overlay-shadow);
 		color-scheme: dark;
 	}
 }
@@ -201,19 +145,6 @@
  * zone, the share kit's poster preview).
  */
 @utility scheme-light {
-	--color-paper: var(--light-paper);
-	--color-paper-shade: var(--light-paper-shade);
-	--color-ink: var(--light-ink);
-	--color-ink-muted: var(--light-ink-muted);
-	--color-ink-disabled: var(--light-ink-disabled);
-	--color-rule-soft: var(--light-rule-soft);
-	--color-field-edge: var(--light-field-edge);
-	--color-stamp: var(--light-stamp);
-	--color-stamp-strong: var(--light-stamp-strong);
-	--color-stamp-tint: var(--light-stamp-tint);
-	--color-error: var(--light-error);
-	--color-error-tint: var(--light-error-tint);
-	--focus-ring: var(--light-stamp);
 	color-scheme: light;
 	background-color: var(--color-paper);
 	color: var(--color-ink);
@@ -372,10 +303,9 @@
 	}
 
 	/*
-	 * The Apercura theme for Astryx (`src/astryx/apercura.css`, loaded with the islands built on
-	 * Astryx) also gives bare headings, paragraphs and small print a type of their own, in the
-	 * lower `reset` layer. The booklet sets its type with its own roles: these elements inherit,
-	 * as they do on a page without an Astryx component.
+	 * The built Astryx theme (imported above) also gives bare headings, paragraphs and small print
+	 * a type of their own, in the lower `reset` layer. The booklet sets its type with its own
+	 * roles: these elements inherit.
 	 */
 	:where(h1, h2, h3, h4, h5, h6, p, small) {
 		font-family: inherit;
@@ -483,10 +413,11 @@
 	}
 
 	/*
-	 * The practitioner's stamp (`Stamp`): a single violet rule with the panel's soft corners, its
-	 * face set in type. Its state is the ink treatment: outlined (the page is not claimed), solid
-	 * ink (claimed and verified), a dashed rule over a faint hatch (a claim being checked). Plain
-	 * CSS, a few bytes per stamp however many a page prints.
+	 * The practitioner's stamp (`Stamp`): a single violet rule with its own soft corners (14 px,
+	 * the brand's, a touch rounder than Astryx's panels), its face set in type. Its state is the
+	 * ink treatment: outlined (the page is not claimed), solid ink (claimed and verified), a dashed
+	 * rule over a faint hatch (a claim being checked). Plain CSS, a few bytes per stamp however
+	 * many a page prints.
 	 */
 	.stamp {
 		--stamp-ink: var(--color-stamp);
@@ -494,7 +425,7 @@
 		flex-direction: column;
 		overflow: hidden;
 		border: 1px solid var(--stamp-ink);
-		border-radius: var(--radius-panel);
+		border-radius: 0.875rem;
 		background-color: var(--color-paper);
 		color: var(--stamp-ink);
 	}

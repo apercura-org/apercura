@@ -9,7 +9,7 @@ import {
 	SiteCard,
 	SkeletonText,
 } from "@apercura/ui";
-import { contrastRatio, palette } from "@apercura/ui/tokens";
+import { contrastRatio, paletteHex } from "@apercura/ui/tokens";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { hasLocale } from "next-intl";
@@ -102,14 +102,15 @@ export default async function GalleryPage({ params }: PageProps<"/[locale]/_ui">
 										<span
 											aria-hidden="true"
 											className="size-12 shrink-0 border border-ink"
-											style={{ backgroundColor: palette[name] }}
+											style={{ backgroundColor: paletteHex[name] }}
 										/>
 										<span className="flex min-w-0 flex-col">
 											<span className="text-meta font-semibold text-ink">
 												{t(`palette.${name}`)}
 											</span>
 											<span className="text-meta text-ink-muted tabular">
-												{palette[name]} · {contrastRatio(palette[name], palette.paper).toFixed(2)}:1
+												{paletteHex[name]} ·{" "}
+												{contrastRatio(paletteHex[name], paletteHex.paper).toFixed(2)}:1
 											</span>
 										</span>
 									</li>

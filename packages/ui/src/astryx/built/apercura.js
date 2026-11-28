@@ -114,26 +114,26 @@ export const apercuraTheme = {
     "--color-syntax-diff-header": "transparent",
     "--color-syntax-added-marker": "var(--color-syntax-punctuation)",
     "--color-syntax-removed-marker": "var(--color-syntax-punctuation)",
-    "--color-background-surface": "light-dark(oklch(1 0 0), oklch(0.2 0.01 260))",
-    "--color-background-body": "light-dark(oklch(1 0 0), oklch(0.2 0.01 260))",
-    "--color-background-card": "light-dark(oklch(1 0 0), oklch(0.2 0.01 260))",
-    "--color-background-popover": "light-dark(oklch(1 0 0), oklch(0.2 0.01 260))",
-    "--color-background-muted": "light-dark(oklch(0.977 0.003 260), oklch(0.235 0.011 260))",
-    "--color-accent": "light-dark(oklch(0.47 0.13 285), oklch(0.78 0.1 285))",
-    "--color-accent-muted": "light-dark(oklch(0.965 0.016 285), oklch(0.28 0.04 285))",
+    "--color-background-surface": "light-dark(#ffffff, #24262a)",
+    "--color-background-body": "light-dark(#f0f1f2, #1a1c1f)",
+    "--color-background-card": "light-dark(#ffffff, #1a1c1f)",
+    "--color-background-popover": "light-dark(#ffffff, #1a1c1f)",
+    "--color-background-muted": "light-dark(#f0f1f2, #1a1c1f)",
+    "--color-accent": "light-dark(#554da0, #a39ff8)",
+    "--color-accent-muted": "light-dark(#d2d3e5, #423887)",
     "--color-neutral": "light-dark(#0000000F, #ffffff1A)",
-    "--color-overlay": "oklch(0.23 0.014 260 / 0.45)",
-    "--color-overlay-hover": "light-dark(#0000000D, #ffffff0D)",
-    "--color-overlay-pressed": "light-dark(#0000001A, #ffffff1A)",
-    "--color-text-primary": "light-dark(oklch(0.23 0.014 260), oklch(0.95 0.005 260))",
-    "--color-text-secondary": "light-dark(oklch(0.47 0.014 260), oklch(0.77 0.012 260))",
-    "--color-text-disabled": "light-dark(oklch(0.6 0.01 260), oklch(0.59 0.01 260))",
-    "--color-text-accent": "light-dark(oklch(0.47 0.13 285), oklch(0.78 0.1 285))",
-    "--color-on-dark": "#ffffff",
-    "--color-on-light": "#111111",
-    "--color-on-accent": "light-dark(oklch(1 0 0), oklch(0.2 0.01 260))",
+    "--color-overlay": "light-dark(#00000080, #000000CC)",
+    "--color-overlay-hover": "light-dark(#0000000d, #ffffff0d)",
+    "--color-overlay-pressed": "light-dark(#0000001a, #ffffff1a)",
+    "--color-text-primary": "light-dark(#000000, #ffffff)",
+    "--color-text-secondary": "light-dark(#444850, #9a9ea7)",
+    "--color-text-disabled": "light-dark(#8e929c, #51545d)",
+    "--color-text-accent": "light-dark(#554da0, #c2c3e6)",
+    "--color-on-dark": "light-dark(#ffffff, #ffffff)",
+    "--color-on-light": "light-dark(#0f1114, #101114)",
+    "--color-on-accent": "light-dark(#ffffff, #101114)",
     "--color-on-success": "light-dark(#ffffff, #111111)",
-    "--color-on-error": "light-dark(oklch(1 0 0), oklch(0.2 0.01 260))",
+    "--color-on-error": "light-dark(#ffffff, #101114)",
     "--color-on-warning": "#111111",
     "--color-info": "light-dark(#0074e2, #6d9cfe)",
     "--color-info-muted": "light-dark(#b9d7ff, #88bcff3D)",
@@ -141,24 +141,24 @@ export const apercuraTheme = {
     "--color-text-info": "light-dark(#0067ce, #a1caff)",
     "--color-text-success": "light-dark(#2f7d33, #90ca90)",
     "--color-text-warning": "light-dark(#836700, #eec448)",
-    "--color-text-error": "light-dark(oklch(0.52 0.16 25), oklch(0.74 0.14 25))",
+    "--color-text-error": "light-dark(#a4292b, #f2b5af)",
     "--color-on-info-muted": "light-dark(#003978, #a1caff)",
     "--color-on-success-muted": "light-dark(#00490b, #90ca90)",
     "--color-on-warning-muted": "light-dark(#4b3900, #eec448)",
-    "--color-on-error-muted": "light-dark(oklch(0.52 0.16 25), oklch(0.74 0.14 25))",
-    "--color-icon-accent": "light-dark(oklch(0.47 0.13 285), oklch(0.78 0.1 285))",
-    "--color-icon-primary": "light-dark(oklch(0.23 0.014 260), oklch(0.95 0.005 260))",
-    "--color-icon-secondary": "light-dark(oklch(0.47 0.014 260), oklch(0.77 0.012 260))",
-    "--color-icon-disabled": "light-dark(oklch(0.6 0.01 260), oklch(0.59 0.01 260))",
+    "--color-on-error-muted": "light-dark(#75010c, #f2b5af)",
+    "--color-icon-accent": "light-dark(#554da0, #c2c3e6)",
+    "--color-icon-primary": "light-dark(#000000, #ffffff)",
+    "--color-icon-secondary": "light-dark(#6b6f78, #9a9ea7)",
+    "--color-icon-disabled": "light-dark(#8e929c, #51545d)",
     "--color-success": "light-dark(#198100, #64af4c)",
     "--color-warning": "#ffce2f",
-    "--color-error": "light-dark(oklch(0.52 0.16 25), oklch(0.74 0.14 25))",
+    "--color-error": "light-dark(#b33736, #f5877f)",
     "--color-success-muted": "light-dark(#bce0bb, #90ca903D)",
-    "--color-error-muted": "light-dark(oklch(0.97 0.013 25), oklch(0.27 0.045 25))",
+    "--color-error-muted": "light-dark(#eacdca, #ff98903d)",
     "--color-warning-muted": "light-dark(#fae19e, #e2b6233D)",
-    "--color-border": "light-dark(oklch(0.885 0.007 260), oklch(0.34 0.013 262))",
-    "--color-border-emphasized": "light-dark(oklch(0.6 0.012 260), oklch(0.6 0.012 260))",
-    "--color-skeleton": "light-dark(oklch(0.977 0.003 260), oklch(0.235 0.011 260))",
+    "--color-border": "light-dark(#00000014, #ffffff1a)",
+    "--color-border-emphasized": "light-dark(#82868e, #70757c)",
+    "--color-skeleton": "light-dark(#d2d4d8, #51545d)",
     "--color-shadow": "light-dark(#0000001A, #0000004D)",
     "--color-tint-hover": "light-dark(#000000, #ffffff)",
     "--color-background-red": "light-dark(#ffc4be, #5b2b28)",
@@ -202,26 +202,29 @@ export const apercuraTheme = {
     "--color-icon-gray": "light-dark(#474747, #9e9e9e)",
     "--color-text-gray": "light-dark(#1b1b1b, #d4d4d4)",
     "--radius-none": "0px",
-    "--radius-inner": "6px",
-    "--radius-element": "10px",
-    "--radius-container": "14px",
-    "--radius-page": "14px",
+    "--radius-inner": "0.375rem",
+    "--radius-element": "0.625rem",
+    "--radius-container": "0.75rem",
+    "--radius-page": "1.75rem",
     "--radius-chat": "28px",
     "--radius-full": "9999px",
-    "--shadow-low": "0 12px 32px -12px light-dark(oklch(0.23 0.03 260 / 0.16), oklch(0 0 0 / 0.5)), 0 2px 6px -2px light-dark(oklch(0.23 0.03 260 / 0.16), oklch(0 0 0 / 0.5))",
-    "--shadow-med": "0 12px 32px -12px light-dark(oklch(0.23 0.03 260 / 0.16), oklch(0 0 0 / 0.5)), 0 2px 6px -2px light-dark(oklch(0.23 0.03 260 / 0.16), oklch(0 0 0 / 0.5))",
-    "--shadow-high": "0 12px 32px -12px light-dark(oklch(0.23 0.03 260 / 0.16), oklch(0 0 0 / 0.5)), 0 2px 6px -2px light-dark(oklch(0.23 0.03 260 / 0.16), oklch(0 0 0 / 0.5))",
+    "--shadow-low": "0 2px 4px light-dark(oklch(0 0 0 / 5%), oklch(0 0 0 / 25%)), 0 4px 8px light-dark(oklch(0 0 0 / 10%), oklch(0 0 0 / 40%)), inset 0 0 0 1px light-dark(transparent, oklch(1 0 0 / 8%))",
+    "--shadow-med": "0 2px 4px light-dark(oklch(0 0 0 / 5%), oklch(0 0 0 / 35%)), 0 4px 12px light-dark(oklch(0 0 0 / 10%), oklch(0 0 0 / 50%)), inset 0 0 0 1px light-dark(transparent, oklch(1 0 0 / 12%))",
+    "--shadow-high": "0 4px 6px light-dark(oklch(0 0 0 / 10%), oklch(0 0 0 / 50%)), 0 12px 24px light-dark(oklch(0 0 0 / 15%), oklch(0 0 0 / 70%)), inset 0 0 0 1px light-dark(transparent, oklch(1 0 0 / 15%))",
     "--shadow-inset-hover": "inset 0px 0px 0px 2px #0074e24D",
     "--shadow-inset-selected": "inset 0px 0px 0px 2px #0074e280",
     "--shadow-inset-success": "inset 0px 0px 0px 2px #2f7d334D",
     "--shadow-inset-warning": "inset 0px 0px 0px 2px #f8d36a4D",
     "--shadow-inset-error": "inset 0px 0px 0px 2px #de47454D",
+    "--color-background-inverted": "light-dark(#191c20, #f0f1f2)",
+    "--focus-outline-color": "var(--focus-ring, var(--color-accent))",
+    "--color-icon-error": "light-dark(#a4292b, #f2b5af)",
+    "--color-border-error": "light-dark(#e4bbb7, #e87871)",
     "--size-element-sm": "44px",
     "--size-element-md": "44px",
     "--size-element-lg": "52px",
     "--focus-outline-width": "3px",
-    "--focus-outline-offset": "2px",
-    "--focus-outline-color": "var(--focus-ring, var(--color-accent))"
+    "--focus-outline-offset": "2px"
   },
   localTokens: {
     "--astryx-theme-neutral-color-status-fill-accent": "light-dark(#0074e2, #6d9cfe)"
@@ -328,7 +331,13 @@ export const apercuraTheme = {
     },
     "item": {
       "selected": {
-        "--color-text-secondary": "light-dark(#474747, #c6c6c6)"
+        "--color-text-secondary": "light-dark(#474747, #c6c6c6)",
+        "@light": {
+          "--color-text-secondary": "#444850"
+        },
+        "@dark": {
+          "--color-text-secondary": "#c4c6cb"
+        }
       }
     },
     "tree-list-item": {
@@ -422,20 +431,7 @@ export const apercuraTheme = {
     },
     "switch": {
       "base": {
-        "--color-background-gray": "var(--color-border-emphasized)",
-        "width": "48px",
-        "height": "28px",
-        "borderWidth": "2px",
-        "borderStyle": "solid",
-        "borderColor": "var(--color-text-primary)",
-        "backgroundColor": "var(--color-background-surface)"
-      },
-      "checked": {
-        "backgroundColor": "var(--color-text-primary)",
-        "borderColor": "var(--color-text-primary)"
-      },
-      "disabled": {
-        "borderColor": "var(--color-text-disabled)"
+        "--color-background-gray": "var(--color-border-emphasized)"
       }
     },
     "progress-bar": {
@@ -486,137 +482,6 @@ export const apercuraTheme = {
     "section": {
       "base": {
         "padding": "var(--spacing-3)"
-      }
-    },
-    "checkbox-input": {
-      "base": {
-        "gap": "12px",
-        "minHeight": "44px",
-        "alignItems": "center"
-      }
-    },
-    "checkbox-indicator": {
-      "base": {
-        "width": "24px",
-        "height": "24px",
-        "borderWidth": "2px",
-        "borderStyle": "solid",
-        "borderColor": "var(--color-text-primary)",
-        "borderRadius": "6px",
-        "backgroundColor": "var(--color-background-surface)",
-        "color": "var(--color-background-surface)"
-      },
-      "checked": {
-        "backgroundColor": "var(--color-text-primary)",
-        "borderColor": "var(--color-text-primary)",
-        "color": "var(--color-background-surface)"
-      },
-      "disabled": {
-        "borderColor": "var(--color-text-disabled)"
-      }
-    },
-    "checkbox-label": {
-      "base": {
-        "fontSize": "1.125rem",
-        "fontWeight": "400",
-        "color": "var(--color-text-primary)"
-      }
-    },
-    "radio-list": {
-      "base": {
-        "gap": "0px"
-      }
-    },
-    "radio-list-item": {
-      "base": {
-        "minHeight": "44px",
-        "gap": "12px"
-      }
-    },
-    "radio-indicator": {
-      "base": {
-        "width": "24px",
-        "height": "24px",
-        "borderWidth": "2px",
-        "borderStyle": "solid",
-        "borderColor": "var(--color-text-primary)",
-        "backgroundColor": "var(--color-background-surface)"
-      },
-      "checked": {
-        "borderColor": "var(--color-text-primary)",
-        "backgroundColor": "var(--color-background-surface)"
-      },
-      "disabled": {
-        "borderColor": "var(--color-text-disabled)"
-      }
-    },
-    "radio-indicator-dot": {
-      "base": {
-        "width": "12px",
-        "height": "12px",
-        "backgroundColor": "var(--color-text-primary)"
-      }
-    },
-    "switch-thumb": {
-      "base": {
-        "width": "20px",
-        "height": "20px",
-        "backgroundColor": "var(--color-text-primary)"
-      },
-      "checked": {
-        "backgroundColor": "var(--color-background-surface)"
-      }
-    },
-    "switch-field": {
-      "base": {
-        "minHeight": "44px",
-        "gap": "12px",
-        "alignItems": "center"
-      }
-    },
-    "switch-label": {
-      "base": {
-        "fontSize": "1.125rem",
-        "fontWeight": "400",
-        "color": "var(--color-text-primary)"
-      }
-    },
-    "tab": {
-      "base": {
-        "minHeight": "44px",
-        "paddingInline": "16px",
-        "fontSize": "1rem",
-        "fontWeight": "500",
-        "color": "var(--color-text-secondary)"
-      },
-      "selected": {
-        "color": "var(--color-text-primary)",
-        "fontWeight": "600"
-      }
-    },
-    "tab-indicator": {
-      "base": {
-        "height": "2px",
-        "backgroundColor": "var(--color-text-primary)"
-      }
-    },
-    "tooltip": {
-      "base": {
-        "backgroundColor": "var(--color-text-primary)",
-        "color": "var(--color-background-surface)",
-        "borderRadius": "10px",
-        "paddingBlock": "6px",
-        "paddingInline": "12px",
-        "fontSize": "1rem"
-      }
-    },
-    "popover": {
-      "base": {
-        "borderRadius": "14px",
-        "borderWidth": "1px",
-        "borderStyle": "solid",
-        "borderColor": "var(--color-border)",
-        "backgroundColor": "var(--color-background-surface)"
       }
     }
   },
